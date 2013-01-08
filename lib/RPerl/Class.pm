@@ -9,6 +9,7 @@ use RPerl;
 # RPerl object constructor, shorthand
 sub new { no strict; return bless({%{$_[0] . '::properties'}}, $_[0]); }
 
+=UNUSED_CODE
 # RPerl object constructor, longhand
 #sub new($class_name_const_str)
 sub new_longhand
@@ -24,5 +25,6 @@ print "in Class.pm, have \%properties =\n" . Dumper(\%properties) . "\n" if $RPe
 print "in Class.pm, have \$new_obj =\n" . Dumper($new_obj) . "\n" if $RPerl::DEBUG;
 	return $new_obj;
 }
+=cut
 
 1;
