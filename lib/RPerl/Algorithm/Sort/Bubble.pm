@@ -1,5 +1,5 @@
 package RPerl::Algorithm::Sort::Bubble;
-use strict;  use warnings;
+use strict;  use warnings;  use types;
 use Data::Dumper;
 
 our @ISA = ('RPerl::Algorithm::Sort');
@@ -12,11 +12,11 @@ our %properties =
 
 # TODO: REMOVE sort_void() DUPLICATES BY MOVING INTO Sort.pm
 # call out to sort data, return nothing
-#sub sort_void($self_obj)
+#sub sort_void($self_object)
 sub sort_void
 {
-	my $self_obj = shift;
-	$self_obj->{data_scalar_array_ref} = sort_scalar_array_ref($self_obj->{data_scalar_array_ref});
+	my object $self = shift;
+	$self->{data_scalar_array_ref} = sort_scalar_array_ref($self->{data_scalar_array_ref});
 }
 
 # original algorithm: O(n**2) time, O(1) extra space 
@@ -24,32 +24,32 @@ sub sort_void
 #sub sort_scalar_array_ref($data_scalar_array_ref)
 sub sort_scalar_array_ref
 {
-	my $data_scalar_array_ref = shift;
-	my $is_sorted_bool = 0;
-	my $i_int;
-	my $data_length_const_int = scalar @{$data_scalar_array_ref};
-	my $swap_scalar;
+	my scalar_array_ref $data = shift;
+	my int $is_sorted = 0;
+	my int $i;
+	my const_int $data_length = scalar @{$data};
+	my scalar $swap;
 	
-	print "in sort_scalar_array_ref(), have \$data_length_const_int = $data_length_const_int\n" if $RPerl::DEBUG;
+	print "in sort_scalar_array_ref(), have \$data_length = $data_length\n" if $RPerl::DEBUG;
 
-	while (not($is_sorted_bool))
+	while (not($is_sorted))
 	{
 		print "in sort_scalar_array_ref(), top of WHILE loop\n" if $RPerl::DEBUG;
-		$is_sorted_bool = 1;
-		for ($i_int = 0; $i_int < $data_length_const_int; $i_int++)
+		$is_sorted = 1;
+		for ($i = 0; $i < ($data_length - 1); $i++)
 		{
-			print "in sort_scalar_array_ref(), inside for() loop, have \$i_int = $i_int\n" if $RPerl::DEBUG;
-			print "in sort_scalar_array_ref(), inside for() loop, have \$data_scalar_array_ref\n" . Dumper($data_scalar_array_ref) . "\n" if $RPerl::DEBUG;
-			if ($data_scalar_array_ref->[$i_int] > $data_scalar_array_ref->[($i_int + 1)])
+			print "in sort_scalar_array_ref(), inside for() loop, have \$i = $i\n" if $RPerl::DEBUG;
+			print "in sort_scalar_array_ref(), inside for() loop, have \$data\n" . Dumper($data) . "\n" if $RPerl::DEBUG;
+			if ($data->[$i] > $data->[($i + 1)])
 			{
 				print "in sort_scalar_array_ref(), inside for() loop, SWAPPED\n" if $RPerl::DEBUG;
-				$is_sorted_bool = 0;
-				$swap_scalar = $data_scalar_array_ref->[$i_int];
-				$data_scalar_array_ref->[$i_int] = $data_scalar_array_ref->[($i_int + 1)];
-				$data_scalar_array_ref->[($i_int + 1)] = $swap_scalar;
+				$is_sorted = 0;
+				$swap = $data->[$i];
+				$data->[$i] = $data->[($i + 1)];
+				$data->[($i + 1)] = $swap;
 			}
 		}
 	}
 	
-	return $data_scalar_array_ref;
+	return $data;
 }

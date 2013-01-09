@@ -1,0 +1,3 @@
+sudo -i
+cpan
+cpan> install XYZ
