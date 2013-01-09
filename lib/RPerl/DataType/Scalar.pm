@@ -1,7 +1,5 @@
 package RPerl::DataType::Scalar;
 use strict; use warnings;
-our @ISA = ('RPerl::DataType');
-use RPerl::DataType;
 use RPerl::DataType::Constant;
 use RPerl::DataType::Reference;
 

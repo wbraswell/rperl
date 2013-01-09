@@ -1,3 +1,5 @@
+NO INSTALL NOTES JUST YET
+
 sudo -i
 cpan
 cpan> install XYZ

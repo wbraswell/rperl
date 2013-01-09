@@ -1,6 +1,7 @@
 package types;
 use strict; use warnings;
 
+use RPerl::DataType::Void;
 use RPerl::DataType::Scalar;
 use RPerl::DataType::Number;
 use RPerl::DataType::Integer;
