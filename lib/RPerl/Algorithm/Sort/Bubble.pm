@@ -9,18 +9,19 @@ our %properties =
 	data => my scalar_array_ref $KEY_data,
 );
 
-# TODO: REMOVE sort_void() DUPLICATES BY MOVING INTO Sort.pm
 # call out to sort data, return nothing
 our void $sort_method = sub {(my object $self) = @_;
+;
 	$self->{data} = bubblesort($self->{data});
 };
 
-# original algorithm: O(n**2) time, O(1) extra space 
+# original algorithm: O(n**2) average time, O(1) worst-case extra space 
 # sort data, return sorted data
 our scalar_array_ref $bubblesort = sub {(my scalar_array_ref $data) = @_;
+;
 	my int $is_sorted = 0;
 	my int $i;
-	my const_int $data_length = scalar @{$data};
+	my const_int $data_length = scalar(@{$data});
 	my scalar $swap;
 	
 	print "in bubblesort(), have \$data_length = $data_length\n" if $RPerl::DEBUG;

@@ -9,17 +9,18 @@ our %properties =
 	data => my scalar_array_ref $KEY_data,
 );
 
-# TODO: REMOVE sort_void() DUPLICATES BY MOVING INTO Sort.pm, HANDLE MULTIPLE VARIANTS
 # call out to sort data, return nothing
 our void $sort_method = sub {(my object $self) = @_;
+;
 #	$self->{data} = quicksort($self->{data});  # original algorithm
-	$self->{data} = quicksort_in_place($self->{data});  # in-place variant algorithm
+	$self->{data} = quicksort_in_place($self->{data});  # in-place algorithm
 };
 
-# original algorithm: O(n log n) time, O(n) extra space 
+# original algorithm: O(n log n) average time, O(n) worst-case extra space 
 # sort data, return sorted data
 our scalar_array_ref $quicksort = sub {(my scalar_array_ref $data) = @_;
-	my const_int $data_length = scalar @{$data};
+;
+	my const_int $data_length = scalar(@{$data});
 	
 	print "in quicksort(), have \$data = \n" . RPerl::DUMPER($data) . "\n" if $RPerl::DEBUG;
 	print "in quicksort(), have \$data_length = $data_length\n" if $RPerl::DEBUG;
@@ -54,14 +55,16 @@ our scalar_array_ref $quicksort = sub {(my scalar_array_ref $data) = @_;
 	return $data;
 };
 
-# in-place variant: O(n log n) time, O(log n) extra space
+# in-place algorithm: O(n log n) average time, O(log n) worst-case extra space
 # call out to sort data, return sorted data
 our scalar_array_ref $quicksort_in_place = sub {(my scalar_array_ref $data) = @_;
+;
 	return quicksort_in_place_left_right($data, 0, (scalar @{$data}) - 1);
 };
 
-# in-place variant; sort data, return sorted data
+# in-place algorithm; sort data, return sorted data
 our scalar_array_ref $quicksort_in_place_left_right = sub { (my scalar_array_ref $data, my const_int $i_left, my const_int $i_right) = @_;
+;
 	print "in quicksort_in_place_left_right(), have \$data = \n" . RPerl::DUMPER($data) . "\n" if $RPerl::DEBUG;
 	
 	my int $i_pivot;
@@ -77,8 +80,9 @@ our scalar_array_ref $quicksort_in_place_left_right = sub { (my scalar_array_ref
 	return $data;
 };
 
-# in-place variant; partition data, return store index
+# in-place algorithm; partition data, return store index
 our int $partition = sub {(my scalar_array_ref $data, my const_int $i_left, my const_int $i_right, my const_int $i_pivot) = @_;
+;
 	my scalar $swap;
 	my int $i_store;
 	my int $i;
@@ -86,7 +90,7 @@ our int $partition = sub {(my scalar_array_ref $data, my const_int $i_left, my c
 	my const_scalar $pivot = $data->[$i_pivot];	
 	print "in partition(), have \$pivot = $pivot\n" if $RPerl::DEBUG;
 	
-	# temporarily move pivot to the end of subarray to keep it out of the way
+	# temporarily move pivot to the end of sublist to keep it out of the way
 	$data->[$i_pivot] = $data->[$i_right];
 	$data->[$i_right] = $pivot;
 	
