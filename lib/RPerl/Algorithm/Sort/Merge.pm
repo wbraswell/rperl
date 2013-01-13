@@ -6,7 +6,9 @@ use RPerl::Algorithm::Sort;
 
 our %properties =
 (
-	data => my scalar_array_ref $KEY_data,
+	# TODO: handle multiple data structures
+##	data => my scalar_array_ref $KEY_data,
+	data => my scalar_linkedlist_ref $KEY_data,
 );
 
 # call out to sort data, return nothing
@@ -14,7 +16,8 @@ our void $sort_method = sub {(my object $self) = @_;
 ;
 	# TODO: handle multiple algorithm choices
 ##	$self->{data} = mergesort($self->{data});  # original top-down algorithm
-	$self->{data} = mergesort_bottom_up($self->{data});  # bottom-up algorithm
+##	$self->{data} = mergesort_bottom_up($self->{data});  # bottom-up algorithm
+	$self->{data}->{head} = mergesort_linkedlist($self->{data}->{head});  # linked list algorithm
 };
 
 # top-down algorithm: comparison-based and stable and online [O(n log n) average total time, O(n) worst-case total extra space]
@@ -135,3 +138,82 @@ our void $merge_bottom_up = sub {(my scalar_array_ref $data, my scalar_array_ref
 
 # bottom-up algorithm; return smaller of 2 scalars [O(1) time, O(1) extra space]
 our scalar $min = sub {(my const_scalar $a, my const_scalar $b) = @_; if ($a < $b) {return $a;} else {return $b;}};
+
+
+# START HERE: add debugging messages and debug!
+our linkedlistnode_ref $mergesort_linkedlist = sub {(my linkedlistnode_ref $head) = @_;
+;
+	my linkedlistnode_ref $left;
+	my linkedlistnode_ref $right;
+	
+	# singleton or empty sublists are sorted
+	return $head if (not(defined($head)) or not(defined($head->{next})));
+	
+	unmerge_linkedlist($head, $left, $right);
+	mergesort_linkedlist($left);
+	mergesort_linkedlist($right);
+	$head = merge_linkedlist($left, $right);
+	
+	return $head;
+};
+
+our void $unmerge_linkedlist = sub {(my scalar_linkedlist_ref $head, my linkedlistnode_ref $left, my linkedlistnode_ref $right) = @_;
+;	
+	my linkedlistnode_ref $slow;
+	my linkedlistnode_ref $fast;
+	
+	# singleton or empty sublists
+	if (not(defined($head)) or not(defined($head->{next})))
+	{
+		$left = $head;
+		$right = undef;	
+	}
+	else
+	{
+		$slow = $head;
+		$fast = $head->{next};
+		
+		# advance fast twice and slow once
+		while (defined($fast))
+		{
+			$fast = $fast->{next};
+			if (defined($fast))
+			{
+				$slow = $slow->{next};
+				$fast = $fast->{next};
+			}
+		}
+		
+		# split list at midpoint
+		$left = $head;
+		$right = $slow->{next};
+		$slow->{next} = undef;
+	}
+};
+
+our linkedlistnode_ref $merge_linkedlist = sub {(my linkedlistnode_ref $left, my linkedlistnode_ref $right) = @_;
+;
+	my linkedlistnode_ref $merged;
+	
+	if (not(defined($left)))
+	{
+		return $right;
+	}
+	elsif (not(defined($right)))
+	{
+		return $left;
+	}
+	
+	if ($left->{data} <= $right->{data})
+	{
+		$merged = $left;
+		$merged->{next} = merge_linkedlist($left->{next}, $right);
+	}
+	else
+	{
+		$merged = $right;
+		$merged->{next} = merge_linkedlist($left, $right->{next});
+	}
+	
+	return $merged;
+};

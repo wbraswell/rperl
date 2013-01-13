@@ -15,7 +15,7 @@ our void $sort_method = sub {(my object $self) = @_;
 	$self->{data} = bubblesort($self->{data});
 };
 
-# original algorithm: O(n**2) average time, O(1) worst-case extra space, comparison-based and stable
+# original algorithm: comparison-based and stable [O(n**2) average time, O(1) worst-case extra space]
 # sort data, return sorted data
 our scalar_array_ref $bubblesort = sub {(my scalar_array_ref $data) = @_;
 ;

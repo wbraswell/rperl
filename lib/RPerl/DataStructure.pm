@@ -1,4 +1,4 @@
-package RPerl::Algorithm;
+package RPerl::DataStructure;
 use strict;  use warnings;
 
 our @ISA = ('RPerl::Class');

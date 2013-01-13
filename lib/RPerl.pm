@@ -1,10 +1,13 @@
 package RPerl;
 use strict;  use warnings;
+our @ISA = ('RPerl::Class');
+use RPerl::Class;
 
 # <<<=== DECREASE MAGIC ===>>>
 
 #no magic;  # require data types, full declarations, other non-magic
-use types;
+#use types;  # circular dependency causes "subroutine DUMPER redefined" error, solved by replacing use with require below
+require types;
 
 
 # <<<=== PSEUDO-EXPORTED VARIABLES AND FUNCTIONS ===>>>
@@ -13,35 +16,12 @@ our $DEBUG = 1;
 
 # TODO: replace Data::Dumper with pure-RPerl equivalent?
 use Data::Dumper;
-sub DUMPER {return Dumper(@_);}
-
-# RPerl function/method autoloader, shorthand; allows syntax for typed functions/methods
-our $AUTOLOAD;  sub AUTOLOAD { return eval('&$' . $AUTOLOAD . '(@_);'); }  ## no critic, suppress 'expression form of eval' warning
-$SIG{__WARN__} = sub { return if $_[0] =~ /^Use of inherited AUTOLOAD for non-method /; warn @_; };  # suppress deprecated feature warning
-
-=UNUSED_CODE
-# RPerl function/method autoloader, longhand; allows syntax for typed functions/methods
-our $AUTOLOAD;
-sub AUTOLOAD
+sub DUMPER
 {
-	print "IN AUTOLOAD, have \$AUTOLOAD = '$AUTOLOAD', and \@_ =\n" . RPerl::DUMPER(\@_) . "\n";
-	if ($AUTOLOAD =~ /main::/)
-	{
-#		my $foo_func_ref = eval("\${$AUTOLOAD}");
-#		print "IN AUTOLOAD, have \$foo_func_ref =\n" . RPerl::DUMPER($foo_func_ref) . "\n";
-#		return &$foo_func_ref(@_);
-
-		my $eval_string = '&$' . $AUTOLOAD . '(@_);';
-		print "IN AUTOLOAD, have \$eval_string = '$eval_string'\n";
-		return eval($eval_string);
-	}
-	else
-	{
-		no strict;
-		return &${$AUTOLOAD}(@_);
-	}
+	# TODO: handle any data structure that has its own DUMPER() method, not just linked lists
+	return $_[0]->DUMPER() if ((ref($_[0] eq 'RPerl::DataStructure::LinkedListReference')) or (ref($_[0]) =~ m/_linkedlist_/));
+	return Dumper(@_);
 }
-=cut
 
 
 # <<<=== INCREASE RUNTIME PERFORMANCE ===>>>
@@ -51,5 +31,3 @@ sub AUTOLOAD
 # compile
 
 # parallelize
-
-1;

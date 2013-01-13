@@ -1,11 +1,38 @@
 package RPerl::Class;
-use strict;  use warnings;  use RPerl;
-our @ISA = ('RPerl');  # need to inherit function/method autoloader
+use strict;  use warnings;
 
 #our %properties = ();  # this base class doesn't actually have any properties
 
 # RPerl object constructor, shorthand
 sub new { no strict; return bless({%{$_[0] . '::properties'}}, $_[0]); }
+
+# RPerl function/method autoloader, shorthand; allows syntax for typed functions/methods
+our $AUTOLOAD;  sub AUTOLOAD { return eval('&$' . $AUTOLOAD . '(@_);'); }  ## no critic, suppress 'expression form of eval' warning
+$SIG{__WARN__} = sub { return if $_[0] =~ /^Use of inherited AUTOLOAD for non-method /; warn @_; };  # suppress deprecated feature warning
+
+=UNUSED_CODE
+# RPerl function/method autoloader, longhand; allows syntax for typed functions/methods
+our $AUTOLOAD;
+sub AUTOLOAD
+{
+	print "IN AUTOLOAD, have \$AUTOLOAD = '$AUTOLOAD', and \@_ =\n" . RPerl::DUMPER(\@_) . "\n";
+	if ($AUTOLOAD =~ /main::/)
+	{
+#		my $foo_func_ref = eval("\${$AUTOLOAD}");
+#		print "IN AUTOLOAD, have \$foo_func_ref =\n" . RPerl::DUMPER($foo_func_ref) . "\n";
+#		return &$foo_func_ref(@_);
+
+		my $eval_string = '&$' . $AUTOLOAD . '(@_);';
+		print "IN AUTOLOAD, have \$eval_string = '$eval_string'\n";
+		return eval($eval_string);  ## no critic
+	}
+	else
+	{
+		no strict;
+		return &${$AUTOLOAD}(@_);
+	}
+}
+=cut
 
 =UNUSED_CODE
 # RPerl object constructor, longhand
