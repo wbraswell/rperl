@@ -12,14 +12,15 @@ $SIG{__WARN__} = sub { return if $_[0] =~ /^Use of inherited AUTOLOAD for non-me
 
 =UNUSED_CODE
 # RPerl function/method autoloader, longhand; allows syntax for typed functions/methods
+use Data::Dumper;  # don't depend on RPerl::DUMPER
 our $AUTOLOAD;
 sub AUTOLOAD
 {
-	print "IN AUTOLOAD, have \$AUTOLOAD = '$AUTOLOAD', and \@_ =\n" . RPerl::DUMPER(\@_) . "\n";
+	print "IN AUTOLOAD, have \$AUTOLOAD = '$AUTOLOAD', and \@_ =\n" . Dumper(\@_) . "\n";
 	if ($AUTOLOAD =~ /main::/)
 	{
 #		my $foo_func_ref = eval("\${$AUTOLOAD}");
-#		print "IN AUTOLOAD, have \$foo_func_ref =\n" . RPerl::DUMPER($foo_func_ref) . "\n";
+#		print "IN AUTOLOAD, have \$foo_func_ref =\n" . Dumper($foo_func_ref) . "\n";
 #		return &$foo_func_ref(@_);
 
 		my $eval_string = '&$' . $AUTOLOAD . '(@_);';
@@ -40,14 +41,14 @@ sub AUTOLOAD
 sub new_longhand
 {
 	(my $class_name_const_str) = @_;
-print "in Class.pm, have \$class_name_const_str = '$class_name_const_str'\n" if $RPerl::DEBUG;
+print "in Class.pm, have \$class_name_const_str = '$class_name_const_str'\n";
 	my $properties_name_const_str = $class_name_const_str . '::properties';
-print "in Class.pm, have \$properties_name_const_str = '$properties_name_const_str'\n" if $RPerl::DEBUG;
+print "in Class.pm, have \$properties_name_const_str = '$properties_name_const_str'\n";
 	my %properties = %{$properties_name_const_str};
-print "in Class.pm, have \%properties =\n" . Dumper(\%properties) . "\n" if $RPerl::DEBUG;
+print "in Class.pm, have \%properties =\n" . Dumper(\%properties) . "\n";
 #	my $new_obj = bless({%{$class_name_const_str . '::properties'}}, $class_name_const_str);
 	my $new_obj = bless({%properties}, $class_name_const_str);
-print "in Class.pm, have \$new_obj =\n" . Dumper($new_obj) . "\n" if $RPerl::DEBUG;
+print "in Class.pm, have \$new_obj =\n" . Dumper($new_obj) . "\n";
 	return $new_obj;
 }
 =cut

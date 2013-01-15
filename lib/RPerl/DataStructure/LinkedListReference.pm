@@ -1,9 +1,6 @@
 package RPerl::DataStructure::LinkedListReference;
 use strict; use warnings;
-
-# derivative types need to access our anonymous-method-holding variables
 our @ISA = ('RPerl::DataStructure', 'RPerl::DataType::Reference');
-
 use RPerl::DataStructure;
 use RPerl::DataType::Reference;
 
@@ -17,7 +14,7 @@ our %properties =
 
 our RPerl::DataStructure::LinkedListReference $new_from_array_ref = sub {(my string $class, my const_array_ref $input) = @_;
 ;
-	print "in new_from_array_ref(), received \$class = '$class', and \$input =\n" . RPerl::DUMPER($input) . "\n" if $RPerl::DEBUG;
+#	print "in new_from_array_ref(), received \$class = '$class', and \$input =\n" . RPerl::DUMPER($input) . "\n" if $RPerl::DEBUG;
 	my unknown $output = $class->new();
 	my int $i;
 	for ($i = (scalar(@{$input}) - 1); $i >= 0; $i--)
@@ -36,24 +33,7 @@ our void $linkedlist_unshift = sub {(my RPerl::DataStructure::LinkedListReferenc
 	$list->{head} = $new_node;
 };
 
-our string $DUMPER = sub {(my RPerl::DataStructure::LinkedListReference $data) = @_;
-;
-	my string $dumped = '[';
-	my RPerl::DataStructure::LinkedList::NodeReference $node = $data->{head};
-	my int $is_first = 1;
-	
-	while (defined($node))
-	{
-		if ($is_first) { $is_first = 0; }
-		else { $dumped .= ', '; }
-		# TODO: handle non-scalar linked list elements
-		$dumped .= $node->{data};
-		$node = $node->{next};
-	}
-	
-	$dumped .= ']';
-	return $dumped;
-};
+our string $DUMPER = sub {(my RPerl::DataStructure::LinkedListReference $data) = @_; return $data->{head}->DUMPER(); };
 
 
 # we only provide data structure references, not the direct data structures themselves,
@@ -65,21 +45,22 @@ our @ISA = ('RPerl::DataStructure::LinkedListReference');
 use RPerl::DataStructure::LinkedListReference;
 our %properties = %properties; our $new_from_array_ref = $new_from_array_ref; our $linkedlist_unshift = $linkedlist_unshift; our $DUMPER = $DUMPER;
 
+
 package scalar_linkedlist_ref;
-our @ISA = ('RPerl::DataStructure::LinkedListReference');
+our @ISA = ('linkedlist_ref');
 use RPerl::DataStructure::LinkedListReference;
 our %properties = %properties; our $new_from_array_ref = $new_from_array_ref; our $linkedlist_unshift = $linkedlist_unshift; our $DUMPER = $DUMPER;
 
 
 package const_linkedlist_ref;
-our @ISA = ('RPerl::DataStructure::LinkedListReference', 'RPerl::DataType::Constant');
+our @ISA = ('linkedlist_ref', 'const');
 use RPerl::DataStructure::LinkedListReference;
 use RPerl::DataType::Constant;
 our %properties = %properties; our $new_from_array_ref = $new_from_array_ref; our $linkedlist_unshift = $linkedlist_unshift; our $DUMPER = $DUMPER;
 
 
 package const_scalar_linkedlist_ref;
-our @ISA = ('RPerl::DataStructure::LinkedListReference', 'RPerl::DataType::Constant');
+our @ISA = ('scalar_linkedlist_ref', 'const');
 use RPerl::DataStructure::LinkedListReference;
 use RPerl::DataType::Constant;
 our %properties = %properties; our $new_from_array_ref = $new_from_array_ref; our $linkedlist_unshift = $linkedlist_unshift; our $DUMPER = $DUMPER;

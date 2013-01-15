@@ -18,8 +18,9 @@ our $DEBUG = 1;
 use Data::Dumper;
 sub DUMPER
 {
-	# TODO: handle any data structure that has its own DUMPER() method, not just linked lists
-	return $_[0]->DUMPER() if ((ref($_[0] eq 'RPerl::DataStructure::LinkedListReference')) or (ref($_[0]) =~ m/_linkedlist_/));
+#	die ('in RPerl::DUMPER(), received undef argument, dying') if (not(defined($_[0])));
+	return '**UNDEF**' if (not(defined($_[0])));
+	return $_[0]->DUMPER() if (defined(eval('$' . ref($_[0]) . '::DUMPER')));  ## no critic
 	return Dumper(@_);
 }
 

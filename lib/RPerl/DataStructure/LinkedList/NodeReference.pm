@@ -10,6 +10,24 @@ our %properties =
 	next => my RPerl::DataStructure::LinkedList::NodeReference $KEY_next = undef
 );
 
+our string $DUMPER = sub {(my RPerl::DataStructure::LinkedList::NodeReference $node) = @_;
+;
+	my string $dumped = '[';
+	my int $is_first = 1;
+	
+	while (defined($node))
+	{
+		if ($is_first) { $is_first = 0; }
+		else { $dumped .= ', '; }
+		# TODO: handle non-scalar linked list elements
+		$dumped .= $node->{data};
+		$node = $node->{next};
+	}
+	
+	$dumped .= ']';
+	return $dumped;
+};
+
 
 # we only provide data structure references, not the direct data structures themselves,
 # because an RPerl::Class is a blessed hash _reference_, and we are not natively implementing the data structures in C here;

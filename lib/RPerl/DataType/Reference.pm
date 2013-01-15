@@ -10,4 +10,5 @@ our @ISA = ('RPerl::DataType::Reference');
 
 
 package const_ref;
-our @ISA = ('RPerl::DataType::Reference', 'RPerl::DataType::Constant');
+#our @ISA = ('RPerl::DataType::Reference', 'RPerl::DataType::Constant');
+our @ISA = ('ref', 'const');
