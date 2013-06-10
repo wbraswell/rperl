@@ -1,5 +1,7 @@
-package RPerl::DataStructure::LinkedList::NodeReference;
+package RPerl::DataStructure::LinkedList::Node;
 use strict;  use warnings;
+
+package RPerl::DataStructure::LinkedList::NodeReference;
 our @ISA = ('RPerl::DataStructure', 'RPerl::DataType::Reference');
 use RPerl::DataStructure;
 use RPerl::DataType::Reference;
@@ -35,5 +37,5 @@ our string $DUMPER = sub {(my RPerl::DataStructure::LinkedList::NodeReference $n
 # I favored the consistency of user-side RPerl data type short-form package alias _ delimeter over the Perl system-side package name scope :: delimeter 
 package linkedlistnode_ref;
 our @ISA = ('RPerl::DataStructure::LinkedList::NodeReference');
-use RPerl::DataStructure::LinkedList::NodeReference;
+use RPerl::DataStructure::LinkedList::Node;
 our %properties = %properties;

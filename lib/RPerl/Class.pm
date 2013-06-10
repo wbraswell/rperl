@@ -7,11 +7,14 @@ use strict;  use warnings;
 sub new { no strict; return bless({%{$_[0] . '::properties'}}, $_[0]); }
 
 # RPerl function/method autoloader, shorthand; allows syntax for typed functions/methods
-our $AUTOLOAD;  sub AUTOLOAD { return eval('&$' . $AUTOLOAD . '(@_);'); }  ## no critic, suppress 'expression form of eval' warning
+our $AUTOLOAD;  sub AUTOLOAD { my $retval = eval('&$' . $AUTOLOAD . '(@_);'); die($@) if ($@); return $retval; }  ## no critic, suppress 'expression form of eval' warning, suppress '...propagated at RPerl/Class.pm' appended exception
 $SIG{__WARN__} = sub { return if $_[0] =~ /^Use of inherited AUTOLOAD for non-method /; warn @_; };  # suppress deprecated feature warning
 
 =UNUSED_CODE
+# RPerl function/method autoloader, shorthand; allows syntax for typed functions/methods
+#our $AUTOLOAD;  sub AUTOLOAD { my $retval = eval('&$' . $AUTOLOAD . '(@_);'); die if ($@); return $retval; }  ## no critic, suppress 'expression form of eval' warning, allow '...propagated at RPerl/Class.pm' appended exception
 # RPerl function/method autoloader, longhand; allows syntax for typed functions/methods
+# TODO: Add die() support as in the shorthand version above
 use Data::Dumper;  # don't depend on RPerl::DUMPER
 our $AUTOLOAD;
 sub AUTOLOAD

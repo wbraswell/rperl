@@ -6,15 +6,20 @@ use RPerl::Algorithm::Sort;
 
 our %properties =
 (
+	variant => my string $KEY_mode = 'original',  # default to original (not in-place) variant
 	data => my scalar_array_ref $KEY_data,
 );
 
 # call out to sort data, return nothing
 our void $sort_method = sub {(my object $self) = @_;
 ;
-	# TODO: handle multiple algorithm choices
-##	$self->{data} = quicksort($self->{data});  # original algorithm
-	$self->{data} = quicksort_in_place($self->{data});  # in-place algorithm
+	if ((ref($self->{data}) eq 'ARRAY') or ($self->{data}->isa('array_ref')))
+	{
+		if ($self->{variant} eq 'original') { $self->{data} = quicksort($self->{data}); }
+		elsif ($self->{variant} eq 'inplace') { $self->{data} = quicksort_inplace($self->{data}); }
+		else { die("Unsupported variant '" . $self->{variant} . "' detected for array_ref data type (original or inplace supported), dying"); }
+	}
+	else { die("Unsupported data structure '" . ref($self->{data}) . "' detected (only array_ref supported), dying"); }
 };
 
 # original algorithm: comparison-based and stable [O(n log n) average total time, O(n) worst-case total extra space]
@@ -68,26 +73,26 @@ our scalar_array_ref $quicksort = sub {(my scalar_array_ref $data) = @_;
 
 # in-place algorithm: comparison-based and not stable [O(n log n) average total time, O(log n) worst-case total extra space]
 # call out to sort data, return sorted data
-our scalar_array_ref $quicksort_in_place = sub {(my scalar_array_ref $data) = @_;
+our scalar_array_ref $quicksort_inplace = sub {(my scalar_array_ref $data) = @_;
 ;
-	return quicksort_in_place_left_right($data, 0, (scalar @{$data}) - 1);
+	return quicksort_inplace_left_right($data, 0, (scalar @{$data}) - 1);
 };
 
 # in-place algorithm; sort data, return sorted data [O(n log n) total time, O(log n) total extra space] 
-our scalar_array_ref $quicksort_in_place_left_right = sub { (my scalar_array_ref $data, my const_int $i_left, my const_int $i_right) = @_;
+our scalar_array_ref $quicksort_inplace_left_right = sub { (my scalar_array_ref $data, my const_int $i_left, my const_int $i_right) = @_;
 ;
-#	print "in quicksort_in_place_left_right(), have \$data = \n" . RPerl::DUMPER($data) . "\n" if $RPerl::DEBUG;
+#	print "in quicksort_inplace_left_right(), have \$data = \n" . RPerl::DUMPER($data) . "\n" if $RPerl::DEBUG;
 	
 	my int $i_pivot;
 	
 	if ($i_left < $i_right)
 	{
 		$i_pivot = int($i_left + (($i_right - $i_left) / 2));  # pivot is middle element in partition; okay for large, already-sorted, or repetitive arrays
-		$i_pivot = partition_in_place($data, $i_left, $i_right, $i_pivot);  # partition data [O(n) time]
+		$i_pivot = partition_inplace($data, $i_left, $i_right, $i_pivot);  # partition data [O(n) time]
 		
 		# recursively call this function on the list with sublist indices [O(log n) time, O(log n) total extra space for call stack]
-		quicksort_in_place_left_right($data, $i_left, $i_pivot - 1);  # ignore recursion return values because data is sorted in-place
-		quicksort_in_place_left_right($data, $i_pivot + 1, $i_right);
+		quicksort_inplace_left_right($data, $i_left, $i_pivot - 1);  # ignore recursion return values because data is sorted in-place
+		quicksort_inplace_left_right($data, $i_pivot + 1, $i_right);
 	}
 	# else, singleton or empty sublists are sorted
 	
@@ -97,14 +102,14 @@ our scalar_array_ref $quicksort_in_place_left_right = sub { (my scalar_array_ref
 };
 
 # in-place algorithm; partition data, return store index [O(n) time, O(1) extra space]
-our int $partition_in_place = sub {(my scalar_array_ref $data, my const_int $i_left, my const_int $i_right, my const_int $i_pivot) = @_;
+our int $partition_inplace = sub {(my scalar_array_ref $data, my const_int $i_left, my const_int $i_right, my const_int $i_pivot) = @_;
 ;
 	my scalar $swap;
 	my int $i_store;
 	my int $i;
 	
 	my const_scalar $pivot = $data->[$i_pivot];	
-#	print "in partition_in_place(), have \$pivot = $pivot\n" if $RPerl::DEBUG;
+#	print "in partition_inplace(), have \$pivot = $pivot\n" if $RPerl::DEBUG;
 	
 	# temporarily move pivot to the end of sublist to keep it out of the way
 	$data->[$i_pivot] = $data->[$i_right];

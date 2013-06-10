@@ -13,6 +13,7 @@ use RPerl::DataType::Reference;
 use RPerl::DataStructure::Array;
 use RPerl::DataStructure::Hash;
 use RPerl::DataStructure::Object;
-use RPerl::DataStructure::LinkedListReference;
+use RPerl::DataStructure::LinkedList;
+use RPerl::DataStructure::Graph::Tree::Binary;
 
 1;

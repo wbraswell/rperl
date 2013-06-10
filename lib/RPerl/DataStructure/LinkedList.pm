@@ -1,11 +1,13 @@
-package RPerl::DataStructure::LinkedListReference;
+package RPerl::DataStructure::LinkedList;
 use strict; use warnings;
+
+package RPerl::DataStructure::LinkedListReference;
 our @ISA = ('RPerl::DataStructure', 'RPerl::DataType::Reference');
 use RPerl::DataStructure;
 use RPerl::DataType::Reference;
 
 # linked lists are comprised of nodes
-use RPerl::DataStructure::LinkedList::NodeReference;
+use RPerl::DataStructure::LinkedList::Node;
 
 our %properties =
 (
@@ -42,25 +44,26 @@ our string $DUMPER = sub {(my RPerl::DataStructure::LinkedListReference $data) =
 # I favored the consistency of user-side RPerl data type short-form package alias _ delimeter over the Perl system-side package name scope :: delimeter 
 package linkedlist_ref;
 our @ISA = ('RPerl::DataStructure::LinkedListReference');
-use RPerl::DataStructure::LinkedListReference;
+use RPerl::DataStructure::LinkedList;
+# TODO: check if these (and other) symbol copies can be shortened???   move into import() subroutine to be automatically called by 'use' command?
 our %properties = %properties; our $new_from_array_ref = $new_from_array_ref; our $linkedlist_unshift = $linkedlist_unshift; our $DUMPER = $DUMPER;
 
 
 package scalar_linkedlist_ref;
 our @ISA = ('linkedlist_ref');
-use RPerl::DataStructure::LinkedListReference;
+use RPerl::DataStructure::LinkedList;
 our %properties = %properties; our $new_from_array_ref = $new_from_array_ref; our $linkedlist_unshift = $linkedlist_unshift; our $DUMPER = $DUMPER;
 
 
 package const_linkedlist_ref;
 our @ISA = ('linkedlist_ref', 'const');
-use RPerl::DataStructure::LinkedListReference;
+use RPerl::DataStructure::LinkedList;
 use RPerl::DataType::Constant;
 our %properties = %properties; our $new_from_array_ref = $new_from_array_ref; our $linkedlist_unshift = $linkedlist_unshift; our $DUMPER = $DUMPER;
 
 
 package const_scalar_linkedlist_ref;
 our @ISA = ('scalar_linkedlist_ref', 'const');
-use RPerl::DataStructure::LinkedListReference;
+use RPerl::DataStructure::LinkedList;
 use RPerl::DataType::Constant;
 our %properties = %properties; our $new_from_array_ref = $new_from_array_ref; our $linkedlist_unshift = $linkedlist_unshift; our $DUMPER = $DUMPER;
