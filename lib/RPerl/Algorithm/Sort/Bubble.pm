@@ -1,3 +1,5 @@
+# START HERE: manually translate to Inline::C
+
 package RPerl::Algorithm::Sort::Bubble;
 use strict;  use warnings;
 
@@ -9,12 +11,14 @@ our %properties =
 	data => my scalar_array_ref $KEY_data,
 );
 
+# [object-oriented programming interface]
 # call out to sort data, return nothing
 our void $sort_method = sub {(my object $self) = @_;
 ;
 	$self->{data} = bubblesort($self->{data});
 };
 
+# [procedural programming interface]
 # original algorithm: comparison-based and stable [O(n**2) average time, O(1) worst-case extra space]
 # sort data, return sorted data
 our scalar_array_ref $bubblesort = sub {(my scalar_array_ref $data) = @_;
