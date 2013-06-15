@@ -1,3 +1,26 @@
+
+#define __INLINE_CPP_STANDARD_HEADERS 1
+#define __INLINE_CPP_NAMESPACE_STD 1
+
+
+#define __INLINE_CPP_STANDARD_HEADERS 1
+#define __INLINE_CPP_NAMESPACE_STD 1
+
+#define __INLINE_CPP 1
+#ifndef bool
+#include <iostream>
+#endif
+extern "C" {
+#include "EXTERN.h"
+#include "perl.h"
+#include "XSUB.h"
+#include "INLINE.h"
+}
+#ifdef bool
+#undef bool
+#include <iostream>
+#endif
+
 // <<< HELPER DEFINES >>>
 #define RPerl__DEBUG 1  // NEED FIX: access actual inherited debug flag somehow?
 #define AV_ELEMENT(av,index) ((av_fetch(av,index,0)!=NULL)?*av_fetch(av,index,0):newSV(0))
@@ -169,3 +192,60 @@ SV *bubblesort(SV *my_data)  // NEED ANSWER: is this properly grabbing argument 
 	 return my_data;
 ////};
 }
+
+MODULE = RPerl::Algorithm::Sort_0e79        PACKAGE = RPerl::Algorithm::Sort::Bubble
+
+PROTOTYPES: DISABLE
+
+void
+Bubble::sort_method()
+    PREINIT:
+	I32 *	__temp_markstack_ptr;
+    PPCODE:
+	__temp_markstack_ptr = PL_markstack_ptr++;
+	THIS->sort_method();
+        if (PL_markstack_ptr != __temp_markstack_ptr) {
+          /* truly void, because dXSARGS not invoked */
+          PL_markstack_ptr = __temp_markstack_ptr;
+          XSRETURN_EMPTY; /* return empty stack */
+        }
+        /* must have used dXSARGS; list context implied */
+        return; /* assume stack size is correct */
+
+SV *
+Bubble::data_get()
+    
+void
+Bubble::data_set(data_new)
+	SV *	data_new
+    PREINIT:
+	I32 *	__temp_markstack_ptr;
+    PPCODE:
+	__temp_markstack_ptr = PL_markstack_ptr++;
+	THIS->data_set(data_new);
+        if (PL_markstack_ptr != __temp_markstack_ptr) {
+          /* truly void, because dXSARGS not invoked */
+          PL_markstack_ptr = __temp_markstack_ptr;
+          XSRETURN_EMPTY; /* return empty stack */
+        }
+        /* must have used dXSARGS; list context implied */
+        return; /* assume stack size is correct */
+
+Bubble *
+Bubble::new()
+    
+void
+Bubble::DESTROY()
+    
+MODULE = RPerl::Algorithm::Sort_0e79        PACKAGE = RPerl::Algorithm::Sort  
+
+PROTOTYPES: DISABLE
+
+char *
+RPerl_DUMPER__perl_from_c(dumpee)
+	SV *	dumpee
+    
+SV *
+bubblesort(data)
+	SV *	data
+    

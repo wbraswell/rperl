@@ -1,4 +1,4 @@
-# This Makefile is for the RPerl::Algorithm::Sort::Bubble_cpp_2c4b extension to perl.
+# This Makefile is for the RPerl::Algorithm::Sort_0e79 extension to perl.
 #
 # It was generated automatically by MakeMaker version
 # 6.62 (Revision: 66200) from the contents of
@@ -17,9 +17,9 @@
 #     CONFIGURE_REQUIRES => {  }
 #     INC => q[-I"/home/wbraswell/austin_perl_mongers/compiler/RPerl/RPerl-latest/lib/RPerl/Algorithm/Sort/drivers"]
 #     LIBS => [q[-lstdc++]]
-#     NAME => q[RPerl::Algorithm::Sort::Bubble_cpp_2c4b]
+#     NAME => q[RPerl::Algorithm::Sort_0e79]
 #     PREREQ_PM => {  }
-#     TYPEMAPS => [q[/usr/share/perl/5.10/ExtUtils/typemap]]
+#     TYPEMAPS => [q[/usr/share/perl/5.10/ExtUtils/typemap], q[/home/wbraswell/austin_perl_mongers/compiler/RPerl/RPerl-latest/lib/RPerl/Algorithm/Sort/drivers/_Inline/build/RPerl/Algorithm/Sort_0e79/CPP.map]]
 #     VERSION => q[0.00]
 
 # --- MakeMaker post_initialize section:
@@ -57,8 +57,8 @@ VENDORLIBEXP = /usr/share/perl5
 AR_STATIC_ARGS = cr
 DIRFILESEP = /
 DFSEP = $(DIRFILESEP)
-NAME = RPerl::Algorithm::Sort::Bubble_cpp_2c4b
-NAME_SYM = RPerl_Algorithm_Sort_Bubble_cpp_2c4b
+NAME = RPerl::Algorithm::Sort_0e79
+NAME_SYM = RPerl_Algorithm_Sort_0e79
 VERSION = 0.00
 VERSION_MACRO = VERSION
 VERSION_SYM = 0_00
@@ -147,9 +147,9 @@ MM_REVISION = 66200
 # PARENT_NAME = NAME without BASEEXT and no trailing :: (eg Foo::Bar)
 # DLBASE  = Basename part of dynamic library. May be just equal BASEEXT.
 MAKE = make
-FULLEXT = RPerl/Algorithm/Sort/Bubble_cpp_2c4b
-BASEEXT = Bubble_cpp_2c4b
-PARENT_NAME = RPerl::Algorithm::Sort
+FULLEXT = RPerl/Algorithm/Sort_0e79
+BASEEXT = Sort_0e79
+PARENT_NAME = RPerl::Algorithm
 DLBASE = $(BASEEXT)
 VERSION_FROM = 
 INC = -I"/home/wbraswell/austin_perl_mongers/compiler/RPerl/RPerl-latest/lib/RPerl/Algorithm/Sort/drivers"
@@ -159,9 +159,9 @@ LINKTYPE = dynamic
 BOOTDEP = 
 
 # Handy lists of source code files:
-XS_FILES = Bubble_cpp_2c4b.xs
-C_FILES  = Bubble_cpp_2c4b.c
-O_FILES  = Bubble_cpp_2c4b.o
+XS_FILES = Sort_0e79.xs
+C_FILES  = Sort_0e79.c
+O_FILES  = Sort_0e79.o
 H_FILES  = INLINE.h
 MAN1PODS = 
 MAN3PODS = 
@@ -170,8 +170,8 @@ MAN3PODS =
 CONFIGDEP = $(PERL_ARCHLIB)$(DFSEP)Config.pm $(PERL_INC)$(DFSEP)config.h
 
 # Where to build things
-INST_LIBDIR      = $(INST_LIB)/RPerl/Algorithm/Sort
-INST_ARCHLIBDIR  = $(INST_ARCHLIB)/RPerl/Algorithm/Sort
+INST_LIBDIR      = $(INST_LIB)/RPerl/Algorithm
+INST_ARCHLIBDIR  = $(INST_ARCHLIB)/RPerl/Algorithm
 
 INST_AUTODIR     = $(INST_LIB)/auto/$(FULLEXT)
 INST_ARCHAUTODIR = $(INST_ARCHLIB)/auto/$(FULLEXT)
@@ -208,8 +208,8 @@ XSUBPPDIR = /usr/local/share/perl/5.10.1/ExtUtils
 XSUBPP = $(XSUBPPDIR)$(DFSEP)xsubpp
 XSUBPPRUN = $(PERLRUN) $(XSUBPP)
 XSPROTOARG = 
-XSUBPPDEPS = /usr/share/perl/5.10/ExtUtils/typemap /usr/share/perl/5.10/ExtUtils/typemap $(XSUBPP)
-XSUBPPARGS = -typemap "/usr/share/perl/5.10/ExtUtils/typemap" 
+XSUBPPDEPS = /usr/share/perl/5.10/ExtUtils/typemap /usr/share/perl/5.10/ExtUtils/typemap /home/wbraswell/austin_perl_mongers/compiler/RPerl/RPerl-latest/lib/RPerl/Algorithm/Sort/drivers/_Inline/build/RPerl/Algorithm/Sort_0e79/CPP.map $(XSUBPP)
+XSUBPPARGS = -typemap "/usr/share/perl/5.10/ExtUtils/typemap" -typemap "/home/wbraswell/austin_perl_mongers/compiler/RPerl/RPerl-latest/lib/RPerl/Algorithm/Sort/drivers/_Inline/build/RPerl/Algorithm/Sort_0e79/CPP.map" 
 XSUBPP_EXTRA_ARGS = 
 
 
@@ -264,8 +264,8 @@ CI = ci -u
 RCS_LABEL = rcs -Nv$(VERSION_SYM): -q
 DIST_CP = best
 DIST_DEFAULT = tardist
-DISTNAME = RPerl-Algorithm-Sort-Bubble_cpp_2c4b
-DISTVNAME = RPerl-Algorithm-Sort-Bubble_cpp_2c4b-0.00
+DISTNAME = RPerl-Algorithm-Sort_0e79
+DISTVNAME = RPerl-Algorithm-Sort_0e79-0.00
 
 
 # --- MakeMaker macro section:
@@ -284,7 +284,7 @@ MPOLLUTE =
 
 # --- MakeMaker const_loadlibs section:
 
-# RPerl::Algorithm::Sort::Bubble_cpp_2c4b might depend on some other libraries:
+# RPerl::Algorithm::Sort_0e79 might depend on some other libraries:
 # See ExtUtils::Liblist for details
 #
 EXTRALIBS = -lstdc++
@@ -533,13 +533,13 @@ clean :: clean_subdirs
 	- $(RM_F) \
 	  *$(LIB_EXT) core \
 	  core.[0-9] $(INST_ARCHAUTODIR)/extralibs.all \
-	  Bubble_cpp_2c4b.c core.[0-9][0-9] \
-	  $(BASEEXT).bso pm_to_blib.ts \
-	  MYMETA.json core.[0-9][0-9][0-9][0-9] \
-	  MYMETA.yml $(BASEEXT).x \
-	  $(BOOTSTRAP) perl$(EXE_EXT) \
-	  tmon.out *$(OBJ_EXT) \
-	  pm_to_blib $(INST_ARCHAUTODIR)/extralibs.ld \
+	  core.[0-9][0-9] $(BASEEXT).bso \
+	  pm_to_blib.ts MYMETA.json \
+	  core.[0-9][0-9][0-9][0-9] MYMETA.yml \
+	  $(BASEEXT).x $(BOOTSTRAP) \
+	  perl$(EXE_EXT) tmon.out \
+	  *$(OBJ_EXT) pm_to_blib \
+	  Sort_0e79.c $(INST_ARCHAUTODIR)/extralibs.ld \
 	  blibdirs.ts core.[0-9][0-9][0-9][0-9][0-9] \
 	  *perl.core core.*perl.*.? \
 	  $(MAKE_APERL_FILE) $(BASEEXT).def \
@@ -584,7 +584,7 @@ metafile : create_distdir
 	$(NOECHO) $(ECHO) 'meta-spec:' >> META_new.yml
 	$(NOECHO) $(ECHO) '  url: http://module-build.sourceforge.net/META-spec-v1.4.html' >> META_new.yml
 	$(NOECHO) $(ECHO) '  version: 1.4' >> META_new.yml
-	$(NOECHO) $(ECHO) 'name: RPerl-Algorithm-Sort-Bubble_cpp_2c4b' >> META_new.yml
+	$(NOECHO) $(ECHO) 'name: RPerl-Algorithm-Sort_0e79' >> META_new.yml
 	$(NOECHO) $(ECHO) 'no_index:' >> META_new.yml
 	$(NOECHO) $(ECHO) '  directory:' >> META_new.yml
 	$(NOECHO) $(ECHO) '    - t' >> META_new.yml
@@ -607,7 +607,7 @@ metafile : create_distdir
 	$(NOECHO) $(ECHO) '      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",' >> META_new.json
 	$(NOECHO) $(ECHO) '      "version" : "2"' >> META_new.json
 	$(NOECHO) $(ECHO) '   },' >> META_new.json
-	$(NOECHO) $(ECHO) '   "name" : "RPerl-Algorithm-Sort-Bubble_cpp_2c4b",' >> META_new.json
+	$(NOECHO) $(ECHO) '   "name" : "RPerl-Algorithm-Sort_0e79",' >> META_new.json
 	$(NOECHO) $(ECHO) '   "no_index" : {' >> META_new.json
 	$(NOECHO) $(ECHO) '      "directory" : [' >> META_new.json
 	$(NOECHO) $(ECHO) '         "t",' >> META_new.json
@@ -905,7 +905,7 @@ PERL_HDRS = \
 
 $(OBJECT) : $(PERL_HDRS)
 
-Bubble_cpp_2c4b.c : $(XSUBPPDEPS)
+Sort_0e79.c : $(XSUBPPDEPS)
 
 
 # --- MakeMaker makefile section:

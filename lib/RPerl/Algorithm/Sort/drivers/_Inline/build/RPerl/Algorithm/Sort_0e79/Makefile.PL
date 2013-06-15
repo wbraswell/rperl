@@ -2,9 +2,10 @@ use ExtUtils::MakeMaker;
 my %options = %{
 {
   'TYPEMAPS' => [
-    '/usr/share/perl/5.10/ExtUtils/typemap'
+    '/usr/share/perl/5.10/ExtUtils/typemap',
+    '/home/wbraswell/austin_perl_mongers/compiler/RPerl/RPerl-latest/lib/RPerl/Algorithm/Sort/drivers/_Inline/build/RPerl/Algorithm/Sort_0e79/CPP.map'
   ],
-  'NAME' => 'RPerl::Algorithm::Sort::Bubble_cpp_2c4b',
+  'NAME' => 'RPerl::Algorithm::Sort_0e79',
   'CC' => 'g++',
   'CCFLAGS' => ' -Wno-deprecated',
   'LIBS' => [

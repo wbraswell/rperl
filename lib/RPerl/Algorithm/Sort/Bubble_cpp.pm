@@ -1,5 +1,6 @@
 use strict; use warnings;
 package RPerl::Algorithm::Sort::Bubble_cpp;
+package RPerl::Algorithm::Sort;  # begin namespace hack, want to use ...Sort::Bubble->new(), not ...Sort::Bubble_cpp::Bubble->new()
 
 use Inline
 (
@@ -12,4 +13,5 @@ use Inline
         WARNINGS => 1,
 );
 
+package RPerl::Algorithm::Sort::Bubble_cpp;  # end namespace hack
 1;
