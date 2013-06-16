@@ -22,14 +22,27 @@ my object $sorter = RPerl::Algorithm::Sort::Bubble->new();
 #$sorter->{variant} = 'bottomup';	# MERGESORT
 
 # NEED CHOOSE: which data structure?
-$sorter->{data} = [21, 12, 31, 13, 42, 2012, 5555, 1.21, 33.3, 9999, -15, 0];
+#$sorter->{data} = [21, 12, 31, 13, 42, 2012, 5555, 1.21, 33.3, 9999, -15, 0];
 #$sorter->{data} = scalar_linkedlist_ref->new_from_array_ref([21, 12, 31, 13, 42, 2012, 5555, 1.21, 33.3, 9999, -15, 0]);
 
-print "in multi_sort.pl, have \$sorter =\n" . RPerl::DUMPER($sorter) . "\n" if $RPerl::DEBUG;
+my @data_array = (0 ... 20000);
+@data_array = reverse(@data_array);
+$sorter->{data} = \@data_array;
 
+print "in multi_sort.pl, have \$sorter =\n" . RPerl::DUMPER($sorter) . "\n" if $RPerl::DEBUG;
 print "in multi_sort.pl, have unsorted \$sorter->{data} =\n" . RPerl::DUMPER($sorter->{data}) . "\n" if $RPerl::DEBUG;
+
+my $start_time = time();
 $sorter->sort_method();
+my $end_time = time();
+my $run_time = $end_time - $start_time;
+
 print "in multi_sort.pl, have sorted \$sorter->{data} =\n" . RPerl::DUMPER($sorter->{data}) . "\n" if $RPerl::DEBUG;
+print "in multi_sort.pl, have \$run_time = $run_time\n";
+
+exit;
+
+
 
 # <<<=== SORT 2 ===>>>
 # <<<=== SORT 2 ===>>>
