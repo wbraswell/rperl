@@ -1,45 +1,61 @@
 #!/usr/bin/perl
+use lib '/home/wbraswell/austin_perl_mongers/compiler/RPerl/RPerl-latest/lib';  # RPerl system files  # NEED REMOVE hard-coded path
 use strict;  use warnings;  use RPerl;  our @ISA = ('RPerl');
 
+use lib '/home/wbraswell/austin_perl_mongers/compiler/RPerl/RPerl-latest/lib/CPAN';  # RPerl's MyConfig.pm  # NEED REMOVE hard-coded path
+use MyConfig;
+
 # supported algorithms
-use RPerl::Algorithm::Sort::Bubble;
+#use RPerl::Algorithm::Sort::Bubble;
+use RPerl::Algorithm::Sort::Bubble_cpp;
 use RPerl::Algorithm::Sort::Quick;
 use RPerl::Algorithm::Sort::Merge;
 
+our string $test_sub = sub { print "HOWDY FROM test_sub(), NICE TO MEET YOU!  RECEIVED \$\_[0] = '" . $_[0] . "'!\n";  return "wolvie_retval"; };
+
 # <<<=== SORT 1 ===>>>
 # <<<=== SORT 1 ===>>>
 # <<<=== SORT 1 ===>>>
+
+my string $algorithm;
+my string $variant = undef;
+my object $sorter;
 
 # NEED CHOOSE: which general algorithm?
-my object $sorter = RPerl::Algorithm::Sort::Bubble->new();
-#my object $sorter = RPerl::Algorithm::Sort::Quick->new();
-#my object $sorter = RPerl::Algorithm::Sort::Merge->new();
+$algorithm = 'RPerl::Algorithm::Sort::Bubble';  # Bubble_cpp's class name is Bubble, so use this one
+#$algorithm = 'RPerl::Algorithm::Sort::Quick';
+#$algorithm = 'RPerl::Algorithm::Sort::Merge';
 
 # NEED CHOOSE: which specific variant algorithm?
-#$sorter->{variant} = 'original';	# QUICKSORT
-#$sorter->{variant} = 'inplace';	# QUICKSORT
-#$sorter->{variant} = 'topdown';	# MERGESORT
-#$sorter->{variant} = 'bottomup';	# MERGESORT
+#$variant = 'original';	# QUICKSORT
+#$variant = 'inplace';	# QUICKSORT
+#$variant = 'topdown';	# MERGESORT
+#$variant = 'bottomup';	# MERGESORT
 
-# NEED CHOOSE: which data structure?
-#$sorter->{data} = [21, 12, 31, 13, 42, 2012, 5555, 1.21, 33.3, 9999, -15, 0];
-#$sorter->{data} = scalar_linkedlist_ref->new_from_array_ref([21, 12, 31, 13, 42, 2012, 5555, 1.21, 33.3, 9999, -15, 0]);
+for (my $i = 0; $i < 1;  $i++)
+{
+#	my $test_retval = test_sub("gumbee_pokey");
+#	print "TEST SUB SEZ: '$test_retval'\n";
+	
+	$sorter = $algorithm->new();
+	$sorter->set_variant($variant) if (defined($variant));
+	
+	# NEED CHOOSE: which data structure?
+#	$sorter->set_data([21, 12, 31, 13, 42, 2012, 5555, 1.21, 33.3, 9999, -15, 0]);
+#	$sorter->set_data(scalar_linkedlist_ref->new_from_array_ref([21, 12, 31, 13, 42, 2012, 5555, 1.21, 33.3, 9999, -15, 0]));
+	$sorter->set_data([reverse(0 ... 5000)]);
 
-my @data_array = (0 ... 20000);
-@data_array = reverse(@data_array);
-$sorter->{data} = \@data_array;
+	print "in multi_sort.pl, have \$i = $i and \$sorter =\n" . RPerl::DUMPER($sorter) . "\n" if $RPerl::DEBUG;
+	print "in multi_sort.pl, have \$i = $i and unsorted \$sorter->{data} =\n" . RPerl::DUMPER($sorter->get_data()) . "\n" if $RPerl::DEBUG;
 
-print "in multi_sort.pl, have \$sorter =\n" . RPerl::DUMPER($sorter) . "\n" if $RPerl::DEBUG;
-print "in multi_sort.pl, have unsorted \$sorter->{data} =\n" . RPerl::DUMPER($sorter->{data}) . "\n" if $RPerl::DEBUG;
+	my $start_time = time();
+	$sorter->sort_method();
+	my $end_time = time();
+	my $run_time = $end_time - $start_time;
 
-my $start_time = time();
-$sorter->sort_method();
-my $end_time = time();
-my $run_time = $end_time - $start_time;
-
-print "in multi_sort.pl, have sorted \$sorter->{data} =\n" . RPerl::DUMPER($sorter->{data}) . "\n" if $RPerl::DEBUG;
-print "in multi_sort.pl, have \$run_time = $run_time\n";
-
+	print "in multi_sort.pl, have \$i = $i and sorted \$sorter->{data} =\n" . RPerl::DUMPER($sorter->get_data()) . "\n" if $RPerl::DEBUG;
+	print "in multi_sort.pl, have \$i = $i and \$run_time = $run_time\n";
+}
 exit;
 
 

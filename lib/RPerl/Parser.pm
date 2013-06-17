@@ -1,8 +1,8 @@
-package RPerl::Language::Parser;
+package RPerl::Parser;
 use strict;  use warnings;
 
 our @ISA = ('RPerl::Class');
-use RPerl::Class;
+use RPerl::Class;  use RPerl;
 
 our %properties =
 (

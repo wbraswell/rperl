@@ -6,37 +6,63 @@ use strict;  use warnings;
 # RPerl object constructor, shorthand
 sub new { no strict; return bless({%{$_[0] . '::properties'}}, $_[0]); }
 
-# RPerl function/method autoloader, shorthand; allows syntax for typed functions/methods
-our $AUTOLOAD;  sub AUTOLOAD { my $retval = eval('&$' . $AUTOLOAD . '(@_);'); die($@) if ($@); return $retval; }  ## no critic, suppress 'expression form of eval' warning, suppress '...propagated at RPerl/Class.pm' appended exception
-$SIG{__WARN__} = sub { return if $_[0] =~ /^Use of inherited AUTOLOAD for non-method /; warn @_; };  # suppress deprecated feature warning
+# suppress deprecated feature warning
+$SIG{__WARN__} = sub { return if $_[0] =~ /^Use of inherited AUTOLOAD for non-method /; warn @_; };
 
-=UNUSED_CODE
-# RPerl function/method autoloader, shorthand; allows syntax for typed functions/methods
-#our $AUTOLOAD;  sub AUTOLOAD { my $retval = eval('&$' . $AUTOLOAD . '(@_);'); die if ($@); return $retval; }  ## no critic, suppress 'expression form of eval' warning, allow '...propagated at RPerl/Class.pm' appended exception
-# RPerl function/method autoloader, longhand; allows syntax for typed functions/methods
-# TODO: Add die() support as in the shorthand version above
+#=UNUSED_CODE
+# RPerl function/method autoloader, longhand; allows syntax for typed functions/methods and automates get/set accessors/mutators for object properties;
+# creates real subroutines to avoid AUTOLOADing any function/method more than once, performs operation inside AUTOLOAD that one time
 use Data::Dumper;  # don't depend on RPerl::DUMPER
 our $AUTOLOAD;
 sub AUTOLOAD
 {
-	print "IN AUTOLOAD, have \$AUTOLOAD = '$AUTOLOAD', and \@_ =\n" . Dumper(\@_) . "\n";
-	if ($AUTOLOAD =~ /main::/)
-	{
-#		my $foo_func_ref = eval("\${$AUTOLOAD}");
-#		print "IN AUTOLOAD, have \$foo_func_ref =\n" . Dumper($foo_func_ref) . "\n";
-#		return &$foo_func_ref(@_);
+#	print "IN AUTOLOAD, top of subroutine, received \$AUTOLOAD = '$AUTOLOAD', and \@_ =\n" . Dumper(\@_) . "\n";
+	no strict;
+	my $retval;
 
-		my $eval_string = '&$' . $AUTOLOAD . '(@_);';
-		print "IN AUTOLOAD, have \$eval_string = '$eval_string'\n";
-		return eval($eval_string);  ## no critic
+	if ($AUTOLOAD =~ /^([\w+::]*)(get|set)_(\w+)$/)
+	{
+#		print "IN AUTOLOAD, accessor/mutator MODE, have \$1 = '$1', \$2 = '$2', \$3 = '$3'\n";
+		if ($2 eq 'get')	
+		{
+#			print "IN AUTOLOAD, accessor MODE\n";
+			eval("\*\{$AUTOLOAD\} \= sub \{ return \$\_\[0\]\-\>\{$3\}\; \}\;");  ## no critic
+#			eval("\*\{$AUTOLOAD\} \= sub \{ print \"IN POST\-AUTOLOAD\, accessor MODE $AUTOLOAD\\n\"\; return \$\_\[0\]\-\>\{$3\}\; \}\;");  ## no critic
+			$retval = $_[0]->{$3};
+		}
+		else  # ($2 eq 'set')
+		{
+#			print "IN AUTOLOAD, mutator MODE\n";
+			eval("\*\{$AUTOLOAD\} \= sub \{ \$\_\[0\]\-\>\{$3\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$3\}\; \}\;");  ## no critic
+#			eval("\*\{$AUTOLOAD\} \= sub \{ print \"IN POST\-AUTOLOAD\, mutator MODE $AUTOLOAD\\n\"\; \$\_\[0\]\-\>\{$3\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$3\}\; \}\;");  ## no critic
+			$_[0]->{$3} = $_[1];
+			$retval = $_[0]->{$3};
+		}
 	}
 	else
 	{
-		no strict;
-		return &${$AUTOLOAD}(@_);
+#		print "IN AUTOLOAD, direct call MODE\n";
+		eval("\*\{$AUTOLOAD\} \= sub \{ return \&\$\{$AUTOLOAD\}\(\@\_\)\; \}\;");  ## no critic  # NEED UPGRADE: how can I do this w/out a subroutine?
+#		eval("\*\{$AUTOLOAD\} \= sub \{ print \"IN POST\-AUTOLOAD\, direct call MODE $AUTOLOAD\\n\"\; return \&\$\{$AUTOLOAD\}\(\@\_\)\; \}\;");  ## no critic  # NEED UPGRADE: how can I do this w/out a subroutine?
+		$retval = &${$AUTOLOAD}(@_);
 	}
-}
+=SNIP
+	## NEED ANSWER: is there any reason to encapsulate calls in an eval() to trap their errors???
+	else
+	{
+		my $eval_string = '&$' . $AUTOLOAD . '(@_);';
+		print "IN AUTOLOAD, eval call MODE, have \$eval_string = '$eval_string'\n";
+		$retval = eval($eval_string);  ## no critic
+	}
 =cut
+
+	die($@) if ($@);  # suppress '...propagated at RPerl/Class.pm' appended exception	
+#	die if ($@);  # allow '...propagated at RPerl/Class.pm' appended exception	
+	
+#	print "IN AUTOLOAD, bottom of subroutine, about to return \$retval = '$retval'\n";
+	return $retval;
+}
+#=cut
 
 =UNUSED_CODE
 # RPerl object constructor, longhand

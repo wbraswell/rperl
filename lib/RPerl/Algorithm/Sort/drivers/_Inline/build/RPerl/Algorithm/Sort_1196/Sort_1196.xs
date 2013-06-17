@@ -1,3 +1,26 @@
+
+#define __INLINE_CPP_STANDARD_HEADERS 1
+#define __INLINE_CPP_NAMESPACE_STD 1
+
+
+#define __INLINE_CPP_STANDARD_HEADERS 1
+#define __INLINE_CPP_NAMESPACE_STD 1
+
+#define __INLINE_CPP 1
+#ifndef bool
+#include <iostream>
+#endif
+extern "C" {
+#include "EXTERN.h"
+#include "perl.h"
+#include "XSUB.h"
+#include "INLINE.h"
+}
+#ifdef bool
+#undef bool
+#include <iostream>
+#endif
+
 // <<< HELPER DEFINES >>>
 #define RPerl__DEBUG 1  // NEED FIX: access actual inherited debug flag somehow?
 #define RPerl__DEBUG2 1
@@ -238,3 +261,76 @@ SV *bubblesort(SV *data)  // NEED ANSWER: is this properly grabbing argument nam
 	 return data;
 ////};
 }
+
+MODULE = RPerl::Algorithm::Sort_1196        PACKAGE = RPerl::Algorithm::Sort::Bubble
+
+PROTOTYPES: DISABLE
+
+void
+Bubble::sort_method()
+    PREINIT:
+	I32 *	__temp_markstack_ptr;
+    PPCODE:
+	__temp_markstack_ptr = PL_markstack_ptr++;
+	THIS->sort_method();
+        if (PL_markstack_ptr != __temp_markstack_ptr) {
+          /* truly void, because dXSARGS not invoked */
+          PL_markstack_ptr = __temp_markstack_ptr;
+          XSRETURN_EMPTY; /* return empty stack */
+        }
+        /* must have used dXSARGS; list context implied */
+        return; /* assume stack size is correct */
+
+SV *
+Bubble::get_data()
+    
+void
+Bubble::set_data(data_new)
+	SV *	data_new
+    PREINIT:
+	I32 *	__temp_markstack_ptr;
+    PPCODE:
+	__temp_markstack_ptr = PL_markstack_ptr++;
+	THIS->set_data(data_new);
+        if (PL_markstack_ptr != __temp_markstack_ptr) {
+          /* truly void, because dXSARGS not invoked */
+          PL_markstack_ptr = __temp_markstack_ptr;
+          XSRETURN_EMPTY; /* return empty stack */
+        }
+        /* must have used dXSARGS; list context implied */
+        return; /* assume stack size is correct */
+
+Bubble *
+Bubble::new()
+    
+void
+Bubble::DESTROY()
+    
+MODULE = RPerl::Algorithm::Sort_1196        PACKAGE = RPerl::Algorithm::Sort  
+
+PROTOTYPES: DISABLE
+
+void
+RPerl_object_property_init(initee)
+	SV *	initee
+    PREINIT:
+	I32 *	__temp_markstack_ptr;
+    PPCODE:
+	__temp_markstack_ptr = PL_markstack_ptr++;
+	RPerl_object_property_init(initee);
+        if (PL_markstack_ptr != __temp_markstack_ptr) {
+          /* truly void, because dXSARGS not invoked */
+          PL_markstack_ptr = __temp_markstack_ptr;
+          XSRETURN_EMPTY; /* return empty stack */
+        }
+        /* must have used dXSARGS; list context implied */
+        return; /* assume stack size is correct */
+
+char *
+RPerl_DUMPER__perl_from_c(dumpee)
+	SV *	dumpee
+    
+SV *
+bubblesort(data)
+	SV *	data
+    

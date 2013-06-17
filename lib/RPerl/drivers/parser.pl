@@ -1,9 +1,10 @@
 #!/usr/bin/perl
 use strict;  use warnings;  use RPerl;
 
-use RPerl::Language::Parser;
+use RPerl::Parser;
+use Data::Dumper;
 
-my $parser_obj = RPerl::Language::Parser->new();
+my $parser_obj = RPerl::Parser->new();
 print "have \$parser_obj =\n" . Dumper($parser_obj) . "\n";
 
 my $retval_str = $parser_obj->foo_str(33, 1.21);  # should print "baz" and 23
@@ -15,7 +16,7 @@ my $retval_array_ref = $parser_obj->bar_array_ref();
 print "in parser.pl, have \$retval_array_ref = \n" . Dumper($retval_array_ref) . "\n";
 
 
-#&$RPerl::Language::Parser::foo_method({fake => 'object'}, "foo_arg_noAUTOLOAD");
+#&$RPerl::Parser::foo_method({fake => 'object'}, "foo_arg_noAUTOLOAD");
 #$sorter->foo_method("foo_arg_yesAUTOLOAD");
 our int $foo_func = sub {(my $func_arg) = @_;  print "HEY-HO FROM foo_func(), RECEIVED \$func_arg = '$func_arg'\n";}; 
 &$foo_func('2112_noAUTOLOAD');
