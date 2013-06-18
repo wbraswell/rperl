@@ -8,5 +8,5 @@ use RPerl::Algorithm;
 
 our void__method $inherited_method = sub { (my object $self, my string $person) = @_;  print "[[[ HOWDY $person FROM INSIDE inherited_method()!!! ]]]\n"; };
 
-print "WAZZUP FROM Sort.pm\n";
-inherited_method('FAKESELF', "Spidey");
+#print "WAZZUP FROM Sort.pm\n";
+#inherited_method('FAKESELF', "Spidey");

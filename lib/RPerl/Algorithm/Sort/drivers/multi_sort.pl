@@ -32,26 +32,26 @@ $algorithm = 'RPerl::Algorithm::Sort::Bubble';  # Bubble_cpp's class name is Bub
 #$variant = 'topdown';	# MERGESORT
 #$variant = 'bottomup';	# MERGESORT
 
-for (my $i = 0; $i < 3;  $i++)
+for (my $i = 0; $i < 1;  $i++)
 {
 #	my $test_retval = test_sub("gumbee_pokey");
 #	print "TEST SUB SEZ: '$test_retval'\n";
 	
 	$sorter = $algorithm->new();
 	$sorter->set_variant($variant) if (defined($variant));
-	RPerl::Algorithm::Sort::inherited_method($sorter, "Jean");
-	$sorter->inherited_method("Logan");
+#	RPerl::Algorithm::Sort::inherited_method($sorter, "Jean");
+#	$sorter->inherited_method("Logan");
 	
 	# NEED CHOOSE: which data structure?
 #	$sorter->set_data([21, 12, 31, 13, 42, 2012, 5555, 1.21, 33.3, 9999, -15, 0]);
 #	$sorter->set_data(scalar_linkedlist_ref->new_from_array_ref([21, 12, 31, 13, 42, 2012, 5555, 1.21, 33.3, 9999, -15, 0]));
-	$sorter->set_data([reverse(0 ... 5)]);
+	$sorter->set_data([reverse(0 ... 5000)]);
 
 	print "in multi_sort.pl, have \$i = $i and \$sorter =\n" . RPerl::DUMPER($sorter) . "\n" if $RPerl::DEBUG;
 	print "in multi_sort.pl, have \$i = $i and unsorted \$sorter->{data} =\n" . RPerl::DUMPER($sorter->get_data()) . "\n" if $RPerl::DEBUG;
 
 	my $start_time = time();
-	$sorter->sort_method();
+	$sorter->sort();
 	my $end_time = time();
 	my $run_time = $end_time - $start_time;
 

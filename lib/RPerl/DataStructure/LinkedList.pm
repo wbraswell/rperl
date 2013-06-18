@@ -14,7 +14,7 @@ our %properties =
 	head => my RPerl::DataStructure::LinkedList::NodeReference $KEY_head = undef,  # start with head = undef so we can test for empty list
 );
 
-our RPerl::DataStructure::LinkedListReference $new_from_array_ref = sub {(my string $class, my const_array_ref $input) = @_;
+our RPerl::DataStructure::LinkedListReference $new_from_array_ref = sub {(my string $class, my const__array_ref $input) = @_;
 ;
 #	print "in new_from_array_ref(), received \$class = '$class', and \$input =\n" . RPerl::DUMPER($input) . "\n" if $RPerl::DEBUG;
 	my unknown $output = $class->new();
@@ -62,7 +62,7 @@ use RPerl::DataType::Constant;
 our %properties = %properties; our $new_from_array_ref = $new_from_array_ref; our $linkedlist_unshift = $linkedlist_unshift; our $DUMPER = $DUMPER;
 
 
-package const__scalar_linkedlist_ref;
+package const___scalar_linkedlist_ref;
 our @ISA = ('scalar_linkedlist_ref', 'const');
 use RPerl::DataStructure::LinkedList;
 use RPerl::DataType::Constant;

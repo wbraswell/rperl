@@ -112,7 +112,7 @@ our unknown $to_nested_array_refs = sub {(my RPerl::DataStructure::Graph::Tree::
 };
 
 # accept nested array refs, return binary tree nodes
-our RPerl::DataStructure::Graph::Tree::Binary::NodeReference $new_from_nested_array_refs = sub {(my string $class, my const_array_ref $input) = @_;
+our RPerl::DataStructure::Graph::Tree::Binary::NodeReference $new_from_nested_array_refs = sub {(my string $class, my const__array_ref $input) = @_;
 ;
 #	print "in ...Tree::Binary::NodeReference::new_from_nested_array_refs(), received \$class = '$class', and \$input =\n" . RPerl::DUMPER($input) . "\n" if $RPerl::DEBUG;
 	my unknown $output = $class->new();

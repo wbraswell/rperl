@@ -13,7 +13,7 @@ our %properties =
 
 # [object-oriented programming interface]
 # call out to sort data, return nothing
-our void_method $sort = sub {(my object $self) = @_;
+our void__method $sort = sub {(my object $self) = @_;
 ;
 	$self->{data} = bubblesort($self->{data});
 };
@@ -25,7 +25,7 @@ our scalar_array_ref $bubblesort = sub {(my scalar_array_ref $data) = @_;
 ;
 	my int $is_sorted = 0;
 	my int $i;
-	my const_int $data_length = scalar(@{$data});
+	my const__int $data_length = scalar(@{$data});
 	my scalar $swap;
 	
 #	print "in bubblesort(), have \$data_length = $data_length\n" if $RPerl::DEBUG;

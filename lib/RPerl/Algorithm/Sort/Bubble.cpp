@@ -11,7 +11,7 @@ class Bubble
 {
 public:
 	// <<< TRANSLATED METHOD DECLARATIONS >>>
-	void sort_method();  // NEED ANSWER: no named argument required for $self object?
+	void sort();  // NEED ANSWER: no named argument required for $self object?
 
 	// <<< ACCESSOR & MUTATOR DECLARATIONS/DEFINITIONS
 	SV *get_data() { return SvREFCNT_inc(this->data); }
@@ -40,19 +40,19 @@ private:
 
 ////# [object-oriented programming interface]
 ////# call out to sort data, return nothing
-////our void $sort_method = sub {(my object $self) = @_;
-void Bubble::sort_method()
+////our void $sort = sub {(my object $self) = @_;
+void Bubble::sort()
 ////;
 {
 	// NEED ANSWER: why do we need to do property init?
 	RPerl_object_property_init(this->data);
 
-	if (RPerl__DEBUG3) { printf("in sort_method(), top of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(this->data) = %lu\n", SV_REFERENCE_COUNT(this->data));  printf("in sort_method(), top of subroutine, have this->data = %s", RPerl_DUMPER__perl_from_c(this->data));  printf("in sort_method(), top of subroutine, have post-DUMPER SV_REFERENCE_COUNT(this->data) = %lu\n\n", SV_REFERENCE_COUNT(this->data));  }
+	if (RPerl__DEBUG3) { printf("in sort(), top of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(this->data) = %lu\n", SV_REFERENCE_COUNT(this->data));  printf("in sort(), top of subroutine, have this->data = %s", RPerl_DUMPER__perl_from_c(this->data));  printf("in sort(), top of subroutine, have post-DUMPER SV_REFERENCE_COUNT(this->data) = %lu\n\n", SV_REFERENCE_COUNT(this->data));  }
 
 ////	$self->{data} = bubblesort($self->{data});
 	this->data = bubblesort(this->data);
 
-	if (RPerl__DEBUG2) { printf("in sort_method(), bottom of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(this->data) = %lu\n", SV_REFERENCE_COUNT(this->data));  printf("in sort_method(), bottom of subroutine, have this->data = %s", RPerl_DUMPER__perl_from_c(this->data));  printf("in sort_method(), bottom of subroutine, have post-DUMPER SV_REFERENCE_COUNT(this->data) = %lu\n\n", SV_REFERENCE_COUNT(this->data));  }
+	if (RPerl__DEBUG2) { printf("in sort(), bottom of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(this->data) = %lu\n", SV_REFERENCE_COUNT(this->data));  printf("in sort(), bottom of subroutine, have this->data = %s", RPerl_DUMPER__perl_from_c(this->data));  printf("in sort(), bottom of subroutine, have post-DUMPER SV_REFERENCE_COUNT(this->data) = %lu\n\n", SV_REFERENCE_COUNT(this->data));  }
 ////};
 }
 

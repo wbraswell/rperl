@@ -16,7 +16,7 @@ our %properties =
 	root => my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $KEY_root = undef,  # start with root = undef so we can test for empty tree
 );
 
-our RPerl::DataStructure::Graph::Tree::BinaryReference $new_from_nested_array_refs = sub {(my string $class, my const_array_ref $input) = @_;
+our RPerl::DataStructure::Graph::Tree::BinaryReference $new_from_nested_array_refs = sub {(my string $class, my const__array_ref $input) = @_;
 ;
 #	print "in ...Tree::BinaryReference::new_from_nested_array_refs(), received \$class = '$class', and \$input =\n" . RPerl::DUMPER($input) . "\n" if $RPerl::DEBUG;
 	my unknown $output = $class->new();
@@ -43,19 +43,19 @@ our %properties = %properties; our $new_from_nested_array_refs = $new_from_neste
 
 
 package scalar_binarytree_ref;
-our @ISA = ('binarytree_ref');
+our @ISA = ('ref');
 use RPerl::DataStructure::Graph::Tree::Binary;
 our %properties = %properties; our $new_from_nested_array_refs = $new_from_nested_array_refs; our $traverse_depthfirst_preorder = $traverse_depthfirst_preorder; our $to_nested_array_refs = $to_nested_array_refs; our $traverse_breadthfirst_queue = $traverse_breadthfirst_queue;
 
 
-package const_binarytree_ref;
+package const__binarytree_ref;
 our @ISA = ('binarytree_ref', 'const');
 use RPerl::DataStructure::Graph::Tree::Binary;
 use RPerl::DataType::Constant;
 our %properties = %properties; our $new_from_nested_array_refs = $new_from_nested_array_refs; our $traverse_depthfirst_preorder = $traverse_depthfirst_preorder; our $to_nested_array_refs = $to_nested_array_refs; our $traverse_breadthfirst_queue = $traverse_breadthfirst_queue;
 
 
-package const_scalar_binarytree_ref;
+package const__scalar_binarytree_ref;
 our @ISA = ('scalar_binarytree_ref', 'const');
 use RPerl::DataStructure::Graph::Tree::Binary;
 use RPerl::DataType::Constant;

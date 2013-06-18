@@ -31,7 +31,7 @@ our void $sort_method = sub {(my object $self) = @_;
 # sort data, return sorted data
 our scalar_array_ref $mergesort_array_topdown = sub {(my scalar_array_ref $data) = @_;
 ;
-	my const_int $data_length = scalar(@{$data});
+	my const__int $data_length = scalar(@{$data});
 	
 #	print "in mergesort_array_topdown(), have \$data = \n" . RPerl::DUMPER($data) . "\n" if $RPerl::DEBUG;
 #	print "in mergesort_array_topdown(), have \$data_length = $data_length\n" if $RPerl::DEBUG;
@@ -40,7 +40,7 @@ our scalar_array_ref $mergesort_array_topdown = sub {(my scalar_array_ref $data)
 	return $data if ($data_length <= 1);
 	
 	# split data in half at midpoint
-	my const_int $i_middle = int($data_length / 2);
+	my const__int $i_middle = int($data_length / 2);
 	my scalar_array_ref $left = [@$data[0 .. ($i_middle - 1)]];
 	my scalar_array_ref $right = [@$data[$i_middle .. ($data_length - 1)]];
 	
@@ -83,7 +83,7 @@ our scalar_array_ref $merge_array_topdown = sub {(my scalar_array_ref $left, my 
 # sort data, return sorted data
 our scalar_array_ref $mergesort_array_bottomup = sub {(my scalar_array_ref $data) = @_;
 ;
-	my const_int $data_length = scalar(@{$data});
+	my const__int $data_length = scalar(@{$data});
 	my int $width;	
 	my int $i;
 	
@@ -111,7 +111,7 @@ our scalar_array_ref $mergesort_array_bottomup = sub {(my scalar_array_ref $data
 };
 
 # bottom-up variant; merge sublists, return nothing [O(n) time, O(1) extra space]
-our void $merge_array_bottomup = sub {(my scalar_array_ref $data, my scalar_array_ref $tmp_data, my const_int $i_left, my const_int $i_right, my const_int $i_end) = @_;
+our void $merge_array_bottomup = sub {(my scalar_array_ref $data, my scalar_array_ref $tmp_data, my const__int $i_left, my const__int $i_right, my const__int $i_end) = @_;
 ;
 	my int $i0 = $i_left;
 	my int $i1 = $i_right;
@@ -145,7 +145,7 @@ our void $merge_array_bottomup = sub {(my scalar_array_ref $data, my scalar_arra
 };
 
 # bottom-up variant; return smaller of 2 scalars [O(1) time, O(1) extra space]
-our scalar $min = sub {(my const_scalar $a, my const_scalar $b) = @_; if ($a < $b) {return $a;} else {return $b;}};
+our scalar $min = sub {(my const__scalar $a, my const__scalar $b) = @_; if ($a < $b) {return $a;} else {return $b;}};
 
 # linked list, top-down variant: comparison-based and stable and online [O(n log n) average total time, O(1) worst-case total extra space]
 # sort data starting at head node, return new head node of sorted data
