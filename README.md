@@ -1,4 +1,4 @@
-qrperl
+rperl
 =====
 
 RPerl is an implementation of the Perl 11 philosophy (perl11.org) in the form of an optimizing Perl 5 compiler.
