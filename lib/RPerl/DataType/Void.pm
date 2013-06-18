@@ -4,3 +4,7 @@ use strict; use warnings;
 
 package void;
 our @ISA = ('RPerl::DataType::Void');
+
+
+package void__method;
+our @ISA = ('method');

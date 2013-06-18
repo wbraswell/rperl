@@ -1,14 +1,17 @@
+use strict;  use warnings;
+
 #$CPAN::INC_prefix = '';
 $CPAN::INC_prefix = '/home/wbraswell/RPerl/3rd_party/CPAN/';
 $CPAN::INC_elements_extra = 
 [
 	'/lib/perl5'  # from Parse::RecDescent
 ];
+$CPAN::Config = undef;  # defined below, suppress warning about only-used-once-possible-typo
 
 # duplicate @INC entries to include custom INC_prefix directories
 sub CPAN::INC_update
 {
-	eval("use Data::Dumper;");
+	eval("use Data::Dumper;");  ## no critic
 
 #print "inside CPAN::INC_update(), have \@INC = \n" . Dumper(\@INC) . "\n\n";
 
@@ -28,9 +31,12 @@ sub CPAN::INC_update
 	{
 #print "inside CPAN::INC_update(), have \@INC[$i] = " . @INC[$i] . "\n";
 
-		next if (@INC[$i] =~ '/home');
-		next if ((length($CPAN::INC_prefix) > 0) and (@INC[$i] =~ $CPAN::INC_prefix));
-		my $INC_element_new = @INC[$i];
+#		next if (@INC[$i] =~ '/home');
+		next if ($INC[$i] =~ '/home');
+#		next if ((length($CPAN::INC_prefix) > 0) and (@INC[$i] =~ $CPAN::INC_prefix));
+		next if ((length($CPAN::INC_prefix) > 0) and ($INC[$i] =~ $CPAN::INC_prefix));
+#		my $INC_element_new = @INC[$i];
+		my $INC_element_new = $INC[$i];
 		if (substr($INC_element_new, 0, 1) eq '/')
 			{ $INC_element_new = substr($INC_element_new, 1, length($INC_element_new) - 1); }
 		$INC_element_new = $CPAN::INC_prefix . $INC_element_new;
@@ -50,14 +56,15 @@ sub CPAN::INC_element_exists
 
 	for (my $i = 0;  $i < scalar(@INC);  $i++)
 	{
-		return(1) if (@INC[$i] eq $element);
+#		return(1) if (@INC[$i] eq $element);
+		return(1) if ($INC[$i] eq $element);
 	}
 
 	return(0);
 }
 
 
-$CPAN::Config = {
+$CPAN::Config = {  
   'applypatch' => q[],
   'auto_commit' => q[0],
   'build_cache' => q[100],

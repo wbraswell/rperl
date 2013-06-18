@@ -10,16 +10,21 @@ package object;
 our @ISA = ('RPerl::DataStructure::Object');
 
 
-package const_object;
-#our @ISA = ('RPerl::DataStructure::Object', 'RPerl::DataType::Constant');
+package const__object;
 our @ISA = ('object', 'const');
 
 
 package object_ref;
-#our @ISA = ('RPerl::DataStructure::Object', 'RPerl::DataType::Reference');
-our @ISA = ('object', 'ref');
+our @ISA = ('ref');
 
 
-package const_object_ref;
-#our @ISA = ('RPerl::DataStructure::Object', 'RPerl::DataType::Constant', 'RPerl::DataType::Reference');
-our @ISA = ('object', 'const', 'ref');
+package const__object_ref;
+our @ISA = ('object_ref', 'const');
+
+
+package object__method;
+our @ISA = ('method');
+
+
+package object_ref__method;
+our @ISA = ('method');

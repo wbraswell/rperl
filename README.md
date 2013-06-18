@@ -1,4 +1,4 @@
-rperl
+qrperl
 =====
 
 RPerl is an implementation of the Perl 11 philosophy (perl11.org) in the form of an optimizing Perl 5 compiler.
@@ -10,6 +10,10 @@ RPerl follows the naming convention of RPython, in that each implements a restri
 The RPerl development board may be found on Trello here:
 
 https://trello.com/board/austin-pm-rperl-development/51b6b97215f60f9460006538
+
+The RPerl source code repository may be found on Github here:
+
+https://github.com/wbraswell/rperl/
 
 RPerl is copyright (c) 2013, William N. Braswell, Jr.
 

@@ -10,3 +10,7 @@ use RPerl::DataStructure::Graph;
 package tree_ref;
 our @ISA = ('RPerl::DataStructure::Graph::TreeReference');
 use RPerl::DataStructure::Graph::Tree;
+
+
+package tree_ref__method;
+our @ISA = ('method');

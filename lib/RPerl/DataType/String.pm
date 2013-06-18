@@ -10,17 +10,21 @@ package string;
 our @ISA = ('RPerl::DataType::String');
 
 
-package const_string;
-#our @ISA = ('RPerl::DataType::String', 'RPerl::DataType::Constant');
+package const__string;
 our @ISA = ('string', 'const');
 
 
 package string_ref;
-#our @ISA = ('RPerl::DataType::String', 'RPerl::DataType::Reference');
-our @ISA = ('string', 'ref');
+our @ISA = ('ref');
 
 
 package const_string_ref;
-#our @ISA = ('RPerl::DataType::String', 'RPerl::DataType::Constant', 'RPerl::DataType::Reference');
-our @ISA = ('string', 'const', 'ref');
+our @ISA = ('ref');
 
+
+package string__method;
+our @ISA = ('method');
+
+
+package string_ref__method;
+our @ISA = ('method');

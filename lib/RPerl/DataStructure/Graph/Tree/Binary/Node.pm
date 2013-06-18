@@ -152,3 +152,7 @@ package binarytreenode_ref;
 our @ISA = ('RPerl::DataStructure::Graph::Tree::Binary::NodeReference');
 use RPerl::DataStructure::Graph::Tree::Binary::Node;
 our %properties = %properties; our $new_from_nested_array_refs = $new_from_nested_array_refs; our $traverse_depthfirst_preorder = $traverse_depthfirst_preorder; our $to_nested_array_refs = $to_nested_array_refs; our $traverse_breadthfirst_queue = $traverse_breadthfirst_queue;
+
+
+package binarytreenode_ref__method;
+our @ISA = ('method');

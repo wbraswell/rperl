@@ -10,16 +10,21 @@ package float;
 our @ISA = ('RPerl::DataType::Float');
 
 
-package const_float;
-#our @ISA = ('RPerl::DataType::Float', 'RPerl::DataType::Constant');
+package const__float;
 our @ISA = ('float', 'const');
 
 
 package float_ref;
-#our @ISA = ('RPerl::DataType::Float', 'RPerl::DataType::Reference');
-our @ISA = ('float', 'ref');
+our @ISA = ('ref');
 
 
-package const_float_ref;
-#our @ISA = ('RPerl::DataType::Float', 'RPerl::DataType::Constant', 'RPerl::DataType::Reference');
-our @ISA = ('float', 'const', 'ref');
+package const__float_ref;
+our @ISA = ('float_ref', 'const');
+
+
+package float__method;
+our @ISA = ('method');
+
+
+package float_ref__method;
+our @ISA = ('method');

@@ -16,4 +16,6 @@ use RPerl::DataStructure::Object;
 use RPerl::DataStructure::LinkedList;
 use RPerl::DataStructure::Graph::Tree::Binary;
 
+use RPerl::Subroutine::Method;
+
 1;

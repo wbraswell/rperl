@@ -11,3 +11,7 @@ use RPerl::DataType::Reference;
 package code_ref;
 our @ISA = ('RPerl::DataStructure::CodeReference'); 
 use RPerl::DataStructure::Code;
+
+
+package code_ref__method;
+our @ISA = ('method');

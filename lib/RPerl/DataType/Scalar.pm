@@ -8,16 +8,21 @@ package scalar;
 our @ISA = ('RPerl::DataType::Scalar');
 
 
-package const_scalar;
-#our @ISA = ('RPerl::DataType::Scalar', 'RPerl::DataType::Constant');
+package const__scalar;
 our @ISA = ('scalar', 'const');
 
 
 package scalar_ref;
-#our @ISA = ('RPerl::DataType::Scalar', 'RPerl::DataType::Reference');
-our @ISA = ('scalar', 'ref');
+our @ISA = ('ref');
 
 
-package const_scalar_ref;
-#our @ISA = ('RPerl::DataType::Scalar', 'RPerl::DataType::Constant', 'RPerl::DataType::Reference');
-our @ISA = ('scalar', 'const', 'ref');
+package const__scalar_ref;
+our @ISA = ('ref');
+
+
+package scalar__method;
+our @ISA = ('method');
+
+
+package scalar_ref__method;
+our @ISA = ('method');

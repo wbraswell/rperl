@@ -55,15 +55,25 @@ use RPerl::DataStructure::LinkedList;
 our %properties = %properties; our $new_from_array_ref = $new_from_array_ref; our $linkedlist_unshift = $linkedlist_unshift; our $DUMPER = $DUMPER;
 
 
-package const_linkedlist_ref;
+package const__linkedlist_ref;
 our @ISA = ('linkedlist_ref', 'const');
 use RPerl::DataStructure::LinkedList;
 use RPerl::DataType::Constant;
 our %properties = %properties; our $new_from_array_ref = $new_from_array_ref; our $linkedlist_unshift = $linkedlist_unshift; our $DUMPER = $DUMPER;
 
 
-package const_scalar_linkedlist_ref;
+package const__scalar_linkedlist_ref;
 our @ISA = ('scalar_linkedlist_ref', 'const');
 use RPerl::DataStructure::LinkedList;
 use RPerl::DataType::Constant;
 our %properties = %properties; our $new_from_array_ref = $new_from_array_ref; our $linkedlist_unshift = $linkedlist_unshift; our $DUMPER = $DUMPER;
+
+
+package linkedlist_ref__method;
+our @ISA = ('method');
+
+
+package scalar_linkedlist_ref__method;
+our @ISA = ('method');
+
+

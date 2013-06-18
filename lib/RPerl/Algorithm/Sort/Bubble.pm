@@ -13,7 +13,7 @@ our %properties =
 
 # [object-oriented programming interface]
 # call out to sort data, return nothing
-our void $sort_method = sub {(my object $self) = @_;
+our void_method $sort = sub {(my object $self) = @_;
 ;
 	$self->{data} = bubblesort($self->{data});
 };

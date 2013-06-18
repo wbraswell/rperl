@@ -9,20 +9,28 @@ our @ISA = ('HASH', 'RPerl::DataStructure::Hash');
 
 
 package hash_ref;
-#our @ISA = ('RPerl::DataStructure::Hash', 'RPerl::DataType::Reference');
-our @ISA = ('hash', 'ref');
+our @ISA = ('ref');
 
 
 package scalar_hash_ref;
-#our @ISA = ('RPerl::DataStructure::Hash', 'RPerl::DataType::Reference');
 our @ISA = ('hash_ref');
 
 
-package const_hash_ref;
-#our @ISA = ('RPerl::DataStructure::Hash', 'RPerl::DataType::Constant', 'RPerl::DataType::Reference');
+package const__hash_ref;
 our @ISA = ('hash_ref', 'const');
 
 
-package const_scalar_hash_ref;
-#our @ISA = ('RPerl::DataStructure::Hash', 'RPerl::DataType::Constant', 'RPerl::DataType::Reference');
-our @ISA = ('scalar_hash_ref', 'constant');
+package const__scalar_hash_ref;
+our @ISA = ('scalar_hash_ref', 'const');
+
+
+package hash__method;
+our @ISA = ('method');
+
+
+package hash_ref__method;
+our @ISA = ('method');
+
+
+package scalar_hash_ref__method;
+our @ISA = ('method');

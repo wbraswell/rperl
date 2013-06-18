@@ -10,16 +10,21 @@ package number;
 our @ISA = ('RPerl::DataType::Number');
 
 
-package const_number;
-#our @ISA = ('RPerl::DataType::Number', 'RPerl::DataType::Constant');
+package const__number;
 our @ISA = ('number', 'const');
 
 
 package number_ref;
-#our @ISA = ('RPerl::DataType::Number', 'RPerl::DataType::Reference');
-our @ISA = ('number', 'ref');
+our @ISA = ('ref');
 
 
-package const_number_ref;
-#our @ISA = ('RPerl::DataType::Number', 'RPerl::DataType::Constant', 'RPerl::DataType::Reference');
-our @ISA = ('number', 'constant', 'ref');
+package const__number_ref;
+our @ISA = ('number_ref', 'const');
+
+
+package number__method;
+our @ISA = ('method');
+
+
+package number_ref__method;
+our @ISA = ('method');

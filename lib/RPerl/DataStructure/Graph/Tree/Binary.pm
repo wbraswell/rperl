@@ -60,3 +60,11 @@ our @ISA = ('scalar_binarytree_ref', 'const');
 use RPerl::DataStructure::Graph::Tree::Binary;
 use RPerl::DataType::Constant;
 our %properties = %properties; our $new_from_nested_array_refs = $new_from_nested_array_refs; our $traverse_depthfirst_preorder = $traverse_depthfirst_preorder; our $to_nested_array_refs = $to_nested_array_refs; our $traverse_breadthfirst_queue = $traverse_breadthfirst_queue;
+
+
+package binarytree_ref__method;
+our @ISA = ('method');
+
+
+package scalar_binarytree_ref__method;
+our @ISA = ('method');

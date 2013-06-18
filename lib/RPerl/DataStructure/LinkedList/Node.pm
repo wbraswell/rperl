@@ -39,3 +39,7 @@ package linkedlistnode_ref;
 our @ISA = ('RPerl::DataStructure::LinkedList::NodeReference');
 use RPerl::DataStructure::LinkedList::Node;
 our %properties = %properties;
+
+
+package linkedlistnode_ref__method;
+our @ISA = ('method');
