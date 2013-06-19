@@ -35,7 +35,7 @@ our void $linkedlist_unshift = sub {(my RPerl::DataStructure::LinkedListReferenc
 	$list->{head} = $new_node;
 };
 
-our string $DUMPER = sub {(my RPerl::DataStructure::LinkedListReference $data) = @_; return $data->{head}->DUMPER(); };
+our string__method $DUMPER = sub {(my RPerl::DataStructure::LinkedListReference $data) = @_; return $data->{head}->DUMPER(); };
 
 
 # we only provide data structure references, not the direct data structures themselves,
@@ -75,5 +75,3 @@ our @ISA = ('method');
 
 package scalar_linkedlist_ref__method;
 our @ISA = ('method');
-
-

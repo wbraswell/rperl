@@ -17,7 +17,7 @@ our @ISA = ('ref');
 
 
 package const__scalar_ref;
-our @ISA = ('ref');
+our @ISA = ('scalar_ref', 'const');
 
 
 package scalar__method;

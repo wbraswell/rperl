@@ -15,8 +15,18 @@ our %properties =
 # call out to sort data, return nothing
 our void__method $sort = sub {(my object $self) = @_;
 ;
+	# DEV NOTE: this is an in-place sorting algorithm, we don't actually need to set $self->{data} as it has not changed location
 	$self->{data} = bubblesort($self->{data});
 };
+
+# Random note for later from mst:
+#   This would warn BUT "no warnings 'illegalproto'" disables that
+#   Now you can extract the prototype at runtime using 'perldoc -f prototype'
+#   Key thing: whitespace in the prototype is lost so you'll be parsing 'scalar_array_ref->scalar_array_ref'
+#   however it's otherwise preserved verbatim by the perl compiler and you can do what you like with it
+#   Web::Simple uses this to provide 'sub (GET + /user/:id) { ... }' for web routing.
+#   sub bubblesort(scalar_array_ref -> scalar_array_ref) {}
+# end random note
 
 # [procedural programming interface]
 # original algorithm: comparison-based and stable [O(n**2) average time, O(1) worst-case extra space]
@@ -53,5 +63,6 @@ our scalar_array_ref $bubblesort = sub {(my scalar_array_ref $data) = @_;
 	}
 	
 	# data is now sorted via top-level nested iteration [O(n**2) total time, O(1) total extra space] 
+	# DEV NOTE: this is an in-place sorting algorithm, we don't actually need to return $data as it has not changed location
 	return $data;
 };

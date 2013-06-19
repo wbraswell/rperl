@@ -11,7 +11,7 @@ our %properties =
 );
 
 # call out to sort data, return nothing
-our void $sort_method = sub {(my object $self) = @_;
+our void__method $sort = sub {(my object $self) = @_;
 ;
 	if ((ref($self->{data}) eq 'ARRAY') or ($self->{data}->isa('array_ref')))
 	{

@@ -12,7 +12,7 @@ our %properties =
 	next => my RPerl::DataStructure::LinkedList::NodeReference $KEY_next = undef
 );
 
-our string $DUMPER = sub {(my RPerl::DataStructure::LinkedList::NodeReference $node) = @_;
+our string__method $DUMPER = sub {(my RPerl::DataStructure::LinkedList::NodeReference $node) = @_;
 ;
 	my string $dumped = '[';
 	my int $is_first = 1;

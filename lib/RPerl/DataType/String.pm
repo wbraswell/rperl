@@ -18,8 +18,8 @@ package string_ref;
 our @ISA = ('ref');
 
 
-package const_string_ref;
-our @ISA = ('ref');
+package const__string_ref;
+our @ISA = ('string_ref', 'const');
 
 
 package string__method;

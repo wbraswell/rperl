@@ -1,35 +1,43 @@
+////use strict;  use warnings;
+
 #include "/home/wbraswell/austin_perl_mongers/compiler/RPerl/RPerl-latest/lib/RPerl/HelperFunctions.cpp"
 //#include <RPerl/HelperFunctions.cpp>
-#include <string.h>
+
+// NEED ANSWER: only include through Perl because of namespace hack?
+////use RPerl::Algorithm::Sort;
+#include "/home/wbraswell/austin_perl_mongers/compiler/RPerl/RPerl-latest/lib/RPerl/Algorithm/Sort.cpp"
+//#include <RPerl/Algorithm/Sort.cpp>
 
 // <<< TRANSLATED FUNCTION DECLARATIONS >>>
 SV *bubblesort(SV *data);
 
+// DEV NOTE: currently using C++ single inheritance;  is it worth the bother fixing Inline::CPP to get multiple inheritance working?
 ////package RPerl::Algorithm::Sort::Bubble;
-////use strict;  use warnings;
+////our @ISA = ('RPerl::Algorithm::Sort');
+
+
+// START HERE: figure out C++ inheritance from Sort to Bubble below
+
+
+//class Bubble : public Sort
 class Bubble
 {
 public:
 	// <<< TRANSLATED METHOD DECLARATIONS >>>
 	void sort();  // NEED ANSWER: no named argument required for $self object?
 
-	// <<< ACCESSOR & MUTATOR DECLARATIONS/DEFINITIONS
+	// <<< ACCESSOR & MUTATOR DECLARATIONS/DEFINITIONS >>>
 	SV *get_data() { return SvREFCNT_inc(this->data); }
 	void set_data(SV* data_new) { this->data = SvREFCNT_inc(data_new); }
 
 	// <<< CONSTRUCTOR & DESTRUCTOR DECLARATIONS/DEFINITIONS >>>
-	Bubble() {}  // NEED ANSWER: need init() functionality?  need move @ISA definition here?
+	Bubble() {} // NEED ANSWER: need init() functionality?  need move @ISA definition here?
 	~Bubble() { SvREFCNT_dec(this->data); }
-
-private:
-	// <<< TRANSLATED INHERITANCE DECLARATION & DEFINITION >>>
-	// NEED ANSWER: use C++ single inheritance?  need to fix Inline::CPP to get multiple inheritance working?
-////our @ISA = ('RPerl::Algorithm::Sort');
-////use RPerl::Algorithm::Sort;
 //	AV *ISA = newAV();  // DEV NOTE: no programmatic or run-time modification of inheritance, @ISA made private in C++
 //	av_push(ISA, SvREFCNT_inc(newSVpv("SOME::RPERL::PACKAGE::INDICATING::TRANSLATED::FROM::PERL::TO::CPP", 2112)));  // NEED ADD: actual package
-//	av_push(ISA, SvREFCNT_inc(newSVpv("RPerl::Algorithm::Sort", 22)));  // NEED ANSWER: does this have to go inside the constructor?  if so, how to check class (not object) inheritance?
+//	av_push(ISA, SvREFCNT_inc(newSVpv("RPerl::Algorithm::Sort", 22)));  // NEED ANSWER: does this need to go inside the constructor?  if so, how to check class (not object) inheritance?
 
+private:
 	// <<< TRANSLATED PROPERTY DECLARATIONS >>>
 ////our %properties =
 ////(
@@ -40,7 +48,7 @@ private:
 
 ////# [object-oriented programming interface]
 ////# call out to sort data, return nothing
-////our void $sort = sub {(my object $self) = @_;
+////our void__method $sort = sub {(my object $self) = @_;
 void Bubble::sort()
 ////;
 {
