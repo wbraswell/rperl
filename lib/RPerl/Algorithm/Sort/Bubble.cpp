@@ -1,9 +1,49 @@
 ////use strict;  use warnings;
+using std::cout;  using std::endl;
 
+// NEED FIX: Bubble.cpp should not load HelperFunctions.cpp, only HelperFunctions.h?  where then would we load HelperFunctions.cpp?
+//#include "/home/wbraswell/austin_perl_mongers/compiler/RPerl/RPerl-latest/lib/RPerl/HelperFunctions.h"
 #include "/home/wbraswell/austin_perl_mongers/compiler/RPerl/RPerl-latest/lib/RPerl/HelperFunctions.cpp"
 //#include <RPerl/HelperFunctions.cpp>
 
-// NEED ANSWER: only include through Perl because of namespace hack?
+/*
+// <<< TRANSLATED FUNCTION DECLARATIONS >>>
+void not_inherited(SV *person);
+
+////package RPerl::Algorithm::Sort;
+////our @ISA = ('RPerl::Algorithm');
+//class Sort : public Algorithm
+class Sort
+{
+public:
+	// <<< TRANSLATED METHOD DECLARATIONS >>>
+	void inherited(SV *person);
+
+	// <<< ACCESSOR & MUTATOR DECLARATIONS/DEFINITIONS
+	// NONE
+
+	// <<< CONSTRUCTOR & DESTRUCTOR DECLARATIONS/DEFINITIONS >>>
+	Sort() {}
+	~Sort() {}
+//	AV *ISA = newAV();  // DEV NOTE: no programmatic or run-time modification of inheritance, @ISA made private in C++
+//	av_push(ISA, SvREFCNT_inc(newSVpv("SOME::RPERL::PACKAGE::INDICATING::TRANSLATED::FROM::PERL::TO::CPP", 2112)));  // NEED ADD: actual package
+//	av_push(ISA, SvREFCNT_inc(newSVpv("RPerl::Algorithm", 22)));  // NEED ANSWER: does this have to go inside the constructor?  if so, how to check class (not object) inheritance?
+
+//private:
+	// <<< TRANSLATED PROPERTY DECLARATIONS >>>
+	// NONE
+};
+
+////our void__method $inherited = sub { (my object $self, my string $person) = @_;  print "[[[ HOWDY \$self $self \$person $person FROM INSIDE inherited()!!! ]]]\n"; };
+//void Sort::inherited(SV *person) { printf("[[[ C++ HOWDY $self %d $person %s FROM INSIDE inherited()!!! ]]]\n", 2112, SvPV_nolen(person)); }
+void Sort::inherited(SV *person) { cout << "[[[ C++ HOWDY $self " << this << " $person " << SvPV_nolen(person) << " FROM INSIDE inherited()!!! ]]]\n"; }
+
+////our void $not_inherited = sub { (my string $person) = @_;  print "[[[ HOW DO YOU DO \$person $person FROM INSIDE not_inherited()... ]]]\n"; };
+void not_inherited(SV *person) { printf("[[[ C++ HOW DO YOU DO $person %s FROM INSIDE not_inherited()... ]]]\n", SvPV_nolen(person)); }
+*/
+
+
+// NEED ANSWER: include through C++ and/or Perl because of namespace hack?
 ////use RPerl::Algorithm::Sort;
 #include "/home/wbraswell/austin_perl_mongers/compiler/RPerl/RPerl-latest/lib/RPerl/Algorithm/Sort.cpp"
 //#include <RPerl/Algorithm/Sort.cpp>
@@ -12,15 +52,15 @@
 SV *bubblesort(SV *data);
 
 // DEV NOTE: currently using C++ single inheritance;  is it worth the bother fixing Inline::CPP to get multiple inheritance working?
+// DEV NOTE: setting @ISA is handled in Bubble_cpp.pm
 ////package RPerl::Algorithm::Sort::Bubble;
 ////our @ISA = ('RPerl::Algorithm::Sort');
-
-
-// START HERE: figure out C++ inheritance from Sort to Bubble below
-
+//	AV *ISA = newAV();  // DEV NOTE: no programmatic or run-time modification of inheritance, @ISA made private in C++
+//	av_push(ISA, SvREFCNT_inc(newSVpv("SOME::RPERL::PACKAGE::INDICATING::TRANSLATED::FROM::PERL::TO::CPP", 2112)));  // NEED ADD: actual package
+//	av_push(ISA, SvREFCNT_inc(newSVpv("RPerl::Algorithm::Sort", 22)));  // NEED ANSWER: does this need to go inside the constructor?  if so, how to check class (not object) inheritance?
 
 //class Bubble : public Sort
-class Bubble
+class CPP__RPerl__Algorithm__Sort__Bubble : public CPP__RPerl__Algorithm__Sort
 {
 public:
 	// <<< TRANSLATED METHOD DECLARATIONS >>>
@@ -28,14 +68,13 @@ public:
 
 	// <<< ACCESSOR & MUTATOR DECLARATIONS/DEFINITIONS >>>
 	SV *get_data() { return SvREFCNT_inc(this->data); }
-	void set_data(SV* data_new) { this->data = SvREFCNT_inc(data_new); }
+	void set_data(SV* data_new) { this->data = data_new; }
 
 	// <<< CONSTRUCTOR & DESTRUCTOR DECLARATIONS/DEFINITIONS >>>
-	Bubble() {} // NEED ANSWER: need init() functionality?  need move @ISA definition here?
-	~Bubble() { SvREFCNT_dec(this->data); }
-//	AV *ISA = newAV();  // DEV NOTE: no programmatic or run-time modification of inheritance, @ISA made private in C++
-//	av_push(ISA, SvREFCNT_inc(newSVpv("SOME::RPERL::PACKAGE::INDICATING::TRANSLATED::FROM::PERL::TO::CPP", 2112)));  // NEED ADD: actual package
-//	av_push(ISA, SvREFCNT_inc(newSVpv("RPerl::Algorithm::Sort", 22)));  // NEED ANSWER: does this need to go inside the constructor?  if so, how to check class (not object) inheritance?
+//	Bubble() {} // NEED ANSWER: need init() functionality?  need move @ISA definition here?
+//	~Bubble() {}
+	CPP__RPerl__Algorithm__Sort__Bubble() {} // NEED ANSWER: need init() functionality?  need move @ISA definition here?
+	~CPP__RPerl__Algorithm__Sort__Bubble() {}
 
 private:
 	// <<< TRANSLATED PROPERTY DECLARATIONS >>>
@@ -49,18 +88,19 @@ private:
 ////# [object-oriented programming interface]
 ////# call out to sort data, return nothing
 ////our void__method $sort = sub {(my object $self) = @_;
-void Bubble::sort()
+//void Bubble::sort()
+void CPP__RPerl__Algorithm__Sort__Bubble::sort()
 ////;
 {
-	// NEED ANSWER: why do we need to do property init?
-	RPerl_object_property_init(this->data);
-
-	if (RPerl__DEBUG3) { printf("in sort(), top of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(this->data) = %lu\n", SV_REFERENCE_COUNT(this->data));  printf("in sort(), top of subroutine, have this->data = %s", RPerl_DUMPER__perl_from_c(this->data));  printf("in sort(), top of subroutine, have post-DUMPER SV_REFERENCE_COUNT(this->data) = %lu\n\n", SV_REFERENCE_COUNT(this->data));  }
+	if (RPerl__DEBUG2) { printf("in sort(), top of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(this->data) = %lu\n", SV_REFERENCE_COUNT(this->data));  printf("in sort(), top of subroutine, have this->data = %s", RPerl_DUMPER__perl_from_c(this->data));  printf("in sort(), top of subroutine, have post-DUMPER SV_REFERENCE_COUNT(this->data) = %lu\n\n", SV_REFERENCE_COUNT(this->data));  }
 
 ////	$self->{data} = bubblesort($self->{data});
 	this->data = bubblesort(this->data);
 
-	if (RPerl__DEBUG2) { printf("in sort(), bottom of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(this->data) = %lu\n", SV_REFERENCE_COUNT(this->data));  printf("in sort(), bottom of subroutine, have this->data = %s", RPerl_DUMPER__perl_from_c(this->data));  printf("in sort(), bottom of subroutine, have post-DUMPER SV_REFERENCE_COUNT(this->data) = %lu\n\n", SV_REFERENCE_COUNT(this->data));  }
+	if (RPerl__DEBUG2) { printf("in sort(), bottom of subroutine, have pre-SvREFCNT_dec pre-DUMPER SV_REFERENCE_COUNT(this->data) = %lu\n", SV_REFERENCE_COUNT(this->data));  printf("in sort(), bottom of subroutine, have pre-SvREFCNT_dec this->data = %s", RPerl_DUMPER__perl_from_c(this->data));  printf("in sort(), bottom of subroutine, have pre-SvREFCNT_dec post-DUMPER SV_REFERENCE_COUNT(this->data) = %lu\n\n", SV_REFERENCE_COUNT(this->data));  }
+	SvREFCNT_dec(this->data);
+	if (RPerl__DEBUG2) { printf("in sort(), bottom of subroutine, have post-SvREFCNT_dec pre-DUMPER SV_REFERENCE_COUNT(this->data) = %lu\n", SV_REFERENCE_COUNT(this->data));  printf("in sort(), bottom of subroutine, have post-SvREFCNT_dec this->data = %s", RPerl_DUMPER__perl_from_c(this->data));  printf("in sort(), bottom of subroutine, have post-SvREFCNT_dec post-DUMPER SV_REFERENCE_COUNT(this->data) = %lu\n\n", SV_REFERENCE_COUNT(this->data));  }
+//	if (RPerl__DEBUG2) { printf("in sort(), bottom of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(this->data) = %lu\n", SV_REFERENCE_COUNT(this->data));  printf("in sort(), bottom of subroutine, have this->data = %s", RPerl_DUMPER__perl_from_c(this->data));  printf("in sort(), bottom of subroutine, post-DUMPER SV_REFERENCE_COUNT(this->data) = %lu\n\n", SV_REFERENCE_COUNT(this->data));  }
 ////};
 }
 
@@ -71,6 +111,9 @@ void Bubble::sort()
 SV *bubblesort(SV *data)  // DEV NOTE: properly creates local-to-function SV* data here, does not get confused with this->data object property, even though they share a name
 ////;
 {
+	RPerl_object_property_init(data); // NEED ANSWER: why do we need to do property init?
+	SvREFCNT_inc(data);
+
 	if (RPerl__DEBUG3) { printf("in bubblesort(), top of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(data) = %lu\n", SV_REFERENCE_COUNT(data));  printf("in bubblesort(), top of subroutine, have data = %s", RPerl_DUMPER__perl_from_c(data));  printf("in bubblesort(), top of subroutine, have post-DUMPER SV_REFERENCE_COUNT(data) = %lu\n\n", SV_REFERENCE_COUNT(data)); }
 ////	my int $is_sorted = 0;
 	int is_sorted = 0;
@@ -85,7 +128,7 @@ SV *bubblesort(SV *data)  // DEV NOTE: properly creates local-to-function SV* da
 
 ////	my scalar $swap;
 	SV *swap = newSV(0);
-	
+
 	if (RPerl__DEBUG2) { printf("in bubblesort(), after variable init, have pre-DUMPER SV_REFERENCE_COUNT(data_i) = %lu\n", SV_REFERENCE_COUNT(data_i));  printf("in bubblesort(), after variable init, have data_i = %s", RPerl_DUMPER__perl_from_c(data_i));  printf("in bubblesort(), after variable init, have post-DUMPER SV_REFERENCE_COUNT(data_i) = %lu\n\n", SV_REFERENCE_COUNT(data_i)); }
 	if (RPerl__DEBUG2) { printf("in bubblesort(), after variable init, have pre-DUMPER SV_REFERENCE_COUNT(data_i_plus_1) = %lu\n", SV_REFERENCE_COUNT(data_i_plus_1));  printf("in bubblesort(), after variable init, have data_i_plus_1 = %s", RPerl_DUMPER__perl_from_c(data_i_plus_1));  printf("in bubblesort(), after variable init, have post-DUMPER SV_REFERENCE_COUNT(data_i_plus_1) = %lu\n\n", SV_REFERENCE_COUNT(data_i_plus_1)); }
 	if (RPerl__DEBUG2) { printf("in bubblesort(), after variable init, have pre-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n", SV_REFERENCE_COUNT(swap));  printf("in bubblesort(), after variable init, have swap = %s", RPerl_DUMPER__perl_from_c(swap));  printf("in bubblesort(), after variable init, have post-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n\n", SV_REFERENCE_COUNT(swap)); }
@@ -157,7 +200,8 @@ SV *bubblesort(SV *data)  // DEV NOTE: properly creates local-to-function SV* da
 		if (RPerl__DEBUG) { printf("in bubblesort(), bottom of while() loop, have pre-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n", SV_REFERENCE_COUNT(swap));  printf("in bubblesort(), bottom of while() loop, have swap = %s", RPerl_DUMPER__perl_from_c(swap));  printf("in bubblesort(), bottom of while() loop, have post-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n\n", SV_REFERENCE_COUNT(swap)); }
 ////	}
 	}
-	
+
+//	SvREFCNT_inc(data);
 	if (RPerl__DEBUG3) { printf("in bubblesort(), bottom of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(data) = %lu\n", SV_REFERENCE_COUNT(data));  printf("in bubblesort(), bottom of subroutine, have data = %s", RPerl_DUMPER__perl_from_c(data));  printf("in bubblesort(), bottom of subroutine, have post-DUMPER SV_REFERENCE_COUNT(data) = %lu\n\n", SV_REFERENCE_COUNT(data)); }
 	if (RPerl__DEBUG) { printf("in bubblesort(), bottom of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(data_i) = %lu\n", SV_REFERENCE_COUNT(data_i));  printf("in bubblesort(), bottom of subroutine, have data_i = %s", RPerl_DUMPER__perl_from_c(data_i));  printf("in bubblesort(), bottom of subroutine, have post-DUMPER SV_REFERENCE_COUNT(data_i) = %lu\n\n", SV_REFERENCE_COUNT(data_i)); }
 	if (RPerl__DEBUG) { printf("in bubblesort(), bottom of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(data_i_plus_1) = %lu\n", SV_REFERENCE_COUNT(data_i_plus_1));  printf("in bubblesort(), bottom of subroutine, have data_i_plus_1 = %s", RPerl_DUMPER__perl_from_c(data_i_plus_1));  printf("in bubblesort(), bottom of subroutine, have post-DUMPER SV_REFERENCE_COUNT(data_i_plus_1) = %lu\n\n", SV_REFERENCE_COUNT(data_i_plus_1)); }
@@ -165,6 +209,7 @@ SV *bubblesort(SV *data)  // DEV NOTE: properly creates local-to-function SV* da
 
 ////	# data is now sorted via top-level nested iteration [O(n**2) total time, O(1) total extra space]
 ////	return $data;
-	 return data;
+//	SvREFCNT_dec(data);
+	return data;
 ////};
 }

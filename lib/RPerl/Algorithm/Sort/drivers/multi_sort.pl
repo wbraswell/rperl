@@ -8,8 +8,12 @@ use MyConfig;
 # supported algorithms
 #use RPerl::Algorithm::Sort::Bubble;  # choose ONE of this
 use RPerl::Algorithm::Sort::Bubble_cpp;  # OR this
-use RPerl::Algorithm::Sort::Quick;
-use RPerl::Algorithm::Sort::Merge;
+RPerl::Algorithm::Sort::Bubble_cpp::cpp_load();
+RPerl::Algorithm::Sort::Bubble_cpp::cpp_link();
+
+# NEED FIX: these Perl packages use RPerl::Algorithm::Sort, which creates a conflict when Bubble_cpp has already loaded Sort.cpp
+#use RPerl::Algorithm::Sort::Quick;
+#use RPerl::Algorithm::Sort::Merge;
 
 our string $test_sub = sub { print "HOWDY FROM test_sub(), NICE TO MEET YOU!  RECEIVED \$\_[0] = '" . $_[0] . "'!\n";  return "wolvie_retval"; };
 
@@ -38,20 +42,21 @@ for (my $i = 0; $i < 1;  $i++)
 #	my $test_retval = test_sub("gumbee_pokey");
 #	print "TEST SUB SEZ: '$test_retval'\n";
 	
-	$sorter = $algorithm->new();
-#	$sorter = new RPerl::Algorithm::Sort::Bubble;
-	$sorter->set_variant($variant) if (defined($variant));
+#	$sorter = CPP::RPerl__Algorithm__Sort__Bubble->new();
+#	$sorter = Bubble->new();
+#	$sorter = $algorithm->new();
+	$sorter = new RPerl::Algorithm::Sort::Bubble;
+#	$sorter->set_variant($variant) if (defined($variant));
+	print "in multi_sort.pl, have \$i = $i and pre-data \$sorter =\n" . RPerl::DUMPER($sorter) . "\n" if $RPerl::DEBUG;
 	
-=SNIP
-	RPerl::Algorithm::Sort::inherited($sorter, "Jean Gray");
-	RPerl::Algorithm::Sort->inherited("Phoenix");
-	$sorter->inherited("Logan");
-#	inherited("LONG_LOST_BROTHER?", "Sabertooth");  # inherited method should only work as method!
-	not_inherited("Scott Summers");
-	RPerl::Algorithm::Sort::not_inherited("Cyclops");  # bypass RPerl POST-INIT symbol table entries that put non-method not_inherited() in main::, use AUTOLOAD
-	main::not_inherited("Beast");
-	::not_inherited("Dr. Hank McCoy");
-=cut
+#	RPerl::Algorithm::Sort::inherited($sorter, "Jean Gray");  # Perl yes, C++ no
+#	RPerl::Algorithm::Sort->inherited("Phoenix");  # Perl yes, C++ no
+	$sorter->inherited("Logan");  # Perl yes, C++ yes
+#	inherited("LONG_LOST_BROTHER?", "Sabertooth");  # Perl no, C++ no; inherited method should only work as method!
+	not_inherited("Scott Summers");  # Perl yes, C++ yes
+#	RPerl::Algorithm::Sort::not_inherited("Cyclops");  # Perl yes, C++ no; bypass RPerl POST-INIT symbol table entries that put non-method not_inherited() in main::, use AUTOLOAD
+	main::not_inherited("Beast");  # Perl yes, C++ yes
+	::not_inherited("Dr. Hank McCoy");  # Perl yes, C++ yes
 	
 	# NEED CHOOSE: which data structure?
 #	$data = [21, 12, 31, 13, 42, 2012, 5555, 1.21, 33.3, 9999, -15, 0];
@@ -59,16 +64,18 @@ for (my $i = 0; $i < 1;  $i++)
 	$data = [reverse(0 ... 5)];
 	$sorter->set_data($data);
 
+	print "in multi_sort.pl, have \$i = $i and unsorted \$data =\n" . RPerl::DUMPER($data) . "\n" if $RPerl::DEBUG;
 	print "in multi_sort.pl, have \$i = $i and \$sorter =\n" . RPerl::DUMPER($sorter) . "\n" if $RPerl::DEBUG;
-	print "in multi_sort.pl, have \$i = $i and unsorted \$sorter->{data} =\n" . RPerl::DUMPER($sorter->get_data()) . "\n" if $RPerl::DEBUG;
+#	print "in multi_sort.pl, have \$i = $i and unsorted \$sorter->get_data() =\n" . RPerl::DUMPER($sorter->get_data()) . "\n" if $RPerl::DEBUG;
 
 	my $start_time = time();
-	$sorter->sort();  # OO interface
-#	bubblesort($data);  # procedural interface
+#	$sorter->sort();  # OO interface
+	bubblesort($data);  # procedural interface
 	my $end_time = time();
 	my $run_time = $end_time - $start_time;
 
-	print "in multi_sort.pl, have \$i = $i and sorted \$sorter->{data} =\n" . RPerl::DUMPER($sorter->get_data()) . "\n" if $RPerl::DEBUG;
+	print "in multi_sort.pl, have \$i = $i and sorted \$data =\n" . RPerl::DUMPER($data) . "\n" if $RPerl::DEBUG;
+#	print "in multi_sort.pl, have \$i = $i and sorted \$sorter->get_data() =\n" . RPerl::DUMPER($sorter->get_data()) . "\n" if $RPerl::DEBUG;
 	print "in multi_sort.pl, have \$i = $i and \$run_time = $run_time\n";
 }
 exit;

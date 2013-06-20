@@ -1,5 +1,3 @@
-# START HERE: manually translate to Inline::C
-
 package RPerl::Algorithm::Sort::Bubble;
 use strict;  use warnings;
 

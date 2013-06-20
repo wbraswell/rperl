@@ -14,7 +14,10 @@ inherited('FAKESELF', "Spidey");
 RPerl::Algorithm::Sort::inherited("FAKECLASS", "Peter Parker");
 RPerl::Algorithm::Sort->inherited("Mary Jane");
 
+# pre-INIT AUTOLOAD resolution below only works with Perl, not Inline::CPP
+=SNIP
 not_inherited('Doc Oc');
 RPerl::Algorithm::Sort::not_inherited("Doctor Octavius");
 RPerl::Algorithm::Sort->not_inherited("Mad Scientist");  # ignores "Mad Scientist"
 print "LATERZ FROM Sort.pm\n";
+=cut

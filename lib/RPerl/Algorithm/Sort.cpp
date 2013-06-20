@@ -1,21 +1,28 @@
 ////use strict;  use warnings;
+using std::cout;  using std::endl;
+
+#include "/home/wbraswell/austin_perl_mongers/compiler/RPerl/RPerl-latest/lib/RPerl/HelperFunctions.h"
+//#include "/home/wbraswell/austin_perl_mongers/compiler/RPerl/RPerl-latest/lib/RPerl/HelperFunctions.cpp"
+//#include <RPerl/HelperFunctions.cpp>
 
 ////use RPerl::Algorithm;
 //#include "/home/wbraswell/austin_perl_mongers/compiler/RPerl/RPerl-latest/lib/RPerl/Algorithm.cpp"
 //#include <RPerl/Algorithm.cpp>
 
+/*
+void sort();  // DUMMY!
+SV *get_data();  // DUMMY!
+void set_data(SV *new_data);  // DUMMY!
+*/
 
 // <<< TRANSLATED FUNCTION DECLARATIONS >>>
 void not_inherited(SV *person);
 
-void sort();  // DUMMY!
-SV *get_data();  // DUMMY!
-void set_data(SV *new_data);  // DUMMY!
-
 ////package RPerl::Algorithm::Sort;
 ////our @ISA = ('RPerl::Algorithm');
 //class Sort : public Algorithm
-class Sort
+//class Sort
+class CPP__RPerl__Algorithm__Sort
 {
 public:
 	// <<< TRANSLATED METHOD DECLARATIONS >>>
@@ -25,11 +32,10 @@ public:
 	// NONE
 
 	// <<< CONSTRUCTOR & DESTRUCTOR DECLARATIONS/DEFINITIONS >>>
-	Sort() {}
-	~Sort() {}
-//	AV *ISA = newAV();  // DEV NOTE: no programmatic or run-time modification of inheritance, @ISA made private in C++
-//	av_push(ISA, SvREFCNT_inc(newSVpv("SOME::RPERL::PACKAGE::INDICATING::TRANSLATED::FROM::PERL::TO::CPP", 2112)));  // NEED ADD: actual package
-//	av_push(ISA, SvREFCNT_inc(newSVpv("RPerl::Algorithm", 22)));  // NEED ANSWER: does this have to go inside the constructor?  if so, how to check class (not object) inheritance?
+//	Sort() {}
+//	~Sort() {}
+	CPP__RPerl__Algorithm__Sort() {}
+	~CPP__RPerl__Algorithm__Sort() {}
 
 //private:
 	// <<< TRANSLATED PROPERTY DECLARATIONS >>>
@@ -37,7 +43,9 @@ public:
 };
 
 ////our void__method $inherited = sub { (my object $self, my string $person) = @_;  print "[[[ HOWDY \$self $self \$person $person FROM INSIDE inherited()!!! ]]]\n"; };
-void Sort::inherited(SV *person) { printf("[[[ C++ HOWDY $self %d $person %s FROM INSIDE inherited()!!! ]]]\n", 2112, SvPV_nolen(person)); }
+//void Sort::inherited(SV *person) { printf("[[[ C++ HOWDY $self %d $person %s FROM INSIDE inherited()!!! ]]]\n", 2112, SvPV_nolen(person)); }
+//void Sort::inherited(SV *person) { cout << "[[[ C++ HOWDY $self " << this << " $person " << SvPV_nolen(person) << " FROM INSIDE inherited()!!! ]]]\n"; }
+void CPP__RPerl__Algorithm__Sort::inherited(SV *person) { cout << "[[[ C++ HOWDY $self " << this << " $person " << SvPV_nolen(person) << " FROM INSIDE inherited()!!! ]]]\n"; }
 
 ////our void $not_inherited = sub { (my string $person) = @_;  print "[[[ HOW DO YOU DO \$person $person FROM INSIDE not_inherited()... ]]]\n"; };
 void not_inherited(SV *person) { printf("[[[ C++ HOW DO YOU DO $person %s FROM INSIDE not_inherited()... ]]]\n", SvPV_nolen(person)); }
