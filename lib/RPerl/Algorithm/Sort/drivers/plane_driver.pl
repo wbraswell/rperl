@@ -1,9 +1,9 @@
 #!/usr/bin/perl
-use lib '/home/wbraswell/austin_perl_mongers/compiler/RPerl/RPerl-latest/lib';  # RPerl system files  # NEED REMOVE hard-coded path
+use lib '/tmp/RPerl-latest/lib';  # RPerl system files  # NEED REMOVE hard-coded path
 use strict;  use warnings;  use RPerl;  our @ISA = ('RPerl');
 
 # NEED THESE TWO FOLLOWING LINES FOR Inline
-use lib '/home/wbraswell/austin_perl_mongers/compiler/RPerl/RPerl-latest/lib/CPAN';  # RPerl's MyConfig.pm  # NEED REMOVE hard-coded path
+use lib '/tmp/RPerl-latest/lib/CPAN';  # RPerl's MyConfig.pm  # NEED REMOVE hard-coded path
 use MyConfig;
 
 #package RPerl::Algorithm::Sort;  # begin namespace hack, want to use ...Sort::Bubble->new(), not ...Sort::Bubble_cpp::Bubble->new()
@@ -11,8 +11,8 @@ use MyConfig;
 
 use Inline
 (
-        CPP => '/home/wbraswell/austin_perl_mongers/compiler/RPerl/RPerl-latest/lib/RPerl/Algorithm/Sort/PlaneTMP.cpp',
-        CCFLAGS => '-Wno-deprecated',  # old-style-header warnings, suppress
+        CPP => '/tmp/RPerl-latest/lib/RPerl/Algorithm/Sort/PlaneTMP.cpp',
+        CCFLAGS => '-Wno-deprecated',
         BUILD_NOISY => 1,
         CLEAN_AFTER_BUILD => 0,
         WARNINGS => 1,

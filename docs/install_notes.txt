@@ -5,6 +5,7 @@ $ mkdir -p ~/RPerl/3rd_party/CPAN
 $ cd ~/.cpan/CPAN
 $ mv MyConfig.pm MyConfig.pm.old
 $ ln -s path/to/RPerl/lib/CPAN/MyConfig.pm MyConfig.pm
+$ ln -s path/to/RPerl /tmp/RPerl-latest
 
 $ cpan
 cpan> o conf
@@ -13,3 +14,7 @@ cpan> install Parse::RecDescent
 cpan> force install Inline
 cpan> force install Inline::CPP
 	must force, Inline tests are broken, they change @INC and then fail to load single-user-installation of Parse::RecDescent
+cpan> force install Inline::Filters
+
+$ mv ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm.old
+$ ln -s path/to/RPerl/lib/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm

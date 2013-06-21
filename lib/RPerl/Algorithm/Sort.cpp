@@ -1,46 +1,10 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-#include "/home/wbraswell/austin_perl_mongers/compiler/RPerl/RPerl-latest/lib/RPerl/HelperFunctions.h"
-//#include "/home/wbraswell/austin_perl_mongers/compiler/RPerl/RPerl-latest/lib/RPerl/HelperFunctions.cpp"
-//#include <RPerl/HelperFunctions.cpp>
-
-////use RPerl::Algorithm;
-//#include "/home/wbraswell/austin_perl_mongers/compiler/RPerl/RPerl-latest/lib/RPerl/Algorithm.cpp"
-//#include <RPerl/Algorithm.cpp>
-
-/*
-void sort();  // DUMMY!
-SV *get_data();  // DUMMY!
-void set_data(SV *new_data);  // DUMMY!
-*/
-
-// <<< TRANSLATED FUNCTION DECLARATIONS >>>
-void not_inherited(SV *person);
-
-////package RPerl::Algorithm::Sort;
-////our @ISA = ('RPerl::Algorithm');
-//class Sort : public Algorithm
-//class Sort
-class CPP__RPerl__Algorithm__Sort
-{
-public:
-	// <<< TRANSLATED METHOD DECLARATIONS >>>
-	void inherited(SV *person);
-
-	// <<< ACCESSOR & MUTATOR DECLARATIONS/DEFINITIONS
-	// NONE
-
-	// <<< CONSTRUCTOR & DESTRUCTOR DECLARATIONS/DEFINITIONS >>>
-//	Sort() {}
-//	~Sort() {}
-	CPP__RPerl__Algorithm__Sort() {}
-	~CPP__RPerl__Algorithm__Sort() {}
-
-//private:
-	// <<< TRANSLATED PROPERTY DECLARATIONS >>>
-	// NONE
-};
+//#include "/tmp/RPerl-latest/lib/RPerl/HelperFunctions.h"
+//#include <RPerl/HelperFunctions.h>
+//#include "/tmp/RPerl-latest/lib/RPerl/Algorithm/Sort.h"
+//#include <RPerl/Algorithm/Sort.h>
 
 ////our void__method $inherited = sub { (my object $self, my string $person) = @_;  print "[[[ HOWDY \$self $self \$person $person FROM INSIDE inherited()!!! ]]]\n"; };
 //void Sort::inherited(SV *person) { printf("[[[ C++ HOWDY $self %d $person %s FROM INSIDE inherited()!!! ]]]\n", 2112, SvPV_nolen(person)); }

@@ -1,14 +1,22 @@
+#!/usr/bin/perl
+use strict;  use warnings;
+
+BEGIN { unshift(@INC, ('/frobnicate', '/tmp/CPAN', 'befunge')); }
+use MyConfig;
+
+#package main;
+#BEGIN { print "[[[ BEGIN 'use Inline' STAGE for 'RPerl/Algorithm/Sort/Bubble.cpp' ]]]\n"x3; }
+
+#use Inline::Filters;
+#use Inline Config => FILTERS => [Preprocess];
+
+#use Inline CPP => <<'END';
+use Inline CPP => <<'END', FILTERS => 'Preprocess';
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-#include "/tmp/RPerl-latest/lib/RPerl/HelperFunctions.h"		// -> TERM
-//#include <RPerl/HelperFunctions.h>
-#include "/tmp/RPerl-latest/lib/RPerl/HelperFunctions.c"		// -> TERM
-//#include <RPerl/HelperFunctions.c>
-#include "/tmp/RPerl-latest/lib/RPerl/Algorithm/Sort/Bubble.h"  // -> Sort.h -> TERM
-//#include <RPerl/Algorithm/Sort/Bubble.h>
-#include "/tmp/RPerl-latest/lib/RPerl/Algorithm/Sort.cpp"		// -> TERM
-//#include <RPerl/Algorithm/Sort.cpp>
+#include "/tmp/RPerl-latest/lib/RPerl/HelperFunctions.h"
+#include "/tmp/RPerl-latest/lib/RPerl/Algorithm/Sort/Bubble.h"
 
 ////# [object-oriented programming interface]
 ////# call out to sort data, return nothing
@@ -138,3 +146,8 @@ SV *bubblesort(SV *data)  // DEV NOTE: properly creates local-to-function SV* da
 	return data;
 ////};
 }
+
+END
+
+print "[[[ END 'use Inline' STAGE for 'RPerl/Algorithm/Sort/Bubble.cpp' ]]]\n"x3;
+1;

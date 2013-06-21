@@ -34,22 +34,35 @@ INIT
 				next if ($module_file_line =~ /^\s*\#/);
 				
 				# skip multi-line comments
-				if ($module_file_line =~ /^\=\w+/)
+				if ($module_file_line =~ /^\=(\w+)/)
 				{
+#					print "in Class.pm INIT block, skipping multi-line comment, have \$1 = '$1'\n";
 					$module_file_line = <MODULE_FILE>;
 					while ($module_file_line !~ /^\=cut/) { $module_file_line = <MODULE_FILE>; }
 					next;
 				}
+				
+				# skip multi-line heredocs
+				if (($module_file_line =~ /\=\s*\<\<\s*(\w+)\s*\;\s*$/) or
+					($module_file_line =~ /\=\s*\<\<\s*\'(\w+)\'\s*\;\s*$/) or
+					($module_file_line =~ /\=\s*\<\<\s*\"(\w+)\"\s*\;\s*$/))
+				{
+#					print "in Class.pm INIT block, skipping multi-line heredoc, have \$1 = '$1'\n";
+					$module_file_line = <MODULE_FILE>;
+					while ($module_file_line !~ /^$1/) { $module_file_line = <MODULE_FILE>; }
+					next;
+				}
 
+				# create accessor/mutator methods for each class 
 				if ($module_file_line =~ /^\s*package\s+(\w+(::\w+)*)\;$/)
 				{
 					$package_name = $1;
-					print "in Class.pm INIT block, have \$package name = '$package_name'\n";
+#					print "in Class.pm INIT block, have \$package name = '$package_name'\n";
 					%class_properties = eval("\%$package_name\:\:properties");  ## no critic
 					
 					foreach my $class_property_name (sort(keys %class_properties))
 					{
-						print "in Class.pm INIT block, have \$class_property_name = '$class_property_name'\n";
+#						print "in Class.pm INIT block, have \$class_property_name = '$class_property_name'\n";
 						eval("\*\{$package_name\:\:get_$class_property_name\} \= sub \{ return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;");  ## no critic
 #						eval("\*\{$package_name\:\:get_$class_property_name\} \= sub \{ print \"IN POST\-INIT\, accessor MODE $package_name\:\:get_$class_property_name\\n\"\; return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;");  ## no critic
 						eval("\*\{$package_name\:\:set_$class_property_name\} \= sub \{ \$\_\[0\]\-\>\{$class_property_name\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;");  ## no critic
@@ -57,28 +70,29 @@ INIT
 					}
 				}
 				
+				# create symbol table entries for methods and plain-old non-method subroutines
 				if ($module_file_line =~ /^\s*our\s+(\w+)\s+\$(\w+)\s+\=\s+sub\s+\{/)
 				{
 					$subroutine_type = $1;
 					$subroutine_name = $2;
-					print "in Class.pm INIT block, have \$subroutine_type = '$subroutine_type', and \$subroutine_name = '$subroutine_name'\n";
+#					print "in Class.pm INIT block, have \$subroutine_type = '$subroutine_type', and \$subroutine_name = '$subroutine_name'\n";
 					
 					if ($subroutine_type =~ /\_\_method$/)
 					{
-						print "in Class.pm INIT block, have method'\n";
-#						eval("\*\{$package_name\:\:$subroutine_name\} \= sub \{ return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;");  ## no critic  # NEED UPGRADE: how can I do this w/out a subroutine?
-						eval("\*\{$package_name\:\:$subroutine_name\} \= sub \{ print \"IN POST\-INIT\, method direct call MODE $package_name\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;");  ## no critic  # NEED UPGRADE: how can I do this w/out a subroutine?
+#						print "in Class.pm INIT block, $subroutine_name is a method\n";
+						eval("\*\{$package_name\:\:$subroutine_name\} \= sub \{ return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;");  ## no critic  # NEED UPGRADE: how can I do this w/out a subroutine?
+#						eval("\*\{$package_name\:\:$subroutine_name\} \= sub \{ print \"IN POST\-INIT\, method direct call MODE $package_name\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;");  ## no critic  # NEED UPGRADE: how can I do this w/out a subroutine?
 					}
 					else
 					{
-						print "in Class.pm INIT block, have subroutine'\n";
+#						print "in Class.pm INIT block, $subroutine_name is a non-method subroutine\n";
 						if (eval("defined\(\&main\:\:$subroutine_name\)"))  ## no critic
 							{ die "Attempt by package '$package_name' to re-define shared global subroutine '$subroutine_name', please re-name your subroutine or make it a method, dying"; }
 						# DEV NOTE: must load into both main:: and $package_name:: namespaces, in order to call subroutines w/out class prefix from within class file (package) itself, and not to use AUTOLOAD
-#						eval("\*\{main\:\:$subroutine_name\} \= sub \{ return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;");  ## no critic  # NEED UPGRADE: how can I do this w/out a subroutine?
-						eval("\*\{main\:\:$subroutine_name\} \= sub \{ print \"IN POST\-INIT\, subroutine direct call MODE main\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;");  ## no critic  # NEED UPGRADE: how can I do this w/out a subroutine?
-#						eval("\*\{$package_name\:\:$subroutine_name\} \= sub \{ return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;");  ## no critic  # NEED UPGRADE: how can I do this w/out a subroutine?
-						eval("\*\{$package_name\:\:$subroutine_name\} \= sub \{ print \"IN POST\-INIT\, subroutine direct call MODE $package_name\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;");  ## no critic  # NEED UPGRADE: how can I do this w/out a subroutine?
+						eval("\*\{main\:\:$subroutine_name\} \= sub \{ return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;");  ## no critic  # NEED UPGRADE: how can I do this w/out a subroutine?
+#						eval("\*\{main\:\:$subroutine_name\} \= sub \{ print \"IN POST\-INIT\, subroutine direct call MODE main\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;");  ## no critic  # NEED UPGRADE: how can I do this w/out a subroutine?
+						eval("\*\{$package_name\:\:$subroutine_name\} \= sub \{ return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;");  ## no critic  # NEED UPGRADE: how can I do this w/out a subroutine?
+#						eval("\*\{$package_name\:\:$subroutine_name\} \= sub \{ print \"IN POST\-INIT\, subroutine direct call MODE $package_name\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;");  ## no critic  # NEED UPGRADE: how can I do this w/out a subroutine?
 					}
 				}
 			}

@@ -1,6 +1,3 @@
-//# include <HelperFunctions.h>
-# include "/home/wbraswell/austin_perl_mongers/compiler/RPerl/RPerl-latest/lib/RPerl/HelperFunctions.h"
-
 // <<< HELPER FUNCTION DEFINITIONS >>
 void RPerl_object_property_init(SV* initee) { dSP; XPUSHs(initee); PUTBACK; call_pv("Dumper", G_SCALAR); }
 char* RPerl_DUMPER__perl_from_c(SV* dumpee)
