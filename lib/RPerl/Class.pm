@@ -1,5 +1,5 @@
-package RPerl::Class;
 use strict;  use warnings;
+package RPerl::Class;
 use Data::Dumper;  # don't depend on RPerl::DUMPER
 
 #our %properties = ();  # this base class doesn't actually have any properties

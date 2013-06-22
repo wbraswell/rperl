@@ -1,7 +1,7 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-#include "/tmp/RPerl-latest/lib/RPerl/Algorithm/Sort/Bubble.h"  // -> (HelperFunctions.c || TERM) && Sort.cpp
+#include "/tmp/RPerl-latest/lib/RPerl/Algorithm/Sort/Bubble.h"  // -> HelperFunctions.c && Sort.cpp && Inefficient.cpp
 //	#include <RPerl/Algorithm/Sort/Bubble.h>
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp
@@ -134,6 +134,20 @@ SV *bubblesort(SV *data)  // DEV NOTE: properly creates local-to-function SV* da
 	return data;
 ////};
 }
+
+// [[[ INHERITANCE TESTING ]]]
+////our void__method $inherited__Bubble = sub { (my object $self, my string $person) = @_;  print "in Perl Bubble->inherited__Bubble(), have \$self = '$self' and \$person = '$person', FRIED\n"; };
+void CPP__RPerl__Algorithm__Sort__Bubble::inherited__Bubble(SV *person) { cout << "in C++ PERL_TYPES Bubble->inherited__Bubble(), have $self = '" << this << "' and $person = '" << SvPV_nolen(person) << "', FRIED\n"; }
+
+////our void__method $inherited = sub { (my object $self, my string $person) = @_;  print "in Perl Bubble->inherited(), have \$self = '$self' and \$person = '$person', ILLOGICAL\n"; };
+//void CPP__RPerl__Algorithm__Sort__Bubble::inherited(SV *person) { cout << "in C++ PERL_TYPES Bubble->inherited(), have $self = '" << this << "' and $person = '" << SvPV_nolen(person) << "', ILLOGICAL\n"; }
+
+////our string $uninherited__Bubble = sub { (my string $person) = @_;  print "in Perl Bubble::uninherited__Bubble(), \$person = '$person', MITOCHONDRIAL\n";  return "Perl Bubble::uninherited__Bubble() RULES!"; };
+SV *uninherited__Bubble(SV *person) { cout << "in C++ PERL_TYPES Bubble::uninherited__Bubble(), have $person = '" << SvPV_nolen(person) << "', MITOCHONDRIAL\n";  return newSVpv("C++ PERL_TYPES Bubble::uninherited__Bubble() RULES!", 0); }
+
+////our string $uninherited = sub { (my string $person) = @_;  print "in Perl Bubble::uninherited(), \$person = '$person', TETRAHEDRON\n";  return "Perl Bubble::uninherited() ROCKS!"; };
+//SV *uninherited(SV *person) { cout << "in C++ PERL_TYPES Bubble::uninherited(), have $person = '" << SvPV_nolen(person) << "', TETRAHEDRON\n";  return newSVpv("C++ PERL_TYPES Bubble::uninherited() RULES!", 0); }
+//char *uninherited(char *person) { cout << "in C++ CPP_TYPES Bubble::uninherited(), have $person = '" << person << "', TETRAHEDRON\n";  return "C++ CPP_TYPES Bubble::uninherited() RULES!"; }
 
 #endif
 #define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp 1

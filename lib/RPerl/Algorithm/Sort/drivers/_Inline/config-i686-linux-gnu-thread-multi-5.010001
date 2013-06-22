@@ -1,0 +1,25 @@
+version : 0.53
+languages : %
+    C : C
+    C++ : CPP
+    CPP : CPP
+    CXX : CPP
+    Cplusplus : CPP
+    Foo : Foo
+    c++ : CPP
+    cplusplus : CPP
+    cpp : CPP
+    cxx : CPP
+    foo : Foo
+types : %
+    C : compiled
+    CPP : compiled
+    Foo : interpreted
+modules : %
+    C : Inline::C
+    CPP : Inline::CPP
+    Foo : Inline::Foo
+suffixes : %
+    C : so
+    CPP : so
+    Foo : foo

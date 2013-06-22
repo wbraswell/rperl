@@ -1,40 +1,42 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-#include "/tmp/RPerl-latest/lib/RPerl/HelperFunctions.c"		// -> HelperFunctions.h -> TERM
+#include "/tmp/RPerl-latest/lib/RPerl/HelperFunctions.c"		// -> HelperFunctions.h
 
 ////use RPerl::Algorithm::Sort;
-#include "/tmp/RPerl-latest/lib/RPerl/Algorithm/Sort.cpp"			// -> Sort.h -> IFTERM
+#include "/tmp/RPerl-latest/lib/RPerl/Algorithm/Sort.cpp"			// -> Sort.h
 //	#include <RPerl/Algorithm/Sort.cpp>
+
+////use RPerl::Algorithm::Inefficient;
+#include "/tmp/RPerl-latest/lib/RPerl/Algorithm/Inefficient.cpp"			// -> Inefficient.h
+//	#include <RPerl/Algorithm/Inefficient.cpp>
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h
 
 // <<< TRANSLATED FUNCTION DECLARATIONS >>>
 SV *bubblesort(SV *data);
+// [[[ INHERITANCE TESTING ]]]
+SV *uninherited__Bubble(SV *person);
+//SV *uninherited(SV *person);
+//char *uninherited(char *person);
 
-// DEV NOTE: currently using C++ single inheritance;  is it worth the bother fixing Inline::CPP to get multiple inheritance working?
-// DEV NOTE: setting @ISA is handled in Bubble_cpp.pm
-////package RPerl::Algorithm::Sort::Bubble;
-////our @ISA = ('RPerl::Algorithm::Sort');
-//	AV *ISA = newAV();  // DEV NOTE: no programmatic or run-time modification of inheritance, @ISA made private in C++
-//	av_push(ISA, SvREFCNT_inc(newSVpv("SOME::RPERL::PACKAGE::INDICATING::TRANSLATED::FROM::PERL::TO::CPP", 2112)));  // NEED ADD: actual package
-//	av_push(ISA, SvREFCNT_inc(newSVpv("RPerl::Algorithm::Sort", 22)));  // NEED ANSWER: does this need to go inside the constructor?  if so, how to check class (not object) inheritance?
-
-//class Bubble : public Sort
-class CPP__RPerl__Algorithm__Sort__Bubble : public CPP__RPerl__Algorithm__Sort
+// DEV NOTE, CORRELATION #01: multiple inheritance is enabled by _either_ C++ here or Perl at correlation in Bubble_cpp.pm
+//class CPP__RPerl__Algorithm__Sort__Bubble : public CPP__RPerl__Algorithm__Sort  // SINGLE INHERITANCE
+class CPP__RPerl__Algorithm__Sort__Bubble : public CPP__RPerl__Algorithm__Sort, public CPP__RPerl__Algorithm__Inefficient  // MULTIPLE INHERITANCE
 {
 public:
 	// <<< TRANSLATED METHOD DECLARATIONS >>>
 	void sort();  // NEED ANSWER: no named argument required for $self object?
+// [[[ INHERITANCE TESTING ]]]
+	void inherited__Bubble(SV *person);
+//	void inherited(SV *person);
 
 	// <<< ACCESSOR & MUTATOR DECLARATIONS/DEFINITIONS >>>
 	SV *get_data() { return SvREFCNT_inc(this->data); }
 	void set_data(SV* data_new) { this->data = data_new; }
 
 	// <<< CONSTRUCTOR & DESTRUCTOR DECLARATIONS/DEFINITIONS >>>
-//	Bubble() {} // NEED ANSWER: need init() functionality?  need move @ISA definition here?
-//	~Bubble() {}
-	CPP__RPerl__Algorithm__Sort__Bubble() {} // NEED ANSWER: need init() functionality?  need move @ISA definition here?
+	CPP__RPerl__Algorithm__Sort__Bubble() {}
 	~CPP__RPerl__Algorithm__Sort__Bubble() {}
 
 private:

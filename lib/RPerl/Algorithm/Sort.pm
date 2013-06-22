@@ -1,11 +1,14 @@
-package RPerl::Algorithm::Sort;
 use strict;  use warnings;
+package RPerl::Algorithm::Sort;
 
 our @ISA = ('RPerl::Algorithm');
 use RPerl::Algorithm;
 
-our void__method $inherited = sub { (my object $self, my string $person) = @_;  print "[[[ HOWDY \$self $self \$person $person FROM INSIDE inherited()!!! ]]]\n"; };
-our void $not_inherited = sub { (my string $person) = @_;  print "[[[ HOW DO YOU DO \$person $person FROM INSIDE not_inherited()... ]]]\n"; };
+# [[[ INHERITANCE TESTING ]]]
+our void__method $inherited__Sort = sub { (my object $self, my string $person) = @_;  print "in Perl Sort->inherited__Sort(), have \$self = '$self' and \$person = '$person', FISH\n"; };
+#our void__method $inherited = sub { (my object $self, my string $person) = @_;  print "in Perl Sort->inherited(), have \$self = '$self' and \$person = '$person', IN\n"; };
+our string $uninherited__Sort = sub { (my string $person) = @_;  print "in Perl Sort::uninherited__Sort(), \$person = '$person', MY\n";  return "Perl Sort::uninherited__Sort() RULES!"; };
+#our string $uninherited = sub { (my string $person) = @_;  print "in Perl Sort::uninherited(), \$person = '$person', TROUSERS\n";  return "Perl Sort::uninherited() ROCKS!"; };
 
 
 # all of the following happen before the INIT block, and thus rely upon AUTOLOAD
@@ -18,8 +21,8 @@ RPerl::Algorithm::Sort->inherited("Mary Jane");
 
 # pre-INIT AUTOLOAD resolution below only works with Perl, not Inline::CPP
 =SNIP
-not_inherited('Doc Oc');
-RPerl::Algorithm::Sort::not_inherited("Doctor Octavius");
-RPerl::Algorithm::Sort->not_inherited("Mad Scientist");  # ignores "Mad Scientist"
+uninherited('Doc Oc');
+RPerl::Algorithm::Sort::uninherited("Doctor Octavius");
+RPerl::Algorithm::Sort->uninherited("Mad Scientist");  # ignores "Mad Scientist"
 print "LATERZ FROM Sort.pm\n";
 =cut

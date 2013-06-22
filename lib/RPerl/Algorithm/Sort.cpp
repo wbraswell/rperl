@@ -1,32 +1,23 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-#include "/tmp/RPerl-latest/lib/RPerl/Algorithm/Sort.h"  // -> HelperFunctions.c || TERM
+#include "/tmp/RPerl-latest/lib/RPerl/Algorithm/Sort.h"  // -> HelperFunctions.c && Algorithm.cpp
 //	#include <RPerl/Algorithm/Sort.h>
-
-//#include "/tmp/RPerl-latest/lib/RPerl/Algorithm/Sort.h"
-//#include <RPerl/Algorithm/Sort.h>
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort_cpp
 
-////our void__method $inherited = sub { (my object $self, my string $person) = @_;  print "[[[ HOWDY \$self $self \$person $person FROM INSIDE inherited()!!! ]]]\n"; };
-//void Sort::inherited(SV *person) { printf("[[[ C++ HOWDY $self %d $person %s FROM INSIDE inherited()!!! ]]]\n", 2112, SvPV_nolen(person)); }
-//void Sort::inherited(SV *person) { cout << "[[[ C++ HOWDY $self " << this << " $person " << SvPV_nolen(person) << " FROM INSIDE inherited()!!! ]]]\n"; }
-void CPP__RPerl__Algorithm__Sort::inherited(SV *person) { cout << "[[[ C++ HOWDY $self " << this << " $person " << SvPV_nolen(person) << " FROM INSIDE inherited()!!! ]]]\n"; }
+// [[[ INHERITANCE TESTING ]]]
+////our void__method $inherited__Sort = sub { (my object $self, my string $person) = @_;  print "in Perl Sort->inherited__Sort(), have \$self = '$self' and \$person = '$person', FISH\n"; };
+void CPP__RPerl__Algorithm__Sort::inherited__Sort(SV *person) { cout << "in C++ PERL_TYPES Sort->inherited__Sort(), have $self = '" << this << "' and $person = '" << SvPV_nolen(person) << "', FISH\n"; }
 
-////our void $not_inherited = sub { (my string $person) = @_;  print "[[[ HOW DO YOU DO \$person $person FROM INSIDE not_inherited()... ]]]\n"; };
-void not_inherited(SV *person) { printf("[[[ C++ HOW DO YOU DO $person %s FROM INSIDE not_inherited()... ]]]\n", SvPV_nolen(person)); }
+////our void__method $inherited = sub { (my object $self, my string $person) = @_;  print "in Perl Sort->inherited(), have \$self = '$self' and \$person = '$person', IN\n"; };
+//void CPP__RPerl__Algorithm__Sort::inherited(SV *person) { cout << "in C++ PERL_TYPES Sort->inherited(), have $self = '" << this << "' and $person = '" << SvPV_nolen(person) << "', IN\n"; }
 
-////# all of the following happen before the INIT block, and thus rely upon AUTOLOAD
-////print "WAZZUP FROM Sort.pm\n";
-////inherited('FAKESELF', "Spidey");
-////RPerl::Algorithm::Sort::inherited("FAKECLASS", "Peter Parker");
-////RPerl::Algorithm::Sort->inherited("Mary Jane");
+////our string $uninherited__Sort = sub { (my string $person) = @_;  print "in Perl Sort::uninherited__Sort(), \$person = '$person', MY\n";  return "Perl Sort::uninherited__Sort() RULES!"; };
+SV *uninherited__Sort(SV *person) { cout << "in C++ PERL_TYPES Sort::uninherited__Sort(), have $person = '" << SvPV_nolen(person) << "', MY\n";  return newSVpv("C++ PERL_TYPES Sort::uninherited__Sort() RULES!", 0); }
 
-////not_inherited('Doc Oc');
-////RPerl::Algorithm::Sort::not_inherited("Doctor Octavius");
-////RPerl::Algorithm::Sort->not_inherited("Mad Scientist");  # ignores "Mad Scientist"
-////print "LATERZ FROM Sort.pm\n";
+////our string $uninherited = sub { (my string $person) = @_;  print "in Perl Sort::uninherited(), \$person = '$person', TROUSERS\n";  return "Perl Sort::uninherited() ROCKS!"; };
+//SV *uninherited(SV *person) { cout << "in C++ PERL_TYPES Sort::uninherited(), have $person = '" << SvPV_nolen(person) << "', TROUSERS\n";  return newSVpv("C++ PERL_TYPES Sort::uninherited() RULES!", 0); }
 
 #endif
 #define __CPP__INCLUDED__RPerl__Algorithm__Sort_cpp 1

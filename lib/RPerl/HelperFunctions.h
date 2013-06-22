@@ -9,7 +9,7 @@
 
 #ifndef __CPP__INCLUDED__RPerl__HelperFunctions_h
 
-// <<< HELPER FUNCTION DECLARATIONS >>
+// <<< HELPER FUNCTION DECLARATIONS >>>
 void RPerl_object_property_init(SV* initee); // NEED ANSWER: what in the hades does this property init function even do?  why do we need it???
 char* RPerl_DUMPER__perl_from_c(SV* dumpee);
 

@@ -1,8 +1,10 @@
-package RPerl::Algorithm::Sort::Bubble;
 use strict;  use warnings;
+package RPerl::Algorithm::Sort::Bubble;
 
-our @ISA = ('RPerl::Algorithm::Sort');
+#our @ISA = ('RPerl::Algorithm::Sort');
+our @ISA = ('RPerl::Algorithm::Sort', 'RPerl::Algorithm::Inefficient');
 use RPerl::Algorithm::Sort;
+use RPerl::Algorithm::Inefficient;
 
 our %properties =
 (
@@ -64,3 +66,9 @@ our scalar_array_ref $bubblesort = sub {(my scalar_array_ref $data) = @_;
 	# DEV NOTE: this is an in-place sorting algorithm, we don't actually need to return $data as it has not changed location
 	return $data;
 };
+
+# [[[ INHERITANCE TESTING ]]]
+our void__method $inherited__Bubble = sub { (my object $self, my string $person) = @_;  print "in Perl Bubble->inherited__Bubble(), have \$self = '$self' and \$person = '$person', FRIED\n"; };
+#our void__method $inherited = sub { (my object $self, my string $person) = @_;  print "in Perl Bubble->inherited(), have \$self = '$self' and \$person = '$person', ILLOGICAL\n"; };
+our string $uninherited__Bubble = sub { (my string $person) = @_;  print "in Perl Bubble::uninherited__Bubble(), \$person = '$person', MITOCHONDRIAL\n";  return "Perl Bubble::uninherited__Bubble() RULES!"; };
+#our string $uninherited = sub { (my string $person) = @_;  print "in Perl Bubble::uninherited(), \$person = '$person', TETRAHEDRON\n";  return "Perl Bubble::uninherited() ROCKS!"; };

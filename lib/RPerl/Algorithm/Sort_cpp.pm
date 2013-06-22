@@ -6,6 +6,7 @@ our @ISA = ('RPerl::Class');
 use RPerl::Class;  use RPerl;
 
 use RPerl::HelperFunctions_cpp;
+use RPerl::Algorithm_cpp;
 
 our void__method $cpp_load = sub {
 ;	
@@ -13,7 +14,11 @@ our void__method $cpp_load = sub {
 		else { print "in Sort_cpp::cpp_load(), have \$RPerl::Algorithm::Sort_cpp::CPP_loaded = 'UNDEF'\n"; }
 	if (not(defined($RPerl::Algorithm::Sort_cpp::CPP_loaded)) or not($RPerl::Algorithm::Sort_cpp::CPP_loaded))
 	{
-		RPerl::HelperFunctions_cpp::cpp_load();
+		$RPerl::HelperFunctions_cpp::CPP_loaded = 1;  # HelperFunctions.c loaded by C++ #include in Sort.h 
+
+		####use RPerl::Algorithm;
+		$RPerl::Algorithm_cpp::CPP_loaded = 1;  # Algorithm.cpp loaded by C++ #include in Sort.h
+
 		my $eval_string = <<'EOF';
 package main;
 BEGIN { print "[[[ BEGIN 'use Inline' STAGE for 'RPerl/Algorithm/Sort.cpp' ]]]\n"x3; }
@@ -36,6 +41,7 @@ EOF
 		die(@_) if (@_);
 		
 		RPerl::HelperFunctions_cpp::cpp_link();
+		RPerl::Algorithm_cpp::cpp_link();
 		$RPerl::Algorithm::Sort_cpp::CPP_loaded = 1;
 	}
 	else { print "in Sort_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"; }

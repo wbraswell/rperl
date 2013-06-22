@@ -1,19 +1,18 @@
 #!/usr/bin/perl
+use strict;  use warnings;
 use lib '/tmp/RPerl-latest/lib';  # RPerl system files  # NEED REMOVE hard-coded path
-use strict;  use warnings;  use RPerl;  our @ISA = ('RPerl');
+use RPerl;  our @ISA = ('RPerl');
 
 use lib '/tmp/RPerl-latest/lib/CPAN';  # RPerl's MyConfig.pm  # NEED REMOVE hard-coded path
 use MyConfig;
 
 # supported algorithms
 #use RPerl::Algorithm::Sort::Bubble;  # choose ONE of this
-use RPerl::Algorithm::Sort::Bubble_cpp; RPerl::Algorithm::Sort::Bubble_cpp::cpp_load(); RPerl::Algorithm::Sort::Bubble_cpp::cpp_link(); # OR this
+use RPerl::Algorithm::Sort::Bubble_cpp;  RPerl::Algorithm::Sort::Bubble_cpp::cpp_load();  RPerl::Algorithm::Sort::Bubble_cpp::cpp_link(); # OR this
 
 # NEED FIX: these Perl packages use RPerl::Algorithm::Sort, which creates a conflict when Bubble_cpp has already loaded Sort.cpp
 #use RPerl::Algorithm::Sort::Quick;
 #use RPerl::Algorithm::Sort::Merge;
-
-our string $test_sub = sub { print "HOWDY FROM test_sub(), NICE TO MEET YOU!  RECEIVED \$\_[0] = '" . $_[0] . "'!\n";  return "wolvie_retval"; };
 
 # <<<=== SORT 1 ===>>>
 # <<<=== SORT 1 ===>>>
@@ -37,24 +36,31 @@ $algorithm = 'RPerl::Algorithm::Sort::Bubble';  # Bubble_cpp's class name is Bub
 
 for (my $i = 0; $i < 1;  $i++)
 {
-#	my $test_retval = test_sub("gumbee_pokey");
-#	print "TEST SUB SEZ: '$test_retval'\n";
-	
-#	$sorter = CPP::RPerl__Algorithm__Sort__Bubble->new();
-#	$sorter = Bubble->new();
-#	$sorter = $algorithm->new();
-	$sorter = new RPerl::Algorithm::Sort::Bubble;
-#	$sorter->set_variant($variant) if (defined($variant));
+	$sorter = $algorithm->new();
+	$sorter->set_variant($variant) if (defined($variant));
 	print "in multi_sort.pl, have \$i = $i and pre-data \$sorter =\n" . RPerl::DUMPER($sorter) . "\n" if $RPerl::DEBUG;
 	
-#	RPerl::Algorithm::Sort::inherited($sorter, "Jean Gray");  # Perl yes, C++ no
-#	RPerl::Algorithm::Sort->inherited("Phoenix");  # Perl yes, C++ no
-	$sorter->inherited("Logan");  # Perl yes, C++ yes
-#	inherited("LONG_LOST_BROTHER?", "Sabertooth");  # Perl no, C++ no; inherited method should only work as method!
-	not_inherited("Scott Summers");  # Perl yes, C++ yes
-#	RPerl::Algorithm::Sort::not_inherited("Cyclops");  # Perl yes, C++ no; bypass RPerl POST-INIT symbol table entries that put non-method not_inherited() in main::, use AUTOLOAD
-	main::not_inherited("Beast");  # Perl yes, C++ yes
-	::not_inherited("Dr. Hank McCoy");  # Perl yes, C++ yes
+	print "[[[ BEGIN INHERITANCE TESTING ]]]\n"x3;
+	$sorter->inherited__Algorithm("Frozen");  # RPerl yes, C++ yes
+	$sorter->inherited__Inefficient("Frozen");  # RPerl yes, C++ yes
+	$sorter->inherited__Sort("Frozen");  # RPerl yes, C++ yes
+	$sorter->inherited__Bubble("Frozen");  # RPerl yes, C++ yes
+	print "\n";
+#	RPerl::Algorithm::Sort::inherited($sorter, "Jean Gray");  # RPerl yes, C++ no
+#	RPerl::Algorithm::Sort->inherited("Scott Summers");  # RPerl yes, C++ no
+	$sorter->inherited("Logan");  # RPerl yes, C++ yes
+#	inherited("MANORBEAST?", "Dr. Hank McCoy");  # RPerl no, C++ no; inherited method should only work as method!
+	print "\n";
+	uninherited__Algorithm("Claws");  # RPerl yes, C++ yes
+	uninherited__Inefficient("Claws");  # RPerl yes, C++ yes
+	uninherited__Sort("Claws");  # RPerl yes, C++ yes
+	uninherited__Bubble("Claws");  # RPerl yes, C++ yes
+	print "\n";
+	uninherited("Wolverine");  # RPerl yes, C++ yes
+#	RPerl::Algorithm::Sort::uninherited("Phoenix");  # RPerl yes, C++ no; bypass RPerl POST-INIT symbol table entries that put non-method uninherited() in main::, use AUTOLOAD
+	main::uninherited("Wolvie");  # RPerl yes, C++ yes
+	::uninherited("wlverine");  # RPerl yes, C++ yes
+	print "[[[ END INHERITANCE TESTING ]]]\n"x3;
 	
 	# NEED CHOOSE: which data structure?
 #	$data = [21, 12, 31, 13, 42, 2012, 5555, 1.21, 33.3, 9999, -15, 0];

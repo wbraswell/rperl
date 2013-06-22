@@ -7,6 +7,7 @@ use RPerl::Class;  use RPerl;
 
 use RPerl::HelperFunctions_cpp;
 use RPerl::Algorithm::Sort_cpp;
+use RPerl::Algorithm::Inefficient_cpp;
 
 our void__method $cpp_load = sub {
 ;	
@@ -18,6 +19,9 @@ our void__method $cpp_load = sub {
 
 		####use RPerl::Algorithm::Sort;
 		$RPerl::Algorithm::Sort_cpp::CPP_loaded = 1;  # Sort.cpp loaded by C++ #include in Bubble.h
+
+		####use RPerl::Algorithm::Inefficient;
+		$RPerl::Algorithm::Inefficient_cpp::CPP_loaded = 1;  # Inefficient.cpp loaded by C++ #include in Bubble.h
 
 		my $eval_string = <<'EOF';
 package main;
@@ -47,6 +51,7 @@ EOF
 		
 		RPerl::HelperFunctions_cpp::cpp_link();
 		RPerl::Algorithm::Sort_cpp::cpp_link();
+		RPerl::Algorithm::Inefficient_cpp::cpp_link();
 		$RPerl::Algorithm::Sort::Bubble_cpp::CPP_loaded = 1;
 	}
 #	else { print "in Bubble_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"; }
@@ -63,7 +68,9 @@ package RPerl::Algorithm::Sort::Bubble_cpp;
 $CPP_linked = 1;
 1;
 package RPerl::Algorithm::Sort::Bubble;
-our @ISA = ('main::CPP__RPerl__Algorithm__Sort__Bubble', 'RPerl::Algorithm::Sort');
+# DEV NOTE, CORRELATION #01: multiple inheritance is enabled by _either_ Perl here or C++ at correlation in Bubble.h
+#our @ISA = ('main::CPP__RPerl__Algorithm__Sort__Bubble', 'RPerl::Algorithm::Sort');  # SINGLE INHERITANCE (not counting main::CPP__*)
+our @ISA = ('main::CPP__RPerl__Algorithm__Sort__Bubble', 'RPerl::Algorithm::Sort', 'RPerl::Algorithm::Inefficient');  # MULTIPLE INHERITANCE
 1;
 EOF
 #		print "in Bubble_cpp::cpp_link(), CPP not yet linked, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
