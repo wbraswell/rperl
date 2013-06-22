@@ -1,12 +1,14 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-//#include "/tmp/RPerl-latest/lib/RPerl/HelperFunctions.h"
-//#include <RPerl/HelperFunctions.h>
+#include "/tmp/RPerl-latest/lib/RPerl/HelperFunctions.c"		// -> HelperFunctions.h -> TERM
+//	#include <RPerl/HelperFunctions.c>
 
 ////use RPerl::Algorithm;
 //#include "/tmp/RPerl-latest/lib/RPerl/Algorithm.h"
 //#include <RPerl/Algorithm.h>
+
+#ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort_h
 
 /*
 void sort();  // DUMMY!
@@ -40,3 +42,6 @@ public:
 	// <<< TRANSLATED PROPERTY DECLARATIONS >>>
 	// NONE
 };
+
+#endif
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort_h 1

@@ -9,10 +9,12 @@ our void $not_inherited = sub { (my string $person) = @_;  print "[[[ HOW DO YOU
 
 
 # all of the following happen before the INIT block, and thus rely upon AUTOLOAD
+=SNIP
 print "WAZZUP FROM Sort.pm\n";
 inherited('FAKESELF', "Spidey");
 RPerl::Algorithm::Sort::inherited("FAKECLASS", "Peter Parker");
 RPerl::Algorithm::Sort->inherited("Mary Jane");
+=cut
 
 # pre-INIT AUTOLOAD resolution below only works with Perl, not Inline::CPP
 =SNIP

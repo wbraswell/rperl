@@ -7,9 +7,7 @@ use MyConfig;
 
 # supported algorithms
 #use RPerl::Algorithm::Sort::Bubble;  # choose ONE of this
-use RPerl::Algorithm::Sort::Bubble_cpp;  # OR this
-RPerl::Algorithm::Sort::Bubble_cpp::cpp_load();
-RPerl::Algorithm::Sort::Bubble_cpp::cpp_link();
+use RPerl::Algorithm::Sort::Bubble_cpp; RPerl::Algorithm::Sort::Bubble_cpp::cpp_load(); RPerl::Algorithm::Sort::Bubble_cpp::cpp_link(); # OR this
 
 # NEED FIX: these Perl packages use RPerl::Algorithm::Sort, which creates a conflict when Bubble_cpp has already loaded Sort.cpp
 #use RPerl::Algorithm::Sort::Quick;

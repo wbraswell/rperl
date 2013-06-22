@@ -1,10 +1,13 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-//#include "/tmp/RPerl-latest/lib/RPerl/HelperFunctions.h"
-//#include <RPerl/HelperFunctions.h>
+#include "/tmp/RPerl-latest/lib/RPerl/Algorithm/Sort.h"  // -> HelperFunctions.c || TERM
+//	#include <RPerl/Algorithm/Sort.h>
+
 //#include "/tmp/RPerl-latest/lib/RPerl/Algorithm/Sort.h"
 //#include <RPerl/Algorithm/Sort.h>
+
+#ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort_cpp
 
 ////our void__method $inherited = sub { (my object $self, my string $person) = @_;  print "[[[ HOWDY \$self $self \$person $person FROM INSIDE inherited()!!! ]]]\n"; };
 //void Sort::inherited(SV *person) { printf("[[[ C++ HOWDY $self %d $person %s FROM INSIDE inherited()!!! ]]]\n", 2112, SvPV_nolen(person)); }
@@ -24,3 +27,6 @@ void not_inherited(SV *person) { printf("[[[ C++ HOW DO YOU DO $person %s FROM I
 ////RPerl::Algorithm::Sort::not_inherited("Doctor Octavius");
 ////RPerl::Algorithm::Sort->not_inherited("Mad Scientist");  # ignores "Mad Scientist"
 ////print "LATERZ FROM Sort.pm\n";
+
+#endif
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort_cpp 1

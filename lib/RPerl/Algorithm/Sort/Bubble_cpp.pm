@@ -14,12 +14,10 @@ our void__method $cpp_load = sub {
 #		else { print "in Bubble_cpp::cpp_load(), have \$RPerl::Algorithm::Sort::Bubble_cpp::CPP_loaded = 'UNDEF'\n"; }
 	if (not(defined($RPerl::Algorithm::Sort::Bubble_cpp::CPP_loaded)) or not($RPerl::Algorithm::Sort::Bubble_cpp::CPP_loaded))
 	{
-		$RPerl::HelperFunctions_cpp::CPP_loaded = 1;  # HelperFunctions.cpp loaded by C++ #include in Bubble.cpp 
-
-# NEED FIX: Bubble.cpp should not load HelperFunctions.cpp, only HelperFunctions.h?  where then would we load HelperFunctions.cpp?
+		$RPerl::HelperFunctions_cpp::CPP_loaded = 1;  # HelperFunctions.c loaded by C++ #include in Bubble.h 
 
 		####use RPerl::Algorithm::Sort;
-		$RPerl::Algorithm::Sort_cpp::CPP_loaded = 1;  # Sort.cpp loaded by C++ #include in Bubble.cpp 
+		$RPerl::Algorithm::Sort_cpp::CPP_loaded = 1;  # Sort.cpp loaded by C++ #include in Bubble.h
 
 		my $eval_string = <<'EOF';
 package main;

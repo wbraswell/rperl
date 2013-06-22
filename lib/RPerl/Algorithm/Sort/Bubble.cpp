@@ -1,14 +1,10 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-#include "/tmp/RPerl-latest/lib/RPerl/HelperFunctions.h"		// -> TERM
-//#include <RPerl/HelperFunctions.h>
-#include "/tmp/RPerl-latest/lib/RPerl/HelperFunctions.c"		// -> TERM
-//#include <RPerl/HelperFunctions.c>
-#include "/tmp/RPerl-latest/lib/RPerl/Algorithm/Sort/Bubble.h"  // -> Sort.h -> TERM
-//#include <RPerl/Algorithm/Sort/Bubble.h>
-#include "/tmp/RPerl-latest/lib/RPerl/Algorithm/Sort.cpp"		// -> TERM
-//#include <RPerl/Algorithm/Sort.cpp>
+#include "/tmp/RPerl-latest/lib/RPerl/Algorithm/Sort/Bubble.h"  // -> (HelperFunctions.c || TERM) && Sort.cpp
+//	#include <RPerl/Algorithm/Sort/Bubble.h>
+
+#ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp
 
 ////# [object-oriented programming interface]
 ////# call out to sort data, return nothing
@@ -138,3 +134,6 @@ SV *bubblesort(SV *data)  // DEV NOTE: properly creates local-to-function SV* da
 	return data;
 ////};
 }
+
+#endif
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp 1

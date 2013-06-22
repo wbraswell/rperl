@@ -1,12 +1,13 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-//#include "/tmp/RPerl-latest/lib/RPerl/HelperFunctions.h"
-//#include <RPerl/HelperFunctions.h>
+#include "/tmp/RPerl-latest/lib/RPerl/HelperFunctions.c"		// -> HelperFunctions.h -> TERM
 
 ////use RPerl::Algorithm::Sort;
-#include "/tmp/RPerl-latest/lib/RPerl/Algorithm/Sort.h"
-//#include <RPerl/Algorithm/Sort.h>
+#include "/tmp/RPerl-latest/lib/RPerl/Algorithm/Sort.cpp"			// -> Sort.h -> IFTERM
+//	#include <RPerl/Algorithm/Sort.cpp>
+
+#ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h
 
 // <<< TRANSLATED FUNCTION DECLARATIONS >>>
 SV *bubblesort(SV *data);
@@ -44,3 +45,6 @@ private:
 ////);
 	SV *data;
 };
+
+#endif
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h 1
