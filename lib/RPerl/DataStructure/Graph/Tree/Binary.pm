@@ -1,6 +1,7 @@
+use strict;  use warnings;
 package RPerl::DataStructure::Graph::Tree::Binary;
-use strict; use warnings;
 
+# NEED FIX: weird inheritance for these as-reference-only data structures
 package RPerl::DataStructure::Graph::Tree::BinaryReference;
 our @ISA = ('RPerl::DataStructure::Graph::TreeReference');
 use RPerl::DataStructure::Graph::Tree;
@@ -9,14 +10,20 @@ use RPerl::DataStructure::Graph::Tree;
 use RPerl::DataStructure::Graph::Tree::Binary::Node;
 
 # code_ref parameter accepted by traverse method(s)
-use RPerl::DataStructure::Code;
+use RPerl::Code;
+
+# must include here because we do not inherit data types
+use RPerl::DataType::Unknown;
+use RPerl::DataType::String;
+use RPerl::DataStructure::Array;
+#use RPerl::Code::Subroutine::Method;  # NEED ADD: explicit method declarations
 
 our %properties =
 (
 	root => my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $KEY_root = undef,  # start with root = undef so we can test for empty tree
 );
 
-our RPerl::DataStructure::Graph::Tree::BinaryReference $new_from_nested_array_refs = sub {(my string $class, my const__array_ref $input) = @_;
+our RPerl::DataStructure::Graph::Tree::BinaryReference $new_from_nested_array_refs = sub {(my string $class, my const_array_ref $input) = @_;
 ;
 #	print "in ...Tree::BinaryReference::new_from_nested_array_refs(), received \$class = '$class', and \$input =\n" . RPerl::DUMPER($input) . "\n" if $RPerl::DEBUG;
 	my unknown $output = $class->new();
@@ -27,44 +34,37 @@ our RPerl::DataStructure::Graph::Tree::BinaryReference $new_from_nested_array_re
 };
 
 # much happens in the Node class, provide wrapper methods
-our unknown $traverse_breadthfirst_queue = sub {(my RPerl::DataStructure::Graph::Tree::BinaryReference $self, my RPerl::DataStructure::CodeReference $callback) = @_; return $self->{root}->traverse_breadthfirst_queue($callback) if defined($self->{root}); };
-our unknown $traverse_depthfirst_preorder = sub {(my RPerl::DataStructure::Graph::Tree::BinaryReference $self, my RPerl::DataStructure::CodeReference $callback) = @_; return $self->{root}->traverse_depthfirst_preorder($callback) if defined($self->{root}); };
+our unknown $traverse_breadthfirst_queue = sub {(my RPerl::DataStructure::Graph::Tree::BinaryReference $self, my RPerl::CodeReference $callback) = @_; return $self->{root}->traverse_breadthfirst_queue($callback) if defined($self->{root}); };
+our unknown $traverse_depthfirst_preorder = sub {(my RPerl::DataStructure::Graph::Tree::BinaryReference $self, my RPerl::CodeReference $callback) = @_; return $self->{root}->traverse_depthfirst_preorder($callback) if defined($self->{root}); };
 our array_ref $to_nested_array_refs = sub {(my RPerl::DataStructure::Graph::Tree::BinaryReference $data) = @_; return $data->{root}->to_nested_array_refs(); };
 
 
-# we only provide data structure references, not the direct data structures themselves,
-# because an RPerl::Class is a blessed hash _reference_, and we are not natively implementing the data structures in C here;
-# thus the slightly weird naming convention where some places have delimeters (:: or _) and some don't,
-# I favored the consistency of user-side RPerl data type short-form package alias _ delimeter over the Perl system-side package name scope :: delimeter 
+# [[[ BINARY TREES ]]]
+
+# ref to binary tree
+# DEV NOTE: for naming conventions, see DEV NOTE in same code section of LinkedList.pm
 package binarytree_ref;
 our @ISA = ('RPerl::DataStructure::Graph::Tree::BinaryReference');
 use RPerl::DataStructure::Graph::Tree::Binary;
 our %properties = %properties; our $new_from_nested_array_refs = $new_from_nested_array_refs; our $traverse_depthfirst_preorder = $traverse_depthfirst_preorder; our $to_nested_array_refs = $to_nested_array_refs; our $traverse_breadthfirst_queue = $traverse_breadthfirst_queue;
 
-
-package scalar_binarytree_ref;
+# ref to binary tree with const size
+package const_binarytree_ref;
 our @ISA = ('ref');
-use RPerl::DataStructure::Graph::Tree::Binary;
-our %properties = %properties; our $new_from_nested_array_refs = $new_from_nested_array_refs; our $traverse_depthfirst_preorder = $traverse_depthfirst_preorder; our $to_nested_array_refs = $to_nested_array_refs; our $traverse_breadthfirst_queue = $traverse_breadthfirst_queue;
 
 
-package const__binarytree_ref;
-our @ISA = ('binarytree_ref', 'const');
-use RPerl::DataStructure::Graph::Tree::Binary;
-use RPerl::DataType::Constant;
-our %properties = %properties; our $new_from_nested_array_refs = $new_from_nested_array_refs; our $traverse_depthfirst_preorder = $traverse_depthfirst_preorder; our $to_nested_array_refs = $to_nested_array_refs; our $traverse_breadthfirst_queue = $traverse_breadthfirst_queue;
+# [[[ INT BINARY TREES ]]]
 
+# (ref to binary tree) of ints
+package int__binarytree_ref;
+our @ISA = ('binarytree_ref');
+our %properties = %properties; our $new_from_array_ref = $new_from_array_ref; our $binarytree_unshift = $binarytree_unshift; our $DUMPER = $DUMPER;
 
-package const__scalar_binarytree_ref;
-our @ISA = ('scalar_binarytree_ref', 'const');
-use RPerl::DataStructure::Graph::Tree::Binary;
-use RPerl::DataType::Constant;
-our %properties = %properties; our $new_from_nested_array_refs = $new_from_nested_array_refs; our $traverse_depthfirst_preorder = $traverse_depthfirst_preorder; our $to_nested_array_refs = $to_nested_array_refs; our $traverse_breadthfirst_queue = $traverse_breadthfirst_queue;
+# (ref to binary tree with const size) of ints
+package int__const_binarytree_ref;
+our @ISA = ('const_binarytree_ref');
+our %properties = %properties; our $new_from_array_ref = $new_from_array_ref; our $binarytree_unshift = $binarytree_unshift; our $DUMPER = $DUMPER;
 
+# NEED ADD: remaining sub-types
 
-package binarytree_ref__method;
-our @ISA = ('method');
-
-
-package scalar_binarytree_ref__method;
-our @ISA = ('method');
+1;

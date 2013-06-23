@@ -17,7 +17,8 @@ void CPP__RPerl__Algorithm::inherited__Algorithm(SV *person) { cout << "in C++ P
 SV *uninherited__Algorithm(SV *person) { cout << "in C++ PERL_TYPES Algorithm::uninherited__Algorithm(), have $person = '" << SvPV_nolen(person) << "', MYSTIC\n";  return newSVpv("C++ PERL_TYPES Algorithm::uninherited__Algorithm() RULES!", 0); }
 
 ////our string $uninherited = sub { (my string $person) = @_;  print "in Perl Algorithm::uninherited(), \$person = '$person', TERRITORY\n";  return "Perl Algorithm::uninherited() ROCKS!"; };
-SV *uninherited(SV *person) { cout << "in C++ PERL_TYPES Algorithm::uninherited(), have $person = '" << SvPV_nolen(person) << "', TERRITORY\n";  return newSVpv("C++ PERL_TYPES Algorithm::uninherited() RULES!", 0); }
+//SV *uninherited(SV *person) { cout << "in C++ PERL_TYPES Algorithm::uninherited(), have $person = '" << SvPV_nolen(person) << "', TERRITORY\n";  return newSVpv("C++ PERL_TYPES Algorithm::uninherited() RULES!", 0); }  // PERL_TYPES
+char *uninherited(char *person) { cout << "in C++ CPP_TYPES Algorithm::uninherited(), have $person = '" << person << "', TETRAHEDRON\n";  return (char *)"C++ CPP_TYPES Algorithm::uninherited() RULES!"; }  // CPP_TYPES
 
 #endif
 #define __CPP__INCLUDED__RPerl__Algorithm_cpp 1

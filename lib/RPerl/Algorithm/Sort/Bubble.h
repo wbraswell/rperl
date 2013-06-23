@@ -17,8 +17,8 @@ using std::cout;  using std::endl;
 SV *bubblesort(SV *data);
 // [[[ INHERITANCE TESTING ]]]
 SV *uninherited__Bubble(SV *person);
-//SV *uninherited(SV *person);
-//char *uninherited(char *person);
+//SV *uninherited(SV *person);  // PERL_TYPES
+//char *uninherited(char *person);  // CPP_TYPES
 
 // DEV NOTE, CORRELATION #01: multiple inheritance is enabled by _either_ C++ here or Perl at correlation in Bubble_cpp.pm
 //class CPP__RPerl__Algorithm__Sort__Bubble : public CPP__RPerl__Algorithm__Sort  // SINGLE INHERITANCE
@@ -43,7 +43,7 @@ private:
 	// <<< TRANSLATED PROPERTY DECLARATIONS >>>
 ////our %properties =
 ////(
-////	data => my scalar_array_ref $KEY_data,
+////	data => my scalar__array_ref $KEY_data,
 ////);
 	SV *data;
 };

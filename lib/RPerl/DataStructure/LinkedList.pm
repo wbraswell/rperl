@@ -1,10 +1,14 @@
+use strict;  use warnings;
 package RPerl::DataStructure::LinkedList;
-use strict; use warnings;
+
+# NEED FIX: this is also a valid RPerl Class, but we can't inherit from RPerl::Class due to circular references?
+use RPerl::DataStructure::Array;
 
 package RPerl::DataStructure::LinkedListReference;
-our @ISA = ('RPerl::DataStructure', 'RPerl::DataType::Reference');
+# NEED ADDRESS: which inheritance???
+our @ISA = ('RPerl::DataStructure', 'RPerl::DataType::Modifier::Reference');
+#our @ISA = ('RPerl::DataType::Modifier::Reference');
 use RPerl::DataStructure;
-use RPerl::DataType::Reference;
 
 # linked lists are comprised of nodes
 use RPerl::DataStructure::LinkedList::Node;
@@ -14,7 +18,7 @@ our %properties =
 	head => my RPerl::DataStructure::LinkedList::NodeReference $KEY_head = undef,  # start with head = undef so we can test for empty list
 );
 
-our RPerl::DataStructure::LinkedListReference $new_from_array_ref = sub {(my string $class, my const__array_ref $input) = @_;
+our RPerl::DataStructure::LinkedListReference $new_from_array_ref = sub {(my string $class, my const_array_ref $input) = @_;
 ;
 #	print "in new_from_array_ref(), received \$class = '$class', and \$input =\n" . RPerl::DUMPER($input) . "\n" if $RPerl::DEBUG;
 	my unknown $output = $class->new();
@@ -38,7 +42,10 @@ our void $linkedlist_unshift = sub {(my RPerl::DataStructure::LinkedListReferenc
 our string__method $DUMPER = sub {(my RPerl::DataStructure::LinkedListReference $data) = @_; return $data->{head}->DUMPER(); };
 
 
-# we only provide data structure references, not the direct data structures themselves,
+# [[[ LINKED LISTS ]]]
+
+# ref to linked list
+# DEV NOTE: we only provide data structure references, not the direct data structures themselves,
 # because an RPerl::Class is a blessed hash _reference_, and we are not natively implementing the data structures in C here;
 # thus the slightly weird naming convention where some places have delimeters (:: or _) and some don't,
 # I favored the consistency of user-side RPerl data type short-form package alias _ delimeter over the Perl system-side package name scope :: delimeter 
@@ -48,30 +55,19 @@ use RPerl::DataStructure::LinkedList;
 # TODO: check if these (and other) symbol copies can be shortened???   move into import() subroutine to be automatically called by 'use' command?
 our %properties = %properties; our $new_from_array_ref = $new_from_array_ref; our $linkedlist_unshift = $linkedlist_unshift; our $DUMPER = $DUMPER;
 
+# ref to linked list with const size
+package const_linkedlist_ref;
+our @ISA = ('ref');
 
-package scalar_linkedlist_ref;
+
+# [[[ INT LINKED LISTS ]]]
+
+# (ref to linked list) of ints
+package int__linkedlist_ref;
 our @ISA = ('linkedlist_ref');
-use RPerl::DataStructure::LinkedList;
-our %properties = %properties; our $new_from_array_ref = $new_from_array_ref; our $linkedlist_unshift = $linkedlist_unshift; our $DUMPER = $DUMPER;
 
+# (ref to linked list with const size) of ints
+package int__const_linkedlist_ref;
+our @ISA = ('const_linkedlist_ref');
 
-package const__linkedlist_ref;
-our @ISA = ('linkedlist_ref', 'const');
-use RPerl::DataStructure::LinkedList;
-use RPerl::DataType::Constant;
-our %properties = %properties; our $new_from_array_ref = $new_from_array_ref; our $linkedlist_unshift = $linkedlist_unshift; our $DUMPER = $DUMPER;
-
-
-package const___scalar_linkedlist_ref;
-our @ISA = ('scalar_linkedlist_ref', 'const');
-use RPerl::DataStructure::LinkedList;
-use RPerl::DataType::Constant;
-our %properties = %properties; our $new_from_array_ref = $new_from_array_ref; our $linkedlist_unshift = $linkedlist_unshift; our $DUMPER = $DUMPER;
-
-
-package linkedlist_ref__method;
-our @ISA = ('method');
-
-
-package scalar_linkedlist_ref__method;
-our @ISA = ('method');
+# NEED ADD: remaining sub-types

@@ -1,30 +1,21 @@
+use strict;  use warnings;
 package RPerl::DataType::String;
-use strict; use warnings;
+
 our @ISA = ('RPerl::DataType::Scalar');
 use RPerl::DataType::Scalar;
-use RPerl::DataType::Constant;
-use RPerl::DataType::Reference;
 
-
+# a string is 0 or more letters, digits, or other ASCII (Unicode???) symbols
 package string;
 our @ISA = ('RPerl::DataType::String');
 
-
-package const__string;
+# string with const value
+package const_string;
 our @ISA = ('string', 'const');
 
-
+# ref to string
 package string_ref;
 our @ISA = ('ref');
 
-
-package const__string_ref;
-our @ISA = ('string_ref', 'const');
-
-
-package string__method;
-our @ISA = ('method');
-
-
-package string_ref__method;
-our @ISA = ('method');
+# ref to (string with const value)
+package const_string_ref;
+our @ISA = ('ref');

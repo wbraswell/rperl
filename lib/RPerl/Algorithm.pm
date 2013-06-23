@@ -1,8 +1,9 @@
 use strict;  use warnings;
 package RPerl::Algorithm;
 
+# RPerl Base Class
 our @ISA = ('RPerl::Class');
-use RPerl::Class; use RPerl; # the base classes that directly call "use RPerl::Class;" also need to "use RPerl;" to get "use types;", etc.
+use RPerl::Class;  use RPerl;
 
 # [[[ INHERITANCE TESTING ]]]
 our void__method $inherited__Algorithm = sub { (my object $self, my string $person) = @_;  print "in Perl Algorithm->inherited__Algorithm(), have \$self = '$self' and \$person = '$person', FNORD\n"; };

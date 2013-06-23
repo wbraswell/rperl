@@ -7,8 +7,8 @@ use lib '/tmp/RPerl-latest/lib/CPAN';  # RPerl's MyConfig.pm  # NEED REMOVE hard
 use MyConfig;
 
 # supported algorithms
-#use RPerl::Algorithm::Sort::Bubble;  # choose ONE of this
-use RPerl::Algorithm::Sort::Bubble_cpp;  RPerl::Algorithm::Sort::Bubble_cpp::cpp_load();  RPerl::Algorithm::Sort::Bubble_cpp::cpp_link(); # OR this
+use RPerl::Algorithm::Sort::Bubble;  # choose ONE of this
+#use RPerl::Algorithm::Sort::Bubble_cpp;  RPerl::Algorithm::Sort::Bubble_cpp::cpp_load();  RPerl::Algorithm::Sort::Bubble_cpp::cpp_link(); # OR this
 
 # NEED FIX: these Perl packages use RPerl::Algorithm::Sort, which creates a conflict when Bubble_cpp has already loaded Sort.cpp
 #use RPerl::Algorithm::Sort::Quick;
@@ -21,7 +21,7 @@ use RPerl::Algorithm::Sort::Bubble_cpp;  RPerl::Algorithm::Sort::Bubble_cpp::cpp
 my string $algorithm;
 my string $variant = undef;
 my object $sorter;
-my scalar_array_ref $data;
+my number__array_ref $data;
 
 # NEED CHOOSE: which general algorithm?
 $algorithm = 'RPerl::Algorithm::Sort::Bubble';  # Bubble_cpp's class name is Bubble, so use this one
@@ -114,7 +114,7 @@ print "in multi_sort.pl, have sorted \$sorter2->{data} =\n" . RPerl::DUMPER($sor
 # <<<=== SORT 3 ===>>>
 
 # NEED CHOOSE: which data structure?
-my scalar_array_ref $data2 = [12, 11, 10, 9, 8, 7, 6];
+my number__array_ref $data2 = [12, 11, 10, 9, 8, 7, 6];
 #my scalar_linkedlist_ref $data2 = scalar_linkedlist_ref->new_from_array_ref([12, 11, 10, 9, 8, 7, 6]);
 print "in multi_sort.pl, have unsorted \$data2 =\n" . RPerl::DUMPER($data2) . "\n" if $RPerl::DEBUG;
 

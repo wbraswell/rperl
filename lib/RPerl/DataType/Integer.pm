@@ -1,30 +1,21 @@
+use strict;  use warnings;
 package RPerl::DataType::Integer;
-use strict; use warnings;
+
 our @ISA = ('RPerl::DataType::Number');
 use RPerl::DataType::Number;
-use RPerl::DataType::Constant;
-use RPerl::DataType::Reference;
 
-
+# an integer is a whole number, it has no floating-point (fractional/decimal) component
 package int;
 our @ISA = ('RPerl::DataType::Integer');
 
-
-package const__int;
+# int with const value
+package const_int;
 our @ISA = ('int', 'const');
 
-
+# ref to int
 package int_ref;
 our @ISA = ('ref');
 
-
-package const__int_ref;
-our @ISA = ('int_ref', 'const');
-
-
-package int__method;
-our @ISA = ('method');
-
-
-package int_ref__method;
-our @ISA = ('method');
+# ref to (int with const value)
+package const_int_ref;
+our @ISA = ('ref');

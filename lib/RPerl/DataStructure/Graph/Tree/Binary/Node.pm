@@ -1,13 +1,17 @@
-package RPerl::DataStructure::Graph::Tree::Binary::Node;
 use strict;  use warnings;
+package RPerl::DataStructure::Graph::Tree::Binary::Node;
 
 package RPerl::DataStructure::Graph::Tree::Binary::NodeReference;
-our @ISA = ('RPerl::DataStructure', 'RPerl::DataType::Reference');
+our @ISA = ('RPerl::DataStructure', 'RPerl::DataType::Modifier::Reference');
 use RPerl::DataStructure;
-use RPerl::DataType::Reference;
 
 # code_ref parameter accepted by traverse method(s)
-use RPerl::DataStructure::Code;
+use RPerl::Code;
+
+# must include here because we do not inherit data types
+use RPerl::DataType::Unknown;
+use RPerl::DataStructure::Array;
+use RPerl::Code::Subroutine::Method;
 
 our %properties =
 (
@@ -17,7 +21,7 @@ our %properties =
 );
 
 # traverse nodes breadth-first
-our unknown__method $traverse_breadthfirst_queue = sub {(my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $self, my RPerl::DataStructure::CodeReference $callback) = @_;
+our unknown__method $traverse_breadthfirst_queue = sub {(my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $self, my RPerl::CodeReference $callback) = @_;
 ;
 	print "in ...Tree::Binary::NodeReference::traverse_breadthfirst_queue(), received \$self = \n" . RPerl::DUMPER($self) . "\n" if $RPerl::DEBUG;
 	my @return_value = ();
@@ -47,7 +51,7 @@ our unknown__method $traverse_breadthfirst_queue = sub {(my RPerl::DataStructure
 };
 
 # traverse nodes depth-first in pre-order
-our unknown__method $traverse_depthfirst_preorder = sub {(my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $self, my RPerl::DataStructure::CodeReference $callback) = @_;
+our unknown__method $traverse_depthfirst_preorder = sub {(my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $self, my RPerl::CodeReference $callback) = @_;
 ;
 	print "in ...Tree::Binary::NodeReference::traverse_depthfirst_preorder(), received \$self = \n" . RPerl::DUMPER($self) . "\n" if $RPerl::DEBUG;
 #	print "in ...Tree::Binary::NodeReference::traverse_depthfirst_preorder(), received \$callback = " . RPerl::DUMPER($callback) . "\n" if $RPerl::DEBUG;
@@ -112,7 +116,7 @@ our unknown__method $to_nested_array_refs = sub {(my RPerl::DataStructure::Graph
 };
 
 # accept nested array refs, return binary tree nodes
-our RPerl::DataStructure::Graph::Tree::Binary::NodeReference $new_from_nested_array_refs = sub {(my string $class, my const__array_ref $input) = @_;
+our RPerl::DataStructure::Graph::Tree::Binary::NodeReference $new_from_nested_array_refs = sub {(my string $class, my const_array_ref $input) = @_;
 ;
 #	print "in ...Tree::Binary::NodeReference::new_from_nested_array_refs(), received \$class = '$class', and \$input =\n" . RPerl::DUMPER($input) . "\n" if $RPerl::DEBUG;
 	my unknown $output = $class->new();
@@ -144,15 +148,9 @@ our string__method $DUMPER = sub {(my RPerl::DataStructure::Graph::Tree::Binary:
 =cut
 
 
-# we only provide data structure references, not the direct data structures themselves,
-# because an RPerl::Class is a blessed hash _reference_, and we are not natively implementing the data structures in C here;
-# thus the slightly weird naming convention where some places have delimeters (:: or _) and some don't,
-# I favored the consistency of user-side RPerl data type short-form package alias _ delimeter over the Perl system-side package name scope :: delimeter 
+# ref to (binary tree node)
+# DEV NOTE: for naming conventions, see DEV NOTE in same code section of LinkedList.pm
 package binarytreenode_ref;
 our @ISA = ('RPerl::DataStructure::Graph::Tree::Binary::NodeReference');
 use RPerl::DataStructure::Graph::Tree::Binary::Node;
 our %properties = %properties; our $new_from_nested_array_refs = $new_from_nested_array_refs; our $traverse_depthfirst_preorder = $traverse_depthfirst_preorder; our $to_nested_array_refs = $to_nested_array_refs; our $traverse_breadthfirst_queue = $traverse_breadthfirst_queue;
-
-
-package binarytreenode_ref__method;
-our @ISA = ('method');

@@ -29,9 +29,9 @@ our void__method $sort = sub {(my object $self) = @_;
 
 # top-down variant: comparison-based and stable and online [O(n log n) average total time, O(n) worst-case total extra space]
 # sort data, return sorted data
-our scalar_array_ref $mergesort_array_topdown = sub {(my scalar_array_ref $data) = @_;
+our scalar__array_ref $mergesort_array_topdown = sub {(my scalar__array_ref $data) = @_;
 ;
-	my const__int $data_length = scalar(@{$data});
+	my const_int $data_length = scalar(@{$data});
 	
 #	print "in mergesort_array_topdown(), have \$data = \n" . RPerl::DUMPER($data) . "\n" if $RPerl::DEBUG;
 #	print "in mergesort_array_topdown(), have \$data_length = $data_length\n" if $RPerl::DEBUG;
@@ -40,9 +40,9 @@ our scalar_array_ref $mergesort_array_topdown = sub {(my scalar_array_ref $data)
 	return $data if ($data_length <= 1);
 	
 	# split data in half at midpoint
-	my const__int $i_middle = int($data_length / 2);
-	my scalar_array_ref $left = [@$data[0 .. ($i_middle - 1)]];
-	my scalar_array_ref $right = [@$data[$i_middle .. ($data_length - 1)]];
+	my const_int $i_middle = int($data_length / 2);
+	my scalar__array_ref $left = [@$data[0 .. ($i_middle - 1)]];
+	my scalar__array_ref $right = [@$data[$i_middle .. ($data_length - 1)]];
 	
 	# recursively call this function on the sublists [O(log n) time], then merge the lengths-add-to-n sublists [O(n) time]
 	$left = mergesort_array_topdown($left);
@@ -55,13 +55,13 @@ our scalar_array_ref $mergesort_array_topdown = sub {(my scalar_array_ref $data)
 };
 
 # top-down variant; merge sublists data, return merged data [O(n) time, O(n) total extra space]
-our scalar_array_ref $merge_array_topdown = sub {(my scalar_array_ref $left, my scalar_array_ref $right) = @_;
+our scalar__array_ref $merge_array_topdown = sub {(my scalar__array_ref $left, my scalar__array_ref $right) = @_;
 ;
 	my int $left_length = scalar(@{$left});
 	my int $right_length = scalar(@{$right});
 	
 	# merged sublists [O(n) total extra space]
-	my @merged_scalar_array = ();
+	my @merged_scalar__array = ();
 	
 	# iteratively merge elements of lengths-add-to-n sublists [O(n) time, O(n) total extra space for merged sublists]
 	while (($left_length > 0) || ($right_length > 0))
@@ -69,26 +69,26 @@ our scalar_array_ref $merge_array_topdown = sub {(my scalar_array_ref $left, my 
 		if (($left_length > 0) && ($right_length > 0))
 		{
 			# compare elements and merge in smaller element, this is the core sort comparison
-			if ($left->[0] <= $right->[0]) { push(@merged_scalar_array, shift(@{$left}));  $left_length--; }
-			else { push(@merged_scalar_array, shift(@{$right}));  $right_length--; }
+			if ($left->[0] <= $right->[0]) { push(@merged_scalar__array, shift(@{$left}));  $left_length--; }
+			else { push(@merged_scalar__array, shift(@{$right}));  $right_length--; }
 		}
-		elsif ($left_length > 0) { @merged_scalar_array = (@merged_scalar_array, @{$left});  $left_length = 0; }
-		elsif ($right_length > 0) { @merged_scalar_array = (@merged_scalar_array, @{$right});  $right_length = 0; }
+		elsif ($left_length > 0) { @merged_scalar__array = (@merged_scalar__array, @{$left});  $left_length = 0; }
+		elsif ($right_length > 0) { @merged_scalar__array = (@merged_scalar__array, @{$right});  $right_length = 0; }
 	}
 	
-	return \@merged_scalar_array;
+	return \@merged_scalar__array;
 };
 
 # bottom-up variant: comparison-based and stable and online [O(n log n) average total time, O(n) worst-case total extra space]
 # sort data, return sorted data
-our scalar_array_ref $mergesort_array_bottomup = sub {(my scalar_array_ref $data) = @_;
+our scalar__array_ref $mergesort_array_bottomup = sub {(my scalar__array_ref $data) = @_;
 ;
-	my const__int $data_length = scalar(@{$data});
+	my const_int $data_length = scalar(@{$data});
 	my int $width;	
 	my int $i;
 	
 	# temporary storage for partially sorted data [O(n) total extra space; counted for this function, not the merge_array_bottomup() function]
-	my scalar_array_ref $tmp_data = [];
+	my scalar__array_ref $tmp_data = [];
 	
 #	print "in mergesort_array_bottomup(), have \$data = \n" . RPerl::DUMPER($data) . "\n" if $RPerl::DEBUG;
 #	print "in mergesort_array_bottomup(), have \$data_length = $data_length\n" if $RPerl::DEBUG;
@@ -111,7 +111,7 @@ our scalar_array_ref $mergesort_array_bottomup = sub {(my scalar_array_ref $data
 };
 
 # bottom-up variant; merge sublists, return nothing [O(n) time, O(1) extra space]
-our void $merge_array_bottomup = sub {(my scalar_array_ref $data, my scalar_array_ref $tmp_data, my const__int $i_left, my const__int $i_right, my const__int $i_end) = @_;
+our void $merge_array_bottomup = sub {(my scalar__array_ref $data, my scalar__array_ref $tmp_data, my const_int $i_left, my const_int $i_right, my const_int $i_end) = @_;
 ;
 	my int $i0 = $i_left;
 	my int $i1 = $i_right;
@@ -145,7 +145,7 @@ our void $merge_array_bottomup = sub {(my scalar_array_ref $data, my scalar_arra
 };
 
 # bottom-up variant; return smaller of 2 scalars [O(1) time, O(1) extra space]
-our scalar $min = sub {(my const__scalar $a, my const__scalar $b) = @_; if ($a < $b) {return $a;} else {return $b;}};
+our scalar $min = sub {(my const_scalar $a, my const_scalar $b) = @_; if ($a < $b) {return $a;} else {return $b;}};
 
 # linked list, top-down variant: comparison-based and stable and online [O(n log n) average total time, O(1) worst-case total extra space]
 # sort data starting at head node, return new head node of sorted data

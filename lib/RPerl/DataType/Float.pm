@@ -1,30 +1,21 @@
+use strict;  use warnings;
 package RPerl::DataType::Float;
-use strict; use warnings;
+
 our @ISA = ('RPerl::DataType::Number');
 use RPerl::DataType::Number;
-use RPerl::DataType::Constant;
-use RPerl::DataType::Reference;
 
-
+# a floating-point number has a fractional/decimal component
 package float;
 our @ISA = ('RPerl::DataType::Float');
 
-
-package const__float;
+# float with const value
+package const_float;
 our @ISA = ('float', 'const');
 
-
+# ref to float
 package float_ref;
 our @ISA = ('ref');
 
-
-package const__float_ref;
-our @ISA = ('float_ref', 'const');
-
-
-package float__method;
-our @ISA = ('method');
-
-
-package float_ref__method;
-our @ISA = ('method');
+# ref to (float with const value)
+package const_float_ref;
+our @ISA = ('ref');

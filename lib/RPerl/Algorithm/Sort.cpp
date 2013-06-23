@@ -17,7 +17,8 @@ void CPP__RPerl__Algorithm__Sort::inherited__Sort(SV *person) { cout << "in C++ 
 SV *uninherited__Sort(SV *person) { cout << "in C++ PERL_TYPES Sort::uninherited__Sort(), have $person = '" << SvPV_nolen(person) << "', MY\n";  return newSVpv("C++ PERL_TYPES Sort::uninherited__Sort() RULES!", 0); }
 
 ////our string $uninherited = sub { (my string $person) = @_;  print "in Perl Sort::uninherited(), \$person = '$person', TROUSERS\n";  return "Perl Sort::uninherited() ROCKS!"; };
-//SV *uninherited(SV *person) { cout << "in C++ PERL_TYPES Sort::uninherited(), have $person = '" << SvPV_nolen(person) << "', TROUSERS\n";  return newSVpv("C++ PERL_TYPES Sort::uninherited() RULES!", 0); }
+//SV *uninherited(SV *person) { cout << "in C++ PERL_TYPES Sort::uninherited(), have $person = '" << SvPV_nolen(person) << "', TROUSERS\n";  return newSVpv("C++ PERL_TYPES Sort::uninherited() RULES!", 0); }  // PERL_TYPES
+//char *uninherited(char *person) { cout << "in C++ CPP_TYPES Sort::uninherited(), have $person = '" << person << "', TETRAHEDRON\n";  return (char *)"C++ CPP_TYPES Sort::uninherited() RULES!"; }  // CPP_TYPES
 
 #endif
 #define __CPP__INCLUDED__RPerl__Algorithm__Sort_cpp 1

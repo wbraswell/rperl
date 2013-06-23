@@ -1,28 +1,22 @@
+use strict;  use warnings;
 package RPerl::DataType::Scalar;
-use strict; use warnings;
-use RPerl::DataType::Constant;
-use RPerl::DataType::Reference;
 
+our @ISA = ('RPerl::DataType');
+use RPerl::DataType;
 
+# a scalar is a known, non-void data type, meaning a number or a string
+# DEV NOTE: overload Perl's 'scalar' keyword
 package scalar;
 our @ISA = ('RPerl::DataType::Scalar');
 
-
-package const__scalar;
+# scalar with const value
+package const_scalar;
 our @ISA = ('scalar', 'const');
 
-
+# ref to scalar
 package scalar_ref;
 our @ISA = ('ref');
 
-
-package const__scalar_ref;
-our @ISA = ('scalar_ref', 'const');
-
-
-package scalar__method;
-our @ISA = ('method');
-
-
-package scalar_ref__method;
-our @ISA = ('method');
+# ref to (scalar with const value)
+package const_scalar_ref;
+our @ISA = ('ref');

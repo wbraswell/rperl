@@ -28,7 +28,7 @@ void CPP__RPerl__Algorithm__Sort__Bubble::sort()
 ////# [procedural programming interface]
 ////# original algorithm: comparison-based and stable [O(n**2) average time, O(1) worst-case extra space]
 ////# sort data, return sorted data
-////our scalar_array_ref $bubblesort = sub {(my scalar_array_ref $data) = @_;
+////our scalar__array_ref $bubblesort = sub {(my scalar__array_ref $data) = @_;
 SV *bubblesort(SV *data)  // DEV NOTE: properly creates local-to-function SV* data here, does not get confused with this->data object property, even though they share a name
 ////;
 {
@@ -88,7 +88,8 @@ SV *bubblesort(SV *data)  // DEV NOTE: properly creates local-to-function SV* da
 //			if (SvNV(AV_ELEMENT((AV*) SvRV(data), i)) > SvNV(AV_ELEMENT((AV*) SvRV(data), (i + 1))))  // DE-OPTIMIZE, SHORT-HAND
 			data_i = AV_ELEMENT(data_av, i);  // OPTIMIZE, LONG-HAND: use data_i and data_av
 			data_i_plus_1 = AV_ELEMENT(data_av, (i + 1));  // OPTIMIZE, LONG-HAND: use data_i_plus_1 and data_av
-			// NEED ANSWER: assuming numeric value and using C++ numeric comparator, is this appropriate?
+
+			// DEV NOTE: data is of type number__array_ref, assuming numeric values for data elements and using C++ numeric comparator
 			if (SvNV(data_i) > SvNV(data_i_plus_1))  // OPTIMIZE, LONG-HAND: use data_i and data_i_plus_1
 ////			{
 			{
@@ -146,8 +147,8 @@ void CPP__RPerl__Algorithm__Sort__Bubble::inherited__Bubble(SV *person) { cout <
 SV *uninherited__Bubble(SV *person) { cout << "in C++ PERL_TYPES Bubble::uninherited__Bubble(), have $person = '" << SvPV_nolen(person) << "', MITOCHONDRIAL\n";  return newSVpv("C++ PERL_TYPES Bubble::uninherited__Bubble() RULES!", 0); }
 
 ////our string $uninherited = sub { (my string $person) = @_;  print "in Perl Bubble::uninherited(), \$person = '$person', TETRAHEDRON\n";  return "Perl Bubble::uninherited() ROCKS!"; };
-//SV *uninherited(SV *person) { cout << "in C++ PERL_TYPES Bubble::uninherited(), have $person = '" << SvPV_nolen(person) << "', TETRAHEDRON\n";  return newSVpv("C++ PERL_TYPES Bubble::uninherited() RULES!", 0); }
-//char *uninherited(char *person) { cout << "in C++ CPP_TYPES Bubble::uninherited(), have $person = '" << person << "', TETRAHEDRON\n";  return "C++ CPP_TYPES Bubble::uninherited() RULES!"; }
+//SV *uninherited(SV *person) { cout << "in C++ PERL_TYPES Bubble::uninherited(), have $person = '" << SvPV_nolen(person) << "', TETRAHEDRON\n";  return newSVpv("C++ PERL_TYPES Bubble::uninherited() RULES!", 0); }  // PERL_TYPES
+//char *uninherited(char *person) { cout << "in C++ CPP_TYPES Bubble::uninherited(), have $person = '" << person << "', TETRAHEDRON\n";  return (char *)"C++ CPP_TYPES Bubble::uninherited() RULES!"; }  // CPP_TYPES
 
 #endif
 #define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp 1

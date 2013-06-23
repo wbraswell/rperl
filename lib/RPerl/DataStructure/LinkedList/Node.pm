@@ -1,10 +1,15 @@
-package RPerl::DataStructure::LinkedList::Node;
 use strict;  use warnings;
+package RPerl::DataStructure::LinkedList::Node;
 
 package RPerl::DataStructure::LinkedList::NodeReference;
-our @ISA = ('RPerl::DataStructure', 'RPerl::DataType::Reference');
+our @ISA = ('RPerl::DataStructure', 'RPerl::DataType::Modifier::Reference');
 use RPerl::DataStructure;
-use RPerl::DataType::Reference;
+
+# must include here because we do not inherit data types
+use RPerl::DataType::Integer;
+use RPerl::DataType::String;
+use RPerl::DataType::Unknown;
+use RPerl::Code::Subroutine::Method;
 
 our %properties =
 (
@@ -30,16 +35,9 @@ our string__method $DUMPER = sub {(my RPerl::DataStructure::LinkedList::NodeRefe
 	return $dumped;
 };
 
-
-# we only provide data structure references, not the direct data structures themselves,
-# because an RPerl::Class is a blessed hash _reference_, and we are not natively implementing the data structures in C here;
-# thus the slightly weird naming convention where some places have delimeters (:: or _) and some don't,
-# I favored the consistency of user-side RPerl data type short-form package alias _ delimeter over the Perl system-side package name scope :: delimeter 
+# ref to (linked list node)
+# DEV NOTE: for naming conventions, see DEV NOTE in same code section of LinkedList.pm
 package linkedlistnode_ref;
 our @ISA = ('RPerl::DataStructure::LinkedList::NodeReference');
 use RPerl::DataStructure::LinkedList::Node;
 our %properties = %properties;
-
-
-package linkedlistnode_ref__method;
-our @ISA = ('method');

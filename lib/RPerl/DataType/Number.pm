@@ -1,30 +1,21 @@
+use strict;  use warnings;
 package RPerl::DataType::Number;
-use strict; use warnings;
+
 our @ISA = ('RPerl::DataType::Scalar');
 use RPerl::DataType::Scalar;
-use RPerl::DataType::Constant;
-use RPerl::DataType::Reference;
 
-
+# a number is any numeric value, meaning either an integer or a floating-point number
 package number;
 our @ISA = ('RPerl::DataType::Number');
 
-
-package const__number;
+# number with const value
+package const_number;
 our @ISA = ('number', 'const');
 
-
+# ref to number
 package number_ref;
 our @ISA = ('ref');
 
-
-package const__number_ref;
-our @ISA = ('number_ref', 'const');
-
-
-package number__method;
-our @ISA = ('method');
-
-
-package number_ref__method;
-our @ISA = ('method');
+# ref to (number with const value)
+package const_number_ref;
+our @ISA = ('ref');

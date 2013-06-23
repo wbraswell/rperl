@@ -13,7 +13,8 @@ using std::cout;  using std::endl;
 // <<< TRANSLATED FUNCTION DECLARATIONS >>>
 // [[[ INHERITANCE TESTING ]]]
 SV *uninherited__Sort(SV *person);
-//SV *uninherited(SV *person);
+//SV *uninherited(SV *person);  // PERL_TYPES
+//char *uninherited(char *person);  // CPP_TYPES
 
 ////package RPerl::Algorithm::Sort;
 ////our @ISA = ('RPerl::Algorithm');

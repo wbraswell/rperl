@@ -1,17 +1,22 @@
-package RPerl::DataStructure::Graph;
 use strict;  use warnings; 
+package RPerl::DataStructure::Graph;
 
-
-package RPerl::DataStructure::GraphReference;
-our @ISA = ('RPerl::DataStructure', 'RPerl::DataType::Reference');
+# NEED ADDRESS: which inheritance???
+our @ISA = ('RPerl::DataStructure', 'RPerl::DataType::Modifier::Reference');
+#our @ISA = ('RPerl::DataType::Modifier::Reference');
 use RPerl::DataStructure;
-use RPerl::DataType::Reference;
 
 
+# [[[ GRAPHS ]]]
+
+# ref to graph
 package graph_ref;
 our @ISA = ('RPerl::DataStructure::GraphReference'); 
 use RPerl::DataStructure::Graph;
 
+# ref to graph with const size
+package const_graph_ref;
+our @ISA = ('ref'); 
+use RPerl::DataStructure::Graph;
 
-package graph_ref__method;
-our @ISA = ('method');
+# NEED ADD: remaining sub-types
