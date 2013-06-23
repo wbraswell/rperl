@@ -16,6 +16,7 @@ The RPerl source code repository may be found on Github here:
 https://github.com/wbraswell/rperl/
 
 RPerl is copyright (c) 2013, William N. Braswell, Jr.
+Copyleft, All Rights Reversed.
 
 RPerl is made available under the same terms as Perl itself:
 
