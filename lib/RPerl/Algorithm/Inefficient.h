@@ -15,6 +15,8 @@ using std::cout;  using std::endl;
 SV *uninherited__Inefficient(SV *person);
 //SV *uninherited(SV *person);  // PERL_TYPES
 //char *uninherited(char *person);  // CPP_TYPES
+//void uninherited__string_array_in(char **people);  // CPP_TYPES
+void uninherited__string_array_in();  // CPP_TYPES
 
 ////package RPerl::Algorithm::Inefficient;
 ////our @ISA = ('RPerl::Algorithm');

@@ -7,8 +7,8 @@ use lib '/tmp/RPerl-latest/lib/CPAN';  # RPerl's MyConfig.pm  # NEED REMOVE hard
 use MyConfig;
 
 # supported algorithms
-use RPerl::Algorithm::Sort::Bubble;  # choose ONE of this
-#use RPerl::Algorithm::Sort::Bubble_cpp;  RPerl::Algorithm::Sort::Bubble_cpp::cpp_load();  RPerl::Algorithm::Sort::Bubble_cpp::cpp_link(); # OR this
+#use RPerl::Algorithm::Sort::Bubble;  # choose ONE of this
+use RPerl::Algorithm::Sort::Bubble_cpp;  RPerl::Algorithm::Sort::Bubble_cpp::cpp_load();  RPerl::Algorithm::Sort::Bubble_cpp::cpp_link(); # OR this
 
 # NEED FIX: these Perl packages use RPerl::Algorithm::Sort, which creates a conflict when Bubble_cpp has already loaded Sort.cpp
 #use RPerl::Algorithm::Sort::Quick;
@@ -61,6 +61,11 @@ for (my $i = 0; $i < 1;  $i++)
 	main::uninherited("Wolvie");  # RPerl yes, C++ yes
 	::uninherited("wlverine");  # RPerl yes, C++ yes
 	print "[[[ END INHERITANCE TESTING ]]]\n"x3;
+	
+	print "[[[ BEGIN TYPE TESTING ]]]\n"x3;
+#	uninherited__string_array_in(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']);
+	uninherited__string_array_in();
+	print "[[[ END TYPE TESTING ]]]\n"x3;
 	
 	# NEED CHOOSE: which data structure?
 #	$data = [21, 12, 31, 13, 42, 2012, 5555, 1.21, 33.3, 9999, -15, 0];

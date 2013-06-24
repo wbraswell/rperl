@@ -30,6 +30,7 @@ use Inline
 (
 #	CPP => 'RPerl/Algorithm/Sort/Bubble.cpp',
 	CPP => '/tmp/RPerl-latest/lib/RPerl/Algorithm/Sort/Bubble.cpp',
+#	TYPEMAPS => '/tmp/RPerl-latest/lib/RPerl/DataStructure/Array.typemap',  # DOES NOT OVERRIDE ALREADY-SET TYPEMAP IN PERL CORE
 	CCFLAGS => '-Wno-deprecated',
 	BUILD_NOISY => 1,
 	CLEAN_AFTER_BUILD => 0,

@@ -10,6 +10,9 @@ our void__method $inherited = sub { (my object $self, my string $person) = @_;  
 our string $uninherited__Inefficient = sub { (my string $person) = @_;  print "in Perl Inefficient::uninherited__Inefficient(), \$person = '$person', MESSY\n";  return "Perl Inefficient::uninherited__Inefficient() RULES!"; };
 #our string $uninherited = sub { (my string $person) = @_;  print "in Perl Inefficient::uninherited(), \$person = '$person', TRICKS\n";  return "Perl Inefficient::uninherited() ROCKS!"; };
 
+# [[[ TYPE TESTING ]]]
+our void $uninherited__string_array_in = sub { (my string__array_ref $people) = @_;  for (my int $i = 0;  $i < @{$people};  $i++) { print "in Perl Inefficient::uninherited__string_array_in(), have person $i = '" . $people->[$i] . "', FOOBAZ\n"; } };
+
 
 # all of the following happen before the INIT block, and thus rely upon AUTOLOAD
 =SNIP
