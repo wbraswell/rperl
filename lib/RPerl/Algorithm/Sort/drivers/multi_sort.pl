@@ -62,10 +62,10 @@ for (my $i = 0; $i < 1;  $i++)
 	::uninherited("wlverine");  # RPerl yes, C++ yes
 	print "[[[ END INHERITANCE TESTING ]]]\n"x3;
 	
-	print "[[[ BEGIN TYPE TESTING ]]]\n"x3;
+#	print "[[[ BEGIN TYPE TESTING ]]]\n"x3;
 #	uninherited__string_array_in(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']);
-	uninherited__string_array_in();
-	print "[[[ END TYPE TESTING ]]]\n"x3;
+#	uninherited__string_array_in();
+#	print "[[[ END TYPE TESTING ]]]\n"x3;
 	
 	# NEED CHOOSE: which data structure?
 #	$data = [21, 12, 31, 13, 42, 2012, 5555, 1.21, 33.3, 9999, -15, 0];

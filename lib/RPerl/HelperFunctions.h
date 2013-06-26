@@ -8,8 +8,8 @@
 #define SV_REFERENCE_COUNT(sv) (SvREFCNT(sv))
 
 // <<< TYPE INCLUDES >>>
-#include "/tmp/RPerl-latest/lib/RPerl/DataStructure/Array.c"		// -> Array.h
-//	#include <RPerl/DataStructure/Array.c>
+//#include "/tmp/RPerl-latest/lib/RPerl/DataStructure/Array.cpp"		// -> Array.h
+//	#include <RPerl/DataStructure/Array.cpp>
 
 #ifndef __CPP__INCLUDED__RPerl__HelperFunctions_h
 

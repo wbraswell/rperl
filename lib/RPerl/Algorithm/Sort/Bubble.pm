@@ -1,10 +1,10 @@
 use strict;  use warnings;
 package RPerl::Algorithm::Sort::Bubble;
 
-#our @ISA = ('RPerl::Algorithm::Sort');
-our @ISA = ('RPerl::Algorithm::Sort', 'RPerl::Algorithm::Inefficient');
+our @ISA = ('RPerl::Algorithm::Sort');
+#our @ISA = ('RPerl::Algorithm::Sort', 'RPerl::Algorithm::Inefficient');
 use RPerl::Algorithm::Sort;
-use RPerl::Algorithm::Inefficient;
+#use RPerl::Algorithm::Inefficient;
 
 our %properties =
 (

@@ -11,7 +11,7 @@ our string $uninherited__Inefficient = sub { (my string $person) = @_;  print "i
 #our string $uninherited = sub { (my string $person) = @_;  print "in Perl Inefficient::uninherited(), \$person = '$person', TRICKS\n";  return "Perl Inefficient::uninherited() ROCKS!"; };
 
 # [[[ TYPE TESTING ]]]
-our void $uninherited__string_array_in = sub { (my string__array_ref $people) = @_;  for (my int $i = 0;  $i < @{$people};  $i++) { print "in Perl Inefficient::uninherited__string_array_in(), have person $i = '" . $people->[$i] . "', FOOBAZ\n"; } };
+our void $typetest___string__array_ref__in___void__out = sub { (my string__array_ref $people) = @_;  for (my int $i = 0;  $i < @{$people};  $i++) { print "in Perl Inefficient::typetest___string__array_ref__in___void__out(), have person $i = '" . $people->[$i] . "', FOOBAZ\n"; } };
 
 
 # all of the following happen before the INIT block, and thus rely upon AUTOLOAD

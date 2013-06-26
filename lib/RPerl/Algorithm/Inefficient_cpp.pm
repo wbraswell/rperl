@@ -26,6 +26,7 @@ use Inline
 (
 #	CPP => 'RPerl/Algorithm/Inefficient.cpp',
 	CPP => '/tmp/RPerl-latest/lib/RPerl/Algorithm/Inefficient.cpp',
+	INC => '-I/usr/include/c++/4.5/ -I/usr/include/c++/4.5/i686-linux-gnu/',  # NEED FIX: remove hard-coded path
 	CCFLAGS => '-Wno-deprecated',
 	BUILD_NOISY => 1,
 	CLEAN_AFTER_BUILD => 0,
