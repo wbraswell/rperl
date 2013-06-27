@@ -17,6 +17,7 @@ use Inline
 #	FILTERS => 'Preprocess',
 );
 
-main::int_AV_to_int_vector([5, 4, 3, 2, 1, 0]);
-#main::int_AV_to_int_vector([0..9]);
-#main::string_AV_to_string_vector([qw(foo bar baz)]);
+#main::XS_unpack_int__array_ref([5, 4, 3, 2, 1, 0]);
+#main::XS_unpack_int__array_ref([0..9]);
+main::print___int__array_ref([5, 4, 3, 2, 1, 0]);
+print "\n";
