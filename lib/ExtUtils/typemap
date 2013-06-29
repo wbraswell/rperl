@@ -24,12 +24,14 @@ unsigned long *		T_OPAQUEPTR
 
 # NEED FIX, CORRELATION #02: bug, possibly in Inline, causing inability to declare 3rd count_FOO argument to T_PACKEDARRAY; temporarily solved here
 # DEV NOTE: all comments must be on their own line or typemapping will silently fail and typemapped subroutines will fail to bind from Inline to Perl
+
 # ORIGINAL CODE perl core
 #char **			T_PACKEDARRAY
+
 # MODIFIED CODE
 char **				T_PACKED
-#string__array_ref	T_PACKED
 int__array_ref		T_PACKED
+#string__array_ref	T_PACKED
 
 
 

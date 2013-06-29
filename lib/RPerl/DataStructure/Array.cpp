@@ -16,71 +16,92 @@ using std::cout;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array_cpp
 
-int__array_ref XS_unpack_int__array_ref(SV *input)
+// convert from (Perl SV containing reference to (Perl AV of (Perl SVs containing IVs))) to (C++ std::vector of ints)
+int__array_ref XS_unpack_int__array_ref(SV *input_av_ref)
 {
 	printf("in XS_unpack_int__array_ref(), top of subroutine\n");
 
-	AV *input_deref;
-	SV **input_deref_element;
-	int__array_ref output;
-	int input_deref_length;
-	int i;
+    AV* input_av;
+    int input_av_index_max;
+    int i;
+    SV** input_av_element;
+    int__array_ref output_vector;
 
-	// dereference if valid input array_ref, or die
-	if (SvROK(input) && (SvTYPE(SvRV(input)) == SVt_PVAV)) { input_deref = (AV*)SvRV(input); }
-	else { croak("in XS_unpack_int__array_ref(), input was not an AV ref"); }
+	if (SvROK(input_av_ref) && (SvTYPE(SvRV(input_av_ref)) == SVt_PVAV)) { input_av = (AV*)SvRV(input_av_ref); }
+	else { croak("in XS_unpack_int__array_ref(), input_av_ref was not an AV ref"); }
 
-	// return NULL if empty input array
-	input_deref_length = av_len(input_deref);
-	if (input_deref_length < 0)
+	input_av_index_max = av_len(input_av);
+	printf("in XS_unpack_int__array_ref(), have input_av_index_max = '%d'\n", input_av_index_max);
+
+	// DEV NOTE: VECTOR ELEMENT ASSIGNMENT OPTION information is not specific to this subroutine or packing/unpacking
+
+	// VECTOR ELEMENT ASSIGNMENT, OPTION A, SUBSCRIPT, KNOWN SIZE: vector has programmer-provided const size or compiler-guessable size,
+	// resize() ahead of time to allow l-value subscript notation
+	output_vector.resize((size_t)(input_av_index_max + 1));
+
+	// VECTOR ELEMENT ASSIGNMENT, OPTION C, PUSH, KNOWN SIZE: vector has programmer-provided const size or compiler-guessable size,
+	// reserve() ahead of time to avoid memory reallocation(s) (aka change in vector capacity) during element copying in for() loop
+//	output_vector.reserve((size_t)(input_av_index_max + 1));
+
+	// VECTOR ELEMENT ASSIGNMENT, OPTION E, ITERATOR, KNOWN SIZE: no calls to resize() means we can save output_vector.begin() for re-use in the for() loop
+//	output_vector.reserve((size_t)(input_av_index_max + 1));
+//	int__array_ref__iterator output_vector_begin = output_vector.begin();
+
+	for (i = 0;  i <= input_av_index_max;  ++i)
 	{
-		warn("in XS_unpack_int__array_ref(), array was empty, returning empty array via (int__array_ref)NULL");
-		return((int__array_ref)NULL);
-	}
+		// utilizes i in element retrieval
+		input_av_element = av_fetch(input_av, i, 0);
 
-	printf("in XS_unpack_int__array_ref(), have input_deref_length = '%d'\n", input_deref_length);
-
-	for (i = 0;  i <= input_deref_length;  i++)
-	{
-		input_deref_element = av_fetch(input_deref, i, 0);
-		if (input_deref_element != NULL)
+		if (input_av_element != NULL)
 		{
-			// NEED ANSWER: is it correct to use SvIOKp() here instead of just SvIOK()?
-//			if (SvIOK(*input_deref_element)) { output[i] = SvIV(*input_deref_element); }
-			if (SvIOKp(*input_deref_element)) { output[i] = SvIV(*input_deref_element); }
-			else { croak("in XS_unpack_int__array_ref(), int__array_ref element %d was not an int", i); }
+			// VECTOR ELEMENT ASSIGNMENT, OPTION A, SUBSCRIPT, KNOWN SIZE: l-value subscript notation with no further resize(); utilizes i in assignment
+			if (SvIOKp(*input_av_element)) { output_vector[i] = SvIV(*input_av_element); }
+
+			// VECTOR ELEMENT ASSIGNMENT, OPTION B, SUBSCRIPT, UNKNOWN SIZE: unpredictable value of i and thus unpredictable vector size,
+			// call resize() every time we use l-value subscript; utilizes i in assignment
+//			if (SvIOKp(*input_av_element)) { output_vector.resize((size_t)(i + 1));  output_vector[i] = SvIV(*input_av_element); }
+
+			// VECTOR ELEMENT ASSIGNMENT, OPTIONS C & D, PUSH, KNOWN & UNKNOWN SIZE: push_back() calls resize(); does not utilize i in assignment
+//			if (SvIOKp(*input_av_element)) { output_vector.push_back(SvIV(*input_av_element)); }
+
+			// VECTOR ELEMENT ASSIGNMENT, OPTION E, ITERATOR, KNOWN SIZE: insert() with no further resize(); utilizes i in assignment
+//			if (SvIOKp(*input_av_element)) { output_vector.insert((i + output_vector_begin), SvIV(*input_av_element)); }
+
+			// VECTOR ELEMENT ASSIGNMENT, OPTION F, ITERATOR, UNKNOWN SIZE: unpredictable value of i and thus unpredictable vector size,
+			// call resize() every time we use insert(); utilizes i in assignment
+//			if (SvIOKp(*input_av_element)) { output_vector.resize((size_t)i);  output_vector.insert((i + output_vector.begin()), SvIV(*input_av_element)); }
+
+			else { croak("in XS_unpack_int__array_ref(), input_av_element %d was not an int", i); }
 		}
-		else { croak("in XS_unpack_int__array_ref(), int__array_ref element %d was undef and/or NULL", i); }
+		else { croak("in XS_unpack_int__array_ref(), input_av_element %d was undef and/or NULL", i); }
 	}
 
+
+	printf("in XS_unpack_int__array_ref(), after for() loop, have output_vector.size() = %d\n", output_vector.size());
 	printf("in XS_unpack_int__array_ref(), bottom of subroutine\n");
 
-	return(output);
+	return(output_vector);
 }
 
 
-void XS_pack_int__array_ref(SV *output, int__array_ref input)
+// convert from (C++ std::vector of ints) to (Perl SV containing reference to (Perl AV of (Perl SVs containing IVs)))
+void XS_pack_int__array_ref(SV *output_av_ref, int__array_ref input_vector)
 {
 	printf("in XS_pack_int__array_ref(), top of subroutine\n");
 
-	// variable declarations
 	AV *output_av = newAV();  // initialize output array to empty
-	int input_length = input.size();
+	int input_vector_length = input_vector.size();
 	int i;
 	SV *temp_sv_pointer;
 
-	printf("in XS_pack_int__array_ref(), have input_length = '%d'\n", input_length);
+	printf("in XS_pack_int__array_ref(), have input_vector_length = '%d'\n", input_vector_length);
 
-	if (input_length > 0)
-	{
-		for (i = 0;  i < input_length;  i++) { av_push(output_av, newSViv(input[i])); }
-		free(input);
-	}
+	if (input_vector_length > 0) { for (i = 0;  i < input_vector_length;  ++i) { av_push(output_av, newSViv(input_vector[i])); } }
 	else warn("in XS_pack_int__array_ref(), array was empty, returning empty array via newAV()");
 
-	temp_sv_pointer = newSVrv(output, NULL);	  // upgrade output stack SV to an RV
+	temp_sv_pointer = newSVrv(output_av_ref, NULL);	  // upgrade output stack SV to an RV
 	SvREFCNT_dec(temp_sv_pointer);		 // discard temporary pointer
-	SvRV(output) = (SV*)output_av;	   // make output stack RV point at our output AV
+	SvRV(output_av_ref) = (SV*)output_av;	   // make output stack RV point at our output AV
 
 	printf("in XS_pack_int__array_ref(), bottom of subroutine\n");
 }
@@ -215,8 +236,10 @@ void XS_pack_string__array_ref(SV* st, string__array_ref s)  // MODIFIED CODE
 //# [[[ TYPE TESTING ]]]
 //# [[[ TYPE TESTING ]]]
 void typetest___int__in___void__out(int fuzznum) { printf("in C CPP_TYPES Array::typetest___int__in___void__out(), have fuzznum '%d', BOOFAZ\n", fuzznum); }  // CPP_TYPES
-void typetest___string__in___void__out(char* fuzzword) { printf("in C CPP_TYPES Array::typetest___string__in___void__out(), have fuzzword '%s', BAZBOT\n", fuzzword); }  // CPP_TYPES
 void typetest___int__array_ref__in___void__out(int__array_ref lucky_numbers) { int how_lucky = lucky_numbers.size();  int i;  for (i = 0;  i < how_lucky;  i++) { printf("in C CPP_TYPES Array::typetest___int__array_ref__in___void__out(), have lucky number %d/%d = '%d', BARBAT\n", i, (how_lucky - 1), lucky_numbers[i]); } }  // CPP_TYPES
+int__array_ref typetest___int__in___int__array_ref__out(int my_size) { int__array_ref new_vec(my_size);  int i;  for (i = 0;  i < my_size;  i++) { new_vec[i] = i * 5;  printf("in C CPP_TYPES Array::typetest___int__in___int__array_ref__out(), setting element %d/%d = '%d', BARBAT\n", i, (my_size - 1), new_vec[i]); }  return(new_vec); }  // CPP_TYPES
+
+void typetest___string__in___void__out(char* fuzzword) { printf("in C CPP_TYPES Array::typetest___string__in___void__out(), have fuzzword '%s', BAZBOT\n", fuzzword); }  // CPP_TYPES
 //our void $typetest___string__array_ref__in___void__out = sub { (my string__array_ref $people) = @_;  for (my int $i = 0;  $i < @{$people};  $i++) { print "in Perl Inefficient::typetest___string__array_ref__in___void__out(), have person $i = '" . $people->[$i] . "', FOOBAZ\n"; } };  // PERL_TYPES
 void typetest___string__array_ref__in___void__out(string__array_ref people) { char **person;  int i = 0;  for (person = people;  *person;  person++ ) { printf("in C CPP_TYPES Array::typetest___string__array_ref__in___void__out(), have person %d = '%s', FOOBAZ\n", i, *person);  i++; } }  // CPP_TYPES
 

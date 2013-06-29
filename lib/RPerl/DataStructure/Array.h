@@ -1,15 +1,15 @@
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array_h
 
-#include <vector>
-
 // [[[ TYPEDEFS FOR RPERL-TYPES-IN-C ]]]
+typedef std::vector<int> int__array_ref;
+typedef std::vector<int>::iterator int__array_ref__iterator;
+typedef std::vector<int>::const_iterator int__array_ref__const_iterator;
 typedef char* string;
 typedef char** string__array_ref;
-typedef std::vector<int> int__array_ref;
 
 // [[[ TYPEMAP PACK/UNPACK SUBROUTINE PROTOTYPE DECLARATIONS FOR RPERL-TYPES-IN-C ]]]
-int__array_ref XS_unpack_int__array_ref(SV *input);
-void XS_pack_int__array_ref(SV *output, int__array_ref input);
+int__array_ref XS_unpack_int__array_ref(SV *input_av_ref);
+void XS_pack_int__array_ref(SV *output_av_ref, int__array_ref input_vector);
 
 // CODE FROM: Dean Roehrich's Perl API Cookbook A
 // LICENSE: none???

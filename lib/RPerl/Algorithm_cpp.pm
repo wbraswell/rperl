@@ -27,6 +27,7 @@ use Inline
 	CLEAN_AFTER_BUILD => 0,
 	WARNINGS => 1,
 	FILTERS => 'Preprocess',
+	AUTO_INCLUDE => '#include <vector>',  # DEV NOTE: include non-RPerl files here so they are not parsed by the 'Preprocess' filter
 );
 print "[[[ END 'use Inline' STAGE for 'RPerl/Algorithm.cpp' ]]]\n"x3;
 1;
