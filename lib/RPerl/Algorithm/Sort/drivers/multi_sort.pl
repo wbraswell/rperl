@@ -6,6 +6,8 @@ use RPerl;  our @ISA = ('RPerl');
 use lib '/tmp/RPerl-latest/lib/CPAN';  # RPerl's MyConfig.pm  # NEED REMOVE hard-coded path
 use MyConfig;
 
+use Time::HiRes qw(time);
+
 # supported algorithms
 #use RPerl::Algorithm::Sort::Bubble;  # choose ONE of this
 use RPerl::Algorithm::Sort::Bubble_cpp;  RPerl::Algorithm::Sort::Bubble_cpp::cpp_load();  RPerl::Algorithm::Sort::Bubble_cpp::cpp_link(); # OR this
@@ -70,7 +72,7 @@ for (my $i = 0; $i < 1;  $i++)
 	# NEED CHOOSE: which data structure?
 #	$data = [21, 12, 31, 13, 42, 2012, 5555, 1.21, 33.3, 9999, -15, 0];
 #	$data = scalar_linkedlist_ref->new_from_array_ref([21, 12, 31, 13, 42, 2012, 5555, 1.21, 33.3, 9999, -15, 0]);
-	$data = [reverse(0 ... 5)];
+	$data = [reverse(0 ... 50000)];
 	$sorter->set_data($data);
 
 	print "in multi_sort.pl, have \$i = $i and unsorted \$data =\n" . RPerl::DUMPER($data) . "\n" if $RPerl::DEBUG;
@@ -78,13 +80,15 @@ for (my $i = 0; $i < 1;  $i++)
 #	print "in multi_sort.pl, have \$i = $i and unsorted \$sorter->get_data() =\n" . RPerl::DUMPER($sorter->get_data()) . "\n" if $RPerl::DEBUG;
 
 	my $start_time = time();
-#	$sorter->sort();  # OO interface
-	bubblesort($data);  # procedural interface
+	$sorter->sort();  # OO interface; does not include C++ packing/unpacking, that is done in accessor/mutator calls
+#	DEV NOTE: for procedural interface, must set $data to retval because C++ packing/unpacking does not change contents of original $data SV*;
+#	bubblesort($data);  # procedural interface, Perl only
+#	$data = bubblesort($data);  # procedural interface, Perl & C++; includes C++ packing/unpacking in this 1 line
 	my $end_time = time();
 	my $run_time = $end_time - $start_time;
 
-	print "in multi_sort.pl, have \$i = $i and sorted \$data =\n" . RPerl::DUMPER($data) . "\n" if $RPerl::DEBUG;
-#	print "in multi_sort.pl, have \$i = $i and sorted \$sorter->get_data() =\n" . RPerl::DUMPER($sorter->get_data()) . "\n" if $RPerl::DEBUG;
+#	print "in multi_sort.pl, have \$i = $i and sorted \$data =\n" . RPerl::DUMPER($data) . "\n" if $RPerl::DEBUG;
+	print "in multi_sort.pl, have \$i = $i and sorted \$sorter->get_data() =\n" . RPerl::DUMPER($sorter->get_data()) . "\n" if $RPerl::DEBUG;
 	print "in multi_sort.pl, have \$i = $i and \$run_time = $run_time\n";
 }
 exit;

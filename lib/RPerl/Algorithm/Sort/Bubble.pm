@@ -1,15 +1,12 @@
 use strict;  use warnings;
 package RPerl::Algorithm::Sort::Bubble;
 
-our @ISA = ('RPerl::Algorithm::Sort');
-#our @ISA = ('RPerl::Algorithm::Sort', 'RPerl::Algorithm::Inefficient');
+#our @ISA = ('RPerl::Algorithm::Sort');
+our @ISA = ('RPerl::Algorithm::Sort', 'RPerl::Algorithm::Inefficient');
 use RPerl::Algorithm::Sort;
-#use RPerl::Algorithm::Inefficient;
+use RPerl::Algorithm::Inefficient;
 
-our %properties =
-(
-	data => my number__array_ref $KEY_data,
-);
+our %properties = ( data => my int__array_ref $KEY_data );
 
 # [object-oriented programming interface]
 # call out to sort data, return nothing
@@ -22,21 +19,21 @@ our void__method $sort = sub {(my object $self) = @_;
 # Random note for later from mst:
 #   This would warn BUT "no warnings 'illegalproto'" disables that
 #   Now you can extract the prototype at runtime using 'perldoc -f prototype'
-#   Key thing: whitespace in the prototype is lost so you'll be parsing 'number__array_ref->number__array_ref'
+#   Key thing: whitespace in the prototype is lost so you'll be parsing 'int__array_ref->int__array_ref'
 #   however it's otherwise preserved verbatim by the perl compiler and you can do what you like with it
 #   Web::Simple uses this to provide 'sub (GET + /user/:id) { ... }' for web routing.
-#   sub bubblesort(number__array_ref -> number__array_ref) {}
+#   sub bubblesort(int__array_ref -> int__array_ref) {}
 # end random note
 
 # [procedural programming interface]
 # original algorithm: comparison-based and stable [O(n**2) average time, O(1) worst-case extra space]
 # sort data, return sorted data
-our number__array_ref $bubblesort = sub {(my number__array_ref $data) = @_;
+our int__array_ref $bubblesort = sub {(my int__array_ref $data) = @_;
 ;
 	my int $is_sorted = 0;
 	my int $i;
 	my const_int $data_length = scalar(@{$data});
-	my scalar $swap;
+	my int $swap;
 	
 #	print "in bubblesort(), have \$data_length = $data_length\n" if $RPerl::DEBUG;
 
@@ -63,7 +60,7 @@ our number__array_ref $bubblesort = sub {(my number__array_ref $data) = @_;
 	}
 	
 	# data is now sorted via top-level nested iteration [O(n**2) total time, O(1) total extra space] 
-	# DEV NOTE: this is an in-place sorting algorithm, we don't actually need to return $data as it has not changed location
+	# DEV NOTE: this is an in-place sorting algorithm, we don't actually need to return $data as it has not changed location, EXCEPT FOR IN C++ BECAUSE OF PACKING/UNPACKING!!!
 	return $data;
 };
 

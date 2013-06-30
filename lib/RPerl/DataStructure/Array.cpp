@@ -1,6 +1,6 @@
 ////use strict;  use warnings;
 
-#include "/tmp/RPerl-latest/lib/RPerl/DataStructure/Array.h"		// -> ???
+#include "/tmp/RPerl-latest/lib/RPerl/DataStructure/Array.h"		// -> NULL (relies on <vector> being included via Inline::CPP's AUTO_INCLUDE config option)
 //	#include <RPerl/DataStructure/Array.h>
 
 using std::cout;  using std::endl;
@@ -43,11 +43,12 @@ int__array_ref XS_unpack_int__array_ref(SV *input_av_ref)
 	// reserve() ahead of time to avoid memory reallocation(s) (aka change in vector capacity) during element copying in for() loop
 //	output_vector.reserve((size_t)(input_av_index_max + 1));
 
-	// VECTOR ELEMENT ASSIGNMENT, OPTION E, ITERATOR, KNOWN SIZE: no calls to resize() means we can save output_vector.begin() for re-use in the for() loop
-//	output_vector.reserve((size_t)(input_av_index_max + 1));
-//	int__array_ref__iterator output_vector_begin = output_vector.begin();
+	// VECTOR ELEMENT ASSIGNMENT, OPTION E, ITERATOR, KNOWN SIZE:
+//	output_vector.reserve((size_t)(input_av_index_max + 1));  // if incrementing iteration
+//	output_vector.resize((size_t)(input_av_index_max + 1));  // if decrementing iteration
 
-	for (i = 0;  i <= input_av_index_max;  ++i)
+	for (i = 0;  i <= input_av_index_max;  ++i)  // incrementing iteration
+//	for (i = input_av_index_max;  i >= 0;  --i)  // decrementing iteration
 	{
 		// utilizes i in element retrieval
 		input_av_element = av_fetch(input_av, i, 0);
@@ -59,17 +60,19 @@ int__array_ref XS_unpack_int__array_ref(SV *input_av_ref)
 
 			// VECTOR ELEMENT ASSIGNMENT, OPTION B, SUBSCRIPT, UNKNOWN SIZE: unpredictable value of i and thus unpredictable vector size,
 			// call resize() every time we use l-value subscript; utilizes i in assignment
-//			if (SvIOKp(*input_av_element)) { output_vector.resize((size_t)(i + 1));  output_vector[i] = SvIV(*input_av_element); }
+//			if (SvIOKp(*input_av_element)) { VECTOR_RESIZE_NOSHRINK(output_vector, (i + 1));  output_vector[i] = SvIV(*input_av_element); }
 
-			// VECTOR ELEMENT ASSIGNMENT, OPTIONS C & D, PUSH, KNOWN & UNKNOWN SIZE: push_back() calls resize(); does not utilize i in assignment
+			// VECTOR ELEMENT ASSIGNMENT, OPTIONS C & D, PUSH, KNOWN & UNKNOWN SIZE: push_back() calls resize(); does not utilize i in assignment;
+			// only works for incrementing iteration!!!  will reverse list order for decrementing iteration, there is no push_front() method
 //			if (SvIOKp(*input_av_element)) { output_vector.push_back(SvIV(*input_av_element)); }
 
-			// VECTOR ELEMENT ASSIGNMENT, OPTION E, ITERATOR, KNOWN SIZE: insert() with no further resize(); utilizes i in assignment
-//			if (SvIOKp(*input_av_element)) { output_vector.insert((i + output_vector_begin), SvIV(*input_av_element)); }
+			// VECTOR ELEMENT ASSIGNMENT, OPTION E, ITERATOR, KNOWN SIZE: utilizes i in assignment
+//			if (SvIOKp(*input_av_element)) { output_vector.insert((i + output_vector.begin()), SvIV(*input_av_element)); }  // if incrementing iteration
+//			if (SvIOKp(*input_av_element)) { output_vector.erase(i + output_vector.begin());  output_vector.insert((i + output_vector.begin()), SvIV(*input_av_element)); }  // if decrementing iteration
 
 			// VECTOR ELEMENT ASSIGNMENT, OPTION F, ITERATOR, UNKNOWN SIZE: unpredictable value of i and thus unpredictable vector size,
 			// call resize() every time we use insert(); utilizes i in assignment
-//			if (SvIOKp(*input_av_element)) { output_vector.resize((size_t)i);  output_vector.insert((i + output_vector.begin()), SvIV(*input_av_element)); }
+//			if (SvIOKp(*input_av_element)) { VECTOR_RESIZE_NOSHRINK(output_vector, (i + 1));  output_vector.erase(i + output_vector.begin());  output_vector.insert((i + output_vector.begin()), SvIV(*input_av_element)); }
 
 			else { croak("in XS_unpack_int__array_ref(), input_av_element %d was not an int", i); }
 		}

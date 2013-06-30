@@ -638,3 +638,10 @@ our @ISA = ('const_array_ref');
 # (ref to (array with const size)) of (refs to (hashs with const sizes))
 package const_hash_ref__const_array_ref;
 our @ISA = ('const_array_ref');
+
+
+
+# [[[ TYPE TESTING ]]]
+# [[[ TYPE TESTING ]]]
+# [[[ TYPE TESTING ]]]
+our void $typetest___string__array_ref__in___void__out = sub { (my string__array_ref $people) = @_;  for (my int $i = 0;  $i < @{$people};  $i++) { print "in Perl Inefficient::typetest___string__array_ref__in___void__out(), have person $i = '" . $people->[$i] . "', FOOBAZ\n"; } };

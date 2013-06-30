@@ -17,13 +17,6 @@ SV *uninherited__Inefficient(SV *person);
 //char *uninherited(char *person);  // CPP_TYPES
 //void uninherited__string_array_in(char **people);  // CPP_TYPES
 
-//# [[[ TYPE TESTING ]]]
-void typetest___int__in___void__out(int fuzznum);  // CPP_TYPES
-void typetest___string__in___void__out(char* fuzzword);  // CPP_TYPES
-void typetest___int__array_ref__in___void__out(int__array_ref lucky_numbers);  // CPP_TYPES
-void typetest___string__array_ref__in___void__out(string__array_ref people);  // CPP_TYPES
-string__array_ref typetest___void__in___string__array_ref__out();  // CPP_TYPES
-
 
 ////package RPerl::Algorithm::Inefficient;
 ////our @ISA = ('RPerl::Algorithm');
