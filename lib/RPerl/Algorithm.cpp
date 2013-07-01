@@ -1,8 +1,7 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-#include "/tmp/RPerl-latest/lib/RPerl/Algorithm.h"  // -> HelperFunctions.c && Class.cpp???  RPerl.cpp???
-//	#include <RPerl/Algorithm.h>
+#include <RPerl/Algorithm.h>  // -> HelperFunctions.c && Class.cpp???  RPerl.cpp???
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm_cpp
 

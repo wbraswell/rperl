@@ -23,27 +23,32 @@ our void__method $cpp_load = sub {
 		####use RPerl::Algorithm::Inefficient;
 		$RPerl::Algorithm::Inefficient_cpp::CPP_loaded = 1;  # Inefficient.cpp loaded by C++ #include in Bubble.h
 
-		my $eval_string = <<'EOF';
+		my $eval_string = <<"EOF";
 package main;
 BEGIN { print "[[[ BEGIN 'use Inline' STAGE for 'RPerl/Algorithm/Sort/Bubble.cpp' ]]]\n"x3; }
 use Inline
 (
-#	CPP => 'RPerl/Algorithm/Sort/Bubble.cpp',
-	CPP => '/tmp/RPerl-latest/lib/RPerl/Algorithm/Sort/Bubble.cpp',
-	INC => '-I/usr/include/c++/4.5/ -I/usr/include/c++/4.5/i686-linux-gnu/',  # NEED FIX: remove hard-coded path
-#	TYPEMAPS => '/tmp/RPerl-latest/lib/RPerl/DataStructure/Array.typemap',  # DOES NOT OVERRIDE ALREADY-SET TYPEMAP IN PERL CORE
-	CCFLAGS => '-Wno-deprecated',
+	CPP => '$RPerl::INCLUDE_PATH/RPerl/Algorithm/Sort/Bubble.cpp',
+#	TYPEMAPS => '$RPerl::INCLUDE_PATH/RPerl/DataStructure/Array.typemap',  # DOES NOT OVERRIDE ALREADY-SET TYPEMAP IN PERL CORE
+	CCFLAGS => '-Wno-deprecated -std=c++0x',
+	INC => '-I$RPerl::INCLUDE_PATH',
 	BUILD_NOISY => 1,
 	CLEAN_AFTER_BUILD => 0,
 	WARNINGS => 1,
 	FILTERS => 'Preprocess',
-	AUTO_INCLUDE => '#include <vector>',  # DEV NOTE: include non-RPerl files here so they are not parsed by the 'Preprocess' filter
+	AUTO_INCLUDE => # DEV NOTE: include non-RPerl files using AUTO_INCLUDE so they are not parsed by the 'Preprocess' filter
+	[
+		'#include <iostream>',
+		'#include <string>',
+		'#include <vector>',
+		'#include <unordered_map>',  # DEV NOTE: unordered_map may require '-std=c++0x' in CCFLAGS above
+	],
 );
 print "[[[ END 'use Inline' STAGE for 'RPerl/Algorithm/Sort/Bubble.cpp' ]]]\n"x3;
 1;
 EOF
 
-#		print "in Bubble_cpp::cpp_load(), CPP not yet loaded, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
+		print "in Bubble_cpp::cpp_load(), CPP not yet loaded, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
 
 		eval($eval_string);  ## no critic
 		die(@_) if (@_);

@@ -2,21 +2,28 @@
 use strict;  use warnings;
 use Data::Dumper;
 
-use lib '/tmp/RPerl-latest/lib/CPAN';  # RPerl's MyConfig.pm  # NEED REMOVE hard-coded path
+ # NEED REMOVE hard-coded path
+BEGIN { package main;  our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib'; }
+
+use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';  # RPerl's MyConfig.pm 
 use MyConfig;
 
 package main;
 use Inline
 (
-	CPP => '/tmp/RPerl-latest/lib/RPerl/Algorithm/Sort/drivers/vector_test.cpp',
-	INC => '-I/usr/include/c++/4.5/ -I/usr/include/c++/4.5/i686-linux-gnu/',  # NEED FIX: remove hard-coded path
-#    TYPEMAPS => '/tmp/RPerl-latest/lib/RPerl/Algorithm/Sort/drivers/vector_test.typemap',
-	CCFLAGS => '-Wno-deprecated',
+	CPP => "$main::RPERL_INCLUDE_PATH/RPerl/Algorithm/Sort/drivers/vector_test.cpp",
+	CCFLAGS => '-Wno-deprecated -std=c++0x',
+	INC => '-I$RPerl::INCLUDE_PATH',
 	BUILD_NOISY => 1,
 	CLEAN_AFTER_BUILD => 0,
 	WARNINGS => 1,
 	FILTERS => 'Preprocess',
-	AUTO_INCLUDE => '#include <vector>',  # DEV NOTE: include non-RPerl files here so they are not parsed by the 'Preprocess' filter
+	AUTO_INCLUDE => # DEV NOTE: include non-RPerl files using AUTO_INCLUDE so they are not parsed by the 'Preprocess' filter
+	[
+#		'#include <string>',
+		'#include <vector>',
+#		'#include <unordered_map>',  # DEV NOTE: unordered_map may require '-std=c++0x' in CCFLAGS above
+	],
 );
 
 #XS_unpack_int__array_ref([5, 4, 3, 2, 1, 0]);

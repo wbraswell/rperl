@@ -1,9 +1,14 @@
 #!/usr/bin/perl
 use strict;  use warnings;
-use lib '/tmp/RPerl-latest/lib';  # RPerl system files  # NEED REMOVE hard-coded path
-use RPerl;  our @ISA = ('RPerl');
 
-use lib '/tmp/RPerl-latest/lib/CPAN';  # RPerl's MyConfig.pm  # NEED REMOVE hard-coded path
+ # NEED REMOVE hard-coded path
+BEGIN { package main;  our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib'; }
+
+use lib $main::RPERL_INCLUDE_PATH;  # RPerl system files
+use RPerl;  our @ISA = ('RPerl');
+$RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;
+
+use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';  # RPerl's MyConfig.pm 
 use MyConfig;
 
 use Time::HiRes qw(time);
@@ -72,7 +77,7 @@ for (my $i = 0; $i < 1;  $i++)
 	# NEED CHOOSE: which data structure?
 #	$data = [21, 12, 31, 13, 42, 2012, 5555, 1.21, 33.3, 9999, -15, 0];
 #	$data = scalar_linkedlist_ref->new_from_array_ref([21, 12, 31, 13, 42, 2012, 5555, 1.21, 33.3, 9999, -15, 0]);
-	$data = [reverse(0 ... 50000)];
+	$data = [reverse(0 ... 500)];
 	$sorter->set_data($data);
 
 	print "in multi_sort.pl, have \$i = $i and unsorted \$data =\n" . RPerl::DUMPER($data) . "\n" if $RPerl::DEBUG;

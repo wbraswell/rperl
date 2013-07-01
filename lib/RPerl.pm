@@ -3,6 +3,9 @@ use strict;  use warnings;
 our @ISA = ('RPerl::Class');
 use RPerl::Class;
 
+# IMPORTANT SYSTEM-DEPENDENT CONFIGURATION VARIABLE!  drivers must set this to the path to RPerl
+our $INCLUDE_PATH = '/FAILURE/BECAUSE/RPERL/INCLUDE/PATH/NOT/YET/SET';
+
 # <<<=== DECREASE MAGIC ===>>>
 
 #no magic;  # require data types, full declarations, other non-magic
@@ -32,3 +35,5 @@ sub DUMPER
 # compile
 
 # parallelize
+
+1;

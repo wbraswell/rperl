@@ -1,9 +1,7 @@
 ////use strict;  use warnings;
-
-#include "/tmp/RPerl-latest/lib/RPerl/DataStructure/Array.h"		// -> NULL (relies on <vector> being included via Inline::CPP's AUTO_INCLUDE config option)
-//	#include <RPerl/DataStructure/Array.h>
-
 using std::cout;  using std::endl;
+
+#include <RPerl/DataStructure/Array.h>		// -> NULL (relies on <vector> being included via Inline::CPP's AUTO_INCLUDE config option)
 
 /*
  * NEED FIX, CORRELATION #02: bug, possibly in Inline, causing inability to declare 3rd count_FOO argument to T_PACKEDARRAY;
@@ -109,7 +107,7 @@ void XS_pack_int__array_ref(SV *output_av_ref, int__array_ref input_vector)
 	printf("in XS_pack_int__array_ref(), bottom of subroutine\n");
 }
 
-
+/*
 // CODE FROM: Dean Roehrich's Perl API Cookbook A
 // LICENSE: none???
 // http://search.cpan.org/~dmr/CookBookA-19960430/
@@ -233,7 +231,7 @@ void XS_pack_string__array_ref(SV* st, string__array_ref s)  // MODIFIED CODE
 // [[[ END ORIGINAL CODE foswiki ]]]
 // [[[ END ORIGINAL CODE foswiki ]]]
 // [[[ END ORIGINAL CODE foswiki ]]]
-
+*/
 
 //# [[[ TYPE TESTING ]]]
 //# [[[ TYPE TESTING ]]]
@@ -242,7 +240,7 @@ void typetest___int__in___void__out(int fuzznum) { printf("in C CPP_TYPES Array:
 void typetest___int__array_ref__in___void__out(int__array_ref lucky_numbers) { int how_lucky = lucky_numbers.size();  int i;  for (i = 0;  i < how_lucky;  i++) { printf("in C CPP_TYPES Array::typetest___int__array_ref__in___void__out(), have lucky number %d/%d = '%d', BARBAT\n", i, (how_lucky - 1), lucky_numbers[i]); } }  // CPP_TYPES
 int__array_ref typetest___int__in___int__array_ref__out(int my_size) { int__array_ref new_vec(my_size);  int i;  for (i = 0;  i < my_size;  i++) { new_vec[i] = i * 5;  printf("in C CPP_TYPES Array::typetest___int__in___int__array_ref__out(), setting element %d/%d = '%d', BARBAT\n", i, (my_size - 1), new_vec[i]); }  return(new_vec); }  // CPP_TYPES
 
-void typetest___string__in___void__out(char* fuzzword) { printf("in C CPP_TYPES Array::typetest___string__in___void__out(), have fuzzword '%s', BAZBOT\n", fuzzword); }  // CPP_TYPES
+/*
 //our void $typetest___string__array_ref__in___void__out = sub { (my string__array_ref $people) = @_;  for (my int $i = 0;  $i < @{$people};  $i++) { print "in Perl Inefficient::typetest___string__array_ref__in___void__out(), have person $i = '" . $people->[$i] . "', FOOBAZ\n"; } };  // PERL_TYPES
 void typetest___string__array_ref__in___void__out(string__array_ref people) { char **person;  int i = 0;  for (person = people;  *person;  person++ ) { printf("in C CPP_TYPES Array::typetest___string__array_ref__in___void__out(), have person %d = '%s', FOOBAZ\n", i, *person);  i++; } }  // CPP_TYPES
 
@@ -281,6 +279,6 @@ string__array_ref typetest___void__in___string__array_ref__out()
 	return(people);
 
 } // CPP_TYPES
-
+*/
 #endif
 #define __CPP__INCLUDED__RPerl__DataStructure__Array_cpp 1

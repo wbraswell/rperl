@@ -1,10 +1,16 @@
 #!/usr/bin/perl
 use strict;  use warnings;
-use lib '/tmp/RPerl-latest/lib';  # RPerl system files  # NEED REMOVE hard-coded path
-use RPerl;  our @ISA = ('RPerl');
 
-use lib '/tmp/RPerl-latest/lib/CPAN';  # RPerl's MyConfig.pm  # NEED REMOVE hard-coded path
+ # NEED REMOVE hard-coded path
+BEGIN { package main;  our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib'; }
+
+use lib $main::RPERL_INCLUDE_PATH;  # RPerl system files
+use RPerl;  our @ISA = ('RPerl');
+$RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;
+
+use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';  # RPerl's MyConfig.pm 
 use MyConfig;
+
 
 #use RPerl::Algorithm::Inefficient;  # choose ONE of this
 use RPerl::Algorithm::Inefficient_cpp;  RPerl::Algorithm::Inefficient_cpp::cpp_load();  RPerl::Algorithm::Inefficient_cpp::cpp_link(); # OR this

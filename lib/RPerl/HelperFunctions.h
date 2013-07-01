@@ -1,7 +1,3 @@
-// <<< TYPE DEFINES >>>
-#define __PERL__TYPES  // must choose exactly ONE of this,
-//#define __CPP__TYPES  // or this
-
 // <<< DEBUG DEFINES >>>
 #define RPerl__DEBUG 1  // NEED FIX: access actual inherited debug flag somehow?
 #define RPerl__DEBUG2 1
@@ -10,10 +6,6 @@
 // <<< HELPER DEFINES >>>
 #define AV_ELEMENT(av,index) ((av_fetch(av,index,0)!=NULL)?*av_fetch(av,index,0):newSV(0))
 #define SV_REFERENCE_COUNT(sv) (SvREFCNT(sv))
-
-// <<< TYPE INCLUDES >>>
-//#include "/tmp/RPerl-latest/lib/RPerl/DataStructure/Array.cpp"		// -> Array.h
-//	#include <RPerl/DataStructure/Array.cpp>
 
 #ifndef __CPP__INCLUDED__RPerl__HelperFunctions_h
 

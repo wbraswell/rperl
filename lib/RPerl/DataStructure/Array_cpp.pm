@@ -11,20 +11,25 @@ our void__method $cpp_load = sub {
 		else { print "in Array_cpp::cpp_load(), have \$RPerl::DataStructure::Array_cpp::CPP_loaded = 'UNDEF'\n"; }
 	if (not(defined($RPerl::DataStructure::Array_cpp::CPP_loaded)) or not($RPerl::DataStructure::Array_cpp::CPP_loaded))
 	{
-		my $eval_string = <<'EOF';
+		my $eval_string = <<"EOF";
 package main;
 BEGIN { print "[[[ BEGIN 'use Inline' STAGE for 'RPerl/DataStructure/Array.cpp' ]]]\n"x3; }
 use Inline
 (
-#	CPP => 'RPerl/DataStructure/Array.cpp',
-	CPP => '/tmp/RPerl-latest/lib/RPerl/DataStructure/Array.cpp',
-	INC => '-I/usr/include/c++/4.5/ -I/usr/include/c++/4.5/i686-linux-gnu/',  # NEED FIX: remove hard-coded path
-	CCFLAGS => '-Wno-deprecated',
+	CPP => '$RPerl::INCLUDE_PATH/RPerl/DataStructure/Array.cpp',
+	CCFLAGS => '-Wno-deprecated -std=c++0x',
+	INC => '-I$RPerl::INCLUDE_PATH',
 	BUILD_NOISY => 1,
 	CLEAN_AFTER_BUILD => 0,
 	WARNINGS => 1,
 	FILTERS => 'Preprocess',
-	AUTO_INCLUDE => '#include <vector>',  # DEV NOTE: include non-RPerl files here so they are not parsed by the 'Preprocess' filter
+	AUTO_INCLUDE => # DEV NOTE: include non-RPerl files using AUTO_INCLUDE so they are not parsed by the 'Preprocess' filter
+	[
+		'#include <iostream>',
+		'#include <string>',
+		'#include <vector>',
+		'#include <unordered_map>',  # DEV NOTE: unordered_map may require '-std=c++0x' in CCFLAGS above
+	],
 );
 print "[[[ END 'use Inline' STAGE for 'RPerl/DataStructure/Array.cpp' ]]]\n"x3;
 1;

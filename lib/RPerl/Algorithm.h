@@ -1,13 +1,10 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-#include "/tmp/RPerl-latest/lib/RPerl/HelperFunctions.c"		// -> HelperFunctions.h
-//	#include <RPerl/HelperFunctions.c>
+#include <RPerl/HelperFunctions.c>		// -> HelperFunctions.h
 
 ////use RPerl::Class; use RPerl; # the base classes that directly call "use RPerl::Class;" also need to "use RPerl;" to get "use types;", etc.
-//#include "/tmp/RPerl-latest/lib/RPerl/Class.cpp"		// -> Class.h???
 //#include <RPerl/Class.cpp>
-//#include "/tmp/RPerl-latest/lib/RPerl.cpp"		// -> RPerl.h???
 //#include <RPerl.cpp>
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm_h

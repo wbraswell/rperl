@@ -1,8 +1,7 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-#include "/tmp/RPerl-latest/lib/RPerl/Algorithm/Inefficient.h"  // -> HelperFunctions.c && Algorithm.cpp
-//	#include <RPerl/Algorithm/Inefficient.h>
+#include <RPerl/Algorithm/Inefficient.h>  // -> HelperFunctions.c && Algorithm.cpp
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Inefficient_cpp
 

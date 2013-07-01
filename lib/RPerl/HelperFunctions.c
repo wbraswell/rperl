@@ -1,5 +1,4 @@
-#include "/tmp/RPerl-latest/lib/RPerl/HelperFunctions.h"		// -> ???
-//	#include <RPerl/HelperFunctions.h>
+#include <RPerl/HelperFunctions.h>  // -> ???
 
 #ifndef __CPP__INCLUDED__RPerl__HelperFunctions_c
 

@@ -1,12 +1,17 @@
 #!/usr/bin/perl
 use strict;  use warnings;
-use lib '/tmp/RPerl-latest/lib';  # RPerl system files  # NEED REMOVE hard-coded path
+
+ # NEED REMOVE hard-coded path
+BEGIN { package main;  our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib'; }
+
+use lib $main::RPERL_INCLUDE_PATH;  # RPerl system files
 use RPerl;  our @ISA = ('RPerl');
+$RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;
 
 use Data::Dumper;
 our $AUTOLOAD;  sub AUTOLOAD { die("AUTOLOAD purposefully disabled, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n" . Dumper(\@_) . ", dying"); }
 
-use lib '/tmp/RPerl-latest/lib/CPAN';  # RPerl's MyConfig.pm  # NEED REMOVE hard-coded path
+use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';  # RPerl's MyConfig.pm 
 use MyConfig;
 
 #use RPerl::DataStructure::Array;  # choose ONE of this
@@ -18,9 +23,11 @@ typetest___int__array_ref__in___void__out([2, 2112, 42, 23, 877, 33, 1701]);
 my $retval_array_ref = typetest___int__in___int__array_ref__out(5);
 print "in array_test.pl, have \$retval_array_ref = \n" . Dumper($retval_array_ref) . "\n";
 
-die("Done for now, dying");
-
 typetest___string__in___void__out("Melange");
+my $retval_string = typetest___void__in___string__out();
+print "in array_test.pl, have \$retval_string = '$retval_string'\n";
+
+die("Done for now, dying");
 
 ##my string__array_ref $my_peeps = ['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter'];
 my $my_peeps = ['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter'];

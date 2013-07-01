@@ -1,12 +1,10 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-#include "/tmp/RPerl-latest/lib/RPerl/HelperFunctions.c"		// -> HelperFunctions.h
-//	#include <RPerl/HelperFunctions.c>
+#include <RPerl/HelperFunctions.c>		// -> HelperFunctions.h
 
 ////use RPerl::Algorithm;
-#include "/tmp/RPerl-latest/lib/RPerl/Algorithm.cpp"		// -> Algorithm.h
-//#include <RPerl/Algorithm.cpp>
+#include <RPerl/Algorithm.cpp>		// -> Algorithm.h
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort_h
 

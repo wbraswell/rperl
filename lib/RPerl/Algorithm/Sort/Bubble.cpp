@@ -1,8 +1,7 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-#include "/tmp/RPerl-latest/lib/RPerl/Algorithm/Sort/Bubble.h"  // -> HelperFunctions.c && Sort.cpp && Inefficient.cpp
-//	#include <RPerl/Algorithm/Sort/Bubble.h>
+#include <RPerl/Algorithm/Sort/Bubble.h>  // -> HelperFunctions.c && Sort.cpp && Inefficient.cpp
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp
 # ifdef __PERL__TYPES

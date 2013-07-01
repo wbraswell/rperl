@@ -20,7 +20,7 @@ use RPerl::DataStructure::Array;
 
 # [[[ HASHES ]]]
 
-# a hash is an associative array, meaning a 1-dimensional list/vector/sequence/set of (key, data type) pairs
+# a hash is an associative array, meaning a 1-dimensional list/vector/sequence/set of (key, value) pairs
 package hash;
 our @ISA = ('HASH', 'RPerl::DataStructure::Hash');
 

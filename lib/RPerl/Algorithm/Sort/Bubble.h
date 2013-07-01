@@ -1,15 +1,15 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-#include "/tmp/RPerl-latest/lib/RPerl/HelperFunctions.c"		// -> HelperFunctions.h
+#include <types.h>	// -> Array.cpp
+
+#include <RPerl/HelperFunctions.c>		// -> HelperFunctions.h
 
 ////use RPerl::Algorithm::Sort;
-#include "/tmp/RPerl-latest/lib/RPerl/Algorithm/Sort.cpp"			// -> Sort.h
-//	#include <RPerl/Algorithm/Sort.cpp>
+#include <RPerl/Algorithm/Sort.cpp>			// -> Sort.h
 
 ////use RPerl::Algorithm::Inefficient;
-#include "/tmp/RPerl-latest/lib/RPerl/Algorithm/Inefficient.cpp"			// -> Inefficient.h
-//	#include <RPerl/Algorithm/Inefficient.cpp>
+#include <RPerl/Algorithm/Inefficient.cpp>		// -> Inefficient.h
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h
 # ifdef __PERL__TYPES
@@ -58,9 +58,6 @@ private:
 // [[[<<< BEGIN CPP TYPES >>>]]]
 // [[[<<< BEGIN CPP TYPES >>>]]]
 // [[[<<< BEGIN CPP TYPES >>>]]]
-
-// NEED ANSWER: only include CPP TYPES if we're going to use them!?  should this be here or in HelperFunctions.h???
-#include "/tmp/RPerl-latest/lib/RPerl/DataStructure/Array.cpp"	// -> Array.h
 
 // <<< TRANSLATED FUNCTION DECLARATIONS >>>
 int__array_ref bubblesort(int__array_ref data);

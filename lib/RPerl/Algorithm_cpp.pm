@@ -20,14 +20,19 @@ package main;
 BEGIN { print "[[[ BEGIN 'use Inline' STAGE for 'RPerl/Algorithm.cpp' ]]]\n"x3; }
 use Inline
 (
-#	CPP => 'RPerl/Algorithm.cpp',
-	CPP => '/tmp/RPerl-latest/lib/RPerl/Algorithm.cpp',
-	CCFLAGS => '-Wno-deprecated',
+	CPP => '$RPerl::INCLUDE_PATH/RPerl/Algorithm.cpp',
+	CCFLAGS => '-Wno-deprecated -std=c++0x',
+	INC => '-I$RPerl::INCLUDE_PATH',
 	BUILD_NOISY => 1,
 	CLEAN_AFTER_BUILD => 0,
 	WARNINGS => 1,
 	FILTERS => 'Preprocess',
-	AUTO_INCLUDE => '#include <vector>',  # DEV NOTE: include non-RPerl files here so they are not parsed by the 'Preprocess' filter
+	AUTO_INCLUDE => # DEV NOTE: include non-RPerl files using AUTO_INCLUDE so they are not parsed by the 'Preprocess' filter
+	[
+		'#include <string>',
+		'#include <vector>',
+		'#include <unordered_map>',  # DEV NOTE: unordered_map may require '-std=c++0x' in CCFLAGS above
+	],
 );
 print "[[[ END 'use Inline' STAGE for 'RPerl/Algorithm.cpp' ]]]\n"x3;
 1;
