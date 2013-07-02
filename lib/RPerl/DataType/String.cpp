@@ -5,7 +5,7 @@ using std::cout;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_cpp
 
-// convert from FOOBAZ		Perl -> C++
+// convert from (Perl SV containing string) to (C++ std::string)
 string XS_unpack_string(SV *input_sv)
 {
 	printf("in XS_unpack_string(), top of subroutine\n");
@@ -21,19 +21,16 @@ string XS_unpack_string(SV *input_sv)
 }
 
 
-// convert from BAZFOO		C++ -> Perl
+// convert from (C++ std::string) to (Perl SV containing string)
 void XS_pack_string(SV *output_sv, string input_string)
 {
 	printf("in XS_pack_string(), top of subroutine\n");
 
+	// NEED ANSWER: is it correct to mortalize here?  does this cause memory leaking???
 	output_sv = sv_2mortal(newSVpv(input_string.data(), input_string.size()));
+//	sv_setsv(output_sv, sv_2mortal(newSVpv(input_string.data(), input_string.size())));  // DEV NOTE: sv_setsv() no longer defined?  perlguts & perlxstypemap docs need updating?
 
     dSP;
-
-
-
-    // START HERE:  test strings more and clean up this file, then do string arrays, then hashes
-
 
 // NEED ANSWER: is this correct???
 //	ENTER;

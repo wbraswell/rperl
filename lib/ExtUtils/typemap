@@ -32,7 +32,7 @@ unsigned long *		T_OPAQUEPTR
 #char **				T_PACKED
 string				T_PACKED
 int__array_ref		T_PACKED
-#string__array_ref	T_PACKED
+string__array_ref	T_PACKED
 
 
 
