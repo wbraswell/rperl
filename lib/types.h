@@ -7,6 +7,6 @@
 
 #include <RPerl/DataType/String.cpp>	// -> String.h
 #include <RPerl/DataStructure/Array.cpp>	// -> Array.h
-//#include <RPerl/DataStructure/Hash.cpp>	// -> Hash.h
+#include <RPerl/DataStructure/Hash.cpp>	// -> Hash.h
 
 #endif
