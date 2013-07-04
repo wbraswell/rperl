@@ -30,9 +30,17 @@ unsigned long *		T_OPAQUEPTR
 
 # MODIFIED CODE
 #char **				T_PACKED
+
+number				T_DOUBLE
 string				T_PACKED
+
 int__array_ref		T_PACKED
+number__array_ref	T_PACKED
 string__array_ref	T_PACKED
+
+int__hash_ref		T_PACKED
+number__hash_ref	T_PACKED
+string__hash_ref	T_PACKED
 
 
 

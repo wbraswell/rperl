@@ -640,8 +640,14 @@ package const_hash_ref__const_array_ref;
 our @ISA = ('const_array_ref');
 
 
+# [[[ TYPE TESTING ]]]
+# [[[ TYPE TESTING ]]]
+# [[[ TYPE TESTING ]]]
+our void $typetest___int__array_ref__in___void__out = sub { (my int__array_ref $lucky_numbers) = @_;  my int $how_lucky = scalar @{$lucky_numbers};  my int $i;  for ($i = 0;  $i < $how_lucky;  ++$i) { print "in Perl Array::typetest___int__array_ref__in___void__out(), have lucky number $i/" . ($how_lucky - 1) . " = " . $lucky_numbers->[$i] . ", BARBAT\n"; } };
+our int__array_ref $typetest___int__in___int__array_ref__out = sub { (my int $my_size) = @_;  my int__array_ref $new_array = [];  my int $i;  for ($i = 0;  $i < $my_size;  ++$i) { $new_array->[$i] = $i * 5;  print "in Perl Array::typetest___int__in___int__array_ref__out(), setting element $i/" . ($my_size - 1) . " = " . $new_array->[$i] . ", BARBAT\n"; }  return($new_array); };
 
-# [[[ TYPE TESTING ]]]
-# [[[ TYPE TESTING ]]]
-# [[[ TYPE TESTING ]]]
-#our void $typetest___string__array_ref__in___void__out = sub { (my string__array_ref $people) = @_;  for (my int $i = 0;  $i < @{$people};  $i++) { print "in Perl Array::typetest___string__array_ref__in___void__out(), have person $i = '" . $people->[$i] . "', FOOBAZ\n"; } };
+our void $typetest___number__array_ref__in___void__out = sub { (my number__array_ref $lucky_numbers) = @_;  my int $how_lucky = scalar @{$lucky_numbers};  my int $i;  for ($i = 0;  $i < $how_lucky;  ++$i) { print "in Perl Array::typetest___number__array_ref__in___void__out(), have lucky number $i/" . ($how_lucky - 1) . " = " . $lucky_numbers->[$i] . ", BARBAT\n"; } };
+our number__array_ref $typetest___int__in___number__array_ref__out = sub { (my int $my_size) = @_;  my number__array_ref $new_array = [];  my int $i;  for ($i = 0;  $i < $my_size;  ++$i) { $new_array->[$i] = $i * 5.123456789;  print "in Perl Array::typetest___int__in___number__array_ref__out(), setting element $i/" . ($my_size - 1) . " = " . $new_array->[$i] . ", BARBAT\n"; }  return($new_array); };
+
+our void $typetest___string__array_ref__in___void__out = sub { (my string__array_ref $people) = @_;  my int $i;  for ($i = 0;  $i < scalar @{$people};  ++$i) { print "in Perl Array::typetest___string__array_ref__in___void__out(), have person $i = '" . $people->[$i] . "', FOOBAZ\n"; } };
+our string__array_ref $typetest___int__in___string__array_ref__out = sub { (my int $my_size) = @_;  my string__array_ref $people = [];  my int $i;  for ($i = 0;  $i < $my_size;  ++$i) { $people->[$i] = "Jeffy Ten! $i/" . ($my_size - 1);  print "in Perl Array::typetest___void__in___string__array_ref__out(), bottom of for() loop, have i = $i, just set another Jeffy!\n"; }  return($people); };

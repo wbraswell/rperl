@@ -49,8 +49,8 @@ void XS_pack_string(SV *output_sv, string input_string)
 //# [[[ TYPE TESTING ]]]
 //# [[[ TYPE TESTING ]]]
 //# [[[ TYPE TESTING ]]]
-//void typetest___string__in___void__out(string fuzzword) { printf("in C++ CPP_TYPES printf() String::typetest___string__in___void__out(), have fuzzword '%s', BAZBOT\n", fuzzword.data()); }
-void typetest___string__in___void__out(string fuzzword) { cout << "in C++ CPP_TYPES cout<< String::typetest___string__in___void__out(), have fuzzword '" << fuzzword << "', BAZBOT" << endl; }
+//void typetest___string__in___void__out(string fuzzword) { printf("in C++ printf() String::typetest___string__in___void__out(), have fuzzword '%s', BAZBOT\n", fuzzword.data()); }
+void typetest___string__in___void__out(string fuzzword) { cout << "in C++ cout<< String::typetest___string__in___void__out(), have fuzzword '" << fuzzword << "', BAZBOT" << endl; }
 string typetest___void__in___string__out() { string retval = "Spice";  return(retval); }
 
 

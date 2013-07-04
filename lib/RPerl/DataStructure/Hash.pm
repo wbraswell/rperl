@@ -638,3 +638,14 @@ our @ISA = ('const_hash_ref');
 # (ref to (hash with const size)) of (refs to (hashs with const sizes))
 package const_hash_ref__const_hash_ref;
 our @ISA = ('const_hash_ref');
+
+
+# [[[ TYPE TESTING ]]]
+# [[[ TYPE TESTING ]]]
+# [[[ TYPE TESTING ]]]
+our void $typetest___int__hash_ref__in___void__out = sub { (my int__hash_ref $lucky_numbers) = @_;  foreach my string $key (keys %{$lucky_numbers}) { print "in Perl Hash::typetest___int__hash_ref__in___void__out(), have lucky number '$key' => " . $lucky_numbers->{$key} . ", BARSTOOL\n"; } };
+our int__hash_ref $typetest___int__in___int__hash_ref__out = sub { (my int $my_size) = @_;  my int__hash_ref $new_hash = {};  my int $i;  my string $temp_key;  for ($i = 0;  $i < $my_size;  ++$i) { $temp_key = "funkey" . $i;  $new_hash->{$temp_key} = $i * 5;  print "in Perl Hash::typetest___int__in___int__hash_ref__out(), setting entry '$temp_key' => " . $new_hash->{$temp_key} . ", BARSTOOL\n"; }  return($new_hash); };
+our void $typetest___number__hash_ref__in___void__out = sub { (my number__hash_ref $lucky_numbers) = @_;  foreach my string $key (keys %{$lucky_numbers}) { print "in Perl Hash::typetest___number__hash_ref__in___void__out(), have lucky number '$key' => " . $lucky_numbers->{$key} . ", BARSTOOL\n"; } };
+our number__hash_ref $typetest___int__in___number__hash_ref__out = sub { (my int $my_size) = @_;  my number__hash_ref $new_hash = {};  my int $i;  my string $temp_key;  for ($i = 0;  $i < $my_size;  ++$i) { $temp_key = "funkey" . $i;  $new_hash->{$temp_key} = $i * 5.123456789;  print "in Perl Hash::typetest___int__in___number__hash_ref__out(), setting entry '$temp_key' => " . $new_hash->{$temp_key} . ", BARSTOOL\n"; }  return($new_hash); };
+our void $typetest___string__hash_ref__in___void__out = sub { (my string__hash_ref $people) = @_;  foreach my string $key (keys %{$people}) { print "in Perl Hash::typetest___string__hash_ref__in___void__out(), have person '$key' => '" . $people->{$key} . "', STARBOOL\n"; } };
+our string__hash_ref $typetest___int__in___string__hash_ref__out = sub { (my int $my_size) = @_;  my string__hash_ref $people = {};  my int $i;  for ($i = 0;  $i < $my_size;  ++$i) { $people->{"Luker_key" . $i} = "Jeffy Ten! " . $i . "/" . ($my_size - 1); print "in Perl Hash::typetest___int__in___string__hash_ref__out(), bottom of for() loop, have i = $i, just set another Jeffy!\n"; }  return($people); };
