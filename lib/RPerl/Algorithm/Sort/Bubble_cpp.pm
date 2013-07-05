@@ -29,7 +29,7 @@ BEGIN { print "[[[ BEGIN 'use Inline' STAGE for 'RPerl/Algorithm/Sort/Bubble.cpp
 use Inline
 (
 	CPP => '$RPerl::INCLUDE_PATH/RPerl/Algorithm/Sort/Bubble.cpp',
-#	TYPEMAPS => '$RPerl::INCLUDE_PATH/RPerl/DataStructure/Array.typemap',  # DOES NOT OVERRIDE ALREADY-SET TYPEMAP IN PERL CORE
+	TYPEMAPS => '$RPerl::INCLUDE_PATH/typemap.rperl',
 	CCFLAGS => '-Wno-deprecated -std=c++0x',
 	INC => '-I$RPerl::INCLUDE_PATH',
 	BUILD_NOISY => 1,

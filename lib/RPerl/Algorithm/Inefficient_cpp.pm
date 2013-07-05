@@ -25,6 +25,7 @@ BEGIN { print "[[[ BEGIN 'use Inline' STAGE for 'RPerl/Algorithm/Inefficient.cpp
 use Inline
 (
 	CPP => '$RPerl::INCLUDE_PATH/RPerl/Algorithm/Inefficient.cpp',
+	TYPEMAPS => '$RPerl::INCLUDE_PATH/typemap.rperl',
 	CCFLAGS => '-Wno-deprecated -std=c++0x',
 	INC => '-I$RPerl::INCLUDE_PATH',
 	BUILD_NOISY => 1,
@@ -33,6 +34,7 @@ use Inline
 	FILTERS => 'Preprocess',
 	AUTO_INCLUDE => # DEV NOTE: include non-RPerl files using AUTO_INCLUDE so they are not parsed by the 'Preprocess' filter
 	[
+		'#include <iostream>',
 		'#include <string>',
 		'#include <vector>',
 		'#include <unordered_map>',  # DEV NOTE: unordered_map may require '-std=c++0x' in CCFLAGS above

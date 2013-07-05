@@ -18,6 +18,3 @@ cpan> force install Inline::Filters
 
 $ mv ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm.old
 $ ln -s path/to/RPerl/lib/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm
-
-$ mv /usr/share/perl/5.10.1/ExtUtils/typemap /usr/share/perl/5.10.1/ExtUtils/typemap.old
-$ ln -s path/to/RPerl/lib/ExtUtils/typemap /usr/share/perl/5.10.1/ExtUtils/typemap

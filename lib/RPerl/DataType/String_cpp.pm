@@ -17,6 +17,7 @@ BEGIN { print "[[[ BEGIN 'use Inline' STAGE for 'RPerl/DataType/String.cpp' ]]]\
 use Inline
 (
 	CPP => '$RPerl::INCLUDE_PATH/RPerl/DataType/String.cpp',
+	TYPEMAPS => '$RPerl::INCLUDE_PATH/typemap.rperl',
 	CCFLAGS => '-Wno-deprecated -std=c++0x',
 	INC => '-I$RPerl::INCLUDE_PATH',
 	BUILD_NOISY => 1,
