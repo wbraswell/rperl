@@ -24,6 +24,5 @@ our @ISA = ('ref');
 # [[[ TYPE TESTING ]]]
 # [[[ TYPE TESTING ]]]
 # [[[ TYPE TESTING ]]]
-use RPerl::DataType::Void;
-our void $typetest___string__in___void__out = sub { (my string $fuzzword) = @_;  print "in Perl String::typetest___string__in___void__out(), have fuzzword '$fuzzword', BAZBOT\n"; };
-our string $typetest___void__in___string__out = sub { my string $retval = "Spice";  return($retval); }
+our string $typetest___void__in___string__out = sub { my string $retval = "Spice";  return($retval); };
+our string $typetest___string__in___string__out = sub { (my string $fuzzword) = @_;  print "in Perl String::typetest___string__in___string__out(), have fuzzword '$fuzzword', BAZBOT\n";  return($fuzzword . "FUZZ"); };

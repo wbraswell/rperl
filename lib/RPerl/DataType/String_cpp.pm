@@ -28,6 +28,7 @@ use Inline
 	[
 		'#include <iostream>',
 		'#include <string>',
+		'#include <sstream>',
 		'#include <vector>',
 		'#include <unordered_map>',  # DEV NOTE: unordered_map may require '-std=c++0x' in CCFLAGS above
 	],
@@ -38,7 +39,7 @@ EOF
 		print "in String_cpp::cpp_load(), CPP not yet loaded, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
 
 		eval($eval_string);  ## no critic
-		die(@_) if (@_);
+		die($@) if ($@);
 		
 		$RPerl::DataType::String_cpp::CPP_loaded = 1;
 	}
@@ -62,7 +63,7 @@ EOF
 #		print "in String_cpp::cpp_link(), CPP not yet linked, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
 
 		eval($eval_string);  ## no critic
-		die(@_) if (@_);
+		die($@) if ($@);
 	}
 #	else { print "in String_cpp::cpp_link(), CPP already linked, DOING NOTHING\n"; }
 };

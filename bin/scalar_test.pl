@@ -12,8 +12,8 @@ use RPerl::DataType::Number_cpp;  RPerl::DataType::Number_cpp::cpp_load();  RPer
 use RPerl::DataType::String_cpp;  RPerl::DataType::String_cpp::cpp_load();  RPerl::DataType::String_cpp::cpp_link();
 
 # variable declarations
-my number $retval_number;
-my string $retval_string;
+my number $number_retval;
+my string $string_retval;
 
 # loop to test for memory leaks
 my const_int $i_MAX = 1;
@@ -21,13 +21,17 @@ for (my int $i = 0;  $i < $i_MAX;  ++$i)
 {
 	print "in scalar_test.pl, top of for() loop $i/$i_MAX\n";
 	
-	typetest___number__in___void__out(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679);
-	$retval_number = typetest___void__in___number__out();
-	print "in scalar_test.pl $i/$i_MAX, have \$retval_number = $retval_number\n";
+	$number_retval = stringify(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679);
+	print "in scalar_test.pl $i/$i_MAX, have \$number_retval = '$number_retval'\n";
+	$number_retval = typetest___void__in___number__out();
+	print "in scalar_test.pl $i/$i_MAX, have \$number_retval = $number_retval\n";
+	$number_retval = typetest___number__in___number__out(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679);
+	print "in scalar_test.pl $i/$i_MAX, have \$number_retval = $number_retval\n";
 
-	typetest___string__in___void__out("Melange");
-	$retval_string = typetest___void__in___string__out();
-	print "in scalar_test.pl $i/$i_MAX, have \$retval_string = '$retval_string'\n";
+	$string_retval = typetest___void__in___string__out();
+	print "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n";
+	$string_retval = typetest___string__in___string__out("Melange");
+	print "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n";
 }
 
 #die("Done for now, dying");

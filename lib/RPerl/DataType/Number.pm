@@ -3,6 +3,7 @@ package RPerl::DataType::Number;
 
 our @ISA = ('RPerl::DataType::Scalar');
 use RPerl::DataType::Scalar;
+use RPerl::DataType::String;  # for stringify()
 
 # a number is any numeric value, meaning either an integer or a floating-point number
 package number;
@@ -20,10 +21,12 @@ our @ISA = ('ref');
 package const_number_ref;
 our @ISA = ('ref');
 
+# [[[ STRINGIFY ]]]
+our string $stringify = sub { (my $input_number) = @_;  return("$input_number"); };
 
 # [[[ TYPE TESTING ]]]
 # [[[ TYPE TESTING ]]]
 # [[[ TYPE TESTING ]]]
 use RPerl::DataType::Void;
-our void $typetest___number__in___void__out = sub { (my number $lucky_number) = @_;  print "in Perl Number::typetest___number__in___void__out(), have \$lucky_number $lucky_number, BATBOZ\n"; };
 our number $typetest___void__in___number__out = sub { my number $retval = 22 / 7;  print "in Perl Number::typetest___void__in___number__out(), have \$retval $retval, BATBOZ\n";  return($retval); };
+our number $typetest___number__in___number__out = sub { (my number $lucky_number) = @_;  print "in Perl Number::typetest___number__in___number__out(), have \$lucky_number $lucky_number, BATBOZ\n";  return($lucky_number * 2); };
