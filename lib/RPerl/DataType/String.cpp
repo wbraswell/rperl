@@ -1,9 +1,10 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-#include <RPerl/DataType/String.h>		// -> NULL (relies on <string> being included via Inline::CPP's AUTO_INCLUDE config option)
-
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_cpp
+#define __CPP__INCLUDED__RPerl__DataType__String_cpp 1
+
+#include <RPerl/DataType/String.h>		// -> NULL (relies on <string> being included via Inline::CPP's AUTO_INCLUDE config option)
 
 // convert from (Perl SV containing string) to (C++ std::string)
 string XS_unpack_string(SV *input_sv)
@@ -42,4 +43,3 @@ string typetest___void__in___string__out() { string retval = "Spice";  return(re
 string typetest___string__in___string__out(string fuzzword) { cout << "in C++ cout<< String::typetest___string__in___string__out(), have fuzzword '" << fuzzword << "', BAZBOT" << endl;  return(fuzzword + "FUZZ"); }
 
 #endif
-#define __CPP__INCLUDED__RPerl__DataType__String_cpp 1

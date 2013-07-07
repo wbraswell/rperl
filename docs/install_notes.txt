@@ -15,6 +15,10 @@ cpan> force install Inline
 cpan> force install Inline::CPP
 	must force, Inline tests are broken, they change @INC and then fail to load single-user-installation of Parse::RecDescent
 cpan> force install Inline::Filters
+cpan> install Scalar::Util
+	must install system-wide!  may conflict with previous system-wide install if used in single-user install, says:
+		"isdual" is not exported by the Scalar::Util module
+cpan> install Scalar::Util::Numeric
 
 $ mv ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm.old
 $ ln -s path/to/RPerl/lib/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm

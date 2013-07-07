@@ -1,4 +1,8 @@
+////use strict;  use warnings;
+using std::cout;  using std::endl;
+
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash_h
+#define __CPP__INCLUDED__RPerl__DataStructure__Hash_h 1
 
 ////# [[[ DATA TYPES ]]]
 ////use RPerl::DataType::Number;
@@ -19,7 +23,7 @@ typedef std::unordered_map<string, string> string__hash_ref;
 typedef std::unordered_map<string, string>::iterator string__hash_ref__iterator;
 typedef std::unordered_map<string, string>::const_iterator string__hash_ref__const_iterator;
 
-// [[[ TYPEMAP PACK/UNPACK SUBROUTINE PROTOTYPE DECLARATIONS FOR RPERL-TYPES-IN-C ]]]
+// [[[ TYPEMAP PACK/UNPACK DECLARATIONS ]]]
 int__hash_ref XS_unpack_int__hash_ref(SV *input_hv_ref);
 void XS_pack_int__hash_ref(SV *output_hv_ref, int__hash_ref input_unordered_map);
 number__hash_ref XS_unpack_number__hash_ref(SV *input_hv_ref);
@@ -38,4 +42,3 @@ void typetest___string__hash_ref__in___void__out(string__hash_ref people);
 string__hash_ref typetest___int__in___string__hash_ref__out(int my_size);
 
 #endif
-#define __CPP__INCLUDED__RPerl__DataStructure__Hash_h 1

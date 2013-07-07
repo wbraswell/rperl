@@ -1,12 +1,13 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
+#ifndef __CPP__INCLUDED__RPerl__Algorithm__Inefficient_h
+#define __CPP__INCLUDED__RPerl__Algorithm__Inefficient_h 1
+
 #include <RPerl/HelperFunctions.c>		// -> HelperFunctions.h
 
 ////use RPerl::Algorithm;
 #include <RPerl/Algorithm.cpp>		// -> Algorithm.h
-
-#ifndef __CPP__INCLUDED__RPerl__Algorithm__Inefficient_h
 
 // <<< TRANSLATED FUNCTION DECLARATIONS >>>
 // [[[ INHERITANCE TESTING ]]]
@@ -39,4 +40,3 @@ public:
 };
 
 #endif
-#define __CPP__INCLUDED__RPerl__Algorithm__Inefficient_h 1

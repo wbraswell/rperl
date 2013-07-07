@@ -1,9 +1,10 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-#include <RPerl/Algorithm/Sort.h>  // -> HelperFunctions.c && Algorithm.cpp
-
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort_cpp
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort_cpp 1
+
+#include <RPerl/Algorithm/Sort.h>  // -> HelperFunctions.c && Algorithm.cpp
 
 // [[[ INHERITANCE TESTING ]]]
 ////our void__method $inherited__Sort = sub { (my object $self, my string $person) = @_;  print "in Perl Sort->inherited__Sort(), have \$self = '$self' and \$person = '$person', FISH\n"; };
@@ -20,4 +21,3 @@ SV *uninherited__Sort(SV *person) { cout << "in C++ PERL_TYPES Sort::uninherited
 //char *uninherited(char *person) { cout << "in C++ CPP_TYPES Sort::uninherited(), have $person = '" << person << "', TETRAHEDRON\n";  return (char *)"C++ CPP_TYPES Sort::uninherited() RULES!"; }  // CPP_TYPES
 
 #endif
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort_cpp 1

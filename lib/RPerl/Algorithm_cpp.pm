@@ -33,6 +33,7 @@ use Inline
 		'#include <iostream>',
 		'#include <string>',
 		'#include <sstream>',
+		'#include <limits>',
 		'#include <vector>',
 		'#include <unordered_map>',  # DEV NOTE: unordered_map may require '-std=c++0x' in CCFLAGS above
 	],

@@ -22,7 +22,7 @@ package const_number_ref;
 our @ISA = ('ref');
 
 # [[[ STRINGIFY ]]]
-our string $stringify = sub { (my $input_number) = @_;  return("$input_number"); };
+our string $stringify_number = sub { (my $input_number) = @_;  return("$input_number"); };
 
 # [[[ TYPE TESTING ]]]
 # [[[ TYPE TESTING ]]]

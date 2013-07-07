@@ -1,6 +1,9 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
+#ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h 1
+
 #include <types.h>	// -> Array.cpp
 
 #include <RPerl/HelperFunctions.c>		// -> HelperFunctions.h
@@ -11,7 +14,6 @@ using std::cout;  using std::endl;
 ////use RPerl::Algorithm::Inefficient;
 #include <RPerl/Algorithm/Inefficient.cpp>		// -> Inefficient.h
 
-#ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h
 # ifdef __PERL__TYPES
 
 // [[[<<< BEGIN PERL TYPES >>>]]]
@@ -101,4 +103,3 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 # endif
 
 #endif
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h 1

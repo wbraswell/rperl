@@ -1,9 +1,10 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-#include <RPerl/Algorithm/Inefficient.h>  // -> HelperFunctions.c && Algorithm.cpp
-
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Inefficient_cpp
+#define __CPP__INCLUDED__RPerl__Algorithm__Inefficient_cpp 1
+
+#include <RPerl/Algorithm/Inefficient.h>  // -> HelperFunctions.c && Algorithm.cpp
 
 // [[[ INHERITANCE TESTING ]]]
 ////our void__method $inherited__Inefficient = sub { (my object $self, my string $person) = @_;  print "in Perl Inefficient->inherited__Inefficient(), have \$self = '$self' and \$person = '$person', FLUFFY\n"; };
@@ -20,4 +21,3 @@ SV *uninherited__Inefficient(SV *person) { cout << "in C++ PERL_TYPES Inefficien
 //char *uninherited(char *person) { cout << "in C++ CPP_TYPES Inefficient::uninherited(), have $person = '" << person << "', TETRAHEDRON\n";  return (char *)"C++ CPP_TYPES Inefficient::uninherited() RULES!"; }  // CPP_TYPES
 
 #endif
-#define __CPP__INCLUDED__RPerl__Algorithm__Inefficient_cpp 1

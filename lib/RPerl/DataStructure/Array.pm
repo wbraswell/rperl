@@ -17,7 +17,6 @@ use RPerl::DataType::Unknown;
 # [[[ DATA STRUCTURES ]]]
 use RPerl::DataStructure::Hash;
 
-
 # [[[ ARRAYS ]]]
 
 # an array is a 1-dimensional list/vector/sequence/set of data types
@@ -640,10 +639,204 @@ package const_hash_ref__const_array_ref;
 our @ISA = ('const_array_ref');
 
 
+# [[[ STRINGIFY ]]]
+# [[[ STRINGIFY ]]]
+# [[[ STRINGIFY ]]]
+
+# convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
+our string $stringify_int__array_ref = sub { (my $input_av_ref) = @_;  
+;
+#	print "in Perl stringify_int__array_ref(), top of subroutine\n";
+
+	# for type checking in stringify()'s, inside eval to delay until after 'use MyConfig', need move somewhere else???
+	eval 'use Scalar::Util::Numeric qw(isint);';  ## no critic
+
+    my @input_av;
+	my int $input_av_length;
+	my int $i;
+	my int $input_av_element;
+	my string $output_sv;
+#	my bool $i_is_0 = 1;  # NEED FIX: add bool RPerl type!
+	my int $i_is_0 = 1;
+
+	if (UNIVERSAL::isa($input_av_ref, 'ARRAY')) { @input_av = @{$input_av_ref}; }
+	else { die("in Perl stringify_int__array_ref(), \$input_av_ref was not an AV ref, dying"); }
+	
+	$input_av_length = scalar @input_av;
+#	print "in Perl stringify_int__array_ref(), have \$input_av_length = $input_av_length\n";
+
+	$output_sv = '[';
+
+	for ($i = 0;  $i < $input_av_length;  ++$i)
+	{
+		# utilizes i in element retrieval
+		$input_av_element = $input_av[$i];
+
+		if (defined($input_av_element))
+		{
+			if (isint($input_av_element))
+			{
+				if ($i_is_0)
+				{
+					$output_sv .= "$input_av_element";
+					$i_is_0 = 0;
+				}
+				else
+				{
+					$output_sv .= ", $input_av_element";
+				}
+			}
+			else { die("in Perl stringify_int__array_ref(), \$input_av_element at index $i was not an int, dying"); }
+		}
+		else { die("in Perl stringify_int__array_ref(), \$input_av_element at index $i was undef and/or NULL, dying"); }
+	}
+
+	$output_sv .= ']';
+
+	print "in Perl stringify_int__array_ref(), after for() loop, have \$output_sv =\n$output_sv\n";
+#	print "in Perl stringify_int__array_ref(), bottom of subroutine\n";
+	
+	return($output_sv);
+};
+
+# convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing NVs))) to Perl-parsable (Perl SV containing PV)
+our string $stringify_number__array_ref = sub { (my $input_av_ref) = @_;  
+;
+#	print "in Perl stringify_number__array_ref(), top of subroutine\n";
+
+	# for type checking in stringify()'s, inside eval to delay until after 'use MyConfig', need move somewhere else???
+	eval 'use Scalar::Util::Numeric qw(isnum);';  ## no critic
+
+    my @input_av;
+	my int $input_av_length;
+	my int $i;
+	my number $input_av_element;
+	my string $output_sv;
+#	my bool $i_is_0 = 1;  # NEED FIX: add bool RPerl type!
+	my int $i_is_0 = 1;
+
+	if (UNIVERSAL::isa($input_av_ref, 'ARRAY')) { @input_av = @{$input_av_ref}; }
+	else { die("in Perl stringify_number__array_ref(), \$input_av_ref was not an AV ref, dying"); }
+	
+	$input_av_length = scalar @input_av;
+#	print "in Perl stringify_number__array_ref(), have \$input_av_length = $input_av_length\n";
+
+	$output_sv = '[';
+
+	for ($i = 0;  $i < $input_av_length;  ++$i)
+	{
+		# utilizes i in element retrieval
+		$input_av_element = $input_av[$i];
+
+		if (defined($input_av_element))
+		{
+			if (isnum($input_av_element))
+			{
+				if ($i_is_0)
+				{
+					$output_sv .= "$input_av_element";
+					$i_is_0 = 0;
+				}
+				else
+				{
+					$output_sv .= ", $input_av_element";
+				}
+			}
+			else { die("in Perl stringify_number__array_ref(), \$input_av_element at index $i was not a number, dying"); }
+		}
+		else { die("in Perl stringify_number__array_ref(), \$input_av_element at index $i was undef and/or NULL, dying"); }
+	}
+
+	$output_sv .= ']';
+
+	print "in Perl stringify_number__array_ref(), after for() loop, have \$output_sv =\n$output_sv\n";
+#	print "in Perl stringify_number__array_ref(), bottom of subroutine\n";
+	
+	return($output_sv);
+};
+
+
+# convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs))) to Perl-parsable (Perl SV containing PV)
+our string $stringify_string__array_ref = sub { (my $input_av_ref) = @_;  
+;
+#	print "in Perl stringify_string__array_ref(), top of subroutine\n";
+
+	# for type checking in stringify()'s, inside eval to delay until after 'use MyConfig', need move somewhere else???
+	eval 'use Scalar::Util qw(isdual);';  ## no critic
+
+    my @input_av;
+	my int $input_av_length;
+	my int $i;
+	my string $input_av_element;
+	my string $temp_string;
+	my number $temp_num;
+	my string $output_sv;
+#	my bool $i_is_0 = 1;  # NEED FIX: add bool RPerl type!
+	my int $i_is_0 = 1;
+
+	if (UNIVERSAL::isa($input_av_ref, 'ARRAY')) { @input_av = @{$input_av_ref}; }
+	else { die("in Perl stringify_string__array_ref(), \$input_av_ref was not an AV ref, dying"); }
+	
+	$input_av_length = scalar @input_av;
+#	print "in Perl stringify_string__array_ref(), have \$input_av_length = $input_av_length\n";
+
+	$output_sv = '[';
+
+	for ($i = 0;  $i < $input_av_length;  ++$i)
+	{
+		# utilizes i in element retrieval
+		$input_av_element = $input_av[$i];
+
+		if (defined($input_av_element))
+		{
+			# DEV NOTE: evaluate copied scalar in numeric context;
+			# forces $temp_string to dualvar status if $input_av_element is a number wrapped in a string,
+			# without $input_av_element itself getting dualvar status, cool trick!
+			# Scalar::Util::Numeric::isnum/isint are like SvNOK/SvIOK, and Scalar::Util::isdual plus this trick is like SvPOK
+			$temp_string = $input_av_element;
+			{ no warnings;  $temp_num = $temp_string + 0; }
+			
+			# a string is any scalar that:
+			# 1. is defined
+			# AND
+			# 2. does not hold a reference
+			# AND
+			# 3a. does not hold a number (normal string)
+			# OR
+			# 3b. does hold a number wrapped in a string (dualvar eligibile)
+			if ((ref($input_av_element) eq '') and
+				(
+					not(isnum($input_av_element)) or
+					isdual($temp_string)
+				))
+			{
+				if ($i_is_0)
+				{
+					$output_sv .= '"' . $input_av_element . '"';
+					$i_is_0 = 0;
+				}
+				else
+				{
+					$output_sv .= ', "' . $input_av_element . '"';
+				}
+			}
+			else { die("in Perl stringify_string__array_ref(), \$input_av_element at index $i was not a string, dying"); }
+		}
+		else { die("in Perl stringify_string__array_ref(), \$input_av_element at index $i was undef and/or NULL, dying"); }
+	}
+
+	$output_sv .= ']';
+
+	print "in Perl stringify_string__array_ref(), after for() loop, have \$output_sv =\n$output_sv\n";
+#	print "in Perl stringify_string__array_ref(), bottom of subroutine\n";
+	
+	return($output_sv);
+};
+
 # [[[ TYPE TESTING ]]]
 # [[[ TYPE TESTING ]]]
 # [[[ TYPE TESTING ]]]
-our void $typetest___int__array_ref__in___void__out = sub { (my int__array_ref $lucky_numbers) = @_;  my int $how_lucky = scalar @{$lucky_numbers};  my int $i;  for ($i = 0;  $i < $how_lucky;  ++$i) { print "in Perl Array::typetest___int__array_ref__in___void__out(), have lucky number $i/" . ($how_lucky - 1) . " = " . $lucky_numbers->[$i] . ", BARBAT\n"; } };
+our string $typetest___int__array_ref__in___string__out = sub { (my int__array_ref $lucky_numbers) = @_;  my int $how_lucky = scalar @{$lucky_numbers};  my int $i;  for ($i = 0;  $i < $how_lucky;  ++$i) { print "in Perl Array::typetest___int__array_ref__in___string__out(), have lucky number $i/" . ($how_lucky - 1) . " = " . $lucky_numbers->[$i] . ", BARBAT\n"; }   };
 our int__array_ref $typetest___int__in___int__array_ref__out = sub { (my int $my_size) = @_;  my int__array_ref $new_array = [];  my int $i;  for ($i = 0;  $i < $my_size;  ++$i) { $new_array->[$i] = $i * 5;  print "in Perl Array::typetest___int__in___int__array_ref__out(), setting element $i/" . ($my_size - 1) . " = " . $new_array->[$i] . ", BARBAT\n"; }  return($new_array); };
 
 our void $typetest___number__array_ref__in___void__out = sub { (my number__array_ref $lucky_numbers) = @_;  my int $how_lucky = scalar @{$lucky_numbers};  my int $i;  for ($i = 0;  $i < $how_lucky;  ++$i) { print "in Perl Array::typetest___number__array_ref__in___void__out(), have lucky number $i/" . ($how_lucky - 1) . " = " . $lucky_numbers->[$i] . ", BARBAT\n"; } };

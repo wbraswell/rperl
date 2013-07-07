@@ -1,4 +1,8 @@
+////use strict;  use warnings;
+using std::cout;  using std::endl;
+
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_h
+#define __CPP__INCLUDED__RPerl__DataType__String_h 1
 
 // [[[ TYPEDEFS FOR RPERL-TYPES-IN-C ]]]
 typedef std::string string;
@@ -16,4 +20,3 @@ string typetest___void__in___string__out();
 string typetest___string__in___string__out(string fuzzword);
 
 #endif
-#define __CPP__INCLUDED__RPerl__DataType__String_h 1

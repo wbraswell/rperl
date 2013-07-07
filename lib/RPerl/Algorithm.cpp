@@ -1,9 +1,10 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-#include <RPerl/Algorithm.h>  // -> HelperFunctions.c && Class.cpp???  RPerl.cpp???
-
 #ifndef __CPP__INCLUDED__RPerl__Algorithm_cpp
+#define __CPP__INCLUDED__RPerl__Algorithm_cpp 1
+
+#include <RPerl/Algorithm.h>  // -> HelperFunctions.c && Class.cpp???  RPerl.cpp???
 
 // [[[ INHERITANCE TESTING ]]]
 ////our void__method $inherited__Algorithm = sub { (my object $self, my string $person) = @_;  print "in Perl Algorithm->inherited__Algorithm(), have \$self = '$self' and \$person = '$person', FNORD\n"; };
@@ -20,4 +21,3 @@ SV *uninherited__Algorithm(SV *person) { cout << "in C++ PERL_TYPES Algorithm::u
 char *uninherited(char *person) { cout << "in C++ CPP_TYPES Algorithm::uninherited(), have $person = '" << person << "', TETRAHEDRON\n";  return (char *)"C++ CPP_TYPES Algorithm::uninherited() RULES!"; }  // CPP_TYPES
 
 #endif
-#define __CPP__INCLUDED__RPerl__Algorithm_cpp 1

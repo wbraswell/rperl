@@ -1,9 +1,10 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-#include <RPerl/DataStructure/Hash.h>		// -> NULL (relies on <unordered_map> being included via Inline::CPP's AUTO_INCLUDE config option)
-
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash_cpp
+#define __CPP__INCLUDED__RPerl__DataStructure__Hash_cpp 1
+
+#include <RPerl/DataStructure/Hash.h>		// -> NULL (relies on <unordered_map> being included via Inline::CPP's AUTO_INCLUDE config option)
 
 // convert from (Perl SV containing reference to (Perl HV of (Perl SVs containing IVs))) to (C++ std::unordered_map of ints)
 int__hash_ref XS_unpack_int__hash_ref(SV *input_hv_ref)
@@ -79,7 +80,7 @@ void XS_pack_int__hash_ref(SV *output_hv_ref, int__hash_ref input_unordered_map)
 }
 
 
-// convert from (Perl SV containing reference to (Perl HV of (Perl SVs containing NVs))) to (C++ std::unordered_map of numbers)
+// convert from (Perl SV containing reference to (Perl HV of (Perl SVs containing NVs))) to (C++ std::unordered_map of long doubles)
 number__hash_ref XS_unpack_number__hash_ref(SV *input_hv_ref)
 {
 	printf("in XS_unpack_number__hash_ref(), top of subroutine\n");
@@ -126,7 +127,7 @@ number__hash_ref XS_unpack_number__hash_ref(SV *input_hv_ref)
 }
 
 
-// convert from (C++ std::unordered_map of numbers) to (Perl SV containing reference to (Perl HV of (Perl SVs containing NVs)))
+// convert from (C++ std::unordered_map of long doubles) to (Perl SV containing reference to (Perl HV of (Perl SVs containing NVs)))
 void XS_pack_number__hash_ref(SV *output_hv_ref, number__hash_ref input_unordered_map)
 {
 	printf("in XS_pack_number__hash_ref(), top of subroutine\n");
@@ -239,4 +240,3 @@ string__hash_ref typetest___int__in___string__hash_ref__out(int my_size) { strin
 
 
 #endif
-#define __CPP__INCLUDED__RPerl__DataStructure__Hash_cpp 1

@@ -1,15 +1,11 @@
 #!/usr/bin/perl
 use strict;  use warnings;
 
- # NEED REMOVE hard-coded path
-BEGIN { package main;  our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib'; }
-
-use lib $main::RPERL_INCLUDE_PATH;  # RPerl system files
-use RPerl;  our @ISA = ('RPerl');
-$RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;
-
-use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';  # RPerl's MyConfig.pm 
-use MyConfig;
+# RPERL DRIVER BOILERPLATE
+BEGIN { package main;  our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib'; } # NEED REMOVE hard-coded path
+use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';  use MyConfig;  # RPerl's MyConfig.pm 
+use lib $main::RPERL_INCLUDE_PATH;  use RPerl;  our @ISA = ('RPerl');  $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;  # RPerl system files
+use Data::Dumper;  our $AUTOLOAD;  sub AUTOLOAD { die("AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n" . Dumper(\@_) . ", dying"); }
 
 use Time::HiRes qw(time);
 

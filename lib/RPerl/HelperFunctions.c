@@ -1,6 +1,7 @@
-#include <RPerl/HelperFunctions.h>  // -> ???
-
 #ifndef __CPP__INCLUDED__RPerl__HelperFunctions_c
+#define __CPP__INCLUDED__RPerl__HelperFunctions_c 1
+
+#include <RPerl/HelperFunctions.h>  // -> ???
 
 // <<< HELPER FUNCTION DEFINITIONS >>
 void RPerl_object_property_init(SV* initee) { dSP; XPUSHs(initee); PUTBACK; call_pv("Dumper", G_SCALAR); }
@@ -25,5 +26,3 @@ char* RPerl_DUMPER__perl_from_c(SV* dumpee)
 }
 
 #endif
-#define __CPP__INCLUDED__RPerl__HelperFunctions_c 1
-

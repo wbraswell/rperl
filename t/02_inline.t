@@ -90,7 +90,7 @@ void greetings_void(SV* name1, ...) {
 	}
 	Inline_Stack_Reset;
 	Inline_Stack_Push(sv_2mortal(retval));
-	Inline_Stack_Done;	
+	Inline_Stack_Done;
 }
 END_OF_C_CODE
 EOF

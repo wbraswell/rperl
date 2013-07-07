@@ -1,13 +1,14 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
+#ifndef __CPP__INCLUDED__RPerl__Algorithm_h
+#define __CPP__INCLUDED__RPerl__Algorithm_h 1
+
 #include <RPerl/HelperFunctions.c>		// -> HelperFunctions.h
 
 ////use RPerl::Class; use RPerl; # the base classes that directly call "use RPerl::Class;" also need to "use RPerl;" to get "use types;", etc.
 //#include <RPerl/Class.cpp>
 //#include <RPerl.cpp>
-
-#ifndef __CPP__INCLUDED__RPerl__Algorithm_h
 
 // <<< TRANSLATED FUNCTION DECLARATIONS >>>
 // [[[ INHERITANCE TESTING ]]]
@@ -39,4 +40,3 @@ public:
 };
 
 #endif
-#define __CPP__INCLUDED__RPerl__Algorithm_h 1
