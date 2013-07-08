@@ -39,9 +39,10 @@ void XS_pack_string__array_ref(SV *output_av_ref, string__array_ref input_vector
 
 // [[[ STRINGIFY DECLARATIONS ]]]
 # ifdef __PERL__TYPES
-void stringify_int__array_ref(SV *input_av_ref);
-void stringify_number__array_ref(SV *input_av_ref);
-void stringify_string__array_ref(SV *input_av_ref);
+//void stringify_int__array_ref(SV *input_av_ref);
+SV* stringify_int__array_ref(SV *input_av_ref);
+SV* stringify_number__array_ref(SV *input_av_ref);
+SV* stringify_string__array_ref(SV *input_av_ref);
 # elif defined __CPP__TYPES
 string stringify_int__array_ref(int__array_ref input_vector);
 string stringify_number__array_ref(number__array_ref input_vector);
@@ -53,11 +54,22 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 //# [[[ TYPE TESTING ]]]
 //# [[[ TYPE TESTING ]]]
 //# [[[ TYPE TESTING ]]]
-void typetest___int__array_ref__in___void__out(int__array_ref lucky_numbers);
+# ifdef __PERL__TYPES
+//void typetest___int__array_ref__in___string__out(SV* lucky_numbers);
+SV* typetest___int__array_ref__in___string__out(SV* lucky_numbers);
+//void typetest___int__in___int__array_ref__out(int my_size);
+SV* typetest___int__in___int__array_ref__out(int my_size);
+SV* typetest___number__array_ref__in___string__out(SV* lucky_numbers);
+SV* typetest___int__in___number__array_ref__out(int my_size);
+SV* typetest___string__array_ref__in___string__out(SV* people);
+SV* typetest___int__in___string__array_ref__out(int my_size);
+# elif defined __CPP__TYPES
+string typetest___int__array_ref__in___string__out(int__array_ref lucky_numbers);
 int__array_ref typetest___int__in___int__array_ref__out(int my_size);
-void typetest___number__array_ref__in___void__out(number__array_ref lucky_numbers);
+string typetest___number__array_ref__in___string__out(number__array_ref lucky_numbers);
 number__array_ref typetest___int__in___number__array_ref__out(int my_size);
-void typetest___string__array_ref__in___void__out(string__array_ref people);
+string typetest___string__array_ref__in___string__out(string__array_ref people);
 string__array_ref typetest___int__in___string__array_ref__out(int my_size);
+# endif
 
 #endif

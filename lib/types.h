@@ -2,8 +2,8 @@
 #define __CPP__INCLUDED__types_h 1
 
 // <<< TYPE DEFINES >>>
-//#define __PERL__TYPES  // must choose exactly ONE of this,
-#define __CPP__TYPES  // or this
+#define __PERL__TYPES  // must choose exactly ONE of this,
+//#define __CPP__TYPES  // or this
 
 # ifdef __CPP__TYPES
 

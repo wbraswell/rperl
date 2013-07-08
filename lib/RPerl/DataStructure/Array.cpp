@@ -83,7 +83,7 @@ int__array_ref XS_unpack_int__array_ref(SV *input_av_ref)
 	}
 
 
-	printf("in XS_unpack_int__array_ref(), after for() loop, have output_vector.size() = %d\n", output_vector.size());
+//	printf("in XS_unpack_int__array_ref(), after for() loop, have output_vector.size() = %d\n", output_vector.size());
 //	printf("in XS_unpack_int__array_ref(), bottom of subroutine\n");
 
 	return(output_vector);
@@ -100,7 +100,7 @@ void XS_pack_int__array_ref(SV *output_av_ref, int__array_ref input_vector)
 	int i;
 	SV *temp_sv_pointer;
 
-	printf("in XS_pack_int__array_ref(), have input_vector_length = %d\n", input_vector_length);
+//	printf("in XS_pack_int__array_ref(), have input_vector_length = %d\n", input_vector_length);
 
 	if (input_vector_length > 0) { for (i = 0;  i < input_vector_length;  ++i) { av_push(output_av, newSViv(input_vector[i])); } }
 	else warn("in XS_pack_int__array_ref(), array was empty, returning empty array via newAV()");
@@ -177,7 +177,7 @@ number__array_ref XS_unpack_number__array_ref(SV *input_av_ref)
 	}
 
 
-	printf("in XS_unpack_number__array_ref(), after for() loop, have output_vector.size() = %d\n", output_vector.size());
+//	printf("in XS_unpack_number__array_ref(), after for() loop, have output_vector.size() = %d\n", output_vector.size());
 //	printf("in XS_unpack_number__array_ref(), bottom of subroutine\n");
 
 	return(output_vector);
@@ -194,7 +194,7 @@ void XS_pack_number__array_ref(SV *output_av_ref, number__array_ref input_vector
 	int i;
 	SV *temp_sv_pointer;
 
-	printf("in XS_pack_number__array_ref(), have input_vector_length = %d\n", input_vector_length);
+//	printf("in XS_pack_number__array_ref(), have input_vector_length = %d\n", input_vector_length);
 
 	if (input_vector_length > 0) { for (i = 0;  i < input_vector_length;  ++i) { av_push(output_av, newSVnv(input_vector[i])); } }
 	else warn("in XS_pack_number__array_ref(), array was empty, returning empty array via newAV()");
@@ -252,7 +252,7 @@ string__array_ref XS_unpack_string__array_ref(SV *input_av_ref)
 		else { croak("in XS_unpack_string__array_ref(), input_av_element at index %d was undef and/or NULL, croaking", i); }
 	}
 
-	printf("in XS_unpack_string__array_ref(), after for() loop, have output_vector.size() = %d\n", output_vector.size());
+//	printf("in XS_unpack_string__array_ref(), after for() loop, have output_vector.size() = %d\n", output_vector.size());
 //	printf("in XS_unpack_string__array_ref(), bottom of subroutine\n");
 
 	return(output_vector);
@@ -269,7 +269,7 @@ void XS_pack_string__array_ref(SV *output_av_ref, string__array_ref input_vector
 	int i;
 	SV *temp_sv_pointer;
 
-	printf("in XS_pack_string__array_ref(), have input_vector_length = %d\n", input_vector_length);
+//	printf("in XS_pack_string__array_ref(), have input_vector_length = %d\n", input_vector_length);
 
 	if (input_vector_length > 0) { for (i = 0;  i < input_vector_length;  ++i) { av_push(output_av, newSVpv(input_vector[i].data(), input_vector[i].size())); } }
 	else warn("in XS_pack_string__array_ref(), array was empty, returning empty array via newAV()");
@@ -292,12 +292,20 @@ void XS_pack_string__array_ref(SV *output_av_ref, string__array_ref input_vector
 // [[[<<< BEGIN PERL TYPES >>>]]]
 // [[[<<< BEGIN PERL TYPES >>>]]]
 
+// DEV NOTE: direct manipulation of the Perl Stack shown in /* block comments */
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
-void stringify_int__array_ref(SV *input_av_ref)
+//void stringify_int__array_ref(SV *input_av_ref)
+SV* stringify_int__array_ref(SV *input_av_ref)
 {
-//	printf("in C++ __PERL__TYPES stringify_int__array_ref(), top of subroutine\n");
+//	Inline_Stack_Vars;
+//#define Inline_Stack_Vars	dXSARGS  // from INLINE.h
+//	dXSARGS;
+//#  define dXSARGS dSP; dAXMARK; dITEMS  // from XSUB.h
+/*	dSP;
+	dAXMARK; */
+//	dITEMS;
 
-	Inline_Stack_Vars;
+//	printf("in C++ __PERL__TYPES stringify_int__array_ref(), top of subroutine\n");
 
     AV* input_av;
     int input_av_length;
@@ -340,21 +348,32 @@ void stringify_int__array_ref(SV *input_av_ref)
 
 	sv_catpvn(output_sv, "]", 1);
 
-	printf("in C++ __PERL__TYPES stringify_int__array_ref(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
+//	printf("in C++ __PERL__TYPES stringify_int__array_ref(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
 //	printf("in C++ __PERL__TYPES stringify_int__array_ref(), bottom of subroutine\n");
 
-	Inline_Stack_Reset;
-	Inline_Stack_Push(sv_2mortal(output_sv));
-	Inline_Stack_Done;
+//	Inline_Stack_Reset;
+//#define Inline_Stack_Reset      sp = mark  // from INLINE.h
+/*	sp = mark; */
+
+//	Inline_Stack_Push(sv_2mortal(output_sv));
+//#define Inline_Stack_Push(x)	XPUSHs(x)  // from INLINE.h
+/*	XPUSHs(sv_2mortal(output_sv));  // mortalize because we created output_sv with newSV() in this function */
+	return(output_sv);
+
+//	Inline_Stack_Done;
+//#define Inline_Stack_Done	PUTBACK  // from INLINE.h
+//	PUTBACK;
+
+//	Inline_Stack_Return(1);
+//#define Inline_Stack_Return(x)	XSRETURN(x)  // from INLINE.h
+//	XSRETURN(1);
 }
 
 
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing NVs))) to Perl-parsable (Perl SV containing PV)
-void stringify_number__array_ref(SV *input_av_ref)
+SV* stringify_number__array_ref(SV *input_av_ref)
 {
 //	printf("in C++ __PERL__TYPES stringify_number__array_ref(), top of subroutine\n");
-
-	Inline_Stack_Vars;
 
     AV* input_av;
     int input_av_length;
@@ -405,21 +424,17 @@ void stringify_number__array_ref(SV *input_av_ref)
 	sv_setpv(output_sv, (char *)(temp_stream.str().c_str()));
 //	sv_catpvn(output_sv, "]", 1);
 
-	printf("in C++ __PERL__TYPES stringify_number__array_ref(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
+//	printf("in C++ __PERL__TYPES stringify_number__array_ref(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
 //	printf("in C++ __PERL__TYPES stringify_number__array_ref(), bottom of subroutine\n");
 
-	Inline_Stack_Reset;
-	Inline_Stack_Push(sv_2mortal(output_sv));
-	Inline_Stack_Done;
+	return(output_sv);
 }
 
 
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs))) to Perl-parsable (Perl SV containing PV)
-void stringify_string__array_ref(SV *input_av_ref)
+SV* stringify_string__array_ref(SV *input_av_ref)
 {
 //	printf("in C++ __PERL__TYPES stringify_string__array_ref(), top of subroutine\n");
-
-	Inline_Stack_Vars;
 
     AV* input_av;
     int input_av_length;
@@ -468,12 +483,10 @@ void stringify_string__array_ref(SV *input_av_ref)
 //	sv_setpv(output_sv, (char *)(temp_stream.str().c_str()));
 	sv_catpvn(output_sv, "]", 1);
 
-	printf("in C++ __PERL__TYPES stringify_string__array_ref(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
+//	printf("in C++ __PERL__TYPES stringify_string__array_ref(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
 //	printf("in C++ __PERL__TYPES stringify_string__array_ref(), bottom of subroutine\n");
 
-	Inline_Stack_Reset;
-	Inline_Stack_Push(sv_2mortal(output_sv));
-	Inline_Stack_Done;
+	return(output_sv);
 }
 
 // [[[<<< END PERL TYPES >>>]]]
@@ -519,7 +532,7 @@ string stringify_int__array_ref(int__array_ref input_vector)
 
 	output_stream << ']';
 
-	printf("in C++ __CPP__TYPES stringify_int__array_ref(), after for() loop, have output_stream =\n%s\n", (char *)(output_stream.str().c_str()));
+//	printf("in C++ __CPP__TYPES stringify_int__array_ref(), after for() loop, have output_stream =\n%s\n", (char *)(output_stream.str().c_str()));
 //	printf("in C++ __CPP__TYPES stringify_int__array_ref(), bottom of subroutine\n");
 
 	return(output_stream.str());
@@ -560,7 +573,7 @@ string stringify_number__array_ref(number__array_ref input_vector)
 
 	output_stream << ']';
 
-	printf("in C++ __CPP__TYPES stringify_number__array_ref(), after for() loop, have output_stream =\n%s\n", (char *)(output_stream.str().c_str()));
+//	printf("in C++ __CPP__TYPES stringify_number__array_ref(), after for() loop, have output_stream =\n%s\n", (char *)(output_stream.str().c_str()));
 //	printf("in C++ __CPP__TYPES stringify_number__array_ref(), bottom of subroutine\n");
 
 	return(output_stream.str());
@@ -606,7 +619,7 @@ string stringify_string__array_ref(string__array_ref input_vector)
 	output_string += "]";
 
 //	printf("in C++ __CPP__TYPES stringify_string__array_ref(), after for() loop, have output_stream =\n%s\n", (char *)(output_stream.str().c_str()));
-	printf("in C++ __CPP__TYPES stringify_string__array_ref(), after for() loop, have output_string =\n%s\n", output_string.c_str());
+//	printf("in C++ __CPP__TYPES stringify_string__array_ref(), after for() loop, have output_string =\n%s\n", output_string.c_str());
 //	printf("in C++ __CPP__TYPES stringify_string__array_ref(), bottom of subroutine\n");
 
 //	return(output_stream.str());
@@ -628,20 +641,92 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 //# [[[ TYPE TESTING ]]]
 //# [[[ TYPE TESTING ]]]
 
+# ifdef __PERL__TYPES
 
-// START HERE: refactor typetest functions here and in Array.h, then update array_test.pl, then create Test::More equivalent
-// START HERE: refactor typetest functions here and in Array.h, then update array_test.pl, then create Test::More equivalent
-// START HERE: refactor typetest functions here and in Array.h, then update array_test.pl, then create Test::More equivalent
+// DEV NOTE: direct manipulation of the Perl Stack shown in /* block comments */
+/*void typetest___int__array_ref__in___string__out(SV* lucky_numbers) */
+SV* typetest___int__array_ref__in___string__out(SV* lucky_numbers)
+{
+/*	dSP; */
+
+/*	SV* output_sv; */
+	AV* lucky_numbers_deref = (AV*)SvRV(lucky_numbers);
+	int how_lucky = av_len(lucky_numbers_deref) + 1;
+	int i;
+	for (i = 0;  i < how_lucky;  ++i)
+	{
+		printf("in C++ __PERL__TYPES Array::typetest___int__array_ref__in___string__out(), have lucky number %d/%d = %d, BARBAT\n", i, (how_lucky - 1), (int)SvIV(*av_fetch(lucky_numbers_deref, i, 0)));
+	}
+
+//	ENTER;
+//	SAVETMPS;
+/*	stringify_int__array_ref(lucky_numbers); */
+/*	output_sv = stringify_int__array_ref(lucky_numbers); */
+//	SPAGAIN;
+
+/*	output_sv = POPs; */
+//	PUTBACK;
+
+//	FREETMPS;
+//	LEAVE;
+
+/*	sv_catpv(output_sv, "BARBAT"); */
+/*	printf("in C++ __PERL__TYPES Array::typetest___int__array_ref__in___string__out(), have output_sv = %s\n", SvPV_nolen(output_sv)); */
+
+/*
+//	SPAGAIN;
+//	PUSHMARK(SP);
+	XPUSHs(output_sv);  // do not mortalize because we receive value for output_sv from outside this function
+//	PUTBACK;
+ */
+//	SvREFCNT_inc(output_sv);
+/*	return(output_sv);  // do not mortalize because we receive value for output_sv from outside this function */
+	return(newSVpvf("%s%s", SvPV_nolen(stringify_int__array_ref(lucky_numbers)), "BARBAT"));
+}
 
 
-void typetest___int__array_ref__in___void__out(int__array_ref lucky_numbers) { int how_lucky = lucky_numbers.size();  int i;  for (i = 0;  i < how_lucky;  ++i) { printf("in C++ Array::typetest___int__array_ref__in___void__out(), have lucky number %d/%d = %d, BARBAT\n", i, (how_lucky - 1), lucky_numbers[i]); } }
-int__array_ref typetest___int__in___int__array_ref__out(int my_size) { int__array_ref new_vec(my_size);  int i;  for (i = 0;  i < my_size;  ++i) { new_vec[i] = i * 5;  printf("in C++ Array::typetest___int__in___int__array_ref__out(), setting element %d/%d = %d, BARBAT\n", i, (my_size - 1), new_vec[i]); }  return(new_vec); }
+// DEV NOTE: direct manipulation of the Perl Stack shown in /* block comments */
+/*void typetest___int__in___int__array_ref__out(int my_size) */
+SV* typetest___int__in___int__array_ref__out(int my_size)
+{
+/*	dSP;
+	dAXMARK; */
 
-void typetest___number__array_ref__in___void__out(number__array_ref lucky_numbers) { int how_lucky = lucky_numbers.size();  int i;  for (i = 0;  i < how_lucky;  ++i) { printf("in C++ Array::typetest___number__array_ref__in___void__out(), have lucky number %d/%d = %Lf, BARBAT\n", i, (how_lucky - 1), lucky_numbers[i]); } }
-number__array_ref typetest___int__in___number__array_ref__out(int my_size) { number__array_ref new_vec(my_size);  int i;  for (i = 0;  i < my_size;  ++i) { new_vec[i] = i * 5.123456789;  printf("in C++ Array::typetest___number__in___number__array_ref__out(), setting element %d/%d = %Lf, BARBAT\n", i, (my_size - 1), new_vec[i]); }  return(new_vec); }
+	AV* output_av = newAV();
+	int i;
 
-//void typetest___string__array_ref__in___void__out(string__array_ref people) { int i;  for (i = 0;  i < people.size();  ++i) { printf("in C++ printf() Array::typetest___string__array_ref__in___void__out(), have person %d = '%s', FOOBAZ\n", i, people[i].c_str()); } }
-void typetest___string__array_ref__in___void__out(string__array_ref people) { int i;  for (i = 0;  i < people.size();  ++i) { cout << "in C++ cout<< Array::typetest___string__array_ref__in___void__out(), have person " << i << " = '" << people[i] << "', FOOBAZ\n"; } }
-string__array_ref typetest___int__in___string__array_ref__out(int my_size) { string__array_ref people;  int i;  people.resize((size_t)my_size);  for (i = 0;  i < my_size;  ++i) { people[i] = "Jeffy Ten! " + std::to_string(i) + "/" + std::to_string(my_size - 1); printf("in C++ Array::typetest___void__in___string__array_ref__out(), bottom of for() loop, have i = %d, just set another Jeffy!\n", i); }  return(people); }
+	av_extend(output_av, (I32)(my_size - 1));
+
+	for (i = 0;  i < my_size;  ++i)
+	{
+		av_store(output_av, (I32)i, newSViv(i * 5));
+		printf("in C++ __PERL__TYPES Array::typetest___int__in___int__array_ref__out(), setting element %d/%d = %d, BARBAT\n", i, (my_size - 1), (int)SvIV(*av_fetch(output_av, (I32)i, 0)));
+	}
+
+/*
+	sp = mark;
+	XPUSHs(sv_2mortal(newRV_noinc((SV*) output_av)));  // do mortalize because we create output_av with newAV() in this function
+*/
+	return(newRV_noinc((SV*) output_av));
+}
+
+SV* typetest___number__array_ref__in___string__out(SV* lucky_numbers) { AV* lucky_numbers_deref = (AV*)SvRV(lucky_numbers); int how_lucky = av_len(lucky_numbers_deref) + 1; int i; for (i = 0;  i < how_lucky;  ++i) { printf("in C++ __PERL__TYPES Array::typetest___number__array_ref__in___string__out(), have lucky number %d/%d = %Lf, BARBAZ\n", i, (how_lucky - 1), (long double)SvNV(*av_fetch(lucky_numbers_deref, i, 0))); } return(newSVpvf("%s%s", SvPV_nolen(stringify_number__array_ref(lucky_numbers)), "BARBAZ")); }
+SV* typetest___int__in___number__array_ref__out(int my_size) { AV* output_av = newAV(); int i; 	av_extend(output_av, (I32)(my_size - 1)); 	for (i = 0;  i < my_size;  ++i) { av_store(output_av, (I32)i, newSVnv(i * 5.123456789)); printf("in C++ __PERL__TYPES Array::typetest___int__in___number__array_ref__out(), setting element %d/%d = %Lf, BARBAT\n", i, (my_size - 1), (long double)SvNV(*av_fetch(output_av, (I32)i, 0))); } return(newRV_noinc((SV*) output_av)); }
+SV* typetest___string__array_ref__in___string__out(SV* people) { AV* people_deref = (AV*)SvRV(people); int i; for (i = 0;  i < (av_len(people_deref) + 1);  ++i) { printf("in C++ __PERL__TYPES Array::typetest___string__array_ref__in___string__out(), have person %d = '%s', BARBAR\n", i, (char *)SvPV_nolen(*av_fetch(people_deref, i, 0))); } 	return(newSVpvf("%s%s", SvPV_nolen(stringify_string__array_ref(people)), "BARBAR")); }
+SV* typetest___int__in___string__array_ref__out(int my_size) { AV* people = newAV(); int i; 	av_extend(people, (I32)(my_size - 1)); 	for (i = 0;  i < my_size;  ++i) { av_store(people, (I32)i, newSVpvf("Jeffy Ten! %d/%d", i, (my_size - 1))); printf("in C++ __PERL__TYPES Array::typetest___int__in___string__array_ref__out(), bottom of for() loop, have i = %d, just set another Jeffy, BARBAR\n", i); } 	return(newRV_noinc((SV*) people)); }
+
+# elif defined __CPP__TYPES
+
+string typetest___int__array_ref__in___string__out(int__array_ref lucky_numbers) { int how_lucky = lucky_numbers.size();  int i;  for (i = 0;  i < how_lucky;  ++i) { printf("in C++ __CPP__TYPES Array::typetest___int__array_ref__in___string__out(), have lucky number %d/%d = %d, BARBAT\n", i, (how_lucky - 1), lucky_numbers[i]); }  return(stringify_int__array_ref(lucky_numbers) + "BARBAT"); }
+int__array_ref typetest___int__in___int__array_ref__out(int my_size) { int__array_ref new_vec(my_size);  int i;  for (i = 0;  i < my_size;  ++i) { new_vec[i] = i * 5;  printf("in C++ __CPP__TYPES Array::typetest___int__in___int__array_ref__out(), setting element %d/%d = %d, BARBAT\n", i, (my_size - 1), new_vec[i]); }  return(new_vec); }
+
+string typetest___number__array_ref__in___string__out(number__array_ref lucky_numbers) { int how_lucky = lucky_numbers.size();  int i;  for (i = 0;  i < how_lucky;  ++i) { printf("in C++ __CPP__TYPES Array::typetest___number__array_ref__in___string__out(), have lucky number %d/%d = %Lf, BARBAZ\n", i, (how_lucky - 1), lucky_numbers[i]); }  return(stringify_number__array_ref(lucky_numbers) + "BARBAZ"); }
+number__array_ref typetest___int__in___number__array_ref__out(int my_size) { number__array_ref new_vec(my_size);  int i;  for (i = 0;  i < my_size;  ++i) { new_vec[i] = i * 5.123456789;  printf("in C++ __CPP__TYPES Array::typetest___number__in___number__array_ref__out(), setting element %d/%d = %Lf, BARBAZ\n", i, (my_size - 1), new_vec[i]); }  return(new_vec); }
+
+//string typetest___string__array_ref__in___string__out(string__array_ref people) { int i;  for (i = 0;  i < people.size();  ++i) { printf("in C++ __CPP__TYPES printf() Array::typetest___string__array_ref__in___string__out(), have person %d = '%s', BARBAR\n", i, people[i].c_str()); }  return(stringify_string__array_ref(people) + "BARBAR"); }
+string typetest___string__array_ref__in___string__out(string__array_ref people) { int i;  for (i = 0;  i < people.size();  ++i) { cout << "in C++ __CPP__TYPES cout<< Array::typetest___string__array_ref__in___string__out(), have person " << i << " = '" << people[i] << "', BARBAR\n"; }  return(stringify_string__array_ref(people) + "BARBAR"); }
+string__array_ref typetest___int__in___string__array_ref__out(int my_size) { string__array_ref people;  int i;  people.resize((size_t)my_size);  for (i = 0;  i < my_size;  ++i) { people[i] = "Jeffy Ten! " + std::to_string(i) + "/" + std::to_string(my_size - 1); printf("in C++ __CPP__TYPES Array::typetest___int__in___string__array_ref__out(), bottom of for() loop, have i = %d, just set another Jeffy, BARBAR\n", i); }  return(people); }
+
+# endif
 
 #endif
