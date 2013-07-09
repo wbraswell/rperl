@@ -656,7 +656,7 @@ our string $stringify_int__array_ref = sub { (my $input_av_ref) = @_;
 	my int $i;
 	my int $input_av_element;
 	my string $output_sv;
-#	my bool $i_is_0 = 1;  # NEED FIX: add bool RPerl type!
+#	my bool $i_is_0 = 1;  # TODO: add bool RPerl type
 	my int $i_is_0 = 1;
 
 	if (UNIVERSAL::isa($input_av_ref, 'ARRAY')) { @input_av = @{$input_av_ref}; }
@@ -754,7 +754,6 @@ our string $stringify_number__array_ref = sub { (my $input_av_ref) = @_;
 	
 	return($output_sv);
 };
-
 
 # convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs))) to Perl-parsable (Perl SV containing PV)
 our string $stringify_string__array_ref = sub { (my $input_av_ref) = @_;  

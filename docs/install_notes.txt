@@ -19,6 +19,8 @@ cpan> install Scalar::Util
 	must install system-wide!  may conflict with previous system-wide install if used in single-user install, says:
 		"isdual" is not exported by the Scalar::Util module
 cpan> install Scalar::Util::Numeric
+cpan> install Test::Exception
+	probably already installed by something else
 
 $ mv ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm.old
 $ ln -s path/to/RPerl/lib/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm

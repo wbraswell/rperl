@@ -23,10 +23,11 @@ for (my int $i = 0;  $i < $i_MAX;  ++$i)
 {
 	print "in array_test.pl, top of for() loop $i/$i_MAX\n";
 
-#	$stringify_retval = stringify_int__array_ref(2);  # finds correct error
+#	$stringify_retval = stringify_int__array_ref([2]);
 	$stringify_retval = stringify_int__array_ref([2, 2112, 42, 23, 877, 33, 1701]);
-#	$stringify_retval = stringify_int__array_ref([2, 2112, 42.3, 23, 877, 33, 1701]);  # finds correct error
-#	$stringify_retval = stringify_int__array_ref([2, 2112, '42', 23, 877, 33, 1701]);  # finds correct error
+#	$stringify_retval = stringify_int__array_ref(2);  # raise/throw exception
+#	$stringify_retval = stringify_int__array_ref([2, 2112, 42.3, 23, 877, 33, 1701]);  # raise/throw exception
+#	$stringify_retval = stringify_int__array_ref([2, 2112, '42', 23, 877, 33, 1701]);  # raise/throw exception
 	print "in array_test.pl $i/$i_MAX, have \$stringify_retval =\n$stringify_retval\n";
 	
 	$stringify_retval = typetest___int__array_ref__in___string__out([2, 2112, 42, 23, 877, 33, 1701]);
@@ -39,7 +40,7 @@ for (my int $i = 0;  $i < $i_MAX;  ++$i)
 	$retval_int__array_ref = typetest___int__in___int__array_ref__out(5);
 	print "in array_test.pl $i/$i_MAX, have \$retval_int__array_ref = \n" . Dumper($retval_int__array_ref) . "\n";
 
-#	$stringify_retval = stringify_number__array_ref(2);  # finds correct error
+#	$stringify_retval = stringify_number__array_ref(2);  # raise/throw exception
 #	$stringify_retval = stringify_number__array_ref([2, 2112, 42, 23, 877, 33, 1701]);
 #	$stringify_retval = stringify_number__array_ref([2.1, 2112.2, 42.3, 23, 877, 33, 1701]);
 	$stringify_retval = stringify_number__array_ref([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, 33.876587658765875687658765, 1701.6789]);
@@ -54,11 +55,11 @@ for (my int $i = 0;  $i < $i_MAX;  ++$i)
 
 	$my_peeps = ['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter'];
 #	$my_peeps = ['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '23'];
-#	$my_peeps = ['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', 23];  # finds correct error
+#	$my_peeps = ['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', 23];  # raise/throw exception
 #	$my_peeps = ['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '-2112.23'];
 #	$my_peeps = ['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', "-2112.23"];
-#	$my_peeps = ['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', -2112.23];  # finds correct error
-#	$my_peeps = ['Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', {fuzz => 'bizz', bar => "stool!\n", bat => 24}];  # finds correct error
+#	$my_peeps = ['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', -2112.23];  # raise/throw exception
+#	$my_peeps = ['Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', {fuzz => 'bizz', bar => "stool!\n", bat => 24}];  # raise/throw exception
 #	print "in array_test.pl $i/$i_MAX, have \$my_peeps =\n" . RPerl::DUMPER($my_peeps);
 	$stringify_retval = stringify_string__array_ref($my_peeps);	
 	print "in array_test.pl $i/$i_MAX, have \$stringify_retval =\n$stringify_retval\n";

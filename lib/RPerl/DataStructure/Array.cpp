@@ -293,6 +293,7 @@ void XS_pack_string__array_ref(SV *output_av_ref, string__array_ref input_vector
 // [[[<<< BEGIN PERL TYPES >>>]]]
 
 // DEV NOTE: direct manipulation of the Perl Stack shown in /* block comments */
+// TODO: use Perl stack manipulation to enable support for variable number of arguments and multiple return values
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
 //void stringify_int__array_ref(SV *input_av_ref)
 SV* stringify_int__array_ref(SV *input_av_ref)
