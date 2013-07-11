@@ -4,9 +4,6 @@ using std::cout;  using std::endl;
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array_h
 #define __CPP__INCLUDED__RPerl__DataStructure__Array_h 1
 
-// need types.h for definitions of __PERL__TYPES or __CPP__TYPES
-#include <types.h>
-
 ////# [[[ DATA TYPES ]]]
 ////use RPerl::DataType::Number;
 #include <RPerl/DataType/Number.cpp>
@@ -25,6 +22,8 @@ typedef std::vector<number>::const_iterator number__array_ref__const_iterator;
 typedef std::vector<string> string__array_ref;
 typedef std::vector<string>::iterator string__array_ref__iterator;
 typedef std::vector<string>::const_iterator string__array_ref__const_iterator;
+
+#include <types.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
 // [[[ MACROS ]]]
 #define VECTOR_RESIZE_NOSHRINK(my_vector, my_size) ((my_vector.size() < my_size) ? my_vector.resize((size_t)(my_size)) : (void)0)  // do grow but don't shrink
@@ -51,8 +50,6 @@ string stringify_string__array_ref(string__array_ref input_vector);
 Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_exactly_one!
 # endif
 
-//# [[[ TYPE TESTING ]]]
-//# [[[ TYPE TESTING ]]]
 //# [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
 //void typetest___int__array_ref__in___string__out(SV* lucky_numbers);

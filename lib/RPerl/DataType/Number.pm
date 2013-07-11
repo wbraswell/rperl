@@ -21,6 +21,10 @@ our @ISA = ('ref');
 package const_number_ref;
 our @ISA = ('ref');
 
+# [[[ DATA TYPES & OPERATIONS ]]]
+our string $types_number = sub { return('PERL'); };
+our string $ops_number = sub { return('PERL'); };
+
 # [[[ STRINGIFY ]]]
 our string $stringify_number = sub { (my $input_number) = @_;  return("$input_number"); };
 

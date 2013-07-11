@@ -23,6 +23,8 @@ typedef std::unordered_map<string, string> string__hash_ref;
 typedef std::unordered_map<string, string>::iterator string__hash_ref__iterator;
 typedef std::unordered_map<string, string>::const_iterator string__hash_ref__const_iterator;
 
+#include <types.h> // for definitions of __PERL__TYPES or __CPP__TYPES
+
 // [[[ TYPEMAP PACK/UNPACK DECLARATIONS ]]]
 int__hash_ref XS_unpack_int__hash_ref(SV *input_hv_ref);
 void XS_pack_int__hash_ref(SV *output_hv_ref, int__hash_ref input_unordered_map);
@@ -31,8 +33,6 @@ void XS_pack_number__hash_ref(SV *output_hv_ref, number__hash_ref input_unordere
 string__hash_ref XS_unpack_string__hash_ref(SV *input_hv_ref);
 void XS_pack_string__hash_ref(SV *output_hv_ref, string__hash_ref input_unordered_map);
 
-//# [[[ TYPE TESTING ]]]
-//# [[[ TYPE TESTING ]]]
 //# [[[ TYPE TESTING ]]]
 void typetest___int__hash_ref__in___void__out(int__hash_ref lucky_numbers);
 int__hash_ref typetest___int__in___int__hash_ref__out(int my_size);

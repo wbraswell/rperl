@@ -46,7 +46,7 @@ sub CPAN::INC_update
 #print "inside CPAN::INC_update(), have \$INC_element_new = " . $INC_element_new . "\n";
 	}
 
-print "inside CPAN::INC_update(), have modified \@INC = \n" . Dumper(\@INC) . "\n\n";
+#print "inside CPAN::INC_update(), have modified \@INC = \n" . Dumper(\@INC) . "\n\n";
 }
 
 

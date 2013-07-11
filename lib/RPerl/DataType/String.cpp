@@ -38,8 +38,15 @@ void XS_pack_string(SV *output_sv, string input_string)
 //# [[[ TYPE TESTING ]]]
 //# [[[ TYPE TESTING ]]]
 //# [[[ TYPE TESTING ]]]
+# ifdef __PERL__TYPES
+SV* typetest___void__in___string__out() { return(newSVpv("Spice", 0)); }
+SV* typetest___string__in___string__out(SV* fuzzword) { cout << "in C++ __PERL__TYPES cout<< String::typetest___string__in___string__out(), have fuzzword '" << SvPV_nolen(fuzzword) << "', BAZBOT" << endl;  return(newSVpvf("%s%s", SvPV_nolen(fuzzword), "FUZZ")); }
+# elif defined __CPP__TYPES
 string typetest___void__in___string__out() { string retval = "Spice";  return(retval); }
 //string typetest___string__in___string__out(string fuzzword) { printf("in C++ printf() String::typetest___string__in___string__out(), have fuzzword '%s', BAZBOT\n", fuzzword.data());  return(fuzzword + "FUZZ"); }
-string typetest___string__in___string__out(string fuzzword) { cout << "in C++ cout<< String::typetest___string__in___string__out(), have fuzzword '" << fuzzword << "', BAZBOT" << endl;  return(fuzzword + "FUZZ"); }
+string typetest___string__in___string__out(string fuzzword) { cout << "in C++ __CPP__TYPES cout<< String::typetest___string__in___string__out(), have fuzzword '" << fuzzword << "', BAZBOT" << endl;  return(fuzzword + "FUZZ"); }
+# else
+Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_exactly_one!
+# endif
 
 #endif

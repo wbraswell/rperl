@@ -1,13 +1,16 @@
 #!/usr/bin/perl
 use strict;  use warnings;
 
+# TODO: add support for Test::Exception
 use Test::More tests => 48;
 #use Test::More;
 
 # MyConfig
+BEGIN { diag("\n[[[ Beginning Inline Pre-Test Loading ]]]\n ");	}
 BEGIN { use lib '/tmp/RPerl-latest/lib/CPAN/';  use_ok('MyConfig'); }
 
 
+diag("\n[[[ Beginning Selection Of Tests From The Inline::C Cookbook ]]]\n ");
 # Inline::C examples from:  http://search.cpan.org/~sisyphus/Inline-0.53/C/C-Cookbook.pod
 # Note: I excluded the Inline::C examples which required reading files, loading 3rd-party libraries, and other weirdness not suitable for testing.
 
@@ -120,6 +123,7 @@ is($foo, 'Perl Rocks!', 'Inline::C, call change(), correctly changed $foo');
 is($bar, 'Inline Rules!', 'Inline::C, call change(), correctly changed $bar');
 
 
+diag("\n[[[ Beginning Entirety Of Tests From The Inline::CPP POD ]]]\n ");
 # Inline::CPP examples from:  http://search.cpan.org/~davido/Inline-CPP-0.44/lib/Inline/CPP.pod
 # Note: I did not exclude any Inline::CPP examples, they are all suitable for testing.
 

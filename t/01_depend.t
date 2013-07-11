@@ -1,8 +1,10 @@
 #!/usr/bin/perl
 use strict;  use warnings;
 
+# TODO: add support for Test::Exception
 use Test::More tests => 12;
 
+BEGIN { diag("\n[[[ Beginning Dependency Tests ]]]\n ");	}
 BEGIN { use_ok('Data::Dumper'); }
 require_ok('Data::Dumper');
 
