@@ -15,10 +15,6 @@ cpan> force install Inline
 cpan> force install Inline::CPP
 	must force, Inline tests are broken, they change @INC and then fail to load single-user-installation of Parse::RecDescent
 cpan> force install Inline::Filters
-cpan> install Scalar::Util
-	must install system-wide!  may conflict with previous system-wide install if used in single-user install, says:
-		"isdual" is not exported by the Scalar::Util module
-cpan> install Scalar::Util::Numeric
 cpan> install Test::Exception
 	probably already installed by something else
 
