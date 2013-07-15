@@ -11,6 +11,9 @@
 #define SV_REFERENCE_COUNT(sv) (SvREFCNT(sv))
 
 // <<< HELPER FUNCTION DECLARATIONS >>>
+int RPerl_SvIOKp(SV* input_sv);
+int RPerl_SvNOKp(SV* input_sv);
+int RPerl_SvPOKp(SV* input_sv);
 void RPerl_object_property_init(SV* initee); // NEED ANSWER: what in the hades does this property init function even do?  why do we need it???
 char* RPerl_DUMPER__perl_from_c(SV* dumpee);
 

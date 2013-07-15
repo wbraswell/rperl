@@ -4,6 +4,9 @@ package RPerl::DataStructure::Array;
 our @ISA = ('RPerl::DataStructure');
 use RPerl::DataStructure;
 
+# for type checking via SvIOKp(), SvNOKp(), and SvPOKp(); inside INIT to delay until after 'use MyConfig'
+INIT { use RPerl::HelperFunctions_cpp;  RPerl::HelperFunctions_cpp::cpp_load();  RPerl::HelperFunctions_cpp::cpp_link(); }
+
 # [[[ DATA TYPES ]]]
 use RPerl::DataType::Void;
 use RPerl::DataType::Integer;
@@ -16,6 +19,10 @@ use RPerl::DataType::Unknown;
 
 # [[[ DATA STRUCTURES ]]]
 use RPerl::DataStructure::Hash;
+
+# [[[ DATA TYPES & OPERATIONS ]]]
+our string $types_array = sub { return('PERL'); };
+our string $ops_array = sub { return('PERL'); };
 
 # [[[ ARRAYS ]]]
 
@@ -649,12 +656,18 @@ our string $stringify_int__array_ref = sub { (my $input_av_ref) = @_;
 #	print "in Perl stringify_int__array_ref(), top of subroutine\n";
 
 	# for type checking in stringify()'s, inside eval to delay until after 'use MyConfig', need move somewhere else???
-	eval 'use Scalar::Util::Numeric qw(isint);';  ## no critic
+	# replaced by RPerl_SvIOKp()
+#	eval 'use Scalar::Util::Numeric qw(isint);';  ## no critic
+#	eval 'use Scalar::Util qw(isdual);';  ## no critic
 
     my @input_av;
 	my int $input_av_length;
 	my int $i;
 	my int $input_av_element;
+#	my string $temp_string = '';
+#	my number $temp_num = 0;
+#	my string $temp_string2 = '';
+#	my number $temp_num2 = 0;
 	my string $output_sv;
 #	my bool $i_is_0 = 1;  # TODO: add bool RPerl type
 	my int $i_is_0 = 1;
@@ -674,7 +687,44 @@ our string $stringify_int__array_ref = sub { (my $input_av_ref) = @_;
 
 		if (defined($input_av_element))
 		{
-			if (isint($input_av_element))
+=SNIP Attempt at Pure-Perl equivalent to SvIOKp(), only works if $input_av_element not already dualvar status, which can be inadvertently caused by printing values for debugging, etc.
+#			print "in Perl stringify_int__array_ref(), inside for() loop \$i = $i, have \$input_av_element = $input_av_element\n";  # DEV NOTE: causes int-to-string dualvar status
+#			print "in Perl stringify_int__array_ref(), inside for() loop \$i = $i, have \$input_av_element = " . $input_av_element . "\n";  # DEV NOTE: causes int-to-string dualvar status
+#			printf("in Perl stringify_int__array_ref(), inside for() loop \$i = $i, have \$input_av_element = %d\n", $input_av_element);  # DEV NOTE: causes string-to-int dualvar status
+			print "in Perl stringify_int__array_ref(), inside for() loop \$i = $i, have isdual(\$input_av_element) = " . isdual($input_av_element) . "\n";
+
+			# DEV NOTE: evaluate copied scalar in numeric context;
+			# forces $temp_string to dualvar status if $input_av_element is a number wrapped in a string,
+			# without $input_av_element itself getting dualvar status, cool trick!
+			# Scalar::Util::Numeric::isnum/isint are like SvNOK/SvIOK, and Scalar::Util::isdual plus this trick is like SvPOK
+			$temp_string = $input_av_element;
+			print "in Perl stringify_int__array_ref(), inside for() loop \$i = $i, have pre-numeric-op isdual(\$temp_string) = " . isdual($temp_string) . "\n";
+			{ no warnings;  $temp_num = $temp_string + 0; }
+			print "in Perl stringify_int__array_ref(), inside for() loop \$i = $i, have post-numeric-op isdual(\$temp_string) = " . isdual($temp_string) . "\n";  # DEV NOTE: solely true iff $input_av_element is non-dualvar number-wrapped-in-string
+			print "in Perl stringify_int__array_ref(), inside for() loop \$i = $i, have post-numeric-op isdual(\$temp_num) = " . isdual($temp_num) . "\n";
+			
+			$temp_num2 = $input_av_element;
+			print "in Perl stringify_int__array_ref(), inside for() loop \$i = $i, have pre-string-op isdual(\$temp_num2) = " . isdual($temp_num2) . "\n";
+			{ no warnings;  $temp_string2 = $temp_num2 . ''; }
+			print "in Perl stringify_int__array_ref(), inside for() loop \$i = $i, have post-string-op isdual(\$temp_num2) = " . isdual($temp_num2) . "\n";  # DEV NOTE: solely true iff $input_av_element is non-dualvar int
+			print "in Perl stringify_int__array_ref(), inside for() loop \$i = $i, have post-string-op isdual(\$temp_string2) = " . isdual($temp_string2) . "\n";
+			
+			# an int is any scalar that:
+			# 1. is defined
+			# AND
+			# 2. does not hold a reference
+			# AND
+			# 3. does not hold an integer wrapped in a string (dualvar eligibile)
+			# AND
+			# 4. does hold an integer (normal int)
+#			if ((ref($input_av_element) eq '') and not(isdual($input_av_element)) and isint($input_av_element))
+#			if ((ref($input_av_element) eq '') and isdual($input_av_element) and isint($input_av_element))
+			if ((ref($input_av_element) eq '') and not(isdual($temp_string)) and isint($input_av_element))  # works when $input_av_element not already dualvar
+#			if ((ref($input_av_element) eq '') and not(isdual($temp_num)) and isint($input_av_element))
+#			if ((ref($input_av_element) eq '') and isint($input_av_element))
+#			if (isint($input_av_element))
+=cut
+			if (main::RPerl_SvIOKp($input_av_element))
 			{
 				if ($i_is_0)
 				{
@@ -705,7 +755,7 @@ our string $stringify_number__array_ref = sub { (my $input_av_ref) = @_;
 #	print "in Perl stringify_number__array_ref(), top of subroutine\n";
 
 	# for type checking in stringify()'s, inside eval to delay until after 'use MyConfig', need move somewhere else???
-	eval 'use Scalar::Util::Numeric qw(isnum);';  ## no critic
+#	eval 'use Scalar::Util::Numeric qw(isnum);';  ## no critic
 
     my @input_av;
 	my int $input_av_length;
@@ -730,7 +780,8 @@ our string $stringify_number__array_ref = sub { (my $input_av_ref) = @_;
 
 		if (defined($input_av_element))
 		{
-			if (isnum($input_av_element))
+			if (main::RPerl_SvNOKp($input_av_element) or main::RPerl_SvIOKp($input_av_element))
+#			if (isnum($input_av_element))
 			{
 				if ($i_is_0)
 				{
@@ -761,14 +812,15 @@ our string $stringify_string__array_ref = sub { (my $input_av_ref) = @_;
 #	print "in Perl stringify_string__array_ref(), top of subroutine\n";
 
 	# for type checking in stringify()'s, inside eval to delay until after 'use MyConfig', need move somewhere else???
-	eval 'use Scalar::Util qw(isdual);';  ## no critic
+#	eval 'use Scalar::Util::Numeric qw(isnum);';  ## no critic
+#	eval 'use Scalar::Util qw(isdual);';  ## no critic
 
     my @input_av;
 	my int $input_av_length;
 	my int $i;
 	my string $input_av_element;
-	my string $temp_string;
-	my number $temp_num;
+#	my string $temp_string;
+#	my number $temp_num;
 	my string $output_sv;
 #	my bool $i_is_0 = 1;  # NEED FIX: add bool RPerl type!
 	my int $i_is_0 = 1;
@@ -788,6 +840,7 @@ our string $stringify_string__array_ref = sub { (my $input_av_ref) = @_;
 
 		if (defined($input_av_element))
 		{
+=SNIP Attempt at Pure-Perl equivalent to SvPOKp()
 			# DEV NOTE: evaluate copied scalar in numeric context;
 			# forces $temp_string to dualvar status if $input_av_element is a number wrapped in a string,
 			# without $input_av_element itself getting dualvar status, cool trick!
@@ -808,6 +861,8 @@ our string $stringify_string__array_ref = sub { (my $input_av_ref) = @_;
 					not(isnum($input_av_element)) or
 					isdual($temp_string)
 				))
+=cut
+			if (main::RPerl_SvPOKp($input_av_element))
 			{
 				if ($i_is_0)
 				{
@@ -837,11 +892,11 @@ our string $stringify_string__array_ref = sub { (my $input_av_ref) = @_;
 # [[[ TYPE TESTING ]]]
 # [[[ TYPE TESTING ]]]
 
-our string $typetest___int__array_ref__in___string__out = sub { (my int__array_ref $lucky_numbers) = @_;  my int $how_lucky = scalar @{$lucky_numbers};  my int $i;  for ($i = 0;  $i < $how_lucky;  ++$i) { print "in Perl Array::typetest___int__array_ref__in___string__out(), have lucky number $i/" . ($how_lucky - 1) . " = " . $lucky_numbers->[$i] . ", BARBAT\n"; }  return(stringify_int__array_ref($lucky_numbers) . 'BARBAT'); };
+our string $typetest___int__array_ref__in___string__out = sub { (my int__array_ref $lucky_numbers) = @_;  my int $how_lucky = scalar @{$lucky_numbers};  my int $i;  for ($i = 0;  $i < $how_lucky;  ++$i) { if (main::RPerl_SvIOKp($lucky_numbers->[$i])) { print "in Perl Array::typetest___int__array_ref__in___string__out(), have lucky number $i/" . ($how_lucky - 1) . " = " . $lucky_numbers->[$i] . ", BARBAT\n"; } }  return(stringify_int__array_ref($lucky_numbers) . 'BARBAT'); };
 our int__array_ref $typetest___int__in___int__array_ref__out = sub { (my int $my_size) = @_;  my int__array_ref $new_array = [];  my int $i;  for ($i = 0;  $i < $my_size;  ++$i) { $new_array->[$i] = $i * 5;  print "in Perl Array::typetest___int__in___int__array_ref__out(), setting element $i/" . ($my_size - 1) . " = " . $new_array->[$i] . ", BARBAT\n"; }  return($new_array); };
 
-our string $typetest___number__array_ref__in___string__out = sub { (my number__array_ref $lucky_numbers) = @_;  my int $how_lucky = scalar @{$lucky_numbers};  my int $i;  for ($i = 0;  $i < $how_lucky;  ++$i) { print "in Perl Array::typetest___number__array_ref__in___string__out(), have lucky number $i/" . ($how_lucky - 1) . " = " . $lucky_numbers->[$i] . ", BARBAZ\n"; }  return(stringify_number__array_ref($lucky_numbers) . 'BARBAZ'); };
+our string $typetest___number__array_ref__in___string__out = sub { (my number__array_ref $lucky_numbers) = @_;  my int $how_lucky = scalar @{$lucky_numbers};  my int $i;  for ($i = 0;  $i < $how_lucky;  ++$i) { if (main::RPerl_SvNOKp($lucky_numbers->[$i]) or main::RPerl_SvIOKp($lucky_numbers->[$i])) { print "in Perl Array::typetest___number__array_ref__in___string__out(), have lucky number $i/" . ($how_lucky - 1) . " = " . $lucky_numbers->[$i] . ", BARBAZ\n"; } }  return(stringify_number__array_ref($lucky_numbers) . 'BARBAZ'); };
 our number__array_ref $typetest___int__in___number__array_ref__out = sub { (my int $my_size) = @_;  my number__array_ref $new_array = [];  my int $i;  for ($i = 0;  $i < $my_size;  ++$i) { $new_array->[$i] = $i * 5.123456789;  print "in Perl Array::typetest___int__in___number__array_ref__out(), setting element $i/" . ($my_size - 1) . " = " . $new_array->[$i] . ", BARBAZ\n"; }  return($new_array); };
 
-our string $typetest___string__array_ref__in___string__out = sub { (my string__array_ref $people) = @_;  my int $i;  for ($i = 0;  $i < scalar @{$people};  ++$i) { print "in Perl Array::typetest___string__array_ref__in___string__out(), have person $i = '" . $people->[$i] . "', BARBAR\n"; }  return(stringify_string__array_ref($people) . 'BARBAR'); };
+our string $typetest___string__array_ref__in___string__out = sub { (my string__array_ref $people) = @_;  my int $i;  for ($i = 0;  $i < scalar @{$people};  ++$i) { if (main::RPerl_SvPOKp($people->[$i])) { print "in Perl Array::typetest___string__array_ref__in___string__out(), have person $i = '" . $people->[$i] . "', BARBAR\n"; } }  return(stringify_string__array_ref($people) . 'BARBAR'); };
 our string__array_ref $typetest___int__in___string__array_ref__out = sub { (my int $my_size) = @_;  my string__array_ref $people = [];  my int $i;  for ($i = 0;  $i < $my_size;  ++$i) { $people->[$i] = "Jeffy Ten! $i/" . ($my_size - 1);  print "in Perl Array::typetest___void__in___string__array_ref__out(), bottom of for() loop, have i = $i, just set another Jeffy, BARBAR\n"; }  return($people); };

@@ -2,10 +2,11 @@ use strict; use warnings;
 package RPerl::HelperFunctions_cpp;
 our $CPP_loaded = 0;
 our $CPP_linked = 0;
-our @ISA = ('RPerl::Class');
-use RPerl::Class;  use RPerl;
+#our @ISA = ('RPerl::Class');  # DEV NOTE: need to use HelperFunctions in RPerl::DataStructure::Array for type checking SvIOKp() etc; remove dependency on RPerl void__method type so HelperFunctions can be loaded by RPerl type system
+#use RPerl::Class;  use RPerl;  # DEV NOTE: remove dependency on RPerl
 
-our void__method $cpp_load = sub {
+#our void__method $cpp_load = sub {  # DEV NOTE: remove dependency on RPerl
+sub cpp_load {
 ;	
 	if (defined($RPerl::HelperFunctions_cpp::CPP_loaded)) { print "in HelperFunctions_cpp::cpp_load(), have \$RPerl::HelperFunctions_cpp::CPP_loaded = '" . $RPerl::HelperFunctions_cpp::CPP_loaded . "'\n"; }
 		else { print "in HelperFunctions_cpp::cpp_load(), have \$RPerl::HelperFunctions_cpp::CPP_loaded = 'UNDEF'\n"; }
@@ -45,9 +46,11 @@ EOF
 		$RPerl::HelperFunctions_cpp::CPP_loaded = 1;
 	}
 	else { print "in HelperFunctions_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"; }
-};
+#};
+}
 
-our void__method $cpp_link = sub {
+#our void__method $cpp_link = sub {  # DEV NOTE: remove dependency on RPerl
+sub cpp_link {
 ;
 #	if (defined($RPerl::HelperFunctions_cpp::CPP_linked)) { print "in HelperFunctions_cpp::cpp_link(), have \$RPerl::HelperFunctions_cpp::CPP_linked = '" . $RPerl::HelperFunctions_cpp::CPP_linked . "'\n"; }
 #		else { print "in HelperFunctions_cpp::cpp_link(), have \$RPerl::HelperFunctions_cpp::CPP_linked = 'UNDEF'\n"; }
@@ -67,7 +70,8 @@ EOF
 		die($@) if ($@);
 	}
 #	else { print "in HelperFunctions_cpp::cpp_link(), CPP already linked, DOING NOTHING\n"; }
-};
+#};
+}
 
 package RPerl::HelperFunctions_cpp;
 1;

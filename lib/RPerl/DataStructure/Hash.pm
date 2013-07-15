@@ -4,6 +4,9 @@ package RPerl::DataStructure::Hash;
 our @ISA = ('RPerl::DataStructure');
 use RPerl::DataStructure;
 
+# for type checking via SvIOKp(), SvNOKp(), and SvPOKp(); inside INIT to delay until after 'use MyConfig'
+INIT { use RPerl::HelperFunctions_cpp;  RPerl::HelperFunctions_cpp::cpp_load();  RPerl::HelperFunctions_cpp::cpp_link(); }
+
 # [[[ DATA TYPES ]]]
 use RPerl::DataType::Void;
 use RPerl::DataType::Integer;
@@ -17,6 +20,9 @@ use RPerl::DataType::Unknown;
 # [[[ DATA STRUCTURES ]]]
 use RPerl::DataStructure::Array;
 
+# [[[ DATA TYPES & OPERATIONS ]]]
+our string $types_hash = sub { return('PERL'); };
+our string $ops_hash = sub { return('PERL'); };
 
 # [[[ HASHES ]]]
 
@@ -638,6 +644,171 @@ our @ISA = ('const_hash_ref');
 # (ref to (hash with const size)) of (refs to (hashs with const sizes))
 package const_hash_ref__const_hash_ref;
 our @ISA = ('const_hash_ref');
+
+
+# [[[ STRINGIFY ]]]
+# [[[ STRINGIFY ]]]
+# [[[ STRINGIFY ]]]
+
+# convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
+our string $stringify_int__hash_ref = sub { (my $input_hv_ref) = @_;  
+;
+#	print "in Perl stringify_int__hash_ref(), top of subroutine\n";
+
+    my %input_hv;
+#	my int $input_hv_length;
+	my int $i;
+	my int $input_hv_element;
+	my string $output_sv;
+#	my bool $i_is_0 = 1;  # TODO: add bool RPerl type
+	my int $i_is_0 = 1;
+
+	if (UNIVERSAL::isa($input_hv_ref, 'HASH')) { %input_hv = %{$input_hv_ref}; }
+	else { die("in Perl stringify_int__hash_ref(), \$input_hv_ref was not an HV ref, dying"); }
+	
+#	$input_hv_length = scalar keys %input_hv;
+#	print "in Perl stringify_int__hash_ref(), have \$input_hv_length = $input_hv_length\n";
+
+	$output_sv = '{';
+
+	foreach my $i (keys %input_hv)
+	{
+		# utilizes i in element retrieval
+		$input_hv_element = $input_hv{$i};
+
+		if (defined($input_hv_element))
+		{
+			if (main::RPerl_SvIOKp($input_hv_element))
+			{
+				if ($i_is_0)
+				{
+					$output_sv .= "\"$i\" => $input_hv_element";
+					$i_is_0 = 0;
+				}
+				else
+				{
+					$output_sv .= ", \"$i\" => $input_hv_element";
+				}
+			}
+			else { die("in Perl stringify_int__hash_ref(), \$input_hv_element at key $i was not an int, dying"); }
+		}
+		else { die("in Perl stringify_int__hash_ref(), \$input_hv_element at key $i was undef and/or NULL, dying"); }
+	}
+
+	$output_sv .= '}';
+
+#	print "in Perl stringify_int__hash_ref(), after for() loop, have \$output_sv =\n$output_sv\n";
+#	print "in Perl stringify_int__hash_ref(), bottom of subroutine\n";
+	
+	return($output_sv);
+};
+
+# convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing NVs))) to Perl-parsable (Perl SV containing PV)
+our string $stringify_number__hash_ref = sub { (my $input_hv_ref) = @_;  
+;
+#	print "in Perl stringify_number__hash_ref(), top of subroutine\n";
+
+    my %input_hv;
+#	my int $input_hv_length;
+	my int $i;
+	my number $input_hv_element;
+	my string $output_sv;
+#	my bool $i_is_0 = 1;  # NEED FIX: add bool RPerl type!
+	my int $i_is_0 = 1;
+
+	if (UNIVERSAL::isa($input_hv_ref, 'HASH')) { %input_hv = %{$input_hv_ref}; }
+	else { die("in Perl stringify_number__hash_ref(), \$input_hv_ref was not an HV ref, dying"); }
+	
+#	$input_hv_length = scalar keys %input_hv;
+#	print "in Perl stringify_number__hash_ref(), have \$input_hv_length = $input_hv_length\n";
+
+	$output_sv = '{';
+
+	foreach my $i (keys %input_hv)
+	{
+		# utilizes i in element retrieval
+		$input_hv_element = $input_hv{$i};
+
+		if (defined($input_hv_element))
+		{
+			if (main::RPerl_SvNOKp($input_hv_element) or main::RPerl_SvIOKp($input_hv_element))
+#			if (isnum($input_hv_element))
+			{
+				if ($i_is_0)
+				{
+					$output_sv .= "\"$i\" => $input_hv_element";
+					$i_is_0 = 0;
+				}
+				else
+				{
+					$output_sv .= ", \"$i\" => $input_hv_element";
+				}
+			}
+			else { die("in Perl stringify_number__hash_ref(), \$input_hv_element at key $i was not a number, dying"); }
+		}
+		else { die("in Perl stringify_number__hash_ref(), \$input_hv_element at key $i was undef and/or NULL, dying"); }
+	}
+
+	$output_sv .= '}';
+
+#	print "in Perl stringify_number__hash_ref(), after for() loop, have \$output_sv =\n$output_sv\n";
+#	print "in Perl stringify_number__hash_ref(), bottom of subroutine\n";
+	
+	return($output_sv);
+};
+
+# convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing PVs))) to Perl-parsable (Perl SV containing PV)
+our string $stringify_string__hash_ref = sub { (my $input_hv_ref) = @_;  
+;
+#	print "in Perl stringify_string__hash_ref(), top of subroutine\n";
+
+    my %input_hv;
+#	my int $input_hv_length;
+	my int $i;
+	my string $input_hv_element;
+	my string $output_sv;
+#	my bool $i_is_0 = 1;  # NEED FIX: add bool RPerl type!
+	my int $i_is_0 = 1;
+
+	if (UNIVERSAL::isa($input_hv_ref, 'HASH')) { %input_hv = %{$input_hv_ref}; }
+	else { die("in Perl stringify_string__hash_ref(), \$input_hv_ref was not an HV ref, dying"); }
+	
+#	$input_hv_length = scalar keys %input_hv;
+#	print "in Perl stringify_string__hash_ref(), have \$input_hv_length = $input_hv_length\n";
+
+	$output_sv = '{';
+
+	foreach my $i (keys %input_hv)
+	{
+		# utilizes i in element retrieval
+		$input_hv_element = $input_hv{$i};
+
+		if (defined($input_hv_element))
+		{
+			if (main::RPerl_SvPOKp($input_hv_element))
+			{
+				if ($i_is_0)
+				{
+					$output_sv .= '"' . $i . '" => "' . $input_hv_element . '"';
+					$i_is_0 = 0;
+				}
+				else
+				{
+					$output_sv .= ', "' . $i . '" => "' . $input_hv_element . '"';
+				}
+			}
+			else { die("in Perl stringify_string__hash_ref(), \$input_hv_element at key $i was not a string, dying"); }
+		}
+		else { die("in Perl stringify_string__hash_ref(), \$input_hv_element at key $i was undef and/or NULL, dying"); }
+	}
+
+	$output_sv .= '}';
+
+#	print "in Perl stringify_string__hash_ref(), after for() loop, have \$output_sv =\n$output_sv\n";
+#	print "in Perl stringify_string__hash_ref(), bottom of subroutine\n";
+	
+	return($output_sv);
+};
 
 
 # [[[ TYPE TESTING ]]]

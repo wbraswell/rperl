@@ -14,7 +14,7 @@ our void__method $cpp_load = sub {
 		else { print "in Sort_cpp::cpp_load(), have \$RPerl::Algorithm::Sort_cpp::CPP_loaded = 'UNDEF'\n"; }
 	if (not(defined($RPerl::Algorithm::Sort_cpp::CPP_loaded)) or not($RPerl::Algorithm::Sort_cpp::CPP_loaded))
 	{
-		$RPerl::HelperFunctions_cpp::CPP_loaded = 1;  # HelperFunctions.c loaded by C++ #include in Sort.h 
+		$RPerl::HelperFunctions_cpp::CPP_loaded = 1;  # HelperFunctions.cpp loaded by C++ #include in Sort.h 
 
 		####use RPerl::Algorithm;
 		$RPerl::Algorithm_cpp::CPP_loaded = 1;  # Algorithm.cpp loaded by C++ #include in Sort.h

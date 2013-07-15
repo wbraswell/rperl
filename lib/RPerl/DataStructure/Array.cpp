@@ -153,7 +153,8 @@ number__array_ref XS_unpack_number__array_ref(SV *input_av_ref)
 		if (input_av_element != NULL)
 		{
 			// VECTOR ELEMENT ASSIGNMENT, OPTION A, SUBSCRIPT, KNOWN SIZE: l-value subscript notation with no further resize(); utilizes i in assignment
-			if (SvNOKp(*input_av_element)) { output_vector[i] = SvNV(*input_av_element); }
+//			if (SvNOKp(*input_av_element)) { output_vector[i] = SvNV(*input_av_element); }
+			if (SvNOKp(*input_av_element) || SvIOKp(*input_av_element)) { output_vector[i] = SvNV(*input_av_element); }  // DEV NOTE: cast int to number
 
 			// VECTOR ELEMENT ASSIGNMENT, OPTION B, SUBSCRIPT, UNKNOWN SIZE: unpredictable value of i and thus unpredictable vector size,
 			// call resize() every time we use l-value subscript; utilizes i in assignment
@@ -247,7 +248,7 @@ string__array_ref XS_unpack_string__array_ref(SV *input_av_ref)
 			// only works for incrementing iteration!!!  will reverse list order for decrementing iteration, there is no push_front() method
 //			if (SvPOKp(*input_av_element)) { output_vector.push_back(SvPV_nolen(*input_av_element)); }
 
-				else { croak("in XS_unpack_string__array_ref(), input_av_element %d was not a string, croaking", i); }
+				else { croak("in XS_unpack_string__array_ref(), input_av_element at index %d was not a string, croaking", i); }
 		}
 		else { croak("in XS_unpack_string__array_ref(), input_av_element at index %d was undef and/or NULL, croaking", i); }
 	}
@@ -401,8 +402,8 @@ SV* stringify_number__array_ref(SV *input_av_ref)
 
 		if (input_av_element != NULL)
 		{
-//			if (SvNOKp(*input_av_element))  // do not allow non-floating-point numbers, such as integers
-			if (SvNOKp(*input_av_element) || SvIOKp(*input_av_element))  // allow non-floating-point numbers, such as integers
+//			if (SvNOKp(*input_av_element))
+			if (SvNOKp(*input_av_element) || SvIOKp(*input_av_element))    // DEV NOTE: cast int to number
 			{
 				if (i_is_0)
 				{
@@ -654,9 +655,14 @@ SV* typetest___int__array_ref__in___string__out(SV* lucky_numbers)
 	AV* lucky_numbers_deref = (AV*)SvRV(lucky_numbers);
 	int how_lucky = av_len(lucky_numbers_deref) + 1;
 	int i;
+
 	for (i = 0;  i < how_lucky;  ++i)
 	{
-		printf("in C++ __PERL__TYPES Array::typetest___int__array_ref__in___string__out(), have lucky number %d/%d = %d, BARBAT\n", i, (how_lucky - 1), (int)SvIV(*av_fetch(lucky_numbers_deref, i, 0)));
+		// DEV NOTE: use SvIOKp() before casting possibly-non-IV element using SvIV(), which can inadvertently cause dualvar status and future type checking errors;
+		// only affects this C++ __PERL__TYPES implementation of typetest___int__array_ref__in___string__out() due to use of SvIV() and Pure-Perl implementation due to similar casting;
+		// does not affect C++ __CPP__TYPES implementation, as that is fully typed and can't easily cast for inadvertent effects
+		if (SvIOKp(*av_fetch(lucky_numbers_deref, i, 0))) { printf("in C++ __PERL__TYPES Array::typetest___int__array_ref__in___string__out(), have lucky number %d/%d = %d, BARBAT\n", i, (how_lucky - 1), (int)SvIV(*av_fetch(lucky_numbers_deref, i, 0))); }
+//		else { printf("in C++ __PERL__TYPES Array::typetest___int__array_ref__in___string__out(), have lucky number %d/%d = <NOT_AN_INT>, BARBAT\n", i, (how_lucky - 1)); }
 	}
 
 //	ENTER;
@@ -711,9 +717,9 @@ SV* typetest___int__in___int__array_ref__out(int my_size)
 	return(newRV_noinc((SV*) output_av));
 }
 
-SV* typetest___number__array_ref__in___string__out(SV* lucky_numbers) { AV* lucky_numbers_deref = (AV*)SvRV(lucky_numbers); int how_lucky = av_len(lucky_numbers_deref) + 1; int i; for (i = 0;  i < how_lucky;  ++i) { printf("in C++ __PERL__TYPES Array::typetest___number__array_ref__in___string__out(), have lucky number %d/%d = %Lf, BARBAZ\n", i, (how_lucky - 1), (long double)SvNV(*av_fetch(lucky_numbers_deref, i, 0))); } return(newSVpvf("%s%s", SvPV_nolen(stringify_number__array_ref(lucky_numbers)), "BARBAZ")); }
+SV* typetest___number__array_ref__in___string__out(SV* lucky_numbers) { AV* lucky_numbers_deref = (AV*)SvRV(lucky_numbers); int how_lucky = av_len(lucky_numbers_deref) + 1; int i; for (i = 0;  i < how_lucky;  ++i) { if (SvNOKp(*av_fetch(lucky_numbers_deref, i, 0)) || SvIOKp(*av_fetch(lucky_numbers_deref, i, 0))) { printf("in C++ __PERL__TYPES Array::typetest___number__array_ref__in___string__out(), have lucky number %d/%d = %Lf, BARBAZ\n", i, (how_lucky - 1), (long double)SvNV(*av_fetch(lucky_numbers_deref, i, 0))); } } return(newSVpvf("%s%s", SvPV_nolen(stringify_number__array_ref(lucky_numbers)), "BARBAZ")); }
 SV* typetest___int__in___number__array_ref__out(int my_size) { AV* output_av = newAV(); int i; 	av_extend(output_av, (I32)(my_size - 1)); 	for (i = 0;  i < my_size;  ++i) { av_store(output_av, (I32)i, newSVnv(i * 5.123456789)); printf("in C++ __PERL__TYPES Array::typetest___int__in___number__array_ref__out(), setting element %d/%d = %Lf, BARBAT\n", i, (my_size - 1), (long double)SvNV(*av_fetch(output_av, (I32)i, 0))); } return(newRV_noinc((SV*) output_av)); }
-SV* typetest___string__array_ref__in___string__out(SV* people) { AV* people_deref = (AV*)SvRV(people); int i; for (i = 0;  i < (av_len(people_deref) + 1);  ++i) { printf("in C++ __PERL__TYPES Array::typetest___string__array_ref__in___string__out(), have person %d = '%s', BARBAR\n", i, (char *)SvPV_nolen(*av_fetch(people_deref, i, 0))); } 	return(newSVpvf("%s%s", SvPV_nolen(stringify_string__array_ref(people)), "BARBAR")); }
+SV* typetest___string__array_ref__in___string__out(SV* people) { AV* people_deref = (AV*)SvRV(people); int i; for (i = 0;  i < (av_len(people_deref) + 1);  ++i) { if (SvPOKp(*av_fetch(people_deref, i, 0))) { printf("in C++ __PERL__TYPES Array::typetest___string__array_ref__in___string__out(), have person %d = '%s', BARBAR\n", i, (char *)SvPV_nolen(*av_fetch(people_deref, i, 0))); } }  return(newSVpvf("%s%s", SvPV_nolen(stringify_string__array_ref(people)), "BARBAR")); }
 SV* typetest___int__in___string__array_ref__out(int my_size) { AV* people = newAV(); int i; 	av_extend(people, (I32)(my_size - 1)); 	for (i = 0;  i < my_size;  ++i) { av_store(people, (I32)i, newSVpvf("Jeffy Ten! %d/%d", i, (my_size - 1))); printf("in C++ __PERL__TYPES Array::typetest___int__in___string__array_ref__out(), bottom of for() loop, have i = %d, just set another Jeffy, BARBAR\n", i); } 	return(newRV_noinc((SV*) people)); }
 
 # elif defined __CPP__TYPES

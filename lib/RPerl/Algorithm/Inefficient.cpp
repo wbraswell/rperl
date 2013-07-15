@@ -4,7 +4,7 @@ using std::cout;  using std::endl;
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Inefficient_cpp
 #define __CPP__INCLUDED__RPerl__Algorithm__Inefficient_cpp 1
 
-#include <RPerl/Algorithm/Inefficient.h>  // -> HelperFunctions.c && Algorithm.cpp
+#include <RPerl/Algorithm/Inefficient.h>  // -> HelperFunctions.cpp && Algorithm.cpp
 
 // [[[ INHERITANCE TESTING ]]]
 ////our void__method $inherited__Inefficient = sub { (my object $self, my string $person) = @_;  print "in Perl Inefficient->inherited__Inefficient(), have \$self = '$self' and \$person = '$person', FLUFFY\n"; };

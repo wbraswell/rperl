@@ -4,7 +4,7 @@ using std::cout;  using std::endl;
 #ifndef __CPP__INCLUDED__RPerl__Algorithm_h
 #define __CPP__INCLUDED__RPerl__Algorithm_h 1
 
-#include <RPerl/HelperFunctions.c>		// -> HelperFunctions.h
+#include <RPerl/HelperFunctions.cpp>		// -> HelperFunctions.h
 
 ////use RPerl::Class; use RPerl; # the base classes that directly call "use RPerl::Class;" also need to "use RPerl;" to get "use types;", etc.
 //#include <RPerl/Class.cpp>

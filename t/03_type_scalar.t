@@ -2,11 +2,15 @@
 use strict;  use warnings;
 
 # SUPPRESS OUTPUT FROM INDIVIDUAL TESTS, EXCLUDING TESTS INSIDE BEGIN{} BLOCKS
-open(STDOUT, ">/dev/null") || die "Can't redirect stdout";  ## no critic
-open(STDERR, ">/dev/null") || die "Can't redirect stderr";  ## no critic
+# order is BEGIN, UNITCHECK, CHECK, INIT, END; CHECK here suppresses Inline compile output from including HelperFunctions_cpp.pm from INIT in Array.pm
+CHECK
+{
+	open(STDOUT, ">/dev/null") || die "Can't redirect stdout";  ## no critic
+	open(STDERR, ">/dev/null") || die "Can't redirect stderr";  ## no critic
+};
 	
-#use Test::More tests => 49;
-use Test::More;
+use Test::More tests => 49;
+#use Test::More;
 use Test::Exception;
 
 # RPERL TEST BOILERPLATE

@@ -15,7 +15,7 @@ our void__method $cpp_load = sub {
 #		else { print "in Bubble_cpp::cpp_load(), have \$RPerl::Algorithm::Sort::Bubble_cpp::CPP_loaded = 'UNDEF'\n"; }
 	if (not(defined($RPerl::Algorithm::Sort::Bubble_cpp::CPP_loaded)) or not($RPerl::Algorithm::Sort::Bubble_cpp::CPP_loaded))
 	{
-		$RPerl::HelperFunctions_cpp::CPP_loaded = 1;  # HelperFunctions.c loaded by C++ #include in Bubble.h 
+		$RPerl::HelperFunctions_cpp::CPP_loaded = 1;  # HelperFunctions.cpp loaded by C++ #include in Bubble.h 
 
 		####use RPerl::Algorithm::Sort;
 		$RPerl::Algorithm::Sort_cpp::CPP_loaded = 1;  # Sort.cpp loaded by C++ #include in Bubble.h

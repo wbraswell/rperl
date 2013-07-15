@@ -4,7 +4,7 @@ using std::cout;  using std::endl;
 #ifndef __CPP__INCLUDED__RPerl__Algorithm_cpp
 #define __CPP__INCLUDED__RPerl__Algorithm_cpp 1
 
-#include <RPerl/Algorithm.h>  // -> HelperFunctions.c && Class.cpp???  RPerl.cpp???
+#include <RPerl/Algorithm.h>  // -> HelperFunctions.cpp && Class.cpp???  RPerl.cpp???
 
 // [[[ INHERITANCE TESTING ]]]
 ////our void__method $inherited__Algorithm = sub { (my object $self, my string $person) = @_;  print "in Perl Algorithm->inherited__Algorithm(), have \$self = '$self' and \$person = '$person', FNORD\n"; };

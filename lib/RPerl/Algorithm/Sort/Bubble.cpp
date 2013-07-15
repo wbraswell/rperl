@@ -4,7 +4,7 @@ using std::cout;  using std::endl;
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp
 #define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp 1
 
-#include <RPerl/Algorithm/Sort/Bubble.h>  // -> HelperFunctions.c && Sort.cpp && Inefficient.cpp
+#include <RPerl/Algorithm/Sort/Bubble.h>  // -> HelperFunctions.cpp && Sort.cpp && Inefficient.cpp
 
 # ifdef __PERL__TYPES
 

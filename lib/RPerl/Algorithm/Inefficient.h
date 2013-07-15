@@ -4,7 +4,7 @@ using std::cout;  using std::endl;
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Inefficient_h
 #define __CPP__INCLUDED__RPerl__Algorithm__Inefficient_h 1
 
-#include <RPerl/HelperFunctions.c>		// -> HelperFunctions.h
+#include <RPerl/HelperFunctions.cpp>		// -> HelperFunctions.h
 
 ////use RPerl::Algorithm;
 #include <RPerl/Algorithm.cpp>		// -> Algorithm.h

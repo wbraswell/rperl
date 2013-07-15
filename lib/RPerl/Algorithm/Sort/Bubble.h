@@ -6,7 +6,7 @@ using std::cout;  using std::endl;
 
 #include <types.h>	// -> Array.cpp
 
-#include <RPerl/HelperFunctions.c>		// -> HelperFunctions.h
+#include <RPerl/HelperFunctions.cpp>		// -> HelperFunctions.h
 
 ////use RPerl::Algorithm::Sort;
 #include <RPerl/Algorithm/Sort.cpp>			// -> Sort.h

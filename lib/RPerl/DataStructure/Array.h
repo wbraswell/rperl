@@ -50,6 +50,15 @@ string stringify_string__array_ref(string__array_ref input_vector);
 Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_exactly_one!
 # endif
 
+// [[[ DATA TYPES & OPERATIONS ]]]
+# ifdef __PERL__TYPES
+SV* types_array() { return(newSVpv("PERL", 4)); }
+SV* ops_array() { return(newSVpv("CPP", 3)); }
+# elif defined __CPP__TYPES
+string types_array() { string retval = "CPP";  return(retval); }
+string ops_array() { string retval = "CPP";  return(retval); }
+# endif
+
 //# [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
 //void typetest___int__array_ref__in___string__out(SV* lucky_numbers);

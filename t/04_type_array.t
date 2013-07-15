@@ -2,45 +2,112 @@
 use strict;  use warnings;
 
 # SUPPRESS OUTPUT FROM INDIVIDUAL TESTS, EXCLUDING TESTS INSIDE BEGIN{} BLOCKS
-#open(STDOUT, ">/dev/null") || die "Can't redirect stdout";  ## no critic
-#open(STDERR, ">/dev/null") || die "Can't redirect stderr";  ## no critic
-
-#use Test::More tests => 16;
-use Test::More;
+# order is BEGIN, UNITCHECK, CHECK, INIT, END; CHECK here suppresses Inline compile output from including HelperFunctions_cpp.pm from INIT in Array.pm
+CHECK
+{
+	open(STDOUT, ">/dev/null") || die "Can't redirect stdout";  ## no critic
+	open(STDERR, ">/dev/null") || die "Can't redirect stderr";  ## no critic
+};
+	
+use Test::More tests => 121;
+#use Test::More;
+use Test::Exception;
 
 # RPERL TEST BOILERPLATE
-BEGIN { package main;  our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib'; }  # NEED REMOVE hard-coded path
-BEGIN { use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';  use_ok('MyConfig'); }  # RPerl's MyConfig.pm 
-BEGIN { use lib $main::RPERL_INCLUDE_PATH;  use_ok('RPerl');  our @ISA = ('RPerl');  $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH; }  # RPerl system files
-BEGIN { use_ok('Data::Dumper');  our $AUTOLOAD;  sub AUTOLOAD { die("AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n" . Dumper(\@_) . ", dying"); } }  ## no critic
+BEGIN { diag("\n[[[ Beginning Array Type Pre-Test Loading, RPerl Type System ]]]\n ");	}
+BEGIN { lives_ok(sub { package main;  our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib'; }, q(package main;  our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib';)); }  # NEED REMOVE hard-coded path
+BEGIN { lives_ok(sub { use lib $main::RPERL_INCLUDE_PATH . '/CPAN/'; }, q(use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';)); lives_and(sub { use_ok('MyConfig'); }); }  # RPerl's MyConfig.pm 
+BEGIN { lives_ok(sub { use lib $main::RPERL_INCLUDE_PATH; }, q(use lib $main::RPERL_INCLUDE_PATH;));  lives_and(sub { use_ok('RPerl'); });  lives_ok(sub { our @ISA = ('RPerl');  $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH; }, q(our @ISA = ('RPerl');  $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;)); }  # RPerl system files
+BEGIN { lives_and(sub { use_ok('Data::Dumper'); });  lives_ok(sub { our $AUTOLOAD;  sub AUTOLOAD { die("AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n" . Dumper(\@_) . ", dying"); }}, q(our $AUTOLOAD;  sub AUTOLOAD {...})); }  ## no critic
 
-# Array: use, load, link
-BEGIN { use_ok('RPerl::DataStructure::Array_cpp'); }
-require_ok('RPerl::DataStructure::Array_cpp');
-RPerl::DataStructure::Array_cpp::cpp_load();
-is($@, '', 'RPerl::DataStructure::Array_cpp, call cpp_load(), no error');
-RPerl::DataStructure::Array_cpp::cpp_link();
-is($@, '', 'RPerl::DataStructure::Array_cpp, call cpp_link(), no error');
+# loop 3 times, once for each mode: Pure-Perl, Hybrid-Perl-and-C++, Pure-C++
+for (my $i = 0;  $i < 3;  ++$i)
+{
+	print "in 04_type_array.t, top of for() loop, have \$i = $i\n";  # no effect if suppressing output!
 
-# Int Array: pack, unpack
-my string $stringify_retval;
-$stringify_retval = stringify_int__array_ref([2]);
-is($stringify_retval, '[2]', 'RPerl::DataStructure::Array_cpp, call stringify_int__array_ref(), single-element array, correct return value');
-$stringify_retval = stringify_int__array_ref([2, 2112, 42, 23, 877, 33, 1701]);
-is($stringify_retval, '[2, 2112, 42, 23, 877, 33, 1701]', 'RPerl::DataStructure::Array_cpp, call stringify_int__array_ref(), multiple-element array, correct return value');
-$stringify_retval = stringify_int__array_ref(2);  # raise/throw exception
-is($stringify_retval, '[2, 2112, 42, 23, 877, 33, 1701]', 'RPerl::DataStructure::Array_cpp, call stringify_int__array_ref(), multiple-element array, correct return value');
+	if ($i == 0)
+	{
+		diag("\n[[[ Beginning Pure-Perl Array Type Tests, RPerl Type System Using Perl Data Types & Perl Operations ]]]\n ");	
+		lives_and(sub { is(types_number(), 'PERL') }, q(types_number();));
+		lives_and(sub { is(ops_number(), 'PERL') }, q(ops_number();));
+		lives_and(sub { is(types_string(), 'PERL') }, q(types_string();));
+		lives_and(sub { is(ops_string(), 'PERL') }, q(ops_string();));
+		lives_and(sub { is(types_array(), 'PERL') }, q(types_array();));
+		lives_and(sub { is(ops_array(), 'PERL') }, q(ops_array();));
+	}
+	elsif ($i == 1)
+	{
+		diag("\n[[[ Beginning Hybrid-Perl-and-C++ Array Type Tests, RPerl Type System Using Perl Data Types & C++ Operations ]]]\n ");	
+#		lives_and(sub { is(types_enable('PERL'), undef) }, q(types_enable('PERL');));  # NEED FIX: RPerl typed functions not working in types.pm, must call as normal Perl function
+		lives_and(sub { is(types::types_enable('PERL'), undef) }, q(types::types_enable('PERL');));
+		
+		# Array: C++ use, load, link
+		BEGIN { lives_and(sub { use_ok('RPerl::DataStructure::Array_cpp'); }); }
+		lives_and(sub { require_ok('RPerl::DataStructure::Array_cpp'); });
+		lives_ok(sub { RPerl::DataStructure::Array_cpp::cpp_load(); }, q(RPerl::DataStructure::Array_cpp::cpp_load();));
+		lives_ok(sub { RPerl::DataStructure::Array_cpp::cpp_link(); }, q(RPerl::DataStructure::Array_cpp::cpp_link();));
+		lives_and(sub { is(types_number(), 'PERL') }, q(types_number();));
+		lives_and(sub { is(ops_number(), 'CPP') }, q(ops_number();));
+		lives_and(sub { is(types_string(), 'PERL') }, q(types_string();));
+		lives_and(sub { is(ops_string(), 'CPP') }, q(ops_string();));
+		lives_and(sub { is(types_array(), 'PERL') }, q(types_array();));
+		lives_and(sub { is(ops_array(), 'CPP') }, q(ops_array();));
+	}
+	else
+	{
+		diag("\n[[[ Beginning Pure-C++ Array Type Tests, RPerl Type System Using C++ Data Types & C++ Operations ]]]\n ");	
+		lives_and(sub { is(types::types_enable('CPP'), undef) }, q(types::types_enable('CPP');));
+		
+		# force reload and relink
+		$RPerl::DataStructure::Array_cpp::CPP_loaded = 0;	
+		$RPerl::DataStructure::Array_cpp::CPP_linked = 0;	
+		
+		# Array: C++ use, load, link
+		lives_ok(sub { RPerl::DataStructure::Array_cpp::cpp_load(); }, q(RPerl::DataStructure::Array_cpp::cpp_load();));
+		lives_ok(sub { RPerl::DataStructure::Array_cpp::cpp_link(); }, q(RPerl::DataStructure::Array_cpp::cpp_link();));
+		lives_and(sub { is(types_number(), 'CPP') }, q(types_number();));
+		lives_and(sub { is(ops_number(), 'CPP') }, q(ops_number();));
+		lives_and(sub { is(types_string(), 'CPP') }, q(types_string();));
+		lives_and(sub { is(ops_string(), 'CPP') }, q(ops_string();));
+		lives_and(sub { is(types_array(), 'CPP') }, q(types_array();));
+		lives_and(sub { is(ops_array(), 'CPP') }, q(ops_array();));
+	}
 
+	# Int Array: stringify, create, manipulate
+	throws_ok(sub { stringify_int__array_ref(2) }, '/input_av_ref was not an AV ref/', q(stringify_int__array_ref(2);  # throw exception));
+	lives_and(sub { is(stringify_int__array_ref([2]), '[2]') }, q(stringify_int__array_ref([2]);));
+	lives_and(sub { is(stringify_int__array_ref([2, 2112, 42, 23, 877, 33, 1701]), '[2, 2112, 42, 23, 877, 33, 1701]') }, q(stringify_int__array_ref([2, 2112, 42, 23, 877, 33, 1701]);));
+	throws_ok(sub { stringify_int__array_ref([2, 2112, 42.3, 23, 877, 33, 1701]) }, '/input_av_element at index 2 was not an int/', q(stringify_int__array_ref([2, 2112, 42.3, 23, 877, 33, 1701]);  # throw exception));
+	throws_ok(sub { stringify_int__array_ref([2, 2112, '42', 23, 877, 33, 1701]) }, '/input_av_element at index 2 was not an int/', q(stringify_int__array_ref([2, 2112, '42', 23, 877, 33, 1701]);  # throw exception));
+	lives_and(sub { is(typetest___int__array_ref__in___string__out([2, 2112, 42, 23, 877, 33, 1701]), '[2, 2112, 42, 23, 877, 33, 1701]BARBAT') }, q(typetest___int__array_ref__in___string__out([2, 2112, 42, 23, 877, 33, 1701]);));
+	throws_ok(sub { typetest___int__array_ref__in___string__out([2, 2112, 42, 23, 877, "abcdefg\n", 33, 1701]) }, '/input_av_element at index 5 was not an int/', q(typetest___int__array_ref__in___string__out([2, 2112, 42, 23, 877, "abcdefg\n", 33, 1701]);  # throw exception));
+	lives_and(sub { is(typetest___int__array_ref__in___string__out([444, 33, 1701]), '[444, 33, 1701]BARBAT') }, q(typetest___int__array_ref__in___string__out([444, 33, 1701]);  # call again to test Perl stack is still functioning properly));
+	lives_and(sub { is_deeply(typetest___int__in___int__array_ref__out(5), [0, 5, 10, 15, 20]) }, q(typetest___int__in___int__array_ref__out(5);));
 
-
-
-
-
-=SNIP
-$stringify_retval = typetest___void__in___number__out();
-cmp_ok(abs($stringify_retval - 3.14285714285714), '<', 0.0000001, 'RPerl::DataStructure::Array_cpp, call typetest___void__in___number__out(), correct return value');
-$stringify_retval = typetest___number__in___number__out(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679);
-cmp_ok(abs($stringify_retval - 6.28318530717959), '<', 0.0000001, 'RPerl::DataStructure::Array_cpp, call typetest___number__in___number__out(), correct return value');
-=cut
+	# Number Array: stringify, create, manipulate
+	throws_ok(sub { stringify_number__array_ref(2) }, '/input_av_ref was not an AV ref/', q(stringify_number__array_ref(2);  # throw exception));
+	lives_and(sub { is(stringify_number__array_ref([2]), '[2]') }, q(stringify_number__array_ref([2]);));
+	lives_and(sub { is(stringify_number__array_ref([2, 2112, 42, 23, 877, 33, 1701]), '[2, 2112, 42, 23, 877, 33, 1701]') }, q(stringify_number__array_ref([2, 2112, 42, 23, 877, 33, 1701]);));
+	lives_and(sub { is(stringify_number__array_ref([2.1, 2112.2, 42.3, 23, 877, 33, 1701]), '[2.1, 2112.2, 42.3, 23, 877, 33, 1701]') }, q(stringify_number__array_ref([2.1, 2112.2, 42.3, 23, 877, 33, 1701]);));
+	lives_and(sub { is(stringify_number__array_ref([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, 33.876587658765875687658765, 1701.6789]), '[2.12344321123443, 2112.4321, 42.4567, 23.7654444444444, 877.5678, 33.8765876587659, 1701.6789]') }, q(stringify_number__array_ref([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, 33.876587658765875687658765, 1701.6789]);));
+	throws_ok(sub { stringify_number__array_ref([2, 2112, '42', 23, 877, 33, 1701]) }, '/input_av_element at index 2 was not a number/', q(stringify_number__array_ref([2, 2112, '42', 23, 877, 33, 1701]);  # throw exception));
+	lives_and(sub { is(typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, 33.876587658765875687658765, 1701.6789]), '[2.12344321123443, 2112.4321, 42.4567, 23.7654444444444, 877.5678, 33.8765876587659, 1701.6789]BARBAZ') }, q(typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, 33.876587658765875687658765, 1701.6789]);));
+	throws_ok(sub { typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, "abcdefg\n", 33.876587658765875687658765, 1701.6789]) }, '/input_av_element at index 5 was not a number/', q(typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, "abcdefg\n", 33.876587658765875687658765, 1701.6789]);  # throw exception));
+	lives_and(sub { is_deeply(typetest___int__in___number__array_ref__out(5), [0, 5.123456789, 10.246913578, 15.370370367, 20.493827156]) }, q(typetest___int__in___number__array_ref__out(5);));
+	
+	# String Array: stringify, create, manipulate
+	# DEV NOTE: all single-quotes replaced by double-quotes when passing through stringify, this is because Perl accepts both but C/C++ only accepts double-quotes for strings
+	throws_ok(sub { stringify_string__array_ref('Lone Ranger') }, '/input_av_ref was not an AV ref/', q(stringify_string__array_ref('Lone Ranger');  # throw exception));
+	lives_and(sub { is(stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']), q(["Superman", "Batman", "Wonder Woman", "Flash", "Green Lantern", "Aquaman", "Martian Manhunter"])) }, q(stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']);));
+	lives_and(sub { is(stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '23']), q(["Superman", "Batman", "Wonder Woman", "Flash", "Green Lantern", "Aquaman", "Martian Manhunter", "23"])) }, q(stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '23']);));
+	throws_ok(sub { stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', 23]) }, '/input_av_element at index 7 was not a string/', q(stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', 23]);  # throw exception));
+	lives_and(sub { is(stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '-2112.23']), q(["Superman", "Batman", "Wonder Woman", "Flash", "Green Lantern", "Aquaman", "Martian Manhunter", "-2112.23"])) }, q(stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '-2112.23']);));
+	lives_and(sub { is(stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', "Martian Manhunter", "-2112.23"]), q(["Superman", "Batman", "Wonder Woman", "Flash", "Green Lantern", "Aquaman", "Martian Manhunter", "-2112.23"])) }, q(stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', "Martian Manhunter", "-2112.23"]);));
+	throws_ok(sub { stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', -2112.23]) }, '/input_av_element at index 7 was not a string/', q(stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', -2112.23]);  # throw exception));
+	throws_ok(sub { stringify_string__array_ref(['Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', {fuzz => 'bizz', bar => "stool!\n", bat => 24}]) }, '/input_av_element at index 5 was not a string/', q(stringify_string__array_ref(['Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', {fuzz => 'bizz', bar => "stool!\n", bat => 24}]);  # throw exception));
+	lives_and(sub { is(typetest___string__array_ref__in___string__out(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']), q(["Superman", "Batman", "Wonder Woman", "Flash", "Green Lantern", "Aquaman", "Martian Manhunter"]BARBAR)) }, q(typetest___string__array_ref__in___string__out(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']);));
+	throws_ok(sub { typetest___string__array_ref__in___string__out(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', 23]) }, '/input_av_element at index 7 was not a string/', q(typetest___string__array_ref__in___string__out(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', 23]);  # throw exception));
+	lives_and(sub { is_deeply(typetest___int__in___string__array_ref__out(5), ['Jeffy Ten! 0/4', 'Jeffy Ten! 1/4', 'Jeffy Ten! 2/4', 'Jeffy Ten! 3/4', 'Jeffy Ten! 4/4']) }, q(typetest___int__in___string__array_ref__out(5);));
+}
 
 done_testing();

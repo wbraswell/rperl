@@ -31,7 +31,7 @@ for (my int $i = 0;  $i < $i_MAX;  ++$i)
 	print "in array_test.pl $i/$i_MAX, have \$stringify_retval =\n$stringify_retval\n";
 	
 	$stringify_retval = typetest___int__array_ref__in___string__out([2, 2112, 42, 23, 877, 33, 1701]);
-#	$stringify_retval = typetest___int__array_ref__in___string__out([2, 2112, "abcdefg\n", 42, 23, 877, 33, 1701]);  # not-an-int error
+#	$stringify_retval = typetest___int__array_ref__in___string__out([2, 2112, 42, 23, 877, "abcdefg\n", 33, 1701]);  # not-an-int error
 	print "in array_test.pl $i/$i_MAX, have \$stringify_retval =\n$stringify_retval\n";
 	
 	my $howdy_retval = typetest___int__array_ref__in___string__out([444, 33, 1701]);
@@ -47,7 +47,7 @@ for (my int $i = 0;  $i < $i_MAX;  ++$i)
 	print "in array_test.pl $i/$i_MAX, have \$stringify_retval =\n$stringify_retval\n";
 
 	$stringify_retval = typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, 33.876587658765875687658765, 1701.6789]);
-#	$stringify_retval = typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, "abcdefg\n", 42.4567, 23.765444444444444444, 877.5678, 33.876587658765875687658765, 1701.6789]);  # not-an-int error
+#	$stringify_retval = typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, "abcdefg\n", 33.876587658765875687658765, 1701.6789]);  # not-a-number error
 	print "in array_test.pl $i/$i_MAX, have \$stringify_retval =\n$stringify_retval\n";
 
 	$retval_number__array_ref = typetest___int__in___number__array_ref__out(5);
@@ -65,7 +65,7 @@ for (my int $i = 0;  $i < $i_MAX;  ++$i)
 	print "in array_test.pl $i/$i_MAX, have \$stringify_retval =\n$stringify_retval\n";
 
 	$stringify_retval = typetest___string__array_ref__in___string__out($my_peeps);
-#	$stringify_retval = typetest___string__array_ref__in___string__out("Should be people, instead just a person!");
+#	$stringify_retval = typetest___string__array_ref__in___string__out("Should be people, instead just a person!");  # break strict refs and then segfault, not test-worthy!
 #	$stringify_retval = typetest___string__array_ref__in___string__out(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']);
 	print "in array_test.pl $i/$i_MAX, have \$stringify_retval =\n$stringify_retval\n";
 

@@ -33,6 +33,15 @@ void XS_pack_number__hash_ref(SV *output_hv_ref, number__hash_ref input_unordere
 string__hash_ref XS_unpack_string__hash_ref(SV *input_hv_ref);
 void XS_pack_string__hash_ref(SV *output_hv_ref, string__hash_ref input_unordered_map);
 
+// [[[ DATA TYPES & OPERATIONS ]]]
+# ifdef __PERL__TYPES
+SV* types_hash() { return(newSVpv("PERL", 4)); }
+SV* ops_hash() { return(newSVpv("CPP", 3)); }
+# elif defined __CPP__TYPES
+string types_hash() { string retval = "CPP";  return(retval); }
+string ops_hash() { string retval = "CPP";  return(retval); }
+# endif
+
 //# [[[ TYPE TESTING ]]]
 void typetest___int__hash_ref__in___void__out(int__hash_ref lucky_numbers);
 int__hash_ref typetest___int__in___int__hash_ref__out(int my_size);

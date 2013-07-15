@@ -22,6 +22,12 @@ for (my int $i = 0;  $i < $i_MAX;  ++$i)
 {
 	print "in hash_test.pl, top of for() loop $i/$i_MAX\n";
 	
+	
+	# START HERE: add stringify()'s here, modify *void__out()'s here & Hash.h/cpp/pm, then in Hash.h/cpp add stringify()'s & separate PERL vs CPP types
+	# START HERE: add stringify()'s here, modify *void__out()'s here & Hash.h/cpp/pm, then in Hash.h/cpp add stringify()'s & separate PERL vs CPP types
+	# START HERE: add stringify()'s here, modify *void__out()'s here & Hash.h/cpp/pm, then in Hash.h/cpp add stringify()'s & separate PERL vs CPP types
+	
+	
 	typetest___int__hash_ref__in___void__out({'binary' => 2, 'rush' => 2112, 'answer' => 42, 'fnord' => 23, 'units' => 877, 'degree' => 33, 'ncc' => 1701});
 #	typetest___int__hash_ref__in___void__out({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => "abcdefg\n", 'answer' => 42, 'fnord' => 23, 'units' => 877, 'degree' => 33, 'ncc' => 1701});  # not-an-int error
 
