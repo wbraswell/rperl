@@ -2,17 +2,18 @@
 use strict;  use warnings;
 
 # RPERL DRIVER BOILERPLATE
-BEGIN { package main;  our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib'; } # NEED REMOVE hard-coded path
-use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';  use MyConfig;  # RPerl's MyConfig.pm 
-use lib $main::RPERL_INCLUDE_PATH;  use RPerl;  our @ISA = ('RPerl');  $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;  # RPerl system files
-use Data::Dumper;  our $AUTOLOAD;  sub AUTOLOAD { die("AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n" . Dumper(\@_) . ", dying"); }
+BEGIN { package main;  our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib'; }  # NEED REMOVE hard-coded path
+BEGIN { use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';  use MyConfig; }  # RPerl's MyConfig.pm 
+BEGIN { use lib $main::RPERL_INCLUDE_PATH;  use RPerl;  our @ISA = ('RPerl');  $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH; }  # RPerl system files
+BEGIN { use Data::Dumper;  our $AUTOLOAD;  sub AUTOLOAD { die("AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n" . Dumper(\@_) . ", dying"); } }  ## no critic
 
 # UNCOMMENT TO ENABLE C++
 use RPerl::DataStructure::Hash_cpp;  RPerl::DataStructure::Hash_cpp::cpp_load();  RPerl::DataStructure::Hash_cpp::cpp_link();
 
 # variable declarations
-my $retval_int__hash_ref;
-my $retval_number__hash_ref;
+my string $retval_stringify;
+my int__hash_ref $retval_int__hash_ref;
+my number__hash_ref $retval_number__hash_ref;
 my string__hash_ref $my_peeps = {};
 my string__hash_ref $retval_jeffys;
 
@@ -21,6 +22,13 @@ my const_int $i_MAX = 1;
 for (my int $i = 0;  $i < $i_MAX;  ++$i)
 {
 	print "in hash_test.pl, top of for() loop $i/$i_MAX\n";
+	
+	$retval_stringify = stringify_int__hash_ref({a_key => 23});
+#	$retval_stringify = stringify_int__hash_ref([2, 2112, 42, 23, 877, 33, 1701]);
+#	$retval_stringify = stringify_int__hash_ref(2);  # raise/throw exception
+#	$retval_stringify = stringify_int__hash_ref([2, 2112, 42.3, 23, 877, 33, 1701]);  # raise/throw exception
+#	$retval_stringify = stringify_int__hash_ref([2, 2112, '42', 23, 877, 33, 1701]);  # raise/throw exception
+	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 	
 	
 	# START HERE: add stringify()'s here, modify *void__out()'s here & Hash.h/cpp/pm, then in Hash.h/cpp add stringify()'s & separate PERL vs CPP types
