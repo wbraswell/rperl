@@ -1,0 +1,156 @@
+The Book Of RPerl
+A True Story
+Written By Will The Chill
+AKA The Voice In The Wilderness
+From Pungenday, Bureaucracy 44th, YOLD 3179
+To Setting Orange, Bureaucracy 46th, YOLD 3179
+
+
+Table Of Contents
+Chapter 0: Hello, World
+Chapter 1: Of Saints & Wizards
+Chapter 2: Onion Ring To Rule Them All
+Chapter 3: A LAMP In The Dark Ages
+Chapter 4: A New Hope
+
+
+Chapter 0: Hello, World
+
+Harken, brethren!  Harken, brothers and sisters in programming, to The Voice In The Wilderness.  I am The Voice, bringing you glad tidings of a great joy.
+
+The Voice will fall upon many deaf ears.  They that have ears to hear, let them hear.
+
+The Voice will be rejected as sacrilegious by many leaders.  They that have the heart to lead themselves, let them follow their hearts.
+
+The Voice is one of you, a programmer among programmers, a coder among coders, a hacker among hackers.
+
+Verily I say unto thee, The Voice speaks Truth via allegory in the wilderness of confusion.
+
+
+Chapter 1: Of Saints & Wizards
+
+In our digital world of Cyberia, created by The Great Programmer Of All Programmers, live many beings.
+
+There are the masses, the common folk, known as Users, generally unaware and uninterested in the activities of the Technicians around them except when inconvenienced.  The Users' existence provides a purpose for Cyberia's existence: the Users use Cyberia and Cyberia is used by the Users.
+
+All Non-Users are Technicians, having achieved varying levels of mastery over the vast expanses of Cyberia.  The Technicians' existence also provides a purpose for Cyberia's existence: the Technicians improve Cyberia and Cyberia is improved by the Technicians.
+
+Chief among the Technicians are the Programmer Guild, the engineers who create and repair the many building blocks of Cyberia.  Second among the Technicians are the SysAdmin Guild, the authorities who hold the keys to protect Users and operate Cyberia's complex machinery, built by the Programmer Guild.
+
+The Programmer Guild is made of many clans and houses and orders, and it is among the Programmer Guild that the fate of Cyberia shall always lie...
+
+There are the tinkerers, known as Hackers, and their sometimes malicious security cousins, the Crackers.
+
+There are the Gurus, sitting in the clouds atop their mountains of code, sometimes attracting travellers seeking wisdom.
+
+There are the Wizards, striding through the forests and wilderness, capable of wielding magic beyond the understanding of mere mortals.
+
+There are the Legends, known after their own lives as laying the foundations of our ever-expanding Cyberia.  The Hall of Legends includes von Neumann, The Royal Society's Babbage and Turing, and the Countess of Lovelace.
+
+There are the Saints, known in their own lives as capable of performing miracles and showing great compassion toward humanity.
+
+There are the Monks, studying and meditating in their monasteries, held in awe of the Saints, silent in reverence of the Great Programmer.
+
+There are the Prophets, kin to The Voice, bearing a multitude of messages.  True Prophets speak from the Great Programmer.  False Prophets abound.
+
+There are the Sith Lords, leading their empires and battling one another, driven by their insatiable lust for gold and power.  Darth Gates and Darth Jobs are falsely revered by many as Saints or even Legends.  The greatest among the Sith is he who spreads widest their weapons of fear, uncertainty, and doubt.  The methods of the Sith include embracing, extending, and extinguishing the lights of lesser beings.
+
+There are the Jedi Masters, sworn enemies of the Sith, capable of wielding The Force to great effect.  Master Shuttleworth leads the Jedi Council.
+
+There are the Jedi Knights, the code soldiers who fight the Sith every hour of every day, following the guidance of their Masters and the Saints.
+
+There is a powerful old Empire of blue, capable of both great good and great evil.  They struggle to keep hold over their own lands.
+
+There is a powerful new Empire of many colors, also capable of both great good and great evil.  Founded by Hackers, their creed began as Do No Evil, but it is no longer.
+
+There are 3 Holy Saints elevated above the rest.  In YOLD 3149, Saint RMS gave to Cyberia the tools of GNU and the lawfulness of the GPL, in the form of a Wildebeest.  In YOLD 3157, Saint Linus gave to Cyberia the operating systems of Linux, in the form of a Penguin, married to the Wildebeest.  In YOLD 3153, Saint Larry took artistic license and the Wildebeest, and gave to Cyberia the programming languages of Perl, in the forms of an Onion and a Camel and a Pumpkin and a Butterfly.
+
+
+Chapter 2: Onion Ring To Rule Them All
+
+In the beginning was the word, and the word was power, the power of programmability.  The power to make easy things easy, and hard things possible.  The power of digital magic.
+
+Saint Ritchie and Saint Thompson gave to Cyberia the holy gifts of Unix and C, the very first gifts of real magic in the land, and the people of Cyberia saw that it was good.  
+Yet the small taste of magic in Unix and C was not enough to slate the growing thirst of the fledgling Programmer Guild.  Thus it was decreed to be the beginning of the First Age of Cyberia on Sweetmorn, Chaos 1st, YOLD 3136.  
+
+And so it came to pass that Saint Larry gave to Cyberia the gift of Perl in YOLD 3153, in the form of a high magic Onion of many layers, and the people of Cyberia saw that it was good.  Jedi Master O'Reilly and Saint Larry gave further gifts of Perl to Cyberia, in the form of a magic Camel and other lesser animals.  Perl's magic granted its wielder the ability to achieve complex solutions which were previously impractical or impossible.  Perl's magic acted as glue between terminally incompatible systems.  Perl's magic caused inspiration and disgust, beautiful code and disastrous code.  Perl's magic compressed entire programs into a single line of code.  Each Perl was more magic than the last, culminating in the 5th Perl, and all Programmers who rode upon the Camel or partook of the Onion became members of The Great Perl Brotherhood.
+
+Upon the Camel, Saint Larry gave to Cyberia the 3 Great Virtues Of A Programmer: Laziness to reduce overall energy expenditure, Impatience to have the computer anticipate your needs, and Hubris to avoid the disapproval of your fellow Programmer.  The gift of Perl was the gift of a Swiss Army Chainsaw, it was the gift of a multitude of backronyms, it was the gift that Does What I Mean.  The Perl Monks came to be, and divided themselves into many ranks leading to Papacy, and their Perl Monastery thrived for an age in Cyberia.  Saint Larry taught his disciples to Have The Appropriate Amount Of Fun, and to Let Many Flowers Bloom.  The Perl Monks enjoyed poetry and golf and other recreations.
+
+The Perl Monks befriended others among The Great Perl Brotherhood, and between them a Library was built, known as the CPAN.  By their hands, the walls and contents of the Library were wrought, and The Great Perl Brotherhood beheld the Library as a shining Light of shared knowledge among the Programmer Guild.  The Perl Foundation came to be, an order of custodians entrusted with keeping secure the sacred names and symbols of The Great Perl Brotherhood, and officiating meetings of The Great Perl Brotherhood, known as the YAPC.  In many cities the Perl Mongers came to be, a loose fellowship of Hackers upon many different quests.  Another shining Light, in the form of a LAMP, was created by the cooperation of the Wildebeest, the Penguin, and the Camel.  Drawn by the Twin Lights of the Library and the LAMP, a number of powerful Jedi, Gurus, and Wizards came to join The Great Perl Brotherhood, marking the height of the First Age of Cyberia.
+
+In those days there was no Perl King beyond Saint Larry, and to the people of Cyberia he was always more Saint than King.  The P5P came to be, an order of custodians entrusted with keeping stable the sacred magic and source code of Perl 5 itself, in the form of a Pumpkin.  The head of the P5P order was given the title of Pumpking, and from YOLD 3160 onward the Pumpkings ruled over the Patch Pumpkin with great care and solemn responsibility.  Cyberia was built upon the backs of the Wildebeest, and the Penguin, and the Camel; yet the Pumpkin was not perfect, and many Monks murmured against the Pumpkin, and a chalice of the Programmer Guild's sacred nectar was ritualistically sacrificed as an omen.  The Pumpkin's high magic became a burden and slowed the Camel's trot to a crawl, working knowledge of the Pumpkin's innards was generally inaccessible, and the Onion's layers spawned a multitude of competing child languages.
+
+And so it came to pass in YOLD 3166 that Saint Larry left the Camel and Pumpkin, and taking a bite of the Onion, walked into the wilderness in search of further communion with The Great Programmer Of All Programmers.
+
+
+Chapter 3: A LAMP In The Dark Ages
+
+It was foretold that Saint Larry would perform a miracle before Christmas, and it may yet come to pass, but the prophecy did not come to pass in those days.  Instead, Saint Larry undertook a great quest of many seasons, revealing the Camel's illness with the Apocalypses, and yet the Camel did not die.  And so it came to pass that Saint Larry gave to Cyberia the gift a new Perl, the 6th Perl, in the form of a Butterfly, a younger sister of the Camel and a further embodiment of the spirit of the Onion.  The Butterfly was meant to make easy things trivial, hard things easy, and impossible things hard.
+
+Yet though they were siblings, the Camel and the Butterfly were incompatible.  The Great Perl Brotherhood was rent asunder, brother against sister, parent against child, Camel against Butterfly.  Some followed Saint Larry to feed and nurture the new Butterfly, some stayed behind to tend the Camel and Pumpkin.  Few pledged loyalty to both the Camel and the Butterfly.  Many abandoned The Great Perl Brotherhood, never to return.  Wielding a rough cleaver, The Great Programmer split the Onion in twain.  There was much weeping and gnashing of teeth.
+
+In those days, a veritable menagerie roamed Cyberia, possessing the spirit of the Onion.  There was a Ponie and a Parrot and a Pug dog and a Moose and a Mouse and others.  Many new philosophies of the Butterfly made their way to the Camel.  Still, confusion continued to spread among The Great Perl Brotherhood, and they asked, was the Camel truth?  Was the Butterfly truth?  Where was Saint Larry's Christmas miracle?  Was the Pumpkin rotting?  Was the Onion dead?  Many answers were offered, yet the truth was elusive.  The remaining Monks retreated deeper into their Monastery, and a long darkness slowly settled over The Great Perl Brotherhood.
+
+No longer sufficient were the old ways of the Camel from the First Age of Cyberia.  The Users presented the Programmer Guild with ever-increasing demands for richness of experience and interactivity.  The Butterfly remained too fragile and young to meet the Users' needs.  The Camel, though slowed by the burden of high magic, remained the only trusty work animal in the Perl Monastery's stables.  The Pumpkings, though fraught with the burning flames of constant religious infighting, maintained their fervor and the Pumpkin grew slowly alongside the Camel.  The candles in the Monastery grew fainter, yet all was not lost.
+
+While The Great Perl Brotherhood stumbled forward through its own dark age, the Twin Lights of the Library and the LAMP shone without occlusion.  The foundations of Cyberia, largely built upon the back of the Camel, were buried deeper under the newer structures built atop, yet foundations they remained.  Some of Cyberia's new structures were built using an alchemical catalyst derived from refined juices of the Pumpkin, but the Onion continued to fall out of favor among the halls of learning, and young Technicians were encouraged to pursue other sacrilegious solutions.
+
+And so it came to pass in YOLD 3170 that Jedi Master O'Reilly ushered in the Second Age of Cyberia.
+
+
+Chapter 4: A New Hope
+
+Cyberia flourished in its Second Age, while the Perl Monks grew ever more reclusive.  Most of the menagerie grew ill or died.  The Camel and the Butterfly remained apart, the Onion remained split in two.  The Programmer Guild looked upon the Onion with pity and remorse.  But hope remained.
+
+The Users embraced the Second Age, and many sacrilegious offerings were put forth by the Sith Lords and the Empires.  A vast and towering Cloud appeared above Cyberia, bestowing great power upon those able to tap into its surging energy.  Jedi and Sith alike thrived.  The Programmer Guild expanded, while The Great Perl Brotherhood shrank.  Rumor grew of a shadow in Cyberia, whispers of a nameless fear, and so it came to pass in YOLD 3178 that the Onion of power perceived its time had now come.
+
+The Voice In The Wilderness made contact with the Perl Monks on Bureaucracy 6th, YOLD 3178, requesting aid in a quest that had previously claimed many and been completed by none.  The Voice's quest was to return the Camel's trot, even to lighten the Camel's load and enable a full running gallop.  A gallop, by the slowest animal in Cyberia!  A galloping Camel could revive The Great Perl Brotherhood.  A galloping Camel could bring even greater prosperity to all of Cyberia, it might even bring a new age.
+
+After 4 days had passed, and independent of The Voice's quest, a secret meeting of the high council of The Great Perl Brotherhood convened in the city of the Onion on Bureaucracy 10th, YOLD 3178.  Present were the Pumpkings, Wizards, and Popes remaining loyal to the Onion, including both those who pledged themselves to the Butterfly and those who followed the Camel.  Most importantly, Saint Larry attended that he might bless the proceedings.  The two halves of the Onion were inspected and debated.  More chalices were sacrificed, as an omen and perhaps as an offering to The Great Programmer Of All Programmers.  At long last, the Onion's halves were rejoined and all present accepted the charge of reunification.  The Camel and the Butterfly must be made to live together in harmony.  Saint Larry agreed to lend his magic to the cause, and to his disciples he spake these words: "Thanks for not making me do all of this.  You guys are great.  I love you."
+
+Wizard dötNet and Wizard Urban met with The Voice on Bureaucracy 42nd, YOLD 3178.  They 3 members of The Great Perl Brotherhood took upon themselves the mantle of the Perl 11 Clan, their new number being the sum-total of the old numbers of the Camel and of the Butterfly.  Wizard dötNet gave to the 11 Clan the charge of pluggability at the 3 main Onion layers of parser, compiler, and interpreter.  Wizard Urban and The Voice accepted the further charge of finding the Camel's gallop, looking first to resurrect the long-dead work of the lost Monk Beattie, only to find the rusted B::CC machinery incapable of lightening the Camel's load.  The Perl 11 Clan knew it must create its own salvation if the Camel were ever to gallop across the mountains and plains of Cyberia.
+
+One quarter century after Saint Larry conceived the Onion, The Great Perl Brotherhood met in the city of The Voice for the traditionary YAPC, ceremonies commencing on Confusion 8th, YOLD 3179.  As is customary, a host of brethren presented themselves, with Saint Larry blessing the proceedings as the Perl Neighborhood, where many flowers bloom.  Prevailing were the philosophies of reunification and the Perl 11 Clan.  Six Paths were laid out ahead of The Great Perl Brotherhood, in the forms of a Velociraptor and a Flamingo and a Stooge and a Swallow and a Moth and a Sword.  The quickening was finally occurring.  Any of the Six Paths may lead to the 7th Perl and Third Age of Cyberia...
+
+Saint Larry spake and said "Perl 5 is a Velociraptor", and thus it is that the Past Pumpking and Wizard MST sees the Pumpkin.  With the help of Wizard MST, it may yet be possible for the Pumpkin to be forked or otherwise upgraded and truly take the form of a Velociraptor of exceeding haste.
+
+Wizard Urban drank a potion and created P2, a Perl 5 JIT in the form of a Flamingo, the new number being the sum-total of the digits of the Perl 11 clan.
+
+Wizard Little spake and said "Perl is a Dead End", and then he created Moe, an experimental 5.5th Perl in the form of a Stooge.
+
+Wizard Worthington and Wizard Wilson created MoarVM, a Perl 6 runtime in the form of a Swallow, cousin to the Parrot.
+
+Saint Larry held the charge of reunification and created STD_P5, a backwards-compatibility grammar for Perl 6 to parse Perl 5, in the form of Moth, cousin to the Butterfly.  If the Moth flies with the Swallow, a Christmas miracle may yet occur.
+
+The Voice In The Wilderness held the Perl 11 Clan charges of pluggability and the Camel's gallop, and created RPerl, an optimizer to compile low magic Perl 5 into C and C++, in the form of a Sword.  The Voice further created The Low Magic Perl Commandments, to be followed by neophytes of the Programmer Guild and those seeking the Camel's gallop.  Holding the Sword and the Commandments and this Book, The Voice stands firm and holds forth.  For the Prophets of all ages have foretold the creation of new minds and great vessels, 
+thus may it be made so by the Twin Lights and the power of Good triumphant over Evil.
+
+Therefore I exhort thee, fellow Programmer, to aid in forging one or more of the Six Paths.
+
+May The Great Programmer Of All Programmers grant you Godspeed toward the Third Age.
+
+HTAAOF Brothers,
+~ The Voice In The Wilderness
+
+
+The Perl 11 Clan
+http://www.perl11.org
+
+The Velociraptor
+https://github.com/mirrors/perl
+
+The Flamingo
+https://github.com/perl11/p2
+
+The Stooge
+https://github.com/MoeOrganization/moe
+
+The Swallow
+https://github.com/moarvm/moarvm
+
+The Moth
+https://github.com/perl6/std/blob/master/STD_P5.pm6
+
+The Sword
+https://github.com/wbraswell/rperl

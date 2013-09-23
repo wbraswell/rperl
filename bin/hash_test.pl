@@ -8,7 +8,7 @@ BEGIN { use lib $main::RPERL_INCLUDE_PATH;  use RPerl;  our @ISA = ('RPerl');  $
 BEGIN { use Data::Dumper;  our $AUTOLOAD;  sub AUTOLOAD { die("AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n" . Dumper(\@_) . ", dying"); } }  ## no critic
 
 # UNCOMMENT TO ENABLE C++
-use RPerl::DataStructure::Hash_cpp;  RPerl::DataStructure::Hash_cpp::cpp_load();  RPerl::DataStructure::Hash_cpp::cpp_link();
+#use RPerl::DataStructure::Hash_cpp;  RPerl::DataStructure::Hash_cpp::cpp_load();  RPerl::DataStructure::Hash_cpp::cpp_link();
 
 # variable declarations
 my string $retval_stringify;
@@ -23,13 +23,14 @@ for (my int $i = 0;  $i < $i_MAX;  ++$i)
 {
 	print "in hash_test.pl, top of for() loop $i/$i_MAX\n";
 	
-	$retval_stringify = stringify_int__hash_ref({a_key => 23});
-#	$retval_stringify = stringify_int__hash_ref([2, 2112, 42, 23, 877, 33, 1701]);
+#	$retval_stringify = stringify_int__hash_ref({a_key => 23});
+	$retval_stringify = stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => 877, f_key => 33, g_key => 1701});
 #	$retval_stringify = stringify_int__hash_ref(2);  # raise/throw exception
-#	$retval_stringify = stringify_int__hash_ref([2, 2112, 42.3, 23, 877, 33, 1701]);  # raise/throw exception
-#	$retval_stringify = stringify_int__hash_ref([2, 2112, '42', 23, 877, 33, 1701]);  # raise/throw exception
+#	$retval_stringify = stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => 23, e_key => 877, f_key => 33, g_key => 1701});  # raise/throw exception
+#	$retval_stringify = stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => '42', d_key => 23, e_key => 877, f_key => 33, g_key => 1701});  # raise/throw exception
 	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 	
+die("Done for now, dying");
 	
 	# START HERE: add stringify()'s here, modify *void__out()'s here & Hash.h/cpp/pm, then in Hash.h/cpp add stringify()'s & separate PERL vs CPP types
 	# START HERE: add stringify()'s here, modify *void__out()'s here & Hash.h/cpp/pm, then in Hash.h/cpp add stringify()'s & separate PERL vs CPP types

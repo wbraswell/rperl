@@ -8,7 +8,7 @@ CHECK
 	open(STDOUT, ">/dev/null") || die "Can't redirect stdout";  ## no critic
 	open(STDERR, ">/dev/null") || die "Can't redirect stderr";  ## no critic
 };
-	
+
 use Test::More tests => 49;
 #use Test::More;
 use Test::Exception;
