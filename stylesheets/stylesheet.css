@@ -241,7 +241,7 @@ header a.button_home {
 aside a.button_home {
   display: block; 
   background: transparent url(../images/button_rperl_logo.png) 0 0 no-repeat;
-  margin-bottom: 10;
+  margin-bottom: 20px;
 }
 
 /* BUTTON, THE BOOK OF RPERL */
@@ -268,7 +268,7 @@ header a.button_the_book_of_rperl {
 aside a.button_the_book_of_rperl {
   display: block; 
   background: transparent url(../images/button_rperl_sword_wand.png) 0 0 no-repeat;
-  margin-bottom: 10;
+  margin-bottom: 20px;
 }
 
 
