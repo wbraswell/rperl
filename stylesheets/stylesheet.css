@@ -217,9 +217,37 @@ aside a.button_download {
   font-size: 21px;
 }
 
+/* BUTTON, HOME */
+a.button_home {
+  width: 200px;
+  height: 200px;
+  line-height: 1.2;
+  font-size: 23px;
+  color: #000;
+  padding-left: 10px;
+  padding-top: 115px;
+  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
+}
+a.button_home small {
+  display: block;
+  font-size: 11px;
+}
+header a.button_home {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: transparent url(../images/button_rperl_logo.png) 0 0 no-repeat;
+}
+aside a.button_home {
+  display: block;
+  background: transparent url(../images/button_rperl_logo.png) 0 0 no-repeat;
+  margin-bottom: 20px;
+  font-size: 21px;
+}
+
 /* BUTTON, THE BOOK OF RPERL */
 a.button_the_book_of_rperl {
-  width: 202px;
+  width: 200px;
   height: 200px;
   line-height: 1.2;
   font-size: 23px;
@@ -636,6 +664,13 @@ footer a:hover {
   aside#sidebar a.button_download {
     display: none;
   }
+
+  /* BUTTON, HOME */
+/*
+  aside#sidebar a.button_home {
+    display: none;
+  }
+*/
 
   /* BUTTON, THE BOOK OF RPERL */
 /*
