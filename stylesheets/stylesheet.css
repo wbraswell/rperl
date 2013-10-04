@@ -157,6 +157,16 @@ aside a.button {
   font-size: 21px;
 }
 
+aside a.the_book_of_rperl__button {
+  width: 138px;
+  padding-left: 64px;
+  display: block;
+  background: transparent url(../images/rperl_sword_wand.png) 0 0 no-repeat;
+  margin-bottom: 20px;
+  font-size: 21px;
+}
+
+
 code, pre {
   font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
   color: #222;
