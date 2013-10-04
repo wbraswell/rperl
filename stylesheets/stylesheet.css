@@ -306,6 +306,7 @@ ul, ol, dl {
 
 /* COMMON STYLES */
 
+/*
 hr {
   height: 1px;
   line-height: 1px;
@@ -314,6 +315,18 @@ hr {
   border: none;
   background: transparent url('../images/hr.png') 0 0 no-repeat;
 }
+*/
+
+hr {
+  background: #ddd; 
+  clear: both; 
+  float: none; 
+  width: 100%; 
+  height: 1px;
+  margin: 0 0 1.4em;
+  border: none; 
+}
+
 
 table {
   width: 100%;
