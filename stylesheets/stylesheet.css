@@ -220,7 +220,7 @@ aside a.button_download {
 /* BUTTON, HOME */
 a.button_home {
   width: 200px;
-  height: 120px;
+  height: 95px;
   line-height: 1.2;
   font-size: 21px;
   color: #000;
@@ -247,7 +247,7 @@ aside a.button_home {
 /* BUTTON, THE BOOK OF RPERL */
 a.button_the_book_of_rperl {
   width: 200px;
-  height: 140px;
+  height: 115px;
   line-height: 1.2;
   font-size: 21px;
   color: #000;
