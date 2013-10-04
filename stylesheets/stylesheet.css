@@ -136,8 +136,8 @@ a.button_blank {
   line-height: 1.2;
   font-size: 23px;
   color: #fff;
-  padding-left: 68px;
-  padding-top: 22px;
+  padding-left: 10px;
+  padding-top: 10px;
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
 }
 a.button_blank small {
@@ -151,8 +151,6 @@ header a.button_blank {
   background: transparent url(../images/button_blank.png) 0 0 no-repeat;
 }
 aside a.button_blank {
-  width: 138px;
-  padding-left: 64px;
   display: block;
   background: transparent url(../images/button_blank.png) 0 0 no-repeat;
   margin-bottom: 20px;
@@ -222,12 +220,12 @@ aside a.button_download {
 /* BUTTON, THE BOOK OF RPERL */
 a.button_the_book_of_rperl {
   width: 134px;
-  height: 95px;
+  height: 150px;
   line-height: 1.2;
   font-size: 23px;
   color: #fff;
-  padding-left: 68px;
-  padding-top: 22px;
+  padding-left: 10px;
+  padding-top: 80px;
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
 }
 a.button_the_book_of_rperl small {
@@ -241,8 +239,6 @@ header a.button_the_book_of_rperl {
   background: transparent url(../images/button_rperl_sword_wand.png) 0 0 no-repeat;
 }
 aside a.button_the_book_of_rperl {
-  width: 138px;
-  padding-left: 64px;
   display: block;
   background: transparent url(../images/button_rperl_sword_wand.png) 0 0 no-repeat;
   margin-bottom: 20px;
