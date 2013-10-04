@@ -131,8 +131,8 @@ aside#sidebar p.repo-owner a {
 
 /* BUTTON, BLANK */
 a.button_blank {
-  width: 134px;
-  height: 58px;
+  width: 202px;
+  height: 78px;
   line-height: 1.2;
   font-size: 23px;
   color: #fff;
@@ -219,13 +219,13 @@ aside a.button_download {
 
 /* BUTTON, THE BOOK OF RPERL */
 a.button_the_book_of_rperl {
-  width: 134px;
-  height: 150px;
+  width: 202px;
+  height: 200px;
   line-height: 1.2;
   font-size: 23px;
   color: #fff;
   padding-left: 10px;
-  padding-top: 80px;
+  padding-top: 115px;
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
 }
 a.button_the_book_of_rperl small {
