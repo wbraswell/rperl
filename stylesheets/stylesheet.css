@@ -128,7 +128,9 @@ aside#sidebar p.repo-owner a {
   margin-bottom: 40px;
 }
 
-a.button {
+
+/* BUTTON, BLANK */
+a.button_blank {
   width: 134px;
   height: 58px;
   line-height: 1.2;
@@ -138,30 +140,111 @@ a.button {
   padding-top: 22px;
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
 }
-a.button small {
+a.button_blank small {
   display: block;
   font-size: 11px;
 }
-header a.button {
+header a.button_blank {
   position: absolute;
   right: 0;
   top: 0;
-  background: transparent url(../images/github-button.png) 0 0 no-repeat;
+  background: transparent url(../images/button_blank.png) 0 0 no-repeat;
 }
-aside a.button {
+aside a.button_blank {
   width: 138px;
   padding-left: 64px;
   display: block;
-  background: transparent url(../images/download-button.png) 0 0 no-repeat;
+  background: transparent url(../images/button_blank.png) 0 0 no-repeat;
   margin-bottom: 20px;
   font-size: 21px;
 }
 
-aside a.the_book_of_rperl__button {
+/* BUTTON, GITHUB */
+a.button_github {
+  width: 134px;
+  height: 58px;
+  line-height: 1.2;
+  font-size: 23px;
+  color: #fff;
+  padding-left: 68px;
+  padding-top: 22px;
+  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
+}
+a.button_github small {
+  display: block;
+  font-size: 11px;
+}
+header a.button_github {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: transparent url(../images/button_github.png) 0 0 no-repeat;
+}
+aside a.button_github {
   width: 138px;
   padding-left: 64px;
   display: block;
-  background: transparent url(../images/rperl_sword_wand_button.png) 0 0 no-repeat;
+  background: transparent url(../images/button_github.png) 0 0 no-repeat;
+  margin-bottom: 20px;
+  font-size: 21px;
+}
+
+/* BUTTON, DOWNLOAD */
+a.button_download {
+  width: 134px;
+  height: 58px;
+  line-height: 1.2;
+  font-size: 23px;
+  color: #fff;
+  padding-left: 68px;
+  padding-top: 22px;
+  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
+}
+a.button_download small {
+  display: block;
+  font-size: 11px;
+}
+header a.button_download {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: transparent url(../images/button_download.png) 0 0 no-repeat;
+}
+aside a.button_download {
+  width: 138px;
+  padding-left: 64px;
+  display: block;
+  background: transparent url(../images/button_download.png) 0 0 no-repeat;
+  margin-bottom: 20px;
+  font-size: 21px;
+}
+
+/* BUTTON, THE BOOK OF RPERL */
+a.button_the_book_of_rperl {
+  width: 134px;
+  height: 58px;
+  line-height: 1.2;
+  font-size: 23px;
+  color: #fff;
+  padding-left: 68px;
+  padding-top: 22px;
+  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
+}
+a.button_the_book_of_rperl small {
+  display: block;
+  font-size: 11px;
+}
+header a.button_the_book_of_rperl {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: transparent url(../images/button_rperl_sword_wand.png) 0 0 no-repeat;
+}
+aside a.button_the_book_of_rperl {
+  width: 138px;
+  padding-left: 64px;
+  display: block;
+  background: transparent url(../images/button_rperl_sword_wand.png) 0 0 no-repeat;
   margin-bottom: 20px;
   font-size: 21px;
 }
@@ -434,7 +517,10 @@ footer a:hover {
   header h2 {
     font-size: 24px;
   }
-  header a.button {
+
+
+  /* BUTTON, BLANK */
+  header a.button_blank {
     background-image: none;
     width: auto;
     height: auto;
@@ -451,10 +537,81 @@ footer a:hover {
     -webkit-border-radius: 5px;                     
     border-radius: 5px;    
   }
-  header a.button small {
+  header a.button_blank small {
     font-size: 13px;
     display: inline;
   }
+
+  /* BUTTON, GITHUB */
+  header a.button_github {
+    background-image: none;
+    width: auto;
+    height: auto;
+    display: inline-block;
+    margin-top: 15px;
+    padding: 5px 10px;
+    position: relative;
+    text-align: center;
+    font-size: 13px;
+    line-height: 1;
+    background-color: #9ddcff;
+    color: #2879d0;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;                     
+    border-radius: 5px;    
+  }
+  header a.button_github small {
+    font-size: 13px;
+    display: inline;
+  }
+
+  /* BUTTON, DOWNLOAD */
+  header a.button_download {
+    background-image: none;
+    width: auto;
+    height: auto;
+    display: inline-block;
+    margin-top: 15px;
+    padding: 5px 10px;
+    position: relative;
+    text-align: center;
+    font-size: 13px;
+    line-height: 1;
+    background-color: #9ddcff;
+    color: #2879d0;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;                     
+    border-radius: 5px;    
+  }
+  header a.button_download small {
+    font-size: 13px;
+    display: inline;
+  }
+
+  /* BUTTON, THE BOOK OF RPERL */
+  header a.button_the_book_of_rperl {
+    background-image: none;
+    width: auto;
+    height: auto;
+    display: inline-block;
+    margin-top: 15px;
+    padding: 5px 10px;
+    position: relative;
+    text-align: center;
+    font-size: 13px;
+    line-height: 1;
+    background-color: #9ddcff;
+    color: #2879d0;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;                     
+    border-radius: 5px;    
+  }
+  header a.button_the_book_of_rperl small {
+    font-size: 13px;
+    display: inline;
+  }
+
+
   #main-content,
   aside#sidebar {
     float: none;
@@ -467,9 +624,31 @@ footer a:hover {
     padding: 20px 0;
     min-height: 0;
   }
-  aside#sidebar a.button {
+
+
+  /* BUTTON, BLANK */
+  aside#sidebar a.button_blank {
     display: none;
   }
+
+  /* BUTTON, GITHUB */
+  aside#sidebar a.button_github {
+    display: none;
+  }
+
+  /* BUTTON, DOWNLOAD */
+  aside#sidebar a.button_download {
+    display: none;
+  }
+
+  /* BUTTON, THE BOOK OF RPERL */
+/*
+  aside#sidebar a.button_the_book_of_rperl {
+    display: none;
+  }
+*/
+
+
   #main-content h1:before,
   #main-content h2:before,
   #main-content h3:before,
