@@ -220,7 +220,7 @@ aside a.button_download {
 /* BUTTON, HOME */
 a.button_home {
   width: 200px;
-  height: 95px;
+/*  height: 95px; */
 /*  line-height: 1.2; */
   font-size: 21px;
   color: #000;
@@ -239,14 +239,14 @@ header a.button_home {
   background: transparent url(../images/button_rperl_logo.png) 0 0 no-repeat;
 }
 aside a.button_home {
-  display: inline; 
+  display: block; 
   background: transparent url(../images/button_rperl_logo.png) 0 0 no-repeat;
 }
 
 /* BUTTON, THE BOOK OF RPERL */
 a.button_the_book_of_rperl {
   width: 200px;
-  height: 115px;
+/*  height: 115px; */
 /*  line-height: 1.2; */
   font-size: 21px;
   color: #000;
@@ -265,7 +265,7 @@ header a.button_the_book_of_rperl {
   background: transparent url(../images/button_rperl_sword_wand.png) 0 0 no-repeat;
 }
 aside a.button_the_book_of_rperl {
-  display: inline; 
+  display: block; 
   background: transparent url(../images/button_rperl_sword_wand.png) 0 0 no-repeat;
 }
 
