@@ -72,26 +72,32 @@ header {
 }
 
 header h1 {
+  text-align: left;  /* page headings */
   letter-spacing: -1px;
   font-size: 72px;
   color: #fff;
   line-height: 1;
   margin-bottom: 0.2em;
-  width: 540px;
+/*  width: 540px; */
+  width: 840px;
 }
 
 header h2 {
+  text-align: left;  /* page sub-headings */
   font-size: 26px;
   color: #9ddcff;
   font-weight: normal;
   line-height: 1.3;
-  width: 540px;
+/*  width: 540px; */
+  width: 840px;
   letter-spacing: 0;
 }
 
 .inner {
+  text-align: justify;  /* justify all text unless otherwise listed as left-align  */
   position: relative;
-  width: 940px;
+/*  width: 940px; */
+  width: 1240px;
   margin: 0 auto;
 }
 
@@ -101,7 +107,8 @@ header h2 {
 }
 
 #main-content {
-  width: 690px;
+/*  width: 690px; */
+  width: 990px;
   float: left;
 }
 
@@ -121,6 +128,7 @@ aside#sidebar {
 
 aside#sidebar p.repo-owner,
 aside#sidebar p.repo-owner a {
+  text-align: left;  /* text in repo tag  */
   font-weight: bold;
 }
 
@@ -136,8 +144,8 @@ a.button_blank {
   line-height: 1.2;
   font-size: 23px;
   color: #fff;
-  padding-left: 10px;
-  padding-top: 10px;
+/*  padding-left: 10px;
+  padding-top: 10px; */
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
 }
 a.button_blank small {
@@ -153,7 +161,7 @@ header a.button_blank {
 aside a.button_blank {
   display: block;
   background: transparent url(../images/button_blank.png) 0 0 no-repeat;
-  margin-bottom: 20px;
+  margin-bottom: 20px; 
   font-size: 21px;
 }
 
@@ -224,7 +232,8 @@ a.button_home {
 /*  line-height: 1.2; */
   font-size: 21px;
   color: #000;
-  padding-left: 10px;
+/*  padding-left: 10px; /* replaced by text-align:center; below */
+  text-align: center;
   padding-top: 90px;
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
 }
@@ -251,7 +260,8 @@ a.button_the_book_of_rperl {
 /*  line-height: 1.2; */
   font-size: 21px;
   color: #000;
-  padding-left: 10px;
+/*  padding-left: 10px; /* replaced by text-align:center; below */
+  text-align: center;
   padding-top: 115px;
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
 }
@@ -306,17 +316,6 @@ ul, ol, dl {
 
 /* COMMON STYLES */
 
-/*
-hr {
-  height: 1px;
-  line-height: 1px;
-  margin-top: 1em;
-  padding-bottom: 1em;
-  border: none;
-  background: transparent url('../images/hr.png') 0 0 no-repeat;
-}
-*/
-
 hr {
   background: #ddd; 
   clear: both; 
@@ -326,7 +325,6 @@ hr {
   margin: 0 0 1.4em;
   border: none; 
 }
-
 
 table {
   width: 100%;
@@ -352,7 +350,43 @@ form {
 
 /* GENERAL ELEMENT TYPE STYLES */
 
+/* used to horizontally center images, such as logos in header */
+img.centered_h {
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+}
+
+/* used to horizontally center stand-alone text, for combined horiz-and-vertical alignment use centered_outer and centered_inner below */
+p.centered_h {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+/* used to horizontall AND vertically align text, such as labels over blank buttons */
+.centered_outer { 
+  width: 100%; 
+  height: 100%; 
+  position: relative;
+}
+
+.centered_inner { 
+  width: 100%; 
+  height: 100%; 
+  display: table; 
+  margin-left: auto;
+  margin-right: auto;
+  width: 6em;
+}
+
+.centered_inner p {
+  display: table-cell; 
+  vertical-align: middle; 
+}
+
 #main-content h1 {
+  text-align: left;  /* page sections */
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
   font-size: 2.8em;
   letter-spacing: -1px;
@@ -367,6 +401,7 @@ form {
 }
 
 #main-content h2 {
+  text-align: left;  /* page sub-sections */
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
   font-size: 22px;
   font-weight: bold;
@@ -468,12 +503,18 @@ dl dd {
   font-weight: 100;
 }
 
+/* copyleft notice */
 footer {
-  background: transparent url('../images/hr.png') 0 0 no-repeat;
   margin-top: 40px;
   padding-top: 20px;
   padding-bottom: 30px;
   font-size: 13px;
+  color: #000;
+}
+
+/* copyright notice */
+footer small {
+  font-size: 10px;
   color: #aaa;
 }
 
