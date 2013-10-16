@@ -253,6 +253,34 @@ aside a.button_home {
   margin-bottom: 20px;
 }
 
+/* BUTTON, FAQ */
+a.button_faq {
+  width: 200px;
+/*  height: 95px; */
+/*  line-height: 1.2; */
+  font-size: 21px;
+  color: #000;
+/*  padding-left: 10px; /* replaced by text-align:center; below */
+  text-align: center;
+  padding-top: 90px;
+  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
+}
+a.button_faq small {
+  display: block;
+  font-size: 11px;
+}
+header a.button_faq {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: transparent url(../images/button_rperl_logo.png) 0 0 no-repeat;
+}
+aside a.button_faq {
+  display: block; 
+  background: transparent url(../images/button_rperl_logo.png) 0 0 no-repeat;
+  margin-bottom: 20px;
+}
+
 /* BUTTON, THE BOOK OF RPERL */
 a.button_the_book_of_rperl {
   width: 200px;
