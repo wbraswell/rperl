@@ -79,11 +79,12 @@ header h1 {
   line-height: 1;
   margin-bottom: 0.2em;
 /*  width: 540px; */
-  width: 840px;
+/*  width: 840px; */
 }
 
 header h2 {
   text-align: left;  /* page sub-headings */
+  font-style: italic;
   font-size: 26px;
   color: #9ddcff;
   font-weight: normal;
@@ -245,11 +246,11 @@ header a.button_home {
   position: absolute;
   right: 0;
   top: 0;
-  background: transparent url(../images/button_rperl_logo.png) 0 0 no-repeat;
+  background: transparent url(../images/button_roadrunner.png) 0 0 no-repeat;
 }
 aside a.button_home {
   display: block; 
-  background: transparent url(../images/button_rperl_logo.png) 0 0 no-repeat;
+  background: transparent url(../images/button_roadrunner.png) 0 0 no-repeat;
   margin-bottom: 20px;
 }
 
@@ -262,7 +263,7 @@ a.button_faq {
   color: #000;
 /*  padding-left: 10px; /* replaced by text-align:center; below */
   text-align: center;
-  padding-top: 90px;
+  padding-top: 100px;
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
 }
 a.button_faq small {
@@ -273,11 +274,11 @@ header a.button_faq {
   position: absolute;
   right: 0;
   top: 0;
-  background: transparent url(../images/button_rperl_logo.png) 0 0 no-repeat;
+  background: transparent url(../images/button_question_mark.png) 0 0 no-repeat;
 }
 aside a.button_faq {
   display: block; 
-  background: transparent url(../images/button_rperl_logo.png) 0 0 no-repeat;
+  background: transparent url(../images/button_question_mark.png) 0 0 no-repeat;
   margin-bottom: 20px;
 }
 
@@ -301,11 +302,11 @@ header a.button_the_book_of_rperl {
   position: absolute;
   right: 0;
   top: 0;
-  background: transparent url(../images/button_rperl_sword_wand.png) 0 0 no-repeat;
+  background: transparent url(../images/button_sword_wand.png) 0 0 no-repeat;
 }
 aside a.button_the_book_of_rperl {
   display: block; 
-  background: transparent url(../images/button_rperl_sword_wand.png) 0 0 no-repeat;
+  background: transparent url(../images/button_sword_wand.png) 0 0 no-repeat;
   margin-bottom: 20px;
 }
 
