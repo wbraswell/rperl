@@ -311,6 +311,34 @@ aside a.button_the_book_of_rperl {
   margin-bottom: 20px;
 }
 
+/* BUTTON, THE LOW MAGIC PERL COMMANDMENTS */
+a.button_the_low_magic_perl_commandments {
+  width: 250px;
+/*  height: 100px; */
+/*  line-height: 1.2; */
+  font-size: 21px;
+  color: #000;
+/*  padding-left: 10px; /* replaced by text-align:center; below */
+  text-align: center;
+  padding-top: 100px;
+  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
+}
+a.button_the_low_magic_perl_commandments small {
+  display: block;
+  font-size: 11px;
+}
+header a.button_the_low_magic_perl_commandments {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: transparent url(../images/button_tablets.png) 0 0 no-repeat;
+}
+aside a.button_the_low_magic_perl_commandments {
+  display: block; 
+  background: transparent url(../images/button_tablets.png) 0 0 no-repeat;
+  margin-bottom: 20px;
+}
+
 
 code, pre {
   font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
