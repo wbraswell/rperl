@@ -29,59 +29,124 @@
     <div id="content-wrapper">
       <div class="inner clearfix">
         <section id="main-content">
-          <h1><a name="faq" class="anchor" href="#faq"><span class="octicon octicon-link"></span></a>The Low-Magic Perl Commandments</h1>
-            <h2>Last Update: November 6th, 2013</h2>
+          <h1><a name="commandments" class="anchor" href="#commandments"><span class="octicon octicon-link"></span></a>The Low-Magic Perl Commandments</h1>
+            <h2>Last Update: November 7th, 2013</h2>
+
+<h2>Feelings</h2>
+
+“Sam sat on the ground and put his head in his hands.<br>
+'I wish I had never come here, and I don't want to see no more magic,' he said, and fell silent.”<br>
+~ JRR Tolkien, The Fellowship Of The Ring<br><br>
+
+<h2>Best Practices</h2>
+
+“Each piece of advice is framed as a single imperative sentence – a 'Thou shalt...' or a 'Thou shalt not...'<br>
+People cling to their current coding habits even when those habits are manifestly making their code buggy, slow, and incomprehensible to others.<br>
+Recorrect each old habit the instant you notice yourself backsliding.  Be strict with your hands.”<br>
+~ Damian Conway, Perl Best Practices<br><br>
 
 <h2>Table Of Contents</h2>
 <a href="#commandments_ideals">Ideals</a><br>
 <a href="#commandments_magic">Magic</a><br>
 <a href="#commandments_data">Data</a><br>
 <a href="#commandments_operations">Operations</a><br>
-<a href="#commandments_oo">Object-Orientation</a><br><br>
+<a href="#commandments_oo">Object-Orientation</a><br>
 
-<a name="commandments_ideals" class="anchor" href="#commandments_ideals"></a>
-<h3>Ideals</h3>
-<table>
-  <tr><td>THOU SHALT:</td><td>THOU SHALT NOT:</td></tr>
-  <tr>
-    <td>0.  Foobaz</td>
-    <td>1.  Boofaz</td>
-  </tr>
-  <tr>
-    <td>2.  Foobaz</td>
-    <td>3.  Boofaz</td>
-  </tr>
-  <tr>
-    <td>4.  Foobaz</td>
-    <td>5.  Boofaz</td>
-  </tr>
-</table>
+<a name="commandments_ideals" class="anchor" href="#commandments_ideals"></a>                       
+<h3>Ideals</h3>                     
+                        
+<table class="commandments">                        
+    <thead><tr><th class="header">THOU SHALT:</th><th class="blank"><th class="header">THOU SHALT NOT:</th></tr></thead>                    
+    <tfoot><tr><th class="footer"></th><th class="blank"><th class="footer"></th></tr></tfoot>                  
+    <tbody>                 
+        <tr>    <td class="body">0.  Use Perl & Have No Other Programming Languages Before Perl</td>    <td class="blank"></td> <td class="body">1.  Use Non-Perl Programming Languages, Except During Official Emergencies</td>    </tr>
+        <tr>    <td class="body">2.  Use Perl Best Practices (“perlcritic –brutal” & “perltidy -pbp”) & Idiomatic Programming</td>  <td class="blank"></td> <td class="body">3.  Use Obfuscation, Golf, Or Non-PBP Code, Except As Officially Stated Herein</td>    </tr>
+        <tr>    <td class="body">4.  Use Hard Work To Create Robust, Effective, Bug-Free, High-Quality Code That Serves A Real Need</td>    <td class="blank"></td> <td class="body">5.  Use Laziness To Create Fragile, Ineffective, Buggy, Low-Quality Code That Just Saves Labor</td>    </tr>
+        <tr>    <td class="body">6.  Use Patience Create Efficient, Fast Code That Does Its Job</td>    <td class="blank"></td> <td class="body">7.  Use Impatience To Create Inefficient, Slow Code That Does More Than Its Job</td>   </tr>
+        <tr>    <td class="body">8.  Use Humility To Create Maintainable, Re-Grokkable Code That Serves The Greater Good</td>   <td class="blank"></td> <td class="body">9.  Use Hubris To Create Unmaintainable, Incomprehensible Code That Just Impresses People</td> </tr>
+    </tbody>                    
+</table>                        
+                        
+<br>
+                        
+<a name="commandments_magic" class="anchor" href="#commandments_magic"></a>                     
+<h3>Magic</h3>                      
+                        
+<table class="commandments">                        
+    <thead><tr><th class="header">THOU SHALT:</th><th class="blank"><th class="header">THOU SHALT NOT:</th></tr></thead>                    
+    <tfoot><tr><th class="footer"></th><th class="blank"><th class="footer"></th></tr></tfoot>                  
+    <tbody>                 
+        <tr>    <td class="body">10.  Use & Contribute To Low-Magic Pure-Perl CPAN Code</td>    <td class="blank"></td> <td class="body">11.  Use XS, High-Magic Perl, Or High-Magic CPAN Code, Except During Official Emergencies [PBP 228 Conflict]</td>  </tr>
+        <tr>    <td class="body">12.  Use Pragmata To Mark Magic Level Of Code (“use magic;” & “no magic;”)</td>    <td class="blank"></td> <td class="body">13.  Use Unmarked High-Magic Code</td> </tr>
+        <tr>    <td class="body">14.  Use Production Perl Features</td> <td class="blank"></td> <td class="body">15.  Use Deprecated (Array Value Exists, etc) Or Experimental Perl Features (Lvalue Subroutines, Attributes Pragma, etc)</td>  </tr>
+    </tbody>                    
+</table>                        
+                        
+<br>
+                        
+<a name="commandments_data" class="anchor" href="#commandments_data"></a>                       
+<h3>Data</h3>                       
+                        
+<table class="commandments">                        
+    <thead><tr><th class="header">THOU SHALT:</th><th class="blank"><th class="header">THOU SHALT NOT:</th></tr></thead>                    
+    <tfoot><tr><th class="footer"></th><th class="blank"><th class="footer"></th></tr></tfoot>                  
+    <tbody>                 
+        <tr>    <td class="body">16.  Use A Type System (“use types;”), Static-Type Data, & Variable Declarations</td>  <td class="blank"></td> <td class="body">17.  Use Dynamic-Type Data Or Auto-Vivification</td>   </tr>
+        <tr>    <td class="body">18.  Use Private Lexical-Scope Variables (“my”)</td>   <td class="blank"></td> <td class="body">19.  Use Private Dynamic-Scope (“local”), Private Persistent Lexical-Scope (“state”), Global, Or Package Variables (“our”)</td>    </tr>
+        <tr>    <td class="body">20.  Use Scalars (Strings & Numbers), Arrays, Hashes, & Filehandles</td>   <td class="blank"></td> <td class="body">21.  Use Typeglobs Or Code References</td> </tr>
+        <tr>    <td class="body">22.  Use Normal Variables With Single, Descriptive Names</td>  <td class="blank"></td> <td class="body">23.  Use Aliased, Non-Descriptive, Special (%ENV, %SIG, etc), Or Punctuation Variables ($_, @_, %!, $@, $$, $[, etc)</td>  </tr>
+        <tr>    <td class="body">24.  Use Direct Access To $ Scalar Variables</td>  <td class="blank"></td> <td class="body">25.  Use Indirect Access To $ Scalar Variables Via References Or Pointer Arithmetic</td>   </tr>
+        <tr>    <td class="body">26.  Use Indirect Access To Arrays & Hashes Via Anonymous References Stored In $ Scalar Variables</td> <td class="blank"></td> <td class="body">27.  Use Direct Access To Arrays & Hashes Stored In @ Or % Non-Scalar Variables</td>   </tr>
+        <tr>    <td class="body">28.  Use Numeric & Single-Quote Non-Interpolated String Literals</td>  <td class="blank"></td> <td class="body">29.  Use Double-Quote Interpolated String Or Special Literals (__FILE__, __LINE__, __PACKAGE__, __SUB__, etc)</td> </tr>
+        <tr>    <td class="body">30.  Use Mundane @ARGV & Known Constants (“my const_int $FNORD = 23;”)</td>    <td class="blank"></td> <td class="body">31.  Use Magic @ARGV, Magic Numbers, Or Secret Constants (Amphisbaena, Space Fleet, etc)</td>  </tr>
+        <tr>    <td class="body">32.  Use Definedness Test On Builtins (“defined( $var = builtin($args) );” Or “defined(builtin($args));”)</td> <td class="blank"></td> <td class="body">33.  Use Undefined Values (“$var = undef;”, etc) Or Definedness Test On Non-Builtins (“defined($var);”, etc)</td>  </tr>
+        <tr>    <td class="body">34.  Use Secure Platforms & Trusted Data</td>  <td class="blank"></td> <td class="body">35.  Use Taint Mode</td>   </tr>
+    </tbody>                    
+</table>                        
+                        
+<br>
+                        
+<a name="commandments_operations" class="anchor" href="#commandments_operations"></a>                       
+<h3>Operations</h3>                     
+                        
+<table class="commandments">                        
+    <thead><tr><th class="header">THOU SHALT:</th><th class="blank"><th class="header">THOU SHALT NOT:</th></tr></thead>                    
+    <tfoot><tr><th class="footer"></th><th class="blank"><th class="footer"></th></tr></tfoot>                  
+    <tbody>                 
+        <tr>    <td class="body">36.  Use Compile-Time Includes (“use MyModule;”)</td>  <td class="blank"></td> <td class="body">37.  Use Run-Time Includes (“require MyModule;”)</td>  </tr>
+        <tr>    <td class="body">38.  Use Static-Type Arguments & Return Values For Subroutines</td>    <td class="blank"></td> <td class="body">39.  Use Dynamic-Type Arguments Or Return Values For Subroutines</td>  </tr>
+        <tr>    <td class="body">40.  Use Static Number Of Arguments & Single Return Values For Subroutines</td>    <td class="blank"></td> <td class="body">41.  Use Dynamic Number Of Arguments, Multiple Return Values, Or Dynamic Context (“wantarray”) For Subroutines</td>    </tr>
+        <tr>    <td class="body">42.  Use Real Prototypes For Subroutines (“our int__array_ref $foo = sub {( my string $data ) = @_; ... }”)</td>   <td class="blank"></td> <td class="body">43.  Use Perl Prototypes (AKA Parameter Context Templates) For Subroutines</td>    </tr>
+        <tr>    <td class="body">44.  Use Basic String Processing</td>  <td class="blank"></td> <td class="body">45.  Use Regular Expressions, Smart Match, q Quoting Mechanisms, Unicode/UTF-8, Or String Interpolation</td>   </tr>
+        <tr>    <td class="body">46.  Use Conditional & Loop Control Structures</td>    <td class="blank"></td> <td class="body">47.  Use Goto, Either Mundane Or Magic</td>    </tr>
+        <tr>    <td class="body">48.  Use Normal Code Blocks (Bodies Of Conditionals, Loops, & Named Subroutines)</td>  <td class="blank"></td> <td class="body">49.  Use Special Code Blocks (Closures, Anonymous, BEGIN, UNITCHECK, CHECK, INIT, END, etc)</td>   </tr>
+        <tr>    <td class="body">50.  Use Early Binding (Compile-Time Dispatch) & Eager Evaluation (Compile-Time Compile)</td>  <td class="blank"></td> <td class="body">51.  Use Late Binding (Autoload, Run-Time Dispatch, etc) Or Lazy Evaluation (“eval”, Promises, Run-Time Compile, etc)</td> </tr>
+        <tr>    <td class="body">52.  Use Lexical-Scope Grep & Map, Sole Accepted $_ (“map { my int $var = $_; foo($var); } @{$vars};”)</td>    <td class="blank"></td> <td class="body">53.  Use Dynamic-Scope Grep Or Map (“map { foo($_); } @{$vars};”)</td> </tr>
+        <tr>    <td class="body">54.  Use Non-Preprocessed Code</td>    <td class="blank"></td> <td class="body">55.  Use Preprocessed Code (Source Filters, etc)</td>  </tr>
+        <tr>    <td class="body">56.  Use Operations In 1 Context (Scalar Or List) & Scalar Operations On 1 Type (Number, String, etc)</td> <td class="blank"></td> <td class="body">57.  Use Scalar Operations In List Context & Vice-Versa, Or Numeric Operations On Strings & Vice-Versa</td>    </tr>
+        <tr>    <td class="body">58.  Use Unique Subroutine Names & Known Builtins</td> <td class="blank"></td> <td class="body">59.  Use Overloading Or Secret Operators (Diamond, Spaceship, Babycart, Bang Bang, Enterprise, Space Station, etc)</td>    </tr>
+        <tr>    <td class="body">60.  Use Lexical-Scope & Non-Complex Builtins</td> <td class="blank"></td> <td class="body">61.  Use Global-Scope (“select”, etc) Or Complex Builtins (“format/write”, “pack/unpack” [PBP 102 Conflict], etc)</td> </tr>
+    </tbody>                    
+</table>                        
+                        
+<br>
+                        
+<a name="commandments_oo" class="anchor" href="#commandments_oo"></a>                       
+<h3>Object-Orientation</h3>                     
+                        
+<table class="commandments">                        
+    <thead><tr><th class="header">THOU SHALT:</th><th class="blank"><th class="header">THOU SHALT NOT:</th></tr></thead>                    
+    <tfoot><tr><th class="footer"></th><th class="blank"><th class="footer"></th></tr></tfoot>                  
+    <tbody>                 
+        <tr>    <td class="body">62.  Use Lightweight Objects (Blessed Reference To Field Hash Or Restricted Hash [PBP 195 Conflict])</td>  <td class="blank"></td> <td class="body">63.  Use Heavy Objects (MOP, Moose, Mouse, Moo, etc)</td>  </tr>
+    </tbody>                    
+</table>                        
+                        
 <br><br>
 
-<a name="commandments_magic" class="anchor" href="#commandments_magic"></a>
-<h3>Magic</h3>
-0.  FOOBAZ
-1.  BOOFAZ
-<br><br>
-
-<a name="commandments_data" class="anchor" href="#commandments_data"></a>
-<h3>Data</h3>
-0.  FOOBAZ
-1.  BOOFAZ
-<br><br>
-
-<a name="commandments_operations" class="anchor" href="#commandments_operations"></a>
-<h3>Operations</h3>
-0.  FOOBAZ
-1.  BOOFAZ
-<br><br>
-
-<a name="commandments_oo" class="anchor" href="#commandments_oo"></a>
-<h3>Object-Orientation</h3>
-0.  FOOBAZ
-1.  BOOFAZ
-<br><br>
-
+<h2>External References</h2>
+<a href="http://search.cpan.org/~thaljef/Perl-Critic-1.121/lib/Perl/Critic/PolicySummary.pod">Summary Of All 141 Current Perl Critic PBP Policies</a><br>
+<a href="http://refcards.com/docs/vromansj/perl-best-practices/refguide.pdf">Summary Of All 256 Original PBP Headings</a><br>
 
         </section>
 
