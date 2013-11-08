@@ -69,6 +69,7 @@ header {
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
   background: #2e7bcf url(../images/header-bg.jpg) 0 0 repeat-x;
   border-bottom: solid 1px #275da1;
+  width: 100%;
 }
 
 header h1 {
@@ -77,10 +78,12 @@ header h1 {
   font-size: 72px;
   color: #fff;
   line-height: 1;
-  margin-bottom: 0.2em;
 /*  width: 540px; */
 /*  width: 840px; */
-  width: 75%;
+  width: 75%;  /* don't allow the page title to over-run the github link */
+/*  margin-bottom: 0.2em; */
+  margin-bottom: 10px;
+  margin-left: 10px;
 }
 
 header h2 {
@@ -93,6 +96,7 @@ header h2 {
 /*  width: 540px; */
 /*  width: 840px; */
   letter-spacing: 0;
+  margin-left: 10px;
 }
 
 .inner {
@@ -100,8 +104,9 @@ header h2 {
   position: relative;
 /*  width: 940px; */
 /*  width: 1240px; */
-  width: 1250px;
-  margin: 0 auto;
+/*  width: 1250px; BORK */
+  width: 100%;  /* width of blue grid header background image */
+  margin: 0 auto; 
 }
 
 #content-wrapper {
@@ -109,20 +114,23 @@ header h2 {
   padding-top: 30px;
 }
 
+/* the actual content, not the header or buttons */
 #main-content {
 /*  width: 690px; */
-  width: 975px;
-  float: left;
+/*  width: 975px; */
+  width: 65%;
+  float: left; 
+  padding-left: 5%;  /* needed to keep text from under-running on the left */
 }
 
 #main-content img {
-  max-width: 100%;
+  max-width: 100%; 
 }
 
 aside#sidebar {
-  width: 250px;
-  padding-left: 10px;
-  min-height: 504px;
+  width: 30%;
+/*  padding-left: 10px; */
+/*  min-height: 504px; */
   float: right;
   background: transparent url(../images/sidebar-bg.jpg) 0 0 no-repeat;
   font-size: 12px;
@@ -150,6 +158,8 @@ a.button_blank {
 /*  padding-left: 10px;
   padding-top: 10px; */
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
+  margin-left: auto;
+  margin-right: auto;
 }
 a.button_blank small {
   display: block;
@@ -176,8 +186,11 @@ a.button_github {
   font-size: 23px;
   color: #fff;
   padding-left: 68px;
+  padding-right: 10px;
   padding-top: 22px;
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
+  margin-left: auto;
+  margin-right: auto;
 }
 a.button_github small {
   display: block;
@@ -208,6 +221,8 @@ a.button_download {
   padding-left: 68px;
   padding-top: 22px;
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
+  margin-left: auto;
+  margin-right: auto;
 }
 a.button_download small {
   display: block;
@@ -239,6 +254,8 @@ a.button_home {
   text-align: center;
   padding-top: 100px;
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
+  margin-left: auto;
+  margin-right: auto;
 }
 a.button_home small {
   display: block;
@@ -267,6 +284,8 @@ a.button_faq {
   text-align: center;
   padding-top: 100px;
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
+  margin-left: auto;
+  margin-right: auto;
 }
 a.button_faq small {
   display: block;
@@ -295,6 +314,8 @@ a.button_the_book_of_rperl {
   text-align: center;
   padding-top: 100px;
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
+  margin-left: auto;
+  margin-right: auto;
 }
 a.button_the_book_of_rperl small {
   display: block;
@@ -323,6 +344,8 @@ a.button_the_low_magic_perl_commandments {
   text-align: center;
   padding-top: 100px;
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
+  margin-left: auto;
+  margin-right: auto;
 }
 a.button_the_low_magic_perl_commandments small {
   display: block;
@@ -403,11 +426,12 @@ td {
   padding: 5px;
 }
 
+/* THE LOW-MAGIC PERL COMMANDMENTS, TABLES */
+
 /* Zebra-stripe rows */
 tbody tr:nth-child(odd) td.body {
       background: #e9e9e9;  /* VERY LIGHT GREY  */
 }
-
 
 table.commandments {
   border: none;
@@ -672,13 +696,45 @@ footer a:hover {
 /* #Media Queries
 ================================================== */
 
+/* Larger than 1250 (devices and browsers) */
+@media only screen and (min-width: 1250px) {
+  .inner {
+    width: 100%;
+  }
+  #main-content {
+    width: 75%;
+    padding-left: 5%;
+  } 
+  aside#sidebar {
+    width: 20%;
+  }
+}
+
+/* THIS IS THE DEFAULT MODE IMPLEMENTED THROUGHOUT THE FILE */
+/* Larger than standard 960 (devices and browsers) */
+/* @media only screen and (min-width: 960px) and (max-width: 1249px) {} */
+
+/* IMPLEMENTED WITH MORE PRECISION IN THE OPTIONS BELOW */
 /* Smaller than standard 960 (devices and browsers) */
-@media only screen and (max-width: 959px) {}
+/* @media only screen and (max-width: 959px) {} */
 
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 @media only screen and (min-width: 768px) and (max-width: 959px) {
   .inner {
-    width: 740px;
+    width: 100%;
+  }
+  #main-content {
+    width: 60%;
+    padding-left: 5%;
+  } 
+  aside#sidebar {
+    width: 35%;
+  }
+}
+/*  DISABLE OLD HARD-CODED OPTION
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+  .inner {
+    width: 740px; 
   }
   header h1, header h2 {
     width: 340px;
@@ -703,12 +759,19 @@ footer a:hover {
     margin-left: 0;
   }
 }
+*/
 
 /* All Mobile Sizes (devices and browser) */
 @media only screen and (max-width: 767px) {
   .inner {
-    width: 93%;
+    width: 100%;
   }
+  #main-content {
+    width: 100%;
+    float: none;
+    padding-left: 0%;
+  } 
+
   header {
     padding: 20px 0;
   }
@@ -716,37 +779,49 @@ footer a:hover {
     position: relative;
   }
   header h1, header h2 {
-    width: 100%;
+    width: 90%;
   }
   header h1 {
-    font-size: 48px;
+    font-size: 42px;
   }
   header h2 {
     font-size: 24px;
   }
 
+  aside#sidebar {
+    width: 100%;
+    float: none;
+    background-image: none;
+    margin-top: 20px;
+    border-top: solid 1px #ddd;
+    padding: 20px 0;
+    min-height: 0;
+  }
 
   /* BUTTON, BLANK */
-  header a.button_blank {
-    background-image: none;
-    width: auto;
-    height: auto;
-    display: inline-block;
-    margin-top: 15px;
-    padding: 5px 10px;
-    position: relative;
-    text-align: center;
-    font-size: 13px;
-    line-height: 1;
-    background-color: #9ddcff;
-    color: #2879d0;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;                     
-    border-radius: 5px;    
+  aside#sidebar a.button_blank {
+    display: none;
   }
-  header a.button_blank small {
-    font-size: 13px;
-    display: inline;
+
+  /* BUTTON, GITHUB */
+  aside#sidebar a.button_github {
+    display: none;
+  }
+
+  /* BUTTON, DOWNLOAD */
+  aside#sidebar a.button_download {
+    display: none;
+  }
+
+  #main-content h1:before,
+  #main-content h2:before,
+  #main-content h3:before,
+  #main-content h4:before,
+  #main-content h5:before,
+  #main-content h6:before {
+    content: none;
+    padding-right: 0;
+    margin-left: 0;
   }
 
   /* BUTTON, GITHUB */
@@ -772,111 +847,11 @@ footer a:hover {
     display: inline;
   }
 
-  /* BUTTON, DOWNLOAD */
-  header a.button_download {
-    background-image: none;
-    width: auto;
-    height: auto;
-    display: inline-block;
-    margin-top: 15px;
-    padding: 5px 10px;
-    position: relative;
-    text-align: center;
-    font-size: 13px;
-    line-height: 1;
-    background-color: #9ddcff;
-    color: #2879d0;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;                     
-    border-radius: 5px;    
-  }
-  header a.button_download small {
-    font-size: 13px;
-    display: inline;
-  }
-
-  /* BUTTON, THE BOOK OF RPERL */
-  header a.button_the_book_of_rperl {
-    background-image: none;
-    width: auto;
-    height: auto;
-    display: inline-block;
-    margin-top: 15px;
-    padding: 5px 10px;
-    position: relative;
-    text-align: center;
-    font-size: 13px;
-    line-height: 1;
-    background-color: #9ddcff;
-    color: #2879d0;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;                     
-    border-radius: 5px;    
-  }
-  header a.button_the_book_of_rperl small {
-    font-size: 13px;
-    display: inline;
-  }
-
-
-  #main-content,
-  aside#sidebar {
-    float: none;
-    width: 100% ! important;
-  }
-  aside#sidebar {
-    background-image: none;
-    margin-top: 20px;
-    border-top: solid 1px #ddd;
-    padding: 20px 0;
-    min-height: 0;
-  }
-
-
-  /* BUTTON, BLANK */
-  aside#sidebar a.button_blank {
-    display: none;
-  }
-
-  /* BUTTON, GITHUB */
-  aside#sidebar a.button_github {
-    display: none;
-  }
-
-  /* BUTTON, DOWNLOAD */
-  aside#sidebar a.button_download {
-    display: none;
-  }
-
-  /* BUTTON, HOME */
-/*
-  aside#sidebar a.button_home {
-    display: none;
-  }
-*/
-
-  /* BUTTON, THE BOOK OF RPERL */
-/*
-  aside#sidebar a.button_the_book_of_rperl {
-    display: none;
-  }
-*/
-
-
-  #main-content h1:before,
-  #main-content h2:before,
-  #main-content h3:before,
-  #main-content h4:before,
-  #main-content h5:before,
-  #main-content h6:before {
-    content: none;
-    padding-right: 0;
-    margin-left: 0;
-  }
 }
 
+/* IMPLEMENTED IN GENERAL IN THE OPTION ABOVE */
 /* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
-@media only screen and (min-width: 480px) and (max-width: 767px) {}
+/* @media only screen and (min-width: 480px) and (max-width: 767px) {} */
 
 /* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
-@media only screen and (max-width: 479px) {}
+/* @media only screen and (max-width: 479px) {} */
