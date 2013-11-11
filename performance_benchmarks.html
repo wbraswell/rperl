@@ -40,7 +40,10 @@
         <section id="main-content">
           <h1><a name="benchmarks" class="anchor" href="#benchmarks"><span class="octicon octicon-link"></span></a>Performance Benchmarks</h1>
             <h2>Last Update: November 10th, 2013</h2>
-All current benchmarks are based on the manually-compiled bubblesort algorithm, and include all 3 execution modes: pure Perl, RPerl using Perl data types & C/C++ operations, and RPerl using C/C++ data types & C/C++ operations.  There are dramatic speed differences between these 3 execution modes.  Future testing algorithms will include the Alioth Shootout Benchmark Games, etc.<br><br>
+            <h2>Overview</h2>
+The data presented here shows exactly how much faster RPerl can run when compared with normal Perl 5.  There are 2 primary components of programming languages: data and operations.  RPerl can be configured to use either Perl data types or C/C++ data types, which means the RPerl compiler can accept as input 1 RPerl application source code, and can produce as output 2 functionally-equivalent RPerl application binary executables.  We call these 2 options the RPerl "data modes", specifically the Perl data mode and the C/C++ data mode.  In both data modes, RPerl uses C/C++ operations.  Plain-old pure Perl uses Perl data and Perl operations.  When we add RPerl's 2 data modes to pure Perl, we have a total of 3 "execution modes".  Pure Perl is the slowest execution mode, RPerl's Perl data mode is significantly faster, and RPerl's C/C++ data mode is by far the fastest.<br><br>
+
+All current benchmarks are based on the manually-compiled bubblesort algorithm, and include all 3 execution modes: pure Perl is shown in blue, RPerl's Perl data mode is red, and RPerl's C/C++ data mode is yellow.  Future testing algorithms will include the Alioth Shootout Benchmark Games, etc.  All benchmarks were run in serial under identical conditions on a Dell Latitude D630 with an 800MHz Intel Core2 Duo processor and 2GB of RAM, running Perl v5.10.1 and Ubuntu v10.04.3 on Linux kernel v2.6.32.<br><br>
 
 <h2>Table Of Contents</h2>
 <a href="#benchmarks_bubblesort_raw_table">Bubblesort, Raw Timings, Table</a><br>
@@ -52,7 +55,7 @@ All current benchmarks are based on the manually-compiled bubblesort algorithm, 
 
 <a name="benchmarks_bubblesort_raw_table" class="anchor" href="#benchmarks_bubblesort_raw_table"></a>
 <h3>Bubblesort, Raw Timings, Table</h3>
-I projected 2 of the values that would have otherwise taken a long time to produce, which is okay because bubblesort's run-time scales very, very predictably.<br><br>
+This table shows the most basic data which was gathered directly from running the benchmarks.  The far left column shows increasingly-large input data set sizes, which is important because running the sort algorithm on a larger amount of input data should take a longer time.  There is then 1 column for each of the 3 execution modes.  Each execution mode was run for each data size, with the exception of the 1 largest data size on the 2 slower execution modes.  In those 2 cases, we project the values that would have otherwise taken a long time to produce, which is okay because bubblesort's run-time scales very, very predictably.  In other words, it wasn't necessary to wait 3 hours for pure Perl to sort 100,000 pieces of random data, because for our purposes we can safely predict how long it would take to run.<br><br>
 <table class="timings">                             
     <thead> <tr>    <th class="header1"></th>   <th class="header1"></th>   <th class="header1">Time, Seconds</th>  <th class="header1"></th>   </tr>   
         <tr>    <th class="header2">Data Size</th>  <th class="header2">Pure Perl: Perl Types, Perl Ops</th>    <th class="header2">RPerl: Perl Types, C++ Ops</th> <th class="header2">RPerl: C++ Types, C++ Ops</th>  </tr>   </thead>
@@ -69,7 +72,9 @@ I projected 2 of the values that would have otherwise taken a long time to produ
 
 <a name="benchmarks_bubblesort_raw_graph" class="anchor" href="#benchmarks_bubblesort_raw_graph"></a>
 <h3>Bubblesort, Raw Timings, Graph</h3>
-The bubblesort algorithm produces perfectly parabolic runtime graphs.<br><br>
+Predictable computing algorithms possess a quality known as computational complexity, which is a mathematical measurement used to predict how long an algorithm will take to run when given input data of different sizes.  The bubblesort algorithm used in these performance benchmarks has a naturally inefficient computational complexity known as O(n**2), pronounced as "big oh of n squared".  This means that if we give bubblesort an input data size of 5, then it will take a time factor of 5 squared to run, which is 25.  If we give bubblesort an input data size of 10 (not much bigger than 5), then it will take a time factor of 10 squared to run, which is 100 (much larger than 25), and input of 15 will yield time factor of 225 (very much larger than 25).  This computational complexity of O(n**2) is specific to the bubblesort algorithm, and most other sorting algorithms have a more efficient computational complexity, although that doesn't affect our testing because as long as we compare apples-to-apples (bubblesort-to-bubblesort) then our data holds value.  In fact, bubblesort is perhaps a good benchmark choice, precisely due to its predictable, simple, inefficient nature.  When we measure bubblesort's run-time, we can be reasonably sure our measurements are related to the 2 primary computational resources of CPU speed and RAM capacity, as opposed to misleading measurements of secondary computational resources such as hard-drive read/write or network bandwidth.  This makes our measurements more meaningful.<br><br>
+
+This line graph shows linearly-increasing data sizes on the horizontal x-axis also-linearly-increasing time on the vertical y-axis.  The O(n**2) computational complexity of bubblesort directly converts to the graph of y=(x**2) or "y equals x squared", which produces the familiar parabola half-bowl-shape from high-school algebra.  (Just imagine the mirror-image left halves of the bowl outlines are invisible, because we can't have data sizes smaller than 0.)  You can see how pure Perl in blue has a very tall-and-narrow parabolic shape, whereas RPerl's Perl data mode in red makes a more wide-and-shallow parabola.  Contrastingly, RPerl's C/C++ data mode in yellow is so much faster its parabola barely raises off the 0-second mark for the entire graph.  The dashed lines represent the 2 projected values, which help to visualize the overall parabolic bowl-shape of the graphs.<br><br>
 <table class="timings"><tbody><tr><td>
 <a href="images/benchmarks/bubblesort_raw_graph.png"><img class="centered_h" src="images/benchmarks/bubblesort_raw_graph.png" width="100%"></a>
 </td></tr></tbody></table>
@@ -78,7 +83,9 @@ The bubblesort algorithm produces perfectly parabolic runtime graphs.<br><br>
 
 <a name="benchmarks_bubblesort_logarithmic_graph" class="anchor" href="#benchmarks_bubblesort_logarithmic_graph"></a>
 <h3>Bubblesort, Logarithmic Scale Timings, Graph</h3>
-All 3 execution modes show identically-predictable and proportionate runtime scaling.<br><br>
+This line graph show logarithmically-increasing values on both the x-axis and y-axis.  On a linear graph axis, the distance between 1-to-10 is equal to the distance between 101-to-110, and is one-tenth of the distance between 10-to-100.  This means large values are shown far away from small values on a linear axis.  On a logarithmic graph axis, the distance between 1-to-10 is about one-tenth of the distance between 101-to-110, and is equal to the distances between both 10-to-100 and 100-to-1,000.  This means large values are shown close to small values on a logarithmic axis.<br><br>
+
+The use of logarithmic axes can morph smooth curves into smooth lines, as shown in this line graph.  Although there are tiny variances in the lines, to the human eye all 3 lines appear to be perfectly straight and running parallel to one another.  The straightness of the lines indicates the bubblesort algorithm's computational complexity is scaling smoothly as predicted.  In other words, the computational complexity is staying very close to O(n**2) as the input data sizes increase.  The constant relative distances between the lines indicate the 3 execution modes are all scaling at a steady rate and closely proportionate to one another.  This means our benchmark algorithms are running correctly, and scaling nearly perfectly.<br><br>
 <table class="timings"><tbody><tr><td>
 <a href="images/benchmarks/bubblesort_logarithmic_graph.png"><img class="centered_h" src="images/benchmarks/bubblesort_logarithmic_graph.png" width="100%"></a>
 </td></tr></tbody></table>
@@ -87,7 +94,9 @@ All 3 execution modes show identically-predictable and proportionate runtime sca
 
 <a name="benchmarks_bubblesort_ratios_table" class="anchor" href="#benchmarks_bubblesort_ratios_table"></a>
 <h3>Bubblesort, Performance Ratios, Table</h3>
-The 2 projected run-time values are not utilized in calculating these all-imporant performance ratios, so this is 100% real, hard data.<br><br>
+This table shows the important performance ratios extrapolated from the first raw data table.  The 4 columns are the same as the first table.  Projected values are created from performance ratios, not used to create performance ratios, so we exclude the row for data size 100,000 and the 2 projected values therein.  The last row shows the simple rounded averages for each column, which gives us meaningful ratios from which we may evaluate all 3 execution modes.  The ratios are normalized to pure Perl's performance, so the first ratio column is shown as all 1.0 values.  This means for a data size of 5,000 we can see RPerl's Perl data mode runs 6.5 times faster than pure Perl, and RPerl's C/C++ data mode runs 183.3 times faster than pure Perl.  On average, RPerl's Perl data mode runs about 7 times faster than pure Perl, and RPerl C/C++ data mode runs about 199 times faster than pure Perl.<br><br>
+
+Of special interest are the performance ratios of both RPerl data modes, which grow as data size increases.  The performance ratio of RPerl's Perl data mode increases from 6.5 to 7.4, about 14% growth.  The performance ratio of RPerl's C/C++ data mode increases from 183.3 to 220.5, about 20% growth.  This indicates the performance of both Perl data and Perl operations do not scale linearly in our benchmarks.  To fabricate some easy example numbers, input data size 10 may require Perl data filling 10 units of memory, while input data size 100 may require Perl data filling 110 memory units (instead of the expected 100 units), and input data size 1,000 may require Perl data filling 1,300 memory units (instead of 1,000 units).  Likewise, Perl operations slow down non-linearly as input data size increases, so data size 10 may take Perl operations filling 10 time units, but data size 100 may take Perl operations filling 110 time units, and so forth.  Many more different and extensive benchmarks must be run to show if this trend applies in general - we can only extrapolate so much from our current available data.  Still, even if the performance ratios evened out across many benchmark algorithms and input data sizes, the fact remains that both RPerl modes are much faster than pure Perl, and RPerl's C/C++ data mode may (hopefully!) be capable of achieving the holy grail of "as fast as C" performance.<br><br>
 <table class="timings">                             
     <thead> <tr>    <th class="header1"></th>   <th class="header1"></th>   <th class="header1">Performance, Multiples</th> <th class="header1"></th>   </tr>   
             <th class="header2">Data Size</th>  <th class="header2">Pure Perl: Perl Types, Perl Ops</th>    <th class="header2">RPerl: Perl Types, C++ Ops</th> <th class="header2">RPerl: C++ Types, C++ Ops</th>  </tr>   </thead>
@@ -104,7 +113,7 @@ The 2 projected run-time values are not utilized in calculating these all-impora
 
 <a name="benchmarks_bubblesort_ratios_graph" class="anchor" href="#benchmarks_bubblesort_ratios_graph"></a>
 <h3>Bubblesort, Performance Ratios, Graph</h3>
-When RPerl runs using C/C++ data and operations, it seems to outperform even more as the data size scales up.<br><br>
+This line graph illustrates the non-averaged data from the performance ratios table.  Like the raw and logarithmic timing graphs, the x-axis represents input data size.  Unlike the timing graphs, the y-axis represents performance ratios, not time in seconds.  Pure Perl in blue is, by definition, a totally flat line at the 1.0 value along the bottom of the graph.  RPerl's Perl data mode in red is a relatively steady line between the values of 6 and 8, hovering just above pure Perl near the bottom.  RPerl's C/C++ data mode in yellow flies far above the other 2 execution modes at the top of the graph, and clearly shows the upward slants of increasing performance ratios as the data size increases while moving to the right.<br><br>
 <table class="timings"><tbody><tr><td>
 <a href="images/benchmarks/bubblesort_ratios_graph.png"><img class="centered_h" src="images/benchmarks/bubblesort_ratios_graph.png" width="100%"></a>
 </td></tr></tbody></table>
@@ -113,7 +122,10 @@ When RPerl runs using C/C++ data and operations, it seems to outperform even mor
 
 <a name="benchmarks_bubblesort_avgratios_chart" class="anchor" href="#benchmarks_bubblesort_avgratios_chart"></a>
 <h3>Bubblesort, Average Performance Ratios, Chart</h3>
-The slice sizes represent relative speed, a bigger slice is higher performance.  Does this pie chart look familiar to you?  Hmm...  :-)<br><br>
+This pie chart illustrates the averaged data from the performance ratios table.  The size of the pie slices represent relative speed, so a bigger slice means higher run-time performance.  Pure Perl in blue is only about 0.5% of the total pie, while RPerl's C/C++ data mode in yellow clearly dominates.<br><br>
+
+Also, this chart is awesome because it looks like a famous classic video game character that we all know and love.  :-)<br><br>
+
 <table class="timings"><tbody><tr><td>
 <a href="images/benchmarks/bubblesort_avgratios_chart.png"><img class="centered_h" src="images/benchmarks/bubblesort_avgratios_chart.png" width="100%"></a>
 </td></tr></tbody></table>
