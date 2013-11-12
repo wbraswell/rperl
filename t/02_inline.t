@@ -7,7 +7,8 @@ use Test::More tests => 48;
 
 # MyConfig
 BEGIN { diag("\n[[[ Beginning Inline Pre-Test Loading ]]]\n ");	}
-BEGIN { use lib '../lib/CPAN/';  use_ok('MyConfig'); }    # BULK88: removed hard-coded directory 
+BEGIN { use lib '/tmp/RPerl-latest/lib/CPAN/';  use_ok('MyConfig'); }
+#BEGIN { use lib '../lib/CPAN/';  use_ok('MyConfig'); }  # BULK88: NEED REMOVE hard-coded directory 
 
 
 diag("\n[[[ Beginning Selection Of Tests From The Inline::C Cookbook ]]]\n ");
