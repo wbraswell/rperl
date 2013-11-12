@@ -11,7 +11,7 @@ require_ok('Data::Dumper');
 # DEPENDENCIES LIKELY FULFILLED BY SYSTEM-WIDE MODULES ABOVE THIS LINE
 # DEPENDENCIES POSSIBLY FULFILLED BY USER-SPECIFIC MODULES BELOW THIS LINE
 
-BEGIN { use lib '/tmp/RPerl-latest/lib/CPAN/';  use_ok('MyConfig'); }
+BEGIN { use lib '../lib/CPAN/';  use_ok('MyConfig'); }  # BULK88: removed hard-coded directory 
 require_ok('MyConfig');
 
 BEGIN { use_ok('Parse::RecDescent'); }
