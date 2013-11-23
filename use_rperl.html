@@ -42,19 +42,45 @@
             <h2>Last Update: November 22th, 2013</h2>
 
 <h2>Table Of Contents</h2>
-<a href="#use_rperl_foo">FOO</a><br>
-<a href="#use_rperl_baz">BAZ</a><br><br>
+<a href="#use_rperl_users">Normal Users</a><br>
+<a href="#use_rperl_devs">Software Developers</a><br><br>
 
-<a name="use_rperl_foo" class="anchor" href="#use_rperl_foo"></a>
-<h3>FOO SECTION</h3>
-HOWDY HOWDY HOWDY<br>
+<a name="use_rperl_users" class="anchor" href="#use_rperl_users"></a>
+<h3>Normal Users</h3>
+RPerl is currently in an alpha pre-release state.<br>
+It is not recommended that users attempt to run RPerl at this time.<br><br>
 
+<a name="use_rperl_devs" class="anchor" href="#use_rperl_devs"></a>
+<h3>Software Developers</h3>
+RPerl has been tested in Linux, as reflected in the following RPerl install notes.<br>
+This documentation is for a single-user installation, not a system-wide installation.<br><br>
 
+<h4>Create Initial Symlinks & Enable Custom CPAN MyConfig</h4>
+$ mkdir -p ~/RPerl/3rd_party/CPAN<br>
+$ cd ~/.cpan/CPAN<br>
+$ mv MyConfig.pm MyConfig.pm.old<br>
+$ ln -s path/to/RPerl/lib/CPAN/MyConfig.pm MyConfig.pm<br>
+$ ln -s path/to/RPerl /tmp/RPerl-latest<br><br>
 
+<h4>Install CPAN Modules</h4>
+$ cpan<br>
+cpan> o conf<br>
+&nbsp;&nbsp;(confirm RPerl entries are loaded)<br>
+cpan> install Parse::RecDescent<br>
+cpan> force install Inline<br>
+cpan> force install Inline::CPP<br>
+&nbsp;&nbsp;(must force, Inline tests are broken, they change @INC and then fail to load single-user-installation of Parse::RecDescent)<br>
+cpan> force install Inline::Filters<br>
+cpan> install Test::Exception<br>
+&nbsp;&nbsp;(probably already installed by something else)<br><br>
 
-<a name="use_rperl_baz" class="anchor" href="#use_rperl_baz"></a>
-<h3>BAZ SECTION</h3>
-HOWDY HOWDY HOWDY<br>
+<h4>Create Final Symlink To Patched Filters.pm File</h4>
+$ mv ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm.old<br>
+$ ln -s path/to/RPerl/lib/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm<br><br>
+
+<h4>Test Installation</h4>
+$ cd path/to/RPerl
+$ ./t/01
 
         </section>
 
