@@ -48,12 +48,14 @@
 <a name="use_rperl_users" class="anchor" href="#use_rperl_users"></a>
 <h3>Normal Users</h3>
 RPerl is currently in an alpha pre-release state.<br>
-It is not recommended that users attempt to run RPerl at this time.<br><br>
+It is not recommended that non-programmers attempt to run RPerl at this time.<br>
+Please check back in the future as we release more user-friendly versions of RPerl.  Thank you for your patience!<br><br>
 
 <a name="use_rperl_devs" class="anchor" href="#use_rperl_devs"></a>
 <h3>Software Developers</h3>
 RPerl has been tested in Linux, as reflected in the following RPerl install notes.<br>
-This documentation is for a single-user installation, not a system-wide installation.<br><br>
+This documentation is for a single-user installation, not a system-wide installation.<br>
+It is assumed you have downloaded and unpacked RPerl to a directory shown as "path/to/RPerl" below.<br><br>
 
 <h4>Create Initial Symlinks & Enable Custom CPAN MyConfig</h4>
 $ mkdir -p ~/RPerl/3rd_party/CPAN<br>
@@ -78,9 +80,13 @@ cpan> install Test::Exception<br>
 $ mv ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm.old<br>
 $ ln -s path/to/RPerl/lib/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm<br><br>
 
-<h4>Test Installation</h4>
-$ cd path/to/RPerl
-$ ./t/01
+<h4>Test Installation, In This Order</h4>
+$ cd path/to/RPerl<br>
+$ ./t/01_depend.t<br>
+$ ./t/02_inline.t<br>
+$ ./t/03_type_scalar.t<br>
+$ ./t/04_type_array.t<br>
+$ ./t/05_type_hash.t<br><br>
 
         </section>
 
