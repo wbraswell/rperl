@@ -46,25 +46,25 @@
 <a href="#use_rperl_devs">Software Developers</a><br><br>
 
 <a name="use_rperl_users" class="anchor" href="#use_rperl_users"></a>
-<h3>Normal Users</h3>
+<h2>Normal Users</h2>
 RPerl is currently in an alpha pre-release state.<br>
 It is not recommended that non-programmers attempt to run RPerl at this time.<br>
 Please check back in the future as we release more user-friendly versions of RPerl.  Thank you for your patience!<br><br>
 
 <a name="use_rperl_devs" class="anchor" href="#use_rperl_devs"></a>
-<h3>Software Developers</h3>
+<h2>Software Developers</h2>
 RPerl has been tested in Linux, as reflected in the following RPerl install notes.<br>
 This documentation is for a single-user installation, not a system-wide installation.<br>
 It is assumed you have downloaded and unpacked RPerl to a directory shown as "path/to/RPerl" below.<br><br>
 
-<h4>Create Initial Symlinks & Enable Custom CPAN MyConfig</h4>
+<h3>Create Initial Symlinks & Enable Custom CPAN MyConfig</h3>
 $ mkdir -p ~/RPerl/3rd_party/CPAN<br>
 $ cd ~/.cpan/CPAN<br>
 $ mv MyConfig.pm MyConfig.pm.old<br>
 $ ln -s path/to/RPerl/lib/CPAN/MyConfig.pm MyConfig.pm<br>
 $ ln -s path/to/RPerl /tmp/RPerl-latest<br><br>
 
-<h4>Install CPAN Modules</h4>
+<h3>Install CPAN Modules</h3>
 $ cpan<br>
 cpan> o conf<br>
 &nbsp;&nbsp;(confirm RPerl entries are loaded)<br>
@@ -76,11 +76,11 @@ cpan> force install Inline::Filters<br>
 cpan> install Test::Exception<br>
 &nbsp;&nbsp;(probably already installed by something else)<br><br>
 
-<h4>Create Final Symlink To Patched Filters.pm File</h4>
+<h3>Create Final Symlink To Patched Filters.pm File</h3>
 $ mv ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm.old<br>
 $ ln -s path/to/RPerl/lib/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm<br><br>
 
-<h4>Test Installation</h4>
+<h3>Test Installation</h3>
 $ cd path/to/RPerl<br>
 $ ./t/01_depend.t<br>
 $ ./t/02_inline.t<br>
@@ -91,29 +91,20 @@ $ ./t/05_type_hash.t<br><br>
         </section>
 
         <aside id="sidebar">
-          <a href="/" class="button_home">
-            RPerl Home Page
-          </a>
+          <a href="/" class="button_home">RPerl Home Page</a>
           <hr/>
-          <a href="faq.html" class="button_faq">
-            FAQ
-          </a>
+          <a href="faq.html" class="button_faq">FAQ</a>
           <hr/>
-          <a href="performance_benchmarks.html" class="button_performance_benchmarks">
-            Performance Benchmarks
-          </a>
+          <a href="kickstart_rperl.html" class="button_kickstart_rperl">Kickstart RPerl</a>
           <hr/>
-          <a href="use_rperl.html" class="button_use_rperl">
-            use RPerl;
-          </a>
+          <a href="use_rperl.html" class="button_use_rperl">use RPerl;</a>
           <hr/>
-          <a href="the_book_of_rperl.html" class="button_the_book_of_rperl">
-            The Book Of RPerl
-          </a>
+          <a href="performance_benchmarks.html" class="button_performance_benchmarks">Performance Benchmarks</a>
           <hr/>
-          <a href="the_low_magic_perl_commandments.html" class="button_the_low_magic_perl_commandments">
-            The Low-Magic Perl Commandments
-          </a>
+          <a href="the_low_magic_perl_commandments.html" class="button_the_low_magic_perl_commandments">The Low-Magic Perl Commandments</a>
+          <hr/>
+          <a href="the_book_of_rperl.html" class="button_the_book_of_rperl">The Book Of RPerl</a>
+
           <a href="https://trello.com/board/austin-pm-rperl-development/51b6b97215f60f9460006538" class="button_blank">
             <div class="centered_outer"><div class="centered_inner"><p>
             <small>Project Management on</small>
