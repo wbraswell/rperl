@@ -291,8 +291,8 @@ aside a.button_faq {
   margin-bottom: 20px;
 }
 
-/* BUTTON, KICKSTART RPERL */
-a.button_kickstart_rperl {
+/* BUTTON, FINANCES */
+a.button_finances {
   width: 250px;
 /*  height: 100px; */
 /*  line-height: 1.2; */
@@ -305,11 +305,11 @@ a.button_kickstart_rperl {
   margin-left: auto;
   margin-right: auto;
 }
-a.button_kickstart_rperl small {
+a.button_finances small {
   display: block;
   font-size: 11px;
 }
-aside a.button_kickstart_rperl {
+aside a.button_finances {
   display: block; 
   background: transparent url(../images/button_dollar_sign.png) 0 0 no-repeat;
   margin-bottom: 20px;
