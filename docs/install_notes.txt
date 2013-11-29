@@ -4,8 +4,8 @@ Single-User Installation (Not System-Wide Installation)
 $ mkdir -p ~/RPerl/3rd_party/CPAN
 $ cd ~/.cpan/CPAN
 $ mv MyConfig.pm MyConfig.pm.old
-$ ln -s path/to/RPerl/lib/CPAN/MyConfig.pm MyConfig.pm
-$ ln -s path/to/RPerl /tmp/RPerl-latest
+$ ln -s path_to_RPerl/lib/CPAN/MyConfig.pm MyConfig.pm
+$ ln -s path_to_RPerl /tmp/RPerl-latest
 
 $ cpan
 cpan> o conf
@@ -19,4 +19,9 @@ cpan> install Test::Exception
 	probably already installed by something else
 
 $ mv ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm.old
-$ ln -s path/to/RPerl/lib/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm
+$ ln -s path_to_RPerl/lib/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm
+
+DEBUGGING:
+$ mv /usr/share/perl5/Perl/Critic/Policy/CodeLayout/RequireTidyCode.pm /usr/share/perl5/Perl/Critic/Policy/CodeLayout/RequireTidyCode.pm.orig
+$ ln -s path_to_RPerl/lib/Perl/Critic/Policy/CodeLayout/RequireTidyCode.pm /usr/share/perl5/Perl/Critic/Policy/CodeLayout/RequireTidyCode.pm
+
