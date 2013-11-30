@@ -94,3 +94,5 @@ our string $uninherited__Bubble = sub {
 #our string $uninherited = sub { (my string $person) = @_;  print "in Perl Bubble::uninherited(), \$person = '$person', TETRAHEDRON\n";  return "Perl Bubble::uninherited() ROCKS!"; };
 
 1;
+
+# perltidy bug?  next (and previous) line must be blank
