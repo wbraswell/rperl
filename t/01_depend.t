@@ -29,12 +29,3 @@ require_ok('Inline::CPP');
 
 BEGIN { use_ok('Inline::Filters'); }
 require_ok('Inline::Filters');
-
-=SNIP it is annoying to see the long failure message(s), even though we know it is inside a TODO block
-TODO: 
-{
-	local $TODO = "RPerl pegex parser not yet implemented";	
-#	BEGIN { use_ok('Pegex'); }  # NEED FIX: BEGIN block inside TODO block registers as real failure instead of TODO pseudo-failure
-	require_ok('Pegex');
-}
-=cut

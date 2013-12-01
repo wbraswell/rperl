@@ -1,13 +1,13 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.1.0');
+use version; our $VERSION = qv('0.1.1');
 
 # SUPPRESS OUTPUT FROM INDIVIDUAL TESTS, EXCLUDING TESTS INSIDE BEGIN{} BLOCKS
 # order is BEGIN, UNITCHECK, CHECK, INIT, END; CHECK here suppresses Inline compile output from including HelperFunctions_cpp.pm from INIT in Array.pm
 CHECK {
-    open( STDOUT, '>', '/dev/null' ) || croak('Can not redirect stdout');
-    open( STDERR, '>', '/dev/null' ) || croak('Can not redirect stderr');
+    open( STDOUT, '>', '/dev/null' ) || croak('Error redirecting stdout, croaking');
+    open( STDERR, '>', '/dev/null' ) || croak('Error redirecting stderr, croaking');
 }
 
 use Carp;
@@ -25,19 +25,19 @@ BEGIN {
 
 BEGIN {
     lives_ok(
-        sub {
+        sub {    ## PERLTIDY BUG blank newline
 
             package main;
             our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib';
         },
-        q{package main; our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib';} ## no critic qw(RequireInterpolationOfMetachars)  # allow single-quoted sigils;
+        q{package main; our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib';} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
     );
 }    # NEED REMOVE hard-coded path
 
 BEGIN {
     lives_ok(
         sub { use lib $main::RPERL_INCLUDE_PATH . '/CPAN/'; },
-        q{use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';} ## no critic qw(RequireInterpolationOfMetachars)  # allow single-quoted sigils
+        q{use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
     );
     lives_and( sub { use_ok('MyConfig'); }, q{use_ok('MyConfig') lives} );
 }    # RPerl's MyConfig.pm
@@ -45,7 +45,7 @@ BEGIN {
 BEGIN {
     lives_ok(
         sub { use lib $main::RPERL_INCLUDE_PATH; },
-        q{use lib $main::RPERL_INCLUDE_PATH;} ## no critic qw(RequireInterpolationOfMetachars)  # allow single-quoted sigils
+        q{use lib $main::RPERL_INCLUDE_PATH;} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
     );
     lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
     lives_ok(
@@ -53,7 +53,7 @@ BEGIN {
             use base ('RPerl');
             $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;
         },
-        q{use base ('RPerl');  $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;} ## no critic qw(RequireInterpolationOfMetachars)  # allow single-quoted sigils
+        q{use base ('RPerl');  $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
     );
 }    # RPerl system files
 
@@ -64,14 +64,14 @@ BEGIN {
         sub {
             our $AUTOLOAD;
 
-            sub AUTOLOAD { ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  # RPerl system requires AUTOLOAD; allow read-only @_
+            sub AUTOLOAD { ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  ## RPERL SYSTEM allow autoload  ## RPERL SYSTEM allow read-only @_
                 croak(
-                    "AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n"
+                    "Error autoloading, AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n"
                         . Dumper( \@_ )
                         . ', croaking' );
             }
         },
-        q{our $AUTOLOAD;  sub AUTOLOAD {...}} ## no critic qw(RequireInterpolationOfMetachars)  # allow single-quoted sigils
+        q{our $AUTOLOAD;  sub AUTOLOAD {...}} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
     );
 }
 
@@ -83,7 +83,7 @@ for my $i ( 0 .. 2 ) {
 
     if ( $i == 0 ) {
         diag(
-            "\n[[[ Beginning Pure-Perl Array Type Tests, RPerl Type System Using Perl Data Types & Perl Operations ]]]\n "
+            "\n[[[ Beginning RPerl's Pure-Perl Array Type Tests, RPerl Type System Using Perl Data Types & Perl Operations ]]]\n "
         );
         lives_and(
             sub {
@@ -123,15 +123,14 @@ for my $i ( 0 .. 2 ) {
     }
     elsif ( $i == 1 ) {
         diag(
-            "\n[[[ Beginning Hybrid-Perl-and-C++ Array Type Tests, RPerl Type System Using Perl Data Types & C++ Operations ]]]\n "
+            "\n[[[ Beginning RPerl's Perl Data Mode Array Type Tests, RPerl Type System Using Perl Data Types & C++ Operations ]]]\n "
         );
 
-#		lives_and(sub { is(types_enable('PERL'), undef, q{types_enable('PERL') is undef}) }, q{types_enable('PERL') lives});  # NEED FIX: RPerl typed functions not working in types.pm, must call as normal Perl function
-#        lives_and( sub { is( types::types_enable('PERL'), undef, q{types::types_enable('PERL') returns undef} ) }, q{types::types_enable('PERL') lives} );
+#		lives_ok(sub { types_enable('PERL') }, q{types_enable('PERL') lives});  # NEED FIX?  RPerl typed functions not working in types.pm, must call as normal Perl function
         lives_ok(
             sub { types::types_enable('PERL') },
             q{types::types_enable('PERL') lives}
-        ); # NEED FIX?  should it be just this lives_ok() or the lives_and() above?
+        );
 
         # Array: C++ use, load, link
         BEGIN {
@@ -186,7 +185,7 @@ for my $i ( 0 .. 2 ) {
     }
     else {
         diag(
-            "\n[[[ Beginning Pure-C++ Array Type Tests, RPerl Type System Using C++ Data Types & C++ Operations ]]]\n "
+            "\n[[[ Beginning RPerl's C++ Data Mode Array Type Tests, RPerl Type System Using C++ Data Types & C++ Operations ]]]\n "
         );
         lives_ok(
             sub { types::types_enable('CPP') },
@@ -228,7 +227,7 @@ for my $i ( 0 .. 2 ) {
         );
         lives_and(
             sub { is( types_array(), 'CPP', q{types_array() returns 'CPP'} ) }
-            ,
+            ,    ## PERLTIDY BUG comma on newline
             q{types_array() lives}
         );
         lives_and(
@@ -253,7 +252,7 @@ for my $i ( 0 .. 2 ) {
     lives_and(
         sub {
             is( stringify_int__array_ref(
-                    [ 2, 2112, 42, 23, 877, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                    [ 2, 2112, 42, 23, 877, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ),
                 '[2, 2112, 42, 23, 877, 33, 1701]',
                 q{stringify_int__array_ref([2, 2112, 42, 23, 877, 33, 1701]) returns correct value}
@@ -263,16 +262,16 @@ for my $i ( 0 .. 2 ) {
     );
     throws_ok(
         sub {
-            stringify_int__array_ref( [ 2, 2112, 42.3, 23, 877, 33, 1701 ] ) ## no critic qw(ProhibitMagicNumbers)  # allow test values
-                ;
+            stringify_int__array_ref( [ 2, 2112, 42.3, 23, 877, 33, 1701 ] ) ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                ;    ## PERLTIDY BUG semicolon on newline
         },
         '/input_av_element at index 2 was not an int/',
         q{stringify_int__array_ref([2, 2112, 42.3, 23, 877, 33, 1701]) throws correct exception}
     );
     throws_ok(
         sub {
-            stringify_int__array_ref( [ 2, 2112, '42', 23, 877, 33, 1701 ] ) ## no critic qw(ProhibitMagicNumbers)  # allow test values
-                ;
+            stringify_int__array_ref( [ 2, 2112, '42', 23, 877, 33, 1701 ] ) ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                ;    ## PERLTIDY BUG semicolon on newline
         },
         '/input_av_element at index 2 was not an int/',
         q{stringify_int__array_ref([2, 2112, '42', 23, 877, 33, 1701]) throws correct exception}
@@ -280,7 +279,7 @@ for my $i ( 0 .. 2 ) {
     lives_and(
         sub {
             is( typetest___int__array_ref__in___string__out(
-                    [ 2, 2112, 42, 23, 877, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                    [ 2, 2112, 42, 23, 877, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ),
                 '[2, 2112, 42, 23, 877, 33, 1701]BARBAT',
                 q{typetest___int__array_ref__in___string__out([2, 2112, 42, 23, 877, 33, 1701]) returns correct value}
@@ -291,15 +290,15 @@ for my $i ( 0 .. 2 ) {
     throws_ok(
         sub {
             typetest___int__array_ref__in___string__out(
-                [ 2, 2112, 42, 23, 877, "abcdefg\n", 33, 1701 ] ); ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                [ 2, 2112, 42, 23, 877, "abcdefg\n", 33, 1701 ] ); ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
         },
         '/input_av_element at index 5 was not an int/',
-        q{typetest___int__array_ref__in___string__out([2, 2112, 42, 23, 877, "abcdefg\n", 33, 1701]) throws correct exception} ## no critic qw(RequireInterpolationOfMetachars)  # allow single-quoted newline
+        q{typetest___int__array_ref__in___string__out([2, 2112, 42, 23, 877, "abcdefg\n", 33, 1701]) throws correct exception} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted newline
     );
     lives_and(
         sub {
             is( typetest___int__array_ref__in___string__out(
-                    [ 444, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                    [ 444, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ),
                 '[444, 33, 1701]BARBAT',
                 q{typetest___int__array_ref__in___string__out([444, 33, 1701]) returns correct value again, Perl stack still functioning properly}
@@ -310,8 +309,8 @@ for my $i ( 0 .. 2 ) {
     lives_and(
         sub {
             is_deeply(
-                typetest___int__in___int__array_ref__out(5), ## no critic qw(ProhibitMagicNumbers)  # allow test values
-                [ 0, 5, 10, 15, 20 ], ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                typetest___int__in___int__array_ref__out(5), ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                [ 0, 5, 10, 15, 20 ], ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 q{typetest___int__in___int__array_ref__out(5) returns correct value}
             );
         },
@@ -335,7 +334,7 @@ for my $i ( 0 .. 2 ) {
     lives_and(
         sub {
             is( stringify_number__array_ref(
-                    [ 2, 2112, 42, 23, 877, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                    [ 2, 2112, 42, 23, 877, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ),
                 '[2, 2112, 42, 23, 877, 33, 1701]',
                 q{stringify_number__array_ref([2, 2112, 42, 23, 877, 33, 1701]) returns correct value}
@@ -346,7 +345,7 @@ for my $i ( 0 .. 2 ) {
     lives_and(
         sub {
             is( stringify_number__array_ref(
-                    [ 2.1, 2112.2, 42.3, 23, 877, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                    [ 2.1, 2112.2, 42.3, 23, 877, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ),
                 '[2.1, 2112.2, 42.3, 23, 877, 33, 1701]',
                 q{stringify_number__array_ref([2.1, 2112.2, 42.3, 23, 877, 33, 1701]) returns correct value}
@@ -357,10 +356,10 @@ for my $i ( 0 .. 2 ) {
     lives_and(
         sub {
             is( stringify_number__array_ref(
-                    [   2.1234432112344321, 2112.4321, ## no critic qw(ProhibitMagicNumbers)  # allow test values
-                        42.4567, 23.765444444444444444, ## no critic qw(ProhibitMagicNumbers)  # allow test values
-                        877.5678, 33.876587658765875687658765, ## no critic qw(ProhibitMagicNumbers)  # allow test values
-                        1701.6789 ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                    [   2.1234432112344321, 2112.4321, ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                        42.4567, 23.765444444444444444, ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                        877.5678, 33.876587658765875687658765, ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                        1701.6789 ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                     ]
                 ),
                 '[2.12344321123443, 2112.4321, 42.4567, 23.7654444444444, 877.5678, 33.8765876587659, 1701.6789]',
@@ -372,7 +371,7 @@ for my $i ( 0 .. 2 ) {
     throws_ok(
         sub {
             stringify_number__array_ref(
-                [ 2, 2112, '42', 23, 877, 33, 1701 ] ); ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                [ 2, 2112, '42', 23, 877, 33, 1701 ] ); ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
         },
         '/input_av_element at index 2 was not a number/',
         q{stringify_number__array_ref([2, 2112, '42', 23, 877, 33, 1701]) throws correct exception}
@@ -380,10 +379,10 @@ for my $i ( 0 .. 2 ) {
     lives_and(
         sub {
             is( typetest___number__array_ref__in___string__out(
-                    [   2.1234432112344321, 2112.4321, ## no critic qw(ProhibitMagicNumbers)  # allow test values
-                        42.4567, 23.765444444444444444, ## no critic qw(ProhibitMagicNumbers)  # allow test values
-                        877.5678, 33.876587658765875687658765, ## no critic qw(ProhibitMagicNumbers)  # allow test values
-                        1701.6789 ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                    [   2.1234432112344321, 2112.4321, ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                        42.4567, 23.765444444444444444, ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                        877.5678, 33.876587658765875687658765, ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                        1701.6789 ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                     ]
                 ),
                 '[2.12344321123443, 2112.4321, 42.4567, 23.7654444444444, 877.5678, 33.8765876587659, 1701.6789]BARBAZ',
@@ -395,22 +394,22 @@ for my $i ( 0 .. 2 ) {
     throws_ok(
         sub {
             typetest___number__array_ref__in___string__out(
-                [   2.1234432112344321, 2112.4321, ## no critic qw(ProhibitMagicNumbers)  # allow test values
-                    42.4567, 23.765444444444444444, ## no critic qw(ProhibitMagicNumbers)  # allow test values
-                    877.5678, "abcdefg\n", ## no critic qw(ProhibitMagicNumbers)  # allow test values
-                    33.876587658765875687658765, 1701.6789 ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                [   2.1234432112344321, 2112.4321, ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                    42.4567, 23.765444444444444444, ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                    877.5678, "abcdefg\n", ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                    33.876587658765875687658765, 1701.6789 ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ]
             );
         },
         '/input_av_element at index 5 was not a number/',
-        q{typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, "abcdefg\n", 33.876587658765875687658765, 1701.6789]) throws correct exception} ## no critic qw(RequireInterpolationOfMetachars)  # allow single-quoted newline
+        q{typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, "abcdefg\n", 33.876587658765875687658765, 1701.6789]) throws correct exception} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted newline
     );
     lives_and(
         sub {
             is_deeply(
-                typetest___int__in___number__array_ref__out(5), ## no critic qw(ProhibitMagicNumbers)  # allow test values
-                [ 0, 5.123456789, 10.246913578, 15.370370367, 20.493827156 ] ## no critic qw(ProhibitMagicNumbers)  # allow test values
-                ,
+                typetest___int__in___number__array_ref__out(5), ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                [ 0, 5.123456789, 10.246913578, 15.370370367, 20.493827156 ] ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                ,    ## PERLTIDY BUG comma on newline
                 q{typetest___int__in___number__array_ref__out(5) returns correct value}
             );
         },
@@ -460,7 +459,7 @@ for my $i ( 0 .. 2 ) {
                 [   'Superman',      'Batman',
                     'Wonder Woman',  'Flash',
                     'Green Lantern', 'Aquaman',
-                    'Martian Manhunter', 23 ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                    'Martian Manhunter', 23 ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ]
             );
         },
@@ -488,7 +487,7 @@ for my $i ( 0 .. 2 ) {
                     [   'Superman',      'Batman',
                         'Wonder Woman',  'Flash',
                         'Green Lantern', 'Aquaman',
-                        "Martian Manhunter", "-2112.23" ## no critic qw(ProhibitInterpolationOfLiterals)  # allow double-quoted test values
+                        "Martian Manhunter", "-2112.23" ## no critic qw(ProhibitInterpolationOfLiterals)  ## RPERL allow double-quoted test values
                     ]
                 ),
                 q{["Superman", "Batman", "Wonder Woman", "Flash", "Green Lantern", "Aquaman", "Martian Manhunter", "-2112.23"]},
@@ -503,7 +502,7 @@ for my $i ( 0 .. 2 ) {
                 [   'Superman',      'Batman',
                     'Wonder Woman',  'Flash',
                     'Green Lantern', 'Aquaman',
-                    'Martian Manhunter', -2112.23 ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                    'Martian Manhunter', -2112.23 ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ]
             );
         },
@@ -523,7 +522,7 @@ for my $i ( 0 .. 2 ) {
             );
         },
         '/input_av_element at index 5 was not a string/',
-        q{stringify_string__array_ref(['Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', {fuzz => 'bizz', bar => "stool!\n", bat => 24}]) throws correct exception} ## no critic qw(RequireInterpolationOfMetachars)  # allow single-quoted newline
+        q{stringify_string__array_ref(['Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', {fuzz => 'bizz', bar => "stool!\n", bat => 24}]) throws correct exception} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted newline
     );
     lives_and(
         sub {
@@ -546,7 +545,7 @@ for my $i ( 0 .. 2 ) {
                 [   'Superman',      'Batman',
                     'Wonder Woman',  'Flash',
                     'Green Lantern', 'Aquaman',
-                    'Martian Manhunter', 23 ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                    'Martian Manhunter', 23 ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ]
             );
         },
@@ -556,7 +555,7 @@ for my $i ( 0 .. 2 ) {
     lives_and(
         sub {
             is_deeply(
-                typetest___int__in___string__array_ref__out(5), ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                typetest___int__in___string__array_ref__out(5), ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 [   'Jeffy Ten! 0/4',
                     'Jeffy Ten! 1/4',
                     'Jeffy Ten! 2/4',

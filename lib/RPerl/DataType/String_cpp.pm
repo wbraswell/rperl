@@ -1,15 +1,15 @@
 use strict; use warnings;
 package RPerl::DataType::String_cpp;
-our $CPP_loaded = 0;
-our $CPP_linked = 0;
+our $CPP_LOADED = 0;
+our $CPP_LINKED = 0;
 our @ISA = ('RPerl::Class');
 use RPerl::Class;  use RPerl;
 
 our void__method $cpp_load = sub {
 ;	
-	if (defined($RPerl::DataType::String_cpp::CPP_loaded)) { print "in String_cpp::cpp_load(), have \$RPerl::DataType::String_cpp::CPP_loaded = '" . $RPerl::DataType::String_cpp::CPP_loaded . "'\n"; }
-		else { print "in String_cpp::cpp_load(), have \$RPerl::DataType::String_cpp::CPP_loaded = 'UNDEF'\n"; }
-	if (not(defined($RPerl::DataType::String_cpp::CPP_loaded)) or not($RPerl::DataType::String_cpp::CPP_loaded))
+	if (defined($RPerl::DataType::String_cpp::CPP_LOADED)) { print "in String_cpp::cpp_load(), have \$RPerl::DataType::String_cpp::CPP_LOADED = '" . $RPerl::DataType::String_cpp::CPP_LOADED . "'\n"; }
+		else { print "in String_cpp::cpp_load(), have \$RPerl::DataType::String_cpp::CPP_LOADED = 'UNDEF'\n"; }
+	if (not(defined($RPerl::DataType::String_cpp::CPP_LOADED)) or not($RPerl::DataType::String_cpp::CPP_LOADED))
 	{
 		my $eval_string = <<"EOF";
 package main;
@@ -42,20 +42,20 @@ EOF
 		eval($eval_string);  ## no critic
 		die($@) if ($@);
 		
-		$RPerl::DataType::String_cpp::CPP_loaded = 1;
+		$RPerl::DataType::String_cpp::CPP_LOADED = 1;
 	}
 	else { print "in String_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"; }
 };
 
 our void__method $cpp_link = sub {
 ;
-#	if (defined($RPerl::DataType::String_cpp::CPP_linked)) { print "in String_cpp::cpp_link(), have \$RPerl::DataType::String_cpp::CPP_linked = '" . $RPerl::DataType::String_cpp::CPP_linked . "'\n"; }
-#		else { print "in String_cpp::cpp_link(), have \$RPerl::DataType::String_cpp::CPP_linked = 'UNDEF'\n"; }
-	if (not(defined($RPerl::DataType::String_cpp::CPP_linked)) or not($RPerl::DataType::String_cpp::CPP_linked))
+#	if (defined($RPerl::DataType::String_cpp::CPP_LINKED)) { print "in String_cpp::cpp_link(), have \$RPerl::DataType::String_cpp::CPP_LINKED = '" . $RPerl::DataType::String_cpp::CPP_LINKED . "'\n"; }
+#		else { print "in String_cpp::cpp_link(), have \$RPerl::DataType::String_cpp::CPP_LINKED = 'UNDEF'\n"; }
+	if (not(defined($RPerl::DataType::String_cpp::CPP_LINKED)) or not($RPerl::DataType::String_cpp::CPP_LINKED))
 	{
 		my $eval_string = <<'EOF';
 package RPerl::DataType::String_cpp;
-$CPP_linked = 1;
+$CPP_LINKED = 1;
 1;
 #package RPerl::DataType::String;
 #our @ISA = ('main::CPP__RPerl__DataType__String', 'RPerl::DataType');
