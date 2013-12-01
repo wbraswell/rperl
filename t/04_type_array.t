@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.0.9');
+use version; our $VERSION = qv('0.1.0');
 
 # SUPPRESS OUTPUT FROM INDIVIDUAL TESTS, EXCLUDING TESTS INSIDE BEGIN{} BLOCKS
 # order is BEGIN, UNITCHECK, CHECK, INIT, END; CHECK here suppresses Inline compile output from including HelperFunctions_cpp.pm from INIT in Array.pm
@@ -30,7 +30,7 @@ BEGIN {
             package main;
             our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib';
         },
-        q{package main;  our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib';} ## no critic qw(RequireInterpolationOfMetachars)  # allow single-quoted sigils;
+        q{package main; our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib';} ## no critic qw(RequireInterpolationOfMetachars)  # allow single-quoted sigils;
     );
 }    # NEED REMOVE hard-coded path
 
@@ -39,15 +39,15 @@ BEGIN {
         sub { use lib $main::RPERL_INCLUDE_PATH . '/CPAN/'; },
         q{use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';} ## no critic qw(RequireInterpolationOfMetachars)  # allow single-quoted sigils
     );
-    lives_and( sub { use_ok('MyConfig'); } );
+    lives_and( sub { use_ok('MyConfig'); }, q{use_ok('MyConfig') lives} );
 }    # RPerl's MyConfig.pm
 
 BEGIN {
     lives_ok(
         sub { use lib $main::RPERL_INCLUDE_PATH; },
-        q{use lib $ main::RPERL_INCLUDE_PATH;}
+        q{use lib $main::RPERL_INCLUDE_PATH;} ## no critic qw(RequireInterpolationOfMetachars)  # allow single-quoted sigils
     );
-    lives_and( sub { use_ok('RPerl'); } );
+    lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
     lives_ok(
         sub {
             use base ('RPerl');
@@ -58,20 +58,20 @@ BEGIN {
 }    # RPerl system files
 
 BEGIN {
-    lives_and( sub { use_ok('Data::Dumper'); } );
+    lives_and( sub { use_ok('Data::Dumper'); },
+        q{use_ok('Data::Dumper') lives} );
     lives_ok(
         sub {
             our $AUTOLOAD;
 
-            sub AUTOLOAD
-            { ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  # RPerl system requires AUTOLOAD; allow read-only @_
+            sub AUTOLOAD { ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  # RPerl system requires AUTOLOAD; allow read-only @_
                 croak(
                     "AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n"
                         . Dumper( \@_ )
                         . ', croaking' );
             }
         },
-        q{our $ AUTOLOAD;  sub AUTOLOAD {...}}
+        q{our $AUTOLOAD;  sub AUTOLOAD {...}} ## no critic qw(RequireInterpolationOfMetachars)  # allow single-quoted sigils
     );
 }
 
@@ -93,8 +93,9 @@ for my $i ( 0 .. 2 ) {
             q{types_number() lives}
         );
         lives_and(
-            sub { is( ops_number(), 'PERL', q{ops_number() returns 'PERL'} ) }
-            ,
+            sub {
+                is( ops_number(), 'PERL', q{ops_number() returns 'PERL'} );
+            },
             q{ops_number() lives}
         );
         lives_and(
@@ -130,21 +131,26 @@ for my $i ( 0 .. 2 ) {
         lives_ok(
             sub { types::types_enable('PERL') },
             q{types::types_enable('PERL') lives}
-            )
-            ; # NEED FIX?  should it be just this lives_ok() or the lives_and() above?
+        ); # NEED FIX?  should it be just this lives_ok() or the lives_and() above?
 
         # Array: C++ use, load, link
         BEGIN {
-            lives_and( sub { use_ok('RPerl::DataStructure::Array_cpp'); } );
+            lives_and(
+                sub { use_ok('RPerl::DataStructure::Array_cpp'); },
+                q{use_ok('RPerl::DataStructure::Array_cpp') lives}
+            );
         }
-        lives_and( sub { require_ok('RPerl::DataStructure::Array_cpp'); } );
+        lives_and(
+            sub { require_ok('RPerl::DataStructure::Array_cpp'); },
+            q{require_ok('RPerl::DataStructure::Array_cpp') lives}
+        );
         lives_ok(
             sub { RPerl::DataStructure::Array_cpp::cpp_load(); },
-            q(RPerl::DataStructure::Array_cpp::cpp_load();)
+            q{RPerl::DataStructure::Array_cpp::cpp_load() lives}
         );
         lives_ok(
             sub { RPerl::DataStructure::Array_cpp::cpp_link(); },
-            q(RPerl::DataStructure::Array_cpp::cpp_link();)
+            q{RPerl::DataStructure::Array_cpp::cpp_link() lives}
         );
         lives_and(
             sub {
@@ -234,20 +240,20 @@ for my $i ( 0 .. 2 ) {
     throws_ok(
         sub { stringify_int__array_ref(2) },
         '/input_av_ref was not an AV ref/',
-        q{stringify_int__array_ref(2);  # throw exception}
+        q{stringify_int__array_ref(2) throws correct exception}
     );
     lives_and(
         sub {
             is( stringify_int__array_ref( [2] ),
-                '[2]', q{stringify_int__array_ref([2]) returns '[2]' } );
+                '[2]',
+                q{stringify_int__array_ref([2]) returns correct value} );
         },
         q{stringify_int__array_ref([2]) lives}
     );
     lives_and(
         sub {
             is( stringify_int__array_ref(
-                    [ 2, 2112, 42, 23, 877, 33, 1701
-                    ] ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                    [ 2, 2112, 42, 23, 877, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  # allow test values
                 ),
                 '[2, 2112, 42, 23, 877, 33, 1701]',
                 q{stringify_int__array_ref([2, 2112, 42, 23, 877, 33, 1701]) returns correct value}
@@ -257,16 +263,16 @@ for my $i ( 0 .. 2 ) {
     );
     throws_ok(
         sub {
-            stringify_int__array_ref( [ 2, 2112, 42.3, 23, 877, 33, 1701 ] )
-                ;   ## no critic qw(ProhibitMagicNumbers)  # allow test values
+            stringify_int__array_ref( [ 2, 2112, 42.3, 23, 877, 33, 1701 ] ) ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                ;
         },
         '/input_av_element at index 2 was not an int/',
         q{stringify_int__array_ref([2, 2112, 42.3, 23, 877, 33, 1701]) throws correct exception}
     );
     throws_ok(
         sub {
-            stringify_int__array_ref( [ 2, 2112, '42', 23, 877, 33, 1701 ] )
-                ;   ## no critic qw(ProhibitMagicNumbers)  # allow test values
+            stringify_int__array_ref( [ 2, 2112, '42', 23, 877, 33, 1701 ] ) ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                ;
         },
         '/input_av_element at index 2 was not an int/',
         q{stringify_int__array_ref([2, 2112, '42', 23, 877, 33, 1701]) throws correct exception}
@@ -274,8 +280,7 @@ for my $i ( 0 .. 2 ) {
     lives_and(
         sub {
             is( typetest___int__array_ref__in___string__out(
-                    [ 2, 2112, 42, 23, 877, 33, 1701
-                    ] ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                    [ 2, 2112, 42, 23, 877, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  # allow test values
                 ),
                 '[2, 2112, 42, 23, 877, 33, 1701]BARBAT',
                 q{typetest___int__array_ref__in___string__out([2, 2112, 42, 23, 877, 33, 1701]) returns correct value}
@@ -286,8 +291,7 @@ for my $i ( 0 .. 2 ) {
     throws_ok(
         sub {
             typetest___int__array_ref__in___string__out(
-                [ 2, 2112, 42, 23, 877, "abcdefg\n", 33, 1701 ] )
-                ;   ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                [ 2, 2112, 42, 23, 877, "abcdefg\n", 33, 1701 ] ); ## no critic qw(ProhibitMagicNumbers)  # allow test values
         },
         '/input_av_element at index 5 was not an int/',
         q{typetest___int__array_ref__in___string__out([2, 2112, 42, 23, 877, "abcdefg\n", 33, 1701]) throws correct exception} ## no critic qw(RequireInterpolationOfMetachars)  # allow single-quoted newline
@@ -295,7 +299,7 @@ for my $i ( 0 .. 2 ) {
     lives_and(
         sub {
             is( typetest___int__array_ref__in___string__out(
-                    [ 444, 33, 1701 ]
+                    [ 444, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  # allow test values
                 ),
                 '[444, 33, 1701]BARBAT',
                 q{typetest___int__array_ref__in___string__out([444, 33, 1701]) returns correct value again, Perl stack still functioning properly}
@@ -305,96 +309,112 @@ for my $i ( 0 .. 2 ) {
     );
     lives_and(
         sub {
-            is_deeply( typetest___int__in___int__array_ref__out(5),
-                [ 0, 5, 10, 15, 20 ] );
+            is_deeply(
+                typetest___int__in___int__array_ref__out(5), ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                [ 0, 5, 10, 15, 20 ], ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                q{typetest___int__in___int__array_ref__out(5) returns correct value}
+            );
         },
-        q(typetest___int__in___int__array_ref__out(5);)
+        q{typetest___int__in___int__array_ref__out(5) lives}
     );
 
     # Number Array: stringify, create, manipulate
     throws_ok(
         sub { stringify_number__array_ref(2) },
         '/input_av_ref was not an AV ref/',
-        q(stringify_number__array_ref(2);  # throw exception)
+        q{stringify_number__array_ref(2) throws correct exception}
     );
-    lives_and( sub { is( stringify_number__array_ref( [2] ), '[2]' ) },
-        q(stringify_number__array_ref([2]);) );
+    lives_and(
+        sub {
+            is( stringify_number__array_ref( [2] ),
+                '[2]',
+                q{stringify_number__array_ref([2]) returns correct value} );
+        },
+        q{stringify_number__array_ref([2]) lives}
+    );
     lives_and(
         sub {
             is( stringify_number__array_ref(
-                    [ 2, 2112, 42, 23, 877, 33, 1701 ]
+                    [ 2, 2112, 42, 23, 877, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  # allow test values
                 ),
-                '[2, 2112, 42, 23, 877, 33, 1701]'
+                '[2, 2112, 42, 23, 877, 33, 1701]',
+                q{stringify_number__array_ref([2, 2112, 42, 23, 877, 33, 1701]) returns correct value}
             );
         },
-        q(stringify_number__array_ref([2, 2112, 42, 23, 877, 33, 1701]);)
+        q{stringify_number__array_ref([2, 2112, 42, 23, 877, 33, 1701]) lives}
     );
     lives_and(
         sub {
             is( stringify_number__array_ref(
-                    [ 2.1, 2112.2, 42.3, 23, 877, 33, 1701 ]
+                    [ 2.1, 2112.2, 42.3, 23, 877, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  # allow test values
                 ),
-                '[2.1, 2112.2, 42.3, 23, 877, 33, 1701]'
+                '[2.1, 2112.2, 42.3, 23, 877, 33, 1701]',
+                q{stringify_number__array_ref([2.1, 2112.2, 42.3, 23, 877, 33, 1701]) returns correct value}
             );
         },
-        q(stringify_number__array_ref([2.1, 2112.2, 42.3, 23, 877, 33, 1701]);)
+        q{stringify_number__array_ref([2.1, 2112.2, 42.3, 23, 877, 33, 1701]) lives}
     );
     lives_and(
         sub {
             is( stringify_number__array_ref(
-                    [   2.1234432112344321, 2112.4321,
-                        42.4567,            23.765444444444444444,
-                        877.5678,           33.876587658765875687658765,
-                        1701.6789
+                    [   2.1234432112344321, 2112.4321, ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                        42.4567, 23.765444444444444444, ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                        877.5678, 33.876587658765875687658765, ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                        1701.6789 ## no critic qw(ProhibitMagicNumbers)  # allow test values
                     ]
                 ),
-                '[2.12344321123443, 2112.4321, 42.4567, 23.7654444444444, 877.5678, 33.8765876587659, 1701.6789]'
+                '[2.12344321123443, 2112.4321, 42.4567, 23.7654444444444, 877.5678, 33.8765876587659, 1701.6789]',
+                q{stringify_number__array_ref([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, 33.876587658765875687658765, 1701.6789]) returns correct value}
             );
         },
-        q(stringify_number__array_ref([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, 33.876587658765875687658765, 1701.6789]);)
+        q{stringify_number__array_ref([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, 33.876587658765875687658765, 1701.6789]) lives}
     );
     throws_ok(
         sub {
             stringify_number__array_ref(
-                [ 2, 2112, '42', 23, 877, 33, 1701 ] );
+                [ 2, 2112, '42', 23, 877, 33, 1701 ] ); ## no critic qw(ProhibitMagicNumbers)  # allow test values
         },
         '/input_av_element at index 2 was not a number/',
-        q(stringify_number__array_ref([2, 2112, '42', 23, 877, 33, 1701]);  # throw exception)
+        q{stringify_number__array_ref([2, 2112, '42', 23, 877, 33, 1701]) throws correct exception}
     );
     lives_and(
         sub {
             is( typetest___number__array_ref__in___string__out(
-                    [   2.1234432112344321, 2112.4321,
-                        42.4567,            23.765444444444444444,
-                        877.5678,           33.876587658765875687658765,
-                        1701.6789
+                    [   2.1234432112344321, 2112.4321, ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                        42.4567, 23.765444444444444444, ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                        877.5678, 33.876587658765875687658765, ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                        1701.6789 ## no critic qw(ProhibitMagicNumbers)  # allow test values
                     ]
                 ),
-                '[2.12344321123443, 2112.4321, 42.4567, 23.7654444444444, 877.5678, 33.8765876587659, 1701.6789]BARBAZ'
+                '[2.12344321123443, 2112.4321, 42.4567, 23.7654444444444, 877.5678, 33.8765876587659, 1701.6789]BARBAZ',
+                q{typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, 33.876587658765875687658765, 1701.6789]) returns correct value}
             );
         },
-        q(typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, 33.876587658765875687658765, 1701.6789]);)
+        q{typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, 33.876587658765875687658765, 1701.6789]) lives}
     );
     throws_ok(
         sub {
             typetest___number__array_ref__in___string__out(
-                [   2.1234432112344321,          2112.4321,
-                    42.4567,                     23.765444444444444444,
-                    877.5678,                    "abcdefg\n",
-                    33.876587658765875687658765, 1701.6789
+                [   2.1234432112344321, 2112.4321, ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                    42.4567, 23.765444444444444444, ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                    877.5678, "abcdefg\n", ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                    33.876587658765875687658765, 1701.6789 ## no critic qw(ProhibitMagicNumbers)  # allow test values
                 ]
             );
         },
         '/input_av_element at index 5 was not a number/',
-        q(typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, "abcdefg\n", 33.876587658765875687658765, 1701.6789]);  # throw exception)
+        q{typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, "abcdefg\n", 33.876587658765875687658765, 1701.6789]) throws correct exception} ## no critic qw(RequireInterpolationOfMetachars)  # allow single-quoted newline
     );
     lives_and(
         sub {
-            is_deeply( typetest___int__in___number__array_ref__out(5),
-                [ 0, 5.123456789, 10.246913578, 15.370370367, 20.493827156 ]
+            is_deeply(
+                typetest___int__in___number__array_ref__out(5), ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                [ 0, 5.123456789, 10.246913578, 15.370370367, 20.493827156 ] ## no critic qw(ProhibitMagicNumbers)  # allow test values
+                ,
+                q{typetest___int__in___number__array_ref__out(5) returns correct value}
             );
         },
-        q(typetest___int__in___number__array_ref__out(5);)
+        q{typetest___int__in___number__array_ref__out(5) lives}
     );
 
 # String Array: stringify, create, manipulate
@@ -402,7 +422,7 @@ for my $i ( 0 .. 2 ) {
     throws_ok(
         sub { stringify_string__array_ref('Lone Ranger') },
         '/input_av_ref was not an AV ref/',
-        q(stringify_string__array_ref('Lone Ranger');  # throw exception)
+        q{stringify_string__array_ref('Lone Ranger') throws correct exception}
     );
     lives_and(
         sub {
@@ -413,10 +433,11 @@ for my $i ( 0 .. 2 ) {
                         'Martian Manhunter'
                     ]
                 ),
-                q(["Superman", "Batman", "Wonder Woman", "Flash", "Green Lantern", "Aquaman", "Martian Manhunter"])
+                q{["Superman", "Batman", "Wonder Woman", "Flash", "Green Lantern", "Aquaman", "Martian Manhunter"]},
+                q{stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']) returns correct value}
             );
         },
-        q(stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']);)
+        q{stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']) lives}
     );
     lives_and(
         sub {
@@ -427,23 +448,24 @@ for my $i ( 0 .. 2 ) {
                         'Martian Manhunter', '23'
                     ]
                 ),
-                q(["Superman", "Batman", "Wonder Woman", "Flash", "Green Lantern", "Aquaman", "Martian Manhunter", "23"])
+                q{["Superman", "Batman", "Wonder Woman", "Flash", "Green Lantern", "Aquaman", "Martian Manhunter", "23"]},
+                q{stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '23']) returns correct value}
             );
         },
-        q(stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '23']);)
+        q{stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '23']) lives}
     );
     throws_ok(
         sub {
             stringify_string__array_ref(
-                [   'Superman',          'Batman',
-                    'Wonder Woman',      'Flash',
-                    'Green Lantern',     'Aquaman',
-                    'Martian Manhunter', 23
+                [   'Superman',      'Batman',
+                    'Wonder Woman',  'Flash',
+                    'Green Lantern', 'Aquaman',
+                    'Martian Manhunter', 23 ## no critic qw(ProhibitMagicNumbers)  # allow test values
                 ]
             );
         },
         '/input_av_element at index 7 was not a string/',
-        q(stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', 23]);  # throw exception)
+        q{stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', 23]) throws correct exception}
     );
     lives_and(
         sub {
@@ -454,37 +476,39 @@ for my $i ( 0 .. 2 ) {
                         'Martian Manhunter', '-2112.23'
                     ]
                 ),
-                q(["Superman", "Batman", "Wonder Woman", "Flash", "Green Lantern", "Aquaman", "Martian Manhunter", "-2112.23"])
+                q{["Superman", "Batman", "Wonder Woman", "Flash", "Green Lantern", "Aquaman", "Martian Manhunter", "-2112.23"]},
+                q{stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '-2112.23']) returns correct value}
             );
         },
-        q(stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '-2112.23']);)
+        q{stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '-2112.23']) lives}
     );
     lives_and(
         sub {
             is( stringify_string__array_ref(
-                    [   'Superman',          'Batman',
-                        'Wonder Woman',      'Flash',
-                        'Green Lantern',     'Aquaman',
-                        "Martian Manhunter", "-2112.23"
+                    [   'Superman',      'Batman',
+                        'Wonder Woman',  'Flash',
+                        'Green Lantern', 'Aquaman',
+                        "Martian Manhunter", "-2112.23" ## no critic qw(ProhibitInterpolationOfLiterals)  # allow double-quoted test values
                     ]
                 ),
-                q(["Superman", "Batman", "Wonder Woman", "Flash", "Green Lantern", "Aquaman", "Martian Manhunter", "-2112.23"])
+                q{["Superman", "Batman", "Wonder Woman", "Flash", "Green Lantern", "Aquaman", "Martian Manhunter", "-2112.23"]},
+                q{stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', "Martian Manhunter", "-2112.23"]) returns correct value}
             );
         },
-        q(stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', "Martian Manhunter", "-2112.23"]);)
+        q{stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', "Martian Manhunter", "-2112.23"]) lives}
     );
     throws_ok(
         sub {
             stringify_string__array_ref(
-                [   'Superman',          'Batman',
-                    'Wonder Woman',      'Flash',
-                    'Green Lantern',     'Aquaman',
-                    'Martian Manhunter', -2112.23
+                [   'Superman',      'Batman',
+                    'Wonder Woman',  'Flash',
+                    'Green Lantern', 'Aquaman',
+                    'Martian Manhunter', -2112.23 ## no critic qw(ProhibitMagicNumbers)  # allow test values
                 ]
             );
         },
         '/input_av_element at index 7 was not a string/',
-        q(stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', -2112.23]);  # throw exception)
+        q{stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', -2112.23]) throws correct exception}
     );
     throws_ok(
         sub {
@@ -499,7 +523,7 @@ for my $i ( 0 .. 2 ) {
             );
         },
         '/input_av_element at index 5 was not a string/',
-        q(stringify_string__array_ref(['Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', {fuzz => 'bizz', bar => "stool!\n", bat => 24}]);  # throw exception)
+        q{stringify_string__array_ref(['Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', {fuzz => 'bizz', bar => "stool!\n", bat => 24}]) throws correct exception} ## no critic qw(RequireInterpolationOfMetachars)  # allow single-quoted newline
     );
     lives_and(
         sub {
@@ -510,37 +534,39 @@ for my $i ( 0 .. 2 ) {
                         'Martian Manhunter'
                     ]
                 ),
-                q(["Superman", "Batman", "Wonder Woman", "Flash", "Green Lantern", "Aquaman", "Martian Manhunter"]BARBAR)
+                q{["Superman", "Batman", "Wonder Woman", "Flash", "Green Lantern", "Aquaman", "Martian Manhunter"]BARBAR},
+                q{typetest___string__array_ref__in___string__out(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']) returns correct value}
             );
         },
-        q(typetest___string__array_ref__in___string__out(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']);)
+        q{typetest___string__array_ref__in___string__out(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']) lives}
     );
     throws_ok(
         sub {
             typetest___string__array_ref__in___string__out(
-                [   'Superman',          'Batman',
-                    'Wonder Woman',      'Flash',
-                    'Green Lantern',     'Aquaman',
-                    'Martian Manhunter', 23
+                [   'Superman',      'Batman',
+                    'Wonder Woman',  'Flash',
+                    'Green Lantern', 'Aquaman',
+                    'Martian Manhunter', 23 ## no critic qw(ProhibitMagicNumbers)  # allow test values
                 ]
             );
         },
         '/input_av_element at index 7 was not a string/',
-        q(typetest___string__array_ref__in___string__out(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', 23]);  # throw exception)
+        q{typetest___string__array_ref__in___string__out(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', 23]) throws correct exception}
     );
     lives_and(
         sub {
             is_deeply(
-                typetest___int__in___string__array_ref__out(5),
+                typetest___int__in___string__array_ref__out(5), ## no critic qw(ProhibitMagicNumbers)  # allow test values
                 [   'Jeffy Ten! 0/4',
                     'Jeffy Ten! 1/4',
                     'Jeffy Ten! 2/4',
                     'Jeffy Ten! 3/4',
                     'Jeffy Ten! 4/4'
-                ]
+                ],
+                q{typetest___int__in___string__array_ref__out(5) returns correct value}
             );
         },
-        q(typetest___int__in___string__array_ref__out(5);)
+        q{typetest___int__in___string__array_ref__out(5) lives}
     );
 }
 

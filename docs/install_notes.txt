@@ -1,5 +1,6 @@
 RPerl Install Notes
 Single-User Installation (Not System-Wide Installation)
+Last Updated November 30th, 2013
 
 $ mkdir -p ~/RPerl/3rd_party/CPAN
 $ cd ~/.cpan/CPAN
@@ -24,4 +25,10 @@ $ ln -s path_to_RPerl/lib/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/sha
 DEBUGGING:
 $ mv /usr/share/perl5/Perl/Critic/Policy/CodeLayout/RequireTidyCode.pm /usr/share/perl5/Perl/Critic/Policy/CodeLayout/RequireTidyCode.pm.orig
 $ ln -s path_to_RPerl/lib/Perl/Critic/Policy/CodeLayout/RequireTidyCode.pm /usr/share/perl5/Perl/Critic/Policy/CodeLayout/RequireTidyCode.pm
+
+DEVELOPMENT:
+$ perltidy -pbp --ignore-side-comment-lengths --converge
+    Perltidy v20121207 or later
+$ perlcritic --brutal
+    Perl-Critic v1.120 or later
 
