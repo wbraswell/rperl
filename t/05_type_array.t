@@ -74,10 +74,9 @@ BEGIN {
     );
 }
 
-# loop 3 times, once for each mode: Pure-Perl, Hybrid-Perl-and-C++, Pure-C++
-#for (my $i = 0;  $i < 3;  ++$i)
+# loop 3 times, once for each mode: Pure-Perl, RPerl Perl-Data, and RPerl C-Data
 for my $i ( 0 .. 2 ) {
-    print "in 04_type_array.t, top of for() loop, have \$i = $i\n"
+    print "in 05_type_array.t, top of for() loop, have \$i = $i\n"
         or croak;    # no effect if suppressing output!
 
     if ( $i == 0 ) {
@@ -122,10 +121,9 @@ for my $i ( 0 .. 2 ) {
     }
     elsif ( $i == 1 ) {
         diag(
-            "\n[[[ Beginning RPerl's Perl Data Mode Array Type Tests, RPerl Type System Using Perl Data Types & C++ Operations ]]]\n "
+            "\n[[[ Beginning RPerl's Perl-Data Mode Array Type Tests, RPerl Type System Using Perl Data Types & C++ Operations ]]]\n "
         );
 
-#		lives_ok(sub { types_enable('PERL') }, q{types_enable('PERL') lives});  # NEED FIX?  RPerl typed functions not working in types.pm, must call as normal Perl function
         lives_ok(
             sub { types::types_enable('PERL') },
             q{types::types_enable('PERL') lives}
@@ -184,7 +182,7 @@ for my $i ( 0 .. 2 ) {
     }
     else {
         diag(
-            "\n[[[ Beginning RPerl's C++ Data Mode Array Type Tests, RPerl Type System Using C++ Data Types & C++ Operations ]]]\n "
+            "\n[[[ Beginning RPerl's C-Data Mode Array Type Tests, RPerl Type System Using C++ Data Types & C++ Operations ]]]\n "
         );
         lives_ok(
             sub { types::types_enable('CPP') },
