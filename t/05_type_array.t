@@ -6,17 +6,16 @@ use version; our $VERSION = qv('0.1.1');
 # SUPPRESS OUTPUT FROM INDIVIDUAL TESTS, EXCLUDING TESTS INSIDE BEGIN{} BLOCKS
 # order is BEGIN, UNITCHECK, CHECK, INIT, END; CHECK here suppresses Inline compile output from including HelperFunctions_cpp.pm from INIT in Array.pm
 CHECK {
-    open( STDOUT, '>', '/dev/null' ) || croak('Error redirecting stdout, croaking');
-    open( STDERR, '>', '/dev/null' ) || croak('Error redirecting stderr, croaking');
+    open( STDOUT, '>', '/dev/null' )
+        || croak('Error redirecting stdout, croaking');
+    open( STDERR, '>', '/dev/null' )
+        || croak('Error redirecting stderr, croaking');
 }
 
-use Carp;
 use Test::More tests => 121;
-
-#use Test::More;
 use Test::Exception;
+use Carp;
 
-# RPERL TEST BOILERPLATE
 BEGIN {
     diag(
         "\n[[[ Beginning Array Type Pre-Test Loading, RPerl Type System ]]]\n "
@@ -569,4 +568,4 @@ for my $i ( 0 .. 2 ) {
     );
 }
 
-done_testing();
+#done_testing();

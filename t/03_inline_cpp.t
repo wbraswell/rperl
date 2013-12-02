@@ -3,14 +3,12 @@ use strict;
 use warnings;
 use version; our $VERSION = qv('0.1.0');
 
-#use Test::More;
 use Test::More tests => 20;
 use Test::Exception;
 use Carp;
 use English qw(-no_match_vars);
 my $ERROR_MAX = 0.00000001; ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
 
-# RPERL TEST BOILERPLATE
 BEGIN {
     diag("\n[[[ Beginning Inline::CPP Pre-Test Loading ]]]\n ");
 }

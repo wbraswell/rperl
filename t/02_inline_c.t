@@ -3,14 +3,12 @@ use strict;
 use warnings;
 use version; our $VERSION = qv('0.1.0');
 
-#use Test::More;
 use Test::More tests => 19;
 use Test::Exception;
 use Carp;
 use English qw(-no_match_vars);
 my $ERROR_MAX = 0.00000001; ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
 
-# RPERL TEST BOILERPLATE
 BEGIN {
     diag("\n[[[ Beginning Inline::C Pre-Test Loading ]]]\n ");
 }
@@ -31,6 +29,9 @@ BEGIN {
         sub { use lib $main::RPERL_INCLUDE_PATH . '/CPAN/'; },
         q{use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
     );
+}
+
+BEGIN {
     lives_and( sub { use_ok('MyConfig'); }, q{use_ok('MyConfig') lives} );
 }    # RPerl's MyConfig.pm
 
