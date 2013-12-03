@@ -247,10 +247,10 @@ for my $i ( 0 .. 2 ) {
     # START HERE: change from is() to like() to handle out-of-order hash stringification?
     lives_and(
         sub {
-            is( stringify_int__hash_ref(
+            like( stringify_int__hash_ref(
                     {a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => 877, f_key => 33, g_key => 1701}
                 ),
-                q{{"a_key" => 2, "g_key" => 1701, "b_key" => 2112, "d_key" => 23, "f_key" => 33, "c_key" => 42, "e_key" => 877}},
+                q{/\{"a_key" => 2, "g_key" => 1701, "b_key" => 2112, "d_key" => 23, "f_key" => 33, "c_key" => 42, "e_key" => 877\}/},
                 q{stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => 877, f_key => 33, g_key => 1701}) returns correct value}
             );
         },
