@@ -1,6 +1,6 @@
 RPerl Install Notes
 Single-User Installation (Not System-Wide Installation)
-Last Updated November 30th, 2013
+Last Updated December 5th, 2013
 
 $ mkdir -p ~/RPerl/3rd_party/CPAN
 $ cd ~/.cpan/CPAN
@@ -21,6 +21,9 @@ cpan> install Test::Exception
 
 $ mv ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm.old
 $ ln -s path_to_RPerl/lib/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm
+
+UNCONFIRMED:
+cpan> install BULKDD/Inline-Filters-0.12_01.tar.gz
 
 DEBUGGING:
 $ mv /usr/share/perl5/Perl/Critic/Policy/CodeLayout/RequireTidyCode.pm /usr/share/perl5/Perl/Critic/Policy/CodeLayout/RequireTidyCode.pm.orig

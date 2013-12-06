@@ -1,14 +1,17 @@
 #!/usr/bin/perl
-use strict;  use warnings;
+use strict;
+use warnings;
+use version; our $VERSION = qv('0.1.0');
+use Carp;
 
 # RPERL DRIVER BOILERPLATE
 BEGIN { package main;  our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib'; }  # NEED REMOVE hard-coded path
 BEGIN { use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';  use MyConfig; }  # RPerl's MyConfig.pm 
-BEGIN { use lib $main::RPERL_INCLUDE_PATH;  use RPerl;  our @ISA = ('RPerl');  $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH; }  # RPerl system files
-BEGIN { use Data::Dumper;  our $AUTOLOAD;  sub AUTOLOAD { die("AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n" . Dumper(\@_) . ", dying"); } }  ## no critic
+BEGIN { use lib $main::RPERL_INCLUDE_PATH;  use RPerl;  use base ('RPerl');  $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH; }  # RPerl system files
+BEGIN { use Data::Dumper;  our $AUTOLOAD;  sub AUTOLOAD { croak("AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n" . Dumper(\@_) . ', croaking'); } }  ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  ## RPERL SYSTEM allow autoload  ## RPERL SYSTEM allow read-only @_
 
 # UNCOMMENT TO ENABLE C++
-#use RPerl::DataStructure::Hash_cpp;  RPerl::DataStructure::Hash_cpp::cpp_load();  RPerl::DataStructure::Hash_cpp::cpp_link();
+use RPerl::DataStructure::Hash_cpp;  RPerl::DataStructure::Hash_cpp::cpp_load();  RPerl::DataStructure::Hash_cpp::cpp_link();
 
 # variable declarations
 my string $retval_stringify;
@@ -19,24 +22,23 @@ my string__hash_ref $retval_jeffys;
 
 # loop to test for memory leaks
 my const_int $i_MAX = 1;
-for (my int $i = 0;  $i < $i_MAX;  ++$i)
-{
-	print "in hash_test.pl, top of for() loop $i/$i_MAX\n";
-	
-#	$retval_stringify = stringify_int__hash_ref({a_key => 23});
-	$retval_stringify = stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => 877, f_key => 33, g_key => 1701});
-#	$retval_stringify = stringify_int__hash_ref(2);  # raise/throw exception
-#	$retval_stringify = stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => 23, e_key => 877, f_key => 33, g_key => 1701});  # raise/throw exception
-#	$retval_stringify = stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => '42', d_key => 23, e_key => 877, f_key => 33, g_key => 1701});  # raise/throw exception
-	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
-	
-die("Done for now, dying");
-	
+for my int $i ( 0 .. $i_MAX ) {
+	print "in hash_test.pl, top of for() loop $i/$i_MAX\n" or croak();
+
+	$retval_stringify = stringify_int__hash_ref(2);  # HV00; raise/throw exception
+#	$retval_stringify = stringify_int__hash_ref({a_key => 23});  # HV01
+#	$retval_stringify = stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => 877, f_key => 33, g_key => 1701});  # HV02
+#	$retval_stringify = stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => 23, e_key => 877, f_key => 33, g_key => 1701});  # HV03; raise/throw exception
+#	$retval_stringify = stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => '42', d_key => 23, e_key => 877, f_key => 33, g_key => 1701});  # HV04; raise/throw exception
+	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
+
+croak('Done for now, croaking');
+
 	# START HERE: add stringify()'s here, modify *void__out()'s here & Hash.h/cpp/pm, then in Hash.h/cpp add stringify()'s & separate PERL vs CPP types
 	# START HERE: add stringify()'s here, modify *void__out()'s here & Hash.h/cpp/pm, then in Hash.h/cpp add stringify()'s & separate PERL vs CPP types
 	# START HERE: add stringify()'s here, modify *void__out()'s here & Hash.h/cpp/pm, then in Hash.h/cpp add stringify()'s & separate PERL vs CPP types
-	
-	
+
+
 	typetest___int__hash_ref__in___void__out({'binary' => 2, 'rush' => 2112, 'answer' => 42, 'fnord' => 23, 'units' => 877, 'degree' => 33, 'ncc' => 1701});
 #	typetest___int__hash_ref__in___void__out({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => "abcdefg\n", 'answer' => 42, 'fnord' => 23, 'units' => 877, 'degree' => 33, 'ncc' => 1701});  # not-an-int error
 
@@ -58,4 +60,4 @@ die("Done for now, dying");
 	print "in type_test.pl, have \$retval_jeffys =\n" . RPerl::DUMPER($retval_jeffys) . "\n" if $RPerl::DEBUG;
 }
 
-#die("Done for now, dying");
+#croak('Done for now, croaking');

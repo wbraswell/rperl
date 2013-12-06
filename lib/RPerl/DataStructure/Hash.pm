@@ -1,10 +1,14 @@
-use strict;  use warnings;
 package RPerl::DataStructure::Hash;
+use strict;
+use warnings;
+use version; our $VERSION = qv('0.1.1');
+use Carp;
 
-our @ISA = ('RPerl::DataStructure');
+use base ('RPerl::DataStructure');
 use RPerl::DataStructure;
 
 # for type checking via SvIOKp(), SvNOKp(), and SvPOKp(); inside INIT to delay until after 'use MyConfig'
+INIT { print "in Hash.pm, loading C++ helper functions for type checking...\n"; }
 INIT { use RPerl::HelperFunctions_cpp;  RPerl::HelperFunctions_cpp::cpp_load();  RPerl::HelperFunctions_cpp::cpp_link(); }
 
 # [[[ DATA TYPES ]]]
@@ -650,6 +654,8 @@ our @ISA = ('const_hash_ref');
 # [[[ STRINGIFY ]]]
 # [[[ STRINGIFY ]]]
 
+package RPerl::DataStructure::Hash;
+
 # convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
 our string $stringify_int__hash_ref = sub { (my $input_hv_ref) = @_;  
 ;
@@ -664,7 +670,7 @@ our string $stringify_int__hash_ref = sub { (my $input_hv_ref) = @_;
 	my int $i_is_0 = 1;
 
 	if (UNIVERSAL::isa($input_hv_ref, 'HASH')) { %input_hv = %{$input_hv_ref}; }
-	else { die("in Perl stringify_int__hash_ref(), \$input_hv_ref was not an HV ref, dying"); }
+	else { die("in Perl stringify_int__hash_ref(), \$input_hv_ref was not an HV ref, dying"); }  # croak says eval(), die says Array.pm, confess says Array.pm & stack trace
 	
 #	$input_hv_length = scalar keys %input_hv;
 #	print "in Perl stringify_int__hash_ref(), have \$input_hv_length = $input_hv_length\n";

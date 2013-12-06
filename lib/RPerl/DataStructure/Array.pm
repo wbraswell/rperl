@@ -1,10 +1,14 @@
-use strict;  use warnings;
 package RPerl::DataStructure::Array;
+use strict;
+use warnings;
+use version; our $VERSION = qv('0.1.1');
+use Carp;
 
-our @ISA = ('RPerl::DataStructure');
+use base ('RPerl::DataStructure');
 use RPerl::DataStructure;
 
 # for type checking via SvIOKp(), SvNOKp(), and SvPOKp(); inside INIT to delay until after 'use MyConfig'
+INIT { print "in Array.pm, loading C++ helper functions for type checking...\n"; }
 INIT { use RPerl::HelperFunctions_cpp;  RPerl::HelperFunctions_cpp::cpp_load();  RPerl::HelperFunctions_cpp::cpp_link(); }
 
 # [[[ DATA TYPES ]]]
@@ -650,6 +654,8 @@ our @ISA = ('const_array_ref');
 # [[[ STRINGIFY ]]]
 # [[[ STRINGIFY ]]]
 
+package RPerl::DataStructure::Array;
+
 # convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
 our string $stringify_int__array_ref = sub { (my $input_av_ref) = @_;  
 ;
@@ -673,7 +679,7 @@ our string $stringify_int__array_ref = sub { (my $input_av_ref) = @_;
 	my int $i_is_0 = 1;
 
 	if (UNIVERSAL::isa($input_av_ref, 'ARRAY')) { @input_av = @{$input_av_ref}; }
-	else { die("in Perl stringify_int__array_ref(), \$input_av_ref was not an AV ref, dying"); }
+	else { die("in Perl stringify_int__array_ref(), \$input_av_ref was not an AV ref, dying"); }  # croak says eval(), die says Array.pm, confess says Array.pm & stack trace
 	
 	$input_av_length = scalar @input_av;
 #	print "in Perl stringify_int__array_ref(), have \$input_av_length = $input_av_length\n";

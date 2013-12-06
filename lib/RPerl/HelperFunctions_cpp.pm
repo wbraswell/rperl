@@ -1,5 +1,9 @@
-use strict; use warnings;
 package RPerl::HelperFunctions_cpp;
+use strict;
+use warnings;
+use version; our $VERSION = qv('0.1.1');
+use Carp;
+
 our $CPP_loaded = 0;
 our $CPP_linked = 0;
 #our @ISA = ('RPerl::Class');  # DEV NOTE: need to use HelperFunctions in RPerl::DataStructure::Array for type checking SvIOKp() etc; remove dependency on RPerl void__method type so HelperFunctions can be loaded by RPerl type system
@@ -8,6 +12,7 @@ our $CPP_linked = 0;
 #our void__method $cpp_load = sub {  # DEV NOTE: remove dependency on RPerl
 sub cpp_load {
 ;	
+#    croak("in HelperFunctions_cpp::cpp_load(), croaking");
 	if (defined($RPerl::HelperFunctions_cpp::CPP_loaded)) { print "in HelperFunctions_cpp::cpp_load(), have \$RPerl::HelperFunctions_cpp::CPP_loaded = '" . $RPerl::HelperFunctions_cpp::CPP_loaded . "'\n"; }
 		else { print "in HelperFunctions_cpp::cpp_load(), have \$RPerl::HelperFunctions_cpp::CPP_loaded = 'UNDEF'\n"; }
 	if (not(defined($RPerl::HelperFunctions_cpp::CPP_loaded)) or not($RPerl::HelperFunctions_cpp::CPP_loaded))
@@ -41,7 +46,7 @@ EOF
 		print "in HelperFunctions_cpp::cpp_load(), CPP not yet loaded, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
 
 		eval($eval_string);  ## no critic
-		die($@) if ($@);
+		croak($@) if ($@);
 		
 		$RPerl::HelperFunctions_cpp::CPP_loaded = 1;
 	}
@@ -67,7 +72,7 @@ EOF
 #		print "in HelperFunctions_cpp::cpp_link(), CPP not yet linked, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
 
 		eval($eval_string);  ## no critic
-		die($@) if ($@);
+		croak($@) if ($@);
 	}
 #	else { print "in HelperFunctions_cpp::cpp_link(), CPP already linked, DOING NOTHING\n"; }
 #};

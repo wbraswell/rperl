@@ -230,12 +230,12 @@ for my $i ( 0 .. 2 ) {
     }
 
     # Int Hash: stringify, create, manipulate
-    throws_ok(
+    throws_ok(  # HV00
         sub { stringify_int__hash_ref(2) },
         '/input_hv_ref was not an HV ref/',
         q{stringify_int__hash_ref(2) throws correct exception}
     );
-    lives_and(
+    lives_and(  # HV01
         sub {
             is( stringify_int__hash_ref( { a_key => 23 } ),
                 q{{"a_key" => 23}},
@@ -244,9 +244,7 @@ for my $i ( 0 .. 2 ) {
         },
         q{stringify_int__hash_ref({a_key => 23}) lives}
     );
-
-# START HERE: change from is() to like() to handle out-of-order hash stringification?
-    lives_and(
+    lives_and(  # HV02
         sub {
             like(
                 stringify_int__hash_ref(
@@ -259,7 +257,7 @@ for my $i ( 0 .. 2 ) {
                         g_key => 1701
                     }
                 ),
-                # NEED FIX: replace ".*" near end of following regex with something to match exactly 6 occurrences of ", "; (,\s)* and variations don't work?
+                # NEED FIX: replace ".*" near end of this & following regexes with syntax to match exactly 6 occurrences of ", "; (,\s)* and variations don't work?
                 q{/^\{(?=.*"a_key" => 2\b)(?=.*"b_key" => 2112\b)(?=.*"c_key" => 42\b)(?=.*"d_key" => 23\b)(?=.*"e_key" => 877\b)(?=.*"f_key" => 33\b)(?=.*"g_key" => 1701\b).*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
                 ,
                 q{stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => 877, f_key => 33, g_key => 1701}) returns correct value}
