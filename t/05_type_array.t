@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.2.0');
+use version; our $VERSION = qv('0.3.0');
 
 # SUPPRESS OUTPUT FROM INDIVIDUAL TESTS, EXCLUDING TESTS INSIDE BEGIN{} BLOCKS
 # order is BEGIN, UNITCHECK, CHECK, INIT, END; CHECK here suppresses Inline compile output from including HelperFunctions_cpp.pm from INIT in Array.pm
@@ -78,17 +78,12 @@ BEGIN {
 for my $i ( 0 .. 2 ) {
     print "in 05_type_array.t, top of for() loop, have \$i = $i\n"
         or croak;    # no effect if suppressing output!
+    my $OPS_TYPES;
 
     if ( $i == 0 ) {
+        $OPS_TYPES = 'PERLOPS_PERLTYPES';
         diag(
             "\n[[[ Beginning RPerl's Pure-Perl Array Type Tests, RPerl Type System Using Perl Data Types & Perl Operations ]]]\n "
-        );
-        lives_and(
-            sub {
-                is( types_number(), 'PERL',
-                    q{types_number() returns 'PERL'} );
-            },
-            q{types_number() lives}
         );
         lives_and(
             sub {
@@ -98,10 +93,10 @@ for my $i ( 0 .. 2 ) {
         );
         lives_and(
             sub {
-                is( types_string(), 'PERL',
-                    q{types_string() returns 'PERL'} );
+                is( types_number(), 'PERL',
+                    q{types_number() returns 'PERL'} );
             },
-            q{types_string() lives}
+            q{types_number() lives}
         );
         lives_and(
             sub { is( ops_string(), 'PERL', q{ops_string() returns 'PERL'} ) }
@@ -110,16 +105,24 @@ for my $i ( 0 .. 2 ) {
         );
         lives_and(
             sub {
-                is( types_array(), 'PERL', q{types_array() returns 'PERL'} );
+                is( types_string(), 'PERL',
+                    q{types_string() returns 'PERL'} );
             },
-            q{types_array() lives}
+            q{types_string() lives}
         );
         lives_and(
             sub { is( ops_array(), 'PERL', q{ops_array() returns 'PERL'} ) },
             q{ops_array() lives}
         );
+        lives_and(
+            sub {
+                is( types_array(), 'PERL', q{types_array() returns 'PERL'} );
+            },
+            q{types_array() lives}
+        );
     }
     elsif ( $i == 1 ) {
+        $OPS_TYPES = 'CPPOPS_PERLTYPES';
         diag(
             "\n[[[ Beginning RPerl's Perl-Data Mode Array Type Tests, RPerl Type System Using Perl Data Types & C++ Operations ]]]\n "
         );
@@ -149,6 +152,10 @@ for my $i ( 0 .. 2 ) {
             q{RPerl::DataStructure::Array_cpp::cpp_link() lives}
         );
         lives_and(
+            sub { is( ops_number(), 'CPP', q{ops_number() returns 'CPP'} ) },
+            q{ops_number() lives}
+        );
+        lives_and(
             sub {
                 is( types_number(), 'PERL',
                     q{types_number() returns 'PERL'} );
@@ -156,8 +163,8 @@ for my $i ( 0 .. 2 ) {
             q{types_number() lives}
         );
         lives_and(
-            sub { is( ops_number(), 'CPP', q{ops_number() returns 'CPP'} ) },
-            q{ops_number() lives}
+            sub { is( ops_string(), 'CPP', q{ops_string() returns 'CPP'} ) },
+            q{ops_string() lives}
         );
         lives_and(
             sub {
@@ -167,20 +174,17 @@ for my $i ( 0 .. 2 ) {
             q{types_string() lives}
         );
         lives_and(
-            sub { is( ops_string(), 'CPP', q{ops_string() returns 'CPP'} ) },
-            q{ops_string() lives}
-        );
+            sub { is( ops_array(), 'CPP', q{ops_array() returns 'CPP'} ) },
+            q{ops_array() lives} );
         lives_and(
             sub {
                 is( types_array(), 'PERL', q{types_array() returns 'PERL'} );
             },
             q{types_array() lives}
         );
-        lives_and(
-            sub { is( ops_array(), 'CPP', q{ops_array() returns 'CPP'} ) },
-            q{ops_array() lives} );
     }
     else {
+        $OPS_TYPES = 'CPPOPS_CPPTYPES';
         diag(
             "\n[[[ Beginning RPerl's C-Data Mode Array Type Tests, RPerl Type System Using C++ Data Types & C++ Operations ]]]\n "
         );
@@ -203,14 +207,18 @@ for my $i ( 0 .. 2 ) {
             q{RPerl::DataStructure::Array_cpp::cpp_link() lives}
         );
         lives_and(
+            sub { is( ops_number(), 'CPP', q{ops_number() returns 'CPP'} ) },
+            q{ops_number() lives}
+        );
+        lives_and(
             sub {
                 is( types_number(), 'CPP', q{types_number() returns 'CPP'} );
             },
             q{types_number() lives}
         );
         lives_and(
-            sub { is( ops_number(), 'CPP', q{ops_number() returns 'CPP'} ) },
-            q{ops_number() lives}
+            sub { is( ops_string(), 'CPP', q{ops_string() returns 'CPP'} ) },
+            q{ops_string() lives}
         );
         lives_and(
             sub {
@@ -219,23 +227,19 @@ for my $i ( 0 .. 2 ) {
             q{types_string() lives}
         );
         lives_and(
-            sub { is( ops_string(), 'CPP', q{ops_string() returns 'CPP'} ) },
-            q{ops_string() lives}
-        );
+            sub { is( ops_array(), 'CPP', q{ops_array() returns 'CPP'} ) },
+            q{ops_array() lives} );
         lives_and(
             sub { is( types_array(), 'CPP', q{types_array() returns 'CPP'} ) }
             ,    ## PERLTIDY BUG comma on newline
             q{types_array() lives}
         );
-        lives_and(
-            sub { is( ops_array(), 'CPP', q{ops_array() returns 'CPP'} ) },
-            q{ops_array() lives} );
     }
 
     # Int Array: stringify, create, manipulate
     throws_ok(    # AV00
         sub { stringify_int__array_ref(2) },
-        '/input_av_ref was not an AV ref/',
+        "/$OPS_TYPES.*input_av_ref was not an AV ref/",
         q{stringify_int__array_ref(2) throws correct exception}
     );
     lives_and(    # AV01
@@ -262,7 +266,7 @@ for my $i ( 0 .. 2 ) {
             stringify_int__array_ref( [ 2, 2112, 42.3, 23, 877, 33, 1701 ] ) ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ;    ## PERLTIDY BUG semicolon on newline
         },
-        '/input_av_element at index 2 was not an int/',
+        "/$OPS_TYPES.*input_av_element at index 2 was not an int/",
         q{stringify_int__array_ref([2, 2112, 42.3, 23, 877, 33, 1701]) throws correct exception}
     );
     throws_ok(       # AV04
@@ -270,7 +274,7 @@ for my $i ( 0 .. 2 ) {
             stringify_int__array_ref( [ 2, 2112, '42', 23, 877, 33, 1701 ] ) ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ;    ## PERLTIDY BUG semicolon on newline
         },
-        '/input_av_element at index 2 was not an int/',
+        "/$OPS_TYPES.*input_av_element at index 2 was not an int/",
         q{stringify_int__array_ref([2, 2112, '42', 23, 877, 33, 1701]) throws correct exception}
     );
     lives_and(       # AV10
@@ -278,7 +282,7 @@ for my $i ( 0 .. 2 ) {
             is( typetest___int__array_ref__in___string__out(
                     [ 2, 2112, 42, 23, 877, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ),
-                '[2, 2112, 42, 23, 877, 33, 1701]BARBAT',
+                '[2, 2112, 42, 23, 877, 33, 1701]' . $OPS_TYPES,
                 q{typetest___int__array_ref__in___string__out([2, 2112, 42, 23, 877, 33, 1701]) returns correct value}
             );
         },
@@ -289,7 +293,7 @@ for my $i ( 0 .. 2 ) {
             typetest___int__array_ref__in___string__out(
                 [ 2, 2112, 42, 23, 877, "abcdefg\n", 33, 1701 ] ); ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
         },
-        '/input_av_element at index 5 was not an int/',
+        "/$OPS_TYPES.*input_av_element at index 5 was not an int/",
         q{typetest___int__array_ref__in___string__out([2, 2112, 42, 23, 877, "abcdefg\n", 33, 1701]) throws correct exception} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted newline
     );
     lives_and(    # AV12
@@ -297,7 +301,7 @@ for my $i ( 0 .. 2 ) {
             is( typetest___int__array_ref__in___string__out(
                     [ 444, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ),
-                '[444, 33, 1701]BARBAT',
+                '[444, 33, 1701]' . $OPS_TYPES,
                 q{typetest___int__array_ref__in___string__out([444, 33, 1701]) returns correct value again, Perl stack still functioning properly}
             );
         },
@@ -317,7 +321,7 @@ for my $i ( 0 .. 2 ) {
     # Number Array: stringify, create, manipulate
     throws_ok(                        # AV30
         sub { stringify_number__array_ref(2) },
-        '/input_av_ref was not an AV ref/',
+        "/$OPS_TYPES.*input_av_ref was not an AV ref/",
         q{stringify_number__array_ref(2) throws correct exception}
     );
     lives_and(                        # AV31
@@ -370,7 +374,7 @@ for my $i ( 0 .. 2 ) {
             stringify_number__array_ref(
                 [ 2, 2112, '42', 23, 877, 33, 1701 ] ); ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
         },
-        '/input_av_element at index 2 was not a number/',
+        "/$OPS_TYPES.*input_av_element at index 2 was not a number/",
         q{stringify_number__array_ref([2, 2112, '42', 23, 877, 33, 1701]) throws correct exception}
     );
     lives_and(                                          # AV40
@@ -382,7 +386,8 @@ for my $i ( 0 .. 2 ) {
                         1701.6789 ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                     ]
                 ),
-                '[2.12344321123443, 2112.4321, 42.4567, 23.7654444444444, 877.5678, 33.8765876587659, 1701.6789]BARBAZ',
+                '[2.12344321123443, 2112.4321, 42.4567, 23.7654444444444, 877.5678, 33.8765876587659, 1701.6789]'
+                    . $OPS_TYPES,
                 q{typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, 33.876587658765875687658765, 1701.6789]) returns correct value}
             );
         },
@@ -398,7 +403,7 @@ for my $i ( 0 .. 2 ) {
                 ]
             );
         },
-        '/input_av_element at index 5 was not a number/',
+        "/$OPS_TYPES.*input_av_element at index 5 was not a number/",
         q{typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, "abcdefg\n", 33.876587658765875687658765, 1701.6789]) throws correct exception} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted newline
     );
     lives_and(    # AV50
@@ -417,7 +422,7 @@ for my $i ( 0 .. 2 ) {
 # DEV NOTE: all single-quotes replaced by double-quotes when passing through stringify, this is because Perl accepts both but C/C++ only accepts double-quotes for strings
     throws_ok(    # AV60
         sub { stringify_string__array_ref('Lone Ranger') },
-        '/input_av_ref was not an AV ref/',
+        "/$OPS_TYPES.*input_av_ref was not an AV ref/",
         q{stringify_string__array_ref('Lone Ranger') throws correct exception}
     );
     lives_and(    # AV61
@@ -460,7 +465,7 @@ for my $i ( 0 .. 2 ) {
                 ]
             );
         },
-        '/input_av_element at index 7 was not a string/',
+        "/$OPS_TYPES.*input_av_element at index 7 was not a string/",
         q{stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', 23]) throws correct exception}
     );
     lives_and(                              # AV64
@@ -503,7 +508,7 @@ for my $i ( 0 .. 2 ) {
                 ]
             );
         },
-        '/input_av_element at index 7 was not a string/',
+        "/$OPS_TYPES.*input_av_element at index 7 was not a string/",
         q{stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', -2112.23]) throws correct exception}
     );
     throws_ok(                                    # AV67
@@ -518,7 +523,7 @@ for my $i ( 0 .. 2 ) {
                 ]
             );
         },
-        '/input_av_element at index 5 was not a string/',
+        "/$OPS_TYPES.*input_av_element at index 5 was not a string/",
         q{stringify_string__array_ref(['Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', {fuzz => 'bizz', bar => "stool!\n", bat => 24}]) throws correct exception} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted newline
     );
     lives_and(    # AV70
@@ -530,7 +535,8 @@ for my $i ( 0 .. 2 ) {
                         'Martian Manhunter'
                     ]
                 ),
-                q{["Superman", "Batman", "Wonder Woman", "Flash", "Green Lantern", "Aquaman", "Martian Manhunter"]BARBAR},
+                q{["Superman", "Batman", "Wonder Woman", "Flash", "Green Lantern", "Aquaman", "Martian Manhunter"]}
+                    . $OPS_TYPES,
                 q{typetest___string__array_ref__in___string__out(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']) returns correct value}
             );
         },
@@ -546,18 +552,18 @@ for my $i ( 0 .. 2 ) {
                 ]
             );
         },
-        '/input_av_element at index 7 was not a string/',
+        "/$OPS_TYPES.*input_av_element at index 7 was not a string/",
         q{typetest___string__array_ref__in___string__out(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', 23]) throws correct exception}
     );
     lives_and(                              # AV80
         sub {
             is_deeply(
                 typetest___int__in___string__array_ref__out(5), ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
-                [   'Jeffy Ten! 0/4',
-                    'Jeffy Ten! 1/4',
-                    'Jeffy Ten! 2/4',
-                    'Jeffy Ten! 3/4',
-                    'Jeffy Ten! 4/4'
+                [   'Jeffy Ten! 0/4 ' . $OPS_TYPES,
+                    'Jeffy Ten! 1/4 ' . $OPS_TYPES,
+                    'Jeffy Ten! 2/4 ' . $OPS_TYPES,
+                    'Jeffy Ten! 3/4 ' . $OPS_TYPES,
+                    'Jeffy Ten! 4/4 ' . $OPS_TYPES,
                 ],
                 q{typetest___int__in___string__array_ref__out(5) returns correct value}
             );

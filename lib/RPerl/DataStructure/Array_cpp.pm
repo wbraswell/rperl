@@ -1,8 +1,11 @@
-use strict; use warnings;
 package RPerl::DataStructure::Array_cpp;
+use strict;
+use warnings;
+use version; our $VERSION = qv('0.3.0');
+
 our $CPP_LOADED = 0;
 our $CPP_LINKED = 0;
-our @ISA = ('RPerl::Class');
+use base ('RPerl::Class');
 use RPerl::Class;  use RPerl;
 
 our void__method $cpp_load = sub {

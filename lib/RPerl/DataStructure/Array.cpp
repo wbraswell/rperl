@@ -1,6 +1,8 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
+// VERSION 0.3.0
+
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array_cpp
 #define __CPP__INCLUDED__RPerl__DataStructure__Array_cpp 1
 
@@ -22,7 +24,7 @@ using std::cout;  using std::endl;
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))) to (C++ std::vector of ints)
 int__array_ref XS_unpack_int__array_ref(SV *input_av_ref)
 {
-//	printf("in XS_unpack_int__array_ref(), top of subroutine\n");
+//	printf("in CPPOPS_CPPTYPES XS_unpack_int__array_ref(), top of subroutine\n");
 
     AV* input_av;
     int input_av_length;
@@ -31,10 +33,10 @@ int__array_ref XS_unpack_int__array_ref(SV *input_av_ref)
     int__array_ref output_vector;
 
 	if (SvROK(input_av_ref) && (SvTYPE(SvRV(input_av_ref)) == SVt_PVAV)) { input_av = (AV*)SvRV(input_av_ref); }
-	else { croak("in XS_unpack_int__array_ref(), input_av_ref was not an AV ref, croaking"); }
+	else { croak("in CPPOPS_CPPTYPES XS_unpack_int__array_ref(), input_av_ref was not an AV ref, croaking"); }
 
 	input_av_length = av_len(input_av) + 1;
-//	printf("in XS_unpack_int__array_ref(), have input_av_length = %d\n", input_av_length);
+//	printf("in CPPOPS_CPPTYPES XS_unpack_int__array_ref(), have input_av_length = %d\n", input_av_length);
 
 	// DEV NOTE: VECTOR ELEMENT ASSIGNMENT OPTION information is not specific to this subroutine or packing/unpacking
 
@@ -77,14 +79,14 @@ int__array_ref XS_unpack_int__array_ref(SV *input_av_ref)
 			// call resize() every time we use insert(); utilizes i in assignment
 //			if (SvIOKp(*input_av_element)) { VECTOR_RESIZE_NOSHRINK(output_vector, (i + 1));  output_vector.erase(i + output_vector.begin());  output_vector.insert((i + output_vector.begin()), SvIV(*input_av_element)); }
 
-			else { croak("in XS_unpack_int__array_ref(), input_av_element at index %d was not an int, croaking", i); }
+			else { croak("in CPPOPS_CPPTYPES XS_unpack_int__array_ref(), input_av_element at index %d was not an int, croaking", i); }
 		}
-		else { croak("in XS_unpack_int__array_ref(), input_av_element at index %d was undef and/or NULL, croaking", i); }
+		else { croak("in CPPOPS_CPPTYPES XS_unpack_int__array_ref(), input_av_element at index %d was undef and/or NULL, croaking", i); }
 	}
 
 
-//	printf("in XS_unpack_int__array_ref(), after for() loop, have output_vector.size() = %d\n", output_vector.size());
-//	printf("in XS_unpack_int__array_ref(), bottom of subroutine\n");
+//	printf("in CPPOPS_CPPTYPES XS_unpack_int__array_ref(), after for() loop, have output_vector.size() = %d\n", output_vector.size());
+//	printf("in CPPOPS_CPPTYPES XS_unpack_int__array_ref(), bottom of subroutine\n");
 
 	return(output_vector);
 }
@@ -93,30 +95,30 @@ int__array_ref XS_unpack_int__array_ref(SV *input_av_ref)
 // convert from (C++ std::vector of ints) to (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs)))
 void XS_pack_int__array_ref(SV *output_av_ref, int__array_ref input_vector)
 {
-//	printf("in XS_pack_int__array_ref(), top of subroutine\n");
+//	printf("in CPPOPS_CPPTYPES XS_pack_int__array_ref(), top of subroutine\n");
 
 	AV *output_av = newAV();  // initialize output array to empty
 	int input_vector_length = input_vector.size();
 	int i;
 	SV *temp_sv_pointer;
 
-//	printf("in XS_pack_int__array_ref(), have input_vector_length = %d\n", input_vector_length);
+//	printf("in CPPOPS_CPPTYPES XS_pack_int__array_ref(), have input_vector_length = %d\n", input_vector_length);
 
 	if (input_vector_length > 0) { for (i = 0;  i < input_vector_length;  ++i) { av_push(output_av, newSViv(input_vector[i])); } }
-	else warn("in XS_pack_int__array_ref(), array was empty, returning empty array via newAV()");
+	else warn("in CPPOPS_CPPTYPES XS_pack_int__array_ref(), array was empty, returning empty array via newAV()");
 
 	temp_sv_pointer = newSVrv(output_av_ref, NULL);	  // upgrade output stack SV to an RV
 	SvREFCNT_dec(temp_sv_pointer);		 // discard temporary pointer
 	SvRV(output_av_ref) = (SV*)output_av;	   // make output stack RV point at our output AV
 
-//	printf("in XS_pack_int__array_ref(), bottom of subroutine\n");
+//	printf("in CPPOPS_CPPTYPES XS_pack_int__array_ref(), bottom of subroutine\n");
 }
 
 
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing NVs))) to (C++ std::vector of long doubles)
 number__array_ref XS_unpack_number__array_ref(SV *input_av_ref)
 {
-//	printf("in XS_unpack_number__array_ref(), top of subroutine\n");
+//	printf("in CPPOPS_CPPTYPES XS_unpack_number__array_ref(), top of subroutine\n");
 
     AV* input_av;
     int input_av_length;
@@ -125,10 +127,10 @@ number__array_ref XS_unpack_number__array_ref(SV *input_av_ref)
     number__array_ref output_vector;
 
 	if (SvROK(input_av_ref) && (SvTYPE(SvRV(input_av_ref)) == SVt_PVAV)) { input_av = (AV*)SvRV(input_av_ref); }
-	else { croak("in XS_unpack_number__array_ref(), input_av_ref was not an AV ref, croaking"); }
+	else { croak("in CPPOPS_CPPTYPES XS_unpack_number__array_ref(), input_av_ref was not an AV ref, croaking"); }
 
 	input_av_length = av_len(input_av) + 1;
-//	printf("in XS_unpack_number__array_ref(), have input_av_length = %d\n", input_av_length);
+//	printf("in CPPOPS_CPPTYPES XS_unpack_number__array_ref(), have input_av_length = %d\n", input_av_length);
 
 	// DEV NOTE: VECTOR ELEMENT ASSIGNMENT OPTION information is not specific to this subroutine or packing/unpacking
 
@@ -172,14 +174,14 @@ number__array_ref XS_unpack_number__array_ref(SV *input_av_ref)
 			// call resize() every time we use insert(); utilizes i in assignment
 //			if (SvNOKp(*input_av_element)) { VECTOR_RESIZE_NOSHRINK(output_vector, (i + 1));  output_vector.erase(i + output_vector.begin());  output_vector.insert((i + output_vector.begin()), SvNV(*input_av_element)); }
 
-			else { croak("in XS_unpack_number__array_ref(), input_av_element at index %d was not a number, croaking", i); }
+			else { croak("in CPPOPS_CPPTYPES XS_unpack_number__array_ref(), input_av_element at index %d was not a number, croaking", i); }
 		}
-		else { croak("in XS_unpack_number__array_ref(), input_av_element at index %d was undef and/or NULL, croaking", i); }
+		else { croak("in CPPOPS_CPPTYPES XS_unpack_number__array_ref(), input_av_element at index %d was undef and/or NULL, croaking", i); }
 	}
 
 
-//	printf("in XS_unpack_number__array_ref(), after for() loop, have output_vector.size() = %d\n", output_vector.size());
-//	printf("in XS_unpack_number__array_ref(), bottom of subroutine\n");
+//	printf("in CPPOPS_CPPTYPES XS_unpack_number__array_ref(), after for() loop, have output_vector.size() = %d\n", output_vector.size());
+//	printf("in CPPOPS_CPPTYPES XS_unpack_number__array_ref(), bottom of subroutine\n");
 
 	return(output_vector);
 }
@@ -188,30 +190,30 @@ number__array_ref XS_unpack_number__array_ref(SV *input_av_ref)
 // convert from (C++ std::vector of long doubles) to (Perl SV containing RV to (Perl AV of (Perl SVs containing NVs)))
 void XS_pack_number__array_ref(SV *output_av_ref, number__array_ref input_vector)
 {
-//	printf("in XS_pack_number__array_ref(), top of subroutine\n");
+//	printf("in CPPOPS_CPPTYPES XS_pack_number__array_ref(), top of subroutine\n");
 
 	AV *output_av = newAV();  // initialize output array to empty
 	int input_vector_length = input_vector.size();
 	int i;
 	SV *temp_sv_pointer;
 
-//	printf("in XS_pack_number__array_ref(), have input_vector_length = %d\n", input_vector_length);
+//	printf("in CPPOPS_CPPTYPES XS_pack_number__array_ref(), have input_vector_length = %d\n", input_vector_length);
 
 	if (input_vector_length > 0) { for (i = 0;  i < input_vector_length;  ++i) { av_push(output_av, newSVnv(input_vector[i])); } }
-	else warn("in XS_pack_number__array_ref(), array was empty, returning empty array via newAV()");
+	else warn("in CPPOPS_CPPTYPES XS_pack_number__array_ref(), array was empty, returning empty array via newAV()");
 
 	temp_sv_pointer = newSVrv(output_av_ref, NULL);	  // upgrade output stack SV to an RV
 	SvREFCNT_dec(temp_sv_pointer);		 // discard temporary pointer
 	SvRV(output_av_ref) = (SV*)output_av;	   // make output stack RV point at our output AV
 
-//	printf("in XS_pack_number__array_ref(), bottom of subroutine\n");
+//	printf("in CPPOPS_CPPTYPES XS_pack_number__array_ref(), bottom of subroutine\n");
 }
 
 
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs))) to (C++ std::vector of std::strings)
 string__array_ref XS_unpack_string__array_ref(SV *input_av_ref)
 {
-//	printf("in XS_unpack_string__array_ref(), top of subroutine\n");
+//	printf("in CPPOPS_CPPTYPES XS_unpack_string__array_ref(), top of subroutine\n");
 
     AV* input_av;
     int input_av_length;
@@ -220,10 +222,10 @@ string__array_ref XS_unpack_string__array_ref(SV *input_av_ref)
     string__array_ref output_vector;
 
 	if (SvROK(input_av_ref) && (SvTYPE(SvRV(input_av_ref)) == SVt_PVAV)) { input_av = (AV*)SvRV(input_av_ref); }
-	else { croak("in XS_unpack_string__array_ref(), input_av_ref was not an AV ref, croaking"); }
+	else { croak("in CPPOPS_CPPTYPES XS_unpack_string__array_ref(), input_av_ref was not an AV ref, croaking"); }
 
 	input_av_length = av_len(input_av) + 1;
-//	printf("in XS_unpack_string__array_ref(), have input_av_length = %d\n", input_av_length);
+//	printf("in CPPOPS_CPPTYPES XS_unpack_string__array_ref(), have input_av_length = %d\n", input_av_length);
 
 	// VECTOR ELEMENT ASSIGNMENT, OPTION A, SUBSCRIPT, KNOWN SIZE: vector has programmer-provided const size or compiler-guessable size,
 	// resize() ahead of time to allow l-value subscript notation
@@ -248,13 +250,13 @@ string__array_ref XS_unpack_string__array_ref(SV *input_av_ref)
 			// only works for incrementing iteration!!!  will reverse list order for decrementing iteration, there is no push_front() method
 //			if (SvPOKp(*input_av_element)) { output_vector.push_back(SvPV_nolen(*input_av_element)); }
 
-				else { croak("in XS_unpack_string__array_ref(), input_av_element at index %d was not a string, croaking", i); }
+				else { croak("in CPPOPS_CPPTYPES XS_unpack_string__array_ref(), input_av_element at index %d was not a string, croaking", i); }
 		}
-		else { croak("in XS_unpack_string__array_ref(), input_av_element at index %d was undef and/or NULL, croaking", i); }
+		else { croak("in CPPOPS_CPPTYPES XS_unpack_string__array_ref(), input_av_element at index %d was undef and/or NULL, croaking", i); }
 	}
 
-//	printf("in XS_unpack_string__array_ref(), after for() loop, have output_vector.size() = %d\n", output_vector.size());
-//	printf("in XS_unpack_string__array_ref(), bottom of subroutine\n");
+//	printf("in CPPOPS_CPPTYPES XS_unpack_string__array_ref(), after for() loop, have output_vector.size() = %d\n", output_vector.size());
+//	printf("in CPPOPS_CPPTYPES XS_unpack_string__array_ref(), bottom of subroutine\n");
 
 	return(output_vector);
 }
@@ -263,23 +265,23 @@ string__array_ref XS_unpack_string__array_ref(SV *input_av_ref)
 // convert from (C++ std::vector of std::strings) to (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs)))
 void XS_pack_string__array_ref(SV *output_av_ref, string__array_ref input_vector)
 {
-//	printf("in XS_pack_string__array_ref(), top of subroutine\n");
+//	printf("in CPPOPS_CPPTYPES XS_pack_string__array_ref(), top of subroutine\n");
 
 	AV *output_av = newAV();  // initialize output array to empty
 	int input_vector_length = input_vector.size();
 	int i;
 	SV *temp_sv_pointer;
 
-//	printf("in XS_pack_string__array_ref(), have input_vector_length = %d\n", input_vector_length);
+//	printf("in CPPOPS_CPPTYPES XS_pack_string__array_ref(), have input_vector_length = %d\n", input_vector_length);
 
 	if (input_vector_length > 0) { for (i = 0;  i < input_vector_length;  ++i) { av_push(output_av, newSVpv(input_vector[i].data(), input_vector[i].size())); } }
-	else warn("in XS_pack_string__array_ref(), array was empty, returning empty array via newAV()");
+	else warn("in CPPOPS_CPPTYPES XS_pack_string__array_ref(), array was empty, returning empty array via newAV()");
 
 	temp_sv_pointer = newSVrv(output_av_ref, NULL);	  // upgrade output stack SV to an RV
 	SvREFCNT_dec(temp_sv_pointer);		 // discard temporary pointer
 	SvRV(output_av_ref) = (SV*)output_av;	   // make output stack RV point at our output AV
 
-//	printf("in XS_pack_string__array_ref(), bottom of subroutine\n");
+//	printf("in CPPOPS_CPPTYPES XS_pack_string__array_ref(), bottom of subroutine\n");
 }
 
 
@@ -307,7 +309,7 @@ SV* stringify_int__array_ref(SV *input_av_ref)
 	dAXMARK; */
 //	dITEMS;
 
-//	printf("in C++ __PERL__TYPES stringify_int__array_ref(), top of subroutine\n");
+//	printf("in CPPOPS_PERLTYPES stringify_int__array_ref(), top of subroutine\n");
 
     AV* input_av;
     int input_av_length;
@@ -317,10 +319,10 @@ SV* stringify_int__array_ref(SV *input_av_ref)
     bool i_is_0 = 1;
 
 	if (SvROK(input_av_ref) && (SvTYPE(SvRV(input_av_ref)) == SVt_PVAV)) { input_av = (AV*)SvRV(input_av_ref); }
-	else { croak("in C++ __PERL__TYPES stringify_int__array_ref(), input_av_ref was not an AV ref, croaking"); }
+	else { croak("in CPPOPS_PERLTYPES stringify_int__array_ref(), input_av_ref was not an AV ref, croaking"); }
 
 	input_av_length = av_len(input_av) + 1;
-//	printf("in C++ __PERL__TYPES stringify_int__array_ref(), have input_av_length = %d\n", input_av_length);
+//	printf("in CPPOPS_PERLTYPES stringify_int__array_ref(), have input_av_length = %d\n", input_av_length);
 
 	sv_setpvn(output_sv, "[", 1);
 
@@ -343,15 +345,15 @@ SV* stringify_int__array_ref(SV *input_av_ref)
 					sv_catpvf(output_sv, ", %d", (int)SvIV(*input_av_element));
 				}
 			}
-			else { croak("in C++ __PERL__TYPES stringify_int__array_ref(), input_av_element at index %d was not an int, croaking", i); }
+			else { croak("in CPPOPS_PERLTYPES stringify_int__array_ref(), input_av_element at index %d was not an int, croaking", i); }
 		}
-		else { croak("in C++ __PERL__TYPES stringify_int__array_ref(), input_av_element at index %d was undef and/or NULL, croaking", i); }
+		else { croak("in CPPOPS_PERLTYPES stringify_int__array_ref(), input_av_element at index %d was undef and/or NULL, croaking", i); }
 	}
 
 	sv_catpvn(output_sv, "]", 1);
 
-//	printf("in C++ __PERL__TYPES stringify_int__array_ref(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
-//	printf("in C++ __PERL__TYPES stringify_int__array_ref(), bottom of subroutine\n");
+//	printf("in CPPOPS_PERLTYPES stringify_int__array_ref(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
+//	printf("in CPPOPS_PERLTYPES stringify_int__array_ref(), bottom of subroutine\n");
 
 //	Inline_Stack_Reset;
 //#define Inline_Stack_Reset      sp = mark  // from INLINE.h
@@ -375,7 +377,7 @@ SV* stringify_int__array_ref(SV *input_av_ref)
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing NVs))) to Perl-parsable (Perl SV containing PV)
 SV* stringify_number__array_ref(SV *input_av_ref)
 {
-//	printf("in C++ __PERL__TYPES stringify_number__array_ref(), top of subroutine\n");
+//	printf("in CPPOPS_PERLTYPES stringify_number__array_ref(), top of subroutine\n");
 
     AV* input_av;
     int input_av_length;
@@ -387,10 +389,10 @@ SV* stringify_number__array_ref(SV *input_av_ref)
 	temp_stream.precision(std::numeric_limits<double>::digits10);
 
 	if (SvROK(input_av_ref) && (SvTYPE(SvRV(input_av_ref)) == SVt_PVAV)) { input_av = (AV*)SvRV(input_av_ref); }
-	else { croak("in C++ __PERL__TYPES stringify_number__array_ref(), input_av_ref was not an AV ref, croaking"); }
+	else { croak("in CPPOPS_PERLTYPES stringify_number__array_ref(), input_av_ref was not an AV ref, croaking"); }
 
 	input_av_length = av_len(input_av) + 1;
-//	printf("in C++ __PERL__TYPES stringify_number__array_ref(), have input_av_length = %d\n", input_av_length);
+//	printf("in CPPOPS_PERLTYPES stringify_number__array_ref(), have input_av_length = %d\n", input_av_length);
 
 	temp_stream << "[";
 //	sv_setpvn(output_sv, "[", 1);
@@ -417,17 +419,17 @@ SV* stringify_number__array_ref(SV *input_av_ref)
 //					sv_catpvf(output_sv, ", %Lf", (long double)SvNV(*input_av_element));
 				}
 			}
-			else { croak("in C++ __PERL__TYPES stringify_number__array_ref(), input_av_element at index %d was not a number, croaking", i); }
+			else { croak("in CPPOPS_PERLTYPES stringify_number__array_ref(), input_av_element at index %d was not a number, croaking", i); }
 		}
-		else { croak("in C++ __PERL__TYPES stringify_number__array_ref(), input_av_element at index %d was undef and/or NULL, croaking", i); }
+		else { croak("in CPPOPS_PERLTYPES stringify_number__array_ref(), input_av_element at index %d was undef and/or NULL, croaking", i); }
 	}
 
 	temp_stream << "]";
 	sv_setpv(output_sv, (char *)(temp_stream.str().c_str()));
 //	sv_catpvn(output_sv, "]", 1);
 
-//	printf("in C++ __PERL__TYPES stringify_number__array_ref(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
-//	printf("in C++ __PERL__TYPES stringify_number__array_ref(), bottom of subroutine\n");
+//	printf("in CPPOPS_PERLTYPES stringify_number__array_ref(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
+//	printf("in CPPOPS_PERLTYPES stringify_number__array_ref(), bottom of subroutine\n");
 
 	return(output_sv);
 }
@@ -436,7 +438,7 @@ SV* stringify_number__array_ref(SV *input_av_ref)
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs))) to Perl-parsable (Perl SV containing PV)
 SV* stringify_string__array_ref(SV *input_av_ref)
 {
-//	printf("in C++ __PERL__TYPES stringify_string__array_ref(), top of subroutine\n");
+//	printf("in CPPOPS_PERLTYPES stringify_string__array_ref(), top of subroutine\n");
 
     AV* input_av;
     int input_av_length;
@@ -447,10 +449,10 @@ SV* stringify_string__array_ref(SV *input_av_ref)
 //	ostringstream temp_stream;
 
 	if (SvROK(input_av_ref) && (SvTYPE(SvRV(input_av_ref)) == SVt_PVAV)) { input_av = (AV*)SvRV(input_av_ref); }
-	else { croak("in C++ __PERL__TYPES stringify_string__array_ref(), input_av_ref was not an AV ref, croaking"); }
+	else { croak("in CPPOPS_PERLTYPES stringify_string__array_ref(), input_av_ref was not an AV ref, croaking"); }
 
 	input_av_length = av_len(input_av) + 1;
-//	printf("in C++ __PERL__TYPES stringify_string__array_ref(), have input_av_length = %d\n", input_av_length);
+//	printf("in CPPOPS_PERLTYPES stringify_string__array_ref(), have input_av_length = %d\n", input_av_length);
 
 //	temp_stream << "[";
 	sv_setpvn(output_sv, "[", 1);
@@ -476,17 +478,17 @@ SV* stringify_string__array_ref(SV *input_av_ref)
 					sv_catpvf(output_sv, ", \"%s\"", SvPV_nolen(*input_av_element));
 				}
 			}
-			else { croak("in C++ __PERL__TYPES stringify_string__array_ref(), input_av_element at index %d was not a string, croaking", i); }
+			else { croak("in CPPOPS_PERLTYPES stringify_string__array_ref(), input_av_element at index %d was not a string, croaking", i); }
 		}
-		else { croak("in C++ __PERL__TYPES stringify_string__array_ref(), input_av_element at index %d was undef and/or NULL, croaking", i); }
+		else { croak("in CPPOPS_PERLTYPES stringify_string__array_ref(), input_av_element at index %d was undef and/or NULL, croaking", i); }
 	}
 
 //	temp_stream << "]";
 //	sv_setpv(output_sv, (char *)(temp_stream.str().c_str()));
 	sv_catpvn(output_sv, "]", 1);
 
-//	printf("in C++ __PERL__TYPES stringify_string__array_ref(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
-//	printf("in C++ __PERL__TYPES stringify_string__array_ref(), bottom of subroutine\n");
+//	printf("in CPPOPS_PERLTYPES stringify_string__array_ref(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
+//	printf("in CPPOPS_PERLTYPES stringify_string__array_ref(), bottom of subroutine\n");
 
 	return(output_sv);
 }
@@ -504,7 +506,7 @@ SV* stringify_string__array_ref(SV *input_av_ref)
 // convert from (C++ std::vector of ints) to Perl-parsable (C++ std::string)
 string stringify_int__array_ref(int__array_ref input_vector)
 {
-//	printf("in C++ __CPP__TYPES stringify_int__array_ref(), top of subroutine\n");
+//	printf("in CPPOPS_CPPTYPES stringify_int__array_ref(), top of subroutine\n");
 
 	ostringstream output_stream;
 	int input_vector_length = input_vector.size();
@@ -512,7 +514,7 @@ string stringify_int__array_ref(int__array_ref input_vector)
 	int input_vector_element;
     bool i_is_0 = 1;
 
-//	printf("in C++ __CPP__TYPES stringify_int__array_ref(), have input_vector_length = %d\n", input_vector_length);
+//	printf("in CPPOPS_CPPTYPES stringify_int__array_ref(), have input_vector_length = %d\n", input_vector_length);
 
 	output_stream << '[';
 
@@ -534,8 +536,8 @@ string stringify_int__array_ref(int__array_ref input_vector)
 
 	output_stream << ']';
 
-//	printf("in C++ __CPP__TYPES stringify_int__array_ref(), after for() loop, have output_stream =\n%s\n", (char *)(output_stream.str().c_str()));
-//	printf("in C++ __CPP__TYPES stringify_int__array_ref(), bottom of subroutine\n");
+//	printf("in CPPOPS_CPPTYPES stringify_int__array_ref(), after for() loop, have output_stream =\n%s\n", (char *)(output_stream.str().c_str()));
+//	printf("in CPPOPS_CPPTYPES stringify_int__array_ref(), bottom of subroutine\n");
 
 	return(output_stream.str());
 }
@@ -544,7 +546,7 @@ string stringify_int__array_ref(int__array_ref input_vector)
 // convert from (C++ std::vector of long doubles) to Perl-parsable (C++ std::string)
 string stringify_number__array_ref(number__array_ref input_vector)
 {
-//	printf("in C++ __CPP__TYPES stringify_number__array_ref(), top of subroutine\n");
+//	printf("in CPPOPS_CPPTYPES stringify_number__array_ref(), top of subroutine\n");
 
 	ostringstream output_stream;
 	int input_vector_length = input_vector.size();
@@ -552,7 +554,7 @@ string stringify_number__array_ref(number__array_ref input_vector)
 	number input_vector_element;
     bool i_is_0 = 1;
 
-//	printf("in C++ __CPP__TYPES stringify_number__array_ref(), have input_vector_length = %d\n", input_vector_length);
+//	printf("in CPPOPS_CPPTYPES stringify_number__array_ref(), have input_vector_length = %d\n", input_vector_length);
 
 	output_stream.precision(std::numeric_limits<double>::digits10);
 	output_stream << '[';
@@ -575,8 +577,8 @@ string stringify_number__array_ref(number__array_ref input_vector)
 
 	output_stream << ']';
 
-//	printf("in C++ __CPP__TYPES stringify_number__array_ref(), after for() loop, have output_stream =\n%s\n", (char *)(output_stream.str().c_str()));
-//	printf("in C++ __CPP__TYPES stringify_number__array_ref(), bottom of subroutine\n");
+//	printf("in CPPOPS_CPPTYPES stringify_number__array_ref(), after for() loop, have output_stream =\n%s\n", (char *)(output_stream.str().c_str()));
+//	printf("in CPPOPS_CPPTYPES stringify_number__array_ref(), bottom of subroutine\n");
 
 	return(output_stream.str());
 }
@@ -585,7 +587,7 @@ string stringify_number__array_ref(number__array_ref input_vector)
 // convert from (C++ std::vector of std::strings) to Perl-parsable (C++ std::string)
 string stringify_string__array_ref(string__array_ref input_vector)
 {
-//	printf("in C++ __CPP__TYPES stringify_string__array_ref(), top of subroutine\n");
+//	printf("in CPPOPS_CPPTYPES stringify_string__array_ref(), top of subroutine\n");
 
 //	ostringstream output_stream;
 	string output_string;
@@ -594,7 +596,7 @@ string stringify_string__array_ref(string__array_ref input_vector)
 	string input_vector_element;
     bool i_is_0 = 1;
 
-//	printf("in C++ __CPP__TYPES stringify_string__array_ref(), have input_vector_length = %d\n", input_vector_length);
+//	printf("in CPPOPS_CPPTYPES stringify_string__array_ref(), have input_vector_length = %d\n", input_vector_length);
 
 //	output_stream << '[';
 	output_string = "[";
@@ -620,9 +622,9 @@ string stringify_string__array_ref(string__array_ref input_vector)
 //	output_stream << ']';
 	output_string += "]";
 
-//	printf("in C++ __CPP__TYPES stringify_string__array_ref(), after for() loop, have output_stream =\n%s\n", (char *)(output_stream.str().c_str()));
-//	printf("in C++ __CPP__TYPES stringify_string__array_ref(), after for() loop, have output_string =\n%s\n", output_string.c_str());
-//	printf("in C++ __CPP__TYPES stringify_string__array_ref(), bottom of subroutine\n");
+//	printf("in CPPOPS_CPPTYPES stringify_string__array_ref(), after for() loop, have output_stream =\n%s\n", (char *)(output_stream.str().c_str()));
+//	printf("in CPPOPS_CPPTYPES stringify_string__array_ref(), after for() loop, have output_string =\n%s\n", output_string.c_str());
+//	printf("in CPPOPS_CPPTYPES stringify_string__array_ref(), bottom of subroutine\n");
 
 //	return(output_stream.str());
 	return(output_string);
@@ -661,8 +663,8 @@ SV* typetest___int__array_ref__in___string__out(SV* lucky_numbers)
 		// DEV NOTE: use SvIOKp() before casting possibly-non-IV element using SvIV(), which can inadvertently cause dualvar status and future type checking errors;
 		// only affects this C++ __PERL__TYPES implementation of typetest___int__array_ref__in___string__out() due to use of SvIV() and Pure-Perl implementation due to similar casting;
 		// does not affect C++ __CPP__TYPES implementation, as that is fully typed and can't easily cast for inadvertent effects
-		if (SvIOKp(*av_fetch(lucky_numbers_deref, i, 0))) { printf("in C++ __PERL__TYPES Array::typetest___int__array_ref__in___string__out(), have lucky number %d/%d = %d, BARBAT\n", i, (how_lucky - 1), (int)SvIV(*av_fetch(lucky_numbers_deref, i, 0))); }
-//		else { printf("in C++ __PERL__TYPES Array::typetest___int__array_ref__in___string__out(), have lucky number %d/%d = <NOT_AN_INT>, BARBAT\n", i, (how_lucky - 1)); }
+		if (SvIOKp(*av_fetch(lucky_numbers_deref, i, 0))) { printf("in CPPOPS_PERLTYPES Array::typetest___int__array_ref__in___string__out(), have lucky number %d/%d = %d, BARBAT\n", i, (how_lucky - 1), (int)SvIV(*av_fetch(lucky_numbers_deref, i, 0))); }
+//		else { printf("in CPPOPS_PERLTYPES Array::typetest___int__array_ref__in___string__out(), have lucky number %d/%d = <NOT_AN_INT>, BARBAT\n", i, (how_lucky - 1)); }
 	}
 
 //	ENTER;
@@ -678,7 +680,7 @@ SV* typetest___int__array_ref__in___string__out(SV* lucky_numbers)
 //	LEAVE;
 
 /*	sv_catpv(output_sv, "BARBAT"); */
-/*	printf("in C++ __PERL__TYPES Array::typetest___int__array_ref__in___string__out(), have output_sv = %s\n", SvPV_nolen(output_sv)); */
+/*	printf("in CPPOPS_PERLTYPES Array::typetest___int__array_ref__in___string__out(), have output_sv = %s\n", SvPV_nolen(output_sv)); */
 
 /*
 //	SPAGAIN;
@@ -688,7 +690,7 @@ SV* typetest___int__array_ref__in___string__out(SV* lucky_numbers)
  */
 //	SvREFCNT_inc(output_sv);
 /*	return(output_sv);  // do not mortalize because we receive value for output_sv from outside this function */
-	return(newSVpvf("%s%s", SvPV_nolen(stringify_int__array_ref(lucky_numbers)), "BARBAT"));
+	return(newSVpvf("%s%s", SvPV_nolen(stringify_int__array_ref(lucky_numbers)), "CPPOPS_PERLTYPES"));
 }
 
 
@@ -707,7 +709,7 @@ SV* typetest___int__in___int__array_ref__out(int my_size)
 	for (i = 0;  i < my_size;  ++i)
 	{
 		av_store(output_av, (I32)i, newSViv(i * 5));
-		printf("in C++ __PERL__TYPES Array::typetest___int__in___int__array_ref__out(), setting element %d/%d = %d, BARBAT\n", i, (my_size - 1), (int)SvIV(*av_fetch(output_av, (I32)i, 0)));
+		printf("in CPPOPS_PERLTYPES Array::typetest___int__in___int__array_ref__out(), setting element %d/%d = %d, BARBAT\n", i, (my_size - 1), (int)SvIV(*av_fetch(output_av, (I32)i, 0)));
 	}
 
 /*
@@ -717,22 +719,22 @@ SV* typetest___int__in___int__array_ref__out(int my_size)
 	return(newRV_noinc((SV*) output_av));
 }
 
-SV* typetest___number__array_ref__in___string__out(SV* lucky_numbers) { AV* lucky_numbers_deref = (AV*)SvRV(lucky_numbers); int how_lucky = av_len(lucky_numbers_deref) + 1; int i; for (i = 0;  i < how_lucky;  ++i) { if (SvNOKp(*av_fetch(lucky_numbers_deref, i, 0)) || SvIOKp(*av_fetch(lucky_numbers_deref, i, 0))) { printf("in C++ __PERL__TYPES Array::typetest___number__array_ref__in___string__out(), have lucky number %d/%d = %Lf, BARBAZ\n", i, (how_lucky - 1), (long double)SvNV(*av_fetch(lucky_numbers_deref, i, 0))); } } return(newSVpvf("%s%s", SvPV_nolen(stringify_number__array_ref(lucky_numbers)), "BARBAZ")); }
-SV* typetest___int__in___number__array_ref__out(int my_size) { AV* output_av = newAV(); int i; 	av_extend(output_av, (I32)(my_size - 1)); 	for (i = 0;  i < my_size;  ++i) { av_store(output_av, (I32)i, newSVnv(i * 5.123456789)); printf("in C++ __PERL__TYPES Array::typetest___int__in___number__array_ref__out(), setting element %d/%d = %Lf, BARBAT\n", i, (my_size - 1), (long double)SvNV(*av_fetch(output_av, (I32)i, 0))); } return(newRV_noinc((SV*) output_av)); }
-SV* typetest___string__array_ref__in___string__out(SV* people) { AV* people_deref = (AV*)SvRV(people); int i; for (i = 0;  i < (av_len(people_deref) + 1);  ++i) { if (SvPOKp(*av_fetch(people_deref, i, 0))) { printf("in C++ __PERL__TYPES Array::typetest___string__array_ref__in___string__out(), have person %d = '%s', BARBAR\n", i, (char *)SvPV_nolen(*av_fetch(people_deref, i, 0))); } }  return(newSVpvf("%s%s", SvPV_nolen(stringify_string__array_ref(people)), "BARBAR")); }
-SV* typetest___int__in___string__array_ref__out(int my_size) { AV* people = newAV(); int i; 	av_extend(people, (I32)(my_size - 1)); 	for (i = 0;  i < my_size;  ++i) { av_store(people, (I32)i, newSVpvf("Jeffy Ten! %d/%d", i, (my_size - 1))); printf("in C++ __PERL__TYPES Array::typetest___int__in___string__array_ref__out(), bottom of for() loop, have i = %d, just set another Jeffy, BARBAR\n", i); } 	return(newRV_noinc((SV*) people)); }
+SV* typetest___number__array_ref__in___string__out(SV* lucky_numbers) { AV* lucky_numbers_deref = (AV*)SvRV(lucky_numbers); int how_lucky = av_len(lucky_numbers_deref) + 1; int i; for (i = 0;  i < how_lucky;  ++i) { if (SvNOKp(*av_fetch(lucky_numbers_deref, i, 0)) || SvIOKp(*av_fetch(lucky_numbers_deref, i, 0))) { printf("in CPPOPS_PERLTYPES Array::typetest___number__array_ref__in___string__out(), have lucky number %d/%d = %Lf, BARBAZ\n", i, (how_lucky - 1), (long double)SvNV(*av_fetch(lucky_numbers_deref, i, 0))); } } return(newSVpvf("%s%s", SvPV_nolen(stringify_number__array_ref(lucky_numbers)), "CPPOPS_PERLTYPES")); }
+SV* typetest___int__in___number__array_ref__out(int my_size) { AV* output_av = newAV(); int i; 	av_extend(output_av, (I32)(my_size - 1)); 	for (i = 0;  i < my_size;  ++i) { av_store(output_av, (I32)i, newSVnv(i * 5.123456789)); printf("in CPPOPS_PERLTYPES Array::typetest___int__in___number__array_ref__out(), setting element %d/%d = %Lf, BARBAT\n", i, (my_size - 1), (long double)SvNV(*av_fetch(output_av, (I32)i, 0))); } return(newRV_noinc((SV*) output_av)); }
+SV* typetest___string__array_ref__in___string__out(SV* people) { AV* people_deref = (AV*)SvRV(people); int i; for (i = 0;  i < (av_len(people_deref) + 1);  ++i) { if (SvPOKp(*av_fetch(people_deref, i, 0))) { printf("in CPPOPS_PERLTYPES Array::typetest___string__array_ref__in___string__out(), have person %d = '%s', BARBAR\n", i, (char *)SvPV_nolen(*av_fetch(people_deref, i, 0))); } }  return(newSVpvf("%s%s", SvPV_nolen(stringify_string__array_ref(people)), "CPPOPS_PERLTYPES")); }
+SV* typetest___int__in___string__array_ref__out(int my_size) { AV* people = newAV(); int i; 	av_extend(people, (I32)(my_size - 1)); 	for (i = 0;  i < my_size;  ++i) { av_store(people, (I32)i, newSVpvf("Jeffy Ten! %d/%d CPPOPS_PERLTYPES", i, (my_size - 1))); printf("in CPPOPS_PERLTYPES Array::typetest___int__in___string__array_ref__out(), bottom of for() loop, have i = %d, just set another Jeffy, BARBAR\n", i); } 	return(newRV_noinc((SV*) people)); }
 
 # elif defined __CPP__TYPES
 
-string typetest___int__array_ref__in___string__out(int__array_ref lucky_numbers) { int how_lucky = lucky_numbers.size();  int i;  for (i = 0;  i < how_lucky;  ++i) { printf("in C++ __CPP__TYPES Array::typetest___int__array_ref__in___string__out(), have lucky number %d/%d = %d, BARBAT\n", i, (how_lucky - 1), lucky_numbers[i]); }  return(stringify_int__array_ref(lucky_numbers) + "BARBAT"); }
-int__array_ref typetest___int__in___int__array_ref__out(int my_size) { int__array_ref new_vec(my_size);  int i;  for (i = 0;  i < my_size;  ++i) { new_vec[i] = i * 5;  printf("in C++ __CPP__TYPES Array::typetest___int__in___int__array_ref__out(), setting element %d/%d = %d, BARBAT\n", i, (my_size - 1), new_vec[i]); }  return(new_vec); }
+string typetest___int__array_ref__in___string__out(int__array_ref lucky_numbers) { int how_lucky = lucky_numbers.size();  int i;  for (i = 0;  i < how_lucky;  ++i) { printf("in CPPOPS_CPPTYPES Array::typetest___int__array_ref__in___string__out(), have lucky number %d/%d = %d, BARBAT\n", i, (how_lucky - 1), lucky_numbers[i]); }  return(stringify_int__array_ref(lucky_numbers) + "CPPOPS_CPPTYPES"); }
+int__array_ref typetest___int__in___int__array_ref__out(int my_size) { int__array_ref new_vec(my_size);  int i;  for (i = 0;  i < my_size;  ++i) { new_vec[i] = i * 5;  printf("in CPPOPS_CPPTYPES Array::typetest___int__in___int__array_ref__out(), setting element %d/%d = %d, BARBAT\n", i, (my_size - 1), new_vec[i]); }  return(new_vec); }
 
-string typetest___number__array_ref__in___string__out(number__array_ref lucky_numbers) { int how_lucky = lucky_numbers.size();  int i;  for (i = 0;  i < how_lucky;  ++i) { printf("in C++ __CPP__TYPES Array::typetest___number__array_ref__in___string__out(), have lucky number %d/%d = %Lf, BARBAZ\n", i, (how_lucky - 1), lucky_numbers[i]); }  return(stringify_number__array_ref(lucky_numbers) + "BARBAZ"); }
-number__array_ref typetest___int__in___number__array_ref__out(int my_size) { number__array_ref new_vec(my_size);  int i;  for (i = 0;  i < my_size;  ++i) { new_vec[i] = i * 5.123456789;  printf("in C++ __CPP__TYPES Array::typetest___number__in___number__array_ref__out(), setting element %d/%d = %Lf, BARBAZ\n", i, (my_size - 1), new_vec[i]); }  return(new_vec); }
+string typetest___number__array_ref__in___string__out(number__array_ref lucky_numbers) { int how_lucky = lucky_numbers.size();  int i;  for (i = 0;  i < how_lucky;  ++i) { printf("in CPPOPS_CPPTYPES Array::typetest___number__array_ref__in___string__out(), have lucky number %d/%d = %Lf, BARBAZ\n", i, (how_lucky - 1), lucky_numbers[i]); }  return(stringify_number__array_ref(lucky_numbers) + "CPPOPS_CPPTYPES"); }
+number__array_ref typetest___int__in___number__array_ref__out(int my_size) { number__array_ref new_vec(my_size);  int i;  for (i = 0;  i < my_size;  ++i) { new_vec[i] = i * 5.123456789;  printf("in CPPOPS_CPPTYPES Array::typetest___number__in___number__array_ref__out(), setting element %d/%d = %Lf, BARBAZ\n", i, (my_size - 1), new_vec[i]); }  return(new_vec); }
 
-//string typetest___string__array_ref__in___string__out(string__array_ref people) { int i;  for (i = 0;  i < people.size();  ++i) { printf("in C++ __CPP__TYPES printf() Array::typetest___string__array_ref__in___string__out(), have person %d = '%s', BARBAR\n", i, people[i].c_str()); }  return(stringify_string__array_ref(people) + "BARBAR"); }
-string typetest___string__array_ref__in___string__out(string__array_ref people) { int i;  for (i = 0;  i < people.size();  ++i) { cout << "in C++ __CPP__TYPES cout<< Array::typetest___string__array_ref__in___string__out(), have person " << i << " = '" << people[i] << "', BARBAR\n"; }  return(stringify_string__array_ref(people) + "BARBAR"); }
-string__array_ref typetest___int__in___string__array_ref__out(int my_size) { string__array_ref people;  int i;  people.resize((size_t)my_size);  for (i = 0;  i < my_size;  ++i) { people[i] = "Jeffy Ten! " + std::to_string(i) + "/" + std::to_string(my_size - 1); printf("in C++ __CPP__TYPES Array::typetest___int__in___string__array_ref__out(), bottom of for() loop, have i = %d, just set another Jeffy, BARBAR\n", i); }  return(people); }
+//string typetest___string__array_ref__in___string__out(string__array_ref people) { int i;  for (i = 0;  i < people.size();  ++i) { printf("in CPPOPS_CPPTYPES printf() Array::typetest___string__array_ref__in___string__out(), have person %d = '%s', BARBAR\n", i, people[i].c_str()); }  return(stringify_string__array_ref(people) + "BARBAR"); }
+string typetest___string__array_ref__in___string__out(string__array_ref people) { int i;  for (i = 0;  i < people.size();  ++i) { cout << "in CPPOPS_CPPTYPES cout<< Array::typetest___string__array_ref__in___string__out(), have person " << i << " = '" << people[i] << "', BARBAR\n"; }  return(stringify_string__array_ref(people) + "CPPOPS_CPPTYPES"); }
+string__array_ref typetest___int__in___string__array_ref__out(int my_size) { string__array_ref people;  int i;  people.resize((size_t)my_size);  for (i = 0;  i < my_size;  ++i) { people[i] = "Jeffy Ten! " + std::to_string(i) + "/" + std::to_string(my_size - 1) + " CPPOPS_CPPTYPES"; printf("in CPPOPS_CPPTYPES Array::typetest___int__in___string__array_ref__out(), bottom of for() loop, have i = %d, just set another Jeffy, BARBAR\n", i); }  return(people); }
 
 # endif
 

@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.2.0');
+use version; our $VERSION = qv('0.3.0');
 use Carp;
 
 # RPERL DRIVER BOILERPLATE
@@ -19,16 +19,12 @@ types::types_enable('CPP');
 # UNCOMMENT TO ENABLE C++ OPS
 use RPerl::DataStructure::Array_cpp;  RPerl::DataStructure::Array_cpp::cpp_load();  RPerl::DataStructure::Array_cpp::cpp_link();
 
-print q{in array_test.pl, have types_number() = '} . types_number() . "'\n" or croak();
 print q{in array_test.pl, have ops_number() = '} . ops_number() . "'\n" or croak();
-print q{in array_test.pl, have types_string() = '} . types_string() . "'\n" or croak();
+print q{in array_test.pl, have types_number() = '} . types_number() . "'\n" or croak();
 print q{in array_test.pl, have ops_string() = '} . ops_string() . "'\n" or croak();
-print q{in array_test.pl, have types_array() = '} . types_array() . "'\n" or croak();
+print q{in array_test.pl, have types_string() = '} . types_string() . "'\n" or croak();
 print q{in array_test.pl, have ops_array() = '} . ops_array() . "'\n" or croak();
-
-# START HERE: use types_*() 'PERL' & 'CPP' strings to confirm output of test functions below
-# START HERE: use types_*() 'PERL' & 'CPP' strings to confirm output of test functions below
-# START HERE: use types_*() 'PERL' & 'CPP' strings to confirm output of test functions below
+print q{in array_test.pl, have types_array() = '} . types_array() . "'\n" or croak();
 
 # variable declarations
 my string $retval_stringify;
@@ -42,42 +38,40 @@ my const_int $i_MAX = 1;
 for my int $i ( 0 .. $i_MAX ) {
 	print "in array_test.pl, top of for() loop $i/$i_MAX\n" or croak();
 
-	$retval_stringify = stringify_int__array_ref(2);  # AV00; raise/throw exception
+#	$retval_stringify = stringify_int__array_ref(2);  # AV00; raise/throw exception
 #	$retval_stringify = stringify_int__array_ref([2]);  # AV01
 #	$retval_stringify = stringify_int__array_ref([2, 2112, 42, 23, 877, 33, 1701]);  # AV02
 #	$retval_stringify = stringify_int__array_ref([2, 2112, 42.3, 23, 877, 33, 1701]);  # AV03; raise/throw exception
 #	$retval_stringify = stringify_int__array_ref([2, 2112, '42', 23, 877, 33, 1701]);  # AV04; raise/throw exception
-	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
+#	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
 
-croak('Done for now, croaking');
-
-	$retval_stringify = typetest___int__array_ref__in___string__out([2, 2112, 42, 23, 877, 33, 1701]);  # AV10
+#	$retval_stringify = typetest___int__array_ref__in___string__out([2, 2112, 42, 23, 877, 33, 1701]);  # AV10
 #	$retval_stringify = typetest___int__array_ref__in___string__out([2, 2112, 42, 23, 877, "abcdefg\n", 33, 1701]);  # AV11; not-an-int error
-	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
+#	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 
-	my $howdy_retval = typetest___int__array_ref__in___string__out([444, 33, 1701]);  # AV12; confirm Perl stack is still functioning properly
-	print "in array_test.pl $i/$i_MAX, have \$howdy_retval =\n$howdy_retval\n";
-	
-	$retval_int__array_ref = typetest___int__in___int__array_ref__out(5);  # AV20
-	print "in array_test.pl $i/$i_MAX, have \$retval_int__array_ref = \n" . Dumper($retval_int__array_ref) . "\n";
+#	my $howdy_retval = typetest___int__array_ref__in___string__out([444, 33, 1701]);  # AV12; confirm Perl stack is still functioning properly
+#	print "in array_test.pl $i/$i_MAX, have \$howdy_retval =\n$howdy_retval\n";
+
+#	$retval_int__array_ref = typetest___int__in___int__array_ref__out(5);  # AV20
+#	print "in array_test.pl $i/$i_MAX, have \$retval_int__array_ref = \n" . Dumper($retval_int__array_ref) . "\n";
 
 #	$retval_stringify = stringify_number__array_ref(2);  # AV30; raise/throw exception
-#	$retval_stringify = stringify_number__array_ref([2]);  # AV31; raise/throw exception
+#	$retval_stringify = stringify_number__array_ref([2]);  # AV31
 #	$retval_stringify = stringify_number__array_ref([2, 2112, 42, 23, 877, 33, 1701]);  # AV32
 #	$retval_stringify = stringify_number__array_ref([2.1, 2112.2, 42.3, 23, 877, 33, 1701]);  # AV33
-	$retval_stringify = stringify_number__array_ref([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, 33.876587658765875687658765, 1701.6789]);  # AV34
+#	$retval_stringify = stringify_number__array_ref([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, 33.876587658765875687658765, 1701.6789]);  # AV34
 #	$retval_stringify = stringify_number__array_ref([2, 2112, '42', 23, 877, 33, 1701]);  # AV35; raise/throw exception
-	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
+#	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 
-	$retval_stringify = typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, 33.876587658765875687658765, 1701.6789]);  # AV40
+#	$retval_stringify = typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, 33.876587658765875687658765, 1701.6789]);  # AV40
 #	$retval_stringify = typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, "abcdefg\n", 33.876587658765875687658765, 1701.6789]);  # AV41; raise/throw exception
-	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
+#	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 
-	$retval_number__array_ref = typetest___int__in___number__array_ref__out(5);  # AV50
-	print "in array_test.pl $i/$i_MAX, have \$retval_number__array_ref = \n" . Dumper($retval_number__array_ref) . "\n";
+#	$retval_number__array_ref = typetest___int__in___number__array_ref__out(5);  # AV50
+#	print "in array_test.pl $i/$i_MAX, have \$retval_number__array_ref = \n" . Dumper($retval_number__array_ref) . "\n";
 
-#	$my_peeps = stringify_string__array_ref('Lone Ranger');  # AV60; raise/throw exception
-	$my_peeps = ['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter'];  # AV61
+#	$my_peeps = 'Lone Ranger';  # AV60; raise/throw exception
+#	$my_peeps = ['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter'];  # AV61
 #	$my_peeps = ['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '23'];  # AV62
 #	$my_peeps = ['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', 23];  # AV63; raise/throw exception
 #	$my_peeps = ['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '-2112.23'];  # AV64
@@ -85,17 +79,19 @@ croak('Done for now, croaking');
 #	$my_peeps = ['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', -2112.23];  # AV66; raise/throw exception
 #	$my_peeps = ['Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', {fuzz => 'bizz', bar => "stool!\n", bat => 24}];  # AV67; raise/throw exception
 #	print "in array_test.pl $i/$i_MAX, have \$my_peeps =\n" . RPerl::DUMPER($my_peeps);
-	$retval_stringify = stringify_string__array_ref($my_peeps);	
-	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
+#	$retval_stringify = stringify_string__array_ref($my_peeps);	
+#	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 
 #	$retval_stringify = typetest___string__array_ref__in___string__out($my_peeps);
 #	$retval_stringify = typetest___string__array_ref__in___string__out("Should be people, instead just a person!");  # break strict refs and then segfault, not test-worthy!
 #	$retval_stringify = typetest___string__array_ref__in___string__out(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']);  # AV70
 #	$retval_stringify = typetest___string__array_ref__in___string__out(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', 23]);  # AV71; raise/throw exception
-	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
+#	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 
 	$retval_jeffys = typetest___int__in___string__array_ref__out(5);  # AV80
 	print "in type_test.pl $i/$i_MAX, have \$retval_jeffys =\n" . Dumper($retval_jeffys) . "\n";
+
+croak('Done for now, croaking');
 }
 
 #croak('Done for now, croaking');
