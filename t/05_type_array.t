@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.3.1');
+use version; our $VERSION = qv('0.3.2');
 
 # SUPPRESS OUTPUT FROM INDIVIDUAL TESTS, EXCLUDING TESTS INSIDE BEGIN{} BLOCKS
 # order is BEGIN, UNITCHECK, CHECK, INIT, END; CHECK here suppresses Inline compile output from including HelperFunctions_cpp.pm from INIT in Array.pm
@@ -273,11 +273,11 @@ for my $i ( 0 .. 2 ) {
     throws_ok(       # AV04
         sub {
             stringify_int__array_ref(
-                [ 2, 2112, '42', 23, -877, 33, 1701 ] ) ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                [ 2, 2112, 42, '23', -877, 33, 1701 ] ) ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ;    ## PERLTIDY BUG semicolon on newline
         },
-        "/$OPS_TYPES.*input_av_element at index 2 was not an int/",
-        q{stringify_int__array_ref([2, 2112, '42', 23, -877, 33, 1701]) throws correct exception}
+        "/$OPS_TYPES.*input_av_element at index 3 was not an int/",
+        q{stringify_int__array_ref([2, 2112, 42, '23', -877, 33, 1701]) throws correct exception}
     );
     lives_and(       # AV10
         sub {
@@ -374,10 +374,10 @@ for my $i ( 0 .. 2 ) {
     throws_ok(                    # AV35
         sub {
             stringify_number__array_ref(
-                [ 2, 2112, '42', 23, -877, 33, 1701 ] ); ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                [ 2, 2112, 42, '23', -877, 33, 1701 ] ); ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
         },
-        "/$OPS_TYPES.*input_av_element at index 2 was not a number/",
-        q{stringify_number__array_ref([2, 2112, '42', 23, -877, 33, 1701]) throws correct exception}
+        "/$OPS_TYPES.*input_av_element at index 3 was not a number/",
+        q{stringify_number__array_ref([2, 2112, 42, '23', -877, 33, 1701]) throws correct exception}
     );
     lives_and(                                           # AV40
         sub {

@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.1.3');
+use version; our $VERSION = qv('0.1.4');
 
 # SUPPRESS OUTPUT FROM INDIVIDUAL TESTS, EXCLUDING TESTS INSIDE BEGIN{} BLOCKS
 # order is BEGIN, UNITCHECK, CHECK, INIT, END; CHECK here suppresses Inline compile output from including HelperFunctions_cpp.pm from INIT in Hash.pm
@@ -368,6 +368,99 @@ for my $i ( 0 .. 2 ) {
             );
         },
         q{typetest___int__in___int__hash_ref__out(5) lives}
+    );
+
+    # Num Hash: stringify, create, manipulate
+    throws_ok(    # HV30
+        sub { stringify_number__hash_ref(2) },
+        "/$OPS_TYPES.*input_hv_ref was not an HV ref/",
+        q{stringify_number__hash_ref(2) throws correct exception}
+    );
+    lives_and(    # HV31
+        sub {
+            is( stringify_number__hash_ref( { a_key => 23 } ),
+                q{{'a_key' => 23}},
+                q{stringify_number__hash_ref({a_key => 23}) returns correct value}
+            );
+        },
+        q{stringify_number__hash_ref({a_key => 23}) lives}
+    );
+    lives_and(    # HV32
+        sub {
+            like(
+                stringify_number__hash_ref(
+                    {   a_key => 2,
+                        b_key => 2112,
+                        c_key => 42,
+                        d_key => 23,
+                        e_key => -877,
+                        f_key => 33,
+                        g_key => 1701
+                    }
+                ),
+
+                q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2112\b)(?=.*'c_key' => 42\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => 33\b)(?=.*'g_key' => 1701\b).*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+                ,
+                q{stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) returns correct value}
+            );
+        },
+        q{stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) lives}
+    );
+    lives_and(    # HV33
+        sub {
+            like(
+                stringify_number__hash_ref(
+                    {   a_key => 2,
+                        b_key => 2112,
+                        c_key => 42.3,
+                        d_key => 23,
+                        e_key => -877,
+                        f_key => 33,
+                        g_key => 1701
+                    }
+                ),
+                q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2112\b)(?=.*'c_key' => 42\.3\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => 33\b)(?=.*'g_key' => 1701\b).*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+                ,
+                q{stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) returns correct value}
+            );
+        },
+        q{stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) lives}
+    );
+    lives_and(    # HV34
+        sub {
+            like(
+                stringify_number__hash_ref(
+                    {   a_key => 2.1234432112344321,
+                        b_key => 2112.4321,
+                        c_key => 42.4567,
+                        d_key => 23.765444444444444444,
+                        e_key => -877.5678,
+                        f_key => 33.876587658765875687658765,
+                        g_key => 1701.6789
+                    }
+                ),
+                q{/^\{(?=.*'a_key' => 2\.12344321123443\b)(?=.*'b_key' => 2112\.4321\b)(?=.*'c_key' => 42\.4567\b)(?=.*'d_key' => 23\.7654444444444\b)(?=.*'e_key' => -877\.5678\b)(?=.*'f_key' => 33\.8765876587659\b)(?=.*'g_key' => 1701\.6789\b).*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+                ,
+                q{stringify_number__hash_ref({a_key => 2.1234432112344321, b_key => 2112.4321, ..., g_key => 1701.6789}) returns correct value}
+            );
+        },
+        q{stringify_number__hash_ref({a_key => 2.1234432112344321, b_key => 2112.4321, ..., g_key => 1701.6789}) lives}
+    );
+    throws_ok(    # HV35
+        sub {
+            stringify_number__hash_ref(
+                {   a_key => 2,
+                    b_key => 2112,
+                    c_key => 42,
+                    d_key => '23',
+                    e_key => -877,
+                    f_key => 33,
+                    g_key => 1701
+                }
+            );    ## PERLTIDY BUG semicolon on newline
+        },
+        "/$OPS_TYPES.*input_hv_value at key 'd_key' was not a number/",
+        q{stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => '23', e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
     );
 }
 done_testing();

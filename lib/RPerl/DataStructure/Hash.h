@@ -1,7 +1,7 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-// VERSION 0.1.3
+// VERSION 0.1.4
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash_h
 #define __CPP__INCLUDED__RPerl__DataStructure__Hash_h 1

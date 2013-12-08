@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.1.3');
+use version; our $VERSION = qv('0.1.4');
 use Carp;
 
 # RPERL DRIVER BOILERPLATE
@@ -14,10 +14,10 @@ BEGIN { use Data::Dumper;  our $AUTOLOAD;  sub AUTOLOAD { croak("AUTOLOAD purpos
 #types::types_enable('PERL');
 
 # UNCOMMENT TO ENABLE C++ TYPES FOR C++ OPS
-#types::types_enable('CPP');
+types::types_enable('CPP');
 
 # UNCOMMENT TO ENABLE C++
-#use RPerl::DataStructure::Hash_cpp;  RPerl::DataStructure::Hash_cpp::cpp_load();  RPerl::DataStructure::Hash_cpp::cpp_link();
+use RPerl::DataStructure::Hash_cpp;  RPerl::DataStructure::Hash_cpp::cpp_load();  RPerl::DataStructure::Hash_cpp::cpp_link();
 
 print q{in array_test.pl, have ops_number() = '} . ops_number() . "'\n" or croak();
 print q{in array_test.pl, have types_number() = '} . types_number() . "'\n" or croak();
@@ -54,16 +54,20 @@ for my int $i ( 0 .. $i_MAX ) {
 
 #	$retval_int__hash_ref = typetest___int__in___int__hash_ref__out(5);  # HV20
 #	print "in hash_test.pl $i/$i_MAX, have \$retval_int__hash_ref = \n" . Dumper($retval_int__hash_ref) . "\n";
-	
-	$retval_stringify = stringify_number__hash_ref(2);  # HV30; raise/throw exception
+
+#	$retval_stringify = stringify_number__hash_ref(2);  # HV30; raise/throw exception
 	$retval_stringify = stringify_number__hash_ref({a_key => 23});  # HV31
-	$retval_stringify = stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701});  # HV32
-	$retval_stringify = stringify_number__hash_ref({a_key => 2.1, b_key => 2112.2, c_key => 42.3, d_key => 23, e_key => -877, f_key => 33, g_key => 1701});  # HV03; raise/throw exception
-	$retval_stringify = stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => 23, e_key => -877, f_key => 33, g_key => 1701});  # HV03; raise/throw exception
-	$retval_stringify = stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => '23', e_key => -877, f_key => 33, g_key => 1701});  # HV04; raise/throw exception
-	prnumber "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
+#	$retval_stringify = stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701});  # HV32
+#	$retval_stringify = stringify_number__hash_ref({a_key => 2.1, b_key => 2112.2, c_key => 42.3, d_key => 23, e_key => -877, f_key => 33, g_key => 1701});  # HV33
+#	$retval_stringify = stringify_number__hash_ref({a_key => 2.1234432112344321, b_key => 2112.4321, c_key => 42.4567, d_key => 23.765444444444444444, e_key => -877.5678, f_key => 33.876587658765875687658765, g_key => 1701.6789});  # HV34
+#	$retval_stringify = stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => '23', e_key => -877, f_key => 33, g_key => 1701});  # HV35; raise/throw exception
+	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
 
 croak('Done for now, croaking');
+
+    # START HERE: finish implementing number & string tests below and in 06_type_hash.t
+    # START HERE: finish implementing number & string tests below and in 06_type_hash.t
+    # START HERE: finish implementing number & string tests below and in 06_type_hash.t
 
 #	typetest___number__hash_ref__in___void__out({'binary' => 2.1234432112344321, 'rush' => 2112.4321, 'answer' => 42.4567, 'fnord' => 23.765444444444444444, 'units' => -877.5678, 'degree' => 33.876587658765875687658765, 'ncc' => 1701.6789});
 #	typetest___number__hash_ref__in___void__out({'binary' => 2.1234432112344321, 'rush' => 2112.4321, 'ERROR_FUNKEY' => 'abcdefg', 'answer' => 42.4567, 'fnord' => 23.765444444444444444, 'units' => -877.5678, 'degree' => 33.876587658765875687658765, 'ncc' => 1701.6789});  # not-a-number error

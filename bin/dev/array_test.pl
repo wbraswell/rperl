@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.3.0');
+use version; our $VERSION = qv('0.3.2');
 use Carp;
 
 # RPERL DRIVER BOILERPLATE
@@ -42,7 +42,7 @@ for my int $i ( 0 .. $i_MAX ) {
 #	$retval_stringify = stringify_int__array_ref([2]);  # AV01
 #	$retval_stringify = stringify_int__array_ref([2, 2112, 42, 23, -877, 33, 1701]);  # AV02
 #	$retval_stringify = stringify_int__array_ref([2, 2112, 42.3, 23, -877, 33, 1701]);  # AV03; raise/throw exception
-#	$retval_stringify = stringify_int__array_ref([2, 2112, '42', 23, -877, 33, 1701]);  # AV04; raise/throw exception
+#	$retval_stringify = stringify_int__array_ref([2, 2112, 42, '23', -877, 33, 1701]);  # AV04; raise/throw exception
 #	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
 
 #	$retval_stringify = typetest___int__array_ref__in___string__out([2, 2112, 42, 23, -877, 33, 1701]);  # AV10
@@ -62,7 +62,7 @@ croak('Done for now, croaking');
 #	$retval_stringify = stringify_number__array_ref([2, 2112, 42, 23, -877, 33, 1701]);  # AV32
 #	$retval_stringify = stringify_number__array_ref([2.1, 2112.2, 42.3, 23, -877, 33, 1701]);  # AV33
 #	$retval_stringify = stringify_number__array_ref([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, 33.876587658765875687658765, 1701.6789]);  # AV34
-#	$retval_stringify = stringify_number__array_ref([2, 2112, '42', 23, -877, 33, 1701]);  # AV35; raise/throw exception
+#	$retval_stringify = stringify_number__array_ref([2, 2112, 42, '23', -877, 33, 1701]);  # AV35; raise/throw exception
 #	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 
 #	$retval_stringify = typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, 33.876587658765875687658765, 1701.6789]);  # AV40

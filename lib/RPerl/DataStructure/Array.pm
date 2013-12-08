@@ -1,7 +1,7 @@
 package RPerl::DataStructure::Array;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.3.1');
+use version; our $VERSION = qv('0.3.2');
 use Carp;
 
 use base ('RPerl::DataStructure');
