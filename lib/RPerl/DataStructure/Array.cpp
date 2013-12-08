@@ -1,7 +1,7 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-// VERSION 0.3.0
+// VERSION 0.3.1
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array_cpp
 #define __CPP__INCLUDED__RPerl__DataStructure__Array_cpp 1
@@ -469,13 +469,16 @@ SV* stringify_string__array_ref(SV *input_av_ref)
 				if (i_is_0)
 				{
 //					temp_stream << "\"" << SvPV_nolen(*input_av_element) << "\"";
-					sv_catpvf(output_sv, "\"%s\"", SvPV_nolen(*input_av_element));  // NEED ANSWER: should we wrap strings in double quotes or single quotes???
+					// DEV NOTE: emulate Data::Dumper & follow PBP by using single quotes for strings
+//					sv_catpvf(output_sv, "\"%s\"", SvPV_nolen(*input_av_element));
+					sv_catpvf(output_sv, "\'%s\'", SvPV_nolen(*input_av_element));
 					i_is_0 = 0;
 				}
 				else
 				{
 //					temp_stream << ", \"" << SvPV_nolen(*input_av_element) << "\"";
-					sv_catpvf(output_sv, ", \"%s\"", SvPV_nolen(*input_av_element));
+//					sv_catpvf(output_sv, ", \"%s\"", SvPV_nolen(*input_av_element));
+					sv_catpvf(output_sv, ", \'%s\'", SvPV_nolen(*input_av_element));
 				}
 			}
 			else { croak("in CPPOPS_PERLTYPES stringify_string__array_ref(), input_av_element at index %d was not a string, croaking", i); }
@@ -609,13 +612,16 @@ string stringify_string__array_ref(string__array_ref input_vector)
 		if (i_is_0)
 		{
 //			output_stream <<  "\"" << input_vector_element << "\"";
-			output_string += "\"" + input_vector_element + "\"";
+			// DEV NOTE: emulate Data::Dumper & follow PBP by using single quotes for strings
+//			output_string += "\"" + input_vector_element + "\"";
+			output_string += "\'" + input_vector_element + "\'";
 			i_is_0 = 0;
 		}
 		else
 		{
 //			output_stream <<  ", \"" << input_vector_element << "\"";
-			output_string += ", \"" + input_vector_element + "\"";
+//			output_string += ", \"" + input_vector_element + "\"";
+			output_string += ", \'" + input_vector_element + "\'";
 		}
 	}
 
@@ -725,6 +731,9 @@ SV* typetest___string__array_ref__in___string__out(SV* people) { AV* people_dere
 SV* typetest___int__in___string__array_ref__out(int my_size) { AV* people = newAV(); int i; 	av_extend(people, (I32)(my_size - 1)); 	for (i = 0;  i < my_size;  ++i) { av_store(people, (I32)i, newSVpvf("Jeffy Ten! %d/%d CPPOPS_PERLTYPES", i, (my_size - 1))); printf("in CPPOPS_PERLTYPES Array::typetest___int__in___string__array_ref__out(), bottom of for() loop, have i = %d, just set another Jeffy, BARBAR\n", i); } 	return(newRV_noinc((SV*) people)); }
 
 # elif defined __CPP__TYPES
+
+// DEV NOTE: typetest_*_string__out() for CPPOPS_CPPTYPES below do not have runtime calls to Sv?OKp() like PERLOPS_PERLTYPES and CPPOPS_PERLTYPES;
+// for CPPOPS_CPPTYPES, types are checked at compile time and will die in XS_unpack_*() before calling typetest_*_string__out() or printing elements
 
 string typetest___int__array_ref__in___string__out(int__array_ref lucky_numbers) { int how_lucky = lucky_numbers.size();  int i;  for (i = 0;  i < how_lucky;  ++i) { printf("in CPPOPS_CPPTYPES Array::typetest___int__array_ref__in___string__out(), have lucky number %d/%d = %d, BARBAT\n", i, (how_lucky - 1), lucky_numbers[i]); }  return(stringify_int__array_ref(lucky_numbers) + "CPPOPS_CPPTYPES"); }
 int__array_ref typetest___int__in___int__array_ref__out(int my_size) { int__array_ref new_vec(my_size);  int i;  for (i = 0;  i < my_size;  ++i) { new_vec[i] = i * 5;  printf("in CPPOPS_CPPTYPES Array::typetest___int__in___int__array_ref__out(), setting element %d/%d = %d, BARBAT\n", i, (my_size - 1), new_vec[i]); }  return(new_vec); }

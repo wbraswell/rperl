@@ -1,7 +1,7 @@
 package RPerl::DataStructure::Array;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.3.0');
+use version; our $VERSION = qv('0.3.1');
 use Carp;
 
 use base ('RPerl::DataStructure');
@@ -751,7 +751,7 @@ our string $stringify_int__array_ref = sub { (my $input_av_ref) = @_;
 
 #	print "in PERLOPS_PERLTYPES stringify_int__array_ref(), after for() loop, have \$output_sv =\n$output_sv\n";
 #	print "in PERLOPS_PERLTYPES stringify_int__array_ref(), bottom of subroutine\n";
-	
+
 	return($output_sv);
 };
 
@@ -872,12 +872,15 @@ our string $stringify_string__array_ref = sub { (my $input_av_ref) = @_;
 			{
 				if ($i_is_0)
 				{
-					$output_sv .= '"' . $input_av_element . '"';
+				    # DEV NOTE: emulate Data::Dumper & follow PBP by using single quotes for strings
+#					$output_sv .= '"' . $input_av_element . '"';
+					$output_sv .= "\'$input_av_element\'";
 					$i_is_0 = 0;
 				}
 				else
 				{
-					$output_sv .= ', "' . $input_av_element . '"';
+#					$output_sv .= ', "' . $input_av_element . '"';
+					$output_sv .= ", \'$input_av_element\'";
 				}
 			}
 			else { die("in PERLOPS_PERLTYPES stringify_string__array_ref(), \$input_av_element at index $i was not a string, dying"); }

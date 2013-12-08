@@ -46,8 +46,10 @@ for my int $i ( 0 .. $i_MAX ) {
 #	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
 
 #	$retval_stringify = typetest___int__array_ref__in___string__out([2, 2112, 42, 23, 877, 33, 1701]);  # AV10
-#	$retval_stringify = typetest___int__array_ref__in___string__out([2, 2112, 42, 23, 877, "abcdefg\n", 33, 1701]);  # AV11; not-an-int error
-#	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
+	$retval_stringify = typetest___int__array_ref__in___string__out([2, 2112, 42, 23, 877, "abcdefg\n", 33, 1701]);  # AV11; not-an-int error
+	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
+
+croak('Done for now, croaking');
 
 #	my $howdy_retval = typetest___int__array_ref__in___string__out([444, 33, 1701]);  # AV12; confirm Perl stack is still functioning properly
 #	print "in array_test.pl $i/$i_MAX, have \$howdy_retval =\n$howdy_retval\n";
@@ -83,15 +85,13 @@ for my int $i ( 0 .. $i_MAX ) {
 #	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 
 #	$retval_stringify = typetest___string__array_ref__in___string__out($my_peeps);
-#	$retval_stringify = typetest___string__array_ref__in___string__out("Should be people, instead just a person!");  # break strict refs and then segfault, not test-worthy!
+#	$retval_stringify = typetest___string__array_ref__in___string__out("Should be people, instead just a person!");  # break strict refs and then segfault, not test-worthy!  DEV NOTE: segfault likely due to not running SvROK() and SvTYPE() before SvRV() in CPPOPS_PERLTYPES
 #	$retval_stringify = typetest___string__array_ref__in___string__out(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']);  # AV70
 #	$retval_stringify = typetest___string__array_ref__in___string__out(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', 23]);  # AV71; raise/throw exception
 #	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 
 	$retval_jeffys = typetest___int__in___string__array_ref__out(5);  # AV80
 	print "in type_test.pl $i/$i_MAX, have \$retval_jeffys =\n" . Dumper($retval_jeffys) . "\n";
-
-croak('Done for now, croaking');
 }
 
 #croak('Done for now, croaking');
