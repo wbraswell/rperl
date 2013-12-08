@@ -11,8 +11,8 @@ using std::cout;  using std::endl;
 
 // <<< TRANSLATED FUNCTION DECLARATIONS >>>
 // [[[ INHERITANCE TESTING ]]]
-SV *uninherited__Sort(SV *person);
-//SV *uninherited(SV *person);  // PERL_TYPES
+SV* uninherited__Sort(SV* person);
+//SV* uninherited(SV* person);  // PERL_TYPES
 //char *uninherited(char *person);  // CPP_TYPES
 
 ////package RPerl::Algorithm::Sort;
@@ -22,8 +22,8 @@ class CPP__RPerl__Algorithm__Sort : public CPP__RPerl__Algorithm
 public:
 	// <<< TRANSLATED METHOD DECLARATIONS >>>
 // [[[ INHERITANCE TESTING ]]]
-	void inherited__Sort(SV *person);
-//	void inherited(SV *person);
+	void inherited__Sort(SV* person);
+//	void inherited(SV* person);
 
 	// <<< ACCESSOR & MUTATOR DECLARATIONS/DEFINITIONS >>>
 	// NONE

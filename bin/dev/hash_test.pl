@@ -11,13 +11,13 @@ BEGIN { use lib $main::RPERL_INCLUDE_PATH;  use RPerl;  use base ('RPerl');  $RP
 BEGIN { use Data::Dumper;  our $AUTOLOAD;  sub AUTOLOAD { croak("AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n" . Dumper(\@_) . ', croaking'); } }  ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  ## RPERL SYSTEM allow autoload  ## RPERL SYSTEM allow read-only @_
 
 # UNCOMMENT TO ENABLE PERL TYPES FOR C++ OPS
-types::types_enable('PERL');
+#types::types_enable('PERL');
 
 # UNCOMMENT TO ENABLE C++ TYPES FOR C++ OPS
-#types::types_enable('CPP');
+types::types_enable('CPP');
 
 # UNCOMMENT TO ENABLE C++
-#use RPerl::DataStructure::Hash_cpp;  RPerl::DataStructure::Hash_cpp::cpp_load();  RPerl::DataStructure::Hash_cpp::cpp_link();
+use RPerl::DataStructure::Hash_cpp;  RPerl::DataStructure::Hash_cpp::cpp_load();  RPerl::DataStructure::Hash_cpp::cpp_link();
 
 print q{in array_test.pl, have ops_number() = '} . ops_number() . "'\n" or croak();
 print q{in array_test.pl, have types_number() = '} . types_number() . "'\n" or croak();
@@ -41,19 +41,15 @@ for my int $i ( 0 .. $i_MAX ) {
 #	$retval_stringify = stringify_int__hash_ref(2);  # HV00; raise/throw exception
 #	$retval_stringify = stringify_int__hash_ref({a_key => 23});  # HV01
 #	$retval_stringify = stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => 877, f_key => 33, g_key => 1701});  # HV02
-	$retval_stringify = stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => 23, e_key => 877, f_key => 33, g_key => 1701});  # HV03; raise/throw exception
+#	$retval_stringify = stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => 23, e_key => 877, f_key => 33, g_key => 1701});  # HV03; raise/throw exception
 #	$retval_stringify = stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => '42', d_key => 23, e_key => 877, f_key => 33, g_key => 1701});  # HV04; raise/throw exception
-	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
+#	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
+
+#	$retval_stringify = typetest___int__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, 'answer' => 42, 'fnord' => 23, 'units' => 877, 'degree' => 33, 'ncc' => 1701});  # HV10
+	$retval_stringify = typetest___int__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => "abcdefg\n", 'answer' => 42, 'fnord' => 23, 'units' => 877, 'degree' => 33, 'ncc' => 1701});  # HV11; not-an-int error
+	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 
 croak('Done for now, croaking');
-
-	# START HERE: add stringify()'s here, modify *void__out()'s here & Hash.h/cpp/pm, then in Hash.h/cpp add stringify()'s & separate PERL vs CPP types
-	# START HERE: add stringify()'s here, modify *void__out()'s here & Hash.h/cpp/pm, then in Hash.h/cpp add stringify()'s & separate PERL vs CPP types
-	# START HERE: add stringify()'s here, modify *void__out()'s here & Hash.h/cpp/pm, then in Hash.h/cpp add stringify()'s & separate PERL vs CPP types
-
-
-#	typetest___int__hash_ref__in___void__out({'binary' => 2, 'rush' => 2112, 'answer' => 42, 'fnord' => 23, 'units' => 877, 'degree' => 33, 'ncc' => 1701});
-#	typetest___int__hash_ref__in___void__out({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => "abcdefg\n", 'answer' => 42, 'fnord' => 23, 'units' => 877, 'degree' => 33, 'ncc' => 1701});  # not-an-int error
 
 #	$retval_int__hash_ref = typetest___int__in___int__hash_ref__out(5);
 #	print "in hash_test.pl $i/$i_MAX, have \$retval_int__hash_ref = \n" . Dumper($retval_int__hash_ref) . "\n";

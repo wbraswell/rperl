@@ -39,18 +39,18 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 # endif
 
 // [[[ TYPEMAP PACK/UNPACK DECLARATIONS ]]]
-int__hash_ref XS_unpack_int__hash_ref(SV *input_hv_ref);
-void XS_pack_int__hash_ref(SV *output_hv_ref, int__hash_ref input_unordered_map);
-number__hash_ref XS_unpack_number__hash_ref(SV *input_hv_ref);
-void XS_pack_number__hash_ref(SV *output_hv_ref, number__hash_ref input_unordered_map);
-string__hash_ref XS_unpack_string__hash_ref(SV *input_hv_ref);
-void XS_pack_string__hash_ref(SV *output_hv_ref, string__hash_ref input_unordered_map);
+int__hash_ref XS_unpack_int__hash_ref(SV* input_hv_ref);
+void XS_pack_int__hash_ref(SV* output_hv_ref, int__hash_ref input_unordered_map);
+number__hash_ref XS_unpack_number__hash_ref(SV* input_hv_ref);
+void XS_pack_number__hash_ref(SV* output_hv_ref, number__hash_ref input_unordered_map);
+string__hash_ref XS_unpack_string__hash_ref(SV* input_hv_ref);
+void XS_pack_string__hash_ref(SV* output_hv_ref, string__hash_ref input_unordered_map);
 
 // [[[ STRINGIFY DECLARATIONS ]]]
 # ifdef __PERL__TYPES
-SV* stringify_int__hash_ref(SV *input_hv_ref);
-SV* stringify_number__hash_ref(SV *input_hv_ref);
-SV* stringify_string__hash_ref(SV *input_hv_ref);
+SV* stringify_int__hash_ref(SV* input_hv_ref);
+SV* stringify_number__hash_ref(SV* input_hv_ref);
+SV* stringify_string__hash_ref(SV* input_hv_ref);
 # elif defined __CPP__TYPES
 string stringify_int__hash_ref(int__hash_ref input_unordered_map);
 string stringify_number__hash_ref(number__hash_ref input_unordered_map);

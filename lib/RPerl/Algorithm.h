@@ -12,8 +12,8 @@ using std::cout;  using std::endl;
 
 // <<< TRANSLATED FUNCTION DECLARATIONS >>>
 // [[[ INHERITANCE TESTING ]]]
-SV *uninherited__Algorithm(SV *person);
-//SV *uninherited(SV *person);  // PERL_TYPES
+SV* uninherited__Algorithm(SV* person);
+//SV* uninherited(SV* person);  // PERL_TYPES
 char *uninherited(char *person);  // CPP_TYPES
 
 ////package RPerl::Algorithm;
@@ -24,8 +24,8 @@ class CPP__RPerl__Algorithm
 public:
 	// <<< TRANSLATED METHOD DECLARATIONS >>>
 // [[[ INHERITANCE TESTING ]]]
-	void inherited__Algorithm(SV *person);
-//	void inherited(SV *person);
+	void inherited__Algorithm(SV* person);
+//	void inherited(SV* person);
 
 	// <<< ACCESSOR & MUTATOR DECLARATIONS/DEFINITIONS >>>
 	// NONE

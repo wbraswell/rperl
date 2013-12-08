@@ -11,8 +11,8 @@ typedef std::ostringstream ostringstream;
 #include <types.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
 // [[[ TYPEMAP PACK/UNPACK SUBROUTINE PROTOTYPE DECLARATIONS FOR RPERL-TYPES-IN-C ]]]
-string XS_unpack_string(SV *input_sv);
-void XS_pack_string(SV *output_sv, string input_string);
+string XS_unpack_string(SV* input_sv);
+void XS_pack_string(SV* output_sv, string input_string);
 
 // [[[ DATA TYPES & OPERATIONS ]]]
 # ifdef __PERL__TYPES

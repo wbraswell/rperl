@@ -1,7 +1,7 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-// VERSION 0.3.0
+// VERSION 0.3.2
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array_h
 #define __CPP__INCLUDED__RPerl__DataStructure__Array_h 1
@@ -42,19 +42,19 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 #define VECTOR_RESIZE_NOSHRINK(my_vector, my_size) ((my_vector.size() < my_size) ? my_vector.resize((size_t)(my_size)) : (void)0)  // do grow but don't shrink
 
 // [[[ TYPEMAP PACK/UNPACK DECLARATIONS ]]]
-int__array_ref XS_unpack_int__array_ref(SV *input_av_ref);
-void XS_pack_int__array_ref(SV *output_av_ref, int__array_ref input_vector);
-number__array_ref XS_unpack_number__array_ref(SV *input_av_ref);
-void XS_pack_number__array_ref(SV *output_av_ref, number__array_ref input_vector);
-string__array_ref XS_unpack_string__array_ref(SV *input_av_ref);
-void XS_pack_string__array_ref(SV *output_av_ref, string__array_ref input_vector);
+int__array_ref XS_unpack_int__array_ref(SV* input_av_ref);
+void XS_pack_int__array_ref(SV* output_av_ref, int__array_ref input_vector);
+number__array_ref XS_unpack_number__array_ref(SV* input_av_ref);
+void XS_pack_number__array_ref(SV* output_av_ref, number__array_ref input_vector);
+string__array_ref XS_unpack_string__array_ref(SV* input_av_ref);
+void XS_pack_string__array_ref(SV* output_av_ref, string__array_ref input_vector);
 
 // [[[ STRINGIFY DECLARATIONS ]]]
 # ifdef __PERL__TYPES
-//void stringify_int__array_ref(SV *input_av_ref);
-SV* stringify_int__array_ref(SV *input_av_ref);
-SV* stringify_number__array_ref(SV *input_av_ref);
-SV* stringify_string__array_ref(SV *input_av_ref);
+//void stringify_int__array_ref(SV* input_av_ref);
+SV* stringify_int__array_ref(SV* input_av_ref);
+SV* stringify_number__array_ref(SV* input_av_ref);
+SV* stringify_string__array_ref(SV* input_av_ref);
 # elif defined __CPP__TYPES
 string stringify_int__array_ref(int__array_ref input_vector);
 string stringify_number__array_ref(number__array_ref input_vector);

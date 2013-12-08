@@ -21,10 +21,10 @@ using std::cout;  using std::endl;
 // [[[<<< BEGIN PERL TYPES >>>]]]
 
 // <<< TRANSLATED FUNCTION DECLARATIONS >>>
-SV *bubblesort(SV *data);
+SV* bubblesort(SV* data);
 // [[[ INHERITANCE TESTING ]]]
-SV *uninherited__Bubble(SV *person);
-//SV *uninherited(SV *person);  // PERL_TYPES
+SV* uninherited__Bubble(SV* person);
+//SV* uninherited(SV* person);  // PERL_TYPES
 
 // DEV NOTE, CORRELATION #01: multiple inheritance is enabled by _either_ C++ here or Perl at correlation in Bubble_cpp.pm
 //class CPP__RPerl__Algorithm__Sort__Bubble : public CPP__RPerl__Algorithm__Sort  // SINGLE INHERITANCE
@@ -34,11 +34,11 @@ public:
 	// <<< TRANSLATED METHOD DECLARATIONS >>>
 	void sort();  // NEED ANSWER: no named argument required for $self object?
 // [[[ INHERITANCE TESTING ]]]
-	void inherited__Bubble(SV *person);
-//	void inherited(SV *person);
+	void inherited__Bubble(SV* person);
+//	void inherited(SV* person);
 
 	// <<< ACCESSOR & MUTATOR DECLARATIONS/DEFINITIONS >>>
-	SV *get_data() { return SvREFCNT_inc(this->data); }
+	SV* get_data() { return SvREFCNT_inc(this->data); }
 	void set_data(SV* data_new) { this->data = data_new; }
 
 	// <<< CONSTRUCTOR & DESTRUCTOR DECLARATIONS/DEFINITIONS >>>
@@ -48,7 +48,7 @@ public:
 private:
 	// <<< TRANSLATED PROPERTY DECLARATIONS >>>
 ////our %properties = ( data => my int__array_ref $KEY_data );
-	SV *data;
+	SV* data;
 };
 
 // [[[<<< END PERL TYPES >>>]]]
@@ -64,7 +64,7 @@ private:
 // <<< TRANSLATED FUNCTION DECLARATIONS >>>
 int__array_ref bubblesort(int__array_ref data);
 // [[[ INHERITANCE TESTING ]]]
-SV *uninherited__Bubble(SV *person);  // NEED UPGRADE TO CPP_TYPES!!!
+SV* uninherited__Bubble(SV* person);  // NEED UPGRADE TO CPP_TYPES!!!
 //char *uninherited(char *person);  // CPP_TYPES
 
 // DEV NOTE, CORRELATION #01: multiple inheritance is enabled by _either_ C++ here or Perl at correlation in Bubble_cpp.pm
@@ -75,8 +75,8 @@ public:
 	// <<< TRANSLATED METHOD DECLARATIONS >>>
 	void sort();  // NEED ANSWER: no named argument required for $self object?
 // [[[ INHERITANCE TESTING ]]]
-	void inherited__Bubble(SV *person);  // NEED UPGRADE TO CPP_TYPES!!!
-//	void inherited(SV *person);  // NEED UPGRADE TO CPP_TYPES!!!
+	void inherited__Bubble(SV* person);  // NEED UPGRADE TO CPP_TYPES!!!
+//	void inherited(SV* person);  // NEED UPGRADE TO CPP_TYPES!!!
 
 	// <<< ACCESSOR & MUTATOR DECLARATIONS/DEFINITIONS >>>
 	int__array_ref get_data() { return(this->data); }

@@ -7,7 +7,7 @@ using std::cout;  using std::endl;
 #include <RPerl/DataType/String.h>		// -> NULL (relies on <string> being included via Inline::CPP's AUTO_INCLUDE config option)
 
 // convert from (Perl SV containing string) to (C++ std::string)
-string XS_unpack_string(SV *input_sv)
+string XS_unpack_string(SV* input_sv)
 {
 //	printf("in XS_unpack_string(), top of subroutine\n");
 
@@ -23,7 +23,7 @@ string XS_unpack_string(SV *input_sv)
 
 
 // convert from (C++ std::string) to (Perl SV containing string)
-void XS_pack_string(SV *output_sv, string input_string)
+void XS_pack_string(SV* output_sv, string input_string)
 {
 //	printf("in XS_pack_string(), top of subroutine\n");
 //	cout << "in XS_pack_string(), have input_string = '" << input_string << "'" << endl;

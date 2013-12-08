@@ -267,22 +267,22 @@ class Queue {
 		Queue(int sz=0) { q = newAV(); if (sz) av_extend(q, sz-1); }
 		~Queue() { av_undef(q); }
 		int size() {return av_len(q) + 1; }
-		int enqueue(SV *item) { av_push(q, SvREFCNT_inc(item)); return av_len(q)+1; }
-		SV *dequeue() { return av_shift(q); }
-		SV *peek() { return size() ? SvREFCNT_inc(*av_fetch(q,0,0)): &PL_sv_undef;}
+		int enqueue(SV* item) { av_push(q, SvREFCNT_inc(item)); return av_len(q)+1; }
+		SV* dequeue() { return av_shift(q); }
+		SV* peek() { return size() ? SvREFCNT_inc(*av_fetch(q,0,0)): &PL_sv_undef;}
 	private:
-		AV *q;
+		AV* q;
 };
 class Stack {
 	public:
 		Stack(int sz=0) { s = newAV(); if (sz) av_extend(s, sz-1); }
 		~Stack() { av_undef(s); }
 		int size() { return av_len(s) + 1; }
-		int push(SV *i) { av_push(s, SvREFCNT_inc(i)); return av_len(s)+1; }
-		SV *pop() { return av_pop(s); }
-		SV *peek() { return size() ? SvREFCNT_inc(*av_fetch(s,size()-1,0)) : &PL_sv_undef; }
+		int push(SV* i) { av_push(s, SvREFCNT_inc(i)); return av_len(s)+1; }
+		SV* pop() { return av_pop(s); }
+		SV* peek() { return size() ? SvREFCNT_inc(*av_fetch(s,size()-1,0)) : &PL_sv_undef; }
 	private:
-		AV *s;
+		AV* s;
 };
 END_OF_CPP_CODE
 EOF
@@ -355,7 +355,7 @@ int add ( int a, int b ) { return a + b; }
 int add ( int a, int b, int c ) { return a + b + c; }
 // But a function call with elipses can dispatch to overloaded functions since
 // no Perl binding is required in reaching those functions.
-int multiadd ( SV * a, ... ) {
+int multiadd ( SV*  a, ... ) {
 	dXSARGS;  // Creates a variable 'items' that contains a paramater count.
 	try{
 		switch ( items ) {

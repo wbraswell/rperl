@@ -1,7 +1,7 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-// VERSION 0.3.1
+// VERSION 0.3.2
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array_cpp
 #define __CPP__INCLUDED__RPerl__DataStructure__Array_cpp 1
@@ -22,7 +22,7 @@ using std::cout;  using std::endl;
 // [[[ TYPEMAP PACK/UNPACK ]]]
 
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))) to (C++ std::vector of ints)
-int__array_ref XS_unpack_int__array_ref(SV *input_av_ref)
+int__array_ref XS_unpack_int__array_ref(SV* input_av_ref)
 {
 //	printf("in CPPOPS_CPPTYPES XS_unpack_int__array_ref(), top of subroutine\n");
 
@@ -93,14 +93,14 @@ int__array_ref XS_unpack_int__array_ref(SV *input_av_ref)
 
 
 // convert from (C++ std::vector of ints) to (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs)))
-void XS_pack_int__array_ref(SV *output_av_ref, int__array_ref input_vector)
+void XS_pack_int__array_ref(SV* output_av_ref, int__array_ref input_vector)
 {
 //	printf("in CPPOPS_CPPTYPES XS_pack_int__array_ref(), top of subroutine\n");
 
-	AV *output_av = newAV();  // initialize output array to empty
+	AV* output_av = newAV();  // initialize output array to empty
 	int input_vector_length = input_vector.size();
 	int i;
-	SV *temp_sv_pointer;
+	SV* temp_sv_pointer;
 
 //	printf("in CPPOPS_CPPTYPES XS_pack_int__array_ref(), have input_vector_length = %d\n", input_vector_length);
 
@@ -116,7 +116,7 @@ void XS_pack_int__array_ref(SV *output_av_ref, int__array_ref input_vector)
 
 
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing NVs))) to (C++ std::vector of long doubles)
-number__array_ref XS_unpack_number__array_ref(SV *input_av_ref)
+number__array_ref XS_unpack_number__array_ref(SV* input_av_ref)
 {
 //	printf("in CPPOPS_CPPTYPES XS_unpack_number__array_ref(), top of subroutine\n");
 
@@ -188,14 +188,14 @@ number__array_ref XS_unpack_number__array_ref(SV *input_av_ref)
 
 
 // convert from (C++ std::vector of long doubles) to (Perl SV containing RV to (Perl AV of (Perl SVs containing NVs)))
-void XS_pack_number__array_ref(SV *output_av_ref, number__array_ref input_vector)
+void XS_pack_number__array_ref(SV* output_av_ref, number__array_ref input_vector)
 {
 //	printf("in CPPOPS_CPPTYPES XS_pack_number__array_ref(), top of subroutine\n");
 
-	AV *output_av = newAV();  // initialize output array to empty
+	AV* output_av = newAV();  // initialize output array to empty
 	int input_vector_length = input_vector.size();
 	int i;
-	SV *temp_sv_pointer;
+	SV* temp_sv_pointer;
 
 //	printf("in CPPOPS_CPPTYPES XS_pack_number__array_ref(), have input_vector_length = %d\n", input_vector_length);
 
@@ -211,7 +211,7 @@ void XS_pack_number__array_ref(SV *output_av_ref, number__array_ref input_vector
 
 
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs))) to (C++ std::vector of std::strings)
-string__array_ref XS_unpack_string__array_ref(SV *input_av_ref)
+string__array_ref XS_unpack_string__array_ref(SV* input_av_ref)
 {
 //	printf("in CPPOPS_CPPTYPES XS_unpack_string__array_ref(), top of subroutine\n");
 
@@ -263,14 +263,14 @@ string__array_ref XS_unpack_string__array_ref(SV *input_av_ref)
 
 
 // convert from (C++ std::vector of std::strings) to (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs)))
-void XS_pack_string__array_ref(SV *output_av_ref, string__array_ref input_vector)
+void XS_pack_string__array_ref(SV* output_av_ref, string__array_ref input_vector)
 {
 //	printf("in CPPOPS_CPPTYPES XS_pack_string__array_ref(), top of subroutine\n");
 
-	AV *output_av = newAV();  // initialize output array to empty
+	AV* output_av = newAV();  // initialize output array to empty
 	int input_vector_length = input_vector.size();
 	int i;
-	SV *temp_sv_pointer;
+	SV* temp_sv_pointer;
 
 //	printf("in CPPOPS_CPPTYPES XS_pack_string__array_ref(), have input_vector_length = %d\n", input_vector_length);
 
@@ -298,8 +298,8 @@ void XS_pack_string__array_ref(SV *output_av_ref, string__array_ref input_vector
 // DEV NOTE: direct manipulation of the Perl Stack shown in /* block comments */
 // TODO: use Perl stack manipulation to enable support for variable number of arguments and multiple return values
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
-//void stringify_int__array_ref(SV *input_av_ref)
-SV* stringify_int__array_ref(SV *input_av_ref)
+//void stringify_int__array_ref(SV* input_av_ref)
+SV* stringify_int__array_ref(SV* input_av_ref)
 {
 //	Inline_Stack_Vars;
 //#define Inline_Stack_Vars	dXSARGS  // from INLINE.h
@@ -375,7 +375,7 @@ SV* stringify_int__array_ref(SV *input_av_ref)
 
 
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing NVs))) to Perl-parsable (Perl SV containing PV)
-SV* stringify_number__array_ref(SV *input_av_ref)
+SV* stringify_number__array_ref(SV* input_av_ref)
 {
 //	printf("in CPPOPS_PERLTYPES stringify_number__array_ref(), top of subroutine\n");
 
@@ -436,7 +436,7 @@ SV* stringify_number__array_ref(SV *input_av_ref)
 
 
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs))) to Perl-parsable (Perl SV containing PV)
-SV* stringify_string__array_ref(SV *input_av_ref)
+SV* stringify_string__array_ref(SV* input_av_ref)
 {
 //	printf("in CPPOPS_PERLTYPES stringify_string__array_ref(), top of subroutine\n");
 

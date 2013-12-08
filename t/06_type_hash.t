@@ -302,5 +302,40 @@ for my $i ( 0 .. 2 ) {
         "/$OPS_TYPES.*input_hv_value '42' at key 'c_key' was not an int/",
         q{stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => '42', d_key => 23, e_key => 877, f_key => 33, g_key => 1701}) throws correct exception}
     );
+    lives_and(    # HV10
+        sub {
+            like(
+                typetest___int__hash_ref__in___string__out(
+                    {   'binary' => 2,
+                        'rush'   => 2112,
+                        'answer' => 42,
+                        'fnord'  => 23,
+                        'units'  => 877,
+                        'degree' => 33,
+                        'ncc'    => 1701
+                    }
+                ),
+                q{/^\{(?=.*'binary' => 2\b)(?=.*'rush' => 2112\b)(?=.*'answer' => 42\b)(?=.*'fnord' => 23\b)(?=.*'units' => 877\b)(?=.*'degree' => 33\b)(?=.*'ncc' => 1701\b).*\}} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+                    . $OPS_TYPES . q{$/m}, ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+                q{typetest___int__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, 'answer' => 42, 'fnord' => 23, 'units' => 877, 'degree' => 33, 'ncc' => 1701}) returns correct value}
+            );
+        },
+        q{typetest___int__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, 'answer' => 42, 'fnord' => 23, 'units' => 877, 'degree' => 33, 'ncc' => 1701}) lives}
+    );
+    
+    # START HERE: decide if we keep error value in print-out as in hash (and possibly remove newline char from abcdefg\n), or remove as in array
+    # START HERE: decide if we keep error value in print-out as in hash (and possibly remove newline char from abcdefg\n), or remove as in array
+    # START HERE: decide if we keep error value in print-out as in hash (and possibly remove newline char from abcdefg\n), or remove as in array
+    
+=cut
+    throws_ok(                             # HV11
+        sub {
+            typetest___int__hash_ref__in___string__out(
+                [ 2, 2112, 42, 23, 877, "abcdefg\n", 33, 1701 ] ); ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+        },
+        "/$OPS_TYPES.*input_hv_element at index 5 was not an int/",
+        q{typetest___int__hash_ref__in___string__out([2, 2112, 42, 23, 877, "abcdefg\n", 33, 1701]) throws correct exception} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted newline
+    );
+=cut
 }
 done_testing();

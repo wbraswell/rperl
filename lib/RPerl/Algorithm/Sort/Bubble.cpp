@@ -34,7 +34,7 @@ void CPP__RPerl__Algorithm__Sort__Bubble::sort()
 ////# original algorithm: comparison-based and stable [O(n**2) average time, O(1) worst-case extra space]
 ////# sort data, return sorted data
 ////our int__array_ref $bubblesort = sub {(my int__array_ref $data) = @_;
-SV *bubblesort(SV *data)  // DEV NOTE: properly creates local-to-function SV* data here, does not get confused with this->data object property, even though they share a name
+SV* bubblesort(SV* data)  // DEV NOTE: properly creates local-to-function SV* data here, does not get confused with this->data object property, even though they share a name
 ////;
 {
 	RPerl_object_property_init(data); // NEED ANSWER: why do we need to do property init?
@@ -49,11 +49,11 @@ SV *bubblesort(SV *data)  // DEV NOTE: properly creates local-to-function SV* da
 //	const int data_length = av_len((AV*) SvRV(data)) + 1;  // DE-OPTIMIZE, SHORT-HAND
 	AV* data_av = (AV*) SvRV(data);  // OPTIMIZE, LONG-HAND: data dereferenced to data_av more than once, declare data_av and re-use, MUST REFRESH data_av for every assignment directly to data (none in this algorithm)
 	const int data_length = av_len(data_av) + 1;  // OPTIMIZE, LONG-HAND: use data_av
-	SV *data_i = newSV(0);  // OPTIMIZE, LONG-HAND: data element i accessed more than once, declare data_i and re-use;  all new SV*'s given initial undef newSV(0) value to avoid printf() errors during debugging
-	SV *data_i_plus_1 = newSV(0);  // OPTIMIZE, LONG-HAND
+	SV* data_i = newSV(0);  // OPTIMIZE, LONG-HAND: data element i accessed more than once, declare data_i and re-use;  all new SV*'s given initial undef newSV(0) value to avoid printf() errors during debugging
+	SV* data_i_plus_1 = newSV(0);  // OPTIMIZE, LONG-HAND
 
 ////	my scalar $swap;
-	SV *swap = newSV(0);
+	SV* swap = newSV(0);
 
 //	if (RPerl__DEBUG2) { printf("in bubblesort(), after variable init, have pre-DUMPER SV_REFERENCE_COUNT(data_i) = %lu\n", SV_REFERENCE_COUNT(data_i));  printf("in bubblesort(), after variable init, have data_i = %s", RPerl_DUMPER__perl_from_c(data_i));  printf("in bubblesort(), after variable init, have post-DUMPER SV_REFERENCE_COUNT(data_i) = %lu\n\n", SV_REFERENCE_COUNT(data_i)); }
 //	if (RPerl__DEBUG2) { printf("in bubblesort(), after variable init, have pre-DUMPER SV_REFERENCE_COUNT(data_i_plus_1) = %lu\n", SV_REFERENCE_COUNT(data_i_plus_1));  printf("in bubblesort(), after variable init, have data_i_plus_1 = %s", RPerl_DUMPER__perl_from_c(data_i_plus_1));  printf("in bubblesort(), after variable init, have post-DUMPER SV_REFERENCE_COUNT(data_i_plus_1) = %lu\n\n", SV_REFERENCE_COUNT(data_i_plus_1)); }
@@ -145,16 +145,16 @@ SV *bubblesort(SV *data)  // DEV NOTE: properly creates local-to-function SV* da
 // [[[ INHERITANCE TESTING ]]]
 // [[[ INHERITANCE TESTING ]]]
 ////our void__method $inherited__Bubble = sub { (my object $self, my string $person) = @_;  print "in Perl Bubble->inherited__Bubble(), have \$self = '$self' and \$person = '$person', FRIED\n"; };
-void CPP__RPerl__Algorithm__Sort__Bubble::inherited__Bubble(SV *person) { cout << "in C++ PERL_TYPES Bubble->inherited__Bubble(), have $self = '" << this << "' and $person = '" << SvPV_nolen(person) << "', FRIED\n"; }
+void CPP__RPerl__Algorithm__Sort__Bubble::inherited__Bubble(SV* person) { cout << "in C++ PERL_TYPES Bubble->inherited__Bubble(), have $self = '" << this << "' and $person = '" << SvPV_nolen(person) << "', FRIED\n"; }
 
 ////our void__method $inherited = sub { (my object $self, my string $person) = @_;  print "in Perl Bubble->inherited(), have \$self = '$self' and \$person = '$person', ILLOGICAL\n"; };
-//void CPP__RPerl__Algorithm__Sort__Bubble::inherited(SV *person) { cout << "in C++ PERL_TYPES Bubble->inherited(), have $self = '" << this << "' and $person = '" << SvPV_nolen(person) << "', ILLOGICAL\n"; }
+//void CPP__RPerl__Algorithm__Sort__Bubble::inherited(SV* person) { cout << "in C++ PERL_TYPES Bubble->inherited(), have $self = '" << this << "' and $person = '" << SvPV_nolen(person) << "', ILLOGICAL\n"; }
 
 ////our string $uninherited__Bubble = sub { (my string $person) = @_;  print "in Perl Bubble::uninherited__Bubble(), \$person = '$person', MITOCHONDRIAL\n";  return "Perl Bubble::uninherited__Bubble() RULES!"; };
-SV *uninherited__Bubble(SV *person) { cout << "in C++ PERL_TYPES Bubble::uninherited__Bubble(), have $person = '" << SvPV_nolen(person) << "', MITOCHONDRIAL\n";  return newSVpv("C++ PERL_TYPES Bubble::uninherited__Bubble() RULES!", 0); }
+SV* uninherited__Bubble(SV* person) { cout << "in C++ PERL_TYPES Bubble::uninherited__Bubble(), have $person = '" << SvPV_nolen(person) << "', MITOCHONDRIAL\n";  return newSVpv("C++ PERL_TYPES Bubble::uninherited__Bubble() RULES!", 0); }
 
 ////our string $uninherited = sub { (my string $person) = @_;  print "in Perl Bubble::uninherited(), \$person = '$person', TETRAHEDRON\n";  return "Perl Bubble::uninherited() ROCKS!"; };
-//SV *uninherited(SV *person) { cout << "in C++ PERL_TYPES Bubble::uninherited(), have $person = '" << SvPV_nolen(person) << "', TETRAHEDRON\n";  return newSVpv("C++ PERL_TYPES Bubble::uninherited() RULES!", 0); }  // PERL_TYPES
+//SV* uninherited(SV* person) { cout << "in C++ PERL_TYPES Bubble::uninherited(), have $person = '" << SvPV_nolen(person) << "', TETRAHEDRON\n";  return newSVpv("C++ PERL_TYPES Bubble::uninherited() RULES!", 0); }  // PERL_TYPES
 
 // [[[<<< END PERL TYPES >>>]]]
 // [[[<<< END PERL TYPES >>>]]]
@@ -287,15 +287,15 @@ int__array_ref bubblesort(int__array_ref data)  // DEV NOTE: properly creates lo
 // [[[ INHERITANCE TESTING ]]]
 ////our void__method $inherited__Bubble = sub { (my object $self, my string $person) = @_;  print "in Perl Bubble->inherited__Bubble(), have \$self = '$self' and \$person = '$person', FRIED\n"; };
 // NEED UPGRADE TO CPP_TYPES!!!
-void CPP__RPerl__Algorithm__Sort__Bubble::inherited__Bubble(SV *person) { cout << "in C++ PERL_TYPES Bubble->inherited__Bubble(), have $self = '" << this << "' and $person = '" << SvPV_nolen(person) << "', FRIED\n"; }
+void CPP__RPerl__Algorithm__Sort__Bubble::inherited__Bubble(SV* person) { cout << "in C++ PERL_TYPES Bubble->inherited__Bubble(), have $self = '" << this << "' and $person = '" << SvPV_nolen(person) << "', FRIED\n"; }
 
 ////our void__method $inherited = sub { (my object $self, my string $person) = @_;  print "in Perl Bubble->inherited(), have \$self = '$self' and \$person = '$person', ILLOGICAL\n"; };
 // NEED UPGRADE TO CPP_TYPES!!!
-//void CPP__RPerl__Algorithm__Sort__Bubble::inherited(SV *person) { cout << "in C++ PERL_TYPES Bubble->inherited(), have $self = '" << this << "' and $person = '" << SvPV_nolen(person) << "', ILLOGICAL\n"; }
+//void CPP__RPerl__Algorithm__Sort__Bubble::inherited(SV* person) { cout << "in C++ PERL_TYPES Bubble->inherited(), have $self = '" << this << "' and $person = '" << SvPV_nolen(person) << "', ILLOGICAL\n"; }
 
 ////our string $uninherited__Bubble = sub { (my string $person) = @_;  print "in Perl Bubble::uninherited__Bubble(), \$person = '$person', MITOCHONDRIAL\n";  return "Perl Bubble::uninherited__Bubble() RULES!"; };
 // NEED UPGRADE TO CPP_TYPES!!!
-SV *uninherited__Bubble(SV *person) { cout << "in C++ PERL_TYPES Bubble::uninherited__Bubble(), have $person = '" << SvPV_nolen(person) << "', MITOCHONDRIAL\n";  return newSVpv("C++ PERL_TYPES Bubble::uninherited__Bubble() RULES!", 0); }
+SV* uninherited__Bubble(SV* person) { cout << "in C++ PERL_TYPES Bubble::uninherited__Bubble(), have $person = '" << SvPV_nolen(person) << "', MITOCHONDRIAL\n";  return newSVpv("C++ PERL_TYPES Bubble::uninherited__Bubble() RULES!", 0); }
 
 ////our string $uninherited = sub { (my string $person) = @_;  print "in Perl Bubble::uninherited(), \$person = '$person', TETRAHEDRON\n";  return "Perl Bubble::uninherited() ROCKS!"; };
 //char *uninherited(char *person) { cout << "in C++ CPP_TYPES Bubble::uninherited(), have $person = '" << person << "', TETRAHEDRON\n";  return (char *)"C++ CPP_TYPES Bubble::uninherited() RULES!"; }  // CPP_TYPES
