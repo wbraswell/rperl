@@ -42,12 +42,12 @@ for my int $i ( 0 .. $i_MAX ) {
 #	$retval_stringify = stringify_int__hash_ref({a_key => 23});  # HV01
 #	$retval_stringify = stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => 877, f_key => 33, g_key => 1701});  # HV02
 #	$retval_stringify = stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => 23, e_key => 877, f_key => 33, g_key => 1701});  # HV03; raise/throw exception
-#	$retval_stringify = stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => '42', d_key => 23, e_key => 877, f_key => 33, g_key => 1701});  # HV04; raise/throw exception
-#	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
+	$retval_stringify = stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => '23', e_key => 877, f_key => 33, g_key => 1701});  # HV04; raise/throw exception
+	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
 
 #	$retval_stringify = typetest___int__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, 'answer' => 42, 'fnord' => 23, 'units' => 877, 'degree' => 33, 'ncc' => 1701});  # HV10
-	$retval_stringify = typetest___int__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => "abcdefg\n", 'answer' => 42, 'fnord' => 23, 'units' => 877, 'degree' => 33, 'ncc' => 1701});  # HV11; not-an-int error
-	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
+#	$retval_stringify = typetest___int__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => "abcdefg", 'answer' => 42, 'fnord' => 23, 'units' => 877, 'degree' => 33, 'ncc' => 1701});  # HV11; not-an-int error
+#	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 
 croak('Done for now, croaking');
 
@@ -55,7 +55,7 @@ croak('Done for now, croaking');
 #	print "in hash_test.pl $i/$i_MAX, have \$retval_int__hash_ref = \n" . Dumper($retval_int__hash_ref) . "\n";
 
 #	typetest___number__hash_ref__in___void__out({'binary' => 2.1234432112344321, 'rush' => 2112.4321, 'answer' => 42.4567, 'fnord' => 23.765444444444444444, 'units' => 877.5678, 'degree' => 33.876587658765875687658765, 'ncc' => 1701.6789});
-#	typetest___number__hash_ref__in___void__out({'binary' => 2.1234432112344321, 'rush' => 2112.4321, 'ERROR_FUNKEY' => "abcdefg\n", 'answer' => 42.4567, 'fnord' => 23.765444444444444444, 'units' => 877.5678, 'degree' => 33.876587658765875687658765, 'ncc' => 1701.6789});  # not-a-number error
+#	typetest___number__hash_ref__in___void__out({'binary' => 2.1234432112344321, 'rush' => 2112.4321, 'ERROR_FUNKEY' => "abcdefg", 'answer' => 42.4567, 'fnord' => 23.765444444444444444, 'units' => 877.5678, 'degree' => 33.876587658765875687658765, 'ncc' => 1701.6789});  # not-a-number error
 
 #	$retval_number__hash_ref = typetest___int__in___number__hash_ref__out(5);
 #	print "in hash_test.pl $i/$i_MAX, have \$retval_number__hash_ref = \n" . Dumper($retval_number__hash_ref) . "\n";

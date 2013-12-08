@@ -43,8 +43,9 @@ int__hash_ref XS_unpack_int__hash_ref(SV* input_hv_ref)
 
 			// UNORDERED MAP ENTRY ASSIGNMENT, OPTION A, SUBSCRIPT, KNOWN SIZE: l-value subscript notation with no further reserve(); does not utilize i in assignment
 			if (SvIOKp(input_hv_value)) { output_unordered_map[SvPV_nolen(input_hv_key)] = SvIV(input_hv_value); }
-//			else { croak("in CPPOPS_CPPTYPES XS_unpack_int__hash_ref(), input_hv_value '%s' at key '%s' and index %d was not an int, croaking", SvPV_nolen(input_hv_value), SvPV_nolen(input_hv_key), i); }
-			else { croak("in CPPOPS_CPPTYPES XS_unpack_int__hash_ref(), input_hv_value '%s' at key '%s' was not an int, croaking", SvPV_nolen(input_hv_value), SvPV_nolen(input_hv_key), i); }
+//			else { croak("in CPPOPS_CPPTYPES XS_unpack_int__hash_ref(), input_hv_value '%s' at key '%s' and index %d was not an int, croaking", SvPV_nolen(input_hv_value), SvPV_nolen(input_hv_key), i); }  // index is for internal use, doesn't appear in Pure-Perl output
+//			else { croak("in CPPOPS_CPPTYPES XS_unpack_int__hash_ref(), input_hv_value '%s' at key '%s' was not an int, croaking", SvPV_nolen(input_hv_value), SvPV_nolen(input_hv_key), i); }  // values is of unknown type, do not attempt to print
+			else { croak("in CPPOPS_CPPTYPES XS_unpack_int__hash_ref(), input_hv_value at key '%s' was not an int, croaking", SvPV_nolen(input_hv_key), i); }
 		}
 		else { croak("in CPPOPS_CPPTYPES XS_unpack_int__hash_ref(), input_hv_entry at index %d was undef and/or NULL, croaking", i); }
 	}
@@ -119,7 +120,7 @@ number__hash_ref XS_unpack_number__hash_ref(SV* input_hv_ref)
 			// UNORDERED MAP ENTRY ASSIGNMENT, OPTION A, SUBSCRIPT, KNOWN SIZE: l-value subscript notation with no further reserve(); does not utilize i in assignment
 			if (SvNOKp(input_hv_value)) { output_unordered_map[SvPV_nolen(input_hv_key)] = SvNV(input_hv_value); }
 //			else { croak("in CPPOPS_CPPTYPES XS_unpack_number__hash_ref(), input_hv_value '%s' at key '%s' and index %d was not a number, croaking", SvPV_nolen(input_hv_value), SvPV_nolen(input_hv_key), i); }
-			else { croak("in CPPOPS_CPPTYPES XS_unpack_number__hash_ref(), input_hv_value '%s' at key '%s' was not a number, croaking", SvPV_nolen(input_hv_value), SvPV_nolen(input_hv_key), i); }
+			else { croak("in CPPOPS_CPPTYPES XS_unpack_number__hash_ref(), input_hv_value at key '%s' was not a number, croaking", SvPV_nolen(input_hv_key), i); }
 		}
 		else { croak("in CPPOPS_CPPTYPES XS_unpack_number__hash_ref(), input_hv_entry at index %d was undef and/or NULL, croaking", i); }
 	}
@@ -194,7 +195,7 @@ string__hash_ref XS_unpack_string__hash_ref(SV* input_hv_ref)
 			// UNORDERED MAP ENTRY ASSIGNMENT, OPTION A, SUBSCRIPT, KNOWN SIZE: l-value subscript notation with no further reserve(); does not utilize i in assignment
 			if (SvPOKp(input_hv_value)) { output_unordered_map[SvPV_nolen(input_hv_key)] = SvPV_nolen(input_hv_value); }
 //			else { croak("in CPPOPS_CPPTYPES XS_unpack_string__hash_ref(), input_hv_value '%s' at key '%s' and index %d was not a string, croaking", SvPV_nolen(input_hv_value), SvPV_nolen(input_hv_key), i); }
-			else { croak("in CPPOPS_CPPTYPES XS_unpack_string__hash_ref(), input_hv_value '%s' at key '%s' was not a string, croaking", SvPV_nolen(input_hv_value), SvPV_nolen(input_hv_key), i); }
+			else { croak("in CPPOPS_CPPTYPES XS_unpack_string__hash_ref(), input_hv_value at key '%s' was not a string, croaking", SvPV_nolen(input_hv_key), i); }
 		}
 		else { croak("in CPPOPS_CPPTYPES XS_unpack_string__hash_ref(), input_hv_entry at index %d was undef and/or NULL, croaking", i); }
 	}
@@ -284,7 +285,7 @@ SV* stringify_int__hash_ref(SV* input_hv_ref)
 				}
 			}
 //			else { croak("in CPPOPS_PERLTYPES stringify_int__hash_ref(), input_hv_value '%s' at key '%s' and index %d was not an int, croaking", SvPV_nolen(input_hv_value), SvPV_nolen(input_hv_key), i); }
-			else { croak("in CPPOPS_PERLTYPES stringify_int__hash_ref(), input_hv_value '%s' at key '%s' was not an int, croaking", SvPV_nolen(input_hv_value), SvPV_nolen(input_hv_key)); }
+			else { croak("in CPPOPS_PERLTYPES stringify_int__hash_ref(), input_hv_value at key '%s' was not an int, croaking", SvPV_nolen(input_hv_key)); }
 		}
 		else { croak("in CPPOPS_PERLTYPES stringify_int__hash_ref(), input_hv_entry at index %d was undef and/or NULL, croaking", i); }
 	}

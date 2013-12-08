@@ -85,16 +85,21 @@ for my $i ( 0 .. 2 ) {
         );
         lives_and(
             sub {
+                is( ops_number(), 'PERL', q{ops_number() returns 'PERL'} );
+            },
+            q{ops_number() lives}
+        );
+        lives_and(
+            sub {
                 is( types_number(), 'PERL',
                     q{types_number() returns 'PERL'} );
             },
             q{types_number() lives}
         );
         lives_and(
-            sub {
-                is( ops_number(), 'PERL', q{ops_number() returns 'PERL'} );
-            },
-            q{ops_number() lives}
+            sub { is( ops_string(), 'PERL', q{ops_string() returns 'PERL'} ) }
+            ,
+            q{ops_string() lives}
         );
         lives_and(
             sub {
@@ -104,19 +109,14 @@ for my $i ( 0 .. 2 ) {
             q{types_string() lives}
         );
         lives_and(
-            sub { is( ops_string(), 'PERL', q{ops_string() returns 'PERL'} ) }
-            ,
-            q{ops_string() lives}
-        );
+            sub { is( ops_hash(), 'PERL', q{ops_hash() returns 'PERL'} ) },
+            q{ops_hash() lives} );
         lives_and(
             sub {
                 is( types_hash(), 'PERL', q{types_hash() returns 'PERL'} );
             },
             q{types_hash() lives}
         );
-        lives_and(
-            sub { is( ops_hash(), 'PERL', q{ops_hash() returns 'PERL'} ) },
-            q{ops_hash() lives} );
     }
     elsif ( $i == 1 ) {
         $OPS_TYPES = 'CPPOPS_PERLTYPES';
@@ -149,6 +149,10 @@ for my $i ( 0 .. 2 ) {
             q{RPerl::DataStructure::Hash_cpp::cpp_link() lives}
         );
         lives_and(
+            sub { is( ops_number(), 'CPP', q{ops_number() returns 'CPP'} ) },
+            q{ops_number() lives}
+        );
+        lives_and(
             sub {
                 is( types_number(), 'PERL',
                     q{types_number() returns 'PERL'} );
@@ -156,8 +160,8 @@ for my $i ( 0 .. 2 ) {
             q{types_number() lives}
         );
         lives_and(
-            sub { is( ops_number(), 'CPP', q{ops_number() returns 'CPP'} ) },
-            q{ops_number() lives}
+            sub { is( ops_string(), 'CPP', q{ops_string() returns 'CPP'} ) },
+            q{ops_string() lives}
         );
         lives_and(
             sub {
@@ -167,18 +171,14 @@ for my $i ( 0 .. 2 ) {
             q{types_string() lives}
         );
         lives_and(
-            sub { is( ops_string(), 'CPP', q{ops_string() returns 'CPP'} ) },
-            q{ops_string() lives}
-        );
+            sub { is( ops_hash(), 'CPP', q{ops_hash() returns 'CPP'} ) },
+            q{ops_hash() lives} );
         lives_and(
             sub {
                 is( types_hash(), 'PERL', q{types_hash() returns 'PERL'} );
             },
             q{types_hash() lives}
         );
-        lives_and(
-            sub { is( ops_hash(), 'CPP', q{ops_hash() returns 'CPP'} ) },
-            q{ops_hash() lives} );
     }
     else {
         $OPS_TYPES = 'CPPOPS_CPPTYPES';
@@ -204,14 +204,18 @@ for my $i ( 0 .. 2 ) {
             q{RPerl::DataStructure::Hash_cpp::cpp_link() lives}
         );
         lives_and(
+            sub { is( ops_number(), 'CPP', q{ops_number() returns 'CPP'} ) },
+            q{ops_number() lives}
+        );
+        lives_and(
             sub {
                 is( types_number(), 'CPP', q{types_number() returns 'CPP'} );
             },
             q{types_number() lives}
         );
         lives_and(
-            sub { is( ops_number(), 'CPP', q{ops_number() returns 'CPP'} ) },
-            q{ops_number() lives}
+            sub { is( ops_string(), 'CPP', q{ops_string() returns 'CPP'} ) },
+            q{ops_string() lives}
         );
         lives_and(
             sub {
@@ -220,17 +224,13 @@ for my $i ( 0 .. 2 ) {
             q{types_string() lives}
         );
         lives_and(
-            sub { is( ops_string(), 'CPP', q{ops_string() returns 'CPP'} ) },
-            q{ops_string() lives}
-        );
+            sub { is( ops_hash(), 'CPP', q{ops_hash() returns 'CPP'} ) },
+            q{ops_hash() lives} );
         lives_and(
             sub { is( types_hash(), 'CPP', q{types_hash() returns 'CPP'} ) }
             ,    ## PERLTIDY BUG comma on newline
             q{types_hash() lives}
         );
-        lives_and(
-            sub { is( ops_hash(), 'CPP', q{ops_hash() returns 'CPP'} ) },
-            q{ops_hash() lives} );
     }
 
     # Int Hash: stringify, create, manipulate
@@ -283,7 +283,7 @@ for my $i ( 0 .. 2 ) {
                 }
             );    ## PERLTIDY BUG semicolon on newline
         },
-        "/$OPS_TYPES.*input_hv_value '42.3' at key 'c_key' was not an int/",
+        "/$OPS_TYPES.*input_hv_value at key 'c_key' was not an int/",
         q{stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => 23, e_key => 877, f_key => 33, g_key => 1701}) throws correct exception}
     );
     throws_ok(    # HV04
@@ -291,16 +291,16 @@ for my $i ( 0 .. 2 ) {
             stringify_int__hash_ref(
                 {   a_key => 2,
                     b_key => 2112,
-                    c_key => '42',
-                    d_key => 23,
+                    c_key => 42,
+                    d_key => '23',
                     e_key => 877,
                     f_key => 33,
                     g_key => 1701
                 }
             );    ## PERLTIDY BUG semicolon on newline
         },
-        "/$OPS_TYPES.*input_hv_value '42' at key 'c_key' was not an int/",
-        q{stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => '42', d_key => 23, e_key => 877, f_key => 33, g_key => 1701}) throws correct exception}
+        "/$OPS_TYPES.*input_hv_value at key 'd_key' was not an int/",
+        q{stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => '23', e_key => 877, f_key => 33, g_key => 1701}) throws correct exception}
     );
     lives_and(    # HV10
         sub {
@@ -322,20 +322,13 @@ for my $i ( 0 .. 2 ) {
         },
         q{typetest___int__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, 'answer' => 42, 'fnord' => 23, 'units' => 877, 'degree' => 33, 'ncc' => 1701}) lives}
     );
-    
-    # START HERE: decide if we keep error value in print-out as in hash (and possibly remove newline char from abcdefg\n), or remove as in array
-    # START HERE: decide if we keep error value in print-out as in hash (and possibly remove newline char from abcdefg\n), or remove as in array
-    # START HERE: decide if we keep error value in print-out as in hash (and possibly remove newline char from abcdefg\n), or remove as in array
-    
-=cut
     throws_ok(                             # HV11
         sub {
             typetest___int__hash_ref__in___string__out(
-                [ 2, 2112, 42, 23, 877, "abcdefg\n", 33, 1701 ] ); ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                {'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => "abcdefg", 'answer' => 42, 'fnord' => 23, 'units' => 877, 'degree' => 33, 'ncc' => 1701} );
         },
-        "/$OPS_TYPES.*input_hv_element at index 5 was not an int/",
-        q{typetest___int__hash_ref__in___string__out([2, 2112, 42, 23, 877, "abcdefg\n", 33, 1701]) throws correct exception} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted newline
+        "/$OPS_TYPES.*input_hv_value at key 'ERROR_FUNKEY' was not an int/",
+        q{typetest___int__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => "abcdefg", 'answer' => 42, 'fnord' => 23, 'units' => 877, 'degree' => 33, 'ncc' => 1701}) throws correct exception} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted newline
     );
-=cut
 }
 done_testing();

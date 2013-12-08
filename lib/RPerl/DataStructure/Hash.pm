@@ -698,7 +698,7 @@ our string $stringify_int__hash_ref = sub { (my $input_hv_ref) = @_;
 					$output_sv .= ", \'$i\' => $input_hv_value";
 				}
 			}
-			else { die("in PERLOPS_PERLTYPES stringify_int__hash_ref(), \$input_hv_value '$input_hv_value' at key '$i' was not an int, dying"); }
+			else { die("in PERLOPS_PERLTYPES stringify_int__hash_ref(), \$input_hv_value at key '$i' was not an int, dying"); }
 		}
 		else { die("in PERLOPS_PERLTYPES stringify_int__hash_ref(), \$input_hv_value at key '$i' was undef and/or NULL, dying"); }
 	}
@@ -752,7 +752,7 @@ our string $stringify_number__hash_ref = sub { (my $input_hv_ref) = @_;
 					$output_sv .= ", \'$i\' => $input_hv_value";
 				}
 			}
-			else { die("in PERLOPS_PERLTYPES stringify_number__hash_ref(), \$input_hv_value '$input_hv_value' at key '$i' was not a number, dying"); }
+			else { die("in PERLOPS_PERLTYPES stringify_number__hash_ref(), \$input_hv_value at key '$i' was not a number, dying"); }
 		}
 		else { die("in PERLOPS_PERLTYPES stringify_number__hash_ref(), \$input_hv_value at key '$i' was undef and/or NULL, dying"); }
 	}
@@ -806,7 +806,7 @@ our string $stringify_string__hash_ref = sub { (my $input_hv_ref) = @_;
 					$output_sv .= ", '$i' => '$input_hv_value'";
 				}
 			}
-			else { die("in PERLOPS_PERLTYPES stringify_string__hash_ref(), \$input_hv_value '$input_hv_value' at key '$i' was not a string, dying"); }
+			else { die("in PERLOPS_PERLTYPES stringify_string__hash_ref(), \$input_hv_value at key '$i' was not a string, dying"); }
 		}
 		else { die("in PERLOPS_PERLTYPES stringify_string__hash_ref(), \$input_hv_value at key '$i' was undef and/or NULL, dying"); }
 	}
