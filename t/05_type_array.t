@@ -253,50 +253,52 @@ for my $i ( 0 .. 2 ) {
     lives_and(    # AV02
         sub {
             is( stringify_int__array_ref(
-                    [ 2, 2112, 42, 23, 877, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                    [ 2, 2112, 42, 23, -877, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ),
-                '[2, 2112, 42, 23, 877, 33, 1701]',
-                q{stringify_int__array_ref([2, 2112, 42, 23, 877, 33, 1701]) returns correct value}
+                '[2, 2112, 42, 23, -877, 33, 1701]',
+                q{stringify_int__array_ref([2, 2112, 42, 23, -877, 33, 1701]) returns correct value}
             );
         },
-        q{stringify_int__array_ref([2, 2112, 42, 23, 877, 33, 1701]) lives}
+        q{stringify_int__array_ref([2, 2112, 42, 23, -877, 33, 1701]) lives}
     );
-    throws_ok(                                         # AV03
+    throws_ok(                                          # AV03
         sub {
-            stringify_int__array_ref( [ 2, 2112, 42.3, 23, 877, 33, 1701 ] ) ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+            stringify_int__array_ref(
+                [ 2, 2112, 42.3, 23, -877, 33, 1701 ] ) ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ;    ## PERLTIDY BUG semicolon on newline
         },
         "/$OPS_TYPES.*input_av_element at index 2 was not an int/",
-        q{stringify_int__array_ref([2, 2112, 42.3, 23, 877, 33, 1701]) throws correct exception}
+        q{stringify_int__array_ref([2, 2112, 42.3, 23, -877, 33, 1701]) throws correct exception}
     );
     throws_ok(       # AV04
         sub {
-            stringify_int__array_ref( [ 2, 2112, '42', 23, 877, 33, 1701 ] ) ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+            stringify_int__array_ref(
+                [ 2, 2112, '42', 23, -877, 33, 1701 ] ) ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ;    ## PERLTIDY BUG semicolon on newline
         },
         "/$OPS_TYPES.*input_av_element at index 2 was not an int/",
-        q{stringify_int__array_ref([2, 2112, '42', 23, 877, 33, 1701]) throws correct exception}
+        q{stringify_int__array_ref([2, 2112, '42', 23, -877, 33, 1701]) throws correct exception}
     );
     lives_and(       # AV10
         sub {
             is( typetest___int__array_ref__in___string__out(
-                    [ 2, 2112, 42, 23, 877, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                    [ 2, 2112, 42, 23, -877, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ),
-                '[2, 2112, 42, 23, 877, 33, 1701]' . $OPS_TYPES,
-                q{typetest___int__array_ref__in___string__out([2, 2112, 42, 23, 877, 33, 1701]) returns correct value}
+                '[2, 2112, 42, 23, -877, 33, 1701]' . $OPS_TYPES,
+                q{typetest___int__array_ref__in___string__out([2, 2112, 42, 23, -877, 33, 1701]) returns correct value}
             );
         },
-        q{typetest___int__array_ref__in___string__out([2, 2112, 42, 23, 877, 33, 1701]) lives}
+        q{typetest___int__array_ref__in___string__out([2, 2112, 42, 23, -877, 33, 1701]) lives}
     );
-    throws_ok(                                         # AV11
+    throws_ok(                                          # AV11
         sub {
             typetest___int__array_ref__in___string__out(
-                [ 2, 2112, 42, 23, 877, "abcdefg\n", 33, 1701 ] ); ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                [ 2, 2112, 42, 23, -877, 'abcdefg', 33, 1701 ] ); ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
         },
         "/$OPS_TYPES.*input_av_element at index 5 was not an int/",
-        q{typetest___int__array_ref__in___string__out([2, 2112, 42, 23, 877, "abcdefg\n", 33, 1701]) throws correct exception} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted newline
+        q{typetest___int__array_ref__in___string__out([2, 2112, 42, 23, -877, 'abcdefg', 33, 1701]) throws correct exception}
     );
-    lives_and(    # AV12
+    lives_and(                                                    # AV12
         sub {
             is( typetest___int__array_ref__in___string__out(
                     [ 444, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
@@ -335,78 +337,78 @@ for my $i ( 0 .. 2 ) {
     lives_and(                        # AV32
         sub {
             is( stringify_number__array_ref(
-                    [ 2, 2112, 42, 23, 877, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                    [ 2, 2112, 42, 23, -877, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ),
-                '[2, 2112, 42, 23, 877, 33, 1701]',
-                q{stringify_number__array_ref([2, 2112, 42, 23, 877, 33, 1701]) returns correct value}
+                '[2, 2112, 42, 23, -877, 33, 1701]',
+                q{stringify_number__array_ref([2, 2112, 42, 23, -877, 33, 1701]) returns correct value}
             );
         },
-        q{stringify_number__array_ref([2, 2112, 42, 23, 877, 33, 1701]) lives}
+        q{stringify_number__array_ref([2, 2112, 42, 23, -877, 33, 1701]) lives}
     );
-    lives_and(                                         # AV33
+    lives_and(                                          # AV33
         sub {
             is( stringify_number__array_ref(
-                    [ 2.1, 2112.2, 42.3, 23, 877, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                    [ 2.1, 2112.2, 42.3, 23, -877, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ),
-                '[2.1, 2112.2, 42.3, 23, 877, 33, 1701]',
-                q{stringify_number__array_ref([2.1, 2112.2, 42.3, 23, 877, 33, 1701]) returns correct value}
+                '[2.1, 2112.2, 42.3, 23, -877, 33, 1701]',
+                q{stringify_number__array_ref([2.1, 2112.2, 42.3, 23, -877, 33, 1701]) returns correct value}
             );
         },
-        q{stringify_number__array_ref([2.1, 2112.2, 42.3, 23, 877, 33, 1701]) lives}
+        q{stringify_number__array_ref([2.1, 2112.2, 42.3, 23, -877, 33, 1701]) lives}
     );
-    lives_and(                                               # AV34
+    lives_and(                                                # AV34
         sub {
             is( stringify_number__array_ref(
                     [   2.1234432112344321, 2112.4321, ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                         42.4567, 23.765444444444444444, ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
-                        877.5678, 33.876587658765875687658765, ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                        -877.5678, 33.876587658765875687658765, ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                         1701.6789 ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                     ]
                 ),
-                '[2.12344321123443, 2112.4321, 42.4567, 23.7654444444444, 877.5678, 33.8765876587659, 1701.6789]',
-                q{stringify_number__array_ref([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, 33.876587658765875687658765, 1701.6789]) returns correct value}
+                '[2.12344321123443, 2112.4321, 42.4567, 23.7654444444444, -877.5678, 33.8765876587659, 1701.6789]',
+                q{stringify_number__array_ref([2.1234432112344321, 2112.4321, ..., 1701.6789]) returns correct value}
             );
         },
-        q{stringify_number__array_ref([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, 33.876587658765875687658765, 1701.6789]) lives}
+        q{stringify_number__array_ref([2.1234432112344321, 2112.4321, ..., 1701.6789]) lives}
     );
     throws_ok(                    # AV35
         sub {
             stringify_number__array_ref(
-                [ 2, 2112, '42', 23, 877, 33, 1701 ] ); ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                [ 2, 2112, '42', 23, -877, 33, 1701 ] ); ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
         },
         "/$OPS_TYPES.*input_av_element at index 2 was not a number/",
-        q{stringify_number__array_ref([2, 2112, '42', 23, 877, 33, 1701]) throws correct exception}
+        q{stringify_number__array_ref([2, 2112, '42', 23, -877, 33, 1701]) throws correct exception}
     );
-    lives_and(                                          # AV40
+    lives_and(                                           # AV40
         sub {
             is( typetest___number__array_ref__in___string__out(
                     [   2.1234432112344321, 2112.4321, ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                         42.4567, 23.765444444444444444, ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
-                        877.5678, 33.876587658765875687658765, ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                        -877.5678, 33.876587658765875687658765, ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                         1701.6789 ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                     ]
                 ),
-                '[2.12344321123443, 2112.4321, 42.4567, 23.7654444444444, 877.5678, 33.8765876587659, 1701.6789]'
+                '[2.12344321123443, 2112.4321, 42.4567, 23.7654444444444, -877.5678, 33.8765876587659, 1701.6789]'
                     . $OPS_TYPES,
-                q{typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, 33.876587658765875687658765, 1701.6789]) returns correct value}
+                q{typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, ..., 1701.6789]) returns correct value}
             );
         },
-        q{typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, 33.876587658765875687658765, 1701.6789]) lives}
+        q{typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, ..., 1701.6789]) lives}
     );
     throws_ok(                    # AV41
         sub {
             typetest___number__array_ref__in___string__out(
                 [   2.1234432112344321, 2112.4321, ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                     42.4567, 23.765444444444444444, ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
-                    877.5678, "abcdefg\n", ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                    -877.5678, 'abcdefg', ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                     33.876587658765875687658765, 1701.6789 ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ]
             );
         },
         "/$OPS_TYPES.*input_av_element at index 5 was not a number/",
-        q{typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, 877.5678, "abcdefg\n", 33.876587658765875687658765, 1701.6789]) throws correct exception} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted newline
+        q{typetest___number__array_ref__in___string__out([2.1234432112344321, ..., 'abcdefg', 33.876587658765875687658765, 1701.6789]) throws correct exception}
     );
-    lives_and(    # AV50
+    lives_and(                                             # AV50
         sub {
             is_deeply(
                 typetest___int__in___number__array_ref__out(5), ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
@@ -524,7 +526,7 @@ for my $i ( 0 .. 2 ) {
             );
         },
         "/$OPS_TYPES.*input_av_element at index 5 was not a string/",
-        q{stringify_string__array_ref(['Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', {fuzz => 'bizz', bar => "stool!\n", bat => 24}]) throws correct exception} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted newline
+        q{stringify_string__array_ref(['Wonder Woman', ..., 'Martian Manhunter', {fuzz => 'bizz', bar => "stool!\n", bat => 24}]) throws correct exception} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted newline
     );
     lives_and(    # AV70
         sub {
@@ -537,10 +539,10 @@ for my $i ( 0 .. 2 ) {
                 ),
                 q{['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']}
                     . $OPS_TYPES,
-                q{typetest___string__array_ref__in___string__out(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']) returns correct value}
+                q{typetest___string__array_ref__in___string__out(['Superman', ..., 'Green Lantern', 'Aquaman', 'Martian Manhunter']) returns correct value}
             );
         },
-        q{typetest___string__array_ref__in___string__out(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']) lives}
+        q{typetest___string__array_ref__in___string__out(['Superman', ..., 'Green Lantern', 'Aquaman', 'Martian Manhunter']) lives}
     );
     throws_ok(    # AV71
         sub {
@@ -553,7 +555,7 @@ for my $i ( 0 .. 2 ) {
             );
         },
         "/$OPS_TYPES.*input_av_element at index 7 was not a string/",
-        q{typetest___string__array_ref__in___string__out(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', 23]) throws correct exception}
+        q{typetest___string__array_ref__in___string__out(['Superman', ..., 'Green Lantern', 'Aquaman', 'Martian Manhunter', 23]) throws correct exception}
     );
     lives_and(                              # AV80
         sub {

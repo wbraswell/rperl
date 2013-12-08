@@ -374,11 +374,11 @@ SV* typetest___int__in___int__hash_ref__out(int my_size)
 {
 	HV* output_hv = newHV();
 	int i;
-	char* temp_key;
+	char temp_key[30];
 
 	for (i = 0;  i < my_size;  ++i)
 	{
-		sprintf(temp_key, "funkey%d", i);
+		sprintf(temp_key, "CPPOPS_PERLTYPES_funkey%d", i);
 		hv_store(output_hv, (const char*)temp_key, (U32)strlen(temp_key), newSViv(i * 5), (U32)0);
 		printf("in CPPOPS_PERLTYPES Hash::typetest___int__in___int__hash_ref__out(), setting entry '%s' => %d, BARBAT\n",
 				temp_key, (int)SvIV(*hv_fetch(output_hv, (const char*)temp_key, (U32)strlen(temp_key), (I32)0)));
@@ -400,13 +400,13 @@ SV* typetest___int__in___string__hash_ref__out(int my_size) { HV* people = newHV
 # elif defined __CPP__TYPES
 
 string typetest___int__hash_ref__in___string__out(int__hash_ref lucky_numbers) { int__hash_ref__const_iterator i;  for (i = lucky_numbers.begin();  i != lucky_numbers.end();  ++i) { printf("in CPPOPS_CPPTYPES Hash::typetest___int__hash_ref__in___string__out(), have lucky number '%s' => %d, BARSTOOL\n", (i->first).c_str(), i->second); }  return(stringify_int__hash_ref(lucky_numbers) + "CPPOPS_CPPTYPES"); }
-int__hash_ref typetest___int__in___int__hash_ref__out(int my_size) { int__hash_ref new_unordered_map(my_size);  int i;  string temp_key;  for (i = 0;  i < my_size;  ++i) { temp_key = "funkey" + std::to_string(i);  new_unordered_map[temp_key] = i * 5;  printf("in CPPOPS_CPPTYPES Hash::typetest___int__in___int__hash_ref__out(), setting entry '%s' => %d, BARSTOOL\n", temp_key.c_str(), new_unordered_map[temp_key]); }  return(new_unordered_map); }
+int__hash_ref typetest___int__in___int__hash_ref__out(int my_size) { int__hash_ref new_unordered_map(my_size);  int i;  string temp_key;  for (i = 0;  i < my_size;  ++i) { temp_key = "CPPOPS_CPPTYPES_funkey" + std::to_string(i);  new_unordered_map[temp_key] = i * 5;  printf("in CPPOPS_CPPTYPES Hash::typetest___int__in___int__hash_ref__out(), setting entry '%s' => %d, BARSTOOL\n", temp_key.c_str(), new_unordered_map[temp_key]); }  return(new_unordered_map); }
 
 /*
 
 //void typetest___number__hash_ref__in___void__out(number__hash_ref lucky_numbers) { number__hash_ref__const_iterator i;  for (i = lucky_numbers.begin();  i != lucky_numbers.end();  ++i) { printf("in CPPOPS_CPPTYPES Hash::typetest___number__hash_ref__in___void__out(), have lucky number '%s' => %Lf, BARSTOOL\n", (i->first).c_str(), i->second); } }
 string typetest___number__hash_ref__in___string__out(number__hash_ref lucky_numbers) { number__hash_ref__const_iterator i;  for (i = lucky_numbers.begin();  i != lucky_numbers.end();  ++i) { printf("in CPPOPS_CPPTYPES Hash::typetest___number__hash_ref__in___string__out(), have lucky number '%s' => %Lf, BARSTOOL\n", (i->first).c_str(), i->second); }  return(stringify_number__hash_ref(lucky_numbers) + "CPPOPS_CPPTYPES"); }
-number__hash_ref typetest___int__in___number__hash_ref__out(int my_size) { number__hash_ref new_unordered_map(my_size);  int i;  string temp_key;  for (i = 0;  i < my_size;  ++i) { temp_key = "funkey" + std::to_string(i);  new_unordered_map[temp_key] = i * 5.123456789;  printf("in CPPOPS_CPPTYPES Hash::typetest___int__in___number__hash_ref__out(), setting entry '%s' => %Lf, BARSTOOL\n", temp_key.c_str(), new_unordered_map[temp_key]); }  return(new_unordered_map); }
+number__hash_ref typetest___int__in___number__hash_ref__out(int my_size) { number__hash_ref new_unordered_map(my_size);  int i;  string temp_key;  for (i = 0;  i < my_size;  ++i) { temp_key = "CPPOPS_CPPTYPES_funkey" + std::to_string(i);  new_unordered_map[temp_key] = i * 5.123456789;  printf("in CPPOPS_CPPTYPES Hash::typetest___int__in___number__hash_ref__out(), setting entry '%s' => %Lf, BARSTOOL\n", temp_key.c_str(), new_unordered_map[temp_key]); }  return(new_unordered_map); }
 
 //void typetest___string__hash_ref__in___void__out(string__hash_ref people) { string__hash_ref__const_iterator i;  for (i = people.begin();  i != people.end();  ++i) { printf("in CPPOPS_CPPTYPES Hash::typetest___string__hash_ref__in___void__out(), have person '%s' => '%s', STARBOOL\n", (i->first).c_str(), (i->second).c_str()); } }
 string typetest___string__hash_ref__in___string__out(string__hash_ref people) { string__hash_ref__const_iterator i;  for (i = people.begin();  i != people.end();  ++i) { printf("in CPPOPS_CPPTYPES Hash::typetest___string__hash_ref__in___string__out(), have person '%s' => '%s', STARBOOL\n", (i->first).c_str(), (i->second).c_str()); }  return(stringify_string__hash_ref(people) + "CPPOPS_CPPTYPES"); }
