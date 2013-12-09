@@ -442,10 +442,7 @@ for my $i ( 0 .. 2 ) {
     );
     lives_and(    # AVPV01
         sub {
-            is( stringify_string__array_ref(
-                    [   'Superman'
-                    ]
-                ),
+            is( stringify_string__array_ref( ['Superman'] ),
                 q{['Superman']},
                 q{AVPV01 stringify_string__array_ref(['Superman']) returns correct value}
             );

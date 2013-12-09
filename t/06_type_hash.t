@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.1.5');
+use version; our $VERSION = qv('0.2.0');
 
 # SUPPRESS OUTPUT FROM INDIVIDUAL TESTS, EXCLUDING TESTS INSIDE BEGIN{} BLOCKS
 # order is BEGIN, UNITCHECK, CHECK, INIT, END; CHECK here suppresses Inline compile output from including HelperFunctions_cpp.pm from INIT in Hash.pm
@@ -12,7 +12,7 @@ CHECK {
         || croak('Error redirecting stderr, croaking');
 }
 
-use Test::More;    # tests => 121;
+use Test::More tests => 130;
 use Test::Exception;
 use Carp;
 
@@ -24,7 +24,7 @@ BEGIN {
 
 BEGIN {
     lives_ok(
-        sub {      ## PERLTIDY BUG blank newline
+        sub {    ## PERLTIDY BUG blank newline
 
             package main;
             our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib';
@@ -687,13 +687,90 @@ for my $i ( 0 .. 2 ) {
                     'alanscottetal' => 'Green Lantern',
                     'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman',
                     'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter',
-                    'HASH_NOT_STRING' => {fuzz => 'bizz', bar => "stool!\n", bat => 24}
+                    'HASH_NOT_STRING' =>
+                        { fuzz => 'bizz', bar => "stool!\n", bat => 24 }
                 }
             );
         },
         "/$OPS_TYPES.*input_hv_value at key 'HASH_NOT_STRING' was not a string/",
         q{HVPV08 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'HASH_NOT_STRING' => {fuzz => 'bizz', ...}}) throws correct exception}
     );
+    lives_and(    # HVPV10
+        sub {
+            like(
+                typetest___string__hash_ref__in___string__out(
+                    {   'kryptonian_manofsteel_clarkkent' => 'Superman',
+                        'gothamite_darkknight_brucewayne' => 'Batman',
+                        'amazonian_dianathemyscira_dianaprince' =>
+                            'Wonder Woman',
+                        'scarletspeedster_barryallenetal' => 'Flash',
+                        'alanscottetal'                   => 'Green Lantern',
+                        'atlanteanhybrid_aquaticace_arthurcurryorin' =>
+                            'Aquaman',
+                        'greenmartian_bloodwynd_jonnjonnz' =>
+                            'Martian Manhunter'
+                    }
+                ),
+                q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'gothamite_darkknight_brucewayne' => 'Batman')(?=.*'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman')(?=.*'scarletspeedster_barryallenetal' => 'Flash')(?=.*'alanscottetal' => 'Green Lantern')(?=.*'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter').*\}}
+                    . $OPS_TYPES
+                    . q{$/m}, ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
+                q{HVPV10 typetest___string__hash_ref__in___string__out({'kryptonian_manofsteel_clarkkent' => 'Superman', ...}) returns correct value}
+            );
+        },
+        q{HVPV10 typetest___string__hash_ref__in___string__out({'kryptonian_manofsteel_clarkkent' => 'Superman', ...}) lives}
+    );
+    throws_ok(                # HVPV11
+        sub {
+            typetest___string__hash_ref__in___string__out(
+                {   'kryptonian_manofsteel_clarkkent'       => 'Superman',
+                    'gothamite_darkknight_brucewayne'       => 'Batman',
+                    'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman',
+                    'scarletspeedster_barryallenetal'       => 'Flash',
+                    'alanscottetal' => 'Green Lantern',
+                    'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman',
+                    'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter',
+                    'ARRAY_NOT_STRING' => [ 23, -42.3 ] ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                }
+            );
+        },
+        "/$OPS_TYPES.*input_hv_value at key 'ARRAY_NOT_STRING' was not a string/",
+        q{HVPV11 typetest___string__hash_ref__in___string__out({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'ARRAY_NOT_STRING' => [23, -42.3]}) throws correct exception}
+    );
+    lives_and(                                          # HVPV12
+        sub {
+            like(
+                typetest___string__hash_ref__in___string__out(
+                    {   'stuckinaworldhenevercreated' => 'Howard The Duck',
+                        'atlanteanhybrid_aquaticace_arthurcurryorin' =>
+                            'Aquaman',
+                        'greenmartian_bloodwynd_jonnjonnz' =>
+                            'Martian Manhunter'
+                    }
+                ),
+                q{/^\{(?=.*'stuckinaworldhenevercreated' => 'Howard The Duck')(?=.*'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter').*\}}
+                    . $OPS_TYPES
+                    . q{$/m}, ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
+                q{HVPV12 typetest___string__hash_ref__in___string__out({'stuckinaworldhenevercreated' => 'Howard The Duck', ...}) returns correct value}
+            );
+        },
+        q{HVPV12 typetest___string__hash_ref__in___string__out({'stuckinaworldhenevercreated' => 'Howard The Duck', ...}) lives}
+    );
+    lives_and(                # HVPV20
+        sub {
+            is_deeply(
+                typetest___int__in___string__hash_ref__out(5), ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                {   "$OPS_TYPES\_Luker_key3" => 'Jeffy Ten! 3/4',
+                    "$OPS_TYPES\_Luker_key2" => 'Jeffy Ten! 2/4',
+                    "$OPS_TYPES\_Luker_key1" => 'Jeffy Ten! 1/4',
+                    "$OPS_TYPES\_Luker_key4" => 'Jeffy Ten! 4/4',
+                    "$OPS_TYPES\_Luker_key0" => 'Jeffy Ten! 0/4'
+                },
+                q{HVPV20 typetest___int__in___string__hash_ref__out(5) returns correct value}
+            );
+        },
+        q{HVPV20 typetest___int__in___string__hash_ref__out(5) lives}
+    );
 }
 
-done_testing();
+#done_testing();
+

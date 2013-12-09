@@ -1,7 +1,7 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-// VERSION 0.1.4
+// VERSION 0.2.0
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash_cpp
 #define __CPP__INCLUDED__RPerl__DataStructure__Hash_cpp 1
@@ -640,8 +640,8 @@ SV* typetest___int__in___string__hash_ref__out(int my_size)
 
 	for (i = 0;  i < my_size;  ++i)
 	{
-		sprintf(temp_key, "CPPOPS_PERLTYPES_funkey%d", i);
-		hv_store(people, (const char*)temp_key, (U32)strlen(temp_key), newSVpvf("Jeffy Ten! %d/%d CPPOPS_PERLTYPES", i, (my_size - 1)), (U32)0);
+		sprintf(temp_key, "CPPOPS_PERLTYPES_Luker_key%d", i);
+		hv_store(people, (const char*)temp_key, (U32)strlen(temp_key), newSVpvf("Jeffy Ten! %d/%d", i, (my_size - 1)), (U32)0);
 		printf("in CPPOPS_PERLTYPES Hash::typetest___int__in___string__hash_ref__out(), have temp_key = '%s', just set another Jeffy, BARTAT\n", temp_key);
 	}
 
@@ -659,7 +659,7 @@ number__hash_ref typetest___int__in___number__hash_ref__out(int my_size) { numbe
 
 //void typetest___string__hash_ref__in___void__out(string__hash_ref people) { string__hash_ref__const_iterator i;  for (i = people.begin();  i != people.end();  ++i) { printf("in CPPOPS_CPPTYPES Hash::typetest___string__hash_ref__in___void__out(), have person '%s' => '%s', STARBOOL\n", (i->first).c_str(), (i->second).c_str()); } }
 string typetest___string__hash_ref__in___string__out(string__hash_ref people) { string__hash_ref__const_iterator i;  for (i = people.begin();  i != people.end();  ++i) { printf("in CPPOPS_CPPTYPES Hash::typetest___string__hash_ref__in___string__out(), have person '%s' => '%s', STARBOOL\n", (i->first).c_str(), (i->second).c_str()); }  return(stringify_string__hash_ref(people) + "CPPOPS_CPPTYPES"); }
-string__hash_ref typetest___int__in___string__hash_ref__out(int my_size) { string__hash_ref people;  int i;  people.reserve((size_t)my_size);  for (i = 0;  i < my_size;  ++i) { people["Luker_key" + std::to_string(i)] = "Jeffy Ten! " + std::to_string(i) + "/" + std::to_string(my_size - 1); printf("in CPPOPS_CPPTYPES Hash::typetest___int__in___string__hash_ref__out(), bottom of for() loop, have i = %d, just set another Jeffy!\n", i); }  return(people); }
+string__hash_ref typetest___int__in___string__hash_ref__out(int my_size) { string__hash_ref people;  int i;  people.reserve((size_t)my_size);  for (i = 0;  i < my_size;  ++i) { people["CPPOPS_CPPTYPES_Luker_key" + std::to_string(i)] = "Jeffy Ten! " + std::to_string(i) + "/" + std::to_string(my_size - 1); printf("in CPPOPS_CPPTYPES Hash::typetest___int__in___string__hash_ref__out(), bottom of for() loop, have i = %d, just set another Jeffy!\n", i); }  return(people); }
 
 # endif
 

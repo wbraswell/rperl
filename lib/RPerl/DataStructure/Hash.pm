@@ -1,7 +1,7 @@
 package RPerl::DataStructure::Hash;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.1.4');
+use version; our $VERSION = qv('0.2.0');
 use Carp;
 
 use base ('RPerl::DataStructure');
@@ -834,4 +834,4 @@ our number__hash_ref $typetest___int__in___number__hash_ref__out = sub { (my int
 
 #our void $typetest___string__hash_ref__in___void__out = sub { (my string__hash_ref $people) = @_;  foreach my string $key (keys %{$people}) { print "in PERLOPS_PERLTYPES Hash::typetest___string__hash_ref__in___void__out(), have person '$key' => '" . $people->{$key} . "', STARBOOL\n"; } };
 our string $typetest___string__hash_ref__in___string__out = sub { (my string__hash_ref $people) = @_;  foreach my string $key (keys %{$people}) { if (main::RPerl_SvPOKp($people->{$key})) { print "in PERLOPS_PERLTYPES Hash::typetest___string__hash_ref__in___string__out(), have person '$key' => '" . $people->{$key} . "', STARBOOL\n"; } }  return(stringify_string__hash_ref($people) . 'PERLOPS_PERLTYPES'); };
-our string__hash_ref $typetest___int__in___string__hash_ref__out = sub { (my int $my_size) = @_;  my string__hash_ref $people = {};  my int $i;  for ($i = 0;  $i < $my_size;  ++$i) { $people->{"Luker_key" . $i} = "Jeffy Ten! " . $i . "/" . ($my_size - 1); print "in PERLOPS_PERLTYPES Hash::typetest___int__in___string__hash_ref__out(), bottom of for() loop, have i = $i, just set another Jeffy!\n"; }  return($people); };
+our string__hash_ref $typetest___int__in___string__hash_ref__out = sub { (my int $my_size) = @_;  my string__hash_ref $people = {};  my int $i;  for ($i = 0;  $i < $my_size;  ++$i) { $people->{"PERLOPS_PERLTYPES_Luker_key" . $i} = "Jeffy Ten! " . $i . "/" . ($my_size - 1); print "in PERLOPS_PERLTYPES Hash::typetest___int__in___string__hash_ref__out(), bottom of for() loop, have i = $i, just set another Jeffy!\n"; }  return($people); };

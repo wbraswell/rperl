@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.1.5');
+use version; our $VERSION = qv('0.2.0');
 use Carp;
 
 # RPERL DRIVER BOILERPLATE
@@ -73,10 +73,6 @@ for my int $i ( 0 .. $i_MAX ) {
 #	$retval_number__hash_ref = typetest___int__in___number__hash_ref__out(5);  # HVNV20
 #	print "in hash_test.pl $i/$i_MAX, have \$retval_number__hash_ref = \n" . Dumper($retval_number__hash_ref) . "\n";
 
-# START HERE: implement HVPV0? in 06*.t
-# START HERE: implement HVPV0? in 06*.t
-# START HERE: implement HVPV0? in 06*.t
-
 #	$my_peeps = 'Lone Ranger';  # HVPV00; raise/throw exception
 #	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman'};  # HVPV01
 #	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter'};  # HVPV02
@@ -85,17 +81,22 @@ for my int $i ( 0 .. $i_MAX ) {
 #	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'string_not_number' => '-2112.23'};  # HVPV05
 #	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'string_not_number' => "-2112.23"};  # HVPV06
 #	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'NUMBER_NOT_STRING' => -2112.23};  # HVPV07; raise/throw exception
-	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'HASH_NOT_STRING' => {fuzz => 'bizz', bar => "stool!\n", bat => 24}};  # HVPV08; raise/throw exception
+#	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'HASH_NOT_STRING' => {fuzz => 'bizz', bar => "stool!\n", bat => 24}};  # HVPV08; raise/throw exception
 #	print "in hash_test.pl, have \$my_peeps =\n" . RPerl::DUMPER($my_peeps) . "\n" if $RPerl::DEBUG;
-	$retval_stringify = stringify_string__hash_ref($my_peeps);	
-	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
+#	$retval_stringify = stringify_string__hash_ref($my_peeps);	
+#	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
+
+#	$retval_stringify = typetest___string__hash_ref__in___string__out({'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter'});  # HVPV10
+#	$retval_stringify = typetest___string__hash_ref__in___string__out({'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'ARRAY_NOT_STRING' => [23, -42.3]});  # HVPV11; raise/throw exception
+#	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
+
+#	my $howdy_retval = typetest___string__hash_ref__in___string__out({'stuckinaworldhenevercreated' => 'Howard The Duck', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter'});  # HVPV12; confirm Perl stack is still functioning properly
+#	print "in hash_test.pl $i/$i_MAX, have \$howdy_retval =\n$howdy_retval\n";
+
+	$retval_jeffys = typetest___int__in___string__hash_ref__out(5);  # HVPV20
+	print "in type_test.pl, have \$retval_jeffys =\n" . RPerl::DUMPER($retval_jeffys) . "\n" if $RPerl::DEBUG;
 
 croak('Done for now, croaking');
-
-#	typetest___string__hash_ref__in___void__out($my_peeps);
-
-#	$retval_jeffys = typetest___int__in___string__hash_ref__out(5);
-#	print "in type_test.pl, have \$retval_jeffys =\n" . RPerl::DUMPER($retval_jeffys) . "\n" if $RPerl::DEBUG;
 }
 
 #croak('Done for now, croaking');

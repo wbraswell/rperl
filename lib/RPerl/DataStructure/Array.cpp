@@ -1,7 +1,7 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-// VERSION 0.3.2
+// VERSION 0.3.4
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array_cpp
 #define __CPP__INCLUDED__RPerl__DataStructure__Array_cpp 1
