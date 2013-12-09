@@ -9,6 +9,8 @@ use Carp;
 use English qw(-no_match_vars);
 my $ERROR_MAX = 0.00000001; ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
 
+#$SIG{__WARN__}=sub {cluck $_[0]};  # DEBUGGING
+
 BEGIN {
     diag("\n[[[ Beginning Inline::C Pre-Test Loading ]]]\n ");
 }
@@ -46,6 +48,7 @@ lives_and(
     sub {
         my $EVAL_RETVAL = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
             'use Inline C=>q{char* greet(){return("Hello, world");}};';
+#            '$SIG{__WARN__}=sub {cluck $_[0]};  use Inline C=>q{char* greet(){return("Hello, world");}};';
         if ( $EVAL_ERROR ne q{} ) {
             croak(
                 "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"

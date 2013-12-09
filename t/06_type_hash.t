@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.1.4');
+use version; our $VERSION = qv('0.1.5');
 
 # SUPPRESS OUTPUT FROM INDIVIDUAL TESTS, EXCLUDING TESTS INSIDE BEGIN{} BLOCKS
 # order is BEGIN, UNITCHECK, CHECK, INIT, END; CHECK here suppresses Inline compile output from including HelperFunctions_cpp.pm from INIT in Hash.pm
@@ -345,14 +345,14 @@ for my $i ( 0 .. 2 ) {
         sub {
             like(
                 typetest___int__hash_ref__in___string__out(
-                    { something => 444, degree => 33, ncc => 1701 }
+                    { something => -444, degree => 33, ncc => 1701 }
                 ),
-                q{/^\{(?=.*'something' => 444\b)(?=.*'degree' => 33\b)(?=.*'ncc' => 1701\b).*\}} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+                q{/^\{(?=.*'something' => -444\b)(?=.*'degree' => 33\b)(?=.*'ncc' => 1701\b).*\}} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
                     . $OPS_TYPES . q{$/m}, ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
-                q{HVIV12 typetest___int__hash_ref__in___string__out({something => 444, degree => 33, ncc => 1701}) returns correct value again, Perl stack still functioning properly}
+                q{HVIV12 typetest___int__hash_ref__in___string__out({something => -444, degree => 33, ncc => 1701}) returns correct value}
             );
         },
-        q{HVIV12 typetest___int__hash_ref__in___string__out({something => 444, degree => 33, ncc => 1701}) lives}
+        q{HVIV12 typetest___int__hash_ref__in___string__out({something => -444, degree => 33, ncc => 1701}) lives}
     );
     lives_and(                             # HVIV20
         sub {
@@ -500,6 +500,19 @@ for my $i ( 0 .. 2 ) {
         },
         "/$OPS_TYPES.*input_hv_value at key 'ERROR_FUNKEY' was not a number/",
         q{HVNV11 typetest___number__hash_ref__in___string__out({'binary' => 2.1234432112344321, 'ERROR_FUNKEY' => 'abcdefg', ..., 'ncc' => 1701.6789}) throws correct exception}
+    );
+    lives_and(    # HVNV12
+        sub {
+            like(
+                typetest___number__hash_ref__in___string__out(
+                    { something => -444, degree => 33.876587658765875687658765, ncc => 1701.6789 }
+                ),
+                q{/^\{(?=.*'something' => -444\b)(?=.*'degree' => 33\.8765876587659\b)(?=.*'ncc' => 1701\.6789\b).*\}} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+                    . $OPS_TYPES . q{$/m}, ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+                q{HVNV12 typetest___number__hash_ref__in___string__out({something => -444, degree => 33.876587658765875687658765, ncc => 1701.6789}) returns correct value}
+            );
+        },
+        q{HVNV12 typetest___number__hash_ref__in___string__out({something => -444, degree => 33.876587658765875687658765, ncc => 1701.6789}) lives}
     );
 }
 done_testing();

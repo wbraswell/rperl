@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.1.4');
+use version; our $VERSION = qv('0.1.5');
 use Carp;
 
 # RPERL DRIVER BOILERPLATE
@@ -49,7 +49,7 @@ for my int $i ( 0 .. $i_MAX ) {
 #	$retval_stringify = typetest___int__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => 'abcdefg', 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => 33, 'ncc' => 1701});  # HVIV11; raise/throw exception
 #	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 
-#	my $howdy_retval = typetest___int__hash_ref__in___string__out({something => 444, degree => 33, ncc => 1701});  # HVIV12; confirm Perl stack is still functioning properly
+#	my $howdy_retval = typetest___int__hash_ref__in___string__out({something => -444, degree => 33, ncc => 1701});  # HVIV12; confirm Perl stack is still functioning properly
 #	print "in hash_test.pl $i/$i_MAX, have \$howdy_retval =\n$howdy_retval\n";
 
 #	$retval_int__hash_ref = typetest___int__in___int__hash_ref__out(5);  # HVIV20
@@ -64,8 +64,18 @@ for my int $i ( 0 .. $i_MAX ) {
 #	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
 
 #	$retval_stringify = typetest___number__hash_ref__in___string__out({'binary' => 2.1234432112344321, 'rush' => 2112.4321, 'answer' => 42.4567, 'fnord' => 23.765444444444444444, 'units' => -877.5678, 'degree' => 33.876587658765875687658765, 'ncc' => 1701.6789});  # HVNV10
-	$retval_stringify = typetest___number__hash_ref__in___string__out({'binary' => 2.1234432112344321, 'rush' => 2112.4321, 'ERROR_FUNKEY' => 'abcdefg', 'answer' => 42.4567, 'fnord' => 23.765444444444444444, 'units' => -877.5678, 'degree' => 33.876587658765875687658765, 'ncc' => 1701.6789});  # HVNV11; raise/throw exception
-	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
+#	$retval_stringify = typetest___number__hash_ref__in___string__out({'binary' => 2.1234432112344321, 'rush' => 2112.4321, 'ERROR_FUNKEY' => 'abcdefg', 'answer' => 42.4567, 'fnord' => 23.765444444444444444, 'units' => -877.5678, 'degree' => 33.876587658765875687658765, 'ncc' => 1701.6789});  # HVNV11; raise/throw exception
+#	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
+
+#	my $howdy_retval = typetest___number__hash_ref__in___string__out({something => -444, degree => 33.876587658765875687658765, ncc => 1701.6789});  # HVNV12; confirm Perl stack is still functioning properly
+#	print "in hash_test.pl $i/$i_MAX, have \$howdy_retval =\n$howdy_retval\n";
+
+# START HERE: enable following test HVNV20 in 06_type_hash.t
+# START HERE: enable following test HVNV20 in 06_type_hash.t
+# START HERE: enable following test HVNV20 in 06_type_hash.t
+
+	$retval_number__hash_ref = typetest___int__in___number__hash_ref__out(5);  # HVNV20
+	print "in hash_test.pl $i/$i_MAX, have \$retval_number__hash_ref = \n" . Dumper($retval_number__hash_ref) . "\n";
 
 croak('Done for now, croaking');
 
