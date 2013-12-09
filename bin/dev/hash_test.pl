@@ -38,45 +38,42 @@ my const_int $i_MAX = 1;
 for my int $i ( 0 .. $i_MAX ) {
 	print "in hash_test.pl, top of for() loop $i/$i_MAX\n" or croak();
 
-#	$retval_stringify = stringify_int__hash_ref(2);  # HV00; raise/throw exception
-#	$retval_stringify = stringify_int__hash_ref({a_key => 23});  # HV01
-#	$retval_stringify = stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701});  # HV02
-#	$retval_stringify = stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => 23, e_key => -877, f_key => 33, g_key => 1701});  # HV03; raise/throw exception
-#	$retval_stringify = stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => '23', e_key => -877, f_key => 33, g_key => 1701});  # HV04; raise/throw exception
+#	$retval_stringify = stringify_int__hash_ref(2);  # HVIV00; raise/throw exception
+#	$retval_stringify = stringify_int__hash_ref({a_key => 23});  # HVIV01
+#	$retval_stringify = stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701});  # HVIV02
+#	$retval_stringify = stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => 23, e_key => -877, f_key => 33, g_key => 1701});  # HVIV03; raise/throw exception
+#	$retval_stringify = stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => '23', e_key => -877, f_key => 33, g_key => 1701});  # HVIV04; raise/throw exception
 #	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
 
-#	$retval_stringify = typetest___int__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => 33, 'ncc' => 1701});  # HV10
-#	$retval_stringify = typetest___int__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => 'abcdefg', 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => 33, 'ncc' => 1701});  # HV11; not-an-int error
+#	$retval_stringify = typetest___int__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => 33, 'ncc' => 1701});  # HVIV10
+#	$retval_stringify = typetest___int__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => 'abcdefg', 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => 33, 'ncc' => 1701});  # HVIV11; raise/throw exception
 #	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 
-#	my $howdy_retval = typetest___int__hash_ref__in___string__out({something => 444, degree => 33, ncc => 1701});  # HV12; confirm Perl stack is still functioning properly
+#	my $howdy_retval = typetest___int__hash_ref__in___string__out({something => 444, degree => 33, ncc => 1701});  # HVIV12; confirm Perl stack is still functioning properly
 #	print "in hash_test.pl $i/$i_MAX, have \$howdy_retval =\n$howdy_retval\n";
 
-#	$retval_int__hash_ref = typetest___int__in___int__hash_ref__out(5);  # HV20
+#	$retval_int__hash_ref = typetest___int__in___int__hash_ref__out(5);  # HVIV20
 #	print "in hash_test.pl $i/$i_MAX, have \$retval_int__hash_ref = \n" . Dumper($retval_int__hash_ref) . "\n";
 
-#	$retval_stringify = stringify_number__hash_ref(2);  # HV30; raise/throw exception
-	$retval_stringify = stringify_number__hash_ref({a_key => 23});  # HV31
-#	$retval_stringify = stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701});  # HV32
-#	$retval_stringify = stringify_number__hash_ref({a_key => 2.1, b_key => 2112.2, c_key => 42.3, d_key => 23, e_key => -877, f_key => 33, g_key => 1701});  # HV33
-#	$retval_stringify = stringify_number__hash_ref({a_key => 2.1234432112344321, b_key => 2112.4321, c_key => 42.4567, d_key => 23.765444444444444444, e_key => -877.5678, f_key => 33.876587658765875687658765, g_key => 1701.6789});  # HV34
-#	$retval_stringify = stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => '23', e_key => -877, f_key => 33, g_key => 1701});  # HV35; raise/throw exception
-	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
+#	$retval_stringify = stringify_number__hash_ref(2);  # HVNV00; raise/throw exception
+#	$retval_stringify = stringify_number__hash_ref({a_key => 23});  # HVNV01
+#	$retval_stringify = stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701});  # HVNV02
+#	$retval_stringify = stringify_number__hash_ref({a_key => 2.1, b_key => 2112.2, c_key => 42.3, d_key => 23, e_key => -877, f_key => 33, g_key => 1701});  # HVNV03
+#	$retval_stringify = stringify_number__hash_ref({a_key => 2.1234432112344321, b_key => 2112.4321, c_key => 42.4567, d_key => 23.765444444444444444, e_key => -877.5678, f_key => 33.876587658765875687658765, g_key => 1701.6789});  # HVNV04
+#	$retval_stringify = stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => '23', e_key => -877, f_key => 33, g_key => 1701});  # HVNV05; raise/throw exception
+#	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
+
+#	$retval_stringify = typetest___number__hash_ref__in___string__out({'binary' => 2.1234432112344321, 'rush' => 2112.4321, 'answer' => 42.4567, 'fnord' => 23.765444444444444444, 'units' => -877.5678, 'degree' => 33.876587658765875687658765, 'ncc' => 1701.6789});  # HVNV10
+	$retval_stringify = typetest___number__hash_ref__in___string__out({'binary' => 2.1234432112344321, 'rush' => 2112.4321, 'ERROR_FUNKEY' => 'abcdefg', 'answer' => 42.4567, 'fnord' => 23.765444444444444444, 'units' => -877.5678, 'degree' => 33.876587658765875687658765, 'ncc' => 1701.6789});  # HVNV11; raise/throw exception
+	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 
 croak('Done for now, croaking');
-
-    # START HERE: finish implementing number & string tests below and in 06_type_hash.t
-    # START HERE: finish implementing number & string tests below and in 06_type_hash.t
-    # START HERE: finish implementing number & string tests below and in 06_type_hash.t
-
-#	typetest___number__hash_ref__in___void__out({'binary' => 2.1234432112344321, 'rush' => 2112.4321, 'answer' => 42.4567, 'fnord' => 23.765444444444444444, 'units' => -877.5678, 'degree' => 33.876587658765875687658765, 'ncc' => 1701.6789});
-#	typetest___number__hash_ref__in___void__out({'binary' => 2.1234432112344321, 'rush' => 2112.4321, 'ERROR_FUNKEY' => 'abcdefg', 'answer' => 42.4567, 'fnord' => 23.765444444444444444, 'units' => -877.5678, 'degree' => 33.876587658765875687658765, 'ncc' => 1701.6789});  # not-a-number error
 
 #	$retval_number__hash_ref = typetest___int__in___number__hash_ref__out(5);
 #	print "in hash_test.pl $i/$i_MAX, have \$retval_number__hash_ref = \n" . Dumper($retval_number__hash_ref) . "\n";
 
 #	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'stringified_number' => -2112.23};  # stringifies numbers
-#	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'stringified_number' => -2112.23, 'ERROR_KEY' => {fuzz => 'bizz', bar => "stool!\n", bat => 24}};  # not-a-string error
+#	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'stringified_number' => -2112.23, 'ERROR_KEY' => {fuzz => 'bizz', bar => "stool!\n", bat => 24}};  # raise/throw exception
 #	print "in hash_test.pl, have \$my_peeps =\n" . RPerl::DUMPER($my_peeps) . "\n" if $RPerl::DEBUG;
 #	typetest___string__hash_ref__in___void__out($my_peeps);
 

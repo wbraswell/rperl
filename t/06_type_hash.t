@@ -234,21 +234,21 @@ for my $i ( 0 .. 2 ) {
     }
 
     # Int Hash: stringify, create, manipulate
-    throws_ok(    # HV00
+    throws_ok(    # HVIV00
         sub { stringify_int__hash_ref(2) },
         "/$OPS_TYPES.*input_hv_ref was not an HV ref/",
-        q{stringify_int__hash_ref(2) throws correct exception}
+        q{HVIV00 stringify_int__hash_ref(2) throws correct exception}
     );
-    lives_and(    # HV01
+    lives_and(    # HVIV01
         sub {
             is( stringify_int__hash_ref( { a_key => 23 } ),
                 q{{'a_key' => 23}},
-                q{stringify_int__hash_ref({a_key => 23}) returns correct value}
+                q{HVIV01 stringify_int__hash_ref({a_key => 23}) returns correct value}
             );
         },
-        q{stringify_int__hash_ref({a_key => 23}) lives}
+        q{HVIV01 stringify_int__hash_ref({a_key => 23}) lives}
     );
-    lives_and(    # HV02
+    lives_and(    # HVIV02
         sub {
             like(
                 stringify_int__hash_ref(
@@ -265,12 +265,12 @@ for my $i ( 0 .. 2 ) {
 # NEED FIX: replace ".*" near end of this & following regexes with syntax to match exactly 6 occurrences of ", "; (,\s)* and variations don't work?
                 q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2112\b)(?=.*'c_key' => 42\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => 33\b)(?=.*'g_key' => 1701\b).*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
                 ,
-                q{stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) returns correct value}
+                q{HVIV02 stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) returns correct value}
             );
         },
-        q{stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) lives}
+        q{HVIV02 stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) lives}
     );
-    throws_ok(    # HV03
+    throws_ok(    # HVIV03
         sub {
             stringify_int__hash_ref(
                 {   a_key => 2,
@@ -284,9 +284,9 @@ for my $i ( 0 .. 2 ) {
             );    ## PERLTIDY BUG semicolon on newline
         },
         "/$OPS_TYPES.*input_hv_value at key 'c_key' was not an int/",
-        q{stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
+        q{HVIV03 stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
     );
-    throws_ok(    # HV04
+    throws_ok(    # HVIV04
         sub {
             stringify_int__hash_ref(
                 {   a_key => 2,
@@ -300,9 +300,9 @@ for my $i ( 0 .. 2 ) {
             );    ## PERLTIDY BUG semicolon on newline
         },
         "/$OPS_TYPES.*input_hv_value at key 'd_key' was not an int/",
-        q{stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => '23', e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
+        q{HVIV04 stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => '23', e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
     );
-    lives_and(    # HV10
+    lives_and(    # HVIV10
         sub {
             like(
                 typetest___int__hash_ref__in___string__out(
@@ -318,13 +318,13 @@ for my $i ( 0 .. 2 ) {
                 q{/^\{(?=.*'binary' => 2\b)(?=.*'rush' => 2112\b)(?=.*'answer' => 42\b)(?=.*'fnord' => 23\b)(?=.*'units' => -877\b)(?=.*'degree' => 33\b)(?=.*'ncc' => 1701\b).*\}} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
                     . $OPS_TYPES . q{$/m}, ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
 
-#                q{typetest___int__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => 33, 'ncc' => 1701}) returns correct value}
-                q{typetest___int__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, ..., 'ncc' => 1701}) returns correct value}
+#                q{HVIV10 typetest___int__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => 33, 'ncc' => 1701}) returns correct value}
+                q{HVIV10 typetest___int__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, ..., 'ncc' => 1701}) returns correct value}
             );
         },
-        q{typetest___int__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, ..., 'ncc' => 1701}) lives}
+        q{HVIV10 typetest___int__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, ..., 'ncc' => 1701}) lives}
     );
-    throws_ok(                             # HV11
+    throws_ok(                             # HVIV11
         sub {
             typetest___int__hash_ref__in___string__out(
                 {   'binary'       => 2,
@@ -339,9 +339,9 @@ for my $i ( 0 .. 2 ) {
             );
         },
         "/$OPS_TYPES.*input_hv_value at key 'ERROR_FUNKEY' was not an int/",
-        q{typetest___int__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => 'abcdefg', ..., 'ncc' => 1701}) throws correct exception}
+        q{HVIV11 typetest___int__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => 'abcdefg', ..., 'ncc' => 1701}) throws correct exception}
     );
-    lives_and(    # HV12
+    lives_and(    # HVIV12
         sub {
             like(
                 typetest___int__hash_ref__in___string__out(
@@ -349,12 +349,12 @@ for my $i ( 0 .. 2 ) {
                 ),
                 q{/^\{(?=.*'something' => 444\b)(?=.*'degree' => 33\b)(?=.*'ncc' => 1701\b).*\}} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
                     . $OPS_TYPES . q{$/m}, ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
-                q{typetest___int__hash_ref__in___string__out({something => 444, degree => 33, ncc => 1701}) returns correct value again, Perl stack still functioning properly}
+                q{HVIV12 typetest___int__hash_ref__in___string__out({something => 444, degree => 33, ncc => 1701}) returns correct value again, Perl stack still functioning properly}
             );
         },
-        q{typetest___int__hash_ref__in___string__out({something => 444, degree => 33, ncc => 1701}) lives}
+        q{HVIV12 typetest___int__hash_ref__in___string__out({something => 444, degree => 33, ncc => 1701}) lives}
     );
-    lives_and(                             # HV20
+    lives_and(                             # HVIV20
         sub {
             is_deeply(
                 typetest___int__in___int__hash_ref__out(5), ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
@@ -364,28 +364,28 @@ for my $i ( 0 .. 2 ) {
                     "$OPS_TYPES\_funkey1" => 5,
                     "$OPS_TYPES\_funkey0" => 0
                 },
-                q{typetest___int__in___int__hash_ref__out(5) returns correct value}
+                q{HVIV20 typetest___int__in___int__hash_ref__out(5) returns correct value}
             );
         },
-        q{typetest___int__in___int__hash_ref__out(5) lives}
+        q{HVIV20 typetest___int__in___int__hash_ref__out(5) lives}
     );
 
     # Num Hash: stringify, create, manipulate
-    throws_ok(    # HV30
+    throws_ok(    # HVNV00
         sub { stringify_number__hash_ref(2) },
         "/$OPS_TYPES.*input_hv_ref was not an HV ref/",
-        q{stringify_number__hash_ref(2) throws correct exception}
+        q{HVNV00 stringify_number__hash_ref(2) throws correct exception}
     );
-    lives_and(    # HV31
+    lives_and(    # HVNV01
         sub {
             is( stringify_number__hash_ref( { a_key => 23 } ),
                 q{{'a_key' => 23}},
-                q{stringify_number__hash_ref({a_key => 23}) returns correct value}
+                q{HVNV01 stringify_number__hash_ref({a_key => 23}) returns correct value}
             );
         },
-        q{stringify_number__hash_ref({a_key => 23}) lives}
+        q{HVNV01 stringify_number__hash_ref({a_key => 23}) lives}
     );
-    lives_and(    # HV32
+    lives_and(    # HVNV02
         sub {
             like(
                 stringify_number__hash_ref(
@@ -401,12 +401,12 @@ for my $i ( 0 .. 2 ) {
 
                 q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2112\b)(?=.*'c_key' => 42\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => 33\b)(?=.*'g_key' => 1701\b).*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
                 ,
-                q{stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) returns correct value}
+                q{HVNV02 stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) returns correct value}
             );
         },
-        q{stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) lives}
+        q{HVNV02 stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) lives}
     );
-    lives_and(    # HV33
+    lives_and(    # HVNV03
         sub {
             like(
                 stringify_number__hash_ref(
@@ -421,12 +421,12 @@ for my $i ( 0 .. 2 ) {
                 ),
                 q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2112\b)(?=.*'c_key' => 42\.3\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => 33\b)(?=.*'g_key' => 1701\b).*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
                 ,
-                q{stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) returns correct value}
+                q{HVNV03 stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) returns correct value}
             );
         },
-        q{stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) lives}
+        q{HVNV03 stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) lives}
     );
-    lives_and(    # HV34
+    lives_and(    # HVNV04
         sub {
             like(
                 stringify_number__hash_ref(
@@ -441,12 +441,12 @@ for my $i ( 0 .. 2 ) {
                 ),
                 q{/^\{(?=.*'a_key' => 2\.12344321123443\b)(?=.*'b_key' => 2112\.4321\b)(?=.*'c_key' => 42\.4567\b)(?=.*'d_key' => 23\.7654444444444\b)(?=.*'e_key' => -877\.5678\b)(?=.*'f_key' => 33\.8765876587659\b)(?=.*'g_key' => 1701\.6789\b).*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
                 ,
-                q{stringify_number__hash_ref({a_key => 2.1234432112344321, b_key => 2112.4321, ..., g_key => 1701.6789}) returns correct value}
+                q{HVNV04 stringify_number__hash_ref({a_key => 2.1234432112344321, b_key => 2112.4321, ..., g_key => 1701.6789}) returns correct value}
             );
         },
-        q{stringify_number__hash_ref({a_key => 2.1234432112344321, b_key => 2112.4321, ..., g_key => 1701.6789}) lives}
+        q{HVNV04 stringify_number__hash_ref({a_key => 2.1234432112344321, b_key => 2112.4321, ..., g_key => 1701.6789}) lives}
     );
-    throws_ok(    # HV35
+    throws_ok(    # HVNV05
         sub {
             stringify_number__hash_ref(
                 {   a_key => 2,
@@ -460,7 +460,46 @@ for my $i ( 0 .. 2 ) {
             );    ## PERLTIDY BUG semicolon on newline
         },
         "/$OPS_TYPES.*input_hv_value at key 'd_key' was not a number/",
-        q{stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => '23', e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
+        q{HVNV05 stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => '23', e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
+    );
+    lives_and(    # HVNV10
+        sub {
+            like(
+                typetest___number__hash_ref__in___string__out(
+                    {   'binary' => 2.1234432112344321,
+                        'rush'   => 2112.4321,
+                        'answer' => 42.4567,
+                        'fnord'  => 23.765444444444444444,
+                        'units'  => -877.5678,
+                        'degree' => 33.876587658765875687658765,
+                        'ncc'    => 1701.6789
+                    }
+                ),
+                q{/^\{(?=.*'binary' => 2\.12344321123443\b)(?=.*'rush' => 2112\.4321\b)(?=.*'answer' => 42\.4567\b)(?=.*'fnord' => 23\.7654444444444\b)(?=.*'units' => -877\.5678\b)(?=.*'degree' => 33\.8765876587659\b)(?=.*'ncc' => 1701\.6789\b).*\}} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+                    . $OPS_TYPES . q{$/m}, ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils  ## PERLTIDY BUG blank newline
+
+#                q{HVNV10 typetest___number__hash_ref__in___string__out({'binary' => 2.1234432112344321, 'rush' => 2112.4321, 'answer' => 42.4567, 'fnord' => 23.765444444444444444, 'units' => -877.5678, 'degree' => 33.876587658765875687658765, 'ncc' => 1701.6789}) returns correct value}
+                q{HVNV10 typetest___number__hash_ref__in___string__out({'binary' => 2.1234432112344321, 'rush' => 2112.4321, ..., 'ncc' => 1701.6789}) returns correct value}
+            );
+        },
+        q{HVNV10 typetest___number__hash_ref__in___string__out({'binary' => 2.1234432112344321, 'rush' => 2112.4321, ..., 'ncc' => 1701.6789}) lives}
+    );
+    throws_ok(                             # HVNV11
+        sub {
+            typetest___number__hash_ref__in___string__out(
+                {   'binary'       => 2.1234432112344321,
+                    'rush'         => 2112.4321,
+                    'ERROR_FUNKEY' => 'abcdefg',
+                    'answer'       => 42.4567,
+                    'fnord'        => 23.765444444444444444,
+                    'units'        => -877.5678,
+                    'degree'       => 33.876587658765875687658765,
+                    'ncc'          => 1701.6789
+                }
+            );
+        },
+        "/$OPS_TYPES.*input_hv_value at key 'ERROR_FUNKEY' was not a number/",
+        q{HVNV11 typetest___number__hash_ref__in___string__out({'binary' => 2.1234432112344321, 'ERROR_FUNKEY' => 'abcdefg', ..., 'ncc' => 1701.6789}) throws correct exception}
     );
 }
 done_testing();
