@@ -501,12 +501,12 @@ string stringify_string__hash_ref(string__hash_ref input_unordered_map)
 	{
 		if (i_is_0)
 		{
-			output_string += "'" + (string)(i->first).c_str() + "' => " + (string)(i->second);
+			output_string += "'" + (string)(i->first).c_str() + "' => '" + (string)(i->second) + "'";
 			i_is_0 = 0;
 		}
 		else
 		{
-			output_string += ", '" + (string)(i->first).c_str() + "' => " + (string)(i->second);
+			output_string += ", '" + (string)(i->first).c_str() + "' => '" + (string)(i->second) + "'";
 		}
 	}
 

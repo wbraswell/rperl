@@ -514,5 +514,20 @@ for my $i ( 0 .. 2 ) {
         },
         q{HVNV12 typetest___number__hash_ref__in___string__out({something => -444, degree => 33.876587658765875687658765, ncc => 1701.6789}) lives}
     );
+    lives_and(                             # HVNV20
+        sub {
+            is_deeply(
+                typetest___int__in___number__hash_ref__out(5), ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                {   "$OPS_TYPES\_funkey2" => 10.246913578,
+                    "$OPS_TYPES\_funkey3" => 15.370370367,
+                    "$OPS_TYPES\_funkey4" => 20.493827156,
+                    "$OPS_TYPES\_funkey1" => 5.123456789,
+                    "$OPS_TYPES\_funkey0" => 0
+                },
+                q{HVNV20 typetest___int__in___number__hash_ref__out(5) returns correct value}
+            );
+        },
+        q{HVNV20 typetest___int__in___number__hash_ref__out(5) lives}
+    );
 }
 done_testing();
