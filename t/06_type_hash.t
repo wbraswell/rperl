@@ -263,7 +263,7 @@ for my $i ( 0 .. 2 ) {
                 ),
 
 # NEED FIX: replace ".*" near end of this & following regexes with syntax to match exactly 6 occurrences of ", "; (,\s)* and variations don't work?
-                q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2112\b)(?=.*'c_key' => 42\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => 33\b)(?=.*'g_key' => 1701\b).*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+                q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2112\b)(?=.*'c_key' => 42\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => 33\b)(?=.*'g_key' => 1701\b).*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
                 ,
                 q{HVIV02 stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) returns correct value}
             );
@@ -281,7 +281,7 @@ for my $i ( 0 .. 2 ) {
                     f_key => 33,
                     g_key => 1701
                 }
-            );    ## PERLTIDY BUG semicolon on newline
+            );
         },
         "/$OPS_TYPES.*input_hv_value at key 'c_key' was not an int/",
         q{HVIV03 stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
@@ -297,7 +297,7 @@ for my $i ( 0 .. 2 ) {
                     f_key => 33,
                     g_key => 1701
                 }
-            );    ## PERLTIDY BUG semicolon on newline
+            );
         },
         "/$OPS_TYPES.*input_hv_value at key 'd_key' was not an int/",
         q{HVIV04 stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => '23', e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
@@ -315,8 +315,8 @@ for my $i ( 0 .. 2 ) {
                         'ncc'    => 1701
                     }
                 ),
-                q{/^\{(?=.*'binary' => 2\b)(?=.*'rush' => 2112\b)(?=.*'answer' => 42\b)(?=.*'fnord' => 23\b)(?=.*'units' => -877\b)(?=.*'degree' => 33\b)(?=.*'ncc' => 1701\b).*\}} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
-                    . $OPS_TYPES . q{$/m}, ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+                q{/^\{(?=.*'binary' => 2\b)(?=.*'rush' => 2112\b)(?=.*'answer' => 42\b)(?=.*'fnord' => 23\b)(?=.*'units' => -877\b)(?=.*'degree' => 33\b)(?=.*'ncc' => 1701\b).*\}} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
+                    . $OPS_TYPES . q{$/m}, ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
 
 #                q{HVIV10 typetest___int__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => 33, 'ncc' => 1701}) returns correct value}
                 q{HVIV10 typetest___int__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, ..., 'ncc' => 1701}) returns correct value}
@@ -347,8 +347,8 @@ for my $i ( 0 .. 2 ) {
                 typetest___int__hash_ref__in___string__out(
                     { something => -444, degree => 33, ncc => 1701 }
                 ),
-                q{/^\{(?=.*'something' => -444\b)(?=.*'degree' => 33\b)(?=.*'ncc' => 1701\b).*\}} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
-                    . $OPS_TYPES . q{$/m}, ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+                q{/^\{(?=.*'something' => -444\b)(?=.*'degree' => 33\b)(?=.*'ncc' => 1701\b).*\}} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
+                    . $OPS_TYPES . q{$/m}, ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
                 q{HVIV12 typetest___int__hash_ref__in___string__out({something => -444, degree => 33, ncc => 1701}) returns correct value}
             );
         },
@@ -399,7 +399,7 @@ for my $i ( 0 .. 2 ) {
                     }
                 ),
 
-                q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2112\b)(?=.*'c_key' => 42\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => 33\b)(?=.*'g_key' => 1701\b).*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+                q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2112\b)(?=.*'c_key' => 42\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => 33\b)(?=.*'g_key' => 1701\b).*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
                 ,
                 q{HVNV02 stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) returns correct value}
             );
@@ -419,7 +419,7 @@ for my $i ( 0 .. 2 ) {
                         g_key => 1701
                     }
                 ),
-                q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2112\b)(?=.*'c_key' => 42\.3\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => 33\b)(?=.*'g_key' => 1701\b).*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+                q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2112\b)(?=.*'c_key' => 42\.3\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => 33\b)(?=.*'g_key' => 1701\b).*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
                 ,
                 q{HVNV03 stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) returns correct value}
             );
@@ -439,7 +439,7 @@ for my $i ( 0 .. 2 ) {
                         g_key => 1701.6789
                     }
                 ),
-                q{/^\{(?=.*'a_key' => 2\.12344321123443\b)(?=.*'b_key' => 2112\.4321\b)(?=.*'c_key' => 42\.4567\b)(?=.*'d_key' => 23\.7654444444444\b)(?=.*'e_key' => -877\.5678\b)(?=.*'f_key' => 33\.8765876587659\b)(?=.*'g_key' => 1701\.6789\b).*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+                q{/^\{(?=.*'a_key' => 2\.12344321123443\b)(?=.*'b_key' => 2112\.4321\b)(?=.*'c_key' => 42\.4567\b)(?=.*'d_key' => 23\.7654444444444\b)(?=.*'e_key' => -877\.5678\b)(?=.*'f_key' => 33\.8765876587659\b)(?=.*'g_key' => 1701\.6789\b).*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
                 ,
                 q{HVNV04 stringify_number__hash_ref({a_key => 2.1234432112344321, b_key => 2112.4321, ..., g_key => 1701.6789}) returns correct value}
             );
@@ -457,7 +457,7 @@ for my $i ( 0 .. 2 ) {
                     f_key => 33,
                     g_key => 1701
                 }
-            );    ## PERLTIDY BUG semicolon on newline
+            );
         },
         "/$OPS_TYPES.*input_hv_value at key 'd_key' was not a number/",
         q{HVNV05 stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => '23', e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
@@ -475,10 +475,8 @@ for my $i ( 0 .. 2 ) {
                         'ncc'    => 1701.6789
                     }
                 ),
-                q{/^\{(?=.*'binary' => 2\.12344321123443\b)(?=.*'rush' => 2112\.4321\b)(?=.*'answer' => 42\.4567\b)(?=.*'fnord' => 23\.7654444444444\b)(?=.*'units' => -877\.5678\b)(?=.*'degree' => 33\.8765876587659\b)(?=.*'ncc' => 1701\.6789\b).*\}} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
-                    . $OPS_TYPES . q{$/m}, ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils  ## PERLTIDY BUG blank newline
-
-#                q{HVNV10 typetest___number__hash_ref__in___string__out({'binary' => 2.1234432112344321, 'rush' => 2112.4321, 'answer' => 42.4567, 'fnord' => 23.765444444444444444, 'units' => -877.5678, 'degree' => 33.876587658765875687658765, 'ncc' => 1701.6789}) returns correct value}
+                q{/^\{(?=.*'binary' => 2\.12344321123443\b)(?=.*'rush' => 2112\.4321\b)(?=.*'answer' => 42\.4567\b)(?=.*'fnord' => 23\.7654444444444\b)(?=.*'units' => -877\.5678\b)(?=.*'degree' => 33\.8765876587659\b)(?=.*'ncc' => 1701\.6789\b).*\}} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
+                    . $OPS_TYPES . q{$/m}, ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
                 q{HVNV10 typetest___number__hash_ref__in___string__out({'binary' => 2.1234432112344321, 'rush' => 2112.4321, ..., 'ncc' => 1701.6789}) returns correct value}
             );
         },
@@ -505,10 +503,13 @@ for my $i ( 0 .. 2 ) {
         sub {
             like(
                 typetest___number__hash_ref__in___string__out(
-                    { something => -444, degree => 33.876587658765875687658765, ncc => 1701.6789 }
+                    {   something => -444,
+                        degree    => 33.876587658765875687658765,
+                        ncc       => 1701.6789
+                    }
                 ),
-                q{/^\{(?=.*'something' => -444\b)(?=.*'degree' => 33\.8765876587659\b)(?=.*'ncc' => 1701\.6789\b).*\}} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
-                    . $OPS_TYPES . q{$/m}, ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+                q{/^\{(?=.*'something' => -444\b)(?=.*'degree' => 33\.8765876587659\b)(?=.*'ncc' => 1701\.6789\b).*\}} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
+                    . $OPS_TYPES . q{$/m}, ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
                 q{HVNV12 typetest___number__hash_ref__in___string__out({something => -444, degree => 33.876587658765875687658765, ncc => 1701.6789}) returns correct value}
             );
         },
@@ -529,5 +530,170 @@ for my $i ( 0 .. 2 ) {
         },
         q{HVNV20 typetest___int__in___number__hash_ref__out(5) lives}
     );
+
+    # String Hash: stringify, create, manipulate
+    throws_ok(    # HVPV00
+        sub { stringify_string__hash_ref('Lone Ranger') },
+        "/$OPS_TYPES.*input_hv_ref was not an HV ref/",
+        q{HVPV00 stringify_string__hash_ref('Lone Ranger') throws correct exception}
+    );
+    lives_and(    # HVPV01
+        sub {
+            is( stringify_string__hash_ref(
+                    { 'kryptonian_manofsteel_clarkkent' => 'Superman' }
+                ),
+                q{{'kryptonian_manofsteel_clarkkent' => 'Superman'}},
+                q{HVPV01 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman'}) returns correct value}
+            );
+        },
+        q{HVPV01 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman'}) lives}
+    );
+    lives_and(    # HVPV02
+        sub {
+            like(
+                stringify_string__hash_ref(
+                    {   'kryptonian_manofsteel_clarkkent' => 'Superman',
+                        'gothamite_darkknight_brucewayne' => 'Batman',
+                        'amazonian_dianathemyscira_dianaprince' =>
+                            'Wonder Woman',
+                        'scarletspeedster_barryallenetal' => 'Flash',
+                        'alanscottetal'                   => 'Green Lantern',
+                        'atlanteanhybrid_aquaticace_arthurcurryorin' =>
+                            'Aquaman',
+                        'greenmartian_bloodwynd_jonnjonnz' =>
+                            'Martian Manhunter'
+                    }
+                ),
+                q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'gothamite_darkknight_brucewayne' => 'Batman')(?=.*'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman')(?=.*'scarletspeedster_barryallenetal' => 'Flash')(?=.*'alanscottetal' => 'Green Lantern')(?=.*'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter').*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
+                ,                                                                                                                                                                                                                                                                                                                                                                                                             ## PERLTIDY BUG comma on newline
+                q{HVPV02 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', ...}) returns correct value}
+            );
+        },
+        q{HVPV02 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', ...}) lives}
+    );
+    lives_and(    # HVPV03
+        sub {
+            like(
+                stringify_string__hash_ref(
+                    {   'kryptonian_manofsteel_clarkkent' => 'Superman',
+                        'gothamite_darkknight_brucewayne' => 'Batman',
+                        'amazonian_dianathemyscira_dianaprince' =>
+                            'Wonder Woman',
+                        'scarletspeedster_barryallenetal' => 'Flash',
+                        'alanscottetal'                   => 'Green Lantern',
+                        'atlanteanhybrid_aquaticace_arthurcurryorin' =>
+                            'Aquaman',
+                        'greenmartian_bloodwynd_jonnjonnz' =>
+                            'Martian Manhunter',
+                        'string_not_int' => '23'
+                    }
+                ),
+                q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'gothamite_darkknight_brucewayne' => 'Batman')(?=.*'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman')(?=.*'scarletspeedster_barryallenetal' => 'Flash')(?=.*'alanscottetal' => 'Green Lantern')(?=.*'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'string_not_int' => '23').*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
+                ,                                                                                                                                                                                                                                                                                                                                                                                                                                           ## PERLTIDY BUG comma on newline
+                q{HVPV03 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'string_not_int' => '23'}) returns correct value}
+            );
+        },
+        q{HVPV03 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'string_not_int' => '23'}) lives}
+    );
+    throws_ok(    # HVPV04
+        sub {
+            stringify_string__hash_ref(
+                {   'kryptonian_manofsteel_clarkkent'       => 'Superman',
+                    'gothamite_darkknight_brucewayne'       => 'Batman',
+                    'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman',
+                    'scarletspeedster_barryallenetal'       => 'Flash',
+                    'alanscottetal' => 'Green Lantern',
+                    'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman',
+                    'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter',
+                    'INT_NOT_STRING'                   => 23
+                }
+            );
+        },
+        "/$OPS_TYPES.*input_hv_value at key 'INT_NOT_STRING' was not a string/",
+        q{HVPV04 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'INT_NOT_STRING' => 23}) throws correct exception}
+    );
+    lives_and(    # HVPV05
+        sub {
+            like(
+                stringify_string__hash_ref(
+                    {   'kryptonian_manofsteel_clarkkent' => 'Superman',
+                        'gothamite_darkknight_brucewayne' => 'Batman',
+                        'amazonian_dianathemyscira_dianaprince' =>
+                            'Wonder Woman',
+                        'scarletspeedster_barryallenetal' => 'Flash',
+                        'alanscottetal'                   => 'Green Lantern',
+                        'atlanteanhybrid_aquaticace_arthurcurryorin' =>
+                            'Aquaman',
+                        'greenmartian_bloodwynd_jonnjonnz' =>
+                            'Martian Manhunter',
+                        'string_not_number' => '-2112.23'
+                    }
+                ),
+                q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'gothamite_darkknight_brucewayne' => 'Batman')(?=.*'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman')(?=.*'scarletspeedster_barryallenetal' => 'Flash')(?=.*'alanscottetal' => 'Green Lantern')(?=.*'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'string_not_number' => '-2112.23').*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
+                ,                                                                                                                                                                                                                                                                                                                                                                                                                                                    ## PERLTIDY BUG comma on newline
+                q{HVPV05 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'string_not_number' => '-2112.23'}) returns correct value}
+            );
+        },
+        q{HVPV05 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'string_not_number' => '-2112.23'}) lives}
+    );
+    lives_and(    # HVPV06
+        sub {
+            like(
+                stringify_string__hash_ref(
+                    {   'kryptonian_manofsteel_clarkkent' => 'Superman',
+                        'gothamite_darkknight_brucewayne' => 'Batman',
+                        'amazonian_dianathemyscira_dianaprince' =>
+                            'Wonder Woman',
+                        'scarletspeedster_barryallenetal' => 'Flash',
+                        'alanscottetal'                   => 'Green Lantern',
+                        'atlanteanhybrid_aquaticace_arthurcurryorin' =>
+                            'Aquaman',
+                        'greenmartian_bloodwynd_jonnjonnz' =>
+                            'Martian Manhunter',
+                        'string_not_number' => "-2112.23" ## no critic qw(ProhibitInterpolationOfLiterals)  ## RPERL allow double-quoted test data
+                    }
+                ),
+                q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'gothamite_darkknight_brucewayne' => 'Batman')(?=.*'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman')(?=.*'scarletspeedster_barryallenetal' => 'Flash')(?=.*'alanscottetal' => 'Green Lantern')(?=.*'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'string_not_number' => '-2112.23').*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
+                ,                                                                                                                                                                                                                                                                                                                                                                                                                                                    ## PERLTIDY BUG comma on newline
+                q{HVPV06 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'string_not_number' => "-2112.23"}) returns correct value}
+            );
+        },
+        q{HVPV06 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'string_not_number' => "-2112.23"}) lives}
+    );
+    throws_ok(    # HVPV07
+        sub {
+            stringify_string__hash_ref(
+                {   'kryptonian_manofsteel_clarkkent'       => 'Superman',
+                    'gothamite_darkknight_brucewayne'       => 'Batman',
+                    'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman',
+                    'scarletspeedster_barryallenetal'       => 'Flash',
+                    'alanscottetal' => 'Green Lantern',
+                    'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman',
+                    'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter',
+                    'NUMBER_NOT_STRING'                => -2112.23
+                }
+            );
+        },
+        "/$OPS_TYPES.*input_hv_value at key 'NUMBER_NOT_STRING' was not a string/",
+        q{HVPV07 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'NUMBER_NOT_STRING' => -2112.23}) throws correct exception}
+    );
+    throws_ok(    # HVPV08
+        sub {
+            stringify_string__hash_ref(
+                {   'kryptonian_manofsteel_clarkkent'       => 'Superman',
+                    'gothamite_darkknight_brucewayne'       => 'Batman',
+                    'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman',
+                    'scarletspeedster_barryallenetal'       => 'Flash',
+                    'alanscottetal' => 'Green Lantern',
+                    'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman',
+                    'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter',
+                    'HASH_NOT_STRING' => {fuzz => 'bizz', bar => "stool!\n", bat => 24}
+                }
+            );
+        },
+        "/$OPS_TYPES.*input_hv_value at key 'HASH_NOT_STRING' was not a string/",
+        q{HVPV08 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'HASH_NOT_STRING' => {fuzz => 'bizz', ...}}) throws correct exception}
+    );
 }
+
 done_testing();

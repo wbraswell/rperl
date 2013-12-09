@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.3.3');
+use version; our $VERSION = qv('0.3.4');
 
 # SUPPRESS OUTPUT FROM INDIVIDUAL TESTS, EXCLUDING TESTS INSIDE BEGIN{} BLOCKS
 # order is BEGIN, UNITCHECK, CHECK, INIT, END; CHECK here suppresses Inline compile output from including HelperFunctions_cpp.pm from INIT in Array.pm
@@ -12,7 +12,7 @@ CHECK {
         || croak('Error redirecting stderr, croaking');
 }
 
-use Test::More tests => 127;
+use Test::More tests => 130;
 use Test::Exception;
 use Carp;
 
@@ -443,6 +443,18 @@ for my $i ( 0 .. 2 ) {
     lives_and(    # AVPV01
         sub {
             is( stringify_string__array_ref(
+                    [   'Superman'
+                    ]
+                ),
+                q{['Superman']},
+                q{AVPV01 stringify_string__array_ref(['Superman']) returns correct value}
+            );
+        },
+        q{AVPV01 stringify_string__array_ref(['Superman']) lives}
+    );
+    lives_and(    # AVPV02
+        sub {
+            is( stringify_string__array_ref(
                     [   'Superman',      'Batman',
                         'Wonder Woman',  'Flash',
                         'Green Lantern', 'Aquaman',
@@ -450,12 +462,12 @@ for my $i ( 0 .. 2 ) {
                     ]
                 ),
                 q{['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']},
-                q{AVPV01 stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']) returns correct value}
+                q{AVPV02 stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']) returns correct value}
             );
         },
-        q{AVPV01 stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']) lives}
+        q{AVPV02 stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']) lives}
     );
-    lives_and(    # AVPV02
+    lives_and(    # AVPV03
         sub {
             is( stringify_string__array_ref(
                     [   'Superman',          'Batman',
@@ -465,12 +477,12 @@ for my $i ( 0 .. 2 ) {
                     ]
                 ),
                 q{['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '23']},
-                q{AVPV02 stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '23']) returns correct value}
+                q{AVPV03 stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '23']) returns correct value}
             );
         },
-        q{AVPV02 stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '23']) lives}
+        q{AVPV03 stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '23']) lives}
     );
-    throws_ok(    # AVPV03
+    throws_ok(    # AVPV04
         sub {
             stringify_string__array_ref(
                 [   'Superman',      'Batman',
@@ -481,9 +493,9 @@ for my $i ( 0 .. 2 ) {
             );
         },
         "/$OPS_TYPES.*input_av_element at index 7 was not a string/",
-        q{AVPV03 stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', 23]) throws correct exception}
+        q{AVPV04 stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', 23]) throws correct exception}
     );
-    lives_and(                              # AVPV04
+    lives_and(                              # AVPV05
         sub {
             is( stringify_string__array_ref(
                     [   'Superman',          'Batman',
@@ -493,12 +505,12 @@ for my $i ( 0 .. 2 ) {
                     ]
                 ),
                 q{['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '-2112.23']},
-                q{AVPV04 stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '-2112.23']) returns correct value}
+                q{AVPV05 stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '-2112.23']) returns correct value}
             );
         },
-        q{AVPV04 stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '-2112.23']) lives}
+        q{AVPV05 stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '-2112.23']) lives}
     );
-    lives_and(    # AVPV05
+    lives_and(    # AVPV06
         sub {
             is( stringify_string__array_ref(
                     [   'Superman',      'Batman',
@@ -508,12 +520,12 @@ for my $i ( 0 .. 2 ) {
                     ]
                 ),
                 q{['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '-2112.23']},
-                q{AVPV05 stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', "Martian Manhunter", "-2112.23"]) returns correct value}
+                q{AVPV06 stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', "Martian Manhunter", "-2112.23"]) returns correct value}
             );
         },
-        q{AVPV05 stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', "Martian Manhunter", "-2112.23"]) lives}
+        q{AVPV06 stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', "Martian Manhunter", "-2112.23"]) lives}
     );
-    throws_ok(                                          # AVPV06
+    throws_ok(                                          # AVPV07
         sub {
             stringify_string__array_ref(
                 [   'Superman',      'Batman',
@@ -524,9 +536,9 @@ for my $i ( 0 .. 2 ) {
             );
         },
         "/$OPS_TYPES.*input_av_element at index 7 was not a string/",
-        q{AVPV06 stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', -2112.23]) throws correct exception}
+        q{AVPV07 stringify_string__array_ref(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', -2112.23]) throws correct exception}
     );
-    throws_ok(                                    # AVPV07
+    throws_ok(                                    # AVPV08
         sub {
             stringify_string__array_ref(
                 [   'Wonder Woman',
@@ -539,7 +551,7 @@ for my $i ( 0 .. 2 ) {
             );
         },
         "/$OPS_TYPES.*input_av_element at index 5 was not a string/",
-        q{AVPV07 stringify_string__array_ref(['Wonder Woman', ..., 'Martian Manhunter', {fuzz => 'bizz', bar => "stool!\n", bat => 24}]) throws correct exception} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted newline
+        q{AVPV08 stringify_string__array_ref(['Wonder Woman', ..., 'Martian Manhunter', {fuzz => 'bizz', bar => "stool!\n", bat => 24}]) throws correct exception} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted newline
     );
     lives_and(    # AVPV10
         sub {
