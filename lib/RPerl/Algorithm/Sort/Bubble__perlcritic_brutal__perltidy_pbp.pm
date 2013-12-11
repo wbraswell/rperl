@@ -10,10 +10,10 @@ use base ( 'RPerl::Algorithm::Sort', 'RPerl::Algorithm::Inefficient' );
 use RPerl::Algorithm::Sort;
 use RPerl::Algorithm::Inefficient;
 
-##our %properties = ( data => my int__array_ref $KEY_data );
-my %properties = ( data => my int__array_ref $KEY_data );
+##our %properties = ( data => my integer__array_ref $KEY_data );
+my %properties = ( data => my integer__array_ref $KEY_data );
 
-# [object-oriented programming interface]
+# [object-oriented programming integererface]
 # call out to sort data, return nothing
 our void__method $sort = sub {
     ( my object $self ) = @_;
@@ -25,21 +25,21 @@ our void__method $sort = sub {
 # Random note for later from mst:
 #   This would warn BUT "no warnings 'illegalproto'" disables that
 #   Now you can extract the prototype at runtime using 'perldoc -f prototype'
-#   Key thing: whitespace in the prototype is lost so you'll be parsing 'int__array_ref->int__array_ref'
+#   Key thing: whitespace in the prototype is lost so you'll be parsing 'integer__array_ref->integer__array_ref'
 #   however it's otherwise preserved verbatim by the perl compiler and you can do what you like with it
 #   Web::Simple uses this to provide 'sub (GET + /user/:id) { ... }' for web routing.
-#   sub bubblesort(int__array_ref -> int__array_ref) {}
+#   sub bubblesort(integer__array_ref -> integer__array_ref) {}
 # end random note
 
-# [procedural programming interface]
+# [procedural programming integererface]
 # original algorithm: comparison-based and stable [O(n**2) average time, O(1) worst-case extra space]
 # sort data, return sorted data
-our int__array_ref $bubblesort = sub {
-    ( my int__array_ref $data ) = @_;
-    my int $is_sorted = 0;
-##    my int $i;
-    my const_int $data_length = scalar @{$data};
-    my int $swap;
+our integer__array_ref $bubblesort = sub {
+    ( my integer__array_ref $data ) = @_;
+    my integer $is_sorted = 0;
+##    my integer $i;
+    my const_integer $data_length = scalar @{$data};
+    my integer $swap;
 
 #	print "in bubblesort(), have \$data_length = $data_length\n" if $RPerl::DEBUG;
 
@@ -49,7 +49,7 @@ our int__array_ref $bubblesort = sub {
         #print "in bubblesort(), top of WHILE loop\n" if $RPerl::DEBUG;
         $is_sorted = 1;
 ##        for ( $i = 0; $i < ( $data_length - 1 ); $i++ ) {
-        for my int $i ( 0 .. ( $data_length - 1 ) ) {
+        for my integer $i ( 0 .. ( $data_length - 1 ) ) {
 
 #            print "in bubblesort(), inside for() loop, have \$i = $i\n" if $RPerl::DEBUG;
 #            print "in bubblesort(), inside for() loop, have \$data\n" . RPerl::DUMPER($data) . "\n" if $RPerl::DEBUG;

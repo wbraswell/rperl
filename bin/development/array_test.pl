@@ -28,32 +28,32 @@ print q{in array_test.pl, have types_array() = '} . types_array() . "'\n" or cro
 
 # variable declarations
 my string $retval_stringify;
-my int__array_ref $retval_int__array_ref;
+my integer__array_ref $retval_integer__array_ref;
 my number__array_ref $retval_number__array_ref;
 my string__array_ref $my_peeps;
 my string__array_ref $retval_jeffys;
 
 # loop to test for memory leaks
-my const_int $i_MAX = 1;
-for my int $i ( 0 .. $i_MAX ) {
+my const_integer $i_MAX = 1;
+for my integer $i ( 0 .. $i_MAX ) {
 	print "in array_test.pl, top of for() loop $i/$i_MAX\n" or croak();
 
-#	$retval_stringify = stringify_int__array_ref(2);  # AVIV00; raise/throw exception
-#	$retval_stringify = stringify_int__array_ref([2]);  # AVIV01
-#	$retval_stringify = stringify_int__array_ref([2, 2112, 42, 23, -877, 33, 1701]);  # AVIV02
-#	$retval_stringify = stringify_int__array_ref([2, 2112, 42.3, 23, -877, 33, 1701]);  # AVIV03; raise/throw exception
-#	$retval_stringify = stringify_int__array_ref([2, 2112, 42, '23', -877, 33, 1701]);  # AVIV04; raise/throw exception
+#	$retval_stringify = stringify_integer__array_ref(2);  # AVIV00; raise/throw exception
+#	$retval_stringify = stringify_integer__array_ref([2]);  # AVIV01
+#	$retval_stringify = stringify_integer__array_ref([2, 2112, 42, 23, -877, 33, 1701]);  # AVIV02
+#	$retval_stringify = stringify_integer__array_ref([2, 2112, 42.3, 23, -877, 33, 1701]);  # AVIV03; raise/throw exception
+#	$retval_stringify = stringify_integer__array_ref([2, 2112, 42, '23', -877, 33, 1701]);  # AVIV04; raise/throw exception
 #	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
 
-#	$retval_stringify = typetest___int__array_ref__in___string__out([2, 2112, 42, 23, -877, 33, 1701]);  # AVIV10
-#	$retval_stringify = typetest___int__array_ref__in___string__out([2, 2112, 42, 23, -877, 'abcdefg', 33, 1701]);  # AVIV11; not-an-int error
+#	$retval_stringify = typetest___integer__array_ref__in___string__out([2, 2112, 42, 23, -877, 33, 1701]);  # AVIV10
+#	$retval_stringify = typetest___integer__array_ref__in___string__out([2, 2112, 42, 23, -877, 'abcdefg', 33, 1701]);  # AVIV11; not-an-integer error
 #	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 
-#	my $howdy_retval = typetest___int__array_ref__in___string__out([-444, 33, 1701]);  # AVIV12; confirm Perl stack is still functioning properly
+#	my $howdy_retval = typetest___integer__array_ref__in___string__out([-444, 33, 1701]);  # AVIV12; confirm Perl stack is still functioning properly
 #	print "in array_test.pl $i/$i_MAX, have \$howdy_retval =\n$howdy_retval\n";
 
-#	$retval_int__array_ref = typetest___int__in___int__array_ref__out(5);  # AVIV20
-#	print "in array_test.pl $i/$i_MAX, have \$retval_int__array_ref = \n" . Dumper($retval_int__array_ref) . "\n";
+#	$retval_integer__array_ref = typetest___integer__in___integer__array_ref__out(5);  # AVIV20
+#	print "in array_test.pl $i/$i_MAX, have \$retval_integer__array_ref = \n" . Dumper($retval_integer__array_ref) . "\n";
 
 #	$retval_stringify = stringify_number__array_ref(2);  # AVNV00; raise/throw exception
 #	$retval_stringify = stringify_number__array_ref([2]);  # AVNV01
@@ -70,7 +70,7 @@ for my int $i ( 0 .. $i_MAX ) {
 #	my $howdy_retval = typetest___number__array_ref__in___string__out([-444, 33.876587658765875687658765, 1701.6789]);  # AVNV12; confirm Perl stack is still functioning properly
 #	print "in array_test.pl $i/$i_MAX, have \$howdy_retval =\n$howdy_retval\n";
 
-#	$retval_number__array_ref = typetest___int__in___number__array_ref__out(5);  # AVNV20
+#	$retval_number__array_ref = typetest___integer__in___number__array_ref__out(5);  # AVNV20
 #	print "in array_test.pl $i/$i_MAX, have \$retval_number__array_ref = \n" . Dumper($retval_number__array_ref) . "\n";
 
 #	$my_peeps = 'Lone Ranger';  # AVPV00; raise/throw exception
@@ -97,8 +97,8 @@ for my int $i ( 0 .. $i_MAX ) {
 
 croak('Done for now, croaking');
 	
-	$retval_jeffys = typetest___int__in___string__array_ref__out(5);  # AVPV20
-	print "in type_test.pl $i/$i_MAX, have \$retval_jeffys =\n" . Dumper($retval_jeffys) . "\n";
+	$retval_jeffys = typetest___integer__in___string__array_ref__out(5);  # AVPV20
+	print "in array_test.pl $i/$i_MAX, have \$retval_jeffys =\n" . Dumper($retval_jeffys) . "\n";
 }
 
 #croak('Done for now, croaking');

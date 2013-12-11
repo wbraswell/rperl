@@ -16,7 +16,7 @@ BEGIN { use Data::Dumper;  our $AUTOLOAD;  sub AUTOLOAD { croak("AUTOLOAD purpos
 # UNCOMMENT TO ENABLE C++ TYPES FOR C++ OPS
 types::types_enable('CPP');
 
-# UNCOMMENT TO ENABLE C++
+# UNCOMMENT TO ENABLE C++ OPS
 use RPerl::DataStructure::Hash_cpp;  RPerl::DataStructure::Hash_cpp::cpp_load();  RPerl::DataStructure::Hash_cpp::cpp_link();
 
 print q{in array_test.pl, have ops_number() = '} . ops_number() . "'\n" or croak();
@@ -28,32 +28,32 @@ print q{in array_test.pl, have types_hash() = '} . types_hash() . "'\n" or croak
 
 # variable declarations
 my string $retval_stringify;
-my int__hash_ref $retval_int__hash_ref;
+my integer__hash_ref $retval_integer__hash_ref;
 my number__hash_ref $retval_number__hash_ref;
 my string__hash_ref $my_peeps = {};
 my string__hash_ref $retval_jeffys;
 
 # loop to test for memory leaks
-my const_int $i_MAX = 1;
-for my int $i ( 0 .. $i_MAX ) {
+my const_integer $i_MAX = 1;
+for my integer $i ( 0 .. $i_MAX ) {
 	print "in hash_test.pl, top of for() loop $i/$i_MAX\n" or croak();
 
-#	$retval_stringify = stringify_int__hash_ref(2);  # HVIV00; raise/throw exception
-#	$retval_stringify = stringify_int__hash_ref({a_key => 23});  # HVIV01
-#	$retval_stringify = stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701});  # HVIV02
-#	$retval_stringify = stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => 23, e_key => -877, f_key => 33, g_key => 1701});  # HVIV03; raise/throw exception
-#	$retval_stringify = stringify_int__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => '23', e_key => -877, f_key => 33, g_key => 1701});  # HVIV04; raise/throw exception
+#	$retval_stringify = stringify_integer__hash_ref(2);  # HVIV00; raise/throw exception
+#	$retval_stringify = stringify_integer__hash_ref({a_key => 23});  # HVIV01
+#	$retval_stringify = stringify_integer__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701});  # HVIV02
+#	$retval_stringify = stringify_integer__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => 23, e_key => -877, f_key => 33, g_key => 1701});  # HVIV03; raise/throw exception
+#	$retval_stringify = stringify_integer__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => '23', e_key => -877, f_key => 33, g_key => 1701});  # HVIV04; raise/throw exception
 #	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
 
-#	$retval_stringify = typetest___int__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => 33, 'ncc' => 1701});  # HVIV10
-#	$retval_stringify = typetest___int__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => 'abcdefg', 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => 33, 'ncc' => 1701});  # HVIV11; raise/throw exception
+#	$retval_stringify = typetest___integer__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => 33, 'ncc' => 1701});  # HVIV10
+#	$retval_stringify = typetest___integer__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => 'abcdefg', 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => 33, 'ncc' => 1701});  # HVIV11; raise/throw exception
 #	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 
-#	my $howdy_retval = typetest___int__hash_ref__in___string__out({something => -444, degree => 33, ncc => 1701});  # HVIV12; confirm Perl stack is still functioning properly
+#	my $howdy_retval = typetest___integer__hash_ref__in___string__out({something => -444, degree => 33, ncc => 1701});  # HVIV12; confirm Perl stack is still functioning properly
 #	print "in hash_test.pl $i/$i_MAX, have \$howdy_retval =\n$howdy_retval\n";
 
-#	$retval_int__hash_ref = typetest___int__in___int__hash_ref__out(5);  # HVIV20
-#	print "in hash_test.pl $i/$i_MAX, have \$retval_int__hash_ref = \n" . Dumper($retval_int__hash_ref) . "\n";
+#	$retval_integer__hash_ref = typetest___integer__in___integer__hash_ref__out(5);  # HVIV20
+#	print "in hash_test.pl $i/$i_MAX, have \$retval_integer__hash_ref = \n" . Dumper($retval_integer__hash_ref) . "\n";
 
 #	$retval_stringify = stringify_number__hash_ref(2);  # HVNV00; raise/throw exception
 #	$retval_stringify = stringify_number__hash_ref({a_key => 23});  # HVNV01
@@ -70,13 +70,13 @@ for my int $i ( 0 .. $i_MAX ) {
 #	my $howdy_retval = typetest___number__hash_ref__in___string__out({something => -444, degree => 33.876587658765875687658765, ncc => 1701.6789});  # HVNV12; confirm Perl stack is still functioning properly
 #	print "in hash_test.pl $i/$i_MAX, have \$howdy_retval =\n$howdy_retval\n";
 
-#	$retval_number__hash_ref = typetest___int__in___number__hash_ref__out(5);  # HVNV20
+#	$retval_number__hash_ref = typetest___integer__in___number__hash_ref__out(5);  # HVNV20
 #	print "in hash_test.pl $i/$i_MAX, have \$retval_number__hash_ref = \n" . Dumper($retval_number__hash_ref) . "\n";
 
 #	$my_peeps = 'Lone Ranger';  # HVPV00; raise/throw exception
 #	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman'};  # HVPV01
 #	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter'};  # HVPV02
-#	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'string_not_int' => '23'};  # HVPV03
+#	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'string_not_integer' => '23'};  # HVPV03
 #	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'INT_NOT_STRING' => 23};  # HVPV04; raise/throw exception
 #	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'string_not_number' => '-2112.23'};  # HVPV05
 #	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'string_not_number' => "-2112.23"};  # HVPV06
@@ -93,8 +93,8 @@ for my int $i ( 0 .. $i_MAX ) {
 #	my $howdy_retval = typetest___string__hash_ref__in___string__out({'stuckinaworldhenevercreated' => 'Howard The Duck', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter'});  # HVPV12; confirm Perl stack is still functioning properly
 #	print "in hash_test.pl $i/$i_MAX, have \$howdy_retval =\n$howdy_retval\n";
 
-	$retval_jeffys = typetest___int__in___string__hash_ref__out(5);  # HVPV20
-	print "in type_test.pl, have \$retval_jeffys =\n" . RPerl::DUMPER($retval_jeffys) . "\n" if $RPerl::DEBUG;
+	$retval_jeffys = typetest___integer__in___string__hash_ref__out(5);  # HVPV20
+	print "in hash_test.pl, have \$retval_jeffys =\n" . RPerl::DUMPER($retval_jeffys) . "\n" if $RPerl::DEBUG;
 
 croak('Done for now, croaking');
 }

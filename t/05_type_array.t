@@ -238,87 +238,87 @@ for my $i ( 0 .. 2 ) {
 
     # Int Array: stringify, create, manipulate
     throws_ok(    # AVIV00
-        sub { stringify_int__array_ref(2) },
+        sub { stringify_integer__array_ref(2) },
         "/$OPS_TYPES.*input_av_ref was not an AV ref/",
-        q{stringify_int__array_ref(2) throws correct exception}
+        q{stringify_integer__array_ref(2) throws correct exception}
     );
     lives_and(    # AVIV01
         sub {
-            is( stringify_int__array_ref( [2] ),
+            is( stringify_integer__array_ref( [2] ),
                 '[2]',
-                q{AVIV01 stringify_int__array_ref([2]) returns correct value}
+                q{AVIV01 stringify_integer__array_ref([2]) returns correct value}
             );
         },
-        q{AVIV01 stringify_int__array_ref([2]) lives}
+        q{AVIV01 stringify_integer__array_ref([2]) lives}
     );
     lives_and(    # AVIV02
         sub {
-            is( stringify_int__array_ref(
+            is( stringify_integer__array_ref(
                     [ 2, 2112, 42, 23, -877, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ),
                 '[2, 2112, 42, 23, -877, 33, 1701]',
-                q{AVIV02 stringify_int__array_ref([2, 2112, 42, 23, -877, 33, 1701]) returns correct value}
+                q{AVIV02 stringify_integer__array_ref([2, 2112, 42, 23, -877, 33, 1701]) returns correct value}
             );
         },
-        q{AVIV02 stringify_int__array_ref([2, 2112, 42, 23, -877, 33, 1701]) lives}
+        q{AVIV02 stringify_integer__array_ref([2, 2112, 42, 23, -877, 33, 1701]) lives}
     );
     throws_ok(                                          # AVIV03
         sub {
-            stringify_int__array_ref(
+            stringify_integer__array_ref(
                 [ 2, 2112, 42.3, 23, -877, 33, 1701 ] ) ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ;    ## PERLTIDY BUG semicolon on newline
         },
-        "/$OPS_TYPES.*input_av_element at index 2 was not an int/",
-        q{AVIV03 stringify_int__array_ref([2, 2112, 42.3, 23, -877, 33, 1701]) throws correct exception}
+        "/$OPS_TYPES.*input_av_element at index 2 was not an integer/",
+        q{AVIV03 stringify_integer__array_ref([2, 2112, 42.3, 23, -877, 33, 1701]) throws correct exception}
     );
     throws_ok(       # AVIV04
         sub {
-            stringify_int__array_ref(
+            stringify_integer__array_ref(
                 [ 2, 2112, 42, '23', -877, 33, 1701 ] ) ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ;    ## PERLTIDY BUG semicolon on newline
         },
-        "/$OPS_TYPES.*input_av_element at index 3 was not an int/",
-        q{AVIV04 stringify_int__array_ref([2, 2112, 42, '23', -877, 33, 1701]) throws correct exception}
+        "/$OPS_TYPES.*input_av_element at index 3 was not an integer/",
+        q{AVIV04 stringify_integer__array_ref([2, 2112, 42, '23', -877, 33, 1701]) throws correct exception}
     );
     lives_and(       # AVIV10
         sub {
-            is( typetest___int__array_ref__in___string__out(
+            is( typetest___integer__array_ref__in___string__out(
                     [ 2, 2112, 42, 23, -877, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ),
                 '[2, 2112, 42, 23, -877, 33, 1701]' . $OPS_TYPES,
-                q{AVIV10 typetest___int__array_ref__in___string__out([2, 2112, 42, 23, -877, 33, 1701]) returns correct value}
+                q{AVIV10 typetest___integer__array_ref__in___string__out([2, 2112, 42, 23, -877, 33, 1701]) returns correct value}
             );
         },
-        q{AVIV10 typetest___int__array_ref__in___string__out([2, 2112, 42, 23, -877, 33, 1701]) lives}
+        q{AVIV10 typetest___integer__array_ref__in___string__out([2, 2112, 42, 23, -877, 33, 1701]) lives}
     );
     throws_ok(                                          # AVIV11
         sub {
-            typetest___int__array_ref__in___string__out(
+            typetest___integer__array_ref__in___string__out(
                 [ 2, 2112, 42, 23, -877, 'abcdefg', 33, 1701 ] ); ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
         },
-        "/$OPS_TYPES.*input_av_element at index 5 was not an int/",
-        q{AVIV11 typetest___int__array_ref__in___string__out([2, 2112, 42, 23, -877, 'abcdefg', 33, 1701]) throws correct exception}
+        "/$OPS_TYPES.*input_av_element at index 5 was not an integer/",
+        q{AVIV11 typetest___integer__array_ref__in___string__out([2, 2112, 42, 23, -877, 'abcdefg', 33, 1701]) throws correct exception}
     );
     lives_and(                                                    # AVIV12
         sub {
-            is( typetest___int__array_ref__in___string__out(
+            is( typetest___integer__array_ref__in___string__out(
                     [ -444, 33, 1701 ] ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ),
                 '[-444, 33, 1701]' . $OPS_TYPES,
-                q{AVIV12 typetest___int__array_ref__in___string__out([-444, 33, 1701]) returns correct value}
+                q{AVIV12 typetest___integer__array_ref__in___string__out([-444, 33, 1701]) returns correct value}
             );
         },
-        q{AVIV12 typetest___int__array_ref__in___string__out([-444, 33, 1701]) lives}
+        q{AVIV12 typetest___integer__array_ref__in___string__out([-444, 33, 1701]) lives}
     );
     lives_and(                         # AVIV20
         sub {
             is_deeply(
-                typetest___int__in___int__array_ref__out(5), ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                typetest___integer__in___integer__array_ref__out(5), ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 [ 0, 5, 10, 15, 20 ], ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
-                q{AVIV20 typetest___int__in___int__array_ref__out(5) returns correct value}
+                q{AVIV20 typetest___integer__in___integer__array_ref__out(5) returns correct value}
             );
         },
-        q{AVIV20 typetest___int__in___int__array_ref__out(5) lives}
+        q{AVIV20 typetest___integer__in___integer__array_ref__out(5) lives}
     );
 
     # Number Array: stringify, create, manipulate
@@ -424,13 +424,13 @@ for my $i ( 0 .. 2 ) {
     lives_and(                                                       # AVNV20
         sub {
             is_deeply(
-                typetest___int__in___number__array_ref__out(5), ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                typetest___integer__in___number__array_ref__out(5), ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 [ 0, 5.123456789, 10.246913578, 15.370370367, 20.493827156 ] ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 ,    ## PERLTIDY BUG comma on newline
-                q{AVNV20 typetest___int__in___number__array_ref__out(5) returns correct value}
+                q{AVNV20 typetest___integer__in___number__array_ref__out(5) returns correct value}
             );
         },
-        q{AVNV20 typetest___int__in___number__array_ref__out(5) lives}
+        q{AVNV20 typetest___integer__in___number__array_ref__out(5) lives}
     );
 
 # String Array: stringify, create, manipulate
@@ -594,17 +594,17 @@ for my $i ( 0 .. 2 ) {
     lives_and(                              # AVPV20
         sub {
             is_deeply(
-                typetest___int__in___string__array_ref__out(5), ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                typetest___integer__in___string__array_ref__out(5), ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
                 [   'Jeffy Ten! 0/4 ' . $OPS_TYPES,
                     'Jeffy Ten! 1/4 ' . $OPS_TYPES,
                     'Jeffy Ten! 2/4 ' . $OPS_TYPES,
                     'Jeffy Ten! 3/4 ' . $OPS_TYPES,
                     'Jeffy Ten! 4/4 ' . $OPS_TYPES,
                 ],
-                q{AVPV20 typetest___int__in___string__array_ref__out(5) returns correct value}
+                q{AVPV20 typetest___integer__in___string__array_ref__out(5) returns correct value}
             );
         },
-        q{AVPV20 typetest___int__in___string__array_ref__out(5) lives}
+        q{AVPV20 typetest___integer__in___string__array_ref__out(5) lives}
     );
 }
 

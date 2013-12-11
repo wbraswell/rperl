@@ -15,9 +15,9 @@ using std::cout;  using std::endl;
 ////use RPerl::DataType::Unknown;
 
 // [[[ TYPEDEFS FOR RPERL-TYPES-IN-C ]]]
-typedef std::vector<int> int__array_ref;
-typedef std::vector<int>::iterator int__array_ref__iterator;
-typedef std::vector<int>::const_iterator int__array_ref__const_iterator;
+typedef std::vector<integer> integer__array_ref;
+typedef std::vector<integer>::iterator integer__array_ref__iterator;
+typedef std::vector<integer>::const_iterator integer__array_ref__const_iterator;
 typedef std::vector<number> number__array_ref;
 typedef std::vector<number>::iterator number__array_ref__iterator;
 typedef std::vector<number>::const_iterator number__array_ref__const_iterator;
@@ -42,8 +42,8 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 #define VECTOR_RESIZE_NOSHRINK(my_vector, my_size) ((my_vector.size() < my_size) ? my_vector.resize((size_t)(my_size)) : (void)0)  // do grow but don't shrink
 
 // [[[ TYPEMAP PACK/UNPACK DECLARATIONS ]]]
-int__array_ref XS_unpack_int__array_ref(SV* input_av_ref);
-void XS_pack_int__array_ref(SV* output_av_ref, int__array_ref input_vector);
+integer__array_ref XS_unpack_integer__array_ref(SV* input_av_ref);
+void XS_pack_integer__array_ref(SV* output_av_ref, integer__array_ref input_vector);
 number__array_ref XS_unpack_number__array_ref(SV* input_av_ref);
 void XS_pack_number__array_ref(SV* output_av_ref, number__array_ref input_vector);
 string__array_ref XS_unpack_string__array_ref(SV* input_av_ref);
@@ -51,33 +51,33 @@ void XS_pack_string__array_ref(SV* output_av_ref, string__array_ref input_vector
 
 // [[[ STRINGIFY DECLARATIONS ]]]
 # ifdef __PERL__TYPES
-//void stringify_int__array_ref(SV* input_av_ref);
-SV* stringify_int__array_ref(SV* input_av_ref);
+//void stringify_integer__array_ref(SV* input_av_ref);
+SV* stringify_integer__array_ref(SV* input_av_ref);
 SV* stringify_number__array_ref(SV* input_av_ref);
 SV* stringify_string__array_ref(SV* input_av_ref);
 # elif defined __CPP__TYPES
-string stringify_int__array_ref(int__array_ref input_vector);
+string stringify_integer__array_ref(integer__array_ref input_vector);
 string stringify_number__array_ref(number__array_ref input_vector);
 string stringify_string__array_ref(string__array_ref input_vector);
 # endif
 
 //# [[[ TYPE TESTING DECLARATIONS ]]]
 # ifdef __PERL__TYPES
-//void typetest___int__array_ref__in___string__out(SV* lucky_numbers);
-SV* typetest___int__array_ref__in___string__out(SV* lucky_numbers);
-//void typetest___int__in___int__array_ref__out(int my_size);
-SV* typetest___int__in___int__array_ref__out(int my_size);
+//void typetest___integer__array_ref__in___string__out(SV* lucky_numbers);
+SV* typetest___integer__array_ref__in___string__out(SV* lucky_numbers);
+//void typetest___integer__in___integer__array_ref__out(integer my_size);
+SV* typetest___integer__in___integer__array_ref__out(integer my_size);
 SV* typetest___number__array_ref__in___string__out(SV* lucky_numbers);
-SV* typetest___int__in___number__array_ref__out(int my_size);
+SV* typetest___integer__in___number__array_ref__out(integer my_size);
 SV* typetest___string__array_ref__in___string__out(SV* people);
-SV* typetest___int__in___string__array_ref__out(int my_size);
+SV* typetest___integer__in___string__array_ref__out(integer my_size);
 # elif defined __CPP__TYPES
-string typetest___int__array_ref__in___string__out(int__array_ref lucky_numbers);
-int__array_ref typetest___int__in___int__array_ref__out(int my_size);
+string typetest___integer__array_ref__in___string__out(integer__array_ref lucky_numbers);
+integer__array_ref typetest___integer__in___integer__array_ref__out(integer my_size);
 string typetest___number__array_ref__in___string__out(number__array_ref lucky_numbers);
-number__array_ref typetest___int__in___number__array_ref__out(int my_size);
+number__array_ref typetest___integer__in___number__array_ref__out(integer my_size);
 string typetest___string__array_ref__in___string__out(string__array_ref people);
-string__array_ref typetest___int__in___string__array_ref__out(int my_size);
+string__array_ref typetest___integer__in___string__array_ref__out(integer my_size);
 # endif
 
 #endif

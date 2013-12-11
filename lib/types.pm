@@ -45,7 +45,7 @@ sub types_enable { (my $types_input) = @_;
 	
 	my string $types_h_filename = $RPerl::INCLUDE_PATH . '/types.h';
 #	my bool $types_h_modified = 0;
-	my int $types_h_modified = 0;
+	my integer $types_h_modified = 0;
 	
 	print "in types::types_enable(), have \$types_h_filename = '$types_h_filename'\n";
 	

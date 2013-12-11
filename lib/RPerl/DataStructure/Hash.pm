@@ -49,68 +49,68 @@ our @ISA = ('ref');
 
 # [[[ INT HASHES ]]]
 
-# hash of ints
-package int__hash;
+# hash of integers
+package integer__hash;
 our @ISA = ('hash');
 
-# hash of (ints with const values)
-package const_int__hash;
+# hash of (integers with const values)
+package const_integer__hash;
 our @ISA = ('hash');
 
-# hash of (refs to ints)
-package int_ref__hash;
+# hash of (refs to integers)
+package integer_ref__hash;
 our @ISA = ('hash');
 
-# hash of (refs to (ints with const values))
-package const_int_ref__hash;
+# hash of (refs to (integers with const values))
+package const_integer_ref__hash;
 our @ISA = ('hash');
 
-# (hash with const size) of ints
-package int__const_hash;
+# (hash with const size) of integers
+package integer__const_hash;
 our @ISA = ('const_hash');
 
-# (hash with const size) of (ints with const values)
-package const_int__const_hash;
+# (hash with const size) of (integers with const values)
+package const_integer__const_hash;
 our @ISA = ('const_hash');
 
-# (hash with const size) of (refs to ints)
-package int_ref__const_hash;
+# (hash with const size) of (refs to integers)
+package integer_ref__const_hash;
 our @ISA = ('const_hash');
 
-# (hash with const size) of (refs to (ints with const values))
-package const_int_ref__const_hash;
+# (hash with const size) of (refs to (integers with const values))
+package const_integer_ref__const_hash;
 our @ISA = ('const_hash');
 
-# (ref to hash) of ints
-package int__hash_ref;
+# (ref to hash) of integers
+package integer__hash_ref;
 our @ISA = ('hash_ref');
 
-# (ref to hash) of (ints with const values)
-package const_int__hash_ref;
+# (ref to hash) of (integers with const values)
+package const_integer__hash_ref;
 our @ISA = ('hash_ref');
 
-# (ref to hash) of (refs to ints)
-package int_ref__hash_ref;
+# (ref to hash) of (refs to integers)
+package integer_ref__hash_ref;
 our @ISA = ('hash_ref');
 
-# (ref to hash) of (refs to (ints with const values))
-package const_int_ref__hash_ref;
+# (ref to hash) of (refs to (integers with const values))
+package const_integer_ref__hash_ref;
 our @ISA = ('hash_ref');
 
-# (ref to (hash with const size)) of ints
-package int__const_hash_ref;
+# (ref to (hash with const size)) of integers
+package integer__const_hash_ref;
 our @ISA = ('const_hash_ref');
 
-# (ref to (hash with const size)) of (ints with const values)
-package const_int__const_hash_ref;
+# (ref to (hash with const size)) of (integers with const values)
+package const_integer__const_hash_ref;
 our @ISA = ('const_hash_ref');
 
-# (ref to (hash with const size)) of (refs to ints)
-package int_ref__const_hash_ref;
+# (ref to (hash with const size)) of (refs to integers)
+package integer_ref__const_hash_ref;
 our @ISA = ('const_hash_ref');
 
-# (ref to (hash with const size)) of (refs to (ints with const values))
-package const_int_ref__const_hash_ref;
+# (ref to (hash with const size)) of (refs to (integers with const values))
+package const_integer_ref__const_hash_ref;
 our @ISA = ('const_hash_ref');
 
 
@@ -650,30 +650,31 @@ package const_hash_ref__const_hash_ref;
 our @ISA = ('const_hash_ref');
 
 
-# [[[ STRINGIFY ]]]
-# [[[ STRINGIFY ]]]
-# [[[ STRINGIFY ]]]
-
+# [[[ SWITCH CONTEXT BACK TO MAIN PACKAGE ]]]
 package RPerl::DataStructure::Hash;
 
+# [[[ STRINGIFY ]]]
+# [[[ STRINGIFY ]]]
+# [[[ STRINGIFY ]]]
+
 # convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
-our string $stringify_int__hash_ref = sub { (my $input_hv_ref) = @_;  
+our string $stringify_integer__hash_ref = sub { (my $input_hv_ref) = @_;  
 ;
-#	print "in PERLOPS_PERLTYPES stringify_int__hash_ref(), top of subroutine\n";
+#	print "in PERLOPS_PERLTYPES stringify_integer__hash_ref(), top of subroutine\n";
 
     my %input_hv;
-#	my int $input_hv_length;
-	my int $i;
-	my int $input_hv_value;
+#	my integer $input_hv_length;
+	my integer $i;
+	my integer $input_hv_value;
 	my string $output_sv;
 #	my bool $i_is_0 = 1;  # TODO: add bool RPerl type
-	my int $i_is_0 = 1;
+	my integer $i_is_0 = 1;
 
 	if (UNIVERSAL::isa($input_hv_ref, 'HASH')) { %input_hv = %{$input_hv_ref}; }
-	else { die("in PERLOPS_PERLTYPES stringify_int__hash_ref(), \$input_hv_ref was not an HV ref, dying"); }  # croak says eval(), die says Array.pm, confess says Array.pm & stack trace
+	else { die("in PERLOPS_PERLTYPES stringify_integer__hash_ref(), \$input_hv_ref was not an HV ref, dying"); }  # croak says eval(), die says Array.pm, confess says Array.pm & stack trace
 	
 #	$input_hv_length = scalar keys %input_hv;
-#	print "in PERLOPS_PERLTYPES stringify_int__hash_ref(), have \$input_hv_length = $input_hv_length\n";
+#	print "in PERLOPS_PERLTYPES stringify_integer__hash_ref(), have \$input_hv_length = $input_hv_length\n";
 
 	$output_sv = '{';
 
@@ -698,15 +699,15 @@ our string $stringify_int__hash_ref = sub { (my $input_hv_ref) = @_;
 					$output_sv .= ", \'$i\' => $input_hv_value";
 				}
 			}
-			else { die("in PERLOPS_PERLTYPES stringify_int__hash_ref(), \$input_hv_value at key '$i' was not an int, dying"); }
+			else { die("in PERLOPS_PERLTYPES stringify_integer__hash_ref(), \$input_hv_value at key '$i' was not an integer, dying"); }
 		}
-		else { die("in PERLOPS_PERLTYPES stringify_int__hash_ref(), \$input_hv_value at key '$i' was undef and/or NULL, dying"); }
+		else { die("in PERLOPS_PERLTYPES stringify_integer__hash_ref(), \$input_hv_value at key '$i' was undef and/or NULL, dying"); }
 	}
 
 	$output_sv .= '}';
 
-#	print "in PERLOPS_PERLTYPES stringify_int__hash_ref(), after for() loop, have \$output_sv =\n$output_sv\n";
-#	print "in PERLOPS_PERLTYPES stringify_int__hash_ref(), bottom of subroutine\n";
+#	print "in PERLOPS_PERLTYPES stringify_integer__hash_ref(), after for() loop, have \$output_sv =\n$output_sv\n";
+#	print "in PERLOPS_PERLTYPES stringify_integer__hash_ref(), bottom of subroutine\n";
 	
 	return($output_sv);
 };
@@ -717,12 +718,12 @@ our string $stringify_number__hash_ref = sub { (my $input_hv_ref) = @_;
 #	print "in PERLOPS_PERLTYPES stringify_number__hash_ref(), top of subroutine\n";
 
     my %input_hv;
-#	my int $input_hv_length;
-	my int $i;
+#	my integer $input_hv_length;
+	my integer $i;
 	my number $input_hv_value;
 	my string $output_sv;
 #	my bool $i_is_0 = 1;  # NEED FIX: add bool RPerl type!
-	my int $i_is_0 = 1;
+	my integer $i_is_0 = 1;
 
 	if (UNIVERSAL::isa($input_hv_ref, 'HASH')) { %input_hv = %{$input_hv_ref}; }
 	else { die("in PERLOPS_PERLTYPES stringify_number__hash_ref(), \$input_hv_ref was not an HV ref, dying"); }
@@ -771,12 +772,12 @@ our string $stringify_string__hash_ref = sub { (my $input_hv_ref) = @_;
 #	print "in PERLOPS_PERLTYPES stringify_string__hash_ref(), top of subroutine\n";
 
     my %input_hv;
-#	my int $input_hv_length;
-	my int $i;
+#	my integer $input_hv_length;
+	my integer $i;
 	my string $input_hv_value;
 	my string $output_sv;
 #	my bool $i_is_0 = 1;  # NEED FIX: add bool RPerl type!
-	my int $i_is_0 = 1;
+	my integer $i_is_0 = 1;
 
 	if (UNIVERSAL::isa($input_hv_ref, 'HASH')) { %input_hv = %{$input_hv_ref}; }
 	else { die("in PERLOPS_PERLTYPES stringify_string__hash_ref(), \$input_hv_ref was not an HV ref, dying"); }
@@ -824,14 +825,14 @@ our string $stringify_string__hash_ref = sub { (my $input_hv_ref) = @_;
 # [[[ TYPE TESTING ]]]
 # [[[ TYPE TESTING ]]]
 
-#our void $typetest___int__hash_ref__in___void__out = sub { (my int__hash_ref $lucky_numbers) = @_;  foreach my string $key (keys %{$lucky_numbers}) { print "in PERLOPS_PERLTYPES Hash::typetest___int__hash_ref__in___void__out(), have lucky number '$key' => " . $lucky_numbers->{$key} . ", BARSTOOL\n"; } };
-our string $typetest___int__hash_ref__in___string__out = sub { (my int__hash_ref $lucky_numbers) = @_;  foreach my string $key (keys %{$lucky_numbers}) { if (main::RPerl_SvIOKp($lucky_numbers->{$key})) { print "in PERLOPS_PERLTYPES Hash::typetest___int__hash_ref__in___string__out(), have lucky number '$key' => " . $lucky_numbers->{$key} . ", BARSTOOL\n"; } }  return(stringify_int__hash_ref($lucky_numbers) . 'PERLOPS_PERLTYPES'); };
-our int__hash_ref $typetest___int__in___int__hash_ref__out = sub { (my int $my_size) = @_;  my int__hash_ref $new_hash = {};  my int $i;  my string $temp_key;  for ($i = 0;  $i < $my_size;  ++$i) { $temp_key = "PERLOPS_PERLTYPES_funkey" . $i;  $new_hash->{$temp_key} = $i * 5;  print "in PERLOPS_PERLTYPES Hash::typetest___int__in___int__hash_ref__out(), setting entry '$temp_key' => " . $new_hash->{$temp_key} . ", BARSTOOL\n"; }  return($new_hash); };
+#our void $typetest___integer__hash_ref__in___void__out = sub { (my integer__hash_ref $lucky_numbers) = @_;  foreach my string $key (keys %{$lucky_numbers}) { print "in PERLOPS_PERLTYPES Hash::typetest___integer__hash_ref__in___void__out(), have lucky number '$key' => " . $lucky_numbers->{$key} . ", BARSTOOL\n"; } };
+our string $typetest___integer__hash_ref__in___string__out = sub { (my integer__hash_ref $lucky_numbers) = @_;  foreach my string $key (keys %{$lucky_numbers}) { if (main::RPerl_SvIOKp($lucky_numbers->{$key})) { print "in PERLOPS_PERLTYPES Hash::typetest___integer__hash_ref__in___string__out(), have lucky number '$key' => " . $lucky_numbers->{$key} . ", BARSTOOL\n"; } }  return(stringify_integer__hash_ref($lucky_numbers) . 'PERLOPS_PERLTYPES'); };
+our integer__hash_ref $typetest___integer__in___integer__hash_ref__out = sub { (my integer $my_size) = @_;  my integer__hash_ref $new_hash = {};  my integer $i;  my string $temp_key;  for ($i = 0;  $i < $my_size;  ++$i) { $temp_key = "PERLOPS_PERLTYPES_funkey" . $i;  $new_hash->{$temp_key} = $i * 5;  print "in PERLOPS_PERLTYPES Hash::typetest___integer__in___integer__hash_ref__out(), setting entry '$temp_key' => " . $new_hash->{$temp_key} . ", BARSTOOL\n"; }  return($new_hash); };
 
 #our void $typetest___number__hash_ref__in___void__out = sub { (my number__hash_ref $lucky_numbers) = @_;  foreach my string $key (keys %{$lucky_numbers}) { print "in PERLOPS_PERLTYPES Hash::typetest___number__hash_ref__in___void__out(), have lucky number '$key' => " . $lucky_numbers->{$key} . ", BARSTOOL\n"; } };
 our string $typetest___number__hash_ref__in___string__out = sub { (my number__hash_ref $lucky_numbers) = @_;  foreach my string $key (keys %{$lucky_numbers}) { if (main::RPerl_SvNOKp($lucky_numbers->{$key}) or main::RPerl_SvIOKp($lucky_numbers->{$key})) { print "in PERLOPS_PERLTYPES Hash::typetest___number__hash_ref__in___string__out(), have lucky number '$key' => " . $lucky_numbers->{$key} . ", BARSTOOL\n"; } }  return(stringify_number__hash_ref($lucky_numbers) . 'PERLOPS_PERLTYPES'); };
-our number__hash_ref $typetest___int__in___number__hash_ref__out = sub { (my int $my_size) = @_;  my number__hash_ref $new_hash = {};  my int $i;  my string $temp_key;  for ($i = 0;  $i < $my_size;  ++$i) { $temp_key = "PERLOPS_PERLTYPES_funkey" . $i;  $new_hash->{$temp_key} = $i * 5.123456789;  print "in PERLOPS_PERLTYPES Hash::typetest___int__in___number__hash_ref__out(), setting entry '$temp_key' => " . $new_hash->{$temp_key} . ", BARSTOOL\n"; }  return($new_hash); };
+our number__hash_ref $typetest___integer__in___number__hash_ref__out = sub { (my integer $my_size) = @_;  my number__hash_ref $new_hash = {};  my integer $i;  my string $temp_key;  for ($i = 0;  $i < $my_size;  ++$i) { $temp_key = "PERLOPS_PERLTYPES_funkey" . $i;  $new_hash->{$temp_key} = $i * 5.123456789;  print "in PERLOPS_PERLTYPES Hash::typetest___integer__in___number__hash_ref__out(), setting entry '$temp_key' => " . $new_hash->{$temp_key} . ", BARSTOOL\n"; }  return($new_hash); };
 
 #our void $typetest___string__hash_ref__in___void__out = sub { (my string__hash_ref $people) = @_;  foreach my string $key (keys %{$people}) { print "in PERLOPS_PERLTYPES Hash::typetest___string__hash_ref__in___void__out(), have person '$key' => '" . $people->{$key} . "', STARBOOL\n"; } };
 our string $typetest___string__hash_ref__in___string__out = sub { (my string__hash_ref $people) = @_;  foreach my string $key (keys %{$people}) { if (main::RPerl_SvPOKp($people->{$key})) { print "in PERLOPS_PERLTYPES Hash::typetest___string__hash_ref__in___string__out(), have person '$key' => '" . $people->{$key} . "', STARBOOL\n"; } }  return(stringify_string__hash_ref($people) . 'PERLOPS_PERLTYPES'); };
-our string__hash_ref $typetest___int__in___string__hash_ref__out = sub { (my int $my_size) = @_;  my string__hash_ref $people = {};  my int $i;  for ($i = 0;  $i < $my_size;  ++$i) { $people->{"PERLOPS_PERLTYPES_Luker_key" . $i} = "Jeffy Ten! " . $i . "/" . ($my_size - 1); print "in PERLOPS_PERLTYPES Hash::typetest___int__in___string__hash_ref__out(), bottom of for() loop, have i = $i, just set another Jeffy!\n"; }  return($people); };
+our string__hash_ref $typetest___integer__in___string__hash_ref__out = sub { (my integer $my_size) = @_;  my string__hash_ref $people = {};  my integer $i;  for ($i = 0;  $i < $my_size;  ++$i) { $people->{"PERLOPS_PERLTYPES_Luker_key" . $i} = "Jeffy Ten! " . $i . "/" . ($my_size - 1); print "in PERLOPS_PERLTYPES Hash::typetest___integer__in___string__hash_ref__out(), bottom of for() loop, have i = $i, just set another Jeffy!\n"; }  return($people); };

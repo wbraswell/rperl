@@ -20,9 +20,13 @@ our @ISA = ('ref');
 package const_string_ref;
 our @ISA = ('ref');
 
-# [[[ DATA TYPES & OPERATIONS ]]]
-our string $types_string = sub { return('PERL'); };
+
+# [[[ SWITCH CONTEXT BACK TO MAIN PACKAGE ]]]
+package RPerl::DataType::String;
+
+# [[[ OPERATIONS & DATA TYPES ]]]
 our string $ops_string = sub { return('PERL'); };
+our string $types_string = sub { return('PERL'); };
 
 # [[[ TYPE TESTING ]]]
 # [[[ TYPE TESTING ]]]

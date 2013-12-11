@@ -47,7 +47,7 @@ public:
 
 private:
 	// <<< TRANSLATED PROPERTY DECLARATIONS >>>
-////our %properties = ( data => my int__array_ref $KEY_data );
+////our %properties = ( data => my integer__array_ref $KEY_data );
 	SV* data;
 };
 
@@ -62,7 +62,7 @@ private:
 // [[[<<< BEGIN CPP TYPES >>>]]]
 
 // <<< TRANSLATED FUNCTION DECLARATIONS >>>
-int__array_ref bubblesort(int__array_ref data);
+integer__array_ref bubblesort(integer__array_ref data);
 // [[[ INHERITANCE TESTING ]]]
 SV* uninherited__Bubble(SV* person);  // NEED UPGRADE TO CPP_TYPES!!!
 //char *uninherited(char *person);  // CPP_TYPES
@@ -79,8 +79,8 @@ public:
 //	void inherited(SV* person);  // NEED UPGRADE TO CPP_TYPES!!!
 
 	// <<< ACCESSOR & MUTATOR DECLARATIONS/DEFINITIONS >>>
-	int__array_ref get_data() { return(this->data); }
-	void set_data(int__array_ref data_new) { this->data = data_new; }  // NEED ANSWERS: do we need to use some vector copy feature here???
+	integer__array_ref get_data() { return(this->data); }
+	void set_data(integer__array_ref data_new) { this->data = data_new; }  // NEED ANSWERS: do we need to use some vector copy feature here???
 
 	// <<< CONSTRUCTOR & DESTRUCTOR DECLARATIONS/DEFINITIONS >>>
 	CPP__RPerl__Algorithm__Sort__Bubble() {}
@@ -88,8 +88,8 @@ public:
 
 private:
 	// <<< TRANSLATED PROPERTY DECLARATIONS >>>
-////our %properties = ( data => my int__array_ref $KEY_data );
-	int__array_ref data;
+////our %properties = ( data => my integer__array_ref $KEY_data );
+	integer__array_ref data;
 };
 
 // [[[<<< END CPP TYPES >>>]]]

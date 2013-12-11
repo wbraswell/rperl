@@ -12,7 +12,7 @@ using std::cout;  using std::endl;
 // [[[<<< BEGIN PERL TYPES >>>]]]
 // [[[<<< BEGIN PERL TYPES >>>]]]
 
-////# [object-oriented programming interface]
+////# [object-oriented programming integererface]
 ////# call out to sort data, return nothing
 ////our void__method $sort = sub {(my object $self) = @_;
 void CPP__RPerl__Algorithm__Sort__Bubble::sort()
@@ -30,10 +30,10 @@ void CPP__RPerl__Algorithm__Sort__Bubble::sort()
 ////};
 }
 
-////# [procedural programming interface]
+////# [procedural programming integererface]
 ////# original algorithm: comparison-based and stable [O(n**2) average time, O(1) worst-case extra space]
 ////# sort data, return sorted data
-////our int__array_ref $bubblesort = sub {(my int__array_ref $data) = @_;
+////our integer__array_ref $bubblesort = sub {(my integer__array_ref $data) = @_;
 SV* bubblesort(SV* data)  // DEV NOTE: properly creates local-to-function SV* data here, does not get confused with this->data object property, even though they share a name
 ////;
 {
@@ -41,14 +41,14 @@ SV* bubblesort(SV* data)  // DEV NOTE: properly creates local-to-function SV* da
 	SvREFCNT_inc(data);
 
 //	if (RPerl__DEBUG3) { printf("in bubblesort(), top of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(data) = %lu\n", SV_REFERENCE_COUNT(data));  printf("in bubblesort(), top of subroutine, have data = %s", RPerl_DUMPER__perl_from_c(data));  printf("in bubblesort(), top of subroutine, have post-DUMPER SV_REFERENCE_COUNT(data) = %lu\n\n", SV_REFERENCE_COUNT(data)); }
-////	my int $is_sorted = 0;
-	int is_sorted = 0;
-////	my int $i;
-	int i;
-////	my const_int $data_length = scalar(@{$data});
-//	const int data_length = av_len((AV*) SvRV(data)) + 1;  // DE-OPTIMIZE, SHORT-HAND
+////	my integer $is_sorted = 0;
+	integer is_sorted = 0;
+////	my integer $i;
+	integer i;
+////	my const_integer $data_length = scalar(@{$data});
+//	const integer data_length = av_len((AV*) SvRV(data)) + 1;  // DE-OPTIMIZE, SHORT-HAND
 	AV* data_av = (AV*) SvRV(data);  // OPTIMIZE, LONG-HAND: data dereferenced to data_av more than once, declare data_av and re-use, MUST REFRESH data_av for every assignment directly to data (none in this algorithm)
-	const int data_length = av_len(data_av) + 1;  // OPTIMIZE, LONG-HAND: use data_av
+	const integer data_length = av_len(data_av) + 1;  // OPTIMIZE, LONG-HAND: use data_av
 	SV* data_i = newSV(0);  // OPTIMIZE, LONG-HAND: data element i accessed more than once, declare data_i and re-use;  all new SV*'s given initial undef newSV(0) value to avoid printf() errors during debugging
 	SV* data_i_plus_1 = newSV(0);  // OPTIMIZE, LONG-HAND
 
@@ -94,7 +94,7 @@ SV* bubblesort(SV* data)  // DEV NOTE: properly creates local-to-function SV* da
 			data_i = AV_ELEMENT(data_av, i);  // OPTIMIZE, LONG-HAND: use data_i and data_av
 			data_i_plus_1 = AV_ELEMENT(data_av, (i + 1));  // OPTIMIZE, LONG-HAND: use data_i_plus_1 and data_av
 
-			// DEV NOTE: data is of type int__array_ref, assuming numeric values for data elements and using C++ numeric comparator
+			// DEV NOTE: data is of type integer__array_ref, assuming numeric values for data elements and using C++ numeric comparator
 			if (SvNV(data_i) > SvNV(data_i_plus_1))  // OPTIMIZE, LONG-HAND: use data_i and data_i_plus_1
 ////			{
 			{
@@ -166,7 +166,7 @@ SV* uninherited__Bubble(SV* person) { cout << "in C++ PERL_TYPES Bubble::uninher
 // [[[<<< BEGIN CPP TYPES >>>]]]
 // [[[<<< BEGIN CPP TYPES >>>]]]
 
-////# [object-oriented programming interface]
+////# [object-oriented programming integererface]
 ////# call out to sort data, return nothing
 ////our void__method $sort = sub {(my object $self) = @_;
 void CPP__RPerl__Algorithm__Sort__Bubble::sort()
@@ -181,25 +181,25 @@ void CPP__RPerl__Algorithm__Sort__Bubble::sort()
 ////};
 }
 
-////# [procedural programming interface]
+////# [procedural programming integererface]
 ////# original algorithm: comparison-based and stable [O(n**2) average time, O(1) worst-case extra space]
 ////# sort data, return sorted data
-////our int__array_ref $bubblesort = sub {(my int__array_ref $data) = @_;
-int__array_ref bubblesort(int__array_ref data)  // DEV NOTE: properly creates local-to-function int__array_ref data here, does not get confused with this->data object property, even though they share a name
+////our integer__array_ref $bubblesort = sub {(my integer__array_ref $data) = @_;
+integer__array_ref bubblesort(integer__array_ref data)  // DEV NOTE: properly creates local-to-function integer__array_ref data here, does not get confused with this->data object property, even though they share a name
 ////;
 {
 //	if (RPerl__DEBUG3) { printf("in bubblesort(), top of subroutine, have data = %d", data); }
-////	my int $is_sorted = 0;
-	int is_sorted = 0;
-////	my int $i;
-	int i;
-////	my const_int $data_length = scalar(@{$data});
-	const int data_length = data.size();
-	int data_i = -9999;  // OPTIMIZE, LONG-HAND: data element i accessed more than once, declare data_i and re-use;  all new int's given initial -9999 value to avoid printf() errors during debugging
-	int data_i_plus_1 = -9999;  // OPTIMIZE, LONG-HAND
+////	my integer $is_sorted = 0;
+	integer is_sorted = 0;
+////	my integer $i;
+	integer i;
+////	my const_integer $data_length = scalar(@{$data});
+	const integer data_length = data.size();
+	integer data_i = -9999;  // OPTIMIZE, LONG-HAND: data element i accessed more than once, declare data_i and re-use;  all new integer's given initial -9999 value to avoid printf() errors during debugging
+	integer data_i_plus_1 = -9999;  // OPTIMIZE, LONG-HAND
 
-////	my int $swap;
-	int swap = -9999;
+////	my integer $swap;
+	integer swap = -9999;
 
 //	if (RPerl__DEBUG2) { printf("in bubblesort(), after variable init, have data_i = %d\n", data_i); }
 //	if (RPerl__DEBUG2) { printf("in bubblesort(), after variable init, have data_i_plus_1 = %d\n", data_i_plus_1); }
@@ -240,7 +240,7 @@ int__array_ref bubblesort(int__array_ref data)  // DEV NOTE: properly creates lo
 			data_i = data[i];  // OPTIMIZE, LONG-HAND: use data_i
 			data_i_plus_1 = data[(i + 1)];  // OPTIMIZE, LONG-HAND: use data_i_plus_1
 
-			// DEV NOTE: data is of type int__array_ref, assuming numeric values for data elements and using C++ numeric comparator
+			// DEV NOTE: data is of type integer__array_ref, assuming numeric values for data elements and using C++ numeric comparator
 			if (data_i > data_i_plus_1)  // OPTIMIZE, LONG-HAND: use data_i and data_i_plus_1
 ////			{
 			{

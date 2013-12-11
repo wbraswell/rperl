@@ -1,3 +1,5 @@
+# NEED FIX, OUTDATED
+# Float should have it's own functionality and compile to float C/C++ type, not just be a sub-type of Number
 use strict;  use warnings;
 package RPerl::DataType::Float;
 

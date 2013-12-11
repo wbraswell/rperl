@@ -20,7 +20,7 @@ our %properties =
 our string__method $DUMPER = sub {(my RPerl::DataStructure::LinkedList::NodeReference $node) = @_;
 ;
 	my string $dumped = '[';
-	my int $is_first = 1;
+	my integer $is_first = 1;
 	
 	while (defined($node))
 	{

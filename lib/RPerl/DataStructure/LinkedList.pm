@@ -22,7 +22,7 @@ our RPerl::DataStructure::LinkedListReference $new_from_array_ref = sub {(my str
 ;
 #	print "in new_from_array_ref(), received \$class = '$class', and \$input =\n" . RPerl::DUMPER($input) . "\n" if $RPerl::DEBUG;
 	my unknown $output = $class->new();
-	my int $i;
+	my integer $i;
 	for ($i = (scalar(@{$input}) - 1); $i >= 0; $i--)
 	{
 		linkedlist_unshift($output, $input->[$i]);
@@ -52,7 +52,7 @@ our string__method $DUMPER = sub {(my RPerl::DataStructure::LinkedListReference 
 package linkedlist_ref;
 our @ISA = ('RPerl::DataStructure::LinkedListReference');
 use RPerl::DataStructure::LinkedList;
-# TODO: check if these (and other) symbol copies can be shortened???   move into import() subroutine to be automatically called by 'use' command?
+# TODO: check if these (and other) symbol copies can be shortened???   move integero import() subroutine to be automatically called by 'use' command?
 our %properties = %properties; our $new_from_array_ref = $new_from_array_ref; our $linkedlist_unshift = $linkedlist_unshift; our $DUMPER = $DUMPER;
 
 # ref to linked list with const size
@@ -62,12 +62,12 @@ our @ISA = ('ref');
 
 # [[[ INT LINKED LISTS ]]]
 
-# (ref to linked list) of ints
-package int__linkedlist_ref;
+# (ref to linked list) of integers
+package integer__linkedlist_ref;
 our @ISA = ('linkedlist_ref');
 
-# (ref to linked list with const size) of ints
-package int__const_linkedlist_ref;
+# (ref to linked list with const size) of integers
+package integer__const_linkedlist_ref;
 our @ISA = ('const_linkedlist_ref');
 
 # NEED ADD: remaining sub-types
