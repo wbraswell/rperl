@@ -1,12 +1,14 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
+// VERSION 0.2.0
+
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_h
 #define __CPP__INCLUDED__RPerl__DataType__Integer_h 1
 
-// [[[ TYPEDEFS FOR RPERL-TYPES-IN-C ]]]
-// DEV NOTE: must use "integer" because "integer" defined by Inline's default typemap, even if we put our own integer entry integero typemap.rperl;
-// if we allow Inline default integer, then it will accept all kinds of non-integer values which should be filtered by XS_unpack_integer()
+// [[[ TYPEDEFS ]]]
+// DEV NOTE: must use "integer" because "int" is already defined by Inline's default typemap, even if we put our own integer entry into typemap.rperl;
+// if we allow Inline default int, then it will accept all kinds of non-integer values which should be filtered by XS_unpack_integer() and check_integer()
 typedef int integer;
 
 #include <types.h> // for definitions of __PERL__TYPES or __CPP__TYPES
@@ -30,7 +32,7 @@ string stringify_integer(integer input_integer);
 Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_exactly_one!
 # endif
 
-// [[[ DATA TYPES & OPERATIONS ]]]
+// [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 # ifdef __PERL__TYPES
 # define OPS_TYPES_ID 1 // CPPOPS_PERLTYPES is 1
 SV* ops_integer() { return(newSVpv("CPP", 3)); }

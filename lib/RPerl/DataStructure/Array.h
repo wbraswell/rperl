@@ -1,7 +1,7 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-// VERSION 0.3.2
+// VERSION 0.3.3
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array_h
 #define __CPP__INCLUDED__RPerl__DataStructure__Array_h 1
@@ -14,7 +14,7 @@ using std::cout;  using std::endl;
 ////use RPerl::DataType::Scalar;
 ////use RPerl::DataType::Unknown;
 
-// [[[ TYPEDEFS FOR RPERL-TYPES-IN-C ]]]
+// [[[ TYPEDEFS ]]]
 typedef std::vector<integer> integer__array_ref;
 typedef std::vector<integer>::iterator integer__array_ref__iterator;
 typedef std::vector<integer>::const_iterator integer__array_ref__const_iterator;
@@ -41,15 +41,17 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 // [[[ MACROS ]]]
 #define VECTOR_RESIZE_NOSHRINK(my_vector, my_size) ((my_vector.size() < my_size) ? my_vector.resize((size_t)(my_size)) : (void)0)  // do grow but don't shrink
 
-// [[[ TYPEMAP PACK/UNPACK DECLARATIONS ]]]
+// [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
+# ifdef __CPP__TYPES
 integer__array_ref XS_unpack_integer__array_ref(SV* input_av_ref);
 void XS_pack_integer__array_ref(SV* output_av_ref, integer__array_ref input_vector);
 number__array_ref XS_unpack_number__array_ref(SV* input_av_ref);
 void XS_pack_number__array_ref(SV* output_av_ref, number__array_ref input_vector);
 string__array_ref XS_unpack_string__array_ref(SV* input_av_ref);
 void XS_pack_string__array_ref(SV* output_av_ref, string__array_ref input_vector);
+# endif
 
-// [[[ STRINGIFY DECLARATIONS ]]]
+// [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
 //void stringify_integer__array_ref(SV* input_av_ref);
 SV* stringify_integer__array_ref(SV* input_av_ref);
@@ -61,7 +63,7 @@ string stringify_number__array_ref(number__array_ref input_vector);
 string stringify_string__array_ref(string__array_ref input_vector);
 # endif
 
-//# [[[ TYPE TESTING DECLARATIONS ]]]
+//# [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
 //void typetest___integer__array_ref__in___string__out(SV* lucky_numbers);
 SV* typetest___integer__array_ref__in___string__out(SV* lucky_numbers);

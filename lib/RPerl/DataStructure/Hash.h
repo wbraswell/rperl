@@ -1,7 +1,7 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-// VERSION 0.1.4
+// VERSION 0.1.5
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash_h
 #define __CPP__INCLUDED__RPerl__DataStructure__Hash_h 1
@@ -14,7 +14,7 @@ using std::cout;  using std::endl;
 ////use RPerl::DataType::Scalar;
 ////use RPerl::DataType::Unknown;
 
-// [[[ TYPEDEFS FOR RPERL-TYPES-IN-C ]]]
+// [[[ TYPEDEFS ]]]
 typedef std::unordered_map<string, integer> integer__hash_ref;
 typedef std::unordered_map<string, integer>::iterator integer__hash_ref__iterator;
 typedef std::unordered_map<string, integer>::const_iterator integer__hash_ref__const_iterator;
@@ -38,15 +38,17 @@ string types_hash() { string retval = "CPP";  return(retval); }
 Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_exactly_one!
 # endif
 
-// [[[ TYPEMAP PACK/UNPACK DECLARATIONS ]]]
+// [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
+# ifdef __CPP__TYPES
 integer__hash_ref XS_unpack_integer__hash_ref(SV* input_hv_ref);
 void XS_pack_integer__hash_ref(SV* output_hv_ref, integer__hash_ref input_unordered_map);
 number__hash_ref XS_unpack_number__hash_ref(SV* input_hv_ref);
 void XS_pack_number__hash_ref(SV* output_hv_ref, number__hash_ref input_unordered_map);
 string__hash_ref XS_unpack_string__hash_ref(SV* input_hv_ref);
 void XS_pack_string__hash_ref(SV* output_hv_ref, string__hash_ref input_unordered_map);
+# endif
 
-// [[[ STRINGIFY DECLARATIONS ]]]
+// [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
 SV* stringify_integer__hash_ref(SV* input_hv_ref);
 SV* stringify_number__hash_ref(SV* input_hv_ref);
@@ -57,7 +59,7 @@ string stringify_number__hash_ref(number__hash_ref input_unordered_map);
 string stringify_string__hash_ref(string__hash_ref input_unordered_map);
 # endif
 
-//# [[[ TYPE TESTING DECLARATIONS ]]]
+//# [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
 SV* typetest___integer__hash_ref__in___string__out(SV* lucky_numbers);
 SV* typetest___integer__in___integer__hash_ref__out(integer my_size);

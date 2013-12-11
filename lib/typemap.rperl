@@ -3,7 +3,7 @@
 
 # SCALAR TYPES
 integer				T_PACKED
-number				T_DOUBLE
+number				T_PACKED
 string				T_PACKED
 
 # ARRAY TYPES

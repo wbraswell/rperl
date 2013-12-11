@@ -52,7 +52,7 @@ our string__method $DUMPER = sub {(my RPerl::DataStructure::LinkedListReference 
 package linkedlist_ref;
 our @ISA = ('RPerl::DataStructure::LinkedListReference');
 use RPerl::DataStructure::LinkedList;
-# TODO: check if these (and other) symbol copies can be shortened???   move integero import() subroutine to be automatically called by 'use' command?
+# TODO: check if these (and other) symbol copies can be shortened???   move integer import() subroutine to be automatically called by 'use' command?
 our %properties = %properties; our $new_from_array_ref = $new_from_array_ref; our $linkedlist_unshift = $linkedlist_unshift; our $DUMPER = $DUMPER;
 
 # ref to linked list with const size

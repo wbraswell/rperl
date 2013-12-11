@@ -5,7 +5,7 @@
 package RPerl::DataType::Integer;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.0.2');
+use version; our $VERSION = qv('0.2.0');
 use Carp;
 use base ('RPerl::DataType::Number');
 use RPerl::DataType::Number;
@@ -29,7 +29,7 @@ use base ('ref');
 # [[[ SWITCH CONTEXT BACK TO MAIN PACKAGE ]]]
 package RPerl::DataType::Integer;
 
-# [[[ OPERATIONS & DATA TYPES ]]]
+# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 our integer $OPS_TYPES_ID = 0;                        # PERLOPS_PERLTYPES is 0
 our string $ops_integer   = sub { return ('PERL'); };
 our string $types_integer = sub { return ('PERL'); };

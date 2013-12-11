@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.0.1');
+use version; our $VERSION = qv('0.1.2');
 use Carp;
 
 ## no critic qw(ProhibitMagicNumbers ProhibitUnreachableCode)  ## RPERL allow numeric test values, allow unreachable test code
@@ -16,10 +16,10 @@ BEGIN { use Data::Dumper;  our $AUTOLOAD;  sub AUTOLOAD { croak("AUTOLOAD purpos
 #types::types_enable('PERL');
 
 # UNCOMMENT TO ENABLE C++ TYPES FOR C++ OPS
-types::types_enable('CPP');
+#types::types_enable('CPP');
 
 # UNCOMMENT TO ENABLE C++ OPS
-use RPerl::DataType::Integer_cpp;  RPerl::DataType::Integer_cpp::cpp_load();  RPerl::DataType::Integer_cpp::cpp_link();
+#use RPerl::DataType::Integer_cpp;  RPerl::DataType::Integer_cpp::cpp_load();  RPerl::DataType::Integer_cpp::cpp_link();
 #use RPerl::DataType::Number_cpp;  RPerl::DataType::Number_cpp::cpp_load();  RPerl::DataType::Number_cpp::cpp_link();
 #use RPerl::DataType::String_cpp;  RPerl::DataType::String_cpp::cpp_load();  RPerl::DataType::String_cpp::cpp_link();
 
@@ -40,7 +40,7 @@ my const_integer $i_MAX = 1;
 for my integer $i ( 0 .. $i_MAX ) {
 	print "in scalar_test.pl, top of for() loop $i/$i_MAX\n" or croak();
 
-    # [[[ INT TESTS ]]]
+    # [[[ INTEGER TESTS ]]]
 
 #	$string_retval = stringify_integer();  # IV00; raise/throw exception  # CPPOPS_BOTHTYPES Usage: main::stringify_integer(input_integer) at ./bin/development/scalar_test.pl line 45.
 #	$string_retval = stringify_integer(3);  # IV01
@@ -68,13 +68,9 @@ for my integer $i ( 0 .. $i_MAX ) {
 #	$integer_retval = typetest___integer__in___integer__out(-1_234_567_890_000);  # IV28; raise/throw exception
 #	print "in scalar_test.pl $i/$i_MAX, have \$integer_retval = $integer_retval\n" or croak();
 
-croak('Done for now, croaking');
-
-# START HERE: upgrade Number to full type like Integer; upgrade all Number & String code like Integer
-
     # [[[ NUMBER TESTS ]]]
 
-	$string_retval = stringify_number();  # NV00; raise/throw exception
+#	$string_retval = stringify_number();  # NV00; raise/throw exception  # CPPOPS_BOTHTYPES Usage: main::stringify_number(input_number) at ./bin/development/scalar_test.pl line 73.
 #	$string_retval = stringify_number(3);  # NV01
 #	$string_retval = stringify_number(-17);  # NV02
 #	$string_retval = stringify_number(-17.3);  # NV03
@@ -82,12 +78,12 @@ croak('Done for now, croaking');
 #	$string_retval = stringify_number([3]);  # NV05; raise/throw exception
 #	$string_retval = stringify_number({a_key => 3});  # NV06; raise/throw exception
 #	$string_retval = stringify_number(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679);  # NV07
-	print "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n" or croak();
+#	print "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n" or croak();
 
-	$number_retval = typetest___void__in___number__out();  # NV10
-	print "in scalar_test.pl $i/$i_MAX, have \$number_retval = $number_retval\n" or croak();
+#	$number_retval = typetest___void__in___number__out();  # NV10
+#	print "in scalar_test.pl $i/$i_MAX, have \$number_retval = $number_retval\n" or croak();
 
-	$number_retval = typetest___number__in___number__out();  # NV20; raise/throw exception
+#	$number_retval = typetest___number__in___number__out();  # NV20; raise/throw exception  # CPPOPS_BOTHTYPES Usage: main::typetest___number__in___number__out(lucky_number) at ./bin/development/scalar_test.pl line 86.
 #	$number_retval = typetest___number__in___number__out(3);  # NV21
 #	$number_retval = typetest___number__in___number__out(-17);  # NV22
 #	$number_retval = typetest___number__in___number__out(-17.3);  # NV23
@@ -95,7 +91,13 @@ croak('Done for now, croaking');
 #	$number_retval = typetest___number__in___number__out([3]);  # NV25; raise/throw exception
 #	$number_retval = typetest___number__in___number__out({a_key => 3});  # NV26; raise/throw exception
 #	$number_retval = typetest___number__in___number__out(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679);  # NV27
-	print "in scalar_test.pl $i/$i_MAX, have \$number_retval = $number_retval\n" or croak();
+#	print "in scalar_test.pl $i/$i_MAX, have \$number_retval = $number_retval\n" or croak();
+
+croak('Done for now, croaking');
+
+# START HERE: update String to new code & format like Integer/Number; update 04_type_scalar.t to new 05/6*.t format & checking of $OPS_TYPES; fix 05/6*.t
+# START HERE: update String to new code & format like Integer/Number; update 04_type_scalar.t to new 05/6*.t format & checking of $OPS_TYPES; fix 05/6*.t
+# START HERE: update String to new code & format like Integer/Number; update 04_type_scalar.t to new 05/6*.t format & checking of $OPS_TYPES; fix 05/6*.t
 
     # [[[ STRING TESTS ]]]
 
