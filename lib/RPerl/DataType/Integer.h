@@ -1,7 +1,7 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-// VERSION 0.2.1
+// VERSION 0.2.2
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_h
 #define __CPP__INCLUDED__RPerl__DataType__Integer_h 1
@@ -12,10 +12,11 @@ using std::cout;  using std::endl;
 typedef int integer;
 
 #include <types.h> // for definitions of __PERL__TYPES or __CPP__TYPES
-#include <RPerl/DataType/String.cpp>  // for stringify()
+#include <RPerl/DataType/String.cpp>  // need for string typedef
 
-// [[[ TYPE CHECKING ]]]
+// [[[ TYPE-CHECKING ]]]
 void check_integer(SV* possible_integer);
+void check_integer_trace(SV* possible_integer, const char* variable_name, const char* subroutine_name);
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 # ifdef __CPP__TYPES

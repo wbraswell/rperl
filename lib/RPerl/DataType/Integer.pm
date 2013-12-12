@@ -5,7 +5,7 @@
 package RPerl::DataType::Integer;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.2.1');
+use version; our $VERSION = qv('0.2.2');
 use Carp;
 use base ('RPerl::DataType::Number');
 use RPerl::DataType::Number;
@@ -34,17 +34,30 @@ our integer $OPS_TYPES_ID = 0;                        # PERLOPS_PERLTYPES is 0
 our string $ops_integer   = sub { return ('PERL'); };
 our string $types_integer = sub { return ('PERL'); };
 
-# [[[ TYPE CHECKING ]]]
+# [[[ TYPE-CHECKING ]]]
 our void $check_integer = sub {
     ( my $possible_integer ) = @_;
     if ( not( defined $possible_integer ) ) {
         croak(
-            'in PERLOPS_PERLTYPES Integer::check_integer(), $possible_integer was undef and/or NULL, croaking'
+            "\nERROR EIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but undefined/null value found,\ncroaking"
         );
     }
     if ( not( main::RPerl_SvIOKp($possible_integer) ) ) {
         croak(
-            'in PERLOPS_PERLTYPES Integer::check_integer(), $possible_integer was not an integer, croaking'
+            "\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but non-integer value found,\ncroaking"
+        );
+    }
+};
+our void $check_integer_trace = sub {
+    ( my $possible_integer, my $variable_name, my $subroutine_name ) = @_;
+    if ( not( defined $possible_integer ) ) {
+        croak(
+            "\nERROR EIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but undefined/null value found,\nin variable '$variable_name' from subroutine '$subroutine_name',\ncroaking"
+        );
+    }
+    if ( not( main::RPerl_SvIOKp($possible_integer) ) ) {
+        croak(
+            "\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but non-integer value found,\nin variable '$variable_name' from subroutine '$subroutine_name',\ncroaking"
         );
     }
 };
@@ -52,7 +65,10 @@ our void $check_integer = sub {
 # [[[ STRINGIFY ]]]
 our string $stringify_integer = sub {
     ( my $input_integer ) = @_;
-    check_integer($input_integer);
+
+    #    check_integer($input_integer);
+    check_integer_trace( $input_integer, '$input_integer',
+        'stringify_integer()' );
     print
         "in PERLOPS_PERLTYPES Integer::stringify_integer(), bottom of subroutine, received \$input_integer = $input_integer\n"
         or croak();
@@ -69,7 +85,10 @@ our integer $typetest___void__in___integer__out = sub {
 };
 our integer $typetest___integer__in___integer__out = sub {
     ( my integer $lucky_integer ) = @_;
-    check_integer($lucky_integer);
+
+    #    check_integer($lucky_integer);
+    check_integer_trace( $lucky_integer, '$lucky_integer',
+        'typetest___integer__in___integer__out()' );
     print
         'in PERLOPS_PERLTYPES Integer::typetest___integer__in___integer__out(), received $lucky_integer = '
         . stringify_integer($lucky_integer) . "\n"

@@ -1,7 +1,7 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-// VERSION 0.2.1
+// VERSION 0.2.2
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_h
 #define __CPP__INCLUDED__RPerl__DataType__String_h 1
@@ -14,6 +14,7 @@ typedef std::ostringstream ostringstream;
 
 // [[[ TYPE CHECKING ]]]
 void check_string(SV* possible_string);
+void check_string_trace(SV* possible_string, const char* variable_name, const char* subroutine_name);
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 # ifdef __CPP__TYPES

@@ -3,6 +3,10 @@ use strict;
 use warnings;
 use version; our $VERSION = qv('0.2.0');
 
+# [[[ SETUP ]]]
+# [[[ SETUP ]]]
+# [[[ SETUP ]]]
+
 # SUPPRESS OUTPUT FROM INDIVIDUAL TESTS, EXCLUDING TESTS INSIDE BEGIN{} BLOCKS
 # order is BEGIN, UNITCHECK, CHECK, INIT, END; CHECK here suppresses Inline compile output from including HelperFunctions_cpp.pm from INIT in Hash.pm
 CHECK {
@@ -74,14 +78,36 @@ BEGIN {
     );
 }
 
+# [[[ TEST RUNLOOP ]]]
+# [[[ TEST RUNLOOP ]]]
+# [[[ TEST RUNLOOP ]]]
+
 # loop 3 times, once for each mode: Pure-Perl, RPerl Perl-Data, and RPerl C-Data
 for my $i ( 0 .. 2 ) {
     print "in 06_type_hash.t, top of for() loop, have \$i = $i\n" or croak; # no effect if suppressing output!
     my $OPS_TYPES;
+
+    # [[[ PERLOPS_PERLTYPES SETUP ]]]
+    # [[[ PERLOPS_PERLTYPES SETUP ]]]
+    # [[[ PERLOPS_PERLTYPES SETUP ]]]
+
     if ( $i == 0 ) {
         $OPS_TYPES = 'PERLOPS_PERLTYPES';
         diag(
             "\n[[[ Beginning RPerl's Pure-Perl Hash Type Tests, RPerl Type System Using Perl Data Types & Perl Operations ]]]\n "
+        );
+        lives_and(
+            sub {
+                is( ops_integer(), 'PERL', q{ops_integer() returns 'PERL'} );
+            },
+            q{ops_integer() lives}
+        );
+        lives_and(
+            sub {
+                is( types_integer(), 'PERL',
+                    q{types_integer() returns 'PERL'} );
+            },
+            q{types_integer() lives}
         );
         lives_and(
             sub {
@@ -118,6 +144,11 @@ for my $i ( 0 .. 2 ) {
             q{types_hash() lives}
         );
     }
+
+    # [[[ CPPOPS_PERLTYPES SETUP ]]]
+    # [[[ CPPOPS_PERLTYPES SETUP ]]]
+    # [[[ CPPOPS_PERLTYPES SETUP ]]]
+
     elsif ( $i == 1 ) {
         $OPS_TYPES = 'CPPOPS_PERLTYPES';
         diag(
@@ -147,6 +178,18 @@ for my $i ( 0 .. 2 ) {
         lives_ok(
             sub { RPerl::DataStructure::Hash_cpp::cpp_link(); },
             q{RPerl::DataStructure::Hash_cpp::cpp_link() lives}
+        );
+        lives_and(
+            sub { is( ops_integer(), 'CPP', q{ops_integer() returns 'CPP'} ) }
+            ,
+            q{ops_integer() lives}
+        );
+        lives_and(
+            sub {
+                is( types_integer(), 'PERL',
+                    q{types_integer() returns 'PERL'} );
+            },
+            q{types_integer() lives}
         );
         lives_and(
             sub { is( ops_number(), 'CPP', q{ops_number() returns 'CPP'} ) },
@@ -180,6 +223,11 @@ for my $i ( 0 .. 2 ) {
             q{types_hash() lives}
         );
     }
+
+    # [[[ CPPOPS_CPPTYPES SETUP ]]]
+    # [[[ CPPOPS_CPPTYPES SETUP ]]]
+    # [[[ CPPOPS_CPPTYPES SETUP ]]]
+
     else {
         $OPS_TYPES = 'CPPOPS_CPPTYPES';
         diag(
@@ -202,6 +250,18 @@ for my $i ( 0 .. 2 ) {
         lives_ok(
             sub { RPerl::DataStructure::Hash_cpp::cpp_link(); },
             q{RPerl::DataStructure::Hash_cpp::cpp_link() lives}
+        );
+        lives_and(
+            sub { is( ops_integer(), 'CPP', q{ops_integer() returns 'CPP'} ) }
+            ,
+            q{ops_integer() lives}
+        );
+        lives_and(
+            sub {
+                is( types_integer(), 'CPP',
+                    q{types_integer() returns 'CPP'} );
+            },
+            q{types_integer() lives}
         );
         lives_and(
             sub { is( ops_number(), 'CPP', q{ops_number() returns 'CPP'} ) },
@@ -233,7 +293,10 @@ for my $i ( 0 .. 2 ) {
         );
     }
 
-    # Int Hash: stringify, create, manipulate
+    # [[[ INTEGER HASH TESTS ]]]
+    # [[[ INTEGER HASH TESTS ]]]
+    # [[[ INTEGER HASH TESTS ]]]
+
     throws_ok(    # HVIV00
         sub { stringify_integer__hash_ref(2) },
         "/$OPS_TYPES.*input_hv_ref was not an HV ref/",
@@ -370,7 +433,10 @@ for my $i ( 0 .. 2 ) {
         q{HVIV20 typetest___integer__in___integer__hash_ref__out(5) lives}
     );
 
-    # Num Hash: stringify, create, manipulate
+    # [[[ NUMBER HASH TESTS ]]]
+    # [[[ NUMBER HASH TESTS ]]]
+    # [[[ NUMBER HASH TESTS ]]]
+
     throws_ok(    # HVNV00
         sub { stringify_number__hash_ref(2) },
         "/$OPS_TYPES.*input_hv_ref was not an HV ref/",
@@ -531,7 +597,10 @@ for my $i ( 0 .. 2 ) {
         q{HVNV20 typetest___integer__in___number__hash_ref__out(5) lives}
     );
 
-    # String Hash: stringify, create, manipulate
+    # [[[ STRING HASH TESTS ]]]
+    # [[[ STRING HASH TESTS ]]]
+    # [[[ STRING HASH TESTS ]]]
+
     throws_ok(    # HVPV00
         sub { stringify_string__hash_ref('Lone Ranger') },
         "/$OPS_TYPES.*input_hv_ref was not an HV ref/",
@@ -589,7 +658,7 @@ for my $i ( 0 .. 2 ) {
                     }
                 ),
                 q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'gothamite_darkknight_brucewayne' => 'Batman')(?=.*'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman')(?=.*'scarletspeedster_barryallenetal' => 'Flash')(?=.*'alanscottetal' => 'Green Lantern')(?=.*'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'string_not_integer' => '23').*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
-                ,                                                                                                                                                                                                                                                                                                                                                                                                                                           ## PERLTIDY BUG comma on newline
+                ,                                                                                                                                                                                                                                                                                                                                                                                                                                               ## PERLTIDY BUG comma on newline
                 q{HVPV03 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'string_not_integer' => '23'}) returns correct value}
             );
         },

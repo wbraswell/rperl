@@ -1,7 +1,7 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-// VERSION 0.2.1
+// VERSION 0.2.2
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Number_h
 #define __CPP__INCLUDED__RPerl__DataType__Number_h 1
@@ -10,10 +10,11 @@ using std::cout;  using std::endl;
 typedef long double number;
 
 #include <types.h> // for definitions of __PERL__TYPES or __CPP__TYPES
-#include <RPerl/DataType/String.cpp>  // for stringify()
+#include <RPerl/DataType/String.cpp>  // need for string typedef
 
-// [[[ TYPE CHECKING ]]]
+// [[[ TYPE-CHECKING ]]]
 void check_number(SV* possible_number);
+void check_number_trace(SV* possible_number, const char* variable_name, const char* subroutine_name);
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 # ifdef __CPP__TYPES

@@ -5,7 +5,7 @@
 package RPerl::DataType::Number;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.2.1');
+use version; our $VERSION = qv('0.2.2');
 use Carp;
 use base ('RPerl::DataType::Scalar');
 use RPerl::DataType::Scalar;
@@ -43,12 +43,12 @@ our $OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0
 our string $ops_number   = sub { return ('PERL'); };
 our string $types_number = sub { return ('PERL'); };
 
-# [[[ TYPE CHECKING ]]]
+# [[[ TYPE-CHECKING ]]]
 our void $check_number = sub {
     ( my $possible_number ) = @_;
     if ( not( defined $possible_number ) ) {
         croak(
-            'in PERLOPS_PERLTYPES Number::check_number(), $possible_number was undef and/or NULL, croaking'
+            "\nERROR ENV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but undefined/null value found,\ncroaking"
         );
     }
     if (not(   main::RPerl_SvNOKp($possible_number)
@@ -56,7 +56,24 @@ our void $check_number = sub {
         )
     {
         croak(
-            'in PERLOPS_PERLTYPES Number::check_number(), $possible_number was not an number, croaking'
+            "\nERROR ENV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but non-number value found,\ncroaking"
+        );
+    }
+};
+
+our void $check_number_trace = sub {
+    ( my $possible_number, my $variable_name, my $subroutine_name ) = @_;
+    if ( not( defined $possible_number ) ) {
+        croak(
+            "\nERROR ENV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but undefined/null value found,\nin variable '$variable_name' from subroutine '$subroutine_name',\ncroaking"
+        );
+    }
+    if (not(   main::RPerl_SvNOKp($possible_number)
+            || main::RPerl_SvIOKp($possible_number) )
+        )
+    {
+        croak(
+            "\nERROR ENV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but non-number value found,\nin variable '$variable_name' from subroutine '$subroutine_name',\ncroaking"
         );
     }
 };
@@ -64,7 +81,10 @@ our void $check_number = sub {
 # [[[ STRINGIFY ]]]
 our string $stringify_number = sub {
     ( my $input_number ) = @_;
-    check_number($input_number);
+
+    #    check_number($input_number);
+    check_number_trace( $input_number, '$input_number',
+        'stringify_number()' );
     print
         "in PERLOPS_PERLTYPES Number::stringify_number(), bottom of subroutine, received \$input_number = $input_number\n"
         or croak();
@@ -81,7 +101,10 @@ our number $typetest___void__in___number__out = sub {
 };
 our number $typetest___number__in___number__out = sub {
     ( my number $lucky_number ) = @_;
-    check_number($lucky_number);
+
+    #    check_number($lucky_number);
+    check_number_trace( $lucky_number, '$lucky_number',
+        'typetest___number__in___number__out()' );
     print
         'in PERLOPS_PERLTYPES Number::typetest___number__in___number__out(), received $lucky_number = '
         . stringify_number($lucky_number) . "\n"

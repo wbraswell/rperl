@@ -4,7 +4,7 @@
 package RPerl::DataType::String;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.2.1');
+use version; our $VERSION = qv('0.2.2');
 use Carp;
 use base ('RPerl::DataType::Scalar');
 use RPerl::DataType::Scalar;
@@ -39,12 +39,25 @@ our void $check_string = sub {
     ( my $possible_string ) = @_;
     if ( not( defined $possible_string ) ) {
         croak(
-            'in PERLOPS_PERLTYPES String::check_string(), $possible_string was undef and/or NULL, croaking'
+            "\nERROR EPV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but undefined/null value found,\ncroaking"
         );
     }
     if ( not( main::RPerl_SvPOKp($possible_string) ) ) {
         croak(
-            'in PERLOPS_PERLTYPES String::check_string(), $possible_string was not an string, croaking'
+            "\nERROR EPV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but non-string value found,\ncroaking"
+        );
+    }
+};
+our void $check_string_trace = sub {
+    ( my $possible_string, my $variable_name, my $subroutine_name ) = @_;
+    if ( not( defined $possible_string ) ) {
+        croak(
+            "\nERROR EPV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but undefined/null value found,\nin variable '$variable_name' from subroutine '$subroutine_name',\ncroaking"
+        );
+    }
+    if ( not( main::RPerl_SvPOKp($possible_string) ) ) {
+        croak(
+            "\nERROR EPV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but non-string value found,\nin variable '$variable_name' from subroutine '$subroutine_name',\ncroaking"
         );
     }
 };
@@ -59,7 +72,10 @@ our string $typetest___void__in___string__out = sub {
 };
 our string $typetest___string__in___string__out = sub {
     ( my string $lucky_string ) = @_;
-    check_string($lucky_string);
+
+    #    check_string($lucky_string);
+    check_string_trace( $lucky_string, '$lucky_string',
+        'typetest___string__in___string__out()' );
     print
         "in PERLOPS_PERLTYPES String::typetest___string__in___string__out(), received \$lucky_string = '$lucky_string'\n"
         or croak();
