@@ -1,7 +1,7 @@
 ////use strict;  use warnings;
 //using std::cout;  using std::endl;  // not needed for integer?
 
-// VERSION 0.2.0
+// VERSION 0.2.1
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_cpp
 #define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 1
@@ -85,13 +85,13 @@ printf("in CPPOPS_CPPTYPES stringify_integer(), top of subroutine, received inpu
 
 SV* typetest___void__in___integer__out() {
 	SV* retval = newSViv((21 / 7) + OPS_TYPES_ID);
-printf("in CPPOPS_PERLTYPES typetest___void__in___integer__out(), have retval %d\n", (integer)SvIV(retval));
+printf("in CPPOPS_PERLTYPES typetest___void__in___integer__out(), have retval = %d\n", (integer)SvIV(retval));
 	return(retval);
 }
 
 SV* typetest___integer__in___integer__out(SV* lucky_integer) {
 	check_integer(lucky_integer);
-printf("in CPPOPS_PERLTYPES typetest___integer__in___integer__out(), have lucky_integer %d\n", (integer)SvIV(lucky_integer));
+printf("in CPPOPS_PERLTYPES typetest___integer__in___integer__out(), received lucky_integer = %d\n", (integer)SvIV(lucky_integer));
 	return(newSViv((SvIV(lucky_integer) * 2) + OPS_TYPES_ID));
 }
 
@@ -99,12 +99,12 @@ printf("in CPPOPS_PERLTYPES typetest___integer__in___integer__out(), have lucky_
 
 integer typetest___void__in___integer__out() {
 	integer retval = (21 / 7) + OPS_TYPES_ID;
-printf("in CPPOPS_CPPTYPES typetest___void__in___integer__out(), have retval %d\n", retval);
+printf("in CPPOPS_CPPTYPES typetest___void__in___integer__out(), have retval = %d\n", retval);
 	return(retval);
 }
 
 integer typetest___integer__in___integer__out(integer lucky_integer) {
-printf("in CPPOPS_CPPTYPES typetest___integer__in___integer__out(), have lucky_integer %d\n", lucky_integer);
+printf("in CPPOPS_CPPTYPES typetest___integer__in___integer__out(), received lucky_integer = %d\n", lucky_integer);
 	return((lucky_integer * 2) + OPS_TYPES_ID);
 }
 

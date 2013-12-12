@@ -1,7 +1,7 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-// VERSION 0.2.0
+// VERSION 0.2.1
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Number_h
 #define __CPP__INCLUDED__RPerl__DataType__Number_h 1

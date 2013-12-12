@@ -1,7 +1,7 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-// VERSION 0.2.0
+// VERSION 0.2.1
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Number_cpp
 #define __CPP__INCLUDED__RPerl__DataType__Number_cpp 1
@@ -96,13 +96,13 @@ printf("in CPPOPS_CPPTYPES stringify_number(), top of subroutine, received unfor
 
 SV* typetest___void__in___number__out() {
 	SV* retval = newSVnv((22.0 / 7.0) + OPS_TYPES_ID);
-printf("in CPPOPS_PERLTYPES typetest___void__in___number__out(), have unformatted retval %Lf\n", (number)SvNV(retval));
+printf("in CPPOPS_PERLTYPES typetest___void__in___number__out(), have unformatted retval = %Lf\n", (number)SvNV(retval));
 	return(retval);
 }
 
 SV* typetest___number__in___number__out(SV* lucky_number) {
 	check_number(lucky_number);
-printf("in CPPOPS_PERLTYPES typetest___number__in___number__out(), have unformatted lucky_number %Lf\n", (number)SvNV(lucky_number));
+printf("in CPPOPS_PERLTYPES typetest___number__in___number__out(), have received lucky_number = %Lf\n", (number)SvNV(lucky_number));
 	return(newSVnv((SvNV(lucky_number) * 2.0) + OPS_TYPES_ID));
 }
 
@@ -110,12 +110,12 @@ printf("in CPPOPS_PERLTYPES typetest___number__in___number__out(), have unformat
 
 number typetest___void__in___number__out() {
 	number retval = (22.0 / 7.0) + OPS_TYPES_ID;
-printf("in CPPOPS_CPPTYPES typetest___void__in___number__out(), have unformatted retval %Lf\n", retval);
+printf("in CPPOPS_CPPTYPES typetest___void__in___number__out(), have unformatted retval = %Lf\n", retval);
 	return(retval);
 }
 
 number typetest___number__in___number__out(number lucky_number) {
-	printf("in CPPOPS_CPPTYPES typetest___number__in___number__out(), have unformatted lucky_number %Lf\n", lucky_number);
+	printf("in CPPOPS_CPPTYPES typetest___number__in___number__out(), received unformatted lucky_number = %Lf\n", lucky_number);
 	return((lucky_number * 2.0) + OPS_TYPES_ID);
 }
 

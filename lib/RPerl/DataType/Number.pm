@@ -5,7 +5,7 @@
 package RPerl::DataType::Number;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.2.0');
+use version; our $VERSION = qv('0.2.1');
 use Carp;
 use base ('RPerl::DataType::Scalar');
 use RPerl::DataType::Scalar;
@@ -39,9 +39,9 @@ package RPerl::DataType::Number;
 
 # [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 #our integer $OPS_TYPES_ID = 0;                        # DEV NOTE: Integer type declared as a sub-type of Number, must disable here
-our $OPS_TYPES_ID = 0;                        # PERLOPS_PERLTYPES is 0
-our string $ops_number    = sub { return ('PERL'); };
-our string $types_number  = sub { return ('PERL'); };
+our $OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0
+our string $ops_number   = sub { return ('PERL'); };
+our string $types_number = sub { return ('PERL'); };
 
 # [[[ TYPE CHECKING ]]]
 our void $check_number = sub {
@@ -51,7 +51,10 @@ our void $check_number = sub {
             'in PERLOPS_PERLTYPES Number::check_number(), $possible_number was undef and/or NULL, croaking'
         );
     }
-    if ( not( main::RPerl_SvNOKp($possible_number) || main::RPerl_SvIOKp($possible_number) ) ) {
+    if (not(   main::RPerl_SvNOKp($possible_number)
+            || main::RPerl_SvIOKp($possible_number) )
+        )
+    {
         croak(
             'in PERLOPS_PERLTYPES Number::check_number(), $possible_number was not an number, croaking'
         );
@@ -69,8 +72,6 @@ our string $stringify_number = sub {
 };
 
 # [[[ TYPE TESTING ]]]
-# [[[ TYPE TESTING ]]]
-# [[[ TYPE TESTING ]]]
 our number $typetest___void__in___number__out = sub {
     my number $retval = ( 22 / 7 ) + $OPS_TYPES_ID; # return floating-point number value
     print
@@ -82,7 +83,7 @@ our number $typetest___number__in___number__out = sub {
     ( my number $lucky_number ) = @_;
     check_number($lucky_number);
     print
-        'in PERLOPS_PERLTYPES Number::typetest___number__in___number__out(), have $lucky_number = '
+        'in PERLOPS_PERLTYPES Number::typetest___number__in___number__out(), received $lucky_number = '
         . stringify_number($lucky_number) . "\n"
         or croak();
     return ( ( $lucky_number * 2 ) + $OPS_TYPES_ID );

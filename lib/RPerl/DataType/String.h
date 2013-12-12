@@ -1,37 +1,46 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
+// VERSION 0.2.1
+
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_h
 #define __CPP__INCLUDED__RPerl__DataType__String_h 1
 
-// [[[ TYPEDEFS FOR RPERL-TYPES-IN-C ]]]
+// [[[ TYPEDEFS ]]]
 typedef std::string string;
 typedef std::ostringstream ostringstream;
 
 #include <types.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
-// [[[ TYPEMAP PACK/UNPACK SUBROUTINE PROTOTYPE DECLARATIONS FOR RPERL-TYPES-IN-C ]]]
+// [[[ TYPE CHECKING ]]]
+void check_string(SV* possible_string);
+
+// [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
+# ifdef __CPP__TYPES
 string XS_unpack_string(SV* input_sv);
 void XS_pack_string(SV* output_sv, string input_string);
+# endif
 
-// [[[ DATA TYPES & OPERATIONS ]]]
+// [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 # ifdef __PERL__TYPES
-SV* types_string() { return(newSVpv("PERL", 4)); }
+# define OPS_TYPES_ID 1 // CPPOPS_PERLTYPES is 1
 SV* ops_string() { return(newSVpv("CPP", 3)); }
+SV* types_string() { return(newSVpv("PERL", 4)); }
 # elif defined __CPP__TYPES
-string types_string() { string retval = "CPP";  return(retval); }
+# define OPS_TYPES_ID 2 // CPPOPS_CPPTYPES is 2
 string ops_string() { string retval = "CPP";  return(retval); }
+string types_string() { string retval = "CPP";  return(retval); }
 # else
 Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_exactly_one!
 # endif
 
-//# [[[ TYPE TESTING ]]]
+// [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
 SV* typetest___void__in___string__out();
-SV* typetest___string__in___string__out(SV* fuzzword);
+SV* typetest___string__in___string__out(SV* lucky_string);
 # elif defined __CPP__TYPES
 string typetest___void__in___string__out();
-string typetest___string__in___string__out(string fuzzword);
+string typetest___string__in___string__out(string lucky_string);
 # endif
 
 #endif

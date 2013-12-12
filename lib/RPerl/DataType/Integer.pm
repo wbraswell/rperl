@@ -5,7 +5,7 @@
 package RPerl::DataType::Integer;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.2.0');
+use version; our $VERSION = qv('0.2.1');
 use Carp;
 use base ('RPerl::DataType::Number');
 use RPerl::DataType::Number;
@@ -60,8 +60,6 @@ our string $stringify_integer = sub {
 };
 
 # [[[ TYPE TESTING ]]]
-# [[[ TYPE TESTING ]]]
-# [[[ TYPE TESTING ]]]
 our integer $typetest___void__in___integer__out = sub {
     my integer $retval = ( 21 / 7 ) + $OPS_TYPES_ID; # return integer (not number) value, don't do (22 / 7) etc.
     print
@@ -73,7 +71,7 @@ our integer $typetest___integer__in___integer__out = sub {
     ( my integer $lucky_integer ) = @_;
     check_integer($lucky_integer);
     print
-        'in PERLOPS_PERLTYPES Integer::typetest___integer__in___integer__out(), have $lucky_integer = '
+        'in PERLOPS_PERLTYPES Integer::typetest___integer__in___integer__out(), received $lucky_integer = '
         . stringify_integer($lucky_integer) . "\n"
         or croak();
     return ( ( $lucky_integer * 2 ) + $OPS_TYPES_ID );

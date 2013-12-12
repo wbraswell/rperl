@@ -1,35 +1,69 @@
-use strict;  use warnings;
+## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+## no critic qw(ProhibitMultiplePackages)  ## RPERL SYSTEM types, allow multiple packages
+## no critic qw(Capitalization)  ## RPERL SYSTEM types, allow lowercase packages
 package RPerl::DataType::String;
-
-our @ISA = ('RPerl::DataType::Scalar');
+use strict;
+use warnings;
+use version; our $VERSION = qv('0.2.1');
+use Carp;
+use base ('RPerl::DataType::Scalar');
 use RPerl::DataType::Scalar;
 
 # a string is 0 or more letters, digits, or other ASCII (Unicode???) symbols
 package string;
-our @ISA = ('RPerl::DataType::String');
+use base ('RPerl::DataType::String');
 
 # string with const value
 package const_string;
-our @ISA = ('string', 'const');
+use base qw(string const);
 
 # ref to string
 package string_ref;
-our @ISA = ('ref');
+use base ('ref');
 
 # ref to (string with const value)
 package const_string_ref;
-our @ISA = ('ref');
-
+use base ('ref');
 
 # [[[ SWITCH CONTEXT BACK TO MAIN PACKAGE ]]]
 package RPerl::DataType::String;
 
-# [[[ OPERATIONS & DATA TYPES ]]]
-our string $ops_string = sub { return('PERL'); };
-our string $types_string = sub { return('PERL'); };
+# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
+#our integer $OPS_TYPES_ID = 0;                        # DEV NOTE: Integer type declared as a sub-type of Number, disable for now, re-enable later?
+our $OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0
+our string $ops_string   = sub { return ('PERL'); };
+our string $types_string = sub { return ('PERL'); };
+
+# [[[ TYPE CHECKING ]]]
+our void $check_string = sub {
+    ( my $possible_string ) = @_;
+    if ( not( defined $possible_string ) ) {
+        croak(
+            'in PERLOPS_PERLTYPES String::check_string(), $possible_string was undef and/or NULL, croaking'
+        );
+    }
+    if ( not( main::RPerl_SvPOKp($possible_string) ) ) {
+        croak(
+            'in PERLOPS_PERLTYPES String::check_string(), $possible_string was not an string, croaking'
+        );
+    }
+};
 
 # [[[ TYPE TESTING ]]]
-# [[[ TYPE TESTING ]]]
-# [[[ TYPE TESTING ]]]
-our string $typetest___void__in___string__out = sub { my string $retval = "Spice";  return($retval); };
-our string $typetest___string__in___string__out = sub { (my string $fuzzword) = @_;  print "in Perl String::typetest___string__in___string__out(), have fuzzword '$fuzzword', BAZBOT\n";  return($fuzzword . "FUZZ"); };
+our string $typetest___void__in___string__out = sub {
+    my string $retval = 'Spice PERLOPS_PERLTYPES';
+    print
+        "in PERLOPS_PERLTYPES String::typetest___void__in___string__out(), have \$retval = '$retval'\n"
+        or croak();
+    return ($retval);
+};
+our string $typetest___string__in___string__out = sub {
+    ( my string $lucky_string ) = @_;
+    check_string($lucky_string);
+    print
+        "in PERLOPS_PERLTYPES String::typetest___string__in___string__out(), received \$lucky_string = '$lucky_string'\n"
+        or croak();
+    return ( $lucky_string . ' PERLOPS_PERLTYPES' );
+};
+
+1;

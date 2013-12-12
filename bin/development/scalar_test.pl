@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.1.2');
+use version; our $VERSION = qv('0.2.1');
 use Carp;
 
 ## no critic qw(ProhibitMagicNumbers ProhibitUnreachableCode)  ## RPERL allow numeric test values, allow unreachable test code
@@ -93,18 +93,12 @@ for my integer $i ( 0 .. $i_MAX ) {
 #	$number_retval = typetest___number__in___number__out(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679);  # NV27
 #	print "in scalar_test.pl $i/$i_MAX, have \$number_retval = $number_retval\n" or croak();
 
-croak('Done for now, croaking');
-
-# START HERE: update String to new code & format like Integer/Number; update 04_type_scalar.t to new 05/6*.t format & checking of $OPS_TYPES; fix 05/6*.t
-# START HERE: update String to new code & format like Integer/Number; update 04_type_scalar.t to new 05/6*.t format & checking of $OPS_TYPES; fix 05/6*.t
-# START HERE: update String to new code & format like Integer/Number; update 04_type_scalar.t to new 05/6*.t format & checking of $OPS_TYPES; fix 05/6*.t
-
     # [[[ STRING TESTS ]]]
 
 	$string_retval = typetest___void__in___string__out();  # PV00
-	print "in scalar_test.pl $i/$i_MAX, have \$string_retval = $string_retval\n" or croak();
+	print "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n" or croak();
 
-	$string_retval = typetest___string__in___string__out();  # PV10; raise/throw exception
+#	$string_retval = typetest___string__in___string__out();  # PV10; raise/throw exception  # CPPOPS_BOTHTYPES Usage: main::typetest___string__in___string__out(lucky_string) at ./bin/development/scalar_test.pl line 101.
 #	$string_retval = typetest___string__in___string__out(3);  # PV11; raise/throw exception
 #	$string_retval = typetest___string__in___string__out(-17);  # PV12; raise/throw exception
 #	$string_retval = typetest___string__in___string__out(-17.3);  # PV13; raise/throw exception
@@ -112,7 +106,10 @@ croak('Done for now, croaking');
 #	$string_retval = typetest___string__in___string__out([3]);  # PV15; raise/throw exception
 #	$string_retval = typetest___string__in___string__out({a_key => 3});  # PV16; raise/throw exception
 #	$string_retval = typetest___string__in___string__out('Melange');  # PV17
-	print "in scalar_test.pl $i/$i_MAX, have \$string_retval = $string_retval\n" or croak();
+#	$string_retval = typetest___string__in___string__out("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n");  # PV18
+#	print "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n" or croak();
+
+croak('Done for now, croaking');
 }
 
 #croak('Done for now, croaking');
