@@ -3,6 +3,10 @@ use strict;
 use warnings;
 use version; our $VERSION = qv('0.2.0');
 
+# START HERE: update/fix 05/06*.t for new scalars
+# START HERE: update/fix 05/06*.t for new scalars
+# START HERE: update/fix 05/06*.t for new scalars
+
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
