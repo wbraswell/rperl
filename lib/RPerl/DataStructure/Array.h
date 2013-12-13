@@ -6,6 +6,9 @@ using std::cout;  using std::endl;
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array_h
 #define __CPP__INCLUDED__RPerl__DataStructure__Array_h 1
 
+// [[[ MACROS ]]]
+#define VECTOR_RESIZE_NOSHRINK(my_vector, my_size) ((my_vector.size() < my_size) ? my_vector.resize((size_t)(my_size)) : (void)0)  // do grow but don't shrink
+
 ////# [[[ DATA TYPES ]]]
 ////use RPerl::DataType::Number;
 #include <RPerl/DataType/Number.cpp>
@@ -37,9 +40,6 @@ string types_array() { string retval = "CPP";  return(retval); }
 # else
 Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_exactly_one!
 # endif
-
-// [[[ MACROS ]]]
-#define VECTOR_RESIZE_NOSHRINK(my_vector, my_size) ((my_vector.size() < my_size) ? my_vector.resize((size_t)(my_size)) : (void)0)  // do grow but don't shrink
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 # ifdef __CPP__TYPES

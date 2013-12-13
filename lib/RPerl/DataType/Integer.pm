@@ -7,9 +7,12 @@ use strict;
 use warnings;
 use version; our $VERSION = qv('0.2.2');
 use Carp;
+
+# [[[ SETUP ]]]
 use base ('RPerl::DataType::Number');
 use RPerl::DataType::Number;
 
+# [[[ SUB-TYPES ]]]
 # an integer is a whole number, it has no floating-pointeger (fractional/decimal) component
 package integer;
 use base ('RPerl::DataType::Integer');
@@ -48,7 +51,7 @@ our void $check_integer = sub {
         );
     }
 };
-our void $check_integer_trace = sub {
+our void $check_trace_integer = sub {
     ( my $possible_integer, my $variable_name, my $subroutine_name ) = @_;
     if ( not( defined $possible_integer ) ) {
         croak(
@@ -67,7 +70,7 @@ our string $stringify_integer = sub {
     ( my $input_integer ) = @_;
 
     #    check_integer($input_integer);
-    check_integer_trace( $input_integer, '$input_integer',
+    check_trace_integer( $input_integer, '$input_integer',
         'stringify_integer()' );
     print
         "in PERLOPS_PERLTYPES Integer::stringify_integer(), bottom of subroutine, received \$input_integer = $input_integer\n"
@@ -87,7 +90,7 @@ our integer $typetest___integer__in___integer__out = sub {
     ( my integer $lucky_integer ) = @_;
 
     #    check_integer($lucky_integer);
-    check_integer_trace( $lucky_integer, '$lucky_integer',
+    check_trace_integer( $lucky_integer, '$lucky_integer',
         'typetest___integer__in___integer__out()' );
     print
         'in PERLOPS_PERLTYPES Integer::typetest___integer__in___integer__out(), received $lucky_integer = '

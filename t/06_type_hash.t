@@ -1,11 +1,8 @@
 #!/usr/bin/perl
+## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
 use strict;
 use warnings;
 use version; our $VERSION = qv('0.2.0');
-
-# START HERE: update/fix 05/06*.t for new scalars
-# START HERE: update/fix 05/06*.t for new scalars
-# START HERE: update/fix 05/06*.t for new scalars
 
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
@@ -424,7 +421,7 @@ for my $i ( 0 .. 2 ) {
     lives_and(                             # HVIV20
         sub {
             is_deeply(
-                typetest___integer__in___integer__hash_ref__out(5), ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                typetest___integer__in___integer__hash_ref__out(5),
                 {   "$OPS_TYPES\_funkey2" => 10,
                     "$OPS_TYPES\_funkey3" => 15,
                     "$OPS_TYPES\_funkey4" => 20,
@@ -588,7 +585,7 @@ for my $i ( 0 .. 2 ) {
     lives_and(                             # HVNV20
         sub {
             is_deeply(
-                typetest___integer__in___number__hash_ref__out(5), ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                typetest___integer__in___number__hash_ref__out(5),
                 {   "$OPS_TYPES\_funkey2" => 10.246913578,
                     "$OPS_TYPES\_funkey3" => 15.370370367,
                     "$OPS_TYPES\_funkey4" => 20.493827156,
@@ -802,14 +799,14 @@ for my $i ( 0 .. 2 ) {
                     'alanscottetal' => 'Green Lantern',
                     'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman',
                     'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter',
-                    'ARRAY_NOT_STRING' => [ 23, -42.3 ] ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                    'ARRAY_NOT_STRING'                 => [ 23, -42.3 ]
                 }
             );
         },
         "/$OPS_TYPES.*input_hv_value at key 'ARRAY_NOT_STRING' was not a string/",
         q{HVPV11 typetest___string__hash_ref__in___string__out({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'ARRAY_NOT_STRING' => [23, -42.3]}) throws correct exception}
     );
-    lives_and(                                          # HVPV12
+    lives_and(    # HVPV12
         sub {
             like(
                 typetest___string__hash_ref__in___string__out(
@@ -831,7 +828,7 @@ for my $i ( 0 .. 2 ) {
     lives_and(                # HVPV20
         sub {
             is_deeply(
-                typetest___integer__in___string__hash_ref__out(5), ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+                typetest___integer__in___string__hash_ref__out(5),
                 {   "$OPS_TYPES\_Luker_key3" => 'Jeffy Ten! 3/4',
                     "$OPS_TYPES\_Luker_key2" => 'Jeffy Ten! 2/4',
                     "$OPS_TYPES\_Luker_key1" => 'Jeffy Ten! 1/4',

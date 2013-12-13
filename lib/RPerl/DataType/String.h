@@ -1,10 +1,24 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-// VERSION 0.2.2
+// VERSION 0.2.3
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_h
 #define __CPP__INCLUDED__RPerl__DataType__String_h 1
+
+// [[[ TYPE-CHECKING MACROS ]]]
+#define CHECK_STRING(possible_string) \
+	(not(SvOK(possible_string)) ? \
+			croak("\nERROR EPV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but undefined/null value found,\ncroaking") : \
+			(not(SvPOKp(possible_string)) ? \
+					croak("\nERROR EPV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but non-string value found,\ncroaking") : \
+					(void)0))
+#define CHECK_TRACE_STRING(possible_string, variable_name, subroutine_name) \
+	(not(SvOK(possible_string)) ? \
+			croak("\nERROR EPV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but undefined/null value found,\nin variable '%s' from subroutine '%s',\ncroaking", variable_name, subroutine_name) : \
+			(not(SvPOKp(possible_string)) ? \
+					croak("\nERROR EPV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but non-string value found,\nin variable '%s' from subroutine '%s',\ncroaking", variable_name, subroutine_name) : \
+					(void)0))
 
 // [[[ TYPEDEFS ]]]
 typedef std::string string;
@@ -13,8 +27,9 @@ typedef std::ostringstream ostringstream;
 #include <types.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
 // [[[ TYPE CHECKING ]]]
-void check_string(SV* possible_string);
-void check_string_trace(SV* possible_string, const char* variable_name, const char* subroutine_name);
+// DEPRECATED, SEE MACROS ABOVE
+//void check_string(SV* possible_string);
+//void check_trace_string(SV* possible_string, const char* variable_name, const char* subroutine_name);
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 # ifdef __CPP__TYPES

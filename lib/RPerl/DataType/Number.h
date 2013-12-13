@@ -1,10 +1,24 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-// VERSION 0.2.2
+// VERSION 0.2.3
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Number_h
 #define __CPP__INCLUDED__RPerl__DataType__Number_h 1
+
+// [[[ TYPE-CHECKING MACROS ]]]
+#define CHECK_NUMBER(possible_number) \
+	(not(SvOK(possible_number)) ? \
+			croak("\nERROR ENV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found,\ncroaking") : \
+			(not(SvNOKp(possible_number) || SvIOKp(possible_number)) ? \
+					croak("\nERROR ENV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but non-number value found,\ncroaking") : \
+					(void)0))
+#define CHECK_TRACE_NUMBER(possible_number, variable_name, subroutine_name) \
+	(not(SvOK(possible_number)) ? \
+			croak("\nERROR ENV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found,\nin variable '%s' from subroutine '%s',\ncroaking", variable_name, subroutine_name) : \
+			(not(SvNOKp(possible_number) || SvIOKp(possible_number)) ? \
+					croak("\nERROR ENV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but non-number value found,\nin variable '%s' from subroutine '%s',\ncroaking", variable_name, subroutine_name) : \
+					(void)0))
 
 // [[[ TYPEDEFS ]]]
 typedef long double number;
@@ -13,8 +27,9 @@ typedef long double number;
 #include <RPerl/DataType/String.cpp>  // need for string typedef
 
 // [[[ TYPE-CHECKING ]]]
-void check_number(SV* possible_number);
-void check_number_trace(SV* possible_number, const char* variable_name, const char* subroutine_name);
+// DEPRECATED, SEE MACROS ABOVE
+//void check_number(SV* possible_number);
+//void check_trace_number(SV* possible_number, const char* variable_name, const char* subroutine_name);
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 # ifdef __CPP__TYPES

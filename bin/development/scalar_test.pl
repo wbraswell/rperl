@@ -19,9 +19,9 @@ BEGIN { use Data::Dumper;  our $AUTOLOAD;  sub AUTOLOAD { croak("AUTOLOAD purpos
 types::types_enable('CPP');
 
 # UNCOMMENT TO ENABLE C++ OPS
-#use RPerl::DataType::Integer_cpp;  RPerl::DataType::Integer_cpp::cpp_load();  RPerl::DataType::Integer_cpp::cpp_link();
+use RPerl::DataType::Integer_cpp;  RPerl::DataType::Integer_cpp::cpp_load();  RPerl::DataType::Integer_cpp::cpp_link();
 #use RPerl::DataType::Number_cpp;  RPerl::DataType::Number_cpp::cpp_load();  RPerl::DataType::Number_cpp::cpp_link();
-use RPerl::DataType::String_cpp;  RPerl::DataType::String_cpp::cpp_load();  RPerl::DataType::String_cpp::cpp_link();
+#use RPerl::DataType::String_cpp;  RPerl::DataType::String_cpp::cpp_load();  RPerl::DataType::String_cpp::cpp_link();
 
 print q{in scalar_test.pl, have ops_integer() = '} . ops_integer() . "'\n" or croak();
 print q{in scalar_test.pl, have types_integer() = '} . types_integer() . "'\n" or croak();
@@ -49,9 +49,11 @@ for my integer $i ( 0 .. $i_MAX ) {
 #	$string_retval = stringify_integer('-17.3');  # TIV04; raise/throw exception
 #	$string_retval = stringify_integer([3]);  # TIV05; raise/throw exception
 #	$string_retval = stringify_integer({a_key => 3});  # TIV06; raise/throw exception
-#	$string_retval = stringify_integer(-1_234_567_890);  # TIV07
+	$string_retval = stringify_integer(-1_234_567_890);  # TIV07
 #	$string_retval = stringify_integer(-1_234_567_890_000);  # TIV08; raise/throw exception
-#	print "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n" or croak();
+	print "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n" or croak();
+
+croak('Done for now, croaking');
 
 #	$integer_retval = typetest___void__in___integer__out();  # TIV10
 #	print "in scalar_test.pl $i/$i_MAX, have \$integer_retval = $integer_retval\n" or croak();
@@ -108,8 +110,6 @@ for my integer $i ( 0 .. $i_MAX ) {
 #	$string_retval = typetest___string__in___string__out('Melange');  # TPV17
 	$string_retval = typetest___string__in___string__out("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n");  # TPV18
 	print "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n" or croak();
-
-croak('Done for now, croaking');
 }
 
 #croak('Done for now, croaking');

@@ -1,7 +1,7 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-// VERSION 0.2.2
+// VERSION 0.2.3
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Number_cpp
 #define __CPP__INCLUDED__RPerl__DataType__Number_cpp 1
@@ -12,6 +12,8 @@ using std::cout;  using std::endl;
 // [[[ TYPE-CHECKING ]]]
 // [[[ TYPE-CHECKING ]]]
 
+// TYPE-CHECKING SUBROUTINES DEPRECATED IN FAVOR OF EQUIVALENT MACROS
+/*
 void check_number(SV* possible_number) {
     if (not(SvOK(possible_number))) {
     	croak("\nERROR ENV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found,\ncroaking");
@@ -20,8 +22,7 @@ void check_number(SV* possible_number) {
     	croak("\nERROR ENV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but non-number value found,\ncroaking");
     }
 };
-
-void check_number_trace(SV* possible_number, const char* variable_name, const char* subroutine_name) {
+void check_trace_number(SV* possible_number, const char* variable_name, const char* subroutine_name) {
     if (not(SvOK(possible_number))) {
     	croak("\nERROR ENV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found,\nin variable '%s' from subroutine '%s',\ncroaking",
     			variable_name, subroutine_name);
@@ -31,6 +32,7 @@ void check_number_trace(SV* possible_number, const char* variable_name, const ch
     			variable_name, subroutine_name);
     }
 };
+*/
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
@@ -41,8 +43,8 @@ void check_number_trace(SV* possible_number, const char* variable_name, const ch
 // convert from (Perl SV containing number) to (C number)
 number XS_unpack_number(SV* input_sv) {
 printf("in CPPOPS_CPPTYPES XS_unpack_number(), top of subroutine\n");
-//	check_number(input_sv);
-	check_number_trace(input_sv, "input_sv", "XS_unpack_number()");
+//	CHECK_NUMBER(input_sv);
+	CHECK_TRACE_NUMBER(input_sv, "input_sv", "XS_unpack_number()");
 
 //	number output_number;
 
@@ -76,8 +78,8 @@ printf("in CPPOPS_CPPTYPES XS_pack_number(), bottom of subroutine\n");
 
 SV* stringify_number(SV* input_number)
 {
-//	check_number(input_number);
-	check_number_trace(input_number, "input_number", "stringify_number()");
+//	CHECK_NUMBER(input_number);
+	CHECK_TRACE_NUMBER(input_number, "input_number", "stringify_number()");
 printf("in CPPOPS_PERLTYPES stringify_number(), top of subroutine, received unformatted input_number = %Lf\n", (number)SvNV(input_number));
 
 	ostringstream output_stream;
@@ -118,8 +120,8 @@ printf("in CPPOPS_PERLTYPES typetest___void__in___number__out(), have unformatte
 }
 
 SV* typetest___number__in___number__out(SV* lucky_number) {
-//	check_number(lucky_number);
-	check_number_trace(lucky_number, "lucky_number", "typetest___number__in___number__out()");
+//	CHECK_NUMBER(lucky_number);
+	CHECK_TRACE_NUMBER(lucky_number, "lucky_number", "typetest___number__in___number__out()");
 printf("in CPPOPS_PERLTYPES typetest___number__in___number__out(), have received lucky_number = %Lf\n", (number)SvNV(lucky_number));
 	return(newSVnv((SvNV(lucky_number) * 2.0) + OPS_TYPES_ID));
 }

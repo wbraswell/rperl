@@ -1,7 +1,7 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-// VERSION 0.2.0
+// VERSION 0.2.1
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash_cpp
 #define __CPP__INCLUDED__RPerl__DataStructure__Hash_cpp 1
@@ -12,17 +12,18 @@ using std::cout;  using std::endl;
 integer__hash_ref XS_unpack_integer__hash_ref(SV* input_hv_ref)
 {
 	printf("in CPPOPS_CPPTYPES XS_unpack_integer__hash_ref(), top of subroutine\n");
+//	CHECK_HASH_REF(input_hv_ref);
+	CHECK_TRACE_HASH_REF(input_hv_ref, "input_hv_ref", "XS_unpack_integer__hash_ref()");
 
     HV* input_hv;
     integer input_hv_num_keys;
     integer i;
     HE* input_hv_entry;
-    SV* input_hv_key;
-    SV* input_hv_value;
+    SV* input_hv_entry_key;
+    SV* input_hv_entry_value;
     integer__hash_ref output_unordered_map;
 
-	if (SvROK(input_hv_ref) && (SvTYPE(SvRV(input_hv_ref)) == SVt_PVHV)) { input_hv = (HV*)SvRV(input_hv_ref); }
-	else { croak("in CPPOPS_CPPTYPES XS_unpack_integer__hash_ref(), input_hv_ref was not an HV ref, croaking"); }
+	input_hv = (HV*)SvRV(input_hv_ref);
 
 	input_hv_num_keys = hv_iterinit(input_hv);
 	printf("in CPPOPS_CPPTYPES XS_unpack_integer__hash_ref(), have input_hv_num_keys = %d\n", input_hv_num_keys);
@@ -35,19 +36,16 @@ integer__hash_ref XS_unpack_integer__hash_ref(SV* input_hv_ref)
 	{
 		// does not utilize i in entry retrieval
 		input_hv_entry = hv_iternext(input_hv);
+//		CHECK_HASH_ENTRY(input_hv_entry);
+		CHECK_TRACE_HASH_ENTRY(input_hv_entry, "input_hv_entry", "XS_unpack_integer__hash_ref()");
 
-		if (input_hv_entry != NULL)
-		{
-			input_hv_key = hv_iterkeysv(input_hv_entry);
-			input_hv_value = hv_iterval(input_hv, input_hv_entry);
+		input_hv_entry_key = hv_iterkeysv(input_hv_entry);
+		input_hv_entry_value = hv_iterval(input_hv, input_hv_entry);
+//		CHECK_INTEGER(input_hv_entry_value);
+		CHECK_TRACE_INTEGER(input_hv_entry_value, strcat((char*)"input_hv_entry_value at key ", (const char*)SvPV_nolen(input_hv_entry_key)), "XS_unpack_integer__hash_ref()");
 
-			// UNORDERED MAP ENTRY ASSIGNMENT, OPTION A, SUBSCRIPT, KNOWN SIZE: l-value subscript notation with no further reserve(); does not utilize i in assignment
-			if (SvIOKp(input_hv_value)) { output_unordered_map[SvPV_nolen(input_hv_key)] = SvIV(input_hv_value); }
-//			else { croak("in CPPOPS_CPPTYPES XS_unpack_integer__hash_ref(), input_hv_value '%s' at key '%s' and index %d was not an integer, croaking", SvPV_nolen(input_hv_value), SvPV_nolen(input_hv_key), i); }  // index is for integerernal use, doesn't appear in Pure-Perl output
-//			else { croak("in CPPOPS_CPPTYPES XS_unpack_integer__hash_ref(), input_hv_value '%s' at key '%s' was not an integer, croaking", SvPV_nolen(input_hv_value), SvPV_nolen(input_hv_key), i); }  // values is of unknown type, do not attempt to print
-			else { croak("in CPPOPS_CPPTYPES XS_unpack_integer__hash_ref(), input_hv_value at key '%s' was not an integer, croaking", SvPV_nolen(input_hv_key), i); }
-		}
-		else { croak("in CPPOPS_CPPTYPES XS_unpack_integer__hash_ref(), input_hv_entry at index %d was undef and/or NULL, croaking", i); }
+		// UNORDERED MAP ENTRY ASSIGNMENT, OPTION A, SUBSCRIPT, KNOWN SIZE: l-value subscript notation with no further reserve(); does not utilize i in assignment
+		output_unordered_map[SvPV_nolen(input_hv_entry_key)] = SvIV(input_hv_entry_value);
 	}
 
 	printf("in CPPOPS_CPPTYPES XS_unpack_integer__hash_ref(), after for() loop, have output_unordered_map.size() = %d\n", output_unordered_map.size());
@@ -74,7 +72,7 @@ void XS_pack_integer__hash_ref(SV* output_hv_ref, integer__hash_ref input_unorde
 		for (i = input_unordered_map.begin();  i != input_unordered_map.end();  ++i)
 			{ hv_store(output_hv, (const char*)((i->first).c_str()), (U32)((i->first).size()), newSViv(i->second), (U32)0); }
 	}
-	else warn("in CPPOPS_CPPTYPES XS_pack_integer__hash_ref(), hash was empty, returning empty hash via newHV()");
+	else croak("in CPPOPS_CPPTYPES XS_pack_integer__hash_ref(), hash was empty, returning empty hash via newHV()");
 
 	temp_sv_pointegerer = newSVrv(output_hv_ref, NULL);	  // upgrade output stack SV to an RV
 	SvREFCNT_dec(temp_sv_pointegerer);		 // discard temporary pointegerer
@@ -88,17 +86,18 @@ void XS_pack_integer__hash_ref(SV* output_hv_ref, integer__hash_ref input_unorde
 number__hash_ref XS_unpack_number__hash_ref(SV* input_hv_ref)
 {
 	printf("in CPPOPS_CPPTYPES XS_unpack_number__hash_ref(), top of subroutine\n");
+//	CHECK_HASH_REF(input_hv_ref);
+	CHECK_TRACE_HASH_REF(input_hv_ref, "input_hv_ref", "XS_unpack_number__hash_ref()");
 
     HV* input_hv;
     integer input_hv_num_keys;
     integer i;
     HE* input_hv_entry;
-    SV* input_hv_key;
-    SV* input_hv_value;
+    SV* input_hv_entry_key;
+    SV* input_hv_entry_value;
     number__hash_ref output_unordered_map;
 
-	if (SvROK(input_hv_ref) && (SvTYPE(SvRV(input_hv_ref)) == SVt_PVHV)) { input_hv = (HV*)SvRV(input_hv_ref); }
-	else { croak("in CPPOPS_CPPTYPES XS_unpack_number__hash_ref(), input_hv_ref was not an HV ref, croaking"); }
+	input_hv = (HV*)SvRV(input_hv_ref);
 
 	input_hv_num_keys = hv_iterinit(input_hv);
 	printf("in CPPOPS_CPPTYPES XS_unpack_number__hash_ref(), have input_hv_num_keys = %d\n", input_hv_num_keys);
@@ -111,18 +110,16 @@ number__hash_ref XS_unpack_number__hash_ref(SV* input_hv_ref)
 	{
 		// does not utilize i in entry retrieval
 		input_hv_entry = hv_iternext(input_hv);
+//		CHECK_HASH_ENTRY(input_hv_entry);
+		CHECK_TRACE_HASH_ENTRY(input_hv_entry, "input_hv_entry", "XS_unpack_number__hash_ref()");
 
-		if (input_hv_entry != NULL)
-		{
-			input_hv_key = hv_iterkeysv(input_hv_entry);
-			input_hv_value = hv_iterval(input_hv, input_hv_entry);
+		input_hv_entry_key = hv_iterkeysv(input_hv_entry);
+		input_hv_entry_value = hv_iterval(input_hv, input_hv_entry);
+//		CHECK_NUMBER(input_hv_entry_value);
+		CHECK_TRACE_NUMBER(input_hv_entry_value, strcat((char*)"input_hv_entry_value at key ", (const char*)SvPV_nolen(input_hv_entry_key)), "XS_unpack_number__hash_ref()");
 
-			// UNORDERED MAP ENTRY ASSIGNMENT, OPTION A, SUBSCRIPT, KNOWN SIZE: l-value subscript notation with no further reserve(); does not utilize i in assignment
-			if (SvNOKp(input_hv_value) || SvIOKp(input_hv_value)) { output_unordered_map[SvPV_nolen(input_hv_key)] = SvNV(input_hv_value); }
-//			else { croak("in CPPOPS_CPPTYPES XS_unpack_number__hash_ref(), input_hv_value '%s' at key '%s' and index %d was not a number, croaking", SvPV_nolen(input_hv_value), SvPV_nolen(input_hv_key), i); }
-			else { croak("in CPPOPS_CPPTYPES XS_unpack_number__hash_ref(), input_hv_value at key '%s' was not a number, croaking", SvPV_nolen(input_hv_key), i); }
-		}
-		else { croak("in CPPOPS_CPPTYPES XS_unpack_number__hash_ref(), input_hv_entry at index %d was undef and/or NULL, croaking", i); }
+		// UNORDERED MAP ENTRY ASSIGNMENT, OPTION A, SUBSCRIPT, KNOWN SIZE: l-value subscript notation with no further reserve(); does not utilize i in assignment
+		output_unordered_map[SvPV_nolen(input_hv_entry_key)] = SvNV(input_hv_entry_value);
 	}
 
 	printf("in CPPOPS_CPPTYPES XS_unpack_number__hash_ref(), after for() loop, have output_unordered_map.size() = %d\n", output_unordered_map.size());
@@ -149,7 +146,7 @@ void XS_pack_number__hash_ref(SV* output_hv_ref, number__hash_ref input_unordere
 		for (i = input_unordered_map.begin();  i != input_unordered_map.end();  ++i)
 			{ hv_store(output_hv, (const char*)((i->first).c_str()), (U32)((i->first).size()), newSVnv(i->second), (U32)0); }
 	}
-	else warn("in CPPOPS_CPPTYPES XS_pack_number__hash_ref(), hash was empty, returning empty hash via newHV()");
+	else croak("in CPPOPS_CPPTYPES XS_pack_number__hash_ref(), hash was empty, returning empty hash via newHV()");
 
 	temp_sv_pointegerer = newSVrv(output_hv_ref, NULL);	  // upgrade output stack SV to an RV
 	SvREFCNT_dec(temp_sv_pointegerer);		 // discard temporary pointegerer
@@ -163,17 +160,18 @@ void XS_pack_number__hash_ref(SV* output_hv_ref, number__hash_ref input_unordere
 string__hash_ref XS_unpack_string__hash_ref(SV* input_hv_ref)
 {
 	printf("in CPPOPS_CPPTYPES XS_unpack_string__hash_ref(), top of subroutine\n");
+//	CHECK_HASH_REF(input_hv_ref);
+	CHECK_TRACE_HASH_REF(input_hv_ref, "input_hv_ref", "XS_unpack_string__hash_ref()");
 
     HV* input_hv;
     integer input_hv_num_keys;
     integer i;
     HE* input_hv_entry;
-    SV* input_hv_key;
-    SV* input_hv_value;
+    SV* input_hv_entry_key;
+    SV* input_hv_entry_value;
     string__hash_ref output_unordered_map;
 
-	if (SvROK(input_hv_ref) && (SvTYPE(SvRV(input_hv_ref)) == SVt_PVHV)) { input_hv = (HV*)SvRV(input_hv_ref); }
-	else { croak("in CPPOPS_CPPTYPES XS_unpack_string__hash_ref(), input_hv_ref was not an HV ref, croaking"); }
+	input_hv = (HV*)SvRV(input_hv_ref);
 
 	input_hv_num_keys = hv_iterinit(input_hv);
 	printf("in CPPOPS_CPPTYPES XS_unpack_string__hash_ref(), have input_hv_num_keys = %d\n", input_hv_num_keys);
@@ -186,18 +184,16 @@ string__hash_ref XS_unpack_string__hash_ref(SV* input_hv_ref)
 	{
 		// does not utilize i in entry retrieval
 		input_hv_entry = hv_iternext(input_hv);
+//		CHECK_HASH_ENTRY(input_hv_entry);
+		CHECK_TRACE_HASH_ENTRY(input_hv_entry, "input_hv_entry", "XS_unpack_string__hash_ref()");
 
-		if (input_hv_entry != NULL)
-		{
-			input_hv_key = hv_iterkeysv(input_hv_entry);
-			input_hv_value = hv_iterval(input_hv, input_hv_entry);
+		input_hv_entry_key = hv_iterkeysv(input_hv_entry);
+		input_hv_entry_value = hv_iterval(input_hv, input_hv_entry);
+//		CHECK_STRING(input_hv_entry_value);
+		CHECK_TRACE_STRING(input_hv_entry_value, strcat((char*)"input_hv_entry_value at key ", (const char*)SvPV_nolen(input_hv_entry_key)), "XS_unpack_string__hash_ref()");
 
-			// UNORDERED MAP ENTRY ASSIGNMENT, OPTION A, SUBSCRIPT, KNOWN SIZE: l-value subscript notation with no further reserve(); does not utilize i in assignment
-			if (SvPOKp(input_hv_value)) { output_unordered_map[SvPV_nolen(input_hv_key)] = SvPV_nolen(input_hv_value); }
-//			else { croak("in CPPOPS_CPPTYPES XS_unpack_string__hash_ref(), input_hv_value '%s' at key '%s' and index %d was not a string, croaking", SvPV_nolen(input_hv_value), SvPV_nolen(input_hv_key), i); }
-			else { croak("in CPPOPS_CPPTYPES XS_unpack_string__hash_ref(), input_hv_value at key '%s' was not a string, croaking", SvPV_nolen(input_hv_key), i); }
-		}
-		else { croak("in CPPOPS_CPPTYPES XS_unpack_string__hash_ref(), input_hv_entry at index %d was undef and/or NULL, croaking", i); }
+		// UNORDERED MAP ENTRY ASSIGNMENT, OPTION A, SUBSCRIPT, KNOWN SIZE: l-value subscript notation with no further reserve(); does not utilize i in assignment
+		output_unordered_map[SvPV_nolen(input_hv_entry_key)] = SvPV_nolen(input_hv_entry_value);
 	}
 
 	printf("in CPPOPS_CPPTYPES XS_unpack_string__hash_ref(), after for() loop, have output_unordered_map.size() = %d\n", output_unordered_map.size());
@@ -224,7 +220,7 @@ void XS_pack_string__hash_ref(SV* output_hv_ref, string__hash_ref input_unordere
 		for (i = input_unordered_map.begin();  i != input_unordered_map.end();  ++i)
 			{ hv_store(output_hv, (const char*)((i->first).c_str()), (U32)((i->first).size()), newSVpv((i->second).c_str(), 0), (U32)0); }
 	}
-	else warn("in CPPOPS_CPPTYPES XS_pack_string__hash_ref(), hash was empty, returning empty hash via newHV()");
+	else croak("in CPPOPS_CPPTYPES XS_pack_string__hash_ref(), hash was empty, returning empty hash via newHV()");
 
 	temp_sv_pointegerer = newSVrv(output_hv_ref, NULL);	  // upgrade output stack SV to an RV
 	SvREFCNT_dec(temp_sv_pointegerer);		 // discard temporary pointegerer
@@ -244,19 +240,19 @@ void XS_pack_string__hash_ref(SV* output_hv_ref, string__hash_ref input_unordere
 SV* stringify_integer__hash_ref(SV* input_hv_ref)
 {
 	printf("in CPPOPS_PERLTYPES stringify_integer__hash_ref(), top of subroutine\n");
+//	CHECK_HASH_REF(input_hv_ref);
+	CHECK_TRACE_HASH_REF(input_hv_ref, "input_hv_ref", "stringify_integer__hash_ref()");
 
     HV* input_hv;
     integer input_hv_num_keys;
     integer i;
     HE* input_hv_entry;
-    SV* input_hv_key;
-    SV* input_hv_value;
+    SV* input_hv_entry_key;
+    SV* input_hv_entry_value;
     SV* output_sv = newSV(0);
     bool i_is_0 = 1;
 
-	if (SvROK(input_hv_ref) && (SvTYPE(SvRV(input_hv_ref)) == SVt_PVHV)) { input_hv = (HV*)SvRV(input_hv_ref); }
-	else { croak("in CPPOPS_PERLTYPES stringify_integer__hash_ref(), input_hv_ref was not an HV ref, croaking"); }
-
+	input_hv = (HV*)SvRV(input_hv_ref);
 	input_hv_num_keys = hv_iterinit(input_hv);
 	printf("in CPPOPS_PERLTYPES stringify_integer__hash_ref(), have input_hv_num_keys = %d\n", input_hv_num_keys);
 
@@ -266,28 +262,23 @@ SV* stringify_integer__hash_ref(SV* input_hv_ref)
 	{
 		// does not utilize i in entry retrieval
 		input_hv_entry = hv_iternext(input_hv);
+//		CHECK_HASH_ENTRY(input_hv_entry);
+		CHECK_TRACE_HASH_ENTRY(input_hv_entry, "input_hv_entry", "stringify_integer__hash_ref()");
 
-		if (input_hv_entry != NULL)
-		{
-			input_hv_key = hv_iterkeysv(input_hv_entry);
-			input_hv_value = hv_iterval(input_hv, input_hv_entry);
+			input_hv_entry_key = hv_iterkeysv(input_hv_entry);
+			input_hv_entry_value = hv_iterval(input_hv, input_hv_entry);
+	//		CHECK_INTEGER(input_hv_entry_value);
+			CHECK_TRACE_INTEGER(input_hv_entry_value, strcat((char*)"input_hv_entry_value at key ", (const char*)SvPV_nolen(input_hv_entry_key)), "stringify_integer__hash_ref()");
 
-			if (SvIOKp(input_hv_value))
+			if (i_is_0)
 			{
-				if (i_is_0)
-				{
-					sv_catpvf(output_sv, "'%s' => %d", SvPV_nolen(input_hv_key), (integer)SvIV(input_hv_value));
-					i_is_0 = 0;
-				}
-				else
-				{
-					sv_catpvf(output_sv, ", '%s' => %d", SvPV_nolen(input_hv_key), (integer)SvIV(input_hv_value));
-				}
+				sv_catpvf(output_sv, "'%s' => %d", SvPV_nolen(input_hv_entry_key), (integer)SvIV(input_hv_entry_value));
+				i_is_0 = 0;
 			}
-//			else { croak("in CPPOPS_PERLTYPES stringify_integer__hash_ref(), input_hv_value '%s' at key '%s' and index %d was not an integer, croaking", SvPV_nolen(input_hv_value), SvPV_nolen(input_hv_key), i); }
-			else { croak("in CPPOPS_PERLTYPES stringify_integer__hash_ref(), input_hv_value at key '%s' was not an integer, croaking", SvPV_nolen(input_hv_key)); }
-		}
-		else { croak("in CPPOPS_PERLTYPES stringify_integer__hash_ref(), input_hv_entry at index %d was undef and/or NULL, croaking", i); }
+			else
+			{
+				sv_catpvf(output_sv, ", '%s' => %d", SvPV_nolen(input_hv_entry_key), (integer)SvIV(input_hv_entry_value));
+			}
 	}
 
 	sv_catpvn(output_sv, "}", 1);
@@ -302,21 +293,21 @@ SV* stringify_integer__hash_ref(SV* input_hv_ref)
 SV* stringify_number__hash_ref(SV* input_hv_ref)
 {
 	printf("in CPPOPS_PERLTYPES stringify_number__hash_ref(), top of subroutine\n");
+//	CHECK_HASH_REF(input_hv_ref);
+	CHECK_TRACE_HASH_REF(input_hv_ref, "input_hv_ref", "stringify_number__hash_ref()");
 
     HV* input_hv;
     integer input_hv_num_keys;
     integer i;
     HE* input_hv_entry;
-    SV* input_hv_key;
-    SV* input_hv_value;
+    SV* input_hv_entry_key;
+    SV* input_hv_entry_value;
     SV* output_sv = newSV(0);
     bool i_is_0 = 1;
 	ostringstream temp_stream;
 	temp_stream.precision(std::numeric_limits<double>::digits10);
 
-	if (SvROK(input_hv_ref) && (SvTYPE(SvRV(input_hv_ref)) == SVt_PVHV)) { input_hv = (HV*)SvRV(input_hv_ref); }
-	else { croak("in CPPOPS_PERLTYPES stringify_number__hash_ref(), input_hv_ref was not an HV ref, croaking"); }
-
+	input_hv = (HV*)SvRV(input_hv_ref);
 	input_hv_num_keys = hv_iterinit(input_hv);
 	printf("in CPPOPS_PERLTYPES stringify_number__hash_ref(), have input_hv_num_keys = %d\n", input_hv_num_keys);
 
@@ -326,32 +317,27 @@ SV* stringify_number__hash_ref(SV* input_hv_ref)
 	{
 		// does not utilize i in entry retrieval
 		input_hv_entry = hv_iternext(input_hv);
+//		CHECK_HASH_ENTRY(input_hv_entry);
+		CHECK_TRACE_HASH_ENTRY(input_hv_entry, "input_hv_entry", "stringify_number__hash_ref()");
 
-		if (input_hv_entry != NULL)
+		input_hv_entry_key = hv_iterkeysv(input_hv_entry);
+		input_hv_entry_value = hv_iterval(input_hv, input_hv_entry);
+//		CHECK_NUMBER(input_hv_entry_value);
+		CHECK_TRACE_NUMBER(input_hv_entry_value, strcat((char*)"input_hv_entry_value at key ", (const char*)SvPV_nolen(input_hv_entry_key)), "stringify_number__hash_ref()");
+
+		if (i_is_0)
 		{
-			input_hv_key = hv_iterkeysv(input_hv_entry);
-			input_hv_value = hv_iterval(input_hv, input_hv_entry);
-
-			if (SvNOKp(input_hv_value) || SvIOKp(input_hv_value))  // DEV NOTE: cast integer to number
-			{
-				if (i_is_0)
-				{
-					temp_stream << "'" << SvPV_nolen(input_hv_key) << "' => " << (long double)SvNV(input_hv_value);
-					i_is_0 = 0;
-				}
-				else
-				{
-					temp_stream << ", '" << SvPV_nolen(input_hv_key) << "' => " << (long double)SvNV(input_hv_value);
-				}
-			}
-//			else { croak("in CPPOPS_PERLTYPES stringify_number__hash_ref(), input_hv_value '%s' at key '%s' and index %d was not a number, croaking", SvPV_nolen(input_hv_value), SvPV_nolen(input_hv_key), i); }
-			else { croak("in CPPOPS_PERLTYPES stringify_number__hash_ref(), input_hv_value at key '%s' was not a number, croaking", SvPV_nolen(input_hv_key)); }
+			temp_stream << "'" << SvPV_nolen(input_hv_entry_key) << "' => " << (long double)SvNV(input_hv_entry_value);
+			i_is_0 = 0;
 		}
-		else { croak("in CPPOPS_PERLTYPES stringify_number__hash_ref(), input_hv_entry at index %d was undef and/or NULL, croaking", i); }
+		else
+		{
+			temp_stream << ", '" << SvPV_nolen(input_hv_entry_key) << "' => " << (long double)SvNV(input_hv_entry_value);
+		}
 	}
 
 	temp_stream << "}";
-	sv_setpv(output_sv, (char *)(temp_stream.str().c_str()));
+	sv_setpv(output_sv, (char*)(temp_stream.str().c_str()));
 
 	printf("in CPPOPS_PERLTYPES stringify_number__hash_ref(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
 	printf("in CPPOPS_PERLTYPES stringify_number__hash_ref(), bottom of subroutine\n");
@@ -363,19 +349,19 @@ SV* stringify_number__hash_ref(SV* input_hv_ref)
 SV* stringify_string__hash_ref(SV* input_hv_ref)
 {
 	printf("in CPPOPS_PERLTYPES stringify_string__hash_ref(), top of subroutine\n");
+//	CHECK_HASH_REF(input_hv_ref);
+	CHECK_TRACE_HASH_REF(input_hv_ref, "input_hv_ref", "stringify_string__hash_ref()");
 
     HV* input_hv;
     integer input_hv_num_keys;
     integer i;
     HE* input_hv_entry;
-    SV* input_hv_key;
-    SV* input_hv_value;
+    SV* input_hv_entry_key;
+    SV* input_hv_entry_value;
     SV* output_sv = newSV(0);
     bool i_is_0 = 1;
 
-	if (SvROK(input_hv_ref) && (SvTYPE(SvRV(input_hv_ref)) == SVt_PVHV)) { input_hv = (HV*)SvRV(input_hv_ref); }
-	else { croak("in CPPOPS_PERLTYPES stringify_string__hash_ref(), input_hv_ref was not an HV ref, croaking"); }
-
+	input_hv = (HV*)SvRV(input_hv_ref);
 	input_hv_num_keys = hv_iterinit(input_hv);
 	printf("in CPPOPS_PERLTYPES stringify_string__hash_ref(), have input_hv_num_keys = %d\n", input_hv_num_keys);
 
@@ -385,28 +371,23 @@ SV* stringify_string__hash_ref(SV* input_hv_ref)
 	{
 		// does not utilize i in entry retrieval
 		input_hv_entry = hv_iternext(input_hv);
+//		CHECK_HASH_ENTRY(input_hv_entry);
+		CHECK_TRACE_HASH_ENTRY(input_hv_entry, "input_hv_entry", "stringify_string__hash_ref()");
 
-		if (input_hv_entry != NULL)
+		input_hv_entry_key = hv_iterkeysv(input_hv_entry);
+		input_hv_entry_value = hv_iterval(input_hv, input_hv_entry);
+//		CHECK_STRING(input_hv_entry_value);
+		CHECK_TRACE_STRING(input_hv_entry_value, strcat((char*)"input_hv_entry_value at key ", (const char*)SvPV_nolen(input_hv_entry_key)), "stringify_string__hash_ref()");
+
+		if (i_is_0)
 		{
-			input_hv_key = hv_iterkeysv(input_hv_entry);
-			input_hv_value = hv_iterval(input_hv, input_hv_entry);
-
-			if (SvPOKp(input_hv_value))
-			{
-				if (i_is_0)
-				{
-					sv_catpvf(output_sv, "'%s' => '%s'", SvPV_nolen(input_hv_key), SvPV_nolen(input_hv_value));
-					i_is_0 = 0;
-				}
-				else
-				{
-					sv_catpvf(output_sv, ", '%s' => '%s'", SvPV_nolen(input_hv_key), SvPV_nolen(input_hv_value));
-				}
-			}
-//			else { croak("in CPPOPS_PERLTYPES stringify_string__hash_ref(), input_hv_value '%s' at key '%s' and index %d was not a string, croaking", SvPV_nolen(input_hv_value), SvPV_nolen(input_hv_key), i); }
-			else { croak("in CPPOPS_PERLTYPES stringify_string__hash_ref(), input_hv_value at key '%s' was not a string, croaking", SvPV_nolen(input_hv_key)); }
+			sv_catpvf(output_sv, "'%s' => '%s'", SvPV_nolen(input_hv_entry_key), SvPV_nolen(input_hv_entry_value));
+			i_is_0 = 0;
 		}
-		else { croak("in CPPOPS_PERLTYPES stringify_string__hash_ref(), input_hv_entry at index %d was undef and/or NULL, croaking", i); }
+		else
+		{
+			sv_catpvf(output_sv, ", '%s' => '%s'", SvPV_nolen(input_hv_entry_key), SvPV_nolen(input_hv_entry_value));
+		}
 	}
 
 	sv_catpvn(output_sv, "}", 1);
@@ -445,7 +426,7 @@ string stringify_integer__hash_ref(integer__hash_ref input_unordered_map)
 
 	output_stream << '}';
 
-	printf("in CPPOPS_CPPTYPES stringify_integer__hash_ref(), after for() loop, have output_stream =\n%s\n", (char *)(output_stream.str().c_str()));
+	printf("in CPPOPS_CPPTYPES stringify_integer__hash_ref(), after for() loop, have output_stream =\n%s\n", (char*)(output_stream.str().c_str()));
 	printf("in CPPOPS_CPPTYPES stringify_integer__hash_ref(), bottom of subroutine\n");
 
 	return(output_stream.str());
@@ -479,7 +460,7 @@ string stringify_number__hash_ref(number__hash_ref input_unordered_map)
 
 	output_stream << '}';
 
-	printf("in CPPOPS_CPPTYPES stringify_number__hash_ref(), after for() loop, have output_stream =\n%s\n", (char *)(output_stream.str().c_str()));
+	printf("in CPPOPS_CPPTYPES stringify_number__hash_ref(), after for() loop, have output_stream =\n%s\n", (char*)(output_stream.str().c_str()));
 	printf("in CPPOPS_CPPTYPES stringify_number__hash_ref(), bottom of subroutine\n");
 
 	return(output_stream.str());
@@ -533,6 +514,8 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 
 SV* typetest___integer__hash_ref__in___string__out(SV* lucky_numbers)
 {
+//	CHECK_HASH_REF(lucky_numbers);
+	CHECK_TRACE_HASH_REF(lucky_numbers, "lucky_numbers", "typetest___integer__hash_ref__in___string__out()");
 	HV* lucky_numbers_deref = (HV*)SvRV(lucky_numbers);
 	integer how_lucky = hv_iterinit(lucky_numbers_deref);
 	integer i;
@@ -540,25 +523,29 @@ SV* typetest___integer__hash_ref__in___string__out(SV* lucky_numbers)
 	for (i = 0;  i < how_lucky;  ++i)
 	{
 		HE* lucky_number_entry = hv_iternext(lucky_numbers_deref);
+//		CHECK_HASH_ENTRY(lucky_number_entry);
+		CHECK_TRACE_HASH_ENTRY(lucky_number_entry, "lucky_number_entry", "typetest___integer__hash_ref__in___string__out()");
 
-		if (SvIOKp(hv_iterval(lucky_numbers_deref, lucky_number_entry))) {
-			printf("in CPPOPS_PERLTYPES Hash::typetest___integer__hash_ref__in___string__out(), have lucky number '%s' => %d, BARSTOOL\n",
-					SvPV_nolen(hv_iterkeysv(lucky_number_entry)), (integer)SvIV(hv_iterval(lucky_numbers_deref, lucky_number_entry)));
-		}
-//		else { printf("in CPPOPS_PERLTYPES Hash::typetest___integer__hash_ref__in___string__out(), have lucky number '%s' => <NOT_AN_INT>, BARSTOOL\n", SvPV_nolen(*hv_iterkeysv(lucky_number_entry))); }
+//		CHECK_INTEGER(hv_iterval(lucky_numbers_deref, lucky_number_entry));
+		CHECK_TRACE_INTEGER(hv_iterval(lucky_numbers_deref, lucky_number_entry), strcat((char*)"hv_iterval(lucky_numbers_deref, lucky_number_entry) at key ", (const char*)SvPV_nolen(hv_iterkeysv(lucky_number_entry))), "typetest___integer__hash_ref__in___string__out()");
+
+		printf("in CPPOPS_PERLTYPES Hash::typetest___integer__hash_ref__in___string__out(), have lucky number '%s' => %d, BARSTOOL\n",
+			SvPV_nolen(hv_iterkeysv(lucky_number_entry)), (integer)SvIV(hv_iterval(lucky_numbers_deref, lucky_number_entry)));
 	}
 
 	return(newSVpvf("%s%s", SvPV_nolen(stringify_integer__hash_ref(lucky_numbers)), "CPPOPS_PERLTYPES"));
 }
 
 
-SV* typetest___integer__in___integer__hash_ref__out(integer my_size)
+SV* typetest___integer__in___integer__hash_ref__out(SV* my_size)
 {
+//	CHECK_INTEGER(my_size);
+	CHECK_TRACE_INTEGER(my_size, "my_size", "typetest___integer__in___integer__hash_ref__out()");
 	HV* output_hv = newHV();
 	integer i;
 	char temp_key[30];
 
-	for (i = 0;  i < my_size;  ++i)
+	for (i = 0;  i < SvIV(my_size);  ++i)
 	{
 		sprintf(temp_key, "CPPOPS_PERLTYPES_funkey%d", i);
 		hv_store(output_hv, (const char*)temp_key, (U32)strlen(temp_key), newSViv(i * 5), (U32)0);
@@ -572,6 +559,8 @@ SV* typetest___integer__in___integer__hash_ref__out(integer my_size)
 
 SV* typetest___number__hash_ref__in___string__out(SV* lucky_numbers)
 {
+//	CHECK_HASH_REF(lucky_numbers);
+	CHECK_TRACE_HASH_REF(lucky_numbers, "lucky_numbers", "typetest___number__hash_ref__in___string__out()");
 	HV* lucky_numbers_deref = (HV*)SvRV(lucky_numbers);
 	integer how_lucky = hv_iterinit(lucky_numbers_deref);
 	integer i;
@@ -579,26 +568,29 @@ SV* typetest___number__hash_ref__in___string__out(SV* lucky_numbers)
 	for (i = 0;  i < how_lucky;  ++i)
 	{
 		HE* lucky_number_entry = hv_iternext(lucky_numbers_deref);
+//		CHECK_HASH_ENTRY(lucky_number_entry);
+		CHECK_TRACE_HASH_ENTRY(lucky_number_entry, "lucky_number_entry", "typetest___number__hash_ref__in___string__out()");
 
-		if (SvNOKp(hv_iterval(lucky_numbers_deref, lucky_number_entry)) || SvIOKp(hv_iterval(lucky_numbers_deref, lucky_number_entry)))
-		{
-			printf("in CPPOPS_PERLTYPES Hash::typetest___number__hash_ref__in___string__out(), have lucky number '%s' => %Lf, BARSTOOP\n",
-					SvPV_nolen(hv_iterkeysv(lucky_number_entry)), (long double)SvNV(hv_iterval(lucky_numbers_deref, lucky_number_entry)));
-		}
-//		else { printf("in CPPOPS_PERLTYPES Hash::typetest___number__hash_ref__in___string__out(), have lucky number '%s' => <NOT_A_NUMBER>, BARSTOOP\n", SvPV_nolen(*hv_iterkeysv(lucky_number_entry))); }
+//		CHECK_NUMBER(hv_iterval(lucky_numbers_deref, lucky_number_entry));
+		CHECK_TRACE_NUMBER(hv_iterval(lucky_numbers_deref, lucky_number_entry), strcat((char*)"hv_iterval(lucky_numbers_deref, lucky_number_entry) at key ", (const char*)SvPV_nolen(hv_iterkeysv(lucky_number_entry))), "typetest___number__hash_ref__in___string__out()");
+
+		printf("in CPPOPS_PERLTYPES Hash::typetest___number__hash_ref__in___string__out(), have lucky number '%s' => %Lf, BARSTOOP\n",
+			SvPV_nolen(hv_iterkeysv(lucky_number_entry)), (long double)SvNV(hv_iterval(lucky_numbers_deref, lucky_number_entry)));
 	}
 
 	return(newSVpvf("%s%s", SvPV_nolen(stringify_number__hash_ref(lucky_numbers)), "CPPOPS_PERLTYPES"));
 }
 
 
-SV* typetest___integer__in___number__hash_ref__out(integer my_size)
+SV* typetest___integer__in___number__hash_ref__out(SV* my_size)
 {
+//	CHECK_INTEGER(my_size);
+	CHECK_TRACE_INTEGER(my_size, "my_size", "typetest___integer__in___number__hash_ref__out()");
 	HV* output_hv = newHV();
 	integer i;
 	char temp_key[30];
 
-	for (i = 0;  i < my_size;  ++i)
+	for (i = 0;  i < SvIV(my_size);  ++i)
 	{
 		sprintf(temp_key, "CPPOPS_PERLTYPES_funkey%d", i);
 		hv_store(output_hv, (const char*)temp_key, (U32)strlen(temp_key), newSVnv(i * 5.123456789), (U32)0);
@@ -612,6 +604,8 @@ SV* typetest___integer__in___number__hash_ref__out(integer my_size)
 
 SV* typetest___string__hash_ref__in___string__out(SV* people)
 {
+//	CHECK_HASH_REF(people);
+	CHECK_TRACE_HASH_REF(people, "people", "typetest___string__hash_ref__in___string__out()");
 	HV* people_deref = (HV*)SvRV(people);
 	integer how_crowded = hv_iterinit(people_deref);
 	integer i;
@@ -619,29 +613,32 @@ SV* typetest___string__hash_ref__in___string__out(SV* people)
 	for (i = 0;  i < how_crowded;  ++i)
 	{
 		HE* person_entry = hv_iternext(people_deref);
+//		CHECK_HASH_ENTRY(person_entry);
+		CHECK_TRACE_HASH_ENTRY(person_entry, "person_entry", "typetest___string__hash_ref__in___string__out()");
 
-		if (SvPOKp(hv_iterval(people_deref, person_entry)))
-		{
-			printf("in CPPOPS_PERLTYPES Hash::typetest___string__hash_ref__in___string__out(), have person '%s' => '%s', BARSPOON\n",
-					(char *)SvPV_nolen(hv_iterkeysv(person_entry)), (char *)SvPV_nolen(hv_iterval(people_deref, person_entry)));
-		}
-//		else { printf("in CPPOPS_PERLTYPES Hash::typetest___string__hash_ref__in___string__out(), have person '%s' => <NOT_A_STRING>, BARSPOON\n", SvPV_nolen(*hv_iterkeysv(person_entry))); }
+//		CHECK_STRING(hv_iterval(people_deref, person_entry));
+		CHECK_TRACE_STRING(hv_iterval(people_deref, person_entry), strcat((char*)"hv_iterval(people_deref, person_entry) at key ", (const char*)SvPV_nolen(hv_iterkeysv(person_entry))), "typetest___string__hash_ref__in___string__out()");
+
+		printf("in CPPOPS_PERLTYPES Hash::typetest___string__hash_ref__in___string__out(), have person '%s' => '%s', BARSPOON\n",
+			(char*)SvPV_nolen(hv_iterkeysv(person_entry)), (char*)SvPV_nolen(hv_iterval(people_deref, person_entry)));
 	}
 
 	return(newSVpvf("%s%s", SvPV_nolen(stringify_string__hash_ref(people)), "CPPOPS_PERLTYPES"));
 }
 
 
-SV* typetest___integer__in___string__hash_ref__out(integer my_size)
+SV* typetest___integer__in___string__hash_ref__out(SV* my_size)
 {
+//	CHECK_INTEGER(my_size);
+	CHECK_TRACE_INTEGER(my_size, "my_size", "typetest___integer__in___string__hash_ref__out()");
 	HV* people = newHV();
 	integer i;
 	char temp_key[30];
 
-	for (i = 0;  i < my_size;  ++i)
+	for (i = 0;  i < SvIV(my_size);  ++i)
 	{
 		sprintf(temp_key, "CPPOPS_PERLTYPES_Luker_key%d", i);
-		hv_store(people, (const char*)temp_key, (U32)strlen(temp_key), newSVpvf("Jeffy Ten! %d/%d", i, (my_size - 1)), (U32)0);
+		hv_store(people, (const char*)temp_key, (U32)strlen(temp_key), newSVpvf("Jeffy Ten! %d/%d", i, (SvIV(my_size) - 1)), (U32)0);
 		printf("in CPPOPS_PERLTYPES Hash::typetest___integer__in___string__hash_ref__out(), have temp_key = '%s', just set another Jeffy, BARTAT\n", temp_key);
 	}
 
@@ -653,11 +650,9 @@ SV* typetest___integer__in___string__hash_ref__out(integer my_size)
 string typetest___integer__hash_ref__in___string__out(integer__hash_ref lucky_numbers) { integer__hash_ref__const_iterator i;  for (i = lucky_numbers.begin();  i != lucky_numbers.end();  ++i) { printf("in CPPOPS_CPPTYPES Hash::typetest___integer__hash_ref__in___string__out(), have lucky number '%s' => %d, BARSTOOL\n", (i->first).c_str(), i->second); }  return(stringify_integer__hash_ref(lucky_numbers) + "CPPOPS_CPPTYPES"); }
 integer__hash_ref typetest___integer__in___integer__hash_ref__out(integer my_size) { integer__hash_ref new_unordered_map(my_size);  integer i;  string temp_key;  for (i = 0;  i < my_size;  ++i) { temp_key = "CPPOPS_CPPTYPES_funkey" + std::to_string(i);  new_unordered_map[temp_key] = i * 5;  printf("in CPPOPS_CPPTYPES Hash::typetest___integer__in___integer__hash_ref__out(), setting entry '%s' => %d, BARSTOOL\n", temp_key.c_str(), new_unordered_map[temp_key]); }  return(new_unordered_map); }
 
-//void typetest___number__hash_ref__in___void__out(number__hash_ref lucky_numbers) { number__hash_ref__const_iterator i;  for (i = lucky_numbers.begin();  i != lucky_numbers.end();  ++i) { printf("in CPPOPS_CPPTYPES Hash::typetest___number__hash_ref__in___void__out(), have lucky number '%s' => %Lf, BARSTOOL\n", (i->first).c_str(), i->second); } }
 string typetest___number__hash_ref__in___string__out(number__hash_ref lucky_numbers) { number__hash_ref__const_iterator i;  for (i = lucky_numbers.begin();  i != lucky_numbers.end();  ++i) { printf("in CPPOPS_CPPTYPES Hash::typetest___number__hash_ref__in___string__out(), have lucky number '%s' => %Lf, BARSTOOL\n", (i->first).c_str(), i->second); }  return(stringify_number__hash_ref(lucky_numbers) + "CPPOPS_CPPTYPES"); }
 number__hash_ref typetest___integer__in___number__hash_ref__out(integer my_size) { number__hash_ref new_unordered_map(my_size);  integer i;  string temp_key;  for (i = 0;  i < my_size;  ++i) { temp_key = "CPPOPS_CPPTYPES_funkey" + std::to_string(i);  new_unordered_map[temp_key] = i * 5.123456789;  printf("in CPPOPS_CPPTYPES Hash::typetest___integer__in___number__hash_ref__out(), setting entry '%s' => %Lf, BARSTOOL\n", temp_key.c_str(), new_unordered_map[temp_key]); }  return(new_unordered_map); }
 
-//void typetest___string__hash_ref__in___void__out(string__hash_ref people) { string__hash_ref__const_iterator i;  for (i = people.begin();  i != people.end();  ++i) { printf("in CPPOPS_CPPTYPES Hash::typetest___string__hash_ref__in___void__out(), have person '%s' => '%s', STARBOOL\n", (i->first).c_str(), (i->second).c_str()); } }
 string typetest___string__hash_ref__in___string__out(string__hash_ref people) { string__hash_ref__const_iterator i;  for (i = people.begin();  i != people.end();  ++i) { printf("in CPPOPS_CPPTYPES Hash::typetest___string__hash_ref__in___string__out(), have person '%s' => '%s', STARBOOL\n", (i->first).c_str(), (i->second).c_str()); }  return(stringify_string__hash_ref(people) + "CPPOPS_CPPTYPES"); }
 string__hash_ref typetest___integer__in___string__hash_ref__out(integer my_size) { string__hash_ref people;  integer i;  people.reserve((size_t)my_size);  for (i = 0;  i < my_size;  ++i) { people["CPPOPS_CPPTYPES_Luker_key" + std::to_string(i)] = "Jeffy Ten! " + std::to_string(i) + "/" + std::to_string(my_size - 1); printf("in CPPOPS_CPPTYPES Hash::typetest___integer__in___string__hash_ref__out(), bottom of for() loop, have i = %d, just set another Jeffy!\n", i); }  return(people); }
 

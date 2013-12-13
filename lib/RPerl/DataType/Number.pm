@@ -61,7 +61,7 @@ our void $check_number = sub {
     }
 };
 
-our void $check_number_trace = sub {
+our void $check_trace_number = sub {
     ( my $possible_number, my $variable_name, my $subroutine_name ) = @_;
     if ( not( defined $possible_number ) ) {
         croak(
@@ -83,7 +83,7 @@ our string $stringify_number = sub {
     ( my $input_number ) = @_;
 
     #    check_number($input_number);
-    check_number_trace( $input_number, '$input_number',
+    check_trace_number( $input_number, '$input_number',
         'stringify_number()' );
     print
         "in PERLOPS_PERLTYPES Number::stringify_number(), bottom of subroutine, received \$input_number = $input_number\n"
@@ -103,7 +103,7 @@ our number $typetest___number__in___number__out = sub {
     ( my number $lucky_number ) = @_;
 
     #    check_number($lucky_number);
-    check_number_trace( $lucky_number, '$lucky_number',
+    check_trace_number( $lucky_number, '$lucky_number',
         'typetest___number__in___number__out()' );
     print
         'in PERLOPS_PERLTYPES Number::typetest___number__in___number__out(), received $lucky_number = '

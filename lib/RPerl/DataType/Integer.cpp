@@ -1,7 +1,7 @@
 ////use strict;  use warnings;
 //using std::cout;  using std::endl;  // not needed for integer?
 
-// VERSION 0.2.2
+// VERSION 0.2.3
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_cpp
 #define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 1
@@ -12,6 +12,8 @@
 // [[[ TYPE-CHECKING ]]]
 // [[[ TYPE-CHECKING ]]]
 
+// TYPE-CHECKING SUBROUTINES DEPRECATED IN FAVOR OF EQUIVALENT MACROS
+/*
 void check_integer(SV* possible_integer) {
     if (not(SvOK(possible_integer))) {
     	croak("\nERROR EIV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but undefined/null value found,\ncroaking");
@@ -20,8 +22,7 @@ void check_integer(SV* possible_integer) {
     	croak("\nERROR EIV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but non-integer value found,\ncroaking");
     }
 };
-
-void check_integer_trace(SV* possible_integer, const char* variable_name, const char* subroutine_name) {
+void check_trace_integer(SV* possible_integer, const char* variable_name, const char* subroutine_name) {
     if (not(SvOK(possible_integer))) {
     	croak("\nERROR EIV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but undefined/null value found,\nin variable '%s' from subroutine '%s',\ncroaking",
     			variable_name, subroutine_name);
@@ -31,6 +32,7 @@ void check_integer_trace(SV* possible_integer, const char* variable_name, const 
     			variable_name, subroutine_name);
     }
 };
+*/
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
@@ -41,8 +43,8 @@ void check_integer_trace(SV* possible_integer, const char* variable_name, const 
 // convert from (Perl SV containing integer) to (C integer)
 integer XS_unpack_integer(SV* input_sv) {
 printf("in CPPOPS_CPPTYPES XS_unpack_integer(), top of subroutine\n");
-//	check_integer(input_sv);
-	check_integer_trace(input_sv, "input_sv", "XS_unpack_integer()");
+//	CHECK_INTEGER(input_sv);
+	CHECK_TRACE_INTEGER(input_sv, "input_sv", "XS_unpack_integer()");
 
 //	integer output_integer;
 
@@ -76,8 +78,8 @@ printf("in CPPOPS_CPPTYPES XS_pack_integer(), bottom of subroutine\n");
 
 SV* stringify_integer(SV* input_integer)
 {
-//	check_integer(input_integer);
-	check_integer_trace(input_integer, "input_integer", "stringify_integer()");
+//	CHECK_INTEGER(input_integer);
+	CHECK_TRACE_INTEGER(input_integer, "input_integer", "stringify_integer()");
 printf("in CPPOPS_PERLTYPES stringify_integer(), bottom of subroutine, received input_integer = %d\n", (integer)SvIV(input_integer));
 	return(newSVpvf("%d", (integer)SvIV(input_integer)));
 }
@@ -107,8 +109,8 @@ printf("in CPPOPS_PERLTYPES typetest___void__in___integer__out(), have retval = 
 }
 
 SV* typetest___integer__in___integer__out(SV* lucky_integer) {
-//	check_integer(lucky_integer);
-	check_integer_trace(lucky_integer, "lucky_integer", "typetest___integer__in___integer__out()");
+//	CHECK_INTEGER(lucky_integer);
+	CHECK_TRACE_INTEGER(lucky_integer, "lucky_integer", "typetest___integer__in___integer__out()");
 printf("in CPPOPS_PERLTYPES typetest___integer__in___integer__out(), received lucky_integer = %d\n", (integer)SvIV(lucky_integer));
 	return(newSViv((SvIV(lucky_integer) * 2) + OPS_TYPES_ID));
 }

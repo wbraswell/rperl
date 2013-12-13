@@ -48,7 +48,7 @@ our void $check_string = sub {
         );
     }
 };
-our void $check_string_trace = sub {
+our void $check_trace_string = sub {
     ( my $possible_string, my $variable_name, my $subroutine_name ) = @_;
     if ( not( defined $possible_string ) ) {
         croak(
@@ -74,7 +74,7 @@ our string $typetest___string__in___string__out = sub {
     ( my string $lucky_string ) = @_;
 
     #    check_string($lucky_string);
-    check_string_trace( $lucky_string, '$lucky_string',
+    check_trace_string( $lucky_string, '$lucky_string',
         'typetest___string__in___string__out()' );
     print
         "in PERLOPS_PERLTYPES String::typetest___string__in___string__out(), received \$lucky_string = '$lucky_string'\n"

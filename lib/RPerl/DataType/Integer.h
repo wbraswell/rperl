@@ -1,10 +1,24 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-// VERSION 0.2.2
+// VERSION 0.2.3
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_h
 #define __CPP__INCLUDED__RPerl__DataType__Integer_h 1
+
+// [[[ TYPE-CHECKING MACROS ]]]
+#define CHECK_INTEGER(possible_integer) \
+	(not(SvOK(possible_integer)) ? \
+			croak("\nERROR EIV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but undefined/null value found,\ncroaking") : \
+			(not(SvIOKp(possible_integer)) ? \
+					croak("\nERROR EIV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but non-integer value found,\ncroaking") : \
+					(void)0))
+#define CHECK_TRACE_INTEGER(possible_integer, variable_name, subroutine_name) \
+	(not(SvOK(possible_integer)) ? \
+			croak("\nERROR EIV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but undefined/null value found,\nin variable '%s' from subroutine '%s',\ncroaking", variable_name, subroutine_name) : \
+			(not(SvIOKp(possible_integer)) ? \
+					croak("\nERROR EIV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but non-integer value found,\nin variable '%s' from subroutine '%s',\ncroaking", variable_name, subroutine_name) : \
+					(void)0))
 
 // [[[ TYPEDEFS ]]]
 // DEV NOTE: must use "integer" because "int" is already defined by Inline's default typemap, even if we put our own integer entry into typemap.rperl;
@@ -15,8 +29,9 @@ typedef int integer;
 #include <RPerl/DataType/String.cpp>  // need for string typedef
 
 // [[[ TYPE-CHECKING ]]]
-void check_integer(SV* possible_integer);
-void check_integer_trace(SV* possible_integer, const char* variable_name, const char* subroutine_name);
+// DEPRECATED, SEE MACROS ABOVE
+//void check_integer(SV* possible_integer);
+//void check_trace_integer(SV* possible_integer, const char* variable_name, const char* subroutine_name);
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 # ifdef __CPP__TYPES
