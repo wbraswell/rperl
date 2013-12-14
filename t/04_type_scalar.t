@@ -1,8 +1,9 @@
 #!/usr/bin/perl
 ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted newline
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.2.0');
+use version; our $VERSION = qv('0.2.5');
 
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
@@ -17,7 +18,7 @@ CHECK {
         || croak('Error redirecting stderr, croaking');
 }
 
-use Test::More tests => 181;
+use Test::More tests => 199;
 use Test::Exception;
 use Carp;
 my $ERROR_MAX = 0.00000001;
@@ -350,52 +351,57 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         "/(EIV00.*$OPS_TYPES)|(Usage.*stringify_integer)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TIV00 stringify_integer() throws correct exception}
     );
-    lives_and(                                              # TIV01
-        sub {
-            is( stringify_integer(3), '3',
-                q{TIV01 stringify_integer(3) returns correct value} );
-        },
-        q{TIV01 stringify_integer(3) lives}
+    throws_ok(                                              # TIV01
+        sub { stringify_integer(undef) },
+        "/EIV00.*$OPS_TYPES/",
+        q{TIV01 stringify_integer(undef) throws correct exception}
     );
     lives_and(                                              # TIV02
         sub {
-            is( stringify_integer(-17), '-17',
-                q{TIV02 stringify_integer(-17) returns correct value} );
+            is( stringify_integer(3), '3',
+                q{TIV02 stringify_integer(3) returns correct value} );
         },
-        q{TIV02 stringify_integer(-17) lives}
+        q{TIV02 stringify_integer(3) lives}
     );
-    throws_ok(                                              # TIV03
-        sub { stringify_integer(-17.3) },
-        "/(EIV01.*$OPS_TYPES)/",
-        q{TIV03 stringify_integer(-17.3) throws correct exception}
+    lives_and(                                              # TIV03
+        sub {
+            is( stringify_integer(-17), '-17',
+                q{TIV03 stringify_integer(-17) returns correct value} );
+        },
+        q{TIV03 stringify_integer(-17) lives}
     );
     throws_ok(                                              # TIV04
-        sub { stringify_integer('-17.3') },
-        "/(EIV01.*$OPS_TYPES)/",
-        q{TIV04 stringify_integer('-17.3') throws correct exception}
+        sub { stringify_integer(-17.3) },
+        "/EIV01.*$OPS_TYPES/",
+        q{TIV04 stringify_integer(-17.3) throws correct exception}
     );
     throws_ok(                                              # TIV05
-        sub { stringify_integer( [3] ) },
-        "/(EIV01.*$OPS_TYPES)/",
-        q{TIV05 stringify_integer([3]) throws correct exception}
+        sub { stringify_integer('-17.3') },
+        "/EIV01.*$OPS_TYPES/",
+        q{TIV05 stringify_integer('-17.3') throws correct exception}
     );
     throws_ok(                                              # TIV06
-        sub { stringify_integer( { a_key => 3 } ) },
-        "/(EIV01.*$OPS_TYPES)/",
-        q{TIV06 stringify_integer({a_key => 3}) throws correct exception}
+        sub { stringify_integer( [3] ) },
+        "/EIV01.*$OPS_TYPES/",
+        q{TIV06 stringify_integer([3]) throws correct exception}
     );
-    lives_and(                                              # TIV07
+    throws_ok(                                              # TIV07
+        sub { stringify_integer( { a_key => 3 } ) },
+        "/EIV01.*$OPS_TYPES/",
+        q{TIV07 stringify_integer({a_key => 3}) throws correct exception}
+    );
+    lives_and(                                              # TIV08
         sub {
             is( stringify_integer(-1_234_567_890), '-1234567890',
-                q{TIV07 stringify_integer(-1_234_567_890) returns correct value}
+                q{TIV08 stringify_integer(-1_234_567_890) returns correct value}
             );
         },
-        q{TIV07 stringify_integer(-1_234_567_890) lives}
+        q{TIV08 stringify_integer(-1_234_567_890) lives}
     );
-    throws_ok(                                              # TIV08
+    throws_ok(                                              # TIV09
         sub { stringify_integer(-1_234_567_890_000) },
-        "/(EIV01.*$OPS_TYPES)/",
-        q{TIV08 stringify_integer(-1_234_567_890_000) throws correct exception}
+        "/EIV01.*$OPS_TYPES/",
+        q{TIV09 stringify_integer(-1_234_567_890_000) throws correct exception}
     );
     lives_and(                                              # TIV10
         sub {
@@ -412,57 +418,62 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         ,    # DEV NOTE: 2 different error messages, RPerl & C
         q{TIV20 typetest___integer__in___integer__out() throws correct exception}
     );
-    lives_and(    # TIV21
-        sub {
-            is( typetest___integer__in___integer__out(3),
-                ( ( 3 * 2 ) + $OPS_TYPES_ID ),
-                q{TIV21 typetest___integer__in___integer__out(3) returns correct value}
-            );
-        },
-        q{TIV21 typetest___integer__in___integer__out(3) lives}
+    throws_ok(    # TIV21
+        sub { typetest___integer__in___integer__out(undef) },
+        "/EIV00.*$OPS_TYPES/",
+        q{TIV21 typetest___integer__in___integer__out(undef) throws correct exception}
     );
     lives_and(    # TIV22
         sub {
-            is( typetest___integer__in___integer__out(-17),
-                ( ( -17 * 2 ) + $OPS_TYPES_ID ),
-                q{TIV22 typetest___integer__in___integer__out(-17) returns correct value}
+            is( typetest___integer__in___integer__out(3),
+                ( ( 3 * 2 ) + $OPS_TYPES_ID ),
+                q{TIV22 typetest___integer__in___integer__out(3) returns correct value}
             );
         },
-        q{TIV22 typetest___integer__in___integer__out(-17) lives}
+        q{TIV22 typetest___integer__in___integer__out(3) lives}
     );
-    throws_ok(    # TIV23
-        sub { typetest___integer__in___integer__out(-17.3) },
-        "/(EIV01.*$OPS_TYPES)/",
-        q{TIV23 typetest___integer__in___integer__out(-17.3) throws correct exception}
+    lives_and(    # TIV23
+        sub {
+            is( typetest___integer__in___integer__out(-17),
+                ( ( -17 * 2 ) + $OPS_TYPES_ID ),
+                q{TIV23 typetest___integer__in___integer__out(-17) returns correct value}
+            );
+        },
+        q{TIV23 typetest___integer__in___integer__out(-17) lives}
     );
     throws_ok(    # TIV24
-        sub { typetest___integer__in___integer__out('-17.3') },
-        "/(EIV01.*$OPS_TYPES)/",
-        q{TIV24 typetest___integer__in___integer__out('-17.3') throws correct exception}
+        sub { typetest___integer__in___integer__out(-17.3) },
+        "/EIV01.*$OPS_TYPES/",
+        q{TIV24 typetest___integer__in___integer__out(-17.3) throws correct exception}
     );
     throws_ok(    # TIV25
-        sub { typetest___integer__in___integer__out( [3] ) },
-        "/(EIV01.*$OPS_TYPES)/",
-        q{TIV25 typetest___integer__in___integer__out([3]) throws correct exception}
+        sub { typetest___integer__in___integer__out('-17.3') },
+        "/EIV01.*$OPS_TYPES/",
+        q{TIV25 typetest___integer__in___integer__out('-17.3') throws correct exception}
     );
     throws_ok(    # TIV26
-        sub { typetest___integer__in___integer__out( { a_key => 3 } ) },
-        "/(EIV01.*$OPS_TYPES)/",
-        q{TIV26 typetest___integer__in___integer__out({a_key => 3}) throws correct exception}
+        sub { typetest___integer__in___integer__out( [3] ) },
+        "/EIV01.*$OPS_TYPES/",
+        q{TIV26 typetest___integer__in___integer__out([3]) throws correct exception}
     );
-    lives_and(    # TIV27
+    throws_ok(    # TIV27
+        sub { typetest___integer__in___integer__out( { a_key => 3 } ) },
+        "/EIV01.*$OPS_TYPES/",
+        q{TIV27 typetest___integer__in___integer__out({a_key => 3}) throws correct exception}
+    );
+    lives_and(    # TIV28
         sub {
             is( typetest___integer__in___integer__out(-234_567_890),
                 ( ( -234_567_890 * 2 ) + $OPS_TYPES_ID ),
-                q{TIV27 typetest___integer__in___integer__out(-234_567_890) returns correct value}
+                q{TIV28 typetest___integer__in___integer__out(-234_567_890) returns correct value}
             );
         },
-        q{TIV27 typetest___integer__in___integer__out(-234_567_890) lives}
+        q{TIV28 typetest___integer__in___integer__out(-234_567_890) lives}
     );
-    throws_ok(    # TIV28
+    throws_ok(    # TIV29
         sub { typetest___integer__in___integer__out(-1_234_567_890_000) },
-        "/(EIV01.*$OPS_TYPES)/",
-        q{TIV28 typetest___integer__in___integer__out(-1_234_567_890_000) throws correct exception}
+        "/EIV01.*$OPS_TYPES/",
+        q{TIV29 typetest___integer__in___integer__out(-1_234_567_890_000) throws correct exception}
     );
 
     # [[[ NUMBER TESTS ]]]
@@ -474,52 +485,57 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         "/(ENV00.*$OPS_TYPES)|(Usage.*stringify_number)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TNV00 stringify_number() throws correct exception}
     );
-    lives_and(                                             # TNV01
-        sub {
-            is( stringify_number(3), '3',
-                q{TNV01 stringify_number(3) returns correct value} );
-        },
-        q{TNV01 stringify_number(3) lives}
+    throws_ok(                                             # TNV01
+        sub { stringify_number(undef) },
+        "/ENV00.*$OPS_TYPES/",
+        q{TNV01 stringify_number(undef) throws correct exception}
     );
     lives_and(                                             # TNV02
         sub {
-            is( stringify_number(-17), '-17',
-                q{TNV02 stringify_number(-17) returns correct value} );
+            is( stringify_number(3), '3',
+                q{TNV02 stringify_number(3) returns correct value} );
         },
-        q{TNV02 stringify_number(-17) lives}
+        q{TNV02 stringify_number(3) lives}
     );
     lives_and(                                             # TNV03
         sub {
-            is( stringify_number(-17.3), '-17.3',
-                q{TNV03 stringify_number(-17.3) returns correct value} );
+            is( stringify_number(-17), '-17',
+                q{TNV03 stringify_number(-17) returns correct value} );
         },
-        q{TNV03 stringify_number(-17.3) lives}
+        q{TNV03 stringify_number(-17) lives}
     );
-    throws_ok(                                             # TNV04
-        sub { stringify_number('-17.3') },
-        "/(ENV01.*$OPS_TYPES)/",
-        q{TNV04 stringify_number('-17.3') throws correct exception}
+    lives_and(                                             # TNV04
+        sub {
+            is( stringify_number(-17.3), '-17.3',
+                q{TNV04 stringify_number(-17.3) returns correct value} );
+        },
+        q{TNV04 stringify_number(-17.3) lives}
     );
     throws_ok(                                             # TNV05
-        sub { stringify_number( [3] ) },
-        "/(ENV01.*$OPS_TYPES)/",
-        q{TNV05 stringify_number([3]) throws correct exception}
+        sub { stringify_number('-17.3') },
+        "/ENV01.*$OPS_TYPES/",
+        q{TNV05 stringify_number('-17.3') throws correct exception}
     );
     throws_ok(                                             # TNV06
-        sub { stringify_number( { a_key => 3 } ) },
-        "/(ENV01.*$OPS_TYPES)/",
-        q{TNV06 stringify_number({a_key => 3}) throws correct exception}
+        sub { stringify_number( [3] ) },
+        "/ENV01.*$OPS_TYPES/",
+        q{TNV06 stringify_number([3]) throws correct exception}
     );
-    lives_and(                                             # TNV07
+    throws_ok(                                             # TNV07
+        sub { stringify_number( { a_key => 3 } ) },
+        "/ENV01.*$OPS_TYPES/",
+        q{TNV07 stringify_number({a_key => 3}) throws correct exception}
+    );
+    lives_and(                                             # TNV08
         sub {
             is( stringify_number(
                     3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679
                 ),
                 '3.14159265358979',
-                q{TNV07 stringify_number(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679) returns correct value}
+                q{TNV08 stringify_number(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679) returns correct value}
             );
         },
-        q{TNV07 stringify_number(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679) lives}
+        q{TNV08 stringify_number(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679) lives}
     );
     lives_and(                                             # TNV10
         sub {
@@ -540,49 +556,54 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         ,             # DEV NOTE: 2 different error messages, RPerl & C
         q{TNV20 typetest___number__in___number__out() throws correct exception}
     );
-    lives_and(        # TNV21
-        sub {
-            is( typetest___number__in___number__out(3),
-                ( ( 3 * 2 ) + $OPS_TYPES_ID ),
-                q{TNV21 typetest___number__in___number__out(3) returns correct value}
-            );
-        },
-        q{TNV21 typetest___number__in___number__out(3) lives}
+    throws_ok(        # TNV21
+        sub { typetest___number__in___number__out(undef) },
+        "/ENV00.*$OPS_TYPES/",
+        q{TNV21 typetest___number__in___number__out(undef) throws correct exception}
     );
     lives_and(        # TNV22
         sub {
-            is( typetest___number__in___number__out(-17),
-                ( ( -17 * 2 ) + $OPS_TYPES_ID ),
-                q{TNV22 typetest___number__in___number__out(-17) returns correct value}
+            is( typetest___number__in___number__out(3),
+                ( ( 3 * 2 ) + $OPS_TYPES_ID ),
+                q{TNV22 typetest___number__in___number__out(3) returns correct value}
             );
         },
-        q{TNV22 typetest___number__in___number__out(-17) lives}
+        q{TNV22 typetest___number__in___number__out(3) lives}
     );
     lives_and(        # TNV23
         sub {
-            is( typetest___number__in___number__out(-17.3),
-                ( ( -17.3 * 2 ) + $OPS_TYPES_ID ),
-                q{TNV23 typetest___number__in___number__out(-17.3) returns correct value}
+            is( typetest___number__in___number__out(-17),
+                ( ( -17 * 2 ) + $OPS_TYPES_ID ),
+                q{TNV23 typetest___number__in___number__out(-17) returns correct value}
             );
         },
-        q{TNV23 typetest___number__in___number__out(-17.3) lives}
+        q{TNV23 typetest___number__in___number__out(-17) lives}
     );
-    throws_ok(        # TNV24
-        sub { typetest___number__in___number__out('-17.3') },
-        "/(ENV01.*$OPS_TYPES)/",
-        q{TNV24 typetest___number__in___number__out('-17.3') throws correct exception}
+    lives_and(        # TNV24
+        sub {
+            is( typetest___number__in___number__out(-17.3),
+                ( ( -17.3 * 2 ) + $OPS_TYPES_ID ),
+                q{TNV24 typetest___number__in___number__out(-17.3) returns correct value}
+            );
+        },
+        q{TNV24 typetest___number__in___number__out(-17.3) lives}
     );
     throws_ok(        # TNV25
-        sub { typetest___number__in___number__out( [3] ) },
-        "/(ENV01.*$OPS_TYPES)/",
-        q{TNV25 typetest___number__in___number__out([3]) throws correct exception}
+        sub { typetest___number__in___number__out('-17.3') },
+        "/ENV01.*$OPS_TYPES/",
+        q{TNV25 typetest___number__in___number__out('-17.3') throws correct exception}
     );
     throws_ok(        # TNV26
-        sub { typetest___number__in___number__out( { a_key => 3 } ) },
-        "/(ENV01.*$OPS_TYPES)/",
-        q{TNV26 typetest___number__in___number__out({a_key => 3}) throws correct exception}
+        sub { typetest___number__in___number__out( [3] ) },
+        "/ENV01.*$OPS_TYPES/",
+        q{TNV26 typetest___number__in___number__out([3]) throws correct exception}
     );
-    lives_and(        # TNV27
+    throws_ok(        # TNV27
+        sub { typetest___number__in___number__out( { a_key => 3 } ) },
+        "/ENV01.*$OPS_TYPES/",
+        q{TNV27 typetest___number__in___number__out({a_key => 3}) throws correct exception}
+    );
+    lives_and(        # TNV28
         sub {
             cmp_ok(
                 abs(typetest___number__in___number__out(
@@ -591,10 +612,10 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
                 ),
                 '<',
                 $ERROR_MAX,
-                q{TNV27 typetest___number__in___number__out(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679) returns correct value}
+                q{TNV28 typetest___number__in___number__out(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679) returns correct value}
             );
         },
-        q{TNV27 typetest___number__in___number__out(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679) lives}
+        q{TNV28 typetest___number__in___number__out(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679) lives}
     );
 
     # [[[ STRING TESTS ]]]
@@ -617,47 +638,63 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         q{TPV10 typetest___string__in___string__out() throws correct exception}
     );
     throws_ok(    # TPV11
-        sub { typetest___string__in___string__out(3) },
-        "/(EPV01.*$OPS_TYPES)/",
-        q{TPV11 typetest___string__in___string__out(3) throws correct exception}
+        sub { typetest___string__in___string__out(undef) },
+        "/EPV00.*$OPS_TYPES/",
+        q{TPV11 typetest___string__in___string__out(undef) throws correct exception}
     );
     throws_ok(    # TPV12
-        sub { typetest___string__in___string__out(-17) },
-        "/(EPV01.*$OPS_TYPES)/",
-        q{TPV12 typetest___string__in___string__out(-17) throws correct exception}
+        sub { typetest___string__in___string__out(3) },
+        "/EPV01.*$OPS_TYPES/",
+        q{TPV12 typetest___string__in___string__out(3) throws correct exception}
     );
     throws_ok(    # TPV13
-        sub { typetest___string__in___string__out(-17.3) },
-        "/(EPV01.*$OPS_TYPES)/",
-        q{TPV13 typetest___string__in___string__out(-17.3) throws correct exception}
+        sub { typetest___string__in___string__out(-17) },
+        "/EPV01.*$OPS_TYPES/",
+        q{TPV13 typetest___string__in___string__out(-17) throws correct exception}
     );
-    lives_and(    # TPV14
+    throws_ok(    # TPV14
+        sub { typetest___string__in___string__out(-17.3) },
+        "/EPV01.*$OPS_TYPES/",
+        q{TPV14 typetest___string__in___string__out(-17.3) throws correct exception}
+    );
+    lives_and(    # TPV15
         sub {
             is( typetest___string__in___string__out('-17.3'),
                 "-17.3 $OPS_TYPES",
-                q{TPV14 typetest___string__in___string__out('-17.3') returns correct value}
+                q{TPV15 typetest___string__in___string__out('-17.3') returns correct value}
             );
         },
-        q{TPV14 typetest___string__in___string__out('-17.3') lives}
-    );
-    throws_ok(    # TPV15
-        sub { typetest___string__in___string__out( [3] ) },
-        "/(EPV01.*$OPS_TYPES)/",
-        q{TPV15 typetest___string__in___string__out([3]) throws correct exception}
+        q{TPV15 typetest___string__in___string__out('-17.3') lives}
     );
     throws_ok(    # TPV16
-        sub { typetest___string__in___string__out( { a_key => 3 } ) },
-        "/(EPV01.*$OPS_TYPES)/",
-        q{TPV16 typetest___string__in___string__out({a_key => 3}) throws correct exception}
+        sub { typetest___string__in___string__out( [3] ) },
+        "/EPV01.*$OPS_TYPES/",
+        q{TPV16 typetest___string__in___string__out([3]) throws correct exception}
     );
-    lives_and(    # TPV17
+    throws_ok(    # TPV17
+        sub { typetest___string__in___string__out( { a_key => 3 } ) },
+        "/EPV01.*$OPS_TYPES/",
+        q{TPV17 typetest___string__in___string__out({a_key => 3}) throws correct exception}
+    );
+    lives_and(    # TPV18
         sub {
             is( typetest___string__in___string__out('Melange'),
                 "Melange $OPS_TYPES",
-                q{TPV17 typetest___string__in___string__out('Melange') returns correct value}
+                q{TPV18 typetest___string__in___string__out('Melange') returns correct value}
             );
         },
-        q{TPV17 typetest___string__in___string__out('Melange') lives}
+        q{TPV18 typetest___string__in___string__out('Melange') lives}
+    );
+    lives_and(    # TPV19
+        sub {
+            is( typetest___string__in___string__out(
+                    "\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n"
+                ),
+                "\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n $OPS_TYPES",
+                q{TPV19 typetest___string__in___string__out("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n") returns correct value}
+            );
+        },
+        q{TPV19 typetest___string__in___string__out("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n") lives}
     );
 }
 

@@ -512,28 +512,28 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 
 # ifdef __PERL__TYPES
 
-SV* typetest___integer__hash_ref__in___string__out(SV* lucky_numbers)
+SV* typetest___integer__hash_ref__in___string__out(SV* lucky_integers)
 {
-//	CHECK_HASH_REF(lucky_numbers);
-	//CHECK_TRACE_HASH_REF(lucky_numbers, "lucky_numbers", "typetest___integer__hash_ref__in___string__out()");
-	HV* lucky_numbers_deref = (HV*)SvRV(lucky_numbers);
-	integer how_lucky = hv_iterinit(lucky_numbers_deref);
+//	CHECK_HASH_REF(lucky_integers);
+	//CHECK_TRACE_HASH_REF(lucky_integers, "lucky_integers", "typetest___integer__hash_ref__in___string__out()");
+	HV* lucky_integers_deref = (HV*)SvRV(lucky_integers);
+	integer how_lucky = hv_iterinit(lucky_integers_deref);
 	integer i;
 
 	for (i = 0;  i < how_lucky;  ++i)
 	{
-		HE* lucky_number_entry = hv_iternext(lucky_numbers_deref);
-//		CHECK_HASH_ENTRY(lucky_number_entry);
-		//CHECK_TRACE_HASH_ENTRY(lucky_number_entry, "lucky_number_entry", "typetest___integer__hash_ref__in___string__out()");
+		HE* lucky_integer_entry = hv_iternext(lucky_integers_deref);
+//		CHECK_HASH_ENTRY(lucky_integer_entry);
+		//CHECK_TRACE_HASH_ENTRY(lucky_integer_entry, "lucky_integer_entry", "typetest___integer__hash_ref__in___string__out()");
 
-//		CHECK_INTEGER(hv_iterval(lucky_numbers_deref, lucky_number_entry));
-		//CHECK_TRACE_INTEGER(hv_iterval(lucky_numbers_deref, lucky_number_entry), strcat((char*)"hv_iterval(lucky_numbers_deref, lucky_number_entry) at key ", (const char*)SvPV_nolen(hv_iterkeysv(lucky_number_entry))), "typetest___integer__hash_ref__in___string__out()");
+//		CHECK_INTEGER(hv_iterval(lucky_integers_deref, lucky_integer_entry));
+		//CHECK_TRACE_INTEGER(hv_iterval(lucky_integers_deref, lucky_integer_entry), strcat((char*)"hv_iterval(lucky_integers_deref, lucky_integer_entry) at key ", (const char*)SvPV_nolen(hv_iterkeysv(lucky_integer_entry))), "typetest___integer__hash_ref__in___string__out()");
 
-		printf("in CPPOPS_PERLTYPES Hash::typetest___integer__hash_ref__in___string__out(), have lucky number '%s' => %d, BARSTOOL\n",
-			SvPV_nolen(hv_iterkeysv(lucky_number_entry)), (integer)SvIV(hv_iterval(lucky_numbers_deref, lucky_number_entry)));
+		printf("in CPPOPS_PERLTYPES Hash::typetest___integer__hash_ref__in___string__out(), have lucky integer '%s' => %d, BARSTOOL\n",
+			SvPV_nolen(hv_iterkeysv(lucky_integer_entry)), (integer)SvIV(hv_iterval(lucky_integers_deref, lucky_integer_entry)));
 	}
 
-	return(newSVpvf("%s%s", SvPV_nolen(stringify_integer__hash_ref(lucky_numbers)), "CPPOPS_PERLTYPES"));
+	return(newSVpvf("%s%s", SvPV_nolen(stringify_integer__hash_ref(lucky_integers)), "CPPOPS_PERLTYPES"));
 }
 
 
@@ -647,7 +647,7 @@ SV* typetest___integer__in___string__hash_ref__out(SV* my_size)
 
 # elif defined __CPP__TYPES
 
-string typetest___integer__hash_ref__in___string__out(integer__hash_ref lucky_numbers) { integer__hash_ref__const_iterator i;  for (i = lucky_numbers.begin();  i != lucky_numbers.end();  ++i) { printf("in CPPOPS_CPPTYPES Hash::typetest___integer__hash_ref__in___string__out(), have lucky number '%s' => %d, BARSTOOL\n", (i->first).c_str(), i->second); }  return(stringify_integer__hash_ref(lucky_numbers) + "CPPOPS_CPPTYPES"); }
+string typetest___integer__hash_ref__in___string__out(integer__hash_ref lucky_integers) { integer__hash_ref__const_iterator i;  for (i = lucky_integers.begin();  i != lucky_integers.end();  ++i) { printf("in CPPOPS_CPPTYPES Hash::typetest___integer__hash_ref__in___string__out(), have lucky integer '%s' => %d, BARSTOOL\n", (i->first).c_str(), i->second); }  return(stringify_integer__hash_ref(lucky_integers) + "CPPOPS_CPPTYPES"); }
 integer__hash_ref typetest___integer__in___integer__hash_ref__out(integer my_size) { integer__hash_ref new_unordered_map(my_size);  integer i;  string temp_key;  for (i = 0;  i < my_size;  ++i) { temp_key = "CPPOPS_CPPTYPES_funkey" + std::to_string(i);  new_unordered_map[temp_key] = i * 5;  printf("in CPPOPS_CPPTYPES Hash::typetest___integer__in___integer__hash_ref__out(), setting entry '%s' => %d, BARSTOOL\n", temp_key.c_str(), new_unordered_map[temp_key]); }  return(new_unordered_map); }
 
 string typetest___number__hash_ref__in___string__out(number__hash_ref lucky_numbers) { number__hash_ref__const_iterator i;  for (i = lucky_numbers.begin();  i != lucky_numbers.end();  ++i) { printf("in CPPOPS_CPPTYPES Hash::typetest___number__hash_ref__in___string__out(), have lucky number '%s' => %Lf, BARSTOOL\n", (i->first).c_str(), i->second); }  return(stringify_number__hash_ref(lucky_numbers) + "CPPOPS_CPPTYPES"); }

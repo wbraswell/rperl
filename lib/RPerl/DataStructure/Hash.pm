@@ -239,26 +239,26 @@ our string $stringify_string__hash_ref = sub {
 
 our string $typetest___integer__hash_ref__in___string__out = sub {
 print "in PERLOPS_PERLTYPES Hash::typetest___integer__hash_ref__in___string__out(), top of subroutine\n";
-    ( my integer__hash_ref $lucky_numbers) = @_;
+    ( my integer__hash_ref $lucky_integers) = @_;
 
-    #    check_hash_ref($lucky_numbers);
-    check_trace_hash_ref( $lucky_numbers, '$lucky_numbers',
+    #    check_hash_ref($lucky_integers);
+    check_trace_hash_ref( $lucky_integers, '$lucky_integers',
         'typetest___integer__hash_ref__in___string__out()' );
-    foreach my string $key ( keys %{$lucky_numbers} ) {
-        my $lucky_number = $lucky_numbers->{$key};
+    foreach my string $key ( keys %{$lucky_integers} ) {
+        my $lucky_integer = $lucky_integers->{$key};
 
-        #        check_integer($lucky_number);
-        check_trace_integer( $lucky_number, '$lucky_number',
+        #        check_integer($lucky_integer);
+        check_trace_integer( $lucky_integer, '$lucky_integer',
             'typetest___integer__hash_ref__in___string__out()' );
         print
-            "in PERLOPS_PERLTYPES Hash::typetest___integer__hash_ref__in___string__out(), have lucky number '$key' => "
-            . $lucky_number
+            "in PERLOPS_PERLTYPES Hash::typetest___integer__hash_ref__in___string__out(), have lucky integer '$key' => "
+            . $lucky_integer
             . ", BARSTOOL\n"
             or croak();
     }
 print "in PERLOPS_PERLTYPES Hash::typetest___integer__hash_ref__in___string__out(), bottom of subroutine\n";
     return (
-        stringify_integer__hash_ref($lucky_numbers) . 'PERLOPS_PERLTYPES' );
+        stringify_integer__hash_ref($lucky_integers) . 'PERLOPS_PERLTYPES' );
 };
 
 our integer__hash_ref $typetest___integer__in___integer__hash_ref__out = sub {

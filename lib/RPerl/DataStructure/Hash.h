@@ -88,14 +88,14 @@ string stringify_string__hash_ref(string__hash_ref input_unordered_map);
 
 //# [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
-SV* typetest___integer__hash_ref__in___string__out(SV* lucky_numbers);
+SV* typetest___integer__hash_ref__in___string__out(SV* lucky_integers);
 SV* typetest___integer__in___integer__hash_ref__out(SV* my_size);
 SV* typetest___number__hash_ref__in___string__out(SV* lucky_numbers);
 SV* typetest___integer__in___number__hash_ref__out(SV* my_size);
 SV* typetest___string__hash_ref__in___string__out(SV* people);
 SV* typetest___integer__in___string__hash_ref__out(SV* my_size);
 # elif defined __CPP__TYPES
-string typetest___integer__hash_ref__in___string__out(integer__hash_ref lucky_numbers);
+string typetest___integer__hash_ref__in___string__out(integer__hash_ref lucky_integers);
 integer__hash_ref typetest___integer__in___integer__hash_ref__out(integer my_size);
 string typetest___number__hash_ref__in___string__out(number__hash_ref lucky_numbers);
 number__hash_ref typetest___integer__in___number__hash_ref__out(integer my_size);

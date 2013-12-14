@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.2.3');
+use version; our $VERSION = qv('0.2.5');
 use Carp;
 
 ## no critic qw(ProhibitMagicNumbers ProhibitUnreachableCode)  ## RPERL allow numeric test values, allow unreachable test code
@@ -13,10 +13,10 @@ BEGIN { use lib $main::RPERL_INCLUDE_PATH;  use RPerl;  use base ('RPerl');  $RP
 BEGIN { use Data::Dumper;  our $AUTOLOAD;  sub AUTOLOAD { croak("AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n" . Dumper(\@_) . ', croaking'); } }  ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  ## RPERL SYSTEM allow autoload  ## RPERL SYSTEM allow read-only @_
 
 # UNCOMMENT TO ENABLE PERL TYPES FOR C++ OPS
-#types::types_enable('PERL');
+types::types_enable('PERL');
 
 # UNCOMMENT TO ENABLE C++ TYPES FOR C++ OPS
-types::types_enable('CPP');
+#types::types_enable('CPP');
 
 # UNCOMMENT TO ENABLE C++ OPS
 use RPerl::DataType::Integer_cpp;  RPerl::DataType::Integer_cpp::cpp_load();  RPerl::DataType::Integer_cpp::cpp_link();
@@ -42,15 +42,16 @@ for my integer $i ( 0 .. $i_MAX ) {
 
     # [[[ INTEGER TESTS ]]]
 
-#	$string_retval = stringify_integer();  # TIV00; raise/throw exception  # CPPOPS_BOTHTYPES Usage: main::stringify_integer(input_integer) at ./bin/development/scalar_test.pl line 45.
-	$string_retval = stringify_integer(3);  # TIV01
-#	$string_retval = stringify_integer(-17);  # TIV02
-#	$string_retval = stringify_integer(-17.3);  # TIV03; raise/throw exception
-#	$string_retval = stringify_integer('-17.3');  # TIV04; raise/throw exception
-#	$string_retval = stringify_integer([3]);  # TIV05; raise/throw exception
-#	$string_retval = stringify_integer({a_key => 3});  # TIV06; raise/throw exception
-#	$string_retval = stringify_integer(-1_234_567_890);  # TIV07
-#	$string_retval = stringify_integer(-1_234_567_890_000);  # TIV08; raise/throw exception
+#	$string_retval = stringify_integer();  # TIV00; error PERLOPS EIV00, CPPOPS "Usage: main::stringify_integer(input_integer)"
+	$string_retval = stringify_integer(undef);  # TIV01; error EIV00
+#	$string_retval = stringify_integer(3);  # TIV02
+#	$string_retval = stringify_integer(-17);  # TIV03
+#	$string_retval = stringify_integer(-17.3);  # TIV04; error EIV01
+#	$string_retval = stringify_integer('-17.3');  # TIV05; error EIV01
+#	$string_retval = stringify_integer([3]);  # TIV06; error EIV01
+#	$string_retval = stringify_integer({a_key => 3});  # TIV07; error EIV01
+#	$string_retval = stringify_integer(-1_234_567_890);  # TIV08
+#	$string_retval = stringify_integer(-1_234_567_890_000);  # TIV09; error EIV01
 	print "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n" or croak();
 
 croak('Done for now, croaking');
@@ -58,41 +59,44 @@ croak('Done for now, croaking');
 #	$integer_retval = typetest___void__in___integer__out();  # TIV10
 #	print "in scalar_test.pl $i/$i_MAX, have \$integer_retval = $integer_retval\n" or croak();
 
-#	$integer_retval = typetest___integer__in___integer__out();  # TIV20; raise/throw exception  # CPPOPS_BOTHTYPES Usage: main::typetest___integer__in___integer__out(lucky_integer) at ./bin/development/scalar_test.pl line 59.
-#	$integer_retval = typetest___integer__in___integer__out(3);  # TIV21
-#	$integer_retval = typetest___integer__in___integer__out(-17);  # TIV22
-#	$integer_retval = typetest___integer__in___integer__out(-17.3);  # TIV23; raise/throw exception
-#	$integer_retval = typetest___integer__in___integer__out('-17.3');  # TIV24; raise/throw exception
-#	$integer_retval = typetest___integer__in___integer__out([3]);  # TIV25; raise/throw exception
-#	$integer_retval = typetest___integer__in___integer__out({a_key => 3});  # TIV26; raise/throw exception
+#	$integer_retval = typetest___integer__in___integer__out();  # TIV20; error PERLOPS EIV00, CPPOPS "Usage: main::typetest___integer__in___integer__out(lucky_integer)"
+#	$integer_retval = typetest___integer__in___integer__out(undef);  # TIV21; error EIV00
+#	$integer_retval = typetest___integer__in___integer__out(3);  # TIV22
+#	$integer_retval = typetest___integer__in___integer__out(-17);  # TIV23
+#	$integer_retval = typetest___integer__in___integer__out(-17.3);  # TIV24; error EIV01
+#	$integer_retval = typetest___integer__in___integer__out('-17.3');  # TIV25; error EIV01
+#	$integer_retval = typetest___integer__in___integer__out([3]);  # TIV26; error EIV01
+#	$integer_retval = typetest___integer__in___integer__out({a_key => 3});  # TIV27; error EIV01
 ##	$integer_retval = typetest___integer__in___integer__out(-1_234_567_890);  # NOT TEST-WORTHY: arithmetic overflow, incorrect results
-#	$integer_retval = typetest___integer__in___integer__out(-234_567_890);  # TIV27
-#	$integer_retval = typetest___integer__in___integer__out(-1_234_567_890_000);  # TIV28; raise/throw exception
+#	$integer_retval = typetest___integer__in___integer__out(-234_567_890);  # TIV28
+#	$integer_retval = typetest___integer__in___integer__out(-1_234_567_890_000);  # TIV29; error EIV01
 #	print "in scalar_test.pl $i/$i_MAX, have \$integer_retval = $integer_retval\n" or croak();
 
     # [[[ NUMBER TESTS ]]]
 
-#	$string_retval = stringify_number();  # TNV00; raise/throw exception  # CPPOPS_BOTHTYPES Usage: main::stringify_number(input_number) at ./bin/development/scalar_test.pl line 73.
-#	$string_retval = stringify_number(3);  # TNV01
-#	$string_retval = stringify_number(-17);  # TNV02
-#	$string_retval = stringify_number(-17.3);  # TNV03
-#	$string_retval = stringify_number('-17.3');  # TNV04; raise/throw exception
-#	$string_retval = stringify_number([3]);  # TNV05; raise/throw exception
-#	$string_retval = stringify_number({a_key => 3});  # TNV06; raise/throw exception
-#	$string_retval = stringify_number(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679);  # TNV07
+#	$string_retval = stringify_number();  # TNV00; error PERLOPS ENV00, CPPOPS "Usage: main::stringify_number(input_number)"
+#	$string_retval = stringify_number(undef);  # TNV01; error ENV00
+#	$string_retval = stringify_number(3);  # TNV02
+#	$string_retval = stringify_number(-17);  # TNV03
+#	$string_retval = stringify_number(-17.3);  # TNV04
+#	$string_retval = stringify_number('-17.3');  # TNV05; error ENV01
+#	$string_retval = stringify_number([3]);  # TNV06; error ENV01
+#	$string_retval = stringify_number({a_key => 3});  # TNV07; error ENV01
+#	$string_retval = stringify_number(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679);  # TNV08
 #	print "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n" or croak();
 
 #	$number_retval = typetest___void__in___number__out();  # TNV10
 #	print "in scalar_test.pl $i/$i_MAX, have \$number_retval = $number_retval\n" or croak();
 
-#	$number_retval = typetest___number__in___number__out();  # TNV20; raise/throw exception  # CPPOPS_BOTHTYPES Usage: main::typetest___number__in___number__out(lucky_number) at ./bin/development/scalar_test.pl line 86.
-#	$number_retval = typetest___number__in___number__out(3);  # TNV21
-#	$number_retval = typetest___number__in___number__out(-17);  # TNV22
-#	$number_retval = typetest___number__in___number__out(-17.3);  # TNV23
-#	$number_retval = typetest___number__in___number__out('-17.3');  # TNV24; raise/throw exception
-#	$number_retval = typetest___number__in___number__out([3]);  # TNV25; raise/throw exception
-#	$number_retval = typetest___number__in___number__out({a_key => 3});  # TNV26; raise/throw exception
-#	$number_retval = typetest___number__in___number__out(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679);  # TNV27
+#	$number_retval = typetest___number__in___number__out();  # TNV20; error PERLOPS ENV00, CPPOPS "Usage: main::typetest___number__in___number__out(lucky_number)"
+#	$number_retval = typetest___number__in___number__out(undef);  # TNV21; error ENV00
+#	$number_retval = typetest___number__in___number__out(3);  # TNV22
+#	$number_retval = typetest___number__in___number__out(-17);  # TNV23
+#	$number_retval = typetest___number__in___number__out(-17.3);  # TNV24
+#	$number_retval = typetest___number__in___number__out('-17.3');  # TNV25; error ENV01
+#	$number_retval = typetest___number__in___number__out([3]);  # TNV26; error ENV01
+#	$number_retval = typetest___number__in___number__out({a_key => 3});  # TNV27; error ENV01
+#	$number_retval = typetest___number__in___number__out(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679);  # TNV28
 #	print "in scalar_test.pl $i/$i_MAX, have \$number_retval = $number_retval\n" or croak();
 
     # [[[ STRING TESTS ]]]
@@ -100,15 +104,16 @@ croak('Done for now, croaking');
 #	$string_retval = typetest___void__in___string__out();  # TPV00
 #	print "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n" or croak();
 
-#	$string_retval = typetest___string__in___string__out();  # TPV10; raise/throw exception  # CPPOPS_BOTHTYPES Usage: main::typetest___string__in___string__out(lucky_string) at ./bin/development/scalar_test.pl line 101.
-#	$string_retval = typetest___string__in___string__out(3);  # TPV11; raise/throw exception
-#	$string_retval = typetest___string__in___string__out(-17);  # TPV12; raise/throw exception
-#	$string_retval = typetest___string__in___string__out(-17.3);  # TPV13; raise/throw exception
-#	$string_retval = typetest___string__in___string__out('-17.3');  # TPV14
-#	$string_retval = typetest___string__in___string__out([3]);  # TPV15; raise/throw exception
-#	$string_retval = typetest___string__in___string__out({a_key => 3});  # TPV16; raise/throw exception
-#	$string_retval = typetest___string__in___string__out('Melange');  # TPV17
-#	$string_retval = typetest___string__in___string__out("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n");  # TPV18
+#	$string_retval = typetest___string__in___string__out();  # TPV10; error PERLOPS EPV00, CPPOPS "Usage: main::typetest___string__in___string__out(lucky_string)"
+#	$string_retval = typetest___string__in___string__out(undef);  # TPV11; error EPV00
+#	$string_retval = typetest___string__in___string__out(3);  # TPV12; error EPV01
+#	$string_retval = typetest___string__in___string__out(-17);  # TPV13; error EPV01
+#	$string_retval = typetest___string__in___string__out(-17.3);  # TPV14; error EPV01
+#	$string_retval = typetest___string__in___string__out('-17.3');  # TPV15
+#	$string_retval = typetest___string__in___string__out([3]);  # TPV16; error EPV01
+#	$string_retval = typetest___string__in___string__out({a_key => 3});  # TPV17; error EPV01
+#	$string_retval = typetest___string__in___string__out('Melange');  # TPV18
+#	$string_retval = typetest___string__in___string__out("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n");  # TPV19
 #	print "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n" or croak();
 }
 
