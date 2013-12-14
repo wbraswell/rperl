@@ -1,5 +1,6 @@
 ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
 ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+## no critic qw(ProhibitMultiplePackages)  ## RPERL SYSTEM types, allow multiple packages
 package RPerl::DataStructure::Hash;
 use strict;
 use warnings;
@@ -13,9 +14,9 @@ use Carp;
 use base ('RPerl::DataStructure');
 use RPerl::DataStructure;
 
-# for type checking via SvIOKp(), SvNOKp(), and SvPOKp(); inside INIT to delay until after 'use MyConfig'
+# for type-checking via SvIOKp(), SvNOKp(), and SvPOKp(); inside INIT to delay until after 'use MyConfig'
 INIT {
-    print "in Hash.pm, loading C++ helper functions for type checking...\n"
+    print "in Hash.pm, loading C++ helper functions for type-checking...\n"
         or croak();
 }
 INIT {
@@ -35,19 +36,14 @@ use RPerl::DataType::Unknown;
 use RPerl::DataStructure::Array;
 use RPerl::DataStructure::Hash::SubTypes;
 
-# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-
-our integer $OPS_TYPES_ID = 0;                        # PERLOPS_PERLTYPES is 0
-our string $ops_hash      = sub { return ('PERL'); };
-our string $types_hash    = sub { return ('PERL'); };
+# [[[ SWITCH CONTEXT TO MAIN PACKAGE, THUS EXPORTING TYPE-CHECKING ]]]
+package main;
 
 # [[[ TYPE-CHECKING ]]]
 # [[[ TYPE-CHECKING ]]]
 # [[[ TYPE-CHECKING ]]]
 
-our void $check_hash_ref = sub {
+our void $CHECK_HASH_REF = sub {
     ( my $possible_hash_ref ) = @_;
     if ( not( defined $possible_hash_ref ) ) {
         croak(
@@ -62,8 +58,7 @@ our void $check_hash_ref = sub {
         );
     }
 };
-
-our void $check_trace_hash_ref = sub {
+our void $CHECKTRACE_HASH_REF = sub {
     ( my $possible_hash_ref, my $variable_name, my $subroutine_name ) = @_;
     if ( not( defined $possible_hash_ref ) ) {
         croak(
@@ -77,24 +72,33 @@ our void $check_trace_hash_ref = sub {
     }
 };
 
+# [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
+package RPerl::DataType::Integer;
+
+# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
+# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
+# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
+
+our integer $OPS_TYPES_ID = 0;                        # PERLOPS_PERLTYPES is 0
+our string $ops_hash      = sub { return ('PERL'); };
+our string $types_hash    = sub { return ('PERL'); };
+
 # [[[ STRINGIFY ]]]
 # [[[ STRINGIFY ]]]
 # [[[ STRINGIFY ]]]
 
-=disable
 # convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
 our string $stringify_integer__hash_ref = sub {
     ( my $input_hv_ref ) = @_;
 
 	print "in PERLOPS_PERLTYPES stringify_integer__hash_ref(), top of subroutine\n" or croak();
-#    check_hash_ref($input_hv_ref);
-    check_trace_hash_ref( $input_hv_ref, '$input_hv_ref',
+#    ::CHECK_HASH_REF($input_hv_ref);
+    ::CHECKTRACE_HASH_REF( $input_hv_ref, '$input_hv_ref',
         'stringify_integer__hash_ref()' );
 
     my %input_hv;
 
 #	my integer $input_hv_length;
-    my integer $i;
     my integer $input_hv_entry_value;
     my string $output_sv;
     my integer $i_is_0 = 1;    # DEV NOTE: should be bool type, not integer
@@ -106,22 +110,17 @@ our string $stringify_integer__hash_ref = sub {
 
     $output_sv = '{';
 
-    foreach my $i ( keys %input_hv ) {
+    foreach my string $key ( keys %input_hv ) {
 
-        # utilizes i in element retrieval
-        $input_hv_entry_value = $input_hv{$i};
+        $input_hv_entry_value = $input_hv{$key};
 
-        #        check_integer($input_hv_entry_value);
-        check_trace_integer( $input_hv_entry_value, '$input_hv_entry_value',
+        #        ::CHECK_INTEGER($input_hv_entry_value);
+        ::CHECKTRACE_INTEGER( $input_hv_entry_value, "\$input_hv_entry_value at key '$key'",
             'stringify_integer__hash_ref()' );
 
-        if ($i_is_0) {
-            $output_sv .= "\'$i\' => $input_hv_entry_value"; # DEV NOTE: emulate Data::Dumper & follow PBP by using single quotes for strings
-            $i_is_0 = 0;
-        }
-        else {
-            $output_sv .= ", \'$i\' => $input_hv_entry_value";
-        }
+        if ($i_is_0) { $i_is_0 = 0; } else { $output_sv .= ', '; }
+        $key =~ s/\'/\\\'/gxms; # delimit all single-quote ' characters with a back-slash \ character
+        $output_sv .= "'$key' => $input_hv_entry_value"; # DEV NOTE: emulate Data::Dumper & follow PBP by using single quotes for key strings
     }
 
     $output_sv .= '}';
@@ -131,21 +130,19 @@ our string $stringify_integer__hash_ref = sub {
 
     return ($output_sv);
 };
-=cut
 
 # convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing NVs))) to Perl-parsable (Perl SV containing PV)
 our string $stringify_number__hash_ref = sub {
     ( my $input_hv_ref ) = @_;
 
 	print "in PERLOPS_PERLTYPES stringify_number__hash_ref(), top of subroutine\n" or croak();
-#    check_hash_ref($input_hv_ref);
-    check_trace_hash_ref( $input_hv_ref, '$input_hv_ref',
+#    ::CHECK_HASH_REF($input_hv_ref);
+    ::CHECKTRACE_HASH_REF( $input_hv_ref, '$input_hv_ref',
         'stringify_number__hash_ref()' );
 
     my %input_hv;
 
     #	my integer $input_hv_length;
-    my integer $i;
     my number $input_hv_entry_value;
     my string $output_sv;
     my integer $i_is_0 = 1;
@@ -157,22 +154,17 @@ our string $stringify_number__hash_ref = sub {
 
     $output_sv = '{';
 
-    foreach my $i ( keys %input_hv ) {
+    foreach my string $key ( keys %input_hv ) {
 
-        # utilizes i in element retrieval
-        $input_hv_entry_value = $input_hv{$i};
+        $input_hv_entry_value = $input_hv{$key};
 
-        #        check_number($input_hv_entry_value);
-        check_trace_number( $input_hv_entry_value, '$input_hv_entry_value',
+        #        ::CHECK_NUMBER($input_hv_entry_value);
+        ::CHECKTRACE_NUMBER( $input_hv_entry_value, "\$input_hv_entry_value at key '$key'",
             'stringify_number__hash_ref()' );
 
-        if ($i_is_0) {
-            $output_sv .= "\'$i\' => $input_hv_entry_value";
-            $i_is_0 = 0;
-        }
-        else {
-            $output_sv .= ", \'$i\' => $input_hv_entry_value";
-        }
+        if ($i_is_0) { $i_is_0 = 0; } else { $output_sv .= ', '; }
+        $key =~ s/\'/\\\'/gxms;
+        $output_sv .= "'$key' => $input_hv_entry_value";
     }
 
     $output_sv .= '}';
@@ -188,14 +180,13 @@ our string $stringify_string__hash_ref = sub {
     ( my $input_hv_ref ) = @_;
 
 	print "in PERLOPS_PERLTYPES stringify_string__hash_ref(), top of subroutine\n" or croak();
-#    check_hash_ref($input_hv_ref);
-    check_trace_hash_ref( $input_hv_ref, '$input_hv_ref',
+#    ::CHECK_HASH_REF($input_hv_ref);
+    ::CHECKTRACE_HASH_REF( $input_hv_ref, '$input_hv_ref',
         'stringify_string__hash_ref()' );
 
     my %input_hv;
 
     #	my integer $input_hv_length;
-    my integer $i;
     my string $input_hv_entry_value;
     my string $output_sv;
     my integer $i_is_0 = 1;
@@ -207,22 +198,18 @@ our string $stringify_string__hash_ref = sub {
 
     $output_sv = '{';
 
-    foreach my $i ( keys %input_hv ) {
+    foreach my string $key ( keys %input_hv ) {
 
-        # utilizes i in element retrieval
-        $input_hv_entry_value = $input_hv{$i};
+        $input_hv_entry_value = $input_hv{$key};
 
-        #        check_string($input_hv_entry_value);
-        check_trace_string( $input_hv_entry_value, '$input_hv_entry_value',
+        #        ::CHECK_STRING($input_hv_entry_value);
+        ::CHECKTRACE_STRING( $input_hv_entry_value, "\$input_hv_entry_value at key '$key'",
             'stringify_string__hash_ref()' );
 
-        if ($i_is_0) {
-            $output_sv .= "'$i' => '$input_hv_entry_value'";
-            $i_is_0 = 0;
-        }
-        else {
-            $output_sv .= ", '$i' => '$input_hv_entry_value'";
-        }
+        if ($i_is_0) { $i_is_0 = 0; } else { $output_sv .= ', '; }
+        $key =~ s/\'/\\\'/gxms;
+        $input_hv_entry_value =~ s/\'/\\\'/gxms;
+        $output_sv .= "'$key' => '$input_hv_entry_value'";
     }
 
     $output_sv .= '}';
@@ -238,17 +225,17 @@ our string $stringify_string__hash_ref = sub {
 # [[[ TYPE TESTING ]]]
 
 our string $typetest___integer__hash_ref__in___string__out = sub {
-print "in PERLOPS_PERLTYPES Hash::typetest___integer__hash_ref__in___string__out(), top of subroutine\n";
+#print "in PERLOPS_PERLTYPES Hash::typetest___integer__hash_ref__in___string__out(), top of subroutine\n";
     ( my integer__hash_ref $lucky_integers) = @_;
 
-    #    check_hash_ref($lucky_integers);
-    check_trace_hash_ref( $lucky_integers, '$lucky_integers',
+    #    ::CHECK_HASH_REF($lucky_integers);
+    ::CHECKTRACE_HASH_REF( $lucky_integers, '$lucky_integers',
         'typetest___integer__hash_ref__in___string__out()' );
     foreach my string $key ( keys %{$lucky_integers} ) {
         my $lucky_integer = $lucky_integers->{$key};
 
-        #        check_integer($lucky_integer);
-        check_trace_integer( $lucky_integer, '$lucky_integer',
+        #        ::CHECK_INTEGER($lucky_integer);
+        ::CHECKTRACE_INTEGER( $lucky_integer, "\$lucky_integer at key '$key'",
             'typetest___integer__hash_ref__in___string__out()' );
         print
             "in PERLOPS_PERLTYPES Hash::typetest___integer__hash_ref__in___string__out(), have lucky integer '$key' => "
@@ -264,8 +251,8 @@ print "in PERLOPS_PERLTYPES Hash::typetest___integer__hash_ref__in___string__out
 our integer__hash_ref $typetest___integer__in___integer__hash_ref__out = sub {
     ( my integer $my_size) = @_;
 
-    #    check_integer($my_size);
-    check_trace_integer( $my_size, '$my_size',
+    #    ::CHECK_INTEGER($my_size);
+    ::CHECKTRACE_INTEGER( $my_size, '$my_size',
         'typetest___integer__in___integer__hash_ref__out()' );
     my integer__hash_ref $new_hash = {};
     my string $temp_key;
@@ -284,14 +271,14 @@ our integer__hash_ref $typetest___integer__in___integer__hash_ref__out = sub {
 our string $typetest___number__hash_ref__in___string__out = sub {
     ( my number__hash_ref $lucky_numbers) = @_;
 
-    #    check_hash_ref($lucky_numbers);
-    check_trace_hash_ref( $lucky_numbers, '$lucky_numbers',
+    #    ::CHECK_HASH_REF($lucky_numbers);
+    ::CHECKTRACE_HASH_REF( $lucky_numbers, '$lucky_numbers',
         'typetest___number__hash_ref__in___string__out()' );
     foreach my string $key ( keys %{$lucky_numbers} ) {
         my $lucky_number = $lucky_numbers->{$key};
 
-        #        check_number($lucky_number);
-        check_trace_number( $lucky_number, '$lucky_number',
+        #        ::CHECK_NUMBER($lucky_number);
+        ::CHECKTRACE_NUMBER( $lucky_number, "\$lucky_number at key '$key'",
             'typetest___number__hash_ref__in___string__out()' );
         print
             "in PERLOPS_PERLTYPES Hash::typetest___number__hash_ref__in___string__out(), have lucky number '$key' => "
@@ -306,8 +293,8 @@ our string $typetest___number__hash_ref__in___string__out = sub {
 our number__hash_ref $typetest___integer__in___number__hash_ref__out = sub {
     ( my integer $my_size) = @_;
 
-    #    check_integer($my_size);
-    check_trace_integer( $my_size, '$my_size',
+    #    ::CHECK_INTEGER($my_size);
+    ::CHECKTRACE_INTEGER( $my_size, '$my_size',
         'typetest___integer__in___number__hash_ref__out()' );
     my number__hash_ref $new_hash = {};
     my string $temp_key;
@@ -326,14 +313,14 @@ our number__hash_ref $typetest___integer__in___number__hash_ref__out = sub {
 our string $typetest___string__hash_ref__in___string__out = sub {
     ( my string__hash_ref $people) = @_;
 
-    #    check_hash_ref($lucky_numbers);
-    check_trace_hash_ref( $people, '$people',
+    #    ::CHECK_HASH_REF($lucky_numbers);
+    ::CHECKTRACE_HASH_REF( $people, '$people',
         'typetest___string__hash_ref__in___string__out()' );
     foreach my string $key ( keys %{$people} ) {
         my $person = $people->{$key};
 
-        #        check_string($person);
-        check_trace_string( $person, '$person',
+        #        ::CHECK_STRING($person);
+        ::CHECKTRACE_STRING( $person, "\$person at key '$key'",
             'typetest___string__hash_ref__in___string__out()' );
         print
             "in PERLOPS_PERLTYPES Hash::typetest___string__hash_ref__in___string__out(), have person '$key' => '"
@@ -347,8 +334,8 @@ our string $typetest___string__hash_ref__in___string__out = sub {
 our string__hash_ref $typetest___integer__in___string__hash_ref__out = sub {
     ( my integer $my_size) = @_;
 
-    #    check_integer($my_size);
-    check_trace_integer( $my_size, '$my_size',
+    #    ::CHECK_INTEGER($my_size);
+    ::CHECKTRACE_INTEGER( $my_size, '$my_size',
         'typetest___integer__in___string__hash_ref__out()' );
     my string__hash_ref $people = {};
     for my integer $i ( 0 .. $my_size ) {

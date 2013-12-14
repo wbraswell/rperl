@@ -3,7 +3,7 @@
 ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted newline
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.2.5');
+use version; our $VERSION = qv('0.2.6');
 
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
@@ -660,7 +660,7 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
     lives_and(    # TPV15
         sub {
             is( typetest___string__in___string__out('-17.3'),
-                "-17.3 $OPS_TYPES",
+                "'-17.3' $OPS_TYPES",
                 q{TPV15 typetest___string__in___string__out('-17.3') returns correct value}
             );
         },
@@ -679,7 +679,7 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
     lives_and(    # TPV18
         sub {
             is( typetest___string__in___string__out('Melange'),
-                "Melange $OPS_TYPES",
+                "'Melange' $OPS_TYPES",
                 q{TPV18 typetest___string__in___string__out('Melange') returns correct value}
             );
         },
@@ -690,7 +690,7 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
             is( typetest___string__in___string__out(
                     "\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n"
                 ),
-                "\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n $OPS_TYPES",
+                "'\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n' $OPS_TYPES",
                 q{TPV19 typetest___string__in___string__out("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n") returns correct value}
             );
         },

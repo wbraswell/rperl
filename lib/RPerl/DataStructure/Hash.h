@@ -18,19 +18,19 @@ using std::cout;  using std::endl;
 			(not(SvHROKp(possible_hash_ref)) ? \
 					croak("\nERROR EHVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nhash_ref value expected but non-hash_ref value found,\ncroaking") : \
 					(void)0))
-#define CHECK_TRACE_HASH_REF(possible_hash_ref, variable_name, subroutine_name) \
+#define CHECKTRACE_HASH_REF(possible_hash_ref, variable_name, subroutine_name) \
 	(not(SvOK(possible_hash_ref)) ? \
-			croak("\nERROR EHVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nhash_ref value expected but undefined/null value found,\nin variable '%s' from subroutine '%s',\ncroaking", variable_name, subroutine_name) : \
+			croak("\nERROR EHVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nhash_ref value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
 			(not(SvHROKp(possible_hash_ref)) ? \
-					croak("\nERROR EHVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nhash_ref value expected but non-hash_ref value found,\nin variable '%s' from subroutine '%s',\ncroaking", variable_name, subroutine_name) : \
+					croak("\nERROR EHVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nhash_ref value expected but non-hash_ref value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
 					(void)0))
 #define CHECK_HASH_ENTRY(possible_hash_entry) \
 	((possible_hash_entry == NULL) ? \
 			croak("\nERROR EHE00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nhash_entry value expected but undefined/null value found,\ncroaking") : \
 					(void)0)
-#define CHECK_TRACE_HASH_ENTRY(possible_hash_entry, variable_name, subroutine_name) \
+#define CHECKTRACE_HASH_ENTRY(possible_hash_entry, variable_name, subroutine_name) \
 	((possible_hash_entry == NULL) ? \
-			croak("\nERROR EHE00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nhash_entry value expected but undefined/null value found,\nin variable '%s' from subroutine '%s',\ncroaking", variable_name, subroutine_name) : \
+			croak("\nERROR EHE00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nhash_entry value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
 					(void)0)
 
 ////# [[[ DATA TYPES ]]]

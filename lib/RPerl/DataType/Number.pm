@@ -5,7 +5,7 @@
 package RPerl::DataType::Number;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.2.2');
+use version; our $VERSION = qv('0.2.4');
 use Carp;
 use base ('RPerl::DataType::Scalar');
 use RPerl::DataType::Scalar;
@@ -34,17 +34,11 @@ use base ('ref');
 package const_number_ref;
 use base ('ref');
 
-# [[[ SWITCH CONTEXT BACK TO MAIN PACKAGE ]]]
-package RPerl::DataType::Number;
-
-# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-#our integer $OPS_TYPES_ID = 0;                        # DEV NOTE: Integer type declared as a sub-type of Number, must disable here
-our $OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0
-our string $ops_number   = sub { return ('PERL'); };
-our string $types_number = sub { return ('PERL'); };
+# [[[ SWITCH CONTEXT TO MAIN PACKAGE, THUS EXPORTING TYPE-CHECKING ]]]
+package main;
 
 # [[[ TYPE-CHECKING ]]]
-our void $check_number = sub {
+our void $CHECK_NUMBER = sub {
     ( my $possible_number ) = @_;
     if ( not( defined $possible_number ) ) {
         croak(
@@ -60,12 +54,11 @@ our void $check_number = sub {
         );
     }
 };
-
-our void $check_trace_number = sub {
+our void $CHECKTRACE_NUMBER = sub {
     ( my $possible_number, my $variable_name, my $subroutine_name ) = @_;
     if ( not( defined $possible_number ) ) {
         croak(
-            "\nERROR ENV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but undefined/null value found,\nin variable '$variable_name' from subroutine '$subroutine_name',\ncroaking"
+            "\nERROR ENV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
         );
     }
     if (not(   main::RPerl_SvNOKp($possible_number)
@@ -73,17 +66,26 @@ our void $check_trace_number = sub {
         )
     {
         croak(
-            "\nERROR ENV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but non-number value found,\nin variable '$variable_name' from subroutine '$subroutine_name',\ncroaking"
+            "\nERROR ENV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but non-number value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
         );
     }
 };
+
+# [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
+package RPerl::DataType::Number;
+
+# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
+#our integer $OPS_TYPES_ID = 0;                        # DEV NOTE: Integer type declared as a sub-type of Number, must disable here
+our $OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0
+our string $ops_number   = sub { return ('PERL'); };
+our string $types_number = sub { return ('PERL'); };
 
 # [[[ STRINGIFY ]]]
 our string $stringify_number = sub {
     ( my $input_number ) = @_;
 
-    #    check_number($input_number);
-    check_trace_number( $input_number, '$input_number',
+    #    ::CHECK_NUMBER($input_number);
+    ::CHECKTRACE_NUMBER( $input_number, '$input_number',
         'stringify_number()' );
     print
         "in PERLOPS_PERLTYPES Number::stringify_number(), bottom of subroutine, received \$input_number = $input_number\n"
@@ -102,8 +104,8 @@ our number $typetest___void__in___number__out = sub {
 our number $typetest___number__in___number__out = sub {
     ( my number $lucky_number ) = @_;
 
-    #    check_number($lucky_number);
-    check_trace_number( $lucky_number, '$lucky_number',
+    #    ::CHECK_NUMBER($lucky_number);
+    ::CHECKTRACE_NUMBER( $lucky_number, '$lucky_number',
         'typetest___number__in___number__out()' );
     print
         'in PERLOPS_PERLTYPES Number::typetest___number__in___number__out(), received $lucky_number = '

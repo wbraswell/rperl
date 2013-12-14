@@ -1,10 +1,16 @@
 #!/usr/bin/perl
+## no critic qw(ProhibitUselessNoCritic)  ## RPERL allow disabled test code
+## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+## no critic qw(ProhibitUnreachableCode)  ## RPERL allow unreachable test code
+## no critic qw(ProhibitStringySplit)  ## RPERL allow string test values
+## no critic qw(ProhibitInterpolationOfLiterals)  ## RPERL allow string test values
+## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow string test values
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.2.5');
+use version; our $VERSION = qv('0.2.7');
 use Carp;
 
-## no critic qw(ProhibitMagicNumbers ProhibitUnreachableCode)  ## RPERL allow numeric test values, allow unreachable test code
+# [[[ SETUP ]]]
 
 # RPERL DRTIVER BOILERPLATE
 BEGIN { package main;  our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib'; }  # NEED REMOVE hard-coded path
@@ -13,13 +19,13 @@ BEGIN { use lib $main::RPERL_INCLUDE_PATH;  use RPerl;  use base ('RPerl');  $RP
 BEGIN { use Data::Dumper;  our $AUTOLOAD;  sub AUTOLOAD { croak("AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n" . Dumper(\@_) . ', croaking'); } }  ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  ## RPERL SYSTEM allow autoload  ## RPERL SYSTEM allow read-only @_
 
 # UNCOMMENT TO ENABLE PERL TYPES FOR C++ OPS
-types::types_enable('PERL');
+#types::types_enable('PERL');
 
 # UNCOMMENT TO ENABLE C++ TYPES FOR C++ OPS
 #types::types_enable('CPP');
 
 # UNCOMMENT TO ENABLE C++ OPS
-use RPerl::DataType::Integer_cpp;  RPerl::DataType::Integer_cpp::cpp_load();  RPerl::DataType::Integer_cpp::cpp_link();
+#use RPerl::DataType::Integer_cpp;  RPerl::DataType::Integer_cpp::cpp_load();  RPerl::DataType::Integer_cpp::cpp_link();
 #use RPerl::DataType::Number_cpp;  RPerl::DataType::Number_cpp::cpp_load();  RPerl::DataType::Number_cpp::cpp_link();
 #use RPerl::DataType::String_cpp;  RPerl::DataType::String_cpp::cpp_load();  RPerl::DataType::String_cpp::cpp_link();
 
@@ -34,16 +40,18 @@ print q{in scalar_test.pl, have types_string() = '} . types_string() . "'\n" or 
 my integer $integer_retval;
 my number $number_retval;
 my string $string_retval;
+my string $my_string;
+my string $dumper_string;
 
 # loop to test for memory leaks
 my const_integer $i_MAX = 1;
 for my integer $i ( 0 .. $i_MAX ) {
-	print "in scalar_test.pl, top of for() loop $i/$i_MAX\n" or croak();
+	print "in scalar_test.pl, top of for() loop $i/$i_MAX\n\n" or croak();
 
     # [[[ INTEGER TESTS ]]]
 
 #	$string_retval = stringify_integer();  # TIV00; error PERLOPS EIV00, CPPOPS "Usage: main::stringify_integer(input_integer)"
-	$string_retval = stringify_integer(undef);  # TIV01; error EIV00
+#	$string_retval = stringify_integer(undef);  # TIV01; error EIV00
 #	$string_retval = stringify_integer(3);  # TIV02
 #	$string_retval = stringify_integer(-17);  # TIV03
 #	$string_retval = stringify_integer(-17.3);  # TIV04; error EIV01
@@ -52,9 +60,7 @@ for my integer $i ( 0 .. $i_MAX ) {
 #	$string_retval = stringify_integer({a_key => 3});  # TIV07; error EIV01
 #	$string_retval = stringify_integer(-1_234_567_890);  # TIV08
 #	$string_retval = stringify_integer(-1_234_567_890_000);  # TIV09; error EIV01
-	print "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n" or croak();
-
-croak('Done for now, croaking');
+#	print "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n" or croak();
 
 #	$integer_retval = typetest___void__in___integer__out();  # TIV10
 #	print "in scalar_test.pl $i/$i_MAX, have \$integer_retval = $integer_retval\n" or croak();
@@ -99,7 +105,67 @@ croak('Done for now, croaking');
 #	$number_retval = typetest___number__in___number__out(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679);  # TNV28
 #	print "in scalar_test.pl $i/$i_MAX, have \$number_retval = $number_retval\n" or croak();
 
+
+
+
+
+# FIRST! 
+# Ambiguous use of *{main::CHECK_HASH_REF} resolved to *main::CHECK_HASH_REF at (eval 286) line 1, <MODULE_FILE> line 46.
+# Ambiguous use of ${main::CHECK_HASH_REF} resolved to $main::CHECK_HASH_REF at (eval 286) line 1, <MODULE_FILE> line 46.
+# Subroutine main::CHECK_HASH_REF redefined at (eval 286) line 1, <MODULE_FILE> line 46.
+    
+
+    # START HERE: format string tests below, update 04*.t; check if additional string hash tests are needed, update 06*.t; update arrays; FINISH TYPE-CHECKING
+    # START HERE: format string tests below, update 04*.t; check if additional string hash tests are needed, update 06*.t; update arrays; FINISH TYPE-CHECKING
+    # START HERE: format string tests below, update 04*.t; check if additional string hash tests are needed, update 06*.t; update arrays; FINISH TYPE-CHECKING
+ 
+
+
+
     # [[[ STRING TESTS ]]]
+
+#	$string_retval = stringify_string();  # TPV00; error PERLOPS EPV00, CPPOPS "Usage: main::stringify_string(input_string)"
+#	$string_retval = stringify_string(undef);  # TPV01; error EPV00
+#	$string_retval = stringify_string(3);  # TPV02; error EPV01
+#	$string_retval = stringify_string(-17);  # TPV03; error EPV01
+#	$string_retval = stringify_string(-17.3);  # TPV04; error EPV01
+#	$string_retval = stringify_string('-17.3');  # TPV05
+#	$string_retval = stringify_string([3]);  # TPV06; error EPV01
+#	$string_retval = stringify_string({a_key => 3});  # TPV07; error EPV01
+
+    # DEV NOTE: in English grammar, I prefer the comma after the right-quote
+	$my_string = '\'I am a single-quoted string, in a single-quoted string with back-slash control chars\', the first string said introspectively.';  # TPVXX
+#	$my_string = '"I am a double-quoted string, in a single-quoted string with no back-slash chars", the second string observed.';  # TPVXX
+#	$my_string = "'I am a single-quoted string, in a double-quoted string with no back-slash chars', the third string added.";  # TPVXX
+#	$my_string = "\"I am a double-quoted string, in a double-quoted string with back-slash control chars\", the fourth string offered.";  # TPVXX
+
+#	$my_string = '\'I am a single-quoted string, in a single-quoted string with back-slash control and \ display \ chars\', the fifth string shouted.';  # TPVXX
+#	$my_string = '"I am a double-quoted string, in a single-quoted string with back-slash \ display \ chars", the sixth string hollered.';  # TPVXX
+#	$my_string = "'I am a single-quoted string, in a double-quoted string with back-slash \\ display \\ chars', the seventh string yelled.";  # TPVXX
+#	$my_string = "\"I am a double-quoted string, in a double-quoted string with back-slash control and \\ display \\ chars\", the eighth string belted.";  # TPVXX
+
+#	$my_string = q{'I am a single-quoted string, in a single-quoted q{} string with no back-slash chars', the ninth string chimed in.};  # TPVXX
+#	$my_string = q{"I am a double-quoted string, in a single-quoted q{} string with no back-slash chars", the tenth string opined.};  # TPVXX
+#	$my_string = qq{'I am a single-quoted string, in a double-quoted qq{} string with no back-slash chars', the eleventh string asserted.};  # TPVXX
+#	$my_string = qq{"I am a double-quoted string, in a double-quoted qq{} string with no back-slash chars", the twelfth string insisted.};  # TPVXX
+
+#	$my_string = q{'I am a single-quoted string, in a single-quoted q{} string with back-slash \ display \ chars', the thirteenth string whispered.};  # TPVXX
+#	$my_string = q{"I am a double-quoted string, in a single-quoted q{} string with back-slash \ display \ chars", the fourteenth string breathed.};  # TPVXX
+#	$my_string = qq{'I am a single-quoted string, in a double-quoted qq{} string with back-slash \\ display \\ chars', the fifteenth string mouthed.};  # TPVXX
+#	$my_string = qq{"I am a double-quoted string, in a double-quoted qq{} string with back-slash \\ display \\ chars", the sixteenth string implied.};  # TPVXX
+
+	print "in scalar_test.pl $i/$i_MAX, have \$my_string =\n$my_string\n\n" or croak();
+	$dumper_string = Dumper([$my_string]);
+	$dumper_string =~ s/^\s+|\s+$//xmsg;
+	my @dumper_split = split "\n", $dumper_string;
+	$dumper_string = $dumper_split[1];
+#	print "in scalar_test.pl $i/$i_MAX, have Dumper([\$my_string]) =\n" . Dumper([$my_string]) . "\n" or croak();
+
+    $string_retval = stringify_string($my_string);
+	print "in scalar_test.pl $i/$i_MAX, have \$string_retval =\n$string_retval STRINGIFY\n\n" or croak();
+	print "in scalar_test.pl $i/$i_MAX, have \$dumper_string =\n$dumper_string DUMPERIFY\n\n" or croak();
+
+croak('Done for now, croaking');
 
 #	$string_retval = typetest___void__in___string__out();  # TPV00
 #	print "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n" or croak();

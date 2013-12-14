@@ -14,7 +14,7 @@ using std::cout;  using std::endl;
 
 // TYPE-CHECKING SUBROUTINES DEPRECATED IN FAVOR OF EQUIVALENT MACROS
 /*
-void check_number(SV* possible_number) {
+void CHECK_NUMBER(SV* possible_number) {
     if (not(SvOK(possible_number))) {
     	croak("\nERROR ENV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found,\ncroaking");
     }
@@ -22,7 +22,7 @@ void check_number(SV* possible_number) {
     	croak("\nERROR ENV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but non-number value found,\ncroaking");
     }
 };
-void check_trace_number(SV* possible_number, const char* variable_name, const char* subroutine_name) {
+void CHECKTRACE_NUMBER(SV* possible_number, const char* variable_name, const char* subroutine_name) {
     if (not(SvOK(possible_number))) {
     	croak("\nERROR ENV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found,\nin variable '%s' from subroutine '%s',\ncroaking",
     			variable_name, subroutine_name);
@@ -44,7 +44,7 @@ void check_trace_number(SV* possible_number, const char* variable_name, const ch
 number XS_unpack_number(SV* input_sv) {
 printf("in CPPOPS_CPPTYPES XS_unpack_number(), top of subroutine\n");
 //	CHECK_NUMBER(input_sv);
-	CHECK_TRACE_NUMBER(input_sv, "input_sv", "XS_unpack_number()");
+	CHECKTRACE_NUMBER(input_sv, "input_sv", "XS_unpack_number()");
 
 //	number output_number;
 
@@ -79,12 +79,12 @@ printf("in CPPOPS_CPPTYPES XS_pack_number(), bottom of subroutine\n");
 SV* stringify_number(SV* input_number)
 {
 //	CHECK_NUMBER(input_number);
-	CHECK_TRACE_NUMBER(input_number, "input_number", "stringify_number()");
+	CHECKTRACE_NUMBER(input_number, "input_number", "stringify_number()");
 printf("in CPPOPS_PERLTYPES stringify_number(), top of subroutine, received unformatted input_number = %Lf\n", (number)SvNV(input_number));
 
 	ostringstream output_stream;
 	output_stream.precision(std::numeric_limits<double>::digits10);
-	output_stream << SvNV(input_number);
+	output_stream << (long double)SvNV(input_number);
 	return(newSVpv((const char *)((output_stream.str()).c_str()), 0));
 
 	// DEV NOTE: none of these printf()-type solutions count significant digits both before and after the decimal point,
@@ -121,7 +121,7 @@ printf("in CPPOPS_PERLTYPES typetest___void__in___number__out(), have unformatte
 
 SV* typetest___number__in___number__out(SV* lucky_number) {
 //	CHECK_NUMBER(lucky_number);
-	CHECK_TRACE_NUMBER(lucky_number, "lucky_number", "typetest___number__in___number__out()");
+	CHECKTRACE_NUMBER(lucky_number, "lucky_number", "typetest___number__in___number__out()");
 printf("in CPPOPS_PERLTYPES typetest___number__in___number__out(), have received lucky_number = %Lf\n", (number)SvNV(lucky_number));
 	return(newSVnv((SvNV(lucky_number) * 2.0) + OPS_TYPES_ID));
 }

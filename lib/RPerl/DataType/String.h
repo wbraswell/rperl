@@ -1,7 +1,7 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-// VERSION 0.2.3
+// VERSION 0.2.5
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_h
 #define __CPP__INCLUDED__RPerl__DataType__String_h 1
@@ -15,11 +15,11 @@ using std::cout;  using std::endl;
 			(not(SvPOKp(possible_string)) ? \
 					croak("\nERROR EPV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but non-string value found,\ncroaking") : \
 					(void)0))
-#define CHECK_TRACE_STRING(possible_string, variable_name, subroutine_name) \
+#define CHECKTRACE_STRING(possible_string, variable_name, subroutine_name) \
 	(not(SvOK(possible_string)) ? \
-			croak("\nERROR EPV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but undefined/null value found,\nin variable '%s' from subroutine '%s',\ncroaking", variable_name, subroutine_name) : \
+			croak("\nERROR EPV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
 			(not(SvPOKp(possible_string)) ? \
-					croak("\nERROR EPV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but non-string value found,\nin variable '%s' from subroutine '%s',\ncroaking", variable_name, subroutine_name) : \
+					croak("\nERROR EPV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but non-string value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
 					(void)0))
 
 // [[[ TYPEDEFS ]]]
@@ -28,14 +28,8 @@ typedef std::ostringstream ostringstream;
 
 // [[[ TYPE CHECKING ]]]
 // DEPRECATED, SEE MACROS ABOVE
-//void check_string(SV* possible_string);
-//void check_trace_string(SV* possible_string, const char* variable_name, const char* subroutine_name);
-
-// [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
-# ifdef __CPP__TYPES
-string XS_unpack_string(SV* input_sv);
-void XS_pack_string(SV* output_sv, string input_string);
-# endif
+//void CHECK_STRING(SV* possible_string);
+//void CHECKTRACE_STRING(SV* possible_string, const char* variable_name, const char* subroutine_name);
 
 // [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 # ifdef __PERL__TYPES
@@ -48,6 +42,19 @@ string ops_string() { string retval = "CPP";  return(retval); }
 string types_string() { string retval = "CPP";  return(retval); }
 # else
 Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_exactly_one!
+# endif
+
+// [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
+# ifdef __CPP__TYPES
+string XS_unpack_string(SV* input_sv);
+void XS_pack_string(SV* output_sv, string input_string);
+# endif
+
+// [[[ STRINGIFY ]]]
+# ifdef __PERL__TYPES
+SV* stringify_string(SV* input_sv);
+# elif defined __CPP__TYPES
+string stringify_string(string input_string);
 # endif
 
 // [[[ TYPE TESTING ]]]
