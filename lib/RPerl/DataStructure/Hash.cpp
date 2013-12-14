@@ -13,7 +13,7 @@ integer__hash_ref XS_unpack_integer__hash_ref(SV* input_hv_ref)
 {
 	printf("in CPPOPS_CPPTYPES XS_unpack_integer__hash_ref(), top of subroutine\n");
 //	CHECK_HASH_REF(input_hv_ref);
-	CHECK_TRACE_HASH_REF(input_hv_ref, "input_hv_ref", "XS_unpack_integer__hash_ref()");
+	//CHECK_TRACE_HASH_REF(input_hv_ref, "input_hv_ref", "XS_unpack_integer__hash_ref()");
 
     HV* input_hv;
     integer input_hv_num_keys;
@@ -37,12 +37,12 @@ integer__hash_ref XS_unpack_integer__hash_ref(SV* input_hv_ref)
 		// does not utilize i in entry retrieval
 		input_hv_entry = hv_iternext(input_hv);
 //		CHECK_HASH_ENTRY(input_hv_entry);
-		CHECK_TRACE_HASH_ENTRY(input_hv_entry, "input_hv_entry", "XS_unpack_integer__hash_ref()");
+		//CHECK_TRACE_HASH_ENTRY(input_hv_entry, "input_hv_entry", "XS_unpack_integer__hash_ref()");
 
 		input_hv_entry_key = hv_iterkeysv(input_hv_entry);
 		input_hv_entry_value = hv_iterval(input_hv, input_hv_entry);
 //		CHECK_INTEGER(input_hv_entry_value);
-		CHECK_TRACE_INTEGER(input_hv_entry_value, strcat((char*)"input_hv_entry_value at key ", (const char*)SvPV_nolen(input_hv_entry_key)), "XS_unpack_integer__hash_ref()");
+		//CHECK_TRACE_INTEGER(input_hv_entry_value, strcat((char*)"input_hv_entry_value at key ", (const char*)SvPV_nolen(input_hv_entry_key)), "XS_unpack_integer__hash_ref()");
 
 		// UNORDERED MAP ENTRY ASSIGNMENT, OPTION A, SUBSCRIPT, KNOWN SIZE: l-value subscript notation with no further reserve(); does not utilize i in assignment
 		output_unordered_map[SvPV_nolen(input_hv_entry_key)] = SvIV(input_hv_entry_value);
@@ -87,7 +87,7 @@ number__hash_ref XS_unpack_number__hash_ref(SV* input_hv_ref)
 {
 	printf("in CPPOPS_CPPTYPES XS_unpack_number__hash_ref(), top of subroutine\n");
 //	CHECK_HASH_REF(input_hv_ref);
-	CHECK_TRACE_HASH_REF(input_hv_ref, "input_hv_ref", "XS_unpack_number__hash_ref()");
+	//CHECK_TRACE_HASH_REF(input_hv_ref, "input_hv_ref", "XS_unpack_number__hash_ref()");
 
     HV* input_hv;
     integer input_hv_num_keys;
@@ -111,12 +111,12 @@ number__hash_ref XS_unpack_number__hash_ref(SV* input_hv_ref)
 		// does not utilize i in entry retrieval
 		input_hv_entry = hv_iternext(input_hv);
 //		CHECK_HASH_ENTRY(input_hv_entry);
-		CHECK_TRACE_HASH_ENTRY(input_hv_entry, "input_hv_entry", "XS_unpack_number__hash_ref()");
+		//CHECK_TRACE_HASH_ENTRY(input_hv_entry, "input_hv_entry", "XS_unpack_number__hash_ref()");
 
 		input_hv_entry_key = hv_iterkeysv(input_hv_entry);
 		input_hv_entry_value = hv_iterval(input_hv, input_hv_entry);
 //		CHECK_NUMBER(input_hv_entry_value);
-		CHECK_TRACE_NUMBER(input_hv_entry_value, strcat((char*)"input_hv_entry_value at key ", (const char*)SvPV_nolen(input_hv_entry_key)), "XS_unpack_number__hash_ref()");
+		//CHECK_TRACE_NUMBER(input_hv_entry_value, strcat((char*)"input_hv_entry_value at key ", (const char*)SvPV_nolen(input_hv_entry_key)), "XS_unpack_number__hash_ref()");
 
 		// UNORDERED MAP ENTRY ASSIGNMENT, OPTION A, SUBSCRIPT, KNOWN SIZE: l-value subscript notation with no further reserve(); does not utilize i in assignment
 		output_unordered_map[SvPV_nolen(input_hv_entry_key)] = SvNV(input_hv_entry_value);
@@ -161,7 +161,7 @@ string__hash_ref XS_unpack_string__hash_ref(SV* input_hv_ref)
 {
 	printf("in CPPOPS_CPPTYPES XS_unpack_string__hash_ref(), top of subroutine\n");
 //	CHECK_HASH_REF(input_hv_ref);
-	CHECK_TRACE_HASH_REF(input_hv_ref, "input_hv_ref", "XS_unpack_string__hash_ref()");
+	//CHECK_TRACE_HASH_REF(input_hv_ref, "input_hv_ref", "XS_unpack_string__hash_ref()");
 
     HV* input_hv;
     integer input_hv_num_keys;
@@ -185,12 +185,12 @@ string__hash_ref XS_unpack_string__hash_ref(SV* input_hv_ref)
 		// does not utilize i in entry retrieval
 		input_hv_entry = hv_iternext(input_hv);
 //		CHECK_HASH_ENTRY(input_hv_entry);
-		CHECK_TRACE_HASH_ENTRY(input_hv_entry, "input_hv_entry", "XS_unpack_string__hash_ref()");
+		//CHECK_TRACE_HASH_ENTRY(input_hv_entry, "input_hv_entry", "XS_unpack_string__hash_ref()");
 
 		input_hv_entry_key = hv_iterkeysv(input_hv_entry);
 		input_hv_entry_value = hv_iterval(input_hv, input_hv_entry);
 //		CHECK_STRING(input_hv_entry_value);
-		CHECK_TRACE_STRING(input_hv_entry_value, strcat((char*)"input_hv_entry_value at key ", (const char*)SvPV_nolen(input_hv_entry_key)), "XS_unpack_string__hash_ref()");
+		//CHECK_TRACE_STRING(input_hv_entry_value, strcat((char*)"input_hv_entry_value at key ", (const char*)SvPV_nolen(input_hv_entry_key)), "XS_unpack_string__hash_ref()");
 
 		// UNORDERED MAP ENTRY ASSIGNMENT, OPTION A, SUBSCRIPT, KNOWN SIZE: l-value subscript notation with no further reserve(); does not utilize i in assignment
 		output_unordered_map[SvPV_nolen(input_hv_entry_key)] = SvPV_nolen(input_hv_entry_value);
@@ -241,7 +241,7 @@ SV* stringify_integer__hash_ref(SV* input_hv_ref)
 {
 	printf("in CPPOPS_PERLTYPES stringify_integer__hash_ref(), top of subroutine\n");
 //	CHECK_HASH_REF(input_hv_ref);
-	CHECK_TRACE_HASH_REF(input_hv_ref, "input_hv_ref", "stringify_integer__hash_ref()");
+	//CHECK_TRACE_HASH_REF(input_hv_ref, "input_hv_ref", "stringify_integer__hash_ref()");
 
     HV* input_hv;
     integer input_hv_num_keys;
@@ -263,12 +263,12 @@ SV* stringify_integer__hash_ref(SV* input_hv_ref)
 		// does not utilize i in entry retrieval
 		input_hv_entry = hv_iternext(input_hv);
 //		CHECK_HASH_ENTRY(input_hv_entry);
-		CHECK_TRACE_HASH_ENTRY(input_hv_entry, "input_hv_entry", "stringify_integer__hash_ref()");
+		//CHECK_TRACE_HASH_ENTRY(input_hv_entry, "input_hv_entry", "stringify_integer__hash_ref()");
 
 			input_hv_entry_key = hv_iterkeysv(input_hv_entry);
 			input_hv_entry_value = hv_iterval(input_hv, input_hv_entry);
 	//		CHECK_INTEGER(input_hv_entry_value);
-			CHECK_TRACE_INTEGER(input_hv_entry_value, strcat((char*)"input_hv_entry_value at key ", (const char*)SvPV_nolen(input_hv_entry_key)), "stringify_integer__hash_ref()");
+			//CHECK_TRACE_INTEGER(input_hv_entry_value, strcat((char*)"input_hv_entry_value at key ", (const char*)SvPV_nolen(input_hv_entry_key)), "stringify_integer__hash_ref()");
 
 			if (i_is_0)
 			{
@@ -294,7 +294,7 @@ SV* stringify_number__hash_ref(SV* input_hv_ref)
 {
 	printf("in CPPOPS_PERLTYPES stringify_number__hash_ref(), top of subroutine\n");
 //	CHECK_HASH_REF(input_hv_ref);
-	CHECK_TRACE_HASH_REF(input_hv_ref, "input_hv_ref", "stringify_number__hash_ref()");
+	//CHECK_TRACE_HASH_REF(input_hv_ref, "input_hv_ref", "stringify_number__hash_ref()");
 
     HV* input_hv;
     integer input_hv_num_keys;
@@ -318,12 +318,12 @@ SV* stringify_number__hash_ref(SV* input_hv_ref)
 		// does not utilize i in entry retrieval
 		input_hv_entry = hv_iternext(input_hv);
 //		CHECK_HASH_ENTRY(input_hv_entry);
-		CHECK_TRACE_HASH_ENTRY(input_hv_entry, "input_hv_entry", "stringify_number__hash_ref()");
+		//CHECK_TRACE_HASH_ENTRY(input_hv_entry, "input_hv_entry", "stringify_number__hash_ref()");
 
 		input_hv_entry_key = hv_iterkeysv(input_hv_entry);
 		input_hv_entry_value = hv_iterval(input_hv, input_hv_entry);
 //		CHECK_NUMBER(input_hv_entry_value);
-		CHECK_TRACE_NUMBER(input_hv_entry_value, strcat((char*)"input_hv_entry_value at key ", (const char*)SvPV_nolen(input_hv_entry_key)), "stringify_number__hash_ref()");
+		//CHECK_TRACE_NUMBER(input_hv_entry_value, strcat((char*)"input_hv_entry_value at key ", (const char*)SvPV_nolen(input_hv_entry_key)), "stringify_number__hash_ref()");
 
 		if (i_is_0)
 		{
@@ -350,7 +350,7 @@ SV* stringify_string__hash_ref(SV* input_hv_ref)
 {
 	printf("in CPPOPS_PERLTYPES stringify_string__hash_ref(), top of subroutine\n");
 //	CHECK_HASH_REF(input_hv_ref);
-	CHECK_TRACE_HASH_REF(input_hv_ref, "input_hv_ref", "stringify_string__hash_ref()");
+	//CHECK_TRACE_HASH_REF(input_hv_ref, "input_hv_ref", "stringify_string__hash_ref()");
 
     HV* input_hv;
     integer input_hv_num_keys;
@@ -372,12 +372,12 @@ SV* stringify_string__hash_ref(SV* input_hv_ref)
 		// does not utilize i in entry retrieval
 		input_hv_entry = hv_iternext(input_hv);
 //		CHECK_HASH_ENTRY(input_hv_entry);
-		CHECK_TRACE_HASH_ENTRY(input_hv_entry, "input_hv_entry", "stringify_string__hash_ref()");
+		//CHECK_TRACE_HASH_ENTRY(input_hv_entry, "input_hv_entry", "stringify_string__hash_ref()");
 
 		input_hv_entry_key = hv_iterkeysv(input_hv_entry);
 		input_hv_entry_value = hv_iterval(input_hv, input_hv_entry);
 //		CHECK_STRING(input_hv_entry_value);
-		CHECK_TRACE_STRING(input_hv_entry_value, strcat((char*)"input_hv_entry_value at key ", (const char*)SvPV_nolen(input_hv_entry_key)), "stringify_string__hash_ref()");
+		//CHECK_TRACE_STRING(input_hv_entry_value, strcat((char*)"input_hv_entry_value at key ", (const char*)SvPV_nolen(input_hv_entry_key)), "stringify_string__hash_ref()");
 
 		if (i_is_0)
 		{
@@ -515,7 +515,7 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 SV* typetest___integer__hash_ref__in___string__out(SV* lucky_numbers)
 {
 //	CHECK_HASH_REF(lucky_numbers);
-	CHECK_TRACE_HASH_REF(lucky_numbers, "lucky_numbers", "typetest___integer__hash_ref__in___string__out()");
+	//CHECK_TRACE_HASH_REF(lucky_numbers, "lucky_numbers", "typetest___integer__hash_ref__in___string__out()");
 	HV* lucky_numbers_deref = (HV*)SvRV(lucky_numbers);
 	integer how_lucky = hv_iterinit(lucky_numbers_deref);
 	integer i;
@@ -524,10 +524,10 @@ SV* typetest___integer__hash_ref__in___string__out(SV* lucky_numbers)
 	{
 		HE* lucky_number_entry = hv_iternext(lucky_numbers_deref);
 //		CHECK_HASH_ENTRY(lucky_number_entry);
-		CHECK_TRACE_HASH_ENTRY(lucky_number_entry, "lucky_number_entry", "typetest___integer__hash_ref__in___string__out()");
+		//CHECK_TRACE_HASH_ENTRY(lucky_number_entry, "lucky_number_entry", "typetest___integer__hash_ref__in___string__out()");
 
 //		CHECK_INTEGER(hv_iterval(lucky_numbers_deref, lucky_number_entry));
-		CHECK_TRACE_INTEGER(hv_iterval(lucky_numbers_deref, lucky_number_entry), strcat((char*)"hv_iterval(lucky_numbers_deref, lucky_number_entry) at key ", (const char*)SvPV_nolen(hv_iterkeysv(lucky_number_entry))), "typetest___integer__hash_ref__in___string__out()");
+		//CHECK_TRACE_INTEGER(hv_iterval(lucky_numbers_deref, lucky_number_entry), strcat((char*)"hv_iterval(lucky_numbers_deref, lucky_number_entry) at key ", (const char*)SvPV_nolen(hv_iterkeysv(lucky_number_entry))), "typetest___integer__hash_ref__in___string__out()");
 
 		printf("in CPPOPS_PERLTYPES Hash::typetest___integer__hash_ref__in___string__out(), have lucky number '%s' => %d, BARSTOOL\n",
 			SvPV_nolen(hv_iterkeysv(lucky_number_entry)), (integer)SvIV(hv_iterval(lucky_numbers_deref, lucky_number_entry)));
@@ -540,7 +540,7 @@ SV* typetest___integer__hash_ref__in___string__out(SV* lucky_numbers)
 SV* typetest___integer__in___integer__hash_ref__out(SV* my_size)
 {
 //	CHECK_INTEGER(my_size);
-	CHECK_TRACE_INTEGER(my_size, "my_size", "typetest___integer__in___integer__hash_ref__out()");
+	//CHECK_TRACE_INTEGER(my_size, "my_size", "typetest___integer__in___integer__hash_ref__out()");
 	HV* output_hv = newHV();
 	integer i;
 	char temp_key[30];
@@ -560,7 +560,7 @@ SV* typetest___integer__in___integer__hash_ref__out(SV* my_size)
 SV* typetest___number__hash_ref__in___string__out(SV* lucky_numbers)
 {
 //	CHECK_HASH_REF(lucky_numbers);
-	CHECK_TRACE_HASH_REF(lucky_numbers, "lucky_numbers", "typetest___number__hash_ref__in___string__out()");
+	//CHECK_TRACE_HASH_REF(lucky_numbers, "lucky_numbers", "typetest___number__hash_ref__in___string__out()");
 	HV* lucky_numbers_deref = (HV*)SvRV(lucky_numbers);
 	integer how_lucky = hv_iterinit(lucky_numbers_deref);
 	integer i;
@@ -569,10 +569,10 @@ SV* typetest___number__hash_ref__in___string__out(SV* lucky_numbers)
 	{
 		HE* lucky_number_entry = hv_iternext(lucky_numbers_deref);
 //		CHECK_HASH_ENTRY(lucky_number_entry);
-		CHECK_TRACE_HASH_ENTRY(lucky_number_entry, "lucky_number_entry", "typetest___number__hash_ref__in___string__out()");
+		//CHECK_TRACE_HASH_ENTRY(lucky_number_entry, "lucky_number_entry", "typetest___number__hash_ref__in___string__out()");
 
 //		CHECK_NUMBER(hv_iterval(lucky_numbers_deref, lucky_number_entry));
-		CHECK_TRACE_NUMBER(hv_iterval(lucky_numbers_deref, lucky_number_entry), strcat((char*)"hv_iterval(lucky_numbers_deref, lucky_number_entry) at key ", (const char*)SvPV_nolen(hv_iterkeysv(lucky_number_entry))), "typetest___number__hash_ref__in___string__out()");
+		//CHECK_TRACE_NUMBER(hv_iterval(lucky_numbers_deref, lucky_number_entry), strcat((char*)"hv_iterval(lucky_numbers_deref, lucky_number_entry) at key ", (const char*)SvPV_nolen(hv_iterkeysv(lucky_number_entry))), "typetest___number__hash_ref__in___string__out()");
 
 		printf("in CPPOPS_PERLTYPES Hash::typetest___number__hash_ref__in___string__out(), have lucky number '%s' => %Lf, BARSTOOP\n",
 			SvPV_nolen(hv_iterkeysv(lucky_number_entry)), (long double)SvNV(hv_iterval(lucky_numbers_deref, lucky_number_entry)));
@@ -585,7 +585,7 @@ SV* typetest___number__hash_ref__in___string__out(SV* lucky_numbers)
 SV* typetest___integer__in___number__hash_ref__out(SV* my_size)
 {
 //	CHECK_INTEGER(my_size);
-	CHECK_TRACE_INTEGER(my_size, "my_size", "typetest___integer__in___number__hash_ref__out()");
+	//CHECK_TRACE_INTEGER(my_size, "my_size", "typetest___integer__in___number__hash_ref__out()");
 	HV* output_hv = newHV();
 	integer i;
 	char temp_key[30];
@@ -605,7 +605,7 @@ SV* typetest___integer__in___number__hash_ref__out(SV* my_size)
 SV* typetest___string__hash_ref__in___string__out(SV* people)
 {
 //	CHECK_HASH_REF(people);
-	CHECK_TRACE_HASH_REF(people, "people", "typetest___string__hash_ref__in___string__out()");
+	//CHECK_TRACE_HASH_REF(people, "people", "typetest___string__hash_ref__in___string__out()");
 	HV* people_deref = (HV*)SvRV(people);
 	integer how_crowded = hv_iterinit(people_deref);
 	integer i;
@@ -614,10 +614,10 @@ SV* typetest___string__hash_ref__in___string__out(SV* people)
 	{
 		HE* person_entry = hv_iternext(people_deref);
 //		CHECK_HASH_ENTRY(person_entry);
-		CHECK_TRACE_HASH_ENTRY(person_entry, "person_entry", "typetest___string__hash_ref__in___string__out()");
+		//CHECK_TRACE_HASH_ENTRY(person_entry, "person_entry", "typetest___string__hash_ref__in___string__out()");
 
 //		CHECK_STRING(hv_iterval(people_deref, person_entry));
-		CHECK_TRACE_STRING(hv_iterval(people_deref, person_entry), strcat((char*)"hv_iterval(people_deref, person_entry) at key ", (const char*)SvPV_nolen(hv_iterkeysv(person_entry))), "typetest___string__hash_ref__in___string__out()");
+		//CHECK_TRACE_STRING(hv_iterval(people_deref, person_entry), strcat((char*)"hv_iterval(people_deref, person_entry) at key ", (const char*)SvPV_nolen(hv_iterkeysv(person_entry))), "typetest___string__hash_ref__in___string__out()");
 
 		printf("in CPPOPS_PERLTYPES Hash::typetest___string__hash_ref__in___string__out(), have person '%s' => '%s', BARSPOON\n",
 			(char*)SvPV_nolen(hv_iterkeysv(person_entry)), (char*)SvPV_nolen(hv_iterval(people_deref, person_entry)));
@@ -630,7 +630,7 @@ SV* typetest___string__hash_ref__in___string__out(SV* people)
 SV* typetest___integer__in___string__hash_ref__out(SV* my_size)
 {
 //	CHECK_INTEGER(my_size);
-	CHECK_TRACE_INTEGER(my_size, "my_size", "typetest___integer__in___string__hash_ref__out()");
+	//CHECK_TRACE_INTEGER(my_size, "my_size", "typetest___integer__in___string__hash_ref__out()");
 	HV* people = newHV();
 	integer i;
 	char temp_key[30];
@@ -638,7 +638,7 @@ SV* typetest___integer__in___string__hash_ref__out(SV* my_size)
 	for (i = 0;  i < SvIV(my_size);  ++i)
 	{
 		sprintf(temp_key, "CPPOPS_PERLTYPES_Luker_key%d", i);
-		hv_store(people, (const char*)temp_key, (U32)strlen(temp_key), newSVpvf("Jeffy Ten! %d/%d", i, (SvIV(my_size) - 1)), (U32)0);
+		hv_store(people, (const char*)temp_key, (U32)strlen(temp_key), newSVpvf("Jeffy Ten! %d/%d", i, (int)(SvIV(my_size) - 1)), (U32)0);
 		printf("in CPPOPS_PERLTYPES Hash::typetest___integer__in___string__hash_ref__out(), have temp_key = '%s', just set another Jeffy, BARTAT\n", temp_key);
 	}
 

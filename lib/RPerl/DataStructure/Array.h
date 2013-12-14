@@ -6,6 +6,8 @@ using std::cout;  using std::endl;
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array_h
 #define __CPP__INCLUDED__RPerl__DataStructure__Array_h 1
 
+#include <types_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
+
 // [[[ MACROS ]]]
 #define VECTOR_RESIZE_NOSHRINK(my_vector, my_size) ((my_vector.size() < my_size) ? my_vector.resize((size_t)(my_size)) : (void)0)  // do grow but don't shrink
 
@@ -27,8 +29,6 @@ typedef std::vector<number>::const_iterator number__array_ref__const_iterator;
 typedef std::vector<string> string__array_ref;
 typedef std::vector<string>::iterator string__array_ref__iterator;
 typedef std::vector<string>::const_iterator string__array_ref__const_iterator;
-
-#include <types.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
 // [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 # ifdef __PERL__TYPES

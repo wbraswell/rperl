@@ -30,6 +30,10 @@ print q{in array_test.pl, have types_string() = '} . types_string() . "'\n" or c
 print q{in array_test.pl, have ops_hash() = '} . ops_hash() . "'\n" or croak();
 print q{in array_test.pl, have types_hash() = '} . types_hash() . "'\n" or croak();
 
+#print qq{in array_test.pl, have SYMBOL TABLE for package 'main' =\n} . Dumper(\%{*{main::}}) . "\n" or croak();
+#print qq{in array_test.pl, have SYMBOL TABLE entry for 'main::stringify_integer__hash_ref' =\n} . Dumper(\%{*{main::stringify_integer__hash_ref}}) . "\n" or croak();
+#print qq{in array_test.pl, have 'stringify_integer__hash_ref' =\n} . Dumper(\*stringify_integer__hash_ref) . "\n" or croak();
+
 # variable declarations
 my string $retval_stringify;
 my integer__hash_ref $retval_integer__hash_ref;
@@ -41,14 +45,10 @@ my string__hash_ref $retval_jeffys;
 my const_integer $i_MAX = 1;
 for my integer $i ( 0 .. $i_MAX ) {
 	print "in hash_test.pl, top of for() loop $i/$i_MAX\n" or croak();
-	
-	# START HERE: why is CPPOPS_CPPTYPES going to PERLOPS_PERLTYPES???
-	# START HERE: why is CPPOPS_CPPTYPES going to PERLOPS_PERLTYPES???
-	# START HERE: why is CPPOPS_CPPTYPES going to PERLOPS_PERLTYPES???
 
 #	$retval_stringify = stringify_integer__hash_ref();  # NEED ADD THIS TEST AND OTHER SIMILAR
-	$retval_stringify = stringify_integer__hash_ref(2);  # HVIV00; raise/throw exception
-#	$retval_stringify = stringify_integer__hash_ref({a_key => 23});  # HVIV01
+#	$retval_stringify = stringify_integer__hash_ref(2);  # HVIV00; raise/throw exception
+	$retval_stringify = stringify_integer__hash_ref({a_key => 23});  # HVIV01
 #	$retval_stringify = stringify_integer__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701});  # HVIV02
 #	$retval_stringify = stringify_integer__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => 23, e_key => -877, f_key => 33, g_key => 1701});  # HVIV03; raise/throw exception
 #	$retval_stringify = stringify_integer__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => '23', e_key => -877, f_key => 33, g_key => 1701});  # HVIV04; raise/throw exception

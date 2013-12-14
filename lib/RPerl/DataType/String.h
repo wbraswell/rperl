@@ -6,6 +6,8 @@ using std::cout;  using std::endl;
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_h
 #define __CPP__INCLUDED__RPerl__DataType__String_h 1
 
+#include <types_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
+
 // [[[ TYPE-CHECKING MACROS ]]]
 #define CHECK_STRING(possible_string) \
 	(not(SvOK(possible_string)) ? \
@@ -23,8 +25,6 @@ using std::cout;  using std::endl;
 // [[[ TYPEDEFS ]]]
 typedef std::string string;
 typedef std::ostringstream ostringstream;
-
-#include <types.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
 // [[[ TYPE CHECKING ]]]
 // DEPRECATED, SEE MACROS ABOVE

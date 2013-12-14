@@ -6,6 +6,8 @@ using std::cout;  using std::endl;
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash_h
 #define __CPP__INCLUDED__RPerl__DataStructure__Hash_h 1
 
+#include <types_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
+
 // for SvHROKp() macro and RPerl_SvHROKp() subroutine
 #include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
 
@@ -51,8 +53,6 @@ typedef std::unordered_map<string, number>::const_iterator number__hash_ref__con
 typedef std::unordered_map<string, string> string__hash_ref;
 typedef std::unordered_map<string, string>::iterator string__hash_ref__iterator;
 typedef std::unordered_map<string, string>::const_iterator string__hash_ref__const_iterator;
-
-#include <types.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
 // [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 # ifdef __PERL__TYPES

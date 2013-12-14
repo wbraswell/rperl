@@ -43,14 +43,14 @@ sub types_enable { (my $types_input) = @_;
 ;
 	print "in types::types_enable(), received \$types_input = '$types_input'\n";
 	
-	my string $types_h_filename = $RPerl::INCLUDE_PATH . '/types.h';
+	my string $types_h_filename = $RPerl::INCLUDE_PATH . '/types_mode.h';
 #	my bool $types_h_modified = 0;
 	my integer $types_h_modified = 0;
 	
 	print "in types::types_enable(), have \$types_h_filename = '$types_h_filename'\n";
 	
-	open(my $TYPES_H_FILEHANDLE_IN,'<', $types_h_filename) or die("Can't read types.h input file: $!, dying");
-	open(my $TYPES_H_FILEHANDLE_OUT,'>', ($types_h_filename . '.swap')) or die("Can't write types.h.swap output file: $!, dying");
+	open(my $TYPES_H_FILEHANDLE_IN,'<', $types_h_filename) or die("Can't read types_mode.h input file: $!, dying");
+	open(my $TYPES_H_FILEHANDLE_OUT,'>', ($types_h_filename . '.swap')) or die("Can't write types_mode.h.swap output file: $!, dying");
 
 	while(defined(my $line_current = <$TYPES_H_FILEHANDLE_IN>))
 	{
@@ -85,7 +85,7 @@ sub types_enable { (my $types_input) = @_;
 			else
 			{
 				close($TYPES_H_FILEHANDLE_OUT);
-				die('Found invalid __$types_current__TYPES definition in types.h, neither properly disabled nor enabled, dying');
+				die('Found invalid __$types_current__TYPES definition in types_mode.h, neither properly disabled nor enabled, dying');
 			}
 		}
 		print $TYPES_H_FILEHANDLE_OUT $line_current;
@@ -95,8 +95,8 @@ sub types_enable { (my $types_input) = @_;
 	
 	if ($types_h_modified)
 	{
-		move($types_h_filename, ($types_h_filename . '.orig')) or die("Can't move types.h input file to types.h.orig: $!, dying");
-		move(($types_h_filename . '.swap'), $types_h_filename) or die("Can't move types.h.swap output file to types.h: $!, dying");
+		move($types_h_filename, ($types_h_filename . '.orig')) or die("Can't move types_mode.h input file to types_mode.h.orig: $!, dying");
+		move(($types_h_filename . '.swap'), $types_h_filename) or die("Can't move types_mode.h.swap output file to types_mode.h: $!, dying");
 	}
 	
 	return();

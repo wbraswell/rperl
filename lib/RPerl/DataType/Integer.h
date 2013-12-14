@@ -6,6 +6,9 @@ using std::cout;  using std::endl;
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_h
 #define __CPP__INCLUDED__RPerl__DataType__Integer_h 1
 
+#include <types_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
+#include <RPerl/DataType/String.cpp>  // string types used in stringify_*() subroutines
+
 // [[[ TYPE-CHECKING MACROS ]]]
 #define CHECK_INTEGER(possible_integer) \
 	(not(SvOK(possible_integer)) ? \
@@ -24,9 +27,6 @@ using std::cout;  using std::endl;
 // DEV NOTE: must use "integer" because "int" is already defined by Inline's default typemap, even if we put our own integer entry into typemap.rperl;
 // if we allow Inline default int, then it will accept all kinds of non-integer values which should be filtered by XS_unpack_integer() and check_integer()
 typedef int integer;
-
-#include <types.h> // for definitions of __PERL__TYPES or __CPP__TYPES
-#include <RPerl/DataType/String.cpp>  // need for string typedef
 
 // [[[ TYPE-CHECKING ]]]
 // DEPRECATED, SEE MACROS ABOVE

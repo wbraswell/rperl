@@ -4,7 +4,7 @@ using std::cout;  using std::endl;
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h
 #define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h 1
 
-#include <types.h>	// -> Array.cpp
+#include <types_mode.h>  // for definitions of __PERL__TYPES or __CPP__TYPES
 
 #include <RPerl/HelperFunctions.cpp>		// -> HelperFunctions.h
 

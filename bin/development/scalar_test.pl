@@ -43,13 +43,13 @@ for my integer $i ( 0 .. $i_MAX ) {
     # [[[ INTEGER TESTS ]]]
 
 #	$string_retval = stringify_integer();  # TIV00; raise/throw exception  # CPPOPS_BOTHTYPES Usage: main::stringify_integer(input_integer) at ./bin/development/scalar_test.pl line 45.
-#	$string_retval = stringify_integer(3);  # TIV01
+	$string_retval = stringify_integer(3);  # TIV01
 #	$string_retval = stringify_integer(-17);  # TIV02
 #	$string_retval = stringify_integer(-17.3);  # TIV03; raise/throw exception
 #	$string_retval = stringify_integer('-17.3');  # TIV04; raise/throw exception
 #	$string_retval = stringify_integer([3]);  # TIV05; raise/throw exception
 #	$string_retval = stringify_integer({a_key => 3});  # TIV06; raise/throw exception
-	$string_retval = stringify_integer(-1_234_567_890);  # TIV07
+#	$string_retval = stringify_integer(-1_234_567_890);  # TIV07
 #	$string_retval = stringify_integer(-1_234_567_890_000);  # TIV08; raise/throw exception
 	print "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n" or croak();
 
@@ -108,8 +108,8 @@ croak('Done for now, croaking');
 #	$string_retval = typetest___string__in___string__out([3]);  # TPV15; raise/throw exception
 #	$string_retval = typetest___string__in___string__out({a_key => 3});  # TPV16; raise/throw exception
 #	$string_retval = typetest___string__in___string__out('Melange');  # TPV17
-	$string_retval = typetest___string__in___string__out("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n");  # TPV18
-	print "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n" or croak();
+#	$string_retval = typetest___string__in___string__out("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n");  # TPV18
+#	print "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n" or croak();
 }
 
 #croak('Done for now, croaking');

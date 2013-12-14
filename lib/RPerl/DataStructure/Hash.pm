@@ -81,6 +81,7 @@ our void $check_trace_hash_ref = sub {
 # [[[ STRINGIFY ]]]
 # [[[ STRINGIFY ]]]
 
+=disable
 # convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
 our string $stringify_integer__hash_ref = sub {
     ( my $input_hv_ref ) = @_;
@@ -130,6 +131,7 @@ our string $stringify_integer__hash_ref = sub {
 
     return ($output_sv);
 };
+=cut
 
 # convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing NVs))) to Perl-parsable (Perl SV containing PV)
 our string $stringify_number__hash_ref = sub {
@@ -236,6 +238,7 @@ our string $stringify_string__hash_ref = sub {
 # [[[ TYPE TESTING ]]]
 
 our string $typetest___integer__hash_ref__in___string__out = sub {
+print "in PERLOPS_PERLTYPES Hash::typetest___integer__hash_ref__in___string__out(), top of subroutine\n";
     ( my integer__hash_ref $lucky_numbers) = @_;
 
     #    check_hash_ref($lucky_numbers);
@@ -253,6 +256,7 @@ our string $typetest___integer__hash_ref__in___string__out = sub {
             . ", BARSTOOL\n"
             or croak();
     }
+print "in PERLOPS_PERLTYPES Hash::typetest___integer__hash_ref__in___string__out(), bottom of subroutine\n";
     return (
         stringify_integer__hash_ref($lucky_numbers) . 'PERLOPS_PERLTYPES' );
 };
