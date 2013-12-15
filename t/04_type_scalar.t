@@ -1,9 +1,11 @@
 #!/usr/bin/perl
 ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
 ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted newline
+## no critic qw(ProhibitInterpolationOfLiterals)  ## RPERL allow string test values
+## no critic qw(ProhibitStringySplit)  ## RPERL allow string test values
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.2.7');
+use version; our $VERSION = qv('0.3.0');
 
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
@@ -18,7 +20,7 @@ CHECK {
         || croak('Error redirecting stderr, croaking');
 }
 
-use Test::More tests => 199;
+use Test::More tests => 277;
 use Test::Exception;
 use Carp;
 my $ERROR_MAX = 0.00000001;
@@ -81,6 +83,19 @@ BEGIN {
     );
 }
 
+# use Data::Dumper() to to stringify a string
+#our string $string__dumperify = sub {  # NEED FIX: RPerl subroutines disabled here
+sub string__dumperify {
+    ( my string $input_string ) = @_;
+
+#    print "in 04_type_scalar.t string__dumperify(), received have \$input_string =\n$input_string\n\n" or croak();
+    $input_string = Dumper( [$input_string] );
+    $input_string =~ s/^\s+|\s+$//xmsg;    # strip leading whitespace
+    my @input_string_split = split "\n", $input_string;
+    $input_string = $input_string_split[1];    # only select the data line
+    return $input_string;
+}
+
 # [[[ TEST RUNLOOP ]]]
 # [[[ TEST RUNLOOP ]]]
 # [[[ TEST RUNLOOP ]]]
@@ -103,7 +118,8 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         );
         lives_and(
             sub {
-                is( integer__ops(), 'PERL', q{integer__ops() returns 'PERL'} );
+                is( integer__ops(), 'PERL',
+                    q{integer__ops() returns 'PERL'} );
             },
             q{integer__ops() lives}
         );
@@ -115,8 +131,9 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
             q{integer__types() lives}
         );
         lives_and(
-            sub { is( number__ops(), 'PERL', q{number__ops() returns 'PERL'} ) }
-            ,
+            sub {
+                is( number__ops(), 'PERL', q{number__ops() returns 'PERL'} );
+            },
             q{number__ops() lives}
         );
         lives_and(
@@ -127,8 +144,9 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
             q{number__types() lives}
         );
         lives_and(
-            sub { is( string__ops(), 'PERL', q{string__ops() returns 'PERL'} ) }
-            ,    ## PERLTIDY BUG comma on newline
+            sub {
+                is( string__ops(), 'PERL', q{string__ops() returns 'PERL'} );
+            },    ## PERLTIDY BUG comma on newline
             q{string__ops() lives}
         );
         lives_and(
@@ -176,8 +194,9 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
             q{RPerl::DataType::Integer_cpp::cpp_link() lives}
         );
         lives_and(
-            sub { is( integer__ops(), 'CPP', q{integer__ops() returns 'CPP'} ) }
-            ,
+            sub {
+                is( integer__ops(), 'CPP', q{integer__ops() returns 'CPP'} );
+            },
             q{integer__ops() lives}
         );
         lives_and(
@@ -208,7 +227,8 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
             q{RPerl::DataType::Number_cpp::cpp_link() lives}
         );
         lives_and(
-            sub { is( number__ops(), 'CPP', q{number__ops() returns 'CPP'} ) },
+            sub { is( number__ops(), 'CPP', q{number__ops() returns 'CPP'} ) }
+            ,
             q{number__ops() lives}
         );
         lives_and(
@@ -239,7 +259,8 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
             q{RPerl::DataType::String_cpp::cpp_link() lives}
         );
         lives_and(
-            sub { is( string__ops(), 'CPP', q{string__ops() returns 'CPP'} ) },
+            sub { is( string__ops(), 'CPP', q{string__ops() returns 'CPP'} ) }
+            ,
             q{string__ops() lives}
         );
         lives_and(
@@ -285,8 +306,9 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
             q{RPerl::DataType::Integer_cpp::cpp_link() lives}
         );
         lives_and(
-            sub { is( integer__ops(), 'CPP', q{integer__ops() returns 'CPP'} ) }
-            ,
+            sub {
+                is( integer__ops(), 'CPP', q{integer__ops() returns 'CPP'} );
+            },
             q{integer__ops() lives}
         );
         lives_and(
@@ -309,12 +331,14 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
             q{RPerl::DataType::Number_cpp::cpp_link() lives}
         );
         lives_and(
-            sub { is( number__ops(), 'CPP', q{number__ops() returns 'CPP'} ) },
+            sub { is( number__ops(), 'CPP', q{number__ops() returns 'CPP'} ) }
+            ,
             q{number__ops() lives}
         );
         lives_and(
             sub {
-                is( number__types(), 'CPP', q{number__types() returns 'CPP'} );
+                is( number__types(), 'CPP',
+                    q{number__types() returns 'CPP'} );
             },
             q{number__types() lives}
         );
@@ -331,12 +355,15 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
             q{RPerl::DataType::String_cpp::cpp_link() lives}
         );
         lives_and(
-            sub { is( string__ops(), 'CPP', q{string__ops()  returns 'CPP'} ) },
+            sub {
+                is( string__ops(), 'CPP', q{string__ops()  returns 'CPP'} );
+            },
             q{string__ops() lives}
         );
         lives_and(
             sub {
-                is( string__types(), 'CPP', q{string__types()  returns 'CPP'} );
+                is( string__types(), 'CPP',
+                    q{string__types()  returns 'CPP'} );
             },
             q{string__types() lives}
         );
@@ -351,46 +378,46 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         "/(EIV00.*$OPS_TYPES)|(Usage.*integer__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TIV00 integer__stringify() throws correct exception}
     );
-    throws_ok(                                              # TIV01
+    throws_ok(                                               # TIV01
         sub { integer__stringify(undef) },
         "/EIV00.*$OPS_TYPES/",
         q{TIV01 integer__stringify(undef) throws correct exception}
     );
-    lives_and(                                              # TIV02
+    lives_and(                                               # TIV02
         sub {
             is( integer__stringify(3), '3',
                 q{TIV02 integer__stringify(3) returns correct value} );
         },
         q{TIV02 integer__stringify(3) lives}
     );
-    lives_and(                                              # TIV03
+    lives_and(                                               # TIV03
         sub {
             is( integer__stringify(-17), '-17',
                 q{TIV03 integer__stringify(-17) returns correct value} );
         },
         q{TIV03 integer__stringify(-17) lives}
     );
-    throws_ok(                                              # TIV04
+    throws_ok(                                               # TIV04
         sub { integer__stringify(-17.3) },
         "/EIV01.*$OPS_TYPES/",
         q{TIV04 integer__stringify(-17.3) throws correct exception}
     );
-    throws_ok(                                              # TIV05
+    throws_ok(                                               # TIV05
         sub { integer__stringify('-17.3') },
         "/EIV01.*$OPS_TYPES/",
         q{TIV05 integer__stringify('-17.3') throws correct exception}
     );
-    throws_ok(                                              # TIV06
+    throws_ok(                                               # TIV06
         sub { integer__stringify( [3] ) },
         "/EIV01.*$OPS_TYPES/",
         q{TIV06 integer__stringify([3]) throws correct exception}
     );
-    throws_ok(                                              # TIV07
+    throws_ok(                                               # TIV07
         sub { integer__stringify( { a_key => 3 } ) },
         "/EIV01.*$OPS_TYPES/",
         q{TIV07 integer__stringify({a_key => 3}) throws correct exception}
     );
-    lives_and(                                              # TIV08
+    lives_and(                                               # TIV08
         sub {
             is( integer__stringify(-1_234_567_890), '-1234567890',
                 q{TIV08 integer__stringify(-1_234_567_890) returns correct value}
@@ -398,12 +425,12 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         },
         q{TIV08 integer__stringify(-1_234_567_890) lives}
     );
-    throws_ok(                                              # TIV09
+    throws_ok(                                               # TIV09
         sub { integer__stringify(-1_234_567_890_000) },
         "/EIV01.*$OPS_TYPES/",
         q{TIV09 integer__stringify(-1_234_567_890_000) throws correct exception}
     );
-    lives_and(                                              # TIV10
+    lives_and(                                               # TIV10
         sub {
             is( integer__typetest0(),
                 ( 3 + $OPS_TYPES_ID ),
@@ -412,7 +439,7 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         },
         q{TIV10 integer__typetest0() lives}
     );
-    throws_ok(                                              # TIV20
+    throws_ok(                                               # TIV20
         sub { integer__typetest1() },
         "/(EIV00.*$OPS_TYPES)|(Usage.*integer__typetest1)/"
         ,    # DEV NOTE: 2 different error messages, RPerl & C
@@ -485,48 +512,49 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         "/(ENV00.*$OPS_TYPES)|(Usage.*number__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TNV00 number__stringify() throws correct exception}
     );
-    throws_ok(                                             # TNV01
+    throws_ok(                                              # TNV01
         sub { number__stringify(undef) },
         "/ENV00.*$OPS_TYPES/",
         q{TNV01 number__stringify(undef) throws correct exception}
     );
-    lives_and(                                             # TNV02
+    lives_and(                                              # TNV02
         sub {
             is( number__stringify(3), '3',
                 q{TNV02 number__stringify(3) returns correct value} );
         },
         q{TNV02 number__stringify(3) lives}
     );
-    lives_and(                                             # TNV03
+    lives_and(                                              # TNV03
         sub {
             is( number__stringify(-17), '-17',
                 q{TNV03 number__stringify(-17) returns correct value} );
         },
         q{TNV03 number__stringify(-17) lives}
     );
-    lives_and(                                             # TNV04
+    lives_and(                                              # TNV04
         sub {
-            is( number__stringify(-17.3), '-17.3',
+            is( number__stringify(-17.3),
+                '-17.3',
                 q{TNV04 number__stringify(-17.3) returns correct value} );
         },
         q{TNV04 number__stringify(-17.3) lives}
     );
-    throws_ok(                                             # TNV05
+    throws_ok(                                              # TNV05
         sub { number__stringify('-17.3') },
         "/ENV01.*$OPS_TYPES/",
         q{TNV05 number__stringify('-17.3') throws correct exception}
     );
-    throws_ok(                                             # TNV06
+    throws_ok(                                              # TNV06
         sub { number__stringify( [3] ) },
         "/ENV01.*$OPS_TYPES/",
         q{TNV06 number__stringify([3]) throws correct exception}
     );
-    throws_ok(                                             # TNV07
+    throws_ok(                                              # TNV07
         sub { number__stringify( { a_key => 3 } ) },
         "/ENV01.*$OPS_TYPES/",
         q{TNV07 number__stringify({a_key => 3}) throws correct exception}
     );
-    lives_and(                                             # TNV08
+    lives_and(                                              # TNV08
         sub {
             is( number__stringify(
                     3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679
@@ -537,11 +565,10 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         },
         q{TNV08 number__stringify(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679) lives}
     );
-    lives_and(                                             # TNV10
+    lives_and(                                              # TNV10
         sub {
             cmp_ok(
-                abs(number__typetest0()
-                        - ( 3.14285714285714 + $OPS_TYPES_ID )
+                abs(number__typetest0() - ( 3.14285714285714 + $OPS_TYPES_ID )
                 ),    ## PERLTIDY BUG comma on newline
                 '<',
                 $ERROR_MAX,
@@ -622,80 +649,351 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
     # [[[ STRING TESTS ]]]
     # [[[ STRING TESTS ]]]
 
-    lives_and(    # TPV00
+    throws_ok(    # TPV00
+        sub { string__stringify() },
+        "/(EPV00.*$OPS_TYPES)|(Usage.*string__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
+        q{TPV00 string__stringify() throws correct exception}
+    );
+    throws_ok(                                              # TPV01
+        sub { string__stringify(undef) },
+        "/EPV00.*$OPS_TYPES/",
+        q{TPV01 string__stringify(undef) throws correct exception}
+    );
+    throws_ok(                                              # TPV02
+        sub { string__stringify(3) },
+        "/EPV01.*$OPS_TYPES/",
+        q{TPV02 string__stringify(3) throws correct exception}
+    );
+    throws_ok(                                              # TPV03
+        sub { string__stringify(-17) },
+        "/EPV01.*$OPS_TYPES/",
+        q{TPV03 string__stringify(-17) throws correct exception}
+    );
+    throws_ok(                                              # TPV04
+        sub { string__stringify(-17.3) },
+        "/EPV01.*$OPS_TYPES/",
+        q{TPV04 string__stringify(-17.3) throws correct exception}
+    );
+    lives_and(                                              # TPV05
         sub {
-            is( string__typetest0(),
-                "Spice $OPS_TYPES",
-                q{TPV00 string__typetest0() returns correct value}
+            is( string__stringify('-17.3'),
+                "'-17.3'",
+                q{TPV05 string__stringify('-17.3') returns correct value} );
+        },
+        q{TPV05 string__stringify('-17.3') lives}
+    );
+    throws_ok(                                              # TPV06
+        sub { string__stringify( [3] ) },
+        "/EPV01.*$OPS_TYPES/",
+        q{TPV06 string__stringify([3]) throws correct exception}
+    );
+    throws_ok(                                              # TPV07
+        sub { string__stringify( { a_key => 3 } ) },
+        "/EPV01.*$OPS_TYPES/",
+        q{TPV07 string__stringify({a_key => 3}) throws correct exception}
+    );
+    lives_and(                                              # TPV08
+        sub {
+            is( string__stringify('Melange'),
+                "'Melange'",
+                q{TPV08 string__stringify('Melange') returns correct value} );
+        },
+        q{TPV08 string__stringify('Melange') lives}
+    );
+    lives_and(                                              # TPV09
+        sub {
+            is( string__stringify(
+                    "\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n"
+                ),
+                "'\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n'",
+                q{TPV09 string__stringify("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n") returns correct value}
             );
         },
-        q{TPV00 string__typetest0() lives}
+        q{TPV09 string__stringify("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n") lives}
     );
-    throws_ok(    # TPV10
-        sub { string__typetest1() },
-        "/(EPV00.*$OPS_TYPES)|(Usage.*string__typetest1)/"
-        ,         # DEV NOTE: 2 different error messages, RPerl & C
-        q{TPV10 string__typetest1() throws correct exception}
+
+    lives_and(                                              # TPV10
+        sub {
+            is( string__stringify(
+                    '\'I am a single-quoted string, in a single-quoted string with back-slash control chars\', the first string said introspectively.'
+                ),
+                string__dumperify(
+                    '\'I am a single-quoted string, in a single-quoted string with back-slash control chars\', the first string said introspectively.'
+                ),
+                q{TPV10 string__stringify('\'I am a single-quoted string...\', the first string said introspectively.') returns correct value}
+            );
+        },
+        q{TPV10 string__stringify('\'I am a single-quoted string...\', the first string said introspectively.') lives}
     );
-    throws_ok(    # TPV11
-        sub { string__typetest1(undef) },
-        "/EPV00.*$OPS_TYPES/",
-        q{TPV11 string__typetest1(undef) throws correct exception}
+    lives_and(    # TPV11
+        sub {
+            is( string__stringify(
+                    '"I am a double-quoted string, in a single-quoted string with no back-slash chars", the second string observed.'
+                ),
+                string__dumperify(
+                    '"I am a double-quoted string, in a single-quoted string with no back-slash chars", the second string observed.'
+                ),
+                q{TPV11 string__stringify('"I am a double-quoted string...", the second string observed.') returns correct value}
+            );
+        },
+        q{TPV11 string__stringify('"I am a double-quoted string...", the second string observed.') lives}
     );
-    throws_ok(    # TPV12
-        sub { string__typetest1(3) },
-        "/EPV01.*$OPS_TYPES/",
-        q{TPV12 string__typetest1(3) throws correct exception}
+    lives_and(    # TPV12
+        sub {
+            is( string__stringify(
+                    "'I am a single-quoted string, in a double-quoted string with no back-slash chars', the third string added."
+                ),
+                string__dumperify(
+                    "'I am a single-quoted string, in a double-quoted string with no back-slash chars', the third string added."
+                ),
+                q{TPV12 string__stringify("'I am a single-quoted string...', the third string added.") returns correct value}
+            );
+        },
+        q{TPV12 string__stringify("'I am a single-quoted string...', the third string added.") lives}
     );
-    throws_ok(    # TPV13
-        sub { string__typetest1(-17) },
-        "/EPV01.*$OPS_TYPES/",
-        q{TPV13 string__typetest1(-17) throws correct exception}
+    lives_and(    # TPV13
+        sub {
+            is( string__stringify(
+                    "\"I am a double-quoted string, in a double-quoted string with back-slash control chars\", the fourth string offered."
+                ),
+                string__dumperify(
+                    "\"I am a double-quoted string, in a double-quoted string with back-slash control chars\", the fourth string offered."
+                ),
+                q{TPV13 string__stringify("\"I am a double-quoted string...\", the fourth string offered.") returns correct value}
+            );
+        },
+        q{TPV13 string__stringify("\"I am a double-quoted string...\", the fourth string offered.") lives}
     );
-    throws_ok(    # TPV14
-        sub { string__typetest1(-17.3) },
-        "/EPV01.*$OPS_TYPES/",
-        q{TPV14 string__typetest1(-17.3) throws correct exception}
+    lives_and(    # TPV14
+        sub {
+            is( string__stringify(
+                    '\'I am a single-quoted string, in a single-quoted string with back-slash control and \ display \ chars\', the fifth string shouted.'
+                ),
+                string__dumperify(
+                    '\'I am a single-quoted string, in a single-quoted string with back-slash control and \ display \ chars\', the fifth string shouted.'
+                ),
+                q{TPV14 string__stringify('\'I am a single-quoted string... and \ display \ chars\', the fifth string shouted.') returns correct value}
+            );
+        },
+        q{TPV14 string__stringify('\'I am a single-quoted string... and \ display \ chars\', the fifth string shouted.') lives}
     );
     lives_and(    # TPV15
         sub {
-            is( string__typetest1('-17.3'),
-                "'-17.3' $OPS_TYPES",
-                q{TPV15 string__typetest1('-17.3') returns correct value}
+            is( string__stringify(
+                    '"I am a double-quoted string, in a single-quoted string with back-slash \ display \ chars", the sixth string hollered.'
+                ),
+                string__dumperify(
+                    '"I am a double-quoted string, in a single-quoted string with back-slash \ display \ chars", the sixth string hollered.'
+                ),
+                q{TPV15 string__stringify('"I am a double-quoted string... \ display \ chars", the sixth string hollered.') returns correct value}
             );
         },
-        q{TPV15 string__typetest1('-17.3') lives}
+        q{TPV15 string__stringify('"I am a double-quoted string... \ display \ chars", the sixth string hollered.') lives}
     );
-    throws_ok(    # TPV16
+    lives_and(    # TPV16
+        sub {
+            is( string__stringify(
+                    "'I am a single-quoted string, in a double-quoted string with back-slash \\ display \\ chars', the seventh string yelled."
+                ),
+                string__dumperify(
+                    "'I am a single-quoted string, in a double-quoted string with back-slash \\ display \\ chars', the seventh string yelled."
+                ),
+                q{TPV16 string__stringify("'I am a single-quoted string... \\ display \\ chars', the seventh string yelled.") returns correct value}
+            );
+        },
+        q{TPV16 string__stringify("'I am a single-quoted string... \\ display \\ chars', the seventh string yelled.") lives}
+    );
+    lives_and(    # TPV17
+        sub {
+            is( string__stringify(
+                    "\"I am a double-quoted string, in a double-quoted string with back-slash control and \\ display \\ chars\", the eighth string belted."
+                ),
+                string__dumperify(
+                    "\"I am a double-quoted string, in a double-quoted string with back-slash control and \\ display \\ chars\", the eighth string belted."
+                ),
+                q{TPV17 string__stringify("\"I am a double-quoted string... and \\ display \\ chars\", the eighth string belted.") returns correct value}
+            );
+        },
+        q{TPV17 string__stringify("\"I am a double-quoted string... and \\ display \\ chars\", the eighth string belted.") lives}
+    );
+    lives_and(    # TPV20
+        sub {
+            is( string__stringify(
+                    q{'I am a single-quoted string, in a single-quoted q{} string with no back-slash chars', the ninth string chimed in.}
+                ),
+                string__dumperify(
+                    q{'I am a single-quoted string, in a single-quoted q{} string with no back-slash chars', the ninth string chimed in.}
+                ),
+                q{TPV20 string__stringify(q{'I am a single-quoted string...', the ninth string chimed in.}) returns correct value}
+            );
+        },
+        q{TPV20 string__stringify(q{'I am a single-quoted string...', the ninth string chimed in.}) lives}
+    );
+    lives_and(    # TPV21
+        sub {
+            is( string__stringify(
+                    q{"I am a double-quoted string, in a single-quoted q{} string with no back-slash chars", the tenth string opined.}
+                ),
+                string__dumperify(
+                    q{"I am a double-quoted string, in a single-quoted q{} string with no back-slash chars", the tenth string opined.}
+                ),
+                q{TPV21 string__stringify(q{"I am a double-quoted string...", the tenth string opined.}) returns correct value}
+            );
+        },
+        q{TPV21 string__stringify(q{"I am a double-quoted string...", the tenth string opined.}) lives}
+    );
+    lives_and(    # TPV22
+        sub {
+            is( string__stringify(
+                    qq{'I am a single-quoted string, in a double-quoted qq{} string with no back-slash chars', the eleventh string asserted.}
+                ),
+                string__dumperify(
+                    qq{'I am a single-quoted string, in a double-quoted qq{} string with no back-slash chars', the eleventh string asserted.}
+                ),
+                q{TPV22 string__stringify(qq{'I am a single-quoted string...', the eleventh string asserted.}) returns correct value}
+            );
+        },
+        q{TPV22 string__stringify(qq{'I am a single-quoted string...', the eleventh string asserted.}) lives}
+    );
+    lives_and(    # TPV23
+        sub {
+            is( string__stringify(
+                    qq{"I am a double-quoted string, in a double-quoted qq{} string with no back-slash chars", the twelfth string insisted.}
+                ),
+                string__dumperify(
+                    qq{"I am a double-quoted string, in a double-quoted qq{} string with no back-slash chars", the twelfth string insisted.}
+                ),
+                q{TPV23 string__stringify(qq{"I am a double-quoted string...", the twelfth string insisted.}) returns correct value}
+            );
+        },
+        q{TPV23 string__stringify(qq{"I am a double-quoted string...", the twelfth string insisted.}) lives}
+    );
+    lives_and(    # TPV24
+        sub {
+            is( string__stringify(
+                    q{'I am a single-quoted string, in a single-quoted q{} string with back-slash \ display \ chars', the thirteenth string whispered.}
+                ),
+                string__dumperify(
+                    q{'I am a single-quoted string, in a single-quoted q{} string with back-slash \ display \ chars', the thirteenth string whispered.}
+                ),
+                q{TPV24 string__stringify(q{'I am a single-quoted string... \ display \ chars', the thirteenth string whispered.}) returns correct value}
+            );
+        },
+        q{TPV24 string__stringify(q{'I am a single-quoted string... \ display \ chars', the thirteenth string whispered.}) lives}
+    );
+    lives_and(    # TPV25
+        sub {
+            is( string__stringify(
+                    q{"I am a double-quoted string, in a single-quoted q{} string with back-slash \ display \ chars", the fourteenth string breathed.}
+                ),
+                string__dumperify(
+                    q{"I am a double-quoted string, in a single-quoted q{} string with back-slash \ display \ chars", the fourteenth string breathed.}
+                ),
+                q{TPV25 string__stringify(q{"I am a double-quoted string... \ display \ chars", the fourteenth string breathed.}) returns correct value}
+            );
+        },
+        q{TPV25 string__stringify(q{"I am a double-quoted string... \ display \ chars", the fourteenth string breathed.}) lives}
+    );
+    lives_and(    # TPV26
+        sub {
+            is( string__stringify(
+                    qq{'I am a single-quoted string, in a double-quoted qq{} string with back-slash \\ display \\ chars', the fifteenth string mouthed.}
+                ),
+                string__dumperify(
+                    qq{'I am a single-quoted string, in a double-quoted qq{} string with back-slash \\ display \\ chars', the fifteenth string mouthed.}
+                ),
+                q{TPV26 string__stringify(qq{'I am a single-quoted string... back-slash \\ display \\ chars', the fifteenth string mouthed.}) returns correct value}
+            );
+        },
+        q{TPV26 string__stringify(qq{'I am a single-quoted string... back-slash \\ display \\ chars', the fifteenth string mouthed.}) lives}
+    );
+    lives_and(    # TPV27
+        sub {
+            is( string__stringify(
+                    qq{"I am a double-quoted string, in a double-quoted qq{} string with back-slash \\ display \\ chars", the sixteenth string implied.}
+                ),
+                string__dumperify(
+                    qq{"I am a double-quoted string, in a double-quoted qq{} string with back-slash \\ display \\ chars", the sixteenth string implied.}
+                ),
+                q{TPV27 string__stringify(qq{"I am a double-quoted string... back-slash \\ display \\ chars", the sixteenth string implied.}) returns correct value}
+            );
+        },
+        q{TPV27 string__stringify(qq{"I am a double-quoted string... back-slash \\ display \\ chars", the sixteenth string implied.}) lives}
+    );
+    lives_and(    # TPV30
+        sub {
+            is( string__typetest0(),
+                "Spice $OPS_TYPES",
+                q{TPV30 string__typetest0() returns correct value}
+            );
+        },
+        q{TPV30 string__typetest0() lives}
+    );
+    throws_ok(    # TPV40
+        sub { string__typetest1() },
+        "/(EPV00.*$OPS_TYPES)|(Usage.*string__typetest1)/"
+        ,         # DEV NOTE: 2 different error messages, RPerl & C
+        q{TPV40 string__typetest1() throws correct exception}
+    );
+    throws_ok(    # TPV41
+        sub { string__typetest1(undef) },
+        "/EPV00.*$OPS_TYPES/",
+        q{TPV41 string__typetest1(undef) throws correct exception}
+    );
+    throws_ok(    # TPV42
+        sub { string__typetest1(3) },
+        "/EPV01.*$OPS_TYPES/",
+        q{TPV42 string__typetest1(3) throws correct exception}
+    );
+    throws_ok(    # TPV43
+        sub { string__typetest1(-17) },
+        "/EPV01.*$OPS_TYPES/",
+        q{TPV43 string__typetest1(-17) throws correct exception}
+    );
+    throws_ok(    # TPV44
+        sub { string__typetest1(-17.3) },
+        "/EPV01.*$OPS_TYPES/",
+        q{TPV44 string__typetest1(-17.3) throws correct exception}
+    );
+    lives_and(    # TPV45
+        sub {
+            is( string__typetest1('-17.3'),
+                "'-17.3' $OPS_TYPES",
+                q{TPV45 string__typetest1('-17.3') returns correct value}
+            );
+        },
+        q{TPV45 string__typetest1('-17.3') lives}
+    );
+    throws_ok(    # TPV46
         sub { string__typetest1( [3] ) },
         "/EPV01.*$OPS_TYPES/",
-        q{TPV16 string__typetest1([3]) throws correct exception}
+        q{TPV46 string__typetest1([3]) throws correct exception}
     );
-    throws_ok(    # TPV17
+    throws_ok(    # TPV47
         sub { string__typetest1( { a_key => 3 } ) },
         "/EPV01.*$OPS_TYPES/",
-        q{TPV17 string__typetest1({a_key => 3}) throws correct exception}
+        q{TPV47 string__typetest1({a_key => 3}) throws correct exception}
     );
-    lives_and(    # TPV18
+    lives_and(    # TPV48
         sub {
             is( string__typetest1('Melange'),
                 "'Melange' $OPS_TYPES",
-                q{TPV18 string__typetest1('Melange') returns correct value}
+                q{TPV48 string__typetest1('Melange') returns correct value}
             );
         },
-        q{TPV18 string__typetest1('Melange') lives}
+        q{TPV48 string__typetest1('Melange') lives}
     );
-    lives_and(    # TPV19
+    lives_and(    # TPV49
         sub {
             is( string__typetest1(
                     "\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n"
                 ),
                 "'\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n' $OPS_TYPES",
-                q{TPV19 string__typetest1("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n") returns correct value}
+                q{TPV49 string__typetest1("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n") returns correct value}
             );
         },
-        q{TPV19 string__typetest1("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n") lives}
+        q{TPV49 string__typetest1("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n") lives}
     );
 }
 
-#done_testing();
+done_testing();

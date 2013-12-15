@@ -5,18 +5,19 @@
 ## no critic qw(ProhibitStringySplit)  ## RPERL allow string test values
 ## no critic qw(ProhibitInterpolationOfLiterals)  ## RPERL allow string test values
 ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow string test values
+## no critic qw(RequirePodAtEnd RequirePodSections PodSpelling)  ## RPERL allow block quotes
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.3.0');
+use version; our $VERSION = qv('0.3.1');
 use Carp;
 
 # [[[ SETUP ]]]
 
 # RPERL DRTIVER BOILERPLATE
-BEGIN { package main;  our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib'; }  # NEED REMOVE hard-coded path
-BEGIN { use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';  use MyConfig; }  # RPerl's MyConfig.pm 
-BEGIN { use lib $main::RPERL_INCLUDE_PATH;  use RPerl;  use parent ('RPerl');  $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH; }  # RPerl system files
-BEGIN { use Data::Dumper;  our $AUTOLOAD;  sub AUTOLOAD { croak("AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n" . Dumper(\@_) . ', croaking'); } }  ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  ## RPERL SYSTEM allow autoload  ## RPERL SYSTEM allow read-only @_
+BEGIN { package main; our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib'; } # NEED REMOVE hard-coded path
+BEGIN { use lib $main::RPERL_INCLUDE_PATH . '/CPAN/'; use MyConfig; } # RPerl's MyConfig.pm
+BEGIN { use lib $main::RPERL_INCLUDE_PATH; use RPerl; use parent ('RPerl'); $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH; }    # RPerl system files
+BEGIN { use Data::Dumper; our $AUTOLOAD;     sub AUTOLOAD { croak( "AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n" . Dumper( \@_ ) . ', croaking' ); } } ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  ## RPERL SYSTEM allow autoload  ## RPERL SYSTEM allow read-only @_
 
 # UNCOMMENT TO ENABLE PERL TYPES FOR C++ OPS
 #types::types_enable('PERL');
@@ -27,7 +28,9 @@ types::types_enable('CPP');
 # UNCOMMENT TO ENABLE C++ OPS
 #use RPerl::DataType::Integer_cpp;  RPerl::DataType::Integer_cpp::cpp_load();  RPerl::DataType::Integer_cpp::cpp_link();
 #use RPerl::DataType::Number_cpp;  RPerl::DataType::Number_cpp::cpp_load();  RPerl::DataType::Number_cpp::cpp_link();
-use RPerl::DataType::String_cpp;  RPerl::DataType::String_cpp::cpp_load();  RPerl::DataType::String_cpp::cpp_link();
+use RPerl::DataType::String_cpp;
+RPerl::DataType::String_cpp::cpp_load();
+RPerl::DataType::String_cpp::cpp_link();
 
 print q{in scalar_test.pl, have integer__ops() = '} . integer__ops() . "'\n" or croak();
 print q{in scalar_test.pl, have integer__types() = '} . integer__types() . "'\n" or croak();
@@ -35,6 +38,18 @@ print q{in scalar_test.pl, have number__ops() = '} . number__ops() . "'\n" or cr
 print q{in scalar_test.pl, have number__types() = '} . number__types() . "'\n" or croak();
 print q{in scalar_test.pl, have string__ops() = '} . string__ops() . "'\n" or croak();
 print q{in scalar_test.pl, have string__types() = '} . string__types() . "'\n" or croak();
+
+# use Data::Dumper() to to stringify a string
+#our string $string__dumperify = sub {  # NEED FIX: RPerl subroutines disabled here
+sub string__dumperify {
+    ( my string $input_string ) = @_;
+        print "in scalar_test.pl string__dumperify(), received have \$input_string =\n$input_string\n\n" or croak();
+        $input_string = Dumper( [$input_string] );
+        $input_string =~ s/^\s+|\s+$//xmsg;         # strip leading whitespace
+        my @input_string_split = split "\n", $input_string;
+        $input_string = $input_string_split[1];    # only select the data line
+        return $input_string;
+}
 
 # variable declarations
 my integer $integer_retval;
@@ -105,13 +120,6 @@ for my integer $i ( 0 .. $i_MAX ) {
 #    $number_retval = number__typetest1(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679);  # TNV28
 #    print "in scalar_test.pl $i/$i_MAX, have \$number_retval = $number_retval\n" or croak();
 
-
-    # START HERE: add new string tests below to 04*.t
-    # START HERE: add new string tests below to 04*.t
-    # START HERE: add new string tests below to 04*.t
-    
-    
-
     # [[[ STRING TESTS ]]]
 
 #    $string_retval = string__stringify();  # TPV00; error PERLOPS EPV00, CPPOPS "Usage: main::string__stringify(input_string)"
@@ -122,10 +130,12 @@ for my integer $i ( 0 .. $i_MAX ) {
 #    $string_retval = string__stringify('-17.3');  # TPV05
 #    $string_retval = string__stringify([3]);  # TPV06; error EPV01
 #    $string_retval = string__stringify({a_key => 3});  # TPV07; error EPV01
+#    $string_retval = string__stringify('Melange');  # TPV08
+#    $string_retval = string__stringify("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n");  # TPV09
 #    print "in scalar_test.pl $i/$i_MAX, have \$string_retval =\n$string_retval\n" or croak();
 
     # DEV NOTE: in English grammar, I prefer the comma after the right-quote
-#    $my_string = '\'I am a single-quoted string, in a single-quoted string with back-slash control chars\', the first string said introspectively.';  # TPV10
+    $my_string = '\'I am a single-quoted string, in a single-quoted string with back-slash control chars\', the first string said introspectively.' ;    # TPV10
 #    $my_string = '"I am a double-quoted string, in a single-quoted string with no back-slash chars", the second string observed.';  # TPV11
 #    $my_string = "'I am a single-quoted string, in a double-quoted string with no back-slash chars', the third string added.";  # TPV12
 #    $my_string = "\"I am a double-quoted string, in a double-quoted string with back-slash control chars\", the fourth string offered.";  # TPV13
@@ -143,16 +153,19 @@ for my integer $i ( 0 .. $i_MAX ) {
 #    $my_string = qq{'I am a single-quoted string, in a double-quoted qq{} string with back-slash \\ display \\ chars', the fifteenth string mouthed.};  # TPV26
 #    $my_string = qq{"I am a double-quoted string, in a double-quoted qq{} string with back-slash \\ display \\ chars", the sixteenth string implied.};  # TPV27
 
-#    print "in scalar_test.pl $i/$i_MAX, have \$my_string =\n$my_string\n\n" or croak();
-#    $dumper_string = Dumper([$my_string]);  # retrieve Dumper()'s version of the stringified string
-#    $dumper_string =~ s/^\s+|\s+$//xmsg;  # strip leading whitespace
-#    my @dumper_split = split "\n", $dumper_string;
-#    $dumper_string = $dumper_split[1];  # only select the data line
+=disable
+    print "in scalar_test.pl $i/$i_MAX, have \$my_string =\n$my_string\n\n" or croak();
+    $dumper_string = Dumper([$my_string]);  # retrieve Dumper()'s version of the stringified string
+    $dumper_string =~ s/^\s+|\s+$//xmsg;  # strip leading whitespace
+    my @dumper_split = split "\n", $dumper_string;
+    $dumper_string = $dumper_split[1];  # only select the data line
 #    print "in scalar_test.pl $i/$i_MAX, have Dumper([\$my_string]) =\n" . Dumper([$my_string]) . "\n" or croak();
+=cut
 
-#    $string_retval = string__stringify($my_string);
-#    print "in scalar_test.pl $i/$i_MAX, have \$string_retval =\n$string_retval STRINGIFY\n\n" or croak();
-#    print "in scalar_test.pl $i/$i_MAX, have \$dumper_string =\n$dumper_string DUMPERIFY\n\n" or croak();
+    $dumper_string = string__dumperify($my_string);
+    $string_retval = string__stringify($my_string);
+    print "in scalar_test.pl $i/$i_MAX, have \$string_retval =\n$string_retval STRINGIFY\n\n" or croak();
+    print "in scalar_test.pl $i/$i_MAX, have \$dumper_string =\n$dumper_string DUMPERIFY\n\n" or croak();
 
 #    $string_retval = string__typetest0();  # TPV30
 #    print "in scalar_test.pl $i/$i_MAX, have \$string_retval =\n$string_retval\n" or croak();
@@ -166,14 +179,11 @@ for my integer $i ( 0 .. $i_MAX ) {
 #    $string_retval = string__typetest1([3]);  # TPV46; error EPV01
 #    $string_retval = string__typetest1({a_key => 3});  # TPV47; error EPV01
 #    $string_retval = string__typetest1('Melange');  # TPV48
-    $string_retval = string__typetest1("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n");  # TPV49
-    print "in scalar_test.pl $i/$i_MAX, have \$string_retval =\n$string_retval\n" or croak();
+#    $string_retval = string__typetest1("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n");  # TPV49
+#    print "in scalar_test.pl $i/$i_MAX, have \$string_retval =\n$string_retval\n" or croak();
 
-croak('Done for now, croaking');
+    croak('Done for now, croaking');
 }
 
 #croak('Done for now, croaking');
-
-
-
 
