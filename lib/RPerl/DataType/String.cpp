@@ -1,7 +1,7 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-// VERSION 0.2.4
+// VERSION 0.3.0
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_cpp
 #define __CPP__INCLUDED__RPerl__DataType__String_cpp 1
@@ -14,7 +14,7 @@ using std::cout;  using std::endl;
 
 // TYPE-CHECKING SUBROUTINES DEPRECATED IN FAVOR OF EQUIVALENT MACROS
 /*
-void CHECK_STRING(SV* possible_string) {
+void string__CHECK(SV* possible_string) {
     if (not(SvOK(possible_string))) {
     	croak("\nERROR EPV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but undefined/null value found,\ncroaking");
     }
@@ -22,7 +22,7 @@ void CHECK_STRING(SV* possible_string) {
     	croak("\nERROR EPV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but non-string value found,\ncroaking");
     }
 };
-void CHECKTRACE_STRING(SV* possible_string, const char* variable_name, const char* subroutine_name) {
+void string__CHECKTRACE(SV* possible_string, const char* variable_name, const char* subroutine_name) {
     if (not(SvOK(possible_string))) {
     	croak("\nERROR EPV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but undefined/null value found,\nin variable '%s' from subroutine '%s',\ncroaking",
     			variable_name, subroutine_name);
@@ -44,8 +44,8 @@ void CHECKTRACE_STRING(SV* possible_string, const char* variable_name, const cha
 string XS_unpack_string(SV* input_sv)
 {
 //printf("in CPPOPS_CPPTYPES XS_unpack_string(), top of subroutine\n");
-//	CHECK_STRING(input_sv);
-	CHECKTRACE_STRING(input_sv, "input_sv", "XS_unpack_string()");
+//	string__CHECK(input_sv);
+	string__CHECKTRACE(input_sv, "input_sv", "XS_unpack_string()");
 //	string output_string;
 //	output_string = SvPV_nolen(input_sv);
 //printf("in CPPOPS_CPPTYPES XS_unpack_string(), bottom of subroutine\n");
@@ -72,17 +72,17 @@ void XS_pack_string(SV* output_sv, string input_string) {
 
 # ifdef __PERL__TYPES
 
-SV* stringify_string(SV* input_sv)
+SV* string__stringify(SV* input_sv)
 {
     string input_sv_string;
     size_t input_sv_string_pos;
 
-//	CHECK_STRING(input_sv);
-	CHECKTRACE_STRING(input_sv, "input_sv", "stringify_string()");
+//	string__CHECK(input_sv);
+	string__CHECKTRACE(input_sv, "input_sv", "string__stringify()");
 
 	input_sv_string = SvPV_nolen(input_sv);
 
-printf("in CPPOPS_PERLTYPES stringify_string(), received input_sv_string =\n%s\n\n", input_sv_string.c_str());
+printf("in CPPOPS_PERLTYPES string__stringify(), received input_sv_string =\n%s\n\n", input_sv_string.c_str());
 
 	// escape all back-slash \ and single-quote ' characters with a back-slash \ character
 	input_sv_string = string(SvPV_nolen(input_sv));
@@ -101,16 +101,16 @@ printf("in CPPOPS_PERLTYPES stringify_string(), received input_sv_string =\n%s\n
 
 	input_sv_string = "'" + input_sv_string + "'";
 
-printf("in CPPOPS_PERLTYPES stringify_string(), bottom of subroutine, returning possibly-modified input_sv_string =\n%s\n\n", input_sv_string.c_str());
+printf("in CPPOPS_PERLTYPES string__stringify(), bottom of subroutine, returning possibly-modified input_sv_string =\n%s\n\n", input_sv_string.c_str());
 
 	return(newSVpvf("%s", input_sv_string.c_str()));
 }
 
 # elif defined __CPP__TYPES
 
-string stringify_string(string input_string)
+string string__stringify(string input_string)
 {
-printf("in CPPOPS_CPPTYPES stringify_string(), top of subroutine, received input_string =\n%s\n\n", input_string.c_str());
+printf("in CPPOPS_CPPTYPES string__stringify(), top of subroutine, received input_string =\n%s\n\n", input_string.c_str());
 
     size_t input_string_pos;
 
@@ -130,7 +130,7 @@ printf("in CPPOPS_CPPTYPES stringify_string(), top of subroutine, received input
 
 	input_string = "'" + input_string + "'";
 
-printf("in CPPOPS_CPPTYPES stringify_string(), bottom of subroutine, returning possibly-modified input_string =\n%s\n\n", input_string.c_str());
+printf("in CPPOPS_CPPTYPES string__stringify(), bottom of subroutine, returning possibly-modified input_string =\n%s\n\n", input_string.c_str());
 
 	return(input_string);
 }
@@ -143,30 +143,30 @@ printf("in CPPOPS_CPPTYPES stringify_string(), bottom of subroutine, returning p
 
 # ifdef __PERL__TYPES
 
-SV* typetest___void__in___string__out() {
-printf("in CPPOPS_PERLTYPES typetest___void__in___string__out()\n");
+SV* string__typetest0() {
+printf("in CPPOPS_PERLTYPES string__typetest0()\n");
 	return(newSVpv("Spice CPPOPS_PERLTYPES", 0));
 }
 
-SV* typetest___string__in___string__out(SV* lucky_string) {
-//	CHECK_STRING(lucky_string);
-	CHECKTRACE_STRING(lucky_string, "lucky_string", "typetest___string__in___string__out()");
-//cout << "in CPPOPS_PERLTYPES typetest___string__in___string__out(), received lucky_string '" << SvPV_nolen(lucky_string) << "'" << endl;
-printf("in CPPOPS_PERLTYPES typetest___string__in___string__out(), received lucky_string = '%s'\n", SvPV_nolen(lucky_string));
-	return(newSVpvf("%s%s", SvPV_nolen(stringify_string(lucky_string)), " CPPOPS_PERLTYPES"));
+SV* string__typetest1(SV* lucky_string) {
+//	string__CHECK(lucky_string);
+	string__CHECKTRACE(lucky_string, "lucky_string", "string__typetest1()");
+//cout << "in CPPOPS_PERLTYPES string__typetest1(), received lucky_string '" << SvPV_nolen(lucky_string) << "'" << endl;
+printf("in CPPOPS_PERLTYPES string__typetest1(), received lucky_string = '%s'\n", SvPV_nolen(lucky_string));
+	return(newSVpvf("%s%s", SvPV_nolen(string__stringify(lucky_string)), " CPPOPS_PERLTYPES"));
 }
 
 # elif defined __CPP__TYPES
 
-string typetest___void__in___string__out() {
+string string__typetest0() {
 	string retval = "Spice CPPOPS_CPPTYPES";
-printf("in CPPOPS_CPPTYPES typetest___void__in___string__out(), have retval = '%s'\n", retval.c_str());
+printf("in CPPOPS_CPPTYPES string__typetest0(), have retval = '%s'\n", retval.c_str());
 	return(retval);
 }
 
-string typetest___string__in___string__out(string lucky_string) {
-printf("in CPPOPS_CPPTYPES typetest___string__in___string__out(), received lucky_string = '%s'\n", lucky_string.c_str());
-	return(stringify_string(lucky_string) + " CPPOPS_CPPTYPES");
+string string__typetest1(string lucky_string) {
+printf("in CPPOPS_CPPTYPES string__typetest1(), received lucky_string = '%s'\n", lucky_string.c_str());
+	return(string__stringify(lucky_string) + " CPPOPS_CPPTYPES");
 }
 
 # else

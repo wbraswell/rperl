@@ -1,8 +1,11 @@
 package RPerl::DataStructure::Hash;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.2.2');
+use version; our $VERSION = qv('0.2.4');
 use Carp;
+
+# [[[ SUB-TYPES BEFORE SETUP ]]]
+use RPerl::DataStructure::Hash::SubTypes;
 
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
@@ -29,19 +32,18 @@ use RPerl::DataType::Number;
 use RPerl::DataType::Character;
 use RPerl::DataType::String;
 use RPerl::DataType::Scalar;
+
 #use RPerl::DataType::Reference;
 use RPerl::DataType::Unknown;
-use RPerl::DataStructure::Array;
 
-# most of the code is in the sub-types
-use RPerl::DataStructure::Hash::SubTypes;
+#use RPerl::DataStructure::Array;
 
 # [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 # [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 # [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 
 our integer $OPS_TYPES_ID = 0;                        # PERLOPS_PERLTYPES is 0
-our string__method $ops      = sub { return ('PERL'); };
-our string__method $types    = sub { return ('PERL'); };
+our string__method $ops   = sub { return ('PERL'); };
+our string__method $types = sub { return ('PERL'); };
 
 1;

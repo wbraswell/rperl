@@ -5,7 +5,7 @@
 package RPerl::DataStructure::Hash::SubTypes;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.1.0');
+use version; our $VERSION = qv('0.1.1');
 use Carp;
 
 # [[[ HASHES ]]]
@@ -26,7 +26,7 @@ use parent -norequire, qw(hash const);
 package hash_ref;
 use parent -norequire, ('ref');
 
-    # [[[ TYPE-CHECKING ]]]
+# [[[ TYPE-CHECKING ]]]
 
 our void__method $CHECK = sub {
     ( my $possible_hash_ref ) = @_;

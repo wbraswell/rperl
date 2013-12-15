@@ -5,14 +5,10 @@
 package RPerl::DataType::Integer;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.2.3');
+use version; our $VERSION = qv('0.3.0');
 use Carp;
 
-# [[[ SETUP ]]]
-use parent ('RPerl::DataType::Number');
-use RPerl::DataType::Number;
-
-# [[[ SUB-TYPES ]]]
+# [[[ SUB-TYPES BEFORE SETUP ]]]
 # an integer is a whole number, it has no floating-pointeger (fractional/decimal) component
 package integer;
 use parent ('RPerl::DataType::Integer');
@@ -29,13 +25,16 @@ use parent -norequire, ('ref');
 package const_integer_ref;
 use parent -norequire, ('ref');
 
+
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
-#package RPerl::DataType::Integer;
-package integer;  # NEED FIX: BROKEN INHERITANCE
-use Carp;
+package RPerl::DataType::Integer;
+
+# [[[ SETUP ]]]
+use parent ('RPerl::DataType::Number');
+use RPerl::DataType::Number;
 
 # [[[ TYPE-CHECKING ]]]
-our void__method $CHECK = sub {
+our void $integer__CHECK = sub {
     ( my $possible_integer ) = @_;
     if ( not( defined $possible_integer ) ) {
         croak(
@@ -48,7 +47,7 @@ our void__method $CHECK = sub {
         );
     }
 };
-our void__method $CHECKTRACE = sub {
+our void $integer__CHECKTRACE = sub {
     ( my $possible_integer, my $variable_name, my $subroutine_name ) = @_;
     if ( not( defined $possible_integer ) ) {
         croak(
@@ -63,42 +62,42 @@ our void__method $CHECKTRACE = sub {
 };
 
 # [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-our integer $OPS_TYPES_ID = 0;                        # PERLOPS_PERLTYPES is 0
-our string__method $ops   = sub { return ('PERL'); };
-our string__method $types = sub { return ('PERL'); };
+our integer $integer__OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0
+our string $integer__ops = sub { return ('PERL'); };
+our string $integer__types = sub { return ('PERL'); };
 
 # [[[ STRINGIFY ]]]
-our string__method $stringify = sub {
+our string $integer__stringify = sub {
     ( my $input_integer ) = @_;
 
-    #    integer::CHECK($input_integer);
-    integer::CHECKTRACE( $input_integer, '$input_integer',
-        'integer::stringify()' );
+    #    integer__CHECK($input_integer);
+    integer__CHECKTRACE( $input_integer, '$input_integer',
+        'integer__stringify()' );
     print
-        "in PERLOPS_PERLTYPES integer::stringify(), bottom of subroutine, received \$input_integer = $input_integer\n"
+        "in PERLOPS_PERLTYPES integer__stringify(), bottom of subroutine, received \$input_integer = $input_integer\n"
         or croak();
     return ("$input_integer");
 };
 
 # [[[ TYPE TESTING ]]]
-our integer__method $typetest___void__in = sub {
-    my integer $retval = ( 21 / 7 ) + $OPS_TYPES_ID; # return integer (not number) value, don't do (22 / 7) etc.
+our integer $integer__typetest0 = sub {
+    my integer $retval = ( 21 / 7 ) + $integer__OPS_TYPES_ID; # return integer (not number) value, don't do (22 / 7) etc.
     print
-        "in PERLOPS_PERLTYPES integer::typetest___void__in(), have \$retval = $retval\n"
+        "in PERLOPS_PERLTYPES integer__typetest0(), have \$retval = $retval\n"
         or croak();
     return ($retval);
 };
-our integer__method $typetest___integer__in = sub {
+our integer $integer__typetest1 = sub {
     ( my integer $lucky_integer ) = @_;
 
-    #    integer::CHECK($lucky_integer);
-    integer::CHECKTRACE( $lucky_integer, '$lucky_integer',
-        'integer::typetest___integer__in()' );
+    #    integer__CHECK($lucky_integer);
+    integer__CHECKTRACE( $lucky_integer, '$lucky_integer',
+        'integer__typetest1()' );
     print
-        'in PERLOPS_PERLTYPES integer::typetest___integer__in(), received $lucky_integer = '
-        . integer::stringify($lucky_integer) . "\n"
+        'in PERLOPS_PERLTYPES integer__typetest1(), received $lucky_integer = '
+        . integer__stringify($lucky_integer) . "\n"
         or croak();
-    return ( ( $lucky_integer * 2 ) + $OPS_TYPES_ID );
+    return ( ( $lucky_integer * 2 ) + $integer__OPS_TYPES_ID );
 };
 
 1;

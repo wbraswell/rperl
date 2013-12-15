@@ -5,15 +5,10 @@
 package RPerl::DataType::Number;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.2.4');
+use version; our $VERSION = qv('0.3.0');
 use Carp;
 
-# [[[ SETUP ]]]
-use parent ('RPerl::DataType::Scalar');
-use RPerl::DataType::Scalar;
-#use RPerl::DataType::String;
-
-# [[[ SUB-TYPES ]]]
+# [[[ SUB-TYPES BEFORE SETUP ]]]
 # DEV NOTE:
 # a number is any numeric value, meaning either an integer or a floating-point number;
 # Integer and Float are both sub-classes of Number;
@@ -38,12 +33,16 @@ package const_number_ref;
 use parent -norequire, ('ref');
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
-#package RPerl::DataType::Number;
-package number;  # NEED FIX: BROKEN INHERITANCE
-use Carp;
+package RPerl::DataType::Number;
+
+# [[[ SETUP ]]]
+use parent ('RPerl::DataType::Scalar');
+use RPerl::DataType::Scalar;
+use RPerl::DataType::String;    # need string type
+use RPerl::DataType::Integer; # need integer type, normally included by types.pm but put here in case we don't use types.pm
 
 # [[[ TYPE-CHECKING ]]]
-our void__method $CHECK = sub {
+our void $number__CHECK = sub {
     ( my $possible_number ) = @_;
     if ( not( defined $possible_number ) ) {
         croak(
@@ -59,7 +58,7 @@ our void__method $CHECK = sub {
         );
     }
 };
-our void__method $CHECKTRACE = sub {
+our void $number__CHECKTRACE = sub {
     ( my $possible_number, my $variable_name, my $subroutine_name ) = @_;
     if ( not( defined $possible_number ) ) {
         croak(
@@ -77,43 +76,42 @@ our void__method $CHECKTRACE = sub {
 };
 
 # [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-#our integer $OPS_TYPES_ID = 0;                        # DEV NOTE: Integer type declared as a sub-type of Number, must disable here
-our $OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0
-our string__method $ops   = sub { return ('PERL'); };
-our string__method $types = sub { return ('PERL'); };
+our integer $number__OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0
+our string $number__ops = sub { return ('PERL'); };
+our string $number__types = sub { return ('PERL'); };
 
 # [[[ STRINGIFY ]]]
-our string__method $stringify = sub {
+our string $number__stringify = sub {
     ( my $input_number ) = @_;
 
-    #    number::CHECK($input_number);
-    number::CHECKTRACE( $input_number, '$input_number',
-        'number::stringify()' );
+    #    number__CHECK($input_number);
+    number__CHECKTRACE( $input_number, '$input_number',
+        'number__stringify()' );
     print
-        "in PERLOPS_PERLTYPES number::stringify(), bottom of subroutine, received \$input_number = $input_number\n"
+        "in PERLOPS_PERLTYPES number__stringify(), bottom of subroutine, received \$input_number = $input_number\n"
         or croak();
     return ("$input_number");
 };
 
 # [[[ TYPE TESTING ]]]
-our number__method $typetest___void__in = sub {
-    my number $retval = ( 22 / 7 ) + $OPS_TYPES_ID; # return floating-point number value
+our number $number__typetest0 = sub {
+    my number $retval = ( 22 / 7 ) + $number__OPS_TYPES_ID; # return floating-point number value
     print
-        "in PERLOPS_PERLTYPES number::typetest___void__in(), have \$retval = $retval\n"
+        "in PERLOPS_PERLTYPES number__typetest0(), have \$retval = $retval\n"
         or croak();
     return ($retval);
 };
-our number__method $typetest___number__in = sub {
+our number $number__typetest1 = sub {
     ( my number $lucky_number ) = @_;
 
-    #    number::CHECK($lucky_number);
-    number::CHECKTRACE( $lucky_number, '$lucky_number',
-        'number::typetest___number__in()' );
+    #    number__CHECK($lucky_number);
+    number__CHECKTRACE( $lucky_number, '$lucky_number',
+        'number__typetest1()' );
     print
-        'in PERLOPS_PERLTYPES number::typetest___number__in(), received $lucky_number = '
-        . number::stringify($lucky_number) . "\n"
+        'in PERLOPS_PERLTYPES number__typetest1(), received $lucky_number = '
+        . number__stringify($lucky_number) . "\n"
         or croak();
-    return ( ( $lucky_number * 2 ) + $OPS_TYPES_ID );
+    return ( ( $lucky_number * 2 ) + $number__OPS_TYPES_ID );
 };
 
 1;

@@ -27,14 +27,14 @@ use RPerl::DataType::Scalar;
 use RPerl::DataType::Unknown;
 
 # [[[ DATA STRUCTURES ]]]
-use RPerl::DataStructure::Array;
+#use RPerl::DataStructure::Array;
 use RPerl::DataStructure::Hash;
-use RPerl::DataStructure::LinkedList;
-use RPerl::DataStructure::LinkedList::Node;
-use RPerl::DataStructure::Graph;
-use RPerl::DataStructure::Graph::Tree;
-use RPerl::DataStructure::Graph::Tree::Binary;
-use RPerl::DataStructure::Graph::Tree::Binary::Node;
+#use RPerl::DataStructure::LinkedList;
+#use RPerl::DataStructure::LinkedList::Node;
+#use RPerl::DataStructure::Graph;
+#use RPerl::DataStructure::Graph::Tree;
+#use RPerl::DataStructure::Graph::Tree::Binary;
+#use RPerl::DataStructure::Graph::Tree::Binary::Node;
 
 # [[[ C++ TYPE CONTROL ]]]
 package RPerl;  if (not(defined($RPerl::INCLUDE_PATH))) { our $INCLUDE_PATH = '/FAILURE/BECAUSE/RPERL/INCLUDE/PATH/NOT/YET/SET'; }  1;  # suppress warnings about typo in types_enable() below

@@ -13,6 +13,7 @@ our void__method $cpp_load = sub {
 	{
 		my $eval_string = <<"EOF";
 package main;
+
 BEGIN { print "[[[ BEGIN 'use Inline' STAGE for 'RPerl/DataType/Integer.cpp' ]]]\n"x3; }
 use Inline
 (

@@ -1,7 +1,7 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-// VERSION 0.2.4
+// VERSION 0.3.0
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Number_h
 #define __CPP__INCLUDED__RPerl__DataType__Number_h 1
@@ -9,40 +9,8 @@ using std::cout;  using std::endl;
 #include <types_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 #include <RPerl/DataType/String.cpp>  // string types used in stringify_*() subroutines
 
-// [[[ TYPE-CHECKING MACROS ]]]
-#define CHECK_NUMBER(possible_number) \
-	(not(SvOK(possible_number)) ? \
-			croak("\nERROR ENV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found,\ncroaking") : \
-			(not(SvNOKp(possible_number) || SvIOKp(possible_number)) ? \
-					croak("\nERROR ENV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but non-number value found,\ncroaking") : \
-					(void)0))
-#define CHECKTRACE_NUMBER(possible_number, variable_name, subroutine_name) \
-	(not(SvOK(possible_number)) ? \
-			croak("\nERROR ENV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
-			(not(SvNOKp(possible_number) || SvIOKp(possible_number)) ? \
-					croak("\nERROR ENV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but non-number value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
-					(void)0))
-
 // [[[ TYPEDEFS ]]]
 typedef long double number;
-
-// [[[ TYPE-CHECKING ]]]
-// DEPRECATED, SEE MACROS ABOVE
-//void CHECK_NUMBER(SV* possible_number);
-//void CHECKTRACE_NUMBER(SV* possible_number, const char* variable_name, const char* subroutine_name);
-
-// [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-# ifdef __PERL__TYPES
-# define OPS_TYPES_ID 1 // CPPOPS_PERLTYPES is 1
-SV* ops_number() { return(newSVpv("CPP", 3)); }
-SV* types_number() { return(newSVpv("PERL", 4)); }
-# elif defined __CPP__TYPES
-# define OPS_TYPES_ID 2 // CPPOPS_CPPTYPES is 2
-string ops_number() { string retval = "CPP";  return(retval); }
-string types_number() { string retval = "CPP";  return(retval); }
-# else
-Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_exactly_one!
-# endif
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 # ifdef __CPP__TYPES
@@ -50,20 +18,52 @@ number XS_unpack_number(SV* input_sv);
 void XS_pack_number(SV* output_sv, number input_number);
 # endif
 
+// [[[ TYPE-CHECKING MACROS ]]]
+#define number__CHECK(possible_number) \
+	(not(SvOK(possible_number)) ? \
+			croak("\nERROR ENV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found,\ncroaking") : \
+			(not(SvNOKp(possible_number) || SvIOKp(possible_number)) ? \
+					croak("\nERROR ENV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but non-number value found,\ncroaking") : \
+					(void)0))
+#define number__CHECKTRACE(possible_number, variable_name, subroutine_name) \
+	(not(SvOK(possible_number)) ? \
+			croak("\nERROR ENV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
+			(not(SvNOKp(possible_number) || SvIOKp(possible_number)) ? \
+					croak("\nERROR ENV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but non-number value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
+					(void)0))
+
+// [[[ TYPE-CHECKING ]]]
+// DEPRECATED, SEE MACROS ABOVE
+//void number__CHECK(SV* possible_number);
+//void number__CHECKTRACE(SV* possible_number, const char* variable_name, const char* subroutine_name);
+
+// [[[ OPERATIONS & DATA TYPES REPORTING ]]]
+# ifdef __PERL__TYPES
+# define number__OPS_TYPES_ID 1 // CPPOPS_PERLTYPES is 1
+SV* number__ops() { return(newSVpv("CPP", 3)); }
+SV* number__types() { return(newSVpv("PERL", 4)); }
+# elif defined __CPP__TYPES
+# define number__OPS_TYPES_ID 2 // CPPOPS_CPPTYPES is 2
+string number__ops() { string retval = "CPP";  return(retval); }
+string number__types() { string retval = "CPP";  return(retval); }
+# else
+Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_exactly_one!
+# endif
+
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
-SV* stringify_number(SV* input_number);
+SV* number__stringify(SV* input_number);
 # elif defined __CPP__TYPES
-string stringify_number(number input_number);
+string number__stringify(number input_number);
 # endif
 
 // [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
-SV* typetest___void__in___number__out();
-SV* typetest___number__in___number__out(SV* lucky_number);
+SV* number__typetest0();
+SV* number__typetest1(SV* lucky_number);
 # elif defined __CPP__TYPES
-number typetest___void__in___number__out();
-number typetest___number__in___number__out(number lucky_number);
+number number__typetest0();
+number number__typetest1(number lucky_number);
 # endif
 
 #endif
