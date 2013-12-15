@@ -4,7 +4,7 @@ use warnings;
 use version; our $VERSION = qv('0.3.4');
 use Carp;
 
-use base ('RPerl::DataStructure');
+use parent ('RPerl::DataStructure');
 use RPerl::DataStructure;
 
 # for type checking via SvIOKp(), SvNOKp(), and SvPOKp(); inside INIT to delay until after 'use MyConfig'

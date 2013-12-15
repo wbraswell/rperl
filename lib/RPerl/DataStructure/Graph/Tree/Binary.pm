@@ -55,13 +55,13 @@ our @ISA = ('ref');
 
 # [[[ INT BINARY TREES ]]]
 
-# (ref to binary tree) of ints
-package int__binarytree_ref;
+# (ref to binary tree) of integers
+package integer__binarytree_ref;
 our @ISA = ('binarytree_ref');
 our %properties = %properties; our $new_from_array_ref = $new_from_array_ref; our $binarytree_unshift = $binarytree_unshift; our $DUMPER = $DUMPER;
 
-# (ref to binary tree with const size) of ints
-package int__const_binarytree_ref;
+# (ref to binary tree with const size) of integers
+package integer__const_binarytree_ref;
 our @ISA = ('const_binarytree_ref');
 our %properties = %properties; our $new_from_array_ref = $new_from_array_ref; our $binarytree_unshift = $binarytree_unshift; our $DUMPER = $DUMPER;
 

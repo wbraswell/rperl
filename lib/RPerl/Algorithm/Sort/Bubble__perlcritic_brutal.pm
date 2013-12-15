@@ -6,7 +6,7 @@ use version; our $VERSION = qv('0.0.9');
 
 #our @ISA = ('RPerl::Algorithm::Sort');
 ##our @ISA = ( 'RPerl::Algorithm::Sort', 'RPerl::Algorithm::Inefficient' );
-use base ( 'RPerl::Algorithm::Sort', 'RPerl::Algorithm::Inefficient' );
+use parent ( 'RPerl::Algorithm::Sort', 'RPerl::Algorithm::Inefficient' );
 use RPerl::Algorithm::Sort;
 use RPerl::Algorithm::Inefficient;
 

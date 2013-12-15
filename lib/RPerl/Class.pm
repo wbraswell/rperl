@@ -1,5 +1,6 @@
-use strict;  use warnings;
 package RPerl::Class;
+use strict;
+use warnings;
 use Data::Dumper;  # don't depend on RPerl::DUMPER
 
 #our %properties = ();  # this base class doesn't actually have any properties
@@ -14,7 +15,7 @@ INIT
 	my %class_properties;
 	my $subroutine_type;
 	my $subroutine_name;
-	
+
 	foreach my $module_file_short (sort(keys %INC))
 	{
 		$package_name = '';
@@ -54,7 +55,7 @@ INIT
 				}
 
 				# create accessor/mutator methods for each class 
-				if ($module_file_line =~ /^\s*package\s+(\w+(::\w+)*)\;$/)
+				if ($module_file_line =~ /^\s*package\s+(\w+(::\w+)*)\;.*$/xms)
 				{
 					$package_name = $1;
 #					print "in Class.pm INIT block, have \$package name = '$package_name'\n";

@@ -49,10 +49,10 @@ BEGIN {
     lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
     lives_ok(
         sub {
-            use base ('RPerl');
+            use parent ('RPerl');
             $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;
         },
-        q{use base ('RPerl');  $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+        q{use parent ('RPerl');  $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
     );
 }    # RPerl system files
 

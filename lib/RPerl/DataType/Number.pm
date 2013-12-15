@@ -7,10 +7,13 @@ use strict;
 use warnings;
 use version; our $VERSION = qv('0.2.4');
 use Carp;
-use base ('RPerl::DataType::Scalar');
-use RPerl::DataType::Scalar;
-use RPerl::DataType::String;
 
+# [[[ SETUP ]]]
+use parent ('RPerl::DataType::Scalar');
+use RPerl::DataType::Scalar;
+#use RPerl::DataType::String;
+
+# [[[ SUB-TYPES ]]]
 # DEV NOTE:
 # a number is any numeric value, meaning either an integer or a floating-point number;
 # Integer and Float are both sub-classes of Number;
@@ -20,25 +23,27 @@ use RPerl::DataType::String;
 # and we generate C long doubles instead of C floats;
 # in the future, this can be optimized (for at least memory usage) by implementing full Float semantics
 package number;
-use base ('RPerl::DataType::Number');
+use parent ('RPerl::DataType::Number');
 
 # number with const value
 package const_number;
-use base qw(number const);
+use parent -norequire, qw(number const);
 
 # ref to number
 package number_ref;
-use base ('ref');
+use parent -norequire, ('ref');
 
 # ref to (number with const value)
 package const_number_ref;
-use base ('ref');
+use parent -norequire, ('ref');
 
-# [[[ SWITCH CONTEXT TO MAIN PACKAGE, THUS EXPORTING TYPE-CHECKING ]]]
-package main;
+# [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
+#package RPerl::DataType::Number;
+package number;  # NEED FIX: BROKEN INHERITANCE
+use Carp;
 
 # [[[ TYPE-CHECKING ]]]
-our void $CHECK_NUMBER = sub {
+our void__method $CHECK = sub {
     ( my $possible_number ) = @_;
     if ( not( defined $possible_number ) ) {
         croak(
@@ -54,7 +59,7 @@ our void $CHECK_NUMBER = sub {
         );
     }
 };
-our void $CHECKTRACE_NUMBER = sub {
+our void__method $CHECKTRACE = sub {
     ( my $possible_number, my $variable_name, my $subroutine_name ) = @_;
     if ( not( defined $possible_number ) ) {
         croak(
@@ -71,45 +76,42 @@ our void $CHECKTRACE_NUMBER = sub {
     }
 };
 
-# [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
-package RPerl::DataType::Number;
-
 # [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 #our integer $OPS_TYPES_ID = 0;                        # DEV NOTE: Integer type declared as a sub-type of Number, must disable here
 our $OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0
-our string $ops_number   = sub { return ('PERL'); };
-our string $types_number = sub { return ('PERL'); };
+our string__method $ops   = sub { return ('PERL'); };
+our string__method $types = sub { return ('PERL'); };
 
 # [[[ STRINGIFY ]]]
-our string $stringify_number = sub {
+our string__method $stringify = sub {
     ( my $input_number ) = @_;
 
-    #    ::CHECK_NUMBER($input_number);
-    ::CHECKTRACE_NUMBER( $input_number, '$input_number',
-        'stringify_number()' );
+    #    number::CHECK($input_number);
+    number::CHECKTRACE( $input_number, '$input_number',
+        'number::stringify()' );
     print
-        "in PERLOPS_PERLTYPES Number::stringify_number(), bottom of subroutine, received \$input_number = $input_number\n"
+        "in PERLOPS_PERLTYPES number::stringify(), bottom of subroutine, received \$input_number = $input_number\n"
         or croak();
     return ("$input_number");
 };
 
 # [[[ TYPE TESTING ]]]
-our number $typetest___void__in___number__out = sub {
+our number__method $typetest___void__in = sub {
     my number $retval = ( 22 / 7 ) + $OPS_TYPES_ID; # return floating-point number value
     print
-        "in PERLOPS_PERLTYPES Number::typetest___void__in___number__out(), have \$retval = $retval\n"
+        "in PERLOPS_PERLTYPES number::typetest___void__in(), have \$retval = $retval\n"
         or croak();
     return ($retval);
 };
-our number $typetest___number__in___number__out = sub {
+our number__method $typetest___number__in = sub {
     ( my number $lucky_number ) = @_;
 
-    #    ::CHECK_NUMBER($lucky_number);
-    ::CHECKTRACE_NUMBER( $lucky_number, '$lucky_number',
-        'typetest___number__in___number__out()' );
+    #    number::CHECK($lucky_number);
+    number::CHECKTRACE( $lucky_number, '$lucky_number',
+        'number::typetest___number__in()' );
     print
-        'in PERLOPS_PERLTYPES Number::typetest___number__in___number__out(), received $lucky_number = '
-        . stringify_number($lucky_number) . "\n"
+        'in PERLOPS_PERLTYPES number::typetest___number__in(), received $lucky_number = '
+        . number::stringify($lucky_number) . "\n"
         or croak();
     return ( ( $lucky_number * 2 ) + $OPS_TYPES_ID );
 };

@@ -1,10 +1,20 @@
 package types;
-use strict; use warnings;
+use strict;
+use warnings;
 
 # [[[ NON-RPERL MODULES ]]]
 use File::Copy qw(move);
- 
+
 # all following type lists lowest-to-highest level
+
+# [[[ CODE ]]]
+use RPerl::Code::Subroutine;
+
+# [[[ OBJECT-ORIENTED ]]]
+use RPerl::Class;
+use RPerl::Object;
+use RPerl::DataStructure::Property;
+use RPerl::Code::Subroutine::Method;  # Data Types & Structures Are Implemented As Classes With Methods, etc.
 
 # [[[ DATA TYPES ]]]
 use RPerl::DataType::Void;
@@ -25,15 +35,6 @@ use RPerl::DataStructure::Graph;
 use RPerl::DataStructure::Graph::Tree;
 use RPerl::DataStructure::Graph::Tree::Binary;
 use RPerl::DataStructure::Graph::Tree::Binary::Node;
-
-# [[[ CODE ]]]
-use RPerl::Code::Subroutine;
-
-# [[[ OBJECT-ORIENTED ]]]
-use RPerl::Class;
-use RPerl::Object;
-use RPerl::DataStructure::Property;
-use RPerl::Code::Subroutine::Method;
 
 # [[[ C++ TYPE CONTROL ]]]
 package RPerl;  if (not(defined($RPerl::INCLUDE_PATH))) { our $INCLUDE_PATH = '/FAILURE/BECAUSE/RPERL/INCLUDE/PATH/NOT/YET/SET'; }  1;  # suppress warnings about typo in types_enable() below

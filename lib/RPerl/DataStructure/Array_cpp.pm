@@ -5,7 +5,7 @@ use version; our $VERSION = qv('0.3.0');
 
 our $CPP_LOADED = 0;
 our $CPP_LINKED = 0;
-use base ('RPerl::Class');
+use parent ('RPerl::Class');
 use RPerl::Class;  use RPerl;
 
 our void__method $cpp_load = sub {
