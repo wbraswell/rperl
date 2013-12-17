@@ -43,7 +43,7 @@ use RPerl::DataType::Unknown;
 # [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 
 our integer $OPS_TYPES_ID = 0;                        # PERLOPS_PERLTYPES is 0
-our string $ops   = sub { return ('PERL'); };
-our string $types = sub { return ('PERL'); };
+our string $hash__ops   = sub { return ('PERL'); };
+our string $hash__types = sub { return ('PERL'); };
 
 1;
