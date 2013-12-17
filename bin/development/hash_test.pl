@@ -17,19 +17,19 @@ BEGIN { use Data::Dumper;  our $AUTOLOAD;  sub AUTOLOAD { croak("AUTOLOAD purpos
 #types::types_enable('PERL');
 
 # UNCOMMENT TO ENABLE C++ TYPES FOR C++ OPS
-types::types_enable('CPP');
+#types::types_enable('CPP');
 
 # UNCOMMENT TO ENABLE C++ OPS
-use RPerl::DataStructure::Hash_cpp;  RPerl::DataStructure::Hash_cpp::cpp_load();  RPerl::DataStructure::Hash_cpp::cpp_link();
+#use RPerl::DataStructure::Hash_cpp;  RPerl::DataStructure::Hash_cpp::cpp_load();  RPerl::DataStructure::Hash_cpp::cpp_link();
 
-print q{in array_test.pl, have ops_integer() = '} . ops_integer() . "'\n" or croak();
-print q{in array_test.pl, have types_integer() = '} . types_integer() . "'\n" or croak();
-print q{in array_test.pl, have ops_number() = '} . ops_number() . "'\n" or croak();
-print q{in array_test.pl, have types_number() = '} . types_number() . "'\n" or croak();
-print q{in array_test.pl, have ops_string() = '} . ops_string() . "'\n" or croak();
-print q{in array_test.pl, have types_string() = '} . types_string() . "'\n" or croak();
-print q{in array_test.pl, have ops_hash() = '} . ops_hash() . "'\n" or croak();
-print q{in array_test.pl, have types_hash() = '} . types_hash() . "'\n" or croak();
+print q{in hash_test.pl, have integer__ops() = '} . integer__ops() . "'\n" or croak();
+print q{in hash_test.pl, have integer__types() = '} . integer__types() . "'\n" or croak();
+print q{in hash_test.pl, have number__ops() = '} . number__ops() . "'\n" or croak();
+print q{in hash_test.pl, have number__types() = '} . number__types() . "'\n" or croak();
+print q{in hash_test.pl, have string__ops() = '} . string__ops() . "'\n" or croak();
+print q{in hash_test.pl, have string__types() = '} . string__types() . "'\n" or croak();
+print q{in hash_test.pl, have hash__ops() = '} . hash__ops() . "'\n" or croak();
+print q{in hash_test.pl, have hash__types() = '} . hash__types() . "'\n" or croak();
 
 #print qq{in array_test.pl, have SYMBOL TABLE for package 'main' =\n} . Dumper(\%{*{main::}}) . "\n" or croak();
 #print qq{in array_test.pl, have SYMBOL TABLE entry for 'main::stringify_integer__hash_ref' =\n} . Dumper(\%{*{main::stringify_integer__hash_ref}}) . "\n" or croak();
@@ -60,9 +60,20 @@ for my integer $i ( 0 .. $i_MAX ) {
 #	$retval_stringify = stringify_integer__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => '23', e_key => -877, f_key => 33, g_key => 1701});  # TIVHVRV12; error EIV01
 #	$retval_stringify = stringify_integer__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => [23], e_key => -877, f_key => 33, g_key => 1701});  # TIVHVRV13; error EIV01
 #	$retval_stringify = stringify_integer__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => {a_subkey => 23}, e_key => -877, f_key => 33, g_key => 1701});  # TIVHVRV14; error EIV01
-#	$retval_stringify = stringify_integer__hash_ref({a_key => 23});  # TIVHVRV20
+	$retval_stringify = stringify_integer__hash_ref({a_key => 23});  # TIVHVRV20
 #	$retval_stringify = stringify_integer__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701});  # TIVHVRV21
 #	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
+
+
+
+    # START HERE: update called subroutine names, make sure Hash.* matches
+    # START HERE: update called subroutine names, make sure Hash.* matches
+    # START HERE: update called subroutine names, make sure Hash.* matches
+
+
+
+
+croak('Done for now, croaking');
 
 #	$retval_stringify = typetest___integer__hash_ref__in___string__out();  # TIVHVRV30; error PERLOPS EHVRV00, CPPOPS "Usage: main::typetest___integer__hash_ref__in___string__out(input_unordered_map)"
 #	$retval_stringify = typetest___integer__hash_ref__in___string__out(2);  # TIVHVRV31; error EHVRV01
@@ -134,8 +145,6 @@ for my integer $i ( 0 .. $i_MAX ) {
 
 #	$retval_jeffys = typetest___integer__in___string__hash_ref__out(5);  # TPVHVRV40
 #	print "in hash_test.pl, have \$retval_jeffys =\n" . RPerl::DUMPER($retval_jeffys) . "\n" or croak();
-
-croak('Done for now, croaking');
 }
 
 #croak('Done for now, croaking');

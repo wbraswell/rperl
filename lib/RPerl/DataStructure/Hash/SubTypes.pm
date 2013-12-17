@@ -5,7 +5,7 @@
 package RPerl::DataStructure::Hash::SubTypes;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.1.1');
+use version; our $VERSION = qv('0.1.2');
 use Carp;
 
 # [[[ HASHES ]]]
@@ -26,33 +26,33 @@ use parent -norequire, qw(hash const);
 package hash_ref;
 use parent -norequire, ('ref');
 
-# [[[ TYPE-CHECKING ]]]
+# [[[ TYPE-hash_ref__CHECKING ]]]
 
-our void__method $CHECK = sub {
+our void $hash_ref__CHECK = sub {
     ( my $possible_hash_ref ) = @_;
     if ( not( defined $possible_hash_ref ) ) {
         croak(
-            "\nERROR EHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nhash_ref value expected but undefined/null value found,\ncroaking"
+            "\nERROR EHVRV00, TYPE-hash_ref__CHECKING MISMATCH, PERLOPS_PERLTYPES:\nhash_ref value expected but undefined/null value found,\ncroaking"
         );
     }
 
 #    if ( UNIVERSAL::isa( $possible_hash_ref, 'HASH' ) ) {  # DEV NOTE: I believe the following 2 lines are equivalent?
     if ( not( main::RPerl_SvHROKp($possible_hash_ref) ) ) {
         croak(
-            "\nERROR EHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nhash_ref value expected but non-hash_ref value found,\ncroaking"
+            "\nERROR EHVRV01, TYPE-hash_ref__CHECKING MISMATCH, PERLOPS_PERLTYPES:\nhash_ref value expected but non-hash_ref value found,\ncroaking"
         );
     }
 };
-our void__method $CHECKTRACE = sub {
+our void $hash_ref__CHECKTRACE = sub {
     ( my $possible_hash_ref, my $variable_name, my $subroutine_name ) = @_;
     if ( not( defined $possible_hash_ref ) ) {
         croak(
-            "\nERROR EHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nhash_ref value expected but undefined/null value found,\nin variable '$variable_name' from subroutine '$subroutine_name',\ncroaking"
+            "\nERROR EHVRV00, TYPE-hash_ref__CHECKING MISMATCH, PERLOPS_PERLTYPES:\nhash_ref value expected but undefined/null value found,\nin variable '$variable_name' from subroutine '$subroutine_name',\ncroaking"
         );
     }
     if ( not( main::RPerl_SvHROKp($possible_hash_ref) ) ) {
         croak(
-            "\nERROR EHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nhash_ref value expected but non-hash_ref value found,\nin variable '$variable_name' from subroutine '$subroutine_name',\ncroaking"
+            "\nERROR EHVRV01, TYPE-hash_ref__CHECKING MISMATCH, PERLOPS_PERLTYPES:\nhash_ref value expected but non-hash_ref value found,\nin variable '$variable_name' from subroutine '$subroutine_name',\ncroaking"
         );
     }
 };
@@ -106,16 +106,16 @@ use parent -norequire, ('hash_ref');
 # [[[ STRINGIFY ]]]
 
 # convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
-our string__method $stringify = sub {
+our string $integer__hash_ref__stringify = sub {
     ( my $input_hv_ref ) = @_;
 
     print
-        "in PERLOPS_PERLTYPES integer__hash_ref::stringify(), top of subroutine\n"
+        "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), top of subroutine\n"
         or croak();
 
-    #    hash_ref::CHECK($input_hv_ref);
-    hash_ref::CHECKTRACE( $input_hv_ref, '$input_hv_ref',
-        'integer__hash_ref::stringify()' );
+    #    hash_ref__CHECK($input_hv_ref);
+    hash_ref__CHECKTRACE( $input_hv_ref, '$input_hv_ref',
+        'integer__hash_ref__stringify()' );
 
     my %input_hv;
 
@@ -127,7 +127,7 @@ our string__method $stringify = sub {
     %input_hv = %{$input_hv_ref};
 
 #	$input_hv_length = scalar keys %input_hv;
-#	print "in PERLOPS_PERLTYPES integer__hash_ref::stringify(), have \$input_hv_length = $input_hv_length\n";
+#	print "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), have \$input_hv_length = $input_hv_length\n";
 
     $output_sv = '{';
 
@@ -135,11 +135,11 @@ our string__method $stringify = sub {
 
         $input_hv_entry_value = $input_hv{$key};
 
-        #        integer::CHECK($input_hv_entry_value);
-        integer::CHECKTRACE(
+        #        integer__CHECK($input_hv_entry_value);
+        integer__CHECKTRACE(
             $input_hv_entry_value,
             "\$input_hv_entry_value at key '$key'",
-            'integer__hash_ref::stringify()'
+            'integer__hash_ref__stringify()'
         );
 
         if ($i_is_0) { $i_is_0 = 0; }
@@ -151,10 +151,10 @@ our string__method $stringify = sub {
     $output_sv .= '}';
 
     print
-        "in PERLOPS_PERLTYPES integer__hash_ref::stringify(), after for() loop, have \$output_sv =\n$output_sv\n"
+        "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n"
         or croak();
     print
-        "in PERLOPS_PERLTYPES integer__hash_ref::stringify(), bottom of subroutine\n"
+        "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), bottom of subroutine\n"
         or croak();
 
     return ($output_sv);
@@ -162,48 +162,48 @@ our string__method $stringify = sub {
 
 # [[[ TYPE TESTING ]]]
 
-our string__method $typetest___string__out = sub {
+our string $integer__hash_ref__typetest0 = sub {
 
   #print "in PERLOPS_PERLTYPES typetest___string__out(), top of subroutine\n";
     ( my integer__hash_ref $lucky_integers) = @_;
 
-    #    hash_ref::CHECK($lucky_integers);
-    hash_ref::CHECKTRACE( $lucky_integers, '$lucky_integers',
-        'integer__hash_ref::typetest___string__out()' );
+    #    hash_ref__CHECK($lucky_integers);
+    hash_ref__CHECKTRACE( $lucky_integers, '$lucky_integers',
+        'integer__hash_ref__typetest0()' );
     foreach my string $key ( keys %{$lucky_integers} ) {
         my $lucky_integer = $lucky_integers->{$key};
 
-        #        initeger::CHECK($lucky_integer);
-        integer::CHECKTRACE(
+        #        integer__CHECKTRACE($lucky_integer);
+        integer__CHECKTRACE(
             $lucky_integer,
             "\$lucky_integer at key '$key'",
-            'integer__hash_ref::typetest___string__out()'
+            'integer__hash_ref__typetest0()'
         );
         print
-            "in PERLOPS_PERLTYPES integer__hash_ref::typetest___string__out(), have lucky integer '$key' => "
+            "in PERLOPS_PERLTYPES integer__hash_ref__typetest0(), have lucky integer '$key' => "
             . $lucky_integer
             . ", BARSTOOL\n"
             or croak();
     }
     print
-        "in PERLOPS_PERLTYPES integer__hash_ref::typetest___string__out(), bottom of subroutine\n";
+        "in PERLOPS_PERLTYPES integer__hash_ref__typetest0(), bottom of subroutine\n";
     return (
-        integer__hash_ref::stringify($lucky_integers) . 'PERLOPS_PERLTYPES' );
+        integer__hash_ref__stringify($lucky_integers) . 'PERLOPS_PERLTYPES' );
 };
 
-our integer__hash_ref__method $typetest___integer__in = sub {
+our integer__hash_ref $integer__hash_ref__typetest1 = sub {
     ( my integer $my_size) = @_;
 
-    #    initeger::CHECK($my_size);
-    integer::CHECKTRACE( $my_size, '$my_size',
-        'integer__hash_ref::typetest___integer__in()' );
+    #    integer__CHECKTRACE($my_size);
+    integer__CHECKTRACE( $my_size, '$my_size',
+        'integer__hash_ref__typetest1()' );
     my integer__hash_ref $new_hash = {};
     my string $temp_key;
     for my integer $i ( 0 .. $my_size ) {
         $temp_key = 'PERLOPS_PERLTYPES_funkey' . $i;
         $new_hash->{$temp_key} = $i * 5;
         print
-            "in PERLOPS_PERLTYPES integer__hash_ref::typetest___integer__in(), setting entry '$temp_key' => "
+            "in PERLOPS_PERLTYPES integer__hash_ref__typetest1(), setting entry '$temp_key' => "
             . $new_hash->{$temp_key}
             . ", BARSTOOL\n"
             or croak();
@@ -350,16 +350,16 @@ use parent -norequire, ('hash_ref');
 # [[[ STRINGIFY ]]]
 
 # convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing NVs))) to Perl-parsable (Perl SV containing PV)
-our string__method $stringify = sub {
+our string $number__hash_ref__stringify = sub {
     ( my $input_hv_ref ) = @_;
 
     print
-        "in PERLOPS_PERLTYPES number__hash_ref::stringify(), top of subroutine\n"
+        "in PERLOPS_PERLTYPES number__hash_ref__stringify(), top of subroutine\n"
         or croak();
 
-    #    hash_ref::CHECK($input_hv_ref);
-    hash_ref::CHECKTRACE( $input_hv_ref, '$input_hv_ref',
-        'number__hash_ref::stringify()' );
+    #    hash_ref__CHECK($input_hv_ref);
+    hash_ref__CHECKTRACE( $input_hv_ref, '$input_hv_ref',
+        'number__hash_ref__stringify()' );
 
     my %input_hv;
 
@@ -371,7 +371,7 @@ our string__method $stringify = sub {
     %input_hv = %{$input_hv_ref};
 
 #	$input_hv_length = scalar keys %input_hv;
-#	print "in PERLOPS_PERLTYPES number__hash_ref::stringify(), have \$input_hv_length = $input_hv_length\n";
+#	print "in PERLOPS_PERLTYPES number__hash_ref__stringify(), have \$input_hv_length = $input_hv_length\n";
 
     $output_sv = '{';
 
@@ -379,11 +379,11 @@ our string__method $stringify = sub {
 
         $input_hv_entry_value = $input_hv{$key};
 
-        #        number::CHECK($input_hv_entry_value);
-        number::CHECKTRACE(
+        #        number__CHECK($input_hv_entry_value);
+        number__CHECKTRACE(
             $input_hv_entry_value,
             "\$input_hv_entry_value at key '$key'",
-            'number__hash_ref::stringify()'
+            'number__hash_ref__stringify()'
         );
 
         if ($i_is_0) { $i_is_0 = 0; }
@@ -395,10 +395,10 @@ our string__method $stringify = sub {
     $output_sv .= '}';
 
     print
-        "in PERLOPS_PERLTYPES number__hash_ref::stringify(), after for() loop, have \$output_sv =\n$output_sv\n"
+        "in PERLOPS_PERLTYPES number__hash_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n"
         or croak();
     print
-        "in PERLOPS_PERLTYPES number__hash_ref::stringify(), bottom of subroutine\n"
+        "in PERLOPS_PERLTYPES number__hash_ref__stringify(), bottom of subroutine\n"
         or croak();
 
     return ($output_sv);
@@ -406,44 +406,44 @@ our string__method $stringify = sub {
 
 # [[[ TYPE TESTING ]]]
 
-our string__method $typetest___string__out = sub {
+our string $number__hash_ref__typetest0 = sub {
     ( my number__hash_ref $lucky_numbers) = @_;
 
-    #    hash_ref::CHECK($lucky_numbers);
-    hash_ref::CHECKTRACE( $lucky_numbers, '$lucky_numbers',
-        'number__hash_ref::typetest___string__out()' );
+    #    hash_ref__CHECK($lucky_numbers);
+    hash_ref__CHECKTRACE( $lucky_numbers, '$lucky_numbers',
+        'number__hash_ref__typetest0()' );
     foreach my string $key ( keys %{$lucky_numbers} ) {
         my $lucky_number = $lucky_numbers->{$key};
 
-        #        number::CHECK($lucky_number);
-        number::CHECKTRACE(
+        #        number__CHECK($lucky_number);
+        number__CHECKTRACE(
             $lucky_number,
             "\$lucky_number at key '$key'",
-            'number__hash_ref::typetest___string__out()'
+            'number__hash_ref__typetest0()'
         );
         print
-            "in PERLOPS_PERLTYPES number__hash_ref::typetest___string__out(), have lucky number '$key' => "
+            "in PERLOPS_PERLTYPES number__hash_ref__typetest0(), have lucky number '$key' => "
             . $lucky_number
             . ", BARSTOOL\n"
             or croak();
     }
     return (
-        number__hash_ref::stringify($lucky_numbers) . 'PERLOPS_PERLTYPES' );
+        number__hash_ref__stringify($lucky_numbers) . 'PERLOPS_PERLTYPES' );
 };
 
-our number__hash_ref__method $typetest___integer__in = sub {
+our number__hash_ref $number__hash_ref__typetest1 = sub {
     ( my integer $my_size) = @_;
 
-    #    initeger::CHECK($my_size);
-    integer::CHECKTRACE( $my_size, '$my_size',
-        'number__hash_ref::typetest___integer__in()' );
+    #    integer__CHECKTRACE($my_size);
+    integer__CHECKTRACE( $my_size, '$my_size',
+        'number__hash_ref__typetest1()' );
     my number__hash_ref $new_hash = {};
     my string $temp_key;
     for my integer $i ( 0 .. $my_size ) {
         $temp_key = 'PERLOPS_PERLTYPES_funkey' . $i;
         $new_hash->{$temp_key} = $i * 5.123456789;
         print
-            "in PERLOPS_PERLTYPES number__hash_ref::typetest___integer__in(), setting entry '$temp_key' => "
+            "in PERLOPS_PERLTYPES number__hash_ref__typetest1(), setting entry '$temp_key' => "
             . $new_hash->{$temp_key}
             . ", BARSTOOL\n"
             or croak();
@@ -590,16 +590,16 @@ use parent -norequire, ('hash_ref');
 # [[[ STRINGIFY ]]]
 
 # convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing PVs))) to Perl-parsable (Perl SV containing PV)
-our string__method $stringify = sub {
+our string $string__hash_ref__stringify = sub {
     ( my $input_hv_ref ) = @_;
 
     print
-        "in PERLOPS_PERLTYPES string__hash_ref::stringify(), top of subroutine\n"
+        "in PERLOPS_PERLTYPES string__hash_ref__stringify(), top of subroutine\n"
         or croak();
 
-    #    hash_ref::CHECK($input_hv_ref);
-    hash_ref::CHECKTRACE( $input_hv_ref, '$input_hv_ref',
-        'string__hash_ref::stringify()' );
+    #    hash_ref__CHECK($input_hv_ref);
+    hash_ref__CHECKTRACE( $input_hv_ref, '$input_hv_ref',
+        'string__hash_ref__stringify()' );
 
     my %input_hv;
 
@@ -611,7 +611,7 @@ our string__method $stringify = sub {
     %input_hv = %{$input_hv_ref};
 
 #	$input_hv_length = scalar keys %input_hv;
-#	print "in PERLOPS_PERLTYPES string__hash_ref::stringify(), have \$input_hv_length = $input_hv_length\n";
+#	print "in PERLOPS_PERLTYPES string__hash_ref__stringify(), have \$input_hv_length = $input_hv_length\n";
 
     $output_sv = '{';
 
@@ -619,11 +619,11 @@ our string__method $stringify = sub {
 
         $input_hv_entry_value = $input_hv{$key};
 
-        #        string::CHECK($input_hv_entry_value);
-        string::CHECKTRACE(
+        #        string__CHECK($input_hv_entry_value);
+        string__CHECKTRACE(
             $input_hv_entry_value,
             "\$input_hv_entry_value at key '$key'",
-            'string__hash_ref::stringify()'
+            'string__hash_ref__stringify()'
         );
 
         if ($i_is_0) { $i_is_0 = 0; }
@@ -636,10 +636,10 @@ our string__method $stringify = sub {
     $output_sv .= '}';
 
     print
-        "in PERLOPS_PERLTYPES string__hash_ref::stringify(), after for() loop, have \$output_sv =\n$output_sv\n"
+        "in PERLOPS_PERLTYPES string__hash_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n"
         or croak();
     print
-        "in PERLOPS_PERLTYPES string__hash_ref::stringify(), bottom of subroutine\n"
+        "in PERLOPS_PERLTYPES string__hash_ref__stringify(), bottom of subroutine\n"
         or croak();
 
     return ($output_sv);
@@ -647,42 +647,42 @@ our string__method $stringify = sub {
 
 # [[[ TYPE TESTING ]]]
 
-our string__method $typetest___string__out = sub {
+our string $string__hash_ref__typetest0 = sub {
     ( my string__hash_ref $people) = @_;
 
-    #    hash_ref::CHECK($lucky_numbers);
-    hash_ref::CHECKTRACE( $people, '$people',
-        'string__hash_ref::typetest___string__out()' );
+    #    hash_ref__CHECK($lucky_numbers);
+    hash_ref__CHECKTRACE( $people, '$people',
+        'string__hash_ref__typetest0()' );
     foreach my string $key ( keys %{$people} ) {
         my $person = $people->{$key};
 
-        #        string::CHECK($person);
-        string::CHECKTRACE(
+        #        string__CHECK($person);
+        string__CHECKTRACE(
             $person,
             "\$person at key '$key'",
-            'string__hash_ref::typetest___string__out()'
+            'string__hash_ref__typetest0()'
         );
         print
-            "in PERLOPS_PERLTYPES string__hash_ref::typetest___string__out(), have person '$key' => '"
+            "in PERLOPS_PERLTYPES string__hash_ref__typetest0(), have person '$key' => '"
             . $people->{$key}
             . "', STARBOOL\n"
             or croak();
     }
-    return ( string__hash_ref::stringify($people) . 'PERLOPS_PERLTYPES' );
+    return ( string__hash_ref__stringify($people) . 'PERLOPS_PERLTYPES' );
 };
 
-our string__hash_ref__method $typetest___integer__in = sub {
+our string__hash_ref $string__hash_ref__typetest1 = sub {
     ( my integer $my_size) = @_;
 
-    #    initeger::CHECK($my_size);
-    integer::CHECKTRACE( $my_size, '$my_size',
-        'string__hash_ref::typetest___integer__in()' );
+    #    integer__CHECKTRACE($my_size);
+    integer__CHECKTRACE( $my_size, '$my_size',
+        'string__hash_ref__typetest1()' );
     my string__hash_ref $people = {};
     for my integer $i ( 0 .. $my_size ) {
         $people->{ 'PERLOPS_PERLTYPES_Luker_key' . $i }
             = q{Jeffy Ten! } . $i . q{/} . ( $my_size - 1 );
         print
-            "in PERLOPS_PERLTYPES string__hash_ref::typetest___integer__in(), bottom of for() loop, have i = $i, just set another Jeffy!\n"
+            "in PERLOPS_PERLTYPES string__hash_ref__typetest1(), bottom of for() loop, have i = $i, just set another Jeffy!\n"
             or croak();
     }
     return ($people);
