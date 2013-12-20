@@ -5,7 +5,7 @@
 package RPerl::DataType::Number;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.3.0');
+use version; our $VERSION = 0.003002;
 use Carp;
 
 # [[[ SUB-TYPES BEFORE SETUP ]]]

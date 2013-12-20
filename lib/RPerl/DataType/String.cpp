@@ -1,10 +1,8 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-// VERSION 0.3.0
-
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_cpp
-#define __CPP__INCLUDED__RPerl__DataType__String_cpp 1
+#define __CPP__INCLUDED__RPerl__DataType__String_cpp 0.003002
 
 #include <RPerl/DataType/String.h>		// -> NULL (relies on native C type)
 
@@ -24,11 +22,11 @@ void string__CHECK(SV* possible_string) {
 };
 void string__CHECKTRACE(SV* possible_string, const char* variable_name, const char* subroutine_name) {
     if (not(SvOK(possible_string))) {
-    	croak("\nERROR EPV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but undefined/null value found,\nin variable '%s' from subroutine '%s',\ncroaking",
+    	croak("\nERROR EPV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking",
     			variable_name, subroutine_name);
     }
 	if (not(SvPOKp(possible_string))) {
-    	croak("\nERROR EPV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but non-string value found,\nin variable '%s' from subroutine '%s',\ncroaking",
+    	croak("\nERROR EPV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but non-string value found,\nin variable %s from subroutine %s,\ncroaking",
     			variable_name, subroutine_name);
     }
 };

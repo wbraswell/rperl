@@ -1,22 +1,10 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-// VERSION 0.3.0
-
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_h
-#define __CPP__INCLUDED__RPerl__DataType__String_h 1
+#define __CPP__INCLUDED__RPerl__DataType__String_h 0.003002
 
 #include <types_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
-
-// [[[ TYPEDEFS ]]]
-typedef std::string string;
-typedef std::ostringstream ostringstream;
-
-// [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
-# ifdef __CPP__TYPES
-string XS_unpack_string(SV* input_sv);
-void XS_pack_string(SV* output_sv, string input_string);
-# endif
 
 // [[[ TYPE-CHECKING MACROS ]]]
 #define string__CHECK(possible_string) \
@@ -37,6 +25,10 @@ void XS_pack_string(SV* output_sv, string input_string);
 //void string__CHECK(SV* possible_string);
 //void string__CHECKTRACE(SV* possible_string, const char* variable_name, const char* subroutine_name);
 
+// [[[ TYPEDEFS ]]]
+typedef std::string string;
+typedef std::ostringstream ostringstream;
+
 // [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 # ifdef __PERL__TYPES
 # define string__OPS_TYPES_ID 1 // CPPOPS_PERLTYPES is 1
@@ -48,6 +40,12 @@ string string__ops() { string retval = "CPP";  return(retval); }
 string string__types() { string retval = "CPP";  return(retval); }
 # else
 Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_exactly_one!
+# endif
+
+// [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
+# ifdef __CPP__TYPES
+string XS_unpack_string(SV* input_sv);
+void XS_pack_string(SV* output_sv, string input_string);
 # endif
 
 // [[[ STRINGIFY ]]]

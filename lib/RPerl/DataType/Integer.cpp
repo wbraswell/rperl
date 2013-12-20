@@ -1,12 +1,36 @@
 ////use strict;  use warnings;
 //using std::cout;  using std::endl;  // not needed for integer?
 
-// VERSION 0.3.0
-
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_cpp
-#define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 1
+#define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 0.003002
 
 #include <RPerl/DataType/Integer.h>		// -> NULL (relies on native C type)
+
+// [[[ TYPE-CHECKING SUBROUTINES ]]]
+// [[[ TYPE-CHECKING SUBROUTINES ]]]
+// [[[ TYPE-CHECKING SUBROUTINES ]]]
+
+// DEPRECATED IN FAVOR OF EQUIVALENT MACROS
+/*
+void CHECK(SV* possible_integer) {
+    if (not(SvOK(possible_integer))) {
+    	croak("\nERROR EIV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but undefined/null value found,\ncroaking");
+    }
+	if (not(SvIOKp(possible_integer))) {
+    	croak("\nERROR EIV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but non-integer value found,\ncroaking");
+    }
+};
+void CHECKTRACE(SV* possible_integer, const char* variable_name, const char* subroutine_name) {
+    if (not(SvOK(possible_integer))) {
+    	croak("\nERROR EIV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking",
+    			variable_name, subroutine_name);
+    }
+	if (not(SvIOKp(possible_integer))) {
+    	croak("\nERROR EIV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but non-integer value found,\nin variable %s from subroutine %s,\ncroaking",
+    			variable_name, subroutine_name);
+    }
+};
+*/
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
@@ -43,32 +67,6 @@ printf("in CPPOPS_CPPTYPES XS_pack_integer(), bottom of subroutine\n");
 }
 
 # endif
-
-// [[[ TYPE-CHECKING SUBROUTINES ]]]
-// [[[ TYPE-CHECKING SUBROUTINES ]]]
-// [[[ TYPE-CHECKING SUBROUTINES ]]]
-
-// DEPRECATED IN FAVOR OF EQUIVALENT MACROS
-/*
-void CHECK(SV* possible_integer) {
-    if (not(SvOK(possible_integer))) {
-    	croak("\nERROR EIV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but undefined/null value found,\ncroaking");
-    }
-	if (not(SvIOKp(possible_integer))) {
-    	croak("\nERROR EIV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but non-integer value found,\ncroaking");
-    }
-};
-void CHECKTRACE(SV* possible_integer, const char* variable_name, const char* subroutine_name) {
-    if (not(SvOK(possible_integer))) {
-    	croak("\nERROR EIV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but undefined/null value found,\nin variable '%s' from subroutine '%s',\ncroaking",
-    			variable_name, subroutine_name);
-    }
-	if (not(SvIOKp(possible_integer))) {
-    	croak("\nERROR EIV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but non-integer value found,\nin variable '%s' from subroutine '%s',\ncroaking",
-    			variable_name, subroutine_name);
-    }
-};
-*/
 
 // [[[ STRINGIFY ]]]
 // [[[ STRINGIFY ]]]

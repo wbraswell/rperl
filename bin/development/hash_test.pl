@@ -2,7 +2,7 @@
 ## no critic qw(ProhibitMagicNumbers ProhibitUnreachableCode)  ## RPERL allow numeric test values, allow unreachable test code
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.2.0');
+use version; our $VERSION = 0.003000;
 use Carp;
 
 # [[[ SETUP ]]]
@@ -17,10 +17,10 @@ BEGIN { use Data::Dumper;  our $AUTOLOAD;  sub AUTOLOAD { croak("AUTOLOAD purpos
 #types::types_enable('PERL');
 
 # UNCOMMENT TO ENABLE C++ TYPES FOR C++ OPS
-#types::types_enable('CPP');
+types::types_enable('CPP');
 
 # UNCOMMENT TO ENABLE C++ OPS
-#use RPerl::DataStructure::Hash_cpp;  RPerl::DataStructure::Hash_cpp::cpp_load();  RPerl::DataStructure::Hash_cpp::cpp_link();
+use RPerl::DataStructure::Hash_cpp;  RPerl::DataStructure::Hash_cpp::cpp_load();  RPerl::DataStructure::Hash_cpp::cpp_link();
 
 print q{in hash_test.pl, have integer__ops() = '} . integer__ops() . "'\n" or croak();
 print q{in hash_test.pl, have integer__types() = '} . integer__types() . "'\n" or croak();
@@ -61,20 +61,9 @@ for my integer $i ( 0 .. $i_MAX ) {
 #	$retval_stringify = integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => '23', e_key => -877, f_key => 33, g_key => 1701});  # TIVHVRV12; error EIV01
 #	$retval_stringify = integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => [23], e_key => -877, f_key => 33, g_key => 1701});  # TIVHVRV13; error EIV01
 #	$retval_stringify = integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => {a_subkey => 23}, e_key => -877, f_key => 33, g_key => 1701});  # TIVHVRV14; error EIV01
-	$retval_stringify = integer__hash_ref__stringify({a_key => 23});  # TIVHVRV20
+#	$retval_stringify = integer__hash_ref__stringify({a_key => 23});  # TIVHVRV20
 #	$retval_stringify = integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701});  # TIVHVRV21
 #	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
-
-
-
-    # START HERE: update called subroutine names, make sure Hash.* matches
-    # START HERE: update called subroutine names, make sure Hash.* matches
-    # START HERE: update called subroutine names, make sure Hash.* matches
-
-
-
-
-croak('Done for now, croaking');
 
 #	$retval_stringify = integer__hash_ref__typetest0();  # TIVHVRV30; error PERLOPS EHVRV00, CPPOPS "Usage: main::integer__hash_ref__typetest0(input_unordered_map)"
 #	$retval_stringify = integer__hash_ref__typetest0(2);  # TIVHVRV31; error EHVRV01
@@ -131,11 +120,11 @@ croak('Done for now, croaking');
 #	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'STRING_NOT_UNDEF' => 'undef'};  # TPVHVRV21
 #	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'STRING_NOT_INTEGER' => '23'};  # TPVHVRV22
 #	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'STRING_NOT_NUMBER' => '-2112.23'};  # TPVHVRV23
-	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', "STRING_'NOT'_ARRAY" => "['Tonto']"};  # TPVHVRV24 # DEV NOTE: strings containing single-quotes, will be back-slash delimited by stringify_*()
+#	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', "STRING_'NOT'_ARRAY" => "['To\n\to']"};  # TPVHVRV24 # DEV NOTE: strings containing special chars, will be interpolated by P5's double-quotes and then back-slash delimited by RPerl's stringify_*()
 #	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'STRING_NOT_HASH' => '{buzz => 5}'};  # TPVHVRV25
 #	print "in hash_test.pl, have \$my_peeps =\n" . RPerl::DUMPER($my_peeps) . "\n" or croak();
-	$retval_stringify = string__hash_ref__stringify($my_peeps);	
-	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
+#	$retval_stringify = string__hash_ref__stringify($my_peeps);	
+#	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 
 #	$retval_stringify = string__hash_ref__typetest0();  # TPVHVRV30; error PERLOPS EHVRV00, CPPOPS "Usage: main::string__hash_ref__typetest0(input_unordered_map)"
 #	$retval_stringify = string__hash_ref__typetest0(2);  # TPVHVRV31; error EHVRV01
@@ -146,6 +135,8 @@ croak('Done for now, croaking');
 
 #	$retval_jeffys = string__hash_ref__typetest1(5);  # TPVHVRV40
 #	print "in hash_test.pl, have \$retval_jeffys =\n" . RPerl::DUMPER($retval_jeffys) . "\n" or croak();
+
+croak('Done for now, croaking');
 }
 
 #croak('Done for now, croaking');

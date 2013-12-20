@@ -1,7 +1,7 @@
 package RPerl::DataStructure::Hash;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.2.4');
+use version; our $VERSION = 0.003000;
 use Carp;
 
 # [[[ SUB-TYPES BEFORE SETUP ]]]
@@ -43,7 +43,7 @@ use RPerl::DataType::Unknown;
 # [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 
 our integer $OPS_TYPES_ID = 0;                        # PERLOPS_PERLTYPES is 0
-our string $hash__ops   = sub { return ('PERL'); };
-our string $hash__types = sub { return ('PERL'); };
+our string $hash__ops     = sub { return ('PERL'); };
+our string $hash__types   = sub { return ('PERL'); };
 
 1;

@@ -1,12 +1,36 @@
 ////use strict;  use warnings;
 using std::cout;  using std::endl;
 
-// VERSION 0.3.0
-
 #ifndef __CPP__INCLUDED__RPerl__DataType__Number_cpp
-#define __CPP__INCLUDED__RPerl__DataType__Number_cpp 1
+#define __CPP__INCLUDED__RPerl__DataType__Number_cpp 0.003002
 
 #include <RPerl/DataType/Number.h>		// -> NULL (relies on native C type)
+
+// [[[ TYPE-CHECKING ]]]
+// [[[ TYPE-CHECKING ]]]
+// [[[ TYPE-CHECKING ]]]
+
+// TYPE-CHECKING SUBROUTINES DEPRECATED IN FAVOR OF EQUIVALENT MACROS
+/*
+void number__CHECK(SV* possible_number) {
+    if (not(SvOK(possible_number))) {
+    	croak("\nERROR ENV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found,\ncroaking");
+    }
+	if (not(SvNOKp(possible_number) || SvIOKp(possible_number))) {
+    	croak("\nERROR ENV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but non-number value found,\ncroaking");
+    }
+};
+void number__CHECKTRACE(SV* possible_number, const char* variable_name, const char* subroutine_name) {
+    if (not(SvOK(possible_number))) {
+    	croak("\nERROR ENV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking",
+    			variable_name, subroutine_name);
+    }
+	if (not(SvNOKp(possible_number) || SvIOKp(possible_number))) {
+    	croak("\nERROR ENV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but non-number value found,\nin variable %s from subroutine %s,\ncroaking",
+    			variable_name, subroutine_name);
+    }
+};
+*/
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
@@ -43,32 +67,6 @@ printf("in CPPOPS_CPPTYPES XS_pack_number(), bottom of subroutine\n");
 }
 
 # endif
-
-// [[[ TYPE-CHECKING ]]]
-// [[[ TYPE-CHECKING ]]]
-// [[[ TYPE-CHECKING ]]]
-
-// TYPE-CHECKING SUBROUTINES DEPRECATED IN FAVOR OF EQUIVALENT MACROS
-/*
-void number__CHECK(SV* possible_number) {
-    if (not(SvOK(possible_number))) {
-    	croak("\nERROR ENV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found,\ncroaking");
-    }
-	if (not(SvNOKp(possible_number) || SvIOKp(possible_number))) {
-    	croak("\nERROR ENV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but non-number value found,\ncroaking");
-    }
-};
-void number__CHECKTRACE(SV* possible_number, const char* variable_name, const char* subroutine_name) {
-    if (not(SvOK(possible_number))) {
-    	croak("\nERROR ENV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found,\nin variable '%s' from subroutine '%s',\ncroaking",
-    			variable_name, subroutine_name);
-    }
-	if (not(SvNOKp(possible_number) || SvIOKp(possible_number))) {
-    	croak("\nERROR ENV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but non-number value found,\nin variable '%s' from subroutine '%s',\ncroaking",
-    			variable_name, subroutine_name);
-    }
-};
-*/
 
 // [[[ STRINGIFY ]]]
 // [[[ STRINGIFY ]]]

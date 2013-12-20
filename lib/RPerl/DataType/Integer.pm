@@ -5,7 +5,7 @@
 package RPerl::DataType::Integer;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.3.0');
+use version; our $VERSION = 0.003002;
 use Carp;
 
 # [[[ SUB-TYPES BEFORE SETUP ]]]
@@ -24,7 +24,6 @@ use parent -norequire, ('ref');
 # ref to (integer with const value)
 package const_integer_ref;
 use parent -norequire, ('ref');
-
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataType::Integer;

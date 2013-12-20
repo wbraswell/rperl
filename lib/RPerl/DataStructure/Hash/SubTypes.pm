@@ -5,7 +5,7 @@
 package RPerl::DataStructure::Hash::SubTypes;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.1.2');
+use version; our $VERSION = 0.003000;
 use Carp;
 
 # [[[ HASHES ]]]
@@ -25,6 +25,7 @@ use parent -norequire, qw(hash const);
 # ref to hash
 package hash_ref;
 use parent -norequire, ('ref');
+use Carp;
 
 # [[[ TYPE-CHECKING ]]]
 
@@ -47,12 +48,12 @@ our void $hash_ref__CHECKTRACE = sub {
     ( my $possible_hash_ref, my $variable_name, my $subroutine_name ) = @_;
     if ( not( defined $possible_hash_ref ) ) {
         croak(
-            "\nERROR EHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nhash_ref value expected but undefined/null value found,\nin variable '$variable_name' from subroutine '$subroutine_name',\ncroaking"
+            "\nERROR EHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nhash_ref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
         );
     }
     if ( not( main::RPerl_SvHROKp($possible_hash_ref) ) ) {
         croak(
-            "\nERROR EHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nhash_ref value expected but non-hash_ref value found,\nin variable '$variable_name' from subroutine '$subroutine_name',\ncroaking"
+            "\nERROR EHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nhash_ref value expected but non-hash_ref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
         );
     }
 };
@@ -102,6 +103,7 @@ use parent -norequire, ('const_hash');
 # (ref to hash) of integers
 package integer__hash_ref;
 use parent -norequire, ('hash_ref');
+use Carp;
 
 # [[[ STRINGIFY ]]]
 
@@ -346,6 +348,7 @@ use parent -norequire, ('const_hash');
 # (ref to hash) of numbers
 package number__hash_ref;
 use parent -norequire, ('hash_ref');
+use Carp;
 
 # [[[ STRINGIFY ]]]
 
@@ -586,6 +589,7 @@ use parent -norequire, ('const_hash');
 # (ref to hash) of strings
 package string__hash_ref;
 use parent -norequire, ('hash_ref');
+use Carp;
 
 # [[[ STRINGIFY ]]]
 
