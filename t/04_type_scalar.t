@@ -1,11 +1,11 @@
 #!/usr/bin/perl
 ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
-## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted newline
 ## no critic qw(ProhibitInterpolationOfLiterals)  ## RPERL allow string test values
 ## no critic qw(ProhibitStringySplit)  ## RPERL allow string test values
+## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted control characters, sigils, and regexes
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.3.0');
+use version; our $VERSION = 0.003002;
 
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
@@ -38,14 +38,14 @@ BEGIN {
             package main;
             our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib';
         },
-        q{package main;  our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib';} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+        q{package main;  our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib';}
     );
 }    # NEED REMOVE hard-coded path
 
 BEGIN {
     lives_ok(
         sub { use lib $main::RPERL_INCLUDE_PATH . '/CPAN/'; },
-        q{use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+        q{use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';}
     );
     lives_and( sub { use_ok('MyConfig'); }, q{use_ok('MyConfig') lives} );
 }    # RPerl's MyConfig.pm
@@ -53,7 +53,7 @@ BEGIN {
 BEGIN {
     lives_ok(
         sub { use lib $main::RPERL_INCLUDE_PATH; },
-        q{use lib $main::RPERL_INCLUDE_PATH;} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+        q{use lib $main::RPERL_INCLUDE_PATH;}
     );
     lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
     lives_ok(
@@ -61,7 +61,7 @@ BEGIN {
             use parent ('RPerl');
             $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;
         },
-        q{use parent ('RPerl');  $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+        q{use parent ('RPerl');  $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;}
     );
 }    # RPerl system files
 
@@ -79,7 +79,7 @@ BEGIN {
                         . ', croaking' );
             }
         },
-        q{our $AUTOLOAD;  sub AUTOLOAD {...}} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+        q{our $AUTOLOAD;  sub AUTOLOAD {...}}
     );
 }
 

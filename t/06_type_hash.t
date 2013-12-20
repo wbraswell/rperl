@@ -1,8 +1,10 @@
 #!/usr/bin/perl
 ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+## no critic qw(ProhibitInterpolationOfLiterals)  ## RPERL allow string test values
+## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted control characters, sigils, and regexes
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.2.0');
+use version; our $VERSION = 0.003002;
 
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
@@ -17,7 +19,7 @@ CHECK {
         || croak('Error redirecting stderr, croaking');
 }
 
-use Test::More tests => 130;
+use Test::More;    # tests => 130;
 use Test::Exception;
 use Carp;
 
@@ -29,19 +31,19 @@ BEGIN {
 
 BEGIN {
     lives_ok(
-        sub {    ## PERLTIDY BUG blank newline
+        sub {      ## PERLTIDY BUG blank newline
 
             package main;
             our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib';
         },
-        q{package main; our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib';} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+        q{package main; our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib';}
     );
 }    # NEED REMOVE hard-coded path
 
 BEGIN {
     lives_ok(
         sub { use lib $main::RPERL_INCLUDE_PATH . '/CPAN/'; },
-        q{use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+        q{use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';}
     );
     lives_and( sub { use_ok('MyConfig'); }, q{use_ok('MyConfig') lives} );
 }    # RPerl's MyConfig.pm
@@ -49,7 +51,7 @@ BEGIN {
 BEGIN {
     lives_ok(
         sub { use lib $main::RPERL_INCLUDE_PATH; },
-        q{use lib $main::RPERL_INCLUDE_PATH;} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+        q{use lib $main::RPERL_INCLUDE_PATH;}
     );
     lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
     lives_ok(
@@ -57,7 +59,7 @@ BEGIN {
             use parent ('RPerl');
             $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;
         },
-        q{use parent ('RPerl');  $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+        q{use parent ('RPerl');  $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;}
     );
 }    # RPerl system files
 
@@ -75,7 +77,7 @@ BEGIN {
                         . ', croaking' );
             }
         },
-        q{our $AUTOLOAD;  sub AUTOLOAD {...}} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+        q{our $AUTOLOAD;  sub AUTOLOAD {...}}
     );
 }
 
@@ -99,50 +101,53 @@ for my $i ( 0 .. 2 ) {
         );
         lives_and(
             sub {
-                is( ops_integer(), 'PERL', q{ops_integer() returns 'PERL'} );
+                is( integer__ops(), 'PERL',
+                    q{integer__ops() returns 'PERL'} );
             },
-            q{ops_integer() lives}
+            q{integer__ops() lives}
         );
         lives_and(
             sub {
-                is( types_integer(), 'PERL',
-                    q{types_integer() returns 'PERL'} );
+                is( integer__types(), 'PERL',
+                    q{integer__types() returns 'PERL'} );
             },
-            q{types_integer() lives}
+            q{integer__types() lives}
         );
         lives_and(
             sub {
-                is( ops_number(), 'PERL', q{ops_number() returns 'PERL'} );
+                is( number__ops(), 'PERL', q{number__ops() returns 'PERL'} );
             },
-            q{ops_number() lives}
+            q{number__ops() lives}
         );
         lives_and(
             sub {
-                is( types_number(), 'PERL',
-                    q{types_number() returns 'PERL'} );
+                is( number__types(), 'PERL',
+                    q{number__types() returns 'PERL'} );
             },
-            q{types_number() lives}
-        );
-        lives_and(
-            sub { is( ops_string(), 'PERL', q{ops_string() returns 'PERL'} ) }
-            ,
-            q{ops_string() lives}
+            q{number__types() lives}
         );
         lives_and(
             sub {
-                is( types_string(), 'PERL',
-                    q{types_string() returns 'PERL'} );
+                is( string__ops(), 'PERL', q{string__ops() returns 'PERL'} );
             },
-            q{types_string() lives}
+            q{string__ops() lives}
         );
         lives_and(
-            sub { is( ops_hash(), 'PERL', q{ops_hash() returns 'PERL'} ) },
-            q{ops_hash() lives} );
+            sub {
+                is( string__types(), 'PERL',
+                    q{string__types() returns 'PERL'} );
+            },
+            q{string__types() lives}
+        );
+        lives_and(
+            sub { is( hash__ops(), 'PERL', q{hash__ops() returns 'PERL'} ) },
+            q{hash__ops() lives}
+        );
         lives_and(
             sub {
-                is( types_hash(), 'PERL', q{types_hash() returns 'PERL'} );
+                is( hash__types(), 'PERL', q{hash__types() returns 'PERL'} );
             },
-            q{types_hash() lives}
+            q{hash__types() lives}
         );
     }
 
@@ -181,47 +186,50 @@ for my $i ( 0 .. 2 ) {
             q{RPerl::DataStructure::Hash_cpp::cpp_link() lives}
         );
         lives_and(
-            sub { is( ops_integer(), 'CPP', q{ops_integer() returns 'CPP'} ) }
+            sub {
+                is( integer__ops(), 'CPP', q{integer__ops() returns 'CPP'} );
+            },
+            q{integer__ops() lives}
+        );
+        lives_and(
+            sub {
+                is( integer__types(), 'PERL',
+                    q{integer__types() returns 'PERL'} );
+            },
+            q{integer__types() lives}
+        );
+        lives_and(
+            sub { is( number__ops(), 'CPP', q{number__ops() returns 'CPP'} ) }
             ,
-            q{ops_integer() lives}
+            q{number__ops() lives}
         );
         lives_and(
             sub {
-                is( types_integer(), 'PERL',
-                    q{types_integer() returns 'PERL'} );
+                is( number__types(), 'PERL',
+                    q{number__types() returns 'PERL'} );
             },
-            q{types_integer() lives}
+            q{number__types() lives}
         );
         lives_and(
-            sub { is( ops_number(), 'CPP', q{ops_number() returns 'CPP'} ) },
-            q{ops_number() lives}
+            sub { is( string__ops(), 'CPP', q{string__ops() returns 'CPP'} ) }
+            ,
+            q{string__ops() lives}
         );
         lives_and(
             sub {
-                is( types_number(), 'PERL',
-                    q{types_number() returns 'PERL'} );
+                is( string__types(), 'PERL',
+                    q{string__types() returns 'PERL'} );
             },
-            q{types_number() lives}
+            q{string__types() lives}
         );
         lives_and(
-            sub { is( ops_string(), 'CPP', q{ops_string() returns 'CPP'} ) },
-            q{ops_string() lives}
-        );
+            sub { is( hash__ops(), 'CPP', q{hash__ops() returns 'CPP'} ) },
+            q{hash__ops() lives} );
         lives_and(
             sub {
-                is( types_string(), 'PERL',
-                    q{types_string() returns 'PERL'} );
+                is( hash__types(), 'PERL', q{hash__types() returns 'PERL'} );
             },
-            q{types_string() lives}
-        );
-        lives_and(
-            sub { is( ops_hash(), 'CPP', q{ops_hash() returns 'CPP'} ) },
-            q{ops_hash() lives} );
-        lives_and(
-            sub {
-                is( types_hash(), 'PERL', q{types_hash() returns 'PERL'} );
-            },
-            q{types_hash() lives}
+            q{hash__types() lives}
         );
     }
 
@@ -253,44 +261,49 @@ for my $i ( 0 .. 2 ) {
             q{RPerl::DataStructure::Hash_cpp::cpp_link() lives}
         );
         lives_and(
-            sub { is( ops_integer(), 'CPP', q{ops_integer() returns 'CPP'} ) }
+            sub {
+                is( integer__ops(), 'CPP', q{integer__ops() returns 'CPP'} );
+            },
+            q{integer__ops() lives}
+        );
+        lives_and(
+            sub {
+                is( integer__types(), 'CPP',
+                    q{integer__types() returns 'CPP'} );
+            },
+            q{integer__types() lives}
+        );
+        lives_and(
+            sub { is( number__ops(), 'CPP', q{number__ops() returns 'CPP'} ) }
             ,
-            q{ops_integer() lives}
+            q{number__ops() lives}
         );
         lives_and(
             sub {
-                is( types_integer(), 'CPP',
-                    q{types_integer() returns 'CPP'} );
+                is( number__types(), 'CPP',
+                    q{number__types() returns 'CPP'} );
             },
-            q{types_integer() lives}
+            q{number__types() lives}
         );
         lives_and(
-            sub { is( ops_number(), 'CPP', q{ops_number() returns 'CPP'} ) },
-            q{ops_number() lives}
+            sub { is( string__ops(), 'CPP', q{string__ops() returns 'CPP'} ) }
+            ,
+            q{string__ops() lives}
         );
         lives_and(
             sub {
-                is( types_number(), 'CPP', q{types_number() returns 'CPP'} );
+                is( string__types(), 'CPP',
+                    q{string__types() returns 'CPP'} );
             },
-            q{types_number() lives}
+            q{string__types() lives}
         );
         lives_and(
-            sub { is( ops_string(), 'CPP', q{ops_string() returns 'CPP'} ) },
-            q{ops_string() lives}
-        );
+            sub { is( hash__ops(), 'CPP', q{hash__ops() returns 'CPP'} ) },
+            q{hash__ops() lives} );
         lives_and(
-            sub {
-                is( types_string(), 'CPP', q{types_string() returns 'CPP'} );
-            },
-            q{types_string() lives}
-        );
-        lives_and(
-            sub { is( ops_hash(), 'CPP', q{ops_hash() returns 'CPP'} ) },
-            q{ops_hash() lives} );
-        lives_and(
-            sub { is( types_hash(), 'CPP', q{types_hash() returns 'CPP'} ) }
+            sub { is( hash__types(), 'CPP', q{hash__types() returns 'CPP'} ) }
             ,    ## PERLTIDY BUG comma on newline
-            q{types_hash() lives}
+            q{hash__types() lives}
         );
     }
 
@@ -298,24 +311,131 @@ for my $i ( 0 .. 2 ) {
     # [[[ INTEGER HASH TESTS ]]]
     # [[[ INTEGER HASH TESTS ]]]
 
-    throws_ok(    # HVIV00
-        sub { stringify_integer__hash_ref(2) },
-        "/$OPS_TYPES.*input_hv_ref was not an HV ref/",
-        q{HVIV00 stringify_integer__hash_ref(2) throws correct exception}
+    throws_ok(    # TIVHVRV00
+        sub { integer__hash_ref__stringify() },
+        "/(EHVRV00.*$OPS_TYPES)|(Usage.*integer__hash_ref__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
+        q{TIVHVRV00 integer__hash_ref__stringify() throws correct exception}
     );
-    lives_and(    # HVIV01
+    throws_ok(    # TIVHVRV01
+        sub { integer__hash_ref__stringify(undef) },
+        "/EHVRV00.*$OPS_TYPES/",
+        q{TIVHVRV01 integer__hash_ref__stringify(undef) throws correct exception}
+    );
+    throws_ok(    # TIVHVRV02
+        sub { integer__hash_ref__stringify(2) },
+        "/EHVRV01.*$OPS_TYPES/",
+        q{TIVHVRV02 integer__hash_ref__stringify(2) throws correct exception}
+    );
+    throws_ok(    # TIVHVRV03
+        sub { integer__hash_ref__stringify(2.3) },
+        "/EHVRV01.*$OPS_TYPES/",
+        q{TIVHVRV03 integer__hash_ref__stringify(2.3) throws correct exception}
+    );
+    throws_ok(    # TIVHVRV04
+        sub { integer__hash_ref__stringify('2') },
+        "/EHVRV01.*$OPS_TYPES/",
+        q{TIVHVRV04 integer__hash_ref__stringify('2') throws correct exception}
+    );
+    throws_ok(    # TIVHVRV05
+        sub { integer__hash_ref__stringify( [2] ) },
+        "/EHVRV01.*$OPS_TYPES/",
+        q{TIVHVRV05 integer__hash_ref__stringify([2]) throws correct exception}
+    );
+    throws_ok(    # TIVHVRV10
         sub {
-            is( stringify_integer__hash_ref( { a_key => 23 } ),
-                q{{'a_key' => 23}},
-                q{HVIV01 stringify_integer__hash_ref({a_key => 23}) returns correct value}
+            integer__hash_ref__stringify(
+                {   a_key => 2,
+                    b_key => 2112,
+                    c_key => undef,
+                    d_key => 23,
+                    e_key => -877,
+                    f_key => 33,
+                    g_key => 1701
+                }
             );
         },
-        q{HVIV01 stringify_integer__hash_ref({a_key => 23}) lives}
+        "/EIV00.*$OPS_TYPES/",
+        q{TIVHVRV10 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => undef, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
     );
-    lives_and(    # HVIV02
+    throws_ok(    # TIVHVRV11
+        sub {
+            integer__hash_ref__stringify(
+                {   a_key => 2,
+                    b_key => 2112,
+                    c_key => 42,
+                    d_key => 23.3,
+                    e_key => -877,
+                    f_key => 33,
+                    g_key => 1701
+                }
+            );
+        },
+        "/EIV01.*$OPS_TYPES/",
+        q{TIVHVRV11 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => 23.3, e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
+    );
+    throws_ok(    # TIVHVRV12
+        sub {
+            integer__hash_ref__stringify(
+                {   a_key => 2,
+                    b_key => 2112,
+                    c_key => 42,
+                    d_key => '23',
+                    e_key => -877,
+                    f_key => 33,
+                    g_key => 1701
+                }
+            );
+        },
+        "/EIV01.*$OPS_TYPES/",
+        q{TIVHVRV12 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => '23', e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
+    );
+    throws_ok(    # TIVHVRV13
+        sub {
+            integer__hash_ref__stringify(
+                {   a_key => 2,
+                    b_key => 2112,
+                    c_key => 42,
+                    d_key => [23],
+                    e_key => -877,
+                    f_key => 33,
+                    g_key => 1701
+                }
+            );
+        },
+        "/EIV01.*$OPS_TYPES/",
+        q{TIVHVRV13 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => [23], e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
+    );
+    throws_ok(    # TIVHVRV14
+        sub {
+            integer__hash_ref__stringify(
+                {   a_key => 2,
+                    b_key => 2112,
+                    c_key => 42,
+                    d_key => { a_subkey => 23 },
+                    e_key => -877,
+                    f_key => 33,
+                    g_key => 1701
+                }
+            );
+        },
+        "/EIV01.*$OPS_TYPES/",
+
+#        q{TIVHVRV14 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => {a_subkey => 23}, e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
+        q{TIVHVRV14 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => {a_subkey => 23}, ..., g_key => 1701}) throws correct exception}
+    );
+    lives_and(    # TIVHVRV20
+        sub {
+            is( integer__hash_ref__stringify( { a_key => 23 } ),
+                q{{'a_key' => 23}},
+                q{TIVHVRV20 integer__hash_ref__stringify({a_key => 23}) returns correct value}
+            );
+        },
+        q{TIVHVRV20 integer__hash_ref__stringify({a_key => 23}) lives}
+    );
+    lives_and(    # TIVHVRV21
         sub {
             like(
-                stringify_integer__hash_ref(
+                integer__hash_ref__stringify(
                     {   a_key => 2,
                         b_key => 2112,
                         c_key => 42,
@@ -327,70 +447,42 @@ for my $i ( 0 .. 2 ) {
                 ),
 
 # NEED FIX: replace ".*" near end of this & following regexes with syntax to match exactly 6 occurrences of ", "; (,\s)* and variations don't work?
-                q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2112\b)(?=.*'c_key' => 42\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => 33\b)(?=.*'g_key' => 1701\b).*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
-                ,
-                q{HVIV02 stringify_integer__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) returns correct value}
+                q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2112\b)(?=.*'c_key' => 42\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => 33\b)(?=.*'g_key' => 1701\b).*\}$/m},
+                q{TIVHVRV21 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) returns correct value}
             );
         },
-        q{HVIV02 stringify_integer__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) lives}
+        q{TIVHVRV21 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) lives}
     );
-    throws_ok(    # HVIV03
+    throws_ok(    # TIVHVRV30
+        sub { integer__hash_ref__typetest0() },
+        "/(EHVRV00.*$OPS_TYPES)|(Usage.*integer__hash_ref__typetest0)/", # DEV NOTE: 2 different error messages, RPerl & C
+        q{TIVHVRV30 integer__hash_ref__typetest0() throws correct exception}
+    );
+    throws_ok(    # TIVHVRV31
+        sub { integer__hash_ref__typetest0(2) },
+        "/EHVRV01.*$OPS_TYPES/",
+        q{TIVHVRV31 integer__hash_ref__typetest0(2) throws correct exception}
+    );
+    throws_ok(    # TIVHVRV32
         sub {
-            stringify_integer__hash_ref(
-                {   a_key => 2,
-                    b_key => 2112,
-                    c_key => 42.3,
-                    d_key => 23,
-                    e_key => -877,
-                    f_key => 33,
-                    g_key => 1701
+            integer__hash_ref__typetest0(
+                {   'binary'       => 2,
+                    'rush'         => 2112,
+                    'ERROR_FUNKEY' => undef,
+                    'answer'       => 42,
+                    'fnord'        => 23,
+                    'units'        => -877,
+                    'degree'       => 33,
+                    'ncc'          => 1701
                 }
             );
         },
-        "/$OPS_TYPES.*input_hv_value at key 'c_key' was not an integer/",
-        q{HVIV03 stringify_integer__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
+        "/EIV00.*$OPS_TYPES/",
+        q{TIVHVRV32 integer__hash_ref__typetest0({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => undef, ..., 'ncc' => 1701}) throws correct exception}
     );
-    throws_ok(    # HVIV04
+    throws_ok(    # TIVHVRV33
         sub {
-            stringify_integer__hash_ref(
-                {   a_key => 2,
-                    b_key => 2112,
-                    c_key => 42,
-                    d_key => '23',
-                    e_key => -877,
-                    f_key => 33,
-                    g_key => 1701
-                }
-            );
-        },
-        "/$OPS_TYPES.*input_hv_value at key 'd_key' was not an integer/",
-        q{HVIV04 stringify_integer__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => '23', e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
-    );
-    lives_and(    # HVIV10
-        sub {
-            like(
-                typetest___integer__hash_ref__in___string__out(
-                    {   'binary' => 2,
-                        'rush'   => 2112,
-                        'answer' => 42,
-                        'fnord'  => 23,
-                        'units'  => -877,
-                        'degree' => 33,
-                        'ncc'    => 1701
-                    }
-                ),
-                q{/^\{(?=.*'binary' => 2\b)(?=.*'rush' => 2112\b)(?=.*'answer' => 42\b)(?=.*'fnord' => 23\b)(?=.*'units' => -877\b)(?=.*'degree' => 33\b)(?=.*'ncc' => 1701\b).*\}} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
-                    . $OPS_TYPES . q{$/m}, ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
-
-#                q{HVIV10 typetest___integer__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => 33, 'ncc' => 1701}) returns correct value}
-                q{HVIV10 typetest___integer__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, ..., 'ncc' => 1701}) returns correct value}
-            );
-        },
-        q{HVIV10 typetest___integer__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, ..., 'ncc' => 1701}) lives}
-    );
-    throws_ok(                             # HVIV11
-        sub {
-            typetest___integer__hash_ref__in___string__out(
+            integer__hash_ref__typetest0(
                 {   'binary'       => 2,
                     'rush'         => 2112,
                     'ERROR_FUNKEY' => 'abcdefg',
@@ -402,60 +494,160 @@ for my $i ( 0 .. 2 ) {
                 }
             );
         },
-        "/$OPS_TYPES.*input_hv_value at key 'ERROR_FUNKEY' was not an integer/",
-        q{HVIV11 typetest___integer__hash_ref__in___string__out({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => 'abcdefg', ..., 'ncc' => 1701}) throws correct exception}
+        "/EIV01.*$OPS_TYPES/",
+        q{TIVHVRV33 integer__hash_ref__typetest0({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => 'abcdefg', ..., 'ncc' => 1701}) throws correct exception}
     );
-    lives_and(    # HVIV12
+    lives_and(    # TIVHVRV34
         sub {
             like(
-                typetest___integer__hash_ref__in___string__out(
-                    { something => -444, degree => 33, ncc => 1701 }
+                integer__hash_ref__typetest0(
+                    {   'binary' => 2,
+                        'rush'   => 2112,
+                        'answer' => 42,
+                        'fnord'  => 23,
+                        'units'  => -877,
+                        'degree' => 33,
+                        'ncc'    => 1701
+                    }
                 ),
-                q{/^\{(?=.*'something' => -444\b)(?=.*'degree' => 33\b)(?=.*'ncc' => 1701\b).*\}} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
-                    . $OPS_TYPES . q{$/m}, ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
-                q{HVIV12 typetest___integer__hash_ref__in___string__out({something => -444, degree => 33, ncc => 1701}) returns correct value}
+                q{/^\{(?=.*'binary' => 2\b)(?=.*'rush' => 2112\b)(?=.*'answer' => 42\b)(?=.*'fnord' => 23\b)(?=.*'units' => -877\b)(?=.*'degree' => 33\b)(?=.*'ncc' => 1701\b).*\}}
+                    . $OPS_TYPES . q{$/m},
+
+#                q{TIVHVRV34 integer__hash_ref__typetest0({'binary' => 2, 'rush' => 2112, 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => 33, 'ncc' => 1701}) returns correct value}
+                q{TIVHVRV34 integer__hash_ref__typetest0({'binary' => 2, 'rush' => 2112, ..., 'ncc' => 1701}) returns correct value}
             );
         },
-        q{HVIV12 typetest___integer__hash_ref__in___string__out({something => -444, degree => 33, ncc => 1701}) lives}
+        q{TIVHVRV34 integer__hash_ref__typetest0({'binary' => 2, 'rush' => 2112, ..., 'ncc' => 1701}) lives}
     );
-    lives_and(                             # HVIV20
+    lives_and(    # TIVHVRV40
         sub {
             is_deeply(
-                typetest___integer__in___integer__hash_ref__out(5),
+                integer__hash_ref__typetest1(5),
                 {   "$OPS_TYPES\_funkey2" => 10,
                     "$OPS_TYPES\_funkey3" => 15,
                     "$OPS_TYPES\_funkey4" => 20,
                     "$OPS_TYPES\_funkey1" => 5,
                     "$OPS_TYPES\_funkey0" => 0
                 },
-                q{HVIV20 typetest___integer__in___integer__hash_ref__out(5) returns correct value}
+                q{TIVHVRV40 integer__hash_ref__typetest1(5) returns correct value}
             );
         },
-        q{HVIV20 typetest___integer__in___integer__hash_ref__out(5) lives}
+        q{TIVHVRV40 integer__hash_ref__typetest1(5) lives}
     );
 
     # [[[ NUMBER HASH TESTS ]]]
     # [[[ NUMBER HASH TESTS ]]]
     # [[[ NUMBER HASH TESTS ]]]
 
-    throws_ok(    # HVNV00
-        sub { stringify_number__hash_ref(2) },
-        "/$OPS_TYPES.*input_hv_ref was not an HV ref/",
-        q{HVNV00 stringify_number__hash_ref(2) throws correct exception}
+    throws_ok(    # TNVHVRV00
+        sub { number__hash_ref__stringify() },
+        "/(EHVRV00.*$OPS_TYPES)|(Usage.*number__hash_ref__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
+        q{TNVHVRV00 number__hash_ref__stringify() throws correct exception}
     );
-    lives_and(    # HVNV01
+    throws_ok(    # TNVHVRV01
+        sub { number__hash_ref__stringify(undef) },
+        "/EHVRV00.*$OPS_TYPES/",
+        q{TNVHVRV01 number__hash_ref__stringify(undef) throws correct exception}
+    );
+    throws_ok(    # TNVHVRV02
+        sub { number__hash_ref__stringify(2) },
+        "/EHVRV01.*$OPS_TYPES/",
+        q{TNVHVRV02 number__hash_ref__stringify(2) throws correct exception}
+    );
+    throws_ok(    # TNVHVRV03
+        sub { number__hash_ref__stringify(2.3) },
+        "/EHVRV01.*$OPS_TYPES/",
+        q{TNVHVRV03 number__hash_ref__stringify(2.3) throws correct exception}
+    );
+    throws_ok(    # TNVHVRV04
+        sub { number__hash_ref__stringify('2') },
+        "/EHVRV01.*$OPS_TYPES/",
+        q{TNVHVRV04 number__hash_ref__stringify('2') throws correct exception}
+    );
+    throws_ok(    # TNVHVRV05
+        sub { number__hash_ref__stringify( [2] ) },
+        "/EHVRV01.*$OPS_TYPES/",
+        q{TNVHVRV05 number__hash_ref__stringify([2]) throws correct exception}
+    );
+    throws_ok(    # TNVHVRV10
         sub {
-            is( stringify_number__hash_ref( { a_key => 23 } ),
-                q{{'a_key' => 23}},
-                q{HVNV01 stringify_number__hash_ref({a_key => 23}) returns correct value}
+            number__hash_ref__stringify(
+                {   a_key => 2,
+                    b_key => 2112,
+                    c_key => undef,
+                    d_key => 23,
+                    e_key => -877,
+                    f_key => 33,
+                    g_key => 1701
+                }
             );
         },
-        q{HVNV01 stringify_number__hash_ref({a_key => 23}) lives}
+        "/ENV00.*$OPS_TYPES/",
+        q{TNVHVRV10 number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => undef, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
     );
-    lives_and(    # HVNV02
+    throws_ok(    # TNVHVRV11
+        sub {
+            number__hash_ref__stringify(
+                {   a_key => 2,
+                    b_key => 2112,
+                    c_key => 42.3,
+                    d_key => '23',
+                    e_key => -877,
+                    f_key => 33,
+                    g_key => 1701
+                }
+            );
+        },
+        "/ENV01.*$OPS_TYPES/",
+        q{TNVHVRV11 number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42.3, d_key => '23', e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
+    );
+    throws_ok(    # TNVHVRV12
+        sub {
+            number__hash_ref__stringify(
+                {   a_key => 2,
+                    b_key => 2112,
+                    c_key => 42.3,
+                    d_key => [23],
+                    e_key => -877,
+                    f_key => 33,
+                    g_key => 1701
+                }
+            );
+        },
+        "/ENV01.*$OPS_TYPES/",
+        q{TNVHVRV12 number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42.3, d_key => [23], e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
+    );
+    throws_ok(    # TNVHVRV13
+        sub {
+            number__hash_ref__stringify(
+                {   a_key => 2,
+                    b_key => 2112,
+                    c_key => 42.3,
+                    d_key => { a_subkey => 23 },
+                    e_key => -877,
+                    f_key => 33,
+                    g_key => 1701
+                }
+            );
+        },
+        "/ENV01.*$OPS_TYPES/",
+
+#        q{TNVHVRV13 number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42.3, d_key => {a_subkey => 23}, e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
+        q{TNVHVRV13 number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42.3, d_key => {a_subkey => 23}, ..., g_key => 1701}) throws correct exception}
+    );
+    lives_and(    # TNVHVRV20
+        sub {
+            is( number__hash_ref__stringify( { a_key => 23 } ),
+                q{{'a_key' => 23}},
+                q{TNVHVRV20 number__hash_ref__stringify({a_key => 23}) returns correct value}
+            );
+        },
+        q{TNVHVRV20 number__hash_ref__stringify({a_key => 23}) lives}
+    );
+    lives_and(    # TNVHVRV21
         sub {
             like(
-                stringify_number__hash_ref(
+                number__hash_ref__stringify(
                     {   a_key => 2,
                         b_key => 2112,
                         c_key => 42,
@@ -466,37 +658,27 @@ for my $i ( 0 .. 2 ) {
                     }
                 ),
 
-                q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2112\b)(?=.*'c_key' => 42\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => 33\b)(?=.*'g_key' => 1701\b).*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
-                ,
-                q{HVNV02 stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) returns correct value}
+                q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2112\b)(?=.*'c_key' => 42\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => 33\b)(?=.*'g_key' => 1701\b).*\}$/m},
+                q{TNVHVRV21 number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) returns correct value}
             );
         },
-        q{HVNV02 stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) lives}
+        q{TNVHVRV21 number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) lives}
     );
-    lives_and(    # HVNV03
+    lives_and(    # TNVHVRV22
         sub {
-            like(
-                stringify_number__hash_ref(
-                    {   a_key => 2,
-                        b_key => 2112,
-                        c_key => 42.3,
-                        d_key => 23,
-                        e_key => -877,
-                        f_key => 33,
-                        g_key => 1701
-                    }
+            is( number__hash_ref__stringify(
+                    { a_key => 2.1234432112344321 }
                 ),
-                q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2112\b)(?=.*'c_key' => 42\.3\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => 33\b)(?=.*'g_key' => 1701\b).*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
-                ,
-                q{HVNV03 stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) returns correct value}
+                q{{'a_key' => 2.12344321123443}},
+                q{TNVHVRV22 number__hash_ref__stringify({a_key => 2.1234432112344321}) returns correct value}
             );
         },
-        q{HVNV03 stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42.3, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) lives}
+        q{TNVHVRV22 number__hash_ref__stringify({a_key => 2.1234432112344321}) lives}
     );
-    lives_and(    # HVNV04
+    lives_and(    # TNVHVRV23
         sub {
             like(
-                stringify_number__hash_ref(
+                number__hash_ref__stringify(
                     {   a_key => 2.1234432112344321,
                         b_key => 2112.4321,
                         c_key => 42.4567,
@@ -506,52 +688,44 @@ for my $i ( 0 .. 2 ) {
                         g_key => 1701.6789
                     }
                 ),
-                q{/^\{(?=.*'a_key' => 2\.12344321123443\b)(?=.*'b_key' => 2112\.4321\b)(?=.*'c_key' => 42\.4567\b)(?=.*'d_key' => 23\.7654444444444\b)(?=.*'e_key' => -877\.5678\b)(?=.*'f_key' => 33\.8765876587659\b)(?=.*'g_key' => 1701\.6789\b).*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
-                ,
-                q{HVNV04 stringify_number__hash_ref({a_key => 2.1234432112344321, b_key => 2112.4321, ..., g_key => 1701.6789}) returns correct value}
+                q{/^\{(?=.*'a_key' => 2\.12344321123443\b)(?=.*'b_key' => 2112\.4321\b)(?=.*'c_key' => 42\.4567\b)(?=.*'d_key' => 23\.7654444444444\b)(?=.*'e_key' => -877\.5678\b)(?=.*'f_key' => 33\.8765876587659\b)(?=.*'g_key' => 1701\.6789\b).*\}$/m},
+
+#                q{TNVHVRV23 number__hash_ref__stringify(a_key => 2.1234432112344321, b_key => 2112.4321, c_key => 42.4567, d_key => 23.765444444444444444, e_key => -877.5678, f_key => 33.876587658765875687658765, g_key => 1701.6789) returns correct value}
+                q{TNVHVRV23 number__hash_ref__stringify(a_key => 2.1234432112344321, b_key => 2112.4321, c_key => 42.4567, ..., g_key => 1701.6789) returns correct value}
             );
         },
-        q{HVNV04 stringify_number__hash_ref({a_key => 2.1234432112344321, b_key => 2112.4321, ..., g_key => 1701.6789}) lives}
+        q{TNVHVRV23 number__hash_ref__stringify(a_key => 2.1234432112344321, b_key => 2112.4321, c_key => 42.4567, d_key => 23.765444444444444444, e_key => -877.5678, f_key => 33.876587658765875687658765, g_key => 1701.6789) lives}
     );
-    throws_ok(    # HVNV05
+    throws_ok(    # TNVHVRV30
+        sub { number__hash_ref__typetest0() },
+        "/(EHVRV00.*$OPS_TYPES)|(Usage.*number__hash_ref__typetest0)/", # DEV NOTE: 2 different error messages, RPerl & C
+        q{TNVHVRV30 number__hash_ref__typetest0() throws correct exception}
+    );
+    throws_ok(    # TNVHVRV31
+        sub { number__hash_ref__typetest0(2) },
+        "/EHVRV01.*$OPS_TYPES/",
+        q{TNVHVRV31 number__hash_ref__typetest0(2) throws correct exception}
+    );
+    throws_ok(    # TNVHVRV32
         sub {
-            stringify_number__hash_ref(
-                {   a_key => 2,
-                    b_key => 2112,
-                    c_key => 42,
-                    d_key => '23',
-                    e_key => -877,
-                    f_key => 33,
-                    g_key => 1701
+            number__hash_ref__typetest0(
+                {   'binary'       => 2.1234432112344321,
+                    'rush'         => 2112.4321,
+                    'ERROR_FUNKEY' => undef,
+                    'answer'       => 42.4567,
+                    'fnord'        => 23.765444444444444444,
+                    'units'        => -877.5678,
+                    'degree'       => 33.876587658765875687658765,
+                    'ncc'          => 1701.6789
                 }
             );
         },
-        "/$OPS_TYPES.*input_hv_value at key 'd_key' was not a number/",
-        q{HVNV05 stringify_number__hash_ref({a_key => 2, b_key => 2112, c_key => 42, d_key => '23', e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
+        "/ENV00.*$OPS_TYPES/",
+        q{TNVHVRV32 number__hash_ref__typetest0({'binary' => 2.1234432112344321, 'ERROR_FUNKEY' => undef, ..., 'ncc' => 1701.6789}) throws correct exception}
     );
-    lives_and(    # HVNV10
+    throws_ok(    # TNVHVRV33
         sub {
-            like(
-                typetest___number__hash_ref__in___string__out(
-                    {   'binary' => 2.1234432112344321,
-                        'rush'   => 2112.4321,
-                        'answer' => 42.4567,
-                        'fnord'  => 23.765444444444444444,
-                        'units'  => -877.5678,
-                        'degree' => 33.876587658765875687658765,
-                        'ncc'    => 1701.6789
-                    }
-                ),
-                q{/^\{(?=.*'binary' => 2\.12344321123443\b)(?=.*'rush' => 2112\.4321\b)(?=.*'answer' => 42\.4567\b)(?=.*'fnord' => 23\.7654444444444\b)(?=.*'units' => -877\.5678\b)(?=.*'degree' => 33\.8765876587659\b)(?=.*'ncc' => 1701\.6789\b).*\}} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
-                    . $OPS_TYPES . q{$/m}, ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
-                q{HVNV10 typetest___number__hash_ref__in___string__out({'binary' => 2.1234432112344321, 'rush' => 2112.4321, ..., 'ncc' => 1701.6789}) returns correct value}
-            );
-        },
-        q{HVNV10 typetest___number__hash_ref__in___string__out({'binary' => 2.1234432112344321, 'rush' => 2112.4321, ..., 'ncc' => 1701.6789}) lives}
-    );
-    throws_ok(                             # HVNV11
-        sub {
-            typetest___number__hash_ref__in___string__out(
+            number__hash_ref__typetest0(
                 {   'binary'       => 2.1234432112344321,
                     'rush'         => 2112.4321,
                     'ERROR_FUNKEY' => 'abcdefg',
@@ -563,213 +737,145 @@ for my $i ( 0 .. 2 ) {
                 }
             );
         },
-        "/$OPS_TYPES.*input_hv_value at key 'ERROR_FUNKEY' was not a number/",
-        q{HVNV11 typetest___number__hash_ref__in___string__out({'binary' => 2.1234432112344321, 'ERROR_FUNKEY' => 'abcdefg', ..., 'ncc' => 1701.6789}) throws correct exception}
+        "/ENV01.*$OPS_TYPES/",
+        q{TNVHVRV33 number__hash_ref__typetest0({'binary' => 2.1234432112344321, 'ERROR_FUNKEY' => 'abcdefg', ..., 'ncc' => 1701.6789}) throws correct exception}
     );
-    lives_and(    # HVNV12
+    lives_and(    # TNVHVRV34
         sub {
             like(
-                typetest___number__hash_ref__in___string__out(
-                    {   something => -444,
-                        degree    => 33.876587658765875687658765,
-                        ncc       => 1701.6789
+                number__hash_ref__typetest0(
+                    {   'binary' => 2.1234432112344321,
+                        'rush'   => 2112.4321,
+                        'answer' => 42.4567,
+                        'fnord'  => 23.765444444444444444,
+                        'units'  => -877.5678,
+                        'degree' => 33.876587658765875687658765,
+                        'ncc'    => 1701.6789
                     }
                 ),
-                q{/^\{(?=.*'something' => -444\b)(?=.*'degree' => 33\.8765876587659\b)(?=.*'ncc' => 1701\.6789\b).*\}} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
-                    . $OPS_TYPES . q{$/m}, ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
-                q{HVNV12 typetest___number__hash_ref__in___string__out({something => -444, degree => 33.876587658765875687658765, ncc => 1701.6789}) returns correct value}
+                q{/^\{(?=.*'binary' => 2\.12344321123443\b)(?=.*'rush' => 2112\.4321\b)(?=.*'answer' => 42\.4567\b)(?=.*'fnord' => 23\.7654444444444\b)(?=.*'units' => -877\.5678\b)(?=.*'degree' => 33\.8765876587659\b)(?=.*'ncc' => 1701\.6789\b).*\}}
+                    . $OPS_TYPES . q{$/m},
+                q{TNVHVRV34 number__hash_ref__typetest0({'binary' => 2.1234432112344321, 'rush' => 2112.4321, ..., 'ncc' => 1701.6789}) returns correct value}
             );
         },
-        q{HVNV12 typetest___number__hash_ref__in___string__out({something => -444, degree => 33.876587658765875687658765, ncc => 1701.6789}) lives}
+        q{TNVHVRV34 number__hash_ref__typetest0({'binary' => 2.1234432112344321, 'rush' => 2112.4321, ..., 'ncc' => 1701.6789}) lives}
     );
-    lives_and(                             # HVNV20
+    lives_and(    # TNVHVRV40
         sub {
             is_deeply(
-                typetest___integer__in___number__hash_ref__out(5),
+                number__hash_ref__typetest1(5),
                 {   "$OPS_TYPES\_funkey2" => 10.246913578,
                     "$OPS_TYPES\_funkey3" => 15.370370367,
                     "$OPS_TYPES\_funkey4" => 20.493827156,
                     "$OPS_TYPES\_funkey1" => 5.123456789,
                     "$OPS_TYPES\_funkey0" => 0
                 },
-                q{HVNV20 typetest___integer__in___number__hash_ref__out(5) returns correct value}
+                q{TNVHVRV40 number__hash_ref__typetest1(5) returns correct value}
             );
         },
-        q{HVNV20 typetest___integer__in___number__hash_ref__out(5) lives}
+        q{TNVHVRV40 number__hash_ref__typetest1(5) lives}
     );
 
     # [[[ STRING HASH TESTS ]]]
     # [[[ STRING HASH TESTS ]]]
     # [[[ STRING HASH TESTS ]]]
 
-    throws_ok(    # HVPV00
-        sub { stringify_string__hash_ref('Lone Ranger') },
-        "/$OPS_TYPES.*input_hv_ref was not an HV ref/",
-        q{HVPV00 stringify_string__hash_ref('Lone Ranger') throws correct exception}
+    throws_ok(    # TPVHVRV00
+        sub { string__hash_ref__stringify() },
+        "/(EHVRV00.*$OPS_TYPES)|(Usage.*string__hash_ref__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
+        q{TPVHVRV00 string__hash_ref__stringify() throws correct exception}
     );
-    lives_and(    # HVPV01
-        sub {
-            is( stringify_string__hash_ref(
-                    { 'kryptonian_manofsteel_clarkkent' => 'Superman' }
-                ),
-                q{{'kryptonian_manofsteel_clarkkent' => 'Superman'}},
-                q{HVPV01 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman'}) returns correct value}
-            );
-        },
-        q{HVPV01 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman'}) lives}
+    throws_ok(    # TPVHVRV01
+        sub { string__hash_ref__stringify(undef) },
+        "/EHVRV00.*$OPS_TYPES/",
+        q{TPVHVRV01 string__hash_ref__stringify(undef) throws correct exception}
     );
-    lives_and(    # HVPV02
-        sub {
-            like(
-                stringify_string__hash_ref(
-                    {   'kryptonian_manofsteel_clarkkent' => 'Superman',
-                        'gothamite_darkknight_brucewayne' => 'Batman',
-                        'amazonian_dianathemyscira_dianaprince' =>
-                            'Wonder Woman',
-                        'scarletspeedster_barryallenetal' => 'Flash',
-                        'alanscottetal'                   => 'Green Lantern',
-                        'atlanteanhybrid_aquaticace_arthurcurryorin' =>
-                            'Aquaman',
-                        'greenmartian_bloodwynd_jonnjonnz' =>
-                            'Martian Manhunter'
-                    }
-                ),
-                q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'gothamite_darkknight_brucewayne' => 'Batman')(?=.*'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman')(?=.*'scarletspeedster_barryallenetal' => 'Flash')(?=.*'alanscottetal' => 'Green Lantern')(?=.*'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter').*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
-                ,                                                                                                                                                                                                                                                                                                                                                                                                             ## PERLTIDY BUG comma on newline
-                q{HVPV02 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', ...}) returns correct value}
-            );
-        },
-        q{HVPV02 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', ...}) lives}
+    throws_ok(    # TPVHVRV02
+        sub { string__hash_ref__stringify(2) },
+        "/EHVRV01.*$OPS_TYPES/",
+        q{TPVHVRV02 string__hash_ref__stringify(2) throws correct exception}
     );
-    lives_and(    # HVPV03
-        sub {
-            like(
-                stringify_string__hash_ref(
-                    {   'kryptonian_manofsteel_clarkkent' => 'Superman',
-                        'gothamite_darkknight_brucewayne' => 'Batman',
-                        'amazonian_dianathemyscira_dianaprince' =>
-                            'Wonder Woman',
-                        'scarletspeedster_barryallenetal' => 'Flash',
-                        'alanscottetal'                   => 'Green Lantern',
-                        'atlanteanhybrid_aquaticace_arthurcurryorin' =>
-                            'Aquaman',
-                        'greenmartian_bloodwynd_jonnjonnz' =>
-                            'Martian Manhunter',
-                        'string_not_integer' => '23'
-                    }
-                ),
-                q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'gothamite_darkknight_brucewayne' => 'Batman')(?=.*'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman')(?=.*'scarletspeedster_barryallenetal' => 'Flash')(?=.*'alanscottetal' => 'Green Lantern')(?=.*'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'string_not_integer' => '23').*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
-                ,                                                                                                                                                                                                                                                                                                                                                                                                                                               ## PERLTIDY BUG comma on newline
-                q{HVPV03 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'string_not_integer' => '23'}) returns correct value}
-            );
-        },
-        q{HVPV03 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'string_not_integer' => '23'}) lives}
+    throws_ok(    # TPVHVRV03
+        sub { string__hash_ref__stringify(2.3) },
+        "/EHVRV01.*$OPS_TYPES/",
+        q{TPVHVRV03 string__hash_ref__stringify(2.3) throws correct exception}
     );
-    throws_ok(    # HVPV04
+    throws_ok(    # TPVHVRV04
+        sub { string__hash_ref__stringify('Lone Ranger') },
+        "/EHVRV01.*$OPS_TYPES/",
+        q{TPVHVRV04 string__hash_ref__stringify('Lone Ranger') throws correct exception}
+    );
+    throws_ok(    # TPVHVRV05
+        sub { string__hash_ref__stringify( ['Lone Ranger'] ) },
+        "/EHVRV01.*$OPS_TYPES/",
+        q{TPVHVRV05 string__hash_ref__stringify(['Lone Ranger']) throws correct exception}
+    );
+    throws_ok(    # TPVHVRV10
         sub {
-            stringify_string__hash_ref(
-                {   'kryptonian_manofsteel_clarkkent'       => 'Superman',
-                    'gothamite_darkknight_brucewayne'       => 'Batman',
-                    'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman',
-                    'scarletspeedster_barryallenetal'       => 'Flash',
-                    'alanscottetal' => 'Green Lantern',
-                    'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman',
+            string__hash_ref__stringify(
+                {   'kryptonian_manofsteel_clarkkent'  => 'Superman',
                     'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter',
-                    'INT_NOT_STRING'                   => 23
+                    'UNDEF_NOT_STRING'                 => undef
                 }
             );
         },
-        "/$OPS_TYPES.*input_hv_value at key 'INT_NOT_STRING' was not a string/",
-        q{HVPV04 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'INT_NOT_STRING' => 23}) throws correct exception}
+        "/EPV00.*$OPS_TYPES/",
+        q{TPVHVRV10 string__hash_ref__stringify({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'UNDEF_NOT_STRING' => undef}) throws correct exception}
     );
-    lives_and(    # HVPV05
+    throws_ok(    # TPVHVRV11
         sub {
-            like(
-                stringify_string__hash_ref(
-                    {   'kryptonian_manofsteel_clarkkent' => 'Superman',
-                        'gothamite_darkknight_brucewayne' => 'Batman',
-                        'amazonian_dianathemyscira_dianaprince' =>
-                            'Wonder Woman',
-                        'scarletspeedster_barryallenetal' => 'Flash',
-                        'alanscottetal'                   => 'Green Lantern',
-                        'atlanteanhybrid_aquaticace_arthurcurryorin' =>
-                            'Aquaman',
-                        'greenmartian_bloodwynd_jonnjonnz' =>
-                            'Martian Manhunter',
-                        'string_not_number' => '-2112.23'
-                    }
-                ),
-                q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'gothamite_darkknight_brucewayne' => 'Batman')(?=.*'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman')(?=.*'scarletspeedster_barryallenetal' => 'Flash')(?=.*'alanscottetal' => 'Green Lantern')(?=.*'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'string_not_number' => '-2112.23').*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
-                ,                                                                                                                                                                                                                                                                                                                                                                                                                                                    ## PERLTIDY BUG comma on newline
-                q{HVPV05 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'string_not_number' => '-2112.23'}) returns correct value}
+            string__hash_ref__stringify(
+                {   'kryptonian_manofsteel_clarkkent'  => 'Superman',
+                    'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter',
+                    'INTEGER_NOT_STRING'               => 23
+                }
             );
         },
-        q{HVPV05 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'string_not_number' => '-2112.23'}) lives}
+        "/EPV01.*$OPS_TYPES/",
+        q{TPVHVRV11 string__hash_ref__stringify({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'INTEGER_NOT_STRING' => 23}) throws correct exception}
     );
-    lives_and(    # HVPV06
+    throws_ok(    # TPVHVRV12
         sub {
-            like(
-                stringify_string__hash_ref(
-                    {   'kryptonian_manofsteel_clarkkent' => 'Superman',
-                        'gothamite_darkknight_brucewayne' => 'Batman',
-                        'amazonian_dianathemyscira_dianaprince' =>
-                            'Wonder Woman',
-                        'scarletspeedster_barryallenetal' => 'Flash',
-                        'alanscottetal'                   => 'Green Lantern',
-                        'atlanteanhybrid_aquaticace_arthurcurryorin' =>
-                            'Aquaman',
-                        'greenmartian_bloodwynd_jonnjonnz' =>
-                            'Martian Manhunter',
-                        'string_not_number' => "-2112.23" ## no critic qw(ProhibitInterpolationOfLiterals)  ## RPERL allow double-quoted test data
-                    }
-                ),
-                q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'gothamite_darkknight_brucewayne' => 'Batman')(?=.*'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman')(?=.*'scarletspeedster_barryallenetal' => 'Flash')(?=.*'alanscottetal' => 'Green Lantern')(?=.*'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'string_not_number' => '-2112.23').*\}$/m} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
-                ,                                                                                                                                                                                                                                                                                                                                                                                                                                                    ## PERLTIDY BUG comma on newline
-                q{HVPV06 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'string_not_number' => "-2112.23"}) returns correct value}
-            );
-        },
-        q{HVPV06 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'string_not_number' => "-2112.23"}) lives}
-    );
-    throws_ok(    # HVPV07
-        sub {
-            stringify_string__hash_ref(
-                {   'kryptonian_manofsteel_clarkkent'       => 'Superman',
-                    'gothamite_darkknight_brucewayne'       => 'Batman',
-                    'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman',
-                    'scarletspeedster_barryallenetal'       => 'Flash',
-                    'alanscottetal' => 'Green Lantern',
-                    'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman',
+            string__hash_ref__stringify(
+                {   'kryptonian_manofsteel_clarkkent'  => 'Superman',
                     'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter',
                     'NUMBER_NOT_STRING'                => -2112.23
                 }
             );
         },
-        "/$OPS_TYPES.*input_hv_value at key 'NUMBER_NOT_STRING' was not a string/",
-        q{HVPV07 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'NUMBER_NOT_STRING' => -2112.23}) throws correct exception}
+        "/EPV01.*$OPS_TYPES/",
+        q{TPVHVRV12 string__hash_ref__stringify({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'NUMBER_NOT_STRING' => -2112.23}) throws correct exception}
     );
-    throws_ok(    # HVPV08
+    throws_ok(    # TPVHVRV13
         sub {
-            stringify_string__hash_ref(
-                {   'kryptonian_manofsteel_clarkkent'       => 'Superman',
-                    'gothamite_darkknight_brucewayne'       => 'Batman',
-                    'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman',
-                    'scarletspeedster_barryallenetal'       => 'Flash',
-                    'alanscottetal' => 'Green Lantern',
-                    'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman',
+            string__hash_ref__stringify(
+                {   'kryptonian_manofsteel_clarkkent'  => 'Superman',
                     'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter',
-                    'HASH_NOT_STRING' =>
-                        { fuzz => 'bizz', bar => "stool!\n", bat => 24 }
+                    'ARRAY_NOT_STRING'                 => ['Tonto']
                 }
             );
         },
-        "/$OPS_TYPES.*input_hv_value at key 'HASH_NOT_STRING' was not a string/",
-        q{HVPV08 stringify_string__hash_ref({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'HASH_NOT_STRING' => {fuzz => 'bizz', ...}}) throws correct exception}
+        "/EPV01.*$OPS_TYPES/",
+        q{TPVHVRV13 string__hash_ref__stringify({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'ARRAY_NOT_STRING' => ['Tonto']}) throws correct exception}
     );
-    lives_and(    # HVPV10
+    throws_ok(    # TPVHVRV14
+        sub {
+            string__hash_ref__stringify(
+                {   'kryptonian_manofsteel_clarkkent'  => 'Superman',
+                    'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter',
+                    'HASH_NOT_STRING'                  => { fizz => 3 }
+                }
+            );
+        },
+        "/EPV01.*$OPS_TYPES/",
+        q{TPVHVRV14 string__hash_ref__stringify({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'HASH_NOT_STRING' => {fizz => 3}}) throws correct exception}
+    );
+    lives_and(    # TPVHVRV20
         sub {
             like(
-                typetest___string__hash_ref__in___string__out(
-                    {   'kryptonian_manofsteel_clarkkent' => 'Superman',
+                string__hash_ref__stringify(
+                    {   'stuckinaworldhenevercreated' => 'Howard The Duck',
+                        'kryptonian_manofsteel_clarkkent' => 'Superman',
                         'gothamite_darkknight_brucewayne' => 'Batman',
                         'amazonian_dianathemyscira_dianaprince' =>
                             'Wonder Woman',
@@ -781,17 +887,128 @@ for my $i ( 0 .. 2 ) {
                             'Martian Manhunter'
                     }
                 ),
-                q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'gothamite_darkknight_brucewayne' => 'Batman')(?=.*'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman')(?=.*'scarletspeedster_barryallenetal' => 'Flash')(?=.*'alanscottetal' => 'Green Lantern')(?=.*'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter').*\}}
-                    . $OPS_TYPES
-                    . q{$/m}, ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
-                q{HVPV10 typetest___string__hash_ref__in___string__out({'kryptonian_manofsteel_clarkkent' => 'Superman', ...}) returns correct value}
+                q{/^\{(?=.*'stuckinaworldhenevercreated' => 'Howard The Duck')(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'gothamite_darkknight_brucewayne' => 'Batman')(?=.*'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman')(?=.*'scarletspeedster_barryallenetal' => 'Flash')(?=.*'alanscottetal' => 'Green Lantern')(?=.*'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter').*\}$/m}
+                ,    ## PERLTIDY BUG comma on newline
+                q{TPVHVRV20 string__hash_ref__stringify({'stuckinaworldhenevercreated' => 'Howard The Duck', 'kryptonian_manofsteel_clarkkent' => 'Superman', ...}) returns correct value}
             );
         },
-        q{HVPV10 typetest___string__hash_ref__in___string__out({'kryptonian_manofsteel_clarkkent' => 'Superman', ...}) lives}
+        q{TPVHVRV20 string__hash_ref__stringify({'stuckinaworldhenevercreated' => 'Howard The Duck', 'kryptonian_manofsteel_clarkkent' => 'Superman', ...}) lives}
     );
-    throws_ok(                # HVPV11
+    lives_and(       # TPVHVRV21
         sub {
-            typetest___string__hash_ref__in___string__out(
+            like(
+                string__hash_ref__stringify(
+                    {   'kryptonian_manofsteel_clarkkent' => 'Superman',
+                        'greenmartian_bloodwynd_jonnjonnz' =>
+                            'Martian Manhunter',
+                        'STRING_NOT_UNDEF' => 'undef'
+                    }
+                ),
+                q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'STRING_NOT_UNDEF' => 'undef').*\}$/m}
+                ,    ## PERLTIDY BUG comma on newline
+                q{TPVHVRV21 string__hash_ref__stringify({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'STRING_NOT_UNDEF' => 'undef'}) returns correct value}
+            );
+        },
+        q{TPVHVRV21 string__hash_ref__stringify({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'STRING_NOT_UNDEF' => 'undef'}) lives}
+    );
+    lives_and(       # TPVHVRV22
+        sub {
+            like(
+                string__hash_ref__stringify(
+                    {   'kryptonian_manofsteel_clarkkent' => 'Superman',
+                        'greenmartian_bloodwynd_jonnjonnz' =>
+                            'Martian Manhunter',
+                        'STRING_NOT_INTEGER' => '23'
+                    }
+                ),
+                q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'STRING_NOT_INTEGER' => '23').*\}$/m}
+                ,    ## PERLTIDY BUG comma on newline
+                q{TPVHVRV22 string__hash_ref__stringify({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'STRING_NOT_INTEGER' => '23'}) returns correct value}
+            );
+        },
+        q{TPVHVRV22 string__hash_ref__stringify({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'STRING_NOT_INTEGER' => '23'}) lives}
+    );
+    lives_and(       # TPVHVRV23
+        sub {
+            like(
+                string__hash_ref__stringify(
+                    {   'kryptonian_manofsteel_clarkkent' => 'Superman',
+                        'greenmartian_bloodwynd_jonnjonnz' =>
+                            'Martian Manhunter',
+                        'STRING_NOT_NUMBER' => '-2112.23'
+                    }
+                ),
+                q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'STRING_NOT_NUMBER' => '-2112.23').*\}$/m}
+                ,    ## PERLTIDY BUG comma on newline
+                q{TPVHVRV23 string__hash_ref__stringify({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'STRING_NOT_NUMBER' => '-2112.23'}) returns correct value}
+            );
+        },
+        q{TPVHVRV23 string__hash_ref__stringify({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'STRING_NOT_NUMBER' => '-2112.23'}) lives}
+    );
+    lives_and(       # TPVHVRV24
+        sub {
+            like(
+                string__hash_ref__stringify(
+                    {   'kryptonian_manofsteel_clarkkent' => 'Superman',
+                        'greenmartian_bloodwynd_jonnjonnz' =>
+                            'Martian Manhunter',
+                        "STRING_NOT_ARRAY" => "[Tonto]"
+                    }
+                ),
+                q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'STRING_NOT_ARRAY' => '\[Tonto\]').*\}$/m}
+                ,    ## PERLTIDY BUG comma on newline
+                q{TPVHVRV24 string__hash_ref__stringify({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., "STRING_NOT_ARRAY" => "[Tonto]"}) returns correct value}
+            );
+        },
+        q{TPVHVRV24 string__hash_ref__stringify({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., "STRING_NOT_ARRAY" => "[Tonto]"}) lives}
+    );
+    lives_and(       # TPVHVRV25
+        sub {
+            like(
+                string__hash_ref__stringify(
+                    {   'kryptonian_manofsteel_clarkkent' => 'Superman',
+                        'greenmartian_bloodwynd_jonnjonnz' =>
+                            'Martian Manhunter',
+                        "STRING_NOT_HASH" => "{buzz => 5}"
+                    }
+                ),
+                q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'STRING_NOT_HASH' => '\{buzz => 5\}').*\}$/m}
+                ,    ## PERLTIDY BUG comma on newline
+                q{TPVHVRV25 string__hash_ref__stringify({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., "STRING_NOT_HASH" => "{buzz => 5}"}) returns correct value}
+            );
+        },
+        q{TPVHVRV25 string__hash_ref__stringify({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., "STRING_NOT_HASH" => "{buzz => 5}"}) lives}
+    );
+    throws_ok(       # TPVHVRV30
+        sub { string__hash_ref__typetest0() },
+        "/(EHVRV00.*$OPS_TYPES)|(Usage.*string__hash_ref__typetest0)/", # DEV NOTE: 2 different error messages, RPerl & C
+        q{TPVHVRV30 string__hash_ref__typetest0() throws correct exception}
+    );
+    throws_ok(    # TPVHVRV31
+        sub { string__hash_ref__typetest0(2) },
+        "/EHVRV01.*$OPS_TYPES/",
+        q{TPVHVRV31 string__hash_ref__typetest0(2) throws correct exception}
+    );
+    throws_ok(    # TPVHVRV32
+        sub {
+            string__hash_ref__typetest0(
+                {   'kryptonian_manofsteel_clarkkent'       => 'Superman',
+                    'gothamite_darkknight_brucewayne'       => 'Batman',
+                    'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman',
+                    'scarletspeedster_barryallenetal'       => 'Flash',
+                    'alanscottetal' => 'Green Lantern',
+                    'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman',
+                    'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter',
+                    'UNDEF_NOT_STRING'                 => undef
+                }
+            );
+        },
+        "/EPV00.*$OPS_TYPES/",
+        q{TPVHVRV32 string__hash_ref__typetest0({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'UNDEF_NOT_STRING' => undef}) throws correct exception}
+    );
+    throws_ok(    # TPVHVRV33
+        sub {
+            string__hash_ref__typetest0(
                 {   'kryptonian_manofsteel_clarkkent'       => 'Superman',
                     'gothamite_darkknight_brucewayne'       => 'Batman',
                     'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman',
@@ -803,13 +1020,13 @@ for my $i ( 0 .. 2 ) {
                 }
             );
         },
-        "/$OPS_TYPES.*input_hv_value at key 'ARRAY_NOT_STRING' was not a string/",
-        q{HVPV11 typetest___string__hash_ref__in___string__out({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'ARRAY_NOT_STRING' => [23, -42.3]}) throws correct exception}
+        "/EPV01.*$OPS_TYPES/",
+        q{TPVHVRV33 string__hash_ref__typetest0({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'ARRAY_NOT_STRING' => [23, -42.3]}) throws correct exception}
     );
-    lives_and(    # HVPV12
+    lives_and(    # TPVHVRV34
         sub {
             like(
-                typetest___string__hash_ref__in___string__out(
+                string__hash_ref__typetest0(
                     {   'stuckinaworldhenevercreated' => 'Howard The Duck',
                         'atlanteanhybrid_aquaticace_arthurcurryorin' =>
                             'Aquaman',
@@ -818,29 +1035,28 @@ for my $i ( 0 .. 2 ) {
                     }
                 ),
                 q{/^\{(?=.*'stuckinaworldhenevercreated' => 'Howard The Duck')(?=.*'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter').*\}}
-                    . $OPS_TYPES
-                    . q{$/m}, ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted regexs
-                q{HVPV12 typetest___string__hash_ref__in___string__out({'stuckinaworldhenevercreated' => 'Howard The Duck', ...}) returns correct value}
+                    . $OPS_TYPES . q{$/m},
+                q{TPVHVRV34 string__hash_ref__typetest0({'stuckinaworldhenevercreated' => 'Howard The Duck', ...}) returns correct value}
             );
         },
-        q{HVPV12 typetest___string__hash_ref__in___string__out({'stuckinaworldhenevercreated' => 'Howard The Duck', ...}) lives}
+        q{TPVHVRV34 string__hash_ref__typetest0({'stuckinaworldhenevercreated' => 'Howard The Duck', ...}) lives}
     );
-    lives_and(                # HVPV20
+    lives_and(    # TPVHVRV40
         sub {
             is_deeply(
-                typetest___integer__in___string__hash_ref__out(5),
+                string__hash_ref__typetest1(5),
                 {   "$OPS_TYPES\_Luker_key3" => 'Jeffy Ten! 3/4',
                     "$OPS_TYPES\_Luker_key2" => 'Jeffy Ten! 2/4',
                     "$OPS_TYPES\_Luker_key1" => 'Jeffy Ten! 1/4',
                     "$OPS_TYPES\_Luker_key4" => 'Jeffy Ten! 4/4',
                     "$OPS_TYPES\_Luker_key0" => 'Jeffy Ten! 0/4'
                 },
-                q{HVPV20 typetest___integer__in___string__hash_ref__out(5) returns correct value}
+                q{TPVHVRV40 string__hash_ref__typetest1(5) returns correct value}
             );
         },
-        q{HVPV20 typetest___integer__in___string__hash_ref__out(5) lives}
+        q{TPVHVRV40 string__hash_ref__typetest1(5) lives}
     );
 }
 
-#done_testing();
+done_testing();
 

@@ -1,3 +1,4 @@
+## no critic qw(ProhibitExcessMainComplexity)  ## RPERL SYSTEM types, allow long subtypes package
 ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
 ## no critic qw(ProhibitMultiplePackages)  ## RPERL SYSTEM types, allow multiple packages
 ## no critic qw(Capitalization)  ## RPERL SYSTEM types, allow lowercase packages
@@ -5,7 +6,7 @@
 package RPerl::DataStructure::Hash::SubTypes;
 use strict;
 use warnings;
-use version; our $VERSION = 0.003000;
+use version; our $VERSION = 0.003001;
 use Carp;
 
 # [[[ HASHES ]]]
@@ -201,7 +202,7 @@ our integer__hash_ref $integer__hash_ref__typetest1 = sub {
         'integer__hash_ref__typetest1()' );
     my integer__hash_ref $new_hash = {};
     my string $temp_key;
-    for my integer $i ( 0 .. $my_size ) {
+    for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $temp_key = 'PERLOPS_PERLTYPES_funkey' . $i;
         $new_hash->{$temp_key} = $i * 5;
         print
@@ -442,7 +443,7 @@ our number__hash_ref $number__hash_ref__typetest1 = sub {
         'number__hash_ref__typetest1()' );
     my number__hash_ref $new_hash = {};
     my string $temp_key;
-    for my integer $i ( 0 .. $my_size ) {
+    for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $temp_key = 'PERLOPS_PERLTYPES_funkey' . $i;
         $new_hash->{$temp_key} = $i * 5.123456789;
         print
@@ -682,7 +683,7 @@ our string__hash_ref $string__hash_ref__typetest1 = sub {
     ::integer__CHECKTRACE( $my_size, '$my_size',
         'string__hash_ref__typetest1()' );
     my string__hash_ref $people = {};
-    for my integer $i ( 0 .. $my_size ) {
+    for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $people->{ 'PERLOPS_PERLTYPES_Luker_key' . $i }
             = q{Jeffy Ten! } . $i . q{/} . ( $my_size - 1 );
         print
