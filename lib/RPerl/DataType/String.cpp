@@ -135,9 +135,9 @@ printf("in CPPOPS_CPPTYPES string__stringify(), bottom of subroutine, returning 
 
 # endif
 
-//# [[[ TYPE TESTING ]]]
-//# [[[ TYPE TESTING ]]]
-//# [[[ TYPE TESTING ]]]
+// [[[ TYPE TESTING ]]]
+// [[[ TYPE TESTING ]]]
+// [[[ TYPE TESTING ]]]
 
 # ifdef __PERL__TYPES
 

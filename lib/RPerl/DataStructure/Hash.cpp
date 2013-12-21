@@ -2,13 +2,15 @@
 using std::cout;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash_cpp
-#define __CPP__INCLUDED__RPerl__DataStructure__Hash_cpp 0.003000
+#define __CPP__INCLUDED__RPerl__DataStructure__Hash_cpp 0.003001
 
 #include <RPerl/DataStructure/Hash.h>		// -> NULL (relies on <unordered_map> being included via Inline::CPP's AUTO_INCLUDE config option)
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
+
+# ifdef __CPP__TYPES
 
 // convert from (Perl SV containing reference to (Perl HV of (Perl SVs containing IVs))) to (C++ std::unordered_map of integers)
 integer__hash_ref XS_unpack_integer__hash_ref(SV* input_hv_ref)
@@ -74,7 +76,7 @@ void XS_pack_integer__hash_ref(SV* output_hv_ref, integer__hash_ref input_unorde
 		for (i = input_unordered_map.begin();  i != input_unordered_map.end();  ++i)
 			{ hv_store(output_hv, (const char*)((i->first).c_str()), (U32)((i->first).size()), newSViv(i->second), (U32)0); }
 	}
-	else croak("in CPPOPS_CPPTYPES XS_pack_integer__hash_ref(), hash was empty, returning empty hash via newHV()");
+//	else warn("in CPPOPS_CPPTYPES XS_pack_integer__hash_ref(), hash was empty, returning empty hash via newHV()");
 
 	temp_sv_pointegerer = newSVrv(output_hv_ref, NULL);	  // upgrade output stack SV to an RV
 	SvREFCNT_dec(temp_sv_pointegerer);		 // discard temporary pointegerer
@@ -148,7 +150,7 @@ void XS_pack_number__hash_ref(SV* output_hv_ref, number__hash_ref input_unordere
 		for (i = input_unordered_map.begin();  i != input_unordered_map.end();  ++i)
 			{ hv_store(output_hv, (const char*)((i->first).c_str()), (U32)((i->first).size()), newSVnv(i->second), (U32)0); }
 	}
-	else croak("in CPPOPS_CPPTYPES XS_pack_number__hash_ref(), hash was empty, returning empty hash via newHV()");
+//	else warn("in CPPOPS_CPPTYPES XS_pack_number__hash_ref(), hash was empty, returning empty hash via newHV()");
 
 	temp_sv_pointegerer = newSVrv(output_hv_ref, NULL);	  // upgrade output stack SV to an RV
 	SvREFCNT_dec(temp_sv_pointegerer);		 // discard temporary pointegerer
@@ -222,7 +224,7 @@ void XS_pack_string__hash_ref(SV* output_hv_ref, string__hash_ref input_unordere
 		for (i = input_unordered_map.begin();  i != input_unordered_map.end();  ++i)
 			{ hv_store(output_hv, (const char*)((i->first).c_str()), (U32)((i->first).size()), newSVpv((i->second).c_str(), 0), (U32)0); }
 	}
-	else croak("in CPPOPS_CPPTYPES XS_pack_string__hash_ref(), hash was empty, returning empty hash via newHV()");
+//	else warn("in CPPOPS_CPPTYPES XS_pack_string__hash_ref(), hash was empty, returning empty hash via newHV()");
 
 	temp_sv_pointegerer = newSVrv(output_hv_ref, NULL);	  // upgrade output stack SV to an RV
 	SvREFCNT_dec(temp_sv_pointegerer);		 // discard temporary pointegerer
@@ -231,10 +233,11 @@ void XS_pack_string__hash_ref(SV* output_hv_ref, string__hash_ref input_unordere
 	printf("in CPPOPS_CPPTYPES XS_pack_string__hash_ref(), bottom of subroutine\n");
 }
 
+# endif
 
-//# [[[ STRINGIFY ]]]
-//# [[[ STRINGIFY ]]]
-//# [[[ STRINGIFY ]]]
+// [[[ STRINGIFY ]]]
+// [[[ STRINGIFY ]]]
+// [[[ STRINGIFY ]]]
 
 # ifdef __PERL__TYPES
 
@@ -616,9 +619,9 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 # endif
 
 
-//# [[[ TYPE TESTING ]]]
-//# [[[ TYPE TESTING ]]]
-//# [[[ TYPE TESTING ]]]
+// [[[ TYPE TESTING ]]]
+// [[[ TYPE TESTING ]]]
+// [[[ TYPE TESTING ]]]
 
 # ifdef __PERL__TYPES
 
@@ -749,7 +752,7 @@ SV* string__hash_ref__typetest1(SV* my_size)
 	for (i = 0;  i < SvIV(my_size);  ++i)
 	{
 		sprintf(temp_key, "CPPOPS_PERLTYPES_Luker_key%d", i);
-		hv_store(people, (const char*)temp_key, (U32)strlen(temp_key), newSVpvf("Jeffy Ten! %d/%d", i, (int)(SvIV(my_size) - 1)), (U32)0);
+		hv_store(people, (const char*)temp_key, (U32)strlen(temp_key), newSVpvf("Jeffy Ten! %d/%d", i, (integer)(SvIV(my_size) - 1)), (U32)0);
 		printf("in CPPOPS_PERLTYPES string__hash_ref__typetest1(), have temp_key = '%s', just set another Jeffy, BARTAT\n", temp_key);
 	}
 

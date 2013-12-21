@@ -31,11 +31,6 @@ print q{in hash_test.pl, have string__types() = '} . string__types() . "'\n" or 
 print q{in hash_test.pl, have hash__ops() = '} . hash__ops() . "'\n" or croak();
 print q{in hash_test.pl, have hash__types() = '} . hash__types() . "'\n" or croak();
 
-# DEBUGGING SUBROUTINE LOADING/LINKING
-#print qq{in array_test.pl, have SYMBOL TABLE for package 'main' =\n} . Dumper(\%{*{main::}}) . "\n" or croak();
-#print qq{in array_test.pl, have SYMBOL TABLE entry for 'main::integer__hash_ref__stringify' =\n} . Dumper(\%{*{main::integer__hash_ref__stringify}}) . "\n" or croak();
-#print qq{in array_test.pl, have 'integer__hash_ref__stringify' =\n} . Dumper(\*integer__hash_ref__stringify) . "\n" or croak();
-
 # variable declarations
 my string $retval_stringify;
 my integer__hash_ref $retval_integer__hash_ref;
@@ -44,7 +39,7 @@ my string__hash_ref $my_peeps = {};
 my string__hash_ref $retval_jeffys;
 
 # loop to test for memory leaks
-my const_integer $i_MAX = 1;
+my const_integer $i_MAX = 0;
 for my integer $i ( 0 .. $i_MAX ) {
 	print "in hash_test.pl, top of for() loop $i/$i_MAX\n" or croak();
 
@@ -72,8 +67,8 @@ for my integer $i ( 0 .. $i_MAX ) {
 #	$retval_stringify = integer__hash_ref__typetest0({'binary' => 2, 'rush' => 2112, 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => 33, 'ncc' => 1701});  # TIVHVRV34
 #	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 
-	$retval_integer__hash_ref = integer__hash_ref__typetest1(5);  # TIVHVRV40
-	print "in hash_test.pl $i/$i_MAX, have \$retval_integer__hash_ref = \n" . Dumper($retval_integer__hash_ref) . "\n" or croak();
+#	$retval_integer__hash_ref = integer__hash_ref__typetest1(5);  # TIVHVRV40
+#	print "in hash_test.pl $i/$i_MAX, have \$retval_integer__hash_ref = \n" . Dumper($retval_integer__hash_ref) . "\n" or croak();
 
     # [[[ NUMBER TESTS ]]]
 
@@ -129,7 +124,7 @@ for my integer $i ( 0 .. $i_MAX ) {
 #	$retval_stringify = string__hash_ref__typetest0();  # TPVHVRV30; error PERLOPS EHVRV00, CPPOPS "Usage: main::string__hash_ref__typetest0(input_unordered_map)"
 #	$retval_stringify = string__hash_ref__typetest0(2);  # TPVHVRV31; error EHVRV01
 #	$retval_stringify = string__hash_ref__typetest0({'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'UNDEF_NOT_STRING' => undef});  # TPVHVRV32; error EPV00
-#	$retval_stringify = string__hash_ref__typetest0({'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'ARRAY{'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'UNDEF_NOT_STRING' => undef}_NOT_STRING' => [23, -42.3]});  # TPVHVRV33; error EPV01
+#	$retval_stringify = string__hash_ref__typetest0({'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'ARRAY_NOT_STRING' => [23, -42.3]});  # TPVHVRV33; error EPV01
 #	$retval_stringify = string__hash_ref__typetest0({'stuckinaworldhenevercreated' => 'Howard The Duck', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter'});  # TPVHVRV34
 #	print "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 

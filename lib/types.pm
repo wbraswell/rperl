@@ -27,7 +27,7 @@ use RPerl::DataType::Scalar;
 use RPerl::DataType::Unknown;
 
 # [[[ DATA STRUCTURES ]]]
-#use RPerl::DataStructure::Array;
+use RPerl::DataStructure::Array;
 use RPerl::DataStructure::Hash;
 #use RPerl::DataStructure::LinkedList;
 #use RPerl::DataStructure::LinkedList::Node;

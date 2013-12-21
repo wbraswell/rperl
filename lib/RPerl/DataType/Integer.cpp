@@ -94,9 +94,9 @@ printf("in CPPOPS_CPPTYPES integer__stringify(), top of subroutine, received inp
 
 # endif
 
-//# [[[ TYPE TESTING ]]]
-//# [[[ TYPE TESTING ]]]
-//# [[[ TYPE TESTING ]]]
+// [[[ TYPE TESTING ]]]
+// [[[ TYPE TESTING ]]]
+// [[[ TYPE TESTING ]]]
 
 # ifdef __PERL__TYPES
 

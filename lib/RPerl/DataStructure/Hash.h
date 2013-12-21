@@ -6,10 +6,10 @@ using std::cout;  using std::endl;
 
 #include <types_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
-// for SvHROKp() macro and RPerl_SvHROKp() subroutine
+// for type-checking subroutines & macros
 #include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
 
-////# [[[ DATA TYPES ]]]
+//// [[[ DATA TYPES ]]]
 ////use RPerl::DataType::Integer;
 #include <RPerl/DataType/Integer.cpp>
 ////use RPerl::DataType::Number;
@@ -84,7 +84,7 @@ string number__hash_ref__stringify(number__hash_ref input_unordered_map);
 string string__hash_ref__stringify(string__hash_ref input_unordered_map);
 # endif
 
-//# [[[ TYPE TESTING ]]]
+// [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
 SV* integer__hash_ref__typetest0(SV* lucky_integers);
 SV* integer__hash_ref__typetest1(SV* my_size);

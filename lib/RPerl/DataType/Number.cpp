@@ -105,9 +105,9 @@ printf("in CPPOPS_CPPTYPES number__stringify(), top of subroutine, received unfo
 
 # endif
 
-//# [[[ TYPE TESTING ]]]
-//# [[[ TYPE TESTING ]]]
-//# [[[ TYPE TESTING ]]]
+// [[[ TYPE TESTING ]]]
+// [[[ TYPE TESTING ]]]
+// [[[ TYPE TESTING ]]]
 
 # ifdef __PERL__TYPES
 

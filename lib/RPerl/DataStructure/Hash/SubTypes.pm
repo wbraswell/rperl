@@ -6,7 +6,7 @@
 package RPerl::DataStructure::Hash::SubTypes;
 use strict;
 use warnings;
-use version; our $VERSION = 0.003001;
+use version; our $VERSION = 0.003002;
 use Carp;
 
 # [[[ HASHES ]]]
@@ -38,7 +38,7 @@ our void $hash_ref__CHECK = sub {
         );
     }
 
-#    if ( UNIVERSAL::isa( $possible_hash_ref, 'HASH' ) ) {  # DEV NOTE: I believe the following 2 lines are equivalent?
+#    if ( UNIVERSAL::isa( $possible_hash_ref, 'HASH' ) ) {  # DEV NOTE: I believe these 2 lines are equivalent?
     if ( not( main::RPerl_SvHROKp($possible_hash_ref) ) ) {
         croak(
             "\nERROR EHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nhash_ref value expected but non-hash_ref value found,\ncroaking"
@@ -125,7 +125,7 @@ our string $integer__hash_ref__stringify = sub {
     #	my integer $input_hv_length;
     my integer $input_hv_entry_value;
     my string $output_sv;
-    my integer $i_is_0 = 1;    # DEV NOTE: should be bool type, not integer
+    my integer $i_is_0 = 1;   # NEED UPGRADE: should be bool type, not integer
 
     %input_hv = %{$input_hv_ref};
 
@@ -137,6 +137,8 @@ our string $integer__hash_ref__stringify = sub {
     foreach my string $key ( keys %input_hv ) {
 
         $input_hv_entry_value = $input_hv{$key};
+        $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
+        $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
 
         #        ::integer__CHECK($input_hv_entry_value);
         ::integer__CHECKTRACE(
@@ -147,7 +149,6 @@ our string $integer__hash_ref__stringify = sub {
 
         if ($i_is_0) { $i_is_0 = 0; }
         else         { $output_sv .= ', '; }
-        $key =~ s/\'/\\\'/gxms; # delimit all single-quote ' characters with a back-slash \ character
         $output_sv .= "'$key' => $input_hv_entry_value"; # DEV NOTE: emulate Data::Dumper & follow PBP by using single quotes for key strings
     }
 
@@ -166,8 +167,6 @@ our string $integer__hash_ref__stringify = sub {
 # [[[ TYPE TESTING ]]]
 
 our string $integer__hash_ref__typetest0 = sub {
-
-  #print "in PERLOPS_PERLTYPES typetest___string__out(), top of subroutine\n";
     ( my integer__hash_ref $lucky_integers) = @_;
 
     #    ::hash_ref__CHECK($lucky_integers);
@@ -175,6 +174,8 @@ our string $integer__hash_ref__typetest0 = sub {
         'integer__hash_ref__typetest0()' );
     foreach my string $key ( keys %{$lucky_integers} ) {
         my $lucky_integer = $lucky_integers->{$key};
+        $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
+        $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
 
         #        ::integer__CHECK($lucky_integer);
         ::integer__CHECKTRACE(
@@ -370,7 +371,7 @@ our string $number__hash_ref__stringify = sub {
     #	my integer $input_hv_length;
     my number $input_hv_entry_value;
     my string $output_sv;
-    my integer $i_is_0 = 1;
+    my integer $i_is_0 = 1;   # NEED UPGRADE: should be bool type, not integer
 
     %input_hv = %{$input_hv_ref};
 
@@ -382,6 +383,8 @@ our string $number__hash_ref__stringify = sub {
     foreach my string $key ( keys %input_hv ) {
 
         $input_hv_entry_value = $input_hv{$key};
+        $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
+        $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
 
         #        ::number__CHECK($input_hv_entry_value);
         ::number__CHECKTRACE(
@@ -392,7 +395,6 @@ our string $number__hash_ref__stringify = sub {
 
         if ($i_is_0) { $i_is_0 = 0; }
         else         { $output_sv .= ', '; }
-        $key =~ s/\'/\\\'/gxms;
         $output_sv .= "'$key' => $input_hv_entry_value";
     }
 
@@ -418,6 +420,8 @@ our string $number__hash_ref__typetest0 = sub {
         'number__hash_ref__typetest0()' );
     foreach my string $key ( keys %{$lucky_numbers} ) {
         my $lucky_number = $lucky_numbers->{$key};
+        $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
+        $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
 
         #        ::number__CHECK($lucky_number);
         ::number__CHECKTRACE(
@@ -611,7 +615,7 @@ our string $string__hash_ref__stringify = sub {
     #	my integer $input_hv_length;
     my string $input_hv_entry_value;
     my string $output_sv;
-    my integer $i_is_0 = 1;
+    my integer $i_is_0 = 1;   # NEED UPGRADE: should be bool type, not integer
 
     %input_hv = %{$input_hv_ref};
 
@@ -623,6 +627,8 @@ our string $string__hash_ref__stringify = sub {
     foreach my string $key ( keys %input_hv ) {
 
         $input_hv_entry_value = $input_hv{$key};
+        $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
+        $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
 
         #        ::string__CHECK($input_hv_entry_value);
         ::string__CHECKTRACE(
@@ -633,8 +639,8 @@ our string $string__hash_ref__stringify = sub {
 
         if ($i_is_0) { $i_is_0 = 0; }
         else         { $output_sv .= ', '; }
-        $key =~ s/\'/\\\'/gxms;
-        $input_hv_entry_value =~ s/\'/\\\'/gxms;
+        $input_hv_entry_value =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
+        $input_hv_entry_value =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
         $output_sv .= "'$key' => '$input_hv_entry_value'";
     }
 
@@ -660,6 +666,8 @@ our string $string__hash_ref__typetest0 = sub {
         'string__hash_ref__typetest0()' );
     foreach my string $key ( keys %{$people} ) {
         my $person = $people->{$key};
+        $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
+        $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
 
         #        ::string__CHECK($person);
         ::string__CHECKTRACE(
@@ -669,7 +677,7 @@ our string $string__hash_ref__typetest0 = sub {
         );
         print
             "in PERLOPS_PERLTYPES string__hash_ref__typetest0(), have person '$key' => '"
-            . $people->{$key}
+            . $person
             . "', STARBOOL\n"
             or croak();
     }

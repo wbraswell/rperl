@@ -5,10 +5,10 @@
 ## no critic qw(ProhibitStringySplit)  ## RPERL allow string test values
 ## no critic qw(ProhibitInterpolationOfLiterals)  ## RPERL allow string test values
 ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow string test values
-## no critic qw(RequirePodAtEnd RequirePodSections PodSpelling)  ## RPERL allow block quotes
+## no critic qw(RequirePodAtEnd RequirePodSections PodSpelling)  ## RPERL allow block comments
 use strict;
 use warnings;
-use version; our $VERSION = 0.003002;
+use version; our $VERSION = 0.003003;
 use Carp;
 
 # [[[ SETUP ]]]
@@ -59,7 +59,7 @@ my string $my_string;
 my string $dumper_string;
 
 # loop to test for memory leaks
-my const_integer $i_MAX = 1;
+my const_integer $i_MAX = 0;
 for my integer $i ( 0 .. $i_MAX ) {
     print "in scalar_test.pl, top of for() loop $i/$i_MAX\n\n" or croak();
 

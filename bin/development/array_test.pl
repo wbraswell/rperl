@@ -1,8 +1,11 @@
 #!/usr/bin/perl
+## no critic qw(ProhibitMagicNumbers ProhibitUnreachableCode)  ## RPERL allow numeric test values, allow unreachable test code
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.3.4');
+use version; our $VERSION = 0.003012;
 use Carp;
+
+# [[[ SETUP ]]]
 
 # RPERL DRIVER BOILERPLATE
 BEGIN { package main;  our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib'; }  # NEED REMOVE hard-coded path
@@ -14,91 +17,119 @@ BEGIN { use Data::Dumper;  our $AUTOLOAD;  sub AUTOLOAD { croak("AUTOLOAD purpos
 #types::types_enable('PERL');
 
 # UNCOMMENT TO ENABLE C++ TYPES FOR C++ OPS
-types::types_enable('CPP');
+#types::types_enable('CPP');
 
 # UNCOMMENT TO ENABLE C++ OPS
-use RPerl::DataStructure::Array_cpp;  RPerl::DataStructure::Array_cpp::cpp_load();  RPerl::DataStructure::Array_cpp::cpp_link();
+#use RPerl::DataStructure::Array_cpp;  RPerl::DataStructure::Array_cpp::cpp_load();  RPerl::DataStructure::Array_cpp::cpp_link();
 
-print q{in array_test.pl, have ops_number() = '} . ops_number() . "'\n" or croak();
-print q{in array_test.pl, have types_number() = '} . types_number() . "'\n" or croak();
-print q{in array_test.pl, have ops_string() = '} . ops_string() . "'\n" or croak();
-print q{in array_test.pl, have types_string() = '} . types_string() . "'\n" or croak();
-print q{in array_test.pl, have ops_array() = '} . ops_array() . "'\n" or croak();
-print q{in array_test.pl, have types_array() = '} . types_array() . "'\n" or croak();
+print q{in array_test.pl, have integer__ops() = '} . integer__ops() . "'\n" or croak();
+print q{in array_test.pl, have integer__types() = '} . integer__types() . "'\n" or croak();
+print q{in array_test.pl, have number__ops() = '} . number__ops() . "'\n" or croak();
+print q{in array_test.pl, have number__types() = '} . number__types() . "'\n" or croak();
+print q{in array_test.pl, have string__ops() = '} . string__ops() . "'\n" or croak();
+print q{in array_test.pl, have string__types() = '} . string__types() . "'\n" or croak();
+print q{in array_test.pl, have array__ops() = '} . array__ops() . "'\n" or croak();
+print q{in array_test.pl, have array__types() = '} . array__types() . "'\n" or croak();
 
 # variable declarations
 my string $retval_stringify;
 my integer__array_ref $retval_integer__array_ref;
 my number__array_ref $retval_number__array_ref;
-my string__array_ref $my_peeps;
 my string__array_ref $retval_jeffys;
 
 # loop to test for memory leaks
-my const_integer $i_MAX = 1;
+my const_integer $i_MAX = 0;
 for my integer $i ( 0 .. $i_MAX ) {
 	print "in array_test.pl, top of for() loop $i/$i_MAX\n" or croak();
 
-#	$retval_stringify = stringify_integer__array_ref(2);  # AVIV00; raise/throw exception
-#	$retval_stringify = stringify_integer__array_ref([2]);  # AVIV01
-#	$retval_stringify = stringify_integer__array_ref([2, 2112, 42, 23, -877, 33, 1701]);  # AVIV02
-#	$retval_stringify = stringify_integer__array_ref([2, 2112, 42.3, 23, -877, 33, 1701]);  # AVIV03; raise/throw exception
-#	$retval_stringify = stringify_integer__array_ref([2, 2112, 42, '23', -877, 33, 1701]);  # AVIV04; raise/throw exception
+    # [[[ INTEGER TESTS ]]]
+
+	$retval_stringify = integer__array_ref__stringify();  # TIVAVRV00; error PERLOPS EAVRV00, CPPOPS "Usage: main::integer__array_ref__stringify(input_av_ref/input_vector)"
+#	$retval_stringify = integer__array_ref__stringify(undef);  # TIVAVRV01; error EAVRV00
+#	$retval_stringify = integer__array_ref__stringify(2);  # TIVAVRV02; error EAVRV01
+#	$retval_stringify = integer__array_ref__stringify(2.3);  # TIVAVRV03; error EAVRV01
+#	$retval_stringify = integer__array_ref__stringify('2');  # TIVAVRV04; error EAVRV01
+#	$retval_stringify = integer__array_ref__stringify({a_key => 23});  # TIVAVRV05; error EAVRV01
+#	$retval_stringify = integer__array_ref__stringify([2, 2112, undef, 23, -877, 33, 1701]);  # TIVAVRV10; error EIV00
+#	$retval_stringify = integer__array_ref__stringify([2, 2112, 42, 23.3, -877, 33, 1701]);  # TIVAVRV11; error EIV01
+#	$retval_stringify = integer__array_ref__stringify([2, 2112, 42, '23', -877, 33, 1701]);  # TIVAVRV12; error EIV01
+#	$retval_stringify = integer__array_ref__stringify([2, 2112, 42, [23], -877, 33, 1701]);  # TIVAVRV13; error EIV01
+#	$retval_stringify = integer__array_ref__stringify([2, 2112, 42, {a_subkey => 23}, -877, 33, 1701]);  # TIVAVRV14; error EIV01
+#	$retval_stringify = integer__array_ref__stringify([23]);  # TIVAVRV20
+#	$retval_stringify = integer__array_ref__stringify([2, 2112, 42, 23, -877, 33, 1701]);  # TIVAVRV21
+	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
+
+#	$retval_stringify = integer__array_ref__typetest0();  # TIVAVRV30; error PERLOPS EAVRV00, CPPOPS "Usage: main::integer__array_ref__typetest0(lucky_integers)"
+#	$retval_stringify = integer__array_ref__typetest0(2);  # TIVAVRV31; error EAVRV01
+#	$retval_stringify = integer__array_ref__typetest0([2, 2112, undef, 23, -877, 33, 1701]);  # TIVAVRV32; error EIV00
+#	$retval_stringify = integer__array_ref__typetest0([2, 2112, 42, 'abcdefg', -877, 33, 1701]);  # TIVAVRV33; error EIV01
+#	$retval_stringify = integer__array_ref__typetest0([2, 2112, 42, 23, -877, 33, 1701]);  # TIVAVRV34
+#	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
+
+#	$retval_integer__array_ref = integer__array_ref__typetest1(5);  # TIVAVRV40
+#	print "in array_test.pl $i/$i_MAX, have \$retval_integer__array_ref = \n" . Dumper($retval_integer__array_ref) . "\n" or croak();
+
+    # [[[ NUMBER TESTS ]]]
+
+#	$retval_stringify = number__array_ref__stringify();  # TNVAVRV00; error PERLOPS EAVRV00, CPPOPS "Usage: main::number__array_ref__stringify(input_av_ref/input_vector)"
+#	$retval_stringify = number__array_ref__stringify(undef);  # TNVAVRV01; error EAVRV00
+#	$retval_stringify = number__array_ref__stringify(2);  # TNVAVRV02; error EAVRV01
+#	$retval_stringify = number__array_ref__stringify(2.3);  # TNVAVRV03; error EAVRV01
+#	$retval_stringify = number__array_ref__stringify('2');  # TNVAVRV04; error EAVRV01
+#	$retval_stringify = number__array_ref__stringify({a_key => 23});  # TNVAVRV05; error EAVRV01
+#	$retval_stringify = number__array_ref__stringify([2, 2112, undef, 23, -877, 33, 1701]);  # TNVAVRV10; error ENV00
+#	$retval_stringify = number__array_ref__stringify([2, 2112, 42, '23', -877, 33, 1701]);  # TNVAVRV11; error ENV01
+#	$retval_stringify = number__array_ref__stringify([2, 2112, 42, [23], -877, 33, 1701]);  # TNVAVRV12; error ENV01
+#	$retval_stringify = number__array_ref__stringify([2, 2112, 42, {a_subkey => 23}, -877, 33, 1701]);  # TNVAVRV13; error ENV01
+#	$retval_stringify = number__array_ref__stringify([23]);  # TNVAVRV20
+#	$retval_stringify = number__array_ref__stringify([2, 2112, 42, 23, -877, 33, 1701]);  # TNVAVRV21
+#	$retval_stringify = number__array_ref__stringify([23.2]);  # TNVAVRV22
+#	$retval_stringify = number__array_ref__stringify([2.1, 2112.2, 42.3, 23, -877, 33, 1701]);  # TNVAVRV23
+#	$retval_stringify = number__array_ref__stringify([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, 33.876587658765875687658765, 1701.6789]);  # TNVAVRV24
 #	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
 
-#	$retval_stringify = typetest___integer__array_ref__in___string__out([2, 2112, 42, 23, -877, 33, 1701]);  # AVIV10
-#	$retval_stringify = typetest___integer__array_ref__in___string__out([2, 2112, 42, 23, -877, 'abcdefg', 33, 1701]);  # AVIV11; not-an-integer error
+#	$retval_stringify = number__array_ref__typetest0();  # TNVAVRV30; error PERLOPS EAVRV00, CPPOPS "Usage: main::number__array_ref__typetest0(lucky_numbers)"
+#	$retval_stringify = number__array_ref__typetest0(2);  # TNVAVRV31; error EAVRV01
+#	$retval_stringify = number__array_ref__typetest0([2.1234432112344321, 2112.4321, undef, 23.765444444444444444, -877.5678, 33.876587658765875687658765, 1701.6789]);  # TNVAVRV32; error ENV00
+#	$retval_stringify = number__array_ref__typetest0([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, 'abcdefg', 33.876587658765875687658765, 1701.6789]);  # TNVAVRV33; error ENV01
+#	$retval_stringify = number__array_ref__typetest0([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, 33.876587658765875687658765, 1701.6789]);  # TNVAVRV34
 #	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 
-#	my $howdy_retval = typetest___integer__array_ref__in___string__out([-444, 33, 1701]);  # AVIV12; confirm Perl stack is still functioning properly
-#	print "in array_test.pl $i/$i_MAX, have \$howdy_retval =\n$howdy_retval\n";
+#	$retval_number__array_ref = number__array_ref__typetest1(5);  # TNVAVRV40
+#	print "in array_test.pl $i/$i_MAX, have \$retval_number__array_ref = \n" . Dumper($retval_number__array_ref) . "\n" or croak();
 
-#	$retval_integer__array_ref = typetest___integer__in___integer__array_ref__out(5);  # AVIV20
-#	print "in array_test.pl $i/$i_MAX, have \$retval_integer__array_ref = \n" . Dumper($retval_integer__array_ref) . "\n";
+    # [[[ STRING TESTS ]]]
 
-#	$retval_stringify = stringify_number__array_ref(2);  # AVNV00; raise/throw exception
-#	$retval_stringify = stringify_number__array_ref([2]);  # AVNV01
-#	$retval_stringify = stringify_number__array_ref([2, 2112, 42, 23, -877, 33, 1701]);  # AVNV02
-#	$retval_stringify = stringify_number__array_ref([2.1, 2112.2, 42.3, 23, -877, 33, 1701]);  # AVNV03
-#	$retval_stringify = stringify_number__array_ref([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, 33.876587658765875687658765, 1701.6789]);  # AVNV04
-#	$retval_stringify = stringify_number__array_ref([2, 2112, 42, '23', -877, 33, 1701]);  # AVNV05; raise/throw exception
+#	$retval_stringify = string__array_ref__stringify();  # TPVAVRV00; error PERLOPS EAVRV00, CPPOPS "Usage: main::string__array_ref__stringify(input_av_ref/input_vector)"
+#	$retval_stringify = string__array_ref__stringify(undef);  # TPVAVRV01; error EAVRV00
+#	$retval_stringify = string__array_ref__stringify(2);  # TPVAVRV02; error EAVRV01
+#	$retval_stringify = string__array_ref__stringify(2.3);  # TPVAVRV03; error EAVRV01
+#	$retval_stringify = string__array_ref__stringify('Lone Ranger');  # TPVAVRV04; error EAVRV01
+#	$retval_stringify = string__array_ref__stringify({a_key => 'Lone Ranger'});  # TPVAVRV05; error EAVRV01
+#	$retval_stringify = string__array_ref__stringify(['Superman', 'Batman', 'Wonder Woman', undef, 'Green Lantern', 'Aquaman', 'Martian Manhunter']);  # TPVAVRV10; error EPV00
+#	$retval_stringify = string__array_ref__stringify(['Superman', 'Batman', 23, 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']);  # TPVAVRV11; error EPV01
+#	$retval_stringify = string__array_ref__stringify(['Superman', 'Batman', 23.2, 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']);  # TPVAVRV12; error EPV01
+#	$retval_stringify = string__array_ref__stringify(['Superman', 'Batman', ['Wonder Woman'], 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']);  # TPVAVRV13; error EPV01
+#	$retval_stringify = string__array_ref__stringify(['Superman', 'Batman', {a_subkey => 'Wonder Woman'}, 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']);  # TPVAVRV14; error EPV01
+#	$retval_stringify = string__array_ref__stringify(['Howard The Duck', 'Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']);  # TPVAVRV20
+#	$retval_stringify = string__array_ref__stringify(['Superman', 'Martian Manhunter', 'undef']);  # TPVAVRV21
+#	$retval_stringify = string__array_ref__stringify(['Superman', 'Martian Manhunter', '23']);  # TPVAVRV22
+#	$retval_stringify = string__array_ref__stringify(['Superman', 'Martian Manhunter', '-2112.23']);  # TPVAVRV23
+#	$retval_stringify = string__array_ref__stringify(['Superman', 'Martian Manhunter', "[\\'Tonto'\\]"]);  # TPVAVRV24
+#	$retval_stringify = string__array_ref__stringify(['Superman', 'Martian Manhunter', '{buzz => 5}']);  # TPVAVRV25
+#	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
+
+#	$retval_stringify = string__array_ref__typetest0();  # TPVAVRV30; error PERLOPS EAVRV00, CPPOPS "Usage: main::string__array_ref__typetest0(people)"
+#	$retval_stringify = string__array_ref__typetest0(2);  # TPVAVRV31; error EAVRV01
+#	$retval_stringify = string__array_ref__typetest0(['Superman', 'Batman', 'Wonder Woman', undef, 'Green Lantern', 'Aquaman', 'Martian Manhunter']);  # TPVAVRV32; error EPV00
+#	$retval_stringify = string__array_ref__typetest0(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', [23, -42.3]]);  # TPVAVRV33; error EPV01
+#	$retval_stringify = string__array_ref__typetest0(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']);  # TPVAVRV34
 #	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 
-#	$retval_stringify = typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, 33.876587658765875687658765, 1701.6789]);  # AVNV10
-#	$retval_stringify = typetest___number__array_ref__in___string__out([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, 'abcdefg', 33.876587658765875687658765, 1701.6789]);  # AVNV11; raise/throw exception
-#	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
-
-#	my $howdy_retval = typetest___number__array_ref__in___string__out([-444, 33.876587658765875687658765, 1701.6789]);  # AVNV12; confirm Perl stack is still functioning properly
-#	print "in array_test.pl $i/$i_MAX, have \$howdy_retval =\n$howdy_retval\n";
-
-#	$retval_number__array_ref = typetest___integer__in___number__array_ref__out(5);  # AVNV20
-#	print "in array_test.pl $i/$i_MAX, have \$retval_number__array_ref = \n" . Dumper($retval_number__array_ref) . "\n";
-
-#	$my_peeps = 'Lone Ranger';  # AVPV00; raise/throw exception
-#	$my_peeps = ['Superman'];  # AVPV01
-#	$my_peeps = ['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter'];  # AVPV02
-#	$my_peeps = ['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '23'];  # AVPV03
-#	$my_peeps = ['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', 23];  # AVPV04; raise/throw exception
-#	$my_peeps = ['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '-2112.23'];  # AVPV05
-#	$my_peeps = ['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', "-2112.23"];  # AVPV06
-#	$my_peeps = ['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', -2112.23];  # AVPV07; raise/throw exception
-#	$my_peeps = ['Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', {fuzz => 'bizz', bar => "stool!\n", bat => 24}];  # AVPV08; raise/throw exception
-#	print "in array_test.pl $i/$i_MAX, have \$my_peeps =\n" . RPerl::DUMPER($my_peeps);
-#	$retval_stringify = stringify_string__array_ref($my_peeps);	
-#	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
-
-#	$retval_stringify = typetest___string__array_ref__in___string__out($my_peeps);
-#	$retval_stringify = typetest___string__array_ref__in___string__out("Should be people, instead just a person!");  # break strict refs and then segfault, not test-worthy!  DEV NOTE: segfault likely due to not running SvROK() and SvTYPE() before SvRV() in CPPOPS_PERLTYPES
-#	$retval_stringify = typetest___string__array_ref__in___string__out(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']);  # AVPV10
-#	$retval_stringify = typetest___string__array_ref__in___string__out(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', 23]);  # AVPV11; raise/throw exception
-#	print "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
-
-	my $howdy_retval = typetest___string__array_ref__in___string__out(['Howard The Duck', 'Aquaman', 'Martian Manhunter']);  # AVPV12; confirm Perl stack is still functioning properly
-	print "in array_test.pl $i/$i_MAX, have \$howdy_retval =\n$howdy_retval\n";
+#	$retval_jeffys = string__array_ref__typetest1(5);  # TPVAVRV40
+#	print "in array_test.pl $i/$i_MAX, have \$retval_jeffys = \n" . Dumper($retval_jeffys) . "\n" or croak();
 
 croak('Done for now, croaking');
-	
-	$retval_jeffys = typetest___integer__in___string__array_ref__out(5);  # AVPV20
-	print "in array_test.pl $i/$i_MAX, have \$retval_jeffys =\n" . Dumper($retval_jeffys) . "\n";
 }
 
 #croak('Done for now, croaking');

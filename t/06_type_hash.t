@@ -4,7 +4,7 @@
 ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted control characters, sigils, and regexes
 use strict;
 use warnings;
-use version; our $VERSION = 0.003002;
+use version; our $VERSION = 0.003003;
 
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
@@ -19,7 +19,7 @@ CHECK {
         || croak('Error redirecting stderr, croaking');
 }
 
-use Test::More;    # tests => 130;
+use Test::More tests => 226;
 use Test::Exception;
 use Carp;
 
@@ -1059,4 +1059,3 @@ for my $i ( 0 .. 2 ) {
 }
 
 done_testing();
-
