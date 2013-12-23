@@ -1,5 +1,6 @@
 #!/usr/bin/perl
-print "\n\n[[[ OBJECT-ORIENTED TESTS DISABLED UNTIL C++ -> PERL NAMESPACE ISSUES ARE FIXED IN INLINE::CPP ]]]\n\n";
+
+use Test::More skip_all => "[[[ OBJECT-ORIENTED TESTS DISABLED UNTIL C++ -> PERL NAMESPACE ISSUES ARE FIXED IN INLINE::CPP ]]]";
 
 =disable
     lives_and(     # TIVALSOBU30
