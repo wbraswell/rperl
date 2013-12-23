@@ -1,29 +1,33 @@
-use strict; use warnings;
 package RPerl::Algorithm::Sort::Bubble_cpp;
-our $CPP_loaded = 0;
-our $CPP_linked = 0;
-our @ISA = ('RPerl::Class');
-use RPerl::Class;  use RPerl;
-
+use strict;
+use warnings;
+use Carp;
+use version; our $VERSION = 0.001_000;
+our $CPP_LOADED = 0;
+our $CPP_LINKED = 0;
+use parent ('RPerl::Class');
+use RPerl::Class;
+use RPerl;
 use RPerl::HelperFunctions_cpp;
 use RPerl::Algorithm::Sort_cpp;
 use RPerl::Algorithm::Inefficient_cpp;
 
 our void__method $cpp_load = sub {
-;	
-#	if (defined($RPerl::Algorithm::Sort::Bubble_cpp::CPP_loaded)) { print "in Bubble_cpp::cpp_load(), have \$RPerl::Algorithm::Sort::Bubble_cpp::CPP_loaded = '" . $RPerl::Algorithm::Sort::Bubble_cpp::CPP_loaded . "'\n"; }
-#		else { print "in Bubble_cpp::cpp_load(), have \$RPerl::Algorithm::Sort::Bubble_cpp::CPP_loaded = 'UNDEF'\n"; }
-	if (not(defined($RPerl::Algorithm::Sort::Bubble_cpp::CPP_loaded)) or not($RPerl::Algorithm::Sort::Bubble_cpp::CPP_loaded))
-	{
-		$RPerl::HelperFunctions_cpp::CPP_loaded = 1;  # HelperFunctions.cpp loaded by C++ #include in Bubble.h 
 
-		####use RPerl::Algorithm::Sort;
-		$RPerl::Algorithm::Sort_cpp::CPP_loaded = 1;  # Sort.cpp loaded by C++ #include in Bubble.h
+#	if (defined($RPerl::Algorithm::Sort::Bubble_cpp::CPP_LOADED)) { print "in Bubble_cpp::cpp_load(), have \$RPerl::Algorithm::Sort::Bubble_cpp::CPP_LOADED = '" . $RPerl::Algorithm::Sort::Bubble_cpp::CPP_LOADED . "'\n"; }
+#		else { print "in Bubble_cpp::cpp_load(), have \$RPerl::Algorithm::Sort::Bubble_cpp::CPP_LOADED = 'UNDEF'\n"; }
+    if (   not( defined $RPerl::Algorithm::Sort::Bubble_cpp::CPP_LOADED )
+        or not($RPerl::Algorithm::Sort::Bubble_cpp::CPP_LOADED) )
+    {
+        $RPerl::HelperFunctions_cpp::CPP_LOADED = 1; # HelperFunctions.cpp loaded by C++ #include in Bubble.h
 
-		####use RPerl::Algorithm::Inefficient;
-		$RPerl::Algorithm::Inefficient_cpp::CPP_loaded = 1;  # Inefficient.cpp loaded by C++ #include in Bubble.h
+        ####use RPerl::Algorithm::Sort;
+        $RPerl::Algorithm::Sort_cpp::CPP_LOADED = 1; # Sort.cpp loaded by C++ #include in Bubble.h
 
-		my $eval_string = <<"EOF";
+        ####use RPerl::Algorithm::Inefficient;
+        $RPerl::Algorithm::Inefficient_cpp::CPP_LOADED = 1; # Inefficient.cpp loaded by C++ #include in Bubble.h
+
+        my $eval_string = <<"EOF";
 package main;
 BEGIN { print "[[[ BEGIN 'use Inline' STAGE for 'RPerl/Algorithm/Sort/Bubble.cpp' ]]]\n"x3; }
 use Inline
@@ -50,28 +54,35 @@ print "[[[ END 'use Inline' STAGE for 'RPerl/Algorithm/Sort/Bubble.cpp' ]]]\n"x3
 1;
 EOF
 
-		print "in Bubble_cpp::cpp_load(), CPP not yet loaded, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
+        print
+            "in Bubble_cpp::cpp_load(), CPP not yet loaded, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n"
+            . $eval_string
+            . "<<< END EVAL STRING >>>\n"
+            or croak();
 
-		eval($eval_string);  ## no critic
-		die($@) if ($@);
-		
-		RPerl::HelperFunctions_cpp::cpp_link();
-		RPerl::Algorithm::Sort_cpp::cpp_link();
-		RPerl::Algorithm::Inefficient_cpp::cpp_link();
-		$RPerl::Algorithm::Sort::Bubble_cpp::CPP_loaded = 1;
-	}
+        eval($eval_string);
+        if ($@) {croak($@);}
+
+        RPerl::HelperFunctions_cpp::cpp_link();
+        RPerl::Algorithm::Sort_cpp::cpp_link();
+        RPerl::Algorithm::Inefficient_cpp::cpp_link();
+        $RPerl::Algorithm::Sort::Bubble_cpp::CPP_LOADED = 1;
+    }
+
 #	else { print "in Bubble_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"; }
 };
 
 our void__method $cpp_link = sub {
-;
-#	if (defined($RPerl::Algorithm::Sort::Bubble_cpp::CPP_linked)) { print "in Bubble_cpp::cpp_link(), have \$RPerl::Algorithm::Sort::Bubble_cpp::CPP_linked = '" . $RPerl::Algorithm::Sort::Bubble_cpp::CPP_linked . "'\n"; }
-#		else { print "in Bubble_cpp::cpp_link(), have \$RPerl::Algorithm::Sort::Bubble_cpp::CPP_linked = 'UNDEF'\n"; }
-	if (not(defined($RPerl::Algorithm::Sort::Bubble_cpp::CPP_linked)) or not($RPerl::Algorithm::Sort::Bubble_cpp::CPP_linked))
-	{
-		my $eval_string = <<'EOF';
+    ;
+
+#	if (defined($RPerl::Algorithm::Sort::Bubble_cpp::CPP_LINKED)) { print "in Bubble_cpp::cpp_link(), have \$RPerl::Algorithm::Sort::Bubble_cpp::CPP_LINKED = '" . $RPerl::Algorithm::Sort::Bubble_cpp::CPP_LINKED . "'\n"; }
+#		else { print "in Bubble_cpp::cpp_link(), have \$RPerl::Algorithm::Sort::Bubble_cpp::CPP_LINKED = 'UNDEF'\n"; }
+    if (   not( defined $RPerl::Algorithm::Sort::Bubble_cpp::CPP_LINKED )
+        or not($RPerl::Algorithm::Sort::Bubble_cpp::CPP_LINKED) )
+    {
+        my $eval_string = <<'EOF';
 package RPerl::Algorithm::Sort::Bubble_cpp;
-$CPP_linked = 1;
+$CPP_LINKED = 1;
 1;
 package RPerl::Algorithm::Sort::Bubble;
 # DEV NOTE, CORRELATION #01: multiple inheritance is enabled by _either_ Perl here or C++ at correlation in Bubble.h
@@ -79,14 +90,15 @@ package RPerl::Algorithm::Sort::Bubble;
 our @ISA = ('main::CPP__RPerl__Algorithm__Sort__Bubble', 'RPerl::Algorithm::Sort', 'RPerl::Algorithm::Inefficient');  # MULTIPLE INHERITANCE
 1;
 EOF
+
 #		print "in Bubble_cpp::cpp_link(), CPP not yet linked, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
 
-		eval($eval_string);  ## no critic
-		die($@) if ($@);
-	}
+        eval($eval_string);
+        if ($@) {croak($@);}
+    }
+
 #	else { print "in Bubble_cpp::cpp_link(), CPP already linked, DOING NOTHING\n"; }
 };
-
 
 =DEBUG
 use Data::Dumper;
@@ -101,7 +113,6 @@ foreach my $entry ( keys %main:: )
     else { print "in Bubble_cpp->cpp_link(), after use Inline(...), symtab entry '$entry' is SOMETHING ELSE\n"; }
 }
 =cut
-
 
 package RPerl::Algorithm::Sort::Bubble_cpp;
 1;

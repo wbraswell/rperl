@@ -1,7 +1,9 @@
 package RPerl::DataStructure::Array;
 use strict;
 use warnings;
-use version; our $VERSION = 0.003005;
+use version; our $VERSION = 0.003_006;
+use parent ('RPerl::DataStructure');
+use RPerl::DataStructure;
 use Carp;
 
 # [[[ SUB-TYPES BEFORE SETUP ]]]
@@ -10,9 +12,6 @@ use RPerl::DataStructure::Array::SubTypes;
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
-
-use parent ('RPerl::DataStructure');
-use RPerl::DataStructure;
 
 # for type-checking via SvIOKp(), SvNOKp(), and SvPOKp(); inside INIT to delay until after 'use MyConfig'
 INIT {
@@ -32,11 +31,8 @@ use RPerl::DataType::Number;
 use RPerl::DataType::Character;
 use RPerl::DataType::String;
 use RPerl::DataType::Scalar;
-
-#use RPerl::DataType::Reference;
 use RPerl::DataType::Unknown;
-
-#use RPerl::DataStructure::Hash;
+use RPerl::DataStructure::Hash;
 
 # [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 # [[[ OPERATIONS & DATA TYPES REPORTING ]]]

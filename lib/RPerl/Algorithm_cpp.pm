@@ -1,7 +1,7 @@
 use strict; use warnings;
 package RPerl::Algorithm_cpp;
-our $CPP_loaded = 0;
-our $CPP_linked = 0;
+our $CPP_LOADED = 0;
+our $CPP_LINKED = 0;
 our @ISA = ('RPerl::Class');
 use RPerl::Class;  use RPerl;
 
@@ -9,11 +9,11 @@ use RPerl::HelperFunctions_cpp;
 
 our void__method $cpp_load = sub {
 ;	
-	if (defined($RPerl::Algorithm_cpp::CPP_loaded)) { print "in Algorithm_cpp::cpp_load(), have \$RPerl::Algorithm_cpp::CPP_loaded = '" . $RPerl::Algorithm_cpp::CPP_loaded . "'\n"; }
-		else { print "in Algorithm_cpp::cpp_load(), have \$RPerl::Algorithm_cpp::CPP_loaded = 'UNDEF'\n"; }
-	if (not(defined($RPerl::Algorithm_cpp::CPP_loaded)) or not($RPerl::Algorithm_cpp::CPP_loaded))
+	if (defined($RPerl::Algorithm_cpp::CPP_LOADED)) { print "in Algorithm_cpp::cpp_load(), have \$RPerl::Algorithm_cpp::CPP_LOADED = '" . $RPerl::Algorithm_cpp::CPP_LOADED . "'\n"; }
+		else { print "in Algorithm_cpp::cpp_load(), have \$RPerl::Algorithm_cpp::CPP_LOADED = 'UNDEF'\n"; }
+	if (not(defined($RPerl::Algorithm_cpp::CPP_LOADED)) or not($RPerl::Algorithm_cpp::CPP_LOADED))
 	{
-		$RPerl::HelperFunctions_cpp::CPP_loaded = 1;  # HelperFunctions.cpp loaded by C++ #include in Algorithm.h 
+		$RPerl::HelperFunctions_cpp::CPP_LOADED = 1;  # HelperFunctions.cpp loaded by C++ #include in Algorithm.h 
 		
 		my $eval_string = <<'EOF';
 package main;
@@ -47,20 +47,20 @@ EOF
 		die($@) if ($@);
 		
 		RPerl::HelperFunctions_cpp::cpp_link();
-		$RPerl::Algorithm_cpp::CPP_loaded = 1;
+		$RPerl::Algorithm_cpp::CPP_LOADED = 1;
 	}
 	else { print "in Algorithm_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"; }
 };
 
 our void__method $cpp_link = sub {
 ;
-#	if (defined($RPerl::Algorithm_cpp::CPP_linked)) { print "in Algorithm_cpp::cpp_link(), have \$RPerl::Algorithm_cpp::CPP_linked = '" . $RPerl::Algorithm_cpp::CPP_linked . "'\n"; }
-#		else { print "in Algorithm_cpp::cpp_link(), have \$RPerl::Algorithm_cpp::CPP_linked = 'UNDEF'\n"; }
-	if (not(defined($RPerl::Algorithm_cpp::CPP_linked)) or not($RPerl::Algorithm_cpp::CPP_linked))
+#	if (defined($RPerl::Algorithm_cpp::CPP_LINKED)) { print "in Algorithm_cpp::cpp_link(), have \$RPerl::Algorithm_cpp::CPP_LINKED = '" . $RPerl::Algorithm_cpp::CPP_LINKED . "'\n"; }
+#		else { print "in Algorithm_cpp::cpp_link(), have \$RPerl::Algorithm_cpp::CPP_LINKED = 'UNDEF'\n"; }
+	if (not(defined($RPerl::Algorithm_cpp::CPP_LINKED)) or not($RPerl::Algorithm_cpp::CPP_LINKED))
 	{
 		my $eval_string = <<'EOF';
 package RPerl::Algorithm_cpp;
-$CPP_linked = 1;
+$CPP_LINKED = 1;
 1;
 package RPerl::Algorithm;
 our @ISA = ('main::CPP__RPerl__Algorithm', 'RPerl::Class');

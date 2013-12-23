@@ -2,7 +2,7 @@
 ## no critic qw(ProhibitMagicNumbers ProhibitUnreachableCode)  ## RPERL allow numeric test values, allow unreachable test code
 use strict;
 use warnings;
-use version; our $VERSION = 0.003002;
+use version; our $VERSION = 0.003_002;
 use Carp;
 
 # [[[ SETUP ]]]
@@ -135,6 +135,3 @@ croak('Done for now, croaking');
 }
 
 #croak('Done for now, croaking');
-
-
-

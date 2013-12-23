@@ -42,13 +42,13 @@ package types;
 #our void $types_input_enable = sub { (my $types_input) = @_;  # NEED FIX: RPerl typed functions not working in types.pm, must call as normal Perl function
 sub types_enable { (my $types_input) = @_;
 ;
-	print "in types::types_enable(), received \$types_input = '$types_input'\n";
+#	print "in types::types_enable(), received \$types_input = '$types_input'\n";
 	
 	my string $types_h_filename = $RPerl::INCLUDE_PATH . '/types_mode.h';
 #	my bool $types_h_modified = 0;
 	my integer $types_h_modified = 0;
 	
-	print "in types::types_enable(), have \$types_h_filename = '$types_h_filename'\n";
+#	print "in types::types_enable(), have \$types_h_filename = '$types_h_filename'\n";
 	
 	open(my $TYPES_H_FILEHANDLE_IN,'<', $types_h_filename) or die("Can't read types_mode.h input file: $!, dying");
 	open(my $TYPES_H_FILEHANDLE_OUT,'>', ($types_h_filename . '.swap')) or die("Can't write types_mode.h.swap output file: $!, dying");
@@ -57,28 +57,28 @@ sub types_enable { (my $types_input) = @_;
 	{
 		my string $types_current;
 	
-		print "in types::types_enable(), have \$line_current =\n$line_current";
+#		print "in types::types_enable(), have \$line_current =\n$line_current";
 		if ($line_current =~ /\#\s*define\s+\_\_(\w+)\_\_TYPES/)
 		{
 			$types_current = $1;
-			print "in types::types_enable(), FOUND $types_current TYPES DEFINITION\n";
+#			print "in types::types_enable(), FOUND $types_current TYPES DEFINITION\n";
 			
 			if ($line_current =~ /^\s*\/\//)
 			{
-				print "in types::types_enable(), FOUND $types_current TYPES DISABLED\n";
+#				print "in types::types_enable(), FOUND $types_current TYPES DISABLED\n";
 				if ($types_current eq $types_input)
 				{
-					print "in types::types_enable(), ENABLE $types_current TYPES\n";
+#					print "in types::types_enable(), ENABLE $types_current TYPES\n";
 					$line_current =~ s/\/\///;  # remove first occurence of // comment
 					$types_h_modified = 1;
 				}
 			}
 			elsif ($line_current =~ /^\s*\#\s*define/)
 			{
-				print "in types::types_enable(), FOUND $types_current TYPES ENABLED\n";
+#				print "in types::types_enable(), FOUND $types_current TYPES ENABLED\n";
 				if ($types_current ne $types_input)
 				{
-					print "in types::types_enable(), DISABLE $types_current TYPES\n";
+#					print "in types::types_enable(), DISABLE $types_current TYPES\n";
 					$line_current = '//' . $line_current;
 					$types_h_modified = 1;
 				}
@@ -89,7 +89,7 @@ sub types_enable { (my $types_input) = @_;
 				die('Found invalid __$types_current__TYPES definition in types_mode.h, neither properly disabled nor enabled, dying');
 			}
 		}
-		print $TYPES_H_FILEHANDLE_OUT $line_current;
+		print $TYPES_H_FILEHANDLE_OUT $line_current;  # WRITE DATA BACK TO FILE
 	}
 
 	close($TYPES_H_FILEHANDLE_OUT);

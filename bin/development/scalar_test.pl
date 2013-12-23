@@ -13,7 +13,7 @@ use Carp;
 
 # [[[ SETUP ]]]
 
-# RPERL DRTIVER BOILERPLATE
+# RPERL DRIVER BOILERPLATE
 BEGIN { package main; our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib'; } # NEED REMOVE hard-coded path
 BEGIN { use lib $main::RPERL_INCLUDE_PATH . '/CPAN/'; use MyConfig; } # RPerl's MyConfig.pm
 BEGIN { use lib $main::RPERL_INCLUDE_PATH; use RPerl; use parent ('RPerl'); $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH; }    # RPerl system files

@@ -4,7 +4,7 @@
 ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted control characters, sigils, and regexes
 use strict;
 use warnings;
-use version; our $VERSION = 0.003003;
+use version; our $VERSION = 0.003_003;
 
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]

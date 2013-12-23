@@ -4,8 +4,8 @@ use warnings;
 use version; our $VERSION = qv('0.1.1');
 use Carp;
 
-our $CPP_loaded = 0;
-our $CPP_linked = 0;
+our $CPP_LOADED = 0;
+our $CPP_LINKED = 0;
 #our @ISA = ('RPerl::Class');  # DEV NOTE: need to use HelperFunctions in RPerl::DataStructure::Array for type checking SvIOKp() etc; remove dependency on RPerl void__method type so HelperFunctions can be loaded by RPerl type system
 #use RPerl::Class;  use RPerl;  # DEV NOTE: remove dependency on RPerl
 
@@ -13,9 +13,9 @@ our $CPP_linked = 0;
 sub cpp_load {
 ;	
 #    croak("in HelperFunctions_cpp::cpp_load(), croaking");
-	if (defined($RPerl::HelperFunctions_cpp::CPP_loaded)) { print "in HelperFunctions_cpp::cpp_load(), have \$RPerl::HelperFunctions_cpp::CPP_loaded = '" . $RPerl::HelperFunctions_cpp::CPP_loaded . "'\n"; }
-		else { print "in HelperFunctions_cpp::cpp_load(), have \$RPerl::HelperFunctions_cpp::CPP_loaded = 'UNDEF'\n"; }
-	if (not(defined($RPerl::HelperFunctions_cpp::CPP_loaded)) or not($RPerl::HelperFunctions_cpp::CPP_loaded))
+	if (defined($RPerl::HelperFunctions_cpp::CPP_LOADED)) { print "in HelperFunctions_cpp::cpp_load(), have \$RPerl::HelperFunctions_cpp::CPP_LOADED = '" . $RPerl::HelperFunctions_cpp::CPP_LOADED . "'\n"; }
+		else { print "in HelperFunctions_cpp::cpp_load(), have \$RPerl::HelperFunctions_cpp::CPP_LOADED = 'UNDEF'\n"; }
+	if (not(defined($RPerl::HelperFunctions_cpp::CPP_LOADED)) or not($RPerl::HelperFunctions_cpp::CPP_LOADED))
 	{
 		my $eval_string = <<"EOF";
 package main;
@@ -48,7 +48,7 @@ EOF
 		eval($eval_string);  ## no critic
 		croak($@) if ($@);
 		
-		$RPerl::HelperFunctions_cpp::CPP_loaded = 1;
+		$RPerl::HelperFunctions_cpp::CPP_LOADED = 1;
 	}
 	else { print "in HelperFunctions_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"; }
 #};
@@ -57,13 +57,13 @@ EOF
 #our void__method $cpp_link = sub {  # DEV NOTE: remove dependency on RPerl
 sub cpp_link {
 ;
-#	if (defined($RPerl::HelperFunctions_cpp::CPP_linked)) { print "in HelperFunctions_cpp::cpp_link(), have \$RPerl::HelperFunctions_cpp::CPP_linked = '" . $RPerl::HelperFunctions_cpp::CPP_linked . "'\n"; }
-#		else { print "in HelperFunctions_cpp::cpp_link(), have \$RPerl::HelperFunctions_cpp::CPP_linked = 'UNDEF'\n"; }
-	if (not(defined($RPerl::HelperFunctions_cpp::CPP_linked)) or not($RPerl::HelperFunctions_cpp::CPP_linked))
+#	if (defined($RPerl::HelperFunctions_cpp::CPP_LINKED)) { print "in HelperFunctions_cpp::cpp_link(), have \$RPerl::HelperFunctions_cpp::CPP_LINKED = '" . $RPerl::HelperFunctions_cpp::CPP_LINKED . "'\n"; }
+#		else { print "in HelperFunctions_cpp::cpp_link(), have \$RPerl::HelperFunctions_cpp::CPP_LINKED = 'UNDEF'\n"; }
+	if (not(defined($RPerl::HelperFunctions_cpp::CPP_LINKED)) or not($RPerl::HelperFunctions_cpp::CPP_LINKED))
 	{
 		my $eval_string = <<'EOF';
 package RPerl::HelperFunctions_cpp;
-$CPP_linked = 1;
+$CPP_LINKED = 1;
 1;
 package RPerl::HelperFunctions;
 our @ISA = ('RPerl');  # HelperFunctions is not a class, so @ISA does not contain 'main::CPP__HelperFunctions' or 'RPerl::Class';  HelperFunctions_cpp is a class because it needs typed methods

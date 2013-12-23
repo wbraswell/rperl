@@ -1,7 +1,10 @@
 package RPerl;
-use strict;  use warnings;
-our @ISA = ('RPerl::Class');
+use strict;
+use warnings;
+use version; our $VERSION = 0.003_002;
+use parent ('RPerl::Class');
 use RPerl::Class;
+use Carp;
 
 # IMPORTANT SYSTEM-DEPENDENT CONFIGURATION VARIABLE!  drivers must set this to the path to RPerl
 our $INCLUDE_PATH = '/FAILURE/BECAUSE/RPERL/INCLUDE/PATH/NOT/YET/SET';
@@ -12,11 +15,11 @@ our $INCLUDE_PATH = '/FAILURE/BECAUSE/RPERL/INCLUDE/PATH/NOT/YET/SET';
 #use types;  # circular dependency causes "subroutine DUMPER redefined" error, solved by replacing use with require below
 require types;
 
-
 # <<<=== PSEUDO-EXPORTED VARIABLES AND FUNCTIONS ===>>>
 
 our $DEBUG = 1;
 
+=disable
 # TODO: replace Data::Dumper with pure-RPerl equivalent?
 use Data::Dumper;
 sub DUMPER
@@ -26,7 +29,7 @@ sub DUMPER
 	return $_[0]->DUMPER() if (defined(eval('$' . ref($_[0]) . '::DUMPER')));  ## no critic
 	return Dumper(@_);
 }
-
+=cut
 
 # <<<=== INCREASE RUNTIME PERFORMANCE ===>>>
 

@@ -4,7 +4,9 @@
 package RPerl::DataType::String;
 use strict;
 use warnings;
-use version; our $VERSION = 0.003002;
+use version; our $VERSION = 0.003_003;
+use parent ('RPerl::DataType');
+use RPerl::DataType;
 use Carp;
 
 # [[[ SUB-TYPES BEFORE SETUP ]]]

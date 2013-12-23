@@ -9,5 +9,7 @@ system("$main::RPERL_TESTS_PATH/03*");  print "\n\n";
 system("$main::RPERL_TESTS_PATH/04*");  print "\n\n";
 system("$main::RPERL_TESTS_PATH/05*");  print "\n\n";
 system("$main::RPERL_TESTS_PATH/06*");  print "\n\n";
-exit();
 system("$main::RPERL_TESTS_PATH/07*");  print "\n\n";
+system("$main::RPERL_TESTS_PATH/08*");  print "\n\n";
+exit();
+

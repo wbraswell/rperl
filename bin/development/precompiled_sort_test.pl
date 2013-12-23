@@ -1,31 +1,59 @@
 #!/usr/bin/perl
-use strict;  use warnings;
+## no critic qw(ProhibitMagicNumbers ProhibitUnreachableCode)  ## RPERL allow numeric test values, allow unreachable test code
+use strict;
+use warnings;
+use version; our $VERSION = 0.003_012;
+use Carp;
+
+# [[[ SETUP ]]]
 
 # RPERL DRIVER BOILERPLATE
-BEGIN { package main;  our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib'; } # NEED REMOVE hard-coded path
-#BEGIN { package main;  our $RPERL_INCLUDE_PATH = '../lib'; } # NEED REMOVE hard-coded path
-use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';  use MyConfig;  # RPerl's MyConfig.pm 
-use lib $main::RPERL_INCLUDE_PATH;  use RPerl;  our @ISA = ('RPerl');  $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;  # RPerl system files
-use Data::Dumper;  our $AUTOLOAD;  sub AUTOLOAD { die("AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n" . Dumper(\@_) . ", dying"); }
+BEGIN { package main;  our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib'; }  # NEED REMOVE hard-coded path
+BEGIN { use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';  use MyConfig; }  # RPerl's MyConfig.pm 
+BEGIN { use lib $main::RPERL_INCLUDE_PATH;  use RPerl;  use parent ('RPerl');  $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH; }  # RPerl system files
+BEGIN { use Data::Dumper;  our $AUTOLOAD;  sub AUTOLOAD { croak("AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n" . Dumper(\@_) . ', croaking'); } }  ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  ## RPERL SYSTEM allow autoload  ## RPERL SYSTEM allow read-only @_
 
+# for benchmarking
 use Time::HiRes qw(time);
 
-# supported algorithms
-use RPerl::Algorithm::Sort::Bubble;  # choose ONE of this
-#use RPerl::Algorithm::Sort::Bubble_cpp;  RPerl::Algorithm::Sort::Bubble_cpp::cpp_load();  RPerl::Algorithm::Sort::Bubble_cpp::cpp_link(); # OR this
+# UNCOMMENT TO ENABLE PERL TYPES FOR C++ OPS
+types::types_enable('PERL');
+
+# UNCOMMENT TO ENABLE C++ TYPES FOR C++ OPS
+#types::types_enable('CPP');
+
+# TOGGLE COMMENT TO ENABLE C++ OPS
+#use RPerl::Algorithm::Sort::Bubble;  # choose ONE of this
+use RPerl::Algorithm::Sort::Bubble_cpp;  RPerl::Algorithm::Sort::Bubble_cpp::cpp_load();  RPerl::Algorithm::Sort::Bubble_cpp::cpp_link(); # OR this
 
 # NEED FIX: these Perl packages use RPerl::Algorithm::Sort, which creates a conflict when Bubble_cpp has already loaded Sort.cpp
 #use RPerl::Algorithm::Sort::Quick;
 #use RPerl::Algorithm::Sort::Merge;
+
+print q{in precompiled_sort_test.pl, have integer__ops() = '} . integer__ops() . "'\n" or croak();
+print q{in precompiled_sort_test.pl, have integer__types() = '} . integer__types() . "'\n" or croak();
+print q{in precompiled_sort_test.pl, have number__ops() = '} . number__ops() . "'\n" or croak();
+print q{in precompiled_sort_test.pl, have number__types() = '} . number__types() . "'\n" or croak();
+print q{in precompiled_sort_test.pl, have string__ops() = '} . string__ops() . "'\n" or croak();
+print q{in precompiled_sort_test.pl, have string__types() = '} . string__types() . "'\n" or croak();
+print q{in precompiled_sort_test.pl, have array__ops() = '} . array__ops() . "'\n" or croak();
+print q{in precompiled_sort_test.pl, have array__types() = '} . array__types() . "'\n" or croak();
+print q{in precompiled_sort_test.pl, have hash__ops() = '} . hash__ops() . "'\n" or croak();
+print q{in precompiled_sort_test.pl, have hash__types() = '} . hash__types() . "'\n" or croak();
+print q{in precompiled_sort_test.pl, have bubblesort__ops() = '} . bubblesort__ops() . "'\n" or croak();
+print q{in precompiled_sort_test.pl, have bubblesort__types() = '} . bubblesort__types() . "'\n" or croak();
 
 # <<<=== SORT 1 ===>>>
 # <<<=== SORT 1 ===>>>
 # <<<=== SORT 1 ===>>>
 
 my string $algorithm;
+my const_integer $integer__data_size = 8;
 my string $variant = undef;
 my object $sorter;
-my number__array_ref $data;
+my integer__array_ref $integer__data;
+my number__array_ref $number__data;
+my string $string_retval;
 
 # NEED CHOOSE: which general algorithm?
 $algorithm = 'RPerl::Algorithm::Sort::Bubble';  # Bubble_cpp's class name is Bubble, so use this one
@@ -38,65 +66,60 @@ $algorithm = 'RPerl::Algorithm::Sort::Bubble';  # Bubble_cpp's class name is Bub
 #$variant = 'topdown';	# MERGESORT
 #$variant = 'bottomup';	# MERGESORT
 
-for (my $i = 0; $i < 1;  $i++)
-{
+# loop to test for memory leaks
+my const_integer $i_MAX = 0;
+for my integer $i ( 0 .. $i_MAX ) {
+	print "in precompiled_sort_test.pl, top of for() loop $i/$i_MAX\n" or croak();
+
+=disable_sort
 	$sorter = $algorithm->new();
-	$sorter->set_variant($variant) if (defined($variant));
-	print "in multi_sort.pl, have \$i = $i and pre-data \$sorter =\n" . RPerl::DUMPER($sorter) . "\n" if $RPerl::DEBUG;
-	
-	print "[[[ BEGIN INHERITANCE TESTING ]]]\n"x3;
-	$sorter->inherited__Algorithm("Frozen");  # RPerl yes, C++ yes
-	$sorter->inherited__Inefficient("Frozen");  # RPerl yes, C++ yes
-	$sorter->inherited__Sort("Frozen");  # RPerl yes, C++ yes
-	$sorter->inherited__Bubble("Frozen");  # RPerl yes, C++ yes
-	print "\n";
-#	RPerl::Algorithm::Sort::inherited($sorter, "Jean Gray");  # RPerl yes, C++ no
-#	RPerl::Algorithm::Sort->inherited("Scott Summers");  # RPerl yes, C++ no
-	$sorter->inherited("Logan");  # RPerl yes, C++ yes
-#	inherited("MANORBEAST?", "Dr. Hank McCoy");  # RPerl no, C++ no; inherited method should only work as method!
-	print "\n";
-	uninherited__Algorithm("Claws");  # RPerl yes, C++ yes
-	uninherited__Inefficient("Claws");  # RPerl yes, C++ yes
-	uninherited__Sort("Claws");  # RPerl yes, C++ yes
-	uninherited__Bubble("Claws");  # RPerl yes, C++ yes
-	print "\n";
-	uninherited("Wolverine");  # RPerl yes, C++ yes
-#	RPerl::Algorithm::Sort::uninherited("Phoenix");  # RPerl yes, C++ no; bypass RPerl POST-INIT symbol table entries that put non-method uninherited() in main::, use AUTOLOAD
-	main::uninherited("Wolvie");  # RPerl yes, C++ yes
-	::uninherited("wlverine");  # RPerl yes, C++ yes
-	print "[[[ END INHERITANCE TESTING ]]]\n"x3;
-	
-#	print "[[[ BEGIN TYPE TESTING ]]]\n"x3;
-#	uninherited__string_array_in(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']);
-#	uninherited__string_array_in();
-#	print "[[[ END TYPE TESTING ]]]\n"x3;
-	
-	# NEED CHOOSE: which data structure?
-#	$data = [21, 12, 31, 13, 42, 2012, 5555, 1.21, 33.3, 9999, -15, 0];
-#	$data = scalar_linkedlist_ref->new_from_array_ref([21, 12, 31, 13, 42, 2012, 5555, 1.21, 33.3, 9999, -15, 0]);
-	$data = [reverse(0 ... 500)];
-	$sorter->set_data($data);
+	if (defined $variant) { $sorter->set_variant($variant); }
+	print "in precompiled_sort_test.pl, have \$i = $i and pre-data \$sorter =\n" . Dumper($sorter) . "\n" or croak();
 
-	print "in multi_sort.pl, have \$i = $i and unsorted \$data =\n" . RPerl::DUMPER($data) . "\n" if $RPerl::DEBUG;
-	print "in multi_sort.pl, have \$i = $i and \$sorter =\n" . RPerl::DUMPER($sorter) . "\n" if $RPerl::DEBUG;
-#	print "in multi_sort.pl, have \$i = $i and unsorted \$sorter->get_data() =\n" . RPerl::DUMPER($sorter->get_data()) . "\n" if $RPerl::DEBUG;
+	# PRIMARY SORT TESTS
+	$integer__data = [reverse 0 .. 7];  # TIVALSOBU20
+#	$integer__data = [reverse 0 .. ($integer__data_size - 1)];
+#	$number__data = [21, 12, 31, 13, 42, 2012, 5555, 1.21, 33.3, 9999, -15, 0];
+#	$integer__data = scalar_linkedlist_ref->new_from_array_ref([21, 12, 31, 13, 42, 2012, 5555, 1.21, 33.3, 9999, -15, 0]);
 
-	my $start_time = time();
-	$sorter->sort();  # OO interface; does not include C++ packing/unpacking, that is done in accessor/mutator calls
-#	DEV NOTE: for procedural interface, must set $data to retval because C++ packing/unpacking does not change contents of original $data SV*;
-#	bubblesort($data);  # procedural interface, Perl only
-#	$data = bubblesort($data);  # procedural interface, Perl & C++; includes C++ packing/unpacking in this 1 line
-	my $end_time = time();
+	$sorter->set_integer__data($integer__data);
+
+	print "in precompiled_sort_test.pl, have \$i = $i and unsorted \$integer__data =\n" . Dumper($integer__data) . "\n" or croak();
+	print "in precompiled_sort_test.pl, have \$i = $i and \$sorter =\n" . Dumper($sorter) . "\n" or croak();
+#	print "in precompiled_sort_test.pl, have \$i = $i and unsorted \$sorter->get_integer__data() =\n" . Dumper($sorter->get_integer__data()) . "\n" or croak();
+
+	my $start_time = time;
+	$sorter->integer__sort();  # OO interface; CPPOPS_CPPTYPS packing/unpacking not here, in accessor/mutator calls instead
+#	DEV NOTE: for procedural interface CPPOPS_CPPTYPES, must set $integer__data to retval because C++ packing/unpacking does not change contents of original $integer__data SV*, so not exactly "in-place";
+#   DEV NOTE: for procedural interface CPPOPS_PERLTYPES, must set any variable to retval to avoid weird Perl stack issues
+#	bubblesort($integer__data);  # procedural interface, PERLOPS_PERLTYPES only
+#	$integer__data = bubblesort($integer__data);  # procedural interface, ANYOPS_ANYTYPES works; CPPOPS_CPPTYPES packing/unpacking here
+	my $end_time = time;
 	my $run_time = $end_time - $start_time;
 
-#	print "in multi_sort.pl, have \$i = $i and sorted \$data =\n" . RPerl::DUMPER($data) . "\n" if $RPerl::DEBUG;
-	print "in multi_sort.pl, have \$i = $i and sorted \$sorter->get_data() =\n" . RPerl::DUMPER($sorter->get_data()) . "\n" if $RPerl::DEBUG;
-	print "in multi_sort.pl, have \$i = $i and \$run_time = $run_time\n";
+#	print "in precompiled_sort_test.pl, have \$i = $i and sorted \$integer__data =\n" . Dumper($integer__data) . "\n" or croak();
+	print "in precompiled_sort_test.pl, have \$i = $i and sorted \$sorter->get_integer__data() =\n" . Dumper($sorter->get_integer__data()) . "\n" or croak();
+	print "in precompiled_sort_test.pl, have \$i = $i and \$run_time = $run_time\n" or croak();
+=cut
+
+	# ADDITIONAL NON-SORT TESTS
+	$integer__data = [reverse 0 .. 7];
+	$string_retval = integer__bubblesort__typetest0($integer__data);  # TIVALSOBU30
+#	$string_retval = integer__bubblesort__typetest0([reverse 0 .. 7]);  # TIVALSOBU30
+	print "in precompiled_sort_test.pl, received return value from integer__bubblesort__typetest0([reverse 0 .. 7]) =\n" . $string_retval . "\n" or croak();
+#	print "in precompiled_sort_test.pl, received return value from integer__bubblesort__typetest0([reverse 0 .. 7]) =\n" . integer__bubblesort__typetest0([reverse 0 .. 7]) . "\n" or croak();
 }
-exit;
+
+croak('Done for now, croaking');
 
 
 
+
+
+
+
+
+=disable
 # <<<=== SORT 2 ===>>>
 # <<<=== SORT 2 ===>>>
 # <<<=== SORT 2 ===>>>
@@ -116,28 +139,29 @@ my object $sorter2 = RPerl::Algorithm::Sort::Bubble->new();
 $sorter2->{data} = [5, 4, 3, 2, 1, 0];
 #$sorter2->{data} = scalar_linkedlist_ref->new_from_array_ref([5, 4, 3, 2, 1, 0]);
 
-print "in multi_sort.pl, have unsorted \$sorter2->{data} =\n" . RPerl::DUMPER($sorter2->{data}) . "\n" if $RPerl::DEBUG;
+print "in precompiled_sort_test.pl, have unsorted \$sorter2->{data} =\n" . Dumper($sorter2->{data}) . "\n" or croak();
 $sorter2->sort_method();
-print "in multi_sort.pl, have sorted \$sorter2->{data} =\n" . RPerl::DUMPER($sorter2->{data}) . "\n" if $RPerl::DEBUG;
+print "in precompiled_sort_test.pl, have sorted \$sorter2->{data} =\n" . Dumper($sorter2->{data}) . "\n" or croak();
 
 # <<<=== SORT 3 ===>>>
 # <<<=== SORT 3 ===>>>
 # <<<=== SORT 3 ===>>>
 
 # NEED CHOOSE: which data structure?
-my number__array_ref $data2 = [12, 11, 10, 9, 8, 7, 6];
-#my scalar_linkedlist_ref $data2 = scalar_linkedlist_ref->new_from_array_ref([12, 11, 10, 9, 8, 7, 6]);
-print "in multi_sort.pl, have unsorted \$data2 =\n" . RPerl::DUMPER($data2) . "\n" if $RPerl::DEBUG;
+my number__array_ref $integer__data2 = [12, 11, 10, 9, 8, 7, 6];
+#my scalar_linkedlist_ref $integer__data2 = scalar_linkedlist_ref->new_from_array_ref([12, 11, 10, 9, 8, 7, 6]);
+print "in precompiled_sort_test.pl, have unsorted \$integer__data2 =\n" . Dumper($integer__data2) . "\n" or croak();
 
 # NEED CHOOSE: which specific variant algorithm?
-my $data2_sorted = RPerl::Algorithm::Sort::Bubble::bubblesort($data2);
-#my $data2_sorted = RPerl::Algorithm::Sort::Quick::quicksort($data2);
-#my $data2_sorted = RPerl::Algorithm::Sort::Quick::quicksort_inplace($data2);
-#my $data2_sorted = RPerl::Algorithm::Sort::Merge::mergesort_array_topdown($data2);
-#my $data2_sorted = RPerl::Algorithm::Sort::Merge::mergesort_array_bottomup($data2);
-#my $data2_sorted = RPerl::Algorithm::Sort::Merge::mergesort_linkedlist_topdown($data2->{head});
+my $integer__data2_sorted = RPerl::Algorithm::Sort::Bubble::bubblesort($integer__data2);
+#my $integer__data2_sorted = RPerl::Algorithm::Sort::Quick::quicksort($integer__data2);
+#my $integer__data2_sorted = RPerl::Algorithm::Sort::Quick::quicksort_inplace($integer__data2);
+#my $integer__data2_sorted = RPerl::Algorithm::Sort::Merge::mergesort_array_topdown($integer__data2);
+#my $integer__data2_sorted = RPerl::Algorithm::Sort::Merge::mergesort_array_bottomup($integer__data2);
+#my $integer__data2_sorted = RPerl::Algorithm::Sort::Merge::mergesort_linkedlist_topdown($integer__data2->{head});
 
-print "in multi_sort.pl, have sorted \$data2_sorted =\n" . RPerl::DUMPER($data2_sorted) . "\n" if $RPerl::DEBUG;
+print "in precompiled_sort_test.pl, have sorted \$integer__data2_sorted =\n" . Dumper($integer__data2_sorted) . "\n" or croak();
 
 # re-print SORT 1 data to make sure nothing weird with RPerl has caused it to change during SORT 2 and SORT 3
-print "in multi_sort.pl, STILL have sorted \$sorter->{data} =\n" . RPerl::DUMPER($sorter->{data}) . "\n" if $RPerl::DEBUG;
+print "in precompiled_sort_test.pl, STILL have sorted \$sorter->{data} =\n" . Dumper($sorter->{data}) . "\n" or croak();
+=cut

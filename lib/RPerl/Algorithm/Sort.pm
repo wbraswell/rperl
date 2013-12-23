@@ -1,7 +1,7 @@
 use strict;  use warnings;
 package RPerl::Algorithm::Sort;
 
-our @ISA = ('RPerl::Algorithm');
+use parent ('RPerl::Algorithm');
 use RPerl::Algorithm;
 
 # [[[ INHERITANCE TESTING ]]]

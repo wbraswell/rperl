@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.0.2');
+use version; our $VERSION = 0.000_003;
 use Carp;
 
 # RPERL DRIVER BOILERPLATE

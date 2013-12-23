@@ -1,7 +1,5 @@
-// VERSION 0.2.1
-
 #ifndef __CPP__INCLUDED__RPerl__HelperFunctions_cpp
-#define __CPP__INCLUDED__RPerl__HelperFunctions_cpp 1
+#define __CPP__INCLUDED__RPerl__HelperFunctions_cpp 0.003_000
 
 #include <RPerl/HelperFunctions.h>  // -> NULL
 
@@ -12,7 +10,15 @@ int RPerl_SvPOKp(SV* input_sv) { return(SvPOKp(input_sv)); }
 int RPerl_SvAROKp(SV* input_av_ref) { return(SvAROKp(input_av_ref)); }
 int RPerl_SvHROKp(SV* input_hv_ref) { return(SvHROKp(input_hv_ref)); }
 
-void RPerl_object_property_init(SV* initee) { dSP; XPUSHs(initee); PUTBACK; call_pv("Dumper", G_SCALAR); }  // NEED ANSWER: what in the hades does this property init function even do?  why do we need it???
+// NEED ANSWER: what in the hades does this property init function even do?  why do we need it???
+void RPerl_object_property_init(SV* initee)
+{
+	dSP;
+	PUSHMARK(SP);
+	XPUSHs(initee);
+	PUTBACK;
+	call_pv("Dumper", G_SCALAR);
+}
 
 char* RPerl_DUMPER__perl_from_c(SV* dumpee)
 {
