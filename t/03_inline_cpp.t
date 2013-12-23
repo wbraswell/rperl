@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.1.0');
+use version; our $VERSION = -0.001_000;
 
-use Test::More tests => 20;
+use Test::More; # tests => 20;
 use Test::Exception;
 use Carp;
 use English qw(-no_match_vars);
@@ -24,13 +24,7 @@ BEGIN {
     );
 }    # NEED REMOVE hard-coded path
 
-BEGIN {
-    lives_ok(
-        sub { use lib $main::RPERL_INCLUDE_PATH . '/CPAN/'; },
-        q{use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
-    );
-    lives_and( sub { use_ok('MyConfig'); }, q{use_ok('MyConfig') lives} );
-}    # RPerl's MyConfig.pm
+######BEGIN { lives_ok( sub { use lib $main::RPERL_INCLUDE_PATH . '/CPAN/'; }, q{use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils ); lives_and( sub { use_ok('MyConfig'); }, q{use_ok('MyConfig') lives} ); }    # RPerl's MyConfig.pm
 
 diag("\n[[[ Beginning Entirety Of Tests From The Inline::CPP POD ]]]\n ");
 
@@ -442,4 +436,4 @@ lives_and( # can't use throws_ok() because we are trapping the exception inside 
     q{Inline::CPP, call multiadd(1, 2, 3, 4) lives}
 );
 
-#done_testing();
+done_testing();

@@ -5,7 +5,7 @@
 ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted control characters, sigils, and regexes
 use strict;
 use warnings;
-use version; our $VERSION = 0.003002;
+use version; our $VERSION = -0.003_002;
 
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
@@ -20,7 +20,7 @@ CHECK {
         || croak('Error redirecting stderr, croaking');
 }
 
-use Test::More tests => 277;
+use Test::More; # tests => 277;
 use Test::Exception;
 use Carp;
 my $ERROR_MAX = 0.00000001;
@@ -42,19 +42,10 @@ BEGIN {
     );
 }    # NEED REMOVE hard-coded path
 
-BEGIN {
-    lives_ok(
-        sub { use lib $main::RPERL_INCLUDE_PATH . '/CPAN/'; },
-        q{use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';}
-    );
-    lives_and( sub { use_ok('MyConfig'); }, q{use_ok('MyConfig') lives} );
-}    # RPerl's MyConfig.pm
+######BEGIN { lives_ok( sub { use lib $main::RPERL_INCLUDE_PATH . '/CPAN/'; }, q{use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';} ); lives_and( sub { use_ok('MyConfig'); }, q{use_ok('MyConfig') lives} ); }    # RPerl's MyConfig.pm
 
 BEGIN {
-    lives_ok(
-        sub { use lib $main::RPERL_INCLUDE_PATH; },
-        q{use lib $main::RPERL_INCLUDE_PATH;}
-    );
+######    lives_ok( sub { use lib $main::RPERL_INCLUDE_PATH; }, q{use lib $main::RPERL_INCLUDE_PATH;} );
     lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
     lives_ok(
         sub {

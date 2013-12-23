@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.1.0');
+use version; our $VERSION = -0.001_000;
 
-use Test::More tests => 14;
+use Test::More; # tests => 14;
 use Test::Exception;
 
 BEGIN { diag("\n[[[ Beginning Dependency Tests ]]]\n "); }
@@ -31,18 +31,11 @@ BEGIN {
     );
 }    # NEED REMOVE hard-coded path
 
-BEGIN {
-    lives_ok(
-        sub { use lib $main::RPERL_INCLUDE_PATH . '/CPAN/'; },
-        q{use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
-    );
-}
+######BEGIN { lives_ok( sub { use lib $main::RPERL_INCLUDE_PATH . '/CPAN/'; }, q{use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils ); }
 
-BEGIN {
-    lives_and( sub { use_ok('MyConfig'); }, q{use_ok('MyConfig') lives} );
-}    # RPerl's MyConfig.pm
+######BEGIN { lives_and( sub { use_ok('MyConfig'); }, q{use_ok('MyConfig') lives} ); }    # RPerl's MyConfig.pm
 
-lives_and( sub { require_ok('MyConfig'); }, q{require_ok('MyConfig') lives} );
+######lives_and( sub { require_ok('MyConfig'); }, q{require_ok('MyConfig') lives} );
 
 BEGIN {
     lives_and(
@@ -83,3 +76,5 @@ lives_and(
     sub { require_ok('Inline::Filters'); },
     q{require_ok('Inline::Filters') lives}
 );
+
+done_testing();
