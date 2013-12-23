@@ -20,9 +20,9 @@ BEGIN {
         sub {               ## PERLTIDY BUG blank newline
 
             package main;
-            our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib';
+            our $RPERL_INCLUDE_PATH = 'lib';
         },
-        q{package main;  our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib';} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+        q{package main;  our $RPERL_INCLUDE_PATH = 'lib';} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
     );
 }    # NEED REMOVE hard-coded path
 

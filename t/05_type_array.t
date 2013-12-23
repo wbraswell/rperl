@@ -34,9 +34,9 @@ BEGIN {
         sub {    ## PERLTIDY BUG blank newline
 
             package main;
-            our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib';
+            our $RPERL_INCLUDE_PATH = 'lib';
         },
-        q{package main; our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib';}
+        q{package main; our $RPERL_INCLUDE_PATH = 'lib';}
     );
 }    # NEED REMOVE hard-coded path
 

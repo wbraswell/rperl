@@ -13,12 +13,6 @@ use version; our $VERSION = -0.003_002;
 
 # SUPPRESS OUTPUT FROM INDIVIDUAL TESTS, EXCLUDING TESTS INSIDE BEGIN{} BLOCKS
 # order is BEGIN, UNITCHECK, CHECK, INIT, END; CHECK here suppresses Inline compile output from including HelperFunctions_cpp.pm from INIT in Array.pm
-CHECK {
-    open( STDOUT, '>', '/dev/null' )
-        || croak('Error redirecting stdout, croaking');
-    open( STDERR, '>', '/dev/null' )
-        || croak('Error redirecting stderr, croaking');
-}
 
 use Test::More; # tests => 277;
 use Test::Exception;
@@ -36,9 +30,9 @@ BEGIN {
         sub {    ## PERLTIDY BUG blank newline
 
             package main;
-            our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib';
+            our $RPERL_INCLUDE_PATH = 'lib';
         },
-        q{package main;  our $RPERL_INCLUDE_PATH = '/tmp/RPerl-latest/lib';}
+        q{package main;  our $RPERL_INCLUDE_PATH = 'lib';}
     );
 }    # NEED REMOVE hard-coded path
 
