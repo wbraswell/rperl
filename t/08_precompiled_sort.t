@@ -13,12 +13,6 @@ use version; our $VERSION = -0.000_013;
 #=disable
 # SUPPRESS OUTPUT FROM INDIVIDUAL TESTS, EXCLUDING TESTS INSIDE BEGIN{} BLOCKS
 # order is BEGIN, UNITCHECK, CHECK, INIT, END; CHECK here suppresses Inline compile output from including HelperFunctions_cpp.pm
-CHECK {
-    open( STDOUT, '>', '/dev/null' )
-        || croak('Error redirecting stdout, croaking');
-    open( STDERR, '>', '/dev/null' )
-        || croak('Error redirecting stderr, croaking');
-}
 #=cut
 
 use Test::More; # tests => 66;
@@ -50,7 +44,6 @@ BEGIN {
     lives_ok(
         sub {
             use parent ('RPerl');
-            $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;
         },
         q{use parent ('RPerl');  $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;}
     );

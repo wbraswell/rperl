@@ -48,7 +48,6 @@ BEGIN {
     lives_ok(
         sub {
             use parent ('RPerl');
-            $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;
         },
         q{use parent ('RPerl');  $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;}
     );

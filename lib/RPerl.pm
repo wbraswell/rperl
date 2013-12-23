@@ -7,7 +7,7 @@ use RPerl::Class;
 use Carp;
 
 # IMPORTANT SYSTEM-DEPENDENT CONFIGURATION VARIABLE!  drivers must set this to the path to RPerl
-our $INCLUDE_PATH = '/FAILURE/BECAUSE/RPERL/INCLUDE/PATH/NOT/YET/SET';
+our $INCLUDE_PATH = 'lib';
 
 # <<<=== DECREASE MAGIC ===>>>
 
