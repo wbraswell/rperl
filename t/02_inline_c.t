@@ -26,9 +26,7 @@ BEGIN {
     );
 }    # NEED REMOVE hard-coded path
 
-######BEGIN { lives_ok( sub { use lib $main::RPERL_INCLUDE_PATH . '/CPAN/'; }, q{use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils ); }
 
-######BEGIN { lives_and( sub { use_ok('MyConfig'); }, q{use_ok('MyConfig') lives} ); }    # RPerl's MyConfig.pm
 
 diag("\n[[[ Beginning Selection Of Tests From The Inline::C Cookbook ]]]\n ");
 

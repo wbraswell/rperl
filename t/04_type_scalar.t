@@ -36,10 +36,8 @@ BEGIN {
     );
 }    # NEED REMOVE hard-coded path
 
-######BEGIN { lives_ok( sub { use lib $main::RPERL_INCLUDE_PATH . '/CPAN/'; }, q{use lib $main::RPERL_INCLUDE_PATH . '/CPAN/';} ); lives_and( sub { use_ok('MyConfig'); }, q{use_ok('MyConfig') lives} ); }    # RPerl's MyConfig.pm
 
 BEGIN {
-######    lives_ok( sub { use lib $main::RPERL_INCLUDE_PATH; }, q{use lib $main::RPERL_INCLUDE_PATH;} );
     lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
     lives_ok(
         sub {
