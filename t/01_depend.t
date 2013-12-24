@@ -21,20 +21,6 @@ lives_and(
 # DEPENDENCIES POSSIBLY FULFILLED BY USER-SPECIFIC MODULES BELOW THIS LINE
 
 BEGIN {
-    lives_ok(
-        sub {    ## PERLTIDY BUG blank newline
-
-            package main;
-            our $RPERL_INCLUDE_PATH = 'lib';
-        },
-        q{package main;  our $RPERL_INCLUDE_PATH = 'lib';} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
-    );
-}    # NEED REMOVE hard-coded path
-
-
-
-
-BEGIN {
     lives_and(
         sub { use_ok('Parse::RecDescent'); },
         q{use_ok('Parse::RecDescent') lives}

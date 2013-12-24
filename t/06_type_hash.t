@@ -10,15 +10,6 @@ use version; our $VERSION = -0.003_003;
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
 
-# SUPPRESS OUTPUT FROM INDIVIDUAL TESTS, EXCLUDING TESTS INSIDE BEGIN{} BLOCKS
-# order is BEGIN, UNITCHECK, CHECK, INIT, END; CHECK here suppresses Inline compile output from including HelperFunctions_cpp.pm from INIT in Hash.pm
-CHECK {
-    open( STDOUT, '>', '/dev/null' )
-        || croak('Error redirecting stdout, croaking');
-    open( STDERR, '>', '/dev/null' )
-        || croak('Error redirecting stderr, croaking');
-}
-
 use Test::More; # tests => 226;
 use Test::Exception;
 use Carp;
@@ -30,24 +21,12 @@ BEGIN {
 }
 
 BEGIN {
-    lives_ok(
-        sub {      ## PERLTIDY BUG blank newline
-
-            package main;
-            our $RPERL_INCLUDE_PATH = 'lib';
-        },
-        q{package main; our $RPERL_INCLUDE_PATH = 'lib';}
-    );
-}    # NEED REMOVE hard-coded path
-
-
-BEGIN {
     lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
     lives_ok(
         sub {
             use parent ('RPerl');
         },
-        q{use parent ('RPerl');  $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;}
+        q{use parent ('RPerl');}
     );
 }    # RPerl system files
 

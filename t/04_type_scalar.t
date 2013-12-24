@@ -26,24 +26,12 @@ BEGIN {
 }
 
 BEGIN {
-    lives_ok(
-        sub {    ## PERLTIDY BUG blank newline
-
-            package main;
-            our $RPERL_INCLUDE_PATH = 'lib';
-        },
-        q{package main;  our $RPERL_INCLUDE_PATH = 'lib';}
-    );
-}    # NEED REMOVE hard-coded path
-
-
-BEGIN {
     lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
     lives_ok(
         sub {
             use parent ('RPerl');
         },
-        q{use parent ('RPerl');  $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;}
+        q{use parent ('RPerl');}
     );
 }    # RPerl system files
 

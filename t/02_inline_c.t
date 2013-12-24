@@ -15,19 +15,6 @@ BEGIN {
     diag("\n[[[ Beginning Inline::C Pre-Test Loading ]]]\n ");
 }
 
-BEGIN {
-    lives_ok(
-        sub {               ## PERLTIDY BUG blank newline
-
-            package main;
-            our $RPERL_INCLUDE_PATH = 'lib';
-        },
-        q{package main;  our $RPERL_INCLUDE_PATH = 'lib';} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
-    );
-}    # NEED REMOVE hard-coded path
-
-
-
 diag("\n[[[ Beginning Selection Of Tests From The Inline::C Cookbook ]]]\n ");
 
 # Inline::C examples from:  http://search.cpan.org/~sisyphus/Inline-0.53/C/C-Cookbook.pod

@@ -13,18 +13,6 @@ BEGIN {
     diag("\n[[[ Beginning Inline::CPP Pre-Test Loading ]]]\n ");
 }
 
-BEGIN {
-    lives_ok(
-        sub {               ## PERLTIDY BUG blank newline
-
-            package main;
-            our $RPERL_INCLUDE_PATH = 'lib';
-        },
-        q{package main;  our $RPERL_INCLUDE_PATH = 'lib';} ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
-    );
-}    # NEED REMOVE hard-coded path
-
-
 diag("\n[[[ Beginning Entirety Of Tests From The Inline::CPP POD ]]]\n ");
 
 # Inline::CPP examples from:  http://search.cpan.org/~davido/Inline-CPP-0.44/lib/Inline/CPP.pod
