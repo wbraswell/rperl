@@ -42,22 +42,22 @@ our integer__array_ref $integer__bubblesort = sub {
     my const_integer $integer__data_length = scalar @{$integer__data};
     my integer $swap;
 
-#    print "in PERLOPS_PERLTYPES integer__bubblesort(), have \$integer__data_length = $integer__data_length\n" or croak();
+#    print STDERR "in PERLOPS_PERLTYPES integer__bubblesort(), have \$integer__data_length = $integer__data_length\n" or croak();
 
 # iterate through the length-n list up to n times (n * n == n**2), larger elements "bubble to the top" (end) of the list
     while ( not($is_sorted) ) {
 
-#        print "in PERLOPS_PERLTYPES integer__bubblesort(), top of WHILE loop\n" or croak();
+#        print STDERR "in PERLOPS_PERLTYPES integer__bubblesort(), top of WHILE loop\n" or croak();
         $is_sorted = 1;
         for my integer $i ( 0 .. ( $integer__data_length - 2 ) ) {
 
-#            print "in PERLOPS_PERLTYPES integer__bubblesort(), inside for() loop, have \$i = $i\n" or croak();
-#            print "in PERLOPS_PERLTYPES integer__bubblesort(), inside for() loop, have \$integer__data\n" . Dumper($integer__data) . "\n" or croak();
+#            print STDERR "in PERLOPS_PERLTYPES integer__bubblesort(), inside for() loop, have \$i = $i\n" or croak();
+#            print STDERR "in PERLOPS_PERLTYPES integer__bubblesort(), inside for() loop, have \$integer__data\n" . Dumper($integer__data) . "\n" or croak();
 
  # compare elements and swap if out-of-order, this is the core sort comparison
             if ( $integer__data->[$i] > $integer__data->[ ( $i + 1 ) ] ) {
 
-#                print "in PERLOPS_PERLTYPES integer__bubblesort(), inside for() loop, SWAPPING\n" or croak();
+#                print STDERR "in PERLOPS_PERLTYPES integer__bubblesort(), inside for() loop, SWAPPING\n" or croak();
                 $is_sorted = 0;
                 $swap      = $integer__data->[$i];
                 $integer__data->[$i] = $integer__data->[ ( $i + 1 ) ];
@@ -99,14 +99,14 @@ our string $integer__bubblesort__typetest0 = sub {
             "\$lucky_integer at index $i",
             'integer__bubblesort__typetest0()'
         );
-        print
+        print STDERR
             "in PERLOPS_PERLTYPES integer__bubblesort__typetest0(), have lucky integer $i/"
             . ( $how_lucky - 1 ) . ' = '
             . $lucky_integers->[$i]
             . ", BATBAR\n"
             or croak();
     }
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES integer__bubblesort__typetest0(), bottom of subroutine\n";
     return (
         ::integer__array_ref__stringify(
@@ -122,21 +122,21 @@ our string $integer__bubblesort__typetest0 = sub {
 
 our void__method $inherited__Bubble = sub {
     ( my object $self, my string $person) = @_;
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), have \$self = '$self' and \$person = '$person', FRIED\n"
         or croak();
 };
 
 our void__method $inherited = sub {
     ( my object $self, my string $person) = @_;
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES Bubble->inherited(), have \$self = '$self' and \$person = '$person', ILLOGICAL\n"
         or croak();
 };
 
 our string $uninherited__Bubble = sub {
     ( my string $person) = @_;
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES Bubble::uninherited__Bubble(), \$person = '$person', MITOCHONDRIAL\n"
         or croak();
     return ('Bubble::uninherited__Bubble() RULES! PERLOPS_PERLTYPES');
@@ -145,7 +145,7 @@ our string $uninherited__Bubble = sub {
 # DEV NOTE: this will clash in RPerl/Class.pm with other shared global subs with the same name uninherited(), such as from Algorithm.pm
 our string $uninherited = sub {
     ( my string $person) = @_;
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES Bubble::uninherited(), \$person = '$person', TETRAHEDRON\n"
         or croak();
     return ('Bubble::uninherited() ROCKS! PERLOPS_PERLTYPES');

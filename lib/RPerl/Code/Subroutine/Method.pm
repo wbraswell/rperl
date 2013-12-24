@@ -3,7 +3,7 @@
 package RPerl::Code::Subroutine::Method;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.2.0');
+use version; our $VERSION = 0.002_000;
 use Carp;
 
 # [[[ SETUP ]]]

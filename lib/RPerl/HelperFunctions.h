@@ -1,7 +1,5 @@
-// VERSION 0.2.1
-
 #ifndef __CPP__INCLUDED__RPerl__HelperFunctions_h
-#define __CPP__INCLUDED__RPerl__HelperFunctions_h 1
+#define __CPP__INCLUDED__RPerl__HelperFunctions_h 0.002_001
 
 // <<< DEBUG DEFINES >>>
 #define RPerl__DEBUG 1  // NEED FIX: access actual inherited debug flag somehow?

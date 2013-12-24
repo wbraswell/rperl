@@ -74,7 +74,7 @@ our string $integer__stringify = sub {
     #    integer__CHECK($input_integer);
     integer__CHECKTRACE( $input_integer, '$input_integer',
         'integer__stringify()' );
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES integer__stringify(), bottom of subroutine, received \$input_integer = $input_integer\n"
         or croak();
     return ("$input_integer");
@@ -83,7 +83,7 @@ our string $integer__stringify = sub {
 # [[[ TYPE TESTING ]]]
 our integer $integer__typetest0 = sub {
     my integer $retval = ( 21 / 7 ) + $integer__OPS_TYPES_ID; # return integer (not number) value, don't do (22 / 7) etc.
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES integer__typetest0(), have \$retval = $retval\n"
         or croak();
     return ($retval);
@@ -94,7 +94,7 @@ our integer $integer__typetest1 = sub {
     #    integer__CHECK($lucky_integer);
     integer__CHECKTRACE( $lucky_integer, '$lucky_integer',
         'integer__typetest1()' );
-    print
+    print STDERR
         'in PERLOPS_PERLTYPES integer__typetest1(), received $lucky_integer = '
         . integer__stringify($lucky_integer) . "\n"
         or croak();

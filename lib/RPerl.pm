@@ -12,8 +12,8 @@ our $INCLUDE_PATH = 'lib';
 # <<<=== DECREASE MAGIC ===>>>
 
 #no magic;  # require data types, full declarations, other non-magic
-#use types;  # circular dependency causes "subroutine DUMPER redefined" error, solved by replacing use with require below
-require types;
+#use rperltypes;  # circular dependency causes "subroutine DUMPER redefined" error, solved by replacing use with require below
+require rperltypes;
 
 # <<<=== PSEUDO-EXPORTED VARIABLES AND FUNCTIONS ===>>>
 

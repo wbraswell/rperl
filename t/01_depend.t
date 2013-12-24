@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use version; our $VERSION = -0.001_000;
+use version; our $VERSION = 0.001_000;
 
 use Test::More; # tests => 14;
 use Test::Exception;

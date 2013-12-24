@@ -4,7 +4,7 @@
 ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted control characters, sigils, and regexes
 use strict;
 use warnings;
-use version; our $VERSION = -0.003_003;
+use version; our $VERSION = 0.003_003;
 
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
@@ -54,7 +54,7 @@ BEGIN {
 
 # loop 3 times, once for each mode: Pure-Perl, RPerl Perl-Data, and RPerl C-Data
 for my $i ( 0 .. 2 ) {
-    print "in 06_type_hash.t, top of for() loop, have \$i = $i\n" or croak; # no effect if suppressing output!
+    print STDERR "in 06_type_hash.t, top of for() loop, have \$i = $i\n" or croak; # no effect if suppressing output!
     my $OPS_TYPES;
 
     # [[[ PERLOPS_PERLTYPES SETUP ]]]
@@ -129,8 +129,8 @@ for my $i ( 0 .. 2 ) {
         );
 
         lives_ok(
-            sub { types::types_enable('PERL') },
-            q{types::types_enable('PERL') lives}
+            sub { rperltypes::types_enable('PERL') },
+            q{rperltypes::types_enable('PERL') lives}
         );
 
         # Hash: C++ use, load, link
@@ -210,8 +210,8 @@ for my $i ( 0 .. 2 ) {
             "\n[[[ Beginning RPerl's C-Data Mode Hash Type Tests, RPerl Type System Using C++ Data Types & C++ Operations ]]]\n "
         );
         lives_ok(
-            sub { types::types_enable('CPP') },
-            q{types::types_enable('CPP') lives}
+            sub { rperltypes::types_enable('CPP') },
+            q{rperltypes::types_enable('CPP') lives}
         );
 
         # force reload and relink

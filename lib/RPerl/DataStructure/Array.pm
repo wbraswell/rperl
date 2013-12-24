@@ -15,7 +15,7 @@ use RPerl::DataStructure::Array::SubTypes;
 
 # for type-checking via SvIOKp(), SvNOKp(), and SvPOKp(); inside INIT to delay until after 'use MyConfig'
 INIT {
-    print "in Array.pm, loading C++ helper functions for type-checking...\n"
+    print STDERR "in Array.pm, loading C++ helper functions for type-checking...\n"
         or croak();
 }
 INIT {

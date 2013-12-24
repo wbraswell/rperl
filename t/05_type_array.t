@@ -4,14 +4,11 @@
 ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted control characters, sigils, and regexes
 use strict;
 use warnings;
-use version; our $VERSION = -0.003_012;
+use version; our $VERSION = 0.003_013;
 
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
-
-# SUPPRESS OUTPUT FROM INDIVIDUAL TESTS, EXCLUDING TESTS INSIDE BEGIN{} BLOCKS
-# order is BEGIN, UNITCHECK, CHECK, INIT, END; CHECK here suppresses Inline compile output from including HelperFunctions_cpp.pm from INIT in Array.pm
 
 use Test::More; # tests => 229;
 use Test::Exception;
@@ -57,7 +54,7 @@ BEGIN {
 
 # loop 3 times, once for each mode: Pure-Perl, RPerl Perl-Data, and RPerl C-Data
 for my $i ( 0 .. 2 ) {
-    print "in 05_type_array.t, top of for() loop, have \$i = $i\n"
+    print STDERR "in 05_type_array.t, top of for() loop, have \$i = $i\n"
         or croak;    # no effect if suppressing output!
     my $OPS_TYPES;
 
@@ -135,8 +132,8 @@ for my $i ( 0 .. 2 ) {
         );
 
         lives_ok(
-            sub { types::types_enable('PERL') },
-            q{types::types_enable('PERL') lives}
+            sub { rperltypes::types_enable('PERL') },
+            q{rperltypes::types_enable('PERL') lives}
         );
 
         # Array: C++ use, load, link
@@ -218,8 +215,8 @@ for my $i ( 0 .. 2 ) {
             "\n[[[ Beginning RPerl's C-Data Mode Array Type Tests, RPerl Type System Using C++ Data Types & C++ Operations ]]]\n "
         );
         lives_ok(
-            sub { types::types_enable('CPP') },
-            q{types::types_enable('CPP') lives}
+            sub { rperltypes::types_enable('CPP') },
+            q{rperltypes::types_enable('CPP') lives}
         );
 
         # force reload and relink

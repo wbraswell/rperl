@@ -10,8 +10,8 @@ use RPerl::Algorithm_cpp;
 
 our void__method $cpp_load = sub {
 ;	
-	if (defined($RPerl::Algorithm::Sort_cpp::CPP_LOADED)) { print "in Sort_cpp::cpp_load(), have \$RPerl::Algorithm::Sort_cpp::CPP_LOADED = '" . $RPerl::Algorithm::Sort_cpp::CPP_LOADED . "'\n"; }
-		else { print "in Sort_cpp::cpp_load(), have \$RPerl::Algorithm::Sort_cpp::CPP_LOADED = 'UNDEF'\n"; }
+	if (defined($RPerl::Algorithm::Sort_cpp::CPP_LOADED)) { print STDERR "in Sort_cpp::cpp_load(), have \$RPerl::Algorithm::Sort_cpp::CPP_LOADED = '" . $RPerl::Algorithm::Sort_cpp::CPP_LOADED . "'\n"; }
+		else { print STDERR "in Sort_cpp::cpp_load(), have \$RPerl::Algorithm::Sort_cpp::CPP_LOADED = 'UNDEF'\n"; }
 	if (not(defined($RPerl::Algorithm::Sort_cpp::CPP_LOADED)) or not($RPerl::Algorithm::Sort_cpp::CPP_LOADED))
 	{
 		$RPerl::HelperFunctions_cpp::CPP_LOADED = 1;  # HelperFunctions.cpp loaded by C++ #include in Sort.h 
@@ -21,7 +21,7 @@ our void__method $cpp_load = sub {
 
 		my $eval_string = <<"EOF";
 package main;
-BEGIN { print "[[[ BEGIN 'use Inline' STAGE for 'RPerl/Algorithm/Sort.cpp' ]]]\n"x3; }
+BEGIN { print STDERR "[[[ BEGIN 'use Inline' STAGE for 'RPerl/Algorithm/Sort.cpp' ]]]\n"x3; }
 use Inline
 (
 	CPP => '$RPerl::INCLUDE_PATH/RPerl/Algorithm/Sort.cpp',
@@ -42,10 +42,10 @@ use Inline
 		'#include <unordered_map>',  # DEV NOTE: unordered_map may require '-std=c++0x' in CCFLAGS above
 	],
 );
-print "[[[ END 'use Inline' STAGE for 'RPerl/Algorithm/Sort.cpp' ]]]\n"x3;
+print STDERR "[[[ END 'use Inline' STAGE for 'RPerl/Algorithm/Sort.cpp' ]]]\n"x3;
 1;
 EOF
-		print "in Sort_cpp::cpp_load(), CPP not yet loaded, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
+		print STDERR "in Sort_cpp::cpp_load(), CPP not yet loaded, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
 
 		eval($eval_string);  ## no critic
 		die($@) if ($@);
@@ -54,13 +54,13 @@ EOF
 		RPerl::Algorithm_cpp::cpp_link();
 		$RPerl::Algorithm::Sort_cpp::CPP_LOADED = 1;
 	}
-	else { print "in Sort_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"; }
+	else { print STDERR "in Sort_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"; }
 };
 
 our void__method $cpp_link = sub {
 ;
-#	if (defined($RPerl::Algorithm::Sort_cpp::CPP_LINKED)) { print "in Sort_cpp::cpp_link(), have \$RPerl::Algorithm::Sort_cpp::CPP_LINKED = '" . $RPerl::Algorithm::Sort_cpp::CPP_LINKED . "'\n"; }
-#		else { print "in Sort_cpp::cpp_link(), have \$RPerl::Algorithm::Sort_cpp::CPP_LINKED = 'UNDEF'\n"; }
+#	if (defined($RPerl::Algorithm::Sort_cpp::CPP_LINKED)) { print STDERR "in Sort_cpp::cpp_link(), have \$RPerl::Algorithm::Sort_cpp::CPP_LINKED = '" . $RPerl::Algorithm::Sort_cpp::CPP_LINKED . "'\n"; }
+#		else { print STDERR "in Sort_cpp::cpp_link(), have \$RPerl::Algorithm::Sort_cpp::CPP_LINKED = 'UNDEF'\n"; }
 	if (not(defined($RPerl::Algorithm::Sort_cpp::CPP_LINKED)) or not($RPerl::Algorithm::Sort_cpp::CPP_LINKED))
 	{
 		my $eval_string = <<'EOF';
@@ -71,12 +71,12 @@ package RPerl::Algorithm::Sort;
 our @ISA = ('main::CPP__RPerl__Algorithm__Sort', 'RPerl::Algorithm');
 1;
 EOF
-#		print "in Sort_cpp::cpp_link(), CPP not yet linked, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
+#		print STDERR "in Sort_cpp::cpp_link(), CPP not yet linked, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
 
 		eval($eval_string);  ## no critic
 		die($@) if ($@);
 	}
-#	else { print "in Sort_cpp::cpp_link(), CPP already linked, DOING NOTHING\n"; }
+#	else { print STDERR "in Sort_cpp::cpp_link(), CPP already linked, DOING NOTHING\n"; }
 };
 
 package RPerl::Algorithm::Sort_cpp;

@@ -6,7 +6,7 @@ using std::cout;  using std::endl;
 
 #include <RPerl/HelperFunctions.cpp>		// -> HelperFunctions.h
 
-////use RPerl::Class; use RPerl; # the base classes that directly call "use RPerl::Class;" also need to "use RPerl;" to get "use types;", etc.
+////use RPerl::Class; use RPerl; # the base classes that directly call "use RPerl::Class;" also need to "use RPerl;" to get "use rperltypes;", etc.
 //#include <RPerl/Class.cpp>
 //#include <RPerl.cpp>
 

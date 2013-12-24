@@ -1,26 +1,30 @@
 RPerl Install Notes
 Single-User Installation (Not System-Wide Installation)
-Last Updated December 5th, 2013
+Last Updated December 24th, 2013
 
-$ mkdir -p ~/RPerl/3rd_party/CPAN
-$ cd ~/.cpan/CPAN
-$ mv MyConfig.pm MyConfig.pm.old
-$ ln -s path_to_RPerl/lib/CPAN/MyConfig.pm MyConfig.pm
-$ ln -s path_to_RPerl /tmp/RPerl-latest
+$ curl -L cpanmin.us | perl - -l $HOME/perl5 App::cpanminus local::lib
+$ eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
 
-$ cpan
-cpan> o conf
-	confirm RPerl entries are loaded
-cpan> install Parse::RecDescent
-cpan> force install Inline
-cpan> force install Inline::CPP
-	must force, Inline tests are broken, they change @INC and then fail to load single-user-installation of Parse::RecDescent
-cpan> force install Inline::Filters
-cpan> install Test::Exception
-	probably already installed by something else
+copy/paste the 'eval $(...)' line above into ~/.bashrc, run 'set' to ensure the following 4 env vars are updated:
+    PERL_MM_OPT
+    PERL_MB_OPT
+    PERL5LIB
+    PATH
+
+	# MANUALLY DOWNLOAD RPERL TARBALL OR GIT REPO
 
 $ mv ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm.old
 $ ln -s path_to_RPerl/lib/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm
+
+$ cd GIT_REPOS_DIR
+$ perl Makefile.PL
+$ cpanm --installdeps .
+$ rm -Rf _Inline/; reset; perl -Ilib t/08_precompiled_sort.t
+$ rm -Rf _Inline/; reset; prove -l t/05_type_array.t 2> /dev/null
+    # MANUALLY CONFIRM TESTS WORK
+
+
+
 
 UNCONFIRMED:
 cpan> install BULKDD/Inline-Filters-0.12_01.tar.gz

@@ -12,4 +12,4 @@ our %properties =
 	baz => my scalar__hash_ref $KEY_baz = {one_const_int => 21, two_const_int => 12, name_const_str => 'starman'}
 );
 
-our float $foo_method = sub { (my object $self, my string $arg) = @_;  print "HOWDY FROM foo_method(), HAVE \$arg = '$arg' and \$self =\n" . RPerl::DUMPER($self) . "\n"; };
+our float $foo_method = sub { (my object $self, my string $arg) = @_;  print STDERR "HOWDY FROM foo_method(), HAVE \$arg = '$arg' and \$self =\n" . RPerl::DUMPER($self) . "\n"; };

@@ -25,7 +25,7 @@ our %properties =
 
 our RPerl::DataStructure::Graph::Tree::BinaryReference $new_from_nested_array_refs = sub {(my string $class, my const_array_ref $input) = @_;
 ;
-#	print "in ...Tree::BinaryReference::new_from_nested_array_refs(), received \$class = '$class', and \$input =\n" . RPerl::DUMPER($input) . "\n" if $RPerl::DEBUG;
+#	print STDERR "in ...Tree::BinaryReference::new_from_nested_array_refs(), received \$class = '$class', and \$input =\n" . RPerl::DUMPER($input) . "\n" if $RPerl::DEBUG;
 	my unknown $output = $class->new();
 
 	$output->{root} = binarytreenode_ref->new_from_nested_array_refs($input);

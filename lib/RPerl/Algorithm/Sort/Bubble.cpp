@@ -18,15 +18,15 @@ using std::cout;  using std::endl;
 void CPP__RPerl__Algorithm__Sort__Bubble::integer__sort()
 ////;
 {
-//	if (RPerl__DEBUG2) { printf("in integer__sort(), top of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(this->integer__data) = %lu\n", SV_REFERENCE_COUNT(this->integer__data));  printf("in integer__sort(), top of subroutine, have this->integer__data = %s", RPerl_DUMPER__perl_from_c(this->integer__data));  printf("in integer__sort(), top of subroutine, have post-DUMPER SV_REFERENCE_COUNT(this->integer__data) = %lu\n\n", SV_REFERENCE_COUNT(this->integer__data));  }
+//	if (RPerl__DEBUG2) { fprintf(stderr, "in integer__sort(), top of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(this->integer__data) = %lu\n", SV_REFERENCE_COUNT(this->integer__data));  fprintf(stderr, "in integer__sort(), top of subroutine, have this->integer__data = %s", RPerl_DUMPER__perl_from_c(this->integer__data));  fprintf(stderr, "in integer__sort(), top of subroutine, have post-DUMPER SV_REFERENCE_COUNT(this->integer__data) = %lu\n\n", SV_REFERENCE_COUNT(this->integer__data));  }
 
 ////	$self->{integer__data} = integer__bubblesort($self->{integer__data});
 	this->integer__data = integer__bubblesort(this->integer__data);
 
-//	if (RPerl__DEBUG2) { printf("in integer__sort(), bottom of subroutine, have pre-SvREFCNT_dec pre-DUMPER SV_REFERENCE_COUNT(this->integer__data) = %lu\n", SV_REFERENCE_COUNT(this->integer__data));  printf("in integer__sort(), bottom of subroutine, have pre-SvREFCNT_dec this->integer__data = %s", RPerl_DUMPER__perl_from_c(this->integer__data));  printf("in integer__sort(), bottom of subroutine, have pre-SvREFCNT_dec post-DUMPER SV_REFERENCE_COUNT(this->integer__data) = %lu\n\n", SV_REFERENCE_COUNT(this->integer__data));  }
+//	if (RPerl__DEBUG2) { fprintf(stderr, "in integer__sort(), bottom of subroutine, have pre-SvREFCNT_dec pre-DUMPER SV_REFERENCE_COUNT(this->integer__data) = %lu\n", SV_REFERENCE_COUNT(this->integer__data));  fprintf(stderr, "in integer__sort(), bottom of subroutine, have pre-SvREFCNT_dec this->integer__data = %s", RPerl_DUMPER__perl_from_c(this->integer__data));  fprintf(stderr, "in integer__sort(), bottom of subroutine, have pre-SvREFCNT_dec post-DUMPER SV_REFERENCE_COUNT(this->integer__data) = %lu\n\n", SV_REFERENCE_COUNT(this->integer__data));  }
 	SvREFCNT_dec(this->integer__data);
-//	if (RPerl__DEBUG2) { printf("in integer__sort(), bottom of subroutine, have post-SvREFCNT_dec pre-DUMPER SV_REFERENCE_COUNT(this->integer__data) = %lu\n", SV_REFERENCE_COUNT(this->integer__data));  printf("in integer__sort(), bottom of subroutine, have post-SvREFCNT_dec this->integer__data = %s", RPerl_DUMPER__perl_from_c(this->integer__data));  printf("in integer__sort(), bottom of subroutine, have post-SvREFCNT_dec post-DUMPER SV_REFERENCE_COUNT(this->integer__data) = %lu\n\n", SV_REFERENCE_COUNT(this->integer__data));  }
-//	if (RPerl__DEBUG2) { printf("in integer__sort(), bottom of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(this->integer__data) = %lu\n", SV_REFERENCE_COUNT(this->integer__data));  printf("in integer__sort(), bottom of subroutine, have this->integer__data = %s", RPerl_DUMPER__perl_from_c(this->integer__data));  printf("in integer__sort(), bottom of subroutine, post-DUMPER SV_REFERENCE_COUNT(this->integer__data) = %lu\n\n", SV_REFERENCE_COUNT(this->integer__data));  }
+//	if (RPerl__DEBUG2) { fprintf(stderr, "in integer__sort(), bottom of subroutine, have post-SvREFCNT_dec pre-DUMPER SV_REFERENCE_COUNT(this->integer__data) = %lu\n", SV_REFERENCE_COUNT(this->integer__data));  fprintf(stderr, "in integer__sort(), bottom of subroutine, have post-SvREFCNT_dec this->integer__data = %s", RPerl_DUMPER__perl_from_c(this->integer__data));  fprintf(stderr, "in integer__sort(), bottom of subroutine, have post-SvREFCNT_dec post-DUMPER SV_REFERENCE_COUNT(this->integer__data) = %lu\n\n", SV_REFERENCE_COUNT(this->integer__data));  }
+//	if (RPerl__DEBUG2) { fprintf(stderr, "in integer__sort(), bottom of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(this->integer__data) = %lu\n", SV_REFERENCE_COUNT(this->integer__data));  fprintf(stderr, "in integer__sort(), bottom of subroutine, have this->integer__data = %s", RPerl_DUMPER__perl_from_c(this->integer__data));  fprintf(stderr, "in integer__sort(), bottom of subroutine, post-DUMPER SV_REFERENCE_COUNT(this->integer__data) = %lu\n\n", SV_REFERENCE_COUNT(this->integer__data));  }
 ////};
 }
 
@@ -45,9 +45,9 @@ SV* integer__bubblesort(SV* integer__data)  // DEV NOTE: properly creates local-
 
 	RPerl_object_property_init(integer__data); // NEED ANSWER: why do we need to do property init?
 	SvREFCNT_inc(integer__data);
-	printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of subroutine...\n");
+	fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of subroutine...\n");
 
-//	if (RPerl__DEBUG3) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(integer__data) = %lu\n", SV_REFERENCE_COUNT(integer__data));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of subroutine, have integer__data = %s", RPerl_DUMPER__perl_from_c(integer__data));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of subroutine, have post-DUMPER SV_REFERENCE_COUNT(integer__data) = %lu\n\n", SV_REFERENCE_COUNT(integer__data)); }
+//	if (RPerl__DEBUG3) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(integer__data) = %lu\n", SV_REFERENCE_COUNT(integer__data));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of subroutine, have integer__data = %s", RPerl_DUMPER__perl_from_c(integer__data));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of subroutine, have post-DUMPER SV_REFERENCE_COUNT(integer__data) = %lu\n\n", SV_REFERENCE_COUNT(integer__data)); }
 ////	my integer $is_sorted = 0;
 	integer is_sorted = 0;
 ////	my integer $i;
@@ -56,18 +56,18 @@ SV* integer__bubblesort(SV* integer__data)  // DEV NOTE: properly creates local-
 //	const integer integer__data_length = av_len((AV*) SvRV(integer__data)) + 1;  // DE-OPTIMIZE, SHORT-HAND
 	AV* integer__data_av = (AV*) SvRV(integer__data);  // OPTIMIZE, LONG-HAND: integer__data dereferenced to integer__data_av more than once, declare integer__data_av and re-use, MUST REFRESH integer__data_av for every assignment directly to integer__data (none in this algorithm)
 	const integer integer__data_length = av_len(integer__data_av) + 1;  // OPTIMIZE, LONG-HAND: use integer__data_av
-	SV* integer__data_i = newSV(0);  // OPTIMIZE, LONG-HAND: integer__data element i accessed more than once, declare integer__data_i and re-use;  all new SV*'s given initial undef newSV(0) value to avoid printf() errors during debugging
+	SV* integer__data_i = newSV(0);  // OPTIMIZE, LONG-HAND: integer__data element i accessed more than once, declare integer__data_i and re-use;  all new SV*'s given initial undef newSV(0) value to avoid fprintf(stderr, ) errors during debugging
 	SV* integer__data_i_plus_1 = newSV(0);  // OPTIMIZE, LONG-HAND
 
 ////	my scalar $swap;
 	SV* swap = newSV(0);
 
-//	if (RPerl__DEBUG2) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), after variable init, have pre-DUMPER SV_REFERENCE_COUNT(integer__data_i) = %lu\n", SV_REFERENCE_COUNT(integer__data_i));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), after variable init, have integer__data_i = %s", RPerl_DUMPER__perl_from_c(integer__data_i));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), after variable init, have post-DUMPER SV_REFERENCE_COUNT(integer__data_i) = %lu\n\n", SV_REFERENCE_COUNT(integer__data_i)); }
-//	if (RPerl__DEBUG2) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), after variable init, have pre-DUMPER SV_REFERENCE_COUNT(integer__data_i_plus_1) = %lu\n", SV_REFERENCE_COUNT(integer__data_i_plus_1));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), after variable init, have integer__data_i_plus_1 = %s", RPerl_DUMPER__perl_from_c(integer__data_i_plus_1));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), after variable init, have post-DUMPER SV_REFERENCE_COUNT(integer__data_i_plus_1) = %lu\n\n", SV_REFERENCE_COUNT(integer__data_i_plus_1)); }
-//	if (RPerl__DEBUG2) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), after variable init, have pre-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n", SV_REFERENCE_COUNT(swap));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), after variable init, have swap = %s", RPerl_DUMPER__perl_from_c(swap));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), after variable init, have post-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n\n", SV_REFERENCE_COUNT(swap)); }
+//	if (RPerl__DEBUG2) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), after variable init, have pre-DUMPER SV_REFERENCE_COUNT(integer__data_i) = %lu\n", SV_REFERENCE_COUNT(integer__data_i));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), after variable init, have integer__data_i = %s", RPerl_DUMPER__perl_from_c(integer__data_i));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), after variable init, have post-DUMPER SV_REFERENCE_COUNT(integer__data_i) = %lu\n\n", SV_REFERENCE_COUNT(integer__data_i)); }
+//	if (RPerl__DEBUG2) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), after variable init, have pre-DUMPER SV_REFERENCE_COUNT(integer__data_i_plus_1) = %lu\n", SV_REFERENCE_COUNT(integer__data_i_plus_1));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), after variable init, have integer__data_i_plus_1 = %s", RPerl_DUMPER__perl_from_c(integer__data_i_plus_1));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), after variable init, have post-DUMPER SV_REFERENCE_COUNT(integer__data_i_plus_1) = %lu\n\n", SV_REFERENCE_COUNT(integer__data_i_plus_1)); }
+//	if (RPerl__DEBUG2) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), after variable init, have pre-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n", SV_REFERENCE_COUNT(swap));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), after variable init, have swap = %s", RPerl_DUMPER__perl_from_c(swap));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), after variable init, have post-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n\n", SV_REFERENCE_COUNT(swap)); }
 
 ////#	print "in CPPOPS_PERLTYPES integer__bubblesort(), have \$integer__data_length = $integer__data_length\n" if $RPerl::DEBUG;
-//	 if (RPerl__DEBUG2) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), after variable init, have integer__data_length = %d\n", integer__data_length); }
+//	 if (RPerl__DEBUG2) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), after variable init, have integer__data_length = %d\n", integer__data_length); }
 
 ////	# iterate through the length-n list up to n times (n * n == n**2), larger elements "bubble to the top" (end) of the list
 ////	while (not($is_sorted))
@@ -75,11 +75,11 @@ SV* integer__bubblesort(SV* integer__data)  // DEV NOTE: properly creates local-
 ////	{
 	{
 ////#		print "in CPPOPS_PERLTYPES integer__bubblesort(), top of while loop\n" if $RPerl::DEBUG;
-//		if (RPerl__DEBUG2) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of while() loop\n"); }
-//		if (RPerl__DEBUG3) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of while() loop, have pre-DUMPER SV_REFERENCE_COUNT(integer__data) = %lu\n", SV_REFERENCE_COUNT(integer__data));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of while() loop, have integer__data = %s", RPerl_DUMPER__perl_from_c(integer__data));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of while() loop, have post-DUMPER SV_REFERENCE_COUNT(integer__data) = %lu\n\n", SV_REFERENCE_COUNT(integer__data)); }
-//		if (RPerl__DEBUG) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of while() loop, have pre-DUMPER SV_REFERENCE_COUNT(integer__integer__data_i) = %lu\n", SV_REFERENCE_COUNT(integer__integer__data_i));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of while() loop, have integer__integer__data_i = %s", RPerl_DUMPER__perl_from_c(integer__integer__data_i));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of while() loop, have post-DUMPER SV_REFERENCE_COUNT(integer__integer__data_i) = %lu\n\n", SV_REFERENCE_COUNT(integer__integer__data_i)); }
-//		if (RPerl__DEBUG) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of while() loop, have pre-DUMPER SV_REFERENCE_COUNT(integer__data_i_plus_1) = %lu\n", SV_REFERENCE_COUNT(integer__data_i_plus_1));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of while() loop, have integer__data_i_plus_1 = %s", RPerl_DUMPER__perl_from_c(integer__data_i_plus_1));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of while() loop, have post-DUMPER SV_REFERENCE_COUNT(integer__data_i_plus_1) = %lu\n\n", SV_REFERENCE_COUNT(integer__data_i_plus_1)); }
-//		if (RPerl__DEBUG) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of while() loop, have pre-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n", SV_REFERENCE_COUNT(swap));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of while() loop, have swap = %s", RPerl_DUMPER__perl_from_c(swap));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of while() loop, have post-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n\n", SV_REFERENCE_COUNT(swap)); }
+//		if (RPerl__DEBUG2) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of while() loop\n"); }
+//		if (RPerl__DEBUG3) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of while() loop, have pre-DUMPER SV_REFERENCE_COUNT(integer__data) = %lu\n", SV_REFERENCE_COUNT(integer__data));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of while() loop, have integer__data = %s", RPerl_DUMPER__perl_from_c(integer__data));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of while() loop, have post-DUMPER SV_REFERENCE_COUNT(integer__data) = %lu\n\n", SV_REFERENCE_COUNT(integer__data)); }
+//		if (RPerl__DEBUG) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of while() loop, have pre-DUMPER SV_REFERENCE_COUNT(integer__integer__data_i) = %lu\n", SV_REFERENCE_COUNT(integer__integer__data_i));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of while() loop, have integer__integer__data_i = %s", RPerl_DUMPER__perl_from_c(integer__integer__data_i));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of while() loop, have post-DUMPER SV_REFERENCE_COUNT(integer__integer__data_i) = %lu\n\n", SV_REFERENCE_COUNT(integer__integer__data_i)); }
+//		if (RPerl__DEBUG) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of while() loop, have pre-DUMPER SV_REFERENCE_COUNT(integer__data_i_plus_1) = %lu\n", SV_REFERENCE_COUNT(integer__data_i_plus_1));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of while() loop, have integer__data_i_plus_1 = %s", RPerl_DUMPER__perl_from_c(integer__data_i_plus_1));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of while() loop, have post-DUMPER SV_REFERENCE_COUNT(integer__data_i_plus_1) = %lu\n\n", SV_REFERENCE_COUNT(integer__data_i_plus_1)); }
+//		if (RPerl__DEBUG) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of while() loop, have pre-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n", SV_REFERENCE_COUNT(swap));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of while() loop, have swap = %s", RPerl_DUMPER__perl_from_c(swap));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of while() loop, have post-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n\n", SV_REFERENCE_COUNT(swap)); }
 
 ////		$is_sorted = 1;
 		is_sorted = 1;
@@ -88,12 +88,12 @@ SV* integer__bubblesort(SV* integer__data)  // DEV NOTE: properly creates local-
 ////		{
 		{
 ////#			print "in CPPOPS_PERLTYPES integer__bubblesort(), inside for() loop, have \$i = $i\n" if $RPerl::DEBUG;
-//			if (RPerl__DEBUG2) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of for() loop, have i = %d\n", i); }
+//			if (RPerl__DEBUG2) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of for() loop, have i = %d\n", i); }
 ////#			print "in CPPOPS_PERLTYPES integer__bubblesort(), inside for() loop, have \$integer__data\n" . RPerl::DUMPER($integer__data) . "\n" if $RPerl::DEBUG;
-//			if (RPerl__DEBUG3) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of for() loop, have pre-DUMPER SV_REFERENCE_COUNT(integer__data) = %lu\n", SV_REFERENCE_COUNT(integer__data));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of for() loop, have integer__data = %s", RPerl_DUMPER__perl_from_c(integer__data));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of for() loop, have post-DUMPER SV_REFERENCE_COUNT(integer__data) = %lu\n\n", SV_REFERENCE_COUNT(integer__data)); }
-//			if (RPerl__DEBUG) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of for() loop, have pre-DUMPER SV_REFERENCE_COUNT(integer__data_i) = %lu\n", SV_REFERENCE_COUNT(integer__data_i));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of for() loop, have integer__data_i = %s", RPerl_DUMPER__perl_from_c(integer__data_i));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of for() loop, have post-DUMPER SV_REFERENCE_COUNT(integer__data_i) = %lu\n\n", SV_REFERENCE_COUNT(integer__data_i)); }
-//			if (RPerl__DEBUG) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of for() loop, have pre-DUMPER SV_REFERENCE_COUNT(integer__data_i_plus_1) = %lu\n", SV_REFERENCE_COUNT(integer__data_i_plus_1));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of for() loop, have integer__data_i_plus_1 = %s", RPerl_DUMPER__perl_from_c(integer__data_i_plus_1));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of for() loop, have post-DUMPER SV_REFERENCE_COUNT(integer__data_i_plus_1) = %lu\n\n", SV_REFERENCE_COUNT(integer__data_i_plus_1)); }
-//			if (RPerl__DEBUG) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of for() loop, have pre-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n", SV_REFERENCE_COUNT(swap));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of for() loop, have swap = %s", RPerl_DUMPER__perl_from_c(swap));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), top of for() loop, have post-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n\n", SV_REFERENCE_COUNT(swap)); }
+//			if (RPerl__DEBUG3) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of for() loop, have pre-DUMPER SV_REFERENCE_COUNT(integer__data) = %lu\n", SV_REFERENCE_COUNT(integer__data));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of for() loop, have integer__data = %s", RPerl_DUMPER__perl_from_c(integer__data));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of for() loop, have post-DUMPER SV_REFERENCE_COUNT(integer__data) = %lu\n\n", SV_REFERENCE_COUNT(integer__data)); }
+//			if (RPerl__DEBUG) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of for() loop, have pre-DUMPER SV_REFERENCE_COUNT(integer__data_i) = %lu\n", SV_REFERENCE_COUNT(integer__data_i));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of for() loop, have integer__data_i = %s", RPerl_DUMPER__perl_from_c(integer__data_i));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of for() loop, have post-DUMPER SV_REFERENCE_COUNT(integer__data_i) = %lu\n\n", SV_REFERENCE_COUNT(integer__data_i)); }
+//			if (RPerl__DEBUG) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of for() loop, have pre-DUMPER SV_REFERENCE_COUNT(integer__data_i_plus_1) = %lu\n", SV_REFERENCE_COUNT(integer__data_i_plus_1));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of for() loop, have integer__data_i_plus_1 = %s", RPerl_DUMPER__perl_from_c(integer__data_i_plus_1));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of for() loop, have post-DUMPER SV_REFERENCE_COUNT(integer__data_i_plus_1) = %lu\n\n", SV_REFERENCE_COUNT(integer__data_i_plus_1)); }
+//			if (RPerl__DEBUG) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of for() loop, have pre-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n", SV_REFERENCE_COUNT(swap));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of for() loop, have swap = %s", RPerl_DUMPER__perl_from_c(swap));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of for() loop, have post-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n\n", SV_REFERENCE_COUNT(swap)); }
 
 ////			# compare elements and swap if out-of-order, this is the core sort comparison
 ////			if ($integer__data->[$i] > $integer__data->[($i + 1)])
@@ -106,7 +106,7 @@ SV* integer__bubblesort(SV* integer__data)  // DEV NOTE: properly creates local-
 ////			{
 			{
 ////#				print "in CPPOPS_PERLTYPES integer__bubblesort(), inside for() loop, SWAPPED\n" if $RPerl::DEBUG;
-//				if (RPerl__DEBUG2) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), inside for() loop, SWAPPED\n"); }
+//				if (RPerl__DEBUG2) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), inside for() loop, SWAPPED\n"); }
 ////				$is_sorted = 0;
 				is_sorted = 0;
 ////				$swap = $integer__data->[$i];
@@ -122,24 +122,24 @@ SV* integer__bubblesort(SV* integer__data)  // DEV NOTE: properly creates local-
 				av_store(integer__data_av, (i + 1), SvREFCNT_inc(swap));  // OPTIMIZE, LONG-HAND: use integer__data_av
 ////			}
 			}
-//			if (RPerl__DEBUG3) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of for() loop, have pre-DUMPER SV_REFERENCE_COUNT(integer__data) = %lu\n", SV_REFERENCE_COUNT(integer__data));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of for() loop, have integer__data = %s", RPerl_DUMPER__perl_from_c(integer__data));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of for() loop, have post-DUMPER SV_REFERENCE_COUNT(integer__data) = %lu\n\n", SV_REFERENCE_COUNT(integer__data)); }
-//			if (RPerl__DEBUG) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of for() loop, have pre-DUMPER SV_REFERENCE_COUNT(integer__data_i) = %lu\n", SV_REFERENCE_COUNT(integer__data_i));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of for() loop, have integer__data_i = %s", RPerl_DUMPER__perl_from_c(integer__data_i));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of for() loop, have post-DUMPER SV_REFERENCE_COUNT(integer__data_i) = %lu\n\n", SV_REFERENCE_COUNT(integer__data_i)); }
-//			if (RPerl__DEBUG) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of for() loop, have pre-DUMPER SV_REFERENCE_COUNT(integer__data_i_plus_1) = %lu\n", SV_REFERENCE_COUNT(integer__data_i_plus_1));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of for() loop, have integer__data_i_plus_1 = %s", RPerl_DUMPER__perl_from_c(integer__data_i_plus_1));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of for() loop, have post-DUMPER SV_REFERENCE_COUNT(integer__data_i_plus_1) = %lu\n\n", SV_REFERENCE_COUNT(integer__data_i_plus_1)); }
-//			if (RPerl__DEBUG) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of for() loop, have pre-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n", SV_REFERENCE_COUNT(swap));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of for() loop, have swap = %s", RPerl_DUMPER__perl_from_c(swap));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of for() loop, have post-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n\n", SV_REFERENCE_COUNT(swap)); }
+//			if (RPerl__DEBUG3) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of for() loop, have pre-DUMPER SV_REFERENCE_COUNT(integer__data) = %lu\n", SV_REFERENCE_COUNT(integer__data));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of for() loop, have integer__data = %s", RPerl_DUMPER__perl_from_c(integer__data));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of for() loop, have post-DUMPER SV_REFERENCE_COUNT(integer__data) = %lu\n\n", SV_REFERENCE_COUNT(integer__data)); }
+//			if (RPerl__DEBUG) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of for() loop, have pre-DUMPER SV_REFERENCE_COUNT(integer__data_i) = %lu\n", SV_REFERENCE_COUNT(integer__data_i));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of for() loop, have integer__data_i = %s", RPerl_DUMPER__perl_from_c(integer__data_i));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of for() loop, have post-DUMPER SV_REFERENCE_COUNT(integer__data_i) = %lu\n\n", SV_REFERENCE_COUNT(integer__data_i)); }
+//			if (RPerl__DEBUG) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of for() loop, have pre-DUMPER SV_REFERENCE_COUNT(integer__data_i_plus_1) = %lu\n", SV_REFERENCE_COUNT(integer__data_i_plus_1));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of for() loop, have integer__data_i_plus_1 = %s", RPerl_DUMPER__perl_from_c(integer__data_i_plus_1));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of for() loop, have post-DUMPER SV_REFERENCE_COUNT(integer__data_i_plus_1) = %lu\n\n", SV_REFERENCE_COUNT(integer__data_i_plus_1)); }
+//			if (RPerl__DEBUG) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of for() loop, have pre-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n", SV_REFERENCE_COUNT(swap));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of for() loop, have swap = %s", RPerl_DUMPER__perl_from_c(swap));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of for() loop, have post-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n\n", SV_REFERENCE_COUNT(swap)); }
 ////		}
 		}
-//		if (RPerl__DEBUG3) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of while() loop, have pre-DUMPER SV_REFERENCE_COUNT(integer__data) = %lu\n", SV_REFERENCE_COUNT(integer__data));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of while() loop, have integer__data = %s", RPerl_DUMPER__perl_from_c(integer__data));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of while() loop, have post-DUMPER SV_REFERENCE_COUNT(integer__data) = %lu\n\n", SV_REFERENCE_COUNT(integer__data)); }
-//		if (RPerl__DEBUG) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of while() loop, have pre-DUMPER SV_REFERENCE_COUNT(integer__data_i) = %lu\n", SV_REFERENCE_COUNT(integer__data_i));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of while() loop, have integer__data_i = %s", RPerl_DUMPER__perl_from_c(integer__data_i));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of while() loop, have post-DUMPER SV_REFERENCE_COUNT(integer__data_i) = %lu\n\n", SV_REFERENCE_COUNT(integer__data_i)); }
-//		if (RPerl__DEBUG) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of while() loop, have pre-DUMPER SV_REFERENCE_COUNT(integer__data_i_plus_1) = %lu\n", SV_REFERENCE_COUNT(integer__data_i_plus_1));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of while() loop, have integer__data_i_plus_1 = %s", RPerl_DUMPER__perl_from_c(integer__data_i_plus_1));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of while() loop, have post-DUMPER SV_REFERENCE_COUNT(integer__data_i_plus_1) = %lu\n\n", SV_REFERENCE_COUNT(integer__data_i_plus_1)); }
-//		if (RPerl__DEBUG) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of while() loop, have pre-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n", SV_REFERENCE_COUNT(swap));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of while() loop, have swap = %s", RPerl_DUMPER__perl_from_c(swap));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of while() loop, have post-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n\n", SV_REFERENCE_COUNT(swap)); }
+//		if (RPerl__DEBUG3) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of while() loop, have pre-DUMPER SV_REFERENCE_COUNT(integer__data) = %lu\n", SV_REFERENCE_COUNT(integer__data));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of while() loop, have integer__data = %s", RPerl_DUMPER__perl_from_c(integer__data));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of while() loop, have post-DUMPER SV_REFERENCE_COUNT(integer__data) = %lu\n\n", SV_REFERENCE_COUNT(integer__data)); }
+//		if (RPerl__DEBUG) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of while() loop, have pre-DUMPER SV_REFERENCE_COUNT(integer__data_i) = %lu\n", SV_REFERENCE_COUNT(integer__data_i));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of while() loop, have integer__data_i = %s", RPerl_DUMPER__perl_from_c(integer__data_i));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of while() loop, have post-DUMPER SV_REFERENCE_COUNT(integer__data_i) = %lu\n\n", SV_REFERENCE_COUNT(integer__data_i)); }
+//		if (RPerl__DEBUG) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of while() loop, have pre-DUMPER SV_REFERENCE_COUNT(integer__data_i_plus_1) = %lu\n", SV_REFERENCE_COUNT(integer__data_i_plus_1));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of while() loop, have integer__data_i_plus_1 = %s", RPerl_DUMPER__perl_from_c(integer__data_i_plus_1));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of while() loop, have post-DUMPER SV_REFERENCE_COUNT(integer__data_i_plus_1) = %lu\n\n", SV_REFERENCE_COUNT(integer__data_i_plus_1)); }
+//		if (RPerl__DEBUG) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of while() loop, have pre-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n", SV_REFERENCE_COUNT(swap));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of while() loop, have swap = %s", RPerl_DUMPER__perl_from_c(swap));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of while() loop, have post-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n\n", SV_REFERENCE_COUNT(swap)); }
 ////	}
 	}
 
 //	SvREFCNT_inc(integer__data);
-//	if (RPerl__DEBUG3) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(integer__data) = %lu\n", SV_REFERENCE_COUNT(integer__data));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of subroutine, have integer__data = %s", RPerl_DUMPER__perl_from_c(integer__data));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of subroutine, have post-DUMPER SV_REFERENCE_COUNT(integer__data) = %lu\n\n", SV_REFERENCE_COUNT(integer__data)); }
-//	if (RPerl__DEBUG) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(integer__data_i) = %lu\n", SV_REFERENCE_COUNT(integer__data_i));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of subroutine, have integer__data_i = %s", RPerl_DUMPER__perl_from_c(integer__data_i));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of subroutine, have post-DUMPER SV_REFERENCE_COUNT(integer__data_i) = %lu\n\n", SV_REFERENCE_COUNT(integer__data_i)); }
-//	if (RPerl__DEBUG) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(integer__data_i_plus_1) = %lu\n", SV_REFERENCE_COUNT(integer__data_i_plus_1));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of subroutine, have integer__data_i_plus_1 = %s", RPerl_DUMPER__perl_from_c(integer__data_i_plus_1));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of subroutine, have post-DUMPER SV_REFERENCE_COUNT(integer__data_i_plus_1) = %lu\n\n", SV_REFERENCE_COUNT(integer__data_i_plus_1)); }
-//	if (RPerl__DEBUG) { printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n", SV_REFERENCE_COUNT(swap));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of subroutine, have swap = %s", RPerl_DUMPER__perl_from_c(swap));  printf("in CPPOPS_PERLTYPES integer__bubblesort(), bottom of subroutine, have post-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n\n", SV_REFERENCE_COUNT(swap)); }
+//	if (RPerl__DEBUG3) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(integer__data) = %lu\n", SV_REFERENCE_COUNT(integer__data));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of subroutine, have integer__data = %s", RPerl_DUMPER__perl_from_c(integer__data));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of subroutine, have post-DUMPER SV_REFERENCE_COUNT(integer__data) = %lu\n\n", SV_REFERENCE_COUNT(integer__data)); }
+//	if (RPerl__DEBUG) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(integer__data_i) = %lu\n", SV_REFERENCE_COUNT(integer__data_i));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of subroutine, have integer__data_i = %s", RPerl_DUMPER__perl_from_c(integer__data_i));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of subroutine, have post-DUMPER SV_REFERENCE_COUNT(integer__data_i) = %lu\n\n", SV_REFERENCE_COUNT(integer__data_i)); }
+//	if (RPerl__DEBUG) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(integer__data_i_plus_1) = %lu\n", SV_REFERENCE_COUNT(integer__data_i_plus_1));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of subroutine, have integer__data_i_plus_1 = %s", RPerl_DUMPER__perl_from_c(integer__data_i_plus_1));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of subroutine, have post-DUMPER SV_REFERENCE_COUNT(integer__data_i_plus_1) = %lu\n\n", SV_REFERENCE_COUNT(integer__data_i_plus_1)); }
+//	if (RPerl__DEBUG) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n", SV_REFERENCE_COUNT(swap));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of subroutine, have swap = %s", RPerl_DUMPER__perl_from_c(swap));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), bottom of subroutine, have post-DUMPER SV_REFERENCE_COUNT(swap) = %lu\n\n", SV_REFERENCE_COUNT(swap)); }
 
 ////	# integer__data is now sorted via top-level nested iteration [O(n**2) total time, O(1) total extra space]
 ////	return $integer__data;
@@ -159,12 +159,9 @@ SV* integer__bubblesort(SV* integer__data)  // DEV NOTE: properly creates local-
 
 
 
-
 // START HERE: replace NV w/ IV in integer__bubblesort(), create number__bubblesort(), update precompiled_sort_test.pl and 08_precompiled_sort.t
 // START HERE: replace NV w/ IV in integer__bubblesort(), create number__bubblesort(), update precompiled_sort_test.pl and 08_precompiled_sort.t
 // START HERE: replace NV w/ IV in integer__bubblesort(), create number__bubblesort(), update precompiled_sort_test.pl and 08_precompiled_sort.t
-
-
 
 
 
@@ -185,7 +182,7 @@ SV* integer__bubblesort__typetest0(SV* lucky_integers)
 	{
 //		integer__CHECK(*av_fetch(lucky_integers_deref, i, 0));
 		integer__CHECKTRACE(*av_fetch(lucky_integers_deref, i, 0), (char*)((string)"*av_fetch(lucky_integers_deref, i, 0) at index " + to_string(i)).c_str(), "integer__bubblesort__typetest0()");
-		printf("in CPPOPS_PERLTYPES integer__bubblesort__typetest0(), have lucky integer %d/%d = %d, BATBAR\n", i, (how_lucky - 1), (integer)SvIV(*av_fetch(lucky_integers_deref, i, 0)));
+		fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort__typetest0(), have lucky integer %d/%d = %d, BATBAR\n", i, (how_lucky - 1), (integer)SvIV(*av_fetch(lucky_integers_deref, i, 0)));
 	}
 
 //	SV* retval__integer__bubblesort = integer__bubblesort(lucky_integers);
@@ -239,12 +236,12 @@ SV* uninherited(SV* person)
 void CPP__RPerl__Algorithm__Sort__Bubble::integer__sort()
 ////;
 {
-//	if (RPerl__DEBUG2) { printf("in integer__sort(), top of subroutine, have this->integer__data = %d\n", this->integer__data); }
+//	if (RPerl__DEBUG2) { fprintf(stderr, "in integer__sort(), top of subroutine, have this->integer__data = %d\n", this->integer__data); }
 
 ////	$self->{integer__data} = integer__bubblesort($self->{integer__data});
 	this->integer__data = integer__bubblesort(this->integer__data);
 
-//	if (RPerl__DEBUG2) { printf("in integer__sort(), bottom of subroutine, have this->integer__data = %d\n", this->integer__data); }
+//	if (RPerl__DEBUG2) { fprintf(stderr, "in integer__sort(), bottom of subroutine, have this->integer__data = %d\n", this->integer__data); }
 ////};
 }
 
@@ -255,26 +252,26 @@ void CPP__RPerl__Algorithm__Sort__Bubble::integer__sort()
 integer__array_ref integer__bubblesort(integer__array_ref integer__data)  // DEV NOTE: properly creates local-to-function integer__array_ref integer__data here, does not get confused with this->integer__data object property, even though they share a name
 ////;
 {
-	printf("in CPPOPS_CPPTYPES integer__bubblesort, top of subroutine...\n");
-//	if (RPerl__DEBUG3) { printf("in integer__bubblesort, top of subroutine, have integer__data = %d", integer__data); }
+	fprintf(stderr, "in CPPOPS_CPPTYPES integer__bubblesort, top of subroutine...\n");
+//	if (RPerl__DEBUG3) { fprintf(stderr, "in integer__bubblesort, top of subroutine, have integer__data = %d", integer__data); }
 ////	my integer $is_sorted = 0;
 	integer is_sorted = 0;
 ////	my integer $i;
 	integer i;
 ////	my const_integer $integer__data_length = scalar(@{$integer__data});
 	const integer integer__data_length = integer__data.size();
-	integer integer__data_i = -9999;  // OPTIMIZE, LONG-HAND: integer__data element i accessed more than once, declare integer__data_i and re-use;  all new integer's given initial -9999 value to avoid printf() errors during debugging
+	integer integer__data_i = -9999;  // OPTIMIZE, LONG-HAND: integer__data element i accessed more than once, declare integer__data_i and re-use;  all new integer's given initial -9999 value to avoid fprintf(stderr, ) errors during debugging
 	integer integer__data_i_plus_1 = -9999;  // OPTIMIZE, LONG-HAND
 
 ////	my integer $swap;
 	integer swap = -9999;
 
-//	if (RPerl__DEBUG2) { printf("in integer__bubblesort, after variable init, have integer__data_i = %d\n", integer__data_i); }
-//	if (RPerl__DEBUG2) { printf("in integer__bubblesort, after variable init, have integer__data_i_plus_1 = %d\n", integer__data_i_plus_1); }
-//	if (RPerl__DEBUG2) { printf("in integer__bubblesort, after variable init, have swap = %d\n", swap); }
+//	if (RPerl__DEBUG2) { fprintf(stderr, "in integer__bubblesort, after variable init, have integer__data_i = %d\n", integer__data_i); }
+//	if (RPerl__DEBUG2) { fprintf(stderr, "in integer__bubblesort, after variable init, have integer__data_i_plus_1 = %d\n", integer__data_i_plus_1); }
+//	if (RPerl__DEBUG2) { fprintf(stderr, "in integer__bubblesort, after variable init, have swap = %d\n", swap); }
 
 ////#	print "in integer__bubblesort, have \$integer__data_length = $integer__data_length\n" if $RPerl::DEBUG;
-//	 if (RPerl__DEBUG2) { printf("in integer__bubblesort, after variable init, have integer__data_length = %d\n", integer__data_length); }
+//	 if (RPerl__DEBUG2) { fprintf(stderr, "in integer__bubblesort, after variable init, have integer__data_length = %d\n", integer__data_length); }
 
 ////	# iterate through the length-n list up to n times (n * n == n**2), larger elements "bubble to the top" (end) of the list
 ////	while (not($is_sorted))
@@ -282,11 +279,11 @@ integer__array_ref integer__bubblesort(integer__array_ref integer__data)  // DEV
 ////	{
 	{
 ////#		print "in integer__bubblesort, top of while loop\n" if $RPerl::DEBUG;
-//		if (RPerl__DEBUG2) { printf("in integer__bubblesort, top of while() loop\n"); }
-//		if (RPerl__DEBUG3) { printf("in integer__bubblesort, top of while() loop, have integer__data = %d\n", integer__data); }
-//		if (RPerl__DEBUG) { printf("in integer__bubblesort, top of while() loop, have integer__data_i = %d\n", integer__data_i); }
-//		if (RPerl__DEBUG) { printf("in integer__bubblesort, top of while() loop, have integer__data_i_plus_1 = %d\n", integer__data_i_plus_1); }
-//		if (RPerl__DEBUG) { printf("in integer__bubblesort, top of while() loop, have swap = %d\n", swap); }
+//		if (RPerl__DEBUG2) { fprintf(stderr, "in integer__bubblesort, top of while() loop\n"); }
+//		if (RPerl__DEBUG3) { fprintf(stderr, "in integer__bubblesort, top of while() loop, have integer__data = %d\n", integer__data); }
+//		if (RPerl__DEBUG) { fprintf(stderr, "in integer__bubblesort, top of while() loop, have integer__data_i = %d\n", integer__data_i); }
+//		if (RPerl__DEBUG) { fprintf(stderr, "in integer__bubblesort, top of while() loop, have integer__data_i_plus_1 = %d\n", integer__data_i_plus_1); }
+//		if (RPerl__DEBUG) { fprintf(stderr, "in integer__bubblesort, top of while() loop, have swap = %d\n", swap); }
 
 ////		$is_sorted = 1;
 		is_sorted = 1;
@@ -295,12 +292,12 @@ integer__array_ref integer__bubblesort(integer__array_ref integer__data)  // DEV
 ////		{
 		{
 ////#			print "in integer__bubblesort, inside for() loop, have \$i = $i\n" if $RPerl::DEBUG;
-//			if (RPerl__DEBUG2) { printf("in integer__bubblesort, top of for() loop, have i = %d\n", i); }
+//			if (RPerl__DEBUG2) { fprintf(stderr, "in integer__bubblesort, top of for() loop, have i = %d\n", i); }
 ////#			print "in integer__bubblesort, inside for() loop, have \$integer__data\n" . RPerl::DUMPER($integer__data) . "\n" if $RPerl::DEBUG;
-//			if (RPerl__DEBUG3) { printf("in integer__bubblesort, top of for() loop, have integer__data = %d\n", integer__data); }
-//			if (RPerl__DEBUG) { printf("in integer__bubblesort, top of for() loop, have integer__data_i = %d\n", integer__data_i); }
-//			if (RPerl__DEBUG) { printf("in integer__bubblesort, top of for() loop, have integer__data_i_plus_1 = %d\n", integer__data_i_plus_1); }
-//			if (RPerl__DEBUG) { printf("in integer__bubblesort, top of for() loop, have swap = %d\n", swap); }
+//			if (RPerl__DEBUG3) { fprintf(stderr, "in integer__bubblesort, top of for() loop, have integer__data = %d\n", integer__data); }
+//			if (RPerl__DEBUG) { fprintf(stderr, "in integer__bubblesort, top of for() loop, have integer__data_i = %d\n", integer__data_i); }
+//			if (RPerl__DEBUG) { fprintf(stderr, "in integer__bubblesort, top of for() loop, have integer__data_i_plus_1 = %d\n", integer__data_i_plus_1); }
+//			if (RPerl__DEBUG) { fprintf(stderr, "in integer__bubblesort, top of for() loop, have swap = %d\n", swap); }
 
 ////			# compare elements and swap if out-of-order, this is the core sort comparison
 ////			if ($integer__data->[$i] > $integer__data->[($i + 1)])
@@ -313,7 +310,7 @@ integer__array_ref integer__bubblesort(integer__array_ref integer__data)  // DEV
 ////			{
 			{
 ////#				print "in integer__bubblesort, inside for() loop, SWAPPED\n" if $RPerl::DEBUG;
-//				if (RPerl__DEBUG2) { printf("in integer__bubblesort, inside for() loop, SWAPPED\n"); }
+//				if (RPerl__DEBUG2) { fprintf(stderr, "in integer__bubblesort, inside for() loop, SWAPPED\n"); }
 ////				$is_sorted = 0;
 				is_sorted = 0;
 ////				$swap = $integer__data->[$i];
@@ -326,23 +323,23 @@ integer__array_ref integer__bubblesort(integer__array_ref integer__data)  // DEV
 				integer__data[(i + 1)] = swap;
 ////			}
 			}
-//			if (RPerl__DEBUG3) { printf("in integer__bubblesort, bottom of for() loop, have integer__data = %d\n", integer__data); }
-//			if (RPerl__DEBUG) { printf("in integer__bubblesort, bottom of for() loop, have integer__data_i = %d\n", integer__data_i); }
-//			if (RPerl__DEBUG) { printf("in integer__bubblesort, bottom of for() loop, have integer__data_i_plus_1 = %d\n", integer__data_i_plus_1); }
-//			if (RPerl__DEBUG) { printf("in integer__bubblesort, bottom of for() loop, have swap = %d\n", swap); }
+//			if (RPerl__DEBUG3) { fprintf(stderr, "in integer__bubblesort, bottom of for() loop, have integer__data = %d\n", integer__data); }
+//			if (RPerl__DEBUG) { fprintf(stderr, "in integer__bubblesort, bottom of for() loop, have integer__data_i = %d\n", integer__data_i); }
+//			if (RPerl__DEBUG) { fprintf(stderr, "in integer__bubblesort, bottom of for() loop, have integer__data_i_plus_1 = %d\n", integer__data_i_plus_1); }
+//			if (RPerl__DEBUG) { fprintf(stderr, "in integer__bubblesort, bottom of for() loop, have swap = %d\n", swap); }
 ////		}
 		}
-//		if (RPerl__DEBUG3) { printf("in integer__bubblesort, bottom of while() loop, have integer__data = %d\n", integer__data); }
-//		if (RPerl__DEBUG) { printf("in integer__bubblesort, bottom of while() loop, have integer__data_i = %d\n", integer__data_i); }
-//		if (RPerl__DEBUG) { printf("in integer__bubblesort, bottom of while() loop, have integer__data_i_plus_1 = %d\n", integer__data_i_plus_1); }
-//		if (RPerl__DEBUG) { printf("in integer__bubblesort, bottom of while() loop, have swap = %d\n", swap); }
+//		if (RPerl__DEBUG3) { fprintf(stderr, "in integer__bubblesort, bottom of while() loop, have integer__data = %d\n", integer__data); }
+//		if (RPerl__DEBUG) { fprintf(stderr, "in integer__bubblesort, bottom of while() loop, have integer__data_i = %d\n", integer__data_i); }
+//		if (RPerl__DEBUG) { fprintf(stderr, "in integer__bubblesort, bottom of while() loop, have integer__data_i_plus_1 = %d\n", integer__data_i_plus_1); }
+//		if (RPerl__DEBUG) { fprintf(stderr, "in integer__bubblesort, bottom of while() loop, have swap = %d\n", swap); }
 ////	}
 	}
 
-//	if (RPerl__DEBUG3) { printf("in integer__bubblesort, bottom of subroutine, have integer__data = %d\n", integer__data); }
-//	if (RPerl__DEBUG) { printf("in integer__bubblesort, bottom of subroutine, have integer__data_i = %d\n", integer__data_i); }
-//	if (RPerl__DEBUG) { printf("in integer__bubblesort, bottom of subroutine, have integer__data_i_plus_1 = %d\n", integer__data_i_plus_1); }
-//	if (RPerl__DEBUG) {  printf("in integer__bubblesort, bottom of subroutine, have swap = %d\n", swap); }
+//	if (RPerl__DEBUG3) { fprintf(stderr, "in integer__bubblesort, bottom of subroutine, have integer__data = %d\n", integer__data); }
+//	if (RPerl__DEBUG) { fprintf(stderr, "in integer__bubblesort, bottom of subroutine, have integer__data_i = %d\n", integer__data_i); }
+//	if (RPerl__DEBUG) { fprintf(stderr, "in integer__bubblesort, bottom of subroutine, have integer__data_i_plus_1 = %d\n", integer__data_i_plus_1); }
+//	if (RPerl__DEBUG) {  fprintf(stderr, "in integer__bubblesort, bottom of subroutine, have swap = %d\n", swap); }
 
 ////	# integer__data is now sorted via top-level nested iteration [O(n**2) total time, O(1) total extra space]
 ////	return $integer__data;
@@ -360,7 +357,7 @@ string integer__bubblesort__typetest0(integer__array_ref lucky_integers)
 	integer i;
 	for (i = 0;  i < how_lucky;  ++i)
 	{
-		printf("in CPPOPS_CPPTYPES integer__bubblesort__typetest0(), have lucky number %d/%d = %d, BATBAR\n", i, (how_lucky - 1), lucky_integers[i]);
+		fprintf(stderr, "in CPPOPS_CPPTYPES integer__bubblesort__typetest0(), have lucky number %d/%d = %d, BATBAR\n", i, (how_lucky - 1), lucky_integers[i]);
 	}
 	return(integer__array_ref__stringify(integer__bubblesort(lucky_integers)) + "CPPOPS_CPPTYPES");
 }

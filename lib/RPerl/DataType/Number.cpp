@@ -40,7 +40,7 @@ void number__CHECKTRACE(SV* possible_number, const char* variable_name, const ch
 
 // convert from (Perl SV containing number) to (C number)
 number XS_unpack_number(SV* input_sv) {
-printf("in CPPOPS_CPPTYPES XS_unpack_number(), top of subroutine\n");
+fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number(), top of subroutine\n");
 //	number__CHECK(input_sv);
 	number__CHECKTRACE(input_sv, "input_sv", "XS_unpack_number()");
 
@@ -49,7 +49,7 @@ printf("in CPPOPS_CPPTYPES XS_unpack_number(), top of subroutine\n");
 //	if (SvNOKp(input_sv)) { output_number = SvNV(input_sv); } else { croak("in CPPOPS_CPPTYPES XS_unpack_number(), input_sv was not a number"); }
 //	output_number = SvNV(input_sv);
 
-printf("in CPPOPS_CPPTYPES XS_unpack_number(), bottom of subroutine\n");
+fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number(), bottom of subroutine\n");
 
 	return((number)SvNV(input_sv));
 //	return(output_number);
@@ -57,13 +57,13 @@ printf("in CPPOPS_CPPTYPES XS_unpack_number(), bottom of subroutine\n");
 
 // convert from (C number) to (Perl SV containing number)
 void XS_pack_number(SV* output_sv, number input_number) {
-printf("in CPPOPS_CPPTYPES XS_pack_number(), top of subroutine\n");
-printf("in CPPOPS_CPPTYPES XS_pack_number(), received unformatted input_number = %Lf\n", input_number);
+fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number(), top of subroutine\n");
+fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number(), received unformatted input_number = %Lf\n", input_number);
 
 	sv_setsv(output_sv, sv_2mortal(newSVnv(input_number)));
 
-printf("in CPPOPS_CPPTYPES XS_pack_number(), have output_sv = '%s'\n", SvPV_nolen(output_sv));
-printf("in CPPOPS_CPPTYPES XS_pack_number(), bottom of subroutine\n");
+fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number(), have output_sv = '%s'\n", SvPV_nolen(output_sv));
+fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number(), bottom of subroutine\n");
 }
 
 # endif
@@ -78,14 +78,14 @@ SV* number__stringify(SV* input_number)
 {
 //	number__CHECK(input_number);
 	number__CHECKTRACE(input_number, "input_number", "number__stringify()");
-printf("in CPPOPS_PERLTYPES number__stringify(), top of subroutine, received unformatted input_number = %Lf\n", (number)SvNV(input_number));
+fprintf(stderr, "in CPPOPS_PERLTYPES number__stringify(), top of subroutine, received unformatted input_number = %Lf\n", (number)SvNV(input_number));
 
 	ostringstream output_stream;
 	output_stream.precision(std::numeric_limits<double>::digits10);
 	output_stream << (long double)SvNV(input_number);
 	return(newSVpv((const char *)((output_stream.str()).c_str()), 0));
 
-	// DEV NOTE: none of these printf()-type solutions count significant digits both before and after the decimal point,
+	// DEV NOTE: none of these fprintf(stderr, )-type solutions count significant digits both before and after the decimal point,
 	// so we fall back to utilizing C++ ostringstream which stringifies floating point numbers exactly the same as Perl (AFAICTSF)
 //	return(newSVpvf("%16.32Lf", (long double)SvNV(input_number)));
 //	return(newSVpvf("%"NVff"", SvNV(input_number)));
@@ -96,7 +96,7 @@ printf("in CPPOPS_PERLTYPES number__stringify(), top of subroutine, received unf
 
 string number__stringify(number input_number)
 {
-printf("in CPPOPS_CPPTYPES number__stringify(), top of subroutine, received unformatted input_number = %Lf\n", input_number);
+fprintf(stderr, "in CPPOPS_CPPTYPES number__stringify(), top of subroutine, received unformatted input_number = %Lf\n", input_number);
 	ostringstream output_stream;
 	output_stream.precision(std::numeric_limits<double>::digits10);
 	output_stream << input_number;
@@ -113,14 +113,14 @@ printf("in CPPOPS_CPPTYPES number__stringify(), top of subroutine, received unfo
 
 SV* number__typetest0() {
 	SV* retval = newSVnv((22.0 / 7.0) + number__OPS_TYPES_ID);
-printf("in CPPOPS_PERLTYPES number__typetest0(), have unformatted retval = %Lf\n", (number)SvNV(retval));
+fprintf(stderr, "in CPPOPS_PERLTYPES number__typetest0(), have unformatted retval = %Lf\n", (number)SvNV(retval));
 	return(retval);
 }
 
 SV* number__typetest1(SV* lucky_number) {
 //	number__CHECK(lucky_number);
 	number__CHECKTRACE(lucky_number, "lucky_number", "number__typetest1()");
-printf("in CPPOPS_PERLTYPES number__typetest1(), have received lucky_number = %Lf\n", (number)SvNV(lucky_number));
+fprintf(stderr, "in CPPOPS_PERLTYPES number__typetest1(), have received lucky_number = %Lf\n", (number)SvNV(lucky_number));
 	return(newSVnv((SvNV(lucky_number) * 2.0) + number__OPS_TYPES_ID));
 }
 
@@ -128,12 +128,12 @@ printf("in CPPOPS_PERLTYPES number__typetest1(), have received lucky_number = %L
 
 number number__typetest0() {
 	number retval = (22.0 / 7.0) + number__OPS_TYPES_ID;
-printf("in CPPOPS_CPPTYPES number__typetest0(), have unformatted retval = %Lf\n", retval);
+fprintf(stderr, "in CPPOPS_CPPTYPES number__typetest0(), have unformatted retval = %Lf\n", retval);
 	return(retval);
 }
 
 number number__typetest1(number lucky_number) {
-	printf("in CPPOPS_CPPTYPES number__typetest1(), received unformatted lucky_number = %Lf\n", lucky_number);
+	fprintf(stderr, "in CPPOPS_CPPTYPES number__typetest1(), received unformatted lucky_number = %Lf\n", lucky_number);
 	return((lucky_number * 2.0) + number__OPS_TYPES_ID);
 }
 

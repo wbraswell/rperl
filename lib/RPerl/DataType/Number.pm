@@ -41,7 +41,7 @@ package RPerl::DataType::Number;
 use parent ('RPerl::DataType::Scalar');
 use RPerl::DataType::Scalar;
 use RPerl::DataType::String;    # need string type
-use RPerl::DataType::Integer; # need integer type, normally included by types.pm but put here in case we don't use types.pm
+use RPerl::DataType::Integer; # need integer type, normally included by rperltypes.pm but put here in case we don't use rperltypes.pm
 
 # [[[ TYPE-CHECKING ]]]
 our void $number__CHECK = sub {
@@ -89,7 +89,7 @@ our string $number__stringify = sub {
     #    number__CHECK($input_number);
     number__CHECKTRACE( $input_number, '$input_number',
         'number__stringify()' );
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES number__stringify(), bottom of subroutine, received \$input_number = $input_number\n"
         or croak();
     return ("$input_number");
@@ -98,7 +98,7 @@ our string $number__stringify = sub {
 # [[[ TYPE TESTING ]]]
 our number $number__typetest0 = sub {
     my number $retval = ( 22 / 7 ) + $number__OPS_TYPES_ID; # return floating-point number value
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES number__typetest0(), have \$retval = $retval\n"
         or croak();
     return ($retval);
@@ -109,7 +109,7 @@ our number $number__typetest1 = sub {
     #    number__CHECK($lucky_number);
     number__CHECKTRACE( $lucky_number, '$lucky_number',
         'number__typetest1()' );
-    print
+    print STDERR
         'in PERLOPS_PERLTYPES number__typetest1(), received $lucky_number = '
         . number__stringify($lucky_number) . "\n"
         or croak();

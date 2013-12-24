@@ -2,7 +2,7 @@
 using std::cout;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_h
-#define __CPP__INCLUDED__RPerl__DataType__Integer_h 0.003002
+#define __CPP__INCLUDED__RPerl__DataType__Integer_h 0.003_002
 
 #include <types_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 #include <RPerl/DataType/String.cpp>  // string types used in stringify_*() subroutines

@@ -4,18 +4,13 @@
 ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted control characters, sigils, and regexes
 use strict;
 use warnings;
-use version; our $VERSION = -0.000_013;
+use version; our $VERSION = 0.000_014;
 
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
 
-#=disable
-# SUPPRESS OUTPUT FROM INDIVIDUAL TESTS, EXCLUDING TESTS INSIDE BEGIN{} BLOCKS
-# order is BEGIN, UNITCHECK, CHECK, INIT, END; CHECK here suppresses Inline compile output from including HelperFunctions_cpp.pm
-#=cut
-
-use Test::More; # tests => 66;
+use Test::More;    # tests => 66;
 use Test::Exception;
 use Carp;
 
@@ -61,7 +56,8 @@ BEGIN {
 for my $i ( 0 .. 2 ) {
 
     #for my $i ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
-    print "in 08_precompiled_sort.t, top of for() loop, have \$i = $i\n"
+    print STDERR
+        "in 08_precompiled_sort.t, top of for() loop, have \$i = $i\n"
         or croak;    # no effect if suppressing output!
     my $OPS_TYPES;
 
@@ -175,8 +171,8 @@ for my $i ( 0 .. 2 ) {
         );
 
         lives_ok(
-            sub { types::types_enable('PERL') },
-            q{types::types_enable('PERL') lives}
+            sub { rperltypes::types_enable('PERL') },
+            q{rperltypes::types_enable('PERL') lives}
         );
 
         # Bubblesort: C++ use, load, link
@@ -281,8 +277,8 @@ for my $i ( 0 .. 2 ) {
             "\n[[[ Beginning RPerl's C-Data Mode Pre-Compiled Sort Tests, RPerl Type System Using C++ Data Types & C++ Operations ]]]\n "
         );
         lives_ok(
-            sub { types::types_enable('CPP') },
-            q{types::types_enable('CPP') lives}
+            sub { rperltypes::types_enable('CPP') },
+            q{rperltypes::types_enable('CPP') lives}
         );
 
         # force reload and relink
@@ -386,7 +382,10 @@ for my $i ( 0 .. 2 ) {
     lives_and(    # TIVALSOBU21
         sub {
             is_deeply(
-                eval { my $retval = integer__bubblesort( [ reverse 0 .. 7 ] ); return $retval; }, # DEV NOTE: does different things to Perl stack than non-eval
+                eval {
+                    my $retval = integer__bubblesort( [ reverse 0 .. 7 ] );
+                    return $retval;
+                }, # DEV NOTE: does different things to Perl stack than non-eval
                 [ 0 .. 7 ],
                 q{TIVALSOBU21 eval { my $retval = integer__bubblesort( [ reverse 0 .. 7 ] ); return $retval; } returns correct value}
             );
@@ -396,8 +395,7 @@ for my $i ( 0 .. 2 ) {
 
     lives_and(     # TIVALSOBU30
         sub {
-            is(
-                integer__bubblesort__typetest0( [ reverse 0 .. 7 ] ),
+            is( integer__bubblesort__typetest0( [ reverse 0 .. 7 ] ),
                 '[0, 1, 2, 3, 4, 5, 6, 7]' . $OPS_TYPES,
                 q{TIVALSOBU30 integer__bubblesort__typetest0([reverse 0 .. 7]) returns correct value}
             );
@@ -406,8 +404,12 @@ for my $i ( 0 .. 2 ) {
     );
     lives_and(     # TIVALSOBU31
         sub {
-            is(
-            eval { my $retval = integer__bubblesort__typetest0( [ reverse 0 .. 7 ] ); return $retval; }, # DEBUG TEMP: works for weird multi-return values in CPPOPS_PERLTYPES
+            is( eval {
+                    my $retval
+                        = integer__bubblesort__typetest0(
+                        [ reverse 0 .. 7 ] );
+                    return $retval;
+                }, # DEBUG TEMP: works for weird multi-return values in CPPOPS_PERLTYPES
                 '[0, 1, 2, 3, 4, 5, 6, 7]' . $OPS_TYPES,
                 q{TIVALSOBU31 eval { my $retval = integer__bubblesort__typetest0( [ reverse 0 .. 7 ] ); return $retval; } returns correct value}
             );

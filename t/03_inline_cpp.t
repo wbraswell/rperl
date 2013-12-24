@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use version; our $VERSION = -0.001_000;
+use version; our $VERSION = 0.001_000;
 
 use Test::More; # tests => 20;
 use Test::Exception;
@@ -97,8 +97,8 @@ using namespace std;
 /* Abstract class (interface) */
 class Object {
 	public:
-		virtual void print() { cout << "Object (" << this << ")" << endl; }
-		virtual char* nonprint() { ostringstream oretval;  oretval << "Object (" << this << ")";  return((char*)oretval.str().c_str()); }
+		virtual void print STDERR() { cout << "Object (" << this << ")" << endl; }
+		virtual char* nonprint STDERR() { ostringstream oretval;  oretval << "Object (" << this << ")";  return((char*)oretval.str().c_str()); }
 		virtual void info() = 0;
 		virtual bool isa(char *klass) = 0;
 		virtual bool can(char *method) = 0;
@@ -107,11 +107,11 @@ class Airplane : public Object {
 	public:
 		Airplane() {}
 		~Airplane() {}
-		virtual void info() { print(); }
+		virtual void info() { print STDERR(); }
 		virtual bool isa(char *klass) { return strcmp(klass, "Object")==0; }
 		virtual bool can(char *method) {
 			bool yes = false;
-			yes |= strcmp(method, "print")==0;
+			yes |= strcmp(method, "print STDERR")==0;
 			yes |= strcmp(method, "info")==0;
 			yes |= strcmp(method, "isa")==0;
 			yes |= strcmp(method, "can")==0;
@@ -136,7 +136,7 @@ lives_and(
 );
 my $airplane_call_eval_string = <<'EOF';
 my $plane = new Airplane;
-my $plane_retval1 = $plane->nonprint;
+my $plane_retval1 = $plane->nonprint STDERR;
 my $plane_retval2 = '';
 if ($plane->isa("Object")) { $plane_retval2 .= "Plane is an Object!"; }
 unless ($plane->can("fly")) { $plane_retval2 .= "  This plane sucks!"; }
@@ -288,20 +288,20 @@ my $queue_retval = '';
 $q->enqueue(50);
 $q->enqueue("Where am I?");
 $q->enqueue("In a queue.");
-#print "There are ", $q->size, " items in the queue\n";
+#print STDERR "There are ", $q->size, " items in the queue\n";
 while($q->size) {
-#	print "About to dequeue: ", $q->peek, "\n";
-#	print "Actually dequeued: ", $q->dequeue, "\n";
+#	print STDERR "About to dequeue: ", $q->peek, "\n";
+#	print STDERR "Actually dequeued: ", $q->dequeue, "\n";
 	$queue_retval .= $q->dequeue . '  ';
 }
 my $s = new Stack;
 my $stack_retval = '';
 $s->push(42);
 $s->push("What?");
-#print "There are ", $s->size, " items on the stack\n";
+#print STDERR "There are ", $s->size, " items on the stack\n";
 while($s->size) {
-#	print "About to pop: ", $s->peek, "\n";
-#	print "Actually popped: ", $s->pop, "\n";
+#	print STDERR "About to pop: ", $s->peek, "\n";
+#	print STDERR "Actually popped: ", $s->pop, "\n";
 	$stack_retval .= $s->pop . '  ';
 }
 return($queue_retval, $stack_retval);

@@ -2,7 +2,7 @@
 //using std::cout;  using std::endl;  // not needed for integer?
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_cpp
-#define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 0.003002
+#define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 0.003_002
 
 #include <RPerl/DataType/Integer.h>		// -> NULL (relies on native C type)
 
@@ -40,7 +40,7 @@ void CHECKTRACE(SV* possible_integer, const char* variable_name, const char* sub
 
 // convert from (Perl SV containing integer) to (C integer)
 integer XS_unpack_integer(SV* input_sv) {
-printf("in CPPOPS_CPPTYPES XS_unpack_integer(), top of subroutine\n");
+fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_integer(), top of subroutine\n");
 //	integer__CHECK(input_sv);
 	integer__CHECKTRACE(input_sv, "input_sv", "XS_unpack_integer()");
 
@@ -49,7 +49,7 @@ printf("in CPPOPS_CPPTYPES XS_unpack_integer(), top of subroutine\n");
 //	if (SvIOKp(input_sv)) { output_integer = SvIV(input_sv); } else { croak("in CPPOPS_CPPTYPES XS_unpack_integer(), input_sv was not an integer"); }
 //	output_integer = SvIV(input_sv);
 
-printf("in CPPOPS_CPPTYPES XS_unpack_integer(), bottom of subroutine\n");
+fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_integer(), bottom of subroutine\n");
 
 	return((integer)SvIV(input_sv));
 //	return(output_integer);
@@ -57,13 +57,13 @@ printf("in CPPOPS_CPPTYPES XS_unpack_integer(), bottom of subroutine\n");
 
 // convert from (C integer) to (Perl SV containing integer)
 void XS_pack_integer(SV* output_sv, integer input_integer) {
-printf("in CPPOPS_CPPTYPES XS_pack_integer(), top of subroutine\n");
-printf("in CPPOPS_CPPTYPES XS_pack_integer(), received input_integer = %d\n", input_integer);
+fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer(), top of subroutine\n");
+fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer(), received input_integer = %d\n", input_integer);
 
 	sv_setsv(output_sv, sv_2mortal(newSViv(input_integer)));
 
-printf("in CPPOPS_CPPTYPES XS_pack_integer(), have output_sv = '%s'\n", SvPV_nolen(output_sv));
-printf("in CPPOPS_CPPTYPES XS_pack_integer(), bottom of subroutine\n");
+fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer(), have output_sv = '%s'\n", SvPV_nolen(output_sv));
+fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer(), bottom of subroutine\n");
 }
 
 # endif
@@ -78,7 +78,7 @@ SV* integer__stringify(SV* input_integer)
 {
 //	integer__CHECK(input_integer);
 	integer__CHECKTRACE(input_integer, "input_integer", "integer__stringify()");
-printf("in CPPOPS_PERLTYPES integer__stringify(), bottom of subroutine, received input_integer = %d\n", (integer)SvIV(input_integer));
+fprintf(stderr, "in CPPOPS_PERLTYPES integer__stringify(), bottom of subroutine, received input_integer = %d\n", (integer)SvIV(input_integer));
 	return(newSVpvf("%d", (integer)SvIV(input_integer)));
 }
 
@@ -86,7 +86,7 @@ printf("in CPPOPS_PERLTYPES integer__stringify(), bottom of subroutine, received
 
 string integer__stringify(integer input_integer)
 {
-printf("in CPPOPS_CPPTYPES integer__stringify(), top of subroutine, received input_integer = %d\n", input_integer);
+fprintf(stderr, "in CPPOPS_CPPTYPES integer__stringify(), top of subroutine, received input_integer = %d\n", input_integer);
 	string output_string = "";
 	sprintf((char*)output_string.c_str(), "%d", input_integer);
 	return(output_string);
@@ -102,14 +102,14 @@ printf("in CPPOPS_CPPTYPES integer__stringify(), top of subroutine, received inp
 
 SV* integer__typetest0() {
 	SV* retval = newSViv((21 / 7) + integer__OPS_TYPES_ID);
-printf("in CPPOPS_PERLTYPES integer__typetest0(), have retval = %d\n", (integer)SvIV(retval));
+fprintf(stderr, "in CPPOPS_PERLTYPES integer__typetest0(), have retval = %d\n", (integer)SvIV(retval));
 	return(retval);
 }
 
 SV* integer__typetest1(SV* lucky_integer) {
 //	integer__CHECK(lucky_integer);
 	integer__CHECKTRACE(lucky_integer, "lucky_integer", "integer__typetest1()");
-printf("in CPPOPS_PERLTYPES integer__typetest1(), received lucky_integer = %d\n", (integer)SvIV(lucky_integer));
+fprintf(stderr, "in CPPOPS_PERLTYPES integer__typetest1(), received lucky_integer = %d\n", (integer)SvIV(lucky_integer));
 	return(newSViv((SvIV(lucky_integer) * 2) + integer__OPS_TYPES_ID));
 }
 
@@ -117,12 +117,12 @@ printf("in CPPOPS_PERLTYPES integer__typetest1(), received lucky_integer = %d\n"
 
 integer integer__typetest0() {
 	integer retval = (21 / 7) + integer__OPS_TYPES_ID;
-printf("in CPPOPS_CPPTYPES integer__typetest0(), have retval = %d\n", retval);
+fprintf(stderr, "in CPPOPS_CPPTYPES integer__typetest0(), have retval = %d\n", retval);
 	return(retval);
 }
 
 integer integer__typetest1(integer lucky_integer) {
-printf("in CPPOPS_CPPTYPES integer__typetest1(), received lucky_integer = %d\n", lucky_integer);
+fprintf(stderr, "in CPPOPS_CPPTYPES integer__typetest1(), received lucky_integer = %d\n", lucky_integer);
 	return((lucky_integer * 2) + integer__OPS_TYPES_ID);
 }
 

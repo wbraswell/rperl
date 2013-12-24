@@ -7,7 +7,7 @@
 package RPerl::DataStructure::Array::SubTypes;
 use strict;
 use warnings;
-use version; our $VERSION = 0.003007;
+use version; our $VERSION = 0.003_007;
 use Carp;
 
 # [[[ ARRAYS ]]]
@@ -113,7 +113,7 @@ use Carp;
 our string $integer__array_ref__stringify = sub {
     ( my $input_av_ref ) = @_;
 
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES integer__array_ref__stringify(), top of subroutine\n"
         or croak();
 
@@ -130,7 +130,7 @@ our string $integer__array_ref__stringify = sub {
     @input_av        = @{$input_av_ref};
     $input_av_length = scalar @input_av;
 
-#	print "in PERLOPS_PERLTYPES integer__array_ref__stringify(), have \$input_av_length = $input_av_length\n";
+#	print STDERR "in PERLOPS_PERLTYPES integer__array_ref__stringify(), have \$input_av_length = $input_av_length\n";
 
     $output_sv = '[';
 
@@ -152,10 +152,10 @@ our string $integer__array_ref__stringify = sub {
 
     $output_sv .= ']';
 
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES integer__array_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n"
         or croak();
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES integer__array_ref__stringify(), bottom of subroutine\n"
         or croak();
 
@@ -180,14 +180,14 @@ our string $integer__array_ref__typetest0 = sub {
             "\$lucky_integer at index $i",
             'integer__array_ref__typetest0()'
         );
-        print
+        print STDERR
             "in PERLOPS_PERLTYPES integer__array_ref__typetest0(), have lucky integer $i/"
             . ( $how_lucky - 1 ) . ' = '
             . $lucky_integers->[$i]
             . ", BARBAT\n"
             or croak();
     }
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES integer__array_ref__typetest0(), bottom of subroutine\n";
     return ( integer__array_ref__stringify($lucky_integers)
             . 'PERLOPS_PERLTYPES' );
@@ -202,7 +202,7 @@ our integer__array_ref $integer__array_ref__typetest1 = sub {
     my integer__array_ref $new_array = [];
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $new_array->[$i] = $i * 5;
-        print
+        print STDERR
             "in PERLOPS_PERLTYPES integer__array_ref__typetest1(), setting element $i/"
             . ( $my_size - 1 ) . ' = '
             . $new_array->[$i]
@@ -355,7 +355,7 @@ use Carp;
 our string $number__array_ref__stringify = sub {
     ( my $input_av_ref ) = @_;
 
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES number__array_ref__stringify(), top of subroutine\n"
         or croak();
 
@@ -372,7 +372,7 @@ our string $number__array_ref__stringify = sub {
     @input_av        = @{$input_av_ref};
     $input_av_length = scalar @input_av;
 
-#	print "in PERLOPS_PERLTYPES number__array_ref__stringify(), have \$input_av_length = $input_av_length\n";
+#	print STDERR "in PERLOPS_PERLTYPES number__array_ref__stringify(), have \$input_av_length = $input_av_length\n";
 
     $output_sv = '[';
 
@@ -394,10 +394,10 @@ our string $number__array_ref__stringify = sub {
 
     $output_sv .= ']';
 
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES number__array_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n"
         or croak();
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES number__array_ref__stringify(), bottom of subroutine\n"
         or croak();
 
@@ -422,14 +422,14 @@ our string $number__array_ref__typetest0 = sub {
             "\$lucky_number at index $i",
             'number__array_ref__typetest0()'
         );
-        print
+        print STDERR
             "in PERLOPS_PERLTYPES number__array_ref__typetest0(), have lucky number $i/"
             . ( $how_lucky - 1 ) . ' = '
             . $lucky_numbers->[$i]
             . ", BARBAZ\n"
             or croak();
     }
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES number__array_ref__typetest0(), bottom of subroutine\n";
     return (
         number__array_ref__stringify($lucky_numbers) . 'PERLOPS_PERLTYPES' );
@@ -444,7 +444,7 @@ our number__array_ref $number__array_ref__typetest1 = sub {
     my number__array_ref $new_array = [];
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $new_array->[$i] = $i * 5.123456789;
-        print
+        print STDERR
             "in PERLOPS_PERLTYPES number__array_ref__typetest1(), setting element $i/"
             . ( $my_size - 1 ) . ' = '
             . $new_array->[$i]
@@ -597,7 +597,7 @@ use Carp;
 our string $string__array_ref__stringify = sub {
     ( my $input_av_ref ) = @_;
 
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES string__array_ref__stringify(), top of subroutine\n"
         or croak();
 
@@ -614,7 +614,7 @@ our string $string__array_ref__stringify = sub {
     @input_av        = @{$input_av_ref};
     $input_av_length = scalar @input_av;
 
-#	print "in PERLOPS_PERLTYPES string__array_ref__stringify(), have \$input_av_length = $input_av_length\n";
+#	print STDERR "in PERLOPS_PERLTYPES string__array_ref__stringify(), have \$input_av_length = $input_av_length\n";
 
     $output_sv = '[';
 
@@ -638,10 +638,10 @@ our string $string__array_ref__stringify = sub {
 
     $output_sv .= ']';
 
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES string__array_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n"
         or croak();
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES string__array_ref__stringify(), bottom of subroutine\n"
         or croak();
 
@@ -666,14 +666,14 @@ our string $string__array_ref__typetest0 = sub {
             "\$person at index $i",
             'string__array_ref__typetest0()'
         );
-        print
+        print STDERR
             "in PERLOPS_PERLTYPES string__array_ref__typetest0(), have person $i/"
             . ( $how_crowded - 1 ) . ' = '
             . $people->[$i]
             . ", BARBAR\n"
             or croak();
     }
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES string__array_ref__typetest0(), bottom of subroutine\n";
     return ( string__array_ref__stringify($people) . 'PERLOPS_PERLTYPES' );
 };
@@ -688,7 +688,7 @@ our string__array_ref $string__array_ref__typetest1 = sub {
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $new_array->[$i]
             = "Jeffy Ten! $i/" . ( $my_size - 1 ) . ' PERLOPS_PERLTYPES';
-        print
+        print STDERR
             "in PERLOPS_PERLTYPES string__array_ref__typetest1(), bottom of for() loop, have i = $i, just set another Jeffy, BARBAR\n"
             or croak();
     }

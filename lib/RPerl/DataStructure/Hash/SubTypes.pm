@@ -6,7 +6,7 @@
 package RPerl::DataStructure::Hash::SubTypes;
 use strict;
 use warnings;
-use version; our $VERSION = 0.003002;
+use version; our $VERSION = 0.003_002;
 use Carp;
 
 # [[[ HASHES ]]]
@@ -112,7 +112,7 @@ use Carp;
 our string $integer__hash_ref__stringify = sub {
     ( my $input_hv_ref ) = @_;
 
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), top of subroutine\n"
         or croak();
 
@@ -130,7 +130,7 @@ our string $integer__hash_ref__stringify = sub {
     %input_hv = %{$input_hv_ref};
 
 #	$input_hv_length = scalar keys %input_hv;
-#	print "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), have \$input_hv_length = $input_hv_length\n";
+#	print STDERR "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), have \$input_hv_length = $input_hv_length\n";
 
     $output_sv = '{';
 
@@ -154,10 +154,10 @@ our string $integer__hash_ref__stringify = sub {
 
     $output_sv .= '}';
 
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n"
         or croak();
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), bottom of subroutine\n"
         or croak();
 
@@ -183,13 +183,13 @@ our string $integer__hash_ref__typetest0 = sub {
             "\$lucky_integer at key '$key'",
             'integer__hash_ref__typetest0()'
         );
-        print
+        print STDERR
             "in PERLOPS_PERLTYPES integer__hash_ref__typetest0(), have lucky integer '$key' => "
             . $lucky_integer
             . ", BARSTOOL\n"
             or croak();
     }
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES integer__hash_ref__typetest0(), bottom of subroutine\n";
     return (
         integer__hash_ref__stringify($lucky_integers) . 'PERLOPS_PERLTYPES' );
@@ -206,7 +206,7 @@ our integer__hash_ref $integer__hash_ref__typetest1 = sub {
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $temp_key = 'PERLOPS_PERLTYPES_funkey' . $i;
         $new_hash->{$temp_key} = $i * 5;
-        print
+        print STDERR
             "in PERLOPS_PERLTYPES integer__hash_ref__typetest1(), setting entry '$temp_key' => "
             . $new_hash->{$temp_key}
             . ", BARSTOOL\n"
@@ -358,7 +358,7 @@ use Carp;
 our string $number__hash_ref__stringify = sub {
     ( my $input_hv_ref ) = @_;
 
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES number__hash_ref__stringify(), top of subroutine\n"
         or croak();
 
@@ -376,7 +376,7 @@ our string $number__hash_ref__stringify = sub {
     %input_hv = %{$input_hv_ref};
 
 #	$input_hv_length = scalar keys %input_hv;
-#	print "in PERLOPS_PERLTYPES number__hash_ref__stringify(), have \$input_hv_length = $input_hv_length\n";
+#	print STDERR "in PERLOPS_PERLTYPES number__hash_ref__stringify(), have \$input_hv_length = $input_hv_length\n";
 
     $output_sv = '{';
 
@@ -400,10 +400,10 @@ our string $number__hash_ref__stringify = sub {
 
     $output_sv .= '}';
 
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES number__hash_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n"
         or croak();
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES number__hash_ref__stringify(), bottom of subroutine\n"
         or croak();
 
@@ -429,7 +429,7 @@ our string $number__hash_ref__typetest0 = sub {
             "\$lucky_number at key '$key'",
             'number__hash_ref__typetest0()'
         );
-        print
+        print STDERR
             "in PERLOPS_PERLTYPES number__hash_ref__typetest0(), have lucky number '$key' => "
             . $lucky_number
             . ", BARSTOOL\n"
@@ -450,7 +450,7 @@ our number__hash_ref $number__hash_ref__typetest1 = sub {
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $temp_key = 'PERLOPS_PERLTYPES_funkey' . $i;
         $new_hash->{$temp_key} = $i * 5.123456789;
-        print
+        print STDERR
             "in PERLOPS_PERLTYPES number__hash_ref__typetest1(), setting entry '$temp_key' => "
             . $new_hash->{$temp_key}
             . ", BARSTOOL\n"
@@ -602,7 +602,7 @@ use Carp;
 our string $string__hash_ref__stringify = sub {
     ( my $input_hv_ref ) = @_;
 
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES string__hash_ref__stringify(), top of subroutine\n"
         or croak();
 
@@ -620,7 +620,7 @@ our string $string__hash_ref__stringify = sub {
     %input_hv = %{$input_hv_ref};
 
 #	$input_hv_length = scalar keys %input_hv;
-#	print "in PERLOPS_PERLTYPES string__hash_ref__stringify(), have \$input_hv_length = $input_hv_length\n";
+#	print STDERR "in PERLOPS_PERLTYPES string__hash_ref__stringify(), have \$input_hv_length = $input_hv_length\n";
 
     $output_sv = '{';
 
@@ -646,10 +646,10 @@ our string $string__hash_ref__stringify = sub {
 
     $output_sv .= '}';
 
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES string__hash_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n"
         or croak();
-    print
+    print STDERR
         "in PERLOPS_PERLTYPES string__hash_ref__stringify(), bottom of subroutine\n"
         or croak();
 
@@ -675,7 +675,7 @@ our string $string__hash_ref__typetest0 = sub {
             "\$person at key '$key'",
             'string__hash_ref__typetest0()'
         );
-        print
+        print STDERR
             "in PERLOPS_PERLTYPES string__hash_ref__typetest0(), have person '$key' => '"
             . $person
             . "', STARBOOL\n"
@@ -694,7 +694,7 @@ our string__hash_ref $string__hash_ref__typetest1 = sub {
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $people->{ 'PERLOPS_PERLTYPES_Luker_key' . $i }
             = q{Jeffy Ten! } . $i . q{/} . ( $my_size - 1 );
-        print
+        print STDERR
             "in PERLOPS_PERLTYPES string__hash_ref__typetest1(), bottom of for() loop, have i = $i, just set another Jeffy!\n"
             or croak();
     }

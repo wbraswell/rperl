@@ -5,14 +5,11 @@
 ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted control characters, sigils, and regexes
 use strict;
 use warnings;
-use version; our $VERSION = -0.003_002;
+use version; our $VERSION = 0.003_002;
 
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
-
-# SUPPRESS OUTPUT FROM INDIVIDUAL TESTS, EXCLUDING TESTS INSIDE BEGIN{} BLOCKS
-# order is BEGIN, UNITCHECK, CHECK, INIT, END; CHECK here suppresses Inline compile output from including HelperFunctions_cpp.pm from INIT in Array.pm
 
 use Test::More; # tests => 277;
 use Test::Exception;
@@ -58,7 +55,7 @@ BEGIN {
 sub string__dumperify {
     ( my string $input_string ) = @_;
 
-#    print "in 04_type_scalar.t string__dumperify(), received have \$input_string =\n$input_string\n\n" or croak();
+#    print STDERR "in 04_type_scalar.t string__dumperify(), received have \$input_string =\n$input_string\n\n" or croak();
     $input_string = Dumper( [$input_string] );
     $input_string =~ s/^\s+|\s+$//xmsg;    # strip leading whitespace
     my @input_string_split = split "\n", $input_string;
@@ -72,7 +69,7 @@ sub string__dumperify {
 
 # loop 3 times, once for each mode: Pure-Perl, RPerl Perl-Data, and RPerl C-Data
 for my $OPS_TYPES_ID ( 0 .. 2 ) {
-    print
+    print STDERR
         "in 04_type_scalar.t, top of for() loop, have \$OPS_TYPES_ID = $OPS_TYPES_ID\n"
         or croak;    # no effect if suppressing output!
     my $OPS_TYPES;
@@ -140,8 +137,8 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
 
 #		lives_ok(sub { types_enable('PERL') }, q{types_enable('PERL') lives});  # NEED FIX?  RPerl typed functions not working in types.pm, must call as normal Perl function
         lives_ok(
-            sub { types::types_enable('PERL') },
-            q{types::types_enable('PERL') lives}
+            sub { rperltypes::types_enable('PERL') },
+            q{rperltypes::types_enable('PERL') lives}
         );
 
         # Integer: C++ use, load, link
@@ -252,8 +249,8 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
             "\n[[[ Beginning RPerl's C-Data Mode Scalar Type Tests, RPerl Type System Using C++ Data Types & C++ Operations ]]]\n "
         );
         lives_ok(
-            sub { types::types_enable('CPP') },
-            q{types::types_enable('CPP') lives}
+            sub { rperltypes::types_enable('CPP') },
+            q{rperltypes::types_enable('CPP') lives}
         );
 
         # force reload and relink
