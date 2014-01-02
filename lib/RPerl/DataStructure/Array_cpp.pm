@@ -1,12 +1,12 @@
 package RPerl::DataStructure::Array_cpp;
 use strict;
 use warnings;
-use version; our $VERSION = 0.003_000;
+our $VERSION = 0.003_000;
 
 our $CPP_LOADED = 0;
 our $CPP_LINKED = 0;
-use parent ('RPerl::Class');
-use RPerl::Class;  use RPerl;
+use parent ('RPerl::CompileUnit::Module::Class');
+use RPerl::CompileUnit::Module::Class;  use RPerl;
 
 our void__method $cpp_load = sub {
 ;

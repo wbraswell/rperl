@@ -1,8 +1,8 @@
 ////use strict;  use warnings;
-using std::cout;  using std::endl;
+using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_cpp
-#define __CPP__INCLUDED__RPerl__DataType__String_cpp 0.003002
+#define __CPP__INCLUDED__RPerl__DataType__String_cpp 0.003_003
 
 #include <RPerl/DataType/String.h>		// -> NULL (relies on native C type)
 
@@ -80,7 +80,7 @@ SV* string__stringify(SV* input_sv)
 
 	input_sv_string = SvPV_nolen(input_sv);
 
-fprintf(stderr, "in CPPOPS_PERLTYPES string__stringify(), received input_sv_string =\n%s\n\n", input_sv_string.c_str());
+//fprintf(stderr, "in CPPOPS_PERLTYPES string__stringify(), received input_sv_string =\n%s\n\n", input_sv_string.c_str());
 
 	// escape all back-slash \ and single-quote ' characters with a back-slash \ character
 	input_sv_string = string(SvPV_nolen(input_sv));
@@ -99,7 +99,7 @@ fprintf(stderr, "in CPPOPS_PERLTYPES string__stringify(), received input_sv_stri
 
 	input_sv_string = "'" + input_sv_string + "'";
 
-fprintf(stderr, "in CPPOPS_PERLTYPES string__stringify(), bottom of subroutine, returning possibly-modified input_sv_string =\n%s\n\n", input_sv_string.c_str());
+//fprintf(stderr, "in CPPOPS_PERLTYPES string__stringify(), bottom of subroutine, returning possibly-modified input_sv_string =\n%s\n\n", input_sv_string.c_str());
 
 	return(newSVpvf("%s", input_sv_string.c_str()));
 }
@@ -108,7 +108,7 @@ fprintf(stderr, "in CPPOPS_PERLTYPES string__stringify(), bottom of subroutine, 
 
 string string__stringify(string input_string)
 {
-fprintf(stderr, "in CPPOPS_CPPTYPES string__stringify(), top of subroutine, received input_string =\n%s\n\n", input_string.c_str());
+//fprintf(stderr, "in CPPOPS_CPPTYPES string__stringify(), top of subroutine, received input_string =\n%s\n\n", input_string.c_str());
 
     size_t input_string_pos;
 
@@ -128,7 +128,7 @@ fprintf(stderr, "in CPPOPS_CPPTYPES string__stringify(), top of subroutine, rece
 
 	input_string = "'" + input_string + "'";
 
-fprintf(stderr, "in CPPOPS_CPPTYPES string__stringify(), bottom of subroutine, returning possibly-modified input_string =\n%s\n\n", input_string.c_str());
+//fprintf(stderr, "in CPPOPS_CPPTYPES string__stringify(), bottom of subroutine, returning possibly-modified input_string =\n%s\n\n", input_string.c_str());
 
 	return(input_string);
 }
@@ -142,15 +142,16 @@ fprintf(stderr, "in CPPOPS_CPPTYPES string__stringify(), bottom of subroutine, r
 # ifdef __PERL__TYPES
 
 SV* string__typetest0() {
-fprintf(stderr, "in CPPOPS_PERLTYPES string__typetest0()\n");
+//fprintf(stderr, "in CPPOPS_PERLTYPES string__typetest0()\n");
 	return(newSVpv("Spice CPPOPS_PERLTYPES", 0));
 }
 
 SV* string__typetest1(SV* lucky_string) {
 //	string__CHECK(lucky_string);
 	string__CHECKTRACE(lucky_string, "lucky_string", "string__typetest1()");
-//cout << "in CPPOPS_PERLTYPES string__typetest1(), received lucky_string '" << SvPV_nolen(lucky_string) << "'" << endl;
-fprintf(stderr, "in CPPOPS_PERLTYPES string__typetest1(), received lucky_string = '%s'\n", SvPV_nolen(lucky_string));
+//cout << "in CPPOPS_PERLTYPES string__typetest1(), received lucky_string '" << SvPV_nolen(lucky_string) << "'" << '\n';  cout.flush();  // DEV NOTE: must flush buffer to avoid endl over-flushing and out-of-order printing
+//cerr << "in CPPOPS_PERLTYPES string__typetest1(), received lucky_string '" << SvPV_nolen(lucky_string) << "'" << '\n';  // DEV NOTE: cerr doesn't have a buffer to flush
+//fprintf(stderr, "in CPPOPS_PERLTYPES string__typetest1(), received lucky_string = '%s'\n", SvPV_nolen(lucky_string));
 	return(newSVpvf("%s%s", SvPV_nolen(string__stringify(lucky_string)), " CPPOPS_PERLTYPES"));
 }
 
@@ -158,12 +159,12 @@ fprintf(stderr, "in CPPOPS_PERLTYPES string__typetest1(), received lucky_string 
 
 string string__typetest0() {
 	string retval = "Spice CPPOPS_CPPTYPES";
-fprintf(stderr, "in CPPOPS_CPPTYPES string__typetest0(), have retval = '%s'\n", retval.c_str());
+//fprintf(stderr, "in CPPOPS_CPPTYPES string__typetest0(), have retval = '%s'\n", retval.c_str());
 	return(retval);
 }
 
 string string__typetest1(string lucky_string) {
-fprintf(stderr, "in CPPOPS_CPPTYPES string__typetest1(), received lucky_string = '%s'\n", lucky_string.c_str());
+//fprintf(stderr, "in CPPOPS_CPPTYPES string__typetest1(), received lucky_string = '%s'\n", lucky_string.c_str());
 	return(string__stringify(lucky_string) + " CPPOPS_CPPTYPES");
 }
 

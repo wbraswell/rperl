@@ -4,7 +4,7 @@
 ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted control characters, sigils, and regexes
 use strict;
 use warnings;
-use version; our $VERSION = 0.003_003;
+our $VERSION = 0.004_000;
 
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
@@ -53,15 +53,15 @@ BEGIN {
 # [[[ TEST RUNLOOP ]]]
 
 # loop 3 times, once for each mode: Pure-Perl, RPerl Perl-Data, and RPerl C-Data
-for my $i ( 0 .. 2 ) {
-    print STDERR "in 06_type_hash.t, top of for() loop, have \$i = $i\n" or croak; # no effect if suppressing output!
+for my $OPS_TYPES_ID ( 0 .. 2 ) {
+#    print STDERR "in 06_type_hash.t, top of for() loop, have \$OPS_TYPES_ID = $OPS_TYPES_ID\n" or croak; # no effect if suppressing output!
     my $OPS_TYPES;
 
     # [[[ PERLOPS_PERLTYPES SETUP ]]]
     # [[[ PERLOPS_PERLTYPES SETUP ]]]
     # [[[ PERLOPS_PERLTYPES SETUP ]]]
 
-    if ( $i == 0 ) {
+    if ( $OPS_TYPES_ID == 0 ) {
         $OPS_TYPES = 'PERLOPS_PERLTYPES';
         diag(
             "\n[[[ Beginning RPerl's Pure-Perl Hash Type Tests, RPerl Type System Using Perl Data Types & Perl Operations ]]]\n "
@@ -122,7 +122,7 @@ for my $i ( 0 .. 2 ) {
     # [[[ CPPOPS_PERLTYPES SETUP ]]]
     # [[[ CPPOPS_PERLTYPES SETUP ]]]
 
-    elsif ( $i == 1 ) {
+    elsif ( $OPS_TYPES_ID == 1 ) {
         $OPS_TYPES = 'CPPOPS_PERLTYPES';
         diag(
             "\n[[[ Beginning RPerl's Perl-Data Mode Hash Type Tests, RPerl Type System Using Perl Data Types & C++ Operations ]]]\n "
@@ -280,32 +280,32 @@ for my $i ( 0 .. 2 ) {
 
     throws_ok(    # TIVHVRV00
         sub { integer__hash_ref__stringify() },
-        "/(EHVRV00.*$OPS_TYPES)|(Usage.*integer__hash_ref__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(EIVHVRV00.*$OPS_TYPES)|(Usage.*integer__hash_ref__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TIVHVRV00 integer__hash_ref__stringify() throws correct exception}
     );
     throws_ok(    # TIVHVRV01
         sub { integer__hash_ref__stringify(undef) },
-        "/EHVRV00.*$OPS_TYPES/",
+        "/EIVHVRV00.*$OPS_TYPES/",
         q{TIVHVRV01 integer__hash_ref__stringify(undef) throws correct exception}
     );
     throws_ok(    # TIVHVRV02
         sub { integer__hash_ref__stringify(2) },
-        "/EHVRV01.*$OPS_TYPES/",
+        "/EIVHVRV01.*$OPS_TYPES/",
         q{TIVHVRV02 integer__hash_ref__stringify(2) throws correct exception}
     );
     throws_ok(    # TIVHVRV03
         sub { integer__hash_ref__stringify(2.3) },
-        "/EHVRV01.*$OPS_TYPES/",
+        "/EIVHVRV01.*$OPS_TYPES/",
         q{TIVHVRV03 integer__hash_ref__stringify(2.3) throws correct exception}
     );
     throws_ok(    # TIVHVRV04
         sub { integer__hash_ref__stringify('2') },
-        "/EHVRV01.*$OPS_TYPES/",
+        "/EIVHVRV01.*$OPS_TYPES/",
         q{TIVHVRV04 integer__hash_ref__stringify('2') throws correct exception}
     );
     throws_ok(    # TIVHVRV05
         sub { integer__hash_ref__stringify( [2] ) },
-        "/EHVRV01.*$OPS_TYPES/",
+        "/EIVHVRV01.*$OPS_TYPES/",
         q{TIVHVRV05 integer__hash_ref__stringify([2]) throws correct exception}
     );
     throws_ok(    # TIVHVRV10
@@ -316,13 +316,13 @@ for my $i ( 0 .. 2 ) {
                     c_key => undef,
                     d_key => 23,
                     e_key => -877,
-                    f_key => 33,
+                    f_key => -33,
                     g_key => 1701
                 }
             );
         },
-        "/EIV00.*$OPS_TYPES/",
-        q{TIVHVRV10 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => undef, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
+        "/EIVHVRV02.*$OPS_TYPES/",
+        q{TIVHVRV10 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => undef, d_key => 23, e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
     );
     throws_ok(    # TIVHVRV11
         sub {
@@ -332,13 +332,13 @@ for my $i ( 0 .. 2 ) {
                     c_key => 42,
                     d_key => 23.3,
                     e_key => -877,
-                    f_key => 33,
+                    f_key => -33,
                     g_key => 1701
                 }
             );
         },
-        "/EIV01.*$OPS_TYPES/",
-        q{TIVHVRV11 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => 23.3, e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
+        "/EIVHVRV03.*$OPS_TYPES/",
+        q{TIVHVRV11 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => 23.3, e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
     );
     throws_ok(    # TIVHVRV12
         sub {
@@ -348,13 +348,13 @@ for my $i ( 0 .. 2 ) {
                     c_key => 42,
                     d_key => '23',
                     e_key => -877,
-                    f_key => 33,
+                    f_key => -33,
                     g_key => 1701
                 }
             );
         },
-        "/EIV01.*$OPS_TYPES/",
-        q{TIVHVRV12 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => '23', e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
+        "/EIVHVRV03.*$OPS_TYPES/",
+        q{TIVHVRV12 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => '23', e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
     );
     throws_ok(    # TIVHVRV13
         sub {
@@ -364,13 +364,13 @@ for my $i ( 0 .. 2 ) {
                     c_key => 42,
                     d_key => [23],
                     e_key => -877,
-                    f_key => 33,
+                    f_key => -33,
                     g_key => 1701
                 }
             );
         },
-        "/EIV01.*$OPS_TYPES/",
-        q{TIVHVRV13 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => [23], e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
+        "/EIVHVRV03.*$OPS_TYPES/",
+        q{TIVHVRV13 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => [23], e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
     );
     throws_ok(    # TIVHVRV14
         sub {
@@ -380,14 +380,14 @@ for my $i ( 0 .. 2 ) {
                     c_key => 42,
                     d_key => { a_subkey => 23 },
                     e_key => -877,
-                    f_key => 33,
+                    f_key => -33,
                     g_key => 1701
                 }
             );
         },
-        "/EIV01.*$OPS_TYPES/",
+        "/EIVHVRV03.*$OPS_TYPES/",
 
-#        q{TIVHVRV14 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => {a_subkey => 23}, e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
+#        q{TIVHVRV14 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => {a_subkey => 23}, e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
         q{TIVHVRV14 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => {a_subkey => 23}, ..., g_key => 1701}) throws correct exception}
     );
     lives_and(    # TIVHVRV20
@@ -408,26 +408,26 @@ for my $i ( 0 .. 2 ) {
                         c_key => 42,
                         d_key => 23,
                         e_key => -877,
-                        f_key => 33,
+                        f_key => -33,
                         g_key => 1701
                     }
                 ),
 
 # NEED FIX: replace ".*" near end of this & following regexes with syntax to match exactly 6 occurrences of ", "; (,\s)* and variations don't work?
-                q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2112\b)(?=.*'c_key' => 42\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => 33\b)(?=.*'g_key' => 1701\b).*\}$/m},
-                q{TIVHVRV21 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) returns correct value}
+                q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2112\b)(?=.*'c_key' => 42\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => -33\b)(?=.*'g_key' => 1701\b).*\}$/m},
+                q{TIVHVRV21 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => -33, g_key => 1701}) returns correct value}
             );
         },
-        q{TIVHVRV21 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) lives}
+        q{TIVHVRV21 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => -33, g_key => 1701}) lives}
     );
     throws_ok(    # TIVHVRV30
         sub { integer__hash_ref__typetest0() },
-        "/(EHVRV00.*$OPS_TYPES)|(Usage.*integer__hash_ref__typetest0)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(EIVHVRV00.*$OPS_TYPES)|(Usage.*integer__hash_ref__typetest0)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TIVHVRV30 integer__hash_ref__typetest0() throws correct exception}
     );
     throws_ok(    # TIVHVRV31
         sub { integer__hash_ref__typetest0(2) },
-        "/EHVRV01.*$OPS_TYPES/",
+        "/EIVHVRV01.*$OPS_TYPES/",
         q{TIVHVRV31 integer__hash_ref__typetest0(2) throws correct exception}
     );
     throws_ok(    # TIVHVRV32
@@ -439,12 +439,12 @@ for my $i ( 0 .. 2 ) {
                     'answer'       => 42,
                     'fnord'        => 23,
                     'units'        => -877,
-                    'degree'       => 33,
+                    'degree'       => -33,
                     'ncc'          => 1701
                 }
             );
         },
-        "/EIV00.*$OPS_TYPES/",
+        "/EIVHVRV02.*$OPS_TYPES/",
         q{TIVHVRV32 integer__hash_ref__typetest0({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => undef, ..., 'ncc' => 1701}) throws correct exception}
     );
     throws_ok(    # TIVHVRV33
@@ -456,12 +456,12 @@ for my $i ( 0 .. 2 ) {
                     'answer'       => 42,
                     'fnord'        => 23,
                     'units'        => -877,
-                    'degree'       => 33,
+                    'degree'       => -33,
                     'ncc'          => 1701
                 }
             );
         },
-        "/EIV01.*$OPS_TYPES/",
+        "/EIVHVRV03.*$OPS_TYPES/",
         q{TIVHVRV33 integer__hash_ref__typetest0({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => 'abcdefg', ..., 'ncc' => 1701}) throws correct exception}
     );
     lives_and(    # TIVHVRV34
@@ -473,14 +473,14 @@ for my $i ( 0 .. 2 ) {
                         'answer' => 42,
                         'fnord'  => 23,
                         'units'  => -877,
-                        'degree' => 33,
+                        'degree' => -33,
                         'ncc'    => 1701
                     }
                 ),
-                q{/^\{(?=.*'binary' => 2\b)(?=.*'rush' => 2112\b)(?=.*'answer' => 42\b)(?=.*'fnord' => 23\b)(?=.*'units' => -877\b)(?=.*'degree' => 33\b)(?=.*'ncc' => 1701\b).*\}}
+                q{/^\{(?=.*'binary' => 2\b)(?=.*'rush' => 2112\b)(?=.*'answer' => 42\b)(?=.*'fnord' => 23\b)(?=.*'units' => -877\b)(?=.*'degree' => -33\b)(?=.*'ncc' => 1701\b).*\}}
                     . $OPS_TYPES . q{$/m},
 
-#                q{TIVHVRV34 integer__hash_ref__typetest0({'binary' => 2, 'rush' => 2112, 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => 33, 'ncc' => 1701}) returns correct value}
+#                q{TIVHVRV34 integer__hash_ref__typetest0({'binary' => 2, 'rush' => 2112, 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => -33, 'ncc' => 1701}) returns correct value}
                 q{TIVHVRV34 integer__hash_ref__typetest0({'binary' => 2, 'rush' => 2112, ..., 'ncc' => 1701}) returns correct value}
             );
         },
@@ -508,32 +508,32 @@ for my $i ( 0 .. 2 ) {
 
     throws_ok(    # TNVHVRV00
         sub { number__hash_ref__stringify() },
-        "/(EHVRV00.*$OPS_TYPES)|(Usage.*number__hash_ref__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(ENVHVRV00.*$OPS_TYPES)|(Usage.*number__hash_ref__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TNVHVRV00 number__hash_ref__stringify() throws correct exception}
     );
     throws_ok(    # TNVHVRV01
         sub { number__hash_ref__stringify(undef) },
-        "/EHVRV00.*$OPS_TYPES/",
+        "/ENVHVRV00.*$OPS_TYPES/",
         q{TNVHVRV01 number__hash_ref__stringify(undef) throws correct exception}
     );
     throws_ok(    # TNVHVRV02
         sub { number__hash_ref__stringify(2) },
-        "/EHVRV01.*$OPS_TYPES/",
+        "/ENVHVRV01.*$OPS_TYPES/",
         q{TNVHVRV02 number__hash_ref__stringify(2) throws correct exception}
     );
     throws_ok(    # TNVHVRV03
         sub { number__hash_ref__stringify(2.3) },
-        "/EHVRV01.*$OPS_TYPES/",
+        "/ENVHVRV01.*$OPS_TYPES/",
         q{TNVHVRV03 number__hash_ref__stringify(2.3) throws correct exception}
     );
     throws_ok(    # TNVHVRV04
         sub { number__hash_ref__stringify('2') },
-        "/EHVRV01.*$OPS_TYPES/",
+        "/ENVHVRV01.*$OPS_TYPES/",
         q{TNVHVRV04 number__hash_ref__stringify('2') throws correct exception}
     );
     throws_ok(    # TNVHVRV05
         sub { number__hash_ref__stringify( [2] ) },
-        "/EHVRV01.*$OPS_TYPES/",
+        "/ENVHVRV01.*$OPS_TYPES/",
         q{TNVHVRV05 number__hash_ref__stringify([2]) throws correct exception}
     );
     throws_ok(    # TNVHVRV10
@@ -544,13 +544,13 @@ for my $i ( 0 .. 2 ) {
                     c_key => undef,
                     d_key => 23,
                     e_key => -877,
-                    f_key => 33,
+                    f_key => -33,
                     g_key => 1701
                 }
             );
         },
-        "/ENV00.*$OPS_TYPES/",
-        q{TNVHVRV10 number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => undef, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
+        "/ENVHVRV02.*$OPS_TYPES/",
+        q{TNVHVRV10 number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => undef, d_key => 23, e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
     );
     throws_ok(    # TNVHVRV11
         sub {
@@ -560,13 +560,13 @@ for my $i ( 0 .. 2 ) {
                     c_key => 42.3,
                     d_key => '23',
                     e_key => -877,
-                    f_key => 33,
+                    f_key => -33,
                     g_key => 1701
                 }
             );
         },
-        "/ENV01.*$OPS_TYPES/",
-        q{TNVHVRV11 number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42.3, d_key => '23', e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
+        "/ENVHVRV03.*$OPS_TYPES/",
+        q{TNVHVRV11 number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42.3, d_key => '23', e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
     );
     throws_ok(    # TNVHVRV12
         sub {
@@ -576,13 +576,13 @@ for my $i ( 0 .. 2 ) {
                     c_key => 42.3,
                     d_key => [23],
                     e_key => -877,
-                    f_key => 33,
+                    f_key => -33,
                     g_key => 1701
                 }
             );
         },
-        "/ENV01.*$OPS_TYPES/",
-        q{TNVHVRV12 number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42.3, d_key => [23], e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
+        "/ENVHVRV03.*$OPS_TYPES/",
+        q{TNVHVRV12 number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42.3, d_key => [23], e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
     );
     throws_ok(    # TNVHVRV13
         sub {
@@ -592,14 +592,14 @@ for my $i ( 0 .. 2 ) {
                     c_key => 42.3,
                     d_key => { a_subkey => 23 },
                     e_key => -877,
-                    f_key => 33,
+                    f_key => -33,
                     g_key => 1701
                 }
             );
         },
-        "/ENV01.*$OPS_TYPES/",
+        "/ENVHVRV03.*$OPS_TYPES/",
 
-#        q{TNVHVRV13 number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42.3, d_key => {a_subkey => 23}, e_key => -877, f_key => 33, g_key => 1701}) throws correct exception}
+#        q{TNVHVRV13 number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42.3, d_key => {a_subkey => 23}, e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
         q{TNVHVRV13 number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42.3, d_key => {a_subkey => 23}, ..., g_key => 1701}) throws correct exception}
     );
     lives_and(    # TNVHVRV20
@@ -620,16 +620,16 @@ for my $i ( 0 .. 2 ) {
                         c_key => 42,
                         d_key => 23,
                         e_key => -877,
-                        f_key => 33,
+                        f_key => -33,
                         g_key => 1701
                     }
                 ),
 
-                q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2112\b)(?=.*'c_key' => 42\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => 33\b)(?=.*'g_key' => 1701\b).*\}$/m},
-                q{TNVHVRV21 number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) returns correct value}
+                q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2112\b)(?=.*'c_key' => 42\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => -33\b)(?=.*'g_key' => 1701\b).*\}$/m},
+                q{TNVHVRV21 number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => -33, g_key => 1701}) returns correct value}
             );
         },
-        q{TNVHVRV21 number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701}) lives}
+        q{TNVHVRV21 number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => -33, g_key => 1701}) lives}
     );
     lives_and(    # TNVHVRV22
         sub {
@@ -651,26 +651,26 @@ for my $i ( 0 .. 2 ) {
                         c_key => 42.4567,
                         d_key => 23.765444444444444444,
                         e_key => -877.5678,
-                        f_key => 33.876587658765875687658765,
+                        f_key => -33.876587658765875687658765,
                         g_key => 1701.6789
                     }
                 ),
-                q{/^\{(?=.*'a_key' => 2\.12344321123443\b)(?=.*'b_key' => 2112\.4321\b)(?=.*'c_key' => 42\.4567\b)(?=.*'d_key' => 23\.7654444444444\b)(?=.*'e_key' => -877\.5678\b)(?=.*'f_key' => 33\.8765876587659\b)(?=.*'g_key' => 1701\.6789\b).*\}$/m},
+                q{/^\{(?=.*'a_key' => 2\.12344321123443\b)(?=.*'b_key' => 2112\.4321\b)(?=.*'c_key' => 42\.4567\b)(?=.*'d_key' => 23\.7654444444444\b)(?=.*'e_key' => -877\.5678\b)(?=.*'f_key' => -33\.8765876587659\b)(?=.*'g_key' => 1701\.6789\b).*\}$/m},
 
-#                q{TNVHVRV23 number__hash_ref__stringify(a_key => 2.1234432112344321, b_key => 2112.4321, c_key => 42.4567, d_key => 23.765444444444444444, e_key => -877.5678, f_key => 33.876587658765875687658765, g_key => 1701.6789) returns correct value}
+#                q{TNVHVRV23 number__hash_ref__stringify(a_key => 2.1234432112344321, b_key => 2112.4321, c_key => 42.4567, d_key => 23.765444444444444444, e_key => -877.5678, f_key => -33.876587658765875687658765, g_key => 1701.6789) returns correct value}
                 q{TNVHVRV23 number__hash_ref__stringify(a_key => 2.1234432112344321, b_key => 2112.4321, c_key => 42.4567, ..., g_key => 1701.6789) returns correct value}
             );
         },
-        q{TNVHVRV23 number__hash_ref__stringify(a_key => 2.1234432112344321, b_key => 2112.4321, c_key => 42.4567, d_key => 23.765444444444444444, e_key => -877.5678, f_key => 33.876587658765875687658765, g_key => 1701.6789) lives}
+        q{TNVHVRV23 number__hash_ref__stringify(a_key => 2.1234432112344321, b_key => 2112.4321, c_key => 42.4567, d_key => 23.765444444444444444, e_key => -877.5678, f_key => -33.876587658765875687658765, g_key => 1701.6789) lives}
     );
     throws_ok(    # TNVHVRV30
         sub { number__hash_ref__typetest0() },
-        "/(EHVRV00.*$OPS_TYPES)|(Usage.*number__hash_ref__typetest0)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(ENVHVRV00.*$OPS_TYPES)|(Usage.*number__hash_ref__typetest0)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TNVHVRV30 number__hash_ref__typetest0() throws correct exception}
     );
     throws_ok(    # TNVHVRV31
         sub { number__hash_ref__typetest0(2) },
-        "/EHVRV01.*$OPS_TYPES/",
+        "/ENVHVRV01.*$OPS_TYPES/",
         q{TNVHVRV31 number__hash_ref__typetest0(2) throws correct exception}
     );
     throws_ok(    # TNVHVRV32
@@ -682,12 +682,12 @@ for my $i ( 0 .. 2 ) {
                     'answer'       => 42.4567,
                     'fnord'        => 23.765444444444444444,
                     'units'        => -877.5678,
-                    'degree'       => 33.876587658765875687658765,
+                    'degree'       => -33.876587658765875687658765,
                     'ncc'          => 1701.6789
                 }
             );
         },
-        "/ENV00.*$OPS_TYPES/",
+        "/ENVHVRV02.*$OPS_TYPES/",
         q{TNVHVRV32 number__hash_ref__typetest0({'binary' => 2.1234432112344321, 'ERROR_FUNKEY' => undef, ..., 'ncc' => 1701.6789}) throws correct exception}
     );
     throws_ok(    # TNVHVRV33
@@ -699,12 +699,12 @@ for my $i ( 0 .. 2 ) {
                     'answer'       => 42.4567,
                     'fnord'        => 23.765444444444444444,
                     'units'        => -877.5678,
-                    'degree'       => 33.876587658765875687658765,
+                    'degree'       => -33.876587658765875687658765,
                     'ncc'          => 1701.6789
                 }
             );
         },
-        "/ENV01.*$OPS_TYPES/",
+        "/ENVHVRV03.*$OPS_TYPES/",
         q{TNVHVRV33 number__hash_ref__typetest0({'binary' => 2.1234432112344321, 'ERROR_FUNKEY' => 'abcdefg', ..., 'ncc' => 1701.6789}) throws correct exception}
     );
     lives_and(    # TNVHVRV34
@@ -716,11 +716,11 @@ for my $i ( 0 .. 2 ) {
                         'answer' => 42.4567,
                         'fnord'  => 23.765444444444444444,
                         'units'  => -877.5678,
-                        'degree' => 33.876587658765875687658765,
+                        'degree' => -33.876587658765875687658765,
                         'ncc'    => 1701.6789
                     }
                 ),
-                q{/^\{(?=.*'binary' => 2\.12344321123443\b)(?=.*'rush' => 2112\.4321\b)(?=.*'answer' => 42\.4567\b)(?=.*'fnord' => 23\.7654444444444\b)(?=.*'units' => -877\.5678\b)(?=.*'degree' => 33\.8765876587659\b)(?=.*'ncc' => 1701\.6789\b).*\}}
+                q{/^\{(?=.*'binary' => 2\.12344321123443\b)(?=.*'rush' => 2112\.4321\b)(?=.*'answer' => 42\.4567\b)(?=.*'fnord' => 23\.7654444444444\b)(?=.*'units' => -877\.5678\b)(?=.*'degree' => -33\.8765876587659\b)(?=.*'ncc' => 1701\.6789\b).*\}}
                     . $OPS_TYPES . q{$/m},
                 q{TNVHVRV34 number__hash_ref__typetest0({'binary' => 2.1234432112344321, 'rush' => 2112.4321, ..., 'ncc' => 1701.6789}) returns correct value}
             );
@@ -749,32 +749,32 @@ for my $i ( 0 .. 2 ) {
 
     throws_ok(    # TPVHVRV00
         sub { string__hash_ref__stringify() },
-        "/(EHVRV00.*$OPS_TYPES)|(Usage.*string__hash_ref__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(EPVHVRV00.*$OPS_TYPES)|(Usage.*string__hash_ref__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TPVHVRV00 string__hash_ref__stringify() throws correct exception}
     );
     throws_ok(    # TPVHVRV01
         sub { string__hash_ref__stringify(undef) },
-        "/EHVRV00.*$OPS_TYPES/",
+        "/EPVHVRV00.*$OPS_TYPES/",
         q{TPVHVRV01 string__hash_ref__stringify(undef) throws correct exception}
     );
     throws_ok(    # TPVHVRV02
         sub { string__hash_ref__stringify(2) },
-        "/EHVRV01.*$OPS_TYPES/",
+        "/EPVHVRV01.*$OPS_TYPES/",
         q{TPVHVRV02 string__hash_ref__stringify(2) throws correct exception}
     );
     throws_ok(    # TPVHVRV03
         sub { string__hash_ref__stringify(2.3) },
-        "/EHVRV01.*$OPS_TYPES/",
+        "/EPVHVRV01.*$OPS_TYPES/",
         q{TPVHVRV03 string__hash_ref__stringify(2.3) throws correct exception}
     );
     throws_ok(    # TPVHVRV04
         sub { string__hash_ref__stringify('Lone Ranger') },
-        "/EHVRV01.*$OPS_TYPES/",
+        "/EPVHVRV01.*$OPS_TYPES/",
         q{TPVHVRV04 string__hash_ref__stringify('Lone Ranger') throws correct exception}
     );
     throws_ok(    # TPVHVRV05
         sub { string__hash_ref__stringify( ['Lone Ranger'] ) },
-        "/EHVRV01.*$OPS_TYPES/",
+        "/EPVHVRV01.*$OPS_TYPES/",
         q{TPVHVRV05 string__hash_ref__stringify(['Lone Ranger']) throws correct exception}
     );
     throws_ok(    # TPVHVRV10
@@ -786,7 +786,7 @@ for my $i ( 0 .. 2 ) {
                 }
             );
         },
-        "/EPV00.*$OPS_TYPES/",
+        "/EPVHVRV02.*$OPS_TYPES/",
         q{TPVHVRV10 string__hash_ref__stringify({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'UNDEF_NOT_STRING' => undef}) throws correct exception}
     );
     throws_ok(    # TPVHVRV11
@@ -798,7 +798,7 @@ for my $i ( 0 .. 2 ) {
                 }
             );
         },
-        "/EPV01.*$OPS_TYPES/",
+        "/EPVHVRV03.*$OPS_TYPES/",
         q{TPVHVRV11 string__hash_ref__stringify({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'INTEGER_NOT_STRING' => 23}) throws correct exception}
     );
     throws_ok(    # TPVHVRV12
@@ -810,7 +810,7 @@ for my $i ( 0 .. 2 ) {
                 }
             );
         },
-        "/EPV01.*$OPS_TYPES/",
+        "/EPVHVRV03.*$OPS_TYPES/",
         q{TPVHVRV12 string__hash_ref__stringify({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'NUMBER_NOT_STRING' => -2112.23}) throws correct exception}
     );
     throws_ok(    # TPVHVRV13
@@ -822,7 +822,7 @@ for my $i ( 0 .. 2 ) {
                 }
             );
         },
-        "/EPV01.*$OPS_TYPES/",
+        "/EPVHVRV03.*$OPS_TYPES/",
         q{TPVHVRV13 string__hash_ref__stringify({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'ARRAY_NOT_STRING' => ['Tonto']}) throws correct exception}
     );
     throws_ok(    # TPVHVRV14
@@ -834,7 +834,7 @@ for my $i ( 0 .. 2 ) {
                 }
             );
         },
-        "/EPV01.*$OPS_TYPES/",
+        "/EPVHVRV03.*$OPS_TYPES/",
         q{TPVHVRV14 string__hash_ref__stringify({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'HASH_NOT_STRING' => {fizz => 3}}) throws correct exception}
     );
     lives_and(    # TPVHVRV20
@@ -948,12 +948,12 @@ for my $i ( 0 .. 2 ) {
     );
     throws_ok(       # TPVHVRV30
         sub { string__hash_ref__typetest0() },
-        "/(EHVRV00.*$OPS_TYPES)|(Usage.*string__hash_ref__typetest0)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(EPVHVRV00.*$OPS_TYPES)|(Usage.*string__hash_ref__typetest0)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TPVHVRV30 string__hash_ref__typetest0() throws correct exception}
     );
     throws_ok(    # TPVHVRV31
         sub { string__hash_ref__typetest0(2) },
-        "/EHVRV01.*$OPS_TYPES/",
+        "/EPVHVRV01.*$OPS_TYPES/",
         q{TPVHVRV31 string__hash_ref__typetest0(2) throws correct exception}
     );
     throws_ok(    # TPVHVRV32
@@ -970,7 +970,7 @@ for my $i ( 0 .. 2 ) {
                 }
             );
         },
-        "/EPV00.*$OPS_TYPES/",
+        "/EPVHVRV02.*$OPS_TYPES/",
         q{TPVHVRV32 string__hash_ref__typetest0({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'UNDEF_NOT_STRING' => undef}) throws correct exception}
     );
     throws_ok(    # TPVHVRV33
@@ -987,7 +987,7 @@ for my $i ( 0 .. 2 ) {
                 }
             );
         },
-        "/EPV01.*$OPS_TYPES/",
+        "/EPVHVRV03.*$OPS_TYPES/",
         q{TPVHVRV33 string__hash_ref__typetest0({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'ARRAY_NOT_STRING' => [23, -42.3]}) throws correct exception}
     );
     lives_and(    # TPVHVRV34

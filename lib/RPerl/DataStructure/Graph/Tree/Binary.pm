@@ -16,7 +16,7 @@ use RPerl::Code;
 use RPerl::DataType::Unknown;
 use RPerl::DataType::String;
 use RPerl::DataStructure::Array;
-#use RPerl::Code::Subroutine::Method;  # NEED ADD: explicit method declarations
+#use RPerl::CodeBlock::Subroutine::Method;  # NEED ADD: explicit method declarations
 
 our %properties =
 (

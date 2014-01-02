@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use version; our $VERSION = 0.001_000;
+our $VERSION = 0.001_001;
 
 use Test::More; # tests => 20;
 use Test::Exception;
@@ -97,8 +97,8 @@ using namespace std;
 /* Abstract class (interface) */
 class Object {
 	public:
-		virtual void print STDERR() { cout << "Object (" << this << ")" << endl; }
-		virtual char* nonprint STDERR() { ostringstream oretval;  oretval << "Object (" << this << ")";  return((char*)oretval.str().c_str()); }
+		virtual void print() { cout << "Object (" << this << ")" << endl; }
+		virtual char* nonprint() { ostringstream oretval;  oretval << "Object (" << this << ")";  return((char*)oretval.str().c_str()); }
 		virtual void info() = 0;
 		virtual bool isa(char *klass) = 0;
 		virtual bool can(char *method) = 0;
@@ -107,11 +107,11 @@ class Airplane : public Object {
 	public:
 		Airplane() {}
 		~Airplane() {}
-		virtual void info() { print STDERR(); }
+		virtual void info() { print(); }
 		virtual bool isa(char *klass) { return strcmp(klass, "Object")==0; }
 		virtual bool can(char *method) {
 			bool yes = false;
-			yes |= strcmp(method, "print STDERR")==0;
+			yes |= strcmp(method, "print")==0;
 			yes |= strcmp(method, "info")==0;
 			yes |= strcmp(method, "isa")==0;
 			yes |= strcmp(method, "can")==0;
@@ -136,7 +136,7 @@ lives_and(
 );
 my $airplane_call_eval_string = <<'EOF';
 my $plane = new Airplane;
-my $plane_retval1 = $plane->nonprint STDERR;
+my $plane_retval1 = $plane->nonprint;
 my $plane_retval2 = '';
 if ($plane->isa("Object")) { $plane_retval2 .= "Plane is an Object!"; }
 unless ($plane->can("fly")) { $plane_retval2 .= "  This plane sucks!"; }

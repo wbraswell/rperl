@@ -2,8 +2,8 @@ use strict; use warnings;
 package RPerl::Algorithm::Sort_cpp;
 our $CPP_LOADED = 0;
 our $CPP_LINKED = 0;
-our @ISA = ('RPerl::Class');
-use RPerl::Class;  use RPerl;
+our @ISA = ('RPerl::CompileUnit::Module::Class');
+use RPerl::CompileUnit::Module::Class;  use RPerl;
 
 use RPerl::HelperFunctions_cpp;
 use RPerl::Algorithm_cpp;

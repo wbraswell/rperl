@@ -17,5 +17,5 @@ our @ISA = ('ref');
 package const_object_ref;
 our @ISA = ('ref');
 
-# RPerl Object, no inheritance from RPerl or RPerl::Class
+# RPerl Object, no inheritance from RPerl or RPerl::CompileUnit::Module::Class
 1;

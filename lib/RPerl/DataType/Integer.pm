@@ -5,7 +5,7 @@
 package RPerl::DataType::Integer;
 use strict;
 use warnings;
-use version; our $VERSION = 0.003_003;
+our $VERSION = 0.003_003;
 use parent ('RPerl::DataType');
 use RPerl::DataType;
 use Carp;
@@ -74,18 +74,14 @@ our string $integer__stringify = sub {
     #    integer__CHECK($input_integer);
     integer__CHECKTRACE( $input_integer, '$input_integer',
         'integer__stringify()' );
-    print STDERR
-        "in PERLOPS_PERLTYPES integer__stringify(), bottom of subroutine, received \$input_integer = $input_integer\n"
-        or croak();
+#    print STDERR "in PERLOPS_PERLTYPES integer__stringify(), bottom of subroutine, received \$input_integer = $input_integer\n" or croak();
     return ("$input_integer");
 };
 
 # [[[ TYPE TESTING ]]]
 our integer $integer__typetest0 = sub {
     my integer $retval = ( 21 / 7 ) + $integer__OPS_TYPES_ID; # return integer (not number) value, don't do (22 / 7) etc.
-    print STDERR
-        "in PERLOPS_PERLTYPES integer__typetest0(), have \$retval = $retval\n"
-        or croak();
+#    print STDERR "in PERLOPS_PERLTYPES integer__typetest0(), have \$retval = $retval\n" or croak();
     return ($retval);
 };
 our integer $integer__typetest1 = sub {
@@ -94,10 +90,7 @@ our integer $integer__typetest1 = sub {
     #    integer__CHECK($lucky_integer);
     integer__CHECKTRACE( $lucky_integer, '$lucky_integer',
         'integer__typetest1()' );
-    print STDERR
-        'in PERLOPS_PERLTYPES integer__typetest1(), received $lucky_integer = '
-        . integer__stringify($lucky_integer) . "\n"
-        or croak();
+#    print STDERR 'in PERLOPS_PERLTYPES integer__typetest1(), received $lucky_integer = ' . integer__stringify($lucky_integer) . "\n" or croak();
     return ( ( $lucky_integer * 2 ) + $integer__OPS_TYPES_ID );
 };
 

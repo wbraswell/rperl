@@ -1,20 +1,18 @@
 package rperltypes;
 use strict;
 use warnings;
+our $VERSION = 0.000_101;
+use Carp;
+#use RPerl;
+
+# NEED UPGRADE: create GrammarComponents
+#use parent qw(RPerl::GrammarComponent)
+#our %properties = (); ## no critic qw(ProhibitPackageVars)  ## RPERL SYSTEM, allow OO properties
 
 # [[[ NON-RPERL MODULES ]]]
 use File::Copy qw(move);
 
 # all following type lists lowest-to-highest level
-
-# [[[ CODE ]]]
-use RPerl::Code::Subroutine;
-
-# [[[ OBJECT-ORIENTED ]]]
-use RPerl::Class;
-use RPerl::Object;
-use RPerl::DataStructure::Property;
-use RPerl::Code::Subroutine::Method;  # Data Types & Structures Are Implemented As Classes With Methods, etc.
 
 # [[[ DATA TYPES ]]]
 use RPerl::DataType::Void;
@@ -36,6 +34,27 @@ use RPerl::DataStructure::Hash;
 #use RPerl::DataStructure::Graph::Tree::Binary;
 #use RPerl::DataStructure::Graph::Tree::Binary::Node;
 
+# [[[ OBJECT-ORIENTED ]]]
+use RPerl::Object;
+use RPerl::CodeBlock::Subroutine::Method;  # Method is the only item that is both a Data Type & a Grammar Rule
+
+# these types are currently implemented for all 3 primary RPerl modes: PERLOPS_PERLTYPES, CPPOPS_PERLTYPES, CPPOPS_CPPTYPES
+# NEED REMOVE: hard-coded list
+our string__array_ref $supported = [
+    qw(
+        void
+        integer
+        number
+        string
+        integer__array_ref
+        number__array_ref
+        string__array_ref
+        integer__hash_ref
+        number__hash_ref
+        string__hash_ref
+        )
+];
+
 # [[[ C++ TYPE CONTROL ]]]
 package RPerl;  if (not(defined($RPerl::INCLUDE_PATH))) { our $INCLUDE_PATH = '/FAILURE/BECAUSE/RPERL/INCLUDE/PATH/NOT/YET/SET'; }  1;  # suppress warnings about typo in types_enable() below
 package rperltypes;
@@ -44,14 +63,14 @@ sub types_enable { (my $types_input) = @_;
 ;
 #	print STDERR "in rperltypes::types_enable(), received \$types_input = '$types_input'\n";
 	
-	my string $types_h_filename = $RPerl::INCLUDE_PATH . '/types_mode.h';
-#	my bool $types_h_modified = 0;
-	my integer $types_h_modified = 0;
+	my string $rperltypes_h_filename = $RPerl::INCLUDE_PATH . '/rperltypes_mode.h';
+#	my bool $rperltypes_h_modified = 0;
+	my integer $rperltypes_h_modified = 0;
 	
-#	print STDERR "in rperltypes::types_enable(), have \$types_h_filename = '$types_h_filename'\n";
+#	print STDERR "in rperltypes::types_enable(), have \$rperltypes_h_filename = '$rperltypes_h_filename'\n";
 	
-	open(my $TYPES_H_FILEHANDLE_IN,'<', $types_h_filename) or die("Can't read types_mode.h input file: $!, dying");
-	open(my $TYPES_H_FILEHANDLE_OUT,'>', ($types_h_filename . '.swap')) or die("Can't write types_mode.h.swap output file: $!, dying");
+	open(my $TYPES_H_FILEHANDLE_IN,'<', $rperltypes_h_filename) or die("Can't read rperltypes_mode.h input file: $!, dying");
+	open(my $TYPES_H_FILEHANDLE_OUT,'>', ($rperltypes_h_filename . '.swap')) or die("Can't write rperltypes_mode.h.swap output file: $!, dying");
 
 	while(defined(my $line_current = <$TYPES_H_FILEHANDLE_IN>))
 	{
@@ -70,7 +89,7 @@ sub types_enable { (my $types_input) = @_;
 				{
 #					print STDERR "in rperltypes::types_enable(), ENABLE $types_current TYPES\n";
 					$line_current =~ s/\/\///;  # remove first occurence of // comment
-					$types_h_modified = 1;
+					$rperltypes_h_modified = 1;
 				}
 			}
 			elsif ($line_current =~ /^\s*\#\s*define/)
@@ -80,13 +99,13 @@ sub types_enable { (my $types_input) = @_;
 				{
 #					print STDERR "in rperltypes::types_enable(), DISABLE $types_current TYPES\n";
 					$line_current = '//' . $line_current;
-					$types_h_modified = 1;
+					$rperltypes_h_modified = 1;
 				}
 			}
 			else
 			{
 				close($TYPES_H_FILEHANDLE_OUT);
-				die('Found invalid __$types_current__TYPES definition in types_mode.h, neither properly disabled nor enabled, dying');
+				die('Found invalid __$types_current__TYPES definition in rperltypes_mode.h, neither properly disabled nor enabled, dying');
 			}
 		}
 		print $TYPES_H_FILEHANDLE_OUT $line_current;  # WRITE DATA BACK TO FILE
@@ -94,10 +113,10 @@ sub types_enable { (my $types_input) = @_;
 
 	close($TYPES_H_FILEHANDLE_OUT);
 	
-	if ($types_h_modified)
+	if ($rperltypes_h_modified)
 	{
-		move($types_h_filename, ($types_h_filename . '.orig')) or die("Can't move types_mode.h input file to types_mode.h.orig: $!, dying");
-		move(($types_h_filename . '.swap'), $types_h_filename) or die("Can't move types_mode.h.swap output file to types_mode.h: $!, dying");
+		move($rperltypes_h_filename, ($rperltypes_h_filename . '.orig')) or die("Can't move rperltypes_mode.h input file to rperltypes_mode.h.orig: $!, dying");
+		move(($rperltypes_h_filename . '.swap'), $rperltypes_h_filename) or die("Can't move rperltypes_mode.h.swap output file to rperltypes_mode.h: $!, dying");
 	}
 	
 	return();

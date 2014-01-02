@@ -1,8 +1,8 @@
 ////use strict;  use warnings;
-using std::cout;  using std::endl;
+using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Number_cpp
-#define __CPP__INCLUDED__RPerl__DataType__Number_cpp 0.003002
+#define __CPP__INCLUDED__RPerl__DataType__Number_cpp 0.003_003
 
 #include <RPerl/DataType/Number.h>		// -> NULL (relies on native C type)
 
@@ -40,7 +40,7 @@ void number__CHECKTRACE(SV* possible_number, const char* variable_name, const ch
 
 // convert from (Perl SV containing number) to (C number)
 number XS_unpack_number(SV* input_sv) {
-fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number(), top of subroutine\n");
+//fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number(), top of subroutine\n");
 //	number__CHECK(input_sv);
 	number__CHECKTRACE(input_sv, "input_sv", "XS_unpack_number()");
 
@@ -49,7 +49,7 @@ fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number(), top of subroutine\n");
 //	if (SvNOKp(input_sv)) { output_number = SvNV(input_sv); } else { croak("in CPPOPS_CPPTYPES XS_unpack_number(), input_sv was not a number"); }
 //	output_number = SvNV(input_sv);
 
-fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number(), bottom of subroutine\n");
+//fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number(), bottom of subroutine\n");
 
 	return((number)SvNV(input_sv));
 //	return(output_number);
@@ -57,13 +57,13 @@ fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number(), bottom of subroutine\n")
 
 // convert from (C number) to (Perl SV containing number)
 void XS_pack_number(SV* output_sv, number input_number) {
-fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number(), top of subroutine\n");
-fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number(), received unformatted input_number = %Lf\n", input_number);
+//fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number(), top of subroutine\n");
+//fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number(), received unformatted input_number = %Lf\n", input_number);
 
 	sv_setsv(output_sv, sv_2mortal(newSVnv(input_number)));
 
-fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number(), have output_sv = '%s'\n", SvPV_nolen(output_sv));
-fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number(), bottom of subroutine\n");
+//fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number(), have output_sv = '%s'\n", SvPV_nolen(output_sv));
+//fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number(), bottom of subroutine\n");
 }
 
 # endif
@@ -78,7 +78,7 @@ SV* number__stringify(SV* input_number)
 {
 //	number__CHECK(input_number);
 	number__CHECKTRACE(input_number, "input_number", "number__stringify()");
-fprintf(stderr, "in CPPOPS_PERLTYPES number__stringify(), top of subroutine, received unformatted input_number = %Lf\n", (number)SvNV(input_number));
+//fprintf(stderr, "in CPPOPS_PERLTYPES number__stringify(), top of subroutine, received unformatted input_number = %Lf\n", (number)SvNV(input_number));
 
 	ostringstream output_stream;
 	output_stream.precision(std::numeric_limits<double>::digits10);
@@ -96,7 +96,7 @@ fprintf(stderr, "in CPPOPS_PERLTYPES number__stringify(), top of subroutine, rec
 
 string number__stringify(number input_number)
 {
-fprintf(stderr, "in CPPOPS_CPPTYPES number__stringify(), top of subroutine, received unformatted input_number = %Lf\n", input_number);
+//fprintf(stderr, "in CPPOPS_CPPTYPES number__stringify(), top of subroutine, received unformatted input_number = %Lf\n", input_number);
 	ostringstream output_stream;
 	output_stream.precision(std::numeric_limits<double>::digits10);
 	output_stream << input_number;
@@ -113,14 +113,14 @@ fprintf(stderr, "in CPPOPS_CPPTYPES number__stringify(), top of subroutine, rece
 
 SV* number__typetest0() {
 	SV* retval = newSVnv((22.0 / 7.0) + number__OPS_TYPES_ID);
-fprintf(stderr, "in CPPOPS_PERLTYPES number__typetest0(), have unformatted retval = %Lf\n", (number)SvNV(retval));
+//fprintf(stderr, "in CPPOPS_PERLTYPES number__typetest0(), have unformatted retval = %Lf\n", (number)SvNV(retval));
 	return(retval);
 }
 
 SV* number__typetest1(SV* lucky_number) {
 //	number__CHECK(lucky_number);
 	number__CHECKTRACE(lucky_number, "lucky_number", "number__typetest1()");
-fprintf(stderr, "in CPPOPS_PERLTYPES number__typetest1(), have received lucky_number = %Lf\n", (number)SvNV(lucky_number));
+//fprintf(stderr, "in CPPOPS_PERLTYPES number__typetest1(), have received lucky_number = %Lf\n", (number)SvNV(lucky_number));
 	return(newSVnv((SvNV(lucky_number) * 2.0) + number__OPS_TYPES_ID));
 }
 
@@ -128,12 +128,12 @@ fprintf(stderr, "in CPPOPS_PERLTYPES number__typetest1(), have received lucky_nu
 
 number number__typetest0() {
 	number retval = (22.0 / 7.0) + number__OPS_TYPES_ID;
-fprintf(stderr, "in CPPOPS_CPPTYPES number__typetest0(), have unformatted retval = %Lf\n", retval);
+//fprintf(stderr, "in CPPOPS_CPPTYPES number__typetest0(), have unformatted retval = %Lf\n", retval);
 	return(retval);
 }
 
 number number__typetest1(number lucky_number) {
-	fprintf(stderr, "in CPPOPS_CPPTYPES number__typetest1(), received unformatted lucky_number = %Lf\n", lucky_number);
+	//fprintf(stderr, "in CPPOPS_CPPTYPES number__typetest1(), received unformatted lucky_number = %Lf\n", lucky_number);
 	return((lucky_number * 2.0) + number__OPS_TYPES_ID);
 }
 

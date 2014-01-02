@@ -1,7 +1,7 @@
 use strict;  use warnings;
 package RPerl::DataStructure::LinkedList;
 
-# NEED FIX: this is also a valid RPerl Class, but we can't inherit from RPerl::Class due to circular references?
+# NEED FIX: this is also a valid RPerl Class, but we can't inherit from RPerl::CompileUnit::Module::Class due to circular references?
 use RPerl::DataStructure::Array;
 
 package RPerl::DataStructure::LinkedListReference;
@@ -46,7 +46,7 @@ our string__method $DUMPER = sub {(my RPerl::DataStructure::LinkedListReference 
 
 # ref to linked list
 # DEV NOTE: we only provide data structure references, not the direct data structures themselves,
-# because an RPerl::Class is a blessed hash _reference_, and we are not natively implementing the data structures in C here;
+# because an RPerl::CompileUnit::Module::Class is a blessed hash _reference_, and we are not natively implementing the data structures in C here;
 # thus the slightly weird naming convention where some places have delimeters (:: or _) and some don't,
 # I favored the consistency of user-side RPerl data type short-form package alias _ delimeter over the Perl system-side package name scope :: delimeter 
 package linkedlist_ref;

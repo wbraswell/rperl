@@ -4,7 +4,7 @@
 package RPerl::DataType::String;
 use strict;
 use warnings;
-use version; our $VERSION = 0.003_003;
+our $VERSION = 0.003_003;
 use parent ('RPerl::DataType');
 use RPerl::DataType;
 use Carp;
@@ -74,16 +74,13 @@ our string $string__stringify = sub {
     #    string__CHECK($input_string);
     string__CHECKTRACE( $input_string, '$input_string',
         'string__stringify()' );
-    print STDERR
-        "in PERLOPS_PERLTYPES string__stringify(), received \$input_string =\n$input_string\n\n"
-        or croak();
+
+#    print STDERR "in PERLOPS_PERLTYPES string__stringify(), received \$input_string =\n$input_string\n\n" or croak();
     $input_string =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
     $input_string =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
     $input_string = "'$input_string'";
 
-    print STDERR
-        "in PERLOPS_PERLTYPES string__stringify(), bottom of subroutine, returning possibly-modified \$input_string =\n$input_string\n\n"
-        or croak();
+#    print STDERR "in PERLOPS_PERLTYPES string__stringify(), bottom of subroutine, returning possibly-modified \$input_string =\n$input_string\n\n" or croak();
 
     return ($input_string);
 };
@@ -91,9 +88,8 @@ our string $string__stringify = sub {
 # [[[ TYPE TESTING ]]]
 our string $string__typetest0 = sub {
     my string $retval = 'Spice PERLOPS_PERLTYPES';
-    print STDERR
-        "in PERLOPS_PERLTYPES string__typetest0(), have \$retval = '$retval'\n"
-        or croak();
+
+#    print STDERR "in PERLOPS_PERLTYPES string__typetest0(), have \$retval = '$retval'\n" or croak();
     return ($retval);
 };
 our string $string__typetest1 = sub {
@@ -102,9 +98,8 @@ our string $string__typetest1 = sub {
     #    string__CHECK($lucky_string);
     string__CHECKTRACE( $lucky_string, '$lucky_string',
         'string__typetest1()' );
-    print STDERR
-        "in PERLOPS_PERLTYPES string__typetest1(), received \$lucky_string = '$lucky_string'\n"
-        or croak();
+
+#    print STDERR "in PERLOPS_PERLTYPES string__typetest1(), received \$lucky_string = '$lucky_string'\n" or croak();
     return ( string__stringify($lucky_string) . ' PERLOPS_PERLTYPES' );
 };
 

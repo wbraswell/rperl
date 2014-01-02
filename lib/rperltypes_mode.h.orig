@@ -1,5 +1,5 @@
-#ifndef __CPP__INCLUDED__types_mode_h
-#define __CPP__INCLUDED__types_mode_h 1
+#ifndef __CPP__INCLUDED__rperltypes_mode_h
+#define __CPP__INCLUDED__rperltypes_mode_h 1
 
 // AUTOMATICALLY MODIFIED BY rperltypes::types_enable()
 // <<< TYPE DEFINES >>>

@@ -11,7 +11,7 @@ use RPerl::Code;
 # must include here because we do not inherit data types
 use RPerl::DataType::Unknown;
 use RPerl::DataStructure::Array;
-use RPerl::Code::Subroutine::Method;
+use RPerl::CodeBlock::Subroutine::Method;
 
 our %properties =
 (
@@ -139,7 +139,7 @@ our string__method $DUMPER = sub {(my RPerl::DataStructure::Graph::Tree::Binary:
 ;
 	my string $dumped = '[';
 
-# START HERE
+# CONTINUE HERE
 	$dumped .= "**FAKE_DUMP_STRING**";
 	
 	$dumped .= ']';

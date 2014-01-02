@@ -1,12 +1,12 @@
 ////use strict;  use warnings;
-using std::cout;  using std::endl;
+using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm_h
 #define __CPP__INCLUDED__RPerl__Algorithm_h 1
 
 #include <RPerl/HelperFunctions.cpp>		// -> HelperFunctions.h
 
-////use RPerl::Class; use RPerl; # the base classes that directly call "use RPerl::Class;" also need to "use RPerl;" to get "use rperltypes;", etc.
+////use RPerl::CompileUnit::Module::Class; use RPerl; # the base classes that directly call "use RPerl::CompileUnit::Module::Class;" also need to "use RPerl;" to get "use rperltypes;", etc.
 //#include <RPerl/Class.cpp>
 //#include <RPerl.cpp>
 
@@ -17,7 +17,7 @@ SV* uninherited__Algorithm(SV* person);
 char *uninherited(char *person);  // CPP_TYPES
 
 ////package RPerl::Algorithm;
-////our @ISA = ('RPerl::Class');
+////our @ISA = ('RPerl::CompileUnit::Module::Class');
 //class CPP__RPerl__Algorithm : public CPP__RPerl__Class
 class CPP__RPerl__Algorithm
 {

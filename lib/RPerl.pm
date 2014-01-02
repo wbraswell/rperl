@@ -1,9 +1,9 @@
 package RPerl;
 use strict;
 use warnings;
-use version; our $VERSION = 0.003_002;
-use parent ('RPerl::Class');
-use RPerl::Class;
+our $VERSION = 1.000_000;  # BETA!!!
+use parent ('RPerl::CompileUnit::Module::Class');
+use RPerl::CompileUnit::Module::Class;
 use Carp;
 
 # IMPORTANT SYSTEM-DEPENDENT CONFIGURATION VARIABLE!  drivers must set this to the path to RPerl

@@ -8,7 +8,7 @@
 ## no critic qw(RequirePodAtEnd RequirePodSections PodSpelling)  ## RPERL allow block comments
 use strict;
 use warnings;
-use version; our $VERSION = 0.003_003;
+our $VERSION = 0.003_003;
 use Carp;
 
 # [[[ SETUP ]]]

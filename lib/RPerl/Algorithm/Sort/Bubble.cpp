@@ -1,8 +1,8 @@
 ////use strict;  use warnings;
-using std::cout;  using std::endl;
+using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp 0.003_013
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp 0.003_016
 
 #include <RPerl/Algorithm/Sort/Bubble.h>  // -> HelperFunctions.cpp && Sort.cpp && Inefficient.cpp
 
@@ -12,7 +12,10 @@ using std::cout;  using std::endl;
 // [[[<<< BEGIN PERL TYPES >>>]]]
 // [[[<<< BEGIN PERL TYPES >>>]]]
 
-////# [object-oriented programming interface]
+////# [[[ OO METHODS ]]]
+////# [[[ OO METHODS ]]]
+////# [[[ OO METHODS ]]]
+
 ////# call out to sort integer__data, return nothing
 ////our void__method $integer__sort = sub {(my object $self) = @_;
 void CPP__RPerl__Algorithm__Sort__Bubble::integer__sort()
@@ -30,7 +33,16 @@ void CPP__RPerl__Algorithm__Sort__Bubble::integer__sort()
 ////};
 }
 
-////# [procedural programming interface]
+void CPP__RPerl__Algorithm__Sort__Bubble::number__sort()
+{
+	this->number__data = number__bubblesort(this->number__data);
+	SvREFCNT_dec(this->number__data);
+}
+
+////# [[[ PROCEDURAL SUBROUTINES ]]]
+////# [[[ PROCEDURAL SUBROUTINES ]]]
+////# [[[ PROCEDURAL SUBROUTINES ]]]
+
 ////# original algorithm: comparison-based and stable [O(n**2) average time, O(1) worst-case extra space]
 ////# sort data, return sorted data
 ////our integer__array_ref $integer__bubblesort = sub {(my integer__array_ref $data) = @_;
@@ -45,7 +57,10 @@ SV* integer__bubblesort(SV* integer__data)  // DEV NOTE: properly creates local-
 
 	RPerl_object_property_init(integer__data); // NEED ANSWER: why do we need to do property init?
 	SvREFCNT_inc(integer__data);
-	fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of subroutine...\n");
+//	fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of subroutine...\n");
+
+//	integer__array_ref__CHECK(integer__data);
+	integer__array_ref__CHECKTRACE(integer__data, "integer__data", "integer__bubblesort()");
 
 //	if (RPerl__DEBUG3) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(integer__data) = %lu\n", SV_REFERENCE_COUNT(integer__data));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of subroutine, have integer__data = %s", RPerl_DUMPER__perl_from_c(integer__data));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of subroutine, have post-DUMPER SV_REFERENCE_COUNT(integer__data) = %lu\n\n", SV_REFERENCE_COUNT(integer__data)); }
 ////	my integer $is_sorted = 0;
@@ -97,12 +112,12 @@ SV* integer__bubblesort(SV* integer__data)  // DEV NOTE: properly creates local-
 
 ////			# compare elements and swap if out-of-order, this is the core sort comparison
 ////			if ($integer__data->[$i] > $integer__data->[($i + 1)])
-//			if (SvNV(AV_ELEMENT((AV*) SvRV(integer__data), i)) > SvNV(AV_ELEMENT((AV*) SvRV(integer__data), (i + 1))))  // DE-OPTIMIZE, SHORT-HAND
+//			if (SvIV(AV_ELEMENT((AV*) SvRV(integer__data), i)) > SvIV(AV_ELEMENT((AV*) SvRV(integer__data), (i + 1))))  // DE-OPTIMIZE, SHORT-HAND
 			integer__data_i = AV_ELEMENT(integer__data_av, i);  // OPTIMIZE, LONG-HAND: use integer__data_i and integer__data_av
 			integer__data_i_plus_1 = AV_ELEMENT(integer__data_av, (i + 1));  // OPTIMIZE, LONG-HAND: use integer__data_i_plus_1 and integer__data_av
 
-			// DEV NOTE: integer__data is of type integer__array_ref, assuming numeric values for integer__data elements and using C++ numeric comparator
-			if (SvNV(integer__data_i) > SvNV(integer__data_i_plus_1))  // OPTIMIZE, LONG-HAND: use integer__data_i and integer__data_i_plus_1
+			// DEV NOTE: using C++ numeric greater-than comparator operator as direct replacement for equivalent Perl builtin operator
+			if (SvIV(integer__data_i) > SvIV(integer__data_i_plus_1))  // OPTIMIZE, LONG-HAND: use integer__data_i and integer__data_i_plus_1
 ////			{
 			{
 ////#				print "in CPPOPS_PERLTYPES integer__bubblesort(), inside for() loop, SWAPPED\n" if $RPerl::DEBUG;
@@ -156,14 +171,44 @@ SV* integer__bubblesort(SV* integer__data)  // DEV NOTE: properly creates local-
 ////};
 }
 
+SV* number__bubblesort(SV* number__data)
+{
+	RPerl_object_property_init(number__data);
+	SvREFCNT_inc(number__data);
+//	fprintf(stderr, "in CPPOPS_PERLTYPES number__bubblesort(), top of subroutine...\n");
 
+//	number__array_ref__CHECK(number__data);
+	number__array_ref__CHECKTRACE(number__data, "number__data", "number__bubblesort()");
 
+	integer is_sorted = 0;
+	integer i;
+	AV* number__data_av = (AV*) SvRV(number__data);
+	const integer number__data_length = av_len(number__data_av) + 1;
+	SV* number__data_i = newSV(0);
+	SV* number__data_i_plus_1 = newSV(0);
 
-// START HERE: replace NV w/ IV in integer__bubblesort(), create number__bubblesort(), update precompiled_sort_test.pl and 08_precompiled_sort.t
-// START HERE: replace NV w/ IV in integer__bubblesort(), create number__bubblesort(), update precompiled_sort_test.pl and 08_precompiled_sort.t
-// START HERE: replace NV w/ IV in integer__bubblesort(), create number__bubblesort(), update precompiled_sort_test.pl and 08_precompiled_sort.t
+	SV* swap = newSV(0);
+	while (not(is_sorted))
+	{
+		is_sorted = 1;
+		for (i = 0; i < (number__data_length - 1); i++)
+		{
+			number__data_i = AV_ELEMENT(number__data_av, i);
+			number__data_i_plus_1 = AV_ELEMENT(number__data_av, (i + 1));
 
-
+			if (SvNV(number__data_i) > SvNV(number__data_i_plus_1))
+			{
+				is_sorted = 0;
+				number__data_i = AV_ELEMENT(number__data_av, i);
+				swap = number__data_i;
+				number__data_i_plus_1 = AV_ELEMENT(number__data_av, (i + 1));
+				av_store(number__data_av, i, SvREFCNT_inc(number__data_i_plus_1));
+				av_store(number__data_av, (i + 1), SvREFCNT_inc(swap));
+			}
+		}
+	}
+	return(number__data);
+}
 
 // [[[ TYPE TESTING ]]]
 // [[[ TYPE TESTING ]]]
@@ -172,18 +217,17 @@ SV* integer__bubblesort(SV* integer__data)  // DEV NOTE: properly creates local-
 SV* integer__bubblesort__typetest0(SV* lucky_integers)
 {
 //	dSP;  PUSHMARK(SP);  // DEV NOTE: necessary to avoid "panic: memory wrap" or messing up Perl stack in some cases, but not here!
-//	array_ref__CHECK(lucky_integers);
-	array_ref__CHECKTRACE(lucky_integers, "lucky_integers", "integer__bubblesort__typetest0()");
+//	integer__array_ref__CHECK(lucky_integers);
+	integer__array_ref__CHECKTRACE(lucky_integers, "lucky_integers", "integer__bubblesort__typetest0()");
+	/*
 	AV* lucky_integers_deref = (AV*)SvRV(lucky_integers);
 	integer how_lucky = av_len(lucky_integers_deref) + 1;
 	integer i;
-
 	for (i = 0;  i < how_lucky;  ++i)
 	{
-//		integer__CHECK(*av_fetch(lucky_integers_deref, i, 0));
-		integer__CHECKTRACE(*av_fetch(lucky_integers_deref, i, 0), (char*)((string)"*av_fetch(lucky_integers_deref, i, 0) at index " + to_string(i)).c_str(), "integer__bubblesort__typetest0()");
-		fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort__typetest0(), have lucky integer %d/%d = %d, BATBAR\n", i, (how_lucky - 1), (integer)SvIV(*av_fetch(lucky_integers_deref, i, 0)));
+		fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort__typetest0(), have lucky_integer %d/%d = %d, BATBAR\n", i, (how_lucky - 1), (integer)SvIV(*av_fetch(lucky_integers_deref, i, 0)));
 	}
+	*/
 
 //	SV* retval__integer__bubblesort = integer__bubblesort(lucky_integers);
 //	SV* retval__integer__array_ref__stringify = integer__array_ref__stringify(retval__integer__bubblesort);
@@ -192,6 +236,23 @@ SV* integer__bubblesort__typetest0(SV* lucky_integers)
 //	return(newSVpvf("%s%s", SvPV_nolen(retval__integer__array_ref__stringify), "CPPOPS_PERLTYPES"));
 //	return(newSVpvf("%s%s", SvPV_nolen(integer__array_ref__stringify(retval__integer__bubblesort)), "CPPOPS_PERLTYPES"));
 	return(newSVpvf("%s%s", SvPV_nolen(integer__array_ref__stringify(integer__bubblesort(lucky_integers))), "CPPOPS_PERLTYPES"));
+}
+
+SV* number__bubblesort__typetest0(SV* lucky_numbers)
+{
+//	number__array_ref__CHECK(lucky_numbers);
+	number__array_ref__CHECKTRACE(lucky_numbers, "lucky_numbers", "number__bubblesort__typetest0()");
+	/*
+	AV* lucky_numbers_deref = (AV*)SvRV(lucky_numbers);
+	integer how_lucky = av_len(lucky_numbers_deref) + 1;
+	integer i;
+	for (i = 0;  i < how_lucky;  ++i)
+	{
+		fprintf(stderr, "in CPPOPS_PERLTYPES number__bubblesort__typetest0(), have lucky_number %d/%d = %Lf, BATBAR\n", i, (how_lucky - 1), (number)SvNV(*av_fetch(lucky_numbers_deref, i, 0)));
+	}
+	*/
+
+	return(newSVpvf("%s%s", SvPV_nolen(number__array_ref__stringify(number__bubblesort(lucky_numbers))), "CPPOPS_PERLTYPES"));
 }
 
 // [[[ INHERITANCE TESTING ]]]
@@ -230,7 +291,10 @@ SV* uninherited(SV* person)
 // [[[<<< BEGIN CPP TYPES >>>]]]
 // [[[<<< BEGIN CPP TYPES >>>]]]
 
-////# [object-oriented programming interface]
+////# [[[ OO METHODS ]]]
+////# [[[ OO METHODS ]]]
+////# [[[ OO METHODS ]]]
+
 ////# call out to sort integer__data, return nothing
 ////our void__method $integer__sort = sub {(my object $self) = @_;
 void CPP__RPerl__Algorithm__Sort__Bubble::integer__sort()
@@ -245,14 +309,17 @@ void CPP__RPerl__Algorithm__Sort__Bubble::integer__sort()
 ////};
 }
 
-////# [procedural programming interface]
+////# [[[ PROCEDURAL SUBROUTINES ]]]
+////# [[[ PROCEDURAL SUBROUTINES ]]]
+////# [[[ PROCEDURAL SUBROUTINES ]]]
+
 ////# original algorithm: comparison-based and stable [O(n**2) average time, O(1) worst-case extra space]
 ////# sort integer__data, return sorted integer__data
 ////our integer__array_ref $integer__bubblesort = sub {(my integer__array_ref $integer__data) = @_;
 integer__array_ref integer__bubblesort(integer__array_ref integer__data)  // DEV NOTE: properly creates local-to-function integer__array_ref integer__data here, does not get confused with this->integer__data object property, even though they share a name
 ////;
 {
-	fprintf(stderr, "in CPPOPS_CPPTYPES integer__bubblesort, top of subroutine...\n");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES integer__bubblesort, top of subroutine...\n");
 //	if (RPerl__DEBUG3) { fprintf(stderr, "in integer__bubblesort, top of subroutine, have integer__data = %d", integer__data); }
 ////	my integer $is_sorted = 0;
 	integer is_sorted = 0;
@@ -347,19 +414,72 @@ integer__array_ref integer__bubblesort(integer__array_ref integer__data)  // DEV
 ////};
 }
 
+
+
+
+
+number__array_ref number__bubblesort(number__array_ref number__data)
+{
+//	fprintf(stderr, "in CPPOPS_CPPTYPES number__bubblesort, top of subroutine...\n");
+	integer is_sorted = 0;
+	integer i;
+	const integer number__data_length = number__data.size();
+	number number__data_i = -9999;
+	number number__data_i_plus_1 = -9999;
+	number swap = -9999;
+	while (not(is_sorted))
+	{
+		is_sorted = 1;
+		for (i = 0; i < (number__data_length - 1); i++)
+		{
+			number__data_i = number__data[i];
+			number__data_i_plus_1 = number__data[(i + 1)];
+			if (number__data_i > number__data_i_plus_1)
+			{
+				is_sorted = 0;
+				swap = number__data_i;
+				number__data[i] = number__data_i_plus_1;
+				number__data[(i + 1)] = swap;
+			}
+		}
+	}
+	return(number__data);
+}
+
+
+
+
+
+
+
 // [[[ TYPE TESTING ]]]
 // [[[ TYPE TESTING ]]]
 // [[[ TYPE TESTING ]]]
 
 string integer__bubblesort__typetest0(integer__array_ref lucky_integers)
 {
+	/*
 	integer how_lucky = lucky_integers.size();
 	integer i;
 	for (i = 0;  i < how_lucky;  ++i)
 	{
-		fprintf(stderr, "in CPPOPS_CPPTYPES integer__bubblesort__typetest0(), have lucky number %d/%d = %d, BATBAR\n", i, (how_lucky - 1), lucky_integers[i]);
+		fprintf(stderr, "in CPPOPS_CPPTYPES integer__bubblesort__typetest0(), have lucky_integer %d/%d = %d, BATBAR\n", i, (how_lucky - 1), lucky_integers[i]);
 	}
+	*/
 	return(integer__array_ref__stringify(integer__bubblesort(lucky_integers)) + "CPPOPS_CPPTYPES");
+}
+
+string number__bubblesort__typetest0(number__array_ref lucky_numbers)
+{
+	/*
+	integer how_lucky = lucky_numbers.size();
+	integer i;
+	for (i = 0;  i < how_lucky;  ++i)
+	{
+		fprintf(stderr, "in CPPOPS_CPPTYPES number__bubblesort__typetest0(), have lucky_number %d/%d = %Lf, BATBAR\n", i, (how_lucky - 1), lucky_numbers[i]);
+	}
+	*/
+	return(number__array_ref__stringify(number__bubblesort(lucky_numbers)) + "CPPOPS_CPPTYPES");
 }
 
 // [[[ INHERITANCE TESTING ]]]

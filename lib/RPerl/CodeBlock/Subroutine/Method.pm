@@ -1,21 +1,22 @@
 ## no critic qw(ProhibitMultiplePackages)  ## RPERL SYSTEM types, allow multiple packages
 ## no critic qw(Capitalization)  ## RPERL SYSTEM types, allow lowercase packages
-package RPerl::Code::Subroutine::Method;
+package RPerl::CodeBlock::Subroutine::Method;
 use strict;
 use warnings;
-use version; our $VERSION = 0.002_000;
+our $VERSION = 0.002_001;
 use Carp;
+use RPerl;
+
+use parent qw(RPerl::CodeBlock::Subroutine);
+our %properties = (); ## no critic qw(ProhibitPackageVars)  ## RPERL SYSTEM, allow OO properties
 
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
-
-use parent ('RPerl::Code::Subroutine');
-use RPerl::Code::Subroutine;
 
 # a method is a subroutine belonging to a class or object
 package method;
-use parent ('RPerl::Code::Subroutine::Method');
+use parent ('RPerl::CodeBlock::Subroutine::Method');
 
 # [[[ SCALAR & SCALAR REF METHODS ]]]
 # [[[ SCALAR & SCALAR REF METHODS ]]]
@@ -113,6 +114,9 @@ package number__array_ref__method;
 use parent -norequire, ('method');
 
 package string__array_ref__method;
+use parent -norequire, ('method');
+
+package object__array_ref__method;
 use parent -norequire, ('method');
 
 1;

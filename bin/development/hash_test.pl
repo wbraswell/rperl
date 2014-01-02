@@ -2,7 +2,7 @@
 ## no critic qw(ProhibitMagicNumbers ProhibitUnreachableCode)  ## RPERL allow numeric test values, allow unreachable test code
 use strict;
 use warnings;
-use version; our $VERSION = 0.003_002;
+our $VERSION = 0.004_000;
 use Carp;
 
 # [[[ SETUP ]]]
@@ -44,26 +44,26 @@ for my integer $i ( 0 .. $i_MAX ) {
 
     # [[[ INTEGER TESTS ]]]
 
-#	$retval_stringify = integer__hash_ref__stringify();  # TIVHVRV00; error PERLOPS EHVRV00, CPPOPS "Usage: main::integer__hash_ref__stringify(input_unordered_map)"
-#	$retval_stringify = integer__hash_ref__stringify(undef);  # TIVHVRV01; error EHVRV00
-#	$retval_stringify = integer__hash_ref__stringify(2);  # TIVHVRV02; error EHVRV01
-#	$retval_stringify = integer__hash_ref__stringify(2.3);  # TIVHVRV03; error EHVRV01
-#	$retval_stringify = integer__hash_ref__stringify('2');  # TIVHVRV04; error EHVRV01
-#	$retval_stringify = integer__hash_ref__stringify([2]);  # TIVHVRV05; error EHVRV01
-#	$retval_stringify = integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => undef, d_key => 23, e_key => -877, f_key => 33, g_key => 1701});  # TIVHVRV10; error EIV00
-#	$retval_stringify = integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => 23.3, e_key => -877, f_key => 33, g_key => 1701});  # TIVHVRV11; error EIV01
-#	$retval_stringify = integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => '23', e_key => -877, f_key => 33, g_key => 1701});  # TIVHVRV12; error EIV01
-#	$retval_stringify = integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => [23], e_key => -877, f_key => 33, g_key => 1701});  # TIVHVRV13; error EIV01
-#	$retval_stringify = integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => {a_subkey => 23}, e_key => -877, f_key => 33, g_key => 1701});  # TIVHVRV14; error EIV01
+#	$retval_stringify = integer__hash_ref__stringify();  # TIVHVRV00; error PERLOPS EIVHVRV00, CPPOPS "Usage: main::integer__hash_ref__stringify(input_unordered_map)"
+#	$retval_stringify = integer__hash_ref__stringify(undef);  # TIVHVRV01; error EIVHVRV00
+#	$retval_stringify = integer__hash_ref__stringify(2);  # TIVHVRV02; error EIVHVRV01
+#	$retval_stringify = integer__hash_ref__stringify(2.3);  # TIVHVRV03; error EIVHVRV01
+#	$retval_stringify = integer__hash_ref__stringify('2');  # TIVHVRV04; error EIVHVRV01
+#	$retval_stringify = integer__hash_ref__stringify([2]);  # TIVHVRV05; error EIVHVRV01
+#	$retval_stringify = integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => undef, d_key => 23, e_key => -877, f_key => -33, g_key => 1701});  # TIVHVRV10; error EIVHVRV02
+#	$retval_stringify = integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => 23.3, e_key => -877, f_key => -33, g_key => 1701});  # TIVHVRV11; error EIVHVRV03
+#	$retval_stringify = integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => '23', e_key => -877, f_key => -33, g_key => 1701});  # TIVHVRV12; error EIVHVRV03
+#	$retval_stringify = integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => [23], e_key => -877, f_key => -33, g_key => 1701});  # TIVHVRV13; error EIVHVRV03
+#	$retval_stringify = integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => {a_subkey => 23}, e_key => -877, f_key => -33, g_key => 1701});  # TIVHVRV14; error EIVHVRV03
 #	$retval_stringify = integer__hash_ref__stringify({a_key => 23});  # TIVHVRV20
-#	$retval_stringify = integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701});  # TIVHVRV21
+#	$retval_stringify = integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => -33, g_key => 1701});  # TIVHVRV21
 #	print STDERR "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
 
-#	$retval_stringify = integer__hash_ref__typetest0();  # TIVHVRV30; error PERLOPS EHVRV00, CPPOPS "Usage: main::integer__hash_ref__typetest0(input_unordered_map)"
-#	$retval_stringify = integer__hash_ref__typetest0(2);  # TIVHVRV31; error EHVRV01
-#	$retval_stringify = integer__hash_ref__typetest0({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => undef, 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => 33, 'ncc' => 1701});  # TIVHVRV32; error EIV00
-#	$retval_stringify = integer__hash_ref__typetest0({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => 'abcdefg', 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => 33, 'ncc' => 1701});  # TIVHVRV33; error EIV01
-#	$retval_stringify = integer__hash_ref__typetest0({'binary' => 2, 'rush' => 2112, 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => 33, 'ncc' => 1701});  # TIVHVRV34
+#	$retval_stringify = integer__hash_ref__typetest0();  # TIVHVRV30; error PERLOPS EIVHVRV00, CPPOPS "Usage: main::integer__hash_ref__typetest0(input_unordered_map)"
+#	$retval_stringify = integer__hash_ref__typetest0(2);  # TIVHVRV31; error EIVHVRV01
+#	$retval_stringify = integer__hash_ref__typetest0({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => undef, 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => -33, 'ncc' => 1701});  # TIVHVRV32; error EIVHVRV02
+#	$retval_stringify = integer__hash_ref__typetest0({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => 'abcdefg', 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => -33, 'ncc' => 1701});  # TIVHVRV33; error EIVHVRV03
+#	$retval_stringify = integer__hash_ref__typetest0({'binary' => 2, 'rush' => 2112, 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => -33, 'ncc' => 1701});  # TIVHVRV34
 #	print STDERR "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 
 #	$retval_integer__hash_ref = integer__hash_ref__typetest1(5);  # TIVHVRV40
@@ -71,27 +71,27 @@ for my integer $i ( 0 .. $i_MAX ) {
 
     # [[[ NUMBER TESTS ]]]
 
-#	$retval_stringify = number__hash_ref__stringify();  # TNVHVRV00; error PERLOPS EHVRV00, CPPOPS "Usage: main::number__hash_ref__stringify(input_unordered_map)"
-#	$retval_stringify = number__hash_ref__stringify(undef);  # TNVHVRV01; error EHVRV00
-#	$retval_stringify = number__hash_ref__stringify(2);  # TNVHVRV02; error EHVRV01
-#	$retval_stringify = number__hash_ref__stringify(2.3);  # TNVHVRV03; error EHVRV01
-#	$retval_stringify = number__hash_ref__stringify('2');  # TNVHVRV04; error EHVRV01
-#	$retval_stringify = number__hash_ref__stringify([2]);  # TNVHVRV05; error EHVRV01
-#	$retval_stringify = number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => undef, d_key => 23, e_key => -877, f_key => 33, g_key => 1701});  # TNVHVRV10; error ENV00
-#	$retval_stringify = number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42.3, d_key => '23', e_key => -877, f_key => 33, g_key => 1701});  # TNVHVRV11; error ENV01
-#	$retval_stringify = number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42.3, d_key => [23], e_key => -877, f_key => 33, g_key => 1701});  # TNVHVRV12; error ENV01
-#	$retval_stringify = number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42.3, d_key => {a_subkey => 23}, e_key => -877, f_key => 33, g_key => 1701});  # TNVHVRV13; error ENV01
+#	$retval_stringify = number__hash_ref__stringify();  # TNVHVRV00; error PERLOPS ENVHVRV00, CPPOPS "Usage: main::number__hash_ref__stringify(input_unordered_map)"
+#	$retval_stringify = number__hash_ref__stringify(undef);  # TNVHVRV01; error ENVHVRV00
+#	$retval_stringify = number__hash_ref__stringify(2);  # TNVHVRV02; error ENVHVRV01
+#	$retval_stringify = number__hash_ref__stringify(2.3);  # TNVHVRV03; error ENVHVRV01
+#	$retval_stringify = number__hash_ref__stringify('2');  # TNVHVRV04; error ENVHVRV01
+#	$retval_stringify = number__hash_ref__stringify([2]);  # TNVHVRV05; error ENVHVRV01
+#	$retval_stringify = number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => undef, d_key => 23, e_key => -877, f_key => -33, g_key => 1701});  # TNVHVRV10; error ENVHVRV02
+#	$retval_stringify = number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42.3, d_key => '23', e_key => -877, f_key => -33, g_key => 1701});  # TNVHVRV11; error ENVHVRV03
+#	$retval_stringify = number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42.3, d_key => [23], e_key => -877, f_key => -33, g_key => 1701});  # TNVHVRV12; error ENVHVRV03
+#	$retval_stringify = number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42.3, d_key => {a_subkey => 23}, e_key => -877, f_key => -33, g_key => 1701});  # TNVHVRV13; error ENVHVRV03
 #	$retval_stringify = number__hash_ref__stringify({a_key => 23});  # TNVHVRV20
-#	$retval_stringify = number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => 33, g_key => 1701});  # TNVHVRV21
+#	$retval_stringify = number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => -33, g_key => 1701});  # TNVHVRV21
 #	$retval_stringify = number__hash_ref__stringify({a_key => 2.1234432112344321});  # TNVHVRV22
-#	$retval_stringify = number__hash_ref__stringify({a_key => 2.1234432112344321, b_key => 2112.4321, c_key => 42.4567, d_key => 23.765444444444444444, e_key => -877.5678, f_key => 33.876587658765875687658765, g_key => 1701.6789});  # TNVHVRV23
+#	$retval_stringify = number__hash_ref__stringify({a_key => 2.1234432112344321, b_key => 2112.4321, c_key => 42.4567, d_key => 23.765444444444444444, e_key => -877.5678, f_key => -33.876587658765875687658765, g_key => 1701.6789});  # TNVHVRV23
 #	print STDERR "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
 
-#	$retval_stringify = number__hash_ref__typetest0();  # TNVHVRV30; error PERLOPS EHVRV00, CPPOPS "Usage: main::number__hash_ref__typetest0(input_unordered_map)"
-#	$retval_stringify = number__hash_ref__typetest0(2);  # TNVHVRV31; error EHVRV01
-#	$retval_stringify = number__hash_ref__typetest0({'binary' => 2.1234432112344321, 'rush' => 2112.4321, 'ERROR_FUNKEY' => undef, 'answer' => 42.4567, 'fnord' => 23.765444444444444444, 'units' => -877.5678, 'degree' => 33.876587658765875687658765, 'ncc' => 1701.6789});  # TNVHVRV32; error ENV00
-#	$retval_stringify = number__hash_ref__typetest0({'binary' => 2.1234432112344321, 'rush' => 2112.4321, 'ERROR_FUNKEY' => 'abcdefg', 'answer' => 42.4567, 'fnord' => 23.765444444444444444, 'units' => -877.5678, 'degree' => 33.876587658765875687658765, 'ncc' => 1701.6789});  # TNVHVRV33; error ENV01
-#	$retval_stringify = number__hash_ref__typetest0({'binary' => 2.1234432112344321, 'rush' => 2112.4321, 'answer' => 42.4567, 'fnord' => 23.765444444444444444, 'units' => -877.5678, 'degree' => 33.876587658765875687658765, 'ncc' => 1701.6789});  # TNVHVRV34
+#	$retval_stringify = number__hash_ref__typetest0();  # TNVHVRV30; error PERLOPS ENVHVRV00, CPPOPS "Usage: main::number__hash_ref__typetest0(input_unordered_map)"
+#	$retval_stringify = number__hash_ref__typetest0(2);  # TNVHVRV31; error ENVHVRV01
+#	$retval_stringify = number__hash_ref__typetest0({'binary' => 2.1234432112344321, 'rush' => 2112.4321, 'ERROR_FUNKEY' => undef, 'answer' => 42.4567, 'fnord' => 23.765444444444444444, 'units' => -877.5678, 'degree' => -33.876587658765875687658765, 'ncc' => 1701.6789});  # TNVHVRV32; error ENVHVRV02
+#	$retval_stringify = number__hash_ref__typetest0({'binary' => 2.1234432112344321, 'rush' => 2112.4321, 'ERROR_FUNKEY' => 'abcdefg', 'answer' => 42.4567, 'fnord' => 23.765444444444444444, 'units' => -877.5678, 'degree' => -33.876587658765875687658765, 'ncc' => 1701.6789});  # TNVHVRV33; error ENVHVRV03
+#	$retval_stringify = number__hash_ref__typetest0({'binary' => 2.1234432112344321, 'rush' => 2112.4321, 'answer' => 42.4567, 'fnord' => 23.765444444444444444, 'units' => -877.5678, 'degree' => -33.876587658765875687658765, 'ncc' => 1701.6789});  # TNVHVRV34
 #	print STDERR "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 
 #	$retval_number__hash_ref = number__hash_ref__typetest1(5);  # TNVHVRV40
@@ -99,17 +99,17 @@ for my integer $i ( 0 .. $i_MAX ) {
 
     # [[[ STRING TESTS ]]]
 
-#	$retval_stringify = string__hash_ref__stringify();  # TPVHVRV00; error PERLOPS EHVRV00, CPPOPS "Usage: main::string__hash_ref__stringify(input_unordered_map)"
-#	$retval_stringify = string__hash_ref__stringify(undef);  # TPVHVRV01; error EHVRV00
-#	$retval_stringify = string__hash_ref__stringify(2);  # TPVHVRV02; error EHVRV01
-#	$retval_stringify = string__hash_ref__stringify(2.3);  # TPVHVRV03; error EHVRV01
-#	$retval_stringify = string__hash_ref__stringify('Lone Ranger');  # TPVHVRV04; error EHVRV01
-#	$retval_stringify = string__hash_ref__stringify(['Lone Ranger']);  # TPVHVRV05; error EHVRV01
-#	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'UNDEF_NOT_STRING' => undef};  # TPVHVRV10; error EPV00
-#	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'INTEGER_NOT_STRING' => 23};  # TPVHVRV11; error EPV01
-#	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'NUMBER_NOT_STRING' => -2112.23};  # TPVHVRV12; error EPV01
-#	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'ARRAY_NOT_STRING' => ['Tonto']};  # TPVHVRV13; error EPV01
-#	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'HASH_NOT_STRING' => {fizz => 3}};  # TPVHVRV14; error EPV01
+#	$retval_stringify = string__hash_ref__stringify();  # TPVHVRV00; error PERLOPS EPVHVRV00, CPPOPS "Usage: main::string__hash_ref__stringify(input_unordered_map)"
+#	$retval_stringify = string__hash_ref__stringify(undef);  # TPVHVRV01; error EPVHVRV00
+#	$retval_stringify = string__hash_ref__stringify(2);  # TPVHVRV02; error EPVHVRV01
+#	$retval_stringify = string__hash_ref__stringify(2.3);  # TPVHVRV03; error EPVHVRV01
+#	$retval_stringify = string__hash_ref__stringify('Lone Ranger');  # TPVHVRV04; error EPVHVRV01
+#	$retval_stringify = string__hash_ref__stringify(['Lone Ranger']);  # TPVHVRV05; error EPVHVRV01
+#	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'UNDEF_NOT_STRING' => undef};  # TPVHVRV10; error EPVHVRV02
+#	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'INTEGER_NOT_STRING' => 23};  # TPVHVRV11; error EPVHVRV03
+#	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'NUMBER_NOT_STRING' => -2112.23};  # TPVHVRV12; error EPVHVRV03
+#	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'ARRAY_NOT_STRING' => ['Tonto']};  # TPVHVRV13; error EPVHVRV03
+#	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'HASH_NOT_STRING' => {fizz => 3}};  # TPVHVRV14; error EPVHVRV03
 #	$my_peeps = {'stuckinaworldhenevercreated' => 'Howard The Duck', 'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter'};  # TPVHVRV20
 #	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'STRING_NOT_UNDEF' => 'undef'};  # TPVHVRV21
 #	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'STRING_NOT_INTEGER' => '23'};  # TPVHVRV22
@@ -120,10 +120,10 @@ for my integer $i ( 0 .. $i_MAX ) {
 #	$retval_stringify = string__hash_ref__stringify($my_peeps);	
 #	print STDERR "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 
-#	$retval_stringify = string__hash_ref__typetest0();  # TPVHVRV30; error PERLOPS EHVRV00, CPPOPS "Usage: main::string__hash_ref__typetest0(input_unordered_map)"
-#	$retval_stringify = string__hash_ref__typetest0(2);  # TPVHVRV31; error EHVRV01
-#	$retval_stringify = string__hash_ref__typetest0({'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'UNDEF_NOT_STRING' => undef});  # TPVHVRV32; error EPV00
-#	$retval_stringify = string__hash_ref__typetest0({'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'ARRAY_NOT_STRING' => [23, -42.3]});  # TPVHVRV33; error EPV01
+#	$retval_stringify = string__hash_ref__typetest0();  # TPVHVRV30; error PERLOPS EPVHVRV00, CPPOPS "Usage: main::string__hash_ref__typetest0(input_unordered_map)"
+#	$retval_stringify = string__hash_ref__typetest0(2);  # TPVHVRV31; error EPVHVRV01
+#	$retval_stringify = string__hash_ref__typetest0({'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'UNDEF_NOT_STRING' => undef});  # TPVHVRV32; error EPVHVRV02
+#	$retval_stringify = string__hash_ref__typetest0({'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'ARRAY_NOT_STRING' => [23, -42.3]});  # TPVHVRV33; error EPVHVRV03
 #	$retval_stringify = string__hash_ref__typetest0({'stuckinaworldhenevercreated' => 'Howard The Duck', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter'});  # TPVHVRV34
 #	print STDERR "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 

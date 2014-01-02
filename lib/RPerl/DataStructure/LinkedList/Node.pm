@@ -9,7 +9,7 @@ use RPerl::DataStructure;
 use RPerl::DataType::Integer;
 use RPerl::DataType::String;
 use RPerl::DataType::Unknown;
-use RPerl::Code::Subroutine::Method;
+use RPerl::CodeBlock::Subroutine::Method;
 
 our %properties =
 (

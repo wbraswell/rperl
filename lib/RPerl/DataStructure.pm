@@ -1,4 +1,6 @@
-use strict;  use warnings;
+use strict;
+use warnings;
+
 package RPerl::DataStructure;
 
 # a data structure is a compound data type

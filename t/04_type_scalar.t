@@ -5,7 +5,7 @@
 ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted control characters, sigils, and regexes
 use strict;
 use warnings;
-use version; our $VERSION = 0.003_002;
+our $VERSION = 0.003_002;
 
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
@@ -69,9 +69,7 @@ sub string__dumperify {
 
 # loop 3 times, once for each mode: Pure-Perl, RPerl Perl-Data, and RPerl C-Data
 for my $OPS_TYPES_ID ( 0 .. 2 ) {
-    print STDERR
-        "in 04_type_scalar.t, top of for() loop, have \$OPS_TYPES_ID = $OPS_TYPES_ID\n"
-        or croak;    # no effect if suppressing output!
+#    print STDERR "in 04_type_scalar.t, top of for() loop, have \$OPS_TYPES_ID = $OPS_TYPES_ID\n" or croak;    # no effect if suppressing output!
     my $OPS_TYPES;
 
     # [[[ PERLOPS_PERLTYPES SETUP ]]]

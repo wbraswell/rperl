@@ -1,10 +1,10 @@
 ////use strict;  use warnings;
-using std::cout;  using std::endl;
+using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash_h
-#define __CPP__INCLUDED__RPerl__DataStructure__Hash_h 0.003000
+#define __CPP__INCLUDED__RPerl__DataStructure__Hash_h 0.004_000
 
-#include <types_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
+#include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
 // for type-checking subroutines & macros
 #include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
@@ -51,6 +51,14 @@ typedef std::unordered_map<string, number>::const_iterator number__hash_ref__con
 typedef std::unordered_map<string, string> string__hash_ref;
 typedef std::unordered_map<string, string>::iterator string__hash_ref__iterator;
 typedef std::unordered_map<string, string>::const_iterator string__hash_ref__const_iterator;
+
+// [[[ TYPE-CHECKING SUBROUTINES ]]]
+void integer__hash_ref__CHECK(SV* possible_integer__hash_ref);
+void integer__hash_ref__CHECKTRACE(SV* possible_integer__hash_ref, const char* variable_name, const char* subroutine_name);
+void number__hash_ref__CHECK(SV* possible_number__hash_ref);
+void number__hash_ref__CHECKTRACE(SV* possible_number__hash_ref, const char* variable_name, const char* subroutine_name);
+void string__hash_ref__CHECK(SV* possible_string__hash_ref);
+void string__hash_ref__CHECKTRACE(SV* possible_string__hash_ref, const char* variable_name, const char* subroutine_name);
 
 // [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 # ifdef __PERL__TYPES

@@ -1,8 +1,8 @@
 ////use strict;  use warnings;
-using std::cout;  using std::endl;  using std::to_string;
+using std::cout;  using std::cerr;  using std::to_string;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array_cpp
-#define __CPP__INCLUDED__RPerl__DataStructure__Array_cpp 0.003012
+#define __CPP__INCLUDED__RPerl__DataStructure__Array_cpp 0.004_000
 
 #include <RPerl/DataStructure/Array.h>		// -> NULL (relies on <vector> being included via Inline::CPP's AUTO_INCLUDE config option)
 
@@ -15,6 +15,140 @@ using std::cout;  using std::endl;  using std::to_string;
  * eval_FOO.c:1322:36: error: ‘count_charPtrPtr’ was not declared in this scope
  */
 
+// [[[ TYPE-CHECKING ]]]
+// [[[ TYPE-CHECKING ]]]
+// [[[ TYPE-CHECKING ]]]
+
+// DEV NOTE: for() loops are statements not expressions, so they can't be embedded in ternary operators, and thus this type-checking must be done with subroutines instead of macros
+void integer__array_ref__CHECK(SV* possible_integer__array_ref)
+{
+	// DEV NOTE: the following two if() statements are functionally equivalent to the array_ref__CHECK() macro, but with integer-specific error codes
+    if ( not( SvOK(possible_integer__array_ref) ) ) { croak( "\nERROR EIVAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger__array_ref value expected but undefined/null value found,\ncroaking" ); }
+    if ( not( SvAROKp(possible_integer__array_ref) ) ) { croak( "\nERROR EIVAVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger__array_ref value expected but non-array_ref value found,\ncroaking" ); }
+
+    AV* possible_integer__array;
+    integer possible_integer__array_length;
+    integer i;
+    SV** possible_integer__array_element;
+
+    possible_integer__array = (AV*)SvRV(possible_integer__array_ref);
+	possible_integer__array_length = av_len(possible_integer__array) + 1;
+
+	for (i = 0;  i < possible_integer__array_length;  ++i)  // incrementing iteration
+	{
+		possible_integer__array_element = av_fetch(possible_integer__array, i, 0);
+
+		// DEV NOTE: the following two if() statements are functionally equivalent to the integer__CHECK() macro & subroutine, but with array-specific error codes
+	    if (not(SvOK(*possible_integer__array_element))) { croak("\nERROR EIVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger__array_ref element value expected but undefined/null value found at index %d,\ncroaking", i); }
+		if (not(SvIOKp(*possible_integer__array_element))) { croak("\nERROR EIVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger__array_ref element value expected but non-integer value found at index %d,\ncroaking", i); }
+	}
+}
+void integer__array_ref__CHECKTRACE(SV* possible_integer__array_ref, const char* variable_name, const char* subroutine_name)
+{
+    if ( not( SvOK(possible_integer__array_ref) ) ) { croak( "\nERROR EIVAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger__array_ref value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name ); }
+    if ( not( SvAROKp(possible_integer__array_ref) ) ) { croak( "\nERROR EIVAVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger__array_ref value expected but non-array_ref value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name ); }
+
+    AV* possible_integer__array;
+    integer possible_integer__array_length;
+    integer i;
+    SV** possible_integer__array_element;
+
+    possible_integer__array = (AV*)SvRV(possible_integer__array_ref);
+	possible_integer__array_length = av_len(possible_integer__array) + 1;
+
+	for (i = 0;  i < possible_integer__array_length;  ++i)  // incrementing iteration
+	{
+		possible_integer__array_element = av_fetch(possible_integer__array, i, 0);
+
+	    if (not(SvOK(*possible_integer__array_element))) { croak("\nERROR EIVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger__array_ref element value expected but undefined/null value found at index %d,\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name); }
+		if (not(SvIOKp(*possible_integer__array_element))) { croak("\nERROR EIVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger__array_ref element value expected but non-integer value found at index %d,\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name); }
+	}
+}
+void number__array_ref__CHECK(SV* possible_number__array_ref)
+{
+    if ( not( SvOK(possible_number__array_ref) ) ) { croak( "\nERROR ENVAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber__array_ref value expected but undefined/null value found,\ncroaking" ); }
+    if ( not( SvAROKp(possible_number__array_ref) ) ) { croak( "\nERROR ENVAVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber__array_ref value expected but non-array_ref value found,\ncroaking" ); }
+
+    AV* possible_number__array;
+    integer possible_number__array_length;
+    integer i;
+    SV** possible_number__array_element;
+
+    possible_number__array = (AV*)SvRV(possible_number__array_ref);
+	possible_number__array_length = av_len(possible_number__array) + 1;
+
+	for (i = 0;  i < possible_number__array_length;  ++i)  // incrementing iteration
+	{
+		possible_number__array_element = av_fetch(possible_number__array, i, 0);
+
+	    if (not(SvOK(*possible_number__array_element))) { croak("\nERROR ENVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber__array_ref element value expected but undefined/null value found at index %d,\ncroaking", i); }
+		if (not(SvNOKp(*possible_number__array_element) || SvIOKp(*possible_number__array_element))) { croak("\nERROR ENVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber__array_ref element value expected but non-number value found at index %d,\ncroaking", i); }
+	}
+}
+void number__array_ref__CHECKTRACE(SV* possible_number__array_ref, const char* variable_name, const char* subroutine_name)
+{
+    if ( not( SvOK(possible_number__array_ref) ) ) { croak( "\nERROR ENVAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber__array_ref value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name ); }
+    if ( not( SvAROKp(possible_number__array_ref) ) ) { croak( "\nERROR ENVAVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber__array_ref value expected but non-array_ref value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name ); }
+
+    AV* possible_number__array;
+    integer possible_number__array_length;
+    integer i;
+    SV** possible_number__array_element;
+
+    possible_number__array = (AV*)SvRV(possible_number__array_ref);
+	possible_number__array_length = av_len(possible_number__array) + 1;
+
+	for (i = 0;  i < possible_number__array_length;  ++i)  // incrementing iteration
+	{
+		possible_number__array_element = av_fetch(possible_number__array, i, 0);
+
+	    if (not(SvOK(*possible_number__array_element))) { croak("\nERROR ENVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber__array_ref element value expected but undefined/null value found at index %d,\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name); }
+		if (not(SvNOKp(*possible_number__array_element) || SvIOKp(*possible_number__array_element))) { croak("\nERROR ENVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber__array_ref element value expected but non-number value found at index %d,\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name); }
+	}
+}
+void string__array_ref__CHECK(SV* possible_string__array_ref)
+{
+    if ( not( SvOK(possible_string__array_ref) ) ) { croak( "\nERROR EPVAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring__array_ref value expected but undefined/null value found,\ncroaking" ); }
+    if ( not( SvAROKp(possible_string__array_ref) ) ) { croak( "\nERROR EPVAVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring__array_ref value expected but non-array_ref value found,\ncroaking" ); }
+
+    AV* possible_string__array;
+    integer possible_string__array_length;
+    integer i;
+    SV** possible_string__array_element;
+
+    possible_string__array = (AV*)SvRV(possible_string__array_ref);
+	possible_string__array_length = av_len(possible_string__array) + 1;
+
+	for (i = 0;  i < possible_string__array_length;  ++i)  // incrementing iteration
+	{
+		possible_string__array_element = av_fetch(possible_string__array, i, 0);
+
+	    if (not(SvOK(*possible_string__array_element))) { croak("\nERROR EPVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring__array_ref element value expected but undefined/null value found at index %d,\ncroaking", i); }
+		if (not(SvPOKp(*possible_string__array_element))) { croak("\nERROR EPVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring__array_ref element value expected but non-string value found at index %d,\ncroaking", i); }
+	}
+}
+void string__array_ref__CHECKTRACE(SV* possible_string__array_ref, const char* variable_name, const char* subroutine_name)
+{
+    if ( not( SvOK(possible_string__array_ref) ) ) { croak( "\nERROR EPVAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring__array_ref value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name ); }
+    if ( not( SvAROKp(possible_string__array_ref) ) ) { croak( "\nERROR EPVAVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring__array_ref value expected but non-array_ref value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name ); }
+
+    AV* possible_string__array;
+    integer possible_string__array_length;
+    integer i;
+    SV** possible_string__array_element;
+
+    possible_string__array = (AV*)SvRV(possible_string__array_ref);
+	possible_string__array_length = av_len(possible_string__array) + 1;
+
+	for (i = 0;  i < possible_string__array_length;  ++i)  // incrementing iteration
+	{
+		possible_string__array_element = av_fetch(possible_string__array, i, 0);
+
+	    if (not(SvOK(*possible_string__array_element))) { croak("\nERROR EPVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring__array_ref element value expected but undefined/null value found at index %d,\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name); }
+		if (not(SvPOKp(*possible_string__array_element))) { croak("\nERROR EPVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring__array_ref element value expected but non-string value found at index %d,\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name); }
+	}
+}
+
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
@@ -24,9 +158,9 @@ using std::cout;  using std::endl;  using std::to_string;
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))) to (C++ std::vector of integers)
 integer__array_ref XS_unpack_integer__array_ref(SV* input_av_ref)
 {
-	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_integer__array_ref(), top of subroutine\n");
-//	array_ref__CHECK(input_av_ref);
-	array_ref__CHECKTRACE(input_av_ref, "input_av_ref", "XS_unpack_integer__array_ref()");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_integer__array_ref(), top of subroutine\n");
+//	integer__array_ref__CHECK(input_av_ref);
+	integer__array_ref__CHECKTRACE(input_av_ref, "input_av_ref", "XS_unpack_integer__array_ref()");
 
     AV* input_av;
     integer input_av_length;
@@ -36,7 +170,7 @@ integer__array_ref XS_unpack_integer__array_ref(SV* input_av_ref)
 
     input_av = (AV*)SvRV(input_av_ref);
 	input_av_length = av_len(input_av) + 1;
-	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_integer__array_ref(), have input_av_length = %d\n", input_av_length);
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_integer__array_ref(), have input_av_length = %d\n", input_av_length);
 
 	// DEV NOTE: VECTOR ELEMENT ASSIGNMENT OPTION information is not specific to this subroutine or packing/unpacking
 
@@ -57,8 +191,9 @@ integer__array_ref XS_unpack_integer__array_ref(SV* input_av_ref)
 	{
 		// utilizes i in element retrieval
 		input_av_element = av_fetch(input_av, i, 0);
+		// DEV NOTE: integer type-checking already done as part of integer__array_ref__CHECKTRACE()
 //		integer__CHECK(*input_av_element);
-		integer__CHECKTRACE(*input_av_element, (char*)((string)"*input_av_element at index " + to_string(i)).c_str(), "XS_unpack_integer__hash_ref()");
+//		integer__CHECKTRACE(*input_av_element, (char*)((string)"*input_av_element at index " + to_string(i)).c_str(), "XS_unpack_integer__hash_ref()");
 
 		// VECTOR ELEMENT ASSIGNMENT, OPTION A, SUBSCRIPT, KNOWN SIZE: l-value subscript notation with no further resize(); utilizes i in assignment
 		output_vector[i] = SvIV(*input_av_element);
@@ -80,8 +215,8 @@ integer__array_ref XS_unpack_integer__array_ref(SV* input_av_ref)
 //		VECTOR_RESIZE_NOSHRINK(output_vector, (i + 1));  output_vector.erase(i + output_vector.begin());  output_vector.insert((i + output_vector.begin()), SvIV(*input_av_element));
 	}
 
-	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_integer__array_ref(), after for() loop, have output_vector.size() = %d\n", output_vector.size());
-	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_integer__array_ref(), bottom of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_integer__array_ref(), after for() loop, have output_vector.size() = %d\n", output_vector.size());
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_integer__array_ref(), bottom of subroutine\n");
 
 	return(output_vector);
 }
@@ -90,14 +225,14 @@ integer__array_ref XS_unpack_integer__array_ref(SV* input_av_ref)
 // convert from (C++ std::vector of integers) to (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs)))
 void XS_pack_integer__array_ref(SV* output_av_ref, integer__array_ref input_vector)
 {
-	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer__array_ref(), top of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer__array_ref(), top of subroutine\n");
 
 	AV* output_av = newAV();  // initialize output array to empty
 	integer input_vector_length = input_vector.size();
 	integer i;
 	SV* temp_sv_pointegerer;
 
-	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer__array_ref(), have input_vector_length = %d\n", input_vector_length);
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer__array_ref(), have input_vector_length = %d\n", input_vector_length);
 
 	if (input_vector_length > 0) { for (i = 0;  i < input_vector_length;  ++i) { av_push(output_av, newSViv(input_vector[i])); } }
 //	else warn("in CPPOPS_CPPTYPES XS_pack_integer__array_ref(), array was empty, returning empty array via newAV()");
@@ -106,16 +241,16 @@ void XS_pack_integer__array_ref(SV* output_av_ref, integer__array_ref input_vect
 	SvREFCNT_dec(temp_sv_pointegerer);		 // discard temporary pointegerer
 	SvRV(output_av_ref) = (SV*)output_av;	   // make output stack RV pointeger at our output AV
 
-	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer__array_ref(), bottom of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer__array_ref(), bottom of subroutine\n");
 }
 
 
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing NVs))) to (C++ std::vector of numbers)
 number__array_ref XS_unpack_number__array_ref(SV* input_av_ref)
 {
-	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number__array_ref(), top of subroutine\n");
-//	array_ref__CHECK(input_av_ref);
-	array_ref__CHECKTRACE(input_av_ref, "input_av_ref", "XS_unpack_number__array_ref()");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number__array_ref(), top of subroutine\n");
+//	number__array_ref__CHECK(input_av_ref);
+	number__array_ref__CHECKTRACE(input_av_ref, "input_av_ref", "XS_unpack_number__array_ref()");
 
     AV* input_av;
     integer input_av_length;
@@ -125,7 +260,7 @@ number__array_ref XS_unpack_number__array_ref(SV* input_av_ref)
 
     input_av = (AV*)SvRV(input_av_ref);
 	input_av_length = av_len(input_av) + 1;
-	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number__array_ref(), have input_av_length = %d\n", input_av_length);
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number__array_ref(), have input_av_length = %d\n", input_av_length);
 
 	// VECTOR ELEMENT ASSIGNMENT, OPTION A, SUBSCRIPT, KNOWN SIZE: vector has programmer-provided const size or compiler-guessable size,
 	// resize() ahead of time to allow l-value subscript notation
@@ -135,15 +270,13 @@ number__array_ref XS_unpack_number__array_ref(SV* input_av_ref)
 	{
 		// utilizes i in element retrieval
 		input_av_element = av_fetch(input_av, i, 0);
-//		number__CHECK(*input_av_element);
-		number__CHECKTRACE(*input_av_element, (char*)((string)"*input_av_element at index " + to_string(i)).c_str(), "XS_unpack_number__hash_ref()");
 
 		// VECTOR ELEMENT ASSIGNMENT, OPTION A, SUBSCRIPT, KNOWN SIZE: l-value subscript notation with no further resize(); utilizes i in assignment
 		output_vector[i] = SvNV(*input_av_element);
 	}
 
-	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number__array_ref(), after for() loop, have output_vector.size() = %d\n", output_vector.size());
-	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number__array_ref(), bottom of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number__array_ref(), after for() loop, have output_vector.size() = %d\n", output_vector.size());
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number__array_ref(), bottom of subroutine\n");
 
 	return(output_vector);
 }
@@ -152,14 +285,14 @@ number__array_ref XS_unpack_number__array_ref(SV* input_av_ref)
 // convert from (C++ std::vector of numbers) to (Perl SV containing RV to (Perl AV of (Perl SVs containing NVs)))
 void XS_pack_number__array_ref(SV* output_av_ref, number__array_ref input_vector)
 {
-	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number__array_ref(), top of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number__array_ref(), top of subroutine\n");
 
 	AV* output_av = newAV();  // initialize output array to empty
 	integer input_vector_length = input_vector.size();
 	integer i;
 	SV* temp_sv_pointegerer;
 
-	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number__array_ref(), have input_vector_length = %d\n", input_vector_length);
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number__array_ref(), have input_vector_length = %d\n", input_vector_length);
 
 	if (input_vector_length > 0) { for (i = 0;  i < input_vector_length;  ++i) { av_push(output_av, newSVnv(input_vector[i])); } }
 //	else warn("in CPPOPS_CPPTYPES XS_pack_number__array_ref(), array was empty, returning empty array via newAV()");
@@ -168,16 +301,16 @@ void XS_pack_number__array_ref(SV* output_av_ref, number__array_ref input_vector
 	SvREFCNT_dec(temp_sv_pointegerer);		 // discard temporary pointegerer
 	SvRV(output_av_ref) = (SV*)output_av;	   // make output stack RV pointeger at our output AV
 
-	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number__array_ref(), bottom of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number__array_ref(), bottom of subroutine\n");
 }
 
 
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs))) to (C++ std::vector of std::strings)
 string__array_ref XS_unpack_string__array_ref(SV* input_av_ref)
 {
-	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_string__array_ref(), top of subroutine\n");
-//	array_ref__CHECK(input_av_ref);
-	array_ref__CHECKTRACE(input_av_ref, "input_av_ref", "XS_unpack_string__array_ref()");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_string__array_ref(), top of subroutine\n");
+//	string__array_ref__CHECK(input_av_ref);
+	string__array_ref__CHECKTRACE(input_av_ref, "input_av_ref", "XS_unpack_string__array_ref()");
 
     AV* input_av;
     integer input_av_length;
@@ -187,7 +320,7 @@ string__array_ref XS_unpack_string__array_ref(SV* input_av_ref)
 
     input_av = (AV*)SvRV(input_av_ref);
 	input_av_length = av_len(input_av) + 1;
-	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_string__array_ref(), have input_av_length = %d\n", input_av_length);
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_string__array_ref(), have input_av_length = %d\n", input_av_length);
 
 	// VECTOR ELEMENT ASSIGNMENT, OPTION A, SUBSCRIPT, KNOWN SIZE: vector has programmer-provided const size or compiler-guessable size,
 	// resize() ahead of time to allow l-value subscript notation
@@ -197,15 +330,13 @@ string__array_ref XS_unpack_string__array_ref(SV* input_av_ref)
 	{
 		// utilizes i in element retrieval
 		input_av_element = av_fetch(input_av, i, 0);
-//		string__CHECK(*input_av_element);
-		string__CHECKTRACE(*input_av_element, (char*)((string)"*input_av_element at index " + to_string(i)).c_str(), "XS_unpack_string__hash_ref()");
 
 		// VECTOR ELEMENT ASSIGNMENT, OPTION A, SUBSCRIPT, KNOWN SIZE: l-value subscript notation with no further resize(); utilizes i in assignment
 		output_vector[i] = SvPV_nolen(*input_av_element);
 	}
 
-	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_string__array_ref(), after for() loop, have output_vector.size() = %d\n", output_vector.size());
-	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_string__array_ref(), bottom of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_string__array_ref(), after for() loop, have output_vector.size() = %d\n", output_vector.size());
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_string__array_ref(), bottom of subroutine\n");
 
 	return(output_vector);
 }
@@ -214,14 +345,14 @@ string__array_ref XS_unpack_string__array_ref(SV* input_av_ref)
 // convert from (C++ std::vector of std::strings) to (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs)))
 void XS_pack_string__array_ref(SV* output_av_ref, string__array_ref input_vector)
 {
-	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string__array_ref(), top of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string__array_ref(), top of subroutine\n");
 
 	AV* output_av = newAV();  // initialize output array to empty
 	integer input_vector_length = input_vector.size();
 	integer i;
 	SV* temp_sv_pointegerer;
 
-	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string__array_ref(), have input_vector_length = %d\n", input_vector_length);
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string__array_ref(), have input_vector_length = %d\n", input_vector_length);
 
 	if (input_vector_length > 0) { for (i = 0;  i < input_vector_length;  ++i) { av_push(output_av, newSVpv(input_vector[i].data(), input_vector[i].size())); } }
 //	else warn("in CPPOPS_CPPTYPES XS_pack_string__array_ref(), array was empty, returning empty array via newAV()");
@@ -230,7 +361,7 @@ void XS_pack_string__array_ref(SV* output_av_ref, string__array_ref input_vector
 	SvREFCNT_dec(temp_sv_pointegerer);		 // discard temporary pointegerer
 	SvRV(output_av_ref) = (SV*)output_av;	   // make output stack RV pointeger at our output AV
 
-	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string__array_ref(), bottom of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string__array_ref(), bottom of subroutine\n");
 }
 
 # endif
@@ -255,9 +386,9 @@ SV* integer__array_ref__stringify(SV* input_av_ref)
 	dAXMARK; */
 //	dITEMS;
 
-	fprintf(stderr, "in CPPOPS_PERLTYPES integer__array_ref__stringify(), top of subroutine\n");
-//	array_ref__CHECK(input_av_ref);
-	array_ref__CHECKTRACE(input_av_ref, "input_av_ref", "integer__array_ref__stringify()");
+//	fprintf(stderr, "in CPPOPS_PERLTYPES integer__array_ref__stringify(), top of subroutine\n");
+//	integer__array_ref__CHECK(input_av_ref);
+	integer__array_ref__CHECKTRACE(input_av_ref, "input_av_ref", "integer__array_ref__stringify()");
 
     AV* input_av;
     integer input_av_length;
@@ -268,7 +399,7 @@ SV* integer__array_ref__stringify(SV* input_av_ref)
 
     input_av = (AV*)SvRV(input_av_ref);
 	input_av_length = av_len(input_av) + 1;
-	fprintf(stderr, "in CPPOPS_PERLTYPES integer__array_ref__stringify(), have input_av_length = %d\n", input_av_length);
+//	fprintf(stderr, "in CPPOPS_PERLTYPES integer__array_ref__stringify(), have input_av_length = %d\n", input_av_length);
 
 	sv_setpvn(output_sv, "[", 1);
 
@@ -276,8 +407,9 @@ SV* integer__array_ref__stringify(SV* input_av_ref)
 	{
 		// utilizes i in element retrieval
 		input_av_element = av_fetch(input_av, i, 0);
+		// DEV NOTE: integer type-checking already done as part of integer__array_ref__CHECKTRACE()
 //		integer__CHECK(*input_av_element);
-		integer__CHECKTRACE(*input_av_element, (char*)((string)"*input_av_element at index " + to_string(i)).c_str(), "integer__hash_ref__stringify()");
+//		integer__CHECKTRACE(*input_av_element, (char*)((string)"*input_av_element at index " + to_string(i)).c_str(), "integer__hash_ref__stringify()");
 
 		if (i_is_0) { i_is_0 = 0; } else { sv_catpvn(output_sv, ", ", 2); }
 		sv_catpvf(output_sv, "%d", (integer)SvIV(*input_av_element));
@@ -285,8 +417,8 @@ SV* integer__array_ref__stringify(SV* input_av_ref)
 
 	sv_catpvn(output_sv, "]", 1);
 
-	fprintf(stderr, "in CPPOPS_PERLTYPES integer__array_ref__stringify(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
-	fprintf(stderr, "in CPPOPS_PERLTYPES integer__array_ref__stringify(), bottom of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_PERLTYPES integer__array_ref__stringify(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
+//	fprintf(stderr, "in CPPOPS_PERLTYPES integer__array_ref__stringify(), bottom of subroutine\n");
 
 //	Inline_Stack_Reset;
 //define Inline_Stack_Reset      sp = mark  // from INLINE.h
@@ -310,9 +442,9 @@ SV* integer__array_ref__stringify(SV* input_av_ref)
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing NVs))) to Perl-parsable (Perl SV containing PV)
 SV* number__array_ref__stringify(SV* input_av_ref)
 {
-	fprintf(stderr, "in CPPOPS_PERLTYPES number__array_ref__stringify(), top of subroutine\n");
-//	array_ref__CHECK(input_av_ref);
-	array_ref__CHECKTRACE(input_av_ref, "input_av_ref", "number__array_ref__stringify()");
+//	fprintf(stderr, "in CPPOPS_PERLTYPES number__array_ref__stringify(), top of subroutine\n");
+//	number__array_ref__CHECK(input_av_ref);
+	number__array_ref__CHECKTRACE(input_av_ref, "input_av_ref", "number__array_ref__stringify()");
 
     AV* input_av;
     integer input_av_length;
@@ -325,7 +457,7 @@ SV* number__array_ref__stringify(SV* input_av_ref)
 
 	input_av = (AV*)SvRV(input_av_ref);
 	input_av_length = av_len(input_av) + 1;
-	fprintf(stderr, "in CPPOPS_PERLTYPES number__array_ref__stringify(), have input_av_length = %d\n", input_av_length);
+//	fprintf(stderr, "in CPPOPS_PERLTYPES number__array_ref__stringify(), have input_av_length = %d\n", input_av_length);
 
 	temp_stream << "[";
 //	sv_setpvn(output_sv, "[", 1);
@@ -334,8 +466,6 @@ SV* number__array_ref__stringify(SV* input_av_ref)
 	{
 		// utilizes i in element retrieval
 		input_av_element = av_fetch(input_av, i, 0);
-//		number__CHECK(*input_av_element);
-		number__CHECKTRACE(*input_av_element, (char*)((string)"*input_av_element at index " + to_string(i)).c_str(), "number__hash_ref__stringify()");
 
 		if (i_is_0) { i_is_0 = 0; } else { temp_stream << ", "; }
 //		if (i_is_0) { i_is_0 = 0; } else { sv_catpvn(output_sv, ", ", 2); }
@@ -347,8 +477,8 @@ SV* number__array_ref__stringify(SV* input_av_ref)
 	sv_setpv(output_sv, (char *)(temp_stream.str().c_str()));
 //	sv_catpvn(output_sv, "]", 1);
 
-	fprintf(stderr, "in CPPOPS_PERLTYPES number__array_ref__stringify(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
-	fprintf(stderr, "in CPPOPS_PERLTYPES number__array_ref__stringify(), bottom of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_PERLTYPES number__array_ref__stringify(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
+//	fprintf(stderr, "in CPPOPS_PERLTYPES number__array_ref__stringify(), bottom of subroutine\n");
 
 	return(output_sv);
 }
@@ -357,9 +487,9 @@ SV* number__array_ref__stringify(SV* input_av_ref)
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs))) to Perl-parsable (Perl SV containing PV)
 SV* string__array_ref__stringify(SV* input_av_ref)
 {
-	fprintf(stderr, "in CPPOPS_PERLTYPES string__array_ref__stringify(), top of subroutine\n");
-//	array_ref__CHECK(input_av_ref);
-	array_ref__CHECKTRACE(input_av_ref, "input_av_ref", "string__array_ref__stringify()");
+//	fprintf(stderr, "in CPPOPS_PERLTYPES string__array_ref__stringify(), top of subroutine\n");
+//	string__array_ref__CHECK(input_av_ref);
+	string__array_ref__CHECKTRACE(input_av_ref, "input_av_ref", "string__array_ref__stringify()");
 
     AV* input_av;
     integer input_av_length;
@@ -373,7 +503,7 @@ SV* string__array_ref__stringify(SV* input_av_ref)
 
 	input_av = (AV*)SvRV(input_av_ref);
 	input_av_length = av_len(input_av) + 1;
-	fprintf(stderr, "in CPPOPS_PERLTYPES string__array_ref__stringify(), have input_av_length = %d\n", input_av_length);
+//	fprintf(stderr, "in CPPOPS_PERLTYPES string__array_ref__stringify(), have input_av_length = %d\n", input_av_length);
 
 //	temp_stream << "[";
 	sv_setpvn(output_sv, "[", 1);
@@ -382,8 +512,6 @@ SV* string__array_ref__stringify(SV* input_av_ref)
 	{
 		// utilizes i in element retrieval
 		input_av_element = av_fetch(input_av, i, 0);
-//		string__CHECK(*input_av_element);
-		string__CHECKTRACE(*input_av_element, (char*)((string)"*input_av_element at index " + to_string(i)).c_str(), "string__hash_ref__stringify()");
 
 //		if (i_is_0) { i_is_0 = 0; } else { temp_stream << ", "; }
 		if (i_is_0) { i_is_0 = 0; } else { sv_catpvn(output_sv, ", ", 2); }
@@ -412,8 +540,8 @@ SV* string__array_ref__stringify(SV* input_av_ref)
 //	sv_setpv(output_sv, (char *)(temp_stream.str().c_str()));
 	sv_catpvn(output_sv, "]", 1);
 
-	fprintf(stderr, "in CPPOPS_PERLTYPES string__array_ref__stringify(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
-	fprintf(stderr, "in CPPOPS_PERLTYPES string__array_ref__stringify(), bottom of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_PERLTYPES string__array_ref__stringify(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
+//	fprintf(stderr, "in CPPOPS_PERLTYPES string__array_ref__stringify(), bottom of subroutine\n");
 
 	return(output_sv);
 }
@@ -423,7 +551,7 @@ SV* string__array_ref__stringify(SV* input_av_ref)
 // convert from (C++ std::vector of integers) to Perl-parsable (C++ std::string)
 string integer__array_ref__stringify(integer__array_ref input_vector)
 {
-	fprintf(stderr, "in CPPOPS_CPPTYPES integer__array_ref__stringify(), top of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES integer__array_ref__stringify(), top of subroutine\n");
 
 	ostringstream output_stream;
 	integer input_vector_length = input_vector.size();
@@ -431,7 +559,7 @@ string integer__array_ref__stringify(integer__array_ref input_vector)
 	integer input_vector_element;
     bool i_is_0 = 1;
 
-	fprintf(stderr, "in CPPOPS_CPPTYPES integer__array_ref__stringify(), have input_vector_length = %d\n", input_vector_length);
+//	fprintf(stderr, "in CPPOPS_CPPTYPES integer__array_ref__stringify(), have input_vector_length = %d\n", input_vector_length);
 
 	output_stream << '[';
 
@@ -445,8 +573,8 @@ string integer__array_ref__stringify(integer__array_ref input_vector)
 
 	output_stream << ']';
 
-	fprintf(stderr, "in CPPOPS_CPPTYPES integer__array_ref__stringify(), after for() loop, have output_stream =\n%s\n", (char *)(output_stream.str().c_str()));
-	fprintf(stderr, "in CPPOPS_CPPTYPES integer__array_ref__stringify(), bottom of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES integer__array_ref__stringify(), after for() loop, have output_stream =\n%s\n", (char *)(output_stream.str().c_str()));
+//	fprintf(stderr, "in CPPOPS_CPPTYPES integer__array_ref__stringify(), bottom of subroutine\n");
 
 	return(output_stream.str());
 }
@@ -455,7 +583,7 @@ string integer__array_ref__stringify(integer__array_ref input_vector)
 // convert from (C++ std::vector of numbers) to Perl-parsable (C++ std::string)
 string number__array_ref__stringify(number__array_ref input_vector)
 {
-	fprintf(stderr, "in CPPOPS_CPPTYPES number__array_ref__stringify(), top of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES number__array_ref__stringify(), top of subroutine\n");
 
 	ostringstream output_stream;
 	integer input_vector_length = input_vector.size();
@@ -463,7 +591,7 @@ string number__array_ref__stringify(number__array_ref input_vector)
 	number input_vector_element;
     bool i_is_0 = 1;
 
-	fprintf(stderr, "in CPPOPS_CPPTYPES number__array_ref__stringify(), have input_vector_length = %d\n", input_vector_length);
+//	fprintf(stderr, "in CPPOPS_CPPTYPES number__array_ref__stringify(), have input_vector_length = %d\n", input_vector_length);
 
 	output_stream.precision(std::numeric_limits<double>::digits10);
 	output_stream << '[';
@@ -478,8 +606,8 @@ string number__array_ref__stringify(number__array_ref input_vector)
 
 	output_stream << ']';
 
-	fprintf(stderr, "in CPPOPS_CPPTYPES number__array_ref__stringify(), after for() loop, have output_stream =\n%s\n", (char *)(output_stream.str().c_str()));
-	fprintf(stderr, "in CPPOPS_CPPTYPES number__array_ref__stringify(), bottom of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES number__array_ref__stringify(), after for() loop, have output_stream =\n%s\n", (char *)(output_stream.str().c_str()));
+//	fprintf(stderr, "in CPPOPS_CPPTYPES number__array_ref__stringify(), bottom of subroutine\n");
 
 	return(output_stream.str());
 }
@@ -488,7 +616,7 @@ string number__array_ref__stringify(number__array_ref input_vector)
 // convert from (C++ std::vector of std::strings) to Perl-parsable (C++ std::string)
 string string__array_ref__stringify(string__array_ref input_vector)
 {
-	fprintf(stderr, "in CPPOPS_CPPTYPES string__array_ref__stringify(), top of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES string__array_ref__stringify(), top of subroutine\n");
 
 //	ostringstream output_stream;
 	string output_string;
@@ -498,7 +626,7 @@ string string__array_ref__stringify(string__array_ref input_vector)
     size_t input_vector_element_pos;
     bool i_is_0 = 1;
 
-	fprintf(stderr, "in CPPOPS_CPPTYPES string__array_ref__stringify(), have input_vector_length = %d\n", input_vector_length);
+//	fprintf(stderr, "in CPPOPS_CPPTYPES string__array_ref__stringify(), have input_vector_length = %d\n", input_vector_length);
 
 //	output_stream << '[';
 	output_string = "[";
@@ -531,8 +659,8 @@ string string__array_ref__stringify(string__array_ref input_vector)
 	output_string += "]";
 
 //	fprintf(stderr, "in CPPOPS_CPPTYPES string__array_ref__stringify(), after for() loop, have output_stream =\n%s\n", (char *)(output_stream.str().c_str()));
-	fprintf(stderr, "in CPPOPS_CPPTYPES string__array_ref__stringify(), after for() loop, have output_string =\n%s\n", output_string.c_str());
-	fprintf(stderr, "in CPPOPS_CPPTYPES string__array_ref__stringify(), bottom of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES string__array_ref__stringify(), after for() loop, have output_string =\n%s\n", output_string.c_str());
+//	fprintf(stderr, "in CPPOPS_CPPTYPES string__array_ref__stringify(), bottom of subroutine\n");
 
 //	return(output_stream.str());
 	return(output_string);
@@ -558,18 +686,16 @@ SV* integer__array_ref__typetest0(SV* lucky_integers)
 /*	dSP; */
 
 /*	SV* output_sv; */
-//	array_ref__CHECK(lucky_integers);
-	array_ref__CHECKTRACE(lucky_integers, "lucky_integers", "integer__array_ref__typetest0()");
-	AV* lucky_integers_deref = (AV*)SvRV(lucky_integers);
-	integer how_lucky = av_len(lucky_integers_deref) + 1;
-	integer i;
+//	integer__array_ref__CHECK(lucky_integers);
+	integer__array_ref__CHECKTRACE(lucky_integers, "lucky_integers", "integer__array_ref__typetest0()");
+//	AV* lucky_integers_deref = (AV*)SvRV(lucky_integers);
+//	integer how_lucky = av_len(lucky_integers_deref) + 1;
+//	integer i;
 
-	for (i = 0;  i < how_lucky;  ++i)
-	{
-//		integer__CHECK(*av_fetch(lucky_integers_deref, i, 0));
-		integer__CHECKTRACE(*av_fetch(lucky_integers_deref, i, 0), (char*)((string)"*av_fetch(lucky_integers_deref, i, 0) at index " + to_string(i)).c_str(), "integer__array_ref__typetest0()");
-		fprintf(stderr, "in CPPOPS_PERLTYPES integer__array_ref__typetest0(), have lucky integer %d/%d = %d, BARBAT\n", i, (how_lucky - 1), (integer)SvIV(*av_fetch(lucky_integers_deref, i, 0)));
-	}
+//	for (i = 0;  i < how_lucky;  ++i)
+//	{
+//		fprintf(stderr, "in CPPOPS_PERLTYPES integer__array_ref__typetest0(), have lucky integer %d/%d = %d, BARBAT\n", i, (how_lucky - 1), (integer)SvIV(*av_fetch(lucky_integers_deref, i, 0)));
+//	}
 
 //	ENTER;
 //	SAVETMPS;
@@ -615,7 +741,7 @@ SV* integer__array_ref__typetest1(SV* my_size)
 	for (i = 0;  i < SvIV(my_size);  ++i)
 	{
 		av_store(output_av, (I32)i, newSViv(i * 5));
-		fprintf(stderr, "in CPPOPS_PERLTYPES integer__array_ref__typetest1(), setting element %d/%d = %d, BARBAT\n", i, (integer)(SvIV(my_size) - 1), (integer)SvIV(*av_fetch(output_av, (I32)i, 0)));
+//		fprintf(stderr, "in CPPOPS_PERLTYPES integer__array_ref__typetest1(), setting element %d/%d = %d, BARBAT\n", i, (integer)(SvIV(my_size) - 1), (integer)SvIV(*av_fetch(output_av, (I32)i, 0)));
 	}
 
 /*
@@ -627,18 +753,18 @@ SV* integer__array_ref__typetest1(SV* my_size)
 
 SV* number__array_ref__typetest0(SV* lucky_numbers)
 {
-//	array_ref__CHECK(lucky_numbers);
-	array_ref__CHECKTRACE(lucky_numbers, "lucky_numbers", "number__array_ref__typetest0()");
-	AV* lucky_numbers_deref = (AV*)SvRV(lucky_numbers);
-	integer how_lucky = av_len(lucky_numbers_deref) + 1;
-	integer i;
+//	number__array_ref__CHECK(lucky_numbers);
+	number__array_ref__CHECKTRACE(lucky_numbers, "lucky_numbers", "number__array_ref__typetest0()");
+//	AV* lucky_numbers_deref = (AV*)SvRV(lucky_numbers);
+//	integer how_lucky = av_len(lucky_numbers_deref) + 1;
+//	integer i;
 
-	for (i = 0;  i < how_lucky;  ++i)
-	{
+//	for (i = 0;  i < how_lucky;  ++i)
+//	{
 //		number__CHECK(*av_fetch(lucky_numbers_deref, i, 0));
-		number__CHECKTRACE(*av_fetch(lucky_numbers_deref, i, 0), (char*)((string)"*av_fetch(lucky_numbers_deref, i, 0) at index " + to_string(i)).c_str(), "number__array_ref__typetest0()");
-		fprintf(stderr, "in CPPOPS_PERLTYPES number__array_ref__typetest0(), have lucky number %d/%d = %Lf, BARBAT\n", i, (how_lucky - 1), (number)SvNV(*av_fetch(lucky_numbers_deref, i, 0)));
-	}
+//		number__CHECKTRACE(*av_fetch(lucky_numbers_deref, i, 0), (char*)((string)"*av_fetch(lucky_numbers_deref, i, 0) at index " + to_string(i)).c_str(), "number__array_ref__typetest0()");
+//		fprintf(stderr, "in CPPOPS_PERLTYPES number__array_ref__typetest0(), have lucky number %d/%d = %Lf, BARBAT\n", i, (how_lucky - 1), (number)SvNV(*av_fetch(lucky_numbers_deref, i, 0)));
+//	}
 	return(newSVpvf("%s%s", SvPV_nolen(number__array_ref__stringify(lucky_numbers)), "CPPOPS_PERLTYPES"));
 }
 
@@ -652,24 +778,23 @@ SV* number__array_ref__typetest1(SV* my_size)
 	for (i = 0;  i < SvIV(my_size);  ++i)
 	{
 		av_store(output_av, (I32)i, newSVnv(i * 5.123456789));
-		fprintf(stderr, "in CPPOPS_PERLTYPES number__array_ref__typetest1(), setting element %d/%d = %Lf, BARBAT\n", i, (integer)(SvIV(my_size) - 1),
-				(number)SvNV(*av_fetch(output_av, (I32)i, 0)));
+//		fprintf(stderr, "in CPPOPS_PERLTYPES number__array_ref__typetest1(), setting element %d/%d = %Lf, BARBAT\n", i, (integer)(SvIV(my_size) - 1), (number)SvNV(*av_fetch(output_av, (I32)i, 0)));
 	}
 	return(newRV_noinc((SV*) output_av));
 }
 
 SV* string__array_ref__typetest0(SV* people)
 {
-//	array_ref__CHECK(people);
-	array_ref__CHECKTRACE(people, "people", "string__array_ref__typetest0()");
-	AV* people_deref = (AV*)SvRV(people);
-	integer i;
-	for (i = 0;  i < (av_len(people_deref) + 1);  ++i)
-	{
+//	string__array_ref__CHECK(people);
+	string__array_ref__CHECKTRACE(people, "people", "string__array_ref__typetest0()");
+//	AV* people_deref = (AV*)SvRV(people);
+//	integer i;
+//	for (i = 0;  i < (av_len(people_deref) + 1);  ++i)
+//	{
 //		string__CHECK(*av_fetch(people_deref, i, 0));
-		string__CHECKTRACE(*av_fetch(people_deref, i, 0), (char*)((string)"*av_fetch(people_deref, i, 0) at index " + to_string(i)).c_str(), "string__array_ref__typetest0()");
-		fprintf(stderr, "in CPPOPS_PERLTYPES string__array_ref__typetest0(), have person %d = '%s', BARBAR\n", i, (char *)SvPV_nolen(*av_fetch(people_deref, i, 0)));
-	}
+//		string__CHECKTRACE(*av_fetch(people_deref, i, 0), (char*)((string)"*av_fetch(people_deref, i, 0) at index " + to_string(i)).c_str(), "string__array_ref__typetest0()");
+//		fprintf(stderr, "in CPPOPS_PERLTYPES string__array_ref__typetest0(), have person %d = '%s', BARBAR\n", i, (char *)SvPV_nolen(*av_fetch(people_deref, i, 0)));
+//	}
 	return(newSVpvf("%s%s", SvPV_nolen(string__array_ref__stringify(people)), "CPPOPS_PERLTYPES"));
 }
 
@@ -683,22 +808,80 @@ SV* string__array_ref__typetest1(SV* my_size)
 	for (i = 0;  i < SvIV(my_size);  ++i)
 	{
 		av_store(people, (I32)i, newSVpvf("Jeffy Ten! %d/%d CPPOPS_PERLTYPES", i, (integer)(SvIV(my_size) - 1)));
-		fprintf(stderr, "in CPPOPS_PERLTYPES string__array_ref__typetest1(), bottom of for() loop, have i = %d, just set another Jeffy, BARBAR\n", i);
+//		fprintf(stderr, "in CPPOPS_PERLTYPES string__array_ref__typetest1(), bottom of for() loop, have i = %d, just set another Jeffy, BARBAR\n", i);
 	}
 	return(newRV_noinc((SV*) people));
 }
 
 # elif defined __CPP__TYPES
 
-string integer__array_ref__typetest0(integer__array_ref lucky_integers) { integer how_lucky = lucky_integers.size();  integer i;  for (i = 0;  i < how_lucky;  ++i) { fprintf(stderr, "in CPPOPS_CPPTYPES integer__array_ref__typetest0(), have lucky number %d/%d = %d, BARBAT\n", i, (how_lucky - 1), lucky_integers[i]); }  return(integer__array_ref__stringify(lucky_integers) + "CPPOPS_CPPTYPES"); }
-integer__array_ref integer__array_ref__typetest1(integer my_size) { integer__array_ref new_vec(my_size);  integer i;  for (i = 0;  i < my_size;  ++i) { new_vec[i] = i * 5;  fprintf(stderr, "in CPPOPS_CPPTYPES integer__array_ref__typetest1(), setting element %d/%d = %d, BARBAT\n", i, (my_size - 1), new_vec[i]); }  return(new_vec); }
+string integer__array_ref__typetest0(integer__array_ref lucky_integers)
+{
+	integer how_lucky = lucky_integers.size();
+	integer i;
+//	for (i = 0;  i < how_lucky;  ++i)
+//	{
+//		fprintf(stderr, "in CPPOPS_CPPTYPES integer__array_ref__typetest0(), have lucky number %d/%d = %d, BARBAT\n", i, (how_lucky - 1), lucky_integers[i]);
+//	}
+	return(integer__array_ref__stringify(lucky_integers) + "CPPOPS_CPPTYPES");
+}
 
-string number__array_ref__typetest0(number__array_ref lucky_numbers) { integer how_lucky = lucky_numbers.size();  integer i;  for (i = 0;  i < how_lucky;  ++i) { fprintf(stderr, "in CPPOPS_CPPTYPES number__array_ref__typetest0(), have lucky number %d/%d = %Lf, BARBAZ\n", i, (how_lucky - 1), lucky_numbers[i]); }  return(number__array_ref__stringify(lucky_numbers) + "CPPOPS_CPPTYPES"); }
-number__array_ref number__array_ref__typetest1(integer my_size) { number__array_ref new_vec(my_size);  integer i;  for (i = 0;  i < my_size;  ++i) { new_vec[i] = i * 5.123456789;  fprintf(stderr, "in CPPOPS_CPPTYPES typetest___number__in___number__array_ref__out(), setting element %d/%d = %Lf, BARBAZ\n", i, (my_size - 1), new_vec[i]); }  return(new_vec); }
+integer__array_ref integer__array_ref__typetest1(integer my_size)
+{
+	integer__array_ref new_vec(my_size);
+	integer i;
+	for (i = 0;  i < my_size;  ++i) {
+		new_vec[i] = i * 5;
+//		fprintf(stderr, "in CPPOPS_CPPTYPES integer__array_ref__typetest1(), setting element %d/%d = %d, BARBAT\n", i, (my_size - 1), new_vec[i]);
+	}
+	return(new_vec);
+}
+
+string number__array_ref__typetest0(number__array_ref lucky_numbers)
+{
+	integer how_lucky = lucky_numbers.size();
+	integer i;
+//	for (i = 0;  i < how_lucky;  ++i)
+//	{
+//		fprintf(stderr, "in CPPOPS_CPPTYPES number__array_ref__typetest0(), have lucky number %d/%d = %Lf, BARBAZ\n", i, (how_lucky - 1), lucky_numbers[i]);
+//	}
+	return(number__array_ref__stringify(lucky_numbers) + "CPPOPS_CPPTYPES");
+}
+number__array_ref number__array_ref__typetest1(integer my_size)
+{
+	number__array_ref new_vec(my_size);
+	integer i;
+	for (i = 0;  i < my_size;  ++i)
+	{
+		new_vec[i] = i * 5.123456789;
+//		fprintf(stderr, "in CPPOPS_CPPTYPES typetest___number__in___number__array_ref__out(), setting element %d/%d = %Lf, BARBAZ\n", i, (my_size - 1), new_vec[i]);
+	}
+	return(new_vec);
+}
 
 //string string__array_ref__typetest0(string__array_ref people) { integer i;  for (i = 0;  i < people.size();  ++i) { fprintf(stderr, "in CPPOPS_CPPTYPES fprintf(stderr, ) string__array_ref__typetest0(), have person %d = '%s', BARBAR\n", i, people[i].c_str()); }  return(string__array_ref__stringify(people) + "BARBAR"); }
-string string__array_ref__typetest0(string__array_ref people) { integer i;  for (i = 0;  i < people.size();  ++i) { cout << "in CPPOPS_CPPTYPES string__array_ref__typetest0(), have person " << i << " = '" << people[i] << "', BARBAR\n"; }  return(string__array_ref__stringify(people) + "CPPOPS_CPPTYPES"); }
-string__array_ref string__array_ref__typetest1(integer my_size) { string__array_ref people;  integer i;  people.resize((size_t)my_size);  for (i = 0;  i < my_size;  ++i) { people[i] = "Jeffy Ten! " + std::to_string(i) + "/" + std::to_string(my_size - 1) + " CPPOPS_CPPTYPES"; fprintf(stderr, "in CPPOPS_CPPTYPES string__array_ref__typetest1(), bottom of for() loop, have i = %d, just set another Jeffy, BARBAR\n", i); }  return(people); }
+string string__array_ref__typetest0(string__array_ref people)
+{
+	integer i;
+//	for (i = 0;  i < people.size();  ++i)
+//	{
+//		cout << "in CPPOPS_CPPTYPES string__array_ref__typetest0(), have person " << i << " = '" << people[i] << "', BARBAR\n";
+//	}
+	return(string__array_ref__stringify(people) + "CPPOPS_CPPTYPES");
+}
+
+string__array_ref string__array_ref__typetest1(integer my_size)
+{
+	string__array_ref people;
+	integer i;
+	people.resize((size_t)my_size);
+	for (i = 0;  i < my_size;  ++i)
+	{
+		people[i] = "Jeffy Ten! " + std::to_string(i) + "/" + std::to_string(my_size - 1) + " CPPOPS_CPPTYPES";
+//		fprintf(stderr, "in CPPOPS_CPPTYPES string__array_ref__typetest1(), bottom of for() loop, have i = %d, just set another Jeffy, BARBAR\n", i);
+	}
+	return(people);
+}
 
 # endif
 

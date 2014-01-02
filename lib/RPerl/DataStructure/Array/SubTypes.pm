@@ -7,7 +7,7 @@
 package RPerl::DataStructure::Array::SubTypes;
 use strict;
 use warnings;
-use version; our $VERSION = 0.003_007;
+our $VERSION = 0.004_000;
 use Carp;
 
 # [[[ ARRAYS ]]]
@@ -107,18 +107,85 @@ package integer__array_ref;
 use parent -norequire, ('array_ref');
 use Carp;
 
+# [[[ TYPE-CHECKING ]]]
+
+our void $integer__array_ref__CHECK = sub {
+    ( my $possible_integer__array_ref ) = @_;
+	# DEV NOTE: the following two if() statements are functionally equivalent to the array_ref__CHECK() subroutine, but with integer-specific error codes
+    if ( not( defined $possible_integer__array_ref ) ) {
+        croak(
+            "\nERROR EIVAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger__array_ref value expected but undefined/null value found,\ncroaking"
+        );
+    }
+
+    if ( not( main::RPerl_SvAROKp($possible_integer__array_ref) ) ) {
+        croak(
+            "\nERROR EIVAVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger__array_ref value expected but non-array_ref value found,\ncroaking"
+        );
+    }
+
+    my integer $possible_integer;
+    for my integer $i (
+        0 .. ( ( scalar @{$possible_integer__array_ref} ) - 1 ) )
+    {
+        $possible_integer = $possible_integer__array_ref->[$i];
+		# DEV NOTE: the following two if() statements are functionally equivalent to the integer__CHECK() subroutine, but with array-specific error codes
+        if ( not( defined $possible_integer ) ) {
+            croak(
+                "\nERROR EIVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger__array_ref element value expected but undefined/null value found at index $i,\ncroaking"
+            );
+        }
+        if ( not( main::RPerl_SvIOKp($possible_integer) ) ) {
+            croak(
+                "\nERROR EIVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger__array_ref element value expected but non-integer value found at index $i,\ncroaking"
+            );
+        }
+    }
+};
+our void $integer__array_ref__CHECKTRACE = sub {
+    (   my $possible_integer__array_ref,
+        my $variable_name,
+        my $subroutine_name
+    ) = @_;
+    if ( not( defined $possible_integer__array_ref ) ) {
+        croak(
+            "\nERROR EIVAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger__array_ref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+        );
+    }
+    if ( not( main::RPerl_SvAROKp($possible_integer__array_ref) ) ) {
+        croak(
+            "\nERROR EIVAVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger__array_ref value expected but non-array_ref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+        );
+    }
+
+    my integer $possible_integer;
+    for my integer $i (
+        0 .. ( ( scalar @{$possible_integer__array_ref} ) - 1 ) )
+    {
+        $possible_integer = $possible_integer__array_ref->[$i];
+        if ( not( defined $possible_integer ) ) {
+            croak(
+                "\nERROR EIVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger__array_ref element value expected but undefined/null value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+            );
+        }
+        if ( not( main::RPerl_SvIOKp($possible_integer) ) ) {
+            croak(
+                "\nERROR EIVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger__array_ref element value expected but non-integer value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+            );
+        }
+    }
+};
+
 # [[[ STRINGIFY ]]]
 
 # convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
 our string $integer__array_ref__stringify = sub {
     ( my $input_av_ref ) = @_;
 
-    print STDERR
-        "in PERLOPS_PERLTYPES integer__array_ref__stringify(), top of subroutine\n"
-        or croak();
+#    print STDERR "in PERLOPS_PERLTYPES integer__array_ref__stringify(), top of subroutine\n" or croak();
 
-    #    ::array_ref__CHECK($input_av_ref);
-    ::array_ref__CHECKTRACE( $input_av_ref, '$input_av_ref',
+    #    ::integer__array_ref__CHECK($input_av_ref);
+    ::integer__array_ref__CHECKTRACE( $input_av_ref, '$input_av_ref',
         'integer__array_ref__stringify()' );
 
     my @input_av;
@@ -138,12 +205,9 @@ our string $integer__array_ref__stringify = sub {
 
         $input_av_element = $input_av[$i];
 
+		# DEV NOTE: integer type-checking already done as part of integer__array_ref__CHECKTRACE()
         #        ::integer__CHECK($input_av_element);
-        ::integer__CHECKTRACE(
-            $input_av_element,
-            "\$input_av_element at index $i",
-            'integer__array_ref__stringify()'
-        );
+        #::integer__CHECKTRACE( $input_av_element, "\$input_av_element at index $i", 'integer__array_ref__stringify()' );
 
         if ($i_is_0) { $i_is_0 = 0; }
         else         { $output_sv .= ', '; }
@@ -152,12 +216,8 @@ our string $integer__array_ref__stringify = sub {
 
     $output_sv .= ']';
 
-    print STDERR
-        "in PERLOPS_PERLTYPES integer__array_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n"
-        or croak();
-    print STDERR
-        "in PERLOPS_PERLTYPES integer__array_ref__stringify(), bottom of subroutine\n"
-        or croak();
+#    print STDERR "in PERLOPS_PERLTYPES integer__array_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
+#    print STDERR "in PERLOPS_PERLTYPES integer__array_ref__stringify(), bottom of subroutine\n" or croak();
 
     return ($output_sv);
 };
@@ -166,29 +226,15 @@ our string $integer__array_ref__stringify = sub {
 
 our string $integer__array_ref__typetest0 = sub {
     ( my integer__array_ref $lucky_integers) = @_;
+#    ::integer__array_ref__CHECK($lucky_integers);
+    ::integer__array_ref__CHECKTRACE( $lucky_integers, '$lucky_integers', 'integer__array_ref__typetest0()' );
 
-    #    ::array_ref__CHECK($lucky_integers);
-    ::array_ref__CHECKTRACE( $lucky_integers, '$lucky_integers',
-        'integer__array_ref__typetest0()' );
-    my integer $how_lucky = scalar @{$lucky_integers};
-    for my integer $i ( 0 .. ( $how_lucky - 1 ) ) {
-        my $lucky_integer = $lucky_integers->[$i];
-
-        #        ::integer__CHECK($lucky_integer);
-        ::integer__CHECKTRACE(
-            $lucky_integer,
-            "\$lucky_integer at index $i",
-            'integer__array_ref__typetest0()'
-        );
-        print STDERR
-            "in PERLOPS_PERLTYPES integer__array_ref__typetest0(), have lucky integer $i/"
-            . ( $how_lucky - 1 ) . ' = '
-            . $lucky_integers->[$i]
-            . ", BARBAT\n"
-            or croak();
-    }
-    print STDERR
-        "in PERLOPS_PERLTYPES integer__array_ref__typetest0(), bottom of subroutine\n";
+#    my integer $how_lucky = scalar @{$lucky_integers};
+#    for my integer $i ( 0 .. ( $how_lucky - 1 ) ) {
+#        my $lucky_integer = $lucky_integers->[$i];
+#        print STDERR "in PERLOPS_PERLTYPES integer__array_ref__typetest0(), have lucky integer $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_integers->[$i] . ", BARBAT\n" or croak();
+#    }
+#    print STDERR "in PERLOPS_PERLTYPES integer__array_ref__typetest0(), bottom of subroutine\n";
     return ( integer__array_ref__stringify($lucky_integers)
             . 'PERLOPS_PERLTYPES' );
 };
@@ -202,12 +248,7 @@ our integer__array_ref $integer__array_ref__typetest1 = sub {
     my integer__array_ref $new_array = [];
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $new_array->[$i] = $i * 5;
-        print STDERR
-            "in PERLOPS_PERLTYPES integer__array_ref__typetest1(), setting element $i/"
-            . ( $my_size - 1 ) . ' = '
-            . $new_array->[$i]
-            . ", BARBAT\n"
-            or croak();
+#        print STDERR "in PERLOPS_PERLTYPES integer__array_ref__typetest1(), setting element $i/" . ( $my_size - 1 ) . ' = ' . $new_array->[$i] . ", BARBAT\n" or croak();
     }
     return ($new_array);
 };
@@ -349,18 +390,83 @@ package number__array_ref;
 use parent -norequire, ('array_ref');
 use Carp;
 
+# [[[ TYPE-CHECKING ]]]
+
+our void $number__array_ref__CHECK = sub {
+    ( my $possible_number__array_ref ) = @_;
+    if ( not( defined $possible_number__array_ref ) ) {
+        croak(
+            "\nERROR ENVAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber__array_ref value expected but undefined/null value found,\ncroaking"
+        );
+    }
+
+    if ( not( main::RPerl_SvAROKp($possible_number__array_ref) ) ) {
+        croak(
+            "\nERROR ENVAVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber__array_ref value expected but non-array_ref value found,\ncroaking"
+        );
+    }
+
+    my number $possible_number;
+    for my integer $i (
+        0 .. ( ( scalar @{$possible_number__array_ref} ) - 1 ) )
+    {
+        $possible_number = $possible_number__array_ref->[$i];
+        if ( not( defined $possible_number ) ) {
+            croak(
+                "\nERROR ENVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber__array_ref element value expected but undefined/null value found at index $i,\ncroaking"
+            );
+        }
+        if ( not( main::RPerl_SvNOKp($possible_number) || main::RPerl_SvIOKp($possible_number) ) ) {
+            croak(
+                "\nERROR ENVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber__array_ref element value expected but non-number value found at index $i,\ncroaking"
+            );
+        }
+    }
+};
+our void $number__array_ref__CHECKTRACE = sub {
+    (   my $possible_number__array_ref,
+        my $variable_name,
+        my $subroutine_name
+    ) = @_;
+    if ( not( defined $possible_number__array_ref ) ) {
+        croak(
+            "\nERROR ENVAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber__array_ref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+        );
+    }
+    if ( not( main::RPerl_SvAROKp($possible_number__array_ref) ) ) {
+        croak(
+            "\nERROR ENVAVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber__array_ref value expected but non-array_ref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+        );
+    }
+
+    my number $possible_number;
+    for my integer $i (
+        0 .. ( ( scalar @{$possible_number__array_ref} ) - 1 ) )
+    {
+        $possible_number = $possible_number__array_ref->[$i];
+        if ( not( defined $possible_number ) ) {
+            croak(
+                "\nERROR ENVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber__array_ref element value expected but undefined/null value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+            );
+        }
+        if ( not( main::RPerl_SvNOKp($possible_number) || main::RPerl_SvIOKp($possible_number) ) ) {
+            croak(
+                "\nERROR ENVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber__array_ref element value expected but non-number value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+            );
+        }
+    }
+};
+
 # [[[ STRINGIFY ]]]
 
 # convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing NVs))) to Perl-parsable (Perl SV containing PV)
 our string $number__array_ref__stringify = sub {
     ( my $input_av_ref ) = @_;
 
-    print STDERR
-        "in PERLOPS_PERLTYPES number__array_ref__stringify(), top of subroutine\n"
-        or croak();
+#    print STDERR "in PERLOPS_PERLTYPES number__array_ref__stringify(), top of subroutine\n" or croak();
 
-    #    ::array_ref__CHECK($input_av_ref);
-    ::array_ref__CHECKTRACE( $input_av_ref, '$input_av_ref',
+    #    ::number__array_ref__CHECK($input_av_ref);
+    ::number__array_ref__CHECKTRACE( $input_av_ref, '$input_av_ref',
         'number__array_ref__stringify()' );
 
     my @input_av;
@@ -380,13 +486,6 @@ our string $number__array_ref__stringify = sub {
 
         $input_av_element = $input_av[$i];
 
-        #        ::number__CHECK($input_av_element);
-        ::number__CHECKTRACE(
-            $input_av_element,
-            "\$input_av_element at index $i",
-            'number__array_ref__stringify()'
-        );
-
         if ($i_is_0) { $i_is_0 = 0; }
         else         { $output_sv .= ', '; }
         $output_sv .= $input_av_element;
@@ -394,12 +493,8 @@ our string $number__array_ref__stringify = sub {
 
     $output_sv .= ']';
 
-    print STDERR
-        "in PERLOPS_PERLTYPES number__array_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n"
-        or croak();
-    print STDERR
-        "in PERLOPS_PERLTYPES number__array_ref__stringify(), bottom of subroutine\n"
-        or croak();
+#    print STDERR "in PERLOPS_PERLTYPES number__array_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
+#    print STDERR "in PERLOPS_PERLTYPES number__array_ref__stringify(), bottom of subroutine\n" or croak();
 
     return ($output_sv);
 };
@@ -408,29 +503,15 @@ our string $number__array_ref__stringify = sub {
 
 our string $number__array_ref__typetest0 = sub {
     ( my number__array_ref $lucky_numbers) = @_;
+#    ::number__array_ref__CHECK($lucky_numbers);
+    ::number__array_ref__CHECKTRACE( $lucky_numbers, '$lucky_numbers', 'number__array_ref__typetest0()' );
 
-    #    ::array_ref__CHECK($lucky_numbers);
-    ::array_ref__CHECKTRACE( $lucky_numbers, '$lucky_numbers',
-        'number__array_ref__typetest0()' );
-    my integer $how_lucky = scalar @{$lucky_numbers};
-    for my integer $i ( 0 .. ( $how_lucky - 1 ) ) {
-        my $lucky_number = $lucky_numbers->[$i];
-
-        #        ::number__CHECK($lucky_number);
-        ::number__CHECKTRACE(
-            $lucky_number,
-            "\$lucky_number at index $i",
-            'number__array_ref__typetest0()'
-        );
-        print STDERR
-            "in PERLOPS_PERLTYPES number__array_ref__typetest0(), have lucky number $i/"
-            . ( $how_lucky - 1 ) . ' = '
-            . $lucky_numbers->[$i]
-            . ", BARBAZ\n"
-            or croak();
-    }
-    print STDERR
-        "in PERLOPS_PERLTYPES number__array_ref__typetest0(), bottom of subroutine\n";
+#    my integer $how_lucky = scalar @{$lucky_numbers};
+#    for my integer $i ( 0 .. ( $how_lucky - 1 ) ) {
+#        my $lucky_number = $lucky_numbers->[$i];
+#        print STDERR "in PERLOPS_PERLTYPES number__array_ref__typetest0(), have lucky number $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_numbers->[$i] . ", BARBAZ\n" or croak();
+#    }
+#    print STDERR "in PERLOPS_PERLTYPES number__array_ref__typetest0(), bottom of subroutine\n";
     return (
         number__array_ref__stringify($lucky_numbers) . 'PERLOPS_PERLTYPES' );
 };
@@ -444,12 +525,7 @@ our number__array_ref $number__array_ref__typetest1 = sub {
     my number__array_ref $new_array = [];
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $new_array->[$i] = $i * 5.123456789;
-        print STDERR
-            "in PERLOPS_PERLTYPES number__array_ref__typetest1(), setting element $i/"
-            . ( $my_size - 1 ) . ' = '
-            . $new_array->[$i]
-            . ", BARBAZ\n"
-            or croak();
+#        print STDERR "in PERLOPS_PERLTYPES number__array_ref__typetest1(), setting element $i/" . ( $my_size - 1 ) . ' = ' . $new_array->[$i] . ", BARBAZ\n" or croak();
     }
     return ($new_array);
 };
@@ -591,18 +667,83 @@ package string__array_ref;
 use parent -norequire, ('array_ref');
 use Carp;
 
+# [[[ TYPE-CHECKING ]]]
+
+our void $string__array_ref__CHECK = sub {
+    ( my $possible_string__array_ref ) = @_;
+    if ( not( defined $possible_string__array_ref ) ) {
+        croak(
+            "\nERROR EPVAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring__array_ref value expected but undefined/null value found,\ncroaking"
+        );
+    }
+
+    if ( not( main::RPerl_SvAROKp($possible_string__array_ref) ) ) {
+        croak(
+            "\nERROR EPVAVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring__array_ref value expected but non-array_ref value found,\ncroaking"
+        );
+    }
+
+    my string $possible_string;
+    for my integer $i (
+        0 .. ( ( scalar @{$possible_string__array_ref} ) - 1 ) )
+    {
+        $possible_string = $possible_string__array_ref->[$i];
+        if ( not( defined $possible_string ) ) {
+            croak(
+                "\nERROR EPVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring__array_ref element value expected but undefined/null value found at index $i,\ncroaking"
+            );
+        }
+        if ( not( main::RPerl_SvPOKp($possible_string) ) ) {
+            croak(
+                "\nERROR EPVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring__array_ref element value expected but non-string value found at index $i,\ncroaking"
+            );
+        }
+    }
+};
+our void $string__array_ref__CHECKTRACE = sub {
+    (   my $possible_string__array_ref,
+        my $variable_name,
+        my $subroutine_name
+    ) = @_;
+    if ( not( defined $possible_string__array_ref ) ) {
+        croak(
+            "\nERROR EPVAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring__array_ref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+        );
+    }
+    if ( not( main::RPerl_SvAROKp($possible_string__array_ref) ) ) {
+        croak(
+            "\nERROR EPVAVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring__array_ref value expected but non-array_ref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+        );
+    }
+
+    my string $possible_string;
+    for my integer $i (
+        0 .. ( ( scalar @{$possible_string__array_ref} ) - 1 ) )
+    {
+        $possible_string = $possible_string__array_ref->[$i];
+        if ( not( defined $possible_string ) ) {
+            croak(
+                "\nERROR EPVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring__array_ref element value expected but undefined/null value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+            );
+        }
+        if ( not( main::RPerl_SvPOKp($possible_string) ) ) {
+            croak(
+                "\nERROR EPVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring__array_ref element value expected but non-string value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+            );
+        }
+    }
+};
+
 # [[[ STRINGIFY ]]]
 
 # convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs))) to Perl-parsable (Perl SV containing PV)
 our string $string__array_ref__stringify = sub {
     ( my $input_av_ref ) = @_;
 
-    print STDERR
-        "in PERLOPS_PERLTYPES string__array_ref__stringify(), top of subroutine\n"
-        or croak();
+#    print STDERR "in PERLOPS_PERLTYPES string__array_ref__stringify(), top of subroutine\n" or croak();
 
-    #    ::array_ref__CHECK($input_av_ref);
-    ::array_ref__CHECKTRACE( $input_av_ref, '$input_av_ref',
+    #    ::string__array_ref__CHECK($input_av_ref);
+    ::string__array_ref__CHECKTRACE( $input_av_ref, '$input_av_ref',
         'string__array_ref__stringify()' );
 
     my @input_av;
@@ -622,13 +763,6 @@ our string $string__array_ref__stringify = sub {
 
         $input_av_element = $input_av[$i];
 
-        #        ::string__CHECK($input_av_element);
-        ::string__CHECKTRACE(
-            $input_av_element,
-            "\$input_av_element at index $i",
-            'string__array_ref__stringify()'
-        );
-
         if ($i_is_0) { $i_is_0 = 0; }
         else         { $output_sv .= ', '; }
         $input_av_element =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
@@ -638,12 +772,8 @@ our string $string__array_ref__stringify = sub {
 
     $output_sv .= ']';
 
-    print STDERR
-        "in PERLOPS_PERLTYPES string__array_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n"
-        or croak();
-    print STDERR
-        "in PERLOPS_PERLTYPES string__array_ref__stringify(), bottom of subroutine\n"
-        or croak();
+#    print STDERR "in PERLOPS_PERLTYPES string__array_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
+#    print STDERR "in PERLOPS_PERLTYPES string__array_ref__stringify(), bottom of subroutine\n" or croak();
 
     return ($output_sv);
 };
@@ -652,29 +782,15 @@ our string $string__array_ref__stringify = sub {
 
 our string $string__array_ref__typetest0 = sub {
     ( my string__array_ref $people) = @_;
+#    ::string__array_ref__CHECK($people);
+    ::string__array_ref__CHECKTRACE( $people, '$people', 'string__array_ref__typetest0()' );
 
-    #    ::array_ref__CHECK($people);
-    ::array_ref__CHECKTRACE( $people, '$people',
-        'string__array_ref__typetest0()' );
-    my integer $how_crowded = scalar @{$people};
-    for my integer $i ( 0 .. ( $how_crowded - 1 ) ) {
-        my $person = $people->[$i];
-
-        #        ::string__CHECK($person);
-        ::string__CHECKTRACE(
-            $person,
-            "\$person at index $i",
-            'string__array_ref__typetest0()'
-        );
-        print STDERR
-            "in PERLOPS_PERLTYPES string__array_ref__typetest0(), have person $i/"
-            . ( $how_crowded - 1 ) . ' = '
-            . $people->[$i]
-            . ", BARBAR\n"
-            or croak();
-    }
-    print STDERR
-        "in PERLOPS_PERLTYPES string__array_ref__typetest0(), bottom of subroutine\n";
+#    my integer $how_crowded = scalar @{$people};
+#    for my integer $i ( 0 .. ( $how_crowded - 1 ) ) {
+#        my $person = $people->[$i];
+#        print STDERR "in PERLOPS_PERLTYPES string__array_ref__typetest0(), have person $i/" . ( $how_crowded - 1 ) . ' = ' . $people->[$i] . ", BARBAR\n" or croak();
+#    }
+#    print STDERR "in PERLOPS_PERLTYPES string__array_ref__typetest0(), bottom of subroutine\n";
     return ( string__array_ref__stringify($people) . 'PERLOPS_PERLTYPES' );
 };
 
@@ -688,9 +804,7 @@ our string__array_ref $string__array_ref__typetest1 = sub {
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $new_array->[$i]
             = "Jeffy Ten! $i/" . ( $my_size - 1 ) . ' PERLOPS_PERLTYPES';
-        print STDERR
-            "in PERLOPS_PERLTYPES string__array_ref__typetest1(), bottom of for() loop, have i = $i, just set another Jeffy, BARBAR\n"
-            or croak();
+#        print STDERR "in PERLOPS_PERLTYPES string__array_ref__typetest1(), bottom of for() loop, have i = $i, just set another Jeffy, BARBAR\n" or croak();
     }
     return ($new_array);
 };
@@ -991,6 +1105,72 @@ use parent -norequire, ('const_array_ref');
 
 # (ref to (array with const size)) of (refs to (hashs with const sizes))
 package const_hash_ref__const_array_ref;
+use parent -norequire, ('const_array_ref');
+
+# [[[ OBJECT ARRAYS (2-dimesional) ]]]
+
+# array of objects
+package object__array;
+use parent -norequire, ('array');
+
+# array of (objects with const sizes)
+package const_object__array;
+use parent -norequire, ('array');
+
+# array of (refs to objects)
+package object_ref__array;
+use parent -norequire, ('array');
+
+# array of (refs to (objects with const sizes))
+package const_object_ref__array;
+use parent -norequire, ('array');
+
+# (array with const size) of objects
+package object__const_array;
+use parent -norequire, ('const_array');
+
+# (array with const size) of (objects with const sizes)
+package const_object__const_array;
+use parent -norequire, ('const_array');
+
+# (array with const size) of (refs to objects)
+package object_ref__const_array;
+use parent -norequire, ('const_array');
+
+# (array with const size) of (refs to (objects with const sizes))
+package const_object_ref__const_array;
+use parent -norequire, ('const_array');
+
+# (ref to array) of objects
+package object__array_ref;
+use parent -norequire, ('array_ref');
+
+# (ref to array) of (objects with const sizes)
+package const_object__array_ref;
+use parent -norequire, ('array_ref');
+
+# (ref to array) of (refs to objects)
+package object_ref__array_ref;
+use parent -norequire, ('array_ref');
+
+# (ref to array) of (refs to (objects with const sizes))
+package const_object_ref__array_ref;
+use parent -norequire, ('array_ref');
+
+# (ref to (array with const size)) of objects
+package object__const_array_ref;
+use parent -norequire, ('const_array_ref');
+
+# (ref to (array with const size)) of (objects with const sizes)
+package const_object__const_array_ref;
+use parent -norequire, ('const_array_ref');
+
+# (ref to (array with const size)) of (refs to objects)
+package object_ref__const_array_ref;
+use parent -norequire, ('const_array_ref');
+
+# (ref to (array with const size)) of (refs to (objects with const sizes))
+package const_object_ref__const_array_ref;
 use parent -norequire, ('const_array_ref');
 
 1;

@@ -2,8 +2,8 @@ use strict;  use warnings;
 package RPerl::Algorithm;
 
 # RPerl Base Class
-use parent ('RPerl::Class');
-use RPerl::Class;  use RPerl;
+use parent ('RPerl::CompileUnit::Module::Class');
+use RPerl::CompileUnit::Module::Class;  use RPerl;
 
 # [[[ INHERITANCE TESTING ]]]
 our void__method $inherited__Algorithm = sub { (my object $self, my string $person) = @_;  print STDERR "in Perl Algorithm->inherited__Algorithm(), have \$self = '$self' and \$person = '$person', FNORD\n"; };

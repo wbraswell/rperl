@@ -4,7 +4,7 @@
 ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted control characters, sigils, and regexes
 use strict;
 use warnings;
-use version; our $VERSION = 0.003_013;
+our $VERSION = 0.004_000;
 
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
@@ -53,16 +53,15 @@ BEGIN {
 # [[[ TEST RUNLOOP ]]]
 
 # loop 3 times, once for each mode: Pure-Perl, RPerl Perl-Data, and RPerl C-Data
-for my $i ( 0 .. 2 ) {
-    print STDERR "in 05_type_array.t, top of for() loop, have \$i = $i\n"
-        or croak;    # no effect if suppressing output!
+for my $OPS_TYPES_ID ( 0 .. 2 ) {
+#    print STDERR "in 05_type_array.t, top of for() loop, have \$OPS_TYPES_ID = $OPS_TYPES_ID\n" or croak;    # no effect if suppressing output!
     my $OPS_TYPES;
 
     # [[[ PERLOPS_PERLTYPES SETUP ]]]
     # [[[ PERLOPS_PERLTYPES SETUP ]]]
     # [[[ PERLOPS_PERLTYPES SETUP ]]]
 
-    if ( $i == 0 ) {
+    if ( $OPS_TYPES_ID == 0 ) {
         $OPS_TYPES = 'PERLOPS_PERLTYPES';
         diag(
             "\n[[[ Beginning RPerl's Pure-Perl Array Type Tests, RPerl Type System Using Perl Data Types & Perl Operations ]]]\n "
@@ -125,7 +124,7 @@ for my $i ( 0 .. 2 ) {
     # [[[ CPPOPS_PERLTYPES SETUP ]]]
     # [[[ CPPOPS_PERLTYPES SETUP ]]]
 
-    elsif ( $i == 1 ) {
+    elsif ( $OPS_TYPES_ID == 1 ) {
         $OPS_TYPES = 'CPPOPS_PERLTYPES';
         diag(
             "\n[[[ Beginning RPerl's Perl-Data Mode Array Type Tests, RPerl Type System Using Perl Data Types & C++ Operations ]]]\n "
@@ -287,73 +286,73 @@ for my $i ( 0 .. 2 ) {
 
     throws_ok(    # TIVAVRV00
         sub { integer__array_ref__stringify() },
-        "/(EAVRV00.*$OPS_TYPES)|(Usage.*integer__array_ref__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(EIVAVRV00.*$OPS_TYPES)|(Usage.*integer__array_ref__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TIVAVRV00 integer__array_ref__stringify() throws correct exception}
     );
     throws_ok(    # TIVAVRV01
         sub { integer__array_ref__stringify(undef) },
-        "/EAVRV00.*$OPS_TYPES/",
+        "/EIVAVRV00.*$OPS_TYPES/",
         q{TIVAVRV01 integer__array_ref__stringify(undef) throws correct exception}
     );
     throws_ok(    # TIVAVRV02
         sub { integer__array_ref__stringify(2) },
-        "/EAVRV01.*$OPS_TYPES/",
+        "/EIVAVRV01.*$OPS_TYPES/",
         q{TIVAVRV02 integer__array_ref__stringify(2) throws correct exception}
     );
     throws_ok(    # TIVAVRV03
         sub { integer__array_ref__stringify(2.3) },
-        "/EAVRV01.*$OPS_TYPES/",
+        "/EIVAVRV01.*$OPS_TYPES/",
         q{TIVAVRV03 integer__array_ref__stringify(2.3) throws correct exception}
     );
     throws_ok(    # TIVAVRV04
         sub { integer__array_ref__stringify('2') },
-        "/EAVRV01.*$OPS_TYPES/",
+        "/EIVAVRV01.*$OPS_TYPES/",
         q{TIVAVRV04 integer__array_ref__stringify('2') throws correct exception}
     );
     throws_ok(    # TIVAVRV05
         sub { integer__array_ref__stringify( { a_key => 23 } ) },
-        "/EAVRV01.*$OPS_TYPES/",
+        "/EIVAVRV01.*$OPS_TYPES/",
         q{TIVAVRV05 integer__array_ref__stringify({a_key => 23}) throws correct exception}
     );
     throws_ok(    # TIVAVRV10
         sub {
             integer__array_ref__stringify(
-                [ 2, 2112, undef, 23, -877, 33, 1701 ] );
+                [ 2, 2112, undef, 23, -877, -33, 1701 ] );
         },
-        "/EIV00.*$OPS_TYPES/",
-        q{TIVAVRV10 integer__array_ref__stringify([2, 2112, undef, 23, -877, 33, 1701]) throws correct exception}
+        "/EIVAVRV02.*$OPS_TYPES/",
+        q{TIVAVRV10 integer__array_ref__stringify([2, 2112, undef, 23, -877, -33, 1701]) throws correct exception}
     );
     throws_ok(    # TIVAVRV11
         sub {
             integer__array_ref__stringify(
-                [ 2, 2112, 42, 23.3, -877, 33, 1701 ] );
+                [ 2, 2112, 42, 23.3, -877, -33, 1701 ] );
         },
-        "/EIV01.*$OPS_TYPES/",
-        q{TIVAVRV11 integer__array_ref__stringify([2, 2112, 42, 23.3, -877, 33, 1701]) throws correct exception}
+        "/EIVAVRV03.*$OPS_TYPES/",
+        q{TIVAVRV11 integer__array_ref__stringify([2, 2112, 42, 23.3, -877, -33, 1701]) throws correct exception}
     );
     throws_ok(    # TIVAVRV12
         sub {
             integer__array_ref__stringify(
-                [ 2, 2112, 42, '23', -877, 33, 1701 ] );
+                [ 2, 2112, 42, '23', -877, -33, 1701 ] );
         },
-        "/EIV01.*$OPS_TYPES/",
-        q{TIVAVRV12 integer__array_ref__stringify([2, 2112, 42, '23', -877, 33, 1701]) throws correct exception}
+        "/EIVAVRV03.*$OPS_TYPES/",
+        q{TIVAVRV12 integer__array_ref__stringify([2, 2112, 42, '23', -877, -33, 1701]) throws correct exception}
     );
     throws_ok(    # TIVAVRV13
         sub {
             integer__array_ref__stringify(
-                [ 2, 2112, 42, [23], -877, 33, 1701 ] );
+                [ 2, 2112, 42, [23], -877, -33, 1701 ] );
         },
-        "/EIV01.*$OPS_TYPES/",
-        q{TIVAVRV13 integer__array_ref__stringify([2, 2112, 42, [23], -877, 33, 1701]) throws correct exception}
+        "/EIVAVRV03.*$OPS_TYPES/",
+        q{TIVAVRV13 integer__array_ref__stringify([2, 2112, 42, [23], -877, -33, 1701]) throws correct exception}
     );
     throws_ok(    # TIVAVRV14
         sub {
             integer__array_ref__stringify(
-                [ 2, 2112, 42, { a_subkey => 23 }, -877, 33, 1701 ] );
+                [ 2, 2112, 42, { a_subkey => 23 }, -877, -33, 1701 ] );
         },
-        "/EIV01.*$OPS_TYPES/",
-        q{TIVAVRV14 integer__array_ref__stringify([2, 2112, 42, {a_subkey => 23}, -877, 33, 1701]) throws correct exception}
+        "/EIVAVRV03.*$OPS_TYPES/",
+        q{TIVAVRV14 integer__array_ref__stringify([2, 2112, 42, {a_subkey => 23}, -877, -33, 1701]) throws correct exception}
     );
     lives_and(    # TIVAVRV20
         sub {
@@ -367,50 +366,50 @@ for my $i ( 0 .. 2 ) {
     lives_and(    # TIVAVRV21
         sub {
             is( integer__array_ref__stringify(
-                    [ 2, 2112, 42, 23, -877, 33, 1701 ]
+                    [ 2, 2112, 42, 23, -877, -33, 1701 ]
                 ),
-                '[2, 2112, 42, 23, -877, 33, 1701]',
-                q{TIVAVRV21 integer__array_ref__stringify([2, 2112, 42, 23, -877, 33, 1701]) returns correct value}
+                '[2, 2112, 42, 23, -877, -33, 1701]',
+                q{TIVAVRV21 integer__array_ref__stringify([2, 2112, 42, 23, -877, -33, 1701]) returns correct value}
             );
         },
-        q{TIVAVRV21 integer__array_ref__stringify([2, 2112, 42, 23, -877, 33, 1701]) lives}
+        q{TIVAVRV21 integer__array_ref__stringify([2, 2112, 42, 23, -877, -33, 1701]) lives}
     );
     throws_ok(    # TIVAVRV30
         sub { integer__array_ref__typetest0() },
-        "/(EAVRV00.*$OPS_TYPES)|(Usage.*integer__array_ref__typetest0)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(EIVAVRV00.*$OPS_TYPES)|(Usage.*integer__array_ref__typetest0)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TIVAVRV30 integer__array_ref__typetest0() throws correct exception}
     );
     throws_ok(    # TIVAVRV31
         sub { integer__array_ref__typetest0(2) },
-        "/EAVRV01.*$OPS_TYPES/",
+        "/EIVAVRV01.*$OPS_TYPES/",
         q{TIVAVRV31 integer__array_ref__typetest0(2) throws correct exception}
     );
     throws_ok(    # TIVAVRV32
         sub {
             integer__array_ref__typetest0(
-                [ 2, 2112, undef, 23, -877, 33, 1701 ] );
+                [ 2, 2112, undef, 23, -877, -33, 1701 ] );
         },
-        "/EIV00.*$OPS_TYPES/",
-        q{TIVAVRV32 integer__array_ref__typetest0([2, 2112, undef, 23, -877, 33, 1701]) throws correct exception}
+        "/EIVAVRV02.*$OPS_TYPES/",
+        q{TIVAVRV32 integer__array_ref__typetest0([2, 2112, undef, 23, -877, -33, 1701]) throws correct exception}
     );
     throws_ok(    # TIVAVRV33
         sub {
             integer__array_ref__typetest0(
-                [ 2, 2112, 42, 'abcdefg', -877, 33, 1701 ] );
+                [ 2, 2112, 42, 'abcdefg', -877, -33, 1701 ] );
         },
-        "/EIV01.*$OPS_TYPES/",
-        q{TIVAVRV33 integer__array_ref__typetest0([2, 2112, 42, 'abcdefg', -877, 33, 1701]) throws correct exception}
+        "/EIVAVRV03.*$OPS_TYPES/",
+        q{TIVAVRV33 integer__array_ref__typetest0([2, 2112, 42, 'abcdefg', -877, -33, 1701]) throws correct exception}
     );
     lives_and(    # TIVAVRV34
         sub {
             is( integer__array_ref__typetest0(
-                    [ 2, 2112, 42, 23, -877, 33, 1701 ]
+                    [ 2, 2112, 42, 23, -877, -33, 1701 ]
                 ),
-                '[2, 2112, 42, 23, -877, 33, 1701]' . $OPS_TYPES,
-                q{TIVAVRV34 integer__array_ref__typetest0([2, 2112, 42, 23, -877, 33, 1701]) returns correct value}
+                '[2, 2112, 42, 23, -877, -33, 1701]' . $OPS_TYPES,
+                q{TIVAVRV34 integer__array_ref__typetest0([2, 2112, 42, 23, -877, -33, 1701]) returns correct value}
             );
         },
-        q{TIVAVRV34 integer__array_ref__typetest0([2, 2112, 42, 23, -877, 33, 1701]) lives}
+        q{TIVAVRV34 integer__array_ref__typetest0([2, 2112, 42, 23, -877, -33, 1701]) lives}
     );
     lives_and(    # TIVAVRV40
         sub {
@@ -429,65 +428,65 @@ for my $i ( 0 .. 2 ) {
 
     throws_ok(    # TNVAVRV00
         sub { number__array_ref__stringify() },
-        "/(EAVRV00.*$OPS_TYPES)|(Usage.*number__array_ref__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(ENVAVRV00.*$OPS_TYPES)|(Usage.*number__array_ref__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TNVAVRV00 number__array_ref__stringify() throws correct exception}
     );
     throws_ok(    # TNVAVRV01
         sub { number__array_ref__stringify(undef) },
-        "/EAVRV00.*$OPS_TYPES/",
+        "/ENVAVRV00.*$OPS_TYPES/",
         q{TNVAVRV01 number__array_ref__stringify(undef) throws correct exception}
     );
     throws_ok(    # TNVAVRV02
         sub { number__array_ref__stringify(2) },
-        "/EAVRV01.*$OPS_TYPES/",
+        "/ENVAVRV01.*$OPS_TYPES/",
         q{TNVAVRV02 number__array_ref__stringify(2) throws correct exception}
     );
     throws_ok(    # TNVAVRV03
         sub { number__array_ref__stringify(2.3) },
-        "/EAVRV01.*$OPS_TYPES/",
+        "/ENVAVRV01.*$OPS_TYPES/",
         q{TNVAVRV03 number__array_ref__stringify(2.3) throws correct exception}
     );
     throws_ok(    # TNVAVRV04
         sub { number__array_ref__stringify('2') },
-        "/EAVRV01.*$OPS_TYPES/",
+        "/ENVAVRV01.*$OPS_TYPES/",
         q{TNVAVRV04 number__array_ref__stringify('2') throws correct exception}
     );
     throws_ok(    # TNVAVRV05
         sub { number__array_ref__stringify( { a_key => 23 } ) },
-        "/EAVRV01.*$OPS_TYPES/",
+        "/ENVAVRV01.*$OPS_TYPES/",
         q{TNVAVRV05 number__array_ref__stringify({a_key => 23}) throws correct exception}
     );
     throws_ok(    # TNVAVRV10
         sub {
             number__array_ref__stringify(
-                [ 2, 2112, undef, 23, -877, 33, 1701 ] );
+                [ 2, 2112, undef, 23, -877, -33, 1701 ] );
         },
-        "/ENV00.*$OPS_TYPES/",
-        q{TNVAVRV10 number__array_ref__stringify([2, 2112, undef, 23, -877, 33, 1701]) throws correct exception}
+        "/ENVAVRV02.*$OPS_TYPES/",
+        q{TNVAVRV10 number__array_ref__stringify([2, 2112, undef, 23, -877, -33, 1701]) throws correct exception}
     );
     throws_ok(    # TNVAVRV11
         sub {
             number__array_ref__stringify(
-                [ 2, 2112, 42, '23', -877, 33, 1701 ] );
+                [ 2, 2112, 42, '23', -877, -33, 1701 ] );
         },
-        "/ENV01.*$OPS_TYPES/",
-        q{TNVAVRV11 number__array_ref__stringify([2, 2112, 42, '23', -877, 33, 1701]) throws correct exception}
+        "/ENVAVRV03.*$OPS_TYPES/",
+        q{TNVAVRV11 number__array_ref__stringify([2, 2112, 42, '23', -877, -33, 1701]) throws correct exception}
     );
     throws_ok(    # TNVAVRV12
         sub {
             number__array_ref__stringify(
-                [ 2, 2112, 42, [23], -877, 33, 1701 ] );
+                [ 2, 2112, 42, [23], -877, -33, 1701 ] );
         },
-        "/ENV01.*$OPS_TYPES/",
-        q{TNVAVRV12 number__array_ref__stringify([2, 2112, 42, [23], -877, 33, 1701]) throws correct exception}
+        "/ENVAVRV03.*$OPS_TYPES/",
+        q{TNVAVRV12 number__array_ref__stringify([2, 2112, 42, [23], -877, -33, 1701]) throws correct exception}
     );
     throws_ok(    # TNVAVRV13
         sub {
             number__array_ref__stringify(
-                [ 2, 2112, 42, { a_subkey => 23 }, -877, 33, 1701 ] );
+                [ 2, 2112, 42, { a_subkey => 23 }, -877, -33, 1701 ] );
         },
-        "/ENV01.*$OPS_TYPES/",
-        q{TNVAVRV13 number__array_ref__stringify([2, 2112, 42, {a_subkey => 23}, -877, 33, 1701]) throws correct exception}
+        "/ENVAVRV03.*$OPS_TYPES/",
+        q{TNVAVRV13 number__array_ref__stringify([2, 2112, 42, {a_subkey => 23}, -877, -33, 1701]) throws correct exception}
     );
     lives_and(    # TNVAVRV20
         sub {
@@ -501,13 +500,13 @@ for my $i ( 0 .. 2 ) {
     lives_and(    # TNVAVRV21
         sub {
             is( number__array_ref__stringify(
-                    [ 2, 2112, 42, 23, -877, 33, 1701 ]
+                    [ 2, 2112, 42, 23, -877, -33, 1701 ]
                 ),
-                '[2, 2112, 42, 23, -877, 33, 1701]',
-                q{TNVAVRV21 number__array_ref__stringify([2, 2112, 42, 23, -877, 33, 1701]) returns correct value}
+                '[2, 2112, 42, 23, -877, -33, 1701]',
+                q{TNVAVRV21 number__array_ref__stringify([2, 2112, 42, 23, -877, -33, 1701]) returns correct value}
             );
         },
-        q{TNVAVRV21 number__array_ref__stringify([2, 2112, 42, 23, -877, 33, 1701]) lives}
+        q{TNVAVRV21 number__array_ref__stringify([2, 2112, 42, 23, -877, -33, 1701]) lives}
     );
     lives_and(    # TNVAVRV22
         sub {
@@ -521,24 +520,24 @@ for my $i ( 0 .. 2 ) {
     lives_and(    # TNVAVRV23
         sub {
             is( number__array_ref__stringify(
-                    [ 2.1, 2112.2, 42.3, 23, -877, 33, 1701 ]
+                    [ 2.1, 2112.2, 42.3, 23, -877, -33, 1701 ]
                 ),
-                '[2.1, 2112.2, 42.3, 23, -877, 33, 1701]',
-                q{TNVAVRV23 number__array_ref__stringify([2.1, 2112.2, 42.3, 23, -877, 33, 1701]) returns correct value}
+                '[2.1, 2112.2, 42.3, 23, -877, -33, 1701]',
+                q{TNVAVRV23 number__array_ref__stringify([2.1, 2112.2, 42.3, 23, -877, -33, 1701]) returns correct value}
             );
         },
-        q{TNVAVRV23 number__array_ref__stringify([2.1, 2112.2, 42.3, 23, -877, 33, 1701]) lives}
+        q{TNVAVRV23 number__array_ref__stringify([2.1, 2112.2, 42.3, 23, -877, -33, 1701]) lives}
     );
     lives_and(    # TNVAVRV24
         sub {
             is( number__array_ref__stringify(
                     [   2.1234432112344321, 2112.4321,
                         42.4567,            23.765444444444444444,
-                        -877.5678,          33.876587658765875687658765,
+                        -877.5678,          -33.876587658765875687658765,
                         1701.6789
                     ]
                 ),
-                '[2.12344321123443, 2112.4321, 42.4567, 23.7654444444444, -877.5678, 33.8765876587659, 1701.6789]',
+                '[2.12344321123443, 2112.4321, 42.4567, 23.7654444444444, -877.5678, -33.8765876587659, 1701.6789]',
                 q{TNVAVRV24 number__array_ref__stringify([2.1234432112344321, 2112.4321, ..., 1701.6789]) returns correct value}
             );
         },
@@ -546,12 +545,12 @@ for my $i ( 0 .. 2 ) {
     );
     throws_ok(    # TNVAVRV30
         sub { number__array_ref__typetest0() },
-        "/(EAVRV00.*$OPS_TYPES)|(Usage.*number__array_ref__typetest0)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(ENVAVRV00.*$OPS_TYPES)|(Usage.*number__array_ref__typetest0)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TNVAVRV30 number__array_ref__typetest0() throws correct exception}
     );
     throws_ok(    # TNVAVRV31
         sub { number__array_ref__typetest0(2) },
-        "/EAVRV01.*$OPS_TYPES/",
+        "/ENVAVRV01.*$OPS_TYPES/",
         q{TNVAVRV31 number__array_ref__typetest0(2) throws correct exception}
     );
     throws_ok(    # TNVAVRV32
@@ -559,12 +558,12 @@ for my $i ( 0 .. 2 ) {
             number__array_ref__typetest0(
                 [   2.1234432112344321, 2112.4321,
                     undef,              23.765444444444444444,
-                    -877.5678,          33.876587658765875687658765,
+                    -877.5678,          -33.876587658765875687658765,
                     1701.6789
                 ]
             );
         },
-        "/ENV00.*$OPS_TYPES/",
+        "/ENVAVRV02.*$OPS_TYPES/",
         q{TNVAVRV32 number__array_ref__typetest0([2.1234432112344321, 2112.4321, undef, 23.765444444444444444, ..., 1701.6789]) throws correct exception}
     );
     throws_ok(    # TNVAVRV33
@@ -573,23 +572,23 @@ for my $i ( 0 .. 2 ) {
                 [   2.1234432112344321,          2112.4321,
                     42.4567,                     23.765444444444444444,
                     -877.5678,                   'abcdefg',
-                    33.876587658765875687658765, 1701.6789
+                    -33.876587658765875687658765, 1701.6789
                 ]
             );
         },
-        "/ENV01.*$OPS_TYPES/",
-        q{TNVAVRV33 number__array_ref__typetest0([2.1234432112344321, ..., 'abcdefg', 33.876587658765875687658765, 1701.6789]) throws correct exception}
+        "/ENVAVRV03.*$OPS_TYPES/",
+        q{TNVAVRV33 number__array_ref__typetest0([2.1234432112344321, ..., 'abcdefg', -33.876587658765875687658765, 1701.6789]) throws correct exception}
     );
     lives_and(    # TNVAVRV34
         sub {
             is( number__array_ref__typetest0(
                     [   2.1234432112344321, 2112.4321,
                         42.4567,            23.765444444444444444,
-                        -877.5678,          33.876587658765875687658765,
+                        -877.5678,          -33.876587658765875687658765,
                         1701.6789
                     ]
                 ),
-                '[2.12344321123443, 2112.4321, 42.4567, 23.7654444444444, -877.5678, 33.8765876587659, 1701.6789]'
+                '[2.12344321123443, 2112.4321, 42.4567, 23.7654444444444, -877.5678, -33.8765876587659, 1701.6789]'
                     . $OPS_TYPES,
                 q{TNVAVRV34 number__array_ref__typetest0([2.1234432112344321, 2112.4321, ..., 1701.6789]) returns correct value}
             );
@@ -614,32 +613,32 @@ for my $i ( 0 .. 2 ) {
 
     throws_ok(    # TPVAVRV00
         sub { string__array_ref__stringify() },
-        "/(EAVRV00.*$OPS_TYPES)|(Usage.*string__array_ref__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(EPVAVRV00.*$OPS_TYPES)|(Usage.*string__array_ref__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TPVAVRV00 string__array_ref__stringify() throws correct exception}
     );
     throws_ok(    # TPVAVRV01
         sub { string__array_ref__stringify(undef) },
-        "/EAVRV00.*$OPS_TYPES/",
+        "/EPVAVRV00.*$OPS_TYPES/",
         q{TPVAVRV01 string__array_ref__stringify(undef) throws correct exception}
     );
     throws_ok(    # TPVAVRV02
         sub { string__array_ref__stringify(2) },
-        "/EAVRV01.*$OPS_TYPES/",
+        "/EPVAVRV01.*$OPS_TYPES/",
         q{TPVAVRV02 string__array_ref__stringify(2) throws correct exception}
     );
     throws_ok(    # TPVAVRV03
         sub { string__array_ref__stringify(2.3) },
-        "/EAVRV01.*$OPS_TYPES/",
+        "/EPVAVRV01.*$OPS_TYPES/",
         q{TPVAVRV03 string__array_ref__stringify(2.3) throws correct exception}
     );
     throws_ok(    # TPVAVRV04
         sub { string__array_ref__stringify('Lone Ranger') },
-        "/EAVRV01.*$OPS_TYPES/",
+        "/EPVAVRV01.*$OPS_TYPES/",
         q{TPVAVRV04 string__array_ref__stringify('Lone Ranger') throws correct exception}
     );
     throws_ok(    # TPVAVRV05
         sub { string__array_ref__stringify( { a_key => 'Lone Ranger' } ) },
-        "/EAVRV01.*$OPS_TYPES/",
+        "/EPVAVRV01.*$OPS_TYPES/",
         q{TPVAVRV05 string__array_ref__stringify({a_key => 'Lone Ranger'}) throws correct exception}
     );
     throws_ok(    # TPVAVRV10
@@ -652,7 +651,7 @@ for my $i ( 0 .. 2 ) {
                 ]
             );
         },
-        "/EPV00.*$OPS_TYPES/",
+        "/EPVAVRV02.*$OPS_TYPES/",
         q{TPVAVRV10 string__array_ref__stringify(['Superman', 'Batman', 'Wonder Woman', undef, 'Green Lantern', 'Aquaman', 'Martian Manhunter']) throws correct exception}
     );
     throws_ok(    # TPVAVRV11
@@ -665,7 +664,7 @@ for my $i ( 0 .. 2 ) {
                 ]
             );
         },
-        "/EPV01.*$OPS_TYPES/",
+        "/EPVAVRV03.*$OPS_TYPES/",
         q{TPVAVRV11 string__array_ref__stringify(['Superman', 'Batman', 23, 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']) throws correct exception}
     );
     throws_ok(    # TPVAVRV12
@@ -678,7 +677,7 @@ for my $i ( 0 .. 2 ) {
                 ]
             );
         },
-        "/EPV01.*$OPS_TYPES/",
+        "/EPVAVRV03.*$OPS_TYPES/",
         q{TPVAVRV12 string__array_ref__stringify(['Superman', 'Batman', 23.2, 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']) throws correct exception}
     );
     throws_ok(    # TPVAVRV13
@@ -691,7 +690,7 @@ for my $i ( 0 .. 2 ) {
                 ]
             );
         },
-        "/EPV01.*$OPS_TYPES/",
+        "/EPVAVRV03.*$OPS_TYPES/",
         q{TPVAVRV13 string__array_ref__stringify(['Superman', 'Batman', ['Wonder Woman'], 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']) throws correct exception}
     );
     throws_ok(    # TPVAVRV14
@@ -704,7 +703,7 @@ for my $i ( 0 .. 2 ) {
                 ]
             );
         },
-        "/EPV01.*$OPS_TYPES/",
+        "/EPVAVRV03.*$OPS_TYPES/",
         q{TPVAVRV14 string__array_ref__stringify(['Superman', 'Batman', {a_subkey => 'Wonder Woman'}, ..., 'Martian Manhunter']) throws correct exception}
     );
     lives_and(    # TPVAVRV20
@@ -779,12 +778,12 @@ for my $i ( 0 .. 2 ) {
     );
     throws_ok(    # TPVAVRV30
         sub { string__array_ref__typetest0() },
-        "/(EAVRV00.*$OPS_TYPES)|(Usage.*string__array_ref__typetest0)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(EPVAVRV00.*$OPS_TYPES)|(Usage.*string__array_ref__typetest0)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TPVAVRV30 string__array_ref__typetest0() throws correct exception}
     );
     throws_ok(    # TPVAVRV31
         sub { string__array_ref__typetest0(2) },
-        "/EAVRV01.*$OPS_TYPES/",
+        "/EPVAVRV01.*$OPS_TYPES/",
         q{TPVAVRV31 string__array_ref__typetest0(2) throws correct exception}
     );
     throws_ok(    # TPVAVRV32
@@ -797,7 +796,7 @@ for my $i ( 0 .. 2 ) {
                 ]
             );
         },
-        "/EPV00.*$OPS_TYPES/",
+        "/EPVAVRV02.*$OPS_TYPES/",
         q{TPVAVRV32 string__array_ref__typetest0(['Superman', 'Batman', 'Wonder Woman', undef, 'Green Lantern', 'Aquaman', 'Martian Manhunter']) throws correct exception}
     );
     throws_ok(    # TPVAVRV33
@@ -810,7 +809,7 @@ for my $i ( 0 .. 2 ) {
                 ]
             );
         },
-        "/EPV01.*$OPS_TYPES/",
+        "/EPVAVRV03.*$OPS_TYPES/",
         q{TPVAVRV33 string__array_ref__typetest0(['Superman', 'Batman', 'Wonder Woman', ..., 'Martian Manhunter', [23, -42.3]]) throws correct exception}
     );
     lives_and(    # TPVAVRV34

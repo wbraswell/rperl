@@ -2,8 +2,8 @@ use strict; use warnings;
 package RPerl::DataType::Number_cpp;
 our $CPP_LOADED = 0;
 our $CPP_LINKED = 0;
-our @ISA = ('RPerl::Class');
-use RPerl::Class;  use RPerl;
+our @ISA = ('RPerl::CompileUnit::Module::Class');
+use RPerl::CompileUnit::Module::Class;  use RPerl;
 
 our void__method $cpp_load = sub {
 ;	

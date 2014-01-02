@@ -1,6 +1,8 @@
-RPerl Install Notes
+RPerl v1.0 Beta, Install Notes
 Single-User Installation (Not System-Wide Installation)
-Last Updated December 24th, 2013
+Last Updated January 1st, 2014
+
+[[[ IMPORTANT WARNING: DO NOT USE THIS local::lib INSTALLATION METHODOLOGY WITH PERLBREW, PERLALL, PLENV, OR OTHER SPECIAL PERL ENVIRONMENTS ]]]
 
 $ curl -L cpanmin.us | perl - -l $HOME/perl5 App::cpanminus local::lib
 $ eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
@@ -19,12 +21,36 @@ $ ln -s path_to_RPerl/lib/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/sha
 $ cd GIT_REPOS_DIR
 $ perl Makefile.PL
 $ cpanm --installdeps .
-$ rm -Rf _Inline/; reset; perl -Ilib t/08_precompiled_sort.t
-$ rm -Rf _Inline/; reset; prove -l t/05_type_array.t 2> /dev/null
-    # MANUALLY CONFIRM TESTS WORK
+	# note the dot at the end of this command
+
+$ rm -Rf _Inline/; reset; perl -Ilib bin/test_suite.pl
+	# MANUALLY CONFIRM ALL TESTS PASS, WITH COMPILER OUTPUT
+
+$ rm -Rf _Inline/; reset; perl -Ilib t/08_type_array.t
+	# MANUALLY CONFIRM SINGLE TESTS PASS, WITH COMPILER OUTPUT
+
+$ rm -Rf _Inline/; reset; prove -l t/* 2> /dev/null
+	# MANUALLY CONFIRM ALL TESTS PASS, WITHOUT COMPILER OUTPUT
+	
+$ rm -Rf ./_Inline/; reset; perl -Ilib bin/development/compiler_test.pl
+	# MANUALLY CONFIRM COMPILER TEST RUNS, WITH COMPILER OUTPUT
+
+$ rm -Rf _Inline; reset; perl -Ilib ./bin/development/rperl_test_00.pl
+	# MANUALLY CONFIRM COMPILED TEST RUNS, WITH COMPILER OUTPUT
+
+$ vi lib/RPerl_test_00.pm
+	# MANUALLY EDIT RPERL "HELLO WORLD" PERL MODULE
+
+$ vi bin/development/rperl_test_00.pl
+	# MANUALLY EDIT RPERL "HELLO WORLD" PERL DRIVER
+
+$ vi lib/RPerl_test_00.cpp
+	# MANUALLY INSPECT RPERL "HELLO WORLD" C++ MODULE
 
 
 
+
+[[[ IGNORE THE FOLLOWING LINES UNLESS YOU ARE AN RPERL DEVELOPER ]]]
 
 UNCONFIRMED:
 cpan> install BULKDD/Inline-Filters-0.12_01.tar.gz

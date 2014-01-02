@@ -5,5 +5,5 @@ package RPerl::DataType;
 use RPerl::DataType::Modifier::Constant;
 use RPerl::DataType::Modifier::Reference;
 
-# RPerl Data Type, no inheritance from RPerl or RPerl::Class
+# RPerl Data Type, no inheritance from RPerl or RPerl::CompileUnit::Module::Class
 1;

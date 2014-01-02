@@ -1,7 +1,7 @@
 package RPerl::DataStructure::Hash;
 use strict;
 use warnings;
-use version; our $VERSION = 0.003_001;
+our $VERSION = 0.003_001;
 use parent ('RPerl::DataStructure');
 use RPerl::DataStructure;
 use Carp;

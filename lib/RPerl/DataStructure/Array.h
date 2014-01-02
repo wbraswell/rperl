@@ -1,10 +1,10 @@
 ////use strict;  use warnings;
-using std::cout;  using std::endl;
+using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array_h
-#define __CPP__INCLUDED__RPerl__DataStructure__Array_h 0.003012
+#define __CPP__INCLUDED__RPerl__DataStructure__Array_h 0.004_000
 
-#include <types_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
+#include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
 // for type-checking subroutines & macros
 #include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
@@ -46,6 +46,14 @@ typedef std::vector<number>::const_iterator number__array_ref__const_iterator;
 typedef std::vector<string> string__array_ref;
 typedef std::vector<string>::iterator string__array_ref__iterator;
 typedef std::vector<string>::const_iterator string__array_ref__const_iterator;
+
+// [[[ TYPE-CHECKING SUBROUTINES ]]]
+void integer__array_ref__CHECK(SV* possible_integer__array_ref);
+void integer__array_ref__CHECKTRACE(SV* possible_integer__array_ref, const char* variable_name, const char* subroutine_name);
+void number__array_ref__CHECK(SV* possible_number__array_ref);
+void number__array_ref__CHECKTRACE(SV* possible_number__array_ref, const char* variable_name, const char* subroutine_name);
+void string__array_ref__CHECK(SV* possible_string__array_ref);
+void string__array_ref__CHECKTRACE(SV* possible_string__array_ref, const char* variable_name, const char* subroutine_name);
 
 // [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 # ifdef __PERL__TYPES

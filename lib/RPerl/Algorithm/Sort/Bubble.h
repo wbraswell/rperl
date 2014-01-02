@@ -1,11 +1,11 @@
 ////use strict;  use warnings;
-using std::cout;  using std::endl;
+using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h 0.003_012
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h 0.003_014
 
-#include <types_mode.h>  // for definitions of __PERL__TYPES or __CPP__TYPES
-#include <types.h>  // for data types and structures
+#include <rperltypes_mode.h>  // for definitions of __PERL__TYPES or __CPP__TYPES
+#include <rperltypes.h>  // for data types and structures
 
 #include <RPerl/HelperFunctions.cpp>		// -> HelperFunctions.h
 
@@ -21,9 +21,14 @@ using std::cout;  using std::endl;
 // [[[<<< BEGIN PERL TYPES >>>]]]
 // [[[<<< BEGIN PERL TYPES >>>]]]
 
-// <<< TRANSLATED FUNCTION DECLARATIONS >>>
-SV* integer__bubblesort(SV* data);
+////# [[[ PROCEDURAL SUBROUTINES ]]]
+////# [[[ PROCEDURAL SUBROUTINES ]]]
+////# [[[ PROCEDURAL SUBROUTINES ]]]
+
+SV* integer__bubblesort(SV* integer__data);
+SV* number__bubblesort(SV* number__data);
 //void bubblesort(SV* data);  // TEMPORARY DEBUGGING
+
 // [[[ INHERITANCE TESTING ]]]
 SV* uninherited__Bubble(SV* person);
 SV* uninherited(SV* person);
@@ -33,8 +38,13 @@ SV* uninherited(SV* person);
 class CPP__RPerl__Algorithm__Sort__Bubble : public CPP__RPerl__Algorithm__Sort, public CPP__RPerl__Algorithm__Inefficient  // MULTIPLE INHERITANCE
 {
 public:
-	// <<< TRANSLATED METHOD DECLARATIONS >>>
+	////# [[[ OO METHODS ]]]
+	////# [[[ OO METHODS ]]]
+	////# [[[ OO METHODS ]]]
+
 	void integer__sort();  // NEED ANSWER: no named argument required for $self object?
+	void number__sort();
+
 // [[[ INHERITANCE TESTING ]]]
 	void inherited__Bubble(SV* person);
 	void inherited(SV* person);
@@ -42,15 +52,22 @@ public:
 	// <<< ACCESSOR & MUTATOR DECLARATIONS/DEFINITIONS >>>
 	SV* get_integer__data() { return SvREFCNT_inc(this->integer__data); }
 	void set_integer__data(SV* integer__data_new) { this->integer__data = integer__data_new; }
+	SV* get_number__data() { return SvREFCNT_inc(this->number__data); }
+	void set_number__data(SV* number__data_new) { this->number__data = number__data_new; }
 
 	// <<< CONSTRUCTOR & DESTRUCTOR DECLARATIONS/DEFINITIONS >>>
 	CPP__RPerl__Algorithm__Sort__Bubble() {}
 	~CPP__RPerl__Algorithm__Sort__Bubble() {}
 
+////# [[[ OO PROPERTIES ]]]
+////# [[[ OO PROPERTIES ]]]
+////# [[[ OO PROPERTIES ]]]
+
 private:
 	// <<< TRANSLATED PROPERTY DECLARATIONS >>>
-////our %properties = ( data => my integer__array_ref $KEY_integer__data );
+////our %properties = ( integer__data => my integer__array_ref $KEY_integer__data, number__data  => my number__array_ref $KEY_number__data );
 	SV* integer__data;
+	SV* number__data;
 };
 
 // [[[<<< END PERL TYPES >>>]]]
@@ -63,8 +80,13 @@ private:
 // [[[<<< BEGIN CPP TYPES >>>]]]
 // [[[<<< BEGIN CPP TYPES >>>]]]
 
-// <<< TRANSLATED FUNCTION DECLARATIONS >>>
+////# [[[ PROCEDURAL SUBROUTINES ]]]
+////# [[[ PROCEDURAL SUBROUTINES ]]]
+////# [[[ PROCEDURAL SUBROUTINES ]]]
+
 integer__array_ref integer__bubblesort(integer__array_ref integer__data);
+number__array_ref number__bubblesort(number__array_ref number__data);
+
 // [[[ INHERITANCE TESTING ]]]
 string uninherited__Bubble(string person);
 string uninherited(string person);
@@ -74,8 +96,13 @@ string uninherited(string person);
 class CPP__RPerl__Algorithm__Sort__Bubble : public CPP__RPerl__Algorithm__Sort, public CPP__RPerl__Algorithm__Inefficient  // MULTIPLE INHERITANCE
 {
 public:
-	// <<< TRANSLATED METHOD DECLARATIONS >>>
+	////# [[[ OO METHODS ]]]
+	////# [[[ OO METHODS ]]]
+	////# [[[ OO METHODS ]]]
+
 	void integer__sort();  // NEED ANSWER: no named argument required for $self object?
+	void number__sort();
+
 // [[[ INHERITANCE TESTING ]]]
 	void inherited__Bubble(string person);
 	void inherited(string person);
@@ -83,15 +110,22 @@ public:
 	// <<< ACCESSOR & MUTATOR DECLARATIONS/DEFINITIONS >>>
 	integer__array_ref get_integer__data() { return(this->integer__data); }
 	void set_integer__data(integer__array_ref integer__data_new) { this->integer__data = integer__data_new; }  // NEED ANSWERS: do we need to use some vector copy feature here???
+	number__array_ref get_number__data() { return(this->number__data); }
+	void set_number__data(number__array_ref number__data_new) { this->number__data = number__data_new; }
 
 	// <<< CONSTRUCTOR & DESTRUCTOR DECLARATIONS/DEFINITIONS >>>
 	CPP__RPerl__Algorithm__Sort__Bubble() {}
 	~CPP__RPerl__Algorithm__Sort__Bubble() {}
 
+	////# [[[ OO PROPERTIES ]]]
+	////# [[[ OO PROPERTIES ]]]
+	////# [[[ OO PROPERTIES ]]]
+
 private:
 	// <<< TRANSLATED PROPERTY DECLARATIONS >>>
-////our %properties = ( data => my integer__array_ref $KEY_data );
+////our %properties = ( integer__data => my integer__array_ref $KEY_integer__data, number__data  => my number__array_ref $KEY_number__data );
 	integer__array_ref integer__data;
+	number__array_ref number__data;
 };
 
 // [[[<<< END CPP TYPES >>>]]]
@@ -117,11 +151,11 @@ string bubblesort__types() { string retval = "CPP";  return(retval); }
 # ifdef __PERL__TYPES
 SV* integer__bubblesort__typetest0(SV* lucky_integers);
 SV* number__bubblesort__typetest0(SV* lucky_numbers);
-SV* string__bubblesort__typetest0(SV* people);
+//SV* string__bubblesort__typetest0(SV* people);
 # elif defined __CPP__TYPES
 string integer__bubblesort__typetest0(integer__array_ref lucky_integers);
 string number__bubblesort__typetest0(number__array_ref lucky_numbers);
-string string__bubblesort__typetest0(string__array_ref people);
+//string string__bubblesort__typetest0(string__array_ref people);
 # endif
 
 #endif

@@ -6,7 +6,7 @@
 package RPerl::DataStructure::Hash::SubTypes;
 use strict;
 use warnings;
-use version; our $VERSION = 0.003_002;
+our $VERSION = 0.004_000;
 use Carp;
 
 # [[[ HASHES ]]]
@@ -106,18 +106,91 @@ package integer__hash_ref;
 use parent -norequire, ('hash_ref');
 use Carp;
 
+# [[[ TYPE-CHECKING ]]]
+
+our void $integer__hash_ref__CHECK = sub {
+    ( my $possible_integer__hash_ref ) = @_;
+	# DEV NOTE: the following two if() statements are functionally equivalent to the hash_ref__CHECK() subroutine, but with integer-specific error codes
+    if ( not( defined $possible_integer__hash_ref ) ) {
+        croak(
+            "\nERROR EIVHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger__hash_ref value expected but undefined/null value found,\ncroaking"
+        );
+    }
+
+    if ( not( main::RPerl_SvHROKp($possible_integer__hash_ref) ) ) {
+        croak(
+            "\nERROR EIVHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger__hash_ref value expected but non-hash_ref value found,\ncroaking"
+        );
+    }
+
+    my integer $possible_integer;
+    foreach my string $key ( keys %{$possible_integer__hash_ref} )
+    {
+        $possible_integer = $possible_integer__hash_ref->{$key};
+		# DEV NOTE: the following two if() statements are functionally equivalent to the integer__CHECK() subroutine, but with hash-specific error codes
+        if ( not( defined $possible_integer ) ) {
+            $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
+            $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
+            croak(
+                "\nERROR EIVHVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger__hash_ref element value expected but undefined/null value found at key '$key',\ncroaking"
+            );
+        }
+        if ( not( main::RPerl_SvIOKp($possible_integer) ) ) {
+            $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
+            $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
+            croak(
+                "\nERROR EIVHVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger__hash_ref element value expected but non-integer value found at key '$key',\ncroaking"
+            );
+        }
+    }
+};
+our void $integer__hash_ref__CHECKTRACE = sub {
+    ( my $possible_integer__hash_ref, my $variable_name, my $subroutine_name ) = @_;
+	# DEV NOTE: the following two if() statements are functionally equivalent to the hash_ref__CHECKTRACE() subroutine, but with integer-specific error codes
+    if ( not( defined $possible_integer__hash_ref ) ) {
+        croak(
+            "\nERROR EIVHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger__hash_ref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+        );
+    }
+
+    if ( not( main::RPerl_SvHROKp($possible_integer__hash_ref) ) ) {
+        croak(
+            "\nERROR EIVHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger__hash_ref value expected but non-hash_ref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+        );
+    }
+
+    my integer $possible_integer;
+    foreach my string $key ( keys %{$possible_integer__hash_ref} )
+    {
+        $possible_integer = $possible_integer__hash_ref->{$key};
+		# DEV NOTE: the following two if() statements are functionally equivalent to the integer__CHECKTRACE() subroutine, but with hash-specific error codes
+        if ( not( defined $possible_integer ) ) {
+            $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
+            $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
+            croak(
+                "\nERROR EIVHVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger__hash_ref element value expected but undefined/null value found at key '$key',\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+            );
+        }
+        if ( not( main::RPerl_SvIOKp($possible_integer) ) ) {
+            $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
+            $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
+            croak(
+                "\nERROR EIVHVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger__hash_ref element value expected but non-integer value found at key '$key',\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+            );
+        }
+    }
+};
+
 # [[[ STRINGIFY ]]]
 
 # convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
 our string $integer__hash_ref__stringify = sub {
     ( my $input_hv_ref ) = @_;
 
-    print STDERR
-        "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), top of subroutine\n"
-        or croak();
+#    print STDERR "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), top of subroutine\n" or croak();
 
-    #    ::hash_ref__CHECK($input_hv_ref);
-    ::hash_ref__CHECKTRACE( $input_hv_ref, '$input_hv_ref',
+    #    ::integer__hash_ref__CHECK($input_hv_ref);
+    ::integer__hash_ref__CHECKTRACE( $input_hv_ref, '$input_hv_ref',
         'integer__hash_ref__stringify()' );
 
     my %input_hv;
@@ -140,12 +213,9 @@ our string $integer__hash_ref__stringify = sub {
         $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
         $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
 
+		# DEV NOTE: integer type-checking already done as part of integer__hash_ref__CHECKTRACE()
         #        ::integer__CHECK($input_hv_entry_value);
-        ::integer__CHECKTRACE(
-            $input_hv_entry_value,
-            "\$input_hv_entry_value at key '$key'",
-            'integer__hash_ref__stringify()'
-        );
+#        ::integer__CHECKTRACE( $input_hv_entry_value, "\$input_hv_entry_value at key '$key'", 'integer__hash_ref__stringify()' );
 
         if ($i_is_0) { $i_is_0 = 0; }
         else         { $output_sv .= ', '; }
@@ -154,12 +224,8 @@ our string $integer__hash_ref__stringify = sub {
 
     $output_sv .= '}';
 
-    print STDERR
-        "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n"
-        or croak();
-    print STDERR
-        "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), bottom of subroutine\n"
-        or croak();
+#    print STDERR "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
+#    print STDERR "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), bottom of subroutine\n" or croak();
 
     return ($output_sv);
 };
@@ -169,20 +235,15 @@ our string $integer__hash_ref__stringify = sub {
 our string $integer__hash_ref__typetest0 = sub {
     ( my integer__hash_ref $lucky_integers) = @_;
 
-    #    ::hash_ref__CHECK($lucky_integers);
-    ::hash_ref__CHECKTRACE( $lucky_integers, '$lucky_integers',
+    #    ::integer__hash_ref__CHECK($lucky_integers);
+    ::integer__hash_ref__CHECKTRACE( $lucky_integers, '$lucky_integers',
         'integer__hash_ref__typetest0()' );
+=disable
     foreach my string $key ( keys %{$lucky_integers} ) {
         my $lucky_integer = $lucky_integers->{$key};
         $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
         $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
 
-        #        ::integer__CHECK($lucky_integer);
-        ::integer__CHECKTRACE(
-            $lucky_integer,
-            "\$lucky_integer at key '$key'",
-            'integer__hash_ref__typetest0()'
-        );
         print STDERR
             "in PERLOPS_PERLTYPES integer__hash_ref__typetest0(), have lucky integer '$key' => "
             . $lucky_integer
@@ -191,6 +252,7 @@ our string $integer__hash_ref__typetest0 = sub {
     }
     print STDERR
         "in PERLOPS_PERLTYPES integer__hash_ref__typetest0(), bottom of subroutine\n";
+=cut
     return (
         integer__hash_ref__stringify($lucky_integers) . 'PERLOPS_PERLTYPES' );
 };
@@ -206,11 +268,7 @@ our integer__hash_ref $integer__hash_ref__typetest1 = sub {
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $temp_key = 'PERLOPS_PERLTYPES_funkey' . $i;
         $new_hash->{$temp_key} = $i * 5;
-        print STDERR
-            "in PERLOPS_PERLTYPES integer__hash_ref__typetest1(), setting entry '$temp_key' => "
-            . $new_hash->{$temp_key}
-            . ", BARSTOOL\n"
-            or croak();
+#        print STDERR "in PERLOPS_PERLTYPES integer__hash_ref__typetest1(), setting entry '$temp_key' => " . $new_hash->{$temp_key} . ", BARSTOOL\n" or croak();
     }
     return ($new_hash);
 };
@@ -352,18 +410,91 @@ package number__hash_ref;
 use parent -norequire, ('hash_ref');
 use Carp;
 
+# [[[ TYPE-CHECKING ]]]
+
+our void $number__hash_ref__CHECK = sub {
+    ( my $possible_number__hash_ref ) = @_;
+	# DEV NOTE: the following two if() statements are functionally equivalent to the hash_ref__CHECK() subroutine, but with number-specific error codes
+    if ( not( defined $possible_number__hash_ref ) ) {
+        croak(
+            "\nERROR ENVHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber__hash_ref value expected but undefined/null value found,\ncroaking"
+        );
+    }
+
+    if ( not( main::RPerl_SvHROKp($possible_number__hash_ref) ) ) {
+        croak(
+            "\nERROR ENVHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber__hash_ref value expected but non-hash_ref value found,\ncroaking"
+        );
+    }
+
+    my number $possible_number;
+    foreach my string $key ( keys %{$possible_number__hash_ref} )
+    {
+        $possible_number = $possible_number__hash_ref->{$key};
+		# DEV NOTE: the following two if() statements are functionally equivalent to the number__CHECK() subroutine, but with hash-specific error codes
+        if ( not( defined $possible_number ) ) {
+            $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
+            $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
+            croak(
+                "\nERROR ENVHVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber__hash_ref element value expected but undefined/null value found at key '$key',\ncroaking"
+            );
+        }
+        if ( not( main::RPerl_SvNOKp($possible_number) || main::RPerl_SvIOKp($possible_number) ) ) {
+            $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
+            $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
+            croak(
+                "\nERROR ENVHVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber__hash_ref element value expected but non-number value found at key '$key',\ncroaking"
+            );
+        }
+    }
+};
+our void $number__hash_ref__CHECKTRACE = sub {
+    ( my $possible_number__hash_ref, my $variable_name, my $subroutine_name ) = @_;
+	# DEV NOTE: the following two if() statements are functionally equivalent to the hash_ref__CHECKTRACE() subroutine, but with number-specific error codes
+    if ( not( defined $possible_number__hash_ref ) ) {
+        croak(
+            "\nERROR ENVHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber__hash_ref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+        );
+    }
+
+    if ( not( main::RPerl_SvHROKp($possible_number__hash_ref) ) ) {
+        croak(
+            "\nERROR ENVHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber__hash_ref value expected but non-hash_ref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+        );
+    }
+
+    my number $possible_number;
+    foreach my string $key ( keys %{$possible_number__hash_ref} )
+    {
+        $possible_number = $possible_number__hash_ref->{$key};
+		# DEV NOTE: the following two if() statements are functionally equivalent to the number__CHECKTRACE() subroutine, but with hash-specific error codes
+        if ( not( defined $possible_number ) ) {
+            $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
+            $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
+            croak(
+                "\nERROR ENVHVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber__hash_ref element value expected but undefined/null value found at key '$key',\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+            );
+        }
+        if ( not( main::RPerl_SvNOKp($possible_number) || main::RPerl_SvIOKp($possible_number) ) ) {
+            $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
+            $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
+            croak(
+                "\nERROR ENVHVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber__hash_ref element value expected but non-number value found at key '$key',\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+            );
+        }
+    }
+};
+
 # [[[ STRINGIFY ]]]
 
 # convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing NVs))) to Perl-parsable (Perl SV containing PV)
 our string $number__hash_ref__stringify = sub {
     ( my $input_hv_ref ) = @_;
 
-    print STDERR
-        "in PERLOPS_PERLTYPES number__hash_ref__stringify(), top of subroutine\n"
-        or croak();
+#    print STDERR "in PERLOPS_PERLTYPES number__hash_ref__stringify(), top of subroutine\n" or croak();
 
-    #    ::hash_ref__CHECK($input_hv_ref);
-    ::hash_ref__CHECKTRACE( $input_hv_ref, '$input_hv_ref',
+    #    ::number__hash_ref__CHECK($input_hv_ref);
+    ::number__hash_ref__CHECKTRACE( $input_hv_ref, '$input_hv_ref',
         'number__hash_ref__stringify()' );
 
     my %input_hv;
@@ -386,13 +517,6 @@ our string $number__hash_ref__stringify = sub {
         $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
         $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
 
-        #        ::number__CHECK($input_hv_entry_value);
-        ::number__CHECKTRACE(
-            $input_hv_entry_value,
-            "\$input_hv_entry_value at key '$key'",
-            'number__hash_ref__stringify()'
-        );
-
         if ($i_is_0) { $i_is_0 = 0; }
         else         { $output_sv .= ', '; }
         $output_sv .= "'$key' => $input_hv_entry_value";
@@ -400,12 +524,8 @@ our string $number__hash_ref__stringify = sub {
 
     $output_sv .= '}';
 
-    print STDERR
-        "in PERLOPS_PERLTYPES number__hash_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n"
-        or croak();
-    print STDERR
-        "in PERLOPS_PERLTYPES number__hash_ref__stringify(), bottom of subroutine\n"
-        or croak();
+#    print STDERR "in PERLOPS_PERLTYPES number__hash_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
+#    print STDERR "in PERLOPS_PERLTYPES number__hash_ref__stringify(), bottom of subroutine\n" or croak();
 
     return ($output_sv);
 };
@@ -415,26 +535,17 @@ our string $number__hash_ref__stringify = sub {
 our string $number__hash_ref__typetest0 = sub {
     ( my number__hash_ref $lucky_numbers) = @_;
 
-    #    ::hash_ref__CHECK($lucky_numbers);
-    ::hash_ref__CHECKTRACE( $lucky_numbers, '$lucky_numbers',
+    #    ::number__hash_ref__CHECK($lucky_numbers);
+    ::number__hash_ref__CHECKTRACE( $lucky_numbers, '$lucky_numbers',
         'number__hash_ref__typetest0()' );
+=disable
     foreach my string $key ( keys %{$lucky_numbers} ) {
         my $lucky_number = $lucky_numbers->{$key};
         $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
         $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-
-        #        ::number__CHECK($lucky_number);
-        ::number__CHECKTRACE(
-            $lucky_number,
-            "\$lucky_number at key '$key'",
-            'number__hash_ref__typetest0()'
-        );
-        print STDERR
-            "in PERLOPS_PERLTYPES number__hash_ref__typetest0(), have lucky number '$key' => "
-            . $lucky_number
-            . ", BARSTOOL\n"
-            or croak();
+#        print STDERR "in PERLOPS_PERLTYPES number__hash_ref__typetest0(), have lucky number '$key' => " . $lucky_number . ", BARSTOOL\n" or croak();
     }
+=cut
     return (
         number__hash_ref__stringify($lucky_numbers) . 'PERLOPS_PERLTYPES' );
 };
@@ -450,11 +561,7 @@ our number__hash_ref $number__hash_ref__typetest1 = sub {
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $temp_key = 'PERLOPS_PERLTYPES_funkey' . $i;
         $new_hash->{$temp_key} = $i * 5.123456789;
-        print STDERR
-            "in PERLOPS_PERLTYPES number__hash_ref__typetest1(), setting entry '$temp_key' => "
-            . $new_hash->{$temp_key}
-            . ", BARSTOOL\n"
-            or croak();
+#        print STDERR "in PERLOPS_PERLTYPES number__hash_ref__typetest1(), setting entry '$temp_key' => " . $new_hash->{$temp_key} . ", BARSTOOL\n" or croak();
     }
     return ($new_hash);
 };
@@ -596,18 +703,91 @@ package string__hash_ref;
 use parent -norequire, ('hash_ref');
 use Carp;
 
+# [[[ TYPE-CHECKING ]]]
+
+our void $string__hash_ref__CHECK = sub {
+    ( my $possible_string__hash_ref ) = @_;
+	# DEV NOTE: the following two if() statements are functionally equivalent to the hash_ref__CHECK() subroutine, but with string-specific error codes
+    if ( not( defined $possible_string__hash_ref ) ) {
+        croak(
+            "\nERROR EPVHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring__hash_ref value expected but undefined/null value found,\ncroaking"
+        );
+    }
+
+    if ( not( main::RPerl_SvHROKp($possible_string__hash_ref) ) ) {
+        croak(
+            "\nERROR EPVHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring__hash_ref value expected but non-hash_ref value found,\ncroaking"
+        );
+    }
+
+    my string $possible_string;
+    foreach my string $key ( keys %{$possible_string__hash_ref} )
+    {
+        $possible_string = $possible_string__hash_ref->{$key};
+		# DEV NOTE: the following two if() statements are functionally equivalent to the string__CHECK() subroutine, but with hash-specific error codes
+        if ( not( defined $possible_string ) ) {
+            $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
+            $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
+            croak(
+                "\nERROR EPVHVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring__hash_ref element value expected but undefined/null value found at key '$key',\ncroaking"
+            );
+        }
+        if ( not( main::RPerl_SvPOKp($possible_string) ) ) {
+            $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
+            $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
+            croak(
+                "\nERROR EPVHVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring__hash_ref element value expected but non-string value found at key '$key',\ncroaking"
+            );
+        }
+    }
+};
+our void $string__hash_ref__CHECKTRACE = sub {
+    ( my $possible_string__hash_ref, my $variable_name, my $subroutine_name ) = @_;
+	# DEV NOTE: the following two if() statements are functionally equivalent to the hash_ref__CHECKTRACE() subroutine, but with string-specific error codes
+    if ( not( defined $possible_string__hash_ref ) ) {
+        croak(
+            "\nERROR EPVHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring__hash_ref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+        );
+    }
+
+    if ( not( main::RPerl_SvHROKp($possible_string__hash_ref) ) ) {
+        croak(
+            "\nERROR EPVHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring__hash_ref value expected but non-hash_ref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+        );
+    }
+
+    my string $possible_string;
+    foreach my string $key ( keys %{$possible_string__hash_ref} )
+    {
+        $possible_string = $possible_string__hash_ref->{$key};
+		# DEV NOTE: the following two if() statements are functionally equivalent to the string__CHECKTRACE() subroutine, but with hash-specific error codes
+        if ( not( defined $possible_string ) ) {
+            $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
+            $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
+            croak(
+                "\nERROR EPVHVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring__hash_ref element value expected but undefined/null value found at key '$key',\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+            );
+        }
+        if ( not( main::RPerl_SvPOKp($possible_string) ) ) {
+            $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
+            $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
+            croak(
+                "\nERROR EPVHVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring__hash_ref element value expected but non-string value found at key '$key',\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+            );
+        }
+    }
+};
+
 # [[[ STRINGIFY ]]]
 
 # convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing PVs))) to Perl-parsable (Perl SV containing PV)
 our string $string__hash_ref__stringify = sub {
     ( my $input_hv_ref ) = @_;
 
-    print STDERR
-        "in PERLOPS_PERLTYPES string__hash_ref__stringify(), top of subroutine\n"
-        or croak();
+#    print STDERR "in PERLOPS_PERLTYPES string__hash_ref__stringify(), top of subroutine\n" or croak();
 
-    #    ::hash_ref__CHECK($input_hv_ref);
-    ::hash_ref__CHECKTRACE( $input_hv_ref, '$input_hv_ref',
+    #    ::string__hash_ref__CHECK($input_hv_ref);
+    ::string__hash_ref__CHECKTRACE( $input_hv_ref, '$input_hv_ref',
         'string__hash_ref__stringify()' );
 
     my %input_hv;
@@ -630,13 +810,6 @@ our string $string__hash_ref__stringify = sub {
         $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
         $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
 
-        #        ::string__CHECK($input_hv_entry_value);
-        ::string__CHECKTRACE(
-            $input_hv_entry_value,
-            "\$input_hv_entry_value at key '$key'",
-            'string__hash_ref__stringify()'
-        );
-
         if ($i_is_0) { $i_is_0 = 0; }
         else         { $output_sv .= ', '; }
         $input_hv_entry_value =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
@@ -646,12 +819,8 @@ our string $string__hash_ref__stringify = sub {
 
     $output_sv .= '}';
 
-    print STDERR
-        "in PERLOPS_PERLTYPES string__hash_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n"
-        or croak();
-    print STDERR
-        "in PERLOPS_PERLTYPES string__hash_ref__stringify(), bottom of subroutine\n"
-        or croak();
+#    print STDERR "in PERLOPS_PERLTYPES string__hash_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
+#    print STDERR "in PERLOPS_PERLTYPES string__hash_ref__stringify(), bottom of subroutine\n" or croak();
 
     return ($output_sv);
 };
@@ -661,26 +830,17 @@ our string $string__hash_ref__stringify = sub {
 our string $string__hash_ref__typetest0 = sub {
     ( my string__hash_ref $people) = @_;
 
-    #    ::hash_ref__CHECK($lucky_numbers);
-    ::hash_ref__CHECKTRACE( $people, '$people',
+    #    ::string__hash_ref__CHECK($lucky_numbers);
+    ::string__hash_ref__CHECKTRACE( $people, '$people',
         'string__hash_ref__typetest0()' );
+=disable
     foreach my string $key ( keys %{$people} ) {
         my $person = $people->{$key};
         $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
         $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-
-        #        ::string__CHECK($person);
-        ::string__CHECKTRACE(
-            $person,
-            "\$person at key '$key'",
-            'string__hash_ref__typetest0()'
-        );
-        print STDERR
-            "in PERLOPS_PERLTYPES string__hash_ref__typetest0(), have person '$key' => '"
-            . $person
-            . "', STARBOOL\n"
-            or croak();
+#        print STDERR "in PERLOPS_PERLTYPES string__hash_ref__typetest0(), have person '$key' => '" . $person . "', STARBOOL\n" or croak();
     }
+=cut
     return ( string__hash_ref__stringify($people) . 'PERLOPS_PERLTYPES' );
 };
 
@@ -694,9 +854,7 @@ our string__hash_ref $string__hash_ref__typetest1 = sub {
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $people->{ 'PERLOPS_PERLTYPES_Luker_key' . $i }
             = q{Jeffy Ten! } . $i . q{/} . ( $my_size - 1 );
-        print STDERR
-            "in PERLOPS_PERLTYPES string__hash_ref__typetest1(), bottom of for() loop, have i = $i, just set another Jeffy!\n"
-            or croak();
+#        print STDERR "in PERLOPS_PERLTYPES string__hash_ref__typetest1(), bottom of for() loop, have i = $i, just set another Jeffy!\n" or croak();
     }
     return ($people);
 };
@@ -991,6 +1149,72 @@ use parent -norequire, ('const_hash_ref');
 
 # (ref to (hash with const size)) of (refs to (hashs with const sizes))
 package const_hash_ref__const_hash_ref;
+use parent -norequire, ('const_hash_ref');
+
+# [[[ OBJECT HASHES (2-dimensional) ]]]
+
+# hash of objects
+package object__hash;
+use parent -norequire, ('hash');
+
+# hash of (objects with const sizes)
+package const_object__hash;
+use parent -norequire, ('hash');
+
+# hash of (refs to objects)
+package object_ref__hash;
+use parent -norequire, ('hash');
+
+# hash of (refs to (objects with const sizes))
+package const_object_ref__hash;
+use parent -norequire, ('hash');
+
+# (hash with const size) of objects
+package object__const_hash;
+use parent -norequire, ('const_hash');
+
+# (hash with const size) of (objects with const sizes)
+package const_object__const_hash;
+use parent -norequire, ('const_hash');
+
+# (hash with const size) of (refs to objects)
+package object_ref__const_hash;
+use parent -norequire, ('const_hash');
+
+# (hash with const size) of (refs to (objects with const sizes))
+package const_object_ref__const_hash;
+use parent -norequire, ('const_hash');
+
+# (ref to hash) of objects
+package object__hash_ref;
+use parent -norequire, ('hash_ref');
+
+# (ref to hash) of (objects with const sizes)
+package const_object__hash_ref;
+use parent -norequire, ('hash_ref');
+
+# (ref to hash) of (refs to objects)
+package object_ref__hash_ref;
+use parent -norequire, ('hash_ref');
+
+# (ref to hash) of (refs to (objects with const sizes))
+package const_object_ref__hash_ref;
+use parent -norequire, ('hash_ref');
+
+# (ref to (hash with const size)) of objects
+package object__const_hash_ref;
+use parent -norequire, ('const_hash_ref');
+
+# (ref to (hash with const size)) of (objects with const sizes)
+package const_object__const_hash_ref;
+use parent -norequire, ('const_hash_ref');
+
+# (ref to (hash with const size)) of (refs to objects)
+package object_ref__const_hash_ref;
+use parent -norequire, ('const_hash_ref');
+
+# (ref to (hash with const size)) of (refs to (objects with const sizes))
+package const_object_ref__const_hash_ref;
 use parent -norequire, ('const_hash_ref');
 
 1;
