@@ -39,7 +39,7 @@
       <div class="inner clearfix">
         <section id="main-content">
           <h1><a name="use_rperl" class="anchor" href="#use_rperl"><span class="octicon octicon-link"></span></a>use RPerl;</h1>
-            <h2>Last Update: November 22nd, 2013</h2>
+            <h2>Last Update: January 1st, 2014</h2>
 
 <h2>Table Of Contents</h2>
 <a href="#use_rperl_users">Normal Users</a><br>
@@ -47,7 +47,7 @@
 
 <a name="use_rperl_users" class="anchor" href="#use_rperl_users"></a>
 <h2>Normal Users</h2>
-RPerl is currently in an alpha pre-release state.<br>
+RPerl is currently in a beta pre-release state.<br>
 It is not recommended that non-programmers attempt to run RPerl at this time.<br>
 Please check back in the future as we release more user-friendly versions of RPerl.  Thank you for your patience!<br><br>
 
@@ -57,36 +57,8 @@ RPerl has been tested in Linux, as reflected in the following RPerl install note
 This documentation is for a single-user installation, not a system-wide installation.<br>
 It is assumed you have downloaded and unpacked RPerl to a directory shown as "path/to/RPerl" below.<br><br>
 
-<h3>Create Initial Symlinks & Enable Custom CPAN MyConfig</h3>
-$ mkdir -p ~/RPerl/3rd_party/CPAN<br>
-$ cd ~/.cpan/CPAN<br>
-$ mv MyConfig.pm MyConfig.pm.old<br>
-$ ln -s path/to/RPerl/lib/CPAN/MyConfig.pm MyConfig.pm<br>
-$ ln -s path/to/RPerl /tmp/RPerl-latest<br><br>
-
-<h3>Install CPAN Modules</h3>
-$ cpan<br>
-cpan> o conf<br>
-&nbsp;&nbsp;(confirm RPerl entries are loaded)<br>
-cpan> install Parse::RecDescent<br>
-cpan> force install Inline<br>
-cpan> force install Inline::CPP<br>
-&nbsp;&nbsp;(must force, Inline tests are broken, they change @INC and then fail to load single-user-installation of Parse::RecDescent)<br>
-cpan> force install Inline::Filters<br>
-cpan> install Test::Exception<br>
-&nbsp;&nbsp;(probably already installed by something else)<br><br>
-
-<h3>Create Final Symlink To Patched Filters.pm File</h3>
-$ mv ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm.old<br>
-$ ln -s path/to/RPerl/lib/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm<br><br>
-
-<h3>Test Installation</h3>
-$ cd path/to/RPerl<br>
-$ ./t/01_depend.t<br>
-$ ./t/02_inline.t<br>
-$ ./t/03_type_scalar.t<br>
-$ ./t/04_type_array.t<br>
-$ ./t/05_type_hash.t<br><br>
+<h3>FOR NOW PLEASE REFER TO THE PLAIN-TEXT INSTALL NOTES</h3>
+<a href="https://github.com/wbraswell/rperl/blob/master/docs/install_notes.txt">https://github.com/wbraswell/rperl/blob/master/docs/install_notes.txt</a><br><br>
 
         </section>
 
