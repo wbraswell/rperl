@@ -16,14 +16,14 @@ BEGIN { use Data::Dumper;  our $AUTOLOAD;  sub AUTOLOAD { croak("AUTOLOAD purpos
 use Time::HiRes qw(time);
 
 # UNCOMMENT TO ENABLE PERL TYPES FOR C++ OPS
-#rperltypes::types_enable('PERL');
+rperltypes::types_enable('PERL');
 
 # UNCOMMENT TO ENABLE C++ TYPES FOR C++ OPS
 #rperltypes::types_enable('CPP');
 
 # TOGGLE COMMENT TO ENABLE C++ OPS
-use RPerl::Algorithm::Sort::Bubble;  # choose ONE of this
-#use RPerl::Algorithm::Sort::Bubble_cpp;  RPerl::Algorithm::Sort::Bubble_cpp::cpp_load();  RPerl::Algorithm::Sort::Bubble_cpp::cpp_link(); # OR this
+#use RPerl::Algorithm::Sort::Bubble;  # choose ONE of this
+use RPerl::Algorithm::Sort::Bubble_cpp;  RPerl::Algorithm::Sort::Bubble_cpp::cpp_load();  RPerl::Algorithm::Sort::Bubble_cpp::cpp_link(); # OR this
 
 # NEED FIX: these Perl packages use RPerl::Algorithm::Sort, which creates a conflict when Bubble_cpp has already loaded Sort.cpp
 #use RPerl::Algorithm::Sort::Quick;
@@ -47,7 +47,7 @@ print STDERR q{in precompiled_sort_test.pl, have bubblesort__types() = '} . bubb
 # <<<=== SORT 1 ===>>>
 
 my string $algorithm;
-my const_integer $test__data_size = 2000;
+my const_integer $test__data_size = 20;
 my string $variant = undef;
 my object $sorter;
 my integer__array_ref $integer__data;

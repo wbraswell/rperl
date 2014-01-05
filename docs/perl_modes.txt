@@ -1,0 +1,71 @@
+[[[ MODES ]]]
+
+	EXECUTION (aka RUN): the process used to execute the CODE
+        INTERPRET
+        JUST-IN-TIME COMPILE (aka JIT, DYNAMIC COMPILE)
+        COMPILE (aka STATIC COMPILE)
+
+    SOURCE CODE (aka CODE): the language used to write the text representation of the OPS and TYPES
+        PERL
+        RPERL
+        CPP
+        C
+        XS
+
+    OPERATIONS (aka OPS): the language used to execute the operations on the TYPES
+        PERL
+        CPP
+
+    DATA TYPES (aka TYPES): the language used to store the data types
+        PERL_DYNAMIC (aka NONE, should be aka PERL)
+        PERL_STATIC (aka PERL, should be aka RPERL)
+        CPP
+
+INTERPRET run,  PERL code,      PERL ops,   PERL_DYNAMIC types  = NORMAL PERL
+INTERPRET run,  PERL code,      PERL ops,   PERL_STATIC types   = RPERL PURE-PERL MODE
+...
+COMPILE run,    RPERL code,     CPP ops,    PERL_STATIC types   = RPERL CPPOPS_PERLTYPES MODE
+COMPILE run,    RPERL code,     CPP ops,    CPP types           = RPERL CPPOPS_CPPTYPES MODE
+...
+INTERPRET run,  C code,			PERL ops,   PERL_DYNAMIC types  = B::C OUTPUT
+COMPILE run,    C code,			PERL ops,   PERL_DYNAMIC types  = B::CC OUTPUT non-typed
+COMPILE run,    C code,			PERL ops,   PERL_STATIC types   = B::CC OUTPUT typed
+...
+
+
+[[[ COMPONENTS ]]]
+
+SOURCE CODE: highest-level human-readable text data
+ABSTRACT SYNTAX TREE (aka AST): next-to-highest-level data structure representation of SOURCE CODE
+DOCUMENT SYNTAX TREE (aka DOCTREE): higher-level static-analysis AST
+OPERATIONS SYNTAX TREE (aka OPTREE): lower-level dynamic-analysis AST
+BYTECODE: medium-level intermediate representation, used as MACHINE CODE for VIRTUAL MACHINE
+ASSEMBLY CODE: next-to-lowest-level text representation of MACHINE CODE
+MACHINE CODE: lowest-level computer-readable binary data
+
+VIRTUAL MACHINE: non-physical software processor, executes OPTREE or BYTECODE
+MACHINE: physical hardware processor, executes MACHINE CODE
+
+TOKEN: individual SOURCE CODE component
+
+
+[[[ ACTIONS ]]]
+
+LEXICAL ANALYSIS (aka LEXER, TOKENIZE): convert SOURCE CODE to TOKENS
+PARSE (aka DECOMPOSE, DECONSTRUCT, ANALYZE): convert SOURCE CODE to AST, or TOKENS to AST, same language
+DEPARSE (aka COMPOSE, CONSTRUCT, SYNTHESIZE): convert AST to SOURCE CODE, during WALK TREE, same language
+GENERATE (aka EMIT, RENDER): convert AST to SOURCE CODE, during WALK TREE, different languages
+STRINGIFY (aka PRETTY PRINT, SERIALIZE): convert DATA TYPES to SOURCE CODE
+
+WALK TREE: visit every node in AST
+TRANSLATE: convert SOURCE CODE to SOURCE CODE, or AST to AST, or MACHINE CODE to MACHINE CODE, different languages
+
+COMPILE: convert SOURCE CODE to BYTECODE, or SOURCE CODE to MACHINE CODE, before EXECUTION
+DECOMPILE: convert BYTECODE to SOURCE CODE, or MACHINE CODE to SOURCE CODE
+JIT: convert SOURCE CODE to MACHINE CODE, or BYTECODE to MACHINE CODE, during EXECUTION
+INTERPRET: convert SOURCE CODE to OPTREE, or SOURCE CODE to BYTECODE, during EXECUTION
+
+ASSEMBLE: convert ASSEMBLY CODE to MACHINE CODE
+DISASSEMBLE: convert MACHINE CODE to ASSEMBLY CODE
+
+EXECUTION (aka RUNTIME): convert OPERATIONS to DATA, and DATA to different DATA
