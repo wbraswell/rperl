@@ -26,7 +26,7 @@ use Inline
 (
 	CPP => '$RPerl::INCLUDE_PATH/RPerl_test_00.cpp',
 	TYPEMAPS => '$RPerl::INCLUDE_PATH/typemap.rperl',
-	CCFLAGS => '-Wno-deprecated -std=c++0x',
+	CCFLAGS => '-Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal',
 	INC => '-I$RPerl::INCLUDE_PATH',
 	BUILD_NOISY => 1,
 	CLEAN_AFTER_BUILD => 0,
