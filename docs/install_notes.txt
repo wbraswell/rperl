@@ -1,6 +1,6 @@
 RPerl v1.0 Beta, Install Notes
 Single-User Installation (Not System-Wide Installation)
-Last Updated January 1st, 2014
+Last Updated January 6st, 2014
 
 [[[ IMPORTANT WARNING: DO NOT USE THIS local::lib INSTALLATION METHODOLOGY WITH PERLBREW, PERLALL, PLENV, OR OTHER SPECIAL PERL ENVIRONMENTS ]]]
 
@@ -14,9 +14,6 @@ copy/paste the 'eval $(...)' line above into ~/.bashrc, run 'set' to ensure the 
     PATH
 
 	# MANUALLY DOWNLOAD RPERL TARBALL OR GIT REPO
-
-$ mv ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm.old
-$ ln -s path_to_RPerl/lib/Inline/Filters.pm ~/RPerl/3rd_party/CPAN/usr/local/share/perl/5.10.1/Inline/Filters.pm
 
 $ cd GIT_REPOS_DIR
 $ perl Makefile.PL
@@ -52,8 +49,7 @@ $ vi lib/RPerl_test_00.cpp
 
 [[[ IGNORE THE FOLLOWING LINES UNLESS YOU ARE AN RPERL DEVELOPER ]]]
 
-UNCONFIRMED:
-cpan> install BULKDD/Inline-Filters-0.12_01.tar.gz
+cpan> install RURBAN/Inline-Filters-0.12_02.tar.gz
 
 DEBUGGING:
 $ mv /usr/share/perl5/Perl/Critic/Policy/CodeLayout/RequireTidyCode.pm /usr/share/perl5/Perl/Critic/Policy/CodeLayout/RequireTidyCode.pm.orig
