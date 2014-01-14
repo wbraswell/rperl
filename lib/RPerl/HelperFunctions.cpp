@@ -18,7 +18,7 @@ void RPerl_object_property_init(SV* initee)
 	XPUSHs(initee);
 	PUTBACK;
 	call_pv("Dumper", G_SCALAR);
-	printf("in HelperFunctions::RPerl_object_property_init(), have initee->flags =\n0x%x\n", initee->sv_flags);
+//	printf("in HelperFunctions::RPerl_object_property_init(), have initee->flags =\n0x%x\n", initee->sv_flags);
 }
 
 char* RPerl_DUMPER__perl_from_c(SV* dumpee)

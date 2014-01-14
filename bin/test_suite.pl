@@ -2,14 +2,14 @@
 use strict;  use warnings;
 
 # DEV NOTE: compiler output is getting through even with the redirection of STDERR to /dev/null, why?
-system("$^X -Mblib t/01*.t 2> /dev/null");  print STDERR "\n\n";
-system("$^X -Mblib t/02*.t 2> /dev/null");  print STDERR "\n\n";
-system("$^X -Mblib t/03*.t 2> /dev/null");  print STDERR "\n\n";
-system("$^X -Mblib t/04*.t 2> /dev/null");  print STDERR "\n\n";
-system("$^X -Mblib t/05*.t 2> /dev/null");  print STDERR "\n\n";
-system("$^X -Mblib t/06*.t 2> /dev/null");  print STDERR "\n\n";
-system("$^X -Mblib t/07*.t 2> /dev/null");  print STDERR "\n\n";
-system("$^X -Mblib t/08*.t 2> /dev/null");  print STDERR "\n\n";
+system("perl -Ilib t/01*.t 2> /dev/null");  print STDERR "\n\n";
+system("perl -Ilib t/02*.t 2> /dev/null");  print STDERR "\n\n";
+system("perl -Ilib t/03*.t 2> /dev/null");  print STDERR "\n\n";
+system("perl -Ilib t/04*.t 2> /dev/null");  print STDERR "\n\n";
+system("perl -Ilib t/05*.t 2> /dev/null");  print STDERR "\n\n";
+system("perl -Ilib t/06*.t 2> /dev/null");  print STDERR "\n\n";
+system("perl -Ilib t/07*.t 2> /dev/null");  print STDERR "\n\n";
+system("perl -Ilib t/08*.t 2> /dev/null");  print STDERR "\n\n";
 
 =disable
 BEGIN { package main;  our $RPERL_TESTS_PATH = "/tmp/RPerl-latest/t"; } # NEED REMOVE hard-coded path

@@ -55,7 +55,7 @@ SV* integer__bubblesort(SV* integer__data)  // DEV NOTE: properly creates local-
 //	dSP;  ENTER;  SAVETMPS;  PUSHMARK(SP);
 //	Inline_Stack_Vars;
 
-//	RPerl_object_property_init(integer__data); // NEED ANSWER: why do we need to do property init?
+	RPerl_object_property_init(integer__data); // NEED ANSWER: why do we need to do property init?
 	SvREFCNT_inc(integer__data);
 //	fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), top of subroutine...\n");
 

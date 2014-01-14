@@ -1,6 +1,6 @@
 RPerl v1.0 Beta, Install Notes
 Single-User Installation (Not System-Wide Installation)
-Last Updated January 6st, 2014
+Last Updated January 6th, 2014
 
 [[[ IMPORTANT WARNING: DO NOT USE THIS local::lib INSTALLATION METHODOLOGY WITH PERLBREW, PERLALL, PLENV, OR OTHER SPECIAL PERL ENVIRONMENTS ]]]
 
