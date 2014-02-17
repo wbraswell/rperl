@@ -5,6 +5,7 @@ our $VERSION = 0.001_010;
 use Carp;
 use RPerl;
 
+
 # [[[ SETUP ]]]
 ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  ## RPERL SYSTEM allow autoload  ## RPERL SYSTEM allow read-only @_
 # RPERL DRIVER BOILERPLATE
@@ -36,8 +37,14 @@ use RPerl::Compiler;    # includes Inline
 # move output away from initial Inline compiler output
 print {*STDERR} "\n\n" or croak();
 
+
+# START HERE: accept filename as argument, set up Return_00* files
+# START HERE: accept filename as argument, set up Return_00* files
+# START HERE: accept filename as argument, set up Return_00* files
+
+
 # NEED REMOVE HARD-CODED SOURCE FILE NAME
-my string $rperl_source__file_name = 'lib/RPerl_test_00.pm';
+my string $rperl_source__file_name = 'lib/RPerl/Test/Print_00.pm';
 
 # [[[ PARSE PERL TO PPI ]]]
 # [[[ PARSE PERL TO PPI ]]]
@@ -67,5 +74,5 @@ my string $cpp_source = rperl_to_cpp__generate( $rperl_ast, $mode );
 # [[[ COMPILE C++ TO XS & BINARY ]]]
 # [[[ COMPILE C++ TO XS & BINARY ]]]
 
-my string $cpp_file_name = $RPerl::INCLUDE_PATH . '/RPerl_test_00.cpp';
+my string $cpp_file_name = $RPerl::INCLUDE_PATH . '/RPerl/Test/Print_00.cpp';
 cpp_to_xsbinary__compile( $cpp_source, $cpp_file_name );

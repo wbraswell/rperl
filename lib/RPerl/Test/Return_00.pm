@@ -63,6 +63,20 @@ our void $greet_planet = sub {
 #if(0){2;}  # parses to 1 PPI::Statement::Compound object, translates to 1 RPerl::Operation::Statement::Conditional object
 #for my $i (0 .. 2){1;}  # parses to 1 PPI::Statement::Compound object, translates to 1 RPerl::Operation::Statement::Loop::For object
 #for my integer $i (0 .. 2){1;} # parses to 2 PPI::Statement::Compound objects, translates to 1 RPerl::Operation::Statement::Loop::For object
+
+#return;  # PARSE ERROR: invalid RPerl, missing parenthesis
+#return();
+#return 23;  # PARSE ERROR: invalid RPerl, missing parenthesis
+#return(23);
+#return 23 + 12;  # PARSE ERROR: invalid RPerl, missing parenthesis
+#return(23) + 12;  # PARSE ERROR: invalid RPerl, missing parenthesis
+#return(23 + 12);
+#return 'foo';  # PARSE ERROR: invalid RPerl, missing parenthesis
+#return('foo');
+#return 'foo' . 'bar';  # PARSE ERROR: invalid RPerl, missing parenthesis
+#return('foo') . 'bar';  # PARSE ERROR: invalid RPerl, missing parenthesis
+#return('foo' . 'bar');
+#return(23, 'foo');
 };
 
 # [[[ OPERATIONS & DATA TYPES REPORTING ]]]

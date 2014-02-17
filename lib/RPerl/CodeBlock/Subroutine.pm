@@ -625,7 +625,7 @@ our hash_ref__method $ppi_to_rperl__arguments_translate = sub {
     # SUBROUTINE_ARGUMENTS rule begin
     if ( $node_class ne $node_class_expected ) {
         croak(
-            "\nERROR ECVTRPI02, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, PPI OBJECT FAILURE:\n$node_class_expected object expected but $node_class object found,\ncroaking"
+            "\nERROR ECVTRPI02a, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, PPI OBJECT FAILURE:\n$node_class_expected object expected but $node_class object found,\ncroaking"
         );
     }
     $child_key = 'children';

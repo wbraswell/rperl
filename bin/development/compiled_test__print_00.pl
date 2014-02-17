@@ -17,14 +17,14 @@ use RPerl;
 rperltypes::types_enable('CPP');
 
 # TOGGLE COMMENT TO ENABLE C++ OPS
-#use RPerl_test_00;    # choose ONE of this
-use RPerl_test_00_cpp;
-RPerl_test_00_cpp::cpp_load();
-RPerl_test_00_cpp::cpp_link();    # OR this
+#use RPerl::Test::Print_00;    # choose ONE of this
+use RPerl::Test::Print_00_cpp;
+RPerl::Test::Print_00_cpp::cpp_load();
+RPerl::Test::Print_00_cpp::cpp_link();    # OR this
 
-# disabled to avoid attempt to compile RPerl_test_00__*() from RPerl to CPP
-#print {*STDERR} q{in RPerl_test_00.pl, have RPerl_test_00__ops() = '} . RPerl_test_00__ops() . "'\n"();
-#print {*STDERR} q{in RPerl_test_00.pl, have RPerl_test_00__types() = '} . RPerl_test_00__types() . "'\n"();
+# disabled to avoid attempt to compile Print_00__*() from RPerl to CPP
+#print {*STDERR} q{in compiled_test__print_00.pl, have RPerl_Test_Print_00__ops() = '} . RPerl_Test_Print_00__ops() . "'\n"();
+#print {*STDERR} q{in compiled_test__print_00.pl, have RPerl_Test_Print_00__types() = '} . RPerl_Test_Print_00__types() . "'\n"();
 
 greet_planet(23);
 

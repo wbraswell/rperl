@@ -1,7 +1,7 @@
 package RPerl::Operation::Expression::Literal;
 use strict;
 use warnings;
-our $VERSION = 0.000_010;
+our $VERSION = 0.000_011;
 use Carp;
 use RPerl;
 
@@ -44,8 +44,27 @@ our string__method $rperl_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 our string__method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self ) = @_;                     # object method
     my string $self_generated = q{};
-    $self_generated
-        .= 'STUB CPP CODE STRING, CREATED BY RPerl::Operation::Expression::Literal';
+
+    if ( $self->{type} eq 'number' ) {
+        $self_generated .= $self->{value};
+    }
+    elsif ( $self->{type} eq 'string' ) {
+
+# NEED FIX: remove hard-coded double-quotes, handle pre-existing double-quotes separator and LMPC ban on interpolation
+        substr $self->{value}, 0,  1, q{"};
+        substr $self->{value}, -1, 1, q{"};
+
+        # DEV NOTE: special OPS_TYPES tag replacement regex
+        $self->{value} =~ s/PERLOPS_PERLTYPES/CPPOPS_CPPTYPES/gxms;
+        $self_generated .= $self->{value};
+    }
+    else {
+        croak(
+            "\nERROR ECVGESY01, C++ GENERATOR, RPERL SYNTAX:\nin Literal, expected type 'number' or 'string', but non-matching type '"
+                . $self->{type}
+                . "' found,\ncroaking" );
+    }
+
     return ($self_generated);
 };
 

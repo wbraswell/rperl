@@ -1,7 +1,7 @@
 package RPerl::CompileUnit::Module::Package; ## no critic qw(ProhibitExcessMainComplexity)  ## RPERL SYSTEM allow complex code
 use strict;
 use warnings;
-our $VERSION = 0.000_013;
+our $VERSION = 0.000_014;
 use Carp;
 use RPerl;
 
@@ -63,12 +63,17 @@ our string__method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     }
     $self_generated .= "\n";
 
+    my $self_name_underscores = $self->{name};
+    $self_name_underscores =~ s/::/_/gxms;
+
     $self_generated .= q{// [[[ OPERATIONS & DATA TYPES REPORTING ]]]} . "\n";
-    $self_generated .= q{string } . $self->{name} . q[__ops() {] . "\n";
+    $self_generated
+        .= q{string } . $self_name_underscores . q[__ops() {] . "\n";
     $self_generated .= q{    string retval = "CPP";} . "\n";
     $self_generated .= q{    return (retval);} . "\n";
     $self_generated .= q[}] . "\n";
-    $self_generated .= q{string } . $self->{name} . q[__types() {] . "\n";
+    $self_generated
+        .= q{string } . $self_name_underscores . q[__types() {] . "\n";
     $self_generated .= q{    string retval = "CPP";} . "\n";
     $self_generated .= q{    return (retval);} . "\n";
     $self_generated .= q[}] . "\n";

@@ -1,6 +1,6 @@
 RPerl v1.0 Beta, Install Notes
 Single-User Installation (Not System-Wide Installation)
-Last Updated January 6th, 2014
+Last Updated February 17th, 2014
 
 [[[ IMPORTANT WARNING: DO NOT USE THIS local::lib INSTALLATION METHODOLOGY WITH PERLBREW, PERLALL, PLENV, OR OTHER SPECIAL PERL ENVIRONMENTS ]]]
 
@@ -23,7 +23,14 @@ $ cpanm --installdeps .
 $ rm -Rf _Inline/; reset; perl -Ilib bin/test_suite.pl
 	# MANUALLY CONFIRM ALL TESTS PASS, WITH COMPILER OUTPUT
 
-$ rm -Rf _Inline/; reset; perl -Ilib t/08_type_array.t
+$ rm -Rf _Inline/; reset; perl -Ilib t/01_depend.t
+$ rm -Rf _Inline/; reset; perl -Ilib t/02_inline_c.t
+$ rm -Rf _Inline/; reset; perl -Ilib t/03_inline_cpp.t
+$ rm -Rf _Inline/; reset; perl -Ilib t/04_type_scalar.t
+$ rm -Rf _Inline/; reset; perl -Ilib t/05_type_array.t
+$ rm -Rf _Inline/; reset; perl -Ilib t/06_type_hash.t
+$ rm -Rf _Inline/; reset; perl -Ilib t/07_oo_inherit.t
+$ rm -Rf _Inline/; reset; perl -Ilib t/08_precompiled_sort.t
 	# MANUALLY CONFIRM SINGLE TESTS PASS, WITH COMPILER OUTPUT
 
 $ rm -Rf _Inline/; reset; prove -l t/* 2> /dev/null
@@ -32,17 +39,17 @@ $ rm -Rf _Inline/; reset; prove -l t/* 2> /dev/null
 $ rm -Rf ./_Inline/; reset; perl -Ilib bin/development/compiler_test.pl
 	# MANUALLY CONFIRM COMPILER TEST RUNS, WITH COMPILER OUTPUT
 
-$ rm -Rf _Inline; reset; perl -Ilib ./bin/development/rperl_test_00.pl
+$ rm -Rf _Inline; reset; perl -Ilib ./bin/development/compiled_test__print_00.pl
 	# MANUALLY CONFIRM COMPILED TEST RUNS, WITH COMPILER OUTPUT
 
-$ vi lib/RPerl_test_00.pm
+$ vi lib/RPerl/Test/Print_00.pm
 	# MANUALLY EDIT RPERL "HELLO WORLD" PERL MODULE
 
-$ vi bin/development/rperl_test_00.pl
+$ vi bin/development/compiled_test_print_00.pl
 	# MANUALLY EDIT RPERL "HELLO WORLD" PERL DRIVER
 
-$ vi lib/RPerl_test_00.cpp
-	# MANUALLY INSPECT RPERL "HELLO WORLD" C++ MODULE
+$ less lib/RPerl/Test/Print_00.cpp
+	# MANUALLY INSPECT GENERATED RPERL "HELLO WORLD" C++ MODULE
 
 
 

@@ -38,9 +38,9 @@ our object__array_ref__method $ppi_to_rperl__translate_plus = sub {
     my object $node;
     my integer $node_index_max;
     my string $node_class;
-    my string $node_classes_expected = [
+    my string__array_ref $node_classes_expected = [
         'PPI::Statement', 'PPI::Statement::Compound',
-        'PPI::Statement::Variable'
+        'PPI::Statement::Variable', 'PPI::Statement::Break',
     ];
     my object $node_translated;
     my object $child;
@@ -274,9 +274,18 @@ NODE_LOOP: for my $node_index_loop ( 0 .. $node_index_max ) {
             push @{$nodes_translated}, $node_translated;
             next NODE_LOOP;
         }
+        elsif ( $node_class eq 'PPI::Statement::Break' ) {
+
+# OPERATION rule, STATEMENT rule/production, OPERATOR_VOID rule/production @ INDEX iterated
+            $node_translated
+                = RPerl::Operation::Statement::OperatorVoid::Return
+                ->ppi_to_rperl__translate($node);
+            push @{$nodes_translated}, $node_translated;
+            next NODE_LOOP;
+        }
         else { # DEV NOTE: this should be redundant and delete-able, however it is an extra catch in case previous check of $node_classes_expected is somehow borked
             croak(
-                "\nERROR ECVTRPI02, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, PPI OBJECT FAILURE:\nmember of ("
+                "\nERROR ECVTRPI02a, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, PPI OBJECT FAILURE:\nmember of ("
                     . join( ', ', @{$node_classes_expected} )
                     . ")\nobject expected but $node_class object found,\ncroaking"
             );

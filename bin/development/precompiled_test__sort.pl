@@ -29,18 +29,18 @@ use RPerl::Algorithm::Sort::Bubble_cpp;  RPerl::Algorithm::Sort::Bubble_cpp::cpp
 #use RPerl::Algorithm::Sort::Quick;
 #use RPerl::Algorithm::Sort::Merge;
 
-print STDERR q{in precompiled_sort_test.pl, have integer__ops() = '} . integer__ops() . "'\n" or croak();
-print STDERR q{in precompiled_sort_test.pl, have integer__types() = '} . integer__types() . "'\n" or croak();
-print STDERR q{in precompiled_sort_test.pl, have number__ops() = '} . number__ops() . "'\n" or croak();
-print STDERR q{in precompiled_sort_test.pl, have number__types() = '} . number__types() . "'\n" or croak();
-print STDERR q{in precompiled_sort_test.pl, have string__ops() = '} . string__ops() . "'\n" or croak();
-print STDERR q{in precompiled_sort_test.pl, have string__types() = '} . string__types() . "'\n" or croak();
-print STDERR q{in precompiled_sort_test.pl, have array__ops() = '} . array__ops() . "'\n" or croak();
-print STDERR q{in precompiled_sort_test.pl, have array__types() = '} . array__types() . "'\n" or croak();
-print STDERR q{in precompiled_sort_test.pl, have hash__ops() = '} . hash__ops() . "'\n" or croak();
-print STDERR q{in precompiled_sort_test.pl, have hash__types() = '} . hash__types() . "'\n" or croak();
-print STDERR q{in precompiled_sort_test.pl, have bubblesort__ops() = '} . bubblesort__ops() . "'\n" or croak();
-print STDERR q{in precompiled_sort_test.pl, have bubblesort__types() = '} . bubblesort__types() . "'\n" or croak();
+print STDERR q{in precompiled_test__sort.pl, have integer__ops() = '} . integer__ops() . "'\n" or croak();
+print STDERR q{in precompiled_test__sort.pl, have integer__types() = '} . integer__types() . "'\n" or croak();
+print STDERR q{in precompiled_test__sort.pl, have number__ops() = '} . number__ops() . "'\n" or croak();
+print STDERR q{in precompiled_test__sort.pl, have number__types() = '} . number__types() . "'\n" or croak();
+print STDERR q{in precompiled_test__sort.pl, have string__ops() = '} . string__ops() . "'\n" or croak();
+print STDERR q{in precompiled_test__sort.pl, have string__types() = '} . string__types() . "'\n" or croak();
+print STDERR q{in precompiled_test__sort.pl, have array__ops() = '} . array__ops() . "'\n" or croak();
+print STDERR q{in precompiled_test__sort.pl, have array__types() = '} . array__types() . "'\n" or croak();
+print STDERR q{in precompiled_test__sort.pl, have hash__ops() = '} . hash__ops() . "'\n" or croak();
+print STDERR q{in precompiled_test__sort.pl, have hash__types() = '} . hash__types() . "'\n" or croak();
+print STDERR q{in precompiled_test__sort.pl, have bubblesort__ops() = '} . bubblesort__ops() . "'\n" or croak();
+print STDERR q{in precompiled_test__sort.pl, have bubblesort__types() = '} . bubblesort__types() . "'\n" or croak();
 
 # <<<=== SORT 1 ===>>>
 # <<<=== SORT 1 ===>>>
@@ -68,11 +68,11 @@ $algorithm = 'RPerl::Algorithm::Sort::Bubble';  # Bubble_cpp's class name is Bub
 # loop to test for memory leaks
 my const_integer $i_MAX = 0;
 for my integer $i ( 0 .. $i_MAX ) {
-	print STDERR "in precompiled_sort_test.pl, top of for() loop $i/$i_MAX\n" or croak();
+	print STDERR "in precompiled_test__sort.pl, top of for() loop $i/$i_MAX\n" or croak();
 
 #	$sorter = $algorithm->new();  # OO INTERFACE
 #	if (defined $variant) { $sorter->set_variant($variant); }  # OO INTERFACE
-#	print STDERR "in precompiled_sort_test.pl $i/$i_MAX, have pre-data \$sorter =\n" . Dumper($sorter) . "\n" or croak();  # OO INTERFACE
+#	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have pre-data \$sorter =\n" . Dumper($sorter) . "\n" or croak();  # OO INTERFACE
 
 	# [[[ INTEGER TESTS ]]]
 	
@@ -95,9 +95,9 @@ for my integer $i ( 0 .. $i_MAX ) {
 #	$integer__data = scalar_linkedlist_ref->new_from_array_ref([21, 12, 31, 13, 42, 2012, 5555, 1.21, 33.3, 9999, -15, 0]);  # NOT USED FOR BUBBLESORT
 #	$sorter->set_integer__data($integer__data);  # OO INTERFACE
 
-	print STDERR "in precompiled_sort_test.pl $i/$i_MAX, have unsorted \$integer__data =\n" . Dumper($integer__data) . "\n" or croak();  # PROCEDURAL INTERFACE
-#	print STDERR "in precompiled_sort_test.pl $i/$i_MAX, have \$sorter =\n" . Dumper($sorter) . "\n" or croak();  # OO INTERFACE
-#	print STDERR "in precompiled_sort_test.pl $i/$i_MAX, have unsorted \$sorter->get_integer__data() =\n" . Dumper($sorter->get_integer__data()) . "\n" or croak();  # OO INTERFACE
+	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have unsorted \$integer__data =\n" . Dumper($integer__data) . "\n" or croak();  # PROCEDURAL INTERFACE
+#	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have \$sorter =\n" . Dumper($sorter) . "\n" or croak();  # OO INTERFACE
+#	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have unsorted \$sorter->get_integer__data() =\n" . Dumper($sorter->get_integer__data()) . "\n" or croak();  # OO INTERFACE
 
 	my $start_time = time;
 #	$sorter->integer__sort();  # OO INTERFACE, ANYOPS_ANYTYPES needs testing; CPPOPS_CPPTYPS packing/unpacking not here, in accessor/mutator calls instead
@@ -111,9 +111,9 @@ for my integer $i ( 0 .. $i_MAX ) {
 	my $end_time = time;
 	my $run_time = $end_time - $start_time;
 
-	print STDERR "in precompiled_sort_test.pl $i/$i_MAX, have sorted \$integer__data =\n" . Dumper($integer__data) . "\n" or croak();  # PROCEDURAL INTERFACE
-#	print STDERR "in precompiled_sort_test.pl $i/$i_MAX, have sorted \$sorter->get_integer__data() =\n" . Dumper($sorter->get_integer__data()) . "\n" or croak();  # OO INTERFACE
-	print STDERR "in precompiled_sort_test.pl $i/$i_MAX, have \$run_time = $run_time\n" or croak();
+	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have sorted \$integer__data =\n" . Dumper($integer__data) . "\n" or croak();  # PROCEDURAL INTERFACE
+#	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have sorted \$sorter->get_integer__data() =\n" . Dumper($sorter->get_integer__data()) . "\n" or croak();  # OO INTERFACE
+	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have \$run_time = $run_time\n" or croak();
 #=cut
 
 #	$string_retval = integer__bubblesort__typetest0();  # TIVALSOBU30; error PERLOPS EIVAVRV00, CPPOPS "Usage: main::integer__bubblesort__typetest0(lucky_integers)"
@@ -121,7 +121,7 @@ for my integer $i ( 0 .. $i_MAX ) {
 #	$string_retval = integer__bubblesort__typetest0([2, 2112, undef, 23, -877, -33, 1701]);  # TIVALSOBU32; error EIVAVRV02
 #	$string_retval = integer__bubblesort__typetest0([2, 2112, 42, 23, -877, -33, 1701, [23, -42.3]]);  # TIVALSOBU33; error EIVAVRV03
 #	$string_retval = integer__bubblesort__typetest0([2, 2112, 42, 23, -877, -33, 1701]);  # TIVALSOBU34
-#	print STDERR "in precompiled_sort_test.pl $i/$i_MAX, have \$string_retval =\n$string_retval\n";
+#	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have \$string_retval =\n$string_retval\n";
 
 	# [[[ NUMBER TESTS ]]]
 
@@ -146,9 +146,9 @@ for my integer $i ( 0 .. $i_MAX ) {
 #	$number__data = scalar_linkedlist_ref->new_from_array_ref([21, 12, 31, 13, 42, 2012, 5555, 1.21, 33.3, 9999, -15, 0]);  # NOT USED FOR BUBBLESORT
 #	$sorter->set_number__data($number__data);  # OO INTERFACE
 
-	print STDERR "in precompiled_sort_test.pl $i/$i_MAX, have unsorted \$number__data =\n" . Dumper($number__data) . "\n" or croak();  # PROCEDURAL INTERFACE
-#	print STDERR "in precompiled_sort_test.pl $i/$i_MAX, have \$sorter =\n" . Dumper($sorter) . "\n" or croak();  # OO INTERFACE
-#	print STDERR "in precompiled_sort_test.pl $i/$i_MAX, have unsorted \$sorter->get_number__data() =\n" . Dumper($sorter->get_number__data()) . "\n" or croak();  # OO INTERFACE
+	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have unsorted \$number__data =\n" . Dumper($number__data) . "\n" or croak();  # PROCEDURAL INTERFACE
+#	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have \$sorter =\n" . Dumper($sorter) . "\n" or croak();  # OO INTERFACE
+#	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have unsorted \$sorter->get_number__data() =\n" . Dumper($sorter->get_number__data()) . "\n" or croak();  # OO INTERFACE
 
 	my $start_time = time;
 #	$sorter->number__sort();  # OO INTERFACE, ANYOPS_ANYTYPES needs testing; CPPOPS_CPPTYPS packing/unpacking not here, in accessor/mutator calls instead
@@ -162,9 +162,9 @@ for my integer $i ( 0 .. $i_MAX ) {
 	my $end_time = time;
 	my $run_time = $end_time - $start_time;
 
-	print STDERR "in precompiled_sort_test.pl $i/$i_MAX, have sorted \$number__data =\n" . Dumper($number__data) . "\n" or croak();  # PROCEDURAL INTERFACE
-#	print STDERR "in precompiled_sort_test.pl $i/$i_MAX, have sorted \$sorter->get_number__data() =\n" . Dumper($sorter->get_number__data()) . "\n" or croak();  # OO INTERFACE
-	print STDERR "in precompiled_sort_test.pl $i/$i_MAX, have \$run_time = $run_time\n" or croak();
+	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have sorted \$number__data =\n" . Dumper($number__data) . "\n" or croak();  # PROCEDURAL INTERFACE
+#	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have sorted \$sorter->get_number__data() =\n" . Dumper($sorter->get_number__data()) . "\n" or croak();  # OO INTERFACE
+	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have \$run_time = $run_time\n" or croak();
 #=cut
 
 #	$string_retval = number__bubblesort__typetest0();  # TNVALSOBU30; error PERLOPS ENVAVRV00, CPPOPS "Usage: main::number__bubblesort__typetest0(lucky_numbers)"
@@ -172,7 +172,7 @@ for my integer $i ( 0 .. $i_MAX ) {
 #	$string_retval = number__bubblesort__typetest0([2.1234432112344321, 2112.4321, undef, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789]);  # TNVALSOBU32; error ENVAVRV02
 #	$string_retval = number__bubblesort__typetest0([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, 'abcdefg', -33.876587658765875687658765, 1701.6789]);  # TNVALSOBU33; error ENVAVRV03
 #	$string_retval = number__bubblesort__typetest0([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789]);  # TNVALSOBU34
-#	print STDERR "in precompiled_sort_test.pl $i/$i_MAX, have \$string_retval =\n$string_retval\n";
+#	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have \$string_retval =\n$string_retval\n";
 
 croak('Done for now, croaking');
 }
@@ -206,9 +206,9 @@ my object $sorter2 = RPerl::Algorithm::Sort::Bubble->new();
 $sorter2->{data} = [5, 4, 3, 2, 1, 0];
 #$sorter2->{data} = scalar_linkedlist_ref->new_from_array_ref([5, 4, 3, 2, 1, 0]);
 
-print STDERR "in precompiled_sort_test.pl, have unsorted \$sorter2->{data} =\n" . Dumper($sorter2->{data}) . "\n" or croak();
+print STDERR "in precompiled_test__sort.pl, have unsorted \$sorter2->{data} =\n" . Dumper($sorter2->{data}) . "\n" or croak();
 $sorter2->sort_method();
-print STDERR "in precompiled_sort_test.pl, have sorted \$sorter2->{data} =\n" . Dumper($sorter2->{data}) . "\n" or croak();
+print STDERR "in precompiled_test__sort.pl, have sorted \$sorter2->{data} =\n" . Dumper($sorter2->{data}) . "\n" or croak();
 
 # <<<=== SORT 3 ===>>>
 # <<<=== SORT 3 ===>>>
@@ -217,7 +217,7 @@ print STDERR "in precompiled_sort_test.pl, have sorted \$sorter2->{data} =\n" . 
 # NEED CHOOSE: which data structure?
 my number__array_ref $integer__data2 = [12, 11, 10, 9, 8, 7, 6];
 #my scalar_linkedlist_ref $integer__data2 = scalar_linkedlist_ref->new_from_array_ref([12, 11, 10, 9, 8, 7, 6]);
-print STDERR "in precompiled_sort_test.pl, have unsorted \$integer__data2 =\n" . Dumper($integer__data2) . "\n" or croak();
+print STDERR "in precompiled_test__sort.pl, have unsorted \$integer__data2 =\n" . Dumper($integer__data2) . "\n" or croak();
 
 # NEED CHOOSE: which specific variant algorithm?
 my $integer__data2_sorted = RPerl::Algorithm::Sort::Bubble::bubblesort($integer__data2);
@@ -227,8 +227,8 @@ my $integer__data2_sorted = RPerl::Algorithm::Sort::Bubble::bubblesort($integer_
 #my $integer__data2_sorted = RPerl::Algorithm::Sort::Merge::mergesort_array_bottomup($integer__data2);
 #my $integer__data2_sorted = RPerl::Algorithm::Sort::Merge::mergesort_linkedlist_topdown($integer__data2->{head});
 
-print STDERR "in precompiled_sort_test.pl, have sorted \$integer__data2_sorted =\n" . Dumper($integer__data2_sorted) . "\n" or croak();
+print STDERR "in precompiled_test__sort.pl, have sorted \$integer__data2_sorted =\n" . Dumper($integer__data2_sorted) . "\n" or croak();
 
 # re-print STDERR SORT 1 data to make sure nothing weird with RPerl has caused it to change during SORT 2 and SORT 3
-print STDERR "in precompiled_sort_test.pl, STILL have sorted \$sorter->{data} =\n" . Dumper($sorter->{data}) . "\n" or croak();
+print STDERR "in precompiled_test__sort.pl, STILL have sorted \$sorter->{data} =\n" . Dumper($sorter->{data}) . "\n" or croak();
 =cut

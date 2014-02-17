@@ -1,7 +1,7 @@
 package RPerl::Operation::Expression::Variable; ## nfo critic qw(ProhibitExcessMainComplexity)  ## RPERL SYSTEM allow complex code
 use strict;
 use warnings;
-our $VERSION = 0.000_001;
+our $VERSION = 0.000_010;
 use Carp;
 use RPerl;
 
@@ -117,8 +117,12 @@ our string__method $rperl_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 our string__method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self ) = @_;    # object method
     my string $self_generated = q{};
-    $self_generated
-        .= 'STUB CPP CODE STRING, CREATED BY RPerl::Operation::Expression::Variable';
+
+    # trim leading sigil dollar sign
+    if ( ( substr $self->{symbol}, 0, 1 ) eq q{$} ) {
+        substr $self->{symbol}, 0, 1, q{};
+    }
+    $self_generated .= $self->{symbol};
     return ($self_generated);
 };
 

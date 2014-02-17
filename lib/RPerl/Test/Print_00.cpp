@@ -1,7 +1,7 @@
-// namespace RPerl_test_00;  // NEED UPGRADE: Perl vs C++ namespace compatibility
+// namespace RPerl::Test::Print_00;  // NEED UPGRADE: Perl vs C++ namespace compatibility
 using std::cout;
 using std::cerr;
-// VERSION 0.002_000
+// VERSION 0.003_000
 #include <rperltypes.h>  // for data types and structures
 #include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
 
@@ -15,11 +15,11 @@ void greet_planet(integer arg0){
 }
 
 // [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-string RPerl_test_00__ops() {
+string RPerl_Test_Print_00__ops() {
     string retval = "CPP";
     return (retval);
 }
-string RPerl_test_00__types() {
+string RPerl_Test_Print_00__types() {
     string retval = "CPP";
     return (retval);
 }

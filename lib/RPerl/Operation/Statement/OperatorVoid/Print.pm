@@ -25,7 +25,7 @@ our %properties_class = ( ## no critic qw(ProhibitPackageVars)  ## RPERL SYSTEM,
      # NEED UPGRADE: officialize splitting class and object properties into 2 hashes
     name => my string $KEY_name = 'print',
     parentheses_require => my integer $KEY_parentheses_require = 0,
-    parentheses_allow => my integer $KEY_parentheses_allow = 0, # Perl::Critic brutal CodeLayout::ProhibitParensWithBuiltins
+    parentheses_allow => my integer $KEY_parentheses_allow = 0, # subject to Perl::Critic brutal CodeLayout::ProhibitParensWithBuiltins
     arguments_min     => my integer $KEY_arguments_min     = 1,
     arguments_max => my integer $KEY_arguments_max = 999,
 );
@@ -69,35 +69,12 @@ our string__method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     foreach my object $argument ( @{ $self->{arguments}->{elements} } ) {
         $self_generated .= ' <<';
         my string $argument_class = blessed($argument);
-        if ( $argument_class eq 'RPerl::Operation::Expression::Literal' ) {
-            if ( $argument->{type} eq 'number' ) {
-                $self_generated .= q{ } . $argument->{value};
-            }
-            elsif ( $argument->{type} eq 'string' ) {
-
-# NEED FIX: remove hard-coded double-quotes, handle pre-existing double-quotes separator and LMPC ban on interpolation
-                substr $argument->{value}, 0, 1, q{"};
-                substr $argument->{value}, -1, 1, q{"};
-                # DEV NOTE: special OPS_TYPES tag replacement regex
-                $argument->{value} =~ s/PERLOPS_PERLTYPES/CPPOPS_CPPTYPES/gxms;
-                $self_generated .= q{ } . $argument->{value};
-            }
-            else {
-                croak(
-                    "\nERROR ECVGESY01, C++ GENERATOR, RPERL SYNTAX:\nin OperatorVoid '"
-                        . $self->{name}
-                        . q{', expected Literal argument of type 'number' or 'string', but non-matching type '}
-                        . $self->{type}
-                        . "' found,\ncroaking" );
-            }
-        }
-        elsif ( $argument_class eq 'RPerl::Operation::Expression::Variable' )
+        if (   ( $argument_class eq 'RPerl::Operation::Expression::Literal' )
+            or
+            ( $argument_class eq 'RPerl::Operation::Expression::Variable' ) )
         {
-            # trim leading sigil dollar sign
-            if ( ( substr $argument->{symbol}, 0, 1 ) eq q{$} ) {
-                substr $argument->{symbol}, 0, 1, q{};
-            }
-            $self_generated .= q{ } . $argument->{symbol};
+            $self_generated .= q{ }
+                . $argument->rperl_to_cpp__generate__CPPOPS_CPPTYPES();
         }
         else {
             croak(
