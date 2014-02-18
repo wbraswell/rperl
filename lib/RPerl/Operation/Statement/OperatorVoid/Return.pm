@@ -184,6 +184,10 @@ our object__method $ppi_to_rperl__translate = sub {
 
 
 
+
+# START HERE: set up Return_00* files
+# START HERE: set up Return_00* files
+# START HERE: set up Return_00* files
 # CONTINUE HERE: handle required single-element PPI::Structure::List instead of multi-element LIST_ELEMENTS below
 # CONTINUE HERE: handle required single-element PPI::Structure::List instead of multi-element LIST_ELEMENTS below
 # CONTINUE HERE: handle required single-element PPI::Structure::List instead of multi-element LIST_ELEMENTS below

@@ -1,0 +1,140 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+our $VERSION = 0.002_000;
+use Carp;
+use RPerl;
+
+# [[[ SETUP ]]]
+## no critic qw(ProhibitAutoloading RequireArgUnpacking)  ## RPERL SYSTEM allow autoload  ## RPERL SYSTEM allow read-only @_
+## no critic qw(ProhibitBooleanGrep)  ## RPERL SYSTEM allow grep through $modes_supported
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  ## RPERL USER DEFAULT optionally allow numeric values, print operator
+# RPERL DRIVER BOILERPLATE
+BEGIN { package main; our $RPERL_INCLUDE_PATH = 'lib'; } # NEED REMOVE hard-coded path
+
+BEGIN {
+    #    use RPerl;   # NEED FIX: moved into proper RPerl header above
+    use parent ('RPerl');
+    $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;
+}                                                        # RPerl system files
+
+BEGIN {
+    use Data::Dumper;
+    our $AUTOLOAD;
+
+    sub AUTOLOAD {
+        croak(
+            "AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n"
+                . Dumper( \@_ )
+                . ', croaking' );
+    }
+}
+
+use RPerl::Parser;    # includes PPI, Perl::Critic
+use RPerl::Translator;
+use RPerl::Generator;
+use RPerl::Compiler;    # includes Inline
+use Getopt::Long;
+
+# move output away from initial Inline compiler output
+print {*STDERR} "\n\n" or croak();
+
+# [[[ ACCEPT COMMAND-LINE ARGUMENTS ]]]
+# [[[ ACCEPT COMMAND-LINE ARGUMENTS ]]]
+# [[[ ACCEPT COMMAND-LINE ARGUMENTS ]]]
+
+my string $rperl_input_file_name = undef;
+my string $cpp_output_file_name  = undef;
+my $mode = {};    # can't store defaults here, erased by GetOptions()
+my $mode_default = { ops => 'CPP', types => 'CPP' }; # default to CPPOPS_CPPTYPES
+my $modes_supported = { ops => ['CPP'], types => [ 'PERL', 'CPP' ] };
+GetOptions(
+    'infile=s'  => \$rperl_input_file_name,
+    'outfile=s' => \$cpp_output_file_name,
+    'mode=s%'   => \$mode,
+    )
+    or croak(
+    "\nERROR EARG00: Failure processing command line arguments,\ncroaking");
+if ( not( defined $rperl_input_file_name ) ) { ## no critic qw(ProhibitCascadingIfElse)  # RPERL SYSTEM allow argument handling logic
+    croak(
+        "\nERROR EARG01: No RPerl source code input file specified,\ncroaking"
+    );
+}
+elsif ( not( -e $rperl_input_file_name ) ) {
+    croak(
+        "\nERROR EARG02: Specified RPerl source code input file '$rperl_input_file_name' does not exist,\ncroaking"
+    );
+}
+elsif ( not( -r $rperl_input_file_name ) ) {
+    croak(
+        "\nERROR EARG03: Specified RPerl source code input file '$rperl_input_file_name' is not readable,\ncroaking"
+    );
+}
+elsif ( not( -f $rperl_input_file_name ) ) {
+    croak(
+        "\nERROR EARG04: Specified RPerl source code input file '$rperl_input_file_name' is not a plain file,\ncroaking"
+    );
+}
+elsif ( $rperl_input_file_name !~ /[.]pm$/xms ) {
+    croak(
+        "\nERROR EARG05: Specified RPerl source code input file '$rperl_input_file_name' is not a Perl module ending in '.pm',\ncroaking"
+    );
+}
+if ( not( defined $cpp_output_file_name ) ) {
+    $cpp_output_file_name = $rperl_input_file_name;
+    substr $cpp_output_file_name, -3, 4, '.cpp';
+}
+foreach my string $mode_key ( keys %{$mode} ) {
+    if ( not( exists $modes_supported->{$mode_key} ) ) {
+        croak(
+            "\nERROR EARG06: Unsupported or invalid mode category '$mode_key' specified, supported categories are ("
+                . join( ', ', keys %{$modes_supported} )
+                . "),\ncroaking" );
+    }
+    elsif (
+        not( grep { $_ eq $mode->{$mode_key} }
+            @{ $modes_supported->{$mode_key} } )
+        )
+    {
+        croak(    "\nERROR EARG07: Unsupported or invalid mode '"
+                . $mode->{$mode_key}
+                . "' in mode category '$mode_key' specified, supported modes are ("
+                . join( ', ', @{ $modes_supported->{$mode_key} } )
+                . "),\ncroaking" );
+    }
+}
+foreach my string $mode_default_key ( keys %{$mode_default} ) { ## no critic qw(ProhibitPostfixControls)  # PERLCRITIC ERROR: not postfix foreach!
+    if ( not( exists $mode->{$mode_default_key} ) ) {
+        $mode->{$mode_default_key} = $mode_default->{$mode_default_key};
+    }
+}
+print {*STDERR}
+    "in rperl, have \$rperl_input_file_name = '$rperl_input_file_name'\n";
+print {*STDERR}
+    "in rperl, have \$cpp_output_file_name = '$cpp_output_file_name'\n";
+print {*STDERR} "in rperl, have \$mode = \n"
+    . Dumper($mode) . "\n";
+
+# [[[ PARSE PERL TO PPI ]]]
+# [[[ PARSE PERL TO PPI ]]]
+# [[[ PARSE PERL TO PPI ]]]
+
+my object $ppi_doctree = perl_to_ppi__parse($rperl_input_file_name);
+
+# [[[ TRANSLATE PPI TO RPERL ]]]
+# [[[ TRANSLATE PPI TO RPERL ]]]
+# [[[ TRANSLATE PPI TO RPERL ]]]
+
+my object $rperl_ast = ppi_to_rperl__translate($ppi_doctree);
+
+# [[[ GENERATE RPERL TO C++ ]]]
+# [[[ GENERATE RPERL TO C++ ]]]
+# [[[ GENERATE RPERL TO C++ ]]]
+
+my string $cpp_source = rperl_to_cpp__generate( $rperl_ast, $mode );
+
+# [[[ COMPILE C++ TO XS & BINARY ]]]
+# [[[ COMPILE C++ TO XS & BINARY ]]]
+# [[[ COMPILE C++ TO XS & BINARY ]]]
+
+cpp_to_xsbinary__compile( $cpp_source, $cpp_output_file_name );

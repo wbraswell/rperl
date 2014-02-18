@@ -1,6 +1,6 @@
 RPerl v1.0 Beta, Install Notes
 Single-User Installation (Not System-Wide Installation)
-Last Updated February 17th, 2014
+Last Updated February 18th, 2014
 
 [[[ IMPORTANT WARNING: DO NOT USE THIS local::lib INSTALLATION METHODOLOGY WITH PERLBREW, PERLALL, PLENV, OR OTHER SPECIAL PERL ENVIRONMENTS ]]]
 
@@ -36,7 +36,8 @@ $ rm -Rf _Inline/; reset; perl -Ilib t/08_precompiled_sort.t
 $ rm -Rf _Inline/; reset; prove -l t/* 2> /dev/null
 	# MANUALLY CONFIRM ALL TESTS PASS, WITHOUT COMPILER OUTPUT
 	
-$ rm -Rf ./_Inline/; reset; perl -Ilib bin/development/compiler_test.pl
+$ rm -Rf ./_Inline/; reset; perl -Ilib bin/rperl --infile=lib/RPerl/Test/Print_00.pm --mode ops=CPP --mode types=CPP
+$ rm -Rf ./_Inline/; reset; perl -Ilib bin/rperl --infile=lib/RPerl/Test/Print_00.pm --mode ops=CPP --mode types=PERL
 	# MANUALLY CONFIRM COMPILER TEST RUNS, WITH COMPILER OUTPUT
 
 $ rm -Rf _Inline; reset; perl -Ilib ./bin/development/compiled_test__print_00.pl
