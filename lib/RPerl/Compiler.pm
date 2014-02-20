@@ -14,6 +14,20 @@ use Data::Dumper;
 
 # [[[ PROCEDURAL SUBROUTINES ]]]
 
+
+# START HERE: move functionality from bin/rperl to perl_to_cpp() below; link RPerl::pmc_compile() to perl_to_cpp(); enable Module::Compile
+# START HERE: move functionality from bin/rperl to perl_to_cpp() below; link RPerl::pmc_compile() to perl_to_cpp(); enable Module::Compile
+# START HERE: move functionality from bin/rperl to perl_to_cpp() below; link RPerl::pmc_compile() to perl_to_cpp(); enable Module::Compile
+
+
+our string $perl_to_cpp = sub {
+    ( my string $perl_source ) = @_;
+    my string $cpp_source;
+    #...
+    return($cpp_source);
+};
+
+
 # Compile from C++-Parsable String to Perl-Linkable XS & Machine-Readable Binary
 our void $cpp_to_xsbinary__compile = sub {
     ( my string $cpp_source, my string $cpp_file_name ) = @_;
