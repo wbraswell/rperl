@@ -1,7 +1,7 @@
 package Inline::Filters;
 use strict;
 use Config;
-$Inline::Filters::VERSION = "0.12_02";
+$Inline::Filters::VERSION = "0.12_03";
 
 #============================================================================
 # Object Interface
@@ -29,7 +29,7 @@ sub Strip_POD {
 #============================================================================
 # Strip comments in various languages
 #============================================================================
-sub skip_quoted {
+sub _skip_quoted {
     my ($text, $index, $closer) = @_;
     for (my $i=$index+1; $i<length $text; $i++) {
         my $p = substr($text, $i-1, 1);
@@ -39,14 +39,14 @@ sub skip_quoted {
     return $index; # must not have been a string
 }
 
-sub strip_comments {
+sub _strip_comments {
     my ($txt, $opn, $cls, @quotes) = @_;
     my $i = -1;
     while (++$i < length $txt) {
 	my $closer;
         if (grep {my $r=substr($txt,$i,length($_)) eq $_; $closer=$_ if $r; $r}
 	    @quotes) {
-	    $i = skip_quoted($txt, $i, $closer);
+	    $i = _skip_quoted($txt, $i, $closer);
 	    next;
         }
         if (substr($txt, $i, length($opn)) eq $opn) {
@@ -64,23 +64,23 @@ sub strip_comments {
 sub Strip_C_Comments {
     my $ilsm = shift;
     my $code = shift;
-    $code = strip_comments($code, '//', "\n", '"');
-    $code = strip_comments($code, '/*', '*/', '"');
+    $code = _strip_comments($code, '//', "\n", '"');
+    $code = _strip_comments($code, '/*', '*/', '"');
     return $code;
 }
 
 sub Strip_CPP_Comments {
     my $ilsm = shift;
     my $code = shift;
-    $code = strip_comments($code, '//', "\n", '"');
-    $code = strip_comments($code, '/*', '*/', '"');
+    $code = _strip_comments($code, '//', "\n", '"');
+    $code = _strip_comments($code, '/*', '*/', '"');
     return $code;
 }
 
 sub Strip_Python_Comments {
     my $ilsm = shift;
     my $code = shift;
-    $code = strip_comments($code, '#', "\n", '"', '"""', '\'');
+    $code = _strip_comments($code, '#', "\n", '"', '"""', '\'');
     return $code;
 }
 
@@ -148,6 +148,7 @@ my %filters =
 	    Strip_Comments => \&Strip_CPP_Comments,
 	   ],
   );
+
 sub get_filters {
     my $language = shift;
     my ($all, $lang) = @filters{ALL => $language};
