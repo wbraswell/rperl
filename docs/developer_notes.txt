@@ -1,0 +1,20 @@
+################################################################################
+# PERLTIDY 
+################################################################################
+
+$ mv /usr/share/perl5/Perl/Critic/Policy/CodeLayout/RequireTidyCode.pm \
+    /usr/share/perl5/Perl/Critic/Policy/CodeLayout/RequireTidyCode.pm.orig
+$ ln -s PATH_TO_RPERL/lib/Perl/Critic/Policy/CodeLayout/RequireTidyCode.pm \
+    /usr/share/perl5/Perl/Critic/Policy/CodeLayout/RequireTidyCode.pm
+
+# MUST HAVE Perltidy v20121207 OR LATER
+$ perltidy -pbp --ignore-side-comment-lengths --converge
+
+
+################################################################################
+# PERLCRITIC
+################################################################################
+
+# MUST HAVE Perl-Critic v1.120 OR LATER
+$ perlcritic --brutal
+
