@@ -1,23 +1,57 @@
 # RPerl v1.0 Beta, Install Notes
 # Single-User Installation (Not System-Wide Installation)
-# Last Updated March 30th, 2014
+# Last Updated April 1st, 2014
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# IMPORTANT WARNING: DO NOT USE THIS local::lib INSTALLATION METHODOLOGY 
-# WITH PERLBREW, PERLALL, PLENV, OR OTHER SPECIAL PERL ENVIRONMENTS 
+# IMPORTANT WARNING: ONLY USE STEP 1A OR 1B, NOT BOTH
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ################################################################################
-# INSTALL RPERL & DEPENDENCIES USING LOCAL::LIB & CPANMINUS
+# STEP 0.
+# PRE-INSTALL
+################################################################################
+
+$ mv ~/perl5 ~/perl5.old  # disable any previous local::lib or Perlbrew
+$ perl -v  # NOTE! the version of Perl determines whether you take step 1a or 1b
+
+################################################################################
+# STEP 1A.  ONLY FOR PERL v5.10, v5.12(?), v5.16 & v5.18 - NOT v5.14!
+# INSTALL LOCAL::LIB & CPANMINUS
 ################################################################################
 
 $ curl -L cpanmin.us | perl - -l $HOME/perl5 App::cpanminus local::lib
-$ echo "eval \$(perl -I\$HOME/perl5/lib/perl5 -Mlocal::lib)" >> ~/.bashrc;
+$ echo 'eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)' >> ~/.bashrc
 $ . ~/.bashrc;  set | grep perl5  # note the dot at the start of this command
 
 # in the output of the previous 'set' command,
-# ensure the following 4 environmental variables are updated to include perl5: 
+# ensure the following 4 environmental variables are updated to include ~/perl5: 
 # PERL_MM_OPT, PERL_MB_OPT, PERL5LIB, PATH
+
+################################################################################
+# STEP 1B.  ONLY FOR PERL v5.14! (ALSO v5.8 & OLDER???)
+# INSTALL PERLBREW & CPANMINUS
+################################################################################
+
+$ sudo apt-get install perlbrew
+# OR
+$ curl -L http://install.perlbrew.pl | bash
+
+$ perlbrew init
+$ echo 'source ~/perl5/perlbrew/etc/bashrc' >> ~/.bashrc
+$ . ~/.bashrc;  set | grep perl5  # note the dot at the start of this command
+
+# in the output of the previous 'set' command,
+# ensure the following 2 environmental variables are updated to include ~/perl5:
+# PERLBREW_PATH, PERLBREW_ROOT
+
+$ perlbrew install perl-5.18.2
+$ perlbrew use perl-5.18.2
+$ perlbrew install-cpanm
+
+################################################################################
+# STEP 2.
+# INSTALL RPERL & DEPENDENCIES
+################################################################################
 
 $ git clone git@github.com:wbraswell/rperl.git
 # OR
@@ -28,6 +62,7 @@ $ perl Makefile.PL
 $ cpanm --installdeps .  # note the dot at the end of this command
 
 ################################################################################
+# STEP 3.
 # RUN RPERL SYSTEM TESTS
 ################################################################################
 
@@ -48,6 +83,7 @@ $ rm -Rf _Inline/; reset; perl -Ilib t/08_precompiled_sort.t
 $ rm -Rf _Inline/; reset; prove -l t/* 2> /dev/null
 
 ################################################################################
+# STEP 4.
 # RUN RPERL COMPILER TESTS
 ################################################################################
 	
