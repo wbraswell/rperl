@@ -10,7 +10,7 @@ WriteMakefile(
         'Perl::Tidy'      => 0,
         'Inline'          => 0,
         'Inline::CPP'     => 0,
-        'Inline::Filters' => 0,
+        'Inline::Filters' => 0.13,
         'Test::Exception' => 0,
         'Module::Compile' => 0,
     }
