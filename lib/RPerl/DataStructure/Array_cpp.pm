@@ -17,26 +17,8 @@ our void__method $cpp_load = sub {
 		my $eval_string = <<"EOF";
 package main;
 BEGIN { print STDERR "[[[ BEGIN 'use Inline' STAGE for 'RPerl/DataStructure/Array.cpp' ]]]\n"x3; }
-use Inline
-(
-	CPP => '$RPerl::INCLUDE_PATH/RPerl/DataStructure/Array.cpp',
-	TYPEMAPS => '$RPerl::INCLUDE_PATH/typemap.rperl',
-	CCFLAGS => '-Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal',
-	INC => '-I$RPerl::INCLUDE_PATH',
-	BUILD_NOISY => 1,
-	CLEAN_AFTER_BUILD => 0,
-	WARNINGS => 1,
-	FILTERS => 'Preprocess',
-	AUTO_INCLUDE => # DEV NOTE: include non-RPerl files using AUTO_INCLUDE so they are not parsed by the 'Preprocess' filter
-	[
-		'#include <iostream>',
-		'#include <string>',
-		'#include <sstream>',
-		'#include <limits>',
-		'#include <vector>',
-		'#include <unordered_map>',  # DEV NOTE: unordered_map may require '-std=c++0x' in CCFLAGS above
-	],
-);
+use RPerl::Inline;
+use Inline (CPP => "$RPerl::INCLUDE_PATH/RPerl/DataStructure/Array.cpp", \@RPerl::Inline::ARGS);
 print STDERR "[[[ END 'use Inline' STAGE for 'RPerl/DataStructure/Array.cpp' ]]]\n"x3;
 1;
 EOF
