@@ -1,15 +1,13 @@
 #!/usr/bin/perl
 use strict;  use warnings;
 
+system("make");
+
 # DEV NOTE: compiler output is getting through even with the redirection of STDERR to /dev/null, why?
-system("perl -Ilib t/01*.t 2> /dev/null");  print STDERR "\n\n";
-system("perl -Ilib t/02*.t 2> /dev/null");  print STDERR "\n\n";
-system("perl -Ilib t/03*.t 2> /dev/null");  print STDERR "\n\n";
-system("perl -Ilib t/04*.t 2> /dev/null");  print STDERR "\n\n";
-system("perl -Ilib t/05*.t 2> /dev/null");  print STDERR "\n\n";
-system("perl -Ilib t/06*.t 2> /dev/null");  print STDERR "\n\n";
-system("perl -Ilib t/07*.t 2> /dev/null");  print STDERR "\n\n";
-system("perl -Ilib t/08*.t 2> /dev/null");  print STDERR "\n\n";
+for my $t (glob("t/0*.t")) {
+  print STDERR "$t\n";
+  system("$^X -Iblib/arch -Iblib/lib $t 2> /dev/null");  print STDERR "\n";
+}
 
 =disable
 BEGIN { package main;  our $RPERL_TESTS_PATH = "/tmp/RPerl-latest/t"; } # NEED REMOVE hard-coded path
