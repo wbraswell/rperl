@@ -12,8 +12,8 @@ use RPerl::HelperFunctions_cpp;
 
 our void__method $cpp_load = sub {
 
-#	if (defined($RPerl::Test::Print_00_cpp::CPP_LOADED)) { print {*STDERR} "in RPerl::Test::Print_00_cpp::cpp_load(), have \$RPerl::Test::Print_00_cpp::CPP_LOADED = '" . $RPerl::Test::Print_00_cpp::CPP_LOADED . "'\n"; }
-#		else { print {*STDERR} "in RPerl::Test::Print_00_cpp::cpp_load(), have \$RPerl::Test::Print_00_cpp::CPP_LOADED = 'UNDEF'\n"; }
+#	if (defined($RPerl::Test::Print_00_cpp::CPP_LOADED)) { RPerl::diag "in RPerl::Test::Print_00_cpp::cpp_load(), have \$RPerl::Test::Print_00_cpp::CPP_LOADED = '" . $RPerl::Test::Print_00_cpp::CPP_LOADED . "'\n"; }
+#		else { RPerl::diag "in RPerl::Test::Print_00_cpp::cpp_load(), have \$RPerl::Test::Print_00_cpp::CPP_LOADED = 'UNDEF'\n"; }
     if (   not( defined $RPerl::Test::Print_00_cpp::CPP_LOADED )
         or not($RPerl::Test::Print_00_cpp::CPP_LOADED) )
     {
@@ -21,18 +21,17 @@ our void__method $cpp_load = sub {
 
         my $eval_string = <<"EOF";
 package main;
-BEGIN { print {*STDERR} "[[[ BEGIN 'use Inline' STAGE for 'RPerl::Test::Print_00.cpp' ]]]\n"x3; }
 use RPerl::Inline;
+BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl::Test::Print_00.cpp' ]]]\n"x3); }
 use Inline (CPP => "$RPerl::INCLUDE_PATH/RPerl/Test/Print_00.cpp", \@RPerl::Inline::ARGS);
-print {*STDERR} "[[[ END 'use Inline' STAGE for 'RPerl::Test::Print_00.cpp' ]]]\n"x3;
+RPerl::diag("[[[ END 'use Inline' STAGE for 'RPerl::Test::Print_00.cpp' ]]]\n"x3);
 1;
 EOF
 
-        print {*STDERR}
-            "in RPerl::Test::Print_00_cpp::cpp_load(), CPP not yet loaded, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n"
-            . $eval_string
-            . "<<< END EVAL STRING >>>\n"
-            or croak();
+        RPerl::diag(
+            "in RPerl::Test::Print_00_cpp::cpp_load(), CPP not yet loaded, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n",
+            $eval_string,
+            "<<< END EVAL STRING >>>\n");
 
         eval($eval_string);
         if ($@) {croak($@);}
@@ -41,14 +40,14 @@ EOF
         $RPerl::Test::Print_00_cpp::CPP_LOADED = 1;
     }
 
-#	else { print {*STDERR} "in RPerl::Test::Print_00_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"; }
+#	else { RPerl::diag "in RPerl::Test::Print_00_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"; }
 };
 
 our void__method $cpp_link = sub {
     ;
 
-#	if (defined($RPerl::Test::Print_00_cpp::CPP_LINKED)) { print {*STDERR} "in RPerl::Test::Print_00_cpp::cpp_link(), have \$RPerl::Test::Print_00_cpp::CPP_LINKED = '" . $RPerl::Test::Print_00_cpp::CPP_LINKED . "'\n"; }
-#		else { print {*STDERR} "in RPerl::Test::Print_00_cpp::cpp_link(), have \$RPerl::Test::Print_00_cpp::CPP_LINKED = 'UNDEF'\n"; }
+#	if (defined($RPerl::Test::Print_00_cpp::CPP_LINKED)) { RPerl::diag "in RPerl::Test::Print_00_cpp::cpp_link(), have \$RPerl::Test::Print_00_cpp::CPP_LINKED = '" . $RPerl::Test::Print_00_cpp::CPP_LINKED . "'\n"; }
+#		else { RPerl::diag "in RPerl::Test::Print_00_cpp::cpp_link(), have \$RPerl::Test::Print_00_cpp::CPP_LINKED = 'UNDEF'\n"; }
     if (   not( defined $RPerl::Test::Print_00_cpp::CPP_LINKED )
         or not($RPerl::Test::Print_00_cpp::CPP_LINKED) )
     {
@@ -63,26 +62,26 @@ our @ISA = ('main::CPP__Print_00');  # MULTIPLE INHERITANCE
 1;
 EOF
 
-#		print {*STDERR} "in RPerl::Test::Print_00_cpp::cpp_link(), CPP not yet linked, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
+#		RPerl::diag "in RPerl::Test::Print_00_cpp::cpp_link(), CPP not yet linked, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
 
         eval($eval_string);
         if ($@) {croak($@);}
     }
 
-#	else { print {*STDERR} "in RPerl::Test::Print_00_cpp::cpp_link(), CPP already linked, DOING NOTHING\n"; }
+#	else { RPerl::diag "in RPerl::Test::Print_00_cpp::cpp_link(), CPP already linked, DOING NOTHING\n"; }
 };
 
 =DEBUG
 use Data::Dumper;
-#print {*STDERR} "in RPerl::Test::Print_00_cpp->cpp_link(), after use Inline(...), have \%INC =\n" . Dumper(\%INC) . "\n";
+#RPerl::diag "in RPerl::Test::Print_00_cpp->cpp_link(), after use Inline(...), have \%INC =\n" . Dumper(\%INC) . "\n";
 no strict;
 foreach my $entry ( keys %main:: )
 {
-	if (defined(${$entry})) { print {*STDERR} "in RPerl::Test::Print_00_cpp->cpp_link(), after use Inline(...), symtab entry '$entry' is defined scalar\n"; }
-    elsif (defined(@{$entry})) { print {*STDERR} "in RPerl::Test::Print_00_cpp->cpp_link(), after use Inline(...), symtab entry '$entry' is defined array\n"; }
-    elsif (defined(%{$entry})) { print {*STDERR} "in RPerl::Test::Print_00_cpp->cpp_link(), after use Inline(...), symtab entry '$entry' is defined hash\n"; }
-    elsif (defined(&{$entry})) { print {*STDERR} "in RPerl::Test::Print_00_cpp->cpp_link(), after use Inline(...), symtab entry '$entry' is defined sub\n"; }
-    else { print {*STDERR} "in RPerl::Test::Print_00_cpp->cpp_link(), after use Inline(...), symtab entry '$entry' is SOMETHING ELSE\n"; }
+	if (defined(${$entry})) { RPerl::diag "in RPerl::Test::Print_00_cpp->cpp_link(), after use Inline(...), symtab entry '$entry' is defined scalar\n"; }
+    elsif (defined(@{$entry})) { RPerl::diag "in RPerl::Test::Print_00_cpp->cpp_link(), after use Inline(...), symtab entry '$entry' is defined array\n"; }
+    elsif (defined(%{$entry})) { RPerl::diag "in RPerl::Test::Print_00_cpp->cpp_link(), after use Inline(...), symtab entry '$entry' is defined hash\n"; }
+    elsif (defined(&{$entry})) { RPerl::diag "in RPerl::Test::Print_00_cpp->cpp_link(), after use Inline(...), symtab entry '$entry' is defined sub\n"; }
+    else { RPerl::diag "in RPerl::Test::Print_00_cpp->cpp_link(), after use Inline(...), symtab entry '$entry' is SOMETHING ELSE\n"; }
 }
 =cut
 

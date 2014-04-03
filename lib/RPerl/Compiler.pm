@@ -32,12 +32,12 @@ our string $perl_to_cpp = sub {
 our void $cpp_to_xsbinary__compile = sub {
     ( my string $cpp_source, my string $cpp_file_name ) = @_;
 
-    print {*STDERR}
+    RPerl::diag(
         "in cpp_to_xsbinary__compile(), received \$cpp_source =\n\n"
-        . $cpp_source . "\n";
-    print {*STDERR}
+        ,$cpp_source,"\n");
+    RPerl::diag(
         q{in cpp_to_xsbinary__compile(), received $cpp_file_name = '}
-        . $cpp_file_name . "'\n";
+        . $cpp_file_name . "'\n");
 
     # save file(s)
     if ( -f $cpp_file_name ) {

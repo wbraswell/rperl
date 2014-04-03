@@ -1,12 +1,13 @@
 package RPerl::Inline;
+use RPerl;
 
 our @ARGS = (
   TYPEMAPS => "$RPerl::INCLUDE_PATH/typemap.rperl",
   # TODO: strip C++ incompat CFLAGS
   CCFLAGS => '-Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
   INC => "-I$RPerl::INCLUDE_PATH",
-  BUILD_NOISY => 1,
-  CLEAN_AFTER_BUILD => 0,
+  BUILD_NOISY => $ENV{TEST_VERBOSE},
+  CLEAN_AFTER_BUILD => 0, # cache it
   WARNINGS => 1,
   FILTERS => 'Preprocess',
   AUTO_INCLUDE => # DEV NOTE: include non-RPerl files using AUTO_INCLUDE so they are not parsed by the 'Preprocess' filter

@@ -187,7 +187,7 @@ our void $integer__hash_ref__CHECKTRACE = sub {
 our string $integer__hash_ref__stringify = sub {
     ( my $input_hv_ref ) = @_;
 
-#    print STDERR "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), top of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), top of subroutine\n" or croak();
 
     #    ::integer__hash_ref__CHECK($input_hv_ref);
     ::integer__hash_ref__CHECKTRACE( $input_hv_ref, '$input_hv_ref',
@@ -203,7 +203,7 @@ our string $integer__hash_ref__stringify = sub {
     %input_hv = %{$input_hv_ref};
 
 #	$input_hv_length = scalar keys %input_hv;
-#	print STDERR "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), have \$input_hv_length = $input_hv_length\n";
+#	RPerl::diag "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), have \$input_hv_length = $input_hv_length\n";
 
     $output_sv = '{';
 
@@ -224,8 +224,8 @@ our string $integer__hash_ref__stringify = sub {
 
     $output_sv .= '}';
 
-#    print STDERR "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
-#    print STDERR "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), bottom of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), bottom of subroutine\n" or croak();
 
     return ($output_sv);
 };
@@ -244,13 +244,13 @@ our string $integer__hash_ref__typetest0 = sub {
         $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
         $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
 
-        print STDERR
+        RPerl::diag
             "in PERLOPS_PERLTYPES integer__hash_ref__typetest0(), have lucky integer '$key' => "
             . $lucky_integer
             . ", BARSTOOL\n"
             or croak();
     }
-    print STDERR
+    RPerl::diag
         "in PERLOPS_PERLTYPES integer__hash_ref__typetest0(), bottom of subroutine\n";
 =cut
     return (
@@ -268,7 +268,7 @@ our integer__hash_ref $integer__hash_ref__typetest1 = sub {
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $temp_key = 'PERLOPS_PERLTYPES_funkey' . $i;
         $new_hash->{$temp_key} = $i * 5;
-#        print STDERR "in PERLOPS_PERLTYPES integer__hash_ref__typetest1(), setting entry '$temp_key' => " . $new_hash->{$temp_key} . ", BARSTOOL\n" or croak();
+#        RPerl::diag "in PERLOPS_PERLTYPES integer__hash_ref__typetest1(), setting entry '$temp_key' => " . $new_hash->{$temp_key} . ", BARSTOOL\n" or croak();
     }
     return ($new_hash);
 };
@@ -491,7 +491,7 @@ our void $number__hash_ref__CHECKTRACE = sub {
 our string $number__hash_ref__stringify = sub {
     ( my $input_hv_ref ) = @_;
 
-#    print STDERR "in PERLOPS_PERLTYPES number__hash_ref__stringify(), top of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES number__hash_ref__stringify(), top of subroutine\n" or croak();
 
     #    ::number__hash_ref__CHECK($input_hv_ref);
     ::number__hash_ref__CHECKTRACE( $input_hv_ref, '$input_hv_ref',
@@ -507,7 +507,7 @@ our string $number__hash_ref__stringify = sub {
     %input_hv = %{$input_hv_ref};
 
 #	$input_hv_length = scalar keys %input_hv;
-#	print STDERR "in PERLOPS_PERLTYPES number__hash_ref__stringify(), have \$input_hv_length = $input_hv_length\n";
+#	RPerl::diag "in PERLOPS_PERLTYPES number__hash_ref__stringify(), have \$input_hv_length = $input_hv_length\n";
 
     $output_sv = '{';
 
@@ -524,8 +524,8 @@ our string $number__hash_ref__stringify = sub {
 
     $output_sv .= '}';
 
-#    print STDERR "in PERLOPS_PERLTYPES number__hash_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
-#    print STDERR "in PERLOPS_PERLTYPES number__hash_ref__stringify(), bottom of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES number__hash_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES number__hash_ref__stringify(), bottom of subroutine\n" or croak();
 
     return ($output_sv);
 };
@@ -543,7 +543,7 @@ our string $number__hash_ref__typetest0 = sub {
         my $lucky_number = $lucky_numbers->{$key};
         $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
         $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-#        print STDERR "in PERLOPS_PERLTYPES number__hash_ref__typetest0(), have lucky number '$key' => " . $lucky_number . ", BARSTOOL\n" or croak();
+#        RPerl::diag "in PERLOPS_PERLTYPES number__hash_ref__typetest0(), have lucky number '$key' => " . $lucky_number . ", BARSTOOL\n" or croak();
     }
 =cut
     return (
@@ -561,7 +561,7 @@ our number__hash_ref $number__hash_ref__typetest1 = sub {
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $temp_key = 'PERLOPS_PERLTYPES_funkey' . $i;
         $new_hash->{$temp_key} = $i * 5.123456789;
-#        print STDERR "in PERLOPS_PERLTYPES number__hash_ref__typetest1(), setting entry '$temp_key' => " . $new_hash->{$temp_key} . ", BARSTOOL\n" or croak();
+#        RPerl::diag "in PERLOPS_PERLTYPES number__hash_ref__typetest1(), setting entry '$temp_key' => " . $new_hash->{$temp_key} . ", BARSTOOL\n" or croak();
     }
     return ($new_hash);
 };
@@ -784,7 +784,7 @@ our void $string__hash_ref__CHECKTRACE = sub {
 our string $string__hash_ref__stringify = sub {
     ( my $input_hv_ref ) = @_;
 
-#    print STDERR "in PERLOPS_PERLTYPES string__hash_ref__stringify(), top of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES string__hash_ref__stringify(), top of subroutine\n" or croak();
 
     #    ::string__hash_ref__CHECK($input_hv_ref);
     ::string__hash_ref__CHECKTRACE( $input_hv_ref, '$input_hv_ref',
@@ -800,7 +800,7 @@ our string $string__hash_ref__stringify = sub {
     %input_hv = %{$input_hv_ref};
 
 #	$input_hv_length = scalar keys %input_hv;
-#	print STDERR "in PERLOPS_PERLTYPES string__hash_ref__stringify(), have \$input_hv_length = $input_hv_length\n";
+#	RPerl::diag "in PERLOPS_PERLTYPES string__hash_ref__stringify(), have \$input_hv_length = $input_hv_length\n";
 
     $output_sv = '{';
 
@@ -819,8 +819,8 @@ our string $string__hash_ref__stringify = sub {
 
     $output_sv .= '}';
 
-#    print STDERR "in PERLOPS_PERLTYPES string__hash_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
-#    print STDERR "in PERLOPS_PERLTYPES string__hash_ref__stringify(), bottom of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES string__hash_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES string__hash_ref__stringify(), bottom of subroutine\n" or croak();
 
     return ($output_sv);
 };
@@ -838,7 +838,7 @@ our string $string__hash_ref__typetest0 = sub {
         my $person = $people->{$key};
         $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
         $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-#        print STDERR "in PERLOPS_PERLTYPES string__hash_ref__typetest0(), have person '$key' => '" . $person . "', STARBOOL\n" or croak();
+#        RPerl::diag "in PERLOPS_PERLTYPES string__hash_ref__typetest0(), have person '$key' => '" . $person . "', STARBOOL\n" or croak();
     }
 =cut
     return ( string__hash_ref__stringify($people) . 'PERLOPS_PERLTYPES' );
@@ -854,7 +854,7 @@ our string__hash_ref $string__hash_ref__typetest1 = sub {
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $people->{ 'PERLOPS_PERLTYPES_Luker_key' . $i }
             = q{Jeffy Ten! } . $i . q{/} . ( $my_size - 1 );
-#        print STDERR "in PERLOPS_PERLTYPES string__hash_ref__typetest1(), bottom of for() loop, have i = $i, just set another Jeffy!\n" or croak();
+#        RPerl::diag "in PERLOPS_PERLTYPES string__hash_ref__typetest1(), bottom of for() loop, have i = $i, just set another Jeffy!\n" or croak();
     }
     return ($people);
 };

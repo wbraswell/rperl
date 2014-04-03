@@ -7,33 +7,32 @@ use RPerl::CompileUnit::Module::Class;  use RPerl;
 
 our void__method $cpp_load = sub {
 ;	
-	if (defined($RPerl::DataType::Integer_cpp::CPP_LOADED)) { print STDERR "in Integer_cpp::cpp_load(), have \$RPerl::DataType::Integer_cpp::CPP_LOADED = '" . $RPerl::DataType::Integer_cpp::CPP_LOADED . "'\n"; }
-		else { print STDERR "in Integer_cpp::cpp_load(), have \$RPerl::DataType::Integer_cpp::CPP_LOADED = 'UNDEF'\n"; }
+	if (defined($RPerl::DataType::Integer_cpp::CPP_LOADED)) { RPerl::diag "in Integer_cpp::cpp_load(), have \$RPerl::DataType::Integer_cpp::CPP_LOADED = '" . $RPerl::DataType::Integer_cpp::CPP_LOADED . "'\n"; }
+		else { RPerl::diag "in Integer_cpp::cpp_load(), have \$RPerl::DataType::Integer_cpp::CPP_LOADED = 'UNDEF'\n"; }
 	if (not(defined($RPerl::DataType::Integer_cpp::CPP_LOADED)) or not($RPerl::DataType::Integer_cpp::CPP_LOADED))
 	{
 		my $eval_string = <<"EOF";
 package main;
-
-BEGIN { print STDERR "[[[ BEGIN 'use Inline' STAGE for 'RPerl/DataType/Integer.cpp' ]]]\n"x3; }
 use RPerl::Inline;
+BEGIN { RPerl::diag "[[[ BEGIN 'use Inline' STAGE for 'RPerl/DataType/Integer.cpp' ]]]\n"x3; }
 use Inline (CPP => "$RPerl::INCLUDE_PATH/RPerl/DataType/Integer.cpp", \@RPerl::Inline::ARGS);
-print STDERR "[[[ END 'use Inline' STAGE for 'RPerl/DataType/Integer.cpp' ]]]\n"x3;
+RPerl::diag "[[[ END 'use Inline' STAGE for 'RPerl/DataType/Integer.cpp' ]]]\n"x3;
 1;
 EOF
-		print STDERR "in Integer_cpp::cpp_load(), CPP not yet loaded, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
+		RPerl::diag "in Integer_cpp::cpp_load(), CPP not yet loaded, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
 
 		eval($eval_string);  ## no critic
 		die($@) if ($@);
 		
 		$RPerl::DataType::Integer_cpp::CPP_LOADED = 1;
 	}
-	else { print STDERR "in Integer_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"; }
+	else { RPerl::diag "in Integer_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"; }
 };
 
 our void__method $cpp_link = sub {
 ;
-#	if (defined($RPerl::DataType::Integer_cpp::CPP_LINKED)) { print STDERR "in Integer_cpp::cpp_link(), have \$RPerl::DataType::Integer_cpp::CPP_LINKED = '" . $RPerl::DataType::Integer_cpp::CPP_LINKED . "'\n"; }
-#		else { print STDERR "in Integer_cpp::cpp_link(), have \$RPerl::DataType::Integer_cpp::CPP_LINKED = 'UNDEF'\n"; }
+#	if (defined($RPerl::DataType::Integer_cpp::CPP_LINKED)) { RPerl::diag "in Integer_cpp::cpp_link(), have \$RPerl::DataType::Integer_cpp::CPP_LINKED = '" . $RPerl::DataType::Integer_cpp::CPP_LINKED . "'\n"; }
+#		else { RPerl::diag "in Integer_cpp::cpp_link(), have \$RPerl::DataType::Integer_cpp::CPP_LINKED = 'UNDEF'\n"; }
 	if (not(defined($RPerl::DataType::Integer_cpp::CPP_LINKED)) or not($RPerl::DataType::Integer_cpp::CPP_LINKED))
 	{
 		my $eval_string = <<'EOF';
@@ -44,12 +43,12 @@ $CPP_LINKED = 1;
 #our @ISA = ('main::CPP__RPerl__DataType__Integer', 'RPerl::DataType');
 1;
 EOF
-#		print STDERR "in Integer_cpp::cpp_link(), CPP not yet linked, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
+#		RPerl::diag "in Integer_cpp::cpp_link(), CPP not yet linked, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
 
 		eval($eval_string);  ## no critic
 		die($@) if ($@);
 	}
-#	else { print STDERR "in Integer_cpp::cpp_link(), CPP already linked, DOING NOTHING\n"; }
+#	else { RPerl::diag "in Integer_cpp::cpp_link(), CPP already linked, DOING NOTHING\n"; }
 };
 
 package RPerl::DataType::Integer_cpp;

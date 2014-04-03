@@ -15,7 +15,7 @@ use RPerl::DataStructure::Hash::SubTypes;
 
 # for type-checking via SvIOKp(), SvNOKp(), and SvPOKp(); inside INIT to delay until after 'use MyConfig'
 INIT {
-    print STDERR "in Hash.pm, loading C++ helper functions for type-checking...\n"
+    RPerl::diag "in Hash.pm, loading C++ helper functions for type-checking...\n"
         or croak();
 }
 INIT {

@@ -89,14 +89,14 @@ our string $number__stringify = sub {
     #    number__CHECK($input_number);
     number__CHECKTRACE( $input_number, '$input_number',
         'number__stringify()' );
-#    print STDERR "in PERLOPS_PERLTYPES number__stringify(), bottom of subroutine, received \$input_number = $input_number\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES number__stringify(), bottom of subroutine, received \$input_number = $input_number\n" or croak();
     return ("$input_number");
 };
 
 # [[[ TYPE TESTING ]]]
 our number $number__typetest0 = sub {
     my number $retval = ( 22 / 7 ) + $number__OPS_TYPES_ID; # return floating-point number value
-#    print STDERR "in PERLOPS_PERLTYPES number__typetest0(), have \$retval = $retval\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES number__typetest0(), have \$retval = $retval\n" or croak();
     return ($retval);
 };
 our number $number__typetest1 = sub {
@@ -105,7 +105,7 @@ our number $number__typetest1 = sub {
     #    number__CHECK($lucky_number);
     number__CHECKTRACE( $lucky_number, '$lucky_number',
         'number__typetest1()' );
-#    print STDERR 'in PERLOPS_PERLTYPES number__typetest1(), received $lucky_number = ' . number__stringify($lucky_number) . "\n" or croak();
+#    RPerl::diag 'in PERLOPS_PERLTYPES number__typetest1(), received $lucky_number = ' . number__stringify($lucky_number) . "\n" or croak();
     return ( ( $lucky_number * 2 ) + $number__OPS_TYPES_ID );
 };
 

@@ -11,11 +11,8 @@ my $ERROR_MAX = 0.00000001; ## no critic qw(ProhibitMagicNumbers)  ## RPERL allo
 
 #$SIG{__WARN__}=sub {cluck $_[0]};  # DEBUGGING
 
-BEGIN {
-    diag("\n[[[ Beginning Inline::C Pre-Test Loading ]]]\n ");
-}
-
-diag("\n[[[ Beginning Selection Of Tests From The Inline::C Cookbook ]]]\n ");
+BEGIN{ diag("[[[ Beginning Inline::C Pre-Test Loading ]]]") if $ENV{TEST_VERBOSE}; }
+diag("[[[ Beginning Selection Of Tests From The Inline::C Cookbook ]]]") if $ENV{TEST_VERBOSE};
 
 # Inline::C examples from:  http://search.cpan.org/~sisyphus/Inline-0.53/C/C-Cookbook.pod
 # Note: I excluded the Inline::C examples which required reading files, loading 3rd-party libraries, and other weirdness not suitable for testing.

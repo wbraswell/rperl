@@ -61,13 +61,13 @@ package rperltypes;
 #our void $types_input_enable = sub { (my $types_input) = @_;  # NEED FIX: RPerl typed functions not working in types.pm, must call as normal Perl function
 sub types_enable { (my $types_input) = @_;
 ;
-#	print STDERR "in rperltypes::types_enable(), received \$types_input = '$types_input'\n";
+#	RPerl::diag "in rperltypes::types_enable(), received \$types_input = '$types_input'\n";
 	
 	my string $rperltypes_h_filename = $RPerl::INCLUDE_PATH . '/rperltypes_mode.h';
 #	my bool $rperltypes_h_modified = 0;
 	my integer $rperltypes_h_modified = 0;
 	
-#	print STDERR "in rperltypes::types_enable(), have \$rperltypes_h_filename = '$rperltypes_h_filename'\n";
+#	RPerl::diag "in rperltypes::types_enable(), have \$rperltypes_h_filename = '$rperltypes_h_filename'\n";
 	
 	open(my $TYPES_H_FILEHANDLE_IN,'<', $rperltypes_h_filename) or die("Can't read rperltypes_mode.h input file: $!, dying");
 	open(my $TYPES_H_FILEHANDLE_OUT,'>', ($rperltypes_h_filename . '.swap')) or die("Can't write rperltypes_mode.h.swap output file: $!, dying");
@@ -76,28 +76,28 @@ sub types_enable { (my $types_input) = @_;
 	{
 		my string $types_current;
 	
-#		print STDERR "in rperltypes::types_enable(), have \$line_current =\n$line_current";
+#		RPerl::diag "in rperltypes::types_enable(), have \$line_current =\n$line_current";
 		if ($line_current =~ /\#\s*define\s+\_\_(\w+)\_\_TYPES/)
 		{
 			$types_current = $1;
-#			print STDERR "in rperltypes::types_enable(), FOUND $types_current TYPES DEFINITION\n";
+#			RPerl::diag "in rperltypes::types_enable(), FOUND $types_current TYPES DEFINITION\n";
 			
 			if ($line_current =~ /^\s*\/\//)
 			{
-#				print STDERR "in rperltypes::types_enable(), FOUND $types_current TYPES DISABLED\n";
+#				RPerl::diag "in rperltypes::types_enable(), FOUND $types_current TYPES DISABLED\n";
 				if ($types_current eq $types_input)
 				{
-#					print STDERR "in rperltypes::types_enable(), ENABLE $types_current TYPES\n";
+#					RPerl::diag "in rperltypes::types_enable(), ENABLE $types_current TYPES\n";
 					$line_current =~ s/\/\///;  # remove first occurence of // comment
 					$rperltypes_h_modified = 1;
 				}
 			}
 			elsif ($line_current =~ /^\s*\#\s*define/)
 			{
-#				print STDERR "in rperltypes::types_enable(), FOUND $types_current TYPES ENABLED\n";
+#				RPerl::diag "in rperltypes::types_enable(), FOUND $types_current TYPES ENABLED\n";
 				if ($types_current ne $types_input)
 				{
-#					print STDERR "in rperltypes::types_enable(), DISABLE $types_current TYPES\n";
+#					RPerl::diag "in rperltypes::types_enable(), DISABLE $types_current TYPES\n";
 					$line_current = '//' . $line_current;
 					$rperltypes_h_modified = 1;
 				}

@@ -17,9 +17,7 @@ use Carp;
 my $ERROR_MAX = 0.00000001;
 
 BEGIN {
-    diag(
-        "\n[[[ Beginning Scalar Type Pre-Test Loading, RPerl Type System ]]]\n "
-    );
+    diag("[[[ Beginning Scalar Type Pre-Test Loading, RPerl Type System ]]]") if $ENV{TEST_VERBOSE};
 }
 
 BEGIN {
@@ -79,8 +77,7 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
     if ( $OPS_TYPES_ID == 0 ) {
         $OPS_TYPES = 'PERLOPS_PERLTYPES';
         diag(
-            "\n[[[ Beginning RPerl's Pure-Perl Scalar Type Tests, RPerl Type System Using Perl Data Types & Perl Operations ]]]\n "
-        );
+          "[[[ Beginning RPerl's Pure-Perl Scalar Type Tests, RPerl Type System Using Perl Data Types & Perl Operations ]]]")  if $ENV{TEST_VERBOSE};
         lives_and(
             sub {
                 is( integer__ops(), 'PERL',
@@ -130,8 +127,8 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
     elsif ( $OPS_TYPES_ID == 1 ) {
         $OPS_TYPES = 'CPPOPS_PERLTYPES';
         diag(
-            "\n[[[ Beginning RPerl's Perl-Data Mode Scalar Type Tests, RPerl Type System Using Perl Data Types & C++ Operations ]]]\n "
-        );
+            "[[[ Beginning RPerl's Perl-Data Mode Scalar Type Tests, RPerl Type System Using Perl Data Types & C++ Operations ]]]"
+        ) if $ENV{TEST_VERBOSE};
 
 #		lives_ok(sub { types_enable('PERL') }, q{types_enable('PERL') lives});  # NEED FIX?  RPerl typed functions not working in types.pm, must call as normal Perl function
         lives_ok(
@@ -244,8 +241,7 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
     else {
         $OPS_TYPES = 'CPPOPS_CPPTYPES';
         diag(
-            "\n[[[ Beginning RPerl's C-Data Mode Scalar Type Tests, RPerl Type System Using C++ Data Types & C++ Operations ]]]\n "
-        );
+            "[[[ Beginning RPerl's C-Data Mode Scalar Type Tests, RPerl Type System Using C++ Data Types & C++ Operations ]]]") if $ENV{TEST_VERBOSE};
         lives_ok(
             sub { rperltypes::types_enable('CPP') },
             q{rperltypes::types_enable('CPP') lives}

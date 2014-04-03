@@ -10,10 +10,10 @@ use English qw(-no_match_vars);
 my $ERROR_MAX = 0.00000001; ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
 
 BEGIN {
-    diag("\n[[[ Beginning Inline::CPP Pre-Test Loading ]]]\n ");
+    diag("[[[ Beginning Inline::CPP Pre-Test Loading ]]]") if $ENV{TEST_VERBOSE};
 }
 
-diag("\n[[[ Beginning Entirety Of Tests From The Inline::CPP POD ]]]\n ");
+diag("[[[ Beginning Entirety Of Tests From The Inline::CPP POD ]]]") if $ENV{TEST_VERBOSE};
 
 # Inline::CPP examples from:  http://search.cpan.org/~davido/Inline-CPP-0.44/lib/Inline/CPP.pod
 # Note: I did not exclude any Inline::CPP examples, they are all suitable for testing.

@@ -39,7 +39,7 @@ END
 sub validate {
     my $o = shift;
 
-    print STDERR "validate Stage\n" if $o->{CONFIG}{BUILD_NOISY};
+    RPerl::diag "validate Stage\n" if $o->{CONFIG}{BUILD_NOISY};
     $o->{ILSM} ||= {};
     $o->{ILSM}{XS} ||= {};
     $o->{ILSM}{MAKEFILE} ||= {};
@@ -332,7 +332,7 @@ sub call {
     my ($o, $method, $header, $indent) = (@_, 0);
     my $time;
     my $i = ' ' x $indent;
-    print STDERR "${i}Starting $header Stage\n" if $o->{CONFIG}{BUILD_NOISY};
+    RPerl::diag "${i}Starting $header Stage\n" if $o->{CONFIG}{BUILD_NOISY};
     $time = Time::HiRes::time()
       if $o->{CONFIG}{BUILD_TIMERS};
 
@@ -340,10 +340,10 @@ sub call {
 
     $time = Time::HiRes::time() - $time
       if $o->{CONFIG}{BUILD_TIMERS};
-    print STDERR "${i}Finished $header Stage\n" if $o->{CONFIG}{BUILD_NOISY};
+    RPerl::diag "${i}Finished $header Stage\n" if $o->{CONFIG}{BUILD_NOISY};
     printf STDERR "${i}Time for $header Stage: %5.4f secs\n", $time
       if $o->{CONFIG}{BUILD_TIMERS};
-    print STDERR "\n" if $o->{CONFIG}{BUILD_NOISY};
+    RPerl::diag "\n" if $o->{CONFIG}{BUILD_NOISY};
 }
 
 #==============================================================================
@@ -388,7 +388,7 @@ sub get_parser {
 sub get_maps {
     my $o = shift;
 
-    print STDERR "get_maps Stage\n" if $o->{CONFIG}{BUILD_NOISY};
+    RPerl::diag "get_maps Stage\n" if $o->{CONFIG}{BUILD_NOISY};
     my $typemap = '';
     my $file;
     $file = File::Spec->catfile($Config::Config{installprivlib},"ExtUtils","typemap");

@@ -31,6 +31,11 @@ sub DUMPER
 }
 =cut
 
+sub diag {
+  print STDERR @_ if $ENV{TEST_VERBOSE};
+  1
+}
+
 # <<<=== INCREASE RUNTIME PERFORMANCE ===>>>
 
 # parse

@@ -6,7 +6,7 @@ our $VERSION = 0.001_000;
 use Test::More; # tests => 14;
 use Test::Exception;
 
-BEGIN { diag("\n[[[ Beginning Dependency Tests ]]]\n "); }
+diag("\n[[[ Beginning Dependency Tests ]]]\n ") if $ENV{TEST_VERBOSE};
 
 BEGIN {
     lives_and( sub { use_ok('Data::Dumper'); },

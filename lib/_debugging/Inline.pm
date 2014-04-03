@@ -224,7 +224,7 @@ sub END {
 #==============================================================================
 sub print_version {
     return if $version_printed++;
-    print STDERR <<END;
+    RPerl::diag <<END;
 
     You are using Inline.pm version $Inline::VERSION
 
@@ -1276,7 +1276,7 @@ sub reportbug {
     use strict;
     my $o = shift;
     return if $o->{INLINE}{reportbug_handled}++;
-    print STDERR <<END;
+    RPerl::diag <<END;
 <-----------------------REPORTBUG Section------------------------------------->
 
 REPORTBUG mode in effect.
@@ -1334,20 +1334,20 @@ sub print_info {
     use strict;
     my $o = shift;
 
-    print STDERR <<END;
+    RPerl::diag <<END;
 <-----------------------Information Section----------------------------------->
 
 Information about the processing of your Inline $o->{API}{language_id} code:
 
 END
 
-    print STDERR <<END if ($o->{INLINE}{object_ready});
+    RPerl::diag <<END if ($o->{INLINE}{object_ready});
 Your module is already compiled. It is located at:
 $o->{API}{location}
 
 END
 
-    print STDERR <<END if ($o->{INLINE}{object_ready} and $o->{CONFIG}{FORCE_BUILD});
+    RPerl::diag <<END if ($o->{INLINE}{object_ready} and $o->{CONFIG}{FORCE_BUILD});
 But the FORCE_BUILD option is set, so your code will be recompiled.
 I\'ll use this build directory:
 $o->{API}{build_dir}
@@ -1356,7 +1356,7 @@ and I\'ll install the executable as:
 $o->{API}{location}
 
 END
-    print STDERR <<END if (not $o->{INLINE}{object_ready});
+    RPerl::diag <<END if (not $o->{INLINE}{object_ready});
 Your source code needs to be compiled. I\'ll use this build directory:
 $o->{API}{build_dir}
 
@@ -1366,11 +1366,11 @@ $o->{API}{location}
 END
 
     eval {
-	print STDERR $o->info;
+	RPerl::diag $o->info;
     };
     print $@ if $@;
 
-    print STDERR <<END;
+    RPerl::diag <<END;
 
 <-----------------------End of Information Section---------------------------->
 END
