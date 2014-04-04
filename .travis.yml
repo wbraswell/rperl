@@ -1,12 +1,13 @@
 language: perl
 perl:
-  - "5.18"
-  - "5.16"
-# NEED FIX: Perl v5.14 compiler errors, temporarily disable
-#  - "5.14"
-  - "5.12"
+# NEED FIX? Perl v5.8 $CPP_LINKED global symbol errors, leave disabled?
+#  - "5.8"
   - "5.10"
-  - "5.8"
+  - "5.12"
+# NEED FIX: Perl v5.14 compiler errors, temporarily disable?
+  - "5.14"
+  - "5.16"
+  - "5.18"
 
 notifications:
   irc:
