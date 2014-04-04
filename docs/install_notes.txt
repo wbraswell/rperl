@@ -1,6 +1,6 @@
 # RPerl v1.0 Beta, Install Notes
 # Single-User Installation (Not System-Wide Installation)
-# Last Updated April 1st, 2014
+# Last Updated April 4th, 2014
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # IMPORTANT WARNING: ONLY USE STEP 1A OR 1B, NOT BOTH
@@ -65,6 +65,9 @@ $ cpanm --installdeps .  # note the dot at the end of this command
 # STEP 3.
 # RUN RPERL SYSTEM TESTS
 ################################################################################
+
+# automatically confirm all tests pass, without compiler output
+$ rm -Rf _Inline/; reset; make test
 
 # manually confirm all tests pass, with compiler output
 $ rm -Rf _Inline/; reset; perl -Ilib bin/test_suite.pl
