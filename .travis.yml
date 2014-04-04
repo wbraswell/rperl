@@ -12,5 +12,14 @@ notifications:
   irc:
     channels:
       - "irc.perl.org#perl11"
-    on_success: never
+    on_success: always
     on_failure: always
+    # to enable skip_join, in IRC channel first execute `/mode -n`
+    skip_join: true
+    template:
+      - "RPerl Commit, %{author}, %{message}, %{build_url}"
+
+    # DEFAULT TEMPLATE
+#      - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
+#      - "Change view : %{compare_url}"
+#      - "Build details : %{build_url}"
