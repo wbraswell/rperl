@@ -5,3 +5,5 @@ perl:
 # NEED FIX: Perl v5.14 compiler errors, temporarily disable
 #  - "5.14"
   - "5.12"
+  - "5.10"
+  - "5.8"
