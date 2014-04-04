@@ -387,9 +387,9 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         q{TIV08 integer__stringify(-1_234_567_890) lives}
     );
     throws_ok(                                               # TIV09
-        sub { integer__stringify(-1_234_567_890_000_000_000) },
+        sub { integer__stringify(-1_234_567_890_000_000_000_000_000_000_000_000) },
         "/EIV01.*$OPS_TYPES/",
-        q{TIV09 integer__stringify(-1_234_567_890_000_000_000) throws correct exception}
+        q{TIV09 integer__stringify(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
     );
     lives_and(                                               # TIV10
         sub {
@@ -459,9 +459,9 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         q{TIV28 integer__typetest1(-234_567_890) lives}
     );
     throws_ok(    # TIV29
-        sub { integer__typetest1(-1_234_567_890_000_000_000) },
+        sub { integer__typetest1(-1_234_567_890_000_000_000_000_000_000_000_000) },
         "/EIV01.*$OPS_TYPES/",
-        q{TIV29 integer__typetest1(-1_234_567_890_000_000_000) throws correct exception}
+        q{TIV29 integer__typetest1(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
     );
 
     # [[[ NUMBER TESTS ]]]
