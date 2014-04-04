@@ -309,6 +309,11 @@ void CPP__RPerl__Algorithm__Sort__Bubble::integer__sort()
 ////};
 }
 
+void CPP__RPerl__Algorithm__Sort__Bubble::number__sort()
+{
+	this->number__data = number__bubblesort(this->number__data);
+}
+
 ////# [[[ PROCEDURAL SUBROUTINES ]]]
 ////# [[[ PROCEDURAL SUBROUTINES ]]]
 ////# [[[ PROCEDURAL SUBROUTINES ]]]
