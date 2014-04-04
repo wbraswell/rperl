@@ -17,7 +17,7 @@ notifications:
     # to enable skip_join, in IRC channel first execute `/mode -n`
     skip_join: true
     template:
-      - "RPerl Commit, %{author}, %{message}, %{build_url}"
+      - "RPerl Commit By %{author}. %{message} %{build_url}"
 
     # DEFAULT TEMPLATE
 #      - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
