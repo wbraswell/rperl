@@ -7,3 +7,10 @@ perl:
   - "5.12"
   - "5.10"
   - "5.8"
+
+notifications:
+  irc:
+    channels:
+      - "irc.perl.org#perl11"
+    on_success: never
+    on_failure: always
