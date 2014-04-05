@@ -10,7 +10,7 @@ use RPerl;
 ## no critic qw(ProhibitBooleanGrep)  ## RPERL SYSTEM allow grep through $modes_supported
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  ## RPERL USER DEFAULT optionally allow numeric values, print operator
 # RPERL DRIVER BOILERPLATE
-BEGIN { package main; our $RPERL_INCLUDE_PATH = 'lib'; } # NEED REMOVE hard-coded path
+BEGIN { package main; our $RPERL_INCLUDE_PATH = 'blib/lib'; } # NEED REMOVE hard-coded path
 
 BEGIN {
     #    use RPerl;   # NEED FIX: moved into proper RPerl header above

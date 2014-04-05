@@ -100,14 +100,14 @@ our object $perl_to_ppi__parse = sub {
     # [[[ CHECK PERL SYNTAX ]]]
 
     my string $rperl_source__perl_syntax_command
-        = q{perl -Ilib -M'warnings FATAL=>q(all)' -cW }
+        = q{perl -Iblib/lib -M'warnings FATAL=>q(all)' -cW }
         . $rperl_source__file_name;
     my string $rperl_source__perl_syntax_command__no_output
         = $rperl_source__perl_syntax_command . ' > /dev/null 2> /dev/null';
     my string $rperl_source__perl_syntax_command__all_output
         = $rperl_source__perl_syntax_command . ' 2>&1';
 
-#my string $rperl_source__perl_syntax_command = q{perl -Ilib -cW } . $rperl_source__file_name;
+#my string $rperl_source__perl_syntax_command = q{perl -Iblib/lib -cW } . $rperl_source__file_name;
 
     print {*STDERR}
         "in perl_to_ppi__parse(), have \$rperl_source__perl_syntax_command =\n$rperl_source__perl_syntax_command\n"
