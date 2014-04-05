@@ -1,10 +1,11 @@
 package RPerl::Inline;
 use RPerl;
+use Config;
 
 our @ARGS = (
   TYPEMAPS => "$RPerl::INCLUDE_PATH/typemap.rperl",
   # TODO: strip C++ incompat CFLAGS
-  CCFLAGS => '-Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
+  CCFLAGS => $Config{ccflags} . ' -DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
   INC => "-I$RPerl::INCLUDE_PATH",
   BUILD_NOISY => $ENV{TEST_VERBOSE},
   CLEAN_AFTER_BUILD => 0, # cache it
