@@ -15,7 +15,7 @@ $ mv ~/perl5 ~/perl5.old  # disable any previous local::lib or Perlbrew
 $ perl -v  # NOTE! the version of Perl determines whether you take step 1a or 1b
 
 ################################################################################
-# STEP 1A.  ONLY FOR PERL v5.10, v5.12(?), v5.16 & v5.18 - NOT v5.14!
+# STEP 1A.  ONLY FOR NORMAL OPERATING SYSTEMS, NOT DEBIAN WITH BROKEN PERL v5.14
 # INSTALL LOCAL::LIB & CPANMINUS
 ################################################################################
 
@@ -28,7 +28,7 @@ $ . ~/.bashrc;  set | grep perl5  # note the dot at the start of this command
 # PERL_MM_OPT, PERL_MB_OPT, PERL5LIB, PATH
 
 ################################################################################
-# STEP 1B.  ONLY FOR PERL v5.14! (ALSO v5.8 & OLDER???)
+# STEP 1B.  ONLY FOR DEBIAN WITH BROKEN PERL v5.14 AND ANYBODY WITH PERL v5.8
 # INSTALL PERLBREW & CPANMINUS
 ################################################################################
 
@@ -62,6 +62,9 @@ $ wget https://github.com/wbraswell/rperl/archive/master.zip;  unzip master.zip
 $ cd rperl*
 $ perl Makefile.PL
 $ cpanm --installdeps .  # note the dot at the end of this command
+
+# WINDOWS USERS ONLY
+# Enable Write Permissions For blib/lib/ Directory
 
 ################################################################################
 # STEP 3.

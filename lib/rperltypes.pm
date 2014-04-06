@@ -104,6 +104,7 @@ sub types_enable { (my $types_input) = @_;
 			}
 			else
 			{
+				close($TYPES_H_FILEHANDLE_IN);
 				close($TYPES_H_FILEHANDLE_OUT);
 				die('Found invalid __$types_current__TYPES definition in rperltypes_mode.h, neither properly disabled nor enabled, dying');
 			}
@@ -111,6 +112,7 @@ sub types_enable { (my $types_input) = @_;
 		print $TYPES_H_FILEHANDLE_OUT $line_current;  # WRITE DATA BACK TO FILE
 	}
 
+	close($TYPES_H_FILEHANDLE_IN);
 	close($TYPES_H_FILEHANDLE_OUT);
 	
 	if ($rperltypes_h_modified)

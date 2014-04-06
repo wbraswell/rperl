@@ -20,6 +20,7 @@ diag("[[[ Beginning Entirety Of Tests From The Inline::CPP POD ]]]") if $ENV{TES
 
 # class Farmer, AKA "Farmer Bob"
 my $farmer_define_eval_string = <<'EOF';
+use Inline CPP => Config => CCFLAGSEX => '-DNO_XSLOCKS';
 use Inline CPP => <<'END_OF_CPP_CODE';
 class Farmer {
 	public:
@@ -91,6 +92,7 @@ lives_and(
 
 # class Airplane, AKA "Plane and Simple"
 my $airplane_define_eval_string = <<'EOF';
+use Inline CPP => Config => CCFLAGSEX => '-DNO_XSLOCKS';
 use Inline CPP => <<'END_OF_CPP_CODE';
 using namespace std;
 #include <sstream>
@@ -175,6 +177,7 @@ sub average {
 	}
 	return $average;
 }
+use Inline CPP => Config => CCFLAGSEX => '-DNO_XSLOCKS';
 use Inline CPP => <<'END_OF_CPP_CODE';
 double avg(...) {
 	Inline_Stack_Vars;
@@ -242,6 +245,7 @@ lives_and(
 
 # classes Queue and Stack, AKA "Stacks and Queues"
 my $queuestack_define_eval_string = <<'EOF';
+use Inline CPP => Config => CCFLAGSEX => '-DNO_XSLOCKS';
 use Inline CPP => <<'END_OF_CPP_CODE';
 class Queue {
 	public:
@@ -329,6 +333,7 @@ lives_and(
 
 # multiadd(), AKA "Elipses Revisited (and Overloading or Templates)"
 my $multiadd_define_eval_string = <<'EOF';
+use Inline CPP => Config => CCFLAGSEX => '-DNO_XSLOCKS';
 use Inline CPP => <<'END_OF_CPP_CODE';
 #include <stdexcept>
 // Inline::CPP won't create predictable bindings to overloaded functions.
