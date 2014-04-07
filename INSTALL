@@ -1,6 +1,6 @@
 # RPerl v1.0 Beta, Install Notes
 # Single-User Installation (Not System-Wide Installation)
-# Last Updated April 5th, 2014
+# Last Updated April 7th, 2014
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # IMPORTANT WARNING: ONLY USE STEP 1A OR 1B, NOT BOTH
@@ -28,11 +28,13 @@ $ . ~/.bashrc;  set | grep perl5  # note the dot at the start of this command
 # PERL_MM_OPT, PERL_MB_OPT, PERL5LIB, PATH
 
 ################################################################################
-# STEP 1B.  ONLY FOR DEBIAN WITH BROKEN PERL v5.14 AND ANYBODY WITH PERL v5.8
+# STEP 1B.  ONLY FOR DEBIAN WITH BROKEN PERL v5.14 AND ANYBODY WITH PERL <=v5.8
 # INSTALL PERLBREW & CPANMINUS
 ################################################################################
 
 $ sudo apt-get install perlbrew
+# OR
+$ yum install perlbrew
 # OR
 $ curl -L http://install.perlbrew.pl | bash
 
