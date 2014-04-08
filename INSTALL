@@ -65,9 +65,6 @@ $ cd rperl*
 $ perl Makefile.PL
 $ cpanm --installdeps .  # note the dot at the end of this command
 
-# WINDOWS USERS ONLY
-# Remove Read-Only Setting On Directory blib/lib/ And All Files Therein
-
 ################################################################################
 # STEP 3.
 # RUN RPERL SYSTEM TESTS
