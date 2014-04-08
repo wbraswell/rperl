@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-our $VERSION = 0.001_010;
+our $VERSION = 0.001_020;
 use ExtUtils::MakeMaker;
 push(@ExtUtils::MakeMaker::Overridable, qw(pm_to_blib)) if ($^O eq 'MSWin32');
 
@@ -26,7 +26,7 @@ package MY;
 sub pm_to_blib {
     my $self = shift;
     my $blib = $self->SUPER::pm_to_blib(@_);
-    #un-read-only blib/lib for tests to pass, files are modified at runtime there
+    # un-read-only blib/lib for tests to pass, files are modified at runtime there
     if ($^O eq 'MSWin32') {
 	my ($lastline,$start) =  qq{\t\$(NOECHO) \$(TOUCH) pm_to_blib\n};
 	($start = index($blib, $lastline)) == -1
@@ -34,4 +34,9 @@ sub pm_to_blib {
 	substr($blib, $start, 0, "\t".'attrib -R /S  blib/lib/*'."\n");
     }
     return $blib;
+}
+
+# NEED UPGRADE: disable `make install` for now, enable when appropriate
+sub install {
+    return '';
 }
