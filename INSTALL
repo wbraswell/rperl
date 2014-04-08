@@ -34,8 +34,6 @@ $ . ~/.bashrc;  set | grep perl5  # note the dot at the start of this command
 
 $ sudo apt-get install perlbrew
 # OR
-$ yum install perlbrew
-# OR
 $ curl -L http://install.perlbrew.pl | bash
 
 $ perlbrew init
