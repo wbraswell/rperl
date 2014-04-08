@@ -1,9 +1,9 @@
 # RPerl v1.0 Beta, Install Notes
 # Single-User Installation (Not System-Wide Installation)
-# Last Updated April 7th, 2014
+# Last Updated April 8th, 2014
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# IMPORTANT WARNING: ONLY USE STEP 1A OR 1B, NOT BOTH
+# IMPORTANT WARNING: ONLY USE ONE OF STEP 1A, 1B, OR 1C - NOT ALL THREE
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ################################################################################
@@ -49,6 +49,15 @@ $ . ~/.bashrc;  set | grep perl5  # note the dot at the start of this command
 $ perlbrew install perl-5.18.2
 $ perlbrew use perl-5.18.2
 $ perlbrew install-cpanm
+
+################################################################################
+# STEP 1C.  ONLY FOR WINDOWS
+# INSTALL UPDATED GCC COMPILER
+################################################################################
+
+# RPerl on Windows has currently been tested with the Mingw64 GCC v4.8 compiler.
+# The Mingw64 GCC v4.6 and older compilers are not compatible.
+# As of April 2014, no versions of Strawberry Perl ship with a 4.8 series GCC.
 
 ################################################################################
 # STEP 2.
