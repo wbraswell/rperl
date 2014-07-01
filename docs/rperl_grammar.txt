@@ -1,9 +1,9 @@
 cCOMPILE_UNIT ::=			PROGRAM | MODULE+
-cPROGRAM ::=				hashbang_perl RPERL_HEADER SUBROUTINE* OPERATION+
-cMODULE ::=					PACKAGE | OO_CLASS
-cPACKAGE ::=				package _word scolon RPERL_HEADER SUBROUTINE+ _number_one scolon
- RPERL_HEADER ::=			use strict scolon use warnings scolon our dollar VERSION equal _version scolon use carp scolon use rperl scolon INCLUDE* CONSTANT*
--INCLUDE ::=				use _word scolon | use _word qw lparen _word+ rparen scolon
+cPROGRAM ::=				shebang HEADER SUBROUTINE* OPERATION+
+cMODULE ::=					PACKAGE | CLASS
+cPACKAGE ::=				package _scoped_word scolon HEADER SUBROUTINE+ _number_one scolon
+ HEADER ::=					use strict scolon use warnings scolon our dollar VERSION equal _version scolon use carp scolon use rperl scolon INCLUDE* CONSTANT*
+-INCLUDE ::=				use _scoped_word scolon | use _scoped_word qw lparen _word+ rparen scolon
 -CONSTANT ::=				use constant _word fat_arrow CONSTANT_VALUE scolon
  CONSTANT_VALUE ::=			_literal | lbracket _literal (comma _literal)* rbracket | lbrace _word fat_arrow _literal (comma _word fat_arrow _literal)* rbrace
 cSUBROUTINE ::=				our _type _variable_symbol equal sub lbrace SUBROUTINE_ARGUMENTS? OPERATION+ rbrace scolon
@@ -13,7 +13,7 @@ cOPERATION ::=				EXPRESSION scolon | STATEMENT
 cOPERATOR ::=				_operator_name LIST_ELEMENTS? | _operator_name lparen LIST_ELEMENTS? rparen | EXPRESSION _operator_name EXPRESSION | VARIABLE _operator_name
 cOPERATOR_VOID ::=			_operator_void_name LIST_ELEMENTS? scolon | _operator_void_name lparen LIST_ELEMENTS? rparen scolon
 cEXPRESSION ::=				_literal | VARIABLE | lbracket LIST_ELEMENTS? rbracket | lbrace HASH_ENTRIES? rbrace 
-							| OPERATOR | _word lparen LIST_ELEMENTS? rparen | VARIABLE thin_arrow _word lparen LIST_ELEMENTS? rparen | lparen EXPRESSION rparen
+							| OPERATOR | _scoped_word lparen LIST_ELEMENTS? rparen | VARIABLE thin_arrow _word lparen LIST_ELEMENTS? rparen | lparen EXPRESSION rparen
 cSTATEMENT ::=				CONDITIONAL | (_loop_label colon)? LOOP | OPERATOR_VOID | VARIABLE_DECLARATION | VARIABLE_MODIFICATION
 cCONDITIONAL ::=			if lparen EXPRESSION rparen CODE_BLOCK (elsif lparen EXPRESSION rparen CODE_BLOCK)* (else CODE_BLOCK)?
 cLOOP ::=					LOOP_FOR | LOOP_FOREACH | LOOP_WHILE
@@ -31,10 +31,10 @@ cLIST_ELEMENTS ::=			LIST_ELEMENT_VALUE (comma LIST_ELEMENT_VALUE)*
  HASH_ENTRIES ::=			_word fat_arrow HASH_ENTRY_VALUE (comma _word fat_arrow HASH_ENTRY_VALUE)* 
  HASH_ENTRY_VALUE ::=		EXPRESSION | percent lbrace VARIABLE rbrace
 
-cOO_CLASS ::=				package _word scolon RPERL_HEADER use parent qw lparen (_word)+ rparen scolon OO_PROPERTIES OO_METHOD* SUBROUTINE* _number_one scolon
-cOO_PROPERTIES ::=			our percent properties equal lparen HASH_ENTRIES? rparen scolon
-cOO_METHOD ::=				our _type _variable_symbol equal sub lbrace OO_METHOD_ARGUMENTS? OPERATION+ rbrace scolon
- OO_METHOD_ARGUMENTS ::=	lparen my _type class_or_self (comma my _type _variable_symbol)* rparen equal at_underscore scolon
+cCLASS ::=				package _scoped_word scolon HEADER use parent qw lparen (_scoped_word)+ rparen scolon PROPERTIES METHOD* SUBROUTINE* _number_one scolon
+cPROPERTIES ::=			our percent properties equal lparen HASH_ENTRIES? rparen scolon
+cMETHOD ::=				our _type _variable_symbol equal sub lbrace METHOD_ARGUMENTS? OPERATION+ rbrace scolon
+ METHOD_ARGUMENTS ::=	lparen my _type class_or_self (comma my _type _variable_symbol)* rparen equal at_underscore scolon
 
  X? ::=						X | EMPTY
  X+ ::=						X* X

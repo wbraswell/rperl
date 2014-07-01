@@ -1,0 +1,27 @@
+%{
+    package RPerl::Grammar;
+    use strict;
+    use warnings;
+    our $VERSION = 0.000_001;
+    use Carp;
+%}
+
+%strict
+
+%token SHEBANG = '#!/usr/bin/perl'  # NEED UPGRADE: regex matching any path to Perl executable
+%token SCOPED_WORD  = /([A-Za-z][A-Za-z0-9(::)]*)/
+%token WORD         = /([A-Za-z][A-Za-z0-9_]*)/
+
+%tree  # automatically create AST
+%prefix RPerl::  # all class names begin with RPerl
+
+%%
+
+CompileUnit:    Program | Module+ ;
+Program:        SHEBANG Header Subroutine* Operation+ ;
+Module:         Package | Class ;
+Package:        'package' SCOPED_WORD ';' Header Subroutine+ '1;'
+
+%%
+
+1;
