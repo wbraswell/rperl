@@ -12,8 +12,8 @@ cSUBROUTINE ::=				our _type _variable_symbol equal sub lbrace SUBROUTINE_ARGUME
 cOPERATION ::=				EXPRESSION scolon | STATEMENT
 cOPERATOR ::=				_operator_name LIST_ELEMENTS? | _operator_name lparen LIST_ELEMENTS? rparen | EXPRESSION _operator_name EXPRESSION | VARIABLE _operator_name
 cOPERATOR_VOID ::=			_operator_void_name LIST_ELEMENTS? scolon | _operator_void_name lparen LIST_ELEMENTS? rparen scolon
-cEXPRESSION ::=				_literal | VARIABLE | lbracket LIST_ELEMENTS? rbracket | lbrace HASH_ENTRIES? rbrace 
-							| OPERATOR | _scoped_word lparen LIST_ELEMENTS? rparen | VARIABLE thin_arrow _word lparen LIST_ELEMENTS? rparen | lparen EXPRESSION rparen
+cEXPRESSION ::=				_literal | VARIABLE | lbracket LIST_ELEMENTS? rbracket | lbrace HASH_ENTRIES? rbrace |
+							OPERATOR | _scoped_word lparen LIST_ELEMENTS? rparen | VARIABLE thin_arrow _word lparen LIST_ELEMENTS? rparen | lparen EXPRESSION rparen
 cSTATEMENT ::=				CONDITIONAL | (_loop_label colon)? LOOP | OPERATOR_VOID | VARIABLE_DECLARATION | VARIABLE_MODIFICATION
 cCONDITIONAL ::=			if lparen EXPRESSION rparen CODE_BLOCK (elsif lparen EXPRESSION rparen CODE_BLOCK)* (else CODE_BLOCK)?
 cLOOP ::=					LOOP_FOR | LOOP_FOREACH | LOOP_WHILE

@@ -2,26 +2,70 @@
     package RPerl::Grammar;
     use strict;
     use warnings;
-    our $VERSION = 0.000_001;
+    our $VERSION = 0.000_010;
     use Carp;
 %}
 
 %strict
 
-%token SHEBANG = '#!/usr/bin/perl'  # NEED UPGRADE: regex matching any path to Perl executable
-%token SCOPED_WORD  = /([A-Za-z][A-Za-z0-9(::)]*)/
-%token WORD         = /([A-Za-z][A-Za-z0-9_]*)/
+%token SHEBANG              = /(\#\!\/[A-Za-z0-9_\/]*\/perl)/
+%token WORD                 = /([A-Za-z][A-Za-z0-9_]*)/
+%token SCOPED_WORD          = /([A-Za-z][A-Za-z0-9_(::)]*)/
+%token VERSION_NUMBER       = /[0-9]+\.[0-9][0-9][0-9]\_[0-9][0-9][0-9]/
+%token LITERAL              = //  # number or string
+%token VARIABLE_SYMBOL      = //  # sigil word
+%token TYPE                 = //  # data type
+%token OPERATOR_NAME        = //
+%token OPERATOR_VOID_NAME   = //
+%token LOOP_LABEL           = //
+%token KEYS_OR_VALUES       = //
+%token CLASS_OR_SELF        = //
 
 %tree  # automatically create AST
 %prefix RPerl::  # all class names begin with RPerl
 
 %%
 
-CompileUnit:    Program | Module+ ;
-Program:        SHEBANG Header Subroutine* Operation+ ;
-Module:         Package | Class ;
-Package:        'package' SCOPED_WORD ';' Header Subroutine+ '1;'
+CompileUnit:            Program | Module+ ;
+Program:                SHEBANG Header Subroutine* Operation+ ;
+Module:                 Package | Class ;
+Package:                'package' SCOPED_WORD ';' Header Subroutine+ '1;' ;
+Header:                 'use strict;' 'use warnings;' 'our $VERSION =' VERSION_NUMBER ';' 'use Carp;' 'use RPerl;' Include* Constant* ;
+Include:                'use' SCOPED_WORD ';' | 'use' SCOPED_WORD 'qw(' WORD+ ');' ;
+Constant:               'use constant' WORD '=>' Constant_Value ';' ;
+Constant_Value:         LITERAL | '[' LITERAL (',' LITERAL)* ']' | '{' WORD '=>' LITERAL (',' WORD '=>' LITERAL)* '}' ;
+Subroutine:             'our' TYPE VARIABLE_SYMBOL '= sub {' SubroutineArguments? Operation+ '};' ;
+SubroutineArguments:    '(' 'my' TYPE VARIABLE_SYMBOL (',' 'my' TYPE VARIABLE_SYMBOL)* ') = @_;' ;
+
+Operation:              Expression ';' | Statement ;
+Operator:               OPERATOR_NAME ListElements? | OPERATOR_NAME '(' ListElements? ')' | Expression OPERATOR_NAME Expression | Variable OPERATOR_NAME ;
+OperatorVoid:           OPERATOR_VOID_NAME ListElements? ';' | OPERATOR_VOID_NAME '(' ListElements? ')' ';' ;
+Expression:             LITERAL | Variable | '[' ListElements? ']' | '{' HashEntries? '}' | 
+                        Operator | SCOPED_WORD '(' ListElements? ')' | Variable '->' WORD '(' ListElements? ')' | '(' Expression ')' ;
+Statement:              Conditional | (LOOP_LABEL ':')? Loop | OperatorVoid | VariableDeclaration | VariableModification ;
+Conditional:            'if' '(' Expression ')' CodeBlock ('elsif' '(' Expression ')' CodeBlock)* ('else' CodeBlock)? ;
+Loop:                   LoopFor | LoopForEach | LoopWhile ;
+LoopFor:                'for my integer' VARIABLE_SYMBOL '(' Expression '..' Expression ')' CodeBlock ;
+LoopForEach:            'foreach my' TYPE VARIABLE_SYMBOL '(' ListElements ')' CodeBlock ;
+LoopWhile:              'while' '(' Expression ')' CodeBlock ;
+CodeBlock:              '{' Operation+ '}' ;
+
+Variable:               VARIABLE_SYMBOL VariableRetrieval* ;
+VariableRetrieval:      '->[' Expression ']' | '->{' Expression '}' ;
+VariableDeclaration:    'my' TYPE VARIABLE_SYMBOL ';' | 'my' TYPE VARIABLE_SYMBOL '=' Expression ';' ;
+VariableModification:   Variable '=' Expression ';' ;
+ListElements:           ListElementValue (',' ListElementValue)* ;
+ListElementValue:       Expression | '@{' Variable '}' | KEYS_OR_VALUES '%{' Variable '}' ;
+HashEntries:            WORD '=>' HashEntryValue (',' WORD '=>' HashEntryValue)* ;
+HashEntryValue:         Expression | '%{' Variable '}' ;
+
+Class:                  'package' SCOPED_WORD ';' Header 'use parent qw(' (SCOPED_WORD)+ ');' Properties Method* Subroutine* '1;' ;
+Properties:             'our %properties' '=' '(' HashEntries? ');' ;
+Method:                 'our' TYPE VARIABLE_SYMBOL '= sub {' MethodArguments? Operation+ '};' ;
+MethodArguments:        '(' 'my' TYPE CLASS_OR_SELF (',' 'my' TYPE VARIABLE_SYMBOL)* ') = @_;' ;
 
 %%
 
-1;
+{
+    1;
+}
