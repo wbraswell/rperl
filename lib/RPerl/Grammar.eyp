@@ -1,25 +1,83 @@
 %{
-    package RPerl::Grammar;
+#    package RPerl::Grammar; NEED FIX: what package name?
     use strict;
     use warnings;
-    our $VERSION = 0.000_010;
+    our $VERSION = 0.000_100;
     use Carp;
+    
+    use rperlrules;  # affirmative, it totally does
 %}
 
 %strict
 
-%token SHEBANG              = /(\#\!\/[A-Za-z0-9_\/]*\/perl)/
-%token WORD                 = /([A-Za-z][A-Za-z0-9_]*)/
-%token SCOPED_WORD          = /([A-Za-z][A-Za-z0-9_(::)]*)/
-%token VERSION_NUMBER       = /[0-9]+\.[0-9][0-9][0-9]\_[0-9][0-9][0-9]/
-%token LITERAL              = //  # number or string
-%token VARIABLE_SYMBOL      = //  # sigil word
-%token TYPE                 = //  # data type
-%token OPERATOR_NAME        = //
-%token OPERATOR_VOID_NAME   = //
-%token LOOP_LABEL           = //
-%token KEYS_OR_VALUES       = //
-%token CLASS_OR_SELF        = //
+%token SHEBANG              = /^(\#\!\/[\w\/]*\/perl)$/     # hash, bang, full *NIX path to Perl executable, all alone on 1 line; ex. '#!/usr/bin/perl'
+%token WORD                 = /[a-zA-Z]\w*/                 # letter followed by letters, numbers, and underscores; ex. 'foobar_42_Howdy'
+%token WORD_SCOPED          = /[a-zA-Z][\w(::)]*/           # letter followed by letters, numbers, underscores, and scopes (double colons); ex. 'Foo::Bar::x_23'
+%token VERSION_NUMBER       = /\d+\.\d{3}\_\d{3}/           # number(s) followed by decicmal, then 3 numbers, underscore, and 3 numbers; ex. '123.456_789'
+%token LITERAL              = /(-?\d+(\.\d+)?)|('[^']*')/   # number or single-quoted string
+%token VARIABLE_SYMBOL      = /\$[a-zA-Z]\w*/               # dollar sigil, word
+%token TYPE                 = /[a-z][a-z_]*[a-z]/           # lower case letter followed by lower case letters and underscores, finished with lower case letter
+
+# OFFICIAL PRECEDENCE LIST                              http://perldoc.perl.org/perlop.html#Operator-Precedence-and-Associativity [1]
+%token OPERATOR_SYMBOL_24   = /or|xor/                  # precedence 24 infix: logical or and xor, equivalent to || except for precedence
+%token OPERATOR_SYMBOL_23   = /and/                     # precedence 23 infix: logical and, equivalent to && except for precedence
+%token OPERATOR_SYMBOL_22   = /not/                     # precedence 22 prefix: logical negation, equivalent to ! except for precedence
+#%token OPERATOR_SYMBOL_21   = /,/                       # precedence 21 postfix and infix: "list operators (rightward)" [1] AKA comma beta; UNUSED
+#%token OPERATOR_SYMBOL_20   = /,|=>/                    # precedence 20 postfix and infix: comma alpha, fat arrow AKA fat comma; UNUSED
+%token OPERATOR_SYMBOL_19a  = /next|last/               # precedence 19 prefix void: next, last
+%token OPERATOR_SYMBOL_19   = /=|\+=|-=|\*=|\/=/        # precedence 19 infix: equal, add equal, subtract equal, multiply equal, divide equal
+#%token OPERATOR_SYMBOL_18   = /\?:/                    # precedence 18 infix: ternary; UNUSED
+%token OPERATOR_SYMBOL_17   = /\.\./                    # precedence 17 infix: range
+%token OPERATOR_SYMBOL_16   = /\|\|/                    # precedence 16 infix: logical or
+%token OPERATOR_SYMBOL_15   = /&&/                      # precedence 15 infix: logical and
+%token OPERATOR_SYMBOL_14   = /\||\^/                   # precedence 14 infix: bitwise or, bitwise xor
+%token OPERATOR_SYMBOL_13   = /&/                       # precedence 13 infix: bitwise and
+%token OPERATOR_SYMBOL_12   = /==|!=|eq|ne/             # precedence 12 infix: equal to, not equal to
+%token OPERATOR_SYMBOL_11   = /<|>|<=|>=|lt|gt|le|ge/   # precedence 11 infix: less than, greater than, less or equal, greater or equal
+%token OPERATOR_SYMBOL_10   = /[a-z]+/                  # precedence 10 prefix: "named unary operators" [1]; ex. 'chdir' and 'rand'
+%token OPERATOR_SYMBOL_09   = /<<|>>/                   # precedence 09 infix: shift left, shift right
+%token OPERATOR_SYMBOL_08   = /\+|-|\./                 # precedence 08 infix: add, subtract, concatenate
+%token OPERATOR_SYMBOL_07   = /\*|\/|\%/                # precedence 07 infix: multiply, divide, modulo
+#%token OPERATOR_SYMBOL_06   = /=\~|!\~/                 # precedence 06 infix: regular expression matching; UNUSED
+%token OPERATOR_SYMBOL_05   = /!|-/                     # precedence 05 prefix: logical negation, negative
+%token OPERATOR_SYMBOL_04   = /\*\*/                    # precedence 04 infix: exponent
+%token OPERATOR_SYMBOL_03   = /\+\+|--/                 # precedence 03 prefix and postfix: increment, decrement
+#%token OPERATOR_SYMBOL_02   = /->/                      # precedence 02 infix: thin arrow; UNUSED
+%token OPERATOR_SYMBOL_01   = /[a-zA-Z]\w*/             # precedence 01 prefix: "terms and list operators (leftward)" [1] AKA builtins, subroutines, methods
+
+%token OPERATOR_VOID     = /croak|print|return|exit/  # void: no return value or context
+
+%token LOOP_LABEL           = /[A-Z][A-Z0-9_]*/     # upper case letter followed by upper case letters, numbers, and underscores
+%token KEYS_OR_VALUES       = /keys|values/
+%token CLASS_OR_SELF        = /class|self/
+%token ARGUMENTS_BEGIN      = /\(\s*my/             # left parenthesis, my; ex. '(my' or '( my'
+%token ARGUMENTS_END        = /\)\s*=\s*\@_\s*;/    # right parenthesis, equal, at underscore, semicolon; ex. ') = @_;';
+
+%left       OPERATOR_SYMBOL_24
+%left       OPERATOR_SYMBOL_23
+%right      OPERATOR_SYMBOL_22
+#%nonassoc   OPERATOR_SYMBOL_21
+#%left       OPERATOR_SYMBOL_20
+%right      OPERATOR_SYMBOL_19a
+%right      OPERATOR_SYMBOL_19
+#%right      OPERATOR_SYMBOL_18
+%nonassoc   OPERATOR_SYMBOL_17
+%left       OPERATOR_SYMBOL_16
+%left       OPERATOR_SYMBOL_15
+%left       OPERATOR_SYMBOL_14
+%left       OPERATOR_SYMBOL_13
+%nonassoc   OPERATOR_SYMBOL_12
+%nonassoc   OPERATOR_SYMBOL_11
+%nonassoc   OPERATOR_SYMBOL_10
+%left       OPERATOR_SYMBOL_09
+%left       OPERATOR_SYMBOL_08
+%left       OPERATOR_SYMBOL_07
+#%left       OPERATOR_SYMBOL_06
+%right      OPERATOR_SYMBOL_05
+%right      OPERATOR_SYMBOL_04
+%nonassoc   OPERATOR_SYMBOL_03
+#%left       OPERATOR_SYMBOL_02
+%left       OPERATOR_SYMBOL_01
 
 %tree  # automatically create AST
 %prefix RPerl::  # all class names begin with RPerl
@@ -29,19 +87,25 @@
 CompileUnit:            Program | Module+ ;
 Program:                SHEBANG Header Subroutine* Operation+ ;
 Module:                 Package | Class ;
-Package:                'package' SCOPED_WORD ';' Header Subroutine+ '1;' ;
+Package:                'package' WORD_SCOPED ';' Header Subroutine+ '1;' ;
 Header:                 'use strict;' 'use warnings;' 'our $VERSION =' VERSION_NUMBER ';' 'use Carp;' 'use RPerl;' Include* Constant* ;
-Include:                'use' SCOPED_WORD ';' | 'use' SCOPED_WORD 'qw(' WORD+ ');' ;
+Include:                'use' WORD_SCOPED ';' | 'use' WORD_SCOPED 'qw(' WORD+ ');' ;
 Constant:               'use constant' WORD '=>' Constant_Value ';' ;
 Constant_Value:         LITERAL | '[' LITERAL (',' LITERAL)* ']' | '{' WORD '=>' LITERAL (',' WORD '=>' LITERAL)* '}' ;
 Subroutine:             'our' TYPE VARIABLE_SYMBOL '= sub {' SubroutineArguments? Operation+ '};' ;
-SubroutineArguments:    '(' 'my' TYPE VARIABLE_SYMBOL (',' 'my' TYPE VARIABLE_SYMBOL)* ') = @_;' ;
+SubroutineArguments:    ARGUMENTS_BEGIN TYPE VARIABLE_SYMBOL (',' 'my' TYPE VARIABLE_SYMBOL)* ARGUMENTS_END ;
 
 Operation:              Expression ';' | Statement ;
-Operator:               OPERATOR_NAME ListElements? | OPERATOR_NAME '(' ListElements? ')' | Expression OPERATOR_NAME Expression | Variable OPERATOR_NAME ;
-OperatorVoid:           OPERATOR_VOID_NAME ListElements? ';' | OPERATOR_VOID_NAME '(' ListElements? ')' ';' ;
+Operator:               OPERATOR_SYMBOL_01 '(' ListElements? ')' | OPERATOR_SYMBOL_03 Variable | Variable OPERATOR_SYMBOL_03 |
+                        Expression OPERATOR_SYMBOL_04 Expression | OPERATOR_SYMBOL_05 Expression | Expression OPERATOR_SYMBOL_07 Expression |
+                        Expression OPERATOR_SYMBOL_08 Expression | Expression OPERATOR_SYMBOL_09 Expression | OPERATOR_SYMBOL_10 Expression |
+                        Expression OPERATOR_SYMBOL_11 Expression | Expression OPERATOR_SYMBOL_12 Expression | Expression OPERATOR_SYMBOL_13 Expression | 
+                        Expression OPERATOR_SYMBOL_14 Expression | Expression OPERATOR_SYMBOL_15 Expression | Expression OPERATOR_SYMBOL_16 Expression | 
+                        Expression OPERATOR_SYMBOL_17 Expression | OPERATOR_SYMBOL_22 Expression | Expression OPERATOR_SYMBOL_23 Expression | 
+                        Expression OPERATOR_SYMBOL_24 Expression ;
+OperatorVoid:           OPERATOR_SYMBOL_19a LOOP_LABEL ';' | OPERATOR_VOID '(' ListElements? ')' ';' ;
 Expression:             LITERAL | Variable | '[' ListElements? ']' | '{' HashEntries? '}' | 
-                        Operator | SCOPED_WORD '(' ListElements? ')' | Variable '->' WORD '(' ListElements? ')' | '(' Expression ')' ;
+                        Operator | WORD_SCOPED '(' ListElements? ')' | Variable '->' WORD '(' ListElements? ')' | '(' Expression ')' ;
 Statement:              Conditional | (LOOP_LABEL ':')? Loop | OperatorVoid | VariableDeclaration | VariableModification ;
 Conditional:            'if' '(' Expression ')' CodeBlock ('elsif' '(' Expression ')' CodeBlock)* ('else' CodeBlock)? ;
 Loop:                   LoopFor | LoopForEach | LoopWhile ;
@@ -52,17 +116,18 @@ CodeBlock:              '{' Operation+ '}' ;
 
 Variable:               VARIABLE_SYMBOL VariableRetrieval* ;
 VariableRetrieval:      '->[' Expression ']' | '->{' Expression '}' ;
-VariableDeclaration:    'my' TYPE VARIABLE_SYMBOL ';' | 'my' TYPE VARIABLE_SYMBOL '=' Expression ';' ;
-VariableModification:   Variable '=' Expression ';' ;
+VariableDeclaration:    'my' TYPE VARIABLE_SYMBOL ';' | 'my' TYPE VARIABLE_SYMBOL OPERATOR_SYMBOL_19 Expression ';' ;
+VariableModification:   Variable OPERATOR_SYMBOL_19 Expression ';' ;
 ListElements:           ListElementValue (',' ListElementValue)* ;
 ListElementValue:       Expression | '@{' Variable '}' | KEYS_OR_VALUES '%{' Variable '}' ;
 HashEntries:            WORD '=>' HashEntryValue (',' WORD '=>' HashEntryValue)* ;
 HashEntryValue:         Expression | '%{' Variable '}' ;
 
-Class:                  'package' SCOPED_WORD ';' Header 'use parent qw(' (SCOPED_WORD)+ ');' Properties Method* Subroutine* '1;' ;
+#Class:                  'package' WORD_SCOPED ';' Header 'use parent qw(' WORD_SCOPED+ ');' Properties Method* Subroutine* '1;' ;  # NEED FIX: Methods insufficiently distinguishable from Subroutines
+Class:                  'package' WORD_SCOPED ';' Header 'use parent qw(' WORD_SCOPED+ ');' Properties Method* '1;' ;
 Properties:             'our %properties' '=' '(' HashEntries? ');' ;
 Method:                 'our' TYPE VARIABLE_SYMBOL '= sub {' MethodArguments? Operation+ '};' ;
-MethodArguments:        '(' 'my' TYPE CLASS_OR_SELF (',' 'my' TYPE VARIABLE_SYMBOL)* ') = @_;' ;
+MethodArguments:        ARGUMENTS_BEGIN TYPE CLASS_OR_SELF (',' 'my' TYPE VARIABLE_SYMBOL)* ARGUMENTS_END ;
 
 %%
 

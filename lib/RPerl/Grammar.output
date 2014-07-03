@@ -1,0 +1,4175 @@
+Conflicts:
+----------
+Conflict in state 66 between rule 63 and token OPERATOR_SYMBOL_09 resolved as shift.
+Conflict in state 66 between rule 63 and token OPERATOR_SYMBOL_08 resolved as shift.
+Conflict in state 66 between rule 63 and token OPERATOR_SYMBOL_14 resolved as shift.
+Conflict in state 66 between rule 63 and token OPERATOR_SYMBOL_07 resolved as shift.
+Conflict in state 66 between rule 63 and token OPERATOR_SYMBOL_17 resolved as shift.
+Conflict in state 66 between rule 63 and token OPERATOR_SYMBOL_13 resolved as shift.
+Conflict in state 66 between rule 63 and token OPERATOR_SYMBOL_11 resolved as shift.
+Conflict in state 66 between rule 63 and token OPERATOR_SYMBOL_04 resolved as shift.
+Conflict in state 66 between rule 63 and token OPERATOR_SYMBOL_12 resolved as shift.
+Conflict in state 66 between rule 63 and token OPERATOR_SYMBOL_15 resolved as shift.
+Conflict in state 66 between rule 63 and token OPERATOR_SYMBOL_24 resolved as reduce.
+Conflict in state 66 between rule 63 and token OPERATOR_SYMBOL_23 resolved as reduce.
+Conflict in state 66 between rule 63 and token OPERATOR_SYMBOL_16 resolved as shift.
+Conflict in state 74 between rule 55 and token OPERATOR_SYMBOL_24 resolved as reduce.
+Conflict in state 74 between rule 55 and token OPERATOR_SYMBOL_15 resolved as reduce.
+Conflict in state 74 between rule 55 and token OPERATOR_SYMBOL_11 resolved as reduce.
+Conflict in state 74 between rule 55 and token OPERATOR_SYMBOL_12 resolved as reduce.
+Conflict in state 74 between rule 55 and token OPERATOR_SYMBOL_04 resolved as shift.
+Conflict in state 74 between rule 55 and token OPERATOR_SYMBOL_16 resolved as reduce.
+Conflict in state 74 between rule 55 and token OPERATOR_SYMBOL_23 resolved as reduce.
+Conflict in state 74 between rule 55 and token OPERATOR_SYMBOL_09 resolved as shift.
+Conflict in state 74 between rule 55 and token OPERATOR_SYMBOL_17 resolved as reduce.
+Conflict in state 74 between rule 55 and token OPERATOR_SYMBOL_07 resolved as shift.
+Conflict in state 74 between rule 55 and token OPERATOR_SYMBOL_13 resolved as reduce.
+Conflict in state 74 between rule 55 and token OPERATOR_SYMBOL_14 resolved as reduce.
+Conflict in state 74 between rule 55 and token OPERATOR_SYMBOL_08 resolved as shift.
+Conflict in state 98 between rule 51 and token OPERATOR_SYMBOL_14 resolved as reduce.
+Conflict in state 98 between rule 51 and token OPERATOR_SYMBOL_08 resolved as reduce.
+Conflict in state 98 between rule 51 and token OPERATOR_SYMBOL_17 resolved as reduce.
+Conflict in state 98 between rule 51 and token OPERATOR_SYMBOL_07 resolved as reduce.
+Conflict in state 98 between rule 51 and token OPERATOR_SYMBOL_13 resolved as reduce.
+Conflict in state 98 between rule 51 and token OPERATOR_SYMBOL_09 resolved as reduce.
+Conflict in state 98 between rule 51 and token OPERATOR_SYMBOL_16 resolved as reduce.
+Conflict in state 98 between rule 51 and token OPERATOR_SYMBOL_23 resolved as reduce.
+Conflict in state 98 between rule 51 and token OPERATOR_SYMBOL_12 resolved as reduce.
+Conflict in state 98 between rule 51 and token OPERATOR_SYMBOL_11 resolved as reduce.
+Conflict in state 98 between rule 51 and token OPERATOR_SYMBOL_04 resolved as shift.
+Conflict in state 98 between rule 51 and token OPERATOR_SYMBOL_15 resolved as reduce.
+Conflict in state 98 between rule 51 and token OPERATOR_SYMBOL_24 resolved as reduce.
+Conflict in state 105 between rule 54 and token OPERATOR_SYMBOL_14 resolved as reduce.
+Conflict in state 105 between rule 54 and token OPERATOR_SYMBOL_08 resolved as shift.
+Conflict in state 105 between rule 54 and token OPERATOR_SYMBOL_17 resolved as reduce.
+Conflict in state 105 between rule 54 and token OPERATOR_SYMBOL_13 resolved as reduce.
+Conflict in state 105 between rule 54 and token OPERATOR_SYMBOL_07 resolved as shift.
+Conflict in state 105 between rule 54 and token OPERATOR_SYMBOL_09 resolved as reduce.
+Conflict in state 105 between rule 54 and token OPERATOR_SYMBOL_16 resolved as reduce.
+Conflict in state 105 between rule 54 and token OPERATOR_SYMBOL_23 resolved as reduce.
+Conflict in state 105 between rule 54 and token OPERATOR_SYMBOL_12 resolved as reduce.
+Conflict in state 105 between rule 54 and token OPERATOR_SYMBOL_04 resolved as shift.
+Conflict in state 105 between rule 54 and token OPERATOR_SYMBOL_11 resolved as reduce.
+Conflict in state 105 between rule 54 and token OPERATOR_SYMBOL_24 resolved as reduce.
+Conflict in state 105 between rule 54 and token OPERATOR_SYMBOL_15 resolved as reduce.
+Conflict in state 106 between rule 52 and token OPERATOR_SYMBOL_09 resolved as reduce.
+Conflict in state 106 between rule 52 and token OPERATOR_SYMBOL_14 resolved as reduce.
+Conflict in state 106 between rule 52 and token OPERATOR_SYMBOL_08 resolved as reduce.
+Conflict in state 106 between rule 52 and token OPERATOR_SYMBOL_07 resolved as reduce.
+Conflict in state 106 between rule 52 and token OPERATOR_SYMBOL_17 resolved as reduce.
+Conflict in state 106 between rule 52 and token OPERATOR_SYMBOL_13 resolved as reduce.
+Conflict in state 106 between rule 52 and token OPERATOR_SYMBOL_11 resolved as reduce.
+Conflict in state 106 between rule 52 and token OPERATOR_SYMBOL_12 resolved as reduce.
+Conflict in state 106 between rule 52 and token OPERATOR_SYMBOL_04 resolved as shift.
+Conflict in state 106 between rule 52 and token OPERATOR_SYMBOL_24 resolved as reduce.
+Conflict in state 106 between rule 52 and token OPERATOR_SYMBOL_15 resolved as reduce.
+Conflict in state 106 between rule 52 and token OPERATOR_SYMBOL_16 resolved as reduce.
+Conflict in state 106 between rule 52 and token OPERATOR_SYMBOL_23 resolved as reduce.
+Conflict in state 107 between rule 62 and token OPERATOR_SYMBOL_09 resolved as shift.
+Conflict in state 107 between rule 62 and token OPERATOR_SYMBOL_17 resolved as error.
+Conflict in state 107 between rule 62 and token OPERATOR_SYMBOL_07 resolved as shift.
+Conflict in state 107 between rule 62 and token OPERATOR_SYMBOL_13 resolved as shift.
+Conflict in state 107 between rule 62 and token OPERATOR_SYMBOL_14 resolved as shift.
+Conflict in state 107 between rule 62 and token OPERATOR_SYMBOL_08 resolved as shift.
+Conflict in state 107 between rule 62 and token OPERATOR_SYMBOL_24 resolved as reduce.
+Conflict in state 107 between rule 62 and token OPERATOR_SYMBOL_15 resolved as shift.
+Conflict in state 107 between rule 62 and token OPERATOR_SYMBOL_11 resolved as shift.
+Conflict in state 107 between rule 62 and token OPERATOR_SYMBOL_04 resolved as shift.
+Conflict in state 107 between rule 62 and token OPERATOR_SYMBOL_12 resolved as shift.
+Conflict in state 107 between rule 62 and token OPERATOR_SYMBOL_16 resolved as shift.
+Conflict in state 107 between rule 62 and token OPERATOR_SYMBOL_23 resolved as reduce.
+Conflict in state 108 between rule 58 and token OPERATOR_SYMBOL_15 resolved as reduce.
+Conflict in state 108 between rule 58 and token OPERATOR_SYMBOL_24 resolved as reduce.
+Conflict in state 108 between rule 58 and token OPERATOR_SYMBOL_04 resolved as shift.
+Conflict in state 108 between rule 58 and token OPERATOR_SYMBOL_12 resolved as shift.
+Conflict in state 108 between rule 58 and token OPERATOR_SYMBOL_11 resolved as shift.
+Conflict in state 108 between rule 58 and token OPERATOR_SYMBOL_23 resolved as reduce.
+Conflict in state 108 between rule 58 and token OPERATOR_SYMBOL_16 resolved as reduce.
+Conflict in state 108 between rule 58 and token OPERATOR_SYMBOL_09 resolved as shift.
+Conflict in state 108 between rule 58 and token OPERATOR_SYMBOL_07 resolved as shift.
+Conflict in state 108 between rule 58 and token OPERATOR_SYMBOL_17 resolved as reduce.
+Conflict in state 108 between rule 58 and token OPERATOR_SYMBOL_13 resolved as reduce.
+Conflict in state 108 between rule 58 and token OPERATOR_SYMBOL_08 resolved as shift.
+Conflict in state 108 between rule 58 and token OPERATOR_SYMBOL_14 resolved as reduce.
+Conflict in state 109 between rule 59 and token OPERATOR_SYMBOL_23 resolved as reduce.
+Conflict in state 109 between rule 59 and token OPERATOR_SYMBOL_16 resolved as reduce.
+Conflict in state 109 between rule 59 and token OPERATOR_SYMBOL_15 resolved as reduce.
+Conflict in state 109 between rule 59 and token OPERATOR_SYMBOL_24 resolved as reduce.
+Conflict in state 109 between rule 59 and token OPERATOR_SYMBOL_12 resolved as shift.
+Conflict in state 109 between rule 59 and token OPERATOR_SYMBOL_11 resolved as shift.
+Conflict in state 109 between rule 59 and token OPERATOR_SYMBOL_04 resolved as shift.
+Conflict in state 109 between rule 59 and token OPERATOR_SYMBOL_07 resolved as shift.
+Conflict in state 109 between rule 59 and token OPERATOR_SYMBOL_17 resolved as reduce.
+Conflict in state 109 between rule 59 and token OPERATOR_SYMBOL_13 resolved as shift.
+Conflict in state 109 between rule 59 and token OPERATOR_SYMBOL_08 resolved as shift.
+Conflict in state 109 between rule 59 and token OPERATOR_SYMBOL_14 resolved as reduce.
+Conflict in state 109 between rule 59 and token OPERATOR_SYMBOL_09 resolved as shift.
+Conflict in state 110 between rule 53 and token OPERATOR_SYMBOL_14 resolved as reduce.
+Conflict in state 110 between rule 53 and token OPERATOR_SYMBOL_08 resolved as reduce.
+Conflict in state 110 between rule 53 and token OPERATOR_SYMBOL_13 resolved as reduce.
+Conflict in state 110 between rule 53 and token OPERATOR_SYMBOL_17 resolved as reduce.
+Conflict in state 110 between rule 53 and token OPERATOR_SYMBOL_07 resolved as shift.
+Conflict in state 110 between rule 53 and token OPERATOR_SYMBOL_09 resolved as reduce.
+Conflict in state 110 between rule 53 and token OPERATOR_SYMBOL_16 resolved as reduce.
+Conflict in state 110 between rule 53 and token OPERATOR_SYMBOL_23 resolved as reduce.
+Conflict in state 110 between rule 53 and token OPERATOR_SYMBOL_11 resolved as reduce.
+Conflict in state 110 between rule 53 and token OPERATOR_SYMBOL_12 resolved as reduce.
+Conflict in state 110 between rule 53 and token OPERATOR_SYMBOL_04 resolved as shift.
+Conflict in state 110 between rule 53 and token OPERATOR_SYMBOL_24 resolved as reduce.
+Conflict in state 110 between rule 53 and token OPERATOR_SYMBOL_15 resolved as reduce.
+Conflict in state 111 between rule 60 and token OPERATOR_SYMBOL_15 resolved as reduce.
+Conflict in state 111 between rule 60 and token OPERATOR_SYMBOL_24 resolved as reduce.
+Conflict in state 111 between rule 60 and token OPERATOR_SYMBOL_11 resolved as shift.
+Conflict in state 111 between rule 60 and token OPERATOR_SYMBOL_12 resolved as shift.
+Conflict in state 111 between rule 60 and token OPERATOR_SYMBOL_04 resolved as shift.
+Conflict in state 111 between rule 60 and token OPERATOR_SYMBOL_23 resolved as reduce.
+Conflict in state 111 between rule 60 and token OPERATOR_SYMBOL_16 resolved as reduce.
+Conflict in state 111 between rule 60 and token OPERATOR_SYMBOL_09 resolved as shift.
+Conflict in state 111 between rule 60 and token OPERATOR_SYMBOL_13 resolved as shift.
+Conflict in state 111 between rule 60 and token OPERATOR_SYMBOL_17 resolved as reduce.
+Conflict in state 111 between rule 60 and token OPERATOR_SYMBOL_07 resolved as shift.
+Conflict in state 111 between rule 60 and token OPERATOR_SYMBOL_08 resolved as shift.
+Conflict in state 111 between rule 60 and token OPERATOR_SYMBOL_14 resolved as shift.
+Conflict in state 112 between rule 65 and token OPERATOR_SYMBOL_24 resolved as reduce.
+Conflict in state 112 between rule 65 and token OPERATOR_SYMBOL_15 resolved as shift.
+Conflict in state 112 between rule 65 and token OPERATOR_SYMBOL_04 resolved as shift.
+Conflict in state 112 between rule 65 and token OPERATOR_SYMBOL_12 resolved as shift.
+Conflict in state 112 between rule 65 and token OPERATOR_SYMBOL_11 resolved as shift.
+Conflict in state 112 between rule 65 and token OPERATOR_SYMBOL_16 resolved as shift.
+Conflict in state 112 between rule 65 and token OPERATOR_SYMBOL_23 resolved as shift.
+Conflict in state 112 between rule 65 and token OPERATOR_SYMBOL_09 resolved as shift.
+Conflict in state 112 between rule 65 and token OPERATOR_SYMBOL_13 resolved as shift.
+Conflict in state 112 between rule 65 and token OPERATOR_SYMBOL_17 resolved as shift.
+Conflict in state 112 between rule 65 and token OPERATOR_SYMBOL_07 resolved as shift.
+Conflict in state 112 between rule 65 and token OPERATOR_SYMBOL_14 resolved as shift.
+Conflict in state 112 between rule 65 and token OPERATOR_SYMBOL_08 resolved as shift.
+Conflict in state 113 between rule 56 and token OPERATOR_SYMBOL_09 resolved as shift.
+Conflict in state 113 between rule 56 and token OPERATOR_SYMBOL_13 resolved as reduce.
+Conflict in state 113 between rule 56 and token OPERATOR_SYMBOL_07 resolved as shift.
+Conflict in state 113 between rule 56 and token OPERATOR_SYMBOL_17 resolved as reduce.
+Conflict in state 113 between rule 56 and token OPERATOR_SYMBOL_08 resolved as shift.
+Conflict in state 113 between rule 56 and token OPERATOR_SYMBOL_14 resolved as reduce.
+Conflict in state 113 between rule 56 and token OPERATOR_SYMBOL_24 resolved as reduce.
+Conflict in state 113 between rule 56 and token OPERATOR_SYMBOL_15 resolved as reduce.
+Conflict in state 113 between rule 56 and token OPERATOR_SYMBOL_12 resolved as reduce.
+Conflict in state 113 between rule 56 and token OPERATOR_SYMBOL_04 resolved as shift.
+Conflict in state 113 between rule 56 and token OPERATOR_SYMBOL_11 resolved as error.
+Conflict in state 113 between rule 56 and token OPERATOR_SYMBOL_23 resolved as reduce.
+Conflict in state 113 between rule 56 and token OPERATOR_SYMBOL_16 resolved as reduce.
+Conflict in state 114 between rule 57 and token OPERATOR_SYMBOL_12 resolved as error.
+Conflict in state 114 between rule 57 and token OPERATOR_SYMBOL_04 resolved as shift.
+Conflict in state 114 between rule 57 and token OPERATOR_SYMBOL_11 resolved as shift.
+Conflict in state 114 between rule 57 and token OPERATOR_SYMBOL_15 resolved as reduce.
+Conflict in state 114 between rule 57 and token OPERATOR_SYMBOL_24 resolved as reduce.
+Conflict in state 114 between rule 57 and token OPERATOR_SYMBOL_23 resolved as reduce.
+Conflict in state 114 between rule 57 and token OPERATOR_SYMBOL_16 resolved as reduce.
+Conflict in state 114 between rule 57 and token OPERATOR_SYMBOL_09 resolved as shift.
+Conflict in state 114 between rule 57 and token OPERATOR_SYMBOL_08 resolved as shift.
+Conflict in state 114 between rule 57 and token OPERATOR_SYMBOL_14 resolved as reduce.
+Conflict in state 114 between rule 57 and token OPERATOR_SYMBOL_13 resolved as reduce.
+Conflict in state 114 between rule 57 and token OPERATOR_SYMBOL_17 resolved as reduce.
+Conflict in state 114 between rule 57 and token OPERATOR_SYMBOL_07 resolved as shift.
+Conflict in state 115 between rule 50 and token OPERATOR_SYMBOL_23 resolved as reduce.
+Conflict in state 115 between rule 50 and token OPERATOR_SYMBOL_16 resolved as reduce.
+Conflict in state 115 between rule 50 and token OPERATOR_SYMBOL_15 resolved as reduce.
+Conflict in state 115 between rule 50 and token OPERATOR_SYMBOL_24 resolved as reduce.
+Conflict in state 115 between rule 50 and token OPERATOR_SYMBOL_11 resolved as reduce.
+Conflict in state 115 between rule 50 and token OPERATOR_SYMBOL_04 resolved as shift.
+Conflict in state 115 between rule 50 and token OPERATOR_SYMBOL_12 resolved as reduce.
+Conflict in state 115 between rule 50 and token OPERATOR_SYMBOL_17 resolved as reduce.
+Conflict in state 115 between rule 50 and token OPERATOR_SYMBOL_07 resolved as reduce.
+Conflict in state 115 between rule 50 and token OPERATOR_SYMBOL_13 resolved as reduce.
+Conflict in state 115 between rule 50 and token OPERATOR_SYMBOL_08 resolved as reduce.
+Conflict in state 115 between rule 50 and token OPERATOR_SYMBOL_14 resolved as reduce.
+Conflict in state 115 between rule 50 and token OPERATOR_SYMBOL_09 resolved as reduce.
+Conflict in state 116 between rule 61 and token OPERATOR_SYMBOL_24 resolved as reduce.
+Conflict in state 116 between rule 61 and token OPERATOR_SYMBOL_15 resolved as shift.
+Conflict in state 116 between rule 61 and token OPERATOR_SYMBOL_11 resolved as shift.
+Conflict in state 116 between rule 61 and token OPERATOR_SYMBOL_04 resolved as shift.
+Conflict in state 116 between rule 61 and token OPERATOR_SYMBOL_12 resolved as shift.
+Conflict in state 116 between rule 61 and token OPERATOR_SYMBOL_16 resolved as reduce.
+Conflict in state 116 between rule 61 and token OPERATOR_SYMBOL_23 resolved as reduce.
+Conflict in state 116 between rule 61 and token OPERATOR_SYMBOL_09 resolved as shift.
+Conflict in state 116 between rule 61 and token OPERATOR_SYMBOL_13 resolved as shift.
+Conflict in state 116 between rule 61 and token OPERATOR_SYMBOL_07 resolved as shift.
+Conflict in state 116 between rule 61 and token OPERATOR_SYMBOL_17 resolved as reduce.
+Conflict in state 116 between rule 61 and token OPERATOR_SYMBOL_14 resolved as shift.
+Conflict in state 116 between rule 61 and token OPERATOR_SYMBOL_08 resolved as shift.
+Conflict in state 117 between rule 64 and token OPERATOR_SYMBOL_23 resolved as reduce.
+Conflict in state 117 between rule 64 and token OPERATOR_SYMBOL_16 resolved as shift.
+Conflict in state 117 between rule 64 and token OPERATOR_SYMBOL_15 resolved as shift.
+Conflict in state 117 between rule 64 and token OPERATOR_SYMBOL_24 resolved as reduce.
+Conflict in state 117 between rule 64 and token OPERATOR_SYMBOL_11 resolved as shift.
+Conflict in state 117 between rule 64 and token OPERATOR_SYMBOL_12 resolved as shift.
+Conflict in state 117 between rule 64 and token OPERATOR_SYMBOL_04 resolved as shift.
+Conflict in state 117 between rule 64 and token OPERATOR_SYMBOL_07 resolved as shift.
+Conflict in state 117 between rule 64 and token OPERATOR_SYMBOL_17 resolved as shift.
+Conflict in state 117 between rule 64 and token OPERATOR_SYMBOL_13 resolved as shift.
+Conflict in state 117 between rule 64 and token OPERATOR_SYMBOL_08 resolved as shift.
+Conflict in state 117 between rule 64 and token OPERATOR_SYMBOL_14 resolved as shift.
+Conflict in state 117 between rule 64 and token OPERATOR_SYMBOL_09 resolved as shift.
+
+Rules:
+------
+0:	$start -> CompileUnit $end
+1:	PLUS-1 -> PLUS-1 Module
+2:	PLUS-1 -> Module
+3:	CompileUnit -> Program
+4:	CompileUnit -> PLUS-1
+5:	STAR-2 -> STAR-2 Subroutine
+6:	STAR-2 -> /* empty */
+7:	PLUS-3 -> PLUS-3 Operation
+8:	PLUS-3 -> Operation
+9:	Program -> SHEBANG Header STAR-2 PLUS-3
+10:	Module -> Package
+11:	Module -> Class
+12:	PLUS-4 -> PLUS-4 Subroutine
+13:	PLUS-4 -> Subroutine
+14:	Package -> 'package' WORD_SCOPED ';' Header PLUS-4 '1;'
+15:	STAR-5 -> STAR-5 Include
+16:	STAR-5 -> /* empty */
+17:	STAR-6 -> STAR-6 Constant
+18:	STAR-6 -> /* empty */
+19:	Header -> 'use strict;' 'use warnings;' 'our $VERSION =' VERSION_NUMBER ';' 'use Carp;' 'use RPerl;' STAR-5 STAR-6
+20:	PLUS-7 -> PLUS-7 WORD
+21:	PLUS-7 -> WORD
+22:	Include -> 'use' WORD_SCOPED ';'
+23:	Include -> 'use' WORD_SCOPED 'qw(' PLUS-7 ');'
+24:	Constant -> 'use constant' WORD '=>' Constant_Value ';'
+25:	PAREN-8 -> ',' LITERAL
+26:	STAR-9 -> STAR-9 PAREN-8
+27:	STAR-9 -> /* empty */
+28:	PAREN-10 -> ',' WORD '=>' LITERAL
+29:	STAR-11 -> STAR-11 PAREN-10
+30:	STAR-11 -> /* empty */
+31:	Constant_Value -> LITERAL
+32:	Constant_Value -> '[' LITERAL STAR-9 ']'
+33:	Constant_Value -> '{' WORD '=>' LITERAL STAR-11 '}'
+34:	OPTIONAL-12 -> SubroutineArguments
+35:	OPTIONAL-12 -> /* empty */
+36:	PLUS-13 -> PLUS-13 Operation
+37:	PLUS-13 -> Operation
+38:	Subroutine -> 'our' TYPE VARIABLE_SYMBOL '= sub {' OPTIONAL-12 PLUS-13 '};'
+39:	PAREN-14 -> ',' 'my' TYPE VARIABLE_SYMBOL
+40:	STAR-15 -> STAR-15 PAREN-14
+41:	STAR-15 -> /* empty */
+42:	SubroutineArguments -> ARGUMENTS_BEGIN TYPE VARIABLE_SYMBOL STAR-15 ARGUMENTS_END
+43:	Operation -> Expression ';'
+44:	Operation -> Statement
+45:	OPTIONAL-16 -> ListElements
+46:	OPTIONAL-16 -> /* empty */
+47:	Operator -> OPERATOR_SYMBOL_01 '(' OPTIONAL-16 ')'
+48:	Operator -> OPERATOR_SYMBOL_03 Variable
+49:	Operator -> Variable OPERATOR_SYMBOL_03
+50:	Operator -> Expression OPERATOR_SYMBOL_04 Expression
+51:	Operator -> OPERATOR_SYMBOL_05 Expression
+52:	Operator -> Expression OPERATOR_SYMBOL_07 Expression
+53:	Operator -> Expression OPERATOR_SYMBOL_08 Expression
+54:	Operator -> Expression OPERATOR_SYMBOL_09 Expression
+55:	Operator -> OPERATOR_SYMBOL_10 Expression
+56:	Operator -> Expression OPERATOR_SYMBOL_11 Expression
+57:	Operator -> Expression OPERATOR_SYMBOL_12 Expression
+58:	Operator -> Expression OPERATOR_SYMBOL_13 Expression
+59:	Operator -> Expression OPERATOR_SYMBOL_14 Expression
+60:	Operator -> Expression OPERATOR_SYMBOL_15 Expression
+61:	Operator -> Expression OPERATOR_SYMBOL_16 Expression
+62:	Operator -> Expression OPERATOR_SYMBOL_17 Expression
+63:	Operator -> OPERATOR_SYMBOL_22 Expression
+64:	Operator -> Expression OPERATOR_SYMBOL_23 Expression
+65:	Operator -> Expression OPERATOR_SYMBOL_24 Expression
+66:	OPTIONAL-17 -> ListElements
+67:	OPTIONAL-17 -> /* empty */
+68:	OperatorVoid -> OPERATOR_SYMBOL_19a LOOP_LABEL ';'
+69:	OperatorVoid -> OPERATOR_VOID '(' OPTIONAL-17 ')' ';'
+70:	OPTIONAL-18 -> ListElements
+71:	OPTIONAL-18 -> /* empty */
+72:	OPTIONAL-19 -> HashEntries
+73:	OPTIONAL-19 -> /* empty */
+74:	OPTIONAL-20 -> ListElements
+75:	OPTIONAL-20 -> /* empty */
+76:	OPTIONAL-21 -> ListElements
+77:	OPTIONAL-21 -> /* empty */
+78:	Expression -> LITERAL
+79:	Expression -> Variable
+80:	Expression -> '[' OPTIONAL-18 ']'
+81:	Expression -> '{' OPTIONAL-19 '}'
+82:	Expression -> Operator
+83:	Expression -> WORD_SCOPED '(' OPTIONAL-20 ')'
+84:	Expression -> Variable '->' WORD '(' OPTIONAL-21 ')'
+85:	Expression -> '(' Expression ')'
+86:	PAREN-22 -> LOOP_LABEL ':'
+87:	OPTIONAL-23 -> PAREN-22
+88:	OPTIONAL-23 -> /* empty */
+89:	Statement -> Conditional
+90:	Statement -> OPTIONAL-23 Loop
+91:	Statement -> OperatorVoid
+92:	Statement -> VariableDeclaration
+93:	Statement -> VariableModification
+94:	PAREN-24 -> 'elsif' '(' Expression ')' CodeBlock
+95:	STAR-25 -> STAR-25 PAREN-24
+96:	STAR-25 -> /* empty */
+97:	PAREN-26 -> 'else' CodeBlock
+98:	OPTIONAL-27 -> PAREN-26
+99:	OPTIONAL-27 -> /* empty */
+100:	Conditional -> 'if' '(' Expression ')' CodeBlock STAR-25 OPTIONAL-27
+101:	Loop -> LoopFor
+102:	Loop -> LoopForEach
+103:	Loop -> LoopWhile
+104:	LoopFor -> 'for my integer' VARIABLE_SYMBOL '(' Expression '..' Expression ')' CodeBlock
+105:	LoopForEach -> 'foreach my' TYPE VARIABLE_SYMBOL '(' ListElements ')' CodeBlock
+106:	LoopWhile -> 'while' '(' Expression ')' CodeBlock
+107:	PLUS-28 -> PLUS-28 Operation
+108:	PLUS-28 -> Operation
+109:	CodeBlock -> '{' PLUS-28 '}'
+110:	STAR-29 -> STAR-29 VariableRetrieval
+111:	STAR-29 -> /* empty */
+112:	Variable -> VARIABLE_SYMBOL STAR-29
+113:	VariableRetrieval -> '->[' Expression ']'
+114:	VariableRetrieval -> '->{' Expression '}'
+115:	VariableDeclaration -> 'my' TYPE VARIABLE_SYMBOL ';'
+116:	VariableDeclaration -> 'my' TYPE VARIABLE_SYMBOL OPERATOR_SYMBOL_19 Expression ';'
+117:	VariableModification -> Variable OPERATOR_SYMBOL_19 Expression ';'
+118:	PAREN-30 -> ',' ListElementValue
+119:	STAR-31 -> STAR-31 PAREN-30
+120:	STAR-31 -> /* empty */
+121:	ListElements -> ListElementValue STAR-31
+122:	ListElementValue -> Expression
+123:	ListElementValue -> '@{' Variable '}'
+124:	ListElementValue -> KEYS_OR_VALUES '%{' Variable '}'
+125:	PAREN-32 -> ',' WORD '=>' HashEntryValue
+126:	STAR-33 -> STAR-33 PAREN-32
+127:	STAR-33 -> /* empty */
+128:	HashEntries -> WORD '=>' HashEntryValue STAR-33
+129:	HashEntryValue -> Expression
+130:	HashEntryValue -> '%{' Variable '}'
+131:	PLUS-34 -> PLUS-34 WORD_SCOPED
+132:	PLUS-34 -> WORD_SCOPED
+133:	STAR-35 -> STAR-35 Method
+134:	STAR-35 -> /* empty */
+135:	Class -> 'package' WORD_SCOPED ';' Header 'use parent qw(' PLUS-34 ');' Properties STAR-35 '1;'
+136:	OPTIONAL-36 -> HashEntries
+137:	OPTIONAL-36 -> /* empty */
+138:	Properties -> 'our %properties' '=' '(' OPTIONAL-36 ');'
+139:	OPTIONAL-37 -> MethodArguments
+140:	OPTIONAL-37 -> /* empty */
+141:	PLUS-38 -> PLUS-38 Operation
+142:	PLUS-38 -> Operation
+143:	Method -> 'our' TYPE VARIABLE_SYMBOL '= sub {' OPTIONAL-37 PLUS-38 '};'
+144:	PAREN-39 -> ',' 'my' TYPE VARIABLE_SYMBOL
+145:	STAR-40 -> STAR-40 PAREN-39
+146:	STAR-40 -> /* empty */
+147:	MethodArguments -> ARGUMENTS_BEGIN TYPE CLASS_OR_SELF STAR-40 ARGUMENTS_END
+
+States:
+-------
+State 0:
+
+	$start -> . CompileUnit $end	(Rule 0)
+
+	'package'	shift, and go to state 8
+	SHEBANG	shift, and go to state 4
+
+	Program	go to state 2
+	Module	go to state 1
+	CompileUnit	go to state 6
+	Class	go to state 5
+	PLUS-1	go to state 3
+	Package	go to state 7
+
+State 1:
+
+	PLUS-1 -> Module .	(Rule 2)
+
+	$default	reduce using rule 2 (PLUS-1)
+
+State 2:
+
+	CompileUnit -> Program .	(Rule 3)
+
+	$default	reduce using rule 3 (CompileUnit)
+
+State 3:
+
+	PLUS-1 -> PLUS-1 . Module	(Rule 1)
+	CompileUnit -> PLUS-1 .	(Rule 4)
+
+	'package'	shift, and go to state 8
+
+	$end	reduce using rule 4 (CompileUnit)
+
+	Class	go to state 5
+	Package	go to state 7
+	Module	go to state 9
+
+State 4:
+
+	Program -> SHEBANG . Header STAR-2 PLUS-3	(Rule 9)
+
+	'use strict;'	shift, and go to state 10
+
+	Header	go to state 11
+
+State 5:
+
+	Module -> Class .	(Rule 11)
+
+	$default	reduce using rule 11 (Module)
+
+State 6:
+
+	$start -> CompileUnit . $end	(Rule 0)
+
+	$end	shift, and go to state 12
+
+State 7:
+
+	Module -> Package .	(Rule 10)
+
+	$default	reduce using rule 10 (Module)
+
+State 8:
+
+	Package -> 'package' . WORD_SCOPED ';' Header PLUS-4 '1;'	(Rule 14)
+	Class -> 'package' . WORD_SCOPED ';' Header 'use parent qw(' PLUS-34 ');' Properties STAR-35 '1;'	(Rule 135)
+
+	WORD_SCOPED	shift, and go to state 13
+
+State 9:
+
+	PLUS-1 -> PLUS-1 Module .	(Rule 1)
+
+	$default	reduce using rule 1 (PLUS-1)
+
+State 10:
+
+	Header -> 'use strict;' . 'use warnings;' 'our $VERSION =' VERSION_NUMBER ';' 'use Carp;' 'use RPerl;' STAR-5 STAR-6	(Rule 19)
+
+	'use warnings;'	shift, and go to state 14
+
+State 11:
+
+	Program -> SHEBANG Header . STAR-2 PLUS-3	(Rule 9)
+
+	$default	reduce using rule 6 (STAR-2)
+
+	STAR-2	go to state 15
+
+State 12:
+
+	$start -> CompileUnit $end .	(Rule 0)
+
+	$default	accept
+
+State 13:
+
+	Package -> 'package' WORD_SCOPED . ';' Header PLUS-4 '1;'	(Rule 14)
+	Class -> 'package' WORD_SCOPED . ';' Header 'use parent qw(' PLUS-34 ');' Properties STAR-35 '1;'	(Rule 135)
+
+	';'	shift, and go to state 16
+
+State 14:
+
+	Header -> 'use strict;' 'use warnings;' . 'our $VERSION =' VERSION_NUMBER ';' 'use Carp;' 'use RPerl;' STAR-5 STAR-6	(Rule 19)
+
+	'our $VERSION ='	shift, and go to state 17
+
+State 15:
+
+	STAR-2 -> STAR-2 . Subroutine	(Rule 5)
+	Program -> SHEBANG Header STAR-2 . PLUS-3	(Rule 9)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'if'	shift, and go to state 40
+	'my'	shift, and go to state 38
+	'our'	shift, and go to state 24
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	LOOP_LABEL	shift, and go to state 45
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_19a	shift, and go to state 37
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	OPERATOR_VOID	shift, and go to state 21
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	'for my integer'	reduce using rule 88 (OPTIONAL-23)
+	'foreach my'	reduce using rule 88 (OPTIONAL-23)
+	'while'	reduce using rule 88 (OPTIONAL-23)
+
+	PAREN-22	go to state 44
+	VariableDeclaration	go to state 47
+	PLUS-3	go to state 28
+	Operator	go to state 39
+	Statement	go to state 43
+	VariableModification	go to state 42
+	Expression	go to state 22
+	Conditional	go to state 35
+	Operation	go to state 23
+	Variable	go to state 29
+	OperatorVoid	go to state 18
+	OPTIONAL-23	go to state 33
+	Subroutine	go to state 19
+
+State 16:
+
+	Package -> 'package' WORD_SCOPED ';' . Header PLUS-4 '1;'	(Rule 14)
+	Class -> 'package' WORD_SCOPED ';' . Header 'use parent qw(' PLUS-34 ');' Properties STAR-35 '1;'	(Rule 135)
+
+	'use strict;'	shift, and go to state 10
+
+	Header	go to state 48
+
+State 17:
+
+	Header -> 'use strict;' 'use warnings;' 'our $VERSION =' . VERSION_NUMBER ';' 'use Carp;' 'use RPerl;' STAR-5 STAR-6	(Rule 19)
+
+	VERSION_NUMBER	shift, and go to state 49
+
+State 18:
+
+	Statement -> OperatorVoid .	(Rule 91)
+
+	$default	reduce using rule 91 (Statement)
+
+State 19:
+
+	STAR-2 -> STAR-2 Subroutine .	(Rule 5)
+
+	$default	reduce using rule 5 (STAR-2)
+
+State 20:
+
+	Expression -> LITERAL .	(Rule 78)
+
+	$default	reduce using rule 78 (Expression)
+
+State 21:
+
+	OperatorVoid -> OPERATOR_VOID . '(' OPTIONAL-17 ')' ';'	(Rule 69)
+
+	'('	shift, and go to state 50
+
+State 22:
+
+	Operation -> Expression . ';'	(Rule 43)
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+
+	';'	shift, and go to state 63
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+	OPERATOR_SYMBOL_07	shift, and go to state 52
+	OPERATOR_SYMBOL_08	shift, and go to state 56
+	OPERATOR_SYMBOL_09	shift, and go to state 51
+	OPERATOR_SYMBOL_11	shift, and go to state 59
+	OPERATOR_SYMBOL_12	shift, and go to state 60
+	OPERATOR_SYMBOL_13	shift, and go to state 54
+	OPERATOR_SYMBOL_14	shift, and go to state 55
+	OPERATOR_SYMBOL_15	shift, and go to state 57
+	OPERATOR_SYMBOL_16	shift, and go to state 62
+	OPERATOR_SYMBOL_17	shift, and go to state 53
+	OPERATOR_SYMBOL_23	shift, and go to state 64
+	OPERATOR_SYMBOL_24	shift, and go to state 58
+
+State 23:
+
+	PLUS-3 -> Operation .	(Rule 8)
+
+	$default	reduce using rule 8 (PLUS-3)
+
+State 24:
+
+	Subroutine -> 'our' . TYPE VARIABLE_SYMBOL '= sub {' OPTIONAL-12 PLUS-13 '};'	(Rule 38)
+
+	TYPE	shift, and go to state 65
+
+State 25:
+
+	Operator -> OPERATOR_SYMBOL_22 . Expression	(Rule 63)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Operator	go to state 39
+	Variable	go to state 67
+	Expression	go to state 66
+
+State 26:
+
+	Operator -> OPERATOR_SYMBOL_03 . Variable	(Rule 48)
+
+	VARIABLE_SYMBOL	shift, and go to state 32
+
+	Variable	go to state 68
+
+State 27:
+
+	Expression -> '(' . Expression ')'	(Rule 85)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Expression	go to state 69
+	Variable	go to state 67
+	Operator	go to state 39
+
+State 28:
+
+	PLUS-3 -> PLUS-3 . Operation	(Rule 7)
+	Program -> SHEBANG Header STAR-2 PLUS-3 .	(Rule 9)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'if'	shift, and go to state 40
+	'my'	shift, and go to state 38
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	LOOP_LABEL	shift, and go to state 45
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_19a	shift, and go to state 37
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	OPERATOR_VOID	shift, and go to state 21
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	$end	reduce using rule 9 (Program)
+	'for my integer'	reduce using rule 88 (OPTIONAL-23)
+	'foreach my'	reduce using rule 88 (OPTIONAL-23)
+	'while'	reduce using rule 88 (OPTIONAL-23)
+
+	Expression	go to state 22
+	Conditional	go to state 35
+	Operation	go to state 70
+	Variable	go to state 29
+	OperatorVoid	go to state 18
+	OPTIONAL-23	go to state 33
+	PAREN-22	go to state 44
+	VariableDeclaration	go to state 47
+	Operator	go to state 39
+	Statement	go to state 43
+	VariableModification	go to state 42
+
+State 29:
+
+	Operator -> Variable . OPERATOR_SYMBOL_03	(Rule 49)
+	Expression -> Variable .	(Rule 79)
+	Expression -> Variable . '->' WORD '(' OPTIONAL-21 ')'	(Rule 84)
+	VariableModification -> Variable . OPERATOR_SYMBOL_19 Expression ';'	(Rule 117)
+
+	'->'	shift, and go to state 71
+	OPERATOR_SYMBOL_03	shift, and go to state 72
+	OPERATOR_SYMBOL_19	shift, and go to state 73
+
+	';'	reduce using rule 79 (Expression)
+	OPERATOR_SYMBOL_04	reduce using rule 79 (Expression)
+	OPERATOR_SYMBOL_07	reduce using rule 79 (Expression)
+	OPERATOR_SYMBOL_08	reduce using rule 79 (Expression)
+	OPERATOR_SYMBOL_09	reduce using rule 79 (Expression)
+	OPERATOR_SYMBOL_11	reduce using rule 79 (Expression)
+	OPERATOR_SYMBOL_12	reduce using rule 79 (Expression)
+	OPERATOR_SYMBOL_13	reduce using rule 79 (Expression)
+	OPERATOR_SYMBOL_14	reduce using rule 79 (Expression)
+	OPERATOR_SYMBOL_15	reduce using rule 79 (Expression)
+	OPERATOR_SYMBOL_16	reduce using rule 79 (Expression)
+	OPERATOR_SYMBOL_17	reduce using rule 79 (Expression)
+	OPERATOR_SYMBOL_23	reduce using rule 79 (Expression)
+	OPERATOR_SYMBOL_24	reduce using rule 79 (Expression)
+
+State 30:
+
+	Operator -> OPERATOR_SYMBOL_10 . Expression	(Rule 55)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Expression	go to state 74
+	Variable	go to state 67
+	Operator	go to state 39
+
+State 31:
+
+	Operator -> OPERATOR_SYMBOL_01 . '(' OPTIONAL-16 ')'	(Rule 47)
+
+	'('	shift, and go to state 75
+
+State 32:
+
+	Variable -> VARIABLE_SYMBOL . STAR-29	(Rule 112)
+
+	$default	reduce using rule 111 (STAR-29)
+
+	STAR-29	go to state 76
+
+State 33:
+
+	Statement -> OPTIONAL-23 . Loop	(Rule 90)
+
+	'for my integer'	shift, and go to state 77
+	'foreach my'	shift, and go to state 81
+	'while'	shift, and go to state 83
+
+	LoopFor	go to state 82
+	LoopForEach	go to state 79
+	LoopWhile	go to state 78
+	Loop	go to state 80
+
+State 34:
+
+	Expression -> '[' . OPTIONAL-18 ']'	(Rule 80)
+
+	'('	shift, and go to state 27
+	'@{'	shift, and go to state 88
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	KEYS_OR_VALUES	shift, and go to state 87
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	']'	reduce using rule 71 (OPTIONAL-18)
+
+	Variable	go to state 67
+	Operator	go to state 39
+	Expression	go to state 84
+	ListElements	go to state 85
+	ListElementValue	go to state 86
+	OPTIONAL-18	go to state 89
+
+State 35:
+
+	Statement -> Conditional .	(Rule 89)
+
+	$default	reduce using rule 89 (Statement)
+
+State 36:
+
+	Expression -> '{' . OPTIONAL-19 '}'	(Rule 81)
+
+	WORD	shift, and go to state 90
+
+	'}'	reduce using rule 73 (OPTIONAL-19)
+
+	HashEntries	go to state 92
+	OPTIONAL-19	go to state 91
+
+State 37:
+
+	OperatorVoid -> OPERATOR_SYMBOL_19a . LOOP_LABEL ';'	(Rule 68)
+
+	LOOP_LABEL	shift, and go to state 93
+
+State 38:
+
+	VariableDeclaration -> 'my' . TYPE VARIABLE_SYMBOL ';'	(Rule 115)
+	VariableDeclaration -> 'my' . TYPE VARIABLE_SYMBOL OPERATOR_SYMBOL_19 Expression ';'	(Rule 116)
+
+	TYPE	shift, and go to state 94
+
+State 39:
+
+	Expression -> Operator .	(Rule 82)
+
+	$default	reduce using rule 82 (Expression)
+
+State 40:
+
+	Conditional -> 'if' . '(' Expression ')' CodeBlock STAR-25 OPTIONAL-27	(Rule 100)
+
+	'('	shift, and go to state 95
+
+State 41:
+
+	Expression -> WORD_SCOPED . '(' OPTIONAL-20 ')'	(Rule 83)
+
+	'('	shift, and go to state 96
+
+State 42:
+
+	Statement -> VariableModification .	(Rule 93)
+
+	$default	reduce using rule 93 (Statement)
+
+State 43:
+
+	Operation -> Statement .	(Rule 44)
+
+	$default	reduce using rule 44 (Operation)
+
+State 44:
+
+	OPTIONAL-23 -> PAREN-22 .	(Rule 87)
+
+	$default	reduce using rule 87 (OPTIONAL-23)
+
+State 45:
+
+	PAREN-22 -> LOOP_LABEL . ':'	(Rule 86)
+
+	':'	shift, and go to state 97
+
+State 46:
+
+	Operator -> OPERATOR_SYMBOL_05 . Expression	(Rule 51)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Operator	go to state 39
+	Variable	go to state 67
+	Expression	go to state 98
+
+State 47:
+
+	Statement -> VariableDeclaration .	(Rule 92)
+
+	$default	reduce using rule 92 (Statement)
+
+State 48:
+
+	Package -> 'package' WORD_SCOPED ';' Header . PLUS-4 '1;'	(Rule 14)
+	Class -> 'package' WORD_SCOPED ';' Header . 'use parent qw(' PLUS-34 ');' Properties STAR-35 '1;'	(Rule 135)
+
+	'our'	shift, and go to state 24
+	'use parent qw('	shift, and go to state 99
+
+	PLUS-4	go to state 101
+	Subroutine	go to state 100
+
+State 49:
+
+	Header -> 'use strict;' 'use warnings;' 'our $VERSION =' VERSION_NUMBER . ';' 'use Carp;' 'use RPerl;' STAR-5 STAR-6	(Rule 19)
+
+	';'	shift, and go to state 102
+
+State 50:
+
+	OperatorVoid -> OPERATOR_VOID '(' . OPTIONAL-17 ')' ';'	(Rule 69)
+
+	'('	shift, and go to state 27
+	'@{'	shift, and go to state 88
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	KEYS_OR_VALUES	shift, and go to state 87
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	')'	reduce using rule 67 (OPTIONAL-17)
+
+	Operator	go to state 39
+	Variable	go to state 67
+	Expression	go to state 84
+	ListElements	go to state 104
+	ListElementValue	go to state 86
+	OPTIONAL-17	go to state 103
+
+State 51:
+
+	Operator -> Expression OPERATOR_SYMBOL_09 . Expression	(Rule 54)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Expression	go to state 105
+	Variable	go to state 67
+	Operator	go to state 39
+
+State 52:
+
+	Operator -> Expression OPERATOR_SYMBOL_07 . Expression	(Rule 52)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Expression	go to state 106
+	Operator	go to state 39
+	Variable	go to state 67
+
+State 53:
+
+	Operator -> Expression OPERATOR_SYMBOL_17 . Expression	(Rule 62)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Variable	go to state 67
+	Operator	go to state 39
+	Expression	go to state 107
+
+State 54:
+
+	Operator -> Expression OPERATOR_SYMBOL_13 . Expression	(Rule 58)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Expression	go to state 108
+	Variable	go to state 67
+	Operator	go to state 39
+
+State 55:
+
+	Operator -> Expression OPERATOR_SYMBOL_14 . Expression	(Rule 59)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Expression	go to state 109
+	Operator	go to state 39
+	Variable	go to state 67
+
+State 56:
+
+	Operator -> Expression OPERATOR_SYMBOL_08 . Expression	(Rule 53)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Variable	go to state 67
+	Operator	go to state 39
+	Expression	go to state 110
+
+State 57:
+
+	Operator -> Expression OPERATOR_SYMBOL_15 . Expression	(Rule 60)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Operator	go to state 39
+	Variable	go to state 67
+	Expression	go to state 111
+
+State 58:
+
+	Operator -> Expression OPERATOR_SYMBOL_24 . Expression	(Rule 65)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Expression	go to state 112
+	Variable	go to state 67
+	Operator	go to state 39
+
+State 59:
+
+	Operator -> Expression OPERATOR_SYMBOL_11 . Expression	(Rule 56)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Expression	go to state 113
+	Operator	go to state 39
+	Variable	go to state 67
+
+State 60:
+
+	Operator -> Expression OPERATOR_SYMBOL_12 . Expression	(Rule 57)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Expression	go to state 114
+	Variable	go to state 67
+	Operator	go to state 39
+
+State 61:
+
+	Operator -> Expression OPERATOR_SYMBOL_04 . Expression	(Rule 50)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Expression	go to state 115
+	Variable	go to state 67
+	Operator	go to state 39
+
+State 62:
+
+	Operator -> Expression OPERATOR_SYMBOL_16 . Expression	(Rule 61)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Expression	go to state 116
+	Operator	go to state 39
+	Variable	go to state 67
+
+State 63:
+
+	Operation -> Expression ';' .	(Rule 43)
+
+	$default	reduce using rule 43 (Operation)
+
+State 64:
+
+	Operator -> Expression OPERATOR_SYMBOL_23 . Expression	(Rule 64)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Expression	go to state 117
+	Variable	go to state 67
+	Operator	go to state 39
+
+State 65:
+
+	Subroutine -> 'our' TYPE . VARIABLE_SYMBOL '= sub {' OPTIONAL-12 PLUS-13 '};'	(Rule 38)
+
+	VARIABLE_SYMBOL	shift, and go to state 118
+
+State 66:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> OPERATOR_SYMBOL_22 Expression .	(Rule 63)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+	OPERATOR_SYMBOL_07	shift, and go to state 52
+	OPERATOR_SYMBOL_08	shift, and go to state 56
+	OPERATOR_SYMBOL_09	shift, and go to state 51
+	OPERATOR_SYMBOL_11	shift, and go to state 59
+	OPERATOR_SYMBOL_12	shift, and go to state 60
+	OPERATOR_SYMBOL_13	shift, and go to state 54
+	OPERATOR_SYMBOL_14	shift, and go to state 55
+	OPERATOR_SYMBOL_15	shift, and go to state 57
+	OPERATOR_SYMBOL_16	shift, and go to state 62
+	OPERATOR_SYMBOL_17	shift, and go to state 53
+
+	')'	reduce using rule 63 (Operator)
+	');'	reduce using rule 63 (Operator)
+	','	reduce using rule 63 (Operator)
+	'..'	reduce using rule 63 (Operator)
+	';'	reduce using rule 63 (Operator)
+	']'	reduce using rule 63 (Operator)
+	'}'	reduce using rule 63 (Operator)
+	OPERATOR_SYMBOL_23	reduce using rule 63 (Operator)
+	OPERATOR_SYMBOL_24	reduce using rule 63 (Operator)
+
+State 67:
+
+	Operator -> Variable . OPERATOR_SYMBOL_03	(Rule 49)
+	Expression -> Variable .	(Rule 79)
+	Expression -> Variable . '->' WORD '(' OPTIONAL-21 ')'	(Rule 84)
+
+	'->'	shift, and go to state 71
+	OPERATOR_SYMBOL_03	shift, and go to state 72
+
+	')'	reduce using rule 79 (Expression)
+	');'	reduce using rule 79 (Expression)
+	','	reduce using rule 79 (Expression)
+	'..'	reduce using rule 79 (Expression)
+	';'	reduce using rule 79 (Expression)
+	']'	reduce using rule 79 (Expression)
+	'}'	reduce using rule 79 (Expression)
+	OPERATOR_SYMBOL_04	reduce using rule 79 (Expression)
+	OPERATOR_SYMBOL_07	reduce using rule 79 (Expression)
+	OPERATOR_SYMBOL_08	reduce using rule 79 (Expression)
+	OPERATOR_SYMBOL_09	reduce using rule 79 (Expression)
+	OPERATOR_SYMBOL_11	reduce using rule 79 (Expression)
+	OPERATOR_SYMBOL_12	reduce using rule 79 (Expression)
+	OPERATOR_SYMBOL_13	reduce using rule 79 (Expression)
+	OPERATOR_SYMBOL_14	reduce using rule 79 (Expression)
+	OPERATOR_SYMBOL_15	reduce using rule 79 (Expression)
+	OPERATOR_SYMBOL_16	reduce using rule 79 (Expression)
+	OPERATOR_SYMBOL_17	reduce using rule 79 (Expression)
+	OPERATOR_SYMBOL_23	reduce using rule 79 (Expression)
+	OPERATOR_SYMBOL_24	reduce using rule 79 (Expression)
+
+State 68:
+
+	Operator -> OPERATOR_SYMBOL_03 Variable .	(Rule 48)
+
+	$default	reduce using rule 48 (Operator)
+
+State 69:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+	Expression -> '(' Expression . ')'	(Rule 85)
+
+	')'	shift, and go to state 119
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+	OPERATOR_SYMBOL_07	shift, and go to state 52
+	OPERATOR_SYMBOL_08	shift, and go to state 56
+	OPERATOR_SYMBOL_09	shift, and go to state 51
+	OPERATOR_SYMBOL_11	shift, and go to state 59
+	OPERATOR_SYMBOL_12	shift, and go to state 60
+	OPERATOR_SYMBOL_13	shift, and go to state 54
+	OPERATOR_SYMBOL_14	shift, and go to state 55
+	OPERATOR_SYMBOL_15	shift, and go to state 57
+	OPERATOR_SYMBOL_16	shift, and go to state 62
+	OPERATOR_SYMBOL_17	shift, and go to state 53
+	OPERATOR_SYMBOL_23	shift, and go to state 64
+	OPERATOR_SYMBOL_24	shift, and go to state 58
+
+State 70:
+
+	PLUS-3 -> PLUS-3 Operation .	(Rule 7)
+
+	$default	reduce using rule 7 (PLUS-3)
+
+State 71:
+
+	Expression -> Variable '->' . WORD '(' OPTIONAL-21 ')'	(Rule 84)
+
+	WORD	shift, and go to state 120
+
+State 72:
+
+	Operator -> Variable OPERATOR_SYMBOL_03 .	(Rule 49)
+
+	$default	reduce using rule 49 (Operator)
+
+State 73:
+
+	VariableModification -> Variable OPERATOR_SYMBOL_19 . Expression ';'	(Rule 117)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Variable	go to state 67
+	Operator	go to state 39
+	Expression	go to state 121
+
+State 74:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> OPERATOR_SYMBOL_10 Expression .	(Rule 55)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+	OPERATOR_SYMBOL_07	shift, and go to state 52
+	OPERATOR_SYMBOL_08	shift, and go to state 56
+	OPERATOR_SYMBOL_09	shift, and go to state 51
+
+	')'	reduce using rule 55 (Operator)
+	');'	reduce using rule 55 (Operator)
+	','	reduce using rule 55 (Operator)
+	'..'	reduce using rule 55 (Operator)
+	';'	reduce using rule 55 (Operator)
+	']'	reduce using rule 55 (Operator)
+	'}'	reduce using rule 55 (Operator)
+	OPERATOR_SYMBOL_11	reduce using rule 55 (Operator)
+	OPERATOR_SYMBOL_12	reduce using rule 55 (Operator)
+	OPERATOR_SYMBOL_13	reduce using rule 55 (Operator)
+	OPERATOR_SYMBOL_14	reduce using rule 55 (Operator)
+	OPERATOR_SYMBOL_15	reduce using rule 55 (Operator)
+	OPERATOR_SYMBOL_16	reduce using rule 55 (Operator)
+	OPERATOR_SYMBOL_17	reduce using rule 55 (Operator)
+	OPERATOR_SYMBOL_23	reduce using rule 55 (Operator)
+	OPERATOR_SYMBOL_24	reduce using rule 55 (Operator)
+
+State 75:
+
+	Operator -> OPERATOR_SYMBOL_01 '(' . OPTIONAL-16 ')'	(Rule 47)
+
+	'('	shift, and go to state 27
+	'@{'	shift, and go to state 88
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	KEYS_OR_VALUES	shift, and go to state 87
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	')'	reduce using rule 46 (OPTIONAL-16)
+
+	ListElementValue	go to state 86
+	Expression	go to state 84
+	ListElements	go to state 123
+	Variable	go to state 67
+	Operator	go to state 39
+	OPTIONAL-16	go to state 122
+
+State 76:
+
+	STAR-29 -> STAR-29 . VariableRetrieval	(Rule 110)
+	Variable -> VARIABLE_SYMBOL STAR-29 .	(Rule 112)
+
+	'->['	shift, and go to state 126
+	'->{'	shift, and go to state 125
+
+	')'	reduce using rule 112 (Variable)
+	');'	reduce using rule 112 (Variable)
+	','	reduce using rule 112 (Variable)
+	'->'	reduce using rule 112 (Variable)
+	'..'	reduce using rule 112 (Variable)
+	';'	reduce using rule 112 (Variable)
+	']'	reduce using rule 112 (Variable)
+	'}'	reduce using rule 112 (Variable)
+	OPERATOR_SYMBOL_03	reduce using rule 112 (Variable)
+	OPERATOR_SYMBOL_04	reduce using rule 112 (Variable)
+	OPERATOR_SYMBOL_07	reduce using rule 112 (Variable)
+	OPERATOR_SYMBOL_08	reduce using rule 112 (Variable)
+	OPERATOR_SYMBOL_09	reduce using rule 112 (Variable)
+	OPERATOR_SYMBOL_11	reduce using rule 112 (Variable)
+	OPERATOR_SYMBOL_12	reduce using rule 112 (Variable)
+	OPERATOR_SYMBOL_13	reduce using rule 112 (Variable)
+	OPERATOR_SYMBOL_14	reduce using rule 112 (Variable)
+	OPERATOR_SYMBOL_15	reduce using rule 112 (Variable)
+	OPERATOR_SYMBOL_16	reduce using rule 112 (Variable)
+	OPERATOR_SYMBOL_17	reduce using rule 112 (Variable)
+	OPERATOR_SYMBOL_19	reduce using rule 112 (Variable)
+	OPERATOR_SYMBOL_23	reduce using rule 112 (Variable)
+	OPERATOR_SYMBOL_24	reduce using rule 112 (Variable)
+
+	VariableRetrieval	go to state 124
+
+State 77:
+
+	LoopFor -> 'for my integer' . VARIABLE_SYMBOL '(' Expression '..' Expression ')' CodeBlock	(Rule 104)
+
+	VARIABLE_SYMBOL	shift, and go to state 127
+
+State 78:
+
+	Loop -> LoopWhile .	(Rule 103)
+
+	$default	reduce using rule 103 (Loop)
+
+State 79:
+
+	Loop -> LoopForEach .	(Rule 102)
+
+	$default	reduce using rule 102 (Loop)
+
+State 80:
+
+	Statement -> OPTIONAL-23 Loop .	(Rule 90)
+
+	$default	reduce using rule 90 (Statement)
+
+State 81:
+
+	LoopForEach -> 'foreach my' . TYPE VARIABLE_SYMBOL '(' ListElements ')' CodeBlock	(Rule 105)
+
+	TYPE	shift, and go to state 128
+
+State 82:
+
+	Loop -> LoopFor .	(Rule 101)
+
+	$default	reduce using rule 101 (Loop)
+
+State 83:
+
+	LoopWhile -> 'while' . '(' Expression ')' CodeBlock	(Rule 106)
+
+	'('	shift, and go to state 129
+
+State 84:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+	ListElementValue -> Expression .	(Rule 122)
+
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+	OPERATOR_SYMBOL_07	shift, and go to state 52
+	OPERATOR_SYMBOL_08	shift, and go to state 56
+	OPERATOR_SYMBOL_09	shift, and go to state 51
+	OPERATOR_SYMBOL_11	shift, and go to state 59
+	OPERATOR_SYMBOL_12	shift, and go to state 60
+	OPERATOR_SYMBOL_13	shift, and go to state 54
+	OPERATOR_SYMBOL_14	shift, and go to state 55
+	OPERATOR_SYMBOL_15	shift, and go to state 57
+	OPERATOR_SYMBOL_16	shift, and go to state 62
+	OPERATOR_SYMBOL_17	shift, and go to state 53
+	OPERATOR_SYMBOL_23	shift, and go to state 64
+	OPERATOR_SYMBOL_24	shift, and go to state 58
+
+	')'	reduce using rule 122 (ListElementValue)
+	','	reduce using rule 122 (ListElementValue)
+	']'	reduce using rule 122 (ListElementValue)
+
+State 85:
+
+	OPTIONAL-18 -> ListElements .	(Rule 70)
+
+	$default	reduce using rule 70 (OPTIONAL-18)
+
+State 86:
+
+	ListElements -> ListElementValue . STAR-31	(Rule 121)
+
+	$default	reduce using rule 120 (STAR-31)
+
+	STAR-31	go to state 130
+
+State 87:
+
+	ListElementValue -> KEYS_OR_VALUES . '%{' Variable '}'	(Rule 124)
+
+	'%{'	shift, and go to state 131
+
+State 88:
+
+	ListElementValue -> '@{' . Variable '}'	(Rule 123)
+
+	VARIABLE_SYMBOL	shift, and go to state 32
+
+	Variable	go to state 132
+
+State 89:
+
+	Expression -> '[' OPTIONAL-18 . ']'	(Rule 80)
+
+	']'	shift, and go to state 133
+
+State 90:
+
+	HashEntries -> WORD . '=>' HashEntryValue STAR-33	(Rule 128)
+
+	'=>'	shift, and go to state 134
+
+State 91:
+
+	Expression -> '{' OPTIONAL-19 . '}'	(Rule 81)
+
+	'}'	shift, and go to state 135
+
+State 92:
+
+	OPTIONAL-19 -> HashEntries .	(Rule 72)
+
+	$default	reduce using rule 72 (OPTIONAL-19)
+
+State 93:
+
+	OperatorVoid -> OPERATOR_SYMBOL_19a LOOP_LABEL . ';'	(Rule 68)
+
+	';'	shift, and go to state 136
+
+State 94:
+
+	VariableDeclaration -> 'my' TYPE . VARIABLE_SYMBOL ';'	(Rule 115)
+	VariableDeclaration -> 'my' TYPE . VARIABLE_SYMBOL OPERATOR_SYMBOL_19 Expression ';'	(Rule 116)
+
+	VARIABLE_SYMBOL	shift, and go to state 137
+
+State 95:
+
+	Conditional -> 'if' '(' . Expression ')' CodeBlock STAR-25 OPTIONAL-27	(Rule 100)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Operator	go to state 39
+	Variable	go to state 67
+	Expression	go to state 138
+
+State 96:
+
+	Expression -> WORD_SCOPED '(' . OPTIONAL-20 ')'	(Rule 83)
+
+	'('	shift, and go to state 27
+	'@{'	shift, and go to state 88
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	KEYS_OR_VALUES	shift, and go to state 87
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	')'	reduce using rule 75 (OPTIONAL-20)
+
+	ListElements	go to state 140
+	Expression	go to state 84
+	ListElementValue	go to state 86
+	OPTIONAL-20	go to state 139
+	Variable	go to state 67
+	Operator	go to state 39
+
+State 97:
+
+	PAREN-22 -> LOOP_LABEL ':' .	(Rule 86)
+
+	$default	reduce using rule 86 (PAREN-22)
+
+State 98:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> OPERATOR_SYMBOL_05 Expression .	(Rule 51)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+
+	')'	reduce using rule 51 (Operator)
+	');'	reduce using rule 51 (Operator)
+	','	reduce using rule 51 (Operator)
+	'..'	reduce using rule 51 (Operator)
+	';'	reduce using rule 51 (Operator)
+	']'	reduce using rule 51 (Operator)
+	'}'	reduce using rule 51 (Operator)
+	OPERATOR_SYMBOL_07	reduce using rule 51 (Operator)
+	OPERATOR_SYMBOL_08	reduce using rule 51 (Operator)
+	OPERATOR_SYMBOL_09	reduce using rule 51 (Operator)
+	OPERATOR_SYMBOL_11	reduce using rule 51 (Operator)
+	OPERATOR_SYMBOL_12	reduce using rule 51 (Operator)
+	OPERATOR_SYMBOL_13	reduce using rule 51 (Operator)
+	OPERATOR_SYMBOL_14	reduce using rule 51 (Operator)
+	OPERATOR_SYMBOL_15	reduce using rule 51 (Operator)
+	OPERATOR_SYMBOL_16	reduce using rule 51 (Operator)
+	OPERATOR_SYMBOL_17	reduce using rule 51 (Operator)
+	OPERATOR_SYMBOL_23	reduce using rule 51 (Operator)
+	OPERATOR_SYMBOL_24	reduce using rule 51 (Operator)
+
+State 99:
+
+	Class -> 'package' WORD_SCOPED ';' Header 'use parent qw(' . PLUS-34 ');' Properties STAR-35 '1;'	(Rule 135)
+
+	WORD_SCOPED	shift, and go to state 141
+
+	PLUS-34	go to state 142
+
+State 100:
+
+	PLUS-4 -> Subroutine .	(Rule 13)
+
+	$default	reduce using rule 13 (PLUS-4)
+
+State 101:
+
+	PLUS-4 -> PLUS-4 . Subroutine	(Rule 12)
+	Package -> 'package' WORD_SCOPED ';' Header PLUS-4 . '1;'	(Rule 14)
+
+	'1;'	shift, and go to state 143
+	'our'	shift, and go to state 24
+
+	Subroutine	go to state 144
+
+State 102:
+
+	Header -> 'use strict;' 'use warnings;' 'our $VERSION =' VERSION_NUMBER ';' . 'use Carp;' 'use RPerl;' STAR-5 STAR-6	(Rule 19)
+
+	'use Carp;'	shift, and go to state 145
+
+State 103:
+
+	OperatorVoid -> OPERATOR_VOID '(' OPTIONAL-17 . ')' ';'	(Rule 69)
+
+	')'	shift, and go to state 146
+
+State 104:
+
+	OPTIONAL-17 -> ListElements .	(Rule 66)
+
+	$default	reduce using rule 66 (OPTIONAL-17)
+
+State 105:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression OPERATOR_SYMBOL_09 Expression .	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+	OPERATOR_SYMBOL_07	shift, and go to state 52
+	OPERATOR_SYMBOL_08	shift, and go to state 56
+
+	')'	reduce using rule 54 (Operator)
+	');'	reduce using rule 54 (Operator)
+	','	reduce using rule 54 (Operator)
+	'..'	reduce using rule 54 (Operator)
+	';'	reduce using rule 54 (Operator)
+	']'	reduce using rule 54 (Operator)
+	'}'	reduce using rule 54 (Operator)
+	OPERATOR_SYMBOL_09	reduce using rule 54 (Operator)
+	OPERATOR_SYMBOL_11	reduce using rule 54 (Operator)
+	OPERATOR_SYMBOL_12	reduce using rule 54 (Operator)
+	OPERATOR_SYMBOL_13	reduce using rule 54 (Operator)
+	OPERATOR_SYMBOL_14	reduce using rule 54 (Operator)
+	OPERATOR_SYMBOL_15	reduce using rule 54 (Operator)
+	OPERATOR_SYMBOL_16	reduce using rule 54 (Operator)
+	OPERATOR_SYMBOL_17	reduce using rule 54 (Operator)
+	OPERATOR_SYMBOL_23	reduce using rule 54 (Operator)
+	OPERATOR_SYMBOL_24	reduce using rule 54 (Operator)
+
+State 106:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression OPERATOR_SYMBOL_07 Expression .	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+
+	')'	reduce using rule 52 (Operator)
+	');'	reduce using rule 52 (Operator)
+	','	reduce using rule 52 (Operator)
+	'..'	reduce using rule 52 (Operator)
+	';'	reduce using rule 52 (Operator)
+	']'	reduce using rule 52 (Operator)
+	'}'	reduce using rule 52 (Operator)
+	OPERATOR_SYMBOL_07	reduce using rule 52 (Operator)
+	OPERATOR_SYMBOL_08	reduce using rule 52 (Operator)
+	OPERATOR_SYMBOL_09	reduce using rule 52 (Operator)
+	OPERATOR_SYMBOL_11	reduce using rule 52 (Operator)
+	OPERATOR_SYMBOL_12	reduce using rule 52 (Operator)
+	OPERATOR_SYMBOL_13	reduce using rule 52 (Operator)
+	OPERATOR_SYMBOL_14	reduce using rule 52 (Operator)
+	OPERATOR_SYMBOL_15	reduce using rule 52 (Operator)
+	OPERATOR_SYMBOL_16	reduce using rule 52 (Operator)
+	OPERATOR_SYMBOL_17	reduce using rule 52 (Operator)
+	OPERATOR_SYMBOL_23	reduce using rule 52 (Operator)
+	OPERATOR_SYMBOL_24	reduce using rule 52 (Operator)
+
+State 107:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression OPERATOR_SYMBOL_17 Expression .	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+	OPERATOR_SYMBOL_07	shift, and go to state 52
+	OPERATOR_SYMBOL_08	shift, and go to state 56
+	OPERATOR_SYMBOL_09	shift, and go to state 51
+	OPERATOR_SYMBOL_11	shift, and go to state 59
+	OPERATOR_SYMBOL_12	shift, and go to state 60
+	OPERATOR_SYMBOL_13	shift, and go to state 54
+	OPERATOR_SYMBOL_14	shift, and go to state 55
+	OPERATOR_SYMBOL_15	shift, and go to state 57
+	OPERATOR_SYMBOL_16	shift, and go to state 62
+
+	OPERATOR_SYMBOL_17	error (nonassociative)
+
+	')'	reduce using rule 62 (Operator)
+	');'	reduce using rule 62 (Operator)
+	','	reduce using rule 62 (Operator)
+	'..'	reduce using rule 62 (Operator)
+	';'	reduce using rule 62 (Operator)
+	']'	reduce using rule 62 (Operator)
+	'}'	reduce using rule 62 (Operator)
+	OPERATOR_SYMBOL_23	reduce using rule 62 (Operator)
+	OPERATOR_SYMBOL_24	reduce using rule 62 (Operator)
+
+State 108:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression OPERATOR_SYMBOL_13 Expression .	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+	OPERATOR_SYMBOL_07	shift, and go to state 52
+	OPERATOR_SYMBOL_08	shift, and go to state 56
+	OPERATOR_SYMBOL_09	shift, and go to state 51
+	OPERATOR_SYMBOL_11	shift, and go to state 59
+	OPERATOR_SYMBOL_12	shift, and go to state 60
+
+	')'	reduce using rule 58 (Operator)
+	');'	reduce using rule 58 (Operator)
+	','	reduce using rule 58 (Operator)
+	'..'	reduce using rule 58 (Operator)
+	';'	reduce using rule 58 (Operator)
+	']'	reduce using rule 58 (Operator)
+	'}'	reduce using rule 58 (Operator)
+	OPERATOR_SYMBOL_13	reduce using rule 58 (Operator)
+	OPERATOR_SYMBOL_14	reduce using rule 58 (Operator)
+	OPERATOR_SYMBOL_15	reduce using rule 58 (Operator)
+	OPERATOR_SYMBOL_16	reduce using rule 58 (Operator)
+	OPERATOR_SYMBOL_17	reduce using rule 58 (Operator)
+	OPERATOR_SYMBOL_23	reduce using rule 58 (Operator)
+	OPERATOR_SYMBOL_24	reduce using rule 58 (Operator)
+
+State 109:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression OPERATOR_SYMBOL_14 Expression .	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+	OPERATOR_SYMBOL_07	shift, and go to state 52
+	OPERATOR_SYMBOL_08	shift, and go to state 56
+	OPERATOR_SYMBOL_09	shift, and go to state 51
+	OPERATOR_SYMBOL_11	shift, and go to state 59
+	OPERATOR_SYMBOL_12	shift, and go to state 60
+	OPERATOR_SYMBOL_13	shift, and go to state 54
+
+	')'	reduce using rule 59 (Operator)
+	');'	reduce using rule 59 (Operator)
+	','	reduce using rule 59 (Operator)
+	'..'	reduce using rule 59 (Operator)
+	';'	reduce using rule 59 (Operator)
+	']'	reduce using rule 59 (Operator)
+	'}'	reduce using rule 59 (Operator)
+	OPERATOR_SYMBOL_14	reduce using rule 59 (Operator)
+	OPERATOR_SYMBOL_15	reduce using rule 59 (Operator)
+	OPERATOR_SYMBOL_16	reduce using rule 59 (Operator)
+	OPERATOR_SYMBOL_17	reduce using rule 59 (Operator)
+	OPERATOR_SYMBOL_23	reduce using rule 59 (Operator)
+	OPERATOR_SYMBOL_24	reduce using rule 59 (Operator)
+
+State 110:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression OPERATOR_SYMBOL_08 Expression .	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+	OPERATOR_SYMBOL_07	shift, and go to state 52
+
+	')'	reduce using rule 53 (Operator)
+	');'	reduce using rule 53 (Operator)
+	','	reduce using rule 53 (Operator)
+	'..'	reduce using rule 53 (Operator)
+	';'	reduce using rule 53 (Operator)
+	']'	reduce using rule 53 (Operator)
+	'}'	reduce using rule 53 (Operator)
+	OPERATOR_SYMBOL_08	reduce using rule 53 (Operator)
+	OPERATOR_SYMBOL_09	reduce using rule 53 (Operator)
+	OPERATOR_SYMBOL_11	reduce using rule 53 (Operator)
+	OPERATOR_SYMBOL_12	reduce using rule 53 (Operator)
+	OPERATOR_SYMBOL_13	reduce using rule 53 (Operator)
+	OPERATOR_SYMBOL_14	reduce using rule 53 (Operator)
+	OPERATOR_SYMBOL_15	reduce using rule 53 (Operator)
+	OPERATOR_SYMBOL_16	reduce using rule 53 (Operator)
+	OPERATOR_SYMBOL_17	reduce using rule 53 (Operator)
+	OPERATOR_SYMBOL_23	reduce using rule 53 (Operator)
+	OPERATOR_SYMBOL_24	reduce using rule 53 (Operator)
+
+State 111:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression OPERATOR_SYMBOL_15 Expression .	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+	OPERATOR_SYMBOL_07	shift, and go to state 52
+	OPERATOR_SYMBOL_08	shift, and go to state 56
+	OPERATOR_SYMBOL_09	shift, and go to state 51
+	OPERATOR_SYMBOL_11	shift, and go to state 59
+	OPERATOR_SYMBOL_12	shift, and go to state 60
+	OPERATOR_SYMBOL_13	shift, and go to state 54
+	OPERATOR_SYMBOL_14	shift, and go to state 55
+
+	')'	reduce using rule 60 (Operator)
+	');'	reduce using rule 60 (Operator)
+	','	reduce using rule 60 (Operator)
+	'..'	reduce using rule 60 (Operator)
+	';'	reduce using rule 60 (Operator)
+	']'	reduce using rule 60 (Operator)
+	'}'	reduce using rule 60 (Operator)
+	OPERATOR_SYMBOL_15	reduce using rule 60 (Operator)
+	OPERATOR_SYMBOL_16	reduce using rule 60 (Operator)
+	OPERATOR_SYMBOL_17	reduce using rule 60 (Operator)
+	OPERATOR_SYMBOL_23	reduce using rule 60 (Operator)
+	OPERATOR_SYMBOL_24	reduce using rule 60 (Operator)
+
+State 112:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+	Operator -> Expression OPERATOR_SYMBOL_24 Expression .	(Rule 65)
+
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+	OPERATOR_SYMBOL_07	shift, and go to state 52
+	OPERATOR_SYMBOL_08	shift, and go to state 56
+	OPERATOR_SYMBOL_09	shift, and go to state 51
+	OPERATOR_SYMBOL_11	shift, and go to state 59
+	OPERATOR_SYMBOL_12	shift, and go to state 60
+	OPERATOR_SYMBOL_13	shift, and go to state 54
+	OPERATOR_SYMBOL_14	shift, and go to state 55
+	OPERATOR_SYMBOL_15	shift, and go to state 57
+	OPERATOR_SYMBOL_16	shift, and go to state 62
+	OPERATOR_SYMBOL_17	shift, and go to state 53
+	OPERATOR_SYMBOL_23	shift, and go to state 64
+
+	')'	reduce using rule 65 (Operator)
+	');'	reduce using rule 65 (Operator)
+	','	reduce using rule 65 (Operator)
+	'..'	reduce using rule 65 (Operator)
+	';'	reduce using rule 65 (Operator)
+	']'	reduce using rule 65 (Operator)
+	'}'	reduce using rule 65 (Operator)
+	OPERATOR_SYMBOL_24	reduce using rule 65 (Operator)
+
+State 113:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression OPERATOR_SYMBOL_11 Expression .	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+	OPERATOR_SYMBOL_07	shift, and go to state 52
+	OPERATOR_SYMBOL_08	shift, and go to state 56
+	OPERATOR_SYMBOL_09	shift, and go to state 51
+
+	OPERATOR_SYMBOL_11	error (nonassociative)
+
+	')'	reduce using rule 56 (Operator)
+	');'	reduce using rule 56 (Operator)
+	','	reduce using rule 56 (Operator)
+	'..'	reduce using rule 56 (Operator)
+	';'	reduce using rule 56 (Operator)
+	']'	reduce using rule 56 (Operator)
+	'}'	reduce using rule 56 (Operator)
+	OPERATOR_SYMBOL_12	reduce using rule 56 (Operator)
+	OPERATOR_SYMBOL_13	reduce using rule 56 (Operator)
+	OPERATOR_SYMBOL_14	reduce using rule 56 (Operator)
+	OPERATOR_SYMBOL_15	reduce using rule 56 (Operator)
+	OPERATOR_SYMBOL_16	reduce using rule 56 (Operator)
+	OPERATOR_SYMBOL_17	reduce using rule 56 (Operator)
+	OPERATOR_SYMBOL_23	reduce using rule 56 (Operator)
+	OPERATOR_SYMBOL_24	reduce using rule 56 (Operator)
+
+State 114:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression OPERATOR_SYMBOL_12 Expression .	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+	OPERATOR_SYMBOL_07	shift, and go to state 52
+	OPERATOR_SYMBOL_08	shift, and go to state 56
+	OPERATOR_SYMBOL_09	shift, and go to state 51
+	OPERATOR_SYMBOL_11	shift, and go to state 59
+
+	OPERATOR_SYMBOL_12	error (nonassociative)
+
+	')'	reduce using rule 57 (Operator)
+	');'	reduce using rule 57 (Operator)
+	','	reduce using rule 57 (Operator)
+	'..'	reduce using rule 57 (Operator)
+	';'	reduce using rule 57 (Operator)
+	']'	reduce using rule 57 (Operator)
+	'}'	reduce using rule 57 (Operator)
+	OPERATOR_SYMBOL_13	reduce using rule 57 (Operator)
+	OPERATOR_SYMBOL_14	reduce using rule 57 (Operator)
+	OPERATOR_SYMBOL_15	reduce using rule 57 (Operator)
+	OPERATOR_SYMBOL_16	reduce using rule 57 (Operator)
+	OPERATOR_SYMBOL_17	reduce using rule 57 (Operator)
+	OPERATOR_SYMBOL_23	reduce using rule 57 (Operator)
+	OPERATOR_SYMBOL_24	reduce using rule 57 (Operator)
+
+State 115:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression OPERATOR_SYMBOL_04 Expression .	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+
+	')'	reduce using rule 50 (Operator)
+	');'	reduce using rule 50 (Operator)
+	','	reduce using rule 50 (Operator)
+	'..'	reduce using rule 50 (Operator)
+	';'	reduce using rule 50 (Operator)
+	']'	reduce using rule 50 (Operator)
+	'}'	reduce using rule 50 (Operator)
+	OPERATOR_SYMBOL_07	reduce using rule 50 (Operator)
+	OPERATOR_SYMBOL_08	reduce using rule 50 (Operator)
+	OPERATOR_SYMBOL_09	reduce using rule 50 (Operator)
+	OPERATOR_SYMBOL_11	reduce using rule 50 (Operator)
+	OPERATOR_SYMBOL_12	reduce using rule 50 (Operator)
+	OPERATOR_SYMBOL_13	reduce using rule 50 (Operator)
+	OPERATOR_SYMBOL_14	reduce using rule 50 (Operator)
+	OPERATOR_SYMBOL_15	reduce using rule 50 (Operator)
+	OPERATOR_SYMBOL_16	reduce using rule 50 (Operator)
+	OPERATOR_SYMBOL_17	reduce using rule 50 (Operator)
+	OPERATOR_SYMBOL_23	reduce using rule 50 (Operator)
+	OPERATOR_SYMBOL_24	reduce using rule 50 (Operator)
+
+State 116:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression OPERATOR_SYMBOL_16 Expression .	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+	OPERATOR_SYMBOL_07	shift, and go to state 52
+	OPERATOR_SYMBOL_08	shift, and go to state 56
+	OPERATOR_SYMBOL_09	shift, and go to state 51
+	OPERATOR_SYMBOL_11	shift, and go to state 59
+	OPERATOR_SYMBOL_12	shift, and go to state 60
+	OPERATOR_SYMBOL_13	shift, and go to state 54
+	OPERATOR_SYMBOL_14	shift, and go to state 55
+	OPERATOR_SYMBOL_15	shift, and go to state 57
+
+	')'	reduce using rule 61 (Operator)
+	');'	reduce using rule 61 (Operator)
+	','	reduce using rule 61 (Operator)
+	'..'	reduce using rule 61 (Operator)
+	';'	reduce using rule 61 (Operator)
+	']'	reduce using rule 61 (Operator)
+	'}'	reduce using rule 61 (Operator)
+	OPERATOR_SYMBOL_16	reduce using rule 61 (Operator)
+	OPERATOR_SYMBOL_17	reduce using rule 61 (Operator)
+	OPERATOR_SYMBOL_23	reduce using rule 61 (Operator)
+	OPERATOR_SYMBOL_24	reduce using rule 61 (Operator)
+
+State 117:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression OPERATOR_SYMBOL_23 Expression .	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+	OPERATOR_SYMBOL_07	shift, and go to state 52
+	OPERATOR_SYMBOL_08	shift, and go to state 56
+	OPERATOR_SYMBOL_09	shift, and go to state 51
+	OPERATOR_SYMBOL_11	shift, and go to state 59
+	OPERATOR_SYMBOL_12	shift, and go to state 60
+	OPERATOR_SYMBOL_13	shift, and go to state 54
+	OPERATOR_SYMBOL_14	shift, and go to state 55
+	OPERATOR_SYMBOL_15	shift, and go to state 57
+	OPERATOR_SYMBOL_16	shift, and go to state 62
+	OPERATOR_SYMBOL_17	shift, and go to state 53
+
+	')'	reduce using rule 64 (Operator)
+	');'	reduce using rule 64 (Operator)
+	','	reduce using rule 64 (Operator)
+	'..'	reduce using rule 64 (Operator)
+	';'	reduce using rule 64 (Operator)
+	']'	reduce using rule 64 (Operator)
+	'}'	reduce using rule 64 (Operator)
+	OPERATOR_SYMBOL_23	reduce using rule 64 (Operator)
+	OPERATOR_SYMBOL_24	reduce using rule 64 (Operator)
+
+State 118:
+
+	Subroutine -> 'our' TYPE VARIABLE_SYMBOL . '= sub {' OPTIONAL-12 PLUS-13 '};'	(Rule 38)
+
+	'= sub {'	shift, and go to state 147
+
+State 119:
+
+	Expression -> '(' Expression ')' .	(Rule 85)
+
+	$default	reduce using rule 85 (Expression)
+
+State 120:
+
+	Expression -> Variable '->' WORD . '(' OPTIONAL-21 ')'	(Rule 84)
+
+	'('	shift, and go to state 148
+
+State 121:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+	VariableModification -> Variable OPERATOR_SYMBOL_19 Expression . ';'	(Rule 117)
+
+	';'	shift, and go to state 149
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+	OPERATOR_SYMBOL_07	shift, and go to state 52
+	OPERATOR_SYMBOL_08	shift, and go to state 56
+	OPERATOR_SYMBOL_09	shift, and go to state 51
+	OPERATOR_SYMBOL_11	shift, and go to state 59
+	OPERATOR_SYMBOL_12	shift, and go to state 60
+	OPERATOR_SYMBOL_13	shift, and go to state 54
+	OPERATOR_SYMBOL_14	shift, and go to state 55
+	OPERATOR_SYMBOL_15	shift, and go to state 57
+	OPERATOR_SYMBOL_16	shift, and go to state 62
+	OPERATOR_SYMBOL_17	shift, and go to state 53
+	OPERATOR_SYMBOL_23	shift, and go to state 64
+	OPERATOR_SYMBOL_24	shift, and go to state 58
+
+State 122:
+
+	Operator -> OPERATOR_SYMBOL_01 '(' OPTIONAL-16 . ')'	(Rule 47)
+
+	')'	shift, and go to state 150
+
+State 123:
+
+	OPTIONAL-16 -> ListElements .	(Rule 45)
+
+	$default	reduce using rule 45 (OPTIONAL-16)
+
+State 124:
+
+	STAR-29 -> STAR-29 VariableRetrieval .	(Rule 110)
+
+	$default	reduce using rule 110 (STAR-29)
+
+State 125:
+
+	VariableRetrieval -> '->{' . Expression '}'	(Rule 114)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Expression	go to state 151
+	Operator	go to state 39
+	Variable	go to state 67
+
+State 126:
+
+	VariableRetrieval -> '->[' . Expression ']'	(Rule 113)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Expression	go to state 152
+	Operator	go to state 39
+	Variable	go to state 67
+
+State 127:
+
+	LoopFor -> 'for my integer' VARIABLE_SYMBOL . '(' Expression '..' Expression ')' CodeBlock	(Rule 104)
+
+	'('	shift, and go to state 153
+
+State 128:
+
+	LoopForEach -> 'foreach my' TYPE . VARIABLE_SYMBOL '(' ListElements ')' CodeBlock	(Rule 105)
+
+	VARIABLE_SYMBOL	shift, and go to state 154
+
+State 129:
+
+	LoopWhile -> 'while' '(' . Expression ')' CodeBlock	(Rule 106)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Operator	go to state 39
+	Variable	go to state 67
+	Expression	go to state 155
+
+State 130:
+
+	STAR-31 -> STAR-31 . PAREN-30	(Rule 119)
+	ListElements -> ListElementValue STAR-31 .	(Rule 121)
+
+	','	shift, and go to state 156
+
+	')'	reduce using rule 121 (ListElements)
+	']'	reduce using rule 121 (ListElements)
+
+	PAREN-30	go to state 157
+
+State 131:
+
+	ListElementValue -> KEYS_OR_VALUES '%{' . Variable '}'	(Rule 124)
+
+	VARIABLE_SYMBOL	shift, and go to state 32
+
+	Variable	go to state 158
+
+State 132:
+
+	ListElementValue -> '@{' Variable . '}'	(Rule 123)
+
+	'}'	shift, and go to state 159
+
+State 133:
+
+	Expression -> '[' OPTIONAL-18 ']' .	(Rule 80)
+
+	$default	reduce using rule 80 (Expression)
+
+State 134:
+
+	HashEntries -> WORD '=>' . HashEntryValue STAR-33	(Rule 128)
+
+	'%{'	shift, and go to state 162
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Variable	go to state 67
+	Operator	go to state 39
+	Expression	go to state 161
+	HashEntryValue	go to state 160
+
+State 135:
+
+	Expression -> '{' OPTIONAL-19 '}' .	(Rule 81)
+
+	$default	reduce using rule 81 (Expression)
+
+State 136:
+
+	OperatorVoid -> OPERATOR_SYMBOL_19a LOOP_LABEL ';' .	(Rule 68)
+
+	$default	reduce using rule 68 (OperatorVoid)
+
+State 137:
+
+	VariableDeclaration -> 'my' TYPE VARIABLE_SYMBOL . ';'	(Rule 115)
+	VariableDeclaration -> 'my' TYPE VARIABLE_SYMBOL . OPERATOR_SYMBOL_19 Expression ';'	(Rule 116)
+
+	';'	shift, and go to state 163
+	OPERATOR_SYMBOL_19	shift, and go to state 164
+
+State 138:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+	Conditional -> 'if' '(' Expression . ')' CodeBlock STAR-25 OPTIONAL-27	(Rule 100)
+
+	')'	shift, and go to state 165
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+	OPERATOR_SYMBOL_07	shift, and go to state 52
+	OPERATOR_SYMBOL_08	shift, and go to state 56
+	OPERATOR_SYMBOL_09	shift, and go to state 51
+	OPERATOR_SYMBOL_11	shift, and go to state 59
+	OPERATOR_SYMBOL_12	shift, and go to state 60
+	OPERATOR_SYMBOL_13	shift, and go to state 54
+	OPERATOR_SYMBOL_14	shift, and go to state 55
+	OPERATOR_SYMBOL_15	shift, and go to state 57
+	OPERATOR_SYMBOL_16	shift, and go to state 62
+	OPERATOR_SYMBOL_17	shift, and go to state 53
+	OPERATOR_SYMBOL_23	shift, and go to state 64
+	OPERATOR_SYMBOL_24	shift, and go to state 58
+
+State 139:
+
+	Expression -> WORD_SCOPED '(' OPTIONAL-20 . ')'	(Rule 83)
+
+	')'	shift, and go to state 166
+
+State 140:
+
+	OPTIONAL-20 -> ListElements .	(Rule 74)
+
+	$default	reduce using rule 74 (OPTIONAL-20)
+
+State 141:
+
+	PLUS-34 -> WORD_SCOPED .	(Rule 132)
+
+	$default	reduce using rule 132 (PLUS-34)
+
+State 142:
+
+	PLUS-34 -> PLUS-34 . WORD_SCOPED	(Rule 131)
+	Class -> 'package' WORD_SCOPED ';' Header 'use parent qw(' PLUS-34 . ');' Properties STAR-35 '1;'	(Rule 135)
+
+	');'	shift, and go to state 168
+	WORD_SCOPED	shift, and go to state 167
+
+State 143:
+
+	Package -> 'package' WORD_SCOPED ';' Header PLUS-4 '1;' .	(Rule 14)
+
+	$default	reduce using rule 14 (Package)
+
+State 144:
+
+	PLUS-4 -> PLUS-4 Subroutine .	(Rule 12)
+
+	$default	reduce using rule 12 (PLUS-4)
+
+State 145:
+
+	Header -> 'use strict;' 'use warnings;' 'our $VERSION =' VERSION_NUMBER ';' 'use Carp;' . 'use RPerl;' STAR-5 STAR-6	(Rule 19)
+
+	'use RPerl;'	shift, and go to state 169
+
+State 146:
+
+	OperatorVoid -> OPERATOR_VOID '(' OPTIONAL-17 ')' . ';'	(Rule 69)
+
+	';'	shift, and go to state 170
+
+State 147:
+
+	Subroutine -> 'our' TYPE VARIABLE_SYMBOL '= sub {' . OPTIONAL-12 PLUS-13 '};'	(Rule 38)
+
+	ARGUMENTS_BEGIN	shift, and go to state 173
+
+	'('	reduce using rule 35 (OPTIONAL-12)
+	'['	reduce using rule 35 (OPTIONAL-12)
+	'for my integer'	reduce using rule 35 (OPTIONAL-12)
+	'foreach my'	reduce using rule 35 (OPTIONAL-12)
+	'if'	reduce using rule 35 (OPTIONAL-12)
+	'my'	reduce using rule 35 (OPTIONAL-12)
+	'while'	reduce using rule 35 (OPTIONAL-12)
+	'{'	reduce using rule 35 (OPTIONAL-12)
+	LITERAL	reduce using rule 35 (OPTIONAL-12)
+	LOOP_LABEL	reduce using rule 35 (OPTIONAL-12)
+	OPERATOR_SYMBOL_01	reduce using rule 35 (OPTIONAL-12)
+	OPERATOR_SYMBOL_03	reduce using rule 35 (OPTIONAL-12)
+	OPERATOR_SYMBOL_05	reduce using rule 35 (OPTIONAL-12)
+	OPERATOR_SYMBOL_10	reduce using rule 35 (OPTIONAL-12)
+	OPERATOR_SYMBOL_19a	reduce using rule 35 (OPTIONAL-12)
+	OPERATOR_SYMBOL_22	reduce using rule 35 (OPTIONAL-12)
+	OPERATOR_VOID	reduce using rule 35 (OPTIONAL-12)
+	VARIABLE_SYMBOL	reduce using rule 35 (OPTIONAL-12)
+	WORD_SCOPED	reduce using rule 35 (OPTIONAL-12)
+
+	OPTIONAL-12	go to state 171
+	SubroutineArguments	go to state 172
+
+State 148:
+
+	Expression -> Variable '->' WORD '(' . OPTIONAL-21 ')'	(Rule 84)
+
+	'('	shift, and go to state 27
+	'@{'	shift, and go to state 88
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	KEYS_OR_VALUES	shift, and go to state 87
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	')'	reduce using rule 77 (OPTIONAL-21)
+
+	ListElementValue	go to state 86
+	Expression	go to state 84
+	ListElements	go to state 175
+	Operator	go to state 39
+	Variable	go to state 67
+	OPTIONAL-21	go to state 174
+
+State 149:
+
+	VariableModification -> Variable OPERATOR_SYMBOL_19 Expression ';' .	(Rule 117)
+
+	$default	reduce using rule 117 (VariableModification)
+
+State 150:
+
+	Operator -> OPERATOR_SYMBOL_01 '(' OPTIONAL-16 ')' .	(Rule 47)
+
+	$default	reduce using rule 47 (Operator)
+
+State 151:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+	VariableRetrieval -> '->{' Expression . '}'	(Rule 114)
+
+	'}'	shift, and go to state 176
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+	OPERATOR_SYMBOL_07	shift, and go to state 52
+	OPERATOR_SYMBOL_08	shift, and go to state 56
+	OPERATOR_SYMBOL_09	shift, and go to state 51
+	OPERATOR_SYMBOL_11	shift, and go to state 59
+	OPERATOR_SYMBOL_12	shift, and go to state 60
+	OPERATOR_SYMBOL_13	shift, and go to state 54
+	OPERATOR_SYMBOL_14	shift, and go to state 55
+	OPERATOR_SYMBOL_15	shift, and go to state 57
+	OPERATOR_SYMBOL_16	shift, and go to state 62
+	OPERATOR_SYMBOL_17	shift, and go to state 53
+	OPERATOR_SYMBOL_23	shift, and go to state 64
+	OPERATOR_SYMBOL_24	shift, and go to state 58
+
+State 152:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+	VariableRetrieval -> '->[' Expression . ']'	(Rule 113)
+
+	']'	shift, and go to state 177
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+	OPERATOR_SYMBOL_07	shift, and go to state 52
+	OPERATOR_SYMBOL_08	shift, and go to state 56
+	OPERATOR_SYMBOL_09	shift, and go to state 51
+	OPERATOR_SYMBOL_11	shift, and go to state 59
+	OPERATOR_SYMBOL_12	shift, and go to state 60
+	OPERATOR_SYMBOL_13	shift, and go to state 54
+	OPERATOR_SYMBOL_14	shift, and go to state 55
+	OPERATOR_SYMBOL_15	shift, and go to state 57
+	OPERATOR_SYMBOL_16	shift, and go to state 62
+	OPERATOR_SYMBOL_17	shift, and go to state 53
+	OPERATOR_SYMBOL_23	shift, and go to state 64
+	OPERATOR_SYMBOL_24	shift, and go to state 58
+
+State 153:
+
+	LoopFor -> 'for my integer' VARIABLE_SYMBOL '(' . Expression '..' Expression ')' CodeBlock	(Rule 104)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Variable	go to state 67
+	Operator	go to state 39
+	Expression	go to state 178
+
+State 154:
+
+	LoopForEach -> 'foreach my' TYPE VARIABLE_SYMBOL . '(' ListElements ')' CodeBlock	(Rule 105)
+
+	'('	shift, and go to state 179
+
+State 155:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+	LoopWhile -> 'while' '(' Expression . ')' CodeBlock	(Rule 106)
+
+	')'	shift, and go to state 180
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+	OPERATOR_SYMBOL_07	shift, and go to state 52
+	OPERATOR_SYMBOL_08	shift, and go to state 56
+	OPERATOR_SYMBOL_09	shift, and go to state 51
+	OPERATOR_SYMBOL_11	shift, and go to state 59
+	OPERATOR_SYMBOL_12	shift, and go to state 60
+	OPERATOR_SYMBOL_13	shift, and go to state 54
+	OPERATOR_SYMBOL_14	shift, and go to state 55
+	OPERATOR_SYMBOL_15	shift, and go to state 57
+	OPERATOR_SYMBOL_16	shift, and go to state 62
+	OPERATOR_SYMBOL_17	shift, and go to state 53
+	OPERATOR_SYMBOL_23	shift, and go to state 64
+	OPERATOR_SYMBOL_24	shift, and go to state 58
+
+State 156:
+
+	PAREN-30 -> ',' . ListElementValue	(Rule 118)
+
+	'('	shift, and go to state 27
+	'@{'	shift, and go to state 88
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	KEYS_OR_VALUES	shift, and go to state 87
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Variable	go to state 67
+	Operator	go to state 39
+	Expression	go to state 84
+	ListElementValue	go to state 181
+
+State 157:
+
+	STAR-31 -> STAR-31 PAREN-30 .	(Rule 119)
+
+	$default	reduce using rule 119 (STAR-31)
+
+State 158:
+
+	ListElementValue -> KEYS_OR_VALUES '%{' Variable . '}'	(Rule 124)
+
+	'}'	shift, and go to state 182
+
+State 159:
+
+	ListElementValue -> '@{' Variable '}' .	(Rule 123)
+
+	$default	reduce using rule 123 (ListElementValue)
+
+State 160:
+
+	HashEntries -> WORD '=>' HashEntryValue . STAR-33	(Rule 128)
+
+	$default	reduce using rule 127 (STAR-33)
+
+	STAR-33	go to state 183
+
+State 161:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+	HashEntryValue -> Expression .	(Rule 129)
+
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+	OPERATOR_SYMBOL_07	shift, and go to state 52
+	OPERATOR_SYMBOL_08	shift, and go to state 56
+	OPERATOR_SYMBOL_09	shift, and go to state 51
+	OPERATOR_SYMBOL_11	shift, and go to state 59
+	OPERATOR_SYMBOL_12	shift, and go to state 60
+	OPERATOR_SYMBOL_13	shift, and go to state 54
+	OPERATOR_SYMBOL_14	shift, and go to state 55
+	OPERATOR_SYMBOL_15	shift, and go to state 57
+	OPERATOR_SYMBOL_16	shift, and go to state 62
+	OPERATOR_SYMBOL_17	shift, and go to state 53
+	OPERATOR_SYMBOL_23	shift, and go to state 64
+	OPERATOR_SYMBOL_24	shift, and go to state 58
+
+	');'	reduce using rule 129 (HashEntryValue)
+	','	reduce using rule 129 (HashEntryValue)
+	'}'	reduce using rule 129 (HashEntryValue)
+
+State 162:
+
+	HashEntryValue -> '%{' . Variable '}'	(Rule 130)
+
+	VARIABLE_SYMBOL	shift, and go to state 32
+
+	Variable	go to state 184
+
+State 163:
+
+	VariableDeclaration -> 'my' TYPE VARIABLE_SYMBOL ';' .	(Rule 115)
+
+	$default	reduce using rule 115 (VariableDeclaration)
+
+State 164:
+
+	VariableDeclaration -> 'my' TYPE VARIABLE_SYMBOL OPERATOR_SYMBOL_19 . Expression ';'	(Rule 116)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Expression	go to state 185
+	Variable	go to state 67
+	Operator	go to state 39
+
+State 165:
+
+	Conditional -> 'if' '(' Expression ')' . CodeBlock STAR-25 OPTIONAL-27	(Rule 100)
+
+	'{'	shift, and go to state 186
+
+	CodeBlock	go to state 187
+
+State 166:
+
+	Expression -> WORD_SCOPED '(' OPTIONAL-20 ')' .	(Rule 83)
+
+	$default	reduce using rule 83 (Expression)
+
+State 167:
+
+	PLUS-34 -> PLUS-34 WORD_SCOPED .	(Rule 131)
+
+	$default	reduce using rule 131 (PLUS-34)
+
+State 168:
+
+	Class -> 'package' WORD_SCOPED ';' Header 'use parent qw(' PLUS-34 ');' . Properties STAR-35 '1;'	(Rule 135)
+
+	'our %properties'	shift, and go to state 188
+
+	Properties	go to state 189
+
+State 169:
+
+	Header -> 'use strict;' 'use warnings;' 'our $VERSION =' VERSION_NUMBER ';' 'use Carp;' 'use RPerl;' . STAR-5 STAR-6	(Rule 19)
+
+	$default	reduce using rule 16 (STAR-5)
+
+	STAR-5	go to state 190
+
+State 170:
+
+	OperatorVoid -> OPERATOR_VOID '(' OPTIONAL-17 ')' ';' .	(Rule 69)
+
+	$default	reduce using rule 69 (OperatorVoid)
+
+State 171:
+
+	Subroutine -> 'our' TYPE VARIABLE_SYMBOL '= sub {' OPTIONAL-12 . PLUS-13 '};'	(Rule 38)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'if'	shift, and go to state 40
+	'my'	shift, and go to state 38
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	LOOP_LABEL	shift, and go to state 45
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_19a	shift, and go to state 37
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	OPERATOR_VOID	shift, and go to state 21
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	'for my integer'	reduce using rule 88 (OPTIONAL-23)
+	'foreach my'	reduce using rule 88 (OPTIONAL-23)
+	'while'	reduce using rule 88 (OPTIONAL-23)
+
+	VariableDeclaration	go to state 47
+	PAREN-22	go to state 44
+	VariableModification	go to state 42
+	Statement	go to state 43
+	Operator	go to state 39
+	Operation	go to state 191
+	Expression	go to state 22
+	Conditional	go to state 35
+	OPTIONAL-23	go to state 33
+	OperatorVoid	go to state 18
+	Variable	go to state 29
+	PLUS-13	go to state 192
+
+State 172:
+
+	OPTIONAL-12 -> SubroutineArguments .	(Rule 34)
+
+	$default	reduce using rule 34 (OPTIONAL-12)
+
+State 173:
+
+	SubroutineArguments -> ARGUMENTS_BEGIN . TYPE VARIABLE_SYMBOL STAR-15 ARGUMENTS_END	(Rule 42)
+
+	TYPE	shift, and go to state 193
+
+State 174:
+
+	Expression -> Variable '->' WORD '(' OPTIONAL-21 . ')'	(Rule 84)
+
+	')'	shift, and go to state 194
+
+State 175:
+
+	OPTIONAL-21 -> ListElements .	(Rule 76)
+
+	$default	reduce using rule 76 (OPTIONAL-21)
+
+State 176:
+
+	VariableRetrieval -> '->{' Expression '}' .	(Rule 114)
+
+	$default	reduce using rule 114 (VariableRetrieval)
+
+State 177:
+
+	VariableRetrieval -> '->[' Expression ']' .	(Rule 113)
+
+	$default	reduce using rule 113 (VariableRetrieval)
+
+State 178:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+	LoopFor -> 'for my integer' VARIABLE_SYMBOL '(' Expression . '..' Expression ')' CodeBlock	(Rule 104)
+
+	'..'	shift, and go to state 195
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+	OPERATOR_SYMBOL_07	shift, and go to state 52
+	OPERATOR_SYMBOL_08	shift, and go to state 56
+	OPERATOR_SYMBOL_09	shift, and go to state 51
+	OPERATOR_SYMBOL_11	shift, and go to state 59
+	OPERATOR_SYMBOL_12	shift, and go to state 60
+	OPERATOR_SYMBOL_13	shift, and go to state 54
+	OPERATOR_SYMBOL_14	shift, and go to state 55
+	OPERATOR_SYMBOL_15	shift, and go to state 57
+	OPERATOR_SYMBOL_16	shift, and go to state 62
+	OPERATOR_SYMBOL_17	shift, and go to state 53
+	OPERATOR_SYMBOL_23	shift, and go to state 64
+	OPERATOR_SYMBOL_24	shift, and go to state 58
+
+State 179:
+
+	LoopForEach -> 'foreach my' TYPE VARIABLE_SYMBOL '(' . ListElements ')' CodeBlock	(Rule 105)
+
+	'('	shift, and go to state 27
+	'@{'	shift, and go to state 88
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	KEYS_OR_VALUES	shift, and go to state 87
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	ListElementValue	go to state 86
+	ListElements	go to state 196
+	Expression	go to state 84
+	Operator	go to state 39
+	Variable	go to state 67
+
+State 180:
+
+	LoopWhile -> 'while' '(' Expression ')' . CodeBlock	(Rule 106)
+
+	'{'	shift, and go to state 186
+
+	CodeBlock	go to state 197
+
+State 181:
+
+	PAREN-30 -> ',' ListElementValue .	(Rule 118)
+
+	$default	reduce using rule 118 (PAREN-30)
+
+State 182:
+
+	ListElementValue -> KEYS_OR_VALUES '%{' Variable '}' .	(Rule 124)
+
+	$default	reduce using rule 124 (ListElementValue)
+
+State 183:
+
+	STAR-33 -> STAR-33 . PAREN-32	(Rule 126)
+	HashEntries -> WORD '=>' HashEntryValue STAR-33 .	(Rule 128)
+
+	','	shift, and go to state 199
+
+	');'	reduce using rule 128 (HashEntries)
+	'}'	reduce using rule 128 (HashEntries)
+
+	PAREN-32	go to state 198
+
+State 184:
+
+	HashEntryValue -> '%{' Variable . '}'	(Rule 130)
+
+	'}'	shift, and go to state 200
+
+State 185:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+	VariableDeclaration -> 'my' TYPE VARIABLE_SYMBOL OPERATOR_SYMBOL_19 Expression . ';'	(Rule 116)
+
+	';'	shift, and go to state 201
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+	OPERATOR_SYMBOL_07	shift, and go to state 52
+	OPERATOR_SYMBOL_08	shift, and go to state 56
+	OPERATOR_SYMBOL_09	shift, and go to state 51
+	OPERATOR_SYMBOL_11	shift, and go to state 59
+	OPERATOR_SYMBOL_12	shift, and go to state 60
+	OPERATOR_SYMBOL_13	shift, and go to state 54
+	OPERATOR_SYMBOL_14	shift, and go to state 55
+	OPERATOR_SYMBOL_15	shift, and go to state 57
+	OPERATOR_SYMBOL_16	shift, and go to state 62
+	OPERATOR_SYMBOL_17	shift, and go to state 53
+	OPERATOR_SYMBOL_23	shift, and go to state 64
+	OPERATOR_SYMBOL_24	shift, and go to state 58
+
+State 186:
+
+	CodeBlock -> '{' . PLUS-28 '}'	(Rule 109)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'if'	shift, and go to state 40
+	'my'	shift, and go to state 38
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	LOOP_LABEL	shift, and go to state 45
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_19a	shift, and go to state 37
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	OPERATOR_VOID	shift, and go to state 21
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	'for my integer'	reduce using rule 88 (OPTIONAL-23)
+	'foreach my'	reduce using rule 88 (OPTIONAL-23)
+	'while'	reduce using rule 88 (OPTIONAL-23)
+
+	Operator	go to state 39
+	Statement	go to state 43
+	VariableModification	go to state 42
+	PAREN-22	go to state 44
+	VariableDeclaration	go to state 47
+	PLUS-28	go to state 202
+	Variable	go to state 29
+	OperatorVoid	go to state 18
+	OPTIONAL-23	go to state 33
+	Conditional	go to state 35
+	Expression	go to state 22
+	Operation	go to state 203
+
+State 187:
+
+	Conditional -> 'if' '(' Expression ')' CodeBlock . STAR-25 OPTIONAL-27	(Rule 100)
+
+	$default	reduce using rule 96 (STAR-25)
+
+	STAR-25	go to state 204
+
+State 188:
+
+	Properties -> 'our %properties' . '=' '(' OPTIONAL-36 ');'	(Rule 138)
+
+	'='	shift, and go to state 205
+
+State 189:
+
+	Class -> 'package' WORD_SCOPED ';' Header 'use parent qw(' PLUS-34 ');' Properties . STAR-35 '1;'	(Rule 135)
+
+	$default	reduce using rule 134 (STAR-35)
+
+	STAR-35	go to state 206
+
+State 190:
+
+	STAR-5 -> STAR-5 . Include	(Rule 15)
+	Header -> 'use strict;' 'use warnings;' 'our $VERSION =' VERSION_NUMBER ';' 'use Carp;' 'use RPerl;' STAR-5 . STAR-6	(Rule 19)
+
+	'use'	shift, and go to state 207
+
+	'('	reduce using rule 18 (STAR-6)
+	'['	reduce using rule 18 (STAR-6)
+	'for my integer'	reduce using rule 18 (STAR-6)
+	'foreach my'	reduce using rule 18 (STAR-6)
+	'if'	reduce using rule 18 (STAR-6)
+	'my'	reduce using rule 18 (STAR-6)
+	'our'	reduce using rule 18 (STAR-6)
+	'use constant'	reduce using rule 18 (STAR-6)
+	'use parent qw('	reduce using rule 18 (STAR-6)
+	'while'	reduce using rule 18 (STAR-6)
+	'{'	reduce using rule 18 (STAR-6)
+	LITERAL	reduce using rule 18 (STAR-6)
+	LOOP_LABEL	reduce using rule 18 (STAR-6)
+	OPERATOR_SYMBOL_01	reduce using rule 18 (STAR-6)
+	OPERATOR_SYMBOL_03	reduce using rule 18 (STAR-6)
+	OPERATOR_SYMBOL_05	reduce using rule 18 (STAR-6)
+	OPERATOR_SYMBOL_10	reduce using rule 18 (STAR-6)
+	OPERATOR_SYMBOL_19a	reduce using rule 18 (STAR-6)
+	OPERATOR_SYMBOL_22	reduce using rule 18 (STAR-6)
+	OPERATOR_VOID	reduce using rule 18 (STAR-6)
+	VARIABLE_SYMBOL	reduce using rule 18 (STAR-6)
+	WORD_SCOPED	reduce using rule 18 (STAR-6)
+
+	STAR-6	go to state 209
+	Include	go to state 208
+
+State 191:
+
+	PLUS-13 -> Operation .	(Rule 37)
+
+	$default	reduce using rule 37 (PLUS-13)
+
+State 192:
+
+	PLUS-13 -> PLUS-13 . Operation	(Rule 36)
+	Subroutine -> 'our' TYPE VARIABLE_SYMBOL '= sub {' OPTIONAL-12 PLUS-13 . '};'	(Rule 38)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'if'	shift, and go to state 40
+	'my'	shift, and go to state 38
+	'{'	shift, and go to state 36
+	'};'	shift, and go to state 211
+	LITERAL	shift, and go to state 20
+	LOOP_LABEL	shift, and go to state 45
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_19a	shift, and go to state 37
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	OPERATOR_VOID	shift, and go to state 21
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	'for my integer'	reduce using rule 88 (OPTIONAL-23)
+	'foreach my'	reduce using rule 88 (OPTIONAL-23)
+	'while'	reduce using rule 88 (OPTIONAL-23)
+
+	Operation	go to state 210
+	Expression	go to state 22
+	Conditional	go to state 35
+	OPTIONAL-23	go to state 33
+	OperatorVoid	go to state 18
+	Variable	go to state 29
+	VariableDeclaration	go to state 47
+	PAREN-22	go to state 44
+	VariableModification	go to state 42
+	Statement	go to state 43
+	Operator	go to state 39
+
+State 193:
+
+	SubroutineArguments -> ARGUMENTS_BEGIN TYPE . VARIABLE_SYMBOL STAR-15 ARGUMENTS_END	(Rule 42)
+
+	VARIABLE_SYMBOL	shift, and go to state 212
+
+State 194:
+
+	Expression -> Variable '->' WORD '(' OPTIONAL-21 ')' .	(Rule 84)
+
+	$default	reduce using rule 84 (Expression)
+
+State 195:
+
+	LoopFor -> 'for my integer' VARIABLE_SYMBOL '(' Expression '..' . Expression ')' CodeBlock	(Rule 104)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Expression	go to state 213
+	Variable	go to state 67
+	Operator	go to state 39
+
+State 196:
+
+	LoopForEach -> 'foreach my' TYPE VARIABLE_SYMBOL '(' ListElements . ')' CodeBlock	(Rule 105)
+
+	')'	shift, and go to state 214
+
+State 197:
+
+	LoopWhile -> 'while' '(' Expression ')' CodeBlock .	(Rule 106)
+
+	$default	reduce using rule 106 (LoopWhile)
+
+State 198:
+
+	STAR-33 -> STAR-33 PAREN-32 .	(Rule 126)
+
+	$default	reduce using rule 126 (STAR-33)
+
+State 199:
+
+	PAREN-32 -> ',' . WORD '=>' HashEntryValue	(Rule 125)
+
+	WORD	shift, and go to state 215
+
+State 200:
+
+	HashEntryValue -> '%{' Variable '}' .	(Rule 130)
+
+	$default	reduce using rule 130 (HashEntryValue)
+
+State 201:
+
+	VariableDeclaration -> 'my' TYPE VARIABLE_SYMBOL OPERATOR_SYMBOL_19 Expression ';' .	(Rule 116)
+
+	$default	reduce using rule 116 (VariableDeclaration)
+
+State 202:
+
+	PLUS-28 -> PLUS-28 . Operation	(Rule 107)
+	CodeBlock -> '{' PLUS-28 . '}'	(Rule 109)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'if'	shift, and go to state 40
+	'my'	shift, and go to state 38
+	'{'	shift, and go to state 36
+	'}'	shift, and go to state 216
+	LITERAL	shift, and go to state 20
+	LOOP_LABEL	shift, and go to state 45
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_19a	shift, and go to state 37
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	OPERATOR_VOID	shift, and go to state 21
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	'for my integer'	reduce using rule 88 (OPTIONAL-23)
+	'foreach my'	reduce using rule 88 (OPTIONAL-23)
+	'while'	reduce using rule 88 (OPTIONAL-23)
+
+	Conditional	go to state 35
+	Expression	go to state 22
+	Operation	go to state 217
+	Variable	go to state 29
+	OperatorVoid	go to state 18
+	OPTIONAL-23	go to state 33
+	PAREN-22	go to state 44
+	VariableDeclaration	go to state 47
+	Operator	go to state 39
+	Statement	go to state 43
+	VariableModification	go to state 42
+
+State 203:
+
+	PLUS-28 -> Operation .	(Rule 108)
+
+	$default	reduce using rule 108 (PLUS-28)
+
+State 204:
+
+	STAR-25 -> STAR-25 . PAREN-24	(Rule 95)
+	Conditional -> 'if' '(' Expression ')' CodeBlock STAR-25 . OPTIONAL-27	(Rule 100)
+
+	'else'	shift, and go to state 221
+	'elsif'	shift, and go to state 218
+
+	$end	reduce using rule 99 (OPTIONAL-27)
+	'('	reduce using rule 99 (OPTIONAL-27)
+	'['	reduce using rule 99 (OPTIONAL-27)
+	'for my integer'	reduce using rule 99 (OPTIONAL-27)
+	'foreach my'	reduce using rule 99 (OPTIONAL-27)
+	'if'	reduce using rule 99 (OPTIONAL-27)
+	'my'	reduce using rule 99 (OPTIONAL-27)
+	'while'	reduce using rule 99 (OPTIONAL-27)
+	'{'	reduce using rule 99 (OPTIONAL-27)
+	'}'	reduce using rule 99 (OPTIONAL-27)
+	'};'	reduce using rule 99 (OPTIONAL-27)
+	LITERAL	reduce using rule 99 (OPTIONAL-27)
+	LOOP_LABEL	reduce using rule 99 (OPTIONAL-27)
+	OPERATOR_SYMBOL_01	reduce using rule 99 (OPTIONAL-27)
+	OPERATOR_SYMBOL_03	reduce using rule 99 (OPTIONAL-27)
+	OPERATOR_SYMBOL_05	reduce using rule 99 (OPTIONAL-27)
+	OPERATOR_SYMBOL_10	reduce using rule 99 (OPTIONAL-27)
+	OPERATOR_SYMBOL_19a	reduce using rule 99 (OPTIONAL-27)
+	OPERATOR_SYMBOL_22	reduce using rule 99 (OPTIONAL-27)
+	OPERATOR_VOID	reduce using rule 99 (OPTIONAL-27)
+	VARIABLE_SYMBOL	reduce using rule 99 (OPTIONAL-27)
+	WORD_SCOPED	reduce using rule 99 (OPTIONAL-27)
+
+	OPTIONAL-27	go to state 222
+	PAREN-24	go to state 219
+	PAREN-26	go to state 220
+
+State 205:
+
+	Properties -> 'our %properties' '=' . '(' OPTIONAL-36 ');'	(Rule 138)
+
+	'('	shift, and go to state 223
+
+State 206:
+
+	STAR-35 -> STAR-35 . Method	(Rule 133)
+	Class -> 'package' WORD_SCOPED ';' Header 'use parent qw(' PLUS-34 ');' Properties STAR-35 . '1;'	(Rule 135)
+
+	'1;'	shift, and go to state 224
+	'our'	shift, and go to state 226
+
+	Method	go to state 225
+
+State 207:
+
+	Include -> 'use' . WORD_SCOPED ';'	(Rule 22)
+	Include -> 'use' . WORD_SCOPED 'qw(' PLUS-7 ');'	(Rule 23)
+
+	WORD_SCOPED	shift, and go to state 227
+
+State 208:
+
+	STAR-5 -> STAR-5 Include .	(Rule 15)
+
+	$default	reduce using rule 15 (STAR-5)
+
+State 209:
+
+	STAR-6 -> STAR-6 . Constant	(Rule 17)
+	Header -> 'use strict;' 'use warnings;' 'our $VERSION =' VERSION_NUMBER ';' 'use Carp;' 'use RPerl;' STAR-5 STAR-6 .	(Rule 19)
+
+	'use constant'	shift, and go to state 229
+
+	'('	reduce using rule 19 (Header)
+	'['	reduce using rule 19 (Header)
+	'for my integer'	reduce using rule 19 (Header)
+	'foreach my'	reduce using rule 19 (Header)
+	'if'	reduce using rule 19 (Header)
+	'my'	reduce using rule 19 (Header)
+	'our'	reduce using rule 19 (Header)
+	'use parent qw('	reduce using rule 19 (Header)
+	'while'	reduce using rule 19 (Header)
+	'{'	reduce using rule 19 (Header)
+	LITERAL	reduce using rule 19 (Header)
+	LOOP_LABEL	reduce using rule 19 (Header)
+	OPERATOR_SYMBOL_01	reduce using rule 19 (Header)
+	OPERATOR_SYMBOL_03	reduce using rule 19 (Header)
+	OPERATOR_SYMBOL_05	reduce using rule 19 (Header)
+	OPERATOR_SYMBOL_10	reduce using rule 19 (Header)
+	OPERATOR_SYMBOL_19a	reduce using rule 19 (Header)
+	OPERATOR_SYMBOL_22	reduce using rule 19 (Header)
+	OPERATOR_VOID	reduce using rule 19 (Header)
+	VARIABLE_SYMBOL	reduce using rule 19 (Header)
+	WORD_SCOPED	reduce using rule 19 (Header)
+
+	Constant	go to state 228
+
+State 210:
+
+	PLUS-13 -> PLUS-13 Operation .	(Rule 36)
+
+	$default	reduce using rule 36 (PLUS-13)
+
+State 211:
+
+	Subroutine -> 'our' TYPE VARIABLE_SYMBOL '= sub {' OPTIONAL-12 PLUS-13 '};' .	(Rule 38)
+
+	$default	reduce using rule 38 (Subroutine)
+
+State 212:
+
+	SubroutineArguments -> ARGUMENTS_BEGIN TYPE VARIABLE_SYMBOL . STAR-15 ARGUMENTS_END	(Rule 42)
+
+	$default	reduce using rule 41 (STAR-15)
+
+	STAR-15	go to state 230
+
+State 213:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+	LoopFor -> 'for my integer' VARIABLE_SYMBOL '(' Expression '..' Expression . ')' CodeBlock	(Rule 104)
+
+	')'	shift, and go to state 231
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+	OPERATOR_SYMBOL_07	shift, and go to state 52
+	OPERATOR_SYMBOL_08	shift, and go to state 56
+	OPERATOR_SYMBOL_09	shift, and go to state 51
+	OPERATOR_SYMBOL_11	shift, and go to state 59
+	OPERATOR_SYMBOL_12	shift, and go to state 60
+	OPERATOR_SYMBOL_13	shift, and go to state 54
+	OPERATOR_SYMBOL_14	shift, and go to state 55
+	OPERATOR_SYMBOL_15	shift, and go to state 57
+	OPERATOR_SYMBOL_16	shift, and go to state 62
+	OPERATOR_SYMBOL_17	shift, and go to state 53
+	OPERATOR_SYMBOL_23	shift, and go to state 64
+	OPERATOR_SYMBOL_24	shift, and go to state 58
+
+State 214:
+
+	LoopForEach -> 'foreach my' TYPE VARIABLE_SYMBOL '(' ListElements ')' . CodeBlock	(Rule 105)
+
+	'{'	shift, and go to state 186
+
+	CodeBlock	go to state 232
+
+State 215:
+
+	PAREN-32 -> ',' WORD . '=>' HashEntryValue	(Rule 125)
+
+	'=>'	shift, and go to state 233
+
+State 216:
+
+	CodeBlock -> '{' PLUS-28 '}' .	(Rule 109)
+
+	$default	reduce using rule 109 (CodeBlock)
+
+State 217:
+
+	PLUS-28 -> PLUS-28 Operation .	(Rule 107)
+
+	$default	reduce using rule 107 (PLUS-28)
+
+State 218:
+
+	PAREN-24 -> 'elsif' . '(' Expression ')' CodeBlock	(Rule 94)
+
+	'('	shift, and go to state 234
+
+State 219:
+
+	STAR-25 -> STAR-25 PAREN-24 .	(Rule 95)
+
+	$default	reduce using rule 95 (STAR-25)
+
+State 220:
+
+	OPTIONAL-27 -> PAREN-26 .	(Rule 98)
+
+	$default	reduce using rule 98 (OPTIONAL-27)
+
+State 221:
+
+	PAREN-26 -> 'else' . CodeBlock	(Rule 97)
+
+	'{'	shift, and go to state 186
+
+	CodeBlock	go to state 235
+
+State 222:
+
+	Conditional -> 'if' '(' Expression ')' CodeBlock STAR-25 OPTIONAL-27 .	(Rule 100)
+
+	$default	reduce using rule 100 (Conditional)
+
+State 223:
+
+	Properties -> 'our %properties' '=' '(' . OPTIONAL-36 ');'	(Rule 138)
+
+	WORD	shift, and go to state 90
+
+	');'	reduce using rule 137 (OPTIONAL-36)
+
+	OPTIONAL-36	go to state 236
+	HashEntries	go to state 237
+
+State 224:
+
+	Class -> 'package' WORD_SCOPED ';' Header 'use parent qw(' PLUS-34 ');' Properties STAR-35 '1;' .	(Rule 135)
+
+	$default	reduce using rule 135 (Class)
+
+State 225:
+
+	STAR-35 -> STAR-35 Method .	(Rule 133)
+
+	$default	reduce using rule 133 (STAR-35)
+
+State 226:
+
+	Method -> 'our' . TYPE VARIABLE_SYMBOL '= sub {' OPTIONAL-37 PLUS-38 '};'	(Rule 143)
+
+	TYPE	shift, and go to state 238
+
+State 227:
+
+	Include -> 'use' WORD_SCOPED . ';'	(Rule 22)
+	Include -> 'use' WORD_SCOPED . 'qw(' PLUS-7 ');'	(Rule 23)
+
+	';'	shift, and go to state 239
+	'qw('	shift, and go to state 240
+
+State 228:
+
+	STAR-6 -> STAR-6 Constant .	(Rule 17)
+
+	$default	reduce using rule 17 (STAR-6)
+
+State 229:
+
+	Constant -> 'use constant' . WORD '=>' Constant_Value ';'	(Rule 24)
+
+	WORD	shift, and go to state 241
+
+State 230:
+
+	STAR-15 -> STAR-15 . PAREN-14	(Rule 40)
+	SubroutineArguments -> ARGUMENTS_BEGIN TYPE VARIABLE_SYMBOL STAR-15 . ARGUMENTS_END	(Rule 42)
+
+	','	shift, and go to state 244
+	ARGUMENTS_END	shift, and go to state 243
+
+	PAREN-14	go to state 242
+
+State 231:
+
+	LoopFor -> 'for my integer' VARIABLE_SYMBOL '(' Expression '..' Expression ')' . CodeBlock	(Rule 104)
+
+	'{'	shift, and go to state 186
+
+	CodeBlock	go to state 245
+
+State 232:
+
+	LoopForEach -> 'foreach my' TYPE VARIABLE_SYMBOL '(' ListElements ')' CodeBlock .	(Rule 105)
+
+	$default	reduce using rule 105 (LoopForEach)
+
+State 233:
+
+	PAREN-32 -> ',' WORD '=>' . HashEntryValue	(Rule 125)
+
+	'%{'	shift, and go to state 162
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	HashEntryValue	go to state 246
+	Expression	go to state 161
+	Operator	go to state 39
+	Variable	go to state 67
+
+State 234:
+
+	PAREN-24 -> 'elsif' '(' . Expression ')' CodeBlock	(Rule 94)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	Variable	go to state 67
+	Operator	go to state 39
+	Expression	go to state 247
+
+State 235:
+
+	PAREN-26 -> 'else' CodeBlock .	(Rule 97)
+
+	$default	reduce using rule 97 (PAREN-26)
+
+State 236:
+
+	Properties -> 'our %properties' '=' '(' OPTIONAL-36 . ');'	(Rule 138)
+
+	');'	shift, and go to state 248
+
+State 237:
+
+	OPTIONAL-36 -> HashEntries .	(Rule 136)
+
+	$default	reduce using rule 136 (OPTIONAL-36)
+
+State 238:
+
+	Method -> 'our' TYPE . VARIABLE_SYMBOL '= sub {' OPTIONAL-37 PLUS-38 '};'	(Rule 143)
+
+	VARIABLE_SYMBOL	shift, and go to state 249
+
+State 239:
+
+	Include -> 'use' WORD_SCOPED ';' .	(Rule 22)
+
+	$default	reduce using rule 22 (Include)
+
+State 240:
+
+	Include -> 'use' WORD_SCOPED 'qw(' . PLUS-7 ');'	(Rule 23)
+
+	WORD	shift, and go to state 251
+
+	PLUS-7	go to state 250
+
+State 241:
+
+	Constant -> 'use constant' WORD . '=>' Constant_Value ';'	(Rule 24)
+
+	'=>'	shift, and go to state 252
+
+State 242:
+
+	STAR-15 -> STAR-15 PAREN-14 .	(Rule 40)
+
+	$default	reduce using rule 40 (STAR-15)
+
+State 243:
+
+	SubroutineArguments -> ARGUMENTS_BEGIN TYPE VARIABLE_SYMBOL STAR-15 ARGUMENTS_END .	(Rule 42)
+
+	$default	reduce using rule 42 (SubroutineArguments)
+
+State 244:
+
+	PAREN-14 -> ',' . 'my' TYPE VARIABLE_SYMBOL	(Rule 39)
+
+	'my'	shift, and go to state 253
+
+State 245:
+
+	LoopFor -> 'for my integer' VARIABLE_SYMBOL '(' Expression '..' Expression ')' CodeBlock .	(Rule 104)
+
+	$default	reduce using rule 104 (LoopFor)
+
+State 246:
+
+	PAREN-32 -> ',' WORD '=>' HashEntryValue .	(Rule 125)
+
+	$default	reduce using rule 125 (PAREN-32)
+
+State 247:
+
+	Operator -> Expression . OPERATOR_SYMBOL_04 Expression	(Rule 50)
+	Operator -> Expression . OPERATOR_SYMBOL_07 Expression	(Rule 52)
+	Operator -> Expression . OPERATOR_SYMBOL_08 Expression	(Rule 53)
+	Operator -> Expression . OPERATOR_SYMBOL_09 Expression	(Rule 54)
+	Operator -> Expression . OPERATOR_SYMBOL_11 Expression	(Rule 56)
+	Operator -> Expression . OPERATOR_SYMBOL_12 Expression	(Rule 57)
+	Operator -> Expression . OPERATOR_SYMBOL_13 Expression	(Rule 58)
+	Operator -> Expression . OPERATOR_SYMBOL_14 Expression	(Rule 59)
+	Operator -> Expression . OPERATOR_SYMBOL_15 Expression	(Rule 60)
+	Operator -> Expression . OPERATOR_SYMBOL_16 Expression	(Rule 61)
+	Operator -> Expression . OPERATOR_SYMBOL_17 Expression	(Rule 62)
+	Operator -> Expression . OPERATOR_SYMBOL_23 Expression	(Rule 64)
+	Operator -> Expression . OPERATOR_SYMBOL_24 Expression	(Rule 65)
+	PAREN-24 -> 'elsif' '(' Expression . ')' CodeBlock	(Rule 94)
+
+	')'	shift, and go to state 254
+	OPERATOR_SYMBOL_04	shift, and go to state 61
+	OPERATOR_SYMBOL_07	shift, and go to state 52
+	OPERATOR_SYMBOL_08	shift, and go to state 56
+	OPERATOR_SYMBOL_09	shift, and go to state 51
+	OPERATOR_SYMBOL_11	shift, and go to state 59
+	OPERATOR_SYMBOL_12	shift, and go to state 60
+	OPERATOR_SYMBOL_13	shift, and go to state 54
+	OPERATOR_SYMBOL_14	shift, and go to state 55
+	OPERATOR_SYMBOL_15	shift, and go to state 57
+	OPERATOR_SYMBOL_16	shift, and go to state 62
+	OPERATOR_SYMBOL_17	shift, and go to state 53
+	OPERATOR_SYMBOL_23	shift, and go to state 64
+	OPERATOR_SYMBOL_24	shift, and go to state 58
+
+State 248:
+
+	Properties -> 'our %properties' '=' '(' OPTIONAL-36 ');' .	(Rule 138)
+
+	$default	reduce using rule 138 (Properties)
+
+State 249:
+
+	Method -> 'our' TYPE VARIABLE_SYMBOL . '= sub {' OPTIONAL-37 PLUS-38 '};'	(Rule 143)
+
+	'= sub {'	shift, and go to state 255
+
+State 250:
+
+	PLUS-7 -> PLUS-7 . WORD	(Rule 20)
+	Include -> 'use' WORD_SCOPED 'qw(' PLUS-7 . ');'	(Rule 23)
+
+	');'	shift, and go to state 257
+	WORD	shift, and go to state 256
+
+State 251:
+
+	PLUS-7 -> WORD .	(Rule 21)
+
+	$default	reduce using rule 21 (PLUS-7)
+
+State 252:
+
+	Constant -> 'use constant' WORD '=>' . Constant_Value ';'	(Rule 24)
+
+	'['	shift, and go to state 259
+	'{'	shift, and go to state 260
+	LITERAL	shift, and go to state 258
+
+	Constant_Value	go to state 261
+
+State 253:
+
+	PAREN-14 -> ',' 'my' . TYPE VARIABLE_SYMBOL	(Rule 39)
+
+	TYPE	shift, and go to state 262
+
+State 254:
+
+	PAREN-24 -> 'elsif' '(' Expression ')' . CodeBlock	(Rule 94)
+
+	'{'	shift, and go to state 186
+
+	CodeBlock	go to state 263
+
+State 255:
+
+	Method -> 'our' TYPE VARIABLE_SYMBOL '= sub {' . OPTIONAL-37 PLUS-38 '};'	(Rule 143)
+
+	ARGUMENTS_BEGIN	shift, and go to state 265
+
+	'('	reduce using rule 140 (OPTIONAL-37)
+	'['	reduce using rule 140 (OPTIONAL-37)
+	'for my integer'	reduce using rule 140 (OPTIONAL-37)
+	'foreach my'	reduce using rule 140 (OPTIONAL-37)
+	'if'	reduce using rule 140 (OPTIONAL-37)
+	'my'	reduce using rule 140 (OPTIONAL-37)
+	'while'	reduce using rule 140 (OPTIONAL-37)
+	'{'	reduce using rule 140 (OPTIONAL-37)
+	LITERAL	reduce using rule 140 (OPTIONAL-37)
+	LOOP_LABEL	reduce using rule 140 (OPTIONAL-37)
+	OPERATOR_SYMBOL_01	reduce using rule 140 (OPTIONAL-37)
+	OPERATOR_SYMBOL_03	reduce using rule 140 (OPTIONAL-37)
+	OPERATOR_SYMBOL_05	reduce using rule 140 (OPTIONAL-37)
+	OPERATOR_SYMBOL_10	reduce using rule 140 (OPTIONAL-37)
+	OPERATOR_SYMBOL_19a	reduce using rule 140 (OPTIONAL-37)
+	OPERATOR_SYMBOL_22	reduce using rule 140 (OPTIONAL-37)
+	OPERATOR_VOID	reduce using rule 140 (OPTIONAL-37)
+	VARIABLE_SYMBOL	reduce using rule 140 (OPTIONAL-37)
+	WORD_SCOPED	reduce using rule 140 (OPTIONAL-37)
+
+	MethodArguments	go to state 266
+	OPTIONAL-37	go to state 264
+
+State 256:
+
+	PLUS-7 -> PLUS-7 WORD .	(Rule 20)
+
+	$default	reduce using rule 20 (PLUS-7)
+
+State 257:
+
+	Include -> 'use' WORD_SCOPED 'qw(' PLUS-7 ');' .	(Rule 23)
+
+	$default	reduce using rule 23 (Include)
+
+State 258:
+
+	Constant_Value -> LITERAL .	(Rule 31)
+
+	$default	reduce using rule 31 (Constant_Value)
+
+State 259:
+
+	Constant_Value -> '[' . LITERAL STAR-9 ']'	(Rule 32)
+
+	LITERAL	shift, and go to state 267
+
+State 260:
+
+	Constant_Value -> '{' . WORD '=>' LITERAL STAR-11 '}'	(Rule 33)
+
+	WORD	shift, and go to state 268
+
+State 261:
+
+	Constant -> 'use constant' WORD '=>' Constant_Value . ';'	(Rule 24)
+
+	';'	shift, and go to state 269
+
+State 262:
+
+	PAREN-14 -> ',' 'my' TYPE . VARIABLE_SYMBOL	(Rule 39)
+
+	VARIABLE_SYMBOL	shift, and go to state 270
+
+State 263:
+
+	PAREN-24 -> 'elsif' '(' Expression ')' CodeBlock .	(Rule 94)
+
+	$default	reduce using rule 94 (PAREN-24)
+
+State 264:
+
+	Method -> 'our' TYPE VARIABLE_SYMBOL '= sub {' OPTIONAL-37 . PLUS-38 '};'	(Rule 143)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'if'	shift, and go to state 40
+	'my'	shift, and go to state 38
+	'{'	shift, and go to state 36
+	LITERAL	shift, and go to state 20
+	LOOP_LABEL	shift, and go to state 45
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_19a	shift, and go to state 37
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	OPERATOR_VOID	shift, and go to state 21
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	'for my integer'	reduce using rule 88 (OPTIONAL-23)
+	'foreach my'	reduce using rule 88 (OPTIONAL-23)
+	'while'	reduce using rule 88 (OPTIONAL-23)
+
+	Variable	go to state 29
+	OperatorVoid	go to state 18
+	OPTIONAL-23	go to state 33
+	PLUS-38	go to state 272
+	Conditional	go to state 35
+	Operation	go to state 271
+	Expression	go to state 22
+	Operator	go to state 39
+	Statement	go to state 43
+	VariableModification	go to state 42
+	PAREN-22	go to state 44
+	VariableDeclaration	go to state 47
+
+State 265:
+
+	MethodArguments -> ARGUMENTS_BEGIN . TYPE CLASS_OR_SELF STAR-40 ARGUMENTS_END	(Rule 147)
+
+	TYPE	shift, and go to state 273
+
+State 266:
+
+	OPTIONAL-37 -> MethodArguments .	(Rule 139)
+
+	$default	reduce using rule 139 (OPTIONAL-37)
+
+State 267:
+
+	Constant_Value -> '[' LITERAL . STAR-9 ']'	(Rule 32)
+
+	$default	reduce using rule 27 (STAR-9)
+
+	STAR-9	go to state 274
+
+State 268:
+
+	Constant_Value -> '{' WORD . '=>' LITERAL STAR-11 '}'	(Rule 33)
+
+	'=>'	shift, and go to state 275
+
+State 269:
+
+	Constant -> 'use constant' WORD '=>' Constant_Value ';' .	(Rule 24)
+
+	$default	reduce using rule 24 (Constant)
+
+State 270:
+
+	PAREN-14 -> ',' 'my' TYPE VARIABLE_SYMBOL .	(Rule 39)
+
+	$default	reduce using rule 39 (PAREN-14)
+
+State 271:
+
+	PLUS-38 -> Operation .	(Rule 142)
+
+	$default	reduce using rule 142 (PLUS-38)
+
+State 272:
+
+	PLUS-38 -> PLUS-38 . Operation	(Rule 141)
+	Method -> 'our' TYPE VARIABLE_SYMBOL '= sub {' OPTIONAL-37 PLUS-38 . '};'	(Rule 143)
+
+	'('	shift, and go to state 27
+	'['	shift, and go to state 34
+	'if'	shift, and go to state 40
+	'my'	shift, and go to state 38
+	'{'	shift, and go to state 36
+	'};'	shift, and go to state 277
+	LITERAL	shift, and go to state 20
+	LOOP_LABEL	shift, and go to state 45
+	OPERATOR_SYMBOL_01	shift, and go to state 31
+	OPERATOR_SYMBOL_03	shift, and go to state 26
+	OPERATOR_SYMBOL_05	shift, and go to state 46
+	OPERATOR_SYMBOL_10	shift, and go to state 30
+	OPERATOR_SYMBOL_19a	shift, and go to state 37
+	OPERATOR_SYMBOL_22	shift, and go to state 25
+	OPERATOR_VOID	shift, and go to state 21
+	VARIABLE_SYMBOL	shift, and go to state 32
+	WORD_SCOPED	shift, and go to state 41
+
+	'for my integer'	reduce using rule 88 (OPTIONAL-23)
+	'foreach my'	reduce using rule 88 (OPTIONAL-23)
+	'while'	reduce using rule 88 (OPTIONAL-23)
+
+	OPTIONAL-23	go to state 33
+	OperatorVoid	go to state 18
+	Variable	go to state 29
+	Conditional	go to state 35
+	Expression	go to state 22
+	Operation	go to state 276
+	VariableModification	go to state 42
+	Statement	go to state 43
+	Operator	go to state 39
+	VariableDeclaration	go to state 47
+	PAREN-22	go to state 44
+
+State 273:
+
+	MethodArguments -> ARGUMENTS_BEGIN TYPE . CLASS_OR_SELF STAR-40 ARGUMENTS_END	(Rule 147)
+
+	CLASS_OR_SELF	shift, and go to state 278
+
+State 274:
+
+	STAR-9 -> STAR-9 . PAREN-8	(Rule 26)
+	Constant_Value -> '[' LITERAL STAR-9 . ']'	(Rule 32)
+
+	','	shift, and go to state 281
+	']'	shift, and go to state 279
+
+	PAREN-8	go to state 280
+
+State 275:
+
+	Constant_Value -> '{' WORD '=>' . LITERAL STAR-11 '}'	(Rule 33)
+
+	LITERAL	shift, and go to state 282
+
+State 276:
+
+	PLUS-38 -> PLUS-38 Operation .	(Rule 141)
+
+	$default	reduce using rule 141 (PLUS-38)
+
+State 277:
+
+	Method -> 'our' TYPE VARIABLE_SYMBOL '= sub {' OPTIONAL-37 PLUS-38 '};' .	(Rule 143)
+
+	$default	reduce using rule 143 (Method)
+
+State 278:
+
+	MethodArguments -> ARGUMENTS_BEGIN TYPE CLASS_OR_SELF . STAR-40 ARGUMENTS_END	(Rule 147)
+
+	$default	reduce using rule 146 (STAR-40)
+
+	STAR-40	go to state 283
+
+State 279:
+
+	Constant_Value -> '[' LITERAL STAR-9 ']' .	(Rule 32)
+
+	$default	reduce using rule 32 (Constant_Value)
+
+State 280:
+
+	STAR-9 -> STAR-9 PAREN-8 .	(Rule 26)
+
+	$default	reduce using rule 26 (STAR-9)
+
+State 281:
+
+	PAREN-8 -> ',' . LITERAL	(Rule 25)
+
+	LITERAL	shift, and go to state 284
+
+State 282:
+
+	Constant_Value -> '{' WORD '=>' LITERAL . STAR-11 '}'	(Rule 33)
+
+	$default	reduce using rule 30 (STAR-11)
+
+	STAR-11	go to state 285
+
+State 283:
+
+	STAR-40 -> STAR-40 . PAREN-39	(Rule 145)
+	MethodArguments -> ARGUMENTS_BEGIN TYPE CLASS_OR_SELF STAR-40 . ARGUMENTS_END	(Rule 147)
+
+	','	shift, and go to state 288
+	ARGUMENTS_END	shift, and go to state 287
+
+	PAREN-39	go to state 286
+
+State 284:
+
+	PAREN-8 -> ',' LITERAL .	(Rule 25)
+
+	$default	reduce using rule 25 (PAREN-8)
+
+State 285:
+
+	STAR-11 -> STAR-11 . PAREN-10	(Rule 29)
+	Constant_Value -> '{' WORD '=>' LITERAL STAR-11 . '}'	(Rule 33)
+
+	','	shift, and go to state 290
+	'}'	shift, and go to state 289
+
+	PAREN-10	go to state 291
+
+State 286:
+
+	STAR-40 -> STAR-40 PAREN-39 .	(Rule 145)
+
+	$default	reduce using rule 145 (STAR-40)
+
+State 287:
+
+	MethodArguments -> ARGUMENTS_BEGIN TYPE CLASS_OR_SELF STAR-40 ARGUMENTS_END .	(Rule 147)
+
+	$default	reduce using rule 147 (MethodArguments)
+
+State 288:
+
+	PAREN-39 -> ',' . 'my' TYPE VARIABLE_SYMBOL	(Rule 144)
+
+	'my'	shift, and go to state 292
+
+State 289:
+
+	Constant_Value -> '{' WORD '=>' LITERAL STAR-11 '}' .	(Rule 33)
+
+	$default	reduce using rule 33 (Constant_Value)
+
+State 290:
+
+	PAREN-10 -> ',' . WORD '=>' LITERAL	(Rule 28)
+
+	WORD	shift, and go to state 293
+
+State 291:
+
+	STAR-11 -> STAR-11 PAREN-10 .	(Rule 29)
+
+	$default	reduce using rule 29 (STAR-11)
+
+State 292:
+
+	PAREN-39 -> ',' 'my' . TYPE VARIABLE_SYMBOL	(Rule 144)
+
+	TYPE	shift, and go to state 294
+
+State 293:
+
+	PAREN-10 -> ',' WORD . '=>' LITERAL	(Rule 28)
+
+	'=>'	shift, and go to state 295
+
+State 294:
+
+	PAREN-39 -> ',' 'my' TYPE . VARIABLE_SYMBOL	(Rule 144)
+
+	VARIABLE_SYMBOL	shift, and go to state 296
+
+State 295:
+
+	PAREN-10 -> ',' WORD '=>' . LITERAL	(Rule 28)
+
+	LITERAL	shift, and go to state 297
+
+State 296:
+
+	PAREN-39 -> ',' 'my' TYPE VARIABLE_SYMBOL .	(Rule 144)
+
+	$default	reduce using rule 144 (PAREN-39)
+
+State 297:
+
+	PAREN-10 -> ',' WORD '=>' LITERAL .	(Rule 28)
+
+	$default	reduce using rule 28 (PAREN-10)
+
+
+Summary:
+--------
+Number of rules         : 148
+Number of terminals     : 74
+Number of non-terminals : 74
+Number of states        : 298
