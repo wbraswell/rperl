@@ -31,10 +31,10 @@ cLIST_ELEMENTS ::=			LIST_ELEMENT_VALUE (comma LIST_ELEMENT_VALUE)*
  HASH_ENTRIES ::=			_word fat_arrow HASH_ENTRY_VALUE (comma _word fat_arrow HASH_ENTRY_VALUE)* 
  HASH_ENTRY_VALUE ::=		EXPRESSION | percent lbrace VARIABLE rbrace
 
-cCLASS ::=				package _word_scoped scolon HEADER use parent qw lparen _word_scoped+ rparen scolon PROPERTIES METHOD* SUBROUTINE* _number_one scolon
+cCLASS ::=				package _word_scoped scolon HEADER use parent qw lparen _word_scoped+ rparen scolon PROPERTIES METHOD* _number_one scolon (SUBROUTINE+ _number_one scolon)?
 cPROPERTIES ::=			our percent properties equal lparen HASH_ENTRIES? rparen scolon
 cMETHOD ::=				our _type _variable_symbol equal sub lbrace METHOD_ARGUMENTS? OPERATION+ rbrace scolon
- METHOD_ARGUMENTS ::=	lparen my _type class_or_self (comma my _type _variable_symbol)* rparen equal at_underscore scolon
+ METHOD_ARGUMENTS ::=	lparen my _type_class_or_self (comma my _type _variable_symbol)* rparen equal at_underscore scolon
 
  X? ::=						X | EMPTY
  X+ ::=						X* X
