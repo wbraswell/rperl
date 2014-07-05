@@ -1,3 +1,5 @@
+# DEV NOTE: this file is outdated and will soon be deleted, see lib/RPerl/Grammar.eyp instead!!!
+
 cCOMPILE_UNIT ::=			PROGRAM | MODULE+
 cPROGRAM ::=				shebang HEADER SUBROUTINE* OPERATION+
 cMODULE ::=					PACKAGE | CLASS
