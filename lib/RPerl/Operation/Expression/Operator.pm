@@ -15,9 +15,9 @@ use parent qw(RPerl::Operation::Expression);
 
 # [[[ OO PROPERTIES ]]]
 our %properties = ( ## no critic qw(ProhibitPackageVars)  ## RPERL SYSTEM, allow OO properties
-    type      => my string $KEY_type                 = undef,
-    name      => my string $KEY_name                 = undef,
-    arguments => my object__array_ref $KEY_arguments = undef,
+    type      => my string $TYPED_type                 = undef,
+    name      => my string $TYPED_name                 = undef,
+    arguments => my object__array_ref $TYPED_arguments = undef,
 );
 
 # [[[ OO METHODS ]]]

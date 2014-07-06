@@ -5,18 +5,19 @@ use warnings;
 our $VERSION = 0.003_016;
 use Carp;
 use RPerl;
+
+use parent qw( RPerl::Algorithm::Sort RPerl::Algorithm::Inefficient ); # INHERITANCE TESTING
 use RPerl::Algorithm::Sort;
 use RPerl::Algorithm::Inefficient;                                     # INHERITANCE TESTING
 use Data::Dumper;
-use parent qw( RPerl::Algorithm::Sort RPerl::Algorithm::Inefficient ); # INHERITANCE TESTING
 
 # [[[ OO PROPERTIES ]]]
 # [[[ OO PROPERTIES ]]]
 # [[[ OO PROPERTIES ]]]
 
 our %properties = ( ## no critic qw(ProhibitPackageVars)  ## RPERL SYSTEM, allow OO properties
-    integer__data => my integer__array_ref $KEY_integer__data,
-    number__data  => my number__array_ref $KEY_number__data
+    integer__data => my integer__array_ref $TYPED_integer__data = undef,
+    number__data  => my number__array_ref $TYPED_number__data = undef
 );
 
 # [[[ OO METHODS ]]]
@@ -55,7 +56,8 @@ our integer__array_ref $integer__bubblesort = sub {
     ::integer__array_ref__CHECKTRACE( $integer__data, '$integer__data',
         'integer__bubblesort()' );
     my integer $is_sorted                  = 0;
-    my const_integer $integer__data_length = scalar @{$integer__data};
+#    my const_integer $integer__data_length = scalar @{$integer__data};  # NEED FIX IN GRAMMAR, scalar() w/out parenthesis
+    my const_integer $integer__data_length = scalar(@{$integer__data});
     my integer $integer__data_i;
     my integer $integer__data_i_plus_1;
     my integer $swap;
