@@ -2,7 +2,7 @@
 package RPerl::Algorithm::Sort::Bubble;
 use strict;
 use warnings;
-our $VERSION = 0.003_016;
+our $VERSION = 0.003_020;
 use Carp;
 use RPerl;
 
@@ -10,6 +10,16 @@ use parent qw( RPerl::Algorithm::Sort RPerl::Algorithm::Inefficient ); # INHERIT
 use RPerl::Algorithm::Sort;
 use RPerl::Algorithm::Inefficient;                                     # INHERITANCE TESTING
 use Data::Dumper;
+
+# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
+# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
+# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
+
+# START HERE: enable OPS_TYPES_ID and subs in Grammar
+
+our integer $bubblesort__OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0
+our string $bubblesort__ops = sub { return ('PERL'); };
+our string $bubblesort__types = sub { return ('PERL'); };
 
 # [[[ OO PROPERTIES ]]]
 # [[[ OO PROPERTIES ]]]
@@ -40,7 +50,7 @@ our void__method $number__sort = sub {
 };
 
 # METHODS ABOVE
-1;
+1;1;  # RPerl code separator
 # SUBROUTINES BELOW
 
 # [[[ PROCEDURAL SUBROUTINES ]]]
@@ -56,8 +66,7 @@ our integer__array_ref $integer__bubblesort = sub {
     ::integer__array_ref__CHECKTRACE( $integer__data, '$integer__data',
         'integer__bubblesort()' );
     my integer $is_sorted                  = 0;
-#    my const_integer $integer__data_length = scalar @{$integer__data};  # NEED FIX IN GRAMMAR, scalar() w/out parenthesis
-    my const_integer $integer__data_length = scalar(@{$integer__data});
+    my const_integer $integer__data_length = scalar @{$integer__data};
     my integer $integer__data_i;
     my integer $integer__data_i_plus_1;
     my integer $swap;
@@ -143,14 +152,6 @@ our number__array_ref $number__bubblesort = sub {
     return $number__data;
 };
 
-# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-
-our integer $bubblesort__OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0
-our string $bubblesort__ops = sub { return ('PERL'); };
-our string $bubblesort__types = sub { return ('PERL'); };
-
 # [[[ TYPE TESTING ]]]
 # [[[ TYPE TESTING ]]]
 # [[[ TYPE TESTING ]]]
@@ -235,4 +236,4 @@ our string $uninherited = sub {
     return ('Bubble::uninherited() ROCKS! PERLOPS_PERLTYPES');
 };
 
-1;
+1;1;  # RPerl code separator

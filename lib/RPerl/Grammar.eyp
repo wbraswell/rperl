@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_500;
+    our $VERSION = 0.000_600;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -20,10 +20,11 @@
 %token SHEBANG              = /(^(\#\!\/[\w\/]*\/perl)$)/               # begin line, hash (octothorpe), bang, *NIX path to Perl, end line; ex. '#!/usr/bin/perl'
 %token VERSION_NUMBER       = /(\d+\.\d{3}\_\d{3})/                     # number(s) followed by decicmal, then 3 numbers, underscore, and 3 numbers; ex. '123.456_789'
 %token LITERAL              = /((-?\d+(\.\d+)?)|('[^']*')|("[^"]*"))/   # number or string
-%token VARIABLE_SYMBOL      = /(\$[a-zA-Z][\w:{2}]*\w*)/                   # dollar sigil, scoped word
+#%token OPS_TYPES_ID         = /(\$[a-zA-Z]\w*__OPS_TYPES_ID)/           # ex. $fooapp__OPS_TYPES_ID
+%token VARIABLE_SYMBOL      = /(\$[a-zA-Z]\w*(::)*\w*)/                 # dollar sigil, scoped word
 %token KEYS_OR_VALUES       = /(keys|values)/                           # 'keys' or 'values'
 %token TYPE_CLASS_OR_SELF   = /(string\s+\$class|object\s+\$self)/      # ex. 'string $class' or 'object $self'
-%token CHECK_OR_CHECKTRACE  = /([a-zA-Z]\w*__CHECK(TRACE)*)/
+%token CHECK_OR_CHECKTRACE  = /([a-zA-Z]\w*__CHECK(TRACE)*)/            # ex. 'integer__array_ref__CHECK' or 'integer__array_ref__CHECKTRACE'
 
 # PRECEDENCE, LEXICAL ORDERING: earlier declaration gets tried first;  http://perldoc.perl.org/perlop.html#Operator-Precedence-and-Associativity [1]
 %token OP24_LOGICAL_OR_XOR      = /(or|xor)/                    # precedence 24 infix: logical or and xor, equivalent to || except for precedence
@@ -40,7 +41,7 @@
 %token OP13_BITWISE_AND         = /(&)/                         # precedence 13 infix: bitwise and
 %token OP12_COMPARE_EQ_NEQ      = /(==|!=|eq|ne)/               # precedence 12 infix: comparison numeric equal, numeric not equal, string equal, string not equal
 %token OP09_BITWISE_SHIFT       = /(<<|>>)/                     # precedence 09 infix: bitwise shift left, shift right
-%token OP10_NAMED_UNARY         = /(^.)/                        # precedence 10 prefix: "named unary operators" [1]; ex. 'chdir' and 'rand'; NEED FIX: hard-code names
+%token OP10_NAMED_UNARY         = /(scalar)/                    # precedence 10 prefix: "named unary operators" [1]; ex. 'chdir' and 'rand'; NEED FIX: hard-code names
 %token OP08_STRING_CAT          = /(\.)/                        # precedence 08 infix: string concatenate
 %token OP03_MATH_INC_DEC        = /(\+\+|--)/                   # precedence 03 prefix and postfix: increment, decrement
 %token OP04_MATH_POW            = /(\*\*)/                      # precedence 04 infix: arithmetic exponent AKA power
@@ -102,19 +103,19 @@
 CompileUnit:            Program | Module+ ;
 Program:                SHEBANG Header Include* Constant* Subroutine* Operation+ ;
 Module:                 Package | Class ;
-Package:                'package' WordScoped ';' Header Include* Constant* Subroutine+ '1;' ;
+Package:                'package' WordScoped ';' Header Include* Constant* Subroutine+ '1;1;' ;
 Header:                 'use strict;' 'use warnings;' 'our $VERSION =' VERSION_NUMBER ';' 'use Carp;' 'use RPerl;' ;
 Include:                'use' WordScoped ';' | 'use' WordScoped 'qw(' WORD+ ')' ';' ;
 Constant:               'use constant' WORD OP20_HASH_FATARROW TypeInner ConstantValue ';' ;
 ConstantValue:          LITERAL | '[' TypeInner? LITERAL (OP21_LIST_COMMA TypeInner? LITERAL)* ']' | 
                         '{' WORD OP20_HASH_FATARROW TypeInner? LITERAL (OP21_LIST_COMMA WORD OP20_HASH_FATARROW TypeInner? LITERAL)* '}' ;
-Subroutine:             'our' Type VARIABLE_SYMBOL '= sub {' SubroutineArguments? Operation+ '};' ;
+Subroutine:             'our' Type VARIABLE_SYMBOL '= sub {' SubroutineArguments? Operation+ '}' ';' ;
 SubroutineArguments:    '( my' Type VARIABLE_SYMBOL (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ArgumentCheck* ;
 ArgumentCheck:          '::' CHECK_OR_CHECKTRACE '(' Expression (OP21_LIST_COMMA Expression OP21_LIST_COMMA Expression)? ')' ';' ;
 
-Class:                  'package' WordScoped ';' Header 'use parent qw(' WordScoped+ ')' ';' Include* Constant* Properties Method* '1;' (Subroutine+ '1;')? ;
+Class:                  'package' WordScoped ';' Header 'use parent qw(' WordScoped+ ')' ';' Include* Constant* Properties Method* '1;1;' (Subroutine+ '1;1;')? ;
 Properties:             'our %properties = (' HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* ')' ';' | 'our %properties = (' ')' ';';
-Method:                 'our' Type VARIABLE_SYMBOL '= sub {' MethodArguments? Operation+ '};' ;
+Method:                 'our' Type VARIABLE_SYMBOL '= sub {' MethodArguments? Operation+ '}' ';' ;
 MethodArguments:        '( my' TYPE_CLASS_OR_SELF (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ArgumentCheck* ;
 
 Operation:              Expression ';' | Statement ;
@@ -128,7 +129,7 @@ Operator:               OP01_NAMED '(' ListElements? ')' | OP03_MATH_INC_DEC Var
                         Expression OP24_LOGICAL_OR_XOR Expression ;
 OperatorVoid:           OP01_NAMED_VOID_PAREN ListElements? ')' ';' | OP01_NAMED_VOID_PAREN FileHandle ListElements? ')' ';' | 
                         OP01_NAMED_VOID ListElements? ';' | OP01_NAMED_VOID FileHandle ListElements? ';' | OP19_LOOP_CONTROL LoopLabel ';' ;
-Expression:             'undef' | LITERAL | Variable | '[' ListElements? ']' | '{' HashEntry (OP21_LIST_COMMA HashEntry)* '}' | '{' '}' |
+Expression:             'undef' | LITERAL | Variable | ArrayReference | ArrayDereferenced | HashReference | HashDereferenced | '{' '}' |
                         Operator | WordScoped '(' ListElements? ')' | Variable OP02_METHOD_THINARROW WORD '(' ListElements? ')' | '(' Expression ')' ;
 Statement:              Conditional | (LoopLabel ':')? Loop | OperatorVoid | VariableDeclaration | VariableModification ;
 Conditional:            'if (' Expression ')' CodeBlock ('elsif (' Expression ')' CodeBlock)* ('else' CodeBlock)? ;
@@ -143,9 +144,13 @@ VariableRetrieval:      OP02_ARRAY_THINARROW Expression ']' | OP02_HASH_THINARRO
 VariableDeclaration:    'my' Type VARIABLE_SYMBOL ';' | 'my' Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN Expression ';' ;
 VariableModification:   Variable OP19_VARIABLE_ASSIGN Expression ';' | Variable OP19_VARIABLE_ASSIGN_BY Expression ';' ;
 ListElements:           ListElement (OP21_LIST_COMMA ListElement)* ;
-ListElement:            Expression | TypeInner Expression | '@{' Variable '}' | KEYS_OR_VALUES '%{' Variable '}' ;
-HashEntry:              WORD OP20_HASH_FATARROW TypeInner? Expression | '%{' Variable '}' ;
-HashEntryTyped:         WORD OP20_HASH_FATARROW TypeInner Expression | '%{' Variable '}' ;
+ListElement:            Expression | TypeInner Expression | KEYS_OR_VALUES HashDereferenced ;
+ArrayReference:         '[' ListElements? ']' ;
+ArrayDereferenced:      '@{' Variable '}' | '@{' ArrayReference '}' ;
+HashEntry:              WORD OP20_HASH_FATARROW TypeInner? Expression | HashDereferenced ;
+HashEntryTyped:         WORD OP20_HASH_FATARROW TypeInner Expression | HashDereferenced ;
+HashReference:          '{' HashEntry (OP21_LIST_COMMA HashEntry)* '}' ;
+HashDereferenced:       '%{' Variable '}' | '%{' HashReference '}' ;
 
 WordScoped:             WORD ('::' WORD)* ; 
 FileHandle:             '{*' WORD '}' ;
