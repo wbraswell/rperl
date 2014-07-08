@@ -2,24 +2,26 @@
 package RPerl::Algorithm::Sort::Bubble;
 use strict;
 use warnings;
-our $VERSION = 0.003_020;
+our $VERSION = 0.003_030;
 use Carp;
 use RPerl;
+
+# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
+# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
+# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
+
+our integer $bubblesort__OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0
+our string $bubblesort__ops = sub { return ('PERL'); };
+our string $bubblesort__types = sub { return ('PERL'); };
+
+# [[[ INHERITANCE & INCLUDES ]]]
+# [[[ INHERITANCE & INCLUDES ]]]
+# [[[ INHERITANCE & INCLUDES ]]]
 
 use parent qw( RPerl::Algorithm::Sort RPerl::Algorithm::Inefficient ); # INHERITANCE TESTING
 use RPerl::Algorithm::Sort;
 use RPerl::Algorithm::Inefficient;                                     # INHERITANCE TESTING
 use Data::Dumper;
-
-# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-
-# START HERE: enable OPS_TYPES_ID and subs in Grammar
-
-our integer $bubblesort__OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0
-our string $bubblesort__ops = sub { return ('PERL'); };
-our string $bubblesort__types = sub { return ('PERL'); };
 
 # [[[ OO PROPERTIES ]]]
 # [[[ OO PROPERTIES ]]]

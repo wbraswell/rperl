@@ -10,6 +10,10 @@ use RPerl::Grammar;
 
 my $eyapp_parser = RPerl::Grammar->new();
 
+# START HERE: need line numbers in syntax error output!
+# START HERE: need line numbers in syntax error output!
+# START HERE: need line numbers in syntax error output!
+
 my $input_filename = shift;
 $eyapp_parser->YYSlurpFile($input_filename);
 
