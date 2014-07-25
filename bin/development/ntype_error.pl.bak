@@ -1,0 +1,36 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+our $VERSION = 0.003_003;
+use Carp;
+
+# [[[ SETUP ]]]
+
+# RPERL DRIVER BOILERPLATE
+BEGIN { package main; our $RPERL_INCLUDE_PATH = 'blib/lib'; } # NEED REMOVE hard-coded path
+BEGIN { use RPerl; use parent ('RPerl'); $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH; }    # RPerl system files
+BEGIN { use Data::Dumper; our $AUTOLOAD;  sub AUTOLOAD { croak( "AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n" . Dumper( \@_ ) . ', croaking' ); } }
+
+# UNCOMMENT TO ENABLE C++ TYPES FOR C++ OPS
+rperltypes::types_enable('CPP');
+
+use RPerl::DataType::String_cpp;
+RPerl::DataType::String_cpp::cpp_load();
+RPerl::DataType::String_cpp::cpp_link();
+
+# use Data::Dumper() to to stringify a string
+#our string $string__dumperify = sub {  # NEED FIX: RPerl subroutines disabled here
+sub string__dumperify {
+    ( my string $input_string ) = @_;
+        print STDERR "in scalar_test.pl string__dumperify(), received have \$input_string =\n$input_string\n\n" or croak();
+        $input_string = Dumper( [$input_string] );
+        $input_string =~ s/^\s+|\s+$//xmsg;         # strip leading whitespace
+        my @input_string_split = split "\n", $input_string;
+        $input_string = $input_string_split[1];    # only select the data line
+        return $input_string;
+}
+
+my string $string_retval;
+$string_retval = integer__stringify(3);  # TIV02
+print STDERR "in scalar_test.pl have \$string_retval = '$string_retval'\n" or croak();
+
