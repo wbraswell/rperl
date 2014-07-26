@@ -1,0 +1,66 @@
+wbraswell@starman:~/austin_perl_mongers/rperl/rperl-latest$ rm -Rf ./_Inline/; reset; make clean; perl Makefile.PL; make; ./bin/development/ntype_string_3.pl
+
+...OUTPUT FROM MAKE REMOVED...
+
+[[[ BEGIN 'use Inline' STAGE for 'DATA' ]]]
+[[[ BEGIN 'use Inline' STAGE for 'DATA' ]]]
+[[[ BEGIN 'use Inline' STAGE for 'DATA' ]]]
+validate Stage
+Starting Build Preprocess Stage
+get_maps Stage
+Finished Build Preprocess Stage
+
+Starting Build Parse Stage
+Finished Build Parse Stage
+
+Starting Build Glue 1 Stage
+Use of uninitialized value $Inline::CPP::ntype in concatenation (.) or string at (eval 68) line 1.
+Use of uninitialized value $Inline::CPP::ntype in concatenation (.) or string at (eval 71) line 1.
+Use of uninitialized value $Inline::CPP::ntype in concatenation (.) or string at (eval 72) line 1.
+Finished Build Glue 1 Stage
+
+Starting Build Glue 2 Stage
+Finished Build Glue 2 Stage
+
+Starting Build Glue 3 Stage
+Finished Build Glue 3 Stage
+
+Starting Build Compile Stage
+  Starting "perl Makefile.PL" Stage
+Generating a Unix-style Makefile
+Writing Makefile for ntype_string_3_pl_bb91
+Writing MYMETA.yml and MYMETA.json
+  Finished "perl Makefile.PL" Stage
+
+  Starting "make" Stage
+Running Mkbootstrap for ntype_string_3_pl_bb91 ()
+chmod 644 ntype_string_3_pl_bb91.bs
+/usr/bin/perl /usr/share/perl/5.18/ExtUtils/xsubpp  -typemap "/usr/share/perl/5.18/ExtUtils/typemap" -typemap "/home/wbraswell/austin_perl_mongers/rperl/rperl-latest/blib/lib/typemap.rperl"   ntype_string_3_pl_bb91.xs > ntype_string_3_pl_bb91.xsc && mv ntype_string_3_pl_bb91.xsc ntype_string_3_pl_bb91.c
+g++ -c  -I"/home/wbraswell/austin_perl_mongers/rperl/rperl-latest/bin/development" -D_REENTRANT -D_GNU_SOURCE -DDEBIAN -fstack-protector -fno-strict-aliasing -pipe -I/usr/local/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix -O2 -g   -DVERSION=\"0.00\" -DXS_VERSION=\"0.00\" -fPIC "-I/usr/lib/perl/5.18/CORE"   ntype_string_3_pl_bb91.c
+rm -f blib/arch/auto/ntype_string_3_pl_bb91/ntype_string_3_pl_bb91.so
+LD_RUN_PATH="/usr/lib/x86_64-linux-gnu" cc  -shared -L/usr/local/lib -fstack-protector ntype_string_3_pl_bb91.o  -o blib/arch/auto/ntype_string_3_pl_bb91/ntype_string_3_pl_bb91.so     \
+       -lstdc++     \
+      
+chmod 755 blib/arch/auto/ntype_string_3_pl_bb91/ntype_string_3_pl_bb91.so
+/usr/bin/perl -MExtUtils::Command::MM -e 'cp_nonempty' -- ntype_string_3_pl_bb91.bs blib/arch/auto/ntype_string_3_pl_bb91/ntype_string_3_pl_bb91.bs 644
+  Finished "make" Stage
+
+  Starting "make install" Stage
+Running Mkbootstrap for ntype_string_3_pl_bb91 ()
+chmod 644 ntype_string_3_pl_bb91.bs
+Files found in blib/arch: installing files in blib/lib into architecture dependent library tree
+Installing /home/wbraswell/austin_perl_mongers/rperl/rperl-latest/_Inline/lib/auto/ntype_string_3_pl_bb91/ntype_string_3_pl_bb91.so
+  Finished "make install" Stage
+
+  Starting Cleaning Up Stage
+  Finished Cleaning Up Stage
+
+Finished Build Compile Stage
+
+[[[ END 'use Inline' STAGE for 'DATA' ]]]
+[[[ END 'use Inline' STAGE for 'DATA' ]]]
+[[[ END 'use Inline' STAGE for 'DATA' ]]]
+in ntype_string_1a.pl have $string_retval = 'Spice CPPOPS_CPPTYPES'
+
+wbraswell@starman:~/austin_perl_mongers/rperl/rperl-latest$ 
+
