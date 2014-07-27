@@ -14,4 +14,4 @@ our void $greet_planet = sub {
     print "Goodbye from PERLOPS_PERLTYPES\n";
 };
 
-1;
+1;1;

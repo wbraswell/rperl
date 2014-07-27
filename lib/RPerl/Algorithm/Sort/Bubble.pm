@@ -10,9 +10,10 @@ use RPerl;
 # [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 # [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 
-our integer $bubblesort__OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0
-our string $bubblesort__ops = sub { return ('PERL'); };
-our string $bubblesort__types = sub { return ('PERL'); };
+# NEED UPGRADE: auto-generate based on package name
+#our integer $bubblesort__OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0
+#our string $bubblesort__ops = sub { return ('PERL'); };
+#our string $bubblesort__types = sub { return ('PERL'); };
 
 # [[[ INHERITANCE & INCLUDES ]]]
 # [[[ INHERITANCE & INCLUDES ]]]

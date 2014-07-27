@@ -20,9 +20,6 @@
 %token SHEBANG              = /(^(\#\!\/[\w\/]*\/perl)$)/               # begin line, hash (octothorpe), bang, *NIX path to Perl, end line; ex. '#!/usr/bin/perl'
 %token VERSION_NUMBER       = /(\d+\.\d{3}\_\d{3})/                     # number(s) followed by decicmal, then 3 numbers, underscore, and 3 numbers; ex. '123.456_789'
 %token LITERAL              = /((-?\d+(\.\d+)?)|('[^']*')|("[^"]*"))/   # number or string
-%token OPS_TYPES_ID         = /(\$[a-zA-Z]\w*__OPS_TYPES_ID)/           # ex. $fooapp__OPS_TYPES_ID
-%token OPS_SUB              = /(\$[a-zA-Z]\w*__ops)/                    # ex. $fooapp__ops
-%token TYPES_SUB            = /(\$[a-zA-Z]\w*__types)/                  # ex. $fooapp__types
 %token VARIABLE_SYMBOL      = /(\$[a-zA-Z]\w*(::)*\w*)/                 # dollar sigil, scoped word
 %token KEYS_OR_VALUES       = /(keys|values)/                           # 'keys' or 'values'
 %token TYPE_CLASS_OR_SELF   = /(string\s+\$class|object\s+\$self)/      # ex. 'string $class' or 'object $self'
@@ -111,9 +108,7 @@ CompileUnit:            Program | Module+ ;
 Program:                SHEBANG Header Include* Constant* Subroutine* Operation+ ;
 Module:                 Package | Class ;
 Package:                'package' WordScoped ';' Header Include* Constant* Subroutine+ '1;1;' ;
-Header:                 'use strict;' 'use warnings;' 'our $VERSION =' VERSION_NUMBER ';' 'use Carp;' 'use RPerl;' OpsTypes;
-OpsTypes:               'our' Type OPS_TYPES_ID OP19_VARIABLE_ASSIGN LITERAL ';' 'our' Type OPS_SUB OpsTypesSub 'our' Type TYPES_SUB OpsTypesSub ;
-OpsTypesSub:            '= sub {' OP01_NAMED_VOID_PAREN LITERAL ')' ';' '}' ';' ;
+Header:                 'use strict;' 'use warnings;' 'our $VERSION =' VERSION_NUMBER ';' 'use Carp;' 'use RPerl;';
 Include:                'use' WordScoped ';' | 'use' WordScoped 'qw(' WORD+ ')' ';' ;
 Constant:               'use constant' WORD OP20_HASH_FATARROW TypeInner ConstantValue ';' ;
 ConstantValue:          LITERAL | '[' TypeInner? LITERAL (OP21_LIST_COMMA TypeInner? LITERAL)* ']' | 
