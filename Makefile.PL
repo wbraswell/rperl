@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-our $VERSION = 0.001_021;
+our $VERSION = 0.001_022;
 use ExtUtils::MakeMaker;
 push(@ExtUtils::MakeMaker::Overridable, qw(pm_to_blib)) if ($^O eq 'MSWin32');
 
@@ -11,7 +11,7 @@ WriteMakefile(
         'Perl::Critic'    => 0,
         'Perl::Tidy'      => 0,
         'Inline'          => 0.55,
-        'Inline::CPP'     => 0.51,
+        'Inline::CPP'     => 0.52,  # fix namespace hack & ntype warnings
         'Inline::Filters' => 0.13,
         'Test::Exception' => 0,
         'Module::Compile' => 0,
