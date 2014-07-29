@@ -10,10 +10,15 @@ The output of the RPerl compiler is fast-running binary code that is exactly equ
 Many thanks to irc.perl.org:
 
 \#perl5 founder timtoady
+
 \#perl6 founder timtoady (again)
+
 \#perl11 founders ingy & rurban & Will_the_Chill (yours truly)
+
 \#perl11 members bulk88 & mst
+
 \#inline founders ingy (again) & nwatkiss
+
 \#inline members davido & mohawk
 
 For more information, please see <a href="http://www.rperl.org">http://www.rperl.org</a>
