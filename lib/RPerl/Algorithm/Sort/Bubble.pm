@@ -10,10 +10,13 @@ use RPerl;
 # [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 # [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 
-# NEED UPGRADE: auto-generate based on package name
-#our integer $bubblesort__OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0
-#our string $bubblesort__ops = sub { return ('PERL'); };
-#our string $bubblesort__types = sub { return ('PERL'); };
+# START HERE: auto-generate ops-types reporting based on package name, for debuggin only???
+# START HERE: auto-generate ops-types reporting based on package name, for debuggin only???
+# START HERE: auto-generate ops-types reporting based on package name, for debuggin only???
+
+our integer $bubblesort__OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0
+our string $bubblesort__ops = sub { return ('PERL'); };
+our string $bubblesort__types = sub { return ('PERL'); };
 
 # [[[ INHERITANCE & INCLUDES ]]]
 # [[[ INHERITANCE & INCLUDES ]]]

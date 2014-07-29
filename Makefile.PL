@@ -11,7 +11,7 @@ WriteMakefile(
         'Perl::Critic'    => 0,
         'Perl::Tidy'      => 0,
         'Inline'          => 0.55,
-        'Inline::CPP'     => 0,
+        'Inline::CPP'     => 0.51,
         'Inline::Filters' => 0.13,
         'Test::Exception' => 0,
         'Module::Compile' => 0,
