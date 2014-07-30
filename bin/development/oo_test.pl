@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.000_003;
+our $VERSION = 0.000_004;
 use Carp;
 
 # RPERL DRIVER BOILERPLATE
@@ -10,32 +10,35 @@ BEGIN { use RPerl;  use parent ('RPerl');  $RPerl::INCLUDE_PATH = $main::RPERL_I
 BEGIN { use Data::Dumper;  our $AUTOLOAD;  sub AUTOLOAD { croak("AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n" . Dumper(\@_) . ', croaking'); } }  ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  ## RPERL SYSTEM allow autoload  ## RPERL SYSTEM allow read-only @_
 
 # UNCOMMENT TO ENABLE PERL TYPES FOR C++ OPS
-rperltypes::types_enable('PERL');
+#rperltypes::types_enable('PERL');
 
 # UNCOMMENT TO ENABLE C++ TYPES FOR C++ OPS
-#rperltypes::types_enable('CPP');
+rperltypes::types_enable('CPP');
+
+
+# START HERE: why are we receiving output of some CPPOPS_PERLTYPES instead of all CPPOPS_CPPTYPES???
+# START HERE: why are we receiving output of some CPPOPS_PERLTYPES instead of all CPPOPS_CPPTYPES???
+# START HERE: why are we receiving output of some CPPOPS_PERLTYPES instead of all CPPOPS_CPPTYPES???
+
 
 # UNCOMMENT TO CHOOSE PERL OPS OR C++ OPS
 #use RPerl::Algorithm::Sort::Bubble;  # choose ONE of this
 use RPerl::Algorithm::Sort::Bubble_cpp;  RPerl::Algorithm::Sort::Bubble_cpp::cpp_load();  RPerl::Algorithm::Sort::Bubble_cpp::cpp_link(); # OR this
 
-print STDERR q{in oo_test.pl, have ops_number() = '} . ops_number() . "'\n" or croak();
-print STDERR q{in oo_test.pl, have types_number() = '} . types_number() . "'\n" or croak();
-print STDERR q{in oo_test.pl, have ops_string() = '} . ops_string() . "'\n" or croak();
-print STDERR q{in oo_test.pl, have types_string() = '} . types_string() . "'\n" or croak();
-print STDERR q{in oo_test.pl, have ops_hash() = '} . ops_hash() . "'\n" or croak();
-print STDERR q{in oo_test.pl, have types_hash() = '} . types_hash() . "'\n" or croak();
+#print STDERR q{in oo_test.pl, have bubblesort__OPS_TYPES_ID = '} . $RPerl::Algorithm::Sort::Bubble::bubblesort__OPS_TYPES_ID . "'\n" or croak();  # PERL/PERL ONLY
+print STDERR q{in oo_test.pl, have bubblesort__ops() = '} . bubblesort__ops() . "'\n" or croak();
+print STDERR q{in oo_test.pl, have bubblesort__types() = '} . bubblesort__types() . "'\n" or croak();
 
 # variable declarations
 my object $sorter;
 
 # loop to test for memory leaks
-my const_int $i_MAX = 1;
-for my int $i ( 0 .. $i_MAX ) {
+my const_integer $i_MAX = 1;
+for my integer $i ( 0 .. $i_MAX ) {
 	print STDERR "in oo_test.pl, top of for() loop $i/$i_MAX\n" or croak();
 
 	$sorter = RPerl::Algorithm::Sort::Bubble->new();
-	print STDERR "in oo_test.pl, have \$i = $i and pre-data \$sorter =\n" . RPerl::DUMPER($sorter) . "\n" if $RPerl::DEBUG;
+	print STDERR "in oo_test.pl, have \$i = $i and pre-data \$sorter =\n" . Dumper($sorter) . "\n" if $RPerl::DEBUG;
 
 	$sorter->inherited__Algorithm("Frozen");  # RPerl yes, C++ yes
 	$sorter->inherited__Inefficient("Frozen");  # RPerl yes, C++ yes
@@ -65,7 +68,7 @@ for my int $i ( 0 .. $i_MAX ) {
 #	$retval_stringify = stringify_int__hash_ref({a_key => 23});  # HVIV01
 #	print STDERR "in oo_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
 #	$retval_jeffys = typetest___int__in___string__hash_ref__out(5);  # HVPV20
-#	print STDERR "in type_test.pl, have \$retval_jeffys =\n" . RPerl::DUMPER($retval_jeffys) . "\n" if $RPerl::DEBUG;
+#	print STDERR "in type_test.pl, have \$retval_jeffys =\n" . Dumper($retval_jeffys) . "\n" if $RPerl::DEBUG;
 
 croak('Done for now, croaking');
 }
