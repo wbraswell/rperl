@@ -2,7 +2,7 @@
 package RPerl::Algorithm::Sort::Bubble;
 use strict;
 use warnings;
-our $VERSION = 0.003_030;
+our $VERSION = 0.003_040;
 use Carp;
 use RPerl;
 
@@ -171,14 +171,12 @@ our string $integer__bubblesort__typetest0 = sub {
     ::integer__array_ref__CHECKTRACE( $lucky_integers, '$lucky_integers',
         'integer__bubblesort__typetest0()' );
 
-=disable
-    my integer $how_lucky = scalar @{$lucky_integers};
-    for my integer $i ( 0 .. ( $how_lucky - 1 ) ) {
-        my $lucky_integer = $lucky_integers->[$i];
-        RPerl::diag "in PERLOPS_PERLTYPES integer__bubblesort__typetest0(), have lucky_integer $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_integers->[$i] . ", BATBAR\n" or croak();
-    }
-    RPerl::diag "in PERLOPS_PERLTYPES integer__bubblesort__typetest0(), bottom of subroutine\n" or croak();
-=cut
+#    my integer $how_lucky = scalar @{$lucky_integers};
+#    for my integer $i ( 0 .. ( $how_lucky - 1 ) ) {
+#        my $lucky_integer = $lucky_integers->[$i];
+#        RPerl::diag "in PERLOPS_PERLTYPES integer__bubblesort__typetest0(), have lucky_integer $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_integers->[$i] . ", BATBAR\n" or croak();
+#    }
+#    RPerl::diag "in PERLOPS_PERLTYPES integer__bubblesort__typetest0(), bottom of subroutine\n" or croak();
 
     return (
         ::integer__array_ref__stringify(
@@ -195,14 +193,12 @@ our string $number__bubblesort__typetest0 = sub {
     ::number__array_ref__CHECKTRACE( $lucky_numbers, '$lucky_numbers',
         'number__bubblesort__typetest0()' );
 
-=disable
-    my integer $how_lucky = scalar @{$lucky_numbers};
-    for my integer $i ( 0 .. ( $how_lucky - 1 ) ) {
-        my $lucky_number = $lucky_numbers->[$i];
-        RPerl::diag "in PERLOPS_PERLTYPES number__bubblesort__typetest0(), have lucky_number $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_numbers->[$i] . ", BATBAR\n" or croak();
-    }
-    RPerl::diag "in PERLOPS_PERLTYPES number__bubblesort__typetest0(), bottom of subroutine\n" or croak();
-=cut
+#    my integer $how_lucky = scalar @{$lucky_numbers};
+#    for my integer $i ( 0 .. ( $how_lucky - 1 ) ) {
+#        my $lucky_number = $lucky_numbers->[$i];
+#        RPerl::diag "in PERLOPS_PERLTYPES number__bubblesort__typetest0(), have lucky_number $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_numbers->[$i] . ", BATBAR\n" or croak();
+#    }
+#    RPerl::diag "in PERLOPS_PERLTYPES number__bubblesort__typetest0(), bottom of subroutine\n" or croak();
 
     return (
         ::number__array_ref__stringify( number__bubblesort($lucky_numbers) )
@@ -228,17 +224,17 @@ our void__method $inherited = sub {
 our string $uninherited__Bubble = sub {
     ( my string $person) = @_;
     RPerl::diag
-        "in PERLOPS_PERLTYPES Bubble::uninherited__Bubble(), \$person = '$person', MITOCHONDRIAL\n";
+        "in PERLOPS_PERLTYPES Bubble::uninherited__Bubble(), received \$person = '$person', MITOCHONDRIAL\n";
     return ('Bubble::uninherited__Bubble() RULES! PERLOPS_PERLTYPES');
 };
 
-# DEV NOTE: this will clash in RPerl/Class.pm with other shared global subs with the same name uninherited(), such as from Algorithm.pm
+# DEV NOTE, CORRELATION #04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
 our string $uninherited = sub {
     ( my string $person) = @_;
     RPerl::diag
-        "in PERLOPS_PERLTYPES Bubble::uninherited(), \$person = '$person', TETRAHEDRON\n";
+        "in PERLOPS_PERLTYPES Bubble::uninherited(), received \$person = '$person', TETRAHEDRON\n";
     return ('Bubble::uninherited() ROCKS! PERLOPS_PERLTYPES');
 };
 
 1;
-1;                    # RPerl code separator
+1;    # RPerl code separator

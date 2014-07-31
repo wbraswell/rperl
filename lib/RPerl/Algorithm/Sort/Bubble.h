@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h 0.003_014
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h 0.003_040
 
 #include <rperltypes_mode.h>  // for definitions of __PERL__TYPES or __CPP__TYPES
 #include <rperltypes.h>  // for data types and structures
@@ -31,6 +31,7 @@ SV* number__bubblesort(SV* number__data);
 
 // [[[ INHERITANCE TESTING ]]]
 SV* uninherited__Bubble(SV* person);
+// DEV NOTE, CORRELATION #04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
 SV* uninherited(SV* person);
 
 // DEV NOTE, CORRELATION #01: multiple inheritance is enabled by _either_ C++ here or Perl at correlation in Bubble_cpp.pm
@@ -89,6 +90,7 @@ number__array_ref number__bubblesort(number__array_ref number__data);
 
 // [[[ INHERITANCE TESTING ]]]
 string uninherited__Bubble(string person);
+// DEV NOTE, CORRELATION #04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
 string uninherited(string person);
 
 // DEV NOTE, CORRELATION #01: multiple inheritance is enabled by _either_ C++ here or Perl at correlation in Bubble_cpp.pm

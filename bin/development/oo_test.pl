@@ -16,9 +16,9 @@ BEGIN { use Data::Dumper;  our $AUTOLOAD;  sub AUTOLOAD { croak("AUTOLOAD purpos
 rperltypes::types_enable('CPP');
 
 
-# START HERE: why are we receiving output of some CPPOPS_PERLTYPES instead of all CPPOPS_CPPTYPES???
-# START HERE: why are we receiving output of some CPPOPS_PERLTYPES instead of all CPPOPS_CPPTYPES???
-# START HERE: why are we receiving output of some CPPOPS_PERLTYPES instead of all CPPOPS_CPPTYPES???
+# START HERE: finish implementing Sort.* & Algorithm.*, decide on Perl-C++ class naming semantic map, utilize new Inline::CPP NAMESPACE config option
+# START HERE: finish implementing Sort.* & Algorithm.*, decide on Perl-C++ class naming semantic map, utilize new Inline::CPP NAMESPACE config option
+# START HERE: finish implementing Sort.* & Algorithm.*, decide on Perl-C++ class naming semantic map, utilize new Inline::CPP NAMESPACE config option
 
 
 # UNCOMMENT TO CHOOSE PERL OPS OR C++ OPS

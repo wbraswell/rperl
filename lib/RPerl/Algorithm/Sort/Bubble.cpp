@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp 0.003_016
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp 0.003_040
 
 #include <RPerl/Algorithm/Sort/Bubble.h>  // -> HelperFunctions.cpp && Sort.cpp && Inefficient.cpp
 
@@ -275,6 +275,7 @@ SV* uninherited__Bubble(SV* person)
 	return(newSVpv("Bubble::uninherited__Bubble() RULES! CPPOPS_PERLTYPES", 0));
 }
 
+// DEV NOTE, CORRELATION #04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
 SV* uninherited(SV* person)
 {
 	cout << "in CPPOPS_PERLTYPES Bubble::uninherited(), received person = '" << SvPV_nolen(person) << "', TETRAHEDRON\n";
@@ -419,10 +420,6 @@ integer__array_ref integer__bubblesort(integer__array_ref integer__data)  // DEV
 ////};
 }
 
-
-
-
-
 number__array_ref number__bubblesort(number__array_ref number__data)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES number__bubblesort, top of subroutine...\n");
@@ -450,12 +447,6 @@ number__array_ref number__bubblesort(number__array_ref number__data)
 	}
 	return(number__data);
 }
-
-
-
-
-
-
 
 // [[[ TYPE TESTING ]]]
 // [[[ TYPE TESTING ]]]
@@ -506,6 +497,7 @@ string uninherited__Bubble(string person) {
 	return((string)"Bubble::uninherited__Bubble() RULES! CPPOPS_CPPTYPES");
 }
 
+// DEV NOTE, CORRELATION #04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
 string uninherited(string person)
 {
 	cout << "in CPPOPS_CPPTYPES Bubble::uninherited(), received person = '" << person << "', TETRAHEDRON\n";
