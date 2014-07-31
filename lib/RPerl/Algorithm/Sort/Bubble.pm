@@ -24,7 +24,7 @@ our string $bubblesort__types = sub { return ('PERL'); };
 
 use parent qw( RPerl::Algorithm::Sort RPerl::Algorithm::Inefficient ); # INHERITANCE TESTING
 use RPerl::Algorithm::Sort;
-use RPerl::Algorithm::Inefficient;                                     # INHERITANCE TESTING
+use RPerl::Algorithm::Inefficient;    # INHERITANCE TESTING
 use Data::Dumper;
 
 # [[[ OO PROPERTIES ]]]
@@ -33,7 +33,7 @@ use Data::Dumper;
 
 our %properties = ( ## no critic qw(ProhibitPackageVars)  ## RPERL SYSTEM, allow OO properties
     integer__data => my integer__array_ref $TYPED_integer__data = undef,
-    number__data  => my number__array_ref $TYPED_number__data = undef
+    number__data  => my number__array_ref $TYPED_number__data   = undef
 );
 
 # [[[ OO METHODS ]]]
@@ -56,7 +56,9 @@ our void__method $number__sort = sub {
 };
 
 # METHODS ABOVE
-1;1;  # RPerl code separator
+1;
+1;    # RPerl code separator
+
 # SUBROUTINES BELOW
 
 # [[[ PROCEDURAL SUBROUTINES ]]]
@@ -214,22 +216,19 @@ our string $number__bubblesort__typetest0 = sub {
 our void__method $inherited__Bubble = sub {
     ( my object $self, my string $person) = @_;
     RPerl::diag
-        "in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), have \$self = '$self' and \$person = '$person', FRIED\n"
-        or croak();
+        "in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), received \$self = '$self' and \$person = '$person', FRIED\n";
 };
 
 our void__method $inherited = sub {
     ( my object $self, my string $person) = @_;
     RPerl::diag
-        "in PERLOPS_PERLTYPES Bubble->inherited(), have \$self = '$self' and \$person = '$person', ILLOGICAL\n"
-        or croak();
+        "in PERLOPS_PERLTYPES Bubble->inherited(), received \$self = '$self' and \$person = '$person', ILLOGICAL\n";
 };
 
 our string $uninherited__Bubble = sub {
     ( my string $person) = @_;
     RPerl::diag
-        "in PERLOPS_PERLTYPES Bubble::uninherited__Bubble(), \$person = '$person', MITOCHONDRIAL\n"
-        or croak();
+        "in PERLOPS_PERLTYPES Bubble::uninherited__Bubble(), \$person = '$person', MITOCHONDRIAL\n";
     return ('Bubble::uninherited__Bubble() RULES! PERLOPS_PERLTYPES');
 };
 
@@ -237,9 +236,9 @@ our string $uninherited__Bubble = sub {
 our string $uninherited = sub {
     ( my string $person) = @_;
     RPerl::diag
-        "in PERLOPS_PERLTYPES Bubble::uninherited(), \$person = '$person', TETRAHEDRON\n"
-        or croak();
+        "in PERLOPS_PERLTYPES Bubble::uninherited(), \$person = '$person', TETRAHEDRON\n";
     return ('Bubble::uninherited() ROCKS! PERLOPS_PERLTYPES');
 };
 
-1;1;  # RPerl code separator
+1;
+1;                    # RPerl code separator
