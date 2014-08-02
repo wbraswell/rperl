@@ -1,43 +1,35 @@
-## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted control characters, sigils, and regexes
+# [[[ PACKAGE, HEADER ]]]
 package RPerl::Algorithm::Sort::Bubble;
 use strict;
 use warnings;
-our $VERSION = 0.003_040;
+our $VERSION = 0.004_000;
 use Carp;
 use RPerl;
 
-# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-
-# START HERE: auto-generate ops-types reporting based on package name, for debuggin only???
-# START HERE: auto-generate ops-types reporting based on package name, for debuggin only???
-# START HERE: auto-generate ops-types reporting based on package name, for debuggin only???
-
-our integer $bubblesort__OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0
-our string $bubblesort__ops = sub { return ('PERL'); };
-our string $bubblesort__types = sub { return ('PERL'); };
-
-# [[[ INHERITANCE & INCLUDES ]]]
-# [[[ INHERITANCE & INCLUDES ]]]
-# [[[ INHERITANCE & INCLUDES ]]]
-
+# [[[ CRITIC, PARENT INHERITANCE, INCLUDES, CONSTANTS, OO PROPERTIES ]]]
+# USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)
+# USER SPECIAL 1: allow single-quoted control characters, sigils, and regexes
+## no critic qw(RequireInterpolationOfMetachars)
 use parent qw( RPerl::Algorithm::Sort RPerl::Algorithm::Inefficient ); # INHERITANCE TESTING
 use RPerl::Algorithm::Sort;
 use RPerl::Algorithm::Inefficient;    # INHERITANCE TESTING
 use Data::Dumper;
-
-# [[[ OO PROPERTIES ]]]
-# [[[ OO PROPERTIES ]]]
-# [[[ OO PROPERTIES ]]]
-
-our %properties = ( ## no critic qw(ProhibitPackageVars)  ## RPERL SYSTEM, allow OO properties
+our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
     integer__data => my integer__array_ref $TYPED_integer__data = undef,
     number__data  => my number__array_ref $TYPED_number__data   = undef
 );
 
-# [[[ OO METHODS ]]]
-# [[[ OO METHODS ]]]
+# START HERE: auto-generate ops-types reporting based on package name, for debuggin only???
+# START HERE: auto-generate ops-types reporting based on package name, for debuggin only???
+# START HERE: auto-generate ops-types reporting based on package name, for debuggin only???
+
+# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
+# ERROR: THIS SECTION DOES NOT CURRENTLY APPEAR IN THE GRAMMAR
+our integer $bubblesort__OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0
+our string $bubblesort__ops = sub { return ('PERL'); };
+our string $bubblesort__types = sub { return ('PERL'); };
+
 # [[[ OO METHODS ]]]
 
 # call out to sort integer data, return nothing
@@ -55,14 +47,23 @@ our void__method $number__sort = sub {
     $self->{number__data} = number__bubblesort( $self->{number__data} );
 };
 
-# METHODS ABOVE
+# INHERITANCE TESTING
+
+our void__method $inherited__Bubble = sub {
+    ( my object $self, my string $person) = @_;
+    RPerl::diag
+        "in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), received \$self = '$self' and \$person = '$person', FRIED\n";
+};
+
+our void__method $inherited = sub {
+    ( my object $self, my string $person) = @_;
+    RPerl::diag
+        "in PERLOPS_PERLTYPES Bubble->inherited(), received \$self = '$self' and \$person = '$person', ILLOGICAL\n";
+};
+
 1;
-1;    # RPerl code separator
+1;    # CODE SEPARATOR: methods above, subroutines below
 
-# SUBROUTINES BELOW
-
-# [[[ PROCEDURAL SUBROUTINES ]]]
-# [[[ PROCEDURAL SUBROUTINES ]]]
 # [[[ PROCEDURAL SUBROUTINES ]]]
 
 # original algorithm: comparison-based and stable [O(n**2) average time, O(1) worst-case extra space]
@@ -160,9 +161,7 @@ our number__array_ref $number__bubblesort = sub {
     return $number__data;
 };
 
-# [[[ TYPE TESTING ]]]
-# [[[ TYPE TESTING ]]]
-# [[[ TYPE TESTING ]]]
+# TYPE TESTING
 
 our string $integer__bubblesort__typetest0 = sub {
     ( my integer__array_ref $lucky_integers) = @_;
@@ -205,21 +204,7 @@ our string $number__bubblesort__typetest0 = sub {
             . 'PERLOPS_PERLTYPES' );
 };
 
-# [[[ INHERITANCE TESTING ]]]
-# [[[ INHERITANCE TESTING ]]]
-# [[[ INHERITANCE TESTING ]]]
-
-our void__method $inherited__Bubble = sub {
-    ( my object $self, my string $person) = @_;
-    RPerl::diag
-        "in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), received \$self = '$self' and \$person = '$person', FRIED\n";
-};
-
-our void__method $inherited = sub {
-    ( my object $self, my string $person) = @_;
-    RPerl::diag
-        "in PERLOPS_PERLTYPES Bubble->inherited(), received \$self = '$self' and \$person = '$person', ILLOGICAL\n";
-};
+# INHERITANCE TESTING, CON'T
 
 our string $uninherited__Bubble = sub {
     ( my string $person) = @_;
@@ -237,4 +222,4 @@ our string $uninherited = sub {
 };
 
 1;
-1;    # RPerl code separator
+1;    # CODE SEPARATOR: end of package or class

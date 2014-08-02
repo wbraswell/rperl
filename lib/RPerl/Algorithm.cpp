@@ -18,6 +18,6 @@ SV* uninherited__Algorithm(SV* person) { cout << "in CPPOPS_PERLTYPES Algorithm:
 
 ////our string $uninherited = sub { (my string $person) = @_;  print "in Perl Algorithm::uninherited(), \$person = '$person', TERRITORY\n";  return "Perl Algorithm::uninherited() ROCKS!"; };
 //SV* uninherited(SV* person) { cout << "in CPPOPS_PERLTYPES Algorithm::uninherited(), have $person = '" << SvPV_nolen(person) << "', TERRITORY\n";  return newSVpv("CPPOPS_PERLTYPES Algorithm::uninherited() RULES!", 0); }  // PERL_TYPES
-char *uninherited(char *person) { cout << "in CPPOPS_CPPTYPES Algorithm::uninherited(), have $person = '" << person << "', TETRAHEDRON\n";  return (char *)"CPPOPS_CPPTYPES Algorithm::uninherited() RULES!"; }  // CPP_TYPES
+//char *uninherited(char *person) { cout << "in CPPOPS_CPPTYPES Algorithm::uninherited(), have $person = '" << person << "', TETRAHEDRON\n";  return (char *)"CPPOPS_CPPTYPES Algorithm::uninherited() RULES!"; }  // CPP_TYPES
 
 #endif

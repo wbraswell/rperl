@@ -1,5 +1,5 @@
-////use strict;  use warnings;
-using std::cout;  using std::cerr;
+using std::cout;
+using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Inefficient_h
 #define __CPP__INCLUDED__RPerl__Algorithm__Inefficient_h 0.003_040
@@ -33,27 +33,27 @@ SV* uninherited__Inefficient(SV* person);
 class CPP__RPerl__Algorithm__Inefficient : public CPP__RPerl__Algorithm
 {
 public:
-	////# [[[ OO METHODS ]]]
-	////# [[[ OO METHODS ]]]
-	////# [[[ OO METHODS ]]]
+    ////# [[[ OO METHODS ]]]
+    ////# [[[ OO METHODS ]]]
+    ////# [[[ OO METHODS ]]]
 
 // [[[ INHERITANCE TESTING ]]]
-	void inherited__Inefficient(SV* person);
-	void inherited(SV* person);
+    void inherited__Inefficient(SV* person);
+    void inherited(SV* person);
 
-	// <<< ACCESSOR & MUTATOR DECLARATIONS/DEFINITIONS >>>
-	// NONE
-	void CRAZY_INLINE_CPP_BUG__CAN_NOT_HAVE_MORE_THAN_7_BLANK_OR_COMMENT_LINES_IN_A_ROW() {}
-	// <<< CONSTRUCTOR & DESTRUCTOR DECLARATIONS/DEFINITIONS >>>
-	CPP__RPerl__Algorithm__Inefficient() {}
-	~CPP__RPerl__Algorithm__Inefficient() {}
+    // <<< ACCESSOR & MUTATOR DECLARATIONS/DEFINITIONS >>>
+    // NONE
+    void CRAZY_INLINE_CPP_BUG__CAN_NOT_HAVE_MORE_THAN_7_BLANK_OR_COMMENT_LINES_IN_A_ROW() {}
+    // <<< CONSTRUCTOR & DESTRUCTOR DECLARATIONS/DEFINITIONS >>>
+    CPP__RPerl__Algorithm__Inefficient() {}
+    ~CPP__RPerl__Algorithm__Inefficient() {}
 
 ////# [[[ OO PROPERTIES ]]]
 ////# [[[ OO PROPERTIES ]]]
 ////# [[[ OO PROPERTIES ]]]
 
 //private:
-	// NONE
+    // NONE
 };
 
 // [[[<<< END PERL TYPES >>>]]]
@@ -78,8 +78,7 @@ string uninherited__Inefficient(string person);
 
 ////package RPerl::Algorithm::Inefficient;
 ////our @ISA = ('RPerl::Algorithm');
-class CPP__RPerl__Algorithm__Inefficient : public CPP__RPerl__Algorithm
-{
+class CPP__RPerl__Algorithm__Inefficient: public CPP__RPerl__Algorithm {
 public:
     ////# [[[ OO METHODS ]]]
     ////# [[[ OO METHODS ]]]
@@ -91,10 +90,13 @@ public:
 
     // <<< ACCESSOR & MUTATOR DECLARATIONS/DEFINITIONS >>>
     // NONE
-    void CRAZY_INLINE_CPP_BUG__CAN_NOT_HAVE_MORE_THAN_7_BLANK_OR_COMMENT_LINES_IN_A_ROW() {}
+    void CRAZY_INLINE_CPP_BUG__CAN_NOT_HAVE_MORE_THAN_7_BLANK_OR_COMMENT_LINES_IN_A_ROW() {
+    }
     // <<< CONSTRUCTOR & DESTRUCTOR DECLARATIONS/DEFINITIONS >>>
-    CPP__RPerl__Algorithm__Inefficient() {}
-    ~CPP__RPerl__Algorithm__Inefficient() {}
+    CPP__RPerl__Algorithm__Inefficient() {
+    }
+    ~CPP__RPerl__Algorithm__Inefficient() {
+    }
 
 ////# [[[ OO PROPERTIES ]]]
 ////# [[[ OO PROPERTIES ]]]
