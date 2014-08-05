@@ -62,6 +62,8 @@ $ perlbrew install-cpanm
 # INSTALL RPERL & DEPENDENCIES
 ################################################################################
 
+$ cpanm INGY/Inline-C-0.62_03.tar.gz
+
 $ git clone git@github.com:wbraswell/rperl.git
 # OR
 $ wget https://github.com/wbraswell/rperl/archive/master.zip;  unzip master.zip

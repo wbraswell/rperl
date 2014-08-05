@@ -2,33 +2,66 @@
 # [[[ HEADER ]]]
 use strict;
 use warnings;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 use Carp;
+use RPerl;
 
-#use RPerl;
 
 # [[[ CRITIC, INCLUDES, CONSTANTS ]]]
 # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)
+use RPerl::Inline;
+
+# [[[ RPERL DRIVER BOILERPLATE ]]]
+BEGIN { package main; our $RPERL_INCLUDE_PATH = 'blib/lib'; } # NEED REMOVE hard-coded path
+
+BEGIN {
+    use parent ('RPerl');
+    $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;
+}                                                        # RPerl system files
+
+BEGIN {
+    use Data::Dumper;
+    our $AUTOLOAD;
+
+    sub AUTOLOAD {
+        croak(
+            "AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n"
+                . Dumper( \@_ )
+                . ', croaking' );
+    }
+}
+
 
 BEGIN { print "[[[ BEGIN 'use Inline' STAGE for 'DATA' ]]]\n" x 3; }
 use Inline (
     CPP      => 'DATA',
-    TYPEMAPS => 'blib/lib/typemap.rperl',
-    CCFLAGSEX =>
-        '-DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
-    BUILD_NOISY       => 1,
-    CLEAN_AFTER_BUILD => 0,    # cache it
-    WARNINGS          => 1,
+    @RPerl::Inline::ARGS,
 
-    #  NAMESPACE => 'Foo::Bar',
-    #  CLASS => 'MyClass'
+
+# START HERE: remove RPerl-specific stuff in this file, use it to update automated namespace tests, clean up CPP.pm, pull request
+# START HERE: remove RPerl-specific stuff in this file, use it to update automated namespace tests, clean up CPP.pm, pull request
+# START HERE: remove RPerl-specific stuff in this file, use it to update automated namespace tests, clean up CPP.pm, pull request
+
+
+# NEED FIX: something wrong w/ args below, causing inability to find <rperltypes.h> and other include C++ files
+#    TYPEMAPS => 'blib/lib/typemap.rperl',
+#    CCFLAGSEX =>
+#        '-DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
+#    BUILD_NOISY       => 1,
+#    CLEAN_AFTER_BUILD => 0,    # cache it
+#    WARNINGS          => 1,
+#    INC => "-I$RPerl::INCLUDE_PATH",
+
+     NAMESPACE => 'Foo::Bar',
+     CLASS => 'MyClass'
 );
 print "[[[ END 'use Inline' STAGE for 'DATA' ]]]\n" x 3;
 
 #my $myobject = MyClass->new();
-#my $myobject = Foo::Bar::MyClass->new();
-my $myobject = Foo__Bar__MyClass->new();
+my $myobject = Foo::Bar::MyClass->new();
+#my $myobject = Foo::Bar::Foo__Bar__MyClass->new();
+#my $myobject = Foo__Bar__MyClass->new();
 
 my $string_retval = $myobject->mymethod('HOWDY INPUT!');
 print {*STDERR}
@@ -40,11 +73,14 @@ __CPP__
 using std::cout;  using std::cerr;
 typedef std::string string;
 
+#include <rperltypes.h>  // for data types and structures
+#include <RPerl/HelperFunctions.cpp>		// -> HelperFunctions.h
+
 //class MyClass
 class Foo__Bar__MyClass
 {
 public:
-    void mymethod(string myinput);
+    string mymethod(string myinput);
 
 //    MyClass() {}
 //    ~MyClass() {}
