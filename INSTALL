@@ -62,8 +62,6 @@ $ perlbrew install-cpanm
 # INSTALL RPERL & DEPENDENCIES
 ################################################################################
 
-$ cpanm RURBAN/Inline-0.54_02.tar.gz
-
 $ git clone git@github.com:wbraswell/rperl.git
 # OR
 $ wget https://github.com/wbraswell/rperl/archive/master.zip;  unzip master.zip
