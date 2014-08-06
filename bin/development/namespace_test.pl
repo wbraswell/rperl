@@ -54,7 +54,7 @@ use Inline (
 #    INC => "-I$RPerl::INCLUDE_PATH",
 
      NAMESPACE => 'Foo::Bar',
-     CLASS => 'MyClass'
+     CLASSES => { 'Foo__Bar__MyClass' => 'MyClass', 'Foo__Bar__YourClass' => 'YourClass' }
 );
 print "[[[ END 'use Inline' STAGE for 'DATA' ]]]\n" x 3;
 
@@ -64,8 +64,12 @@ my $myobject = Foo::Bar::MyClass->new();
 #my $myobject = Foo__Bar__MyClass->new();
 
 my $string_retval = $myobject->mymethod('HOWDY INPUT!');
-print {*STDERR}
-    "in namespace_test.pl have \$string_retval = '$string_retval'\n";
+print {*STDERR} "in namespace_test.pl received mymethod() \$string_retval = '$string_retval'\n";
+    
+my $yourobject = Foo::Bar::YourClass->new();
+$string_retval = $yourobject->yourmethod('AHOY INPUT!');
+print {*STDERR} "in namespace_test.pl received yourmethod() \$string_retval = '$string_retval'\n";
+    
 
 __DATA__
 __CPP__
@@ -92,5 +96,20 @@ public:
 string Foo__Bar__MyClass::mymethod(string myinput) {
     cout << "Namespace Hack, received myinput = '" << myinput << "'\n";
 	string retval = "Namespace Hack retval, Armstrong CPPOPS_CPPTYPES";
+	return(retval);
+}
+
+class Foo__Bar__YourClass
+{
+public:
+    string yourmethod(string yourinput);
+
+    Foo__Bar__YourClass() {}
+    ~Foo__Bar__YourClass() {}
+};
+
+string Foo__Bar__YourClass::yourmethod(string yourinput) {
+    cout << "Namespace Hack, received yourinput = '" << yourinput << "'\n";
+	string retval = "Namespace Hack retval, Aldrin CPPOPS_CPPTYPES";
 	return(retval);
 }
