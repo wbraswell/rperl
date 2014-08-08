@@ -32,17 +32,10 @@ BEGIN {
     }
 }
 
-
 BEGIN { print "[[[ BEGIN 'use Inline' STAGE for 'DATA' ]]]\n" x 3; }
 use Inline (
     CPP      => 'DATA',
     @RPerl::Inline::ARGS,
-
-
-# START HERE: remove RPerl-specific stuff in this file, use it to update automated namespace tests, clean up CPP.pm, pull request
-# START HERE: remove RPerl-specific stuff in this file, use it to update automated namespace tests, clean up CPP.pm, pull request
-# START HERE: remove RPerl-specific stuff in this file, use it to update automated namespace tests, clean up CPP.pm, pull request
-
 
 # NEED FIX: something wrong w/ args below, causing inability to find <rperltypes.h> and other include C++ files
 #    TYPEMAPS => 'blib/lib/typemap.rperl',

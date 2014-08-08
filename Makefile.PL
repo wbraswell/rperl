@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-our $VERSION = 0.001_023;
+our $VERSION = 0.001_024;
 use ExtUtils::MakeMaker;
 push(@ExtUtils::MakeMaker::Overridable, qw(pm_to_blib)) if ($^O eq 'MSWin32');
 
@@ -8,14 +8,14 @@ WriteMakefile(
   NAME         => 'RPerl',
   VERSION_FROM => 'lib/RPerl.pm',
   PREREQ_PM    => {
-        'Perl::Critic'    => 0,
-        'Perl::Tidy'      => 0,
-        'Inline'          => 0.64,
+        'Perl::Critic'    => 1.121,
+        'Perl::Tidy'      => 20140711,
+        'Inline'          => 0.67,
         'Inline::C'       => 0.62,
-        'Inline::CPP'     => 0.52,  # fix namespace hack & ntype warnings
-        'Inline::Filters' => 0.13,
-        'Test::Exception' => 0,
-        'Module::Compile' => 0,
+        'Inline::CPP'     => 0.55,  # fix namespace hack & ntype warnings
+        'Inline::Filters' => 0.16,
+        'Test::Exception' => 0.32,
+#        'Module::Compile' => 0,
         'Parse::Eyapp'    => 1.182,
   },
   clean => {FILES => '_Inline'},
