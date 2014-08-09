@@ -1,9 +1,11 @@
 /_Inline
 /t/_Inline
+/bin/_Inline
+/bin/development/_Inline
 /Makefile
 /MYMETA.json
 /MYMETA.yml
 /out
-Makefile.old
-blib/
+/Makefile.old
+/blib
 /pm_to_blib
