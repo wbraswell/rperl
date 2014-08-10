@@ -2,6 +2,21 @@ package RPerl::Inline;
 use RPerl;
 #use Config;
 
+# long form
+#use Inline CPP => config => classes => sub {
+#    my $class = shift;
+#    my @class_split = split('__', $class);
+#    my $class_auto = pop(@class_split);
+#    my $pkg_auto = join('::', @class_split);
+#    return($pkg_auto, $class_auto);
+#};
+
+# medium form
+#use Inline CPP => config => classes => sub { my @c = split('__', shift); (pop(@c), join('::', @c)); };
+
+# short form
+#use Inline CPP => config => classes => sub { @_ = split('__', shift); (pop, join('::', @_)); };
+
 our @ARGS = (
   TYPEMAPS => "$RPerl::INCLUDE_PATH/typemap.rperl",
   # TODO: strip C++ incompat CFLAGS
