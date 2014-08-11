@@ -10,7 +10,7 @@ WriteMakefile(
   PREREQ_PM    => {
         'Perl::Critic'    => 1.121,
         'Perl::Tidy'      => 20140711,
-        'Inline'          => 0.67,
+        'Inline'          => 0.68,
         'Inline::C'       => 0.62,
         'Inline::CPP'     => 0.55,  # fix namespace hack & ntype warnings
         'Inline::Filters' => 0.16,
