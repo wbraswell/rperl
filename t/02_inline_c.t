@@ -117,7 +117,8 @@ lives_and(
 
 # greetings_char()
 my $greetings_char_eval_string = <<'EOF';
-use Inline C => <<'END_OF_C_CODE';
+#use Inline C => <<'END_OF_C_CODE';  # NEED FIX: Inline::C pegex elipses issue https://github.com/ingydotnet/inline-c-pm/issues/25
+use Inline C => <<'END_OF_C_CODE' => using => 'ParseRecDescent';
 char* greetings_char(SV* name1, ...) {
 	Inline_Stack_Vars;
 	int i;
@@ -164,7 +165,8 @@ lives_and(
 
 # greetings_sv()
 my $greetings_sv_eval_string = <<'EOF';
-use Inline C => <<'END_OF_C_CODE';
+#use Inline C => <<'END_OF_C_CODE';  # NEED FIX: Inline::C pegex elipses issue https://github.com/ingydotnet/inline-c-pm/issues/25
+use Inline C => <<'END_OF_C_CODE' => using => 'ParseRecDescent';
 SV* greetings_sv(SV* retval, SV* name1, ...) {
 	Inline_Stack_Vars;
 	int i;
@@ -212,7 +214,8 @@ lives_and(
 
 # greetings_void()
 my $greetings_void_eval_string = <<'EOF';
-use Inline C => <<'END_OF_C_CODE';
+#use Inline C => <<'END_OF_C_CODE';  # NEED FIX: Inline::C pegex elipses issue https://github.com/ingydotnet/inline-c-pm/issues/25
+use Inline C => <<'END_OF_C_CODE' => using => 'ParseRecDescent';
 void greetings_void(SV* name1, ...) {
 	Inline_Stack_Vars;
 	int i;

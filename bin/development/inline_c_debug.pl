@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 
-use Inline config => build_noisy => 1;
+#use Inline config => build_noisy => 1;
+use Inline config => using => 'ParseRecDescent' => build_noisy => 1;
 
 use Inline C => <<'END_OF_C_CODE';
 char* greetings_char(SV* name1, ...) {
@@ -16,4 +17,4 @@ char* greetings_char(SV* name1, ...) {
 }
 END_OF_C_CODE
 
-greetings_char("Larry", "Ingy", "Reini", "Neil", "Sisyphus", "Davido");
+print greetings_char("Larry", "Ingy", "Reini", "Neil", "Sisyphus", "Davido");
