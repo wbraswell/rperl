@@ -9,8 +9,9 @@ perl:
   - "5.18"
 
 # travis already calls `cpanm --quiet --installdeps --notest .` itself
-#before_script:
-#  - cpanm --installdeps .
+# but we still require a dev version
+before_script:
+  - cpanm -n INGY/Inline-C-0.62_03.tar.gz
 
 notifications:
   irc:

@@ -11,7 +11,7 @@ WriteMakefile(
         'Perl::Critic'    => 1.121,
         'Perl::Tidy'      => 20140711,
         'Inline'          => 0.68,
-        'Inline::C'       => 0.62,
+        'Inline::C'       => '0.62_03',
         'Inline::CPP'     => 0.58,  # fix namespace hack & ntype warnings
         'Inline::Filters' => 0.16,
         'Test::Exception' => 0.32,
