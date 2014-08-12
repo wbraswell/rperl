@@ -9,6 +9,10 @@ perl:
   - "5.16"
   - "5.18"
 
+# travis has a too old Inline
+before_script:
+  - cpanm -n ETJ/Inline-0.68.tar.gz
+
 notifications:
   irc:
     channels:
