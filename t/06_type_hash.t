@@ -148,10 +148,6 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
             sub { RPerl::DataStructure::Hash_cpp::cpp_load(); },
             q{RPerl::DataStructure::Hash_cpp::cpp_load() lives}
         );
-        lives_ok(
-            sub { RPerl::DataStructure::Hash_cpp::cpp_link(); },
-            q{RPerl::DataStructure::Hash_cpp::cpp_link() lives}
-        );
         lives_and(
             sub {
                 is( integer__ops(), 'CPP', q{integer__ops() returns 'CPP'} );
@@ -216,16 +212,11 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
 
         # force reload and relink
         $RPerl::DataStructure::Hash_cpp::CPP_LOADED = 0;
-        $RPerl::DataStructure::Hash_cpp::CPP_LINKED = 0;
 
         # Hash: C++ use, load, link
         lives_ok(
             sub { RPerl::DataStructure::Hash_cpp::cpp_load(); },
             q{RPerl::DataStructure::Hash_cpp::cpp_load() lives}
-        );
-        lives_ok(
-            sub { RPerl::DataStructure::Hash_cpp::cpp_link(); },
-            q{RPerl::DataStructure::Hash_cpp::cpp_link() lives}
         );
         lives_and(
             sub {

@@ -18,7 +18,7 @@ using std::cout;  using std::cerr;
 
 ////# call out to sort integer__data, return nothing
 ////our void__method $integer__sort = sub {(my object $self) = @_;
-void CPP__RPerl__Algorithm__Sort__Bubble::integer__sort()
+void RPerl__Algorithm__Sort__Bubble::integer__sort()
 ////;
 {
 //	if (RPerl__DEBUG2) { fprintf(stderr, "in integer__sort(), top of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(this->integer__data) = %lu\n", SV_REFERENCE_COUNT(this->integer__data));  fprintf(stderr, "in integer__sort(), top of subroutine, have this->integer__data = %s", RPerl_DUMPER__perl_from_c(this->integer__data));  fprintf(stderr, "in integer__sort(), top of subroutine, have post-DUMPER SV_REFERENCE_COUNT(this->integer__data) = %lu\n\n", SV_REFERENCE_COUNT(this->integer__data));  }
@@ -33,7 +33,7 @@ void CPP__RPerl__Algorithm__Sort__Bubble::integer__sort()
 ////};
 }
 
-void CPP__RPerl__Algorithm__Sort__Bubble::number__sort()
+void RPerl__Algorithm__Sort__Bubble::number__sort()
 {
 	this->number__data = number__bubblesort(this->number__data);
 	SvREFCNT_dec(this->number__data);
@@ -259,12 +259,12 @@ SV* number__bubblesort__typetest0(SV* lucky_numbers)
 // [[[ INHERITANCE TESTING ]]]
 // [[[ INHERITANCE TESTING ]]]
 
-void CPP__RPerl__Algorithm__Sort__Bubble::inherited__Bubble(SV* person)
+void RPerl__Algorithm__Sort__Bubble::inherited__Bubble(SV* person)
 {
 	cout << "in CPPOPS_PERLTYPES Bubble->inherited__Bubble(), received this = '" << this << "' and person = '" << SvPV_nolen(person) << "', FRIED\n";
 }
 
-void CPP__RPerl__Algorithm__Sort__Bubble::inherited(SV* person)
+void RPerl__Algorithm__Sort__Bubble::inherited(SV* person)
 {
 	cout << "in CPPOPS_PERLTYPES Bubble->inherited(), received this = '" << this << "' and person = '" << SvPV_nolen(person) << "', ILLOGICAL\n";
 }
@@ -298,7 +298,7 @@ SV* uninherited(SV* person)
 
 ////# call out to sort integer__data, return nothing
 ////our void__method $integer__sort = sub {(my object $self) = @_;
-void CPP__RPerl__Algorithm__Sort__Bubble::integer__sort()
+void RPerl__Algorithm__Sort__Bubble::integer__sort()
 ////;
 {
 //	if (RPerl__DEBUG2) { fprintf(stderr, "in integer__sort(), top of subroutine, have this->integer__data = %d\n", this->integer__data); }
@@ -310,7 +310,7 @@ void CPP__RPerl__Algorithm__Sort__Bubble::integer__sort()
 ////};
 }
 
-void CPP__RPerl__Algorithm__Sort__Bubble::number__sort()
+void RPerl__Algorithm__Sort__Bubble::number__sort()
 {
 	this->number__data = number__bubblesort(this->number__data);
 }
@@ -482,12 +482,12 @@ string number__bubblesort__typetest0(number__array_ref lucky_numbers)
 // [[[ INHERITANCE TESTING ]]]
 // [[[ INHERITANCE TESTING ]]]
 
-void CPP__RPerl__Algorithm__Sort__Bubble::inherited__Bubble(string person)
+void RPerl__Algorithm__Sort__Bubble::inherited__Bubble(string person)
 {
 	cout << "in CPPOPS_CPPTYPES Bubble->inherited__Bubble(), received this = '" << this << "' and person = '" << person << "', FRIED\n";
 }
 
-void CPP__RPerl__Algorithm__Sort__Bubble::inherited(string person)
+void RPerl__Algorithm__Sort__Bubble::inherited(string person)
 {
 	cout << "in CPPOPS_CPPTYPES Bubble->inherited(), received this = '" << this << "' and person = '" << person << "', ILLOGICAL\n";
 }

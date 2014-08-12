@@ -30,7 +30,7 @@ SV* uninherited__Inefficient(SV* person);
 
 ////package RPerl::Algorithm::Inefficient;
 ////our @ISA = ('RPerl::Algorithm');
-class CPP__RPerl__Algorithm__Inefficient : public CPP__RPerl__Algorithm
+class RPerl__Algorithm__Inefficient : public RPerl__Algorithm
 {
 public:
     ////# [[[ OO METHODS ]]]
@@ -45,8 +45,8 @@ public:
     // NONE
     void CRAZY_INLINE_CPP_BUG__CAN_NOT_HAVE_MORE_THAN_7_BLANK_OR_COMMENT_LINES_IN_A_ROW() {}
     // <<< CONSTRUCTOR & DESTRUCTOR DECLARATIONS/DEFINITIONS >>>
-    CPP__RPerl__Algorithm__Inefficient() {}
-    ~CPP__RPerl__Algorithm__Inefficient() {}
+    RPerl__Algorithm__Inefficient() {}
+    ~RPerl__Algorithm__Inefficient() {}
 
 ////# [[[ OO PROPERTIES ]]]
 ////# [[[ OO PROPERTIES ]]]
@@ -78,7 +78,7 @@ string uninherited__Inefficient(string person);
 
 ////package RPerl::Algorithm::Inefficient;
 ////our @ISA = ('RPerl::Algorithm');
-class CPP__RPerl__Algorithm__Inefficient: public CPP__RPerl__Algorithm {
+class RPerl__Algorithm__Inefficient: public RPerl__Algorithm {
 public:
     ////# [[[ OO METHODS ]]]
     ////# [[[ OO METHODS ]]]
@@ -93,9 +93,9 @@ public:
     void CRAZY_INLINE_CPP_BUG__CAN_NOT_HAVE_MORE_THAN_7_BLANK_OR_COMMENT_LINES_IN_A_ROW() {
     }
     // <<< CONSTRUCTOR & DESTRUCTOR DECLARATIONS/DEFINITIONS >>>
-    CPP__RPerl__Algorithm__Inefficient() {
+    RPerl__Algorithm__Inefficient() {
     }
-    ~CPP__RPerl__Algorithm__Inefficient() {
+    ~RPerl__Algorithm__Inefficient() {
     }
 
 ////# [[[ OO PROPERTIES ]]]

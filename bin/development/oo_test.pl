@@ -38,8 +38,7 @@ rperltypes::types_enable('CPP');
 # UNCOMMENT TO CHOOSE PERL OPS OR C++ OPS
 #use RPerl::Algorithm::Sort::Bubble;  # choose ONE of this
 use RPerl::Algorithm::Sort::Bubble_cpp;
-RPerl::Algorithm::Sort::Bubble_cpp::cpp_load();
-RPerl::Algorithm::Sort::Bubble_cpp::cpp_link();    # OR this
+RPerl::Algorithm::Sort::Bubble_cpp::cpp_load(); # OR this
 
 #print {*STDERR} q{in oo_test.pl, have bubblesort__OPS_TYPES_ID = '} . $RPerl::Algorithm::Sort::Bubble::bubblesort__OPS_TYPES_ID . "'\n";  # PERL/PERL ONLY
 print {*STDERR} q{in oo_test.pl, have bubblesort__ops() = '}

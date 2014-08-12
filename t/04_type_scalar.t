@@ -151,10 +151,6 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
             sub { RPerl::DataType::Integer_cpp::cpp_load(); },
             q{RPerl::DataType::Integer_cpp::cpp_load() lives}
         );
-        lives_ok(
-            sub { RPerl::DataType::Integer_cpp::cpp_link(); },
-            q{RPerl::DataType::Integer_cpp::cpp_link() lives}
-        );
         lives_and(
             sub {
                 is( integer__ops(), 'CPP', q{integer__ops() returns 'CPP'} );
@@ -184,10 +180,6 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
             sub { RPerl::DataType::Number_cpp::cpp_load(); },
             q{RPerl::DataType::Number_cpp::cpp_load() lives}
         );
-        lives_ok(
-            sub { RPerl::DataType::Number_cpp::cpp_link(); },
-            q{RPerl::DataType::Number_cpp::cpp_link() lives}
-        );
         lives_and(
             sub { is( number__ops(), 'CPP', q{number__ops() returns 'CPP'} ) }
             ,
@@ -215,10 +207,6 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         lives_ok(
             sub { RPerl::DataType::String_cpp::cpp_load(); },
             q{RPerl::DataType::String_cpp::cpp_load() lives}
-        );
-        lives_ok(
-            sub { RPerl::DataType::String_cpp::cpp_link(); },
-            q{RPerl::DataType::String_cpp::cpp_link() lives}
         );
         lives_and(
             sub { is( string__ops(), 'CPP', q{string__ops() returns 'CPP'} ) }
@@ -249,11 +237,8 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
 
         # force reload and relink
         $RPerl::DataType::Integer_cpp::CPP_LOADED = 0;
-        $RPerl::DataType::Integer_cpp::CPP_LINKED = 0;
         $RPerl::DataType::Number_cpp::CPP_LOADED  = 0;
-        $RPerl::DataType::Number_cpp::CPP_LINKED  = 0;
         $RPerl::DataType::String_cpp::CPP_LOADED  = 0;
-        $RPerl::DataType::String_cpp::CPP_LINKED  = 0;
 
 # Integer: C++ use, load, link
 #		BEGIN { lives_and(sub { use_ok('RPerl::DataType::Integer_cpp'); }); }  # duplicate
@@ -261,10 +246,6 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         lives_ok(
             sub { RPerl::DataType::Integer_cpp::cpp_load(); },
             q{RPerl::DataType::Integer_cpp::cpp_load() lives}
-        );
-        lives_ok(
-            sub { RPerl::DataType::Integer_cpp::cpp_link(); },
-            q{RPerl::DataType::Integer_cpp::cpp_link() lives}
         );
         lives_and(
             sub {
@@ -287,10 +268,6 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
             sub { RPerl::DataType::Number_cpp::cpp_load(); },
             q{RPerl::DataType::Number_cpp::cpp_load() lives}
         );
-        lives_ok(
-            sub { RPerl::DataType::Number_cpp::cpp_link(); },
-            q{RPerl::DataType::Number_cpp::cpp_link() lives}
-        );
         lives_and(
             sub { is( number__ops(), 'CPP', q{number__ops() returns 'CPP'} ) }
             ,
@@ -310,10 +287,6 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         lives_ok(
             sub { RPerl::DataType::String_cpp::cpp_load(); },
             q{RPerl::DataType::String_cpp::cpp_load() lives}
-        );
-        lives_ok(
-            sub { RPerl::DataType::String_cpp::cpp_link(); },
-            q{RPerl::DataType::String_cpp::cpp_link() lives}
         );
         lives_and(
             sub {

@@ -1,7 +1,6 @@
 use strict; use warnings;
 package RPerl::Algorithm::Inefficient_cpp;
 our $CPP_LOADED = 0;
-our $CPP_LINKED = 0;
 our @ISA = ('RPerl::CompileUnit::Module::Class');
 use RPerl::CompileUnit::Module::Class;  use RPerl;
 
@@ -32,34 +31,9 @@ EOF
 		eval($eval_string);  ## no critic
 		die($@) if ($@);
 		
-		RPerl::HelperFunctions_cpp::cpp_link();
-		RPerl::Algorithm_cpp::cpp_link();
 		$RPerl::Algorithm::Inefficient_cpp::CPP_LOADED = 1;
 	}
 	else { RPerl::diag "in Inefficient_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"; }
 };
 
-our void__method $cpp_link = sub {
-;
-#	if (defined($RPerl::Algorithm::Inefficient_cpp::CPP_LINKED)) { RPerl::diag "in Inefficient_cpp::cpp_link(), have \$RPerl::Algorithm::Inefficient_cpp::CPP_LINKED = '" . $RPerl::Algorithm::Inefficient_cpp::CPP_LINKED . "'\n"; }
-#		else { RPerl::diag "in Inefficient_cpp::cpp_link(), have \$RPerl::Algorithm::Inefficient_cpp::CPP_LINKED = 'UNDEF'\n"; }
-	if (not(defined($RPerl::Algorithm::Inefficient_cpp::CPP_LINKED)) or not($RPerl::Algorithm::Inefficient_cpp::CPP_LINKED))
-	{
-		my $eval_string = <<'EOF';
-package RPerl::Algorithm::Inefficient_cpp;
-$CPP_LINKED = 1;
-1;
-package RPerl::Algorithm::Inefficient;
-our @ISA = ('main::CPP__RPerl__Algorithm__Inefficient', 'RPerl::Algorithm');
-1;
-EOF
-#		RPerl::diag "in Inefficient_cpp::cpp_link(), CPP not yet linked, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
-
-		eval($eval_string);  ## no critic
-		die($@) if ($@);
-	}
-#	else { RPerl::diag "in Inefficient_cpp::cpp_link(), CPP already linked, DOING NOTHING\n"; }
-};
-
-package RPerl::Algorithm::Inefficient_cpp;
 1;

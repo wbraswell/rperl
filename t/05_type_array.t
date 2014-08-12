@@ -150,10 +150,6 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
             sub { RPerl::DataStructure::Array_cpp::cpp_load(); },
             q{RPerl::DataStructure::Array_cpp::cpp_load() lives}
         );
-        lives_ok(
-            sub { RPerl::DataStructure::Array_cpp::cpp_link(); },
-            q{RPerl::DataStructure::Array_cpp::cpp_link() lives}
-        );
         lives_and(
             sub {
                 is( integer__ops(), 'CPP', q{integer__ops() returns 'CPP'} );
@@ -220,16 +216,11 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
 
         # force reload and relink
         $RPerl::DataStructure::Array_cpp::CPP_LOADED = 0;
-        $RPerl::DataStructure::Array_cpp::CPP_LINKED = 0;
 
         # Array: C++ use, load, link
         lives_ok(
             sub { RPerl::DataStructure::Array_cpp::cpp_load(); },
             q{RPerl::DataStructure::Array_cpp::cpp_load() lives}
-        );
-        lives_ok(
-            sub { RPerl::DataStructure::Array_cpp::cpp_link(); },
-            q{RPerl::DataStructure::Array_cpp::cpp_link() lives}
         );
         lives_and(
             sub {

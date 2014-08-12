@@ -18,5 +18,4 @@ rperltypes::types_enable('CPP');
 BEGIN { use_ok('RPerl::Test::Print_00_cpp'); }
 RPerl::Test::Print_00_cpp::cpp_load();
 ok( $RPerl::Test::Print_00_cpp::CPP_LOADED, 'Print_00_cpp loaded');
-RPerl::Test::Print_00_cpp::cpp_link();
 greet_planet(42);

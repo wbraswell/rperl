@@ -19,8 +19,7 @@ rperltypes::types_enable('CPP');
 # TOGGLE COMMENT TO ENABLE C++ OPS
 #use RPerl::Test::Print_00;    # choose ONE of this
 use RPerl::Test::Print_00_cpp;
-RPerl::Test::Print_00_cpp::cpp_load();
-RPerl::Test::Print_00_cpp::cpp_link();    # OR this
+RPerl::Test::Print_00_cpp::cpp_load();    # OR this
 
 # disabled to avoid attempt to compile Print_00__*() from RPerl to CPP
 #print {*STDERR} q{in compiled_test__print_00.pl, have RPerl_Test_Print_00__ops() = '} . RPerl_Test_Print_00__ops() . "'\n"();

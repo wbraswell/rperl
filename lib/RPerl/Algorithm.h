@@ -18,8 +18,8 @@ char *uninherited(char *person);  // CPP_TYPES
 
 ////package RPerl::Algorithm;
 ////our @ISA = ('RPerl::CompileUnit::Module::Class');
-//class CPP__RPerl__Algorithm : public CPP__RPerl__Class
-class CPP__RPerl__Algorithm
+//class RPerl__Algorithm : public RPerl__Class
+class RPerl__Algorithm
 {
 public:
 	// <<< TRANSLATED METHOD DECLARATIONS >>>
@@ -31,8 +31,8 @@ public:
 	// NONE
 	void CRAZY_INLINE_CPP_BUG__CAN_NOT_HAVE_MORE_THAN_7_BLANK_OR_COMMENT_LINES_IN_A_ROW() {}
 	// <<< CONSTRUCTOR & DESTRUCTOR DECLARATIONS/DEFINITIONS >>>
-	CPP__RPerl__Algorithm() {}
-	~CPP__RPerl__Algorithm() {}
+	RPerl__Algorithm() {}
+	~RPerl__Algorithm() {}
 
 //private:
 	// <<< TRANSLATED PROPERTY DECLARATIONS >>>

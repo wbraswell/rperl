@@ -23,7 +23,7 @@ rperltypes::types_enable('PERL');
 
 # TOGGLE COMMENT TO ENABLE C++ OPS
 #use RPerl::Algorithm::Sort::Bubble;  # choose ONE of this
-use RPerl::Algorithm::Sort::Bubble_cpp;  RPerl::Algorithm::Sort::Bubble_cpp::cpp_load();  RPerl::Algorithm::Sort::Bubble_cpp::cpp_link(); # OR this
+use RPerl::Algorithm::Sort::Bubble_cpp;  RPerl::Algorithm::Sort::Bubble_cpp::cpp_load(); # OR this
 
 # NEED FIX: these Perl packages use RPerl::Algorithm::Sort, which creates a conflict when Bubble_cpp has already loaded Sort.cpp
 #use RPerl::Algorithm::Sort::Quick;

@@ -188,10 +188,11 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
             sub { RPerl::Algorithm::Sort::Bubble_cpp::cpp_load(); },
             q{RPerl::Algorithm::Sort::Bubble_cpp::cpp_load() lives}
         );
-        lives_ok(
-            sub { RPerl::Algorithm::Sort::Bubble_cpp::cpp_link(); },
-            q{RPerl::Algorithm::Sort::Bubble_cpp::cpp_link() lives}
-        );
+
+# START HERE: figure out why integer__ops() isn't working for CPP
+# START HERE: figure out why integer__ops() isn't working for CPP
+# START HERE: figure out why integer__ops() isn't working for CPP
+
         lives_and(
             sub {
                 is( integer__ops(), 'CPP', q{integer__ops() returns 'CPP'} );
@@ -281,16 +282,11 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
 
         # force reload and relink
         $RPerl::Algorithm::Sort::Bubble_cpp::CPP_LOADED = 0;
-        $RPerl::Algorithm::Sort::Bubble_cpp::CPP_LINKED = 0;
 
         # Bubblesort: C++ use, load, link
         lives_ok(
             sub { RPerl::Algorithm::Sort::Bubble_cpp::cpp_load(); },
             q{RPerl::Algorithm::Sort::Bubble_cpp::cpp_load() lives}
-        );
-        lives_ok(
-            sub { RPerl::Algorithm::Sort::Bubble_cpp::cpp_link(); },
-            q{RPerl::Algorithm::Sort::Bubble_cpp::cpp_link() lives}
         );
         lives_and(
             sub {

@@ -36,18 +36,6 @@ BEGIN { print "[[[ BEGIN 'use Inline' STAGE for 'DATA' ]]]\n" x 3; }
 use Inline (
     CPP      => 'DATA',
     @RPerl::Inline::ARGS,
-
-# NEED FIX: something wrong w/ args below, causing inability to find <rperltypes.h> and other include C++ files
-#    TYPEMAPS => 'blib/lib/typemap.rperl',
-#    CCFLAGSEX =>
-#        '-DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
-#    BUILD_NOISY       => 1,
-#    CLEAN_AFTER_BUILD => 0,    # cache it
-#    WARNINGS          => 1,
-#    INC => "-I$RPerl::INCLUDE_PATH",
-
-     NAMESPACE => 'Foo::Bar',
-     CLASSES => { 'Foo__Bar__MyClass' => 'MyClass', 'Foo__Bar__YourClass' => 'YourClass' }
 );
 print "[[[ END 'use Inline' STAGE for 'DATA' ]]]\n" x 3;
 

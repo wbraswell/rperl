@@ -17,7 +17,7 @@ SV* uninherited__Sort(SV* person);
 
 ////package RPerl::Algorithm::Sort;
 ////our @ISA = ('RPerl::Algorithm');
-class CPP__RPerl__Algorithm__Sort : public CPP__RPerl__Algorithm
+class RPerl__Algorithm__Sort : public RPerl__Algorithm
 {
 public:
 	// <<< TRANSLATED METHOD DECLARATIONS >>>
@@ -29,8 +29,8 @@ public:
 	// NONE
 	void CRAZY_INLINE_CPP_BUG__CAN_NOT_HAVE_MORE_THAN_7_BLANK_OR_COMMENT_LINES_IN_A_ROW() {}
 	// <<< CONSTRUCTOR & DESTRUCTOR DECLARATIONS/DEFINITIONS >>>
-	CPP__RPerl__Algorithm__Sort() {}
-	~CPP__RPerl__Algorithm__Sort() {}
+	RPerl__Algorithm__Sort() {}
+	~RPerl__Algorithm__Sort() {}
 
 //private:
 	// <<< TRANSLATED PROPERTY DECLARATIONS >>>

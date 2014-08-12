@@ -25,11 +25,10 @@ BEGIN { use Data::Dumper; our $AUTOLOAD;  sub AUTOLOAD { croak( "AUTOLOAD purpos
 rperltypes::types_enable('CPP');
 
 # UNCOMMENT TO ENABLE C++ OPS
-#use RPerl::DataType::Integer_cpp;  RPerl::DataType::Integer_cpp::cpp_load();  RPerl::DataType::Integer_cpp::cpp_link();
-#use RPerl::DataType::Number_cpp;  RPerl::DataType::Number_cpp::cpp_load();  RPerl::DataType::Number_cpp::cpp_link();
+#use RPerl::DataType::Integer_cpp;  RPerl::DataType::Integer_cpp::cpp_load();
+#use RPerl::DataType::Number_cpp;  RPerl::DataType::Number_cpp::cpp_load();
 use RPerl::DataType::String_cpp;
 RPerl::DataType::String_cpp::cpp_load();
-RPerl::DataType::String_cpp::cpp_link();
 
 print STDERR q{in scalar_test.pl, have integer__ops() = '} . integer__ops() . "'\n" or croak();
 print STDERR q{in scalar_test.pl, have integer__types() = '} . integer__types() . "'\n" or croak();

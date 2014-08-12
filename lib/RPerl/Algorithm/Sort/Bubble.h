@@ -35,8 +35,8 @@ SV* uninherited__Bubble(SV* person);
 SV* uninherited(SV* person);
 
 // DEV NOTE, CORRELATION #01: multiple inheritance is enabled by _either_ C++ here or Perl at correlation in Bubble_cpp.pm
-//class CPP__RPerl__Algorithm__Sort__Bubble : public CPP__RPerl__Algorithm__Sort  // SINGLE INHERITANCE
-class CPP__RPerl__Algorithm__Sort__Bubble : public CPP__RPerl__Algorithm__Sort, public CPP__RPerl__Algorithm__Inefficient  // MULTIPLE INHERITANCE
+//class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort  // SINGLE INHERITANCE
+class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort, public RPerl__Algorithm__Inefficient  // MULTIPLE INHERITANCE
 {
 public:
 	////# [[[ OO METHODS ]]]
@@ -57,8 +57,8 @@ public:
 	void set_number__data(SV* number__data_new) { this->number__data = number__data_new; }
 
 	// <<< CONSTRUCTOR & DESTRUCTOR DECLARATIONS/DEFINITIONS >>>
-	CPP__RPerl__Algorithm__Sort__Bubble() {}
-	~CPP__RPerl__Algorithm__Sort__Bubble() {}
+	RPerl__Algorithm__Sort__Bubble() {}
+	~RPerl__Algorithm__Sort__Bubble() {}
 
 ////# [[[ OO PROPERTIES ]]]
 ////# [[[ OO PROPERTIES ]]]
@@ -94,8 +94,8 @@ string uninherited__Bubble(string person);
 string uninherited(string person);
 
 // DEV NOTE, CORRELATION #01: multiple inheritance is enabled by _either_ C++ here or Perl at correlation in Bubble_cpp.pm
-//class CPP__RPerl__Algorithm__Sort__Bubble : public CPP__RPerl__Algorithm__Sort  // SINGLE INHERITANCE
-class CPP__RPerl__Algorithm__Sort__Bubble : public CPP__RPerl__Algorithm__Sort, public CPP__RPerl__Algorithm__Inefficient  // MULTIPLE INHERITANCE
+//class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort  // SINGLE INHERITANCE
+class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort, public RPerl__Algorithm__Inefficient  // MULTIPLE INHERITANCE
 {
 public:
 	////# [[[ OO METHODS ]]]
@@ -116,8 +116,8 @@ public:
 	void set_number__data(number__array_ref number__data_new) { this->number__data = number__data_new; }
 
 	// <<< CONSTRUCTOR & DESTRUCTOR DECLARATIONS/DEFINITIONS >>>
-	CPP__RPerl__Algorithm__Sort__Bubble() {}
-	~CPP__RPerl__Algorithm__Sort__Bubble() {}
+	RPerl__Algorithm__Sort__Bubble() {}
+	~RPerl__Algorithm__Sort__Bubble() {}
 
 	////# [[[ OO PROPERTIES ]]]
 	////# [[[ OO PROPERTIES ]]]

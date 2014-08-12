@@ -8,10 +8,10 @@ using std::cout;  using std::cerr;
 
 // [[[ INHERITANCE TESTING ]]]
 ////our void__method $inherited__Sort = sub { (my object $self, my string $person) = @_;  print "in Perl Sort->inherited__Sort(), have \$self = '$self' and \$person = '$person', FISH\n"; };
-void CPP__RPerl__Algorithm__Sort::inherited__Sort(SV* person) { cout << "in CPPOPS_PERLTYPES Sort->inherited__Sort(), have $self = '" << this << "' and $person = '" << SvPV_nolen(person) << "', FISH\n"; }
+void RPerl__Algorithm__Sort::inherited__Sort(SV* person) { cout << "in CPPOPS_PERLTYPES Sort->inherited__Sort(), have $self = '" << this << "' and $person = '" << SvPV_nolen(person) << "', FISH\n"; }
 
 ////our void__method $inherited = sub { (my object $self, my string $person) = @_;  print "in Perl Sort->inherited(), have \$self = '$self' and \$person = '$person', IN\n"; };
-//void CPP__RPerl__Algorithm__Sort::inherited(SV* person) { cout << "in CPPOPS_PERLTYPES Sort->inherited(), have $self = '" << this << "' and $person = '" << SvPV_nolen(person) << "', IN\n"; }
+//void RPerl__Algorithm__Sort::inherited(SV* person) { cout << "in CPPOPS_PERLTYPES Sort->inherited(), have $self = '" << this << "' and $person = '" << SvPV_nolen(person) << "', IN\n"; }
 
 ////our string $uninherited__Sort = sub { (my string $person) = @_;  print "in Perl Sort::uninherited__Sort(), \$person = '$person', MY\n";  return "Perl Sort::uninherited__Sort() RULES!"; };
 SV* uninherited__Sort(SV* person) { cout << "in CPPOPS_PERLTYPES Sort::uninherited__Sort(), have $person = '" << SvPV_nolen(person) << "', MY\n";  return newSVpv("CPPOPS_PERLTYPES Sort::uninherited__Sort() RULES!", 0); }

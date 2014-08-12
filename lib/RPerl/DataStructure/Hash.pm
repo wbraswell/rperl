@@ -21,7 +21,6 @@ INIT {
 INIT {
     use RPerl::HelperFunctions_cpp;
     RPerl::HelperFunctions_cpp::cpp_load();
-    RPerl::HelperFunctions_cpp::cpp_link();
 }
 
 use RPerl::DataType::Void;

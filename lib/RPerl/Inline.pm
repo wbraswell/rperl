@@ -1,5 +1,6 @@
 package RPerl::Inline;
 use RPerl;
+
 #use Config;
 
 # long form
@@ -18,23 +19,26 @@ use RPerl;
 #use Inline CPP => config => classes => sub { @_ = split('__', shift); (pop, join('::', @_)); };
 
 our @ARGS = (
-  TYPEMAPS => "$RPerl::INCLUDE_PATH/typemap.rperl",
-  # TODO: strip C++ incompat CFLAGS
-#  CCFLAGS => $Config{ccflags} . ' -DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
-  CCFLAGSEX => '-DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
-  INC => "-I$RPerl::INCLUDE_PATH",
-  BUILD_NOISY => $ENV{TEST_VERBOSE},
-  CLEAN_AFTER_BUILD => 0, # cache it
-  WARNINGS => 1,
-  FILTERS => 'Preprocess',
-  AUTO_INCLUDE => # DEV NOTE: include non-RPerl files using AUTO_INCLUDE so they are not parsed by the 'Preprocess' filter
-  [
-   '#include <iostream>',
-   '#include <string>',
-   '#include <sstream>',
-   '#include <limits>',
-   '#include <vector>',
-   '#include <unordered_map>',  # DEV NOTE: unordered_map may require '-std=c++0x' in CCFLAGS above
-  ]
+    typemaps => "$RPerl::INCLUDE_PATH/typemap.rperl",
+
+# TODO: strip C++ incompat CFLAGS
+#  ccflags => $Config{ccflags} . ' -DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
+    ccflagsex =>
+        '-DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
+    inc               => "-I$RPerl::INCLUDE_PATH",
+    build_noisy       => $ENV{TEST_VERBOSE},
+    clean_after_build => 0,                          # cache it
+    warnings          => 1,
+    filters           => 'Preprocess',
+    auto_include => # DEV NOTE: include non-RPerl files using AUTO_INCLUDE so they are not parsed by the 'Preprocess' filter
+        [
+        '#include <iostream>',
+        '#include <string>',
+        '#include <sstream>',
+        '#include <limits>',
+        '#include <vector>',
+        '#include <unordered_map>', # DEV NOTE: unordered_map may require '-std=c++0x' in CCFLAGS above
+        ],
+    classes => sub { @_ = split( '__', shift ); ( pop, join( '::', @_ ) ); }
 );
 1;

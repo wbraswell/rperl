@@ -19,7 +19,7 @@ BEGIN { use Data::Dumper;  our $AUTOLOAD;  sub AUTOLOAD { croak("AUTOLOAD purpos
 rperltypes::types_enable('CPP');
 
 # UNCOMMENT TO ENABLE C++ OPS
-use RPerl::DataStructure::Array_cpp;  RPerl::DataStructure::Array_cpp::cpp_load();  RPerl::DataStructure::Array_cpp::cpp_link();
+use RPerl::DataStructure::Array_cpp;  RPerl::DataStructure::Array_cpp::cpp_load();
 
 print STDERR q{in array_test.pl, have integer__ops() = '} . integer__ops() . "'\n" or croak();
 print STDERR q{in array_test.pl, have integer__types() = '} . integer__types() . "'\n" or croak();
