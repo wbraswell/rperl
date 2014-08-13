@@ -9,7 +9,7 @@ perl:
   - "5.18"
 
 # travis already calls `cpanm --quiet --installdeps --notest .` itself
-# but we still require a dev version
+# but we still require a dev version, which travis can't get from Makefile.PL
 before_script:
   - cpanm -n INGY/Inline-C-0.62_03.tar.gz
 
@@ -22,7 +22,7 @@ notifications:
     # to enable skip_join, in IRC channel first execute `/mode -n`
     skip_join: true
     template:
-      - "RPerl Build %{result}; %{author}; %{commit_message}"
+      - "RPerl build %{result}. %{author} says '%{commit_message}'"
       - "%{build_url} %{compare_url}"
 
     # DEFAULT TEMPLATE

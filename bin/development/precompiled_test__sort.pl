@@ -16,10 +16,10 @@ BEGIN { use Data::Dumper;  our $AUTOLOAD;  sub AUTOLOAD { croak("AUTOLOAD purpos
 use Time::HiRes qw(time);
 
 # UNCOMMENT TO ENABLE PERL TYPES FOR C++ OPS
-rperltypes::types_enable('PERL');
+#rperltypes::types_enable('PERL');
 
 # UNCOMMENT TO ENABLE C++ TYPES FOR C++ OPS
-#rperltypes::types_enable('CPP');
+rperltypes::types_enable('CPP');
 
 # TOGGLE COMMENT TO ENABLE C++ OPS
 #use RPerl::Algorithm::Sort::Bubble;  # choose ONE of this
