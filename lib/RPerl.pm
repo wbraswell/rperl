@@ -19,7 +19,7 @@ require rperltypes;
 
 our $DEBUG = 1;
 
-=disable
+#=disable
 # TODO: replace Data::Dumper with pure-RPerl equivalent?
 use Data::Dumper;
 sub DUMPER
@@ -29,7 +29,7 @@ sub DUMPER
 	return $_[0]->DUMPER() if (defined(eval('$' . ref($_[0]) . '::DUMPER')));  ## no critic
 	return Dumper(@_);
 }
-=cut
+#=cut
 
 sub diag {
   print STDERR @_ if $ENV{TEST_VERBOSE};

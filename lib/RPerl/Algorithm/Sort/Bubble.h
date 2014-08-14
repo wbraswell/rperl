@@ -17,6 +17,9 @@ using std::cout;  using std::cerr;
 
 # ifdef __PERL__TYPES
 
+// NEED REMOVE, TEMPORARY DEBUGGING!!!
+SV* bubblesort__ops();
+
 // [[[<<< BEGIN PERL TYPES >>>]]]
 // [[[<<< BEGIN PERL TYPES >>>]]]
 // [[[<<< BEGIN PERL TYPES >>>]]]
@@ -55,6 +58,9 @@ public:
 	void set_integer__data(SV* integer__data_new) { this->integer__data = integer__data_new; }
 	SV* get_number__data() { return SvREFCNT_inc(this->number__data); }
 	void set_number__data(SV* number__data_new) { this->number__data = number__data_new; }
+
+	// NEED REMOVE, TEMP DEBUGGING!!!
+	SV* bubblesort__ops__oo() { return bubblesort__ops(); }
 
 	// <<< CONSTRUCTOR & DESTRUCTOR DECLARATIONS/DEFINITIONS >>>
 	RPerl__Algorithm__Sort__Bubble() {}

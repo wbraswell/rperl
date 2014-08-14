@@ -1,6 +1,6 @@
 # RPerl v1.0 Beta, Install Notes
 # Single-User Installation (Not System-Wide Installation)
-# Last Updated August 8th, 2014
+# Last Updated August 14th, 2014
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # IMPORTANT WARNING: ONLY USE ONE OF STEP 1A, 1B, OR 1C - NOT ALL THREE
@@ -21,7 +21,7 @@ $ perl -v  # NOTE! the version of Perl determines whether you take step 1a or 1b
 
 $ curl -L cpanmin.us | perl - -l $HOME/perl5 App::cpanminus local::lib
 $ echo 'eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)' >> ~/.bashrc
-$ . ~/.bashrc;  set | grep perl5  # note the dot at the start of this command
+$ source ~/.bashrc;  set | grep perl5
 
 # in the output of the previous 'set' command,
 # ensure the following 4 environmental variables are updated to include ~/perl5: 

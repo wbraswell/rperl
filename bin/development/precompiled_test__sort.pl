@@ -16,10 +16,10 @@ BEGIN { use Data::Dumper;  our $AUTOLOAD;  sub AUTOLOAD { croak("AUTOLOAD purpos
 use Time::HiRes qw(time);
 
 # UNCOMMENT TO ENABLE PERL TYPES FOR C++ OPS
-#rperltypes::types_enable('PERL');
+rperltypes::types_enable('PERL');
 
 # UNCOMMENT TO ENABLE C++ TYPES FOR C++ OPS
-rperltypes::types_enable('CPP');
+#rperltypes::types_enable('CPP');
 
 # TOGGLE COMMENT TO ENABLE C++ OPS
 #use RPerl::Algorithm::Sort::Bubble;  # choose ONE of this
@@ -39,8 +39,10 @@ print STDERR q{in precompiled_test__sort.pl, have array__ops() = '} . array__ops
 print STDERR q{in precompiled_test__sort.pl, have array__types() = '} . array__types() . "'\n" or croak();
 print STDERR q{in precompiled_test__sort.pl, have hash__ops() = '} . hash__ops() . "'\n" or croak();
 print STDERR q{in precompiled_test__sort.pl, have hash__types() = '} . hash__types() . "'\n" or croak();
-print STDERR q{in precompiled_test__sort.pl, have bubblesort__ops() = '} . bubblesort__ops() . "'\n" or croak();
-print STDERR q{in precompiled_test__sort.pl, have bubblesort__types() = '} . bubblesort__types() . "'\n" or croak();
+
+#print STDERR q{in precompiled_test__sort.pl, have bubblesort__ops() = '} . bubblesort__ops() . "'\n" or croak();
+#print STDERR q{in precompiled_test__sort.pl, have bubblesort__ops() = '} . RPerl::Algorithm::Sort::Bubble::bubblesort__ops() . "'\n" or croak();
+#print STDERR q{in precompiled_test__sort.pl, have bubblesort__types() = '} . bubblesort__types() . "'\n" or croak();
 
 # <<<=== SORT 1 ===>>>
 # <<<=== SORT 1 ===>>>
@@ -70,9 +72,10 @@ my const_integer $i_MAX = 0;
 for my integer $i ( 0 .. $i_MAX ) {
 	print STDERR "in precompiled_test__sort.pl, top of for() loop $i/$i_MAX\n" or croak();
 
-#	$sorter = $algorithm->new();  # OO INTERFACE
+	$sorter = $algorithm->new();  # OO INTERFACE
 #	if (defined $variant) { $sorter->set_variant($variant); }  # OO INTERFACE
-#	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have pre-data \$sorter =\n" . Dumper($sorter) . "\n" or croak();  # OO INTERFACE
+	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have pre-data \$sorter =\n" . Dumper($sorter) . "\n" or croak();  # OO INTERFACE
+	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have \$sorter->bubblesort__ops__oo() = '" . $sorter->bubblesort__ops__oo() . "'\n" or croak();  # OO INTERFACE
 
 	# [[[ INTEGER TESTS ]]]
 	
@@ -93,26 +96,26 @@ for my integer $i ( 0 .. $i_MAX ) {
 	$integer__data = [reverse 0 .. ($test__data_size - 1)];  # TIVALSOBUXX; manual testing only
 	
 #	$integer__data = scalar_linkedlist_ref->new_from_array_ref([21, 12, 31, 13, 42, 2012, 5555, 1.21, 33.3, 9999, -15, 0]);  # NOT USED FOR BUBBLESORT
-#	$sorter->set_integer__data($integer__data);  # OO INTERFACE
+	$sorter->set_integer__data($integer__data);  # OO INTERFACE
 
 	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have unsorted \$integer__data =\n" . Dumper($integer__data) . "\n" or croak();  # PROCEDURAL INTERFACE
-#	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have \$sorter =\n" . Dumper($sorter) . "\n" or croak();  # OO INTERFACE
-#	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have unsorted \$sorter->get_integer__data() =\n" . Dumper($sorter->get_integer__data()) . "\n" or croak();  # OO INTERFACE
+	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have \$sorter =\n" . Dumper($sorter) . "\n" or croak();  # OO INTERFACE
+	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have unsorted \$sorter->get_integer__data() =\n" . Dumper($sorter->get_integer__data()) . "\n" or croak();  # OO INTERFACE
 
 	my $start_time = time;
-#	$sorter->integer__sort();  # OO INTERFACE, ANYOPS_ANYTYPES needs testing; CPPOPS_CPPTYPS packing/unpacking not here, in accessor/mutator calls instead
+	$sorter->integer__sort();  # OO INTERFACE, ANYOPS_ANYTYPES needs testing; CPPOPS_CPPTYPS packing/unpacking not here, in accessor/mutator calls instead
 #	integer__bubblesort($integer__data);  # PROCEDURAL INTERFACE, PERLOPS_PERLTYPES only
 #	DEV NOTE: for procedural interface CPPOPS_CPPTYPES, must set $integer__data to retval because C++ packing/unpacking does not change contents of original $integer__data SV*, so not exactly "in-place";
 
     # PROCEDURAL INTERFACE, ANYOPS_ANYTYPES works; CPPOPS_CPPTYPES packing/unpacking here
 #	$integer__data = integer__bubblesort();  # TIVALSOBU00; error PERLOPS EIVAVRV00, CPPOPS "Usage: main::integer__bubblesort(integer__data)"
-	$integer__data = integer__bubblesort($integer__data);  # TIVALSOBUxx, xx > 00
+#	$integer__data = integer__bubblesort($integer__data);  # TIVALSOBUxx, xx > 00
 
 	my $end_time = time;
 	my $run_time = $end_time - $start_time;
 
-	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have sorted \$integer__data =\n" . Dumper($integer__data) . "\n" or croak();  # PROCEDURAL INTERFACE
-#	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have sorted \$sorter->get_integer__data() =\n" . Dumper($sorter->get_integer__data()) . "\n" or croak();  # OO INTERFACE
+#	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have sorted \$integer__data =\n" . Dumper($integer__data) . "\n" or croak();  # PROCEDURAL INTERFACE
+	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have sorted \$sorter->get_integer__data() =\n" . Dumper($sorter->get_integer__data()) . "\n" or croak();  # OO INTERFACE
 	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have \$run_time = $run_time\n" or croak();
 #=cut
 
@@ -125,7 +128,7 @@ for my integer $i ( 0 .. $i_MAX ) {
 
 	# [[[ NUMBER TESTS ]]]
 
-#=disable_SORT_TESTS
+=disable_SORT_TESTS
 #	$number__data = undef;  # TNVALSOBU01; error ENVAVRV00
 #	$number__data = 2;  # TNVALSOBU02; error ENVAVRV01
 #	$number__data = 2.3;  # TNVALSOBU03; error ENVAVRV01
@@ -165,7 +168,7 @@ for my integer $i ( 0 .. $i_MAX ) {
 	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have sorted \$number__data =\n" . Dumper($number__data) . "\n" or croak();  # PROCEDURAL INTERFACE
 #	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have sorted \$sorter->get_number__data() =\n" . Dumper($sorter->get_number__data()) . "\n" or croak();  # OO INTERFACE
 	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have \$run_time = $run_time\n" or croak();
-#=cut
+=cut
 
 #	$string_retval = number__bubblesort__typetest0();  # TNVALSOBU30; error PERLOPS ENVAVRV00, CPPOPS "Usage: main::number__bubblesort__typetest0(lucky_numbers)"
 #	$string_retval = number__bubblesort__typetest0(2);  # TNVALSOBU31; error ENVAVRV01
