@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
+our $VERSION = 0.000_010;
 use Carp;
 
 # START HERE: boil down to find why methods are binding but not functions
