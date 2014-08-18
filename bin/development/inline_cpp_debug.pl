@@ -1,16 +1,15 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.000_010;
+our $VERSION = 0.000_011;
 use Carp;
 
 # START HERE: boil down to find why methods are binding but not functions
 # START HERE: boil down to find why methods are binding but not functions
 # START HERE: boil down to find why methods are binding but not functions
 
-# RPERL DRIVER BOILERPLATE
-BEGIN { package main;  our $RPERL_INCLUDE_PATH = 'blib/lib'; }  # NEED REMOVE hard-coded path
-BEGIN { use RPerl; use parent ('RPerl'); $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH; }    # RPerl system files
+package main;  our $RPERL_INCLUDE_PATH = 'blib/lib';
+use RPerl; use parent ('RPerl'); $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;
 use Data::Dumper;
 
 
