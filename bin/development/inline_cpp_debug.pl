@@ -1,37 +1,30 @@
 #!/usr/bin/perl
-use strict;
-use warnings;
-use Data::Dumper;
 
-# START HERE: remove unused Inline ARGS below, move C++ code to __DATA__, boil to one-liner
-# START HERE: remove unused Inline ARGS below, move C++ code to __DATA__, boil to one-liner
-# START HERE: remove unused Inline ARGS below, move C++ code to __DATA__, boil to one-liner
+# AUTOMATIC CLASSES OPTION CAUSES SUBROUTINE CALL TO FAIL
+use Inline (CPP => 'DATA', classes => sub { @_ = split( '__', shift ); ( pop, join( '::', @_ ) ); } );
 
-use Inline (CPP => "blib/lib/RPerl/Test/Inline_CPP_Debug.cpp", typemaps => "blib/lib/typemap.rperl",
+# MANUAL CLASSES OPTION ALLOWS SUBROUTINE AND METHOD CALLS TO SUCCEED
+#use Inline (CPP => 'DATA', classes => { 'RPerl__Test__Inline_CPP_Debug' => 'RPerl::Test::Inline_CPP_Debug'} );
 
-    ccflagsex =>
-        '-DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
-    inc               => "-Iblib/lib",
-    build_noisy       => $ENV{TEST_VERBOSE},
-    clean_after_build => 0,                          # cache it
-    warnings          => 1,
-    filters           => 'Preprocess',
-    auto_include => # DEV NOTE: include non-RPerl files using AUTO_INCLUDE so they are not parsed by the 'Preprocess' filter
-        [
-        '#include <iostream>',
-        '#include <string>',
-        '#include <sstream>',
-        '#include <limits>',
-        '#include <vector>',
-        '#include <unordered_map>', # DEV NOTE: unordered_map may require '-std=c++0x' in CCFLAGS above
-        ],
-    classes => sub { @_ = split( '__', shift ); ( pop, join( '::', @_ ) ); });
+# SUBROUTINE IS ALWAYS IN SYMBOL TABLE: "have \%main:: symbol table entry for my_subroutine() = '*main::my_subroutine'"
+print STDERR q{in inline_cpp_debug.pl, have \%main:: symbol table entry for my_subroutine() = '} . (\%main::)->{'my_subroutine'} . "'\n" or croak();
 
-#print STDERR q{in inline_cpp_debug.pl, have \%main:: symbol table = '} . Dumper(\%main::) . "'\n" or croak();
-print STDERR q{in inline_cpp_debug.pl, have \%main:: symbol table entry for my_function() = '} . (\%main::)->{'my_function'} . "'\n" or croak();
-
+# METHOD CALL ALWAYS SUCCEEDS: "have $my_object->my_method() = 'RETVAL FROM my_subroutine()'"
 my $my_object = RPerl::Test::Inline_CPP_Debug->new();
-print STDERR "in inline_cpp_debug.pl have \$my_object->my_method() = '" . $my_object->my_method() . "'\n" or croak();  # OO INTERFACE
+print STDERR "in inline_cpp_debug.pl, have \$my_object->my_method() = '" . $my_object->my_method() . "'\n" or croak();  # OO INTERFACE
 
-print STDERR q{in inline_cpp_debug.pl, have my_function() = '} . my_function() . "'\n" or croak();
-#print STDERR q{in inline_cpp_debug.pl, have my_function() = '} . RPerl::Test::Inline_CPP_Debug::my_function() . "'\n" or croak();
+# SUBROUTINE CALL FAILS WITH AUTOMATIC CLASSES OPTION: "Undefined subroutine &main::my_subroutine called"
+print STDERR q{in inline_cpp_debug.pl, have my_subroutine() = '} . my_subroutine() . "'\n" or croak();
+
+__DATA__
+__CPP__
+SV* my_subroutine() { return(newSVpv("RETVAL FROM my_subroutine()", 25)); }
+
+// DELETING C++ CLASS BELOW (AND OBJECT/METHOD CALLS IN PERL ABOVE) ALLOWS SUBROUTINE CALL TO SUCCEED, REGARDLESS OF CLASSES OPTION
+class RPerl__Test__Inline_CPP_Debug
+{
+public:
+    SV* my_method() { return my_subroutine(); }
+    RPerl__Test__Inline_CPP_Debug() {}
+    ~RPerl__Test__Inline_CPP_Debug() {}
+};
