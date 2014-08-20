@@ -10,9 +10,9 @@ WriteMakefile(
   PREREQ_PM    => {
         'Perl::Critic'    => 1.121,
         'Perl::Tidy'      => 20140711,
-        'Inline'          => 0.68,
+        'Inline'          => 0.76,
         'Inline::C'       => 0.62,  # really 0.62_03, but travis cannot handle it
-        'Inline::CPP'     => 0.58,  # fix namespace hack & ntype warnings
+        'Inline::CPP'     => 0.60,  # fix namespace hack & ntype warnings
         'Inline::Filters' => 0.16,
         'Test::Exception' => 0.32,
 #        'Module::Compile' => 0,
