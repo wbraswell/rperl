@@ -189,10 +189,6 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
             q{RPerl::Algorithm::Sort::Bubble_cpp::cpp_load() lives}
         );
 
-# START HERE: figure out why integer__ops() isn't working for CPP
-# START HERE: figure out why integer__ops() isn't working for CPP
-# START HERE: figure out why integer__ops() isn't working for CPP
-
         lives_and(
             sub {
                 is( integer__ops(), 'CPP', q{integer__ops() returns 'CPP'} );

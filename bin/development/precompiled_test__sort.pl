@@ -75,6 +75,11 @@ for my integer $i ( 0 .. $i_MAX ) {
 	$sorter = $algorithm->new();  # OO INTERFACE
 #	if (defined $variant) { $sorter->set_variant($variant); }  # OO INTERFACE
 	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have pre-data \$sorter =\n" . Dumper($sorter) . "\n" or croak();  # OO INTERFACE
+	
+	# START HERE: remove debugging code from bubblesort, upgrade RPerl/Inline.pm to new single-retval override code
+	# START HERE: remove debugging code from bubblesort, upgrade RPerl/Inline.pm to new single-retval override code
+	# START HERE: remove debugging code from bubblesort, upgrade RPerl/Inline.pm to new single-retval override code
+	
 	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have \$sorter->bubblesort__ops__oo() = '" . $sorter->bubblesort__ops__oo() . "'\n" or croak();  # OO INTERFACE
 
 	# [[[ INTEGER TESTS ]]]
