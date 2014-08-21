@@ -1,6 +1,6 @@
 # RPerl v1.0 Beta, Install Notes
 # Single-User Installation (Not System-Wide Installation)
-# Last Updated August 14th, 2014
+# Last Updated August 21, 2014
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # IMPORTANT WARNING: ONLY USE ONE OF STEP 1A, 1B, OR 1C - NOT ALL THREE
@@ -65,6 +65,8 @@ $ perlbrew install-cpanm
 $ git clone git@github.com:wbraswell/rperl.git
 # OR
 $ wget https://github.com/wbraswell/rperl/archive/master.zip;  unzip master.zip
+
+$ cpanm -n INGY/Inline-C-0.62_03.tar.gz  # development version of Inline::C
 
 $ cd rperl*
 $ perl Makefile.PL

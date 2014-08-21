@@ -2,7 +2,7 @@
 ## no critic qw(ProhibitMagicNumbers ProhibitUnreachableCode)  ## RPERL allow numeric test values, allow unreachable test code
 use strict;
 use warnings;
-our $VERSION = 0.003_014;
+our $VERSION = 0.003_015;
 use Carp;
 
 # [[[ SETUP ]]]
@@ -40,9 +40,8 @@ print STDERR q{in precompiled_test__sort.pl, have array__types() = '} . array__t
 print STDERR q{in precompiled_test__sort.pl, have hash__ops() = '} . hash__ops() . "'\n" or croak();
 print STDERR q{in precompiled_test__sort.pl, have hash__types() = '} . hash__types() . "'\n" or croak();
 
-#print STDERR q{in precompiled_test__sort.pl, have bubblesort__ops() = '} . bubblesort__ops() . "'\n" or croak();
-#print STDERR q{in precompiled_test__sort.pl, have bubblesort__ops() = '} . RPerl::Algorithm::Sort::Bubble::bubblesort__ops() . "'\n" or croak();
-#print STDERR q{in precompiled_test__sort.pl, have bubblesort__types() = '} . bubblesort__types() . "'\n" or croak();
+print STDERR q{in precompiled_test__sort.pl, have bubblesort__ops() = '} . bubblesort__ops() . "'\n" or croak();
+print STDERR q{in precompiled_test__sort.pl, have bubblesort__types() = '} . bubblesort__types() . "'\n" or croak();
 
 # <<<=== SORT 1 ===>>>
 # <<<=== SORT 1 ===>>>
@@ -75,12 +74,6 @@ for my integer $i ( 0 .. $i_MAX ) {
 	$sorter = $algorithm->new();  # OO INTERFACE
 #	if (defined $variant) { $sorter->set_variant($variant); }  # OO INTERFACE
 	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have pre-data \$sorter =\n" . Dumper($sorter) . "\n" or croak();  # OO INTERFACE
-	
-	# START HERE: remove debugging code from bubblesort
-	# START HERE: remove debugging code from bubblesort
-	# START HERE: remove debugging code from bubblesort
-	
-	print STDERR "in precompiled_test__sort.pl $i/$i_MAX, have \$sorter->bubblesort__ops__oo() = '" . $sorter->bubblesort__ops__oo() . "'\n" or croak();  # OO INTERFACE
 
 	# [[[ INTEGER TESTS ]]]
 	
