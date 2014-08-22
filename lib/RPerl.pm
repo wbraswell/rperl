@@ -6,7 +6,7 @@ use parent ('RPerl::CompileUnit::Module::Class');
 use RPerl::CompileUnit::Module::Class;
 use Carp;
 
-# IMPORTANT SYSTEM-DEPENDENT CONFIGURATION VARIABLE!  drivers must set this to the path to RPerl
+# IMPORTANT SYSTEM-DEPENDENT CONFIGURATION VARIABLE!  drivers may optionally overwrite this to the path to RPerl
 our $INCLUDE_PATH = 'blib/lib';
 
 # <<<=== DECREASE MAGIC ===>>>

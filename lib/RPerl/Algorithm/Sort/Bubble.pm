@@ -11,9 +11,10 @@ use RPerl;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)
 # USER SPECIAL 1: allow single-quoted control characters, sigils, and regexes
 ## no critic qw(RequireInterpolationOfMetachars)
-use parent qw( RPerl::Algorithm::Sort RPerl::Algorithm::Inefficient ); # INHERITANCE TESTING
+use parent qw( RPerl::Algorithm::Sort ); # INHERITANCE TESTING; SINGLE INHERITANCE
+#use parent qw( RPerl::Algorithm::Sort RPerl::Algorithm::Inefficient ); # INHERITANCE TESTING; MULTIPLE INHERITANCE NOT SUPPORTED BY Inline::CPP
 use RPerl::Algorithm::Sort;
-use RPerl::Algorithm::Inefficient;    # INHERITANCE TESTING
+#use RPerl::Algorithm::Inefficient;    # INHERITANCE TESTING; MULTIPLE INHERITANCE NOT SUPPORTED BY Inline::CPP
 use Data::Dumper;
 our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
     integer__data => my integer__array_ref $TYPED_integer__data = undef,

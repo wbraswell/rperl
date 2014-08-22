@@ -1,7 +1,7 @@
 package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
-our $VERSION = 0.010_010;
+our $VERSION = 0.011_000;
 use Carp;
 use Data::Dumper;  # DEV NOTE: don't depend on RPerl::DUMPER yet, although the *stringify() subroutines are coming along...
 
@@ -117,10 +117,10 @@ sub new { no strict; return bless({%{$_[0] . '::properties'}}, $_[0]); }
 # suppress deprecated feature warning
 $SIG{__WARN__} = sub { return if $_[0] =~ /^Use of inherited AUTOLOAD for non-method /; warn @_; };
 
-#=UNUSED_CODE
+=UNUSED_CODE
 # RPerl function/method autoloader, longhand; allows syntax for typed functions/methods and automates get/set accessors/mutators for object properties;
 # creates real subroutines to avoid AUTOLOADing any function/method more than once, performs operation inside AUTOLOAD that one time
-# mostly deprecated in favor of INIT block above
+# now fully deprecated in favor of INIT block above
 our $AUTOLOAD;
 sub AUTOLOAD
 {
@@ -168,7 +168,7 @@ sub AUTOLOAD
 		print {*STDERR} "IN AUTOLOAD, eval call MODE, have \$eval_string = '$eval_string'\n";
 		$retval = eval($eval_string);  ## no critic
 	}
-=cut
+#=cut
 
 	die($@) if ($@);  # suppress '...propagated at RPerl/Class.pm' appended exception	
 #	die if ($@);  # allow '...propagated at RPerl/Class.pm' appended exception	
@@ -176,7 +176,7 @@ sub AUTOLOAD
 #	print {*STDERR} "IN AUTOLOAD, bottom of subroutine, about to return \$retval = '$retval'\n";
 	return $retval;
 }
-#=cut
+=cut
 
 =UNUSED_CODE
 # RPerl object constructor, longhand

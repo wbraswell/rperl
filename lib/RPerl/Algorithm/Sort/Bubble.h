@@ -13,7 +13,7 @@ using std::cout;  using std::cerr;
 #include <RPerl/Algorithm/Sort.cpp>			// -> Sort.h
 
 ////use RPerl::Algorithm::Inefficient;
-#include <RPerl/Algorithm/Inefficient.cpp>		// -> Inefficient.h
+//#include <RPerl/Algorithm/Inefficient.cpp>		// -> Inefficient.h  // MULTIPLE INHERITANCE NOT SUPPORTED BY Inline::CPP
 
 # ifdef __PERL__TYPES
 
@@ -35,8 +35,8 @@ SV* uninherited__Bubble(SV* person);
 SV* uninherited(SV* person);
 
 // DEV NOTE, CORRELATION #01: multiple inheritance is enabled by _either_ C++ here or Perl at correlation in Bubble_cpp.pm
-//class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort  // SINGLE INHERITANCE
-class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort, public RPerl__Algorithm__Inefficient  // MULTIPLE INHERITANCE
+class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort  // SINGLE INHERITANCE
+//class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort, public RPerl__Algorithm__Inefficient  // MULTIPLE INHERITANCE NOT SUPPORTED BY Inline::CPP
 {
 public:
 	////# [[[ OO METHODS ]]]
@@ -94,8 +94,8 @@ string uninherited__Bubble(string person);
 string uninherited(string person);
 
 // DEV NOTE, CORRELATION #01: multiple inheritance is enabled by _either_ C++ here or Perl at correlation in Bubble_cpp.pm
-//class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort  // SINGLE INHERITANCE
-class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort, public RPerl__Algorithm__Inefficient  // MULTIPLE INHERITANCE
+class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort  // SINGLE INHERITANCE
+//class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort, public RPerl__Algorithm__Inefficient  // MULTIPLE INHERITANCE NOT SUPPORTED BY Inline::CPP
 {
 public:
 	////# [[[ OO METHODS ]]]

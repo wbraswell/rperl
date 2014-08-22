@@ -13,7 +13,7 @@ Many thanks to irc.perl.org:
 
 \#perl6 founder timtoady (again)
 
-\#perl11 founders ingy & rurban & Will_the_Chill (yours truly)
+\#perl11 founders ingy & rurban & willthechill (yours truly)
 
 \#perl11 members bulk88 & mst
 

@@ -1,5 +1,9 @@
 #!/usr/bin/perl
 
+# START HERE: implement these tests
+# START HERE: implement these tests
+# START HERE: implement these tests
+
 use Test::More skip_all => "[[[ OBJECT-ORIENTED TESTS DISABLED UNTIL C++ -> PERL NAMESPACE ISSUES ARE FIXED IN INLINE::CPP ]]]";
 
 =disable

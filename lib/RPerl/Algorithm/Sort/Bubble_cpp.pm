@@ -9,7 +9,7 @@ use RPerl::CompileUnit::Module::Class;
 use RPerl;
 use RPerl::HelperFunctions_cpp;
 use RPerl::Algorithm::Sort_cpp;
-use RPerl::Algorithm::Inefficient_cpp;
+#use RPerl::Algorithm::Inefficient_cpp;  # MULTIPLE INHERITANCE NOT SUPPORTED BY Inline::CPP
 
 our void__method $cpp_load = sub {
 
@@ -24,7 +24,7 @@ our void__method $cpp_load = sub {
         $RPerl::Algorithm::Sort_cpp::CPP_LOADED = 1; # Sort.cpp loaded by C++ #include in Bubble.h
 
         ####use RPerl::Algorithm::Inefficient;
-        $RPerl::Algorithm::Inefficient_cpp::CPP_LOADED = 1; # Inefficient.cpp loaded by C++ #include in Bubble.h
+#        $RPerl::Algorithm::Inefficient_cpp::CPP_LOADED = 1; # Inefficient.cpp NOT loaded by C++ #include in Bubble.h (MULTIPLE INHERITANCE NOT SUPPORTED BY Inline::CPP)
 
         my $eval_string = <<"EOF";
 package main;
