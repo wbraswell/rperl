@@ -2,9 +2,10 @@ package RPerl;
 use strict;
 use warnings;
 our $VERSION = 1.000_000;  # BETA!!!
+
 use parent ('RPerl::CompileUnit::Module::Class');
 use RPerl::CompileUnit::Module::Class;
-use Carp;
+
 
 # IMPORTANT SYSTEM-DEPENDENT CONFIGURATION VARIABLE!  drivers may optionally overwrite this to the path to RPerl
 our $INCLUDE_PATH = 'blib/lib';
@@ -15,13 +16,18 @@ our $INCLUDE_PATH = 'blib/lib';
 #use rperltypes;  # circular dependency causes "subroutine DUMPER redefined" error, solved by replacing use with require below
 require rperltypes;
 
-# <<<=== PSEUDO-EXPORTED VARIABLES AND FUNCTIONS ===>>>
+# <<<=== EXPORTED VARIABLES AND FUNCTIONS ===>>>
 
 our $DEBUG = 1;
 
-#=disable
-# TODO: replace Data::Dumper with pure-RPerl equivalent?
+# export Dumper(), carp(), croak(), and confess() to all who call 'use RPerl;'
 use Data::Dumper;
+use Carp;
+use Exporter 'import';
+our @EXPORT = qw(Dumper carp croak confess);
+
+# TODO: replace Data::Dumper with pure-RPerl equivalent?
+#=disable
 sub DUMPER
 {
 #	die ('in RPerl::DUMPER(), received undef argument, dying') if (not(defined($_[0])));

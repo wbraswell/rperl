@@ -2,17 +2,16 @@
 # [[[ HEADER ]]]
 use strict;
 use warnings;
-our $VERSION = 0.003_000;
-use Carp;
 use RPerl;
+our $VERSION = 0.004_000;
 
-# [[[ CRITIC, INCLUDES, CONSTANTS ]]]
+# [[[ CRITICS, INCLUDES ]]]
 # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)
 use RPerl::Inline;
 use Inline ( CPP => 'DATA', @RPerl::Inline::ARGS );
 
-# [[[ BODY ]]]
+# [[[ OPERATIONS ]]]
 my $myobject      = Foo::Bar::MyClass->new();
 my $string_retval = $myobject->mymethod('HOWDY INPUT!');
 print

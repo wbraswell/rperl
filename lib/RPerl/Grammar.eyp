@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_700;
+    our $VERSION = 0.000_702;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -9,7 +9,7 @@
 
 %strict                         # require all tokens to be declared, etc.
 %tree                           # automatically create AST
-%whites  /(\s*(\#.+)*\s*)+/     # Perl comments are treated as whitespace
+%whites  /(\s*(\#.+)*\s*)+/     # Perl comments are treated as whitespace  # NEED FIX: do not treat Critic as comments???
 
 %defaultaction {
     my $self = shift;
@@ -105,10 +105,11 @@
 %%
 
 CompileUnit:            Program | Module+ ;
-Program:                SHEBANG Header Include* Constant* Subroutine* Operation+ ;
+Program:                SHEBANG Header Critic* Include* Constant* Subroutine* Operation+ ;
 Module:                 Package | Class ;
-Package:                'package' WordScoped ';' Header Include* Constant* Subroutine+ '1;1;' ;
-Header:                 'use strict;' 'use warnings;' 'our $VERSION =' VERSION_NUMBER ';' 'use Carp;' 'use RPerl;';
+Package:                'package' WordScoped ';' Header Critic* Include* Constant* Subroutine+ '1;1;' ;
+Header:                 'use strict;' 'use warnings;' 'use RPerl;' 'our $VERSION =' VERSION_NUMBER ';';
+Critic:                 '## no critic qw(' WORD+ ')'
 Include:                'use' WordScoped ';' | 'use' WordScoped 'qw(' WORD+ ')' ';' ;
 Constant:               'use constant' WORD OP20_HASH_FATARROW TypeInner ConstantValue ';' ;
 ConstantValue:          LITERAL | '[' TypeInner? LITERAL (OP21_LIST_COMMA TypeInner? LITERAL)* ']' | 

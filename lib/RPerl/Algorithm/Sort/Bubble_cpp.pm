@@ -11,6 +11,10 @@ use RPerl::HelperFunctions_cpp;
 use RPerl::Algorithm::Sort_cpp;
 #use RPerl::Algorithm::Inefficient_cpp;  # MULTIPLE INHERITANCE NOT SUPPORTED BY Inline::CPP
 
+# START HERE: when 'use *_cpp;' is called, automatically check if loaded (in symtab?) and load if not
+# START HERE: when 'use *_cpp;' is called, automatically check if loaded (in symtab?) and load if not
+# START HERE: when 'use *_cpp;' is called, automatically check if loaded (in symtab?) and load if not
+
 our void__method $cpp_load = sub {
 
 #	if (defined($RPerl::Algorithm::Sort::Bubble_cpp::CPP_LOADED)) { RPerl::diag "in Bubble_cpp::cpp_load(), have \$RPerl::Algorithm::Sort::Bubble_cpp::CPP_LOADED = '" . $RPerl::Algorithm::Sort::Bubble_cpp::CPP_LOADED . "'\n"; }
