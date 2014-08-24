@@ -52,10 +52,10 @@ print q{in precompiled_test__sort.pl, have hash__ops() = '}
 print q{in precompiled_test__sort.pl, have hash__types() = '}
     . hash__types() . "'\n";
 
-print q{in precompiled_test__sort.pl, have bubblesort__ops() = '}
-    . bubblesort__ops() . "'\n";
-print q{in precompiled_test__sort.pl, have bubblesort__types() = '}
-    . bubblesort__types() . "'\n";
+print q{in precompiled_test__sort.pl, have RPerl__Algorithm__Sort__Bubble__ops() = '}
+    . RPerl__Algorithm__Sort__Bubble__ops() . "'\n";
+print q{in precompiled_test__sort.pl, have RPerl__Algorithm__Sort__Bubble__types() = '}
+    . RPerl__Algorithm__Sort__Bubble__types() . "'\n";
 
 # <<<=== SORT 1 ===>>>
 # <<<=== SORT 1 ===>>>

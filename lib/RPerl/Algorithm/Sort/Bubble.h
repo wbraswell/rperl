@@ -142,11 +142,11 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 
 // [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 # ifdef __PERL__TYPES
-SV* bubblesort__ops() { return(newSVpv("CPP", 3)); }
-SV* bubblesort__types() { return(newSVpv("PERL", 4)); }
+SV* RPerl__Algorithm__Sort__Bubble__ops() { return(newSVpv("CPP", 3)); }
+SV* RPerl__Algorithm__Sort__Bubble__types() { return(newSVpv("PERL", 4)); }
 # elif defined __CPP__TYPES
-string bubblesort__ops() { string retval = "CPP";  return(retval); }
-string bubblesort__types() { string retval = "CPP";  return(retval); }
+string RPerl__Algorithm__Sort__Bubble__ops() { string retval = "CPP";  return(retval); }
+string RPerl__Algorithm__Sort__Bubble__types() { string retval = "CPP";  return(retval); }
 # endif
 
 // [[[ TYPE TESTING ]]]

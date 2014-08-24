@@ -24,11 +24,11 @@ rperltypes::types_enable('CPP');
 use RPerl::Algorithm::Sort::Bubble_cpp;
 RPerl::Algorithm::Sort::Bubble_cpp::cpp_load(); # OR this
 
-#print q{in oo_test.pl, have bubblesort__OPS_TYPES_ID = '} . $RPerl::Algorithm::Sort::Bubble::bubblesort__OPS_TYPES_ID . "'\n";  # PERL/PERL ONLY
-print q{in oo_test.pl, have bubblesort__ops() = '}
-    . bubblesort__ops() . "'\n";
-print q{in oo_test.pl, have bubblesort__types() = '}
-    . bubblesort__types() . "'\n";
+#print q{in oo_test.pl, have RPerl__Algorithm__Sort__Bubble__OPS_TYPES_ID = '} . $RPerl::Algorithm::Sort::Bubble::RPerl__Algorithm__Sort__Bubble__OPS_TYPES_ID . "'\n";  # PERL/PERL ONLY
+print q{in oo_test.pl, have RPerl__Algorithm__Sort__Bubble__ops() = '}
+    . RPerl__Algorithm__Sort__Bubble__ops() . "'\n";
+print q{in oo_test.pl, have RPerl__Algorithm__Sort__Bubble__types() = '}
+    . RPerl__Algorithm__Sort__Bubble__types() . "'\n";
 
 # variable declarations
 my object $sorter;

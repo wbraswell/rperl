@@ -144,17 +144,17 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         );
         lives_and(
             sub {
-                is( bubblesort__ops(), 'PERL',
-                    q{bubblesort__ops() returns 'PERL'} );
+                is( RPerl__Algorithm__Sort__Bubble__ops(), 'PERL',
+                    q{RPerl__Algorithm__Sort__Bubble__ops() returns 'PERL'} );
             },
-            q{bubblesort__ops() lives}
+            q{RPerl__Algorithm__Sort__Bubble__ops() lives}
         );
         lives_and(
             sub {
-                is( bubblesort__types(), 'PERL',
-                    q{bubblesort__types() returns 'PERL'} );
+                is( RPerl__Algorithm__Sort__Bubble__types(), 'PERL',
+                    q{RPerl__Algorithm__Sort__Bubble__types() returns 'PERL'} );
             },
-            q{bubblesort__types() lives}
+            q{RPerl__Algorithm__Sort__Bubble__types() lives}
         );
     }
 
@@ -248,17 +248,17 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         );
         lives_and(
             sub {
-                is( bubblesort__ops(), 'CPP',
-                    q{bubblesort__ops() returns 'CPP'} );
+                is( RPerl__Algorithm__Sort__Bubble__ops(), 'CPP',
+                    q{RPerl__Algorithm__Sort__Bubble__ops() returns 'CPP'} );
             },
-            q{bubblesort__ops() lives}
+            q{RPerl__Algorithm__Sort__Bubble__ops() lives}
         );
         lives_and(
             sub {
-                is( bubblesort__types(), 'PERL',
-                    q{bubblesort__types() returns 'PERL'} );
+                is( RPerl__Algorithm__Sort__Bubble__types(), 'PERL',
+                    q{RPerl__Algorithm__Sort__Bubble__types() returns 'PERL'} );
             },
-            q{bubblesort__types() lives}
+            q{RPerl__Algorithm__Sort__Bubble__types() lives}
         );
     }
 
@@ -276,8 +276,8 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
             q{rperltypes::types_enable('CPP') lives}
         );
 
-        # force reload and relink
-        $RPerl::Algorithm::Sort::Bubble_cpp::CPP_LOADED = 0;
+        # force reload
+        delete $main::{'RPerl__Algorithm__Sort__Bubble__ops'};
 
         # Bubblesort: C++ use, load, link
         lives_ok(
@@ -341,17 +341,17 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         );
         lives_and(
             sub {
-                is( bubblesort__ops(), 'CPP',
-                    q{bubblesort__ops() returns 'CPP'} );
+                is( RPerl__Algorithm__Sort__Bubble__ops(), 'CPP',
+                    q{RPerl__Algorithm__Sort__Bubble__ops() returns 'CPP'} );
             },
-            q{bubblesort__ops() lives}
+            q{RPerl__Algorithm__Sort__Bubble__ops() lives}
         );
         lives_and(
             sub {
-                is( bubblesort__types(), 'CPP',
-                    q{bubblesort__types() returns 'CPP'} );
+                is( RPerl__Algorithm__Sort__Bubble__types(), 'CPP',
+                    q{RPerl__Algorithm__Sort__Bubble__types() returns 'CPP'} );
             },
-            q{bubblesort__types() lives}
+            q{RPerl__Algorithm__Sort__Bubble__types() lives}
         );
     }
 

@@ -27,9 +27,9 @@ our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allo
 
 # [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 # ERROR: THIS SECTION DOES NOT CURRENTLY APPEAR IN THE GRAMMAR
-our integer $bubblesort__OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0
-our string $bubblesort__ops = sub { return ('PERL'); };
-our string $bubblesort__types = sub { return ('PERL'); };
+our integer $RPerl__Algorithm__Sort__Bubble__OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0
+our string $RPerl__Algorithm__Sort__Bubble__ops = sub { return ('PERL'); };
+our string $RPerl__Algorithm__Sort__Bubble__types = sub { return ('PERL'); };
 
 # [[[ OO METHODS ]]]
 
