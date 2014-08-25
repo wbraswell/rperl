@@ -107,6 +107,7 @@
 CompileUnit:            Program | Module+ ;
 Program:                SHEBANG Header Critic* Include* Constant* Subroutine* Operation+ ;
 Module:                 Package | Class ;
+# NEED FIX: '1;1;' split into 2 lines by perltidy
 Package:                'package' WordScoped ';' Header Critic* Include* Constant* Subroutine+ '1;1;' ;
 Header:                 'use strict;' 'use warnings;' 'use RPerl;' 'our $VERSION =' VERSION_NUMBER ';';
 Critic:                 '## no critic qw(' WORD+ ')'
