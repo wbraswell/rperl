@@ -1,10 +1,11 @@
-////use strict;  use warnings;
+////# [[[ HEADER ]]]
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp 0.003_050
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp 0.004_010
 
-#include <RPerl/Algorithm/Sort/Bubble.h>  // -> HelperFunctions.cpp && Sort.cpp && NOT Inefficient.cpp (MULTIPLE INHERITANCE NOT SUPPORTED BY Inline::CPP)
+////# [[[ INCLUDES ]]]
+#include <RPerl/Algorithm/Sort/Bubble.h>  // -> HelperFunctions.cpp && Sort.cpp && NOT Inefficient.cpp (MULTIPLE OO INHERITANCE NOT SUPPORTED BY Inline::CPP)
 
 # ifdef __PERL__TYPES
 
@@ -12,8 +13,6 @@ using std::cout;  using std::cerr;
 // [[[<<< BEGIN PERL TYPES >>>]]]
 // [[[<<< BEGIN PERL TYPES >>>]]]
 
-////# [[[ OO METHODS ]]]
-////# [[[ OO METHODS ]]]
 ////# [[[ OO METHODS ]]]
 
 ////# call out to sort integer__data, return nothing
@@ -39,9 +38,19 @@ void RPerl__Algorithm__Sort__Bubble::number__sort()
 	SvREFCNT_dec(this->number__data);
 }
 
-////# [[[ PROCEDURAL SUBROUTINES ]]]
-////# [[[ PROCEDURAL SUBROUTINES ]]]
-////# [[[ PROCEDURAL SUBROUTINES ]]]
+// OO INHERITANCE TESTING
+
+void RPerl__Algorithm__Sort__Bubble::inherited__Bubble(SV* person)
+{
+    cout << "in CPPOPS_PERLTYPES Bubble->inherited__Bubble(), received this = '" << this << "' and person = '" << SvPV_nolen(person) << "', FRIED\n";
+}
+
+void RPerl__Algorithm__Sort__Bubble::inherited(SV* person)
+{
+    cout << "in CPPOPS_PERLTYPES Bubble->inherited(), received this = '" << this << "' and person = '" << SvPV_nolen(person) << "', ILLOGICAL\n";
+}
+
+////# [[[ SUBROUTINES ]]]
 
 ////# original algorithm: comparison-based and stable [O(n**2) average time, O(1) worst-case extra space]
 ////# sort data, return sorted data
@@ -210,9 +219,22 @@ SV* number__bubblesort(SV* number__data)
 	return(number__data);
 }
 
-// [[[ TYPE TESTING ]]]
-// [[[ TYPE TESTING ]]]
-// [[[ TYPE TESTING ]]]
+// OO INHERITANCE TESTING, CONTINUED
+
+SV* uninherited__Bubble(SV* person)
+{
+    cout << "in CPPOPS_PERLTYPES Bubble::uninherited__Bubble(), received person = '" << SvPV_nolen(person) << "', MITOCHONDRIAL\n";
+    return(newSVpv("Bubble::uninherited__Bubble() RULES! CPPOPS_PERLTYPES", 0));
+}
+
+// DEV NOTE, CORRELATION #04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
+SV* uninherited(SV* person)
+{
+    cout << "in CPPOPS_PERLTYPES Bubble::uninherited(), received person = '" << SvPV_nolen(person) << "', TETRAHEDRON\n";
+    return(newSVpv("Bubble::uninherited() RULES! CPPOPS_PERLTYPES", 0));
+}
+
+// TYPE TESTING
 
 SV* integer__bubblesort__typetest0(SV* lucky_integers)
 {
@@ -255,33 +277,6 @@ SV* number__bubblesort__typetest0(SV* lucky_numbers)
 	return(newSVpvf("%s%s", SvPV_nolen(number__array_ref__stringify(number__bubblesort(lucky_numbers))), "CPPOPS_PERLTYPES"));
 }
 
-// [[[ INHERITANCE TESTING ]]]
-// [[[ INHERITANCE TESTING ]]]
-// [[[ INHERITANCE TESTING ]]]
-
-void RPerl__Algorithm__Sort__Bubble::inherited__Bubble(SV* person)
-{
-	cout << "in CPPOPS_PERLTYPES Bubble->inherited__Bubble(), received this = '" << this << "' and person = '" << SvPV_nolen(person) << "', FRIED\n";
-}
-
-void RPerl__Algorithm__Sort__Bubble::inherited(SV* person)
-{
-	cout << "in CPPOPS_PERLTYPES Bubble->inherited(), received this = '" << this << "' and person = '" << SvPV_nolen(person) << "', ILLOGICAL\n";
-}
-
-SV* uninherited__Bubble(SV* person)
-{
-	cout << "in CPPOPS_PERLTYPES Bubble::uninherited__Bubble(), received person = '" << SvPV_nolen(person) << "', MITOCHONDRIAL\n";
-	return(newSVpv("Bubble::uninherited__Bubble() RULES! CPPOPS_PERLTYPES", 0));
-}
-
-// DEV NOTE, CORRELATION #04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
-SV* uninherited(SV* person)
-{
-	cout << "in CPPOPS_PERLTYPES Bubble::uninherited(), received person = '" << SvPV_nolen(person) << "', TETRAHEDRON\n";
-	return(newSVpv("Bubble::uninherited() RULES! CPPOPS_PERLTYPES", 0));
-}
-
 // [[[<<< END PERL TYPES >>>]]]
 // [[[<<< END PERL TYPES >>>]]]
 // [[[<<< END PERL TYPES >>>]]]
@@ -292,8 +287,6 @@ SV* uninherited(SV* person)
 // [[[<<< BEGIN CPP TYPES >>>]]]
 // [[[<<< BEGIN CPP TYPES >>>]]]
 
-////# [[[ OO METHODS ]]]
-////# [[[ OO METHODS ]]]
 ////# [[[ OO METHODS ]]]
 
 ////# call out to sort integer__data, return nothing
@@ -315,9 +308,19 @@ void RPerl__Algorithm__Sort__Bubble::number__sort()
 	this->number__data = number__bubblesort(this->number__data);
 }
 
-////# [[[ PROCEDURAL SUBROUTINES ]]]
-////# [[[ PROCEDURAL SUBROUTINES ]]]
-////# [[[ PROCEDURAL SUBROUTINES ]]]
+// OO INHERITANCE TESTING
+
+void RPerl__Algorithm__Sort__Bubble::inherited__Bubble(string person)
+{
+    cout << "in CPPOPS_CPPTYPES Bubble->inherited__Bubble(), received this = '" << this << "' and person = '" << person << "', FRIED\n";
+}
+
+void RPerl__Algorithm__Sort__Bubble::inherited(string person)
+{
+    cout << "in CPPOPS_CPPTYPES Bubble->inherited(), received this = '" << this << "' and person = '" << person << "', ILLOGICAL\n";
+}
+
+////# [[[ SUBROUTINES ]]]
 
 ////# original algorithm: comparison-based and stable [O(n**2) average time, O(1) worst-case extra space]
 ////# sort integer__data, return sorted integer__data
@@ -448,49 +451,7 @@ number__array_ref number__bubblesort(number__array_ref number__data)
 	return(number__data);
 }
 
-// [[[ TYPE TESTING ]]]
-// [[[ TYPE TESTING ]]]
-// [[[ TYPE TESTING ]]]
-
-string integer__bubblesort__typetest0(integer__array_ref lucky_integers)
-{
-	/*
-	integer how_lucky = lucky_integers.size();
-	integer i;
-	for (i = 0;  i < how_lucky;  ++i)
-	{
-		fprintf(stderr, "in CPPOPS_CPPTYPES integer__bubblesort__typetest0(), have lucky_integer %d/%d = %d, BATBAR\n", i, (how_lucky - 1), lucky_integers[i]);
-	}
-	*/
-	return(integer__array_ref__stringify(integer__bubblesort(lucky_integers)) + "CPPOPS_CPPTYPES");
-}
-
-string number__bubblesort__typetest0(number__array_ref lucky_numbers)
-{
-	/*
-	integer how_lucky = lucky_numbers.size();
-	integer i;
-	for (i = 0;  i < how_lucky;  ++i)
-	{
-		fprintf(stderr, "in CPPOPS_CPPTYPES number__bubblesort__typetest0(), have lucky_number %d/%d = %Lf, BATBAR\n", i, (how_lucky - 1), lucky_numbers[i]);
-	}
-	*/
-	return(number__array_ref__stringify(number__bubblesort(lucky_numbers)) + "CPPOPS_CPPTYPES");
-}
-
-// [[[ INHERITANCE TESTING ]]]
-// [[[ INHERITANCE TESTING ]]]
-// [[[ INHERITANCE TESTING ]]]
-
-void RPerl__Algorithm__Sort__Bubble::inherited__Bubble(string person)
-{
-	cout << "in CPPOPS_CPPTYPES Bubble->inherited__Bubble(), received this = '" << this << "' and person = '" << person << "', FRIED\n";
-}
-
-void RPerl__Algorithm__Sort__Bubble::inherited(string person)
-{
-	cout << "in CPPOPS_CPPTYPES Bubble->inherited(), received this = '" << this << "' and person = '" << person << "', ILLOGICAL\n";
-}
+// OO INHERITANCE TESTING, CONTINUED
 
 string uninherited__Bubble(string person) {
 	cout << "in CPPOPS_CPPTYPES Bubble::uninherited__Bubble(), received person = '" << person << "', MITOCHONDRIAL\n";
@@ -502,6 +463,34 @@ string uninherited(string person)
 {
 	cout << "in CPPOPS_CPPTYPES Bubble::uninherited(), received person = '" << person << "', TETRAHEDRON\n";
 	return((string)"Bubble::uninherited() RULES! CPPOPS_CPPTYPES");
+}
+
+// TYPE TESTING
+
+string integer__bubblesort__typetest0(integer__array_ref lucky_integers)
+{
+    /*
+    integer how_lucky = lucky_integers.size();
+    integer i;
+    for (i = 0;  i < how_lucky;  ++i)
+    {
+        fprintf(stderr, "in CPPOPS_CPPTYPES integer__bubblesort__typetest0(), have lucky_integer %d/%d = %d, BATBAR\n", i, (how_lucky - 1), lucky_integers[i]);
+    }
+    */
+    return(integer__array_ref__stringify(integer__bubblesort(lucky_integers)) + "CPPOPS_CPPTYPES");
+}
+
+string number__bubblesort__typetest0(number__array_ref lucky_numbers)
+{
+    /*
+    integer how_lucky = lucky_numbers.size();
+    integer i;
+    for (i = 0;  i < how_lucky;  ++i)
+    {
+        fprintf(stderr, "in CPPOPS_CPPTYPES number__bubblesort__typetest0(), have lucky_number %d/%d = %Lf, BATBAR\n", i, (how_lucky - 1), lucky_numbers[i]);
+    }
+    */
+    return(number__array_ref__stringify(number__bubblesort(lucky_numbers)) + "CPPOPS_CPPTYPES");
 }
 
 // [[[<<< END CPP TYPES >>>]]]

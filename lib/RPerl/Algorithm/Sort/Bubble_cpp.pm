@@ -3,11 +3,7 @@ package RPerl::Algorithm::Sort::Bubble_cpp;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_001;
-
-# START HERE: use as template for *_cpp.pm
-# START HERE: use as template for *_cpp.pm
-# START HERE: use as template for *_cpp.pm
+our $VERSION = 0.004_010;
 
 # [[[ CRITICS ]]]
 # SYSTEM DEFAULT 1: allow eval() for Inline::CPP

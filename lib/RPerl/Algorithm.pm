@@ -1,18 +1,21 @@
-# [[[ PACKAGE, HEADER ]]]
+# START HERE: use this and Bubble* as template for all hand-compiled system files
+# START HERE: use this and Bubble* as template for all hand-compiled system files
+# START HERE: use this and Bubble* as template for all hand-compiled system files
+
+# [[[ HEADER ]]]
 package RPerl::Algorithm;
 use strict;
 use warnings;
-our $VERSION = 0.000_010;
-use Carp;
 use RPerl;
+our $VERSION = 0.004_010;
 
-# [[[ CRITIC, PARENT INHERITANCE, INCLUDES, CONSTANTS, OO PROPERTIES ]]]
+# [[[ OO INHERITANCE, INCLUDES ]]]
 use parent ('RPerl::CompileUnit::Module::Class'); # RPerl::CompileUnit::Module::Class is the base class of all RPerl classes
-use RPerl::CompileUnit::Module::Class;
+use RPerl::CompileUnit::Module::Class;  # so this class Algorithm doesn't inherit from any other classes (not counting base class)
 
 # [[[ OO METHODS ]]]
 
-# INHERITANCE TESTING
+# OO INHERITANCE TESTING
 our void__method $inherited__Algorithm = sub {
     ( my object $self, my string $person) = @_;
     RPerl::diag
@@ -28,8 +31,9 @@ our void__method $inherited = sub {
 1;
 1;    # CODE SEPARATOR: methods above, subroutines below
 
-# [[[ PROCEDURAL SUBROUTINES ]]]
+# [[[ SUBROUTINES ]]]
 
+# OO INHERITANCE TESTING, CONTINUED
 our string $uninherited__Algorithm = sub {
     ( my string $person) = @_;
     RPerl::diag

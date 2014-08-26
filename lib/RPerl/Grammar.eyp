@@ -119,7 +119,7 @@ Subroutine:             'our' Type VARIABLE_SYMBOL '= sub {' SubroutineArguments
 SubroutineArguments:    '( my' Type VARIABLE_SYMBOL (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ArgumentCheck* ;
 #ArgumentCheck:          '::' CHECK_OR_CHECKTRACE '(' Expression (OP21_LIST_COMMA Expression OP21_LIST_COMMA Expression)? ')' ';' ;
 ArgumentCheck:          CHECK_OR_CHECKTRACE '(' Expression (OP21_LIST_COMMA Expression OP21_LIST_COMMA Expression)? ')' ';' ;
-Class:                  'package' WordScoped ';' Header 'use parent qw(' WordScoped+ ')' ';' Include* Constant* Properties Method* '1;1;' (Subroutine+ '1;1;')? ;
+Class:                  'package' WordScoped ';' Header 'use parent qw(' WordScoped+ ')' ';' Critic* Include* Constant* Properties Method* '1;1;' (Subroutine+ '1;1;')? ;
 Properties:             'our %properties = (' HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* ')' ';' | 'our %properties = (' ')' ';';
 Method:                 'our' Type VARIABLE_SYMBOL '= sub {' MethodArguments? Operation+ '}' ';' ;
 MethodArguments:        '( my' TYPE_CLASS_OR_SELF (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ArgumentCheck* ;
