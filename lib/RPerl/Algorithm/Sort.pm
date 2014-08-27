@@ -1,8 +1,51 @@
-use strict;  use warnings;
+# [[[ HEADER ]]]
 package RPerl::Algorithm::Sort;
+use strict;
+use warnings;
+use RPerl;
+our $VERSION = 0.004_010;
 
+# [[[ CRITICS, OO INHERITANCE, INCLUDES ]]]
+# USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)
 use parent ('RPerl::Algorithm');
 use RPerl::Algorithm;
+
+
+
+
+# [[[ OO METHODS ]]]
+
+
+# OO INHERITANCE TESTING
+
+
+1, 1;    # CODE SEPARATOR: methods above, subroutines below
+
+# [[[ SUBROUTINES ]]]
+
+
+# OO INHERITANCE TESTING, CONTINUED
+
+
+# <<< OPERATIONS & DATA TYPES REPORTING >>>
+our integer $RPerl__Algorithm__Sort__OPS_TYPES_ID
+    = sub { return 0; };    # PERLOPS_PERLTYPES is 0
+our string $RPerl__Algorithm__Sort__ops   = sub { return 'PERL'; };
+our string $RPerl__Algorithm__Sort__types = sub { return 'PERL'; };
+
+1, 1;                          # CODE SEPARATOR: end of class
+
+
+
+
+
+
+
+
+
+
+
 
 # [[[ INHERITANCE TESTING ]]]
 our void__method $inherited__Sort = sub { (my object $self, my string $person) = @_;  RPerl::diag "in Perl Sort->inherited__Sort(), have \$self = '$self' and \$person = '$person', FISH\n"; };

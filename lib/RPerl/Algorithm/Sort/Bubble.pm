@@ -2,9 +2,8 @@
 package RPerl::Algorithm::Sort::Bubble;
 use strict;
 use warnings;
-our $VERSION = 0.004_010;
-use Carp;
 use RPerl;
+our $VERSION = 0.004_010;
 
 # [[[ CRITICS, OO INHERITANCE, INCLUDES ]]]
 # USER DEFAULT 1: allow numeric values and print operator
@@ -56,8 +55,7 @@ our void__method $inherited = sub {
         "in PERLOPS_PERLTYPES Bubble->inherited(), received \$self = '$self' and \$person = '$person', ILLOGICAL\n";
 };
 
-1;
-1;    # CODE SEPARATOR: methods above, subroutines below
+1, 1;    # CODE SEPARATOR: methods above, subroutines below
 
 # [[[ SUBROUTINES ]]]
 
@@ -222,5 +220,4 @@ our integer $RPerl__Algorithm__Sort__Bubble__OPS_TYPES_ID
 our string $RPerl__Algorithm__Sort__Bubble__ops   = sub { return 'PERL'; };
 our string $RPerl__Algorithm__Sort__Bubble__types = sub { return 'PERL'; };
 
-1;
-1;                          # CODE SEPARATOR: end of package or class
+1, 1;                       # CODE SEPARATOR: end of class
