@@ -4,7 +4,7 @@ package RPerl::CompileUnit::Module::ClassTemplate;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_010;
+our $VERSION = 0.000_020;
 
 # [[[ OO INHERITANCE ]]]
 # <<< CHANGE ME: leave as base class for no inheritance, or replace with real parent package name >>>
@@ -44,24 +44,43 @@ use constant EINSTEIN => my scalar__hash_ref $TYPED_EINSTEIN = {
 };
 
 # [[[ OO PROPERTIES ]]]
-
-# INSERT 00 PROPERTIES
-# INSERT 00 PROPERTIES
-# INSERT 00 PROPERTIES
+# <<< CHANGE ME: replace with real property name(s) & data >>>
+our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
+    plugh => my integer $TYPED_plugh            = 23,
+    xyzzy => my string $TYPED_xyzzy             = 'twenty-three',
+    thud => my integer__array_ref $TYPED_thud = [ 2, 4, 6, 8 ],
+    yyz => my number__hash_ref $TYPED_yyz   = { a => 3.1, b => 6.2, c => 9.3 }
+);
 
 # [[[ OO METHODS ]]]
 
-# INSERT OO METHOD
-# INSERT OO METHOD
-# INSERT OO METHOD
+# <<< CHANGE ME: delete for no methods, or replace with real method(s) >>>
+our void__method $quux = sub {
+    ( my object $self) = @_;
+    $self->{plugh} = $self->{plugh} * 2;
+};
+
+our string__method $corge = sub {
+    ( my object $self) = @_;
+    return $self->{xyzzy} x 3;
+};
 
 1, 1;    # CODE SEPARATOR: methods above, subroutines below
 
 # [[[ SUBROUTINES ]]]
 
-# INSERT SUBROUTINE
-# INSERT SUBROUTINE
-# INSERT SUBROUTINE
+# <<< CHANGE ME: delete for no subroutines, or replace with real subroutine(s) >>>
+our void $grault = sub {
+    ( my integer $grault_input ) = @_;
+    print '$grault_input ** 2 = ' . ( $grault_input**2 ) . "\n";
+};
+
+our number__array_ref $garply = sub {
+    ( my integer $garply_input ) = @_;
+    my number__array_ref $garply_output
+        = [ $garply_input * 1.1, $garply_input * 2.2, $garply_input * 3.3 ];
+    return $garply_output;
+};
 
 # NEED DETERMINE: auto-generate ops & types reporting below???
 # NEED DETERMINE: auto-generate ops & types reporting below???
