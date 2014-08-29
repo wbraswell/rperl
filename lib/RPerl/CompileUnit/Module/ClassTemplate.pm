@@ -4,7 +4,7 @@ package RPerl::CompileUnit::Module::ClassTemplate;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_020;
+our $VERSION = 0.000_021;
 
 # [[[ OO INHERITANCE ]]]
 # <<< CHANGE ME: leave as base class for no inheritance, or replace with real parent package name >>>
@@ -15,6 +15,9 @@ use RPerl::CompileUnit::Module::Class;
 # <<< CHANGE ME: delete unused critics >>>
 # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)
+
+# SYSTEM DEFAULT 1: allow eval() for Inline::CPP
+## no critic qw(ProhibitStringyEval RequireCheckingReturnValueOfEval ProhibitPunctuationVars)
 
 # INSERT ALL CRITICS
 # INSERT ALL CRITICS
