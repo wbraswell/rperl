@@ -2,15 +2,8 @@
 ## no critic qw(ProhibitMagicNumbers ProhibitUnreachableCode)  ## RPERL allow numeric test values, allow unreachable test code
 use strict;
 use warnings;
-our $VERSION = 0.004_000;
-use Carp;
-
-# [[[ SETUP ]]]
-
-# RPERL DRIVER BOILERPLATE
-BEGIN { package main;  our $RPERL_INCLUDE_PATH = 'blib/lib'; }  # NEED REMOVE hard-coded path
-BEGIN { use RPerl; use parent ('RPerl'); $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH; }    # RPerl system files
-BEGIN { use Data::Dumper;  our $AUTOLOAD;  sub AUTOLOAD { croak("AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n" . Dumper(\@_) . ', croaking'); } } ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  ## RPERL SYSTEM allow autoload  ## RPERL SYSTEM allow read-only @_
+use RPerl;
+our $VERSION = 0.004_001;
 
 # UNCOMMENT TO ENABLE PERL TYPES FOR C++ OPS
 #rperltypes::types_enable('PERL');

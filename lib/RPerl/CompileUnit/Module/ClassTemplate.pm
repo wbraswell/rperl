@@ -4,20 +4,26 @@ package RPerl::CompileUnit::Module::ClassTemplate;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_021;
+our $VERSION = 0.000_022;
 
 # [[[ OO INHERITANCE ]]]
 # <<< CHANGE ME: leave as base class for no inheritance, or replace with real parent package name >>>
 use parent qw(RPerl::CompileUnit::Module::Class);
 use RPerl::CompileUnit::Module::Class;
 
+# START HERE: continue sorting through all critics
+# START HERE: continue sorting through all critics
+# START HERE: continue sorting through all critics
+
 # [[[ CRITICS ]]]
 # <<< CHANGE ME: delete unused critics >>>
-# USER DEFAULT 1: allow numeric values and print operator
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
 
-# SYSTEM DEFAULT 1: allow eval() for Inline::CPP
-## no critic qw(ProhibitStringyEval RequireCheckingReturnValueOfEval ProhibitPunctuationVars)
+## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd PodSpelling) # DEVELOPER DEFAULT 1: allow unreachable & POD-commented code
+## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  ## DEVELOPER DEFAULT 2: allow string test values
+
+## no critic qw(ProhibitStringyEval RequireCheckingReturnValueOfEval ProhibitPunctuationVars) # SYSTEM DEFAULT 1: allow eval() for Inline::CPP
+## no critic qw(RequireInterpolationOfMetachars)  ## SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
 
 # INSERT ALL CRITICS
 # INSERT ALL CRITICS
