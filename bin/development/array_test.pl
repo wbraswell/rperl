@@ -1,9 +1,11 @@
 #!/usr/bin/perl
-## no critic qw(ProhibitMagicNumbers ProhibitUnreachableCode)  ## RPERL allow numeric test values, allow unreachable test code
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_001;
+our $VERSION = 0.004_002;
+
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd PodSpelling) # DEVELOPER DEFAULT 1: allow unreachable & POD-commented code
 
 # UNCOMMENT TO ENABLE PERL TYPES FOR C++ OPS
 #rperltypes::types_enable('PERL');
@@ -12,16 +14,33 @@ our $VERSION = 0.004_001;
 rperltypes::types_enable('CPP');
 
 # UNCOMMENT TO ENABLE C++ OPS
-use RPerl::DataStructure::Array_cpp;  RPerl::DataStructure::Array_cpp::cpp_load();
+use RPerl::DataStructure::Array_cpp;
+RPerl::DataStructure::Array_cpp::cpp_load();
 
-print STDERR q{in array_test.pl, have integer__ops() = '} . integer__ops() . "'\n" or croak();
-print STDERR q{in array_test.pl, have integer__types() = '} . integer__types() . "'\n" or croak();
-print STDERR q{in array_test.pl, have number__ops() = '} . number__ops() . "'\n" or croak();
-print STDERR q{in array_test.pl, have number__types() = '} . number__types() . "'\n" or croak();
-print STDERR q{in array_test.pl, have string__ops() = '} . string__ops() . "'\n" or croak();
-print STDERR q{in array_test.pl, have string__types() = '} . string__types() . "'\n" or croak();
-print STDERR q{in array_test.pl, have array__ops() = '} . array__ops() . "'\n" or croak();
-print STDERR q{in array_test.pl, have array__types() = '} . array__types() . "'\n" or croak();
+print STDERR q{in array_test.pl, have integer__ops() = '}
+    . integer__ops() . "'\n"
+    or croak();
+print STDERR q{in array_test.pl, have integer__types() = '}
+    . integer__types() . "'\n"
+    or croak();
+print STDERR q{in array_test.pl, have number__ops() = '}
+    . number__ops() . "'\n"
+    or croak();
+print STDERR q{in array_test.pl, have number__types() = '}
+    . number__types() . "'\n"
+    or croak();
+print STDERR q{in array_test.pl, have string__ops() = '}
+    . string__ops() . "'\n"
+    or croak();
+print STDERR q{in array_test.pl, have string__types() = '}
+    . string__types() . "'\n"
+    or croak();
+print STDERR q{in array_test.pl, have array__ops() = '}
+    . array__ops() . "'\n"
+    or croak();
+print STDERR q{in array_test.pl, have array__types() = '}
+    . array__types() . "'\n"
+    or croak();
 
 # variable declarations
 my string $retval_stringify;
@@ -32,7 +51,7 @@ my string__array_ref $retval_jeffys;
 # loop to test for memory leaks
 my const_integer $i_MAX = 0;
 for my integer $i ( 0 .. $i_MAX ) {
-	print STDERR "in array_test.pl, top of for() loop $i/$i_MAX\n" or croak();
+    print STDERR "in array_test.pl, top of for() loop $i/$i_MAX\n" or croak();
 
     # [[[ INTEGER TESTS ]]]
 
@@ -47,9 +66,12 @@ for my integer $i ( 0 .. $i_MAX ) {
 #	$retval_stringify = integer__array_ref__stringify([2, 2112, 42, '23', -877, -33, 1701]);  # TIVAVRV12; error EIVAVRV03
 #	$retval_stringify = integer__array_ref__stringify([2, 2112, 42, [23], -877, -33, 1701]);  # TIVAVRV13; error EIVAVRV03
 #	$retval_stringify = integer__array_ref__stringify([2, 2112, 42, {a_subkey => 23}, -877, -33, 1701]);  # TIVAVRV14; error EIVAVRV03
-	$retval_stringify = integer__array_ref__stringify([23]);  # TIVAVRV20
+    $retval_stringify = integer__array_ref__stringify( [23] );    # TIVAVRV20
+
 #	$retval_stringify = integer__array_ref__stringify([2, 2112, 42, 23, -877, -33, 1701]);  # TIVAVRV21
-	print STDERR "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
+    print STDERR
+        "in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n"
+        or croak();
 
 #	$retval_stringify = integer__array_ref__typetest0();  # TIVAVRV30; error PERLOPS EIVAVRV00, CPPOPS "Usage: main::integer__array_ref__typetest0(lucky_integers)"
 #	$retval_stringify = integer__array_ref__typetest0(2);  # TIVAVRV31; error EIVAVRV01
@@ -121,7 +143,7 @@ for my integer $i ( 0 .. $i_MAX ) {
 #	$retval_jeffys = string__array_ref__typetest1(5);  # TPVAVRV40
 #	print STDERR "in array_test.pl $i/$i_MAX, have \$retval_jeffys = \n" . Dumper($retval_jeffys) . "\n" or croak();
 
-croak('Done for now, croaking');
+    croak('Done for now, croaking');
 }
 
 #croak('Done for now, croaking');
