@@ -1,9 +1,11 @@
 #!/usr/bin/perl
-## no critic qw(ProhibitMagicNumbers ProhibitUnreachableCode)  ## RPERL allow numeric test values, allow unreachable test code
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_000;
+our $VERSION = 0.004_001;
+
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd PodSpelling) # DEVELOPER DEFAULT 1: allow unreachable & POD-commented code
 
 # UNCOMMENT TO ENABLE PERL TYPES FOR C++ OPS
 #rperltypes::types_enable('PERL');
