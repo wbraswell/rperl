@@ -3,13 +3,11 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_010;
+our $VERSION = 0.000_011;
 
 # [[[ CRITICS, INCLUDES ]]]
-# USER DEFAULT 1: allow numeric values and print operator
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)
-# USER DEFAULT 2: allow unreachable & POD-commented code
-## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd PodSpelling)
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd PodSpelling) # DEVELOPER DEFAULT 1: allow unreachable & POD-commented code
 
 # [[[ OPERATIONS ]]]
 
