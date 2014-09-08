@@ -157,7 +157,7 @@ for my integer $i ( 0 .. $i_MAX ) {
 
     # [[[ NUMBER TESTS ]]]
 
-## no critic qw(PodSpelling) # PERL CRITIC ISSUE #588: PodSpelling & RequireTidyCode conflict  https://github.com/Perl-Critic/Perl-Critic/issues/588
+## no critic qw(PodSpelling)  # SYSTEM SPECIAL 5: PERL CRITIC ISSUE #588, PodSpelling & RequireTidyCode conflict  https://github.com/Perl-Critic/Perl-Critic/issues/588
 =disable_SORT_TESTS
 #	$number__data = undef;  # TNVALSOBU01; error ENVAVRV00
 #	$number__data = 2;  # TNVALSOBU02; error ENVAVRV01
@@ -212,7 +212,7 @@ for my integer $i ( 0 .. $i_MAX ) {
 
 croak('Done for now, croaking');
 
-## no critic qw(PodSpelling) # PERL CRITIC ISSUE #588: PodSpelling & RequireTidyCode conflict  https://github.com/Perl-Critic/Perl-Critic/issues/588
+## no critic qw(PodSpelling)  # SYSTEM SPECIAL 5: PERL CRITIC ISSUE #588, PodSpelling & RequireTidyCode conflict  https://github.com/Perl-Critic/Perl-Critic/issues/588
 =disable
 # <<<=== SORT 2 ===>>>
 # <<<=== SORT 2 ===>>>

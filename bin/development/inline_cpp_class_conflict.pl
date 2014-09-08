@@ -1,4 +1,4 @@
-package Ball;    ## no critic (package)  # INLINE::CPP 1
+package Ball;    ## no critic (package)  # SYSTEM SPECIAL 4: originally from Inline::CPP
 
 use strict;
 use warnings;

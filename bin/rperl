@@ -1,34 +1,11 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.002_000;
-use Carp;
 use RPerl;
+our $VERSION = 0.002_001;
 
-# [[[ SETUP ]]]
-## no critic qw(ProhibitAutoloading RequireArgUnpacking)  ## RPERL SYSTEM allow autoload  ## RPERL SYSTEM allow read-only @_
-## no critic qw(ProhibitBooleanGrep)  ## RPERL SYSTEM allow grep through $modes_supported
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  ## RPERL USER DEFAULT optionally allow numeric values, print operator
-# RPERL DRIVER BOILERPLATE
-BEGIN { package main; our $RPERL_INCLUDE_PATH = 'blib/lib'; } # NEED REMOVE hard-coded path
-
-BEGIN {
-    #    use RPerl;   # NEED FIX: moved into proper RPerl header above
-    use parent ('RPerl');
-    $RPerl::INCLUDE_PATH = $main::RPERL_INCLUDE_PATH;
-}                                                        # RPerl system files
-
-BEGIN {
-    use Data::Dumper;
-    our $AUTOLOAD;
-
-    sub AUTOLOAD {
-        croak(
-            "AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n"
-                . Dumper( \@_ )
-                . ', croaking' );
-    }
-}
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(ProhibitBooleanGrep)  # SYSTEM SPECIAL 1: allow grep
 
 use RPerl::Parser;    # includes PPI, Perl::Critic
 use RPerl::Translator;
@@ -55,7 +32,7 @@ GetOptions(
     )
     or croak(
     "\nERROR EARG00: Failure processing command line arguments,\ncroaking");
-if ( not( defined $rperl_input_file_name ) ) { ## no critic qw(ProhibitCascadingIfElse)  # RPERL SYSTEM allow argument handling logic
+if ( not( defined $rperl_input_file_name ) ) { ## no critic qw(ProhibitCascadingIfElse)  # SYSTEM DEFAULT 3: allow argument-handling logic
     croak(
         "\nERROR EARG01: No RPerl source code input file specified,\ncroaking"
     );
@@ -103,7 +80,7 @@ foreach my string $mode_key ( keys %{$mode} ) {
                 . "),\ncroaking" );
     }
 }
-foreach my string $mode_default_key ( keys %{$mode_default} ) { ## no critic qw(ProhibitPostfixControls)  # PERLCRITIC ERROR: not postfix foreach!
+foreach my string $mode_default_key ( keys %{$mode_default} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC UNFILED ISSUE, not postfix foreach
     if ( not( exists $mode->{$mode_default_key} ) ) {
         $mode->{$mode_default_key} = $mode_default->{$mode_default_key};
     }
