@@ -27,7 +27,7 @@ sub DUMPER
 {
 #	die ('in RPerl::DUMPER(), received undef argument, dying') if (not(defined($_[0])));
 	return '**UNDEF**' if (not(defined($_[0])));
-	return $_[0]->DUMPER() if (defined(eval('$' . ref($_[0]) . '::DUMPER')));  ## no critic
+	return $_[0]->DUMPER() if (defined(eval('$' . ref($_[0]) . '::DUMPER')));
 	return Dumper(@_);
 }
 #=cut

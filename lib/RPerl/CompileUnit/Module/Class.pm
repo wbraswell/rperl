@@ -1,7 +1,7 @@
 package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
-our $VERSION = 0.011_000;
+our $VERSION = 0.011_001;
 use Carp;
 use Data::Dumper;  # DEV NOTE: don't depend on RPerl::DUMPER yet, although the *stringify() subroutines are coming along...
 
@@ -28,7 +28,7 @@ INIT
 			$module_file_long = $INC{$module_file_short};			
 #			print {*STDERR} "in Class.pm INIT block, have \$module_file_long = '$module_file_long'\n";
 			
-			open MODULE_FILE, "<", $module_file_long or die $!;  ## no critic
+			open MODULE_FILE, "<", $module_file_long or die $!;
 			while (my $module_file_line = <MODULE_FILE>)
 			{
 				chomp $module_file_line;
@@ -62,7 +62,7 @@ INIT
 				{
 					$package_name = $1;
 #					print {*STDERR} "in Class.pm INIT block, have \$package name = '$package_name'\n";
-					%class_properties = eval("\%$package_name\:\:properties");  ## no critic
+					%class_properties = eval("\%$package_name\:\:properties");
 					
 					foreach my $class_property_name (sort(keys %class_properties))
 					{
@@ -70,12 +70,12 @@ INIT
                         # DEV NOTE, CORRELATION #03: avoid re-defining class accessor/mutator methods; so far only triggered by RPerl::CodeBlock::Subroutine
                         # becuase it has a special BEGIN{} block with multiple package names including it's own package name
                         if (not( eval("defined *\{$package_name\:\:get_$class_property_name\}") ) ) {
-                            eval("\*\{$package_name\:\:get_$class_property_name\} \= sub \{ return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;");  ## no critic
-                            #eval("\*\{$package_name\:\:get_$class_property_name\} \= sub \{ print {*STDERR} \"IN POST\-INIT\, accessor MODE $package_name\:\:get_$class_property_name\\n\"\; return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;");  ## no critic
+                            eval("\*\{$package_name\:\:get_$class_property_name\} \= sub \{ return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;");
+                            #eval("\*\{$package_name\:\:get_$class_property_name\} \= sub \{ print {*STDERR} \"IN POST\-INIT\, accessor MODE $package_name\:\:get_$class_property_name\\n\"\; return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;");
                         }
                         if (not( eval("defined *\{$package_name\:\:set_$class_property_name\}") ) ) {
-                            eval("\*\{$package_name\:\:set_$class_property_name\} \= sub \{ \$\_\[0\]\-\>\{$class_property_name\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;");  ## no critic
-                            #eval("\*\{$package_name\:\:set_$class_property_name\} \= sub \{ print {*STDERR} \"IN POST\-INIT\, mutator MODE $package_name\:\:set_$class_property_name\\n\"\; \$\_\[0\]\-\>\{$class_property_name\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;");  ## no critic
+                            eval("\*\{$package_name\:\:set_$class_property_name\} \= sub \{ \$\_\[0\]\-\>\{$class_property_name\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;");
+                            #eval("\*\{$package_name\:\:set_$class_property_name\} \= sub \{ print {*STDERR} \"IN POST\-INIT\, mutator MODE $package_name\:\:set_$class_property_name\\n\"\; \$\_\[0\]\-\>\{$class_property_name\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;");
                         }
 					}
 				}
@@ -90,19 +90,19 @@ INIT
 					if ($subroutine_type =~ /\_\_method$/)
 					{
 						#print {*STDERR} "in Class.pm INIT block, $subroutine_name is a method\n";
-						eval("\*\{$package_name\:\:$subroutine_name\} \= sub \{ return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;");  ## no critic  # NEED UPGRADE: how can I do this w/out a subroutine?
-#						eval("\*\{$package_name\:\:$subroutine_name\} \= sub \{ print {*STDERR} \"IN POST\-INIT\, method direct call MODE $package_name\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;");  ## no critic  # NEED UPGRADE: how can I do this w/out a subroutine?
+						eval("\*\{$package_name\:\:$subroutine_name\} \= sub \{ return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;");  # NEED UPGRADE: how can I do this w/out a subroutine?
+#						eval("\*\{$package_name\:\:$subroutine_name\} \= sub \{ print {*STDERR} \"IN POST\-INIT\, method direct call MODE $package_name\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;");  # NEED UPGRADE: how can I do this w/out a subroutine?
 					}
 					else
 					{
 #						print {*STDERR} "in Class.pm INIT block, $subroutine_name is a non-method subroutine\n";
-						if (eval("defined\(\&main\:\:$subroutine_name\)"))  ## no critic
+						if (eval("defined\(\&main\:\:$subroutine_name\)"))
 							{ die "Attempt by package '$package_name' to re-define shared global subroutine '$subroutine_name', please re-name your subroutine or make it a method, dying"; }
 						# DEV NOTE: must load into both main:: and $package_name:: namespaces, in order to call subroutines w/out class prefix from within class file (package) itself, and not to use AUTOLOAD
-						eval("\*\{main\:\:$subroutine_name\} \= sub \{ return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;");  ## no critic  # NEED UPGRADE: how can I do this w/out a subroutine?
-#						eval("\*\{main\:\:$subroutine_name\} \= sub \{ print {*STDERR} \"IN POST\-INIT\, subroutine direct call MODE main\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;");  ## no critic  # NEED UPGRADE: how can I do this w/out a subroutine?
-						eval("\*\{$package_name\:\:$subroutine_name\} \= sub \{ return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;");  ## no critic  # NEED UPGRADE: how can I do this w/out a subroutine?
-#						eval("\*\{$package_name\:\:$subroutine_name\} \= sub \{ print {*STDERR} \"IN POST\-INIT\, subroutine direct call MODE $package_name\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;");  ## no critic  # NEED UPGRADE: how can I do this w/out a subroutine?
+						eval("\*\{main\:\:$subroutine_name\} \= sub \{ return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;");  # NEED UPGRADE: how can I do this w/out a subroutine?
+#						eval("\*\{main\:\:$subroutine_name\} \= sub \{ print {*STDERR} \"IN POST\-INIT\, subroutine direct call MODE main\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;");  # NEED UPGRADE: how can I do this w/out a subroutine?
+						eval("\*\{$package_name\:\:$subroutine_name\} \= sub \{ return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;");  # NEED UPGRADE: how can I do this w/out a subroutine?
+#						eval("\*\{$package_name\:\:$subroutine_name\} \= sub \{ print {*STDERR} \"IN POST\-INIT\, subroutine direct call MODE $package_name\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;");  # NEED UPGRADE: how can I do this w/out a subroutine?
 					}
 				}
 			}
@@ -136,15 +136,15 @@ sub AUTOLOAD
 		if ($2 eq 'get')	
 		{
 			print {*STDERR} "IN AUTOLOAD, accessor MODE\n";
-#			eval("\*\{$AUTOLOAD\} \= sub \{ return \$\_\[0\]\-\>\{$3\}\; \}\;");  ## no critic
-			eval("\*\{$AUTOLOAD\} \= sub \{ print {*STDERR} \"IN POST\-AUTOLOAD\, accessor MODE $AUTOLOAD\\n\"\; return \$\_\[0\]\-\>\{$3\}\; \}\;");  ## no critic
+#			eval("\*\{$AUTOLOAD\} \= sub \{ return \$\_\[0\]\-\>\{$3\}\; \}\;");
+			eval("\*\{$AUTOLOAD\} \= sub \{ print {*STDERR} \"IN POST\-AUTOLOAD\, accessor MODE $AUTOLOAD\\n\"\; return \$\_\[0\]\-\>\{$3\}\; \}\;");
 			$retval = $_[0]->{$3};
 		}
 		else  # ($2 eq 'set')
 		{
 			print {*STDERR} "IN AUTOLOAD, mutator MODE\n";
-#			eval("\*\{$AUTOLOAD\} \= sub \{ \$\_\[0\]\-\>\{$3\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$3\}\; \}\;");  ## no critic
-			eval("\*\{$AUTOLOAD\} \= sub \{ print {*STDERR} \"IN POST\-AUTOLOAD\, mutator MODE $AUTOLOAD\\n\"\; \$\_\[0\]\-\>\{$3\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$3\}\; \}\;");  ## no critic
+#			eval("\*\{$AUTOLOAD\} \= sub \{ \$\_\[0\]\-\>\{$3\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$3\}\; \}\;");
+			eval("\*\{$AUTOLOAD\} \= sub \{ print {*STDERR} \"IN POST\-AUTOLOAD\, mutator MODE $AUTOLOAD\\n\"\; \$\_\[0\]\-\>\{$3\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$3\}\; \}\;");
 			$_[0]->{$3} = $_[1];
 			$retval = $_[0]->{$3};
 		}
@@ -155,8 +155,8 @@ sub AUTOLOAD
 		# disable creating symtab entries here to avoid redefining subroutines in INIT block above;
 		# still need direct call mode here in case we want to call an RPerl function/method before the INIT block executes,
 		# such as when an RPerl class calls one of it's own functions/methods during compile time
-#		eval("\*\{$AUTOLOAD\} \= sub \{ return \&\$\{$AUTOLOAD\}\(\@\_\)\; \}\;");  ## no critic  # NEED UPGRADE: how can I do this w/out a subroutine?
-#		eval("\*\{$AUTOLOAD\} \= sub \{ print {*STDERR} \"IN POST\-AUTOLOAD\, direct call MODE $AUTOLOAD\\n\"\; return \&\$\{$AUTOLOAD\}\(\@\_\)\; \}\;");  ## no critic  # NEED UPGRADE: how can I do this w/out a subroutine?
+#		eval("\*\{$AUTOLOAD\} \= sub \{ return \&\$\{$AUTOLOAD\}\(\@\_\)\; \}\;");  # NEED UPGRADE: how can I do this w/out a subroutine?
+#		eval("\*\{$AUTOLOAD\} \= sub \{ print {*STDERR} \"IN POST\-AUTOLOAD\, direct call MODE $AUTOLOAD\\n\"\; return \&\$\{$AUTOLOAD\}\(\@\_\)\; \}\;");  # NEED UPGRADE: how can I do this w/out a subroutine?
 		if (defined(${$AUTOLOAD})) { $retval = &${$AUTOLOAD}(@_); }
 		else { die "Attempt to AUTOLOAD undefined subroutine '$AUTOLOAD', dying"; }
 	}
@@ -166,7 +166,7 @@ sub AUTOLOAD
 	{
 		my $eval_string = '&$' . $AUTOLOAD . '(@_);';
 		print {*STDERR} "IN AUTOLOAD, eval call MODE, have \$eval_string = '$eval_string'\n";
-		$retval = eval($eval_string);  ## no critic
+		$retval = eval($eval_string);
 	}
 #=cut
 

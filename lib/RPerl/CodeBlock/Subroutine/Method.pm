@@ -1,14 +1,14 @@
-## no critic qw(ProhibitMultiplePackages)  ## RPERL SYSTEM types, allow multiple packages
-## no critic qw(Capitalization)  ## RPERL SYSTEM types, allow lowercase packages
 package RPerl::CodeBlock::Subroutine::Method;
 use strict;
 use warnings;
-our $VERSION = 0.002_001;
-use Carp;
 use RPerl;
+our $VERSION = 0.002_001;
+
+## no critic qw(Capitalization)  # SYSTEM DEFAULT 4: allow lower case packages
+## no critic qw(ProhibitMultiplePackages)  ## SYSTEM DEFAULT 5: allow multiple packages
 
 use parent qw(RPerl::CodeBlock::Subroutine);
-our %properties = (); ## no critic qw(ProhibitPackageVars)  ## RPERL SYSTEM, allow OO properties
+our %properties = (); ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
 
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]

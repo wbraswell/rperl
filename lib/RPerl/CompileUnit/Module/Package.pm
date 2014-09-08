@@ -1,13 +1,12 @@
 package RPerl::CompileUnit::Module::Package; ## no critic qw(ProhibitExcessMainComplexity)  ## RPERL SYSTEM allow complex code
 use strict;
 use warnings;
-our $VERSION = 0.000_014;
-use Carp;
 use RPerl;
+our $VERSION = 0.000_014;
 
 # [[[ SETUP ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  ## RPERL USER DEFAULT optionally allow numeric values, print operator
-## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted control characters, sigils, and regexes
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
 use Data::Dumper;
 use Scalar::Util 'blessed';
 

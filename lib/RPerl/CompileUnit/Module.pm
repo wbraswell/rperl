@@ -1,11 +1,10 @@
 package RPerl::CompileUnit::Module;
 use strict;
 use warnings;
-our $VERSION = 0.000_001;
-use Carp;
 use RPerl;
+our $VERSION = 0.000_001;
 
 use parent qw(RPerl::CompileUnit);
-our %properties = (); ## no critic qw(ProhibitPackageVars)  ## RPERL SYSTEM, allow OO properties
+our %properties = (); ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
 
 1;
