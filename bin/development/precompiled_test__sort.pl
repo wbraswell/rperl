@@ -50,9 +50,11 @@ print q{in precompiled_test__sort.pl, have hash__ops() = '}
 print q{in precompiled_test__sort.pl, have hash__types() = '}
     . hash__types() . "'\n";
 
-print q{in precompiled_test__sort.pl, have RPerl__Algorithm__Sort__Bubble__ops() = '}
+print
+    q{in precompiled_test__sort.pl, have RPerl__Algorithm__Sort__Bubble__ops() = '}
     . RPerl__Algorithm__Sort__Bubble__ops() . "'\n";
-print q{in precompiled_test__sort.pl, have RPerl__Algorithm__Sort__Bubble__types() = '}
+print
+    q{in precompiled_test__sort.pl, have RPerl__Algorithm__Sort__Bubble__types() = '}
     . RPerl__Algorithm__Sort__Bubble__types() . "'\n";
 
 # <<<=== SORT 1 ===>>>
@@ -158,6 +160,7 @@ for my integer $i ( 0 .. $i_MAX ) {
     # [[[ NUMBER TESTS ]]]
 
 ## no critic qw(PodSpelling)  # SYSTEM SPECIAL 5: PERL CRITIC ISSUE #588, PodSpelling & RequireTidyCode conflict  https://github.com/Perl-Critic/Perl-Critic/issues/588
+
 =disable_SORT_TESTS
 #	$number__data = undef;  # TNVALSOBU01; error ENVAVRV00
 #	$number__data = 2;  # TNVALSOBU02; error ENVAVRV01
@@ -212,8 +215,8 @@ for my integer $i ( 0 .. $i_MAX ) {
 
 croak('Done for now, croaking');
 
-## no critic qw(PodSpelling)  # SYSTEM SPECIAL 5: PERL CRITIC ISSUE #588, PodSpelling & RequireTidyCode conflict  https://github.com/Perl-Critic/Perl-Critic/issues/588
-=disable
+__DATA__
+
 # <<<=== SORT 2 ===>>>
 # <<<=== SORT 2 ===>>>
 # <<<=== SORT 2 ===>>>
@@ -258,4 +261,3 @@ print "in precompiled_test__sort.pl, have sorted \$integer__data2_sorted =\n" . 
 
 # re-print SORT 1 data to make sure nothing weird with RPerl has caused it to change during SORT 2 and SORT 3
 print "in precompiled_test__sort.pl, STILL have sorted \$sorter->{data} =\n" . Dumper($sorter->{data}) . "\n";
-=cut

@@ -1,8 +1,8 @@
-package RPerl::CompileUnit::Module::Package; ## no critic qw(ProhibitExcessMainComplexity)  ## RPERL SYSTEM allow complex code
+package RPerl::CompileUnit::Module::Package; ## no critic qw(ProhibitExcessMainComplexity ProhibitExcessComplexity)  # SYSTEM SPECIAL 7: allow complex code
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_014;
+our $VERSION = 0.000_015;
 
 # [[[ SETUP ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
@@ -14,7 +14,7 @@ use Scalar::Util 'blessed';
 use parent qw(RPerl::CompileUnit::Module);
 
 # [[[ OO PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  ## RPERL SYSTEM, allow OO properties
+our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
     name => my string $KEY_name = undef,
     version => my string $KEY_version = undef, # NEED UPGRADE: convert vstring from string type to number type?
     includes    => my string__array_ref $KEY_includes    = undef,

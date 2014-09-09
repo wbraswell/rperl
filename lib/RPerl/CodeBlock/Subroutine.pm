@@ -1,17 +1,15 @@
-package RPerl::CodeBlock::Subroutine; ## no critic qw(ProhibitExcessMainComplexity)  ## RPERL SYSTEM allow complex code
+package RPerl::CodeBlock::Subroutine; ## no critic qw(ProhibitExcessMainComplexity ProhibitExcessComplexity)  # SYSTEM SPECIAL 7: allow complex code
 use strict;
 use warnings;
-our $VERSION = 0.000_010;
-use Carp;
 use RPerl;
+our $VERSION = 0.000_011;
 
 # [[[ SETUP ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  ## RPERL USER DEFAULT optionally allow numeric values, print operator
-## no critic qw(ProhibitPackageVars)  ## RPERL SYSTEM, allow $rperltypes::supported
-## no critic qw(ProhibitBooleanGrep)  ## RPERL SYSTEM allow grep through string__array_ref
-## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted control characters, sigils, and regexes
-## no critic qw(ProhibitMultiplePackages)  ## RPERL SYSTEM types, allow multiple packages
-## no critic qw(Capitalization)  ## RPERL SYSTEM types, allow lowercase packages
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
+## no critic qw(Capitalization ProhibitMultiplePackages)  # SYSTEM DEFAULT 4: allow multiple lower case package names
+## no critic qw(ProhibitBooleanGrep)  # SYSTEM SPECIAL 1: allow grep
+## no critic qw(ProhibitPackageVars)  # SYSTEM SPECIAL 4: allow $rperltypes::supported
 BEGIN {
 
     package object__method;
@@ -36,7 +34,7 @@ use Scalar::Util 'blessed';
 use parent qw(RPerl::CodeBlock);
 
 # [[[ OO PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  ## RPERL SYSTEM, allow OO properties
+our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
     type       => my string $KEY_type                   = undef,
     name       => my string $KEY_name                   = undef,
     arguments  => my hash_ref__array_ref $KEY_arguments = undef,
@@ -58,7 +56,8 @@ our string__method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     $self_generated .= q[{] . "\n";
 
     foreach my object $operation ( @{ $self->{operations} } ) {
-        $self_generated .= $operation->rperl_to_cpp__generate__CPPOPS_CPPTYPES();
+        $self_generated
+            .= $operation->rperl_to_cpp__generate__CPPOPS_CPPTYPES();
     }
 
     $self_generated .= q[}] . "\n";
@@ -483,7 +482,7 @@ our object__method $ppi_to_rperl__translate = sub {
     my @operations_array
         = @{ $node->{$child_key}->[$child_index]->{$grandchild_key} }
         [ $grandchild_index .. $grandchild_index_max ];
-    my $operations = \@operations_array;  # two-statement slice
+    my $operations = \@operations_array;    # two-statement slice
 
 #my $operations = \(@{$node->{$child_key}->[$child_index]->{$grandchild_key}}[$grandchild_index .. $grandchild_index_max]);  # DEV NOTE: why does this not work?
 #print {*STDERR} "in Subroutine::ppi_to_rperl__translate(), before call to RPerl::Operation->ppi_to_rperl__translate_plus(\$operations), have \$grandchild_index = $grandchild_index\n";
