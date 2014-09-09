@@ -4,7 +4,7 @@ package RPerl::CompileUnit::Module::ClassTemplate;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_025;
+our $VERSION = 0.000_026;
 
 # [[[ OO INHERITANCE ]]]
 # <<< CHANGE ME: leave as base class for no inheritance, or replace with real parent package name >>>

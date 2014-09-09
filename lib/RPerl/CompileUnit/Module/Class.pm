@@ -1,7 +1,7 @@
 package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
-our $VERSION = 0.011_001;
+our $VERSION = 0.011_002;
 
 use Carp;
 use Data::Dumper; # DEV NOTE: don't depend on RPerl::DUMPER yet, although the *stringify() subroutines are coming along...
@@ -37,8 +37,8 @@ INIT {
 
 #			print {*STDERR} "in Class.pm INIT block, have \$module_file_long = '$module_file_long'\n";
 
-            open {*MODULE_FILE}, '<', $module_file_long or croak $!;
-            while ( my $module_file_line = <MODULE_FILE> ) {
+            open my $MODULE_FILE, '<', $module_file_long or croak $!;
+            while ( my $module_file_line = <$MODULE_FILE> ) {
                 chomp $module_file_line;
 
 #				print {*STDERR} "in Class.pm INIT block, have \$module_file_line =\n$module_file_line\n";
@@ -46,13 +46,21 @@ INIT {
                 # skip single-line comments
                 next if ( $module_file_line =~ /^\s*\#/xms );
 
-                # skip multi-line comments
+                # skip multi-line POD comments
                 if ( $module_file_line =~ /^\=(\w+)/xms ) {
 
-#					print {*STDERR} "in Class.pm INIT block, skipping multi-line comment, have \$1 = '$1'\n";
-                    $module_file_line = <MODULE_FILE>;
+#					print {*STDERR} "in Class.pm INIT block, skipping multi-line POD comment, have \$1 = '$1'\n";
+                    $module_file_line = <$MODULE_FILE>;
+                    if ( not defined $module_file_line ) {
+                        croak
+                            "End of file '$module_file_long' reached without finding '=cut' end of multi-line POD comment '=$1', croaking";
+                    }
                     while ( $module_file_line !~ /^\=cut/xms ) {
-                        $module_file_line = <MODULE_FILE>;
+                        if ( not defined $module_file_line ) {
+                            croak
+                                "End of file '$module_file_long' reached without finding '=cut' end of multi-line POD comment '=$1', croaking";
+                        }
+                        $module_file_line = <$MODULE_FILE>;
                     }
                     next;
                 }
@@ -66,11 +74,26 @@ INIT {
                     )
                 {
 #					print {*STDERR} "in Class.pm INIT block, skipping multi-line heredoc, have \$1 = '$1'\n";
-                    $module_file_line = <MODULE_FILE>;
+                    $module_file_line = <$MODULE_FILE>;
+                    if ( not defined $module_file_line ) {
+                        croak
+                            "End of file '$module_file_long' reached without finding '$1' end of multi-line heredoc string, croaking";
+                    }
                     while ( $module_file_line !~ /^$1/xms ) {
-                        $module_file_line = <MODULE_FILE>;
+                        $module_file_line = <$MODULE_FILE>;
+                        if ( not defined $module_file_line ) {
+                            croak
+                                "End of file '$module_file_long' reached without finding '$1' end of multi-line heredoc string, croaking";
+                        }
                     }
                     next;
+                }
+
+                # skip __DATA__ footer
+                if ( $module_file_line eq '__DATA__' ) {
+
+ #					print {*STDERR} "in Class.pm INIT block, skipping '__DATA__' footer\n";
+                    last;
                 }
 
                 # create accessor/mutator methods for each class
@@ -149,7 +172,7 @@ INIT {
                     }
                 }
             }
-            close MODULE_FILE or croak $!;
+            close $MODULE_FILE or croak $!;
         }
     }
 }
@@ -219,7 +242,7 @@ sub AUTOLOAD
 		print {*STDERR} "IN AUTOLOAD, eval call MODE, have \$eval_string = '$eval_string'\n";
 		$retval = eval $eval_string;
 	}
-#=cut
+=cut
 
 	croak $@ if ($@);  # suppress '...propagated at RPerl/Class.pm' appended exception	
 #	croak if ($@);  # allow '...propagated at RPerl/Class.pm' appended exception	
