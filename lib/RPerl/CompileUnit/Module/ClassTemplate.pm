@@ -71,10 +71,10 @@ use constant EINSTEIN => my scalar__hash_ref $TYPED_EINSTEIN = {
 # [[[ OO PROPERTIES ]]]
 # <<< CHANGE ME: replace with real property name(s) & data >>>
 our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
-    plugh => my integer $TYPED_plugh            = 23,
-    xyzzy => my string $TYPED_xyzzy             = 'twenty-three',
-    thud => my integer__array_ref $TYPED_thud = [ 2, 4, 6, 8 ],
-    yyz => my number__hash_ref $TYPED_yyz   = { a => 3.1, b => 6.2, c => 9.3 }
+    plugh => my integer $TYPED_plugh           = 23,
+    xyzzy => my string $TYPED_xyzzy            = 'twenty-three',
+    thud  => my integer__array_ref $TYPED_thud = [ 2, 4, 6, 8 ],
+    yyz => my number__hash_ref $TYPED_yyz = { a => 3.1, b => 6.2, c => 9.3 },
 );
 
 # [[[ OO METHODS ]]]
@@ -90,7 +90,8 @@ our string__method $corge = sub {
     return $self->{xyzzy} x 3;
 };
 
-1, 1;    # CODE SEPARATOR: methods above, subroutines below
+1;
+1;    # CODE SEPARATOR: methods above, subroutines below
 
 # [[[ SUBROUTINES ]]]
 
@@ -119,4 +120,5 @@ our string $RPerl__CompileUnit__Module__ClassTemplate__ops
 our string $RPerl__CompileUnit__Module__ClassTemplate__types
     = sub { return 'PERL'; };
 
-1, 1;                       # CODE SEPARATOR: end of class
+1;
+1;                          # CODE SEPARATOR: end of class

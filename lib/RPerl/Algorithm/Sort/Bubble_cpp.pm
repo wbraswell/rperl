@@ -27,7 +27,8 @@ our void $cpp_load = sub {
     }
 
     if ($need_load_cpp) {
-#        RPerl::diag "in Bubble_cpp::cpp_load, need load CPP code\n";
+
+        #        RPerl::diag "in Bubble_cpp::cpp_load, need load CPP code\n";
 
         my $eval_string = <<"EOF";
 package main;
