@@ -5,7 +5,7 @@ use warnings;
 our $VERSION = 1.000_000;  # BETA!!!
 
 # [[[ INCLUDES ]]]
-use RPerl::Config;
+require RPerl::Config;
 
 # <<<=== DECREASE MAGIC ===>>>
 
@@ -14,12 +14,6 @@ use RPerl::Config;
 require rperltypes;
 
 # <<<=== EXPORTED FUNCTIONS ===>>>
-
-# export Dumper(), carp(), croak(), and confess() to all who call 'use RPerl;'
-use Data::Dumper;
-use Carp;
-use Exporter 'import';
-our @EXPORT = qw(Dumper carp croak confess);
 
 # TODO: replace Data::Dumper with pure-RPerl equivalent?
 #=disable

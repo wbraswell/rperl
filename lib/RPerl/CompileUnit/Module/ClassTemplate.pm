@@ -4,7 +4,7 @@ package RPerl::CompileUnit::Module::ClassTemplate;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_026;
+our $VERSION = 0.000_027;
 
 # [[[ OO INHERITANCE ]]]
 # <<< CHANGE ME: leave as base class for no inheritance, or replace with real parent package name >>>
@@ -19,11 +19,12 @@ use RPerl::CompileUnit::Module::Class;
 # <<< CHANGE ME: delete unused critics >>>
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
+## no critic qw(ProhibitConstantPragma)  # USER DEFAULT 3: allow constants
 
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd PodSpelling) # DEVELOPER DEFAULT 1: allow unreachable & POD-commented code
 ## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
 
-## no critic qw(ProhibitStringyEval RequireCheckingReturnValueOfEval ProhibitPunctuationVars) # SYSTEM DEFAULT 1: allow eval() for Inline::CPP
+## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
 ## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
 ## no critic qw(ProhibitCascadingIfElse)  # SYSTEM DEFAULT 3: allow argument-handling logic
 ## no critic qw(Capitalization ProhibitMultiplePackages)  # SYSTEM DEFAULT 4: allow multiple lower case package names
@@ -52,21 +53,24 @@ use RPerl::Test::Bar;
 
 # [[[ CONSTANTS ]]]
 # <<< CHANGE ME: delete for no constants, or replace with real constant name(s) & data >>>
-use constant PI => my number $TYPED_PI = 3.14159;
-use constant DAYS => my string__array_ref $TYPED_DAYS
-    = [ 'Sun', 'Mon', 'Tues', 'Weds', 'Thurs', 'Fri', 'Sat' ];
-use constant HYDROGEN => my scalar__array_ref $TYPED_HYDROGEN = [
-    my integer $TYPED_number = 1,
-    my number $TYPED_weight  = 1.00794,
-    my string $TYPED_symbol  = 'H'
-];
-use constant TRANSCENDENTALS => my number__hash_ref $TYPED_TRANSCENDENTALS
-    = { pi => 3.14159, e => 2.71828, c => 299_792_458 };
-use constant EINSTEIN => my scalar__hash_ref $TYPED_EINSTEIN = {
-    name       => my string $TYPED_name        = 'Albert Einstein',
-    birth_year => my integer $TYPED_birth_year = 1879,
-    death_year => my integer $TYPED_death_year = 1955
-};
+use constant PI  => my number $TYPED_PI  = 3.14159;
+use constant PIE => my string $TYPED_PIE = 'pecan';
+
+# NEED UPGRADE: constant array and hash references not yet read-only as of Perl v5.20
+#use constant DAYS => my string__array_ref $TYPED_DAYS
+#    = [ 'Sun', 'Mon', 'Tues', 'Weds', 'Thurs', 'Fri', 'Sat' ];
+#use constant HYDROGEN => my scalar__array_ref $TYPED_HYDROGEN = [
+#    my integer $TYPED_number = 1,
+#    my number $TYPED_weight  = 1.00794,
+#    my string $TYPED_symbol  = 'H'
+#];
+#use constant TRANSCENDENTALS => my number__hash_ref $TYPED_TRANSCENDENTALS
+#    = { pi => 3.14159, e => 2.71828, c => 299_792_458 };
+#use constant EINSTEIN => my scalar__hash_ref $TYPED_EINSTEIN = {
+#    name       => my string $TYPED_name        = 'Albert Einstein',
+#    birth_year => my integer $TYPED_birth_year = 1879,
+#    death_year => my integer $TYPED_death_year = 1955
+#};
 
 # [[[ OO PROPERTIES ]]]
 # <<< CHANGE ME: replace with real property name(s) & data >>>

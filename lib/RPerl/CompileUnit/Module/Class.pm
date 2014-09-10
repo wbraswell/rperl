@@ -1,12 +1,10 @@
 package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
-our $VERSION = 0.011_002;
+use RPerl::Config;    # get Dumper, Carp, English without 'use RPerl;'
+our $VERSION = 0.012_000;
 
-use Carp;
-use Data::Dumper; # DEV NOTE: don't depend on RPerl::DUMPER yet, although the *stringify() subroutines are coming along...
-
-## no critic qw(ProhibitStringyEval RequireCheckingReturnValueOfEval ProhibitPunctuationVars) # SYSTEM DEFAULT 1: allow eval() for Inline::CPP
+## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
 ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  # SYSTEM SPECIAL 2: allow Autoload & read-only @_
 ## no critic qw(ProhibitExcessMainComplexity ProhibitExcessComplexity)  # SYSTEM SPECIAL 7: allow complex code
 ## no critic qw(ProhibitDeepNests)  # SYSTEM SPECIAL 8: allow deeply-nested code
@@ -37,7 +35,7 @@ INIT {
 
 #			print {*STDERR} "in Class.pm INIT block, have \$module_file_long = '$module_file_long'\n";
 
-            open my $MODULE_FILE, '<', $module_file_long or croak $!;
+            open my $MODULE_FILE, '<', $module_file_long or croak $ERRNO;
             while ( my $module_file_line = <$MODULE_FILE> ) {
                 chomp $module_file_line;
 
@@ -116,7 +114,9 @@ INIT {
                             )
                         {
                             eval
-                                "\*\{$package_name\:\:get_$class_property_name\} \= sub \{ return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;";
+                                "\*\{$package_name\:\:get_$class_property_name\} \= sub \{ return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;"
+                                or croak( $ERRNO . "\n" . $EVAL_ERROR );
+                            if ($EVAL_ERROR) { croak($EVAL_ERROR); }
 
 #eval "\*\{$package_name\:\:get_$class_property_name\} \= sub \{ print {*STDERR} \"IN POST\-INIT\, accessor MODE $package_name\:\:get_$class_property_name\\n\"\; return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;";
                         }
@@ -126,7 +126,9 @@ INIT {
                             )
                         {
                             eval
-                                "\*\{$package_name\:\:set_$class_property_name\} \= sub \{ \$\_\[0\]\-\>\{$class_property_name\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;";
+                                "\*\{$package_name\:\:set_$class_property_name\} \= sub \{ \$\_\[0\]\-\>\{$class_property_name\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;"
+                                or croak( $ERRNO . "\n" . $EVAL_ERROR );
+                            if ($EVAL_ERROR) { croak($EVAL_ERROR); }
 
 #eval "\*\{$package_name\:\:set_$class_property_name\} \= sub \{ print {*STDERR} \"IN POST\-INIT\, mutator MODE $package_name\:\:set_$class_property_name\\n\"\; \$\_\[0\]\-\>\{$class_property_name\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;";
                         }
@@ -145,9 +147,11 @@ INIT {
                     if ( $subroutine_type =~ /\_\_method$/xms ) {
 
     #print {*STDERR} "in Class.pm INIT block, $subroutine_name is a method\n";
+    # NEED UPGRADE: how can I do this w/out a subroutine?
                         eval
                             "\*\{$package_name\:\:$subroutine_name\} \= sub \{ return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;"
-                            ; # NEED UPGRADE: how can I do this w/out a subroutine?
+                            or croak( $ERRNO . "\n" . $EVAL_ERROR );
+                        if ($EVAL_ERROR) { croak($EVAL_ERROR); }
 
 #						eval "\*\{$package_name\:\:$subroutine_name\} \= sub \{ print {*STDERR} \"IN POST\-INIT\, method direct call MODE $package_name\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;";  # NEED UPGRADE: how can I do this w/out a subroutine?
                     }
@@ -159,20 +163,24 @@ INIT {
                         }
 
 # DEV NOTE: must load into both main:: and $package_name:: namespaces, in order to call subroutines w/out class prefix from within class file (package) itself, and not to use AUTOLOAD
+# NEED UPGRADE: how can I do this w/out a subroutine?
                         eval
                             "\*\{main\:\:$subroutine_name\} \= sub \{ return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;"
-                            ; # NEED UPGRADE: how can I do this w/out a subroutine?
+                            or croak( $ERRNO . "\n" . $EVAL_ERROR );
+                        if ($EVAL_ERROR) { croak($EVAL_ERROR); }
 
 #						eval "\*\{main\:\:$subroutine_name\} \= sub \{ print {*STDERR} \"IN POST\-INIT\, subroutine direct call MODE main\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;";  # NEED UPGRADE: how can I do this w/out a subroutine?
+# NEED UPGRADE: how can I do this w/out a subroutine?
                         eval
                             "\*\{$package_name\:\:$subroutine_name\} \= sub \{ return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;"
-                            ; # NEED UPGRADE: how can I do this w/out a subroutine?
+                            or croak( $ERRNO . "\n" . $EVAL_ERROR );
+                        if ($EVAL_ERROR) { croak($EVAL_ERROR); }
 
 #						eval "\*\{$package_name\:\:$subroutine_name\} \= sub \{ print {*STDERR} \"IN POST\-INIT\, subroutine direct call MODE $package_name\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;";  # NEED UPGRADE: how can I do this w/out a subroutine?
                     }
                 }
             }
-            close $MODULE_FILE or croak $!;
+            close $MODULE_FILE or croak $ERRNO;
         }
     }
 }
@@ -244,8 +252,8 @@ sub AUTOLOAD
 	}
 =cut
 
-	croak $@ if ($@);  # suppress '...propagated at RPerl/Class.pm' appended exception	
-#	croak if ($@);  # allow '...propagated at RPerl/Class.pm' appended exception	
+	croak $EVAL_ERROR if ($EVAL_ERROR);  # suppress '...propagated at RPerl/Class.pm' appended exception	
+#	croak if ($EVAL_ERROR);  # allow '...propagated at RPerl/Class.pm' appended exception	
 
 #	print {*STDERR} "IN AUTOLOAD, bottom of subroutine, about to return \$retval = '$retval'\n";
 	return $retval;

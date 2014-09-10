@@ -210,8 +210,8 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
             q{rperltypes::types_enable('CPP') lives}
         );
 
-        # force reload and relink
-        $RPerl::DataStructure::Hash_cpp::CPP_LOADED = 0;
+        # force reload
+        delete $main::{'RPerl__DataStructure__Hash__ops'};
 
         # Hash: C++ use, load, link
         lives_ok(

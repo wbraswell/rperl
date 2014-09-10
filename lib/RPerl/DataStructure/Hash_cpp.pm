@@ -1,16 +1,35 @@
-use strict; use warnings;
+# [[[ HEADER ]]]
 package RPerl::DataStructure::Hash_cpp;
-our $CPP_LOADED = 0;
-our @ISA = ('RPerl::CompileUnit::Module::Class');
-use RPerl::CompileUnit::Module::Class;  use RPerl;
+use strict;
+use warnings;
+use RPerl;
+our $VERSION = 0.004_000;
 
+# [[[ CRITICS ]]]
+## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
+
+# [[[ SUBROUTINES ]]]
 our void__method $cpp_load = sub {
-;	
-	if (defined($RPerl::DataStructure::Hash_cpp::CPP_LOADED)) { RPerl::diag "in Hash_cpp::cpp_load(), have \$RPerl::DataStructure::Hash_cpp::CPP_LOADED = '" . $RPerl::DataStructure::Hash_cpp::CPP_LOADED . "'\n"; }
-		else { RPerl::diag "in Hash_cpp::cpp_load(), have \$RPerl::DataStructure::Hash_cpp::CPP_LOADED = 'UNDEF'\n"; }
-	if (not(defined($RPerl::DataStructure::Hash_cpp::CPP_LOADED)) or not($RPerl::DataStructure::Hash_cpp::CPP_LOADED))
-	{
-		my $eval_string = <<"EOF";
+    my $need_load_cpp = 0;
+    if (    ( exists $main::{'RPerl__DataStructure__Hash__ops'} )
+        and ( defined &{ $main::{'RPerl__DataStructure__Hash__ops'} } ) )
+    {
+#        RPerl::diag "in Hash_cpp::cpp_load, RPerl__DataStructure__Hash__ops() exists & defined\n";
+#        RPerl::diag q{in Hash_cpp::cpp_load, have RPerl__DataStructure__Hash__ops() retval = '} . main::RPerl__DataStructure__Hash__ops() . "'\n";
+        if ( main::RPerl__DataStructure__Hash__ops() ne 'CPP' ) {
+            $need_load_cpp = 1;
+        }
+    }
+    else {
+#        RPerl::diag "in Hash_cpp::cpp_load, RPerl__DataStructure__Hash__ops() does not exist or undefined\n";
+        $need_load_cpp = 1;
+    }
+
+    if ($need_load_cpp) {
+
+        #        RPerl::diag "in Hash_cpp::cpp_load, need load CPP code\n";
+
+        my $eval_string = <<"EOF";
 package main;
 use RPerl::Inline;
 BEGIN { RPerl::diag "[[[ BEGIN 'use Inline' STAGE for 'RPerl/DataStructure/Hash.cpp' ]]]\n"x3; }
@@ -18,14 +37,15 @@ use Inline (CPP => "$RPerl::INCLUDE_PATH/RPerl/DataStructure/Hash.cpp", \@RPerl:
 RPerl::diag "[[[ END 'use Inline' STAGE for 'RPerl/DataStructure/Hash.cpp' ]]]\n"x3;
 1;
 EOF
-		RPerl::diag "in Hash_cpp::cpp_load(), CPP not yet loaded, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
 
-		eval($eval_string);  ## no critic
-		die($@) if ($@);
-		
-		$RPerl::DataStructure::Hash_cpp::CPP_LOADED = 1;
-	}
-	else { RPerl::diag "in Hash_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"; }
+#        RPerl::diag "in Hash_cpp::cpp_load(), CPP not yet loaded, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
+
+        eval $eval_string or croak( $ERRNO . "\n" . $EVAL_ERROR );
+        if ($EVAL_ERROR) { croak($EVAL_ERROR); }
+    }
+
+#    else { RPerl::diag "in Hash_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"; }
 };
 
+1;
 1;

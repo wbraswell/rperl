@@ -214,8 +214,8 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
             q{rperltypes::types_enable('CPP') lives}
         );
 
-        # force reload and relink
-        $RPerl::DataStructure::Array_cpp::CPP_LOADED = 0;
+        # force reload
+        delete $main::{'RPerl__DataStructure__Array__ops'};
 
         # Array: C++ use, load, link
         lives_ok(

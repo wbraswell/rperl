@@ -2,6 +2,7 @@ package Ball;    ## no critic (package)  # SYSTEM EXTERNAL 1: originally from In
 
 use strict;
 use warnings;
+use English qw(-no_match_vars);
 
 my $foo__bar__myclass = <<'EOCPP';
 class MyClass {
@@ -26,12 +27,12 @@ class MyClass {
 EOCPP
 
 open( my $FILEHANDLE, '>', '/tmp/Foo__Bar__MyClass.c' )
-    or die "Can't open file '/tmp/Foo__Bar__MyClass.c' for writing $!";
+    or die "Can't open file '/tmp/Foo__Bar__MyClass.c' for writing $ERRNO";
 print $FILEHANDLE $foo__bar__myclass;
 close $FILEHANDLE;
 
 open( $FILEHANDLE, '>', '/tmp/Foo__Qux__MyClass.c' )
-    or die "Can't open file '/tmp/Foo__Qux__MyClass.c' for writing $!";
+    or die "Can't open file '/tmp/Foo__Qux__MyClass.c' for writing $ERRNO";
 print $FILEHANDLE $foo__qux__myclass;
 close $FILEHANDLE;
 

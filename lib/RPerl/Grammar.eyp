@@ -112,6 +112,7 @@ Package:                'package' WordScoped ';' Header Critic* Include* Constan
 Header:                 'use strict;' 'use warnings;' 'use RPerl;' 'our $VERSION =' VERSION_NUMBER ';';
 Critic:                 '## no critic qw(' WORD+ ')';
 Include:                'use' WordScoped ';' | 'use' WordScoped 'qw(' WORD+ ')' ';' ;
+                        # NEED FIX: disable non-scalar constants
 Constant:               'use constant' WORD OP20_HASH_FATARROW TypeInner ConstantValue ';' ;
 ConstantValue:          LITERAL | '[' TypeInner? LITERAL (OP21_LIST_COMMA TypeInner? LITERAL)* ']' | 
                         '{' WORD OP20_HASH_FATARROW TypeInner? LITERAL (OP21_LIST_COMMA WORD OP20_HASH_FATARROW TypeInner? LITERAL)* '}' ;
@@ -135,7 +136,7 @@ Operator:               OP01_NAMED '(' ListElements? ')' | OP03_MATH_INC_DEC Var
                         Expression OP15_LOGICAL_AND Expression | Expression OP16_LOGICAL_OR Expression | Expression OP17_LIST_RANGE Expression | 
                         Expression OP18_TERNARY Variable COLON Variable | OP22_LOGICAL_NOT Expression | Expression OP23_LOGICAL_AND Expression | 
                         Expression OP24_LOGICAL_OR_XOR Expression ;
-                        # NEED FIX: are open() and close() ops void?  if not, need add FileHandle to non-void Operator production
+                        # NEED FIX: are open() and close() ops truly void?  if not, need add FileHandle to non-void Operator production
 OperatorVoid:           OP01_NAMED_VOID_PAREN ListElements? ')' ';' | OP01_NAMED_VOID_PAREN FileHandle ListElements? ')' ';' | 
                         OP01_NAMED_VOID ListElements? ';' | OP01_NAMED_VOID FileHandle ListElements? ';' | OP19_LOOP_CONTROL LoopLabel ';' ;
 Expression:             'undef' | LITERAL | Variable | ArrayReference | ArrayDereferenced | HashReference | HashDereferenced | '{' '}' |

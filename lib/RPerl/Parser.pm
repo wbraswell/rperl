@@ -2,17 +2,13 @@
 package RPerl::Parser;
 use strict;
 use warnings;
+use RPerl;
 our $VERSION = 0.001_001;
-use Carp;
 
 # [[[ SETUP ]]]
-
-use RPerl;
-
 #use RPerl::CompileUnit::Module::Class;
 #use parent ('RPerl::CompileUnit::Module::Class');
 
-use Data::Dumper;
 use PPI;
 use PPI::Dumper;
 use Scalar::Util 'blessed';
@@ -126,7 +122,7 @@ our object $perl_to_ppi__parse = sub {
 
 #print {*STDERR} "in perl_to_ppi__parse(), have \$rperl_source__perl_syntax_retval = $rperl_source__perl_syntax_retval\n" or croak();
 #print {*STDERR} "in perl_to_ppi__parse(), have \$rperl_source__perl_syntax_retstring =\n$rperl_source__perl_syntax_retstring\n" or croak();
-#print {*STDERR} "in perl_to_ppi__parse(), have \$! = $!\n" or croak();  # $! seems to contain random error messages that I can't trace?
+#print {*STDERR} "in perl_to_ppi__parse(), have \$ERRNO = $ERRNO\n" or croak();  # $ERRNO seems to contain random error messages that I can't trace?
 #print {*STDERR} "in perl_to_ppi__parse(), have \$? = $?\n" or croak();
 
 # NEED ADD ERROR CHECKING: ECVPAPL00 FILE DOES NOT EXIST, ECVPAPL01 FILE IS EMPTY
@@ -155,7 +151,10 @@ our object $perl_to_ppi__parse = sub {
 # DEV NOTE: disable RequireTidyCode because perltidy may not be stable
 #    my object $rperl_source__critic = Perl::Critic->new( -severity => 'brutal' );
 #    my object $rperl_source__critic = Perl::Critic->new( -exclude => ['RequireTidyCode'] -severity => 'brutal' );  # DEV NOTE: Perl::Critic's own docs-recommended syntax throws a violation
-    my object $rperl_source__critic = Perl::Critic->new( '-exclude' => ['RequireTidyCode'], '-severity' => 'brutal' );
+    my object $rperl_source__critic = Perl::Critic->new(
+        '-exclude'  => ['RequireTidyCode'],
+        '-severity' => 'brutal'
+    );
     my @rperl_source__critic_violations
         = $rperl_source__critic->critique($rperl_source__file_name);
 

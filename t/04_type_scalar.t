@@ -235,10 +235,10 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
             q{rperltypes::types_enable('CPP') lives}
         );
 
-        # force reload and relink
-        $RPerl::DataType::Integer_cpp::CPP_LOADED = 0;
-        $RPerl::DataType::Number_cpp::CPP_LOADED  = 0;
-        $RPerl::DataType::String_cpp::CPP_LOADED  = 0;
+        # force reload
+        delete $main::{'RPerl__DataType__Integer__ops'};
+        delete $main::{'RPerl__DataType__Number__ops'};
+        delete $main::{'RPerl__DataType__String__ops'};
 
 # Integer: C++ use, load, link
 #		BEGIN { lives_and(sub { use_ok('RPerl::DataType::Integer_cpp'); }); }  # duplicate

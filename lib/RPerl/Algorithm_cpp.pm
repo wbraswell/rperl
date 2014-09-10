@@ -3,11 +3,10 @@ package RPerl::Algorithm_cpp;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_010;
+our $VERSION = 0.004_020;
 
 # [[[ CRITICS ]]]
-# SYSTEM DEFAULT 1: allow eval() for Inline::CPP
-## no critic qw(ProhibitStringyEval RequireCheckingReturnValueOfEval ProhibitPunctuationVars)
+## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
 
 # [[[ SUBROUTINES ]]]
 our void $cpp_load = sub {
@@ -41,8 +40,8 @@ EOF
 
 #        RPerl::diag "in Algorithm_cpp::cpp_load(), CPP not yet loaded, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
 
-        eval $eval_string;
-        if ($@) { croak($@); }
+        eval $eval_string or croak( $ERRNO . "\n" . $EVAL_ERROR );
+        if ($EVAL_ERROR) { croak($EVAL_ERROR); }
     }
 
 #    else { RPerl::diag "in Algorithm_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"; }
