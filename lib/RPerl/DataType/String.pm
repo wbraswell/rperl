@@ -1,13 +1,14 @@
-## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
-## no critic qw(ProhibitMultiplePackages)  ## RPERL SYSTEM types, allow multiple packages
-## no critic qw(Capitalization)  ## RPERL SYSTEM types, allow lowercase packages
 package RPerl::DataType::String;
 use strict;
 use warnings;
-our $VERSION = 0.003_003;
+use RPerl;
+our $VERSION = 0.003_004;
+
+## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
+## no critic qw(Capitalization ProhibitMultiplePackages)  # SYSTEM DEFAULT 4: allow multiple lower case package names
+
 use parent ('RPerl::DataType');
 use RPerl::DataType;
-use Carp;
 
 # [[[ SUB-TYPES BEFORE SETUP ]]]
 # a string is 0 or more letters, digits, or other ASCII (Unicode???) symbols

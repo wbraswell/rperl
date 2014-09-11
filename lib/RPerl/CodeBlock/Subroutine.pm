@@ -1,4 +1,5 @@
-package RPerl::CodeBlock::Subroutine; ## no critic qw(ProhibitExcessMainComplexity ProhibitExcessComplexity)  # SYSTEM SPECIAL 7: allow complex code
+## no critic qw(ProhibitExcessMainComplexity)  # SYSTEM SPECIAL 5: allow complex code outside subroutines, must be on line 1
+package RPerl::CodeBlock::Subroutine;
 use strict;
 use warnings;
 use RPerl;
@@ -9,7 +10,7 @@ our $VERSION = 0.000_011;
 ## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
 ## no critic qw(Capitalization ProhibitMultiplePackages)  # SYSTEM DEFAULT 4: allow multiple lower case package names
 ## no critic qw(ProhibitBooleanGrep)  # SYSTEM SPECIAL 1: allow grep
-## no critic qw(ProhibitPackageVars)  # SYSTEM SPECIAL 4: allow $rperltypes::supported
+## no critic qw(ProhibitPackageVars)  # SYSTEM SPECIAL 4a: allow $rperltypes::supported
 BEGIN {
 
     package object__method;

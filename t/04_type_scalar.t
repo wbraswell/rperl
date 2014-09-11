@@ -1,51 +1,28 @@
 #!/usr/bin/perl
-## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
-## no critic qw(ProhibitInterpolationOfLiterals)  ## RPERL allow string test values
-## no critic qw(ProhibitStringySplit)  ## RPERL allow string test values
-## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted control characters, sigils, and regexes
 use strict;
 use warnings;
-our $VERSION = 0.003_002;
+our $VERSION = 0.003_003;
+
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
+## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
 
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
 
-use Test::More; # tests => 277;
+use Test::More;    # tests => 277;
 use Test::Exception;
 use Carp;
 my $ERROR_MAX = 0.00000001;
 
 BEGIN {
-    diag("[[[ Beginning Scalar Type Pre-Test Loading, RPerl Type System ]]]") if $ENV{TEST_VERBOSE};
-}
-
-BEGIN {
+    if ( $ENV{TEST_VERBOSE} ) {
+        diag(
+            "[[[ Beginning Scalar Type Pre-Test Loading, RPerl Type System ]]]"
+        );
+    }
     lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
-    lives_ok(
-        sub {
-            use parent ('RPerl');
-        },
-        q{use parent ('RPerl');}
-    );
-}    # RPerl system files
-
-BEGIN {
-    lives_and( sub { use_ok('Data::Dumper'); },
-        q{use_ok('Data::Dumper') lives} );
-    lives_ok(
-        sub {
-            our $AUTOLOAD;
-
-            sub AUTOLOAD { ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  ## RPERL SYSTEM allow autoload  ## RPERL SYSTEM allow read-only @_
-                croak(
-                    "Error autoloading, AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n"
-                        . Dumper( \@_ )
-                        . ', croaking' );
-            }
-        },
-        q{our $AUTOLOAD;  sub AUTOLOAD {...}}
-    );
 }
 
 # use Data::Dumper() to to stringify a string
@@ -53,7 +30,7 @@ BEGIN {
 sub string__dumperify {
     ( my string $input_string ) = @_;
 
-    # RPerl::diag "in 04_type_scalar.t string__dumperify(), received have \$input_string =\n$input_string\n\n";
+# RPerl::diag "in 04_type_scalar.t string__dumperify(), received have \$input_string =\n$input_string\n\n";
     $input_string = Dumper( [$input_string] );
     $input_string =~ s/^\s+|\s+$//xmsg;    # strip leading whitespace
     my @input_string_split = split "\n", $input_string;
@@ -67,7 +44,8 @@ sub string__dumperify {
 
 # loop 3 times, once for each mode: Pure-Perl, RPerl Perl-Data, and RPerl C-Data
 for my $OPS_TYPES_ID ( 0 .. 2 ) {
-    # RPerl::diag "in 04_type_scalar.t, top of for() loop, have \$OPS_TYPES_ID = $OPS_TYPES_ID\n";  # no effect if suppressing output!
+
+# RPerl::diag "in 04_type_scalar.t, top of for() loop, have \$OPS_TYPES_ID = $OPS_TYPES_ID\n";  # no effect if suppressing output!
     my $OPS_TYPES;
 
     # [[[ PERLOPS_PERLTYPES SETUP ]]]
@@ -76,8 +54,11 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
 
     if ( $OPS_TYPES_ID == 0 ) {
         $OPS_TYPES = 'PERLOPS_PERLTYPES';
-        diag(
-          "[[[ Beginning RPerl's Pure-Perl Scalar Type Tests, RPerl Type System Using Perl Data Types & Perl Operations ]]]")  if $ENV{TEST_VERBOSE};
+        if ( $ENV{TEST_VERBOSE} ) {
+            diag(
+                "[[[ Beginning RPerl's Pure-Perl Scalar Type Tests, RPerl Type System Using Perl Data Types & Perl Operations ]]]"
+            );
+        }
         lives_and(
             sub {
                 is( integer__ops(), 'PERL',
@@ -126,9 +107,11 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
 
     elsif ( $OPS_TYPES_ID == 1 ) {
         $OPS_TYPES = 'CPPOPS_PERLTYPES';
-        diag(
-            "[[[ Beginning RPerl's Perl-Data Mode Scalar Type Tests, RPerl Type System Using Perl Data Types & C++ Operations ]]]"
-        ) if $ENV{TEST_VERBOSE};
+        if ( $ENV{TEST_VERBOSE} ) {
+            diag(
+                "[[[ Beginning RPerl's Perl-Data Mode Scalar Type Tests, RPerl Type System Using Perl Data Types & C++ Operations ]]]"
+            );
+        }
 
 #		lives_ok(sub { types_enable('PERL') }, q{types_enable('PERL') lives});  # NEED FIX?  RPerl typed functions not working in types.pm, must call as normal Perl function
         lives_ok(
@@ -228,8 +211,11 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
 
     else {
         $OPS_TYPES = 'CPPOPS_CPPTYPES';
-        diag(
-            "[[[ Beginning RPerl's C-Data Mode Scalar Type Tests, RPerl Type System Using C++ Data Types & C++ Operations ]]]") if $ENV{TEST_VERBOSE};
+        if ( $ENV{TEST_VERBOSE} ) {
+            diag(
+                "[[[ Beginning RPerl's C-Data Mode Scalar Type Tests, RPerl Type System Using C++ Data Types & C++ Operations ]]]"
+            );
+        }
         lives_ok(
             sub { rperltypes::types_enable('CPP') },
             q{rperltypes::types_enable('CPP') lives}
@@ -360,7 +346,10 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         q{TIV08 integer__stringify(-1_234_567_890) lives}
     );
     throws_ok(                                               # TIV09
-        sub { integer__stringify(-1_234_567_890_000_000_000_000_000_000_000_000) },
+        sub {
+            integer__stringify(
+                -1_234_567_890_000_000_000_000_000_000_000_000);
+        },
         "/EIV01.*$OPS_TYPES/",
         q{TIV09 integer__stringify(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
     );
@@ -432,7 +421,10 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         q{TIV28 integer__typetest1(-234_567_890) lives}
     );
     throws_ok(    # TIV29
-        sub { integer__typetest1(-1_234_567_890_000_000_000_000_000_000_000_000) },
+        sub {
+            integer__typetest1(
+                -1_234_567_890_000_000_000_000_000_000_000_000);
+        },
         "/EIV01.*$OPS_TYPES/",
         q{TIV29 integer__typetest1(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
     );

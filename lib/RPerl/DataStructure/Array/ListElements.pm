@@ -1,13 +1,13 @@
-package RPerl::DataStructure::Array::ListElements; ## no critic qw(ProhibitExcessMainComplexity)  ## RPERL SYSTEM allow complex code
+## no critic qw(ProhibitExcessMainComplexity)  # SYSTEM SPECIAL 5: allow complex code outside subroutines, must be on line 1
+package RPerl::DataStructure::Array::ListElements;
 use strict;
 use warnings;
-our $VERSION = 0.000_002;
-use Carp;
 use RPerl;
+our $VERSION = 0.000_004;
 
 # [[[ SETUP ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  ## RPERL USER DEFAULT optionally allow numeric values, print operator
-## no critic qw(ProhibitBooleanGrep)  ## RPERL SYSTEM allow grep through string__array_ref
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(ProhibitBooleanGrep)  # SYSTEM SPECIAL 1: allow grep
 use Data::Dumper;
 use Scalar::Util 'blessed';
 
@@ -16,7 +16,7 @@ use parent qw(RPerl::GrammarRule);
 
 # [[[ OO PROPERTIES ]]]
 # DEV NOTE: no active properties, this is a stub object for now, see children objects for active properties
-our %properties = ( ## no critic qw(ProhibitPackageVars)  ## RPERL SYSTEM, allow OO properties
+our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
     elements => my object__array_ref $KEY_elements = undef,
 );
 

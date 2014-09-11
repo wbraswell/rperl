@@ -1,10 +1,11 @@
 #!/usr/bin/perl
-## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
-## no critic qw(RequireCheckingReturnValueOfEval)  ## RPERL allow test code blocks
-## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted control characters, sigils, and regexes
 use strict;
 use warnings;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_001;
+
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
+## no critic qw(RequireCheckingReturnValueOfEval)  ## SYSTEM DEFAULT 5: allow eval() test code blocks
 
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
@@ -15,37 +16,12 @@ use Test::Exception;
 use Carp;
 
 BEGIN {
-    diag(
-        "[[[ Beginning Pre-Compiled Sort Pre-Test Loading, RPerl Type System ]]]"
-    ) if $ENV{TEST_VERBOSE};
-}
-
-BEGIN {
+    if ( $ENV{TEST_VERBOSE} ) {
+        diag(
+            '[[[ Beginning Pre-Compiled Sort Pre-Test Loading, RPerl Type System ]]]'
+        );
+    }
     lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
-    lives_ok(
-        sub {
-            use parent ('RPerl');
-        },
-        q{use parent ('RPerl');}
-    );
-}    # RPerl system files
-
-BEGIN {
-    lives_and( sub { use_ok('Data::Dumper'); },
-        q{use_ok('Data::Dumper') lives} );
-    lives_ok(
-        sub {
-            our $AUTOLOAD;
-
-            sub AUTOLOAD { ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  ## RPERL SYSTEM allow autoload  ## RPERL SYSTEM allow read-only @_
-                croak(
-                    "Error autoloading, AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n"
-                        . Dumper( \@_ )
-                        . ', croaking' );
-            }
-        },
-        q{our $AUTOLOAD;  sub AUTOLOAD {...}}
-    );
 }
 
 # [[[ TEST RUNLOOP ]]]
@@ -55,7 +31,7 @@ BEGIN {
 # loop 3 times, once for each mode: Pure-Perl, RPerl Perl-Data, and RPerl C-Data
 for my $OPS_TYPES_ID ( 0 .. 2 ) {
 
-    #for my $OPS_TYPES_ID ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
+#for my $OPS_TYPES_ID ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
 #    print STDERR "in 08_precompiled_sort.t, top of for() loop, have \$OPS_TYPES_ID = $OPS_TYPES_ID\n" or croak;    # no effect if suppressing output!
     my $OPS_TYPES;
 
@@ -65,9 +41,11 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
 
     if ( $OPS_TYPES_ID == 0 ) {
         $OPS_TYPES = 'PERLOPS_PERLTYPES';
-        diag(
-            "[[[ Beginning RPerl's Pure-Perl Pre-Compiled Sort Tests, RPerl Type System Using Perl Data Types & Perl Operations ]]]"
-        ) if $ENV{TEST_VERBOSE};
+        if ( $ENV{TEST_VERBOSE} ) {
+            diag(
+                q{[[[ Beginning RPerl's Pure-Perl Pre-Compiled Sort Tests, RPerl Type System Using Perl Data Types & Perl Operations ]]]}
+            );
+        }
 
         # Bubblesort: Perl use, load, link
         BEGIN {
@@ -144,7 +122,8 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         );
         lives_and(
             sub {
-                is( RPerl__Algorithm__Sort__Bubble__ops(), 'PERL',
+                is( RPerl__Algorithm__Sort__Bubble__ops(),
+                    'PERL',
                     q{RPerl__Algorithm__Sort__Bubble__ops() returns 'PERL'} );
             },
             q{RPerl__Algorithm__Sort__Bubble__ops() lives}
@@ -152,7 +131,8 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         lives_and(
             sub {
                 is( RPerl__Algorithm__Sort__Bubble__types(), 'PERL',
-                    q{RPerl__Algorithm__Sort__Bubble__types() returns 'PERL'} );
+                    q{RPerl__Algorithm__Sort__Bubble__types() returns 'PERL'}
+                );
             },
             q{RPerl__Algorithm__Sort__Bubble__types() lives}
         );
@@ -164,9 +144,11 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
 
     elsif ( $OPS_TYPES_ID == 1 ) {
         $OPS_TYPES = 'CPPOPS_PERLTYPES';
-        diag(
-            "[[[ Beginning RPerl's Perl-Data Mode Pre-Compiled Sort Tests, RPerl Type System Using Perl Data Types & C++ Operations ]]]"
-        ) if $ENV{TEST_VERBOSE};
+        if ( $ENV{TEST_VERBOSE} ) {
+            diag(
+                q{[[[ Beginning RPerl's Perl-Data Mode Pre-Compiled Sort Tests, RPerl Type System Using Perl Data Types & C++ Operations ]]]}
+            );
+        }
 
         lives_ok(
             sub { rperltypes::types_enable('PERL') },
@@ -248,7 +230,8 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         );
         lives_and(
             sub {
-                is( RPerl__Algorithm__Sort__Bubble__ops(), 'CPP',
+                is( RPerl__Algorithm__Sort__Bubble__ops(),
+                    'CPP',
                     q{RPerl__Algorithm__Sort__Bubble__ops() returns 'CPP'} );
             },
             q{RPerl__Algorithm__Sort__Bubble__ops() lives}
@@ -256,7 +239,8 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         lives_and(
             sub {
                 is( RPerl__Algorithm__Sort__Bubble__types(), 'PERL',
-                    q{RPerl__Algorithm__Sort__Bubble__types() returns 'PERL'} );
+                    q{RPerl__Algorithm__Sort__Bubble__types() returns 'PERL'}
+                );
             },
             q{RPerl__Algorithm__Sort__Bubble__types() lives}
         );
@@ -268,9 +252,11 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
 
     else {
         $OPS_TYPES = 'CPPOPS_CPPTYPES';
-        diag(
-            "[[[ Beginning RPerl's C-Data Mode Pre-Compiled Sort Tests, RPerl Type System Using C++ Data Types & C++ Operations ]]]"
-        ) if $ENV{TEST_VERBOSE};
+        if ( $ENV{TEST_VERBOSE} ) {
+            diag(
+                q{[[[ Beginning RPerl's C-Data Mode Pre-Compiled Sort Tests, RPerl Type System Using C++ Data Types & C++ Operations ]]]}
+            );
+        }
         lives_ok(
             sub { rperltypes::types_enable('CPP') },
             q{rperltypes::types_enable('CPP') lives}
@@ -341,7 +327,8 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         );
         lives_and(
             sub {
-                is( RPerl__Algorithm__Sort__Bubble__ops(), 'CPP',
+                is( RPerl__Algorithm__Sort__Bubble__ops(),
+                    'CPP',
                     q{RPerl__Algorithm__Sort__Bubble__ops() returns 'CPP'} );
             },
             q{RPerl__Algorithm__Sort__Bubble__ops() lives}
@@ -349,7 +336,8 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         lives_and(
             sub {
                 is( RPerl__Algorithm__Sort__Bubble__types(), 'CPP',
-                    q{RPerl__Algorithm__Sort__Bubble__types() returns 'CPP'} );
+                    q{RPerl__Algorithm__Sort__Bubble__types() returns 'CPP'}
+                );
             },
             q{RPerl__Algorithm__Sort__Bubble__types() lives}
         );
@@ -391,32 +379,28 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
     );
     throws_ok(    # TIVALSOBU10
         sub {
-            integer__bubblesort(
-                [ 2, 2112, undef, 23, -877, -33, 1701 ] );
+            integer__bubblesort( [ 2, 2112, undef, 23, -877, -33, 1701 ] );
         },
         "/EIVAVRV02.*$OPS_TYPES/",
         q{TIVALSOBU10 integer__bubblesort([2, 2112, undef, 23, -877, -33, 1701]) throws correct exception}
     );
     throws_ok(    # TIVALSOBU11
         sub {
-            integer__bubblesort(
-                [ 2, 2112, 42, 23.3, -877, -33, 1701 ] );
+            integer__bubblesort( [ 2, 2112, 42, 23.3, -877, -33, 1701 ] );
         },
         "/EIVAVRV03.*$OPS_TYPES/",
         q{TIVALSOBU11 integer__bubblesort([2, 2112, 42, 23.3, -877, -33, 1701]) throws correct exception}
     );
     throws_ok(    # TIVALSOBU12
         sub {
-            integer__bubblesort(
-                [ 2, 2112, 42, '23', -877, -33, 1701 ] );
+            integer__bubblesort( [ 2, 2112, 42, '23', -877, -33, 1701 ] );
         },
         "/EIVAVRV03.*$OPS_TYPES/",
         q{TIVALSOBU12 integer__bubblesort([2, 2112, 42, '23', -877, -33, 1701]) throws correct exception}
     );
     throws_ok(    # TIVALSOBU13
         sub {
-            integer__bubblesort(
-                [ 2, 2112, 42, [23], -877, -33, 1701 ] );
+            integer__bubblesort( [ 2, 2112, 42, [23], -877, -33, 1701 ] );
         },
         "/EIVAVRV03.*$OPS_TYPES/",
         q{TIVALSOBU13 integer__bubblesort([2, 2112, 42, [23], -877, -33, 1701]) throws correct exception}
@@ -442,8 +426,8 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
     lives_and(    # TIVALSOBU21
         sub {
             is_deeply(
-                integer__bubblesort( [2, 2112, 42, 23, -877, -33, 1701] ),
-                [-877, -33, 2, 23, 42, 1701, 2112],
+                integer__bubblesort( [ 2, 2112, 42, 23, -877, -33, 1701 ] ),
+                [ -877, -33, 2, 23, 42, 1701, 2112 ],
                 q{TIVALSOBU21 integer__bubblesort([2, 2112, 42, 23, -877, -33, 1701]) returns correct value}
             );
         },
@@ -472,7 +456,7 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         },
         q{TIVALSOBU22a eval { my $retval = integer__bubblesort( [ reverse 0 .. 7 ] ); return $retval; } lives}
     );
-    throws_ok(    # TIVALSOBU30
+    throws_ok(     # TIVALSOBU30
         sub { integer__bubblesort__typetest0() },
         "/(EIVAVRV00.*$OPS_TYPES)|(Usage.*integer__bubblesort__typetest0)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TIVALSOBU30 integer__bubblesort__typetest0() throws correct exception}
@@ -493,26 +477,28 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
     throws_ok(    # TIVALSOBU33
         sub {
             integer__bubblesort__typetest0(
-                [2, 2112, 42, 23, -877, -33, 1701, [23, -42.3]] );
+                [ 2, 2112, 42, 23, -877, -33, 1701, [ 23, -42.3 ] ] );
         },
         "/EIVAVRV03.*$OPS_TYPES/",
         q{TIVALSOBU33 integer__bubblesort__typetest0([2, 2112, 42, 23, -877, -33, 1701, [23, -42.3]]) throws correct exception}
     );
-    lives_and(     # TIVALSOBU34
+    lives_and(    # TIVALSOBU34
         sub {
-            is( integer__bubblesort__typetest0( [2, 2112, 42, 23, -877, -33, 1701] ),
+            is( integer__bubblesort__typetest0(
+                    [ 2, 2112, 42, 23, -877, -33, 1701 ]
+                ),
                 '[-877, -33, 2, 23, 42, 1701, 2112]' . $OPS_TYPES,
                 q{TIVALSOBU34 integer__bubblesort__typetest0([2, 2112, 42, 23, -877, -33, 1701]) returns correct value}
             );
         },
         q{TIVALSOBU34 integer__bubblesort__typetest0([2, 2112, 42, 23, -877, -33, 1701]) lives}
     );
-    lives_and(     # TIVALSOBU34a
+    lives_and(    # TIVALSOBU34a
         sub {
             is( eval {
                     my $retval
                         = integer__bubblesort__typetest0(
-                        [2, 2112, 42, 23, -877, -33, 1701] );
+                        [ 2, 2112, 42, 23, -877, -33, 1701 ] );
                     return $retval;
                 },
                 '[-877, -33, 2, 23, 42, 1701, 2112]' . $OPS_TYPES,
@@ -531,56 +517,53 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         "/(ENVAVRV00.*$OPS_TYPES)|(Usage.*number__bubblesort)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TNVALSOBU00 number__bubblesort() throws correct exception}
     );
-    throws_ok(    # TNVALSOBU01
+    throws_ok(                                                   # TNVALSOBU01
         sub { number__bubblesort(undef) },
         "/ENVAVRV00.*$OPS_TYPES/",
         q{TNVALSOBU01 number__bubblesort(undef) throws correct exception}
     );
-    throws_ok(    # TNVALSOBU02
+    throws_ok(                                                   # TNVALSOBU02
         sub { number__bubblesort(2) },
         "/ENVAVRV01.*$OPS_TYPES/",
         q{TNVALSOBU02 number__bubblesort(2) throws correct exception}
     );
-    throws_ok(    # TNVALSOBU03
+    throws_ok(                                                   # TNVALSOBU03
         sub { number__bubblesort(2.3) },
         "/ENVAVRV01.*$OPS_TYPES/",
         q{TNVALSOBU03 number__bubblesort(2.3) throws correct exception}
     );
-    throws_ok(    # TNVALSOBU04
+    throws_ok(                                                   # TNVALSOBU04
         sub { number__bubblesort('2') },
         "/ENVAVRV01.*$OPS_TYPES/",
         q{TNVALSOBU04 number__bubblesort('2') throws correct exception}
     );
-    throws_ok(    # TNVALSOBU05
+    throws_ok(                                                   # TNVALSOBU05
         sub { number__bubblesort( { a_key => 23 } ) },
         "/ENVAVRV01.*$OPS_TYPES/",
         q{TNVALSOBU05 number__bubblesort({a_key => 23}) throws correct exception}
     );
-    throws_ok(    # TNVALSOBU10
+    throws_ok(                                                   # TNVALSOBU10
         sub {
-            number__bubblesort(
-                [ 2, 2112, undef, 23, -877, -33, 1701 ] );
+            number__bubblesort( [ 2, 2112, undef, 23, -877, -33, 1701 ] );
         },
         "/ENVAVRV02.*$OPS_TYPES/",
         q{TNVALSOBU10 number__bubblesort([2, 2112, undef, 23, -877, -33, 1701]) throws correct exception}
     );
-    throws_ok(    # TNVALSOBU11
+    throws_ok(                                                   # TNVALSOBU11
         sub {
-            number__bubblesort(
-                [ 2, 2112, 42, '23', -877, -33, 1701 ] );
+            number__bubblesort( [ 2, 2112, 42, '23', -877, -33, 1701 ] );
         },
         "/ENVAVRV03.*$OPS_TYPES/",
         q{TNVALSOBU11 number__bubblesort([2, 2112, 42, '23', -877, -33, 1701]) throws correct exception}
     );
-    throws_ok(    # TNVALSOBU12
+    throws_ok(                                                   # TNVALSOBU12
         sub {
-            number__bubblesort(
-                [ 2, 2112, 42, [23], -877, -33, 1701 ] );
+            number__bubblesort( [ 2, 2112, 42, [23], -877, -33, 1701 ] );
         },
         "/ENVAVRV03.*$OPS_TYPES/",
         q{TNVALSOBU12 number__bubblesort([2, 2112, 42, [23], -877, -33, 1701]) throws correct exception}
     );
-    throws_ok(    # TNVALSOBU13
+    throws_ok(                                                   # TNVALSOBU13
         sub {
             number__bubblesort(
                 [ 2, 2112, 42, { a_subkey => 23 }, -877, -33, 1701 ] );
@@ -588,7 +571,7 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         "/ENVAVRV03.*$OPS_TYPES/",
         q{TNVALSOBU13 number__bubblesort([2, 2112, 42, {a_subkey => 23}, -877, -33, 1701]) throws correct exception}
     );
-    lives_and(    # TNVALSOBU20
+    lives_and(                                                   # TNVALSOBU20
         sub {
             is_deeply(
                 number__bubblesort( [23] ),
@@ -598,17 +581,17 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         },
         q{TNVALSOBU20 number__bubblesort([23]) lives}
     );
-    lives_and(    # TNVALSOBU21
+    lives_and(                                                   # TNVALSOBU21
         sub {
             is_deeply(
-                number__bubblesort( [2, 2112, 42, 23, -877, -33, 1701] ),
-                [-877, -33, 2, 23, 42, 1701, 2112],
+                number__bubblesort( [ 2, 2112, 42, 23, -877, -33, 1701 ] ),
+                [ -877, -33, 2, 23, 42, 1701, 2112 ],
                 q{TNVALSOBU21 number__bubblesort([2, 2112, 42, 23, -877, -33, 1701]) returns correct value}
             );
         },
         q{TNVALSOBU21 number__bubblesort([2, 2112, 42, 23, -877, -33, 1701]) lives}
     );
-    lives_and(    # TNVALSOBU22
+    lives_and(                                                   # TNVALSOBU22
         sub {
             is_deeply(
                 number__bubblesort( [ reverse 0 .. 7 ] ),
@@ -631,7 +614,7 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         },
         q{TNVALSOBU22a eval { my $retval = number__bubblesort( [ reverse 0 .. 7 ] ); return $retval; } lives}
     );
-    lives_and(    # TNVALSOBU23
+    lives_and(     # TNVALSOBU23
         sub {
             is_deeply(
                 number__bubblesort( [23.2] ),
@@ -641,21 +624,33 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
         },
         q{TNVALSOBU23 number__bubblesort([23.2]) lives}
     );
-    lives_and(    # TNVALSOBU24
+    lives_and(     # TNVALSOBU24
         sub {
             is_deeply(
-                number__bubblesort( [2.1, 2112.2, 42.3, 23, -877, -33, 1701] ),
-                [-877, -33, 2.1, 23, 42.3, 1701, 2112.2],
+                number__bubblesort(
+                    [ 2.1, 2112.2, 42.3, 23, -877, -33, 1701 ]
+                ),
+                [ -877, -33, 2.1, 23, 42.3, 1701, 2112.2 ],
                 q{TNVALSOBU24 number__bubblesort([2.1, 2112.2, 42.3, 23, -877, -33, 1701]) returns correct value}
             );
         },
         q{TNVALSOBU24 number__bubblesort([2.1, 2112.2, 42.3, 23, -877, -33, 1701]) lives}
     );
-    lives_and(    # TNVALSOBU25
+    lives_and(     # TNVALSOBU25
         sub {
             is_deeply(
-                number__bubblesort( [2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789] ),
-                [-877.5678, -33.8765876587659, 2.12344321123443, 23.7654444444444, 42.4567, 1701.6789, 2112.4321],
+                number__bubblesort(
+                    [   2.1234432112344321, 2112.4321,
+                        42.4567,            23.765444444444444444,
+                        -877.5678,          -33.876587658765875687658765,
+                        1701.6789
+                    ]
+                ),
+                [   -877.5678,        -33.8765876587659,
+                    2.12344321123443, 23.7654444444444,
+                    42.4567,          1701.6789,
+                    2112.4321
+                ],
                 q{TNVALSOBU25 number__bubblesort([2.1234432112344321, ..., -33.876587658765875687658765, 1701.6789]) returns correct value}
             );
         },
@@ -674,7 +669,12 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
     throws_ok(    # TNVALSOBU32
         sub {
             number__bubblesort__typetest0(
-                [2.1234432112344321, 2112.4321, undef, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789] );
+                [   2.1234432112344321, 2112.4321,
+                    undef,              23.765444444444444444,
+                    -877.5678,          -33.876587658765875687658765,
+                    1701.6789
+                ]
+            );
         },
         "/ENVAVRV02.*$OPS_TYPES/",
         q{TNVALSOBU32 number__bubblesort__typetest0([2.1234432112344321, 2112.4321, undef, ..., 1701.6789]) throws correct exception}
@@ -682,29 +682,49 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
     throws_ok(    # TNVALSOBU33
         sub {
             number__bubblesort__typetest0(
-                [2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, 'abcdefg', -33.876587658765875687658765, 1701.6789] );
+                [   2.1234432112344321,           2112.4321,
+                    42.4567,                      23.765444444444444444,
+                    -877.5678,                    'abcdefg',
+                    -33.876587658765875687658765, 1701.6789
+                ]
+            );
         },
         "/ENVAVRV03.*$OPS_TYPES/",
         q{TNVALSOBU33 number__bubblesort__typetest0([2.1234432112344321, ..., 'abcdefg', -33.876587658765875687658765, 1701.6789]) throws correct exception}
     );
-    lives_and(     # TNVALSOBU34
+    lives_and(    # TNVALSOBU34
         sub {
-            is( number__bubblesort__typetest0( [2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789] ),
-                '[-877.5678, -33.8765876587659, 2.12344321123443, 23.7654444444444, 42.4567, 1701.6789, 2112.4321]' . $OPS_TYPES,
+            is( number__bubblesort__typetest0(
+                    [   2.1234432112344321, 2112.4321,
+                        42.4567,            23.765444444444444444,
+                        -877.5678,          -33.876587658765875687658765,
+                        1701.6789
+                    ]
+                ),
+                '[-877.5678, -33.8765876587659, 2.12344321123443, 23.7654444444444, 42.4567, 1701.6789, 2112.4321]'
+                    . $OPS_TYPES,
                 q{TNVALSOBU34 number__bubblesort__typetest0([2.1234432112344321, ..., -33.876587658765875687658765, 1701.6789]) returns correct value}
             );
         },
         q{TNVALSOBU34 number__bubblesort__typetest0([2.1234432112344321, ..., -33.876587658765875687658765, 1701.6789]) lives}
     );
-    lives_and(     # TNVALSOBU34a
+    lives_and(    # TNVALSOBU34a
         sub {
             is( eval {
-                    my $retval
-                        = number__bubblesort__typetest0(
-                        [2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789] );
+                    my $retval = number__bubblesort__typetest0(
+                        [   2.1234432112344321,
+                            2112.4321,
+                            42.4567,
+                            23.765444444444444444,
+                            -877.5678,
+                            -33.876587658765875687658765,
+                            1701.6789
+                        ]
+                    );
                     return $retval;
                 },
-                '[-877.5678, -33.8765876587659, 2.12344321123443, 23.7654444444444, 42.4567, 1701.6789, 2112.4321]' . $OPS_TYPES,
+                '[-877.5678, -33.8765876587659, 2.12344321123443, 23.7654444444444, 42.4567, 1701.6789, 2112.4321]'
+                    . $OPS_TYPES,
                 q{TNVALSOBU34a eval { my $retval = number__bubblesort__typetest0( [2.1234432112344321, ..., 1701.6789] ); return $retval; } returns correct value}
             );
         },

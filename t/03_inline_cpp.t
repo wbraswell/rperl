@@ -1,19 +1,26 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.001_001;
+our $VERSION = 0.001_003;
 
-use Test::More; # tests => 20;
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
+
+use Test::More;    # tests => 20;
 use Test::Exception;
 use Carp;
 use English qw(-no_match_vars);
-my $ERROR_MAX = 0.00000001; ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+my $ERROR_MAX = 0.00000001;
 
 BEGIN {
-    diag("[[[ Beginning Inline::CPP Pre-Test Loading ]]]") if $ENV{TEST_VERBOSE};
+    if ( $ENV{TEST_VERBOSE} ) {
+        diag('[[[ Beginning Inline::CPP Pre-Test Loading ]]]');
+    }
 }
 
-diag("[[[ Beginning Entirety Of Tests From The Inline::CPP POD ]]]") if $ENV{TEST_VERBOSE};
+if ( $ENV{TEST_VERBOSE} ) {
+    diag('[[[ Beginning Entirety Of Tests From The Inline::CPP POD ]]]');
+}
 
 # Inline::CPP examples from:  http://search.cpan.org/~davido/Inline-CPP-0.44/lib/Inline/CPP.pod
 # Note: I did not exclude any Inline::CPP examples, they are all suitable for testing.
@@ -52,8 +59,7 @@ END_OF_CPP_CODE
 EOF
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
-            $farmer_define_eval_string;
+        my $EVAL_RETVAL = eval $farmer_define_eval_string;
         if ( $EVAL_ERROR ne q{} ) {
             croak(
                 "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
@@ -75,8 +81,7 @@ return("Wow!  The farmer worked " . $farmer->how_long . " hours!");
 EOF
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
-            $farmer_call_eval_string;
+        my $EVAL_RETVAL = eval $farmer_call_eval_string;
         if ( $EVAL_ERROR ne q{} ) {
             croak(
                 "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
@@ -124,8 +129,7 @@ END_OF_CPP_CODE
 EOF
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
-            $airplane_define_eval_string;
+        my $EVAL_RETVAL = eval $airplane_define_eval_string;
         if ( $EVAL_ERROR ne q{} ) {
             croak(
                 "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
@@ -146,8 +150,8 @@ return($plane_retval1, $plane_retval2);
 EOF
 lives_and(
     sub {
-        my ( $airplane_retval1, $airplane_retval2 ) = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
-            $airplane_call_eval_string;
+        my ( $airplane_retval1, $airplane_retval2 )
+            = eval $airplane_call_eval_string;
         if ( $EVAL_ERROR ne q{} ) {
             croak(
                 "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
@@ -193,8 +197,7 @@ END_OF_CPP_CODE
 EOF
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
-            $average_define_eval_string;
+        my $EVAL_RETVAL = eval $average_define_eval_string;
         if ( $EVAL_ERROR ne q{} ) {
             croak(
                 "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
@@ -218,9 +221,7 @@ lives_and(
     sub {
         my ($average_retval,        $avg_retval,
             $average_retval_string, $avg_retval_string
-            )
-            = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
-            $average_call_eval_string;
+        ) = eval $average_call_eval_string;
         if ( $EVAL_ERROR ne q{} ) {
             croak(
                 "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
@@ -273,8 +274,7 @@ END_OF_CPP_CODE
 EOF
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
-            $queuestack_define_eval_string;
+        my $EVAL_RETVAL = eval $queuestack_define_eval_string;
         if ( $EVAL_ERROR ne q{} ) {
             croak(
                 "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
@@ -312,8 +312,8 @@ return($queue_retval, $stack_retval);
 EOF
 lives_and(
     sub {
-        my ( $queue_retval, $stack_retval ) = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
-            $queuestack_call_eval_string;
+        my ( $queue_retval, $stack_retval )
+            = eval $queuestack_call_eval_string;
         if ( $EVAL_ERROR ne q{} ) {
             croak(
                 "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
@@ -357,8 +357,7 @@ END_OF_CPP_CODE
 EOF
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
-            $multiadd_define_eval_string;
+        my $EVAL_RETVAL = eval $multiadd_define_eval_string;
         if ( $EVAL_ERROR ne q{} ) {
             croak(
                 "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
@@ -371,7 +370,7 @@ lives_and(
 );
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
+        my $EVAL_RETVAL = eval
             'return(multiadd(1));  # No dispatch; just return the value';
         if ( $EVAL_ERROR ne q{} ) {
             croak(
@@ -385,40 +384,35 @@ lives_and(
 );
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
-            'multiadd(1, 2);  # Dispatch add(int, int)';
+        my $EVAL_RETVAL = eval 'multiadd(1, 2);  # Dispatch add(int, int)';
         if ( $EVAL_ERROR ne q{} ) {
             croak(
                 "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
             );
         }
-        cmp_ok(
-            $EVAL_RETVAL, q{==}, 3, ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
-            q{Inline::CPP, call multiadd(1, 2) returns correct value}
-        );
+        cmp_ok( $EVAL_RETVAL, q{==}, 3,
+            q{Inline::CPP, call multiadd(1, 2) returns correct value} );
     },
     q{Inline::CPP, call multiadd(1, 2) lives}
 );
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
-            'multiadd(1, 2, 3);  # Dispatch add(int, int, int)';
+        my $EVAL_RETVAL
+            = eval 'multiadd(1, 2, 3);  # Dispatch add(int, int, int)';
         if ( $EVAL_ERROR ne q{} ) {
             croak(
                 "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
             );
         }
-        cmp_ok(
-            $EVAL_RETVAL, q{==}, 6, ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
-            q{Inline::CPP, call multiadd(1, 2, 3) returns correct value}
-        );
+        cmp_ok( $EVAL_RETVAL, q{==}, 6,
+            q{Inline::CPP, call multiadd(1, 2, 3) returns correct value} );
     },
     q{Inline::CPP, call multiadd(1, 2, 3) lives}
 );
 lives_and( # can't use throws_ok() because we are trapping the exception inside of eval
     sub {
-        my $EVAL_RETVAL = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
-            'multiadd(1, 2, 3, 4);  # No dispatch; throw an exception';
+        my $EVAL_RETVAL
+            = eval 'multiadd(1, 2, 3, 4);  # No dispatch; throw an exception';
         like(
             $EVAL_ERROR,
             '/^multiadd\(\) \- Too many args in function call at/',

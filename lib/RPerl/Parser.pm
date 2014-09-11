@@ -1,9 +1,11 @@
-## no critic qw(ProhibitBacktickOperators ProhibitPunctuationVars ProhibitMagicNumbers)  ## RPERL SYSTEM, allow system command execution
 package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl;
 our $VERSION = 0.001_001;
+
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(ProhibitBacktickOperators)  ## SYSTEM SPECIAL 11: allow system command execution
 
 # [[[ SETUP ]]]
 #use RPerl::CompileUnit::Module::Class;
@@ -13,23 +15,6 @@ use PPI;
 use PPI::Dumper;
 use Scalar::Util 'blessed';
 use Perl::Critic;
-
-# [[[ OO PROPERTIES ]]]
-
-# OO disabled for now, not immediately needed
-
-=disable
-our %properties = (
-    foo => my const_string $KEY_foo      = 'baz',
-    bar => my const_int $KEY_bar         = 23,
-    bat => my scalar__array_ref $KEY_bat = [ 21, 12, 'starman' ],
-    baz => my scalar__hash_ref $KEY_baz  = {
-        one_const_int  => 21,
-        two_const_int  => 12,
-        name_const_str => 'starman'
-    }
-);
-=cut
 
 # [[[ PROCEDURAL SUBROUTINES ]]]
 

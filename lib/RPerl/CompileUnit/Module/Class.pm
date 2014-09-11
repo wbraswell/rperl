@@ -2,11 +2,11 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.012_000;
+our $VERSION = 0.012_001;
 
 ## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
 ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  # SYSTEM SPECIAL 2: allow Autoload & read-only @_
-## no critic qw(ProhibitExcessMainComplexity ProhibitExcessComplexity)  # SYSTEM SPECIAL 7: allow complex code
+## no critic qw(ProhibitExcessComplexity)  # SYSTEM SPECIAL 6: allow complex code inside subroutines, must be after line 1
 ## no critic qw(ProhibitDeepNests)  # SYSTEM SPECIAL 8: allow deeply-nested code
 ## no critic qw(ProhibitNoStrict)  # SYSTEM SPECIAL 9: allow no strict
 ## no critic qw(RequireBriefOpen)  # SYSTEM SPECIAL 10: allow complex processing with open filehandle
@@ -91,6 +91,13 @@ INIT {
                 if ( $module_file_line eq '__DATA__' ) {
 
  #					print {*STDERR} "in Class.pm INIT block, skipping '__DATA__' footer\n";
+                    last;
+                }
+
+                # skip __END__ footer
+                if ( $module_file_line eq '__END__' ) {
+
+ #					print {*STDERR} "in Class.pm INIT block, skipping '__END__' footer\n";
                     last;
                 }
 
@@ -198,7 +205,7 @@ sub DESTROY { }
 
 1;
 
-__DATA__
+__END__
 
 # RPerl function/method autoloader, longhand; allows syntax for typed functions/methods and automates get/set accessors/mutators for object properties;
 # creates real subroutines to avoid AUTOLOADing any function/method more than once, performs operation inside AUTOLOAD that one time

@@ -1,14 +1,15 @@
-## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
-## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
-## no critic qw(ProhibitMultiplePackages)  ## RPERL SYSTEM types, allow multiple packages
-## no critic qw(Capitalization)  ## RPERL SYSTEM types, allow lowercase packages
 package RPerl::DataType::Integer;
 use strict;
 use warnings;
-our $VERSION = 0.003_003;
+use RPerl;
+our $VERSION = 0.003_004;
+
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
+## no critic qw(Capitalization ProhibitMultiplePackages)  # SYSTEM DEFAULT 4: allow multiple lower case package names
+
 use parent ('RPerl::DataType');
 use RPerl::DataType;
-use Carp;
 
 # [[[ SUB-TYPES BEFORE SETUP ]]]
 # an integer is a whole number, it has no floating-pointeger (fractional/decimal) component
@@ -74,6 +75,7 @@ our string $integer__stringify = sub {
     #    integer__CHECK($input_integer);
     integer__CHECKTRACE( $input_integer, '$input_integer',
         'integer__stringify()' );
+
 #    RPerl::diag "in PERLOPS_PERLTYPES integer__stringify(), bottom of subroutine, received \$input_integer = $input_integer\n" or croak();
     return ("$input_integer");
 };
@@ -81,6 +83,7 @@ our string $integer__stringify = sub {
 # [[[ TYPE TESTING ]]]
 our integer $integer__typetest0 = sub {
     my integer $retval = ( 21 / 7 ) + $integer__OPS_TYPES_ID; # return integer (not number) value, don't do (22 / 7) etc.
+
 #    RPerl::diag "in PERLOPS_PERLTYPES integer__typetest0(), have \$retval = $retval\n" or croak();
     return ($retval);
 };
@@ -90,6 +93,7 @@ our integer $integer__typetest1 = sub {
     #    integer__CHECK($lucky_integer);
     integer__CHECKTRACE( $lucky_integer, '$lucky_integer',
         'integer__typetest1()' );
+
 #    RPerl::diag 'in PERLOPS_PERLTYPES integer__typetest1(), received $lucky_integer = ' . integer__stringify($lucky_integer) . "\n" or croak();
     return ( ( $lucky_integer * 2 ) + $integer__OPS_TYPES_ID );
 };

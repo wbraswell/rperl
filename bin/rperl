@@ -80,7 +80,7 @@ foreach my string $mode_key ( keys %{$mode} ) {
                 . "),\ncroaking" );
     }
 }
-foreach my string $mode_default_key ( keys %{$mode_default} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC UNFILED ISSUE, not postfix foreach
+foreach my string $mode_default_key ( keys %{$mode_default} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 7: PERL CRITIC UNFILED ISSUE, not postfix foreach
     if ( not( exists $mode->{$mode_default_key} ) ) {
         $mode->{$mode_default_key} = $mode_default->{$mode_default_key};
     }

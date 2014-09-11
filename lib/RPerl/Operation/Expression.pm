@@ -1,14 +1,12 @@
 package RPerl::Operation::Expression;
 use strict;
 use warnings;
-our $VERSION = 0.000_010;
-use Carp;
 use RPerl;
+our $VERSION = 0.000_011;
 
 # [[[ SETUP ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  ## RPERL USER DEFAULT optionally allow numeric values, print operator
-## no critic qw(ProhibitBooleanGrep)  ## RPERL SYSTEM allow grep through string__array_ref
-use Data::Dumper;
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(ProhibitBooleanGrep)  # SYSTEM SPECIAL 1: allow grep
 use Scalar::Util 'blessed';
 
 # [[[ OO INHERITANCE ]]]
@@ -16,8 +14,6 @@ use parent qw(RPerl::Operation);
 
 # [[[ OO PROPERTIES ]]]
 # DEV NOTE: no active properties, this is a stub object for now, see children objects for active properties
-our %properties = ( ## no critic qw(ProhibitPackageVars)  ## RPERL SYSTEM, allow OO properties
-);
 
 # [[[ OO METHODS ]]]
 # TRANSLATE
@@ -92,14 +88,12 @@ our object__method $ppi_to_rperl__translate = sub {
         return ($node_translated);
     }
 
-    # NEED FIX: handle multi-object VARIABLE production (VARIABLE_RETRIEVAL, not just _variable_symbol)
-    # EXPRESSION rule, POSSIBLE VARIABLE PRODUCTION
+# NEED FIX: handle multi-object VARIABLE production (VARIABLE_RETRIEVAL, not just _variable_symbol)
+# EXPRESSION rule, POSSIBLE VARIABLE PRODUCTION
     $production_name       = 'POSSIBLE VARIABLE';
     $component_name        = '<default>';
-    $node_classes_expected = [
-        qw(PPI::Token::Symbol)
-    ];
-    $node_disqualified = 0;
+    $node_classes_expected = [qw(PPI::Token::Symbol)];
+    $node_disqualified     = 0;
     if ( not( grep { $_ eq $node_class } @{$node_classes_expected} ) ) {
         $node_disqualified = 1;
     }
@@ -108,10 +102,12 @@ our object__method $ppi_to_rperl__translate = sub {
     if ( not $node_disqualified ) {
         $production_name = 'VARIABLE';
         $component_name  = '<default>';
-        # NEED FIX: wrapping _variable_symbol in PPI::Statement, short-circuiting check for multi-object VARIABLE production
+
+# NEED FIX: wrapping _variable_symbol in PPI::Statement, short-circuiting check for multi-object VARIABLE production
         my object $variable_node = PPI::Statement->new();
         $variable_node->{children} = [$node];
-        $node_translated = RPerl::Operation::Expression::Variable->ppi_to_rperl__translate($variable_node);
+        $node_translated = RPerl::Operation::Expression::Variable
+            ->ppi_to_rperl__translate($variable_node);
         print {*STDERR}
             "in Expression::ppi_to_rperl__translate(), _LITERAL production, about to return \$node_translated=\n"
             . Dumper($node_translated) . "\n";

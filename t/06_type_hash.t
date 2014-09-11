@@ -1,51 +1,27 @@
 #!/usr/bin/perl
-## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
-## no critic qw(ProhibitInterpolationOfLiterals)  ## RPERL allow string test values
-## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted control characters, sigils, and regexes
 use strict;
 use warnings;
-our $VERSION = 0.004_000;
+our $VERSION = 0.004_003;
+
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
+## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
 
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]
 
-use Test::More; # tests => 226;
+use Test::More;    # tests => 226;
 use Test::Exception;
 use Carp;
 
 BEGIN {
-    diag(
-        "[[[ Beginning Hash Type Pre-Test Loading, RPerl Type System ]]]"
-    ) if $ENV{TEST_VERBOSE};
-}
-
-BEGIN {
+    if ( $ENV{TEST_VERBOSE} ) {
+        diag(
+            '[[[ Beginning Hash Type Pre-Test Loading, RPerl Type System ]]]'
+        );
+    }
     lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
-    lives_ok(
-        sub {
-            use parent ('RPerl');
-        },
-        q{use parent ('RPerl');}
-    );
-}    # RPerl system files
-
-BEGIN {
-    lives_and( sub { use_ok('Data::Dumper'); },
-        q{use_ok('Data::Dumper') lives} );
-    lives_ok(
-        sub {
-            our $AUTOLOAD;
-
-            sub AUTOLOAD { ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  ## RPERL SYSTEM allow autoload  ## RPERL SYSTEM allow read-only @_
-                croak(
-                    "Error autoloading, AUTOLOAD purposefully disabled for debugging, have \$AUTOLOAD = '$AUTOLOAD' and \@_ = \n"
-                        . Dumper( \@_ )
-                        . ', croaking' );
-            }
-        },
-        q{our $AUTOLOAD;  sub AUTOLOAD {...}}
-    );
 }
 
 # [[[ TEST RUNLOOP ]]]
@@ -54,6 +30,7 @@ BEGIN {
 
 # loop 3 times, once for each mode: Pure-Perl, RPerl Perl-Data, and RPerl C-Data
 for my $OPS_TYPES_ID ( 0 .. 2 ) {
+
 #    print STDERR "in 06_type_hash.t, top of for() loop, have \$OPS_TYPES_ID = $OPS_TYPES_ID\n" or croak; # no effect if suppressing output!
     my $OPS_TYPES;
 
@@ -63,9 +40,11 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
 
     if ( $OPS_TYPES_ID == 0 ) {
         $OPS_TYPES = 'PERLOPS_PERLTYPES';
-        diag(
-            "[[[ Beginning RPerl's Pure-Perl Hash Type Tests, RPerl Type System Using Perl Data Types & Perl Operations ]]]"
-        ) if $ENV{TEST_VERBOSE};
+        if ( $ENV{TEST_VERBOSE} ) {
+            diag(
+                q{[[[ Beginning RPerl's Pure-Perl Hash Type Tests, RPerl Type System Using Perl Data Types & Perl Operations ]]]}
+            );
+        }
         lives_and(
             sub {
                 is( integer__ops(), 'PERL',
@@ -124,9 +103,11 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
 
     elsif ( $OPS_TYPES_ID == 1 ) {
         $OPS_TYPES = 'CPPOPS_PERLTYPES';
-        diag(
-            "[[[ Beginning RPerl's Perl-Data Mode Hash Type Tests, RPerl Type System Using Perl Data Types & C++ Operations ]]]"
-        ) if $ENV{TEST_VERBOSE};
+        if ( $ENV{TEST_VERBOSE} ) {
+            diag(
+                q{[[[ Beginning RPerl's Perl-Data Mode Hash Type Tests, RPerl Type System Using Perl Data Types & C++ Operations ]]]}
+            );
+        }
 
         lives_ok(
             sub { rperltypes::types_enable('PERL') },
@@ -202,9 +183,11 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
 
     else {
         $OPS_TYPES = 'CPPOPS_CPPTYPES';
-        diag(
-            "[[[ Beginning RPerl's C-Data Mode Hash Type Tests, RPerl Type System Using C++ Data Types & C++ Operations ]]]"
-        ) if $ENV{TEST_VERBOSE};
+        if ( $ENV{TEST_VERBOSE} ) {
+            diag(
+                q{[[[ Beginning RPerl's C-Data Mode Hash Type Tests, RPerl Type System Using C++ Data Types & C++ Operations ]]]}
+            );
+        }
         lives_ok(
             sub { rperltypes::types_enable('CPP') },
             q{rperltypes::types_enable('CPP') lives}

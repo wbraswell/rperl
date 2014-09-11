@@ -1,20 +1,18 @@
 package RPerl::Operation::Statement::OperatorVoid::Croak;
 use strict;
 use warnings;
-our $VERSION = 0.000_002;
-use Carp;
 use RPerl;
+our $VERSION = 0.000_003;
 
 # [[[ SETUP ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  ## RPERL USER DEFAULT optionally allow numeric values, print operator
-use Data::Dumper;
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 use Scalar::Util 'blessed';
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement::OperatorVoid);
 
 # [[[ OO PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  ## RPERL SYSTEM, allow OO properties
+our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
     name => my string $KEY_name = 'croak',
     arguments => my object__array_ref $KEY_arguments = undef,
 );

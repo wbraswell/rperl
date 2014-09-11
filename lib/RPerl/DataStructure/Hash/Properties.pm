@@ -1,22 +1,19 @@
-package RPerl::DataStructure::Hash::Properties; ## nfo critic qw(ProhibitExcessMainComplexity)  ## RPERL SYSTEM allow complex code
+package RPerl::DataStructure::Hash::Properties;
 use strict;
 use warnings;
-our $VERSION = 0.000_010;
-use Carp;
 use RPerl;
+our $VERSION = 0.000_011;
 
 # [[[ SETUP ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  ## RPERL USER DEFAULT optionally allow numeric values, print operator
-## no critic qw(ProhibitMultiplePackages)  ## RPERL SYSTEM types, allow multiple packages
-## no critic qw(Capitalization)  ## RPERL SYSTEM types, allow lowercase packages
-use Data::Dumper;
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(Capitalization ProhibitMultiplePackages)  # SYSTEM DEFAULT 4: allow multiple lower case package names
 use Scalar::Util 'blessed';
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule RPerl::DataStructure::Hash);
 
 # [[[ OO PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  ## RPERL SYSTEM, allow OO properties
+our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
     property_entries => my object__hash_ref $KEY_property_entries = undef,
 );
 

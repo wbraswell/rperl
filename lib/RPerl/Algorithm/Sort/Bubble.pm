@@ -3,13 +3,11 @@ package RPerl::Algorithm::Sort::Bubble;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_010;
+our $VERSION = 0.004_011;
 
 # [[[ CRITICS, OO INHERITANCE, INCLUDES ]]]
-# USER DEFAULT 1: allow numeric values and print operator
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)
-# USER SPECIAL 1: allow single-quoted control characters, sigils, and regexes
-## no critic qw(RequireInterpolationOfMetachars)
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
 use parent qw( RPerl::Algorithm::Sort ); # OO INHERITANCE TESTING; SINGLE OO INHERITANCE
 
 #use parent qw( RPerl::Algorithm::Sort RPerl::Algorithm::Inefficient ); # OO INHERITANCE TESTING; MULTIPLE OO INHERITANCE NOT SUPPORTED BY Inline::CPP
@@ -55,7 +53,8 @@ our void__method $inherited = sub {
         "in PERLOPS_PERLTYPES Bubble->inherited(), received \$self = '$self' and \$person = '$person', ILLOGICAL\n";
 };
 
-1, 1;    # CODE SEPARATOR: methods above, subroutines below
+1;
+1;    # CODE SEPARATOR: methods above, subroutines below
 
 # [[[ SUBROUTINES ]]]
 
@@ -220,4 +219,5 @@ our integer $RPerl__Algorithm__Sort__Bubble__OPS_TYPES_ID
 our string $RPerl__Algorithm__Sort__Bubble__ops   = sub { return 'PERL'; };
 our string $RPerl__Algorithm__Sort__Bubble__types = sub { return 'PERL'; };
 
-1, 1;                       # CODE SEPARATOR: end of class
+1;
+1;                          # CODE SEPARATOR: end of class

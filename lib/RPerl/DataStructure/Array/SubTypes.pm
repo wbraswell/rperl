@@ -1,14 +1,14 @@
-## no critic qw(ProhibitExcessMainComplexity PodSpelling)  ## RPERL SYSTEM types, allow long subtypes package; RPERL allow block comments; DEV NOTE: these 2 must appear together on 1st line
-## no critic qw(RequirePodAtEnd RequirePodSections)  ## RPERL allow block comments
-## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
-## no critic qw(ProhibitMultiplePackages)  ## RPERL SYSTEM types, allow multiple packages
-## no critic qw(Capitalization)  ## RPERL SYSTEM types, allow lowercase packages
-## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+## no critic qw(ProhibitUselessNoCritic PodSpelling ProhibitExcessMainComplexity)  # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code; SYSTEM SPECIAL 5: allow complex code outside subroutines, must be on line 1
 package RPerl::DataStructure::Array::SubTypes;
 use strict;
 use warnings;
+use RPerl;
 our $VERSION = 0.004_000;
-use Carp;
+
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd) # DEVELOPER DEFAULT 1b: allow unreachable & POD-commented code, must be after line 1
+## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
+## no critic qw(Capitalization ProhibitMultiplePackages)  # SYSTEM DEFAULT 4: allow multiple lower case package names
 
 # [[[ ARRAYS ]]]
 
@@ -111,7 +111,8 @@ use Carp;
 
 our void $integer__array_ref__CHECK = sub {
     ( my $possible_integer__array_ref ) = @_;
-	# DEV NOTE: the following two if() statements are functionally equivalent to the array_ref__CHECK() subroutine, but with integer-specific error codes
+
+# DEV NOTE: the following two if() statements are functionally equivalent to the array_ref__CHECK() subroutine, but with integer-specific error codes
     if ( not( defined $possible_integer__array_ref ) ) {
         croak(
             "\nERROR EIVAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger__array_ref value expected but undefined/null value found,\ncroaking"
@@ -129,7 +130,8 @@ our void $integer__array_ref__CHECK = sub {
         0 .. ( ( scalar @{$possible_integer__array_ref} ) - 1 ) )
     {
         $possible_integer = $possible_integer__array_ref->[$i];
-		# DEV NOTE: the following two if() statements are functionally equivalent to the integer__CHECK() subroutine, but with array-specific error codes
+
+# DEV NOTE: the following two if() statements are functionally equivalent to the integer__CHECK() subroutine, but with array-specific error codes
         if ( not( defined $possible_integer ) ) {
             croak(
                 "\nERROR EIVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger__array_ref element value expected but undefined/null value found at index $i,\ncroaking"
@@ -205,9 +207,9 @@ our string $integer__array_ref__stringify = sub {
 
         $input_av_element = $input_av[$i];
 
-		# DEV NOTE: integer type-checking already done as part of integer__array_ref__CHECKTRACE()
-        #        ::integer__CHECK($input_av_element);
-        #::integer__CHECKTRACE( $input_av_element, "\$input_av_element at index $i", 'integer__array_ref__stringify()' );
+# DEV NOTE: integer type-checking already done as part of integer__array_ref__CHECKTRACE()
+#        ::integer__CHECK($input_av_element);
+#::integer__CHECKTRACE( $input_av_element, "\$input_av_element at index $i", 'integer__array_ref__stringify()' );
 
         if ($i_is_0) { $i_is_0 = 0; }
         else         { $output_sv .= ', '; }
@@ -226,8 +228,10 @@ our string $integer__array_ref__stringify = sub {
 
 our string $integer__array_ref__typetest0 = sub {
     ( my integer__array_ref $lucky_integers) = @_;
-#    ::integer__array_ref__CHECK($lucky_integers);
-    ::integer__array_ref__CHECKTRACE( $lucky_integers, '$lucky_integers', 'integer__array_ref__typetest0()' );
+
+    #    ::integer__array_ref__CHECK($lucky_integers);
+    ::integer__array_ref__CHECKTRACE( $lucky_integers, '$lucky_integers',
+        'integer__array_ref__typetest0()' );
 
 #    my integer $how_lucky = scalar @{$lucky_integers};
 #    for my integer $i ( 0 .. ( $how_lucky - 1 ) ) {
@@ -248,6 +252,7 @@ our integer__array_ref $integer__array_ref__typetest1 = sub {
     my integer__array_ref $new_array = [];
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $new_array->[$i] = $i * 5;
+
 #        RPerl::diag "in PERLOPS_PERLTYPES integer__array_ref__typetest1(), setting element $i/" . ( $my_size - 1 ) . ' = ' . $new_array->[$i] . ", BARBAT\n" or croak();
     }
     return ($new_array);
@@ -416,7 +421,10 @@ our void $number__array_ref__CHECK = sub {
                 "\nERROR ENVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber__array_ref element value expected but undefined/null value found at index $i,\ncroaking"
             );
         }
-        if ( not( main::RPerl_SvNOKp($possible_number) || main::RPerl_SvIOKp($possible_number) ) ) {
+        if (not(   main::RPerl_SvNOKp($possible_number)
+                || main::RPerl_SvIOKp($possible_number) )
+            )
+        {
             croak(
                 "\nERROR ENVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber__array_ref element value expected but non-number value found at index $i,\ncroaking"
             );
@@ -424,10 +432,8 @@ our void $number__array_ref__CHECK = sub {
     }
 };
 our void $number__array_ref__CHECKTRACE = sub {
-    (   my $possible_number__array_ref,
-        my $variable_name,
-        my $subroutine_name
-    ) = @_;
+    ( my $possible_number__array_ref, my $variable_name, my $subroutine_name )
+        = @_;
     if ( not( defined $possible_number__array_ref ) ) {
         croak(
             "\nERROR ENVAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber__array_ref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
@@ -449,7 +455,10 @@ our void $number__array_ref__CHECKTRACE = sub {
                 "\nERROR ENVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber__array_ref element value expected but undefined/null value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
             );
         }
-        if ( not( main::RPerl_SvNOKp($possible_number) || main::RPerl_SvIOKp($possible_number) ) ) {
+        if (not(   main::RPerl_SvNOKp($possible_number)
+                || main::RPerl_SvIOKp($possible_number) )
+            )
+        {
             croak(
                 "\nERROR ENVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber__array_ref element value expected but non-number value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
             );
@@ -503,8 +512,10 @@ our string $number__array_ref__stringify = sub {
 
 our string $number__array_ref__typetest0 = sub {
     ( my number__array_ref $lucky_numbers) = @_;
-#    ::number__array_ref__CHECK($lucky_numbers);
-    ::number__array_ref__CHECKTRACE( $lucky_numbers, '$lucky_numbers', 'number__array_ref__typetest0()' );
+
+    #    ::number__array_ref__CHECK($lucky_numbers);
+    ::number__array_ref__CHECKTRACE( $lucky_numbers, '$lucky_numbers',
+        'number__array_ref__typetest0()' );
 
 #    my integer $how_lucky = scalar @{$lucky_numbers};
 #    for my integer $i ( 0 .. ( $how_lucky - 1 ) ) {
@@ -525,6 +536,7 @@ our number__array_ref $number__array_ref__typetest1 = sub {
     my number__array_ref $new_array = [];
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $new_array->[$i] = $i * 5.123456789;
+
 #        RPerl::diag "in PERLOPS_PERLTYPES number__array_ref__typetest1(), setting element $i/" . ( $my_size - 1 ) . ' = ' . $new_array->[$i] . ", BARBAZ\n" or croak();
     }
     return ($new_array);
@@ -701,10 +713,8 @@ our void $string__array_ref__CHECK = sub {
     }
 };
 our void $string__array_ref__CHECKTRACE = sub {
-    (   my $possible_string__array_ref,
-        my $variable_name,
-        my $subroutine_name
-    ) = @_;
+    ( my $possible_string__array_ref, my $variable_name, my $subroutine_name )
+        = @_;
     if ( not( defined $possible_string__array_ref ) ) {
         croak(
             "\nERROR EPVAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring__array_ref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
@@ -782,8 +792,10 @@ our string $string__array_ref__stringify = sub {
 
 our string $string__array_ref__typetest0 = sub {
     ( my string__array_ref $people) = @_;
-#    ::string__array_ref__CHECK($people);
-    ::string__array_ref__CHECKTRACE( $people, '$people', 'string__array_ref__typetest0()' );
+
+    #    ::string__array_ref__CHECK($people);
+    ::string__array_ref__CHECKTRACE( $people, '$people',
+        'string__array_ref__typetest0()' );
 
 #    my integer $how_crowded = scalar @{$people};
 #    for my integer $i ( 0 .. ( $how_crowded - 1 ) ) {
@@ -804,6 +816,7 @@ our string__array_ref $string__array_ref__typetest1 = sub {
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $new_array->[$i]
             = "Jeffy Ten! $i/" . ( $my_size - 1 ) . ' PERLOPS_PERLTYPES';
+
 #        RPerl::diag "in PERLOPS_PERLTYPES string__array_ref__typetest1(), bottom of for() loop, have i = $i, just set another Jeffy, BARBAR\n" or croak();
     }
     return ($new_array);

@@ -1,13 +1,11 @@
 package RPerl::Operation::Statement;
 use strict;
 use warnings;
-our $VERSION = 0.000_010;
-use Carp;
 use RPerl;
+our $VERSION = 0.000_011;
 
 # [[[ SETUP ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  ## RPERL USER DEFAULT optionally allow numeric values, print operator
-use Data::Dumper;
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 use Scalar::Util 'blessed';
 
 # [[[ OO INHERITANCE ]]]
@@ -15,7 +13,7 @@ use parent qw(RPerl::Operation);
 
 # [[[ OO PROPERTIES ]]]
 # DEV NOTE: no active properties, this is a stub object for now, see children objects for active properties
-our %properties = ( ## no critic qw(ProhibitPackageVars)  ## RPERL SYSTEM, allow OO properties
+our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
 );
 
 # [[[ OO METHODS ]]]

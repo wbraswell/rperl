@@ -1,16 +1,15 @@
-package RPerl::Operation; ## no critic qw(ProhibitExcessMainComplexity)  ## RPERL SYSTEM allow complex code
+## no critic qw(ProhibitExcessMainComplexity)  # SYSTEM SPECIAL 5: allow complex code outside subroutines, must be on line 1
+package RPerl::Operation;
 use strict;
 use warnings;
-our $VERSION = 0.000_003;
-use Carp;
 use RPerl;
+our $VERSION = 0.000_004;
 
 # [[[ SETUP ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  ## RPERL USER DEFAULT optionally allow numeric values, print operator
-## nfo critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted control characters, sigils, and regexes
-## no critic qw(ProhibitPackageVars)  ## RPERL SYSTEM, allow $OperatorVoid::_operator_void_names
-## no critic qw(ProhibitBooleanGrep)  ## RPERL SYSTEM allow grep through string__array_ref
-use Data::Dumper;
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(ProhibitBooleanGrep)  # SYSTEM SPECIAL 1: allow grep
+## no critic qw(ProhibitPackageVars)  # SYSTEM SPECIAL 4b: allow $OperatorVoid::_operator_void_names
+## no critic qw(ProhibitCascadingIfElse)  ## SYSTEM SPECIAL 12: allow complex conditional logic
 use Scalar::Util 'blessed';
 use rperloperations;
 
@@ -18,7 +17,7 @@ use rperloperations;
 use parent qw(RPerl::GrammarRule);
 
 # [[[ OO PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  ## RPERL SYSTEM, allow OO properties
+our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
     type      => my string $KEY_type                 = undef,
     name      => my string $KEY_name                 = undef,
     arguments => my object__array_ref $KEY_arguments = undef,
@@ -39,7 +38,7 @@ our object__array_ref__method $ppi_to_rperl__translate_plus = sub {
     my integer $node_index_max;
     my string $node_class;
     my string__array_ref $node_classes_expected = [
-        'PPI::Statement', 'PPI::Statement::Compound',
+        'PPI::Statement',           'PPI::Statement::Compound',
         'PPI::Statement::Variable', 'PPI::Statement::Break',
     ];
     my object $node_translated;
@@ -118,11 +117,11 @@ NODE_LOOP: for my $node_index_loop ( 0 .. $node_index_max ) {
 
         if ( $node_class eq 'PPI::Statement' ) {
 
-       # IF LAST CHILD IS SEMICOLON
-       #     IF CHILD @ INDEX 0 IS _OPERATOR_VOID_NAME, THIS IS AN OPERATOR_VOID RULE
-       #     ELSIF CHILD @ INDEX 1 IS EQUAL, THIS IS A VARIABLE_MODIFICATION RULE
-       #     ELSE THIS IS AN EXPRESSION RULE
-       # ELSE CURRENTLY UNKNOWN
+# IF LAST CHILD IS SEMICOLON
+#     IF CHILD @ INDEX 0 IS _OPERATOR_VOID_NAME, THIS IS AN OPERATOR_VOID RULE
+#     ELSIF CHILD @ INDEX 1 IS EQUAL, THIS IS A VARIABLE_MODIFICATION RULE
+#     ELSE THIS IS AN EXPRESSION RULE
+# ELSE CURRENTLY UNKNOWN
 
 # OPERATION rule, POSSIBLE SEMICOLON component @ INDEX iterated, KEY 'children', INDEX max
             $rule_name              = 'OPERATION';
@@ -194,7 +193,7 @@ NODE_LOOP: for my $node_index_loop ( 0 .. $node_index_max ) {
                 }
 
 # OPERATION rule, STATEMENT rule/production, OPERATOR_VOID rule/production, _OPERATOR_VOID_NAME component @ INDEX iterated, KEY 'children', INDEX 0
-                if ( not($child_disqualified) ) {   # FIRST CHILD IS _OPERATOR_VOID_NAME
+                if ( not($child_disqualified) ) { # FIRST CHILD IS _OPERATOR_VOID_NAME
                     $node_translated
                         = $child_content_expected->{$child_content}
                         ->ppi_to_rperl__translate($node);  # class method call

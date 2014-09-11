@@ -105,6 +105,7 @@
 
 %%
 
+                        # NEED FIX: add Critic on first separate line before 'package', and on first same line after SHEBANG
 CompileUnit:            Program | Module+ ;
 Program:                SHEBANG Header Critic* Include* Constant* Subroutine* Operation+ ;
 Module:                 Package | Class ;
@@ -121,6 +122,7 @@ SubroutineArguments:    '( my' Type VARIABLE_SYMBOL (OP21_LIST_COMMA 'my' Type V
 #ArgumentCheck:          '::' CHECK_OR_CHECKTRACE '(' Expression (OP21_LIST_COMMA Expression OP21_LIST_COMMA Expression)? ')' ';' ;
 ArgumentCheck:          CHECK_OR_CHECKTRACE '(' Expression (OP21_LIST_COMMA Expression OP21_LIST_COMMA Expression)? ')' ';' ;
 Class:                  'package' WordScoped ';' Header 'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties Method* '1, 1;' (Subroutine+ '1, 1;')? ;
+                        # NEED FIX: add %properties_class as in RPerl::Operation::Statement::OperatorVoid::Return
 Properties:             'our %properties = (' HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* ')' ';' | 'our %properties = (' ')' ';';
 Method:                 'our' Type VARIABLE_SYMBOL '= sub {' MethodArguments? Operation+ '}' ';' ;
 MethodArguments:        '( my' TYPE_CLASS_OR_SELF (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ArgumentCheck* ;

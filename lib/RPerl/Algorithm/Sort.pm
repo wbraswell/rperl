@@ -3,11 +3,10 @@ package RPerl::Algorithm::Sort;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_010;
+our $VERSION = 0.004_011;
 
 # [[[ CRITICS, OO INHERITANCE, INCLUDES ]]]
-# USER DEFAULT 1: allow numeric values and print operator
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
 use parent ('RPerl::Algorithm');
 use RPerl::Algorithm;
 

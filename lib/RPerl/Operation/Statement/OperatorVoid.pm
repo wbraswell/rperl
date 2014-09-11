@@ -1,19 +1,19 @@
 package RPerl::Operation::Statement::OperatorVoid;
 use strict;
 use warnings;
-our $VERSION = 0.000_010;
-use Carp;
 use RPerl;
+our $VERSION = 0.000_010;
 
 # [[[ SETUP ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  ## RPERL USER DEFAULT optionally allow numeric values, print operator
-use Data::Dumper;
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement);
 
+# NEED FIX: create %properties_class
+
 # [[[ OO PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  ## RPERL SYSTEM, allow OO properties
+our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
                     #name => my string $KEY_name = undef,  # object property
      #arguments => my object__array_ref $KEY_arguments = undef,  # object property
 

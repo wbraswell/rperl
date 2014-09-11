@@ -1,20 +1,20 @@
-package RPerl_test_00;
+package RPerl::Test::Return_00;
 use strict;
 use warnings;
-our $VERSION = 0.002_000;
-use Carp;
 use RPerl;
+our $VERSION = 0.002_001;
 
 # [[[ SETUP ]]]
 
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  ## RPERL USER DEFAULT optionally allow numeric values, print operator
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(ProhibitConstantPragma)  # USER DEFAULT 3: allow constants
 
 # NEED UPGRADE: support INCLUDE rule!
 #use Data::Dumper;  # parses to PPI::FOOBAZ object, translates to RPerl::FOOBAZ::Include object
 
 # NEED UPGRADE: support CONSTANT rule!
 # DEV NOTE: Perl::Critic BUG!  ProhibitMagicNumbers conflicts with ProhibitConstantPragma
-#use constant FNORD => 23;  # parses to PPI::FOOBAZ object, translates to RPerl::FOOBAZ::Constant object  ## no critic qw(ProhibitConstantPragma)
+use constant FNORD => 23; # parses to PPI::FOOBAZ object, translates to RPerl::FOOBAZ::Constant object
 
 # [[[ PROCEDURAL SUBROUTINE(S) ]]]
 
@@ -64,19 +64,19 @@ our void $greet_planet = sub {
 #for my $i (0 .. 2){1;}  # parses to 1 PPI::Statement::Compound object, translates to 1 RPerl::Operation::Statement::Loop::For object
 #for my integer $i (0 .. 2){1;} # parses to 2 PPI::Statement::Compound objects, translates to 1 RPerl::Operation::Statement::Loop::For object
 
-#return;  # PARSE ERROR: invalid RPerl, missing parenthesis
-#return();
-#return 23;  # PARSE ERROR: invalid RPerl, missing parenthesis
-#return(23);
-#return 23 + 12;  # PARSE ERROR: invalid RPerl, missing parenthesis
-#return(23) + 12;  # PARSE ERROR: invalid RPerl, missing parenthesis
-#return(23 + 12);
-#return 'foo';  # PARSE ERROR: invalid RPerl, missing parenthesis
-#return('foo');
-#return 'foo' . 'bar';  # PARSE ERROR: invalid RPerl, missing parenthesis
-#return('foo') . 'bar';  # PARSE ERROR: invalid RPerl, missing parenthesis
-#return('foo' . 'bar');
-#return(23, 'foo');
+    #return;  # PARSE ERROR: invalid RPerl, missing parenthesis
+    #return();
+    #return 23;  # PARSE ERROR: invalid RPerl, missing parenthesis
+    #return(23);
+    #return 23 + 12;  # PARSE ERROR: invalid RPerl, missing parenthesis
+    #return(23) + 12;  # PARSE ERROR: invalid RPerl, missing parenthesis
+    #return(23 + 12);
+    #return 'foo';  # PARSE ERROR: invalid RPerl, missing parenthesis
+    #return('foo');
+    #return 'foo' . 'bar';  # PARSE ERROR: invalid RPerl, missing parenthesis
+    #return('foo') . 'bar';  # PARSE ERROR: invalid RPerl, missing parenthesis
+    #return('foo' . 'bar');
+    #return(23, 'foo');
 };
 
 # [[[ OPERATIONS & DATA TYPES REPORTING ]]]

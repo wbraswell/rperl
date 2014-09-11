@@ -1,18 +1,28 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_001;
 
-use Test::More; # tests => 19;
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
+## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
+
+use Test::More;    # tests => 19;
 use Test::Exception;
 use Carp;
 use English qw(-no_match_vars);
-my $ERROR_MAX = 0.00000001; ## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
+my $ERROR_MAX = 0.00000001;
 
 #$SIG{__WARN__}=sub {cluck $_[0]};  # DEBUGGING
 
-BEGIN{ diag("[[[ Beginning Inline::C Pre-Test Loading ]]]") if $ENV{TEST_VERBOSE}; }
-diag("[[[ Beginning Selection Of Tests From The Inline::C Cookbook ]]]") if $ENV{TEST_VERBOSE};
+BEGIN {
+    if ( $ENV{TEST_VERBOSE} ) {
+        diag('[[[ Beginning Inline::C Pre-Test Loading ]]]');
+    }
+}
+if ( $ENV{TEST_VERBOSE} ) {
+    diag('[[[ Beginning Selection Of Tests From The Inline::C Cookbook ]]]');
+}
 
 # Inline::C examples from:  http://search.cpan.org/~sisyphus/Inline-0.53/C/C-Cookbook.pod
 # Note: I excluded the Inline::C examples which required reading files, loading 3rd-party libraries, and other weirdness not suitable for testing.
@@ -21,8 +31,9 @@ diag("[[[ Beginning Selection Of Tests From The Inline::C Cookbook ]]]") if $ENV
 #lives_ok( sub { use Inline C => q{charge* greet(){return("Hello, world");}}; }, q{Inline::C, define greet() lives} );  # bad: invokes Inline during syntax check and crashes all tests
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
-            'use Inline C=>q{char* greet(){return("Hello, world");}};';
+        my $EVAL_RETVAL
+            = eval 'use Inline C=>q{char* greet(){return("Hello, world");}};';
+
 #            '$SIG{__WARN__}=sub {cluck $_[0]};  use Inline C=>q{char* greet(){return("Hello, world");}};';
         if ( $EVAL_ERROR ne q{} ) {
             croak(
@@ -36,8 +47,7 @@ lives_and(
 );
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
-            'greet();';
+        my $EVAL_RETVAL = eval 'greet();';
         if ( $EVAL_ERROR ne q{} ) {
             croak(
                 "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
@@ -52,7 +62,7 @@ lives_and(
 # greet_bind()
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
+        my $EVAL_RETVAL = eval
             'use Inline; Inline->bind(C=>q{char* greet_bind(){return("Hello again, world");}})';
         if ( $EVAL_ERROR ne q{} ) {
             croak(
@@ -68,8 +78,7 @@ lives_and(
 );
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
-            'greet_bind();';
+        my $EVAL_RETVAL = eval 'greet_bind();';
         if ( $EVAL_ERROR ne q{} ) {
             croak(
                 "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
@@ -86,7 +95,7 @@ lives_and(
 # JAxH()
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
+        my $EVAL_RETVAL = eval
             'use Inline C=>q{SV*JAxH(char*x){return newSVpvf("Just Another %s Hacker",x);}};';
         if ( $EVAL_ERROR ne q{} ) {
             croak(
@@ -100,8 +109,7 @@ lives_and(
 );
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
-            'JAxH("Perl");';
+        my $EVAL_RETVAL = eval 'JAxH("Perl");';
         if ( $EVAL_ERROR ne q{} ) {
             croak(
                 "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
@@ -134,8 +142,7 @@ END_OF_C_CODE
 EOF
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
-            $greetings_char_eval_string;
+        my $EVAL_RETVAL = eval $greetings_char_eval_string;
         if ( $EVAL_ERROR ne q{} ) {
             croak(
                 "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
@@ -148,7 +155,7 @@ lives_and(
 );
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
+        my $EVAL_RETVAL = eval
             'greetings_char("Larry", "Ingy", "Reini", "Neil", "Sisyphus", "Davido");';
         if ( $EVAL_ERROR ne q{} ) {
             croak(
@@ -181,8 +188,7 @@ END_OF_C_CODE
 EOF
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
-            $greetings_sv_eval_string;
+        my $EVAL_RETVAL = eval $greetings_sv_eval_string;
         if ( $EVAL_ERROR ne q{} ) {
             croak(
                 "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
@@ -196,9 +202,8 @@ lives_and(
 lives_and(
     sub {
         my $greetings_sv_retval = q{};
-        my $EVAL_RETVAL = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
-            'greetings_sv($greetings_sv_retval, "Larry", "Ingy", "Reini", "Neil", "Sisyphus", "Davido");' ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
-            ;
+        my $EVAL_RETVAL         = eval
+            'greetings_sv($greetings_sv_retval, "Larry", "Ingy", "Reini", "Neil", "Sisyphus", "Davido");';
         if ( $EVAL_ERROR ne q{} ) {
             croak(
                 "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
@@ -233,8 +238,7 @@ END_OF_C_CODE
 EOF
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
-            $greetings_void_eval_string;
+        my $EVAL_RETVAL = eval $greetings_void_eval_string;
         if ( $EVAL_ERROR ne q{} ) {
             croak(
                 "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
@@ -247,7 +251,7 @@ lives_and(
 );
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
+        my $EVAL_RETVAL = eval
             'greetings_void("Larry", "Ingy", "Reini", "Neil", "Sisyphus", "Davido");';
         if ( $EVAL_ERROR ne q{} ) {
             croak(
@@ -274,8 +278,7 @@ END_OF_C_CODE
 EOF
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
-            $change_eval_string;
+        my $EVAL_RETVAL = eval $change_eval_string;
         if ( $EVAL_ERROR ne q{} ) {
             croak(
                 "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
@@ -289,8 +292,7 @@ lives_and(
 lives_and(
     sub {
         my ( $foo, $bar );
-        my $EVAL_RETVAL = eval ## no critic qw(ProhibitStringyEval)  ## RPERL SYSTEM allow Inline eval
-            'change($foo, $bar);'; ## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
+        my $EVAL_RETVAL = eval 'change($foo, $bar);';
         if ( $EVAL_ERROR ne q{} ) {
             croak(
                 "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"

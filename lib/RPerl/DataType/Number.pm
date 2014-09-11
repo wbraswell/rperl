@@ -1,14 +1,15 @@
-## no critic qw(RequireInterpolationOfMetachars)  ## RPERL allow single-quoted sigils
-## no critic qw(ProhibitMagicNumbers)  ## RPERL allow numeric test values
-## no critic qw(ProhibitMultiplePackages)  ## RPERL SYSTEM types, allow multiple packages
-## no critic qw(Capitalization)  ## RPERL SYSTEM types, allow lowercase packages
 package RPerl::DataType::Number;
 use strict;
 use warnings;
-our $VERSION = 0.003_003;
+use RPerl;
+our $VERSION = 0.003_004;
+
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
+## no critic qw(Capitalization ProhibitMultiplePackages)  # SYSTEM DEFAULT 4: allow multiple lower case package names
+
 use parent ('RPerl::DataType');
 use RPerl::DataType;
-use Carp;
 
 # [[[ SUB-TYPES BEFORE SETUP ]]]
 # DEV NOTE:
@@ -89,6 +90,7 @@ our string $number__stringify = sub {
     #    number__CHECK($input_number);
     number__CHECKTRACE( $input_number, '$input_number',
         'number__stringify()' );
+
 #    RPerl::diag "in PERLOPS_PERLTYPES number__stringify(), bottom of subroutine, received \$input_number = $input_number\n" or croak();
     return ("$input_number");
 };
@@ -96,6 +98,7 @@ our string $number__stringify = sub {
 # [[[ TYPE TESTING ]]]
 our number $number__typetest0 = sub {
     my number $retval = ( 22 / 7 ) + $number__OPS_TYPES_ID; # return floating-point number value
+
 #    RPerl::diag "in PERLOPS_PERLTYPES number__typetest0(), have \$retval = $retval\n" or croak();
     return ($retval);
 };
@@ -105,6 +108,7 @@ our number $number__typetest1 = sub {
     #    number__CHECK($lucky_number);
     number__CHECKTRACE( $lucky_number, '$lucky_number',
         'number__typetest1()' );
+
 #    RPerl::diag 'in PERLOPS_PERLTYPES number__typetest1(), received $lucky_number = ' . number__stringify($lucky_number) . "\n" or croak();
     return ( ( $lucky_number * 2 ) + $number__OPS_TYPES_ID );
 };

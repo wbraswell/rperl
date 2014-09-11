@@ -1,20 +1,18 @@
 package RPerl::Operation::Expression::Literal;
 use strict;
 use warnings;
-our $VERSION = 0.000_011;
-use Carp;
 use RPerl;
+our $VERSION = 0.000_011;
 
 # [[[ SETUP ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  ## RPERL USER DEFAULT optionally allow numeric values, print operator
-use Data::Dumper;
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 use Scalar::Util 'blessed';
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression);
 
 # [[[ OO PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  ## RPERL SYSTEM, allow OO properties
+our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
     type             => my string $KEY_type             = undef,
     string_separator => my string $KEY_string_separator = undef,
     value            => my string $KEY_value            = undef,

@@ -6,7 +6,6 @@ our $VERSION = 0.000_101;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
-#our %properties = (); ## no critic qw(ProhibitPackageVars)  ## RPERL SYSTEM, allow OO properties
 
 # [[[ NON-RPERL MODULES ]]]
 use File::Copy qw(move);

@@ -1,20 +1,20 @@
 package RPerl::Test::Print_00;
 use strict;
 use warnings;
-our $VERSION = 0.003_000;
-use Carp;
 use RPerl;
+our $VERSION = 0.003_001;
 
 # [[[ SETUP ]]]
 
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  ## RPERL USER DEFAULT optionally allow numeric values, print operator
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(ProhibitConstantPragma)  # USER DEFAULT 3: allow constants
 
 # NEED UPGRADE: support INCLUDE rule!
 #use Data::Dumper;  # parses to PPI::FOOBAZ object, translates to RPerl::FOOBAZ::Include object
 
 # NEED UPGRADE: support CONSTANT rule!
 # DEV NOTE: Perl::Critic BUG!  ProhibitMagicNumbers conflicts with ProhibitConstantPragma
-#use constant FNORD => 23;  # parses to PPI::FOOBAZ object, translates to RPerl::FOOBAZ::Constant object  ## no critic qw(ProhibitConstantPragma)
+use constant FNORD => 23; # parses to PPI::FOOBAZ object, translates to RPerl::FOOBAZ::Constant object
 
 # [[[ PROCEDURAL SUBROUTINE(S) ]]]
 

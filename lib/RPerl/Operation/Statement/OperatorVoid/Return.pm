@@ -1,25 +1,22 @@
-package RPerl::Operation::Statement::OperatorVoid::Return; ## no critic qw(ProhibitExcessMainComplexity)  ## RPERL SYSTEM allow complex code
+package RPerl::Operation::Statement::OperatorVoid::Return;
 use strict;
 use warnings;
-our $VERSION = 0.001_000;
-use Carp;
 use RPerl;
+our $VERSION = 0.001_001;
 
 # [[[ SETUP ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  ## RPERL USER DEFAULT optionally allow numeric values, print operator
-## no critic qw(ProhibitPackageVars)  ## RPERL SYSTEM, allow $class::properties_class::name
-use Data::Dumper;
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 use Scalar::Util 'blessed';
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement::OperatorVoid); # NEED FIX: is not a Grammar Rule so should not inherit from OperatorVoid, need create Grammar Production class
 
 # [[[ OO PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  ## RPERL SYSTEM, allow OO properties
+our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
                     # object properties
     arguments => my object__array_ref $KEY_arguments = undef,
 );
-our %properties_class = ( ## no critic qw(ProhibitPackageVars)  ## RPERL SYSTEM, allow OO properties
+our %properties_class = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
                           # class properties
      # NEED UPGRADE: officialize splitting class and object properties into 2 hashes
     name => my string $KEY_name = 'return',
@@ -46,7 +43,7 @@ our string__method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my string $self_generated = q{};
 
     # NEED FIX: add non-hardcoded indentation level
-    $self_generated .= '    ';    ## no critic qw(ProhibitEmptyQuotes)
+    $self_generated .= q{ } x 4;
 
     $self_generated .= 'return(';
 
@@ -182,17 +179,12 @@ our object__method $ppi_to_rperl__translate = sub {
     $node_translated
         = RPerl::Operation::Statement::OperatorVoid::Return->new();
 
-
-
-
 # START HERE: set up Return_00* files
 # START HERE: set up Return_00* files
 # START HERE: set up Return_00* files
 # CONTINUE HERE: handle required single-element PPI::Structure::List instead of multi-element LIST_ELEMENTS below
 # CONTINUE HERE: handle required single-element PPI::Structure::List instead of multi-element LIST_ELEMENTS below
 # CONTINUE HERE: handle required single-element PPI::Structure::List instead of multi-element LIST_ELEMENTS below
-
-
 
 # OPERATOR_VOID rule, RETURN production, LIST_ELEMENTS rule/component @ KEY 'children', INDEX 1 to (max - 1)
     $component_name = 'LIST_ELEMENTS';
@@ -232,11 +224,6 @@ our object__method $ppi_to_rperl__translate = sub {
     $node_translated->{arguments}
         = RPerl::DataStructure::Array::ListElements->ppi_to_rperl__translate(
         $arguments_node);
-
-
-
-
-
 
 # OPERATOR_VOID rule, RETURN production end, SEMICOLON component @ KEY 'children', INDEX max
     $component_name         = 'SEMICOLON';

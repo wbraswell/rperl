@@ -2,13 +2,11 @@
 package RPerl::Algorithm::Inefficient;
 use strict;
 use warnings;
-our $VERSION = 0.004_000;
-use Carp;
 use RPerl;
+our $VERSION = 0.004_001;
 
 # [[[ CRITIC, PARENT INHERITANCE, INCLUDES, CONSTANTS, OO PROPERTIES ]]]
-# USER DEFAULT 1: allow numeric values and print operator
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
 use parent qw(RPerl::Algorithm);
 use RPerl::Algorithm;
 our %properties = (); ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties

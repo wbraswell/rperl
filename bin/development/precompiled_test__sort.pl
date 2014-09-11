@@ -1,15 +1,14 @@
-#!/usr/bin/perl
+#!/usr/bin/perl  ## no critic qw(ProhibitUselessNoCritic PodSpelling) # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code, must be on line 1
 # [[[ HEADER ]]]
 use strict;
 use warnings;
 use RPerl;
 our $VERSION = 0.003_021;
 
-# NEED FIX: can never pass critic because of PERL CRITIC ISSUE #588
-
 # [[[ CRITICS, INCLUDES ]]]
+## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd) # DEVELOPER DEFAULT 1b: allow unreachable & POD-commented code, must be after line 1
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
-## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd PodSpelling) # DEVELOPER DEFAULT 1: allow unreachable & POD-commented code
+
 use Time::HiRes qw(time);    # for benchmarking
 
 # [[[ OPERATIONS ]]]
@@ -159,8 +158,6 @@ for my integer $i ( 0 .. $i_MAX ) {
 
     # [[[ NUMBER TESTS ]]]
 
-## no critic qw(PodSpelling)  # SYSTEM SPECIAL 5: PERL CRITIC ISSUE #588, PodSpelling & RequireTidyCode conflict  https://github.com/Perl-Critic/Perl-Critic/issues/588
-
 =disable_SORT_TESTS
 #	$number__data = undef;  # TNVALSOBU01; error ENVAVRV00
 #	$number__data = 2;  # TNVALSOBU02; error ENVAVRV01
@@ -215,14 +212,13 @@ for my integer $i ( 0 .. $i_MAX ) {
 
 croak('Done for now, croaking');
 
-__DATA__
-
 # <<<=== SORT 2 ===>>>
 # <<<=== SORT 2 ===>>>
 # <<<=== SORT 2 ===>>>
 
 # NEED CHOOSE: which general algorithm?
 my object $sorter2 = RPerl::Algorithm::Sort::Bubble->new();
+
 #my object $sorter2 = RPerl::Algorithm::Sort::Quick->new();
 #my object $sorter2 = RPerl::Algorithm::Sort::Merge->new();
 
@@ -233,31 +229,40 @@ my object $sorter2 = RPerl::Algorithm::Sort::Bubble->new();
 #$sorter2->{variant} = 'bottomup';	# MERGESORT
 
 # NEED CHOOSE: which data structure?
-$sorter2->{data} = [5, 4, 3, 2, 1, 0];
+$sorter2->{data} = [ 5, 4, 3, 2, 1, 0 ];
+
 #$sorter2->{data} = scalar_linkedlist_ref->new_from_array_ref([5, 4, 3, 2, 1, 0]);
 
-print "in precompiled_test__sort.pl, have unsorted \$sorter2->{data} =\n" . Dumper($sorter2->{data}) . "\n";
+print "in precompiled_test__sort.pl, have unsorted \$sorter2->{data} =\n"
+    . Dumper( $sorter2->{data} ) . "\n";
 $sorter2->sort_method();
-print "in precompiled_test__sort.pl, have sorted \$sorter2->{data} =\n" . Dumper($sorter2->{data}) . "\n";
+print "in precompiled_test__sort.pl, have sorted \$sorter2->{data} =\n"
+    . Dumper( $sorter2->{data} ) . "\n";
 
 # <<<=== SORT 3 ===>>>
 # <<<=== SORT 3 ===>>>
 # <<<=== SORT 3 ===>>>
 
 # NEED CHOOSE: which data structure?
-my number__array_ref $integer__data2 = [12, 11, 10, 9, 8, 7, 6];
+my number__array_ref $integer__data2 = [ 12, 11, 10, 9, 8, 7, 6 ];
+
 #my scalar_linkedlist_ref $integer__data2 = scalar_linkedlist_ref->new_from_array_ref([12, 11, 10, 9, 8, 7, 6]);
-print "in precompiled_test__sort.pl, have unsorted \$integer__data2 =\n" . Dumper($integer__data2) . "\n";
+print "in precompiled_test__sort.pl, have unsorted \$integer__data2 =\n"
+    . Dumper($integer__data2) . "\n";
 
 # NEED CHOOSE: which specific variant algorithm?
-my $integer__data2_sorted = RPerl::Algorithm::Sort::Bubble::bubblesort($integer__data2);
+my $integer__data2_sorted
+    = RPerl::Algorithm::Sort::Bubble::bubblesort($integer__data2);
+
 #my $integer__data2_sorted = RPerl::Algorithm::Sort::Quick::quicksort($integer__data2);
 #my $integer__data2_sorted = RPerl::Algorithm::Sort::Quick::quicksort_inplace($integer__data2);
 #my $integer__data2_sorted = RPerl::Algorithm::Sort::Merge::mergesort_array_topdown($integer__data2);
 #my $integer__data2_sorted = RPerl::Algorithm::Sort::Merge::mergesort_array_bottomup($integer__data2);
 #my $integer__data2_sorted = RPerl::Algorithm::Sort::Merge::mergesort_linkedlist_topdown($integer__data2->{head});
 
-print "in precompiled_test__sort.pl, have sorted \$integer__data2_sorted =\n" . Dumper($integer__data2_sorted) . "\n";
+print "in precompiled_test__sort.pl, have sorted \$integer__data2_sorted =\n"
+    . Dumper($integer__data2_sorted) . "\n";
 
 # re-print SORT 1 data to make sure nothing weird with RPerl has caused it to change during SORT 2 and SORT 3
-print "in precompiled_test__sort.pl, STILL have sorted \$sorter->{data} =\n" . Dumper($sorter->{data}) . "\n";
+print "in precompiled_test__sort.pl, STILL have sorted \$sorter->{data} =\n"
+    . Dumper( $sorter->{data} ) . "\n";
