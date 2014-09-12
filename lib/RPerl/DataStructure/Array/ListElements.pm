@@ -44,7 +44,7 @@ our object__array_ref__method $ppi_to_rperl__translate = sub {
     my string $child_content_expected;
     my integer $child_disqualified;
 
-    print {*STDERR}
+    RPerl::diag
         "in ListElements::ppi_to_rperl__translate(), received \$node =\n"
         . Dumper($node) . "\n";
 
@@ -60,7 +60,7 @@ our object__array_ref__method $ppi_to_rperl__translate = sub {
         );
     }
 
-    print {*STDERR}
+    RPerl::diag
         "in ListElements::ppi_to_rperl__translate(), have \$node_class = '$node_class'\n";
 
     # LIST_ELEMENTS rule begin
@@ -121,7 +121,7 @@ our object__array_ref__method $ppi_to_rperl__translate = sub {
         $child_class_expected   = 'PPI::Token::Operator';
         $child_content_expected = q{,};
         $child                  = $node->{$child_key}->[$child_index_loop];
-        print {*STDERR}
+        RPerl::diag
             'in ListElements::ppi_to_rperl__translate(), top of for() loop '
             . $child_index_loop . q{/}
             . $child_index_max
@@ -159,7 +159,7 @@ our object__array_ref__method $ppi_to_rperl__translate = sub {
         $child_key       = 'children';
         $child_index     = 0;
         $child           = $node->{$child_key}->[$child_index_loop];
-        print {*STDERR}
+        RPerl::diag
             'in ListElements::ppi_to_rperl__translate(), middle of for() loop '
             . $child_index_loop . q{/}
             . $child_index_max
@@ -184,7 +184,7 @@ our object__array_ref__method $ppi_to_rperl__translate = sub {
         $child_index_loop++;
     }
 
-#    print {*STDERR} "in ListElements::ppi_to_rperl__translate(), bottom of subroutine, about to return \$node_translated=\n" . Dumper($node_translated) . "\n";
+#    RPerl::diag "in ListElements::ppi_to_rperl__translate(), bottom of subroutine, about to return \$node_translated=\n" . Dumper($node_translated) . "\n";
 
     # this rule never matches empty
     return ($node_translated);
@@ -216,7 +216,7 @@ our object__method $ppi_to_rperl__value_translate = sub {
     my string $child_content_expected;
     my integer $child_disqualified;
 
-    print {*STDERR}
+    RPerl::diag
         "in ListElements::ppi_to_rperl__value_translate(), received \$node =\n"
         . Dumper($node) . "\n";
 
@@ -232,7 +232,7 @@ our object__method $ppi_to_rperl__value_translate = sub {
         );
     }
 
-    print {*STDERR}
+    RPerl::diag
         "in ListElements::ppi_to_rperl__value_translate(), have \$node_class = '$node_class'\n";
 
     # LIST_ELEMENT_VALUE rule, POSSIBLE ARRAY_ELEMENTS production
@@ -278,7 +278,7 @@ our object__method $ppi_to_rperl__value_translate = sub {
                 = { DUMMY_AST_KEY =>
                     'DUMMY AST DATA CREATED BY ARRAY_ELEMENTS PRODUCTION IN LIST_ELEMENT_VALUE RULE'
                 };
-            print {*STDERR}
+            RPerl::diag
                 "in ListElements::ppi_to_rperl__value_translate(), ARRAY_ELEMENTS production, about to return \$node_translated=\n"
                 . Dumper($node_translated) . "\n";
             return ($node_translated);
@@ -333,7 +333,7 @@ our object__method $ppi_to_rperl__value_translate = sub {
                 = { DUMMY_AST_KEY =>
                     'DUMMY AST DATA CREATED BY HASH_KEYS_OR_VALUES PRODUCTION IN LIST_ELEMENT_VALUE RULE'
                 };
-            print {*STDERR}
+            RPerl::diag
                 "in ListElements::ppi_to_rperl__value_translate(), HASH_KEYS_OR_VALUES production, about to return \$node_translated=\n"
                 . Dumper($node_translated) . "\n";
             return ($node_translated);
@@ -343,7 +343,7 @@ our object__method $ppi_to_rperl__value_translate = sub {
 # LIST_ELEMENT_VALUE rule, EXPRESSION production @ KEY 'children', INDEX 0 - max
     $node_translated
         = RPerl::Operation::Expression->ppi_to_rperl__translate($node); # class method call
-    print {*STDERR}
+    RPerl::diag
         "in ListElements::ppi_to_rperl__value_translate(), EXPRESSION production, about to return \$node_translated=\n"
         . Dumper($node_translated) . "\n";
 

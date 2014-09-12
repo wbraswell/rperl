@@ -49,7 +49,7 @@ our string__method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self ) = @_;    # object method
     my string $self_generated = q{};
 
-#print {*STDERR} "in Subroutine::rperl_to_cpp__generate__CPPOPS_CPPTYPES(), received \$self = \n" . Dumper($self) . "\n";
+#RPerl::diag "in Subroutine::rperl_to_cpp__generate__CPPOPS_CPPTYPES(), received \$self = \n" . Dumper($self) . "\n";
 #$self_generated .= "// <<< SUBROUTINE RULE, BEGIN CPPOPS_CPPTYPES >>>\n"; # DEBUG TEMP
 
     $self_generated
@@ -64,7 +64,7 @@ our string__method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     $self_generated .= q[}] . "\n";
 
 #$self_generated .= "// <<< SUBROUTINE RULE, END CPPOPS_CPPTYPES >>>\n"; # DEBUG TEMP
-#print {*STDERR} "in Subroutine::rperl_to_cpp__generate__CPPOPS_CPPTYPES(), about to return \$self_generated = \n\n\n" . $self_generated . "\n\n";
+#RPerl::diag "in Subroutine::rperl_to_cpp__generate__CPPOPS_CPPTYPES(), about to return \$self_generated = \n\n\n" . $self_generated . "\n\n";
 
     return ($self_generated);
 };
@@ -74,7 +74,7 @@ our string__method $rperl_to_cpp__header_generate__CPPOPS_CPPTYPES = sub {
     ( my object $self ) = @_;    # object method
     my string $self_header_generated = q{};
 
-#print {*STDERR} "in Subroutine::rperl_to_cpp__header_generate__CPPOPS_CPPTYPES(), received \$self = \n" . Dumper($self) . "\n";
+#RPerl::diag "in Subroutine::rperl_to_cpp__header_generate__CPPOPS_CPPTYPES(), received \$self = \n" . Dumper($self) . "\n";
 #$self_header_generated .= "// <<< SUBROUTINE RULE, HEADER COMPONENTS, BEGIN CPPOPS_CPPTYPES >>>\n"; # DEBUG TEMP
 
     # trim leading sigil dollar sign
@@ -97,7 +97,7 @@ our string__method $rperl_to_cpp__header_generate__CPPOPS_CPPTYPES = sub {
     $self_header_generated .= q[)];
 
 #$self_header_generated .= "\n// <<< SUBROUTINE RULE, HEADER COMPONENTS, END CPPOPS_CPPTYPES >>>\n"; # DEBUG TEMP
-#print {*STDERR} "in Subroutine::rperl_to_cpp__header_generate__CPPOPS_CPPTYPES(), about to return \$self_header_generated = \n\n\n" . $self_header_generated . "\n\n";
+#RPerl::diag "in Subroutine::rperl_to_cpp__header_generate__CPPOPS_CPPTYPES(), about to return \$self_header_generated = \n\n\n" . $self_header_generated . "\n\n";
 
     return ($self_header_generated);
 };
@@ -140,7 +140,7 @@ our object__method $ppi_to_rperl__translate = sub {
     my string $greatgrandchild_content;
     my string $greatgrandchild_content_expected;
 
-    print {*STDERR}
+    RPerl::diag
         "in Subroutine::ppi_to_rperl__translate(), received \$node =\n"
         . Dumper($node) . "\n";
 
@@ -156,7 +156,7 @@ our object__method $ppi_to_rperl__translate = sub {
         );
     }
 
-    print {*STDERR}
+    RPerl::diag
         "in Subroutine::ppi_to_rperl__translate(), have \$node_class = '$node_class'\n";
 
     # SUBROUTINE rule begin
@@ -469,7 +469,7 @@ our object__method $ppi_to_rperl__translate = sub {
             = RPerl::CodeBlock::Subroutine
             ->ppi_to_rperl__arguments_translate($grandchild); # class method call
 
-#print {*STDERR} "in Subroutine::ppi_to_rperl__translate(), returned from Subroutine::ppi_to_rperl__arguments_translate(\$grandchild), received \$node_translated->{arguments} =\n" . Dumper( $node_translated->{arguments} ) . "\n";
+#RPerl::diag "in Subroutine::ppi_to_rperl__translate(), returned from Subroutine::ppi_to_rperl__arguments_translate(\$grandchild), received \$node_translated->{arguments} =\n" . Dumper( $node_translated->{arguments} ) . "\n";
     }
 
 # SUBROUTINE rule, OPERATION+ component @ KEY 'children', INDEX 5, KEY 'children', 1 <= INDEX <= max
@@ -486,10 +486,10 @@ our object__method $ppi_to_rperl__translate = sub {
     my $operations = \@operations_array;    # two-statement slice
 
 #my $operations = \(@{$node->{$child_key}->[$child_index]->{$grandchild_key}}[$grandchild_index .. $grandchild_index_max]);  # DEV NOTE: why does this not work?
-#print {*STDERR} "in Subroutine::ppi_to_rperl__translate(), before call to RPerl::Operation->ppi_to_rperl__translate_plus(\$operations), have \$grandchild_index = $grandchild_index\n";
-#print {*STDERR} "in Subroutine::ppi_to_rperl__translate(), before call to RPerl::Operation->ppi_to_rperl__translate_plus(\$operations), have \$grandchild_index_max = $grandchild_index_max\n";
-#print {*STDERR} "in Subroutine::ppi_to_rperl__translate(), before call to RPerl::Operation->ppi_to_rperl__translate_plus(\$operations), have \$node->{$child_key}->[$child_index]->{$grandchild_key} =\n" . Dumper( $node->{$child_key}->[$child_index]->{$grandchild_key} ) . "\n";
-#print {*STDERR} "in Subroutine::ppi_to_rperl__translate(), before call to RPerl::Operation->ppi_to_rperl__translate_plus(\$operations), have \$operations =\n" . Dumper( $operations ) . "\n";
+#RPerl::diag "in Subroutine::ppi_to_rperl__translate(), before call to RPerl::Operation->ppi_to_rperl__translate_plus(\$operations), have \$grandchild_index = $grandchild_index\n";
+#RPerl::diag "in Subroutine::ppi_to_rperl__translate(), before call to RPerl::Operation->ppi_to_rperl__translate_plus(\$operations), have \$grandchild_index_max = $grandchild_index_max\n";
+#RPerl::diag "in Subroutine::ppi_to_rperl__translate(), before call to RPerl::Operation->ppi_to_rperl__translate_plus(\$operations), have \$node->{$child_key}->[$child_index]->{$grandchild_key} =\n" . Dumper( $node->{$child_key}->[$child_index]->{$grandchild_key} ) . "\n";
+#RPerl::diag "in Subroutine::ppi_to_rperl__translate(), before call to RPerl::Operation->ppi_to_rperl__translate_plus(\$operations), have \$operations =\n" . Dumper( $operations ) . "\n";
     $node_translated->{operations}
         = RPerl::Operation->ppi_to_rperl__translate_plus($operations); # class method call
 
@@ -558,7 +558,7 @@ our object__method $ppi_to_rperl__translate = sub {
         );
     }
 
-    print {*STDERR}
+    RPerl::diag
         "in Subroutine::ppi_to_rperl__translate(), bottom of subroutine, about to return \$node_translated=\n"
         . Dumper($node_translated) . "\n";
 
@@ -606,7 +606,7 @@ our hash_ref__method $ppi_to_rperl__arguments_translate = sub {
     my integer $greatgrandchild_index;
     my integer $greatgrandchild_index_max;
 
-#print {*STDERR} "in Subroutine::ppi_to_rperl__arguments_translate(), received \$node =\n" . Dumper($node) . "\n";
+#RPerl::diag "in Subroutine::ppi_to_rperl__arguments_translate(), received \$node =\n" . Dumper($node) . "\n";
 
     if ( not( defined $node ) ) {
         croak(
@@ -620,7 +620,7 @@ our hash_ref__method $ppi_to_rperl__arguments_translate = sub {
         );
     }
 
-#print {*STDERR} "in Subroutine::ppi_to_rperl__arguments_translate(), have \$node_class = '$node_class'\n";
+#RPerl::diag "in Subroutine::ppi_to_rperl__arguments_translate(), have \$node_class = '$node_class'\n";
 
     # SUBROUTINE_ARGUMENTS rule begin
     if ( $node_class ne $node_class_expected ) {
@@ -882,7 +882,7 @@ our hash_ref__method $ppi_to_rperl__arguments_translate = sub {
             = $node->{$child_key}->[$child_index]->{$grandchild_key}
             ->[$grandchild_index]->{$greatgrandchild_key}
             ->[$greatgrandchild_index];
-        print {*STDERR}
+        RPerl::diag
             "in Subroutine::ppi_to_rperl__arguments_translate(), top of for() loop $greatgrandchild_index/$greatgrandchild_index_max...\n";
 
 # SUBROUTINE_ARGUMENTS rule, COMMA component @ KEY 'children', INDEX 0, KEY 'children', INDEX 0, KEY 'children', INDEX iterated
@@ -1174,7 +1174,7 @@ our hash_ref__method $ppi_to_rperl__arguments_translate = sub {
         );
     }
 
-#print {*STDERR} "in Subroutine::ppi_to_rperl__arguments_translate(), bottom of subroutine, about to return \$node_translated=\n" . Dumper($node_translated) . "\n";
+#RPerl::diag "in Subroutine::ppi_to_rperl__arguments_translate(), bottom of subroutine, about to return \$node_translated=\n" . Dumper($node_translated) . "\n";
 
     # this rule never matches empty
     return ($node_translated);

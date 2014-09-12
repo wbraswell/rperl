@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_011;
+our $VERSION = 0.000_012;
 
 # [[[ CRITICS, INCLUDES ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
@@ -12,10 +12,16 @@ our $VERSION = 0.000_011;
 # [[[ OPERATIONS ]]]
 
 # UNCOMMENT TO ENABLE PERL TYPES FOR C++ OPS
-#rperltypes::types_enable('PERL');
+rperltypes::types_enable('PERL');
 
 # UNCOMMENT TO ENABLE C++ TYPES FOR C++ OPS
-rperltypes::types_enable('CPP');
+#rperltypes::types_enable('CPP');
+
+
+# START HERE: get CPPOPS working
+# START HERE: get CPPOPS working
+# START HERE: get CPPOPS working
+
 
 # UNCOMMENT TO CHOOSE PERL OPS OR C++ OPS
 #use RPerl::Algorithm::Sort::Bubble;  # choose ONE of this
@@ -41,7 +47,7 @@ for my integer $i ( 0 .. $i_MAX ) {
         Dumper($sorter), "\n";
 
     $sorter->inherited__Algorithm('Frozen');      # RPerl yes, C++ yes
-    $sorter->inherited__Inefficient('Frozen');    # RPerl yes, C++ yes
+#    $sorter->inherited__Inefficient('Frozen');    # RPerl yes, C++ yes  # NEED UPGRADE: multiple inheritance not currently supported by Inline::CPP
     $sorter->inherited__Sort('Frozen');           # RPerl yes, C++ yes
     $sorter->inherited__Bubble('Frozen');         # RPerl yes, C++ yes
     print "\n";
@@ -53,7 +59,7 @@ for my integer $i ( 0 .. $i_MAX ) {
 #	inherited('MANORBEAST?', 'Dr. Hank McCoy');  # RPerl no, C++ no; inherited method should only work as method!
     print "\n";
     uninherited__Algorithm('Claws');      # RPerl yes, C++ yes
-    uninherited__Inefficient('Claws');    # RPerl yes, C++ yes
+#    uninherited__Inefficient('Claws');    # RPerl yes, C++ yes  # NEED UPGRADE: multiple inheritance not currently supported by Inline::CPP
     uninherited__Sort('Claws');           # RPerl yes, C++ yes
     uninherited__Bubble('Claws');         # RPerl yes, C++ yes
     print "\n";
@@ -70,7 +76,7 @@ for my integer $i ( 0 .. $i_MAX ) {
 #	$retval_stringify = stringify_int__hash_ref({a_key => 23});  # HVIV01
 #	print "in oo_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
 #	$retval_jeffys = typetest___int__in___string__hash_ref__out(5);  # HVPV20
-#	print "in type_test.pl, have \$retval_jeffys =\n" . Dumper($retval_jeffys) . "\n" if $RPerl::DEBUG;
+#	print "in type_test.pl, have \$retval_jeffys =\n" . Dumper($retval_jeffys) . "\n";
 
     croak('Done for now, croaking');
 }

@@ -124,7 +124,7 @@ our object__method $ppi_to_rperl__translate = sub {
     my string $greatgrandchild_class;
     my string $greatgrandchild_class_expected;
 
-    print {*STDERR}
+    RPerl::diag
         "in Print::ppi_to_rperl__translate(), received \$node =\n"
         . Dumper($node) . "\n";
 
@@ -140,7 +140,7 @@ our object__method $ppi_to_rperl__translate = sub {
         );
     }
 
-    print {*STDERR}
+    RPerl::diag
         "in Print::ppi_to_rperl__translate(), have \$node_class = '$node_class'\n";
 
     # OPERATOR_VOID rule, PRINT production begin
@@ -336,7 +336,7 @@ our object__method $ppi_to_rperl__translate = sub {
         );
     }
 
-    print {*STDERR}
+    RPerl::diag
         "in Print::ppi_to_rperl__translate(), bottom of subroutine, about to return \$node_translated=\n"
         . Dumper($node_translated) . "\n";
 

@@ -32,7 +32,7 @@ BEGIN {
 for my $OPS_TYPES_ID ( 0 .. 2 ) {
 
 #for my $OPS_TYPES_ID ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
-#    print STDERR "in 08_precompiled_sort.t, top of for() loop, have \$OPS_TYPES_ID = $OPS_TYPES_ID\n" or croak;    # no effect if suppressing output!
+#    RPerl::diag "in 08_precompiled_sort.t, top of for() loop, have \$OPS_TYPES_ID = $OPS_TYPES_ID\n" or croak;    # no effect if suppressing output!
     my $OPS_TYPES;
 
     # [[[ PERLOPS_PERLTYPES SETUP ]]]

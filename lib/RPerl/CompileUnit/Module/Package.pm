@@ -28,7 +28,7 @@ our string__method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self ) = @_;    # object method
     my string $self_generated = q{};
 
-#print {*STDERR} "in Package::rperl_to_cpp__generate__CPPOPS_CPPTYPES(), received \$self = \n" . Dumper($self) . "\n";
+#RPerl::diag "in Package::rperl_to_cpp__generate__CPPOPS_CPPTYPES(), received \$self = \n" . Dumper($self) . "\n";
 #$self_generated .= "// <<< PACKAGE RULE, BEGIN CPPOPS_CPPTYPES >>>\n"; # DEBUG TEMP
 
     $self_generated
@@ -78,7 +78,7 @@ our string__method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     $self_generated .= q[}] . "\n";
 
 #$self_generated .= "// <<< PACKAGE RULE, END CPPOPS_CPPTYPES >>>\n"; # DEBUG TEMP
-    print {*STDERR}
+    RPerl::diag
         "in Package::rperl_to_cpp__generate__CPPOPS_CPPTYPES(), about to return \$self_generated = \n\n\n"
         . $self_generated . "\n\n";
 
@@ -114,7 +114,7 @@ our object__method $ppi_to_rperl__translate = sub { # DEV NOTE: object is the re
     my string $grandchild_content_expected;
     my string $grandchild_content;
 
-#    print {*STDERR} "in Package::ppi_to_rperl__translate(), received \$node =\n" . Dumper($node) . "\n";
+#    RPerl::diag "in Package::ppi_to_rperl__translate(), received \$node =\n" . Dumper($node) . "\n";
 
     if ( not( defined $node ) ) {
         croak(
@@ -129,7 +129,7 @@ our object__method $ppi_to_rperl__translate = sub { # DEV NOTE: object is the re
         );
     }
 
-    print {*STDERR}
+    RPerl::diag
         "in Package::ppi_to_rperl__translate(), have \$node_class = '$node_class'\n";
 
     # PACKAGE rule begin
@@ -206,8 +206,8 @@ our object__method $ppi_to_rperl__translate = sub { # DEV NOTE: object is the re
     $node_translated = RPerl::CompileUnit::Module::Package->new();
     $node_translated->{name} = $grandchild_content;
 
-#print {*STDERR} "in Package::ppi_to_rperl__translate(), PACKAGE_NAME component, have \$grandchild = \n" . Dumper($grandchild) . "\n";
-#print {*STDERR} "in Package::ppi_to_rperl__translate(), PACKAGE_NAME component, have \$node_translated = \n" . Dumper($node_translated) . "\n";
+#RPerl::diag "in Package::ppi_to_rperl__translate(), PACKAGE_NAME component, have \$grandchild = \n" . Dumper($grandchild) . "\n";
+#RPerl::diag "in Package::ppi_to_rperl__translate(), PACKAGE_NAME component, have \$node_translated = \n" . Dumper($node_translated) . "\n";
 
 # PACKAGE rule, RPERL_HEADER rule/component begin, USE_STRICT component @ KEY 'children', INDEX 1
     $production_name        = '<default>';
@@ -391,7 +391,7 @@ our object__method $ppi_to_rperl__translate = sub { # DEV NOTE: object is the re
     for my integer $child_index_loop (
         $child_index .. ( $child_index_max - 1 ) )
     {
-        print {*STDERR}
+        RPerl::diag
             'in Package::ppi_to_rperl__translate(), top of SUBROUTINE+ for() loop '
             . ( $child_index_loop - 6 ) . q{/}
             . ( $child_index_max - 7 ) . "...\n";
@@ -451,12 +451,12 @@ our object__method $ppi_to_rperl__translate = sub { # DEV NOTE: object is the re
             );
         }
 
-#print {*STDERR} 'in Package::ppi_to_rperl__translate(), SUBROUTINE+ for() loop ' . ($child_index_loop - 6) . q{/} . ($child_index_max - 7) . ", about to call RPerl::CodeBlock::Subroutine::ppi_to_rperl__translate( \$child )...\n";
+#RPerl::diag 'in Package::ppi_to_rperl__translate(), SUBROUTINE+ for() loop ' . ($child_index_loop - 6) . q{/} . ($child_index_max - 7) . ", about to call RPerl::CodeBlock::Subroutine::ppi_to_rperl__translate( \$child )...\n";
 
         $child_translated
             = RPerl::CodeBlock::Subroutine->ppi_to_rperl__translate($child); # class method call
 
-#print {*STDERR} 'in Package::ppi_to_rperl__translate(), SUBROUTINE+ for() loop ' . ($child_index_loop - 6) . q{/} . ($child_index_max - 7) . ", returned from RPerl::CodeBlock::Subroutine::ppi_to_rperl__translate( \$child ), received \$child_translated = \n" . Dumper($child_translated) . "\n";
+#RPerl::diag 'in Package::ppi_to_rperl__translate(), SUBROUTINE+ for() loop ' . ($child_index_loop - 6) . q{/} . ($child_index_max - 7) . ", returned from RPerl::CodeBlock::Subroutine::ppi_to_rperl__translate( \$child ), received \$child_translated = \n" . Dumper($child_translated) . "\n";
 
         push @{ $node_translated->{subroutines} }, $child_translated;
     }
@@ -495,7 +495,7 @@ our object__method $ppi_to_rperl__translate = sub { # DEV NOTE: object is the re
         );
     }
 
-#    print {*STDERR} "in Package::ppi_to_rperl__translate(), bottom of subroutine, about to return \$node_translated=\n" . Dumper($node_translated) . "\n";
+#    RPerl::diag "in Package::ppi_to_rperl__translate(), bottom of subroutine, about to return \$node_translated=\n" . Dumper($node_translated) . "\n";
 
     # this rule never matches empty
     return ($node_translated);

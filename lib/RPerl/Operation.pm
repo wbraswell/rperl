@@ -52,7 +52,7 @@ our object__array_ref__method $ppi_to_rperl__translate_plus = sub {
     my string $child_content_expected;
     my integer $child_disqualified;
 
-#print {*STDERR} "in Operation::ppi_to_rperl__translate_plus(), received \$nodes =\n" . Dumper($nodes) . "\n";
+#RPerl::diag "in Operation::ppi_to_rperl__translate_plus(), received \$nodes =\n" . Dumper($nodes) . "\n";
 
     $node_index_max = ( scalar @{$nodes} ) - 1;
 
@@ -66,7 +66,7 @@ our object__array_ref__method $ppi_to_rperl__translate_plus = sub {
 NODE_LOOP: for my $node_index_loop ( 0 .. $node_index_max ) {
         $node = $nodes->[$node_index_loop];
 
-        print {*STDERR}
+        RPerl::diag
             'in Operation::ppi_to_rperl__translate_plus(), top of for() loop '
             . $node_index_loop . q{/}
             . $node_index_max
@@ -86,7 +86,7 @@ NODE_LOOP: for my $node_index_loop ( 0 .. $node_index_max ) {
             );
         }
 
-        print {*STDERR}
+        RPerl::diag
             'in Operation::ppi_to_rperl__translate_plus(), in for() loop '
             . $node_index_loop . q{/}
             . $node_index_max
@@ -291,11 +291,11 @@ NODE_LOOP: for my $node_index_loop ( 0 .. $node_index_max ) {
         }
 
 # this line and the followirng print statements should never be reached
-#print {*STDERR} 'in Operation::ppi_to_rperl__translate_plus(), bottom of for() loop ' . $node_index_loop . q{/} . $node_index_max . ", have \$grandchild = \n" . Dumper($grandchild) . "\n";
-#print {*STDERR} 'in Operation::ppi_to_rperl__translate_plus(), bottom of for() loop ' . $node_index_loop . q{/} . $node_index_max . ", have \$node_translated = \n" . Dumper($node_translated) . "\n";
+#RPerl::diag 'in Operation::ppi_to_rperl__translate_plus(), bottom of for() loop ' . $node_index_loop . q{/} . $node_index_max . ", have \$grandchild = \n" . Dumper($grandchild) . "\n";
+#RPerl::diag 'in Operation::ppi_to_rperl__translate_plus(), bottom of for() loop ' . $node_index_loop . q{/} . $node_index_max . ", have \$node_translated = \n" . Dumper($node_translated) . "\n";
     }
 
-#    print {*STDERR} "in Operation::ppi_to_rperl__translate_plus(), bottom of subroutine, about to return \$node_translated=\n" . Dumper($node_translated) . "\n";
+#    RPerl::diag "in Operation::ppi_to_rperl__translate_plus(), bottom of subroutine, about to return \$node_translated=\n" . Dumper($node_translated) . "\n";
 
     # this rule never matches empty
     return ($nodes_translated);

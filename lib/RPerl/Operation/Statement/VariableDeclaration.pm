@@ -43,7 +43,7 @@ our object__method $ppi_to_rperl__translate = sub {
     my integer $child_index_max;
     my integer $child_qualified;
 
-    print {*STDERR}
+    RPerl::diag
         "in VariableDeclaration::ppi_to_rperl__translate(), received \$node =\n"
         . Dumper($node) . "\n";
 
@@ -59,7 +59,7 @@ our object__method $ppi_to_rperl__translate = sub {
         );
     }
 
-    print {*STDERR}
+    RPerl::diag
         "in VariableDeclaration::ppi_to_rperl__translate(), have \$node_class = '$node_class'\n";
 
     # VARIABLE_DECLARATION rule begin
@@ -264,7 +264,7 @@ our object__method $ppi_to_rperl__translate = sub {
         );
     }
 
-    print {*STDERR}
+    RPerl::diag
         "in VariableDeclaration::ppi_to_rperl__translate(), bottom of subroutine, about to return \$node_translated=\n"
         . Dumper($node_translated) . "\n";
 

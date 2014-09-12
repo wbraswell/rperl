@@ -45,8 +45,8 @@ our void $greet_planet = sub {
 #print;
 #print 'Hello, world! dot ' . $arg0 . "\n"; # parses to 1 PPI::Statement object; NEED FIX: . dot string concatenation operator not yet implemented
 #print 'Hello, world! comma ' , $arg0 , "\n"; # parses to 1 PPI::Statement object
-#print {*STDERR} 'Hello, world! comma ' , $arg0 , "\n"; # parses to 1 PPI::Statement object, w/ PPI::Structure::Block at child index 1
-    print {*STDERR} 'Hello, world! comma ', $arg0, ' and ', 42, "\n"; # parses to 1 PPI::Statement object, w/ PPI::Structure::Block at child index 1
+#RPerl::diag 'Hello, world! comma ' , $arg0 , "\n"; # parses to 1 PPI::Statement object, w/ PPI::Structure::Block at child index 1
+    RPerl::diag 'Hello, world! comma ', $arg0, ' and ', 42, "\n"; # parses to 1 PPI::Statement object, w/ PPI::Structure::Block at child index 1
 
 #print 'Hello, world! ' . $arg0 . q{ } . $arg1 . "\n";
 #print 'Hello, world! ' . $arg0 . q{ } . $arg1 . q{ } . ::number__array_ref__stringify($arg2) . "\n";

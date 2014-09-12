@@ -19,8 +19,8 @@ use RPerl::Test::Print_00_cpp;
 RPerl::Test::Print_00_cpp::cpp_load();    # OR this
 
 # disabled to avoid attempt to compile Print_00__*() from RPerl to CPP
-#print {*STDERR} q{in compiled_test__print_00.pl, have RPerl_Test_Print_00__ops() = '} . RPerl_Test_Print_00__ops() . "'\n"();
-#print {*STDERR} q{in compiled_test__print_00.pl, have RPerl_Test_Print_00__types() = '} . RPerl_Test_Print_00__types() . "'\n"();
+#RPerl::diag q{in compiled_test__print_00.pl, have RPerl_Test_Print_00__ops() = '} . RPerl_Test_Print_00__ops() . "'\n"();
+#RPerl::diag q{in compiled_test__print_00.pl, have RPerl_Test_Print_00__types() = '} . RPerl_Test_Print_00__types() . "'\n"();
 
 greet_planet(23);
 

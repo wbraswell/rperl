@@ -15,7 +15,7 @@ our $VERSION = 0.012_001;
 
 # after compiling but before runtime: create symtab entries for all RPerl functions/methods, and accessors/mutators for all RPerl class properties
 INIT {
-#	print {*STDERR} "in Class.pm INIT block, have \%INC =\n" . Dumper(\%INC) . "\n";
+#	RPerl::diag "in Class.pm INIT block, have \%INC =\n" . Dumper(\%INC) . "\n";
 
     my $module_file_long;
     my $package_name;
@@ -30,16 +30,16 @@ INIT {
         if (   ( $module_file_short =~ /^RPerl/xms )
             || ( $module_file_short =~ /^rperl/xms ) )
         {
-#			print {*STDERR} "in Class.pm INIT block, have \$module_file_short = '$module_file_short'\n";
+#			RPerl::diag "in Class.pm INIT block, have \$module_file_short = '$module_file_short'\n";
             $module_file_long = $INC{$module_file_short};
 
-#			print {*STDERR} "in Class.pm INIT block, have \$module_file_long = '$module_file_long'\n";
+#			RPerl::diag "in Class.pm INIT block, have \$module_file_long = '$module_file_long'\n";
 
             open my $MODULE_FILE, '<', $module_file_long or croak $ERRNO;
             while ( my $module_file_line = <$MODULE_FILE> ) {
                 chomp $module_file_line;
 
-#				print {*STDERR} "in Class.pm INIT block, have \$module_file_line =\n$module_file_line\n";
+#				RPerl::diag "in Class.pm INIT block, have \$module_file_line =\n$module_file_line\n";
 
                 # skip single-line comments
                 next if ( $module_file_line =~ /^\s*\#/xms );
@@ -47,7 +47,7 @@ INIT {
                 # skip multi-line POD comments
                 if ( $module_file_line =~ /^\=(\w+)/xms ) {
 
-#					print {*STDERR} "in Class.pm INIT block, skipping multi-line POD comment, have \$1 = '$1'\n";
+#					RPerl::diag "in Class.pm INIT block, skipping multi-line POD comment, have \$1 = '$1'\n";
                     $module_file_line = <$MODULE_FILE>;
                     if ( not defined $module_file_line ) {
                         croak
@@ -71,7 +71,7 @@ INIT {
                         =~ /\=\s*\<\<\s*\"(\w+)\"\s*\;\s*$/xms )
                     )
                 {
-#					print {*STDERR} "in Class.pm INIT block, skipping multi-line heredoc, have \$1 = '$1'\n";
+#					RPerl::diag "in Class.pm INIT block, skipping multi-line heredoc, have \$1 = '$1'\n";
                     $module_file_line = <$MODULE_FILE>;
                     if ( not defined $module_file_line ) {
                         croak
@@ -90,14 +90,14 @@ INIT {
                 # skip __DATA__ footer
                 if ( $module_file_line eq '__DATA__' ) {
 
- #					print {*STDERR} "in Class.pm INIT block, skipping '__DATA__' footer\n";
+ #					RPerl::diag "in Class.pm INIT block, skipping '__DATA__' footer\n";
                     last;
                 }
 
                 # skip __END__ footer
                 if ( $module_file_line eq '__END__' ) {
 
- #					print {*STDERR} "in Class.pm INIT block, skipping '__END__' footer\n";
+ #					RPerl::diag "in Class.pm INIT block, skipping '__END__' footer\n";
                     last;
                 }
 
@@ -107,13 +107,13 @@ INIT {
                 {
                     $package_name = $1;
 
-#					print {*STDERR} "in Class.pm INIT block, have \$package name = '$package_name'\n";
+#					RPerl::diag "in Class.pm INIT block, have \$package name = '$package_name'\n";
                     %class_properties = eval "\%$package_name\:\:properties";
 
                     foreach my $class_property_name (
                         sort keys %class_properties )
                     {
-#						print {*STDERR} "in Class.pm INIT block, have \$class_property_name = '$class_property_name'\n";
+#						RPerl::diag "in Class.pm INIT block, have \$class_property_name = '$class_property_name'\n";
 # DEV NOTE, CORRELATION #03: avoid re-defining class accessor/mutator methods; so far only triggered by RPerl::CodeBlock::Subroutine
 # becuase it has a special BEGIN{} block with multiple package names including it's own package name
                         if (not eval
@@ -125,7 +125,7 @@ INIT {
                                 or croak( $ERRNO . "\n" . $EVAL_ERROR );
                             if ($EVAL_ERROR) { croak($EVAL_ERROR); }
 
-#eval "\*\{$package_name\:\:get_$class_property_name\} \= sub \{ print {*STDERR} \"IN POST\-INIT\, accessor MODE $package_name\:\:get_$class_property_name\\n\"\; return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;";
+#eval "\*\{$package_name\:\:get_$class_property_name\} \= sub \{ RPerl::diag \"IN POST\-INIT\, accessor MODE $package_name\:\:get_$class_property_name\\n\"\; return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;";
                         }
                         if (not eval
                             "defined *\{$package_name\:\:set_$class_property_name\}"
@@ -137,7 +137,7 @@ INIT {
                                 or croak( $ERRNO . "\n" . $EVAL_ERROR );
                             if ($EVAL_ERROR) { croak($EVAL_ERROR); }
 
-#eval "\*\{$package_name\:\:set_$class_property_name\} \= sub \{ print {*STDERR} \"IN POST\-INIT\, mutator MODE $package_name\:\:set_$class_property_name\\n\"\; \$\_\[0\]\-\>\{$class_property_name\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;";
+#eval "\*\{$package_name\:\:set_$class_property_name\} \= sub \{ RPerl::diag \"IN POST\-INIT\, mutator MODE $package_name\:\:set_$class_property_name\\n\"\; \$\_\[0\]\-\>\{$class_property_name\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;";
                         }
                     }
                 }
@@ -149,21 +149,21 @@ INIT {
                     $subroutine_type = $1;
                     $subroutine_name = $2;
 
-#					print {*STDERR} "in Class.pm INIT block, have \$subroutine_type = '$subroutine_type', and \$subroutine_name = '$subroutine_name'\n";
+#					RPerl::diag "in Class.pm INIT block, have \$subroutine_type = '$subroutine_type', and \$subroutine_name = '$subroutine_name'\n";
 
                     if ( $subroutine_type =~ /\_\_method$/xms ) {
 
-    #print {*STDERR} "in Class.pm INIT block, $subroutine_name is a method\n";
+    #RPerl::diag "in Class.pm INIT block, $subroutine_name is a method\n";
     # NEED UPGRADE: how can I do this w/out a subroutine?
                         eval
                             "\*\{$package_name\:\:$subroutine_name\} \= sub \{ return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;"
                             or croak( $ERRNO . "\n" . $EVAL_ERROR );
                         if ($EVAL_ERROR) { croak($EVAL_ERROR); }
 
-#						eval "\*\{$package_name\:\:$subroutine_name\} \= sub \{ print {*STDERR} \"IN POST\-INIT\, method direct call MODE $package_name\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;";  # NEED UPGRADE: how can I do this w/out a subroutine?
+#						eval "\*\{$package_name\:\:$subroutine_name\} \= sub \{ RPerl::diag \"IN POST\-INIT\, method direct call MODE $package_name\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;";  # NEED UPGRADE: how can I do this w/out a subroutine?
                     }
                     else {
-#						print {*STDERR} "in Class.pm INIT block, $subroutine_name is a non-method subroutine\n";
+#						RPerl::diag "in Class.pm INIT block, $subroutine_name is a non-method subroutine\n";
                         if ( eval "defined\(\&main\:\:$subroutine_name\)" ) {
                             croak
                                 "Attempt by package '$package_name' to re-define shared global subroutine '$subroutine_name', please re-name your subroutine or make it a method, dying";
@@ -176,14 +176,14 @@ INIT {
                             or croak( $ERRNO . "\n" . $EVAL_ERROR );
                         if ($EVAL_ERROR) { croak($EVAL_ERROR); }
 
-#						eval "\*\{main\:\:$subroutine_name\} \= sub \{ print {*STDERR} \"IN POST\-INIT\, subroutine direct call MODE main\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;";  # NEED UPGRADE: how can I do this w/out a subroutine?
+#						eval "\*\{main\:\:$subroutine_name\} \= sub \{ RPerl::diag \"IN POST\-INIT\, subroutine direct call MODE main\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;";  # NEED UPGRADE: how can I do this w/out a subroutine?
 # NEED UPGRADE: how can I do this w/out a subroutine?
                         eval
                             "\*\{$package_name\:\:$subroutine_name\} \= sub \{ return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;"
                             or croak( $ERRNO . "\n" . $EVAL_ERROR );
                         if ($EVAL_ERROR) { croak($EVAL_ERROR); }
 
-#						eval "\*\{$package_name\:\:$subroutine_name\} \= sub \{ print {*STDERR} \"IN POST\-INIT\, subroutine direct call MODE $package_name\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;";  # NEED UPGRADE: how can I do this w/out a subroutine?
+#						eval "\*\{$package_name\:\:$subroutine_name\} \= sub \{ RPerl::diag \"IN POST\-INIT\, subroutine direct call MODE $package_name\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;";  # NEED UPGRADE: how can I do this w/out a subroutine?
                     }
                 }
             }
@@ -213,7 +213,7 @@ __END__
 our $AUTOLOAD;
 sub AUTOLOAD
 {
-	print {*STDERR} "IN AUTOLOAD, top of subroutine, received \$AUTOLOAD = '$AUTOLOAD', and \@_ =\n" . Dumper(\@_) . "\n";
+	RPerl::diag "IN AUTOLOAD, top of subroutine, received \$AUTOLOAD = '$AUTOLOAD', and \@_ =\n" . Dumper(\@_) . "\n";
 	no strict;
 	my $retval;
 
@@ -221,31 +221,31 @@ sub AUTOLOAD
 #	if ($AUTOLOAD =~ /^([\w+::]*)(get|set)_(\w+)$/)
 	if (0)
 	{
-		print {*STDERR} "IN AUTOLOAD, accessor/mutator MODE, have \$1 = '$1', \$2 = '$2', \$3 = '$3'\n";
+		RPerl::diag "IN AUTOLOAD, accessor/mutator MODE, have \$1 = '$1', \$2 = '$2', \$3 = '$3'\n";
 		if ($2 eq 'get')	
 		{
-			print {*STDERR} "IN AUTOLOAD, accessor MODE\n";
+			RPerl::diag "IN AUTOLOAD, accessor MODE\n";
 #			eval "\*\{$AUTOLOAD\} \= sub \{ return \$\_\[0\]\-\>\{$3\}\; \}\;";
-			eval "\*\{$AUTOLOAD\} \= sub \{ print {*STDERR} \"IN POST\-AUTOLOAD\, accessor MODE $AUTOLOAD\\n\"\; return \$\_\[0\]\-\>\{$3\}\; \}\;";
+			eval "\*\{$AUTOLOAD\} \= sub \{ RPerl::diag \"IN POST\-AUTOLOAD\, accessor MODE $AUTOLOAD\\n\"\; return \$\_\[0\]\-\>\{$3\}\; \}\;";
 			$retval = $_[0]->{$3};
 		}
 		else  # ($2 eq 'set')
 		{
-			print {*STDERR} "IN AUTOLOAD, mutator MODE\n";
+			RPerl::diag "IN AUTOLOAD, mutator MODE\n";
 #			eval "\*\{$AUTOLOAD\} \= sub \{ \$\_\[0\]\-\>\{$3\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$3\}\; \}\;";
-			eval "\*\{$AUTOLOAD\} \= sub \{ print {*STDERR} \"IN POST\-AUTOLOAD\, mutator MODE $AUTOLOAD\\n\"\; \$\_\[0\]\-\>\{$3\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$3\}\; \}\;";
+			eval "\*\{$AUTOLOAD\} \= sub \{ RPerl::diag \"IN POST\-AUTOLOAD\, mutator MODE $AUTOLOAD\\n\"\; \$\_\[0\]\-\>\{$3\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$3\}\; \}\;";
 			$_[0]->{$3} = $_[1];
 			$retval = $_[0]->{$3};
 		}
 	}
 	else
 	{
-		print {*STDERR} "IN AUTOLOAD, direct call MODE\n";
+		RPerl::diag "IN AUTOLOAD, direct call MODE\n";
 		# disable creating symtab entries here to avoid redefining subroutines in INIT block above;
 		# still need direct call mode here in case we want to call an RPerl function/method before the INIT block executes,
 		# such as when an RPerl class calls one of it's own functions/methods during compile time
 #		eval "\*\{$AUTOLOAD\} \= sub \{ return \&\$\{$AUTOLOAD\}\(\@\_\)\; \}\;";  # NEED UPGRADE: how can I do this w/out a subroutine?
-#		eval "\*\{$AUTOLOAD\} \= sub \{ print {*STDERR} \"IN POST\-AUTOLOAD\, direct call MODE $AUTOLOAD\\n\"\; return \&\$\{$AUTOLOAD\}\(\@\_\)\; \}\;";  # NEED UPGRADE: how can I do this w/out a subroutine?
+#		eval "\*\{$AUTOLOAD\} \= sub \{ RPerl::diag \"IN POST\-AUTOLOAD\, direct call MODE $AUTOLOAD\\n\"\; return \&\$\{$AUTOLOAD\}\(\@\_\)\; \}\;";  # NEED UPGRADE: how can I do this w/out a subroutine?
 		if (defined(${$AUTOLOAD})) { $retval = &${$AUTOLOAD}(@_); }
 		else { die "Attempt to AUTOLOAD undefined subroutine '$AUTOLOAD', dying"; }
 	}
@@ -254,7 +254,7 @@ sub AUTOLOAD
 	else
 	{
 		my $eval_string = '&$' . $AUTOLOAD . '(@_);';
-		print {*STDERR} "IN AUTOLOAD, eval call MODE, have \$eval_string = '$eval_string'\n";
+		RPerl::diag "IN AUTOLOAD, eval call MODE, have \$eval_string = '$eval_string'\n";
 		$retval = eval $eval_string;
 	}
 =cut
@@ -262,7 +262,7 @@ sub AUTOLOAD
 	croak $EVAL_ERROR if ($EVAL_ERROR);  # suppress '...propagated at RPerl/Class.pm' appended exception	
 #	croak if ($EVAL_ERROR);  # allow '...propagated at RPerl/Class.pm' appended exception	
 
-#	print {*STDERR} "IN AUTOLOAD, bottom of subroutine, about to return \$retval = '$retval'\n";
+#	RPerl::diag "IN AUTOLOAD, bottom of subroutine, about to return \$retval = '$retval'\n";
 	return $retval;
 }
 
@@ -271,13 +271,13 @@ sub AUTOLOAD
 sub new_longhand
 {
 	(my $class_name_const_str) = @_;
-print {*STDERR} "in Class.pm, have \$class_name_const_str = '$class_name_const_str'\n";
+RPerl::diag "in Class.pm, have \$class_name_const_str = '$class_name_const_str'\n";
 	my $properties_name_const_str = $class_name_const_str . '::properties';
-print {*STDERR} "in Class.pm, have \$properties_name_const_str = '$properties_name_const_str'\n";
+RPerl::diag "in Class.pm, have \$properties_name_const_str = '$properties_name_const_str'\n";
 	my %properties = %{$properties_name_const_str};
-print {*STDERR} "in Class.pm, have \%properties =\n" . Dumper(\%properties) . "\n";
+RPerl::diag "in Class.pm, have \%properties =\n" . Dumper(\%properties) . "\n";
 #	my $new_obj = bless({%{$class_name_const_str . '::properties'}}, $class_name_const_str);
 	my $new_obj = bless({%properties}, $class_name_const_str);
-print {*STDERR} "in Class.pm, have \$new_obj =\n" . Dumper($new_obj) . "\n";
+RPerl::diag "in Class.pm, have \$new_obj =\n" . Dumper($new_obj) . "\n";
 	return $new_obj;
 }

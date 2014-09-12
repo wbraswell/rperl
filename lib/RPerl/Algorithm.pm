@@ -24,7 +24,8 @@ our void__method $inherited = sub {
         "in PERLOPS_PERLTYPES Algorithm->inherited(), received \$self = '$self' and \$person = '$person', IS\n";
 };
 
-1, 1;    # CODE SEPARATOR: methods above, subroutines below
+1;
+1;    # CODE SEPARATOR: methods above, subroutines below
 
 # [[[ SUBROUTINES ]]]
 
@@ -38,4 +39,5 @@ our string $uninherited__Algorithm = sub {
 
 #our string $uninherited = sub { ( my string $person) = @_; RPerl::diag "in Perl Algorithm::uninherited(), \$person = '$person', TERRITORY\n"; return "Perl Algorithm::uninherited() ROCKS!"; };
 
-1, 1;    # CODE SEPARATOR: end of class
+1;
+1;    # CODE SEPARATOR: end of class

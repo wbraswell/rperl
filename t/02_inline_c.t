@@ -134,7 +134,7 @@ char* greetings_char(SV* name1, ...) {
 	for (i = 0; i < Inline_Stack_Items; i++)
 	{
 		retval = newSVpvf("%sHello %s!  ", SvPV(retval, PL_na), SvPV(Inline_Stack_Item(i), PL_na));
-//		print STDERRf("in greetings_char(), for() loop i = %d, have retval ='%s'\n", i, SvPV_nolen(retval));
+//		printf("in greetings_char(), for() loop i = %d, have retval ='%s'\n", i, SvPV_nolen(retval));
 	}
 	return(SvPV_nolen(retval));
 }
@@ -180,7 +180,7 @@ SV* greetings_sv(SV* retval, SV* name1, ...) {
 	for (i = 1; i < Inline_Stack_Items; i++)
 	{
 		retval = newSVpvf("%sHello %s!  ", SvPV(retval, PL_na), SvPV(Inline_Stack_Item(i), PL_na));
-//		print STDERRf("in greetings_sv(), for() loop i = %d, have retval ='%s'\n", i, SvPV_nolen(retval));
+//		printf("in greetings_sv(), for() loop i = %d, have retval ='%s'\n", i, SvPV_nolen(retval));
 	}
 	return(retval);
 }
@@ -228,7 +228,7 @@ void greetings_void(SV* name1, ...) {
 	for (i = 0; i < Inline_Stack_Items; i++)
 	{
 		retval = newSVpvf("%sHello %s!  ", SvPV(retval, PL_na), SvPV(Inline_Stack_Item(i), PL_na));
-//		print STDERRf("in greetings_void(), for() loop i = %d, have retval ='%s'\n", i, SvPV_nolen(retval));
+//		printf("in greetings_void(), for() loop i = %d, have retval ='%s'\n", i, SvPV_nolen(retval));
 	}
 	Inline_Stack_Reset;
 	Inline_Stack_Push(sv_2mortal(retval));

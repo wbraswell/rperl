@@ -73,11 +73,11 @@ $input_vector_2 = [-999999, 4.0, 3.0, 12.0];
 # loop to test for memory leaks
 my const_integer $i_MAX = 0;
 for my integer $i ( 0 .. $i_MAX ) {
-	print STDERR "in geometric_algebra_test_1_ipvve.pl, top of for() loop $i/$i_MAX\n";
+	RPerl::diag "in geometric_algebra_test_1_ipvve.pl, top of for() loop $i/$i_MAX\n";
 
     $retval_number = inner_product__vector_vector_euclidean($input_vector_1, $input_vector_2);
 
-	print STDERR "in geometric_algebra_test_1_ipvve.pl $i/$i_MAX, have \$retval_number =\n$retval_number\n";
+	RPerl::diag "in geometric_algebra_test_1_ipvve.pl $i/$i_MAX, have \$retval_number =\n$retval_number\n";
 
 croak('Done for now, croaking');
 }

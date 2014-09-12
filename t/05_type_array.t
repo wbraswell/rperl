@@ -31,7 +31,7 @@ BEGIN {
 # loop 3 times, once for each mode: Pure-Perl, RPerl Perl-Data, and RPerl C-Data
 for my $OPS_TYPES_ID ( 0 .. 2 ) {
 
-#    print STDERR "in 05_type_array.t, top of for() loop, have \$OPS_TYPES_ID = $OPS_TYPES_ID\n" or croak;    # no effect if suppressing output!
+#    RPerl::diag "in 05_type_array.t, top of for() loop, have \$OPS_TYPES_ID = $OPS_TYPES_ID\n" or croak;    # no effect if suppressing output!
     my $OPS_TYPES;
 
     # [[[ PERLOPS_PERLTYPES SETUP ]]]

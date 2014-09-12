@@ -10,10 +10,10 @@ our $VERSION = 0.004_011;
 ## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
 use parent qw( RPerl::Algorithm::Sort ); # OO INHERITANCE TESTING; SINGLE OO INHERITANCE
 
-#use parent qw( RPerl::Algorithm::Sort RPerl::Algorithm::Inefficient ); # OO INHERITANCE TESTING; MULTIPLE OO INHERITANCE NOT SUPPORTED BY Inline::CPP
+#use parent qw( RPerl::Algorithm::Sort RPerl::Algorithm::Inefficient ); # OO INHERITANCE TESTING; NEED UPGRADE: multiple inheritance not currently supported by Inline::CPP
 use RPerl::Algorithm::Sort;
 
-#use RPerl::Algorithm::Inefficient;    # OO INHERITANCE TESTING; MULTIPLE OO INHERITANCE NOT SUPPORTED BY Inline::CPP
+#use RPerl::Algorithm::Inefficient;    # OO INHERITANCE TESTING; NEED UPGRADE: multiple inheritance not currently supported by Inline::CPP
 use Data::Dumper;
 
 # [[[ OO PROPERTIES ]]]

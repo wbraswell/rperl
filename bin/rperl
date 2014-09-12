@@ -14,7 +14,7 @@ use RPerl::Compiler;    # includes Inline
 use Getopt::Long;
 
 # move output away from initial Inline compiler output
-print {*STDERR} "\n\n" or croak();
+RPerl::diag "\n\n" or croak();
 
 # [[[ ACCEPT COMMAND-LINE ARGUMENTS ]]]
 # [[[ ACCEPT COMMAND-LINE ARGUMENTS ]]]
@@ -85,11 +85,11 @@ foreach my string $mode_default_key ( keys %{$mode_default} ) { ## no critic qw(
         $mode->{$mode_default_key} = $mode_default->{$mode_default_key};
     }
 }
-print {*STDERR}
+RPerl::diag
     "in rperl, have \$rperl_input_file_name = '$rperl_input_file_name'\n";
-print {*STDERR}
+RPerl::diag
     "in rperl, have \$cpp_output_file_name = '$cpp_output_file_name'\n";
-print {*STDERR} "in rperl, have \$mode = \n"
+RPerl::diag "in rperl, have \$mode = \n"
     . Dumper($mode) . "\n";
 
 # [[[ PARSE PERL TO PPI ]]]

@@ -38,7 +38,7 @@ our object__method $ppi_to_rperl__translate = sub {
     my string $child_content_expected;
     my integer $child_disqualified;
 
-    print {*STDERR}
+    RPerl::diag
         "in Expression::ppi_to_rperl__translate(), received \$node =\n"
         . Dumper($node) . "\n";
 
@@ -54,7 +54,7 @@ our object__method $ppi_to_rperl__translate = sub {
         );
     }
 
-    print {*STDERR}
+    RPerl::diag
         "in Expression::ppi_to_rperl__translate(), have \$node_class = '$node_class'\n";
 
     # EXPRESSION rule, POSSIBLE _LITERAL PRODUCTION
@@ -82,7 +82,7 @@ our object__method $ppi_to_rperl__translate = sub {
             $node_translated->{type}             = 'string';
             $node_translated->{string_separator} = $node->{separator};
         }
-        print {*STDERR}
+        RPerl::diag
             "in Expression::ppi_to_rperl__translate(), _LITERAL production, about to return \$node_translated=\n"
             . Dumper($node_translated) . "\n";
         return ($node_translated);
@@ -108,7 +108,7 @@ our object__method $ppi_to_rperl__translate = sub {
         $variable_node->{children} = [$node];
         $node_translated = RPerl::Operation::Expression::Variable
             ->ppi_to_rperl__translate($variable_node);
-        print {*STDERR}
+        RPerl::diag
             "in Expression::ppi_to_rperl__translate(), _LITERAL production, about to return \$node_translated=\n"
             . Dumper($node_translated) . "\n";
         return ($node_translated);

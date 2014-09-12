@@ -15,7 +15,7 @@ print "[[[ END 'use Inline' STAGE for 'DATA' ]]]\n"x3;
 
 #my $string_retval = string__typetest0();
 my $string_retval = string__typetest1('howdy');
-print STDERR "in ntype.pl have \$string_retval = '$string_retval'\n";
+RPerl::diag "in ntype.pl have \$string_retval = '$string_retval'\n";
 
 
 

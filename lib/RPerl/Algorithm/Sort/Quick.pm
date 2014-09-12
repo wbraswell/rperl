@@ -28,8 +28,8 @@ our scalar__array_ref $quicksort = sub {(my scalar__array_ref $data) = @_;
 ;
 	my const_int $data_length = scalar(@{$data});
 	
-#	RPerl::diag "in quicksort(), have \$data = \n" . RPerl::DUMPER($data) . "\n" if $RPerl::DEBUG;
-#	RPerl::diag "in quicksort(), have \$data_length = $data_length\n" if $RPerl::DEBUG;
+#	RPerl::diag "in quicksort(), have \$data = \n" . RPerl::DUMPER($data) . "\n";
+#	RPerl::diag "in quicksort(), have \$data_length = $data_length\n";
 
 	# singleton or empty sublists are sorted
 	return $data if ($data_length <= 1);
@@ -44,24 +44,24 @@ our scalar__array_ref $quicksort = sub {(my scalar__array_ref $data) = @_;
 	# TODO: handle multiple pivot choices
 	my const_int $i_pivot = $data_length - 1;  # pivot is last element in partition; okay for small, not-already-sorted arrays; required to be stable???
 ##	my const_int $i_pivot = int($data_length / 2);  # pivot is middle element in partition; okay for large, already-sorted, or repetitive arrays
-#	RPerl::diag "in quicksort(), have \$i_pivot = $i_pivot\n" if $RPerl::DEBUG;
+#	RPerl::diag "in quicksort(), have \$i_pivot = $i_pivot\n";
 
 	my const_scalar $pivot = $data->[$i_pivot];
-#	RPerl::diag "in quicksort(), have \$pivot = $pivot\n" if $RPerl::DEBUG;
+#	RPerl::diag "in quicksort(), have \$pivot = $pivot\n";
 
 	# iteratively partition elements of length-n list into sublists less-or-greater than pivot [O(n) time, O(n) total extra space for sublists]
 	for ($i = 0; $i < $data_length; $i++)
 	{
 		next if ($i == $i_pivot);  # do not compare pivot to itself, do not store in @less or @greater
 		$element = $data->[$i];
-#		RPerl::diag "in quicksort(), have \$element = $element\n" if $RPerl::DEBUG;
+#		RPerl::diag "in quicksort(), have \$element = $element\n";
 
 		# compare element to pivot, this is the core sort comparison
 		if ($element <= $pivot) { push(@less_scalar__array, $element); }
 		else { push(@greater_scalar__array, $element); }
 	}
-#	RPerl::diag "in quicksort(), have \@less_scalar__array = \n" . RPerl::DUMPER(\@less_scalar__array) . "\n" if $RPerl::DEBUG;
-#	RPerl::diag "in quicksort(), have \@greater_scalar__array = \n" . RPerl::DUMPER(\@greater_scalar__array) . "\n" if $RPerl::DEBUG;
+#	RPerl::diag "in quicksort(), have \@less_scalar__array = \n" . RPerl::DUMPER(\@less_scalar__array) . "\n";
+#	RPerl::diag "in quicksort(), have \@greater_scalar__array = \n" . RPerl::DUMPER(\@greater_scalar__array) . "\n";
 	
 	# recursively call this function on the sublists [O(log n) time], then concatenate the sorted sublists and pivot element
 	$data = [@{quicksort(\@less_scalar__array)}, $pivot, @{quicksort(\@greater_scalar__array)}];
@@ -81,7 +81,7 @@ our scalar__array_ref $quicksort_inplace = sub {(my scalar__array_ref $data) = @
 # in-place algorithm; sort data, return sorted data [O(n log n) total time, O(log n) total extra space] 
 our scalar__array_ref $quicksort_inplace_left_right = sub { (my scalar__array_ref $data, my const_int $i_left, my const_int $i_right) = @_;
 ;
-#	RPerl::diag "in quicksort_inplace_left_right(), have \$data = \n" . RPerl::DUMPER($data) . "\n" if $RPerl::DEBUG;
+#	RPerl::diag "in quicksort_inplace_left_right(), have \$data = \n" . RPerl::DUMPER($data) . "\n";
 	
 	my int $i_pivot;
 	
@@ -109,7 +109,7 @@ our int $partition_inplace = sub {(my scalar__array_ref $data, my const_int $i_l
 	my int $i;
 	
 	my const_scalar $pivot = $data->[$i_pivot];	
-#	RPerl::diag "in partition_inplace(), have \$pivot = $pivot\n" if $RPerl::DEBUG;
+#	RPerl::diag "in partition_inplace(), have \$pivot = $pivot\n";
 	
 	# temporarily move pivot to the end of sublist to keep it out of the way
 	$data->[$i_pivot] = $data->[$i_right];

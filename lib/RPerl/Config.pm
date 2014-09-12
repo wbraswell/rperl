@@ -22,8 +22,6 @@ package RPerl;
 # IMPORTANT SYSTEM-DEPENDENT CONFIGURATION VARIABLE!  drivers may optionally overwrite this to the path to RPerl
 our $INCLUDE_PATH = 'blib/lib';
 
-our $DEBUG = 1;
-
 # export Dumper(), carp(), croak(), confess(), $ERRNO, and $EVAL_ERROR to all who call 'use RPerl;'
 use Data::Dumper;
 use Carp;

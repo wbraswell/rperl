@@ -17,7 +17,7 @@ use Data::Dumper;
 our string $ppi_to_rperl__translate = sub {
     ( my object $ppi_doctree ) = @_;
 
-#    print {*STDERR} "in ppi_to_rperl__translate(), received \$ppi_doctree =\n" . Dumper($ppi_doctree) . "\n" or croak();
+#    RPerl::diag "in ppi_to_rperl__translate(), received \$ppi_doctree =\n" . Dumper($ppi_doctree) . "\n" or croak();
 
     # NEED UPGRADE: skipping PROGRAM & PACKAGE rules
 

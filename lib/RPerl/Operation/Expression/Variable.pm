@@ -39,7 +39,7 @@ our object__method $ppi_to_rperl__translate = sub {
     my string $child_class_expected;
     my string $child_content;
 
-    print {*STDERR}
+    RPerl::diag
         "in Print::ppi_to_rperl__translate(), received \$node =\n"
         . Dumper($node) . "\n";
 
@@ -55,7 +55,7 @@ our object__method $ppi_to_rperl__translate = sub {
         );
     }
 
-    print {*STDERR}
+    RPerl::diag
         "in Print::ppi_to_rperl__translate(), have \$node_class = '$node_class'\n";
 
     # VARIABLE rule begin
@@ -94,7 +94,7 @@ our object__method $ppi_to_rperl__translate = sub {
 
     # NEED FIX: add VARIABLE_RETRIEVAL* semantics
 
-    print {*STDERR}
+    RPerl::diag
         "in Print::ppi_to_rperl__translate(), bottom of subroutine, about to return \$node_translated=\n"
         . Dumper($node_translated) . "\n";
 

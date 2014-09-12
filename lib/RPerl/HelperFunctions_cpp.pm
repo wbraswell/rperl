@@ -17,22 +17,22 @@ sub cpp_load {
     if (    ( exists $main::{'RPerl__HelperFunctions__ops'} )
         and ( defined &{ $main::{'RPerl__HelperFunctions__ops'} } ) )
     {
-#        print {*STDERR} "in HelperFunctions_cpp::cpp_load, RPerl__HelperFunctions__ops() exists & defined\n";
-#        print {*STDERR} q{in HelperFunctions_cpp::cpp_load, have RPerl__HelperFunctions__ops() retval = '} . main::RPerl__HelperFunctions__ops() . "'\n";
+#        RPerl::diag "in HelperFunctions_cpp::cpp_load, RPerl__HelperFunctions__ops() exists & defined\n";
+#        RPerl::diag q{in HelperFunctions_cpp::cpp_load, have RPerl__HelperFunctions__ops() retval = '} . main::RPerl__HelperFunctions__ops() . "'\n";
         if ( main::RPerl__HelperFunctions__ops() ne 'CPP' ) {
             $need_load_cpp = 1;
         }
     }
     else {
-#        print {*STDERR} "in HelperFunctions_cpp::cpp_load, RPerl__HelperFunctions__ops() does not exist or undefined\n";
+#        RPerl::diag "in HelperFunctions_cpp::cpp_load, RPerl__HelperFunctions__ops() does not exist or undefined\n";
         $need_load_cpp = 1;
     }
 
     if ($need_load_cpp) {
 
-#        print {*STDERR} "in HelperFunctions_cpp::cpp_load, need load CPP code\n";
+#        RPerl::diag "in HelperFunctions_cpp::cpp_load, need load CPP code\n";
 
-#BEGIN { print {*STDERR} "[[[ BEGIN 'use Inline' STAGE for 'RPerl/HelperFunctions.cpp' ]]]\n"x3; }
+#BEGIN { RPerl::diag "[[[ BEGIN 'use Inline' STAGE for 'RPerl/HelperFunctions.cpp' ]]]\n"x3; }
         my $eval_string = <<"EOF";
 package main;
 use RPerl::Inline;
@@ -40,15 +40,15 @@ use Inline (CPP => "$RPerl::INCLUDE_PATH/RPerl/HelperFunctions.cpp", \@RPerl::In
 1;
 EOF
 
-#        print {*STDERR} "in HelperFunctions_cpp::cpp_load(), CPP not yet loaded, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
+#        RPerl::diag "in HelperFunctions_cpp::cpp_load(), CPP not yet loaded, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
 
         eval $eval_string or croak( $ERRNO . "\n" . $EVAL_ERROR );
         if ($EVAL_ERROR) { croak($EVAL_ERROR); }
 
-#print {*STDERR} "[[[ END 'use Inline' STAGE for 'RPerl/HelperFunctions.cpp' ]]]\n"x3;
+#RPerl::diag "[[[ END 'use Inline' STAGE for 'RPerl/HelperFunctions.cpp' ]]]\n"x3;
     }
 
-#	else { print {*STDERR} "in HelperFunctions_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"; }
+#	else { RPerl::diag "in HelperFunctions_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"; }
 }
 
 1;

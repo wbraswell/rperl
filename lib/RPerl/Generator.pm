@@ -17,10 +17,10 @@ use Scalar::Util 'blessed';
 our string $rperl_to_cpp__generate = sub {
     ( my object $node, my string__hash_ref $mode) = @_;
 
-    print {*STDERR} "in rperl_to_cpp__generate(), received \$node =\n"
+    RPerl::diag "in rperl_to_cpp__generate(), received \$node =\n"
         . Dumper($node) . "\n"
         or croak();
-    print {*STDERR} "in rperl_to_cpp__generate(), received \$mode =\n"
+    RPerl::diag "in rperl_to_cpp__generate(), received \$mode =\n"
         . Dumper($mode) . "\n"
         or croak();
 

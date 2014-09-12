@@ -24,7 +24,7 @@ our void $whitespace_comments_pod__strip = sub {    # in-place algorithm
  #our object $whitespace_comments_pod__strip = sub {  # not-in-place algorithm
     ( my object $ppi_parsed) = @_;
 
-#    print {*STDERR} "in whitespace_comments_pod__strip(), received \$ppi_parsed =\n" . Dumper($ppi_parsed) . "\n" or croak();
+#    RPerl::diag "in whitespace_comments_pod__strip(), received \$ppi_parsed =\n" . Dumper($ppi_parsed) . "\n" or croak();
 
     # unblessed "object" is an error
     my string $object_class = blessed($ppi_parsed);
@@ -34,7 +34,7 @@ our void $whitespace_comments_pod__strip = sub {    # in-place algorithm
         );
     }
 
-#    print {*STDERR} "in whitespace_comments_pod__strip(), have \$object_class = '$object_class'\n";
+#    RPerl::diag "in whitespace_comments_pod__strip(), have \$object_class = '$object_class'\n";
 
     # no children is a no-op
     if ( not( defined $ppi_parsed->{children} ) ) {
@@ -50,7 +50,7 @@ our void $whitespace_comments_pod__strip = sub {    # in-place algorithm
         my object $child       = $ppi_parsed->{children}->[$i];
         my string $child_class = blessed($child);
 
-#        print {*STDERR} "in whitespace_comments_pod__strip(), inside for() loop $i/$child_index_max, have \$child_class = '$child_class'\n";
+#        RPerl::diag "in whitespace_comments_pod__strip(), inside for() loop $i/$child_index_max, have \$child_class = '$child_class'\n";
         if (    ( $child_class ne 'PPI::Token::Whitespace' )
             and ( $child_class ne 'PPI::Token::Comment' )
             and ( $child_class ne 'PPI::Token::Pod' ) )
@@ -60,11 +60,11 @@ our void $whitespace_comments_pod__strip = sub {    # in-place algorithm
         }
     }
 
-#    print {*STDERR} "in whitespace_comments_pod__strip(), after for() loop, have \$children_new =\n" . Dumper($children_new) . "\n" or croak();
+#    RPerl::diag "in whitespace_comments_pod__strip(), after for() loop, have \$children_new =\n" . Dumper($children_new) . "\n" or croak();
 
     $ppi_parsed->{children} = $children_new;    # in-place
 
-#    print {*STDERR} "in whitespace_comments_pod__strip(), returning \$ppi_parsed =\n" . Dumper($ppi_parsed) . "\n" or croak();
+#    RPerl::diag "in whitespace_comments_pod__strip(), returning \$ppi_parsed =\n" . Dumper($ppi_parsed) . "\n" or croak();
 
     return ();                                  # in-place
 
@@ -90,12 +90,12 @@ our object $perl_to_ppi__parse = sub {
 
 #my string $rperl_source__perl_syntax_command = q{perl -Iblib/lib -cW } . $rperl_source__file_name;
 
-    print {*STDERR}
+    RPerl::diag
         "in perl_to_ppi__parse(), have \$rperl_source__perl_syntax_command =\n$rperl_source__perl_syntax_command\n"
         or croak();
 
-#print {*STDERR} "in perl_to_ppi__parse(), have \$rperl_source__perl_syntax_command__no_output =\n$rperl_source__perl_syntax_command__no_output\n\n" or croak();
-#print {*STDERR} "in perl_to_ppi__parse(), have \$rperl_source__perl_syntax_command__all_output =\n$rperl_source__perl_syntax_command__all_output\n\n" or croak();
+#RPerl::diag "in perl_to_ppi__parse(), have \$rperl_source__perl_syntax_command__no_output =\n$rperl_source__perl_syntax_command__no_output\n\n" or croak();
+#RPerl::diag "in perl_to_ppi__parse(), have \$rperl_source__perl_syntax_command__all_output =\n$rperl_source__perl_syntax_command__all_output\n\n" or croak();
 
 #my integer $rperl_source__perl_syntax_retval = system $rperl_source__perl_syntax_command;
     my integer $rperl_source__perl_syntax_retval
@@ -105,10 +105,10 @@ our object $perl_to_ppi__parse = sub {
 #my string $rperl_source__perl_syntax_retstring = `$rperl_source__perl_syntax_command`;
 #my string $rperl_source__perl_syntax_retstring = `$rperl_source__perl_syntax_command__all_output`;
 
-#print {*STDERR} "in perl_to_ppi__parse(), have \$rperl_source__perl_syntax_retval = $rperl_source__perl_syntax_retval\n" or croak();
-#print {*STDERR} "in perl_to_ppi__parse(), have \$rperl_source__perl_syntax_retstring =\n$rperl_source__perl_syntax_retstring\n" or croak();
-#print {*STDERR} "in perl_to_ppi__parse(), have \$ERRNO = $ERRNO\n" or croak();  # $ERRNO seems to contain random error messages that I can't trace?
-#print {*STDERR} "in perl_to_ppi__parse(), have \$? = $?\n" or croak();
+#RPerl::diag "in perl_to_ppi__parse(), have \$rperl_source__perl_syntax_retval = $rperl_source__perl_syntax_retval\n" or croak();
+#RPerl::diag "in perl_to_ppi__parse(), have \$rperl_source__perl_syntax_retstring =\n$rperl_source__perl_syntax_retstring\n" or croak();
+#RPerl::diag "in perl_to_ppi__parse(), have \$ERRNO = $ERRNO\n" or croak();  # $ERRNO seems to contain random error messages that I can't trace?
+#RPerl::diag "in perl_to_ppi__parse(), have \$? = $?\n" or croak();
 
 # NEED ADD ERROR CHECKING: ECVPAPL00 FILE DOES NOT EXIST, ECVPAPL01 FILE IS EMPTY
 
@@ -124,7 +124,7 @@ our object $perl_to_ppi__parse = sub {
         );
     }
     else {
-        print {*STDERR}
+        RPerl::diag
             "in perl_to_ppi__parse(), RPerl source code passes perl -cW syntax check\n"
             or croak();
     }
@@ -146,12 +146,12 @@ our object $perl_to_ppi__parse = sub {
     my integer $rperl_source__critic_num_violations
         = scalar @rperl_source__critic_violations;
 
-#print {*STDERR} "in perl_to_ppi__parse(), have \$rperl_source__critic_num_violations = $rperl_source__critic_num_violations\n" or croak();
+#RPerl::diag "in perl_to_ppi__parse(), have \$rperl_source__critic_num_violations = $rperl_source__critic_num_violations\n" or croak();
 
     my string $rperl_source__critic_dumperified_violations
         = Dumper( \@rperl_source__critic_violations );
 
-#print {*STDERR} "in perl_to_ppi__parse(), have Dumper(\\\@rperl_source__critic_violations) =\n" . $rperl_source__critic_dumperified_violations . "\n" or croak();
+#RPerl::diag "in perl_to_ppi__parse(), have Dumper(\\\@rperl_source__critic_violations) =\n" . $rperl_source__critic_dumperified_violations . "\n" or croak();
 
 # NEED ADD ERROR CHECKING: ECVPAPC00 FILE DOES NOT EXIST, ECVPAPC01 FILE IS EMPTY; or would that be redundant with ECVPAPL0x error checking when added above?
 
@@ -162,7 +162,7 @@ our object $perl_to_ppi__parse = sub {
                 . "\ncroaking" );
     }
     else {
-        print {*STDERR}
+        RPerl::diag
             "in perl_to_ppi__parse(), RPerl source code passes Perl::Critic brutal review\n"
             or croak();
     }
@@ -180,29 +180,29 @@ our object $perl_to_ppi__parse = sub {
         = PPI::Dumper->new($rperl_source__ppi_parsed);
 
 #my object $rperl_source__ppi_parsed_dumper = PPI::Dumper->new($rperl_source__ppi_parsed, whitespace=>0);
-#print {*STDERR} "in perl_to_ppi__parse(), have \$rperl_source__ppi_parsed_dumper->print() =\n\n";
+#RPerl::diag "in perl_to_ppi__parse(), have \$rperl_source__ppi_parsed_dumper->print() =\n\n";
 #$rperl_source__ppi_parsed_dumper->print();
-#print {*STDERR} "\n";
-#print {*STDERR} "in perl_to_ppi__parse(), have Dumper(\$rperl_source__ppi_parsed) =\n" . Dumper($rperl_source__ppi_parsed) . "\n";
+#RPerl::diag "\n";
+#RPerl::diag "in perl_to_ppi__parse(), have Dumper(\$rperl_source__ppi_parsed) =\n" . Dumper($rperl_source__ppi_parsed) . "\n";
 
     my string $rperl_source__ppi_parsed__first_package_statement
         = $rperl_source__ppi_parsed->find_first('PPI::Statement::Package')
         ->namespace;
-    print {*STDERR}
+    RPerl::diag
         "in perl_to_ppi__parse(), have \$rperl_source__ppi_parsed__first_package_statement = '$rperl_source__ppi_parsed__first_package_statement'\n"
         or croak();
 
     whitespace_comments_pod__strip($rperl_source__ppi_parsed);
 
-#    print {*STDERR} "in perl_to_ppi__parse(), after whitespace_comments_pod__strip(), have Dumper(\$rperl_source__ppi_parsed) =\n" . Dumper($rperl_source__ppi_parsed) . "\n" or croak();
+#    RPerl::diag "in perl_to_ppi__parse(), after whitespace_comments_pod__strip(), have Dumper(\$rperl_source__ppi_parsed) =\n" . Dumper($rperl_source__ppi_parsed) . "\n" or croak();
 
     $rperl_source__ppi_parsed_dumper
         = PPI::Dumper->new($rperl_source__ppi_parsed);
-    print {*STDERR}
+    RPerl::diag
         "in perl_to_ppi__parse(), after whitespace_comments_pod__strip(), have \$rperl_source__ppi_parsed_dumper->print() =\n\n"
         or croak();
     $rperl_source__ppi_parsed_dumper->print();
-    print {*STDERR} "\n" or croak();
+    RPerl::diag "\n" or croak();
 
 # NEED ADD ERROR CHECKING: ECVPAPI00 FILE DOES NOT EXIST, ECVPAPI01 FILE IS EMPTY; or would that be redundant with ECVPAPL0x error checking when added above?
 # NEED ADD ERROR CHECKING: ECVPAPI02 FAILED TO PARSE PPI; is this even possible?
