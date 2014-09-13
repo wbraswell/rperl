@@ -17,16 +17,10 @@ rperltypes::types_enable('PERL');
 # UNCOMMENT TO ENABLE C++ TYPES FOR C++ OPS
 #rperltypes::types_enable('CPP');
 
-
-# START HERE: get CPPOPS working
-# START HERE: get CPPOPS working
-# START HERE: get CPPOPS working
-
-
 # UNCOMMENT TO CHOOSE PERL OPS OR C++ OPS
-#use RPerl::Algorithm::Sort::Bubble;  # choose ONE of this
-use RPerl::Algorithm::Sort::Bubble_cpp;
-RPerl::Algorithm::Sort::Bubble_cpp::cpp_load(); # OR this
+use RPerl::Algorithm::Sort::Bubble;  # choose ONE of this
+#use RPerl::Algorithm::Sort::Bubble_cpp;
+#RPerl::Algorithm::Sort::Bubble_cpp::cpp_load(); # OR this
 
 #print q{in oo_test.pl, have RPerl__Algorithm__Sort__Bubble__OPS_TYPES_ID = '} . $RPerl::Algorithm::Sort::Bubble::RPerl__Algorithm__Sort__Bubble__OPS_TYPES_ID . "'\n";  # PERL/PERL ONLY
 print q{in oo_test.pl, have RPerl__Algorithm__Sort__Bubble__ops() = '}
@@ -46,10 +40,10 @@ for my integer $i ( 0 .. $i_MAX ) {
     print "in oo_test.pl, have \$i = $i and pre-data \$sorter =\n",
         Dumper($sorter), "\n";
 
-    $sorter->inherited__Algorithm('Frozen');      # RPerl yes, C++ yes
-#    $sorter->inherited__Inefficient('Frozen');    # RPerl yes, C++ yes  # NEED UPGRADE: multiple inheritance not currently supported by Inline::CPP
-    $sorter->inherited__Sort('Frozen');           # RPerl yes, C++ yes
     $sorter->inherited__Bubble('Frozen');         # RPerl yes, C++ yes
+    $sorter->inherited__Sort('Frozen');           # RPerl yes, C++ yes
+#    $sorter->inherited__Inefficient('Frozen');    # RPerl yes, C++ yes  # NEED UPGRADE: multiple inheritance not currently supported by Inline::CPP
+    $sorter->inherited__Algorithm('Frozen');      # RPerl yes, C++ yes
     print "\n";
 
 #	RPerl::Algorithm::Sort::inherited($sorter, 'Jean Gray');  # RPerl yes, C++ no
@@ -58,13 +52,14 @@ for my integer $i ( 0 .. $i_MAX ) {
 
 #	inherited('MANORBEAST?', 'Dr. Hank McCoy');  # RPerl no, C++ no; inherited method should only work as method!
     print "\n";
-    uninherited__Algorithm('Claws');      # RPerl yes, C++ yes
-#    uninherited__Inefficient('Claws');    # RPerl yes, C++ yes  # NEED UPGRADE: multiple inheritance not currently supported by Inline::CPP
-    uninherited__Sort('Claws');           # RPerl yes, C++ yes
+ 
     uninherited__Bubble('Claws');         # RPerl yes, C++ yes
+    uninherited__Sort('Claws');           # RPerl yes, C++ yes
+#    uninherited__Inefficient('Claws');    # RPerl yes, C++ yes  # NEED UPGRADE: multiple inheritance not currently supported by Inline::CPP
+    uninherited__Algorithm('Claws');      # RPerl yes, C++ yes
     print "\n";
+    
     uninherited('Wolverine');             # RPerl yes, C++ yes
-
 #	RPerl::Algorithm::Sort::uninherited('Phoenix');  # RPerl yes, C++ no; bypass RPerl POST-INIT symbol table entries that put non-method uninherited() in main::, use AUTOLOAD
     main::uninherited('Wolvie');          # RPerl yes, C++ yes
     ::uninherited('wlverine');            # RPerl yes, C++ yes

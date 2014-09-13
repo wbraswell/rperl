@@ -3,14 +3,12 @@ package RPerl::Algorithm::Sort;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_011;
+our $VERSION = 0.004_012;
 
 # [[[ CRITICS, OO INHERITANCE, INCLUDES ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
 use parent ('RPerl::Algorithm');
 use RPerl::Algorithm;
-
-
 
 
 # [[[ OO METHODS ]]]
@@ -36,21 +34,11 @@ our string $RPerl__Algorithm__Sort__types = sub { return 'PERL'; };
 1, 1;                          # CODE SEPARATOR: end of class
 
 
-
-
-
-
-
-
-
-
-
-
 # [[[ INHERITANCE TESTING ]]]
-our void__method $inherited__Sort = sub { (my object $self, my string $person) = @_;  RPerl::diag "in Perl Sort->inherited__Sort(), have \$self = '$self' and \$person = '$person', FISH\n"; };
-#our void__method $inherited = sub { (my object $self, my string $person) = @_;  RPerl::diag "in Perl Sort->inherited(), have \$self = '$self' and \$person = '$person', IN\n"; };
-our string $uninherited__Sort = sub { (my string $person) = @_;  RPerl::diag "in Perl Sort::uninherited__Sort(), \$person = '$person', MY\n";  return "Perl Sort::uninherited__Sort() RULES!"; };
-#our string $uninherited = sub { (my string $person) = @_;  RPerl::diag "in Perl Sort::uninherited(), \$person = '$person', TROUSERS\n";  return "Perl Sort::uninherited() ROCKS!"; };
+our void__method $inherited__Sort = sub { (my object $self, my string $person) = @_;  RPerl::diag "in PERLOPS_PERLTYPES Sort->inherited__Sort(), have \$self = '$self' and \$person = '$person', FISH\n"; };
+#our void__method $inherited = sub { (my object $self, my string $person) = @_;  RPerl::diag "in PERLOPS_PERLTYPES Sort->inherited(), have \$self = '$self' and \$person = '$person', IN\n"; };
+our string $uninherited__Sort = sub { (my string $person) = @_;  RPerl::diag "in PERLOPS_PERLTYPES Sort::uninherited__Sort(), \$person = '$person', MY\n";  return "Perl Sort::uninherited__Sort() RULES!"; };
+#our string $uninherited = sub { (my string $person) = @_;  RPerl::diag "in PERLOPS_PERLTYPES Sort::uninherited(), \$person = '$person', TROUSERS\n";  return "Perl Sort::uninherited() ROCKS!"; };
 
 
 # all of the following happen before the INIT block, and thus rely upon AUTOLOAD

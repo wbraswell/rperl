@@ -4,16 +4,12 @@ package RPerl::CompileUnit::Module::ClassTemplate;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_028;
+our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
 # <<< CHANGE ME: leave as base class for no inheritance, or replace with real parent package name >>>
 use parent qw(RPerl::CompileUnit::Module::Class);
 use RPerl::CompileUnit::Module::Class;
-
-# START HERE: continue sorting through all critics
-# START HERE: continue sorting through all critics
-# START HERE: continue sorting through all critics
 
 # [[[ CRITICS ]]]
 # <<< CHANGE ME: delete unused critics >>>
@@ -49,10 +45,6 @@ use RPerl::CompileUnit::Module::Class;
 
 # COMBO CRITICS
 ## no critic qw(ProhibitUselessNoCritic PodSpelling ProhibitExcessMainComplexity)  # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code; SYSTEM SPECIAL 5: allow complex code outside subroutines, must be on line 1
-
-# INSERT ALL CRITICS
-# INSERT ALL CRITICS
-# INSERT ALL CRITICS
 
 # [[[ INCLUDES ]]]
 # <<< CHANGE ME: delete for no includes, or replace with real include package name(s) >>>

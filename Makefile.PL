@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-our $VERSION = 0.001_025;
+our $VERSION = 0.001_026;
 use ExtUtils::MakeMaker;
 push(@ExtUtils::MakeMaker::Overridable, qw(pm_to_blib)) if ($^O eq 'MSWin32');
 
@@ -18,7 +18,7 @@ WriteMakefile(
 #        'Module::Compile' => 0,
         'Parse::Eyapp'    => 1.182,
   },
-  clean => {FILES => '_Inline'},
+  clean => {FILES => '_Inline bin/_Inline bin/development/_Inline'},
 );
 
 
