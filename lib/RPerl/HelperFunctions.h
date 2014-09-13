@@ -1,10 +1,10 @@
 #ifndef __CPP__INCLUDED__RPerl__HelperFunctions_h
-#define __CPP__INCLUDED__RPerl__HelperFunctions_h 0.002_010
+#define __CPP__INCLUDED__RPerl__HelperFunctions_h 0.002_011
 
 // <<< DEBUG DEFINES >>>
-#define RPerl__DEBUG 1  // NEED FIX: access actual inherited debug flag somehow?
-#define RPerl__DEBUG2 1
-#define RPerl__DEBUG3 1  // NEED FIX: these debug statements cause memory leaks by increasing the refcounts of data_i, data_i_plus_1, and swap
+#define TEST_VERBOSE 1  // NEED FIX: access actual environmental variable TEST_VERBOSE!
+#define TEST_VERBOSE2 1
+#define TEST_VERBOSE3 1  // NEED FIX: these debug statements cause memory leaks by increasing the refcounts of data_i, data_i_plus_1, and swap
 
 // <<< HELPER MACROS >>>
 #define SvAROKp(input_av_ref) (SvROK(input_av_ref) && (SvTYPE(SvRV(input_av_ref)) == SVt_PVAV))  // DEV NOTE: look P5P, I invented macros that should probably be in the P5 core!
