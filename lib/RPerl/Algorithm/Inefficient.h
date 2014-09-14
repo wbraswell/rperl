@@ -90,13 +90,10 @@ public:
 
     // <<< ACCESSOR & MUTATOR DECLARATIONS/DEFINITIONS >>>
     // NONE
-    void CRAZY_INLINE_CPP_BUG__CAN_NOT_HAVE_MORE_THAN_7_BLANK_OR_COMMENT_LINES_IN_A_ROW() {
-    }
+    void CRAZY_INLINE_CPP_BUG__CAN_NOT_HAVE_MORE_THAN_7_BLANK_OR_COMMENT_LINES_IN_A_ROW() {}
     // <<< CONSTRUCTOR & DESTRUCTOR DECLARATIONS/DEFINITIONS >>>
-    RPerl__Algorithm__Inefficient() {
-    }
-    ~RPerl__Algorithm__Inefficient() {
-    }
+    RPerl__Algorithm__Inefficient() {}
+    ~RPerl__Algorithm__Inefficient() {}
 
 ////# [[[ OO PROPERTIES ]]]
 ////# [[[ OO PROPERTIES ]]]

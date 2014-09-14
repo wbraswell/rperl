@@ -1,6 +1,30 @@
 #ifndef __CPP__INCLUDED__RPerl__HelperFunctions_h
 #define __CPP__INCLUDED__RPerl__HelperFunctions_h 0.002_011
 
+
+// START HERE: implement RPerl__diag, use in files called by 07_oo_inherit.t
+// START HERE: implement RPerl__diag, use in files called by 07_oo_inherit.t
+// START HERE: implement RPerl__diag, use in files called by 07_oo_inherit.t
+
+/*
+#include <stdlib.h>  // for getenv()
+#include <stdio.h>  // for ostream object type
+
+ostringstream RPerl__diag;
+
+ostream& operator<<(ostream& ostream_object, const char* char_star_input)
+{
+        if (getenv("TEST_VERBOSE") { cerr << char_star_input; }
+        return ostream_object;
+}
+
+ostream& operator<<(ostream& ostream_object, std::string string_input)
+{
+        if (getenv("TEST_VERBOSE") { cerr << string_input; }
+        return ostream_object;
+}
+*/
+
 // <<< DEBUG DEFINES >>>
 #define TEST_VERBOSE 1  // NEED FIX: access actual environmental variable TEST_VERBOSE!
 #define TEST_VERBOSE2 1

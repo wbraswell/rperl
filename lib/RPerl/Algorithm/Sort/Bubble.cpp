@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp 0.004_011
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp 0.004_012
 
 ////# [[[ INCLUDES ]]]
 #include <RPerl/Algorithm/Sort/Bubble.h>  // -> HelperFunctions.cpp && Sort.cpp && NOT Inefficient.cpp (NEED UPGRADE: multiple inheritance not currently supported by Inline::CPP)
@@ -40,15 +40,11 @@ void RPerl__Algorithm__Sort__Bubble::number__sort()
 
 // OO INHERITANCE TESTING
 
-void RPerl__Algorithm__Sort__Bubble::inherited__Bubble(SV* person)
-{
-    cout << "in CPPOPS_PERLTYPES Bubble->inherited__Bubble(), received this = '" << this << "' and person = '" << SvPV_nolen(person) << "', FRIED\n";
-}
+////our void__method $inherited__Bubble = sub { ( my object $self, my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), received \$self = '$self' and \$person = '$person', FRIED\n"; };
+void RPerl__Algorithm__Sort__Bubble::inherited__Bubble(SV* person) { cout << "in CPPOPS_PERLTYPES Bubble->inherited__Bubble(), received this = '" << this << "' and person = '" << SvPV_nolen(person) << "', FRIED\n"; }
 
-void RPerl__Algorithm__Sort__Bubble::inherited(SV* person)
-{
-    cout << "in CPPOPS_PERLTYPES Bubble->inherited(), received this = '" << this << "' and person = '" << SvPV_nolen(person) << "', ILLOGICAL\n";
-}
+////our void__method $inherited = sub { ( my object $self, my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Bubble->inherited(), received \$self = '$self' and \$person = '$person', ILLOGICAL\n"; };
+void RPerl__Algorithm__Sort__Bubble::inherited(SV* person) { cout << "in CPPOPS_PERLTYPES Bubble->inherited(), received this = '" << this << "' and person = '" << SvPV_nolen(person) << "', ILLOGICAL\n"; }
 
 ////# [[[ SUBROUTINES ]]]
 
@@ -221,18 +217,12 @@ SV* number__bubblesort(SV* number__data)
 
 // OO INHERITANCE TESTING, CONTINUED
 
-SV* uninherited__Bubble(SV* person)
-{
-    cout << "in CPPOPS_PERLTYPES Bubble::uninherited__Bubble(), received person = '" << SvPV_nolen(person) << "', MITOCHONDRIAL\n";
-    return(newSVpv("Bubble::uninherited__Bubble() RULES! CPPOPS_PERLTYPES", 0));
-}
+////our string $uninherited__Bubble = sub { ( my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Bubble::uninherited__Bubble(), received \$person = '$person', MITOCHONDRIAL\n"; return ('Bubble::uninherited__Bubble() RULES! PERLOPS_PERLTYPES'); };
+SV* uninherited__Bubble(SV* person) { cout << "in CPPOPS_PERLTYPES Bubble::uninherited__Bubble(), received person = '" << SvPV_nolen(person) << "', MITOCHONDRIAL\n"; return(newSVpv("Bubble::uninherited__Bubble() RULES! CPPOPS_PERLTYPES", 0)); }
 
 // DEV NOTE, CORRELATION #04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
-SV* uninherited(SV* person)
-{
-    cout << "in CPPOPS_PERLTYPES Bubble::uninherited(), received person = '" << SvPV_nolen(person) << "', TETRAHEDRON\n";
-    return(newSVpv("Bubble::uninherited() RULES! CPPOPS_PERLTYPES", 0));
-}
+////our string $uninherited = sub { ( my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Bubble::uninherited(), received \$person = '$person', TETRAHEDRON\n"; return ('Bubble::uninherited() ROCKS! PERLOPS_PERLTYPES'); };
+SV* uninherited(SV* person) { cout << "in CPPOPS_PERLTYPES Bubble::uninherited(), received person = '" << SvPV_nolen(person) << "', TETRAHEDRON\n"; return(newSVpv("Bubble::uninherited() ROCKS! CPPOPS_PERLTYPES", 0)); }
 
 // TYPE TESTING
 
@@ -310,15 +300,11 @@ void RPerl__Algorithm__Sort__Bubble::number__sort()
 
 // OO INHERITANCE TESTING
 
-void RPerl__Algorithm__Sort__Bubble::inherited__Bubble(string person)
-{
-    cout << "in CPPOPS_CPPTYPES Bubble->inherited__Bubble(), received this = '" << this << "' and person = '" << person << "', FRIED\n";
-}
+////our void__method $inherited__Bubble = sub { ( my object $self, my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), received \$self = '$self' and \$person = '$person', FRIED\n"; };
+void RPerl__Algorithm__Sort__Bubble::inherited__Bubble(string person) { cout << "in CPPOPS_CPPTYPES Bubble->inherited__Bubble(), received this = '" << this << "' and person = '" << person << "', FRIED\n"; }
 
-void RPerl__Algorithm__Sort__Bubble::inherited(string person)
-{
-    cout << "in CPPOPS_CPPTYPES Bubble->inherited(), received this = '" << this << "' and person = '" << person << "', ILLOGICAL\n";
-}
+////our void__method $inherited = sub { ( my object $self, my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Bubble->inherited(), received \$self = '$self' and \$person = '$person', ILLOGICAL\n"; };
+void RPerl__Algorithm__Sort__Bubble::inherited(string person) { cout << "in CPPOPS_CPPTYPES Bubble->inherited(), received this = '" << this << "' and person = '" << person << "', ILLOGICAL\n"; }
 
 ////# [[[ SUBROUTINES ]]]
 
@@ -453,17 +439,12 @@ number__array_ref number__bubblesort(number__array_ref number__data)
 
 // OO INHERITANCE TESTING, CONTINUED
 
-string uninherited__Bubble(string person) {
-	cout << "in CPPOPS_CPPTYPES Bubble::uninherited__Bubble(), received person = '" << person << "', MITOCHONDRIAL\n";
-	return((string)"Bubble::uninherited__Bubble() RULES! CPPOPS_CPPTYPES");
-}
+////our string $uninherited__Bubble = sub { ( my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Bubble::uninherited__Bubble(), received \$person = '$person', MITOCHONDRIAL\n"; return ('Bubble::uninherited__Bubble() RULES! PERLOPS_PERLTYPES'); };
+string uninherited__Bubble(string person) { cout << "in CPPOPS_CPPTYPES Bubble::uninherited__Bubble(), received person = '" << person << "', MITOCHONDRIAL\n"; return((string)"Bubble::uninherited__Bubble() RULES! CPPOPS_CPPTYPES"); }
 
 // DEV NOTE, CORRELATION #04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
-string uninherited(string person)
-{
-	cout << "in CPPOPS_CPPTYPES Bubble::uninherited(), received person = '" << person << "', TETRAHEDRON\n";
-	return((string)"Bubble::uninherited() RULES! CPPOPS_CPPTYPES");
-}
+////our string $uninherited = sub { ( my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Bubble::uninherited(), received \$person = '$person', TETRAHEDRON\n"; return ('Bubble::uninherited() ROCKS! PERLOPS_PERLTYPES'); };
+string uninherited(string person) { cout << "in CPPOPS_CPPTYPES Bubble::uninherited(), received person = '" << person << "', TETRAHEDRON\n"; return((string)"Bubble::uninherited() ROCKS! CPPOPS_CPPTYPES"); }
 
 // TYPE TESTING
 

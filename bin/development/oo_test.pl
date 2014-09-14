@@ -12,10 +12,10 @@ our $VERSION = 0.000_012;
 # [[[ OPERATIONS ]]]
 
 # UNCOMMENT TO ENABLE PERL TYPES FOR C++ OPS
-#rperltypes::types_enable('PERL');
+rperltypes::types_enable('PERL');
 
 # UNCOMMENT TO ENABLE C++ TYPES FOR C++ OPS
-rperltypes::types_enable('CPP');
+#rperltypes::types_enable('CPP');
 
 # UNCOMMENT TO CHOOSE PERL OPS OR C++ OPS
 #use RPerl::Algorithm::Sort::Bubble;  # choose ONE of this

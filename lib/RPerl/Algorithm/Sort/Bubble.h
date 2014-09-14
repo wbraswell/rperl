@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h 0.004_010
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h 0.004_011
 
 ////# [[[ INCLUDES ]]]
 #include <rperltypes_mode.h>  // for definitions of __PERL__TYPES or __CPP__TYPES
@@ -23,6 +23,8 @@ using std::cout;  using std::cerr;
 // [[[<<< BEGIN PERL TYPES >>>]]]
 
 ////# [[[ OO INHERITANCE ]]]
+////package RPerl::Algorithm::Sort::Bubble;
+////use parent qw( RPerl::Algorithm::Sort ); # OO INHERITANCE TESTING; SINGLE OO INHERITANCE
 class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort  // SINGLE OO INHERITANCE
 //class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort, public RPerl__Algorithm__Inefficient  // NEED UPGRADE: multiple inheritance not currently supported by Inline::CPP
 {
@@ -86,6 +88,8 @@ SV* RPerl__Algorithm__Sort__Bubble__types() { return(newSVpv("PERL", 4)); }
 // [[[<<< BEGIN CPP TYPES >>>]]]
 
 ////# [[[ OO INHERITANCE ]]]
+////package RPerl::Algorithm::Sort::Bubble;
+////use parent qw( RPerl::Algorithm::Sort ); # OO INHERITANCE TESTING; SINGLE OO INHERITANCE
 class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort  // SINGLE OO INHERITANCE
 //class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort, public RPerl__Algorithm__Inefficient  // NEED UPGRADE: multiple inheritance not currently supported by Inline::CPP
 {
