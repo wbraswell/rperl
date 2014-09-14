@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort_h
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort_h 0.001_000
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort_h 0.001_010
 
 #include <rperltypes_mode.h>  // for definitions of __PERL__TYPES or __CPP__TYPES
 #include <rperltypes.h>  // for data types and structures
@@ -21,7 +21,7 @@ SV* uninherited__Sort(SV* person);
 //SV* uninherited(SV* person);
 
 ////package RPerl::Algorithm::Sort;
-////our @ISA = ('RPerl::Algorithm');
+////use parent ('RPerl::Algorithm');
 class RPerl__Algorithm__Sort : public RPerl__Algorithm
 {
 public:
@@ -46,6 +46,8 @@ public:
 string uninherited__Sort(string person);
 //string uninherited(string person);
 
+////package RPerl::Algorithm::Sort;
+////use parent ('RPerl::Algorithm');
 class RPerl__Algorithm__Sort : public RPerl__Algorithm
 {
 public:

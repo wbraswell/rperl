@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm_h
-#define __CPP__INCLUDED__RPerl__Algorithm_h 0.004_010
+#define __CPP__INCLUDED__RPerl__Algorithm_h 0.004_011
 
 ////# [[[ INCLUDES ]]]
 #include <rperltypes_mode.h>  // for definitions of __PERL__TYPES or __CPP__TYPES
@@ -17,6 +17,8 @@ using std::cout;  using std::cerr;
 // [[[<<< BEGIN PERL TYPES >>>]]]
 
 ////# [[[ OO INHERITANCE ]]]
+////package RPerl::Algorithm;
+////use parent qw(RPerl::CompileUnit::Module::Class); # no non-system inheritance, RPerl::CompileUnit::Module::Class is the base class of all RPerl classes
 class RPerl__Algorithm  // no inheritance
 {
 public:
@@ -58,6 +60,8 @@ SV* RPerl__Algorithm__types() { return(newSVpv("PERL", 4)); }
 // [[[<<< BEGIN CPP TYPES >>>]]]
 
 ////# [[[ OO INHERITANCE ]]]
+////package RPerl::Algorithm;
+////use parent qw(RPerl::CompileUnit::Module::Class); # no non-system inheritance, RPerl::CompileUnit::Module::Class is the base class of all RPerl classes
 class RPerl__Algorithm  // no inheritance
 {
 public:

@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-our $VERSION = 0.001_026;
+our $VERSION = 0.001_027;
 use ExtUtils::MakeMaker;
 push(@ExtUtils::MakeMaker::Overridable, qw(pm_to_blib)) if ($^O eq 'MSWin32');
 
@@ -12,7 +12,7 @@ WriteMakefile(
         'Perl::Tidy'      => 20140711,
         'Inline'          => 0.76,
         'Inline::C'       => 0.62,  # really 0.62_03, but travis cannot handle it
-        'Inline::CPP'     => 0.62,  # davido & mohawk fixed ntype warnings; davido & wbraswell fixed namespace hack
+        'Inline::CPP'     => 0.63,  # davido & mohawk fixed ntype warnings; davido & wbraswell fixed namespace hack
         'Inline::Filters' => 0.16,  # wbraswell, rurban, & bulk88 added preprocess inc array
         'Test::Exception' => 0.32,
 #        'Module::Compile' => 0,

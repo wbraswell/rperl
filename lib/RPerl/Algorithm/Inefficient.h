@@ -29,7 +29,7 @@ SV* uninherited__Inefficient(SV* person);
 //SV* uninherited(SV* person);
 
 ////package RPerl::Algorithm::Inefficient;
-////our @ISA = ('RPerl::Algorithm');
+////use parent qw(RPerl::Algorithm);
 class RPerl__Algorithm__Inefficient : public RPerl__Algorithm
 {
 public:
@@ -77,7 +77,7 @@ string uninherited__Inefficient(string person);
 //string uninherited(string person);
 
 ////package RPerl::Algorithm::Inefficient;
-////our @ISA = ('RPerl::Algorithm');
+////use parent qw(RPerl::Algorithm);
 class RPerl__Algorithm__Inefficient: public RPerl__Algorithm {
 public:
     ////# [[[ OO METHODS ]]]

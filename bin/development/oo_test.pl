@@ -12,15 +12,15 @@ our $VERSION = 0.000_012;
 # [[[ OPERATIONS ]]]
 
 # UNCOMMENT TO ENABLE PERL TYPES FOR C++ OPS
-rperltypes::types_enable('PERL');
+#rperltypes::types_enable('PERL');
 
 # UNCOMMENT TO ENABLE C++ TYPES FOR C++ OPS
-#rperltypes::types_enable('CPP');
+rperltypes::types_enable('CPP');
 
 # UNCOMMENT TO CHOOSE PERL OPS OR C++ OPS
-use RPerl::Algorithm::Sort::Bubble;  # choose ONE of this
-#use RPerl::Algorithm::Sort::Bubble_cpp;
-#RPerl::Algorithm::Sort::Bubble_cpp::cpp_load(); # OR this
+#use RPerl::Algorithm::Sort::Bubble;  # choose ONE of this
+use RPerl::Algorithm::Sort::Bubble_cpp;
+RPerl::Algorithm::Sort::Bubble_cpp::cpp_load(); # OR this
 
 #print q{in oo_test.pl, have RPerl__Algorithm__Sort__Bubble__OPS_TYPES_ID = '} . $RPerl::Algorithm::Sort::Bubble::RPerl__Algorithm__Sort__Bubble__OPS_TYPES_ID . "'\n";  # PERL/PERL ONLY
 print q{in oo_test.pl, have RPerl__Algorithm__Sort__Bubble__ops() = '}

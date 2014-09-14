@@ -6,8 +6,8 @@ use RPerl;
 our $VERSION = 0.004_010;
 
 # [[[ OO INHERITANCE, INCLUDES ]]]
-use parent qw(RPerl::CompileUnit::Module::Class); # RPerl::CompileUnit::Module::Class is the base class of all RPerl classes
-use RPerl::CompileUnit::Module::Class; # so this class Algorithm doesn't inherit from any other classes (not counting base class)
+use parent qw(RPerl::CompileUnit::Module::Class); # no non-system inheritance, RPerl::CompileUnit::Module::Class is the base class of all RPerl classes
+use RPerl::CompileUnit::Module::Class;
 
 # [[[ OO METHODS ]]]
 
@@ -18,11 +18,7 @@ our void__method $inherited__Algorithm = sub {
         "in PERLOPS_PERLTYPES Algorithm->inherited__Algorithm(), received \$self = '$self' and \$person = '$person', FNORD\n";
 };
 
-our void__method $inherited = sub {
-    ( my object $self, my string $person) = @_;
-    RPerl::diag
-        "in PERLOPS_PERLTYPES Algorithm->inherited(), received \$self = '$self' and \$person = '$person', IS\n";
-};
+#our void__method $inherited = sub { ( my object $self, my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Algorithm->inherited(), received \$self = '$self' and \$person = '$person', IS\n"; };
 
 1;
 1;    # CODE SEPARATOR: methods above, subroutines below
@@ -37,7 +33,7 @@ our string $uninherited__Algorithm = sub {
     return 'Algorithm::uninherited__Algorithm() RULES! PERLOPS_PERLTYPES';
 };
 
-#our string $uninherited = sub { ( my string $person) = @_; RPerl::diag "in Perl Algorithm::uninherited(), \$person = '$person', TERRITORY\n"; return "Perl Algorithm::uninherited() ROCKS!"; };
+#our string $uninherited = sub { ( my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Algorithm::uninherited(), received \$person = '$person', TERRITORY\n"; return "Algorithm::uninherited() ROCKS! PERLOPS_PERLTYPES"; };
 
 1;
 1;    # CODE SEPARATOR: end of class
