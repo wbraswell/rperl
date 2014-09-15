@@ -1,19 +1,14 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.004_001;
+our $VERSION = 0.004_002;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
 ## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
 
-# [[[ SETUP ]]]
-# [[[ SETUP ]]]
-# [[[ SETUP ]]]
-
-use Test::More;    # tests => 229;
+use Test::More tests => 220;
 use Test::Exception;
-use Carp;
 
 BEGIN {
     if ( $ENV{TEST_VERBOSE} ) {

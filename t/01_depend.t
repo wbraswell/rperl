@@ -1,35 +1,50 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_002;
 
-use Test::More; # tests => 14;
+use Test::More tests => 14;
 use Test::Exception;
 
-diag("\n[[[ Beginning Dependency Tests ]]]\n ") if $ENV{TEST_VERBOSE};
-
 BEGIN {
-    lives_and( sub { use_ok('Data::Dumper'); },
-        q{use_ok('Data::Dumper') lives} );
+    if ( $ENV{TEST_VERBOSE} ) {
+        diag("[[[ Beginning Dependency Tests ]]]");
+    }
 }
-lives_and(
-    sub { require_ok('Data::Dumper'); },
-    q{require_ok('Data::Dumper') lives}
-);
-
-# DEPENDENCIES LIKELY FULFILLED BY SYSTEM-WIDE MODULES ABOVE THIS LINE
-# DEPENDENCIES POSSIBLY FULFILLED BY USER-SPECIFIC MODULES BELOW THIS LINE
 
 BEGIN {
     lives_and(
-        sub { use_ok('Parse::RecDescent'); },
-        q{use_ok('Parse::RecDescent') lives}
+        sub { use_ok('Test::Exception'); },
+        q{use_ok('Test::Exception') lives}
     );
 }
-
 lives_and(
-    sub { require_ok('Parse::RecDescent'); },
-    q{require_ok('Parse::RecDescent') lives}
+    sub { require_ok('Test::Exception'); },
+    q{require_ok('Test::Exception') lives}
+);
+
+BEGIN {
+    lives_and( sub { use_ok('Perl::Critic'); },
+        q{use_ok('Perl::Critic') lives} );
+}
+lives_and(
+    sub { require_ok('Perl::Critic'); },
+    q{require_ok('Perl::Critic') lives}
+);
+
+BEGIN {
+    lives_and( sub { use_ok('Perl::Tidy'); }, q{use_ok('Perl::Tidy') lives} );
+}
+lives_and( sub { require_ok('Perl::Tidy'); },
+    q{require_ok('Perl::Tidy') lives} );
+
+BEGIN {
+    lives_and( sub { use_ok('Parse::Eyapp'); },
+        q{use_ok('Parse::Eyapp') lives} );
+}
+lives_and(
+    sub { require_ok('Parse::Eyapp'); },
+    q{require_ok('Parse::Eyapp') lives}
 );
 
 BEGIN {

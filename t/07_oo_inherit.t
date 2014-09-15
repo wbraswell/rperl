@@ -1,13 +1,12 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.000_001;
+our $VERSION = 0.000_010;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 
-use Test::More;    # tests => xx;
+use Test::More tests => 99;
 use Test::Exception;
-use Carp;
 
 BEGIN {
     if ( $ENV{TEST_VERBOSE} ) {

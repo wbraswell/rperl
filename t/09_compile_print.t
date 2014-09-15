@@ -1,11 +1,13 @@
 #!/usr/bin/perl
-
-# NEED UPGRADE: full test file template, not just this short baby test
-
 use strict;
 use warnings;
-#use Test::More tests => 4;
-use Test::More;
+our $VERSION = 0.000_002;
+
+# START HERE: full test file template, not just this short baby test
+# START HERE: full test file template, not just this short baby test
+# START HERE: full test file template, not just this short baby test
+
+use Test::More tests => 3;
 
 BEGIN { use_ok('RPerl'); }
 

@@ -1,19 +1,14 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.003_003;
+our $VERSION = 0.003_004;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
 ## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
 
-# [[[ SETUP ]]]
-# [[[ SETUP ]]]
-# [[[ SETUP ]]]
-
-use Test::More;    # tests => 277;
+use Test::More tests => 264;
 use Test::Exception;
-use Carp;
 my $ERROR_MAX = 0.00000001;
 
 BEGIN {

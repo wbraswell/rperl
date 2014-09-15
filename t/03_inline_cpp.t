@@ -1,12 +1,12 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.001_003;
+our $VERSION = 0.001_004;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
 
-use Test::More;    # tests => 20;
+use Test::More tests => 17;
 use Test::Exception;
 use Carp;
 use English qw(-no_match_vars);
