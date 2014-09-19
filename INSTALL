@@ -1,6 +1,6 @@
 # RPerl v1.0 Beta, Install Notes
 # Single-User Installation (Not System-Wide Installation)
-# Last Updated August 21, 2014
+# Last Updated September 19, 2014
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # IMPORTANT WARNING: ONLY USE ONE OF STEP 1A, 1B, OR 1C - NOT ALL THREE
@@ -16,7 +16,7 @@ $ perl -v  # NOTE! the version of Perl determines whether you take step 1a or 1b
 
 ################################################################################
 # STEP 1A.  ONLY FOR NORMAL OPERATING SYSTEMS, NOT DEBIAN WITH BROKEN PERL v5.14
-# INSTALL LOCAL::LIB & CPANMINUS
+# INSTALL LOCAL::LIB & CPANMINUS, DO NOT MIX WITH PERLBREW
 ################################################################################
 
 $ curl -L cpanmin.us | perl - -l $HOME/perl5 App::cpanminus local::lib
@@ -29,7 +29,7 @@ $ source ~/.bashrc;  set | grep perl5
 
 ################################################################################
 # STEP 1B.  ONLY FOR DEBIAN WITH BROKEN PERL v5.14 AND ANYBODY WITH PERL <=v5.8
-# INSTALL PERLBREW & CPANMINUS
+# INSTALL PERLBREW & CPANMINUS, DO NOT MIX WITH LOCAL::LIB
 ################################################################################
 
 $ sudo apt-get install perlbrew
@@ -44,8 +44,9 @@ $ . ~/.bashrc;  set | grep perl5  # note the dot at the start of this command
 # ensure the following 2 environmental variables are updated to include ~/perl5:
 # PERLBREW_PATH, PERLBREW_ROOT
 
-$ perlbrew install perl-5.18.2
-$ perlbrew use perl-5.18.2
+$ perlbrew install perl-5.20.1
+$ perlbrew use perl-5.20.1  # TEMPORARY
+$ perlbrew switch perl-5.20.1  # PERMANENT
 $ perlbrew install-cpanm
 
 ################################################################################
