@@ -22,8 +22,6 @@ $ perl -v  # NOTE! the version of Perl determines whether you take step 1a or 1b
 $ curl -L cpanmin.us | perl - -l $HOME/perl5 App::cpanminus local::lib
 $ echo 'eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)' >> ~/.bashrc
 $ source ~/.bashrc;  set | grep perl5
-
-# in the output of the previous 'set' command,
 # ensure the following 4 environmental variables are updated to include ~/perl5: 
 # PERL_MM_OPT, PERL_MB_OPT, PERL5LIB, PATH
 
@@ -32,22 +30,26 @@ $ source ~/.bashrc;  set | grep perl5
 # INSTALL PERLBREW & CPANMINUS, DO NOT MIX WITH LOCAL::LIB
 ################################################################################
 
+$ wget http://www.cpan.org/src/5.0/perl-5.20.1.tar.bz2; bunzip2 perl-5.20.1.tar.bz2; cd perl-5.20.1; perl Makefile.PL; make; make test; make install
+# OR
 $ sudo apt-get install perlbrew
 # OR
 $ curl -L http://install.perlbrew.pl | bash
 
 $ perlbrew init
+$ perlbrew mirror  # Arlington, TX #222 http://mirror.uta.edu/CPAN/
 $ echo 'source ~/perl5/perlbrew/etc/bashrc' >> ~/.bashrc
-$ . ~/.bashrc;  set | grep perl5  # note the dot at the start of this command
-
-# in the output of the previous 'set' command,
-# ensure the following 2 environmental variables are updated to include ~/perl5:
-# PERLBREW_PATH, PERLBREW_ROOT
+$ source ~/.bashrc; set | grep perl5
+    # ensure the following 3 environmental variables are updated to include ~/perl5: 
+    # PERLBREW_MANPATH, PERLBREW_PATH, PERLBREW_ROOT
 
 $ perlbrew install perl-5.20.1
 $ perlbrew use perl-5.20.1  # TEMPORARY
 $ perlbrew switch perl-5.20.1  # PERMANENT
 $ perlbrew install-cpanm
+
+
+
 
 ################################################################################
 # STEP 1C.  ONLY FOR WINDOWS
