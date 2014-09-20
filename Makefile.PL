@@ -13,7 +13,7 @@ WriteMakefile(
         'Perl::Tidy'      => 20140711,
         'Parse::Eyapp'    => 1.182,
         'Inline'          => 0.76,
-        'Inline::C'       => 0.62,  # really 0.62_03, but travis cannot handle it
+        'Inline::C'       => 0.64,
         'Inline::CPP'     => 0.63,  # davido & mohawk fixed ntype warnings; davido & wbraswell fixed namespace hack
         'Inline::Filters' => 0.16,  # wbraswell, rurban, & bulk88 added preprocess inc array
 #        'Module::Compile' => 0,  # not yet utilized

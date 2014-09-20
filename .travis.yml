@@ -7,11 +7,12 @@ perl:
   - "5.14"
   - "5.16"
   - "5.18"
+  - "5.20"
 
 # travis already calls `cpanm --quiet --installdeps --notest .` itself
-# but we still require a dev version, which travis can't get from Makefile.PL
+# UNCOMMENT LINE BELOW FOR DEV VERSIONS OF MODULES, which travis can't get from Makefile.PL
 before_script:
-  - cpanm -n INGY/Inline-C-0.62_03.tar.gz
+#  - cpanm -n INGY/Inline-C-0.62_03.tar.gz
 
 notifications:
   irc:
