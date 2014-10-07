@@ -182,9 +182,10 @@ our object__method $ppi_to_rperl__translate = sub {
 # START HERE: set up Return_00* files
 # START HERE: set up Return_00* files
 # START HERE: set up Return_00* files
-# CONTINUE HERE: handle required single-element PPI::Structure::List instead of multi-element LIST_ELEMENTS below
-# CONTINUE HERE: handle required single-element PPI::Structure::List instead of multi-element LIST_ELEMENTS below
-# CONTINUE HERE: handle required single-element PPI::Structure::List instead of multi-element LIST_ELEMENTS below
+# THEN
+# START HERE: handle required single-element PPI::Structure::List instead of multi-element LIST_ELEMENTS below
+# START HERE: handle required single-element PPI::Structure::List instead of multi-element LIST_ELEMENTS below
+# START HERE: handle required single-element PPI::Structure::List instead of multi-element LIST_ELEMENTS below
 
 # OPERATOR_VOID rule, RETURN production, LIST_ELEMENTS rule/component @ KEY 'children', INDEX 1 to (max - 1)
     $component_name = 'LIST_ELEMENTS';

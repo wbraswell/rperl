@@ -139,7 +139,9 @@ our string__method $DUMPER = sub {(my RPerl::DataStructure::Graph::Tree::Binary:
 ;
 	my string $dumped = '[';
 
-# CONTINUE HERE
+# START HERE
+# START HERE
+# START HERE
 	$dumped .= "**FAKE_DUMP_STRING**";
 	
 	$dumped .= ']';
