@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.000_010;
+our $VERSION = 0.000_011;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 
@@ -342,74 +342,74 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
     my $sorter = new_ok('RPerl::Algorithm::Sort::Bubble');
 
     can_ok('RPerl::Algorithm::Sort::Bubble', 'inherited__Bubble');
-    lives_ok(     # NEEDTESTID
+    lives_ok(     # TOOIN01
         sub { $sorter->inherited__Bubble('Frozen') },
-        q{NEEDTESTID inherited__Bubble('Frozen') lives}
+        q{TOOIN01 inherited__Bubble('Frozen') lives}
     );
 
     can_ok('RPerl::Algorithm::Sort::Bubble', 'inherited__Sort');
-    lives_ok(     # NEEDTESTID
+    lives_ok(     # TOOIN02
         sub { $sorter->inherited__Sort('Frozen') },
-        q{NEEDTESTID inherited__Sort('Frozen') lives}
+        q{TOOIN02 inherited__Sort('Frozen') lives}
     );
  
     can_ok('RPerl::Algorithm::Sort::Bubble', 'inherited__Algorithm');
-    lives_ok(     # NEEDTESTID
+    lives_ok(     # TOOIN03
         sub { $sorter->inherited__Algorithm('Frozen') },
-        q{NEEDTESTID inherited__Algorithm('Frozen') lives}
+        q{TOOIN03 inherited__Algorithm('Frozen') lives}
     );
 
 
     can_ok('RPerl::Algorithm::Sort::Bubble', 'inherited');
-    lives_ok(     # NEEDTESTID
+    lives_ok(     # TOOIN04
         sub { $sorter->inherited('Logan') },
-        q{NEEDTESTID inherited('Logan') lives}
+        q{TOOIN04 inherited('Logan') lives}
     );
 
 
     can_ok('RPerl::Algorithm::Sort::Bubble', 'uninherited__Bubble');
-    lives_and(     # NEEDTESTID
+    lives_and(     # TOOIN05
         sub {
             is( uninherited__Bubble('Claws'),
                 'Bubble::uninherited__Bubble() RULES! ' . $OPS_TYPES,
-                q{NEEDTESTID uninherited__Bubble('Claws') returns correct value}
+                q{TOOIN05 uninherited__Bubble('Claws') returns correct value}
             );
         },
-        q{NEEDTESTID uninherited__Bubble('Claws') lives}
+        q{TOOIN05 uninherited__Bubble('Claws') lives}
     );
  
     can_ok('RPerl::Algorithm::Sort::Bubble', 'uninherited__Sort');
-    lives_and(     # NEEDTESTID
+    lives_and(     # TOOIN06
         sub {
             is( uninherited__Sort('Claws'),
                 'Sort::uninherited__Sort() RULES! ' . $OPS_TYPES,
-                q{NEEDTESTID uninherited__Sort('Claws') returns correct value}
+                q{TOOIN06 uninherited__Sort('Claws') returns correct value}
             );
         },
-        q{NEEDTESTID uninherited__Sort('Claws') lives}
+        q{TOOIN06 uninherited__Sort('Claws') lives}
     );
  
     can_ok('RPerl::Algorithm::Sort::Bubble', 'uninherited__Algorithm');
-    lives_and(     # NEEDTESTID
+    lives_and(     # TOOIN07
         sub {
             is( uninherited__Algorithm('Claws'),
                 'Algorithm::uninherited__Algorithm() RULES! ' . $OPS_TYPES,
-                q{NEEDTESTID uninherited__Algorithm('Claws') returns correct value}
+                q{TOOIN07 uninherited__Algorithm('Claws') returns correct value}
             );
         },
-        q{NEEDTESTID uninherited__Algorithm('Claws') lives}
+        q{TOOIN07 uninherited__Algorithm('Claws') lives}
     );
 
 
     can_ok('RPerl::Algorithm::Sort::Bubble', 'uninherited');
-    lives_and(     # NEEDTESTID
+    lives_and(     # TOOIN08
         sub {
             is( uninherited('Wolverine'),
                 'Bubble::uninherited() ROCKS! ' . $OPS_TYPES,
-                q{NEEDTESTID uninherited('Wolverine') returns correct value}
+                q{TOOIN08 uninherited('Wolverine') returns correct value}
             );
         },
-        q{NEEDTESTID uninherited('Wolverine') lives}
+        q{TOOIN08 uninherited('Wolverine') lives}
     );
 }
 
