@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_702;
+    our $VERSION = 0.000_710;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -18,9 +18,11 @@
 }
 
 %token SHEBANG              = /(^(\#\!\/[\w\/]*\/perl)$)/               # begin line, hash (octothorpe), bang, *NIX path to Perl, end line; ex. '#!/usr/bin/perl'
-%token VERSION_NUMBER       = /(\d+\.\d{3}\_\d{3})/                     # number(s) followed by decicmal, then 3 numbers, underscore, and 3 numbers; ex. '123.456_789'
-# NEED FIX: optional underscores for normal numbers
-%token LITERAL              = /((-?\d+(\.\d+)?)|('[^']*')|("[^"]*"))/   # number or string
+# START HERE: test version number and literal number regexs
+# START HERE: test version number and literal number regexs
+# START HERE: test version number and literal number regexs
+%token VERSION_NUMBER       = /(\d\d?\.\d{3}\_\d{3})/                   # 1 or 2 numerals(s), decicmal, 3 numerals, underscore, 3 numerals; ex. '12.345_678'
+%token LITERAL              = /((-?(((\3_)*\d{3})|(\d{1,2}))(\.((\d{3}(_\8)*)|(\d{1,2})))?)|('[^']*')|("[^"]*"))/   # number w/ underscores, string w/ single quotes & w/ double quotes
 %token VARIABLE_SYMBOL      = /(\$[a-zA-Z]\w*(::)*\w*)/                 # dollar sigil, scoped word
 %token KEYS_OR_VALUES       = /(keys|values)/                           # 'keys' or 'values'
 %token TYPE_CLASS_OR_SELF   = /(string\s+\$class|object\s+\$self)/      # ex. 'string $class' or 'object $self'
