@@ -111,7 +111,7 @@
 CompileUnit:            Program | Module+ ;
 Program:                SHEBANG Header Critic* Include* Constant* Subroutine* Operation+ ;
 Module:                 Package | Class ;
-Package:                'package' WordScoped ';' Header Critic* Include* Constant* Subroutine+ '1, 1;' ;
+Package:                'package' WordScoped ';' Header Critic* Include* Constant* Subroutine+ '1;' '1;' ;
 Header:                 'use strict;' 'use warnings;' 'use RPerl;' 'our $VERSION =' VERSION_NUMBER ';';
 Critic:                 '## no critic qw(' WORD+ ')';
 Include:                'use' WordScoped ';' | 'use' WordScoped 'qw(' WORD+ ')' ';' ;
@@ -123,7 +123,7 @@ Subroutine:             'our' Type VARIABLE_SYMBOL '= sub {' SubroutineArguments
 SubroutineArguments:    '( my' Type VARIABLE_SYMBOL (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ArgumentCheck* ;
 #ArgumentCheck:          '::' CHECK_OR_CHECKTRACE '(' Expression (OP21_LIST_COMMA Expression OP21_LIST_COMMA Expression)? ')' ';' ;
 ArgumentCheck:          CHECK_OR_CHECKTRACE '(' Expression (OP21_LIST_COMMA Expression OP21_LIST_COMMA Expression)? ')' ';' ;
-Class:                  'package' WordScoped ';' Header 'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties Method* '1, 1;' (Subroutine+ '1, 1;')? ;
+Class:                  'package' WordScoped ';' Header 'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties Method* '1;' '1;' (Subroutine+ '1;' '1;')? ;
                         # NEED FIX: add %properties_class as in RPerl::Operation::Statement::OperatorVoid::Return
 Properties:             'our %properties = (' HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* ')' ';' | 'our %properties = (' ')' ';';
 Method:                 'our' Type VARIABLE_SYMBOL '= sub {' MethodArguments? Operation+ '}' ';' ;

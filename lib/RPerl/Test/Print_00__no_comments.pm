@@ -1,9 +1,8 @@
 package RPerl::Test::Print_00;
 use strict;
 use warnings;
-our $VERSION = 0.003_001;
-use Carp;
 use RPerl;
+our $VERSION = 0.003_002;
 
 our void $greet_planet = sub {
 
