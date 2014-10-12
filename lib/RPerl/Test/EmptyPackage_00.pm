@@ -5,7 +5,7 @@ use warnings;
 use RPerl;
 our $VERSION = 0.001_000;
 
-our void $foo = sub { 2; };
+our void $empty_sub = sub { 2; };
 
 1;
-1;    # CODE SEPARATOR: methods above, subroutines below
+1;    # CODE SEPARATOR: end of package
