@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_710;
+    our $VERSION = 0.000_711;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -22,7 +22,8 @@
 # START HERE: test version number and literal number regexs
 # START HERE: test version number and literal number regexs
 %token VERSION_NUMBER       = /(\d\d?\.\d{3}\_\d{3})/                   # 1 or 2 numerals(s), decicmal, 3 numerals, underscore, 3 numerals; ex. '12.345_678'
-%token LITERAL              = /((-?(((\3_)*\d{3})|(\d{1,2}))(\.((\d{3}(_\8)*)|(\d{1,2})))?)|('[^']*')|("[^"]*"))/   # number w/ underscores, string w/ single quotes & w/ double quotes
+%token LITERAL_NUMBER       = /(-?(((\d{1,2}_)?(\d{3}_)*\d{3})|\d{1,2})(\.((\d{3}(_\d{3})*(_\d{1,2})?)|\d{1,2}))?)/   # number w/ underscores
+%token LITERAL_STRING       = /('[^']*')|("[^"]*")/   # string w/ single quotes & w/ double quotes
 %token VARIABLE_SYMBOL      = /(\$[a-zA-Z]\w*(::)*\w*)/                 # dollar sigil, scoped word
 %token KEYS_OR_VALUES       = /(keys|values)/                           # 'keys' or 'values'
 %token TYPE_CLASS_OR_SELF   = /(string\s+\$class|object\s+\$self)/      # ex. 'string $class' or 'object $self'
@@ -117,8 +118,8 @@ Critic:                 '## no critic qw(' WORD+ ')';
 Include:                'use' WordScoped ';' | 'use' WordScoped 'qw(' WORD+ ')' ';' ;
                         # NEED FIX: disable non-scalar constants
 Constant:               'use constant' WORD OP20_HASH_FATARROW TypeInner ConstantValue ';' ;
-ConstantValue:          LITERAL | '[' TypeInner? LITERAL (OP21_LIST_COMMA TypeInner? LITERAL)* ']' | 
-                        '{' WORD OP20_HASH_FATARROW TypeInner? LITERAL (OP21_LIST_COMMA WORD OP20_HASH_FATARROW TypeInner? LITERAL)* '}' ;
+ConstantValue:          Literal | '[' TypeInner? Literal (OP21_LIST_COMMA TypeInner? Literal)* ']' | 
+                        '{' WORD OP20_HASH_FATARROW TypeInner? Literal (OP21_LIST_COMMA WORD OP20_HASH_FATARROW TypeInner? Literal)* '}' ;
 Subroutine:             'our' Type VARIABLE_SYMBOL '= sub {' SubroutineArguments? Operation+ '}' ';' ;
 SubroutineArguments:    '( my' Type VARIABLE_SYMBOL (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ArgumentCheck* ;
 #ArgumentCheck:          '::' CHECK_OR_CHECKTRACE '(' Expression (OP21_LIST_COMMA Expression OP21_LIST_COMMA Expression)? ')' ';' ;
@@ -143,7 +144,7 @@ Operator:               OP01_NAMED '(' ListElements? ')' | OP03_MATH_INC_DEC Var
                         # NEED FIX: are open() and close() ops truly void?  if not, need add FileHandle to non-void Operator production
 OperatorVoid:           OP01_NAMED_VOID_PAREN ListElements? ')' ';' | OP01_NAMED_VOID_PAREN FileHandle ListElements? ')' ';' | 
                         OP01_NAMED_VOID ListElements? ';' | OP01_NAMED_VOID FileHandle ListElements? ';' | OP19_LOOP_CONTROL LoopLabel ';' ;
-Expression:             'undef' | LITERAL | Variable | ArrayReference | ArrayDereferenced | HashReference | HashDereferenced | '{' '}' |
+Expression:             'undef' | Literal | Variable | ArrayReference | ArrayDereferenced | HashReference | HashDereferenced | '{' '}' |
                         Operator | WordScoped '(' ListElements? ')' | Variable OP02_METHOD_THINARROW WORD '(' ListElements? ')' | '(' Expression ')' ;
 Statement:              Conditional | (LoopLabel COLON)? Loop | OperatorVoid | VariableDeclaration | VariableModification ;
 Conditional:            'if (' Expression ')' CodeBlock ('elsif (' Expression ')' CodeBlock)* ('else' CodeBlock)? ;
@@ -172,6 +173,7 @@ FileHandle:             '{*' WORD '}' | 'my' 'filehandle_ref' VARIABLE_SYMBOL;
 TypeInner:              'my' Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN ;
 Type:                   WORD ;
 LoopLabel:              WORD ;
+Literal:                LITERAL_NUMBER | LITERAL_STRING;
 
 %%
 

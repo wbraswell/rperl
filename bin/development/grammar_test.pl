@@ -2,10 +2,8 @@
 use strict;
 use warnings;
 our $VERSION = 0.000_010;
-use Carp;
-#use RPerl;
+use RPerl::Config;
 
-use Data::Dumper;
 use RPerl::Grammar;
 
 my $eyapp_parser = RPerl::Grammar->new();

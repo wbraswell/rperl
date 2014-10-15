@@ -1,7 +1,7 @@
 # [[[ HEADER ]]]
-package RPerl::Test::EmptyPackage_00;
+package RPerl::Test::EmptyModule::Package_00_Bad_Header_02;
 use strict;
-use warnings;
+used warnings;
 use RPerl;
 our $VERSION = 0.001_000;
 
