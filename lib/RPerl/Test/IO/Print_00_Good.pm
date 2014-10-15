@@ -1,8 +1,8 @@
-package RPerl::Test::Print_00;
+package RPerl::Test::IO::Print_00_Good;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_001;
+our $VERSION = 0.003_003;
 
 # [[[ SETUP ]]]
 
@@ -55,8 +55,8 @@ our void $greet_planet = sub {
 };
 
 # [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-#our integer $Print_00__OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0  # NEED FIX: allow or disallow non-subs like this var?
-#our string $RPerl_Test_Print_00__ops = sub { return ('PERL'); };
-#our string $RPerl_Test_Print_00__types = sub { return ('PERL'); };
+#our integer $RPerl__Test__IO__Print_00_Good__OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0  # NEED FIX: allow or disallow non-subs like this var?
+#our string $RPerl__Test__IO__Print_00_Good__ops = sub { return ('PERL'); };
+#our string $RPerl__Test__IO__Print_00_Good__types = sub { return ('PERL'); };
 
 1;
