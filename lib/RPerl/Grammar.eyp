@@ -18,9 +18,9 @@
 }
 
 %token SHEBANG              = /(^(\#\!\/[\w\/]*\/perl)$)/               # begin line, hash (octothorpe), bang, *NIX path to Perl, end line; ex. '#!/usr/bin/perl'
-# START HERE: test version number and literal number regexs
-# START HERE: test version number and literal number regexs
-# START HERE: test version number and literal number regexs
+# START HERE: literal number regexs
+# START HERE: literal number regexs
+# START HERE: literal number regexs
 %token VERSION_NUMBER       = /(\d\d?\.\d{3}\_\d{3})/                   # 1 or 2 numerals(s), decicmal, 3 numerals, underscore, 3 numerals; ex. '12.345_678'
 %token LITERAL_NUMBER       = /(-?(((\d{1,2}_)?(\d{3}_)*\d{3})|\d{1,2})(\.((\d{3}(_\d{3})*(_\d{1,2})?)|\d{1,2}))?)/   # number w/ underscores
 %token LITERAL_STRING       = /('[^']*')|("[^"]*")/   # string w/ single quotes & w/ double quotes
