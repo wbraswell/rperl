@@ -3,7 +3,7 @@ package RPerl::Test::EmptyModule::Class_00_Good;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 100.001_000;
+our $VERSION = 0.1001_000;
 
 use parent qw(RPerl::Test);
 use RPerl::Test;
