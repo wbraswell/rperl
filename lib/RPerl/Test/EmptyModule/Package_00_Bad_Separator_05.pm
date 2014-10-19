@@ -10,8 +10,3 @@ our void $empty_sub = sub { 2; };
 1;
 1;    # CODE SEPARATOR: end of package
 1;
-
-
-# START HERE: create tests for class bad properties & method & separator
-# START HERE: create tests for class bad properties & method & separator
-# START HERE: create tests for class bad properties & method & separator
