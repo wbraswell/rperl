@@ -5,7 +5,7 @@ use warnings;
 use RPerl;
 our $VERSION = 0.001_000;
 
-our void $empty_sub = sub { -23_456_789.234; };
+our void $empty_sub = sub { -23_456.234; };
 
 1;
 1;    # CODE SEPARATOR: end of package
