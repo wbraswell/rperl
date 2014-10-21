@@ -2,6 +2,7 @@
 /t/_Inline
 /bin/_Inline
 /bin/development/_Inline
+/bin/development/unused/_Inline
 /lib/RPerl/Algorithm/Sort/_Inline
 /Makefile
 /MYMETA.json
