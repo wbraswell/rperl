@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_711;
+    our $VERSION = 0.000_713;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -18,16 +18,13 @@
 }
 
 %token SHEBANG              = /(^(\#\!\/[\w\/]*\/perl)$)/               # begin line, hash (octothorpe), bang, *NIX path to Perl, end line; ex. '#!/usr/bin/perl'
-# START HERE: literal number regexs
-# START HERE: literal number regexs
-# START HERE: literal number regexs
-%token VERSION_NUMBER       = /(\d\d?\.\d{3}\_\d{3})/                   # 1 or 2 numerals(s), decicmal, 3 numerals, underscore, 3 numerals; ex. '12.345_678'
+%token VERSION_NUMBER_ASSIGN = /\$VERSION\ \=\ (\d\d?\.\d{3}\_\d{3});/  # match assign match, only capture & return number; ex. '$VERSION = 12.345_678;' returns '12.345_678'
 %token LITERAL_NUMBER       = /(-?(((\d{1,2}_)?(\d{3}_)*\d{3})|\d{1,2})(\.((\d{3}(_\d{3})*(_\d{1,2})?)|\d{1,2}))?)/   # number w/ underscores
-%token LITERAL_STRING       = /('[^']*')|("[^"]*")/   # string w/ single quotes & w/ double quotes
+%token LITERAL_STRING       = /('[^']*')|("[^"]*")/                     # string w/ single quotes or double quotes
 %token VARIABLE_SYMBOL      = /(\$[a-zA-Z]\w*(::)*\w*)/                 # dollar sigil, scoped word
 %token KEYS_OR_VALUES       = /(keys|values)/                           # 'keys' or 'values'
 %token TYPE_CLASS_OR_SELF   = /(string\s+\$class|object\s+\$self)/      # ex. 'string $class' or 'object $self'
-%token CHECK_OR_CHECKTRACE  = /(::[a-zA-Z]\w*__CHECK(TRACE)?)/            # ex. 'integer__array_ref__CHECK' or 'integer__array_ref__CHECKTRACE'
+%token CHECK_OR_CHECKTRACE  = /(::[a-zA-Z]\w*__CHECK(TRACE)?)/          # ex. 'integer__array_ref__CHECK' or 'integer__array_ref__CHECKTRACE'
 
 # PRECEDENCE, LEXICAL ORDERING: earlier declaration gets tried first;  http://perldoc.perl.org/perlop.html#Operator-Precedence-and-Associativity [1]
 %token OP24_LOGICAL_OR_XOR      = /(or|xor)/                    # precedence 24 infix: logical or and xor, equivalent to || except for precedence
@@ -113,7 +110,7 @@ CompileUnit:            Program | Module+ ;
 Program:                SHEBANG Header Critic* Include* Constant* Subroutine* Operation+ ;
 Module:                 Package | Class ;
 Package:                'package' WordScoped ';' Header Critic* Include* Constant* Subroutine+ '1;' '1;' ;
-Header:                 'use strict;' 'use warnings;' 'use RPerl;' 'our $VERSION =' VERSION_NUMBER ';';
+Header:                 'use strict;' 'use warnings;' 'use RPerl;' 'our' VERSION_NUMBER_ASSIGN;
 Critic:                 '## no critic qw(' WORD+ ')';
 Include:                'use' WordScoped ';' | 'use' WordScoped 'qw(' WORD+ ')' ';' ;
                         # NEED FIX: disable non-scalar constants
@@ -173,7 +170,7 @@ FileHandle:             '{*' WORD '}' | 'my' 'filehandle_ref' VARIABLE_SYMBOL;
 TypeInner:              'my' Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN ;
 Type:                   WORD ;
 LoopLabel:              WORD ;
-Literal:                LITERAL_NUMBER | LITERAL_STRING;
+Literal:                LITERAL_STRING | LITERAL_NUMBER ;
 
 %%
 
