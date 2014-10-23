@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_714;
+    our $VERSION = 0.000_715;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -20,10 +20,7 @@
 %token SHEBANG              = /(^(\#\!\/[\w\/]*\/perl)$)/               # begin line, hash (octothorpe), bang, *NIX path to Perl, end line; ex. '#!/usr/bin/perl'
 %token VERSION_NUMBER_ASSIGN = /\$VERSION\ \=\ (\d\d?\.\d{3}\_\d{3});/  # match assign match, only capture & return number; ex. '$VERSION = 12.345_678;' returns '12.345_678'
 %token LITERAL_NUMBER       = /(-?(((\d{1,2}_)?(\d{3}_)*\d{3})|\d{1,2})(\.((\d{3}(_\d{3})*(_\d{1,2})?)|\d{1,2}))?)/   # number w/ underscores
-# START HERE: finish tests to confirm strings parse correctly
-# START HERE: finish tests to confirm strings parse correctly
-# START HERE: finish tests to confirm strings parse correctly
-%token LITERAL_STRING       = /(('[^']+')|("[^"^$^@^%]+")|(q{[^}]*}))/  # strings: non-empty w/ single quotes, or non-empty double quotes w/out sigils, or possibly-empty single q-braces
+%token LITERAL_STRING       = /(('[^']+')|("[^"\@\$]*((\\n)|(\\t))+[^"\@\$]*")|(q{[^}]*}))/  # strings: single quotes non-empty; double quotes non-empty w/out sigils & w/ newline or tab; or single q-braces
 %token VARIABLE_SYMBOL      = /(\$[a-zA-Z]\w*(::)*\w*)/                 # dollar sigil, scoped word
 %token KEYS_OR_VALUES       = /(keys|values)/                           # 'keys' or 'values'
 %token TYPE_CLASS_OR_SELF   = /(string\s+\$class|object\s+\$self)/      # ex. 'string $class' or 'object $self'

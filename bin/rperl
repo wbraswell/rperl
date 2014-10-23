@@ -2,12 +2,12 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_001;
+our $VERSION = 0.003_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(ProhibitBooleanGrep)  # SYSTEM SPECIAL 1: allow grep
 
-use RPerl::Parser;    # includes PPI, Perl::Critic
+use RPerl::Parser;    # includes Perl::Critic
 use RPerl::Translator;
 use RPerl::Generator;
 use RPerl::Compiler;    # includes Inline
@@ -22,6 +22,7 @@ RPerl::diag "\n\n" or croak();
 
 my string $rperl_input_file_name = undef;
 my string $cpp_output_file_name  = undef;
+my integer $option_number        = 0;
 my $mode = {};    # can't store defaults here, erased by GetOptions()
 my $mode_default = { ops => 'CPP', types => 'CPP' }; # default to CPPOPS_CPPTYPES
 my $modes_supported = { ops => ['CPP'], types => [ 'PERL', 'CPP' ] };
@@ -29,9 +30,11 @@ GetOptions(
     'infile=s'  => \$rperl_input_file_name,
     'outfile=s' => \$cpp_output_file_name,
     'mode=s%'   => \$mode,
+    '<>'        => \&accept_options
     )
     or croak(
     "\nERROR EARG00: Failure processing command line arguments,\ncroaking");
+
 if ( not( defined $rperl_input_file_name ) ) { ## no critic qw(ProhibitCascadingIfElse)  # SYSTEM DEFAULT 3: allow argument-handling logic
     croak(
         "\nERROR EARG01: No RPerl source code input file specified,\ncroaking"
@@ -89,29 +92,31 @@ RPerl::diag
     "in rperl, have \$rperl_input_file_name = '$rperl_input_file_name'\n";
 RPerl::diag
     "in rperl, have \$cpp_output_file_name = '$cpp_output_file_name'\n";
-RPerl::diag "in rperl, have \$mode = \n"
-    . Dumper($mode) . "\n";
+RPerl::diag "in rperl, have \$mode = \n" . Dumper($mode) . "\n";
 
-# [[[ PARSE PERL TO PPI ]]]
-# [[[ PARSE PERL TO PPI ]]]
-# [[[ PARSE PERL TO PPI ]]]
+# Allow Omission Of "-infile" & "-outfile" On Command Line
+sub accept_options {
+#our void $accept_options = sub {  # NEED FIX: can't define RPerl-style subroutines here?
+    ( my unknown $option ) = @_;
 
-my object $ppi_doctree = perl_to_ppi__parse($rperl_input_file_name);
+    if ( $option_number == 0 ) {
+        $rperl_input_file_name = $option;
+    }
+    elsif ( $option_number == 1 ) {
+        $cpp_output_file_name = $option;
+    }
+#    elsif ( $option_number == 2 ) { $mode = $option; }  # NEED UPGRADE: ability to omit "--mode" on command line
+    $option_number++;
+}
 
-# [[[ TRANSLATE PPI TO RPERL ]]]
-# [[[ TRANSLATE PPI TO RPERL ]]]
-# [[[ TRANSLATE PPI TO RPERL ]]]
+# [[[ COMPILE RPERL TO XS & BINARY ]]]
+# [[[ COMPILE RPERL TO XS & BINARY ]]]
+# [[[ COMPILE RPERL TO XS & BINARY ]]]
 
-my object $rperl_ast = ppi_to_rperl__translate($ppi_doctree);
+rperl_to_xsbinary__compile( $rperl_input_file_name, $cpp_output_file_name,
+    $mode );
 
-# [[[ GENERATE RPERL TO C++ ]]]
-# [[[ GENERATE RPERL TO C++ ]]]
-# [[[ GENERATE RPERL TO C++ ]]]
 
-my string $cpp_source = rperl_to_cpp__generate( $rperl_ast, $mode );
-
-# [[[ COMPILE C++ TO XS & BINARY ]]]
-# [[[ COMPILE C++ TO XS & BINARY ]]]
-# [[[ COMPILE C++ TO XS & BINARY ]]]
-
-cpp_to_xsbinary__compile( $cpp_source, $cpp_output_file_name );
+# START HERE: run all parser tests
+# START HERE: run all parser tests
+# START HERE: run all parser tests

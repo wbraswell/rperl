@@ -2,39 +2,58 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_001;
+our $VERSION = 0.003_000;
 
 # [[[ SETUP ]]]
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
 
+use RPerl::Parser;
+
 # [[[ PROCEDURAL SUBROUTINES ]]]
 
+our void $rperl_to_xsbinary__compile = sub {
+    ( my string $rperl_input_file_name, my string $cpp_output_file_name, my hash_ref $mode ) = @_;
 
-# START HERE: move functionality from bin/rperl to perl_to_cpp() below; link RPerl::pmc_compile() to perl_to_cpp(); enable Module::Compile
-# START HERE: move functionality from bin/rperl to perl_to_cpp() below; link RPerl::pmc_compile() to perl_to_cpp(); enable Module::Compile
-# START HERE: move functionality from bin/rperl to perl_to_cpp() below; link RPerl::pmc_compile() to perl_to_cpp(); enable Module::Compile
+    # [[[ PARSE RPERL TO AST ]]]
+    # [[[ PARSE RPERL TO AST ]]]
+    # [[[ PARSE RPERL TO AST ]]]
 
+    my object $rperl_ast = RPerl::Parser::rperl_to_ast__parse($rperl_input_file_name);
 
-our string $perl_to_cpp = sub {
-    ( my string $perl_source ) = @_;
-    my string $cpp_source;
-    #...
-    return($cpp_source);
+    # [[[ GENERATE AST TO C++ ]]]
+    # [[[ GENERATE AST TO C++ ]]]
+    # [[[ GENERATE AST TO C++ ]]]
+
+#    my string $cpp_source = ast_to_cpp__generate( $rperl_ast, $mode );
+
+    # [[[ COMPILE C++ TO XS & BINARY ]]]
+    # [[[ COMPILE C++ TO XS & BINARY ]]]
+    # [[[ COMPILE C++ TO XS & BINARY ]]]
+
+#    cpp_to_xsbinary__compile( $cpp_source, $cpp_output_file_name );
+
 };
 
+our string $ast_to_cpp__generate = sub {
+    ( my object $rperl_ast ) = @_;
+    my string $cpp_source;
+
+    #...
+    return ($cpp_source);
+};
 
 # Compile from C++-Parsable String to Perl-Linkable XS & Machine-Readable Binary
 our void $cpp_to_xsbinary__compile = sub {
     ( my string $cpp_source, my string $cpp_file_name ) = @_;
 
+    RPerl::diag( "in cpp_to_xsbinary__compile(), received \$cpp_source =\n\n",
+        $cpp_source, "\n" );
     RPerl::diag(
-        "in cpp_to_xsbinary__compile(), received \$cpp_source =\n\n"
-        ,$cpp_source,"\n");
-    RPerl::diag(
-        q{in cpp_to_xsbinary__compile(), received $cpp_file_name = '}
-        . $cpp_file_name . "'\n");
+              q{in cpp_to_xsbinary__compile(), received $cpp_file_name = '}
+            . $cpp_file_name
+            . "'\n" );
 
     # save file(s)
     if ( -f $cpp_file_name ) {
@@ -63,4 +82,5 @@ our void $cpp_to_xsbinary__compile = sub {
     # NEED FIX: call Inline to run tests
 };
 
+1;
 1;
