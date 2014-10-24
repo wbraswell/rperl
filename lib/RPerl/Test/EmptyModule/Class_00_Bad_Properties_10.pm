@@ -1,3 +1,7 @@
+# START HERE: finish upgrading tests, run all tests
+# START HERE: finish upgrading tests, run all tests
+# START HERE: finish upgrading tests, run all tests
+
 # [[[ HEADER ]]]
 package RPerl::Test::EmptyModule::Class_00_Good;
 use strict;

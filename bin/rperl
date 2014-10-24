@@ -105,7 +105,7 @@ sub accept_options {
     elsif ( $option_number == 1 ) {
         $cpp_output_file_name = $option;
     }
-#    elsif ( $option_number == 2 ) { $mode = $option; }  # NEED UPGRADE: ability to omit "--mode" on command line
+#    elsif ( $option_number == 2 ) { $mode = $option; }  # NEED UPGRADE: ability to omit "--mode" on command line, accept multiple input files
     $option_number++;
 }
 
@@ -115,8 +115,3 @@ sub accept_options {
 
 rperl_to_xsbinary__compile( $rperl_input_file_name, $cpp_output_file_name,
     $mode );
-
-
-# START HERE: run all parser tests
-# START HERE: run all parser tests
-# START HERE: run all parser tests

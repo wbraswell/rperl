@@ -1,5 +1,5 @@
 # [[[ HEADER ]]]
-package RPerl::Test::DataTypeNumber::Number_48_Good;
+package RPerl::Test::DataTypeNumber::Number_48_Bad_01;
 use strict;
 use warnings;
 use RPerl;

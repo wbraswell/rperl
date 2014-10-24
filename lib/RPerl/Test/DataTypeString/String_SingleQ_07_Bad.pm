@@ -5,8 +5,7 @@ use warnings;
 use RPerl;
 our $VERSION = 0.001_000;
 
-# fails Perl::Critic::Policy::ValuesAndExpressions::RequireInterpolationOfMetachars
-# "String *may* require interpolation"
+# [[[ SUBROUTINES ]]]
 our void $empty_sub = sub { q{@$}; };
 
 1;
