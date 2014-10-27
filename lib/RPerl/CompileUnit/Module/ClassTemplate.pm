@@ -16,6 +16,7 @@ use RPerl::CompileUnit::Module::Class;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
 ## no critic qw(ProhibitConstantPragma)  # USER DEFAULT 3: allow constants
+## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> 
 
 ## no critic qw(ProhibitUselessNoCritic PodSpelling) # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code, must be on line 1
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd) # DEVELOPER DEFAULT 1b: allow unreachable & POD-commented code, must be after line 1
@@ -25,7 +26,7 @@ use RPerl::CompileUnit::Module::Class;
 ## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
 ## no critic qw(ProhibitCascadingIfElse)  # SYSTEM DEFAULT 3: allow argument-handling logic
 ## no critic qw(Capitalization ProhibitMultiplePackages)  # SYSTEM DEFAULT 4: allow multiple lower case package names
-## no critic qw(RequireCheckingReturnValueOfEval)  ## SYSTEM DEFAULT 5: allow eval() test code blocks
+## no critic qw(RequireCheckingReturnValueOfEval)  # SYSTEM DEFAULT 5: allow eval() test code blocks
 
 ## no critic qw(ProhibitBooleanGrep)  # SYSTEM SPECIAL 1: allow grep
 ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  # SYSTEM SPECIAL 2: allow Autoload & read-only @_
@@ -38,8 +39,8 @@ use RPerl::CompileUnit::Module::Class;
 ## no critic qw(ProhibitDeepNests)  # SYSTEM SPECIAL 8: allow deeply-nested code
 ## no critic qw(ProhibitNoStrict)  # SYSTEM SPECIAL 9: allow no strict
 ## no critic qw(RequireBriefOpen)  # SYSTEM SPECIAL 10: allow complex processing with open filehandle
-## no critic qw(ProhibitBacktickOperators)  ## SYSTEM SPECIAL 11: allow system command execution
-## no critic qw(ProhibitCascadingIfElse)  ## SYSTEM SPECIAL 12: allow complex conditional logic
+## no critic qw(ProhibitBacktickOperators)  # SYSTEM SPECIAL 11: allow system command execution
+## no critic qw(ProhibitCascadingIfElse)  # SYSTEM SPECIAL 12: allow complex conditional logic
 
 ## no critic (package)  # SYSTEM EXTERNAL 1: originally from Inline::CPP
 

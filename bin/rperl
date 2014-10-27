@@ -2,9 +2,10 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_001;
+our $VERSION = 0.003_030;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
 ## no critic qw(ProhibitBooleanGrep)  # SYSTEM SPECIAL 1: allow grep
 
 use RPerl::Parser;    # includes Perl::Critic
@@ -20,9 +21,9 @@ RPerl::diag "\n\n" or croak();
 # [[[ ACCEPT COMMAND-LINE ARGUMENTS ]]]
 # [[[ ACCEPT COMMAND-LINE ARGUMENTS ]]]
 
-my string__array_ref $rperl_input_file_names = [];
-my string__array_ref $cpp_output_file_names  = [];
-my integer $option_number                    = 0;
+my string__array_ref $rperl_input_file_names           = [];
+my string__array_ref $rperl_input_file_names_unlabeled = [];
+my string__array_ref $cpp_output_file_names            = [];
 my $mode = {};    # can't store defaults here, erased by GetOptions()
 my $mode_default = { ops => 'CPP', types => 'CPP' }; # default to CPPOPS_CPPTYPES
 my $modes_supported = { ops => ['CPP'], types => [ 'PERL', 'CPP' ] };
@@ -30,10 +31,17 @@ GetOptions(
     'infile=s{1,}'  => \$rperl_input_file_names,
     'outfile=s{1,}' => \$cpp_output_file_names,
     'mode=s%'       => \$mode,
-    '<>'            => \&accept_unlabeled_options
+    '<>'            => \&store_unlabeled_options
     )
     or croak(
     "\nERROR EARG00: Failure processing command line arguments,\ncroaking");
+
+# accept unlabeled input file name(s) if no labeled values specified
+if (    ( ( scalar @{$rperl_input_file_names} ) == 0 )
+    and ( ( scalar @{$rperl_input_file_names_unlabeled} ) > 0 ) )
+{
+    $rperl_input_file_names = $rperl_input_file_names_unlabeled;
+}
 
 if ( ( scalar @{$rperl_input_file_names} ) == 0 ) {
     croak(
@@ -43,9 +51,9 @@ if ( ( scalar @{$rperl_input_file_names} ) == 0 ) {
 
 # check input file(s)
 my integer $rperl_input_file_num = scalar @{$rperl_input_file_names};
-for my integer $i ( 0 .. $rperl_input_file_num ) {
+for my integer $i ( 0 .. ( $rperl_input_file_num - 1 ) ) {
     my string $rperl_input_file_name = $rperl_input_file_names->[$i];
-    RPerl::diag 'in rperl, top of file checking loop ' . $i . ' of ' . $rperl_input_file_num . ", have \$rperl_input_file_names->[$i] = '" . $rperl_input_file_name . "'\n";
+#    RPerl::diag 'in rperl, top of file checking loop ' . $i . ' of ' . $rperl_input_file_num . ", have \$rperl_input_file_names->[$i] = '" . $rperl_input_file_name . "'\n";
 
     if ( not( -e $rperl_input_file_name ) ) { ## no critic qw(ProhibitCascadingIfElse)  # SYSTEM DEFAULT 3: allow argument-handling logic
         croak(
@@ -73,9 +81,12 @@ for my integer $i ( 0 .. $rperl_input_file_num ) {
         $cpp_output_file_names->[$i] = $rperl_input_file_name;
         substr $cpp_output_file_names->[$i], -3, 4, '.cpp';
     }
- 
-    RPerl::diag 'in rperl, bottom of file checking loop ' . $i . ' of ' . $rperl_input_file_num . ", have \$cpp_output_file_names->[$i] = '" . $cpp_output_file_names->[$i] . "'\n";
+
+#    RPerl::diag 'in rperl, bottom of file checking loop ' . $i . ' of ' . $rperl_input_file_num . ", have \$cpp_output_file_names->[$i] = '" . $cpp_output_file_names->[$i] . "'\n";
 }
+
+# NEED FIX: Perl::Critic bug, without $dummy we get "Postfix control "foreach" used (See page 96 of PBP)"
+my $dummy = 2;
 
 # check modes
 foreach my string $mode_key ( keys %{$mode} ) {
@@ -104,28 +115,53 @@ foreach my string $mode_default_key ( keys %{$mode_default} ) { ## no critic qw(
         $mode->{$mode_default_key} = $mode_default->{$mode_default_key};
     }
 }
+
+RPerl::diag "in rperl, have \$rperl_input_file_names = \n"
+    . Dumper($rperl_input_file_names) . "\n";
+RPerl::diag "in rperl, have \$cpp_output_file_names = \n"
+    . Dumper($cpp_output_file_names) . "\n";
 RPerl::diag "in rperl, have \$mode = \n" . Dumper($mode) . "\n";
 
-# allow omission of "-infile" & "-outfile" on command line
-sub accept_unlabeled_options {
-
-#our void $accept_unlabeled_options = sub {  # NEED FIX: can't define RPerl-style subroutines here?
+# allow omission of "-infile" on command line
+#our void $store_unlabeled_options = sub {  # NEED FIX: can't define RPerl-style subroutines here?
+sub store_unlabeled_options {
     ( my unknown $option ) = @_;
-
-    if ( $option_number == 0 ) {
-        $rperl_input_file_name = $option;
+    if ( defined $rperl_input_file_names->[0] ) {
+        croak(
+            "\nERROR EARG08: Unlabeled RPerl source code input file option(s) specified, but labeled option(s) also specified, please choose either labeled or unlabeled,\ncroaking"
+        );
     }
-    elsif ( $option_number == 1 ) {
-        $cpp_output_file_name = $option;
-    }
-
-#    elsif ( $option_number == 2 ) { $mode = $option; }  # NEED UPGRADE: ability to omit "--mode" on command line, accept multiple input files
-    $option_number++;
+    push @{$rperl_input_file_names_unlabeled}, $option;
+    return;
 }
 
 # [[[ COMPILE RPERL TO XS & BINARY ]]]
 # [[[ COMPILE RPERL TO XS & BINARY ]]]
 # [[[ COMPILE RPERL TO XS & BINARY ]]]
 
-rperl_to_xsbinary__compile( $rperl_input_file_name, $cpp_output_file_name,
-    $mode );
+RPerl::diag "\nPRESS <ENTER> TO CONTINUE\n";
+my string $stdin_ignore = <STDIN>;
+
+for my integer $i ( 0 .. ( $rperl_input_file_num - 1 ) ) {
+    my string $rperl_input_file_name = $rperl_input_file_names->[$i];
+    my string $cpp_output_file_name  = $cpp_output_file_names->[$i];
+
+    system 'reset';
+    RPerl::diag
+        'in rperl, input file ' . ($i + 1) . " of $rperl_input_file_num, calling rperl_to_xsbinary__compile( $rperl_input_file_name, $cpp_output_file_name, \$mode )...\n";
+    RPerl::diag "\nPRESS <ENTER> TO CONTINUE\n";
+    $stdin_ignore = <STDIN>;
+
+    my integer $eval_retval = eval {
+        rperl_to_xsbinary__compile( $rperl_input_file_name,
+            $cpp_output_file_name, $mode );
+    };
+
+    if ( not defined $eval_retval ) {
+        RPerl::diag $EVAL_ERROR;
+    }
+    RPerl::diag
+        "\nin rperl, returned from rperl_to_xsbinary__compile( $rperl_input_file_name, $cpp_output_file_name, \$mode )\n";
+    RPerl::diag "\nPRESS <ENTER> TO CONTINUE\n";
+    $stdin_ignore = <STDIN>;
+}

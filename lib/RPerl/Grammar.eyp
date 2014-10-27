@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_715;
+    our $VERSION = 0.000_720;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -143,6 +143,7 @@ OperatorVoid:           OP01_NAMED_VOID_PAREN ListElements? ')' ';' | OP01_NAMED
                         OP01_NAMED_VOID ListElements? ';' | OP01_NAMED_VOID FileHandle ListElements? ';' | OP19_LOOP_CONTROL LoopLabel ';' ;
 Expression:             'undef' | Literal | Variable | ArrayReference | ArrayDereferenced | HashReference | HashDereferenced | '{' '}' |
                         Operator | WordScoped '(' ListElements? ')' | Variable OP02_METHOD_THINARROW WORD '(' ListElements? ')' | '(' Expression ')' ;
+ExpressionOrStdin:      Expression | '<STDIN>';
 Statement:              Conditional | (LoopLabel COLON)? Loop | OperatorVoid | VariableDeclaration | VariableModification ;
 Conditional:            'if (' Expression ')' CodeBlock ('elsif (' Expression ')' CodeBlock)* ('else' CodeBlock)? ;
 Loop:                   LoopFor | LoopForEach | LoopWhile ;
@@ -153,8 +154,8 @@ CodeBlock:              '{' Operation+ '}' ;
 
 Variable:               VARIABLE_SYMBOL VariableRetrieval* ;
 VariableRetrieval:      OP02_ARRAY_THINARROW Expression ']' | OP02_HASH_THINARROW Expression '}' | OP02_HASH_THINARROW WORD '}' ;
-VariableDeclaration:    'my' Type VARIABLE_SYMBOL ';' | 'my' Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN Expression ';' ;
-VariableModification:   Variable OP19_VARIABLE_ASSIGN Expression ';' | Variable OP19_VARIABLE_ASSIGN_BY Expression ';' ;
+VariableDeclaration:    'my' Type VARIABLE_SYMBOL ';' | 'my' Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN ExpressionOrStdin ';' ;
+VariableModification:   Variable OP19_VARIABLE_ASSIGN ExpressionOrStdin ';' | Variable OP19_VARIABLE_ASSIGN_BY Expression ';' ;
 ListElements:           ListElement (OP21_LIST_COMMA ListElement)* ;
 ListElement:            Expression | TypeInner Expression | KEYS_OR_VALUES HashDereferenced ;
 ArrayReference:         '[' ListElements? ']' ;
