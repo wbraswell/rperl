@@ -2,7 +2,7 @@ package RPerl::Operation::Statement::OperatorVoid::Return;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_001;
+our $VERSION = 0.001_002;
 
 # [[[ SETUP ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
@@ -11,13 +11,13 @@ use Scalar::Util 'blessed';
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement::OperatorVoid); # NEED FIX: is not a Grammar Rule so should not inherit from OperatorVoid, need create Grammar Production class
 
-# [[[ OO PROPERTIES ]]]
+# [[[ OO OBJECT PROPERTIES ]]]
 our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
-                    # object properties
     arguments => my object__array_ref $KEY_arguments = undef,
 );
+
+# [[[ OO CLASS PROPERTIES ]]]
 our %properties_class = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
-                          # class properties
      # NEED UPGRADE: officialize splitting class and object properties into 2 hashes
     name => my string $KEY_name = 'return',
     parentheses_require => my integer $KEY_parentheses_require = 1, # disallow ambiguous'ish calling of return w/out parens

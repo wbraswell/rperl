@@ -73,14 +73,20 @@ use constant PIE => my string $TYPED_PIE = 'pecan';
 #    death_year => my integer $TYPED_death_year = 1955
 #};
 
-# [[[ OO PROPERTIES ]]]
-# <<< CHANGE ME: replace with real property name(s) & data >>>
+# [[[ OO OBJECT PROPERTIES ]]]
+# <<< CHANGE ME: replace with real object property name(s) & default data >>>
 our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
     plugh => my integer $TYPED_plugh           = 23,
     xyzzy => my string $TYPED_xyzzy            = 'twenty-three',
     thud  => my integer__array_ref $TYPED_thud = [ 2, 4, 6, 8 ],
     yyz => my number__hash_ref $TYPED_yyz = { a => 3.1, b => 6.2, c => 9.3 },
 );
+
+# [[[ OO CLASS PROPERTIES ]]]
+# <<< CHANGE ME: replace with real class property name(s) & default data >>>
+our %properties_class = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
+    name => my string $KEY_name = 'howdy',
+};
 
 # [[[ OO METHODS ]]]
 

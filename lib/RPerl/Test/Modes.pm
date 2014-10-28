@@ -3,15 +3,20 @@ package RPerl::Test::Modes;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_001;
 
-# START HERE: fix this file, paste contents into github fork of dk's fork of main rperl to eventually get it back into this file
-# START HERE: fix this file, paste contents into github fork of dk's fork of main rperl to eventually get it back into this file
-# START HERE: fix this file, paste contents into github fork of dk's fork of main rperl to eventually get it back into this file
-
-
+# [[[ INCLUDES ]]]
 use base qw(Exporter);
 our @EXPORT = qw(testmodes);
+
+# START HERE: convert to Class
+# START HERE: convert to Class
+# START HERE: convert to Class
+
+# [[[ OO CLASS PROPERTIES ]]]
+our %properties_class = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
+    name => my string $KEY_name = 'return',
+};
 
 sub testmodes {
     map { bless $_ } (
