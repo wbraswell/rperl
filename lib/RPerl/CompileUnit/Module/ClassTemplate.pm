@@ -16,7 +16,8 @@ use RPerl::CompileUnit::Module::Class;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
 ## no critic qw(ProhibitConstantPragma)  # USER DEFAULT 3: allow constants
-## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> 
+## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
+## no critic qw(RequireTrailingCommas)  # USER DEFAULT 5: no trailing commas in RPerl lists  # NEED ANSWER: RPerl is mostly array refs, do we even need this?
 
 ## no critic qw(ProhibitUselessNoCritic PodSpelling) # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code, must be on line 1
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd) # DEVELOPER DEFAULT 1b: allow unreachable & POD-commented code, must be after line 1
@@ -86,7 +87,7 @@ our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allo
 # <<< CHANGE ME: replace with real class property name(s) & default data >>>
 our %properties_class = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
     name => my string $KEY_name = 'howdy',
-};
+);
 
 # [[[ OO METHODS ]]]
 
