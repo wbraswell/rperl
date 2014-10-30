@@ -505,7 +505,7 @@ void XS_pack_integer__hash_ref(SV* output_hv_ref, integer__hash_ref input_unorde
 }
 
 
-// convert from (Perl SV containing reference to (Perl HV of (Perl SVs containing NVs))) to (C++ std::unordered_map of long doubles)
+// convert from (Perl SV containing reference to (Perl HV of (Perl SVs containing NVs))) to (C++ std::unordered_map of doubles)
 number__hash_ref XS_unpack_number__hash_ref(SV* input_hv_ref)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number__hash_ref(), top of subroutine\n");
@@ -547,7 +547,7 @@ number__hash_ref XS_unpack_number__hash_ref(SV* input_hv_ref)
 }
 
 
-// convert from (C++ std::unordered_map of long doubles) to (Perl SV containing reference to (Perl HV of (Perl SVs containing NVs)))
+// convert from (C++ std::unordered_map of doubles) to (Perl SV containing reference to (Perl HV of (Perl SVs containing NVs)))
 void XS_pack_number__hash_ref(SV* output_hv_ref, number__hash_ref input_unordered_map)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number__hash_ref(), top of subroutine\n");
@@ -769,8 +769,8 @@ SV* number__hash_ref__stringify(SV* input_hv_ref)
 			input_hv_entry_key_string_pos += 2;
 		}
 
-//		temp_stream << "'" << SvPV_nolen(input_hv_entry_key) << "' => " << (long double)SvNV(input_hv_entry_value);
-		temp_stream << "'" << input_hv_entry_key_string << "' => " << (long double)SvNV(input_hv_entry_value);
+//      temp_stream << "'" << SvPV_nolen(input_hv_entry_key) << "' => " << (double)SvNV(input_hv_entry_value);
+		temp_stream << "'" << input_hv_entry_key_string << "' => " << (double)SvNV(input_hv_entry_value);
 	}
 
 	temp_stream << "}";
@@ -906,7 +906,7 @@ string integer__hash_ref__stringify(integer__hash_ref input_unordered_map)
 }
 
 
-// convert from (C++ std::unordered_map of long doubles) to Perl-parsable (C++ std::string)
+// convert from (C++ std::unordered_map of doubles) to Perl-parsable (C++ std::string)
 string number__hash_ref__stringify(number__hash_ref input_unordered_map)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES number__hash_ref__stringify(), top of subroutine\n");
@@ -1084,7 +1084,7 @@ SV* number__hash_ref__typetest0(SV* lucky_numbers)
 	for (i = 0;  i < how_lucky;  ++i)
 	{
 		HE* lucky_number_entry = hv_iternext(lucky_numbers_deref);
-//		fprintf(stderr, "in CPPOPS_PERLTYPES number__hash_ref__typetest0(), have lucky number '%s' => %Lf, BARSTOOP\n", SvPV_nolen(hv_iterkeysv(lucky_number_entry)), (long double)SvNV(hv_iterval(lucky_numbers_deref, lucky_number_entry)));
+//		fprintf(stderr, "in CPPOPS_PERLTYPES number__hash_ref__typetest0(), have lucky number '%s' => %Lf, BARSTOOP\n", SvPV_nolen(hv_iterkeysv(lucky_number_entry)), (double)SvNV(hv_iterval(lucky_numbers_deref, lucky_number_entry)));
 	}
 	*/
 
@@ -1104,7 +1104,7 @@ SV* number__hash_ref__typetest1(SV* my_size)
 	{
 		sprintf(temp_key, "CPPOPS_PERLTYPES_funkey%d", i);
 		hv_store(output_hv, (const char*)temp_key, (U32)strlen(temp_key), newSVnv(i * 5.123456789), (U32)0);
-//		fprintf(stderr, "in CPPOPS_PERLTYPES number__hash_ref__typetest1(), setting entry '%s' => %Lf, BARTAB\n", temp_key, (long double)SvNV(*hv_fetch(output_hv, (const char*)temp_key, (U32)strlen(temp_key), (I32)0)));
+//		fprintf(stderr, "in CPPOPS_PERLTYPES number__hash_ref__typetest1(), setting entry '%s' => %Lf, BARTAB\n", temp_key, (double)SvNV(*hv_fetch(output_hv, (const char*)temp_key, (U32)strlen(temp_key), (I32)0)));
 	}
 
 	return(newRV_noinc((SV*) output_hv));

@@ -27,7 +27,7 @@ using std::cout;  using std::cerr;
 //void number__CHECKTRACE(SV* possible_number, const char* variable_name, const char* subroutine_name);
 
 // [[[ TYPEDEFS ]]]
-typedef long double number;
+typedef double number;
 
 // [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 # ifdef __PERL__TYPES

@@ -82,12 +82,12 @@ SV* number__stringify(SV* input_number)
 
 	ostringstream output_stream;
 	output_stream.precision(std::numeric_limits<double>::digits10);
-	output_stream << (long double)SvNV(input_number);
+	output_stream << (double)SvNV(input_number);
 	return(newSVpv((const char *)((output_stream.str()).c_str()), 0));
 
 	// DEV NOTE: none of these fprintf(stderr, )-type solutions count significant digits both before and after the decimal point,
 	// so we fall back to utilizing C++ ostringstream which stringifies floating point numbers exactly the same as Perl (AFAICTSF)
-//	return(newSVpvf("%16.32Lf", (long double)SvNV(input_number)));
+//	return(newSVpvf("%16.32Lf", (double)SvNV(input_number)));
 //	return(newSVpvf("%"NVff"", SvNV(input_number)));
 //	return(newSVpvf("%"NVff"", 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679));
 }
