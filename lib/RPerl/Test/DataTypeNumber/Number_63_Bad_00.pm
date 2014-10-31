@@ -1,3 +1,5 @@
+# [[[ TEST : "ERROR ECVPAPL02" ]]]
+# [[[ TEST : "Can't modify constant item in predecrement" ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::DataTypeNumber::Number_63_Bad_00;
 use strict;
@@ -13,3 +15,4 @@ our void $empty_sub = sub { --23_456.234_567_89; };
 
 1;
 1;    # CODE SEPARATOR: end of package
+

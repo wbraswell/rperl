@@ -1,3 +1,5 @@
+# [[[ TEST : "ERROR ECVPAPL02" ]]]
+# [[[ TEST : 'Bareword "_2" not allowed' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::DataTypeNumber::Number_00_Bad_01;
 use strict;
@@ -10,3 +12,4 @@ our void $empty_sub = sub { _2; };
 
 1;
 1;    # CODE SEPARATOR: end of package
+

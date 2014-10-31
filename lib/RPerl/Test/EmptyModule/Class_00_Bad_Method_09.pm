@@ -1,3 +1,5 @@
+# [[[ TEST : "ERROR ECVPAPL02" ]]]
+# [[[ TEST : "Number found where operator expected" ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::EmptyModule::Class_00_Bad_Method_09;
 use strict;
@@ -19,3 +21,4 @@ our void__method $empty_method = sub { 2; }
 
 1;
 1;                  # CODE SEPARATOR: end of class
+

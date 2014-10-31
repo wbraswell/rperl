@@ -1,3 +1,6 @@
+# [[[ TEST : "ERROR ECVPAPL02" ]]]
+# [[[ TEST : "Perl::Critic::Policy::Miscellanea::RequireRcsKeywords" ]]]
+# [[[ TEST : "Perl::Critic::Policy::Modules::RequireEndWithOne" ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::EmptyModule::Class_00_Bad_Separator_03;
 use strict;
@@ -19,3 +22,4 @@ our void__method $empty_method = sub { 2; };
 
 1;
 1                  # CODE SEPARATOR: end of class
+

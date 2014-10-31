@@ -1,3 +1,5 @@
+# [[[ TEST : "ERROR ECVPAPL02" ]]]
+# [[[ TEST : 'Global symbol "$empty_method" requires explicit package name' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::EmptyModule::Class_00_Bad_Method_00;
 use strict;
@@ -19,3 +21,4 @@ ou void__method $empty_method = sub { 2; };
 
 1;
 1;                  # CODE SEPARATOR: end of class
+
