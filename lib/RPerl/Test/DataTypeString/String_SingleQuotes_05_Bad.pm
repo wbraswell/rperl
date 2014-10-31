@@ -1,3 +1,6 @@
+# [[[ TEST : "ERROR ECVPAPL02" ]]]
+# [[[ TEST : "Perl::Critic::Policy::Miscellanea::RequireRcsKeywords" ]]]
+# [[[ TEST : "Perl::Critic::Policy::ValuesAndExpressions::RequireInterpolationOfMetachars" ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::DataTypeString::String_SingleQuotes_05_Bad;
 use strict;
@@ -10,3 +13,4 @@ our void $empty_sub = sub { '\n foo'; };
 
 1;
 1;    # CODE SEPARATOR: end of package
+

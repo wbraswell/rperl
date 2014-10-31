@@ -1,3 +1,5 @@
+# [[[ TEST : "ERROR ECVPAPL02" ]]]
+# [[[ TEST : "syntax error" ]]]
 foo
 # [[[ HEADER ]]]
 package RPerl::Test::EmptyModule::Package_00_Bad_PreHeader;
@@ -11,3 +13,4 @@ our void $empty_sub = sub { 2; };
 
 1;
 1;    # CODE SEPARATOR: end of package
+

@@ -1,3 +1,5 @@
+# [[[ TEST : "ERROR ECVPAPL02" ]]]
+# [[[ TEST : "Perl::Critic::Policy::Miscellanea::RequireRcsKeywords" ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::DataTypeNumber::Number_15_Bad_03;
 use strict;
@@ -13,3 +15,4 @@ our void $empty_sub = sub { -23__456_789; };
 
 1;
 1;    # CODE SEPARATOR: end of package
+

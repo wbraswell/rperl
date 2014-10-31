@@ -1,3 +1,5 @@
+# [[[ TEST : "ERROR ECVPAPL02" ]]]
+# [[[ TEST : 'Global symbol "$foo" requires explicit package name' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::DataTypeString::String_DoubleQuotes_05_Bad;
 use strict;
@@ -10,3 +12,4 @@ our void $empty_sub = sub { "\n$foo\nbar"; };
 
 1;
 1;    # CODE SEPARATOR: end of package
+

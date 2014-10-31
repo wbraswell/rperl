@@ -1,3 +1,5 @@
+# [[[ TEST : "ERROR ECVPAPL02" ]]]
+# [[[ TEST : "Can't modify numeric gt (>) in scalar assignment" ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::EmptyModule::Class_00_Bad_Properties_06;
 use strict;
@@ -19,3 +21,4 @@ our void__method $empty_method = sub { 2; };
 
 1;
 1;                  # CODE SEPARATOR: end of class
+

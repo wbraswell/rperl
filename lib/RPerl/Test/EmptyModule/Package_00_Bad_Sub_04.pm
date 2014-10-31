@@ -1,3 +1,5 @@
+# [[[ TEST : "ERROR ECVPAPL02" ]]]
+# [[[ TEST : "Perl::Critic::Policy::Miscellanea::RequireRcsKeywords" ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::EmptyModule::Package_00_Bad_Sub_04;
 use strict;
@@ -10,3 +12,4 @@ our void $empty_sub = ub { 2; };
 
 1;
 1;    # CODE SEPARATOR: end of package
+

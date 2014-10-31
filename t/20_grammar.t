@@ -22,7 +22,7 @@ find(
         elsif (m/Bad/ms) {
             open my $fh, '<', $_ or die "Cannot open $file:$ERRNO\n";
             while (<$fh>) {
-                if (m/^\#\s*\[\[\[\s*TEST\s*\:\s*"(.*)"\s*\]\]\]/smx) {
+                if (m/^\#\s*\[\[\[\s*TEST\s*\:\s*['"](.*)['"]\s*\]\]\]/smx) {
                     push @{ $tests{$file} }, $1;
                 }
             }
@@ -51,7 +51,7 @@ for my $file ( sort keys %tests ) {
         }
     }
     elsif ($success) {
-        ok( 0, "$file fails to compile" );
+        ok( 0, "$file compiles without errors while it shouldn't" );
     }
     else {
         my @warnings;
@@ -60,7 +60,7 @@ for my $file ( sort keys %tests ) {
                 push @warnings, "error message '$s' not found";
             }
         }
-        ok( scalar(@warnings) == 0, "$file fails to compile" );
+        ok( scalar(@warnings) == 0, "$file fails to compile with the expected error" );
         for my $s (@warnings) {
             if ( print {*STDERR} "$s\n" ) { }
         }
