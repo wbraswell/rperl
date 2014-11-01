@@ -1,5 +1,4 @@
-# [[[ TEST : "ERROR ECVPAPL02" ]]]
-# [[[ TEST : "Perl::Critic::Policy::Miscellanea::RequireRcsKeywords" ]]]
+# [[[ TEST : "ERROR ECVPAPC02" ]]]
 # [[[ TEST : "Perl::Critic::Policy::Modules::RequireExplicitPackage" ]]]
 # [[[ TEST : "Perl::Critic::Policy::TestingAndDebugging::RequireUseStrict" ]]]
 # [[[ TEST : "Perl::Critic::Policy::TestingAndDebugging::RequireUseWarnings" ]]]

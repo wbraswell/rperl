@@ -1,5 +1,5 @@
-# [[[ TEST : "ERROR ECVPAPL02" ]]]
-# [[[ TEST : "Perl::Critic::Policy::Miscellanea::RequireRcsKeywords" ]]]
+# [[[ TEST : "ERROR ECVPAPC02" ]]]
+# [[[ TEST : "Perl::Critic::Policy::ValuesAndExpressions::RequireNumberSeparators" ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::DataTypeNumber::Number_15_Bad_01;
 use strict;

@@ -1,5 +1,4 @@
 # [[[ TEST : "ERROR ECVPAPL02" ]]]
-# [[[ TEST : "Perl::Critic::Policy::Miscellanea::RequireRcsKeywords" ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::DataTypeNumber::Number_48_Bad_02;
 use strict;
