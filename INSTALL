@@ -1,6 +1,6 @@
 # RPerl v1.0 Beta, Install Notes
 # Single-User Installation (Not System-Wide Installation)
-# Last Updated September 19, 2014
+# Last Updated November 2, 2014
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # IMPORTANT WARNING: ONLY USE ONE OF STEP 1A, 1B, OR 1C - NOT ALL THREE
@@ -97,6 +97,7 @@ $ rm -Rf _Inline/; reset; perl -Iblib/lib t/06_type_hash.t
 $ rm -Rf _Inline/; reset; perl -Iblib/lib t/07_oo_inherit.t
 $ rm -Rf _Inline/; reset; perl -Iblib/lib t/08_precompiled_sort.t
 $ rm -Rf _Inline/; reset; perl -Iblib/lib t/09_compile_print.t
+$ rm -Rf _Inline/; reset; perl -Iblib/lib t/20_grammar.t
 
 # manually confirm all tests pass, without compiler output
 $ rm -Rf _Inline/; reset; prove -l t/* 2> /dev/null
