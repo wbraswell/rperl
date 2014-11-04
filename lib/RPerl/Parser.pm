@@ -137,8 +137,7 @@ our void $rperl_source__parse = sub {
     $eyapp_parser->YYSlurpFile($rperl_source__file_name);
     my object $rperl_ast = $eyapp_parser->YYParse( yydebug => 0xFF );
 
-    RPerl::diag "in rperl_source__parse(), have \$rperl_ast->str() =\n"
-        . $rperl_ast->str() . "\n\n";
+#    RPerl::diag "in rperl_source__parse(), have \$rperl_ast->str() =\n" . $rperl_ast->str() . "\n\n";
     RPerl::diag "in rperl_source__parse(), have \$rperl_ast =\n"
         . Dumper($rperl_ast) . "\n\n";
 
