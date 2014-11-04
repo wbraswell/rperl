@@ -1,5 +1,4 @@
 # [[[ TEST : "ERROR ECVPAPL02" ]]]
-# [[[ TEST : "Perl::Critic::Policy::Miscellanea::RequireRcsKeywords" ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::EmptyModule::Class_00_Bad_VersionNumber_05;
 use strict;

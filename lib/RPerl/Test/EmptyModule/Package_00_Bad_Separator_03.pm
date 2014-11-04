@@ -1,5 +1,4 @@
-# [[[ TEST : "ERROR ECVPAPL02" ]]]
-# [[[ TEST : "Perl::Critic::Policy::Miscellanea::RequireRcsKeywords" ]]]
+# [[[ TEST : "ERROR ECVPAPC02" ]]]
 # [[[ TEST : "Perl::Critic::Policy::Modules::RequireEndWithOne" ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::EmptyModule::Package_00_Bad_Separator_03;

@@ -16,17 +16,20 @@ my %tests;
 find(
     sub {
         my $file = $File::Find::name;
+        if (!m/.pm$/) {
+            return;
+        }
         if (m/Good/ms) {
             $tests{$file} = undef;
         }
         elsif (m/Bad/ms) {
-            open my $fh, '<', $_ or die "Cannot open $file:$ERRNO\n";
+            open my $fh, '<', $_ or die "Cannot open $file:$!\n";
             while (<$fh>) {
-                if (m/^\#\s*\[\[\[\s*TEST\s*\:\s*['"](.*)['"]\s*\]\]\]/smx) {
+                if (m/^\#\s*\[\[\[\s*TEST\s*\:\s*['"](.*)['"]\s*\]\]\]/) {
                     push @{ $tests{$file} }, $1;
                 }
             }
-            if ( close $fh ) { }
+            close $fh;
         }
         else {
             return;
@@ -47,7 +50,7 @@ for my $file ( sort keys %tests ) {
     if ( not defined $errors ) {
         ok( $success, "$file compiles ok" );
         if ( not $success ) {
-            if ( print {*STDERR} "$EVAL_ERROR\n" ) { }
+            print STDERR "==============\n$EVAL_ERROR\n============\n";
         }
     }
     elsif ($success) {
@@ -56,14 +59,17 @@ for my $file ( sort keys %tests ) {
     else {
         my @warnings;
         for my $s ( @{$errors} ) {
-            if ( $EVAL_ERROR !~ /\Q$s\E/msx ) {
+            if ( $EVAL_ERROR !~ /\Q$s\E/ ) {
                 push @warnings, "error message '$s' not found";
             }
         }
         ok( scalar(@warnings) == 0, "$file fails to compile with the expected error" );
         for my $s (@warnings) {
-            if ( print {*STDERR} "$s\n" ) { }
+            print STDERR "$s\n";
         }
+	if ( scalar(@warnings) > 0) {
+            print STDERR "==============\n$EVAL_ERROR\n============\n";
+	}
     }
 }
 

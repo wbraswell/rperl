@@ -1,5 +1,4 @@
-# [[[ TEST : "ERROR ECVPAPL02" ]]]
-# [[[ TEST : "Perl::Critic::Policy::Miscellanea::RequireRcsKeywords" ]]]
+# [[[ TEST : "ERROR ECVPAPC02" ]]]
 # [[[ TEST : "Perl::Critic::Policy::TestingAndDebugging::RequireUseWarnings" ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::EmptyModule::Class_00_Bad_Header_02;
