@@ -1,5 +1,4 @@
-# [[[ TEST : "ERROR ECVPAPL02" ]]]
-# [[[ TEST : "Perl::Critic::Policy::Miscellanea::RequireRcsKeywords" ]]]
+# [[[ TEST : "ERROR ECVPAPC02" ]]]
 # [[[ TEST : "Perl::Critic::Policy::ValuesAndExpressions::RequireInterpolationOfMetachars" ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::DataTypeString::String_SingleQ_06_Bad;
