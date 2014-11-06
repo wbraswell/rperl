@@ -1,4 +1,4 @@
-# [[[ TEST : "ERROR ECVPAPC03" ]]]
+# [[[ TEST : "ERROR ECVPARP00" ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::DataTypeNumber::Number_16_Bad_03;
 use strict;

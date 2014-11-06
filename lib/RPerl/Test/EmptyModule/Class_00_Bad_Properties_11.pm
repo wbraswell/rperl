@@ -1,4 +1,4 @@
-# [[[ TEST : "ERROR ECVPAPC03" ]]]
+# [[[ TEST : "ERROR ECVPARP00" ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::EmptyModule::Class_00_Bad_Properties_11;
 use strict;

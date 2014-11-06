@@ -2,7 +2,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_000;
+our $VERSION = 0.003_001;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(ProhibitBacktickOperators)  ## SYSTEM SPECIAL 11: allow system command execution
@@ -129,9 +129,13 @@ our void $rperl_source__criticize = sub {
     }
 };
 
+# Croak On RPerl Grammar Error
 our void $rperl_parse_error = sub {
-    ( my string $value) = $_[0]->YYCurval;
-    croak("ERROR ECVPAPC03, RPERL PARSER: expected token but got $value\n");
+    ( my array $argument ) = @_;
+    my string $value = $argument->YYCurval;
+    croak(
+        "ERROR ECVPARP00, RPERL PARSER, RPERL GRAMMAR VIOLATION: expected token but got '$value', croaking\n"
+    );
 };
 
 # Parse RPerl Syntax Using Eyapp Grammar
@@ -140,7 +144,10 @@ our void $rperl_source__parse = sub {
 
     my object $eyapp_parser = RPerl::Grammar->new();
     $eyapp_parser->YYSlurpFile($rperl_source__file_name);
-    my object $rperl_ast = $eyapp_parser->YYParse( yydebug => 0xFF, yyerror => $rperl_parse_error );
+    my object $rperl_ast = $eyapp_parser->YYParse(
+        yydebug => 0xFF,
+        yyerror => $rperl_parse_error
+    );
 
 #    RPerl::diag "in rperl_source__parse(), have \$rperl_ast->str() =\n" . $rperl_ast->str() . "\n\n";
     RPerl::diag "in rperl_source__parse(), have \$rperl_ast =\n"

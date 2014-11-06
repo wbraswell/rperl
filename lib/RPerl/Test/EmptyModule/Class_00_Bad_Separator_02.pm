@@ -1,4 +1,4 @@
-# [[[ TEST : "ERROR ECVPAPC03" ]]]
+# [[[ TEST : "ERROR ECVPARP00" ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::EmptyModule::Class_00_Bad_Separator_02;
 use strict;
