@@ -129,13 +129,18 @@ our void $rperl_source__criticize = sub {
     }
 };
 
+our void $rperl_parse_error = sub {
+    ( my string $value) = $_[0]->YYCurval;
+    croak("ERROR ECVPAPC03, RPERL PARSER: expected token but got $value\n");
+};
+
 # Parse RPerl Syntax Using Eyapp Grammar
 our void $rperl_source__parse = sub {
     ( my string $rperl_source__file_name) = @_;
 
     my object $eyapp_parser = RPerl::Grammar->new();
     $eyapp_parser->YYSlurpFile($rperl_source__file_name);
-    my object $rperl_ast = $eyapp_parser->YYParse( yydebug => 0xFF );
+    my object $rperl_ast = $eyapp_parser->YYParse( yydebug => 0xFF, yyerror => $rperl_parse_error );
 
 #    RPerl::diag "in rperl_source__parse(), have \$rperl_ast->str() =\n" . $rperl_ast->str() . "\n\n";
     RPerl::diag "in rperl_source__parse(), have \$rperl_ast =\n"
