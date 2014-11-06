@@ -2,7 +2,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_001;
+our $VERSION = 0.003_002;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(ProhibitBacktickOperators)  ## SYSTEM SPECIAL 11: allow system command execution
@@ -130,7 +130,7 @@ our void $rperl_source__criticize = sub {
 };
 
 # Croak On RPerl Grammar Error
-our void $rperl_parse_error = sub {
+our void $rperl_grammar_error = sub {
     ( my array $argument ) = @_;
     my string $value = $argument->YYCurval;
     croak(
@@ -146,7 +146,7 @@ our void $rperl_source__parse = sub {
     $eyapp_parser->YYSlurpFile($rperl_source__file_name);
     my object $rperl_ast = $eyapp_parser->YYParse(
         yydebug => 0xFF,
-        yyerror => $rperl_parse_error
+        yyerror => $rperl_grammar_error
     );
 
 #    RPerl::diag "in rperl_source__parse(), have \$rperl_ast->str() =\n" . $rperl_ast->str() . "\n\n";
