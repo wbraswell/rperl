@@ -1,4 +1,4 @@
-package RPerl::Test::IO::Print_00_Good;
+package RPerl::Test::IO::Print_00;
 use strict;
 use warnings;
 use RPerl;
@@ -55,8 +55,8 @@ our void $greet_planet = sub {
 };
 
 # [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-#our integer $RPerl__Test__IO__Print_00_Good__OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0  # NEED FIX: allow or disallow non-subs like this var?
-#our string $RPerl__Test__IO__Print_00_Good__ops = sub { return ('PERL'); };
-#our string $RPerl__Test__IO__Print_00_Good__types = sub { return ('PERL'); };
+#our integer $RPerl__Test__IO__Print_00__OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0  # NEED FIX: allow or disallow non-subs like this var?
+#our string $RPerl__Test__IO__Print_00__ops = sub { return ('PERL'); };
+#our string $RPerl__Test__IO__Print_00__types = sub { return ('PERL'); };
 
 1;

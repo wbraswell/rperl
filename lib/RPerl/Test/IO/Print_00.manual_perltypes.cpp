@@ -1,4 +1,4 @@
-// namespace RPerl::Test::IO::Print_00_Good;  // NEED UPGRADE: Perl vs C++ namespace compatibility
+// namespace RPerl::Test::IO::Print_00;  // NEED UPGRADE: Perl vs C++ namespace compatibility
 using std::cout;
 using std::cerr;
 // VERSION 0.001_003
@@ -32,9 +32,9 @@ void greet_planet(SV* arg0) {
 }
 
 // [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-SV* RPerl__Test__IO__Print_00_Good__ops() {
+SV* RPerl__Test__IO__Print_00__ops() {
     return (newSVpv("CPP", 3));
 }
-SV* RPerl__Test__IO__Print_00_Good__types() {
+SV* RPerl__Test__IO__Print_00__types() {
     return (newSVpv("PERL", 4));
 }

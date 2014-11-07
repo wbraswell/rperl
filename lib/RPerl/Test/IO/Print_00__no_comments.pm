@@ -1,4 +1,4 @@
-package RPerl::Test::IO::Print_00_Good;
+package RPerl::Test::IO::Print_00;
 use strict;
 use warnings;
 use RPerl;
