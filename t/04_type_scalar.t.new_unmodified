@@ -7,25 +7,19 @@ our $VERSION = 0.003_004;
 ## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
 ## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
 
-use Test::More tests => 264;
+use RPerl::Test::Modes;
+use Test::More tests => 268;
 use Test::Exception;
 my $ERROR_MAX = 0.00000001;
 
 BEGIN {
-    if ( $ENV{TEST_VERBOSE} ) {
-        diag(
-            "[[[ Beginning Scalar Type Pre-Test Loading, RPerl Type System ]]]"
-        );
-    }
-    lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
+    diag( "[[[ Beginning Scalar Type Pre-Test Loading, RPerl Type System ]]]") if $ENV{TEST_VERBOSE};
+    use_ok('RPerl');
+    use_ok("RPerl::DataType::${_}_cpp") for qw(Integer Number String);
 }
 
-# use Data::Dumper() to stringify a string
-#our string $string__dumperify = sub {  # NEED FIX: RPerl subroutines disabled here
 sub string__dumperify {
     ( my string $input_string ) = @_;
-
-# RPerl::diag "in 04_type_scalar.t string__dumperify(), received have \$input_string =\n$input_string\n\n";
     $input_string = Dumper( [$input_string] );
     $input_string =~ s/^\s+|\s+$//xmsg;    # strip leading whitespace
     my @input_string_split = split "\n", $input_string;
@@ -33,260 +27,51 @@ sub string__dumperify {
     return $input_string;
 }
 
-# [[[ TEST RUNLOOP ]]]
-# [[[ TEST RUNLOOP ]]]
-# [[[ TEST RUNLOOP ]]]
+for my $mode (testmodes) {
+    diag("[[[ Beginning RPerl's Scalar Type Tests, ". $mode->description ." ]]]") if $ENV{TEST_VERBOSE};
 
-# loop 3 times, once for each mode: Pure-Perl, RPerl Perl-Data, and RPerl C-Data
-for my $OPS_TYPES_ID ( 0 .. 2 ) {
+    my $ops   = $mode->ops;
+    my $types = $mode->types;
 
-# RPerl::diag "in 04_type_scalar.t, top of for() loop, have \$OPS_TYPES_ID = $OPS_TYPES_ID\n";  # no effect if suppressing output!
-    my $OPS_TYPES;
+    lives_ok(
+        sub { $mode->enable },
+        "mode '" . $mode->description . "' enabled"
+    );
+        
+    for my $type (qw(Integer Number String)) {
+        if ( $ops eq 'CPP' ) {
+            # force reload
+            delete $main::{"RPerl__DataType__${type}__ops"};
 
-    # [[[ PERLOPS_PERLTYPES SETUP ]]]
-    # [[[ PERLOPS_PERLTYPES SETUP ]]]
-    # [[[ PERLOPS_PERLTYPES SETUP ]]]
-
-    if ( $OPS_TYPES_ID == 0 ) {
-        $OPS_TYPES = 'PERLOPS_PERLTYPES';
-        if ( $ENV{TEST_VERBOSE} ) {
-            diag(
-                "[[[ Beginning RPerl's Pure-Perl Scalar Type Tests, RPerl Type System Using Perl Data Types & Perl Operations ]]]"
+            my $package = "RPerl::DataType::${type}_cpp";
+            lives_and(
+                sub { require_ok($package); },
+                "require_ok($package) lives"
             );
-        }
-        lives_and(
-            sub {
-                is( integer__ops(), 'PERL',
-                    q{integer__ops() returns 'PERL'} );
-            },
+            lives_ok(
+                sub { eval "$package\::cpp_load();" }, 
+                "$package\::cpp_load() lives"
+            );
+        }            
+    
+        my $t = lc $type;
+        lives_and( 
+            sub { is( __PACKAGE__->can("${t}__ops")->(), $ops, "${t}__ops() returns $ops" ) },
             q{integer__ops() lives}
         );
-        lives_and(
-            sub {
-                is( integer__types(), 'PERL',
-                    q{integer__types() returns 'PERL'} );
-            },
+        
+        lives_and( 
+            sub { is( __PACKAGE__->can("${t}__types")->(), $types, "${t}__types() returns $types" ) },
             q{integer__types() lives}
-        );
-        lives_and(
-            sub {
-                is( number__ops(), 'PERL', q{number__ops() returns 'PERL'} );
-            },
-            q{number__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( number__types(), 'PERL',
-                    q{number__types() returns 'PERL'} );
-            },
-            q{number__types() lives}
-        );
-        lives_and(
-            sub {
-                is( string__ops(), 'PERL', q{string__ops() returns 'PERL'} );
-            },    ## PERLTIDY BUG comma on newline
-            q{string__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( string__types(), 'PERL',
-                    q{string__types() returns 'PERL'} );
-            },
-            q{string__types() lives}
-        );
-    }
-
-    # [[[ CPPOPS_PERLTYPES SETUP ]]]
-    # [[[ CPPOPS_PERLTYPES SETUP ]]]
-    # [[[ CPPOPS_PERLTYPES SETUP ]]]
-
-    elsif ( $OPS_TYPES_ID == 1 ) {
-        $OPS_TYPES = 'CPPOPS_PERLTYPES';
-        if ( $ENV{TEST_VERBOSE} ) {
-            diag(
-                "[[[ Beginning RPerl's Perl-Data Mode Scalar Type Tests, RPerl Type System Using Perl Data Types & C++ Operations ]]]"
-            );
-        }
-
-#		lives_ok(sub { types_enable('PERL') }, q{types_enable('PERL') lives});  # NEED FIX?  RPerl typed functions not working in types.pm, must call as normal Perl function
-        lives_ok(
-            sub { rperltypes::types_enable('PERL') },
-            q{rperltypes::types_enable('PERL') lives}
-        );
-
-        # Integer: C++ use, load, link
-        BEGIN {
-            lives_and(
-                sub { use_ok('RPerl::DataType::Integer_cpp'); },
-                q{use_ok('RPerl::DataType::Integer_cpp') lives}
-            );
-        }
-        lives_and(
-            sub { require_ok('RPerl::DataType::Integer_cpp'); },
-            q{require_ok('RPerl::DataType::Integer_cpp') lives}
-        );
-        lives_ok(
-            sub { RPerl::DataType::Integer_cpp::cpp_load(); },
-            q{RPerl::DataType::Integer_cpp::cpp_load() lives}
-        );
-        lives_and(
-            sub {
-                is( integer__ops(), 'CPP', q{integer__ops() returns 'CPP'} );
-            },
-            q{integer__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( integer__types(), 'PERL',
-                    q{integer__types() returns 'PERL'} );
-            },
-            q{integer__types() lives}
-        );
-
-        # Number: C++ use, load, link
-        BEGIN {
-            lives_and(
-                sub { use_ok('RPerl::DataType::Number_cpp'); },
-                q{use_ok('RPerl::DataType::Number_cpp') lives}
-            );
-        }
-        lives_and(
-            sub { require_ok('RPerl::DataType::Number_cpp'); },
-            q{require_ok('RPerl::DataType::Number_cpp') lives}
-        );
-        lives_ok(
-            sub { RPerl::DataType::Number_cpp::cpp_load(); },
-            q{RPerl::DataType::Number_cpp::cpp_load() lives}
-        );
-        lives_and(
-            sub { is( number__ops(), 'CPP', q{number__ops() returns 'CPP'} ) }
-            ,
-            q{number__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( number__types(), 'PERL',
-                    q{number__types() returns 'PERL'} );
-            },
-            q{number__types() lives}
-        );
-
-        # String: C++ use, load, link
-        BEGIN {
-            lives_and(
-                sub { use_ok('RPerl::DataType::String_cpp'); },
-                q{use_ok('RPerl::DataType::String_cpp') lives}
-            );
-        }
-        lives_and(
-            sub { require_ok('RPerl::DataType::String_cpp'); },
-            q{require_ok('RPerl::DataType::String_cpp') lives}
-        );
-        lives_ok(
-            sub { RPerl::DataType::String_cpp::cpp_load(); },
-            q{RPerl::DataType::String_cpp::cpp_load() lives}
-        );
-        lives_and(
-            sub { is( string__ops(), 'CPP', q{string__ops() returns 'CPP'} ) }
-            ,
-            q{string__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( string__types(), 'PERL',
-                    q{string__types() returns 'PERL'} );
-            },
-            q{string__types() lives}
-        );
-    }
-
-    # [[[ CPPOPS_CPPTYPES SETUP ]]]
-    # [[[ CPPOPS_CPPTYPES SETUP ]]]
-    # [[[ CPPOPS_CPPTYPES SETUP ]]]
-
-    else {
-        $OPS_TYPES = 'CPPOPS_CPPTYPES';
-        if ( $ENV{TEST_VERBOSE} ) {
-            diag(
-                "[[[ Beginning RPerl's C-Data Mode Scalar Type Tests, RPerl Type System Using C++ Data Types & C++ Operations ]]]"
-            );
-        }
-        lives_ok(
-            sub { rperltypes::types_enable('CPP') },
-            q{rperltypes::types_enable('CPP') lives}
-        );
-
-        # force reload
-        delete $main::{'RPerl__DataType__Integer__ops'};
-        delete $main::{'RPerl__DataType__Number__ops'};
-        delete $main::{'RPerl__DataType__String__ops'};
-
-# Integer: C++ use, load, link
-#		BEGIN { lives_and(sub { use_ok('RPerl::DataType::Integer_cpp'); }); }  # duplicate
-#		lives_and(sub { require_ok('RPerl::DataType::Integer_cpp'); });  # duplicate
-        lives_ok(
-            sub { RPerl::DataType::Integer_cpp::cpp_load(); },
-            q{RPerl::DataType::Integer_cpp::cpp_load() lives}
-        );
-        lives_and(
-            sub {
-                is( integer__ops(), 'CPP', q{integer__ops() returns 'CPP'} );
-            },
-            q{integer__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( integer__types(), 'CPP',
-                    q{integer__types() returns 'CPP'} );
-            },
-            q{integer__types() lives}
-        );
-
-# Number: C++ use, load, link
-#		BEGIN { lives_and(sub { use_ok('RPerl::DataType::Number_cpp'); }); }  # duplicate
-#		lives_and(sub { require_ok('RPerl::DataType::Number_cpp'); });  # duplicate
-        lives_ok(
-            sub { RPerl::DataType::Number_cpp::cpp_load(); },
-            q{RPerl::DataType::Number_cpp::cpp_load() lives}
-        );
-        lives_and(
-            sub { is( number__ops(), 'CPP', q{number__ops() returns 'CPP'} ) }
-            ,
-            q{number__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( number__types(), 'CPP',
-                    q{number__types() returns 'CPP'} );
-            },
-            q{number__types() lives}
-        );
-
-# String: C++ use, load, link
-#		BEGIN { lives_and(sub { use_ok('RPerl::DataType::String_cpp'); }); }  # duplicate
-#		lives_and(sub { require_ok('RPerl::DataType::String_cpp'); });  # duplicate
-        lives_ok(
-            sub { RPerl::DataType::String_cpp::cpp_load(); },
-            q{RPerl::DataType::String_cpp::cpp_load() lives}
-        );
-        lives_and(
-            sub {
-                is( string__ops(), 'CPP', q{string__ops()  returns 'CPP'} );
-            },
-            q{string__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( string__types(), 'CPP',
-                    q{string__types()  returns 'CPP'} );
-            },
-            q{string__types() lives}
         );
     }
 
     # [[[ INTEGER TESTS ]]]
     # [[[ INTEGER TESTS ]]]
     # [[[ INTEGER TESTS ]]]
+
+    my $OPS_TYPES    = $mode->id;
+    my $OPS_TYPES_ID = $mode->index;
 
     throws_ok(    # TIV00
         sub { integer__stringify() },
@@ -917,4 +702,3 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
     );
 }
 
-done_testing();

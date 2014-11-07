@@ -12,7 +12,6 @@ use Test::More tests => 268;
 use Test::Exception;
 my $ERROR_MAX = 0.00000001;
 
-
 BEGIN {
     if ( $ENV{TEST_VERBOSE} ) {
         diag(
@@ -21,23 +20,26 @@ BEGIN {
     }
     lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
     
-    
-# START HERE: the following use_ok() line lacks a lives_and(), and replaces lots of in-loop code, check for appropriateness
-# START HERE: the following use_ok() line lacks a lives_and(), and replaces lots of in-loop code, check for appropriateness
-# START HERE: the following use_ok() line lacks a lives_and(), and replaces lots of in-loop code, check for appropriateness
-    
-    
-    use_ok("RPerl::DataType::${_}_cpp")for qw(Integer Number String);
+    foreach my $type qw(Integer Number String) {
+        lives_and( sub {use_ok('RPerl::DataType::' . $type . '_cpp'); }, q{use_ok('RPerl::DataType::' . $type . '_cpp') lives} );
+    }
 }
 
+# use Data::Dumper() to stringify a string
+#our string $string__dumperify = sub {  # NEED FIX: RPerl subroutines disabled here
 sub string__dumperify {
     ( my string $input_string ) = @_;
+# RPerl::diag "in 04_type_scalar.t string__dumperify(), received have \$input_string =\n$input_string\n\n";
     $input_string = Dumper( [$input_string] );
     $input_string =~ s/^\s+|\s+$//xmsg;    # strip leading whitespace
     my @input_string_split = split "\n", $input_string;
     $input_string = $input_string_split[1];    # only select the data line
     return $input_string;
 }
+
+# START HERE: modify for() loop below, a'la github comments
+# START HERE: modify for() loop below, a'la github comments
+# START HERE: modify for() loop below, a'la github comments
 
 for my $mode (testmodes) {
     diag("[[[ Beginning RPerl's Scalar Type Tests, ". $mode->description ." ]]]") if $ENV{TEST_VERBOSE};
