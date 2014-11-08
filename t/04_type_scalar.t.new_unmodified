@@ -1,23 +1,28 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.003_004;
+our $VERSION = 0.003_010;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
 ## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
 
+# DK: use RPerl::Test instead of RPerl::Test::Modes
 use RPerl::Test::Modes;
 use Test::More tests => 268;
 use Test::Exception;
 my $ERROR_MAX = 0.00000001;
 
 BEGIN {
+    # DK: don't use prefix if
     diag( "[[[ Beginning Scalar Type Pre-Test Loading, RPerl Type System ]]]") if $ENV{TEST_VERBOSE};
+    # DK: use lives_and() for all use_ok() calls
     use_ok('RPerl');
+    # DK: don't use $_; don't use double-quote string interpolation; don't use postfix for(); use foreach() for list elements
     use_ok("RPerl::DataType::${_}_cpp") for qw(Integer Number String);
 }
 
+# DK: don't delete code comments; don't delete "NEED FIX" and other developer notes; don't delete RPerl::diag() debugging messages
 sub string__dumperify {
     ( my string $input_string ) = @_;
     $input_string = Dumper( [$input_string] );
@@ -27,40 +32,55 @@ sub string__dumperify {
     return $input_string;
 }
 
+# DK: should be foreach my scalar__hash_ref $mode (@{$RPerl::Test::properties_class{modes}})
 for my $mode (testmodes) {
+    # DK: don't use postfix if; append empty parenthesis () after all subroutine and method names; should be $mode->description()
     diag("[[[ Beginning RPerl's Scalar Type Tests, ". $mode->description ." ]]]") if $ENV{TEST_VERBOSE};
 
+    # DK: changed from methods in RPerl::Test::Modes to hash items in RPerl::Test; should be $mode->{ops} and $mode->{types}
     my $ops   = $mode->ops;
     my $types = $mode->types;
 
     lives_ok(
+        # DK: should be sub { RPerl::Test::enable($mode) },
         sub { $mode->enable },
+        # DK: don't use double quotes except for newline "\n" control character, should be q{mode '} . $mode->description . q{' enabled}
         "mode '" . $mode->description . "' enabled"
     );
         
-    for my $type (qw(Integer Number String)) {
+    # DK: use foreach() for list elements; should be foreach my string $type (qw(Integer Number String)) {
+    for my $type (qw(Integer Number String)) {:
         if ( $ops eq 'CPP' ) {
             # force reload
+            # DK: don't use double quotes except for newline "\n" control character, should be delete $main::{'RPerl__DataType__' . $type . '__ops'};
             delete $main::{"RPerl__DataType__${type}__ops"};
 
+            # DK: don't use double quotes except for newline "\n" control character, should be my $package = 'RPerl::DataType::' . $type . '_cpp';
             my $package = "RPerl::DataType::${type}_cpp";
             lives_and(
                 sub { require_ok($package); },
+                # DK: don't use double quotes except for newline "\n" control character, should be 'require_ok(' . $package . ') lives'
                 "require_ok($package) lives"
             );
             lives_ok(
+                # DK: must add nocritic to top of this file to handle stringy eval  ## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
+                # DK: use lives_and(); don't use double quotes except for newline "\n" control character, should be lives_ok( sub { eval( $package . '::cpp_load();' ) },
                 sub { eval "$package\::cpp_load();" }, 
+                # DK: use lives_and(); don't use double quotes except for newline "\n" control character, should be $package . '::cpp_load() lives'
                 "$package\::cpp_load() lives"
             );
         }            
     
+        # DK: don't use arbitrary or abbreviated variable or subroutine names, should be my string $type_lc = lc @type;
         my $t = lc $type;
         lives_and( 
+            # DK: use lives_and(); don't use double quotes except for newline "\n" control character, should be sub { is( __PACKAGE__->can( $type_lc . '__ops' )->(), $ops, $type_lc . '__ops() returns ' . $ops ); },
             sub { is( __PACKAGE__->can("${t}__ops")->(), $ops, "${t}__ops() returns $ops" ) },
             q{integer__ops() lives}
         );
         
         lives_and( 
+            # DK: use lives_and(); don't use double quotes except for newline "\n" control character, should be sub { is( __PACKAGE__->can( $type_lc . '__types' )->(), $types, $type_lc . '__types() returns ' . $types ); },
             sub { is( __PACKAGE__->can("${t}__types")->(), $types, "${t}__types() returns $types" ) },
             q{integer__types() lives}
         );
@@ -70,7 +90,9 @@ for my $mode (testmodes) {
     # [[[ INTEGER TESTS ]]]
     # [[[ INTEGER TESTS ]]]
 
+    # DK: should be my string $OPS_TYPES = RPerl::Test::id($mode);
     my $OPS_TYPES    = $mode->id;
+    # DK: should be $package . '::cpp_load() lives'
     my $OPS_TYPES_ID = $mode->index;
 
     throws_ok(    # TIV00
@@ -702,3 +724,4 @@ for my $mode (testmodes) {
     );
 }
 
+# DK: don't delete the testing conclusion marker, should be done_testing();

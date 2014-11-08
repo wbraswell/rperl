@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_720;
+    our $VERSION = 0.000_730;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -61,6 +61,7 @@
 %token OP11_COMPARE_LT_GT       = /(<|>|<=|>=|lt|gt|le|ge)/     # precedence 11 infix: comparison less than, greater than, less or equal, greater or equal
 %token OP01_NAMED_VOID_PAREN    = /((print|croak|return|exit)\s*\()/   # precedence 01 prefix void: no return value or context
 %token OP01_NAMED_VOID          = /(print|croak|return|exit)/   # precedence 01 prefix void: no return value or context
+%token OP01_NAMED_QW            = /(qw)/                        # precedence 01 prefix qw: quoted words
 %token OP01_NAMED               = /(^.)/                        # precedence 01 prefix: "terms and list operators (leftward)" [1] AKA builtins; NEED FIX: hard-code names
 
 # PRECEDENCE, SYNTAX ASSOCIATIVITY: later declaration gets higher priority
@@ -156,7 +157,7 @@ Variable:               VARIABLE_SYMBOL VariableRetrieval* ;
 VariableRetrieval:      OP02_ARRAY_THINARROW Expression ']' | OP02_HASH_THINARROW Expression '}' | OP02_HASH_THINARROW WORD '}' ;
 VariableDeclaration:    'my' Type VARIABLE_SYMBOL ';' | 'my' Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN ExpressionOrStdin ';' ;
 VariableModification:   Variable OP19_VARIABLE_ASSIGN ExpressionOrStdin ';' | Variable OP19_VARIABLE_ASSIGN_BY Expression ';' ;
-ListElements:           ListElement (OP21_LIST_COMMA ListElement)* ;
+ListElements:           ListElement (OP21_LIST_COMMA ListElement)* | OP01_NAMED_QW '(' WORD+ ')' ;
 ListElement:            Expression | TypeInner Expression | KEYS_OR_VALUES HashDereferenced ;
 ArrayReference:         '[' ListElements? ']' ;
 ArrayDereferenced:      '@{' Variable '}' | '@{' ArrayReference '}' ;

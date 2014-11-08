@@ -1,13 +1,9 @@
-# START HERE: use this instead of Modes.pm in dk's fork of t/04_type_scalar.t
-# START HERE: use this instead of Modes.pm in dk's fork of t/04_type_scalar.t
-# START HERE: use this instead of Modes.pm in dk's fork of t/04_type_scalar.t
-
 # [[[ HEADER ]]]
 package RPerl::Test;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -39,22 +35,26 @@ our void__method $empty_method = sub {
 
 # [[[ SUBROUTINES ]]]
 
-my string $id = sub {
+
+#my string $id = sub {  # NEED FIX: RPerl subroutines disabled here
+sub id {
     ( my scalar__hash_ref $mode ) = @_;
     return $mode->{ops} . 'OPS_' . $mode->{types} . 'TYPES';
-};
+}
 
-my string $description = sub {
+#my string $description = sub {
+sub description {
     ( my scalar__hash_ref $mode ) = @_;
     return $mode->{ops} . ' operations and ' . $mode->{types} . ' data types';
-};
+}
 
-my void $enable = sub {
+#my void $enable = sub {
+sub enable {
     ( my scalar__hash_ref $mode ) = @_;
     if ( $mode->{ops} eq 'CPP' ) {
         rperltypes::types_enable( $mode->{types} );
     }
-};
+}
 
 1;
 1;    # CODE SEPARATOR: end of class
