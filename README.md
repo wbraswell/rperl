@@ -23,6 +23,6 @@ Many thanks to irc.perl.org:
 
 For more information, please see <a href="http://www.rperl.org">http://www.rperl.org</a>
 
-Copyright © 2013, 2014, William N. Braswell, Jr..  All Rights Reserved.  This work is Free & Open Source; you can redistribute it and/or modify it under the same terms as Perl 5.18.0.
+Copyright © 2013, 2014, William N. Braswell, Jr..  All Rights Reserved.  This work is Free & Open Source; you can redistribute it and/or modify it under the same terms as Perl 5.20.0.
 
 For licensing details, please see <a href="http://dev.perl.org/licenses/">http://dev.perl.org/licenses/</a>

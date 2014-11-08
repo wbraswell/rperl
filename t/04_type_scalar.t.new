@@ -14,13 +14,13 @@ my $ERROR_MAX = 0.00000001;
 
 BEGIN {
     if ( $ENV{TEST_VERBOSE} ) {
-        diag(
+        Test::more::diag(
             "[[[ Beginning Scalar Type Pre-Test Loading, RPerl Type System ]]]"
         );
     }
     lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
     
-    foreach my $type qw(Integer Number String) {
+    foreach my $type (qw(Integer Number String)) {
         lives_and( sub {use_ok('RPerl::DataType::' . $type . '_cpp'); }, q{use_ok('RPerl::DataType::' . $type . '_cpp') lives} );
     }
 }
@@ -37,12 +37,10 @@ sub string__dumperify {
     return $input_string;
 }
 
-# START HERE: modify for() loop below, a'la github comments
-# START HERE: modify for() loop below, a'la github comments
-# START HERE: modify for() loop below, a'la github comments
-
-for my $mode (testmodes) {
-    diag("[[[ Beginning RPerl's Scalar Type Tests, ". $mode->description ." ]]]") if $ENV{TEST_VERBOSE};
+foreach my scalar__hash_ref $mode (@{$RPerl::Test::properties_class->{modes}}) {
+    if ($ENV{TEST_VERBOSE}) {
+        Test::more::diag("[[[ Beginning RPerl's Scalar Type Tests, ". $mode->description ." ]]]"); 
+    }
 
     my $ops   = $mode->ops;
     my $types = $mode->types;
