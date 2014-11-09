@@ -7,8 +7,9 @@ our $VERSION = 0.001_002;
 ## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
 ## no critic qw(RequireCheckingReturnValueOfEval)  ## SYSTEM DEFAULT 5: allow eval() test code blocks
 
-use Test::More tests => 177;
+use Test::More tests => 179;
 use Test::Exception;
+use RPerl::Test;
 
 BEGIN {
     if ( $ENV{TEST_VERBOSE} ) {
@@ -17,6 +18,14 @@ BEGIN {
         );
     }
     lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
+    lives_and(
+        sub { use_ok('RPerl::Algorithm::Sort::Bubble'); },
+        q{use_ok('RPerl::Algorithm::Sort::Bubble') lives}
+    );
+    lives_and(
+        sub { use_ok('RPerl::Algorithm::Sort::Bubble_cpp'); },
+        q{use_ok('RPerl::Algorithm::Sort::Bubble_cpp') lives}
+    );
 }
 
 # [[[ TEST RUNLOOP ]]]
@@ -24,139 +33,43 @@ BEGIN {
 # [[[ TEST RUNLOOP ]]]
 
 # loop 3 times, once for each mode: Pure-Perl, RPerl Perl-Data, and RPerl C-Data
-for my $OPS_TYPES_ID ( 0 .. 2 ) {
-
+foreach
+    my scalar__hash_ref $mode ( @{ $RPerl::Test::properties_class{modes} } )
+{
 #for my $OPS_TYPES_ID ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
 #    RPerl::diag "in 08_precompiled_sort.t, top of for() loop, have \$OPS_TYPES_ID = $OPS_TYPES_ID\n" or croak;    # no effect if suppressing output!
-    my $OPS_TYPES;
+    if ( $ENV{TEST_VERBOSE} ) {
+        Test::More::diag(
+                  "[[[ Beginning RPerl's Pre-Compiled Sort Tests, "
+                . RPerl::Test::description($mode)
+                . " ]]]" );
+    }
 
     # [[[ PERLOPS_PERLTYPES SETUP ]]]
     # [[[ PERLOPS_PERLTYPES SETUP ]]]
     # [[[ PERLOPS_PERLTYPES SETUP ]]]
+    my $ops                  = $mode->{ops};
+    my $types                = $mode->{types};
+    my string $OPS_TYPES     = RPerl::Test::id($mode);
+    my integer $OPS_TYPES_ID = $mode->{index};
 
-    if ( $OPS_TYPES_ID == 0 ) {
-        $OPS_TYPES = 'PERLOPS_PERLTYPES';
-        if ( $ENV{TEST_VERBOSE} ) {
-            diag(
-                q{[[[ Beginning RPerl's Pure-Perl Pre-Compiled Sort Tests, RPerl Type System Using Perl Data Types & Perl Operations ]]]}
-            );
-        }
+    lives_ok( sub { RPerl::Test::enable($mode) },
+        q{mode '} . RPerl::Test::description($mode) . q{' enabled} );
 
-        # Bubblesort: Perl use, load, link
-        BEGIN {
-            lives_and(
-                sub { use_ok('RPerl::Algorithm::Sort::Bubble'); },
-                q{use_ok('RPerl::Algorithm::Sort::Bubble') lives}
-            );
-        }
+    if ( $ops eq 'PERL' ) {
         lives_and(
             sub { require_ok('RPerl::Algorithm::Sort::Bubble'); },
             q{require_ok('RPerl::Algorithm::Sort::Bubble') lives}
         );
-        lives_and(
-            sub {
-                is( integer__ops(), 'PERL',
-                    q{integer__ops() returns 'PERL'} );
-            },
-            q{integer__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( integer__types(), 'PERL',
-                    q{integer__types() returns 'PERL'} );
-            },
-            q{integer__types() lives}
-        );
-        lives_and(
-            sub {
-                is( number__ops(), 'PERL', q{number__ops() returns 'PERL'} );
-            },
-            q{number__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( number__types(), 'PERL',
-                    q{number__types() returns 'PERL'} );
-            },
-            q{number__types() lives}
-        );
-        lives_and(
-            sub {
-                is( string__ops(), 'PERL', q{string__ops() returns 'PERL'} );
-            },
-            q{string__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( string__types(), 'PERL',
-                    q{string__types() returns 'PERL'} );
-            },
-            q{string__types() lives}
-        );
-        lives_and(
-            sub { is( array__ops(), 'PERL', q{array__ops() returns 'PERL'} ) }
-            ,
-            q{array__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( array__types(), 'PERL',
-                    q{array__types() returns 'PERL'} );
-            },
-            q{array__types() lives}
-        );
-        lives_and(
-            sub { is( hash__ops(), 'PERL', q{hash__ops() returns 'PERL'} ) },
-            q{hash__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( hash__types(), 'PERL', q{hash__types() returns 'PERL'} );
-            },
-            q{hash__types() lives}
-        );
-        lives_and(
-            sub {
-                is( RPerl__Algorithm__Sort__Bubble__ops(),
-                    'PERL',
-                    q{RPerl__Algorithm__Sort__Bubble__ops() returns 'PERL'} );
-            },
-            q{RPerl__Algorithm__Sort__Bubble__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( RPerl__Algorithm__Sort__Bubble__types(), 'PERL',
-                    q{RPerl__Algorithm__Sort__Bubble__types() returns 'PERL'}
-                );
-            },
-            q{RPerl__Algorithm__Sort__Bubble__types() lives}
-        );
     }
+    else {
+        if ( $types eq 'CPP' ) {
 
-    # [[[ CPPOPS_PERLTYPES SETUP ]]]
-    # [[[ CPPOPS_PERLTYPES SETUP ]]]
-    # [[[ CPPOPS_PERLTYPES SETUP ]]]
-
-    elsif ( $OPS_TYPES_ID == 1 ) {
-        $OPS_TYPES = 'CPPOPS_PERLTYPES';
-        if ( $ENV{TEST_VERBOSE} ) {
-            diag(
-                q{[[[ Beginning RPerl's Perl-Data Mode Pre-Compiled Sort Tests, RPerl Type System Using Perl Data Types & C++ Operations ]]]}
-            );
+            # force reload
+            delete $main::{'RPerl__Algorithm__Sort__Bubble__ops'};
         }
-
-        lives_ok(
-            sub { rperltypes::types_enable('PERL') },
-            q{rperltypes::types_enable('PERL') lives}
-        );
 
         # Bubblesort: C++ use, load, link
-        BEGIN {
-            lives_and(
-                sub { use_ok('RPerl::Algorithm::Sort::Bubble_cpp'); },
-                q{use_ok('RPerl::Algorithm::Sort::Bubble_cpp') lives}
-            );
-        }
         lives_and(
             sub { require_ok('RPerl::Algorithm::Sort::Bubble_cpp'); },
             q{require_ok('RPerl::Algorithm::Sort::Bubble_cpp') lives}
@@ -165,176 +78,24 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
             sub { RPerl::Algorithm::Sort::Bubble_cpp::cpp_load(); },
             q{RPerl::Algorithm::Sort::Bubble_cpp::cpp_load() lives}
         );
-
-        lives_and(
-            sub {
-                is( integer__ops(), 'CPP', q{integer__ops() returns 'CPP'} );
-            },
-            q{integer__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( integer__types(), 'PERL',
-                    q{integer__types() returns 'PERL'} );
-            },
-            q{integer__types() lives}
-        );
-        lives_and(
-            sub { is( number__ops(), 'CPP', q{number__ops() returns 'CPP'} ) }
-            ,
-            q{number__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( number__types(), 'PERL',
-                    q{number__types() returns 'PERL'} );
-            },
-            q{number__types() lives}
-        );
-        lives_and(
-            sub { is( string__ops(), 'CPP', q{string__ops() returns 'CPP'} ) }
-            ,
-            q{string__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( string__types(), 'PERL',
-                    q{string__types() returns 'PERL'} );
-            },
-            q{string__types() lives}
-        );
-        lives_and(
-            sub { is( array__ops(), 'CPP', q{array__ops() returns 'CPP'} ) },
-            q{array__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( array__types(), 'PERL',
-                    q{array__types() returns 'PERL'} );
-            },
-            q{array__types() lives}
-        );
-        lives_and(
-            sub { is( hash__ops(), 'CPP', q{hash__ops() returns 'CPP'} ) },
-            q{hash__ops() lives} );
-        lives_and(
-            sub {
-                is( hash__types(), 'PERL', q{hash__types() returns 'PERL'} );
-            },
-            q{hash__types() lives}
-        );
-        lives_and(
-            sub {
-                is( RPerl__Algorithm__Sort__Bubble__ops(),
-                    'CPP',
-                    q{RPerl__Algorithm__Sort__Bubble__ops() returns 'CPP'} );
-            },
-            q{RPerl__Algorithm__Sort__Bubble__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( RPerl__Algorithm__Sort__Bubble__types(), 'PERL',
-                    q{RPerl__Algorithm__Sort__Bubble__types() returns 'PERL'}
-                );
-            },
-            q{RPerl__Algorithm__Sort__Bubble__types() lives}
-        );
     }
 
-    # [[[ CPPOPS_CPPTYPES SETUP ]]]
-    # [[[ CPPOPS_CPPTYPES SETUP ]]]
-    # [[[ CPPOPS_CPPTYPES SETUP ]]]
-
-    else {
-        $OPS_TYPES = 'CPPOPS_CPPTYPES';
-        if ( $ENV{TEST_VERBOSE} ) {
-            diag(
-                q{[[[ Beginning RPerl's C-Data Mode Pre-Compiled Sort Tests, RPerl Type System Using C++ Data Types & C++ Operations ]]]}
-            );
-        }
-        lives_ok(
-            sub { rperltypes::types_enable('CPP') },
-            q{rperltypes::types_enable('CPP') lives}
-        );
-
-        # force reload
-        delete $main::{'RPerl__Algorithm__Sort__Bubble__ops'};
-
-        # Bubblesort: C++ use, load, link
-        lives_ok(
-            sub { RPerl::Algorithm::Sort::Bubble_cpp::cpp_load(); },
-            q{RPerl::Algorithm::Sort::Bubble_cpp::cpp_load() lives}
+    foreach my string $type (
+        qw(integer number string array hash RPerl__Algorithm__Sort__Bubble))
+    {
+        lives_and(
+            sub {
+                is( __PACKAGE__->can( $type . '__ops' )->(),
+                    $ops, $type . '__ops() returns ' . $ops );
+            },
+            $type . q{__ops() lives}
         );
         lives_and(
             sub {
-                is( integer__ops(), 'CPP', q{integer__ops() returns 'CPP'} );
+                is( __PACKAGE__->can( $type . '__types' )->(),
+                    $types, $type . '__types() returns ' . $types );
             },
-            q{integer__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( integer__types(), 'CPP',
-                    q{integer__types() returns 'CPP'} );
-            },
-            q{integer__types() lives}
-        );
-        lives_and(
-            sub { is( number__ops(), 'CPP', q{number__ops() returns 'CPP'} ) }
-            ,
-            q{number__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( number__types(), 'CPP',
-                    q{number__types() returns 'CPP'} );
-            },
-            q{number__types() lives}
-        );
-        lives_and(
-            sub { is( string__ops(), 'CPP', q{string__ops() returns 'CPP'} ) }
-            ,
-            q{string__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( string__types(), 'CPP',
-                    q{string__types() returns 'CPP'} );
-            },
-            q{string__types() lives}
-        );
-        lives_and(
-            sub { is( array__ops(), 'CPP', q{array__ops() returns 'CPP'} ) },
-            q{array__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( array__types(), 'CPP', q{array__types() returns 'CPP'} );
-            },
-            q{array__types() lives}
-        );
-        lives_and(
-            sub { is( hash__ops(), 'CPP', q{hash__ops() returns 'CPP'} ) },
-            q{hash__ops() lives} );
-        lives_and(
-            sub { is( hash__types(), 'CPP', q{hash__types() returns 'CPP'} ) }
-            ,    ## PERLTIDY BUG comma on newline
-            q{hash__types() lives}
-        );
-        lives_and(
-            sub {
-                is( RPerl__Algorithm__Sort__Bubble__ops(),
-                    'CPP',
-                    q{RPerl__Algorithm__Sort__Bubble__ops() returns 'CPP'} );
-            },
-            q{RPerl__Algorithm__Sort__Bubble__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( RPerl__Algorithm__Sort__Bubble__types(), 'CPP',
-                    q{RPerl__Algorithm__Sort__Bubble__types() returns 'CPP'}
-                );
-            },
-            q{RPerl__Algorithm__Sort__Bubble__types() lives}
+            $type . q{__types() lives}
         );
     }
 
