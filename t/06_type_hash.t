@@ -7,7 +7,8 @@ our $VERSION = 0.004_004;
 ## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
 ## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
 
-use Test::More tests => 217;
+use RPerl::Test;
+use Test::More tests => 219;
 use Test::Exception;
 
 BEGIN {
@@ -17,6 +18,10 @@ BEGIN {
         );
     }
     lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
+    lives_and(
+        sub { use_ok('RPerl::DataStructure::Hash_cpp'); },
+        q{use_ok('RPerl::DataStructure::Hash_cpp') lives}
+    );
 }
 
 # [[[ TEST RUNLOOP ]]]
@@ -24,98 +29,33 @@ BEGIN {
 # [[[ TEST RUNLOOP ]]]
 
 # loop 3 times, once for each mode: Pure-Perl, RPerl Perl-Data, and RPerl C-Data
-for my $OPS_TYPES_ID ( 0 .. 2 ) {
-
+foreach
+    my scalar__hash_ref $mode ( @{ $RPerl::Test::properties_class{modes} } )
+{
 #    RPerl::diag "in 06_type_hash.t, top of for() loop, have \$OPS_TYPES_ID = $OPS_TYPES_ID\n" or croak; # no effect if suppressing output!
-    my $OPS_TYPES;
-
-    # [[[ PERLOPS_PERLTYPES SETUP ]]]
-    # [[[ PERLOPS_PERLTYPES SETUP ]]]
-    # [[[ PERLOPS_PERLTYPES SETUP ]]]
-
-    if ( $OPS_TYPES_ID == 0 ) {
-        $OPS_TYPES = 'PERLOPS_PERLTYPES';
-        if ( $ENV{TEST_VERBOSE} ) {
-            diag(
-                q{[[[ Beginning RPerl's Pure-Perl Hash Type Tests, RPerl Type System Using Perl Data Types & Perl Operations ]]]}
-            );
-        }
-        lives_and(
-            sub {
-                is( integer__ops(), 'PERL',
-                    q{integer__ops() returns 'PERL'} );
-            },
-            q{integer__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( integer__types(), 'PERL',
-                    q{integer__types() returns 'PERL'} );
-            },
-            q{integer__types() lives}
-        );
-        lives_and(
-            sub {
-                is( number__ops(), 'PERL', q{number__ops() returns 'PERL'} );
-            },
-            q{number__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( number__types(), 'PERL',
-                    q{number__types() returns 'PERL'} );
-            },
-            q{number__types() lives}
-        );
-        lives_and(
-            sub {
-                is( string__ops(), 'PERL', q{string__ops() returns 'PERL'} );
-            },
-            q{string__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( string__types(), 'PERL',
-                    q{string__types() returns 'PERL'} );
-            },
-            q{string__types() lives}
-        );
-        lives_and(
-            sub { is( hash__ops(), 'PERL', q{hash__ops() returns 'PERL'} ) },
-            q{hash__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( hash__types(), 'PERL', q{hash__types() returns 'PERL'} );
-            },
-            q{hash__types() lives}
-        );
+    if ( $ENV{TEST_VERBOSE} ) {
+        Test::More::diag( "[[[ Beginning RPerl's Hash Type Tests, "
+                . RPerl::Test::description($mode)
+                . " ]]]" );
     }
 
-    # [[[ CPPOPS_PERLTYPES SETUP ]]]
-    # [[[ CPPOPS_PERLTYPES SETUP ]]]
-    # [[[ CPPOPS_PERLTYPES SETUP ]]]
+    # [[[ PERLOPS_PERLTYPES SETUP ]]]
+    # [[[ PERLOPS_PERLTYPES SETUP ]]]
+    # [[[ PERLOPS_PERLTYPES SETUP ]]]
+    my $ops                  = $mode->{ops};
+    my $types                = $mode->{types};
+    my string $OPS_TYPES     = RPerl::Test::id($mode);
+    my integer $OPS_TYPES_ID = $mode->{index};
 
-    elsif ( $OPS_TYPES_ID == 1 ) {
-        $OPS_TYPES = 'CPPOPS_PERLTYPES';
-        if ( $ENV{TEST_VERBOSE} ) {
-            diag(
-                q{[[[ Beginning RPerl's Perl-Data Mode Hash Type Tests, RPerl Type System Using Perl Data Types & C++ Operations ]]]}
-            );
-        }
+    lives_ok( sub { RPerl::Test::enable($mode) },
+        q{mode '} . RPerl::Test::description($mode) . q{' enabled} );
 
-        lives_ok(
-            sub { rperltypes::types_enable('PERL') },
-            q{rperltypes::types_enable('PERL') lives}
-        );
+    if ( $ops eq 'CPP' ) {
+
+        # force reload
+        delete $main::{'RPerl__DataStructure__Hash__ops'};
 
         # Hash: C++ use, load, link
-        BEGIN {
-            lives_and(
-                sub { use_ok('RPerl::DataStructure::Hash_cpp'); },
-                q{use_ok('RPerl::DataStructure::Hash_cpp') lives}
-            );
-        }
         lives_and(
             sub { require_ok('RPerl::DataStructure::Hash_cpp'); },
             q{require_ok('RPerl::DataStructure::Hash_cpp') lives}
@@ -124,122 +64,23 @@ for my $OPS_TYPES_ID ( 0 .. 2 ) {
             sub { RPerl::DataStructure::Hash_cpp::cpp_load(); },
             q{RPerl::DataStructure::Hash_cpp::cpp_load() lives}
         );
-        lives_and(
-            sub {
-                is( integer__ops(), 'CPP', q{integer__ops() returns 'CPP'} );
-            },
-            q{integer__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( integer__types(), 'PERL',
-                    q{integer__types() returns 'PERL'} );
-            },
-            q{integer__types() lives}
-        );
-        lives_and(
-            sub { is( number__ops(), 'CPP', q{number__ops() returns 'CPP'} ) }
-            ,
-            q{number__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( number__types(), 'PERL',
-                    q{number__types() returns 'PERL'} );
-            },
-            q{number__types() lives}
-        );
-        lives_and(
-            sub { is( string__ops(), 'CPP', q{string__ops() returns 'CPP'} ) }
-            ,
-            q{string__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( string__types(), 'PERL',
-                    q{string__types() returns 'PERL'} );
-            },
-            q{string__types() lives}
-        );
-        lives_and(
-            sub { is( hash__ops(), 'CPP', q{hash__ops() returns 'CPP'} ) },
-            q{hash__ops() lives} );
-        lives_and(
-            sub {
-                is( hash__types(), 'PERL', q{hash__types() returns 'PERL'} );
-            },
-            q{hash__types() lives}
-        );
     }
 
-    # [[[ CPPOPS_CPPTYPES SETUP ]]]
-    # [[[ CPPOPS_CPPTYPES SETUP ]]]
-    # [[[ CPPOPS_CPPTYPES SETUP ]]]
-
-    else {
-        $OPS_TYPES = 'CPPOPS_CPPTYPES';
-        if ( $ENV{TEST_VERBOSE} ) {
-            diag(
-                q{[[[ Beginning RPerl's C-Data Mode Hash Type Tests, RPerl Type System Using C++ Data Types & C++ Operations ]]]}
-            );
-        }
-        lives_ok(
-            sub { rperltypes::types_enable('CPP') },
-            q{rperltypes::types_enable('CPP') lives}
-        );
-
-        # force reload
-        delete $main::{'RPerl__DataStructure__Hash__ops'};
-
-        # Hash: C++ use, load, link
-        lives_ok(
-            sub { RPerl::DataStructure::Hash_cpp::cpp_load(); },
-            q{RPerl::DataStructure::Hash_cpp::cpp_load() lives}
+    foreach my string $type (qw(Integer Number String Hash)) {
+        my string $type_lc = lc $type;
+        lives_and(
+            sub {
+                is( __PACKAGE__->can( $type_lc . '__ops' )->(),
+                    $ops, $type_lc . '__ops() returns ' . $ops );
+            },
+            $type_lc . q{__ops() lives}
         );
         lives_and(
             sub {
-                is( integer__ops(), 'CPP', q{integer__ops() returns 'CPP'} );
+                is( __PACKAGE__->can( $type_lc . '__types' )->(),
+                    $types, $type_lc . '__types() returns ' . $types );
             },
-            q{integer__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( integer__types(), 'CPP',
-                    q{integer__types() returns 'CPP'} );
-            },
-            q{integer__types() lives}
-        );
-        lives_and(
-            sub { is( number__ops(), 'CPP', q{number__ops() returns 'CPP'} ) }
-            ,
-            q{number__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( number__types(), 'CPP',
-                    q{number__types() returns 'CPP'} );
-            },
-            q{number__types() lives}
-        );
-        lives_and(
-            sub { is( string__ops(), 'CPP', q{string__ops() returns 'CPP'} ) }
-            ,
-            q{string__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( string__types(), 'CPP',
-                    q{string__types() returns 'CPP'} );
-            },
-            q{string__types() lives}
-        );
-        lives_and(
-            sub { is( hash__ops(), 'CPP', q{hash__ops() returns 'CPP'} ) },
-            q{hash__ops() lives} );
-        lives_and(
-            sub { is( hash__types(), 'CPP', q{hash__types() returns 'CPP'} ) }
-            ,    ## PERLTIDY BUG comma on newline
-            q{hash__types() lives}
+            $type_lc . q{__types() lives}
         );
     }
 
