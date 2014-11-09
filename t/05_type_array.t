@@ -66,21 +66,20 @@ foreach
         );
     }
 
-    foreach my string $type (qw(Integer Number String Array)) {
-        my string $type_lc = lc $type;
+    foreach my string $type (qw(integer number string array)) {
         lives_and(
             sub {
-                is( __PACKAGE__->can( $type_lc . '__ops' )->(),
-                    $ops, $type_lc . '__ops() returns ' . $ops );
+                is( __PACKAGE__->can( $type . '__ops' )->(),
+                    $ops, $type . '__ops() returns ' . $ops );
             },
-            $type_lc . q{__ops() lives}
+            $type . q{__ops() lives}
         );
         lives_and(
             sub {
-                is( __PACKAGE__->can( $type_lc . '__types' )->(),
-                    $types, $type_lc . '__types() returns ' . $types );
+                is( __PACKAGE__->can( $type . '__types' )->(),
+                    $types, $type . '__types() returns ' . $types );
             },
-            $type_lc . q{__types() lives}
+            $type . q{__types() lives}
         );
     }
 
