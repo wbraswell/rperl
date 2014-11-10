@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.001_002;
+our $VERSION = 0.001_010;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
@@ -34,15 +34,14 @@ BEGIN {
 
 # loop 3 times, once for each mode: Pure-Perl, RPerl Perl-Data, and RPerl C-Data
 foreach
-    my scalar__hash_ref $mode ( @{ $RPerl::Test::properties_class{modes} } )
+    my scalar__hash_ref $mode ( @{ $RPerl::Test::properties_class{modes} } ) ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
 {
 #for my $OPS_TYPES_ID ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
 #    RPerl::diag "in 08_precompiled_sort.t, top of for() loop, have \$OPS_TYPES_ID = $OPS_TYPES_ID\n" or croak;    # no effect if suppressing output!
     if ( $ENV{TEST_VERBOSE} ) {
-        Test::More::diag(
-                  "[[[ Beginning RPerl's Pre-Compiled Sort Tests, "
+        Test::More::diag( '[[[ Beginning RPerl Pre-Compiled Sort Tests, '
                 . RPerl::Test::description($mode)
-                . " ]]]" );
+                . ' ]]]' );
     }
 
     # [[[ PERLOPS_PERLTYPES SETUP ]]]

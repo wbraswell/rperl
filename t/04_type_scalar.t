@@ -1,12 +1,13 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.004_000;
+our $VERSION = 0.004_010;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
 ## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
 ## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
+## no critic qw(RequireCheckingReturnValueOfEval)  # SYSTEM DEFAULT 5: allow eval() test code blocks
 
 use RPerl::Test;
 use Test::More tests => 268;
@@ -45,13 +46,13 @@ sub string__dumperify {
 #RPerl::diag 'in 04_type_scalar.t, before mode loop, have $RPerl::Test::properties_class{modes} = ' . "\n" . Dumper($RPerl::Test::properties_class{modes}) . "\n";
 
 foreach
-    my scalar__hash_ref $mode ( @{ $RPerl::Test::properties_class{modes} } )
+    my scalar__hash_ref $mode ( @{ $RPerl::Test::properties_class{modes} } ) ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
 {
 #    RPerl::diag 'in 04_type_scalar.t, top of mode loop, have $mode = ' . "\n" . Dumper($mode) . "\n";
     if ( $ENV{TEST_VERBOSE} ) {
-        Test::More::diag( "[[[ Beginning RPerl's Scalar Type Tests, "
+        Test::More::diag( '[[[ Beginning RPerl Scalar Type Tests, '
                 . RPerl::Test::description($mode)
-                . " ]]]" );
+                . ' ]]]' );
     }
 
     my $ops   = $mode->{ops};

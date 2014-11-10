@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.000_011;
+our $VERSION = 0.001_010;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 
@@ -32,13 +32,13 @@ BEGIN {
 
 # loop 3 times, once for each mode: Pure-Perl, RPerl Perl-Data, and RPerl C-Data
 foreach
-    my scalar__hash_ref $mode ( @{ $RPerl::Test::properties_class{modes} } )
+    my scalar__hash_ref $mode ( @{ $RPerl::Test::properties_class{modes} } ) ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
 {
     if ( $ENV{TEST_VERBOSE} ) {
         Test::More::diag(
-                  "[[[ Beginning RPerl's Object-Oriented Inheritance Tests, "
+                  '[[[ Beginning RPerl Object-Oriented Inheritance Tests, '
                 . RPerl::Test::description($mode)
-                . " ]]]" );
+                . ' ]]]' );
     }
 
     # [[[ PERLOPS_PERLTYPES SETUP ]]]
