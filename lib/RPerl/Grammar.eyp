@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_730;
+    our $VERSION = 0.000_731;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -97,6 +97,7 @@
 %left       OP02_ARRAY_THINARROW
 %left       OP02_METHOD_THINARROW
 %left       OP01_NAMED
+%left       OP01_NAMED_QW
 %left       OP01_NAMED_VOID
 %left       OP01_NAMED_VOID_PAREN
 
@@ -178,6 +179,7 @@ Literal:                LITERAL_STRING | LITERAL_NUMBER ;
 
 {
 # Rules from Grammar.output
+# NEED FIX: UPDATE!?!
 my string__hash_ref $rules = {
 
 CompileUnit_3 => 'RPerl::CompileUnit',
