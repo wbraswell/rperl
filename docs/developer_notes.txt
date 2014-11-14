@@ -27,9 +27,10 @@ $ perlcritic --brutal
 $ make manifest
     # review MANIFEST contents
 $ vi MANIFEST.SKIP
-    # files to exclude
+    # files to exclude, CAN THIS BE THE SAME AS .gitignore???
 $ make manifest
     # review MANIFEST contents again
+$ make disttest
 $ make dist
     # produces tarball output
 $ cpanm LOCAL_TARBALL_INSTALL_FOOBAR  # NEED SYNTAX WITH FULL TESTING
