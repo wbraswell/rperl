@@ -18,3 +18,21 @@ $ perltidy -pbp --ignore-side-comment-lengths --converge
 # MUST HAVE Perl-Critic v1.120 OR LATER
 $ perlcritic --brutal
 
+
+################################################################################
+# CPAN DISTRIBUTION
+################################################################################
+
+# Makefile.PL uses ExtUtils::MakeMaker
+$ make manifest
+    # review MANIFEST contents
+$ vi MANIFEST.SKIP
+    # files to exclude
+$ make manifest
+    # review MANIFEST contents again
+$ make dist
+    # produces tarball output
+$ cpanm LOCAL_TARBALL_INSTALL_FOOBAR  # NEED SYNTAX WITH FULL TESTING
+    # install from local tarball, ensure tests run & installation is successful
+$ cpanm CPAN::Uploader
+$ cpan-upload REMOTE_TARBALL_UPLOAD_FOOBAR  # NEED SYNTAX
