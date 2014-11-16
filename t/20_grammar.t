@@ -10,19 +10,19 @@ use RPerl::Translator;
 use RPerl::Generator;
 use RPerl::Compiler;
 
-our $VERSION = 0.003_004;
+our $VERSION = 0.003_010;
 
 my %tests;
 find(
     sub {
         my $file = $File::Find::name;
-        if (!m/.pm$/) {
+        if ((!m/.pm$/) and (!m/.pl$/)) {
             return;
         }
-        if (m/Good/ms) {
+        if ((m/Good/ms) or (m/good/ms)) {
             $tests{$file} = undef;
         }
-        elsif (m/Bad/ms) {
+        elsif ((m/Bad/ms) or (m/bad/ms)) {
             open my $fh, '<', $_ or die "Cannot open $file:$!\n";
             while (<$fh>) {
                 if (m/^\#\s*\[\[\[\s*TEST\s*\:\s*['"](.*)['"]\s*\]\]\]/) {

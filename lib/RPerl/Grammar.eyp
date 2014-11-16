@@ -9,6 +9,11 @@
 
 %strict                         # require all tokens to be declared, etc.
 %tree                           # automatically create AST
+
+# START HERE: fix hash bang and critics as legitimate non-comments
+# START HERE: fix hash bang and critics as legitimate non-comments
+# START HERE: fix hash bang and critics as legitimate non-comments
+
 %whites  /(\s*(\#.+)*\s*)+/     # Perl comments are treated as whitespace  # NEED FIX: do not treat Critic as comments???
 
 %defaultaction {

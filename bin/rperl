@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_030;
+our $VERSION = 0.003_031;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
@@ -70,9 +70,9 @@ for my integer $i ( 0 .. ( $rperl_input_file_num - 1 ) ) {
             "\nERROR EARG04: Specified RPerl source code input file '$rperl_input_file_name' is not a plain file,\ncroaking"
         );
     }
-    elsif ( $rperl_input_file_name !~ /[.]pm$/xms ) {
+    elsif ( ( $rperl_input_file_name !~ /[.]pm$/xms ) and ( $rperl_input_file_name !~ /[.]pl$/xms ) ) {
         croak(
-            "\nERROR EARG05: Specified RPerl source code input file '$rperl_input_file_name' is not a Perl module ending in '.pm',\ncroaking"
+            "\nERROR EARG05: Specified RPerl source code input file '$rperl_input_file_name' is not a Perl program ending  in '.pl' or module ending in '.pm',\ncroaking"
         );
     }
 
