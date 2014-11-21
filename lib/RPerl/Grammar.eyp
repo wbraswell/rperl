@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_733;
+    our $VERSION = 0.000_734;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -10,22 +10,7 @@
 %strict                         # require all tokens to be declared, etc.
 %tree                           # automatically create AST
 
-# START HERE: fix hash bang and critics as legitimate non-comments
-# START HERE: fix hash bang and critics as legitimate non-comments
-# START HERE: fix hash bang and critics as legitimate non-comments
-
-# m{\G(\s+)}gc and $self->tokenline($1 =~ tr{\n}{})
-
-#%whites  /(\s+)/
-#%whites  /(\s*(?:#.*)?\s*)/
-#%whites  /(\s*\#.+\s*)+/
-#%whites  /\s+|(\s*\#[^\#].+\s*)+/
-#%whites  { ( m/(\#.*)/xms and not(m/\#[\#\!]/xms) ) or m/(\s+)/xms }
-#%whites  { ( /(\#.*)/ and not(/\#[\#\!]/) ) or /(\s+)/ }
-#%whites  { ( ( m/(\#.*)/xms and not(m/\#[\#\!]/xms) ) or m/(\s+)/xms ) and $self->tokenline($1 =~ tr{\n}{}) }
-#%whites  { ( ( /((\s*\#.+\s*)+)/ and not(/\#[\#\!]/) ) or /(\s+)/gc ) and $self->tokenline($1 =~ tr{\n}{}) }
-#%whites  { m{\G((\s*\#.+\s*)+)}gc and $self->tokenline($1 =~ tr{\n}{}) }
-%whites  { m{\G((\s*\#[^\#\!].+\s*)+)}gc and $self->tokenline($1 =~ tr{\n}{}) }
+%whites /(\s*(?:#[^#\!].*)?\s*)/  # whitespace is actual whitespace and normal comments, not shebang or double-hash critics
 
 %defaultaction {
     my $self = shift;
@@ -34,7 +19,6 @@
 }
 
 #%token SHEBANG              = /(^(\#\!\/[\w\/]*\/perl)$)/               # begin line, hash (octothorpe), bang, *NIX path to Perl, end line; ex. '#!/usr/bin/perl'
-#%token SHEBANG              = /(HELLOHELLOHELLO)/               # begin line, hash (octothorpe), bang, *NIX path to Perl, end line; ex. '#!/usr/bin/perl'
 %token USE_STRICT           = /(use\ strict\;)/
 %token USE_WARNINGS         = /(use\ warnings\;)/
 %token USE_RPERL            = /(use\ RPerl\;)/
