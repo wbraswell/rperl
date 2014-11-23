@@ -7,10 +7,6 @@ our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]
 
-# START HERE: figure out why trailing "# USER DEFAULT 1" comment causes grammar parse error 
-# START HERE: figure out why trailing "# USER DEFAULT 1" comment causes grammar parse error 
-# START HERE: figure out why trailing "# USER DEFAULT 1" comment causes grammar parse error 
-
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 
 # [[[ SUBROUTINES ]]]

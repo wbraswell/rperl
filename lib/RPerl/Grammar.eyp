@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_734;
+    our $VERSION = 0.000_735;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -10,7 +10,8 @@
 %strict                         # require all tokens to be declared, etc.
 %tree                           # automatically create AST
 
-%whites /(\s*(?:#[^#\!].*)?\s*)/  # whitespace is actual whitespace and normal comments, not shebang or double-hash critics
+#%whites /(\s*(?:#[^#\!].*)?\s*)/  # whitespace is actual whitespace and normal comments, not shebang or double-hash critics
+%whites { /\G(\s*(?:#[^#\!].*)?\s*)/gc and print (q{WHITESPACE = '} . $1 . q{'} . "\n") }
 
 %defaultaction {
     my $self = shift;
@@ -19,11 +20,11 @@
 }
 
 #%token SHEBANG              = /(^(\#\!\/[\w\/]*\/perl)$)/               # begin line, hash (octothorpe), bang, *NIX path to Perl, end line; ex. '#!/usr/bin/perl'
-%token USE_STRICT           = /(use\ strict\;)/
-%token USE_WARNINGS         = /(use\ warnings\;)/
-%token USE_RPERL            = /(use\ RPerl\;)/
-%token USE_CONSTANT         = /(use\ constant)/
-%token USE_PARENT           = /(use\ parent)/
+#%token USE_STRICT           = /(use\ strict\;)/
+#%token USE_WARNINGS         = /(use\ warnings\;)/
+#%token USE_RPERL            = /(use\ RPerl\;)/
+#%token USE_CONSTANT         = /(use\ constant)/
+#%token USE_PARENT           = /(use\ parent)/
 %token VERSION_NUMBER_ASSIGN = /\$VERSION\ \=\ (\d\d?\.\d{3}\_\d{3});/  # match assign match, only capture & return number; ex. '$VERSION = 12.345_678;' returns '12.345_678'
 %token LITERAL_NUMBER       = /(-?(((\d{1,2}_)?(\d{3}_)*\d{3})|\d{1,2})(\.((\d{3}(_\d{3})*(_\d{1,2})?)|\d{1,2}))?)/   # number w/ underscores
 %token LITERAL_STRING       = /(('[^']+')|("[^"\@\$]*((\\n)|(\\t))+[^"\@\$]*")|(q{[^}]*}))/  # strings: single quotes non-empty; double quotes non-empty w/out sigils & w/ newline or tab; or single q-braces
@@ -120,21 +121,21 @@ CompileUnit:            Program | Module+ ;
 Program:                '#!/usr/bin/perl' Header Critic* Include* Constant* Subroutine* Operation+ ;
 Module:                 Package | Class ;
 Package:                'package' WordScoped ';' Header Critic* Include* Constant* Subroutine+ '1;' '1;' ;
-#Header:                 'use strict;' 'use warnings;' 'use RPerl;' 'our' VERSION_NUMBER_ASSIGN;
-Header:                 USE_STRICT USE_WARNINGS USE_RPERL'our' VERSION_NUMBER_ASSIGN;
+Header:                 'use strict;' 'use warnings;' 'use RPerl;' 'our' VERSION_NUMBER_ASSIGN;
+#Header:                 USE_STRICT USE_WARNINGS USE_RPERL'our' VERSION_NUMBER_ASSIGN;
 Critic:                 '## no critic qw(' WORD+ ')';
-Include:                'fuse' WordScoped ';' | 'fuse' WordScoped 'qw(' WORD+ ')' ';' ;
+Include:                'use' WordScoped ';' | 'use' WordScoped 'qw(' WORD+ ')' ';' ;
                         # NEED FIX: disable non-scalar constants
-#Constant:               'use constant' WORD OP20_HASH_FATARROW TypeInner ConstantValue ';' ;
-Constant:               USE_CONSTANT WORD OP20_HASH_FATARROW TypeInner ConstantValue ';' ;
+Constant:               'use constant' WORD OP20_HASH_FATARROW TypeInner ConstantValue ';' ;
+#Constant:               USE_CONSTANT WORD OP20_HASH_FATARROW TypeInner ConstantValue ';' ;
 ConstantValue:          Literal | '[' TypeInner? Literal (OP21_LIST_COMMA TypeInner? Literal)* ']' | 
                         '{' WORD OP20_HASH_FATARROW TypeInner? Literal (OP21_LIST_COMMA WORD OP20_HASH_FATARROW TypeInner? Literal)* '}' ;
 Subroutine:             'our' Type VARIABLE_SYMBOL '= sub {' SubroutineArguments? Operation+ '}' ';' ;
 SubroutineArguments:    '( my' Type VARIABLE_SYMBOL (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ArgumentCheck* ;
 #ArgumentCheck:          '::' CHECK_OR_CHECKTRACE '(' Expression (OP21_LIST_COMMA Expression OP21_LIST_COMMA Expression)? ')' ';' ;
 ArgumentCheck:          CHECK_OR_CHECKTRACE '(' Expression (OP21_LIST_COMMA Expression OP21_LIST_COMMA Expression)? ')' ';' ;
-#Class:                  'package' WordScoped ';' Header 'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties Method* '1;' '1;' (Subroutine+ '1;' '1;')? ;
-Class:                  'package' WordScoped ';' Header USE_PARENT 'qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties Method* '1;' '1;' (Subroutine+ '1;' '1;')? ;
+Class:                  'package' WordScoped ';' Header 'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties Method* '1;' '1;' (Subroutine+ '1;' '1;')? ;
+#Class:                  'package' WordScoped ';' Header USE_PARENT 'qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties Method* '1;' '1;' (Subroutine+ '1;' '1;')? ;
                         # NEED FIX: add %properties_class as in RPerl::Operation::Statement::OperatorVoid::Return
 Properties:             'our %properties = (' HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* ')' ';' | 'our %properties = (' ')' ';';
 Method:                 'our' Type VARIABLE_SYMBOL '= sub {' MethodArguments? Operation+ '}' ';' ;
