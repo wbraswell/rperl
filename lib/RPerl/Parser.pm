@@ -2,7 +2,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_002;
+our $VERSION = 0.003_010;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(ProhibitBacktickOperators)  ## SYSTEM SPECIAL 11: allow system command execution
@@ -133,9 +133,18 @@ our void $rperl_source__criticize = sub {
 our void $rperl_grammar_error = sub {
     ( my array $argument ) = @_;
     my string $value = $argument->YYCurval;
-    croak(
-        "ERROR ECVPARP00, RPERL PARSER, RPERL GRAMMAR VIOLATION: expected token but got '$value', croaking\n"
-    );
+ 
+#    croak( "ERROR ECVPARP00, RPERL PARSER, RPERL GRAMMAR VIOLATION: have possible token '$value', croaking\n" );
+#    croak( "ERROR ECVPARP00, RPERL PARSER, RPERL GRAMMAR VIOLATION: have possible token '$value', have \$argument =\n" . Dumper($argument) . "\ncroaking\n" );
+
+    my $current_state_num = $argument->{STACK}[-1][0];
+    my $current_state = $argument->{STATES}[$current_state_num];
+    my $expected_tokens = '';
+    foreach my $expected_token (keys %{$current_state->{ACTIONS}}) {
+        $expected_tokens .= '    ' . $expected_token . "\n";
+    }
+
+    croak( "ERROR ECVPARP00, RPERL PARSER, RPERL GRAMMAR VIOLATION: have possible token '$value', expected one of the following:\n\n" . $expected_tokens . "\ncroaking" );
 };
 
 # Parse RPerl Syntax Using Eyapp Grammar
@@ -145,7 +154,8 @@ our void $rperl_source__parse = sub {
     my object $eyapp_parser = RPerl::Grammar->new();
     $eyapp_parser->YYSlurpFile($rperl_source__file_name);
     my object $rperl_ast = $eyapp_parser->YYParse(
-        yydebug => 0xFF,
+        yydebug => 0x00,  # disable eyapp DBG DEBUGGING
+#        yydebug => 0xFF,  # full eyapp DBG DEBUGGING
         yyerror => $rperl_grammar_error
     );
 
