@@ -13,8 +13,8 @@ use RPerl::CodeBlock::Subroutine::Method;
 
 our %properties =
 (
-	data => my unknown $KEY_data = undef,
-	next => my RPerl::DataStructure::LinkedList::NodeReference $KEY_next = undef
+	data => my unknown $TYPED_data = undef,
+	next => my RPerl::DataStructure::LinkedList::NodeReference $TYPED_next = undef
 );
 
 our string__method $DUMPER = sub {(my RPerl::DataStructure::LinkedList::NodeReference $node) = @_;

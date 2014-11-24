@@ -13,8 +13,8 @@ use parent qw(RPerl::Operation::Statement);
 
 # [[[ OO PROPERTIES ]]]
 our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
-    name  => my string $KEY_name  = undef,
-    value => my object $KEY_value = undef,
+    name  => my string $TYPED_name  = undef,
+    value => my object $TYPED_value = undef,
 );
 
 # [[[ OO METHODS ]]]

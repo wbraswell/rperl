@@ -15,9 +15,9 @@ use RPerl::CodeBlock::Subroutine::Method;
 
 our %properties =
 (
-	data => my unknown $KEY_data = undef,
-	left => my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $KEY_left = undef,
-	right => my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $KEY_right = undef
+	data => my unknown $TYPED_data = undef,
+	left => my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $TYPED_left = undef,
+	right => my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $TYPED_right = undef
 );
 
 # traverse nodes breadth-first

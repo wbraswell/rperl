@@ -15,7 +15,7 @@ use RPerl::DataStructure::LinkedList::Node;
 
 our %properties =
 (
-	head => my RPerl::DataStructure::LinkedList::NodeReference $KEY_head = undef,  # start with head = undef so we can test for empty list
+	head => my RPerl::DataStructure::LinkedList::NodeReference $TYPED_head = undef,  # start with head = undef so we can test for empty list
 );
 
 our RPerl::DataStructure::LinkedListReference $new_from_array_ref = sub {(my string $class, my const_array_ref $input) = @_;

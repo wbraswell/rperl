@@ -15,18 +15,18 @@ use parent qw(RPerl::GrammarRule);
 # DEV NOTE: no active properties, this is a stub object for now, see children objects for active properties
 our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
         # Program, Module, Package, and Class objects
-        #name        => my string $KEY_name                   = undef,
-        #version     => my string $KEY_version                = undef,
-        #includes    => my object__array_ref $KEY_includes    = undef,
-        #constants   => my object__array_ref $KEY_constants   = undef,
-        #subroutines => my object__array_ref $KEY_subroutines = undef,
+        #name        => my string $TYPED_name                   = undef,
+        #version     => my string $TYPED_version                = undef,
+        #includes    => my object__array_ref $TYPED_includes    = undef,
+        #constants   => my object__array_ref $TYPED_constants   = undef,
+        #subroutines => my object__array_ref $TYPED_subroutines = undef,
 
     # Program objects only
-    #operations => my object__array_ref $KEY_operations = undef,
+    #operations => my object__array_ref $TYPED_operations = undef,
 
     # Class objects only
-    #methods    => my object__array_ref $KEY_methods    = undef,
-    #properties => my object__array_ref $KEY_properties = undef,
+    #methods    => my object__array_ref $TYPED_methods    = undef,
+    #properties => my object__array_ref $TYPED_properties = undef,
 );
 
 # [[[ OO METHODS ]]]

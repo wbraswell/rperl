@@ -36,10 +36,10 @@ use parent qw(RPerl::CodeBlock);
 
 # [[[ OO PROPERTIES ]]]
 our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
-    type       => my string $KEY_type                   = undef,
-    name       => my string $KEY_name                   = undef,
-    arguments  => my hash_ref__array_ref $KEY_arguments = undef,
-    operations => my object__array_ref $KEY_operations  = undef,
+    type       => my string $TYPED_type                   = undef,
+    name       => my string $TYPED_name                   = undef,
+    arguments  => my hash_ref__array_ref $TYPED_arguments = undef,
+    operations => my object__array_ref $TYPED_operations  = undef,
 );
 
 # [[[ OO METHOD(S) ]]]

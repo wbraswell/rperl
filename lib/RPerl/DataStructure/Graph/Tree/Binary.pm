@@ -20,7 +20,7 @@ use RPerl::DataStructure::Array;
 
 our %properties =
 (
-	root => my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $KEY_root = undef,  # start with root = undef so we can test for empty tree
+	root => my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $TYPED_root = undef,  # start with root = undef so we can test for empty tree
 );
 
 our RPerl::DataStructure::Graph::Tree::BinaryReference $new_from_nested_array_refs = sub {(my string $class, my const_array_ref $input) = @_;

@@ -15,10 +15,10 @@ use parent qw(RPerl::CompileUnit::Module);
 
 # [[[ OO PROPERTIES ]]]
 our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
-    name => my string $KEY_name = undef,
-    version => my string $KEY_version = undef, # NEED UPGRADE: convert vstring from string type to number type?
-    includes    => my string__array_ref $KEY_includes    = undef,
-    subroutines => my object__array_ref $KEY_subroutines = undef,
+    name => my string $TYPED_name = undef,
+    version => my string $TYPED_version = undef, # NEED UPGRADE: convert vstring from string type to number type?
+    includes    => my string__array_ref $TYPED_includes    = undef,
+    subroutines => my object__array_ref $TYPED_subroutines = undef,
 );
 
 # [[[ OO METHODS ]]]

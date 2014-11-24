@@ -6,8 +6,8 @@ use RPerl::Algorithm::Sort;
 
 our %properties =
 (
-	variant => my string $KEY_mode = 'original',  # default to original (not in-place) variant
-	data => my scalar__array_ref $KEY_data,
+	variant => my string $TYPED_mode = 'original',  # default to original (not in-place) variant
+	data => my scalar__array_ref $TYPED_data,
 );
 
 # call out to sort data, return nothing

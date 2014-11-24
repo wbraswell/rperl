@@ -14,11 +14,11 @@ use parent qw(RPerl::Operation::Statement);
 
 # [[[ OO PROPERTIES ]]]
 our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
-                    #name => my string $KEY_name = undef,  # object property
-     #arguments => my object__array_ref $KEY_arguments = undef,  # object property
+                    #name => my string $TYPED_name = undef,  # object property
+     #arguments => my object__array_ref $TYPED_arguments = undef,  # object property
 
     # class property
-    _operator_void_names => my string__hash_ref $KEY__operator_void_names = {
+    _operator_void_names => my string__hash_ref $TYPED__operator_void_names = {
         'print'  => 'RPerl::Operation::Statement::OperatorVoid::Print',
         'return' => 'RPerl::Operation::Statement::OperatorVoid::Return',
         'croak'  => 'RPerl::Operation::Statement::OperatorVoid::Croak',

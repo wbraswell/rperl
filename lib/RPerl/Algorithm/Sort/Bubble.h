@@ -51,7 +51,7 @@ public:
 ////# [[[ OO PROPERTIES ]]]
 
 private:
-////our %properties = ( integer__data => my integer__array_ref $KEY_integer__data, number__data  => my number__array_ref $KEY_number__data );
+////our %properties = ( integer__data => my integer__array_ref $TYPED_integer__data, number__data  => my number__array_ref $TYPED_number__data );
 	SV* integer__data;
 	SV* number__data;
 };
@@ -116,7 +116,7 @@ public:
 	////# [[[ OO PROPERTIES ]]]
 
 private:
-////our %properties = ( integer__data => my integer__array_ref $KEY_integer__data, number__data  => my number__array_ref $KEY_number__data );
+////our %properties = ( integer__data => my integer__array_ref $TYPED_integer__data, number__data  => my number__array_ref $TYPED_number__data );
 	integer__array_ref integer__data;
 	number__array_ref number__data;
 };

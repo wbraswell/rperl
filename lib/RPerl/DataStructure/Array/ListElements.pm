@@ -17,7 +17,7 @@ use parent qw(RPerl::GrammarRule);
 # [[[ OO PROPERTIES ]]]
 # DEV NOTE: no active properties, this is a stub object for now, see children objects for active properties
 our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
-    elements => my object__array_ref $KEY_elements = undef,
+    elements => my object__array_ref $TYPED_elements = undef,
 );
 
 # [[[ OO METHODS ]]]

@@ -15,17 +15,17 @@ use parent qw(RPerl::Operation::Statement::OperatorVoid); # NEED FIX: is not a G
 # [[[ OO PROPERTIES ]]]
 our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
                     # object properties
-    filehandle => my string $KEY_filehandle           = undef,
-    arguments  => my object__array_ref $KEY_arguments = undef,
+    filehandle => my string $TYPED_filehandle           = undef,
+    arguments  => my object__array_ref $TYPED_arguments = undef,
 );
 our %properties_class = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
                           # class properties
      # NEED UPGRADE: officialize splitting class and object properties into 2 hashes
-    name => my string $KEY_name = 'print',
-    parentheses_require => my integer $KEY_parentheses_require = 0,
-    parentheses_allow => my integer $KEY_parentheses_allow = 0, # subject to Perl::Critic brutal CodeLayout::ProhibitParensWithBuiltins
-    arguments_min     => my integer $KEY_arguments_min     = 1,
-    arguments_max => my integer $KEY_arguments_max = 999,
+    name => my string $TYPED_name = 'print',
+    parentheses_require => my integer $TYPED_parentheses_require = 0,
+    parentheses_allow => my integer $TYPED_parentheses_allow = 0, # subject to Perl::Critic brutal CodeLayout::ProhibitParensWithBuiltins
+    arguments_min     => my integer $TYPED_arguments_min     = 1,
+    arguments_max => my integer $TYPED_arguments_max = 999,
 );
 
 # [[[ OO METHODS ]]]

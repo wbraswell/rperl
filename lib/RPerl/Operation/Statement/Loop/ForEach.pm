@@ -13,11 +13,11 @@ use parent qw(RPerl::Operation::Statement::Loop);
 
 # [[[ OO PROPERTIES ]]]
 our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
-    label           => my string $KEY_label            = undef,
-    iterator_type   => my string $KEY_iterator_type    = undef,
-    iterator_symbol => my string $KEY_iterator_symbol  = undef,
-    range           => my object__array_ref $KEY_range = undef,
-    body            => my object $KEY_body             = undef,
+    label           => my string $TYPED_label            = undef,
+    iterator_type   => my string $TYPED_iterator_type    = undef,
+    iterator_symbol => my string $TYPED_iterator_symbol  = undef,
+    range           => my object__array_ref $TYPED_range = undef,
+    body            => my object $TYPED_body             = undef,
 );
 
 # [[[ OO METHODS ]]]

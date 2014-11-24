@@ -6,8 +6,8 @@ use RPerl::Algorithm::Sort;
 
 our %properties =
 (
-	variant => my string $KEY_mode = 'topdown',  # default to top-down variant
-	data => my unknown $KEY_data,  # TODO: create nonscalar_ref data type?
+	variant => my string $TYPED_mode = 'topdown',  # default to top-down variant
+	data => my unknown $TYPED_data,  # TODO: create nonscalar_ref data type?
 );
 
 # call out to sort data, return nothing

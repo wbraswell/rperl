@@ -13,12 +13,12 @@ use parent qw(RPerl::Operation::Statement);
 
 # [[[ OO PROPERTIES ]]]
 our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
-    if_condition     => my object $KEY_condition                   = undef,
-    if_body          => my object $KEY_body                        = undef,
-    elsif_conditions => my object__array_ref $KEY_elsif_conditions = undef,
-    elsif_bodies     => my object__array_ref $KEY_elsif_bodies     = undef,
-    else_condition   => my object $KEY_else_condition              = undef,
-    else_body        => my object $KEY_else_body                   = undef,
+    if_condition     => my object $TYPED_condition                   = undef,
+    if_body          => my object $TYPED_body                        = undef,
+    elsif_conditions => my object__array_ref $TYPED_elsif_conditions = undef,
+    elsif_bodies     => my object__array_ref $TYPED_elsif_bodies     = undef,
+    else_condition   => my object $TYPED_else_condition              = undef,
+    else_body        => my object $TYPED_else_body                   = undef,
 );
 
 # [[[ OO METHODS ]]]

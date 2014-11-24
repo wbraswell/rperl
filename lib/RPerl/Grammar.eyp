@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_738;
+    our $VERSION = 0.000_740;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -42,6 +42,11 @@
 %token OP12_COMPARE_EQ_NEQ      = /(==|!=|eq|ne)/               # precedence 12 infix: comparison numeric equal, numeric not equal, string equal, string not equal
 %token OP09_BITWISE_SHIFT       = /(<<|>>)/                     # precedence 09 infix: bitwise shift left, shift right
 %token OP10_NAMED_UNARY         = /(scalar)/                    # precedence 10 prefix: "named unary operators" [1]; ex. 'chdir' and 'rand'; NEED FIX: hard-code names
+
+# START HERE: fix confused usage of '::' throughout grammar
+# START HERE: fix confused usage of '::' throughout grammar
+# START HERE: fix confused usage of '::' throughout grammar
+
 #%token OP10_NAMED_UNARY_STRINGIFY = /([a-zA-Z]\w*__stringify)/  # precedence 10 prefix: stringify AKA pretty print; ex. 'integer__array_ref__stringify'
 %token OP10_NAMED_UNARY_STRINGIFY = /(::[a-zA-Z]\w*__stringify)/  # precedence 10 prefix: stringify AKA pretty print; ex. 'integer__array_ref__stringify'
 %token OP08_STRING_CAT          = /(\.)/                        # precedence 08 infix: string concatenate
@@ -59,9 +64,13 @@
 %token OP05_MATH_NEG            = /(-\()/                       # precedence 05 prefix: arithmetic negative
 %token OP08_MATH_ADD_SUB        = /(\+|-)/                      # precedence 08 infix: arithmetic add, subtract
 %token OP11_COMPARE_LT_GT       = /(<|>|<=|>=|lt|gt|le|ge)/     # precedence 11 infix: comparison less than, greater than, less or equal, greater or equal
-%token OP01_NAMED_VOID_PAREN    = /((print|croak|return|exit)\s*\()/  # precedence 01 prefix void: no return value or context
-%token OP01_NAMED_VOID          = /(print|croak|return|exit)/   # precedence 01 prefix void: no return value or context
-%token OP01_NAMED_QW            = /(qw)/                        # precedence 01 prefix qw: quoted words
+%token OP01_PRINT_VOID_PAREN    = /(print\s*\()/                # precedence 01 prefix void: print to STDOUT, STDERR, or filehandle
+%token OP01_PRINT_VOID          = /(print)/                     # precedence 01 prefix void: print to STDOUT, STDERR, or filehandle
+%token OP01_NAMED_VOID_PAREN    = /((croak|return|exit)\s*\()/  # precedence 01 prefix void: "terms and list operators (leftward)" [1] AKA builtins, no return value
+%token OP01_NAMED_VOID          = /(croak|return|exit)/         # precedence 01 prefix void: "terms and list operators (leftward)" [1] AKA builtins, no return value
+%token OP01_QW                  = /(qw)/                        # precedence 01 prefix: quoted words
+%token OP01_OPEN_CLOSE_PAREN    = /((open|close)\s*\()/         # precedence 01 prefix: open or close filehandle
+%token OP01_OPEN_CLOSE          = /(open|close)/                # precedence 01 prefix: open or close filehandle
 %token OP01_NAMED               = /(sin|cos|tan)/               # precedence 01 prefix: "terms and list operators (leftward)" [1] AKA builtins; NEED FIX: hard-code names
 
 # PRECEDENCE, SYNTAX ASSOCIATIVITY: later declaration gets higher priority
@@ -97,9 +106,13 @@
 %left       OP02_ARRAY_THINARROW
 %left       OP02_METHOD_THINARROW
 %left       OP01_NAMED
-%left       OP01_NAMED_QW
+%left       OP01_OPEN_CLOSE
+%left       OP01_OPEN_CLOSE_PAREN
+%left       OP01_QW
 %left       OP01_NAMED_VOID
 %left       OP01_NAMED_VOID_PAREN
+%left       OP01_PRINT_VOID
+%left       OP01_PRINT_VOID_PAREN
 
 %token WORD_SCOPED          = /(([a-zA-Z]\w*(::[a-zA-Z]\w*)+)|(::[a-zA-Z]\w*(::[a-zA-Z]\w*)*))/
 %token WORD                 = /([a-zA-Z]\w*)/                       # letter followed by letters, numbers, and underscores; ex. 'foobar_42_Howdy'
@@ -123,26 +136,25 @@ Subroutine:             'our' Type VARIABLE_SYMBOL '= sub {' SubroutineArguments
 SubroutineArguments:    '( my' Type VARIABLE_SYMBOL (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ArgumentCheck* ;
 #ArgumentCheck:          '::' CHECK_OR_CHECKTRACE '(' Expression (OP21_LIST_COMMA Expression OP21_LIST_COMMA Expression)? ')' ';' ;
 ArgumentCheck:          CHECK_OR_CHECKTRACE '(' Expression (OP21_LIST_COMMA Expression OP21_LIST_COMMA Expression)? ')' ';' ;
-Class:                  'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties Method* '1;' '1;' (Subroutine+ '1;' '1;')? ;
-                        # NEED FIX: add %properties_class as in RPerl::Operation::Statement::OperatorVoid::Return
-Properties:             'our %properties = (' Critic HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* ')' ';' | 'our %properties = (' ')' ';' Critic;
+Class:                  'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties PropertiesClass? Method* '1;' '1;' (Subroutine+ '1;' '1;')? ;
+Properties:             'our %properties = (' Critic HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* ')' ';' | 'our %properties = (' ')' ';' Critic ;
+PropertiesClass:        'our %properties_class = (' Critic HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* ')' ';' ;
 Method:                 'our' Type VARIABLE_SYMBOL '= sub {' MethodArguments? Operation+ '}' ';' ;
 MethodArguments:        '( my' TYPE_CLASS_OR_SELF (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ArgumentCheck* ;
 
 Operation:              Expression ';' | Statement ;
-Operator:               OP01_NAMED '(' ListElements? ')' | OP03_MATH_INC_DEC Variable | Variable OP03_MATH_INC_DEC | Expression OP04_MATH_POW Expression | 
+Operator:               OP01_NAMED '(' ListElements? ')' | OP01_OPEN_CLOSE_PAREN FileHandle ListElements? ')' ';' | OP01_OPEN_CLOSE FileHandle ListElements? ';' |
+                        OP03_MATH_INC_DEC Variable | Variable OP03_MATH_INC_DEC | Expression OP04_MATH_POW Expression | 
                         OP05_LOGICAL_NEG Expression | OP05_MATH_NEG Expression ')' | Expression OP06_REGEX_MATCH '/' OP06_REGEX_PATTERN '/' |
                         Expression OP07_MATH_MULT_DIV_MOD Expression | Expression OP08_MATH_ADD_SUB Expression | Expression OP08_STRING_CAT Expression | 
 #                        Expression OP09_BITWISE_SHIFT Expression | OP10_NAMED_UNARY Expression | '::' OP10_NAMED_UNARY_STRINGIFY Expression | 
                         Expression OP09_BITWISE_SHIFT Expression | OP10_NAMED_UNARY Expression | OP10_NAMED_UNARY_STRINGIFY Expression | 
-                        Expression OP11_COMPARE_LT_GT Expression | 
-                        Expression OP12_COMPARE_EQ_NEQ Expression | Expression OP13_BITWISE_AND Expression | Expression OP14_BITWISE_OR_XOR Expression | 
-                        Expression OP15_LOGICAL_AND Expression | Expression OP16_LOGICAL_OR Expression | Expression OP17_LIST_RANGE Expression | 
-                        Expression OP18_TERNARY Variable COLON Variable | OP22_LOGICAL_NOT Expression | Expression OP23_LOGICAL_AND Expression | 
-                        Expression OP24_LOGICAL_OR_XOR Expression ;
-                        # NEED FIX: are open() and close() ops truly void?  if not, need add FileHandle to non-void Operator production
-OperatorVoid:           OP01_NAMED_VOID_PAREN ListElements? ')' ';' | OP01_NAMED_VOID_PAREN FileHandle ListElements? ')' ';' | 
-                        OP01_NAMED_VOID ListElements? ';' | OP01_NAMED_VOID FileHandle ListElements? ';' | OP19_LOOP_CONTROL LoopLabel ';' ;
+                        Expression OP11_COMPARE_LT_GT Expression | Expression OP12_COMPARE_EQ_NEQ Expression | Expression OP13_BITWISE_AND Expression | 
+                        Expression OP14_BITWISE_OR_XOR Expression | Expression OP15_LOGICAL_AND Expression | Expression OP16_LOGICAL_OR Expression | 
+                        Expression OP17_LIST_RANGE Expression | Expression OP18_TERNARY Variable COLON Variable | OP22_LOGICAL_NOT Expression | 
+                        Expression OP23_LOGICAL_AND Expression | Expression OP24_LOGICAL_OR_XOR Expression ;
+OperatorVoid:           OP01_NAMED_VOID_PAREN ListElements? ')' ';' | OP01_PRINT_VOID_PAREN FileHandle ListElements? ')' ';' | 
+                        OP01_NAMED_VOID ListElements? ';' | OP01_PRINT_VOID FileHandle ListElements? ';' | OP19_LOOP_CONTROL LoopLabel ';' ;
 Expression:             'undef' | Literal | Variable | ArrayReference | ArrayDereferenced | HashReference | HashDereferenced | '{' '}' |
                         Operator | WordScoped '(' ListElements? ')' | Variable OP02_METHOD_THINARROW WORD '(' ListElements? ')' | '(' Expression ')' ;
 ExpressionOrStdin:      Expression | '<STDIN>';
@@ -158,7 +170,7 @@ Variable:               VARIABLE_SYMBOL VariableRetrieval* ;
 VariableRetrieval:      OP02_ARRAY_THINARROW Expression ']' | OP02_HASH_THINARROW Expression '}' | OP02_HASH_THINARROW WORD '}' ;
 VariableDeclaration:    'my' Type VARIABLE_SYMBOL ';' | 'my' Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN ExpressionOrStdin ';' ;
 VariableModification:   Variable OP19_VARIABLE_ASSIGN ExpressionOrStdin ';' | Variable OP19_VARIABLE_ASSIGN_BY Expression ';' ;
-ListElements:           ListElement (OP21_LIST_COMMA ListElement)* | OP01_NAMED_QW '(' WORD+ ')' ;
+ListElements:           ListElement (OP21_LIST_COMMA ListElement)* | OP01_QW '(' WORD+ ')' ;
 ListElement:            Expression | TypeInner Expression | KEYS_OR_VALUES HashDereferenced ;
 ArrayReference:         '[' ListElements? ']' ;
 ArrayDereferenced:      '@{' Variable '}' | '@{' ArrayReference '}' ;

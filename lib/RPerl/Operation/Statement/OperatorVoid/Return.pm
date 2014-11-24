@@ -2,7 +2,7 @@ package RPerl::Operation::Statement::OperatorVoid::Return;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_002;
+our $VERSION = 0.001_003;
 
 # [[[ SETUP ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
@@ -13,17 +13,16 @@ use parent qw(RPerl::Operation::Statement::OperatorVoid); # NEED FIX: is not a G
 
 # [[[ OO OBJECT PROPERTIES ]]]
 our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
-    arguments => my object__array_ref $KEY_arguments = undef,
+    arguments => my object__array_ref $TYPED_arguments = undef,
 );
 
 # [[[ OO CLASS PROPERTIES ]]]
 our %properties_class = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
-     # NEED UPGRADE: officialize splitting class and object properties into 2 hashes
-    name => my string $KEY_name = 'return',
-    parentheses_require => my integer $KEY_parentheses_require = 1, # disallow ambiguous'ish calling of return w/out parens
-    parentheses_allow => my integer $KEY_parentheses_allow = 1, # exempt from Perl::Critic brutal CodeLayout::ProhibitParensWithBuiltins
-    arguments_min => my integer $KEY_arguments_min = 0, # call return() for all subroutines which return void
-    arguments_max => my integer $KEY_arguments_max = 1, # call return((ELEM0, ELEM1, ...)) for all subroutines which return an array; disallow return(ELEM0, ELEM1, ...) multiple return values
+    name => my string $TYPED_name = 'return',
+    parentheses_require => my integer $TYPED_parentheses_require = 1, # disallow ambiguous'ish calling of return w/out parens
+    parentheses_allow => my integer $TYPED_parentheses_allow = 1, # exempt from Perl::Critic brutal CodeLayout::ProhibitParensWithBuiltins
+    arguments_min => my integer $TYPED_arguments_min = 0, # call return() for all subroutines which return void
+    arguments_max => my integer $TYPED_arguments_max = 1, # call return((ELEM0, ELEM1, ...)) for all subroutines which return an array; disallow return(ELEM0, ELEM1, ...) multiple return values
 );
 
 # [[[ OO METHODS ]]]

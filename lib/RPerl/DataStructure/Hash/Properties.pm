@@ -14,7 +14,7 @@ use parent qw(RPerl::GrammarRule RPerl::DataStructure::Hash);
 
 # [[[ OO PROPERTIES ]]]
 our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
-    property_entries => my object__hash_ref $KEY_property_entries = undef,
+    property_entries => my object__hash_ref $TYPED_property_entries = undef,
 );
 
 # [[[ OO METHODS ]]]
