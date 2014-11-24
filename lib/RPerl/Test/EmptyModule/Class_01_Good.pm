@@ -1,6 +1,6 @@
-# [[[ TEST : 'ERROR ECVPARP00' ]]]
+## no critic qw(ProhibitUselessNoCritic PodSpelling ProhibitExcessMainComplexity)  # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code; SYSTEM SPECIAL 5: allow complex code outside subroutines, must be on line 1
 # [[[ HEADER ]]]
-package RPerl::Test::EmptyModule::Class_00_Bad_Properties_11;
+package RPerl::Test::EmptyModule::Class_01_Good;
 use strict;
 use warnings;
 use RPerl;
@@ -12,7 +12,7 @@ use RPerl::Test;
 
 # [[[ OO PROPERTIES ]]]
 our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
-    empty_property => my $TYPED_empty_property = 2
+    empty_property => my integer $TYPED_empty_property = 2
 );
 
 # [[[ OO METHODS ]]]
@@ -20,4 +20,3 @@ our void__method $empty_method = sub { 2; };
 
 1;
 1;                  # CODE SEPARATOR: end of class
-

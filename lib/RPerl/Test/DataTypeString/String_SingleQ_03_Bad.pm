@@ -1,5 +1,5 @@
-# [[[ TEST : "ERROR ECVPAPC02" ]]]
-# [[[ TEST : "Perl::Critic::Policy::ValuesAndExpressions::RequireInterpolationOfMetachars" ]]]
+# [[[ TEST : 'ERROR ECVPAPC02' ]]]
+# [[[ TEST : 'Perl::Critic::Policy::ValuesAndExpressions::RequireInterpolationOfMetachars' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::DataTypeString::String_SingleQ_03_Bad;
 use strict;

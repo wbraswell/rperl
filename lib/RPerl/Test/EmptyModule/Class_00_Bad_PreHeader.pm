@@ -1,5 +1,5 @@
-# [[[ TEST : "ERROR ECVPAPL02" ]]]
-# [[[ TEST : "syntax error" ]]]
+# [[[ TEST : 'ERROR ECVPAPL02' ]]]
+# [[[ TEST : 'syntax error' ]]]
 foo
 # [[[ HEADER ]]]
 package RPerl::Test::EmptyModule::Class_00_Bad_PreHeader;

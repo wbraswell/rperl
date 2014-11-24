@@ -1,5 +1,5 @@
-# [[[ TEST : "ERROR ECVPAPL02" ]]]
-# [[[ TEST : "Illegal declaration of anonymous subroutine" ]]]
+# [[[ TEST : 'ERROR ECVPAPL02' ]]]
+# [[[ TEST : 'Illegal declaration of anonymous subroutine' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::EmptyModule::Package_00_Bad_Sub_05;
 use strict;

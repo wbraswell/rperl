@@ -1,5 +1,5 @@
-# [[[ TEST : "ERROR ECVPAPC02" ]]]
-# [[[ TEST : "Perl::Critic::Policy::Modules::RequireEndWithOne" ]]]
+# [[[ TEST : 'ERROR ECVPAPC02' ]]]
+# [[[ TEST : 'Perl::Critic::Policy::Modules::RequireEndWithOne' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::EmptyModule::Class_00_Bad_Separator_03;
 use strict;

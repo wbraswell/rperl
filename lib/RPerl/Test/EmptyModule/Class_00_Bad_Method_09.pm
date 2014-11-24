@@ -1,5 +1,5 @@
-# [[[ TEST : "ERROR ECVPAPL02" ]]]
-# [[[ TEST : "Number found where operator expected" ]]]
+# [[[ TEST : 'ERROR ECVPAPL02' ]]]
+# [[[ TEST : 'Number found where operator expected' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::EmptyModule::Class_00_Bad_Method_09;
 use strict;

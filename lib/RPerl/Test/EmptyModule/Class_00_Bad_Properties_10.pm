@@ -1,4 +1,4 @@
-# [[[ TEST : "ERROR ECVPAPL02" ]]]
+# [[[ TEST : 'ERROR ECVPAPL02' ]]]
 # [[[ TEST : 'Global symbol "$TYPED_empty_property" requires explicit package name' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::EmptyModule::Class_00_Bad_Properties_10;

@@ -1,5 +1,5 @@
-# [[[ TEST : "ERROR ECVPAPC02" ]]]
-# [[[ TEST : "Perl::Critic::Policy::ValuesAndExpressions::ProhibitMagicNumbers" ]]]
+# [[[ TEST : 'ERROR ECVPAPC02' ]]]
+# [[[ TEST : 'Perl::Critic::Policy::ValuesAndExpressions::ProhibitMagicNumbers' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::DataTypeNumber::Number_48_Bad_01;
 use strict;

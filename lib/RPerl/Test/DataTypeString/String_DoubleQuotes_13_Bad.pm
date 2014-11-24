@@ -1,4 +1,4 @@
-# [[[ TEST : "ERROR ECVPAPL02" ]]]
+# [[[ TEST : 'ERROR ECVPAPL02' ]]]
 # [[[ TEST : 'Global symbol "$bar" requires explicit package name' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::DataTypeString::String_DoubleQuotes_13_Bad;

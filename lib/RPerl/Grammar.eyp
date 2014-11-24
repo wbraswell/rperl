@@ -7,11 +7,9 @@
     use rperlrules;  # affirmative, it totally does
 %}
 
-%strict                         # require all tokens to be declared, etc.
-%tree                           # automatically create AST
-
-%whites /((?:\s*(?:#[^#!].*)?\s*)*)/  # actual whitespace, or one or more normal comments; not shebang '#!', or double-hash critics '##'
-#%whites { /\G((?:\s*(?:#[^#!].*)?\s*)*)/gc and $self->tokenline($1 =~ tr{\n}{}) and print (q{WHITESPACE = '} . $1 . q{'} . "\n") }  # DEBUG
+%strict                               # require all tokens to be declared, etc.
+%tree                                 # automatically create AST
+%whites /((?:\s*(?:#[^#!].*)?\s*)*)/  # actual whitespace, or one or more normal comments; neither shebang '#!', nor double-hash critics '##'
 
 %defaultaction {
     my $self = shift;
@@ -19,10 +17,10 @@
     bless { children => [ @_ ] }, $name;
 }
 
-%token SHEBANG              = /(^#!\/(?:\w+\/)*perl)/               # begin line, hash (octothorpe), bang, *NIX path to Perl; ex. '#!/usr/bin/perl'
+%token SHEBANG              = /(^#!\/(?:\w+\/)*perl)/                   # begin line, hash (octothorpe), bang, *NIX path to Perl; ex. '#!/usr/bin/perl'
 %token VERSION_NUMBER_ASSIGN = /\$VERSION\ \=\ (\d\d?\.\d{3}\_\d{3});/  # match assign match, only capture & return number; ex. '$VERSION = 12.345_678;' returns '12.345_678'
 %token LITERAL_NUMBER       = /(-?(((\d{1,2}_)?(\d{3}_)*\d{3})|\d{1,2})(\.((\d{3}(_\d{3})*(_\d{1,2})?)|\d{1,2}))?)/   # number w/ underscores
-%token LITERAL_STRING       = /(('[^']+')|("[^"\@\$]*((\\n)|(\\t))+[^"\@\$]*")|(q{[^}]*}))/  # strings: single quotes non-empty; double quotes non-empty w/out sigils & w/ newline or tab; or single q-braces
+%token LITERAL_STRING       = /(('[^']+')|("[^"\@\$]*((\\n)|(\\t))+[^"\@\$]*")|(q{[^}]*}))/  # single quotes non-empty; double quotes non-empty w/out sigils & w/ newline or tab; or single q-braces
 %token VARIABLE_SYMBOL      = /(\$[a-zA-Z]\w*(::)*\w*)/                 # dollar sigil, scoped word
 %token KEYS_OR_VALUES       = /(keys|values)/                           # 'keys' or 'values'
 %token TYPE_CLASS_OR_SELF   = /(string\s+\$class|object\s+\$self)/      # ex. 'string $class' or 'object $self'
@@ -50,8 +48,7 @@
 %token OP03_MATH_INC_DEC        = /(\+\+|--)/                   # precedence 03 prefix and postfix: increment, decrement
 %token OP04_MATH_POW            = /(\*\*)/                      # precedence 04 infix: arithmetic exponent AKA power
 %token OP07_MATH_MULT_DIV_MOD   = /(\*|\/|\%)/                  # precedence 07 infix: arithmetic multiply, divide, modulo
-#%token OP06_REGEX_PATTERN       = /(m\/.*\/xms)/                    # precedence 06 infix: regular expression pattern
-%token OP06_REGEX_PATTERN       = /(HOWDYHOWDYHOWDY)/                    # precedence 06 infix: regular expression pattern
+%token OP06_REGEX_PATTERN       = /(m\/.*\/xms)/                # precedence 06 infix: regular expression pattern
 %token OP06_REGEX_MATCH         = /(=\~|!\~)/                   # precedence 06 infix: regular expression match, not match
 %token OP19_VARIABLE_ASSIGN_BY  = /(\+=|-=|\*=|\/=)/            # precedence 19 infix: add assign, subtract assign, multiply assign, divide assign
 %token OP19_VARIABLE_ASSIGN     = /(=)/                         # precedence 19 infix: assign
@@ -62,7 +59,7 @@
 %token OP05_MATH_NEG            = /(-\()/                       # precedence 05 prefix: arithmetic negative
 %token OP08_MATH_ADD_SUB        = /(\+|-)/                      # precedence 08 infix: arithmetic add, subtract
 %token OP11_COMPARE_LT_GT       = /(<|>|<=|>=|lt|gt|le|ge)/     # precedence 11 infix: comparison less than, greater than, less or equal, greater or equal
-%token OP01_NAMED_VOID_PAREN    = /((print|croak|return|exit)\s*\()/   # precedence 01 prefix void: no return value or context
+%token OP01_NAMED_VOID_PAREN    = /((print|croak|return|exit)\s*\()/  # precedence 01 prefix void: no return value or context
 %token OP01_NAMED_VOID          = /(print|croak|return|exit)/   # precedence 01 prefix void: no return value or context
 %token OP01_NAMED_QW            = /(qw)/                        # precedence 01 prefix qw: quoted words
 %token OP01_NAMED               = /(sin|cos|tan)/               # precedence 01 prefix: "terms and list operators (leftward)" [1] AKA builtins; NEED FIX: hard-code names
@@ -110,23 +107,23 @@
 
 %%
 
-                        # NEED FIX: add Critic on first separate line before 'package', and on first same line after SHEBANG
-CompileUnit:            Program | Module+ ;
-Program:                SHEBANG Header Critic* Include* Constant* Subroutine* Operation+ ;
+CompileUnit:            Program | (ModuleHeader Module)+ ;
+Program:                SHEBANG Critic? Header Critic* Include* Constant* Subroutine* Operation+ ;
+ModuleHeader:           Critic? 'package' WordScoped ';' Header ;
 Module:                 Package | Class ;
-Package:                'package' WordScoped ';' Header Critic* Include* Constant* Subroutine+ '1;' '1;' ;
+Package:                Critic* Include* Constant* Subroutine+ '1;' '1;' ;
 Header:                 'use strict;' 'use warnings;' 'use RPerl;' 'our' VERSION_NUMBER_ASSIGN;
 Critic:                 '## no critic qw(' WORD+ ')';
 Include:                'use' WordScoped ';' | 'use' WordScoped 'qw(' WORD+ ')' ';' ;
-                        # NEED FIX: disable non-scalar constants
-Constant:               'use constant' WORD OP20_HASH_FATARROW TypeInner ConstantValue ';' ;
-ConstantValue:          Literal | '[' TypeInner? Literal (OP21_LIST_COMMA TypeInner? Literal)* ']' | 
-                        '{' WORD OP20_HASH_FATARROW TypeInner? Literal (OP21_LIST_COMMA WORD OP20_HASH_FATARROW TypeInner? Literal)* '}' ;
+Constant:               'use constant' WORD OP20_HASH_FATARROW TypeInner Literal ';' ;
+#Constant:              'use constant' WORD OP20_HASH_FATARROW TypeInner ConstantValue ';' ;  # NEED UPGRADE: constant array & hash refs not yet read-only as of Perl v5.20
+#ConstantValue:         Literal | '[' TypeInner? Literal (OP21_LIST_COMMA TypeInner? Literal)* ']' | 
+#                       '{' WORD OP20_HASH_FATARROW TypeInner? Literal (OP21_LIST_COMMA WORD OP20_HASH_FATARROW TypeInner? Literal)* '}' ;
 Subroutine:             'our' Type VARIABLE_SYMBOL '= sub {' SubroutineArguments? Operation+ '}' ';' ;
 SubroutineArguments:    '( my' Type VARIABLE_SYMBOL (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ArgumentCheck* ;
 #ArgumentCheck:          '::' CHECK_OR_CHECKTRACE '(' Expression (OP21_LIST_COMMA Expression OP21_LIST_COMMA Expression)? ')' ';' ;
 ArgumentCheck:          CHECK_OR_CHECKTRACE '(' Expression (OP21_LIST_COMMA Expression OP21_LIST_COMMA Expression)? ')' ';' ;
-Class:                  'package' WordScoped ';' Header 'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties Method* '1;' '1;' (Subroutine+ '1;' '1;')? ;
+Class:                  'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties Method* '1;' '1;' (Subroutine+ '1;' '1;')? ;
                         # NEED FIX: add %properties_class as in RPerl::Operation::Statement::OperatorVoid::Return
 Properties:             'our %properties = (' Critic HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* ')' ';' | 'our %properties = (' ')' ';' Critic;
 Method:                 'our' Type VARIABLE_SYMBOL '= sub {' MethodArguments? Operation+ '}' ';' ;

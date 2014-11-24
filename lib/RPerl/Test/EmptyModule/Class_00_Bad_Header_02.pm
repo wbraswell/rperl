@@ -1,5 +1,5 @@
-# [[[ TEST : "ERROR ECVPAPC02" ]]]
-# [[[ TEST : "Perl::Critic::Policy::TestingAndDebugging::RequireUseWarnings" ]]]
+# [[[ TEST : 'ERROR ECVPAPC02' ]]]
+# [[[ TEST : 'Perl::Critic::Policy::TestingAndDebugging::RequireUseWarnings' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::EmptyModule::Class_00_Bad_Header_02;
 use strict;

@@ -1,4 +1,4 @@
-# [[[ TEST : "ERROR ECVPARP00" ]]]
+# [[[ TEST : 'ERROR ECVPARP00' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::EmptyModule::Class_00_Bad_VersionNumber_02;
 use strict;

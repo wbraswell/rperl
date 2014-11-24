@@ -1,4 +1,4 @@
-# [[[ TEST : "ERROR ECVPARP00" ]]]
+# [[[ TEST : 'ERROR ECVPARP00' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::DataTypeString::String_DoubleQuotes_06_Bad;
 use strict;

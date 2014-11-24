@@ -1,6 +1,6 @@
-# [[[ TEST : "ERROR ECVPAPC02" ]]]
-# [[[ TEST : "Perl::Critic::Policy::ValuesAndExpressions::ProhibitEmptyQuotes" ]]]
-# [[[ TEST : "Perl::Critic::Policy::ValuesAndExpressions::ProhibitInterpolationOfLiterals" ]]]
+# [[[ TEST : 'ERROR ECVPAPC02' ]]]
+# [[[ TEST : 'Perl::Critic::Policy::ValuesAndExpressions::ProhibitEmptyQuotes' ]]]
+# [[[ TEST : 'Perl::Critic::Policy::ValuesAndExpressions::ProhibitInterpolationOfLiterals' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::DataTypeString::String_DoubleQuotes_00_Bad;
 use strict;

@@ -1,5 +1,5 @@
-# [[[ TEST : "ERROR ECVPAPC02" ]]]
-# [[[ TEST : "Perl::Critic::Policy::ValuesAndExpressions::ProhibitEmptyQuotes" ]]]
+# [[[ TEST : 'ERROR ECVPAPC02' ]]]
+# [[[ TEST : 'Perl::Critic::Policy::ValuesAndExpressions::ProhibitEmptyQuotes' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::DataTypeString::String_SingleQuotes_00_Bad;
 use strict;

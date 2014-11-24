@@ -58,7 +58,7 @@ use RPerl::Test::Bar;
 use constant PI  => my number $TYPED_PI  = 3.14159;
 use constant PIE => my string $TYPED_PIE = 'pecan';
 
-# NEED UPGRADE: constant array and hash references not yet read-only as of Perl v5.20
+# NEED UPGRADE: constant array & hash refs not yet read-only as of Perl v5.20
 #use constant DAYS => my string__array_ref $TYPED_DAYS
 #    = [ 'Sun', 'Mon', 'Tues', 'Weds', 'Thurs', 'Fri', 'Sat' ];
 #use constant HYDROGEN => my scalar__array_ref $TYPED_HYDROGEN = [
@@ -86,7 +86,7 @@ our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allo
 # [[[ OO CLASS PROPERTIES ]]]
 # <<< CHANGE ME: replace with real class property name(s) & default data >>>
 our %properties_class = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
-    name => my string $KEY_name = 'howdy',
+    name => my string $TYPED_name = 'howdy',
 );
 
 # [[[ OO METHODS ]]]

@@ -1,4 +1,4 @@
-# [[[ TEST : "ERROR ECVPAPL02" ]]]
+# [[[ TEST : 'ERROR ECVPAPL02' ]]]
 # [[[ TEST : 'Bareword "_2" not allowed' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::DataTypeNumber::Number_00_Bad_01;

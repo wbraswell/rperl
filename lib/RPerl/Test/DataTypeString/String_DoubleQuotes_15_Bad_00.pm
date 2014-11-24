@@ -1,5 +1,5 @@
-# [[[ TEST : "ERROR ECVPAPC02" ]]]
-# [[[ TEST : "Perl::Critic::Policy::Variables::ProhibitPunctuationVars" ]]]
+# [[[ TEST : 'ERROR ECVPAPC02' ]]]
+# [[[ TEST : 'Perl::Critic::Policy::Variables::ProhibitPunctuationVars' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::DataTypeString::String_DoubleQuotes_15_Bad_00;
 use strict;

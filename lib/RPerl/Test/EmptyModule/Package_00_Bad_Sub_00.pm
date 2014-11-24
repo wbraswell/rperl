@@ -1,4 +1,4 @@
-# [[[ TEST : "ERROR ECVPAPL02" ]]]
+# [[[ TEST : 'ERROR ECVPAPL02' ]]]
 # [[[ TEST : 'Global symbol "$empty_sub" requires explicit package name' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::EmptyModule::Package_00_Bad_Sub_00;

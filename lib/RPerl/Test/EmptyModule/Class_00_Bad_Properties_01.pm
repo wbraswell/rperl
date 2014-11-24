@@ -1,6 +1,6 @@
-# [[[ TEST : "ERROR ECVPAPL02" ]]]
-# [[[ TEST : "No such class properties" ]]]
-# [[[ TEST : "syntax error" ]]]
+# [[[ TEST : 'ERROR ECVPAPL02' ]]]
+# [[[ TEST : 'No such class properties' ]]]
+# [[[ TEST : 'syntax error' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::EmptyModule::Class_00_Bad_Properties_01;
 use strict;
