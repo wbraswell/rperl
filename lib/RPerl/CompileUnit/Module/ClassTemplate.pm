@@ -58,7 +58,7 @@ use RPerl::Test::Bar;
 use constant PI  => my number $TYPED_PI  = 3.14159;
 use constant PIE => my string $TYPED_PIE = 'pecan';
 
-# NEED UPGRADE: constant array & hash refs not yet read-only as of Perl v5.20
+# NEED UPGRADE: constant array & hash refs not read-only as of Perl v5.20
 #use constant DAYS => my string__array_ref $TYPED_DAYS
 #    = [ 'Sun', 'Mon', 'Tues', 'Weds', 'Thurs', 'Fri', 'Sat' ];
 #use constant HYDROGEN => my scalar__array_ref $TYPED_HYDROGEN = [

@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_740;
+    our $VERSION = 0.000_741;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -43,11 +43,6 @@
 %token OP09_BITWISE_SHIFT       = /(<<|>>)/                     # precedence 09 infix: bitwise shift left, shift right
 %token OP10_NAMED_UNARY         = /(scalar)/                    # precedence 10 prefix: "named unary operators" [1]; ex. 'chdir' and 'rand'; NEED FIX: hard-code names
 
-# START HERE: fix confused usage of '::' throughout grammar
-# START HERE: fix confused usage of '::' throughout grammar
-# START HERE: fix confused usage of '::' throughout grammar
-
-#%token OP10_NAMED_UNARY_STRINGIFY = /([a-zA-Z]\w*__stringify)/  # precedence 10 prefix: stringify AKA pretty print; ex. 'integer__array_ref__stringify'
 %token OP10_NAMED_UNARY_STRINGIFY = /(::[a-zA-Z]\w*__stringify)/  # precedence 10 prefix: stringify AKA pretty print; ex. 'integer__array_ref__stringify'
 %token OP08_STRING_CAT          = /(\.)/                        # precedence 08 infix: string concatenate
 %token OP03_MATH_INC_DEC        = /(\+\+|--)/                   # precedence 03 prefix and postfix: increment, decrement
@@ -129,12 +124,11 @@ Header:                 'use strict;' 'use warnings;' 'use RPerl;' 'our' VERSION
 Critic:                 '## no critic qw(' WORD+ ')';
 Include:                'use' WordScoped ';' | 'use' WordScoped 'qw(' WORD+ ')' ';' ;
 Constant:               'use constant' WORD OP20_HASH_FATARROW TypeInner Literal ';' ;
-#Constant:              'use constant' WORD OP20_HASH_FATARROW TypeInner ConstantValue ';' ;  # NEED UPGRADE: constant array & hash refs not yet read-only as of Perl v5.20
+#Constant:              'use constant' WORD OP20_HASH_FATARROW TypeInner ConstantValue ';' ;  # NEED UPGRADE: constant array & hash refs not read-only as of Perl v5.20
 #ConstantValue:         Literal | '[' TypeInner? Literal (OP21_LIST_COMMA TypeInner? Literal)* ']' | 
 #                       '{' WORD OP20_HASH_FATARROW TypeInner? Literal (OP21_LIST_COMMA WORD OP20_HASH_FATARROW TypeInner? Literal)* '}' ;
 Subroutine:             'our' Type VARIABLE_SYMBOL '= sub {' SubroutineArguments? Operation+ '}' ';' ;
 SubroutineArguments:    '( my' Type VARIABLE_SYMBOL (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ArgumentCheck* ;
-#ArgumentCheck:          '::' CHECK_OR_CHECKTRACE '(' Expression (OP21_LIST_COMMA Expression OP21_LIST_COMMA Expression)? ')' ';' ;
 ArgumentCheck:          CHECK_OR_CHECKTRACE '(' Expression (OP21_LIST_COMMA Expression OP21_LIST_COMMA Expression)? ')' ';' ;
 Class:                  'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties PropertiesClass? Method* '1;' '1;' (Subroutine+ '1;' '1;')? ;
 Properties:             'our %properties = (' Critic HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* ')' ';' | 'our %properties = (' ')' ';' Critic ;
@@ -147,7 +141,6 @@ Operator:               OP01_NAMED '(' ListElements? ')' | OP01_OPEN_CLOSE_PAREN
                         OP03_MATH_INC_DEC Variable | Variable OP03_MATH_INC_DEC | Expression OP04_MATH_POW Expression | 
                         OP05_LOGICAL_NEG Expression | OP05_MATH_NEG Expression ')' | Expression OP06_REGEX_MATCH '/' OP06_REGEX_PATTERN '/' |
                         Expression OP07_MATH_MULT_DIV_MOD Expression | Expression OP08_MATH_ADD_SUB Expression | Expression OP08_STRING_CAT Expression | 
-#                        Expression OP09_BITWISE_SHIFT Expression | OP10_NAMED_UNARY Expression | '::' OP10_NAMED_UNARY_STRINGIFY Expression | 
                         Expression OP09_BITWISE_SHIFT Expression | OP10_NAMED_UNARY Expression | OP10_NAMED_UNARY_STRINGIFY Expression | 
                         Expression OP11_COMPARE_LT_GT Expression | Expression OP12_COMPARE_EQ_NEQ Expression | Expression OP13_BITWISE_AND Expression | 
                         Expression OP14_BITWISE_OR_XOR Expression | Expression OP15_LOGICAL_AND Expression | Expression OP16_LOGICAL_OR Expression | 
@@ -179,7 +172,6 @@ HashEntryTyped:         WORD OP20_HASH_FATARROW TypeInner Expression | HashDeref
 HashReference:          '{' HashEntry (OP21_LIST_COMMA HashEntry)* '}' ;
 HashDereferenced:       '%{' Variable '}' | '%{' HashReference '}' ;
 
-#WordScoped:             WORD ('::' WORD)* ; 
 WordScoped:             WORD | WORD_SCOPED;
 FileHandle:             '{*' WORD '}' | 'my' 'filehandle_ref' VARIABLE_SYMBOL;
 TypeInner:              'my' Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN ;
