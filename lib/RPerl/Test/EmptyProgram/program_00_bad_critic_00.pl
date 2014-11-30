@@ -12,7 +12,3 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 my integer $i = 2 + 2;
-
-# START HERE: set proper test failures for EmptyProgram/*bad*
-# START HERE: set proper test failures for EmptyProgram/*bad*
-# START HERE: set proper test failures for EmptyProgram/*bad*

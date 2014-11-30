@@ -1,4 +1,6 @@
 #!/usr/bin/perl
+# [[[ TEST : 'ERROR ECVPARP00' ]]]
+# [[[ TEST : "have possible token '##'" ]]]
 # [[[ HEADER ]]]
 use strict;
 use warnings;

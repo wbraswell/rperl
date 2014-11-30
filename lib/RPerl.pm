@@ -27,9 +27,16 @@ sub DUMPER
 #=cut
 
 sub diag {
-  print {*STDERR} @_ if $ENV{TEST_VERBOSE};
+#  print {*STDERR} @_ if $ENV{TEST_VERBOSE};
+  if ($ENV{TEST_VERBOSE} or $RPerl::DEBUG) {
+      print {*STDERR} @_;
+  }
   1;
 }
+
+# <<<=== EXPORTED DATA ===>>>
+
+our $DEBUG = 0;  # Perl variable $RPerl::DEBUG and environmental variable TEST_VERBOSE are equivalent, see diag() above
 
 # <<<=== INCREASE RUNTIME PERFORMANCE ===>>>
 
