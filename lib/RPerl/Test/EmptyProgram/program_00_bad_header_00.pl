@@ -1,4 +1,6 @@
 #!/usr/bin/perl
+# [[[ TEST : 'ERROR ECVPAPL02' ]]]
+# [[[ TEST : 'Unquoted string "foo" may clash with future reserved word' ]]]
 # [[[ HEADER ]]]
 foo
 use strict;

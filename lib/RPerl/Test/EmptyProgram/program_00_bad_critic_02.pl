@@ -1,6 +1,6 @@
 #!/usr/bin/perl
-# [[[ TEST : 'ERROR ECVPARP00' ]]]
-# [[[ TEST : "have possible token '##'" ]]]
+# [[[ TEST : 'ERROR ECVPAPC02' ]]]
+# [[[ TEST : 'ProhibitUnrestrictedNoCritic' ]]]
 # [[[ HEADER ]]]
 use strict;
 use warnings;

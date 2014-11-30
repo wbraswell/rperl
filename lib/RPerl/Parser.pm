@@ -2,7 +2,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_010;
+our $VERSION = 0.003_011;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(ProhibitBacktickOperators)  ## SYSTEM SPECIAL 11: allow system command execution
@@ -133,7 +133,10 @@ our void $rperl_source__criticize = sub {
 our void $rperl_grammar_error = sub {
     ( my array $argument ) = @_;
     my string $value = $argument->YYCurval;
- 
+    if (not(defined($value))) {
+        $value = '';
+    }
+
 #    croak( "ERROR ECVPARP00, RPERL PARSER, RPERL GRAMMAR VIOLATION: have possible token '$value', croaking\n" );
 #    croak( "ERROR ECVPARP00, RPERL PARSER, RPERL GRAMMAR VIOLATION: have possible token '$value', have \$argument =\n" . Dumper($argument) . "\ncroaking\n" );
 

@@ -1,4 +1,6 @@
 #!/usr/bin/perl
+# [[[ TEST : 'ERROR ECVPAPL02' ]]]
+# [[[ TEST : "Can't locate arnings.pm in @INC" ]]]
 # [[[ HEADER ]]]
 use strict;
 use arnings;

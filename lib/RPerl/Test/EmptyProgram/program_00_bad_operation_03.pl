@@ -1,4 +1,6 @@
 #!/usr/bin/perl
+# [[[ TEST : 'ERROR ECVPAPL02' ]]]
+# [[[ TEST : 'Number found where operator expected' ]]]
 # [[[ HEADER ]]]
 use strict;
 use warnings;

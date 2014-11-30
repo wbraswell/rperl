@@ -1,4 +1,6 @@
 #!/usr/bin/perl
+# [[[ TEST : 'ERROR ECVPAPL02' ]]]
+# [[[ TEST : 'Bareword "i" not allowed while "strict subs" in use' ]]]
 # [[[ HEADER ]]]
 use strict;
 use warnings;

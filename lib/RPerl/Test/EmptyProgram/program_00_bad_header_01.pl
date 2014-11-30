@@ -1,4 +1,6 @@
 #!/usr/bin/perl
+# [[[ TEST : 'ERROR ECVPAPC02' ]]]
+# [[[ TEST : 'RequireUseStrict' ]]]
 # [[[ HEADER ]]]
 us strict;
 use warnings;

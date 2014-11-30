@@ -1,4 +1,6 @@
 #!/usr/bin/perl
+# [[[ TEST : 'ERROR ECVPAPL02' ]]]
+# [[[ TEST : 'near "2 ( "' ]]]
 # [[[ HEADER ]]]
 use strict;
 use warnings;

@@ -1,4 +1,6 @@
 #!//bin/perl
+# [[[ TEST : 'ERROR ECVPARP00' ]]]
+# [[[ TEST : "have possible token '#!//bin/pe'" ]]]
 # [[[ HEADER ]]]
 use strict;
 use warnings;

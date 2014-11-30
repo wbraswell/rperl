@@ -1,6 +1,6 @@
 #!/usr/bin/perl
-# [[[ TEST : 'ERROR ECVPARP00' ]]]
-# [[[ TEST : "have possible token '##'" ]]]
+# [[[ TEST : 'ERROR ECVPAPL02' ]]]
+# [[[ TEST : 'Global symbol "$i" requires explicit package name' ]]]
 # [[[ HEADER ]]]
 use strict;
 use warnings;

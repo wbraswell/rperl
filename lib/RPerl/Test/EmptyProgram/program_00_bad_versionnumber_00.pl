@@ -1,4 +1,6 @@
 #!/usr/bin/perl
+# [[[ TEST : 'ERROR ECVPAPC02' ]]]
+# [[[ TEST : 'RequireVersionVar' ]]]
 # [[[ HEADER ]]]
 use strict;
 use warnings;
