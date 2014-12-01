@@ -138,8 +138,7 @@ our void $rperl_grammar_error = sub {
     }
     my integer $line_number = $argument->{TOKENLINE};
 
-#    croak( "ERROR ECVPARP00, RPERL PARSER, SYNTAX ERROR: on line $line_number, have invalid or unexpected token '$value', croaking\n" );
-#    croak( "ERROR ECVPARP00, RPERL PARSER, SYNTAX ERROR: on line $line_number, have invalid or unexpected token '$value', have \$argument =\n" . Dumper($argument) . "\ncroaking\n" );
+#    die( "\nERROR ECVPARP00, RPERL PARSER, SYNTAX ERROR; on line $line_number, have invalid or unexpected token '$value', have \$argument =\n" . Dumper($argument) . "\n" );
 
     my $current_state_num = $argument->{STACK}[-1][0];
     my $current_state = $argument->{STATES}[$current_state_num];
@@ -148,7 +147,8 @@ our void $rperl_grammar_error = sub {
         $expected_tokens .= '    ' . $expected_token . "\n";
     }
 
-    croak( "ERROR ECVPARP00, RPERL PARSER, SYNTAX ERROR: on line $line_number, have invalid or unexpected token '$value', expected one of the following:\n\n" . $expected_tokens . "\ncroaking" );
+    # use die() instead of croak() here to avoid adding extra confusing info to RPerl error message
+    die( "\n" . 'ERROR ECVPARP00, RPERL PARSER, SYNTAX ERROR' . "\n" . 'on line ' . $line_number . q{, have invalid or unexpected token '} . $value . q{', expected one of the following:} . "\n\n" . $expected_tokens . "\n" );
 };
 
 # Parse RPerl Syntax Using Eyapp Grammar
