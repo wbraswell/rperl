@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 # [[[ TEST : 'ERROR ECVPARP00' ]]]
-# [[[ TEST : "have possible token '$VERSION'" ]]]
+# [[[ TEST : "have invalid or unexpected token '$VERSION'" ]]]
 # [[[ HEADER ]]]
 use strict;
 use warnings;

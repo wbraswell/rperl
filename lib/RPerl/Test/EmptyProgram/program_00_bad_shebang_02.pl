@@ -1,6 +1,6 @@
 #!usr/bin/perl
 # [[[ TEST : 'ERROR ECVPARP00' ]]]
-# [[[ TEST : "have possible token '#!usr/bin/'" ]]]
+# [[[ TEST : "have invalid or unexpected token '#!usr/bin/'" ]]]
 # [[[ HEADER ]]]
 use strict;
 use warnings;

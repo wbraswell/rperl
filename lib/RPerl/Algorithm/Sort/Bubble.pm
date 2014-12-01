@@ -3,20 +3,22 @@ package RPerl::Algorithm::Sort::Bubble;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_012;
+our $VERSION = 0.004_020;
 
-# [[[ CRITICS, OO INHERITANCE, INCLUDES ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
-## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
+# [[[ OO INHERITANCE ]]]
 use parent qw( RPerl::Algorithm::Sort ); # OO INHERITANCE TESTING; SINGLE OO INHERITANCE
-
 #use parent qw( RPerl::Algorithm::Sort RPerl::Algorithm::Inefficient ); # OO INHERITANCE TESTING; NEED UPGRADE: multiple inheritance not currently supported by Inline::CPP
 use RPerl::Algorithm::Sort;
-
 #use RPerl::Algorithm::Inefficient;    # OO INHERITANCE TESTING; NEED UPGRADE: multiple inheritance not currently supported by Inline::CPP
+
+# [[[ CRITICS ]]]
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
+
+# [[[ INCLUDES ]]]
 use Data::Dumper;
 
-# [[[ OO PROPERTIES ]]]
+# [[[ OO OBJECT PROPERTIES ]]]
 our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
     integer__data => my integer__array_ref $TYPED_integer__data = undef,
     number__data  => my number__array_ref $TYPED_number__data   = undef
@@ -43,14 +45,14 @@ our void__method $number__sort = sub {
 
 our void__method $inherited__Bubble = sub {
     ( my object $self, my string $person) = @_;
-    RPerl::diag
-        "in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), received \$self = '$self' and \$person = '$person', FRIED\n";
+    RPerl::diag(
+        'in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), received $self = ' . $self . ' and $person = ' . $person . ', FRIED' . "\n");
 };
 
 our void__method $inherited = sub {
     ( my object $self, my string $person) = @_;
-    RPerl::diag
-        "in PERLOPS_PERLTYPES Bubble->inherited(), received \$self = '$self' and \$person = '$person', ILLOGICAL\n";
+    RPerl::diag(
+        'in PERLOPS_PERLTYPES Bubble->inherited(), received $self = ' . $self . ' and $person = ' . $person . ', ILLOGICAL' . "\n");
 };
 
 1;
@@ -157,16 +159,16 @@ our number__array_ref $number__bubblesort = sub {
 
 our string $uninherited__Bubble = sub {
     ( my string $person) = @_;
-    RPerl::diag
-        "in PERLOPS_PERLTYPES Bubble::uninherited__Bubble(), received \$person = '$person', MITOCHONDRIAL\n";
+    RPerl::diag(
+        'in PERLOPS_PERLTYPES Bubble::uninherited__Bubble(), received $person = ' . $person . ', MITOCHONDRIAL' . "\n");
     return ('Bubble::uninherited__Bubble() RULES! PERLOPS_PERLTYPES');
 };
 
 # DEV NOTE, CORRELATION #04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
 our string $uninherited = sub {
     ( my string $person) = @_;
-    RPerl::diag
-        "in PERLOPS_PERLTYPES Bubble::uninherited(), received \$person = '$person', TETRAHEDRON\n";
+    RPerl::diag(
+        'in PERLOPS_PERLTYPES Bubble::uninherited(), received $person = ' . $person . ', TETRAHEDRON' . "\n");
     return ('Bubble::uninherited() ROCKS! PERLOPS_PERLTYPES');
 };
 

@@ -136,9 +136,10 @@ our void $rperl_grammar_error = sub {
     if (not(defined($value))) {
         $value = '';
     }
+    my integer $line_number = $argument->{TOKENLINE};
 
-#    croak( "ERROR ECVPARP00, RPERL PARSER, RPERL GRAMMAR VIOLATION: have possible token '$value', croaking\n" );
-#    croak( "ERROR ECVPARP00, RPERL PARSER, RPERL GRAMMAR VIOLATION: have possible token '$value', have \$argument =\n" . Dumper($argument) . "\ncroaking\n" );
+#    croak( "ERROR ECVPARP00, RPERL PARSER, SYNTAX ERROR: on line $line_number, have invalid or unexpected token '$value', croaking\n" );
+#    croak( "ERROR ECVPARP00, RPERL PARSER, SYNTAX ERROR: on line $line_number, have invalid or unexpected token '$value', have \$argument =\n" . Dumper($argument) . "\ncroaking\n" );
 
     my $current_state_num = $argument->{STACK}[-1][0];
     my $current_state = $argument->{STATES}[$current_state_num];
@@ -147,7 +148,7 @@ our void $rperl_grammar_error = sub {
         $expected_tokens .= '    ' . $expected_token . "\n";
     }
 
-    croak( "ERROR ECVPARP00, RPERL PARSER, RPERL GRAMMAR VIOLATION: have possible token '$value', expected one of the following:\n\n" . $expected_tokens . "\ncroaking" );
+    croak( "ERROR ECVPARP00, RPERL PARSER, SYNTAX ERROR: on line $line_number, have invalid or unexpected token '$value', expected one of the following:\n\n" . $expected_tokens . "\ncroaking" );
 };
 
 # Parse RPerl Syntax Using Eyapp Grammar
