@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 # [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : '"use" not allowed in expression' ]]]
+# [[[ TEST : 'near "use warnings' ]]]
 # [[[ HEADER ]]]
 use strict;
 use warnings

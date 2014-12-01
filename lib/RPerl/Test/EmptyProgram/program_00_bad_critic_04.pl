@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 # [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : 'Global symbol "$i" requires explicit package name' ]]]
+# [[[ TEST : 'near "my integer"' ]]]
 # [[[ HEADER ]]]
 use strict;
 use warnings;
