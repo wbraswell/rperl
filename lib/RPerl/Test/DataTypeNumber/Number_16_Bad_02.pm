@@ -13,6 +13,4 @@ our $VERSION = 0.001_000;
 # DEV NOTE: do not run perltidy on this file, it will wrongly separate the '0_' from the '.' and the '2' below
 our void $empty_sub = sub { 0_.2; };
 
-1;
-1;    # CODE SEPARATOR: end of package
-
+1;                  # end of class

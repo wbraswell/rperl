@@ -13,6 +13,4 @@ our $VERSION = 0.001_000;
 # [[[ SUBROUTINES ]]]
 our void $empty_sub = sub { --0.234_567_89; };
 
-1;
-1;    # CODE SEPARATOR: end of package
-
+1;                  # end of class

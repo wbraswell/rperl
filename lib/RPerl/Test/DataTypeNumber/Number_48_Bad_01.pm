@@ -9,6 +9,4 @@ our $VERSION = 0.001_000;
 
 our void $empty_sub = sub { 23_456._2; };
 
-1;
-1;    # CODE SEPARATOR: end of package
-
+1;                  # end of class

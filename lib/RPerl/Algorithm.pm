@@ -20,9 +20,6 @@ our void__method $inherited__Algorithm = sub {
 
 #our void__method $inherited = sub { ( my object $self, my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Algorithm->inherited(), received \$self = '$self' and \$person = '$person', IS\n"; };
 
-1;
-1;    # CODE SEPARATOR: methods above, subroutines below
-
 # [[[ SUBROUTINES ]]]
 
 # OO INHERITANCE TESTING, CONTINUED
@@ -35,5 +32,4 @@ our string $uninherited__Algorithm = sub {
 
 #our string $uninherited = sub { ( my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Algorithm::uninherited(), received \$person = '$person', TERRITORY\n"; return "Algorithm::uninherited() ROCKS! PERLOPS_PERLTYPES"; };
 
-1;
-1;    # CODE SEPARATOR: end of class
+1;                  # end of class

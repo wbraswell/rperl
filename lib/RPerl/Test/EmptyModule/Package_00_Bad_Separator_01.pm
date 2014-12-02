@@ -1,5 +1,5 @@
 # [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : 'syntax error' ]]]
+# [[[ TEST : 'Bareword "b" not allowed' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::EmptyModule::Package_00_Bad_Separator_01;
 use strict;
@@ -10,6 +10,4 @@ our $VERSION = 0.001_000;
 # [[[ SUBROUTINES ]]]
 our void $empty_sub = sub { 2; };
 
-1
-1;    # CODE SEPARATOR: end of package
-
+b;                  # end of class

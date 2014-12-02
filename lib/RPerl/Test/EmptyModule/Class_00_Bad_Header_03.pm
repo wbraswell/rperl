@@ -1,4 +1,4 @@
-# [[[ TEST : 'ERROR ECVPAPL02' ]]]
+# [[[ TEST : 'ERROR ECVPAPC02' ]]]
 # [[[ TEST : 'Perl::Critic::Policy::Modules::RequireVersionVar' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::EmptyModule::Class_00_Bad_Header_03;
@@ -19,6 +19,4 @@ our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allo
 # [[[ OO METHODS ]]]
 our void__method $empty_method = sub { 2; };
 
-1;
-1;                  # CODE SEPARATOR: end of class
-
+1;                  # end of class

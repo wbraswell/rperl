@@ -37,9 +37,6 @@ our void__method $inherited = sub {
 #RPerl::Algorithm::Inefficient->uninherited("Mad Scientist");  # ignores "Mad Scientist"
 #RPerl::diag "LATERZ FROM Inefficient.pm\n";
 
-1;
-1;    # CODE SEPARATOR: methods above, subroutines below
-
 # [[[ PROCEDURAL SUBROUTINES ]]]
 
 our string $uninherited__Inefficient = sub {
@@ -52,5 +49,4 @@ our string $uninherited__Inefficient = sub {
 # DEV NOTE, CORRELATION #04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
 #our string $uninherited = sub { ( my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Inefficient::uninherited(), received \$person = '$person', TRICKS\n"; return 'Inefficient::uninherited() ROCKS! PERLOPS_PERLTYPES'; };
 
-1;
-1;    # CODE SEPARATOR: end of package or class
+1;                  # end of class

@@ -1,6 +1,6 @@
 # RPerl v1.0 Beta, Install Notes
 # Single-User Installation (Not System-Wide Installation)
-# Last Updated November 2, 2014
+# Last Updated December 2, 2014
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # IMPORTANT WARNING: ONLY USE ONE OF STEP 1A, 1B, OR 1C - NOT ALL THREE
@@ -48,9 +48,6 @@ $ perlbrew use perl-5.20.1  # TEMPORARY
 $ perlbrew switch perl-5.20.1  # PERMANENT
 $ perlbrew install-cpanm
 
-
-
-
 ################################################################################
 # STEP 1C.  ONLY FOR WINDOWS
 # INSTALL UPDATED GCC COMPILER
@@ -79,10 +76,11 @@ $ cpanm --installdeps .  # note the dot at the end of this command
 ################################################################################
 
 # optional
-$ export TEST_VERBOSE=1
+$ export RPERL_VERBOSE=1  # same as `rperl -v` flag
+$ export RPERL_DEBUG=1  # same as `rperl -d` flag
 
 # automatically confirm all tests pass, without compiler output
-$ rm -Rf _Inline/; reset; make test
+$ rm -Rf _Inline/; reset; make; make test
 
 # manually confirm all tests pass, with compiler output
 $ rm -Rf _Inline/; reset; perl -Iblib/lib bin/test_suite.pl

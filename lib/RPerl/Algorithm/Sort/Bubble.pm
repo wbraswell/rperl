@@ -3,7 +3,7 @@ package RPerl::Algorithm::Sort::Bubble;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_020;
+our $VERSION = 0.004_021;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw( RPerl::Algorithm::Sort ); # OO INHERITANCE TESTING; SINGLE OO INHERITANCE
@@ -54,9 +54,6 @@ our void__method $inherited = sub {
     RPerl::diag(
         'in PERLOPS_PERLTYPES Bubble->inherited(), received $self = ' . $self . ' and $person = ' . $person . ', ILLOGICAL' . "\n");
 };
-
-1;
-1;    # CODE SEPARATOR: methods above, subroutines below
 
 # [[[ SUBROUTINES ]]]
 
@@ -221,5 +218,4 @@ our integer $RPerl__Algorithm__Sort__Bubble__OPS_TYPES_ID
 our string $RPerl__Algorithm__Sort__Bubble__ops   = sub { return 'PERL'; };
 our string $RPerl__Algorithm__Sort__Bubble__types = sub { return 'PERL'; };
 
-1;
-1;                          # CODE SEPARATOR: end of class
+1;                  # end of class

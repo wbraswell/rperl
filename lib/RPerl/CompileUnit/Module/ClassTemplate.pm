@@ -42,6 +42,7 @@ use RPerl::CompileUnit::Module::Class;
 ## no critic qw(RequireBriefOpen)  # SYSTEM SPECIAL 10: allow complex processing with open filehandle
 ## no critic qw(ProhibitBacktickOperators)  # SYSTEM SPECIAL 11: allow system command execution
 ## no critic qw(ProhibitCascadingIfElse)  # SYSTEM SPECIAL 12: allow complex conditional logic
+## no critic qw(RequireCarping)  # SYSTEM SPECIAL 13: allow die instead of croak
 
 ## no critic (package)  # SYSTEM EXTERNAL 1: originally from Inline::CPP
 
@@ -102,9 +103,6 @@ our string__method $corge = sub {
     return $self->{xyzzy} x 3;
 };
 
-1;
-1;    # CODE SEPARATOR: methods above, subroutines below
-
 # [[[ SUBROUTINES ]]]
 
 # <<< CHANGE ME: delete for no subroutines, or replace with real subroutine(s) >>>
@@ -132,5 +130,4 @@ our string $RPerl__CompileUnit__Module__ClassTemplate__ops
 our string $RPerl__CompileUnit__Module__ClassTemplate__types
     = sub { return 'PERL'; };
 
-1;
-1;                          # CODE SEPARATOR: end of class
+1;                  # end of class

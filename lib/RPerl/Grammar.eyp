@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_741;
+    our $VERSION = 0.000_750;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -119,7 +119,7 @@ CompileUnit:            Program | (ModuleHeader Module)+ ;
 Program:                SHEBANG Critic? Header Critic* Include* Constant* Subroutine* Operation+ ;
 ModuleHeader:           Critic? 'package' WordScoped ';' Header ;
 Module:                 Package | Class ;
-Package:                Critic* Include* Constant* Subroutine+ '1;' '1;' ;
+Package:                Critic* Include* Constant* Subroutine+ LITERAL_NUMBER ';' ;
 Header:                 'use strict;' 'use warnings;' 'use RPerl;' 'our' VERSION_NUMBER_ASSIGN;
 Critic:                 '## no critic qw(' WORD+ ')';
 Include:                'use' WordScoped ';' | 'use' WordScoped 'qw(' WORD+ ')' ';' ;
@@ -130,11 +130,12 @@ Constant:               'use constant' WORD OP20_HASH_FATARROW TypeInner Literal
 Subroutine:             'our' Type VARIABLE_SYMBOL '= sub {' SubroutineArguments? Operation+ '}' ';' ;
 SubroutineArguments:    '( my' Type VARIABLE_SYMBOL (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ArgumentCheck* ;
 ArgumentCheck:          CHECK_OR_CHECKTRACE '(' Expression (OP21_LIST_COMMA Expression OP21_LIST_COMMA Expression)? ')' ';' ;
-Class:                  'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties PropertiesClass? Method* '1;' '1;' (Subroutine+ '1;' '1;')? ;
+Class:                  'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties PropertiesClass? MethodOrSubroutine* LITERAL_NUMBER ';' ;
 Properties:             'our %properties = (' Critic HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* ')' ';' | 'our %properties = (' ')' ';' Critic ;
 PropertiesClass:        'our %properties_class = (' Critic HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* ')' ';' ;
-Method:                 'our' Type VARIABLE_SYMBOL '= sub {' MethodArguments? Operation+ '}' ';' ;
+Method:                 'our' TypeMethod VARIABLE_SYMBOL '= sub {' MethodArguments? Operation+ '}' ';' ;
 MethodArguments:        '( my' TYPE_CLASS_OR_SELF (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ArgumentCheck* ;
+MethodOrSubroutine:     Method | Subroutine;
 
 Operation:              Expression ';' | Statement ;
 Operator:               OP01_NAMED '(' ListElements? ')' | OP01_OPEN_CLOSE_PAREN FileHandle ListElements? ')' ';' | OP01_OPEN_CLOSE FileHandle ListElements? ';' |
@@ -173,10 +174,11 @@ HashReference:          '{' HashEntry (OP21_LIST_COMMA HashEntry)* '}' ;
 HashDereferenced:       '%{' Variable '}' | '%{' HashReference '}' ;
 
 WordScoped:             WORD | WORD_SCOPED;
-FileHandle:             '{*' WORD '}' | 'my' 'filehandle_ref' VARIABLE_SYMBOL;
-TypeInner:              'my' Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN ;
-Type:                   WORD ;
 LoopLabel:              WORD ;
+Type:                   WORD ;
+TypeMethod:             WORD '__method' ;
+TypeInner:              'my' Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN ;
+FileHandle:             '{*' WORD '}' | 'my' 'filehandle_ref' VARIABLE_SYMBOL;
 Literal:                LITERAL_STRING | LITERAL_NUMBER ;
 
 %%

@@ -16,8 +16,6 @@ use RPerl::Algorithm;
 our void__method $inherited__Sort = sub { (my object $self, my string $person) = @_;  RPerl::diag "in PERLOPS_PERLTYPES Sort->inherited__Sort(), received \$self = '$self' and \$person = '$person', FISH\n"; };
 #our void__method $inherited = sub { (my object $self, my string $person) = @_;  RPerl::diag "in PERLOPS_PERLTYPES Sort->inherited(), received \$self = '$self' and \$person = '$person', IN\n"; };
 
-1, 1;    # CODE SEPARATOR: methods above, subroutines below
-
 # [[[ SUBROUTINES ]]]
 
 # OO INHERITANCE TESTING, CONTINUED
@@ -30,7 +28,7 @@ our integer $RPerl__Algorithm__Sort__OPS_TYPES_ID
 our string $RPerl__Algorithm__Sort__ops   = sub { return 'PERL'; };
 our string $RPerl__Algorithm__Sort__types = sub { return 'PERL'; };
 
-1, 1;                          # CODE SEPARATOR: end of class
+1;                  # end of class
 
 __END__
 # all of the following happen before the INIT block, and thus rely upon AUTOLOAD

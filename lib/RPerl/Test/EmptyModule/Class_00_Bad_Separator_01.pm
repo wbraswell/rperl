@@ -1,5 +1,5 @@
 # [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : 'syntax error' ]]]
+# [[[ TEST : 'Bareword "b" not allowed' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::EmptyModule::Class_00_Bad_Separator_01;
 use strict;
@@ -19,6 +19,4 @@ our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allo
 # [[[ OO METHODS ]]]
 our void__method $empty_method = sub { 2; };
 
-1
-1;                  # CODE SEPARATOR: end of class
-
+b;                  # end of class

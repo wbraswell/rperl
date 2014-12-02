@@ -1,4 +1,5 @@
-# [[[ TEST : 'ERROR ECVPARP00' ]]]
+# [[[ TEST : 'ERROR ECVPAPC02' ]]]
+# [[[ TEST : 'RequireEndWithOne' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::EmptyModule::Class_00_Bad_Separator_00;
 use strict;
@@ -18,6 +19,4 @@ our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allo
 # [[[ OO METHODS ]]]
 our void__method $empty_method = sub { 2; };
 
-;
-1;                  # CODE SEPARATOR: end of class
-
+0;                  # end of class

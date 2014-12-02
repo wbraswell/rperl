@@ -1,4 +1,5 @@
-# [[[ TEST : 'ERROR ECVPARP00' ]]]
+# [[[ TEST : 'ERROR ECVPAPC02' ]]]
+# [[[ TEST : 'RequireEndWithOne' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::EmptyModule::Package_00_Bad_Separator_00;
 use strict;
@@ -9,6 +10,4 @@ our $VERSION = 0.001_000;
 # [[[ SUBROUTINES ]]]
 our void $empty_sub = sub { 2; };
 
-;
-1;    # CODE SEPARATOR: end of package
-
+0;                  # end of class

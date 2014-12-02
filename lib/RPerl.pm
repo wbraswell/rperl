@@ -1,49 +1,75 @@
-# [[[ HEADER ]]]
+# [[[ HEADER SPECIAL ]]]
 package RPerl;
 use strict;
 use warnings;
-our $VERSION = 1.000_000;  # BETA!!!
+our $VERSION = 1.000_000;    # BETA!!!
 
-# [[[ INCLUDES ]]]
+# [[[ CRITICS ]]]
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
+## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
+## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
+
+# [[[ INCLUDES SPECIAL ]]]
 require RPerl::Config;
-
-# <<<=== DECREASE MAGIC ===>>>
 
 #no magic;  # require data types, full declarations, other non-magic
 #use rperltypes;  # circular dependency causes "subroutine DUMPER redefined" error, solved by replacing use with require below
 require rperltypes;
 
-# <<<=== EXPORTED FUNCTIONS ===>>>
+# [[[ OO CLASS PROPERTIES SPECIAL ]]]
 
-# TODO: replace Data::Dumper with pure-RPerl equivalent?
-#=disable
-sub DUMPER
-{
+our $DEBUG = 0; # Perl variable $RPerl::DEBUG and environmental variable RPERL_DEBUG are equivalent, see diag() above
+our $VERBOSE = 0; # Perl variable $RPerl::VERBOSE and environmental variable RPERL_VERBOSE are equivalent, see verbose() above
+
+# [[[ SUBROUTINES SPECIAL ]]]
+
+# NEED UPGRADE: replace Data::Dumper with pure-RPerl equivalent?
+sub DUMPER {
+    ( my $dumpee ) = @_;
+
 #	die ('in RPerl::DUMPER(), received undef argument, dying') if (not(defined($_[0])));
-	return '**UNDEF**' if (not(defined($_[0])));
-	return $_[0]->DUMPER() if (defined(eval('$' . ref($_[0]) . '::DUMPER')));
-	return Dumper(@_);
+    return '**UNDEF**' if ( not( defined $dumpee ) );
+    return $dumpee->DUMPER()
+        if ( defined( eval( q{$} . ref($dumpee) . q{::DUMPER} ) ) );
+    return Dumper($dumpee);
 }
-#=cut
 
 sub diag {
-#  print {*STDERR} @_ if $ENV{TEST_VERBOSE};
-  if ($ENV{TEST_VERBOSE} or $RPerl::DEBUG) {
-      print {*STDERR} @_;
-  }
-  1;
+    ( my $message ) = @_;
+    if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) { print {*STDERR} $message; }
+    return 1; # DEV NOTE: this must be here to avoid 'at -e line 0. INIT failed--call queue aborted.'... BUT WHY???
 }
 
-# <<<=== EXPORTED DATA ===>>>
+sub diag_pause {
+    ( my $message ) = @_;
+    if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) {
+        print {*STDERR} $message;
+        my $stdin_ignore = <STDIN>;
+    }
+    return 1;
+}
 
-our $DEBUG = 0;  # Perl variable $RPerl::DEBUG and environmental variable TEST_VERBOSE are equivalent, see diag() above
+sub verbose {
+    ( my $message ) = @_;
+    if ( $ENV{RPERL_VERBOSE} or $RPerl::VERBOSE ) {
+        print {*STDOUT} $message;
+    }
+    return 1;
+}
 
-# <<<=== INCREASE RUNTIME PERFORMANCE ===>>>
+sub verbose_pause {
+    ( my $message ) = @_;
+    if ( $ENV{RPERL_VERBOSE} or $RPerl::VERBOSE ) {
+        print {*STDOUT} $message;
+        my $stdin_ignore = <STDIN>;
+    }
+    return 1;
+}
 
-# parse
+sub verbose_reset {
+    if ( $ENV{RPERL_VERBOSE} or $RPerl::VERBOSE ) { system 'reset'; }
+    return 1;
+}
 
-# compile
-
-# parallelize
-
-1;
+1;    # end of class

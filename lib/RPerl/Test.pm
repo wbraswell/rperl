@@ -30,11 +30,7 @@ our void__method $empty_method = sub {
     2;
 };
 
-1;
-1;    # CODE SEPARATOR: methods above, subroutines below
-
 # [[[ SUBROUTINES ]]]
-
 
 #my string $id = sub {  # NEED FIX: RPerl subroutines disabled here
 sub id {
@@ -56,5 +52,4 @@ sub enable {
     }
 }
 
-1;
-1;    # CODE SEPARATOR: end of class
+1;                  # end of class

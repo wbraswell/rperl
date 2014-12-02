@@ -10,6 +10,4 @@ our $VERSION = 0.001_000;
 # [[[ SUBROUTINES ]]]
 our void $empty_sub = sub { q{@'foo'}; };
 
-1;
-1;    # CODE SEPARATOR: end of package
-
+1;                  # end of class

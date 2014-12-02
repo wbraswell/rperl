@@ -1,40 +1,44 @@
+# [[[ HEADER ]]]
 package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_011;
+our $VERSION = 0.003_012;
 
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
-## no critic qw(ProhibitBacktickOperators)  ## SYSTEM SPECIAL 11: allow system command execution
-
-# [[[ SETUP ]]]
+# [[[ OO INHERITANCE ]]]
 #use RPerl::CompileUnit::Module::Class;
 #use parent ('RPerl::CompileUnit::Module::Class');
 
+# [[[ CRITICS ]]]
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(ProhibitBacktickOperators)  ## SYSTEM SPECIAL 11: allow system command execution
+## no critic qw(RequireCarping)  # SYSTEM SPECIAL 13: allow die instead of croak
+
+# [[[ INCLUDES ]]]
 use Perl::Critic;
 use RPerl::Grammar;
 
-# [[[ PROCEDURAL SUBROUTINES ]]]
+# [[[ SUBROUTINES ]]]
 
-# Parse from Human-Readable RPerl Source Code File to PPI-Parsed RPerl AST Object
+# Parse from Human-Readable RPerl Source Code File to Eyapp-Parsed RPerl AST Object
 our object $rperl_to_ast__parse = sub {
     ( my string $rperl_source__file_name) = @_;
 
-    # [[[ CHECK PERL SYNTAX ]]]
-    # [[[ CHECK PERL SYNTAX ]]]
-    # [[[ CHECK PERL SYNTAX ]]]
+    # [[[ PARSE PHASE 0: CHECK PERL SYNTAX ]]]
+    # [[[ PARSE PHASE 0: CHECK PERL SYNTAX ]]]
+    # [[[ PARSE PHASE 0: CHECK PERL SYNTAX ]]]
 
     rperl_source__check_syntax($rperl_source__file_name);
 
-    # [[[ CRITICIZE PERL SYNTAX ]]]
-    # [[[ CRITICIZE PERL SYNTAX ]]]
-    # [[[ CRITICIZE PERL SYNTAX ]]]
+    # [[[ PARSE PHASE 1: CRITICIZE PERL SYNTAX ]]]
+    # [[[ PARSE PHASE 1: CRITICIZE PERL SYNTAX ]]]
+    # [[[ PARSE PHASE 1: CRITICIZE PERL SYNTAX ]]]
 
     rperl_source__criticize($rperl_source__file_name);
 
-    # [[[ PARSE RPERL SYNTAX ]]]
-    # [[[ PARSE RPERL SYNTAX ]]]
-    # [[[ PARSE RPERL SYNTAX ]]]
+    # [[[ PARSE PHASE 2: PARSE RPERL SYNTAX ]]]
+    # [[[ PARSE PHASE 2: PARSE RPERL SYNTAX ]]]
+    # [[[ PARSE PHASE 2: PARSE RPERL SYNTAX ]]]
 
     return ( rperl_source__parse($rperl_source__file_name) );
 };
@@ -42,6 +46,8 @@ our object $rperl_to_ast__parse = sub {
 # Check Perl Syntax Using Perl Interpreter
 our void $rperl_source__check_syntax = sub {
     ( my string $rperl_source__file_name) = @_;
+
+    RPerl::verbose 'PARSE PHASE 0: CHECK PERL SYNTAX...';
 
     my string $rperl_source__perl_syntax_command
         = q{perl -Iblib/lib -M'warnings FATAL=>q(all)' -cW }
@@ -75,25 +81,26 @@ our void $rperl_source__check_syntax = sub {
 # NEED ADD ERROR CHECKING: ECVPAPL00 FILE DOES NOT EXIST, ECVPAPL01 FILE IS EMPTY
 
     if ( $rperl_source__perl_syntax_retval != 0 ) {
-        croak(
-            "\n\nERROR ECVPAPL02, RPERL PARSER, PERL SYNTAX CHECK:\nfile '$rperl_source__file_name' fails perl -cW syntax check with return value "
-                . ( $rperl_source__perl_syntax_retval >> 8 )
-                . " and the following messages:\n\n"
-                . `$rperl_source__perl_syntax_command__all_output`
+        die "\n"
+            . 'ERROR ECVPAPL02, RPERL PARSER, PERL SYNTAX ERROR' . "\n"
+            . 'failed `perl -cW` syntax check with return value '
+            . ( $rperl_source__perl_syntax_retval >> 8 )
+            . ' and the following message(s):' . "\n\n"
+            . `$rperl_source__perl_syntax_command__all_output`
 
-                #            . $rperl_source__perl_syntax_retstring
-                . "\ncroaking"
-        );
+#            . $rperl_source__perl_syntax_retstring  # NEED FIX: get error return string instead of re-running command to get error string!
+            . "\n";
     }
     else {
-        RPerl::diag
-            "in rperl_source__check_syntax(), RPerl source code passes perl -cW syntax check\n";
+        RPerl::verbose ' done.' . "\n";
     }
 };
 
 # Criticize Perl Syntax Using Perl::Critic
 our void $rperl_source__criticize = sub {
     ( my string $rperl_source__file_name) = @_;
+
+    RPerl::verbose 'PARSE PHASE 1: CRITICIZE PERL SYNTAX...';
 
 # DEV NOTE: disable RequireTidyCode because perltidy may not be stable
 #    my object $rperl_source__critic = Perl::Critic->new( -severity => 'brutal' );
@@ -109,59 +116,89 @@ our void $rperl_source__criticize = sub {
         = scalar @rperl_source__critic_violations;
 
 #RPerl::diag "in rperl_source__criticize(), have \$rperl_source__critic_num_violations = $rperl_source__critic_num_violations\n";
-
-    my string $rperl_source__critic_dumperified_violations
-        = Dumper( \@rperl_source__critic_violations );
-
+#    my string $rperl_source__critic_dumperified_violations = Dumper( \@rperl_source__critic_violations );
 #RPerl::diag "in rperl_source__criticize(), have Dumper(\\\@rperl_source__critic_violations) =\n" . $rperl_source__critic_dumperified_violations . "\n";
 
 # NEED ADD ERROR CHECKING: ECVPAPC00 FILE DOES NOT EXIST, ECVPAPC01 FILE IS EMPTY; or would that be redundant with ECVPAPL0x error checking when added above?
 
     if ( $rperl_source__critic_num_violations > 0 ) {
-        croak(
-            "\n\nERROR ECVPAPC02, RPERL PARSER, PERL CRITIC VIOLATION:\nfile '$rperl_source__file_name' fails Perl::Critic brutal review with the following violations:\n\n"
-                . $rperl_source__critic_dumperified_violations
-                . "\ncroaking" );
+        my string $violation_pretty = q{};
+        foreach my object $violation (@rperl_source__critic_violations) {
+            $violation_pretty
+                .= '    line number:  ' . $violation->{_location}->[0] . "\n";
+            $violation_pretty
+                .= '    policy:       ' . $violation->{_policy} . "\n";
+            $violation_pretty
+                .= '    description:  ' . $violation->{_description} . "\n";
+            if ( ref( $violation->{_explanation} ) eq 'ARRAY' ) {
+                $violation_pretty
+                    .= '    explanation:  see Perl Best Practices page(s) '
+                    . join( ', ', @{ $violation->{_explanation} } ) . "\n\n";
+            }
+            else {
+                $violation_pretty .= '    explanation:  '
+                    . $violation->{_explanation} . "\n\n";
+            }
+        }
+        die "\n"
+            . 'ERROR ECVPAPC02, RPERL PARSER, PERL CRITIC VIOLATION'
+            . "\n"
+            . 'failed Perl::Critic brutal review with the following message:'
+            . "\n\n"
+            . $violation_pretty;
     }
     else {
-        RPerl::diag
-            "in rperl_source__criticize(), RPerl source code passes Perl::Critic brutal review\n";
+        RPerl::verbose ' done.' . "\n";
     }
 };
 
-# Croak On RPerl Grammar Error
+# Die On RPerl Grammar Error
 our void $rperl_grammar_error = sub {
     ( my array $argument ) = @_;
+
     my string $value = $argument->YYCurval;
-    if (not(defined($value))) {
-        $value = '';
+    if ( not( defined $value ) ) {
+        $value = '<<< undef >>>';
     }
     my integer $line_number = $argument->{TOKENLINE};
 
-#    die( "\nERROR ECVPARP00, RPERL PARSER, SYNTAX ERROR; on line $line_number, have invalid or unexpected token '$value', have \$argument =\n" . Dumper($argument) . "\n" );
+#    die( "\nERROR ECVPARP00, RPERL PARSER, SYNTAX ERROR; have \$argument =\n" . Dumper($argument) . "\n" );
 
     my $current_state_num = $argument->{STACK}[-1][0];
-    my $current_state = $argument->{STATES}[$current_state_num];
-    my $expected_tokens = '';
-    foreach my $expected_token (keys %{$current_state->{ACTIONS}}) {
-        $expected_tokens .= '    ' . $expected_token . "\n";
+    my $current_state     = $argument->{STATES}[$current_state_num];
+    my $expected_tokens   = q{};
+    foreach my $expected_token ( keys %{ $current_state->{ACTIONS} } ) {
+        $expected_tokens .= q{        } . $expected_token . "\n";
     }
 
-    # use die() instead of croak() here to avoid adding extra confusing info to RPerl error message
-    die( "\n" . 'ERROR ECVPARP00, RPERL PARSER, SYNTAX ERROR' . "\n" . 'on line ' . $line_number . q{, have invalid or unexpected token '} . $value . q{', expected one of the following:} . "\n\n" . $expected_tokens . "\n" );
+    die "\n"
+        . 'ERROR ECVPARP00, RPERL PARSER, RPERL SYNTAX ERROR' . "\n"
+        . 'failed RPerl grammar syntax check with the following message:'
+        . "\n\n"
+        . '    line number:       '
+        . $line_number . "\n"
+        . '    unexpected token:  '
+        . $value . "\n"
+        . '    expected token(s):' . "\n"
+        . $expected_tokens . "\n";
 };
 
 # Parse RPerl Syntax Using Eyapp Grammar
 our void $rperl_source__parse = sub {
     ( my string $rperl_source__file_name) = @_;
 
+    RPerl::verbose 'PARSE PHASE 2: PARSE RPERL SYNTAX...';
+
     my object $eyapp_parser = RPerl::Grammar->new();
     $eyapp_parser->YYSlurpFile($rperl_source__file_name);
     my object $rperl_ast = $eyapp_parser->YYParse(
-        yydebug => 0x00,  # disable eyapp DBG DEBUGGING
-#        yydebug => 0xFF,  # full eyapp DBG DEBUGGING
+        yydebug => 0x00,    # disable eyapp DBG DEBUGGING
+
+        #        yydebug => 0xFF,  # full eyapp DBG DEBUGGING
         yyerror => $rperl_grammar_error
     );
+
+    RPerl::verbose ' done.' . "\n";
 
 #    RPerl::diag "in rperl_source__parse(), have \$rperl_ast->str() =\n" . $rperl_ast->str() . "\n\n";
     RPerl::diag "in rperl_source__parse(), have \$rperl_ast =\n"
@@ -170,5 +207,4 @@ our void $rperl_source__parse = sub {
     return ($rperl_ast);
 };
 
-1;
-1;
+1;    # end of class
