@@ -7,8 +7,5 @@ use warnings;
 use RPerl;
 our $VERSION = 0.001_000;
 
-# [[[ CRITICS ]]]
-## no critic qw(ProhibitUselessNoCritic)
-
 # [[[ OPERATIONS ]]]
 integer $i = 2 + 2;
