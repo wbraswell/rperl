@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_020;
+our $VERSION = 0.004_021;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
@@ -189,9 +189,9 @@ sub compile_files {
         RPerl::verbose 'modes: ops => '
             . $modes->{ops}
             . ', types => '
-            . $modes->{types} . "\n";
+            . $modes->{types} . "\n\n";
         if ( $rperl_input_file_num > 1 ) {
-            RPerl::verbose_pause "\nPRESS <ENTER> TO CONTINUE\n";
+            RPerl::diag_pause "PRESS <ENTER> TO CONTINUE\n";
         }
 
         my integer $eval_retval = eval {

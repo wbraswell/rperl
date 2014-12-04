@@ -1,5 +1,8 @@
+## no critic w(ProhibitUselessNoCritic PodSpelling ProhibitExcessMainComplexity)  # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code; SYSTEM SPECIAL 5: allow complex code outside subroutines, must be on line 1
+# [[[ TEST : 'ERROR ECVPAPC02' ]]]
+# [[[ TEST : 'Perl::Critic::Policy::Miscellanea::ProhibitUnrestrictedNoCritic' ]]]
 # [[[ HEADER ]]]
-package RPerl::Test::Critic::Class_00_Good;
+package RPerl::Test::Critic::Class_01_Bad_02;
 use strict;
 use warnings;
 use RPerl;

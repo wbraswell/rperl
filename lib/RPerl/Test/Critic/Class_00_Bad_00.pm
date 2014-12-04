@@ -1,16 +1,18 @@
+# [[[ TEST : 'ERROR ECVPARP00' ]]]
+# [[[ TEST : 'unexpected token:  use parent qw(' ]]]
 # [[[ HEADER ]]]
-package RPerl::Test::Critic::Class_00_Good;
+package RPerl::Test::Critic::Class_00_Bad_00;
 use strict;
 use warnings;
 use RPerl;
 our $VERSION = 0.001_000;
 
+# [[[ CRITICS ]]]
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
+
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Test);
 use RPerl::Test;
-
-# [[[ CRITICS ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 
 # [[[ OO PROPERTIES ]]]
 our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
