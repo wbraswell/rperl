@@ -2,7 +2,7 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.012_001;
+our $VERSION = 0.013_000;
 
 ## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
 ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  # SYSTEM SPECIAL 2: allow Autoload & read-only @_
@@ -22,9 +22,11 @@ INIT {
     my %class_properties;
     my $subroutine_type;
     my $subroutine_name;
+    my $CHECK;
 
     foreach my $module_file_short ( sort keys %INC ) {
         $package_name = q{};
+        $CHECK = $RPerl::CHECK; # reset data type checking to RPerl default for every file
 
 # DEV NOTE: for now, only scan for RPerl subroutines in files or dirs that start with RPerl or rperl
         if (   ( $module_file_short =~ /^RPerl/xms )
@@ -40,6 +42,18 @@ INIT {
                 chomp $module_file_line;
 
 #				RPerl::diag "in Class.pm INIT block, have \$module_file_line =\n$module_file_line\n";
+
+                if ( $module_file_line
+                    =~ /^\s*\#\s*\[\[\[\s*CHECK\s*\:\s*'(\w+)'\s*\]\]\]/xms )
+                {
+                    RPerl::diag(
+                        "in Class.pm INIT block, have \$module_file_long = '$module_file_long'\n"
+                    );
+                    RPerl::diag( 'in Class.pm INIT block, found [[[ CHECK: '
+                            . $1
+                            . " ]]]\n" );
+                    $CHECK = $1;
+                }
 
                 # skip single-line comments
                 next if ( $module_file_line =~ /^\s*\#/xms );
@@ -90,14 +104,14 @@ INIT {
                 # skip __DATA__ footer
                 if ( $module_file_line eq '__DATA__' ) {
 
- #					RPerl::diag "in Class.pm INIT block, skipping '__DATA__' footer\n";
+     #					RPerl::diag "in Class.pm INIT block, skipping '__DATA__' footer\n";
                     last;
                 }
 
                 # skip __END__ footer
                 if ( $module_file_line eq '__END__' ) {
 
- #					RPerl::diag "in Class.pm INIT block, skipping '__END__' footer\n";
+      #					RPerl::diag "in Class.pm INIT block, skipping '__END__' footer\n";
                     last;
                 }
 
@@ -116,24 +130,48 @@ INIT {
 #						RPerl::diag "in Class.pm INIT block, have \$class_property_name = '$class_property_name'\n";
 # DEV NOTE, CORRELATION #03: avoid re-defining class accessor/mutator methods; so far only triggered by RPerl::CodeBlock::Subroutine
 # becuase it has a special BEGIN{} block with multiple package names including it's own package name
-                        if (not eval
-                            "defined *\{$package_name\:\:get_$class_property_name\}"
+#                        if (not eval "defined *\{$package_name\:\:get_$class_property_name\}" )
+                        if (not eval(
+                                      'defined *{'
+                                    . $package_name
+                                    . '::get_'
+                                    . $class_property_name . '}'
+                            )
                             )
                         {
-                            eval
-                                "\*\{$package_name\:\:get_$class_property_name\} \= sub \{ return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;"
+#                            eval "\*\{$package_name\:\:get_$class_property_name\} \= sub \{ return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;"
+                            eval(     '*{'
+                                    . $package_name
+                                    . '::get_'
+                                    . $class_property_name
+                                    . '} = sub { return $_[0]->{'
+                                    . $class_property_name
+                                    . '}; };' )
                                 or croak( $ERRNO . "\n" . $EVAL_ERROR );
                             if ($EVAL_ERROR) { croak($EVAL_ERROR); }
 
 #eval "\*\{$package_name\:\:get_$class_property_name\} \= sub \{ RPerl::diag \"IN POST\-INIT\, accessor MODE $package_name\:\:get_$class_property_name\\n\"\; return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;";
                         }
-                        if (not eval
-                            "defined *\{$package_name\:\:set_$class_property_name\}"
 
+#                        if (not eval "defined *\{$package_name\:\:set_$class_property_name\}" )
+                        if (not eval(
+                                      'defined *{'
+                                    . $package_name
+                                    . '::set_'
+                                    . $class_property_name . '}'
+                            )
                             )
                         {
-                            eval
-                                "\*\{$package_name\:\:set_$class_property_name\} \= sub \{ \$\_\[0\]\-\>\{$class_property_name\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;"
+#                            eval "\*\{$package_name\:\:set_$class_property_name\} \= sub \{ \$\_\[0\]\-\>\{$class_property_name\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;"
+                            eval(     '*{'
+                                    . $package_name
+                                    . '::set_'
+                                    . $class_property_name
+                                    . '} = sub { $_[0]->{'
+                                    . $class_property_name
+                                    . '} = $_[1]; return $_[0]->{'
+                                    . $class_property_name
+                                    . '}; };' )
                                 or croak( $ERRNO . "\n" . $EVAL_ERROR );
                             if ($EVAL_ERROR) { croak($EVAL_ERROR); }
 
@@ -144,46 +182,95 @@ INIT {
 
 # create symbol table entries for methods and plain-old non-method subroutines
                 if ( $module_file_line
-                    =~ /^\s*our\s+(\w+)\s+\$(\w+)\s+\=\s+sub\s+[{]/xms ) # NEED FIX?  useless backslash-escaping of equal sign '='?
+                    =~ /^\s*our\s+(\w+)\s+\$(\w+)\s+\=\s+sub\s+[{]/xms )
                 {
                     $subroutine_type = $1;
                     $subroutine_name = $2;
 
-#					RPerl::diag "in Class.pm INIT block, have \$subroutine_type = '$subroutine_type', and \$subroutine_name = '$subroutine_name'\n";
+                    RPerl::diag(
+                        q{in Class.pm INIT block, have $subroutine_type = '}
+                            . $subroutine_type
+                            . q{', and $subroutine_name = '}
+                            . $subroutine_name
+                            . "'\n" );
+                    RPerl::diag( q{in Class.pm INIT block, have $CHECK = '}
+                            . $CHECK
+                            . "'\n" );
 
-                    if ( $subroutine_type =~ /\_\_method$/xms ) {
+                    if ( $CHECK eq 'OFF' ) {
+                        if ( $subroutine_type =~ /\_\_method$/xms ) {
 
-    #RPerl::diag "in Class.pm INIT block, $subroutine_name is a method\n";
-    # NEED UPGRADE: how can I do this w/out a subroutine?
-                        eval
-                            "\*\{$package_name\:\:$subroutine_name\} \= sub \{ return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;"
-                            or croak( $ERRNO . "\n" . $EVAL_ERROR );
-                        if ($EVAL_ERROR) { croak($EVAL_ERROR); }
+#RPerl::diag "in Class.pm INIT block, $subroutine_name is a method\n";
+# NEED UPGRADE: how can I do this w/out a subroutine?
+#                        eval "\*\{$package_name\:\:$subroutine_name\} \= sub \{ return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;"
+                            eval(     '*{'
+                                    . $package_name . '::'
+                                    . $subroutine_name
+                                    . '} = sub { return &${'
+                                    . $package_name . '::'
+                                    . $subroutine_name
+                                    . '}(@_); };' )
+                                or croak( $ERRNO . "\n" . $EVAL_ERROR );
+                            if ($EVAL_ERROR) { croak($EVAL_ERROR); }
 
 #						eval "\*\{$package_name\:\:$subroutine_name\} \= sub \{ RPerl::diag \"IN POST\-INIT\, method direct call MODE $package_name\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;";  # NEED UPGRADE: how can I do this w/out a subroutine?
-                    }
-                    else {
-#						RPerl::diag "in Class.pm INIT block, $subroutine_name is a non-method subroutine\n";
-                        if ( eval "defined\(\&main\:\:$subroutine_name\)" ) {
-                            croak
-                                "Attempt by package '$package_name' to re-define shared global subroutine '$subroutine_name', please re-name your subroutine or make it a method, dying";
                         }
+                        else {
+#						RPerl::diag "in Class.pm INIT block, $subroutine_name is a non-method subroutine\n";
+#                        if ( eval "defined\(\&main\:\:$subroutine_name\)" ) {
+                            if (eval(
+                                    'defined(&main::'
+                                        . $subroutine_name . ')'
+                                )
+                                )
+                            {
+                                croak
+                                    "Attempt by package '$package_name' to re-define shared global subroutine '$subroutine_name', please re-name your subroutine or make it a method, dying";
+                            }
 
 # DEV NOTE: must load into both main:: and $package_name:: namespaces, in order to call subroutines w/out class prefix from within class file (package) itself, and not to use AUTOLOAD
 # NEED UPGRADE: how can I do this w/out a subroutine?
-                        eval
-                            "\*\{main\:\:$subroutine_name\} \= sub \{ return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;"
-                            or croak( $ERRNO . "\n" . $EVAL_ERROR );
-                        if ($EVAL_ERROR) { croak($EVAL_ERROR); }
+#                        eval "\*\{main\:\:$subroutine_name\} \= sub \{ return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;"
+                            eval(     '*{main::'
+                                    . $subroutine_name
+                                    . '} = sub { return &${'
+                                    . $package_name . '::'
+                                    . $subroutine_name
+                                    . '}(@_); };' )
+                                or croak( $ERRNO . "\n" . $EVAL_ERROR );
+                            if ($EVAL_ERROR) { croak($EVAL_ERROR); }
 
 #						eval "\*\{main\:\:$subroutine_name\} \= sub \{ RPerl::diag \"IN POST\-INIT\, subroutine direct call MODE main\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;";  # NEED UPGRADE: how can I do this w/out a subroutine?
 # NEED UPGRADE: how can I do this w/out a subroutine?
-                        eval
-                            "\*\{$package_name\:\:$subroutine_name\} \= sub \{ return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;"
-                            or croak( $ERRNO . "\n" . $EVAL_ERROR );
-                        if ($EVAL_ERROR) { croak($EVAL_ERROR); }
+#                        eval "\*\{$package_name\:\:$subroutine_name\} \= sub \{ return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;"
+                            eval(     '*{'
+                                    . $package_name . '::'
+                                    . $subroutine_name
+                                    . '} = sub { return &${'
+                                    . $package_name . '::'
+                                    . $subroutine_name
+                                    . '}(@_); };' )
+                                or croak( $ERRNO . "\n" . $EVAL_ERROR );
+                            if ($EVAL_ERROR) { croak($EVAL_ERROR); }
 
 #						eval "\*\{$package_name\:\:$subroutine_name\} \= sub \{ RPerl::diag \"IN POST\-INIT\, subroutine direct call MODE $package_name\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;";  # NEED UPGRADE: how can I do this w/out a subroutine?
+                        }
+                    }
+                    elsif ( $CHECK eq 'ON' ) {
+                        # START HERE: create wrapper subs for interpreted CHECK and CHECKTRACE
+                        # START HERE: create wrapper subs for interpreted CHECK and CHECKTRACE
+                        # START HERE: create wrapper subs for interpreted CHECK and CHECKTRACE
+                        RPerl::diag(
+                            q{in Class.pm INIT block, CHECK IS ON} . "\n" );
+                    }
+                    elsif ( $CHECK eq 'TRACE' ) {
+                        RPerl::diag(
+                            q{in Class.pm INIT block, CHECK IS TRACE} . "\n" );
+                    }
+                    else {
+                        croak(
+                            "Received invalid value '$CHECK' for RPerl preprocessor directive CHECK to control data type checking, valid values are 'OFF', 'ON', and 'TRACE', croaking"
+                        );
                     }
                 }
             }
@@ -193,7 +280,10 @@ INIT {
 }
 
 # RPerl object constructor, shorthand
-sub new { no strict; return bless { %{ $_[0] . '::properties' } }, $_[0]; }
+sub new {
+    no strict;
+    return bless { %{ $_[0] . '::properties' } }, $_[0];
+}
 
 # suppress deprecated feature warning
 local $SIG{__WARN__} = sub {

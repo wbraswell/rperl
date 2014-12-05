@@ -20,16 +20,21 @@
         PERL_DYNAMIC (aka NONE, should be aka PERL)
         PERL_STATIC (aka PERL, should be aka RPERL)
         CPP
+    
+    DATA TYPE CHECKING (aka CHECK): function & method arguments must be correct data type, naturally on for CPP TYPES
+    	OFF
+    	ON (no report)
+    	TRACE (report variable name & calling function)
 
-INTERPRET run,  PERL code,      PERL ops,   PERL_DYNAMIC types  = NORMAL PERL
-INTERPRET run,  PERL code,      PERL ops,   PERL_STATIC types   = RPERL PURE-PERL MODE
+INTERPRET run,  PERL code,      PERL ops,   PERL_DYNAMIC types,	OFF check	= NORMAL PERL
+INTERPRET run,  PERL code,      PERL ops,   PERL_STATIC types,	TRACE check	= RPERL PURE-PERL MODE
 ...
-COMPILE run,    RPERL code,     CPP ops,    PERL_STATIC types   = RPERL CPPOPS_PERLTYPES MODE
-COMPILE run,    RPERL code,     CPP ops,    CPP types           = RPERL CPPOPS_CPPTYPES MODE
+COMPILE run,    RPERL code,     CPP ops,    PERL_STATIC types,  TRACE check = RPERL CPPOPS_PERLTYPES MODE
+COMPILE run,    RPERL code,     CPP ops,    CPP types,          TRACE check = RPERL CPPOPS_CPPTYPES MODE
 ...
-INTERPRET run,  C code,			PERL ops,   PERL_DYNAMIC types  = B::C OUTPUT
-COMPILE run,    C code,			PERL ops,   PERL_DYNAMIC types  = B::CC OUTPUT non-typed
-COMPILE run,    C code,			PERL ops,   PERL_STATIC types   = B::CC OUTPUT typed
+INTERPRET run,  C code,			PERL ops,   PERL_DYNAMIC types, OFF check   = B::C OUTPUT
+COMPILE run,    C code,			PERL ops,   PERL_DYNAMIC types, OFF check   = B::CC OUTPUT non-typed
+COMPILE run,    C code,			PERL ops,   PERL_STATIC types,  TRACE check = B::CC OUTPUT typed
 ...
 
 

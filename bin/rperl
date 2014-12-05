@@ -1,94 +1,100 @@
 #!/usr/bin/perl
+# [[[ HEADER ]]]
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_023;
+our $VERSION = 0.005_000;
 
+# [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
 ## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
 ## no critic qw(ProhibitBooleanGrep)  # SYSTEM SPECIAL 1: allow grep
+## no critic qw(RequireCarping)  # SYSTEM SPECIAL 13: allow die instead of croak
 
+# [[[ INCLUDES ]]]
 use RPerl::Parser;    # includes Perl::Critic
 use RPerl::Translator;
 use RPerl::Generator;
 use RPerl::Compiler;    # includes Inline
 use Getopt::Long;
 
-# [[[ ACCEPT & CHECK OPTIONS (COMMAND-LINE ARGUMENTS) ]]]
-# [[[ ACCEPT & CHECK OPTIONS (COMMAND-LINE ARGUMENTS) ]]]
-# [[[ ACCEPT & CHECK OPTIONS (COMMAND-LINE ARGUMENTS) ]]]
+# [[[ SUBROUTINES ]]]
 
-my string__array_ref $rperl_input_file_names           = [];
+# NEED UPGRADE: this array must be instantiated here, because GetOptions'
+# diamond '<>' operator does not allow passing arguments or receiving return values
 my string__array_ref $rperl_input_file_names_unlabeled = [];
-my string__array_ref $cpp_output_file_names            = [];
-my string__hash_ref $modes = {}; # can't store defaults here, erased by GetOptions()
-my string__hash_ref $modes_default = { ops => 'CPP', types => 'CPP' }; # default to CPPOPS_CPPTYPES
-my array__hash_ref $modes_supported
-    = { ops => ['CPP'], types => [ 'PERL', 'CPP' ] };
-my integer $rperl_input_file_num = 0;
 
-GetOptions(
-    'debug'         => \$RPerl::DEBUG,
-    'verbose'       => \$RPerl::VERBOSE,
-    'infile=s{1,}'  => \$rperl_input_file_names,
-    'outfile=s{1,}' => \$cpp_output_file_names,
-    'mode=s%'       => \$modes,
-    '<>'            => \&store_unlabeled_options
-    )
-    or croak(
-    "\nERROR EARG00: Failure processing command line arguments,\ncroaking");
+# [[[ ACCEPT & CHECK OPTIONS (COMMAND-LINE ARGUMENTS) ]]]
+# [[[ ACCEPT & CHECK OPTIONS (COMMAND-LINE ARGUMENTS) ]]]
+# [[[ ACCEPT & CHECK OPTIONS (COMMAND-LINE ARGUMENTS) ]]]
 
-sub accept_and_check_input_files {
+sub accept_and_verify_input_files {
+    (   my string__array_ref $rperl_input_file_names,
+        my string__array_ref $rperl_input_file_names_unlabeled
+    ) = @_;
+
     RPerl::diag "\n\n"; # move output away from initial Inline compiler output
     RPerl::diag 'in rperl, have $RPerl::DEBUG = ' . $RPerl::DEBUG . "\n";
     RPerl::diag 'in rperl, have $RPerl::VERBOSE = ' . $RPerl::VERBOSE . "\n";
 
     # accept unlabeled input file name(s) if no labeled values specified
-    if (    ( ( scalar @{$rperl_input_file_names} ) == 0 )
-        and ( ( scalar @{$rperl_input_file_names_unlabeled} ) > 0 ) )
-    {
-        $rperl_input_file_names = $rperl_input_file_names_unlabeled;
+    if ( ( scalar @{$rperl_input_file_names_unlabeled} ) > 0 ) {
+        if ( ( scalar @{$rperl_input_file_names} ) == 0 ) {
+            $rperl_input_file_names = $rperl_input_file_names_unlabeled;
+        }
+        else {
+            die
+                "ERROR EARG08: Both labeled & unlabeled RPerl source code input file option(s) specified, dying\n";
+        }
     }
 
     if ( ( scalar @{$rperl_input_file_names} ) == 0 ) {
-        croak(
-            "\nERROR EARG01: No RPerl source code input file(s) specified,\ncroaking"
-        );
+        die
+            "ERROR EARG01: No RPerl source code input file(s) specified, dying\n";
     }
 
-    # check input file(s)
-    $rperl_input_file_num = scalar @{$rperl_input_file_names};
+    # verify input file(s)
+    my $rperl_input_file_num = scalar @{$rperl_input_file_names};
 
 # DEV NOTE: Perl::Critic BUG!  'integer' triggers false positive RequireFinalReturn
 #    for my integer $i ( 0 .. ( $rperl_input_file_num - 1 ) ) {
     for my $i ( 0 .. ( $rperl_input_file_num - 1 ) ) {
         my string $rperl_input_file_name = $rperl_input_file_names->[$i];
 
-#    RPerl::diag 'in rperl, top of file checking loop ' . $i . ' of ' . $rperl_input_file_num . ", have \$rperl_input_file_names->[$i] = '" . $rperl_input_file_name . "'\n";
+#    RPerl::diag 'in rperl, top of file verifying loop ' . $i . ' of ' . $rperl_input_file_num . ", have \$rperl_input_file_names->[$i] = '" . $rperl_input_file_name . "'\n";
 
         if ( not( -e $rperl_input_file_name ) ) { ## no critic qw(ProhibitCascadingIfElse)  # SYSTEM DEFAULT 3: allow argument-handling logic
-            croak(
-                "\nERROR EARG02: Specified RPerl source code input file '$rperl_input_file_name' does not exist,\ncroaking"
-            );
+            die
+                "ERROR EARG02: Specified RPerl source code input file '$rperl_input_file_name' does not exist, dying\n";
         }
         elsif ( not( -r $rperl_input_file_name ) ) {
-            croak(
-                "\nERROR EARG03: Specified RPerl source code input file '$rperl_input_file_name' is not readable,\ncroaking"
-            );
+            die
+                "ERROR EARG03: Specified RPerl source code input file '$rperl_input_file_name' is not readable, dying\n";
         }
         elsif ( not( -f $rperl_input_file_name ) ) {
-            croak(
-                "\nERROR EARG04: Specified RPerl source code input file '$rperl_input_file_name' is not a plain file,\ncroaking"
-            );
+            die
+                "ERROR EARG04: Specified RPerl source code input file '$rperl_input_file_name' is not a plain file, dying\n";
         }
         elsif ( ( $rperl_input_file_name !~ /[.]pm$/xms )
             and ( $rperl_input_file_name !~ /[.]pl$/xms ) )
         {
-            croak(
-                "\nERROR EARG05: Specified RPerl source code input file '$rperl_input_file_name' is not a Perl program ending  in '.pl' or module ending in '.pm',\ncroaking"
-            );
+            die
+                "ERROR EARG05: Specified RPerl source code input file '$rperl_input_file_name' is not a Perl program ending  in '.pl' or module ending in '.pm', dying\n";
         }
+
+    }
+    return $rperl_input_file_names;
+}
+
+sub generate_output_file_names {
+    (   my string__array_ref $rperl_input_file_names,
+        my string__array_ref $cpp_output_file_names,
+        my integer $rperl_input_file_num
+    ) = @_;
+
+    for my $i ( 0 .. ( $rperl_input_file_num - 1 ) ) {
+        my string $rperl_input_file_name = $rperl_input_file_names->[$i];
 
         # automatically generate output file name(s) if not provided
         if ( not( defined $cpp_output_file_names->[$i] ) ) {
@@ -96,35 +102,40 @@ sub accept_and_check_input_files {
             substr $cpp_output_file_names->[$i], -3, 4, '.cpp';
         }
 
-#    RPerl::diag 'in rperl, bottom of file checking loop ' . $i . ' of ' . $rperl_input_file_num . ", have \$cpp_output_file_names->[$i] = '" . $cpp_output_file_names->[$i] . "'\n";
+#    RPerl::diag 'in rperl::generate_output_file_names(), bottom of loop ' . $i . ' of ' . $rperl_input_file_num . ", have \$cpp_output_file_names->[$i] = '" . $cpp_output_file_names->[$i] . "'\n";
     }
-    return;
+
+    return $cpp_output_file_names;
 }
 
-sub accept_and_check_modes {
+sub verify_and_default_modes {
+    (   my string__hash_ref $modes,
+        my string__hash_ref $modes_default,
+        my array__hash_ref $modes_supported
+    ) = @_;
 
-    # check modes
+    # verify modes
     foreach my string $mode_key ( keys %{$modes} ) {
         if ( not( exists $modes_supported->{$mode_key} ) ) {
-            croak(
-                "\nERROR EARG06: Unsupported or invalid mode category '$mode_key' specified, supported categories are ("
-                    . join( ', ', keys %{$modes_supported} )
-                    . "),\ncroaking" );
+            die
+                "ERROR EARG06: Unsupported or invalid mode category '$mode_key' specified, supported categories are ("
+                . join( ', ', keys %{$modes_supported} )
+                . '), dying\n';
         }
         elsif (
             not( grep { $_ eq $modes->{$mode_key} }
                 @{ $modes_supported->{$mode_key} } )
             )
         {
-            croak(    "\nERROR EARG07: Unsupported or invalid mode '"
-                    . $modes->{$mode_key}
-                    . "' in mode category '$mode_key' specified, supported modes are ("
-                    . join( ', ', @{ $modes_supported->{$mode_key} } )
-                    . "),\ncroaking" );
+            die "ERROR EARG07: Unsupported or invalid mode '"
+                . $modes->{$mode_key}
+                . "' in mode category '$mode_key' specified, supported modes are ("
+                . join( ', ', @{ $modes_supported->{$mode_key} } )
+                . '), dying\n';
         }
     }
 
-    # accept modes
+    # defaults when mode(s) not provided
     foreach my string $mode_default_key ( keys %{$modes_default} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 7: PERL CRITIC UNFILED ISSUE, not postfix foreach
         if ( not( exists $modes->{$mode_default_key} ) ) {
             $modes->{$mode_default_key} = $modes_default->{$mode_default_key};
@@ -132,6 +143,16 @@ sub accept_and_check_modes {
     }
 
     1; # DEV NOTE: Perl::Critic BUG!  must have this '1;' to avoid false positive ProhibitPostfixControls & RequireFinalReturn
+
+    return $modes;
+}
+
+sub verbose_multi_file_settings {
+    (   my string__array_ref $rperl_input_file_names,
+        my string__array_ref $cpp_output_file_names,
+        my string__hash_ref $modes,
+        my integer $rperl_input_file_num
+    ) = @_;
 
     if ( $rperl_input_file_num > 1 ) {
         RPerl::verbose "Input file(s):\n";
@@ -157,11 +178,6 @@ sub accept_and_check_modes {
 #our void $store_unlabeled_options = sub {  # NEED FIX: can't define RPerl-style subroutines here?
 sub store_unlabeled_options {
     ( my unknown $option ) = @_;
-    if ( defined $rperl_input_file_names->[0] ) {
-        croak(
-            "\nERROR EARG08: Unlabeled RPerl source code input file option(s) specified, but labeled option(s) also specified, please choose either labeled or unlabeled,\ncroaking"
-        );
-    }
     push @{$rperl_input_file_names_unlabeled}, $option;
     return;
 }
@@ -171,6 +187,11 @@ sub store_unlabeled_options {
 # [[[ COMPILE RPERL TO XS & BINARY ]]]
 
 sub compile_files {
+    (   my string__array_ref $rperl_input_file_names,
+        my string__array_ref $cpp_output_file_names,
+        my string__hash_ref $modes,
+        my integer $rperl_input_file_num
+    ) = @_;
 
 # DEV NOTE: Perl::Critic BUG!  'integer' triggers false positive RequireFinalReturn
 #    for my integer $i ( 0 .. ( $rperl_input_file_num - 1 ) ) {
@@ -189,7 +210,9 @@ sub compile_files {
         RPerl::verbose 'Modes:       ops => '
             . $modes->{ops}
             . ', types => '
-            . $modes->{types} . "\n\n";
+            . $modes->{types}
+            . ', check => '
+            . $modes->{check} . "\n\n";
         if ( $rperl_input_file_num > 1 ) {
             RPerl::diag_pause "PRESS <ENTER> TO CONTINUE\n";
         }
@@ -212,10 +235,41 @@ sub compile_files {
     return;
 }
 
+# [[[ OPERATIONS ]]]
+
 # [[[ ACTUALLY RUN CODE ]]]
 # [[[ ACTUALLY RUN CODE ]]]
 # [[[ ACTUALLY RUN CODE ]]]
 
-accept_and_check_input_files();
-accept_and_check_modes();
-compile_files();
+my string__array_ref $rperl_input_file_names = [];
+my string__array_ref $cpp_output_file_names  = [];
+my string__hash_ref $modes = {}; # can't store defaults here, erased by GetOptions()
+my string__hash_ref $modes_default = { ops => 'CPP', types => 'CPP', check => 'TRACE' }; # default to CPPOPS_CPPTYPES_CHECKTRACE in C++ output code
+my array__hash_ref $modes_supported = {
+    ops   => ['CPP'],
+    types => [ 'PERL', 'CPP' ],
+    check => [ 'OFF', 'ON', 'TRACE' ]
+};
+my integer $rperl_input_file_num = 0;
+
+GetOptions(
+    'debug'         => \$RPerl::DEBUG,
+    'verbose'       => \$RPerl::VERBOSE,
+    'infile=s{1,}'  => \@{$rperl_input_file_names},
+    'outfile=s{1,}' => \@{$cpp_output_file_names},
+    'mode=s%'       => \$modes,
+    '<>'            => \&store_unlabeled_options
+    )
+    or die "ERROR EARG00: Failure processing command line arguments, dying\n";
+
+$rperl_input_file_names
+    = accept_and_verify_input_files( $rperl_input_file_names,
+    $rperl_input_file_names_unlabeled );
+$rperl_input_file_num  = scalar @{$rperl_input_file_names};
+$cpp_output_file_names = generate_output_file_names( $rperl_input_file_names,
+    $cpp_output_file_names, $rperl_input_file_num );
+$modes = verify_and_default_modes( $modes, $modes_default, $modes_supported );
+verbose_multi_file_settings( $rperl_input_file_names, $cpp_output_file_names,
+    $modes, $rperl_input_file_num );
+compile_files( $rperl_input_file_names, $cpp_output_file_names, $modes,
+    $rperl_input_file_num );

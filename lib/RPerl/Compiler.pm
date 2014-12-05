@@ -1,3 +1,4 @@
+# [[[ CHECK: 'OFF' ]]]
 package RPerl::Compiler;
 use strict;
 use warnings;

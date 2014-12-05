@@ -19,8 +19,12 @@ require rperltypes;
 
 # [[[ OO CLASS PROPERTIES SPECIAL ]]]
 
-our $DEBUG = 0; # Perl variable $RPerl::DEBUG and environmental variable RPERL_DEBUG are equivalent, see diag() above
-our $VERBOSE = 0; # Perl variable $RPerl::VERBOSE and environmental variable RPERL_VERBOSE are equivalent, see verbose() above
+# data type checking mode, disabled in RPerl system code which calls 'use RPerl;',
+# changed on a per-file basis by preprocessor directive, see RPerl::CompileUnit::Module::Class::INIT
+# NEED UPGRADE: enable in RPerl system code when boostrapping compiler
+our $CHECK = 'OFF';
+our $DEBUG = 0;  # Perl variable $RPerl::DEBUG and environmental variable RPERL_DEBUG are equivalent, see diag*() below
+our $VERBOSE = 0;  # Perl variable $RPerl::VERBOSE and environmental variable RPERL_VERBOSE are equivalent, see verbose*() below 
 
 # [[[ SUBROUTINES SPECIAL ]]]
 

@@ -1,18 +1,24 @@
+# [[[ CHECK: 'GEOMETRIC_AWESOMENESS' ]]]
+# [[[ HEADER ]]]
 package RPerl::Algorithm::Math::GeometricAlgebra;
 use strict;
 use warnings;
 use RPerl;
 our $VERSION = 0.000_002;
 
+# [[[ OO INHERITANCE ]]]
 use parent ('RPerl::Algorithm::Math');
 use RPerl::Algorithm::Math;
 
+# [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
 
-# [[[ PROCEDURAL SUBROUTINES ]]]
-# [[[ PROCEDURAL SUBROUTINES ]]]
-# [[[ PROCEDURAL SUBROUTINES ]]]
+# [[[ OO OBJECT PROPERTIES ]]]
+our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
+);
+
+# [[[ SUBROUTINES ]]]
 
 our number $inner_product__vector_vector_euclidean = sub {
     (   my number__array_ref $input_vector_1,
@@ -163,4 +169,4 @@ our number $outer_product__bivector_vector_euclidean = sub {
     return $return_value_number;
 };
 
-1;
+1;  # end of class
