@@ -1,6 +1,6 @@
 #!/usr/bin/perl
-# [[[ TEST : 'ERROR ECVPARP00' ]]]
-# [[[ TEST : 'unexpected token:  @TYPED_PI' ]]]
+# [[[ TEST : 'ERROR ECVPA' ]]]
+# [[[ TEST : '@TYPED_PI' ]]]
 # [[[ HEADER ]]]
 use strict;
 use warnings;
