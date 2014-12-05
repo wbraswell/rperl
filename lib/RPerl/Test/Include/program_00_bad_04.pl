@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 # [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : 'Missing operator before Bar?' ]]]
+# [[[ TEST : 'near "use RPerl::Test:"' ]]]
 # [[[ HEADER ]]]
 use strict;
 use warnings;

@@ -1,5 +1,5 @@
 # [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : '"use" not allowed in expression' ]]]
+# [[[ TEST : 'near "use RPerl::Test::Foo' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::Include::Class_00_Bad_04;
 use strict;
