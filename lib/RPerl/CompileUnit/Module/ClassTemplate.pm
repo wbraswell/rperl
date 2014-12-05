@@ -56,7 +56,7 @@ use RPerl::Test::Bar;
 
 # [[[ CONSTANTS ]]]
 # <<< CHANGE ME: delete for no constants, or replace with real constant name(s) & data >>>
-use constant PI  => my number $TYPED_PI  = 3.14159;
+use constant PI  => my number $TYPED_PI  = 3.141_59;
 use constant PIE => my string $TYPED_PIE = 'pecan';
 
 # NEED UPGRADE: constant array & hash refs not read-only as of Perl v5.20
@@ -64,15 +64,15 @@ use constant PIE => my string $TYPED_PIE = 'pecan';
 #    = [ 'Sun', 'Mon', 'Tues', 'Weds', 'Thurs', 'Fri', 'Sat' ];
 #use constant HYDROGEN => my scalar__array_ref $TYPED_HYDROGEN = [
 #    my integer $TYPED_number = 1,
-#    my number $TYPED_weight  = 1.00794,
+#    my number $TYPED_weight  = 1.007_94,
 #    my string $TYPED_symbol  = 'H'
 #];
 #use constant TRANSCENDENTALS => my number__hash_ref $TYPED_TRANSCENDENTALS
-#    = { pi => 3.14159, e => 2.71828, c => 299_792_458 };
+#    = { pi => 3.141_59, e => 2.718_28, c => 299_792_458 };
 #use constant EINSTEIN => my scalar__hash_ref $TYPED_EINSTEIN = {
 #    name       => my string $TYPED_name        = 'Albert Einstein',
-#    birth_year => my integer $TYPED_birth_year = 1879,
-#    death_year => my integer $TYPED_death_year = 1955
+#    birth_year => my integer $TYPED_birth_year = 1_879,
+#    death_year => my integer $TYPED_death_year = 1_955
 #};
 
 # [[[ OO OBJECT PROPERTIES ]]]
