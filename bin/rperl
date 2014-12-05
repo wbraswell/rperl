@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_021;
+our $VERSION = 0.004_023;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
@@ -134,15 +134,15 @@ sub accept_and_check_modes {
     1; # DEV NOTE: Perl::Critic BUG!  must have this '1;' to avoid false positive ProhibitPostfixControls & RequireFinalReturn
 
     if ( $rperl_input_file_num > 1 ) {
-        RPerl::verbose "input file(s):\n";
+        RPerl::verbose "Input file(s):\n";
         foreach my string $input_file_name ( @{$rperl_input_file_names} ) {
             RPerl::verbose q{    } . $input_file_name . "\n";
         }
-        RPerl::verbose "output file(s):\n";
+        RPerl::verbose "Output file(s):\n";
         foreach my string $output_file_name ( @{$cpp_output_file_names} ) {
             RPerl::verbose q{    } . $output_file_name . "\n";
         }
-        RPerl::verbose "modes:\n";
+        RPerl::verbose "Modes:\n";
         foreach my string $mode_key ( keys %{$modes} ) {
             RPerl::verbose q{    }
                 . $mode_key . ' => '
@@ -180,13 +180,13 @@ sub compile_files {
 
         if ( $rperl_input_file_num > 1 ) {
             RPerl::verbose_reset();
-            RPerl::verbose 'input file number: '
+            RPerl::verbose 'Input file number: '
                 . ( $i + 1 ) . ' of '
                 . $rperl_input_file_num . "\n";
         }
-        RPerl::verbose 'input file: ' . $rperl_input_file_name . "\n";
-        RPerl::verbose 'output file: ' . $cpp_output_file_name . "\n";
-        RPerl::verbose 'modes: ops => '
+        RPerl::verbose 'Input file:  ' . $rperl_input_file_name . "\n";
+        RPerl::verbose 'Output file: ' . $cpp_output_file_name . "\n";
+        RPerl::verbose 'Modes:       ops => '
             . $modes->{ops}
             . ', types => '
             . $modes->{types} . "\n\n";

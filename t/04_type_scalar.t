@@ -46,7 +46,7 @@ sub string__dumperify {
 #RPerl::diag 'in 04_type_scalar.t, before mode loop, have $RPerl::Test::properties_class{modes} = ' . "\n" . Dumper($RPerl::Test::properties_class{modes}) . "\n";
 
 foreach
-    my scalar__hash_ref $mode ( @{ $RPerl::Test::properties_class{modes} } ) ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
+    my scalartype__hash_ref $mode ( @{ $RPerl::Test::properties_class{modes} } ) ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
 {
 #    RPerl::diag 'in 04_type_scalar.t, top of mode loop, have $mode = ' . "\n" . Dumper($mode) . "\n";
     if ( $ENV{TEST_VERBOSE} ) {

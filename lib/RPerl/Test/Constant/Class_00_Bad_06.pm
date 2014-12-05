@@ -1,5 +1,5 @@
 # [[[ TEST : 'ERROR ECVPARP00' ]]]
-# [[[ TEST : 'unexpected token:  $TYPD_PI' ]]]
+# [[[ TEST : 'Unexpected token:  $TYPD_PI' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::Constant::Class_00_Bad_06;
 use strict;

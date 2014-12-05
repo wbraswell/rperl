@@ -65,12 +65,12 @@ use parent -norequire, ('method');
 package string_ref__method;
 use parent -norequire, ('method');
 
-# method with scalar return type
-package scalar__method;
+# method with scalartype return type
+package scalartype__method;
 use parent -norequire, ('method');
 
-# method with (ref to scalar) return type
-package scalar_ref__method;
+# method with (ref to scalartype) return type
+package scalartype_ref__method;
 use parent -norequire, ('method');
 
 # method with unknown return type

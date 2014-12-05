@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 # [[[ TEST : 'ERROR ECVPARP00' ]]]
-# [[[ TEST : 'unexpected token:  #!' ]]]
+# [[[ TEST : 'Unexpected token:  #!' ]]]
 # [[[ HEADER ]]]
 use strict;
 use warnings;

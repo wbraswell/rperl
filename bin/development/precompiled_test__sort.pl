@@ -246,7 +246,7 @@ print "in precompiled_test__sort.pl, have sorted \$sorter2->{data} =\n"
 # NEED CHOOSE: which data structure?
 my number__array_ref $integer__data2 = [ 12, 11, 10, 9, 8, 7, 6 ];
 
-#my scalar_linkedlist_ref $integer__data2 = scalar_linkedlist_ref->new_from_array_ref([12, 11, 10, 9, 8, 7, 6]);
+#my scalartype_linkedlist_ref $integer__data2 = scalar_linkedlist_ref->new_from_array_ref([12, 11, 10, 9, 8, 7, 6]);
 print "in precompiled_test__sort.pl, have unsorted \$integer__data2 =\n"
     . Dumper($integer__data2) . "\n";
 

@@ -79,7 +79,7 @@ SV* integer__bubblesort(SV* integer__data)  // DEV NOTE: properly creates local-
 	SV* integer__data_i = newSV(0);  // OPTIMIZE, LONG-HAND: integer__data element i accessed more than once, declare integer__data_i and re-use;  all new SV*'s given initial undef newSV(0) value to avoid fprintf(stderr, ) errors during debugging
 	SV* integer__data_i_plus_1 = newSV(0);  // OPTIMIZE, LONG-HAND
 
-////	my scalar $swap;
+////	my scalartype $swap;
 	SV* swap = newSV(0);
 
 //	if (TEST_VERBOSE2) { fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), after variable init, have pre-DUMPER SV_REFERENCE_COUNT(integer__data_i) = %u\n", SV_REFERENCE_COUNT(integer__data_i));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), after variable init, have integer__data_i = %s", RPerl_DUMPER__perl_from_c(integer__data_i));  fprintf(stderr, "in CPPOPS_PERLTYPES integer__bubblesort(), after variable init, have post-DUMPER SV_REFERENCE_COUNT(integer__data_i) = %u\n\n", SV_REFERENCE_COUNT(integer__data_i)); }

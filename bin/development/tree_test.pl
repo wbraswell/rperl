@@ -15,10 +15,10 @@ my $nested_array_refs_chars = ['F', [['B', ['A', ['D', ['C', 'E']]]], ['G', [und
 
 RPerl::diag "in multi_tree.pl, have \$nested_array_refs_chars =\n" . RPerl::DUMPER($nested_array_refs_chars) . "\n";
 
-my scalar_binarytree_ref $tree = scalar_binarytree_ref->new_from_nested_array_refs($nested_array_refs_chars);
-#my scalar_binarytree_ref $tree = scalar_binarytree_ref->new_from_nested_array_refs([2112, [[33, [17, 71]], [44, [23, [1.21, [undef, 55]]]]]]);
+my scalartype_binarytree_ref $tree = scalar_binarytree_ref->new_from_nested_array_refs($nested_array_refs_chars);
+#my scalartype_binarytree_ref $tree = scalar_binarytree_ref->new_from_nested_array_refs([2112, [[33, [17, 71]], [44, [23, [1.21, [undef, 55]]]]]]);
 =UNUSED CODE
-my scalar_binarytree_ref $tree = scalar_binarytree_ref->new_from_nested_array_refs(
+my scalartype_binarytree_ref $tree = scalar_binarytree_ref->new_from_nested_array_refs(
 [2112, 
 	[[33, 
 		[17, 

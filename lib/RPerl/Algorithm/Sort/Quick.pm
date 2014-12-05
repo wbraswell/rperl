@@ -7,7 +7,7 @@ use RPerl::Algorithm::Sort;
 our %properties =
 (
 	variant => my string $TYPED_mode = 'original',  # default to original (not in-place) variant
-	data => my scalar__array_ref $TYPED_data,
+	data => my scalartype__array_ref $TYPED_data,
 );
 
 # call out to sort data, return nothing
@@ -24,7 +24,7 @@ our void__method $sort = sub {(my object $self) = @_;
 
 # original algorithm: comparison-based and stable [O(n log n) average total time, O(n) worst-case total extra space]
 # sort data, return sorted data
-our scalar__array_ref $quicksort = sub {(my scalar__array_ref $data) = @_;
+our scalartype__array_ref $quicksort = sub {(my scalartype__array_ref $data) = @_;
 ;
 	my const_int $data_length = scalar(@{$data});
 	
@@ -35,7 +35,7 @@ our scalar__array_ref $quicksort = sub {(my scalar__array_ref $data) = @_;
 	return $data if ($data_length <= 1);
 	
 	my int $i;
-	my scalar $element;
+	my scalartype $element;
 	
 	# sublists [O(n) total extra space]
 	my @less_scalar__array = ();
@@ -46,7 +46,7 @@ our scalar__array_ref $quicksort = sub {(my scalar__array_ref $data) = @_;
 ##	my const_int $i_pivot = int($data_length / 2);  # pivot is middle element in partition; okay for large, already-sorted, or repetitive arrays
 #	RPerl::diag "in quicksort(), have \$i_pivot = $i_pivot\n";
 
-	my const_scalar $pivot = $data->[$i_pivot];
+	my const_scalartype $pivot = $data->[$i_pivot];
 #	RPerl::diag "in quicksort(), have \$pivot = $pivot\n";
 
 	# iteratively partition elements of length-n list into sublists less-or-greater than pivot [O(n) time, O(n) total extra space for sublists]
@@ -73,13 +73,13 @@ our scalar__array_ref $quicksort = sub {(my scalar__array_ref $data) = @_;
 
 # in-place algorithm: comparison-based and not stable [O(n log n) average total time, O(log n) worst-case total extra space]
 # call out to sort data, return sorted data
-our scalar__array_ref $quicksort_inplace = sub {(my scalar__array_ref $data) = @_;
+our scalartype__array_ref $quicksort_inplace = sub {(my scalartype__array_ref $data) = @_;
 ;
 	return quicksort_inplace_left_right($data, 0, (scalar @{$data}) - 1);
 };
 
 # in-place algorithm; sort data, return sorted data [O(n log n) total time, O(log n) total extra space] 
-our scalar__array_ref $quicksort_inplace_left_right = sub { (my scalar__array_ref $data, my const_int $i_left, my const_int $i_right) = @_;
+our scalartype__array_ref $quicksort_inplace_left_right = sub { (my scalartype__array_ref $data, my const_int $i_left, my const_int $i_right) = @_;
 ;
 #	RPerl::diag "in quicksort_inplace_left_right(), have \$data = \n" . RPerl::DUMPER($data) . "\n";
 	
@@ -102,13 +102,13 @@ our scalar__array_ref $quicksort_inplace_left_right = sub { (my scalar__array_re
 };
 
 # in-place algorithm; partition data, return store index [O(n) time, O(1) extra space]
-our int $partition_inplace = sub {(my scalar__array_ref $data, my const_int $i_left, my const_int $i_right, my const_int $i_pivot) = @_;
+our int $partition_inplace = sub {(my scalartype__array_ref $data, my const_int $i_left, my const_int $i_right, my const_int $i_pivot) = @_;
 ;
-	my scalar $swap;
+	my scalartype $swap;
 	my int $i_store;
 	my int $i;
 	
-	my const_scalar $pivot = $data->[$i_pivot];	
+	my const_scalartype $pivot = $data->[$i_pivot];	
 #	RPerl::diag "in partition_inplace(), have \$pivot = $pivot\n";
 	
 	# temporarily move pivot to the end of sublist to keep it out of the way

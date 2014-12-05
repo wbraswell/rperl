@@ -858,68 +858,68 @@ use parent -norequire, ('const_array_ref');
 
 # [[[ SCALAR ARRAYS ]]]
 
-# array of scalars
-package scalar__array;
+# array of scalartypes
+package scalartype__array;
 use parent -norequire, ('array');
 
-# array of (scalars with const values)
-package const_scalar__array;
+# array of (scalartypes with const values)
+package const_scalartype__array;
 use parent -norequire, ('array');
 
-# array of (refs to scalars)
-package scalar_ref__array;
+# array of (refs to scalartypes)
+package scalartype_ref__array;
 use parent -norequire, ('array');
 
-# array of (refs to (scalars with const values))
-package const_scalar_ref__array;
+# array of (refs to (scalartypes with const values))
+package const_scalartype_ref__array;
 use parent -norequire, ('array');
 
-# (array with const size) of scalars
-package scalar__const_array;
+# (array with const size) of scalartypes
+package scalartype__const_array;
 use parent -norequire, ('const_array');
 
-# (array with const size) of (scalars with const values)
-package const_scalar__const_array;
+# (array with const size) of (scalartypes with const values)
+package const_scalartype__const_array;
 use parent -norequire, ('const_array');
 
-# (array with const size) of (refs to scalars)
-package scalar_ref__const_array;
+# (array with const size) of (refs to scalartypes)
+package scalartype_ref__const_array;
 use parent -norequire, ('const_array');
 
-# (array with const size) of (refs to (scalars with const values))
-package const_scalar_ref__const_array;
+# (array with const size) of (refs to (scalartypes with const values))
+package const_scalartype_ref__const_array;
 use parent -norequire, ('const_array');
 
-# (ref to array) of scalars
-package scalar__array_ref;
+# (ref to array) of scalartypes
+package scalartype__array_ref;
 use parent -norequire, ('array_ref');
 
-# (ref to array) of (scalars with const values)
-package const_scalar__array_ref;
+# (ref to array) of (scalartypes with const values)
+package const_scalartype__array_ref;
 use parent -norequire, ('array_ref');
 
-# (ref to array) of (refs to scalars)
-package scalar_ref__array_ref;
+# (ref to array) of (refs to scalartypes)
+package scalartype_ref__array_ref;
 use parent -norequire, ('array_ref');
 
-# (ref to array) of (refs to (scalars with const values))
-package const_scalar_ref__array_ref;
+# (ref to array) of (refs to (scalartypes with const values))
+package const_scalartype_ref__array_ref;
 use parent -norequire, ('array_ref');
 
-# (ref to (array with const size)) of scalars
-package scalar__const_array_ref;
+# (ref to (array with const size)) of scalartypes
+package scalartype__const_array_ref;
 use parent -norequire, ('const_array_ref');
 
-# (ref to (array with const size)) of (scalars with const values)
-package const_scalar__const_array_ref;
+# (ref to (array with const size)) of (scalartypes with const values)
+package const_scalartype__const_array_ref;
 use parent -norequire, ('const_array_ref');
 
-# (ref to (array with const size)) of (refs to scalars)
-package scalar_ref__const_array_ref;
+# (ref to (array with const size)) of (refs to scalartypes)
+package scalartype_ref__const_array_ref;
 use parent -norequire, ('const_array_ref');
 
-# (ref to (array with const size)) of (refs to (scalars with const values))
-package const_scalar_ref__const_array_ref;
+# (ref to (array with const size)) of (refs to (scalartypes with const values))
+package const_scalartype_ref__const_array_ref;
 use parent -norequire, ('const_array_ref');
 
 # [[[ UNKNOWN ARRAYS ]]]

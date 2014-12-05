@@ -3,7 +3,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_012;
+our $VERSION = 0.003_014;
 
 # [[[ OO INHERITANCE ]]]
 #use RPerl::CompileUnit::Module::Class;
@@ -47,7 +47,7 @@ our object $rperl_to_ast__parse = sub {
 our void $rperl_source__check_syntax = sub {
     ( my string $rperl_source__file_name) = @_;
 
-    RPerl::verbose 'PARSE PHASE 0: CHECK PERL SYNTAX...';
+    RPerl::verbose 'PARSE PHASE 0: Check Perl syntax...';
 
     my string $rperl_source__perl_syntax_command
         = q{perl -Iblib/lib -M'warnings FATAL=>q(all)' -cW }
@@ -83,7 +83,7 @@ our void $rperl_source__check_syntax = sub {
     if ( $rperl_source__perl_syntax_retval != 0 ) {
         die "\n"
             . 'ERROR ECVPAPL02, RPERL PARSER, PERL SYNTAX ERROR' . "\n"
-            . 'failed `perl -cW` syntax check with return value '
+            . 'Failed `perl -cW` syntax check with return value '
             . ( $rperl_source__perl_syntax_retval >> 8 )
             . ' and the following message(s):' . "\n\n"
             . `$rperl_source__perl_syntax_command__all_output`
@@ -100,7 +100,7 @@ our void $rperl_source__check_syntax = sub {
 our void $rperl_source__criticize = sub {
     ( my string $rperl_source__file_name) = @_;
 
-    RPerl::verbose 'PARSE PHASE 1: CRITICIZE PERL SYNTAX...';
+    RPerl::verbose 'PARSE PHASE 1: Criticize Perl syntax...';
 
 # DEV NOTE: disable RequireTidyCode because perltidy may not be stable
 #    my object $rperl_source__critic = Perl::Critic->new( -severity => 'brutal' );
@@ -125,25 +125,25 @@ our void $rperl_source__criticize = sub {
         my string $violation_pretty = q{};
         foreach my object $violation (@rperl_source__critic_violations) {
             $violation_pretty
-                .= '    line number:  ' . $violation->{_location}->[0] . "\n";
+                .= '    Line number:  ' . $violation->{_location}->[0] . "\n";
             $violation_pretty
-                .= '    policy:       ' . $violation->{_policy} . "\n";
+                .= '    Policy:       ' . $violation->{_policy} . "\n";
             $violation_pretty
-                .= '    description:  ' . $violation->{_description} . "\n";
+                .= '    Description:  ' . $violation->{_description} . "\n";
             if ( ref( $violation->{_explanation} ) eq 'ARRAY' ) {
                 $violation_pretty
-                    .= '    explanation:  see Perl Best Practices page(s) '
+                    .= '    Explanation:  See Perl Best Practices page(s) '
                     . join( ', ', @{ $violation->{_explanation} } ) . "\n\n";
             }
             else {
-                $violation_pretty .= '    explanation:  '
+                $violation_pretty .= '    Explanation:  '
                     . $violation->{_explanation} . "\n\n";
             }
         }
         die "\n"
             . 'ERROR ECVPAPC02, RPERL PARSER, PERL CRITIC VIOLATION'
             . "\n"
-            . 'failed Perl::Critic brutal review with the following message:'
+            . 'Failed Perl::Critic brutal review with the following message:'
             . "\n\n"
             . $violation_pretty;
     }
@@ -167,19 +167,26 @@ our void $rperl_grammar_error = sub {
     my $current_state_num = $argument->{STACK}[-1][0];
     my $current_state     = $argument->{STATES}[$current_state_num];
     my $expected_tokens   = q{};
+    my number $is_first_expected = 1;
     foreach my $expected_token ( keys %{ $current_state->{ACTIONS} } ) {
-        $expected_tokens .= q{        } . $expected_token . "\n";
+        if ($is_first_expected) {
+            $is_first_expected = 0;
+            $expected_tokens .= $expected_token . "\n";
+        }
+        else {
+            $expected_tokens .= q{                       } . $expected_token . "\n";
+        }
     }
 
     die "\n"
         . 'ERROR ECVPARP00, RPERL PARSER, RPERL SYNTAX ERROR' . "\n"
-        . 'failed RPerl grammar syntax check with the following message:'
+        . 'Failed RPerl grammar syntax check with the following message:'
         . "\n\n"
-        . '    line number:       '
+        . '    Line number:       '
         . $line_number . "\n"
-        . '    unexpected token:  '
+        . '    Unexpected token:  '
         . $value . "\n"
-        . '    expected token(s):' . "\n"
+        . '    Expected token(s): '
         . $expected_tokens . "\n";
 };
 
@@ -187,7 +194,7 @@ our void $rperl_grammar_error = sub {
 our void $rperl_source__parse = sub {
     ( my string $rperl_source__file_name) = @_;
 
-    RPerl::verbose 'PARSE PHASE 2: PARSE RPERL SYNTAX...';
+    RPerl::verbose 'PARSE PHASE 2: Parse RPerl syntax...';
 
     my object $eyapp_parser = RPerl::Grammar->new();
     $eyapp_parser->YYSlurpFile($rperl_source__file_name);

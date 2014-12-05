@@ -1,5 +1,5 @@
 # [[[ TEST : 'ERROR ECVPARP00' ]]]
-# [[[ TEST : 'unexpected token:  use constant' ]]]
+# [[[ TEST : 'Unexpected token:  use constant' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::Constant::Package_00_Bad_04;
 use strict;

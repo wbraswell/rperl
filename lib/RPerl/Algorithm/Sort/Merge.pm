@@ -29,7 +29,7 @@ our void__method $sort = sub {(my object $self) = @_;
 
 # top-down variant: comparison-based and stable and online [O(n log n) average total time, O(n) worst-case total extra space]
 # sort data, return sorted data
-our scalar__array_ref $mergesort_array_topdown = sub {(my scalar__array_ref $data) = @_;
+our scalartype__array_ref $mergesort_array_topdown = sub {(my scalartype__array_ref $data) = @_;
 ;
 	my const_int $data_length = scalar(@{$data});
 	
@@ -41,8 +41,8 @@ our scalar__array_ref $mergesort_array_topdown = sub {(my scalar__array_ref $dat
 	
 	# split data in half at midpoint
 	my const_int $i_middle = int($data_length / 2);
-	my scalar__array_ref $left = [@$data[0 .. ($i_middle - 1)]];
-	my scalar__array_ref $right = [@$data[$i_middle .. ($data_length - 1)]];
+	my scalartype__array_ref $left = [@$data[0 .. ($i_middle - 1)]];
+	my scalartype__array_ref $right = [@$data[$i_middle .. ($data_length - 1)]];
 	
 	# recursively call this function on the sublists [O(log n) time], then merge the lengths-add-to-n sublists [O(n) time]
 	$left = mergesort_array_topdown($left);
@@ -55,7 +55,7 @@ our scalar__array_ref $mergesort_array_topdown = sub {(my scalar__array_ref $dat
 };
 
 # top-down variant; merge sublists data, return merged data [O(n) time, O(n) total extra space]
-our scalar__array_ref $merge_array_topdown = sub {(my scalar__array_ref $left, my scalar__array_ref $right) = @_;
+our scalartype__array_ref $merge_array_topdown = sub {(my scalartype__array_ref $left, my scalartype__array_ref $right) = @_;
 ;
 	my int $left_length = scalar(@{$left});
 	my int $right_length = scalar(@{$right});
@@ -81,14 +81,14 @@ our scalar__array_ref $merge_array_topdown = sub {(my scalar__array_ref $left, m
 
 # bottom-up variant: comparison-based and stable and online [O(n log n) average total time, O(n) worst-case total extra space]
 # sort data, return sorted data
-our scalar__array_ref $mergesort_array_bottomup = sub {(my scalar__array_ref $data) = @_;
+our scalartype__array_ref $mergesort_array_bottomup = sub {(my scalartype__array_ref $data) = @_;
 ;
 	my const_int $data_length = scalar(@{$data});
 	my int $width;	
 	my int $i;
 	
 	# temporary storage for partially sorted data [O(n) total extra space; counted for this function, not the merge_array_bottomup() function]
-	my scalar__array_ref $tmp_data = [];
+	my scalartype__array_ref $tmp_data = [];
 	
 #	RPerl::diag "in mergesort_array_bottomup(), have \$data = \n" . RPerl::DUMPER($data) . "\n";
 #	RPerl::diag "in mergesort_array_bottomup(), have \$data_length = $data_length\n";
@@ -111,7 +111,7 @@ our scalar__array_ref $mergesort_array_bottomup = sub {(my scalar__array_ref $da
 };
 
 # bottom-up variant; merge sublists, return nothing [O(n) time, O(1) extra space]
-our void $merge_array_bottomup = sub {(my scalar__array_ref $data, my scalar__array_ref $tmp_data, my const_int $i_left, my const_int $i_right, my const_int $i_end) = @_;
+our void $merge_array_bottomup = sub {(my scalartype__array_ref $data, my scalartype__array_ref $tmp_data, my const_int $i_left, my const_int $i_right, my const_int $i_end) = @_;
 ;
 	my int $i0 = $i_left;
 	my int $i1 = $i_right;
@@ -145,7 +145,7 @@ our void $merge_array_bottomup = sub {(my scalar__array_ref $data, my scalar__ar
 };
 
 # bottom-up variant; return smaller of 2 scalars [O(1) time, O(1) extra space]
-our scalar $min = sub {(my const_scalar $a, my const_scalar $b) = @_; if ($a < $b) {return $a;} else {return $b;}};
+our scalartype $min = sub {(my const_scalartype $a, my const_scalartype $b) = @_; if ($a < $b) {return $a;} else {return $b;}};
 
 # linked list, top-down variant: comparison-based and stable and online [O(n log n) average total time, O(1) worst-case total extra space]
 # sort data starting at head node, return new head node of sorted data
@@ -175,7 +175,7 @@ our linkedlistnode_ref $mergesort_linkedlist_topdown = sub {(my linkedlistnode_r
 };
 
 # linked list, top-down variant; split into sublists, return sublists [O(n) time, O(1) extra space]
-our array_ref $split_linkedlist = sub {(my scalar_linkedlist_ref $head) = @_;
+our array_ref $split_linkedlist = sub {(my scalartype_linkedlist_ref $head) = @_;
 ;	
 #	RPerl::diag "in split_linkedlist(), received \$head->{data} = " . $head->{data} . "\n";
 	

@@ -1,5 +1,5 @@
 # [[[ TEST : 'ERROR ECVPARP00' ]]]
-# [[[ TEST : 'unexpected token:  se' ]]]
+# [[[ TEST : 'Unexpected token:  se' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::Include::Class_00_Bad_00;
 use strict;

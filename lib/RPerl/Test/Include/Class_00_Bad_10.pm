@@ -1,5 +1,5 @@
 # [[[ TEST : 'ERROR ECVPARP00' ]]]
-# [[[ TEST : 'unexpected token:  use parent qw(' ]]]
+# [[[ TEST : 'Unexpected token:  use parent qw(' ]]]
 # [[[ HEADER ]]]
 package RPerl::Test::Include::Class_00_Bad_10;
 use strict;

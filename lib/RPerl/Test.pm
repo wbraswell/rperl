@@ -33,19 +33,19 @@ our void__method $empty_method = sub {
 
 #my string $id = sub {  # NEED FIX: RPerl subroutines disabled here
 sub id {
-    ( my scalar__hash_ref $mode ) = @_;
+    ( my scalartype__hash_ref $mode ) = @_;
     return $mode->{ops} . 'OPS_' . $mode->{types} . 'TYPES';
 }
 
 #my string $description = sub {
 sub description {
-    ( my scalar__hash_ref $mode ) = @_;
+    ( my scalartype__hash_ref $mode ) = @_;
     return $mode->{ops} . ' operations and ' . $mode->{types} . ' data types';
 }
 
 #my void $enable = sub {
 sub enable {
-    ( my scalar__hash_ref $mode ) = @_;
+    ( my scalartype__hash_ref $mode ) = @_;
     if ( $mode->{ops} eq 'CPP' ) {
         rperltypes::types_enable( $mode->{types} );
     }

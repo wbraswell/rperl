@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash::SubTypes;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_000;
+our $VERSION = 0.004_001;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd) # DEVELOPER DEFAULT 1b: allow unreachable & POD-commented code, must be after line 1
@@ -914,68 +914,68 @@ use parent -norequire, ('const_hash_ref');
 
 # [[[ SCALAR HASHES ]]]
 
-# hash of scalars
-package scalar__hash;
+# hash of scalartypes
+package scalartype__hash;
 use parent -norequire, ('hash');
 
-# hash of (scalars with const values)
-package const_scalar__hash;
+# hash of (scalartypes with const values)
+package const_scalartype__hash;
 use parent -norequire, ('hash');
 
-# hash of (refs to scalars)
-package scalar_ref__hash;
+# hash of (refs to scalartypes)
+package scalartype_ref__hash;
 use parent -norequire, ('hash');
 
-# hash of (refs to (scalars with const values))
-package const_scalar_ref__hash;
+# hash of (refs to (scalartypes with const values))
+package const_scalartype_ref__hash;
 use parent -norequire, ('hash');
 
-# (hash with const size) of scalars
-package scalar__const_hash;
+# (hash with const size) of scalartypes
+package scalartype__const_hash;
 use parent -norequire, ('const_hash');
 
-# (hash with const size) of (scalars with const values)
-package const_scalar__const_hash;
+# (hash with const size) of (scalartypes with const values)
+package const_scalartype__const_hash;
 use parent -norequire, ('const_hash');
 
-# (hash with const size) of (refs to scalars)
-package scalar_ref__const_hash;
+# (hash with const size) of (refs to scalartypes)
+package scalartype_ref__const_hash;
 use parent -norequire, ('const_hash');
 
-# (hash with const size) of (refs to (scalars with const values))
-package const_scalar_ref__const_hash;
+# (hash with const size) of (refs to (scalartypes with const values))
+package const_scalartype_ref__const_hash;
 use parent -norequire, ('const_hash');
 
-# (ref to hash) of scalars
-package scalar__hash_ref;
+# (ref to hash) of scalartypes
+package scalartype__hash_ref;
 use parent -norequire, ('hash_ref');
 
-# (ref to hash) of (scalars with const values)
-package const_scalar__hash_ref;
+# (ref to hash) of (scalartypes with const values)
+package const_scalartype__hash_ref;
 use parent -norequire, ('hash_ref');
 
-# (ref to hash) of (refs to scalars)
-package scalar_ref__hash_ref;
+# (ref to hash) of (refs to scalartypes)
+package scalartype_ref__hash_ref;
 use parent -norequire, ('hash_ref');
 
-# (ref to hash) of (refs to (scalars with const values))
-package const_scalar_ref__hash_ref;
+# (ref to hash) of (refs to (scalartypes with const values))
+package const_scalartype_ref__hash_ref;
 use parent -norequire, ('hash_ref');
 
-# (ref to (hash with const size)) of scalars
-package scalar__const_hash_ref;
+# (ref to (hash with const size)) of scalartypes
+package scalartype__const_hash_ref;
 use parent -norequire, ('const_hash_ref');
 
-# (ref to (hash with const size)) of (scalars with const values)
-package const_scalar__const_hash_ref;
+# (ref to (hash with const size)) of (scalartypes with const values)
+package const_scalartype__const_hash_ref;
 use parent -norequire, ('const_hash_ref');
 
-# (ref to (hash with const size)) of (refs to scalars)
-package scalar_ref__const_hash_ref;
+# (ref to (hash with const size)) of (refs to scalartypes)
+package scalartype_ref__const_hash_ref;
 use parent -norequire, ('const_hash_ref');
 
-# (ref to (hash with const size)) of (refs to (scalars with const values))
-package const_scalar_ref__const_hash_ref;
+# (ref to (hash with const size)) of (refs to (scalartypes with const values))
+package const_scalartype_ref__const_hash_ref;
 use parent -norequire, ('const_hash_ref');
 
 # [[[ UNKNOWN HASHES ]]]

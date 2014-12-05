@@ -26,7 +26,7 @@ our string__method $DUMPER = sub {(my RPerl::DataStructure::LinkedList::NodeRefe
 	{
 		if ($is_first) { $is_first = 0; }
 		else { $dumped .= ', '; }
-		# TODO: handle non-scalar linked list elements
+		# TODO: handle non-scalartype linked list elements
 		$dumped .= $node->{data};
 		$node = $node->{next};
 	}
