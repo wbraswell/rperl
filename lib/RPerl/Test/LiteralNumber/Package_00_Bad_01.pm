@@ -1,0 +1,13 @@
+# [[[ TEST : 'ERROR ECVPAPL02' ]]]
+# [[[ TEST : 'Bareword "_2" not allowed' ]]]
+# [[[ HEADER ]]]
+package RPerl::Test::LiteralNumber::Package_00_Bad_01;
+use strict;
+use warnings;
+use RPerl;
+our $VERSION = 0.001_000;
+
+# [[[ SUBROUTINES ]]]
+our void $empty_sub = sub { _2; };
+
+1;                  # end of package
