@@ -15,7 +15,7 @@ use RPerl::CompileUnit::Module::Class;
 # <<< CHANGE ME: delete unused critics >>>
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
-## no critic qw(ProhibitConstantPragma)  # USER DEFAULT 3: allow constants
+## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
 ## no critic qw(RequireTrailingCommas)  # USER DEFAULT 5: no trailing commas in RPerl lists  # NEED ANSWER: RPerl is mostly array refs, do we even need this?
 
@@ -56,6 +56,7 @@ use RPerl::Test::Bar;
 
 # [[[ CONSTANTS ]]]
 # <<< CHANGE ME: delete for no constants, or replace with real constant name(s) & data >>>
+## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
 use constant PI  => my number $TYPED_PI  = 3.141_59;
 use constant PIE => my string $TYPED_PIE = 'pecan';
 
@@ -130,4 +131,4 @@ our string $RPerl__CompileUnit__Module__ClassTemplate__ops
 our string $RPerl__CompileUnit__Module__ClassTemplate__types
     = sub { return 'PERL'; };
 
-1;                  # end of class
+1;                          # end of class

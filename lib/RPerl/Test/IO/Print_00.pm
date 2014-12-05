@@ -2,18 +2,16 @@ package RPerl::Test::IO::Print_00;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_003;
-
-# [[[ SETUP ]]]
+our $VERSION = 0.003_004;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
-## no critic qw(ProhibitConstantPragma)  # USER DEFAULT 3: allow constants
 
 # NEED UPGRADE: support INCLUDE rule!
 #use Data::Dumper;  # parses to PPI::FOOBAZ object, translates to RPerl::FOOBAZ::Include object
 
 # NEED UPGRADE: support CONSTANT rule!
 # DEV NOTE: Perl::Critic BUG!  ProhibitMagicNumbers conflicts with ProhibitConstantPragma
+## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
 use constant FNORD => 23; # parses to PPI::FOOBAZ object, translates to RPerl::FOOBAZ::Constant object
 
 # [[[ PROCEDURAL SUBROUTINE(S) ]]]
