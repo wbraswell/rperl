@@ -2,7 +2,7 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.013_000;
+our $VERSION = 0.014_000;
 
 ## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
 ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  # SYSTEM SPECIAL 2: allow Autoload & read-only @_
@@ -17,16 +17,20 @@ our $VERSION = 0.013_000;
 INIT {
 #	RPerl::diag "in Class.pm INIT block, have \%INC =\n" . Dumper(\%INC) . "\n";
 
-    my $module_file_long;
-    my $package_name;
-    my %class_properties;
-    my $subroutine_type;
-    my $subroutine_name;
-    my $CHECK;
+    my $module_file_long;             # string
+    my $package_name;                 # string
+    my %class_properties;             # hash
+    my $subroutine_type;              # string
+    my $subroutine_name;              # string
+    my $CHECK;                        # string
+    my $inside_subroutine;            # bool
+    my $subroutine_arguments_line;    # string
 
     foreach my $module_file_short ( sort keys %INC ) {
         $package_name = q{};
         $CHECK = $RPerl::CHECK; # reset data type checking to RPerl default for every file
+        $inside_subroutine         = 0;
+        $subroutine_arguments_line = q{};
 
 # DEV NOTE: for now, only scan for RPerl subroutines in files or dirs that start with RPerl or rperl
         if (   ( $module_file_short =~ /^RPerl/xms )
@@ -43,16 +47,30 @@ INIT {
 
 #				RPerl::diag "in Class.pm INIT block, have \$module_file_line =\n$module_file_line\n";
 
+                # set data type checking mode
                 if ( $module_file_line
-                    =~ /^\s*\#\s*\[\[\[\s*CHECK\s*\:\s*'(\w+)'\s*\]\]\]/xms )
+                    =~ /^\s*\#\s*\[\[\[\s*CHECK\s*\:\s*(\w+)\s*\]\]\]/xms )
                 {
                     RPerl::diag(
                         "in Class.pm INIT block, have \$module_file_long = '$module_file_long'\n"
                     );
-                    RPerl::diag( 'in Class.pm INIT block, found [[[ CHECK: '
-                            . $1
-                            . " ]]]\n" );
-                    $CHECK = $1;
+                    if ($inside_subroutine) {
+                        RPerl::diag(
+                                  'in Class.pm INIT block, found [[[ CHECK: '
+                                . $1
+                                . ' ]]] while inside subroutine '
+                                . $subroutine_name
+                                . '(), aborting RPerl activation of entire file'
+                                . "\n" );
+                        last;
+                    }
+                    else {
+                        RPerl::diag(
+                                  'in Class.pm INIT block, found [[[ CHECK: '
+                                . $1
+                                . " ]]]\n" );
+                        $CHECK = $1;
+                    }
                 }
 
                 # skip single-line comments
@@ -103,15 +121,29 @@ INIT {
 
                 # skip __DATA__ footer
                 if ( $module_file_line eq '__DATA__' ) {
+                    if ($inside_subroutine) {
+                        RPerl::diag(
+                            'in Class.pm INIT block, skipping __DATA__ footer while inside subroutine '
+                                . $subroutine_name
+                                . '(), aborting RPerl activation of entire file'
+                                . "\n" );
+                    }
 
-     #					RPerl::diag "in Class.pm INIT block, skipping '__DATA__' footer\n";
+#                    else { RPerl::diag 'in Class.pm INIT block, skipping __DATA__ footer' . "\n"; }
                     last;
                 }
 
                 # skip __END__ footer
                 if ( $module_file_line eq '__END__' ) {
+                    if ($inside_subroutine) {
+                        RPerl::diag(
+                            'in Class.pm INIT block, skipping __END__ footer while inside subroutine '
+                                . $subroutine_name
+                                . '(), aborting RPerl activation of entire file'
+                                . "\n" );
+                    }
 
-      #					RPerl::diag "in Class.pm INIT block, skipping '__END__' footer\n";
+#                    else { RPerl::diag 'in Class.pm INIT block, skipping __END__ footer' . "\n"; }
                     last;
                 }
 
@@ -121,7 +153,19 @@ INIT {
                 {
                     $package_name = $1;
 
-#					RPerl::diag "in Class.pm INIT block, have \$package name = '$package_name'\n";
+                    if ($inside_subroutine) {
+                        RPerl::diag(
+                            'in Class.pm INIT block, have $package name = '
+                                . $package_name
+                                . 'while inside subroutine '
+                                . $subroutine_name
+                                . '(), aborting RPerl activation of entire file'
+                                . "\n" );
+                        last;
+                    }
+
+#                    else { RPerl::diag 'in Class.pm INIT block, have $package name = ' . $package_name . "\n"; }
+
                     %class_properties = eval "\%$package_name\:\:properties";
 
                     foreach my $class_property_name (
@@ -178,46 +222,66 @@ INIT {
 #eval "\*\{$package_name\:\:set_$class_property_name\} \= sub \{ RPerl::diag \"IN POST\-INIT\, mutator MODE $package_name\:\:set_$class_property_name\\n\"\; \$\_\[0\]\-\>\{$class_property_name\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;";
                         }
                     }
+                    next;
                 }
 
 # create symbol table entries for methods and plain-old non-method subroutines
                 if ( $module_file_line
-                    =~ /^\s*our\s+(\w+)\s+\$(\w+)\s+\=\s+sub\s+[{]/xms )
+                    =~ /^\s*our\s+(\w+)\s+\$(\w+)\s+\=\s+sub\s+\{/xms )
                 {
-                    $subroutine_type = $1;
-                    $subroutine_name = $2;
+                    if ($inside_subroutine) {
+                        RPerl::diag(
+                            q{in Class.pm INIT block, have $subroutine_type = }
+                                . $1
+                                . q{, and $subroutine_name = }
+                                . $2
+                                . '() while inside subroutine '
+                                . $subroutine_name
+                                . '(), aborting RPerl activation of entire file'
+                                . "\n" );
+                        last;
+                    }
+                    else {
+                        $subroutine_type = $1;
+                        $subroutine_name = $2;
+                        RPerl::diag(
+                            q{in Class.pm INIT block, have $subroutine_type = }
+                                . $subroutine_type
+                                . q{, and $subroutine_name = }
+                                . $subroutine_name
+                                . "()\n" );
+                        RPerl::diag(
+                                  q{in Class.pm INIT block, have $CHECK = '}
+                                . $CHECK
+                                . "'\n" );
+                    }
 
-                    RPerl::diag(
-                        q{in Class.pm INIT block, have $subroutine_type = '}
-                            . $subroutine_type
-                            . q{', and $subroutine_name = '}
-                            . $subroutine_name
-                            . "'\n" );
-                    RPerl::diag( q{in Class.pm INIT block, have $CHECK = '}
-                            . $CHECK
-                            . "'\n" );
-
+                    # START HERE: copy eval() code from CHECK OFF to ON & TRACE below
+                    # START HERE: copy eval() code from CHECK OFF to ON & TRACE below
+                    # START HERE: copy eval() code from CHECK OFF to ON & TRACE below
                     if ( $CHECK eq 'OFF' ) {
+                        my $subroutine_definition_code;    # string
+                        my $subroutine_definition_diag_code = q{};    # string
                         if ( $subroutine_type =~ /\_\_method$/xms ) {
-
-#RPerl::diag "in Class.pm INIT block, $subroutine_name is a method\n";
-# NEED UPGRADE: how can I do this w/out a subroutine?
-#                        eval "\*\{$package_name\:\:$subroutine_name\} \= sub \{ return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;"
-                            eval(     '*{'
-                                    . $package_name . '::'
-                                    . $subroutine_name
-                                    . '} = sub { return &${'
-                                    . $package_name . '::'
-                                    . $subroutine_name
-                                    . '}(@_); };' )
+#                            $subroutine_definition_diag_code = q{RPerl::diag "IN POST-INIT, method direct call MODE } . $package_name . '::' . $subroutine_name . q{\n"; };
+#                            RPerl::diag "in Class.pm INIT block, $subroutine_name is a method\n";
+# NEED UPGRADE: is it possible to activate non-type-checked RPerl subroutines & methods w/out creating new subroutines?
+                            $subroutine_definition_code
+                                = '*{'
+                                . $package_name . '::'
+                                . $subroutine_name
+                                . '} = sub { '
+                                . $subroutine_definition_diag_code
+                                . 'return &${'
+                                . $package_name . '::'
+                                . $subroutine_name
+                                . '}(@_); };';
+                            eval($subroutine_definition_code)
                                 or croak( $ERRNO . "\n" . $EVAL_ERROR );
                             if ($EVAL_ERROR) { croak($EVAL_ERROR); }
-
-#						eval "\*\{$package_name\:\:$subroutine_name\} \= sub \{ RPerl::diag \"IN POST\-INIT\, method direct call MODE $package_name\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;";  # NEED UPGRADE: how can I do this w/out a subroutine?
                         }
                         else {
-#						RPerl::diag "in Class.pm INIT block, $subroutine_name is a non-method subroutine\n";
-#                        if ( eval "defined\(\&main\:\:$subroutine_name\)" ) {
+#						     RPerl::diag "in Class.pm INIT block, $subroutine_name is a non-method subroutine\n";
                             if (eval(
                                     'defined(&main::'
                                         . $subroutine_name . ')'
@@ -228,49 +292,153 @@ INIT {
                                     "Attempt by package '$package_name' to re-define shared global subroutine '$subroutine_name', please re-name your subroutine or make it a method, dying";
                             }
 
-# DEV NOTE: must load into both main:: and $package_name:: namespaces, in order to call subroutines w/out class prefix from within class file (package) itself, and not to use AUTOLOAD
-# NEED UPGRADE: how can I do this w/out a subroutine?
-#                        eval "\*\{main\:\:$subroutine_name\} \= sub \{ return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;"
-                            eval(     '*{main::'
-                                    . $subroutine_name
-                                    . '} = sub { return &${'
-                                    . $package_name . '::'
-                                    . $subroutine_name
-                                    . '}(@_); };' )
+# DEV NOTE: must load into both main:: and $package_name:: namespaces,
+# in order to call subroutines w/out class prefix from within class file (package) itself, and not to use AUTOLOAD
+#                            $subroutine_definition_diag_code = q{RPerl::diag "IN POST-INIT, subroutine direct call MODE main::} . $subroutine_name . q{\n"; };
+                            $subroutine_definition_code
+                                = '*{main::'
+                                . $subroutine_name
+                                . '} = sub { '
+                                . $subroutine_definition_diag_code
+                                . 'return &${'
+                                . $package_name . '::'
+                                . $subroutine_name
+                                . '}(@_); };';
+                            eval($subroutine_definition_code)
                                 or croak( $ERRNO . "\n" . $EVAL_ERROR );
                             if ($EVAL_ERROR) { croak($EVAL_ERROR); }
 
-#						eval "\*\{main\:\:$subroutine_name\} \= sub \{ RPerl::diag \"IN POST\-INIT\, subroutine direct call MODE main\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;";  # NEED UPGRADE: how can I do this w/out a subroutine?
-# NEED UPGRADE: how can I do this w/out a subroutine?
-#                        eval "\*\{$package_name\:\:$subroutine_name\} \= sub \{ return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;"
-                            eval(     '*{'
-                                    . $package_name . '::'
-                                    . $subroutine_name
-                                    . '} = sub { return &${'
-                                    . $package_name . '::'
-                                    . $subroutine_name
-                                    . '}(@_); };' )
+#                            $subroutine_definition_diag_code = q{RPerl::diag "IN POST-INIT, subroutine direct call MODE } . $package_name . '::' . $subroutine_name . q{\n"; };
+                            $subroutine_definition_code
+                                = '*{'
+                                . $package_name . '::'
+                                . $subroutine_name
+                                . '} = sub {'
+                                . $subroutine_definition_diag_code
+                                . 'return &${'
+                                . $package_name . '::'
+                                . $subroutine_name
+                                . '}(@_); };';
+                            eval($subroutine_definition_code)
                                 or croak( $ERRNO . "\n" . $EVAL_ERROR );
                             if ($EVAL_ERROR) { croak($EVAL_ERROR); }
-
-#						eval "\*\{$package_name\:\:$subroutine_name\} \= sub \{ RPerl::diag \"IN POST\-INIT\, subroutine direct call MODE $package_name\:\:$subroutine_name\\n\"\; return \&\$\{$package_name\:\:$subroutine_name\}\(\@\_\)\; \}\;";  # NEED UPGRADE: how can I do this w/out a subroutine?
                         }
                     }
-                    elsif ( $CHECK eq 'ON' ) {
-                        # START HERE: create wrapper subs for interpreted CHECK and CHECKTRACE
-                        # START HERE: create wrapper subs for interpreted CHECK and CHECKTRACE
-                        # START HERE: create wrapper subs for interpreted CHECK and CHECKTRACE
-                        RPerl::diag(
-                            q{in Class.pm INIT block, CHECK IS ON} . "\n" );
-                    }
-                    elsif ( $CHECK eq 'TRACE' ) {
-                        RPerl::diag(
-                            q{in Class.pm INIT block, CHECK IS TRACE} . "\n" );
+                    elsif ( ( $CHECK ne 'ON' ) and ( $CHECK ne 'TRACE' ) ) {
+                        croak(    'Received invalid value '
+                                . $CHECK
+                                . ' for RPerl preprocessor directive CHECK to control data type checking, valid values are OFF, ON, and TRACE, croaking'
+                        );
                     }
                     else {
-                        croak(
-                            "Received invalid value '$CHECK' for RPerl preprocessor directive CHECK to control data type checking, valid values are 'OFF', 'ON', and 'TRACE', croaking"
-                        );
+                        $inside_subroutine = 1;
+                    }
+                    next;
+                }
+
+                if ($inside_subroutine) {
+                    RPerl::diag(
+                        q{in Class.pm INIT block, have $inside_subroutine = 1}
+                            . "\n" );
+                    $subroutine_arguments_line .= $module_file_line;
+                    if ( $subroutine_arguments_line =~ /\@\_\;/xms ) { # @_; found
+                        if (not( $subroutine_arguments_line =~ /\@\_\;$/xms )
+                            )
+                        {    # @_; found not at end-of-line
+                            RPerl::diag(
+                                q{in Class.pm INIT block, found @_; NOT at end-of-line while inside subroutine }
+                                    . $subroutine_name
+                                    . '(), have $subroutine_arguments_line = '
+                                    . "\n"
+                                    . $subroutine_arguments_line . "\n\n"
+                                    . 'aborting RPerl activation of entire file'
+                                    . "\n" );
+                            last;
+                        }
+
+                        RPerl::diag(
+                            q{in Class.pm INIT block, found @_; at end-of-line while inside subroutine }
+                                . $subroutine_name
+                                . '(), have $subroutine_arguments_line = '
+                                . "\n"
+                                . $subroutine_arguments_line
+                                . "\n" );
+
+                        my $subroutine_arguments = {};    # string__hash_ref
+
+                        # loop once per subroutine argument
+                        while ( $subroutine_arguments_line
+                            =~ m/my\s+(\w+)\s+\$(\w+)/g )
+                        {
+                            my $subroutine_argument_type = $1;    # string
+                            my $subroutine_argument_name = $2;    # string
+                            $subroutine_arguments->{$subroutine_argument_name}
+                                = $subroutine_argument_type;
+                            RPerl::diag(
+                                q{in Class.pm INIT block, have $subroutine_argument_type = }
+                                    . $subroutine_argument_type
+                                    . q{ and $subroutine_argument_name = }
+                                    . $subroutine_argument_name
+                                    . "\n" );
+                        }
+
+                        RPerl::diag(
+                            q{in Class.pm INIT block, have $subroutine_arguments = }
+                                . "\n"
+                                . Dumper($subroutine_arguments)
+                                . "\n" );
+
+                        my $subroutine_arguments_check_code = q{};    # string
+
+                        if ( $CHECK eq 'ON' ) {
+                            RPerl::diag( 'in Class.pm INIT block, CHECK IS ON'
+                                    . "\n" );
+                            foreach my $subroutine_argument_name (
+                                keys %{$subroutine_arguments} )
+                            {
+                                $subroutine_arguments_check_code
+                                    .= q{    } . '::'
+                                    . $subroutine_arguments
+                                    ->{$subroutine_argument_name}
+                                    . '__CHECK( $'
+                                    . $subroutine_argument_name . q{ );}
+                                    . "\n";
+                            }
+                            $inside_subroutine         = 0;
+                            $subroutine_arguments_line = q{};
+                        }
+                        elsif ( $CHECK eq 'TRACE' ) {
+                            RPerl::diag(
+                                      'in Class.pm INIT block, CHECK IS TRACE'
+                                    . "\n" );
+                            foreach my $subroutine_argument_name (
+                                keys %{$subroutine_arguments} )
+                            {
+                                $subroutine_arguments_check_code
+                                    .= q{    } . '::'
+                                    . $subroutine_arguments
+                                    ->{$subroutine_argument_name}
+                                    . '__CHECKTRACE( $'
+                                    . $subroutine_argument_name . q{, '$}
+                                    . $subroutine_argument_name . q{', '}
+                                    . $subroutine_name
+                                    . q{()' );} . "\n";
+                            }
+                            $inside_subroutine         = 0;
+                            $subroutine_arguments_line = q{};
+                        }
+                        else {
+                            croak(    'Received invalid value '
+                                    . $CHECK
+                                    . ' for RPerl preprocessor directive CHECK to control data type checking, valid values are OFF, ON, and TRACE, croaking'
+                            );
+                        }
+                        RPerl::diag(
+                            'in Class.pm INIT block, have $subroutine_arguments_check_code ='
+                                . "\n"
+                                . $subroutine_arguments_check_code
+                                . "\n" );
+                        next;
                     }
                 }
             }

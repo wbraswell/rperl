@@ -1,4 +1,4 @@
-# [[[ CHECK: 'GEOMETRIC_AWESOMENESS' ]]]
+# [[[ CHECK: GEOMETRIC_AWESOMENESS ]]]
 # [[[ HEADER ]]]
 package RPerl::Algorithm::Math::GeometricAlgebra;
 use strict;

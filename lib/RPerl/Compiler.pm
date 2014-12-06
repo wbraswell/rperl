@@ -1,4 +1,4 @@
-# [[[ CHECK: 'OFF' ]]]
+# [[[ CHECK: OFF ]]]
 package RPerl::Compiler;
 use strict;
 use warnings;
@@ -15,7 +15,9 @@ use RPerl::Parser;
 # [[[ PROCEDURAL SUBROUTINES ]]]
 
 our void $rperl_to_xsbinary__compile = sub {
-    ( my string $rperl_input_file_name, my string $cpp_output_file_name, my hash_ref $mode ) = @_;
+    ( my string $rperl_input_file_name, 
+    my string $cpp_output_file_name, 
+    my hash_ref $mode ) = @_;
 
     # [[[ PARSE RPERL TO AST ]]]
     # [[[ PARSE RPERL TO AST ]]]
