@@ -1,4 +1,4 @@
-# [[[ CHECK: GEOMETRIC_AWESOMENESS ]]]
+# [[[ CHECK: TRACE ]]]
 # [[[ HEADER ]]]
 package RPerl::Algorithm::Math::GeometricAlgebra;
 use strict;
@@ -25,13 +25,11 @@ our number $inner_product__vector_vector_euclidean = sub {
         my number__array_ref $input_vector_2)
         = @_;
 
-    #    ::number__array_ref__CHECK($input_vector_1);
-    ::number__array_ref__CHECKTRACE( $input_vector_1, '$input_vector_1',
-        'inner_product__vector_vector_euclidean()' );
+#    ::number__array_ref__CHECK($input_vector_1);
+#    ::number__array_ref__CHECKTRACE( $input_vector_1, '$input_vector_1', 'inner_product__vector_vector_euclidean()' );
 
-    #    ::number__array_ref__CHECK($input_vector_2);
-    ::number__array_ref__CHECKTRACE( $input_vector_2, '$input_vector_2',
-        'inner_product__vector_vector_euclidean()' );
+#    ::number__array_ref__CHECK($input_vector_2);
+#    ::number__array_ref__CHECKTRACE( $input_vector_2, '$input_vector_2', 'inner_product__vector_vector_euclidean()' );
 
     # bound checking
     ( ( scalar @{$input_vector_1} ) == 4 )
@@ -65,13 +63,11 @@ our number__array_ref $inner_product__bivector_vector_euclidean = sub {
         my number__array_ref $input_vector)
         = @_;
 
-    #    ::number__array_ref__CHECK($input_bivector);
-    ::number__array_ref__CHECKTRACE( $input_bivector, '$input_bivector',
-        'inner_product__bivector_vector_euclidean()' );
+#    ::number__array_ref__CHECK($input_bivector);
+#    ::number__array_ref__CHECKTRACE( $input_bivector, '$input_bivector', 'inner_product__bivector_vector_euclidean()' );
 
-    #    ::number__array_ref__CHECK($input_vector);
-    ::number__array_ref__CHECKTRACE( $input_vector, '$input_vector',
-        'inner_product__bivector_vector_euclidean()' );
+#    ::number__array_ref__CHECK($input_vector);
+#    ::number__array_ref__CHECKTRACE( $input_vector, '$input_vector', 'inner_product__bivector_vector_euclidean()' );
 
     # bound checking
     ( ( scalar @{$input_bivector} ) == 4 )
@@ -101,13 +97,11 @@ our number__array_ref $outer_product__vector_vector_euclidean = sub {
         my number__array_ref $input_vector_2)
         = @_;
 
-    #    ::number__array_ref__CHECK($input_vector_1);
-    ::number__array_ref__CHECKTRACE( $input_vector_1, '$input_vector_1',
-        'outer_product__vector_vector_euclidean()' );
+#    ::number__array_ref__CHECK($input_vector_1);
+#    ::number__array_ref__CHECKTRACE( $input_vector_1, '$input_vector_1', 'outer_product__vector_vector_euclidean()' );
 
-    #    ::number__array_ref__CHECK($input_vector_2);
-    ::number__array_ref__CHECKTRACE( $input_vector_2, '$input_vector_2',
-        'outer_product__vector_vector_euclidean()' );
+#    ::number__array_ref__CHECK($input_vector_2);
+#    ::number__array_ref__CHECKTRACE( $input_vector_2, '$input_vector_2', 'outer_product__vector_vector_euclidean()' );
 
     # bound checking
     ( ( scalar @{$input_vector_1} ) == 4 )
@@ -140,13 +134,11 @@ our number $outer_product__bivector_vector_euclidean = sub {
         my number__array_ref $input_vector)
         = @_;
 
-    #    ::number__array_ref__CHECK($input_bivector);
-    ::number__array_ref__CHECKTRACE( $input_bivector, '$input_bivector',
-        'outer_product__bivector_vector_euclidean()' );
+#    ::number__array_ref__CHECK($input_bivector);
+#    ::number__array_ref__CHECKTRACE( $input_bivector, '$input_bivector', 'outer_product__bivector_vector_euclidean()' );
 
-    #    ::number__array_ref__CHECK($input_vector);
-    ::number__array_ref__CHECKTRACE( $input_vector, '$input_vector',
-        'outer_product__bivector_vector_euclidean()' );
+#    ::number__array_ref__CHECK($input_vector);
+#    ::number__array_ref__CHECKTRACE( $input_vector, '$input_vector', 'outer_product__bivector_vector_euclidean()' );
 
     # bound checking
     ( ( scalar @{$input_bivector} ) == 4 )
