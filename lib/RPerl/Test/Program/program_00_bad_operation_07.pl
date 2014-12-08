@@ -1,6 +1,6 @@
 #!/usr/bin/perl
-# [[[ TEST : 'ERROR ECVPARP00' ]]]
-# [[[ TEST : 'Unexpected token:  <<< undef >>>' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< COMPILE_ERROR: 'Unexpected token:  <<< undef >>>' >>>
 # [[[ HEADER ]]]
 use strict;
 use warnings;

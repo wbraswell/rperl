@@ -1,5 +1,5 @@
-# [[[ TEST : 'ERROR ECVPARP00' ]]]
-# [[[ TEST : 'Unexpected token:  ## no critic qw(' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< COMPILE_ERROR: 'Unexpected token:  ## no critic qw(' >>>
 # [[[ HEADER ]]]
 package RPerl::Test::Critic::Class_00_Bad_01;
 use strict;

@@ -1,6 +1,6 @@
 #!/usr/bin/perl
-# [[[ TEST : 'ERROR ECVPAPC02' ]]]
-# [[[ TEST : 'ProhibitUnrestrictedNoCritic' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
+# <<< COMPILE_ERROR: 'ProhibitUnrestrictedNoCritic' >>>
 # [[[ HEADER ]]]
 use strict;
 use warnings;

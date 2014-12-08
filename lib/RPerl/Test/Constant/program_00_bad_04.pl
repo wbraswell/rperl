@@ -1,6 +1,6 @@
 #!/usr/bin/perl
-# [[[ TEST : 'ERROR ECVPA' ]]]
-# [[[ TEST : '@TYPED_PI' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPA' >>>
+# <<< COMPILE_ERROR: '@TYPED_PI' >>>
 # [[[ HEADER ]]]
 use strict;
 use warnings;

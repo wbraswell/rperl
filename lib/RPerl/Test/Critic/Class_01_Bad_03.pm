@@ -1,6 +1,6 @@
 ## no critic qw(ProhibitUselessNoCritic PodSpelling ProhibitExcessMainComplexity
-# [[[ TEST : 'ERROR ECVPARP00' ]]]
-# [[[ TEST : 'Unexpected token:  package' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< COMPILE_ERROR: 'Unexpected token:  package' >>>
 # [[[ HEADER ]]]
 package RPerl::Test::Critic::Class_01_Bad_03;
 use strict;

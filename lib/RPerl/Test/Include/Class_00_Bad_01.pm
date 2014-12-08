@@ -1,5 +1,5 @@
-# [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : 'Bareword "erl::Test::Foo" not allowed' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'Bareword "erl::Test::Foo" not allowed' >>>
 # [[[ HEADER ]]]
 package RPerl::Test::Include::Class_00_Bad_01;
 use strict;

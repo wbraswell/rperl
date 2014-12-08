@@ -1,6 +1,6 @@
 #!/usr/bin/perly
-# [[[ TEST : 'ERROR ECVPARP00' ]]]
-# [[[ TEST : 'Unexpected token:  y' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< COMPILE_ERROR: 'Unexpected token:  y' >>>
 # [[[ HEADER ]]]
 use strict;
 use warnings;

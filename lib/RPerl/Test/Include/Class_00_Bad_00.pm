@@ -1,5 +1,5 @@
-# [[[ TEST : 'ERROR ECVPARP00' ]]]
-# [[[ TEST : 'Unexpected token:  se' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< COMPILE_ERROR: 'Unexpected token:  se' >>>
 # [[[ HEADER ]]]
 package RPerl::Test::Include::Class_00_Bad_00;
 use strict;

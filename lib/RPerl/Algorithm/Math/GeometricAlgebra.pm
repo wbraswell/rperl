@@ -1,4 +1,4 @@
-# [[[ CHECK: TRACE ]]]
+# <<< TYPE_CHECKING: TRACE >>>
 # [[[ HEADER ]]]
 package RPerl::Algorithm::Math::GeometricAlgebra;
 use strict;

@@ -1,5 +1,5 @@
-# [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : 'Global symbol "$TYPED_empty_property" requires explicit package name' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'Global symbol "$TYPED_empty_property" requires explicit package name' >>>
 # [[[ HEADER ]]]
 package RPerl::Test::Properties::Class_00_Bad_10;
 use strict;

@@ -1,6 +1,6 @@
 !/usr/bin/perl
-# [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : 'Unquoted string "perl" may clash with future reserved word' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'Unquoted string "perl" may clash with future reserved word' >>>
 # [[[ HEADER ]]]
 use strict;
 use warnings;

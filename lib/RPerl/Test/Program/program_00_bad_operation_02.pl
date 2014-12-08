@@ -1,6 +1,6 @@
 #!/usr/bin/perl
-# [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : 'near "my integer i "' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'near "my integer i "' >>>
 # [[[ HEADER ]]]
 use strict;
 use warnings;

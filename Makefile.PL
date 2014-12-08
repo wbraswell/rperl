@@ -1,12 +1,13 @@
 use strict;
 use warnings;
-our $VERSION = 0.001_028;
+our $VERSION = 0.001_032;
 use ExtUtils::MakeMaker;
 push(@ExtUtils::MakeMaker::Overridable, qw(pm_to_blib)) if ($^O eq 'MSWin32');
 
 WriteMakefile(
   NAME         => 'RPerl',
   VERSION_FROM => 'lib/RPerl.pm',
+  EXE_FILES    => [ 'script/rperl' ],
   PREREQ_PM    => {
         'Test::Exception' => 0.32,
         'Perl::Critic'    => 1.121,
@@ -18,7 +19,7 @@ WriteMakefile(
         'Inline::Filters' => 0.16,  # wbraswell, rurban, & bulk88 added preprocess inc array
 #        'Module::Compile' => 0,  # not yet utilized
   },
-  clean => {FILES => '_Inline bin/_Inline bin/development/_Inline'},
+  clean => {FILES => '_Inline script/_Inline script/development/_Inline script/development/unused/_Inline'},
 );
 
 

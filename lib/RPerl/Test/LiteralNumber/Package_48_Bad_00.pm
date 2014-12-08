@@ -1,5 +1,5 @@
-# [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : 'Can't modify constant item in predecrement' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'Can't modify constant item in predecrement' >>>
 # [[[ HEADER ]]]
 package RPerl::Test::LiteralNumber::Package_48_Bad_00;
 use strict;

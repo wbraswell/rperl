@@ -1,5 +1,5 @@
-# [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : 'Global symbol "$TYPED_PIE" requires explicit package name' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'Global symbol "$TYPED_PIE" requires explicit package name' >>>
 # [[[ HEADER ]]]
 package RPerl::Test::Constant::Class_00_Bad_12;
 use strict;

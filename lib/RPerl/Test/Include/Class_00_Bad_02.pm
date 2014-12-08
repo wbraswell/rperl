@@ -1,5 +1,5 @@
-# [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : 'near "use RPer:"' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'near "use RPer:"' >>>
 # [[[ HEADER ]]]
 package RPerl::Test::Include::Class_00_Bad_02;
 use strict;

@@ -26,9 +26,9 @@ BEGIN {
     );
 }
 
-# [[[ TEST RUNLOOP ]]]
-# [[[ TEST RUNLOOP ]]]
-# [[[ TEST RUNLOOP ]]]
+# [[[ PRIMARY RUNLOOP ]]]
+# [[[ PRIMARY RUNLOOP ]]]
+# [[[ PRIMARY RUNLOOP ]]]
 
 # loop 3 times, once for each mode: Pure-Perl, RPerl Perl-Data, and RPerl C-Data
 foreach

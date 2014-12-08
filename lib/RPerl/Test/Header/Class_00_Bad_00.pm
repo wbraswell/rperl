@@ -1,7 +1,7 @@
-# [[[ TEST : 'ERROR ECVPAPC02' ]]]
-# [[[ TEST : 'Perl::Critic::Policy::Modules::RequireExplicitPackage' ]]]
-# [[[ TEST : 'Perl::Critic::Policy::TestingAndDebugging::RequireUseStrict' ]]]
-# [[[ TEST : 'Perl::Critic::Policy::TestingAndDebugging::RequireUseWarnings' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
+# <<< COMPILE_ERROR: 'Perl::Critic::Policy::Modules::RequireExplicitPackage' >>>
+# <<< COMPILE_ERROR: 'Perl::Critic::Policy::TestingAndDebugging::RequireUseStrict' >>>
+# <<< COMPILE_ERROR: 'Perl::Critic::Policy::TestingAndDebugging::RequireUseWarnings' >>>
 # [[[ HEADER ]]]
 packaged RPerl::Test::Header::Class_00_Bad_00;
 use strict;

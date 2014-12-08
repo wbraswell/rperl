@@ -1,5 +1,5 @@
-# [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : 'Transliteration replacement not terminated' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'Transliteration replacement not terminated' >>>
 # [[[ HEADER ]]]
 package RPerl::Test::Properties::Class_00_Bad_09;
 use strict;

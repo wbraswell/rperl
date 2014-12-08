@@ -1,6 +1,6 @@
 #!/usr/bin/perl
-# [[[ TEST : 'ERROR ECVPAPC02' ]]]
-# [[[ TEST : 'Perl::Critic::Policy::NamingConventions::Capitalization' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
+# <<< COMPILE_ERROR: 'Perl::Critic::Policy::NamingConventions::Capitalization' >>>
 # [[[ HEADER ]]]
 use strict;
 use warnings;

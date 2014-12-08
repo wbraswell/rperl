@@ -1,6 +1,6 @@
 #!/usr/bin/perl
-# [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : 'No such class integer' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'No such class integer' >>>
 # [[[ HEADER ]]]
 use strict;
 use warnings;

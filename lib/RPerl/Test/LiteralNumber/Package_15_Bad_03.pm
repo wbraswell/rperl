@@ -1,4 +1,4 @@
-# [[[ TEST : 'ERROR ECVPARP00' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
 # [[[ HEADER ]]]
 package RPerl::Test::LiteralNumber::Package_15_Bad_03;
 use strict;

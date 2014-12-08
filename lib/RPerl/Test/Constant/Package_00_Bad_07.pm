@@ -1,5 +1,5 @@
-# [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : 'No such class number' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'No such class number' >>>
 # [[[ HEADER ]]]
 use constant PI  => my number $TYPED_PI  = 3.141_59;
 package RPerl::Test::Constant::Package_00_Bad_07;

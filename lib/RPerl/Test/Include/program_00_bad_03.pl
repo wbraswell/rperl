@@ -1,6 +1,6 @@
 #!/usr/bin/perl
-# [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : 'Can't locate RPerll/Test/Bar.pm' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'Can't locate RPerll/Test/Bar.pm' >>>
 # [[[ HEADER ]]]
 use strict;
 use warnings;

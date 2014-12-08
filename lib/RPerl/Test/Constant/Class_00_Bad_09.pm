@@ -1,5 +1,5 @@
-# [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : 'near "use  PIE =>"' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'near "use  PIE =>"' >>>
 # [[[ HEADER ]]]
 package RPerl::Test::Constant::Class_00_Bad_09;
 use strict;

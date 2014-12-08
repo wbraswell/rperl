@@ -1,5 +1,5 @@
-# [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : 'Can't locate constan.pm' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'Can't locate constan.pm' >>>
 # [[[ HEADER ]]]
 package RPerl::Test::Constant::Class_00_Bad_02;
 use strict;

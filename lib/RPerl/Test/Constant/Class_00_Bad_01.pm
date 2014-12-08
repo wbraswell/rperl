@@ -1,5 +1,5 @@
-# [[[ TEST : 'ERROR ECVPARP00' ]]]
-# [[[ TEST : 'Unexpected token:  us' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< COMPILE_ERROR: 'Unexpected token:  us' >>>
 # [[[ HEADER ]]]
 package RPerl::Test::Constant::Class_00_Bad_01;
 use strict;

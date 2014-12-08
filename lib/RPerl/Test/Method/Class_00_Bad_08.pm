@@ -1,5 +1,5 @@
-# [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : 'Missing right curly or square bracket' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'Missing right curly or square bracket' >>>
 # [[[ HEADER ]]]
 package RPerl::Test::Method::Class_00_Bad_08;
 use strict;

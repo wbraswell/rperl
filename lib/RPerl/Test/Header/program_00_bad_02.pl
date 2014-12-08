@@ -1,6 +1,6 @@
 #!/usr/bin/perl
-# [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : "Can't locate arnings.pm in @INC" ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: "Can't locate arnings.pm in @INC" >>>
 # [[[ HEADER ]]]
 use strict;
 use arnings;

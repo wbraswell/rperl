@@ -1,4 +1,4 @@
-# [[[ CHECK: OFF ]]]
+# <<< TYPE_CHECKING: OFF >>>
 package RPerl::Compiler;
 use strict;
 use warnings;

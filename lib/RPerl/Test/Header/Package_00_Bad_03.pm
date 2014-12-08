@@ -1,5 +1,5 @@
-# [[[ TEST : 'ERROR ECVPAPC02' ]]]
-# [[[ TEST : 'Perl::Critic::Policy::Modules::RequireVersionVar' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
+# <<< COMPILE_ERROR: 'Perl::Critic::Policy::Modules::RequireVersionVar' >>>
 # [[[ HEADER ]]]
 package RPerl::Test::Header::Package_00_Bad_03;
 use strict;

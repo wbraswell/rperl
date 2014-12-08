@@ -1,5 +1,5 @@
-# [[[ TEST : 'ERROR ECVPAPC02' ]]]
-# [[[ TEST : 'RequireEndWithOne' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
+# <<< COMPILE_ERROR: 'RequireEndWithOne' >>>
 # [[[ HEADER ]]]
 package RPerl::Test::Module::Package_00_Bad_Terminator_00;
 use strict;

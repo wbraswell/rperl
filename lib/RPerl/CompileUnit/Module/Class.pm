@@ -49,21 +49,21 @@ INIT {
 
                 # set data type checking mode
                 if ( $module_file_line
-                    =~ /^\s*\#\s*\[\[\[\s*CHECK\s*\:\s*(\w+)\s*\]\]\]/xms )
+                    =~ /^\s*\#\s*\<\<\<\s*TYPE_CHECKING\s*\:\s*(\w+)\s*\>\>\>/xms )
                 {
 #                    RPerl::diag( "in Class.pm INIT block, have \$module_file_long = '$module_file_long'\n" );
                     if ($inside_subroutine) {
                         RPerl::diag(
-                                  'in Class.pm INIT block, found [[[ CHECK: '
+                                  'in Class.pm INIT block, found <<< TYPE_CHECKING: '
                                 . $1
-                                . ' ]]] while inside subroutine '
+                                . ' >>> while inside subroutine '
                                 . $subroutine_name
                                 . '(), aborting RPerl activation of entire file'
                                 . "\n" );
                         last;
                     }
                     else {
-#                        RPerl::diag( 'in Class.pm INIT block, found [[[ CHECK: ' . $1 . " ]]]\n" );
+#                        RPerl::diag( 'in Class.pm INIT block, found <<< TYPE_CHECKING: ' . $1 . " >>>\n" );
                         $CHECK = $1;
                     }
                 }

@@ -1,6 +1,6 @@
 #!/usr/bin/perl
-# [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : 'Global symbol "$i" requires explicit package name' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'Global symbol "$i" requires explicit package name' >>>
 # [[[ HEADER ]]]
 use strict;
 use warnings;

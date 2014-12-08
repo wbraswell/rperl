@@ -1,5 +1,5 @@
-# [[[ TEST : 'ERROR ECVPAPC02' ]]]
-# [[[ TEST : 'Perl::Critic::Policy::Variables::ProhibitPackageVars' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
+# <<< COMPILE_ERROR: 'Perl::Critic::Policy::Variables::ProhibitPackageVars' >>>
 # [[[ HEADER ]]]
 package RPerl::Test::Subroutine::Package_00_Bad_01;
 use strict;

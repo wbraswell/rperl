@@ -1,5 +1,5 @@
-# [[[ TEST : 'ERROR ECVPAPC02' ]]]
-# [[[ TEST : 'Perl::Critic::Policy::ValuesAndExpressions::ProhibitMismatchedOperators' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
+# <<< COMPILE_ERROR: 'Perl::Critic::Policy::ValuesAndExpressions::ProhibitMismatchedOperators' >>>
 # [[[ HEADER ]]]
 package RPerl::Test::LiteralNumber::Package_16_Bad_01;
 use strict;

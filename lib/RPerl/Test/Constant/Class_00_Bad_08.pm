@@ -1,5 +1,5 @@
-# [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : '"use" not allowed in expression' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: '"use" not allowed in expression' >>>
 # [[[ HEADER ]]]
 package RPerl::Test::Constant::Class_00_Bad_08;
 use strict;

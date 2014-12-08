@@ -84,6 +84,12 @@ $input_vector_2 = [-999999, 3.0, -4.0, 12.0];
 #$input_vector_1 = [-999999, 3.0, 4.0, 'howdy'];
 #$input_vector_2 = [-999999, 3.0, 4.0, -12.0];
 
+
+# START HERE: create automatic type-checking tests
+# START HERE: create automatic type-checking tests
+# START HERE: create automatic type-checking tests
+
+
 # loop to test for memory leaks
 my const_integer $i_MAX = 0;
 for my integer $i ( 0 .. $i_MAX ) {

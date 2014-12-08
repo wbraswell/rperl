@@ -1,5 +1,5 @@
-# [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : 'Global symbol "$empty_method" requires explicit package name' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'Global symbol "$empty_method" requires explicit package name' >>>
 # [[[ HEADER ]]]
 package RPerl::Test::Method::Class_00_Bad_00;
 use strict;

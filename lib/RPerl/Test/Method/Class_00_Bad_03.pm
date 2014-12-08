@@ -1,5 +1,5 @@
-# [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : 'syntax error' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'syntax error' >>>
 # [[[ HEADER ]]]
 package RPerl::Test::Method::Class_00_Bad_03;
 use strict;

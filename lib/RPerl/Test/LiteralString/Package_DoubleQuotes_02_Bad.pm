@@ -1,5 +1,5 @@
-# [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : 'Global symbol "$bar" requires explicit package name' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'Global symbol "$bar" requires explicit package name' >>>
 # [[[ HEADER ]]]
 package RPerl::Test::LiteralString::Package_DoubleQuotes_02_Bad;
 use strict;

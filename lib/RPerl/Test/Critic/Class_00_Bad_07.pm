@@ -1,5 +1,5 @@
-# [[[ TEST : 'ERROR ECVPARP00' ]]]
-# [[[ TEST : 'Unexpected token:  our %properties = (' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< COMPILE_ERROR: 'Unexpected token:  our %properties = (' >>>
 # [[[ HEADER ]]]
 package RPerl::Test::Critic::Class_00_Bad_07;
 use strict;

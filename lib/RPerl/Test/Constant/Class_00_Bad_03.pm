@@ -1,5 +1,5 @@
-# [[[ TEST : 'ERROR ECVPAPL02' ]]]
-# [[[ TEST : "Can't modify constant item in scalar assignment" ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: "Can't modify constant item in scalar assignment" >>>
 # [[[ HEADER ]]]
 package RPerl::Test::Constant::Class_00_Bad_03;
 use strict;

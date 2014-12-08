@@ -1,8 +1,8 @@
 use RPerl::Test::Foo;
 #!/usr/bin/perl
-# [[[ TEST : 'ERROR ECVPAPC02' ]]]
-# [[[ TEST : 'Perl::Critic::Policy::Modules::RequireExplicitPackage' ]]]
-# [[[ TEST : 'Perl::Critic::Policy::Modules::RequireEndWithOne' ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
+# <<< COMPILE_ERROR: 'Perl::Critic::Policy::Modules::RequireExplicitPackage' >>>
+# <<< COMPILE_ERROR: 'Perl::Critic::Policy::Modules::RequireEndWithOne' >>>
 # [[[ HEADER ]]]
 use strict;
 use warnings;

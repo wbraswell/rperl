@@ -10,22 +10,24 @@ use RPerl::Translator;
 use RPerl::Generator;
 use RPerl::Compiler;
 
-our $VERSION = 0.003_010;
+our $VERSION = 0.004_000;
 
 my %tests;
 find(
     sub {
         my $file = $File::Find::name;
-        if ((!m/.pm$/) and (!m/.pl$/)) {
+        if ( ( !m/.pm$/ ) and ( !m/.pl$/ ) ) {
             return;
         }
-        if ((m/Good/ms) or (m/good/ms)) {
+        if ( (m/Good/ms) or (m/good/ms) ) {
             $tests{$file} = undef;
         }
-        elsif ((m/Bad/ms) or (m/bad/ms)) {
+        elsif ( (m/Bad/ms) or (m/bad/ms) ) {
             open my $fh, '<', $_ or die "Cannot open $file:$!\n";
             while (<$fh>) {
-                if (m/^\#\s*\[\[\[\s*TEST\s*\:\s*['"](.*)['"]\s*\]\]\]/) {
+                if (m/^\#\s*\<\<\<\s*COMPILE_ERROR\s*\:\s*['"](.*)['"]\s*\>\>\>/
+                    )
+                {
                     push @{ $tests{$file} }, $1;
                 }
             }
@@ -35,7 +37,7 @@ find(
             return;
         }
     },
-    'lib/RPerl/Test'
+    $RPerl::INCLUDE_PATH . '/RPerl/Test'
 );
 
 plan tests => scalar keys %tests;
@@ -48,13 +50,13 @@ for my $file ( sort keys %tests ) {
             { ops => 'CPP', types => 'CPP' } );
     };
     if ( not defined $errors ) {
-        ok( $success, "$file compiles ok" );
+        ok( $success, "$file compiles without errors" );
         if ( not $success ) {
             print STDERR "==============\n$EVAL_ERROR\n============\n";
         }
     }
     elsif ($success) {
-        ok( 0, "$file compiles without errors while it shouldn't" );
+        ok( 0, "$file compiles without errors, but it should have errors" );
     }
     else {
         my @warnings;
@@ -63,13 +65,14 @@ for my $file ( sort keys %tests ) {
                 push @warnings, "error message '$s' not found";
             }
         }
-        ok( scalar(@warnings) == 0, "$file fails to compile with the expected error" );
+        ok( scalar(@warnings) == 0,
+            "$file compiles with error(s), but not the expected error(s)" );
         for my $s (@warnings) {
             print STDERR "$s\n";
         }
-	if ( scalar(@warnings) > 0) {
+        if ( scalar(@warnings) > 0 ) {
             print STDERR "==============\n$EVAL_ERROR\n============\n";
-	}
+        }
     }
 }
 
