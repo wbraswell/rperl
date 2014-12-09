@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_751;
+    our $VERSION = 0.000_752;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -147,8 +147,8 @@ Operator:               OP01_NAMED '(' ListElements? ')' | OP01_OPEN_CLOSE_PAREN
                         Expression OP14_BITWISE_OR_XOR Expression | Expression OP15_LOGICAL_AND Expression | Expression OP16_LOGICAL_OR Expression | 
                         Expression OP17_LIST_RANGE Expression | Expression OP18_TERNARY Variable COLON Variable | OP22_LOGICAL_NOT Expression | 
                         Expression OP23_LOGICAL_AND Expression | Expression OP24_LOGICAL_OR_XOR Expression ;
-OperatorVoid:           OP01_NAMED_VOID_PAREN ListElements? ')' ';' | OP01_PRINT_VOID_PAREN FileHandle ListElements? ')' ';' | 
-                        OP01_NAMED_VOID ListElements? ';' | OP01_PRINT_VOID FileHandle ListElements? ';' | OP19_LOOP_CONTROL LoopLabel ';' ;
+OperatorVoid:           OP01_NAMED_VOID_PAREN ListElements? ')' ';' | OP01_PRINT_VOID_PAREN FileHandle ListElements? ')' ';' | OP01_NAMED_VOID ListElements? ';' |
+                        OP01_PRINT_VOID ListElements? ';' | OP01_PRINT_VOID FileHandle ListElements? ';' | OP19_LOOP_CONTROL LoopLabel ';' ;
 Expression:             'undef' | Literal | Variable | ArrayReference | ArrayDereferenced | HashReference | HashDereferenced | '{' '}' |
                         Operator | WordScoped '(' ListElements? ')' | Variable OP02_METHOD_THINARROW WORD '(' ListElements? ')' | '(' Expression ')' ;
 ExpressionOrStdin:      Expression | '<STDIN>';

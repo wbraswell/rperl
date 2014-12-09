@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# START HERE: get this file to pass critic, create CHECK tests, create more GA tests, fix 10_compile.t to pass critics etc, remove CHECK from grammar
+# START HERE: get this file to pass critic, create CHECK tests, create more GA tests, fix 10_compile.t to pass critics etc, remove CHECK from grammar
+# START HERE: get this file to pass critic, create CHECK tests, create more GA tests, fix 10_compile.t to pass critics etc, remove CHECK from grammar
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -101,7 +106,7 @@ for my $test_file ( sort keys %{$test_files} ) {
 #    if ($stdout_generated) { RPerl::diag( "===STDOUT=BEGIN====\n" . $stdout_generated . "===STDOUT=END======\n" ); }
 #    if ($stderr_generated) { RPerl::diag( "===STDERR=BEGIN====\n" . $stderr_generated . "===STDERR=END======\n" ); }
 
-    if ( $test_exit_status == 0 ) {
+    if ( $test_exit_status == 0 ) {  # UNIX process return code 0, success
         if ( ( $test_file =~ m/Good/ms ) or ( $test_file =~ m/good/ms ) ) {
             my $missing_successes = [];
             if ( defined $test_files->{$test_file}->{successes} ) {
@@ -121,11 +126,11 @@ for my $test_file ( sort keys %{$test_files} ) {
         }
         else {
             ok( 0,
-                "Program $test_file interprets and runs without errors, but it should have errors"
+                "Program $test_file interprets and runs with errors"
             );
         }
     }
-    else {
+    else {  # UNIX process return code not 0, error
         if ( ( $test_file =~ m/Bad/ms ) or ( $test_file =~ m/bad/ms ) ) {
             my $missing_errors = [];
             if ( defined $test_files->{$test_file}->{errors} ) {
@@ -145,7 +150,7 @@ for my $test_file ( sort keys %{$test_files} ) {
         }
         else {
             ok( 0,
-                "Program $test_file interprets and runs with errors, but it should not have errors"
+                "Program $test_file interprets and runs without errors"
             );
         }
     }

@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_020;
+our $VERSION = 0.000_021;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
@@ -19,13 +19,13 @@ my number $retval_number;
 my number__array_ref $input_vector_1;
 my number__array_ref $input_vector_2;
 
-# 84
-#$input_vector_1 = [-999999, 2.0, 4.0, 6.0];
-#$input_vector_2 = [-999999, 3.0, 6.0, 9.0];
-
 # 0
 #$input_vector_1 = [-999999, 0.0, 0.0, 0.0];
 #$input_vector_2 = [-999999, 3.0, 4.0, 12.0];
+
+# 84
+#$input_vector_1 = [-999999, 2.0, 4.0, 6.0];
+#$input_vector_2 = [-999999, 3.0, 6.0, 9.0];
 
 # 96
 #$input_vector_1 = [-999999, 3.0, 4.0, 12.0];
@@ -79,6 +79,11 @@ $input_vector_2 = [-999999, 3.0, -4.0, 12.0];
 # number__array_ref element value expected but non-number value found at index 0
 #$input_vector_1 = ['howdy', 3.0, 4.0, 12.0];
 #$input_vector_2 = [-999999, 3.0, 4.0, -12.0];
+
+# ERROR ENVAVRV03, TYPE-CHECKING MISMATCH
+# number__array_ref element value expected but non-number value found at index 1
+#$input_vector_1 = [-999999, 3.0, 4.0, 12.0];
+#$input_vector_2 = [-999999, 'howdy', 4.0, -12.0];
 
 # ERROR ENVAVRV03, TYPE-CHECKING MISMATCH
 # number__array_ref element value expected but non-number value found at index 2
