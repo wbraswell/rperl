@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+# <<< RUN_FOOBAR: '84' >>>
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -20,8 +21,8 @@ my number__array_ref $input_vector_1;
 my number__array_ref $input_vector_2;
 
 # 84
-#$input_vector_1 = [-999999, 2.0, 4.0, 6.0];
-#$input_vector_2 = [-999999, 3.0, 6.0, 9.0];
+$input_vector_1 = [-999999, 2.0, 4.0, 6.0];
+$input_vector_2 = [-999999, 3.0, 6.0, 9.0];
 
 # 0
 #$input_vector_1 = [-999999, 0.0, 0.0, 0.0];
@@ -52,8 +53,8 @@ my number__array_ref $input_vector_2;
 #$input_vector_2 = [-999999, -3.0, 4.0, 12.0];
 
 # 137
-$input_vector_1 = [-999999, 3.0, 4.0, 12.0];
-$input_vector_2 = [-999999, 3.0, -4.0, 12.0];
+#$input_vector_1 = [-999999, 3.0, 4.0, 12.0];
+#$input_vector_2 = [-999999, 3.0, -4.0, 12.0];
 
 # -119
 #$input_vector_1 = [-999999, 3.0, 4.0, 12.0];
@@ -90,16 +91,5 @@ $input_vector_2 = [-999999, 3.0, -4.0, 12.0];
 #$input_vector_1 = [-999999, 3.0, 4.0, 'howdy'];
 #$input_vector_2 = [-999999, 3.0, 4.0, -12.0];
 
-# loop to test for memory leaks
-my const_integer $i_MAX = 0;
-for my integer $i ( 0 .. $i_MAX ) {
-	print "in geometric_algebra_test_1_ipvve.pl, top of for() loop $i/$i_MAX\n";
-
-    $retval_number = inner_product__vector_vector_euclidean($input_vector_1, $input_vector_2);
-
-    print "in geometric_algebra_test_1_ipvve.pl $i/$i_MAX, have \$retval_number =\n$retval_number\n";
-
-#croak('Done for now, croaking');
-}
-
-#croak('Done for now, croaking');
+$retval_number = inner_product__vector_vector_euclidean($input_vector_1, $input_vector_2);
+print $retval_number . "\n";

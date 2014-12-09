@@ -4,7 +4,7 @@ package RPerl::Algorithm::Math::GeometricAlgebra;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_002;
+our $VERSION = 0.000_003;
 
 # [[[ OO INHERITANCE ]]]
 use parent ('RPerl::Algorithm::Math');
@@ -25,6 +25,7 @@ our number $inner_product__vector_vector_euclidean = sub {
         my number__array_ref $input_vector_2)
         = @_;
 
+# DEPRECATED: type checking automated via <<< CHECK: FOO >>> preprocessor directive
 #    ::number__array_ref__CHECK($input_vector_1);
 #    ::number__array_ref__CHECKTRACE( $input_vector_1, '$input_vector_1', 'inner_product__vector_vector_euclidean()' );
 
@@ -33,13 +34,17 @@ our number $inner_product__vector_vector_euclidean = sub {
 
     # bound checking
     ( ( scalar @{$input_vector_1} ) == 4 )
-        or croak('Argument vector 1 is not of magnitude 4, croaking');
+        or croak(
+        'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_vector_1 is not of magnitude 4, croaking'
+        );
     ( ( scalar @{$input_vector_2} ) == 4 )
-        or croak('Argument vector 2 is not of magnitude 4, croaking');
+        or croak(
+        'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_vector_2 is not of magnitude 4, croaking'
+        );
 
     my number $return_value_number = 0.0;
 
-#    RPerl::diag "in PERLOPS_PERLTYPES inner_product__vector_vector_euclidean(), top of subroutine...\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES inner_product__vector_vector_euclidean(), top of subroutine...\n";
 #    RPerl::diag "in PERLOPS_PERLTYPES inner_product__vector_vector_euclidean(), received \$input_vector_1\n" . Dumper($input_vector_1) . "\n";
 #    RPerl::diag "in PERLOPS_PERLTYPES inner_product__vector_vector_euclidean(), received \$input_vector_2\n" . Dumper($input_vector_2) . "\n";
 
@@ -63,21 +68,19 @@ our number__array_ref $inner_product__bivector_vector_euclidean = sub {
         my number__array_ref $input_vector)
         = @_;
 
-#    ::number__array_ref__CHECK($input_bivector);
-#    ::number__array_ref__CHECKTRACE( $input_bivector, '$input_bivector', 'inner_product__bivector_vector_euclidean()' );
-
-#    ::number__array_ref__CHECK($input_vector);
-#    ::number__array_ref__CHECKTRACE( $input_vector, '$input_vector', 'inner_product__bivector_vector_euclidean()' );
-
     # bound checking
     ( ( scalar @{$input_bivector} ) == 4 )
-        or croak('Argument bivector is not of magnitude 4, croaking');
+        or croak(
+        'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_bivector is not of magnitude 4, croaking'
+        );
     ( ( scalar @{$input_vector} ) == 4 )
-        or croak('Argument vector is not of magnitude 4, croaking');
+        or croak(
+        'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_vector is not of magnitude 4, croaking'
+        );
 
     my number__array_ref $return_value_vector = [];
 
-#    RPerl::diag "in PERLOPS_PERLTYPES inner_product__bivector_vector_euclidean(), top of subroutine...\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES inner_product__bivector_vector_euclidean(), top of subroutine...\n";
 #    RPerl::diag "in PERLOPS_PERLTYPES inner_product__bivector_vector_euclidean(), received \$input_bivector\n" . Dumper($input_bivector) . "\n";
 #    RPerl::diag "in PERLOPS_PERLTYPES inner_product__bivector_vector_euclidean(), received \$input_vector\n" . Dumper($input_vector) . "\n";
 
@@ -97,21 +100,19 @@ our number__array_ref $outer_product__vector_vector_euclidean = sub {
         my number__array_ref $input_vector_2)
         = @_;
 
-#    ::number__array_ref__CHECK($input_vector_1);
-#    ::number__array_ref__CHECKTRACE( $input_vector_1, '$input_vector_1', 'outer_product__vector_vector_euclidean()' );
-
-#    ::number__array_ref__CHECK($input_vector_2);
-#    ::number__array_ref__CHECKTRACE( $input_vector_2, '$input_vector_2', 'outer_product__vector_vector_euclidean()' );
-
     # bound checking
     ( ( scalar @{$input_vector_1} ) == 4 )
-        or croak('Argument vector 1 is not of magnitude 4, croaking');
+        or croak(
+        'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_vector_1 is not of magnitude 4, croaking'
+        );
     ( ( scalar @{$input_vector_2} ) == 4 )
-        or croak('Argument vector 2 is not of magnitude 4, croaking');
+        or croak(
+        'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_vector_2 is not of magnitude 4, croaking'
+        );
 
     my number__array_ref $return_value_bivector = [];
 
-#    RPerl::diag "in PERLOPS_PERLTYPES outer_product__vector_vector_euclidean(), top of subroutine...\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES outer_product__vector_vector_euclidean(), top of subroutine...\n";
 #    RPerl::diag "in PERLOPS_PERLTYPES outer_product__vector_vector_euclidean(), received \$input_vector_1\n" . Dumper($input_vector_1) . "\n";
 #    RPerl::diag "in PERLOPS_PERLTYPES outer_product__vector_vector_euclidean(), received \$input_vector_2\n" . Dumper($input_vector_2) . "\n";
 
@@ -134,21 +135,19 @@ our number $outer_product__bivector_vector_euclidean = sub {
         my number__array_ref $input_vector)
         = @_;
 
-#    ::number__array_ref__CHECK($input_bivector);
-#    ::number__array_ref__CHECKTRACE( $input_bivector, '$input_bivector', 'outer_product__bivector_vector_euclidean()' );
-
-#    ::number__array_ref__CHECK($input_vector);
-#    ::number__array_ref__CHECKTRACE( $input_vector, '$input_vector', 'outer_product__bivector_vector_euclidean()' );
-
     # bound checking
     ( ( scalar @{$input_bivector} ) == 4 )
-        or croak('Argument bivector is not of magnitude 4, croaking');
+        or croak(
+        'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_bivector is not of magnitude 4, croaking'
+        );
     ( ( scalar @{$input_vector} ) == 4 )
-        or croak('Argument vector is not of magnitude 4, croaking');
+        or croak(
+        'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_vector is not of magnitude 4, croaking'
+        );
 
     my number $return_value_number;
 
-#    RPerl::diag "in PERLOPS_PERLTYPES outer_product__vector_vector_euclidean(), top of subroutine...\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES outer_product__vector_vector_euclidean(), top of subroutine...\n";
 #    RPerl::diag "in PERLOPS_PERLTYPES outer_product__vector_vector_euclidean(), received \$input_vector_1\n" . Dumper($input_vector_1) . "\n";
 #    RPerl::diag "in PERLOPS_PERLTYPES outer_product__vector_vector_euclidean(), received \$input_vector_2\n" . Dumper($input_vector_2) . "\n";
 
@@ -161,4 +160,4 @@ our number $outer_product__bivector_vector_euclidean = sub {
     return $return_value_number;
 };
 
-1;  # end of class
+1;    # end of class
