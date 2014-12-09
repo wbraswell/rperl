@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
-# START HERE: get this file to pass critic, create CHECK tests, create more GA tests, fix 10_compile.t to pass critics etc, remove CHECK from grammar
-# START HERE: get this file to pass critic, create CHECK tests, create more GA tests, fix 10_compile.t to pass critics etc, remove CHECK from grammar
-# START HERE: get this file to pass critic, create CHECK tests, create more GA tests, fix 10_compile.t to pass critics etc, remove CHECK from grammar
+# START HERE: get this file to pass critic, create CHECK tests, create more GA tests, fix 10_compile.t to pass critics etc, remove CHECK from grammar, add PREPROCESSOR where missing
+# START HERE: get this file to pass critic, create CHECK tests, create more GA tests, fix 10_compile.t to pass critics etc, remove CHECK from grammar, add PREPROCESSOR where missing
+# START HERE: get this file to pass critic, create CHECK tests, create more GA tests, fix 10_compile.t to pass critics etc, remove CHECK from grammar, add PREPROCESSOR where missing
 
 # [[[ HEADER ]]]
 use strict;
@@ -26,9 +26,10 @@ my $test_files = {};    # string__hash_ref
 find(
     sub {
         my $file = $File::Find::name;
+
 #        RPerl::diag('in 08_interpret_run_program.t, have $file = ' . $file . "\n");
 
-        if ( $file !~ m/.pl$/ ) {
+        if ( $file !~ m/.pl$/xms ) {
             return;
         }
 
@@ -60,13 +61,12 @@ find(
     $RPerl::INCLUDE_PATH . '/RPerl/Test'
 );
 
-#RPerl::diag('in 08_interpret_run_program.t, have $test_files = ' . "\n" . Dumper($test_files) . "\n");
+RPerl::diag('in 08_interpret_run_program.t, have $test_files = ' . "\n" . Dumper($test_files) . "\n");
 
 plan tests => scalar keys %{$test_files};
 
 for my $test_file ( sort keys %{$test_files} ) {
-#    my $pid = open3( \*STDIN_TEST, \*STDOUT_TEST, \*STDERR_TEST, $test_file );  # NEED FIX: can we pass 0 for STDIN to disable it?
-    my $pid = open3( 0, \*STDOUT_TEST, \*STDERR_TEST, $test_file );
+    my $pid           = open3( 0, \*STDOUT_TEST, \*STDERR_TEST, $test_file );
     my $stdout_select = new IO::Select();
     my $stderr_select = new IO::Select();
     $stdout_select->add( \*STDOUT_TEST );
@@ -100,13 +100,13 @@ for my $test_file ( sort keys %{$test_files} ) {
 
     my $test_exit_status = $CHILD_ERROR >> 8;
 
-#RPerl::diag('in 08_interpret_run_program.t, have $CHILD_ERROR = ' . $CHILD_ERROR . "\n");
-#RPerl::diag('in 08_interpret_run_program.t, have $test_exit_status = ' . $test_exit_status . "\n");
+RPerl::diag('in 08_interpret_run_program.t, have $CHILD_ERROR = ' . $CHILD_ERROR . "\n");
+RPerl::diag('in 08_interpret_run_program.t, have $test_exit_status = ' . $test_exit_status . "\n");
 
-#    if ($stdout_generated) { RPerl::diag( "===STDOUT=BEGIN====\n" . $stdout_generated . "===STDOUT=END======\n" ); }
-#    if ($stderr_generated) { RPerl::diag( "===STDERR=BEGIN====\n" . $stderr_generated . "===STDERR=END======\n" ); }
+    if ($stdout_generated) { RPerl::diag( "===STDOUT=BEGIN====\n" . $stdout_generated . "===STDOUT=END======\n" ); }
+    if ($stderr_generated) { RPerl::diag( "===STDERR=BEGIN====\n" . $stderr_generated . "===STDERR=END======\n" ); }
 
-    if ( $test_exit_status == 0 ) {  # UNIX process return code 0, success
+    if ( $test_exit_status == 0 ) {    # UNIX process return code 0, success
         if ( ( $test_file =~ m/Good/ms ) or ( $test_file =~ m/good/ms ) ) {
             my $missing_successes = [];
             if ( defined $test_files->{$test_file}->{successes} ) {
@@ -120,17 +120,15 @@ for my $test_file ( sort keys %{$test_files} ) {
                 }
             }
 
-#            RPerl::diag('in 08_interpret_run_program.t, have $missing_successes =' . "\n" . Dumper($missing_successes) . "\n");
+            RPerl::verbose('in 08_interpret_run_program.t, have $missing_successes =' . "\n" . Dumper($missing_successes) . "\n");
             ok( ( ( scalar @{$missing_successes} ) == 0 ),
                 "Program $test_file interprets and runs without errors" );
         }
         else {
-            ok( 0,
-                "Program $test_file interprets and runs with errors"
-            );
+            ok( 0, "Program $test_file interprets and runs with errors" );
         }
     }
-    else {  # UNIX process return code not 0, error
+    else {    # UNIX process return code not 0, error
         if ( ( $test_file =~ m/Bad/ms ) or ( $test_file =~ m/bad/ms ) ) {
             my $missing_errors = [];
             if ( defined $test_files->{$test_file}->{errors} ) {
@@ -149,9 +147,7 @@ for my $test_file ( sort keys %{$test_files} ) {
             );
         }
         else {
-            ok( 0,
-                "Program $test_file interprets and runs without errors"
-            );
+            ok( 0, "Program $test_file interprets and runs without errors" );
         }
     }
 }
