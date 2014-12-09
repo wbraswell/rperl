@@ -67,8 +67,8 @@ sub types_enable { (my $types_input) = @_;
 	
 #	RPerl::diag "in rperltypes::types_enable(), have \$rperltypes_h_filename = '$rperltypes_h_filename'\n";
 	
-	open(my $TYPES_H_FILEHANDLE_IN,'<', $rperltypes_h_filename) or croak("Can't read rperltypes_mode.h input file: $ERRNO, croaking");
-	open(my $TYPES_H_FILEHANDLE_OUT,'>', ($rperltypes_h_filename . '.swap')) or croak("Can't write rperltypes_mode.h.swap output file: $ERRNO, croaking");
+	open(my $TYPES_H_FILEHANDLE_IN,'<', $rperltypes_h_filename) or croak("Can't read rperltypes_mode.h input file: $OS_ERROR, croaking");
+	open(my $TYPES_H_FILEHANDLE_OUT,'>', ($rperltypes_h_filename . '.swap')) or croak("Can't write rperltypes_mode.h.swap output file: $OS_ERROR, croaking");
 
 	while(defined(my $line_current = <$TYPES_H_FILEHANDLE_IN>))
 	{
@@ -115,8 +115,8 @@ sub types_enable { (my $types_input) = @_;
 	
 	if ($rperltypes_h_modified)
 	{
-		move($rperltypes_h_filename, ($rperltypes_h_filename . '.orig')) or croak("Can't move rperltypes_mode.h input file to rperltypes_mode.h.orig: $ERRNO, croaking");
-		move(($rperltypes_h_filename . '.swap'), $rperltypes_h_filename) or croak("Can't move rperltypes_mode.h.swap output file to rperltypes_mode.h: $ERRNO, croaking");
+		move($rperltypes_h_filename, ($rperltypes_h_filename . '.orig')) or croak("Can't move rperltypes_mode.h input file to rperltypes_mode.h.orig: $OS_ERROR, croaking");
+		move(($rperltypes_h_filename . '.swap'), $rperltypes_h_filename) or croak("Can't move rperltypes_mode.h.swap output file to rperltypes_mode.h: $OS_ERROR, croaking");
 	}
 	
 	return();

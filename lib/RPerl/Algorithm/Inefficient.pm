@@ -15,14 +15,12 @@ our %properties = (); ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: al
 
 our void__method $inherited__Inefficient = sub {
     ( my object $self, my string $person) = @_;
-    RPerl::diag
-        "in PERLOPS_PERLTYPES Inefficient->inherited__Inefficient(), received \$self = '$self' and \$person = '$person', FLUFFY\n";
+#    RPerl::diag "in PERLOPS_PERLTYPES Inefficient->inherited__Inefficient(), received \$self = '$self' and \$person = '$person', FLUFFY\n";
 };
 
 our void__method $inherited = sub {
     ( my object $self, my string $person) = @_;
-    RPerl::diag
-        "in PERLOPS_PERLTYPES Inefficient->inherited(), received \$self = '$self' and \$person = '$person', INCOMPATIBLE\n";
+#    RPerl::diag "in PERLOPS_PERLTYPES Inefficient->inherited(), received \$self = '$self' and \$person = '$person', INCOMPATIBLE\n";
 };
 
 # all of the following happen before the INIT block, and thus rely upon AUTOLOAD

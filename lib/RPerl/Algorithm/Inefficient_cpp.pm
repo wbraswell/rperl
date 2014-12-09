@@ -3,7 +3,7 @@ package RPerl::Algorithm::Inefficient_cpp;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_001;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
@@ -35,15 +35,15 @@ our void__method $cpp_load = sub {
         my $eval_string = <<"EOF";
 package main;
 use RPerl::Inline;
-BEGIN { RPerl::diag "[[[ BEGIN 'use Inline' STAGE for 'RPerl/Algorithm/Inefficient.cpp' ]]]\n"x3; }
+BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/Algorithm/Inefficient.cpp' ]]]\n" x 0); }
 use Inline (CPP => "$RPerl::INCLUDE_PATH/RPerl/Algorithm/Inefficient.cpp", \@RPerl::Inline::ARGS);
-RPerl::diag "[[[ END 'use Inline' STAGE for 'RPerl/Algorithm/Inefficient.cpp' ]]]\n"x3;
+RPerl::diag("[[[ END 'use Inline' STAGE for 'RPerl/Algorithm/Inefficient.cpp' ]]]\n" x 0);
 1;
 EOF
 
 #        RPerl::diag "in Inefficient_cpp::cpp_load(), CPP not yet loaded, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
 
-        eval $eval_string or croak( $ERRNO . "\n" . $EVAL_ERROR );
+        eval $eval_string or croak( $OS_ERROR . "\n" . $EVAL_ERROR );
         if ($EVAL_ERROR) { croak($EVAL_ERROR); }
     }
 

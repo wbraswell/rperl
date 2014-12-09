@@ -45,14 +45,12 @@ our void__method $number__sort = sub {
 
 our void__method $inherited__Bubble = sub {
     ( my object $self, my string $person) = @_;
-    RPerl::diag(
-        'in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), received $self = ' . $self . ' and $person = ' . $person . ', FRIED' . "\n");
+#    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), received $self = ' . $self . ' and $person = ' . $person . ', FRIED' . "\n");
 };
 
 our void__method $inherited = sub {
     ( my object $self, my string $person) = @_;
-    RPerl::diag(
-        'in PERLOPS_PERLTYPES Bubble->inherited(), received $self = ' . $self . ' and $person = ' . $person . ', ILLOGICAL' . "\n");
+#    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited(), received $self = ' . $self . ' and $person = ' . $person . ', ILLOGICAL' . "\n");
 };
 
 # [[[ SUBROUTINES ]]]
@@ -156,16 +154,14 @@ our number__array_ref $number__bubblesort = sub {
 
 our string $uninherited__Bubble = sub {
     ( my string $person) = @_;
-    RPerl::diag(
-        'in PERLOPS_PERLTYPES Bubble::uninherited__Bubble(), received $person = ' . $person . ', MITOCHONDRIAL' . "\n");
+#    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble::uninherited__Bubble(), received $person = ' . $person . ', MITOCHONDRIAL' . "\n");
     return ('Bubble::uninherited__Bubble() RULES! PERLOPS_PERLTYPES');
 };
 
 # DEV NOTE, CORRELATION #04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
 our string $uninherited = sub {
     ( my string $person) = @_;
-    RPerl::diag(
-        'in PERLOPS_PERLTYPES Bubble::uninherited(), received $person = ' . $person . ', TETRAHEDRON' . "\n");
+#    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble::uninherited(), received $person = ' . $person . ', TETRAHEDRON' . "\n");
     return ('Bubble::uninherited() ROCKS! PERLOPS_PERLTYPES');
 };
 

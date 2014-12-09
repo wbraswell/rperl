@@ -59,9 +59,7 @@ our void $rperl_source__check_syntax = sub {
 
 #my string $rperl_source__perl_syntax_command = q{perl -Iblib/lib -cW } . $rperl_source__file_name;
 
-    RPerl::diag
-        "in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_command =\n$rperl_source__perl_syntax_command\n";
-
+#RPerl::diag "in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_command =\n$rperl_source__perl_syntax_command\n";
 #RPerl::diag "in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_command__no_output =\n$rperl_source__perl_syntax_command__no_output\n\n";
 #RPerl::diag "in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_command__all_output =\n$rperl_source__perl_syntax_command__all_output\n\n";
 
@@ -75,7 +73,7 @@ our void $rperl_source__check_syntax = sub {
 
 #RPerl::diag "in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_retval = $rperl_source__perl_syntax_retval\n";
 #RPerl::diag "in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_retstring =\n$rperl_source__perl_syntax_retstring\n";
-#RPerl::diag "in rperl_source__check_syntax(), have \$ERRNO = $ERRNO\n";  # $ERRNO seems to contain random error messages that I can't trace?
+#RPerl::diag "in rperl_source__check_syntax(), have \$OS_ERROR = $OS_ERROR\n";  # $OS_ERROR seems to contain random error messages that I can't trace?
 #RPerl::diag "in rperl_source__check_syntax(), have \$? = $?\n";
 
 # NEED ADD ERROR CHECKING: ECVPAPL00 FILE DOES NOT EXIST, ECVPAPL01 FILE IS EMPTY
@@ -208,8 +206,7 @@ our void $rperl_source__parse = sub {
     RPerl::verbose ' done.' . "\n";
 
 #    RPerl::diag "in rperl_source__parse(), have \$rperl_ast->str() =\n" . $rperl_ast->str() . "\n\n";
-    RPerl::diag "in rperl_source__parse(), have \$rperl_ast =\n"
-        . Dumper($rperl_ast) . "\n\n";
+#    RPerl::diag "in rperl_source__parse(), have \$rperl_ast =\n" . Dumper($rperl_ast) . "\n\n";
 
     return ($rperl_ast);
 };

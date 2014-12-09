@@ -12,7 +12,7 @@ use RPerl::Compiler;
 
 our $VERSION = 0.004_000;
 
-my %tests;
+my $tests = {};
 find(
     sub {
         my $file = $File::Find::name;
@@ -20,7 +20,7 @@ find(
             return;
         }
         if ( (m/Good/ms) or (m/good/ms) ) {
-            $tests{$file} = undef;
+            $tests->{$file} = undef;
         }
         elsif ( (m/Bad/ms) or (m/bad/ms) ) {
             open my $fh, '<', $_ or die "Cannot open $file:$!\n";
@@ -28,7 +28,7 @@ find(
                 if (m/^\#\s*\<\<\<\s*COMPILE_ERROR\s*\:\s*['"](.*)['"]\s*\>\>\>/
                     )
                 {
-                    push @{ $tests{$file} }, $1;
+                    push @{ $tests->{$file} }, $1;
                 }
             }
             close $fh;
@@ -40,38 +40,40 @@ find(
     $RPerl::INCLUDE_PATH . '/RPerl/Test'
 );
 
-plan tests => scalar keys %tests;
+plan tests => scalar keys %{$tests};
 
 my $tempfile = tempfile;
-for my $file ( sort keys %tests ) {
-    my $errors  = $tests{$file};
-    my $success = eval {
+for my $file ( sort keys %{$tests} ) {
+    my $errors            = $tests->{$file};
+    my $eval_return_value = eval {
         rperl_to_xsbinary__compile( $file, $tempfile,
             { ops => 'CPP', types => 'CPP' } );
     };
     if ( not defined $errors ) {
-        ok( $success, "$file compiles without errors" );
-        if ( not $success ) {
-            print STDERR "==============\n$EVAL_ERROR\n============\n";
+        ok( $eval_return_value,
+            "Program or module $file compiles without errors" );
+        if ( not $eval_return_value ) {
+            print "==============\n$EVAL_ERROR\n============\n";
         }
     }
-    elsif ($success) {
-        ok( 0, "$file compiles without errors, but it should have errors" );
+    elsif ($eval_return_value) {
+        ok( 0, "Program or module $file compiles with expected error(s)" );
     }
     else {
-        my @warnings;
-        for my $s ( @{$errors} ) {
-            if ( $EVAL_ERROR !~ /\Q$s\E/ ) {
-                push @warnings, "error message '$s' not found";
+        my $warnings = [];
+        foreach my $error ( @{$errors} ) {
+            if ( $EVAL_ERROR !~ /\Q$error\E/ ) {
+                push @{$warnings},
+                    "Error message '$error' expected, but not found";
             }
         }
-        ok( scalar(@warnings) == 0,
-            "$file compiles with error(s), but not the expected error(s)" );
-        for my $s (@warnings) {
-            print STDERR "$s\n";
+        ok( scalar( @{$warnings} ) == 0,
+            "Program or module $file compiles with the expected error(s)" );
+        foreach my $warning ( @{$warnings} ) {
+            print "$warning\n";
         }
-        if ( scalar(@warnings) > 0 ) {
-            print STDERR "==============\n$EVAL_ERROR\n============\n";
+        if ( scalar( @{$warnings} ) > 0 ) {
+            print "==============\n$EVAL_ERROR\n============\n";
         }
     }
 }

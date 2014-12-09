@@ -13,22 +13,29 @@ use RPerl::Algorithm;
 # [[[ OO METHODS ]]]
 
 # OO INHERITANCE TESTING
-our void__method $inherited__Sort = sub { (my object $self, my string $person) = @_;  RPerl::diag "in PERLOPS_PERLTYPES Sort->inherited__Sort(), received \$self = '$self' and \$person = '$person', FISH\n"; };
+our void__method $inherited__Sort = sub {
+    ( my object $self, my string $person) = @_;
+#    RPerl::diag "in PERLOPS_PERLTYPES Sort->inherited__Sort(), received \$self = '$self' and \$person = '$person', FISH\n";
+};
+
 #our void__method $inherited = sub { (my object $self, my string $person) = @_;  RPerl::diag "in PERLOPS_PERLTYPES Sort->inherited(), received \$self = '$self' and \$person = '$person', IN\n"; };
 
 # [[[ SUBROUTINES ]]]
 
 # OO INHERITANCE TESTING, CONTINUED
-our string $uninherited__Sort = sub { (my string $person) = @_;  RPerl::diag "in PERLOPS_PERLTYPES Sort::uninherited__Sort(), received \$person = '$person', MY\n";  return "Sort::uninherited__Sort() RULES! PERLOPS_PERLTYPES"; };
+our string $uninherited__Sort = sub {
+    ( my string $person) = @_;
+#    RPerl::diag "in PERLOPS_PERLTYPES Sort::uninherited__Sort(), received \$person = '$person', MY\n";
+    return "Sort::uninherited__Sort() RULES! PERLOPS_PERLTYPES";
+};
+
 #our string $uninherited = sub { (my string $person) = @_;  RPerl::diag "in PERLOPS_PERLTYPES Sort::uninherited(), received \$person = '$person', TROUSERS\n";  return "Sort::uninherited() ROCKS! PERLOPS_PERLTYPES"; };
 
 # <<< OPERATIONS & DATA TYPES REPORTING >>>
-our integer $RPerl__Algorithm__Sort__OPS_TYPES_ID
-    = sub { return 0; };    # PERLOPS_PERLTYPES is 0
+our integer $RPerl__Algorithm__Sort__OPS_TYPES_ID = sub { return 0; }; # PERLOPS_PERLTYPES is 0
 our string $RPerl__Algorithm__Sort__ops   = sub { return 'PERL'; };
 our string $RPerl__Algorithm__Sort__types = sub { return 'PERL'; };
-
-1;                  # end of class
+1;    # end of class
 
 __END__
 # all of the following happen before the INIT block, and thus rely upon AUTOLOAD

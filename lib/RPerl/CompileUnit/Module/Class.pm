@@ -41,7 +41,7 @@ INIT {
 
 #			RPerl::diag "in Class.pm INIT block, have \$module_file_long = '$module_file_long'\n";
 
-            open my $MODULE_FILE, '<', $module_file_long or croak $ERRNO;
+            open my $MODULE_FILE, '<', $module_file_long or croak $OS_ERROR;
             while ( my $module_file_line = <$MODULE_FILE> ) {
                 chomp $module_file_line;
 
@@ -186,7 +186,7 @@ INIT {
                                     . '} = sub { return $_[0]->{'
                                     . $class_property_name
                                     . '}; };' )
-                                or croak( $ERRNO . "\n" . $EVAL_ERROR );
+                                or croak( $OS_ERROR . "\n" . $EVAL_ERROR );
                             if ($EVAL_ERROR) { croak($EVAL_ERROR); }
 
 #eval "\*\{$package_name\:\:get_$class_property_name\} \= sub \{ RPerl::diag \"IN POST\-INIT\, accessor MODE $package_name\:\:get_$class_property_name\\n\"\; return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;";
@@ -211,7 +211,7 @@ INIT {
                                     . '} = $_[1]; return $_[0]->{'
                                     . $class_property_name
                                     . '}; };' )
-                                or croak( $ERRNO . "\n" . $EVAL_ERROR );
+                                or croak( $OS_ERROR . "\n" . $EVAL_ERROR );
                             if ($EVAL_ERROR) { croak($EVAL_ERROR); }
 
 #eval "\*\{$package_name\:\:set_$class_property_name\} \= sub \{ RPerl::diag \"IN POST\-INIT\, mutator MODE $package_name\:\:set_$class_property_name\\n\"\; \$\_\[0\]\-\>\{$class_property_name\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$class_property_name\}\; \}\;";
@@ -341,7 +341,7 @@ INIT {
                     }
                 }
             }
-            close $MODULE_FILE or croak $ERRNO;
+            close $MODULE_FILE or croak $OS_ERROR;
         }
     }
 }
@@ -369,7 +369,7 @@ sub activate_subroutine {
             . '}(@_); };';
 #        if ($subroutine_arguments_check_code ne q{}) { RPerl::diag('in Class::activate_subroutine(), have method $subroutine_definition_code =' . "\n" . $subroutine_definition_code . "\n"); }
         eval($subroutine_definition_code)
-            or croak( $ERRNO . "\n" . $EVAL_ERROR );
+            or croak( $OS_ERROR . "\n" . $EVAL_ERROR );
         if ($EVAL_ERROR) { croak($EVAL_ERROR); }
     }
     else {
@@ -394,7 +394,7 @@ sub activate_subroutine {
             . '}(@_); };';
 #        if ($subroutine_arguments_check_code ne q{}) { RPerl::diag('in Class::activate_subroutine(), have subroutine main:: $subroutine_definition_code =' . "\n" . $subroutine_definition_code . "\n"); }
         eval($subroutine_definition_code)
-            or croak( $ERRNO . "\n" . $EVAL_ERROR );
+            or croak( $OS_ERROR . "\n" . $EVAL_ERROR );
         if ($EVAL_ERROR) { croak($EVAL_ERROR); }
 
 #        $subroutine_definition_diag_code = "\n" . {RPerl::diag "IN POST-INIT, subroutine direct call MODE } . $package_name . '::' . $subroutine_name . q{\n"; } . "\n";
@@ -411,7 +411,7 @@ sub activate_subroutine {
             . '}(@_); };';
 #        if ($subroutine_arguments_check_code ne q{}) { RPerl::diag('in Class::activate_subroutine(), have subroutine package:: $subroutine_definition_code =' . "\n" . $subroutine_definition_code . "\n"); }
         eval($subroutine_definition_code)
-            or croak( $ERRNO . "\n" . $EVAL_ERROR );
+            or croak( $OS_ERROR . "\n" . $EVAL_ERROR );
         if ($EVAL_ERROR) { croak($EVAL_ERROR); }
     }
 }

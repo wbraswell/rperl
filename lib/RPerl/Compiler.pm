@@ -62,24 +62,24 @@ our void $cpp_to_xsbinary__compile = sub {
     if ( -f $cpp_file_name ) {
         unlink $cpp_file_name
             or croak(
-            "\nERROR ECVCOFI00, C++ COMPILER, FILE SYSTEM: Attempting to save new file '$cpp_file_name', cannot delete existing file,\ncroaking: $ERRNO"
+            "\nERROR ECVCOFI00, C++ COMPILER, FILE SYSTEM: Attempting to save new file '$cpp_file_name', cannot delete existing file,\ncroaking: $OS_ERROR"
             );
     }
 
     my $CPP_FILEHANDLE;
     open $CPP_FILEHANDLE, '>', $cpp_file_name
         or croak(
-        "\nERROR ECVCOFI01, C++ COMPILER, FILE SYSTEM: Attempting to save new file '$cpp_file_name', cannot open file for writing,\ncroaking: $ERRNO"
+        "\nERROR ECVCOFI01, C++ COMPILER, FILE SYSTEM: Attempting to save new file '$cpp_file_name', cannot open file for writing,\ncroaking: $OS_ERROR"
         );
 
     print {$CPP_FILEHANDLE} $cpp_source
         or croak(
-        "\nERROR ECVCOFI02, C++ COMPILER, FILE SYSTEM: Attempting to save new file '$cpp_file_name', cannot write to file,\ncroaking: $ERRNO"
+        "\nERROR ECVCOFI02, C++ COMPILER, FILE SYSTEM: Attempting to save new file '$cpp_file_name', cannot write to file,\ncroaking: $OS_ERROR"
         );
 
     close $CPP_FILEHANDLE
         or croak(
-        "\nERROR ECVCOFI03, C++ COMPILER, FILE SYSTEM: Attempting to save new file '$cpp_file_name', cannot close file,\ncroaking: $ERRNO"
+        "\nERROR ECVCOFI03, C++ COMPILER, FILE SYSTEM: Attempting to save new file '$cpp_file_name', cannot close file,\ncroaking: $OS_ERROR"
         );
 
     # NEED FIX: call Inline to run tests

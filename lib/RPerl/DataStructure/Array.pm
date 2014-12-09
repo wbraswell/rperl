@@ -14,10 +14,7 @@ use RPerl::DataStructure::Array::SubTypes;
 # [[[ SETUP ]]]
 
 # for type-checking via SvIOKp(), SvNOKp(), and SvPOKp(); inside INIT to delay until after 'use MyConfig'
-INIT {
-    RPerl::diag "in Array.pm, loading C++ helper functions for type-checking...\n"
-        or croak();
-}
+#INIT { RPerl::diag "in Array.pm, loading C++ helper functions for type-checking...\n"; }
 INIT {
     use RPerl::HelperFunctions_cpp;
     RPerl::HelperFunctions_cpp::cpp_load();

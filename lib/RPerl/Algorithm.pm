@@ -14,8 +14,7 @@ use RPerl::CompileUnit::Module::Class;
 # OO INHERITANCE TESTING
 our void__method $inherited__Algorithm = sub {
     ( my object $self, my string $person) = @_;
-    RPerl::diag
-        "in PERLOPS_PERLTYPES Algorithm->inherited__Algorithm(), received \$self = '$self' and \$person = '$person', FNORD\n";
+#    RPerl::diag "in PERLOPS_PERLTYPES Algorithm->inherited__Algorithm(), received \$self = '$self' and \$person = '$person', FNORD\n";
 };
 
 #our void__method $inherited = sub { ( my object $self, my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Algorithm->inherited(), received \$self = '$self' and \$person = '$person', IS\n"; };
@@ -25,8 +24,7 @@ our void__method $inherited__Algorithm = sub {
 # OO INHERITANCE TESTING, CONTINUED
 our string $uninherited__Algorithm = sub {
     ( my string $person) = @_;
-    RPerl::diag
-        "in PERLOPS_PERLTYPES Algorithm::uninherited__Algorithm(), received \$person = '$person', MYSTIC\n";
+#    RPerl::diag "in PERLOPS_PERLTYPES Algorithm::uninherited__Algorithm(), received \$person = '$person', MYSTIC\n";
     return 'Algorithm::uninherited__Algorithm() RULES! PERLOPS_PERLTYPES';
 };
 

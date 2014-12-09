@@ -27,12 +27,12 @@ class MyClass {
 EOCPP
 
 open( my $FILEHANDLE, '>', '/tmp/Foo__Bar__MyClass.c' )
-    or die "Can't open file '/tmp/Foo__Bar__MyClass.c' for writing $ERRNO";
+    or die "Can't open file '/tmp/Foo__Bar__MyClass.c' for writing $OS_ERROR";
 print $FILEHANDLE $foo__bar__myclass;
 close $FILEHANDLE;
 
 open( $FILEHANDLE, '>', '/tmp/Foo__Qux__MyClass.c' )
-    or die "Can't open file '/tmp/Foo__Qux__MyClass.c' for writing $ERRNO";
+    or die "Can't open file '/tmp/Foo__Qux__MyClass.c' for writing $OS_ERROR";
 print $FILEHANDLE $foo__qux__myclass;
 close $FILEHANDLE;
 
