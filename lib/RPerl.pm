@@ -24,7 +24,7 @@ require rperltypes;
 # NEED UPGRADE: enable in RPerl system code when boostrapping compiler
 our $CHECK = 'OFF';
 our $DEBUG = 1;  # Perl variable $RPerl::DEBUG and environmental variable RPERL_DEBUG are equivalent, see diag*() below
-our $VERBOSE = 1;  # Perl variable $RPerl::VERBOSE and environmental variable RPERL_VERBOSE are equivalent, see verbose*() below 
+our $VERBOSE = 0;  # Perl variable $RPerl::VERBOSE and environmental variable RPERL_VERBOSE are equivalent, see verbose*() below 
 
 # [[[ SUBROUTINES SPECIAL ]]]
 
