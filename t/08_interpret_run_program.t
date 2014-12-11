@@ -81,7 +81,7 @@ for my $test_file ( sort keys %{$test_files} ) {
     RPerl::diag( 'in 08_interpret_run_program.t, have $test_file = '
             . $test_file
             . "\n" );
-    my $pid           = open3( 0, \*STDOUT_TEST, \*STDERR_TEST, $test_file );
+    my $pid           = open3( 0, \*STDOUT_TEST, \*STDERR_TEST, "$^X -Mblib $test_file" );
     my $stdout_select = new IO::Select();
     my $stderr_select = new IO::Select();
     $stdout_select->add( \*STDOUT_TEST );
