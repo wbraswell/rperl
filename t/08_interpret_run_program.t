@@ -1,9 +1,5 @@
 #!/usr/bin/perl  ## no critic qw(ProhibitExcessMainComplexity)  # SYSTEM SPECIAL 5: allow complex code outside subroutines, must be on line 1
 
-# START HERE: create CHECK tests, create remaining GA tests, fix 10_compile.t to pass critics etc, remove CHECK from grammar, add PREPROCESSOR where missing
-# START HERE: create CHECK tests, create remaining GA tests, fix 10_compile.t to pass critics etc, remove CHECK from grammar, add PREPROCESSOR where missing
-# START HERE: create CHECK tests, create remaining GA tests, fix 10_compile.t to pass critics etc, remove CHECK from grammar, add PREPROCESSOR where missing
-
 # [[[ HEADER ]]]
 use strict;
 use warnings;

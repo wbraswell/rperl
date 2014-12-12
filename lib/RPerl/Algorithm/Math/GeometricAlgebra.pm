@@ -4,7 +4,7 @@ package RPerl::Algorithm::Math::GeometricAlgebra;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_003;
+our $VERSION = 0.000_004;
 
 # [[[ OO INHERITANCE ]]]
 use parent ('RPerl::Algorithm::Math');
@@ -24,13 +24,6 @@ our number $inner_product__vector_vector_euclidean = sub {
     (   my number__array_ref $input_vector_1,
         my number__array_ref $input_vector_2)
         = @_;
-
-# DEPRECATED: type checking automated via <<< CHECK: FOO >>> preprocessor directive
-#    ::number__array_ref__CHECK($input_vector_1);
-#    ::number__array_ref__CHECKTRACE( $input_vector_1, '$input_vector_1', 'inner_product__vector_vector_euclidean()' );
-
-#    ::number__array_ref__CHECK($input_vector_2);
-#    ::number__array_ref__CHECKTRACE( $input_vector_2, '$input_vector_2', 'inner_product__vector_vector_euclidean()' );
 
     # bound checking
     ( ( scalar @{$input_vector_1} ) == 4 )
