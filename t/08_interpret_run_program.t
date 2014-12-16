@@ -17,8 +17,8 @@ use RPerl::Parser;
 use RPerl::Translator;
 use RPerl::Generator;
 use RPerl::Compiler;
-use File::Find qw(find);
 use Test::More;
+use File::Find qw(find);
 use IPC::Open3;
 use IO::Select;
 

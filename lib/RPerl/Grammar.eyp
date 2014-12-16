@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_801;
+    our $VERSION = 0.000_802;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does

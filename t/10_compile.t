@@ -17,10 +17,9 @@ use RPerl::Parser;
 use RPerl::Translator;
 use RPerl::Generator;
 use RPerl::Compiler;
-use File::Find qw(find);
 use Test::More;
-use IPC::Open3;
-use IO::Select;
+use File::Find qw(find);
+use File::Temp qw(tempfile);
 
 # [[[ OPERATIONS ]]]
 
@@ -39,6 +38,7 @@ find(
             $test_files->{$file} = undef;
         }
         elsif ( ( $file =~ m/Bad/ms ) or ( $file =~ m/bad/ms ) ) {
+
             # NEED FIX: remove use of $_ magic variable
             open my $fh, '<', $_
                 or croak 'ERROR, Cannot open file '
@@ -71,7 +71,7 @@ find(
 
 plan tests => scalar keys %{$test_files};
 
-my $temp_file = '/tmp/rperl_compile.tmp';
+my $temp_file = tempfile();
 
 for my $test_file ( sort keys %{$test_files} ) {
 
