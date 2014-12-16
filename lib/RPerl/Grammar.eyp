@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_800;
+    our $VERSION = 0.000_801;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -41,7 +41,6 @@
 %token OP12_COMPARE_EQ_NEQ      = /(==|!=|eq|ne)/               # precedence 12 infix: comparison numeric equal, numeric not equal, string equal, string not equal
 %token OP09_BITWISE_SHIFT       = /(<<|>>)/                     # precedence 09 infix: bitwise shift left, shift right
 %token OP10_NAMED_UNARY         = /(scalar[^t])/                # precedence 10 prefix: "named unary operators" [1]; ex. 'chdir' and 'rand'; 'scalar' not 'scalartype'; NEED FIX: hard-code names
-
 %token OP10_NAMED_UNARY_STRINGIFY = /(::[a-zA-Z]\w*__stringify)/  # precedence 10 prefix: stringify AKA pretty print; ex. 'integer__array_ref__stringify'
 %token OP08_STRING_CAT          = /(\.)/                        # precedence 08 infix: string concatenate
 %token OP03_MATH_INC_DEC        = /(\+\+|--)/                   # precedence 03 prefix and postfix: increment, decrement
@@ -138,7 +137,7 @@ MethodOrSubroutine:     Method | Subroutine;
 Operation:              Expression ';' | Statement ;
 Operator:               OP01_NAMED '(' ListElements? ')' | OP01_OPEN_CLOSE_PAREN FileHandle ListElements? ')' ';' | OP01_OPEN_CLOSE FileHandle ListElements? ';' |
                         OP03_MATH_INC_DEC Variable | Variable OP03_MATH_INC_DEC | Expression OP04_MATH_POW Expression | 
-                        OP05_LOGICAL_NEG Expression | OP05_MATH_NEG Expression ')' | Expression OP06_REGEX_MATCH '/' OP06_REGEX_PATTERN '/' |
+                        OP05_LOGICAL_NEG Expression | OP05_MATH_NEG Expression ')' | Expression OP06_REGEX_MATCH OP06_REGEX_PATTERN |
                         Expression OP07_MATH_MULT_DIV_MOD Expression | Expression OP08_MATH_ADD_SUB Expression | Expression OP08_STRING_CAT Expression | 
                         Expression OP09_BITWISE_SHIFT Expression | OP10_NAMED_UNARY Expression | OP10_NAMED_UNARY_STRINGIFY Expression | 
                         Expression OP11_COMPARE_LT_GT Expression | Expression OP12_COMPARE_EQ_NEQ Expression | Expression OP13_BITWISE_AND Expression | 
