@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
 # <<< COMPILE_ERROR: 'Perl::Critic::Policy::Modules::RequireVersionVar' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::Header::Class_00_Bad_03;
 use strict;

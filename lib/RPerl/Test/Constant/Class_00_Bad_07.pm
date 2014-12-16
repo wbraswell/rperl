@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
 # <<< COMPILE_ERROR: 'Missing operator before 3.141_59?' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::Constant::Class_00_Bad_07;
 use strict;

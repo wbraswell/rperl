@@ -1,6 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
 # <<< COMPILE_ERROR: 'near "use warnings' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings

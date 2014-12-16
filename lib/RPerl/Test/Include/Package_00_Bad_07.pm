@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
 # <<< COMPILE_ERROR: 'Perl::Critic::Policy::Modules::RequireExplicitPackage' >>>
+
 # [[[ HEADER ]]]
 use RPerl::Test::Foo;
 package RPerl::Test::Include::Package_00_Bad_07;

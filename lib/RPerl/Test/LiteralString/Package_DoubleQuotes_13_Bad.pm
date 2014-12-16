@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
 # <<< COMPILE_ERROR: 'Global symbol "$bar" requires explicit package name' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::LiteralString::Package_DoubleQuotes_13_Bad;
 use strict;

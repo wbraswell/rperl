@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
 # <<< COMPILE_ERROR: "Can't find string terminator" >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::Constant::Package_00_Bad_03;
 use strict;

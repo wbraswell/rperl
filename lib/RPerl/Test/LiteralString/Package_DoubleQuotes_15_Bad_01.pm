@@ -1,4 +1,6 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::LiteralString::Package_DoubleQuotes_15_Bad_01;
 use strict;

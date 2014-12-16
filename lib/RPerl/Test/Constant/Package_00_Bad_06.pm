@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
 # <<< COMPILE_ERROR: 'No such class number' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::Constant::Package_00_Bad_06;
 use constant PI  => my number $TYPED_PI  = 3.141_59;

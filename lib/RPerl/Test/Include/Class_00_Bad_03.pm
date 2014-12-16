@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
 # <<< COMPILE_ERROR: 'near "use RPerl:"' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::Include::Class_00_Bad_03;
 use strict;

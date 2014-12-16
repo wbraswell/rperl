@@ -1,5 +1,13 @@
+# [[[ PREPROCESSOR ]]]
+# <<< TYPE_CHECKING: OFF >>>
+# <<< TYPE_CHECKING: ON >>>
+# <<< TYPE_CHECKING: TRACE >>>
+# <<< RUN_SUCCESS: 'FOO' >>>
+# <<< RUN_ERROR: 'FOO' >>>
+# <<< COMPILE_ERROR: 'FOO' >>>
+
 # [[[ HEADER ]]]
-# <<< CHANGE ME: replace with real class name >>>
+# <<< CHANGE_ME: replace with real class name >>>
 package RPerl::CompileUnit::Module::ClassTemplate;
 use strict;
 use warnings;
@@ -7,12 +15,12 @@ use RPerl;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
-# <<< CHANGE ME: leave as base class for no inheritance, or replace with real parent package name >>>
+# <<< CHANGE_ME: leave as base class for no inheritance, or replace with real parent package name >>>
 use parent qw(RPerl::CompileUnit::Module::Class);
 use RPerl::CompileUnit::Module::Class;
 
 # [[[ CRITICS ]]]
-# <<< CHANGE ME: delete unused critics >>>
+# <<< CHANGE_ME: delete unused critics >>>
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
 ## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
@@ -51,12 +59,12 @@ use RPerl::CompileUnit::Module::Class;
 ## no critic qw(ProhibitUselessNoCritic PodSpelling ProhibitExcessMainComplexity)  # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code; SYSTEM SPECIAL 5: allow complex code outside subroutines, must be on line 1
 
 # [[[ INCLUDES ]]]
-# <<< CHANGE ME: delete for no includes, or replace with real include package name(s) >>>
+# <<< CHANGE_ME: delete for no includes, or replace with real include package name(s) >>>
 use RPerl::Test::Foo;
 use RPerl::Test::Bar;
 
 # [[[ CONSTANTS ]]]
-# <<< CHANGE ME: delete for no constants, or replace with real constant name(s) & data >>>
+# <<< CHANGE_ME: delete for no constants, or replace with real constant name(s) & data >>>
 ## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
 use constant PI  => my number $TYPED_PI  = 3.141_59;
 use constant PIE => my string $TYPED_PIE = 'pecan';
@@ -78,7 +86,7 @@ use constant PIE => my string $TYPED_PIE = 'pecan';
 #};
 
 # [[[ OO OBJECT PROPERTIES ]]]
-# <<< CHANGE ME: replace with real object property name(s) & default data >>>
+# <<< CHANGE_ME: replace with real object property name(s) & default data >>>
 our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
     plugh => my integer $TYPED_plugh           = 23,
     xyzzy => my string $TYPED_xyzzy            = 'twenty-three',
@@ -87,14 +95,14 @@ our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allo
 );
 
 # [[[ OO CLASS PROPERTIES ]]]
-# <<< CHANGE ME: replace with real class property name(s) & default data >>>
+# <<< CHANGE_ME: replace with real class property name(s) & default data >>>
 our %properties_class = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
     name => my string $TYPED_name = 'howdy',
 );
 
 # [[[ OO METHODS ]]]
 
-# <<< CHANGE ME: delete for no methods, or replace with real method(s) >>>
+# <<< CHANGE_ME: delete for no methods, or replace with real method(s) >>>
 our void__method $quux = sub {
     ( my object $self) = @_;
     $self->{plugh} = $self->{plugh} * 2;
@@ -107,7 +115,7 @@ our string__method $corge = sub {
 
 # [[[ SUBROUTINES ]]]
 
-# <<< CHANGE ME: delete for no subroutines, or replace with real subroutine(s) >>>
+# <<< CHANGE_ME: delete for no subroutines, or replace with real subroutine(s) >>>
 our void $grault = sub {
     ( my integer $grault_input ) = @_;
     print '$grault_input ** 2 = ' . ( $grault_input**2 ) . "\n";

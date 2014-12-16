@@ -1,6 +1,9 @@
 #!/usr/binperl
+
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
 # <<< COMPILE_ERROR: 'Unexpected token:  #!/usr/bin' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;

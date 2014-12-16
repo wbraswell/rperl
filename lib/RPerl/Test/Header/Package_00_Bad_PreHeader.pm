@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
 # <<< COMPILE_ERROR: 'syntax error' >>>
+
 foo
 # [[[ HEADER ]]]
 package RPerl::Test::Header::Package_00_Bad_PreHeader;

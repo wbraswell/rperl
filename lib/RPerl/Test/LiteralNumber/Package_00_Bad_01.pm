@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
 # <<< COMPILE_ERROR: 'Bareword "_2" not allowed' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::LiteralNumber::Package_00_Bad_01;
 use strict;

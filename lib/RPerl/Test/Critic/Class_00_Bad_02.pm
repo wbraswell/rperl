@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
 # <<< COMPILE_ERROR: 'Unexpected token:  ###' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::Critic::Class_00_Bad_02;
 use strict;

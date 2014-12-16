@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
 # <<< COMPILE_ERROR: 'Missing operator before 'pecan'?' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::Constant::Class_00_Bad_15;
 use strict;

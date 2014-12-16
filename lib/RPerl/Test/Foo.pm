@@ -1,2 +1,2 @@
 package RPerl::Test::Foo;
-1, 1;
+1;

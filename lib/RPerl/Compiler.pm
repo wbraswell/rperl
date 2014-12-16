@@ -1,18 +1,23 @@
+# [[[ PREPROCESSOR ]]]
 # <<< TYPE_CHECKING: OFF >>>
+
+# [[[ HEADER ]]]
 package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl;
 our $VERSION = 0.003_000;
 
-# [[[ SETUP ]]]
+# [[[ CRITICS ]]]
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
 
+# [[[ INCLUDES ]]]
+
 use RPerl::Parser;
 
-# [[[ PROCEDURAL SUBROUTINES ]]]
+# [[[ SUBROUTINES ]]]
 
 our void $rperl_to_xsbinary__compile = sub {
     ( my string $rperl_input_file_name, 
@@ -85,5 +90,4 @@ our void $cpp_to_xsbinary__compile = sub {
     # NEED FIX: call Inline to run tests
 };
 
-1;
-1;
+1;  # end of package

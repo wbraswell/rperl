@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
 # <<< COMPILE_ERROR: 'Can't locate RPerl//Bar.pm' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::Include::Class_00_Bad_06;
 use strict;

@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
 # <<< COMPILE_ERROR: 'Perl::Critic::Policy::ValuesAndExpressions::ProhibitMagicNumbers' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::LiteralNumber::Package_47_Bad_01;
 use strict;

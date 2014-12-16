@@ -1,6 +1,9 @@
 ### no critic qw(ProhibitUselessNoCritic PodSpelling ProhibitExcessMainComplexity)  # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code; SYSTEM SPECIAL 5: allow complex code outside subroutines, must be on line 1
+
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
 # <<< COMPILE_ERROR: 'Unexpected token:  ###' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::Critic::Class_01_Bad_00;
 use strict;

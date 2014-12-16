@@ -1,4 +1,6 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::Properties::Class_00_Bad_11;
 use strict;

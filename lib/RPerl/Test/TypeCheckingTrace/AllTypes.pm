@@ -6,7 +6,7 @@ package RPerl::Test::TypeCheckingTrace::AllTypes;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_001;
+our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent ('RPerl::Test');

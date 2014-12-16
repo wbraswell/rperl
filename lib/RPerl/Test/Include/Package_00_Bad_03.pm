@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
 # <<< COMPILE_ERROR: 'Unexpected token:  our' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::Include::Package_00_Bad_03;
 use strict;

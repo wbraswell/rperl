@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
 # <<< COMPILE_ERROR: 'Can't modify numeric gt (>) in scalar assignment' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::Properties::Class_00_Bad_06;
 use strict;

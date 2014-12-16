@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
 # <<< COMPILE_ERROR: 'Perl::Critic::Policy::Modules::RequireEndWithOne' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::Constant::Class_00_Bad_18;
 use strict;

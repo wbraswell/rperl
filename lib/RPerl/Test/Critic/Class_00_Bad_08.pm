@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
 # <<< COMPILE_ERROR: 'Perl::Critic::Policy::Variables::ProhibitPackageVars' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::Critic::Class_00_Bad_08;
 use strict;

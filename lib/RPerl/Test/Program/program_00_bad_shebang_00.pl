@@ -1,6 +1,9 @@
 #/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
 # <<< COMPILE_ERROR: 'RequireExplicitPackage' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;

@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
 # <<< COMPILE_ERROR: 'Unexpected token:  use' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::Include::Class_00_Bad_08;
 use strict;

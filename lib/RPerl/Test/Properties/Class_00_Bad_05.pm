@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
 # <<< COMPILE_ERROR: 'syntax error' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::Properties::Class_00_Bad_05;
 use strict;

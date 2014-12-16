@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
 # <<< COMPILE_ERROR: 'Number found where operator expected' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::Method::Class_00_Bad_09;
 use strict;

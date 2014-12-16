@@ -1,4 +1,6 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::LiteralNumber::Package_47_Bad_03;
 use strict;

@@ -1,4 +1,6 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::Method::Class_00_Bad_01;
 use strict;

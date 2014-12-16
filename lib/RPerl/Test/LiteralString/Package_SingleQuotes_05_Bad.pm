@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
 # <<< COMPILE_ERROR: 'Perl::Critic::Policy::ValuesAndExpressions::RequireInterpolationOfMetachars' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::LiteralString::Package_SingleQuotes_05_Bad;
 use strict;

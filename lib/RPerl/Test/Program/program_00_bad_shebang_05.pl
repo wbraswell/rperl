@@ -1,6 +1,9 @@
 #!/usr/bin/perly
+
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
 # <<< COMPILE_ERROR: 'Unexpected token:  y' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;

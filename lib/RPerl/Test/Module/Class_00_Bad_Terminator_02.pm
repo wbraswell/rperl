@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
 # <<< COMPILE_ERROR: 'RequireEndWithOne' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::Module::Class_00_Bad_Terminator_02;
 use strict;

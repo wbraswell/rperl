@@ -1,7 +1,3 @@
-# START HERE: add PREPROCESSOR where missing
-# START HERE: add PREPROCESSOR where missing
-# START HERE: add PREPROCESSOR where missing
-
 # [[[ PREPROCESSOR ]]]
 # <<< TYPE_CHECKING: ON >>>
 
@@ -10,7 +6,7 @@ package RPerl::Test::TypeCheckingOn::AllTypes;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_001;
+our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent ('RPerl::Test');

@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
 # <<< COMPILE_ERROR: 'Can't modify constant item in predecrement' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::LiteralNumber::Package_00_Bad_00;
 use strict;

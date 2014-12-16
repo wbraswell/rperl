@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
 # <<< COMPILE_ERROR: 'syntax error' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::Subroutine::Package_00_Bad_08;
 use strict;

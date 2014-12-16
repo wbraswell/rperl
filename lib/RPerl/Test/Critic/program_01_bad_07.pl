@@ -1,6 +1,9 @@
 #!/usr/bin/perl  ## no critic qw()
+
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
 # <<< COMPILE_ERROR: 'Perl::Critic::Policy::Miscellanea::ProhibitUnrestrictedNoCritic' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;

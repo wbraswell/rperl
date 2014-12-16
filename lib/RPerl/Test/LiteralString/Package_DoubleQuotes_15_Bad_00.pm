@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
 # <<< COMPILE_ERROR: 'Perl::Critic::Policy::Variables::ProhibitPunctuationVars' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::LiteralString::Package_DoubleQuotes_15_Bad_00;
 use strict;

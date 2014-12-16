@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
 # <<< COMPILE_ERROR: 'Operator or semicolon missing' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::Properties::Class_00_Bad_00;
 use strict;

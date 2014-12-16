@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
 # <<< COMPILE_ERROR: 'near "use constant  =>"' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::Constant::Package_00_Bad_01;
 use strict;

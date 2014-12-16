@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
 # <<< COMPILE_ERROR: 'Bareword "b" not allowed' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::Module::Class_00_Bad_Terminator_01;
 use strict;

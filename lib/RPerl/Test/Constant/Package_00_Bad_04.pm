@@ -1,5 +1,7 @@
+# [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
 # <<< COMPILE_ERROR: 'Unexpected token:  use constant' >>>
+
 # [[[ HEADER ]]]
 package RPerl::Test::Constant::Package_00_Bad_04;
 use strict;
