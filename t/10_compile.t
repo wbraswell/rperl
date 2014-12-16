@@ -1,37 +1,64 @@
-#!/usr/bin/perl
+#!/usr/bin/perl  ## no critic qw(ProhibitExcessMainComplexity)  # SYSTEM SPECIAL 5: allow complex code outside subroutines, must be on line 1
+
+# [[[ HEADER ]]]
 use strict;
 use warnings;
-use File::Find qw(find);
-use File::Temp qw(tempfile);
-use Test::More;
 use RPerl;
+our $VERSION = 0.005_000;
+
+# [[[ CRITICS ]]]
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(RequireBriefOpen)  # USER DEFAULT 5: allow open() in perltidy-expanded code
+## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
+## no critic qw(ProhibitDeepNests)  # SYSTEM SPECIAL 8: allow deeply-nested code
+
+# [[[ INCLUDES ]]]
 use RPerl::Parser;
 use RPerl::Translator;
 use RPerl::Generator;
 use RPerl::Compiler;
+use File::Find qw(find);
+use Test::More;
+use IPC::Open3;
+use IO::Select;
 
-our $VERSION = 0.004_000;
+# [[[ OPERATIONS ]]]
 
-my $tests = {};
+my $test_files = {};    # string__hash_ref
 find(
     sub {
         my $file = $File::Find::name;
-        if ( ( !m/.pm$/ ) and ( !m/.pl$/ ) ) {
+
+        #        RPerl::diag('in 10_compile.t, have $file = ' . $file . "\n");
+
+        if ( ( $file !~ m/.pm$/xms ) and ( $file !~ m/.pl$/xms ) ) {
             return;
         }
-        if ( (m/Good/ms) or (m/good/ms) ) {
-            $tests->{$file} = undef;
+
+        if ( ( $file =~ m/Good/ms ) or ( $file =~ m/good/ms ) ) {
+            $test_files->{$file} = undef;
         }
-        elsif ( (m/Bad/ms) or (m/bad/ms) ) {
-            open my $fh, '<', $_ or die "Cannot open $file:$!\n";
+        elsif ( ( $file =~ m/Bad/ms ) or ( $file =~ m/bad/ms ) ) {
+            # NEED FIX: remove use of $_ magic variable
+            open my $fh, '<', $_
+                or croak 'ERROR, Cannot open file '
+                . $file
+                . ' for reading,'
+                . $OS_ERROR
+                . ', croaking';
             while (<$fh>) {
-                if (m/^\#\s*\<\<\<\s*COMPILE_ERROR\s*\:\s*['"](.*)['"]\s*\>\>\>/
+                if (m/^\#\s*\<\<\<\s*COMPILE_ERROR\s*\:\s*['"](.*)['"]\s*\>\>\>/xms
                     )
                 {
-                    push @{ $tests->{$file} }, $1;
+                    push @{ $test_files->{$file}->{errors} }, $1;
                 }
             }
-            close $fh;
+            close $fh
+                or croak 'ERROR, Cannot close file '
+                . $file
+                . ' after reading,'
+                . $OS_ERROR
+                . ', croaking';
         }
         else {
             return;
@@ -40,42 +67,51 @@ find(
     $RPerl::INCLUDE_PATH . '/RPerl/Test'
 );
 
-plan tests => scalar keys %{$tests};
+#RPerl::diag( 'in 10_compile.t, have $test_files = ' . "\n" . Dumper($test_files) . "\n" );
 
-my $tempfile = tempfile;
-for my $file ( sort keys %{$tests} ) {
-    my $errors            = $tests->{$file};
+plan tests => scalar keys %{$test_files};
+
+my $temp_file = '/tmp/rperl_compile.tmp';
+
+for my $test_file ( sort keys %{$test_files} ) {
+
+#    RPerl::diag( 'in 10_compile.t, have $test_file = ' . $test_file . "\n" );
+
     my $eval_return_value = eval {
-        rperl_to_xsbinary__compile( $file, $tempfile,
+        rperl_to_xsbinary__compile( $test_file, $temp_file,
             { ops => 'CPP', types => 'CPP' } );
     };
-    if ( not defined $errors ) {
-        ok( $eval_return_value,
-            "Program or module $file compiles without errors" );
-        if ( not $eval_return_value ) {
-            print "==============\n$EVAL_ERROR\n============\n";
+
+    if ($eval_return_value) {    # Perl eval return code not 0, success
+        if ( ( $test_file =~ m/Good/xms ) or ( $test_file =~ m/good/xms ) ) {
+            ok( 1, "Program or module $test_file compiles without errors" );
+        }
+        else {
+            ok( 0, "Program or module $test_file compiles with errors" );
         }
     }
-    elsif ($eval_return_value) {
-        ok( 0, "Program or module $file compiles with expected error(s)" );
-    }
-    else {
-        my $warnings = [];
-        foreach my $error ( @{$errors} ) {
-            if ( $EVAL_ERROR !~ /\Q$error\E/ ) {
-                push @{$warnings},
-                    "Error message '$error' expected, but not found";
+    else {                       # Perl eval return code 0, error
+
+#        RPerl::diag( 'in 10_compile.t, have $EVAL_ERROR = ' . $EVAL_ERROR . "\n" );
+        if ( ( $test_file =~ m/Bad/ms ) or ( $test_file =~ m/bad/ms ) ) {
+            my $missing_errors = [];
+            if ( defined $test_files->{$test_file}->{errors} ) {
+                foreach my $error ( @{ $test_files->{$test_file}->{errors} } )
+                {
+                    if ( $EVAL_ERROR !~ /\Q$error\E/xms ) {
+                        push @{$missing_errors},
+                            "Error message '$error' expected, but not found";
+                    }
+                }
             }
+            ok( ( ( scalar @{$missing_errors} ) == 0 ),
+                "Program or module $test_file compiles with expected error(s)"
+            );
         }
-        ok( scalar( @{$warnings} ) == 0,
-            "Program or module $file compiles with the expected error(s)" );
-        foreach my $warning ( @{$warnings} ) {
-            print "$warning\n";
-        }
-        if ( scalar( @{$warnings} ) > 0 ) {
-            print "==============\n$EVAL_ERROR\n============\n";
+        else {
+            ok( 0, "Program or module $test_file compiles without errors" );
         }
     }
 }
 
-unlink $tempfile;
+unlink $temp_file;

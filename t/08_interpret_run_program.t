@@ -4,7 +4,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_010;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
@@ -36,6 +36,7 @@ find(
         }
 
         if ( ( $file =~ m/Good/ms ) or ( $file =~ m/good/ms ) ) {
+            # NEED FIX: remove use of $_ magic variable
             open my $fh, '<', $_
                 or croak 'ERROR, Cannot open file '
                 . $file
@@ -57,6 +58,7 @@ find(
                 . ', croaking';
         }
         elsif ( ( $file =~ m/Bad/ms ) or ( $file =~ m/bad/ms ) ) {
+            # NEED FIX: remove use of $_ magic variable
             open my $fh, '<', $_
                 or croak 'ERROR, Cannot open file '
                 . $file
