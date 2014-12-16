@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_802;
+    our $VERSION = 0.000_803;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -107,6 +107,7 @@
 %left       OP01_PRINT_VOID
 %left       OP01_PRINT_VOID_PAREN
 
+%token TYPE_METHOD          = /([a-zA-Z]\w*__method)/               # letter followed by letters, numbers, and underscores, followed by '__method'; ex. 'string__array_ref__method'
 %token WORD_SCOPED          = /(([a-zA-Z]\w*(::[a-zA-Z]\w*)+)|(::[a-zA-Z]\w*(::[a-zA-Z]\w*)*))/
 %token WORD                 = /([a-zA-Z]\w*)/                       # letter followed by letters, numbers, and underscores; ex. 'foobar_42_Howdy'
 %token COLON                = /:/
@@ -130,7 +131,7 @@ SubroutineArguments:    '( my' Type VARIABLE_SYMBOL (OP21_LIST_COMMA 'my' Type V
 Class:                  'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties PropertiesClass? MethodOrSubroutine* LITERAL_NUMBER ';' ;
 Properties:             'our %properties = (' Critic HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* ')' ';' | 'our %properties = (' ')' ';' Critic ;
 PropertiesClass:        'our %properties_class = (' Critic HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* ')' ';' ;
-Method:                 'our' TypeMethod VARIABLE_SYMBOL '= sub {' MethodArguments? Operation+ '}' ';' ;
+Method:                 'our' TYPE_METHOD VARIABLE_SYMBOL '= sub {' MethodArguments? Operation+ '}' ';' ;
 MethodArguments:        '( my' TYPE_CLASS_OR_SELF (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
 MethodOrSubroutine:     Method | Subroutine;
 
@@ -173,7 +174,6 @@ HashDereferenced:       '%{' Variable '}' | '%{' HashReference '}' ;
 WordScoped:             WORD | WORD_SCOPED;
 LoopLabel:              WORD ;
 Type:                   WORD ;
-TypeMethod:             WORD '__method' ;
 TypeInner:              'my' Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN ;
 FileHandle:             '{*' WORD '}' | 'my' 'filehandle_ref' VARIABLE_SYMBOL;
 Literal:                LITERAL_STRING | LITERAL_NUMBER ;

@@ -12,4 +12,4 @@ our $VERSION = 0.001_000;
 # [[[ SUBROUTINES ]]]
 our void $empty_sub = sub { 2; };
 
-b;                  # end of class
+b;                  # end of package

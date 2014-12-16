@@ -11,4 +11,4 @@ our void $empty_sub = sub {
     1;
 };
 
-1;    # end of class
+1;    # end of package

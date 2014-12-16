@@ -17,4 +17,4 @@ use constant PIE => my string $TYPED_PIE = 'pecan';
 # [[[ SUBROUTINES ]]]
 our void $empty_sub = sub { 2; };
 
-1;                  # end of class
+1;                  # end of package
