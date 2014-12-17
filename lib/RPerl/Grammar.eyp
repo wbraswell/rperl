@@ -64,7 +64,7 @@
 %token OP01_QW                  = /(qw)/                        # precedence 01 prefix: quoted words
 %token OP01_OPEN_CLOSE_PAREN    = /((open|close)\s*\()/         # precedence 01 prefix: open or close filehandle
 %token OP01_OPEN_CLOSE          = /(open|close)/                # precedence 01 prefix: open or close filehandle
-%token OP01_NAMED               = /(sin|cos|tan)/               # precedence 01 prefix: "terms and list operators (leftward)" [1] AKA builtins; NEED FIX: hard-code names
+%token OP01_NAMED               = /(sin|cos|tan|ETC)/           # precedence 01 prefix: "terms and list operators (leftward)" [1] AKA builtins; NEED FIX: hard-code names
 
 # PRECEDENCE, SYNTAX ASSOCIATIVITY: later declaration gets higher priority
 %left       OP24_LOGICAL_OR_XOR
@@ -134,6 +134,10 @@ PropertiesClass:        'our %properties_class = (' Critic HashEntryTyped (OP21_
 Method:                 'our' TYPE_METHOD VARIABLE_SYMBOL '= sub {' MethodArguments? Operation+ '}' ';' ;
 MethodArguments:        '( my' TYPE_CLASS_OR_SELF (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
 MethodOrSubroutine:     Method | Subroutine;
+
+# START HERE: remove all '(' tokens and replace inside respective regexes, create operator tests
+# START HERE: remove all '(' tokens and replace inside respective regexes, create operator tests
+# START HERE: remove all '(' tokens and replace inside respective regexes, create operator tests
 
 Operation:              Expression ';' | Statement ;
 Operator:               OP01_NAMED '(' ListElements? ')' | OP01_OPEN_CLOSE_PAREN FileHandle ListElements? ')' ';' | OP01_OPEN_CLOSE FileHandle ListElements? ';' |
