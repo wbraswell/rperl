@@ -26,4 +26,13 @@ our $VERSION = 0.001_000;
 #my integer $fun = 5 - -$bar;
 #my integer $bun = 5 - -($bar);
 
-print 2;
+my integer__array_ref $frob = [];
+my integer $quux = ( push @{$frob}, 21, 12, 23 );
+#my integer $quux = push @{$frob}, 21, 12, 23 ;
+
+print 'have quux = ', $quux, "\n";
+
+
+# START HERE: create operator tests
+# START HERE: create operator tests
+# START HERE: create operator tests

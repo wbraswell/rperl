@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_900;
+    our $VERSION = 0.000_901;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -65,7 +65,7 @@
 %token OP01_QW                  = /(qw)/                        # precedence 01 prefix: quoted words
 %token OP01_OPEN                = /(open)/                      # precedence 01 prefix: open filehandle
 %token OP01_CLOSE               = /(close)/                     # precedence 01 prefix: close filehandle
-%token OP01_NAMED               = /(sin|cos|ETC)/               # precedence 01 prefix: "terms and list operators (leftward)" [1] AKA builtins; NEED FIX: add all builtins
+%token OP01_NAMED               = /(sin|cos|push|pop|ETC)/      # precedence 01 prefix: "terms and list operators (leftward)" [1] AKA builtins; NEED FIX: add all builtins
 
 # PRECEDENCE, SYNTAX ASSOCIATIVITY: later declaration gets higher priority
 %left       OP24_LOGICAL_OR_XOR
@@ -138,20 +138,18 @@ MethodArguments:        '( my' TYPE_CLASS_OR_SELF (OP21_LIST_COMMA 'my' Type VAR
 MethodOrSubroutine:     Method | Subroutine;
 
 Operation:              Expression ';' | Statement ;
-Operator:               OP01_NAMED LEFT_PAREN ListElements? ')' | OP01_OPEN FileHandleOpen OP21_LIST_COMMA SubExpression OP21_LIST_COMMA SubExpression | OP01_CLOSE FileHandleClose |
-#Operator:               OP01_NAMED ListElements | OP01_OPEN FileHandleOpen OP21_LIST_COMMA SubExpression OP21_LIST_COMMA SubExpression | OP01_CLOSE FileHandleClose |
-                        OP03_MATH_INC_DEC Variable | Variable OP03_MATH_INC_DEC | SubExpression OP04_MATH_POW SubExpression |
-                        OP05_LOGICAL_NEG SubExpression | OP05_MATH_NEG SubExpression ')' | SubExpression OP06_REGEX_MATCH OP06_REGEX_PATTERN |
-                        SubExpression OP07_MATH_MULT_DIV_MOD SubExpression | SubExpression OP08_MATH_ADD_SUB SubExpression | SubExpression OP08_STRING_CAT SubExpression |
-                        SubExpression OP09_BITWISE_SHIFT SubExpression | OP10_NAMED_UNARY SubExpression | OP10_NAMED_UNARY_STRINGIFY SubExpression |
-                        SubExpression OP11_COMPARE_LT_GT SubExpression | SubExpression OP12_COMPARE_EQ_NEQ SubExpression | SubExpression OP13_BITWISE_AND SubExpression |
+Operator:               LEFT_PAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')' | OP01_NAMED SubExpression |
+                        OP01_OPEN FileHandleOpen OP21_LIST_COMMA SubExpression OP21_LIST_COMMA SubExpression | OP01_CLOSE FileHandleClose |
+                        OP03_MATH_INC_DEC Variable | Variable OP03_MATH_INC_DEC | SubExpression OP04_MATH_POW SubExpression | OP05_LOGICAL_NEG SubExpression |
+                        OP05_MATH_NEG SubExpression ')' | SubExpression OP06_REGEX_MATCH OP06_REGEX_PATTERN | SubExpression OP07_MATH_MULT_DIV_MOD SubExpression |
+                        SubExpression OP08_MATH_ADD_SUB SubExpression | SubExpression OP08_STRING_CAT SubExpression | SubExpression OP09_BITWISE_SHIFT SubExpression |
+                        OP10_NAMED_UNARY SubExpression | OP10_NAMED_UNARY_STRINGIFY SubExpression | SubExpression OP11_COMPARE_LT_GT SubExpression |
+                        SubExpression OP12_COMPARE_EQ_NEQ SubExpression | SubExpression OP13_BITWISE_AND SubExpression |
                         SubExpression OP14_BITWISE_OR_XOR SubExpression | SubExpression OP15_LOGICAL_AND SubExpression | SubExpression OP16_LOGICAL_OR SubExpression |
                         SubExpression OP17_LIST_RANGE SubExpression | SubExpression OP18_TERNARY Variable COLON Variable | OP22_LOGICAL_NOT SubExpression |
                         SubExpression OP23_LOGICAL_AND SubExpression | SubExpression OP24_LOGICAL_OR_XOR SubExpression ;
 OperatorVoid:           OP01_NAMED_VOID ListElements? ';' | OP01_PRINT_VOID ListElements ';' |
                         OP01_PRINT_VOID FileHandlePrint ListElements ';' | OP19_LOOP_CONTROL LoopLabel ';' ;
-#Expression:             'undef' | Literal | Variable | ArrayReference | ArrayDereferenced | HashReference | HashDereferenced | LEFT_BRACE '}' | Operator |
-#                        WordScoped LEFT_PAREN ListElements? ')' | Variable OP02_METHOD_THINARROW WORD LEFT_PAREN ListElements? ')' | LEFT_PAREN Expression ')' ;
 Expression:             Operator | WordScoped LEFT_PAREN ListElements? ')' | Variable OP02_METHOD_THINARROW WORD LEFT_PAREN ListElements? ')' ;
 SubExpression:          Expression | 'undef' | Literal | Variable | ArrayReference | ArrayDereferenced | HashReference | HashDereferenced | LEFT_BRACE '}' |
                         LEFT_PAREN SubExpression ')' ;
