@@ -6,6 +6,6 @@ use RPerl;
 our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
-our void $empty_sub = sub { "\t'foo'\t{bar}\n"; };
+our void $empty_sub = sub { return "\t'foo'\t{bar}\n"; };
 
 1;                  # end of package

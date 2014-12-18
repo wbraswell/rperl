@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_803;
+    our $VERSION = 0.000_900;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -17,13 +17,16 @@
     bless { children => [ @_ ] }, $name;
 }
 
-%token SHEBANG              = /(^#!\/(?:\w+\/)*perl)/                   # begin line, hash (octothorpe), bang, *NIX path to Perl; ex. '#!/usr/bin/perl'
-%token VERSION_NUMBER_ASSIGN = /\$VERSION\ =\ (\d\d?\.\d{3}\_\d{3});/  # match assign match, only capture & return number; ex. '$VERSION = 12.345_678;' returns '12.345_678'
-%token LITERAL_NUMBER       = /(-?(((\d{1,2}_)?(\d{3}_)*\d{3})|\d{1,2})(\.((\d{3}(_\d{3})*(_\d{1,2})?)|\d{1,2}))?)/   # number w/ underscores
-%token LITERAL_STRING       = /(('[^']+')|("[^"\@\$]*((\\n)|(\\t))+[^"\@\$]*")|(q{[^}]*}))/  # single quotes non-empty; double quotes non-empty w/out sigils & w/ newline or tab; or single q-braces
-%token VARIABLE_SYMBOL      = /(\$[a-zA-Z]\w*(::)*\w*)/                 # dollar sigil, scoped word
-%token KEYS_OR_VALUES       = /(keys|values)/                           # 'keys' or 'values'
-%token TYPE_CLASS_OR_SELF   = /(string\s+\$class|object\s+\$self)/      # ex. 'string $class' or 'object $self'
+%token SHEBANG               = /(^#!\/(?:\w+\/)*perl)/                   # begin line, hash (octothorpe), bang, *NIX path to Perl; ex. '#!/usr/bin/perl'
+%token VERSION_NUMBER_ASSIGN = /\$VERSION\ =\ (\d\d?\.\d{3}\_\d{3});/    # match assign match, only capture & return number; ex. '$VERSION = 12.345_678;' returns '12.345_678'
+%token LITERAL_NUMBER        = /(-?(((\d{1,2}_)?(\d{3}_)*\d{3})|\d{1,2})(\.((\d{3}(_\d{3})*(_\d{1,2})?)|\d{1,2}))?)/   # number w/ underscores
+%token LITERAL_STRING        = /(('[^']+')|("[^"\@\$]*((\\n)|(\\t))+[^"\@\$]*")|(q{[^}]*}))/  # single quotes non-empty; double quotes non-empty w/out sigils & w/ newline or tab; or single q-braces
+%token FILEHANDLE_REF_SYMBOL = /(\$[A-Z][A-Z0-9_]*)/                     # dollar sigil, uppercase letter, uppercase letters & numbers & underscores; ex. '$MY_FILEHANDLE_23'
+%token VARIABLE_SYMBOL       = /(\$[a-zA-Z]\w*(::)*\w*)/                 # dollar sigil, scoped word
+%token KEYS_OR_VALUES        = /(keys|values)/
+%token TYPE_CLASS_OR_SELF    = /(string\s+\$class|object\s+\$self)/      # ex. 'string $class' or 'object $self'
+%token STDIN_STDOUT_STDERR   = /(\{\*STDIN\}|\{\*STDOUT\}|\{\*STDERR\})/ # '{*STDIN}' or '{*STDOUT}' or '{*STDERR}'
+%token STDIN_PROMPT          = /(<STDIN>)/                               # '<STDIN>'
 
 # PRECEDENCE, LEXICAL ORDERING: earlier declaration gets tried first;  http://perldoc.perl.org/perlop.html#Operator-Precedence-and-Associativity [1]
 %token OP24_LOGICAL_OR_XOR      = /(or|xor)/                    # precedence 24 infix: logical or and xor, equivalent to || except for precedence
@@ -57,20 +60,18 @@
 %token OP05_MATH_NEG            = /(-\()/                       # precedence 05 prefix: arithmetic negative
 %token OP08_MATH_ADD_SUB        = /(\+|-)/                      # precedence 08 infix: arithmetic add, subtract
 %token OP11_COMPARE_LT_GT       = /(<|>|<=|>=|lt|gt|le|ge)/     # precedence 11 infix: comparison less than, greater than, less or equal, greater or equal
-%token OP01_PRINT_VOID_PAREN    = /(print\s*\()/                # precedence 01 prefix void: print to STDOUT, STDERR, or filehandle
 %token OP01_PRINT_VOID          = /(print)/                     # precedence 01 prefix void: print to STDOUT, STDERR, or filehandle
-%token OP01_NAMED_VOID_PAREN    = /((croak|return|exit)\s*\()/  # precedence 01 prefix void: "terms and list operators (leftward)" [1] AKA builtins, no return value
 %token OP01_NAMED_VOID          = /(croak|return|exit)/         # precedence 01 prefix void: "terms and list operators (leftward)" [1] AKA builtins, no return value
 %token OP01_QW                  = /(qw)/                        # precedence 01 prefix: quoted words
-%token OP01_OPEN_CLOSE_PAREN    = /((open|close)\s*\()/         # precedence 01 prefix: open or close filehandle
-%token OP01_OPEN_CLOSE          = /(open|close)/                # precedence 01 prefix: open or close filehandle
-%token OP01_NAMED               = /(sin|cos|tan|ETC)/           # precedence 01 prefix: "terms and list operators (leftward)" [1] AKA builtins; NEED FIX: hard-code names
+%token OP01_OPEN                = /(open)/                      # precedence 01 prefix: open filehandle
+%token OP01_CLOSE               = /(close)/                     # precedence 01 prefix: close filehandle
+%token OP01_NAMED               = /(sin|cos|ETC)/               # precedence 01 prefix: "terms and list operators (leftward)" [1] AKA builtins; NEED FIX: add all builtins
 
 # PRECEDENCE, SYNTAX ASSOCIATIVITY: later declaration gets higher priority
 %left       OP24_LOGICAL_OR_XOR
 %left       OP23_LOGICAL_AND
 %right      OP22_LOGICAL_NOT
-%nonassoc   OP21_LIST_COMMA
+%left       OP21_LIST_COMMA
 %left       OP20_HASH_FATARROW
 %right      OP19_LOOP_CONTROL
 %right      OP19_VARIABLE_ASSIGN_BY
@@ -99,18 +100,19 @@
 %left       OP02_ARRAY_THINARROW
 %left       OP02_METHOD_THINARROW
 %left       OP01_NAMED
-%left       OP01_OPEN_CLOSE
-%left       OP01_OPEN_CLOSE_PAREN
+%left       OP01_CLOSE
+%left       OP01_OPEN
 %left       OP01_QW
 %left       OP01_NAMED_VOID
-%left       OP01_NAMED_VOID_PAREN
 %left       OP01_PRINT_VOID
-%left       OP01_PRINT_VOID_PAREN
 
 %token TYPE_METHOD          = /([a-zA-Z]\w*__method)/               # letter followed by letters, numbers, and underscores, followed by '__method'; ex. 'string__array_ref__method'
 %token WORD_SCOPED          = /(([a-zA-Z]\w*(::[a-zA-Z]\w*)+)|(::[a-zA-Z]\w*(::[a-zA-Z]\w*)*))/
 %token WORD                 = /([a-zA-Z]\w*)/                       # letter followed by letters, numbers, and underscores; ex. 'foobar_42_Howdy'
 %token COLON                = /:/
+%token LEFT_PAREN           = /\(/
+%token LEFT_BRACKET         = /\[/
+%token LEFT_BRACE           = /\{/
 
 %%
 
@@ -124,8 +126,8 @@ Critic:                 '## no critic qw(' WORD+ ')';
 Include:                'use' WordScoped ';' | 'use' WordScoped 'qw(' WORD+ ')' ';' ;
 Constant:               'use constant' WORD OP20_HASH_FATARROW TypeInner Literal ';' ;
 #Constant:              'use constant' WORD OP20_HASH_FATARROW TypeInner ConstantValue ';' ;  # NEED UPGRADE: constant array & hash refs not read-only as of Perl v5.20
-#ConstantValue:         Literal | '[' TypeInner? Literal (OP21_LIST_COMMA TypeInner? Literal)* ']' | 
-#                       '{' WORD OP20_HASH_FATARROW TypeInner? Literal (OP21_LIST_COMMA WORD OP20_HASH_FATARROW TypeInner? Literal)* '}' ;
+#ConstantValue:         Literal | LEFT_BRACKET TypeInner? Literal (OP21_LIST_COMMA TypeInner? Literal)* ']' | 
+#                       LEFT_BRACE WORD OP20_HASH_FATARROW TypeInner? Literal (OP21_LIST_COMMA WORD OP20_HASH_FATARROW TypeInner? Literal)* '}' ;
 Subroutine:             'our' Type VARIABLE_SYMBOL '= sub {' SubroutineArguments? Operation+ '}' ';' ;
 SubroutineArguments:    '( my' Type VARIABLE_SYMBOL (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
 Class:                  'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties PropertiesClass? MethodOrSubroutine* LITERAL_NUMBER ';' ;
@@ -135,51 +137,53 @@ Method:                 'our' TYPE_METHOD VARIABLE_SYMBOL '= sub {' MethodArgume
 MethodArguments:        '( my' TYPE_CLASS_OR_SELF (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
 MethodOrSubroutine:     Method | Subroutine;
 
-# START HERE: remove all '(' tokens and replace inside respective regexes, create operator tests
-# START HERE: remove all '(' tokens and replace inside respective regexes, create operator tests
-# START HERE: remove all '(' tokens and replace inside respective regexes, create operator tests
-
 Operation:              Expression ';' | Statement ;
-Operator:               OP01_NAMED '(' ListElements? ')' | OP01_OPEN_CLOSE_PAREN FileHandle ListElements? ')' ';' | OP01_OPEN_CLOSE FileHandle ListElements? ';' |
-                        OP03_MATH_INC_DEC Variable | Variable OP03_MATH_INC_DEC | Expression OP04_MATH_POW Expression | 
-                        OP05_LOGICAL_NEG Expression | OP05_MATH_NEG Expression ')' | Expression OP06_REGEX_MATCH OP06_REGEX_PATTERN |
-                        Expression OP07_MATH_MULT_DIV_MOD Expression | Expression OP08_MATH_ADD_SUB Expression | Expression OP08_STRING_CAT Expression | 
-                        Expression OP09_BITWISE_SHIFT Expression | OP10_NAMED_UNARY Expression | OP10_NAMED_UNARY_STRINGIFY Expression | 
-                        Expression OP11_COMPARE_LT_GT Expression | Expression OP12_COMPARE_EQ_NEQ Expression | Expression OP13_BITWISE_AND Expression | 
-                        Expression OP14_BITWISE_OR_XOR Expression | Expression OP15_LOGICAL_AND Expression | Expression OP16_LOGICAL_OR Expression | 
-                        Expression OP17_LIST_RANGE Expression | Expression OP18_TERNARY Variable COLON Variable | OP22_LOGICAL_NOT Expression | 
-                        Expression OP23_LOGICAL_AND Expression | Expression OP24_LOGICAL_OR_XOR Expression ;
-OperatorVoid:           OP01_NAMED_VOID_PAREN ListElements? ')' ';' | OP01_PRINT_VOID_PAREN FileHandle ListElements? ')' ';' | OP01_NAMED_VOID ListElements? ';' |
-                        OP01_PRINT_VOID ListElements? ';' | OP01_PRINT_VOID FileHandle ListElements? ';' | OP19_LOOP_CONTROL LoopLabel ';' ;
-Expression:             'undef' | Literal | Variable | ArrayReference | ArrayDereferenced | HashReference | HashDereferenced | '{' '}' |
-                        Operator | WordScoped '(' ListElements? ')' | Variable OP02_METHOD_THINARROW WORD '(' ListElements? ')' | '(' Expression ')' ;
-ExpressionOrStdin:      Expression | '<STDIN>';
+Operator:               OP01_NAMED LEFT_PAREN ListElements? ')' | OP01_OPEN FileHandleOpen OP21_LIST_COMMA SubExpression OP21_LIST_COMMA SubExpression | OP01_CLOSE FileHandleClose |
+#Operator:               OP01_NAMED ListElements | OP01_OPEN FileHandleOpen OP21_LIST_COMMA SubExpression OP21_LIST_COMMA SubExpression | OP01_CLOSE FileHandleClose |
+                        OP03_MATH_INC_DEC Variable | Variable OP03_MATH_INC_DEC | SubExpression OP04_MATH_POW SubExpression |
+                        OP05_LOGICAL_NEG SubExpression | OP05_MATH_NEG SubExpression ')' | SubExpression OP06_REGEX_MATCH OP06_REGEX_PATTERN |
+                        SubExpression OP07_MATH_MULT_DIV_MOD SubExpression | SubExpression OP08_MATH_ADD_SUB SubExpression | SubExpression OP08_STRING_CAT SubExpression |
+                        SubExpression OP09_BITWISE_SHIFT SubExpression | OP10_NAMED_UNARY SubExpression | OP10_NAMED_UNARY_STRINGIFY SubExpression |
+                        SubExpression OP11_COMPARE_LT_GT SubExpression | SubExpression OP12_COMPARE_EQ_NEQ SubExpression | SubExpression OP13_BITWISE_AND SubExpression |
+                        SubExpression OP14_BITWISE_OR_XOR SubExpression | SubExpression OP15_LOGICAL_AND SubExpression | SubExpression OP16_LOGICAL_OR SubExpression |
+                        SubExpression OP17_LIST_RANGE SubExpression | SubExpression OP18_TERNARY Variable COLON Variable | OP22_LOGICAL_NOT SubExpression |
+                        SubExpression OP23_LOGICAL_AND SubExpression | SubExpression OP24_LOGICAL_OR_XOR SubExpression ;
+OperatorVoid:           OP01_NAMED_VOID ListElements? ';' | OP01_PRINT_VOID ListElements ';' |
+                        OP01_PRINT_VOID FileHandlePrint ListElements ';' | OP19_LOOP_CONTROL LoopLabel ';' ;
+#Expression:             'undef' | Literal | Variable | ArrayReference | ArrayDereferenced | HashReference | HashDereferenced | LEFT_BRACE '}' | Operator |
+#                        WordScoped LEFT_PAREN ListElements? ')' | Variable OP02_METHOD_THINARROW WORD LEFT_PAREN ListElements? ')' | LEFT_PAREN Expression ')' ;
+Expression:             Operator | WordScoped LEFT_PAREN ListElements? ')' | Variable OP02_METHOD_THINARROW WORD LEFT_PAREN ListElements? ')' ;
+SubExpression:          Expression | 'undef' | Literal | Variable | ArrayReference | ArrayDereferenced | HashReference | HashDereferenced | LEFT_BRACE '}' |
+                        LEFT_PAREN SubExpression ')' ;
+SubExpressionOrPrompt:  SubExpression | STDIN_PROMPT;
 Statement:              Conditional | (LoopLabel COLON)? Loop | OperatorVoid | VariableDeclaration | VariableModification ;
-Conditional:            'if (' Expression ')' CodeBlock ('elsif (' Expression ')' CodeBlock)* ('else' CodeBlock)? ;
+Conditional:            'if (' SubExpression ')' CodeBlock ('elsif (' SubExpression ')' CodeBlock)* ('else' CodeBlock)? ;
 Loop:                   LoopFor | LoopForEach | LoopWhile ;
-LoopFor:                'for my integer' VARIABLE_SYMBOL '(' Expression '..' Expression ')' CodeBlock ;
-LoopForEach:            'foreach my' Type VARIABLE_SYMBOL '(' ListElements ')' CodeBlock ;
-LoopWhile:              'while (' Expression ')' CodeBlock ;
-CodeBlock:              '{' Operation+ '}' ;
+LoopFor:                'for my integer' VARIABLE_SYMBOL LEFT_PAREN SubExpression '..' SubExpression ')' CodeBlock ;
+LoopForEach:            'foreach my' Type VARIABLE_SYMBOL LEFT_PAREN ListElements ')' CodeBlock ;
+LoopWhile:              'while (' SubExpression ')' CodeBlock ;
+CodeBlock:              LEFT_BRACE Operation+ '}' ;
 
 Variable:               VARIABLE_SYMBOL VariableRetrieval* ;
-VariableRetrieval:      OP02_ARRAY_THINARROW Expression ']' | OP02_HASH_THINARROW Expression '}' | OP02_HASH_THINARROW WORD '}' ;
-VariableDeclaration:    'my' Type VARIABLE_SYMBOL ';' | 'my' Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN ExpressionOrStdin ';' ;
-VariableModification:   Variable OP19_VARIABLE_ASSIGN ExpressionOrStdin ';' | Variable OP19_VARIABLE_ASSIGN_BY Expression ';' ;
-ListElements:           ListElement (OP21_LIST_COMMA ListElement)* | OP01_QW '(' WORD+ ')' ;
-ListElement:            Expression | TypeInner Expression | KEYS_OR_VALUES HashDereferenced ;
-ArrayReference:         '[' ListElements? ']' ;
+VariableRetrieval:      OP02_ARRAY_THINARROW SubExpression ']' | OP02_HASH_THINARROW SubExpression '}' | OP02_HASH_THINARROW WORD '}' ;
+VariableDeclaration:    'my' Type VARIABLE_SYMBOL ';' | 'my' Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrPrompt ';' ;
+VariableModification:   Variable OP19_VARIABLE_ASSIGN SubExpressionOrPrompt ';' | Variable OP19_VARIABLE_ASSIGN_BY SubExpression ';' ;
+ListElements:           ListElement (OP21_LIST_COMMA ListElement)* | OP01_QW LEFT_PAREN WORD+ ')' ;
+ListElement:            SubExpression | TypeInner SubExpression | KEYS_OR_VALUES HashDereferenced ;
+ArrayReference:         LEFT_BRACKET ListElements? ']' ;
 ArrayDereferenced:      '@{' Variable '}' | '@{' ArrayReference '}' ;
-HashEntry:              WORD OP20_HASH_FATARROW TypeInner? Expression | HashDereferenced ;
-HashEntryTyped:         WORD OP20_HASH_FATARROW TypeInner Expression | HashDereferenced ;
-HashReference:          '{' HashEntry (OP21_LIST_COMMA HashEntry)* '}' ;
+HashEntry:              WORD OP20_HASH_FATARROW TypeInner? SubExpression | HashDereferenced ;
+HashEntryTyped:         WORD OP20_HASH_FATARROW TypeInner SubExpression | HashDereferenced ;
+HashReference:          LEFT_BRACE HashEntry (OP21_LIST_COMMA HashEntry)* '}' ;
 HashDereferenced:       '%{' Variable '}' | '%{' HashReference '}' ;
 
 WordScoped:             WORD | WORD_SCOPED;
 LoopLabel:              WORD ;
 Type:                   WORD ;
 TypeInner:              'my' Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN ;
-FileHandle:             '{*' WORD '}' | 'my' 'filehandle_ref' VARIABLE_SYMBOL;
+FileHandleOpen:         STDIN_STDOUT_STDERR | 'my' 'filehandle_ref' FILEHANDLE_REF_SYMBOL;
+FileHandleClose:        STDIN_STDOUT_STDERR | FILEHANDLE_REF_SYMBOL;
+FileHandlePrint:        STDIN_STDOUT_STDERR | LEFT_BRACE FILEHANDLE_REF_SYMBOL '}';
 Literal:                LITERAL_STRING | LITERAL_NUMBER ;
 
 %%

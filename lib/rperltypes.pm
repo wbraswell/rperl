@@ -2,7 +2,7 @@ package rperltypes;
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.000_101;
+our $VERSION = 0.000_102;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
@@ -21,6 +21,7 @@ use RPerl::DataType::Character;
 use RPerl::DataType::String;
 use RPerl::DataType::Scalar;
 use RPerl::DataType::Unknown;
+use RPerl::DataType::FileHandle;
 
 # [[[ DATA STRUCTURES ]]]
 use RPerl::DataStructure::Array;

@@ -22,6 +22,6 @@ our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allo
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 
 # [[[ OO METHODS ]]]
-our void__method $empty_method = sub { 2; };
+our void__method $empty_method = sub { return 2; };
 
 1;                  # end of class

@@ -8,7 +8,7 @@ our $VERSION = 0.001_000;
 # [[[ SUBROUTINES ]]]
 our void $empty_sub = sub {
     ( my number__array_ref $foo ) = @_;
-    1;
+    return 1;
 };
 
 1;    # end of package

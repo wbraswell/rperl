@@ -18,6 +18,6 @@ our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allo
 );
 
 # [[[ OO METHODS ]]]
-our $empty_method = sub { 2; };
+our $empty_method = sub { return 2; };
 
 1;                  # end of class

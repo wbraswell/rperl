@@ -22,6 +22,6 @@ our %properties = ( ## no  qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO p
 );
 
 # [[[ OO METHODS ]]]
-our void__method $empty_method = sub { 2; };
+our void__method $empty_method = sub { return 2; };
 
 1;                  # end of class

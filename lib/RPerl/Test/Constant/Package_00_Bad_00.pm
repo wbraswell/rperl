@@ -15,6 +15,6 @@ use  PI  => my number $TYPED_PI  = 3.141_59;
 use constant PIE => my string $TYPED_PIE = 'pecan';
 
 # [[[ SUBROUTINES ]]]
-our void $empty_sub = sub { 2; };
+our void $empty_sub = sub { return 2; };
 
 1;                  # end of package

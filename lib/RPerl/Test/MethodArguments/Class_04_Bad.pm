@@ -21,7 +21,7 @@ our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allo
 # [[[ OO METHODS ]]]
 our void__method $empty_method = sub {
     ( my string $lass, my number $foo, my number__array_ref $bar, my number__hash_ref $baz ) = @_;
-    2;
+    return 2;
 };
 
 1;                  # end of class
