@@ -11,6 +11,10 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 
 my integer $bar = 3;
-my integer $foo = 5 - -4;
-my integer $fun = 5 - -$bar;
 my integer $bun = 5 - -($bar);
+
+#my integer $foo = 5 - -4;
+#my integer $fun = 5 - -$bar;
+
+#croak 'howdy';
+return 'howdy';

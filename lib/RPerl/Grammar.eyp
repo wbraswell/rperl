@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_901;
+    our $VERSION = 0.000_910;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -139,7 +139,7 @@ MethodOrSubroutine:     Method | Subroutine;
 
 Operation:              Expression ';' | Statement ;
 Operator:               OP01_NAMED SubExpression | LEFT_PAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')' |
-                        OP01_OPEN FileHandleOpen OP21_LIST_COMMA SubExpression OP21_LIST_COMMA SubExpression | OP01_CLOSE FileHandleClose |
+                        OP01_OPEN FileHandleOpen OP21_LIST_COMMA LITERAL_STRING OP21_LIST_COMMA SubExpression | OP01_CLOSE FileHandleClose |
                         OP03_MATH_INC_DEC Variable | Variable OP03_MATH_INC_DEC | SubExpression OP04_MATH_POW SubExpression | OP05_LOGICAL_NEG SubExpression |
                         OP05_MATH_NEG SubExpression ')' | SubExpression OP06_REGEX_MATCH OP06_REGEX_PATTERN | SubExpression OP07_MATH_MULT_DIV_MOD SubExpression |
                         SubExpression OP08_MATH_ADD_SUB SubExpression | SubExpression OP08_STRING_CAT SubExpression | SubExpression OP09_BITWISE_SHIFT SubExpression |
