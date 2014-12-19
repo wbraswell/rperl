@@ -10,18 +10,23 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-#open my filehandle_ref $HOWDY, '>', '/tmp/howdy' or croak 'ERROR: Failed to open file /tmp/howdy for writing, croaking';  # BAD
 my integer $open_success = open my filehandle_ref $HOWDY, '>', '/tmp/howdy';
 if ( not $open_success ) {
     croak 'ERROR: Failed to open file /tmp/howdy for writing, croaking';
 }
 
-my integer $print_success = ( print {$HOWDY} 23, 32, 42 );
+( print {$HOWDY} 2, 3, 4 );  # Operator
+print {$HOWDY} 2, 3, 4;  # OperatorVoid
+
+my integer $print_success = ( print {$HOWDY} 2, 3, 4 );  # Operator
 if ( not $print_success ) {
     croak 'ERROR: Failed to write to file /tmp/howdy, croaking';
 }
 
-#close $HOWDY or croak 'ERROR: Failed to close file /tmp/howdy after writing, croaking';  # BAD
 if ( not close $HOWDY ) {
     croak 'ERROR: Failed to close file /tmp/howdy after writing, croaking';
 }
+
+# START HERE: continue Print tests
+# START HERE: continue Print tests
+# START HERE: continue Print tests
