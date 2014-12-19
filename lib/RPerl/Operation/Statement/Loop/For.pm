@@ -12,7 +12,7 @@ use Scalar::Util 'blessed';
 use parent qw(RPerl::Operation::Statement::Loop);
 
 # [[[ OO PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
+our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
     label           => my string $TYPED_label           = undef,
     iterator_symbol => my string $TYPED_iterator_symbol = undef,
     range_min       => my object $TYPED_range_min       = undef,

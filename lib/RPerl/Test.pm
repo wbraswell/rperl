@@ -13,7 +13,7 @@ use RPerl::CompileUnit::Module::Class;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
 
 # [[[ OO CLASS PROPERTIES ]]]
-our %properties_class = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
+our %properties_class = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
     modes => my hash_ref__array_ref $TYPED_modes = [
         { index => 0, ops => 'PERL', types => 'PERL' },
         { index => 1, ops => 'CPP',  types => 'PERL' },

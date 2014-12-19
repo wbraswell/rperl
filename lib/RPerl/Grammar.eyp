@@ -138,7 +138,7 @@ MethodArguments:        '( my' TYPE_CLASS_OR_SELF (OP21_LIST_COMMA 'my' Type VAR
 MethodOrSubroutine:     Method | Subroutine;
 
 Operation:              Expression ';' | Statement ;
-Operator:               LEFT_PAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')' | OP01_NAMED SubExpression |
+Operator:               OP01_NAMED SubExpression | LEFT_PAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')' |
                         OP01_OPEN FileHandleOpen OP21_LIST_COMMA SubExpression OP21_LIST_COMMA SubExpression | OP01_CLOSE FileHandleClose |
                         OP03_MATH_INC_DEC Variable | Variable OP03_MATH_INC_DEC | SubExpression OP04_MATH_POW SubExpression | OP05_LOGICAL_NEG SubExpression |
                         OP05_MATH_NEG SubExpression ')' | SubExpression OP06_REGEX_MATCH OP06_REGEX_PATTERN | SubExpression OP07_MATH_MULT_DIV_MOD SubExpression |

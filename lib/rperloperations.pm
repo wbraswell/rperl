@@ -1,4 +1,4 @@
-package rperloperations; ## no critic qw(Capitalization ProhibitMultiplePackages)  # SYSTEM DEFAULT 4: allow multiple lower case package names
+package rperloperations; ## no critic qw(Capitalization ProhibitMultiplePackages)  # SYSTEM DEFAULT 3: allow multiple lower case package names
 use strict;
 use warnings;
 our $VERSION = 0.000_010;
@@ -8,7 +8,7 @@ use Carp;
 
 # NEED UPGRADE: make Grammars first-class citizens for full Perl 6 compatibility, we should have it done by Christmas  XD
 #use parent qw(RPerl::GrammarComponent)
-#our %properties = (); ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
+#our %properties = (); ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
 
 # [[[ EXPRESSIONS ]]]
 #use RPerl::Operation::Expression::Operator::FOO;

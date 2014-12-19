@@ -6,9 +6,9 @@ our $VERSION = 1.000_000;    # BETA!!!
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
-## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
+## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 5: allow <STDIN> prompt
 ## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
-## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
+## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ INCLUDES SPECIAL ]]]
 require RPerl::Config;

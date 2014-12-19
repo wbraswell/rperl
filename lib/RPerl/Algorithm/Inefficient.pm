@@ -9,7 +9,7 @@ our $VERSION = 0.004_002;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
 use parent qw(RPerl::Algorithm);
 use RPerl::Algorithm;
-our %properties = (); ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
+our %properties = (); ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
 
 # [[[ OO METHODS ]]]
 

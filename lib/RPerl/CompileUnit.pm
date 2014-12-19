@@ -13,7 +13,7 @@ use parent qw(RPerl::GrammarRule);
 
 # [[[ OO PROPERTIES ]]]
 # DEV NOTE: no active properties, this is a stub object for now, see children objects for active properties
-our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
+our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
         # Program, Module, Package, and Class objects
         #name        => my string $TYPED_name                   = undef,
         #version     => my string $TYPED_version                = undef,

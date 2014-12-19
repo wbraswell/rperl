@@ -12,7 +12,7 @@ use Scalar::Util 'blessed';
 use parent qw(RPerl::Operation::Statement);
 
 # [[[ OO PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
+our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
     if_condition     => my object $TYPED_condition                   = undef,
     if_body          => my object $TYPED_body                        = undef,
     elsif_conditions => my object__array_ref $TYPED_elsif_conditions = undef,

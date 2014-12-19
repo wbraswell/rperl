@@ -12,12 +12,12 @@ use Scalar::Util 'blessed';
 use parent qw(RPerl::Operation::Statement::OperatorVoid); # NEED FIX: is not a Grammar Rule so should not inherit from OperatorVoid, need create Grammar Production class
 
 # [[[ OO OBJECT PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
+our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
     arguments => my object__array_ref $TYPED_arguments = undef,
 );
 
 # [[[ OO CLASS PROPERTIES ]]]
-our %properties_class = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
+our %properties_class = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
     name => my string $TYPED_name = 'return',
     parentheses_require => my integer $TYPED_parentheses_require = 1, # disallow ambiguous'ish calling of return w/out parens
     parentheses_allow => my integer $TYPED_parentheses_allow = 1, # exempt from Perl::Critic brutal CodeLayout::ProhibitParensWithBuiltins

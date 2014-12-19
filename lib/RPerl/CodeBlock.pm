@@ -4,10 +4,10 @@ use warnings;
 use RPerl;
 our $VERSION = 0.000_011;
 
-## no critic qw(Capitalization ProhibitMultiplePackages)  # SYSTEM DEFAULT 4: allow multiple lower case package names
+## no critic qw(Capitalization ProhibitMultiplePackages)  # SYSTEM DEFAULT 3: allow multiple lower case package names
 
 use parent qw(RPerl::GrammarRule);
-our %properties = (); ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
+our %properties = (); ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
 
 # [[[ SUB-TYPES ]]]
 

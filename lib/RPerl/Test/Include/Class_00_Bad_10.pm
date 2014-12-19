@@ -19,7 +19,7 @@ use RPerl::Test;
 use RPerl::Test::Bar;
 
 # [[[ OO PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
+our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
     empty_property => my integer $TYPED_empty_property = 2
 );
 

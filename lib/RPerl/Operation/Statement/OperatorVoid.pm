@@ -13,7 +13,7 @@ use parent qw(RPerl::Operation::Statement);
 # NEED FIX: create %properties_class
 
 # [[[ OO PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
+our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
                     #name => my string $TYPED_name = undef,  # object property
      #arguments => my object__array_ref $TYPED_arguments = undef,  # object property
 

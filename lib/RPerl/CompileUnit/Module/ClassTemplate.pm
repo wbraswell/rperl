@@ -22,10 +22,11 @@ use RPerl::CompileUnit::Module::Class;
 # [[[ CRITICS ]]]
 # <<< CHANGE_ME: delete unused critics >>>
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
-## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
-## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
-## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
-## no critic qw(RequireBriefOpen)  # USER DEFAULT 5: allow open() in perltidy-expanded code
+## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
+## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 4: allow constants
+## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 5: allow <STDIN> prompt
+## no critic qw(RequireBriefOpen)  # USER DEFAULT 6: allow open() in perltidy-expanded code
 ## no critic qw(RequireTrailingCommas)  # USER DEFAULT X: no trailing commas in RPerl lists  # NEED ANSWER: RPerl is mostly array refs, do we even need this?
 
 ## no critic qw(ProhibitUselessNoCritic PodSpelling) # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code, must be on line 1
@@ -33,10 +34,9 @@ use RPerl::CompileUnit::Module::Class;
 ## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
 
 ## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
-## no critic qw(RequireInterpolationOfMetachars)  # SYSTEM DEFAULT 2: allow single-quoted control characters, sigils, and regexes
-## no critic qw(ProhibitCascadingIfElse)  # SYSTEM DEFAULT 3: allow argument-handling logic
-## no critic qw(Capitalization ProhibitMultiplePackages)  # SYSTEM DEFAULT 4: allow multiple lower case package names
-## no critic qw(RequireCheckingReturnValueOfEval)  # SYSTEM DEFAULT 5: allow eval() test code blocks
+## no critic qw(ProhibitCascadingIfElse)  # SYSTEM DEFAULT 2: allow argument-handling logic
+## no critic qw(Capitalization ProhibitMultiplePackages)  # SYSTEM DEFAULT 3: allow multiple lower case package names
+## no critic qw(RequireCheckingReturnValueOfEval)  # SYSTEM DEFAULT 4: allow eval() test code blocks
 
 ## no critic qw(ProhibitBooleanGrep)  # SYSTEM SPECIAL 1: allow grep
 ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  # SYSTEM SPECIAL 2: allow Autoload & read-only @_
@@ -65,7 +65,7 @@ use RPerl::Test::Bar;
 
 # [[[ CONSTANTS ]]]
 # <<< CHANGE_ME: delete for no constants, or replace with real constant name(s) & data >>>
-## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
+## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 4: allow constants
 use constant PI  => my number $TYPED_PI  = 3.141_59;
 use constant PIE => my string $TYPED_PIE = 'pecan';
 
@@ -87,7 +87,7 @@ use constant PIE => my string $TYPED_PIE = 'pecan';
 
 # [[[ OO OBJECT PROPERTIES ]]]
 # <<< CHANGE_ME: replace with real object property name(s) & default data >>>
-our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
+our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
     plugh => my integer $TYPED_plugh           = 23,
     xyzzy => my string $TYPED_xyzzy            = 'twenty-three',
     thud  => my integer__array_ref $TYPED_thud = [ 2, 4, 6, 8 ],
@@ -96,7 +96,7 @@ our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allo
 
 # [[[ OO CLASS PROPERTIES ]]]
 # <<< CHANGE_ME: replace with real class property name(s) & default data >>>
-our %properties_class = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 2: allow OO properties
+our %properties_class = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
     name => my string $TYPED_name = 'howdy',
 );
 
