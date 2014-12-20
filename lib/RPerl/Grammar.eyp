@@ -139,7 +139,10 @@ MethodArguments:        '( my' TYPE_CLASS_OR_SELF (OP21_LIST_COMMA 'my' Type VAR
 MethodOrSubroutine:     Method | Subroutine;
 
 Operation:              Expression ';' | Statement ;
-Operator:               LEFT_PAREN OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ')' | 
+Operator:               LEFT_PAREN OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ')' |
+# START HERE: created OP01_NAMED tests
+# START HERE: created OP01_NAMED tests
+# START HERE: created OP01_NAMED tests
                         OP01_NAMED SubExpression | LEFT_PAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')' |
                         OP01_OPEN 'my' 'filehandle_ref' FH_REF_SYMBOL OP21_LIST_COMMA LITERAL_STRING OP21_LIST_COMMA SubExpression |
                         OP01_CLOSE FH_REF_SYMBOL | OP03_MATH_INC_DEC Variable | Variable OP03_MATH_INC_DEC | SubExpression OP04_MATH_POW SubExpression |
@@ -151,8 +154,8 @@ Operator:               LEFT_PAREN OP01_PRINT FH_REF_SYMBOL_BRACES ListElements 
                         SubExpression OP15_LOGICAL_AND SubExpression | SubExpression OP16_LOGICAL_OR SubExpression | SubExpression OP17_LIST_RANGE SubExpression |
                         SubExpression OP18_TERNARY Variable COLON Variable | OP22_LOGICAL_NOT SubExpression | SubExpression OP23_LOGICAL_AND SubExpression |
                         SubExpression OP24_LOGICAL_OR_XOR SubExpression ;
-OperatorVoid:           OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ';' | OP01_PRINT (STDOUT_STDERR)? ListElements ';' | 
-                        OP01_NAMED_VOID ListElements? ';' | OP19_LOOP_CONTROL LoopLabel ';' ;
+OperatorVoid:           OP01_PRINT (STDOUT_STDERR)? ListElements ';' | OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ';' |
+                        OP01_NAMED_VOID ListElements? ';' | OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';' | OP19_LOOP_CONTROL LoopLabel ';' ;
 Expression:             Operator | WordScoped LEFT_PAREN ListElements? ')' | Variable OP02_METHOD_THINARROW WORD LEFT_PAREN ListElements? ')' ;
 SubExpression:          Expression | 'undef' | Literal | Variable | ArrayReference | ArrayDereferenced | HashReference | HashDereferenced | LEFT_BRACE '}' |
                         LEFT_PAREN SubExpression ')' ;

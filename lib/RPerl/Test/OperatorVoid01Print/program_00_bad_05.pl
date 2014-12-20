@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< COMPILE_ERROR: 'Unexpected token:  *' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -30,7 +35,7 @@ print {*STDOUT} 'howdy', 2.31, 'doody', 3.21, 'foobar', 4.23, "\n";
 
 print {*STDERR} 2;
 print {*STDERR} 2, 3, 4, "\n";
-print {*STDERR} 2.31;
+print {*sTDERR} 2.31;
 print {*STDERR} 2.31, 3.21, 4.23, "\n";
 print {*STDERR} 'howdy';
 print {*STDERR} 'howdy', 'doody', 'foobar', "\n";

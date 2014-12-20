@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< COMPILE_ERROR: 'Unexpected token:  print' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -34,7 +39,7 @@ if ( not $print_success ) {
 }
 
 # short format, 1 RPerl Operation
-if (not( print {$HOWDY} 'howdy', 2.31, 'doody', 3.21, 'foobar', 4.23, "\n" ) )
+if (not print {$HOWDY} 'howdy', 2.31, 'doody', 3.21, 'foobar', 4.23, "\n" )
 {
     croak 'ERROR: Failed to write to file /tmp/howdy, croaking';
 }

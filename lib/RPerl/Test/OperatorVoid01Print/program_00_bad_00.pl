@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'near "2;"' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -12,7 +17,7 @@ our $VERSION = 0.001_000;
 
 # USER NOTE: the OperatorVoid (not Operator) production rule matched by 'print' has optional STDOUT, STDERR, or filehandle
 
-print 2;
+print 2 = 2;
 print 2, 3, 4, "\n";
 print 2.31;
 print 2.31, 3.21, 4.23, "\n";

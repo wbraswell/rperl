@@ -15,7 +15,6 @@ my number $op_sin = sin 2;
 my number $op_cos = cos 2;
 
 my integer__array_ref $frob = [];
-my integer $frob_length = ( push @{$frob}, 21, 12, 23 );    # Operator
-print 'have $frob_length = ', $frob_length, "\n";
+push @{$frob}, 21, 12, 23;    # OperatorVoid
 
 print 'have $frob = ', "\n", Dumper($frob), "\n";

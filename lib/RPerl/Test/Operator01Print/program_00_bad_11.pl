@@ -1,4 +1,10 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'near "' >>>
+# <<< COMPILE_ERROR: "'doody' 'foobar'" >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -23,7 +29,7 @@ if ( not $open_success ) {
 ( print {$HOWDY} 2.31 );
 ( print {$HOWDY} 2.31, 3.21, 4.23, "\n" );
 ( print {$HOWDY} 'howdy' );
-( print {$HOWDY} 'howdy', 'doody', 'foobar', "\n" );
+( print {$HOWDY} 'howdy', 'doody' 'foobar', "\n" );
 ( print {$HOWDY} 'howdy', 2.31, 'doody', 3.21, 'foobar', 4.23, "\n" );
 
 # USER NOTE: return values of Operator print are utilized here, catching write errors

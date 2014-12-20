@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'near "2 )"' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -28,7 +33,7 @@ if ( not $open_success ) {
 
 # USER NOTE: return values of Operator print are utilized here, catching write errors
 # long format, 2 RPerl Operations
-my integer $print_success = ( print {$HOWDY} 2 );
+my integer $print_success =  print {$HOWDY} 2 );
 if ( not $print_success ) {
     croak 'ERROR: Failed to write to file /tmp/howdy, croaking';
 }

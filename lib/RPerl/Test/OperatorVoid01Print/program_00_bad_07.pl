@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< COMPILE_ERROR: 'Unexpected token:  print' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -42,7 +47,7 @@ if ( not $open_success ) {
 }
 
 # USER NOTE: return values of OperatorVoid print-to-filehandle are always ignored, possibly ignoring write errors
-print {$HOWDY} 2;
+my integer $print_success = print {$HOWDY} 2;
 print {$HOWDY} 2, 3, 4, "\n";
 print {$HOWDY} 2.31;
 print {$HOWDY} 2.31, 3.21, 4.23, "\n";

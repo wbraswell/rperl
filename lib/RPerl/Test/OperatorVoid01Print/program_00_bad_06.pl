@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< COMPILE_ERROR: 'Unexpected token:  $hOWDY' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -36,20 +41,20 @@ print {*STDERR} 'howdy';
 print {*STDERR} 'howdy', 'doody', 'foobar', "\n";
 print {*STDERR} 'howdy', 2.31, 'doody', 3.21, 'foobar', 4.23, "\n";
 
-my integer $open_success = open my filehandle_ref $HOWDY, '>', '/tmp/howdy';
+my integer $open_success = open my filehandle_ref $hOWDY, '>', '/tmp/howdy';
 if ( not $open_success ) {
     croak 'ERROR: Failed to open file /tmp/howdy for writing, croaking';
 }
 
 # USER NOTE: return values of OperatorVoid print-to-filehandle are always ignored, possibly ignoring write errors
-print {$HOWDY} 2;
-print {$HOWDY} 2, 3, 4, "\n";
-print {$HOWDY} 2.31;
-print {$HOWDY} 2.31, 3.21, 4.23, "\n";
-print {$HOWDY} 'howdy';
-print {$HOWDY} 'howdy', 'doody', 'foobar', "\n";
-print {$HOWDY} 'howdy', 2.31, 'doody', 3.21, 'foobar', 4.23, "\n";
+print {$hOWDY} 2;
+print {$hOWDY} 2, 3, 4, "\n";
+print {$hOWDY} 2.31;
+print {$hOWDY} 2.31, 3.21, 4.23, "\n";
+print {$hOWDY} 'howdy';
+print {$hOWDY} 'howdy', 'doody', 'foobar', "\n";
+print {$hOWDY} 'howdy', 2.31, 'doody', 3.21, 'foobar', 4.23, "\n";
 
-if ( not close $HOWDY ) {
+if ( not close $hOWDY ) {
     croak 'ERROR: Failed to close file /tmp/howdy after writing, croaking';
 }

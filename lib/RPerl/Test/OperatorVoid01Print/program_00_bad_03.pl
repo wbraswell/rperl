@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
+# <<< COMPILE_ERROR: 'Perl::Critic::Policy::InputOutput::RequireBracedFileHandleWithPrint' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -20,7 +25,7 @@ print 'howdy';
 print 'howdy', 'doody', 'foobar', "\n";
 print 'howdy', 2.31, 'doody', 3.21, 'foobar', 4.23, "\n";
 
-print {*STDOUT} 2;
+print STDOUT 2;
 print {*STDOUT} 2, 3, 4, "\n";
 print {*STDOUT} 2.31;
 print {*STDOUT} 2.31, 3.21, 4.23, "\n";
