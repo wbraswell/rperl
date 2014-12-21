@@ -8,6 +8,7 @@ $ ln -s PATH_TO_RPERL/lib/Perl/Critic/Policy/CodeLayout/RequireTidyCode.pm \
     /usr/share/perl5/Perl/Critic/Policy/CodeLayout/RequireTidyCode.pm
 
 # MUST HAVE Perltidy v20121207 OR LATER
+# All RPerl code is run through Perl::Tidy configured for Perl Best Practices
 $ perltidy -pbp --ignore-side-comment-lengths --converge
 
 
@@ -16,6 +17,7 @@ $ perltidy -pbp --ignore-side-comment-lengths --converge
 ################################################################################
 
 # MUST HAVE Perl-Critic v1.120 OR LATER
+# All RPerl code is run through Perl::Critic severity level 1 (brutal)
 $ perlcritic --brutal
 
 
@@ -24,16 +26,26 @@ $ perlcritic --brutal
 ################################################################################
 
 # Makefile.PL uses ExtUtils::MakeMaker
+$ vi lib/RPerl.pm
+    # set $VERSION
 $ make manifest
     # review MANIFEST contents
 $ vi MANIFEST.SKIP
-    # files to exclude, CAN THIS BE THE SAME AS .gitignore???
+    # update with new files to exclude from CPAN
+    # correlated with Makefile.PL & .gitignore
 $ make manifest
     # review MANIFEST contents again
 $ make disttest
 $ make dist
     # produces tarball output
-$ cpanm LOCAL_TARBALL_INSTALL_FOOBAR  # NEED SYNTAX WITH FULL TESTING
+$ mv ~/perl5 ~/perl5.bak
+$ curl -L cpanmin.us | perl - -l $HOME/perl5 App::cpanminus local::lib
+    # optionally create clean ~/perl5 for local::lib single-user installation
+$ cpanm ./RPerl-VERSION.tar.gz
     # install from local tarball, ensure tests run & installation is successful
+$ which rperl
+$ rperl -v -d ~/FOOFILE  # NEED FILENAME
+$ perl -e 'use RPerl;'
+    # ensure RPerl runs correctly
 $ cpanm CPAN::Uploader
 $ cpan-upload REMOTE_TARBALL_UPLOAD_FOOBAR  # NEED SYNTAX

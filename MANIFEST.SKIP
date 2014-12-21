@@ -1,0 +1,37 @@
+# [[[ EXCLUDE ALL GITHUB, UNUSED, AND AUTOMATICALLY-GENERATED FILES FROM CPAN ]]]
+# [ GitHub ]
+^\.git
+^\.gitignore
+^\.travis\.yml
+
+# [ Inline Build ]
+# NEED UPDATE, CORRELATION #05: list of _Inline directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
+^_Inline
+^lib\/RPerl\/Algorithm\/Sort\/_Inline
+^script\/_Inline
+^script\/development\/_Inline
+^script\/development\/unused\/_Inline
+^t\/_Inline
+
+# [ CPAN Build & Distribution ]
+# NEED UPDATE, CORRELATION #06: list of CPAN files & directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
+# MANIFEST.SKIP is not auto-generated, do not exclude self
+# MANIFEST is needed by CPAN, do not exclude
+^MANIFEST\.bak
+# META.yml & META.json are needed by CPAN, do not exclude
+^MYMETA\.
+^Makefile$
+^Makefile\.old
+^blib
+^pm_to_blib
+^RPerl-
+^MakeMaker-
+
+# [ Temporary Files, Ending With Tilde ~ Or swp ]
+~$
+swp$
+
+# [ RPerl Unused ]
+^lib\/3rd_party_debugging
+^script\/3rd_party_debugging
+^script\/development\/unused

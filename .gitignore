@@ -1,13 +1,30 @@
-/_Inline
-/t/_Inline
-/bin/_Inline
-/bin/development/_Inline
-/bin/development/unused/_Inline
-/lib/RPerl/Algorithm/Sort/_Inline
+# [[[ EXCLUDE ALL AUTOMATICALLY-GENERATED FILES FROM GITHUB ]]]
+# [ GitHub ]
+# .gitignore is not auto-generated, do not exclude self
+
+# [ Inline Build ]
+# NEED UPDATE, CORRELATION #05: list of _Inline directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
+/_Inline/
+/lib/RPerl/Algorithm/Sort/_Inline/
+/script/_Inline/
+/script/development/_Inline/
+/script/development/unused/_Inline/
+/t/_Inline/
+
+# [ CPAN Build & Distribution ]
+# NEED UPDATE, CORRELATION #06: list of CPAN files & directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
+# MANIFEST.SKIP is not auto-generated, do not exclude
+/MANIFEST
+/MANIFEST.bak
+/META.*
+/MYMETA.*
 /Makefile
-/MYMETA.json
-/MYMETA.yml
-/out
 /Makefile.old
-/blib
+/blib/
 /pm_to_blib
+/RPerl-*/
+/RPerl-*.tar.gz
+/MakeMaker-*
+
+# [ NEED FIX: Unknown Files ]
+/out
