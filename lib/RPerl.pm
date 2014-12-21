@@ -3,7 +3,7 @@ package RPerl;
 use strict;
 use warnings;
 #our $VERSION = 1.000_000;    # BETA!!!
-our $VERSION = 20141220;    # DEVELOPMENT VERSION
+our $VERSION = 20141221;    # DEVELOPMENT VERSION
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator

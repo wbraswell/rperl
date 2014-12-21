@@ -4,7 +4,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_010;
+our $VERSION = 0.002_030;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
@@ -93,9 +93,14 @@ plan tests => scalar keys %{$test_files};
 for my $test_file ( sort keys %{$test_files} ) {
 
 #    RPerl::diag( 'in 08_interpret_run_program.t, have $test_file = ' . $test_file . "\n" );
-    my $pid
-        = open3( 0, \*STDOUT_TEST, \*STDERR_TEST,
-        "$EXECUTABLE_NAME -Mblib $test_file" );    # disable STDIN w/ 0
+    my $pid;
+    if ($RPerl::INCLUDE_PATH =~ /blib/) {
+        $pid = open3( 0, \*STDOUT_TEST, \*STDERR_TEST, ($EXECUTABLE_NAME . ' -Mblib=' . $RPerl::INCLUDE_PATH . ' ' . $test_file ) );    # disable STDIN w/ 0
+    }
+    else{
+        $pid = open3( 0, \*STDOUT_TEST, \*STDERR_TEST, ($EXECUTABLE_NAME . ' -I' . $RPerl::INCLUDE_PATH . ' ' . $test_file ) );    # disable STDIN w/ 0
+    }
+    
     my $stdout_select = IO::Select->new();
     my $stderr_select = IO::Select->new();
     $stdout_select->add( \*STDOUT_TEST );
