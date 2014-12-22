@@ -3,7 +3,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_014;
+our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
 #use RPerl::CompileUnit::Module::Class;
@@ -69,7 +69,8 @@ our void $rperl_source__check_syntax = sub {
 
 #my string $rperl_source__perl_syntax_retstring = `echo HOWDY`;
 #my string $rperl_source__perl_syntax_retstring = `$rperl_source__perl_syntax_command`;
-#my string $rperl_source__perl_syntax_retstring = `$rperl_source__perl_syntax_command__all_output`;
+    my string $rperl_source__perl_syntax_retstring
+        = `$rperl_source__perl_syntax_command__all_output`;
 
 #RPerl::diag "in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_retval = $rperl_source__perl_syntax_retval\n";
 #RPerl::diag "in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_retstring =\n$rperl_source__perl_syntax_retstring\n";
@@ -84,14 +85,39 @@ our void $rperl_source__check_syntax = sub {
             . 'Failed `perl -cW` syntax check with return value '
             . ( $rperl_source__perl_syntax_retval >> 8 )
             . ' and the following message(s):' . "\n\n"
-            . `$rperl_source__perl_syntax_command__all_output`
 
-#            . $rperl_source__perl_syntax_retstring  # NEED FIX: get error return string instead of re-running command to get error string!
+            #            . `$rperl_source__perl_syntax_command__all_output`
+            . $rperl_source__perl_syntax_retstring # NEED FIX: get error return string instead of re-running command to get error string!
             . "\n";
     }
-    else {
-        RPerl::verbose ' done.' . "\n";
+
+    my string__array_ref $rperl_source__perl_syntax_retstring_lines;
+    @{$rperl_source__perl_syntax_retstring_lines} = split "\n",
+        $rperl_source__perl_syntax_retstring;
+#    RPerl::diag 'in rperl_source__check_syntax(), have $rperl_source__perl_syntax_retstring_lines = ', "\n", Dumper($rperl_source__perl_syntax_retstring_lines), "\n";
+    my string__array_ref $rperl_source__perl_syntax_retstring_warnings = [];
+    foreach my string $rperl_source__perl_syntax_retstring_line (
+        @{$rperl_source__perl_syntax_retstring_lines} )
+    {
+        if (( $rperl_source__perl_syntax_retstring_line !~ /WARNING W/ ) and # RPerl Warning
+            ( $rperl_source__perl_syntax_retstring_line !~ /ERROR E/ ) # RPerl Error
+            and ( $rperl_source__perl_syntax_retstring_line !~ /syntax OK/ ) # Perl Non-Error
+            )
+        {
+            push @{$rperl_source__perl_syntax_retstring_warnings},
+                $rperl_source__perl_syntax_retstring_line;
+        }
     }
+
+    if ( (scalar @{$rperl_source__perl_syntax_retstring_warnings}) != 0 ) {
+        die "\n"
+            . 'ERROR ECVPAPL03, RPERL PARSER, PERL SYNTAX WARNING' . "\n"
+            . 'Failed `perl -cW` syntax check with the following message(s): ' . "\n\n"
+            . (join "\n", @{$rperl_source__perl_syntax_retstring_warnings})
+            . "\n";
+    }
+
+    RPerl::verbose ' done.' . "\n";
 };
 
 # Criticize Perl Syntax Using Perl::Critic
@@ -162,9 +188,9 @@ our void $rperl_grammar_error = sub {
 
 #    die( "\nERROR ECVPARP00, RPERL PARSER, SYNTAX ERROR; have \$argument =\n" . Dumper($argument) . "\n" );
 
-    my $current_state_num = $argument->{STACK}[-1][0];
-    my $current_state     = $argument->{STATES}[$current_state_num];
-    my $expected_tokens   = q{};
+    my $current_state_num        = $argument->{STACK}[-1][0];
+    my $current_state            = $argument->{STATES}[$current_state_num];
+    my $expected_tokens          = q{};
     my number $is_first_expected = 1;
     foreach my $expected_token ( keys %{ $current_state->{ACTIONS} } ) {
         if ($is_first_expected) {
@@ -172,7 +198,8 @@ our void $rperl_grammar_error = sub {
             $expected_tokens .= $expected_token . "\n";
         }
         else {
-            $expected_tokens .= q{                       } . $expected_token . "\n";
+            $expected_tokens
+                .= q{                       } . $expected_token . "\n";
         }
     }
 

@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
-# <<< COMPILE_ERROR: 'RequireEndWithOne' >>>
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL03' >>>
+# <<< COMPILE_ERROR: 'Useless use of a constant' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::Module::Package_00_Bad_Terminator_02;

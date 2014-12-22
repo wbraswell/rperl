@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected token:  *' >>>
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL03' >>>
+# <<< COMPILE_ERROR: 'Name "main::sTDERR" used only once: possible typo' >>>
 
 # [[[ HEADER ]]]
 use strict;

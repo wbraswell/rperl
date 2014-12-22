@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'near "po @"' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -16,9 +21,10 @@ my number $op_sin = sin 2;
 my number $op_cos = cos 2;
 
 my integer__array_ref $frob = [];
-push @{$frob}, 21, 12, 23;    # OperatorVoid, no parentheses required for builtin w/ multiple arguments in void context
+my integer $frob_length = ( push @{$frob}, 21, 12, 23 ); # Operator, yes parentheses required for builtin w/ multiple arguments in non-void context
+print 'have $frob_length = ', $frob_length, "\n";
 print 'have $frob = ', "\n", Dumper($frob), "\n";
 
-pop @{$frob};
+my integer $frob_pop = po @{$frob};
+print 'have $frob_pop = ', "\n", $frob_pop, "\n";
 print 'have $frob = ', "\n", Dumper($frob), "\n";
-

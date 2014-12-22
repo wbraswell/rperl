@@ -1,7 +1,7 @@
 package RPerl::Config;
 use strict;
 use warnings;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_001;
 
 # DEV NOTE: this package exists to serve as the header file for RPerl.pm itself,
 # as well as for RPerl.pm dependencies such as Class.pm, HelperFunctions_cpp.pm, and rperltypes.pm
@@ -39,12 +39,12 @@ if (   ( not exists $INC{'RPerl/Config.pm'} )
     or ( not defined $INC{'RPerl/Config.pm'} ) )
 {
     Carp::croak
-        'BIZARRE ERROR: Non-existent or undefined Perl %INC path entry for RPerl/Config.pm, croaking';
+        'BIZARRE ERROR EINPL00: Non-existent or undefined Perl %INC path entry for RPerl/Config.pm, reported from within RPerl::Config, croaking';
 }
 my $rperl_config_pm_loaded = $INC{'RPerl/Config.pm'};
 if ( not -e $rperl_config_pm_loaded ) {
-    Carp::croak 'BIZARRE ERROR: Non-existent file ', $rperl_config_pm_loaded,
-        ' supposedly loaded in %INC, croaking';
+    Carp::croak 'BIZARRE ERROR EINPL01: Non-existent file ', $rperl_config_pm_loaded,
+        ' supposedly loaded in %INC, reported from within RPerl::Config, croaking';
 }
 ( my $volume_loaded, my $directories_loaded, my $file_loaded )
     = File::Spec->splitpath( $rperl_config_pm_loaded, my $no_file = 0 );
@@ -62,8 +62,8 @@ my $rperl_pm_loaded = undef;
 if ( ( exists $INC{'RPerl.pm'} ) and ( defined $INC{'RPerl.pm'} ) ) {
     $rperl_pm_loaded = $INC{'RPerl.pm'};
     if ( not -e $rperl_pm_loaded ) {
-        Carp::croak 'BIZARRE ERROR: Non-existent file ', $rperl_pm_loaded,
-            ' supposedly loaded in %INC, croaking';
+        Carp::croak 'BIZARRE ERROR EINPL02: Non-existent file ', $rperl_pm_loaded,
+            ' supposedly loaded in %INC, reported from within RPerl::Config, croaking';
     }
 }
 
@@ -142,12 +142,12 @@ foreach my $inc_path ( $directories_loaded, @INC ) {
 #print {*STDERR} 'in RPerl::Config, have $rperl_pms_found = ', "\n", Dumper($rperl_pms_found), "\n";
 
 if ( scalar @{$rperls_found} == 0 ) {
-    Carp::croak 'ERROR: Failed to find rperl executable, croaking';
+    Carp::croak 'ERROR EEXRP00: Failed to find rperl executable, croaking';
 }
 my $rperl_found = $rperls_found->[0];
 if ( scalar @{$rperls_found} > 1 ) {
     print {*STDERR}
-        'WARNING: Found multiple rperl executables, using first located, ',
+        'WARNING WEXRP00: Found multiple rperl executables, using first located, ',
         $rperl_found, "\n";
 }
 
@@ -158,7 +158,7 @@ if ( defined $rperl_pm_loaded ) {
 else {
 
     if ( scalar @{$rperl_pms_found} == 0 ) {
-        Carp::croak 'ERROR: Failed to find RPerl.pm module, croaking';
+        Carp::croak 'ERROR EINRP00: Failed to find RPerl.pm module, croaking';
     }
     foreach my $rperl_pm_found_single ( @{$rperl_pms_found} ) {
         if ( $rperl_pm_found_single eq $rperl_pm_wanted ) {
@@ -166,7 +166,7 @@ else {
         }
     }
     if ( not defined $rperl_pm_found ) {
-        Carp::croak 'ERROR: Expected to find ', $rperl_pm_wanted,
+        Carp::croak 'ERROR EINRP01: Expected to find ', $rperl_pm_wanted,
             ' but instead found ', "\n", Dumper($rperl_pms_found),
             ', croaking';
     }

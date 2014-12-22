@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< COMPILE_ERROR: 'Unexpected token:  99' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -10,7 +15,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer $open_success = open my filehandle_ref $HOWDY, '>', '/tmp/howdy';
+my integer $open_success = open my filehandle_ref $HOWDY, 99, '/tmp/howdy';
 if ( not $open_success ) {
     croak 'ERROR: Failed to open file /tmp/howdy for writing, croaking';
 }

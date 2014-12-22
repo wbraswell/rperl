@@ -19,7 +19,7 @@
 
 %token SHEBANG               = /(^#!\/(?:\w+\/)*perl)/                   # begin line, hash (octothorpe), bang, *NIX path to Perl; ex. '#!/usr/bin/perl'
 %token VERSION_NUMBER_ASSIGN = /\$VERSION\ =\ (\d\d?\.\d{3}\_\d{3});/    # match assign match, only capture & return number; ex. '$VERSION = 12.345_678;' returns '12.345_678'
-%token LITERAL_NUMBER        = /(-?(((\d{1,2}_)?(\d{3}_)*\d{3})|\d{1,2})(\.((\d{3}(_\d{3})*(_\d{1,2})?)|\d{1,2}))?)/   # number w/ underscores
+%token LITERAL_NUMBER        = /(-?(((\d{1,2}_)?(\d{3}_)*\d{3})|\d{1,2})(\.((\d{3}(_\d{3})*(_\d{1,2})?)|\d{1,2}))?)/   # number w/ underscores; ex. '12_345_678.910_1'
 %token LITERAL_STRING        = /(('[^']+')|("[^"\@\$]*((\\n)|(\\t))+[^"\@\$]*")|(q{[^}]*}))/  # single quotes non-empty; double quotes non-empty w/out sigils & w/ newline or tab; or single q-braces
 %token FH_REF_SYMBOL_BRACES  = /(\{\$[A-Z][A-Z0-9_]*\})/                 # left brace, dollar sigil, uppercase letter, uppercase letters & numbers & underscores, right brace; ex. '{$MY_FILEHANDLE_23}'
 %token FH_REF_SYMBOL         = /(\$[A-Z][A-Z0-9_]*)/                     # dollar sigil, uppercase letter, uppercase letters & numbers & underscores; ex. '$MY_FILEHANDLE_23'
@@ -28,6 +28,9 @@
 %token TYPE_CLASS_OR_SELF    = /(string\s+\$class|object\s+\$self)/      # ex. 'string $class' or 'object $self'
 %token STDOUT_STDERR         = /(\{\*STDOUT\}|\{\*STDERR\})/             # '{*STDOUT}' or '{*STDERR}'
 %token STDIN                 = /(<STDIN>)/                               # '<STDIN>'
+
+# FEATURE BOUNTY #000, 1_000 CodeCoin: Implement all Perl functions AKA builtins (PERLOPS_PERLTYPES) as C++ functions (CPPOPS_PERLTYPES & CPPOPS_CPPTYPES)
+# Affects OP01_NAMED, OP01_NAMED_VOID, and OP10_NAMED_UNARY below, corresponding RPerl::Test::Operator* and C++ code;  http://perldoc.perl.org/perlfunc.html
 
 # PRECEDENCE, LEXICAL ORDERING: earlier declaration gets tried first;  http://perldoc.perl.org/perlop.html#Operator-Precedence-and-Associativity [1]
 %token OP24_LOGICAL_OR_XOR      = /(or|xor)/                    # precedence 24 infix: logical or and xor, equivalent to || except for precedence
@@ -44,7 +47,7 @@
 %token OP13_BITWISE_AND         = /(&)/                         # precedence 13 infix: bitwise and
 %token OP12_COMPARE_EQ_NEQ      = /(==|!=|eq|ne)/               # precedence 12 infix: comparison numeric equal, numeric not equal, string equal, string not equal
 %token OP09_BITWISE_SHIFT       = /(<<|>>)/                     # precedence 09 infix: bitwise shift left, shift right
-%token OP10_NAMED_UNARY         = /(scalar[^t])/                # precedence 10 prefix: "named unary operators" [1]; ex. 'chdir' and 'rand'; 'scalar' not 'scalartype'; NEED FIX: hard-code names
+%token OP10_NAMED_UNARY         = /(scalar[^t])/                # precedence 10 prefix: "named unary operators" [1]; ex. 'chdir' and 'rand'; 'scalar' not 'scalartype'
 %token OP10_NAMED_UNARY_STRINGIFY = /(::[a-zA-Z]\w*__stringify)/  # precedence 10 prefix: stringify AKA pretty print; ex. 'integer__array_ref__stringify'
 %token OP08_STRING_CAT          = /(\.)/                        # precedence 08 infix: string concatenate
 %token OP03_MATH_INC_DEC        = /(\+\+|--)/                   # precedence 03 prefix and postfix: increment, decrement
@@ -66,7 +69,7 @@
 %token OP01_QW                  = /(qw)/                        # precedence 01 prefix: quoted words
 %token OP01_OPEN                = /(open)/                      # precedence 01 prefix: open filehandle
 %token OP01_CLOSE               = /(close)/                     # precedence 01 prefix: close filehandle
-%token OP01_NAMED               = /(sin|cos|push|pop|ETC)/      # precedence 01 prefix: "terms and list operators (leftward)" [1] AKA builtins; NEED FIX: add all builtins
+%token OP01_NAMED               = /(sin|cos|push|pop|ETC)/      # precedence 01 prefix: "terms and list operators (leftward)" [1] AKA builtins
 
 # PRECEDENCE, SYNTAX ASSOCIATIVITY: later declaration gets higher priority
 %left       OP24_LOGICAL_OR_XOR
@@ -140,9 +143,6 @@ MethodOrSubroutine:     Method | Subroutine;
 
 Operation:              Expression ';' | Statement ;
 Operator:               LEFT_PAREN OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ')' |
-# START HERE: created OP01_NAMED tests
-# START HERE: created OP01_NAMED tests
-# START HERE: created OP01_NAMED tests
                         OP01_NAMED SubExpression | LEFT_PAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')' |
                         OP01_OPEN 'my' 'filehandle_ref' FH_REF_SYMBOL OP21_LIST_COMMA LITERAL_STRING OP21_LIST_COMMA SubExpression |
                         OP01_CLOSE FH_REF_SYMBOL | OP03_MATH_INC_DEC Variable | Variable OP03_MATH_INC_DEC | SubExpression OP04_MATH_POW SubExpression |

@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
-# <<< COMPILE_ERROR: 'Perl::Critic::Policy::ValuesAndExpressions::ProhibitMagicNumbers' >>>
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL03' >>>
+# <<< COMPILE_ERROR: 'Misplaced _ in number' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::LiteralNumber::Package_48_Bad_01;

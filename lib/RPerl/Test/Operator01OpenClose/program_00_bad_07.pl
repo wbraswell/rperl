@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< COMPILE_ERROR: 'Unexpected token:  $HOWDY' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -20,6 +25,6 @@ if ( not $print_success ) {
     croak 'ERROR: Failed to write to file /tmp/howdy, croaking';
 }
 
-if ( not close $HOWDY ) {
+if ( not clos $HOWDY ) {
     croak 'ERROR: Failed to close file /tmp/howdy after writing, croaking';
 }

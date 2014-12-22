@@ -1,4 +1,31 @@
 ##########################################################################################
+# WARNING & ERROR CODES
+##########################################################################################
+
+W: Warning
+E: Error
+
+CV: Code Value
+PV: Pointer Value (String)
+IV: Integer Value
+NV: Number Value (Float)
+RV: Reference Value
+
+PA: Parse
+IN: Interpret
+CO: Compile
+EX: Execute
+AL: Algorithm
+
+PL: Perl Interpreter
+PC: Perl::Critic Analyzer
+RP: RPerl Compiler
+
+SO: Sort
+BU: Bubble
+
+
+##########################################################################################
 # PERLTIDY 
 ##########################################################################################
 
@@ -20,6 +47,13 @@ $ perltidy -pbp --ignore-side-comment-lengths --converge
 # All RPerl code is run through Perl::Critic severity level 1 (brutal)
 $ perlcritic --brutal
 
+# Perl::Critic & Eclipse EPIC Integration Fix
+$ cd PATH_TO_CRITIC
+$ mv perlcritic perlcritic.old
+$ ln -s PATH_TO_RPERL_GITHUB/script/3rd_party_debugging/perlcritic ./perlcritic
+# Eclipse -> Window -> Preferences -> Perl EPIC -> Perl::Critic -> Custom Location
+# PATH_TO_LAMPUNIVERSITY_GITHUB/bin/perlcritic_eclipse.sh
+
 
 ##########################################################################################
 # CPAN DISTRIBUTION
@@ -30,6 +64,7 @@ $ vi lib/RPerl.pm
     # set $VERSION
 $ rm -Rf ~/perl5; curl -L cpanmin.us | perl - -l $HOME/perl5 App::cpanminus local::lib
     # optionally create clean ~/perl5 for local::lib single-user installation
+    # remember to re-enable Perl::Critic & Eclipse EPIC Integration Fix above
 $ make distclean
 $ rm RPerl*.tar.gz
 $ perl Makefile.PL
