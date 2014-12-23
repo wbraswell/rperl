@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< COMPILE_ERROR: 'Unexpected token:  <<< undef >>>' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -27,7 +32,7 @@ print 'have $bar = ', $bar, "\n";
 print 'have $bat = ', $bat, "\n";
 print 'have $baz = ', $baz, "\n";
 
-++$foo;
+++($foo);
 
 $bat = ++$foo;
 

@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'Can't modify constant item in postincrement' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -14,7 +19,7 @@ our $VERSION = 0.001_000;
 my integer $foo = 2;
 my integer $bar = 3;
 
-$foo++;
+3++;
 
 my integer $bat = $foo++;
 

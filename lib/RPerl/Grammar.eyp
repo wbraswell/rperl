@@ -57,11 +57,11 @@
 %token OP06_REGEX_MATCH         = /(=\~|!\~)/                   # precedence 06 infix: regular expression match, not match
 %token OP19_VARIABLE_ASSIGN_BY  = /(\+=|-=|\*=|\/=)/            # precedence 19 infix: add assign, subtract assign, multiply assign, divide assign
 %token OP19_VARIABLE_ASSIGN     = /(=)/                         # precedence 19 infix: assign
-%token OP05_LOGICAL_NEG         = /(!)/                         # precedence 05 prefix: logical negation, negative
+%token OP05_LOGICAL_NEG         = /(!)/                         # precedence 05 prefix: logical negation
 %token OP02_HASH_THINARROW      = /(->\{)/                      # precedence 02 infix: thin arrow, hash dereference and retrieval
 %token OP02_ARRAY_THINARROW     = /(->\[)/                      # precedence 02 infix: thin arrow, array dereference and retrieval
 %token OP02_METHOD_THINARROW    = /(->)/                        # precedence 02 infix: thin arrow, method dereference and call
-%token OP05_MATH_NEG            = /(-\()/                       # precedence 05 prefix: arithmetic negative
+%token OP05_MATH_NEG_LEFT_PAREN = /(-\()/                       # precedence 05 prefix: arithmetic negative
 %token OP08_MATH_ADD_SUB        = /(\+|-)/                      # precedence 08 infix: arithmetic add, subtract
 %token OP11_COMPARE_LT_GT       = /(<|>|<=|>=|lt|gt|le|ge)/     # precedence 11 infix: comparison less than, greater than, less or equal, greater or equal
 %token OP01_PRINT               = /(print)/                     # precedence 01 prefix void: print to STDOUT, STDERR, or filehandle
@@ -96,7 +96,7 @@
 %left       OP07_MATH_MULT_DIV_MOD
 %left       OP06_REGEX_MATCH
 %left       OP06_REGEX_PATTERN
-%right      OP05_MATH_NEG
+%right      OP05_MATH_NEG_LEFT_PAREN
 %right      OP05_LOGICAL_NEG
 %right      OP04_MATH_POW
 %nonassoc   OP03_MATH_INC_DEC
@@ -146,7 +146,7 @@ Operator:               LEFT_PAREN OP01_PRINT FH_REF_SYMBOL_BRACES ListElements 
                         OP01_NAMED SubExpression | LEFT_PAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')' |
                         OP01_OPEN 'my' 'filehandle_ref' FH_REF_SYMBOL OP21_LIST_COMMA LITERAL_STRING OP21_LIST_COMMA SubExpression |
                         OP01_CLOSE FH_REF_SYMBOL | OP03_MATH_INC_DEC Variable | Variable OP03_MATH_INC_DEC | SubExpression OP04_MATH_POW SubExpression |
-                        OP05_LOGICAL_NEG SubExpression | OP05_MATH_NEG SubExpression ')' | SubExpression OP06_REGEX_MATCH OP06_REGEX_PATTERN |
+                        OP05_LOGICAL_NEG SubExpression | OP05_MATH_NEG_LEFT_PAREN SubExpression ')' | SubExpression OP06_REGEX_MATCH OP06_REGEX_PATTERN |
                         SubExpression OP07_MATH_MULT_DIV_MOD SubExpression | SubExpression OP08_MATH_ADD_SUB SubExpression |
                         SubExpression OP08_STRING_CAT SubExpression | SubExpression OP09_BITWISE_SHIFT SubExpression | OP10_NAMED_UNARY SubExpression |
                         OP10_NAMED_UNARY_STRINGIFY SubExpression | SubExpression OP11_COMPARE_LT_GT SubExpression | SubExpression OP12_COMPARE_EQ_NEQ SubExpression |

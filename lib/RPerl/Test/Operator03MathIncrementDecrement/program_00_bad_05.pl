@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'Can't modify constant item in preincrement' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -29,7 +34,7 @@ print 'have $baz = ', $baz, "\n";
 
 ++$foo;
 
-$bat = ++$foo;
+$bat = ++3;
 
 --$bar;
 

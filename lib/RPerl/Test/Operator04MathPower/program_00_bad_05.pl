@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
+# <<< COMPILE_ERROR: 'Perl::Critic::Policy::References::ProhibitDoubleSigils' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -11,31 +16,26 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer $foo = 2;
-my integer $bar = 3;
+my integer $foo = 2**3;
+my integer $bar = 3**2;
 
-$foo++;
+my integer $bat = $foo**$bar;
 
-my integer $bat = $foo++;
-
-$bar--;
-
-my integer $baz = $bar--;
+my integer $baz = $bar**$foo;
 
 print 'have $foo = ', $foo, "\n";
 print 'have $bar = ', $bar, "\n";
 print 'have $bat = ', $bat, "\n";
 print 'have $baz = ', $baz, "\n";
 
-++$foo;
-
-$bat = ++$foo;
-
---$bar;
-
-$baz = --$bar;
+$foo = 2;
+$bar = 3;
+$bat = ( $foo**2 )**$bar;
+$baz = $foo**( 2***$bar );
+my integer $bax = $foo**2**$bar;    # right associative
 
 print 'have $foo = ', $foo, "\n";
 print 'have $bar = ', $bar, "\n";
 print 'have $bat = ', $bat, "\n";
 print 'have $baz = ', $baz, "\n";
+print 'have $bax = ', $bax, "\n";

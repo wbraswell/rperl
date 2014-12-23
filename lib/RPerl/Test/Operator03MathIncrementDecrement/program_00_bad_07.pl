@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'Can't modify preincrement (++) in scalar assignment' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -33,7 +38,7 @@ $bat = ++$foo;
 
 --$bar;
 
-$baz = --$bar;
+++$baz = --$bar;
 
 print 'have $foo = ', $foo, "\n";
 print 'have $bar = ', $bar, "\n";

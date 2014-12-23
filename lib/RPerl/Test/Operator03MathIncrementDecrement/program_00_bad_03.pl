@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'Bareword "bar" not allowed' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -20,7 +25,7 @@ my integer $bat = $foo++;
 
 $bar--;
 
-my integer $baz = $bar--;
+my integer $baz = bar--;
 
 print 'have $foo = ', $foo, "\n";
 print 'have $bar = ', $bar, "\n";

@@ -11,31 +11,28 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer $foo = 2;
-my integer $bar = 3;
-
-$foo++;
-
-my integer $bat = $foo++;
-
-$bar--;
-
-my integer $baz = $bar--;
+my integer $foo = 0;
+my integer $bar = 1;
+my integer $bat = !$foo;
+my integer $baz = !$bar;
 
 print 'have $foo = ', $foo, "\n";
 print 'have $bar = ', $bar, "\n";
 print 'have $bat = ', $bat, "\n";
 print 'have $baz = ', $baz, "\n";
 
-++$foo;
-
-$bat = ++$foo;
-
---$bar;
-
-$baz = --$bar;
+$foo = 2;
+$bar = 3;
+$bat = !$foo;
+$baz = !( $foo - $bar );
+my integer $bax = !!$foo;
 
 print 'have $foo = ', $foo, "\n";
 print 'have $bar = ', $bar, "\n";
 print 'have $bat = ', $bat, "\n";
 print 'have $baz = ', $baz, "\n";
+print 'have $bax = ', $bax, "\n";
+
+# START HERE: possibly modify to avoid empty values, create bad tests
+# START HERE: possibly modify to avoid empty values, create bad tests
+# START HERE: possibly modify to avoid empty values, create bad tests
