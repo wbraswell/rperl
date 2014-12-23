@@ -53,7 +53,7 @@
 %token OP03_MATH_INC_DEC        = /(\+\+|--)/                   # precedence 03 prefix and postfix: increment, decrement
 %token OP04_MATH_POW            = /(\*\*)/                      # precedence 04 infix: arithmetic exponent AKA power
 %token OP07_MATH_MULT_DIV_MOD   = /(\*|\/|\%)/                  # precedence 07 infix: arithmetic multiply, divide, modulo
-%token OP06_REGEX_PATTERN       = /(m\/.*\/xms)/                # precedence 06 infix: regular expression pattern
+%token OP06_REGEX_PATTERN       = /([ms]\/.*(?:\/.*)?\/[a-z]*)/ # precedence 06 infix: regular expression pattern
 %token OP06_REGEX_MATCH         = /(=\~|!\~)/                   # precedence 06 infix: regular expression match, not match
 %token OP19_VARIABLE_ASSIGN_BY  = /(\+=|-=|\*=|\/=)/            # precedence 19 infix: add assign, subtract assign, multiply assign, divide assign
 %token OP19_VARIABLE_ASSIGN     = /(=)/                         # precedence 19 infix: assign

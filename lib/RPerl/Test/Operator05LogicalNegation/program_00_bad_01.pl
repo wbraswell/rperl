@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< COMPILE_ERROR: 'Unexpected token:  $FOO' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -11,22 +16,24 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer $foo = 3;
-my integer $bar = -3;            # Literal Number, not Operator
-my integer $bat = -(3);          # Operator(Literal Number)
-my integer $baz = 5 - -($bar);
+my integer $FOO = 0;
+my integer $bar = 1;
+my integer $bat = !$FOO;
+my integer $baz = !($bar);
 
-print 'have $foo = ', $foo, "\n";
+print 'have $FOO = ', $FOO, "\n";
 print 'have $bar = ', $bar, "\n";
 print 'have $bat = ', $bat, "\n";
 print 'have $baz = ', $baz, "\n";
 
-$foo = -(-3);                    # Operator(Literal Number)
-$bar = -( -(3) );                # Operator(Operator(Literal Number))
-$bat = $foo + -($bar);
-$baz = $foo - -($bar);
+$FOO = 2;
+$bar = 3;
+$bat = !2;                  # returns empty string ''
+$baz = !( $FOO - $bar );    # returns empty string ''
+my integer $bax = !!$FOO;
 
-print 'have $foo = ', $foo, "\n";
+print 'have $FOO = ', $FOO, "\n";
 print 'have $bar = ', $bar, "\n";
 print 'have $bat = ', $bat, "\n";
 print 'have $baz = ', $baz, "\n";
+print 'have $bax = ', $bax, "\n";

@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'near "* ( $bat"' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -11,22 +16,14 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer $foo = 3;
-my integer $bar = -3;            # Literal Number, not Operator
-my integer $bat = -(3);          # Operator(Literal Number)
-my integer $baz = 5 - -($bar);
+my number $foo = 222 * 33;
+my number $bar = 222 / 33;
+my number $bat = 222 % 33;
+my number $baz = $foo % $bar * $bat / 4;
+my number $bax = $foo % ( * ( $bat / 4 ) );
 
 print 'have $foo = ', $foo, "\n";
 print 'have $bar = ', $bar, "\n";
 print 'have $bat = ', $bat, "\n";
 print 'have $baz = ', $baz, "\n";
-
-$foo = -(-3);                    # Operator(Literal Number)
-$bar = -( -(3) );                # Operator(Operator(Literal Number))
-$bat = $foo + -($bar);
-$baz = $foo - -($bar);
-
-print 'have $foo = ', $foo, "\n";
-print 'have $bar = ', $bar, "\n";
-print 'have $bat = ', $bat, "\n";
-print 'have $baz = ', $baz, "\n";
+print 'have $bax = ', $bax, "\n";

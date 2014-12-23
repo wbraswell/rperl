@@ -1,4 +1,10 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
+# <<< COMPILE_ERROR: 'Perl::Critic::Policy::RegularExpressions::RequireDotMatchAnything' >>>
+# <<< COMPILE_ERROR: 'Perl::Critic::Policy::RegularExpressions::RequireLineBoundaryMatching' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -11,21 +17,23 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer $foo = 0;
-my integer $bar = 1;
-my integer $bat = !$foo;
-my integer $baz = !($bar);
+my string $foo  = 'howdy hello ahoy';
+my integer $bar = $foo =~ m/owdy/msx;
+my integer $bat = ( $foo =~ m/Hello/ );
+my integer $baz = ( $foo =~ m/\s[Aa]hoy$/msx );
+my integer $bax = ( $foo =~ s/ho/HO/gms );
 
 print 'have $foo = ', $foo, "\n";
 print 'have $bar = ', $bar, "\n";
 print 'have $bat = ', $bat, "\n";
 print 'have $baz = ', $baz, "\n";
+print 'have $bax = ', $bax, "\n";
 
-$foo = 2;
-$bar = 3;
-$bat = !2;                  # returns empty string ''
-$baz = !( $foo - $bar );    # returns empty string ''
-my integer $bax = !!$foo;
+$foo = 'Alpha Bravo Charlie 123';
+$bar = ( $foo !~ m/owdy/msx );
+$bat = ( $foo !~ m/ravo/msx );
+$baz = ( $foo !~ m/\s[Cc]harlie\s\d*$/msx );
+$bax = ( $foo !~ s/ha/HAHA/gms );
 
 print 'have $foo = ', $foo, "\n";
 print 'have $bar = ', $bar, "\n";

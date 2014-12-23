@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'near "$foo ~"' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -11,22 +16,26 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer $foo = 3;
-my integer $bar = -3;            # Literal Number, not Operator
-my integer $bat = -(3);          # Operator(Literal Number)
-my integer $baz = 5 - -($bar);
+my string $foo  = 'howdy hello ahoy';
+my integer $bar = $foo =~ m/owdy/msx;
+my integer $bat = ( $foo =~ m/Hello/msx );
+my integer $baz = ( $foo =~ m/\s[Aa]hoy$/msx );
+my integer $bax = ( $foo =~ s/ho/HO/gms );
 
 print 'have $foo = ', $foo, "\n";
 print 'have $bar = ', $bar, "\n";
 print 'have $bat = ', $bat, "\n";
 print 'have $baz = ', $baz, "\n";
+print 'have $bax = ', $bax, "\n";
 
-$foo = -(-3);                    # Operator(Literal Number)
-$bar = -( -(3) );                # Operator(Operator(Literal Number))
-$bat = $foo + -($bar);
-$baz = $foo - -($bar);
+$foo = 'Alpha Bravo Charlie 123';
+$bar = ( $foo !~ m/owdy/msx );
+$bat = ( $foo !~ m/ravo/msx );
+$baz = ( $foo ~ m/\s[Cc]harlie\s\d*$/msx );
+$bax = ( $foo !~ s/ha/HAHA/gms );
 
 print 'have $foo = ', $foo, "\n";
 print 'have $bar = ', $bar, "\n";
 print 'have $bat = ', $bat, "\n";
 print 'have $baz = ', $baz, "\n";
+print 'have $bax = ', $bax, "\n";

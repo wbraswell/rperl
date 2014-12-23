@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< COMPILE_ERROR: 'Unexpected token:  -' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -14,7 +19,7 @@ our $VERSION = 0.001_000;
 my integer $foo = 3;
 my integer $bar = -3;            # Literal Number, not Operator
 my integer $bat = -(3);          # Operator(Literal Number)
-my integer $baz = 5 - -($bar);
+my integer $baz = 5 - -$bar;
 
 print 'have $foo = ', $foo, "\n";
 print 'have $bar = ', $bar, "\n";
