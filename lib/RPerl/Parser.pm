@@ -10,7 +10,7 @@ our $VERSION = 0.004_000;
 #use parent ('RPerl::CompileUnit::Module::Class');
 
 # [[[ CRITICS ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitBacktickOperators)  ## SYSTEM SPECIAL 11: allow system command execution
 ## no critic qw(RequireCarping)  # SYSTEM SPECIAL 13: allow die instead of croak
 

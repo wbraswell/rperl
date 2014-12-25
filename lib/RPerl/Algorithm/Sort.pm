@@ -6,7 +6,7 @@ use RPerl;
 our $VERSION = 0.004_020;
 
 # [[[ CRITICS, OO INHERITANCE, INCLUDES ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
 use parent ('RPerl::Algorithm');
 use RPerl::Algorithm;
 

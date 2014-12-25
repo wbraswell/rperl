@@ -74,6 +74,8 @@ void XS_pack_number(SV* output_sv, number input_number) {
 
 # ifdef __PERL__TYPES
 
+// BUG BOUNTY #000, 50 CodeCoin: modify all ::number*__stringify() to output underscores, to match LITERAL_STRING grammar token input
+
 SV* number__stringify(SV* input_number)
 {
 //	number__CHECK(input_number);

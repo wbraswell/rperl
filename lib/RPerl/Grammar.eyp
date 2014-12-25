@@ -47,8 +47,8 @@
 %token OP13_BITWISE_AND         = /(&)/                         # precedence 13 infix: bitwise and
 %token OP12_COMPARE_EQ_NEQ      = /(==|!=|eq|ne)/               # precedence 12 infix: comparison numeric equal, numeric not equal, string equal, string not equal
 %token OP09_BITWISE_SHIFT       = /(<<|>>)/                     # precedence 09 infix: bitwise shift left, shift right
-%token OP10_NAMED_UNARY         = /(scalar[^t])/                # precedence 10 prefix: "named unary operators" [1]; ex. 'chdir' and 'rand'; 'scalar' not 'scalartype'
-%token OP10_NAMED_UNARY_STRINGIFY = /(::[a-zA-Z]\w*__stringify)/  # precedence 10 prefix: stringify AKA pretty print; ex. 'integer__array_ref__stringify'
+%token OP10_NAMED_UNARY         = /(chdir|rand|scalar[^t])/     # precedence 10 prefix: "named unary operators" [1]; ex. 'chdir' and 'rand'; 'scalar' not 'scalartype'
+%token OP10_STRINGIFY_UNARY     = /((?:main)?::[a-zA-Z]\w*__stringify\()/   # precedence 10 prefix: stringify AKA pretty print; ex. '::integer__array_ref__stringify'
 %token OP08_STRING_CAT          = /(\.)/                        # precedence 08 infix: string concatenate
 %token OP03_MATH_INC_DEC        = /(\+\+|--)/                   # precedence 03 prefix and postfix: increment, decrement
 %token OP04_MATH_POW            = /(\*\*)/                      # precedence 04 infix: arithmetic exponent AKA power
@@ -56,14 +56,14 @@
 %token OP06_REGEX_PATTERN       = /([ms]\/.*(?:\/.*)?\/[a-z]*)/ # precedence 06 infix: regular expression pattern
 %token OP06_REGEX_MATCH         = /(=\~|!\~)/                   # precedence 06 infix: regular expression match, not match
 %token OP19_VARIABLE_ASSIGN_BY  = /(\+=|-=|\*=|\/=)/            # precedence 19 infix: add assign, subtract assign, multiply assign, divide assign
-%token OP19_VARIABLE_ASSIGN     = /(=)/                         # precedence 19 infix: assign
 %token OP05_LOGICAL_NEG         = /(!)/                         # precedence 05 prefix: logical negation
 %token OP02_HASH_THINARROW      = /(->\{)/                      # precedence 02 infix: thin arrow, hash dereference and retrieval
 %token OP02_ARRAY_THINARROW     = /(->\[)/                      # precedence 02 infix: thin arrow, array dereference and retrieval
 %token OP02_METHOD_THINARROW    = /(->)/                        # precedence 02 infix: thin arrow, method dereference and call
-%token OP05_MATH_NEG_LEFT_PAREN = /(-\()/                       # precedence 05 prefix: arithmetic negative
+%token OP05_MATH_NEG_LPAREN     = /(-\()/                       # precedence 05 prefix: arithmetic negative
 %token OP08_MATH_ADD_SUB        = /(\+|-)/                      # precedence 08 infix: arithmetic add, subtract
-%token OP11_COMPARE_LT_GT       = /(<|>|<=|>=|lt|gt|le|ge)/     # precedence 11 infix: comparison less than, greater than, less or equal, greater or equal
+%token OP11_COMPARE_LT_GT       = /(<=|>=|<|>|lt|gt|le|ge)/     # precedence 11 infix: comparison less than, greater than, less or equal, greater or equal
+%token OP19_VARIABLE_ASSIGN     = /(=)/                         # precedence 19 infix: assign
 %token OP01_PRINT               = /(print)/                     # precedence 01 prefix void: print to STDOUT, STDERR, or filehandle
 %token OP01_NAMED_VOID          = /(croak|return|exit)/         # precedence 01 prefix void: "terms and list operators (leftward)" [1] AKA builtins, no return value
 %token OP01_QW                  = /(qw)/                        # precedence 01 prefix: quoted words
@@ -89,14 +89,14 @@
 %nonassoc   OP12_COMPARE_EQ_NEQ
 %nonassoc   OP11_COMPARE_LT_GT
 %nonassoc   OP10_NAMED_UNARY
-%nonassoc   OP10_NAMED_UNARY_STRINGIFY
+%nonassoc   OP10_STRINGIFY_UNARY
 %left       OP09_BITWISE_SHIFT
 %left       OP08_STRING_CAT
 %left       OP08_MATH_ADD_SUB
 %left       OP07_MATH_MULT_DIV_MOD
 %left       OP06_REGEX_MATCH
 %left       OP06_REGEX_PATTERN
-%right      OP05_MATH_NEG_LEFT_PAREN
+%right      OP05_MATH_NEG_LPAREN
 %right      OP05_LOGICAL_NEG
 %right      OP04_MATH_POW
 %nonassoc   OP03_MATH_INC_DEC
@@ -114,9 +114,9 @@
 %token WORD_SCOPED          = /(([a-zA-Z]\w*(::[a-zA-Z]\w*)+)|(::[a-zA-Z]\w*(::[a-zA-Z]\w*)*))/
 %token WORD                 = /([a-zA-Z]\w*)/                       # letter followed by letters, numbers, and underscores; ex. 'foobar_42_Howdy'
 %token COLON                = /:/
-%token LEFT_PAREN           = /\(/
-%token LEFT_BRACKET         = /\[/
-%token LEFT_BRACE           = /\{/
+%token LPAREN               = /\(/
+%token LBRACKET             = /\[/
+%token LBRACE               = /\{/
 
 %%
 
@@ -130,8 +130,8 @@ Critic:                 '## no critic qw(' WORD+ ')';
 Include:                'use' WordScoped ';' | 'use' WordScoped 'qw(' WORD+ ')' ';' ;
 Constant:               'use constant' WORD OP20_HASH_FATARROW TypeInner Literal ';' ;
 #Constant:              'use constant' WORD OP20_HASH_FATARROW TypeInner ConstantValue ';' ;  # NEED UPGRADE: constant array & hash refs not read-only as of Perl v5.20
-#ConstantValue:         Literal | LEFT_BRACKET TypeInner? Literal (OP21_LIST_COMMA TypeInner? Literal)* ']' | 
-#                       LEFT_BRACE WORD OP20_HASH_FATARROW TypeInner? Literal (OP21_LIST_COMMA WORD OP20_HASH_FATARROW TypeInner? Literal)* '}' ;
+#ConstantValue:         Literal | LBRACKET TypeInner? Literal (OP21_LIST_COMMA TypeInner? Literal)* ']' | 
+#                       LBRACE WORD OP20_HASH_FATARROW TypeInner? Literal (OP21_LIST_COMMA WORD OP20_HASH_FATARROW TypeInner? Literal)* '}' ;
 Subroutine:             'our' Type VARIABLE_SYMBOL '= sub {' SubroutineArguments? Operation+ '}' ';' ;
 SubroutineArguments:    '( my' Type VARIABLE_SYMBOL (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
 Class:                  'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties PropertiesClass? MethodOrSubroutine* LITERAL_NUMBER ';' ;
@@ -142,43 +142,43 @@ MethodArguments:        '( my' TYPE_CLASS_OR_SELF (OP21_LIST_COMMA 'my' Type VAR
 MethodOrSubroutine:     Method | Subroutine;
 
 Operation:              Expression ';' | Statement ;
-Operator:               LEFT_PAREN OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ')' |
-                        OP01_NAMED SubExpression | LEFT_PAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')' |
+Operator:               LPAREN OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ')' |
+                        OP01_NAMED SubExpression | LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')' |
                         OP01_OPEN 'my' 'filehandle_ref' FH_REF_SYMBOL OP21_LIST_COMMA LITERAL_STRING OP21_LIST_COMMA SubExpression |
                         OP01_CLOSE FH_REF_SYMBOL | OP03_MATH_INC_DEC Variable | Variable OP03_MATH_INC_DEC | SubExpression OP04_MATH_POW SubExpression |
-                        OP05_LOGICAL_NEG SubExpression | OP05_MATH_NEG_LEFT_PAREN SubExpression ')' | SubExpression OP06_REGEX_MATCH OP06_REGEX_PATTERN |
+                        OP05_LOGICAL_NEG SubExpression | OP05_MATH_NEG_LPAREN SubExpression ')' | SubExpression OP06_REGEX_MATCH OP06_REGEX_PATTERN |
                         SubExpression OP07_MATH_MULT_DIV_MOD SubExpression | SubExpression OP08_MATH_ADD_SUB SubExpression |
                         SubExpression OP08_STRING_CAT SubExpression | SubExpression OP09_BITWISE_SHIFT SubExpression | OP10_NAMED_UNARY SubExpression |
-                        OP10_NAMED_UNARY_STRINGIFY SubExpression | SubExpression OP11_COMPARE_LT_GT SubExpression | SubExpression OP12_COMPARE_EQ_NEQ SubExpression |
-                        SubExpression OP13_BITWISE_AND SubExpression | SubExpression OP14_BITWISE_OR_XOR SubExpression |
-                        SubExpression OP15_LOGICAL_AND SubExpression | SubExpression OP16_LOGICAL_OR SubExpression | SubExpression OP17_LIST_RANGE SubExpression |
+                        OP10_NAMED_UNARY | OP10_STRINGIFY_UNARY SubExpression ')' | SubExpression OP11_COMPARE_LT_GT SubExpression |
+                        SubExpression OP12_COMPARE_EQ_NEQ SubExpression | SubExpression OP13_BITWISE_AND SubExpression |
+                        SubExpression OP14_BITWISE_OR_XOR SubExpression | SubExpression OP15_LOGICAL_AND SubExpression | SubExpression OP16_LOGICAL_OR SubExpression | SubExpression OP17_LIST_RANGE SubExpression |
                         SubExpression OP18_TERNARY Variable COLON Variable | OP22_LOGICAL_NOT SubExpression | SubExpression OP23_LOGICAL_AND SubExpression |
                         SubExpression OP24_LOGICAL_OR_XOR SubExpression ;
 OperatorVoid:           OP01_PRINT (STDOUT_STDERR)? ListElements ';' | OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ';' |
                         OP01_NAMED_VOID ListElements? ';' | OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';' | OP19_LOOP_CONTROL LoopLabel ';' ;
-Expression:             Operator | WordScoped LEFT_PAREN ListElements? ')' | Variable OP02_METHOD_THINARROW WORD LEFT_PAREN ListElements? ')' ;
-SubExpression:          Expression | 'undef' | Literal | Variable | ArrayReference | ArrayDereferenced | HashReference | HashDereferenced | LEFT_BRACE '}' |
-                        LEFT_PAREN SubExpression ')' ;
+Expression:             Operator | WordScoped LPAREN ListElements? ')' | Variable OP02_METHOD_THINARROW WORD LPAREN ListElements? ')' ;
+SubExpression:          Expression | 'undef' | Literal | Variable | ArrayReference | ArrayDereferenced | HashReference | HashDereferenced | LBRACE '}' |
+                        LPAREN SubExpression ')' ;
 SubExpressionOrStdin:   SubExpression | STDIN;
 Statement:              Conditional | (LoopLabel COLON)? Loop | OperatorVoid | VariableDeclaration | VariableModification ;
 Conditional:            'if (' SubExpression ')' CodeBlock ('elsif (' SubExpression ')' CodeBlock)* ('else' CodeBlock)? ;
 Loop:                   LoopFor | LoopForEach | LoopWhile ;
-LoopFor:                'for my integer' VARIABLE_SYMBOL LEFT_PAREN SubExpression OP17_LIST_RANGE SubExpression ')' CodeBlock ;
-LoopForEach:            'foreach my' Type VARIABLE_SYMBOL LEFT_PAREN ListElements ')' CodeBlock ;
+LoopFor:                'for my integer' VARIABLE_SYMBOL LPAREN SubExpression OP17_LIST_RANGE SubExpression ')' CodeBlock ;
+LoopForEach:            'foreach my' Type VARIABLE_SYMBOL LPAREN ListElements ')' CodeBlock ;
 LoopWhile:              'while (' SubExpression ')' CodeBlock ;
-CodeBlock:              LEFT_BRACE Operation+ '}' ;
+CodeBlock:              LBRACE Operation+ '}' ;
 
 Variable:               VARIABLE_SYMBOL VariableRetrieval* ;
 VariableRetrieval:      OP02_ARRAY_THINARROW SubExpression ']' | OP02_HASH_THINARROW SubExpression '}' | OP02_HASH_THINARROW WORD '}' ;
 VariableDeclaration:    'my' Type VARIABLE_SYMBOL ';' | 'my' Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';' ;
 VariableModification:   Variable OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';' | Variable OP19_VARIABLE_ASSIGN_BY SubExpression ';' ;
-ListElements:           ListElement (OP21_LIST_COMMA ListElement)* | OP01_QW LEFT_PAREN WORD+ ')' ;
+ListElements:           ListElement (OP21_LIST_COMMA ListElement)* | OP01_QW LPAREN WORD+ ')' ;
 ListElement:            SubExpression | TypeInner SubExpression | KEYS_OR_VALUES HashDereferenced ;
-ArrayReference:         LEFT_BRACKET ListElements? ']' ;
+ArrayReference:         LBRACKET ListElements? ']' ;
 ArrayDereferenced:      '@{' Variable '}' | '@{' ArrayReference '}' ;
 HashEntry:              WORD OP20_HASH_FATARROW TypeInner? SubExpression | HashDereferenced ;
 HashEntryTyped:         WORD OP20_HASH_FATARROW TypeInner SubExpression | HashDereferenced ;
-HashReference:          LEFT_BRACE HashEntry (OP21_LIST_COMMA HashEntry)* '}' ;
+HashReference:          LBRACE HashEntry (OP21_LIST_COMMA HashEntry)* '}' ;
 HashDereferenced:       '%{' Variable '}' | '%{' HashReference '}' ;
 
 WordScoped:             WORD | WORD_SCOPED;

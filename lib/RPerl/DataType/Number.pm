@@ -4,7 +4,7 @@ use warnings;
 use RPerl;
 our $VERSION = 0.003_004;
 
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(Capitalization ProhibitMultiplePackages)  # SYSTEM DEFAULT 3: allow multiple lower case package names
 
@@ -82,6 +82,8 @@ our void $number__CHECKTRACE = sub {
 our integer $number__OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0
 our string $number__ops = sub { return ('PERL'); };
 our string $number__types = sub { return ('PERL'); };
+
+# BUG BOUNTY #000, 50 CodeCoin: modify all ::number*__stringify() to output underscores, to match LITERAL_STRING grammar token input
 
 # [[[ STRINGIFY ]]]
 our string $number__stringify = sub {

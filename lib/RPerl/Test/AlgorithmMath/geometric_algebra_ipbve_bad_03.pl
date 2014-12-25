@@ -10,7 +10,7 @@ use RPerl;
 our $VERSION = 0.000_001;
 
 # [[[ CRITICS ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values and print operator
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
 
 # [[[ INCLUDES ]]]
 use RPerl::Algorithm::Math::GeometricAlgebra;
