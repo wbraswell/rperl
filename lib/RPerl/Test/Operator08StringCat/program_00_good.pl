@@ -11,11 +11,11 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my number $foo = 222 * -33;
-my number $bar = 222 / 33;
-my number $bat = 222 % 33;
-my number $baz = $foo % $bar * $bat / 4;
-my number $bax = $foo % ( $bar * ( $bat / 4 ) );
+my string $foo = 'howdy' . 'doody';
+my string $bar = 'hello' . ('and' . 'goodbye');
+my string $bat = ('ahoy' . 'matey') . 'yarr';
+my string $baz = $foo . $bar . $bat;
+my string $bax = $foo . $foo . $foo;
 
 print 'have $foo = ', $foo, "\n";
 print 'have $bar = ', $bar, "\n";

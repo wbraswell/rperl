@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< COMPILE_ERROR: 'Unexpected token:  +' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -11,11 +16,11 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my number $foo = 222 * -33;
-my number $bar = 222 / 33;
-my number $bat = 222 % 33;
-my number $baz = $foo % $bar * $bat / 4;
-my number $bax = $foo % ( $bar * ( $bat / 4 ) );
+my number $foo = 222 + 33;
+my number $bar = 222 - 33;
+my number $bat = 222 + -33;
+my number $baz = $foo - $bar + $bat - 4;
+my number $bax = $foo - ( $bar + ( $bat - + 4 ) );
 
 print 'have $foo = ', $foo, "\n";
 print 'have $bar = ', $bar, "\n";

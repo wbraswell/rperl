@@ -2,7 +2,8 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'Unknown regexp modifier' >>>
+# <<< COMPILE_ERROR: "'hello' (" >>>
+# <<< COMPILE_ERROR: 'near "' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -16,23 +17,11 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string $foo  = 'howdy hello ahoy';
-my integer $bar = $foo =~ m/owdy/msx;
-my integer $bat = ( $foo =~ m/Hello/msx );
-my integer $baz = ( $foo =~ m/\s[Aa]hoy$/msx );
-my integer $bax = ( $foo =~ s/hoHO/gms );
-
-print 'have $foo = ', $foo, "\n";
-print 'have $bar = ', $bar, "\n";
-print 'have $bat = ', $bat, "\n";
-print 'have $baz = ', $baz, "\n";
-print 'have $bax = ', $bax, "\n";
-
-$foo = 'Alpha Bravo Charlie 123';
-$bar = ( $foo !~ m/owdy/msx );
-$bat = ( $foo !~ m/ravo/msx );
-$baz = ( $foo !~ m/\s[Cc]harlie\s\d*$/msx );
-$bax = ( $foo !~ s/ha/HAHA/gms );
+my string $foo = 'howdy' . 'doody';
+my string $bar = 'hello' ('and' . 'goodbye');
+my string $bat = ('ahoy' . 'matey') . 'yarr';
+my string $baz = $foo . $bar . $bat;
+my string $bax = $foo . $foo . $foo;
 
 print 'have $foo = ', $foo, "\n";
 print 'have $bar = ', $bar, "\n";

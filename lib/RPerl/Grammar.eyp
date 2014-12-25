@@ -163,7 +163,7 @@ SubExpressionOrStdin:   SubExpression | STDIN;
 Statement:              Conditional | (LoopLabel COLON)? Loop | OperatorVoid | VariableDeclaration | VariableModification ;
 Conditional:            'if (' SubExpression ')' CodeBlock ('elsif (' SubExpression ')' CodeBlock)* ('else' CodeBlock)? ;
 Loop:                   LoopFor | LoopForEach | LoopWhile ;
-LoopFor:                'for my integer' VARIABLE_SYMBOL LEFT_PAREN SubExpression '..' SubExpression ')' CodeBlock ;
+LoopFor:                'for my integer' VARIABLE_SYMBOL LEFT_PAREN SubExpression OP17_LIST_RANGE SubExpression ')' CodeBlock ;
 LoopForEach:            'foreach my' Type VARIABLE_SYMBOL LEFT_PAREN ListElements ')' CodeBlock ;
 LoopWhile:              'while (' SubExpression ')' CodeBlock ;
 CodeBlock:              LEFT_BRACE Operation+ '}' ;
