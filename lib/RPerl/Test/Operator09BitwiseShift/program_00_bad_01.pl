@@ -2,6 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'Unterminated <> operator' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -15,23 +16,11 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string $foo  = 'howdy hello ahoy';
-my integer $bar = $foo =~ m/owdy/msx;
-my integer $bat = ( $foo =~ m/Hello/msx );
-my integer $baz = ( $foo =~ m/\s[Aa]hoy$/msx );
-my integer $bax = ( $foo =~ s/ho/HO/gms );
-
-print 'have $foo = ', $foo, "\n";
-print 'have $bar = ', $bar, "\n";
-print 'have $bat = ', $bat, "\n";
-print 'have $baz = ', $baz, "\n";
-print 'have $bax = ', $bax, "\n";
-
-$foo = 'Alpha Bravo Charlie 123';
-$bar = ( $foo !~ m/owdy/msx );
-$bat = ( $foo !~ m/ravo/msx );
-$baz = ( $foo !~ m/\s[Cc]harlie\s\d*$/msx );
-$bax = ( $foo !~ s/ha/HAHA/gms1 );
+my string $foo = 1_024;
+my string $bar = 256;
+my string $bat = 4_096 << 3;
+my string $baz = $foo <<< 3;
+my string $bax = $bar >> 4;
 
 print 'have $foo = ', $foo, "\n";
 print 'have $bar = ', $bar, "\n";

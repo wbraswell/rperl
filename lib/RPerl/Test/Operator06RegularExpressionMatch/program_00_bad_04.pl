@@ -2,7 +2,6 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'Unknown regexp modifier' >>>
 
 # [[[ HEADER ]]]
 use strict;
