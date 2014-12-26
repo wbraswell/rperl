@@ -35,7 +35,7 @@
 # PRECEDENCE, LEXICAL ORDERING: earlier declaration gets tried first;  http://perldoc.perl.org/perlop.html#Operator-Precedence-and-Associativity [1]
 %token OP24_LOGICAL_OR_XOR      = /(or|xor)/                    # precedence 24 infix: logical or and xor, equivalent to || except for precedence
 %token OP23_LOGICAL_AND         = /(and)/                       # precedence 23 infix: logical and, equivalent to && except for precedence
-%token OP22_LOGICAL_NOT         = /(not)/                       # precedence 22 prefix: logical negation, equivalent to ! except for precedence
+%token OP22_LOGICAL_NEG         = /(not)/                       # precedence 22 prefix: logical negation, equivalent to ! except for precedence
 %token OP21_LIST_COMMA          = /(,)/                         # precedence 21 infix: "list operators (rightward)" [1] AKA comma
 %token OP20_HASH_FATARROW       = /(=>)/                        # precedence 20 infix: hash entry fat arrow AKA fat comma
 %token OP19_LOOP_CONTROL        = /(next|last)/                 # precedence 19 prefix void: loop control next, last
@@ -45,7 +45,7 @@
 %token OP15_LOGICAL_AND         = /(&&)/                        # precedence 15 infix: logical and
 %token OP14_BITWISE_OR_XOR      = /(\||\^)/                     # precedence 14 infix: bitwise or, bitwise xor
 %token OP13_BITWISE_AND         = /(&)/                         # precedence 13 infix: bitwise and
-%token OP12_COMPARE_EQ_NEQ      = /(==|!=|eq|ne)/               # precedence 12 infix: comparison numeric equal, numeric not equal, string equal, string not equal
+%token OP12_COMPARE_EQ_NE       = /(==|!=|eq|ne)/               # precedence 12 infix: comparison numeric equal, numeric not equal, string equal, string not equal
 %token OP09_BITWISE_SHIFT       = /(<<|>>)/                     # precedence 09 infix: bitwise shift left, shift right
 %token OP10_NAMED_UNARY         = /(chdir|rand|scalar[^t])/     # precedence 10 prefix: "named unary operators" [1]; ex. 'chdir' and 'rand'; 'scalar' not 'scalartype'
 %token OP10_STRINGIFY_UNARY     = /((?:main)?::[a-zA-Z]\w*__stringify\()/   # precedence 10 prefix: stringify AKA pretty print; ex. '::integer__array_ref__stringify'
@@ -74,7 +74,7 @@
 # PRECEDENCE, SYNTAX ASSOCIATIVITY: later declaration gets higher priority
 %left       OP24_LOGICAL_OR_XOR
 %left       OP23_LOGICAL_AND
-%right      OP22_LOGICAL_NOT
+%right      OP22_LOGICAL_NEG
 %left       OP21_LIST_COMMA
 %left       OP20_HASH_FATARROW
 %right      OP19_LOOP_CONTROL
@@ -86,7 +86,7 @@
 %left       OP15_LOGICAL_AND
 %left       OP14_BITWISE_OR_XOR
 %left       OP13_BITWISE_AND
-%nonassoc   OP12_COMPARE_EQ_NEQ
+%nonassoc   OP12_COMPARE_EQ_NE
 %nonassoc   OP11_COMPARE_LT_GT
 %nonassoc   OP10_NAMED_UNARY
 %nonassoc   OP10_STRINGIFY_UNARY
@@ -150,10 +150,10 @@ Operator:               LPAREN OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ')' 
                         SubExpression OP07_MATH_MULT_DIV_MOD SubExpression | SubExpression OP08_MATH_ADD_SUB SubExpression |
                         SubExpression OP08_STRING_CAT SubExpression | SubExpression OP09_BITWISE_SHIFT SubExpression | OP10_NAMED_UNARY SubExpression |
                         OP10_NAMED_UNARY | OP10_STRINGIFY_UNARY SubExpression ')' | SubExpression OP11_COMPARE_LT_GT SubExpression |
-                        SubExpression OP12_COMPARE_EQ_NEQ SubExpression | SubExpression OP13_BITWISE_AND SubExpression |
-                        SubExpression OP14_BITWISE_OR_XOR SubExpression | SubExpression OP15_LOGICAL_AND SubExpression | SubExpression OP16_LOGICAL_OR SubExpression | SubExpression OP17_LIST_RANGE SubExpression |
-                        SubExpression OP18_TERNARY Variable COLON Variable | OP22_LOGICAL_NOT SubExpression | SubExpression OP23_LOGICAL_AND SubExpression |
-                        SubExpression OP24_LOGICAL_OR_XOR SubExpression ;
+                        SubExpression OP12_COMPARE_EQ_NE SubExpression | SubExpression OP13_BITWISE_AND SubExpression |
+                        SubExpression OP14_BITWISE_OR_XOR SubExpression | SubExpression OP15_LOGICAL_AND SubExpression | SubExpression OP16_LOGICAL_OR SubExpression |
+                        SubExpression OP17_LIST_RANGE SubExpression | SubExpression OP18_TERNARY VariableOrLiteral COLON VariableOrLiteral |
+                        OP22_LOGICAL_NEG SubExpression | SubExpression OP23_LOGICAL_AND SubExpression | SubExpression OP24_LOGICAL_OR_XOR SubExpression ;
 OperatorVoid:           OP01_PRINT (STDOUT_STDERR)? ListElements ';' | OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ';' |
                         OP01_NAMED_VOID ListElements? ';' | OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';' | OP19_LOOP_CONTROL LoopLabel ';' ;
 Expression:             Operator | WordScoped LPAREN ListElements? ')' | Variable OP02_METHOD_THINARROW WORD LPAREN ListElements? ')' ;
@@ -185,6 +185,7 @@ WordScoped:             WORD | WORD_SCOPED;
 LoopLabel:              WORD ;
 Type:                   WORD ;
 TypeInner:              'my' Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN ;
+VariableOrLiteral:      Variable | Literal;
 Literal:                LITERAL_STRING | LITERAL_NUMBER ;
 
 %%

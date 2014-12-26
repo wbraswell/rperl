@@ -29,8 +29,8 @@ print 'have $baz = ', $baz, "\n";
 print 'have $bax = ', $bax, "\n";
 
 $bat = $foo > 333_333_333_333;
-$baz = 444 >= '222';
-$bax = 33 >= $foo;
+$baz = 444 >= 222;
+$bax = '9_123.456_789' >= $foo;
 
 print 'have $bat = ', $bat, "\n";
 print 'have $baz = ', $baz, "\n";
@@ -45,8 +45,8 @@ print 'have $baz = ', $baz, "\n";
 print 'have $bax = ', $bax, "\n";
 
 $bat = $bar gt 'abc';
-$baz = '444' ge '222';
-$bax = '33' ge $bar;
+$baz = '144' ge '222';
+$bax = 'howdy' ge $bar;
 
 print 'have $bat = ', $bat, "\n";
 print 'have $baz = ', $baz, "\n";
