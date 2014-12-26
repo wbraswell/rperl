@@ -232,8 +232,8 @@ our void $rperl_source__parse = sub {
 
     RPerl::verbose ' done.' . "\n";
 
-#    RPerl::diag "in rperl_source__parse(), have \$rperl_ast->str() =\n" . $rperl_ast->str() . "\n\n";
-#    RPerl::diag "in rperl_source__parse(), have \$rperl_ast =\n" . Dumper($rperl_ast) . "\n\n";
+    RPerl::diag "in rperl_source__parse(), have \$rperl_ast->str() =\n" . $rperl_ast->str() . "\n\n";
+    RPerl::diag "in rperl_source__parse(), have \$rperl_ast =\n" . Dumper($rperl_ast) . "\n\n";
 
     return ($rperl_ast);
 };

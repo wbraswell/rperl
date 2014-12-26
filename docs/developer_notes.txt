@@ -86,4 +86,4 @@ $ rperl -v -d ~/FOOFILE  # NEED FILENAME
 $ perl -e 'use RPerl;'
     # ensure RPerl runs correctly
 $ cpanm CPAN::Uploader
-$ cpan-upload REMOTE_TARBALL_UPLOAD_FOOBAR  # NEED SYNTAX
+$ cpan-upload -v -u WBRASWELL --dry-run RPerl-VERSION.tar.gz

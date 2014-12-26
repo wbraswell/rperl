@@ -1,8 +1,8 @@
-# RPerl v1.0 Beta, Install Notes
-# Single-User Installation (Not System-Wide Installation)
-# Last Updated December 2, 2014
+# RPerl v1.0 Beta 2, Install Notes
+# Last Updated December 25, 2014
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# NOTE: STEPS 0 AND 1 ARE ONLY FOR SINGLE-USER INSTALL, NOT SYSTEM-WIDE INSTALL
 # IMPORTANT WARNING: ONLY USE ONE OF STEP 1A, 1B, OR 1C - NOT ALL THREE
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -62,61 +62,12 @@ $ perlbrew install-cpanm
 # INSTALL RPERL & DEPENDENCIES
 ################################################################################
 
-$ git clone git@github.com:wbraswell/rperl.git
-# OR
-$ wget https://github.com/wbraswell/rperl/archive/master.zip;  unzip master.zip
-
-$ cd rperl*
-$ perl Makefile.PL
-$ cpanm --installdeps .  # note the dot at the end of this command
+$ cpanm WBRASWELL/RPerl-1.00_02.tar.gz
 
 ################################################################################
 # STEP 3.
-# RUN RPERL SYSTEM TESTS
-################################################################################
-
-# optional
-$ export RPERL_VERBOSE=1  # same as `rperl -v` flag
-$ export RPERL_DEBUG=1  # same as `rperl -d` flag
-
-# automatically confirm all tests pass, without compiler output
-$ rm -Rf _Inline/; reset; make; make test
-
-# manually confirm all tests pass, with compiler output
-$ rm -Rf _Inline/; reset; perl -Iblib/lib bin/test_suite.pl
-
-# manually confirm single tests pass, with compiler output
-$ rm -Rf _Inline/; reset; perl -Iblib/lib t/01_depend.t
-$ rm -Rf _Inline/; reset; perl -Iblib/lib t/02_inline_c.t
-$ rm -Rf _Inline/; reset; perl -Iblib/lib t/03_inline_cpp.t
-$ rm -Rf _Inline/; reset; perl -Iblib/lib t/04_type_scalar.t
-$ rm -Rf _Inline/; reset; perl -Iblib/lib t/05_type_array.t
-$ rm -Rf _Inline/; reset; perl -Iblib/lib t/06_type_hash.t
-$ rm -Rf _Inline/; reset; perl -Iblib/lib t/07_oo_inherit.t
-$ rm -Rf _Inline/; reset; perl -Iblib/lib t/08_precompiled_sort.t
-$ rm -Rf _Inline/; reset; perl -Iblib/lib t/09_compile_print.t
-$ rm -Rf _Inline/; reset; perl -Iblib/lib t/20_grammar.t
-
-# manually confirm all tests pass, without compiler output
-$ rm -Rf _Inline/; reset; prove -l t/* 2> /dev/null
-
-################################################################################
-# STEP 4.
-# RUN RPERL COMPILER TESTS
+# RUN RPERL COMPILER
 ################################################################################
 	
-# manually confirm compiler test runs, with compiler output
-$ rm -Rf ./_Inline/; reset; perl -Iblib/lib bin/rperl \
-    --infile=blib/lib/RPerl/Test/Print_00.pm --mode ops=CPP --mode types=CPP
-
-# manually confirm compiled test runs, with compiler output
-$ rm -Rf _Inline; reset; perl -Iblib/lib ./bin/development/compiled_test__print_00.pl
-
-# manually edit RPerl "Hello World" Perl module
-$ vi blib/lib/RPerl/Test/Print_00.pm
-
-# manually edit RPerl "hello world" Perl driver
-$ vi bin/development/compiled_test_print_00.pl
-
-# manually inspect generated RPerl "Hello World" C++ module
-$ less blib/lib/RPerl/Test/Print_00.cpp
+# parse your RPerl input file with abstract syntax tree output
+$ rperl -v -d YOU_RPERL_FILE.(pl|pm)
