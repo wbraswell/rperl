@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL03' >>>
+# <<< COMPILE_ERROR: 'Useless use of push with no values' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -13,5 +18,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 my integer__array_ref $frob = [];
-push @{$frob}, 21, 12, 23;    # OperatorVoid, no parentheses required for builtin w/ multiple arguments in void context
+push @{$frob};
 print 'have $frob = ', "\n", Dumper($frob), "\n";
