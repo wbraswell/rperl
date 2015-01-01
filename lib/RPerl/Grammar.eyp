@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_910;
+    our $VERSION = 0.000_911;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -155,7 +155,7 @@ Operator:               LPAREN OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ')' 
                         SubExpression OP17_LIST_RANGE SubExpression | SubExpression OP18_TERNARY VariableOrLiteral COLON VariableOrLiteral |
                         OP22_LOGICAL_NEG SubExpression | SubExpression OP23_LOGICAL_AND SubExpression | SubExpression OP24_LOGICAL_OR_XOR SubExpression ;
 OperatorVoid:           OP01_PRINT (STDOUT_STDERR)? ListElements ';' | OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ';' |
-                        OP01_NAMED_VOID ListElements? ';' | OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';' | OP19_LOOP_CONTROL LoopLabel ';' ;
+                        OP01_NAMED_VOID ListElements? ';' | OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';' | OP19_LOOP_CONTROL LoopLabel? ';' ;
 Expression:             Operator | WordScoped LPAREN ListElements? ')' | Variable OP02_METHOD_THINARROW WORD LPAREN ListElements? ')' ;
 SubExpression:          Expression | 'undef' | Literal | Variable | ArrayReference | ArrayDereferenced | HashReference | HashDereferenced | LBRACE '}' |
                         LPAREN SubExpression ')' ;
