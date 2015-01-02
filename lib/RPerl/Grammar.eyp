@@ -157,6 +157,7 @@ Operator:               LPAREN OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ')' 
 OperatorVoid:           OP01_PRINT (STDOUT_STDERR)? ListElements ';' | OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ';' |
                         OP01_NAMED_VOID ListElements? ';' | OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';' | OP19_LOOP_CONTROL LoopLabel? ';' ;
 Expression:             Operator | WordScoped LPAREN ListElements? ')' | Variable OP02_METHOD_THINARROW WORD LPAREN ListElements? ')' ;
+# NEED FIX: add class properties double-colon access?
 SubExpression:          Expression | 'undef' | Literal | Variable | ArrayReference | ArrayDereferenced | HashReference | HashDereferenced | LBRACE '}' |
                         LPAREN SubExpression ')' ;
 SubExpressionOrStdin:   SubExpression | STDIN;
