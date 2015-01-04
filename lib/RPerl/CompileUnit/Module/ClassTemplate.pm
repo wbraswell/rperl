@@ -100,12 +100,32 @@ our %properties_class = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3
     name => my string $TYPED_name = 'howdy',
 );
 
-# [[[ OO METHODS ]]]
+# [[[ OO OBJECT METHODS ]]]
 
 # <<< CHANGE_ME: delete for no methods, or replace with real method(s) >>>
 our void__method $quux = sub {
     ( my object $self) = @_;
     $self->{plugh} = $self->{plugh} * 2;
+};
+
+our string__method $corge = sub {
+    ( my object $self) = @_;
+    return $self->{xyzzy} x 3;
+};
+
+
+
+# START HERE: create working class methods
+# START HERE: create working class methods
+# START HERE: create working class methods
+
+
+# [[[ OO CLASS METHODS ]]]
+
+# <<< CHANGE_ME: delete for no methods, or replace with real method(s) >>>
+our void__method $xuuq = sub {
+    ( my string $class) = @_;
+    $class::properties_class{name} .= 'ahoy';
 };
 
 our string__method $corge = sub {

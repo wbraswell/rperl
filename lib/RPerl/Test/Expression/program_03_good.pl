@@ -16,4 +16,4 @@ our integer $foo = sub {
     print $bar, "\n";
     return $bat + $baz;
 };
-foo('howdy!');
+foo('howdy!', 23, 42);

@@ -13,4 +13,4 @@ our $VERSION = 0.001_000;
 use RPerl::Test::Foo;
 
 # [[[ OPERATIONS ]]]
-quux('howdy!');
+RPerl::Test::Foo::xuuq('howdy!');
