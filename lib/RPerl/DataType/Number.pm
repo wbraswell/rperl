@@ -2,7 +2,7 @@ package RPerl::DataType::Number;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_004;
+our $VERSION = 0.003_020;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -78,11 +78,6 @@ our void $number__CHECKTRACE = sub {
     }
 };
 
-# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-our integer $number__OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0
-our string $number__ops = sub { return ('PERL'); };
-our string $number__types = sub { return ('PERL'); };
-
 # BUG BOUNTY #000, 50 CodeCoin: modify all ::number*__stringify() to output underscores, to match LITERAL_STRING grammar token input
 
 # [[[ STRINGIFY ]]]
@@ -99,7 +94,7 @@ our string $number__stringify = sub {
 
 # [[[ TYPE TESTING ]]]
 our number $number__typetest0 = sub {
-    my number $retval = ( 22 / 7 ) + $number__OPS_TYPES_ID; # return floating-point number value
+    my number $retval = ( 22 / 7 ) + number__OPS_TYPES_ID(); # return floating-point number value
 
 #    RPerl::diag "in PERLOPS_PERLTYPES number__typetest0(), have \$retval = $retval\n" or croak();
     return ($retval);
@@ -112,7 +107,7 @@ our number $number__typetest1 = sub {
         'number__typetest1()' );
 
 #    RPerl::diag 'in PERLOPS_PERLTYPES number__typetest1(), received $lucky_number = ' . number__stringify($lucky_number) . "\n" or croak();
-    return ( ( $lucky_number * 2 ) + $number__OPS_TYPES_ID );
+    return ( ( $lucky_number * 2 ) + number__OPS_TYPES_ID() );
 };
 
 1;

@@ -49,14 +49,14 @@
 %token OP09_BITWISE_SHIFT       = /(<<|>>)/                     # precedence 09 infix: bitwise shift left, shift right
 %token OP10_NAMED_UNARY         = /(chdir|rand|scalar[^t])/     # precedence 10 prefix: "named unary operators" [1]; ex. 'chdir' and 'rand'; 'scalar' not 'scalartype'
 %token OP10_STRINGIFY_UNARY     = /((?:main)?::[a-zA-Z]\w*__stringify\()/   # precedence 10 prefix: stringify AKA pretty print; ex. '::integer__array_ref__stringify'
+%token OP19_VARIABLE_ASSIGN_BY  = /(\+=|-=|\*=|\/=|\.=)/        # precedence 19 infix: add assign, subtract assign, multiply assign, divide assign, cat assign
 %token OP08_STRING_CAT          = /(\.)/                        # precedence 08 infix: string concatenate
 %token OP03_MATH_INC_DEC        = /(\+\+|--)/                   # precedence 03 prefix and postfix: increment, decrement
 %token OP04_MATH_POW            = /(\*\*)/                      # precedence 04 infix: arithmetic exponent AKA power
-%token OP07_MATH_MULT_DIV_MOD   = /(\*|\/|\%|\x)/               # precedence 07 infix: arithmetic multiply, divide, modulo
-%token OP07_STRING_REPEAT       = /(\sx\s)/                     # precedence 07 infix: string repetition
+%token OP07_MATH_MULT_DIV_MOD   = /(\*|\/|\%)/                  # precedence 07 infix: arithmetic multiply, divide, modulo
+%token OP07_STRING_REPEAT       = /(x\s)/                       # precedence 07 infix: string repetition
 %token OP06_REGEX_PATTERN       = /([ms]\/.*(?:\/.*)?\/[a-z]*)/ # precedence 06 infix: regular expression pattern
 %token OP06_REGEX_MATCH         = /(=\~|!\~)/                   # precedence 06 infix: regular expression match, not match
-%token OP19_VARIABLE_ASSIGN_BY  = /(\+=|-=|\*=|\/=)/            # precedence 19 infix: add assign, subtract assign, multiply assign, divide assign
 %token OP05_LOGICAL_NEG         = /(!)/                         # precedence 05 prefix: logical negation
 %token OP02_HASH_THINARROW      = /(->\{)/                      # precedence 02 infix: thin arrow, hash dereference and retrieval
 %token OP02_ARRAY_THINARROW     = /(->\[)/                      # precedence 02 infix: thin arrow, array dereference and retrieval
@@ -137,8 +137,10 @@ Constant:               'use constant' WORD OP20_HASH_FATARROW TypeInner Literal
 Subroutine:             'our' Type VARIABLE_SYMBOL '= sub {' SubroutineArguments? Operation+ '}' ';' ;
 SubroutineArguments:    '( my' Type VARIABLE_SYMBOL (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
 Class:                  'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties PropertiesClass? MethodOrSubroutine* LITERAL_NUMBER ';' ;
-Properties:             'our %properties = (' Critic HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* ')' ';' | 'our %properties = (' ')' ';' Critic ;
-PropertiesClass:        'our %properties_class = (' Critic HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* ')' ';' ;
+#Properties:             'our %properties = (' Critic HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* ')' ';' | 'our %properties = (' ')' ';' Critic ;
+#PropertiesClass:        'our %class_properties = (' Critic HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* ')' ';' ;
+Properties:             'our $properties = {' Critic HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* '}' ';' | 'our $properties = {' '}' ';' Critic ;
+PropertiesClass:        'our $class_properties = {' Critic HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* '}' ';' ;
 Method:                 'our' TYPE_METHOD VARIABLE_SYMBOL '= sub {' MethodArguments? Operation+ '}' ';' ;
 MethodArguments:        '( my' TYPE_CLASS_OR_SELF (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
 MethodOrSubroutine:     Method | Subroutine;
@@ -149,9 +151,9 @@ Operator:               LPAREN OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ')' 
                         OP01_OPEN 'my' 'filehandle_ref' FH_REF_SYMBOL OP21_LIST_COMMA LITERAL_STRING OP21_LIST_COMMA SubExpression |
                         OP01_CLOSE FH_REF_SYMBOL | OP03_MATH_INC_DEC Variable | Variable OP03_MATH_INC_DEC | SubExpression OP04_MATH_POW SubExpression |
                         OP05_LOGICAL_NEG SubExpression | OP05_MATH_NEG_LPAREN SubExpression ')' | SubExpression OP06_REGEX_MATCH OP06_REGEX_PATTERN |
-                        # START HERE: add string repeat tests
-                        # START HERE: add string repeat tests
-                        # START HERE: add string repeat tests
+                        # START HERE 3: add string repeat tests
+                        # START HERE 3: add string repeat tests
+                        # START HERE 3: add string repeat tests
                         SubExpression OP07_STRING_REPEAT SubExpression | SubExpression OP07_MATH_MULT_DIV_MOD SubExpression |
                         SubExpression OP08_MATH_ADD_SUB SubExpression | SubExpression OP08_STRING_CAT SubExpression | SubExpression OP09_BITWISE_SHIFT SubExpression |
                         OP10_NAMED_UNARY SubExpression | OP10_NAMED_UNARY | OP10_STRINGIFY_UNARY SubExpression ')' | SubExpression OP11_COMPARE_LT_GT SubExpression |
@@ -162,7 +164,6 @@ Operator:               LPAREN OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ')' 
 OperatorVoid:           OP01_PRINT (STDOUT_STDERR)? ListElements ';' | OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ';' |
                         OP01_NAMED_VOID ListElements? ';' | OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';' | OP19_LOOP_CONTROL LoopLabel? ';' ;
 Expression:             Operator | WordScoped LPAREN ListElements? ')' | Variable OP02_METHOD_THINARROW WORD LPAREN ListElements? ')' ;
-# NEED FIX: add class properties double-colon access?
 SubExpression:          Expression | 'undef' | Literal | Variable | ArrayReference | ArrayDereferenced | HashReference | HashDereferenced | LBRACE '}' |
                         LPAREN SubExpression ')' ;
 SubExpressionOrStdin:   SubExpression | STDIN;

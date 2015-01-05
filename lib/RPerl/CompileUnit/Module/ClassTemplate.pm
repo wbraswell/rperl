@@ -84,18 +84,20 @@ use constant PIE => my string $TYPED_PIE = 'pecan';
 
 # [[[ OO OBJECT PROPERTIES ]]]
 # <<< CHANGE_ME: replace with real object property name(s) & default data >>>
-our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
+#our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
+our $properties = { ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
     plugh => my integer $TYPED_plugh           = 23,
     xyzzy => my string $TYPED_xyzzy            = 'twenty-three',
     thud  => my integer__array_ref $TYPED_thud = [ 2, 4, 6, 8 ],
     yyz => my number__hash_ref $TYPED_yyz = { a => 3.1, b => 6.2, c => 9.3 }
-);
+};
 
 # [[[ OO CLASS PROPERTIES ]]]
 # <<< CHANGE_ME: replace with real class property name(s) & default data >>>
-our %properties_class = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
+#our %class_properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
+our $class_properties = { ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
     fruz => my string $TYPED_fruz = 'howdy'
-);
+};
 
 # [[[ OO OBJECT METHODS ]]]
 
@@ -115,12 +117,12 @@ our string__method $corge = sub {
 # <<< CHANGE_ME: delete for no methods, or replace with real method(s) >>>
 our void__method $xuuq = sub {
     ( my string $class) = @_;
-    $class->{properties_class}{fruz} .= 'ahoy';
+    $class->{class_properties}->{fruz} .= 'ahoy';
 };
 
 our string__method $egroc = sub {
     ( my string $class, my integer $egroc_input) = @_;
-    return $class->{properties_class}{fruz} x $egroc_input;
+    return $class->{class_properties}->{fruz} x $egroc_input;
 };
 
 # [[[ SUBROUTINES ]]]
@@ -138,16 +140,4 @@ our number__array_ref $garply = sub {
     return $garply_output;
 };
 
-# NEED DETERMINE: auto-generate ops & types reporting below???
-# NEED DETERMINE: auto-generate ops & types reporting below???
-# NEED DETERMINE: auto-generate ops & types reporting below???
-
-# <<< OPERATIONS & DATA TYPES REPORTING >>>
-our integer $RPerl__CompileUnit__Module__ClassTemplate__OPS_TYPES_ID
-    = sub { return 0; };    # PERLOPS_PERLTYPES is 0
-our string $RPerl__CompileUnit__Module__ClassTemplate__ops
-    = sub { return 'PERL'; };
-our string $RPerl__CompileUnit__Module__ClassTemplate__types
-    = sub { return 'PERL'; };
-
-1;                          # end of class
+1;    # end of class

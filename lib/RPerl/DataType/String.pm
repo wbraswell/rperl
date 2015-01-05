@@ -2,7 +2,7 @@ package RPerl::DataType::String;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_004;
+our $VERSION = 0.003_010;
 
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(Capitalization ProhibitMultiplePackages)  # SYSTEM DEFAULT 3: allow multiple lower case package names
@@ -62,11 +62,6 @@ our void $string__CHECKTRACE = sub {
         );
     }
 };
-
-# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-our integer $string__OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0
-our string $string__ops = sub { return ('PERL'); };
-our string $string__types = sub { return ('PERL'); };
 
 # [[[ STRINGIFY ]]]
 our string $string__stringify = sub {

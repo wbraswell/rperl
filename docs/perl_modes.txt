@@ -27,7 +27,7 @@
     	TRACE (report variable name & calling function)
 
 INTERPRET run,  PERL code,      PERL ops,   PERL_DYNAMIC types,	OFF check	= NORMAL PERL
-INTERPRET run,  PERL code,      PERL ops,   PERL_STATIC types,	TRACE check	= RPERL PURE-PERL MODE
+INTERPRET run,  PERL code,      PERL ops,   PERL_STATIC types,	TRACE check	= RPERL PERLOPS_PERLTYPES aka PURE-PERL MODE
 ...
 COMPILE run,    RPERL code,     CPP ops,    PERL_STATIC types,  TRACE check = RPERL CPPOPS_PERLTYPES MODE
 COMPILE run,    RPERL code,     CPP ops,    CPP types,          TRACE check = RPERL CPPOPS_CPPTYPES MODE

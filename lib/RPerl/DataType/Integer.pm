@@ -2,7 +2,7 @@ package RPerl::DataType::Integer;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_004;
+our $VERSION = 0.003_010;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -63,11 +63,6 @@ our void $integer__CHECKTRACE = sub {
     }
 };
 
-# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-our integer $integer__OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0
-our string $integer__ops = sub { return ('PERL'); };
-our string $integer__types = sub { return ('PERL'); };
-
 # [[[ STRINGIFY ]]]
 our string $integer__stringify = sub {
     ( my $input_integer ) = @_;
@@ -82,7 +77,7 @@ our string $integer__stringify = sub {
 
 # [[[ TYPE TESTING ]]]
 our integer $integer__typetest0 = sub {
-    my integer $retval = ( 21 / 7 ) + $integer__OPS_TYPES_ID; # return integer (not number) value, don't do (22 / 7) etc.
+    my integer $retval = ( 21 / 7 ) + integer__OPS_TYPES_ID(); # return integer (not number) value, don't do (22 / 7) etc.
 
 #    RPerl::diag "in PERLOPS_PERLTYPES integer__typetest0(), have \$retval = $retval\n" or croak();
     return ($retval);
@@ -95,7 +90,7 @@ our integer $integer__typetest1 = sub {
         'integer__typetest1()' );
 
 #    RPerl::diag 'in PERLOPS_PERLTYPES integer__typetest1(), received $lucky_integer = ' . integer__stringify($lucky_integer) . "\n" or croak();
-    return ( ( $lucky_integer * 2 ) + $integer__OPS_TYPES_ID );
+    return ( ( $lucky_integer * 2 ) + integer__OPS_TYPES_ID() );
 };
 
 1;

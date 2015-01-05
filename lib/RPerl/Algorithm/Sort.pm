@@ -3,7 +3,7 @@ package RPerl::Algorithm::Sort;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_020;
+our $VERSION = 0.004_030;
 
 # [[[ CRITICS, OO INHERITANCE, INCLUDES ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -31,10 +31,6 @@ our string $uninherited__Sort = sub {
 
 #our string $uninherited = sub { (my string $person) = @_;  RPerl::diag "in PERLOPS_PERLTYPES Sort::uninherited(), received \$person = '$person', TROUSERS\n";  return "Sort::uninherited() ROCKS! PERLOPS_PERLTYPES"; };
 
-# <<< OPERATIONS & DATA TYPES REPORTING >>>
-our integer $RPerl__Algorithm__Sort__OPS_TYPES_ID = sub { return 0; }; # PERLOPS_PERLTYPES is 0
-our string $RPerl__Algorithm__Sort__ops   = sub { return 'PERL'; };
-our string $RPerl__Algorithm__Sort__types = sub { return 'PERL'; };
 1;    # end of class
 
 __END__

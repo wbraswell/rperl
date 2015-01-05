@@ -1,0 +1,4 @@
+Running Mkbootstrap for eval_9_d115 ()
+chmod 644 "eval_9_d115.bs"
+Files found in blib/arch: installing files in blib/lib into architecture dependent library tree
+Installing /home/wbraswell/austin_perl_mongers/rperl/rperl-latest/lib/RPerl/Test/OperationsTypesReporting/_Inline/lib/auto/eval_9_d115/eval_9_d115.so

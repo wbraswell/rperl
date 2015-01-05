@@ -3,7 +3,7 @@ package RPerl::DataType::FileHandle;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_010;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -57,10 +57,5 @@ our void $filehandle_ref__CHECKTRACE = sub {
         );
     }
 };
-
-# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-our integer $filehandle__OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0
-our string $filehandle__ops = sub { return ('PERL'); };
-our string $filehandle__types = sub { return ('PERL'); };
 
 1;                                            # end of class

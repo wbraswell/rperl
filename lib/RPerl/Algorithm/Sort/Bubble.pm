@@ -3,12 +3,14 @@ package RPerl::Algorithm::Sort::Bubble;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_021;
+our $VERSION = 0.004_022;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw( RPerl::Algorithm::Sort ); # OO INHERITANCE TESTING; SINGLE OO INHERITANCE
+
 #use parent qw( RPerl::Algorithm::Sort RPerl::Algorithm::Inefficient ); # OO INHERITANCE TESTING; NEED UPGRADE: multiple inheritance not currently supported by Inline::CPP
 use RPerl::Algorithm::Sort;
+
 #use RPerl::Algorithm::Inefficient;    # OO INHERITANCE TESTING; NEED UPGRADE: multiple inheritance not currently supported by Inline::CPP
 
 # [[[ CRITICS ]]]
@@ -45,11 +47,13 @@ our void__method $number__sort = sub {
 
 our void__method $inherited__Bubble = sub {
     ( my object $self, my string $person) = @_;
+
 #    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), received $self = ' . $self . ' and $person = ' . $person . ', FRIED' . "\n");
 };
 
 our void__method $inherited = sub {
     ( my object $self, my string $person) = @_;
+
 #    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited(), received $self = ' . $self . ' and $person = ' . $person . ', ILLOGICAL' . "\n");
 };
 
@@ -154,6 +158,7 @@ our number__array_ref $number__bubblesort = sub {
 
 our string $uninherited__Bubble = sub {
     ( my string $person) = @_;
+
 #    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble::uninherited__Bubble(), received $person = ' . $person . ', MITOCHONDRIAL' . "\n");
     return ('Bubble::uninherited__Bubble() RULES! PERLOPS_PERLTYPES');
 };
@@ -161,6 +166,7 @@ our string $uninherited__Bubble = sub {
 # DEV NOTE, CORRELATION #04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
 our string $uninherited = sub {
     ( my string $person) = @_;
+
 #    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble::uninherited(), received $person = ' . $person . ', TETRAHEDRON' . "\n");
     return ('Bubble::uninherited() ROCKS! PERLOPS_PERLTYPES');
 };
@@ -208,10 +214,4 @@ our string $number__bubblesort__typetest0 = sub {
             . 'PERLOPS_PERLTYPES' );
 };
 
-# <<< OPERATIONS & DATA TYPES REPORTING >>>
-our integer $RPerl__Algorithm__Sort__Bubble__OPS_TYPES_ID
-    = sub { return 0; };    # PERLOPS_PERLTYPES is 0
-our string $RPerl__Algorithm__Sort__Bubble__ops   = sub { return 'PERL'; };
-our string $RPerl__Algorithm__Sort__Bubble__types = sub { return 'PERL'; };
-
-1;                  # end of class
+1;    # end of class
