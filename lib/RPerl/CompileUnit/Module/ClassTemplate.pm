@@ -53,8 +53,6 @@ use RPerl::CompileUnit::Module::Class;
 ## no critic qw(ProhibitCascadingIfElse)  # SYSTEM SPECIAL 12: allow complex conditional logic
 ## no critic qw(RequireCarping)  # SYSTEM SPECIAL 13: allow die instead of croak
 
-## no critic (package)  # SYSTEM EXTERNAL 1: originally from Inline::CPP
-
 # COMBO CRITICS
 ## no critic qw(ProhibitUselessNoCritic PodSpelling ProhibitExcessMainComplexity)  # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code; SYSTEM SPECIAL 5: allow complex code outside subroutines, must be on line 1
 
@@ -65,7 +63,6 @@ use RPerl::Test::Bar;
 
 # [[[ CONSTANTS ]]]
 # <<< CHANGE_ME: delete for no constants, or replace with real constant name(s) & data >>>
-## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 4: allow constants
 use constant PI  => my number $TYPED_PI  = 3.141_59;
 use constant PIE => my string $TYPED_PIE = 'pecan';
 
@@ -91,13 +88,13 @@ our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allo
     plugh => my integer $TYPED_plugh           = 23,
     xyzzy => my string $TYPED_xyzzy            = 'twenty-three',
     thud  => my integer__array_ref $TYPED_thud = [ 2, 4, 6, 8 ],
-    yyz => my number__hash_ref $TYPED_yyz = { a => 3.1, b => 6.2, c => 9.3 },
+    yyz => my number__hash_ref $TYPED_yyz = { a => 3.1, b => 6.2, c => 9.3 }
 );
 
 # [[[ OO CLASS PROPERTIES ]]]
 # <<< CHANGE_ME: replace with real class property name(s) & default data >>>
 our %properties_class = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
-    name => my string $TYPED_name = 'howdy',
+    fruz => my string $TYPED_fruz = 'howdy'
 );
 
 # [[[ OO OBJECT METHODS ]]]
@@ -113,24 +110,17 @@ our string__method $corge = sub {
     return $self->{xyzzy} x 3;
 };
 
-
-
-# START HERE: create working class methods
-# START HERE: create working class methods
-# START HERE: create working class methods
-
-
 # [[[ OO CLASS METHODS ]]]
 
 # <<< CHANGE_ME: delete for no methods, or replace with real method(s) >>>
 our void__method $xuuq = sub {
     ( my string $class) = @_;
-    $class::properties_class{name} .= 'ahoy';
+    $class->{properties_class}{fruz} .= 'ahoy';
 };
 
-our string__method $corge = sub {
-    ( my object $self) = @_;
-    return $self->{xyzzy} x 3;
+our string__method $egroc = sub {
+    ( my string $class, my integer $egroc_input) = @_;
+    return $class->{properties_class}{fruz} x $egroc_input;
 };
 
 # [[[ SUBROUTINES ]]]

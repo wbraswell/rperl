@@ -52,7 +52,8 @@
 %token OP08_STRING_CAT          = /(\.)/                        # precedence 08 infix: string concatenate
 %token OP03_MATH_INC_DEC        = /(\+\+|--)/                   # precedence 03 prefix and postfix: increment, decrement
 %token OP04_MATH_POW            = /(\*\*)/                      # precedence 04 infix: arithmetic exponent AKA power
-%token OP07_MATH_MULT_DIV_MOD   = /(\*|\/|\%)/                  # precedence 07 infix: arithmetic multiply, divide, modulo
+%token OP07_MATH_MULT_DIV_MOD   = /(\*|\/|\%|\x)/               # precedence 07 infix: arithmetic multiply, divide, modulo
+%token OP07_STRING_REPEAT       = /(\sx\s)/                     # precedence 07 infix: string repetition
 %token OP06_REGEX_PATTERN       = /([ms]\/.*(?:\/.*)?\/[a-z]*)/ # precedence 06 infix: regular expression pattern
 %token OP06_REGEX_MATCH         = /(=\~|!\~)/                   # precedence 06 infix: regular expression match, not match
 %token OP19_VARIABLE_ASSIGN_BY  = /(\+=|-=|\*=|\/=)/            # precedence 19 infix: add assign, subtract assign, multiply assign, divide assign
@@ -94,6 +95,7 @@
 %left       OP08_STRING_CAT
 %left       OP08_MATH_ADD_SUB
 %left       OP07_MATH_MULT_DIV_MOD
+%left       OP07_STRING_REPEAT
 %left       OP06_REGEX_MATCH
 %left       OP06_REGEX_PATTERN
 %right      OP05_MATH_NEG_LPAREN
@@ -147,9 +149,12 @@ Operator:               LPAREN OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ')' 
                         OP01_OPEN 'my' 'filehandle_ref' FH_REF_SYMBOL OP21_LIST_COMMA LITERAL_STRING OP21_LIST_COMMA SubExpression |
                         OP01_CLOSE FH_REF_SYMBOL | OP03_MATH_INC_DEC Variable | Variable OP03_MATH_INC_DEC | SubExpression OP04_MATH_POW SubExpression |
                         OP05_LOGICAL_NEG SubExpression | OP05_MATH_NEG_LPAREN SubExpression ')' | SubExpression OP06_REGEX_MATCH OP06_REGEX_PATTERN |
-                        SubExpression OP07_MATH_MULT_DIV_MOD SubExpression | SubExpression OP08_MATH_ADD_SUB SubExpression |
-                        SubExpression OP08_STRING_CAT SubExpression | SubExpression OP09_BITWISE_SHIFT SubExpression | OP10_NAMED_UNARY SubExpression |
-                        OP10_NAMED_UNARY | OP10_STRINGIFY_UNARY SubExpression ')' | SubExpression OP11_COMPARE_LT_GT SubExpression |
+                        # START HERE: add string repeat tests
+                        # START HERE: add string repeat tests
+                        # START HERE: add string repeat tests
+                        SubExpression OP07_STRING_REPEAT SubExpression | SubExpression OP07_MATH_MULT_DIV_MOD SubExpression |
+                        SubExpression OP08_MATH_ADD_SUB SubExpression | SubExpression OP08_STRING_CAT SubExpression | SubExpression OP09_BITWISE_SHIFT SubExpression |
+                        OP10_NAMED_UNARY SubExpression | OP10_NAMED_UNARY | OP10_STRINGIFY_UNARY SubExpression ')' | SubExpression OP11_COMPARE_LT_GT SubExpression |
                         SubExpression OP12_COMPARE_EQ_NE SubExpression | SubExpression OP13_BITWISE_AND SubExpression |
                         SubExpression OP14_BITWISE_OR_XOR SubExpression | SubExpression OP15_LOGICAL_AND SubExpression | SubExpression OP16_LOGICAL_OR SubExpression |
                         SubExpression OP17_LIST_RANGE SubExpression | SubExpression OP18_TERNARY VariableOrLiteral COLON VariableOrLiteral |
