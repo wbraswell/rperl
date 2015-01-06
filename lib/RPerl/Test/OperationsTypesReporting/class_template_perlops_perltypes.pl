@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: 'OPS_TYPES_ID = 0' >>>
+# <<< RUN_SUCCESS: 'MODE_ID = 0' >>>
 # <<< RUN_SUCCESS: "ops = 'PERL'" >>>
 # <<< RUN_SUCCESS: "types = 'PERL'" >>>
 
@@ -22,10 +22,10 @@ use RPerl::CompileUnit::Module::ClassTemplate;
 
 #print '%main:: = ', "\n", Dumper( \%main:: ), "\n";
 
-print 'OPS_TYPES_ID = ', RPerl__CompileUnit__Module__ClassTemplate__OPS_TYPES_ID(), "\n";
-print q{ops = '}, $RPerl::OPS_TYPES_IDS_DECODED->{RPerl__CompileUnit__Module__ClassTemplate__OPS_TYPES_ID()}->{ops}, q{'}, "\n";
-print q{types = '}, $RPerl::OPS_TYPES_IDS_DECODED->{RPerl__CompileUnit__Module__ClassTemplate__OPS_TYPES_ID()}->{types}, q{'}, "\n";
+print 'MODE_ID = ', RPerl__CompileUnit__Module__ClassTemplate__MODE_ID(), "\n";
+print q{ops = '}, $RPerl::MODES->{RPerl__CompileUnit__Module__ClassTemplate__MODE_ID()}->{ops}, q{'}, "\n";
+print q{types = '}, $RPerl::MODES->{RPerl__CompileUnit__Module__ClassTemplate__MODE_ID()}->{types}, q{'}, "\n";
 
-# START HERE 0: replace all outdated usage of *_ops() and *_types()
-# START HERE 0: replace all outdated usage of *_ops() and *_types()
-# START HERE 0: replace all outdated usage of *_ops() and *_types()
+# START HERE 0: test replacement of *_ops() and *_types() with $RPerl::MODES & $MODE_ID
+# START HERE 0: test replacement of *_ops() and *_types() with $RPerl::MODES & $MODE_ID
+# START HERE 0: test replacement of *_ops() and *_types() with $RPerl::MODES & $MODE_ID

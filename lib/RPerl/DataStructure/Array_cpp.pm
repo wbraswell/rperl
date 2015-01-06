@@ -11,17 +11,17 @@ our $VERSION = 0.004_001;
 # [[[ SUBROUTINES ]]]
 our void__method $cpp_load = sub {
     my $need_load_cpp = 0;
-    if (    ( exists $main::{'RPerl__DataStructure__Array__ops'} )
-        and ( defined &{ $main::{'RPerl__DataStructure__Array__ops'} } ) )
+    if (    ( exists $main::{'RPerl__DataStructure__Array__MODE_ID'} )
+        and ( defined &{ $main::{'RPerl__DataStructure__Array__MODE_ID'} } ) )
     {
-#        RPerl::diag "in Array_cpp::cpp_load, RPerl__DataStructure__Array__ops() exists & defined\n";
-#        RPerl::diag q{in Array_cpp::cpp_load, have RPerl__DataStructure__Array__ops() retval = '} . main::RPerl__DataStructure__Array__ops() . "'\n";
-        if ( main::RPerl__DataStructure__Array__ops() ne 'CPP' ) {
+#        RPerl::diag "in Array_cpp::cpp_load, RPerl__DataStructure__Array__MODE_ID() exists & defined\n";
+#        RPerl::diag q{in Array_cpp::cpp_load, have RPerl__DataStructure__Array__MODE_ID() retval = '} . main::RPerl__DataStructure__Array__MODE_ID() . "'\n";
+        if ( $RPerl::MODES->{main::RPerl__DataStructure__Array__MODE_ID()}->{ops} ne 'CPP' ) {
             $need_load_cpp = 1;
         }
     }
     else {
-#        RPerl::diag "in Array_cpp::cpp_load, RPerl__DataStructure__Array__ops() does not exist or undefined\n";
+#        RPerl::diag "in Array_cpp::cpp_load, RPerl__DataStructure__Array__MODE_ID() does not exist or undefined\n";
         $need_load_cpp = 1;
     }
 

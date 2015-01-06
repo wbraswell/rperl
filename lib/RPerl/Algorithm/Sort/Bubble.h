@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h 0.004_011
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h 0.004_020
 
 ////# [[[ INCLUDES ]]]
 #include <rperltypes_mode.h>  // for definitions of __PERL__TYPES or __CPP__TYPES
@@ -73,9 +73,7 @@ SV* number__bubblesort__typetest0(SV* lucky_numbers);
 //SV* string__bubblesort__typetest0(SV* people);
 
 // <<< OPERATIONS & DATA TYPES REPORTING >>>
-SV* RPerl__Algorithm__Sort__Bubble__OPS_TYPES_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES IS 1
-SV* RPerl__Algorithm__Sort__Bubble__ops() { return(newSVpv("CPP", 3)); }
-SV* RPerl__Algorithm__Sort__Bubble__types() { return(newSVpv("PERL", 4)); }
+SV* RPerl__Algorithm__Sort__Bubble__MODE_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
 
 // [[[<<< END PERL TYPES >>>]]]
 // [[[<<< END PERL TYPES >>>]]]
@@ -137,9 +135,7 @@ string number__bubblesort__typetest0(number__array_ref lucky_numbers);
 //string string__bubblesort__typetest0(string__array_ref people);
 
 // <<< OPERATIONS & DATA TYPES REPORTING >>>
-integer RPerl__Algorithm__Sort__Bubble__OPS_TYPES_ID() { integer retval = 1;  return(retval); }  // CPPOPS_PERLTYPES IS 1
-string RPerl__Algorithm__Sort__Bubble__ops() { string retval = "CPP";  return(retval); }
-string RPerl__Algorithm__Sort__Bubble__types() { string retval = "CPP";  return(retval); }
+integer RPerl__Algorithm__Sort__Bubble__MODE_ID() { integer retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 2
 
 // [[[<<< END CPP TYPES >>>]]]
 // [[[<<< END CPP TYPES >>>]]]

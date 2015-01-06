@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash_h
-#define __CPP__INCLUDED__RPerl__DataStructure__Hash_h 0.004_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Hash_h 0.004_010
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
@@ -62,11 +62,9 @@ void string__hash_ref__CHECKTRACE(SV* possible_string__hash_ref, const char* var
 
 // [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 # ifdef __PERL__TYPES
-SV* hash__ops() { return(newSVpv("CPP", 3)); }
-SV* hash__types() { return(newSVpv("PERL", 4)); }
+SV* hash__MODE_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
 # elif defined __CPP__TYPES
-string hash__ops() { string retval = "CPP";  return(retval); }
-string hash__types() { string retval = "CPP";  return(retval); }
+integer hash__MODE_ID() { integer retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 2
 # else
 Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_exactly_one!
 # endif

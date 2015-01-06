@@ -168,10 +168,10 @@ INIT {
                     $package_name_underscores = $package_name;
                     $package_name_underscores =~ s/::/__/g;
  
-                    if (not eval( 'defined &main::' . $package_name_underscores . '__OPS_TYPES_ID' ) )
+                    if (not eval( 'defined &main::' . $package_name_underscores . '__MODE_ID' ) )
                     {
-                        eval(     '*main::' . $package_name_underscores . '__OPS_TYPES_ID = sub { return 0; };' ) # PERLOPS_PERLTYPES is 0
-#                        eval(     'sub main::' . $package_name_underscores . '__OPS_TYPES_ID { return 0; }' ) # equivalent to previous line
+                        eval(     '*main::' . $package_name_underscores . '__MODE_ID = sub { return 0; };' ) # PERLOPS_PERLTYPES is 0
+#                        eval(     'sub main::' . $package_name_underscores . '__MODE_ID { return 0; }' ) # equivalent to previous line
                             or croak( $EVAL_ERROR );
                         if ($EVAL_ERROR) { croak($EVAL_ERROR); }
                     }

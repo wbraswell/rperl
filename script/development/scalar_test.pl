@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_003;
+our $VERSION = 0.003_010;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd PodSpelling) # DEVELOPER DEFAULT 1: allow unreachable & POD-commented code
@@ -21,12 +21,9 @@ rperltypes::types_enable('CPP');
 use RPerl::DataType::String_cpp;
 RPerl::DataType::String_cpp::cpp_load();
 
-RPerl::diag q{in scalar_test.pl, have integer__ops() = '} . integer__ops() . "'\n" or croak();
-RPerl::diag q{in scalar_test.pl, have integer__types() = '} . integer__types() . "'\n" or croak();
-RPerl::diag q{in scalar_test.pl, have number__ops() = '} . number__ops() . "'\n" or croak();
-RPerl::diag q{in scalar_test.pl, have number__types() = '} . number__types() . "'\n" or croak();
-RPerl::diag q{in scalar_test.pl, have string__ops() = '} . string__ops() . "'\n" or croak();
-RPerl::diag q{in scalar_test.pl, have string__types() = '} . string__types() . "'\n" or croak();
+RPerl::diag q{in scalar_test.pl, have integer__MODE_ID() = '} . integer__MODE_ID() . "'\n" or croak();
+RPerl::diag q{in scalar_test.pl, have number__MODE_ID() = '} . number__MODE_ID() . "'\n" or croak();
+RPerl::diag q{in scalar_test.pl, have string__MODE_ID() = '} . string__MODE_ID() . "'\n" or croak();
 
 # use Data::Dumper() to to stringify a string
 #our string $string__dumperify = sub {  # NEED FIX: RPerl subroutines disabled here

@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_012;
+our $VERSION = 0.000_020;
 
 # [[[ CRITICS, INCLUDES ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -22,11 +22,8 @@ rperltypes::types_enable('PERL');
 use RPerl::Algorithm::Sort::Bubble_cpp;
 RPerl::Algorithm::Sort::Bubble_cpp::cpp_load(); # OR this
 
-#print q{in oo_test.pl, have RPerl__Algorithm__Sort__Bubble__OPS_TYPES_ID = '} . $RPerl::Algorithm::Sort::Bubble::RPerl__Algorithm__Sort__Bubble__OPS_TYPES_ID . "'\n";  # PERL/PERL ONLY
-print q{in oo_test.pl, have RPerl__Algorithm__Sort__Bubble__ops() = '}
-    . RPerl__Algorithm__Sort__Bubble__ops() . "'\n";
-print q{in oo_test.pl, have RPerl__Algorithm__Sort__Bubble__types() = '}
-    . RPerl__Algorithm__Sort__Bubble__types() . "'\n";
+print q{in oo_test.pl, have RPerl__Algorithm__Sort__Bubble__MODE_ID() = '}
+    . RPerl__Algorithm__Sort__Bubble__MODE_ID() . "'\n";
 
 # variable declarations
 my object $sorter;

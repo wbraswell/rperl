@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_h
-#define __CPP__INCLUDED__RPerl__DataType__String_h 0.003002
+#define __CPP__INCLUDED__RPerl__DataType__String_h 0.003_010
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
@@ -31,13 +31,9 @@ typedef std::ostringstream ostringstream;
 
 // [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 # ifdef __PERL__TYPES
-# define string__OPS_TYPES_ID 1 // CPPOPS_PERLTYPES is 1
-SV* string__ops() { return(newSVpv("CPP", 3)); }
-SV* string__types() { return(newSVpv("PERL", 4)); }
+SV* string__MODE_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
 # elif defined __CPP__TYPES
-# define string__OPS_TYPES_ID 2 // CPPOPS_CPPTYPES is 2
-string string__ops() { string retval = "CPP";  return(retval); }
-string string__types() { string retval = "CPP";  return(retval); }
+integer string__MODE_ID() { integer retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 2
 # else
 Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_exactly_one!
 # endif

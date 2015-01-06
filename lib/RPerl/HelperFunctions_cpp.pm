@@ -5,7 +5,7 @@ use warnings;
 use RPerl::Config; # get Carp, English, $RPerl::INCLUDE_PATH without 'use RPerl;'
 
 #use RPerl;  # DEV NOTE: need to use HelperFunctions in RPerl::DataStructure::Array for type checking SvIOKp() etc; remove dependency on RPerl void__method type so HelperFunctions can be loaded by RPerl type system
-our $VERSION = 0.002_010;
+our $VERSION = 0.002_020;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
@@ -14,17 +14,20 @@ our $VERSION = 0.002_010;
 #our void__method $cpp_load = sub {  # DEV NOTE: remove dependency on RPerl
 sub cpp_load {
     my $need_load_cpp = 0;
-    if (    ( exists $main::{'RPerl__HelperFunctions__ops'} )
-        and ( defined &{ $main::{'RPerl__HelperFunctions__ops'} } ) )
+    if (    ( exists $main::{'RPerl__HelperFunctions__MODE_ID'} )
+        and ( defined &{ $main::{'RPerl__HelperFunctions__MODE_ID'} } ) )
     {
-#        RPerl::diag "in HelperFunctions_cpp::cpp_load, RPerl__HelperFunctions__ops() exists & defined\n";
-#        RPerl::diag q{in HelperFunctions_cpp::cpp_load, have RPerl__HelperFunctions__ops() retval = '} . main::RPerl__HelperFunctions__ops() . "'\n";
-        if ( main::RPerl__HelperFunctions__ops() ne 'CPP' ) {
+#        RPerl::diag "in HelperFunctions_cpp::cpp_load, RPerl__HelperFunctions__MODE_ID() exists & defined\n";
+#        RPerl::diag q{in HelperFunctions_cpp::cpp_load, have RPerl__HelperFunctions__MODE_ID() retval = '} . main::RPerl__HelperFunctions__MODE_ID() . "'\n";
+        if ( $RPerl::MODES
+            ->{ main::RPerl__HelperFunctions__MODE_ID() }->{ops} ne
+            'CPP' )
+        {
             $need_load_cpp = 1;
         }
     }
     else {
-#        RPerl::diag "in HelperFunctions_cpp::cpp_load, RPerl__HelperFunctions__ops() does not exist or undefined\n";
+#        RPerl::diag "in HelperFunctions_cpp::cpp_load, RPerl__HelperFunctions__MODE_ID() does not exist or undefined\n";
         $need_load_cpp = 1;
     }
 
@@ -51,5 +54,4 @@ EOF
 #	else { RPerl::diag "in HelperFunctions_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"; }
 }
 
-1;
 1;

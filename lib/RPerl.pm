@@ -22,13 +22,6 @@ require rperltypes;
 
 # [[[ OO CLASS PROPERTIES SPECIAL ]]]
 
-# see perl_modes.txt for more info
-our $OPS_TYPES_IDS_DECODED = {
-    0 => { ops => 'PERL', types => 'PERL_STATIC' },
-    1 => { ops => 'CPP',  types => 'PERL_STATIC' },
-    2 => { ops => 'CPP',  types => 'CPP' }
-};
-
 # data type checking mode, disabled in RPerl system code which calls 'use RPerl;',
 # changed on a per-file basis by preprocessor directive, see RPerl::CompileUnit::Module::Class::INIT
 # NEED UPGRADE: enable in RPerl system code when boostrapping compiler

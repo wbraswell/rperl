@@ -30,8 +30,7 @@ typedef std::string string;
 typedef std::ostringstream ostringstream;
 
 // [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-string string__ops() { string retval = "CPP";  return(retval); }
-string string__types() { string retval = "CPP";  return(retval); }
+integer string__MODE_ID() { integer retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 2
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 string XS_unpack_string(SV* input_sv);

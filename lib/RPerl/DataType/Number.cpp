@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Number_cpp
-#define __CPP__INCLUDED__RPerl__DataType__Number_cpp 0.003_003
+#define __CPP__INCLUDED__RPerl__DataType__Number_cpp 0.003_010
 
 #include <RPerl/DataType/Number.h>		// -> NULL (relies on native C type)
 
@@ -114,7 +114,7 @@ string number__stringify(number input_number)
 # ifdef __PERL__TYPES
 
 SV* number__typetest0() {
-	SV* retval = newSVnv((22.0 / 7.0) + number__OPS_TYPES_ID);
+	SV* retval = newSVnv((22.0 / 7.0) + number__MODE_ID());
 //fprintf(stderr, "in CPPOPS_PERLTYPES number__typetest0(), have unformatted retval = %Lf\n", (number)SvNV(retval));
 	return(retval);
 }
@@ -123,20 +123,20 @@ SV* number__typetest1(SV* lucky_number) {
 //	number__CHECK(lucky_number);
 	number__CHECKTRACE(lucky_number, "lucky_number", "number__typetest1()");
 //fprintf(stderr, "in CPPOPS_PERLTYPES number__typetest1(), have received lucky_number = %Lf\n", (number)SvNV(lucky_number));
-	return(newSVnv((SvNV(lucky_number) * 2.0) + number__OPS_TYPES_ID));
+	return(newSVnv((SvNV(lucky_number) * 2.0) + number__MODE_ID()));
 }
 
 # elif defined __CPP__TYPES
 
 number number__typetest0() {
-	number retval = (22.0 / 7.0) + number__OPS_TYPES_ID;
+	number retval = (22.0 / 7.0) + number__MODE_ID();
 //fprintf(stderr, "in CPPOPS_CPPTYPES number__typetest0(), have unformatted retval = %Lf\n", retval);
 	return(retval);
 }
 
 number number__typetest1(number lucky_number) {
 	//fprintf(stderr, "in CPPOPS_CPPTYPES number__typetest1(), received unformatted lucky_number = %Lf\n", lucky_number);
-	return((lucky_number * 2.0) + number__OPS_TYPES_ID);
+	return((lucky_number * 2.0) + number__MODE_ID());
 }
 
 # endif

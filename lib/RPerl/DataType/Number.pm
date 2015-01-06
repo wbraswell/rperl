@@ -94,7 +94,7 @@ our string $number__stringify = sub {
 
 # [[[ TYPE TESTING ]]]
 our number $number__typetest0 = sub {
-    my number $retval = ( 22 / 7 ) + number__OPS_TYPES_ID(); # return floating-point number value
+    my number $retval = ( 22 / 7 ) + number__MODE_ID(); # return floating-point number value
 
 #    RPerl::diag "in PERLOPS_PERLTYPES number__typetest0(), have \$retval = $retval\n" or croak();
     return ($retval);
@@ -107,7 +107,7 @@ our number $number__typetest1 = sub {
         'number__typetest1()' );
 
 #    RPerl::diag 'in PERLOPS_PERLTYPES number__typetest1(), received $lucky_number = ' . number__stringify($lucky_number) . "\n" or croak();
-    return ( ( $lucky_number * 2 ) + number__OPS_TYPES_ID() );
+    return ( ( $lucky_number * 2 ) + number__MODE_ID() );
 };
 
 1;

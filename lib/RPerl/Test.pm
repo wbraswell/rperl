@@ -12,15 +12,6 @@ use RPerl::CompileUnit::Module::Class;
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 
-# [[[ OO CLASS PROPERTIES ]]]
-our %properties_class = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
-    modes => my hash_ref__array_ref $TYPED_modes = [
-        { index => 0, ops => 'PERL', types => 'PERL' },
-        { index => 1, ops => 'CPP',  types => 'PERL' },
-        { index => 2, ops => 'CPP',  types => 'CPP' }
-    ]
-);
-
 # [[[ OO METHODS ]]]
 
 # OO INHERITANCE TESTING
@@ -31,20 +22,22 @@ our void__method $empty_method = sub {
 
 # [[[ SUBROUTINES ]]]
 
-#my string $id = sub {  # NEED FIX: RPerl subroutines disabled here
-sub id {
+# NEED UPDATE: move below code to lib/RPerl/Modes.pm & correlate to $RPerl::MODES in lib/RPerl/Config.pm
+
+#my string $mode_tagline = sub {  # NEED FIX: RPerl subroutines disabled here
+sub mode_tagline {
     ( my scalartype__hash_ref $mode ) = @_;
     return $mode->{ops} . 'OPS_' . $mode->{types} . 'TYPES';
 }
 
-#my string $description = sub {
-sub description {
+#my string $mode_description = sub {
+sub mode_description {
     ( my scalartype__hash_ref $mode ) = @_;
     return $mode->{ops} . ' operations and ' . $mode->{types} . ' data types';
 }
 
-#my void $enable = sub {
-sub enable {
+#my void $mode_enable = sub {
+sub mode_enable {
     ( my scalartype__hash_ref $mode ) = @_;
     if ( $mode->{ops} eq 'CPP' ) {
         rperltypes::types_enable( $mode->{types} );

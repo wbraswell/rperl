@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Package;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_015;
+our $VERSION = 0.000_016;
 
 # [[[ SETUP ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -67,13 +67,8 @@ our string__method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     $self_generated .= q{// [[[ OPERATIONS & DATA TYPES REPORTING ]]]} . "\n";
     $self_generated
-        .= q{string } . $self_name_underscores . q[__ops() {] . "\n";
-    $self_generated .= q{    string retval = "CPP";} . "\n";
-    $self_generated .= q{    return (retval);} . "\n";
-    $self_generated .= q[}] . "\n";
-    $self_generated
-        .= q{string } . $self_name_underscores . q[__types() {] . "\n";
-    $self_generated .= q{    string retval = "CPP";} . "\n";
+        .= q{integer } . $self_name_underscores . q[__MODE_ID() {] . "\n";
+    $self_generated .= q{    integer retval = 2;  // CPPOPS_CPPTYPES is 2} . "\n";
     $self_generated .= q{    return (retval);} . "\n";
     $self_generated .= q[}] . "\n";
 

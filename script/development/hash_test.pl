@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_001;
+our $VERSION = 0.004_010;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd PodSpelling) # DEVELOPER DEFAULT 1: allow unreachable & POD-commented code
@@ -16,14 +16,10 @@ our $VERSION = 0.004_001;
 # UNCOMMENT TO ENABLE C++ OPS
 #use RPerl::DataStructure::Hash_cpp;  RPerl::DataStructure::Hash_cpp::cpp_load();
 
-RPerl::diag q{in hash_test.pl, have integer__ops() = '} . integer__ops() . "'\n" or croak();
-RPerl::diag q{in hash_test.pl, have integer__types() = '} . integer__types() . "'\n" or croak();
-RPerl::diag q{in hash_test.pl, have number__ops() = '} . number__ops() . "'\n" or croak();
-RPerl::diag q{in hash_test.pl, have number__types() = '} . number__types() . "'\n" or croak();
-RPerl::diag q{in hash_test.pl, have string__ops() = '} . string__ops() . "'\n" or croak();
-RPerl::diag q{in hash_test.pl, have string__types() = '} . string__types() . "'\n" or croak();
-RPerl::diag q{in hash_test.pl, have hash__ops() = '} . hash__ops() . "'\n" or croak();
-RPerl::diag q{in hash_test.pl, have hash__types() = '} . hash__types() . "'\n" or croak();
+RPerl::diag q{in hash_test.pl, have integer__MODE_ID() = '} . integer__MODE_ID() . "'\n" or croak();
+RPerl::diag q{in hash_test.pl, have number__MODE_ID() = '} . number__MODE_ID() . "'\n" or croak();
+RPerl::diag q{in hash_test.pl, have string__MODE_ID() = '} . string__MODE_ID() . "'\n" or croak();
+RPerl::diag q{in hash_test.pl, have hash__MODE_ID() = '} . hash__MODE_ID() . "'\n" or croak();
 
 # variable declarations
 my string $retval_stringify;

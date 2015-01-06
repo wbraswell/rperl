@@ -32,9 +32,6 @@ void greet_planet(SV* arg0) {
 }
 
 // [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-SV* RPerl__Test__IO__Print_00__ops() {
-    return (newSVpv("CPP", 3));
-}
-SV* RPerl__Test__IO__Print_00__types() {
-    return (newSVpv("PERL", 4));
+SV* RPerl__Test__IO__Print_00__MODE_ID() {
+    return (newSViv(1));  // CPPOPS_PERLTYPES is 1
 }

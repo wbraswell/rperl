@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.004_010;
+our $VERSION = 0.004_020;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
@@ -43,29 +43,37 @@ sub string__dumperify {
     return $input_string;
 }
 
-#RPerl::diag 'in 04_type_scalar.t, before mode loop, have $RPerl::Test::properties_class{modes} = ' . "\n" . Dumper($RPerl::Test::properties_class{modes}) . "\n";
+# [[[ PRIMARY RUNLOOP ]]]
+# [[[ PRIMARY RUNLOOP ]]]
+# [[[ PRIMARY RUNLOOP ]]]
 
-foreach
-    my scalartype__hash_ref $mode ( @{ $RPerl::Test::properties_class{modes} } ) ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
-{
-#    RPerl::diag 'in 04_type_scalar.t, top of mode loop, have $mode = ' . "\n" . Dumper($mode) . "\n";
+# loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
+foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
+
+#for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
+#    RPerl::diag "in 04_type_scalar.t, top of for() loop, have \$mode_id = $mode_id\n";
+    my scalartype__hash_ref $mode = $RPerl::MODES->{$mode_id};
     if ( $ENV{TEST_VERBOSE} ) {
         Test::More::diag( '[[[ Beginning RPerl Scalar Type Tests, '
-                . RPerl::Test::description($mode)
+                . RPerl::Test::mode_description($mode)
                 . ' ]]]' );
     }
 
-    my $ops   = $mode->{ops};
-    my $types = $mode->{types};
+    # [[[ MODE SETUP ]]]
+    # [[[ MODE SETUP ]]]
+    # [[[ MODE SETUP ]]]
+    my $ops                 = $mode->{ops};
+    my $types               = $mode->{types};
+    my string $mode_tagline = RPerl::Test::mode_tagline($mode);
 
-    lives_ok( sub { RPerl::Test::enable($mode) },
-        q{mode '} . RPerl::Test::description($mode) . q{' enabled} );
+    lives_ok( sub { RPerl::Test::mode_enable($mode) },
+        q{mode '} . RPerl::Test::mode_description($mode) . q{' enabled} );
 
     foreach my string $type (qw(Integer Number String)) {
         if ( $ops eq 'CPP' ) {
 
             # force reload
-            delete $main::{ 'RPerl__DataType__' . $type . '__ops' };
+            delete $main::{ 'RPerl__DataType__' . $type . '__MODE_ID' };
 
             my $package = 'RPerl::DataType::' . $type . '_cpp';
             lives_and(
@@ -79,18 +87,10 @@ foreach
         my string $type_lc = lc $type;
         lives_and(
             sub {
-                is( __PACKAGE__->can( $type_lc . '__ops' )->(),
-                    $ops, $type_lc . '__ops() returns ' . $ops );
+                is( __PACKAGE__->can( $type_lc . '__MODE_ID' )->(),
+                    $ops, $type_lc . '__MODE_ID() returns ' . $ops );
             },
-            q{integer__ops() lives}
-        );
-
-        lives_and(
-            sub {
-                is( __PACKAGE__->can( $type_lc . '__types' )->(),
-                    $types, $type_lc . '__types() returns ' . $types );
-            },
-            q{integer__types() lives}
+            $type_lc . q{__MODE_ID() lives}
         );
     }
 
@@ -98,17 +98,17 @@ foreach
     # [[[ INTEGER TESTS ]]]
     # [[[ INTEGER TESTS ]]]
 
-    my string $OPS_TYPES     = RPerl::Test::id($mode);
-    my integer $OPS_TYPES_ID = $mode->{index};
+    my string $mode_tagline     = RPerl::Test::id($mode);
+    my integer $MODE_ID = $mode->{index};
 
     throws_ok(    # TIV00
         sub { integer__stringify() },
-        "/(EIV00.*$OPS_TYPES)|(Usage.*integer__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(EIV00.*$mode_tagline)|(Usage.*integer__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TIV00 integer__stringify() throws correct exception}
     );
     throws_ok(                                               # TIV01
         sub { integer__stringify(undef) },
-        "/EIV00.*$OPS_TYPES/",
+        "/EIV00.*$mode_tagline/",
         q{TIV01 integer__stringify(undef) throws correct exception}
     );
     lives_and(                                               # TIV02
@@ -127,22 +127,22 @@ foreach
     );
     throws_ok(                                               # TIV04
         sub { integer__stringify(-17.3) },
-        "/EIV01.*$OPS_TYPES/",
+        "/EIV01.*$mode_tagline/",
         q{TIV04 integer__stringify(-17.3) throws correct exception}
     );
     throws_ok(                                               # TIV05
         sub { integer__stringify('-17.3') },
-        "/EIV01.*$OPS_TYPES/",
+        "/EIV01.*$mode_tagline/",
         q{TIV05 integer__stringify('-17.3') throws correct exception}
     );
     throws_ok(                                               # TIV06
         sub { integer__stringify( [3] ) },
-        "/EIV01.*$OPS_TYPES/",
+        "/EIV01.*$mode_tagline/",
         q{TIV06 integer__stringify([3]) throws correct exception}
     );
     throws_ok(                                               # TIV07
         sub { integer__stringify( { a_key => 3 } ) },
-        "/EIV01.*$OPS_TYPES/",
+        "/EIV01.*$mode_tagline/",
         q{TIV07 integer__stringify({a_key => 3}) throws correct exception}
     );
     lives_and(                                               # TIV08
@@ -158,13 +158,13 @@ foreach
             integer__stringify(
                 -1_234_567_890_000_000_000_000_000_000_000_000);
         },
-        "/EIV01.*$OPS_TYPES/",
+        "/EIV01.*$mode_tagline/",
         q{TIV09 integer__stringify(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
     );
     lives_and(                                               # TIV10
         sub {
             is( integer__typetest0(),
-                ( 3 + $OPS_TYPES_ID ),
+                ( 3 + $MODE_ID ),
                 q{TIV10 integer__typetest0() returns correct value}
             );
         },
@@ -172,19 +172,19 @@ foreach
     );
     throws_ok(                                               # TIV20
         sub { integer__typetest1() },
-        "/(EIV00.*$OPS_TYPES)|(Usage.*integer__typetest1)/"
+        "/(EIV00.*$mode_tagline)|(Usage.*integer__typetest1)/"
         ,    # DEV NOTE: 2 different error messages, RPerl & C
         q{TIV20 integer__typetest1() throws correct exception}
     );
     throws_ok(    # TIV21
         sub { integer__typetest1(undef) },
-        "/EIV00.*$OPS_TYPES/",
+        "/EIV00.*$mode_tagline/",
         q{TIV21 integer__typetest1(undef) throws correct exception}
     );
     lives_and(    # TIV22
         sub {
             is( integer__typetest1(3),
-                ( ( 3 * 2 ) + $OPS_TYPES_ID ),
+                ( ( 3 * 2 ) + $MODE_ID ),
                 q{TIV22 integer__typetest1(3) returns correct value}
             );
         },
@@ -193,7 +193,7 @@ foreach
     lives_and(    # TIV23
         sub {
             is( integer__typetest1(-17),
-                ( ( -17 * 2 ) + $OPS_TYPES_ID ),
+                ( ( -17 * 2 ) + $MODE_ID ),
                 q{TIV23 integer__typetest1(-17) returns correct value}
             );
         },
@@ -201,28 +201,28 @@ foreach
     );
     throws_ok(    # TIV24
         sub { integer__typetest1(-17.3) },
-        "/EIV01.*$OPS_TYPES/",
+        "/EIV01.*$mode_tagline/",
         q{TIV24 integer__typetest1(-17.3) throws correct exception}
     );
     throws_ok(    # TIV25
         sub { integer__typetest1('-17.3') },
-        "/EIV01.*$OPS_TYPES/",
+        "/EIV01.*$mode_tagline/",
         q{TIV25 integer__typetest1('-17.3') throws correct exception}
     );
     throws_ok(    # TIV26
         sub { integer__typetest1( [3] ) },
-        "/EIV01.*$OPS_TYPES/",
+        "/EIV01.*$mode_tagline/",
         q{TIV26 integer__typetest1([3]) throws correct exception}
     );
     throws_ok(    # TIV27
         sub { integer__typetest1( { a_key => 3 } ) },
-        "/EIV01.*$OPS_TYPES/",
+        "/EIV01.*$mode_tagline/",
         q{TIV27 integer__typetest1({a_key => 3}) throws correct exception}
     );
     lives_and(    # TIV28
         sub {
             is( integer__typetest1(-234_567_890),
-                ( ( -234_567_890 * 2 ) + $OPS_TYPES_ID ),
+                ( ( -234_567_890 * 2 ) + $MODE_ID ),
                 q{TIV28 integer__typetest1(-234_567_890) returns correct value}
             );
         },
@@ -233,7 +233,7 @@ foreach
             integer__typetest1(
                 -1_234_567_890_000_000_000_000_000_000_000_000);
         },
-        "/EIV01.*$OPS_TYPES/",
+        "/EIV01.*$mode_tagline/",
         q{TIV29 integer__typetest1(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
     );
 
@@ -243,12 +243,12 @@ foreach
 
     throws_ok(    # TNV00
         sub { number__stringify() },
-        "/(ENV00.*$OPS_TYPES)|(Usage.*number__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(ENV00.*$mode_tagline)|(Usage.*number__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TNV00 number__stringify() throws correct exception}
     );
     throws_ok(                                              # TNV01
         sub { number__stringify(undef) },
-        "/ENV00.*$OPS_TYPES/",
+        "/ENV00.*$mode_tagline/",
         q{TNV01 number__stringify(undef) throws correct exception}
     );
     lives_and(                                              # TNV02
@@ -275,17 +275,17 @@ foreach
     );
     throws_ok(                                              # TNV05
         sub { number__stringify('-17.3') },
-        "/ENV01.*$OPS_TYPES/",
+        "/ENV01.*$mode_tagline/",
         q{TNV05 number__stringify('-17.3') throws correct exception}
     );
     throws_ok(                                              # TNV06
         sub { number__stringify( [3] ) },
-        "/ENV01.*$OPS_TYPES/",
+        "/ENV01.*$mode_tagline/",
         q{TNV06 number__stringify([3]) throws correct exception}
     );
     throws_ok(                                              # TNV07
         sub { number__stringify( { a_key => 3 } ) },
-        "/ENV01.*$OPS_TYPES/",
+        "/ENV01.*$mode_tagline/",
         q{TNV07 number__stringify({a_key => 3}) throws correct exception}
     );
     lives_and(                                              # TNV08
@@ -302,7 +302,7 @@ foreach
     lives_and(                                              # TNV10
         sub {
             cmp_ok(
-                abs(number__typetest0() - ( 3.14285714285714 + $OPS_TYPES_ID )
+                abs(number__typetest0() - ( 3.14285714285714 + $MODE_ID )
                 ),    ## PERLTIDY BUG comma on newline
                 '<',
                 $ERROR_MAX,
@@ -313,19 +313,19 @@ foreach
     );
     throws_ok(        # TNV20
         sub { number__typetest1() },
-        "/(ENV00.*$OPS_TYPES)|(Usage.*number__typetest1)/"
+        "/(ENV00.*$mode_tagline)|(Usage.*number__typetest1)/"
         ,             # DEV NOTE: 2 different error messages, RPerl & C
         q{TNV20 number__typetest1() throws correct exception}
     );
     throws_ok(        # TNV21
         sub { number__typetest1(undef) },
-        "/ENV00.*$OPS_TYPES/",
+        "/ENV00.*$mode_tagline/",
         q{TNV21 number__typetest1(undef) throws correct exception}
     );
     lives_and(        # TNV22
         sub {
             is( number__typetest1(3),
-                ( ( 3 * 2 ) + $OPS_TYPES_ID ),
+                ( ( 3 * 2 ) + $MODE_ID ),
                 q{TNV22 number__typetest1(3) returns correct value}
             );
         },
@@ -334,7 +334,7 @@ foreach
     lives_and(        # TNV23
         sub {
             is( number__typetest1(-17),
-                ( ( -17 * 2 ) + $OPS_TYPES_ID ),
+                ( ( -17 * 2 ) + $MODE_ID ),
                 q{TNV23 number__typetest1(-17) returns correct value}
             );
         },
@@ -343,7 +343,7 @@ foreach
     lives_and(        # TNV24
         sub {
             is( number__typetest1(-17.3),
-                ( ( -17.3 * 2 ) + $OPS_TYPES_ID ),
+                ( ( -17.3 * 2 ) + $MODE_ID ),
                 q{TNV24 number__typetest1(-17.3) returns correct value}
             );
         },
@@ -351,17 +351,17 @@ foreach
     );
     throws_ok(        # TNV25
         sub { number__typetest1('-17.3') },
-        "/ENV01.*$OPS_TYPES/",
+        "/ENV01.*$mode_tagline/",
         q{TNV25 number__typetest1('-17.3') throws correct exception}
     );
     throws_ok(        # TNV26
         sub { number__typetest1( [3] ) },
-        "/ENV01.*$OPS_TYPES/",
+        "/ENV01.*$mode_tagline/",
         q{TNV26 number__typetest1([3]) throws correct exception}
     );
     throws_ok(        # TNV27
         sub { number__typetest1( { a_key => 3 } ) },
-        "/ENV01.*$OPS_TYPES/",
+        "/ENV01.*$mode_tagline/",
         q{TNV27 number__typetest1({a_key => 3}) throws correct exception}
     );
     lives_and(        # TNV28
@@ -369,7 +369,7 @@ foreach
             cmp_ok(
                 abs(number__typetest1(
                         3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679
-                    ) - ( ( 3.14159265358979 * 2 ) + $OPS_TYPES_ID )
+                    ) - ( ( 3.14159265358979 * 2 ) + $MODE_ID )
                 ),
                 '<',
                 $ERROR_MAX,
@@ -385,27 +385,27 @@ foreach
 
     throws_ok(    # TPV00
         sub { string__stringify() },
-        "/(EPV00.*$OPS_TYPES)|(Usage.*string__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(EPV00.*$mode_tagline)|(Usage.*string__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TPV00 string__stringify() throws correct exception}
     );
     throws_ok(                                              # TPV01
         sub { string__stringify(undef) },
-        "/EPV00.*$OPS_TYPES/",
+        "/EPV00.*$mode_tagline/",
         q{TPV01 string__stringify(undef) throws correct exception}
     );
     throws_ok(                                              # TPV02
         sub { string__stringify(3) },
-        "/EPV01.*$OPS_TYPES/",
+        "/EPV01.*$mode_tagline/",
         q{TPV02 string__stringify(3) throws correct exception}
     );
     throws_ok(                                              # TPV03
         sub { string__stringify(-17) },
-        "/EPV01.*$OPS_TYPES/",
+        "/EPV01.*$mode_tagline/",
         q{TPV03 string__stringify(-17) throws correct exception}
     );
     throws_ok(                                              # TPV04
         sub { string__stringify(-17.3) },
-        "/EPV01.*$OPS_TYPES/",
+        "/EPV01.*$mode_tagline/",
         q{TPV04 string__stringify(-17.3) throws correct exception}
     );
     lives_and(                                              # TPV05
@@ -418,12 +418,12 @@ foreach
     );
     throws_ok(                                              # TPV06
         sub { string__stringify( [3] ) },
-        "/EPV01.*$OPS_TYPES/",
+        "/EPV01.*$mode_tagline/",
         q{TPV06 string__stringify([3]) throws correct exception}
     );
     throws_ok(                                              # TPV07
         sub { string__stringify( { a_key => 3 } ) },
-        "/EPV01.*$OPS_TYPES/",
+        "/EPV01.*$mode_tagline/",
         q{TPV07 string__stringify({a_key => 3}) throws correct exception}
     );
     lives_and(                                              # TPV08
@@ -657,7 +657,7 @@ foreach
     lives_and(    # TPV30
         sub {
             is( string__typetest0(),
-                "Spice $OPS_TYPES",
+                "Spice $mode_tagline",
                 q{TPV30 string__typetest0() returns correct value}
             );
         },
@@ -665,34 +665,34 @@ foreach
     );
     throws_ok(    # TPV40
         sub { string__typetest1() },
-        "/(EPV00.*$OPS_TYPES)|(Usage.*string__typetest1)/"
+        "/(EPV00.*$mode_tagline)|(Usage.*string__typetest1)/"
         ,         # DEV NOTE: 2 different error messages, RPerl & C
         q{TPV40 string__typetest1() throws correct exception}
     );
     throws_ok(    # TPV41
         sub { string__typetest1(undef) },
-        "/EPV00.*$OPS_TYPES/",
+        "/EPV00.*$mode_tagline/",
         q{TPV41 string__typetest1(undef) throws correct exception}
     );
     throws_ok(    # TPV42
         sub { string__typetest1(3) },
-        "/EPV01.*$OPS_TYPES/",
+        "/EPV01.*$mode_tagline/",
         q{TPV42 string__typetest1(3) throws correct exception}
     );
     throws_ok(    # TPV43
         sub { string__typetest1(-17) },
-        "/EPV01.*$OPS_TYPES/",
+        "/EPV01.*$mode_tagline/",
         q{TPV43 string__typetest1(-17) throws correct exception}
     );
     throws_ok(    # TPV44
         sub { string__typetest1(-17.3) },
-        "/EPV01.*$OPS_TYPES/",
+        "/EPV01.*$mode_tagline/",
         q{TPV44 string__typetest1(-17.3) throws correct exception}
     );
     lives_and(    # TPV45
         sub {
             is( string__typetest1('-17.3'),
-                "'-17.3' $OPS_TYPES",
+                "'-17.3' $mode_tagline",
                 q{TPV45 string__typetest1('-17.3') returns correct value}
             );
         },
@@ -700,18 +700,18 @@ foreach
     );
     throws_ok(    # TPV46
         sub { string__typetest1( [3] ) },
-        "/EPV01.*$OPS_TYPES/",
+        "/EPV01.*$mode_tagline/",
         q{TPV46 string__typetest1([3]) throws correct exception}
     );
     throws_ok(    # TPV47
         sub { string__typetest1( { a_key => 3 } ) },
-        "/EPV01.*$OPS_TYPES/",
+        "/EPV01.*$mode_tagline/",
         q{TPV47 string__typetest1({a_key => 3}) throws correct exception}
     );
     lives_and(    # TPV48
         sub {
             is( string__typetest1('Melange'),
-                "'Melange' $OPS_TYPES",
+                "'Melange' $mode_tagline",
                 q{TPV48 string__typetest1('Melange') returns correct value}
             );
         },
@@ -722,7 +722,7 @@ foreach
             is( string__typetest1(
                     "\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n"
                 ),
-                "'\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n' $OPS_TYPES",
+                "'\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n' $mode_tagline",
                 q{TPV49 string__typetest1("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n") returns correct value}
             );
         },

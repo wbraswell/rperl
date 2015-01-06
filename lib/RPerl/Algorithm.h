@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm_h
-#define __CPP__INCLUDED__RPerl__Algorithm_h 0.004_011
+#define __CPP__INCLUDED__RPerl__Algorithm_h 0.004_020
 
 ////# [[[ INCLUDES ]]]
 #include <rperltypes_mode.h>  // for definitions of __PERL__TYPES or __CPP__TYPES
@@ -45,9 +45,7 @@ SV* uninherited__Algorithm(SV* person);
 //SV* uninherited(SV* person);
 
 // <<< OPERATIONS & DATA TYPES REPORTING >>>
-SV* RPerl__Algorithm__OPS_TYPES_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES IS 1
-SV* RPerl__Algorithm__ops() { return(newSVpv("CPP", 3)); }
-SV* RPerl__Algorithm__types() { return(newSVpv("PERL", 4)); }
+SV* RPerl__Algorithm__MODE_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
 
 // [[[<<< END PERL TYPES >>>]]]
 // [[[<<< END PERL TYPES >>>]]]
@@ -88,9 +86,7 @@ string uninherited__Algorithm(string person);
 //string uninherited(string person);
 
 // <<< OPERATIONS & DATA TYPES REPORTING >>>
-integer RPerl__Algorithm__OPS_TYPES_ID() { integer retval = 1;  return(retval); }  // CPPOPS_PERLTYPES IS 1
-string RPerl__Algorithm__ops() { string retval = "CPP";  return(retval); }
-string RPerl__Algorithm__types() { string retval = "CPP";  return(retval); }
+integer RPerl__Algorithm__MODE_ID() { integer retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 1
 
 // [[[<<< END CPP TYPES >>>]]]
 // [[[<<< END CPP TYPES >>>]]]

@@ -3,7 +3,7 @@ package RPerl::Test::IO::Print_00_cpp;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_004;
+our $VERSION = 0.001_010;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
@@ -11,17 +11,17 @@ our $VERSION = 0.001_004;
 # [[[ SUBROUTINES ]]]
 our void__method $cpp_load = sub {
     my $need_load_cpp = 0;
-    if (    ( exists $main::{'RPerl__Test__IO__Print_00__ops'} )
-        and ( defined &{ $main::{'RPerl__Test__IO__Print_00__ops'} } ) )
+    if (    ( exists $main::{'RPerl__Test__IO__Print_00__MODE_ID'} )
+        and ( defined &{ $main::{'RPerl__Test__IO__Print_00__MODE_ID'} } ) )
     {
-#        RPerl::diag "in Print_00_cpp::cpp_load, RPerl__Test__IO__Print_00__ops() exists & defined\n";
-#        RPerl::diag q{in Print_00_cpp::cpp_load, have RPerl__Test__IO__Print_00__ops() retval = '} . main::RPerl__Test__IO__Print_00__ops() . "'\n";
-        if ( main::RPerl__Test__IO__Print_00__ops() ne 'CPP' ) {
+#        RPerl::diag "in Print_00_cpp::cpp_load, RPerl__Test__IO__Print_00__MODE_ID() exists & defined\n";
+#        RPerl::diag q{in Print_00_cpp::cpp_load, have RPerl__Test__IO__Print_00__MODE_ID() retval = '} . main::RPerl__Test__IO__Print_00__MODE_ID() . "'\n";
+        if ( $RPerl::MODES->{main::RPerl__Test__IO__Print_00__MODE_ID()}->{ops} ne 'CPP' ) {
             $need_load_cpp = 1;
         }
     }
     else {
-#        RPerl::diag "in Print_00_cpp::cpp_load, RPerl__Test__IO__Print_00__ops() does not exist or undefined\n";
+#        RPerl::diag "in Print_00_cpp::cpp_load, RPerl__Test__IO__Print_00__MODE_ID() does not exist or undefined\n";
         $need_load_cpp = 1;
     }
 

@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_021;
+our $VERSION = 0.003_030;
 
 # [[[ CRITICS, INCLUDES ]]]
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd) # DEVELOPER DEFAULT 1b: allow unreachable & POD-commented code, must be after line 1
@@ -28,33 +28,20 @@ RPerl::Algorithm::Sort::Bubble_cpp::cpp_load();    # OR this
 #use RPerl::Algorithm::Sort::Quick;
 #use RPerl::Algorithm::Sort::Merge;
 
-print q{in precompiled_test__sort.pl, have integer__ops() = '}
-    . integer__ops() . "'\n";
-print q{in precompiled_test__sort.pl, have integer__types() = '}
-    . integer__types() . "'\n";
-print q{in precompiled_test__sort.pl, have number__ops() = '}
-    . number__ops() . "'\n";
-print q{in precompiled_test__sort.pl, have number__types() = '}
-    . number__types() . "'\n";
-print q{in precompiled_test__sort.pl, have string__ops() = '}
-    . string__ops() . "'\n";
-print q{in precompiled_test__sort.pl, have string__types() = '}
-    . string__types() . "'\n";
-print q{in precompiled_test__sort.pl, have array__ops() = '}
-    . array__ops() . "'\n";
-print q{in precompiled_test__sort.pl, have array__types() = '}
-    . array__types() . "'\n";
-print q{in precompiled_test__sort.pl, have hash__ops() = '}
-    . hash__ops() . "'\n";
-print q{in precompiled_test__sort.pl, have hash__types() = '}
-    . hash__types() . "'\n";
+print q{in precompiled_test__sort.pl, have integer__MODE_ID() = '}
+    . integer__MODE_ID() . "'\n";
+print q{in precompiled_test__sort.pl, have number__MODE_ID() = '}
+    . number__MODE_ID() . "'\n";
+print q{in precompiled_test__sort.pl, have string__MODE_ID() = '}
+    . string__MODE_ID() . "'\n";
+print q{in precompiled_test__sort.pl, have array__MODE_ID() = '}
+    . array__MODE_ID() . "'\n";
+print q{in precompiled_test__sort.pl, have hash__MODE_ID() = '}
+    . hash__MODE_ID() . "'\n";
 
 print
-    q{in precompiled_test__sort.pl, have RPerl__Algorithm__Sort__Bubble__ops() = '}
-    . RPerl__Algorithm__Sort__Bubble__ops() . "'\n";
-print
-    q{in precompiled_test__sort.pl, have RPerl__Algorithm__Sort__Bubble__types() = '}
-    . RPerl__Algorithm__Sort__Bubble__types() . "'\n";
+    q{in precompiled_test__sort.pl, have RPerl__Algorithm__Sort__Bubble__MODE_ID() = '}
+    . RPerl__Algorithm__Sort__Bubble__MODE_ID() . "'\n";
 
 # <<<=== SORT 1 ===>>>
 # <<<=== SORT 1 ===>>>

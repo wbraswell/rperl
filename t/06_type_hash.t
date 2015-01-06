@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.004_010;
+our $VERSION = 0.004_020;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
@@ -28,34 +28,42 @@ BEGIN {
 # [[[ PRIMARY RUNLOOP ]]]
 # [[[ PRIMARY RUNLOOP ]]]
 
-# loop 3 times, once for each mode: Pure-Perl, RPerl Perl-Data, and RPerl C-Data
-foreach
-    my scalartype__hash_ref $mode ( @{ $RPerl::Test::properties_class{modes} } ) ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
-{
-#    RPerl::diag "in 06_type_hash.t, top of for() loop, have \$OPS_TYPES_ID = $OPS_TYPES_ID\n" or croak; # no effect if suppressing output!
+# loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
+foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
+
+#for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
+#    RPerl::diag "in 06_type_hash.t, top of for() loop, have \$mode_id = $mode_id\n";
+    my scalartype__hash_ref $mode = $RPerl::MODES->{$mode_id};
     if ( $ENV{TEST_VERBOSE} ) {
         Test::More::diag( '[[[ Beginning RPerl Hash Type Tests, '
-                . RPerl::Test::description($mode)
+                . RPerl::Test::mode_description($mode)
                 . ' ]]]' );
     }
 
-    # [[[ PERLOPS_PERLTYPES SETUP ]]]
-    # [[[ PERLOPS_PERLTYPES SETUP ]]]
-    # [[[ PERLOPS_PERLTYPES SETUP ]]]
-    my $ops                  = $mode->{ops};
-    my $types                = $mode->{types};
-    my string $OPS_TYPES     = RPerl::Test::id($mode);
-    my integer $OPS_TYPES_ID = $mode->{index};
+    # [[[ MODE SETUP ]]]
+    # [[[ MODE SETUP ]]]
+    # [[[ MODE SETUP ]]]
+    my $ops                 = $mode->{ops};
+    my $types               = $mode->{types};
+    my string $mode_tagline = RPerl::Test::mode_tagline($mode);
 
-    lives_ok( sub { RPerl::Test::enable($mode) },
-        q{mode '} . RPerl::Test::description($mode) . q{' enabled} );
+    lives_ok( sub { RPerl::Test::mode_enable($mode) },
+        q{mode '} . RPerl::Test::mode_description($mode) . q{' enabled} );
 
-    if ( $ops eq 'CPP' ) {
+    if ( $ops eq 'PERL' ) {
+        lives_and(
+            sub { require_ok('RPerl::Algorithm::Sort::Bubble'); },
+            q{require_ok('RPerl::Algorithm::Sort::Bubble') lives}
+        );
+    }
+    else {
+        if ( $types eq 'CPP' ) {
 
-        # force reload
-        delete $main::{'RPerl__DataStructure__Hash__ops'};
+            # force reload
+            delete $main::{'RPerl__DataStructure__Hash__MODE_ID'};
+        }
 
-        # Hash: C++ use, load, link
+        # C++ use, load, link
         lives_and(
             sub { require_ok('RPerl::DataStructure::Hash_cpp'); },
             q{require_ok('RPerl::DataStructure::Hash_cpp') lives}
@@ -66,20 +74,15 @@ foreach
         );
     }
 
-    foreach my string $type (qw(integer number string hash)) {
+    foreach my string $type (
+        qw(integer number string array hash))
+    {
         lives_and(
             sub {
-                is( __PACKAGE__->can( $type . '__ops' )->(),
-                    $ops, $type . '__ops() returns ' . $ops );
+                is( __PACKAGE__->can( $type . '__MODE_ID' )->(),
+                    $ops, $type . '__MODE_ID() returns ' . $ops );
             },
-            $type . q{__ops() lives}
-        );
-        lives_and(
-            sub {
-                is( __PACKAGE__->can( $type . '__types' )->(),
-                    $types, $type . '__types() returns ' . $types );
-            },
-            $type . q{__types() lives}
+            $type . q{__MODE_ID() lives}
         );
     }
 
@@ -89,32 +92,32 @@ foreach
 
     throws_ok(    # TIVHVRV00
         sub { integer__hash_ref__stringify() },
-        "/(EIVHVRV00.*$OPS_TYPES)|(Usage.*integer__hash_ref__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(EIVHVRV00.*$mode_tagline)|(Usage.*integer__hash_ref__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TIVHVRV00 integer__hash_ref__stringify() throws correct exception}
     );
     throws_ok(    # TIVHVRV01
         sub { integer__hash_ref__stringify(undef) },
-        "/EIVHVRV00.*$OPS_TYPES/",
+        "/EIVHVRV00.*$mode_tagline/",
         q{TIVHVRV01 integer__hash_ref__stringify(undef) throws correct exception}
     );
     throws_ok(    # TIVHVRV02
         sub { integer__hash_ref__stringify(2) },
-        "/EIVHVRV01.*$OPS_TYPES/",
+        "/EIVHVRV01.*$mode_tagline/",
         q{TIVHVRV02 integer__hash_ref__stringify(2) throws correct exception}
     );
     throws_ok(    # TIVHVRV03
         sub { integer__hash_ref__stringify(2.3) },
-        "/EIVHVRV01.*$OPS_TYPES/",
+        "/EIVHVRV01.*$mode_tagline/",
         q{TIVHVRV03 integer__hash_ref__stringify(2.3) throws correct exception}
     );
     throws_ok(    # TIVHVRV04
         sub { integer__hash_ref__stringify('2') },
-        "/EIVHVRV01.*$OPS_TYPES/",
+        "/EIVHVRV01.*$mode_tagline/",
         q{TIVHVRV04 integer__hash_ref__stringify('2') throws correct exception}
     );
     throws_ok(    # TIVHVRV05
         sub { integer__hash_ref__stringify( [2] ) },
-        "/EIVHVRV01.*$OPS_TYPES/",
+        "/EIVHVRV01.*$mode_tagline/",
         q{TIVHVRV05 integer__hash_ref__stringify([2]) throws correct exception}
     );
     throws_ok(    # TIVHVRV10
@@ -130,7 +133,7 @@ foreach
                 }
             );
         },
-        "/EIVHVRV02.*$OPS_TYPES/",
+        "/EIVHVRV02.*$mode_tagline/",
         q{TIVHVRV10 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => undef, d_key => 23, e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
     );
     throws_ok(    # TIVHVRV11
@@ -146,7 +149,7 @@ foreach
                 }
             );
         },
-        "/EIVHVRV03.*$OPS_TYPES/",
+        "/EIVHVRV03.*$mode_tagline/",
         q{TIVHVRV11 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => 23.3, e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
     );
     throws_ok(    # TIVHVRV12
@@ -162,7 +165,7 @@ foreach
                 }
             );
         },
-        "/EIVHVRV03.*$OPS_TYPES/",
+        "/EIVHVRV03.*$mode_tagline/",
         q{TIVHVRV12 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => '23', e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
     );
     throws_ok(    # TIVHVRV13
@@ -178,7 +181,7 @@ foreach
                 }
             );
         },
-        "/EIVHVRV03.*$OPS_TYPES/",
+        "/EIVHVRV03.*$mode_tagline/",
         q{TIVHVRV13 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => [23], e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
     );
     throws_ok(    # TIVHVRV14
@@ -194,7 +197,7 @@ foreach
                 }
             );
         },
-        "/EIVHVRV03.*$OPS_TYPES/",
+        "/EIVHVRV03.*$mode_tagline/",
 
 #        q{TIVHVRV14 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => {a_subkey => 23}, e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
         q{TIVHVRV14 integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => {a_subkey => 23}, ..., g_key => 1701}) throws correct exception}
@@ -231,12 +234,12 @@ foreach
     );
     throws_ok(    # TIVHVRV30
         sub { integer__hash_ref__typetest0() },
-        "/(EIVHVRV00.*$OPS_TYPES)|(Usage.*integer__hash_ref__typetest0)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(EIVHVRV00.*$mode_tagline)|(Usage.*integer__hash_ref__typetest0)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TIVHVRV30 integer__hash_ref__typetest0() throws correct exception}
     );
     throws_ok(    # TIVHVRV31
         sub { integer__hash_ref__typetest0(2) },
-        "/EIVHVRV01.*$OPS_TYPES/",
+        "/EIVHVRV01.*$mode_tagline/",
         q{TIVHVRV31 integer__hash_ref__typetest0(2) throws correct exception}
     );
     throws_ok(    # TIVHVRV32
@@ -253,7 +256,7 @@ foreach
                 }
             );
         },
-        "/EIVHVRV02.*$OPS_TYPES/",
+        "/EIVHVRV02.*$mode_tagline/",
         q{TIVHVRV32 integer__hash_ref__typetest0({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => undef, ..., 'ncc' => 1701}) throws correct exception}
     );
     throws_ok(    # TIVHVRV33
@@ -270,7 +273,7 @@ foreach
                 }
             );
         },
-        "/EIVHVRV03.*$OPS_TYPES/",
+        "/EIVHVRV03.*$mode_tagline/",
         q{TIVHVRV33 integer__hash_ref__typetest0({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => 'abcdefg', ..., 'ncc' => 1701}) throws correct exception}
     );
     lives_and(    # TIVHVRV34
@@ -287,7 +290,7 @@ foreach
                     }
                 ),
                 q{/^\{(?=.*'binary' => 2\b)(?=.*'rush' => 2112\b)(?=.*'answer' => 42\b)(?=.*'fnord' => 23\b)(?=.*'units' => -877\b)(?=.*'degree' => -33\b)(?=.*'ncc' => 1701\b).*\}}
-                    . $OPS_TYPES . q{$/m},
+                    . $mode_tagline . q{$/m},
 
 #                q{TIVHVRV34 integer__hash_ref__typetest0({'binary' => 2, 'rush' => 2112, 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => -33, 'ncc' => 1701}) returns correct value}
                 q{TIVHVRV34 integer__hash_ref__typetest0({'binary' => 2, 'rush' => 2112, ..., 'ncc' => 1701}) returns correct value}
@@ -299,11 +302,11 @@ foreach
         sub {
             is_deeply(
                 integer__hash_ref__typetest1(5),
-                {   "$OPS_TYPES\_funkey2" => 10,
-                    "$OPS_TYPES\_funkey3" => 15,
-                    "$OPS_TYPES\_funkey4" => 20,
-                    "$OPS_TYPES\_funkey1" => 5,
-                    "$OPS_TYPES\_funkey0" => 0
+                {   "$mode_tagline\_funkey2" => 10,
+                    "$mode_tagline\_funkey3" => 15,
+                    "$mode_tagline\_funkey4" => 20,
+                    "$mode_tagline\_funkey1" => 5,
+                    "$mode_tagline\_funkey0" => 0
                 },
                 q{TIVHVRV40 integer__hash_ref__typetest1(5) returns correct value}
             );
@@ -317,32 +320,32 @@ foreach
 
     throws_ok(    # TNVHVRV00
         sub { number__hash_ref__stringify() },
-        "/(ENVHVRV00.*$OPS_TYPES)|(Usage.*number__hash_ref__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(ENVHVRV00.*$mode_tagline)|(Usage.*number__hash_ref__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TNVHVRV00 number__hash_ref__stringify() throws correct exception}
     );
     throws_ok(    # TNVHVRV01
         sub { number__hash_ref__stringify(undef) },
-        "/ENVHVRV00.*$OPS_TYPES/",
+        "/ENVHVRV00.*$mode_tagline/",
         q{TNVHVRV01 number__hash_ref__stringify(undef) throws correct exception}
     );
     throws_ok(    # TNVHVRV02
         sub { number__hash_ref__stringify(2) },
-        "/ENVHVRV01.*$OPS_TYPES/",
+        "/ENVHVRV01.*$mode_tagline/",
         q{TNVHVRV02 number__hash_ref__stringify(2) throws correct exception}
     );
     throws_ok(    # TNVHVRV03
         sub { number__hash_ref__stringify(2.3) },
-        "/ENVHVRV01.*$OPS_TYPES/",
+        "/ENVHVRV01.*$mode_tagline/",
         q{TNVHVRV03 number__hash_ref__stringify(2.3) throws correct exception}
     );
     throws_ok(    # TNVHVRV04
         sub { number__hash_ref__stringify('2') },
-        "/ENVHVRV01.*$OPS_TYPES/",
+        "/ENVHVRV01.*$mode_tagline/",
         q{TNVHVRV04 number__hash_ref__stringify('2') throws correct exception}
     );
     throws_ok(    # TNVHVRV05
         sub { number__hash_ref__stringify( [2] ) },
-        "/ENVHVRV01.*$OPS_TYPES/",
+        "/ENVHVRV01.*$mode_tagline/",
         q{TNVHVRV05 number__hash_ref__stringify([2]) throws correct exception}
     );
     throws_ok(    # TNVHVRV10
@@ -358,7 +361,7 @@ foreach
                 }
             );
         },
-        "/ENVHVRV02.*$OPS_TYPES/",
+        "/ENVHVRV02.*$mode_tagline/",
         q{TNVHVRV10 number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => undef, d_key => 23, e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
     );
     throws_ok(    # TNVHVRV11
@@ -374,7 +377,7 @@ foreach
                 }
             );
         },
-        "/ENVHVRV03.*$OPS_TYPES/",
+        "/ENVHVRV03.*$mode_tagline/",
         q{TNVHVRV11 number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42.3, d_key => '23', e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
     );
     throws_ok(    # TNVHVRV12
@@ -390,7 +393,7 @@ foreach
                 }
             );
         },
-        "/ENVHVRV03.*$OPS_TYPES/",
+        "/ENVHVRV03.*$mode_tagline/",
         q{TNVHVRV12 number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42.3, d_key => [23], e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
     );
     throws_ok(    # TNVHVRV13
@@ -406,7 +409,7 @@ foreach
                 }
             );
         },
-        "/ENVHVRV03.*$OPS_TYPES/",
+        "/ENVHVRV03.*$mode_tagline/",
 
 #        q{TNVHVRV13 number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42.3, d_key => {a_subkey => 23}, e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
         q{TNVHVRV13 number__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42.3, d_key => {a_subkey => 23}, ..., g_key => 1701}) throws correct exception}
@@ -474,12 +477,12 @@ foreach
     );
     throws_ok(    # TNVHVRV30
         sub { number__hash_ref__typetest0() },
-        "/(ENVHVRV00.*$OPS_TYPES)|(Usage.*number__hash_ref__typetest0)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(ENVHVRV00.*$mode_tagline)|(Usage.*number__hash_ref__typetest0)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TNVHVRV30 number__hash_ref__typetest0() throws correct exception}
     );
     throws_ok(    # TNVHVRV31
         sub { number__hash_ref__typetest0(2) },
-        "/ENVHVRV01.*$OPS_TYPES/",
+        "/ENVHVRV01.*$mode_tagline/",
         q{TNVHVRV31 number__hash_ref__typetest0(2) throws correct exception}
     );
     throws_ok(    # TNVHVRV32
@@ -496,7 +499,7 @@ foreach
                 }
             );
         },
-        "/ENVHVRV02.*$OPS_TYPES/",
+        "/ENVHVRV02.*$mode_tagline/",
         q{TNVHVRV32 number__hash_ref__typetest0({'binary' => 2.1234432112344321, 'ERROR_FUNKEY' => undef, ..., 'ncc' => 1701.6789}) throws correct exception}
     );
     throws_ok(    # TNVHVRV33
@@ -513,7 +516,7 @@ foreach
                 }
             );
         },
-        "/ENVHVRV03.*$OPS_TYPES/",
+        "/ENVHVRV03.*$mode_tagline/",
         q{TNVHVRV33 number__hash_ref__typetest0({'binary' => 2.1234432112344321, 'ERROR_FUNKEY' => 'abcdefg', ..., 'ncc' => 1701.6789}) throws correct exception}
     );
     lives_and(    # TNVHVRV34
@@ -530,7 +533,7 @@ foreach
                     }
                 ),
                 q{/^\{(?=.*'binary' => 2\.12344321123443\b)(?=.*'rush' => 2112\.4321\b)(?=.*'answer' => 42\.4567\b)(?=.*'fnord' => 23\.7654444444444\b)(?=.*'units' => -877\.5678\b)(?=.*'degree' => -33\.8765876587659\b)(?=.*'ncc' => 1701\.6789\b).*\}}
-                    . $OPS_TYPES . q{$/m},
+                    . $mode_tagline . q{$/m},
                 q{TNVHVRV34 number__hash_ref__typetest0({'binary' => 2.1234432112344321, 'rush' => 2112.4321, ..., 'ncc' => 1701.6789}) returns correct value}
             );
         },
@@ -540,11 +543,11 @@ foreach
         sub {
             is_deeply(
                 number__hash_ref__typetest1(5),
-                {   "$OPS_TYPES\_funkey2" => 10.246913578,
-                    "$OPS_TYPES\_funkey3" => 15.370370367,
-                    "$OPS_TYPES\_funkey4" => 20.493827156,
-                    "$OPS_TYPES\_funkey1" => 5.123456789,
-                    "$OPS_TYPES\_funkey0" => 0
+                {   "$mode_tagline\_funkey2" => 10.246913578,
+                    "$mode_tagline\_funkey3" => 15.370370367,
+                    "$mode_tagline\_funkey4" => 20.493827156,
+                    "$mode_tagline\_funkey1" => 5.123456789,
+                    "$mode_tagline\_funkey0" => 0
                 },
                 q{TNVHVRV40 number__hash_ref__typetest1(5) returns correct value}
             );
@@ -558,32 +561,32 @@ foreach
 
     throws_ok(    # TPVHVRV00
         sub { string__hash_ref__stringify() },
-        "/(EPVHVRV00.*$OPS_TYPES)|(Usage.*string__hash_ref__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(EPVHVRV00.*$mode_tagline)|(Usage.*string__hash_ref__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TPVHVRV00 string__hash_ref__stringify() throws correct exception}
     );
     throws_ok(    # TPVHVRV01
         sub { string__hash_ref__stringify(undef) },
-        "/EPVHVRV00.*$OPS_TYPES/",
+        "/EPVHVRV00.*$mode_tagline/",
         q{TPVHVRV01 string__hash_ref__stringify(undef) throws correct exception}
     );
     throws_ok(    # TPVHVRV02
         sub { string__hash_ref__stringify(2) },
-        "/EPVHVRV01.*$OPS_TYPES/",
+        "/EPVHVRV01.*$mode_tagline/",
         q{TPVHVRV02 string__hash_ref__stringify(2) throws correct exception}
     );
     throws_ok(    # TPVHVRV03
         sub { string__hash_ref__stringify(2.3) },
-        "/EPVHVRV01.*$OPS_TYPES/",
+        "/EPVHVRV01.*$mode_tagline/",
         q{TPVHVRV03 string__hash_ref__stringify(2.3) throws correct exception}
     );
     throws_ok(    # TPVHVRV04
         sub { string__hash_ref__stringify('Lone Ranger') },
-        "/EPVHVRV01.*$OPS_TYPES/",
+        "/EPVHVRV01.*$mode_tagline/",
         q{TPVHVRV04 string__hash_ref__stringify('Lone Ranger') throws correct exception}
     );
     throws_ok(    # TPVHVRV05
         sub { string__hash_ref__stringify( ['Lone Ranger'] ) },
-        "/EPVHVRV01.*$OPS_TYPES/",
+        "/EPVHVRV01.*$mode_tagline/",
         q{TPVHVRV05 string__hash_ref__stringify(['Lone Ranger']) throws correct exception}
     );
     throws_ok(    # TPVHVRV10
@@ -595,7 +598,7 @@ foreach
                 }
             );
         },
-        "/EPVHVRV02.*$OPS_TYPES/",
+        "/EPVHVRV02.*$mode_tagline/",
         q{TPVHVRV10 string__hash_ref__stringify({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'UNDEF_NOT_STRING' => undef}) throws correct exception}
     );
     throws_ok(    # TPVHVRV11
@@ -607,7 +610,7 @@ foreach
                 }
             );
         },
-        "/EPVHVRV03.*$OPS_TYPES/",
+        "/EPVHVRV03.*$mode_tagline/",
         q{TPVHVRV11 string__hash_ref__stringify({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'INTEGER_NOT_STRING' => 23}) throws correct exception}
     );
     throws_ok(    # TPVHVRV12
@@ -619,7 +622,7 @@ foreach
                 }
             );
         },
-        "/EPVHVRV03.*$OPS_TYPES/",
+        "/EPVHVRV03.*$mode_tagline/",
         q{TPVHVRV12 string__hash_ref__stringify({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'NUMBER_NOT_STRING' => -2112.23}) throws correct exception}
     );
     throws_ok(    # TPVHVRV13
@@ -631,7 +634,7 @@ foreach
                 }
             );
         },
-        "/EPVHVRV03.*$OPS_TYPES/",
+        "/EPVHVRV03.*$mode_tagline/",
         q{TPVHVRV13 string__hash_ref__stringify({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'ARRAY_NOT_STRING' => ['Tonto']}) throws correct exception}
     );
     throws_ok(    # TPVHVRV14
@@ -643,7 +646,7 @@ foreach
                 }
             );
         },
-        "/EPVHVRV03.*$OPS_TYPES/",
+        "/EPVHVRV03.*$mode_tagline/",
         q{TPVHVRV14 string__hash_ref__stringify({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'HASH_NOT_STRING' => {fizz => 3}}) throws correct exception}
     );
     lives_and(    # TPVHVRV20
@@ -757,12 +760,12 @@ foreach
     );
     throws_ok(       # TPVHVRV30
         sub { string__hash_ref__typetest0() },
-        "/(EPVHVRV00.*$OPS_TYPES)|(Usage.*string__hash_ref__typetest0)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(EPVHVRV00.*$mode_tagline)|(Usage.*string__hash_ref__typetest0)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TPVHVRV30 string__hash_ref__typetest0() throws correct exception}
     );
     throws_ok(    # TPVHVRV31
         sub { string__hash_ref__typetest0(2) },
-        "/EPVHVRV01.*$OPS_TYPES/",
+        "/EPVHVRV01.*$mode_tagline/",
         q{TPVHVRV31 string__hash_ref__typetest0(2) throws correct exception}
     );
     throws_ok(    # TPVHVRV32
@@ -779,7 +782,7 @@ foreach
                 }
             );
         },
-        "/EPVHVRV02.*$OPS_TYPES/",
+        "/EPVHVRV02.*$mode_tagline/",
         q{TPVHVRV32 string__hash_ref__typetest0({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'UNDEF_NOT_STRING' => undef}) throws correct exception}
     );
     throws_ok(    # TPVHVRV33
@@ -796,7 +799,7 @@ foreach
                 }
             );
         },
-        "/EPVHVRV03.*$OPS_TYPES/",
+        "/EPVHVRV03.*$mode_tagline/",
         q{TPVHVRV33 string__hash_ref__typetest0({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'ARRAY_NOT_STRING' => [23, -42.3]}) throws correct exception}
     );
     lives_and(    # TPVHVRV34
@@ -811,7 +814,7 @@ foreach
                     }
                 ),
                 q{/^\{(?=.*'stuckinaworldhenevercreated' => 'Howard The Duck')(?=.*'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter').*\}}
-                    . $OPS_TYPES . q{$/m},
+                    . $mode_tagline . q{$/m},
                 q{TPVHVRV34 string__hash_ref__typetest0({'stuckinaworldhenevercreated' => 'Howard The Duck', ...}) returns correct value}
             );
         },
@@ -821,11 +824,11 @@ foreach
         sub {
             is_deeply(
                 string__hash_ref__typetest1(5),
-                {   "$OPS_TYPES\_Luker_key3" => 'Jeffy Ten! 3/4',
-                    "$OPS_TYPES\_Luker_key2" => 'Jeffy Ten! 2/4',
-                    "$OPS_TYPES\_Luker_key1" => 'Jeffy Ten! 1/4',
-                    "$OPS_TYPES\_Luker_key4" => 'Jeffy Ten! 4/4',
-                    "$OPS_TYPES\_Luker_key0" => 'Jeffy Ten! 0/4'
+                {   "$mode_tagline\_Luker_key3" => 'Jeffy Ten! 3/4',
+                    "$mode_tagline\_Luker_key2" => 'Jeffy Ten! 2/4',
+                    "$mode_tagline\_Luker_key1" => 'Jeffy Ten! 1/4',
+                    "$mode_tagline\_Luker_key4" => 'Jeffy Ten! 4/4',
+                    "$mode_tagline\_Luker_key0" => 'Jeffy Ten! 0/4'
                 },
                 q{TPVHVRV40 string__hash_ref__typetest1(5) returns correct value}
             );

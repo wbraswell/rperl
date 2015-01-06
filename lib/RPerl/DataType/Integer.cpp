@@ -2,7 +2,7 @@
 //using std::cout;  using std::cerr;  // not needed for integer?
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_cpp
-#define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 0.003_002
+#define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 0.003_010
 
 #include <RPerl/DataType/Integer.h>		// -> NULL (relies on native C type)
 
@@ -101,7 +101,7 @@ string integer__stringify(integer input_integer)
 # ifdef __PERL__TYPES
 
 SV* integer__typetest0() {
-	SV* retval = newSViv((21 / 7) + integer__OPS_TYPES_ID);
+	SV* retval = newSViv((21 / 7) + integer__MODE_ID());
 //fprintf(stderr, "in CPPOPS_PERLTYPES integer__typetest0(), have retval = %d\n", (integer)SvIV(retval));
 	return(retval);
 }
@@ -110,20 +110,20 @@ SV* integer__typetest1(SV* lucky_integer) {
 //	integer__CHECK(lucky_integer);
 	integer__CHECKTRACE(lucky_integer, "lucky_integer", "integer__typetest1()");
 //fprintf(stderr, "in CPPOPS_PERLTYPES integer__typetest1(), received lucky_integer = %d\n", (integer)SvIV(lucky_integer));
-	return(newSViv((SvIV(lucky_integer) * 2) + integer__OPS_TYPES_ID));
+	return(newSViv((SvIV(lucky_integer) * 2) + integer__MODE_ID()));
 }
 
 # elif defined __CPP__TYPES
 
 integer integer__typetest0() {
-	integer retval = (21 / 7) + integer__OPS_TYPES_ID;
+	integer retval = (21 / 7) + integer__MODE_ID();
 //fprintf(stderr, "in CPPOPS_CPPTYPES integer__typetest0(), have retval = %d\n", retval);
 	return(retval);
 }
 
 integer integer__typetest1(integer lucky_integer) {
 //fprintf(stderr, "in CPPOPS_CPPTYPES integer__typetest1(), received lucky_integer = %d\n", lucky_integer);
-	return((lucky_integer * 2) + integer__OPS_TYPES_ID);
+	return((lucky_integer * 2) + integer__MODE_ID());
 }
 
 # endif

@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash_cpp;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_001;
+our $VERSION = 0.004_010;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
@@ -11,17 +11,17 @@ our $VERSION = 0.004_001;
 # [[[ SUBROUTINES ]]]
 our void__method $cpp_load = sub {
     my $need_load_cpp = 0;
-    if (    ( exists $main::{'RPerl__DataStructure__Hash__ops'} )
-        and ( defined &{ $main::{'RPerl__DataStructure__Hash__ops'} } ) )
+    if (    ( exists $main::{'RPerl__DataStructure__Hash__MODE_ID'} )
+        and ( defined &{ $main::{'RPerl__DataStructure__Hash__MODE_ID'} } ) )
     {
-#        RPerl::diag "in Hash_cpp::cpp_load, RPerl__DataStructure__Hash__ops() exists & defined\n";
-#        RPerl::diag q{in Hash_cpp::cpp_load, have RPerl__DataStructure__Hash__ops() retval = '} . main::RPerl__DataStructure__Hash__ops() . "'\n";
-        if ( main::RPerl__DataStructure__Hash__ops() ne 'CPP' ) {
+#        RPerl::diag "in Hash_cpp::cpp_load, RPerl__DataStructure__Hash__MODE_ID() exists & defined\n";
+#        RPerl::diag q{in Hash_cpp::cpp_load, have RPerl__DataStructure__Hash__MODE_ID() retval = '} . main::RPerl__DataStructure__Hash__MODE_ID() . "'\n";
+        if ( $RPerl::MODES->{main::RPerl__DataStructure__Hash__MODE_ID()}->{ops} ne 'CPP' ) {
             $need_load_cpp = 1;
         }
     }
     else {
-#        RPerl::diag "in Hash_cpp::cpp_load, RPerl__DataStructure__Hash__ops() does not exist or undefined\n";
+#        RPerl::diag "in Hash_cpp::cpp_load, RPerl__DataStructure__Hash__MODE_ID() does not exist or undefined\n";
         $need_load_cpp = 1;
     }
 

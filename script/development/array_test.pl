@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_002;
+our $VERSION = 0.004_010;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd PodSpelling) # DEVELOPER DEFAULT 1: allow unreachable & POD-commented code
@@ -17,22 +17,14 @@ rperltypes::types_enable('CPP');
 use RPerl::DataStructure::Array_cpp;
 RPerl::DataStructure::Array_cpp::cpp_load();
 
-RPerl::diag q{in array_test.pl, have integer__ops() = '}
-    . integer__ops() . "'\n";
-RPerl::diag q{in array_test.pl, have integer__types() = '}
-    . integer__types() . "'\n";
-RPerl::diag q{in array_test.pl, have number__ops() = '}
-    . number__ops() . "'\n";
-RPerl::diag q{in array_test.pl, have number__types() = '}
-    . number__types() . "'\n";
-RPerl::diag q{in array_test.pl, have string__ops() = '}
-    . string__ops() . "'\n";
-RPerl::diag q{in array_test.pl, have string__types() = '}
-    . string__types() . "'\n";
-RPerl::diag q{in array_test.pl, have array__ops() = '}
-    . array__ops() . "'\n";
-RPerl::diag q{in array_test.pl, have array__types() = '}
-    . array__types() . "'\n";
+RPerl::diag q{in array_test.pl, have integer__MODE_ID() = '}
+    . integer__MODE_ID() . "'\n";
+RPerl::diag q{in array_test.pl, have number__MODE_ID() = '}
+    . number__MODE_ID() . "'\n";
+RPerl::diag q{in array_test.pl, have string__MODE_ID() = '}
+    . string__MODE_ID() . "'\n";
+RPerl::diag q{in array_test.pl, have array__MODE_ID() = '}
+    . array__MODE_ID() . "'\n";
 
 # variable declarations
 my string $retval_stringify;

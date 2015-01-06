@@ -2,7 +2,7 @@ package RPerl::Test::IO::Print_00;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_004;
+our $VERSION = 0.003_010;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
 
@@ -51,10 +51,5 @@ our void $greet_planet = sub {
 
     print "Goodbye from PERLOPS_PERLTYPES\n"; # parses to 1 PPI::Statement object
 };
-
-# [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-#our integer $RPerl__Test__IO__Print_00__OPS_TYPES_ID = 0;    # PERLOPS_PERLTYPES is 0  # NEED FIX: allow or disallow non-subs like this var?
-#our string $RPerl__Test__IO__Print_00__ops = sub { return ('PERL'); };
-#our string $RPerl__Test__IO__Print_00__types = sub { return ('PERL'); };
 
 1;

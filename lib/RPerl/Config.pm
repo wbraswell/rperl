@@ -1,7 +1,7 @@
 package RPerl::Config;
 use strict;
 use warnings;
-our $VERSION = 0.001_001;
+our $VERSION = 0.001_010;
 
 # DEV NOTE: this package exists to serve as the header file for RPerl.pm itself,
 # as well as for RPerl.pm dependencies such as Class.pm, HelperFunctions_cpp.pm, and rperltypes.pm
@@ -22,7 +22,12 @@ package RPerl;
 use File::Find qw(find);
 use File::Spec;
 
-# export Dumper(), carp(), croak(), confess(), $OS_ERROR, $EVAL_ERROR, $CHILD_ERROR, and $EXECUTABLE_NAME to all who call 'use RPerl;'
+# export $RPerl::MODES, Dumper(), carp(), croak(), confess(), $OS_ERROR, $EVAL_ERROR, $CHILD_ERROR, and $EXECUTABLE_NAME to all who call 'use RPerl;'
+our $MODES = {  # see perl_modes.txt for more info
+    0 => { ops => 'PERL', types => 'PERL' },  # NEED FIX: should be types => 'PERL_STATIC'
+    1 => { ops => 'CPP',  types => 'PERL' },  # NEED FIX: should be types => 'PERL_STATIC'
+    2 => { ops => 'CPP',  types => 'CPP' }
+};
 use Data::Dumper;
 use Carp;
 use English qw(-no_match_vars);

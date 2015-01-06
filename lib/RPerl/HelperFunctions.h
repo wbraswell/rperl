@@ -1,5 +1,5 @@
 #ifndef __CPP__INCLUDED__RPerl__HelperFunctions_h
-#define __CPP__INCLUDED__RPerl__HelperFunctions_h 0.002_011
+#define __CPP__INCLUDED__RPerl__HelperFunctions_h 0.002_020
 
 
 // START HERE: implement RPerl__diag, use in files called by 07_oo_inherit.t
@@ -45,8 +45,5 @@ int RPerl_SvHROKp(SV* input_hv_ref);
 
 void RPerl_object_property_init(SV* initee); // NEED ANSWER: what in the hades does this property init function even do?  why do we need it???
 char* RPerl_DUMPER__perl_from_c(SV* dumpee);
-
-// [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-SV* RPerl__HelperFunctions__ops() { return(newSVpv("CPP", 3)); }
 
 #endif
