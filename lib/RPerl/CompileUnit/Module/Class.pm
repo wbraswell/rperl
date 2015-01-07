@@ -11,7 +11,7 @@ our $VERSION = 0.014_000;
 ## no critic qw(ProhibitNoStrict)  # SYSTEM SPECIAL 9: allow no strict
 ## no critic qw(RequireBriefOpen)  # SYSTEM SPECIAL 10: allow complex processing with open filehandle
 
-#our %properties = ();  # this base class doesn't actually have any properties
+#our $properties = {};  # this base class doesn't actually have any properties
 
 # after compiling but before runtime: create symtab entries for all RPerl functions/methods, and accessors/mutators for all RPerl class properties
 INIT {
@@ -20,7 +20,7 @@ INIT {
     my $module_file_long;             # string
     my $package_name;                 # string
     my $package_name_underscores;     # string
-    my %object_properties;            # hash
+    my $object_properties;            # hash_ref
     my $subroutine_type;              # string
     my $subroutine_name;              # string
     my $CHECK;                        # string
@@ -179,13 +179,13 @@ INIT {
  
                     # accessor/mutator object methods
 
-         # START HERE 1: change all % to $ if switching properties to hashref!!!
-         # START HERE 1: change all % to $ if switching properties to hashref!!!
-         # START HERE 1: change all % to $ if switching properties to hashref!!!
-                    %object_properties = eval "\%$package_name\:\:properties";
+         # START HERE 1: test $class_properties as hash_ref, then change all %[class_]properties to $[class_]properties
+         # START HERE 1: test $class_properties as hash_ref, then change all %[class_]properties to $[class_]properties
+         # START HERE 1: test $class_properties as hash_ref, then change all %[class_]properties to $[class_]properties
+                    $object_properties = eval "\$$package_name\:\:properties";
 
                     foreach my $object_property_name (
-                        sort keys %object_properties )
+                        sort keys %{$object_properties} )
                     {
 #						RPerl::diag "in Class.pm INIT block, have \$object_property_name = '$object_property_name'\n";
 # DEV NOTE, CORRELATION #03: avoid re-defining class accessor/mutator methods; so far only triggered by RPerl::CodeBlock::Subroutine
@@ -458,7 +458,7 @@ sub activate_subroutine {
 # RPerl object constructor, shorthand
 sub new {
     no strict;
-    return bless { %{ $_[0] . '::properties' } }, $_[0];
+    return bless ${ $_[0] . '::properties' }, $_[0];
 }
 
 # suppress deprecated feature warning

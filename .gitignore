@@ -10,6 +10,8 @@
 /script/development/_Inline/
 /script/development/unused/_Inline/
 /t/_Inline/
+lib/RPerl/Test/OperationsTypesReporting/_Inline
+lib/RPerl/Test/Module/_Inline
 
 # [ CPAN Build & Distribution ]
 # NEED UPDATE, CORRELATION #06: list of CPAN files & directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP

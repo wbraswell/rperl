@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_911;
+    our $VERSION = 0.000_920;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -139,8 +139,9 @@ SubroutineArguments:    '( my' Type VARIABLE_SYMBOL (OP21_LIST_COMMA 'my' Type V
 Class:                  'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties PropertiesClass? MethodOrSubroutine* LITERAL_NUMBER ';' ;
 #Properties:             'our %properties = (' Critic HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* ')' ';' | 'our %properties = (' ')' ';' Critic ;
 #PropertiesClass:        'our %class_properties = (' Critic HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* ')' ';' ;
-Properties:             'our $properties = {' Critic HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* '}' ';' | 'our $properties = {' '}' ';' Critic ;
-PropertiesClass:        'our $class_properties = {' Critic HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* '}' ';' ;
+Properties:             'our hash_ref $properties' OP19_VARIABLE_ASSIGN LBRACE HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* '}' ';' |
+                        'our hash_ref $properties' OP19_VARIABLE_ASSIGN LBRACE '}' ';' ;
+PropertiesClass:        'our hash_ref $class_properties' OP19_VARIABLE_ASSIGN LBRACE HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* '}' ';' ;
 Method:                 'our' TYPE_METHOD VARIABLE_SYMBOL '= sub {' MethodArguments? Operation+ '}' ';' ;
 MethodArguments:        '( my' TYPE_CLASS_OR_SELF (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
 MethodOrSubroutine:     Method | Subroutine;
