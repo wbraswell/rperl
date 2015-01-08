@@ -179,9 +179,9 @@ INIT {
  
                     # accessor/mutator object methods
 
-         # START HERE 1: test $class_properties as hash_ref, then change all %[class_]properties to $[class_]properties
-         # START HERE 1: test $class_properties as hash_ref, then change all %[class_]properties to $[class_]properties
-         # START HERE 1: test $class_properties as hash_ref, then change all %[class_]properties to $[class_]properties
+         # START HERE 1: test $[class_]properties as hash_ref, then change all %[class_]properties to $[class_]properties
+         # START HERE 1: test $[class_]properties as hash_ref, then change all %[class_]properties to $[class_]properties
+         # START HERE 1: test $[class_]properties as hash_ref, then change all %[class_]properties to $[class_]properties
                     $object_properties = eval "\$$package_name\:\:properties";
 
                     foreach my $object_property_name (
@@ -458,7 +458,7 @@ sub activate_subroutine {
 # RPerl object constructor, shorthand
 sub new {
     no strict;
-    return bless ${ $_[0] . '::properties' }, $_[0];
+    return bless { %{ ${ $_[0] . '::properties' } } }, $_[0];
 }
 
 # suppress deprecated feature warning

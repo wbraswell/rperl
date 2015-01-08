@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_920;
+    our $VERSION = 0.000_930;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -21,10 +21,12 @@
 %token VERSION_NUMBER_ASSIGN = /\$VERSION\ =\ (\d\d?\.\d{3}\_\d{3});/    # match assign match, only capture & return number; ex. '$VERSION = 12.345_678;' returns '12.345_678'
 %token LITERAL_NUMBER        = /(-?(((\d{1,2}_)?(\d{3}_)*\d{3})|\d{1,2})(\.((\d{3}(_\d{3})*(_\d{1,2})?)|\d{1,2}))?)/   # number w/ underscores; ex. '12_345_678.910_1'
 %token LITERAL_STRING        = /(('[^']+')|("[^"\@\$]*((\\n)|(\\t))+[^"\@\$]*")|(q{[^}]*}))/  # single quotes non-empty; double quotes non-empty w/out sigils & w/ newline or tab; or single q-braces
+%token VARIABLE_SYMBOL       = /(\$[a-zA-Z]\w*[a-z]\w*(::[a-zA-Z]\w*)*)/ # dollar sigil, scoped word with at least one lowercase in the first scope segment
 %token FH_REF_SYMBOL_BRACES  = /(\{\$[A-Z][A-Z0-9_]*\})/                 # left brace, dollar sigil, uppercase letter, uppercase letters & numbers & underscores, right brace; ex. '{$MY_FILEHANDLE_23}'
 %token FH_REF_SYMBOL         = /(\$[A-Z][A-Z0-9_]*)/                     # dollar sigil, uppercase letter, uppercase letters & numbers & underscores; ex. '$MY_FILEHANDLE_23'
-%token VARIABLE_SYMBOL       = /(\$[a-zA-Z]\w*(::)*\w*)/                 # dollar sigil, scoped word
-%token KEYS_OR_VALUES        = /(keys|values)/
+%token TYPE_METHOD           = /([a-zA-Z]\w*__method)/                   # letter followed by letters, numbers, and underscores, followed by '__method'; ex. 'string__array_ref__method'
+%token WORD_SCOPED           = /([a-zA-Z]\w*(::[a-zA-Z]\w*)+)/
+%token KEYS_OR_VALUES        = /(keys|values)\s/
 %token TYPE_CLASS_OR_SELF    = /(string\s+\$class|object\s+\$self)/      # ex. 'string $class' or 'object $self'
 %token STDOUT_STDERR         = /(\{\*STDOUT\}|\{\*STDERR\})/             # '{*STDOUT}' or '{*STDERR}'
 %token STDIN                 = /(<STDIN>)/                               # '<STDIN>'
@@ -33,44 +35,48 @@
 # Affects OP01_NAMED, OP01_NAMED_VOID, and OP10_NAMED_UNARY below, corresponding RPerl::Test::Operator* and C++ code;  http://perldoc.perl.org/perlfunc.html
 
 # PRECEDENCE, LEXICAL ORDERING: earlier declaration gets tried first;  http://perldoc.perl.org/perlop.html#Operator-Precedence-and-Associativity [1]
-%token OP24_LOGICAL_OR_XOR      = /(or|xor)/                    # precedence 24 infix: logical or and xor, equivalent to || except for precedence
-%token OP23_LOGICAL_AND         = /(and)/                       # precedence 23 infix: logical and, equivalent to && except for precedence
-%token OP22_LOGICAL_NEG         = /(not)/                       # precedence 22 prefix: logical negation, equivalent to ! except for precedence
+# DEV NOTE: tokens which are all letters (or, ne, x, print, open, ETC) & are always followed by whitespace when tidy (NOT argumentless next, last, croak, return, exit)
+# must be explicitly made to match the trailing whitespace in the regular expressions below, in order to avoid incorrectly matching substrings of user-defined words
+%token OP24_LOGICAL_OR_XOR      = /(or|xor)\s/                  # precedence 24 infix: logical or and xor, equivalent to || except for precedence
+%token OP23_LOGICAL_AND         = /(and)\s/                     # precedence 23 infix: logical and, equivalent to && except for precedence
+%token OP22_LOGICAL_NEG         = /(not)\s/                     # precedence 22 prefix: logical negation, equivalent to ! except for precedence
 %token OP21_LIST_COMMA          = /(,)/                         # precedence 21 infix: "list operators (rightward)" [1] AKA comma
 %token OP20_HASH_FATARROW       = /(=>)/                        # precedence 20 infix: hash entry fat arrow AKA fat comma
-%token OP19_LOOP_CONTROL        = /(next|last)/                 # precedence 19 prefix void: loop control next, last
+%token OP19_LOOP_CONTROL_SCOLON = /(next;|last;)/               # precedence 19 prefix void: loop control next, last
+%token OP19_LOOP_CONTROL        = /(next|last)\s/               # precedence 19 prefix void: same as above, except accepts loop label
 %token OP18_TERNARY             = /(\?)/                        # precedence 18 infix: ternary conditional
 %token OP17_LIST_RANGE          = /(\.\.)/                      # precedence 17 infix: range
 %token OP16_LOGICAL_OR          = /(\|\|)/                      # precedence 16 infix: logical or
 %token OP15_LOGICAL_AND         = /(&&)/                        # precedence 15 infix: logical and
 %token OP14_BITWISE_OR_XOR      = /(\||\^)/                     # precedence 14 infix: bitwise or, bitwise xor
 %token OP13_BITWISE_AND         = /(&)/                         # precedence 13 infix: bitwise and
-%token OP12_COMPARE_EQ_NE       = /(==|!=|eq|ne)/               # precedence 12 infix: comparison numeric equal, numeric not equal, string equal, string not equal
+%token OP12_COMPARE_EQ_NE       = /(==|!=|eq|ne)\s/             # precedence 12 infix: comparison numeric equal, numeric not equal, string equal, string not equal
 %token OP09_BITWISE_SHIFT       = /(<<|>>)/                     # precedence 09 infix: bitwise shift left, shift right
-%token OP10_NAMED_UNARY         = /(chdir|rand|scalar[^t])/     # precedence 10 prefix: "named unary operators" [1]; ex. 'chdir' and 'rand'; 'scalar' not 'scalartype'
+%token OP10_NAMED_UNARY         = /(chdir|rand|scalar[^t])\s/   # precedence 10 prefix: "named unary operators" [1]; ex. 'chdir' and 'rand'; 'scalar' not 'scalartype'
 %token OP10_STRINGIFY_UNARY     = /((?:main)?::[a-zA-Z]\w*__stringify\()/   # precedence 10 prefix: stringify AKA pretty print; ex. '::integer__array_ref__stringify'
 %token OP19_VARIABLE_ASSIGN_BY  = /(\+=|-=|\*=|\/=|\.=)/        # precedence 19 infix: add assign, subtract assign, multiply assign, divide assign, cat assign
 %token OP08_STRING_CAT          = /(\.)/                        # precedence 08 infix: string concatenate
 %token OP03_MATH_INC_DEC        = /(\+\+|--)/                   # precedence 03 prefix and postfix: increment, decrement
 %token OP04_MATH_POW            = /(\*\*)/                      # precedence 04 infix: arithmetic exponent AKA power
 %token OP07_MATH_MULT_DIV_MOD   = /(\*|\/|\%)/                  # precedence 07 infix: arithmetic multiply, divide, modulo
-%token OP07_STRING_REPEAT       = /(x\s)/                       # precedence 07 infix: string repetition
+%token OP07_STRING_REPEAT       = /(x)\s/                       # precedence 07 infix: string repetition
 %token OP06_REGEX_PATTERN       = /([ms]\/.*(?:\/.*)?\/[a-z]*)/ # precedence 06 infix: regular expression pattern
 %token OP06_REGEX_MATCH         = /(=\~|!\~)/                   # precedence 06 infix: regular expression match, not match
 %token OP05_LOGICAL_NEG         = /(!)/                         # precedence 05 prefix: logical negation
 %token OP02_HASH_THINARROW      = /(->\{)/                      # precedence 02 infix: thin arrow, hash dereference and retrieval
 %token OP02_ARRAY_THINARROW     = /(->\[)/                      # precedence 02 infix: thin arrow, array dereference and retrieval
-%token OP02_METHOD_THINARROW    = /(->)/                        # precedence 02 infix: thin arrow, method dereference and call
+%token OP02_METHOD_THINARROW    = /(->[a-zA-Z]\w*)/             # precedence 02 infix: thin arrow, method dereference and call
 %token OP05_MATH_NEG_LPAREN     = /(-\()/                       # precedence 05 prefix: arithmetic negative
 %token OP08_MATH_ADD_SUB        = /(\+|-)/                      # precedence 08 infix: arithmetic add, subtract
-%token OP11_COMPARE_LT_GT       = /(<=|>=|<|>|lt|gt|le|ge)/     # precedence 11 infix: comparison less than, greater than, less or equal, greater or equal
+%token OP11_COMPARE_LT_GT       = /(<=|>=|<|>|lt|gt|le|ge)\s/   # precedence 11 infix: comparison less than, greater than, less or equal, greater or equal
 %token OP19_VARIABLE_ASSIGN     = /(=)/                         # precedence 19 infix: assign
-%token OP01_PRINT               = /(print)/                     # precedence 01 prefix void: print to STDOUT, STDERR, or filehandle
-%token OP01_NAMED_VOID          = /(croak|return|exit)/         # precedence 01 prefix void: "terms and list operators (leftward)" [1] AKA builtins, no return value
-%token OP01_QW                  = /(qw)/                        # precedence 01 prefix: quoted words
-%token OP01_OPEN                = /(open)/                      # precedence 01 prefix: open filehandle
-%token OP01_CLOSE               = /(close)/                     # precedence 01 prefix: close filehandle
-%token OP01_NAMED               = /(sin|cos|push|pop|ETC)/      # precedence 01 prefix: "terms and list operators (leftward)" [1] AKA builtins
+%token OP01_PRINT               = /(print)\s/                   # precedence 01 prefix void: print to STDOUT, STDERR, or filehandle
+%token OP01_NAMED_VOID_SCOLON   = /(croak;|return;|exit;)/      # precedence 01 prefix void: "terms and list operators (leftward)" [1] AKA builtins, no return value
+%token OP01_NAMED_VOID          = /(croak|return|exit)\s/       # precedence 01 prefix void: same as above, except accepts argument(s)
+%token OP01_QW                  = /(qw\()/                      # precedence 01 prefix: quoted words
+%token OP01_OPEN                = /(open)\s/                    # precedence 01 prefix: open filehandle
+%token OP01_CLOSE               = /(close)\s/                   # precedence 01 prefix: close filehandle
+%token OP01_NAMED               = /(sin|cos|push|pop|ETC)\s/    # precedence 01 prefix: "terms and list operators (leftward)" [1] AKA builtins
 
 # PRECEDENCE, SYNTAX ASSOCIATIVITY: later declaration gets higher priority
 %left       OP24_LOGICAL_OR_XOR
@@ -78,6 +84,7 @@
 %right      OP22_LOGICAL_NEG
 %left       OP21_LIST_COMMA
 %left       OP20_HASH_FATARROW
+%right      OP19_LOOP_CONTROL_SCOLON
 %right      OP19_LOOP_CONTROL
 %right      OP19_VARIABLE_ASSIGN_BY
 %right      OP19_VARIABLE_ASSIGN
@@ -109,11 +116,10 @@
 %left       OP01_CLOSE
 %left       OP01_OPEN
 %left       OP01_QW
+%left       OP01_NAMED_VOID_SCOLON
 %left       OP01_NAMED_VOID
 %left       OP01_PRINT
 
-%token TYPE_METHOD          = /([a-zA-Z]\w*__method)/               # letter followed by letters, numbers, and underscores, followed by '__method'; ex. 'string__array_ref__method'
-%token WORD_SCOPED          = /(([a-zA-Z]\w*(::[a-zA-Z]\w*)+)|(::[a-zA-Z]\w*(::[a-zA-Z]\w*)*))/
 %token WORD                 = /([a-zA-Z]\w*)/                       # letter followed by letters, numbers, and underscores; ex. 'foobar_42_Howdy'
 %token COLON                = /:/
 %token LPAREN               = /\(/
@@ -163,8 +169,13 @@ Operator:               LPAREN OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ')' 
                         SubExpression OP17_LIST_RANGE SubExpression | SubExpression OP18_TERNARY VariableOrLiteral COLON VariableOrLiteral |
                         OP22_LOGICAL_NEG SubExpression | SubExpression OP23_LOGICAL_AND SubExpression | SubExpression OP24_LOGICAL_OR_XOR SubExpression ;
 OperatorVoid:           OP01_PRINT (STDOUT_STDERR)? ListElements ';' | OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ';' |
-                        OP01_NAMED_VOID ListElements? ';' | OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';' | OP19_LOOP_CONTROL LoopLabel? ';' ;
-Expression:             Operator | WordScoped LPAREN ListElements? ')' | Variable OP02_METHOD_THINARROW WORD LPAREN ListElements? ')' ;
+                        OP01_NAMED_VOID_SCOLON | OP01_NAMED_VOID ListElements ';' | OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';' |
+                        OP19_LOOP_CONTROL_SCOLON | OP19_LOOP_CONTROL LoopLabel ';' ;
+Expression:             Operator | WordScoped LPAREN ListElements? ')' | Variable OP02_METHOD_THINARROW LPAREN ListElements? ')' |
+                        WordScoped OP02_METHOD_THINARROW LPAREN ListElements? ')' ;
+                        # START HERE 4: add class method tests
+                        # START HERE 4: add class method tests
+                        # START HERE 4: add class method tests
 SubExpression:          Expression | 'undef' | Literal | Variable | ArrayReference | ArrayDereferenced | HashReference | HashDereferenced | LBRACE '}' |
                         LPAREN SubExpression ')' ;
 SubExpressionOrStdin:   SubExpression | STDIN;
@@ -180,7 +191,7 @@ Variable:               VARIABLE_SYMBOL VariableRetrieval* ;
 VariableRetrieval:      OP02_ARRAY_THINARROW SubExpression ']' | OP02_HASH_THINARROW SubExpression '}' | OP02_HASH_THINARROW WORD '}' ;
 VariableDeclaration:    'my' Type VARIABLE_SYMBOL ';' | 'my' Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';' ;
 VariableModification:   Variable OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';' | Variable OP19_VARIABLE_ASSIGN_BY SubExpression ';' ;
-ListElements:           ListElement (OP21_LIST_COMMA ListElement)* | OP01_QW LPAREN WORD+ ')' ;
+ListElements:           ListElement (OP21_LIST_COMMA ListElement)* | OP01_QW WORD+ ')' ;
 ListElement:            SubExpression | TypeInner SubExpression | KEYS_OR_VALUES HashDereferenced ;
 ArrayReference:         LBRACKET ListElements? ']' ;
 ArrayDereferenced:      '@{' Variable '}' | '@{' ArrayReference '}' ;

@@ -1,0 +1,4 @@
+[[[ OO OBJECT PROPERTIES & OO CLASS PROPERTIES ]]]
+all object properties and class properties must be typed hash entries using 'my', 
+so there can not be an object properties with the same name as a class property in the same class, 
+because the 'my' in the class property's typed hash entry will mask the earlier 'my' definition of the object property's typed hash entry

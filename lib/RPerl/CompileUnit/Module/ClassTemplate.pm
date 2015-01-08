@@ -84,8 +84,7 @@ use constant PIE => my string $TYPED_PIE = 'pecan';
 
 # [[[ OO OBJECT PROPERTIES ]]]
 # <<< CHANGE_ME: replace with real object property name(s) & default data >>>
-#our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
-our $properties = { ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
+our hash_ref $properties = {
     plugh => my integer $TYPED_plugh           = 23,
     xyzzy => my string $TYPED_xyzzy            = 'twenty-three',
     thud  => my integer__array_ref $TYPED_thud = [ 2, 4, 6, 8 ],
@@ -94,10 +93,7 @@ our $properties = { ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allo
 
 # [[[ OO CLASS PROPERTIES ]]]
 # <<< CHANGE_ME: replace with real class property name(s) & default data >>>
-#our %class_properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
-our $class_properties = { ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
-    fruz => my string $TYPED_fruz = 'howdy'
-};
+our hash_ref $class_properties = { fruz => my string $TYPED_fruz = 'howdy' };
 
 # [[[ OO OBJECT METHODS ]]]
 
