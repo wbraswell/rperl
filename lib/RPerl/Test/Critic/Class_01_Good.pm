@@ -14,9 +14,8 @@ use RPerl::Test;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 
 # [[[ OO PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
-    empty_property => my integer $TYPED_empty_property = 2
-);
+our hash_ref $properties
+    = { empty_property => my integer $TYPED_empty_property = 2 };
 
 # [[[ OO METHODS ]]]
 our void__method $empty_method = sub { return 2; };

@@ -14,10 +14,6 @@ use RPerl::Test::Module::Class_00_Good;
 
 # [[[ OPERATIONS ]]]
 
-# START HERE 1A: add grammar support for parsing 'RPerl::Test::Module::Class_00_Good->new()'
-# START HERE 1A: add grammar support for parsing 'RPerl::Test::Module::Class_00_Good->new()'
-# START HERE 1A: add grammar support for parsing 'RPerl::Test::Module::Class_00_Good->new()'
-
 my object $foo = RPerl::Test::Module::Class_00_Good->new();
 my object $bar = RPerl::Test::Module::Class_00_Good->new();
 

@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Package;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_016;
+our $VERSION = 0.000_017;
 
 # [[[ SETUP ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -14,12 +14,12 @@ use Scalar::Util 'blessed';
 use parent qw(RPerl::CompileUnit::Module);
 
 # [[[ OO PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
+our hash_ref $properties = {
     name => my string $TYPED_name = undef,
     version => my string $TYPED_version = undef, # NEED UPGRADE: convert vstring from string type to number type?
     includes    => my string__array_ref $TYPED_includes    = undef,
-    subroutines => my object__array_ref $TYPED_subroutines = undef,
-);
+    subroutines => my object__array_ref $TYPED_subroutines = undef
+};
 
 # [[[ OO METHODS ]]]
 

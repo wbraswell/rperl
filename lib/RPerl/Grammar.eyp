@@ -122,8 +122,8 @@
 %left       OP01_NAMED_VOID
 %left       OP01_PRINT
 
-%token WORD                 = /([a-zA-Z]\w*[a-z]\w*|[a-z])/             # letter followed by letters, numbers, and underscores; ex. 'foobar_42_Howdy'
-%token CONSTANT_SYMBOL      = /([A-Z][A-Z0-9_]*)/                       # letter followed by letters, numbers, and underscores; ex. 'foobar_42_Howdy'
+%token WORD                 = /([a-zA-Z]\w*[a-z]\w*|[a-z])/             # single letter, or letter followed by letters, numbers, and underscores; ex. 'foobar_42_Howdy'
+%token CONSTANT_SYMBOL      = /([A-Z][A-Z0-9_]*|[A-Z])/                 # single uppercase letter, or uppercase letter followed by uppercase letters, numbers, and underscores; ex. 'foobar_42_Howdy'
 %token COLON                = /:/
 %token LPAREN               = /\(/
 %token LBRACKET             = /\[/
@@ -139,6 +139,9 @@ Package:                Critic* Include* Constant* Subroutine+ LITERAL_NUMBER ';
 Header:                 'use strict;' 'use warnings;' 'use RPerl;' 'our' VERSION_NUMBER_ASSIGN;
 Critic:                 '## no critic qw(' WORD+ ')';
 Include:                'use' WordScoped ';' | 'use' WordScoped 'qw(' WORD+ ')' ';' ;
+                        # START HERE 5: create tests which actually utilize constant values
+                        # START HERE 5: create tests which actually utilize constant values
+                        # START HERE 5: create tests which actually utilize constant values
 Constant:               'use constant' CONSTANT_SYMBOL OP20_HASH_FATARROW TypeInnerConstant Literal ';' ;
 #Constant:              'use constant' CONSTANT_SYMBOL OP20_HASH_FATARROW TypeInnerConstant ConstantValue ';' ;  # NEED UPGRADE: constant array & hash refs not read-only as of Perl v5.20
 #ConstantValue:         Literal | LBRACKET TypeInnerConstant? Literal (OP21_LIST_COMMA TypeInnerConstant? Literal)* ']' | 

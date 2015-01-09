@@ -2,12 +2,12 @@ package RPerl::CodeBlock::Subroutine::Method;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_002;
+our $VERSION = 0.002_003;
 
 ## no critic qw(Capitalization ProhibitMultiplePackages)  # SYSTEM DEFAULT 3: allow multiple lower case package names
 
 use parent qw(RPerl::CodeBlock::Subroutine);
-our %properties = (); ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
+our hash_ref $properties = {};
 
 # [[[ SETUP ]]]
 # [[[ SETUP ]]]

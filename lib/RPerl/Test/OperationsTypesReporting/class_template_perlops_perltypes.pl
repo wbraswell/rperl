@@ -25,7 +25,3 @@ use RPerl::CompileUnit::Module::ClassTemplate;
 print 'MODE_ID = ', RPerl__CompileUnit__Module__ClassTemplate__MODE_ID(), "\n";
 print q{ops = '}, $RPerl::MODES->{RPerl__CompileUnit__Module__ClassTemplate__MODE_ID()}->{ops}, q{'}, "\n";
 print q{types = '}, $RPerl::MODES->{RPerl__CompileUnit__Module__ClassTemplate__MODE_ID()}->{types}, q{'}, "\n";
-
-# START HERE 0: test replacement of *_ops() and *_types() with $RPerl::MODES & $MODE_ID
-# START HERE 0: test replacement of *_ops() and *_types() with $RPerl::MODES & $MODE_ID
-# START HERE 0: test replacement of *_ops() and *_types() with $RPerl::MODES & $MODE_ID

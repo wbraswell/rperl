@@ -2,7 +2,7 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.014_000;
+our $VERSION = 0.014_001;
 
 ## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
 ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  # SYSTEM SPECIAL 2: allow Autoload & read-only @_
@@ -533,6 +533,7 @@ sub AUTOLOAD
 }
 
 # RPerl object constructor, longhand
+# DEPRECATED still uses %properties hash instead of $properties hash_ref
 #sub new($class_name_const_str)
 sub new_longhand
 {

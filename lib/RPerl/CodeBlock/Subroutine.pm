@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_011;
+our $VERSION = 0.000_012;
 
 # [[[ SETUP ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -35,12 +35,12 @@ use Scalar::Util 'blessed';
 use parent qw(RPerl::CodeBlock);
 
 # [[[ OO PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
+our hash_ref $properties = { ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
     type       => my string $TYPED_type                   = undef,
     name       => my string $TYPED_name                   = undef,
     arguments  => my hash_ref__array_ref $TYPED_arguments = undef,
-    operations => my object__array_ref $TYPED_operations  = undef,
-);
+    operations => my object__array_ref $TYPED_operations  = undef
+};
 
 # [[[ OO METHOD(S) ]]]
 
