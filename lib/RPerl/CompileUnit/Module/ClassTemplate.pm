@@ -82,8 +82,8 @@ use constant PIE => my string $TYPED_PIE = 'pecan';
 #    death_year => my integer $TYPED_death_year = 1_955
 #};
 
-# [[[ OO OBJECT PROPERTIES ]]]
-# <<< CHANGE_ME: replace with real object property name(s) & default data >>>
+# [[[ OO PROPERTIES ]]]
+# <<< CHANGE_ME: replace with real property name(s) & default data >>>
 our hash_ref $properties = {
     plugh => my integer $TYPED_plugh           = 23,
     xyzzy => my string $TYPED_xyzzy            = 'twenty-three',
@@ -91,11 +91,7 @@ our hash_ref $properties = {
     yyz => my number__hash_ref $TYPED_yyz = { a => 3.1, b => 6.2, c => 9.3 }
 };
 
-# [[[ OO CLASS PROPERTIES ]]]
-# <<< CHANGE_ME: replace with real class property name(s) & default data >>>
-our hash_ref $class_properties = { fruz => my string $TYPED_fruz = 'howdy' };
-
-# [[[ OO OBJECT METHODS ]]]
+# [[[ OO METHODS ]]]
 
 # <<< CHANGE_ME: delete for no methods, or replace with real method(s) >>>
 our void__method $quux = sub {
@@ -108,25 +104,12 @@ our string__method $corge = sub {
     return $self->{xyzzy} x 3;
 };
 
-# [[[ OO CLASS METHODS ]]]
-
-# <<< CHANGE_ME: delete for no methods, or replace with real method(s) >>>
-our void__method $xuuq = sub {
-    ( my string $class) = @_;
-    $class->{class_properties}->{fruz} .= 'ahoy';
-};
-
-our string__method $egroc = sub {
-    ( my string $class, my integer $egroc_input) = @_;
-    return $class->{class_properties}->{fruz} x $egroc_input;
-};
-
 # [[[ SUBROUTINES ]]]
 
 # <<< CHANGE_ME: delete for no subroutines, or replace with real subroutine(s) >>>
 our void $grault = sub {
     ( my integer $grault_input ) = @_;
-    print '$grault_input ** 2 = ' . ( $grault_input**2 ) . "\n";
+    print '$grault_input ** PI() = ' . ( $grault_input**PI() ) . "\n";
 };
 
 our number__array_ref $garply = sub {
