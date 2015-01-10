@@ -16,9 +16,8 @@ use RPerl::Test;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
-# [[[ OO OBJECT PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
-);
+# [[[ OO PROPERTIES ]]]
+our hash_ref $properties = {};
 
 # [[[ SUBROUTINES ]]]
 

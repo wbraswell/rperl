@@ -17,9 +17,8 @@ use RPerl::Test;
 use RPerl::Test::Foo;
 
 # [[[ OO PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
-    empty_property => my integer $TYPED_empty_property = 2
-);
+our hash_ref $properties
+    = { empty_property => my integer $TYPED_empty_property = 2 };
 
 # [[[ OO METHODS ]]]
 our void__method $empty_method = sub { return 2; };

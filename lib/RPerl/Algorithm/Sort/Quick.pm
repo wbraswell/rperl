@@ -4,11 +4,11 @@ use strict;  use warnings;
 our @ISA = ('RPerl::Algorithm::Sort');
 use RPerl::Algorithm::Sort;
 
-our %properties =
-(
+our hash_ref $properties =
+{
 	variant => my string $TYPED_mode = 'original',  # default to original (not in-place) variant
-	data => my scalartype__array_ref $TYPED_data,
-);
+	data => my scalartype__array_ref $TYPED_data
+};
 
 # call out to sort data, return nothing
 our void__method $sort = sub {(my object $self) = @_;

@@ -9,17 +9,21 @@ our $VERSION = 0.004_002;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
 use parent qw(RPerl::Algorithm);
 use RPerl::Algorithm;
-our %properties = (); ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
+
+# [[[ OO PROPERTIES ]]]
+our hash_ref $properties = {};
 
 # [[[ OO METHODS ]]]
 
 our void__method $inherited__Inefficient = sub {
     ( my object $self, my string $person) = @_;
+
 #    RPerl::diag "in PERLOPS_PERLTYPES Inefficient->inherited__Inefficient(), received \$self = '$self' and \$person = '$person', FLUFFY\n";
 };
 
 our void__method $inherited = sub {
     ( my object $self, my string $person) = @_;
+
 #    RPerl::diag "in PERLOPS_PERLTYPES Inefficient->inherited(), received \$self = '$self' and \$person = '$person', INCOMPATIBLE\n";
 };
 
@@ -47,4 +51,4 @@ our string $uninherited__Inefficient = sub {
 # DEV NOTE, CORRELATION #04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
 #our string $uninherited = sub { ( my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Inefficient::uninherited(), received \$person = '$person', TRICKS\n"; return 'Inefficient::uninherited() ROCKS! PERLOPS_PERLTYPES'; };
 
-1;                  # end of class
+1;    # end of class

@@ -2,7 +2,7 @@ package RPerl::Operation::Statement;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_011;
+our $VERSION = 0.000_012;
 
 # [[[ SETUP ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -13,8 +13,7 @@ use parent qw(RPerl::Operation);
 
 # [[[ OO PROPERTIES ]]]
 # DEV NOTE: no active properties, this is a stub object for now, see children objects for active properties
-our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
-);
+our hash_ref $properties = {};
 
 # [[[ OO METHODS ]]]
 # TRANSLATE

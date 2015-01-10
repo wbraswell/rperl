@@ -12,10 +12,10 @@ use Scalar::Util 'blessed';
 use parent qw(RPerl::Operation::Statement);
 
 # [[[ OO PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
+our hash_ref $properties = {
     name  => my string $TYPED_name  = undef,
     value => my object $TYPED_value = undef,
-);
+};
 
 # [[[ OO METHODS ]]]
 # VARIABLE_MODIFICATION RULE

@@ -12,13 +12,13 @@ use Scalar::Util 'blessed';
 use parent qw(RPerl::Operation::Statement::Loop);
 
 # [[[ OO PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
+our hash_ref $properties = {
     label           => my string $TYPED_label            = undef,
     iterator_type   => my string $TYPED_iterator_type    = undef,
     iterator_symbol => my string $TYPED_iterator_symbol  = undef,
     range           => my object__array_ref $TYPED_range = undef,
     body            => my object $TYPED_body             = undef,
-);
+};
 
 # [[[ OO METHODS ]]]
 

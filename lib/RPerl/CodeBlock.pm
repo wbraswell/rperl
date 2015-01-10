@@ -2,12 +2,12 @@ package RPerl::CodeBlock;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_011;
+our $VERSION = 0.000_012;
 
 ## no critic qw(Capitalization ProhibitMultiplePackages)  # SYSTEM DEFAULT 3: allow multiple lower case package names
 
 use parent qw(RPerl::GrammarRule);
-our %properties = (); ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
+our hash_ref $properties = {};
 
 # [[[ SUB-TYPES ]]]
 

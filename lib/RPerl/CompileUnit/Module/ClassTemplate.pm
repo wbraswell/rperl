@@ -23,10 +23,9 @@ use RPerl::CompileUnit::Module::Class;
 # <<< CHANGE_ME: delete unused critics >>>
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
-## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
-## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 4: allow constants
-## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 5: allow <STDIN> prompt
-## no critic qw(RequireBriefOpen)  # USER DEFAULT 6: allow open() in perltidy-expanded code
+## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
+## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
+## no critic qw(RequireBriefOpen)  # USER DEFAULT 5: allow open() in perltidy-expanded code
 ## no critic qw(RequireTrailingCommas)  # USER DEFAULT X: no trailing commas in RPerl lists  # NEED ANSWER: RPerl is mostly array refs, do we even need this?
 
 ## no critic qw(ProhibitUselessNoCritic PodSpelling) # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code, must be on line 1

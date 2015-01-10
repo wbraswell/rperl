@@ -2,7 +2,7 @@ package RPerl::Operation::Statement::OperatorVoid;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_010;
+our $VERSION = 0.000_012;
 
 # [[[ SETUP ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -10,21 +10,21 @@ our $VERSION = 0.000_010;
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement);
 
-# NEED FIX: create %properties_class
-
 # [[[ OO PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
-                    #name => my string $TYPED_name = undef,  # object property
-     #arguments => my object__array_ref $TYPED_arguments = undef,  # object property
+our hash_ref $properties = {
 
+#name => my string $TYPED_name = undef,  # object property
+#arguments => my object__array_ref $TYPED_arguments = undef,  # object property
+
+# NEED FIX: move "class properties" to constants
     # class property
-    _operator_void_names => my string__hash_ref $TYPED__operator_void_names = {
+    _operator_void_names => my string__hash_ref $TYPED__operator_void_names
+        = {
         'print'  => 'RPerl::Operation::Statement::OperatorVoid::Print',
         'return' => 'RPerl::Operation::Statement::OperatorVoid::Return',
         'croak'  => 'RPerl::Operation::Statement::OperatorVoid::Croak',
-    },
-);
-
+        }
+};
 # [[[ OO METHODS ]]]
 # TRANSLATE
 our object__method $ppi_to_rperl__translate = sub {

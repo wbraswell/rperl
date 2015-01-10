@@ -2,7 +2,7 @@ package RPerl::Operation::Statement::OperatorVoid::Return;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_003;
+our $VERSION = 0.001_005;
 
 # [[[ SETUP ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -12,12 +12,12 @@ use Scalar::Util 'blessed';
 use parent qw(RPerl::Operation::Statement::OperatorVoid); # NEED FIX: is not a Grammar Rule so should not inherit from OperatorVoid, need create Grammar Production class
 
 # [[[ OO OBJECT PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
+our hash_ref $properties = {
     arguments => my object__array_ref $TYPED_arguments = undef,
-);
+};
 
 # [[[ OO CLASS PROPERTIES ]]]
-our %properties_class = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
+our %class_properties = (
     name => my string $TYPED_name = 'return',
     parentheses_require => my integer $TYPED_parentheses_require = 1, # disallow ambiguous'ish calling of return w/out parens
     parentheses_allow => my integer $TYPED_parentheses_allow = 1, # exempt from Perl::Critic brutal CodeLayout::ProhibitParensWithBuiltins
@@ -151,7 +151,7 @@ our object__method $ppi_to_rperl__translate = sub {
     $child_key              = 'children';
     $child_index            = 0;
     $child_class_expected   = 'PPI::Token::Word';
-    $child_content_expected = ( \%properties_class )->{name};
+    $child_content_expected = ( \%class_properties )->{name};
     $child                  = $node->{$child_key}->[$child_index];
     if ( not( defined $child ) ) {
         croak(
@@ -190,21 +190,21 @@ our object__method $ppi_to_rperl__translate = sub {
     $component_name = 'LIST_ELEMENTS';
     $child_index    = 1;
     my integer $arguments_count = $child_index_max - $child_index;
-    if ( $arguments_count < ( \%properties_class )->{arguments_min} ) {
+    if ( $arguments_count < ( \%class_properties )->{arguments_min} ) {
         croak(
             "\nERROR ECVTRSY02, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, RPERL SYNTAX:\nin $node_class object, '"
-                . ( \%properties_class )->{name}
+                . ( \%class_properties )->{name}
                 . q{' operator, }
-                . ( \%properties_class )->{arguments_min}
+                . ( \%class_properties )->{arguments_min}
                 . " minimum argument(s) expected, but $arguments_count argument(s) found,\ncroaking"
         );
     }
-    if ( $arguments_count > ( \%properties_class )->{arguments_max} ) {
+    if ( $arguments_count > ( \%class_properties )->{arguments_max} ) {
         croak(
             "\nERROR ECVTRSY03, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, RPERL SYNTAX:\nin $node_class object, '"
-                . ( \%properties_class )->{name}
+                . ( \%class_properties )->{name}
                 . q{' operator, }
-                . ( \%properties_class )->{arguments_min}
+                . ( \%class_properties )->{arguments_min}
                 . " maximum argument(s) expected, but $arguments_count argument(s) found,\ncroaking"
         );
     }

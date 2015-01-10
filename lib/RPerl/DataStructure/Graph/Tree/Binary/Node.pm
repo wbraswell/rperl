@@ -13,12 +13,12 @@ use RPerl::DataType::Unknown;
 use RPerl::DataStructure::Array;
 use RPerl::CodeBlock::Subroutine::Method;
 
-our %properties =
-(
+our hash_ref $properties =
+{
 	data => my unknown $TYPED_data = undef,
 	left => my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $TYPED_left = undef,
 	right => my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $TYPED_right = undef
-);
+};
 
 # traverse nodes breadth-first
 our unknown__method $traverse_breadthfirst_queue = sub {(my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $self, my RPerl::CodeReference $callback) = @_;
@@ -155,4 +155,4 @@ our string__method $DUMPER = sub {(my RPerl::DataStructure::Graph::Tree::Binary:
 package binarytreenode_ref;
 our @ISA = ('RPerl::DataStructure::Graph::Tree::Binary::NodeReference');
 use RPerl::DataStructure::Graph::Tree::Binary::Node;
-our %properties = %properties; our $new_from_nested_array_refs = $new_from_nested_array_refs; our $traverse_depthfirst_preorder = $traverse_depthfirst_preorder; our $to_nested_array_refs = $to_nested_array_refs; our $traverse_breadthfirst_queue = $traverse_breadthfirst_queue;
+our $properties = $properties; our $new_from_nested_array_refs = $new_from_nested_array_refs; our $traverse_depthfirst_preorder = $traverse_depthfirst_preorder; our $to_nested_array_refs = $to_nested_array_refs; our $traverse_breadthfirst_queue = $traverse_breadthfirst_queue;

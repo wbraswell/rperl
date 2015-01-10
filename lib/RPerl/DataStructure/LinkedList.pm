@@ -13,10 +13,10 @@ use RPerl::DataStructure;
 # linked lists are comprised of nodes
 use RPerl::DataStructure::LinkedList::Node;
 
-our %properties =
-(
+our hash_ref $properties =
+{
 	head => my RPerl::DataStructure::LinkedList::NodeReference $TYPED_head = undef,  # start with head = undef so we can test for empty list
-);
+};
 
 our RPerl::DataStructure::LinkedListReference $new_from_array_ref = sub {(my string $class, my const_array_ref $input) = @_;
 ;
@@ -53,7 +53,7 @@ package linkedlist_ref;
 our @ISA = ('RPerl::DataStructure::LinkedListReference');
 use RPerl::DataStructure::LinkedList;
 # TODO: check if these (and other) symbol copies can be shortened???   move integer import() subroutine to be automatically called by 'use' command?
-our %properties = %properties; our $new_from_array_ref = $new_from_array_ref; our $linkedlist_unshift = $linkedlist_unshift; our $DUMPER = $DUMPER;
+our $properties = $properties; our $new_from_array_ref = $new_from_array_ref; our $linkedlist_unshift = $linkedlist_unshift; our $DUMPER = $DUMPER;
 
 # ref to linked list with const size
 package const_linkedlist_ref;

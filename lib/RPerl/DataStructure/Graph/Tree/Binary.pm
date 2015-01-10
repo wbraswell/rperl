@@ -18,10 +18,10 @@ use RPerl::DataType::String;
 use RPerl::DataStructure::Array;
 #use RPerl::CodeBlock::Subroutine::Method;  # NEED ADD: explicit method declarations
 
-our %properties =
-(
+our hash_ref $properties =
+{
 	root => my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $TYPED_root = undef,  # start with root = undef so we can test for empty tree
-);
+};
 
 our RPerl::DataStructure::Graph::Tree::BinaryReference $new_from_nested_array_refs = sub {(my string $class, my const_array_ref $input) = @_;
 ;
@@ -46,7 +46,7 @@ our array_ref $to_nested_array_refs = sub {(my RPerl::DataStructure::Graph::Tree
 package binarytree_ref;
 our @ISA = ('RPerl::DataStructure::Graph::Tree::BinaryReference');
 use RPerl::DataStructure::Graph::Tree::Binary;
-our %properties = %properties; our $new_from_nested_array_refs = $new_from_nested_array_refs; our $traverse_depthfirst_preorder = $traverse_depthfirst_preorder; our $to_nested_array_refs = $to_nested_array_refs; our $traverse_breadthfirst_queue = $traverse_breadthfirst_queue;
+our $properties = $properties; our $new_from_nested_array_refs = $new_from_nested_array_refs; our $traverse_depthfirst_preorder = $traverse_depthfirst_preorder; our $to_nested_array_refs = $to_nested_array_refs; our $traverse_breadthfirst_queue = $traverse_breadthfirst_queue;
 
 # ref to binary tree with const size
 package const_binarytree_ref;
@@ -58,12 +58,12 @@ our @ISA = ('ref');
 # (ref to binary tree) of integers
 package integer__binarytree_ref;
 our @ISA = ('binarytree_ref');
-our %properties = %properties; our $new_from_array_ref = $new_from_array_ref; our $binarytree_unshift = $binarytree_unshift; our $DUMPER = $DUMPER;
+our $properties = $properties; our $new_from_array_ref = $new_from_array_ref; our $binarytree_unshift = $binarytree_unshift; our $DUMPER = $DUMPER;
 
 # (ref to binary tree with const size) of integers
 package integer__const_binarytree_ref;
 our @ISA = ('const_binarytree_ref');
-our %properties = %properties; our $new_from_array_ref = $new_from_array_ref; our $binarytree_unshift = $binarytree_unshift; our $DUMPER = $DUMPER;
+our $properties = $properties; our $new_from_array_ref = $new_from_array_ref; our $binarytree_unshift = $binarytree_unshift; our $DUMPER = $DUMPER;
 
 # NEED ADD: remaining sub-types
 

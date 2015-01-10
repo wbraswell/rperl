@@ -35,7 +35,7 @@ use Scalar::Util 'blessed';
 use parent qw(RPerl::CodeBlock);
 
 # [[[ OO PROPERTIES ]]]
-our hash_ref $properties = { ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
+our hash_ref $properties = {
     type       => my string $TYPED_type                   = undef,
     name       => my string $TYPED_name                   = undef,
     arguments  => my hash_ref__array_ref $TYPED_arguments = undef,

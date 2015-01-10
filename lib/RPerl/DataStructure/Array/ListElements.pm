@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array::ListElements;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_004;
+our $VERSION = 0.000_005;
 
 # [[[ SETUP ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -16,9 +16,9 @@ use parent qw(RPerl::GrammarRule);
 
 # [[[ OO PROPERTIES ]]]
 # DEV NOTE: no active properties, this is a stub object for now, see children objects for active properties
-our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
+our hash_ref $properties = {
     elements => my object__array_ref $TYPED_elements = undef,
-);
+};
 
 # [[[ OO METHODS ]]]
 

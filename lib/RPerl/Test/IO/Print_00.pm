@@ -11,7 +11,7 @@ our $VERSION = 0.003_010;
 
 # NEED UPGRADE: support CONSTANT rule!
 # DEV NOTE: Perl::Critic BUG!  ProhibitMagicNumbers conflicts with ProhibitConstantPragma
-## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 4: allow constants
+## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
 use constant FNORD => 23; # parses to PPI::FOOBAZ object, translates to RPerl::FOOBAZ::Constant object
 
 # [[[ PROCEDURAL SUBROUTINE(S) ]]]

@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::VariableDeclaration;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_011;
+our $VERSION = 0.000_012;
 
 # [[[ SETUP ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -15,11 +15,11 @@ use Scalar::Util 'blessed';
 use parent qw(RPerl::Operation::Statement);
 
 # [[[ OO PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
+our hash_ref $properties = {
     type  => my string $TYPED_type  = undef,
     name  => my string $TYPED_name  = undef,
     value => my object $TYPED_value = undef,
-);
+};
 
 # [[[ OO METHODS ]]]
 # VARIABLE_DECLARATION RULE

@@ -2,7 +2,7 @@ package RPerl::CompileUnit;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_011;
+our $VERSION = 0.000_012;
 
 # [[[ SETUP ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -13,7 +13,7 @@ use parent qw(RPerl::GrammarRule);
 
 # [[[ OO PROPERTIES ]]]
 # DEV NOTE: no active properties, this is a stub object for now, see children objects for active properties
-our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
+our hash_ref $properties = {
         # Program, Module, Package, and Class objects
         #name        => my string $TYPED_name                   = undef,
         #version     => my string $TYPED_version                = undef,
@@ -27,7 +27,7 @@ our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allo
     # Class objects only
     #methods    => my object__array_ref $TYPED_methods    = undef,
     #properties => my object__array_ref $TYPED_properties = undef,
-);
+};
 
 # [[[ OO METHODS ]]]
 

@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h 0.004_020
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h 0.004_021
 
 ////# [[[ INCLUDES ]]]
 #include <rperltypes_mode.h>  // for definitions of __PERL__TYPES or __CPP__TYPES
@@ -51,7 +51,7 @@ public:
 ////# [[[ OO PROPERTIES ]]]
 
 private:
-////our %properties = ( integer__data => my integer__array_ref $TYPED_integer__data, number__data  => my number__array_ref $TYPED_number__data );
+////our hash_ref $properties = { integer__data => my integer__array_ref $TYPED_integer__data, number__data  => my number__array_ref $TYPED_number__data };
 	SV* integer__data;
 	SV* number__data;
 };
@@ -114,7 +114,7 @@ public:
 	////# [[[ OO PROPERTIES ]]]
 
 private:
-////our %properties = ( integer__data => my integer__array_ref $TYPED_integer__data, number__data  => my number__array_ref $TYPED_number__data );
+////our hash_ref $properties = { integer__data => my integer__array_ref $TYPED_integer__data, number__data  => my number__array_ref $TYPED_number__data };
 	integer__array_ref integer__data;
 	number__array_ref number__data;
 };

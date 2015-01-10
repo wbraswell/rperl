@@ -2,7 +2,7 @@ package RPerl::Operation::Statement::OperatorVoid::Croak;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_003;
+our $VERSION = 0.000_004;
 
 # [[[ SETUP ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -12,10 +12,10 @@ use Scalar::Util 'blessed';
 use parent qw(RPerl::Operation::Statement::OperatorVoid);
 
 # [[[ OO PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
+our hash_ref $properties = {
     name => my string $TYPED_name = 'croak',
-    arguments => my object__array_ref $TYPED_arguments = undef,
-);
+    arguments => my object__array_ref $TYPED_arguments = undef
+};
 
 # [[[ OO METHODS ]]]
 # TRANSLATE

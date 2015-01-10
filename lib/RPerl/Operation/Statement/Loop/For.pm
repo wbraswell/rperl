@@ -2,7 +2,7 @@ package RPerl::Operation::Statement::Loop::For;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_011;
+our $VERSION = 0.000_012;
 
 # [[[ SETUP ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -12,13 +12,13 @@ use Scalar::Util 'blessed';
 use parent qw(RPerl::Operation::Statement::Loop);
 
 # [[[ OO PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
+our hash_ref $properties = {
     label           => my string $TYPED_label           = undef,
     iterator_symbol => my string $TYPED_iterator_symbol = undef,
     range_min       => my object $TYPED_range_min       = undef,
     range_max       => my object $TYPED_range_max       = undef,
     body            => my object $TYPED_body            = undef,
-);
+};
 
 # [[[ OO METHODS ]]]
 

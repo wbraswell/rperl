@@ -11,11 +11,11 @@ use RPerl::DataType::String;
 use RPerl::DataType::Unknown;
 use RPerl::CodeBlock::Subroutine::Method;
 
-our %properties =
-(
+our hash_ref $properties =
+{
 	data => my unknown $TYPED_data = undef,
 	next => my RPerl::DataStructure::LinkedList::NodeReference $TYPED_next = undef
-);
+};
 
 our string__method $DUMPER = sub {(my RPerl::DataStructure::LinkedList::NodeReference $node) = @_;
 ;
@@ -40,4 +40,4 @@ our string__method $DUMPER = sub {(my RPerl::DataStructure::LinkedList::NodeRefe
 package linkedlistnode_ref;
 our @ISA = ('RPerl::DataStructure::LinkedList::NodeReference');
 use RPerl::DataStructure::LinkedList::Node;
-our %properties = %properties;
+our $properties = $properties;

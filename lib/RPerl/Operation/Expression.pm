@@ -14,6 +14,7 @@ use parent qw(RPerl::Operation);
 
 # [[[ OO PROPERTIES ]]]
 # DEV NOTE: no active properties, this is a stub object for now, see children objects for active properties
+our hash_ref $properties = {};
 
 # [[[ OO METHODS ]]]
 # TRANSLATE

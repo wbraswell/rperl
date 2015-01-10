@@ -14,7 +14,7 @@ use parent qw(RPerl::Test);
 use RPerl::Test;
 
 # [[[ CONSTANTS ]]]
-## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 4: allow constants
+## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
 us constant PI   => my number $TYPED_PI  = 3.141_59;
 use constant PIE => my string $TYPED_PIE = 'pecan';
 

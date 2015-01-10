@@ -2,7 +2,7 @@ package RPerl::Operation::Expression::Operator;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_010;
+our $VERSION = 0.000_011;
 
 # [[[ SETUP ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -12,11 +12,11 @@ use Scalar::Util 'blessed';
 use parent qw(RPerl::Operation::Expression);
 
 # [[[ OO PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
+our hash_ref $properties = {
     type      => my string $TYPED_type                 = undef,
     name      => my string $TYPED_name                 = undef,
-    arguments => my object__array_ref $TYPED_arguments = undef,
-);
+    arguments => my object__array_ref $TYPED_arguments = undef
+};
 
 # [[[ OO METHODS ]]]
 

@@ -21,10 +21,10 @@ use RPerl::Algorithm::Sort;
 use Data::Dumper;
 
 # [[[ OO OBJECT PROPERTIES ]]]
-our %properties = ( ## no critic qw(ProhibitPackageVars)  # USER DEFAULT 3: allow OO properties
+our hash_ref $properties = (
     integer__data => my integer__array_ref $TYPED_integer__data = undef,
     number__data  => my number__array_ref $TYPED_number__data   = undef
-);
+};
 
 # [[[ OO METHODS ]]]
 
