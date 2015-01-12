@@ -179,9 +179,9 @@ INIT {
  
                     # accessor/mutator object methods
 
-         # START HERE 1: test $[class_]properties as hash_ref, then change all %[class_]properties to $[class_]properties
-         # START HERE 1: test $[class_]properties as hash_ref, then change all %[class_]properties to $[class_]properties
-         # START HERE 1: test $[class_]properties as hash_ref, then change all %[class_]properties to $[class_]properties
+         # START HERE 1: test new hash_ref $properties
+         # START HERE 1: test new hash_ref $properties
+         # START HERE 1: test new hash_ref $properties
                     $object_properties = eval "\$$package_name\:\:properties";
 
                     foreach my $object_property_name (
