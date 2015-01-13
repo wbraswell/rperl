@@ -87,7 +87,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         my string $type_lc = lc $type;
         lives_and(
             sub {
-                is( __PACKAGE__->can( $type_lc . '__MODE_ID' )->(),
+                is( $RPerl::MODES->{__PACKAGE__->can( 'main::' .  $type_lc . '__MODE_ID' )->()}->{ops},
                     $ops, $type_lc . '__MODE_ID() returns ' . $ops );
             },
             $type_lc . q{__MODE_ID() lives}
@@ -98,7 +98,10 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     # [[[ INTEGER TESTS ]]]
     # [[[ INTEGER TESTS ]]]
 
-    my string $mode_tagline     = RPerl::Test::id($mode);
+# START HERE 0: debug this test file
+# START HERE 0: debug this test file
+# START HERE 0: debug this test file
+
     my integer $MODE_ID = $mode->{index};
 
     throws_ok(    # TIV00
