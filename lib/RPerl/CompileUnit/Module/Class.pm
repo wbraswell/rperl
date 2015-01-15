@@ -189,15 +189,8 @@ INIT {
                     {
 #						RPerl::diag "in Class.pm INIT block, have \$object_property_name = '$object_property_name'\n";
 # DEV NOTE, CORRELATION #03: avoid re-defining class accessor/mutator methods; so far only triggered by RPerl::CodeBlock::Subroutine
-# becuase it has a special BEGIN{} block with multiple package names including it's own package name
-#                        if (not eval "defined &\{$package_name\:\:get_$object_property_name\}" )
-                        if (not eval(
-                                      'defined &{'
-                                    . $package_name
-                                    . '::get_'
-                                    . $object_property_name . '}'
-                            )
-                            )
+# because it has a special BEGIN{} block with multiple package names including it's own package name
+                        if (not eval( 'defined &' . $package_name . '::get_' . $object_property_name ) )
                         {
 #                            eval "\*\{$package_name\:\:get_$object_property_name\} \= sub \{ return \$\_\[0\]\-\>\{$object_property_name\}\; \}\;"
                             eval(     '*{'
@@ -213,14 +206,7 @@ INIT {
 #eval "\*\{$package_name\:\:get_$object_property_name\} \= sub \{ RPerl::diag \"IN POST\-INIT\, accessor MODE $package_name\:\:get_$object_property_name\\n\"\; return \$\_\[0\]\-\>\{$object_property_name\}\; \}\;";
                         }
 
-#                        if (not eval "defined &\{$package_name\:\:set_$object_property_name\}" )
-                        if (not eval(
-                                      'defined &{'
-                                    . $package_name
-                                    . '::set_'
-                                    . $object_property_name . '}'
-                            )
-                            )
+                        if (not eval( 'defined &' . $package_name . '::set_' . $object_property_name ) )
                         {
 #                            eval "\*\{$package_name\:\:set_$object_property_name\} \= sub \{ \$\_\[0\]\-\>\{$object_property_name\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$object_property_name\}\; \}\;"
                             eval(     '*{'
