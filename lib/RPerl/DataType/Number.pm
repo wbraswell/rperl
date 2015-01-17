@@ -2,7 +2,7 @@ package RPerl::DataType::Number;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_020;
+our $VERSION = 0.003_030;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -94,7 +94,7 @@ our string $number__stringify = sub {
 
 # [[[ TYPE TESTING ]]]
 our number $number__typetest0 = sub {
-    my number $retval = ( 22 / 7 ) + number__MODE_ID(); # return floating-point number value
+    my number $retval = ( 22 / 7 ) + main::RPerl__DataType__Number__MODE_ID(); # return floating-point number value
 
 #    RPerl::diag "in PERLOPS_PERLTYPES number__typetest0(), have \$retval = $retval\n" or croak();
     return ($retval);
@@ -107,7 +107,7 @@ our number $number__typetest1 = sub {
         'number__typetest1()' );
 
 #    RPerl::diag 'in PERLOPS_PERLTYPES number__typetest1(), received $lucky_number = ' . number__stringify($lucky_number) . "\n" or croak();
-    return ( ( $lucky_number * 2 ) + number__MODE_ID() );
+    return ( ( $lucky_number * 2 ) + main::RPerl__DataType__Number__MODE_ID() );
 };
 
 1;
