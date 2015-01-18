@@ -3,7 +3,7 @@
 
 // AUTOMATICALLY MODIFIED BY rperltypes::types_enable()
 // <<< TYPE DEFINES >>>
-#define __PERL__TYPES  // must choose exactly ONE of this,
-//#define __CPP__TYPES  // or this
+//#define __PERL__TYPES  // must choose exactly ONE of this,
+#define __CPP__TYPES  // or this
 
 #endif
