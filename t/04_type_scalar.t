@@ -84,13 +84,20 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                 $package . '::cpp_load() lives' );
         }
 
-        my string $type_lc = lc $type;
         lives_and(
             sub {
-                is( $RPerl::MODES->{__PACKAGE__->can( 'main::' .  $type_lc . '__MODE_ID' )->()}->{ops},
-                    $ops, $type_lc . '__MODE_ID() returns ' . $ops );
+                is( $RPerl::MODES->{ __PACKAGE__->can(
+                            'main::RPerl__DataType__' . $type . '__MODE_ID'
+                        )->()
+                        }->{ops},
+                    $ops,
+                    'main::RPerl__DataType__'
+                        . $type
+                        . '__MODE_ID() returns '
+                        . $ops
+                );
             },
-            $type_lc . q{__MODE_ID() lives}
+            'main::RPerl__DataType__' . $type . '__MODE_ID() lives'
         );
     }
 
@@ -98,55 +105,55 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     # [[[ INTEGER TESTS ]]]
     # [[[ INTEGER TESTS ]]]
 
-# START HERE 0: debug this test file
-# START HERE 0: debug this test file
-# START HERE 0: debug this test file
+    # START HERE 0: debug this test file
+    # START HERE 0: debug this test file
+    # START HERE 0: debug this test file
 
     throws_ok(    # TIV00
         sub { integer__stringify() },
         "/(EIV00.*$mode_tagline)|(Usage.*integer__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TIV00 integer__stringify() throws correct exception}
     );
-    throws_ok(                                               # TIV01
+    throws_ok(                                                  # TIV01
         sub { integer__stringify(undef) },
         "/EIV00.*$mode_tagline/",
         q{TIV01 integer__stringify(undef) throws correct exception}
     );
-    lives_and(                                               # TIV02
+    lives_and(                                                  # TIV02
         sub {
             is( integer__stringify(3), '3',
                 q{TIV02 integer__stringify(3) returns correct value} );
         },
         q{TIV02 integer__stringify(3) lives}
     );
-    lives_and(                                               # TIV03
+    lives_and(                                                  # TIV03
         sub {
             is( integer__stringify(-17), '-17',
                 q{TIV03 integer__stringify(-17) returns correct value} );
         },
         q{TIV03 integer__stringify(-17) lives}
     );
-    throws_ok(                                               # TIV04
+    throws_ok(                                                  # TIV04
         sub { integer__stringify(-17.3) },
         "/EIV01.*$mode_tagline/",
         q{TIV04 integer__stringify(-17.3) throws correct exception}
     );
-    throws_ok(                                               # TIV05
+    throws_ok(                                                  # TIV05
         sub { integer__stringify('-17.3') },
         "/EIV01.*$mode_tagline/",
         q{TIV05 integer__stringify('-17.3') throws correct exception}
     );
-    throws_ok(                                               # TIV06
+    throws_ok(                                                  # TIV06
         sub { integer__stringify( [3] ) },
         "/EIV01.*$mode_tagline/",
         q{TIV06 integer__stringify([3]) throws correct exception}
     );
-    throws_ok(                                               # TIV07
+    throws_ok(                                                  # TIV07
         sub { integer__stringify( { a_key => 3 } ) },
         "/EIV01.*$mode_tagline/",
         q{TIV07 integer__stringify({a_key => 3}) throws correct exception}
     );
-    lives_and(                                               # TIV08
+    lives_and(                                                  # TIV08
         sub {
             is( integer__stringify(-1_234_567_890), '-1234567890',
                 q{TIV08 integer__stringify(-1_234_567_890) returns correct value}
@@ -154,7 +161,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         },
         q{TIV08 integer__stringify(-1_234_567_890) lives}
     );
-    throws_ok(                                               # TIV09
+    throws_ok(                                                  # TIV09
         sub {
             integer__stringify(
                 -1_234_567_890_000_000_000_000_000_000_000_000);
@@ -162,7 +169,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         "/EIV01.*$mode_tagline/",
         q{TIV09 integer__stringify(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
     );
-    lives_and(                                               # TIV10
+    lives_and(                                                  # TIV10
         sub {
             is( integer__typetest0(),
                 ( 3 + $mode_id ),
@@ -171,7 +178,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         },
         q{TIV10 integer__typetest0() lives}
     );
-    throws_ok(                                               # TIV20
+    throws_ok(                                                  # TIV20
         sub { integer__typetest1() },
         "/(EIV00.*$mode_tagline)|(Usage.*integer__typetest1)/"
         ,    # DEV NOTE: 2 different error messages, RPerl & C
@@ -247,26 +254,26 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         "/(ENV00.*$mode_tagline)|(Usage.*number__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TNV00 number__stringify() throws correct exception}
     );
-    throws_ok(                                              # TNV01
+    throws_ok(                                                 # TNV01
         sub { number__stringify(undef) },
         "/ENV00.*$mode_tagline/",
         q{TNV01 number__stringify(undef) throws correct exception}
     );
-    lives_and(                                              # TNV02
+    lives_and(                                                 # TNV02
         sub {
             is( number__stringify(3), '3',
                 q{TNV02 number__stringify(3) returns correct value} );
         },
         q{TNV02 number__stringify(3) lives}
     );
-    lives_and(                                              # TNV03
+    lives_and(                                                 # TNV03
         sub {
             is( number__stringify(-17), '-17',
                 q{TNV03 number__stringify(-17) returns correct value} );
         },
         q{TNV03 number__stringify(-17) lives}
     );
-    lives_and(                                              # TNV04
+    lives_and(                                                 # TNV04
         sub {
             is( number__stringify(-17.3),
                 '-17.3',
@@ -274,22 +281,22 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         },
         q{TNV04 number__stringify(-17.3) lives}
     );
-    throws_ok(                                              # TNV05
+    throws_ok(                                                 # TNV05
         sub { number__stringify('-17.3') },
         "/ENV01.*$mode_tagline/",
         q{TNV05 number__stringify('-17.3') throws correct exception}
     );
-    throws_ok(                                              # TNV06
+    throws_ok(                                                 # TNV06
         sub { number__stringify( [3] ) },
         "/ENV01.*$mode_tagline/",
         q{TNV06 number__stringify([3]) throws correct exception}
     );
-    throws_ok(                                              # TNV07
+    throws_ok(                                                 # TNV07
         sub { number__stringify( { a_key => 3 } ) },
         "/ENV01.*$mode_tagline/",
         q{TNV07 number__stringify({a_key => 3}) throws correct exception}
     );
-    lives_and(                                              # TNV08
+    lives_and(                                                 # TNV08
         sub {
             is( number__stringify(
                     3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679
@@ -300,11 +307,11 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         },
         q{TNV08 number__stringify(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679) lives}
     );
-    lives_and(                                              # TNV10
+    lives_and(                                                 # TNV10
         sub {
             cmp_ok(
-                abs(number__typetest0() - ( 3.14285714285714 + $mode_id )
-                ),    ## PERLTIDY BUG comma on newline
+                abs( number__typetest0() - ( 3.14285714285714 + $mode_id ) )
+                ,    ## PERLTIDY BUG comma on newline
                 '<',
                 $ERROR_MAX,
                 q{TNV10 number__typetest0() returns correct value}
@@ -312,18 +319,18 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         },
         q{TNV10 number__typetest0() lives}
     );
-    throws_ok(        # TNV20
+    throws_ok(       # TNV20
         sub { number__typetest1() },
         "/(ENV00.*$mode_tagline)|(Usage.*number__typetest1)/"
-        ,             # DEV NOTE: 2 different error messages, RPerl & C
+        ,            # DEV NOTE: 2 different error messages, RPerl & C
         q{TNV20 number__typetest1() throws correct exception}
     );
-    throws_ok(        # TNV21
+    throws_ok(       # TNV21
         sub { number__typetest1(undef) },
         "/ENV00.*$mode_tagline/",
         q{TNV21 number__typetest1(undef) throws correct exception}
     );
-    lives_and(        # TNV22
+    lives_and(       # TNV22
         sub {
             is( number__typetest1(3),
                 ( ( 3 * 2 ) + $mode_id ),
@@ -332,7 +339,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         },
         q{TNV22 number__typetest1(3) lives}
     );
-    lives_and(        # TNV23
+    lives_and(       # TNV23
         sub {
             is( number__typetest1(-17),
                 ( ( -17 * 2 ) + $mode_id ),
@@ -341,7 +348,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         },
         q{TNV23 number__typetest1(-17) lives}
     );
-    lives_and(        # TNV24
+    lives_and(       # TNV24
         sub {
             is( number__typetest1(-17.3),
                 ( ( -17.3 * 2 ) + $mode_id ),
@@ -350,22 +357,22 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         },
         q{TNV24 number__typetest1(-17.3) lives}
     );
-    throws_ok(        # TNV25
+    throws_ok(       # TNV25
         sub { number__typetest1('-17.3') },
         "/ENV01.*$mode_tagline/",
         q{TNV25 number__typetest1('-17.3') throws correct exception}
     );
-    throws_ok(        # TNV26
+    throws_ok(       # TNV26
         sub { number__typetest1( [3] ) },
         "/ENV01.*$mode_tagline/",
         q{TNV26 number__typetest1([3]) throws correct exception}
     );
-    throws_ok(        # TNV27
+    throws_ok(       # TNV27
         sub { number__typetest1( { a_key => 3 } ) },
         "/ENV01.*$mode_tagline/",
         q{TNV27 number__typetest1({a_key => 3}) throws correct exception}
     );
-    lives_and(        # TNV28
+    lives_and(       # TNV28
         sub {
             cmp_ok(
                 abs(number__typetest1(
@@ -389,27 +396,27 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         "/(EPV00.*$mode_tagline)|(Usage.*string__stringify)/", # DEV NOTE: 2 different error messages, RPerl & C
         q{TPV00 string__stringify() throws correct exception}
     );
-    throws_ok(                                              # TPV01
+    throws_ok(                                                 # TPV01
         sub { string__stringify(undef) },
         "/EPV00.*$mode_tagline/",
         q{TPV01 string__stringify(undef) throws correct exception}
     );
-    throws_ok(                                              # TPV02
+    throws_ok(                                                 # TPV02
         sub { string__stringify(3) },
         "/EPV01.*$mode_tagline/",
         q{TPV02 string__stringify(3) throws correct exception}
     );
-    throws_ok(                                              # TPV03
+    throws_ok(                                                 # TPV03
         sub { string__stringify(-17) },
         "/EPV01.*$mode_tagline/",
         q{TPV03 string__stringify(-17) throws correct exception}
     );
-    throws_ok(                                              # TPV04
+    throws_ok(                                                 # TPV04
         sub { string__stringify(-17.3) },
         "/EPV01.*$mode_tagline/",
         q{TPV04 string__stringify(-17.3) throws correct exception}
     );
-    lives_and(                                              # TPV05
+    lives_and(                                                 # TPV05
         sub {
             is( string__stringify('-17.3'),
                 "'-17.3'",
@@ -417,17 +424,17 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         },
         q{TPV05 string__stringify('-17.3') lives}
     );
-    throws_ok(                                              # TPV06
+    throws_ok(                                                 # TPV06
         sub { string__stringify( [3] ) },
         "/EPV01.*$mode_tagline/",
         q{TPV06 string__stringify([3]) throws correct exception}
     );
-    throws_ok(                                              # TPV07
+    throws_ok(                                                 # TPV07
         sub { string__stringify( { a_key => 3 } ) },
         "/EPV01.*$mode_tagline/",
         q{TPV07 string__stringify({a_key => 3}) throws correct exception}
     );
-    lives_and(                                              # TPV08
+    lives_and(                                                 # TPV08
         sub {
             is( string__stringify('Melange'),
                 "'Melange'",
@@ -435,7 +442,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         },
         q{TPV08 string__stringify('Melange') lives}
     );
-    lives_and(                                              # TPV09
+    lives_and(                                                 # TPV09
         sub {
             is( string__stringify(
                     "\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n"
@@ -447,7 +454,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         q{TPV09 string__stringify("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n") lives}
     );
 
-    lives_and(                                              # TPV10
+    lives_and(                                                 # TPV10
         sub {
             is( string__stringify(
                     '\'I am a single-quoted string, in a single-quoted string with back-slash control chars\', the first string said introspectively.'
