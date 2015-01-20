@@ -17,12 +17,12 @@ rperltypes::types_enable('CPP');
 use RPerl::DataStructure::Array_cpp;
 RPerl::DataStructure::Array_cpp::cpp_load();
 
-RPerl::diag q{in array_test.pl, have integer__MODE_ID() = '}
-    . integer__MODE_ID() . "'\n";
-RPerl::diag q{in array_test.pl, have number__MODE_ID() = '}
-    . number__MODE_ID() . "'\n";
-RPerl::diag q{in array_test.pl, have string__MODE_ID() = '}
-    . string__MODE_ID() . "'\n";
+RPerl::diag q{in array_test.pl, have RPerl__DataType__Integer__MODE_ID() = '}
+    . RPerl__DataType__Integer__MODE_ID() . "'\n";
+RPerl::diag q{in array_test.pl, have RPerl__DataType__Number__MODE_ID() = '}
+    . RPerl__DataType__Number__MODE_ID() . "'\n";
+RPerl::diag q{in array_test.pl, have RPerl__DataType__String__MODE_ID() = '}
+    . RPerl__DataType__String__MODE_ID() . "'\n";
 RPerl::diag q{in array_test.pl, have array__MODE_ID() = '}
     . array__MODE_ID() . "'\n";
 

@@ -94,15 +94,15 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
             sub {
                 is( 
 #                    $RPerl::MODES->{ __PACKAGE__->can( 'main::RPerl__DataType__' . $type . '__MODE_ID' )->() }->{ops},
-#                    $RPerl::MODES->{ eval( 'main::RPerl__DataType__' . $type . '__MODE_ID();' ) }->{ops},
-                    $RPerl::MODES->{ eval( 'main::RP_DT_' . substr($type, 0, 2) . '_MID();' ) }->{ops},
+                    $RPerl::MODES->{ eval( 'main::RPerl__DataType__' . $type . '__MODE_ID();' ) }->{ops},
+#                    $RPerl::MODES->{ eval( 'main::RP_DT_' . substr($type, 0, 2) . '_MID();' ) }->{ops},
                     $ops,
-#                    'main::RPerl__DataType__' . $type . '__MODE_ID() returns ' . $ops
-                    'main::RP_DT_' . substr($type, 0, 2) . '_MID() returns ' . $ops
+                    'main::RPerl__DataType__' . $type . '__MODE_ID() returns ' . $ops
+#                    'main::RP_DT_' . substr($type, 0, 2) . '_MID() returns ' . $ops
                 );
             },
-#            'main::RPerl__DataType__' . $type . '__MODE_ID() lives'
-            'main::RP_DT_' . substr($type, 0, 2) . '_MID() lives'
+            'main::RPerl__DataType__' . $type . '__MODE_ID() lives'
+#            'main::RP_DT_' . substr($type, 0, 2) . '_MID() lives'
         );
     }
 

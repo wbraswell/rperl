@@ -28,12 +28,12 @@ RPerl::Algorithm::Sort::Bubble_cpp::cpp_load();    # OR this
 #use RPerl::Algorithm::Sort::Quick;
 #use RPerl::Algorithm::Sort::Merge;
 
-print q{in precompiled_test__sort.pl, have integer__MODE_ID() = '}
-    . integer__MODE_ID() . "'\n";
-print q{in precompiled_test__sort.pl, have number__MODE_ID() = '}
-    . number__MODE_ID() . "'\n";
-print q{in precompiled_test__sort.pl, have string__MODE_ID() = '}
-    . string__MODE_ID() . "'\n";
+print q{in precompiled_test__sort.pl, have RPerl__DataType__Integer__MODE_ID() = '}
+    . RPerl__DataType__Integer__MODE_ID() . "'\n";
+print q{in precompiled_test__sort.pl, have RPerl__DataType__Number__MODE_ID() = '}
+    . RPerl__DataType__Number__MODE_ID() . "'\n";
+print q{in precompiled_test__sort.pl, have RPerl__DataType__String__MODE_ID() = '}
+    . RPerl__DataType__String__MODE_ID() . "'\n";
 print q{in precompiled_test__sort.pl, have array__MODE_ID() = '}
     . array__MODE_ID() . "'\n";
 print q{in precompiled_test__sort.pl, have hash__MODE_ID() = '}

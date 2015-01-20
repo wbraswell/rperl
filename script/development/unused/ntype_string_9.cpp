@@ -6,7 +6,7 @@ typedef std::string string;
 typedef std::ostringstream ostringstream;
 
 // [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-integer string__MODE_ID() { integer retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 2
+integer RPerl__DataType__String__MODE_ID() { integer retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 2
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 string XS_unpack_string(SV* input_sv);

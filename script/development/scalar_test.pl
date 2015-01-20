@@ -9,6 +9,8 @@ our $VERSION = 0.003_010;
 ## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
+$RPerl::DEBUG = 1;
+
 # UNCOMMENT TO ENABLE PERL TYPES FOR C++ OPS
 #rperltypes::types_enable('PERL');
 
@@ -20,9 +22,12 @@ use RPerl::DataType::Integer_cpp;  RPerl::DataType::Integer_cpp::cpp_load();
 #use RPerl::DataType::Number_cpp;  RPerl::DataType::Number_cpp::cpp_load();
 #use RPerl::DataType::String_cpp; RPerl::DataType::String_cpp::cpp_load();
 
-RPerl::diag q{in scalar_test.pl, have RPerl__DataType__Integer__MODE_ID() = '} . RPerl__DataType__Integer__MODE_ID() . "'\n";
-RPerl::diag q{in scalar_test.pl, have RPerl__DataType__Number__MODE_ID() = '} . RPerl__DataType__Number__MODE_ID() . "'\n";
-RPerl::diag q{in scalar_test.pl, have RPerl__DataType__String__MODE_ID() = '} . RPerl__DataType__String__MODE_ID() . "'\n";
+#RPerl::diag q{in scalar_test.pl, have RPerl__DataType__Integer__MODE_ID() = '} . RPerl__DataType__Integer__MODE_ID() . "'\n";
+#RPerl::diag q{in scalar_test.pl, have RPerl__DataType__Number__MODE_ID() = '} . RPerl__DataType__Number__MODE_ID() . "'\n";
+#RPerl::diag q{in scalar_test.pl, have RPerl__DataType__String__MODE_ID() = '} . RPerl__DataType__String__MODE_ID() . "'\n";
+RPerl::diag q{in scalar_test.pl, have main::RPerl__DataType__Integer__MODE_ID() = '} . main::RPerl__DataType__Integer__MODE_ID() . "'\n";
+RPerl::diag q{in scalar_test.pl, have main::RPerl__DataType__Number__MODE_ID() = '} . main::RPerl__DataType__Number__MODE_ID() . "'\n";
+RPerl::diag q{in scalar_test.pl, have main::RPerl__DataType__String__MODE_ID() = '} . main::RPerl__DataType__String__MODE_ID() . "'\n";
 
 # use Data::Dumper() to to stringify a string
 #our string $string__dumperify = sub {  # NEED FIX: RPerl subroutines disabled here

@@ -16,9 +16,9 @@ our $VERSION = 0.004_010;
 # UNCOMMENT TO ENABLE C++ OPS
 #use RPerl::DataStructure::Hash_cpp;  RPerl::DataStructure::Hash_cpp::cpp_load();
 
-RPerl::diag q{in hash_test.pl, have integer__MODE_ID() = '} . integer__MODE_ID() . "'\n" or croak();
-RPerl::diag q{in hash_test.pl, have number__MODE_ID() = '} . number__MODE_ID() . "'\n" or croak();
-RPerl::diag q{in hash_test.pl, have string__MODE_ID() = '} . string__MODE_ID() . "'\n" or croak();
+RPerl::diag q{in hash_test.pl, have RPerl__DataType__Integer__MODE_ID() = '} . RPerl__DataType__Integer__MODE_ID() . "'\n" or croak();
+RPerl::diag q{in hash_test.pl, have RPerl__DataType__Number__MODE_ID() = '} . RPerl__DataType__Number__MODE_ID() . "'\n" or croak();
+RPerl::diag q{in hash_test.pl, have RPerl__DataType__String__MODE_ID() = '} . RPerl__DataType__String__MODE_ID() . "'\n" or croak();
 RPerl::diag q{in hash_test.pl, have hash__MODE_ID() = '} . hash__MODE_ID() . "'\n" or croak();
 
 # variable declarations

@@ -2,7 +2,13 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_h
-#define __CPP__INCLUDED__RPerl__DataType__Integer_h 0.003_020
+#define __CPP__INCLUDED__RPerl__DataType__Integer_h 0.003_030
+
+// [[[ TYPEDEFS ]]]
+// DEV NOTE: must use "integer" typedef because "int" is already defined by Inline's default typemap, even if we put our own integer entry into typemap.rperl;
+// if we allow Inline default int, then it will accept all kinds of non-integer values which should be filtered by XS_unpack_integer() and CHECK();
+// must be above String.cpp include, as String.cpp uses integer type for it's own *MODE_ID() subroutines
+typedef int integer;
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 #include <RPerl/DataType/String.cpp>  // string types used in stringify_*() subroutines
@@ -26,18 +32,13 @@ using std::cout;  using std::cerr;
 //void integer__CHECK(SV* possible_integer);
 //void integer__CHECKTRACE(SV* possible_integer, const char* variable_name, const char* subroutine_name);
 
-// [[[ TYPEDEFS ]]]
-// DEV NOTE: must use "integer" typedef because "int" is already defined by Inline's default typemap, even if we put our own integer entry into typemap.rperl;
-// if we allow Inline default int, then it will accept all kinds of non-integer values which should be filtered by XS_unpack_integer() and CHECK();
-typedef int integer;
-
 // [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 # ifdef __PERL__TYPES
-//SV* RPerl__DataType__Integer__MODE_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
-SV* RP_DT_In_MID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
+SV* RPerl__DataType__Integer__MODE_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
+//SV* RP_DT_In_MID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
 # elif defined __CPP__TYPES
-//integer RPerl__DataType__Integer__MODE_ID() { integer retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 2
-integer RP_DT_In_MID() { integer retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 2
+integer RPerl__DataType__Integer__MODE_ID() { integer retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 2
+//integer RP_DT_In_MID() { integer retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 2
 # else
 Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_exactly_one!
 # endif
