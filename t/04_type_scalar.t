@@ -76,10 +76,9 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
             delete $main::{ 'RPerl__DataType__' . $type . '__MODE_ID' };
 
             my $package = 'RPerl::DataType::' . $type . '_cpp';
-            lives_and(
-                sub { require_ok($package); },
-                'require_ok(' . $package . ') lives'
-            );
+            lives_and( sub { require_ok($package); }, 'require_ok(' . $package . ') lives' );
+            lives_and( sub { use_ok($package); }, 'use_ok(' . $package . ') lives' );
+            
             lives_ok( sub { eval( $package . '::cpp_load();' ) },
                 $package . '::cpp_load() lives' );
         }
@@ -89,6 +88,13 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 #            sub { main->can( 'RPerl__DataType__' . $type . '__MODE_ID' ) },
 #            'main::RPerl__DataType__' . $type . '__MODE_ID() exists'
 #        );
+
+        $RPerl::DEBUG = 1;
+        RPerl::diag('have $type = ' . $type . "\n");
+        my string $eval_string = 'main::RPerl__DataType__' . $type . '__MODE_ID();';
+        RPerl::diag('have $eval_string = ' . $eval_string . "\n");
+        my string $eval_retval = eval($eval_string);
+        RPerl::diag('have $eval_retval = ' . $eval_retval . "\n");
 
         lives_and(
             sub {
