@@ -62,12 +62,18 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     # [[[ MODE SETUP ]]]
     # [[[ MODE SETUP ]]]
     # [[[ MODE SETUP ]]]
-    my $ops                 = $mode->{ops};
-    my $types               = $mode->{types};
+    my string $ops                 = $mode->{ops};
+    my string $types               = $mode->{types};
     my string $mode_tagline = RPerl::Test::mode_tagline($mode);
+    
+    $RPerl::DEBUG = 1;
+    RPerl::diag('have $ops = ' . $ops . "\n");
+    RPerl::diag('have $types = ' . $types . "\n");
+    RPerl::diag('have $mode_tagline = ' . $mode_tagline . "\n");
 
     lives_ok( sub { RPerl::Test::mode_enable($mode) },
         q{mode '} . RPerl::Test::mode_description($mode) . q{' enabled} );
+#    rperltypes::types_enable('CPP');
 
     foreach my string $type (qw(Integer Number String)) {
         if ( $ops eq 'CPP' ) {
@@ -89,7 +95,6 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 #            'main::RPerl__DataType__' . $type . '__MODE_ID() exists'
 #        );
 
-        $RPerl::DEBUG = 1;
         RPerl::diag('have $type = ' . $type . "\n");
         my string $eval_string = 'main::RPerl__DataType__' . $type . '__MODE_ID();';
         RPerl::diag('have $eval_string = ' . $eval_string . "\n");
