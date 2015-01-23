@@ -2,10 +2,12 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Number_h
-#define __CPP__INCLUDED__RPerl__DataType__Number_h 0.003_020
+#define __CPP__INCLUDED__RPerl__DataType__Number_h 0.003_050
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
-#include <RPerl/DataType/String.cpp>  // string types used in stringify_*() subroutines
+// DEV NOTE: basic data types must be wholly independent of one another, to avoid weird redefining or undefining of subroutine errors
+//#include <RPerl/DataType/Integer.cpp>  // integer types used in *MODE_ID() subroutines
+//#include <RPerl/DataType/String.cpp>  // string types used in stringify_*() subroutines
 
 // [[[ TYPE-CHECKING MACROS ]]]
 #define number__CHECK(possible_number) \
@@ -33,7 +35,8 @@ typedef double number;
 # ifdef __PERL__TYPES
 SV* RPerl__DataType__Number__MODE_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
 # elif defined __CPP__TYPES
-integer RPerl__DataType__Number__MODE_ID() { integer retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 2
+//integer RPerl__DataType__Number__MODE_ID() { integer retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 2
+int RPerl__DataType__Number__MODE_ID() { int retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 2
 # else
 Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_exactly_one!
 # endif
@@ -48,7 +51,8 @@ void XS_pack_number(SV* output_sv, number input_number);
 # ifdef __PERL__TYPES
 SV* number__stringify(SV* input_number);
 # elif defined __CPP__TYPES
-string number__stringify(number input_number);
+//string number__stringify(number input_number);
+std::string number__stringify(number input_number);
 # endif
 
 // [[[ TYPE TESTING ]]]

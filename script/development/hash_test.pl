@@ -11,11 +11,12 @@ our $VERSION = 0.004_010;
 #rperltypes::types_enable('PERL');
 
 # UNCOMMENT TO ENABLE C++ TYPES FOR C++ OPS
-#rperltypes::types_enable('CPP');
+rperltypes::types_enable('CPP');
 
 # UNCOMMENT TO ENABLE C++ OPS
-#use RPerl::DataStructure::Hash_cpp;  RPerl::DataStructure::Hash_cpp::cpp_load();
+use RPerl::DataStructure::Hash_cpp;  RPerl::DataStructure::Hash_cpp::cpp_load();
 
+$RPerl::DEBUG = 1;
 RPerl::diag q{in hash_test.pl, have RPerl__DataType__Integer__MODE_ID() = '} . RPerl__DataType__Integer__MODE_ID() . "'\n" or croak();
 RPerl::diag q{in hash_test.pl, have RPerl__DataType__Number__MODE_ID() = '} . RPerl__DataType__Number__MODE_ID() . "'\n" or croak();
 RPerl::diag q{in hash_test.pl, have RPerl__DataType__String__MODE_ID() = '} . RPerl__DataType__String__MODE_ID() . "'\n" or croak();
@@ -47,8 +48,8 @@ for my integer $i ( 0 .. $i_MAX ) {
 #	$retval_stringify = integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => [23], e_key => -877, f_key => -33, g_key => 1701});  # TIVHVRV13; error EIVHVRV03
 #	$retval_stringify = integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => {a_subkey => 23}, e_key => -877, f_key => -33, g_key => 1701});  # TIVHVRV14; error EIVHVRV03
 #	$retval_stringify = integer__hash_ref__stringify({a_key => 23});  # TIVHVRV20
-#	$retval_stringify = integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => -33, g_key => 1701});  # TIVHVRV21
-#	RPerl::diag "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
+	$retval_stringify = integer__hash_ref__stringify({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => -33, g_key => 1701});  # TIVHVRV21
+	RPerl::diag "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n" or croak();
 
 #	$retval_stringify = integer__hash_ref__typetest0();  # TIVHVRV30; error PERLOPS EIVHVRV00, CPPOPS "Usage: main::integer__hash_ref__typetest0(input_unordered_map)"
 #	$retval_stringify = integer__hash_ref__typetest0(2);  # TIVHVRV31; error EIVHVRV01

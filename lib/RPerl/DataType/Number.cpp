@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Number_cpp
-#define __CPP__INCLUDED__RPerl__DataType__Number_cpp 0.003_010
+#define __CPP__INCLUDED__RPerl__DataType__Number_cpp 0.003_050
 
 #include <RPerl/DataType/Number.h>		// -> NULL (relies on native C type)
 
@@ -82,7 +82,8 @@ SV* number__stringify(SV* input_number)
 	number__CHECKTRACE(input_number, "input_number", "number__stringify()");
 //fprintf(stderr, "in CPPOPS_PERLTYPES number__stringify(), top of subroutine, received unformatted input_number = %Lf\n", (number)SvNV(input_number));
 
-	ostringstream output_stream;
+//	ostringstream output_stream;
+	std::ostringstream output_stream;
 	output_stream.precision(std::numeric_limits<double>::digits10);
 	output_stream << (double)SvNV(input_number);
 	return(newSVpv((const char *)((output_stream.str()).c_str()), 0));
@@ -96,10 +97,12 @@ SV* number__stringify(SV* input_number)
 
 # elif defined __CPP__TYPES
 
-string number__stringify(number input_number)
+//string number__stringify(number input_number)
+std::string number__stringify(number input_number)
 {
 //fprintf(stderr, "in CPPOPS_CPPTYPES number__stringify(), top of subroutine, received unformatted input_number = %Lf\n", input_number);
-	ostringstream output_stream;
+//	ostringstream output_stream;
+	std::ostringstream output_stream;
 	output_stream.precision(std::numeric_limits<double>::digits10);
 	output_stream << input_number;
 	return(output_stream.str());
@@ -114,7 +117,7 @@ string number__stringify(number input_number)
 # ifdef __PERL__TYPES
 
 SV* number__typetest0() {
-	SV* retval = newSVnv((22.0 / 7.0) + RPerl__DataType__Number__MODE_ID());
+	SV* retval = newSVnv((22.0 / 7.0) + SvIV(RPerl__DataType__Number__MODE_ID()));
 //fprintf(stderr, "in CPPOPS_PERLTYPES number__typetest0(), have unformatted retval = %Lf\n", (number)SvNV(retval));
 	return(retval);
 }
@@ -123,7 +126,7 @@ SV* number__typetest1(SV* lucky_number) {
 //	number__CHECK(lucky_number);
 	number__CHECKTRACE(lucky_number, "lucky_number", "number__typetest1()");
 //fprintf(stderr, "in CPPOPS_PERLTYPES number__typetest1(), have received lucky_number = %Lf\n", (number)SvNV(lucky_number));
-	return(newSVnv((SvNV(lucky_number) * 2.0) + RPerl__DataType__Number__MODE_ID()));
+	return(newSVnv((SvNV(lucky_number) * 2.0) + SvIV(RPerl__DataType__Number__MODE_ID())));
 }
 
 # elif defined __CPP__TYPES

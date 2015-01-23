@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.004_030;
+our $VERSION = 0.005_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
@@ -62,18 +62,17 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     # [[[ MODE SETUP ]]]
     # [[[ MODE SETUP ]]]
     # [[[ MODE SETUP ]]]
-    my string $ops                 = $mode->{ops};
-    my string $types               = $mode->{types};
+    my string $ops          = $mode->{ops};
+    my string $types        = $mode->{types};
     my string $mode_tagline = RPerl::Test::mode_tagline($mode);
-    
-    $RPerl::DEBUG = 1;
-    RPerl::diag('have $ops = ' . $ops . "\n");
-    RPerl::diag('have $types = ' . $types . "\n");
-    RPerl::diag('have $mode_tagline = ' . $mode_tagline . "\n");
+
+    #    $RPerl::DEBUG = 1;
+    #    RPerl::diag('have $ops = ' . $ops . "\n");
+    #    RPerl::diag('have $types = ' . $types . "\n");
+    #    RPerl::diag('have $mode_tagline = ' . $mode_tagline . "\n");
 
     lives_ok( sub { RPerl::Test::mode_enable($mode) },
         q{mode '} . RPerl::Test::mode_description($mode) . q{' enabled} );
-#    rperltypes::types_enable('CPP');
 
     foreach my string $type (qw(Integer Number String)) {
         if ( $ops eq 'CPP' ) {
@@ -82,48 +81,52 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
             delete $main::{ 'RPerl__DataType__' . $type . '__MODE_ID' };
 
             my $package = 'RPerl::DataType::' . $type . '_cpp';
-            lives_and( sub { require_ok($package); }, 'require_ok(' . $package . ') lives' );
-            lives_and( sub { use_ok($package); }, 'use_ok(' . $package . ') lives' );
-            
+            lives_and(
+                sub { require_ok($package); },
+                'require_ok(' . $package . ') lives'
+            );
+
+#            lives_and( sub { use_ok($package); }, 'use_ok(' . $package . ') lives' );
+
             lives_ok( sub { eval( $package . '::cpp_load();' ) },
                 $package . '::cpp_load() lives' );
         }
 
-#        lives_ok(
-#            sub { __PACKAGE__->can( 'main::RPerl__DataType__' . $type . '__MODE_IDDDD' ) },
-#            sub { main->can( 'RPerl__DataType__' . $type . '__MODE_ID' ) },
-#            'main::RPerl__DataType__' . $type . '__MODE_ID() exists'
-#        );
+        lives_ok(
+            sub { main->can( 'RPerl__DataType__' . $type . '__MODE_ID' ) },
+            'main::RPerl__DataType__' . $type . '__MODE_ID() exists'
+        );
 
-        RPerl::diag('have $type = ' . $type . "\n");
-        my string $eval_string = 'main::RPerl__DataType__' . $type . '__MODE_ID();';
-        RPerl::diag('have $eval_string = ' . $eval_string . "\n");
-        my string $eval_retval = eval($eval_string);
-        RPerl::diag('have $eval_retval = ' . $eval_retval . "\n");
+# NEED ANSWER: why does direct-calling *MODE_ID() always return 0, but main->can(...) and eval(...) returns correct values?
+#        RPerl::diag('have $type = ' . $type . "\n");
+#        my string $eval_string = 'main::RPerl__DataType__' . $type . '__MODE_ID();';
+#        RPerl::diag('have $eval_string = ' . $eval_string . "\n");
+#        my string $eval_retval = eval($eval_string);
+#        RPerl::diag('have $eval_retval = ' . $eval_retval . "\n");
+#        RPerl::diag q{have main::RPerl__DataType__Integer__MODE_ID() = '} . main::RPerl__DataType__Integer__MODE_ID() . "'\n";
+#        RPerl::diag q{have main::RPerl__DataType__Number__MODE_ID() = '} . main::RPerl__DataType__Number__MODE_ID() . "'\n";
+#        RPerl::diag q{have main::RPerl__DataType__String__MODE_ID() = '} . main::RPerl__DataType__String__MODE_ID() . "'\n";
 
         lives_and(
             sub {
-                is( 
-#                    $RPerl::MODES->{ __PACKAGE__->can( 'main::RPerl__DataType__' . $type . '__MODE_ID' )->() }->{ops},
-                    $RPerl::MODES->{ eval( 'main::RPerl__DataType__' . $type . '__MODE_ID();' ) }->{ops},
-#                    $RPerl::MODES->{ eval( 'main::RP_DT_' . substr($type, 0, 2) . '_MID();' ) }->{ops},
+                is( $RPerl::MODES->{ main->can(
+                            'RPerl__DataType__' . $type . '__MODE_ID'
+                        )->()
+                        }->{ops},
                     $ops,
-                    'main::RPerl__DataType__' . $type . '__MODE_ID() returns ' . $ops
-#                    'main::RP_DT_' . substr($type, 0, 2) . '_MID() returns ' . $ops
+                    'main::RPerl__DataType__'
+                        . $type
+                        . '__MODE_ID() ops returns '
+                        . $ops
                 );
             },
             'main::RPerl__DataType__' . $type . '__MODE_ID() lives'
-#            'main::RP_DT_' . substr($type, 0, 2) . '_MID() lives'
         );
     }
 
     # [[[ INTEGER TESTS ]]]
     # [[[ INTEGER TESTS ]]]
     # [[[ INTEGER TESTS ]]]
-
-    # START HERE 0: debug this test file
-    # START HERE 0: debug this test file
-    # START HERE 0: debug this test file
 
     throws_ok(    # TIV00
         sub { integer__stringify() },

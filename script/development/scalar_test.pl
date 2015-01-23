@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_010;
+our $VERSION = 0.003_020;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd PodSpelling) # DEVELOPER DEFAULT 1: allow unreachable & POD-commented code
@@ -15,10 +15,10 @@ $RPerl::DEBUG = 1;
 #rperltypes::types_enable('PERL');
 
 # UNCOMMENT TO ENABLE C++ TYPES FOR C++ OPS
-rperltypes::types_enable('CPP');
+#rperltypes::types_enable('CPP');
 
 # UNCOMMENT TO ENABLE C++ OPS
-use RPerl::DataType::Integer_cpp;  RPerl::DataType::Integer_cpp::cpp_load();
+#use RPerl::DataType::Integer_cpp;  RPerl::DataType::Integer_cpp::cpp_load();
 #use RPerl::DataType::Number_cpp;  RPerl::DataType::Number_cpp::cpp_load();
 #use RPerl::DataType::String_cpp; RPerl::DataType::String_cpp::cpp_load();
 
@@ -70,7 +70,7 @@ for my integer $i ( 0 .. $i_MAX ) {
     $integer_retval = integer__typetest0();  # TIV10
     RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$integer_retval = $integer_retval\n";
     
-    croak('done');
+#    croak('done');
 
 #    $integer_retval = integer__typetest1();  # TIV20; error PERLOPS EIV00, CPPOPS "Usage: main::integer__typetest1(lucky_integer)"
 #    $integer_retval = integer__typetest1(undef);  # TIV21; error EIV00
@@ -127,7 +127,7 @@ for my integer $i ( 0 .. $i_MAX ) {
 #    RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$string_retval =\n$string_retval\n";
 
     # DEV NOTE: in English grammar, I prefer the comma after the right-quote
-#    $my_string = '\'I am a single-quoted string, in a single-quoted string with back-slash control chars\', the first string said introspectively.' ;    # TPV10
+    $my_string = '\'I am a single-quoted string, in a single-quoted string with back-slash control chars\', the first string said introspectively.' ;    # TPV10
 #    $my_string = '"I am a double-quoted string, in a single-quoted string with no back-slash chars", the second string observed.';  # TPV11
 #    $my_string = "'I am a single-quoted string, in a double-quoted string with no back-slash chars', the third string added.";  # TPV12
 #    $my_string = "\"I am a double-quoted string, in a double-quoted string with back-slash control chars\", the fourth string offered.";  # TPV13
@@ -170,7 +170,7 @@ for my integer $i ( 0 .. $i_MAX ) {
 #    $string_retval = string__typetest1('-17.3');  # TPV45
 #    $string_retval = string__typetest1([3]);  # TPV46; error EPV01
 #    $string_retval = string__typetest1({a_key => 3});  # TPV47; error EPV01
-#    $string_retval = string__typetest1('Melange');  # TPV48
+    $string_retval = string__typetest1('Melange');  # TPV48
 #    $string_retval = string__typetest1("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n");  # TPV49
 #    RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$string_retval =\n$string_retval\n";
 

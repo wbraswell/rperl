@@ -2,7 +2,7 @@
 //using std::cout;  using std::cerr;  // not needed for integer?
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_cpp
-#define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 0.003_010
+#define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 0.003_050
 
 #include <RPerl/DataType/Integer.h>		// -> NULL (relies on native C type)
 
@@ -84,10 +84,12 @@ SV* integer__stringify(SV* input_integer)
 
 # elif defined __CPP__TYPES
 
-string integer__stringify(integer input_integer)
+//string integer__stringify(integer input_integer)
+std::string integer__stringify(integer input_integer)
 {
 //fprintf(stderr, "in CPPOPS_CPPTYPES integer__stringify(), top of subroutine, received input_integer = %d\n", input_integer);
-	string output_string = "";
+//	string output_string = "";
+	std::string output_string = "";
 	sprintf((char*)output_string.c_str(), "%d", input_integer);
 	return(output_string);
 }
@@ -101,7 +103,7 @@ string integer__stringify(integer input_integer)
 # ifdef __PERL__TYPES
 
 SV* integer__typetest0() {
-	SV* retval = newSViv((21 / 7) + RPerl__DataType__Integer__MODE_ID());
+	SV* retval = newSViv((21 / 7) + SvIV(RPerl__DataType__Integer__MODE_ID()));
 //fprintf(stderr, "in CPPOPS_PERLTYPES integer__typetest0(), have retval = %d\n", (integer)SvIV(retval));
 	return(retval);
 }
@@ -110,7 +112,7 @@ SV* integer__typetest1(SV* lucky_integer) {
 //	integer__CHECK(lucky_integer);
 	integer__CHECKTRACE(lucky_integer, "lucky_integer", "integer__typetest1()");
 //fprintf(stderr, "in CPPOPS_PERLTYPES integer__typetest1(), received lucky_integer = %d\n", (integer)SvIV(lucky_integer));
-	return(newSViv((SvIV(lucky_integer) * 2) + RPerl__DataType__Integer__MODE_ID()));
+	return(newSViv((SvIV(lucky_integer) * 2) + SvIV(RPerl__DataType__Integer__MODE_ID())));
 }
 
 # elif defined __CPP__TYPES

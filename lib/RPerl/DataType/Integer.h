@@ -2,16 +2,17 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_h
-#define __CPP__INCLUDED__RPerl__DataType__Integer_h 0.003_030
+#define __CPP__INCLUDED__RPerl__DataType__Integer_h 0.003_050
 
 // [[[ TYPEDEFS ]]]
 // DEV NOTE: must use "integer" typedef because "int" is already defined by Inline's default typemap, even if we put our own integer entry into typemap.rperl;
 // if we allow Inline default int, then it will accept all kinds of non-integer values which should be filtered by XS_unpack_integer() and CHECK();
-// must be above String.cpp include, as String.cpp uses integer type for it's own *MODE_ID() subroutines
+// must be above String.cpp include, as String.cpp uses integer type for it's own *MODE_ID() subroutines [OVERRIDDEN BY DEV NOTE BELOW]
 typedef int integer;
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
-#include <RPerl/DataType/String.cpp>  // string types used in stringify_*() subroutines
+// DEV NOTE: basic data types must be wholly independent of one another, to avoid weird redefining or undefining of subroutine errors
+//#include <RPerl/DataType/String.cpp>  // string types used in stringify_*() subroutines
 
 // [[[ TYPE-CHECKING MACROS ]]]
 #define integer__CHECK(possible_integer) \
@@ -53,7 +54,8 @@ void XS_pack_integer(SV* output_sv, integer input_integer);
 # ifdef __PERL__TYPES
 SV* integer__stringify(SV* input_integer);
 # elif defined __CPP__TYPES
-string integer__stringify(integer input_integer);
+//string integer__stringify(integer input_integer);
+std::string integer__stringify(integer input_integer);
 # endif
 
 // [[[ TYPE TESTING ]]]
