@@ -3,7 +3,7 @@ package RPerl::Algorithm::Sort::Bubble;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_022;
+our $VERSION = 0.004_023;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw( RPerl::Algorithm::Sort ); # OO INHERITANCE TESTING; SINGLE OO INHERITANCE
@@ -21,7 +21,7 @@ use RPerl::Algorithm::Sort;
 use Data::Dumper;
 
 # [[[ OO OBJECT PROPERTIES ]]]
-our hash_ref $properties = (
+our hash_ref $properties = {
     integer__data => my integer__array_ref $TYPED_integer__data = undef,
     number__data  => my number__array_ref $TYPED_number__data   = undef
 };
