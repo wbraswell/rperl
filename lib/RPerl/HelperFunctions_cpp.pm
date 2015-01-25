@@ -5,7 +5,7 @@ use warnings;
 use RPerl::Config; # get Carp, English, $RPerl::INCLUDE_PATH without 'use RPerl;'
 
 #use RPerl;  # DEV NOTE: need to use HelperFunctions in RPerl::DataStructure::Array for type checking SvIOKp() etc; remove dependency on RPerl void__method type so HelperFunctions can be loaded by RPerl type system
-our $VERSION = 0.002_020;
+our $VERSION = 0.002_030;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()

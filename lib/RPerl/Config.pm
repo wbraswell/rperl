@@ -1,7 +1,7 @@
 package RPerl::Config;
 use strict;
 use warnings;
-our $VERSION = 0.001_010;
+our $VERSION = 0.002_000;
 
 # DEV NOTE: this package exists to serve as the header file for RPerl.pm itself,
 # as well as for RPerl.pm dependencies such as Class.pm, HelperFunctions_cpp.pm, and rperltypes.pm
@@ -34,6 +34,76 @@ use English qw(-no_match_vars);
 use Exporter 'import';
 our @EXPORT
     = qw(Dumper carp croak confess $OS_ERROR $EVAL_ERROR $CHILD_ERROR $EXECUTABLE_NAME);
+
+# [[[ OO CLASS PROPERTIES SPECIAL ]]]
+
+# data type checking mode, disabled in RPerl system code which calls 'use RPerl;',
+# changed on a per-file basis by preprocessor directive, see RPerl::CompileUnit::Module::Class::INIT
+# NEED UPGRADE: enable in RPerl system code when bootstrapping compiler
+our $CHECK = 'OFF';
+our $DEBUG = 0; # Perl variable $RPerl::DEBUG and environmental variable RPERL_DEBUG are equivalent, see diag*() below
+our $VERBOSE = 0; # Perl variable $RPerl::VERBOSE and environmental variable RPERL_VERBOSE are equivalent, see verbose*() below
+
+# [[[ SUBROUTINES SPECIAL ]]]
+
+# NEED UPGRADE: replace Data::Dumper with pure-RPerl equivalent?
+sub DUMPER {
+    ( my $dumpee ) = @_;
+
+#	die ('in RPerl::DUMPER(), received undef argument, dying') if (not(defined($_[0])));
+    return '**UNDEF**' if ( not( defined $dumpee ) );
+    return $dumpee->DUMPER()
+        if ( defined( eval( q{$} . ref($dumpee) . q{::DUMPER} ) ) );
+    return Dumper($dumpee);
+}
+
+# NEED UPGRADE: enable variable number of arguments as seen below
+sub diag {
+
+    #    ( my $message ) = @_;
+    my @messages = @_;
+
+  #    if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) { print {*STDERR} $message; }
+    if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) {
+        foreach my $message (@messages) { print {*STDERR} $message; }
+    }
+
+#    if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) { print {*STDERR} "\e[1;31m $message \e[0m"; }  # print in red
+    return 1; # DEV NOTE: this must be here to avoid 'at -e line 0. INIT failed--call queue aborted.'... BUT WHY???
+}
+
+sub diag_pause {
+    my @messages = @_;
+    if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) {
+        foreach my $message (@messages) { print {*STDERR} $message; }
+        my $stdin_ignore = <STDIN>;
+    }
+    return 1;
+}
+
+sub verbose {
+    my @messages = @_;
+    if ( $ENV{RPERL_VERBOSE} or $RPerl::VERBOSE ) {
+        foreach my $message (@messages) { print {*STDOUT} $message; }
+    }
+    return 1;
+}
+
+sub verbose_pause {
+    my @messages = @_;
+    if ( $ENV{RPERL_VERBOSE} or $RPerl::VERBOSE ) {
+        foreach my $message (@messages) { print {*STDOUT} $message; }
+        my $stdin_ignore = <STDIN>;
+    }
+    return 1;
+}
+
+sub verbose_reset {
+    if ( $ENV{RPERL_VERBOSE} or $RPerl::VERBOSE ) { system 'reset'; }
+    return 1;
+}
+
+# [[[ OPERATIONS SPECIAL ]]]
 
 # [ AUTOMATICALLY SET SYSTEM-DEPENDENT PATH VARIABLES ]
 our $BASE_PATH    = undef;

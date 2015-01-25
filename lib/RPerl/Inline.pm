@@ -1,5 +1,9 @@
 package RPerl::Inline;
-use RPerl;
+use strict;
+use warnings;
+our $VERSION = 0.001_000;
+
+#use RPerl;  # ERROR: Too late to run INIT block at ...
 
 #use Config;
 
@@ -18,7 +22,7 @@ use RPerl;
 our @ARGS = (
     typemaps => "$RPerl::INCLUDE_PATH/typemap.rperl",
 
-# TODO: strip C++ incompat CFLAGS
+# NEED UPGRADE: strip C++ incompat CFLAGS
 #  ccflags => $Config{ccflags} . ' -DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
     ccflagsex =>
         '-DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',

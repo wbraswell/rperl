@@ -1,13 +1,13 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.001_030;
+our $VERSION = 0.001_040;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(RequireCheckingReturnValueOfEval)  ## SYSTEM DEFAULT 4: allow eval() test code blocks
 
-use Test::More tests => 179;
+use Test::More tests => 161;
 use Test::Exception;
 use RPerl::Test;
 
@@ -78,15 +78,21 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         );
     }
 
-    foreach my string $type (
-        qw(integer number string array hash RPerl__Algorithm__Sort__Bubble))
-    {
+    foreach my string $type (qw(DataType__Integer DataType__Number DataType__String DataStructure__Array DataStructure__Hash Algorithm__Sort__Bubble)) {
         lives_and(
             sub {
-                is( __PACKAGE__->can( $type . '__MODE_ID' )->(),
-                    $ops, $type . '__MODE_ID() returns ' . $ops );
+                is( $RPerl::MODES->{ main->can(
+                            'RPerl__' . $type . '__MODE_ID'
+                        )->()
+                        }->{ops},
+                    $ops,
+                    'main::RPerl__'
+                        . $type
+                        . '__MODE_ID() ops returns '
+                        . $ops
+                );
             },
-            $type . q{__MODE_ID() lives}
+            'main::RPerl__' . $type . '__MODE_ID() lives'
         );
     }
 

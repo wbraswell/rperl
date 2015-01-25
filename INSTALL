@@ -1,5 +1,5 @@
 # RPerl v1.0 Beta 2, Install Notes
-# Last Updated December 25, 2014
+# Last Updated January 25, 2015
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # NOTE: STEPS 0 AND 1 ARE ONLY FOR SINGLE-USER INSTALL, NOT SYSTEM-WIDE INSTALL
@@ -68,6 +68,10 @@ $ cpanm WBRASWELL/RPerl-1.00_02.tar.gz
 # STEP 3.
 # RUN RPERL COMPILER
 ################################################################################
+
+# optionally enable system debugging and/or verbose user output
+$ export RPERL_DEBUG=1
+$ export RPERL_VERBOSE=1
 	
 # parse your RPerl input file with abstract syntax tree output
 $ rperl -v -d YOU_RPERL_FILE.(pl|pm)
