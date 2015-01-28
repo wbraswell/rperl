@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'Operator or semicolon missing' >>>
+# <<< COMPILE_ERROR: 'Global symbol "$properties" requires explicit package name' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::Properties::Class_00_Bad_00;

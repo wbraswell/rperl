@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'near ")  @_"' >>>
+# <<< COMPILE_ERROR: 'near ") @_"' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::MethodArguments::Class_07_Bad;

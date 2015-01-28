@@ -25,7 +25,8 @@
 %token FH_REF_SYMBOL_BRACES  = /(\{\$[A-Z][A-Z0-9_]*\})/                 # left brace, dollar sigil, uppercase letter, uppercase letters & numbers & underscores, right brace; ex. '{$MY_FILEHANDLE_23}'
 %token FH_REF_SYMBOL         = /(\$[A-Z][A-Z0-9_]*)/                     # dollar sigil, uppercase letter, uppercase letters & numbers & underscores; ex. '$MY_FILEHANDLE_23'
 %token TYPE_METHOD           = /([a-zA-Z]\w*__method)/                   # letter followed by letters, numbers, and underscores, followed by '__method'; ex. 'string__array_ref__method'
-%token WORD_SCOPED           = /([a-zA-Z]\w*(::[a-zA-Z]\w*)+)/
+#%token WORD_SCOPED           = /([a-zA-Z]\w*(::[a-zA-Z]\w*)+)/
+%token WORD_SCOPED           = /((?:[a-zA-Z]\w*)?(?:::[a-zA-Z]\w*)+)/
 %token KEYS_OR_VALUES        = /(keys|values)\s/
 %token TYPE_CLASS_OR_SELF    = /(string\s+\$class|object\s+\$self)/      # 'string $class' or 'object $self'
 %token STDOUT_STDERR         = /(\{\*STDOUT\}|\{\*STDERR\})/             # '{*STDOUT}' or '{*STDERR}'
@@ -35,11 +36,11 @@
 # Affects OP01_NAMED, OP01_NAMED_VOID, and OP10_NAMED_UNARY below, corresponding RPerl::Test::Operator* and C++ code;  http://perldoc.perl.org/perlfunc.html
 
 # PRECEDENCE, LEXICAL ORDERING: earlier declaration gets tried first;  http://perldoc.perl.org/perlop.html#Operator-Precedence-and-Associativity [1]
-# DEV NOTE: tokens which are all letters (or, ne, x, print, open, ETC) & are always followed by whitespace when tidy (NOT argumentless next, last, croak, return, exit)
+# DEV NOTE: tokens which are all letters (or, ne, x, print, open, ETC) & are always followed by whitespace when tidy (NOT not or argumentless next, last, croak, return, exit, chdir, etc)
 # must be explicitly made to match the trailing whitespace in the regular expressions below, in order to avoid incorrectly matching substrings of user-defined words
 %token OP24_LOGICAL_OR_XOR       = /(or|xor)\s/                  # precedence 24 infix: logical or and xor, equivalent to || except for precedence
 %token OP23_LOGICAL_AND          = /(and)\s/                     # precedence 23 infix: logical and, equivalent to && except for precedence
-%token OP22_LOGICAL_NEG          = /(not)\s/                     # precedence 22 prefix: logical negation, equivalent to ! except for precedence
+%token OP22_LOGICAL_NEG          = /(not)/                     # precedence 22 prefix: logical negation, equivalent to ! except for precedence
 %token OP21_LIST_COMMA           = /(,)/                         # precedence 21 infix: "list operators (rightward)" [1] AKA comma
 %token OP20_HASH_FATARROW        = /(=>)/                        # precedence 20 infix: hash entry fat arrow AKA fat comma
 %token OP19_LOOP_CONTROL_SCOLON  = /(next;|last;)/               # precedence 19 prefix void: loop control next, last
@@ -52,8 +53,8 @@
 %token OP13_BITWISE_AND          = /(&)/                         # precedence 13 infix: bitwise and
 %token OP12_COMPARE_EQ_NE        = /(==|!=|eq|ne)\s/             # precedence 12 infix: comparison numeric equal, numeric not equal, string equal, string not equal
 %token OP09_BITWISE_SHIFT        = /(<<|>>)/                     # precedence 09 infix: bitwise shift left, shift right
-%token OP10_NAMED_UNARY          = /(chdir|rand|scalar[^t])\s/   # precedence 10 prefix: "named unary operators" [1]; ex. 'chdir' and 'rand'; 'scalar' not 'scalartype'
-%token OP10_STRINGIFY_UNARY      = /((?:main)?::[a-zA-Z]\w*__stringify\()/   # precedence 10 prefix: stringify AKA pretty print; ex. '::integer__array_ref__stringify'
+%token OP10_NAMED_UNARY          = /(chdir|rand|scalar[^t])/     # precedence 10 prefix: "named unary operators" [1]; ex. 'chdir' and 'rand'; 'scalar' not 'scalartype'
+#%token OP10_STRINGIFY_UNARY      = /((?:main)?::[a-zA-Z]\w*__stringify\()/   # precedence 10 prefix: stringify AKA pretty print; ex. '::integer__array_ref__stringify'
 %token OP19_VARIABLE_ASSIGN_BY   = /(\+=|-=|\*=|\/=|\.=)/        # precedence 19 infix: add assign, subtract assign, multiply assign, divide assign, cat assign
 %token OP08_STRING_CAT           = /(\.)/                        # precedence 08 infix: string concatenate
 %token OP03_MATH_INC_DEC         = /(\+\+|--)/                   # precedence 03 prefix and postfix: increment, decrement
@@ -98,7 +99,7 @@
 %nonassoc   OP12_COMPARE_EQ_NE
 %nonassoc   OP11_COMPARE_LT_GT
 %nonassoc   OP10_NAMED_UNARY
-%nonassoc   OP10_STRINGIFY_UNARY
+#%nonassoc   OP10_STRINGIFY_UNARY
 %left       OP09_BITWISE_SHIFT
 %left       OP08_STRING_CAT
 %left       OP08_MATH_ADD_SUB
@@ -123,8 +124,9 @@
 %left       OP01_PRINT
 
 %token WORD                 = /([a-zA-Z]\w*[a-z]\w*|[a-z])/             # single letter, or letter followed by letters, numbers, and underscores; ex. 'foobar_42_Howdy'
-%token CONSTANT_SYMBOL      = /([A-Z][A-Z0-9_]*|[A-Z])/                 # single uppercase letter, or uppercase letter followed by uppercase letters, numbers, and underscores; ex. 'foobar_42_Howdy'
+%token WORD_UPPERCASE      = /([A-Z][A-Z0-9_]*|[A-Z])/                 # single uppercase letter, or uppercase letter followed by uppercase letters, numbers, and underscores; ex. 'foobar_42_Howdy'
 %token COLON                = /:/
+%token LPAREN_MY            = /\(\s*my/
 %token LPAREN               = /\(/
 %token LBRACKET             = /\[/
 %token LBRACE               = /\{/
@@ -142,17 +144,17 @@ Include:                'use' WordScoped ';' | 'use' WordScoped 'qw(' WORD+ ')' 
                         # START HERE 5: create tests which actually utilize constant values
                         # START HERE 5: create tests which actually utilize constant values
                         # START HERE 5: create tests which actually utilize constant values
-Constant:               'use constant' CONSTANT_SYMBOL OP20_HASH_FATARROW TypeInnerConstant Literal ';' ;
-#Constant:              'use constant' CONSTANT_SYMBOL OP20_HASH_FATARROW TypeInnerConstant ConstantValue ';' ;  # NEED UPGRADE: constant array & hash refs not read-only as of Perl v5.20
+Constant:               'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant Literal ';' ;
+#Constant:              'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant ConstantValue ';' ;  # NEED UPGRADE: constant array & hash refs not read-only as of Perl v5.20
 #ConstantValue:         Literal | LBRACKET TypeInnerConstant? Literal (OP21_LIST_COMMA TypeInnerConstant? Literal)* ']' | 
-#                       LBRACE CONSTANT_SYMBOL OP20_HASH_FATARROW TypeInnerConstant? Literal (OP21_LIST_COMMA CONSTANT_SYMBOL OP20_HASH_FATARROW TypeInnerConstant? Literal)* '}' ;
+#                       LBRACE WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant? Literal (OP21_LIST_COMMA WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant? Literal)* '}' ;
 Subroutine:             'our' Type VARIABLE_SYMBOL '= sub {' SubroutineArguments? Operation+ '}' ';' ;
-SubroutineArguments:    '( my' Type VARIABLE_SYMBOL (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
+SubroutineArguments:    LPAREN_MY Type VARIABLE_SYMBOL (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
 Class:                  'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties MethodOrSubroutine* LITERAL_NUMBER ';' ;
 Properties:             'our hash_ref $properties' OP19_VARIABLE_ASSIGN LBRACE HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* '}' ';' |
                         'our hash_ref $properties' OP19_VARIABLE_ASSIGN LBRACE '}' ';' ;
 Method:                 'our' TYPE_METHOD VARIABLE_SYMBOL '= sub {' MethodArguments? Operation+ '}' ';' ;
-MethodArguments:        '( my' TYPE_CLASS_OR_SELF (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
+MethodArguments:        LPAREN_MY TYPE_CLASS_OR_SELF (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
 MethodOrSubroutine:     Method | Subroutine;
 
 Operation:              Expression ';' | Statement ;
@@ -166,7 +168,8 @@ Operator:               LPAREN OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ')' 
                         # START HERE 3: add string repeat tests
                         SubExpression OP07_STRING_REPEAT SubExpression | SubExpression OP07_MATH_MULT_DIV_MOD SubExpression |
                         SubExpression OP08_MATH_ADD_SUB SubExpression | SubExpression OP08_STRING_CAT SubExpression | SubExpression OP09_BITWISE_SHIFT SubExpression |
-                        OP10_NAMED_UNARY SubExpression | OP10_NAMED_UNARY | OP10_STRINGIFY_UNARY SubExpression ')' | SubExpression OP11_COMPARE_LT_GT SubExpression |
+#                        OP10_NAMED_UNARY SubExpression | OP10_NAMED_UNARY | OP10_STRINGIFY_UNARY SubExpression ')' | SubExpression OP11_COMPARE_LT_GT SubExpression |
+                        OP10_NAMED_UNARY SubExpression | OP10_NAMED_UNARY | SubExpression OP11_COMPARE_LT_GT SubExpression |
                         SubExpression OP12_COMPARE_EQ_NE SubExpression | SubExpression OP13_BITWISE_AND SubExpression |
                         SubExpression OP14_BITWISE_OR_XOR SubExpression | SubExpression OP15_LOGICAL_AND SubExpression | SubExpression OP16_LOGICAL_OR SubExpression |
                         SubExpression OP17_LIST_RANGE SubExpression | SubExpression OP18_TERNARY VariableOrLiteral COLON VariableOrLiteral |
@@ -174,7 +177,7 @@ Operator:               LPAREN OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ')' 
 OperatorVoid:           OP01_PRINT (STDOUT_STDERR)? ListElements ';' | OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ';' |
                         OP01_NAMED_VOID_SCOLON | OP01_NAMED_VOID ListElements ';' | OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';' |
                         OP19_LOOP_CONTROL_SCOLON | OP19_LOOP_CONTROL LoopLabel ';' ;
-Expression:             Operator | WordScoped LPAREN ListElements? ')' | CONSTANT_SYMBOL LPAREN ')' | Variable OP02_METHOD_THINARROW LPAREN ListElements? ')' |
+Expression:             Operator | WordScoped LPAREN ListElements? ')' | WORD_UPPERCASE LPAREN ')' | Variable OP02_METHOD_THINARROW LPAREN ListElements? ')' |
                         WordScoped OP02_METHOD_THINARROW_NEW ')' ;
                         # START HERE 4: add class method tests
                         # START HERE 4: add class method tests
@@ -204,10 +207,10 @@ HashReference:          LBRACE HashEntry (OP21_LIST_COMMA HashEntry)* '}' ;
 HashDereferenced:       '%{' Variable '}' | '%{' HashReference '}' ;
 
 WordScoped:             WORD | WORD_SCOPED;
-LoopLabel:              WORD ;
+LoopLabel:              WORD_UPPERCASE ;
 Type:                   WORD ;
 TypeInner:              'my' Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN ;
-TypeInnerConstant:      'my' Type '$TYPED_' CONSTANT_SYMBOL OP19_VARIABLE_ASSIGN ;
+TypeInnerConstant:      'my' Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN ;
 VariableOrLiteral:      Variable | Literal;
 Literal:                LITERAL_STRING | LITERAL_NUMBER ;
 
