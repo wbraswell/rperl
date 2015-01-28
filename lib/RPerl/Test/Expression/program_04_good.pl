@@ -15,6 +15,6 @@ use RPerl::Test::Foo;
 # [[[ OPERATIONS ]]]
 quux('howdy!');
 
-# START HERE 2: flesh Foo from ClassTemplate, implement class method tests & object method tests
-# START HERE 2: flesh Foo from ClassTemplate, implement class method tests & object method tests
-# START HERE 2: flesh Foo from ClassTemplate, implement class method tests & object method tests
+# START HERE 2: flesh Foo from ClassTemplate, implement class method tests (will be "static" method in C++) & object method tests
+# START HERE 2: flesh Foo from ClassTemplate, implement class method tests (will be "static" method in C++) & object method tests
+# START HERE 2: flesh Foo from ClassTemplate, implement class method tests (will be "static" method in C++) & object method tests

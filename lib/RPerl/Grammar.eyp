@@ -27,7 +27,7 @@
 %token TYPE_METHOD           = /([a-zA-Z]\w*__method)/                   # letter followed by letters, numbers, and underscores, followed by '__method'; ex. 'string__array_ref__method'
 %token WORD_SCOPED           = /([a-zA-Z]\w*(::[a-zA-Z]\w*)+)/
 %token KEYS_OR_VALUES        = /(keys|values)\s/
-%token TYPE_SELF             = /(object\s+\$self)/                       # 'object $self'
+%token TYPE_CLASS_OR_SELF    = /(string\s+\$class|object\s+\$self)/      # 'string $class' or 'object $self'
 %token STDOUT_STDERR         = /(\{\*STDOUT\}|\{\*STDERR\})/             # '{*STDOUT}' or '{*STDERR}'
 %token STDIN                 = /(<STDIN>)/                               # '<STDIN>'
 
@@ -152,7 +152,7 @@ Class:                  'use parent qw(' WordScoped ')' ';' Include Critic* Incl
 Properties:             'our hash_ref $properties' OP19_VARIABLE_ASSIGN LBRACE HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* '}' ';' |
                         'our hash_ref $properties' OP19_VARIABLE_ASSIGN LBRACE '}' ';' ;
 Method:                 'our' TYPE_METHOD VARIABLE_SYMBOL '= sub {' MethodArguments? Operation+ '}' ';' ;
-MethodArguments:        '( my' TYPE_SELF (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
+MethodArguments:        '( my' TYPE_CLASS_OR_SELF (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
 MethodOrSubroutine:     Method | Subroutine;
 
 Operation:              Expression ';' | Statement ;
