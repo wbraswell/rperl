@@ -14,7 +14,7 @@ BEGIN { use_ok('RPerl'); }
 # PERLOPS_PERLTYPES
 rperltypes::types_enable('PERL');
 BEGIN { use_ok('RPerl::Test::IO::Print_00'); }
-use RPerl::Test::IO::Print_00;
+#use RPerl::Test::IO::Print_00;  # NEED ADDRESS: dupe of previous line???
 RPerl::Test::IO::Print_00::greet_planet(42);
 
         
