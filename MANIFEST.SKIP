@@ -14,6 +14,7 @@
 ^t\/_Inline
 ^lib\/RPerl\/Test\/OperationsTypesReporting\/_Inline
 ^lib\/RPerl\/Test\/Module\/_Inline
+^lib\/RPerl\/Test\/Properties\/_Inline
 
 # [ CPAN Build & Distribution ]
 # NEED UPDATE, CORRELATION #06: list of CPAN files & directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
