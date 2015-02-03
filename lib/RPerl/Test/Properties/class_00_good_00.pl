@@ -16,6 +16,6 @@ our $VERSION = 0.000_010;
 use RPerl::Test::Properties::Class_00_Good;
 
 # [[[ OPERATIONS ]]]
-my $test_object = RPerl::Test::Properties::Class_00_Good->new();
-my $retval = $test_object->test_method(23);
+my object $test_object = RPerl::Test::Properties::Class_00_Good->new();
+my integer $retval = $test_object->test_method(23);
 print $retval . "\n";
