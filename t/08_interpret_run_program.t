@@ -140,42 +140,60 @@ for my $test_file ( sort keys %{$test_files} ) {
 #    if ($stdout_generated) { RPerl::diag( "===STDOUT=BEGIN====\n" . $stdout_generated . "===STDOUT=END======\n" ); }
 #    if ($stderr_generated) { RPerl::diag( "===STDERR=BEGIN====\n" . $stderr_generated . "===STDERR=END======\n" ); }
                 
-    my string__array_ref $stdout_generated_lines = \split("\n", $stdout_generated);
+    my @stdout_generated_lines_array = split("\n", $stdout_generated);
+    my string__array_ref $stdout_generated_lines = \@stdout_generated_lines_array;
 
     if ( $test_exit_status == 0 ) {    # UNIX process return code 0, success
         if ( ( $test_file =~ m/Good/xms ) or ( $test_file =~ m/good/xms ) ) {
             my $missing_successes = [];
             if ( defined $test_files->{$test_file}->{successes} ) {
+#=DISABLE
+                # START HERE 0: create remaining 3 pure and 1 mixed properties test programs, with multiple in-order success strings
+                # START HERE 0: create remaining 3 pure and 1 mixed properties test programs, with multiple in-order success strings
+                # START HERE 0: create remaining 3 pure and 1 mixed properties test programs, with multiple in-order success strings
+                $RPerl::DEBUG = 0;
+                $RPerl::VERBOSE = 0;
+                RPerl::diag( 'in 08_interpret_run_program.t, before foreach loop, have successes =' . "\n" . Dumper($test_files->{$test_file}->{successes}) . "\n" );
+ 
+                my string $success = $test_files->{$test_file}->{successes}->[0];
                 
-                my string $success = shift $test_files->{$test_file}->{successes};
-                
-                foreach my $stdout_generated_line (
+                # match success strings in-order in captured output
+                FOREACH_STDOUT_LINE: foreach my string $stdout_generated_line (
                     @{ $stdout_generated_lines } )
                 {
-                    if ( $stdout_generated_line =~ /\Q$success\E/xms ) {
-                        $success = shift $test_files->{$test_file}->{successes};
+                    RPerl::diag( 'in 08_interpret_run_program.t, top of foreach loop, have $success = ' . $success . "\n" );
+                    RPerl::diag( 'in 08_interpret_run_program.t, top of foreach loop, have $stdout_generated_line = ' . $stdout_generated_line . "\n" );
+                    # each stdout line is only allowed to match one success string
+                    if ( $stdout_generated_line =~ /\Q$success\E/xms ) {  
+                        RPerl::diag( 'in 08_interpret_run_program.t, MATCH' . "\n" );
+                        shift $test_files->{$test_file}->{successes};
+                        if ((scalar @{$test_files->{$test_file}->{successes}} ) == 0) { last FOREACH_STDOUT_LINE; }
+                        $success = $test_files->{$test_file}->{successes}->[0];
+                    }
+                    else {
+                        RPerl::diag( 'in 08_interpret_run_program.t, NO MATCH' . "\n" );
                     }
                 }
-                
+            }
+            RPerl::verbose( 'in 08_interpret_run_program.t, have missing successes =' . "\n" . Dumper($test_files->{$test_file}->{successes}) . "\n" );
+            ok( ( ( scalar @{$test_files->{$test_file}->{successes}} ) == 0 ), "Program $test_file interprets and runs without errors" );
+#=cut
+ 
+=DISABLE
                 # NEED UPGRADE: below code allows success strings to be matched out-of-order in captured output
                 # enable with some appropriate preprocessor keyword
-#                foreach my $success (
-#                    @{ $test_files->{$test_file}->{successes} } )
-#                {
-#                    if ( $stdout_generated !~ /\Q$success\E/xms ) {
-#                        push @{$missing_successes},
-#                            "Success message '$success' expected, but not found";
-#                    }
-#                }
+                foreach my $success (
+                    @{ $test_files->{$test_file}->{successes} } )
+                {
+                    if ( $stdout_generated !~ /\Q$success\E/xms ) {
+                        push @{$missing_successes},
+                            "Success message '$success' expected, but not found";
+                    }
+                }
             }
-
-            RPerl::verbose(
-                'in 08_interpret_run_program.t, have $missing_successes ='
-                    . "\n"
-                    . Dumper($missing_successes)
-                    . "\n" );
-            ok( ( ( scalar @{$missing_successes} ) == 0 ),
-                "Program $test_file interprets and runs without errors" );
+            RPerl::verbose( 'in 08_interpret_run_program.t, have $missing_successes =' . "\n" . Dumper($missing_successes) . "\n" );
+            ok( ( ( scalar @{$missing_successes} ) == 0 ), "Program $test_file interprets and runs without errors" );
+=cut
         }
         else {
             ok( 0, "Program $test_file interprets and runs with errors" );
