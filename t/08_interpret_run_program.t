@@ -139,19 +139,34 @@ for my $test_file ( sort keys %{$test_files} ) {
 
 #    if ($stdout_generated) { RPerl::diag( "===STDOUT=BEGIN====\n" . $stdout_generated . "===STDOUT=END======\n" ); }
 #    if ($stderr_generated) { RPerl::diag( "===STDERR=BEGIN====\n" . $stderr_generated . "===STDERR=END======\n" ); }
+                
+    my string__array_ref $stdout_generated_lines = \split("\n", $stdout_generated);
 
     if ( $test_exit_status == 0 ) {    # UNIX process return code 0, success
         if ( ( $test_file =~ m/Good/xms ) or ( $test_file =~ m/good/xms ) ) {
             my $missing_successes = [];
             if ( defined $test_files->{$test_file}->{successes} ) {
-                foreach my $success (
-                    @{ $test_files->{$test_file}->{successes} } )
+                
+                my string $success = shift $test_files->{$test_file}->{successes};
+                
+                foreach my $stdout_generated_line (
+                    @{ $stdout_generated_lines } )
                 {
-                    if ( $stdout_generated !~ /\Q$success\E/xms ) {
-                        push @{$missing_successes},
-                            "Success message '$success' expected, but not found";
+                    if ( $stdout_generated_line =~ /\Q$success\E/xms ) {
+                        $success = shift $test_files->{$test_file}->{successes};
                     }
                 }
+                
+                # NEED UPGRADE: below code allows success strings to be matched out-of-order in captured output
+                # enable with some appropriate preprocessor keyword
+#                foreach my $success (
+#                    @{ $test_files->{$test_file}->{successes} } )
+#                {
+#                    if ( $stdout_generated !~ /\Q$success\E/xms ) {
+#                        push @{$missing_successes},
+#                            "Success message '$success' expected, but not found";
+#                    }
+#                }
             }
 
             RPerl::verbose(
