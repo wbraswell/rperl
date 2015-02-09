@@ -166,7 +166,7 @@ for my $test_file ( sort keys %{$test_files} ) {
                     # each stdout line is only allowed to match one success string
                     if ( $stdout_generated_line =~ /\Q$success\E/xms ) {  
                         RPerl::diag( 'in 08_interpret_run_program.t, MATCH' . "\n" );
-                        shift $test_files->{$test_file}->{successes};
+                        shift @{$test_files->{$test_file}->{successes}};
                         if ((scalar @{$test_files->{$test_file}->{successes}} ) == 0) { last FOREACH_STDOUT_LINE; }
                         $success = $test_files->{$test_file}->{successes}->[0];
                     }

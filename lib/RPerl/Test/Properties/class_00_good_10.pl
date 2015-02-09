@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< RUN_SUCCESS: '46' >>>
-# <<< RUN_SUCCESS: '48' >>>
+# <<< RUN_SUCCESS: '1104' >>>
 
 # [[[ HEADER ]]]
 use strict;
