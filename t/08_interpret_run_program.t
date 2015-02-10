@@ -148,9 +148,6 @@ for my $test_file ( sort keys %{$test_files} ) {
             my $missing_successes = [];
             if ( defined $test_files->{$test_file}->{successes} ) {
 #=DISABLE
-                # START HERE 0: create remaining 3 pure and 1 mixed properties test programs, with multiple in-order success strings
-                # START HERE 0: create remaining 3 pure and 1 mixed properties test programs, with multiple in-order success strings
-                # START HERE 0: create remaining 3 pure and 1 mixed properties test programs, with multiple in-order success strings
                 $RPerl::DEBUG = 0;
                 $RPerl::VERBOSE = 0;
                 RPerl::diag( 'in 08_interpret_run_program.t, before foreach loop, have successes =' . "\n" . Dumper($test_files->{$test_file}->{successes}) . "\n" );
