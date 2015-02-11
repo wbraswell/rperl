@@ -178,10 +178,6 @@ INIT {
  
  
                     # accessor/mutator object methods
-
-         # START HERE 1: test new hash_ref $properties
-         # START HERE 1: test new hash_ref $properties
-         # START HERE 1: test new hash_ref $properties
                     $object_properties = eval "\$$package_name\:\:properties";
 
                     foreach my $object_property_name (
