@@ -81,7 +81,7 @@ use constant PIE => my string $TYPED_PIE = 'pecan';
 #    death_year => my integer $TYPED_death_year = 1_955
 #};
 
-# [[[ OO PROPERTIES ]]]
+# [[[ OO OBJECT PROPERTIES ]]]
 # <<< CHANGE_ME: replace with real property name(s) & default data >>>
 our hash_ref $properties = {
     plugh => my integer $TYPED_plugh           = 23,
@@ -90,7 +90,7 @@ our hash_ref $properties = {
     yyz => my number__hash_ref $TYPED_yyz = { a => 3.1, b => 6.2, c => 9.3 }
 };
 
-# [[[ OO METHODS ]]]
+# [[[ OO OBJECT METHODS ]]]
 
 # <<< CHANGE_ME: delete for no methods, or replace with real method(s) >>>
 our void__method $quux = sub {
@@ -101,6 +101,19 @@ our void__method $quux = sub {
 our string__method $corge = sub {
     ( my object $self) = @_;
     return $self->{xyzzy} x 3;
+};
+
+# [[[ OO CLASS METHODS ]]]
+
+# <<< CHANGE_ME: delete for no methods, or replace with real method(s) >>>
+our void__method $xuuq = sub {
+    ( my string $class) = @_;
+    print 'Class method xuuq called from class ', $class, "\n";
+};
+
+our number__method $egroc = sub {
+    ( my string $class, my number $hgulp) = @_;
+    return $hgulp * 3;
 };
 
 # [[[ SUBROUTINES ]]]
