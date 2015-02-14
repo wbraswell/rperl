@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_965;
+    our $VERSION = 0.000_966;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -70,7 +70,7 @@
 %token OP08_MATH_ADD_SUB         = /(\+|-)/                      # precedence 08 infix: arithmetic add, subtract
 %token OP11_COMPARE_LT_GT        = /(<=|>=|<|>|lt|gt|le|ge)\s/   # precedence 11 infix: comparison less than, greater than, less or equal, greater or equal
 %token OP19_VARIABLE_ASSIGN      = /(=)/                         # precedence 19 infix: assign
-%token OP01_PRINT                = /(print)\s/                   # precedence 01 prefix void: print to STDOUT, STDERR, or filehandle
+%token OP01_PRINT                = /(print|printf)\s/            # precedence 01 prefix void: print to STDOUT, STDERR, or filehandle
 %token OP01_NAMED_VOID_SCOLON    = /(croak;|return;|exit;)/      # precedence 01 prefix void: "terms and list operators (leftward)" [1] AKA builtins, no return value
 %token OP01_NAMED_VOID           = /(croak|return|exit)\s/       # precedence 01 prefix void: same as above, except accepts argument(s)
 %token OP01_QW                   = /(qw\()/                      # precedence 01 prefix: quoted words

@@ -1,20 +1,20 @@
 package RPerl::Config;
 use strict;
 use warnings;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_001;
 
 # DEV NOTE: this package exists to serve as the header file for RPerl.pm itself,
 # as well as for RPerl.pm dependencies such as Class.pm, HelperFunctions_cpp.pm, and rperltypes.pm
 
-# $OS_ERROR == $ERRNO == $!, $EVAL_ERROR == $@, $CHILD_ERROR == $?, $EXECUTABLE_NAME == $^X
+# $OS_ERROR == $ERRNO == $!, $EVAL_ERROR == $@, $CHILD_ERROR == $?, $EXECUTABLE_NAME == $^X, $PROGRAM_NAME == $0
 
-# export Dumper(), carp(), croak(), confess(), $OS_ERROR, $EVAL_ERROR, $CHILD_ERROR, and $EXECUTABLE_NAME to all who call 'use RPerl::Config;'
+# export various subroutines and variables to all who call 'use RPerl::Config;'
 use Data::Dumper;
 use Carp;
 use English qw(-no_match_vars);
 use Exporter 'import';
 our @EXPORT
-    = qw(Dumper carp croak confess $OS_ERROR $EVAL_ERROR $CHILD_ERROR $EXECUTABLE_NAME);
+    = qw(Dumper carp croak confess $OS_ERROR $EVAL_ERROR $CHILD_ERROR $EXECUTABLE_NAME $PROGRAM_NAME);
 
 1;    # end of package
 
@@ -22,7 +22,7 @@ package RPerl;
 use File::Find qw(find);
 use File::Spec;
 
-# export $RPerl::MODES, Dumper(), carp(), croak(), confess(), $OS_ERROR, $EVAL_ERROR, $CHILD_ERROR, and $EXECUTABLE_NAME to all who call 'use RPerl;'
+# export $RPerl::MODES, as well as various subroutines and variables to all who call 'use RPerl;'
 our $MODES = {  # see perl_modes.txt for more info
     0 => { ops => 'PERL', types => 'PERL' },  # NEED FIX: should be types => 'PERL_STATIC'
     1 => { ops => 'CPP',  types => 'PERL' },  # NEED FIX: should be types => 'PERL_STATIC'
@@ -33,7 +33,7 @@ use Carp;
 use English qw(-no_match_vars);
 use Exporter 'import';
 our @EXPORT
-    = qw(Dumper carp croak confess $OS_ERROR $EVAL_ERROR $CHILD_ERROR $EXECUTABLE_NAME);
+    = qw(Dumper carp croak confess $OS_ERROR $EVAL_ERROR $CHILD_ERROR $EXECUTABLE_NAME $PROGRAM_NAME);
 
 # [[[ OO CLASS PROPERTIES SPECIAL ]]]
 
