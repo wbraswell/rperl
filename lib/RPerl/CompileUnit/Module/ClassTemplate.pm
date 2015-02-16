@@ -1,4 +1,5 @@
 # [[[ PREPROCESSOR ]]]
+# <<< CHANGE_ME: choose applicable directives and remove remaining >>>
 # <<< TYPE_CHECKING: OFF >>>
 # <<< TYPE_CHECKING: ON >>>
 # <<< TYPE_CHECKING: TRACE >>>
