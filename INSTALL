@@ -1,9 +1,10 @@
 # RPerl v1.0 Beta 2, Install Notes
-# Last Updated January 25, 2015
+# Last Updated February 16, 2015
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # NOTE: STEPS 0 AND 1 ARE ONLY FOR SINGLE-USER INSTALL, NOT SYSTEM-WIDE INSTALL
 # IMPORTANT WARNING: ONLY USE ONE OF STEP 1A, 1B, OR 1C - NOT ALL THREE
+# IMPORTANT WARNING: ONLY USE ONE OF STEP 2A OR 2B - NOT BOTH
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ################################################################################
@@ -12,11 +13,11 @@
 ################################################################################
 
 $ mv ~/perl5 ~/perl5.old  # disable any previous local::lib or Perlbrew
-$ perl -v  # NOTE! the version of Perl determines whether you take step 1a or 1b
+$ perl -v  # NOTE! the version of Perl determines whether you take step 1A or 1B
 
 ################################################################################
 # STEP 1A.  ONLY FOR NORMAL OPERATING SYSTEMS, NOT DEBIAN WITH BROKEN PERL v5.14
-# INSTALL LOCAL::LIB & CPANMINUS, DO NOT MIX WITH PERLBREW
+# INSTALL LOCAL::LIB & CPANMINUS, DO NOT MIX WITH 1B (PERLBREW)
 ################################################################################
 
 $ curl -L cpanmin.us | perl - -l $HOME/perl5 App::cpanminus local::lib
@@ -27,7 +28,7 @@ $ source ~/.bashrc;  set | grep perl5
 
 ################################################################################
 # STEP 1B.  ONLY FOR DEBIAN WITH BROKEN PERL v5.14 AND ANYBODY WITH PERL <=v5.8
-# INSTALL PERLBREW & CPANMINUS, DO NOT MIX WITH LOCAL::LIB
+# INSTALL PERLBREW & CPANMINUS, DO NOT MIX WITH 1A (LOCAL::LIB)
 ################################################################################
 
 $ wget http://www.cpan.org/src/5.0/perl-5.20.1.tar.bz2; bunzip2 perl-5.20.1.tar.bz2; cd perl-5.20.1; perl Makefile.PL; make; make test; make install
@@ -58,11 +59,24 @@ $ perlbrew install-cpanm
 # As of April 2014, no versions of Strawberry Perl ship with a 4.8 series GCC.
 
 ################################################################################
-# STEP 2.
-# INSTALL RPERL & DEPENDENCIES
+# STEP 2A.  FOR ALL RPERL USERS
+# INSTALL RPERL & DEPENDENCIES, CPAN RELEASE VERSION, DO NOT MIX WITH 2B
 ################################################################################
 
 $ cpanm WBRASWELL/RPerl-1.00_02.tar.gz
+
+################################################################################
+# STEP 2B.  ONLY FOR RPERL DEVELOPERS
+# INSTALL RPERL & DEPENDENCIES, GITHUB DEVELOPMENT VERSION, DO NOT MIX WITH 2A
+################################################################################
+
+$ git clone git@github.com:wbraswell/rperl.git
+# OR
+$ wget https://github.com/wbraswell/rperl/archive/master.zip;  unzip master.zip
+
+$ cd rperl*
+$ perl Makefile.PL
+$ cpanm --installdeps .  # note the dot at the end of this command
 
 ################################################################################
 # STEP 3.
