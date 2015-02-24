@@ -38,18 +38,6 @@ our string__method $corge = sub {
     return $self->{xyzzy} x 3;
 };
 
-# [[[ OO CLASS METHODS ]]]
-
-our void__method $xuuq = sub {
-    ( my string $class) = @_;
-    print 'Class method xuuq called from class ', $class, "\n";
-};
-
-our number__method $egroc = sub {
-    ( my string $class, my number $hgulp) = @_;
-    return $hgulp * 3;
-};
-
 # [[[ SUBROUTINES ]]]
 
 our void $grault = sub {

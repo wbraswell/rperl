@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_967;
+    our $VERSION = 0.000_968;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -27,7 +27,6 @@
 %token TYPE_METHOD           = /([a-zA-Z]\w*__method)/                   # letter followed by letters, numbers, and underscores, followed by '__method'; ex. 'string__array_ref__method'
 %token WORD_SCOPED           = /((?:[a-zA-Z]\w*)?(?:::[a-zA-Z]\w*)+)/
 %token KEYS_OR_VALUES        = /(keys|values)\s/
-#%token TYPE_CLASS_OR_SELF    = /(string\s+\$class|object\s+\$self)/      # 'string $class' or 'object $self' # FEATURE BOUNTY #001, 250 CodeCoin: Implement RPerl class methods as C++ static methods (CPPOPS_*TYPES)
 %token TYPE_SELF             = /(object\s+\$self)/                       # 'object $self'
 %token STDOUT_STDERR         = /(\{\*STDOUT\}|\{\*STDERR\})/             # '{*STDOUT}' or '{*STDERR}'
 %token STDIN                 = /(<STDIN>)/                               # '<STDIN>'

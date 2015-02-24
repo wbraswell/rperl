@@ -1,9 +1,9 @@
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'near "( my tring"' >>>
+# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< COMPILE_ERROR: 'Unexpected token:  object' >>>
 
 # [[[ HEADER ]]]
-package RPerl::Test::MethodArguments::Class_02_Bad;
+package RPerl::Test::MethodArguments::Class_05_Bad;
 use strict;
 use warnings;
 use RPerl;
@@ -19,7 +19,11 @@ our hash_ref $properties
 
 # [[[ OO METHODS ]]]
 our void__method $empty_method = sub {
-    ( my tring $class, my integer $foo ) = @_;
+    (   my object $sel,
+        my number $foo,
+        my number__array_ref $bar,
+        my number__hash_ref $baz
+    ) = @_;
     return 2;
 };
 

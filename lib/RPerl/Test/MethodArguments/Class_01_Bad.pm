@@ -1,9 +1,9 @@
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'Transliteration replacement not terminated' >>>
+# <<< COMPILE_ERROR: 'near "( my oject"' >>>
 
 # [[[ HEADER ]]]
-package RPerl::Test::MethodArguments::Class_01_Bad;
+package RPerl::Test::MethodArguments::Class_03_Bad;
 use strict;
 use warnings;
 use RPerl;
@@ -19,8 +19,8 @@ our hash_ref $properties
 
 # [[[ OO METHODS ]]]
 our void__method $empty_method = sub {
-    (   y object $self ) = @_;
+    ( my oject $self, my integer $foo ) = @_;
     return 2;
 };
 
-1;                  # end of class
+1;    # end of class

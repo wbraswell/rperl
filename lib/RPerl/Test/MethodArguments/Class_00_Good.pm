@@ -1,5 +1,5 @@
 # [[[ HEADER ]]]
-package RPerl::Test::MethodArguments::Class_00_Good;
+package RPerl::Test::MethodArguments::Class_01_Good;
 use strict;
 use warnings;
 use RPerl;
@@ -15,7 +15,7 @@ our hash_ref $properties
 
 # [[[ OO METHODS ]]]
 our void__method $empty_method = sub {
-    ( my string $class ) = @_;
+    ( my object $self ) = @_;
     return 2;
 };
 

@@ -1,9 +1,9 @@
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'near "( my oject"' >>>
+# <<< COMPILE_ERROR: 'near ") @_"' >>>
 
 # [[[ HEADER ]]]
-package RPerl::Test::MethodArguments::Class_03_Bad;
+package RPerl::Test::MethodArguments::Class_07_Bad;
 use strict;
 use warnings;
 use RPerl;
@@ -19,7 +19,12 @@ our hash_ref $properties
 
 # [[[ OO METHODS ]]]
 our void__method $empty_method = sub {
-    ( my oject $self, my integer $foo ) = @_;
+    (   my object $self,
+        my number $foo,
+        my string $bar,
+        my scalartype__array_ref $baz,
+        my integer__hash_ref $bat
+    ) @_;
     return 2;
 };
 

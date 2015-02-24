@@ -1,9 +1,9 @@
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'Global symbol "$cla" requires explicit package name' >>>
+# <<< COMPILE_ERROR: 'Transliteration replacement not terminated' >>>
 
 # [[[ HEADER ]]]
-package RPerl::Test::MethodArguments::Class_00_Bad;
+package RPerl::Test::MethodArguments::Class_01_Bad;
 use strict;
 use warnings;
 use RPerl;
@@ -19,8 +19,8 @@ our hash_ref $properties
 
 # [[[ OO METHODS ]]]
 our void__method $empty_method = sub {
-    (m string $class) = @_;
+    (   y object $self ) = @_;
     return 2;
 };
 
-1;    # end of class
+1;                  # end of class
