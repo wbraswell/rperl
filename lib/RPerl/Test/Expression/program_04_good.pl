@@ -17,6 +17,6 @@ use RPerl::Test::Foo;
 grault(17);
 
 
-# START HERE 2: remove all class method code, add feature bounty for class methods (static methods in C++); flesh Foo from ClassTemplate, implement object method tests
-# START HERE 2: remove all class method code, add feature bounty for class methods (static methods in C++); flesh Foo from ClassTemplate, implement object method tests
-# START HERE 2: remove all class method code, add feature bounty for class methods (static methods in C++); flesh Foo from ClassTemplate, implement object method tests
+# START HERE 2: flesh Foo from ClassTemplate, implement object method tests
+# START HERE 2: flesh Foo from ClassTemplate, implement object method tests
+# START HERE 2: flesh Foo from ClassTemplate, implement object method tests
