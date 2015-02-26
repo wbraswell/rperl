@@ -3,7 +3,7 @@
 # <<< COMPILE_ERROR: 'Unexpected token:  object' >>>
 
 # [[[ HEADER ]]]
-package RPerl::Test::MethodArguments::Class_05_Bad;
+package RPerl::Test::MethodArguments::Class_02_Bad;
 use strict;
 use warnings;
 use RPerl;

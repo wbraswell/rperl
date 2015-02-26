@@ -3,7 +3,7 @@
 # <<< COMPILE_ERROR: 'near "( my oject"' >>>
 
 # [[[ HEADER ]]]
-package RPerl::Test::MethodArguments::Class_03_Bad;
+package RPerl::Test::MethodArguments::Class_01_Bad;
 use strict;
 use warnings;
 use RPerl;

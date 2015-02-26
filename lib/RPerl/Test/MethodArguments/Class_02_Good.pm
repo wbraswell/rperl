@@ -1,5 +1,5 @@
 # [[[ HEADER ]]]
-package RPerl::Test::MethodArguments::Class_05_Good;
+package RPerl::Test::MethodArguments::Class_02_Good;
 use strict;
 use warnings;
 use RPerl;

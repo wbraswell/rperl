@@ -3,7 +3,7 @@
 # <<< COMPILE_ERROR: 'near ") @_"' >>>
 
 # [[[ HEADER ]]]
-package RPerl::Test::MethodArguments::Class_07_Bad;
+package RPerl::Test::MethodArguments::Class_03_Bad;
 use strict;
 use warnings;
 use RPerl;
