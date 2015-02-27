@@ -17,6 +17,6 @@ use RPerl::Test::Foo;
 grault(17);
 
 
-# START HERE 2: flesh Foo from ClassTemplate, implement object method tests
-# START HERE 2: flesh Foo from ClassTemplate, implement object method tests
-# START HERE 2: flesh Foo from ClassTemplate, implement object method tests
+# START HERE 2: implement object method tests
+# START HERE 2: implement object method tests
+# START HERE 2: implement object method tests

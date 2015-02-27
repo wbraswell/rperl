@@ -82,7 +82,7 @@ use constant PIE => my string $TYPED_PIE = 'pecan';
 #    death_year => my integer $TYPED_death_year = 1_955
 #};
 
-# [[[ OO OBJECT PROPERTIES ]]]
+# [[[ OO PROPERTIES ]]]
 # <<< CHANGE_ME: replace with real property name(s) & default data >>>
 our hash_ref $properties = {
     plugh => my integer $TYPED_plugh           = 23,
@@ -91,7 +91,7 @@ our hash_ref $properties = {
     yyz => my number__hash_ref $TYPED_yyz = { a => 3.1, b => 6.2, c => 9.3 }
 };
 
-# [[[ OO OBJECT METHODS ]]]
+# [[[ OO METHODS ]]]
 
 # <<< CHANGE_ME: delete for no methods, or replace with real method(s) >>>
 our void__method $quux = sub {

@@ -18,7 +18,7 @@ use RPerl::CompileUnit::Module::Class;
 use constant PI  => my number $TYPED_PI  = 3.141_59;
 use constant PIE => my string $TYPED_PIE = 'pecan';
 
-# [[[ OO OBJECT PROPERTIES ]]]
+# [[[ OO PROPERTIES ]]]
 our hash_ref $properties = {
     plugh => my integer $TYPED_plugh           = 23,
     xyzzy => my string $TYPED_xyzzy            = 'twenty-three',
@@ -26,7 +26,7 @@ our hash_ref $properties = {
     yyz => my number__hash_ref $TYPED_yyz = { a => 3.1, b => 6.2, c => 9.3 }
 };
 
-# [[[ OO OBJECT METHODS ]]]
+# [[[ OO METHODS ]]]
 
 our void__method $quux = sub {
     ( my object $self) = @_;
