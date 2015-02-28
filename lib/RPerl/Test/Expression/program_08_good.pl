@@ -1,8 +1,4 @@
 #!/usr/bin/perl
-
-# [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: '18966.6466070478' >>>
-
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -17,4 +13,4 @@ our $VERSION = 0.001_000;
 use RPerl::Test::Foo;
 
 # [[[ OPERATIONS ]]]
-RPerl::Test::Foo::grault(23);
+RPerl::Test::Foo::xuuq('howdy!');

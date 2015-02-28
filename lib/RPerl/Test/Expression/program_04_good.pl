@@ -1,4 +1,8 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< RUN_SUCCESS: '7337.80264449013' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -13,10 +17,4 @@ our $VERSION = 0.001_000;
 use RPerl::Test::Foo;
 
 # [[[ OPERATIONS ]]]
-#RPerl::Test::Foo::grault(17);
 grault(17);
-
-
-# START HERE 2: implement object method tests
-# START HERE 2: implement object method tests
-# START HERE 2: implement object method tests

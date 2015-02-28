@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: '18966.6466070478' >>>
+# <<< RUN_SUCCESS: '' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -17,4 +17,10 @@ our $VERSION = 0.001_000;
 use RPerl::Test::Foo;
 
 # [[[ OPERATIONS ]]]
-RPerl::Test::Foo::grault(23);
+#RPerl::Test::Foo::garply(17, 23, 42);
+garply(17, 23, 42);
+
+
+# START HERE 2: implement object method tests
+# START HERE 2: implement object method tests
+# START HERE 2: implement object method tests
