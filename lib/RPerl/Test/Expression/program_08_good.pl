@@ -14,3 +14,8 @@ use RPerl::Test::Foo;
 
 # [[[ OPERATIONS ]]]
 RPerl::Test::Foo::xuuq('howdy!');
+
+
+# START HERE 2: continue implementing object method tests
+# START HERE 2: continue implementing object method tests
+# START HERE 2: continue implementing object method tests
