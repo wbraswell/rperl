@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< RUN_SUCCESS: '46' >>>
+# <<< RUN_SUCCESS: '84' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -13,9 +18,9 @@ our $VERSION = 0.001_000;
 use RPerl::Test::Foo;
 
 # [[[ OPERATIONS ]]]
-RPerl::Test::Foo::xuuq('howdy!');
-
-
-# START HERE 2: continue implementing object method tests
-# START HERE 2: continue implementing object method tests
-# START HERE 2: continue implementing object method tests
+my object $my_foo = RPerl::Test::Foo->new();
+$my_foo->quux();
+print $my_foo->{plugh}, "\n";
+$my_foo->{plugh} = 42;
+$my_foo->quux();
+print $my_foo->{plugh}, "\n";
