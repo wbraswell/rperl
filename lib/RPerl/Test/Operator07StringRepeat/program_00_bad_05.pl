@@ -1,11 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: "have $foo = ''" >>>
-# <<< RUN_SUCCESS: "have $bar = 'bar'" >>>
-# <<< RUN_SUCCESS: "have $bat = 'batbat'" >>>
-# <<< RUN_SUCCESS: "have $baz = 'bazbazbazbaz'" >>>
-# <<< RUN_SUCCESS: "have $bax = 'baxbaxbaxbaxbaxbaxbaxbax'" >>>
+# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< COMPILE_ERROR: 'Unexpected token:  -' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -22,7 +19,7 @@ our $VERSION = 0.001_000;
 my string $foo = 'foo' x 0;
 my string $bar = 'bar' x 1;
 my string $bat = 'bat' x 2;
-my string $baz = 'baz' x 4;
+my string $baz = 'baz' x - 4;
 my string $bax = 'bax' x 8;
 
 print q{have $foo = '}, $foo, q{'}, "\n";

@@ -1,11 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: "have $foo = ''" >>>
-# <<< RUN_SUCCESS: "have $bar = 'bar'" >>>
-# <<< RUN_SUCCESS: "have $bat = 'batbat'" >>>
-# <<< RUN_SUCCESS: "have $baz = 'bazbazbazbaz'" >>>
-# <<< RUN_SUCCESS: "have $bax = 'baxbaxbaxbaxbaxbaxbaxbax'" >>>
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'near "my string"' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -19,7 +16,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string $foo = 'foo' x 0;
+my string $foo = 'foo' x 0
 my string $bar = 'bar' x 1;
 my string $bat = 'bat' x 2;
 my string $baz = 'baz' x 4;
