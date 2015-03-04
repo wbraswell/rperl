@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'near "my string $bat = "' >>>
+# <<< COMPILE_ERROR: 'my string $bat = ' >>>
 
 # [[[ HEADER ]]]
 use strict;
