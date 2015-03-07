@@ -1,5 +1,5 @@
 # RPerl v1.0 Beta 2, Install Notes
-# Last Updated February 16, 2015
+# Last Updated March 6, 2015
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # NOTE: STEPS 0 AND 1 ARE ONLY FOR SINGLE-USER INSTALL, NOT SYSTEM-WIDE INSTALL
@@ -63,7 +63,7 @@ $ perlbrew install-cpanm
 # INSTALL RPERL & DEPENDENCIES, CPAN RELEASE VERSION, DO NOT MIX WITH 2B
 ################################################################################
 
-$ cpanm WBRASWELL/RPerl-1.00_02.tar.gz
+$ cpanm WBRASWELL/RPerl-1.000_002.tar.gz
 
 ################################################################################
 # STEP 2B.  ONLY FOR RPERL DEVELOPERS
