@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_968;
+    our $VERSION = 0.000_969;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -172,9 +172,6 @@ OperatorVoid:           OP01_PRINT (STDOUT_STDERR)? ListElements ';' | OP01_PRIN
                         OP19_LOOP_CONTROL_SCOLON | OP19_LOOP_CONTROL LoopLabel ';' ;
 Expression:             Operator | WordScoped LPAREN ListElements? ')' | WORD_UPPERCASE LPAREN ')' | Variable OP02_METHOD_THINARROW LPAREN ListElements? ')' |
                         WordScoped OP02_METHOD_THINARROW_NEW ')' ;
-                        # START HERE 4: add class method tests
-                        # START HERE 4: add class method tests
-                        # START HERE 4: add class method tests
 SubExpression:          Expression | 'undef' | Literal | Variable | ArrayReference | ArrayDereferenced | HashReference | HashDereferenced | LBRACE '}' |
                         LPAREN SubExpression ')' ;
 SubExpressionOrStdin:   SubExpression | STDIN;
