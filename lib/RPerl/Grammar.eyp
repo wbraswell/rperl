@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_969;
+    our $VERSION = 0.000_970;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -138,9 +138,6 @@ Package:                Critic* Include* Constant* Subroutine+ LITERAL_NUMBER ';
 Header:                 'use strict;' 'use warnings;' 'use RPerl;' 'our' VERSION_NUMBER_ASSIGN;
 Critic:                 '## no critic qw(' WORD+ ')';
 Include:                'use' WordScoped ';' | 'use' WordScoped 'qw(' WORD+ ')' ';' ;
-                        # START HERE 5: create tests which actually utilize constant values
-                        # START HERE 5: create tests which actually utilize constant values
-                        # START HERE 5: create tests which actually utilize constant values
 Constant:               'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant Literal ';' ;
 #Constant:              'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant ConstantValue ';' ;  # NEED UPGRADE: constant array & hash refs not read-only as of Perl v5.20
 #ConstantValue:         Literal | LBRACKET TypeInnerConstant? Literal (OP21_LIST_COMMA TypeInnerConstant? Literal)* ']' | 
