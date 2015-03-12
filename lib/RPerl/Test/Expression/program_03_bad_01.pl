@@ -16,4 +16,9 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer $foo = undef
+our integer $foo = sub {
+    ( my string $bar, my integer $bat, my integer $baz) = @_;
+    print $bar, "\n";
+    return $bat + $baz;
+};
+foo('howdy!', 23, 42)

@@ -1,7 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: '1.570795' >>>
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'Global symbol "$two_pie" requires explicit package name' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -16,5 +17,5 @@ use constant PI  => my number $TYPED_PI  = 3.141_59;
 use constant PIE => my string $TYPED_PIE = 'pecan';
 
 # [[[ OPERATIONS ]]]
-my number $pi_over_2 = PI() / 2;
-print 'pi / 2 = ', $pi_over_2, "\n";
+my string $two_pie = PIE() x 2
+print '2 pie = ', $two_pie, "\n";

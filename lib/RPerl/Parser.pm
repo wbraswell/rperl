@@ -182,7 +182,7 @@ our void $rperl_grammar_error = sub {
 
     my string $value = $argument->YYCurval;
     if ( not( defined $value ) ) {
-        $value = '<<< undef >>>';
+        $value = '<<< NO TOKEN FOUND >>>';
     }
     my integer $line_number = $argument->{TOKENLINE};
 

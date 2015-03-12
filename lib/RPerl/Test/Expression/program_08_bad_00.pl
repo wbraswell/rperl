@@ -1,7 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: '1.570795' >>>
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: '"use" not allowed in expression' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -12,7 +13,7 @@ our $VERSION = 0.001_000;
 # [[[ CONSTANTS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
-use constant PI  => my number $TYPED_PI  = 3.141_59;
+use constant PI  => my number $TYPED_PI  = 3.141_59
 use constant PIE => my string $TYPED_PIE = 'pecan';
 
 # [[[ OPERATIONS ]]]

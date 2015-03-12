@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected token:  <<< NO TOKEN FOUND >>>' >>>
+# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< COMPILE_ERROR: 'Semicolon seems to be missing' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -16,4 +16,9 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer $foo = undef
+our integer $foo = sub {
+    ( my string $bar, my integer $bat, my integer $baz) = @_;
+    print $bar, "\n";
+    return $bat + $baz;
+}
+foo('howdy!', 23, 42);

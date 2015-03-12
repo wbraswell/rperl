@@ -16,4 +16,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer $foo = undef
+my integer $i = 0;
+$i++

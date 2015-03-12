@@ -14,6 +14,8 @@ our $VERSION = 0.001_000;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
-# [[[ OPERATIONS ]]]
+# [[[ INCLUDES ]]]
+use RPerl::Test::Foo;
 
-my integer $foo = undef
+# [[[ OPERATIONS ]]]
+print Dumper( garply( 17, 23, 42 ) )

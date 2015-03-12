@@ -16,4 +16,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer $foo = undef
+our void $foo = sub { ( my string $bar) = @_; print $bar, "\n"; };
+foo('howdy!')
