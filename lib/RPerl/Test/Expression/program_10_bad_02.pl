@@ -3,7 +3,6 @@
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
 # <<< COMPILE_ERROR: 'near ")' >>>
-# <<< COMPILE_ERROR: 'Global symbol "$my_foo" requires explicit package name' >>>
 
 # [[[ HEADER ]]]
 use strict;
