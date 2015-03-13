@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'Global symbol "$two_pie" requires explicit package name' >>>
+# <<< COMPILE_ERROR: 'near "my string"' >>>
 
 # [[[ HEADER ]]]
 use strict;
