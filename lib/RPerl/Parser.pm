@@ -225,8 +225,7 @@ our void $rperl_source__parse = sub {
     $eyapp_parser->YYSlurpFile($rperl_source__file_name);
     my object $rperl_ast = $eyapp_parser->YYParse(
         yydebug => 0x00,    # disable eyapp DBG DEBUGGING
-
-        #        yydebug => 0xFF,  # full eyapp DBG DEBUGGING
+#        yydebug => 0xFF,  # full eyapp DBG DEBUGGING, USE FOR DEBUGGING GRAMMAR
         yyerror => $rperl_grammar_error
     );
 
