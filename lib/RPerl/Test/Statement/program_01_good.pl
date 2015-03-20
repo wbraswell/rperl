@@ -11,4 +11,6 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-if (1) { print 'Production rule Statement matched by Conditional', "\n"; }
+for my integer $i ( -1 .. 1 ) {
+    print 'Production rule Statement matched by Loop, iteration number ', $i, "\n";
+}

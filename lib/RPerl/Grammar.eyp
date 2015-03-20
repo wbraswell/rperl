@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_975;
+    our $VERSION = 0.000_976;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -174,8 +174,8 @@ SubExpressionOrStdin:   SubExpression | STDIN;
 Statement:              Conditional | (LoopLabel COLON)? Loop | OperatorVoid | VariableDeclaration | VariableModification ;
 Conditional:            'if' LPAREN SubExpression ')' CodeBlock ('elsif' LPAREN SubExpression ')' CodeBlock)* ('else' CodeBlock)? ;
 Loop:                   LoopFor | LoopForEach | LoopWhile ;
-LoopFor:                'for my integer' VARIABLE_SYMBOL LPAREN SubExpression OP17_LIST_RANGE SubExpression ')' CodeBlock ;
-LoopForEach:            'foreach my' Type VARIABLE_SYMBOL LPAREN ListElements ')' CodeBlock ;
+LoopFor:                'for' 'my' 'integer' VARIABLE_SYMBOL LPAREN SubExpression OP17_LIST_RANGE SubExpression ')' CodeBlock ;
+LoopForEach:            'foreach' 'my' Type VARIABLE_SYMBOL LPAREN ListElements ')' CodeBlock ;
 LoopWhile:              'while' LPAREN SubExpression ')' CodeBlock ;
 CodeBlock:              LBRACE Operation+ '}' ;
 
@@ -194,7 +194,7 @@ HashDereferenced:       '%{' Variable '}' | '%{' HashReference '}' ;
 
 WordScoped:             WORD | WORD_SCOPED;
 LoopLabel:              WORD_UPPERCASE ;
-Type:                   WORD ;
+Type:                   WORD | 'integer' ;
 TypeInner:              'my' Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN ;
 TypeInnerConstant:      'my' Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN ;
 VariableOrLiteral:      Variable | Literal;

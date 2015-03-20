@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< COMPILE_ERROR: 'Unexpected token:  }' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -11,4 +16,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-if (1) { print 'Production rule Statement matched by Conditional', "\n"; }
+my integer $j = 6;
+for my integer $i ( 0 .. $j ) { }
