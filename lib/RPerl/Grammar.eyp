@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_976;
+    our $VERSION = 0.000_977;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -24,6 +24,7 @@
 %token VARIABLE_SYMBOL       = /(\$(?:[a-zA-Z]\w*)?[a-z]\w*(::[a-zA-Z]\w*)*)/ # dollar sigil, scoped word with at least one lowercase in the first scope segment
 %token FH_REF_SYMBOL_BRACES  = /(\{\$[A-Z][A-Z0-9_]*\})/                 # left brace, dollar sigil, uppercase letter, uppercase letters & numbers & underscores, right brace; ex. '{$MY_FILEHANDLE_23}'
 %token FH_REF_SYMBOL         = /(\$[A-Z][A-Z0-9_]*)/                     # dollar sigil, uppercase letter, uppercase letters & numbers & underscores; ex. '$MY_FILEHANDLE_23'
+%token TYPE_INTEGER          = /(integer\s+)/                            # 'integer' followed by whitespace
 %token TYPE_METHOD           = /([a-zA-Z]\w*__method)/                   # letter followed by letters, numbers, and underscores, followed by '__method'; ex. 'string__array_ref__method'
 %token WORD_SCOPED           = /((?:[a-zA-Z]\w*)?(?:::[a-zA-Z]\w*)+)/
 %token TYPE_SELF             = /(object\s+\$self)/                       # 'object $self'
@@ -174,7 +175,7 @@ SubExpressionOrStdin:   SubExpression | STDIN;
 Statement:              Conditional | (LoopLabel COLON)? Loop | OperatorVoid | VariableDeclaration | VariableModification ;
 Conditional:            'if' LPAREN SubExpression ')' CodeBlock ('elsif' LPAREN SubExpression ')' CodeBlock)* ('else' CodeBlock)? ;
 Loop:                   LoopFor | LoopForEach | LoopWhile ;
-LoopFor:                'for' 'my' 'integer' VARIABLE_SYMBOL LPAREN SubExpression OP17_LIST_RANGE SubExpression ')' CodeBlock ;
+LoopFor:                'for' 'my' TYPE_INTEGER VARIABLE_SYMBOL LPAREN SubExpression OP17_LIST_RANGE SubExpression ')' CodeBlock ;
 LoopForEach:            'foreach' 'my' Type VARIABLE_SYMBOL LPAREN ListElements ')' CodeBlock ;
 LoopWhile:              'while' LPAREN SubExpression ')' CodeBlock ;
 CodeBlock:              LBRACE Operation+ '}' ;
@@ -194,7 +195,7 @@ HashDereferenced:       '%{' Variable '}' | '%{' HashReference '}' ;
 
 WordScoped:             WORD | WORD_SCOPED;
 LoopLabel:              WORD_UPPERCASE ;
-Type:                   WORD | 'integer' ;
+Type:                   WORD | TYPE_INTEGER ;
 TypeInner:              'my' Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN ;
 TypeInnerConstant:      'my' Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN ;
 VariableOrLiteral:      Variable | Literal;
