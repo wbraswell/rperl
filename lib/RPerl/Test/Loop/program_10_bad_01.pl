@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< COMPILE_ERROR: 'Expected token(s): WORD_UPPERCASE' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -11,12 +16,12 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer $i = 10;
-FOOBARLOOP: while ( $i < 23 ) {
-    print 'Production rule Statement matched by Loop, iteration number ', $i,
-        "\n";
-    $i += 2;
-    if ( $i > 18 ) {
-        last FOOBARLOOP;
+my integer $i = 0;
+TESTWHILELOOP: while ( $i < 7 ) {
+    $i++;
+    if ( $i == 3 ) {
+        next TESTWHILELoOP;
     }
+    print 'Production rule Loop matched by LoopWhile, iteration item ', $i,
+        "\n";
 }

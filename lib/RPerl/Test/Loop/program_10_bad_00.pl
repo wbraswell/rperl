@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< COMPILE_ERROR: 'Unexpected token:  }' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -11,12 +16,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer $i = 10;
-FOOBARLOOP: while ( $i < 23 ) {
-    print 'Production rule Statement matched by Loop, iteration number ', $i,
-        "\n";
-    $i += 2;
-    if ( $i > 18 ) {
-        last FOOBARLOOP;
-    }
-}
+my integer $i = 0;
+TESTWHILELOOP: while ( $i < 7 ) { }
