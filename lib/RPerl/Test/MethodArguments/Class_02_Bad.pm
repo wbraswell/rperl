@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected token:  object' >>>
+# <<< COMPILE_ERROR: 'Unexpected Token:  object' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::MethodArguments::Class_02_Bad;

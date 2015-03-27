@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected token:  ## no critic qw(' >>>
+# <<< COMPILE_ERROR: 'Unexpected Token:  ## no critic qw(' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::Critic::Class_00_Bad_01;

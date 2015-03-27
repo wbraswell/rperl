@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_977;
+    our $VERSION = 0.000_979;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -138,7 +138,7 @@ Module:                 Package | Class ;
 Package:                Critic* Include* Constant* Subroutine+ LITERAL_NUMBER ';' ;
 Header:                 'use strict;' 'use warnings;' 'use RPerl;' 'our' VERSION_NUMBER_ASSIGN;
 Critic:                 '## no critic qw(' WORD+ ')';
-Include:                'use' WordScoped ';' | 'use' WordScoped 'qw(' WORD+ ')' ';' ;
+Include:                'use' WordScoped ';' | 'use' WordScoped OP01_QW WORD+ ')' ';' ;
 Constant:               'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant Literal ';' ;
 #Constant:              'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant ConstantValue ';' ;  # NEED UPGRADE: constant array & hash refs not read-only as of Perl v5.20
 #ConstantValue:         Literal | LBRACKET TypeInnerConstant? Literal (OP21_LIST_COMMA TypeInnerConstant? Literal)* ']' | 
@@ -184,8 +184,8 @@ Variable:               VARIABLE_SYMBOL VariableRetrieval* ;
 VariableRetrieval:      OP02_ARRAY_THINARROW SubExpression ']' | OP02_HASH_THINARROW SubExpression '}' | OP02_HASH_THINARROW WORD '}' ;
 VariableDeclaration:    'my' Type VARIABLE_SYMBOL ';' | 'my' Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';' ;
 VariableModification:   Variable OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';' | Variable OP19_VARIABLE_ASSIGN_BY SubExpression ';' ;
-ListElements:           ListElement (OP21_LIST_COMMA ListElement)* | OP01_QW WORD+ ')' ;
-ListElement:            SubExpression | TypeInner SubExpression ;
+ListElements:           ListElement (OP21_LIST_COMMA ListElement)* ;
+ListElement:            SubExpression | TypeInner SubExpression | OP01_QW WORD+ ')' ;
 ArrayReference:         LBRACKET ListElements? ']' ;
 ArrayDereferenced:      '@{' Variable '}' | '@{' ArrayReference '}' ;
 HashEntry:              WORD OP20_HASH_FATARROW TypeInner? SubExpression | HashDereferenced ;

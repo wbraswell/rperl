@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected token:  use parent qw(' >>>
+# <<< COMPILE_ERROR: 'Unexpected Token:  use parent qw(' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::Include::Class_00_Bad_10;

@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected token:  package' >>>
+# <<< COMPILE_ERROR: 'Unexpected Token:  package' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::Critic::Package_01_Bad_03;

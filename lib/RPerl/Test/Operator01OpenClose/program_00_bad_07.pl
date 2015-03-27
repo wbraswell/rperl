@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected token:  $HOWDY' >>>
+# <<< COMPILE_ERROR: 'Unexpected Token:  $HOWDY' >>>
 
 # [[[ HEADER ]]]
 use strict;

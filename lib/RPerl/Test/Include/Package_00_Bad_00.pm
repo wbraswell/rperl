@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected token:  us' >>>
+# <<< COMPILE_ERROR: 'Unexpected Token:  us' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::Include::Package_00_Bad_00;

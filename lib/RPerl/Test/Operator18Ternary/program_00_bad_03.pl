@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected token:  rand' >>>
+# <<< COMPILE_ERROR: 'Unexpected Token:  rand' >>>
 
 # [[[ HEADER ]]]
 use strict;

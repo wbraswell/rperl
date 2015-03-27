@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected token:  y' >>>
+# <<< COMPILE_ERROR: 'Unexpected Token:  y' >>>
 
 # [[[ HEADER ]]]
 use strict;

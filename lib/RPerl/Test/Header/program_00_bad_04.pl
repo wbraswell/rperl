@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected token:  use warnings;' >>>
+# <<< COMPILE_ERROR: 'Unexpected Token:  use warnings;' >>>
 
 # [[[ HEADER ]]]
 use warnings;

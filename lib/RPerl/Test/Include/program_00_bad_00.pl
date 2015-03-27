@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected token:  RPerl::Test::Foo' >>>
+# <<< COMPILE_ERROR: 'Unexpected Token:  RPerl::Test::Foo' >>>
 
 # [[[ HEADER ]]]
 use strict;

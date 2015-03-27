@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected token:  use constant' >>>
+# <<< COMPILE_ERROR: 'Unexpected Token:  use constant' >>>
 
 # [[[ HEADER ]]]
 use strict;

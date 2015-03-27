@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected token:  use' >>>
+# <<< COMPILE_ERROR: 'Unexpected Token:  use' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::Include::Class_00_Bad_08;

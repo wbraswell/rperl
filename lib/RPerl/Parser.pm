@@ -3,7 +3,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_001;
+our $VERSION = 0.004_010;
 
 # [[[ OO INHERITANCE ]]]
 #use RPerl::CompileUnit::Module::Class;
@@ -184,6 +184,16 @@ our void $rperl_grammar_error = sub {
     if ( not( defined $value ) ) {
         $value = '<<< NO TOKEN FOUND >>>';
     }
+    my string $helpful_hint = q{};
+    if ($value =~ /[0-9]/) {
+        $helpful_hint = q{
+    Helpful Hint:      Possible case of PBP RequireNumberSeparators (see below)
+    Policy:            Perl::Critic::Policy::ValuesAndExpressions::RequireNumberSeparators
+    Description:       Long number not separated with underscores
+    Explanation:       See Perl Best Practices page(s) 59
+        };
+    }
+    
     my integer $line_number = $argument->{TOKENLINE};
 
 #    die( "\nERROR ECVPARP00, RPERL PARSER, SYNTAX ERROR; have \$argument =\n" . Dumper($argument) . "\n" );
@@ -208,12 +218,13 @@ our void $rperl_grammar_error = sub {
         . 'ERROR ECVPARP00, RPERL PARSER, RPERL SYNTAX ERROR' . "\n"
         . 'Failed RPerl grammar syntax check with the following message:'
         . "\n\n"
-        . '    Line number:       '
+        . '    Line Number:       '
         . $line_number . "\n"
-        . '    Unexpected token:  '
+        . '    Unexpected Token:  '
         . $value . "\n"
-        . '    Expected token(s): '
-        . $expected_tokens . "\n";
+        . '    Expected Token(s): '
+        . $expected_tokens
+        . $helpful_hint . "\n";
 };
 
 # Parse RPerl Syntax Using Eyapp Grammar
