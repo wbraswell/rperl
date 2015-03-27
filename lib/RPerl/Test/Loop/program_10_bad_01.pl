@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Expected token(s): WORD_UPPERCASE' >>>
+# <<< COMPILE_ERROR: 'Expected Token(s): WORD_UPPERCASE' >>>
 
 # [[[ HEADER ]]]
 use strict;
