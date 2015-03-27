@@ -3,7 +3,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_000;
+our $VERSION = 0.004_001;
 
 # [[[ OO INHERITANCE ]]]
 #use RPerl::CompileUnit::Module::Class;
@@ -192,7 +192,8 @@ our void $rperl_grammar_error = sub {
     my $current_state            = $argument->{STATES}[$current_state_num];
     my $expected_tokens          = q{};
     my number $is_first_expected = 1;
-    foreach my $expected_token ( keys %{ $current_state->{ACTIONS} } ) {
+ 
+    foreach my $expected_token ( sort keys %{ $current_state->{ACTIONS} } ) {
         if ($is_first_expected) {
             $is_first_expected = 0;
             $expected_tokens .= $expected_token . "\n";
