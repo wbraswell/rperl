@@ -11,10 +11,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string__hash_ref $s_hash;
-$s_hash = {
-    titans     => 'ccm',
-    redhawks   => 'msu',
-    redraiders => 'ttu',
-    bears      => 'bu'
-};
+my number $n = -10;
+$n += 17.01;

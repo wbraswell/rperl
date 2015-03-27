@@ -11,5 +11,8 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string $s = 'howdy';
-$s .= ' doody';
+my unknown $foo;
+$foo = [
+    'strange', { weird => 'goofy', beard => [ 'goatee', -17.01 ] },
+    23.42, 'heterogeneous'
+];

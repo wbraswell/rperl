@@ -11,5 +11,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer $i;
-$i = -17;
+my number $n;
+$n = 17.01;

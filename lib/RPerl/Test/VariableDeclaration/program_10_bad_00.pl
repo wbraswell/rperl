@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected token:  }' >>>
+# <<< COMPILE_ERROR: 'Unexpected token:  <<< NO TOKEN FOUND >>>' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -16,5 +16,4 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string__hash_ref $s_hash
-    = { a => 'howdy', b => 'doody', c => 'clarabell', }
+my unknown $foo

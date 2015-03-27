@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected token:  ]' >>>
+# <<< COMPILE_ERROR: 'Unexpected token:  <<< NO TOKEN FOUND >>>' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -16,8 +16,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my unknown $foo;
-$foo = [
-    'strange', { weird => 'goofy', beard => 'goatee' },
-    23.42, 'heterogeneous',
-];
+my integer $i;
+$i = -17

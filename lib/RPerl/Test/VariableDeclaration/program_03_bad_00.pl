@@ -16,4 +16,4 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string $s
+my integer__array_ref $i_array

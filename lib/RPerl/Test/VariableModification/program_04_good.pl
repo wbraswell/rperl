@@ -11,5 +11,10 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer__array_ref $i_array;
-$i_array = [ -20, -15, -10, -5, 0, 5, 10, 15, 20 ];
+my string__hash_ref $s_hash;
+$s_hash = {
+    titans     => 'ccm',
+    redhawks   => 'msu',
+    redraiders => 'ttu',
+    bears      => 'bu'
+};

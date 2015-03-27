@@ -11,8 +11,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my unknown $foo;
-$foo = [
-    'strange', { weird => 'goofy', beard => 'goatee' },
-    23.42, 'heterogeneous'
-];
+my integer $i;
+$i = -17;

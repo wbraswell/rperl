@@ -17,4 +17,4 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 
 my number $n = -10;
-$n += 17.01
+$n -= 17.01

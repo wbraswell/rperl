@@ -16,4 +16,4 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my unknown $foo
+my integer $i
