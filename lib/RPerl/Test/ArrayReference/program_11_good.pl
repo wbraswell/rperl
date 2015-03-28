@@ -11,5 +11,13 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string__array_ref $s_array = [qw(alpha beta gamma), 'howdy'];
-print 'have $s_array = ', "\n", Dumper($s_array), "\n";
+my unknown__array_ref $u_array = [
+    my integer $TYPED_u_array_0           = -23,
+    my number__array_ref $TYPED_u_array_1 = [ 42 / 1_701, 21.12, 2_112.23 ],
+    my string__hash_ref $TYPED_u_array_2  = {
+        alpha => 'strings are scalars, too',
+        beta  => 'hello world',
+        gamma => 'last one'
+    }
+];
+print 'have $u_array =', "\n", Dumper($u_array), "\n";

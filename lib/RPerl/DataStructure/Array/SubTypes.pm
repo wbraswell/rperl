@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array::SubTypes;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_000;
+our $VERSION = 0.004_010;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd) # DEVELOPER DEFAULT 1b: allow unreachable & POD-commented code, must be after line 1
@@ -1053,6 +1053,24 @@ use parent -norequire, ('const_array_ref');
 # (ref to (array with const size)) of (refs to (arrays with const sizes))
 package const_array_ref__const_array_ref;
 use parent -norequire, ('const_array_ref');
+
+# [ HOMOGENEOUS ARRAY ARRAYS (2-dimensional) ]
+
+# (ref to array) of (refs to (arrays of integers))
+package integer__array_ref__array_ref;
+use parent -norequire, ('array_ref__array_ref');
+
+# (ref to array) of (refs to (arrays of numbers))
+package number__array_ref__array_ref;
+use parent -norequire, ('array_ref__array_ref');
+
+# (ref to array) of (refs to (arrays of strings))
+package string__array_ref__array_ref;
+use parent -norequire, ('array_ref__array_ref');
+
+# (ref to array) of (refs to (arrays of scalars))
+package scalartype__array_ref__array_ref;
+use parent -norequire, ('array_ref__array_ref');
 
 # [[[ HASH ARRAYS (2-dimesional) ]]]
 

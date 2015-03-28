@@ -11,11 +11,11 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my array_ref__array_ref $array_array = [
-    my integer__array_ref $TYPED_array_array_0 = [ 17, -23, 1_701 ],
-    my number__array_ref $TYPED_array_array_1
-        = [ 42 / 1_701, 21.12, 2_112.23 ],
-    my string__array_ref $TYPED_array_array_2
-        = [ 'strings are scalars, too', 'hello world', 'last one' ]
+my scalartype $mystery_scalar = 21;
+my scalartype__array_ref $sc_array = [
+    my integer $TYPED_sc_array_0 = 17,
+    my number $TYPED_sc_array_1 = 42 / 1_701,
+    my string $TYPED_sc_array_2 = 'strings are scalars, too',
+    my scalartype $TYPED_sc_array_3 = $mystery_scalar
 ];
-print 'have $array_array =', "\n", Dumper($array_array), "\n";
+print 'have $sc_array =', "\n", Dumper($sc_array), "\n";
