@@ -11,13 +11,11 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my unknown__array_ref $u_array = [
-    my integer $TYPED_u_array_0           = -23,
-    my number__array_ref $TYPED_u_array_1 = [ 42 / 1_701, 21.12, 2_112.23 ],
-    my string__hash_ref $TYPED_u_array_2  = {
-        alpha => 'strings are scalars, too',
-        beta  => 'hello world',
-        gamma => 'last one'
-    }
+my array_ref__array_ref $array_array = [
+    my integer__array_ref $TYPED_array_array_0 = [ 17, -23, 1_701 ],
+    my number__array_ref $TYPED_array_array_1
+        = [ 42 / 1_701, 21.12, 2_112.23 ],
+    my string__array_ref $TYPED_array_array_2
+        = [ 'strings are scalars, too', 'hello world', 'last one' ]
 ];
-print 'have $u_array =', "\n", Dumper($u_array), "\n";
+print 'have $array_array =', "\n", Dumper($array_array), "\n";

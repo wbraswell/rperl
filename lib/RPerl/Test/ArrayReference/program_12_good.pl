@@ -11,8 +11,13 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer__array_ref $i_array = [ 17 ];
-
-# START HERE: create the *bad*.pl versions of these ArrayReference tests
-# START HERE: create the *bad*.pl versions of these ArrayReference tests
-# START HERE: create the *bad*.pl versions of these ArrayReference tests
+my unknown__array_ref $u_array = [
+    my integer $TYPED_u_array_0           = -23,
+    my number__array_ref $TYPED_u_array_1 = [ 42 / 1_701, 21.12, 2_112.23 ],
+    my string__hash_ref $TYPED_u_array_2  = {
+        alpha => 'strings are scalars, too',
+        beta  => 'hello world',
+        gamma => 'last one'
+    }
+];
+print 'have $u_array =', "\n", Dumper($u_array), "\n";
