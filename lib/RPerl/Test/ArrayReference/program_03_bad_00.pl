@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< COMPILE_ERROR: 'Unexpected Token:  <<< NO TOKEN FOUND >>>' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -11,5 +16,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string__array_ref $s_array = ['buffalo', qw(alpha beta gamma), 'howdy'];
-print 'have $s_array = ', "\n", Dumper($s_array), "\n";
+my number__array_ref $n_array
+    = [ sin 17 / 23, cos 42 / 1_701, -( sin 21.12 ) ]

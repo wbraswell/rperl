@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< COMPILE_ERROR: 'Unexpected Token:  ]' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -11,5 +16,4 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string__array_ref $s_array = ['buffalo', qw(alpha beta gamma), 'howdy'];
-print 'have $s_array = ', "\n", Dumper($s_array), "\n";
+my integer__array_ref $i_array = [ 17, ];

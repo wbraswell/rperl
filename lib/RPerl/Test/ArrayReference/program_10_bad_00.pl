@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< COMPILE_ERROR: 'Unexpected Token:  ]' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -11,5 +16,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string__array_ref $s_array = ['buffalo', qw(alpha beta gamma), 'howdy'];
-print 'have $s_array = ', "\n", Dumper($s_array), "\n";
+# homogeneous 2-dimensional array of arrays, using outer type
+my integer__array_ref__array_ref $array_array
+    = [ [ 17, -23, 1_701 ], [ -1, 444, 2_987 ], [ -321, 7, 24_851 ], ];
+print 'have $array_array =', "\n", Dumper($array_array), "\n";
