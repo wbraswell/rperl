@@ -11,5 +11,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string__array_ref $s_array = ['buffalo', qw(alpha beta gamma), 'howdy'];
+my string__array_ref $s_array = [qw(alpha beta gamma)];
 print 'have $s_array = ', "\n", Dumper($s_array), "\n";

@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected Token:  ]' >>>
+# <<< COMPILE_ERROR: 'Unexpected Token:  <<< NO TOKEN FOUND >>>' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -16,5 +16,6 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string__array_ref $s_array = [qw(alpha beta gamma),];
-print 'have $s_array = ', "\n", Dumper($s_array), "\n";
+my integer__array_ref $i_array = [];
+push @{$i_array}, 23;
+print pop @{$i_array}

@@ -20,6 +20,5 @@ my string__array_ref $s_array_0 = [ 'a', 'b', 'c' ];
 my string__array_ref $s_array_1 = [ 'd', 'e', 'f' ];
 my string__array_ref $s_array_2 = [ 'g', 'h', 'i' ];
 my string__array_ref $s_array_all
-    = [ @{$s_array_0}, 'howdy' x 3, @{$s_array_1}, 'doody' x 2,
-    @{$s_array_2}, ];
+    = [ @{$s_array_0}, @{$s_array_1}, @{$s_array_2}, ];
 print 'have $s_array_all = ', "\n", Dumper($s_array_all), "\n";

@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected Token:  <<< NO TOKEN FOUND >>>' >>>
+# <<< COMPILE_ERROR: 'Unexpected Token:  ]' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -16,5 +16,4 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer__array_ref $i_array = [ 17, 23, 42, 1_701, 2_112 ]
-
+my integer__array_ref $i_array = [ 17, ];

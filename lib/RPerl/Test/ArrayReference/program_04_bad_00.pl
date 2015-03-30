@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected Token:  ]' >>>
+# <<< COMPILE_ERROR: 'Unexpected Token:  <<< NO TOKEN FOUND >>>' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -16,9 +16,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string__array_ref $s_array_0 = [ 'a', 'b', 'c' ];
-my string__array_ref $s_array_1 = [ 'd', 'e', 'f' ];
-my string__array_ref $s_array_2 = [ 'g', 'h', 'i' ];
-my string__array_ref $s_array_all
-    = [ @{$s_array_0}, @{$s_array_1}, @{$s_array_2}, ];
-print 'have $s_array_all = ', "\n", Dumper($s_array_all), "\n";
+my number__array_ref $n_array
+    = [ sin 17 / 23, cos 42 / 1_701, -( sin 21.12 ) ]

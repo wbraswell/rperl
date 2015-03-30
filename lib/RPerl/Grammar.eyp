@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_979;
+    our $VERSION = 0.000_980;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -170,7 +170,7 @@ OperatorVoid:           OP01_PRINT (STDOUT_STDERR)? ListElements ';' | OP01_PRIN
                         OP19_LOOP_CONTROL_SCOLON | OP19_LOOP_CONTROL LoopLabel ';' ;
 Expression:             Operator | WordScoped LPAREN ListElements? ')' | WORD_UPPERCASE LPAREN ')' | Variable OP02_METHOD_THINARROW LPAREN ListElements? ')' |
                         WordScoped OP02_METHOD_THINARROW_NEW ')' ;
-SubExpression:          Expression | 'undef' | Literal | Variable | ArrayReference | ArrayDereferenced | HashReference | HashDereferenced | LPAREN SubExpression ')' ;
+SubExpression:          Expression | 'undef' | Literal | Variable | ArrayReference | ArrayDereference | HashReference | HashDereference | LPAREN SubExpression ')' ;
 SubExpressionOrStdin:   SubExpression | STDIN;
 Statement:              Conditional | (LoopLabel COLON)? Loop | OperatorVoid | VariableDeclaration | VariableModification ;
 Conditional:            'if' LPAREN SubExpression ')' CodeBlock ('elsif' LPAREN SubExpression ')' CodeBlock)* ('else' CodeBlock)? ;
@@ -187,11 +187,11 @@ VariableModification:   Variable OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';' |
 ListElements:           ListElement (OP21_LIST_COMMA ListElement)* ;
 ListElement:            SubExpression | TypeInner SubExpression | OP01_QW WORD+ ')' ;
 ArrayReference:         LBRACKET ListElements? ']' ;
-ArrayDereferenced:      '@{' Variable '}' | '@{' ArrayReference '}' ;
-HashEntry:              WORD OP20_HASH_FATARROW TypeInner? SubExpression | HashDereferenced ;
-HashEntryTyped:         WORD OP20_HASH_FATARROW TypeInner SubExpression | HashDereferenced ;
+ArrayDereference:       '@{' Variable '}' | '@{' ArrayReference '}' ;
+HashEntry:              WORD OP20_HASH_FATARROW TypeInner? SubExpression | HashDereference ;
+HashEntryTyped:         WORD OP20_HASH_FATARROW TypeInner SubExpression | HashDereference ;
 HashReference:          LBRACE HashEntry (OP21_LIST_COMMA HashEntry)* '}' | LBRACE '}' ;
-HashDereferenced:       '%{' Variable '}' | '%{' HashReference '}' ;
+HashDereference:        '%{' Variable '}' | '%{' HashReference '}' ;
 
 WordScoped:             WORD | WORD_SCOPED;
 LoopLabel:              WORD_UPPERCASE ;

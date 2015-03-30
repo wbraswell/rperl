@@ -11,5 +11,4 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my number__array_ref $n_array
-    = [ sin 17 / 23, cos 42 / 1_701, -( sin 21.12 ) ];
+my number__array_ref $n_array = [ 17 / 23, 42 / 1_701, 21.12 ];

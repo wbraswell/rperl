@@ -11,7 +11,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my scalartype $mystery_scalar = 'FOOBAZ';
+my scalartype $mystery_scalar = 21.12;
 my scalartype__array_ref $sc_array = [
     my integer $TYPED_sc_array_0 = 17,
     my number $TYPED_sc_array_1 = 42 / 1_701,

@@ -16,11 +16,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my array_ref__array_ref $array_array = [
-    my integer__array_ref $TYPED_array_array_0 = [ 17, -23, 1_701 ],
-    my number__array_ref $TYPED_array_array_1
-        = [ 42 / 1_701, 21.12, 2_112.23 ],
-    my string__array_ref $TYPED_array_array_2
-        = [ 'strings are scalars, too', 'hello world', 'last one' ],
-];
+# homogeneous 2-dimensional array of arrays, using outer type
+my integer__array_ref__array_ref $array_array
+    = [ [ 17, -23, 1_701 ], [ -1, 444, 2_987 ], [ -321, 7, 24_851 ], ];
 print 'have $array_array =', "\n", Dumper($array_array), "\n";
