@@ -18,4 +18,4 @@ my array_ref__array_ref $array_array = [
     my string__array_ref $TYPED_array_array_2
         = [ 'strings are scalars, too', 'hello world', 'last one' ]
 ];
-print 'have $array_array =', "\n", Dumper($array_array), "\n";
+foreach my array_ref $array ( @{$array_array} ) { print '$array = ', Dumper($array), "\n"; }

@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_980;
+    our $VERSION = 0.000_982;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -121,8 +121,9 @@
 %left       OP01_NAMED_VOID
 %left       OP01_PRINT
 
-%token WORD                 = /([a-zA-Z]\w*[a-z]\w*|[a-z])/             # single letter, or letter followed by letters, numbers, and underscores; ex. 'foobar_42_Howdy'
-%token WORD_UPPERCASE      = /([A-Z][A-Z0-9_]*|[A-Z])/                 # single uppercase letter, or uppercase letter followed by uppercase letters, numbers, and underscores; ex. 'foobar_42_Howdy'
+#%token WORD                 = /([a-zA-Z]\w*[a-z]\w*|[a-z])/             # single letter, or letter followed by letters, numbers, and underscores; ex. 'foobar_42_Howdy'
+%token WORD                 = /([a-zA-Z]\w*|[a-z])/             # single letter, or letter followed by letters, numbers, and underscores; ex. 'foobar_42_Howdy'
+%token WORD_UPPERCASE       = /([A-Z][A-Z0-9_]*|[A-Z])/                 # single uppercase letter, or uppercase letter followed by uppercase letters, numbers, and underscores; ex. 'FOOBAR_42_HOWDY'
 %token COLON                = /:/
 %token LPAREN_MY            = /\(\s*my/
 %token LPAREN               = /\(/
@@ -187,7 +188,7 @@ VariableModification:   Variable OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';' |
 ListElements:           ListElement (OP21_LIST_COMMA ListElement)* ;
 ListElement:            SubExpression | TypeInner SubExpression | OP01_QW WORD+ ')' ;
 ArrayReference:         LBRACKET ListElements? ']' ;
-ArrayDereference:       '@{' Variable '}' | '@{' ArrayReference '}' ;
+ArrayDereference:       '@{' Variable '}' | '@{' TypeInner? ArrayReference '}' ;
 HashEntry:              WORD OP20_HASH_FATARROW TypeInner? SubExpression | HashDereference ;
 HashEntryTyped:         WORD OP20_HASH_FATARROW TypeInner SubExpression | HashDereference ;
 HashReference:          LBRACE HashEntry (OP21_LIST_COMMA HashEntry)* '}' | LBRACE '}' ;

@@ -13,3 +13,4 @@ our $VERSION = 0.001_000;
 
 my number__array_ref $n_array
     = [ sin 17 / 23, cos 42 / 1_701, -( sin 21.12 ) ];
+foreach my number $n ( @{$n_array} ) { print '$n = ', $n, "\n"; }

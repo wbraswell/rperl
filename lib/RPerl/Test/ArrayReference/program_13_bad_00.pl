@@ -25,4 +25,3 @@ my unknown__array_ref $u_array = [
         gamma => 'last one'
     },
 ];
-print 'have $u_array =', "\n", Dumper($u_array), "\n";

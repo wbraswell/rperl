@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected Token:  <<< NO TOKEN FOUND >>>' >>>
+# <<< COMPILE_ERROR: 'Unexpected Token:  ]' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -16,6 +16,6 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer__array_ref $i_array = [];
-push @{$i_array}, 23;
-print pop @{$i_array}
+foreach my integer $i ( @{ [ 10, 20, 30, 40, 50, ] } ) {
+    print '$i = ', $i, "\n";
+}

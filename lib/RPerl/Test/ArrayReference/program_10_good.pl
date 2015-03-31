@@ -17,4 +17,4 @@ my array_ref__array_ref $array_array = [
     my integer__array_ref $TYPED_array_array_1 = [ -1,   444, 2_987 ],
     my integer__array_ref $TYPED_array_array_2 = [ -321, 7,   24_851 ]
 ];
-print 'have $array_array =', "\n", Dumper($array_array), "\n";
+foreach my array_ref $array ( @{$array_array} ) { print '$array = ', Dumper($array), "\n"; }

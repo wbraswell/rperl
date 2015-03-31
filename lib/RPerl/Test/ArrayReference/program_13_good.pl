@@ -20,4 +20,4 @@ my unknown__array_ref $u_array = [
         gamma => 'last one'
     }
 ];
-print 'have $u_array =', "\n", Dumper($u_array), "\n";
+foreach my unknown $u ( @{$u_array} ) { print '$u = ', Dumper($u), "\n"; }

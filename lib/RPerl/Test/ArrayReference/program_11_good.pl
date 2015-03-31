@@ -14,4 +14,4 @@ our $VERSION = 0.001_000;
 # homogeneous 2-dimensional array of arrays, using outer type
 my integer__array_ref__array_ref $array_array
     = [ [ 17, -23, 1_701 ], [ -1, 444, 2_987 ], [ -321, 7, 24_851 ] ];
-print 'have $array_array =', "\n", Dumper($array_array), "\n";
+foreach my array_ref $array ( @{$array_array} ) { print '$array = ', Dumper($array), "\n"; }

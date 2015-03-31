@@ -18,4 +18,4 @@ my scalartype__array_ref $sc_array = [
     my string $TYPED_sc_array_2 = 'strings are scalars, too',
     my scalartype $TYPED_sc_array_3 = $mystery_scalar
 ];
-print 'have $sc_array =', "\n", Dumper($sc_array), "\n";
+foreach my scalartype $sc ( @{$sc_array} ) { print '$sc = ', $sc, "\n"; }

@@ -11,5 +11,6 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer__array_ref $i_array = [];
-foreach my integer $i ( @{$i_array} ) { print 'howdy ', $i, "\n"; }
+foreach my integer $i ( @{ [ 10, 20, 30, 40, 50 ] } ) {
+    print '$i = ', $i, "\n";
+}
