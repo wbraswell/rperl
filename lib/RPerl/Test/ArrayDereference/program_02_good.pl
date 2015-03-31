@@ -11,6 +11,6 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-foreach my integer $i ( @{ [ my integer $TYPED_integer_0 = 10, 20, 30, 40, 50 ] } ) {
+foreach my integer $i ( @{ [ my integer $TYPED_i0 = 10, 20, 30, 40, 50 ] } ) {
     print '$i = ', $i, "\n";
 }

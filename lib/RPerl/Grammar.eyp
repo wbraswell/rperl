@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_983;
+    our $VERSION = 0.000_984;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -121,9 +121,9 @@
 %left       OP01_NAMED_VOID
 %left       OP01_PRINT
 
-%token WORD                 = /([a-zA-Z]\w*[a-z]\w*|[a-z])/             # single letter, or letter followed by letters, numbers, and underscores; ex. 'foobar_42_Howdy'
-#%token WORD                 = /([a-zA-Z]\w*|[a-z])/             # single letter, or letter followed by letters, numbers, and underscores; ex. 'foobar_42_Howdy'
-%token WORD_UPPERCASE       = /([A-Z][A-Z0-9_]*|[A-Z])/                 # single uppercase letter, or uppercase letter followed by uppercase letters, numbers, and underscores; ex. 'FOOBAR_42_HOWDY'
+#%token WORD                 = /([a-zA-Z]\w*[a-z]\w*|[a-z])/   # single letter, or letter followed by letters, numbers, and underscores; ex. 'foobar_42_Howdy'
+%token WORD                 = /([a-z]\w*|[A-Z]\w*[a-z]\w*)/   # lowercase letter followed by optional word characters; or uppercase letter followed by at least one lowercase letter and optional word characters
+%token WORD_UPPERCASE       = /([A-Z][A-Z0-9_]*|[A-Z])/       # single uppercase letter, or uppercase letter followed by uppercase letters, numbers, and underscores; ex. 'FOOBAR_42_HOWDY'
 %token COLON                = /:/
 %token LPAREN_MY            = /\(\s*my/
 %token LPAREN               = /\(/
