@@ -18,6 +18,6 @@ my integer__hash_ref $i_hash = {
     enterprise   => 1_701,
     starman      => 2_112
 };
-foreach my string $i_key ( keys %{$i_hash} ) {
+foreach my string $i_key ( sort keys %{$i_hash} ) {
     print $i_key, ' => ', $i_hash->{$i_key}, "\n";
 }

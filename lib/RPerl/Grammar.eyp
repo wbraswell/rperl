@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_985;
+    our $VERSION = 0.000_986;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -76,7 +76,7 @@
 %token OP01_QW                   = /(qw\()/                      # precedence 01 prefix: quoted words
 %token OP01_OPEN                 = /(open)\s/                    # precedence 01 prefix: open filehandle
 %token OP01_CLOSE                = /(close)\s/                   # precedence 01 prefix: close filehandle
-%token OP01_NAMED                = /(sin|cos|push|pop|keys|values|ETC)\s/
+%token OP01_NAMED                = /(sin|cos|push|pop|keys|values|sort|ETC)\s/
                                                                  # precedence 01 prefix: "terms and list operators (leftward)" [1] AKA builtins
 
 # PRECEDENCE, SYNTAX ASSOCIATIVITY: later declaration gets higher priority
