@@ -1,9 +1,9 @@
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'Missing right curly or square bracket' >>>
+# <<< COMPILE_ERROR: 'Number found where operator expected' >>>
 
 # [[[ HEADER ]]]
-package RPerl::Test::Method::Class_00_Bad_08;
+package RPerl::Test::Method::Class_00_Bad_09;
 use strict;
 use warnings;
 use RPerl;
@@ -18,6 +18,6 @@ our hash_ref $properties
     = { empty_property => my integer $TYPED_empty_property = 2 };
 
 # [[[ OO METHODS ]]]
-our void__method $empty_method = sub { return 2; ;
+our void__method $empty_method = sub { return 2; }
 
 1;                  # end of class
