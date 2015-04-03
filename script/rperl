@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.005_000;
+our $VERSION = 0.005_001;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -111,7 +111,7 @@ sub generate_output_file_names {
 sub verify_and_default_modes {
     (   my string__hash_ref $modes,
         my string__hash_ref $modes_default,
-        my array__hash_ref $modes_supported
+        my array_ref__hash_ref $modes_supported
     ) = @_;
 
     # verify modes
@@ -120,18 +120,20 @@ sub verify_and_default_modes {
             die
                 "ERROR EARG06: Unsupported or invalid mode category '$mode_key' specified, supported categories are ("
                 . join( ', ', keys %{$modes_supported} )
-                . '), dying\n';
+                . '), dying' . "\n";
         }
         elsif (
             not( grep { $_ eq $modes->{$mode_key} }
                 @{ $modes_supported->{$mode_key} } )
             )
         {
-            die "ERROR EARG07: Unsupported or invalid mode '"
+            die 'ERROR EARG07: Unsupported or invalid mode ' . q{'}
                 . $modes->{$mode_key}
-                . "' in mode category '$mode_key' specified, supported modes are ("
+                . ' in mode category ' . q{'}
+                . $mode_key . q{'}
+                . 'specified, supported modes are ('
                 . join( ', ', @{ $modes_supported->{$mode_key} } )
-                . '), dying\n';
+                . '), dying' . "\n";
         }
     }
 
@@ -244,8 +246,9 @@ sub compile_files {
 my string__array_ref $rperl_input_file_names = [];
 my string__array_ref $cpp_output_file_names  = [];
 my string__hash_ref $modes = {}; # can't store defaults here, erased by GetOptions()
-my string__hash_ref $modes_default = { ops => 'CPP', types => 'CPP', check => 'TRACE' }; # default to CPPOPS_CPPTYPES_CHECKTRACE in C++ output code
-my array__hash_ref $modes_supported = {
+my string__hash_ref $modes_default
+    = { ops => 'CPP', types => 'CPP', check => 'TRACE' }; # default to CPPOPS_CPPTYPES_CHECKTRACE in C++ output code
+my array_ref__hash_ref $modes_supported = {
     ops   => ['CPP'],
     types => [ 'PERL', 'CPP' ],
     check => [ 'OFF', 'ON', 'TRACE' ]

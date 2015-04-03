@@ -21,5 +21,5 @@ my string__hash_ref $s_hash_all = {
     subhash_2 => $s_hash_2
 };
 foreach my string $s_key ( sort keys %{$s_hash_all} ) {
-    print '$s = ', Dumper( $s_hash_all->{$s_key} ), "\n";
+    print $s_key, ' => ', Dumper( $s_hash_all->{$s_key} ), "\n";
 }

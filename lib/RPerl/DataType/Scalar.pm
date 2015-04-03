@@ -1,5 +1,8 @@
-use strict;  use warnings;
 package RPerl::DataType::Scalar;
+use strict;
+use warnings;
+use RPerl;
+our $VERSION = 0.001_000;
 
 our @ISA = ('RPerl::DataType');
 use RPerl::DataType;
@@ -12,11 +15,3 @@ our @ISA = ('RPerl::DataType::Scalar');
 # scalartype with const value
 package const_scalartype;
 our @ISA = ('scalartype', 'const');
-
-# ref to scalartype
-package scalartype_ref;
-our @ISA = ('ref');
-
-# ref to (scalartype with const value)
-package const_scalartype_ref;
-our @ISA = ('ref');

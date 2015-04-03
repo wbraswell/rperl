@@ -2,7 +2,7 @@ package RPerl::DataType::Number;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_030;
+our $VERSION = 0.003_031;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -12,7 +12,7 @@ use parent ('RPerl::DataType');
 use RPerl::DataType;
 
 # [[[ SUB-TYPES BEFORE SETUP ]]]
-# DEV NOTE:
+# DEV NOTE, CORRELATION #7:
 # a number is any numeric value, meaning either an integer or a floating-point number;
 # Integer and Float are both sub-classes of Number;
 # the hidden Perl semantics are SvIOKp() for ints, and SvNOKp() for numbers;
@@ -26,14 +26,6 @@ use parent ('RPerl::DataType::Number');
 # number with const value
 package const_number;
 use parent -norequire, qw(number const);
-
-# ref to number
-package number_ref;
-use parent -norequire, ('ref');
-
-# ref to (number with const value)
-package const_number_ref;
-use parent -norequire, ('ref');
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataType::Number;

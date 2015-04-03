@@ -2,7 +2,7 @@ package RPerl::DataType::Integer;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_030;
+our $VERSION = 0.003_031;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -19,14 +19,6 @@ use parent ('RPerl::DataType::Integer');
 # integer with const value
 package const_integer;
 use parent -norequire, qw(integer const);
-
-# ref to integer
-package integer_ref;
-use parent -norequire, ('ref');
-
-# ref to (integer with const value)
-package const_integer_ref;
-use parent -norequire, ('ref');
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataType::Integer;

@@ -2,7 +2,7 @@ package RPerl::DataType::String;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_010;
+our $VERSION = 0.003_011;
 
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(Capitalization ProhibitMultiplePackages)  # SYSTEM DEFAULT 3: allow multiple lower case package names
@@ -18,14 +18,6 @@ use parent ('RPerl::DataType::String');
 # string with const value
 package const_string;
 use parent -norequire, qw(string const);
-
-# ref to string
-package string_ref;
-use parent -norequire, ('ref');
-
-# ref to (string with const value)
-package const_string_ref;
-use parent -norequire, ('ref');
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataType::String;

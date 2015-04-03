@@ -1,5 +1,8 @@
-use strict;  use warnings;
 package RPerl::DataType::Character;
+use strict;
+use warnings;
+use RPerl;
+our $VERSION = 0.001_000;
 
 our @ISA = ('RPerl::DataType::String');
 use RPerl::DataType::String;
@@ -11,11 +14,3 @@ our @ISA = ('RPerl::DataType::Integer');
 # char with const value
 package const_char;
 our @ISA = ('char', 'const');
-
-# ref to char
-package char_ref;
-our @ISA = ('ref');
-
-# ref to (char with const value)
-package const_char_ref;
-our @ISA = ('ref');

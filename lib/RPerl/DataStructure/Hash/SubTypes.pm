@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash::SubTypes;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_001;
+our $VERSION = 0.005_001;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd) # DEVELOPER DEFAULT 1b: allow unreachable & POD-commented code, must be after line 1
@@ -12,13 +12,11 @@ our $VERSION = 0.004_001;
 
 # [[[ HASHES ]]]
 
-# a hash is an associative array, meaning a 1-dimensional list/vector/sequence/set of (key, value) pairs
+# a hash is an associative array, meaning a 1-dimensional list/vector/sequence/set of (key, value) pairs;
+# we never use this type directly, instead we always use the hash_ref type,
+# per LMPC #27: Thou Shalt Not Use Direct Access To Arrays & Hashes Stored In @ Or % Non-Scalar Variables
 package hash;
 use parent ('RPerl::DataStructure::Hash');
-
-# hash with const size
-package const_hash;
-use parent -norequire, qw(hash const);
 
 # [[[ HASH REF ]]]
 # [[[ HASH REF ]]]
@@ -63,40 +61,6 @@ our void $hash_ref__CHECKTRACE = sub {
 # ref to (hash with const size)
 package const_hash_ref;
 use parent -norequire, ('ref');
-
-# [[[ INTEGER HASHES ]]]
-
-# hash of integers
-package integer__hash;
-use parent -norequire, ('hash');
-
-# hash of (integers with const values)
-package const_integer__hash;
-use parent -norequire, ('hash');
-
-# hash of (refs to integers)
-package integer_ref__hash;
-use parent -norequire, ('hash');
-
-# hash of (refs to (integers with const values))
-package const_integer_ref__hash;
-use parent -norequire, ('hash');
-
-# (hash with const size) of integers
-package integer__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (integers with const values)
-package const_integer__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (refs to integers)
-package integer_ref__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (refs to (integers with const values))
-package const_integer_ref__const_hash;
-use parent -norequire, ('const_hash');
 
 # [[[ INTEGER HASH REF ]]]
 # [[[ INTEGER HASH REF ]]]
@@ -284,14 +248,6 @@ our integer__hash_ref $integer__hash_ref__typetest1 = sub {
 package const_integer__hash_ref;
 use parent -norequire, ('hash_ref');
 
-# (ref to hash) of (refs to integers)
-package integer_ref__hash_ref;
-use parent -norequire, ('hash_ref');
-
-# (ref to hash) of (refs to (integers with const values))
-package const_integer_ref__hash_ref;
-use parent -norequire, ('hash_ref');
-
 # (ref to (hash with const size)) of integers
 package integer__const_hash_ref;
 use parent -norequire, ('const_hash_ref');
@@ -300,47 +256,7 @@ use parent -norequire, ('const_hash_ref');
 package const_integer__const_hash_ref;
 use parent -norequire, ('const_hash_ref');
 
-# (ref to (hash with const size)) of (refs to integers)
-package integer_ref__const_hash_ref;
-use parent -norequire, ('const_hash_ref');
-
-# (ref to (hash with const size)) of (refs to (integers with const values))
-package const_integer_ref__const_hash_ref;
-use parent -norequire, ('const_hash_ref');
-
 # [[[ FLOAT HASHES ]]]
-
-# hash of floats
-package float__hash;
-use parent -norequire, ('hash');
-
-# hash of (floats with const values)
-package const_float__hash;
-use parent -norequire, ('hash');
-
-# hash of (refs to floats)
-package float_ref__hash;
-use parent -norequire, ('hash');
-
-# hash of (refs to (floats with const values))
-package const_float_ref__hash;
-use parent -norequire, ('hash');
-
-# (hash with const size) of floats
-package float__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (floats with const values)
-package const_float__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (refs to floats)
-package float_ref__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (refs to (floats with const values))
-package const_float_ref__const_hash;
-use parent -norequire, ('const_hash');
 
 # (ref to hash) of floats
 package float__hash_ref;
@@ -350,14 +266,6 @@ use parent -norequire, ('hash_ref');
 package const_float__hash_ref;
 use parent -norequire, ('hash_ref');
 
-# (ref to hash) of (refs to floats)
-package float_ref__hash_ref;
-use parent -norequire, ('hash_ref');
-
-# (ref to hash) of (refs to (floats with const values))
-package const_float_ref__hash_ref;
-use parent -norequire, ('hash_ref');
-
 # (ref to (hash with const size)) of floats
 package float__const_hash_ref;
 use parent -norequire, ('const_hash_ref');
@@ -365,48 +273,6 @@ use parent -norequire, ('const_hash_ref');
 # (ref to (hash with const size)) of (floats with const values)
 package const_float__const_hash_ref;
 use parent -norequire, ('const_hash_ref');
-
-# (ref to (hash with const size)) of (refs to floats)
-package float_ref__const_hash_ref;
-use parent -norequire, ('const_hash_ref');
-
-# (ref to (hash with const size)) of (refs to (floats with const values))
-package const_float_ref__const_hash_ref;
-use parent -norequire, ('const_hash_ref');
-
-# [[[ NUMBER HASHES ]]]
-
-# hash of numbers
-package number__hash;
-use parent -norequire, ('hash');
-
-# hash of (numbers with const values)
-package const_number__hash;
-use parent -norequire, ('hash');
-
-# hash of (refs to numbers)
-package number_ref__hash;
-use parent -norequire, ('hash');
-
-# hash of (refs to (numbers with const values))
-package const_number_ref__hash;
-use parent -norequire, ('hash');
-
-# (hash with const size) of numbers
-package number__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (numbers with const values)
-package const_number__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (refs to numbers)
-package number_ref__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (refs to (numbers with const values))
-package const_number_ref__const_hash;
-use parent -norequire, ('const_hash');
 
 # [[[ NUMBER HASH REF ]]]
 # [[[ NUMBER HASH REF ]]]
@@ -589,14 +455,6 @@ our number__hash_ref $number__hash_ref__typetest1 = sub {
 package const_number__hash_ref;
 use parent -norequire, ('hash_ref');
 
-# (ref to hash) of (refs to numbers)
-package number_ref__hash_ref;
-use parent -norequire, ('hash_ref');
-
-# (ref to hash) of (refs to (numbers with const values))
-package const_number_ref__hash_ref;
-use parent -norequire, ('hash_ref');
-
 # (ref to (hash with const size)) of numbers
 package number__const_hash_ref;
 use parent -norequire, ('const_hash_ref');
@@ -605,47 +463,7 @@ use parent -norequire, ('const_hash_ref');
 package const_number__const_hash_ref;
 use parent -norequire, ('const_hash_ref');
 
-# (ref to (hash with const size)) of (refs to numbers)
-package number_ref__const_hash_ref;
-use parent -norequire, ('const_hash_ref');
-
-# (ref to (hash with const size)) of (refs to (numbers with const values))
-package const_number_ref__const_hash_ref;
-use parent -norequire, ('const_hash_ref');
-
 # [[[ CHAR HASHES ]]]
-
-# hash of chars
-package char__hash;
-use parent -norequire, ('hash');
-
-# hash of (chars with const values)
-package const_char__hash;
-use parent -norequire, ('hash');
-
-# hash of (refs to chars)
-package char_ref__hash;
-use parent -norequire, ('hash');
-
-# hash of (refs to (chars with const values))
-package const_char_ref__hash;
-use parent -norequire, ('hash');
-
-# (hash with const size) of chars
-package char__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (chars with const values)
-package const_char__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (refs to chars)
-package char_ref__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (refs to (chars with const values))
-package const_char_ref__const_hash;
-use parent -norequire, ('const_hash');
 
 # (ref to hash) of chars
 package char__hash_ref;
@@ -655,14 +473,6 @@ use parent -norequire, ('hash_ref');
 package const_char__hash_ref;
 use parent -norequire, ('hash_ref');
 
-# (ref to hash) of (refs to chars)
-package char_ref__hash_ref;
-use parent -norequire, ('hash_ref');
-
-# (ref to hash) of (refs to (chars with const values))
-package const_char_ref__hash_ref;
-use parent -norequire, ('hash_ref');
-
 # (ref to (hash with const size)) of chars
 package char__const_hash_ref;
 use parent -norequire, ('const_hash_ref');
@@ -670,48 +480,6 @@ use parent -norequire, ('const_hash_ref');
 # (ref to (hash with const size)) of (chars with const values)
 package const_char__const_hash_ref;
 use parent -norequire, ('const_hash_ref');
-
-# (ref to (hash with const size)) of (refs to chars)
-package char_ref__const_hash_ref;
-use parent -norequire, ('const_hash_ref');
-
-# (ref to (hash with const size)) of (refs to (chars with const values))
-package const_char_ref__const_hash_ref;
-use parent -norequire, ('const_hash_ref');
-
-# [[[ STRING HASHES ]]]
-
-# hash of strings
-package string__hash;
-use parent -norequire, ('hash');
-
-# hash of (strings with const values)
-package const_string__hash;
-use parent -norequire, ('hash');
-
-# hash of (refs to strings)
-package string_ref__hash;
-use parent -norequire, ('hash');
-
-# hash of (refs to (strings with const values))
-package const_string_ref__hash;
-use parent -norequire, ('hash');
-
-# (hash with const size) of strings
-package string__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (strings with const values)
-package const_string__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (refs to strings)
-package string_ref__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (refs to (strings with const values))
-package const_string_ref__const_hash;
-use parent -norequire, ('const_hash');
 
 # [[[ STRING HASH REF ]]]
 # [[[ STRING HASH REF ]]]
@@ -888,14 +656,6 @@ our string__hash_ref $string__hash_ref__typetest1 = sub {
 package const_string__hash_ref;
 use parent -norequire, ('hash_ref');
 
-# (ref to hash) of (refs to strings)
-package string_ref__hash_ref;
-use parent -norequire, ('hash_ref');
-
-# (ref to hash) of (refs to (strings with const values))
-package const_string_ref__hash_ref;
-use parent -norequire, ('hash_ref');
-
 # (ref to (hash with const size)) of strings
 package string__const_hash_ref;
 use parent -norequire, ('const_hash_ref');
@@ -904,47 +664,7 @@ use parent -norequire, ('const_hash_ref');
 package const_string__const_hash_ref;
 use parent -norequire, ('const_hash_ref');
 
-# (ref to (hash with const size)) of (refs to strings)
-package string_ref__const_hash_ref;
-use parent -norequire, ('const_hash_ref');
-
-# (ref to (hash with const size)) of (refs to (strings with const values))
-package const_string_ref__const_hash_ref;
-use parent -norequire, ('const_hash_ref');
-
 # [[[ SCALAR HASHES ]]]
-
-# hash of scalartypes
-package scalartype__hash;
-use parent -norequire, ('hash');
-
-# hash of (scalartypes with const values)
-package const_scalartype__hash;
-use parent -norequire, ('hash');
-
-# hash of (refs to scalartypes)
-package scalartype_ref__hash;
-use parent -norequire, ('hash');
-
-# hash of (refs to (scalartypes with const values))
-package const_scalartype_ref__hash;
-use parent -norequire, ('hash');
-
-# (hash with const size) of scalartypes
-package scalartype__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (scalartypes with const values)
-package const_scalartype__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (refs to scalartypes)
-package scalartype_ref__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (refs to (scalartypes with const values))
-package const_scalartype_ref__const_hash;
-use parent -norequire, ('const_hash');
 
 # (ref to hash) of scalartypes
 package scalartype__hash_ref;
@@ -952,14 +672,6 @@ use parent -norequire, ('hash_ref');
 
 # (ref to hash) of (scalartypes with const values)
 package const_scalartype__hash_ref;
-use parent -norequire, ('hash_ref');
-
-# (ref to hash) of (refs to scalartypes)
-package scalartype_ref__hash_ref;
-use parent -norequire, ('hash_ref');
-
-# (ref to hash) of (refs to (scalartypes with const values))
-package const_scalartype_ref__hash_ref;
 use parent -norequire, ('hash_ref');
 
 # (ref to (hash with const size)) of scalartypes
@@ -970,121 +682,25 @@ use parent -norequire, ('const_hash_ref');
 package const_scalartype__const_hash_ref;
 use parent -norequire, ('const_hash_ref');
 
-# (ref to (hash with const size)) of (refs to scalartypes)
-package scalartype_ref__const_hash_ref;
-use parent -norequire, ('const_hash_ref');
-
-# (ref to (hash with const size)) of (refs to (scalartypes with const values))
-package const_scalartype_ref__const_hash_ref;
-use parent -norequire, ('const_hash_ref');
-
 # [[[ UNKNOWN HASHES ]]]
-
-# hash of unknowns
-package unknown__hash;
-use parent -norequire, ('hash');
-
-# hash of (unknowns with const values)
-package const_unknown__hash;
-use parent -norequire, ('hash');
-
-# hash of (refs to unknowns)
-package unknown_ref__hash;
-use parent -norequire, ('hash');
-
-# hash of (refs to (unknowns with const values))
-package const_unknown_ref__hash;
-use parent -norequire, ('hash');
-
-# (hash with const size) of unknowns
-package unknown__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (unknowns with const values)
-package const_unknown__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (refs to unknowns)
-package unknown_ref__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (refs to (unknowns with const values))
-package const_unknown_ref__const_hash;
-use parent -norequire, ('const_hash');
 
 # (ref to hash) of unknowns
 package unknown__hash_ref;
-use parent -norequire, ('hash_ref');
-
-# (ref to hash) of (unknowns with const values)
-package const_unknown__hash_ref;
 use parent -norequire, ('hash_ref');
 
 # (ref to hash) of (refs to unknowns)
 package unknown_ref__hash_ref;
 use parent -norequire, ('hash_ref');
 
-# (ref to hash) of (refs to (unknowns with const values))
-package const_unknown_ref__hash_ref;
-use parent -norequire, ('hash_ref');
-
 # (ref to (hash with const size)) of unknowns
 package unknown__const_hash_ref;
-use parent -norequire, ('const_hash_ref');
-
-# (ref to (hash with const size)) of (unknowns with const values)
-package const_unknown__const_hash_ref;
 use parent -norequire, ('const_hash_ref');
 
 # (ref to (hash with const size)) of (refs to unknowns)
 package unknown_ref__const_hash_ref;
 use parent -norequire, ('const_hash_ref');
 
-# (ref to (hash with const size)) of (refs to (unknowns with const values))
-package const_unknown_ref__const_hash_ref;
-use parent -norequire, ('const_hash_ref');
-
 # [[[ ARRAY HASHES (2-dimensional) ]]]
-
-# hash of arrays
-package array__hash;
-use parent -norequire, ('hash');
-
-# hash of (arrays with const sizes)
-package const_array__hash;
-use parent -norequire, ('hash');
-
-# hash of (refs to arrays)
-package array_ref__hash;
-use parent -norequire, ('hash');
-
-# hash of (refs to (arrays with const sizes))
-package const_array_ref__hash;
-use parent -norequire, ('hash');
-
-# (hash with const size) of arrays
-package array__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (arrays with const sizes)
-package const_array__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (refs to arrays)
-package array_ref__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (refs to (arrays with const sizes))
-package const_array_ref__const_hash;
-use parent -norequire, ('const_hash');
-
-# (ref to hash) of arrays
-package array__hash_ref;
-use parent -norequire, ('hash_ref');
-
-# (ref to hash) of (arrays with const sizes)
-package const_array__hash_ref;
-use parent -norequire, ('hash_ref');
 
 # (ref to hash) of (refs to arrays)
 package array_ref__hash_ref;
@@ -1093,14 +709,6 @@ use parent -norequire, ('hash_ref');
 # (ref to hash) of (refs to (arrays with const sizes))
 package const_array_ref__hash_ref;
 use parent -norequire, ('hash_ref');
-
-# (ref to (hash with const size)) of arrays
-package array__const_hash_ref;
-use parent -norequire, ('const_hash_ref');
-
-# (ref to (hash with const size)) of (arrays with const sizes)
-package const_array__const_hash_ref;
-use parent -norequire, ('const_hash_ref');
 
 # (ref to (hash with const size)) of (refs to arrays)
 package array_ref__const_hash_ref;
@@ -1112,46 +720,6 @@ use parent -norequire, ('const_hash_ref');
 
 # [[[ HASH HASHES (2-dimesional) ]]]
 
-# hash of hashs
-package hash__hash;
-use parent -norequire, ('hash');
-
-# hash of (hashs with const sizes)
-package const_hash__hash;
-use parent -norequire, ('hash');
-
-# hash of (refs to hashs)
-package hash_ref__hash;
-use parent -norequire, ('hash');
-
-# hash of (refs to (hashs with const sizes))
-package const_hash_ref__hash;
-use parent -norequire, ('hash');
-
-# (hash with const size) of hashs
-package hash__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (hashs with const sizes)
-package const_hash__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (refs to hashs)
-package hash_ref__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (refs to (hashs with const sizes))
-package const_hash_ref__const_hash;
-use parent -norequire, ('const_hash');
-
-# (ref to hash) of hashs
-package hash__hash_ref;
-use parent -norequire, ('hash_ref');
-
-# (ref to hash) of (hashs with const sizes)
-package const_hash__hash_ref;
-use parent -norequire, ('hash_ref');
-
 # (ref to hash) of (refs to hashs)
 package hash_ref__hash_ref;
 use parent -norequire, ('hash_ref');
@@ -1159,14 +727,6 @@ use parent -norequire, ('hash_ref');
 # (ref to hash) of (refs to (hashs with const sizes))
 package const_hash_ref__hash_ref;
 use parent -norequire, ('hash_ref');
-
-# (ref to (hash with const size)) of hashs
-package hash__const_hash_ref;
-use parent -norequire, ('const_hash_ref');
-
-# (ref to (hash with const size)) of (hashs with const sizes)
-package const_hash__const_hash_ref;
-use parent -norequire, ('const_hash_ref');
 
 # (ref to (hash with const size)) of (refs to hashs)
 package hash_ref__const_hash_ref;
@@ -1176,70 +736,36 @@ use parent -norequire, ('const_hash_ref');
 package const_hash_ref__const_hash_ref;
 use parent -norequire, ('const_hash_ref');
 
+# [ HOMOGENEOUS HASH HASHES (2-dimensional) ]
+
+# (ref to hash) of (refs to (hashs of integers))
+package integer__hash_ref__hash_ref;
+use parent -norequire, ('hash_ref__hash_ref');
+
+# (ref to hash) of (refs to (hashs of numbers))
+package number__hash_ref__hash_ref;
+use parent -norequire, ('hash_ref__hash_ref');
+
+# (ref to hash) of (refs to (hashs of strings))
+package string__hash_ref__hash_ref;
+use parent -norequire, ('hash_ref__hash_ref');
+
+# (ref to hash) of (refs to (hashs of scalars))
+package scalartype__hash_ref__hash_ref;
+use parent -norequire, ('hash_ref__hash_ref');
+
+# (ref to hash) of (refs to (hashs of unknowns))
+package unknown__hash_ref__hash_ref;
+use parent -norequire, ('hash_ref__hash_ref');
+
 # [[[ OBJECT HASHES (2-dimensional) ]]]
-
-# hash of objects
-package object__hash;
-use parent -norequire, ('hash');
-
-# hash of (objects with const sizes)
-package const_object__hash;
-use parent -norequire, ('hash');
-
-# hash of (refs to objects)
-package object_ref__hash;
-use parent -norequire, ('hash');
-
-# hash of (refs to (objects with const sizes))
-package const_object_ref__hash;
-use parent -norequire, ('hash');
-
-# (hash with const size) of objects
-package object__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (objects with const sizes)
-package const_object__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (refs to objects)
-package object_ref__const_hash;
-use parent -norequire, ('const_hash');
-
-# (hash with const size) of (refs to (objects with const sizes))
-package const_object_ref__const_hash;
-use parent -norequire, ('const_hash');
 
 # (ref to hash) of objects
 package object__hash_ref;
 use parent -norequire, ('hash_ref');
 
-# (ref to hash) of (objects with const sizes)
-package const_object__hash_ref;
-use parent -norequire, ('hash_ref');
-
-# (ref to hash) of (refs to objects)
-package object_ref__hash_ref;
-use parent -norequire, ('hash_ref');
-
-# (ref to hash) of (refs to (objects with const sizes))
-package const_object_ref__hash_ref;
-use parent -norequire, ('hash_ref');
-
 # (ref to (hash with const size)) of objects
 package object__const_hash_ref;
-use parent -norequire, ('const_hash_ref');
-
-# (ref to (hash with const size)) of (objects with const sizes)
-package const_object__const_hash_ref;
-use parent -norequire, ('const_hash_ref');
-
-# (ref to (hash with const size)) of (refs to objects)
-package object_ref__const_hash_ref;
-use parent -norequire, ('const_hash_ref');
-
-# (ref to (hash with const size)) of (refs to (objects with const sizes))
-package const_object_ref__const_hash_ref;
 use parent -norequire, ('const_hash_ref');
 
 1;

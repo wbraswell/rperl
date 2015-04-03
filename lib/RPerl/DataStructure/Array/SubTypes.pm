@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array::SubTypes;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_010;
+our $VERSION = 0.005_010;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd) # DEVELOPER DEFAULT 1b: allow unreachable & POD-commented code, must be after line 1
@@ -12,13 +12,11 @@ our $VERSION = 0.004_010;
 
 # [[[ ARRAYS ]]]
 
-# an array is a 1-dimensional list/vector/sequence/set of data types
+# an array is a 1-dimensional list/vector/sequence/set of data types;
+# we never use this type directly, instead we always use the array_ref type,
+# per LMPC #27: Thou Shalt Not Use Direct Access To Arrays & Hashes Stored In @ Or % Non-Scalar Variables
 package array;
 use parent ('RPerl::DataStructure::Array');
-
-# array with const size
-package const_array;
-use parent -norequire, qw( array const );
 
 # [[[ ARRAY REF ]]]
 # [[[ ARRAY REF ]]]
@@ -63,40 +61,6 @@ our void $array_ref__CHECKTRACE = sub {
 # ref to (array with const size)
 package const_array_ref;
 use parent -norequire, ('ref');
-
-# [[[ INTEGER ARRAYS ]]]
-
-# array of integers
-package integer__array;
-use parent -norequire, ('array');
-
-# array of (integers with const values)
-package const_integer__array;
-use parent -norequire, ('array');
-
-# array of (refs to integers)
-package integer_ref__array;
-use parent -norequire, ('array');
-
-# array of (refs to (integers with const values))
-package const_integer_ref__array;
-use parent -norequire, ('array');
-
-# (array with const size) of integers
-package integer__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (integers with const values)
-package const_integer__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (refs to integers)
-package integer_ref__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (refs to (integers with const values))
-package const_integer_ref__const_array;
-use parent -norequire, ('const_array');
 
 # [[[ INTEGER ARRAY REF ]]]
 # [[[ INTEGER ARRAY REF ]]]
@@ -262,14 +226,6 @@ our integer__array_ref $integer__array_ref__typetest1 = sub {
 package const_integer__array_ref;
 use parent -norequire, ('array_ref');
 
-# (ref to array) of (refs to integers)
-package integer_ref__array_ref;
-use parent -norequire, ('array_ref');
-
-# (ref to array) of (refs to (integers with const values))
-package const_integer_ref__array_ref;
-use parent -norequire, ('array_ref');
-
 # (ref to (array with const size)) of integers
 package integer__const_array_ref;
 use parent -norequire, ('const_array_ref');
@@ -278,47 +234,7 @@ use parent -norequire, ('const_array_ref');
 package const_integer__const_array_ref;
 use parent -norequire, ('const_array_ref');
 
-# (ref to (array with const size)) of (refs to integers)
-package integer_ref__const_array_ref;
-use parent -norequire, ('const_array_ref');
-
-# (ref to (array with const size)) of (refs to (integers with const values))
-package const_integer_ref__const_array_ref;
-use parent -norequire, ('const_array_ref');
-
 # [[[ FLOAT ARRAYS ]]]
-
-# array of floats
-package float__array;
-use parent -norequire, ('array');
-
-# array of (floats with const values)
-package const_float__array;
-use parent -norequire, ('array');
-
-# array of (refs to floats)
-package float_ref__array;
-use parent -norequire, ('array');
-
-# array of (refs to (floats with const values))
-package const_float_ref__array;
-use parent -norequire, ('array');
-
-# (array with const size) of floats
-package float__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (floats with const values)
-package const_float__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (refs to floats)
-package float_ref__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (refs to (floats with const values))
-package const_float_ref__const_array;
-use parent -norequire, ('const_array');
 
 # (ref to array) of floats
 package float__array_ref;
@@ -328,14 +244,6 @@ use parent -norequire, ('array_ref');
 package const_float__array_ref;
 use parent -norequire, ('array_ref');
 
-# (ref to array) of (refs to floats)
-package float_ref__array_ref;
-use parent -norequire, ('array_ref');
-
-# (ref to array) of (refs to (floats with const values))
-package const_float_ref__array_ref;
-use parent -norequire, ('array_ref');
-
 # (ref to (array with const size)) of floats
 package float__const_array_ref;
 use parent -norequire, ('const_array_ref');
@@ -343,48 +251,6 @@ use parent -norequire, ('const_array_ref');
 # (ref to (array with const size)) of (floats with const values)
 package const_float__const_array_ref;
 use parent -norequire, ('const_array_ref');
-
-# (ref to (array with const size)) of (refs to floats)
-package float_ref__const_array_ref;
-use parent -norequire, ('const_array_ref');
-
-# (ref to (array with const size)) of (refs to (floats with const values))
-package const_float_ref__const_array_ref;
-use parent -norequire, ('const_array_ref');
-
-# [[[ NUMBER ARRAYS ]]]
-
-# array of numbers
-package number__array;
-use parent -norequire, ('array');
-
-# array of (numbers with const values)
-package const_number__array;
-use parent -norequire, ('array');
-
-# array of (refs to numbers)
-package number_ref__array;
-use parent -norequire, ('array');
-
-# array of (refs to (numbers with const values))
-package const_number_ref__array;
-use parent -norequire, ('array');
-
-# (array with const size) of numbers
-package number__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (numbers with const values)
-package const_number__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (refs to numbers)
-package number_ref__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (refs to (numbers with const values))
-package const_number_ref__const_array;
-use parent -norequire, ('const_array');
 
 # [[[ NUMBER ARRAY REF ]]]
 # [[[ NUMBER ARRAY REF ]]]
@@ -546,14 +412,6 @@ our number__array_ref $number__array_ref__typetest1 = sub {
 package const_number__array_ref;
 use parent -norequire, ('array_ref');
 
-# (ref to array) of (refs to numbers)
-package number_ref__array_ref;
-use parent -norequire, ('array_ref');
-
-# (ref to array) of (refs to (numbers with const values))
-package const_number_ref__array_ref;
-use parent -norequire, ('array_ref');
-
 # (ref to (array with const size)) of numbers
 package number__const_array_ref;
 use parent -norequire, ('const_array_ref');
@@ -562,47 +420,7 @@ use parent -norequire, ('const_array_ref');
 package const_number__const_array_ref;
 use parent -norequire, ('const_array_ref');
 
-# (ref to (array with const size)) of (refs to numbers)
-package number_ref__const_array_ref;
-use parent -norequire, ('const_array_ref');
-
-# (ref to (array with const size)) of (refs to (numbers with const values))
-package const_number_ref__const_array_ref;
-use parent -norequire, ('const_array_ref');
-
 # [[[ CHAR ARRAYS ]]]
-
-# array of chars
-package char__array;
-use parent -norequire, ('array');
-
-# array of (chars with const values)
-package const_char__array;
-use parent -norequire, ('array');
-
-# array of (refs to chars)
-package char_ref__array;
-use parent -norequire, ('array');
-
-# array of (refs to (chars with const values))
-package const_char_ref__array;
-use parent -norequire, ('array');
-
-# (array with const size) of chars
-package char__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (chars with const values)
-package const_char__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (refs to chars)
-package char_ref__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (refs to (chars with const values))
-package const_char_ref__const_array;
-use parent -norequire, ('const_array');
 
 # (ref to array) of chars
 package char__array_ref;
@@ -612,14 +430,6 @@ use parent -norequire, ('array_ref');
 package const_char__array_ref;
 use parent -norequire, ('array_ref');
 
-# (ref to array) of (refs to chars)
-package char_ref__array_ref;
-use parent -norequire, ('array_ref');
-
-# (ref to array) of (refs to (chars with const values))
-package const_char_ref__array_ref;
-use parent -norequire, ('array_ref');
-
 # (ref to (array with const size)) of chars
 package char__const_array_ref;
 use parent -norequire, ('const_array_ref');
@@ -627,48 +437,6 @@ use parent -norequire, ('const_array_ref');
 # (ref to (array with const size)) of (chars with const values)
 package const_char__const_array_ref;
 use parent -norequire, ('const_array_ref');
-
-# (ref to (array with const size)) of (refs to chars)
-package char_ref__const_array_ref;
-use parent -norequire, ('const_array_ref');
-
-# (ref to (array with const size)) of (refs to (chars with const values))
-package const_char_ref__const_array_ref;
-use parent -norequire, ('const_array_ref');
-
-# [[[ STRING ARRAYS ]]]
-
-# array of strings
-package string__array;
-use parent -norequire, ('array');
-
-# array of (strings with const values)
-package const_string__array;
-use parent -norequire, ('array');
-
-# array of (refs to strings)
-package string_ref__array;
-use parent -norequire, ('array');
-
-# array of (refs to (strings with const values))
-package const_string_ref__array;
-use parent -norequire, ('array');
-
-# (array with const size) of strings
-package string__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (strings with const values)
-package const_string__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (refs to strings)
-package string_ref__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (refs to (strings with const values))
-package const_string_ref__const_array;
-use parent -norequire, ('const_array');
 
 # [[[ STRING ARRAY REF ]]]
 # [[[ STRING ARRAY REF ]]]
@@ -832,14 +600,6 @@ so we can keep the no critic sections at the top of the file for reference
 package const_string__array_ref;
 use parent -norequire, ('array_ref');
 
-# (ref to array) of (refs to strings)
-package string_ref__array_ref;
-use parent -norequire, ('array_ref');
-
-# (ref to array) of (refs to (strings with const values))
-package const_string_ref__array_ref;
-use parent -norequire, ('array_ref');
-
 # (ref to (array with const size)) of strings
 package string__const_array_ref;
 use parent -norequire, ('const_array_ref');
@@ -848,47 +608,7 @@ use parent -norequire, ('const_array_ref');
 package const_string__const_array_ref;
 use parent -norequire, ('const_array_ref');
 
-# (ref to (array with const size)) of (refs to strings)
-package string_ref__const_array_ref;
-use parent -norequire, ('const_array_ref');
-
-# (ref to (array with const size)) of (refs to (strings with const values))
-package const_string_ref__const_array_ref;
-use parent -norequire, ('const_array_ref');
-
 # [[[ SCALAR ARRAYS ]]]
-
-# array of scalartypes
-package scalartype__array;
-use parent -norequire, ('array');
-
-# array of (scalartypes with const values)
-package const_scalartype__array;
-use parent -norequire, ('array');
-
-# array of (refs to scalartypes)
-package scalartype_ref__array;
-use parent -norequire, ('array');
-
-# array of (refs to (scalartypes with const values))
-package const_scalartype_ref__array;
-use parent -norequire, ('array');
-
-# (array with const size) of scalartypes
-package scalartype__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (scalartypes with const values)
-package const_scalartype__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (refs to scalartypes)
-package scalartype_ref__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (refs to (scalartypes with const values))
-package const_scalartype_ref__const_array;
-use parent -norequire, ('const_array');
 
 # (ref to array) of scalartypes
 package scalartype__array_ref;
@@ -896,14 +616,6 @@ use parent -norequire, ('array_ref');
 
 # (ref to array) of (scalartypes with const values)
 package const_scalartype__array_ref;
-use parent -norequire, ('array_ref');
-
-# (ref to array) of (refs to scalartypes)
-package scalartype_ref__array_ref;
-use parent -norequire, ('array_ref');
-
-# (ref to array) of (refs to (scalartypes with const values))
-package const_scalartype_ref__array_ref;
 use parent -norequire, ('array_ref');
 
 # (ref to (array with const size)) of scalartypes
@@ -914,121 +626,25 @@ use parent -norequire, ('const_array_ref');
 package const_scalartype__const_array_ref;
 use parent -norequire, ('const_array_ref');
 
-# (ref to (array with const size)) of (refs to scalartypes)
-package scalartype_ref__const_array_ref;
-use parent -norequire, ('const_array_ref');
-
-# (ref to (array with const size)) of (refs to (scalartypes with const values))
-package const_scalartype_ref__const_array_ref;
-use parent -norequire, ('const_array_ref');
-
 # [[[ UNKNOWN ARRAYS ]]]
-
-# array of unknowns
-package unknown__array;
-use parent -norequire, ('array');
-
-# array of (unknowns with const values)
-package const_unknown__array;
-use parent -norequire, ('array');
-
-# array of (refs to unknowns)
-package unknown_ref__array;
-use parent -norequire, ('array');
-
-# array of (refs to (unknowns with const values))
-package const_unknown_ref__array;
-use parent -norequire, ('array');
-
-# (array with const size) of unknowns
-package unknown__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (unknowns with const values)
-package const_unknown__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (refs to unknowns)
-package unknown_ref__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (refs to (unknowns with const values))
-package const_unknown_ref__const_array;
-use parent -norequire, ('const_array');
 
 # (ref to array) of unknowns
 package unknown__array_ref;
-use parent -norequire, ('array_ref');
-
-# (ref to array) of (unknowns with const values)
-package const_unknown__array_ref;
 use parent -norequire, ('array_ref');
 
 # (ref to array) of (refs to unknowns)
 package unknown_ref__array_ref;
 use parent -norequire, ('array_ref');
 
-# (ref to array) of (refs to (unknowns with const values))
-package const_unknown_ref__array_ref;
-use parent -norequire, ('array_ref');
-
 # (ref to (array with const size)) of unknowns
 package unknown__const_array_ref;
-use parent -norequire, ('const_array_ref');
-
-# (ref to (array with const size)) of (unknowns with const values)
-package const_unknown__const_array_ref;
 use parent -norequire, ('const_array_ref');
 
 # (ref to (array with const size)) of (refs to unknowns)
 package unknown_ref__const_array_ref;
 use parent -norequire, ('const_array_ref');
 
-# (ref to (array with const size)) of (refs to (unknowns with const values))
-package const_unknown_ref__const_array_ref;
-use parent -norequire, ('const_array_ref');
-
 # [[[ ARRAY ARRAYS (2-dimensional) ]]]
-
-# array of arrays
-package array__array;
-use parent -norequire, ('array');
-
-# array of (arrays with const sizes)
-package const_array__array;
-use parent -norequire, ('array');
-
-# array of (refs to arrays)
-package array_ref__array;
-use parent -norequire, ('array');
-
-# array of (refs to (arrays with const sizes))
-package const_array_ref__array;
-use parent -norequire, ('array');
-
-# (array with const size) of arrays
-package array__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (arrays with const sizes)
-package const_array__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (refs to arrays)
-package array_ref__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (refs to (arrays with const sizes))
-package const_array_ref__const_array;
-use parent -norequire, ('const_array');
-
-# (ref to array) of arrays
-package array__array_ref;
-use parent -norequire, ('array_ref');
-
-# (ref to array) of (arrays with const sizes)
-package const_array__array_ref;
-use parent -norequire, ('array_ref');
 
 # (ref to array) of (refs to arrays)
 package array_ref__array_ref;
@@ -1037,14 +653,6 @@ use parent -norequire, ('array_ref');
 # (ref to array) of (refs to (arrays with const sizes))
 package const_array_ref__array_ref;
 use parent -norequire, ('array_ref');
-
-# (ref to (array with const size)) of arrays
-package array__const_array_ref;
-use parent -norequire, ('const_array_ref');
-
-# (ref to (array with const size)) of (arrays with const sizes)
-package const_array__const_array_ref;
-use parent -norequire, ('const_array_ref');
 
 # (ref to (array with const size)) of (refs to arrays)
 package array_ref__const_array_ref;
@@ -1072,47 +680,11 @@ use parent -norequire, ('array_ref__array_ref');
 package scalartype__array_ref__array_ref;
 use parent -norequire, ('array_ref__array_ref');
 
+# (ref to array) of (refs to (arrays of unknowns))
+package unknown__array_ref__array_ref;
+use parent -norequire, ('array_ref__array_ref');
+
 # [[[ HASH ARRAYS (2-dimesional) ]]]
-
-# array of hashs
-package hash__array;
-use parent -norequire, ('array');
-
-# array of (hashs with const sizes)
-package const_hash__array;
-use parent -norequire, ('array');
-
-# array of (refs to hashs)
-package hash_ref__array;
-use parent -norequire, ('array');
-
-# array of (refs to (hashs with const sizes))
-package const_hash_ref__array;
-use parent -norequire, ('array');
-
-# (array with const size) of hashs
-package hash__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (hashs with const sizes)
-package const_hash__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (refs to hashs)
-package hash_ref__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (refs to (hashs with const sizes))
-package const_hash_ref__const_array;
-use parent -norequire, ('const_array');
-
-# (ref to array) of hashs
-package hash__array_ref;
-use parent -norequire, ('array_ref');
-
-# (ref to array) of (hashs with const sizes)
-package const_hash__array_ref;
-use parent -norequire, ('array_ref');
 
 # (ref to array) of (refs to hashs)
 package hash_ref__array_ref;
@@ -1121,14 +693,6 @@ use parent -norequire, ('array_ref');
 # (ref to array) of (refs to (hashs with const sizes))
 package const_hash_ref__array_ref;
 use parent -norequire, ('array_ref');
-
-# (ref to (array with const size)) of hashs
-package hash__const_array_ref;
-use parent -norequire, ('const_array_ref');
-
-# (ref to (array with const size)) of (hashs with const sizes)
-package const_hash__const_array_ref;
-use parent -norequire, ('const_array_ref');
 
 # (ref to (array with const size)) of (refs to hashs)
 package hash_ref__const_array_ref;
@@ -1140,68 +704,12 @@ use parent -norequire, ('const_array_ref');
 
 # [[[ OBJECT ARRAYS (2-dimesional) ]]]
 
-# array of objects
-package object__array;
-use parent -norequire, ('array');
-
-# array of (objects with const sizes)
-package const_object__array;
-use parent -norequire, ('array');
-
-# array of (refs to objects)
-package object_ref__array;
-use parent -norequire, ('array');
-
-# array of (refs to (objects with const sizes))
-package const_object_ref__array;
-use parent -norequire, ('array');
-
-# (array with const size) of objects
-package object__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (objects with const sizes)
-package const_object__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (refs to objects)
-package object_ref__const_array;
-use parent -norequire, ('const_array');
-
-# (array with const size) of (refs to (objects with const sizes))
-package const_object_ref__const_array;
-use parent -norequire, ('const_array');
-
 # (ref to array) of objects
 package object__array_ref;
 use parent -norequire, ('array_ref');
 
-# (ref to array) of (objects with const sizes)
-package const_object__array_ref;
-use parent -norequire, ('array_ref');
-
-# (ref to array) of (refs to objects)
-package object_ref__array_ref;
-use parent -norequire, ('array_ref');
-
-# (ref to array) of (refs to (objects with const sizes))
-package const_object_ref__array_ref;
-use parent -norequire, ('array_ref');
-
 # (ref to (array with const size)) of objects
 package object__const_array_ref;
-use parent -norequire, ('const_array_ref');
-
-# (ref to (array with const size)) of (objects with const sizes)
-package const_object__const_array_ref;
-use parent -norequire, ('const_array_ref');
-
-# (ref to (array with const size)) of (refs to objects)
-package object_ref__const_array_ref;
-use parent -norequire, ('const_array_ref');
-
-# (ref to (array with const size)) of (refs to (objects with const sizes))
-package const_object_ref__const_array_ref;
 use parent -norequire, ('const_array_ref');
 
 1;
