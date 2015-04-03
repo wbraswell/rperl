@@ -9,6 +9,6 @@ use warnings;
 use RPerl;
 our $VERSION = 0.001_000;
 
-our void $empty_sub = sub { return 23_456._2; };
+our number $empty_sub = sub { return 23_456._2; };
 
 1;                  # end of package

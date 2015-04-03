@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_986;
+    our $VERSION = 0.000_987;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -191,7 +191,7 @@ ArrayDereference:       '@{' Variable '}' | '@{' TypeInner? ArrayReference '}' ;
 HashEntry:              WORD OP20_HASH_FATARROW TypeInner? SubExpression | HashDereference ;
 HashEntryTyped:         WORD OP20_HASH_FATARROW TypeInner SubExpression | HashDereference ;
 HashReference:          LBRACE HashEntry (OP21_LIST_COMMA HashEntry)* '}' | LBRACE '}' ;
-HashDereference:        '%{' Variable '}' | '%{' HashReference '}' ;
+HashDereference:        '%{' Variable '}' | '%{' TypeInner? HashReference '}' ;
 
 WordScoped:             WORD | WORD_SCOPED;
 LoopLabel:              WORD_UPPERCASE ;

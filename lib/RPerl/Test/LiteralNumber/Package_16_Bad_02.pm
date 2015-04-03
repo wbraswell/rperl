@@ -14,6 +14,6 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 # DEV NOTE: do not run perltidy on this file, it will wrongly separate the '0_' from the '.' and the '2' below
-our void $empty_sub = sub { return 0_.2; };
+our number $empty_sub = sub { return 0_.2; };
 
 1;                  # end of package

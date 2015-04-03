@@ -12,6 +12,6 @@ our $VERSION = 0.001_000;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 
 # [[[ SUBROUTINES ]]]
-our void $empty_sub = sub { return -23_456.234_57_89; };
+our number $empty_sub = sub { return -23_456.234_57_89; };
 
 1;                  # end of package
