@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.005_001;
+our $VERSION = 0.005_002;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -243,6 +243,8 @@ sub compile_files {
 # [[[ ACTUALLY RUN CODE ]]]
 # [[[ ACTUALLY RUN CODE ]]]
 
+my integer $compile_flag = 1;
+my integer $execute_flag = 1;
 my string__array_ref $rperl_input_file_names = [];
 my string__array_ref $cpp_output_file_names  = [];
 my string__hash_ref $modes = {}; # can't store defaults here, erased by GetOptions()
@@ -258,6 +260,8 @@ my integer $rperl_input_file_num = 0;
 GetOptions(
     'debug'         => \$RPerl::DEBUG,
     'verbose'       => \$RPerl::VERBOSE,
+    'compile'       => \$compile_flag,
+    'execute'       => \$execute_flag,
     'infile=s{1,}'  => \@{$rperl_input_file_names},
     'outfile=s{1,}' => \@{$cpp_output_file_names},
     'mode=s%'       => \$modes,
