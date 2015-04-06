@@ -4,7 +4,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.005_001;
+our $VERSION = 0.005_002;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -78,8 +78,15 @@ for my $test_file ( sort keys %{$test_files} ) {
 #    RPerl::diag( 'in 10_compile.t, have $test_file = ' . $test_file . "\n" );
 
     my $eval_return_value = eval {
-        rperl_to_xsbinary__parse_generate_compile( $test_file, $temp_file,
-            { ops => 'CPP', types => 'CPP' } );
+        rperl_to_xsbinary__parse_generate_compile(
+            $test_file,
+            $temp_file,
+            {   ops     => 'CPP',
+                types   => 'CPP',
+                compile => 'PARSE',
+                execute => 'OFF'
+            }
+        );
     };
 
     if ($eval_return_value) {    # Perl eval return code not 0, success

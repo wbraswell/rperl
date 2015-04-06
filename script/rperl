@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.005_003;
+our $VERSION = 0.005_010;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -120,7 +120,7 @@ sub verify_and_default_modes {
         if ($compile_flag) {
             $modes->{compile} = 'COMPILE';
         }
-        else {  # --nocompile command-line argument (option) disables compile & generate, parse remains enabled
+        else { # --nocompile command-line argument (option) disables compile & generate, parse remains enabled
             $modes->{compile} = 'PARSE';
         }
     }
@@ -205,7 +205,7 @@ sub store_unlabeled_options {
 }
 
 # print value of option flags
-sub report_flags {
+sub verbose_flags {
     ( my integer $compile_flag, my integer $execute_flag ) = @_;
     RPerl::verbose( 'Debug Flag:    ', $RPerl::DEBUG,   "\n" );
     RPerl::verbose( 'Verbose Flag:  ', $RPerl::VERBOSE, "\n" );
@@ -221,7 +221,7 @@ sub report_flags {
 # [[[ COMPILE RPERL TO XS & BINARY ]]]
 # [[[ COMPILE RPERL TO XS & BINARY ]]]
 
-sub compile_execute_files {
+sub parse_generate_compile_execute_files {
     (   my string__array_ref $rperl_input_file_names,
         my string__array_ref $cpp_output_file_names,
         my string__hash_ref $modes,
@@ -256,19 +256,23 @@ sub compile_execute_files {
             RPerl::diag_pause "PRESS <ENTER> TO CONTINUE\n";
         }
 
-        my integer $eval_retval = eval {
-            rperl_to_xsbinary__parse_generate_compile( $rperl_input_file_name,
-                $cpp_output_file_name, $modes );
-        };
-
-        if ( not defined $eval_retval ) {
-            print $EVAL_ERROR;
+        if ( $modes->{ops} eq 'PERL' ) {
+            rperl_to_rperl__parse_generate( $rperl_input_file_name, $modes );
         }
-        
-        if ($modes->{execute} eq 'ON') {
-            RPerl::verbose('EXECUTE:       Run RPerl code...' . "\n");
+        elsif ( $modes->{ops} eq 'CPP' ) {
+            my integer $eval_retval = eval {
+                rperl_to_xsbinary__parse_generate_compile(
+                    $rperl_input_file_name, $cpp_output_file_name, $modes );
+            };
+            if ( not defined $eval_retval ) {
+                print $EVAL_ERROR;
+            }
+        }
+        if ( $modes->{execute} eq 'ON' ) {
+            RPerl::verbose( 'EXECUTE:       Run RPerl code...' . "\n" );
             RPerl::verbose("\n");
-            my integer $execute_retval = system('perl', $rperl_input_file_name);
+            my integer $execute_retval
+                = system( 'perl', $rperl_input_file_name );
         }
 
         if (    ( $rperl_input_file_num > 1 )
@@ -319,7 +323,7 @@ GetOptions(
     )
     or die "ERROR EARG00: Failure processing command line arguments, dying\n";
 
-report_flags( $compile_flag, $execute_flag );
+verbose_flags( $compile_flag, $execute_flag );
 $rperl_input_file_names
     = accept_and_verify_input_files( $rperl_input_file_names,
     $rperl_input_file_names_unlabeled );
@@ -330,5 +334,5 @@ $modes = verify_and_default_modes( $modes, $modes_default, $modes_supported,
     $compile_flag, $execute_flag );
 verbose_multi_file_settings( $rperl_input_file_names, $cpp_output_file_names,
     $modes, $rperl_input_file_num );
-compile_execute_files( $rperl_input_file_names, $cpp_output_file_names, $modes,
-    $rperl_input_file_num );
+parse_generate_compile_execute_files( $rperl_input_file_names,
+    $cpp_output_file_names, $modes, $rperl_input_file_num );

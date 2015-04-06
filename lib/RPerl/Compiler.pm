@@ -19,6 +19,33 @@ use RPerl::Parser;
 
 # [[[ SUBROUTINES ]]]
 
+our void $rperl_to_rperl__parse_generate = sub {
+    (   my string $rperl_input_file_name,
+        my hash_ref $mode
+    ) = @_;
+    my object $rperl_ast;
+    my string $rperl_source;
+
+    # [[[ PARSE RPERL TO AST ]]]
+    # [[[ PARSE RPERL TO AST ]]]
+    # [[[ PARSE RPERL TO AST ]]]
+
+    if (   ( $mode->{compile} eq 'PARSE' )
+        or ( $mode->{compile} eq 'GENERATE' ) )
+    {
+        $rperl_ast = RPerl::Parser::rperl_to_ast__parse($rperl_input_file_name);
+    }
+
+    # [[[ GENERATE AST TO RPERL ]]]
+    # [[[ GENERATE AST TO RPERL ]]]
+    # [[[ GENERATE AST TO RPERL ]]]
+
+    if ( $mode->{compile} eq 'GENERATE' )
+    {
+        $rperl_source = ast_to_rperl__generate( $rperl_ast, $mode );
+    }
+};
+
 our void $rperl_to_xsbinary__parse_generate_compile = sub {
     (   my string $rperl_input_file_name,
         my string $cpp_output_file_name,
