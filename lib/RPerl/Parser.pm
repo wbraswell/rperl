@@ -3,7 +3,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_010;
+our $VERSION = 0.004_011;
 
 # [[[ OO INHERITANCE ]]]
 #use RPerl::CompileUnit::Module::Class;
@@ -47,7 +47,7 @@ our object $rperl_to_ast__parse = sub {
 our void $rperl_source__check_syntax = sub {
     ( my string $rperl_source__file_name) = @_;
 
-    RPerl::verbose 'PARSE PHASE 0: Check Perl syntax...';
+    RPerl::verbose 'PARSE PHASE 0: Check Perl syntax...    ';
 
     my string $rperl_source__perl_syntax_command
         = q{perl -Iblib/lib -M'warnings FATAL=>q(all)' -cW }
@@ -231,7 +231,7 @@ our void $rperl_grammar_error = sub {
 our void $rperl_source__parse = sub {
     ( my string $rperl_source__file_name) = @_;
 
-    RPerl::verbose 'PARSE PHASE 2: Parse RPerl syntax...';
+    RPerl::verbose 'PARSE PHASE 2: Parse RPerl syntax...   ';
 
     my object $eyapp_parser = RPerl::Grammar->new();
     $eyapp_parser->YYSlurpFile($rperl_source__file_name);

@@ -25,9 +25,9 @@ use Getopt::Long;
 # diamond '<>' operator does not allow passing arguments or receiving return values
 my string__array_ref $rperl_input_file_names_unlabeled = [];
 
-# [[[ ACCEPT & CHECK OPTIONS (COMMAND-LINE ARGUMENTS) ]]]
-# [[[ ACCEPT & CHECK OPTIONS (COMMAND-LINE ARGUMENTS) ]]]
-# [[[ ACCEPT & CHECK OPTIONS (COMMAND-LINE ARGUMENTS) ]]]
+# [[[ ACCEPT, CHECK, REPORT OPTIONS (COMMAND-LINE ARGUMENTS) ]]]
+# [[[ ACCEPT, CHECK, REPORT OPTIONS (COMMAND-LINE ARGUMENTS) ]]]
+# [[[ ACCEPT, CHECK, REPORT OPTIONS (COMMAND-LINE ARGUMENTS) ]]]
 
 sub accept_and_verify_input_files {
     (   my string__array_ref $rperl_input_file_names,
@@ -111,8 +111,28 @@ sub generate_output_file_names {
 sub verify_and_default_modes {
     (   my string__hash_ref $modes,
         my string__hash_ref $modes_default,
-        my array_ref__hash_ref $modes_supported
+        my array_ref__hash_ref $modes_supported,
+        my integer $compile_flag,
+        my integer $execute_flag
     ) = @_;
+
+    if ( defined $compile_flag ) {
+        if ($compile_flag) {
+            $modes->{compile} = 'COMPILE';
+        }
+        else {  # --nocompile command-line argument (option) disables compile & generate, parse remains enabled
+            $modes->{compile} = 'PARSE';
+        }
+    }
+
+    if ( defined $execute_flag ) {
+        if ($execute_flag) {
+            $modes->{execute} = 'ON';
+        }
+        else {
+            $modes->{execute} = 'OFF';
+        }
+    }
 
     # verify modes
     foreach my string $mode_key ( keys %{$modes} ) {
@@ -157,11 +177,11 @@ sub verbose_multi_file_settings {
     ) = @_;
 
     if ( $rperl_input_file_num > 1 ) {
-        RPerl::verbose "Input file(s):\n";
+        RPerl::verbose "Input File(s):\n";
         foreach my string $input_file_name ( @{$rperl_input_file_names} ) {
             RPerl::verbose q{    } . $input_file_name . "\n";
         }
-        RPerl::verbose "Output file(s):\n";
+        RPerl::verbose "Output File(s):\n";
         foreach my string $output_file_name ( @{$cpp_output_file_names} ) {
             RPerl::verbose q{    } . $output_file_name . "\n";
         }
@@ -184,11 +204,24 @@ sub store_unlabeled_options {
     return;
 }
 
+# print value of option flags
+sub report_flags {
+    ( my integer $compile_flag, my integer $execute_flag ) = @_;
+    RPerl::verbose( 'Debug Flag:    ', $RPerl::DEBUG,   "\n" );
+    RPerl::verbose( 'Verbose Flag:  ', $RPerl::VERBOSE, "\n" );
+    if ( defined $compile_flag ) {
+        RPerl::verbose( 'Compile Flag:  ', $compile_flag, "\n" );
+    }
+    if ( defined $execute_flag ) {
+        RPerl::verbose( 'Execute Flag:  ', $execute_flag, "\n" );
+    }
+}
+
 # [[[ COMPILE RPERL TO XS & BINARY ]]]
 # [[[ COMPILE RPERL TO XS & BINARY ]]]
 # [[[ COMPILE RPERL TO XS & BINARY ]]]
 
-sub compile_files {
+sub compile_execute_files {
     (   my string__array_ref $rperl_input_file_names,
         my string__array_ref $cpp_output_file_names,
         my string__hash_ref $modes,
@@ -203,29 +236,39 @@ sub compile_files {
 
         if ( $rperl_input_file_num > 1 ) {
             RPerl::verbose_reset();
-            RPerl::verbose 'Input file number: '
+            RPerl::verbose 'Input File number: '
                 . ( $i + 1 ) . ' of '
                 . $rperl_input_file_num . "\n";
         }
-        RPerl::verbose 'Input file:   ' . $rperl_input_file_name . "\n";
-        RPerl::verbose 'Output file:  ' . $cpp_output_file_name . "\n";
-        RPerl::verbose 'Modes:        ops => '
+        RPerl::verbose 'Input File:    ' . $rperl_input_file_name . "\n";
+        RPerl::verbose 'Output File:   ' . $cpp_output_file_name . "\n";
+        RPerl::verbose 'Modes:         ops => '
             . $modes->{ops}
             . ', types => '
             . $modes->{types}
             . ', check => '
-            . $modes->{check} . "\n\n";
+            . $modes->{check}
+            . ', compile => '
+            . $modes->{compile}
+            . ', execute => '
+            . $modes->{execute} . "\n\n";
         if ( $rperl_input_file_num > 1 ) {
             RPerl::diag_pause "PRESS <ENTER> TO CONTINUE\n";
         }
 
         my integer $eval_retval = eval {
-            rperl_to_xsbinary__compile( $rperl_input_file_name,
+            rperl_to_xsbinary__parse_generate_compile( $rperl_input_file_name,
                 $cpp_output_file_name, $modes );
         };
 
         if ( not defined $eval_retval ) {
             print $EVAL_ERROR;
+        }
+        
+        if ($modes->{execute} eq 'ON') {
+            RPerl::verbose('EXECUTE:       Run RPerl code...' . "\n");
+            RPerl::verbose("\n");
+            my integer $execute_retval = system('perl', $rperl_input_file_name);
         }
 
         if (    ( $rperl_input_file_num > 1 )
@@ -243,17 +286,24 @@ sub compile_files {
 # [[[ ACTUALLY RUN CODE ]]]
 # [[[ ACTUALLY RUN CODE ]]]
 
-my integer $compile_flag = 1;
-my integer $execute_flag = 1;
+my integer $compile_flag                     = undef;
+my integer $execute_flag                     = undef;
 my string__array_ref $rperl_input_file_names = [];
 my string__array_ref $cpp_output_file_names  = [];
 my string__hash_ref $modes = {}; # can't store defaults here, erased by GetOptions()
-my string__hash_ref $modes_default
-    = { ops => 'CPP', types => 'CPP', check => 'TRACE' }; # default to CPPOPS_CPPTYPES_CHECKTRACE in C++ output code
+my string__hash_ref $modes_default = { # default to CPPOPS_CPPTYPES_CHECKTRACE_COMPILE_EXECUTE in C++ output code
+    ops     => 'CPP',
+    types   => 'CPP',
+    check   => 'TRACE',
+    compile => 'COMPILE',
+    execute => 'ON'
+};
 my array_ref__hash_ref $modes_supported = {
-    ops   => ['CPP'],
-    types => [ 'PERL', 'CPP' ],
-    check => [ 'OFF', 'ON', 'TRACE' ]
+    ops     => ['CPP'],
+    types   => [ 'PERL', 'CPP' ],
+    check   => [ 'OFF', 'ON', 'TRACE' ],
+    compile => [ 'PARSE', 'GENERATE', 'COMPILE' ],
+    execute => [ 'OFF', 'ON' ]
 };
 my integer $rperl_input_file_num = 0;
 
@@ -269,19 +319,16 @@ GetOptions(
     )
     or die "ERROR EARG00: Failure processing command line arguments, dying\n";
 
-RPerl::verbose('Debug Flag:   ', $RPerl::DEBUG, "\n");
-RPerl::verbose('Verbose Flag: ', $RPerl::VERBOSE, "\n");
-RPerl::verbose('Compile Flag: ', $compile_flag, "\n");
-RPerl::verbose('Execute Flag: ', $execute_flag, "\n");
-
+report_flags( $compile_flag, $execute_flag );
 $rperl_input_file_names
     = accept_and_verify_input_files( $rperl_input_file_names,
     $rperl_input_file_names_unlabeled );
 $rperl_input_file_num  = scalar @{$rperl_input_file_names};
 $cpp_output_file_names = generate_output_file_names( $rperl_input_file_names,
     $cpp_output_file_names, $rperl_input_file_num );
-$modes = verify_and_default_modes( $modes, $modes_default, $modes_supported );
+$modes = verify_and_default_modes( $modes, $modes_default, $modes_supported,
+    $compile_flag, $execute_flag );
 verbose_multi_file_settings( $rperl_input_file_names, $cpp_output_file_names,
     $modes, $rperl_input_file_num );
-compile_files( $rperl_input_file_names, $cpp_output_file_names, $modes,
+compile_execute_files( $rperl_input_file_names, $cpp_output_file_names, $modes,
     $rperl_input_file_num );

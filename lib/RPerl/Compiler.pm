@@ -6,7 +6,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_000;
+our $VERSION = 0.003_001;
 
 # [[[ CRITICS ]]]
 
@@ -19,34 +19,47 @@ use RPerl::Parser;
 
 # [[[ SUBROUTINES ]]]
 
-our void $rperl_to_xsbinary__compile = sub {
-    ( my string $rperl_input_file_name, 
-    my string $cpp_output_file_name, 
-    my hash_ref $mode ) = @_;
+our void $rperl_to_xsbinary__parse_generate_compile = sub {
+    (   my string $rperl_input_file_name,
+        my string $cpp_output_file_name,
+        my hash_ref $mode
+    ) = @_;
+    my object $rperl_ast;
+    my string $cpp_source;
 
     # [[[ PARSE RPERL TO AST ]]]
     # [[[ PARSE RPERL TO AST ]]]
     # [[[ PARSE RPERL TO AST ]]]
 
-    my object $rperl_ast = RPerl::Parser::rperl_to_ast__parse($rperl_input_file_name);
+    if (   ( $mode->{compile} eq 'PARSE' )
+        or ( $mode->{compile} eq 'GENERATE' )
+        or ( $mode->{compile} eq 'COMPILE' ) )
+    {
+        $rperl_ast = RPerl::Parser::rperl_to_ast__parse($rperl_input_file_name);
+    }
 
     # [[[ GENERATE AST TO C++ ]]]
     # [[[ GENERATE AST TO C++ ]]]
     # [[[ GENERATE AST TO C++ ]]]
 
-#    my string $cpp_source = ast_to_cpp__generate( $rperl_ast, $mode );
+    if (   ( $mode->{compile} eq 'GENERATE' )
+        or ( $mode->{compile} eq 'COMPILE' ) )
+    {
+        $cpp_source = ast_to_cpp__generate( $rperl_ast, $mode );
+    }
 
     # [[[ COMPILE C++ TO XS & BINARY ]]]
     # [[[ COMPILE C++ TO XS & BINARY ]]]
     # [[[ COMPILE C++ TO XS & BINARY ]]]
 
-#    cpp_to_xsbinary__compile( $cpp_source, $cpp_output_file_name );
-
+    if ( $mode->{compile} eq 'COMPILE' ) {
+        cpp_to_xsbinary__compile( $cpp_source, $cpp_output_file_name );
+    }
 };
 
 our string $ast_to_cpp__generate = sub {
     ( my object $rperl_ast ) = @_;
-    my string $cpp_source;
+    my string $cpp_source = '<<< DUMMY C++ SOURCE CODE >>>';
 
     #...
     return ($cpp_source);
@@ -90,4 +103,4 @@ our void $cpp_to_xsbinary__compile = sub {
     # NEED FIX: call Inline to run tests
 };
 
-1;  # end of package
+1;    # end of package

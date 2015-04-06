@@ -1,0 +1,1 @@
+<<< DUMMY C++ SOURCE CODE >>>
