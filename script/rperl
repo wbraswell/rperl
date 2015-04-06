@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.005_002;
+our $VERSION = 0.005_003;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -207,9 +207,9 @@ sub compile_files {
                 . ( $i + 1 ) . ' of '
                 . $rperl_input_file_num . "\n";
         }
-        RPerl::verbose 'Input file:  ' . $rperl_input_file_name . "\n";
-        RPerl::verbose 'Output file: ' . $cpp_output_file_name . "\n";
-        RPerl::verbose 'Modes:       ops => '
+        RPerl::verbose 'Input file:   ' . $rperl_input_file_name . "\n";
+        RPerl::verbose 'Output file:  ' . $cpp_output_file_name . "\n";
+        RPerl::verbose 'Modes:        ops => '
             . $modes->{ops}
             . ', types => '
             . $modes->{types}
@@ -258,16 +258,21 @@ my array_ref__hash_ref $modes_supported = {
 my integer $rperl_input_file_num = 0;
 
 GetOptions(
-    'debug'         => \$RPerl::DEBUG,
-    'verbose'       => \$RPerl::VERBOSE,
-    'compile'       => \$compile_flag,
-    'execute'       => \$execute_flag,
+    'debug!'        => \$RPerl::DEBUG,
+    'verbose!'      => \$RPerl::VERBOSE,
+    'compile!'      => \$compile_flag,
+    'execute!'      => \$execute_flag,
     'infile=s{1,}'  => \@{$rperl_input_file_names},
     'outfile=s{1,}' => \@{$cpp_output_file_names},
     'mode=s%'       => \$modes,
     '<>'            => \&store_unlabeled_options
     )
     or die "ERROR EARG00: Failure processing command line arguments, dying\n";
+
+RPerl::verbose('Debug Flag:   ', $RPerl::DEBUG, "\n");
+RPerl::verbose('Verbose Flag: ', $RPerl::VERBOSE, "\n");
+RPerl::verbose('Compile Flag: ', $compile_flag, "\n");
+RPerl::verbose('Execute Flag: ', $execute_flag, "\n");
 
 $rperl_input_file_names
     = accept_and_verify_input_files( $rperl_input_file_names,
