@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.005_010;
+our $VERSION = 0.005_011;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -262,7 +262,8 @@ sub parse_generate_compile_execute_files {
         elsif ( $modes->{ops} eq 'CPP' ) {
             my integer $eval_retval = eval {
                 rperl_to_xsbinary__parse_generate_compile(
-                    $rperl_input_file_name, $cpp_output_file_name, $modes );
+                    $rperl_input_file_name, $cpp_output_file_name, $modes );  # returns void
+                    1;  # return true
             };
             if ( not defined $eval_retval ) {
                 print $EVAL_ERROR;

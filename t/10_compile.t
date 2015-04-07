@@ -4,7 +4,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.005_002;
+our $VERSION = 0.005_004;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -86,10 +86,12 @@ for my $test_file ( sort keys %{$test_files} ) {
                 compile => 'PARSE',
                 execute => 'OFF'
             }
-        );
+        );  # returns void
+        1;  # return true
     };
+#    RPerl::diag( 'in 10_compile.t, have $eval_return_value = ' . $eval_return_value . "\n" );  # warning if undef retval
 
-    if ($eval_return_value) {    # Perl eval return code not 0, success
+    if ((defined $eval_return_value) and $eval_return_value) {    # Perl eval return code defined & true, success
         if ( ( $test_file =~ m/Good/xms ) or ( $test_file =~ m/good/xms ) ) {
             ok( 1, "Program or module $test_file compiles without errors" );
         }
@@ -97,7 +99,7 @@ for my $test_file ( sort keys %{$test_files} ) {
             ok( 0, "Program or module $test_file compiles with errors" );
         }
     }
-    else {                       # Perl eval return code 0, error
+    else {                       # Perl eval return code undefined or false, error
 
 #        RPerl::diag( 'in 10_compile.t, have $EVAL_ERROR = ' . $EVAL_ERROR . "\n" );
         if ( ( $test_file =~ m/Bad/ms ) or ( $test_file =~ m/bad/ms ) ) {
