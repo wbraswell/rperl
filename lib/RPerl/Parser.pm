@@ -3,7 +3,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_011;
+our $VERSION = 0.004_012;
 
 # [[[ OO INHERITANCE ]]]
 #use RPerl::CompileUnit::Module::Class;
@@ -244,7 +244,9 @@ our void $rperl_source__parse = sub {
     RPerl::verbose ' done.' . "\n";
 
     RPerl::diag "in rperl_source__parse(), have \$rperl_ast->str() =\n" . $rperl_ast->str() . "\n\n";
-    RPerl::diag "in rperl_source__parse(), have \$rperl_ast =\n" . Dumper($rperl_ast) . "\n\n";
+    my string $rperl_ast_dumped = Dumper($rperl_ast);
+    $rperl_ast_dumped =~ s/\ \ \ \ \ \ \ \ /\ \ \ \ /g;
+    RPerl::diag "in rperl_source__parse(), have \$rperl_ast =\n" . $rperl_ast_dumped . "\n\n";
 
     return ($rperl_ast);
 };

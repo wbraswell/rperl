@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_988;
+    our $VERSION = 0.000_989;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -208,20 +208,130 @@ Literal:                LITERAL_STRING | LITERAL_NUMBER ;
 # NEED FIX: UPDATE!?!
 my string__hash_ref $rules = {
 
-CompileUnit_3 => 'RPerl::CompileUnit',
 CompileUnit_4 => 'RPerl::CompileUnit',
-Program_9 => 'RPerl::CompileUnit::Program',
-Module_10 => 'RPerl::CompileUnit::Module',
-Module_11 => 'RPerl::CompileUnit::Module',
-Package_14 => 'RPerl::CompileUnit::Module::Package',
-Subroutine_38 => 'RPerl::CodeBlock::Subroutine',
-Class_52 => 'RPerl::CompileUnit::Module::Class',
-Properties_55 => 'RPerl::DataStructure::Hash::Properties',
-Method_60 => 'RPerl::CodeBlock::Subroutine::Method',
-Operation_65 => 'RPerl::Operation',
-Operation_66 => 'RPerl::Operation',
-Operator_69 => 'RPerl::Operation::Expression::Operator',
+CompileUnit_5 => 'RPerl::CompileUnit',
+Program_18 => 'RPerl::CompileUnit::Program',
+ModuleHeader_21 => 'RPerl::CompileUnit::Module::Header',
+Module_22 => 'RPerl::CompileUnit::Module',
+Module_23 => 'RPerl::CompileUnit::Module',
+Package_32 => 'RPerl::CompileUnit::Module::Package',
+Header_33 => 'RPerl::CompileUnit::Module::Header',
+Critic_36 => 'RPerl::FOO',
+Include_39 => 'use' WordScoped ';'
+Include_40 => 'use' WordScoped OP01_QW PLUS-15 ')' ';'
+Constant_41 => 'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant Literal ';'
+Subroutine_46 => 'RPerl::CodeBlock::Subroutine',
+SubroutineArguments_50 => LPAREN_MY Type VARIABLE_SYMBOL STAR-19 ')' OP19_VARIABLE_ASSIGN '@_;'
+Class_59 => 'RPerl::CompileUnit::Module::Class',
+Properties_63 => 'RPerl::DataStructure::Hash::Properties',
+Properties_64 => 'RPerl::DataStructure::Hash::Properties',
+Method_69 => 'RPerl::CodeBlock::Subroutine::Method',
+MethodArguments_73 => LPAREN_MY TYPE_SELF STAR-29 ')' OP19_VARIABLE_ASSIGN '@_;'
+MethodOrSubroutine_74 => Method
+MethodOrSubroutine_75 => Subroutine
+Operation_76 => 'RPerl::Operation',
+Operation_77 => 'RPerl::Operation',
+Operator_78 => LPAREN OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ')'
+Operator_79 => OP01_NAMED SubExpression
+Operator_80 => LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
+Operator_81 => OP01_OPEN 'my' 'filehandle_ref' FH_REF_SYMBOL OP21_LIST_COMMA LITERAL_STRING OP21_LIST_COMMA SubExpression
+Operator_82 => OP01_CLOSE FH_REF_SYMBOL
+Operator_83 => OP03_MATH_INC_DEC Variable
+Operator_84 => Variable OP03_MATH_INC_DEC
+Operator_85 => SubExpression OP04_MATH_POW SubExpression
+Operator_86 => OP05_LOGICAL_NEG SubExpression
+Operator_87 => OP05_MATH_NEG_LPAREN SubExpression ')'
+Operator_88 => SubExpression OP06_REGEX_MATCH OP06_REGEX_PATTERN
+Operator_89 => SubExpression OP07_STRING_REPEAT SubExpression
+Operator_90 => SubExpression OP07_MATH_MULT_DIV_MOD SubExpression
+Operator_91 => SubExpression OP08_MATH_ADD_SUB SubExpression
+Operator_92 => SubExpression OP08_STRING_CAT SubExpression
+Operator_93 => SubExpression OP09_BITWISE_SHIFT SubExpression
+Operator_94 => OP10_NAMED_UNARY SubExpression
+Operator_95 => OP10_NAMED_UNARY
+Operator_96 => SubExpression OP11_COMPARE_LT_GT SubExpression
+Operator_97 => SubExpression OP12_COMPARE_EQ_NE SubExpression
+Operator_98 => SubExpression OP13_BITWISE_AND SubExpression
+Operator_99 => SubExpression OP14_BITWISE_OR_XOR SubExpression
+Operator_100 => SubExpression OP15_LOGICAL_AND SubExpression
+Operator_101 => SubExpression OP16_LOGICAL_OR SubExpression
+Operator_102 => SubExpression OP17_LIST_RANGE SubExpression
+Operator_103 => SubExpression OP18_TERNARY VariableOrLiteral COLON VariableOrLiteral
+Operator_104 => OP22_LOGICAL_NEG SubExpression
+Operator_015 => SubExpression OP23_LOGICAL_AND SubExpression
+Operator_106 => SubExpression OP24_LOGICAL_OR_XOR SubExpression
+OperatorVoid_110 => OP01_PRINT OPTIONAL-31 ListElements ';'
+OperatorVoid_111 => OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ';'
+OperatorVoid_112 => OP01_NAMED_VOID_SCOLON
+OperatorVoid_113 => OP01_NAMED_VOID ListElements ';'
+OperatorVoid_114 => OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
+OperatorVoid_115 => OP19_LOOP_CONTROL_SCOLON
+OperatorVoid_116 => OP19_LOOP_CONTROL LoopLabel ';'
+Expression_121 => Operator
+Expression_122 => WordScoped LPAREN OPTIONAL-32 ')'
+Expression_123 => WORD_UPPERCASE LPAREN ')'
+Expression_124 => Variable OP02_METHOD_THINARROW LPAREN OPTIONAL-33 ')'
+Expression_125 => WordScoped OP02_METHOD_THINARROW_NEW ')'
+SubExpression_126 => Expression
+SubExpression_127 => 'undef'
+SubExpression_128 => Literal
+SubExpression_129 => Variable
+SubExpression_130 => ArrayReference
+SubExpression_131 => ArrayDereference
+SubExpression_132 => HashReference
+SubExpression_133 => HashDereference
+SubExpression_134 => LPAREN SubExpression ')'
+SubExpressionOrStdin_135 => SubExpression
+SubExpressionOrStdin_136 => STDIN
+Statement_140 => Conditional
+Statement_141 => OPTIONAL-35 Loop
+Statement_142 => OperatorVoid
+Statement_143 => VariableDeclaration
+Statement_144 => VariableModification
+Conditional_151 => 'if' LPAREN SubExpression ')' CodeBlock STAR-37 OPTIONAL-39
+Loop_152 => LoopFor
+Loop_153 => LoopForEach
+Loop_154 => LoopWhile
+LoopFor_155 => 'for' 'my' TYPE_INTEGER VARIABLE_SYMBOL LPAREN SubExpression OP17_LIST_RANGE SubExpression ')' CodeBlock
+LoopForEach_156 => 'foreach' 'my' Type VARIABLE_SYMBOL LPAREN ListElements ')' CodeBlock
+LoopWhile_157 => 'while' LPAREN SubExpression ')' CodeBlock
+CodeBlock_160 => LBRACE PLUS-40 '}'
+Variable_163 => VARIABLE_SYMBOL STAR-41
+VariableRetrieval_164 => OP02_ARRAY_THINARROW SubExpression ']'
+VariableRetrieval_165 => OP02_HASH_THINARROW SubExpression '}'
+VariableRetrieval_166 => OP02_HASH_THINARROW WORD '}'
+VariableDeclaration_167 => 'my' Type VARIABLE_SYMBOL ';'
+VariableDeclaration_168 => 'my' Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';'
+VariableModification_169 => Variable OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';'
+VariableModification_170 => Variable OP19_VARIABLE_ASSIGN_BY SubExpression ';'
+ListElements_174 => ListElement STAR-43
+ListElement_177 => SubExpression
+ListElement_178 => TypeInner SubExpression
+ListElement_179 => OP01_QW PLUS-44 ')'
+ArrayReference_182 => LBRACKET OPTIONAL-45 ']'
+ArrayDereference_185 => '@{' Variable '}'
+ArrayDereference_186 => '@{' OPTIONAL-46 ArrayReference '}'
+HashEntry_189 => WORD OP20_HASH_FATARROW OPTIONAL-47 SubExpression
+HashEntry_190 => HashDereference
+HashEntryTyped_191 => WORD OP20_HASH_FATARROW TypeInner SubExpression
+HashEntryTyped_192 => HashDereference
+HashReference_196 => LBRACE HashEntry STAR-49 '}'
+HashReference_197 => LBRACE '}'
+HashDereference_200 => '%{' Variable '}'
+HashDereference_201 => '%{' OPTIONAL-50 HashReference '}'
+WordScoped_202 => WORD
+WordScoped_203 => WORD_SCOPED
+LoopLabel_204 => WORD_UPPERCASE
+Type_205 => WORD
+Type_206 => TYPE_INTEGER
+TypeInner_207 => 'my' Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN
+TypeInnerConstant_208 => 'my' Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN
+VariableOrLiteral_209 => Variable
+VariableOrLiteral_210 => Literal
+Literal_211 => LITERAL_STRING
+Literal_212 => LITERAL_NUMBER
 
 }; 
+
     1;
 }
