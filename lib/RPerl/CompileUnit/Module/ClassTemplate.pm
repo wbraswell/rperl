@@ -1,5 +1,5 @@
 # [[[ PREPROCESSOR ]]]
-# <<< CHANGE_ME: choose applicable directives and remove remaining >>>
+# <<< CHANGE_ME: delete unused directives >>>
 # <<< TYPE_CHECKING: OFF >>>
 # <<< TYPE_CHECKING: ON >>>
 # <<< TYPE_CHECKING: TRACE >>>
@@ -21,7 +21,7 @@ use parent qw(RPerl::CompileUnit::Module::Class);
 use RPerl::CompileUnit::Module::Class;
 
 # [[[ CRITICS ]]]
-# <<< CHANGE_ME: delete unused critics >>>
+# <<< CHANGE_ME: delete unused directives >>>
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
