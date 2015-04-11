@@ -15,8 +15,8 @@ use Carp;
 # [[[ STATEMENTS ]]]
 
 use RPerl::Operation::Statement::OperatorVoid::Print;
-use RPerl::Operation::Statement::OperatorVoid::Return;
-use RPerl::Operation::Statement::OperatorVoid::Croak;
+use RPerl::Operation::Statement::OperatorVoid::Named::Return;
+use RPerl::Operation::Statement::OperatorVoid::Named::Croak;
 use RPerl::Operation::Statement::Conditional; # both an Operation & a Grammar Rule
 use RPerl::Operation::Statement::Loop;    # both an Operation & a Grammar Rule
 use RPerl::Operation::Statement::Loop::For; # both an Operation & a Grammar Rule

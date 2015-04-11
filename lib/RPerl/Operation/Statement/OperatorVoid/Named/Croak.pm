@@ -1,4 +1,4 @@
-package RPerl::Operation::Statement::OperatorVoid::Croak;
+package RPerl::Operation::Statement::OperatorVoid::Named::Croak;
 use strict;
 use warnings;
 use RPerl;
@@ -24,7 +24,7 @@ our object__method $ppi_to_rperl__translate = sub {
     my object $node_translated;
     $node_translated
         = { STUB_AST_OBJECT =>
-            'CREATED BY RPerl::Operation::Statement::OperatorVoid::Croak' };
+            'CREATED BY RPerl::Operation::Statement::OperatorVoid::Named::Croak' };
     return ($node_translated);
 };
 
@@ -33,7 +33,7 @@ our string__method $rperl_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self ) = @_;                     # object method
     my string $self_generated = q{};
     $self_generated
-        .= 'STUB PERL CODE STRING, CREATED BY RPerl::Operation::Statement::OperatorVoid::Croak';
+        .= 'STUB PERL CODE STRING, CREATED BY RPerl::Operation::Statement::OperatorVoid::Named::Croak';
     return ($self_generated);
 };
 
@@ -42,7 +42,7 @@ our string__method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self ) = @_;                     # object method
     my string $self_generated = q{};
     $self_generated
-        .= 'STUB CPP CODE STRING, CREATED BY RPerl::Operation::Statement::OperatorVoid::Croak';
+        .= 'STUB CPP CODE STRING, CREATED BY RPerl::Operation::Statement::OperatorVoid::Named::Croak';
     return ($self_generated);
 };
 

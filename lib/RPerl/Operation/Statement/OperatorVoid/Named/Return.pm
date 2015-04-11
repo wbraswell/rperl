@@ -1,4 +1,4 @@
-package RPerl::Operation::Statement::OperatorVoid::Return;
+package RPerl::Operation::Statement::OperatorVoid::Named::Return;
 use strict;
 use warnings;
 use RPerl;
@@ -32,7 +32,7 @@ our string__method $rperl_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self ) = @_;    # object method
     my string $self_generated = q{};
     $self_generated
-        .= "# STUB PERL CODE STRING, CREATED BY RPerl::Operation::Statement::OperatorVoid::Return\n";
+        .= "# STUB PERL CODE STRING, CREATED BY RPerl::Operation::Statement::OperatorVoid::Named::Return\n";
     return ($self_generated);
 };
 
@@ -176,7 +176,7 @@ our object__method $ppi_to_rperl__translate = sub {
         );
     }
     $node_translated
-        = RPerl::Operation::Statement::OperatorVoid::Return->new();
+        = RPerl::Operation::Statement::OperatorVoid::Named::Return->new();
 
 # START HERE: set up Return_00* files
 # START HERE: set up Return_00* files
