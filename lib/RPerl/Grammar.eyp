@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_990;
+    our $VERSION = 0.000_991;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -267,34 +267,34 @@ OperatorVoid_113 => 'RPerl::Operation::Statement::OperatorVoid::Named',
 OperatorVoid_114 => 'RPerl::Operation::Expression::Operator::Named',
 OperatorVoid_115 => 'RPerl::Operation::Statement::OperatorVoid::LoopControl',
 OperatorVoid_116 => 'RPerl::Operation::Statement::OperatorVoid::LoopControl',
-Expression_121 => Operator
-Expression_122 => WordScoped LPAREN OPTIONAL-32 ')'
-Expression_123 => WORD_UPPERCASE LPAREN ')'
-Expression_124 => Variable OP02_METHOD_THINARROW LPAREN OPTIONAL-33 ')'
-Expression_125 => WordScoped OP02_METHOD_THINARROW_NEW ')'
-SubExpression_126 => Expression
-SubExpression_127 => 'undef'
-SubExpression_128 => Literal
-SubExpression_129 => Variable
-SubExpression_130 => ArrayReference
-SubExpression_131 => ArrayDereference
-SubExpression_132 => HashReference
-SubExpression_133 => HashDereference
-SubExpression_134 => LPAREN SubExpression ')'
-SubExpressionOrStdin_135 => SubExpression
-SubExpressionOrStdin_136 => STDIN
-Statement_140 => Conditional
-Statement_141 => OPTIONAL-35 Loop
-Statement_142 => OperatorVoid
-Statement_143 => VariableDeclaration
-Statement_144 => VariableModification
-Conditional_151 => 'if' LPAREN SubExpression ')' CodeBlock STAR-37 OPTIONAL-39
-Loop_152 => LoopFor
-Loop_153 => LoopForEach
-Loop_154 => LoopWhile
-LoopFor_155 => 'for' 'my' TYPE_INTEGER VARIABLE_SYMBOL LPAREN SubExpression OP17_LIST_RANGE SubExpression ')' CodeBlock
-LoopForEach_156 => 'foreach' 'my' Type VARIABLE_SYMBOL LPAREN ListElements ')' CodeBlock
-LoopWhile_157 => 'while' LPAREN SubExpression ')' CodeBlock
+Expression_121 => 'RPerl::Operation::Expression::Operator',
+Expression_122 => 'RPerl::Operation::Expression::SubroutineCall',
+Expression_123 => 'RPerl::Operation::Expression::ConstantCall',
+Expression_124 => 'RPerl::Operation::Expression::SubroutineCall::MethodCall',
+Expression_125 => 'RPerl::Operation::Expression::SubroutineCall::MethodCall::ConstructorCall',
+SubExpression_126 => 'RPerl::Operation::Expression',
+SubExpression_127 => 'RPerl::Operation::Expression::SubExpression::Literal::Undefined',
+SubExpression_128 => 'RPerl::Operation::Expression::SubExpression::Literal',
+SubExpression_129 => 'RPerl::Operation::Expression::SubExpression::Variable',
+SubExpression_130 => 'RPerl::DataStructure::Array::Reference',
+SubExpression_131 => 'RPerl::Operation::Expression::SubExpression::ArrayDereference',
+SubExpression_132 => 'RPerl::DataStructure::Hash::Reference',
+SubExpression_133 => 'RPerl::Operation::Expression::SubExpression::HashDereference',
+SubExpression_134 => 'RPerl::Operation::Expression::SubExpression::Parenthesis',
+SubExpressionOrStdin_135 => 'RPerl::Operation::Expression::SubExpression',
+SubExpressionOrStdin_136 => 'RPerl::InputOutput::Stdin',
+Statement_140 => 'RPerl::Operation::Statement::Conditional',
+Statement_141 => 'RPerl::Operation::Statement::Loop',
+Statement_142 => 'RPerl::Operation::Statement::OperatorVoid',
+Statement_143 => 'RPerl::Operation::Statement::VariableDeclaration',
+Statement_144 => 'RPerl::Operation::Statement::VariableModification',
+Conditional_151 => 'RPerl::Operation::Statement::Conditional',
+Loop_152 => 'RPerl::Operation::Statement::Loop::For',
+Loop_153 => 'RPerl::Operation::Statement::Loop::ForEach',
+Loop_154 => 'RPerl::Operation::Statement::Loop::While',
+LoopFor_155 => 'RPerl::Operation::Statement::Loop::For',
+LoopForEach_156 => 'RPerl::Operation::Statement::Loop::ForEach',
+LoopWhile_157 => 'RPerl::Operation::Statement::Loop::While',
 CodeBlock_160 => LBRACE PLUS-40 '}'
 Variable_163 => VARIABLE_SYMBOL STAR-41
 VariableRetrieval_164 => OP02_ARRAY_THINARROW SubExpression ']'
@@ -330,7 +330,6 @@ VariableOrLiteral_209 => Variable
 VariableOrLiteral_210 => Literal
 Literal_211 => LITERAL_STRING
 Literal_212 => LITERAL_NUMBER
-
 }; 
 
     1;
