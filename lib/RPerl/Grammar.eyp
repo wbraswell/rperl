@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_992;
+    our $VERSION = 0.000_993;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -204,8 +204,14 @@ Literal:                LITERAL_STRING | LITERAL_NUMBER ;
 %%
 
 {
-# Rules from Grammar.output
-my string__hash_ref $rules = {
+# Map from abstract syntax tree to classes
+# DEV NOTE: derived from grammar rules in Grammar.output file, process for grammar updates...
+# 1. Update grammar code in this file, above this line only
+# 2. Run scripts/grammar_recompile.sh
+# 3. Run new & existing grammar tests
+# 4. Copy updates from Grammar.output file into this file, below this line only
+# 5. Run scripts/grammar_recompile.sh again
+our string__hash_ref $rules = {
 CompileUnit_4 => 'RPerl::CompileUnit::Program',
 CompileUnit_5 => 'RPerl::CompileUnit::Module',
 Program_18 => 'RPerl::CompileUnit::Program',

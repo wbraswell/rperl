@@ -6,7 +6,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_001;
+our $VERSION = 0.003_011;
 
 # [[[ CRITICS ]]]
 
@@ -16,6 +16,7 @@ our $VERSION = 0.003_001;
 # [[[ INCLUDES ]]]
 
 use RPerl::Parser;
+use RPerl::Generator;
 
 # [[[ SUBROUTINES ]]]
 
@@ -42,7 +43,7 @@ our void $rperl_to_rperl__parse_generate = sub {
 
     if ( $mode->{compile} eq 'GENERATE' )
     {
-        $rperl_source = ast_to_rperl__generate( $rperl_ast, $mode );
+        $rperl_source = RPerl::Generator::ast_to_rperl__generate( $rperl_ast, $mode );
     }
 };
 
@@ -72,7 +73,7 @@ our void $rperl_to_xsbinary__parse_generate_compile = sub {
     if (   ( $mode->{compile} eq 'GENERATE' )
         or ( $mode->{compile} eq 'COMPILE' ) )
     {
-        $cpp_source = ast_to_cpp__generate( $rperl_ast, $mode );
+        $cpp_source = RPerl::Generator::ast_to_cpp__generate( $rperl_ast, $mode );
     }
 
     # [[[ COMPILE C++ TO XS & BINARY ]]]
@@ -82,14 +83,6 @@ our void $rperl_to_xsbinary__parse_generate_compile = sub {
     if ( $mode->{compile} eq 'COMPILE' ) {
         cpp_to_xsbinary__compile( $cpp_source, $cpp_output_file_name );
     }
-};
-
-our string $ast_to_cpp__generate = sub {
-    ( my object $rperl_ast ) = @_;
-    my string $cpp_source = '<<< DUMMY C++ SOURCE CODE >>>';
-
-    #...
-    return ($cpp_source);
 };
 
 # Compile from C++-Parsable String to Perl-Linkable XS & Machine-Readable Binary
