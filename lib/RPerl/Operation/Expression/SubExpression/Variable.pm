@@ -1,4 +1,4 @@
-package RPerl::Operation::Expression::Variable;
+package RPerl::Operation::Expression::SubExpression::Variable;
 use strict;
 use warnings;
 use RPerl;
@@ -89,7 +89,7 @@ our object__method $ppi_to_rperl__translate = sub {
         );
     }
     $child_content = $child->{content}; # assume PPI::Token::Symbol contains _variable_symbol
-    $node_translated = RPerl::Operation::Expression::Variable->new();
+    $node_translated = RPerl::Operation::Expression::SubExpression::Variable->new();
     $node_translated->{symbol} = $child_content;
 
     # NEED FIX: add VARIABLE_RETRIEVAL* semantics
@@ -107,7 +107,7 @@ our string__method $rperl_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self ) = @_;    # object method
     my string $self_generated = q{};
     $self_generated
-        .= 'STUB PERL CODE STRING, CREATED BY RPerl::Operation::Expression::Variable';
+        .= 'STUB PERL CODE STRING, CREATED BY RPerl::Operation::Expression::SubExpression::Variable';
     return ($self_generated);
 };
 

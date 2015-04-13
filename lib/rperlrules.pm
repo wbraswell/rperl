@@ -35,7 +35,7 @@ use RPerl::CodeBlock;
 
 # [[[ VARIABLES ]]]
 
-use RPerl::Operation::Expression::Variable;
+use RPerl::Operation::Expression::SubExpression::Variable;
 use RPerl::Operation::Expression::Literal; # NEED ANSWER: not a full Grammar Rule, just a Production???
 use RPerl::Operation::Statement::VariableDeclaration;
 use RPerl::Operation::Statement::VariableModification;

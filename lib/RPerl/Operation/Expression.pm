@@ -107,7 +107,7 @@ our object__method $ppi_to_rperl__translate = sub {
 # NEED FIX: wrapping _variable_symbol in PPI::Statement, short-circuiting check for multi-object VARIABLE production
         my object $variable_node = PPI::Statement->new();
         $variable_node->{children} = [$node];
-        $node_translated = RPerl::Operation::Expression::Variable
+        $node_translated = RPerl::Operation::Expression::SubExpression::Variable
             ->ppi_to_rperl__translate($variable_node);
         RPerl::diag
             "in Expression::ppi_to_rperl__translate(), _LITERAL production, about to return \$node_translated=\n"

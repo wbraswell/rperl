@@ -69,7 +69,7 @@ our string__method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         my string $argument_class = blessed($argument);
         if (   ( $argument_class eq 'RPerl::Operation::Expression::Literal' )
             or
-            ( $argument_class eq 'RPerl::Operation::Expression::Variable' ) )
+            ( $argument_class eq 'RPerl::Operation::Expression::SubExpression::Variable' ) )
         {
             $self_generated .= q{ }
                 . $argument->rperl_to_cpp__generate__CPPOPS_CPPTYPES();
