@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_991;
+    our $VERSION = 0.000_992;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -205,9 +205,7 @@ Literal:                LITERAL_STRING | LITERAL_NUMBER ;
 
 {
 # Rules from Grammar.output
-# NEED FIX: UPDATE!?!
 my string__hash_ref $rules = {
-
 CompileUnit_4 => 'RPerl::CompileUnit::Program',
 CompileUnit_5 => 'RPerl::CompileUnit::Module',
 Program_18 => 'RPerl::CompileUnit::Program',
@@ -295,42 +293,42 @@ Loop_154 => 'RPerl::Operation::Statement::Loop::While',
 LoopFor_155 => 'RPerl::Operation::Statement::Loop::For',
 LoopForEach_156 => 'RPerl::Operation::Statement::Loop::ForEach',
 LoopWhile_157 => 'RPerl::Operation::Statement::Loop::While',
-CodeBlock_160 => LBRACE PLUS-40 '}'
-Variable_163 => VARIABLE_SYMBOL STAR-41
-VariableRetrieval_164 => OP02_ARRAY_THINARROW SubExpression ']'
-VariableRetrieval_165 => OP02_HASH_THINARROW SubExpression '}'
-VariableRetrieval_166 => OP02_HASH_THINARROW WORD '}'
-VariableDeclaration_167 => 'my' Type VARIABLE_SYMBOL ';'
-VariableDeclaration_168 => 'my' Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';'
-VariableModification_169 => Variable OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';'
-VariableModification_170 => Variable OP19_VARIABLE_ASSIGN_BY SubExpression ';'
-ListElements_174 => ListElement STAR-43
-ListElement_177 => SubExpression
-ListElement_178 => TypeInner SubExpression
-ListElement_179 => OP01_QW PLUS-44 ')'
-ArrayReference_182 => LBRACKET OPTIONAL-45 ']'
-ArrayDereference_185 => '@{' Variable '}'
-ArrayDereference_186 => '@{' OPTIONAL-46 ArrayReference '}'
-HashEntry_189 => WORD OP20_HASH_FATARROW OPTIONAL-47 SubExpression
-HashEntry_190 => HashDereference
-HashEntryTyped_191 => WORD OP20_HASH_FATARROW TypeInner SubExpression
-HashEntryTyped_192 => HashDereference
-HashReference_196 => LBRACE HashEntry STAR-49 '}'
-HashReference_197 => LBRACE '}'
-HashDereference_200 => '%{' Variable '}'
-HashDereference_201 => '%{' OPTIONAL-50 HashReference '}'
-WordScoped_202 => WORD
-WordScoped_203 => WORD_SCOPED
-LoopLabel_204 => WORD_UPPERCASE
-Type_205 => WORD
-Type_206 => TYPE_INTEGER
-TypeInner_207 => 'my' Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN
-TypeInnerConstant_208 => 'my' Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN
-VariableOrLiteral_209 => Variable
-VariableOrLiteral_210 => Literal
-Literal_211 => LITERAL_STRING
-Literal_212 => LITERAL_NUMBER
-}; 
+CodeBlock_160 => 'RPerl::CodeBlock',
+Variable_163 => 'RPerl::Operation::Expression::SubExpression::Variable',
+VariableRetrieval_164 => 'RPerl::Operation::Expression::SubExpression::Variable::Retrieval',
+VariableRetrieval_165 => 'RPerl::Operation::Expression::SubExpression::Variable::Retrieval',
+VariableRetrieval_166 => 'RPerl::Operation::Expression::SubExpression::Variable::Retrieval',
+VariableDeclaration_167 => 'RPerl::Operation::Statement::VariableDeclaration',
+VariableDeclaration_168 => 'RPerl::Operation::Statement::VariableDeclaration',
+VariableModification_169 => 'RPerl::Operation::Statement::VariableModification',
+VariableModification_170 => 'RPerl::Operation::Statement::VariableModification',
+ListElements_174 => 'RPerl::DataStructure::Array::ListElements',
+ListElement_177 => 'RPerl::Operation::Expression::SubExpression',
+ListElement_178 => 'RPerl::Operation::Expression::SubExpression',
+ListElement_179 => 'RPerl::Operation::Expression::Operator::List::QuotedWords',
+ArrayReference_182 => 'RPerl::DataStructure::Array::Reference',
+ArrayDereference_185 => 'RPerl::Operation::Expression::SubExpression::ArrayDereference',
+ArrayDereference_186 => 'RPerl::Operation::Expression::SubExpression::ArrayDereference',
+HashEntry_189 => 'RPerl::DataStructure::Hash::Entry',
+HashEntry_190 => 'RPerl::Operation::Expression::SubExpression::HashDereference',
+HashEntryTyped_191 => 'RPerl::DataStructure::Hash::Entry',
+HashEntryTyped_192 => 'RPerl::Operation::Expression::SubExpression::HashDereference',
+HashReference_196 => 'RPerl::DataStructure::Hash::Reference',
+HashReference_197 => 'RPerl::DataStructure::Hash::Reference',
+HashDereference_200 => 'RPerl::Operation::Expression::SubExpression::HashDereference',
+HashDereference_201 => 'RPerl::Operation::Expression::SubExpression::HashDereference',
+WordScoped_202 => 'RPerl::CompileUnit::Word',
+WordScoped_203 => 'RPerl::CompileUnit::Word',
+LoopLabel_204 => 'RPerl::CompileUnit::Word',
+Type_205 => 'RPerl::DataType',
+Type_206 => 'RPerl::DataType',
+TypeInner_207 => 'RPerl::DataType',
+TypeInnerConstant_208 => 'RPerl::DataType',
+VariableOrLiteral_209 => 'RPerl::Operation::Expression::SubExpression::Variable',
+VariableOrLiteral_210 => 'RPerl::Operation::Expression::SubExpression::Literal',
+Literal_211 => 'RPerl::Operation::Expression::SubExpression::Literal',
+Literal_212 => 'RPerl::Operation::Expression::SubExpression::Literal'
+};
 
     1;
 }
