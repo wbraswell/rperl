@@ -74,7 +74,7 @@ our object__method $ppi_to_rperl__translate = sub {
     if ( not $node_disqualified ) {
         $production_name = '_LITERAL';
         $component_name  = '<default>';
-        $node_translated = RPerl::Operation::Expression::Literal->new();
+        $node_translated = RPerl::Operation::Expression::SubExpression::Literal->new();
         $node_translated->{value} = $node->{content};
         if ( $node_class eq $node_classes_expected->[0] ) {    # NUMBER
             $node_translated->{type} = 'number';

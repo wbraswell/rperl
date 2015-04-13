@@ -67,7 +67,7 @@ our string__method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     foreach my object $argument ( @{ $self->{arguments}->{elements} } ) {
         $self_generated .= ' <<';
         my string $argument_class = blessed($argument);
-        if (   ( $argument_class eq 'RPerl::Operation::Expression::Literal' )
+        if (   ( $argument_class eq 'RPerl::Operation::Expression::SubExpression::Literal' )
             or
             ( $argument_class eq 'RPerl::Operation::Expression::SubExpression::Variable' ) )
         {

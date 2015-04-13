@@ -1,4 +1,4 @@
-package RPerl::Operation::Expression::Literal;
+package RPerl::Operation::Expression::SubExpression::Literal;
 use strict;
 use warnings;
 use RPerl;
@@ -25,7 +25,7 @@ our object__method $ppi_to_rperl__translate = sub {
     ( my string $class, my object $node) = @_;    # class method
     my object $node_translated;
     $node_translated = { STUB_AST_OBJECT =>
-            'CREATED BY RPerl::Operation::Expression::Literal' };
+            'CREATED BY RPerl::Operation::Expression::SubExpression::Literal' };
     return ($node_translated);
 };
 
@@ -34,7 +34,7 @@ our string__method $rperl_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self ) = @_;                     # object method
     my string $self_generated = q{};
     $self_generated
-        .= 'STUB PERL CODE STRING, CREATED BY RPerl::Operation::Expression::Literal';
+        .= 'STUB PERL CODE STRING, CREATED BY RPerl::Operation::Expression::SubExpression::Literal';
     return ($self_generated);
 };
 
