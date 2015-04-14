@@ -14,7 +14,6 @@ our $VERSION = 0.005_021;
 
 # [[[ INCLUDES ]]]
 use RPerl::Parser;    # includes Perl::Critic
-use RPerl::Translator;
 use RPerl::Generator;
 use RPerl::Compiler;    # includes Inline
 use Getopt::Long;

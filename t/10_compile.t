@@ -14,7 +14,6 @@ our $VERSION = 0.005_004;
 
 # [[[ INCLUDES ]]]
 use RPerl::Parser;
-use RPerl::Translator;
 use RPerl::Generator;
 use RPerl::Compiler;
 use Test::More;
