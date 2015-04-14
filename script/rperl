@@ -18,6 +18,7 @@ use RPerl::Translator;
 use RPerl::Generator;
 use RPerl::Compiler;    # includes Inline
 use Getopt::Long;
+use Pod::Usage;
 
 # [[[ SUBROUTINES ]]]
 
@@ -291,6 +292,8 @@ sub parse_generate_compile_execute_files {
 # [[[ ACTUALLY RUN CODE ]]]
 # [[[ ACTUALLY RUN CODE ]]]
 
+my integer $help = 0;
+my integer $manual = 0;
 my integer $compile_flag                     = undef;
 my integer $execute_flag                     = undef;
 my string__array_ref $rperl_input_file_names = [];
@@ -313,6 +316,8 @@ my array_ref__hash_ref $modes_supported = {
 my integer $rperl_input_file_num = 0;
 
 GetOptions(
+    'help|?'        => \$help,
+    'manual'        => \$manual,
     'debug!'        => \$RPerl::DEBUG,
     'verbose!'      => \$RPerl::VERBOSE,
     'compile!'      => \$compile_flag,
@@ -323,7 +328,9 @@ GetOptions(
     '<>'            => \&store_unlabeled_options
     )
     or die "ERROR EARG00: Failure processing command line arguments, dying\n";
-
+ 
+if ($help) { pod2usage(-verbose => 1); }
+if ($manual) { pod2usage(-verbose => 2); }
 verbose_flags( $compile_flag, $execute_flag );
 $rperl_input_file_names
     = accept_and_verify_input_files( $rperl_input_file_names,
@@ -337,3 +344,79 @@ verbose_multi_file_settings( $rperl_input_file_names, $cpp_output_file_names,
     $modes, $rperl_input_file_num );
 parse_generate_compile_execute_files( $rperl_input_file_names,
     $cpp_output_file_names, $modes, $rperl_input_file_num );
+
+__END__
+=head1 NAME
+
+rperl - Optimizing Perl 5 Compiler
+
+=head1 SYNOPSIS
+
+        rperl [OPTIONS] input_file_0.pm [input_file_1.pm ...] [output_file_0.cpp]
+
+=head1 OPTIONS
+
+=over 8
+
+=item B<--help -h -?>
+
+Print a brief help message.
+
+=item B<--manual -m>
+
+Print the full manual page.
+
+=item B<--debug -d>
+
+=item B<--nodebug -nod>
+
+ Include system diagnostic information in output, or not.
+ Disabled by default, equivalent to `export RPERL_DEBUG=1`.
+
+=item B<--verbose -v>
+
+=item B<--noverbose -nov>
+
+ Include additional user information in output, or not.
+ Disabled by default, equivalent to `export RPERL_VERBOSE=1`.
+
+=item B<--compile -c>
+
+=item B<--nocompile -noc>
+
+ Generate & compile C++ source code, or not.
+ Enabled by default, equivalent to MODE compile => COMPILE.
+
+=item B<--execute -e>
+
+=item B<--noexecute -noe>
+
+ Run input code after optional compile, or not.
+ Enabled by default, equivalent to MODE execute => ON.
+
+=item B<--infile=MyFile.pm -i=MyFile.pm>
+
+ Specify input file, may be repeated for multiple input files.
+ Option prefix '--infile' may be entirely omitted.
+ Option prefix MUST be omitted to specify wildcard for multiple input files.
+
+=item B<--outfile=MyFile.cpp -o=MyFile.cpp>
+
+ Specify output file, may be repeated for multiple output files.
+ Option may be entirely omitted, 'MyFile.pm' in will default to 'MyFile.cpp' out.
+
+=back
+
+=head1 DESCRIPTION
+
+B<RPerl> is a compiler.  For more info:
+
+https://github.com/wbraswell/rperl/blob/master/README.md
+
+=head1 AUTHOR
+
+B<William N. Braswell, Jr.>
+
+william.braswell@autoparallel.com
+
+=cut
