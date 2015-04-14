@@ -16,6 +16,7 @@ use RPerl::CompileUnit::Module::Class;
 
 # [[[ INCLUDES ]]]
 use RPerl::Grammar;
+use RPerl::Parser;
 use Scalar::Util qw(blessed);
 
 # [[[ PROCEDURAL SUBROUTINES ]]]
@@ -41,7 +42,7 @@ our string $ast_to_rperl__generate = sub {
 
     RPerl::diag
         "in RPerl::Generator::ast_to_rperl__generate(), received \$node =\n"
-        . Dumper($node) . "\n";
+        . RPerl::Parser::rperl_ast__dump($node) . "\n";
     RPerl::diag
         "in RPerl::Generator::ast_to_rperl__generate(), received \$mode =\n"
         . Dumper($mode) . "\n";

@@ -94,6 +94,7 @@ our void $rperl_source__check_syntax = sub {
     my string__array_ref $rperl_source__perl_syntax_retstring_lines;
     @{$rperl_source__perl_syntax_retstring_lines} = split "\n",
         $rperl_source__perl_syntax_retstring;
+
 #    RPerl::diag 'in rperl_source__check_syntax(), have $rperl_source__perl_syntax_retstring_lines = ', "\n", Dumper($rperl_source__perl_syntax_retstring_lines), "\n";
     my string__array_ref $rperl_source__perl_syntax_retstring_warnings = [];
     foreach my string $rperl_source__perl_syntax_retstring_line (
@@ -109,11 +110,12 @@ our void $rperl_source__check_syntax = sub {
         }
     }
 
-    if ( (scalar @{$rperl_source__perl_syntax_retstring_warnings}) != 0 ) {
+    if ( ( scalar @{$rperl_source__perl_syntax_retstring_warnings} ) != 0 ) {
         die "\n"
             . 'ERROR ECVPAPL03, RPERL PARSER, PERL SYNTAX WARNING' . "\n"
-            . 'Failed `perl -cW` syntax check with the following message(s): ' . "\n\n"
-            . (join "\n", @{$rperl_source__perl_syntax_retstring_warnings})
+            . 'Failed `perl -cW` syntax check with the following message(s): '
+            . "\n\n"
+            . ( join "\n", @{$rperl_source__perl_syntax_retstring_warnings} )
             . "\n";
     }
 
@@ -185,7 +187,7 @@ our void $rperl_grammar_error = sub {
         $value = '<<< NO TOKEN FOUND >>>';
     }
     my string $helpful_hint = q{};
-    if ($value =~ /[0-9]/) {
+    if ( $value =~ /[0-9]/ ) {
         $helpful_hint = q{
     Helpful Hint:      Possible case of PBP RequireNumberSeparators (see below)
     Policy:            Perl::Critic::Policy::ValuesAndExpressions::RequireNumberSeparators
@@ -193,7 +195,7 @@ our void $rperl_grammar_error = sub {
     Explanation:       See Perl Best Practices page(s) 59
         };
     }
-    
+
     my integer $line_number = $argument->{TOKENLINE};
 
 #    die( "\nERROR ECVPARP00, RPERL PARSER, SYNTAX ERROR; have \$argument =\n" . Dumper($argument) . "\n" );
@@ -202,7 +204,7 @@ our void $rperl_grammar_error = sub {
     my $current_state            = $argument->{STATES}[$current_state_num];
     my $expected_tokens          = q{};
     my number $is_first_expected = 1;
- 
+
     foreach my $expected_token ( sort keys %{ $current_state->{ACTIONS} } ) {
         if ($is_first_expected) {
             $is_first_expected = 0;
@@ -237,18 +239,24 @@ our void $rperl_source__parse = sub {
     $eyapp_parser->YYSlurpFile($rperl_source__file_name);
     my object $rperl_ast = $eyapp_parser->YYParse(
         yydebug => 0x00,    # disable eyapp DBG DEBUGGING
+
 #        yydebug => 0xFF,  # full eyapp DBG DEBUGGING, USE FOR DEBUGGING GRAMMAR
         yyerror => $rperl_grammar_error
     );
 
     RPerl::verbose ' done.' . "\n";
 
-    RPerl::diag "in rperl_source__parse(), have \$rperl_ast->str() =\n" . $rperl_ast->str() . "\n\n";
-    my string $rperl_ast_dumped = Dumper($rperl_ast);
-    $rperl_ast_dumped =~ s/\ \ \ \ \ \ \ \ /\ \ \ \ /g;
-    RPerl::diag "in rperl_source__parse(), have \$rperl_ast =\n" . $rperl_ast_dumped . "\n\n";
+#    RPerl::diag "in rperl_source__parse(), have \$rperl_ast->str() =\n" . $rperl_ast->str() . "\n\n";
+#    RPerl::diag "in rperl_source__parse(), have \$rperl_ast =\n" . rperl_ast__dump($rperl_ast) . "\n\n";
 
     return ($rperl_ast);
+};
+
+our string $rperl_ast__dump = sub {
+    ( my object $rperl_ast) = @_;
+    my string $rperl_ast_dumped = Dumper($rperl_ast);
+    $rperl_ast_dumped =~ s/\ \ \ \ \ \ \ \ /\ \ \ \ /g;
+    return $rperl_ast_dumped;
 };
 
 1;    # end of class

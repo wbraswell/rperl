@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.005_011;
+our $VERSION = 0.005_021;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -229,6 +229,13 @@ sub parse_generate_compile_execute_files {
         my integer $rperl_input_file_num
     ) = @_;
 
+        if ( $modes->{ops} eq 'PERL' ) {
+            # Perl ops does not actually COMPILE, set compile mode to GENERATE instead
+            if ($modes->{compile} eq 'COMPILE') { $modes->{compile} = 'GENERATE'; }
+            # Perl ops does not have CPP types, set types mode to PERL instead
+            if ($modes->{types} eq 'CPP') { $modes->{types} = 'PERL'; }
+        }
+
 # DEV NOTE: Perl::Critic BUG!  'integer' triggers false positive RequireFinalReturn
 #    for my integer $i ( 0 .. ( $rperl_input_file_num - 1 ) ) {
     for my $i ( 0 .. ( $rperl_input_file_num - 1 ) ) {
@@ -293,7 +300,6 @@ sub parse_generate_compile_execute_files {
 # [[[ ACTUALLY RUN CODE ]]]
 
 my integer $help = 0;
-my integer $manual = 0;
 my integer $compile_flag                     = undef;
 my integer $execute_flag                     = undef;
 my string__array_ref $rperl_input_file_names = [];
@@ -307,7 +313,7 @@ my string__hash_ref $modes_default = { # default to CPPOPS_CPPTYPES_CHECKTRACE_C
     execute => 'ON'
 };
 my array_ref__hash_ref $modes_supported = {
-    ops     => ['CPP'],
+    ops     => [ 'PERL', 'CPP' ],
     types   => [ 'PERL', 'CPP' ],
     check   => [ 'OFF', 'ON', 'TRACE' ],
     compile => [ 'PARSE', 'GENERATE', 'COMPILE' ],
@@ -317,7 +323,6 @@ my integer $rperl_input_file_num = 0;
 
 GetOptions(
     'help|?'        => \$help,
-    'manual'        => \$manual,
     'debug!'        => \$RPerl::DEBUG,
     'verbose!'      => \$RPerl::VERBOSE,
     'compile!'      => \$compile_flag,
@@ -330,7 +335,6 @@ GetOptions(
     or die "ERROR EARG00: Failure processing command line arguments, dying\n";
  
 if ($help) { pod2usage(-verbose => 1); }
-if ($manual) { pod2usage(-verbose => 2); }
 verbose_flags( $compile_flag, $execute_flag );
 $rperl_input_file_names
     = accept_and_verify_input_files( $rperl_input_file_names,
@@ -352,7 +356,7 @@ rperl - Optimizing Perl 5 Compiler
 
 =head1 SYNOPSIS
 
-        rperl [OPTIONS] input_file_0.pm [input_file_1.pm ...] [output_file_0.cpp]
+        rperl [OPTIONS] input_file_0.pm [input_file_1.pm ...]
 
 =head1 OPTIONS
 
@@ -362,37 +366,33 @@ rperl - Optimizing Perl 5 Compiler
 
 Print a brief help message.
 
-=item B<--manual -m>
-
-Print the full manual page.
-
 =item B<--debug -d>
 
 =item B<--nodebug -nod>
 
  Include system diagnostic information in output, or not.
- Disabled by default, equivalent to `export RPERL_DEBUG=1`.
+ Disabled by default, equivalent to `export RPERL_DEBUG=1` shell command.
 
 =item B<--verbose -v>
 
 =item B<--noverbose -nov>
 
  Include additional user information in output, or not.
- Disabled by default, equivalent to `export RPERL_VERBOSE=1`.
+ Disabled by default, equivalent to `export RPERL_VERBOSE=1` shell command.
 
 =item B<--compile -c>
 
 =item B<--nocompile -noc>
 
  Generate & compile C++ source code, or not.
- Enabled by default, equivalent to MODE compile => COMPILE.
+ Enabled by default, equivalent to '--mode compile=COMPILE' option.
 
 =item B<--execute -e>
 
 =item B<--noexecute -noe>
 
  Run input code after optional compile, or not.
- Enabled by default, equivalent to MODE execute => ON.
+ Enabled by default, equivalent to '--mode execute=ON' option.
 
 =item B<--infile=MyFile.pm -i=MyFile.pm>
 
@@ -405,18 +405,52 @@ Print the full manual page.
  Specify output file, may be repeated for multiple output files.
  Option may be entirely omitted, 'MyFile.pm' in will default to 'MyFile.cpp' out.
 
+=item B<--mode ops=CPP -m ops=CPP>
+
+=item B<--mode ops=PERL -m ops=PERL>
+
+ Specify operations mode, CPP by default.
+
+=item B<--mode types=CPP -m types=CPP>
+
+=item B<--mode types=PERL -m types=PERL>
+
+ Specify data types mode, CPP by default.
+
+=item B<--mode check=OFF -m check=OFF>
+
+=item B<--mode check=ON -m check=ON>
+
+=item B<--mode check=TRACE -m check=TRACE>
+
+ Specify data type checking mode, TRACE by default.
+
+=item B<--mode compile=PARSE -m compile=PARSE>
+
+=item B<--mode compile=GENERATE -m compile=GENERATE>
+
+=item B<--mode compile=COMPILE -m compile=COMPILE>
+
+ Specify compile mode, COMPILE by default.
+
+=item B<--mode execute=OFF -m execute=OFF>
+
+=item B<--mode execute=ON -m execute=ON>
+
+ Specify execute mode, ON by default.
+ 
 =back
 
 =head1 DESCRIPTION
 
 B<RPerl> is a compiler.  For more info:
 
-https://github.com/wbraswell/rperl/blob/master/README.md
+L<https://github.com/wbraswell/rperl/blob/master/README.md>
 
 =head1 AUTHOR
 
 B<William N. Braswell, Jr.>
 
-william.braswell@autoparallel.com
+L<mailto:william.braswell@autoparallel.com>
 
 =cut

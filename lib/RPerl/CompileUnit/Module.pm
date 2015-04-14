@@ -14,19 +14,20 @@ use RPerl::CompileUnit;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
+# [[[ INCLUDES ]]]
+use RPerl::Parser;
+
 # [[[ OO PROPERTIES ]]]
-our hash_ref $properties = {
-    plugh => my integer $TYPED_plugh           = 23,
-    xyzzy => my string $TYPED_xyzzy            = 'twenty-three',
-    thud  => my integer__array_ref $TYPED_thud = [ 2, 4, 6, 8 ],
-    yyz => my number__hash_ref $TYPED_yyz = { a => 3.1, b => 6.2, c => 9.3 }
-};
+our hash_ref $properties = {};
 
 # [[[ OO METHODS ]]]
 
 our string__method $ast_to_rperl__generate = sub {
     ( my object $self, my string__hash_ref $mode) = @_;
     my string $rperl_source = q{<<< DUMMY PERLOPS_PERLTYPES SOURCE CODE >>>};
+    
+    RPerl::diag('in Module->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n");
+    RPerl::diag('in Module->ast_to_rperl__generate(), received $mode = ' . "\n" . Dumper($mode) . "\n");
 
     #...
     return $rperl_source;
