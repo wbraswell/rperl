@@ -2,7 +2,7 @@
 package RPerl::Generator;
 use strict;
 use warnings;
-our $VERSION = 0.000_020;
+our $VERSION = 0.000_021;
 use RPerl;
 
 # [[[ OO INHERITANCE ]]]
@@ -23,7 +23,7 @@ use Scalar::Util qw(blessed);
 
 our void $grammar_rules__map = sub {
 #    RPerl::diag "in RPerl::Generator::grammar_rules__map(), have \$RPerl::Grammar::rules =\n" . Dumper($RPerl::Grammar::rules) . "\n";
-    foreach my string $rule ( keys $RPerl::Grammar::rules ) {
+    foreach my string $rule ( keys %{$RPerl::Grammar::rules} ) {
         my string $eval_string
             = 'package '
             . $rule
