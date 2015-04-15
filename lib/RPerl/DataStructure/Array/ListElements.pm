@@ -12,6 +12,7 @@ use Data::Dumper;
 use Scalar::Util 'blessed';
 
 # [[[ OO INHERITANCE ]]]
+use RPerl::GrammarRule;
 use parent qw(RPerl::GrammarRule);
 
 # [[[ OO PROPERTIES ]]]

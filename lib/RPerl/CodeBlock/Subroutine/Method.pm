@@ -4,7 +4,8 @@ use warnings;
 use RPerl;
 our $VERSION = 0.002_003;
 
-## no critic qw(Capitalization ProhibitMultiplePackages)  # SYSTEM DEFAULT 3: allow multiple lower case package names
+## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
+
 
 use parent qw(RPerl::CodeBlock::Subroutine);
 our hash_ref $properties = {};

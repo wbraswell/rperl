@@ -22,17 +22,24 @@ use Scalar::Util qw(blessed);
 # [[[ PROCEDURAL SUBROUTINES ]]]
 
 our void $grammar_rules__map = sub {
-#    RPerl::diag "in RPerl::Generator::grammar_rules__map(), have \$RPerl::Grammar::rules =\n" . Dumper($RPerl::Grammar::rules) . "\n";
-    foreach my string $rule ( keys %{$RPerl::Grammar::rules} ) {
+#    RPerl::diag "in Generator::grammar_rules__map(), have \$RPerl::Grammar::rules =\n" . Dumper($RPerl::Grammar::rules) . "\n";
+    foreach my string $rule ( sort keys %{$RPerl::Grammar::rules} ) {
         my string $eval_string
             = 'package '
             . $rule
             . q{; use parent qw(}
             . $RPerl::Grammar::rules->{$rule}
             . q{); use }
-            . $RPerl::Grammar::rules->{$rule} . q{;};
-        eval $eval_string or croak($EVAL_ERROR);
-        if ($EVAL_ERROR) { croak($EVAL_ERROR); }
+            . $RPerl::Grammar::rules->{$rule} . q{; 1;};
+#        RPerl::diag 'in Generator::grammar_rules_map(), have 1st $eval_string = ' . "\n" . $eval_string . "\n";
+        my integer $eval_retval = eval $eval_string;
+        if ((not defined $eval_retval) or ($EVAL_ERROR ne '')) {croak($EVAL_ERROR);}
+#        if (not defined $eval_retval) {croak($EVAL_ERROR);}
+
+        $eval_string = q[foreach my $key ( keys %] . $RPerl::Grammar::rules->{$rule} . q[:: ) { if (defined &{ $] . $RPerl::Grammar::rules->{$rule} . q[::{ $key} } ) { if (not defined eval q<*{] . $rule . q[::> . $key . q<} = sub { return &{ $] . $RPerl::Grammar::rules->{$rule} . q[::{'> . $key . q<'} }(@_); };>) {croak $EVAL_ERROR;} } }];
+        RPerl::diag 'in Generator::grammar_rules_map(), have 2nd $eval_string = ' . "\n" . $eval_string . "\n";
+        $eval_retval = eval $eval_string;
+        if ((not defined $eval_retval) or ($EVAL_ERROR ne '')) {croak($EVAL_ERROR);}
     }
 };
 
@@ -40,12 +47,8 @@ our void $grammar_rules__map = sub {
 our string $ast_to_rperl__generate = sub {
     ( my object $node, my string__hash_ref $mode) = @_;
 
-    RPerl::diag
-        "in RPerl::Generator::ast_to_rperl__generate(), received \$node =\n"
-        . RPerl::Parser::rperl_ast__dump($node) . "\n";
-    RPerl::diag
-        "in RPerl::Generator::ast_to_rperl__generate(), received \$mode =\n"
-        . Dumper($mode) . "\n";
+#    RPerl::diag "in Generator::ast_to_rperl__generate(), received \$node =\n" . RPerl::Parser::rperl_ast__dump($node) . "\n";
+#    RPerl::diag "in Generator::ast_to_rperl__generate(), received \$mode =\n" . Dumper($mode) . "\n";
 
     if ( not( defined $mode->{types} ) ) {
         croak(
@@ -61,7 +64,7 @@ our string $ast_to_rperl__generate = sub {
     grammar_rules__map();
 
     # NEED FIX: check to ensure we are generating a valid return object
-    return ( $node->ast_to_rperl__generate() );
+    return ( $node->ast_to_rperl__generate($mode) );
 };
 
 # Generate from RPerl AST to C++ Source Code
@@ -69,10 +72,10 @@ our string $ast_to_cpp__generate = sub {
     ( my object $node, my string__hash_ref $mode) = @_;
 
     RPerl::diag
-        "in RPerl::Generator::ast_to_cpp__generate(), received \$node =\n"
+        "in Generator::ast_to_cpp__generate(), received \$node =\n"
         . Dumper($node) . "\n";
     RPerl::diag
-        "in RPerl::Generator::ast_to_cpp__generate(), received \$mode =\n"
+        "in Generator::ast_to_cpp__generate(), received \$mode =\n"
         . Dumper($mode) . "\n";
 
     if ( not( defined $mode->{types} ) ) {
@@ -91,9 +94,9 @@ our string $ast_to_cpp__generate = sub {
 
     # NEED FIX: check to ensure we are generating a valid return object
     if ( $mode->{types} eq 'PERL' ) {
-        return ( $node->ast_to_cpp__generate__CPPOPS_PERLTYPES() );
+        return ( $node->ast_to_cpp__generate__CPPOPS_PERLTYPES($mode) );
     }
-    else { return ( $node->ast_to_cpp__generate__CPPOPS_CPPTYPES() ); }
+    else { return ( $node->ast_to_cpp__generate__CPPOPS_CPPTYPES($mode) ); }
 };
 
 1;

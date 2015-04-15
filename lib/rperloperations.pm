@@ -1,4 +1,4 @@
-package rperloperations; ## no critic qw(Capitalization ProhibitMultiplePackages)  # SYSTEM DEFAULT 3: allow multiple lower case package names
+package rperloperations; ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 use strict;
 use warnings;
 our $VERSION = 0.000_011;

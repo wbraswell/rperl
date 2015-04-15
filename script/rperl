@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.005_021;
+our $VERSION = 0.005_022;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -355,86 +355,87 @@ rperl - Optimizing Perl 5 Compiler
 
 =head1 SYNOPSIS
 
-        rperl [OPTIONS] input_file_0.pm [input_file_1.pm ...]
+        rperl [OPTIONS] input_file_0.(pm|pl) [input_file_1.(pm|pl) ...]
 
 =head1 OPTIONS
 
 =over 8
 
-=item B<--help -h -?>
+=item B<--help _OR_ -h _OR_ -?>
 
 Print a brief help message.
 
-=item B<--debug -d>
+=item B<--debug _OR_ -d>
 
-=item B<--nodebug -nod>
+=item B<--nodebug _OR_ -nod>
 
  Include system diagnostic information in output, or not.
  Disabled by default, equivalent to `export RPERL_DEBUG=1` shell command.
 
-=item B<--verbose -v>
+=item B<--verbose _OR_ -v>
 
-=item B<--noverbose -nov>
+=item B<--noverbose _OR_ -nov>
 
  Include additional user information in output, or not.
  Disabled by default, equivalent to `export RPERL_VERBOSE=1` shell command.
 
-=item B<--compile -c>
+=item B<--compile _OR_ -c>
 
-=item B<--nocompile -noc>
+=item B<--nocompile _OR_ -noc>
 
  Generate & compile C++ source code, or not.
  Enabled by default, equivalent to '--mode compile=COMPILE' option.
 
-=item B<--execute -e>
+=item B<--execute _OR_ -e>
 
-=item B<--noexecute -noe>
+=item B<--noexecute _OR_ -noe>
 
  Run input code after optional compile, or not.
  Enabled by default, equivalent to '--mode execute=ON' option.
 
-=item B<--infile=MyFile.pm -i=MyFile.pm>
+=item B<--infile=MyFile.pm _OR_ -i=MyFile.pm>
 
  Specify input file, may be repeated for multiple input files.
  Option prefix '--infile' may be entirely omitted.
  Option prefix MUST be omitted to specify wildcard for multiple input files.
 
-=item B<--outfile=MyFile.cpp -o=MyFile.cpp>
+=item B<--outfile=MyFile.cpp _OR_ -o=MyFile.cpp>
 
  Specify output file, may be repeated for multiple output files.
  Option may be entirely omitted, 'MyFile.pm' in will default to 'MyFile.cpp' out.
 
-=item B<--mode ops=CPP -m ops=CPP>
+=item B<--mode ops=PERL _OR_ -m ops=PERL>
 
-=item B<--mode ops=PERL -m ops=PERL>
+=item B<--mode ops=CPP _OR_ -m ops=CPP>
 
  Specify operations mode, CPP by default.
+ If set to PERL, forces types mode to PERL & compile mode to PARSE or GENERATE.
 
-=item B<--mode types=CPP -m types=CPP>
+=item B<--mode types=PERL _OR_ -m types=PERL>
 
-=item B<--mode types=PERL -m types=PERL>
+=item B<--mode types=CPP _OR_ -m types=CPP>
 
  Specify data types mode, CPP by default.
 
-=item B<--mode check=OFF -m check=OFF>
+=item B<--mode check=OFF _OR_ -m check=OFF>
 
-=item B<--mode check=ON -m check=ON>
+=item B<--mode check=ON _OR_ -m check=ON>
 
-=item B<--mode check=TRACE -m check=TRACE>
+=item B<--mode check=TRACE _OR_ -m check=TRACE>
 
  Specify data type checking mode, TRACE by default.
 
-=item B<--mode compile=PARSE -m compile=PARSE>
+=item B<--mode compile=PARSE _OR_ -m compile=PARSE>
 
-=item B<--mode compile=GENERATE -m compile=GENERATE>
+=item B<--mode compile=GENERATE _OR_ -m compile=GENERATE>
 
-=item B<--mode compile=COMPILE -m compile=COMPILE>
+=item B<--mode compile=COMPILE _OR_ -m compile=COMPILE>
 
  Specify compile mode, COMPILE by default.
 
-=item B<--mode execute=OFF -m execute=OFF>
+=item B<--mode execute=OFF _OR_ -m execute=OFF>
 
-=item B<--mode execute=ON -m execute=ON>
+=item B<--mode execute=ON _OR_ -m execute=ON>
 
  Specify execute mode, ON by default.
  

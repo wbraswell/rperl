@@ -1,9 +1,14 @@
+# [[[ HEADER ]]]
 package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.015_000;
+our $VERSION = 0.016_000;
 
+# [[[ OO INHERITANCE ]]]
+# BASE CLASS HAS NO INHERITANCE
+
+# [[[ CRITICS ]]]
 ## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
 ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  # SYSTEM SPECIAL 2: allow Autoload & read-only @_
 ## no critic qw(ProhibitExcessComplexity)  # SYSTEM SPECIAL 6: allow complex code inside subroutines, must be after line 1
@@ -11,9 +16,55 @@ our $VERSION = 0.015_000;
 ## no critic qw(ProhibitNoStrict)  # SYSTEM SPECIAL 9: allow no strict
 ## no critic qw(RequireBriefOpen)  # SYSTEM SPECIAL 10: allow complex processing with open filehandle
 
+# [[[ INCLUDES ]]]
 use File::Basename;
 
-#our $properties = {};  # this base class doesn't actually have any properties
+# [[[ OO PROPERTIES ]]]
+# BASE CLASS HAS NO PROPERTIES
+
+# [[[ OO METHODS ]]]
+
+sub ast_to_rperl__generate {
+    ( my $self, my $mode) = @_;
+    my $rperl_source = q{<<< DUMMY PERLOPS_PERLTYPES SOURCE CODE >>>};
+    
+    RPerl::diag('in Class->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n");
+    RPerl::diag('in Class->ast_to_rperl__generate(), received $mode = ' . "\n" . Dumper($mode) . "\n");
+
+    return $rperl_source;
+}
+
+our $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
+    ( my $self, my $mode) = @_;
+    my $cpp_source = q{<<< DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>};
+
+    #...
+    return $cpp_source;
+};
+
+our $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
+    ( my $self, my $mode) = @_;
+    my $cpp_source = q{<<< DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>};
+
+    #...
+    return $cpp_source;
+};
+
+# RPerl object constructor, shorthand
+sub new {
+    no strict;
+    return bless { %{ ${ $_[0] . '::properties' } } }, $_[0];
+}
+
+sub DESTROY { }
+
+# [[[ SUBROUTINES ]]]
+
+# suppress deprecated feature warning
+local $SIG{__WARN__} = sub {
+    return if $_[0] =~ /^Use of inherited AUTOLOAD for non-method /xms;
+    carp @_;
+};
 
 # after compiling but before runtime: create symtab entries for all RPerl functions/methods, and accessors/mutators for all RPerl class properties
 INIT {
@@ -490,7 +541,9 @@ sub activate_subroutine {
                 . $subroutine_name
                 . '}(@_); };';
 
-#            if ($subroutine_arguments_check_code ne q{}) { RPerl::diag('in Class::activate_subroutine(), have subroutine package:: $subroutine_definition_code =' . "\n" . $subroutine_definition_code . "\n"); }
+#            if ($subroutine_arguments_check_code ne q{}) { 
+#                RPerl::diag('in Class::activate_subroutine(), have subroutine package:: $subroutine_definition_code =' . "\n" . $subroutine_definition_code . "\n"); 
+#            }
             eval($subroutine_definition_code)
                 or croak($EVAL_ERROR);
             if ($EVAL_ERROR) { croak($EVAL_ERROR); }
@@ -498,21 +551,7 @@ sub activate_subroutine {
     }
 }
 
-# RPerl object constructor, shorthand
-sub new {
-    no strict;
-    return bless { %{ ${ $_[0] . '::properties' } } }, $_[0];
-}
-
-# suppress deprecated feature warning
-local $SIG{__WARN__} = sub {
-    return if $_[0] =~ /^Use of inherited AUTOLOAD for non-method /xms;
-    carp @_;
-};
-
-sub DESTROY { }
-
-1;
+1;    # end of class
 
 __END__
 
