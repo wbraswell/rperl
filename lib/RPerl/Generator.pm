@@ -2,7 +2,7 @@
 package RPerl::Generator;
 use strict;
 use warnings;
-our $VERSION = 0.000_021;
+our $VERSION = 0.000_030;
 use RPerl;
 
 # [[[ OO INHERITANCE ]]]
@@ -22,8 +22,10 @@ use Scalar::Util qw(blessed);
 # [[[ PROCEDURAL SUBROUTINES ]]]
 
 our void $grammar_rules__map = sub {
+
 #    RPerl::diag "in Generator::grammar_rules__map(), have \$RPerl::Grammar::rules =\n" . Dumper($RPerl::Grammar::rules) . "\n";
     foreach my string $rule ( sort keys %{$RPerl::Grammar::rules} ) {
+        # create mapped class/package (namespace) and set up Perl inheritance
         my string $eval_string
             = 'package '
             . $rule
@@ -31,15 +33,34 @@ our void $grammar_rules__map = sub {
             . $RPerl::Grammar::rules->{$rule}
             . q{); use }
             . $RPerl::Grammar::rules->{$rule} . q{; 1;};
+
 #        RPerl::diag 'in Generator::grammar_rules_map(), have 1st $eval_string = ' . "\n" . $eval_string . "\n";
         my integer $eval_retval = eval $eval_string;
-        if ((not defined $eval_retval) or ($EVAL_ERROR ne '')) {croak($EVAL_ERROR);}
-#        if (not defined $eval_retval) {croak($EVAL_ERROR);}
+        if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne '' ) ) {
+            croak($EVAL_ERROR);
+        }
 
-        $eval_string = q[foreach my $key ( keys %] . $RPerl::Grammar::rules->{$rule} . q[:: ) { if (defined &{ $] . $RPerl::Grammar::rules->{$rule} . q[::{ $key} } ) { if (not defined eval q<*{] . $rule . q[::> . $key . q<} = sub { return &{ $] . $RPerl::Grammar::rules->{$rule} . q[::{'> . $key . q<'} }(@_); };>) {croak $EVAL_ERROR;} } }];
-        RPerl::diag 'in Generator::grammar_rules_map(), have 2nd $eval_string = ' . "\n" . $eval_string . "\n";
+        #        if (not defined $eval_retval) {croak($EVAL_ERROR);}
+
+        # copy all subroutines (and thus methods) from original class/package (namespace) into mapped class/package at runtime;
+        # DEV NOTE: I thought this would be handled automatically by Perl inheritance above, but I guess not, probably due to how Class.pm sets subroutines during INIT compile time
+        # NEED REMOVE HIGH MAGIC: double-eval'ed short form, long form available in scripts/development/unused/rsubs.pl, possibly replace this entire grammar_rules__map() subroutine with hard-coded *.pm files
+        $eval_string
+            = q[foreach my $key ( keys %]
+            . $RPerl::Grammar::rules->{$rule}
+            . q[:: ) { if (defined &{ $]
+            . $RPerl::Grammar::rules->{$rule}
+            . q[::{ $key} } ) { if (not defined eval q<*{]
+            . $rule
+            . q[::> . $key . q<} = sub { return &{ $]
+            . $RPerl::Grammar::rules->{$rule}
+            . q[::{'> . $key . q<'} }(@_); };>) {croak $EVAL_ERROR;} } }];
+
+#        RPerl::diag 'in Generator::grammar_rules_map(), have 2nd $eval_string = ' . "\n" . $eval_string . "\n";
         $eval_retval = eval $eval_string;
-        if ((not defined $eval_retval) or ($EVAL_ERROR ne '')) {croak($EVAL_ERROR);}
+        if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne '' ) ) {
+            croak($EVAL_ERROR);
+        }
     }
 };
 
@@ -71,11 +92,9 @@ our string $ast_to_rperl__generate = sub {
 our string $ast_to_cpp__generate = sub {
     ( my object $node, my string__hash_ref $mode) = @_;
 
-    RPerl::diag
-        "in Generator::ast_to_cpp__generate(), received \$node =\n"
+    RPerl::diag "in Generator::ast_to_cpp__generate(), received \$node =\n"
         . Dumper($node) . "\n";
-    RPerl::diag
-        "in Generator::ast_to_cpp__generate(), received \$mode =\n"
+    RPerl::diag "in Generator::ast_to_cpp__generate(), received \$mode =\n"
         . Dumper($mode) . "\n";
 
     if ( not( defined $mode->{types} ) ) {
