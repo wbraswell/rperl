@@ -23,15 +23,15 @@ use Pod::Usage;
 
 # NEED UPGRADE: this array must be instantiated here, because GetOptions'
 # diamond '<>' operator does not allow passing arguments or receiving return values
-my string__array_ref $rperl_input_file_names_unlabeled = [];
+my string__array_ref $input_file_names_unlabeled = [];
 
 # [[[ ACCEPT, CHECK, REPORT OPTIONS (COMMAND-LINE ARGUMENTS) ]]]
 # [[[ ACCEPT, CHECK, REPORT OPTIONS (COMMAND-LINE ARGUMENTS) ]]]
 # [[[ ACCEPT, CHECK, REPORT OPTIONS (COMMAND-LINE ARGUMENTS) ]]]
 
 sub accept_and_verify_input_files {
-    (   my string__array_ref $rperl_input_file_names,
-        my string__array_ref $rperl_input_file_names_unlabeled
+    (   my string__array_ref $input_file_names,
+        my string__array_ref $input_file_names_unlabeled
     ) = @_;
 
     RPerl::diag "\n\n"; # move output away from initial Inline compiler output
@@ -39,9 +39,9 @@ sub accept_and_verify_input_files {
     RPerl::diag 'in rperl, have $RPerl::VERBOSE = ' . $RPerl::VERBOSE . "\n";
 
     # accept unlabeled input file name(s) if no labeled values specified
-    if ( ( scalar @{$rperl_input_file_names_unlabeled} ) > 0 ) {
-        if ( ( scalar @{$rperl_input_file_names} ) == 0 ) {
-            $rperl_input_file_names = $rperl_input_file_names_unlabeled;
+    if ( ( scalar @{$input_file_names_unlabeled} ) > 0 ) {
+        if ( ( scalar @{$input_file_names} ) == 0 ) {
+            $input_file_names = $input_file_names_unlabeled;
         }
         else {
             die
@@ -49,20 +49,20 @@ sub accept_and_verify_input_files {
         }
     }
 
-    if ( ( scalar @{$rperl_input_file_names} ) == 0 ) {
+    if ( ( scalar @{$input_file_names} ) == 0 ) {
         die
             "ERROR EARG01: No RPerl source code input file(s) specified, dying\n";
     }
 
     # verify input file(s)
-    my $rperl_input_file_num = scalar @{$rperl_input_file_names};
+    my $rperl_input_file_num = scalar @{$input_file_names};
 
 # DEV NOTE: Perl::Critic BUG!  'integer' triggers false positive RequireFinalReturn
 #    for my integer $i ( 0 .. ( $rperl_input_file_num - 1 ) ) {
     for my $i ( 0 .. ( $rperl_input_file_num - 1 ) ) {
-        my string $rperl_input_file_name = $rperl_input_file_names->[$i];
+        my string $rperl_input_file_name = $input_file_names->[$i];
 
-#    RPerl::diag 'in rperl, top of file verifying loop ' . $i . ' of ' . $rperl_input_file_num . ", have \$rperl_input_file_names->[$i] = '" . $rperl_input_file_name . "'\n";
+#    RPerl::diag 'in rperl, top of file verifying loop ' . $i . ' of ' . $rperl_input_file_num . ", have \$input_file_names->[$i] = '" . $rperl_input_file_name . "'\n";
 
         if ( not( -e $rperl_input_file_name ) ) { ## no critic qw(ProhibitCascadingIfElse)  # SYSTEM DEFAULT 2: allow argument-handling logic
             die
@@ -84,28 +84,28 @@ sub accept_and_verify_input_files {
         }
 
     }
-    return $rperl_input_file_names;
+    return $input_file_names;
 }
 
 sub generate_output_file_names {
-    (   my string__array_ref $rperl_input_file_names,
-        my string__array_ref $cpp_output_file_names,
+    (   my string__array_ref $input_file_names,
+        my string__array_ref $output_file_names,
         my integer $rperl_input_file_num
     ) = @_;
 
     for my $i ( 0 .. ( $rperl_input_file_num - 1 ) ) {
-        my string $rperl_input_file_name = $rperl_input_file_names->[$i];
+        my string $rperl_input_file_name = $input_file_names->[$i];
 
         # automatically generate output file name(s) if not provided
-        if ( not( defined $cpp_output_file_names->[$i] ) ) {
-            $cpp_output_file_names->[$i] = $rperl_input_file_name;
-            substr $cpp_output_file_names->[$i], -3, 4, '.cpp';
+        if ( not( defined $output_file_names->[$i] ) ) {
+            $output_file_names->[$i] = $rperl_input_file_name;
+            substr $output_file_names->[$i], -3, 4, '.cpp';
         }
 
-#    RPerl::diag 'in rperl::generate_output_file_names(), bottom of loop ' . $i . ' of ' . $rperl_input_file_num . ", have \$cpp_output_file_names->[$i] = '" . $cpp_output_file_names->[$i] . "'\n";
+#    RPerl::diag 'in rperl::generate_output_file_names(), bottom of loop ' . $i . ' of ' . $rperl_input_file_num . ", have \$output_file_names->[$i] = '" . $output_file_names->[$i] . "'\n";
     }
 
-    return $cpp_output_file_names;
+    return $output_file_names;
 }
 
 sub verify_and_default_modes {
@@ -170,19 +170,19 @@ sub verify_and_default_modes {
 }
 
 sub verbose_multi_file_settings {
-    (   my string__array_ref $rperl_input_file_names,
-        my string__array_ref $cpp_output_file_names,
+    (   my string__array_ref $input_file_names,
+        my string__array_ref $output_file_names,
         my string__hash_ref $modes,
         my integer $rperl_input_file_num
     ) = @_;
 
     if ( $rperl_input_file_num > 1 ) {
         RPerl::verbose "Input File(s):\n";
-        foreach my string $input_file_name ( @{$rperl_input_file_names} ) {
+        foreach my string $input_file_name ( @{$input_file_names} ) {
             RPerl::verbose q{    } . $input_file_name . "\n";
         }
         RPerl::verbose "Output File(s):\n";
-        foreach my string $output_file_name ( @{$cpp_output_file_names} ) {
+        foreach my string $output_file_name ( @{$output_file_names} ) {
             RPerl::verbose q{    } . $output_file_name . "\n";
         }
         RPerl::verbose "Modes:\n";
@@ -200,7 +200,7 @@ sub verbose_multi_file_settings {
 #our void $store_unlabeled_options = sub {  # NEED FIX: can't define RPerl-style subroutines here?
 sub store_unlabeled_options {
     ( my unknown $option ) = @_;
-    push @{$rperl_input_file_names_unlabeled}, $option;
+    push @{$input_file_names_unlabeled}, $option;
     return;
 }
 
@@ -222,24 +222,24 @@ sub verbose_flags {
 # [[[ COMPILE RPERL TO XS & BINARY ]]]
 
 sub parse_generate_compile_execute_files {
-    (   my string__array_ref $rperl_input_file_names,
-        my string__array_ref $cpp_output_file_names,
+    (   my string__array_ref $input_file_names,
+        my string__array_ref $output_file_names,
         my string__hash_ref $modes,
         my integer $rperl_input_file_num
     ) = @_;
 
         if ( $modes->{ops} eq 'PERL' ) {
-            # Perl ops does not actually COMPILE, set compile mode to GENERATE instead
+            # PERL ops does not actually COMPILE, set compile mode to GENERATE instead
             if ($modes->{compile} eq 'COMPILE') { $modes->{compile} = 'GENERATE'; }
-            # Perl ops does not have CPP types, set types mode to PERL instead
+            # PERL ops does not have CPP types, set types mode to PERL instead
             if ($modes->{types} eq 'CPP') { $modes->{types} = 'PERL'; }
         }
 
 # DEV NOTE: Perl::Critic BUG!  'integer' triggers false positive RequireFinalReturn
 #    for my integer $i ( 0 .. ( $rperl_input_file_num - 1 ) ) {
     for my $i ( 0 .. ( $rperl_input_file_num - 1 ) ) {
-        my string $rperl_input_file_name = $rperl_input_file_names->[$i];
-        my string $cpp_output_file_name  = $cpp_output_file_names->[$i];
+        my string $rperl_input_file_name = $input_file_names->[$i];
+        my string $cpp_output_file_name  = $output_file_names->[$i];
 
         if ( $rperl_input_file_num > 1 ) {
             RPerl::verbose_reset();
@@ -264,11 +264,11 @@ sub parse_generate_compile_execute_files {
         }
 
         if ( $modes->{ops} eq 'PERL' ) {
-            rperl_to_rperl__parse_generate( $rperl_input_file_name, $modes );
+            RPerl::Compiler::rperl_to_rperl__parse_generate( $rperl_input_file_name, $modes );
         }
         elsif ( $modes->{ops} eq 'CPP' ) {
             my integer $eval_retval = eval {
-                rperl_to_xsbinary__parse_generate_compile(
+                RPerl::Compiler::rperl_to_xsbinary__parse_generate_compile(
                     $rperl_input_file_name, $cpp_output_file_name, $modes );  # returns void
                     1;  # return true
             };
@@ -301,8 +301,8 @@ sub parse_generate_compile_execute_files {
 my integer $help = 0;
 my integer $compile_flag                     = undef;
 my integer $execute_flag                     = undef;
-my string__array_ref $rperl_input_file_names = [];
-my string__array_ref $cpp_output_file_names  = [];
+my string__array_ref $input_file_names = [];
+my string__array_ref $output_file_names  = [];
 my string__hash_ref $modes = {}; # can't store defaults here, erased by GetOptions()
 my string__hash_ref $modes_default = { # default to CPPOPS_CPPTYPES_CHECKTRACE_COMPILE_EXECUTE in C++ output code
     ops     => 'CPP',
@@ -326,8 +326,8 @@ GetOptions(
     'verbose!'      => \$RPerl::VERBOSE,
     'compile!'      => \$compile_flag,
     'execute!'      => \$execute_flag,
-    'infile=s{1,}'  => \@{$rperl_input_file_names},
-    'outfile=s{1,}' => \@{$cpp_output_file_names},
+    'infile=s{1,}'  => \@{$input_file_names},
+    'outfile=s{1,}' => \@{$output_file_names},
     'mode=s%'       => \$modes,
     '<>'            => \&store_unlabeled_options
     )
@@ -335,18 +335,18 @@ GetOptions(
  
 if ($help) { pod2usage(-verbose => 1); }
 verbose_flags( $compile_flag, $execute_flag );
-$rperl_input_file_names
-    = accept_and_verify_input_files( $rperl_input_file_names,
-    $rperl_input_file_names_unlabeled );
-$rperl_input_file_num  = scalar @{$rperl_input_file_names};
-$cpp_output_file_names = generate_output_file_names( $rperl_input_file_names,
-    $cpp_output_file_names, $rperl_input_file_num );
+$input_file_names
+    = accept_and_verify_input_files( $input_file_names,
+    $input_file_names_unlabeled );
+$rperl_input_file_num  = scalar @{$input_file_names};
+$output_file_names = generate_output_file_names( $input_file_names,
+    $output_file_names, $rperl_input_file_num );
 $modes = verify_and_default_modes( $modes, $modes_default, $modes_supported,
     $compile_flag, $execute_flag );
-verbose_multi_file_settings( $rperl_input_file_names, $cpp_output_file_names,
+verbose_multi_file_settings( $input_file_names, $output_file_names,
     $modes, $rperl_input_file_num );
-parse_generate_compile_execute_files( $rperl_input_file_names,
-    $cpp_output_file_names, $modes, $rperl_input_file_num );
+parse_generate_compile_execute_files( $input_file_names,
+    $output_file_names, $modes, $rperl_input_file_num );
 
 __END__
 =head1 NAME
