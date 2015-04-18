@@ -16,12 +16,12 @@ our $VERSION = 0.000_010;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ INCLUDES ]]]
-use RPerl::CompileUnit::Module::ClassTemplate;
+use RPerl::CompileUnit::Module::Class::Template;
 
 # [[[ OPERATIONS ]]]
 
 #print '%main:: = ', "\n", Dumper( \%main:: ), "\n";
 
-print 'MODE_ID = ', RPerl__CompileUnit__Module__ClassTemplate__MODE_ID(), "\n";
-print q{ops = '}, $RPerl::MODES->{RPerl__CompileUnit__Module__ClassTemplate__MODE_ID()}->{ops}, q{'}, "\n";
-print q{types = '}, $RPerl::MODES->{RPerl__CompileUnit__Module__ClassTemplate__MODE_ID()}->{types}, q{'}, "\n";
+print 'MODE_ID = ', RPerl__CompileUnit__Module__Class__Template__MODE_ID(), "\n";
+print q{ops = '}, $RPerl::MODES->{RPerl__CompileUnit__Module__Class__Template__MODE_ID()}->{ops}, q{'}, "\n";
+print q{types = '}, $RPerl::MODES->{RPerl__CompileUnit__Module__Class__Template__MODE_ID()}->{types}, q{'}, "\n";

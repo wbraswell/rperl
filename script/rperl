@@ -316,9 +316,9 @@ sub parse_generate_compile_execute_files {
                 . ( $i + 1 ) . ' of '
                 . $input_files_count . "\n";
         }
-        RPerl::verbose 'Input File:    ' . $input_file_name . "\n";
+        RPerl::verbose 'Input File:       ' . $input_file_name . "\n";
         RPerl::verbose 'Output File(s):   ' . stringify_output_file_name_group($output_file_name_group) . "\n";
-        RPerl::verbose 'Modes:         ops => '
+        RPerl::verbose 'Modes:            ops => '
             . $modes->{ops}
             . ', types => '
             . $modes->{types}

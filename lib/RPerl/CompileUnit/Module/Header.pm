@@ -20,10 +20,10 @@ our hash_ref $properties = {};
 
 our string__hash_ref__method $ast_to_rperl__generate = sub {
     ( my object $self, my string__hash_ref $modes) = @_;
-    my string__hash_ref $rperl_source_group = { PMC => q{<<< RP::CU::M::H DUMMY PERLOPS_PERLTYPES SOURCE CODE >>>}};
+    my string__hash_ref $rperl_source_group = { PMC => q{<<< RP::CU::M::H DUMMY PERLOPS_PERLTYPES SOURCE CODE >>>} . "\n" };
     
     RPerl::diag('in Header->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n");
-    RPerl::diag('in Header->ast_to_rperl__generate(), received $modes = ' . "\n" . Dumper($modes) . "\n");
+#    RPerl::diag('in Header->ast_to_rperl__generate(), received $modes = ' . "\n" . Dumper($modes) . "\n");
 
 #    my object__array_ref $modules_and_headers = $self->{children}->[0]->{children};
     
@@ -37,7 +37,7 @@ our string__hash_ref__method $ast_to_rperl__generate = sub {
 
 our string__hash_ref__method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string__hash_ref $modes) = @_;
-    my string__hash_ref $cpp_source_group = { CPP => q{<<< RP::CU::M::H DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>} };
+    my string__hash_ref $cpp_source_group = { CPP => q{<<< RP::CU::M::H DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>} . "\n" };
 
     #...
     return $cpp_source_group;
@@ -45,7 +45,7 @@ our string__hash_ref__method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 
 our string__hash_ref__method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string__hash_ref $modes) = @_;
-    my string__hash_ref $cpp_source_group = { CPP =>  q{<<< RP::CU::M::H DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>} };
+    my string__hash_ref $cpp_source_group = { CPP =>  q{<<< RP::CU::M::H DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>} . "\n" };
 
     #...
     return $cpp_source_group;

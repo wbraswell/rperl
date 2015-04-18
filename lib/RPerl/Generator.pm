@@ -56,7 +56,7 @@ our void $grammar_rules__map = sub {
             . $RPerl::Grammar::rules->{$rule}
             . q[::{'> . $key . q<'} }(@_); };>) {croak $EVAL_ERROR;} } }];
 
-#        RPerl::diag 'in Generator::grammar_rules_map(), have 2nd $eval_string = ' . "\n" . $eval_string . "\n";
+        RPerl::diag 'in Generator::grammar_rules_map(), have 2nd $eval_string = ' . "\n" . $eval_string . "\n";
         $eval_retval = eval $eval_string;
         if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne '' ) ) {
             croak($EVAL_ERROR);
@@ -68,7 +68,7 @@ our void $grammar_rules__map = sub {
 our string__hash_ref $ast_to_rperl__generate = sub {
     ( my object $node, my string__hash_ref $modes) = @_;
 
-#    RPerl::diag "in Generator::ast_to_rperl__generate(), received \$node =\n" . RPerl::Parser::rperl_ast__dump($node) . "\n";
+    RPerl::diag "in Generator::ast_to_rperl__generate(), received \$node =\n" . RPerl::Parser::rperl_ast__dump($node) . "\n";
 #    RPerl::diag "in Generator::ast_to_rperl__generate(), received \$modes =\n" . Dumper($modes) . "\n";
 
     if ( not( defined $modes->{types} ) ) {

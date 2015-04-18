@@ -9,7 +9,7 @@
 
 # [[[ HEADER ]]]
 # <<< CHANGE_ME: replace with real class name >>>
-package RPerl::CompileUnit::Module::ClassTemplate;
+package RPerl::CompileUnit::Module::Class::Template;
 use strict;
 use warnings;
 use RPerl;

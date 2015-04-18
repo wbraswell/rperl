@@ -1,7 +1,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_993;
+    our $VERSION = 0.000_994;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -217,7 +217,7 @@ CompileUnit_5 => 'RPerl::CompileUnit::Module',
 Program_18 => 'RPerl::CompileUnit::Program',
 ModuleHeader_21 => 'RPerl::CompileUnit::Module::Header',
 Module_22 => 'RPerl::CompileUnit::Module::Package',
-Module_23 => 'RPerl::CompileUnit::Module::Class',
+Module_23 => 'RPerl::CompileUnit::Module::Class::Generator',
 Package_32 => 'RPerl::CompileUnit::Module::Package',
 Header_33 => 'RPerl::CompileUnit::Module::Header',
 Critic_36 => 'RPerl::CompileUnit::Critic',
@@ -226,7 +226,7 @@ Include_40 => 'RPerl::CompileUnit::Include',
 Constant_41 => 'RPerl::CompileUnit::Constant',
 Subroutine_46 => 'RPerl::CodeBlock::Subroutine',
 SubroutineArguments_50 => 'RPerl::CodeBlock::Subroutine::Arguments',
-Class_59 => 'RPerl::CompileUnit::Module::Class',
+Class_59 => 'RPerl::CompileUnit::Module::Class::Generator',
 Properties_63 => 'RPerl::DataStructure::Hash::Properties',
 Properties_64 => 'RPerl::DataStructure::Hash::Properties',
 Method_69 => 'RPerl::CodeBlock::Subroutine::Method',

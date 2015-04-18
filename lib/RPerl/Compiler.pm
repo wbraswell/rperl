@@ -1,3 +1,4 @@
+## no critic qw(ProhibitExcessMainComplexity)  # SYSTEM SPECIAL 5: allow complex code outside subroutines, must be on line 1
 # [[[ PREPROCESSOR ]]]
 # <<< TYPE_CHECKING: OFF >>>
 
@@ -6,12 +7,13 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_011;
+our $VERSION = 0.003_100;
 
 # [[[ CRITICS ]]]
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+## no critic qw(RequireBriefOpen)  # SYSTEM SPECIAL 10: allow complex processing with open filehandle
 
 # [[[ INCLUDES ]]]
 
@@ -93,14 +95,17 @@ our void $rperl_to_xsbinary__parse_generate_compile = sub {
 
 # Write Source Code Files To File System
 our void $save_source_files = sub {
-    ( my string__hash_ref $cpp_source_group, my string__hash_ref $cpp_file_name_group ) = @_;
+    (   my string__hash_ref $cpp_source_group,
+        my string__hash_ref $cpp_file_name_group
+    ) = @_;
 
     RPerl::diag(
         q{in Compiler::save_source_files(), received $cpp_source_group =},
         "\n", Dumper($cpp_source_group), "\n" );
     RPerl::diag(
         q{in Compiler::save_source_files(), received $cpp_file_name_group =},
-        "\n", Dumper($cpp_file_name_group), "\n" );
+        "\n", Dumper($cpp_file_name_group), "\n"
+    );
 
     foreach my string $suffix_key ( sort keys %{$cpp_source_group} ) {
         if (   ( not exists $cpp_file_name_group->{$suffix_key} )
@@ -113,7 +118,7 @@ our void $save_source_files = sub {
         }
     }
 
-    foreach my string $suffix_key ( sort keys %{$cpp_file_name_group} ) {
+    foreach my string $suffix_key ( sort keys %{$cpp_file_name_group} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 7: PERL CRITIC UNFILED ISSUE, not postfix foreach
         if (   ( not exists $cpp_source_group->{$suffix_key} )
             or ( not defined $cpp_source_group->{$suffix_key} )
             or ( $cpp_source_group->{$suffix_key} eq q{} ) )
@@ -123,7 +128,7 @@ our void $save_source_files = sub {
             );
         }
         my string $cpp_file_name = $cpp_file_name_group->{$suffix_key};
-        my string $cpp_source = $cpp_source_group->{$suffix_key};
+        my string $cpp_source    = $cpp_source_group->{$suffix_key};
 
         # actually save file(s)
         if ( -f $cpp_file_name ) {
@@ -158,7 +163,10 @@ our void $cpp_to_xsbinary__compile = sub {
 
     RPerl::diag(
         q{in Compiler::cpp_to_xsbinary__compile(), received $cpp_file_name_group =},
-        "\n", Dumper($cpp_file_name_group), "\n" );
+        "\n", Dumper($cpp_file_name_group), "\n"
+    );
+    
+    # ADD CALLS TO TRIGGER Inline::CPP COMPILATION
 };
 
 1;    # end of package
