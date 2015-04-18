@@ -65,18 +65,18 @@ our void $grammar_rules__map = sub {
 };
 
 # Generate from RPerl AST back to RPerl Source Code
-our string $ast_to_rperl__generate = sub {
-    ( my object $node, my string__hash_ref $mode) = @_;
+our string__hash_ref $ast_to_rperl__generate = sub {
+    ( my object $node, my string__hash_ref $modes) = @_;
 
 #    RPerl::diag "in Generator::ast_to_rperl__generate(), received \$node =\n" . RPerl::Parser::rperl_ast__dump($node) . "\n";
-#    RPerl::diag "in Generator::ast_to_rperl__generate(), received \$mode =\n" . Dumper($mode) . "\n";
+#    RPerl::diag "in Generator::ast_to_rperl__generate(), received \$modes =\n" . Dumper($modes) . "\n";
 
-    if ( not( defined $mode->{types} ) ) {
+    if ( not( defined $modes->{types} ) ) {
         croak(
             "\nERROR ECVGEMO00, RPERL GENERATOR, RPERL TYPES MODE:\n'PERL' expected but undefined/null value found,\ncroaking"
         );
     }
-    if ( not( $mode->{types} eq 'PERL' ) ) {
+    if ( not( $modes->{types} eq 'PERL' ) ) {
         croak(
             "\nERROR ECVGEMO01, RPERL GENERATOR, RPERL TYPES MODE:\n'PERL' expected but non-matching value found,\ncroaking"
         );
@@ -85,24 +85,24 @@ our string $ast_to_rperl__generate = sub {
     grammar_rules__map();
 
     # NEED FIX: check to ensure we are generating a valid return object
-    return ( $node->ast_to_rperl__generate($mode) );
+    return ( $node->ast_to_rperl__generate($modes) );
 };
 
 # Generate from RPerl AST to C++ Source Code
-our string $ast_to_cpp__generate = sub {
-    ( my object $node, my string__hash_ref $mode) = @_;
+our string__hash_ref $ast_to_cpp__generate = sub {
+    ( my object $node, my string__hash_ref $modes) = @_;
 
     RPerl::diag "in Generator::ast_to_cpp__generate(), received \$node =\n"
         . Dumper($node) . "\n";
-    RPerl::diag "in Generator::ast_to_cpp__generate(), received \$mode =\n"
-        . Dumper($mode) . "\n";
+    RPerl::diag "in Generator::ast_to_cpp__generate(), received \$modes =\n"
+        . Dumper($modes) . "\n";
 
-    if ( not( defined $mode->{types} ) ) {
+    if ( not( defined $modes->{types} ) ) {
         croak(
             "\nERROR ECVGEMO02, C++ GENERATOR, RPERL TYPES MODE:\n'PERL' or 'CPP' expected but undefined/null value found,\ncroaking"
         );
     }
-    if ( not( ( $mode->{types} eq 'PERL' ) or ( $mode->{types} eq 'CPP' ) ) )
+    if ( not( ( $modes->{types} eq 'PERL' ) or ( $modes->{types} eq 'CPP' ) ) )
     {
         croak(
             "\nERROR ECVGEMO03, C++ GENERATOR, RPERL TYPES MODE:\n'PERL' or 'CPP' expected but non-matching value found,\ncroaking"
@@ -112,10 +112,28 @@ our string $ast_to_cpp__generate = sub {
     grammar_rules__map();
 
     # NEED FIX: check to ensure we are generating a valid return object
-    if ( $mode->{types} eq 'PERL' ) {
-        return ( $node->ast_to_cpp__generate__CPPOPS_PERLTYPES($mode) );
+    if ( $modes->{types} eq 'PERL' ) {
+        return ( $node->ast_to_cpp__generate__CPPOPS_PERLTYPES($modes) );
     }
-    else { return ( $node->ast_to_cpp__generate__CPPOPS_CPPTYPES($mode) ); }
+    else { return ( $node->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes) ); }
+};
+
+# Append All Source Code Entries From Group 2 Onto The Respective Entries In Group 1
+our string__hash_ref $source_group_append = sub {
+#our void $source_group_append = sub {
+    (my string__hash_ref $rperl_source_group_1, my string__hash_ref $rperl_source_group_2) = @_;
+    RPerl::diag('in Generator::source_group_append(), received $rperl_source_group_1 =' . "\n" . Dumper($rperl_source_group_1) . "\n");
+    RPerl::diag('in Generator::source_group_append(), received $rperl_source_group_2 =' . "\n" . Dumper($rperl_source_group_2) . "\n");
+
+    foreach my string $suffix_key (sort keys %{$rperl_source_group_2}) {
+        if (defined $rperl_source_group_2->{$suffix_key}) {
+            # init to empty string if not already defined
+            if ((not exists $rperl_source_group_1->{$suffix_key}) or (not defined $rperl_source_group_1->{$suffix_key})) {
+                $rperl_source_group_1->{$suffix_key} = q{};
+            }
+            $rperl_source_group_1->{$suffix_key} .= $rperl_source_group_2->{$suffix_key};
+        }
+    }
 };
 
 1;

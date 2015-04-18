@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.020_000;
+our $VERSION = 0.020_010;
 
 # [[[ OO INHERITANCE ]]]
 # BASE CLASS HAS NO INHERITANCE
@@ -24,31 +24,40 @@ use File::Basename;
 
 # [[[ OO METHODS ]]]
 
+#our string__hash_ref__method $ast_to_rperl__generate = sub {
 sub ast_to_rperl__generate {
-    ( my $self, my $mode) = @_;
-    my $rperl_source = q{<<< DUMMY PERLOPS_PERLTYPES SOURCE CODE >>>};
+#    ( my object $self, my string__hash_ref $modes) = @_;
+    ( my $self, my $modes) = @_;
+#    my string__hash_ref $rperl_source_group = { PMC => q{<<< RP::CU::M::H DUMMY PERLOPS_PERLTYPES SOURCE CODE >>>}};
+    my $rperl_source_group = { PMC => q{<<< RP::CU::M::C DUMMY PERLOPS_PERLTYPES SOURCE CODE >>>}};
     
     RPerl::diag('in Class->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n");
-    RPerl::diag('in Class->ast_to_rperl__generate(), received $mode = ' . "\n" . Dumper($mode) . "\n");
+    RPerl::diag('in Class->ast_to_rperl__generate(), received $modes = ' . "\n" . Dumper($modes) . "\n");
 
-    return $rperl_source;
+    return $rperl_source_group;
 }
 
-our $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
-    ( my $self, my $mode) = @_;
-    my $cpp_source = q{<<< DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>};
+#our string__hash_ref__method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
+sub ast_to_cpp__generate__CPPOPS_PERLTYPES {
+#    ( my object $self, my string__hash_ref $modes) = @_;
+    ( my $self, my $modes) = @_;
+#    my string__hash_ref $cpp_source_group = { CPP => q{<<< RP::CU::M::C DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>} };
+    my $cpp_source_group = { CPP => q{<<< RP::CU::M::C DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>} };
 
     #...
-    return $cpp_source;
-};
+    return $cpp_source_group;
+}
 
-our $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
-    ( my $self, my $mode) = @_;
-    my $cpp_source = q{<<< DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>};
+#our string__hash_ref__method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
+sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
+#    ( my object $self, my string__hash_ref $modes) = @_;
+    ( my $self, my $modes) = @_;
+#    my string__hash_ref $cpp_source_group = { CPP =>  q{<<< RP::CU::M::C DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>} };
+    my $cpp_source_group = { CPP =>  q{<<< RP::CU::M::C DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>} };
 
     #...
-    return $cpp_source;
-};
+    return $cpp_source_group;
+}
 
 # RPerl object constructor, shorthand
 sub new {
@@ -71,7 +80,8 @@ INIT {
 #    $RPerl::DEBUG                   = 1;
 #    $RPerl::VERBOSE                 = 1;
 
-    # add calling .pl driver to INC for subroutine activation
+    # add calling .pl driver to INC for subroutine activation;
+    # DEV NOTE: should be safe to use basename() here instead of fileparse(), because $PROGRAM_NAME should never end in a directory
     $INC{ basename($PROGRAM_NAME) } = $PROGRAM_NAME;
 
 #	RPerl::diag "in Class.pm INIT block, have \%INC =\n" . Dumper(\%INC) . "\n";
@@ -500,7 +510,7 @@ sub activate_subroutine {
 #        RPerl::diag( "in Class::activate_subroutine(), $subroutine_name is a non-method subroutine\n" );
         if ( eval( 'defined(&main::' . $subroutine_name . ')' ) ) {
             croak
-                "Attempt by package '$package_name' to re-define shared global subroutine '$subroutine_name', please re-name your subroutine or make it a method, dying";
+                "ERROR ECVPR00, Pre-Processor: Attempt by package '$package_name' to re-define shared global subroutine '$subroutine_name', please re-name your subroutine or make it a method, croaking";
         }
 
 # DEV NOTE: must load into both main:: and $package_name:: namespaces,

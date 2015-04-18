@@ -1,9 +1,10 @@
 use strict;
 use warnings;
-our $VERSION = 0.001_052;
+our $VERSION = 0.001_053;
 use ExtUtils::MakeMaker;
+use English;
 push( @ExtUtils::MakeMaker::Overridable, qw(pm_to_blib) )
-    if ( $^O eq 'MSWin32' );
+    if ( $OSNAME eq 'MSWin32' );
 
 WriteMakefile(
     NAME         => 'RPerl',
@@ -37,7 +38,7 @@ sub pm_to_blib {
     my $blib = $self->SUPER::pm_to_blib(@_);
 
 # un-read-only blib/lib for tests to pass, files are modified at runtime there
-    if ( $^O eq 'MSWin32' ) {
+    if ( $OSNAME eq 'MSWin32' ) {
         my ( $lastline, $start ) = qq{\t\$(NOECHO) \$(TOUCH) pm_to_blib\n};
         ( $start = index( $blib, $lastline ) ) == -1
             && die "Can't find replacement string for pm_to_blib target";
