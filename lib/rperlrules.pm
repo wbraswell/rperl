@@ -2,7 +2,7 @@
 package rperlrules;    # yes, yes it does
 use strict;
 use warnings;
-our $VERSION = 0.000_010;
+our $VERSION = 0.000_011;
 
 #use RPerl;
 

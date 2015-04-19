@@ -3,7 +3,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_012;
+our $VERSION = 0.004_015;
 
 # [[[ OO INHERITANCE ]]]
 #use RPerl::CompileUnit::Module::Class;
@@ -254,8 +254,17 @@ our void $rperl_source__parse = sub {
 
 our string $rperl_ast__dump = sub {
     ( my object $rperl_ast) = @_;
+    $Data::Dumper::Indent = 1;  # do not attempt to align hash values based on hash key length
     my string $rperl_ast_dumped = Dumper($rperl_ast);
-    $rperl_ast_dumped =~ s/\ \ \ \ \ \ \ \ /\ \ \ \ /g;
+    $Data::Dumper::Indent = 2;  # restore default
+    $rperl_ast_dumped =~ s/\ \ /\ \ \ \ /g;  # set tabs from 2 to 4 spaces
+    my string $replacee;
+    my string $replacer;
+    foreach my string $rule ( sort keys %{$RPerl::Grammar::rules} ) {
+        $replacee = q{'} . $rule . q{'};
+        $replacer = q{'} . $rule . ' ISA ' . $RPerl::Grammar::rules->{$rule} . q{'};
+        $rperl_ast_dumped =~ s/$replacee/$replacer/g;
+    }
     return $rperl_ast_dumped;
 };
 

@@ -30,6 +30,8 @@ sub new {
     return bless { %{ ${ $_[0] . '::properties' } } }, $_[0];
 }
 
+# RPerl object destructor
+# NEED ADDRESS: do we ever need to actually deconstruct anything to free resources?
 sub DESTROY { }
 
 # [[[ SUBROUTINES ]]]

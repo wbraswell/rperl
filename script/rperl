@@ -120,12 +120,12 @@ sub generate_output_file_names {
 
         # if output file prefix(es) not provided, then generate output file name(s) from input file name(s)
         else {
-            RPerl::diag 'have $input_file_name = ' . $input_file_name . "\n";
+#            RPerl::diag 'have $input_file_name = ' . $input_file_name . "\n";
             # should not already be only prefix, fileparse() to isolate prefix
             ($input_file_name_prefix, $input_file_name_path, $input_file_name_suffix) = fileparse($input_file_name, qr/\.[^.]*/);
         }
         
-        RPerl::diag '$output_file_name_groups->[' . $i . ']' . "\n" . Dumper($output_file_name_groups->[$i]) . "\n";
+#        RPerl::diag '$output_file_name_groups->[' . $i . ']' . "\n" . Dumper($output_file_name_groups->[$i]) . "\n";
         
         my string $output_file_name_path_prefix = $input_file_name_path . $input_file_name_prefix;
 
@@ -152,11 +152,7 @@ sub generate_output_file_names {
                 $output_file_name_groups->[$i]->{H} = $output_file_name_path_prefix . '.h';
         }
 
-        RPerl::diag 'in rperl::generate_output_file_names(), bottom of loop '
-            . $i . ' of '
-            . $input_files_count
-            . ", have \$output_file_name_groups->[$i] = \n"
-            . Dumper( $output_file_name_groups->[$i] ) . "\n";
+#        RPerl::diag 'in rperl::generate_output_file_names(), bottom of loop ' . $i . ' of ' . $input_files_count . ", have \$output_file_name_groups->[$i] = \n" . Dumper( $output_file_name_groups->[$i] ) . "\n";
     }
 
     return $output_file_name_groups;

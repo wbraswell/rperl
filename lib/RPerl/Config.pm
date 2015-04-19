@@ -1,7 +1,7 @@
 package RPerl::Config;
 use strict;
 use warnings;
-our $VERSION = 0.002_010;
+our $VERSION = 0.002_020;
 
 # DEV NOTE: this package exists to serve as the header file for RPerl.pm itself,
 # as well as for RPerl.pm dependencies such as Class.pm, HelperFunctions_cpp.pm, and rperltypes.pm
@@ -266,9 +266,9 @@ if ( scalar @{$rperls_found} == 0 ) {
 }
 my $rperl_found = $rperls_found->[0];
 if ( scalar @{$rperls_found} > 1 ) {
-    print {*STDERR}
-        'WARNING WEXRP00: Found multiple rperl executables, using first located, ',
-        $rperl_found, "\n";
+    if ((not defined $ENV{RPERL_WARNINGS}) or ($ENV{RPERL_WARNINGS})) {
+        print {*STDERR} 'WARNING WEXRP00: Found multiple rperl executables, using first located, ', $rperl_found, "\n";
+    }
 }
 
 my $rperl_pm_found = undef;

@@ -99,13 +99,8 @@ our void $save_source_files = sub {
         my string__hash_ref $cpp_file_name_group
     ) = @_;
 
-    RPerl::diag(
-        q{in Compiler::save_source_files(), received $cpp_source_group =},
-        "\n", Dumper($cpp_source_group), "\n" );
-    RPerl::diag(
-        q{in Compiler::save_source_files(), received $cpp_file_name_group =},
-        "\n", Dumper($cpp_file_name_group), "\n"
-    );
+#    RPerl::diag( q{in Compiler::save_source_files(), received $cpp_source_group =}, "\n", Dumper($cpp_source_group), "\n" );
+#    RPerl::diag( q{in Compiler::save_source_files(), received $cpp_file_name_group =}, "\n", Dumper($cpp_file_name_group), "\n" );
 
     foreach my string $suffix_key ( sort keys %{$cpp_source_group} ) {
         if (   ( not exists $cpp_file_name_group->{$suffix_key} )

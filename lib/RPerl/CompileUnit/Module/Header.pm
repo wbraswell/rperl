@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Header;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -20,7 +20,8 @@ our hash_ref $properties = {};
 
 our string__hash_ref__method $ast_to_rperl__generate = sub {
     ( my object $self, my string__hash_ref $modes) = @_;
-    my string__hash_ref $rperl_source_group = { PMC => q{<<< RP::CU::M::H DUMMY PERLOPS_PERLTYPES SOURCE CODE >>>} . "\n" };
+#    my string__hash_ref $rperl_source_group = { PMC => q{<<< RP::CU::M::H DUMMY PERLOPS_PERLTYPES SOURCE CODE >>>} . "\n" };
+    my string__hash_ref $rperl_source_group = {};
     
     RPerl::diag('in Header->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n");
 #    RPerl::diag('in Header->ast_to_rperl__generate(), received $modes = ' . "\n" . Dumper($modes) . "\n");
@@ -28,12 +29,26 @@ our string__hash_ref__method $ast_to_rperl__generate = sub {
 #    my $class = ref $self;
 #    RPerl::diag('in Header->ast_to_rperl__generate(), have symtab entries for ' . $class . "\n" . RPerl::analyze_class_symtab_entries($class) . "\n");
 
-#    my object__array_ref $modules_and_headers = $self->{children}->[0]->{children};
+    my object $critic_optional = $self->{children}->[0];
+    my string $package_keyword = $self->{children}->[1];  # PERLOPS only
+    my object $package_name = $self->{children}->[2]->{children}->[0];
+    my string $semicolon = $self->{children}->[3];  # PERLOPS only
+    my string $use_strict = $self->{children}->[4]->{children}->[0];  # PERLOPS only
+    my string $use_warnings = $self->{children}->[4]->{children}->[1];  # PERLOPS only
+    my string $use_rperl = $self->{children}->[4]->{children}->[2];  # PERLOPS only
+    my string $our_keyword = $self->{children}->[4]->{children}->[3];  # PERLOPS only
+    my string $version_number = $self->{children}->[4]->{children}->[4];
     
-#    foreach my object $module_or_header (@{$modules_and_headers}) {
-#        RPerl::diag('in Header->ast_to_rperl__generate(), have $module_or_header = ' . "\n" . RPerl::Parser::rperl_ast__dump($module_or_header) . "\n\n");
-#        $rperl_source .= $module_or_header->ast_to_rperl__generate($modes);
-#    }
+    $rperl_source_group->{PMC} = q{};
+    if ((exists $critic_optional->{children}->[0]) and (defined $critic_optional->{children}->[0])) {
+        my string__hash_ref $rperl_source_subgroup = $critic_optional->{children}->[0]->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append($rperl_source_group, $rperl_source_subgroup);
+    }
+    $rperl_source_group->{PMC} .= $package_keyword . ' ' . $package_name . $semicolon . "\n";
+    $rperl_source_group->{PMC} .= $use_strict . "\n";
+    $rperl_source_group->{PMC} .= $use_warnings . "\n";
+    $rperl_source_group->{PMC} .= $use_rperl . "\n";
+    $rperl_source_group->{PMC} .= $our_keyword . ' $VERSION = ' . $version_number . q{;} . "\n";
 
     return $rperl_source_group;
 };
