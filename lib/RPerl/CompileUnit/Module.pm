@@ -33,6 +33,8 @@ our string__hash_ref__method $ast_to_rperl__generate = sub {
     my object__array_ref $modules_and_headers = $self->{children}->[0]->{children};
     
 #    RPerl::diag('in Module->ast_to_rperl__generate(), have %RPerl::Generator:: symbol table = ' . "\n" . Dumper(\%RPerl::Generator::) . "\n");
+    RPerl::diag('in Module->ast_to_rperl__generate(), have %ModuleHeader_21:: symbol table = ' . "\n" . Dumper(\%ModuleHeader_21::) . "\n");
+    RPerl::diag('in Module->ast_to_rperl__generate(), have %RPerl::CompileUnit::Module::Header:: symbol table = ' . "\n" . Dumper(\%RPerl::CompileUnit::Module::Header::) . "\n");
     
     foreach my object $header_or_module (@{$modules_and_headers}) {
         RPerl::diag('in Module->ast_to_rperl__generate(), have $header_or_module = ' . "\n" . RPerl::Parser::rperl_ast__dump($header_or_module) . "\n\n");

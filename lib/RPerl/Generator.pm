@@ -58,9 +58,7 @@ our void $grammar_rules__map = sub {
 
         RPerl::diag 'in Generator::grammar_rules_map(), have 2nd $eval_string = ' . "\n" . $eval_string . "\n";
         $eval_retval = eval $eval_string;
-        if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne '' ) ) {
-            croak($EVAL_ERROR);
-        }
+        if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne '' ) ) { croak($EVAL_ERROR); }
     }
 };
 
