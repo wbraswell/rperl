@@ -25,6 +25,9 @@ our string__hash_ref__method $ast_to_rperl__generate = sub {
     RPerl::diag('in Header->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n");
 #    RPerl::diag('in Header->ast_to_rperl__generate(), received $modes = ' . "\n" . Dumper($modes) . "\n");
 
+#    my $class = ref $self;
+#    RPerl::diag('in Header->ast_to_rperl__generate(), have symtab entries for ' . $class . "\n" . RPerl::analyze_class_symtab_entries($class) . "\n");
+
 #    my object__array_ref $modules_and_headers = $self->{children}->[0]->{children};
     
 #    foreach my object $module_or_header (@{$modules_and_headers}) {

@@ -16,6 +16,8 @@ our $VERSION = 0.000_010;
 use RPerl::CompileUnit;
 use RPerl::CompileUnit::Program;
 use RPerl::CompileUnit::Module;
+use RPerl::CompileUnit::Module::Class::Generator;
+use RPerl::CompileUnit::Module::Header;
 use RPerl::CompileUnit::Module::Package;
 use RPerl::CodeBlock::Subroutine;
 

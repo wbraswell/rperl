@@ -4,61 +4,38 @@ use warnings;
 our $VERSION = 0.001_000;
 
 # THIS FILE SHOWS HOW TO IDENTIFY SYMBOL TABLE ENTRY TYPES FOR A CLASS
+# analyze_class_symtab_entries() MOVED TO RPerl::Config 
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
 ## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
 
-use Data::Dumper;
+use RPerl::Config;
 use RPerl::CompileUnit::Module::Header;
 use RPerl::Generator;
 RPerl::Generator::grammar_rules__map();
 
 #my $class = 'main';
 #my $class = 'RPerl';
-#my $class = 'RPerl::CompileUnit::Module::Header';
-my $class = 'ModuleHeader_21';
+my $class = 'RPerl::CompileUnit::Module::Header';
+print RPerl::analyze_class_symtab_entries($class) . "\n\n";
 
-my @isa_array = eval '@' . $class . '::ISA';
-#print Dumper(\@isa_array);
-my $isa_string = join ', ', @isa_array;
-print $class . ' ISA (' . $isa_string . ')' . "\n\n";
+$class = 'ModuleHeader_21';
+print RPerl::analyze_class_symtab_entries($class) . "\n\n";
 
-#foreach my $entry ( sort keys %RPerl::CompileUnit::Module::Header:: ) {
-my @keys = eval q{sort keys %} . $class . q{::};
-foreach my $entry (@keys) {
+exit;
 
-#    my $glob = $RPerl::CompileUnit::Module::Header::{$entry};
-    my $glob = eval q{$} . $class . q{::{$entry}};
+print q{=} x 50;
+print "\n";
+print q{=} x 50;
+print "\n";
+my $mh21 = ModuleHeader_21->new();
+print q{$mh21 =} . "\n" . Dumper($mh21) . "\n";
 
-    print q{-} x 50;
-    print "\n";
-    print $entry, "\n";
-
-#    print ref \$glob, "\n";  # always says GLOB
-
-    if ( defined ${$glob} ) {
-        print "\t", 'scalar';
-        my $ref_type = ref ${$glob};
-        if ( $ref_type ne q{} ) {
-            print "\t", $ref_type, '_ref';
-        }
-    }
-    if ( @{$glob} ) {
-        print "\t", 'array';
-    }
-    if ( %{$glob} ) {
-        print "\t", 'hash';
-    }
-    if ( defined &{$glob} ) {
-        print "\t", 'code';
-    }
-
-    print "\n";
-}
-
-print Dumper(ModuleHeader_21::ast_to_rperl__generate({FAKE => 'self'}, {FAKE => 'modes'}));
+#my $generate_retval = ModuleHeader_21::ast_to_rperl__generate({FAKE => 'self'}, {FAKE => 'modes'});
+my $generate_retval = $mh21->ast_to_rperl__generate( { FAKE => 'modes' } );
+print q{$generate_retval =} . "\n" . Dumper($generate_retval) . "\n";
 
 __END__
 

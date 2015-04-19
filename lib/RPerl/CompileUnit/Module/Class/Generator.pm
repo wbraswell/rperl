@@ -27,9 +27,7 @@ our string__hash_ref__method $ast_to_rperl__generate = sub {
     ( my object $self, my string__hash_ref $modes) = @_;
 
     #    ( my $self, my $modes) = @_;
-    my string__hash_ref $rperl_source_group
-        = { PMC => q{<<< RP::CU::M::H DUMMY PERLOPS_PERLTYPES SOURCE CODE >>>}
-            . "\n" };
+    my string__hash_ref $rperl_source_group = { PMC => q{<<< RP::CU::M::C DUMMY PERLOPS_PERLTYPES SOURCE CODE >>>} . "\n" };
 
 #    my $rperl_source_group = { PMC => q{<<< RP::CU::M::C DUMMY PERLOPS_PERLTYPES SOURCE CODE >>>} . "\n" };
 

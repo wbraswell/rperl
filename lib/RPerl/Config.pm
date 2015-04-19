@@ -1,7 +1,7 @@
 package RPerl::Config;
 use strict;
 use warnings;
-our $VERSION = 0.002_001;
+our $VERSION = 0.002_010;
 
 # DEV NOTE: this package exists to serve as the header file for RPerl.pm itself,
 # as well as for RPerl.pm dependencies such as Class.pm, HelperFunctions_cpp.pm, and rperltypes.pm
@@ -101,6 +101,51 @@ sub verbose_pause {
 sub verbose_reset {
     if ( $ENV{RPERL_VERBOSE} or $RPerl::VERBOSE ) { system 'reset'; }
     return 1;
+}
+
+sub analyze_class_symtab_entries {
+    ( my $class ) = @_;
+    my $retval = q{};
+    my @isa_array = eval '@' . $class . '::ISA';
+
+    #print Dumper(\@isa_array);
+    my $isa_string = join ', ', @isa_array;
+    $retval .= '<<<<< BEGIN SYMTAB ENTRIES >>>>>' . "\n";
+    $retval .= $class . ' ISA (' . $isa_string . ')' . "\n\n";
+
+    #foreach my $entry ( sort keys %RPerl::CompileUnit::Module::Header:: ) {
+    my @keys = eval q{sort keys %} . $class . q{::};
+    foreach my $entry (@keys) {
+
+        #    my $glob = $RPerl::CompileUnit::Module::Header::{$entry};
+        my $glob = eval q{$} . $class . q{::{$entry}};
+
+        $retval .= q{-} x 50;
+        $retval .= "\n";
+        $retval .= $entry . "\n";
+
+        #    $retval .= ref \$glob, "\n";  # always says GLOB
+
+        if ( defined ${$glob} ) {
+            $retval .= "\t" . 'scalar';
+            my $ref_type = ref ${$glob};
+            if ( $ref_type ne q{} ) {
+                $retval .= "\t" . $ref_type . '_ref';
+            }
+        }
+        if ( @{$glob} ) {
+            $retval .= "\t" . 'array';
+        }
+        if ( %{$glob} ) {
+            $retval .= "\t" . 'hash';
+        }
+        if ( defined &{$glob} ) {
+            $retval .= "\t" . 'code';
+        }
+
+        $retval .= "\n";
+    }
+    $retval .= '<<<<< END SYMTAB ENTRIES >>>>>' . "\n";
 }
 
 # [[[ OPERATIONS SPECIAL ]]]

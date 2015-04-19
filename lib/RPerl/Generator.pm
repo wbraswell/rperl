@@ -32,7 +32,7 @@ our void $grammar_rules__map = sub {
             . q{; use parent qw(}
             . $RPerl::Grammar::rules->{$rule}
             . q{); use }
-            . $RPerl::Grammar::rules->{$rule} . q{; 1;};
+            . $RPerl::Grammar::rules->{$rule} . q{; our hash_ref $properties = {}; 1;};
 
 #        RPerl::diag 'in Generator::grammar_rules_map(), have 1st $eval_string = ' . "\n" . $eval_string . "\n";
         my integer $eval_retval = eval $eval_string;
@@ -56,7 +56,7 @@ our void $grammar_rules__map = sub {
             . $RPerl::Grammar::rules->{$rule}
             . q[::{'> . $key . q<'} }(@_); };>) {croak $EVAL_ERROR;} } }];
 
-        RPerl::diag 'in Generator::grammar_rules_map(), have 2nd $eval_string = ' . "\n" . $eval_string . "\n";
+#        RPerl::diag 'in Generator::grammar_rules_map(), have 2nd $eval_string = ' . "\n" . $eval_string . "\n";
         $eval_retval = eval $eval_string;
         if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne '' ) ) { croak($EVAL_ERROR); }
     }
