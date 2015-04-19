@@ -1,8 +1,8 @@
 use strict;
 use warnings;
-our $VERSION = 0.001_053;
+our $VERSION = 0.001_060;
 use ExtUtils::MakeMaker;
-use English;
+BEGIN { use English; }
 push( @ExtUtils::MakeMaker::Overridable, qw(pm_to_blib) )
     if ( $OSNAME eq 'MSWin32' );
 
@@ -32,6 +32,7 @@ WriteMakefile(
 );
 
 package MY;
+BEGIN { use English; }
 
 sub pm_to_blib {
     my $self = shift;
