@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Header;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_000;
+our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -36,9 +36,7 @@ our string__hash_ref__method $ast_to_rperl__generate = sub {
     my string $use_warnings = $self->{children}->[4]->{children}->[1];  # PERLOPS only
     my string $use_rperl = $self->{children}->[4]->{children}->[2];  # PERLOPS only
     my string $our_keyword = $self->{children}->[4]->{children}->[3];  # PERLOPS only
-    my string $version_assign = $self->{children}->[4]->{children}->[4];  # PERLOPS only
-    my string $version_number = $self->{children}->[4]->{children}->[5];
-    my string $version_semicolon = $self->{children}->[4]->{children}->[6];  # PERLOPS only
+    my string $version_number = $self->{children}->[4]->{children}->[4];
     
     $rperl_source_group->{PMC} = q{};
     if ((exists $critic_optional->{children}->[0]) and (defined $critic_optional->{children}->[0])) {
@@ -49,8 +47,9 @@ our string__hash_ref__method $ast_to_rperl__generate = sub {
     $rperl_source_group->{PMC} .= $use_strict . "\n";
     $rperl_source_group->{PMC} .= $use_warnings . "\n";
     $rperl_source_group->{PMC} .= $use_rperl . "\n";
-#    $rperl_source_group->{PMC} .= $our_keyword . ' $VERSION = ' . $version_number . q{;} . "\n";
-    $rperl_source_group->{PMC} .= $our_keyword . q{ } . $version_assign . q{ } . $version_number . $version_semicolon . "\n";
+    # DEV NOTE: as of v1.0b2, the hard-coded ' $VERSION = ' & ';' below are the only discarded tokens in the RPerl grammar,
+    # due to the need to differentiate between v-numbers and otherwise-identical normal numbers
+    $rperl_source_group->{PMC} .= $our_keyword . ' $VERSION = ' . $version_number . q{;} . "\n";
 
     return $rperl_source_group;
 };

@@ -113,7 +113,7 @@ our void $save_source_files = sub {
         }
     }
 
-    foreach my string $suffix_key ( sort keys %{$cpp_file_name_group} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 7: PERL CRITIC UNFILED ISSUE, not postfix foreach
+    foreach my string $suffix_key ( sort keys %{$cpp_file_name_group} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 7: PERL CRITIC UNFILED ISSUE, not postfix foreach or if
         if (   ( not exists $cpp_source_group->{$suffix_key} )
             or ( not defined $cpp_source_group->{$suffix_key} )
             or ( $cpp_source_group->{$suffix_key} eq q{} ) )

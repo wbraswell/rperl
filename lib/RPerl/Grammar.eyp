@@ -19,9 +19,7 @@
 }
 
 %token SHEBANG               = /(^#!\/(?:\w+\/)*perl)/                   # begin line, hash (octothorpe), bang, *NIX path to Perl; ex. '#!/usr/bin/perl'
-#%token VERSION_NUMBER_ASSIGN = /\$VERSION\ =\ (\d\d?\.\d{3}\_\d{3});/    # match assign match, only capture & return number; ex. '$VERSION = 12.345_678;' returns '12.345_678'
-%token VERSION_ASSIGN = /(\$VERSION\ =)/    # match assign match, only capture & return number; ex. '$VERSION = 12.345_678;' returns '12.345_678'
-%token VERSION_NUMBER = /(\d\d?\.\d{3}\_\d{3})/    # match assign match, only capture & return number; ex. '$VERSION = 12.345_678;' returns '12.345_678'
+%token VERSION_NUMBER_ASSIGN = /\$VERSION\ =\ (\d\d?\.\d{3}\_\d{3});/    # $VERSION assign v-number, only capture v-number, not a normal number; ex. '$VERSION = 12.345_678;' returns '12.345_678'
 %token LITERAL_NUMBER        = /(-?(((\d{1,2}_)?(\d{3}_)*\d{3})|\d{1,2})(\.((\d{3}(_\d{3})*(_\d{1,2})?)|\d{1,2}))?)/   # number w/ underscores; ex. '12_345_678.910_1'
 %token LITERAL_STRING        = /(('[^']+')|("[^"\@\$]*((\\n)|(\\t))+[^"\@\$]*")|(q{[^}]*}))/  # single quotes non-empty; double quotes non-empty w/out sigils & w/ newline or tab; or single q-braces
 %token VARIABLE_SYMBOL       = /(\$(?:[a-zA-Z]\w*)?[a-z]\w*(::[a-zA-Z]\w*)*)/ # dollar sigil, scoped word with at least one lowercase in the first scope segment
@@ -139,8 +137,7 @@ Program:                SHEBANG Critic? Header Critic* Include* Constant* Subrou
 ModuleHeader:           Critic? 'package' WordScoped ';' Header ;
 Module:                 Package | Class ;
 Package:                Critic* Include* Constant* Subroutine+ LITERAL_NUMBER ';' ;
-#Header:                 'use strict;' 'use warnings;' 'use RPerl;' 'our' VERSION_NUMBER_ASSIGN;
-Header:                 'use strict;' 'use warnings;' 'use RPerl;' 'our' VERSION_ASSIGN VERSION_NUMBER ';';
+Header:                 'use strict;' 'use warnings;' 'use RPerl;' 'our' VERSION_NUMBER_ASSIGN;
 Critic:                 '## no critic qw(' WORD+ ')';
 Include:                'use' WordScoped ';' | 'use' WordScoped OP01_QW WORD+ ')' ';' ;
 Constant:               'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant Literal ';' ;

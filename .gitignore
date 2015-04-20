@@ -34,4 +34,4 @@ lib/RPerl/Test/Properties/_Inline
 /out
 
 # [ RPerl Compile ]
-#lib/RPerl/Test/Fu.pmc
+lib/RPerl/Test/Fu.pmc
