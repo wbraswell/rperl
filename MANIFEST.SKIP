@@ -39,3 +39,6 @@ swp$
 ^lib\/3rd_party_debugging
 ^script\/3rd_party_debugging
 ^script\/development\/unused
+
+# [ RPerl Compile ]
+^lib\/RPerl\/Test\/Fu\.pmc

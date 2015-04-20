@@ -26,12 +26,13 @@ our hash_ref $properties = {};
 our string__hash_ref__method $ast_to_rperl__generate = sub {
     ( my object $self, my string__hash_ref $modes) = @_;
     my string__hash_ref $rperl_source_group = {};
-    
-    RPerl::diag('in Module->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n");
+ 
+#    RPerl::diag('in Module->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n");
 #    RPerl::diag('in Module->ast_to_rperl__generate(), received $modes = ' . "\n" . Dumper($modes) . "\n");
 
     my object__array_ref $modules_and_headers = $self->{children}->[0]->{children};
     
+    # disable unused symbol table testing
 #    RPerl::diag('in Module->ast_to_rperl__generate(), have %RPerl::Generator:: symbol table = ' . "\n" . Dumper(\%RPerl::Generator::) . "\n");
 #    RPerl::diag('in Module->ast_to_rperl__generate(), have %RPerl::CompileUnit::Module::Header:: symbol table dumped = ' . "\n" . Dumper(\%RPerl::CompileUnit::Module::Header::) . "\n");
 #    RPerl::diag('in Module->ast_to_rperl__generate(), have %ModuleHeader_21:: symbol table dumped = ' . "\n" . Dumper(\%ModuleHeader_21::) . "\n");
@@ -41,7 +42,7 @@ our string__hash_ref__method $ast_to_rperl__generate = sub {
 #    RPerl::diag('in Module->ast_to_rperl__generate(), have symtab entries for ' . $class . "\n" . RPerl::analyze_class_symtab_entries($class) . "\n\n");
     
     foreach my object $header_or_module (@{$modules_and_headers}) {
-        RPerl::diag('in Module->ast_to_rperl__generate(), have $header_or_module = ' . "\n" . RPerl::Parser::rperl_ast__dump($header_or_module) . "\n\n");
+#        RPerl::diag('in Module->ast_to_rperl__generate(), have $header_or_module = ' . "\n" . RPerl::Parser::rperl_ast__dump($header_or_module) . "\n\n");
         my string__hash_ref $rperl_source_subgroup = $header_or_module->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append($rperl_source_group, $rperl_source_subgroup);
     }

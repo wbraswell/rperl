@@ -20,6 +20,7 @@ use RPerl::CompileUnit::Module::Class::Generator;
 use RPerl::CompileUnit::Module::Header;
 use RPerl::CompileUnit::Module::Package;
 use RPerl::CodeBlock::Subroutine;
+use RPerl::NonGenerator;
 
 # [[[ OPERATIONS ]]]
 

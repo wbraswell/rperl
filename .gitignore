@@ -32,3 +32,6 @@ lib/RPerl/Test/Properties/_Inline
 
 # [ NEED FIX: Unknown Files ]
 /out
+
+# [ RPerl Compile ]
+#lib/RPerl/Test/Fu.pmc

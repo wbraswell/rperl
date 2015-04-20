@@ -1,6 +1,0 @@
-package RPerl::Test::Fu;
-use strict;
-use warnings;
-use RPerl;
-our $VERSION = 0.001_000;
-<<< RP::CU::M::C DUMMY PERLOPS_PERLTYPES SOURCE CODE >>>

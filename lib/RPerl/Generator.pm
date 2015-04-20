@@ -12,12 +12,15 @@ use RPerl::CompileUnit::Module::Class;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
-## no critic qw(ProhibitPackageVars)  # SYSTEM SPECIAL 4c: allow $RPerl::Grammer::rules
+## no critic qw(ProhibitPackageVars)  # SYSTEM SPECIAL 4c: allow $RPerl::Grammar::rules
 
 # [[[ INCLUDES ]]]
 use RPerl::Grammar;
 use RPerl::Parser;
 use Scalar::Util qw(blessed);
+
+# [[[ OO PROPERTIES ]]]
+our hash_ref $properties = {};
 
 # [[[ PROCEDURAL SUBROUTINES ]]]
 
