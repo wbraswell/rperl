@@ -200,7 +200,7 @@ Type:                   WORD | TYPE_INTEGER ;
 TypeInner:              'my' Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN ;
 TypeInnerConstant:      'my' Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN ;
 VariableOrLiteral:      Variable | Literal;
-Literal:                LITERAL_STRING | LITERAL_NUMBER ;
+Literal:                LITERAL_NUMBER | LITERAL_STRING ;
 
 %%
 
@@ -279,7 +279,7 @@ Expression_124 => 'RPerl::Operation::Expression::SubroutineCall::MethodCall',
 Expression_125 => 'RPerl::Operation::Expression::SubroutineCall::MethodCall::ConstructorCall',
 SubExpression_126 => 'RPerl::Operation::Expression',
 SubExpression_127 => 'RPerl::Operation::Expression::SubExpression::Literal::Undefined',
-SubExpression_128 => 'RPerl::Operation::Expression::SubExpression::Literal',
+SubExpression_128 => 'RPerl::Operation::Expression::SubExpression::Literal',  # Literal
 SubExpression_129 => 'RPerl::Operation::Expression::SubExpression::Variable',
 SubExpression_130 => 'RPerl::DataStructure::Array::Reference',
 SubExpression_131 => 'RPerl::Operation::Expression::SubExpression::ArrayDereference',
@@ -333,8 +333,8 @@ TypeInner_207 => 'RPerl::NonGenerator',  # 'my' Type '$TYPED_' WORD OP19_VARIABL
 TypeInnerConstant_208 => 'RPerl::NonGenerator',  # 'my' Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN
 VariableOrLiteral_209 => 'RPerl::Operation::Expression::SubExpression::Variable',
 VariableOrLiteral_210 => 'RPerl::Operation::Expression::SubExpression::Literal',
-Literal_211 => 'RPerl::Operation::Expression::SubExpression::Literal',  # LITERAL_STRING
-Literal_212 => 'RPerl::Operation::Expression::SubExpression::Literal'  # LITERAL_NUMBER
+Literal_211 => 'RPerl::Operation::Expression::SubExpression::Literal::Number',  # LITERAL_NUMBER
+Literal_212 => 'RPerl::Operation::Expression::SubExpression::Literal::String'  # LITERAL_STRING
 };
 
     1;

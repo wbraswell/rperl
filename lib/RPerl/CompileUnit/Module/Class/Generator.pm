@@ -125,7 +125,7 @@ our string__hash_ref__method $ast_to_rperl__generate = sub {
     }
 
     if ( ref $properties eq 'Properties_63' ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 7: PERL CRITIC UNFILED ISSUE, not postfix foreach or if
-        # non-empty $properties
+                                                # non-empty $properties
         my string $properties_our_hash_ref = $properties->{children}->[0];
         my string $properties_equal        = $properties->{children}->[1];
         my string $properties_left_brace   = $properties->{children}->[2];
@@ -145,13 +145,18 @@ our string__hash_ref__method $ast_to_rperl__generate = sub {
             $rperl_source_subgroup );
 
         foreach my object $property ( @{ $properties_1_to_n->{children} } ) {
-            $rperl_source_subgroup
-                = $property->ast_to_rperl__generate($modes);
-            RPerl::Generator::source_group_append( $rperl_source_group,
-                $rperl_source_subgroup );
+            if ( ( ref $property ) eq 'TERMINAL' ) {
+                $rperl_source_group->{PMC} .= $property->{attr}; # comma between properties
+            }
+            else {
+                $rperl_source_subgroup
+                    = $property->ast_to_rperl__generate($modes);
+                RPerl::Generator::source_group_append( $rperl_source_group,
+                    $rperl_source_subgroup );
+            }
         }
         $rperl_source_group->{PMC}
-            .= $properties_right_brace . $properties_semicolon . "\n";
+            .= "\n" . $properties_right_brace . $properties_semicolon . "\n";
     }
     else {    # Properties_64
               # empty $properties

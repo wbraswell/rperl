@@ -70,7 +70,7 @@ our void $number__CHECKTRACE = sub {
     }
 };
 
-# BUG BOUNTY #000, 50 CodeCoin: modify all ::number*__stringify() to output underscores, to match LITERAL_STRING grammar token input
+# BUG BOUNTY #000, 50 CodeCoin: modify all ::number*__stringify() to output underscores, to match LITERAL_NUMBER grammar token input
 
 # [[[ STRINGIFY ]]]
 our string $number__stringify = sub {

@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_100;
+our $VERSION = 0.003_110;
 
 # [[[ CRITICS ]]]
 
@@ -150,7 +150,7 @@ our void $save_source_files = sub {
             );
 
         if (($suffix_key eq 'PMC') or ($suffix_key eq 'EXE')) {
-            `perltidy -pbp --ignore-side-comment-lengths --converge -b -bext='/' -q $file_name`;
+            `perltidy -pbp --ignore-side-comment-lengths --converge -b -nst -bext='/' -q $file_name`;
         }
     }
 

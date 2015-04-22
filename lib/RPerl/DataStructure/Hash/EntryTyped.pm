@@ -44,7 +44,7 @@ our string__hash_ref__method $ast_to_rperl__generate = sub {
         . $fat_arrow . q{ }
         . $type_inner_my . q{ }
         . $type_inner_type . q{ }
-        . $type_inner_TYPED . q{ }
+        . $type_inner_TYPED
         . $type_inner_name . q{ }
         . $type_inner_equal . q{ };
 

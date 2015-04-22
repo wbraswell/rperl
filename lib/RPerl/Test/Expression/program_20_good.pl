@@ -9,7 +9,7 @@ our $VERSION = 0.001_000;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
-# BUG BOUNTY #000, 50 CodeCoin: modify all ::number*__stringify() to output underscores, to match LITERAL_STRING grammar token input
+# BUG BOUNTY #000, 50 CodeCoin: modify all ::number*__stringify() to output underscores, to match LITERAL_NUMBER grammar token input
 
 # [[[ OPERATIONS ]]]
 
