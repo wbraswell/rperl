@@ -1,16 +1,17 @@
 # [[[ HEADER ]]]
-package RPerl::Operation::Expression::SubExpression::Literal;
+package RPerl::DataStructure::Hash::EntryTyped;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_011;
+our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
-use parent qw(RPerl::Operation::Expression);
-use RPerl::Operation::Expression;
+use RPerl::GrammarRule;
+use parent qw(RPerl::GrammarRule);
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OO PROPERTIES ]]]
 our hash_ref $properties = {};
@@ -21,7 +22,11 @@ our string__hash_ref__method $ast_to_rperl__generate = sub {
     ( my object $self, my string__hash_ref $modes) = @_;
     my string__hash_ref $rperl_source_group = { PMC => q{} };
 
-    RPerl::diag( 'in Literal::EntryTyped->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+    RPerl::diag(
+        'in Hash::EntryTyped->ast_to_rperl__generate(), received $self = '
+            . "\n"
+            . RPerl::Parser::rperl_ast__dump($self)
+            . "\n" );
 
     my string $key           = $self->{children}->[0];
     my string $fat_arrow     = $self->{children}->[1];
@@ -69,4 +74,4 @@ our string__hash_ref__method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     return $cpp_source_group;
 };
 
-1;
+1;    # end of class

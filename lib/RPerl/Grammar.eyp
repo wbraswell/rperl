@@ -316,10 +316,10 @@ ListElement_179 => 'RPerl::Operation::Expression::Operator::List::QuotedWords',
 ArrayReference_182 => 'RPerl::DataStructure::Array::Reference',
 ArrayDereference_185 => 'RPerl::Operation::Expression::SubExpression::ArrayDereference',
 ArrayDereference_186 => 'RPerl::Operation::Expression::SubExpression::ArrayDereference',
-HashEntry_189 => 'RPerl::DataStructure::Hash::Entry',
-HashEntry_190 => 'RPerl::Operation::Expression::SubExpression::HashDereference',
-HashEntryTyped_191 => 'RPerl::DataStructure::Hash::Entry',
-HashEntryTyped_192 => 'RPerl::Operation::Expression::SubExpression::HashDereference',
+HashEntry_189 => 'RPerl::DataStructure::Hash::Entry',  # WORD OP20_HASH_FATARROW OPTIONAL-47 SubExpression
+HashEntry_190 => 'RPerl::Operation::Expression::SubExpression::HashDereference',  # HashDereference
+HashEntryTyped_191 => 'RPerl::DataStructure::Hash::EntryTyped',  # WORD OP20_HASH_FATARROW TypeInner SubExpression
+HashEntryTyped_192 => 'RPerl::Operation::Expression::SubExpression::HashDereference',  # HashDereference
 HashReference_196 => 'RPerl::DataStructure::Hash::Reference',
 HashReference_197 => 'RPerl::DataStructure::Hash::Reference',
 HashDereference_200 => 'RPerl::Operation::Expression::SubExpression::HashDereference',
@@ -327,14 +327,14 @@ HashDereference_201 => 'RPerl::Operation::Expression::SubExpression::HashDerefer
 WordScoped_202 => 'RPerl::CompileUnit::Word',
 WordScoped_203 => 'RPerl::CompileUnit::Word',
 LoopLabel_204 => 'RPerl::CompileUnit::Word',
-Type_205 => 'RPerl::DataType',
-Type_206 => 'RPerl::DataType',
-TypeInner_207 => 'RPerl::DataType',
-TypeInnerConstant_208 => 'RPerl::DataType',
+Type_205 => 'RPerl::NonGenerator',  # WORD
+Type_206 => 'RPerl::NonGenerator',  # TYPE_INTEGER
+TypeInner_207 => 'RPerl::NonGenerator',  # 'my' Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN
+TypeInnerConstant_208 => 'RPerl::NonGenerator',  # 'my' Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN
 VariableOrLiteral_209 => 'RPerl::Operation::Expression::SubExpression::Variable',
 VariableOrLiteral_210 => 'RPerl::Operation::Expression::SubExpression::Literal',
-Literal_211 => 'RPerl::Operation::Expression::SubExpression::Literal',
-Literal_212 => 'RPerl::Operation::Expression::SubExpression::Literal'
+Literal_211 => 'RPerl::Operation::Expression::SubExpression::Literal',  # LITERAL_STRING
+Literal_212 => 'RPerl::Operation::Expression::SubExpression::Literal'  # LITERAL_NUMBER
 };
 
     1;

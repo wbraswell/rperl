@@ -125,11 +125,36 @@ our string__hash_ref__method $ast_to_rperl__generate = sub {
     }
 
     if ( ref $properties eq 'Properties_63' ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 7: PERL CRITIC UNFILED ISSUE, not postfix foreach or if
-        # START HERE: generate non-empty $properties
-        # START HERE: generate non-empty $properties
-        # START HERE: generate non-empty $properties
+        # non-empty $properties
+        my string $properties_our_hash_ref = $properties->{children}->[0];
+        my string $properties_equal        = $properties->{children}->[1];
+        my string $properties_left_brace   = $properties->{children}->[2];
+        my object $property_0              = $properties->{children}->[3];
+        my object $properties_1_to_n       = $properties->{children}->[4];
+        my string $properties_right_brace  = $properties->{children}->[5];
+        my string $properties_semicolon    = $properties->{children}->[6];
+
+        $rperl_source_group->{PMC}
+            .= $properties_our_hash_ref . q{ }
+            . $properties_equal . q{ }
+            . $properties_left_brace . "\n";
+
+        my string__hash_ref $rperl_source_subgroup
+            = $property_0->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group,
+            $rperl_source_subgroup );
+
+        foreach my object $property ( @{ $properties_1_to_n->{children} } ) {
+            $rperl_source_subgroup
+                = $property->ast_to_rperl__generate($modes);
+            RPerl::Generator::source_group_append( $rperl_source_group,
+                $rperl_source_subgroup );
+        }
+        $rperl_source_group->{PMC}
+            .= $properties_right_brace . $properties_semicolon . "\n";
     }
-    else {                                      # Properties_64
+    else {    # Properties_64
+              # empty $properties
         my string $properties_our_hash_ref = $properties->{children}->[0];
         my string $properties_equal        = $properties->{children}->[1];
         my string $properties_left_brace   = $properties->{children}->[2];

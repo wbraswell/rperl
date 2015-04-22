@@ -63,7 +63,7 @@ our void $rperl_to_xsbinary__parse_generate_compile = sub {
         my string__hash_ref $modes
     ) = @_;
     my object $rperl_ast;
-    my string__hash_ref $cpp_source_group;
+    my string__hash_ref $source_group;
 
     # [[[ PARSE RPERL TO AST ]]]
 
@@ -80,32 +80,32 @@ our void $rperl_to_xsbinary__parse_generate_compile = sub {
     if (   ( $modes->{compile} eq 'GENERATE' )
         or ( $modes->{compile} eq 'COMPILE' ) )
     {
-        $cpp_source_group
+        $source_group
             = RPerl::Generator::ast_to_cpp__generate( $rperl_ast, $modes );
-        save_source_files( $cpp_source_group, $cpp_output_file_name_group );
+        save_source_files( $source_group, $cpp_output_file_name_group );
     }
 
     # [[[ COMPILE C++ TO XS & BINARY ]]]
 
     if ( $modes->{compile} eq 'COMPILE' ) {
-        cpp_to_xsbinary__compile( $cpp_source_group,
+        cpp_to_xsbinary__compile( $source_group,
             $cpp_output_file_name_group );
     }
 };
 
 # Write Source Code Files To File System
 our void $save_source_files = sub {
-    (   my string__hash_ref $cpp_source_group,
-        my string__hash_ref $cpp_file_name_group
+    (   my string__hash_ref $source_group,
+        my string__hash_ref $file_name_group
     ) = @_;
 
-#    RPerl::diag( q{in Compiler::save_source_files(), received $cpp_source_group =}, "\n", Dumper($cpp_source_group), "\n" );
-#    RPerl::diag( q{in Compiler::save_source_files(), received $cpp_file_name_group =}, "\n", Dumper($cpp_file_name_group), "\n" );
+#    RPerl::diag( q{in Compiler::save_source_files(), received $source_group =}, "\n", Dumper($source_group), "\n" );
+#    RPerl::diag( q{in Compiler::save_source_files(), received $file_name_group =}, "\n", Dumper($file_name_group), "\n" );
 
-    foreach my string $suffix_key ( sort keys %{$cpp_source_group} ) {
-        if (   ( not exists $cpp_file_name_group->{$suffix_key} )
-            or ( not defined $cpp_file_name_group->{$suffix_key} )
-            or ( $cpp_file_name_group->{$suffix_key} eq q{} ) )
+    foreach my string $suffix_key ( sort keys %{$source_group} ) {
+        if (   ( not exists $file_name_group->{$suffix_key} )
+            or ( not defined $file_name_group->{$suffix_key} )
+            or ( $file_name_group->{$suffix_key} eq q{} ) )
         {
             croak(
                 "\nERROR ECVCOFI00, COMPILER, SAVE OUTPUT FILES: Expecting file name for suffix '$suffix_key', but received empty or no value, croaking"
@@ -113,52 +113,56 @@ our void $save_source_files = sub {
         }
     }
 
-    foreach my string $suffix_key ( sort keys %{$cpp_file_name_group} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 7: PERL CRITIC UNFILED ISSUE, not postfix foreach or if
-        if (   ( not exists $cpp_source_group->{$suffix_key} )
-            or ( not defined $cpp_source_group->{$suffix_key} )
-            or ( $cpp_source_group->{$suffix_key} eq q{} ) )
+    foreach my string $suffix_key ( sort keys %{$file_name_group} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 7: PERL CRITIC UNFILED ISSUE, not postfix foreach or if
+        if (   ( not exists $source_group->{$suffix_key} )
+            or ( not defined $source_group->{$suffix_key} )
+            or ( $source_group->{$suffix_key} eq q{} ) )
         {
             croak(
                 "\nERROR ECVCOFI01, COMPILER, SAVE OUTPUT FILES: Expecting source code for suffix '$suffix_key', but received empty or no value, croaking"
             );
         }
-        my string $cpp_file_name = $cpp_file_name_group->{$suffix_key};
-        my string $cpp_source    = $cpp_source_group->{$suffix_key};
+        my string $file_name = $file_name_group->{$suffix_key};
+        my string $source    = $source_group->{$suffix_key};
 
         # actually save file(s)
-        if ( -f $cpp_file_name ) {
-            unlink $cpp_file_name
+        if ( -f $file_name ) {
+            unlink $file_name
                 or croak(
-                "\nERROR ECVCOFI02, C++ COMPILER, FILE SYSTEM: Attempting to save new file '$cpp_file_name', cannot delete existing file,\ncroaking: $OS_ERROR"
+                "\nERROR ECVCOFI02, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot delete existing file,\ncroaking: $OS_ERROR"
                 );
         }
 
-        my $CPP_FILEHANDLE;
-        open $CPP_FILEHANDLE, '>', $cpp_file_name
+        my $SOURCE_FILEHANDLE;
+        open $SOURCE_FILEHANDLE, '>', $file_name
             or croak(
-            "\nERROR ECVCOFI03, C++ COMPILER, FILE SYSTEM: Attempting to save new file '$cpp_file_name', cannot open file for writing,\ncroaking: $OS_ERROR"
+            "\nERROR ECVCOFI03, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot open file for writing,\ncroaking: $OS_ERROR"
             );
 
-        print {$CPP_FILEHANDLE} $cpp_source
+        print {$SOURCE_FILEHANDLE} $source
             or croak(
-            "\nERROR ECVCOFI04, C++ COMPILER, FILE SYSTEM: Attempting to save new file '$cpp_file_name', cannot write to file,\ncroaking: $OS_ERROR"
+            "\nERROR ECVCOFI04, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot write to file,\ncroaking: $OS_ERROR"
             );
 
-        close $CPP_FILEHANDLE
+        close $SOURCE_FILEHANDLE
             or croak(
-            "\nERROR ECVCOFI05, C++ COMPILER, FILE SYSTEM: Attempting to save new file '$cpp_file_name', cannot close file,\ncroaking: $OS_ERROR"
+            "\nERROR ECVCOFI05, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot close file,\ncroaking: $OS_ERROR"
             );
+
+        if (($suffix_key eq 'PMC') or ($suffix_key eq 'EXE')) {
+            `perltidy -pbp --ignore-side-comment-lengths --converge -b -bext='/' -q $file_name`;
+        }
     }
 
 };
 
 # Compile from C++-Parsable String to Perl-Linkable XS & Machine-Readable Binary
 our void $cpp_to_xsbinary__compile = sub {
-    ( my string $cpp_file_name_group ) = @_;
+    ( my string $file_name_group ) = @_;
 
     RPerl::diag(
-        q{in Compiler::cpp_to_xsbinary__compile(), received $cpp_file_name_group =},
-        "\n", Dumper($cpp_file_name_group), "\n"
+        q{in Compiler::cpp_to_xsbinary__compile(), received $file_name_group =},
+        "\n", Dumper($file_name_group), "\n"
     );
     
     # ADD CALLS TO TRIGGER Inline::CPP COMPILATION

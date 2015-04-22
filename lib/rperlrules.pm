@@ -19,6 +19,7 @@ use RPerl::CompileUnit::Module;
 use RPerl::CompileUnit::Module::Class::Generator;
 use RPerl::CompileUnit::Module::Header;
 use RPerl::CompileUnit::Module::Package;
+use RPerl::CompileUnit::Critic;
 use RPerl::CodeBlock::Subroutine;
 use RPerl::NonGenerator;
 
@@ -36,13 +37,15 @@ use RPerl::Operation::Statement::Loop::ForEach;
 use RPerl::Operation::Statement::Loop::While;
 use RPerl::CodeBlock;
 
-# [[[ VARIABLES ]]]
+# [[[ VARIABLES & TYPES ]]]
 
 use RPerl::Operation::Expression::SubExpression::Variable;
 use RPerl::Operation::Expression::SubExpression::Literal; # NEED ANSWER: not a full Grammar Rule, just a Production???
 use RPerl::Operation::Statement::VariableDeclaration;
 use RPerl::Operation::Statement::VariableModification;
 use RPerl::DataStructure::Array::ListElements;
+use RPerl::DataStructure::Hash::Entry;
+use RPerl::DataStructure::Hash::EntryTyped;
 
 # [[[ OBJECT-ORIENTED ]]]
 use RPerl::CompileUnit::Module::Class;
