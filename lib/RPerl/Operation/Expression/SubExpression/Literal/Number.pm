@@ -30,7 +30,7 @@ our string__hash_ref__method $ast_to_rperl__generate = sub {
 our string__hash_ref__method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string__hash_ref $modes) = @_;
     my string__hash_ref $cpp_source_group
-        = { CPP => q{<<< RP::O::E::SE::L::S DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>}
+        = { CPP => q{<<< RP::O::E::SE::L::N DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>}
             . "\n" };
 
     #...
@@ -40,7 +40,7 @@ our string__hash_ref__method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 our string__hash_ref__method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string__hash_ref $modes) = @_;
     my string__hash_ref $cpp_source_group
-        = { CPP => q{<<< RP::O::E::SE::L::S DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>}
+        = { CPP => q{<<< RP::O::E::SE::L::N DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>}
             . "\n" };
 
     #...

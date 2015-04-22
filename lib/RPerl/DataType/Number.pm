@@ -1,17 +1,20 @@
+# [[[ HEADER ]]]
 package RPerl::DataType::Number;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_031;
+our $VERSION = 0.003_040;
 
+# [[[ OO INHERITANCE ]]]
+use parent ('RPerl::DataType::Scalar');
+use RPerl::DataType::Scalar;
+
+# [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 
-use parent ('RPerl::DataType');
-use RPerl::DataType;
-
-# [[[ SUB-TYPES BEFORE SETUP ]]]
+# [[[ SUB-TYPES BEFORE INCLUDES ]]]
 # DEV NOTE, CORRELATION #7:
 # a number is any numeric value, meaning either an integer or a floating-point number;
 # Integer and Float are both sub-classes of Number;
@@ -30,9 +33,11 @@ use parent -norequire, qw(number const);
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataType::Number;
 
-# [[[ SETUP ]]]
+# [[[ OO INHERITANCE ]]]
 use parent ('RPerl::DataType::Scalar');
 use RPerl::DataType::Scalar;
+
+# [[[ INCLUDES ]]]
 use RPerl::DataType::String;    # need string type
 use RPerl::DataType::Integer; # need integer type, normally included by rperltypes.pm but put here in case we don't use rperltypes.pm
 
