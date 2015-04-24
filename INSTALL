@@ -1,5 +1,5 @@
 # RPerl v1.0 Beta 2, Install Notes
-# Last Updated April 19, 2015
+# Last Updated April 24, 2015
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # NOTE: STEPS 0 AND 1 ARE ONLY FOR SINGLE-USER INSTALL, NOT SYSTEM-WIDE INSTALL
@@ -70,6 +70,8 @@ $ cpanm WBRASWELL/RPerl-1.000_002.tar.gz
 # INSTALL RPERL & DEPENDENCIES, GITHUB DEVELOPMENT VERSION, DO NOT MIX WITH 2A
 ################################################################################
 
+# Complete 'SET UP SSH KEYS' section of Git Notes before `git clone` below.
+# https://github.com/wbraswell/lampuniversity.org/blob/master/docs/git_notes.txt
 $ git clone git@github.com:wbraswell/rperl.git
 # OR
 $ wget https://github.com/wbraswell/rperl/archive/master.zip;  unzip master.zip
@@ -77,6 +79,7 @@ $ wget https://github.com/wbraswell/rperl/archive/master.zip;  unzip master.zip
 $ cd rperl*
 $ perl Makefile.PL
 $ cpanm --installdeps .  # note the dot at the end of this command
+$ make; make test; make install
 
 ################################################################################
 # STEP 3.
