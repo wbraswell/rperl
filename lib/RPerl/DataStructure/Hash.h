@@ -81,13 +81,13 @@ void XS_pack_string__hash_ref(SV* output_hv_ref, string__hash_ref input_unordere
 
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
-SV* integer__hash_ref__stringify(SV* input_hv_ref);
-SV* number__hash_ref__stringify(SV* input_hv_ref);
-SV* string__hash_ref__stringify(SV* input_hv_ref);
+SV* integer__hash_ref__to_string(SV* input_hv_ref);
+SV* number__hash_ref__to_string(SV* input_hv_ref);
+SV* string__hash_ref__to_string(SV* input_hv_ref);
 # elif defined __CPP__TYPES
-string integer__hash_ref__stringify(integer__hash_ref input_unordered_map);
-string number__hash_ref__stringify(number__hash_ref input_unordered_map);
-string string__hash_ref__stringify(string__hash_ref input_unordered_map);
+string integer__hash_ref__to_string(integer__hash_ref input_unordered_map);
+string number__hash_ref__to_string(number__hash_ref input_unordered_map);
+string string__hash_ref__to_string(string__hash_ref input_unordered_map);
 # endif
 
 // [[[ TYPE TESTING ]]]

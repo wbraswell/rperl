@@ -26,7 +26,7 @@ void greet_planet(SV* arg0) {
     cout << "Hello, world! " << SvIV(arg0) << '\n'; // single-quote newline works
     //cout << "Hello, world! " << SvIV(arg0) << "\n";  // double-quote newline works
     //cout << "Hello, world! " << SvIV(arg0) << " " << SvPV_nolen(arg1) << '\n';
-    //cout << "Hello, world! " << SvIV(arg0) << " " << SvPV_nolen(arg1) << " " << SvPV_nolen(number__array_ref__stringify(arg2)) << '\n';
+    //cout << "Hello, world! " << SvIV(arg0) << " " << SvPV_nolen(arg1) << " " << SvPV_nolen(number__array_ref__to_string(arg2)) << '\n';
 
     cout << "Goodbye from CPPOPS_PERLTYPES\n";
 }

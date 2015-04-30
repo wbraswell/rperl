@@ -74,20 +74,20 @@ void XS_pack_integer(SV* output_sv, integer input_integer) {
 
 # ifdef __PERL__TYPES
 
-SV* integer__stringify(SV* input_integer)
+SV* integer__to_string(SV* input_integer)
 {
 //	integer__CHECK(input_integer);
-	integer__CHECKTRACE(input_integer, "input_integer", "integer__stringify()");
-//fprintf(stderr, "in CPPOPS_PERLTYPES integer__stringify(), bottom of subroutine, received input_integer = %d\n", (integer)SvIV(input_integer));
+	integer__CHECKTRACE(input_integer, "input_integer", "integer__to_string()");
+//fprintf(stderr, "in CPPOPS_PERLTYPES integer__to_string(), bottom of subroutine, received input_integer = %d\n", (integer)SvIV(input_integer));
 	return(newSVpvf("%d", (integer)SvIV(input_integer)));
 }
 
 # elif defined __CPP__TYPES
 
-//string integer__stringify(integer input_integer)
-std::string integer__stringify(integer input_integer)
+//string integer__to_string(integer input_integer)
+std::string integer__to_string(integer input_integer)
 {
-//fprintf(stderr, "in CPPOPS_CPPTYPES integer__stringify(), top of subroutine, received input_integer = %d\n", input_integer);
+//fprintf(stderr, "in CPPOPS_CPPTYPES integer__to_string(), top of subroutine, received input_integer = %d\n", input_integer);
 //	string output_string = "";
 	std::string output_string = "";
 	sprintf((char*)output_string.c_str(), "%d", input_integer);

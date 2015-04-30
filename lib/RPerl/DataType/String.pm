@@ -2,15 +2,17 @@ package RPerl::DataType::String;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_011;
+our $VERSION = 0.004_000;
 
+# [[[ OO INHERITANCE ]]]
+use parent ('RPerl::DataType::Scalar');
+use RPerl::DataType::Scalar;
+
+# [[[ CRITICS ]]]
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 
-use parent ('RPerl::DataType');
-use RPerl::DataType;
-
-# [[[ SUB-TYPES BEFORE SETUP ]]]
+# [[[ SUB-TYPES BEFORE INCLUDES ]]]
 # a string is 0 or more letters, digits, or other ASCII (Unicode???) symbols
 package string;
 use parent ('RPerl::DataType::String');
@@ -22,10 +24,10 @@ use parent -norequire, qw(string const);
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataType::String;
 
-# [[[ SETUP ]]]
-use parent ('RPerl::DataType::Scalar');
-use RPerl::DataType::Scalar;
+# [[[ INCLUDES ]]]
 use RPerl::DataType::Integer; # need integer type, normally included by rperltypes.pm but put here in case we don't use rperltypes.pm
+use RPerl::DataType::Number; # need number type, same as above
+use POSIX qw(floor);
 
 # [[[ TYPE CHECKING ]]]
 our void $string__CHECK = sub {
@@ -55,20 +57,32 @@ our void $string__CHECKTRACE = sub {
     }
 };
 
+# [[[ INTEGERIFY ]]]
+our integer $string__to_integer = sub {
+    (my string $input_string) = @_;
+    return floor ($input_string * 1);
+};
+
+# [[[ NUMBERIFY ]]]
+our number $string__to_number = sub {
+    (my string $input_string) = @_;
+    return $input_string * 1.0;
+};
+
 # [[[ STRINGIFY ]]]
-our string $string__stringify = sub {
+our string $string__to_string = sub {
     ( my string $input_string ) = @_;
 
     #    string__CHECK($input_string);
     string__CHECKTRACE( $input_string, '$input_string',
-        'string__stringify()' );
+        'string__to_string()' );
 
-#    RPerl::diag "in PERLOPS_PERLTYPES string__stringify(), received \$input_string =\n$input_string\n\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES string__to_string(), received \$input_string =\n$input_string\n\n" or croak();
     $input_string =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
     $input_string =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
     $input_string = "'$input_string'";
 
-#    RPerl::diag "in PERLOPS_PERLTYPES string__stringify(), bottom of subroutine, returning possibly-modified \$input_string =\n$input_string\n\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES string__to_string(), bottom of subroutine, returning possibly-modified \$input_string =\n$input_string\n\n" or croak();
 
     return ($input_string);
 };
@@ -88,7 +102,7 @@ our string $string__typetest1 = sub {
         'string__typetest1()' );
 
 #    RPerl::diag "in PERLOPS_PERLTYPES string__typetest1(), received \$lucky_string = '$lucky_string'\n" or croak();
-    return ( string__stringify($lucky_string) . ' PERLOPS_PERLTYPES' );
+    return ( string__to_string($lucky_string) . ' PERLOPS_PERLTYPES' );
 };
 
 1;

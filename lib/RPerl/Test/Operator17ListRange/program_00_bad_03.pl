@@ -27,9 +27,9 @@ $bax = [ 0 .. 23 ];
 
 print 'have $foo = ', $foo, "\n";
 print 'have $bar = ', $bar, "\n";
-print 'have $bat = ', ::integer__array_ref__stringify($bat), "\n";
-print 'have $baz = ', ::integer__array_ref__stringify($baz), "\n";
-print 'have $bax = ', ::integer__array_ref__stringify($bax), "\n";
+print 'have $bat = ', ::integer__array_ref__to_string($bat), "\n";
+print 'have $baz = ', ::integer__array_ref__to_string($baz), "\n";
+print 'have $bax = ', ::integer__array_ref__to_string($bax), "\n";
 
 my string__array_ref $bat2;
 $bat2 = [ $bar .. 'ac' ];
@@ -38,6 +38,6 @@ $baz2 = [ 'a2' .. 'a4' ];
 my string__array_ref $bax2;
 $bax2 = [ 'a' .. & $bar ];
 
-print 'have $bat2 = ', ::string__array_ref__stringify($bat2), "\n";
-print 'have $baz2 = ', ::string__array_ref__stringify($baz2), "\n";
-print 'have $bax2 = ', ::string__array_ref__stringify($bax2), "\n";
+print 'have $bat2 = ', ::string__array_ref__to_string($bat2), "\n";
+print 'have $baz2 = ', ::string__array_ref__to_string($baz2), "\n";
+print 'have $bax2 = ', ::string__array_ref__to_string($bax2), "\n";

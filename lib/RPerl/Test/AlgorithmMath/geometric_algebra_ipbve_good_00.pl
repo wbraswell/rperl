@@ -30,5 +30,5 @@ $retval_vector = inner_product__bivector_vector_euclidean( $input_bivector,
     $input_vector );
 print Dumper($retval_vector) . "\n";
 
-# NEED FIX: support 'undef' (AKA null) in FOO__array_ref__stringify(), or implement array_ref__stringify()
-#print number__array_ref__stringify($retval_vector) . "\n";
+# NEED FIX: support 'undef' (AKA null) in FOO__array_ref__to_string(), or implement array_ref__to_string()
+#print number__array_ref__to_string($retval_vector) . "\n";

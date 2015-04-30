@@ -70,17 +70,17 @@ void XS_pack_string(SV* output_sv, string input_string) {
 
 # ifdef __PERL__TYPES
 
-SV* string__stringify(SV* input_sv)
+SV* string__to_string(SV* input_sv)
 {
     string input_sv_string;
     size_t input_sv_string_pos;
 
 //	string__CHECK(input_sv);
-	string__CHECKTRACE(input_sv, "input_sv", "string__stringify()");
+	string__CHECKTRACE(input_sv, "input_sv", "string__to_string()");
 
 	input_sv_string = SvPV_nolen(input_sv);
 
-//fprintf(stderr, "in CPPOPS_PERLTYPES string__stringify(), received input_sv_string =\n%s\n\n", input_sv_string.c_str());
+//fprintf(stderr, "in CPPOPS_PERLTYPES string__to_string(), received input_sv_string =\n%s\n\n", input_sv_string.c_str());
 
 	// escape all back-slash \ and single-quote ' characters with a back-slash \ character
 	input_sv_string = string(SvPV_nolen(input_sv));
@@ -99,16 +99,16 @@ SV* string__stringify(SV* input_sv)
 
 	input_sv_string = "'" + input_sv_string + "'";
 
-//fprintf(stderr, "in CPPOPS_PERLTYPES string__stringify(), bottom of subroutine, returning possibly-modified input_sv_string =\n%s\n\n", input_sv_string.c_str());
+//fprintf(stderr, "in CPPOPS_PERLTYPES string__to_string(), bottom of subroutine, returning possibly-modified input_sv_string =\n%s\n\n", input_sv_string.c_str());
 
 	return(newSVpvf("%s", input_sv_string.c_str()));
 }
 
 # elif defined __CPP__TYPES
 
-string string__stringify(string input_string)
+string string__to_string(string input_string)
 {
-//fprintf(stderr, "in CPPOPS_CPPTYPES string__stringify(), top of subroutine, received input_string =\n%s\n\n", input_string.c_str());
+//fprintf(stderr, "in CPPOPS_CPPTYPES string__to_string(), top of subroutine, received input_string =\n%s\n\n", input_string.c_str());
 
     size_t input_string_pos;
 
@@ -128,7 +128,7 @@ string string__stringify(string input_string)
 
 	input_string = "'" + input_string + "'";
 
-//fprintf(stderr, "in CPPOPS_CPPTYPES string__stringify(), bottom of subroutine, returning possibly-modified input_string =\n%s\n\n", input_string.c_str());
+//fprintf(stderr, "in CPPOPS_CPPTYPES string__to_string(), bottom of subroutine, returning possibly-modified input_string =\n%s\n\n", input_string.c_str());
 
 	return(input_string);
 }
@@ -152,7 +152,7 @@ SV* string__typetest1(SV* lucky_string) {
 //cout << "in CPPOPS_PERLTYPES string__typetest1(), received lucky_string '" << SvPV_nolen(lucky_string) << "'" << '\n';  cout.flush();  // DEV NOTE: must flush buffer to avoid endl over-flushing and out-of-order printing
 //cerr << "in CPPOPS_PERLTYPES string__typetest1(), received lucky_string '" << SvPV_nolen(lucky_string) << "'" << '\n';  // DEV NOTE: cerr doesn't have a buffer to flush
 //fprintf(stderr, "in CPPOPS_PERLTYPES string__typetest1(), received lucky_string = '%s'\n", SvPV_nolen(lucky_string));
-	return(newSVpvf("%s%s", SvPV_nolen(string__stringify(lucky_string)), " CPPOPS_PERLTYPES"));
+	return(newSVpvf("%s%s", SvPV_nolen(string__to_string(lucky_string)), " CPPOPS_PERLTYPES"));
 }
 
 # elif defined __CPP__TYPES
@@ -165,7 +165,7 @@ string string__typetest0() {
 
 string string__typetest1(string lucky_string) {
 //fprintf(stderr, "in CPPOPS_CPPTYPES string__typetest1(), received lucky_string = '%s'\n", lucky_string.c_str());
-	return(string__stringify(lucky_string) + " CPPOPS_CPPTYPES");
+	return(string__to_string(lucky_string) + " CPPOPS_CPPTYPES");
 }
 
 # else

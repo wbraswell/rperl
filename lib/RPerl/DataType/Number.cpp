@@ -74,13 +74,13 @@ void XS_pack_number(SV* output_sv, number input_number) {
 
 # ifdef __PERL__TYPES
 
-// BUG BOUNTY #000, 50 CodeCoin: modify all ::number*__stringify() to output underscores, to match LITERAL_NUMBER grammar token input
+// BUG BOUNTY #000, 50 CodeCoin: modify all ::number*__to_string() to output underscores, to match LITERAL_NUMBER grammar token input
 
-SV* number__stringify(SV* input_number)
+SV* number__to_string(SV* input_number)
 {
 //	number__CHECK(input_number);
-	number__CHECKTRACE(input_number, "input_number", "number__stringify()");
-//fprintf(stderr, "in CPPOPS_PERLTYPES number__stringify(), top of subroutine, received unformatted input_number = %Lf\n", (number)SvNV(input_number));
+	number__CHECKTRACE(input_number, "input_number", "number__to_string()");
+//fprintf(stderr, "in CPPOPS_PERLTYPES number__to_string(), top of subroutine, received unformatted input_number = %Lf\n", (number)SvNV(input_number));
 
 //	ostringstream output_stream;
 	std::ostringstream output_stream;
@@ -97,10 +97,10 @@ SV* number__stringify(SV* input_number)
 
 # elif defined __CPP__TYPES
 
-//string number__stringify(number input_number)
-std::string number__stringify(number input_number)
+//string number__to_string(number input_number)
+std::string number__to_string(number input_number)
 {
-//fprintf(stderr, "in CPPOPS_CPPTYPES number__stringify(), top of subroutine, received unformatted input_number = %Lf\n", input_number);
+//fprintf(stderr, "in CPPOPS_CPPTYPES number__to_string(), top of subroutine, received unformatted input_number = %Lf\n", input_number);
 //	ostringstream output_stream;
 	std::ostringstream output_stream;
 	output_stream.precision(std::numeric_limits<double>::digits10);

@@ -13,7 +13,7 @@ string XS_unpack_string(SV* input_sv);
 void XS_pack_string(SV* output_sv, string input_string);
 
 // [[[ STRINGIFY ]]]
-string string__stringify(string input_string);
+string string__to_string(string input_string);
 
 // [[[ TYPE TESTING ]]]
 string string__typetest0();
@@ -32,7 +32,7 @@ void XS_pack_string(SV* output_sv, string input_string) {
 	sv_setsv(output_sv, sv_2mortal(newSVpv(input_string.data(), input_string.size())));
 }
 
-string string__stringify(string input_string)
+string string__to_string(string input_string)
 {
     size_t input_string_pos;
 
@@ -61,5 +61,5 @@ string string__typetest0() {
 }
 
 string string__typetest1(string lucky_string) {
-	return(string__stringify(lucky_string) + " CPPOPS_CPPTYPES");
+	return(string__to_string(lucky_string) + " CPPOPS_CPPTYPES");
 }

@@ -76,14 +76,14 @@ void XS_pack_string__array_ref(SV* output_av_ref, string__array_ref input_vector
 
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
-//void integer__array_ref__stringify(SV* input_av_ref);
-SV* integer__array_ref__stringify(SV* input_av_ref);
-SV* number__array_ref__stringify(SV* input_av_ref);
-SV* string__array_ref__stringify(SV* input_av_ref);
+//void integer__array_ref__to_string(SV* input_av_ref);
+SV* integer__array_ref__to_string(SV* input_av_ref);
+SV* number__array_ref__to_string(SV* input_av_ref);
+SV* string__array_ref__to_string(SV* input_av_ref);
 # elif defined __CPP__TYPES
-string integer__array_ref__stringify(integer__array_ref input_vector);
-string number__array_ref__stringify(number__array_ref input_vector);
-string string__array_ref__stringify(string__array_ref input_vector);
+string integer__array_ref__to_string(integer__array_ref input_vector);
+string number__array_ref__to_string(number__array_ref input_vector);
+string string__array_ref__to_string(string__array_ref input_vector);
 # endif
 
 // [[[ TYPE TESTING ]]]

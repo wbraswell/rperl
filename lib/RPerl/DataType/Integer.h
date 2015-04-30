@@ -50,10 +50,10 @@ void XS_pack_integer(SV* output_sv, integer input_integer);
 
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
-SV* integer__stringify(SV* input_integer);
+SV* integer__to_string(SV* input_integer);
 # elif defined __CPP__TYPES
-//string integer__stringify(integer input_integer);
-std::string integer__stringify(integer input_integer);
+//string integer__to_string(integer input_integer);
+std::string integer__to_string(integer input_integer);
 # endif
 
 // [[[ TYPE TESTING ]]]

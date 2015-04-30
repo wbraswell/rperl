@@ -49,10 +49,10 @@ void XS_pack_number(SV* output_sv, number input_number);
 
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
-SV* number__stringify(SV* input_number);
+SV* number__to_string(SV* input_number);
 # elif defined __CPP__TYPES
-//string number__stringify(number input_number);
-std::string number__stringify(number input_number);
+//string number__to_string(number input_number);
+std::string number__to_string(number input_number);
 # endif
 
 // [[[ TYPE TESTING ]]]

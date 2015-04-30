@@ -49,9 +49,9 @@ void XS_pack_string(SV* output_sv, string input_string);
 
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
-SV* string__stringify(SV* input_sv);
+SV* string__to_string(SV* input_sv);
 # elif defined __CPP__TYPES
-string string__stringify(string input_string);
+string string__to_string(string input_string);
 # endif
 
 // [[[ TYPE TESTING ]]]

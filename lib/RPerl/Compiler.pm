@@ -149,9 +149,11 @@ our void $save_source_files = sub {
             "\nERROR ECVCOFI05, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot close file,\ncroaking: $OS_ERROR"
             );
 
-        if (($suffix_key eq 'PMC') or ($suffix_key eq 'EXE')) {
+        if ( ( $suffix_key eq 'PMC' ) or ( $suffix_key eq 'EXE' ) ) {
+
 #            `perltidy -pbp --ignore-side-comment-lengths --converge -b -nst -bext='/' -q $file_name`;
-            system 'perltidy', '-pbp', '--ignore-side-comment-lengths', '--converge', '-b', '-nst', q{-bext='/'}, '-q', $file_name;
+            system 'perltidy', '-pbp', '--ignore-side-comment-lengths',
+                '--converge', '-b', '-nst', q{-bext='/'}, '-q', $file_name;
         }
     }
 
@@ -165,7 +167,7 @@ our void $cpp_to_xsbinary__compile = sub {
         q{in Compiler::cpp_to_xsbinary__compile(), received $file_name_group =},
         "\n", Dumper($file_name_group), "\n"
     );
-    
+
     # ADD CALLS TO TRIGGER Inline::CPP COMPILATION
 };
 

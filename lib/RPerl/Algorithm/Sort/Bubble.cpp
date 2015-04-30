@@ -242,12 +242,12 @@ SV* integer__bubblesort__typetest0(SV* lucky_integers)
 	*/
 
 //	SV* retval__integer__bubblesort = integer__bubblesort(lucky_integers);
-//	SV* retval__integer__array_ref__stringify = integer__array_ref__stringify(retval__integer__bubblesort);
-//	SV* retval__string = newSVpvf("%s%s", SvPV_nolen(retval__integer__array_ref__stringify), "CPPOPS_PERLTYPES");
+//	SV* retval__integer__array_ref__to_string = integer__array_ref__to_string(retval__integer__bubblesort);
+//	SV* retval__string = newSVpvf("%s%s", SvPV_nolen(retval__integer__array_ref__to_string), "CPPOPS_PERLTYPES");
 //	return(retval__string);
-//	return(newSVpvf("%s%s", SvPV_nolen(retval__integer__array_ref__stringify), "CPPOPS_PERLTYPES"));
-//	return(newSVpvf("%s%s", SvPV_nolen(integer__array_ref__stringify(retval__integer__bubblesort)), "CPPOPS_PERLTYPES"));
-	return(newSVpvf("%s%s", SvPV_nolen(integer__array_ref__stringify(integer__bubblesort(lucky_integers))), "CPPOPS_PERLTYPES"));
+//	return(newSVpvf("%s%s", SvPV_nolen(retval__integer__array_ref__to_string), "CPPOPS_PERLTYPES"));
+//	return(newSVpvf("%s%s", SvPV_nolen(integer__array_ref__to_string(retval__integer__bubblesort)), "CPPOPS_PERLTYPES"));
+	return(newSVpvf("%s%s", SvPV_nolen(integer__array_ref__to_string(integer__bubblesort(lucky_integers))), "CPPOPS_PERLTYPES"));
 }
 
 SV* number__bubblesort__typetest0(SV* lucky_numbers)
@@ -264,7 +264,7 @@ SV* number__bubblesort__typetest0(SV* lucky_numbers)
 	}
 	*/
 
-	return(newSVpvf("%s%s", SvPV_nolen(number__array_ref__stringify(number__bubblesort(lucky_numbers))), "CPPOPS_PERLTYPES"));
+	return(newSVpvf("%s%s", SvPV_nolen(number__array_ref__to_string(number__bubblesort(lucky_numbers))), "CPPOPS_PERLTYPES"));
 }
 
 // [[[<<< END PERL TYPES >>>]]]
@@ -284,12 +284,12 @@ SV* number__bubblesort__typetest0(SV* lucky_numbers)
 void RPerl__Algorithm__Sort__Bubble::integer__sort()
 ////;
 {
-	if (TEST_VERBOSE2) { fprintf(stderr, "in integer__sort(), top of subroutine, have this->integer__data = %s\n", integer__array_ref__stringify(this->integer__data).c_str()); }
+	if (TEST_VERBOSE2) { fprintf(stderr, "in integer__sort(), top of subroutine, have this->integer__data = %s\n", integer__array_ref__to_string(this->integer__data).c_str()); }
 
 ////	$self->{integer__data} = integer__bubblesort($self->{integer__data});
 	this->integer__data = integer__bubblesort(this->integer__data);
 
-	if (TEST_VERBOSE2) { fprintf(stderr, "in integer__sort(), bottom of subroutine, have this->integer__data = %s\n", integer__array_ref__stringify(this->integer__data).c_str()); }
+	if (TEST_VERBOSE2) { fprintf(stderr, "in integer__sort(), bottom of subroutine, have this->integer__data = %s\n", integer__array_ref__to_string(this->integer__data).c_str()); }
 ////};
 }
 
@@ -458,7 +458,7 @@ string integer__bubblesort__typetest0(integer__array_ref lucky_integers)
         fprintf(stderr, "in CPPOPS_CPPTYPES integer__bubblesort__typetest0(), have lucky_integer %d/%d = %d, BATBAR\n", i, (how_lucky - 1), lucky_integers[i]);
     }
     */
-    return(integer__array_ref__stringify(integer__bubblesort(lucky_integers)) + "CPPOPS_CPPTYPES");
+    return(integer__array_ref__to_string(integer__bubblesort(lucky_integers)) + "CPPOPS_CPPTYPES");
 }
 
 string number__bubblesort__typetest0(number__array_ref lucky_numbers)
@@ -471,7 +471,7 @@ string number__bubblesort__typetest0(number__array_ref lucky_numbers)
         fprintf(stderr, "in CPPOPS_CPPTYPES number__bubblesort__typetest0(), have lucky_number %d/%d = %Lf, BATBAR\n", i, (how_lucky - 1), lucky_numbers[i]);
     }
     */
-    return(number__array_ref__stringify(number__bubblesort(lucky_numbers)) + "CPPOPS_CPPTYPES");
+    return(number__array_ref__to_string(number__bubblesort(lucky_numbers)) + "CPPOPS_CPPTYPES");
 }
 
 // [[[<<< END CPP TYPES >>>]]]

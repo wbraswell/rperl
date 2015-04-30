@@ -146,14 +146,14 @@ our void $integer__array_ref__CHECKTRACE = sub {
 # [[[ STRINGIFY ]]]
 
 # convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
-our string $integer__array_ref__stringify = sub {
+our string $integer__array_ref__to_string = sub {
     ( my $input_av_ref ) = @_;
 
-#    RPerl::diag "in PERLOPS_PERLTYPES integer__array_ref__stringify(), top of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES integer__array_ref__to_string(), top of subroutine\n" or croak();
 
     #    ::integer__array_ref__CHECK($input_av_ref);
     ::integer__array_ref__CHECKTRACE( $input_av_ref, '$input_av_ref',
-        'integer__array_ref__stringify()' );
+        'integer__array_ref__to_string()' );
 
     my @input_av;
     my integer $input_av_length;
@@ -164,7 +164,7 @@ our string $integer__array_ref__stringify = sub {
     @input_av        = @{$input_av_ref};
     $input_av_length = scalar @input_av;
 
-#	RPerl::diag "in PERLOPS_PERLTYPES integer__array_ref__stringify(), have \$input_av_length = $input_av_length\n";
+#	RPerl::diag "in PERLOPS_PERLTYPES integer__array_ref__to_string(), have \$input_av_length = $input_av_length\n";
 
     $output_sv = '[';
 
@@ -174,7 +174,7 @@ our string $integer__array_ref__stringify = sub {
 
 # DEV NOTE: integer type-checking already done as part of integer__array_ref__CHECKTRACE()
 #        ::integer__CHECK($input_av_element);
-#::integer__CHECKTRACE( $input_av_element, "\$input_av_element at index $i", 'integer__array_ref__stringify()' );
+#::integer__CHECKTRACE( $input_av_element, "\$input_av_element at index $i", 'integer__array_ref__to_string()' );
 
         if ($i_is_0) { $i_is_0 = 0; }
         else         { $output_sv .= ', '; }
@@ -183,8 +183,8 @@ our string $integer__array_ref__stringify = sub {
 
     $output_sv .= ']';
 
-#    RPerl::diag "in PERLOPS_PERLTYPES integer__array_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
-#    RPerl::diag "in PERLOPS_PERLTYPES integer__array_ref__stringify(), bottom of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES integer__array_ref__to_string(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES integer__array_ref__to_string(), bottom of subroutine\n" or croak();
 
     return ($output_sv);
 };
@@ -204,7 +204,7 @@ our string $integer__array_ref__typetest0 = sub {
 #        RPerl::diag "in PERLOPS_PERLTYPES integer__array_ref__typetest0(), have lucky integer $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_integers->[$i] . ", BARBAT\n" or croak();
 #    }
 #    RPerl::diag "in PERLOPS_PERLTYPES integer__array_ref__typetest0(), bottom of subroutine\n";
-    return ( integer__array_ref__stringify($lucky_integers)
+    return ( integer__array_ref__to_string($lucky_integers)
             . 'PERLOPS_PERLTYPES' );
 };
 
@@ -336,14 +336,14 @@ our void $number__array_ref__CHECKTRACE = sub {
 # [[[ STRINGIFY ]]]
 
 # convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing NVs))) to Perl-parsable (Perl SV containing PV)
-our string $number__array_ref__stringify = sub {
+our string $number__array_ref__to_string = sub {
     ( my $input_av_ref ) = @_;
 
-#    RPerl::diag "in PERLOPS_PERLTYPES number__array_ref__stringify(), top of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES number__array_ref__to_string(), top of subroutine\n" or croak();
 
     #    ::number__array_ref__CHECK($input_av_ref);
     ::number__array_ref__CHECKTRACE( $input_av_ref, '$input_av_ref',
-        'number__array_ref__stringify()' );
+        'number__array_ref__to_string()' );
 
     my @input_av;
     my integer $input_av_length;
@@ -354,7 +354,7 @@ our string $number__array_ref__stringify = sub {
     @input_av        = @{$input_av_ref};
     $input_av_length = scalar @input_av;
 
-#	RPerl::diag "in PERLOPS_PERLTYPES number__array_ref__stringify(), have \$input_av_length = $input_av_length\n";
+#	RPerl::diag "in PERLOPS_PERLTYPES number__array_ref__to_string(), have \$input_av_length = $input_av_length\n";
 
     $output_sv = '[';
 
@@ -369,8 +369,8 @@ our string $number__array_ref__stringify = sub {
 
     $output_sv .= ']';
 
-#    RPerl::diag "in PERLOPS_PERLTYPES number__array_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
-#    RPerl::diag "in PERLOPS_PERLTYPES number__array_ref__stringify(), bottom of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES number__array_ref__to_string(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES number__array_ref__to_string(), bottom of subroutine\n" or croak();
 
     return ($output_sv);
 };
@@ -391,7 +391,7 @@ our string $number__array_ref__typetest0 = sub {
 #    }
 #    RPerl::diag "in PERLOPS_PERLTYPES number__array_ref__typetest0(), bottom of subroutine\n";
     return (
-        number__array_ref__stringify($lucky_numbers) . 'PERLOPS_PERLTYPES' );
+        number__array_ref__to_string($lucky_numbers) . 'PERLOPS_PERLTYPES' );
 };
 
 our number__array_ref $number__array_ref__typetest1 = sub {
@@ -516,14 +516,14 @@ our void $string__array_ref__CHECKTRACE = sub {
 # [[[ STRINGIFY ]]]
 
 # convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs))) to Perl-parsable (Perl SV containing PV)
-our string $string__array_ref__stringify = sub {
+our string $string__array_ref__to_string = sub {
     ( my $input_av_ref ) = @_;
 
-#    RPerl::diag "in PERLOPS_PERLTYPES string__array_ref__stringify(), top of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES string__array_ref__to_string(), top of subroutine\n" or croak();
 
     #    ::string__array_ref__CHECK($input_av_ref);
     ::string__array_ref__CHECKTRACE( $input_av_ref, '$input_av_ref',
-        'string__array_ref__stringify()' );
+        'string__array_ref__to_string()' );
 
     my @input_av;
     my integer $input_av_length;
@@ -534,7 +534,7 @@ our string $string__array_ref__stringify = sub {
     @input_av        = @{$input_av_ref};
     $input_av_length = scalar @input_av;
 
-#	RPerl::diag "in PERLOPS_PERLTYPES string__array_ref__stringify(), have \$input_av_length = $input_av_length\n";
+#	RPerl::diag "in PERLOPS_PERLTYPES string__array_ref__to_string(), have \$input_av_length = $input_av_length\n";
 
     $output_sv = '[';
 
@@ -551,8 +551,8 @@ our string $string__array_ref__stringify = sub {
 
     $output_sv .= ']';
 
-#    RPerl::diag "in PERLOPS_PERLTYPES string__array_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
-#    RPerl::diag "in PERLOPS_PERLTYPES string__array_ref__stringify(), bottom of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES string__array_ref__to_string(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES string__array_ref__to_string(), bottom of subroutine\n" or croak();
 
     return ($output_sv);
 };
@@ -572,7 +572,7 @@ our string $string__array_ref__typetest0 = sub {
 #        RPerl::diag "in PERLOPS_PERLTYPES string__array_ref__typetest0(), have person $i/" . ( $how_crowded - 1 ) . ' = ' . $people->[$i] . ", BARBAR\n" or croak();
 #    }
 #    RPerl::diag "in PERLOPS_PERLTYPES string__array_ref__typetest0(), bottom of subroutine\n";
-    return ( string__array_ref__stringify($people) . 'PERLOPS_PERLTYPES' );
+    return ( string__array_ref__to_string($people) . 'PERLOPS_PERLTYPES' );
 };
 
 our string__array_ref $string__array_ref__typetest1 = sub {

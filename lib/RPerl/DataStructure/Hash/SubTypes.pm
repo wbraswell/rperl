@@ -152,14 +152,14 @@ our void $integer__hash_ref__CHECKTRACE = sub {
 # [[[ STRINGIFY ]]]
 
 # convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
-our string $integer__hash_ref__stringify = sub {
+our string $integer__hash_ref__to_string = sub {
     ( my $input_hv_ref ) = @_;
 
-#    RPerl::diag "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), top of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES integer__hash_ref__to_string(), top of subroutine\n" or croak();
 
     #    ::integer__hash_ref__CHECK($input_hv_ref);
     ::integer__hash_ref__CHECKTRACE( $input_hv_ref, '$input_hv_ref',
-        'integer__hash_ref__stringify()' );
+        'integer__hash_ref__to_string()' );
 
     my %input_hv;
 
@@ -171,7 +171,7 @@ our string $integer__hash_ref__stringify = sub {
     %input_hv = %{$input_hv_ref};
 
 #	$input_hv_length = scalar keys %input_hv;
-#	RPerl::diag "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), have \$input_hv_length = $input_hv_length\n";
+#	RPerl::diag "in PERLOPS_PERLTYPES integer__hash_ref__to_string(), have \$input_hv_length = $input_hv_length\n";
 
     $output_sv = '{';
 
@@ -183,7 +183,7 @@ our string $integer__hash_ref__stringify = sub {
 
 # DEV NOTE: integer type-checking already done as part of integer__hash_ref__CHECKTRACE()
 #        ::integer__CHECK($input_hv_entry_value);
-#        ::integer__CHECKTRACE( $input_hv_entry_value, "\$input_hv_entry_value at key '$key'", 'integer__hash_ref__stringify()' );
+#        ::integer__CHECKTRACE( $input_hv_entry_value, "\$input_hv_entry_value at key '$key'", 'integer__hash_ref__to_string()' );
 
         if ($i_is_0) { $i_is_0 = 0; }
         else         { $output_sv .= ', '; }
@@ -192,8 +192,8 @@ our string $integer__hash_ref__stringify = sub {
 
     $output_sv .= '}';
 
-#    RPerl::diag "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
-#    RPerl::diag "in PERLOPS_PERLTYPES integer__hash_ref__stringify(), bottom of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES integer__hash_ref__to_string(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES integer__hash_ref__to_string(), bottom of subroutine\n" or croak();
 
     return ($output_sv);
 };
@@ -224,7 +224,7 @@ our string $integer__hash_ref__typetest0 = sub {
 =cut
 
     return (
-        integer__hash_ref__stringify($lucky_integers) . 'PERLOPS_PERLTYPES' );
+        integer__hash_ref__to_string($lucky_integers) . 'PERLOPS_PERLTYPES' );
 };
 
 our integer__hash_ref $integer__hash_ref__typetest1 = sub {
@@ -370,14 +370,14 @@ our void $number__hash_ref__CHECKTRACE = sub {
 # [[[ STRINGIFY ]]]
 
 # convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing NVs))) to Perl-parsable (Perl SV containing PV)
-our string $number__hash_ref__stringify = sub {
+our string $number__hash_ref__to_string = sub {
     ( my $input_hv_ref ) = @_;
 
-#    RPerl::diag "in PERLOPS_PERLTYPES number__hash_ref__stringify(), top of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES number__hash_ref__to_string(), top of subroutine\n" or croak();
 
     #    ::number__hash_ref__CHECK($input_hv_ref);
     ::number__hash_ref__CHECKTRACE( $input_hv_ref, '$input_hv_ref',
-        'number__hash_ref__stringify()' );
+        'number__hash_ref__to_string()' );
 
     my %input_hv;
 
@@ -389,7 +389,7 @@ our string $number__hash_ref__stringify = sub {
     %input_hv = %{$input_hv_ref};
 
 #	$input_hv_length = scalar keys %input_hv;
-#	RPerl::diag "in PERLOPS_PERLTYPES number__hash_ref__stringify(), have \$input_hv_length = $input_hv_length\n";
+#	RPerl::diag "in PERLOPS_PERLTYPES number__hash_ref__to_string(), have \$input_hv_length = $input_hv_length\n";
 
     $output_sv = '{';
 
@@ -406,8 +406,8 @@ our string $number__hash_ref__stringify = sub {
 
     $output_sv .= '}';
 
-#    RPerl::diag "in PERLOPS_PERLTYPES number__hash_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
-#    RPerl::diag "in PERLOPS_PERLTYPES number__hash_ref__stringify(), bottom of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES number__hash_ref__to_string(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES number__hash_ref__to_string(), bottom of subroutine\n" or croak();
 
     return ($output_sv);
 };
@@ -431,7 +431,7 @@ our string $number__hash_ref__typetest0 = sub {
 =cut
 
     return (
-        number__hash_ref__stringify($lucky_numbers) . 'PERLOPS_PERLTYPES' );
+        number__hash_ref__to_string($lucky_numbers) . 'PERLOPS_PERLTYPES' );
 };
 
 our number__hash_ref $number__hash_ref__typetest1 = sub {
@@ -571,14 +571,14 @@ our void $string__hash_ref__CHECKTRACE = sub {
 # [[[ STRINGIFY ]]]
 
 # convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing PVs))) to Perl-parsable (Perl SV containing PV)
-our string $string__hash_ref__stringify = sub {
+our string $string__hash_ref__to_string = sub {
     ( my $input_hv_ref ) = @_;
 
-#    RPerl::diag "in PERLOPS_PERLTYPES string__hash_ref__stringify(), top of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES string__hash_ref__to_string(), top of subroutine\n" or croak();
 
     #    ::string__hash_ref__CHECK($input_hv_ref);
     ::string__hash_ref__CHECKTRACE( $input_hv_ref, '$input_hv_ref',
-        'string__hash_ref__stringify()' );
+        'string__hash_ref__to_string()' );
 
     my %input_hv;
 
@@ -590,7 +590,7 @@ our string $string__hash_ref__stringify = sub {
     %input_hv = %{$input_hv_ref};
 
 #	$input_hv_length = scalar keys %input_hv;
-#	RPerl::diag "in PERLOPS_PERLTYPES string__hash_ref__stringify(), have \$input_hv_length = $input_hv_length\n";
+#	RPerl::diag "in PERLOPS_PERLTYPES string__hash_ref__to_string(), have \$input_hv_length = $input_hv_length\n";
 
     $output_sv = '{';
 
@@ -609,8 +609,8 @@ our string $string__hash_ref__stringify = sub {
 
     $output_sv .= '}';
 
-#    RPerl::diag "in PERLOPS_PERLTYPES string__hash_ref__stringify(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
-#    RPerl::diag "in PERLOPS_PERLTYPES string__hash_ref__stringify(), bottom of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES string__hash_ref__to_string(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES string__hash_ref__to_string(), bottom of subroutine\n" or croak();
 
     return ($output_sv);
 };
@@ -633,7 +633,7 @@ our string $string__hash_ref__typetest0 = sub {
     }
 =cut
 
-    return ( string__hash_ref__stringify($people) . 'PERLOPS_PERLTYPES' );
+    return ( string__hash_ref__to_string($people) . 'PERLOPS_PERLTYPES' );
 };
 
 our string__hash_ref $string__hash_ref__typetest1 = sub {

@@ -47,7 +47,7 @@ our void $greet_planet = sub {
     RPerl::diag 'Hello, world! comma ', $arg0, ' and ', 42, "\n"; # parses to 1 PPI::Statement object, w/ PPI::Structure::Block at child index 1
 
 #print 'Hello, world! ' . $arg0 . q{ } . $arg1 . "\n";
-#print 'Hello, world! ' . $arg0 . q{ } . $arg1 . q{ } . ::number__array_ref__stringify($arg2) . "\n";
+#print 'Hello, world! ' . $arg0 . q{ } . $arg1 . q{ } . ::number__array_ref__to_string($arg2) . "\n";
 
     print "Goodbye from PERLOPS_PERLTYPES\n"; # parses to 1 PPI::Statement object
 };

@@ -651,11 +651,11 @@ void XS_pack_string__hash_ref(SV* output_hv_ref, string__hash_ref input_unordere
 # ifdef __PERL__TYPES
 
 // convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
-SV* integer__hash_ref__stringify(SV* input_hv_ref)
+SV* integer__hash_ref__to_string(SV* input_hv_ref)
 {
-//	fprintf(stderr, "in CPPOPS_PERLTYPES integer__hash_ref__stringify(), top of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_PERLTYPES integer__hash_ref__to_string(), top of subroutine\n");
 //	integer__hash_ref__CHECK(input_hv_ref);
-	integer__hash_ref__CHECKTRACE(input_hv_ref, "input_hv_ref", "integer__hash_ref__stringify()");
+	integer__hash_ref__CHECKTRACE(input_hv_ref, "input_hv_ref", "integer__hash_ref__to_string()");
 
     HV* input_hv;
     integer input_hv_num_keys;
@@ -670,25 +670,25 @@ SV* integer__hash_ref__stringify(SV* input_hv_ref)
 
 	input_hv = (HV*)SvRV(input_hv_ref);
 	input_hv_num_keys = hv_iterinit(input_hv);
-//	fprintf(stderr, "in CPPOPS_PERLTYPES integer__hash_ref__stringify(), have input_hv_num_keys = %d\n", input_hv_num_keys);
+//	fprintf(stderr, "in CPPOPS_PERLTYPES integer__hash_ref__to_string(), have input_hv_num_keys = %d\n", input_hv_num_keys);
 
 	sv_setpvn(output_sv, "{", 1);
 
 	for (i = 0;  i < input_hv_num_keys;  ++i)  // incrementing iteration, iterator i not actually used in loop body
 	{
-//		fprintf(stderr, "in CPPOPS_PERLTYPES integer__hash_ref__stringify(), top of loop i = %d\n", i);
+//		fprintf(stderr, "in CPPOPS_PERLTYPES integer__hash_ref__to_string(), top of loop i = %d\n", i);
 
 		// does not utilize i in entry retrieval
 		input_hv_entry = hv_iternext(input_hv);
 		// DEV NOTE: hash entry type-checking already done as part of integer__hash_ref__CHECKTRACE()
 //		hash_entry__CHECK(input_hv_entry);
-//		hash_entry__CHECKTRACE(input_hv_entry, "input_hv_entry", "integer__hash_ref__stringify()");
+//		hash_entry__CHECKTRACE(input_hv_entry, "input_hv_entry", "integer__hash_ref__to_string()");
 
 		input_hv_entry_key = hv_iterkeysv(input_hv_entry);
 		input_hv_entry_value = hv_iterval(input_hv, input_hv_entry);
 		// DEV NOTE: integer type-checking already done as part of integer__hash_ref__CHECKTRACE()
 //		integer__CHECK(input_hv_entry_value);
-//		integer__CHECKTRACE(input_hv_entry_value, (char*)((string)"input_hv_entry_value at key '" + (string)SvPV_nolen(input_hv_entry_key) + "'").c_str(), "integer__hash_ref__stringify()");
+//		integer__CHECKTRACE(input_hv_entry_value, (char*)((string)"input_hv_entry_value at key '" + (string)SvPV_nolen(input_hv_entry_key) + "'").c_str(), "integer__hash_ref__to_string()");
 
 		if (i_is_0) { i_is_0 = 0; } else { sv_catpvn(output_sv, ", ", 2); }
 
@@ -713,18 +713,18 @@ SV* integer__hash_ref__stringify(SV* input_hv_ref)
 
 	sv_catpvn(output_sv, "}", 1);
 
-//	fprintf(stderr, "in CPPOPS_PERLTYPES integer__hash_ref__stringify(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
-//	fprintf(stderr, "in CPPOPS_PERLTYPES integer__hash_ref__stringify(), bottom of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_PERLTYPES integer__hash_ref__to_string(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
+//	fprintf(stderr, "in CPPOPS_PERLTYPES integer__hash_ref__to_string(), bottom of subroutine\n");
 
 	return(output_sv);
 }
 
 // convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing NVs))) to Perl-parsable (Perl SV containing PV)
-SV* number__hash_ref__stringify(SV* input_hv_ref)
+SV* number__hash_ref__to_string(SV* input_hv_ref)
 {
-//	fprintf(stderr, "in CPPOPS_PERLTYPES number__hash_ref__stringify(), top of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_PERLTYPES number__hash_ref__to_string(), top of subroutine\n");
 //	number__hash_ref__CHECK(input_hv_ref);
-	number__hash_ref__CHECKTRACE(input_hv_ref, "input_hv_ref", "number__hash_ref__stringify()");
+	number__hash_ref__CHECKTRACE(input_hv_ref, "input_hv_ref", "number__hash_ref__to_string()");
 
     HV* input_hv;
     integer input_hv_num_keys;
@@ -741,7 +741,7 @@ SV* number__hash_ref__stringify(SV* input_hv_ref)
 
 	input_hv = (HV*)SvRV(input_hv_ref);
 	input_hv_num_keys = hv_iterinit(input_hv);
-//	fprintf(stderr, "in CPPOPS_PERLTYPES number__hash_ref__stringify(), have input_hv_num_keys = %d\n", input_hv_num_keys);
+//	fprintf(stderr, "in CPPOPS_PERLTYPES number__hash_ref__to_string(), have input_hv_num_keys = %d\n", input_hv_num_keys);
 
 	temp_stream << "{";
 
@@ -776,18 +776,18 @@ SV* number__hash_ref__stringify(SV* input_hv_ref)
 	temp_stream << "}";
 	sv_setpv(output_sv, (char*)(temp_stream.str().c_str()));
 
-//	fprintf(stderr, "in CPPOPS_PERLTYPES number__hash_ref__stringify(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
-//	fprintf(stderr, "in CPPOPS_PERLTYPES number__hash_ref__stringify(), bottom of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_PERLTYPES number__hash_ref__to_string(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
+//	fprintf(stderr, "in CPPOPS_PERLTYPES number__hash_ref__to_string(), bottom of subroutine\n");
 
 	return(output_sv);
 }
 
 // convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing PVs))) to Perl-parsable (Perl SV containing PV)
-SV* string__hash_ref__stringify(SV* input_hv_ref)
+SV* string__hash_ref__to_string(SV* input_hv_ref)
 {
-//	fprintf(stderr, "in CPPOPS_PERLTYPES string__hash_ref__stringify(), top of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_PERLTYPES string__hash_ref__to_string(), top of subroutine\n");
 //	string__hash_ref__CHECK(input_hv_ref);
-	string__hash_ref__CHECKTRACE(input_hv_ref, "input_hv_ref", "string__hash_ref__stringify()");
+	string__hash_ref__CHECKTRACE(input_hv_ref, "input_hv_ref", "string__hash_ref__to_string()");
 
     HV* input_hv;
     integer input_hv_num_keys;
@@ -804,7 +804,7 @@ SV* string__hash_ref__stringify(SV* input_hv_ref)
 
 	input_hv = (HV*)SvRV(input_hv_ref);
 	input_hv_num_keys = hv_iterinit(input_hv);
-//	fprintf(stderr, "in CPPOPS_PERLTYPES string__hash_ref__stringify(), have input_hv_num_keys = %d\n", input_hv_num_keys);
+//	fprintf(stderr, "in CPPOPS_PERLTYPES string__hash_ref__to_string(), have input_hv_num_keys = %d\n", input_hv_num_keys);
 
 	sv_setpvn(output_sv, "{", 1);
 
@@ -853,8 +853,8 @@ SV* string__hash_ref__stringify(SV* input_hv_ref)
 
 	sv_catpvn(output_sv, "}", 1);
 
-//	fprintf(stderr, "in CPPOPS_PERLTYPES string__hash_ref__stringify(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
-//	fprintf(stderr, "in CPPOPS_PERLTYPES string__hash_ref__stringify(), bottom of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_PERLTYPES string__hash_ref__to_string(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
+//	fprintf(stderr, "in CPPOPS_PERLTYPES string__hash_ref__to_string(), bottom of subroutine\n");
 
 	return(output_sv);
 }
@@ -862,9 +862,9 @@ SV* string__hash_ref__stringify(SV* input_hv_ref)
 # elif defined __CPP__TYPES
 
 // convert from (C++ std::unordered_map of integers) to Perl-parsable (C++ std::string)
-string integer__hash_ref__stringify(integer__hash_ref input_unordered_map)
+string integer__hash_ref__to_string(integer__hash_ref input_unordered_map)
 {
-//	fprintf(stderr, "in CPPOPS_CPPTYPES integer__hash_ref__stringify(), top of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES integer__hash_ref__to_string(), top of subroutine\n");
 
 	ostringstream output_stream;
 	integer__hash_ref__const_iterator i;
@@ -899,17 +899,17 @@ string integer__hash_ref__stringify(integer__hash_ref input_unordered_map)
 
 	output_stream << '}';
 
-//	fprintf(stderr, "in CPPOPS_CPPTYPES integer__hash_ref__stringify(), after for() loop, have output_stream =\n%s\n", (char*)(output_stream.str().c_str()));
-//	fprintf(stderr, "in CPPOPS_CPPTYPES integer__hash_ref__stringify(), bottom of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES integer__hash_ref__to_string(), after for() loop, have output_stream =\n%s\n", (char*)(output_stream.str().c_str()));
+//	fprintf(stderr, "in CPPOPS_CPPTYPES integer__hash_ref__to_string(), bottom of subroutine\n");
 
 	return(output_stream.str());
 }
 
 
 // convert from (C++ std::unordered_map of doubles) to Perl-parsable (C++ std::string)
-string number__hash_ref__stringify(number__hash_ref input_unordered_map)
+string number__hash_ref__to_string(number__hash_ref input_unordered_map)
 {
-//	fprintf(stderr, "in CPPOPS_CPPTYPES number__hash_ref__stringify(), top of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES number__hash_ref__to_string(), top of subroutine\n");
 
 	ostringstream output_stream;
 	number__hash_ref__const_iterator i;
@@ -945,17 +945,17 @@ string number__hash_ref__stringify(number__hash_ref input_unordered_map)
 
 	output_stream << '}';
 
-//	fprintf(stderr, "in CPPOPS_CPPTYPES number__hash_ref__stringify(), after for() loop, have output_stream =\n%s\n", (char*)(output_stream.str().c_str()));
-//	fprintf(stderr, "in CPPOPS_CPPTYPES number__hash_ref__stringify(), bottom of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES number__hash_ref__to_string(), after for() loop, have output_stream =\n%s\n", (char*)(output_stream.str().c_str()));
+//	fprintf(stderr, "in CPPOPS_CPPTYPES number__hash_ref__to_string(), bottom of subroutine\n");
 
 	return(output_stream.str());
 }
 
 
 // convert from (C++ std::unordered_map of std::strings) to Perl-parsable (C++ std::string)
-string string__hash_ref__stringify(string__hash_ref input_unordered_map)
+string string__hash_ref__to_string(string__hash_ref input_unordered_map)
 {
-//	fprintf(stderr, "in CPPOPS_CPPTYPES string__hash_ref__stringify(), top of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES string__hash_ref__to_string(), top of subroutine\n");
 
 	string output_string;
 	string__hash_ref__const_iterator i;
@@ -1007,8 +1007,8 @@ string string__hash_ref__stringify(string__hash_ref input_unordered_map)
 
 	output_string += "}";
 
-//	fprintf(stderr, "in CPPOPS_CPPTYPES string__hash_ref__stringify(), after for() loop, have output_string =\n%s\n", output_string.c_str());
-//	fprintf(stderr, "in CPPOPS_CPPTYPES string__hash_ref__stringify(), bottom of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES string__hash_ref__to_string(), after for() loop, have output_string =\n%s\n", output_string.c_str());
+//	fprintf(stderr, "in CPPOPS_CPPTYPES string__hash_ref__to_string(), bottom of subroutine\n");
 
 	return(output_string);
 }
@@ -1049,7 +1049,7 @@ SV* integer__hash_ref__typetest0(SV* lucky_integers)
 //		fprintf(stderr, "in CPPOPS_PERLTYPES integer__hash_ref__typetest0(), have lucky integer '%s' => %d, BARSTOOL\n", SvPV_nolen(hv_iterkeysv(lucky_integer_entry)), (integer)SvIV(hv_iterval(lucky_integers_deref, lucky_integer_entry)));
 	}
 
-	return(newSVpvf("%s%s", SvPV_nolen(integer__hash_ref__stringify(lucky_integers)), "CPPOPS_PERLTYPES"));
+	return(newSVpvf("%s%s", SvPV_nolen(integer__hash_ref__to_string(lucky_integers)), "CPPOPS_PERLTYPES"));
 }
 
 
@@ -1088,7 +1088,7 @@ SV* number__hash_ref__typetest0(SV* lucky_numbers)
 	}
 	*/
 
-	return(newSVpvf("%s%s", SvPV_nolen(number__hash_ref__stringify(lucky_numbers)), "CPPOPS_PERLTYPES"));
+	return(newSVpvf("%s%s", SvPV_nolen(number__hash_ref__to_string(lucky_numbers)), "CPPOPS_PERLTYPES"));
 }
 
 
@@ -1127,7 +1127,7 @@ SV* string__hash_ref__typetest0(SV* people)
 	}
 	*/
 
-	return(newSVpvf("%s%s", SvPV_nolen(string__hash_ref__stringify(people)), "CPPOPS_PERLTYPES"));
+	return(newSVpvf("%s%s", SvPV_nolen(string__hash_ref__to_string(people)), "CPPOPS_PERLTYPES"));
 }
 
 
@@ -1160,7 +1160,7 @@ string integer__hash_ref__typetest0(integer__hash_ref lucky_integers)
 		fprintf(stderr, "in CPPOPS_CPPTYPES integer__hash_ref__typetest0(), have lucky integer '%s' => %d, BARSTOOL\n", (i->first).c_str(), i->second);
 	}
 	*/
-	return(integer__hash_ref__stringify(lucky_integers) + "CPPOPS_CPPTYPES");
+	return(integer__hash_ref__to_string(lucky_integers) + "CPPOPS_CPPTYPES");
 }
 
 integer__hash_ref integer__hash_ref__typetest1(integer my_size)
@@ -1186,7 +1186,7 @@ string number__hash_ref__typetest0(number__hash_ref lucky_numbers)
 		fprintf(stderr, "in CPPOPS_CPPTYPES number__hash_ref__typetest0(), have lucky number '%s' => %Lf, BARSTOOL\n", (i->first).c_str(), i->second);
 	}
 	*/
-	return(number__hash_ref__stringify(lucky_numbers) + "CPPOPS_CPPTYPES");
+	return(number__hash_ref__to_string(lucky_numbers) + "CPPOPS_CPPTYPES");
 }
 number__hash_ref number__hash_ref__typetest1(integer my_size)
 {
@@ -1211,7 +1211,7 @@ string string__hash_ref__typetest0(string__hash_ref people)
 		fprintf(stderr, "in CPPOPS_CPPTYPES string__hash_ref__typetest0(), have person '%s' => '%s', STARBOOL\n", (i->first).c_str(), (i->second).c_str());
 	}
 	*/
-	return(string__hash_ref__stringify(people) + "CPPOPS_CPPTYPES");
+	return(string__hash_ref__to_string(people) + "CPPOPS_CPPTYPES");
 }
 
 string__hash_ref string__hash_ref__typetest1(integer my_size)

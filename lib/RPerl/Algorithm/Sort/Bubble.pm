@@ -188,7 +188,7 @@ our string $integer__bubblesort__typetest0 = sub {
 #    RPerl::diag "in PERLOPS_PERLTYPES integer__bubblesort__typetest0(), bottom of subroutine\n" or croak();
 
     return (
-        ::integer__array_ref__stringify(
+        ::integer__array_ref__to_string(
             integer__bubblesort($lucky_integers)
             )
             . 'PERLOPS_PERLTYPES'
@@ -210,7 +210,7 @@ our string $number__bubblesort__typetest0 = sub {
 #    RPerl::diag "in PERLOPS_PERLTYPES number__bubblesort__typetest0(), bottom of subroutine\n" or croak();
 
     return (
-        ::number__array_ref__stringify( number__bubblesort($lucky_numbers) )
+        ::number__array_ref__to_string( number__bubblesort($lucky_numbers) )
             . 'PERLOPS_PERLTYPES' );
 };
 

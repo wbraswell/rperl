@@ -21,7 +21,7 @@ our string__hash_ref__method $ast_to_rperl__generate = sub {
     RPerl::diag( 'in Literal::Number->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $value           = $self->{children}->[0];
-    # BUG BOUNTY #000, 50 CodeCoin: modify all ::number*__stringify() to output underscores, to match LITERAL_NUMBER grammar token input
+    # BUG BOUNTY #000, 50 CodeCoin: modify all ::number*__to_string() to output underscores, to match LITERAL_NUMBER grammar token input
     $rperl_source_group->{PMC} .= $value;
 
     return $rperl_source_group;

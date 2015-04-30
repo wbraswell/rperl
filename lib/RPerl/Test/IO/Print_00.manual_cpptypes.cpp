@@ -18,7 +18,7 @@ void greet_planet(integer arg0) {
     cout << "Hello, world! " << arg0 << '\n';  // single-quote newline works
     //cout << "Hello, world! " << arg0 << "\n";  // double-quote newline works
     //cout << "Hello, world! " << arg0 << " " << arg1 << '\n';
-    //cout << "Hello, world! " << arg0 << " " << arg1 << " " << number__array_ref__stringify(arg2) << '\n';
+    //cout << "Hello, world! " << arg0 << " " << arg1 << " " << number__array_ref__to_string(arg2) << '\n';
 
     cout << "Goodbye from CPPOPS_CPPTYPES\n";
 }

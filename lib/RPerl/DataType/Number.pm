@@ -75,17 +75,17 @@ our void $number__CHECKTRACE = sub {
     }
 };
 
-# BUG BOUNTY #000, 50 CodeCoin: modify all ::number*__stringify() to output underscores, to match LITERAL_NUMBER grammar token input
+# BUG BOUNTY #000, 50 CodeCoin: modify all ::number*__to_string() to output underscores, to match LITERAL_NUMBER grammar token input
 
 # [[[ STRINGIFY ]]]
-our string $number__stringify = sub {
+our string $number__to_string = sub {
     ( my $input_number ) = @_;
 
     #    number__CHECK($input_number);
     number__CHECKTRACE( $input_number, '$input_number',
-        'number__stringify()' );
+        'number__to_string()' );
 
-#    RPerl::diag "in PERLOPS_PERLTYPES number__stringify(), bottom of subroutine, received \$input_number = $input_number\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES number__to_string(), bottom of subroutine, received \$input_number = $input_number\n" or croak();
     return ("$input_number");
 };
 
@@ -103,7 +103,7 @@ our number $number__typetest1 = sub {
     number__CHECKTRACE( $lucky_number, '$lucky_number',
         'number__typetest1()' );
 
-#    RPerl::diag 'in PERLOPS_PERLTYPES number__typetest1(), received $lucky_number = ' . number__stringify($lucky_number) . "\n" or croak();
+#    RPerl::diag 'in PERLOPS_PERLTYPES number__typetest1(), received $lucky_number = ' . number__to_string($lucky_number) . "\n" or croak();
     return ( ( $lucky_number * 2 ) + main::RPerl__DataType__Number__MODE_ID() );
 };
 

@@ -56,14 +56,14 @@ our void $integer__CHECKTRACE = sub {
 };
 
 # [[[ STRINGIFY ]]]
-our string $integer__stringify = sub {
+our string $integer__to_string = sub {
     ( my $input_integer ) = @_;
 
     #    integer__CHECK($input_integer);
     integer__CHECKTRACE( $input_integer, '$input_integer',
-        'integer__stringify()' );
+        'integer__to_string()' );
 
-#    RPerl::diag "in PERLOPS_PERLTYPES integer__stringify(), bottom of subroutine, received \$input_integer = $input_integer\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES integer__to_string(), bottom of subroutine, received \$input_integer = $input_integer\n" or croak();
     return ("$input_integer");
 };
 
@@ -81,7 +81,7 @@ our integer $integer__typetest1 = sub {
     integer__CHECKTRACE( $lucky_integer, '$lucky_integer',
         'integer__typetest1()' );
 
-#    RPerl::diag 'in PERLOPS_PERLTYPES integer__typetest1(), received $lucky_integer = ' . integer__stringify($lucky_integer) . "\n" or croak();
+#    RPerl::diag 'in PERLOPS_PERLTYPES integer__typetest1(), received $lucky_integer = ' . integer__to_string($lucky_integer) . "\n" or croak();
     return ( ( $lucky_integer * 2 ) + main::RPerl__DataType__Integer__MODE_ID() );
 };
 
