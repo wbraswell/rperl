@@ -9,7 +9,7 @@ our $VERSION = 0.001_010;
 ## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
 
 # [[[ SUBROUTINES ]]]
-our void__method $cpp_load = sub {
+our void_method $cpp_load = sub {
     my $need_load_cpp = 0;
     if (    ( exists $main::{'RPerl__Test__IO__Print_00__MODE_ID'} )
         and ( defined &{ $main::{'RPerl__Test__IO__Print_00__MODE_ID'} } ) )

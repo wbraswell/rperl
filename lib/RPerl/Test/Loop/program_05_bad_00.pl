@@ -16,6 +16,6 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string__hash_ref $my_hash
+my string_hashref $my_hash
     = { a_key => 'howdy', b_key => 'doody', c_key => 'clarabell' };
 foreach my string $my_key ( keys %{$my_hash} ) { }

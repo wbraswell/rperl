@@ -19,10 +19,10 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 
 my number $foo            = 9_123.456_789;
-my number__array_ref $bar = [ 21, 12, 43.23, 987.654_321 ];
-my string $bat            = main::number__to_string($foo);
-my string $baz            = ::number__array_ref__to_string($bar);
-my string $bax = ::string__array_ref__to_string( [ 'abc', '123', 'lalala' ] );
+my number_arrayref $bar = [ 21, 12, 43.23, 987.654_321 ];
+my string $bat            = main::number_to_string($foo);
+my string $baz            = ::number_arrayref_to_string($bar);
+my string $bax = ::string_arrayref_to_string( [ 'abc', '123', 'lalala' ] );
 
 print 'have $foo = ', $foo, "\n";
 print 'have $bar = ', $bar, "\n";
@@ -30,11 +30,11 @@ print 'have $bat = ', $bat, "\n";
 print 'have $baz = ', $baz, "\n";
 print 'have $bax = ', $bax, "\n";
 
-$bat = ::integer__hash_ref__to_string(
+$bat = ::integer_hashref_to_string(
     { foo => 23, bar => 56, quux => 123_456 } );
-$baz = ::number__hash_ref__to_string(
+$baz = ::number_hashref_to_string(
     { foo => 23.4, bar => 56.789, quux => 123_456.789_012 } );
-$bax = ::string__hash_ref__to_string
+$bax = ::string_hashref_to_string
     { foo => 'howdy', bar => 'dowdy', quux => 'doo' };
 
 print 'have $bat = ', $bat, "\n";

@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< RUN_ERROR: 'ERROR EPVHVRV03, TYPE-CHECKING MISMATCH' >>>
-# <<< RUN_ERROR: "string__hash_ref element value expected but non-string value found at key 'd'" >>>
+# <<< RUN_ERROR: "string_hashref element value expected but non-string value found at key 'd'" >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -17,4 +17,4 @@ our $VERSION = 0.000_001;
 use RPerl::Test::TypeCheckingOn::AllTypes;
 
 # [[[ OPERATIONS ]]]
-check__string__hash_ref( { a => 'hello', b => 'howdy', c => 'ahoy', d => { a => 0, b => 1, c => 2 } } );
+check_string_hashref( { a => 'hello', b => 'howdy', c => 'ahoy', d => { a => 0, b => 1, c => 2 } } );

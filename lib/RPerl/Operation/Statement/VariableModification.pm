@@ -12,14 +12,14 @@ use Scalar::Util 'blessed';
 use parent qw(RPerl::Operation::Statement);
 
 # [[[ OO PROPERTIES ]]]
-our hash_ref $properties = {
+our hashref $properties = {
     name  => my string $TYPED_name  = undef,
     value => my object $TYPED_value = undef,
 };
 
 # [[[ OO METHODS ]]]
 # VARIABLE_MODIFICATION RULE
-our object__method $ppi_to_rperl__translate = sub {
+our object_method $ppi_to_rperl__translate = sub {
     ( my string $class, my object $node) = @_;    # class method
 
     # variable declarations
@@ -67,7 +67,7 @@ our object__method $ppi_to_rperl__translate = sub {
     $child_key = 'children';
     if ( not( defined $node->{$child_key} ) ) {
         croak(
-            "\nERROR ECVTRPI03, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, PPI OBJECT FAILURE:\nchildren sub-objects array_ref value expected but undefined/null value found,\ncroaking"
+            "\nERROR ECVTRPI03, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, PPI OBJECT FAILURE:\nchildren sub-objects arrayref value expected but undefined/null value found,\ncroaking"
         );
     }
 

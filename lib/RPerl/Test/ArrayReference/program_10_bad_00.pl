@@ -17,8 +17,8 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 
 # homogeneous 2-dimensional array of arrays, using inner types
-my array_ref__array_ref $array_array = [
-    my integer__array_ref $TYPED_array_array_0 = [ 17,   -23, 1_701 ],
-    my integer__array_ref $TYPED_array_array_1 = [ -1,   444, 2_987 ],
-    my integer__array_ref $TYPED_array_array_2 = [ -321, 7,   24_851 ],
+my arrayref_arrayref $array_array = [
+    my integer_arrayref $TYPED_array_array_0 = [ 17,   -23, 1_701 ],
+    my integer_arrayref $TYPED_array_array_1 = [ -1,   444, 2_987 ],
+    my integer_arrayref $TYPED_array_array_2 = [ -321, 7,   24_851 ],
 ];

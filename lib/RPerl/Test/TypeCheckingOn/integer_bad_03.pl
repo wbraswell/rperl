@@ -17,4 +17,4 @@ our $VERSION = 0.000_001;
 use RPerl::Test::TypeCheckingOn::AllTypes;
 
 # [[[ OPERATIONS ]]]
-check__integer( { a => 0, b => 1, c => 2 } );
+check_integer( { a => 0, b => 1, c => 2 } );

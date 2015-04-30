@@ -23,7 +23,7 @@ use IO::Select;
 
 # [[[ OPERATIONS ]]]
 
-my $test_files = {};    # string__hash_ref
+my $test_files = {};    # string_hashref
 find(
     sub {
         my $file = $File::Find::name;
@@ -140,7 +140,7 @@ for my $test_file ( sort keys %{$test_files} ) {
 #    if ($stderr_generated) { RPerl::diag( "===STDERR=BEGIN====\n" . $stderr_generated . "===STDERR=END======\n" ); }
                 
     my @stdout_generated_lines_array = split("\n", $stdout_generated);
-    my string__array_ref $stdout_generated_lines = \@stdout_generated_lines_array;
+    my string_arrayref $stdout_generated_lines = \@stdout_generated_lines_array;
 
     if ( $test_exit_status == 0 ) {    # UNIX process return code 0, success
         if ( ( $test_file =~ m/Good/xms ) or ( $test_file =~ m/good/xms ) ) {

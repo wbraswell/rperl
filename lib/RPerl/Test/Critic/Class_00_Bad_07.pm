@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected Token:  our hash_ref $properties' >>>
+# <<< COMPILE_ERROR: 'Unexpected Token:  our hashref $properties' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::Critic::Class_00_Bad_07;
@@ -17,10 +17,10 @@ use RPerl::Test;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls
 
 # [[[ OO PROPERTIES ]]]
-our hash_ref $properties
+our hashref $properties
     = { empty_property => my integer $TYPED_empty_property = 2 };
 
 # [[[ OO METHODS ]]]
-our void__method $empty_method = sub { return 2; };
+our void_method $empty_method = sub { return 2; };
 
 1;    # end of class

@@ -17,5 +17,5 @@ our $VERSION = 0.001_000;
 # FEATURE BOUNTY #000, 1_000 CodeCoin: Implement all Perl functions AKA builtins (PERLOPS_PERLTYPES) as C++ functions (CPPOPS_PERLTYPES & CPPOPS_CPPTYPES)
 
 # [[[ OPERATIONS ]]]
-my integer__array_ref $frob = [];
+my integer_arrayref $frob = [];
 push @{$frob}, 21, 12, 23

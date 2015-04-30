@@ -17,10 +17,6 @@ use RPerl::DataType::Scalar;
 package string;
 use parent ('RPerl::DataType::String');
 
-# string with const value
-package const_string;
-use parent -norequire, qw(string const);
-
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataType::String;
 
@@ -30,7 +26,7 @@ use RPerl::DataType::Number; # need number type, same as above
 use POSIX qw(floor);
 
 # [[[ TYPE CHECKING ]]]
-our void $string__CHECK = sub {
+our void $string_CHECK = sub {
     ( my $possible_string ) = @_;
     if ( not( defined $possible_string ) ) {
         croak(
@@ -43,7 +39,7 @@ our void $string__CHECK = sub {
         );
     }
 };
-our void $string__CHECKTRACE = sub {
+our void $string_CHECKTRACE = sub {
     ( my $possible_string, my $variable_name, my $subroutine_name ) = @_;
     if ( not( defined $possible_string ) ) {
         croak(
@@ -58,31 +54,31 @@ our void $string__CHECKTRACE = sub {
 };
 
 # [[[ INTEGERIFY ]]]
-our integer $string__to_integer = sub {
+our integer $string_to_integer = sub {
     (my string $input_string) = @_;
     return floor ($input_string * 1);
 };
 
 # [[[ NUMBERIFY ]]]
-our number $string__to_number = sub {
+our number $string_to_number = sub {
     (my string $input_string) = @_;
     return $input_string * 1.0;
 };
 
 # [[[ STRINGIFY ]]]
-our string $string__to_string = sub {
+our string $string_to_string = sub {
     ( my string $input_string ) = @_;
 
-    #    string__CHECK($input_string);
-    string__CHECKTRACE( $input_string, '$input_string',
-        'string__to_string()' );
+    #    string_CHECK($input_string);
+    string_CHECKTRACE( $input_string, '$input_string',
+        'string_to_string()' );
 
-#    RPerl::diag "in PERLOPS_PERLTYPES string__to_string(), received \$input_string =\n$input_string\n\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES string_to_string(), received \$input_string =\n$input_string\n\n" or croak();
     $input_string =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
     $input_string =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
     $input_string = "'$input_string'";
 
-#    RPerl::diag "in PERLOPS_PERLTYPES string__to_string(), bottom of subroutine, returning possibly-modified \$input_string =\n$input_string\n\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES string_to_string(), bottom of subroutine, returning possibly-modified \$input_string =\n$input_string\n\n" or croak();
 
     return ($input_string);
 };
@@ -97,12 +93,12 @@ our string $string__typetest0 = sub {
 our string $string__typetest1 = sub {
     ( my string $lucky_string ) = @_;
 
-    #    string__CHECK($lucky_string);
-    string__CHECKTRACE( $lucky_string, '$lucky_string',
+    #    string_CHECK($lucky_string);
+    string_CHECKTRACE( $lucky_string, '$lucky_string',
         'string__typetest1()' );
 
 #    RPerl::diag "in PERLOPS_PERLTYPES string__typetest1(), received \$lucky_string = '$lucky_string'\n" or croak();
-    return ( string__to_string($lucky_string) . ' PERLOPS_PERLTYPES' );
+    return ( string_to_string($lucky_string) . ' PERLOPS_PERLTYPES' );
 };
 
 1;

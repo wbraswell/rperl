@@ -2,8 +2,8 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< RUN_ERROR: 'ERROR EAVRV01, TYPE-CHECKING MISMATCH' >>>
-# <<< RUN_ERROR: 'array_ref value expected but non-array_ref value found' >>>
-# <<< RUN_ERROR: 'in variable $input_1 from subroutine check__array_ref()' >>>
+# <<< RUN_ERROR: 'arrayref value expected but non-arrayref value found' >>>
+# <<< RUN_ERROR: 'in variable $input_1 from subroutine check_arrayref()' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -18,4 +18,4 @@ our $VERSION = 0.000_001;
 use RPerl::Test::TypeCheckingTrace::AllTypes;
 
 # [[[ OPERATIONS ]]]
-check__array_ref('abcd');
+check_arrayref('abcd');

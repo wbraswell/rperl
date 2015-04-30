@@ -17,27 +17,27 @@ use rperloperations;
 use parent qw(RPerl::GrammarRule);
 
 # [[[ OO PROPERTIES ]]]
-our hash_ref $properties = {
+our hashref $properties = {
     type      => my string $TYPED_type                 = undef,
     name      => my string $TYPED_name                 = undef,
-    arguments => my object__array_ref $TYPED_arguments = undef,
+    arguments => my object_arrayref $TYPED_arguments = undef,
 };
 
 # [[[ OO METHODS ]]]
 
 # TRANSLATE OPERATION+
-our object__array_ref__method $ppi_to_rperl__translate_plus = sub {
-    ( my string $class, my object__array_ref $nodes) = @_;    # class method
+our object_arrayref_method $ppi_to_rperl__translate_plus = sub {
+    ( my string $class, my object_arrayref $nodes) = @_;    # class method
 
     # variable declarations
     my string $rule_name = 'OPERATION+';
     my string $production_name;
     my string $component_name;
-    my object__array_ref $nodes_translated = []; # default to empty array of operations, this rule never matches empty
+    my object_arrayref $nodes_translated = []; # default to empty array of operations, this rule never matches empty
     my object $node;
     my integer $node_index_max;
     my string $node_class;
-    my string__array_ref $node_classes_expected = [
+    my string_arrayref $node_classes_expected = [
         'PPI::Statement',           'PPI::Statement::Compound',
         'PPI::Statement::Variable', 'PPI::Statement::Break',
     ];
@@ -103,7 +103,7 @@ NODE_LOOP: for my $node_index_loop ( 0 .. $node_index_max ) {
         $child_key = 'children';
         if ( not( defined $node->{$child_key} ) ) {
             croak(
-                "\nERROR ECVTRPI03, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, PPI OBJECT FAILURE:\nchildren sub-objects array_ref value expected but undefined/null value found,\ncroaking"
+                "\nERROR ECVTRPI03, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, PPI OBJECT FAILURE:\nchildren sub-objects arrayref value expected but undefined/null value found,\ncroaking"
             );
         }
 

@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< RUN_ERROR: 'ERROR EAVRV01, TYPE-CHECKING MISMATCH' >>>
-# <<< RUN_ERROR: 'array_ref value expected but non-array_ref value found' >>>
+# <<< RUN_ERROR: 'arrayref value expected but non-arrayref value found' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -17,4 +17,4 @@ our $VERSION = 0.000_001;
 use RPerl::Test::TypeCheckingOn::AllTypes;
 
 # [[[ OPERATIONS ]]]
-check__array_ref( { a => 0, b => 1, c => 2 } );
+check_arrayref( { a => 0, b => 1, c => 2 } );

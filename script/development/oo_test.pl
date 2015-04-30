@@ -29,7 +29,7 @@ print q{in oo_test.pl, have RPerl__Algorithm__Sort__Bubble__MODE_ID() = '}
 my object $sorter;
 
 # loop to test for memory leaks
-my const_integer $i_MAX = 1;
+my integer $i_MAX = 1;  # CONSTANT
 for my integer $i ( 0 .. $i_MAX ) {
     print "in oo_test.pl, top of for() loop $i/$i_MAX\n";
 
@@ -64,10 +64,10 @@ for my integer $i ( 0 .. $i_MAX ) {
 # HASH FOR REFERENCE
 # HASH FOR REFERENCE
 # HASH FOR REFERENCE
-#	$retval_stringify = stringify_int__hash_ref(2);  # HVIV00; raise/throw exception
-#	$retval_stringify = stringify_int__hash_ref({a_key => 23});  # HVIV01
+#	$retval_stringify = stringify_int_hashref(2);  # HVIV00; raise/throw exception
+#	$retval_stringify = stringify_int_hashref({a_key => 23});  # HVIV01
 #	print "in oo_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
-#	$retval_jeffys = typetest___int__in___string__hash_ref__out(5);  # HVPV20
+#	$retval_jeffys = typetest___int__in__string_hashref_out(5);  # HVPV20
 #	print "in type_test.pl, have \$retval_jeffys =\n" . Dumper($retval_jeffys) . "\n";
 
     croak('Done for now, croaking');

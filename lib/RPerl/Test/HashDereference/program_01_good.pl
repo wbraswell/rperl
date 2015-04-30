@@ -13,7 +13,7 @@ our $VERSION = 0.001_000;
 
 foreach my string $key (
     sort keys %{
-        my integer__hash_ref $TYPED_i_hash
+        my integer_hashref $TYPED_i_hash
             = { a => 10, b => 20, c => 30, d => 40, e => 50 }
     }
     )

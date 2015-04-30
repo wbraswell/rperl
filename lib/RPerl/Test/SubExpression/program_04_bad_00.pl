@@ -16,4 +16,4 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string__array_ref $foo = ['howdy doody', 'buffalo bob', 'clarabell clown']
+my string_arrayref $foo = ['howdy doody', 'buffalo bob', 'clarabell clown']

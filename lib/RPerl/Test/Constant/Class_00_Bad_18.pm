@@ -18,11 +18,11 @@ use RPerl::Test;
 use constant PI => my number $TYPED_PI = 3.141_59;
 
 # [[[ OO PROPERTIES ]]]
-our hash_ref $properties
+our hashref $properties
     = { empty_property => my integer $TYPED_empty_property = 2 };
 
 # [[[ OO METHODS ]]]
-our void__method $empty_method = sub { return 2; };
+our void_method $empty_method = sub { return 2; };
 
 1;    # end of class
 

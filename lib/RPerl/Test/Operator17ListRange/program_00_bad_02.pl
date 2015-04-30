@@ -18,26 +18,26 @@ our $VERSION = 0.001_000;
 
 my number $foo = 123;
 my string $bar = 'ab';
-my integer__array_ref $bat;
+my integer_arrayref $bat;
 $bat = [ $foo .. 22 ];
-my integer__array_ref $baz;
+my integer_arrayref $baz;
 $baz = [ 22 .. $foo ];
-my integer__array_ref $bax;
+my integer_arrayref $bax;
 $bax = [ 0 .. 23 ];
 
 print 'have $foo = ', $foo, "\n";
 print 'have $bar = ', $bar, "\n";
-print 'have $bat = ', ::integer__array_ref__to_string($bat), "\n";
-print 'have $baz = ', ::integer__array_ref__to_string($baz), "\n";
-print 'have $bax = ', ::integer__array_ref__to_string($bax), "\n";
+print 'have $bat = ', ::integer_arrayref_to_string($bat), "\n";
+print 'have $baz = ', ::integer_arrayref_to_string($baz), "\n";
+print 'have $bax = ', ::integer_arrayref_to_string($bax), "\n";
 
-my string__array_ref $bat2;
+my string_arrayref $bat2;
 $bat2 = [ $bar .. 'ac' ];
-my string__array_ref $baz2;
+my string_arrayref $baz2;
 $baz2 = [ 'a2' .. - 'a4' ];
-my string__array_ref $bax2;
+my string_arrayref $bax2;
 $bax2 = [ 'a' .. $bar ];
 
-print 'have $bat2 = ', ::string__array_ref__to_string($bat2), "\n";
-print 'have $baz2 = ', ::string__array_ref__to_string($baz2), "\n";
-print 'have $bax2 = ', ::string__array_ref__to_string($bax2), "\n";
+print 'have $bat2 = ', ::string_arrayref_to_string($bat2), "\n";
+print 'have $baz2 = ', ::string_arrayref_to_string($baz2), "\n";
+print 'have $bax2 = ', ::string_arrayref_to_string($bax2), "\n";

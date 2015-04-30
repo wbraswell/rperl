@@ -11,11 +11,11 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string__hash_ref $s_hash_0
+my string_hashref $s_hash_0
     = { alpha => 'a', bravo => 'b', charlie => 'c' };
-my string__hash_ref $s_hash_1 = { delta => 'd', echo => 'e', foxtrot => 'f' };
-my string__hash_ref $s_hash_2 = { golf => 'g', hotel => 'h', india => 'i' };
-my string__hash_ref $s_hash_all = {
+my string_hashref $s_hash_1 = { delta => 'd', echo => 'e', foxtrot => 'f' };
+my string_hashref $s_hash_2 = { golf => 'g', hotel => 'h', india => 'i' };
+my string_hashref $s_hash_all = {
     subhash_0 => $s_hash_0,
     subhash_1 => $s_hash_1,
     subhash_2 => $s_hash_2

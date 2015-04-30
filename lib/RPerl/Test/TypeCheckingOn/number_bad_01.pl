@@ -17,4 +17,4 @@ our $VERSION = 0.000_001;
 use RPerl::Test::TypeCheckingOn::AllTypes;
 
 # [[[ OPERATIONS ]]]
-check__number(q{abcd});
+check_number(q{abcd});

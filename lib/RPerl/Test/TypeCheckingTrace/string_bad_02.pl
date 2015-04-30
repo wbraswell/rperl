@@ -3,7 +3,7 @@
 # [[[ PREPROCESSOR ]]]
 # <<< RUN_ERROR: 'ERROR EPV01, TYPE-CHECKING MISMATCH' >>>
 # <<< RUN_ERROR: 'string value expected but non-string value found' >>>
-# <<< RUN_ERROR: 'in variable $input_1 from subroutine check__string()' >>>
+# <<< RUN_ERROR: 'in variable $input_1 from subroutine check_string()' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -18,4 +18,4 @@ our $VERSION = 0.000_001;
 use RPerl::Test::TypeCheckingTrace::AllTypes;
 
 # [[[ OPERATIONS ]]]
-check__string( [ 0, 1, 2 ] );
+check_string( [ 0, 1, 2 ] );

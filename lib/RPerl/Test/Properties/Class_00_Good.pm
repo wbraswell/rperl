@@ -10,11 +10,11 @@ use parent qw(RPerl::Test);
 use RPerl::Test;
 
 # [[[ OO PROPERTIES ]]]
-our hash_ref $properties
+our hashref $properties
     = { test_property => my integer $TYPED_test_property = 2 };
 
 # [[[ OO METHODS ]]]
-our void__method $test_method = sub {
+our void_method $test_method = sub {
     ( my object $self, my integer $input_integer) = @_;
     $self->{test_property} *= $input_integer;
     return $self->{test_property};

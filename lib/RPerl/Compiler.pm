@@ -29,10 +29,10 @@ use RPerl::Generator;
 our void $rperl_to_rperl__parse_generate = sub {
     (   my string $rperl_input_file_name,
         my string $rperl_output_file_name_group,
-        my string__hash_ref $modes
+        my string_hashref $modes
     ) = @_;
     my object $rperl_ast;
-    my string__hash_ref $rperl_source_group;
+    my string_hashref $rperl_source_group;
 
     # [[[ PARSE RPERL TO AST ]]]
 
@@ -60,10 +60,10 @@ our void $rperl_to_rperl__parse_generate = sub {
 our void $rperl_to_xsbinary__parse_generate_compile = sub {
     (   my string $rperl_input_file_name,
         my string $cpp_output_file_name_group,
-        my string__hash_ref $modes
+        my string_hashref $modes
     ) = @_;
     my object $rperl_ast;
-    my string__hash_ref $source_group;
+    my string_hashref $source_group;
 
     # [[[ PARSE RPERL TO AST ]]]
 
@@ -95,8 +95,8 @@ our void $rperl_to_xsbinary__parse_generate_compile = sub {
 
 # Write Source Code Files To File System
 our void $save_source_files = sub {
-    (   my string__hash_ref $source_group,
-        my string__hash_ref $file_name_group
+    (   my string_hashref $source_group,
+        my string_hashref $file_name_group
     ) = @_;
 
 #    RPerl::diag( q{in Compiler::save_source_files(), received $source_group =}, "\n", Dumper($source_group), "\n" );

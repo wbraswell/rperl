@@ -11,14 +11,14 @@ our $VERSION = 0.000_012;
 use parent qw(RPerl::Operation::Statement);
 
 # [[[ OO PROPERTIES ]]]
-our hash_ref $properties = {
+our hashref $properties = {
 
 #name => my string $TYPED_name = undef,  # object property
-#arguments => my object__array_ref $TYPED_arguments = undef,  # object property
+#arguments => my object_arrayref $TYPED_arguments = undef,  # object property
 
 # NEED FIX: move "class properties" to constants
     # class property
-    _operator_void_names => my string__hash_ref $TYPED__operator_void_names
+    _operator_void_names => my string_hashref $TYPED__operator_void_names
         = {
         'print'  => 'RPerl::Operation::Statement::OperatorVoid::Print',
         'return' => 'RPerl::Operation::Statement::OperatorVoid::Return',
@@ -27,7 +27,7 @@ our hash_ref $properties = {
 };
 # [[[ OO METHODS ]]]
 # TRANSLATE
-our object__method $ppi_to_rperl__translate = sub {
+our object_method $ppi_to_rperl__translate = sub {
     ( my string $class, my object $node) = @_;    # class method
     my object $node_translated;
     $node_translated
@@ -37,7 +37,7 @@ our object__method $ppi_to_rperl__translate = sub {
 };
 
 # GENERATE CPPOPS_PERLTYPES
-our string__method $rperl_to_cpp__generate__CPPOPS_PERLTYPES = sub {
+our string_method $rperl_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self ) = @_;                     # object method
     my string $self_generated = q{};
     $self_generated
@@ -46,7 +46,7 @@ our string__method $rperl_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 };
 
 # GENERATE CPPOPS_CPPTYPES
-our string__method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
+our string_method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self ) = @_;                     # object method
     my string $self_generated = q{};
     $self_generated

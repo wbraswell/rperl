@@ -12,7 +12,7 @@ using std::cout;  using std::cerr;
 
 // TYPE-CHECKING SUBROUTINES DEPRECATED IN FAVOR OF EQUIVALENT MACROS
 /*
-void string__CHECK(SV* possible_string) {
+void string_CHECK(SV* possible_string) {
     if (not(SvOK(possible_string))) {
     	croak("\nERROR EPV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but undefined/null value found,\ncroaking");
     }
@@ -20,7 +20,7 @@ void string__CHECK(SV* possible_string) {
     	croak("\nERROR EPV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but non-string value found,\ncroaking");
     }
 };
-void string__CHECKTRACE(SV* possible_string, const char* variable_name, const char* subroutine_name) {
+void string_CHECKTRACE(SV* possible_string, const char* variable_name, const char* subroutine_name) {
     if (not(SvOK(possible_string))) {
     	croak("\nERROR EPV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking",
     			variable_name, subroutine_name);
@@ -42,8 +42,8 @@ void string__CHECKTRACE(SV* possible_string, const char* variable_name, const ch
 string XS_unpack_string(SV* input_sv)
 {
 //fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_string(), top of subroutine\n");
-//	string__CHECK(input_sv);
-	string__CHECKTRACE(input_sv, "input_sv", "XS_unpack_string()");
+//	string_CHECK(input_sv);
+	string_CHECKTRACE(input_sv, "input_sv", "XS_unpack_string()");
 //	string output_string;
 //	output_string = SvPV_nolen(input_sv);
 //fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_string(), bottom of subroutine\n");
@@ -70,17 +70,17 @@ void XS_pack_string(SV* output_sv, string input_string) {
 
 # ifdef __PERL__TYPES
 
-SV* string__to_string(SV* input_sv)
+SV* string_to_string(SV* input_sv)
 {
     string input_sv_string;
     size_t input_sv_string_pos;
 
-//	string__CHECK(input_sv);
-	string__CHECKTRACE(input_sv, "input_sv", "string__to_string()");
+//	string_CHECK(input_sv);
+	string_CHECKTRACE(input_sv, "input_sv", "string_to_string()");
 
 	input_sv_string = SvPV_nolen(input_sv);
 
-//fprintf(stderr, "in CPPOPS_PERLTYPES string__to_string(), received input_sv_string =\n%s\n\n", input_sv_string.c_str());
+//fprintf(stderr, "in CPPOPS_PERLTYPES string_to_string(), received input_sv_string =\n%s\n\n", input_sv_string.c_str());
 
 	// escape all back-slash \ and single-quote ' characters with a back-slash \ character
 	input_sv_string = string(SvPV_nolen(input_sv));
@@ -99,16 +99,16 @@ SV* string__to_string(SV* input_sv)
 
 	input_sv_string = "'" + input_sv_string + "'";
 
-//fprintf(stderr, "in CPPOPS_PERLTYPES string__to_string(), bottom of subroutine, returning possibly-modified input_sv_string =\n%s\n\n", input_sv_string.c_str());
+//fprintf(stderr, "in CPPOPS_PERLTYPES string_to_string(), bottom of subroutine, returning possibly-modified input_sv_string =\n%s\n\n", input_sv_string.c_str());
 
 	return(newSVpvf("%s", input_sv_string.c_str()));
 }
 
 # elif defined __CPP__TYPES
 
-string string__to_string(string input_string)
+string string_to_string(string input_string)
 {
-//fprintf(stderr, "in CPPOPS_CPPTYPES string__to_string(), top of subroutine, received input_string =\n%s\n\n", input_string.c_str());
+//fprintf(stderr, "in CPPOPS_CPPTYPES string_to_string(), top of subroutine, received input_string =\n%s\n\n", input_string.c_str());
 
     size_t input_string_pos;
 
@@ -128,7 +128,7 @@ string string__to_string(string input_string)
 
 	input_string = "'" + input_string + "'";
 
-//fprintf(stderr, "in CPPOPS_CPPTYPES string__to_string(), bottom of subroutine, returning possibly-modified input_string =\n%s\n\n", input_string.c_str());
+//fprintf(stderr, "in CPPOPS_CPPTYPES string_to_string(), bottom of subroutine, returning possibly-modified input_string =\n%s\n\n", input_string.c_str());
 
 	return(input_string);
 }
@@ -147,12 +147,12 @@ SV* string__typetest0() {
 }
 
 SV* string__typetest1(SV* lucky_string) {
-//	string__CHECK(lucky_string);
-	string__CHECKTRACE(lucky_string, "lucky_string", "string__typetest1()");
+//	string_CHECK(lucky_string);
+	string_CHECKTRACE(lucky_string, "lucky_string", "string__typetest1()");
 //cout << "in CPPOPS_PERLTYPES string__typetest1(), received lucky_string '" << SvPV_nolen(lucky_string) << "'" << '\n';  cout.flush();  // DEV NOTE: must flush buffer to avoid endl over-flushing and out-of-order printing
 //cerr << "in CPPOPS_PERLTYPES string__typetest1(), received lucky_string '" << SvPV_nolen(lucky_string) << "'" << '\n';  // DEV NOTE: cerr doesn't have a buffer to flush
 //fprintf(stderr, "in CPPOPS_PERLTYPES string__typetest1(), received lucky_string = '%s'\n", SvPV_nolen(lucky_string));
-	return(newSVpvf("%s%s", SvPV_nolen(string__to_string(lucky_string)), " CPPOPS_PERLTYPES"));
+	return(newSVpvf("%s%s", SvPV_nolen(string_to_string(lucky_string)), " CPPOPS_PERLTYPES"));
 }
 
 # elif defined __CPP__TYPES
@@ -165,7 +165,7 @@ string string__typetest0() {
 
 string string__typetest1(string lucky_string) {
 //fprintf(stderr, "in CPPOPS_CPPTYPES string__typetest1(), received lucky_string = '%s'\n", lucky_string.c_str());
-	return(string__to_string(lucky_string) + " CPPOPS_CPPTYPES");
+	return(string_to_string(lucky_string) + " CPPOPS_CPPTYPES");
 }
 
 # else

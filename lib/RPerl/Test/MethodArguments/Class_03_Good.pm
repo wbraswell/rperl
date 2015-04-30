@@ -10,16 +10,16 @@ use parent qw(RPerl::Test);
 use RPerl::Test;
 
 # [[[ OO PROPERTIES ]]]
-our hash_ref $properties
+our hashref $properties
     = { empty_property => my integer $TYPED_empty_property = 2 };
 
 # [[[ OO METHODS ]]]
-our void__method $empty_method = sub {
+our void_method $empty_method = sub {
     (   my object $self,
         my number $foo,
         my string $bar,
-        my scalartype__array_ref $baz,
-        my integer__hash_ref $bat
+        my scalartype_arrayref $baz,
+        my integer_hashref $bat
     ) = @_;
     return 2;
 };

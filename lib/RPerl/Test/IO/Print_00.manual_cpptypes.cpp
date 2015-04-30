@@ -8,17 +8,17 @@ using std::cerr;
 // [[[ PROCEDURAL SUBROUTINE DECLARATION(S) ]]]
 void greet_planet(integer arg0);
 //void greet_planet(integer arg0, string arg1);
-//void greet_planet(integer arg0, string arg1, number__array_ref arg2);
+//void greet_planet(integer arg0, string arg1, number_arrayref arg2);
 
 // [[[ PROCEDURAL SUBROUTINE DEFINITION(S) ]]]
 void greet_planet(integer arg0) {
 //void greet_planet(integer arg0, string arg1) {
-//void greet_planet(integer arg0, string arg1, number__array_ref arg2) {
+//void greet_planet(integer arg0, string arg1, number_arrayref arg2) {
     // [[[ PRINT ARGUMENT(S) ]]]
     cout << "Hello, world! " << arg0 << '\n';  // single-quote newline works
     //cout << "Hello, world! " << arg0 << "\n";  // double-quote newline works
     //cout << "Hello, world! " << arg0 << " " << arg1 << '\n';
-    //cout << "Hello, world! " << arg0 << " " << arg1 << " " << number__array_ref__to_string(arg2) << '\n';
+    //cout << "Hello, world! " << arg0 << " " << arg1 << " " << number_arrayref_to_string(arg2) << '\n';
 
     cout << "Goodbye from CPPOPS_CPPTYPES\n";
 }

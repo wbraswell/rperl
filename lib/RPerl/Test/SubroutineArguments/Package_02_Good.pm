@@ -7,7 +7,7 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 our void $empty_sub = sub {
-    ( my number__array_ref $foo ) = @_;
+    ( my number_arrayref $foo ) = @_;
     return 1;
 };
 

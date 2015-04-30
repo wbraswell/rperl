@@ -16,6 +16,6 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string__array_ref $my_array
+my string_arrayref $my_array
     = [ 'howdy', 'doody', 'clarabell' ];
 foreach my string $my_element ( @{$my_array} ) { }

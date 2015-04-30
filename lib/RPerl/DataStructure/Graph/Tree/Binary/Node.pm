@@ -5,7 +5,7 @@ package RPerl::DataStructure::Graph::Tree::Binary::NodeReference;
 our @ISA = ('RPerl::DataStructure', 'RPerl::DataType::Modifier::Reference');
 use RPerl::DataStructure;
 
-# code_ref parameter accepted by traverse method(s)
+# coderef parameter accepted by traverse method(s)
 use RPerl::Code;
 
 # must include here because we do not inherit data types
@@ -13,7 +13,7 @@ use RPerl::DataType::Unknown;
 use RPerl::DataStructure::Array;
 use RPerl::CodeBlock::Subroutine::Method;
 
-our hash_ref $properties =
+our hashref $properties =
 {
 	data => my unknown $TYPED_data = undef,
 	left => my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $TYPED_left = undef,
@@ -21,7 +21,7 @@ our hash_ref $properties =
 };
 
 # traverse nodes breadth-first
-our unknown__method $traverse_breadthfirst_queue = sub {(my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $self, my RPerl::CodeReference $callback) = @_;
+our unknown_method $traverse_breadthfirst_queue = sub {(my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $self, my RPerl::CodeReference $callback) = @_;
 ;
 	RPerl::diag "in ...Tree::Binary::NodeReference::traverse_breadthfirst_queue(), received \$self = \n" . RPerl::DUMPER($self) . "\n";
 	my @return_value = ();
@@ -51,7 +51,7 @@ our unknown__method $traverse_breadthfirst_queue = sub {(my RPerl::DataStructure
 };
 
 # traverse nodes depth-first in pre-order
-our unknown__method $traverse_depthfirst_preorder = sub {(my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $self, my RPerl::CodeReference $callback) = @_;
+our unknown_method $traverse_depthfirst_preorder = sub {(my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $self, my RPerl::CodeReference $callback) = @_;
 ;
 	RPerl::diag "in ...Tree::Binary::NodeReference::traverse_depthfirst_preorder(), received \$self = \n" . RPerl::DUMPER($self) . "\n";
 #	RPerl::diag "in ...Tree::Binary::NodeReference::traverse_depthfirst_preorder(), received \$callback = " . RPerl::DUMPER($callback) . "\n";
@@ -83,59 +83,59 @@ our unknown__method $traverse_depthfirst_preorder = sub {(my RPerl::DataStructur
 };
 
 # accept binary tree nodes, return nested array refs;
-# modified pre-order traversal to achieve the opposite of new_from_nested_array_refs()
-our unknown__method $to_nested_array_refs = sub {(my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $self) = @_;
+# modified pre-order traversal to achieve the opposite of new_from_nested_arrayrefs()
+our unknown_method $to_nested_arrayrefs = sub {(my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $self) = @_;
 ;
-#	RPerl::diag "in ...Tree::Binary::NodeReference::to_nested_array_refs(), received \$self = \n" . RPerl::DUMPER($self) . "\n";
-	my array_ref $return_value = [];
-	my array_ref $return_value_children = [];
+#	RPerl::diag "in ...Tree::Binary::NodeReference::to_nested_arrayrefs(), received \$self = \n" . RPerl::DUMPER($self) . "\n";
+	my arrayref $return_value = [];
+	my arrayref $return_value_children = [];
 	$return_value->[1] = $return_value_children;
 	
 	$return_value->[0] = $self->{data};  # do include undef values
-#	RPerl::diag "in ...Tree::Binary::NodeReference::to_nested_array_refs(), after callback on \$self have \$return_value = \n" . RPerl::DUMPER($return_value) . "\n";
+#	RPerl::diag "in ...Tree::Binary::NodeReference::to_nested_arrayrefs(), after callback on \$self have \$return_value = \n" . RPerl::DUMPER($return_value) . "\n";
 	
 	# possibly recurse on left
 	if (defined($self->{left}))
 	{
 		if (ref(\$self->{left}) eq 'SCALAR') { $return_value_children->[0] = $self->{left}; }
-		else { $return_value_children->[0] = $self->{left}->to_nested_array_refs(); }
+		else { $return_value_children->[0] = $self->{left}->to_nested_arrayrefs(); }
 	}
 	else { $return_value_children->[0] = undef; }
-#	RPerl::diag "in ...Tree::Binary::NodeReference::to_nested_array_refs(), after (possible recurse on) \$self->{left} have \$return_value = \n" . RPerl::DUMPER($return_value) . "\n";
+#	RPerl::diag "in ...Tree::Binary::NodeReference::to_nested_arrayrefs(), after (possible recurse on) \$self->{left} have \$return_value = \n" . RPerl::DUMPER($return_value) . "\n";
 	
 	# possibly recurse on right
 	if (defined($self->{right}))
 	{
 		if (ref(\$self->{right}) eq 'SCALAR') { $return_value_children->[1] = $self->{right}; }
-		else { $return_value_children->[1] = $self->{right}->to_nested_array_refs(); }
+		else { $return_value_children->[1] = $self->{right}->to_nested_arrayrefs(); }
 	}
 	else { $return_value_children->[1] = undef; }
-#	RPerl::diag "in ...Tree::Binary::NodeReference::to_nested_array_refs(), after (possible recurse on) \$self->{right} have \$return_value = \n" . RPerl::DUMPER($return_value) . "\n";
+#	RPerl::diag "in ...Tree::Binary::NodeReference::to_nested_arrayrefs(), after (possible recurse on) \$self->{right} have \$return_value = \n" . RPerl::DUMPER($return_value) . "\n";
 	
 	return $return_value;
 };
 
 # accept nested array refs, return binary tree nodes
-our RPerl::DataStructure::Graph::Tree::Binary::NodeReference $new_from_nested_array_refs = sub {(my string $class, my const_array_ref $input) = @_;
+our RPerl::DataStructure::Graph::Tree::Binary::NodeReference $new_from_nested_arrayrefs = sub {(my string $class, my arrayref $input) = @_;
 ;
-#	RPerl::diag "in ...Tree::Binary::NodeReference::new_from_nested_array_refs(), received \$class = '$class', and \$input =\n" . RPerl::DUMPER($input) . "\n";
+#	RPerl::diag "in ...Tree::Binary::NodeReference::new_from_nested_arrayrefs(), received \$class = '$class', and \$input =\n" . RPerl::DUMPER($input) . "\n";
 	my unknown $output = $class->new();
 
 	$output->{data} = $input->[0];
 	
-	if (ref($input->[1]->[0]) eq 'ARRAY') { $output->{left} = $class->new_from_nested_array_refs($input->[1]->[0]); }
+	if (ref($input->[1]->[0]) eq 'ARRAY') { $output->{left} = $class->new_from_nested_arrayrefs($input->[1]->[0]); }
 	else { $output->{left} = $input->[1]->[0]; }
 	
-	if (ref($input->[1]->[1]) eq 'ARRAY') { $output->{right} = $class->new_from_nested_array_refs($input->[1]->[1]); }
+	if (ref($input->[1]->[1]) eq 'ARRAY') { $output->{right} = $class->new_from_nested_arrayrefs($input->[1]->[1]); }
 	else { $output->{right} = $input->[1]->[1]; }
 	
-#	RPerl::diag "in ...Tree::Binary::NodeReference::new_from_nested_array_refs(), about to return \$output =\n" . RPerl::DUMPER($output) . "\n";
+#	RPerl::diag "in ...Tree::Binary::NodeReference::new_from_nested_arrayrefs(), about to return \$output =\n" . RPerl::DUMPER($output) . "\n";
 
 	return $output;
 };
 
 =UNUSED CODE (Using default Data::Dumper for now)
-our string__method $DUMPER = sub {(my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $node) = @_;
+our string_method $DUMPER = sub {(my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $node) = @_;
 ;
 	my string $dumped = '[';
 
@@ -152,7 +152,7 @@ our string__method $DUMPER = sub {(my RPerl::DataStructure::Graph::Tree::Binary:
 
 # ref to (binary tree node)
 # DEV NOTE: for naming conventions, see DEV NOTE in same code section of LinkedList.pm
-package binarytreenode_ref;
+package binarytreenoderef;
 our @ISA = ('RPerl::DataStructure::Graph::Tree::Binary::NodeReference');
 use RPerl::DataStructure::Graph::Tree::Binary::Node;
-our $properties = $properties; our $new_from_nested_array_refs = $new_from_nested_array_refs; our $traverse_depthfirst_preorder = $traverse_depthfirst_preorder; our $to_nested_array_refs = $to_nested_array_refs; our $traverse_breadthfirst_queue = $traverse_breadthfirst_queue;
+our $properties = $properties; our $new_from_nested_arrayrefs = $new_from_nested_arrayrefs; our $traverse_depthfirst_preorder = $traverse_depthfirst_preorder; our $to_nested_arrayrefs = $to_nested_arrayrefs; our $traverse_breadthfirst_queue = $traverse_breadthfirst_queue;

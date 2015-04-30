@@ -18,83 +18,83 @@ use RPerl::Test::TypeCheckingOn::AllTypes;
 
 # [[[ OPERATIONS ]]]
 
-check__integer(0);
-check__integer(1);
-check__integer(555_555);
-check__integer(-1);
-check__integer(-555_555);
+check_integer(0);
+check_integer(1);
+check_integer(555_555);
+check_integer(-1);
+check_integer(-555_555);
 
-check__number(0);
-check__number(1);
-check__number(555_555);
-check__number(-1);
-check__number(-555_555);
-check__number(0.123_456);
-check__number(1.123_456);
-check__number(555_555.123_456);
-check__number(-1.123_456);
-check__number(-555_555.123_456);
+check_number(0);
+check_number(1);
+check_number(555_555);
+check_number(-1);
+check_number(-555_555);
+check_number(0.123_456);
+check_number(1.123_456);
+check_number(555_555.123_456);
+check_number(-1.123_456);
+check_number(-555_555.123_456);
 
-check__string(q{});
-check__string('0');
-check__string('a');
-check__string('0123abcd');
-check__string(q{0123abcd});
-check__string('0123abcd\n');
-check__string(q{0123abcd\n});
-check__string("0123abcd\n");
-check__string('0123$abcd');
-check__string(q{0123$abcd});
+check_string(q{});
+check_string('0');
+check_string('a');
+check_string('0123abcd');
+check_string(q{0123abcd});
+check_string('0123abcd\n');
+check_string(q{0123abcd\n});
+check_string("0123abcd\n");
+check_string('0123$abcd');
+check_string(q{0123$abcd});
 
-check__array_ref( [] );
-check__array_ref( [0] );
-check__array_ref( [0.123] );
-check__array_ref( ['abcd'] );
-check__array_ref( [ 0, 0, 0 ] );
-check__array_ref( [ 0.123, 0.123, 0.123 ] );
-check__array_ref( [ 'abcd', 'abcd', 'abcd' ] );
-check__array_ref( [ 0, -0.123_456, 'abcd' ] );
-check__array_ref(
+check_arrayref( [] );
+check_arrayref( [0] );
+check_arrayref( [0.123] );
+check_arrayref( ['abcd'] );
+check_arrayref( [ 0, 0, 0 ] );
+check_arrayref( [ 0.123, 0.123, 0.123 ] );
+check_arrayref( [ 'abcd', 'abcd', 'abcd' ] );
+check_arrayref( [ 0, -0.123_456, 'abcd' ] );
+check_arrayref(
     [   0, -0.123_456, 'abcd',
         [ 2, 4, 6, 8 ],
         { a => 'hello', b => 'howdy', c => 'ahoy' }
     ]
 );
 
-check__integer__array_ref( [] );
-check__integer__array_ref( [0] );
-check__integer__array_ref( [ 0, 1, 2, 3 ] );
-check__integer__array_ref( [ -999_999, 0, 1, 2, 3 ] );
+check_integer_arrayref( [] );
+check_integer_arrayref( [0] );
+check_integer_arrayref( [ 0, 1, 2, 3 ] );
+check_integer_arrayref( [ -999_999, 0, 1, 2, 3 ] );
 
-check__number__array_ref( [] );
-check__number__array_ref( [0] );
-check__number__array_ref( [ 0, 1, 2, 3 ] );
-check__number__array_ref( [ -999_999, 0, 1, 2, 3 ] );
-check__number__array_ref( [0.123] );
-check__number__array_ref( [ 0.123, 1.123, 2.123, 3.123 ] );
-check__number__array_ref( [ -999_999.123_456, 0.123, 1, 2, 3 ] );
+check_number_arrayref( [] );
+check_number_arrayref( [0] );
+check_number_arrayref( [ 0, 1, 2, 3 ] );
+check_number_arrayref( [ -999_999, 0, 1, 2, 3 ] );
+check_number_arrayref( [0.123] );
+check_number_arrayref( [ 0.123, 1.123, 2.123, 3.123 ] );
+check_number_arrayref( [ -999_999.123_456, 0.123, 1, 2, 3 ] );
 
-my number__array_ref $input_1 = [ -999_999, 0.0,  0.0,  0.0 ];
-my number__array_ref $input_2 = [ -999_999, 3.0,  4.0,  12.0 ];
-my number__array_ref $input_3 = [ -999_999, 23.0, 42.0, 2_112.0 ];
-check__number__array_refs( $input_1, $input_2, $input_3 );
+my number_arrayref $input_1 = [ -999_999, 0.0,  0.0,  0.0 ];
+my number_arrayref $input_2 = [ -999_999, 3.0,  4.0,  12.0 ];
+my number_arrayref $input_3 = [ -999_999, 23.0, 42.0, 2_112.0 ];
+check_number_arrayrefs( $input_1, $input_2, $input_3 );
 
-check__string__array_ref( [] );
-check__string__array_ref( ['0'] );
-check__string__array_ref( [ '0', 'a', '0123abcd' ] );
-check__string__array_ref( [ '0', 'a', '0123abcd', q{0}, q{a}, q{0123abcd} ] );
-check__string__array_ref(
+check_string_arrayref( [] );
+check_string_arrayref( ['0'] );
+check_string_arrayref( [ '0', 'a', '0123abcd' ] );
+check_string_arrayref( [ '0', 'a', '0123abcd', q{0}, q{a}, q{0123abcd} ] );
+check_string_arrayref(
     [ '0\n', '$a', '0123$abcd', q{0}, q{a\n}, q{0123abcd\n} ] );
-check__string__array_ref( [ "0\n", "a\n", "0123abcd\n" ] );
+check_string_arrayref( [ "0\n", "a\n", "0123abcd\n" ] );
 
-check__hash_ref( {} );
-check__hash_ref( { a => 0 } );
-check__hash_ref( { a => 0.123 } );
-check__hash_ref( { a => 'abcd' } );
-check__hash_ref( { a => 0, b => 0, c => 0 } );
-check__hash_ref( { a => 0.123, b => 0.123, c => 0.123 } );
-check__hash_ref( { a => 'abcd', b => 'abcd', c => 'abcd' } );
-check__hash_ref(
+check_hashref( {} );
+check_hashref( { a => 0 } );
+check_hashref( { a => 0.123 } );
+check_hashref( { a => 'abcd' } );
+check_hashref( { a => 0, b => 0, c => 0 } );
+check_hashref( { a => 0.123, b => 0.123, c => 0.123 } );
+check_hashref( { a => 'abcd', b => 'abcd', c => 'abcd' } );
+check_hashref(
     {   a => 0,
         b => -0.123_456,
         c => 'abcd',
@@ -102,33 +102,33 @@ check__hash_ref(
         e => { a => 'hello', b => 'howdy', c => 'ahoy' }
     }
 );
-check__integer__hash_ref( {} );
-check__integer__hash_ref( { a => 0 } );
-check__integer__hash_ref( { a => 0, b => 1, c => 2, d => 3 } );
-check__integer__hash_ref(
+check_integer_hashref( {} );
+check_integer_hashref( { a => 0 } );
+check_integer_hashref( { a => 0, b => 1, c => 2, d => 3 } );
+check_integer_hashref(
     { aa => -999_999, a => 0, b => 1, c => 2, d => 3 } );
 
-check__number__hash_ref( {} );
-check__number__hash_ref( { a => 0 } );
-check__number__hash_ref( { a => 0, b => 1, c => 2, d => 3 } );
-check__number__hash_ref( { aa => -999_999, a => 0, b => 1, c => 2, d => 3 } );
-check__number__hash_ref( { a => 0.123 } );
-check__number__hash_ref( { a => 0.123, b => 1.123, c => 2.123, d => 3.123 } );
-check__number__hash_ref(
+check_number_hashref( {} );
+check_number_hashref( { a => 0 } );
+check_number_hashref( { a => 0, b => 1, c => 2, d => 3 } );
+check_number_hashref( { aa => -999_999, a => 0, b => 1, c => 2, d => 3 } );
+check_number_hashref( { a => 0.123 } );
+check_number_hashref( { a => 0.123, b => 1.123, c => 2.123, d => 3.123 } );
+check_number_hashref(
     { aa => -999_999.123_456, a => 0.123, b => 1, c => 2, d => 3 } );
 
-my number__hash_ref $input_4
+my number_hashref $input_4
     = { a => -999_999, b => 0.0, c => 0.0, d => 0.0 };
-my number__hash_ref $input_5
+my number_hashref $input_5
     = { a => -999_999, b => 3.0, c => 4.0, d => 12.0 };
-my number__hash_ref $input_6
+my number_hashref $input_6
     = { a => -999_999, b => 23.0, c => 42.0, d => 2_112.0 };
-check__number__hash_refs( $input_4, $input_5, $input_6 );
+check_number_hashrefs( $input_4, $input_5, $input_6 );
 
-check__string__hash_ref( {} );
-check__string__hash_ref( { a => '0' } );
-check__string__hash_ref( { a => '0', b => 'a', c => '0123abcd' } );
-check__string__hash_ref(
+check_string_hashref( {} );
+check_string_hashref( { a => '0' } );
+check_string_hashref( { a => '0', b => 'a', c => '0123abcd' } );
+check_string_hashref(
     {   a => '0',
         b => 'a',
         c => '0123abcd',
@@ -137,7 +137,7 @@ check__string__hash_ref(
         f => q{0123abcd}
     }
 );
-check__string__hash_ref(
+check_string_hashref(
     {   a => '0\n',
         b => '$a',
         c => '0123$abcd',
@@ -146,7 +146,7 @@ check__string__hash_ref(
         f => q{0123abcd\n}
     }
 );
-check__string__hash_ref(
+check_string_hashref(
     {   a => "0\n",
         b => "a\n",
         c => "0123abcd\n"

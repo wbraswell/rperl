@@ -11,17 +11,17 @@ use parent qw(RPerl::Algorithm);
 use RPerl::Algorithm;
 
 # [[[ OO PROPERTIES ]]]
-our hash_ref $properties = {};
+our hashref $properties = {};
 
 # [[[ OO METHODS ]]]
 
-our void__method $inherited__Inefficient = sub {
+our void_method $inherited__Inefficient = sub {
     ( my object $self, my string $person) = @_;
 
 #    RPerl::diag "in PERLOPS_PERLTYPES Inefficient->inherited__Inefficient(), received \$self = '$self' and \$person = '$person', FLUFFY\n";
 };
 
-our void__method $inherited = sub {
+our void_method $inherited = sub {
     ( my object $self, my string $person) = @_;
 
 #    RPerl::diag "in PERLOPS_PERLTYPES Inefficient->inherited(), received \$self = '$self' and \$person = '$person', INCOMPATIBLE\n";

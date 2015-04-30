@@ -20,10 +20,10 @@ use RPerl::Test;
 use constant PIE => my string $TYPED_PIE = 'pecan';
 
 # [[[ OO PROPERTIES ]]]
-our hash_ref $properties
+our hashref $properties
     = { empty_property => my integer $TYPED_empty_property = 2 };
 
 # [[[ OO METHODS ]]]
-our void__method $empty_method = sub { return 2; };
+our void_method $empty_method = sub { return 2; };
 
 1;    # end of class

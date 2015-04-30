@@ -8,11 +8,11 @@ number				T_PACKED
 string				T_PACKED
 
 # ARRAY TYPES
-integer__array_ref	T_PACKED
-number__array_ref	T_PACKED
-string__array_ref	T_PACKED
+integer_arrayref	T_PACKED
+number_arrayref	T_PACKED
+string_arrayref	T_PACKED
 
 # HASH TYPES
-integer__hash_ref	T_PACKED
-number__hash_ref	T_PACKED
-string__hash_ref	T_PACKED
+integer_hashref	T_PACKED
+number_hashref	T_PACKED
+string_hashref	T_PACKED

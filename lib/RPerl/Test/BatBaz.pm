@@ -15,7 +15,7 @@ use RPerl::Test;
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 
 # [[[ OO PROPERTIES ]]]
-our hash_ref $properties = {};
+our hashref $properties = {};
 
 1;    # end of class
 
@@ -36,6 +36,6 @@ use RPerl::Test;
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 
 # [[[ OO PROPERTIES ]]]
-our hash_ref $properties = {};
+our hashref $properties = {};
 
 1;    # end of class

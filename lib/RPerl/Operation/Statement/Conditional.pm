@@ -12,18 +12,18 @@ use Scalar::Util 'blessed';
 use parent qw(RPerl::Operation::Statement);
 
 # [[[ OO PROPERTIES ]]]
-our hash_ref $properties = {
+our hashref $properties = {
     if_condition     => my object $TYPED_condition                   = undef,
     if_body          => my object $TYPED_body                        = undef,
-    elsif_conditions => my object__array_ref $TYPED_elsif_conditions = undef,
-    elsif_bodies     => my object__array_ref $TYPED_elsif_bodies     = undef,
+    elsif_conditions => my object_arrayref $TYPED_elsif_conditions = undef,
+    elsif_bodies     => my object_arrayref $TYPED_elsif_bodies     = undef,
     else_condition   => my object $TYPED_else_condition              = undef,
     else_body        => my object $TYPED_else_body                   = undef,
 };
 
 # [[[ OO METHODS ]]]
 # TRANSLATE
-our object__method $ppi_to_rperl__translate = sub {
+our object_method $ppi_to_rperl__translate = sub {
     ( my string $class, my object $node) = @_;    # class method
     my object $node_translated;
     $node_translated = { STUB_AST_OBJECT =>
@@ -32,7 +32,7 @@ our object__method $ppi_to_rperl__translate = sub {
 };
 
 # GENERATE CPPOPS_PERLTYPES
-our string__method $rperl_to_cpp__generate__CPPOPS_PERLTYPES = sub {
+our string_method $rperl_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self ) = @_;                     # object method
     my string $self_generated = q{};
     $self_generated
@@ -41,7 +41,7 @@ our string__method $rperl_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 };
 
 # GENERATE CPPOPS_CPPTYPES
-our string__method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
+our string_method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self ) = @_;                     # object method
     my string $self_generated = q{};
     $self_generated

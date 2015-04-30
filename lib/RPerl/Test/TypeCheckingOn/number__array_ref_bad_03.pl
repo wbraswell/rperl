@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< RUN_ERROR: 'ERROR ENVAVRV03, TYPE-CHECKING MISMATCH' >>>
-# <<< RUN_ERROR: 'number__array_ref element value expected but non-number value found at index 3' >>>
+# <<< RUN_ERROR: 'number_arrayref element value expected but non-number value found at index 3' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -17,4 +17,4 @@ our $VERSION = 0.000_001;
 use RPerl::Test::TypeCheckingOn::AllTypes;
 
 # [[[ OPERATIONS ]]]
-check__number__array_ref( [ -999_999, 3, 4, { a => 0, b => 1, c => 2 } ] );
+check_number_arrayref( [ -999_999, 3, 4, { a => 0, b => 1, c => 2 } ] );

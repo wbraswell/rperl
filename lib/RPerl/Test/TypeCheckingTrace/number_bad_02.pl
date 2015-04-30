@@ -3,7 +3,7 @@
 # [[[ PREPROCESSOR ]]]
 # <<< RUN_ERROR: 'ERROR ENV01, TYPE-CHECKING MISMATCH' >>>
 # <<< RUN_ERROR: 'number value expected but non-number value found' >>>
-# <<< RUN_ERROR: 'in variable $input_1 from subroutine check__number()' >>>
+# <<< RUN_ERROR: 'in variable $input_1 from subroutine check_number()' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -18,4 +18,4 @@ our $VERSION = 0.000_001;
 use RPerl::Test::TypeCheckingTrace::AllTypes;
 
 # [[[ OPERATIONS ]]]
-check__number( [ 0, 1, 2 ] );
+check_number( [ 0, 1, 2 ] );

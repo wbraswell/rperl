@@ -9,13 +9,13 @@ using std::cout;  using std::cerr;
 //#include <RPerl/DataType/Integer.cpp>  // integer types used in *MODE_ID() subroutines
 
 // [[[ TYPE-CHECKING MACROS ]]]
-#define string__CHECK(possible_string) \
+#define string_CHECK(possible_string) \
 	(not(SvOK(possible_string)) ? \
 			croak("\nERROR EPV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but undefined/null value found,\ncroaking") : \
 			(not(SvPOKp(possible_string)) ? \
 					croak("\nERROR EPV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but non-string value found,\ncroaking") : \
 					(void)0))
-#define string__CHECKTRACE(possible_string, variable_name, subroutine_name) \
+#define string_CHECKTRACE(possible_string, variable_name, subroutine_name) \
 	(not(SvOK(possible_string)) ? \
 			croak("\nERROR EPV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
 			(not(SvPOKp(possible_string)) ? \
@@ -24,8 +24,8 @@ using std::cout;  using std::cerr;
 
 // [[[ TYPE CHECKING ]]]
 // DEPRECATED, SEE MACROS ABOVE
-//void string__CHECK(SV* possible_string);
-//void string__CHECKTRACE(SV* possible_string, const char* variable_name, const char* subroutine_name);
+//void string_CHECK(SV* possible_string);
+//void string_CHECKTRACE(SV* possible_string, const char* variable_name, const char* subroutine_name);
 
 // [[[ TYPEDEFS ]]]
 typedef std::string string;
@@ -49,9 +49,9 @@ void XS_pack_string(SV* output_sv, string input_string);
 
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
-SV* string__to_string(SV* input_sv);
+SV* string_to_string(SV* input_sv);
 # elif defined __CPP__TYPES
-string string__to_string(string input_string);
+string string_to_string(string input_string);
 # endif
 
 // [[[ TYPE TESTING ]]]

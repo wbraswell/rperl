@@ -12,12 +12,12 @@ use RPerl::CompileUnit::Module::Class;
 # [[[ OO METHODS ]]]
 
 # OO INHERITANCE TESTING
-our void__method $inherited__Algorithm = sub {
+our void_method $inherited__Algorithm = sub {
     ( my object $self, my string $person) = @_;
 #    RPerl::diag "in PERLOPS_PERLTYPES Algorithm->inherited__Algorithm(), received \$self = '$self' and \$person = '$person', FNORD\n";
 };
 
-#our void__method $inherited = sub { ( my object $self, my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Algorithm->inherited(), received \$self = '$self' and \$person = '$person', IS\n"; };
+#our void_method $inherited = sub { ( my object $self, my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Algorithm->inherited(), received \$self = '$self' and \$person = '$person', IS\n"; };
 
 # [[[ SUBROUTINES ]]]
 

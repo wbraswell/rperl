@@ -12,8 +12,8 @@ use Scalar::Util 'blessed';
 use parent qw(RPerl::Operation::Statement::OperatorVoid); # NEED FIX: is not a Grammar Rule so should not inherit from OperatorVoid, need create Grammar Production class
 
 # [[[ OO OBJECT PROPERTIES ]]]
-our hash_ref $properties = {
-    arguments => my object__array_ref $TYPED_arguments = undef,
+our hashref $properties = {
+    arguments => my object_arrayref $TYPED_arguments = undef,
 };
 
 # [[[ OO CLASS PROPERTIES ]]]
@@ -28,7 +28,7 @@ our %class_properties = (
 # [[[ OO METHODS ]]]
 
 # GENERATE CPPOPS_PERLTYPES
-our string__method $rperl_to_cpp__generate__CPPOPS_PERLTYPES = sub {
+our string_method $rperl_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self ) = @_;    # object method
     my string $self_generated = q{};
     $self_generated
@@ -37,7 +37,7 @@ our string__method $rperl_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 };
 
 # GENERATE CPPOPS_CPPTYPES
-our string__method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
+our string_method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self ) = @_;    # object method
     my string $self_generated = q{};
 
@@ -72,7 +72,7 @@ our string__method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 };
 
 # TRANSLATE OPERATOR_VOID RULE, RETURN PRODUCTION
-our object__method $ppi_to_rperl__translate = sub {
+our object_method $ppi_to_rperl__translate = sub {
     ( my string $class, my object $node) = @_;    # class method
 
     # variable declarations
@@ -134,7 +134,7 @@ our object__method $ppi_to_rperl__translate = sub {
     $child_key = 'children';
     if ( not( defined $node->{$child_key} ) ) {
         croak(
-            "\nERROR ECVTRPI03, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, PPI OBJECT FAILURE:\nchildren sub-objects array_ref value expected but undefined/null value found,\ncroaking"
+            "\nERROR ECVTRPI03, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, PPI OBJECT FAILURE:\nchildren sub-objects arrayref value expected but undefined/null value found,\ncroaking"
         );
     }
 
@@ -210,7 +210,7 @@ our object__method $ppi_to_rperl__translate = sub {
     }
     my @arguments_array = @{ $node->{$child_key} }
         [ $child_index .. ( $child_index_max - 1 ) ];
-    my object__array_ref $arguments = \@arguments_array; # two-statement slice
+    my object_arrayref $arguments = \@arguments_array; # two-statement slice
 
 #print "in Return::ppi_to_rperl__translate(), have \$arguments_count = $arguments_count\n";
 #print "in Return::ppi_to_rperl__translate(), have \$arguments =\n" . Dumper($arguments) . "\n";

@@ -130,7 +130,7 @@ sub analyze_class_symtab_entries {
             $retval .= "\t" . 'scalar';
             my $ref_type = ref ${$glob};
             if ( $ref_type ne q{} ) {
-                $retval .= "\t" . $ref_type . '_ref';
+                $retval .= "\t" . $ref_type . 'ref';
             }
         }
         if ( @{$glob} ) {

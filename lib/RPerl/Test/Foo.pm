@@ -19,21 +19,21 @@ use constant PI  => my number $TYPED_PI  = 3.141_59;
 use constant PIE => my string $TYPED_PIE = 'pecan';
 
 # [[[ OO PROPERTIES ]]]
-our hash_ref $properties = {
+our hashref $properties = {
     plugh => my integer $TYPED_plugh           = 23,
     xyzzy => my string $TYPED_xyzzy            = 'twenty-three',
-    thud  => my integer__array_ref $TYPED_thud = [ 2, 4, 6, 8 ],
-    yyz => my number__hash_ref $TYPED_yyz = { a => 3.1, b => 6.2, c => 9.3 }
+    thud  => my integer_arrayref $TYPED_thud = [ 2, 4, 6, 8 ],
+    yyz => my number_hashref $TYPED_yyz = { a => 3.1, b => 6.2, c => 9.3 }
 };
 
 # [[[ OO METHODS ]]]
 
-our void__method $quux = sub {
+our void_method $quux = sub {
     ( my object $self) = @_;
     $self->{plugh} = $self->{plugh} * 2;
 };
 
-our string__method $corge = sub {
+our string_method $corge = sub {
     ( my object $self) = @_;
     return $self->{xyzzy} x 3;
 };
@@ -45,9 +45,9 @@ our void $grault = sub {
     print '$grault_input ** PI() = ' . ( $grault_input**PI() ) . "\n";
 };
 
-our number__array_ref $garply = sub {
+our number_arrayref $garply = sub {
     ( my integer $garply_input ) = @_;
-    my number__array_ref $garply_output
+    my number_arrayref $garply_output
         = [ $garply_input * 1.1, $garply_input * 2.2, $garply_input * 3.3 ];
     return $garply_output;
 };

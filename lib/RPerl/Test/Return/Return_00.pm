@@ -24,19 +24,19 @@ our void $greet_planet = sub {
     ( my integer $arg0 ) = @_;    # parses to 1 PPI::Statement object
 
     #( my integer $arg0, my string $arg1) = @_;
-    #( my integer $arg0, my string $arg1, my number__array_ref $arg2) = @_;
+    #( my integer $arg0, my string $arg1, my number_arrayref $arg2) = @_;
 
     # [[[ TYPE-CHECK ARGUMENT(S) ]]]
 
     # NEED FIX: handle possibility of pre-existing CHECK/TRACEs
-    #::integer__CHECK($arg0);
-    #::integer__CHECKTRACE( $arg0, qw{$arg0}, 'greet_planet()' );
+    #::integer_CHECK($arg0);
+    #::integer_CHECKTRACE( $arg0, qw{$arg0}, 'greet_planet()' );
 
-    #::string__CHECK($arg1);
-    #::string__CHECKTRACE( $arg1, qw{$arg1}, 'greet_planet()' );
+    #::string_CHECK($arg1);
+    #::string_CHECKTRACE( $arg1, qw{$arg1}, 'greet_planet()' );
 
-    #::number__array_ref__CHECK($arg2);
-    #::number__array_ref__CHECKTRACE( $arg2, qw{$arg2}, 'greet_planet()' );
+    #::number_arrayref_CHECK($arg2);
+    #::number_arrayref_CHECKTRACE( $arg2, qw{$arg2}, 'greet_planet()' );
 
     # [[[ PRINT ARGUMENT(S) ]]]
 
@@ -47,15 +47,15 @@ our void $greet_planet = sub {
     RPerl::diag 'Hello, world! comma ', $arg0, ' and ', 42, "\n"; # parses to 1 PPI::Statement object, w/ PPI::Structure::Block at child index 1
 
 #print 'Hello, world! ' . $arg0 . q{ } . $arg1 . "\n";
-#print 'Hello, world! ' . $arg0 . q{ } . $arg1 . q{ } . ::number__array_ref__to_string($arg2) . "\n";
+#print 'Hello, world! ' . $arg0 . q{ } . $arg1 . q{ } . ::number_arrayref_to_string($arg2) . "\n";
 
     print "Goodbye from PERLOPS_PERLTYPES\n"; # parses to 1 PPI::Statement object
 
 #my integer $foo = 23;  # parses to 1 PPI::Statement::Variable object, translates to 1 RPerl::Operation::Statement object
 #my integer $foo;  # parses to 1 PPI::Statement::Variable object, translates to 1 RPerl::Operation::Statement object
 #$foo = 23;  # parses to 1 PPI::Statement object, translates to 1 RPerl::Operation::Statement object
-#my integer__array_ref $bar = [23, 34];  # parses to 1 PPI::Statement::Variable object, translates to 1 RPerl::Operation::Statement object
-#my integer__array_ref $bar;  # parses to 1 PPI::Statement::Variable object, translates to 1 RPerl::Operation::Statement object
+#my integer_arrayref $bar = [23, 34];  # parses to 1 PPI::Statement::Variable object, translates to 1 RPerl::Operation::Statement object
+#my integer_arrayref $bar;  # parses to 1 PPI::Statement::Variable object, translates to 1 RPerl::Operation::Statement object
 #$bar = [23, 34];  # parses to 1 PPI::Statement object, translates to 1 RPerl::Operation::Statement object
 
 #if(0){2;}  # parses to 1 PPI::Statement::Compound object, translates to 1 RPerl::Operation::Statement::Conditional object

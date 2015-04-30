@@ -12,7 +12,7 @@ using std::cout;  using std::cerr;
 
 // TYPE-CHECKING SUBROUTINES DEPRECATED IN FAVOR OF EQUIVALENT MACROS
 /*
-void number__CHECK(SV* possible_number) {
+void number_CHECK(SV* possible_number) {
     if (not(SvOK(possible_number))) {
     	croak("\nERROR ENV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found,\ncroaking");
     }
@@ -20,7 +20,7 @@ void number__CHECK(SV* possible_number) {
     	croak("\nERROR ENV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but non-number value found,\ncroaking");
     }
 };
-void number__CHECKTRACE(SV* possible_number, const char* variable_name, const char* subroutine_name) {
+void number_CHECKTRACE(SV* possible_number, const char* variable_name, const char* subroutine_name) {
     if (not(SvOK(possible_number))) {
     	croak("\nERROR ENV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking",
     			variable_name, subroutine_name);
@@ -41,8 +41,8 @@ void number__CHECKTRACE(SV* possible_number, const char* variable_name, const ch
 // convert from (Perl SV containing number) to (C number)
 number XS_unpack_number(SV* input_sv) {
 //fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number(), top of subroutine\n");
-//	number__CHECK(input_sv);
-	number__CHECKTRACE(input_sv, "input_sv", "XS_unpack_number()");
+//	number_CHECK(input_sv);
+	number_CHECKTRACE(input_sv, "input_sv", "XS_unpack_number()");
 
 //	number output_number;
 
@@ -76,11 +76,11 @@ void XS_pack_number(SV* output_sv, number input_number) {
 
 // BUG BOUNTY #000, 50 CodeCoin: modify all ::number*__to_string() to output underscores, to match LITERAL_NUMBER grammar token input
 
-SV* number__to_string(SV* input_number)
+SV* number_to_string(SV* input_number)
 {
-//	number__CHECK(input_number);
-	number__CHECKTRACE(input_number, "input_number", "number__to_string()");
-//fprintf(stderr, "in CPPOPS_PERLTYPES number__to_string(), top of subroutine, received unformatted input_number = %Lf\n", (number)SvNV(input_number));
+//	number_CHECK(input_number);
+	number_CHECKTRACE(input_number, "input_number", "number_to_string()");
+//fprintf(stderr, "in CPPOPS_PERLTYPES number_to_string(), top of subroutine, received unformatted input_number = %Lf\n", (number)SvNV(input_number));
 
 //	ostringstream output_stream;
 	std::ostringstream output_stream;
@@ -97,10 +97,10 @@ SV* number__to_string(SV* input_number)
 
 # elif defined __CPP__TYPES
 
-//string number__to_string(number input_number)
-std::string number__to_string(number input_number)
+//string number_to_string(number input_number)
+std::string number_to_string(number input_number)
 {
-//fprintf(stderr, "in CPPOPS_CPPTYPES number__to_string(), top of subroutine, received unformatted input_number = %Lf\n", input_number);
+//fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string(), top of subroutine, received unformatted input_number = %Lf\n", input_number);
 //	ostringstream output_stream;
 	std::ostringstream output_stream;
 	output_stream.precision(std::numeric_limits<double>::digits10);
@@ -123,8 +123,8 @@ SV* number__typetest0() {
 }
 
 SV* number__typetest1(SV* lucky_number) {
-//	number__CHECK(lucky_number);
-	number__CHECKTRACE(lucky_number, "lucky_number", "number__typetest1()");
+//	number_CHECK(lucky_number);
+	number_CHECKTRACE(lucky_number, "lucky_number", "number__typetest1()");
 //fprintf(stderr, "in CPPOPS_PERLTYPES number__typetest1(), have received lucky_number = %Lf\n", (number)SvNV(lucky_number));
 	return(newSVnv((SvNV(lucky_number) * 2.0) + SvIV(RPerl__DataType__Number__MODE_ID())));
 }

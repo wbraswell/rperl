@@ -2,8 +2,8 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< RUN_ERROR: 'ERROR ENVAVRV03, TYPE-CHECKING MISMATCH' >>>
-# <<< RUN_ERROR: 'number__array_ref element value expected but non-number value found at index 1' >>>
-# <<< RUN_ERROR: 'in variable $input_3 from subroutine check__number__array_refs()' >>>
+# <<< RUN_ERROR: 'number_arrayref element value expected but non-number value found at index 1' >>>
+# <<< RUN_ERROR: 'in variable $input_3 from subroutine check_number_arrayrefs()' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -18,7 +18,7 @@ our $VERSION = 0.000_001;
 use RPerl::Test::TypeCheckingTrace::AllTypes;
 
 # [[[ OPERATIONS ]]]
-my number__array_ref $input_1 = [ -999_999,         3.0,      4.0,  12.0 ];
-my number__array_ref $input_2 = [ -999_999,         3.0,      4.0,  -12.0 ];
-my number__array_ref $input_3 = [ -999_999.123_456, "23.0\n", 42.0, -2112.0 ];
-check__number__array_refs( $input_1, $input_2, $input_3 );
+my number_arrayref $input_1 = [ -999_999,         3.0,      4.0,  12.0 ];
+my number_arrayref $input_2 = [ -999_999,         3.0,      4.0,  -12.0 ];
+my number_arrayref $input_3 = [ -999_999.123_456, "23.0\n", 42.0, -2112.0 ];
+check_number_arrayrefs( $input_1, $input_2, $input_3 );

@@ -3,7 +3,7 @@ package RPerl::Algorithm::Sort::Bubble;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_023;
+our $VERSION = 0.004_030;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw( RPerl::Algorithm::Sort ); # OO INHERITANCE TESTING; SINGLE OO INHERITANCE
@@ -21,37 +21,37 @@ use RPerl::Algorithm::Sort;
 use Data::Dumper;
 
 # [[[ OO OBJECT PROPERTIES ]]]
-our hash_ref $properties = {
-    integer__data => my integer__array_ref $TYPED_integer__data = undef,
-    number__data  => my number__array_ref $TYPED_number__data   = undef
+our hashref $properties = {
+    integer_data => my integer_arrayref $TYPED_integer_data = undef,
+    number_data  => my number_arrayref $TYPED_number_data   = undef
 };
 
 # [[[ OO METHODS ]]]
 
 # call out to sort integer data, return nothing
-our void__method $integer__sort = sub {
+our void_method $integer_sort = sub {
     ( my object $self) = @_;
 
-# DEV NOTE: this is an in-place sorting algorithm, we don't actually need to set $self->{integer__data} as it has not changed location
-    $self->{integer__data} = integer__bubblesort( $self->{integer__data} );
+# DEV NOTE: this is an in-place sorting algorithm, we don't actually need to set $self->{integer_data} as it has not changed location
+    $self->{integer_data} = integer_bubblesort( $self->{integer_data} );
 };
 
 # call out to sort number data, return nothing
-our void__method $number__sort = sub {
+our void_method $number_sort = sub {
     ( my object $self) = @_;
 
-    $self->{number__data} = number__bubblesort( $self->{number__data} );
+    $self->{number_data} = number_bubblesort( $self->{number_data} );
 };
 
 # OO INHERITANCE TESTING
 
-our void__method $inherited__Bubble = sub {
+our void_method $inherited__Bubble = sub {
     ( my object $self, my string $person) = @_;
 
 #    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), received $self = ' . $self . ' and $person = ' . $person . ', FRIED' . "\n");
 };
 
-our void__method $inherited = sub {
+our void_method $inherited = sub {
     ( my object $self, my string $person) = @_;
 
 #    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited(), received $self = ' . $self . ' and $person = ' . $person . ', ILLOGICAL' . "\n");
@@ -61,97 +61,97 @@ our void__method $inherited = sub {
 
 # original algorithm: comparison-based and stable [O(n**2) average time, O(1) worst-case extra space]
 # sort integer data, return sorted data
-our integer__array_ref $integer__bubblesort = sub {
-    ( my integer__array_ref $integer__data) = @_;
+our integer_arrayref $integer_bubblesort = sub {
+    ( my integer_arrayref $integer_data) = @_;
 
-    #    ::integer__array_ref__CHECK($integer__data);
-    ::integer__array_ref__CHECKTRACE( $integer__data, '$integer__data',
-        'integer__bubblesort()' );
+    #    ::integer_arrayref_CHECK($integer_data);
+    ::integer_arrayref_CHECKTRACE( $integer_data, '$integer_data',
+        'integer_bubblesort()' );
     my integer $is_sorted                  = 0;
-    my const_integer $integer__data_length = scalar @{$integer__data};
-    my integer $integer__data_i;
-    my integer $integer__data_i_plus_1;
+    my integer $integer_data_length = scalar @{$integer_data};  # CONSTANT
+    my integer $integer_data_i;
+    my integer $integer_data_i_plus_1;
     my integer $swap;
 
-#    RPerl::diag "in PERLOPS_PERLTYPES integer__bubblesort(), top of subroutine...\n" or croak();
-#    RPerl::diag "in PERLOPS_PERLTYPES integer__bubblesort(), received \$integer__data\n" . Dumper($integer__data) . "\n" or croak();
-#    RPerl::diag "in PERLOPS_PERLTYPES integer__bubblesort(), have \$integer__data_length = $integer__data_length\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort(), top of subroutine...\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort(), received \$integer_data\n" . Dumper($integer_data) . "\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort(), have \$integer_data_length = $integer_data_length\n" or croak();
 
 # iterate through the length-n list up to n times (n * n == n**2), larger elements "bubble to the top" (end) of the list
     while ( not($is_sorted) ) {
 
-#        RPerl::diag "in PERLOPS_PERLTYPES integer__bubblesort(), top of WHILE loop\n" or croak();
+#        RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort(), top of WHILE loop\n" or croak();
         $is_sorted = 1;
-        for my integer $i ( 0 .. ( $integer__data_length - 2 ) ) {
-            $integer__data_i = $integer__data->[$i];
-            $integer__data_i_plus_1 = $integer__data->[ ( $i + 1 ) ];
+        for my integer $i ( 0 .. ( $integer_data_length - 2 ) ) {
+            $integer_data_i = $integer_data->[$i];
+            $integer_data_i_plus_1 = $integer_data->[ ( $i + 1 ) ];
 
-#            RPerl::diag "in PERLOPS_PERLTYPES integer__bubblesort(), inside for() loop \$i = $i, have \$integer__data_i = $integer__data_i\n" or croak();
-#            RPerl::diag "in PERLOPS_PERLTYPES integer__bubblesort(), inside for() loop \$i = $i, have \$integer__data_i_plus_1 = $integer__data_i_plus_1\n" or croak();
+#            RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort(), inside for() loop \$i = $i, have \$integer_data_i = $integer_data_i\n" or croak();
+#            RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort(), inside for() loop \$i = $i, have \$integer_data_i_plus_1 = $integer_data_i_plus_1\n" or croak();
 
  # compare elements and swap if out-of-order, this is the core sort comparison
-            if ( $integer__data_i > $integer__data_i_plus_1 ) {
+            if ( $integer_data_i > $integer_data_i_plus_1 ) {
 
-   #            if ( $integer__data->[$i] > $integer__data->[ ( $i + 1 ) ] ) {
+   #            if ( $integer_data->[$i] > $integer_data->[ ( $i + 1 ) ] ) {
 
-#                RPerl::diag "in PERLOPS_PERLTYPES integer__bubblesort(), inside for() loop, SWAPPING\n" or croak();
+#                RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort(), inside for() loop, SWAPPING\n" or croak();
                 $is_sorted = 0;
-                $swap      = $integer__data_i;
+                $swap      = $integer_data_i;
 
-                #                $swap      = $integer__data->[$i];
-                $integer__data->[$i] = $integer__data_i_plus_1;
+                #                $swap      = $integer_data->[$i];
+                $integer_data->[$i] = $integer_data_i_plus_1;
 
-       #                $integer__data->[$i] = $integer__data->[ ( $i + 1 ) ];
-                $integer__data->[ ( $i + 1 ) ] = $swap;
+       #                $integer_data->[$i] = $integer_data->[ ( $i + 1 ) ];
+                $integer_data->[ ( $i + 1 ) ] = $swap;
             }
         }
     }
 
 # data is now sorted via top-level nested iteration [O(n**2) total time, O(1) total extra space]
-# DEV NOTE: this is an in-place sorting algorithm, we don't actually need to return $integer__data as it has not changed location, EXCEPT FOR IN C++ BECAUSE OF PACKING/UNPACKING!!!
-    return $integer__data;
+# DEV NOTE: this is an in-place sorting algorithm, we don't actually need to return $integer_data as it has not changed location, EXCEPT FOR IN C++ BECAUSE OF PACKING/UNPACKING!!!
+    return $integer_data;
 };
 
 # sort number data, return sorted data
-our number__array_ref $number__bubblesort = sub {
-    ( my number__array_ref $number__data) = @_;
+our number_arrayref $number_bubblesort = sub {
+    ( my number_arrayref $number_data) = @_;
 
-    #    ::number__array_ref__CHECK($number__data);
-    ::number__array_ref__CHECKTRACE( $number__data, '$number__data',
-        'number__bubblesort()' );
+    #    ::number_arrayref_CHECK($number_data);
+    ::number_arrayref_CHECKTRACE( $number_data, '$number_data',
+        'number_bubblesort()' );
     my integer $is_sorted                 = 0;
-    my const_integer $number__data_length = scalar @{$number__data};
-    my integer $number__data_i;
-    my integer $number__data_i_plus_1;
+    my integer $number_data_length = scalar @{$number_data};  # CONSTANT
+    my integer $number_data_i;
+    my integer $number_data_i_plus_1;
     my integer $swap;
 
-#    RPerl::diag "in PERLOPS_PERLTYPES number__bubblesort(), top of subroutine...\n" or croak();
-#    RPerl::diag "in PERLOPS_PERLTYPES number__bubblesort(), received \$number__data\n" . Dumper($number__data) . "\n" or croak();
-#    RPerl::diag "in PERLOPS_PERLTYPES number__bubblesort(), have \$number__data_length = $number__data_length\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort(), top of subroutine...\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort(), received \$number_data\n" . Dumper($number_data) . "\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort(), have \$number_data_length = $number_data_length\n" or croak();
 
 # iterate through the length-n list up to n times (n * n == n**2), larger elements "bubble to the top" (end) of the list
     while ( not($is_sorted) ) {
 
-#        RPerl::diag "in PERLOPS_PERLTYPES number__bubblesort(), top of WHILE loop\n" or croak();
+#        RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort(), top of WHILE loop\n" or croak();
         $is_sorted = 1;
-        for my integer $i ( 0 .. ( $number__data_length - 2 ) ) {
-            $number__data_i = $number__data->[$i];
-            $number__data_i_plus_1 = $number__data->[ ( $i + 1 ) ];
+        for my integer $i ( 0 .. ( $number_data_length - 2 ) ) {
+            $number_data_i = $number_data->[$i];
+            $number_data_i_plus_1 = $number_data->[ ( $i + 1 ) ];
 
-#            RPerl::diag "in PERLOPS_PERLTYPES number__bubblesort(), inside for() loop \$i = $i, have \$number__data_i = $number__data_i\n" or croak();
-#            RPerl::diag "in PERLOPS_PERLTYPES number__bubblesort(), inside for() loop \$i = $i, have \$number__data_i_plus_1 = $number__data_i_plus_1\n" or croak();
+#            RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort(), inside for() loop \$i = $i, have \$number_data_i = $number_data_i\n" or croak();
+#            RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort(), inside for() loop \$i = $i, have \$number_data_i_plus_1 = $number_data_i_plus_1\n" or croak();
 # compare elements and swap if out-of-order, this is the core sort comparison
-            if ( $number__data_i > $number__data_i_plus_1 ) {
+            if ( $number_data_i > $number_data_i_plus_1 ) {
 
-#                RPerl::diag "in PERLOPS_PERLTYPES number__bubblesort(), inside for() loop, SWAPPING\n" or croak();
+#                RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort(), inside for() loop, SWAPPING\n" or croak();
                 $is_sorted          = 0;
-                $swap               = $number__data_i;
-                $number__data->[$i] = $number__data_i_plus_1;
-                $number__data->[ ( $i + 1 ) ] = $swap;
+                $swap               = $number_data_i;
+                $number_data->[$i] = $number_data_i_plus_1;
+                $number_data->[ ( $i + 1 ) ] = $swap;
             }
         }
     }
-    return $number__data;
+    return $number_data;
 };
 
 # OO INHERITANCE TESTING, CONTINUED
@@ -173,44 +173,44 @@ our string $uninherited = sub {
 
 # TYPE TESTING
 
-our string $integer__bubblesort__typetest0 = sub {
-    ( my integer__array_ref $lucky_integers) = @_;
+our string $integer_bubblesort__typetest0 = sub {
+    ( my integer_arrayref $lucky_integers) = @_;
 
-    #    ::integer__array_ref__CHECK($lucky_integers);
-    ::integer__array_ref__CHECKTRACE( $lucky_integers, '$lucky_integers',
-        'integer__bubblesort__typetest0()' );
+    #    ::integer_arrayref_CHECK($lucky_integers);
+    ::integer_arrayref_CHECKTRACE( $lucky_integers, '$lucky_integers',
+        'integer_bubblesort__typetest0()' );
 
 #    my integer $how_lucky = scalar @{$lucky_integers};
 #    for my integer $i ( 0 .. ( $how_lucky - 1 ) ) {
 #        my $lucky_integer = $lucky_integers->[$i];
-#        RPerl::diag "in PERLOPS_PERLTYPES integer__bubblesort__typetest0(), have lucky_integer $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_integers->[$i] . ", BATBAR\n" or croak();
+#        RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort__typetest0(), have lucky_integer $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_integers->[$i] . ", BATBAR\n" or croak();
 #    }
-#    RPerl::diag "in PERLOPS_PERLTYPES integer__bubblesort__typetest0(), bottom of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort__typetest0(), bottom of subroutine\n" or croak();
 
     return (
-        ::integer__array_ref__to_string(
-            integer__bubblesort($lucky_integers)
+        ::integer_arrayref_to_string(
+            integer_bubblesort($lucky_integers)
             )
             . 'PERLOPS_PERLTYPES'
     );
 };
 
-our string $number__bubblesort__typetest0 = sub {
-    ( my number__array_ref $lucky_numbers) = @_;
+our string $number_bubblesort__typetest0 = sub {
+    ( my number_arrayref $lucky_numbers) = @_;
 
-    #    ::number__array_ref__CHECK($lucky_numbers);
-    ::number__array_ref__CHECKTRACE( $lucky_numbers, '$lucky_numbers',
-        'number__bubblesort__typetest0()' );
+    #    ::number_arrayref_CHECK($lucky_numbers);
+    ::number_arrayref_CHECKTRACE( $lucky_numbers, '$lucky_numbers',
+        'number_bubblesort__typetest0()' );
 
 #    my integer $how_lucky = scalar @{$lucky_numbers};
 #    for my integer $i ( 0 .. ( $how_lucky - 1 ) ) {
 #        my $lucky_number = $lucky_numbers->[$i];
-#        RPerl::diag "in PERLOPS_PERLTYPES number__bubblesort__typetest0(), have lucky_number $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_numbers->[$i] . ", BATBAR\n" or croak();
+#        RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort__typetest0(), have lucky_number $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_numbers->[$i] . ", BATBAR\n" or croak();
 #    }
-#    RPerl::diag "in PERLOPS_PERLTYPES number__bubblesort__typetest0(), bottom of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort__typetest0(), bottom of subroutine\n" or croak();
 
     return (
-        ::number__array_ref__to_string( number__bubblesort($lucky_numbers) )
+        ::number_arrayref_to_string( number_bubblesort($lucky_numbers) )
             . 'PERLOPS_PERLTYPES' );
 };
 

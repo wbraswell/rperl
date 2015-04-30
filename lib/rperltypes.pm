@@ -39,18 +39,18 @@ use RPerl::CodeBlock::Subroutine::Method;  # Method is the only item that is bot
 
 # these types are currently implemented for all 3 primary RPerl modes: PERLOPS_PERLTYPES, CPPOPS_PERLTYPES, CPPOPS_CPPTYPES
 # NEED REMOVE: hard-coded list
-our string__array_ref $supported = [
+our string_arrayref $supported = [
     qw(
         void
         integer
         number
         string
-        integer__array_ref
-        number__array_ref
-        string__array_ref
-        integer__hash_ref
-        number__hash_ref
-        string__hash_ref
+        integer_arrayref
+        number_arrayref
+        string_arrayref
+        integer_hashref
+        number_hashref
+        string_hashref
         )
 ];
 

@@ -4,14 +4,14 @@ use strict;
 use warnings;
 use RPerl::Config; # get Carp, English, $RPerl::INCLUDE_PATH without 'use RPerl;'
 
-#use RPerl;  # DEV NOTE: need to use HelperFunctions in RPerl::DataStructure::Array for type checking SvIOKp() etc; remove dependency on RPerl void__method type so HelperFunctions can be loaded by RPerl type system
+#use RPerl;  # DEV NOTE: need to use HelperFunctions in RPerl::DataStructure::Array for type checking SvIOKp() etc; remove dependency on RPerl void_method type so HelperFunctions can be loaded by RPerl type system
 our $VERSION = 0.002_030;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
 
 # [[[ SUBROUTINES ]]]
-#our void__method $cpp_load = sub {  # DEV NOTE: remove dependency on RPerl
+#our void_method $cpp_load = sub {  # DEV NOTE: remove dependency on RPerl
 sub cpp_load {
     my $need_load_cpp = 0;
     if (    ( exists $main::{'RPerl__HelperFunctions__MODE_ID'} )

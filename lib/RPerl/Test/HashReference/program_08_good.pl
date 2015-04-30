@@ -12,7 +12,7 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 
 my scalartype $mystery_scalar    = 21.12;
-my scalartype__hash_ref $sc_hash = {
+my scalartype_hashref $sc_hash = {
     foo => my integer $TYPED_sc_hash_foo    = 17,
     bar => my number $TYPED_sc_hash_bar     = 42 / 1_701,
     bat => my string $TYPED_sc_hash_bat     = 'strings are scalars, too',

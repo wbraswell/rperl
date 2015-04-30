@@ -4,29 +4,29 @@ use strict;  use warnings;
 our @ISA = ('RPerl::Algorithm::Sort');
 use RPerl::Algorithm::Sort;
 
-our hash_ref $properties =
+our hashref $properties =
 {
 	variant => my string $TYPED_mode = 'original',  # default to original (not in-place) variant
-	data => my scalartype__array_ref $TYPED_data
+	data => my scalartype_arrayref $TYPED_data
 };
 
 # call out to sort data, return nothing
-our void__method $sort = sub {(my object $self) = @_;
+our void_method $sort = sub {(my object $self) = @_;
 ;
-	if ((ref($self->{data}) eq 'ARRAY') or ($self->{data}->isa('array_ref')))
+	if ((ref($self->{data}) eq 'ARRAY') or ($self->{data}->isa('arrayref')))
 	{
 		if ($self->{variant} eq 'original') { $self->{data} = quicksort($self->{data}); }
 		elsif ($self->{variant} eq 'inplace') { $self->{data} = quicksort_inplace($self->{data}); }
-		else { die("Unsupported variant '" . $self->{variant} . "' detected for array_ref data type (original or inplace supported), dying"); }
+		else { die("Unsupported variant '" . $self->{variant} . "' detected for arrayref data type (original or inplace supported), dying"); }
 	}
-	else { die("Unsupported data structure '" . ref($self->{data}) . "' detected (only array_ref supported), dying"); }
+	else { die("Unsupported data structure '" . ref($self->{data}) . "' detected (only arrayref supported), dying"); }
 };
 
 # original algorithm: comparison-based and stable [O(n log n) average total time, O(n) worst-case total extra space]
 # sort data, return sorted data
-our scalartype__array_ref $quicksort = sub {(my scalartype__array_ref $data) = @_;
+our scalartype_arrayref $quicksort = sub {(my scalartype_arrayref $data) = @_;
 ;
-	my const_int $data_length = scalar(@{$data});
+	my integer $data_length = scalar(@{$data});  # CONSTANT
 	
 #	RPerl::diag "in quicksort(), have \$data = \n" . RPerl::DUMPER($data) . "\n";
 #	RPerl::diag "in quicksort(), have \$data_length = $data_length\n";
@@ -42,11 +42,11 @@ our scalartype__array_ref $quicksort = sub {(my scalartype__array_ref $data) = @
 	my @greater_scalar__array = ();
 	
 	# TODO: handle multiple pivot choices
-	my const_int $i_pivot = $data_length - 1;  # pivot is last element in partition; okay for small, not-already-sorted arrays; required to be stable???
-##	my const_int $i_pivot = int($data_length / 2);  # pivot is middle element in partition; okay for large, already-sorted, or repetitive arrays
+	my integer $i_pivot = $data_length - 1;  # pivot is last element in partition; okay for small, not-already-sorted arrays; required to be stable???  # CONSTANT
+##	my int $i_pivot = int($data_length / 2);  # pivot is middle element in partition; okay for large, already-sorted, or repetitive arrays  # CONSTANT
 #	RPerl::diag "in quicksort(), have \$i_pivot = $i_pivot\n";
 
-	my const_scalartype $pivot = $data->[$i_pivot];
+	my scalartype $pivot = $data->[$i_pivot];  # CONSTANT
 #	RPerl::diag "in quicksort(), have \$pivot = $pivot\n";
 
 	# iteratively partition elements of length-n list into sublists less-or-greater than pivot [O(n) time, O(n) total extra space for sublists]
@@ -73,13 +73,13 @@ our scalartype__array_ref $quicksort = sub {(my scalartype__array_ref $data) = @
 
 # in-place algorithm: comparison-based and not stable [O(n log n) average total time, O(log n) worst-case total extra space]
 # call out to sort data, return sorted data
-our scalartype__array_ref $quicksort_inplace = sub {(my scalartype__array_ref $data) = @_;
+our scalartype_arrayref $quicksort_inplace = sub {(my scalartype_arrayref $data) = @_;
 ;
 	return quicksort_inplace_left_right($data, 0, (scalar @{$data}) - 1);
 };
 
 # in-place algorithm; sort data, return sorted data [O(n log n) total time, O(log n) total extra space] 
-our scalartype__array_ref $quicksort_inplace_left_right = sub { (my scalartype__array_ref $data, my const_int $i_left, my const_int $i_right) = @_;
+our scalartype_arrayref $quicksort_inplace_left_right = sub { (my scalartype_arrayref $data, my int $i_left, my int $i_right) = @_;  # CONSTANTS $i_left, $i_right
 ;
 #	RPerl::diag "in quicksort_inplace_left_right(), have \$data = \n" . RPerl::DUMPER($data) . "\n";
 	
@@ -102,13 +102,13 @@ our scalartype__array_ref $quicksort_inplace_left_right = sub { (my scalartype__
 };
 
 # in-place algorithm; partition data, return store index [O(n) time, O(1) extra space]
-our int $partition_inplace = sub {(my scalartype__array_ref $data, my const_int $i_left, my const_int $i_right, my const_int $i_pivot) = @_;
+our int $partition_inplace = sub {(my scalartype_arrayref $data, my int $i_left, my int $i_right, my int $i_pivot) = @_;  # CONSTANTS $i_left, $i_right, $i_pivot
 ;
 	my scalartype $swap;
 	my int $i_store;
 	my int $i;
 	
-	my const_scalartype $pivot = $data->[$i_pivot];	
+	my scalartype $pivot = $data->[$i_pivot];  # CONSTANT	
 #	RPerl::diag "in partition_inplace(), have \$pivot = $pivot\n";
 	
 	# temporarily move pivot to the end of sublist to keep it out of the way

@@ -2,8 +2,8 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< RUN_ERROR: 'ERROR EIVAVRV03, TYPE-CHECKING MISMATCH' >>>
-# <<< RUN_ERROR: 'integer__array_ref element value expected but non-integer value found at index 2' >>>
-# <<< RUN_ERROR: 'in variable $input_1 from subroutine check__integer__array_ref()' >>>
+# <<< RUN_ERROR: 'integer_arrayref element value expected but non-integer value found at index 2' >>>
+# <<< RUN_ERROR: 'in variable $input_1 from subroutine check_integer_arrayref()' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -18,4 +18,4 @@ our $VERSION = 0.000_001;
 use RPerl::Test::TypeCheckingTrace::AllTypes;
 
 # [[[ OPERATIONS ]]]
-check__integer__array_ref( [ -999_999, 3, 'howdy', -12 ] );
+check_integer_arrayref( [ -999_999, 3, 'howdy', -12 ] );

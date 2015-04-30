@@ -11,5 +11,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer__array_ref $i_array;
+my integer_arrayref $i_array;
 $i_array = [ -20, -15, -10, -5, 0, 5, 10, 15, 20 ];

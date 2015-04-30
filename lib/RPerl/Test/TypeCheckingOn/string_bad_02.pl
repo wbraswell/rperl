@@ -17,4 +17,4 @@ our $VERSION = 0.000_001;
 use RPerl::Test::TypeCheckingOn::AllTypes;
 
 # [[[ OPERATIONS ]]]
-check__string( [ 0, 1, 2 ] );
+check_string( [ 0, 1, 2 ] );

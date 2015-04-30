@@ -12,7 +12,7 @@
 
 // DEPRECATED IN FAVOR OF EQUIVALENT MACROS
 /*
-void integer__CHECK(SV* possible_integer) {
+void integer_CHECK(SV* possible_integer) {
     if (not(SvOK(possible_integer))) {
     	croak("\nERROR EIV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but undefined/null value found,\ncroaking");
     }
@@ -20,7 +20,7 @@ void integer__CHECK(SV* possible_integer) {
     	croak("\nERROR EIV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but non-integer value found,\ncroaking");
     }
 };
-void integer__CHECKTRACE(SV* possible_integer, const char* variable_name, const char* subroutine_name) {
+void integer_CHECKTRACE(SV* possible_integer, const char* variable_name, const char* subroutine_name) {
     if (not(SvOK(possible_integer))) {
     	croak("\nERROR EIV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking",
     			variable_name, subroutine_name);
@@ -41,8 +41,8 @@ void integer__CHECKTRACE(SV* possible_integer, const char* variable_name, const 
 // convert from (Perl SV containing integer) to (C integer)
 integer XS_unpack_integer(SV* input_sv) {
 //fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_integer(), top of subroutine\n");
-//	integer__CHECK(input_sv);
-	integer__CHECKTRACE(input_sv, "input_sv", "XS_unpack_integer()");
+//	integer_CHECK(input_sv);
+	integer_CHECKTRACE(input_sv, "input_sv", "XS_unpack_integer()");
 
 //	integer output_integer;
 
@@ -74,20 +74,20 @@ void XS_pack_integer(SV* output_sv, integer input_integer) {
 
 # ifdef __PERL__TYPES
 
-SV* integer__to_string(SV* input_integer)
+SV* integer_to_string(SV* input_integer)
 {
-//	integer__CHECK(input_integer);
-	integer__CHECKTRACE(input_integer, "input_integer", "integer__to_string()");
-//fprintf(stderr, "in CPPOPS_PERLTYPES integer__to_string(), bottom of subroutine, received input_integer = %d\n", (integer)SvIV(input_integer));
+//	integer_CHECK(input_integer);
+	integer_CHECKTRACE(input_integer, "input_integer", "integer_to_string()");
+//fprintf(stderr, "in CPPOPS_PERLTYPES integer_to_string(), bottom of subroutine, received input_integer = %d\n", (integer)SvIV(input_integer));
 	return(newSVpvf("%d", (integer)SvIV(input_integer)));
 }
 
 # elif defined __CPP__TYPES
 
-//string integer__to_string(integer input_integer)
-std::string integer__to_string(integer input_integer)
+//string integer_to_string(integer input_integer)
+std::string integer_to_string(integer input_integer)
 {
-//fprintf(stderr, "in CPPOPS_CPPTYPES integer__to_string(), top of subroutine, received input_integer = %d\n", input_integer);
+//fprintf(stderr, "in CPPOPS_CPPTYPES integer_to_string(), top of subroutine, received input_integer = %d\n", input_integer);
 //	string output_string = "";
 	std::string output_string = "";
 	sprintf((char*)output_string.c_str(), "%d", input_integer);
@@ -109,8 +109,8 @@ SV* integer__typetest0() {
 }
 
 SV* integer__typetest1(SV* lucky_integer) {
-//	integer__CHECK(lucky_integer);
-	integer__CHECKTRACE(lucky_integer, "lucky_integer", "integer__typetest1()");
+//	integer_CHECK(lucky_integer);
+	integer_CHECKTRACE(lucky_integer, "lucky_integer", "integer__typetest1()");
 //fprintf(stderr, "in CPPOPS_PERLTYPES integer__typetest1(), received lucky_integer = %d\n", (integer)SvIV(lucky_integer));
 	return(newSViv((SvIV(lucky_integer) * 2) + SvIV(RPerl__DataType__Integer__MODE_ID())));
 }

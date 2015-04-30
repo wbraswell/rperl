@@ -20,13 +20,13 @@ use RPerl::Parser;
 use Scalar::Util qw(blessed);
 
 # [[[ OO PROPERTIES ]]]
-our hash_ref $properties = {};
+our hashref $properties = {};
 
 # [[[ PROCEDURAL SUBROUTINES ]]]
 
 # Generate from RPerl AST back to RPerl Source Code
-our string__hash_ref $ast_to_rperl__generate = sub {
-    ( my object $node, my string__hash_ref $modes) = @_;
+our string_hashref $ast_to_rperl__generate = sub {
+    ( my object $node, my string_hashref $modes) = @_;
 
 #    RPerl::diag "in Generator::ast_to_rperl__generate(), received \$node =\n" . RPerl::Parser::rperl_ast__dump($node) . "\n";
 #    RPerl::diag "in Generator::ast_to_rperl__generate(), received \$modes =\n" . Dumper($modes) . "\n";
@@ -49,8 +49,8 @@ our string__hash_ref $ast_to_rperl__generate = sub {
 };
 
 # Generate from RPerl AST to C++ Source Code
-our string__hash_ref $ast_to_cpp__generate = sub {
-    ( my object $node, my string__hash_ref $modes) = @_;
+our string_hashref $ast_to_cpp__generate = sub {
+    ( my object $node, my string_hashref $modes) = @_;
 
     RPerl::diag "in Generator::ast_to_cpp__generate(), received \$node =\n"
         . Dumper($node) . "\n";
@@ -79,9 +79,9 @@ our string__hash_ref $ast_to_cpp__generate = sub {
 };
 
 # Append All Source Code Entries From Group 2 Onto The Respective Entries In Group 1
-#our string__hash_ref $source_group_append = sub {
+#our string_hashref $source_group_append = sub {
 our void $source_group_append = sub {
-    (my string__hash_ref $rperl_source_group_1, my string__hash_ref $rperl_source_group_2) = @_;
+    (my string_hashref $rperl_source_group_1, my string_hashref $rperl_source_group_2) = @_;
 #    RPerl::diag('in Generator::source_group_append(), received $rperl_source_group_1 =' . "\n" . Dumper($rperl_source_group_1) . "\n");
 #    RPerl::diag('in Generator::source_group_append(), received $rperl_source_group_2 =' . "\n" . Dumper($rperl_source_group_2) . "\n");
 
@@ -107,7 +107,7 @@ our void $grammar_rules__map = sub {
             . q{; use parent qw(}
             . $RPerl::Grammar::rules->{$rule}
             . q{); use }
-            . $RPerl::Grammar::rules->{$rule} . q{; our hash_ref $properties = {}; 1;};
+            . $RPerl::Grammar::rules->{$rule} . q{; our hashref $properties = {}; 1;};
 
 #        RPerl::diag 'in Generator::grammar_rules_map(), have 1st $eval_string = ' . "\n" . $eval_string . "\n";
         my integer $eval_retval = eval $eval_string;

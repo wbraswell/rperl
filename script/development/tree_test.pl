@@ -11,14 +11,14 @@ use strict;  use warnings;  use RPerl;  our @ISA = ('RPerl');
 # <<<=== TREE 1 ===>>>
 # <<<=== TREE 1 ===>>>
 
-my $nested_array_refs_chars = ['F', [['B', ['A', ['D', ['C', 'E']]]], ['G', [undef, ['I', ['H', undef]]]]]];
+my $nested_arrayrefs_chars = ['F', [['B', ['A', ['D', ['C', 'E']]]], ['G', [undef, ['I', ['H', undef]]]]]];
 
-RPerl::diag "in multi_tree.pl, have \$nested_array_refs_chars =\n" . RPerl::DUMPER($nested_array_refs_chars) . "\n";
+RPerl::diag "in multi_tree.pl, have \$nested_arrayrefs_chars =\n" . RPerl::DUMPER($nested_arrayrefs_chars) . "\n";
 
-my scalartype_binarytree_ref $tree = scalar_binarytree_ref->new_from_nested_array_refs($nested_array_refs_chars);
-#my scalartype_binarytree_ref $tree = scalar_binarytree_ref->new_from_nested_array_refs([2112, [[33, [17, 71]], [44, [23, [1.21, [undef, 55]]]]]]);
+my scalartype_binarytreeref $tree = scalar_binarytreeref->new_from_nested_arrayrefs($nested_arrayrefs_chars);
+#my scalartype_binarytreeref $tree = scalar_binarytreeref->new_from_nested_arrayrefs([2112, [[33, [17, 71]], [44, [23, [1.21, [undef, 55]]]]]]);
 =UNUSED CODE
-my scalartype_binarytree_ref $tree = scalar_binarytree_ref->new_from_nested_array_refs(
+my scalartype_binarytreeref $tree = scalar_binarytreeref->new_from_nested_arrayrefs(
 [2112, 
 	[[33, 
 		[17, 
@@ -38,7 +38,7 @@ my scalartype_binarytree_ref $tree = scalar_binarytree_ref->new_from_nested_arra
 
 RPerl::diag "in multi_tree.pl, have \$tree =\n" . RPerl::DUMPER($tree) . "\n";
 
-our string $callback_value = sub {(my binarytreenode_ref $node) = @_;
+our string $callback_value = sub {(my binarytreenoderef $node) = @_;
 ;
 	return $node if (ref(\$node) eq 'SCALAR');
 	return $node->{data};
@@ -50,8 +50,8 @@ RPerl::diag "in multi_tree.pl, have \$retval_depthfirst_preorder =\n" . RPerl::D
 my $retval_breadthfirst_queue = $tree->traverse_breadthfirst_queue($callback_value);
 RPerl::diag "in multi_tree.pl, have \$retval_breadthfirst_queue =\n" . RPerl::DUMPER($retval_breadthfirst_queue) . "\n";
 
-my $retval_nested_array_refs = $tree->to_nested_array_refs();
-RPerl::diag "in multi_tree.pl, have \$retval_nested_array_refs =\n" . RPerl::DUMPER($retval_nested_array_refs) . "\n";
+my $retval_nested_arrayrefs = $tree->to_nested_arrayrefs();
+RPerl::diag "in multi_tree.pl, have \$retval_nested_arrayrefs =\n" . RPerl::DUMPER($retval_nested_arrayrefs) . "\n";
 
 
 

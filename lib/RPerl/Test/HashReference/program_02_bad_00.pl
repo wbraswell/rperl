@@ -16,7 +16,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer__hash_ref $i_hash = {
+my integer_hashref $i_hash = {
     least_random => 17,
     fnord        => 23,
     dont_panic   => 42,

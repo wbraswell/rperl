@@ -2,7 +2,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_994;
+    our $VERSION = 0.000_995;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -26,7 +26,7 @@
 %token FH_REF_SYMBOL_BRACES  = /(\{\$[A-Z][A-Z0-9_]*\})/                 # left brace, dollar sigil, uppercase letter, uppercase letters & numbers & underscores, right brace; ex. '{$MY_FILEHANDLE_23}'
 %token FH_REF_SYMBOL         = /(\$[A-Z][A-Z0-9_]*)/                     # dollar sigil, uppercase letter, uppercase letters & numbers & underscores; ex. '$MY_FILEHANDLE_23'
 %token TYPE_INTEGER          = /(integer\s+)/                            # 'integer' followed by whitespace
-%token TYPE_METHOD           = /([a-zA-Z]\w*__method)/                   # letter followed by letters, numbers, and underscores, followed by '__method'; ex. 'string__array_ref__method'
+%token TYPE_METHOD           = /([a-zA-Z]\w*_method)/                   # letter followed by letters, numbers, and underscores, followed by '_method'; ex. 'string_arrayref_method'
 %token WORD_SCOPED           = /((?:[a-zA-Z]\w*)?(?:::[a-zA-Z]\w*)+)/
 %token TYPE_SELF             = /(object\s+\$self)/                       # 'object $self'
 %token STDOUT_STDERR         = /(\{\*STDOUT\}|\{\*STDERR\})/             # '{*STDOUT}' or '{*STDERR}'
@@ -147,8 +147,8 @@ Constant:               'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInn
 Subroutine:             'our' Type VARIABLE_SYMBOL '= sub {' SubroutineArguments? Operation* '}' ';' ;
 SubroutineArguments:    LPAREN_MY Type VARIABLE_SYMBOL (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
 Class:                  'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties MethodOrSubroutine* LITERAL_NUMBER ';' ;
-Properties:             'our hash_ref $properties' OP19_VARIABLE_ASSIGN LBRACE HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* '}' ';' |
-                        'our hash_ref $properties' OP19_VARIABLE_ASSIGN LBRACE '}' ';' ;
+Properties:             'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* '}' ';' |
+                        'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE '}' ';' ;
 Method:                 'our' TYPE_METHOD VARIABLE_SYMBOL '= sub {' MethodArguments? Operation* '}' ';' ;
 MethodArguments:        LPAREN_MY TYPE_SELF (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
 MethodOrSubroutine:     Method | Subroutine;
@@ -156,7 +156,7 @@ MethodOrSubroutine:     Method | Subroutine;
 Operation:              Expression ';' | Statement ;
 Operator:               LPAREN OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ')' |
                         OP01_NAMED SubExpression | LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')' |
-                        OP01_OPEN 'my' 'filehandle_ref' FH_REF_SYMBOL OP21_LIST_COMMA LITERAL_STRING OP21_LIST_COMMA SubExpression |
+                        OP01_OPEN 'my' 'filehandleref' FH_REF_SYMBOL OP21_LIST_COMMA LITERAL_STRING OP21_LIST_COMMA SubExpression |
                         OP01_CLOSE FH_REF_SYMBOL | OP03_MATH_INC_DEC Variable | Variable OP03_MATH_INC_DEC | SubExpression OP04_MATH_POW SubExpression |
                         OP05_LOGICAL_NEG SubExpression | OP05_MATH_NEG_LPAREN SubExpression ')' | SubExpression OP06_REGEX_MATCH OP06_REGEX_PATTERN |
                         SubExpression OP07_STRING_REPEAT SubExpression | SubExpression OP07_MATH_MULT_DIV_MOD SubExpression |
@@ -212,7 +212,7 @@ Literal:                LITERAL_NUMBER | LITERAL_STRING ;
 # 3. Run new & existing grammar tests
 # 4. Copy updates from Grammar.output file into this file, below this line only
 # 5. Run scripts/grammar_recompile.sh again
-our string__hash_ref $rules = {
+our string_hashref $rules = {
 CompileUnit_4 => 'RPerl::CompileUnit::Program',  # Program
 CompileUnit_5 => 'RPerl::CompileUnit::Module',  # PLUS-2
 Program_18 => 'RPerl::CompileUnit::Program',  # SHEBANG OPTIONAL-3 Header STAR-4 STAR-5 STAR-6 STAR-7 PLUS-8
@@ -228,8 +228,8 @@ Constant_41 => 'RPerl::CompileUnit::Constant',  # 'use constant' WORD_UPPERCASE 
 Subroutine_46 => 'RPerl::CodeBlock::Subroutine',  # 'our' Type VARIABLE_SYMBOL '= sub {' OPTIONAL-16 STAR-17 '}' ';'
 SubroutineArguments_50 => 'RPerl::CodeBlock::Subroutine::Arguments',  # LPAREN_MY Type VARIABLE_SYMBOL STAR-19 ')' OP19_VARIABLE_ASSIGN '@_;'
 Class_59 => 'RPerl::NonGenerator',  # 'use parent qw(' WordScoped ')' ';' Include STAR-20 STAR-21 STAR-22 Properties STAR-23 LITERAL_NUMBER ';'
-Properties_63 => 'RPerl::DataStructure::Hash::Properties',  # 'our hash_ref $properties' OP19_VARIABLE_ASSIGN LBRACE HashEntryTyped STAR-25 '}' ';'
-Properties_64 => 'RPerl::DataStructure::Hash::Properties',  # 'our hash_ref $properties' OP19_VARIABLE_ASSIGN LBRACE '}' ';'
+Properties_63 => 'RPerl::DataStructure::Hash::Properties',  # 'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE HashEntryTyped STAR-25 '}' ';'
+Properties_64 => 'RPerl::DataStructure::Hash::Properties',  # 'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE '}' ';'
 Method_69 => 'RPerl::CodeBlock::Subroutine::Method',  # 'our' TYPE_METHOD VARIABLE_SYMBOL '= sub {' OPTIONAL-26 STAR-27 '}' ';'
 MethodArguments_73 => 'RPerl::CodeBlock::Subroutine::Method::Arguments',  # LPAREN_MY TYPE_SELF STAR-29 ')' OP19_VARIABLE_ASSIGN '@_;'
 MethodOrSubroutine_74 => 'RPerl::CodeBlock::Subroutine::Method',  # Method

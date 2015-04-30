@@ -17,13 +17,13 @@ use RPerl::Algorithm::Math;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OO PROPERTIES ]]]
-our hash_ref $properties = {};
+our hashref $properties = {};
 
 # [[[ SUBROUTINES ]]]
 
 our number $inner_product__vector_vector_euclidean = sub {
-    (   my number__array_ref $input_vector_1,
-        my number__array_ref $input_vector_2)
+    (   my number_arrayref $input_vector_1,
+        my number_arrayref $input_vector_2)
         = @_;
 
     # bound checking
@@ -57,9 +57,9 @@ our number $inner_product__vector_vector_euclidean = sub {
     return $return_value_number;
 };
 
-our number__array_ref $inner_product__bivector_vector_euclidean = sub {
-    (   my number__array_ref $input_bivector,
-        my number__array_ref $input_vector)
+our number_arrayref $inner_product__bivector_vector_euclidean = sub {
+    (   my number_arrayref $input_bivector,
+        my number_arrayref $input_vector)
         = @_;
 
     # bound checking
@@ -72,7 +72,7 @@ our number__array_ref $inner_product__bivector_vector_euclidean = sub {
         'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_vector is not of magnitude 4, croaking'
         );
 
-    my number__array_ref $return_value_vector = [];
+    my number_arrayref $return_value_vector = [];
 
 #    RPerl::diag "in PERLOPS_PERLTYPES inner_product__bivector_vector_euclidean(), top of subroutine...\n";
 #    RPerl::diag "in PERLOPS_PERLTYPES inner_product__bivector_vector_euclidean(), received \$input_bivector\n" . Dumper($input_bivector) . "\n";
@@ -89,9 +89,9 @@ our number__array_ref $inner_product__bivector_vector_euclidean = sub {
     return $return_value_vector;
 };
 
-our number__array_ref $outer_product__vector_vector_euclidean = sub {
-    (   my number__array_ref $input_vector_1,
-        my number__array_ref $input_vector_2)
+our number_arrayref $outer_product__vector_vector_euclidean = sub {
+    (   my number_arrayref $input_vector_1,
+        my number_arrayref $input_vector_2)
         = @_;
 
     # bound checking
@@ -104,7 +104,7 @@ our number__array_ref $outer_product__vector_vector_euclidean = sub {
         'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_vector_2 is not of magnitude 4, croaking'
         );
 
-    my number__array_ref $return_value_bivector = [];
+    my number_arrayref $return_value_bivector = [];
 
 #    RPerl::diag "in PERLOPS_PERLTYPES outer_product__vector_vector_euclidean(), top of subroutine...\n";
 #    RPerl::diag "in PERLOPS_PERLTYPES outer_product__vector_vector_euclidean(), received \$input_vector_1\n" . Dumper($input_vector_1) . "\n";
@@ -125,8 +125,8 @@ our number__array_ref $outer_product__vector_vector_euclidean = sub {
 };
 
 our number $outer_product__bivector_vector_euclidean = sub {
-    (   my number__array_ref $input_bivector,
-        my number__array_ref $input_vector)
+    (   my number_arrayref $input_bivector,
+        my number_arrayref $input_vector)
         = @_;
 
     # bound checking

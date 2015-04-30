@@ -16,10 +16,10 @@ using std::cout;  using std::cerr;
 ////# [[[ OO METHODS ]]]
 
 // INHERITANCE TESTING
-////our void__method $inherited__Algorithm = sub { ( my object $self, my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Algorithm->inherited__Algorithm(), received \$self = '$self' and \$person = '$person', FNORD\n"; };
+////our void_method $inherited__Algorithm = sub { ( my object $self, my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Algorithm->inherited__Algorithm(), received \$self = '$self' and \$person = '$person', FNORD\n"; };
 void RPerl__Algorithm::inherited__Algorithm(SV* person) { cout << "in CPPOPS_PERLTYPES Algorithm->inherited__Algorithm(), received this = '" << this << "' and person = '" << SvPV_nolen(person) << "', FNORD\n"; }
 
-////our void__method $inherited = sub { ( my object $self, my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Algorithm->inherited(), received \$self = '$self' and \$person = '$person', IS\n"; };
+////our void_method $inherited = sub { ( my object $self, my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Algorithm->inherited(), received \$self = '$self' and \$person = '$person', IS\n"; };
 //void RPerl__Algorithm::inherited(SV* person) { cout << "in CPPOPS_PERLTYPES Algorithm->inherited(), received this = '" << this << "' and person = '" << SvPV_nolen(person) << "', IS\n"; }
 
 ////# [[[ SUBROUTINES ]]]
@@ -44,10 +44,10 @@ SV* uninherited__Algorithm(SV* person) { cout << "in CPPOPS_PERLTYPES Algorithm:
 ////# [[[ OO METHODS ]]]
 
 // INHERITANCE TESTING
-////our void__method $inherited__Algorithm = sub { ( my object $self, my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Algorithm->inherited__Algorithm(), received \$self = '$self' and \$person = '$person', FNORD\n"; };
+////our void_method $inherited__Algorithm = sub { ( my object $self, my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Algorithm->inherited__Algorithm(), received \$self = '$self' and \$person = '$person', FNORD\n"; };
 void RPerl__Algorithm::inherited__Algorithm(string person) { cout << "in CPPOPS_CPPTYPES Algorithm->inherited__Algorithm(), received this = '" << this << "' and person = '" << person << "', FNORD\n"; }
 
-////our void__method $inherited = sub { ( my object $self, my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Algorithm->inherited(), received \$self = '$self' and \$person = '$person', IS\n"; };
+////our void_method $inherited = sub { ( my object $self, my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Algorithm->inherited(), received \$self = '$self' and \$person = '$person', IS\n"; };
 //void RPerl__Algorithm::inherited(SV* person) { cout << "in CPPOPS_CPPTYPES Algorithm->inherited(), received this = '" << this << "' and person = '" << person << "', IS\n"; }
 
 ////# [[[ SUBROUTINES ]]]

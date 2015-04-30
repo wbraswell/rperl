@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'near "$bar my number__hash_ref"' >>>
+# <<< COMPILE_ERROR: 'near "$bar my number_hashref"' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::SubroutineArguments::Package_06_Bad;
@@ -11,7 +11,7 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 our void $empty_sub = sub {
-    ( my number $foo, my number__array_ref $bar my number__hash_ref $baz ) = @_;
+    ( my number $foo, my number_arrayref $bar my number_hashref $baz ) = @_;
     return 1;
 };
 

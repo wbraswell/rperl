@@ -17,7 +17,7 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 
 foreach my integer $i (
-    @{  my integer__array_ref $TYPED_i_array
+    @{  my integer_arrayref $TYPED_i_array
             = [ my integer $TYPED_i0 = 10, 20, 30, 40, 50, ]
     }
     )

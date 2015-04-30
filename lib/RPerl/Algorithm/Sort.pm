@@ -13,12 +13,12 @@ use RPerl::Algorithm;
 # [[[ OO METHODS ]]]
 
 # OO INHERITANCE TESTING
-our void__method $inherited__Sort = sub {
+our void_method $inherited__Sort = sub {
     ( my object $self, my string $person) = @_;
 #    RPerl::diag "in PERLOPS_PERLTYPES Sort->inherited__Sort(), received \$self = '$self' and \$person = '$person', FISH\n";
 };
 
-#our void__method $inherited = sub { (my object $self, my string $person) = @_;  RPerl::diag "in PERLOPS_PERLTYPES Sort->inherited(), received \$self = '$self' and \$person = '$person', IN\n"; };
+#our void_method $inherited = sub { (my object $self, my string $person) = @_;  RPerl::diag "in PERLOPS_PERLTYPES Sort->inherited(), received \$self = '$self' and \$person = '$person', IN\n"; };
 
 # [[[ SUBROUTINES ]]]
 

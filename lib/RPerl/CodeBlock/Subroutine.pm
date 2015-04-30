@@ -13,17 +13,17 @@ our $VERSION = 0.000_012;
 ## no critic qw(ProhibitPackageVars)  # SYSTEM SPECIAL 4a: allow $rperltypes::supported
 BEGIN {
 
-    package object__method;
+    package object_method;
     1;
 
-    package hash_ref__method;
+    package hashref_method;
     1;
 
-    package string__method;
+    package string_method;
     1;
 
 # DEV NOTE, CORRELATION #03: method types reside in Method.pm, which is a sub-type of Subroutine.pm, causing the need to have this special BEGIN block
-# to enable the *__method types, and Class.pm's INIT block symbol table entry generator needs us to switch back into the primary package so we have
+# to enable the *_method types, and Class.pm's INIT block symbol table entry generator needs us to switch back into the primary package so we have
 # that happen in the following line, which furthermore triggers the need to avoid re-defining class accessor/mutator methods; how to fix?
     package RPerl::CodeBlock::Subroutine;
     1;
@@ -35,17 +35,17 @@ use Scalar::Util 'blessed';
 use parent qw(RPerl::CodeBlock);
 
 # [[[ OO PROPERTIES ]]]
-our hash_ref $properties = {
+our hashref $properties = {
     type       => my string $TYPED_type                   = undef,
     name       => my string $TYPED_name                   = undef,
-    arguments  => my hash_ref__array_ref $TYPED_arguments = undef,
-    operations => my object__array_ref $TYPED_operations  = undef
+    arguments  => my hashref_arrayref $TYPED_arguments = undef,
+    operations => my object_arrayref $TYPED_operations  = undef
 };
 
 # [[[ OO METHOD(S) ]]]
 
 # GENERATE CPPOPS_CPPTYPES
-our string__method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
+our string_method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self ) = @_;    # object method
     my string $self_generated = q{};
 
@@ -70,7 +70,7 @@ our string__method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 };
 
 # GENERATE HEADER CPPOPS_CPPTYPES
-our string__method $rperl_to_cpp__header_generate__CPPOPS_CPPTYPES = sub {
+our string_method $rperl_to_cpp__header_generate__CPPOPS_CPPTYPES = sub {
     ( my object $self ) = @_;    # object method
     my string $self_header_generated = q{};
 
@@ -83,7 +83,7 @@ our string__method $rperl_to_cpp__header_generate__CPPOPS_CPPTYPES = sub {
     }
     $self_header_generated .= $self->{type} . q{ } . $self->{name} . q{(};
     my integer $argument_is_not_first = 0;
-    foreach my string__hash_ref $argument ( @{ $self->{arguments} } ) {
+    foreach my string_hashref $argument ( @{ $self->{arguments} } ) {
         if ($argument_is_not_first) {
             $self_header_generated .= q{, };
             $argument_is_not_first++;
@@ -104,7 +104,7 @@ our string__method $rperl_to_cpp__header_generate__CPPOPS_CPPTYPES = sub {
 
 # DEV NOTE: due to always being pre-qualified and having only 1 production and having 0 non-pre-qualified components, this rule can croak() on any RPerl syntax error at any component
 # SUBROUTINE RULE
-our object__method $ppi_to_rperl__translate = sub {
+our object_method $ppi_to_rperl__translate = sub {
     ( my string $class, my object $node) = @_;    # class method
 
     # variable declarations MASTER LIST FOR TRANLATION ROUTINES
@@ -168,7 +168,7 @@ our object__method $ppi_to_rperl__translate = sub {
     $child_key = 'children';
     if ( not( defined $node->{$child_key} ) ) {
         croak(
-            "\nERROR ECVTRPI03, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, PPI OBJECT FAILURE:\nchildren sub-objects array_ref value expected but undefined/null value found,\ncroaking"
+            "\nERROR ECVTRPI03, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, PPI OBJECT FAILURE:\nchildren sub-objects arrayref value expected but undefined/null value found,\ncroaking"
         );
     }
 
@@ -571,7 +571,7 @@ our object__method $ppi_to_rperl__translate = sub {
 # DEV NOTE: due to always being pre-qualified and having only 1 production and having 0 rules-as-components,
 # this rule never matches empty and can croak() on any RPerl syntax error at any component
 # SUBROUTINE_ARGUMENTS RULE
-our hash_ref__method $ppi_to_rperl__arguments_translate = sub {
+our hashref_method $ppi_to_rperl__arguments_translate = sub {
     ( my string $class, my object $node) = @_;    # class method
 
     # variable declarations
@@ -631,7 +631,7 @@ our hash_ref__method $ppi_to_rperl__arguments_translate = sub {
     $child_key = 'children';
     if ( not( defined $node->{$child_key} ) ) {
         croak(
-            "\nERROR ECVTRPI03, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, PPI OBJECT FAILURE:\nchildren sub-objects array_ref value expected but undefined/null value found,\ncroaking"
+            "\nERROR ECVTRPI03, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, PPI OBJECT FAILURE:\nchildren sub-objects arrayref value expected but undefined/null value found,\ncroaking"
         );
     }
 
@@ -736,7 +736,7 @@ our hash_ref__method $ppi_to_rperl__arguments_translate = sub {
         )
     {
         croak(
-            "\nERROR ECVTRPI03, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, PPI OBJECT FAILURE:\ngreat-grandchildren sub-sub-sub-objects array_ref value expected but undefined/null value found,\ncroaking"
+            "\nERROR ECVTRPI03, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, PPI OBJECT FAILURE:\ngreat-grandchildren sub-sub-sub-objects arrayref value expected but undefined/null value found,\ncroaking"
         );
     }
     $greatgrandchild_index_max = (
@@ -1183,10 +1183,10 @@ our hash_ref__method $ppi_to_rperl__arguments_translate = sub {
 # Random note for later from mst:  sprint/summer 2012
 #   This would warn BUT "no warnings 'illegalproto'" disables that
 #   Now you can extract the prototype at runtime using 'perldoc -f prototype'
-#   Key thing: whitespace in the prototype is lost so you'll be parsing 'integer__array_ref->integer__array_ref'
+#   Key thing: whitespace in the prototype is lost so you'll be parsing 'integer_arrayref->integer_arrayref'
 #   however it's otherwise preserved verbatim by the perl compiler and you can do what you like with it
 #   Web::Simple uses this to provide 'sub (GET + /user/:id) { ... }' for web routing.
-#   sub bubblesort(integer__array_ref -> integer__array_ref) {}
+#   sub bubblesort(integer_arrayref -> integer_arrayref) {}
 # end random note
 
 1;

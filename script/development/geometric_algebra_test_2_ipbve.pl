@@ -11,9 +11,9 @@ use RPerl::Algorithm::Math::GeometricAlgebra;
 use Data::Dumper;
 
 # variable declarations
-my number__array_ref $retval_vector;
-my number__array_ref $input_bivector;
-my number__array_ref $input_vector;
+my number_arrayref $retval_vector;
+my number_arrayref $input_bivector;
+my number_arrayref $input_vector;
 
 # [ undef, -10.1538461538462, 3, 1.53846153846154 ];
 $input_bivector = [-999999, 3.0/13.0, 4.0/13.0, 12.0/13.0];
@@ -37,7 +37,7 @@ $input_vector = [-999999, 3.0, 4.0, 12.0];
 
 
 # loop to test for memory leaks
-my const_integer $i_MAX = 0;
+my integer $i_MAX = 0;  # CONSTANT
 for my integer $i ( 0 .. $i_MAX ) {
 	RPerl::diag "in geometric_algebra_test_2_ipbve.pl, top of for() loop $i/$i_MAX\n" or croak();
 

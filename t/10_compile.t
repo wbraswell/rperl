@@ -22,7 +22,7 @@ use File::Temp qw(tempfile);
 
 # [[[ OPERATIONS ]]]
 
-my $test_files = {};    # string__hash_ref
+my $test_files = {};    # string_hashref
 find(
     sub {
         my $file = $File::Find::name;

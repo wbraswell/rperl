@@ -13,7 +13,7 @@ use parent qw(RPerl::Test);
 use RPerl::Test;
 
 # [[[ OO PROPERTIES ]]]
-our hash_ref $properties
+our hashref $properties
     = { empty_property => my integer $TYPED_empty_property = 2 };
 
 # [[[ OO METHODS ]]]

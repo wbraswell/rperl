@@ -16,7 +16,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string__hash_ref $foo = {
+my string_hashref $foo = {
     puppet   => 'howdy doody',
     host     => 'buffalo bob',
     sidekick => 'clarabell clown'

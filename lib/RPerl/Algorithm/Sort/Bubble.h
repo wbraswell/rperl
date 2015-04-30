@@ -31,18 +31,18 @@ class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort  // SINGLE 
 public:
 	////# [[[ OO METHODS ]]]
 
-	void integer__sort();  // NEED ANSWER: no named argument required for $self object?
-	void number__sort();
+	void integer_sort();  // NEED ANSWER: no named argument required for $self object?
+	void number_sort();
 
 	// OO INHERITANCE TESTING
 	void inherited__Bubble(SV* person);
 	void inherited(SV* person);
 
 	// <<< ACCESSORS & MUTATORS >>>
-	SV* get_integer__data() { return SvREFCNT_inc(this->integer__data); }
-	void set_integer__data(SV* integer__data_new) { this->integer__data = integer__data_new; }
-	SV* get_number__data() { return SvREFCNT_inc(this->number__data); }
-	void set_number__data(SV* number__data_new) { this->number__data = number__data_new; }
+	SV* get_integer_data() { return SvREFCNT_inc(this->integer_data); }
+	void set_integer_data(SV* integer_data_new) { this->integer_data = integer_data_new; }
+	SV* get_number_data() { return SvREFCNT_inc(this->number_data); }
+	void set_number_data(SV* number_data_new) { this->number_data = number_data_new; }
 
 	// <<< CONSTRUCTOR & DESTRUCTOR >>>
 	RPerl__Algorithm__Sort__Bubble() {}
@@ -51,15 +51,15 @@ public:
 ////# [[[ OO PROPERTIES ]]]
 
 private:
-////our hash_ref $properties = { integer__data => my integer__array_ref $TYPED_integer__data, number__data  => my number__array_ref $TYPED_number__data };
-	SV* integer__data;
-	SV* number__data;
+////our hashref $properties = { integer_data => my integer_arrayref $TYPED_integer_data, number_data  => my number_arrayref $TYPED_number_data };
+	SV* integer_data;
+	SV* number_data;
 };
 
 ////# [[[ SUBROUTINES ]]]
 
-SV* integer__bubblesort(SV* integer__data);
-SV* number__bubblesort(SV* number__data);
+SV* integer_bubblesort(SV* integer_data);
+SV* number_bubblesort(SV* number_data);
 //void integer_bubblesort(SV* data);  // TEMPORARY DEBUGGING
 
 // OO INHERITANCE TESTING, CONTINUED
@@ -68,9 +68,9 @@ SV* uninherited__Bubble(SV* person);
 SV* uninherited(SV* person);
 
 // TYPE TESTING
-SV* integer__bubblesort__typetest0(SV* lucky_integers);
-SV* number__bubblesort__typetest0(SV* lucky_numbers);
-//SV* string__bubblesort__typetest0(SV* people);
+SV* integer_bubblesort__typetest0(SV* lucky_integers);
+SV* number_bubblesort__typetest0(SV* lucky_numbers);
+//SV* string_bubblesort__typetest0(SV* people);
 
 // <<< OPERATIONS & DATA TYPES REPORTING >>>
 SV* RPerl__Algorithm__Sort__Bubble__MODE_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
@@ -94,18 +94,18 @@ class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort  // SINGLE 
 public:
 	////# [[[ OO METHODS ]]]
 
-	void integer__sort();  // NEED ANSWER: no named argument required for $self object?
-	void number__sort();
+	void integer_sort();  // NEED ANSWER: no named argument required for $self object?
+	void number_sort();
 
 // OO INHERITANCE TESTING
 	void inherited__Bubble(string person);
 	void inherited(string person);
 
 	// <<< ACCESSORS & MUTATORS >>>
-	integer__array_ref get_integer__data() { return(this->integer__data); }
-	void set_integer__data(integer__array_ref integer__data_new) { this->integer__data = integer__data_new; }  // NEED ANSWERS: do we need to use some vector copy feature here???
-	number__array_ref get_number__data() { return(this->number__data); }
-	void set_number__data(number__array_ref number__data_new) { this->number__data = number__data_new; }
+	integer_arrayref get_integer_data() { return(this->integer_data); }
+	void set_integer_data(integer_arrayref integer_data_new) { this->integer_data = integer_data_new; }  // NEED ANSWERS: do we need to use some vector copy feature here???
+	number_arrayref get_number_data() { return(this->number_data); }
+	void set_number_data(number_arrayref number_data_new) { this->number_data = number_data_new; }
 
 	// <<< CONSTRUCTOR & DESTRUCTOR >>>
 	RPerl__Algorithm__Sort__Bubble() {}
@@ -114,15 +114,15 @@ public:
 	////# [[[ OO PROPERTIES ]]]
 
 private:
-////our hash_ref $properties = { integer__data => my integer__array_ref $TYPED_integer__data, number__data  => my number__array_ref $TYPED_number__data };
-	integer__array_ref integer__data;
-	number__array_ref number__data;
+////our hashref $properties = { integer_data => my integer_arrayref $TYPED_integer_data, number_data  => my number_arrayref $TYPED_number_data };
+	integer_arrayref integer_data;
+	number_arrayref number_data;
 };
 
 ////# [[[ SUBROUTINES ]]]
 
-integer__array_ref integer__bubblesort(integer__array_ref integer__data);
-number__array_ref number__bubblesort(number__array_ref number__data);
+integer_arrayref integer_bubblesort(integer_arrayref integer_data);
+number_arrayref number_bubblesort(number_arrayref number_data);
 
 // OO INHERITANCE TESTING, CONTINUED
 string uninherited__Bubble(string person);
@@ -130,9 +130,9 @@ string uninherited__Bubble(string person);
 string uninherited(string person);
 
 // TYPE TESTING
-string integer__bubblesort__typetest0(integer__array_ref lucky_integers);
-string number__bubblesort__typetest0(number__array_ref lucky_numbers);
-//string string__bubblesort__typetest0(string__array_ref people);
+string integer_bubblesort__typetest0(integer_arrayref lucky_integers);
+string number_bubblesort__typetest0(number_arrayref lucky_numbers);
+//string string_bubblesort__typetest0(string_arrayref people);
 
 // <<< OPERATIONS & DATA TYPES REPORTING >>>
 integer RPerl__Algorithm__Sort__Bubble__MODE_ID() { integer retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 2

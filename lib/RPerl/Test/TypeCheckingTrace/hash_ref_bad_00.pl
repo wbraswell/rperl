@@ -2,8 +2,8 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< RUN_ERROR: 'ERROR EHVRV01, TYPE-CHECKING MISMATCH' >>>
-# <<< RUN_ERROR: 'hash_ref value expected but non-hash_ref value found' >>>
-# <<< RUN_ERROR: 'in variable $input_1 from subroutine check__hash_ref()' >>>
+# <<< RUN_ERROR: 'hashref value expected but non-hashref value found' >>>
+# <<< RUN_ERROR: 'in variable $input_1 from subroutine check_hashref()' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -18,4 +18,4 @@ our $VERSION = 0.000_001;
 use RPerl::Test::TypeCheckingTrace::AllTypes;
 
 # [[[ OPERATIONS ]]]
-check__hash_ref(0);
+check_hashref(0);

@@ -11,4 +11,4 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string__hash_ref $s_hash;
+my string_hashref $s_hash;

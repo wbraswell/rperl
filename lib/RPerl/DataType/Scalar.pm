@@ -11,7 +11,3 @@ use RPerl::DataType;
 # DEV NOTE: do NOT overload Perl's 'scalar' keyword!!!
 package scalartype;
 our @ISA = ('RPerl::DataType::Scalar');
-
-# scalartype with const value
-package const_scalartype;
-our @ISA = ('scalartype', 'const');

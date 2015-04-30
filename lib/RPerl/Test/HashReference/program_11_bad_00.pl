@@ -17,12 +17,12 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 
 # homogeneous 2-dimensional hash of hashes, using outer type
-my integer__hash_ref__hash_ref $hash_hash = {
-    key_0 => my integer__hash_ref $TYPED_key_0
+my integer_hashref_hashref $hash_hash = {
+    key_0 => my integer_hashref $TYPED_key_0
         = { a => 17, b => -23, c => 1_701 },
-    key_1 => my integer__hash_ref $TYPED_key_1
+    key_1 => my integer_hashref $TYPED_key_1
         = { d => -1, e => 444, f => 2_987 },
-    key_2 => my integer__hash_ref $TYPED_key_2
+    key_2 => my integer_hashref $TYPED_key_2
         = { g => -321, h => 7, i => 24_851 },
 };
 foreach my string $hash_key ( sort keys %{$hash_hash} ) {

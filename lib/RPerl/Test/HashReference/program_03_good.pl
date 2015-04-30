@@ -11,7 +11,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my number__hash_ref $n_hash = {
+my number_hashref $n_hash = {
     alpha => 17 / 23,
     beta  => 42 / 1_701,
     gamma => 21.12

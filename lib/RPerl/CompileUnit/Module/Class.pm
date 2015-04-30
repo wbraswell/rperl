@@ -56,7 +56,7 @@ INIT {
     my $module_file_long;               # string
     my $package_name;                   # string
     my $package_name_underscores;       # string
-    my $object_properties;              # hash_ref
+    my $object_properties;              # hashref
     my $subroutine_type;                # string
     my $subroutine_name;                # string
     my $CHECK;                          # string
@@ -339,7 +339,7 @@ INIT {
 
 #                            RPerl::diag( q{in Class.pm INIT block, found @_; at end-of-line while inside subroutine } . $subroutine_name . '(), have $subroutine_arguments_line = ' . "\n" . $subroutine_arguments_line . "\n" );
 
-                            my $subroutine_arguments = []; # string__array_ref__array_ref
+                            my $subroutine_arguments = []; # string_arrayref_arrayref
 
                             # loop once per subroutine argument
                             while ( $subroutine_arguments_line
@@ -364,7 +364,7 @@ INIT {
                                     $subroutine_arguments_check_code
                                         .= q{    } . '::'
                                         . $subroutine_argument->[0]
-                                        . '__CHECK( $_['
+                                        . '_CHECK( $_['
                                         . $i . '] );' . "\n";
                                     $i++;
                                 }
@@ -387,7 +387,7 @@ INIT {
                                     $subroutine_arguments_check_code
                                         .= q{    } . '::'
                                         . $subroutine_argument->[0]
-                                        . '__CHECKTRACE( $_['
+                                        . '_CHECKTRACE( $_['
                                         . $i
                                         . q{], '$}
                                         . $subroutine_argument->[1] . q{', '}
@@ -592,7 +592,7 @@ sub AUTOLOAD
 }
 
 # RPerl object constructor, longhand
-# DEPRECATED still uses %properties hash instead of $properties hash_ref
+# DEPRECATED still uses %properties hash instead of $properties hashref
 #sub new($class_name_const_str)
 sub new_longhand
 {

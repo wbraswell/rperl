@@ -16,10 +16,6 @@ use RPerl::DataType;
 package integer;
 use parent ('RPerl::DataType::Integer');
 
-# integer with const value
-package const_integer;
-use parent -norequire, qw(integer const);
-
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataType::Integer;
 
@@ -28,7 +24,7 @@ use parent ('RPerl::DataType::Number');
 use RPerl::DataType::Number;
 
 # [[[ TYPE-CHECKING ]]]
-our void $integer__CHECK = sub {
+our void $integer_CHECK = sub {
     ( my $possible_integer ) = @_;
     if ( not( defined $possible_integer ) ) {
         croak(
@@ -41,7 +37,7 @@ our void $integer__CHECK = sub {
         );
     }
 };
-our void $integer__CHECKTRACE = sub {
+our void $integer_CHECKTRACE = sub {
     ( my $possible_integer, my $variable_name, my $subroutine_name ) = @_;
     if ( not( defined $possible_integer ) ) {
         croak(
@@ -56,14 +52,14 @@ our void $integer__CHECKTRACE = sub {
 };
 
 # [[[ STRINGIFY ]]]
-our string $integer__to_string = sub {
+our string $integer_to_string = sub {
     ( my $input_integer ) = @_;
 
-    #    integer__CHECK($input_integer);
-    integer__CHECKTRACE( $input_integer, '$input_integer',
-        'integer__to_string()' );
+    #    integer_CHECK($input_integer);
+    integer_CHECKTRACE( $input_integer, '$input_integer',
+        'integer_to_string()' );
 
-#    RPerl::diag "in PERLOPS_PERLTYPES integer__to_string(), bottom of subroutine, received \$input_integer = $input_integer\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES integer_to_string(), bottom of subroutine, received \$input_integer = $input_integer\n" or croak();
     return ("$input_integer");
 };
 
@@ -77,11 +73,11 @@ our integer $integer__typetest0 = sub {
 our integer $integer__typetest1 = sub {
     ( my integer $lucky_integer ) = @_;
 
-    #    integer__CHECK($lucky_integer);
-    integer__CHECKTRACE( $lucky_integer, '$lucky_integer',
+    #    integer_CHECK($lucky_integer);
+    integer_CHECKTRACE( $lucky_integer, '$lucky_integer',
         'integer__typetest1()' );
 
-#    RPerl::diag 'in PERLOPS_PERLTYPES integer__typetest1(), received $lucky_integer = ' . integer__to_string($lucky_integer) . "\n" or croak();
+#    RPerl::diag 'in PERLOPS_PERLTYPES integer__typetest1(), received $lucky_integer = ' . integer_to_string($lucky_integer) . "\n" or croak();
     return ( ( $lucky_integer * 2 ) + main::RPerl__DataType__Integer__MODE_ID() );
 };
 

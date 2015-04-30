@@ -25,15 +25,15 @@ use File::Basename;
 
 # NEED UPGRADE: this array must be instantiated here, because GetOptions'
 # diamond '<>' operator does not allow passing arguments or receiving return values
-my string__array_ref $input_file_names_unlabeled = [];
+my string_arrayref $input_file_names_unlabeled = [];
 
 # [[[ ACCEPT, CHECK, REPORT OPTIONS (COMMAND-LINE ARGUMENTS) ]]]
 # [[[ ACCEPT, CHECK, REPORT OPTIONS (COMMAND-LINE ARGUMENTS) ]]]
 # [[[ ACCEPT, CHECK, REPORT OPTIONS (COMMAND-LINE ARGUMENTS) ]]]
 
 sub accept_and_verify_input_files {
-    (   my string__array_ref $input_file_names,
-        my string__array_ref $input_file_names_unlabeled
+    (   my string_arrayref $input_file_names,
+        my string_arrayref $input_file_names_unlabeled
     ) = @_;
 
     RPerl::diag "\n\n"; # move output away from initial Inline compiler output
@@ -90,13 +90,13 @@ sub accept_and_verify_input_files {
 }
 
 sub generate_output_file_names {
-    (   my string__array_ref $input_file_names,
-        my string__array_ref $output_file_name_prefixes,
-        my string__hash_ref $modes,
+    (   my string_arrayref $input_file_names,
+        my string_arrayref $output_file_name_prefixes,
+        my string_hashref $modes,
         my integer $input_files_count
     ) = @_;
 
-    my hash_ref__array_ref $output_file_name_groups = [];
+    my hashref_arrayref $output_file_name_groups = [];
     my string $input_file_name;
     my string $input_file_name_path;
     my string $input_file_name_prefix;
@@ -159,9 +159,9 @@ sub generate_output_file_names {
 }
 
 sub verify_and_default_modes {
-    (   my string__hash_ref $modes,
-        my string__hash_ref $modes_default,
-        my array_ref__hash_ref $modes_supported,
+    (   my string_hashref $modes,
+        my string_hashref $modes_default,
+        my arrayref_hashref $modes_supported,
         my integer $compile_flag,
         my integer $execute_flag
     ) = @_;
@@ -220,9 +220,9 @@ sub verify_and_default_modes {
 }
 
 sub verbose_multi_file_settings {
-    (   my string__array_ref $input_file_names,
-        my hash_ref__array_ref $output_file_name_groups,
-        my string__hash_ref $modes,
+    (   my string_arrayref $input_file_names,
+        my hashref_arrayref $output_file_name_groups,
+        my string_hashref $modes,
         my integer $input_files_count
     ) = @_;
 
@@ -232,7 +232,7 @@ sub verbose_multi_file_settings {
             RPerl::verbose q{    } . $input_file_name . "\n";
         }
         RPerl::verbose "Output File(s):\n";
-        foreach my string__hash_ref $output_file_name_group ( @{$output_file_name_groups} ) {
+        foreach my string_hashref $output_file_name_group ( @{$output_file_name_groups} ) {
             RPerl::verbose q{    } . stringify_output_file_name_group($output_file_name_group) . "\n";
         }
         RPerl::verbose "Modes:\n";
@@ -268,7 +268,7 @@ sub verbose_flags {
 }
 
 sub stringify_output_file_name_group {
-    (my string__hash_ref $output_file_name_group) = @_;
+    (my string_hashref $output_file_name_group) = @_;
     my string $output_file_names = q{};
     foreach my string $suffix_key (qw(EXE PMC CPP H)) {
         if (exists $output_file_name_group->{$suffix_key}) {
@@ -283,9 +283,9 @@ sub stringify_output_file_name_group {
 # [[[ CALL COMPILER ]]]
 
 sub parse_generate_compile_execute_files {
-    (   my string__array_ref $input_file_names,
-        my hash_ref__array_ref $output_file_name_groups,
-        my string__hash_ref $modes,
+    (   my string_arrayref $input_file_names,
+        my hashref_arrayref $output_file_name_groups,
+        my string_hashref $modes,
         my integer $input_files_count
     ) = @_;
 
@@ -304,7 +304,7 @@ sub parse_generate_compile_execute_files {
 #    for my integer $i ( 0 .. ( $input_files_count - 1 ) ) {
     for my $i ( 0 .. ( $input_files_count - 1 ) ) {
         my string $input_file_name      = $input_file_names->[$i];
-        my string__hash_ref $output_file_name_group = $output_file_name_groups->[$i];
+        my string_hashref $output_file_name_group = $output_file_name_groups->[$i];
 
         if ( $input_files_count > 1 ) {
             RPerl::verbose_reset();
@@ -367,18 +367,18 @@ sub parse_generate_compile_execute_files {
 my integer $help                                = 0;
 my integer $compile_flag                        = undef;
 my integer $execute_flag                        = undef;
-my string__array_ref $input_file_names          = [];
-my string__array_ref $output_file_name_prefixes = [];
-my hash_ref__array_ref $output_file_name_groups       = [];
-my string__hash_ref $modes = {}; # can't store defaults here, erased by GetOptions()
-my string__hash_ref $modes_default = { # default to CPPOPS_CPPTYPES_CHECKTRACE_COMPILE_EXECUTE in C++ output code
+my string_arrayref $input_file_names          = [];
+my string_arrayref $output_file_name_prefixes = [];
+my hashref_arrayref $output_file_name_groups       = [];
+my string_hashref $modes = {}; # can't store defaults here, erased by GetOptions()
+my string_hashref $modes_default = { # default to CPPOPS_CPPTYPES_CHECKTRACE_COMPILE_EXECUTE in C++ output code
     ops     => 'CPP',
     types   => 'CPP',
     check   => 'TRACE',
     compile => 'COMPILE',
     execute => 'ON'
 };
-my array_ref__hash_ref $modes_supported = {
+my arrayref_hashref $modes_supported = {
     ops     => [ 'PERL',  'CPP' ],
     types   => [ 'PERL',  'CPP' ],
     check   => [ 'OFF',   'ON', 'TRACE' ],

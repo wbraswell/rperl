@@ -30,10 +30,10 @@ RPerl::diag q{in scalar_test.pl, have main::RPerl__DataType__Number__MODE_ID() =
 RPerl::diag q{in scalar_test.pl, have main::RPerl__DataType__String__MODE_ID() = '} . main::RPerl__DataType__String__MODE_ID() . "'\n";
 
 # use Data::Dumper() to to stringify a string
-#our string $string__dumperify = sub {  # NEED FIX: RPerl subroutines disabled here
-sub string__dumperify {
+#our string $string_dumperify = sub {  # NEED FIX: RPerl subroutines disabled here
+sub string_dumperify {
     ( my string $input_string ) = @_;
-        RPerl::diag "in scalar_test.pl string__dumperify(), received have \$input_string =\n$input_string\n\n";
+        RPerl::diag "in scalar_test.pl string_dumperify(), received have \$input_string =\n$input_string\n\n";
         $input_string = Dumper( [$input_string] );
         $input_string =~ s/^\s+|\s+$//xmsg;         # strip leading whitespace
         my @input_string_split = split "\n", $input_string;
@@ -49,22 +49,22 @@ my string $my_string;
 my string $dumper_string;
 
 # loop to test for memory leaks
-my const_integer $i_MAX = 0;
+my integer $i_MAX = 0;  # CONSTANT
 for my integer $i ( 0 .. $i_MAX ) {
     RPerl::diag "in scalar_test.pl, top of for() loop $i/$i_MAX\n\n";
 
     # [[[ INTEGER TESTS ]]]
 
-#    $string_retval = integer__to_string();  # TIV00; error PERLOPS EIV00, CPPOPS "Usage: main::integer__to_string(input_integer)"
-#    $string_retval = integer__to_string(undef);  # TIV01; error EIV00
-    $string_retval = integer__to_string(3);  # TIV02
-#    $string_retval = integer__to_string(-17);  # TIV03
-#    $string_retval = integer__to_string(-17.3);  # TIV04; error EIV01
-#    $string_retval = integer__to_string('-17.3');  # TIV05; error EIV01
-#    $string_retval = integer__to_string([3]);  # TIV06; error EIV01
-#    $string_retval = integer__to_string({a_key => 3});  # TIV07; error EIV01
-#    $string_retval = integer__to_string(-1_234_567_890);  # TIV08
-#    $string_retval = integer__to_string(-1_234_567_890_000);  # TIV09; error EIV01
+#    $string_retval = integer_to_string();  # TIV00; error PERLOPS EIV00, CPPOPS "Usage: main::integer_to_string(input_integer)"
+#    $string_retval = integer_to_string(undef);  # TIV01; error EIV00
+    $string_retval = integer_to_string(3);  # TIV02
+#    $string_retval = integer_to_string(-17);  # TIV03
+#    $string_retval = integer_to_string(-17.3);  # TIV04; error EIV01
+#    $string_retval = integer_to_string('-17.3');  # TIV05; error EIV01
+#    $string_retval = integer_to_string([3]);  # TIV06; error EIV01
+#    $string_retval = integer_to_string({a_key => 3});  # TIV07; error EIV01
+#    $string_retval = integer_to_string(-1_234_567_890);  # TIV08
+#    $string_retval = integer_to_string(-1_234_567_890_000);  # TIV09; error EIV01
     RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n";
 
     $integer_retval = integer__typetest0();  # TIV10
@@ -87,15 +87,15 @@ for my integer $i ( 0 .. $i_MAX ) {
 
     # [[[ NUMBER TESTS ]]]
 
-#    $string_retval = number__to_string();  # TNV00; error PERLOPS ENV00, CPPOPS "Usage: main::number__to_string(input_number)"
-#    $string_retval = number__to_string(undef);  # TNV01; error ENV00
-#    $string_retval = number__to_string(3);  # TNV02
-#    $string_retval = number__to_string(-17);  # TNV03
-#    $string_retval = number__to_string(-17.3);  # TNV04
-#    $string_retval = number__to_string('-17.3');  # TNV05; error ENV01
-#    $string_retval = number__to_string([3]);  # TNV06; error ENV01
-#    $string_retval = number__to_string({a_key => 3});  # TNV07; error ENV01
-#    $string_retval = number__to_string(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679);  # TNV08
+#    $string_retval = number_to_string();  # TNV00; error PERLOPS ENV00, CPPOPS "Usage: main::number_to_string(input_number)"
+#    $string_retval = number_to_string(undef);  # TNV01; error ENV00
+#    $string_retval = number_to_string(3);  # TNV02
+#    $string_retval = number_to_string(-17);  # TNV03
+#    $string_retval = number_to_string(-17.3);  # TNV04
+#    $string_retval = number_to_string('-17.3');  # TNV05; error ENV01
+#    $string_retval = number_to_string([3]);  # TNV06; error ENV01
+#    $string_retval = number_to_string({a_key => 3});  # TNV07; error ENV01
+#    $string_retval = number_to_string(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679);  # TNV08
 #    RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n";
 
 #    $number_retval = number__typetest0();  # TNV10
@@ -114,16 +114,16 @@ for my integer $i ( 0 .. $i_MAX ) {
 
     # [[[ STRING TESTS ]]]
 
-#    $string_retval = string__to_string();  # TPV00; error PERLOPS EPV00, CPPOPS "Usage: main::string__to_string(input_string)"
-#    $string_retval = string__to_string(undef);  # TPV01; error EPV00
-#    $string_retval = string__to_string(3);  # TPV02; error EPV01
-#    $string_retval = string__to_string(-17);  # TPV03; error EPV01
-#    $string_retval = string__to_string(-17.3);  # TPV04; error EPV01
-#    $string_retval = string__to_string('-17.3');  # TPV05
-#    $string_retval = string__to_string([3]);  # TPV06; error EPV01
-#    $string_retval = string__to_string({a_key => 3});  # TPV07; error EPV01
-#    $string_retval = string__to_string('Melange');  # TPV08
-#    $string_retval = string__to_string("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n");  # TPV09
+#    $string_retval = string_to_string();  # TPV00; error PERLOPS EPV00, CPPOPS "Usage: main::string_to_string(input_string)"
+#    $string_retval = string_to_string(undef);  # TPV01; error EPV00
+#    $string_retval = string_to_string(3);  # TPV02; error EPV01
+#    $string_retval = string_to_string(-17);  # TPV03; error EPV01
+#    $string_retval = string_to_string(-17.3);  # TPV04; error EPV01
+#    $string_retval = string_to_string('-17.3');  # TPV05
+#    $string_retval = string_to_string([3]);  # TPV06; error EPV01
+#    $string_retval = string_to_string({a_key => 3});  # TPV07; error EPV01
+#    $string_retval = string_to_string('Melange');  # TPV08
+#    $string_retval = string_to_string("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n");  # TPV09
 #    RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$string_retval =\n$string_retval\n";
 
     # DEV NOTE: in English grammar, I prefer the comma after the right-quote
@@ -154,8 +154,8 @@ for my integer $i ( 0 .. $i_MAX ) {
 #    RPerl::diag "in scalar_test.pl $i/$i_MAX, have Dumper([\$my_string]) =\n" . Dumper([$my_string]) . "\n";
 =cut
 
-    $dumper_string = string__dumperify($my_string);
-    $string_retval = string__to_string($my_string);
+    $dumper_string = string_dumperify($my_string);
+    $string_retval = string_to_string($my_string);
     RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$string_retval =\n$string_retval STRINGIFY\n\n";
     RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$dumper_string =\n$dumper_string DUMPERIFY\n\n";
 

@@ -31,11 +31,11 @@ BEGIN {
 }
 
 # use Data::Dumper() to stringify a string
-#our string $string__dumperify = sub {  # NEED FIX: RPerl subroutines disabled here
-sub string__dumperify {
+#our string $string_dumperify = sub {  # NEED FIX: RPerl subroutines disabled here
+sub string_dumperify {
     ( my string $input_string ) = @_;
 
-#    RPerl::diag "in 04_type_scalar.t string__dumperify(), received have \$input_string =\n$input_string\n\n";
+#    RPerl::diag "in 04_type_scalar.t string_dumperify(), received have \$input_string =\n$input_string\n\n";
     $input_string = Dumper( [$input_string] );
     $input_string =~ s/^\s+|\s+$//xmsg;    # strip leading whitespace
     my @input_string_split = split "\n", $input_string;
@@ -52,7 +52,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
 #for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
 #    RPerl::diag "in 04_type_scalar.t, top of for() loop, have \$mode_id = $mode_id\n";
-    my scalartype__hash_ref $mode = $RPerl::MODES->{$mode_id};
+    my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
     if ( $ENV{TEST_VERBOSE} ) {
         Test::More::diag( '[[[ Beginning RPerl Scalar Type Tests, '
                 . RPerl::Test::mode_description($mode)
@@ -129,64 +129,64 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     # [[[ INTEGER TESTS ]]]
 
     throws_ok(    # TIV00
-        sub { integer__to_string() },
-        "/(EIV00.*$mode_tagline)|(Usage.*integer__to_string)/", # DEV NOTE: 2 different error messages, RPerl & C
-        q{TIV00 integer__to_string() throws correct exception}
+        sub { integer_to_string() },
+        "/(EIV00.*$mode_tagline)|(Usage.*integer_to_string)/", # DEV NOTE: 2 different error messages, RPerl & C
+        q{TIV00 integer_to_string() throws correct exception}
     );
     throws_ok(                                                  # TIV01
-        sub { integer__to_string(undef) },
+        sub { integer_to_string(undef) },
         "/EIV00.*$mode_tagline/",
-        q{TIV01 integer__to_string(undef) throws correct exception}
+        q{TIV01 integer_to_string(undef) throws correct exception}
     );
     lives_and(                                                  # TIV02
         sub {
-            is( integer__to_string(3), '3',
-                q{TIV02 integer__to_string(3) returns correct value} );
+            is( integer_to_string(3), '3',
+                q{TIV02 integer_to_string(3) returns correct value} );
         },
-        q{TIV02 integer__to_string(3) lives}
+        q{TIV02 integer_to_string(3) lives}
     );
     lives_and(                                                  # TIV03
         sub {
-            is( integer__to_string(-17), '-17',
-                q{TIV03 integer__to_string(-17) returns correct value} );
+            is( integer_to_string(-17), '-17',
+                q{TIV03 integer_to_string(-17) returns correct value} );
         },
-        q{TIV03 integer__to_string(-17) lives}
+        q{TIV03 integer_to_string(-17) lives}
     );
     throws_ok(                                                  # TIV04
-        sub { integer__to_string(-17.3) },
+        sub { integer_to_string(-17.3) },
         "/EIV01.*$mode_tagline/",
-        q{TIV04 integer__to_string(-17.3) throws correct exception}
+        q{TIV04 integer_to_string(-17.3) throws correct exception}
     );
     throws_ok(                                                  # TIV05
-        sub { integer__to_string('-17.3') },
+        sub { integer_to_string('-17.3') },
         "/EIV01.*$mode_tagline/",
-        q{TIV05 integer__to_string('-17.3') throws correct exception}
+        q{TIV05 integer_to_string('-17.3') throws correct exception}
     );
     throws_ok(                                                  # TIV06
-        sub { integer__to_string( [3] ) },
+        sub { integer_to_string( [3] ) },
         "/EIV01.*$mode_tagline/",
-        q{TIV06 integer__to_string([3]) throws correct exception}
+        q{TIV06 integer_to_string([3]) throws correct exception}
     );
     throws_ok(                                                  # TIV07
-        sub { integer__to_string( { a_key => 3 } ) },
+        sub { integer_to_string( { a_key => 3 } ) },
         "/EIV01.*$mode_tagline/",
-        q{TIV07 integer__to_string({a_key => 3}) throws correct exception}
+        q{TIV07 integer_to_string({a_key => 3}) throws correct exception}
     );
     lives_and(                                                  # TIV08
         sub {
-            is( integer__to_string(-1_234_567_890), '-1234567890',
-                q{TIV08 integer__to_string(-1_234_567_890) returns correct value}
+            is( integer_to_string(-1_234_567_890), '-1234567890',
+                q{TIV08 integer_to_string(-1_234_567_890) returns correct value}
             );
         },
-        q{TIV08 integer__to_string(-1_234_567_890) lives}
+        q{TIV08 integer_to_string(-1_234_567_890) lives}
     );
     throws_ok(                                                  # TIV09
         sub {
-            integer__to_string(
+            integer_to_string(
                 -1_234_567_890_000_000_000_000_000_000_000_000);
         },
         "/EIV01.*$mode_tagline/",
-        q{TIV09 integer__to_string(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
+        q{TIV09 integer_to_string(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
     );
     lives_and(                                                  # TIV10
         sub {
@@ -269,62 +269,62 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     # [[[ NUMBER TESTS ]]]
 
     throws_ok(    # TNV00
-        sub { number__to_string() },
-        "/(ENV00.*$mode_tagline)|(Usage.*number__to_string)/", # DEV NOTE: 2 different error messages, RPerl & C
-        q{TNV00 number__to_string() throws correct exception}
+        sub { number_to_string() },
+        "/(ENV00.*$mode_tagline)|(Usage.*number_to_string)/", # DEV NOTE: 2 different error messages, RPerl & C
+        q{TNV00 number_to_string() throws correct exception}
     );
     throws_ok(                                                 # TNV01
-        sub { number__to_string(undef) },
+        sub { number_to_string(undef) },
         "/ENV00.*$mode_tagline/",
-        q{TNV01 number__to_string(undef) throws correct exception}
+        q{TNV01 number_to_string(undef) throws correct exception}
     );
     lives_and(                                                 # TNV02
         sub {
-            is( number__to_string(3), '3',
-                q{TNV02 number__to_string(3) returns correct value} );
+            is( number_to_string(3), '3',
+                q{TNV02 number_to_string(3) returns correct value} );
         },
-        q{TNV02 number__to_string(3) lives}
+        q{TNV02 number_to_string(3) lives}
     );
     lives_and(                                                 # TNV03
         sub {
-            is( number__to_string(-17), '-17',
-                q{TNV03 number__to_string(-17) returns correct value} );
+            is( number_to_string(-17), '-17',
+                q{TNV03 number_to_string(-17) returns correct value} );
         },
-        q{TNV03 number__to_string(-17) lives}
+        q{TNV03 number_to_string(-17) lives}
     );
     lives_and(                                                 # TNV04
         sub {
-            is( number__to_string(-17.3),
+            is( number_to_string(-17.3),
                 '-17.3',
-                q{TNV04 number__to_string(-17.3) returns correct value} );
+                q{TNV04 number_to_string(-17.3) returns correct value} );
         },
-        q{TNV04 number__to_string(-17.3) lives}
+        q{TNV04 number_to_string(-17.3) lives}
     );
     throws_ok(                                                 # TNV05
-        sub { number__to_string('-17.3') },
+        sub { number_to_string('-17.3') },
         "/ENV01.*$mode_tagline/",
-        q{TNV05 number__to_string('-17.3') throws correct exception}
+        q{TNV05 number_to_string('-17.3') throws correct exception}
     );
     throws_ok(                                                 # TNV06
-        sub { number__to_string( [3] ) },
+        sub { number_to_string( [3] ) },
         "/ENV01.*$mode_tagline/",
-        q{TNV06 number__to_string([3]) throws correct exception}
+        q{TNV06 number_to_string([3]) throws correct exception}
     );
     throws_ok(                                                 # TNV07
-        sub { number__to_string( { a_key => 3 } ) },
+        sub { number_to_string( { a_key => 3 } ) },
         "/ENV01.*$mode_tagline/",
-        q{TNV07 number__to_string({a_key => 3}) throws correct exception}
+        q{TNV07 number_to_string({a_key => 3}) throws correct exception}
     );
     lives_and(                                                 # TNV08
         sub {
-            is( number__to_string(
+            is( number_to_string(
                     3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679
                 ),
                 '3.14159265358979',
-                q{TNV08 number__to_string(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679) returns correct value}
+                q{TNV08 number_to_string(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679) returns correct value}
             );
         },
-        q{TNV08 number__to_string(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679) lives}
+        q{TNV08 number_to_string(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679) lives}
     );
     lives_and(                                                 # TNV10
         sub {
@@ -411,275 +411,275 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     # [[[ STRING TESTS ]]]
 
     throws_ok(    # TPV00
-        sub { string__to_string() },
-        "/(EPV00.*$mode_tagline)|(Usage.*string__to_string)/", # DEV NOTE: 2 different error messages, RPerl & C
-        q{TPV00 string__to_string() throws correct exception}
+        sub { string_to_string() },
+        "/(EPV00.*$mode_tagline)|(Usage.*string_to_string)/", # DEV NOTE: 2 different error messages, RPerl & C
+        q{TPV00 string_to_string() throws correct exception}
     );
     throws_ok(                                                 # TPV01
-        sub { string__to_string(undef) },
+        sub { string_to_string(undef) },
         "/EPV00.*$mode_tagline/",
-        q{TPV01 string__to_string(undef) throws correct exception}
+        q{TPV01 string_to_string(undef) throws correct exception}
     );
     throws_ok(                                                 # TPV02
-        sub { string__to_string(3) },
+        sub { string_to_string(3) },
         "/EPV01.*$mode_tagline/",
-        q{TPV02 string__to_string(3) throws correct exception}
+        q{TPV02 string_to_string(3) throws correct exception}
     );
     throws_ok(                                                 # TPV03
-        sub { string__to_string(-17) },
+        sub { string_to_string(-17) },
         "/EPV01.*$mode_tagline/",
-        q{TPV03 string__to_string(-17) throws correct exception}
+        q{TPV03 string_to_string(-17) throws correct exception}
     );
     throws_ok(                                                 # TPV04
-        sub { string__to_string(-17.3) },
+        sub { string_to_string(-17.3) },
         "/EPV01.*$mode_tagline/",
-        q{TPV04 string__to_string(-17.3) throws correct exception}
+        q{TPV04 string_to_string(-17.3) throws correct exception}
     );
     lives_and(                                                 # TPV05
         sub {
-            is( string__to_string('-17.3'),
+            is( string_to_string('-17.3'),
                 "'-17.3'",
-                q{TPV05 string__to_string('-17.3') returns correct value} );
+                q{TPV05 string_to_string('-17.3') returns correct value} );
         },
-        q{TPV05 string__to_string('-17.3') lives}
+        q{TPV05 string_to_string('-17.3') lives}
     );
     throws_ok(                                                 # TPV06
-        sub { string__to_string( [3] ) },
+        sub { string_to_string( [3] ) },
         "/EPV01.*$mode_tagline/",
-        q{TPV06 string__to_string([3]) throws correct exception}
+        q{TPV06 string_to_string([3]) throws correct exception}
     );
     throws_ok(                                                 # TPV07
-        sub { string__to_string( { a_key => 3 } ) },
+        sub { string_to_string( { a_key => 3 } ) },
         "/EPV01.*$mode_tagline/",
-        q{TPV07 string__to_string({a_key => 3}) throws correct exception}
+        q{TPV07 string_to_string({a_key => 3}) throws correct exception}
     );
     lives_and(                                                 # TPV08
         sub {
-            is( string__to_string('Melange'),
+            is( string_to_string('Melange'),
                 "'Melange'",
-                q{TPV08 string__to_string('Melange') returns correct value} );
+                q{TPV08 string_to_string('Melange') returns correct value} );
         },
-        q{TPV08 string__to_string('Melange') lives}
+        q{TPV08 string_to_string('Melange') lives}
     );
     lives_and(                                                 # TPV09
         sub {
-            is( string__to_string(
+            is( string_to_string(
                     "\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n"
                 ),
                 "'\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n'",
-                q{TPV09 string__to_string("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n") returns correct value}
+                q{TPV09 string_to_string("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n") returns correct value}
             );
         },
-        q{TPV09 string__to_string("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n") lives}
+        q{TPV09 string_to_string("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n") lives}
     );
 
     lives_and(                                                 # TPV10
         sub {
-            is( string__to_string(
+            is( string_to_string(
                     '\'I am a single-quoted string, in a single-quoted string with back-slash control chars\', the first string said introspectively.'
                 ),
-                string__dumperify(
+                string_dumperify(
                     '\'I am a single-quoted string, in a single-quoted string with back-slash control chars\', the first string said introspectively.'
                 ),
-                q{TPV10 string__to_string('\'I am a single-quoted string...\', the first string said introspectively.') returns correct value}
+                q{TPV10 string_to_string('\'I am a single-quoted string...\', the first string said introspectively.') returns correct value}
             );
         },
-        q{TPV10 string__to_string('\'I am a single-quoted string...\', the first string said introspectively.') lives}
+        q{TPV10 string_to_string('\'I am a single-quoted string...\', the first string said introspectively.') lives}
     );
     lives_and(    # TPV11
         sub {
-            is( string__to_string(
+            is( string_to_string(
                     '"I am a double-quoted string, in a single-quoted string with no back-slash chars", the second string observed.'
                 ),
-                string__dumperify(
+                string_dumperify(
                     '"I am a double-quoted string, in a single-quoted string with no back-slash chars", the second string observed.'
                 ),
-                q{TPV11 string__to_string('"I am a double-quoted string...", the second string observed.') returns correct value}
+                q{TPV11 string_to_string('"I am a double-quoted string...", the second string observed.') returns correct value}
             );
         },
-        q{TPV11 string__to_string('"I am a double-quoted string...", the second string observed.') lives}
+        q{TPV11 string_to_string('"I am a double-quoted string...", the second string observed.') lives}
     );
     lives_and(    # TPV12
         sub {
-            is( string__to_string(
+            is( string_to_string(
                     "'I am a single-quoted string, in a double-quoted string with no back-slash chars', the third string added."
                 ),
-                string__dumperify(
+                string_dumperify(
                     "'I am a single-quoted string, in a double-quoted string with no back-slash chars', the third string added."
                 ),
-                q{TPV12 string__to_string("'I am a single-quoted string...', the third string added.") returns correct value}
+                q{TPV12 string_to_string("'I am a single-quoted string...', the third string added.") returns correct value}
             );
         },
-        q{TPV12 string__to_string("'I am a single-quoted string...', the third string added.") lives}
+        q{TPV12 string_to_string("'I am a single-quoted string...', the third string added.") lives}
     );
     lives_and(    # TPV13
         sub {
-            is( string__to_string(
+            is( string_to_string(
                     "\"I am a double-quoted string, in a double-quoted string with back-slash control chars\", the fourth string offered."
                 ),
-                string__dumperify(
+                string_dumperify(
                     "\"I am a double-quoted string, in a double-quoted string with back-slash control chars\", the fourth string offered."
                 ),
-                q{TPV13 string__to_string("\"I am a double-quoted string...\", the fourth string offered.") returns correct value}
+                q{TPV13 string_to_string("\"I am a double-quoted string...\", the fourth string offered.") returns correct value}
             );
         },
-        q{TPV13 string__to_string("\"I am a double-quoted string...\", the fourth string offered.") lives}
+        q{TPV13 string_to_string("\"I am a double-quoted string...\", the fourth string offered.") lives}
     );
     lives_and(    # TPV14
         sub {
-            is( string__to_string(
+            is( string_to_string(
                     '\'I am a single-quoted string, in a single-quoted string with back-slash control and \ display \ chars\', the fifth string shouted.'
                 ),
-                string__dumperify(
+                string_dumperify(
                     '\'I am a single-quoted string, in a single-quoted string with back-slash control and \ display \ chars\', the fifth string shouted.'
                 ),
-                q{TPV14 string__to_string('\'I am a single-quoted string... and \ display \ chars\', the fifth string shouted.') returns correct value}
+                q{TPV14 string_to_string('\'I am a single-quoted string... and \ display \ chars\', the fifth string shouted.') returns correct value}
             );
         },
-        q{TPV14 string__to_string('\'I am a single-quoted string... and \ display \ chars\', the fifth string shouted.') lives}
+        q{TPV14 string_to_string('\'I am a single-quoted string... and \ display \ chars\', the fifth string shouted.') lives}
     );
     lives_and(    # TPV15
         sub {
-            is( string__to_string(
+            is( string_to_string(
                     '"I am a double-quoted string, in a single-quoted string with back-slash \ display \ chars", the sixth string hollered.'
                 ),
-                string__dumperify(
+                string_dumperify(
                     '"I am a double-quoted string, in a single-quoted string with back-slash \ display \ chars", the sixth string hollered.'
                 ),
-                q{TPV15 string__to_string('"I am a double-quoted string... \ display \ chars", the sixth string hollered.') returns correct value}
+                q{TPV15 string_to_string('"I am a double-quoted string... \ display \ chars", the sixth string hollered.') returns correct value}
             );
         },
-        q{TPV15 string__to_string('"I am a double-quoted string... \ display \ chars", the sixth string hollered.') lives}
+        q{TPV15 string_to_string('"I am a double-quoted string... \ display \ chars", the sixth string hollered.') lives}
     );
     lives_and(    # TPV16
         sub {
-            is( string__to_string(
+            is( string_to_string(
                     "'I am a single-quoted string, in a double-quoted string with back-slash \\ display \\ chars', the seventh string yelled."
                 ),
-                string__dumperify(
+                string_dumperify(
                     "'I am a single-quoted string, in a double-quoted string with back-slash \\ display \\ chars', the seventh string yelled."
                 ),
-                q{TPV16 string__to_string("'I am a single-quoted string... \\ display \\ chars', the seventh string yelled.") returns correct value}
+                q{TPV16 string_to_string("'I am a single-quoted string... \\ display \\ chars', the seventh string yelled.") returns correct value}
             );
         },
-        q{TPV16 string__to_string("'I am a single-quoted string... \\ display \\ chars', the seventh string yelled.") lives}
+        q{TPV16 string_to_string("'I am a single-quoted string... \\ display \\ chars', the seventh string yelled.") lives}
     );
     lives_and(    # TPV17
         sub {
-            is( string__to_string(
+            is( string_to_string(
                     "\"I am a double-quoted string, in a double-quoted string with back-slash control and \\ display \\ chars\", the eighth string belted."
                 ),
-                string__dumperify(
+                string_dumperify(
                     "\"I am a double-quoted string, in a double-quoted string with back-slash control and \\ display \\ chars\", the eighth string belted."
                 ),
-                q{TPV17 string__to_string("\"I am a double-quoted string... and \\ display \\ chars\", the eighth string belted.") returns correct value}
+                q{TPV17 string_to_string("\"I am a double-quoted string... and \\ display \\ chars\", the eighth string belted.") returns correct value}
             );
         },
-        q{TPV17 string__to_string("\"I am a double-quoted string... and \\ display \\ chars\", the eighth string belted.") lives}
+        q{TPV17 string_to_string("\"I am a double-quoted string... and \\ display \\ chars\", the eighth string belted.") lives}
     );
     lives_and(    # TPV20
         sub {
-            is( string__to_string(
+            is( string_to_string(
                     q{'I am a single-quoted string, in a single-quoted q{} string with no back-slash chars', the ninth string chimed in.}
                 ),
-                string__dumperify(
+                string_dumperify(
                     q{'I am a single-quoted string, in a single-quoted q{} string with no back-slash chars', the ninth string chimed in.}
                 ),
-                q{TPV20 string__to_string(q{'I am a single-quoted string...', the ninth string chimed in.}) returns correct value}
+                q{TPV20 string_to_string(q{'I am a single-quoted string...', the ninth string chimed in.}) returns correct value}
             );
         },
-        q{TPV20 string__to_string(q{'I am a single-quoted string...', the ninth string chimed in.}) lives}
+        q{TPV20 string_to_string(q{'I am a single-quoted string...', the ninth string chimed in.}) lives}
     );
     lives_and(    # TPV21
         sub {
-            is( string__to_string(
+            is( string_to_string(
                     q{"I am a double-quoted string, in a single-quoted q{} string with no back-slash chars", the tenth string opined.}
                 ),
-                string__dumperify(
+                string_dumperify(
                     q{"I am a double-quoted string, in a single-quoted q{} string with no back-slash chars", the tenth string opined.}
                 ),
-                q{TPV21 string__to_string(q{"I am a double-quoted string...", the tenth string opined.}) returns correct value}
+                q{TPV21 string_to_string(q{"I am a double-quoted string...", the tenth string opined.}) returns correct value}
             );
         },
-        q{TPV21 string__to_string(q{"I am a double-quoted string...", the tenth string opined.}) lives}
+        q{TPV21 string_to_string(q{"I am a double-quoted string...", the tenth string opined.}) lives}
     );
     lives_and(    # TPV22
         sub {
-            is( string__to_string(
+            is( string_to_string(
                     qq{'I am a single-quoted string, in a double-quoted qq{} string with no back-slash chars', the eleventh string asserted.}
                 ),
-                string__dumperify(
+                string_dumperify(
                     qq{'I am a single-quoted string, in a double-quoted qq{} string with no back-slash chars', the eleventh string asserted.}
                 ),
-                q{TPV22 string__to_string(qq{'I am a single-quoted string...', the eleventh string asserted.}) returns correct value}
+                q{TPV22 string_to_string(qq{'I am a single-quoted string...', the eleventh string asserted.}) returns correct value}
             );
         },
-        q{TPV22 string__to_string(qq{'I am a single-quoted string...', the eleventh string asserted.}) lives}
+        q{TPV22 string_to_string(qq{'I am a single-quoted string...', the eleventh string asserted.}) lives}
     );
     lives_and(    # TPV23
         sub {
-            is( string__to_string(
+            is( string_to_string(
                     qq{"I am a double-quoted string, in a double-quoted qq{} string with no back-slash chars", the twelfth string insisted.}
                 ),
-                string__dumperify(
+                string_dumperify(
                     qq{"I am a double-quoted string, in a double-quoted qq{} string with no back-slash chars", the twelfth string insisted.}
                 ),
-                q{TPV23 string__to_string(qq{"I am a double-quoted string...", the twelfth string insisted.}) returns correct value}
+                q{TPV23 string_to_string(qq{"I am a double-quoted string...", the twelfth string insisted.}) returns correct value}
             );
         },
-        q{TPV23 string__to_string(qq{"I am a double-quoted string...", the twelfth string insisted.}) lives}
+        q{TPV23 string_to_string(qq{"I am a double-quoted string...", the twelfth string insisted.}) lives}
     );
     lives_and(    # TPV24
         sub {
-            is( string__to_string(
+            is( string_to_string(
                     q{'I am a single-quoted string, in a single-quoted q{} string with back-slash \ display \ chars', the thirteenth string whispered.}
                 ),
-                string__dumperify(
+                string_dumperify(
                     q{'I am a single-quoted string, in a single-quoted q{} string with back-slash \ display \ chars', the thirteenth string whispered.}
                 ),
-                q{TPV24 string__to_string(q{'I am a single-quoted string... \ display \ chars', the thirteenth string whispered.}) returns correct value}
+                q{TPV24 string_to_string(q{'I am a single-quoted string... \ display \ chars', the thirteenth string whispered.}) returns correct value}
             );
         },
-        q{TPV24 string__to_string(q{'I am a single-quoted string... \ display \ chars', the thirteenth string whispered.}) lives}
+        q{TPV24 string_to_string(q{'I am a single-quoted string... \ display \ chars', the thirteenth string whispered.}) lives}
     );
     lives_and(    # TPV25
         sub {
-            is( string__to_string(
+            is( string_to_string(
                     q{"I am a double-quoted string, in a single-quoted q{} string with back-slash \ display \ chars", the fourteenth string breathed.}
                 ),
-                string__dumperify(
+                string_dumperify(
                     q{"I am a double-quoted string, in a single-quoted q{} string with back-slash \ display \ chars", the fourteenth string breathed.}
                 ),
-                q{TPV25 string__to_string(q{"I am a double-quoted string... \ display \ chars", the fourteenth string breathed.}) returns correct value}
+                q{TPV25 string_to_string(q{"I am a double-quoted string... \ display \ chars", the fourteenth string breathed.}) returns correct value}
             );
         },
-        q{TPV25 string__to_string(q{"I am a double-quoted string... \ display \ chars", the fourteenth string breathed.}) lives}
+        q{TPV25 string_to_string(q{"I am a double-quoted string... \ display \ chars", the fourteenth string breathed.}) lives}
     );
     lives_and(    # TPV26
         sub {
-            is( string__to_string(
+            is( string_to_string(
                     qq{'I am a single-quoted string, in a double-quoted qq{} string with back-slash \\ display \\ chars', the fifteenth string mouthed.}
                 ),
-                string__dumperify(
+                string_dumperify(
                     qq{'I am a single-quoted string, in a double-quoted qq{} string with back-slash \\ display \\ chars', the fifteenth string mouthed.}
                 ),
-                q{TPV26 string__to_string(qq{'I am a single-quoted string... back-slash \\ display \\ chars', the fifteenth string mouthed.}) returns correct value}
+                q{TPV26 string_to_string(qq{'I am a single-quoted string... back-slash \\ display \\ chars', the fifteenth string mouthed.}) returns correct value}
             );
         },
-        q{TPV26 string__to_string(qq{'I am a single-quoted string... back-slash \\ display \\ chars', the fifteenth string mouthed.}) lives}
+        q{TPV26 string_to_string(qq{'I am a single-quoted string... back-slash \\ display \\ chars', the fifteenth string mouthed.}) lives}
     );
     lives_and(    # TPV27
         sub {
-            is( string__to_string(
+            is( string_to_string(
                     qq{"I am a double-quoted string, in a double-quoted qq{} string with back-slash \\ display \\ chars", the sixteenth string implied.}
                 ),
-                string__dumperify(
+                string_dumperify(
                     qq{"I am a double-quoted string, in a double-quoted qq{} string with back-slash \\ display \\ chars", the sixteenth string implied.}
                 ),
-                q{TPV27 string__to_string(qq{"I am a double-quoted string... back-slash \\ display \\ chars", the sixteenth string implied.}) returns correct value}
+                q{TPV27 string_to_string(qq{"I am a double-quoted string... back-slash \\ display \\ chars", the sixteenth string implied.}) returns correct value}
             );
         },
-        q{TPV27 string__to_string(qq{"I am a double-quoted string... back-slash \\ display \\ chars", the sixteenth string implied.}) lives}
+        q{TPV27 string_to_string(qq{"I am a double-quoted string... back-slash \\ display \\ chars", the sixteenth string implied.}) lives}
     );
     lives_and(    # TPV30
         sub {

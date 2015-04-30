@@ -2,8 +2,8 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< RUN_ERROR: 'ERROR EPVAVRV03, TYPE-CHECKING MISMATCH' >>>
-# <<< RUN_ERROR: 'string__array_ref element value expected but non-string value found at index 3' >>>
-# <<< RUN_ERROR: 'in variable $input_1 from subroutine check__string__array_ref()' >>>
+# <<< RUN_ERROR: 'string_arrayref element value expected but non-string value found at index 3' >>>
+# <<< RUN_ERROR: 'in variable $input_1 from subroutine check_string_arrayref()' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -18,4 +18,4 @@ our $VERSION = 0.000_001;
 use RPerl::Test::TypeCheckingTrace::AllTypes;
 
 # [[[ OPERATIONS ]]]
-check__string__array_ref( [ 'hello', 'howdy', 'ahoy', { a => 0, b => 1, c => 2 } ] );
+check_string_arrayref( [ 'hello', 'howdy', 'ahoy', { a => 0, b => 1, c => 2 } ] );

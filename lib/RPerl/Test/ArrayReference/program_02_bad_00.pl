@@ -16,5 +16,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer__array_ref $i_array = [ 17, 23, 42, 1_701, 2_112 ]
+my integer_arrayref $i_array = [ 17, 23, 42, 1_701, 2_112 ]
 

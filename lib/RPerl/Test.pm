@@ -15,7 +15,7 @@ use RPerl::CompileUnit::Module::Class;
 # [[[ OO METHODS ]]]
 
 # OO INHERITANCE TESTING
-our void__method $empty_method = sub {
+our void_method $empty_method = sub {
     ( my object $self ) = @_;
     2;
 };
@@ -26,19 +26,19 @@ our void__method $empty_method = sub {
 
 #my string $mode_tagline = sub {  # NEED FIX: RPerl subroutines disabled here
 sub mode_tagline {
-    ( my scalartype__hash_ref $mode ) = @_;
+    ( my scalartype_hashref $mode ) = @_;
     return $mode->{ops} . 'OPS_' . $mode->{types} . 'TYPES';
 }
 
 #my string $mode_description = sub {
 sub mode_description {
-    ( my scalartype__hash_ref $mode ) = @_;
+    ( my scalartype_hashref $mode ) = @_;
     return $mode->{ops} . ' operations and ' . $mode->{types} . ' data types';
 }
 
 #my void $mode_enable = sub {
 sub mode_enable {
-    ( my scalartype__hash_ref $mode ) = @_;
+    ( my scalartype_hashref $mode ) = @_;
     if ( $mode->{ops} eq 'CPP' ) {
         rperltypes::types_enable( $mode->{types} );
     }

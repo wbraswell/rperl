@@ -10,13 +10,8 @@ use RPerl::DataStructure;
 # [[[ GRAPHS ]]]
 
 # ref to graph
-package graph_ref;
+package graphref;
 our @ISA = ('RPerl::DataStructure::GraphReference'); 
-use RPerl::DataStructure::Graph;
-
-# ref to graph with const size
-package const_graph_ref;
-our @ISA = ('ref'); 
 use RPerl::DataStructure::Graph;
 
 # NEED ADD: remaining sub-types

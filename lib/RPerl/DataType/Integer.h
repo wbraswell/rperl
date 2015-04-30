@@ -15,13 +15,13 @@ typedef int integer;
 //#include <RPerl/DataType/String.cpp>  // string types used in stringify_*() subroutines
 
 // [[[ TYPE-CHECKING MACROS ]]]
-#define integer__CHECK(possible_integer) \
+#define integer_CHECK(possible_integer) \
 	(not(SvOK(possible_integer)) ? \
 			croak("\nERROR EIV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but undefined/null value found,\ncroaking") : \
 			(not(SvIOKp(possible_integer)) ? \
 					croak("\nERROR EIV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but non-integer value found,\ncroaking") : \
 					(void)0))
-#define integer__CHECKTRACE(possible_integer, variable_name, subroutine_name) \
+#define integer_CHECKTRACE(possible_integer, variable_name, subroutine_name) \
 	(not(SvOK(possible_integer)) ? \
 			croak("\nERROR EIV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
 			(not(SvIOKp(possible_integer)) ? \
@@ -30,8 +30,8 @@ typedef int integer;
 
 // [[[ TYPE-CHECKING SUBROUTINES ]]]
 // DEPRECATED, SEE MACROS ABOVE
-//void integer__CHECK(SV* possible_integer);
-//void integer__CHECKTRACE(SV* possible_integer, const char* variable_name, const char* subroutine_name);
+//void integer_CHECK(SV* possible_integer);
+//void integer_CHECKTRACE(SV* possible_integer, const char* variable_name, const char* subroutine_name);
 
 // [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 # ifdef __PERL__TYPES
@@ -50,10 +50,10 @@ void XS_pack_integer(SV* output_sv, integer input_integer);
 
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
-SV* integer__to_string(SV* input_integer);
+SV* integer_to_string(SV* input_integer);
 # elif defined __CPP__TYPES
-//string integer__to_string(integer input_integer);
-std::string integer__to_string(integer input_integer);
+//string integer_to_string(integer input_integer);
+std::string integer_to_string(integer input_integer);
 # endif
 
 // [[[ TYPE TESTING ]]]

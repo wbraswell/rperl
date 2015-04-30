@@ -14,14 +14,14 @@ use Scalar::Util 'blessed';
 use parent qw(RPerl::GrammarRule RPerl::DataStructure::Hash);
 
 # [[[ OO PROPERTIES ]]]
-our hash_ref $properties = {  # whoah, so meta
-    property_entries => my object__hash_ref $TYPED_property_entries = undef
+our hashref $properties = {  # whoah, so meta
+    property_entries => my object_hashref $TYPED_property_entries = undef
 };
 
 # [[[ OO METHODS ]]]
 
 # TRANSLATE
-our object__method $ppi_to_rperl__translate = sub {
+our object_method $ppi_to_rperl__translate = sub {
     ( my string $class, my object $node) = @_;    # class method
     my object $node_translated;
     $node_translated = { STUB_AST_OBJECT =>
@@ -30,7 +30,7 @@ our object__method $ppi_to_rperl__translate = sub {
 };
 
 # GENERATE CPPOPS_PERLTYPES
-our string__method $rperl_to_cpp__generate__CPPOPS_PERLTYPES = sub {
+our string_method $rperl_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self ) = @_;                     # object method
     my string $self_generated = q{};
     $self_generated
@@ -39,7 +39,7 @@ our string__method $rperl_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 };
 
 # GENERATE CPPOPS_CPPTYPES
-our string__method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
+our string_method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self ) = @_;                     # object method
     my string $self_generated = q{};
     $self_generated

@@ -10,13 +10,13 @@ using std::cout;  using std::cerr;
 //#include <RPerl/DataType/String.cpp>  // string types used in stringify_*() subroutines
 
 // [[[ TYPE-CHECKING MACROS ]]]
-#define number__CHECK(possible_number) \
+#define number_CHECK(possible_number) \
 	(not(SvOK(possible_number)) ? \
 			croak("\nERROR ENV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found,\ncroaking") : \
 			(not(SvNOKp(possible_number) || SvIOKp(possible_number)) ? \
 					croak("\nERROR ENV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but non-number value found,\ncroaking") : \
 					(void)0))
-#define number__CHECKTRACE(possible_number, variable_name, subroutine_name) \
+#define number_CHECKTRACE(possible_number, variable_name, subroutine_name) \
 	(not(SvOK(possible_number)) ? \
 			croak("\nERROR ENV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
 			(not(SvNOKp(possible_number) || SvIOKp(possible_number)) ? \
@@ -25,8 +25,8 @@ using std::cout;  using std::cerr;
 
 // [[[ TYPE-CHECKING ]]]
 // DEPRECATED, SEE MACROS ABOVE
-//void number__CHECK(SV* possible_number);
-//void number__CHECKTRACE(SV* possible_number, const char* variable_name, const char* subroutine_name);
+//void number_CHECK(SV* possible_number);
+//void number_CHECKTRACE(SV* possible_number, const char* variable_name, const char* subroutine_name);
 
 // [[[ TYPEDEFS ]]]
 typedef double number;
@@ -49,10 +49,10 @@ void XS_pack_number(SV* output_sv, number input_number);
 
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
-SV* number__to_string(SV* input_number);
+SV* number_to_string(SV* input_number);
 # elif defined __CPP__TYPES
-//string number__to_string(number input_number);
-std::string number__to_string(number input_number);
+//string number_to_string(number input_number);
+std::string number_to_string(number input_number);
 # endif
 
 // [[[ TYPE TESTING ]]]

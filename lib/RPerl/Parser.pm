@@ -91,12 +91,12 @@ our void $rperl_source__check_syntax = sub {
             . "\n";
     }
 
-    my string__array_ref $rperl_source__perl_syntax_retstring_lines;
+    my string_arrayref $rperl_source__perl_syntax_retstring_lines;
     @{$rperl_source__perl_syntax_retstring_lines} = split "\n",
         $rperl_source__perl_syntax_retstring;
 
 #    RPerl::diag 'in rperl_source__check_syntax(), have $rperl_source__perl_syntax_retstring_lines = ', "\n", Dumper($rperl_source__perl_syntax_retstring_lines), "\n";
-    my string__array_ref $rperl_source__perl_syntax_retstring_warnings = [];
+    my string_arrayref $rperl_source__perl_syntax_retstring_warnings = [];
     foreach my string $rperl_source__perl_syntax_retstring_line (
         @{$rperl_source__perl_syntax_retstring_lines} )
     {

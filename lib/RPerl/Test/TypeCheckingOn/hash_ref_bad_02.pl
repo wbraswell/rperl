@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< RUN_ERROR: 'ERROR EHVRV01, TYPE-CHECKING MISMATCH' >>>
-# <<< RUN_ERROR: 'hash_ref value expected but non-hash_ref value found' >>>
+# <<< RUN_ERROR: 'hashref value expected but non-hashref value found' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -17,4 +17,4 @@ our $VERSION = 0.000_001;
 use RPerl::Test::TypeCheckingOn::AllTypes;
 
 # [[[ OPERATIONS ]]]
-check__hash_ref(q{abcd});
+check_hashref(q{abcd});

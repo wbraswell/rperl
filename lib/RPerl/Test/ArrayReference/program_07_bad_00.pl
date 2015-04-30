@@ -17,7 +17,7 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 
 my scalartype $mystery_scalar      = 21;
-my scalartype__array_ref $sc_array = [
+my scalartype_arrayref $sc_array = [
     my integer $TYPED_sc_array_0    = 17,
     my number $TYPED_sc_array_1     = 42 / 1_701,
     my string $TYPED_sc_array_2     = 'strings are scalars, too',

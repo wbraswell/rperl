@@ -36,7 +36,7 @@ print {*STDERR} 'howdy';
 print {*STDERR} 'howdy', 'doody', 'foobar', "\n";
 print {*STDERR} 'howdy', 2.31, 'doody', 3.21, 'foobar', 4.23, "\n";
 
-my integer $open_success = open my filehandle_ref $HOWDY, '>', '/tmp/howdy';
+my integer $open_success = open my filehandleref $HOWDY, '>', '/tmp/howdy';
 if ( not $open_success ) {
     croak 'ERROR: Failed to open file /tmp/howdy for writing, croaking';
 }

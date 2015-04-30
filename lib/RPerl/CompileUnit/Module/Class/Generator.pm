@@ -18,13 +18,13 @@ use RPerl::Parser;
 use RPerl::Generator;
 
 # [[[ OO PROPERTIES ]]]
-our hash_ref $properties = {};
+our hashref $properties = {};
 
 # [[[ OO METHODS ]]]
 
-our string__hash_ref__method $ast_to_rperl__generate = sub {
-    ( my object $self, my string__hash_ref $modes) = @_;
-    my string__hash_ref $rperl_source_group = {};
+our string_hashref_method $ast_to_rperl__generate = sub {
+    ( my object $self, my string_hashref $modes) = @_;
+    my string_hashref $rperl_source_group = {};
 
     RPerl::diag(
         'in Class::Generator->ast_to_rperl__generate(), received $self = '
@@ -104,21 +104,21 @@ our string__hash_ref__method $ast_to_rperl__generate = sub {
     }
 
     foreach my object $critic ( @{ $critic_star->{children} } ) {
-        my string__hash_ref $rperl_source_subgroup
+        my string_hashref $rperl_source_subgroup
             = $critic->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
     }
 
     foreach my object $include ( @{ $include_star->{children} } ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 7: PERL CRITIC UNFILED ISSUE, not postfix foreach or if
-        my string__hash_ref $rperl_source_subgroup
+        my string_hashref $rperl_source_subgroup
             = $include->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
     }
 
     foreach my object $constant ( @{ $constant_star->{children} } ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 7: PERL CRITIC UNFILED ISSUE, not postfix foreach or if
-        my string__hash_ref $rperl_source_subgroup
+        my string_hashref $rperl_source_subgroup
             = $constant->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
@@ -126,7 +126,7 @@ our string__hash_ref__method $ast_to_rperl__generate = sub {
 
     if ( ref $properties eq 'Properties_63' ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 7: PERL CRITIC UNFILED ISSUE, not postfix foreach or if
                                                 # non-empty $properties
-        my string $properties_our_hash_ref = $properties->{children}->[0];
+        my string $properties_our_hashref = $properties->{children}->[0];
         my string $properties_equal        = $properties->{children}->[1];
         my string $properties_left_brace   = $properties->{children}->[2];
         my object $property_0              = $properties->{children}->[3];
@@ -135,11 +135,11 @@ our string__hash_ref__method $ast_to_rperl__generate = sub {
         my string $properties_semicolon    = $properties->{children}->[6];
 
         $rperl_source_group->{PMC}
-            .= $properties_our_hash_ref . q{ }
+            .= $properties_our_hashref . q{ }
             . $properties_equal . q{ }
             . $properties_left_brace . "\n";
 
-        my string__hash_ref $rperl_source_subgroup
+        my string_hashref $rperl_source_subgroup
             = $property_0->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
@@ -160,13 +160,13 @@ our string__hash_ref__method $ast_to_rperl__generate = sub {
     }
     else {    # Properties_64
               # empty $properties
-        my string $properties_our_hash_ref = $properties->{children}->[0];
+        my string $properties_our_hashref = $properties->{children}->[0];
         my string $properties_equal        = $properties->{children}->[1];
         my string $properties_left_brace   = $properties->{children}->[2];
         my string $properties_right_brace  = $properties->{children}->[3];
         my string $properties_semicolon    = $properties->{children}->[4];
         $rperl_source_group->{PMC}
-            .= $properties_our_hash_ref . q{ }
+            .= $properties_our_hashref . q{ }
             . $properties_equal . q{ }
             . $properties_left_brace
             . $properties_right_brace
@@ -177,7 +177,7 @@ our string__hash_ref__method $ast_to_rperl__generate = sub {
         @{ $method_or_subroutine_star->{children} }
         )
     {
-        my string__hash_ref $rperl_source_subgroup
+        my string_hashref $rperl_source_subgroup
             = $method_or_subroutine->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
@@ -189,9 +189,9 @@ our string__hash_ref__method $ast_to_rperl__generate = sub {
     return $rperl_source_group;
 };
 
-our string__hash_ref__method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
-    ( my object $self, my string__hash_ref $modes) = @_;
-    my string__hash_ref $cpp_source_group
+our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
+    ( my object $self, my string_hashref $modes) = @_;
+    my string_hashref $cpp_source_group
         = { CPP => q{<<< RP::CU::M::C DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>}
             . "\n" };
 
@@ -199,9 +199,9 @@ our string__hash_ref__method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     return $cpp_source_group;
 };
 
-our string__hash_ref__method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
-    ( my object $self, my string__hash_ref $modes) = @_;
-    my string__hash_ref $cpp_source_group
+our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
+    ( my object $self, my string_hashref $modes) = @_;
+    my string_hashref $cpp_source_group
         = { CPP => q{<<< RP::CU::M::C DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>}
             . "\n" };
 

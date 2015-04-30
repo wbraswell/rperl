@@ -11,5 +11,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer__array_ref $i_array = [ 17 ];
+my integer_arrayref $i_array = [ 17 ];
 foreach my integer $i ( @{$i_array} ) { print '$i = ', $i, "\n"; }

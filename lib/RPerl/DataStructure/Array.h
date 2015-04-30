@@ -23,37 +23,37 @@ using std::cout;  using std::cerr;
 #define VECTOR_RESIZE_NOSHRINK(my_vector, my_size) ((my_vector.size() < my_size) ? my_vector.resize((size_t)(my_size)) : (void)0)  // do grow but don't shrink
 
 // [[[ TYPE-CHECKING MACROS ]]]
-#define array_ref__CHECK(possible_array_ref) \
-	(not(SvOK(possible_array_ref)) ? \
-			croak("\nERROR EAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\narray_ref value expected but undefined/null value found,\ncroaking") : \
-			(not(SvAROKp(possible_array_ref)) ? \
-					croak("\nERROR EAVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\narray_ref value expected but non-array_ref value found,\ncroaking") : \
+#define arrayref_CHECK(possible_arrayref) \
+	(not(SvOK(possible_arrayref)) ? \
+			croak("\nERROR EAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\narrayref value expected but undefined/null value found,\ncroaking") : \
+			(not(SvAROKp(possible_arrayref)) ? \
+					croak("\nERROR EAVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\narrayref value expected but non-arrayref value found,\ncroaking") : \
 					(void)0))
-#define array_ref__CHECKTRACE(possible_array_ref, variable_name, subroutine_name) \
-	(not(SvOK(possible_array_ref)) ? \
-			croak("\nERROR EAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\narray_ref value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
-			(not(SvAROKp(possible_array_ref)) ? \
-					croak("\nERROR EAVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\narray_ref value expected but non-array_ref value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
+#define arrayref_CHECKTRACE(possible_arrayref, variable_name, subroutine_name) \
+	(not(SvOK(possible_arrayref)) ? \
+			croak("\nERROR EAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\narrayref value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
+			(not(SvAROKp(possible_arrayref)) ? \
+					croak("\nERROR EAVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\narrayref value expected but non-arrayref value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
 					(void)0))
 
 // [[[ TYPEDEFS ]]]
-typedef std::vector<integer> integer__array_ref;
-typedef std::vector<integer>::iterator integer__array_ref__iterator;
-typedef std::vector<integer>::const_iterator integer__array_ref__const_iterator;
-typedef std::vector<number> number__array_ref;
-typedef std::vector<number>::iterator number__array_ref__iterator;
-typedef std::vector<number>::const_iterator number__array_ref__const_iterator;
-typedef std::vector<string> string__array_ref;
-typedef std::vector<string>::iterator string__array_ref__iterator;
-typedef std::vector<string>::const_iterator string__array_ref__const_iterator;
+typedef std::vector<integer> integer_arrayref;
+typedef std::vector<integer>::iterator integer_arrayref_iterator;
+typedef std::vector<integer>::const_iterator integer_arrayref_const_iterator;
+typedef std::vector<number> number_arrayref;
+typedef std::vector<number>::iterator number_arrayref_iterator;
+typedef std::vector<number>::const_iterator number_arrayref_const_iterator;
+typedef std::vector<string> string_arrayref;
+typedef std::vector<string>::iterator string_arrayref_iterator;
+typedef std::vector<string>::const_iterator string_arrayref_const_iterator;
 
 // [[[ TYPE-CHECKING SUBROUTINES ]]]
-void integer__array_ref__CHECK(SV* possible_integer__array_ref);
-void integer__array_ref__CHECKTRACE(SV* possible_integer__array_ref, const char* variable_name, const char* subroutine_name);
-void number__array_ref__CHECK(SV* possible_number__array_ref);
-void number__array_ref__CHECKTRACE(SV* possible_number__array_ref, const char* variable_name, const char* subroutine_name);
-void string__array_ref__CHECK(SV* possible_string__array_ref);
-void string__array_ref__CHECKTRACE(SV* possible_string__array_ref, const char* variable_name, const char* subroutine_name);
+void integer_arrayref_CHECK(SV* possible_integer_arrayref);
+void integer_arrayref_CHECKTRACE(SV* possible_integer_arrayref, const char* variable_name, const char* subroutine_name);
+void number_arrayref_CHECK(SV* possible_number_arrayref);
+void number_arrayref_CHECKTRACE(SV* possible_number_arrayref, const char* variable_name, const char* subroutine_name);
+void string_arrayref_CHECK(SV* possible_string_arrayref);
+void string_arrayref_CHECKTRACE(SV* possible_string_arrayref, const char* variable_name, const char* subroutine_name);
 
 // [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 # ifdef __PERL__TYPES
@@ -66,43 +66,43 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 # ifdef __CPP__TYPES
-integer__array_ref XS_unpack_integer__array_ref(SV* input_av_ref);
-void XS_pack_integer__array_ref(SV* output_av_ref, integer__array_ref input_vector);
-number__array_ref XS_unpack_number__array_ref(SV* input_av_ref);
-void XS_pack_number__array_ref(SV* output_av_ref, number__array_ref input_vector);
-string__array_ref XS_unpack_string__array_ref(SV* input_av_ref);
-void XS_pack_string__array_ref(SV* output_av_ref, string__array_ref input_vector);
+integer_arrayref XS_unpack_integer_arrayref(SV* input_av_ref);
+void XS_pack_integer_arrayref(SV* output_av_ref, integer_arrayref input_vector);
+number_arrayref XS_unpack_number_arrayref(SV* input_av_ref);
+void XS_pack_number_arrayref(SV* output_av_ref, number_arrayref input_vector);
+string_arrayref XS_unpack_string_arrayref(SV* input_av_ref);
+void XS_pack_string_arrayref(SV* output_av_ref, string_arrayref input_vector);
 # endif
 
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
-//void integer__array_ref__to_string(SV* input_av_ref);
-SV* integer__array_ref__to_string(SV* input_av_ref);
-SV* number__array_ref__to_string(SV* input_av_ref);
-SV* string__array_ref__to_string(SV* input_av_ref);
+//void integer_arrayref_to_string(SV* input_av_ref);
+SV* integer_arrayref_to_string(SV* input_av_ref);
+SV* number_arrayref_to_string(SV* input_av_ref);
+SV* string_arrayref_to_string(SV* input_av_ref);
 # elif defined __CPP__TYPES
-string integer__array_ref__to_string(integer__array_ref input_vector);
-string number__array_ref__to_string(number__array_ref input_vector);
-string string__array_ref__to_string(string__array_ref input_vector);
+string integer_arrayref_to_string(integer_arrayref input_vector);
+string number_arrayref_to_string(number_arrayref input_vector);
+string string_arrayref_to_string(string_arrayref input_vector);
 # endif
 
 // [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
-//void integer__array_ref__typetest0(SV* lucky_integers);
-SV* integer__array_ref__typetest0(SV* lucky_integers);
-//void integer__array_ref__typetest1(SV* my_size);
-SV* integer__array_ref__typetest1(SV* my_size);
-SV* number__array_ref__typetest0(SV* lucky_numbers);
-SV* number__array_ref__typetest1(SV* my_size);
-SV* string__array_ref__typetest0(SV* people);
-SV* string__array_ref__typetest1(SV* my_size);
+//void integer_arrayref__typetest0(SV* lucky_integers);
+SV* integer_arrayref__typetest0(SV* lucky_integers);
+//void integer_arrayref__typetest1(SV* my_size);
+SV* integer_arrayref__typetest1(SV* my_size);
+SV* number_arrayref__typetest0(SV* lucky_numbers);
+SV* number_arrayref__typetest1(SV* my_size);
+SV* string_arrayref__typetest0(SV* people);
+SV* string_arrayref__typetest1(SV* my_size);
 # elif defined __CPP__TYPES
-string integer__array_ref__typetest0(integer__array_ref lucky_integers);
-integer__array_ref integer__array_ref__typetest1(integer my_size);
-string number__array_ref__typetest0(number__array_ref lucky_numbers);
-number__array_ref number__array_ref__typetest1(integer my_size);
-string string__array_ref__typetest0(string__array_ref people);
-string__array_ref string__array_ref__typetest1(integer my_size);
+string integer_arrayref__typetest0(integer_arrayref lucky_integers);
+integer_arrayref integer_arrayref__typetest1(integer my_size);
+string number_arrayref__typetest0(number_arrayref lucky_numbers);
+number_arrayref number_arrayref__typetest1(integer my_size);
+string string_arrayref__typetest0(string_arrayref people);
+string_arrayref string_arrayref__typetest1(integer my_size);
 # endif
 
 #endif

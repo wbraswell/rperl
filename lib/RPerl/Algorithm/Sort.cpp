@@ -12,10 +12,10 @@ using std::cout;  using std::cerr;
 // [[[<<< BEGIN PERL TYPES >>>]]]
 
 // [[[ INHERITANCE TESTING ]]]
-////our void__method $inherited__Sort = sub { (my object $self, my string $person) = @_;  RPerl::diag "in PERLOPS_PERLTYPES Sort->inherited__Sort(), received \$self = '$self' and \$person = '$person', FISH\n"; };
+////our void_method $inherited__Sort = sub { (my object $self, my string $person) = @_;  RPerl::diag "in PERLOPS_PERLTYPES Sort->inherited__Sort(), received \$self = '$self' and \$person = '$person', FISH\n"; };
 void RPerl__Algorithm__Sort::inherited__Sort(SV* person) { cout << "in CPPOPS_PERLTYPES Sort->inherited__Sort(), received this = '" << this << "' and person = '" << SvPV_nolen(person) << "', FISH\n"; }
 
-////our void__method $inherited = sub { (my object $self, my string $person) = @_;  RPerl::diag "in PERLOPS_PERLTYPES Sort->inherited(), received \$self = '$self' and \$person = '$person', IN\n"; };
+////our void_method $inherited = sub { (my object $self, my string $person) = @_;  RPerl::diag "in PERLOPS_PERLTYPES Sort->inherited(), received \$self = '$self' and \$person = '$person', IN\n"; };
 //void RPerl__Algorithm__Sort::inherited(SV* person) { cout << "in CPPOPS_PERLTYPES Sort->inherited(), received this = '" << this << "' and person = '" << SvPV_nolen(person) << "', IN\n"; }
 
 ////our string $uninherited__Sort = sub { (my string $person) = @_;  RPerl::diag "in PERLOPS_PERLTYPES Sort::uninherited__Sort(), received \$person = '$person', MY\n";  return "Sort::uninherited__Sort() RULES! PERLOPS_PERLTYPES"; };
@@ -34,10 +34,10 @@ SV* uninherited__Sort(SV* person) { cout << "in CPPOPS_PERLTYPES Sort::uninherit
 // [[[<<< BEGIN CPP TYPES >>>]]]
 // [[[<<< BEGIN CPP TYPES >>>]]]
 
-////our void__method $inherited__Sort = sub { (my object $self, my string $person) = @_;  RPerl::diag "in PERLOPS_PERLTYPES Sort->inherited__Sort(), received \$self = '$self' and \$person = '$person', FISH\n"; };
+////our void_method $inherited__Sort = sub { (my object $self, my string $person) = @_;  RPerl::diag "in PERLOPS_PERLTYPES Sort->inherited__Sort(), received \$self = '$self' and \$person = '$person', FISH\n"; };
 void RPerl__Algorithm__Sort::inherited__Sort(string person) { cout << "in CPPOPS_CPPTYPES Sort->inherited__Sort(), received this = '" << this << "' and person = '" << person << "', FISH\n"; }
 
-////our void__method $inherited = sub { (my object $self, my string $person) = @_;  RPerl::diag "in PERLOPS_PERLTYPES Sort->inherited(), received \$self = '$self' and \$person = '$person', IN\n"; };
+////our void_method $inherited = sub { (my object $self, my string $person) = @_;  RPerl::diag "in PERLOPS_PERLTYPES Sort->inherited(), received \$self = '$self' and \$person = '$person', IN\n"; };
 //void RPerl__Algorithm__Sort::inherited(string person) { cout << "in CPPOPS_CPPTYPES Sort->inherited(), received this = '" << this << "' and person = '" << person << "', IN\n"; }
 
 ////our string $uninherited__Sort = sub { (my string $person) = @_;  RPerl::diag "in PERLOPS_PERLTYPES Sort::uninherited__Sort(), received \$person = '$person', MY\n";  return "Sort::uninherited__Sort() RULES! PERLOPS_PERLTYPES"; };

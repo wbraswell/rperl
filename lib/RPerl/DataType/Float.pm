@@ -10,7 +10,3 @@ use RPerl::DataType::Number;
 # a floating-point number has a fractional/decimal component
 package float;
 our @ISA = ('RPerl::DataType::Float');
-
-# float with const value
-package const_float;
-our @ISA = ('float', 'const');

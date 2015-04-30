@@ -14,17 +14,17 @@ use Scalar::Util 'blessed';
 use parent qw(RPerl::CompileUnit::Module);
 
 # [[[ OO PROPERTIES ]]]
-our hash_ref $properties = {
+our hashref $properties = {
     name => my string $TYPED_name = undef,
     version => my string $TYPED_version = undef, # NEED UPGRADE: convert vstring from string type to number type?
-    includes    => my string__array_ref $TYPED_includes    = undef,
-    subroutines => my object__array_ref $TYPED_subroutines = undef
+    includes    => my string_arrayref $TYPED_includes    = undef,
+    subroutines => my object_arrayref $TYPED_subroutines = undef
 };
 
 # [[[ OO METHODS ]]]
 
 # GENERATE CPPOPS_CPPTYPES
-our string__method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
+our string_method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self ) = @_;    # object method
     my string $self_generated = q{};
 
@@ -81,8 +81,8 @@ our string__method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 };
 
 # TRANSLATE
-# NEED UPGRADE: use arg0 to determine if (class/object) method, remove confusing __method type suffix or some other solution???
-our object__method $ppi_to_rperl__translate = sub { # DEV NOTE: object is the return type, __method is the OO namespace keyword for Class.pm INIT magic
+# NEED UPGRADE: use arg0 to determine if (class/object) method, remove confusing _method type suffix or some other solution???
+our object_method $ppi_to_rperl__translate = sub { # DEV NOTE: object is the return type, _method is the OO namespace keyword for Class.pm INIT magic
     ( my string $class, my object $node) = @_; # DEV NOTE: arg0 of $class means this is a class method, arg0 of $self would mean object method
 
     # variable declarations
@@ -136,7 +136,7 @@ our object__method $ppi_to_rperl__translate = sub { # DEV NOTE: object is the re
     $child_key = 'children';
     if ( not( defined $node->{$child_key} ) ) {
         croak(
-            "\nERROR ECVTRPI03, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, PPI OBJECT FAILURE:\nchildren sub-objects array_ref value expected but undefined/null value found,\ncroaking"
+            "\nERROR ECVTRPI03, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, PPI OBJECT FAILURE:\nchildren sub-objects arrayref value expected but undefined/null value found,\ncroaking"
         );
     }
 
@@ -382,7 +382,7 @@ our object__method $ppi_to_rperl__translate = sub { # DEV NOTE: object is the re
     # PACKAGE rule, SUBROUTINE+ component @ 6 <= INDEX < max
     $child_key = 'children';
     $child_index++;
-    $node_translated->{subroutines} = []; # DEV NOTE: cannot include object__array_ref type due to 'my' syntax masking error
+    $node_translated->{subroutines} = []; # DEV NOTE: cannot include object_arrayref type due to 'my' syntax masking error
     for my integer $child_index_loop (
         $child_index .. ( $child_index_max - 1 ) )
     {

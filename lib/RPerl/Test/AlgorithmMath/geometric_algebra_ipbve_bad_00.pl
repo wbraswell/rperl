@@ -16,9 +16,9 @@ our $VERSION = 0.000_001;
 use RPerl::Algorithm::Math::GeometricAlgebra;
 
 # [[[ OPERATIONS ]]]
-my number__array_ref $retval_vector;
-my number__array_ref $input_bivector;
-my number__array_ref $input_vector;
+my number_arrayref $retval_vector;
+my number_arrayref $input_bivector;
+my number_arrayref $input_vector;
 $input_bivector = [ -999999, 3.0, 4.0 ];
 $input_vector = [ -999999, 3.0, 4.0, -12.0 ];
 $retval_vector = inner_product__bivector_vector_euclidean( $input_bivector,

@@ -26,10 +26,6 @@ use RPerl::DataType::Scalar;
 package number;
 use parent ('RPerl::DataType::Number');
 
-# number with const value
-package const_number;
-use parent -norequire, qw(number const);
-
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataType::Number;
 
@@ -42,7 +38,7 @@ use RPerl::DataType::String;    # need string type
 use RPerl::DataType::Integer; # need integer type, normally included by rperltypes.pm but put here in case we don't use rperltypes.pm
 
 # [[[ TYPE-CHECKING ]]]
-our void $number__CHECK = sub {
+our void $number_CHECK = sub {
     ( my $possible_number ) = @_;
     if ( not( defined $possible_number ) ) {
         croak(
@@ -58,7 +54,7 @@ our void $number__CHECK = sub {
         );
     }
 };
-our void $number__CHECKTRACE = sub {
+our void $number_CHECKTRACE = sub {
     ( my $possible_number, my $variable_name, my $subroutine_name ) = @_;
     if ( not( defined $possible_number ) ) {
         croak(
@@ -78,14 +74,14 @@ our void $number__CHECKTRACE = sub {
 # BUG BOUNTY #000, 50 CodeCoin: modify all ::number*__to_string() to output underscores, to match LITERAL_NUMBER grammar token input
 
 # [[[ STRINGIFY ]]]
-our string $number__to_string = sub {
+our string $number_to_string = sub {
     ( my $input_number ) = @_;
 
-    #    number__CHECK($input_number);
-    number__CHECKTRACE( $input_number, '$input_number',
-        'number__to_string()' );
+    #    number_CHECK($input_number);
+    number_CHECKTRACE( $input_number, '$input_number',
+        'number_to_string()' );
 
-#    RPerl::diag "in PERLOPS_PERLTYPES number__to_string(), bottom of subroutine, received \$input_number = $input_number\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES number_to_string(), bottom of subroutine, received \$input_number = $input_number\n" or croak();
     return ("$input_number");
 };
 
@@ -99,11 +95,11 @@ our number $number__typetest0 = sub {
 our number $number__typetest1 = sub {
     ( my number $lucky_number ) = @_;
 
-    #    number__CHECK($lucky_number);
-    number__CHECKTRACE( $lucky_number, '$lucky_number',
+    #    number_CHECK($lucky_number);
+    number_CHECKTRACE( $lucky_number, '$lucky_number',
         'number__typetest1()' );
 
-#    RPerl::diag 'in PERLOPS_PERLTYPES number__typetest1(), received $lucky_number = ' . number__to_string($lucky_number) . "\n" or croak();
+#    RPerl::diag 'in PERLOPS_PERLTYPES number__typetest1(), received $lucky_number = ' . number_to_string($lucky_number) . "\n" or croak();
     return ( ( $lucky_number * 2 ) + main::RPerl__DataType__Number__MODE_ID() );
 };
 

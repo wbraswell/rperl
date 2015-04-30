@@ -16,8 +16,8 @@ use RPerl::Algorithm::Math::GeometricAlgebra;
 
 # variable declarations
 my number $retval_number;
-my number__array_ref $input_vector_1;
-my number__array_ref $input_vector_2;
+my number_arrayref $input_vector_1;
+my number_arrayref $input_vector_2;
 
 # 0
 #$input_vector_1 = [-999999, 0.0, 0.0, 0.0];
@@ -76,27 +76,27 @@ $input_vector_2 = [-999999, 3.0, -4.0, 12.0];
 #$input_vector_2 = [-999999, 3.0, 4.0, -12.0, 0.0];
 
 # ERROR ENVAVRV03, TYPE-CHECKING MISMATCH
-# number__array_ref element value expected but non-number value found at index 0
+# number_arrayref element value expected but non-number value found at index 0
 #$input_vector_1 = ['howdy', 3.0, 4.0, 12.0];
 #$input_vector_2 = [-999999, 3.0, 4.0, -12.0];
 
 # ERROR ENVAVRV03, TYPE-CHECKING MISMATCH
-# number__array_ref element value expected but non-number value found at index 1
+# number_arrayref element value expected but non-number value found at index 1
 #$input_vector_1 = [-999999, 3.0, 4.0, 12.0];
 #$input_vector_2 = [-999999, 'howdy', 4.0, -12.0];
 
 # ERROR ENVAVRV03, TYPE-CHECKING MISMATCH
-# number__array_ref element value expected but non-number value found at index 2
+# number_arrayref element value expected but non-number value found at index 2
 #$input_vector_1 = [-999999, 3.0, 'howdy', 12.0];
 #$input_vector_2 = [-999999, 3.0, 4.0, -12.0];
 
 # ERROR ENVAVRV03, TYPE-CHECKING MISMATCH
-# number__array_ref element value expected but non-number value found at index 3
+# number_arrayref element value expected but non-number value found at index 3
 #$input_vector_1 = [-999999, 3.0, 4.0, 'howdy'];
 #$input_vector_2 = [-999999, 3.0, 4.0, -12.0];
 
 # loop to test for memory leaks
-my const_integer $i_MAX = 0;
+my integer $i_MAX = 0;  # CONSTANT
 for my integer $i ( 0 .. $i_MAX ) {
 	print "in geometric_algebra_test_1_ipvve.pl, top of for() loop $i/$i_MAX\n";
 

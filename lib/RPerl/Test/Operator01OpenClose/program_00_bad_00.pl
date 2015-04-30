@@ -15,7 +15,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-open my filehandle_ref $HOWDY, '>', '/tmp/howdy'
+open my filehandleref $HOWDY, '>', '/tmp/howdy'
     or croak 'ERROR: Failed to open file /tmp/howdy for writing, croaking';
 
 my integer $print_success = ( print {$HOWDY} 23, 32, 42 );

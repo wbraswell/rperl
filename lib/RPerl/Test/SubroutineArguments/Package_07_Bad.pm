@@ -11,7 +11,7 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 our void $empty_sub = sub {
-    ( my number $foo, my string $bar, my scalartype__array_ref $baz, my integer__hash_ref $bat ) = @;
+    ( my number $foo, my string $bar, my scalartype_arrayref $baz, my integer_hashref $bat ) = @;
     return 1;
 };
 

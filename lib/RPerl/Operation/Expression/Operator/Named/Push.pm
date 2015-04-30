@@ -14,6 +14,6 @@ use RPerl::Operation::Expression::Operator::Named;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OO PROPERTIES ]]]
-our hash_ref $properties = {};
+our hashref $properties = {};
 
 1;    # end of class

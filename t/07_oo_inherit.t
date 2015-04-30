@@ -35,7 +35,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
 #for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
 #    RPerl::diag "in 07_oo_inherit.t, top of for() loop, have \$mode_id = $mode_id\n";
-    my scalartype__hash_ref $mode = $RPerl::MODES->{$mode_id};
+    my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
     if ( $ENV{TEST_VERBOSE} ) {
         Test::More::diag( 
                   '[[[ Beginning RPerl Object-Oriented Inheritance Tests, '

@@ -13,14 +13,14 @@ use RPerl::DataStructure;
 # linked lists are comprised of nodes
 use RPerl::DataStructure::LinkedList::Node;
 
-our hash_ref $properties =
+our hashref $properties =
 {
 	head => my RPerl::DataStructure::LinkedList::NodeReference $TYPED_head = undef,  # start with head = undef so we can test for empty list
 };
 
-our RPerl::DataStructure::LinkedListReference $new_from_array_ref = sub {(my string $class, my const_array_ref $input) = @_;
+our RPerl::DataStructure::LinkedListReference $new_from_arrayref = sub {(my string $class, my arrayref $input) = @_;
 ;
-#	RPerl::diag "in new_from_array_ref(), received \$class = '$class', and \$input =\n" . RPerl::DUMPER($input) . "\n";
+#	RPerl::diag "in new_from_arrayref(), received \$class = '$class', and \$input =\n" . RPerl::DUMPER($input) . "\n";
 	my unknown $output = $class->new();
 	my integer $i;
 	for ($i = (scalar(@{$input}) - 1); $i >= 0; $i--)
@@ -39,7 +39,7 @@ our void $linkedlist_unshift = sub {(my RPerl::DataStructure::LinkedListReferenc
 	$list->{head} = $new_node;
 };
 
-our string__method $DUMPER = sub {(my RPerl::DataStructure::LinkedListReference $data) = @_; return $data->{head}->DUMPER(); };
+our string_method $DUMPER = sub {(my RPerl::DataStructure::LinkedListReference $data) = @_; return $data->{head}->DUMPER(); };
 
 
 # [[[ LINKED LISTS ]]]
@@ -49,25 +49,16 @@ our string__method $DUMPER = sub {(my RPerl::DataStructure::LinkedListReference 
 # because an RPerl::CompileUnit::Module::Class is a blessed hash _reference_, and we are not natively implementing the data structures in C here;
 # thus the slightly weird naming convention where some places have delimeters (:: or _) and some don't,
 # I favored the consistency of user-side RPerl data type short-form package alias _ delimeter over the Perl system-side package name scope :: delimeter 
-package linkedlist_ref;
+package linkedlistref;
 our @ISA = ('RPerl::DataStructure::LinkedListReference');
 use RPerl::DataStructure::LinkedList;
 # TODO: check if these (and other) symbol copies can be shortened???   move integer import() subroutine to be automatically called by 'use' command?
-our $properties = $properties; our $new_from_array_ref = $new_from_array_ref; our $linkedlist_unshift = $linkedlist_unshift; our $DUMPER = $DUMPER;
-
-# ref to linked list with const size
-package const_linkedlist_ref;
-our @ISA = ('ref');
-
+our $properties = $properties; our $new_from_arrayref = $new_from_arrayref; our $linkedlist_unshift = $linkedlist_unshift; our $DUMPER = $DUMPER;
 
 # [[[ INT LINKED LISTS ]]]
 
 # (ref to linked list) of integers
-package integer__linkedlist_ref;
-our @ISA = ('linkedlist_ref');
-
-# (ref to linked list with const size) of integers
-package integer__const_linkedlist_ref;
-our @ISA = ('const_linkedlist_ref');
+package integer_linkedlistref;
+our @ISA = ('linkedlistref');
 
 # NEED ADD: remaining sub-types
