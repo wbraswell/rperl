@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.020_010;
+our $VERSION = 0.020_020;
 
 # [[[ OO INHERITANCE ]]]
 # BASE CLASS HAS NO INHERITANCE
@@ -447,7 +447,7 @@ sub activate_subroutine {
     my $package_name_tmp;              # string
     my $subroutine_definition_code;    # string
     my $subroutine_definition_diag_code = q{};    # string
-    if ( $subroutine_type =~ /\_\_method$/xms ) {
+    if ( $subroutine_type =~ /\_method$/xms ) {
         if ( $package_name eq '' ) {
             croak( 'Received no package name for method ',
                 $subroutine_name, ', croaking' );
