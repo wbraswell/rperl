@@ -25,7 +25,9 @@ use RPerl::DataType::FileHandle;
 
 # [[[ DATA STRUCTURES ]]]
 use RPerl::DataStructure::Array;
-use RPerl::DataStructure::Hash;
+use RPerl::DataStructure::Array::Reference;
+use RPerl::DataStructure::Hash::Reference;
+use RPerl::DataStructure::Hash::Reference;
 #use RPerl::DataStructure::LinkedList;
 #use RPerl::DataStructure::LinkedList::Node;
 #use RPerl::DataStructure::Graph;
@@ -35,7 +37,7 @@ use RPerl::DataStructure::Hash;
 
 # [[[ OBJECT-ORIENTED ]]]
 use RPerl::Object;
-use RPerl::CodeBlock::Subroutine::Method;  # Method is the only item that is both a Data Type & a Grammar Rule
+use RPerl::CodeBlock::Subroutine::Method;  # Method is the only item that is both a Data Type & a Grammar Rule???
 
 # these types are currently implemented for all 3 primary RPerl modes: PERLOPS_PERLTYPES, CPPOPS_PERLTYPES, CPPOPS_CPPTYPES
 # NEED REMOVE: hard-coded list
