@@ -44,6 +44,7 @@ use RPerl::Operation::Expression::SubExpression::Literal; # NEED ANSWER: not a f
 use RPerl::Operation::Statement::VariableDeclaration;
 use RPerl::Operation::Statement::VariableModification;
 use RPerl::DataStructure::Array::ListElements;
+use RPerl::DataStructure::Array::ListElement;
 use RPerl::DataStructure::Hash::Entry;
 use RPerl::DataStructure::Hash::EntryTyped;
 use RPerl::Operation::Expression::SubExpression::Literal::Number;

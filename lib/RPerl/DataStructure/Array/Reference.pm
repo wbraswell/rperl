@@ -33,41 +33,34 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $rperl_source_group = { PMC => q{} };
 
-    RPerl::diag(
-        'in Array::Reference->ast_to_rperl__generate(), received $self = '
-            . "\n"
-            . RPerl::Parser::rperl_ast__dump($self)
-            . "\n" );
-    return $rperl_source_group;
-    
-    # START HERE: modify the following to generate arrayref output code
-    # START HERE: modify the following to generate arrayref output code
-    # START HERE: modify the following to generate arrayref output code
+#    RPerl::diag( 'in Array::Reference->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    my string $key           = $self->{children}->[0];
-    my string $fat_arrow     = $self->{children}->[1];
-    my object $type_inner    = $self->{children}->[2];
-    my string $type_inner_my = $type_inner->{children}->[0];
-    my string $type_inner_type
-        = $type_inner->{children}->[1]->{children}->[0];
-    my string $type_inner_TYPED = $type_inner->{children}->[2];
-    my string $type_inner_name  = $type_inner->{children}->[3];
-    my string $type_inner_equal = $type_inner->{children}->[4];
-    my object $subexpression    = $self->{children}->[3];
+    if ( ref $self eq 'SubExpression_130' ) {
+        $self = $self->{children}->[0];
+    }
 
-    $rperl_source_group->{PMC}
-        .= $key . q{ }
-        . $fat_arrow . q{ }
-        . $type_inner_my . q{ }
-        . $type_inner_type . q{ }
-        . $type_inner_TYPED
-        . $type_inner_name . q{ }
-        . $type_inner_equal . q{ };
+    if ( ref $self ne 'ArrayReference_182' ) {
+        croak
+            'ERROR ECVGEAS00, Code Generator, Abstract Syntax to RPerl, token'
+            . ( ref $self )
+            . 'found where ArrayReference_182 expected, croaking';
+    }
 
-    my string_hashref $rperl_source_subgroup
-        = $subexpression->ast_to_rperl__generate($modes);
-    RPerl::Generator::source_group_append( $rperl_source_group,
-        $rperl_source_subgroup );
+    my string $left_bracket           = $self->{children}->[0];
+    my object $optional_list_elements = $self->{children}->[1];
+    my string $right_bracket          = $self->{children}->[2];
+
+    $rperl_source_group->{PMC} .= $left_bracket;
+
+    if ( exists $optional_list_elements->{children}->[0] ) {
+        my string_hashref $rperl_source_subgroup
+            = $optional_list_elements->{children}->[0]
+            ->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group,
+            $rperl_source_subgroup );
+    }
+
+    $rperl_source_group->{PMC} .= $right_bracket;
 
     return $rperl_source_group;
 };
