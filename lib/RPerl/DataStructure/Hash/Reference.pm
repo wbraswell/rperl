@@ -39,38 +39,48 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         $self = $self->{children}->[0];
     }
 
-    if (( ref $self ne 'HashReference_196' ) and (ref $self ne 'HashReference_197')) {
+    if (    ( ref $self ne 'HashReference_196' )
+        and ( ref $self ne 'HashReference_197' ) )
+    {
         croak
             'ERROR ECVGEAS00, Code Generator, Abstract Syntax to RPerl, token'
             . ( ref $self )
             . 'found where HashReference_196 or HashReference_197 expected, croaking';
     }
-    
-    my string $left_brace           = $self->{children}->[0];
-    if (ref $self ne 'HashReference_197') {
-        my string $right_brace           = $self->{children}->[1];
+
+    if ( ref $self eq 'HashReference_197' ) {
+        my string $left_brace  = $self->{children}->[0];
+        my string $right_brace = $self->{children}->[1];
         $rperl_source_group->{PMC} .= $left_brace . $right_brace;
+        return $rperl_source_group;
     }
-    return $rperl_source_group;
+    else {
+        my string $left_brace        = $self->{children}->[0];
+        my object $hash_entry        = $self->{children}->[1];
+        my object $star_hash_entries = $self->{children}->[2];
+        my string $right_brace       = $self->{children}->[3];
 
-    my string $left_bracket           = $self->{children}->[0];
-    my object $optional_list_elements = $self->{children}->[1];
-    my string $right_bracket          = $self->{children}->[2];
-
-    $rperl_source_group->{PMC} .= $left_bracket;
-
-    if ( exists $optional_list_elements->{children}->[0] ) {
+        $rperl_source_group->{PMC} .= $left_brace;
         my string_hashref $rperl_source_subgroup
-            = $optional_list_elements->{children}->[0]
-            ->ast_to_rperl__generate($modes);
+            = $hash_entry->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
+
+        foreach my $star_hash_entry ( @{ $star_hash_entries->{children} } ) {
+            $rperl_source_subgroup
+                = $star_hash_entry->ast_to_rperl__generate($modes);
+            RPerl::Generator::source_group_append( $rperl_source_group,
+                $rperl_source_subgroup );
+        }
+
+        $rperl_source_group->{PMC} .= $right_brace;
+        return $rperl_source_group;
     }
-
-    $rperl_source_group->{PMC} .= $right_bracket;
-
-    return $rperl_source_group;
 };
+
+# START HERE: copy hashentry generator code from hashentrytyped or $properties
+# START HERE: copy hashentry generator code from hashentrytyped or $properties
+# START HERE: copy hashentry generator code from hashentrytyped or $properties
 
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;

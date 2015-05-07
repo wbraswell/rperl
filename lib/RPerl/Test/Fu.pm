@@ -24,8 +24,8 @@ our hashref $properties = {
 #    thud  => my integer_arrayref $TYPED_thud = [ 2 ]#,
 #    thud  => my integer_arrayref $TYPED_thud = [ 2, 4, 6, 8 ]#,
 #    thud  => my integer_arrayref $TYPED_thud = [ qw(hi howdy hello) ]#,
-    yyz => my number_hashref $TYPED_yyz = { }
-#    yyz => my number_hashref $TYPED_yyz = { a => 3 }
+#    yyz => my number_hashref $TYPED_yyz = { }
+    yyz => my number_hashref $TYPED_yyz = { a => 3.1 }
 #    yyz => my number_hashref $TYPED_yyz = { a => 3.1, b => 6.2, c => 9.3 }
 };
 
