@@ -67,20 +67,27 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             $rperl_source_subgroup );
 
         foreach my $star_hash_entry ( @{ $star_hash_entries->{children} } ) {
-            $rperl_source_subgroup
-                = $star_hash_entry->ast_to_rperl__generate($modes);
-            RPerl::Generator::source_group_append( $rperl_source_group,
-                $rperl_source_subgroup );
+            if ( ref $star_hash_entry eq 'TERMINAL' ) {
+                if ( $star_hash_entry->{attr} ne ',' ) {
+                    croak
+                        q{ERROR ECVGEAS00, Code Generator, Abstract Syntax to RPerl, token '}
+                        . $star_hash_entry->{attr}
+                        . q{' found where OP21_LIST_COMMA ',' expected, croaking};
+                }
+                $rperl_source_group->{PMC} .= $star_hash_entry->{attr} . q{ }; # OP21_LIST_COMMA
+            }
+            else {
+                $rperl_source_subgroup
+                    = $star_hash_entry->ast_to_rperl__generate($modes);
+                RPerl::Generator::source_group_append( $rperl_source_group,
+                    $rperl_source_subgroup );
+            }
         }
 
         $rperl_source_group->{PMC} .= $right_brace;
         return $rperl_source_group;
     }
 };
-
-# START HERE: copy hashentry generator code from hashentrytyped or $properties
-# START HERE: copy hashentry generator code from hashentrytyped or $properties
-# START HERE: copy hashentry generator code from hashentrytyped or $properties
 
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
