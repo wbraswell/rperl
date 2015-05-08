@@ -19,6 +19,7 @@ use RPerl::CompileUnit::Module;
 use RPerl::CompileUnit::Module::Class::Generator;
 use RPerl::CompileUnit::Module::Header;
 use RPerl::CompileUnit::Module::Package;
+use RPerl::CompileUnit::Include;
 use RPerl::CompileUnit::Critic;
 use RPerl::CodeBlock::Subroutine;
 use RPerl::NonGenerator;

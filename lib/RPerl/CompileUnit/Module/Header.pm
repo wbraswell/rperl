@@ -43,6 +43,9 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         my string_hashref $rperl_source_subgroup = $critic_optional->{children}->[0]->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append($rperl_source_group, $rperl_source_subgroup);
     }
+    if ($modes->{label} eq 'ON') {
+        $rperl_source_group->{PMC} .= '# [[[ HEADER ]]]' . "\n";
+    }
     $rperl_source_group->{PMC} .= $package_keyword . ' ' . $package_name . $package_semicolon . "\n";
     $rperl_source_group->{PMC} .= $use_strict . "\n";
     $rperl_source_group->{PMC} .= $use_warnings . "\n";

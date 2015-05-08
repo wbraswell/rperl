@@ -22,10 +22,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $rperl_source_group = { PMC => q{} };
 
-    RPerl::diag(
-        'in Hash::Entry->ast_to_rperl__generate(), received $self = ' . "\n"
-            . RPerl::Parser::rperl_ast__dump($self)
-            . "\n" );
+#    RPerl::diag( 'in Hash::Entry->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $key                 = $self->{children}->[0];
     my string $fat_arrow           = $self->{children}->[1];

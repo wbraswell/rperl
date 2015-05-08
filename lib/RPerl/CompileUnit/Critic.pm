@@ -6,8 +6,8 @@ use RPerl;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
-use parent qw(RPerl::CompileUnit);
-use RPerl::CompileUnit;
+use parent qw(RPerl::GrammarRule);
+use RPerl::GrammarRule;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator

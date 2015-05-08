@@ -371,19 +371,21 @@ my string_arrayref $input_file_names          = [];
 my string_arrayref $output_file_name_prefixes = [];
 my hashref_arrayref $output_file_name_groups       = [];
 my string_hashref $modes = {}; # can't store defaults here, erased by GetOptions()
-my string_hashref $modes_default = { # default to CPPOPS_CPPTYPES_CHECKTRACE_COMPILE_EXECUTE in C++ output code
+my string_hashref $modes_default = { # default to CPPOPS_CPPTYPES_CHECKTRACE_COMPILE_EXECUTE_LABEL in C++ output code
     ops     => 'CPP',
     types   => 'CPP',
     check   => 'TRACE',
     compile => 'COMPILE',
-    execute => 'ON'
+    execute => 'ON',
+    label => 'ON'
 };
 my arrayref_hashref $modes_supported = {
     ops     => [ 'PERL',  'CPP' ],
     types   => [ 'PERL',  'CPP' ],
     check   => [ 'OFF',   'ON', 'TRACE' ],
     compile => [ 'PARSE', 'GENERATE', 'COMPILE' ],
-    execute => [ 'OFF',   'ON' ]
+    execute => [ 'OFF',   'ON' ],
+    label => [ 'OFF',   'ON' ]
 };
 my integer $input_files_count = 0;
 
@@ -477,6 +479,12 @@ Print a brief help message.
 =item B<--mode execute=ON _OR_ -m execute=ON>
 
  Specify execute mode, ON by default.
+
+=item B<--mode label=OFF _OR_ -m label=OFF>
+
+=item B<--mode label=ON _OR_ -m label=ON>
+
+ Specify source section label mode, ON by default.
 
 =item B<--compile _OR_ -c>
 
