@@ -21,6 +21,7 @@ use RPerl::CompileUnit::Module::Header;
 use RPerl::CompileUnit::Module::Package;
 use RPerl::CompileUnit::Include;
 use RPerl::CompileUnit::Critic;
+use RPerl::CompileUnit::Constant;
 use RPerl::CodeBlock::Subroutine;
 use RPerl::NonGenerator;
 

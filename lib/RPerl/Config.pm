@@ -1,7 +1,7 @@
 package RPerl::Config;
 use strict;
 use warnings;
-our $VERSION = 0.002_020;
+our $VERSION = 0.002_021;
 
 # DEV NOTE: this package exists to serve as the header file for RPerl.pm itself,
 # as well as for RPerl.pm dependencies such as Class.pm, HelperFunctions_cpp.pm, and rperltypes.pm
@@ -13,6 +13,7 @@ use Data::Dumper;
 use Carp;
 use English qw(-no_match_vars);
 use Exporter 'import';
+# DEV NOTE, CORRELATION #08: can't include type() and types() in @EXPORT here or in RPerl:: namespace below
 our @EXPORT
     = qw(Dumper carp croak confess $OS_ERROR $EVAL_ERROR $CHILD_ERROR $EXECUTABLE_NAME $PROGRAM_NAME);
 

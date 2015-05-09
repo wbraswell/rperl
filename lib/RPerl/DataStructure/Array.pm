@@ -6,13 +6,10 @@ use parent ('RPerl::DataStructure');
 use RPerl::DataStructure;
 use Carp;
 
-# [[[ SUB-TYPES BEFORE SETUP ]]]
+# [[[ SUB-TYPES BEFORE INCLUDES ]]]
 use RPerl::DataStructure::Array::SubTypes;
 
-# [[[ SETUP ]]]
-# [[[ SETUP ]]]
-# [[[ SETUP ]]]
-
+# [[[ INCLUDES ]]]
 # for type-checking via SvIOKp(), SvNOKp(), and SvPOKp(); inside INIT to delay until after 'use MyConfig'
 #INIT { RPerl::diag "in Array.pm, loading C++ helper functions for type-checking...\n"; }
 INIT {

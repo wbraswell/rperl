@@ -86,38 +86,66 @@ use constant PIE => my string $TYPED_PIE = 'pecan';
 # [[[ OO PROPERTIES ]]]
 # <<< CHANGE_ME: replace with real property name(s) & default data >>>
 our hashref $properties = {
-    plugh => my integer $TYPED_plugh           = 23,
-    xyzzy => my string $TYPED_xyzzy            = 'twenty-three',
+    plugh => my integer $TYPED_plugh         = 23,
+    xyzzy => my string $TYPED_xyzzy          = 'twenty-three',
     thud  => my integer_arrayref $TYPED_thud = [ 2, 4, 6, 8 ],
     yyz => my number_hashref $TYPED_yyz = { a => 3.1, b => 6.2, c => 9.3 }
 };
 
 # [[[ OO METHODS ]]]
 
+# START HERE: update Foo.pm to copy new methods & subs below, update Tests which call Foo.pm
+# START HERE: update Foo.pm to copy new methods & subs below, update Tests which call Foo.pm
+# START HERE: update Foo.pm to copy new methods & subs below, update Tests which call Foo.pm
+
 # <<< CHANGE_ME: delete for no methods, or replace with real method(s) >>>
+our integer_method $quince = sub {
+    my string $quince_def
+        = '...Cydonia vulgaris ... Cydonia, a city in Crete ... [1913 Webster]';
+    print $quince_def;
+    return length $quince_def;
+};
+
 our void_method $quux = sub {
     ( my object $self) = @_;
     $self->{plugh} = $self->{plugh} * 2;
 };
 
-our string_method $corge = sub {
-    ( my object $self) = @_;
-    return $self->{xyzzy} x 3;
+our string_method $qorge = sub {
+    ( my object $self, my number $corge_input ) = @_;
+    return $self->{xyzzy} x $corge_input;
 };
 
 # [[[ SUBROUTINES ]]]
 
 # <<< CHANGE_ME: delete for no subroutines, or replace with real subroutine(s) >>>
-our void $grault = sub {
+our void $grunt = sub {
+    print 'PIE() = ' . PIE() . "\n";
+};
+
+our number $grault = sub {
     ( my integer $grault_input ) = @_;
-    print '$grault_input ** PI() = ' . ( $grault_input**PI() ) . "\n";
+    return $grault_input**PI();
 };
 
 our number_arrayref $garply = sub {
-    ( my integer $garply_input ) = @_;
-    my number_arrayref $garply_output
-        = [ $garply_input * 1.1, $garply_input * 2.2, $garply_input * 3.3 ];
+    ( my integer $garply_input, my number_arrayref $garply_array ) = @_;
+    my number_arrayref $garply_output = [
+        $garply_input * $garply_array->[0],
+        $garply_input * $garply_array->[1],
+        $garply_input * $garply_array->[2]
+    ];
     return $garply_output;
+};
+
+our string_hashref $gorce = sub {
+    (my integer $a, my number $b, my string $c, my string_hashref $d) = @_;
+    my string_hashref $gorce_output = {
+        alpha => integer_to_string($a),
+        beta => number_to_string($b),
+        gamma => $c,
+        delta => %{$d}
+    }
 };
 
 1;    # end of class

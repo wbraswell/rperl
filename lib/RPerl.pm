@@ -5,7 +5,7 @@ use warnings;
 
 our $VERSION = 1.000_002;    # ONE POINT OH BETA TWO!!!
 
-#our $VERSION = 20141225;    # NON-RELEASE VERSION
+#our $VERSION = 20150509;    # NON-RELEASE VERSION
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -17,7 +17,8 @@ our $VERSION = 1.000_002;    # ONE POINT OH BETA TWO!!!
 require RPerl::Config;
 
 #no magic;  # require data types, full declarations, other non-magic
-#use rperltypes;  # circular dependency causes "subroutine DUMPER redefined" error, solved by replacing use with require below
+# DEV NOTE, CORRELATION #08: circular dependency causes "subroutine FOO redefined" errors, solved by replacing use with require below
+#use rperltypes;
 require rperltypes;
 
 1;    # end of class

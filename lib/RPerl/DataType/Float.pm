@@ -1,4 +1,4 @@
-# DEV NOTE, CORRELATION #7:
+# DEV NOTE, CORRELATION #07:
 # NEED FIX, OUTDATED
 # Float should have it's own functionality and compile to float C/C++ type for memory optimization, not just be a sub-type of Number
 use strict;  use warnings;
