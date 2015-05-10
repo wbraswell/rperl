@@ -1,11 +1,11 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.001_020;
+our $VERSION = 0.001_030;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 
-# suppress 'WEXRP00: Found multiple rperl executables'
+# suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s)
 BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
 use Test::More tests => 83;

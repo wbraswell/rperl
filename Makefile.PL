@@ -3,8 +3,7 @@ use warnings;
 our $VERSION = 0.001_070;
 use ExtUtils::MakeMaker;
 
-# suppress 'WEXRP00: Found multiple rperl executables'
-BEGIN { use English; $ENV{RPERL_WARNINGS} = 0; }
+BEGIN { use English; }
 
 push( @ExtUtils::MakeMaker::Overridable, qw(pm_to_blib) )
     if ( $OSNAME eq 'MSWin32' );

@@ -1,19 +1,19 @@
 #!/usr/bin/perl  ## no critic qw(ProhibitExcessMainComplexity)  # SYSTEM SPECIAL 5: allow complex code outside subroutines, must be on line 1
 
+# suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s)
+BEGIN { $ENV{RPERL_WARNINGS} = 0; }
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.005_004;
+our $VERSION = 0.005_010;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireBriefOpen)  # USER DEFAULT 5: allow open() in perltidy-expanded code
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(ProhibitDeepNests)  # SYSTEM SPECIAL 8: allow deeply-nested code
-
-# suppress 'WEXRP00: Found multiple rperl executables'
-BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
 # [[[ INCLUDES ]]]
 use RPerl::Parser;
