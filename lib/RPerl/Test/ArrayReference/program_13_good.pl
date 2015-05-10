@@ -11,13 +11,13 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my unknown_arrayref $u_array = [
-    my integer $TYPED_u_array_0           = -23,
-    my number_arrayref $TYPED_u_array_1 = [ 42 / 1_701, 21.12, 2_112.23 ],
-    my string_hashref $TYPED_u_array_2  = {
+my arrayref $unknown_array = [
+    my integer $TYPED_unknown_array_0           = -23,
+    my number_arrayref $TYPED_unknown_array_1 = [ 42 / 1_701, 21.12, 2_112.23 ],
+    my string_hashref $TYPED_unknown_array_2  = {
         alpha => 'strings are scalars, too',
         beta  => 'hello world',
         gamma => 'last one'
     }
 ];
-foreach my unknown $u ( @{$u_array} ) { print '$u = ', Dumper($u), "\n"; }
+foreach my unknown $u ( @{$unknown_array} ) { print '$u = ', Dumper($u), "\n"; }

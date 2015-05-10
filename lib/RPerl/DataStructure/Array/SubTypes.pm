@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array::SubTypes;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.006_000;
+our $VERSION = 0.006_001;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd) # DEVELOPER DEFAULT 1b: allow unreachable & POD-commented code, must be after line 1
@@ -544,10 +544,10 @@ so we can keep the no critic sections at the top of the file for reference
 package scalartype_arrayref;
 use parent -norequire, ('arrayref');
 
-# [[[ UNKNOWN ARRAYS ]]]
+# [[[ MIXED ARRAYS ]]]
 
-# (ref to array) of unknowns
-package unknown_arrayref;
+# (ref to array) of mixed types
+package mixed_arrayref;
 use parent -norequire, ('arrayref');
 
 # [[[ ARRAY ARRAYS (2-dimensional) ]]]
@@ -574,8 +574,8 @@ use parent -norequire, ('arrayref_arrayref');
 package scalartype_arrayref_arrayref;
 use parent -norequire, ('arrayref_arrayref');
 
-# (ref to array) of (refs to (arrays of unknowns))
-package unknown_arrayref_arrayref;
+# (ref to array) of (refs to (arrays of mixed types))
+package mixed_arrayref_arrayref;
 use parent -norequire, ('arrayref_arrayref');
 
 # [[[ HASH ARRAYS (2-dimesional) ]]]

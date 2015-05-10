@@ -16,7 +16,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my unknown_hashref $u_hash = {
+my hashref $unknown_hash = {
     key0 => my integer $TYPED_key0 = -23,
     key1 => my number_arrayref $TYPED_key1
         = [ 42 / 1_701, 21.12, 2_112.23 ],
@@ -26,6 +26,6 @@ my unknown_hashref $u_hash = {
         gamma => 'last one',
     }
 };
-foreach my string $hash_key ( sort keys %{$u_hash} ) {
-    print $hash_key, ' => ', Dumper( $u_hash->{$hash_key} ), "\n";
+foreach my string $hash_key ( sort keys %{$unknown_hash} ) {
+    print $hash_key, ' => ', Dumper( $unknown_hash->{$hash_key} ), "\n";
 }
