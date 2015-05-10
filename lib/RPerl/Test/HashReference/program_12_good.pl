@@ -22,6 +22,4 @@ my hashref_hashref $hash_hash = {
         i => 'last one'
     }
 };
-foreach my string $hash_key ( sort keys %{$hash_hash} ) {
-    print $hash_key, ' => ', Dumper( $hash_hash->{$hash_key} ), "\n";
-}
+print Dumper($hash_hash);

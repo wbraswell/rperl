@@ -21,14 +21,33 @@ our hashref $properties = {};
 our string_hashref_method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $rperl_source_group = { PMC => q{} };
+    my string_hashref $rperl_source_subgroup;
 
-#    RPerl::diag( 'in Hash::Entry->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+    RPerl::diag( 'in Hash::Entry->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $key                 = $self->{children}->[0];
+    my string $key_class           = ref $key;
     my string $fat_arrow           = $self->{children}->[1];
     my object $optional_type_inner = $self->{children}->[2];
 
-    $rperl_source_group->{PMC} .= $key . q{ } . $fat_arrow . q{ };
+    if (   ( $key_class eq 'VariableOrLiteralOrWord_211' )
+        or ( $key_class eq 'VariableOrLiteralOrWord_212' ) )
+    {    # Variable or Literal
+        $rperl_source_subgroup = $key->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group,
+            $rperl_source_subgroup );
+    }
+    elsif ( $key_class eq 'VariableOrLiteralOrWord_213' ) {    # WORD
+        $rperl_source_group->{PMC} .= $key->{children}->[0] . q{ };
+    }
+    else {
+        croak
+            q{ERROR ECVGEAS00, Code Generator, Abstract Syntax to RPerl, token '}
+            . ($key_class)
+            . q{' found where VariableOrLiteralOrWord_211 (Variable), VariableOrLiteralOrWord_212 (Literal) or VariableOrLiteralOrWord_213 (WORD) expected, croaking};
+    }
+
+    $rperl_source_group->{PMC} .= $fat_arrow . q{ };
 
     if ( exists $optional_type_inner->{children}->[0] ) {
         my string $optional_type_inner_my
@@ -42,7 +61,8 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         my string $optional_type_inner_equal
             = $optional_type_inner->{children}->[4];
 
-        $rperl_source_group->{PMC} .= $optional_type_inner_my . q{ }
+        $rperl_source_group->{PMC}
+            .= $optional_type_inner_my . q{ }
             . $optional_type_inner_type . q{ }
             . $optional_type_inner_TYPED
             . $optional_type_inner_name . q{ }
@@ -51,8 +71,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
     my object $subexpression = $self->{children}->[3];
 
-    my string_hashref $rperl_source_subgroup
-        = $subexpression->ast_to_rperl__generate($modes);
+    $rperl_source_subgroup = $subexpression->ast_to_rperl__generate($modes);
     RPerl::Generator::source_group_append( $rperl_source_group,
         $rperl_source_subgroup );
 

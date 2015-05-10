@@ -12,6 +12,4 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 
 my integer_hashref $i_hash = {};
-foreach my string $i_key ( sort keys %{$i_hash} ) {
-    print $i_key, ' => ', $i_hash->{$i_key}, "\n";
-}
+print Dumper($i_hash);

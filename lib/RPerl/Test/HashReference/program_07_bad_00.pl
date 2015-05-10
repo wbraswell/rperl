@@ -23,6 +23,4 @@ my scalartype_hashref $sc_hash = {
     bat => my string $TYPED_sc_hash_bat     = 'strings are scalars, too',
     baz => my scalartype $TYPED_sc_hash_baz = $mystery_scalar,
 };
-foreach my string $sc_key ( sort keys %{$sc_hash} ) {
-    print $sc_key, ' => ', Dumper( $sc_hash->{$sc_key} ), "\n";
-}
+print Dumper($sc_hash);

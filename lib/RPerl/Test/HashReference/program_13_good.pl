@@ -21,6 +21,4 @@ my hashref $unknown_hash = {
         gamma => 'last one'
     }
 };
-foreach my string $hash_key ( sort keys %{$unknown_hash} ) {
-    print $hash_key, ' => ', Dumper( $unknown_hash->{$hash_key} ), "\n";
-}
+print Dumper($unknown_hash);

@@ -22,6 +22,4 @@ my string_hashref $s_hash_all = {
     subhash_4 => { wahoo => 'yeehaw', hoowee => 'haayee' },
     subhash_2 => $s_hash_2
 };
-foreach my string $s_key ( sort keys %{$s_hash_all} ) {
-    print $s_key, ' => ', Dumper( $s_hash_all->{$s_key} ), "\n";
-}
+print Dumper($s_hash_all);

@@ -16,6 +16,4 @@ my number_hashref $n_hash = {
     beta  => 42 / 1_701,
     gamma => 21.12
 };
-foreach my string $n_key ( sort keys %{$n_hash} ) {
-    print $n_key, ' => ', $n_hash->{$n_key}, "\n";
-}
+print Dumper($n_hash);

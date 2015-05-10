@@ -1,8 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected Token:  }' >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'a' => '42','b' => 'is','c' => 'the','d' => 'answer'}; string_hashref" >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -16,9 +15,11 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my number_hashref $n_hash = {
-    alpha => 17 / 23,
-    beta  => 42 / 1_701,
-    gamma => 21.12,
-};
-print Dumper($n_hash);
+my hashref $foo   = {};
+my string $my_key = 'any old thing';
+my integer_hashref $bar
+    = { zero => 0, one => 1, two => 2, "three\nhowdy" => 3, $my_key => 12 };
+$foo = { a => '42', b => 'is', c => 'the', d => 'answer' };
+
+$Data::Dumper::Indent = 0;
+print Dumper($foo) . q{ } . type($foo) . "\n";

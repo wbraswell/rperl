@@ -20,6 +20,4 @@ my hashref_hashref $hash_hash = {
     key_2 => my integer_hashref $TYPED_key_2
         = { g => -321, h => 7, i => 24_851 }
 };
-foreach my string $hash_key ( sort keys %{$hash_hash} ) {
-    print $hash_key, ' => ', Dumper( $hash_hash->{$hash_key} ), "\n";
-}
+print Dumper($hash_hash);
