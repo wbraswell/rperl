@@ -73,6 +73,33 @@ our void $number_CHECKTRACE = sub {
 
 # BUG BOUNTY #000, 50 CodeCoin: modify all ::number*__to_string() to output underscores, to match LITERAL_NUMBER grammar token input
 
+
+# START HERE: find_replace_recurse '_croak();' ';' WITH ESCAPES, finish new number_to_string() w/ underscores below, continue updating Type_Types/* to print on different lines, finish Type_Types/*
+# START HERE: find_replace_recurse '_croak();' ';' WITH ESCAPES, finish new number_to_string() w/ underscores below, continue updating Type_Types/* to print on different lines, finish Type_Types/*
+# START HERE: find_replace_recurse '_croak();' ';' WITH ESCAPES, finish new number_to_string() w/ underscores below, continue updating Type_Types/* to print on different lines, finish Type_Types/*
+
+
+=DISABLE
+# [[[ STRINGIFY ]]]
+our string $number_to_string = sub {
+    ( my $input_number ) = @_;
+
+    #    number_CHECK($input_number);
+    number_CHECKTRACE( $input_number, '$input_number', 'number_to_string()' );
+
+#    RPerl::diag "in PERLOPS_PERLTYPES number_to_string(), received \$input_number = $input_number\n";
+    return ("$input_number");
+
+    my string $retval               = q{};
+    my $split_parts = [ split /[.]/xms, "$input_number" ];  # string_arrayref
+    my string $whole_part           = $split_parts->[0];
+    my string $decimal_part         = $split_parts->[1];
+
+    RPerl::diag 'in PERLOPS_PERLTYPES number_to_string(), received $input_number = ' . $input_number . "\n";
+};
+=cut
+
+
 # [[[ STRINGIFY ]]]
 our string $number_to_string = sub {
     ( my $input_number ) = @_;
@@ -84,6 +111,11 @@ our string $number_to_string = sub {
 #    RPerl::diag "in PERLOPS_PERLTYPES number_to_string(), bottom of subroutine, received \$input_number = $input_number\n" or croak();
     return ("$input_number");
 };
+
+
+
+
+
 
 # [[[ TYPE TESTING ]]]
 our number $number__typetest0 = sub {

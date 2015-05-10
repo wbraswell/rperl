@@ -269,7 +269,7 @@ if ( scalar @{$rperls_found} == 0 ) {
 }
 my $rperl_found = $rperls_found->[0];
 if ( scalar @{$rperls_found} > 1 ) {
-    if ((not defined $ENV{RPERL_WARNINGS}) or ($ENV{RPERL_WARNINGS})) {
+    if ((not defined $ENV{RPERL_WARNINGS}) or ($ENV{RPERL_WARNINGS} != 0)) {
         print {*STDERR} 'WARNING WEXRP00: Found multiple rperl executables, using first located, ', $rperl_found, "\n";
     }
 }

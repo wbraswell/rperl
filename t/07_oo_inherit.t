@@ -5,6 +5,9 @@ our $VERSION = 0.001_020;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 
+# suppress 'WEXRP00: Found multiple rperl executables'
+BEGIN { $ENV{RPERL_WARNINGS} = 0; }
+
 use Test::More tests => 83;
 use Test::Exception;
 use RPerl::Test;

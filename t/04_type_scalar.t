@@ -1,13 +1,16 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.005_000;
+our $VERSION = 0.005_010;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
 ## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(RequireCheckingReturnValueOfEval)  # SYSTEM DEFAULT 4: allow eval() test code blocks
+
+# suppress 'WEXRP00: Found multiple rperl executables'
+BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
 use RPerl::Test;
 use Test::More tests => 268;

@@ -12,6 +12,9 @@ our $VERSION = 0.002_030;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(ProhibitDeepNests)  # SYSTEM SPECIAL 8: allow deeply-nested code
 
+# suppress 'WEXRP00: Found multiple rperl executables'
+BEGIN { $ENV{RPERL_WARNINGS} = 0; }
+
 # [[[ INCLUDES ]]]
 use RPerl::Parser;
 use RPerl::Generator;

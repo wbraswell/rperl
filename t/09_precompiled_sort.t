@@ -7,6 +7,9 @@ our $VERSION = 0.001_040;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(RequireCheckingReturnValueOfEval)  ## SYSTEM DEFAULT 4: allow eval() test code blocks
 
+# suppress 'WEXRP00: Found multiple rperl executables'
+BEGIN { $ENV{RPERL_WARNINGS} = 0; }
+
 use Test::More tests => 161;
 use Test::Exception;
 use RPerl::Test;

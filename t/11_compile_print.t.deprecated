@@ -7,6 +7,9 @@ our $VERSION = 0.000_003;
 # START HERE: full test file template, not just this short baby test
 # START HERE: full test file template, not just this short baby test
 
+# suppress 'WEXRP00: Found multiple rperl executables'
+BEGIN { $ENV{RPERL_WARNINGS} = 0; }
+
 use Test::More tests => 3;
 
 BEGIN { use_ok('RPerl'); }
