@@ -5,10 +5,6 @@ use warnings;
 use RPerl::Config;
 our $VERSION = 0.000_102;
 
-# START HERE: create tests for type() and types()
-# START HERE: create tests for type() and types()
-# START HERE: create tests for type() and types()
-
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
 
