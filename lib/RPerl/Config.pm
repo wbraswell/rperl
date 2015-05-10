@@ -1,7 +1,7 @@
 package RPerl::Config;
 use strict;
 use warnings;
-our $VERSION = 0.002_021;
+our $VERSION = 0.002_022;
 
 # DEV NOTE: this package exists to serve as the header file for RPerl.pm itself,
 # as well as for RPerl.pm dependencies such as Class.pm, HelperFunctions_cpp.pm, and rperltypes.pm
@@ -10,6 +10,7 @@ our $VERSION = 0.002_021;
 
 # export various subroutines and variables to all who call 'use RPerl::Config;'
 use Data::Dumper;
+$Data::Dumper::Sortkeys = 1;  # Dumper() output must be sorted for lib/RPerl/Tests/Type_Types/* etc.
 use Carp;
 use English qw(-no_match_vars);
 use Exporter 'import';
@@ -30,6 +31,7 @@ our $MODES = {  # see perl_modes.txt for more info
     2 => { ops => 'CPP',  types => 'CPP' }
 };
 use Data::Dumper;
+$Data::Dumper::Sortkeys = 1;  # Dumper() output must be sorted for lib/RPerl/Tests/Type_Types/* etc.
 use Carp;
 use English qw(-no_match_vars);
 use Exporter 'import';
