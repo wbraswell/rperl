@@ -1,7 +1,7 @@
 package RPerl::Inline;
 use strict;
 use warnings;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_010;
 
 #use RPerl;  # ERROR: Too late to run INIT block at ...
 
@@ -37,6 +37,8 @@ our @ARGS = (
         '#include <string>',
         '#include <sstream>',
         '#include <limits>',
+        '#undef seed',  # fix conflict between Perl's source/internal.h & libstdc++-dev's algorithm.h; 'error: macro "seed" passed 1 arguments, but takes just 0'
+        '#include <algorithm>',
         '#include <vector>',
         '#include <unordered_map>', # DEV NOTE: unordered_map may require '-std=c++0x' in CCFLAGS above
         ],

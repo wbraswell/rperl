@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Number_cpp
-#define __CPP__INCLUDED__RPerl__DataType__Number_cpp 0.003_050
+#define __CPP__INCLUDED__RPerl__DataType__Number_cpp 0.004_000
 
 #include <RPerl/DataType/Number.h>		// -> NULL (relies on native C type)
 
@@ -36,7 +36,7 @@ void number_CHECKTRACE(SV* possible_number, const char* variable_name, const cha
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 
-# ifdef __CPP__TYPES
+//# ifdef __CPP__TYPES
 
 // convert from (Perl SV containing number) to (C number)
 number XS_unpack_number(SV* input_sv) {
@@ -66,7 +66,7 @@ void XS_pack_number(SV* output_sv, number input_number) {
 //fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number(), bottom of subroutine\n");
 }
 
-# endif
+//# endif
 
 // [[[ STRINGIFY ]]]
 // [[[ STRINGIFY ]]]
@@ -74,19 +74,21 @@ void XS_pack_number(SV* output_sv, number input_number) {
 
 # ifdef __PERL__TYPES
 
-// BUG BOUNTY #000, 50 CodeCoin: modify all ::number*__to_string() to output underscores, to match LITERAL_NUMBER grammar token input
-
+// DEV NOTE, CORRELATION #10: wrapper PERLTYPES sub
 SV* number_to_string(SV* input_number)
 {
 //	number_CHECK(input_number);
 	number_CHECKTRACE(input_number, "input_number", "number_to_string()");
 //fprintf(stderr, "in CPPOPS_PERLTYPES number_to_string(), top of subroutine, received unformatted input_number = %Lf\n", (number)SvNV(input_number));
+//fprintf(stderr, "in CPPOPS_PERLTYPES number_to_string()...\n");
 
-//	ostringstream output_stream;
-	std::ostringstream output_stream;
-	output_stream.precision(std::numeric_limits<double>::digits10);
-	output_stream << (double)SvNV(input_number);
-	return(newSVpv((const char *)((output_stream.str()).c_str()), 0));
+	// DEV NOTE: disable old stringify w/out underscores
+/*    std::ostringstream output_stream;
+    output_stream.precision(std::numeric_limits<double>::digits10);
+    output_stream << (double)SvNV(input_number);
+    return(newSVpv((const char *)((output_stream.str()).c_str()), 0)); */
+
+	return(newSVpv((const char *)((number_to_string_CPPTYPES((double)SvNV(input_number))).c_str()), 0));
 
 	// DEV NOTE: none of these fprintf(stderr, )-type solutions count significant digits both before and after the decimal point,
 	// so we fall back to utilizing C++ ostringstream which stringifies floating point numbers exactly the same as Perl (AFAICTSF)
@@ -97,18 +99,85 @@ SV* number_to_string(SV* input_number)
 
 # elif defined __CPP__TYPES
 
-//string number_to_string(number input_number)
-std::string number_to_string(number input_number)
-{
-//fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string(), top of subroutine, received unformatted input_number = %Lf\n", input_number);
-//	ostringstream output_stream;
-	std::ostringstream output_stream;
-	output_stream.precision(std::numeric_limits<double>::digits10);
-	output_stream << input_number;
-	return(output_stream.str());
+// DEV NOTE, CORRELATION #10: shim CPPTYPES sub
+string number_to_string(number input_number) {
+    return(number_to_string_CPPTYPES(input_number));
 }
 
 # endif
+
+// DEV NOTE, CORRELATION #09: must use return type 'string' instead of 'std::string' for proper typemap pack/unpack function name alignment;
+// can cause silent failure, falling back to __PERL__TYPES implementation and NOT failure of tests!
+// DEV NOTE, CORRELATION #10: the real CPPTYPES sub (below) is called by the wrapper PERLTYPES sub and shim CPPTYPES subs (above), moved outside #ifdef blocks
+string number_to_string_CPPTYPES(number input_number)
+{
+//fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), top of subroutine, received unformatted input_number = %Lf\n", input_number);
+//fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES()...\n");
+
+    std::ostringstream output_stream;
+    output_stream.precision(std::numeric_limits<double>::digits10);
+    output_stream << input_number;
+
+    // DEV NOTE: disable old stringify w/out underscores
+//  return(output_stream.str());
+
+    integer is_negative = 0;
+    if (input_number < 0) { is_negative = 1; }
+
+    string input_number_stringified = output_stream.str();
+
+    std::stringstream input_number_stringified_stream(input_number_stringified);
+    string whole_part;
+    std::getline(input_number_stringified_stream, whole_part, '.');
+    string decimal_part;
+    std::getline(input_number_stringified_stream, decimal_part, '.');
+
+//    fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), have whole_part = %s\n", whole_part.c_str());
+//    fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), have decimal_part = %s\n", decimal_part.c_str());
+
+    std::reverse(whole_part.begin(), whole_part.end());
+
+//    fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), have reversed whole_part = %s\n", whole_part.c_str());
+    if (is_negative) { whole_part.pop_back(); }  // remove negative sign
+
+    string whole_part_underscores = "";
+    for(std::string::size_type i = 0; i < whole_part.size(); ++i) {
+//        fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), inside whole_part underscore loop, have i = %d, whole_part[i] = %c\n", i, whole_part[i]);
+        whole_part_underscores += whole_part[i];
+        if (((i % 3) == 2) && (i > 0) && (i != (whole_part.size() - 1))) {
+//            fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), AND UNDERSCORE \n");
+            whole_part_underscores += '_';
+        }
+    }
+
+//    fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), have reversed whole_part_underscores = %s\n", whole_part_underscores.c_str());
+
+    std::reverse(whole_part_underscores.begin(), whole_part_underscores.end());
+
+    if (whole_part_underscores == "") {
+        whole_part_underscores = "0";
+    }
+
+//    fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), have unreversed whole_part_underscores = %s\n", whole_part_underscores.c_str());
+
+    string decimal_part_underscores = "";
+    for(std::string::size_type i = 0; i < decimal_part.size(); ++i) {
+//        fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), inside decimal_part underscore loop, have i = %d, decimal_part[i] = %c\n", i, decimal_part[i]);
+        decimal_part_underscores += decimal_part[i];
+        if (((i % 3) == 2) && (i > 0) && (i != (decimal_part.size() - 1))) {
+//            fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), AND UNDERSCORE \n");
+            decimal_part_underscores += '_';
+        }
+    }
+
+    if (decimal_part_underscores != "") {
+        whole_part_underscores += '.' + decimal_part_underscores;
+    }
+
+    if (is_negative) { whole_part_underscores = '-' + whole_part_underscores; }
+
+    return(whole_part_underscores);
+}
 
 // [[[ TYPE TESTING ]]]
 // [[[ TYPE TESTING ]]]

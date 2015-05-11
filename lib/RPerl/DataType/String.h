@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_h
-#define __CPP__INCLUDED__RPerl__DataType__String_h 0.003_050
+#define __CPP__INCLUDED__RPerl__DataType__String_h 0.003_060
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 // DEV NOTE: basic data types must be wholly independent of one another, to avoid weird redefining or undefining of subroutine errors
@@ -42,10 +42,11 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 # endif
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
-# ifdef __CPP__TYPES
+// DEV NOTE, CORRELATION #10: the pack/unpack subs (below) are called by number_to_string_CPPTYPES(), moved outside #ifdef blocks
+//# ifdef __CPP__TYPES
 string XS_unpack_string(SV* input_sv);
 void XS_pack_string(SV* output_sv, string input_string);
-# endif
+//# endif
 
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES

@@ -151,7 +151,7 @@ our void $integer_hashref_CHECKTRACE = sub {
 our string $integer_hashref_to_string = sub {
     ( my $input_hv_ref ) = @_;
 
-#    RPerl::diag "in PERLOPS_PERLTYPES integer_hashref_to_string(), top of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES integer_hashref_to_string(), top of subroutine\n";
 
     #    ::integer_hashref_CHECK($input_hv_ref);
     ::integer_hashref_CHECKTRACE( $input_hv_ref, '$input_hv_ref',
@@ -188,8 +188,8 @@ our string $integer_hashref_to_string = sub {
 
     $output_sv .= '}';
 
-#    RPerl::diag "in PERLOPS_PERLTYPES integer_hashref_to_string(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
-#    RPerl::diag "in PERLOPS_PERLTYPES integer_hashref_to_string(), bottom of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES integer_hashref_to_string(), after for() loop, have \$output_sv =\n$output_sv\n";
+#    RPerl::diag "in PERLOPS_PERLTYPES integer_hashref_to_string(), bottom of subroutine\n";
 
     return ($output_sv);
 };
@@ -212,8 +212,7 @@ our string $integer_hashref__typetest0 = sub {
         RPerl::diag
             "in PERLOPS_PERLTYPES integer_hashref__typetest0(), have lucky integer '$key' => "
             . $lucky_integer
-            . ", BARSTOOL\n"
-            or croak();
+            . ", BARSTOOL\n";
     }
     RPerl::diag
         "in PERLOPS_PERLTYPES integer_hashref__typetest0(), bottom of subroutine\n";
@@ -235,7 +234,7 @@ our integer_hashref $integer_hashref__typetest1 = sub {
         $temp_key = 'PERLOPS_PERLTYPES_funkey' . $i;
         $new_hash->{$temp_key} = $i * 5;
 
-#        RPerl::diag "in PERLOPS_PERLTYPES integer_hashref__typetest1(), setting entry '$temp_key' => " . $new_hash->{$temp_key} . ", BARSTOOL\n" or croak();
+#        RPerl::diag "in PERLOPS_PERLTYPES integer_hashref__typetest1(), setting entry '$temp_key' => " . $new_hash->{$temp_key} . ", BARSTOOL\n";
     }
     return ($new_hash);
 };
@@ -345,7 +344,7 @@ our void $number_hashref_CHECKTRACE = sub {
 our string $number_hashref_to_string = sub {
     ( my $input_hv_ref ) = @_;
 
-#    RPerl::diag "in PERLOPS_PERLTYPES number_hashref_to_string(), top of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES number_hashref_to_string(), top of subroutine\n";
 
     #    ::number_hashref_CHECK($input_hv_ref);
     ::number_hashref_CHECKTRACE( $input_hv_ref, '$input_hv_ref',
@@ -378,8 +377,8 @@ our string $number_hashref_to_string = sub {
 
     $output_sv .= '}';
 
-#    RPerl::diag "in PERLOPS_PERLTYPES number_hashref_to_string(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
-#    RPerl::diag "in PERLOPS_PERLTYPES number_hashref_to_string(), bottom of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES number_hashref_to_string(), after for() loop, have \$output_sv =\n$output_sv\n";
+#    RPerl::diag "in PERLOPS_PERLTYPES number_hashref_to_string(), bottom of subroutine\n";
 
     return ($output_sv);
 };
@@ -398,7 +397,7 @@ our string $number_hashref__typetest0 = sub {
         my $lucky_number = $lucky_numbers->{$key};
         $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
         $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-#        RPerl::diag "in PERLOPS_PERLTYPES number_hashref__typetest0(), have lucky number '$key' => " . $lucky_number . ", BARSTOOL\n" or croak();
+#        RPerl::diag "in PERLOPS_PERLTYPES number_hashref__typetest0(), have lucky number '$key' => " . $lucky_number . ", BARSTOOL\n";
     }
 =cut
 
@@ -418,7 +417,7 @@ our number_hashref $number_hashref__typetest1 = sub {
         $temp_key = 'PERLOPS_PERLTYPES_funkey' . $i;
         $new_hash->{$temp_key} = $i * 5.123456789;
 
-#        RPerl::diag "in PERLOPS_PERLTYPES number_hashref__typetest1(), setting entry '$temp_key' => " . $new_hash->{$temp_key} . ", BARSTOOL\n" or croak();
+#        RPerl::diag "in PERLOPS_PERLTYPES number_hashref__typetest1(), setting entry '$temp_key' => " . $new_hash->{$temp_key} . ", BARSTOOL\n";
     }
     return ($new_hash);
 };
@@ -522,7 +521,7 @@ our void $string_hashref_CHECKTRACE = sub {
 our string $string_hashref_to_string = sub {
     ( my $input_hv_ref ) = @_;
 
-#    RPerl::diag "in PERLOPS_PERLTYPES string_hashref_to_string(), top of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES string_hashref_to_string(), top of subroutine\n";
 
     #    ::string_hashref_CHECK($input_hv_ref);
     ::string_hashref_CHECKTRACE( $input_hv_ref, '$input_hv_ref',
@@ -557,8 +556,8 @@ our string $string_hashref_to_string = sub {
 
     $output_sv .= '}';
 
-#    RPerl::diag "in PERLOPS_PERLTYPES string_hashref_to_string(), after for() loop, have \$output_sv =\n$output_sv\n" or croak();
-#    RPerl::diag "in PERLOPS_PERLTYPES string_hashref_to_string(), bottom of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES string_hashref_to_string(), after for() loop, have \$output_sv =\n$output_sv\n";
+#    RPerl::diag "in PERLOPS_PERLTYPES string_hashref_to_string(), bottom of subroutine\n";
 
     return ($output_sv);
 };
@@ -577,7 +576,7 @@ our string $string_hashref__typetest0 = sub {
         my $person = $people->{$key};
         $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
         $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-#        RPerl::diag "in PERLOPS_PERLTYPES string_hashref__typetest0(), have person '$key' => '" . $person . "', STARBOOL\n" or croak();
+#        RPerl::diag "in PERLOPS_PERLTYPES string_hashref__typetest0(), have person '$key' => '" . $person . "', STARBOOL\n";
     }
 =cut
 
@@ -595,7 +594,7 @@ our string_hashref $string_hashref__typetest1 = sub {
         $people->{ 'PERLOPS_PERLTYPES_Luker_key' . $i }
             = q{Jeffy Ten! } . $i . q{/} . ( $my_size - 1 );
 
-#        RPerl::diag "in PERLOPS_PERLTYPES string_hashref__typetest1(), bottom of for() loop, have i = $i, just set another Jeffy!\n" or croak();
+#        RPerl::diag "in PERLOPS_PERLTYPES string_hashref__typetest1(), bottom of for() loop, have i = $i, just set another Jeffy!\n";
     }
     return ($people);
 };

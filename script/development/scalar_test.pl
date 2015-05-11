@@ -15,12 +15,12 @@ $RPerl::DEBUG = 1;
 #rperltypes::types_enable('PERL');
 
 # UNCOMMENT TO ENABLE C++ TYPES FOR C++ OPS
-#rperltypes::types_enable('CPP');
+rperltypes::types_enable('CPP');
 
 # UNCOMMENT TO ENABLE C++ OPS
-#use RPerl::DataType::Integer_cpp;  RPerl::DataType::Integer_cpp::cpp_load();
-#use RPerl::DataType::Number_cpp;  RPerl::DataType::Number_cpp::cpp_load();
-#use RPerl::DataType::String_cpp; RPerl::DataType::String_cpp::cpp_load();
+use RPerl::DataType::Integer_cpp;  RPerl::DataType::Integer_cpp::cpp_load();
+use RPerl::DataType::Number_cpp;  RPerl::DataType::Number_cpp::cpp_load();
+use RPerl::DataType::String_cpp; RPerl::DataType::String_cpp::cpp_load();
 
 #RPerl::diag q{in scalar_test.pl, have RPerl__DataType__Integer__MODE_ID() = '} . RPerl__DataType__Integer__MODE_ID() . "'\n";
 #RPerl::diag q{in scalar_test.pl, have RPerl__DataType__Number__MODE_ID() = '} . RPerl__DataType__Number__MODE_ID() . "'\n";
@@ -57,7 +57,7 @@ for my integer $i ( 0 .. $i_MAX ) {
 
 #    $string_retval = integer_to_string();  # TIV00; error PERLOPS EIV00, CPPOPS "Usage: main::integer_to_string(input_integer)"
 #    $string_retval = integer_to_string(undef);  # TIV01; error EIV00
-    $string_retval = integer_to_string(3);  # TIV02
+#    $string_retval = integer_to_string(3);  # TIV02
 #    $string_retval = integer_to_string(-17);  # TIV03
 #    $string_retval = integer_to_string(-17.3);  # TIV04; error EIV01
 #    $string_retval = integer_to_string('-17.3');  # TIV05; error EIV01
@@ -65,12 +65,11 @@ for my integer $i ( 0 .. $i_MAX ) {
 #    $string_retval = integer_to_string({a_key => 3});  # TIV07; error EIV01
 #    $string_retval = integer_to_string(-1_234_567_890);  # TIV08
 #    $string_retval = integer_to_string(-1_234_567_890_000);  # TIV09; error EIV01
-    RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n";
+#    RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n";
 
-    $integer_retval = integer__typetest0();  # TIV10
-    RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$integer_retval = $integer_retval\n";
+#    $integer_retval = integer__typetest0();  # TIV10
+#    RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$integer_retval = $integer_retval\n";
     
-#    croak('done');
 
 #    $integer_retval = integer__typetest1();  # TIV20; error PERLOPS EIV00, CPPOPS "Usage: main::integer__typetest1(lucky_integer)"
 #    $integer_retval = integer__typetest1(undef);  # TIV21; error EIV00
@@ -96,10 +95,13 @@ for my integer $i ( 0 .. $i_MAX ) {
 #    $string_retval = number_to_string([3]);  # TNV06; error ENV01
 #    $string_retval = number_to_string({a_key => 3});  # TNV07; error ENV01
 #    $string_retval = number_to_string(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679);  # TNV08
-#    RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n";
+    $string_retval = number_to_string(1_234_567.890_123_456);  # TNV08
+    RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n";
 
 #    $number_retval = number__typetest0();  # TNV10
 #    RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$number_retval = $number_retval\n";
+
+    croak('done');
 
 #    $number_retval = number__typetest1();  # TNV20; error PERLOPS ENV00, CPPOPS "Usage: main::number__typetest1(lucky_number)"
 #    $number_retval = number__typetest1(undef);  # TNV21; error ENV00

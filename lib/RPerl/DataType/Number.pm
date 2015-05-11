@@ -3,7 +3,7 @@ package RPerl::DataType::Number;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_040;
+our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent ('RPerl::DataType::Scalar');
@@ -71,15 +71,6 @@ our void $number_CHECKTRACE = sub {
     }
 };
 
-# BUG BOUNTY #000, 50 CodeCoin: modify all ::number*__to_string() to output underscores, to match LITERAL_NUMBER grammar token input
-
-
-# START HERE: find_replace_recurse '_croak();' ';' WITH ESCAPES, finish new number_to_string() w/ underscores below, continue updating Type_Types/* to print on different lines, finish Type_Types/*
-# START HERE: find_replace_recurse '_croak();' ';' WITH ESCAPES, finish new number_to_string() w/ underscores below, continue updating Type_Types/* to print on different lines, finish Type_Types/*
-# START HERE: find_replace_recurse '_croak();' ';' WITH ESCAPES, finish new number_to_string() w/ underscores below, continue updating Type_Types/* to print on different lines, finish Type_Types/*
-
-
-=DISABLE
 # [[[ STRINGIFY ]]]
 our string $number_to_string = sub {
     ( my $input_number ) = @_;
@@ -88,40 +79,45 @@ our string $number_to_string = sub {
     number_CHECKTRACE( $input_number, '$input_number', 'number_to_string()' );
 
 #    RPerl::diag "in PERLOPS_PERLTYPES number_to_string(), received \$input_number = $input_number\n";
-    return ("$input_number");
+#    RPerl::diag "in PERLOPS_PERLTYPES number_to_string()...\n";
 
-    my string $retval               = q{};
-    my $split_parts = [ split /[.]/xms, "$input_number" ];  # string_arrayref
-    my string $whole_part           = $split_parts->[0];
-    my string $decimal_part         = $split_parts->[1];
+    # DEV NOTE: disable old stringify w/out underscores
+#    return "$input_number";
 
-    RPerl::diag 'in PERLOPS_PERLTYPES number_to_string(), received $input_number = ' . $input_number . "\n";
+    my integer $is_negative = 0;
+    if ($input_number < 0) { $is_negative = 1; }
+    my string $retval;
+    my $split_parts = [ split /[.]/xms, "$input_number" ];   # string_arrayref
+
+    if ( exists $split_parts->[0] ) {
+        $retval = reverse $split_parts->[0];
+        if ($is_negative) { chop $retval; }  # remove negative sign
+        $retval =~ s/(\d{3})/$1_/gxms;
+        if ((substr $retval, -1, 1) eq '_') { chop $retval; }
+        $retval = reverse $retval;
+    }
+    else {
+        $retval = '0';
+    }
+
+    if ( exists $split_parts->[1] ) {
+        $split_parts->[1] =~ s/(\d{3})/$1_/gxms;
+        if ((substr $split_parts->[1], -1, 1) eq '_') { chop $split_parts->[1]; }
+        $retval .= '.' . $split_parts->[1];
+    }
+
+    if ($is_negative) { $retval = '-' . $retval; }
+
+#    RPerl::diag 'in PERLOPS_PERLTYPES number_to_string(), have $retval = ' . q{'} . $retval . q{'} . "\n";
+    return $retval;
 };
-=cut
-
-
-# [[[ STRINGIFY ]]]
-our string $number_to_string = sub {
-    ( my $input_number ) = @_;
-
-    #    number_CHECK($input_number);
-    number_CHECKTRACE( $input_number, '$input_number',
-        'number_to_string()' );
-
-#    RPerl::diag "in PERLOPS_PERLTYPES number_to_string(), bottom of subroutine, received \$input_number = $input_number\n" or croak();
-    return ("$input_number");
-};
-
-
-
-
-
 
 # [[[ TYPE TESTING ]]]
 our number $number__typetest0 = sub {
-    my number $retval = ( 22 / 7 ) + main::RPerl__DataType__Number__MODE_ID(); # return floating-point number value
+    my number $retval
+        = ( 22 / 7 ) + main::RPerl__DataType__Number__MODE_ID(); # return floating-point number value
 
-#    RPerl::diag "in PERLOPS_PERLTYPES number__typetest0(), have \$retval = $retval\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES number__typetest0(), have \$retval = $retval\n";
     return ($retval);
 };
 our number $number__typetest1 = sub {
@@ -131,8 +127,9 @@ our number $number__typetest1 = sub {
     number_CHECKTRACE( $lucky_number, '$lucky_number',
         'number__typetest1()' );
 
-#    RPerl::diag 'in PERLOPS_PERLTYPES number__typetest1(), received $lucky_number = ' . number_to_string($lucky_number) . "\n" or croak();
-    return ( ( $lucky_number * 2 ) + main::RPerl__DataType__Number__MODE_ID() );
+#    RPerl::diag 'in PERLOPS_PERLTYPES number__typetest1(), received $lucky_number = ' . number_to_string($lucky_number) . "\n";
+    return (
+        ( $lucky_number * 2 ) + main::RPerl__DataType__Number__MODE_ID() );
 };
 
 1;

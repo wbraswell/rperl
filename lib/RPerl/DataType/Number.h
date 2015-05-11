@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Number_h
-#define __CPP__INCLUDED__RPerl__DataType__Number_h 0.003_050
+#define __CPP__INCLUDED__RPerl__DataType__Number_h 0.004_000
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 // DEV NOTE: basic data types must be wholly independent of one another, to avoid weird redefining or undefining of subroutine errors
@@ -31,6 +31,12 @@ using std::cout;  using std::cerr;
 // [[[ TYPEDEFS ]]]
 typedef double number;
 
+// DEV NOTE, CORRELATION #09: must use return type 'string' instead of 'std::string' for proper typemap pack/unpack function name alignment;
+// can cause silent failure, falling back to __PERL__TYPES implementation and NOT failure of tests!
+// include String and Integer here for 'string' and 'integer' types used in number_to_string_CPPTYPES()
+#include <RPerl/DataType/String.cpp>
+#include <RPerl/DataType/Integer.cpp>
+
 // [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 # ifdef __PERL__TYPES
 SV* RPerl__DataType__Number__MODE_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
@@ -42,18 +48,20 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 # endif
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
-# ifdef __CPP__TYPES
+// DEV NOTE, CORRELATION #10: the pack/unpack subs (below) are called by number_to_string_CPPTYPES(), moved outside #ifdef blocks
+//# ifdef __CPP__TYPES
 number XS_unpack_number(SV* input_sv);
 void XS_pack_number(SV* output_sv, number input_number);
-# endif
+//# endif
 
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
 SV* number_to_string(SV* input_number);
 # elif defined __CPP__TYPES
-//string number_to_string(number input_number);
 std::string number_to_string(number input_number);
 # endif
+//string number_to_string(number input_number);
+std::string number_to_string_CPPTYPES(number input_number);
 
 // [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES

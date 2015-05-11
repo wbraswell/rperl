@@ -39,7 +39,7 @@ $input_vector = [-999999, 3.0, 4.0, 12.0];
 # loop to test for memory leaks
 my integer $i_MAX = 0;  # CONSTANT
 for my integer $i ( 0 .. $i_MAX ) {
-	RPerl::diag "in geometric_algebra_test_2_ipbve.pl, top of for() loop $i/$i_MAX\n" or croak();
+	RPerl::diag "in geometric_algebra_test_2_ipbve.pl, top of for() loop $i/$i_MAX\n";
 
     $retval_vector = inner_product__bivector_vector_euclidean($input_bivector, $input_vector);
 

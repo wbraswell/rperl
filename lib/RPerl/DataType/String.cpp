@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_cpp
-#define __CPP__INCLUDED__RPerl__DataType__String_cpp 0.003_003
+#define __CPP__INCLUDED__RPerl__DataType__String_cpp 0.003_060
 
 #include <RPerl/DataType/String.h>		// -> NULL (relies on native C type)
 
@@ -36,7 +36,8 @@ void string_CHECKTRACE(SV* possible_string, const char* variable_name, const cha
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 
-# ifdef __CPP__TYPES
+// DEV NOTE, CORRELATION #10: the pack/unpack subs (below) are called by number_to_string_CPPTYPES(), moved outside #ifdef blocks
+//# ifdef __CPP__TYPES
 
 // convert from (Perl SV containing string) to (C++ std::string)
 string XS_unpack_string(SV* input_sv)
@@ -62,7 +63,7 @@ void XS_pack_string(SV* output_sv, string input_string) {
 //fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string(), bottom of subroutine\n");
 }
 
-# endif
+//# endif
 
 // [[[ STRINGIFY ]]]
 // [[[ STRINGIFY ]]]

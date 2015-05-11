@@ -73,28 +73,28 @@ our integer_arrayref $integer_bubblesort = sub {
     my integer $integer_data_i_plus_1;
     my integer $swap;
 
-#    RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort(), top of subroutine...\n" or croak();
-#    RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort(), received \$integer_data\n" . Dumper($integer_data) . "\n" or croak();
-#    RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort(), have \$integer_data_length = $integer_data_length\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort(), top of subroutine...\n";
+#    RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort(), received \$integer_data\n" . Dumper($integer_data) . "\n";
+#    RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort(), have \$integer_data_length = $integer_data_length\n";
 
 # iterate through the length-n list up to n times (n * n == n**2), larger elements "bubble to the top" (end) of the list
     while ( not($is_sorted) ) {
 
-#        RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort(), top of WHILE loop\n" or croak();
+#        RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort(), top of WHILE loop\n";
         $is_sorted = 1;
         for my integer $i ( 0 .. ( $integer_data_length - 2 ) ) {
             $integer_data_i = $integer_data->[$i];
             $integer_data_i_plus_1 = $integer_data->[ ( $i + 1 ) ];
 
-#            RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort(), inside for() loop \$i = $i, have \$integer_data_i = $integer_data_i\n" or croak();
-#            RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort(), inside for() loop \$i = $i, have \$integer_data_i_plus_1 = $integer_data_i_plus_1\n" or croak();
+#            RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort(), inside for() loop \$i = $i, have \$integer_data_i = $integer_data_i\n";
+#            RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort(), inside for() loop \$i = $i, have \$integer_data_i_plus_1 = $integer_data_i_plus_1\n";
 
  # compare elements and swap if out-of-order, this is the core sort comparison
             if ( $integer_data_i > $integer_data_i_plus_1 ) {
 
    #            if ( $integer_data->[$i] > $integer_data->[ ( $i + 1 ) ] ) {
 
-#                RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort(), inside for() loop, SWAPPING\n" or croak();
+#                RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort(), inside for() loop, SWAPPING\n";
                 $is_sorted = 0;
                 $swap      = $integer_data_i;
 
@@ -125,25 +125,25 @@ our number_arrayref $number_bubblesort = sub {
     my integer $number_data_i_plus_1;
     my integer $swap;
 
-#    RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort(), top of subroutine...\n" or croak();
-#    RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort(), received \$number_data\n" . Dumper($number_data) . "\n" or croak();
-#    RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort(), have \$number_data_length = $number_data_length\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort(), top of subroutine...\n";
+#    RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort(), received \$number_data\n" . Dumper($number_data) . "\n";
+#    RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort(), have \$number_data_length = $number_data_length\n";
 
 # iterate through the length-n list up to n times (n * n == n**2), larger elements "bubble to the top" (end) of the list
     while ( not($is_sorted) ) {
 
-#        RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort(), top of WHILE loop\n" or croak();
+#        RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort(), top of WHILE loop\n";
         $is_sorted = 1;
         for my integer $i ( 0 .. ( $number_data_length - 2 ) ) {
             $number_data_i = $number_data->[$i];
             $number_data_i_plus_1 = $number_data->[ ( $i + 1 ) ];
 
-#            RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort(), inside for() loop \$i = $i, have \$number_data_i = $number_data_i\n" or croak();
-#            RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort(), inside for() loop \$i = $i, have \$number_data_i_plus_1 = $number_data_i_plus_1\n" or croak();
+#            RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort(), inside for() loop \$i = $i, have \$number_data_i = $number_data_i\n";
+#            RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort(), inside for() loop \$i = $i, have \$number_data_i_plus_1 = $number_data_i_plus_1\n";
 # compare elements and swap if out-of-order, this is the core sort comparison
             if ( $number_data_i > $number_data_i_plus_1 ) {
 
-#                RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort(), inside for() loop, SWAPPING\n" or croak();
+#                RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort(), inside for() loop, SWAPPING\n";
                 $is_sorted          = 0;
                 $swap               = $number_data_i;
                 $number_data->[$i] = $number_data_i_plus_1;
@@ -183,9 +183,9 @@ our string $integer_bubblesort__typetest0 = sub {
 #    my integer $how_lucky = scalar @{$lucky_integers};
 #    for my integer $i ( 0 .. ( $how_lucky - 1 ) ) {
 #        my $lucky_integer = $lucky_integers->[$i];
-#        RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort__typetest0(), have lucky_integer $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_integers->[$i] . ", BATBAR\n" or croak();
+#        RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort__typetest0(), have lucky_integer $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_integers->[$i] . ", BATBAR\n";
 #    }
-#    RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort__typetest0(), bottom of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES integer_bubblesort__typetest0(), bottom of subroutine\n";
 
     return (
         ::integer_arrayref_to_string(
@@ -205,9 +205,9 @@ our string $number_bubblesort__typetest0 = sub {
 #    my integer $how_lucky = scalar @{$lucky_numbers};
 #    for my integer $i ( 0 .. ( $how_lucky - 1 ) ) {
 #        my $lucky_number = $lucky_numbers->[$i];
-#        RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort__typetest0(), have lucky_number $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_numbers->[$i] . ", BATBAR\n" or croak();
+#        RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort__typetest0(), have lucky_number $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_numbers->[$i] . ", BATBAR\n";
 #    }
-#    RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort__typetest0(), bottom of subroutine\n" or croak();
+#    RPerl::diag "in PERLOPS_PERLTYPES number_bubblesort__typetest0(), bottom of subroutine\n";
 
     return (
         ::number_arrayref_to_string( number_bubblesort($lucky_numbers) )

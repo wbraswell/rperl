@@ -21,8 +21,17 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in Literal::Number->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $value           = $self->{children}->[0];
-    # BUG BOUNTY #000, 50 CodeCoin: modify all ::number*__to_string() to output underscores, to match LITERAL_NUMBER grammar token input
-    $rperl_source_group->{PMC} .= $value;
+    my string $value_type = type($value);
+    if ($value_type eq 'integer') {
+        $rperl_source_group->{PMC} .= integer_to_string($value);
+    }
+    elsif ($value_type eq 'number') {
+        $rperl_source_group->{PMC} .= number_to_string($value);
+    }
+    else {
+        $rperl_source_group->{PMC} .= $value;
+    }
+
 
     return $rperl_source_group;
 };
