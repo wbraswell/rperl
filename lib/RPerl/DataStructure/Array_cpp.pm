@@ -10,6 +10,7 @@ our $VERSION = 0.004_001;
 
 # [[[ SUBROUTINES ]]]
 our void_method $cpp_load = sub {
+#    print "HOWDY from Array_cpp::cpp_load()\n";
     my $need_load_cpp = 0;
     if (    ( exists $main::{'RPerl__DataStructure__Array__MODE_ID'} )
         and ( defined &{ $main::{'RPerl__DataStructure__Array__MODE_ID'} } ) )

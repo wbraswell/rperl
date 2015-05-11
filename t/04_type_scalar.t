@@ -12,6 +12,10 @@ our $VERSION = 0.005_021;
 # suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s)
 BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
+# TEMP DEBUGGING
+BEGIN { $ENV{RPERL_DEBUG} = 1; }
+#BEGIN { $ENV{TEST_VERBOSE} = 1; }  # should be set by .travis.yml instead of here
+
 use RPerl::Test;
 use Test::More tests => 289;
 use Test::Exception;
