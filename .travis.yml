@@ -2,13 +2,13 @@ language: perl
 # v0.001_020
 perl:
 # NEED FIX? Perl v5.8 $CPP_LINKED global symbol errors, leave disabled?
-#  - 5.8
-  - 5.10
-  - 5.12
-  - 5.14
-  - 5.16
-  - 5.18
-  - 5.20
+#  - "5.8"
+  - "5.10"
+  - "5.12"
+  - "5.14"
+  - "5.16"
+  - "5.18"
+  - "5.20"
 
 # DEV NOTE, CORRELATION #11: update g++ to 4.8 for full C++11 support, including:
 # -std=c++11, std::string::pop_back(), etc.
