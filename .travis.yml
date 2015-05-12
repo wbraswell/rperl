@@ -1,4 +1,5 @@
 language: perl
+# v0.001_000 
 perl:
 # NEED FIX? Perl v5.8 $CPP_LINKED global symbol errors, leave disabled?
 #  - "5.8"
@@ -17,17 +18,17 @@ before_install:
 
 install:
 - sudo apt-get install -qq g++-4.8
-- export CXX="g++-4.8"
+#- export CXX="g++-4.8"
 - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
 
 before_script:
-# UNCOMMENT LINE BELOW TO ENABLE TEST_VERBOSE STDOUT DURING `make test`
+# UNCOMMENT FOLLOWING LINE TO ENABLE TEST_VERBOSE STDOUT DURING `make test`
     - "export RPERL_VERBOSE=1"
-# UNCOMMENT LINE BELOW TO ENABLE NOISY BUILD DURING `make test`; REQUIRES RPERL_VERBOSE=1
+# UNCOMMENT FOLLOWING LINE TO ENABLE NOISY BUILD DURING `make test`; REQUIRES RPERL_VERBOSE=1
     - "export RPERL_DEBUG=1"
-# UNCOMMENT LINE BELOW FOR DEV VERSIONS OF MODULES, which travis can't get from Makefile.PL
+# UNCOMMENT FOLLOWING LINE FOR DEV VERSIONS OF MODULES, which travis can't get from Makefile.PL
 #  - cpanm -n INGY/Inline-C-0.62_03.tar.gz
-# travis already calls `cpanm --quiet --installdeps --notest .` itself
+# DEV NOTE, CORRELATION #11: following line was not necessary until before_install & install sections added
     - cpanm --quiet --installdeps --notest .
 
 # replace default build command "perl Makefile.PL && make test"
