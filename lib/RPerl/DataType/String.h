@@ -4,9 +4,14 @@ using std::cout;  using std::cerr;
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_h
 #define __CPP__INCLUDED__RPerl__DataType__String_h 0.003_060
 
+// [[[ TYPEDEFS ]]]
+// must be above Integer.cpp include, as Integer.cpp uses string type for it's own integer_to_string() subroutines [NO LONGER OVERRIDDEN BY DEV NOTE CORRELATION #12 BELOW???]
+typedef std::string string;
+typedef std::ostringstream ostringstream;
+
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
-// DEV NOTE: basic data types must be wholly independent of one another, to avoid weird redefining or undefining of subroutine errors
-//#include <RPerl/DataType/Integer.cpp>  // integer types used in *MODE_ID() subroutines
+// DEV NOTE, CORRELATION #12: basic data types must be wholly independent of one another, to avoid weird redefining or undefining of subroutine errors [INCORRECT???]
+#include <RPerl/DataType/Integer.cpp>  // integer types used in *MODE_ID() subroutines
 
 // [[[ TYPE-CHECKING MACROS ]]]
 #define string_CHECK(possible_string) \
@@ -26,10 +31,6 @@ using std::cout;  using std::cerr;
 // DEPRECATED, SEE MACROS ABOVE
 //void string_CHECK(SV* possible_string);
 //void string_CHECKTRACE(SV* possible_string, const char* variable_name, const char* subroutine_name);
-
-// [[[ TYPEDEFS ]]]
-typedef std::string string;
-typedef std::ostringstream ostringstream;
 
 // [[[ OPERATIONS & DATA TYPES REPORTING ]]]
 # ifdef __PERL__TYPES

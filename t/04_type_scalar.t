@@ -13,7 +13,7 @@ our $VERSION = 0.005_021;
 BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
 use RPerl::Test;
-use Test::More tests => 289;
+use Test::More tests => 310;
 use Test::Exception;
 my $ERROR_MAX = 0.00000001;
 
@@ -143,128 +143,182 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(                                                  # TIV02
         sub {
-            is( integer_to_string(3), '3',
-                q{TIV02 integer_to_string(3) returns correct value} );
+            is( integer_to_string(0), '0',
+                q{TIV02 integer_to_string(0) returns correct value} );
         },
-        q{TIV02 integer_to_string(3) lives}
+        q{TIV02 integer_to_string(0) lives}
     );
     lives_and(                                                  # TIV03
         sub {
-            is( integer_to_string(-17), '-17',
-                q{TIV03 integer_to_string(-17) returns correct value} );
+            is( integer_to_string(-0), '0',
+                q{TIV03 integer_to_string(-0) returns correct value} );
         },
-        q{TIV03 integer_to_string(-17) lives}
+        q{TIV03 integer_to_string(-0) lives}
     );
-    throws_ok(                                                  # TIV04
-        sub { integer_to_string(-17.3) },
-        "/EIV01.*$mode_tagline/",
-        q{TIV04 integer_to_string(-17.3) throws correct exception}
+    lives_and(                                                  # TIV04
+        sub {
+            is( integer_to_string(3), '3',
+                q{TIV04 integer_to_string(3) returns correct value} );
+        },
+        q{TIV04 integer_to_string(3) lives}
     );
-    throws_ok(                                                  # TIV05
-        sub { integer_to_string('-17.3') },
-        "/EIV01.*$mode_tagline/",
-        q{TIV05 integer_to_string('-17.3') throws correct exception}
+    lives_and(                                                  # TIV05
+        sub {
+            is( integer_to_string(-17), '-17',
+                q{TIV05 integer_to_string(-17) returns correct value} );
+        },
+        q{TIV05 integer_to_string(-17) lives}
     );
     throws_ok(                                                  # TIV06
-        sub { integer_to_string( [3] ) },
+        sub { integer_to_string(-17.3) },
         "/EIV01.*$mode_tagline/",
-        q{TIV06 integer_to_string([3]) throws correct exception}
+        q{TIV06 integer_to_string(-17.3) throws correct exception}
     );
     throws_ok(                                                  # TIV07
-        sub { integer_to_string( { a_key => 3 } ) },
+        sub { integer_to_string('-17.3') },
         "/EIV01.*$mode_tagline/",
-        q{TIV07 integer_to_string({a_key => 3}) throws correct exception}
+        q{TIV07 integer_to_string('-17.3') throws correct exception}
     );
-    lives_and(                                                  # TIV08
-        sub {
-            is( integer_to_string(-1_234_567_890), '-1234567890',
-                q{TIV08 integer_to_string(-1_234_567_890) returns correct value}
-            );
-        },
-        q{TIV08 integer_to_string(-1_234_567_890) lives}
+    throws_ok(                                                  # TIV08
+        sub { integer_to_string( [3] ) },
+        "/EIV01.*$mode_tagline/",
+        q{TIV08 integer_to_string([3]) throws correct exception}
     );
     throws_ok(                                                  # TIV09
+        sub { integer_to_string( { a_key => 3 } ) },
+        "/EIV01.*$mode_tagline/",
+        q{TIV09 integer_to_string({a_key => 3}) throws correct exception}
+    );
+    lives_and(                                                  # TIV10
+        sub {
+            is( integer_to_string(34_567_890), '34_567_890',
+                q{TIV10 integer_to_string(34_567_890) returns correct value}
+            );
+        },
+        q{TIV10 integer_to_string(34_567_890) lives}
+    );
+    lives_and(                                                  # TIV11
+        sub {
+            is( integer_to_string(-34_567_890), '-34_567_890',
+                q{TIV11 integer_to_string(-34_567_890) returns correct value}
+            );
+        },
+        q{TIV11 integer_to_string(-34_567_890) lives}
+    );
+    lives_and(                                                  # TIV12
+        sub {
+            is( integer_to_string(234_567_890), '234_567_890',
+                q{TIV12 integer_to_string(234_567_890) returns correct value}
+            );
+        },
+        q{TIV12 integer_to_string(234_567_890) lives}
+    );
+    lives_and(                                                  # TIV13
+        sub {
+            is( integer_to_string(-234_567_890), '-234_567_890',
+                q{TIV13 integer_to_string(-234_567_890) returns correct value}
+            );
+        },
+        q{TIV13 integer_to_string(-234_567_890) lives}
+    );
+    lives_and(                                                  # TIV14
+        sub {
+            is( integer_to_string(1_234_567_890), '1_234_567_890',
+                q{TIV14 integer_to_string(1_234_567_890) returns correct value}
+            );
+        },
+        q{TIV14 integer_to_string(1_234_567_890) lives}
+    );
+    lives_and(                                                  # TIV15
+        sub {
+            is( integer_to_string(-1_234_567_890), '-1_234_567_890',
+                q{TIV15 integer_to_string(-1_234_567_890) returns correct value}
+            );
+        },
+        q{TIV15 integer_to_string(-1_234_567_890) lives}
+    );
+    throws_ok(                                                  # TIV16
         sub {
             integer_to_string(
                 -1_234_567_890_000_000_000_000_000_000_000_000);
         },
         "/EIV01.*$mode_tagline/",
-        q{TIV09 integer_to_string(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
+        q{TIV16 integer_to_string(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
     );
-    lives_and(                                                  # TIV10
+    lives_and(                                                  # TIV20
         sub {
             is( integer__typetest0(),
                 ( 3 + $mode_id ),
-                q{TIV10 integer__typetest0() returns correct value}
+                q{TIV20 integer__typetest0() returns correct value}
             );
         },
-        q{TIV10 integer__typetest0() lives}
+        q{TIV20 integer__typetest0() lives}
     );
-    throws_ok(                                                  # TIV20
+    throws_ok(                                                  # TIV30
         sub { integer__typetest1() },
         "/(EIV00.*$mode_tagline)|(Usage.*integer__typetest1)/"
         ,    # DEV NOTE: 2 different error messages, RPerl & C
-        q{TIV20 integer__typetest1() throws correct exception}
+        q{TIV30 integer__typetest1() throws correct exception}
     );
-    throws_ok(    # TIV21
+    throws_ok(    # TIV31
         sub { integer__typetest1(undef) },
         "/EIV00.*$mode_tagline/",
-        q{TIV21 integer__typetest1(undef) throws correct exception}
+        q{TIV31 integer__typetest1(undef) throws correct exception}
     );
-    lives_and(    # TIV22
+    lives_and(    # TIV32
         sub {
             is( integer__typetest1(3),
                 ( ( 3 * 2 ) + $mode_id ),
-                q{TIV22 integer__typetest1(3) returns correct value}
+                q{TIV32 integer__typetest1(3) returns correct value}
             );
         },
-        q{TIV22 integer__typetest1(3) lives}
+        q{TIV32 integer__typetest1(3) lives}
     );
-    lives_and(    # TIV23
+    lives_and(    # TIV33
         sub {
             is( integer__typetest1(-17),
                 ( ( -17 * 2 ) + $mode_id ),
-                q{TIV23 integer__typetest1(-17) returns correct value}
+                q{TIV33 integer__typetest1(-17) returns correct value}
             );
         },
-        q{TIV23 integer__typetest1(-17) lives}
+        q{TIV33 integer__typetest1(-17) lives}
     );
-    throws_ok(    # TIV24
+    throws_ok(    # TIV34
         sub { integer__typetest1(-17.3) },
         "/EIV01.*$mode_tagline/",
-        q{TIV24 integer__typetest1(-17.3) throws correct exception}
+        q{TIV34 integer__typetest1(-17.3) throws correct exception}
     );
-    throws_ok(    # TIV25
+    throws_ok(    # TIV35
         sub { integer__typetest1('-17.3') },
         "/EIV01.*$mode_tagline/",
-        q{TIV25 integer__typetest1('-17.3') throws correct exception}
+        q{TIV35 integer__typetest1('-17.3') throws correct exception}
     );
-    throws_ok(    # TIV26
+    throws_ok(    # TIV36
         sub { integer__typetest1( [3] ) },
         "/EIV01.*$mode_tagline/",
-        q{TIV26 integer__typetest1([3]) throws correct exception}
+        q{TIV36 integer__typetest1([3]) throws correct exception}
     );
-    throws_ok(    # TIV27
+    throws_ok(    # TIV37
         sub { integer__typetest1( { a_key => 3 } ) },
         "/EIV01.*$mode_tagline/",
-        q{TIV27 integer__typetest1({a_key => 3}) throws correct exception}
+        q{TIV37 integer__typetest1({a_key => 3}) throws correct exception}
     );
-    lives_and(    # TIV28
+    lives_and(    # TIV38
         sub {
             is( integer__typetest1(-234_567_890),
                 ( ( -234_567_890 * 2 ) + $mode_id ),
-                q{TIV28 integer__typetest1(-234_567_890) returns correct value}
+                q{TIV38 integer__typetest1(-234_567_890) returns correct value}
             );
         },
-        q{TIV28 integer__typetest1(-234_567_890) lives}
+        q{TIV38 integer__typetest1(-234_567_890) lives}
     );
-    throws_ok(    # TIV29
+    throws_ok(    # TIV39
         sub {
             integer__typetest1(
                 -1_234_567_890_000_000_000_000_000_000_000_000);
         },
         "/EIV01.*$mode_tagline/",
-        q{TIV29 integer__typetest1(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
+        q{TIV39 integer__typetest1(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
     );
 
     # [[[ NUMBER TESTS ]]]

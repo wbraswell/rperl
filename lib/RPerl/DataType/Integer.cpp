@@ -2,15 +2,15 @@
 //using std::cout;  using std::cerr;  // not needed for integer?
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_cpp
-#define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 0.003_050
+#define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 0.004_000
 
 #include <RPerl/DataType/Integer.h>		// -> NULL (relies on native C type)
 
-// [[[ TYPE-CHECKING SUBROUTINES ]]]
-// [[[ TYPE-CHECKING SUBROUTINES ]]]
-// [[[ TYPE-CHECKING SUBROUTINES ]]]
+// [[[ TYPE-CHECKING ]]]
+// [[[ TYPE-CHECKING ]]]
+// [[[ TYPE-CHECKING ]]]
 
-// DEPRECATED IN FAVOR OF EQUIVALENT MACROS
+// TYPE-CHECKING SUBROUTINES DEPRECATED IN FAVOR OF EQUIVALENT MACROS
 /*
 void integer_CHECK(SV* possible_integer) {
     if (not(SvOK(possible_integer))) {
@@ -36,7 +36,8 @@ void integer_CHECKTRACE(SV* possible_integer, const char* variable_name, const c
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 
-# ifdef __CPP__TYPES
+// DEV NOTE, CORRELATION #10: the pack/unpack subs (below) are called by *_to_string_CPPTYPES(), moved outside #ifdef blocks
+//# ifdef __CPP__TYPES
 
 // convert from (Perl SV containing integer) to (C integer)
 integer XS_unpack_integer(SV* input_sv) {
@@ -66,7 +67,7 @@ void XS_pack_integer(SV* output_sv, integer input_integer) {
 //fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer(), bottom of subroutine\n");
 }
 
-# endif
+//# endif
 
 // [[[ STRINGIFY ]]]
 // [[[ STRINGIFY ]]]
@@ -78,23 +79,85 @@ SV* integer_to_string(SV* input_integer)
 {
 //	integer_CHECK(input_integer);
 	integer_CHECKTRACE(input_integer, "input_integer", "integer_to_string()");
-//fprintf(stderr, "in CPPOPS_PERLTYPES integer_to_string(), bottom of subroutine, received input_integer = %d\n", (integer)SvIV(input_integer));
-	return(newSVpvf("%d", (integer)SvIV(input_integer)));
+//	fprintf(stderr, "in CPPOPS_PERLTYPES integer_to_string(), top of subroutine, received unformatted input_integer = %d\n", (integer)SvIV(input_integer));
+
+    // DEV NOTE: disable old stringify w/out underscores
+//	return(newSVpvf("%d", (integer)SvIV(input_integer)));
+
+    return(newSVpv((const char *)((integer_to_string_CPPTYPES((integer)SvIV(input_integer))).c_str()), 0));
 }
 
 # elif defined __CPP__TYPES
 
-//string integer_to_string(integer input_integer)
-std::string integer_to_string(integer input_integer)
+// DEV NOTE, CORRELATION #10: shim CPPTYPES sub
+string integer_to_string(integer input_integer) {
+    return(integer_to_string_CPPTYPES(input_integer));
+}
+
+/*
+string integer_to_string(integer input_integer)
+//std::string integer_to_string(integer input_integer)
 {
-//fprintf(stderr, "in CPPOPS_CPPTYPES integer_to_string(), top of subroutine, received input_integer = %d\n", input_integer);
-//	string output_string = "";
-	std::string output_string = "";
+    fprintf(stderr, "in CPPOPS_CPPTYPES integer_to_string(), top of subroutine, received input_integer = %d\n", input_integer);
+	string output_string = "";
+//	std::string output_string = "";
 	sprintf((char*)output_string.c_str(), "%d", input_integer);
 	return(output_string);
 }
+*/
 
 # endif
+
+// DEV NOTE, CORRELATION #09: must use return type 'string' instead of 'std::string' for proper typemap pack/unpack function name alignment;
+// can cause silent failure, falling back to __PERL__TYPES implementation and NOT failure of tests!
+// DEV NOTE, CORRELATION #10: the real CPPTYPES sub (below) is called by the wrapper PERLTYPES sub and shim CPPTYPES subs (above), moved outside #ifdef blocks
+string integer_to_string_CPPTYPES(integer input_integer)
+{
+//    fprintf(stderr, "in CPPOPS_CPPTYPES integer_to_string_CPPTYPES(), top of subroutine, received unformatted input_integer = %d\n", input_integer);
+//    fprintf(stderr, "in CPPOPS_CPPTYPES integer_to_string_CPPTYPES()...\n");
+
+    std::ostringstream output_stream;
+    output_stream.precision(std::numeric_limits<double>::digits10);
+    output_stream << input_integer;
+
+    // DEV NOTE: disable old stringify w/out underscores
+//  return(output_stream.str());
+
+    string output_string = output_stream.str();
+//    fprintf(stderr, "in CPPOPS_CPPTYPES integer_to_string_CPPTYPES(), have output_string = %s\n", output_string.c_str());
+
+    integer is_negative = 0;
+    if (input_integer < 0) { is_negative = 1; }
+
+    std::reverse(output_string.begin(), output_string.end());
+
+//    fprintf(stderr, "in CPPOPS_CPPTYPES integer_to_string_CPPTYPES(), have reversed output_string = %s\n", output_string.c_str());
+    if (is_negative) { output_string.pop_back(); }  // remove negative sign
+
+    string output_string_underscores = "";
+    for(std::string::size_type i = 0; i < output_string.size(); ++i) {
+//        fprintf(stderr, "in CPPOPS_CPPTYPES integer_to_string_CPPTYPES(), inside output_string underscore loop, have i = %d, output_string[i] = %c\n", (int)i, output_string[i]);
+        output_string_underscores += output_string[i];
+        if (((i % 3) == 2) && (i > 0) && (i != (output_string.size() - 1))) {
+//            fprintf(stderr, "in CPPOPS_CPPTYPES integer_to_string_CPPTYPES(), AND UNDERSCORE \n");
+            output_string_underscores += '_';
+        }
+    }
+
+//    fprintf(stderr, "in CPPOPS_CPPTYPES integer_to_string_CPPTYPES(), have reversed output_string_underscores = %s\n", output_string_underscores.c_str());
+
+    std::reverse(output_string_underscores.begin(), output_string_underscores.end());
+
+    if (output_string_underscores == "") {
+        output_string_underscores = "0";
+    }
+
+//    fprintf(stderr, "in CPPOPS_CPPTYPES integer_to_string_CPPTYPES(), have unreversed output_string_underscores = %s\n", output_string_underscores.c_str());
+
+    if (is_negative) { output_string_underscores = '-' + output_string_underscores; }
+
+    return(output_string_underscores);
+}
 
 // [[[ TYPE TESTING ]]]
 // [[[ TYPE TESTING ]]]

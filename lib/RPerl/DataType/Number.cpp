@@ -36,6 +36,7 @@ void number_CHECKTRACE(SV* possible_number, const char* variable_name, const cha
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 
+// DEV NOTE, CORRELATION #10: the pack/unpack subs (below) are called by *_to_string_CPPTYPES(), moved outside #ifdef blocks
 //# ifdef __CPP__TYPES
 
 // convert from (Perl SV containing number) to (C number)
@@ -142,7 +143,7 @@ string number_to_string_CPPTYPES(number input_number)
 
     string whole_part_underscores = "";
     for(std::string::size_type i = 0; i < whole_part.size(); ++i) {
-//        fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), inside whole_part underscore loop, have i = %d, whole_part[i] = %c\n", i, whole_part[i]);
+//        fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), inside whole_part underscore loop, have i = %d, whole_part[i] = %c\n", (int)i, whole_part[i]);
         whole_part_underscores += whole_part[i];
         if (((i % 3) == 2) && (i > 0) && (i != (whole_part.size() - 1))) {
 //            fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), AND UNDERSCORE \n");
@@ -162,7 +163,7 @@ string number_to_string_CPPTYPES(number input_number)
 
     string decimal_part_underscores = "";
     for(std::string::size_type i = 0; i < decimal_part.size(); ++i) {
-//        fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), inside decimal_part underscore loop, have i = %d, decimal_part[i] = %c\n", i, decimal_part[i]);
+//        fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), inside decimal_part underscore loop, have i = %d, decimal_part[i] = %c\n", (int)i, decimal_part[i]);
         decimal_part_underscores += decimal_part[i];
         if (((i % 3) == 2) && (i > 0) && (i != (decimal_part.size() - 1))) {
 //            fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), AND UNDERSCORE \n");

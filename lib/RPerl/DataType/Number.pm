@@ -3,7 +3,7 @@ package RPerl::DataType::Number;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_000;
+our $VERSION = 0.004_001;
 
 # [[[ OO INHERITANCE ]]]
 use parent ('RPerl::DataType::Scalar');
@@ -106,7 +106,7 @@ our string $number_to_string = sub {
         $retval .= '.' . $split_parts->[1];
     }
 
-    if ($is_negative) { $retval = '-' . $retval; }
+    if ($is_negative) { $retval = q{-} . $retval; }
 
 #    RPerl::diag 'in PERLOPS_PERLTYPES number_to_string(), have $retval = ' . q{'} . $retval . q{'} . "\n";
     return $retval;

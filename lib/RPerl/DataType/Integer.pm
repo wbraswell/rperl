@@ -2,7 +2,7 @@ package RPerl::DataType::Integer;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_031;
+our $VERSION = 0.004_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -59,13 +59,30 @@ our string $integer_to_string = sub {
     integer_CHECKTRACE( $input_integer, '$input_integer',
         'integer_to_string()' );
 
-#    RPerl::diag "in PERLOPS_PERLTYPES integer_to_string(), bottom of subroutine, received \$input_integer = $input_integer\n";
-    return ("$input_integer");
+#    RPerl::diag "in PERLOPS_PERLTYPES integer_to_string(), received \$input_integer = $input_integer\n";
+#    RPerl::diag "in PERLOPS_PERLTYPES integer_to_string()...\n";
+
+    # DEV NOTE: disable old stringify w/out underscores
+    #    return "$input_integer";
+
+    my integer $is_negative = 0;
+    if ( $input_integer < 0 ) { $is_negative = 1; }
+    my string $retval = reverse "$input_integer";
+    if ($is_negative) { chop $retval; }    # remove negative sign
+    $retval =~ s/(\d{3})/$1_/gxms;
+    if ( ( substr $retval, -1, 1 ) eq '_' ) { chop $retval; }
+    $retval = reverse $retval;
+
+    if ($is_negative) { $retval = q{-} . $retval; }
+
+#    RPerl::diag 'in PERLOPS_PERLTYPES integer_to_string(), have $retval = ' . q{'} . $retval . q{'} . "\n";
+    return $retval;
 };
 
 # [[[ TYPE TESTING ]]]
 our integer $integer__typetest0 = sub {
-    my integer $retval = ( 21 / 7 ) + main::RPerl__DataType__Integer__MODE_ID(); # return integer (not number) value, don't do (22 / 7) etc.
+    my integer $retval
+        = ( 21 / 7 ) + main::RPerl__DataType__Integer__MODE_ID(); # return integer (not number) value, don't do (22 / 7) etc.
 
 #    RPerl::diag "in PERLOPS_PERLTYPES integer__typetest0(), have \$retval = $retval\n";
     return ($retval);
@@ -78,7 +95,8 @@ our integer $integer__typetest1 = sub {
         'integer__typetest1()' );
 
 #    RPerl::diag 'in PERLOPS_PERLTYPES integer__typetest1(), received $lucky_integer = ' . integer_to_string($lucky_integer) . "\n";
-    return ( ( $lucky_integer * 2 ) + main::RPerl__DataType__Integer__MODE_ID() );
+    return (
+        ( $lucky_integer * 2 ) + main::RPerl__DataType__Integer__MODE_ID() );
 };
 
 1;

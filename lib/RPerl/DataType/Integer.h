@@ -2,17 +2,17 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_h
-#define __CPP__INCLUDED__RPerl__DataType__Integer_h 0.003_050
+#define __CPP__INCLUDED__RPerl__DataType__Integer_h 0.004_000
 
 // [[[ TYPEDEFS ]]]
 // DEV NOTE: must use "integer" typedef because "int" is already defined by Inline's default typemap, even if we put our own integer entry into typemap.rperl;
 // if we allow Inline default int, then it will accept all kinds of non-integer values which should be filtered by XS_unpack_integer() and CHECK();
-// must be above String.cpp include, as String.cpp uses integer type for it's own *MODE_ID() subroutines [OVERRIDDEN BY DEV NOTE BELOW]
+// must be above String.cpp include, as String.cpp uses integer type for it's own *MODE_ID() subroutines [NO LONGER OVERRIDDEN BY DEV NOTE CORRELATION #12 BELOW???]
 typedef int integer;
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
-// DEV NOTE: basic data types must be wholly independent of one another, to avoid weird redefining or undefining of subroutine errors
-//#include <RPerl/DataType/String.cpp>  // string types used in stringify_*() subroutines
+// DEV NOTE, CORRELATION #12: basic data types must be wholly independent of one another, to avoid weird redefining or undefining of subroutine errors [INCORRECT???]
+#include <RPerl/DataType/String.cpp>  // string types used in *_to_string() subroutines
 
 // [[[ TYPE-CHECKING MACROS ]]]
 #define integer_CHECK(possible_integer) \
@@ -43,18 +43,21 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 # endif
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
-# ifdef __CPP__TYPES
+// DEV NOTE, CORRELATION #10: the pack/unpack subs (below) are called by *_to_string_CPPTYPES(), moved outside #ifdef blocks
+//# ifdef __CPP__TYPES
 integer XS_unpack_integer(SV* input_sv);
 void XS_pack_integer(SV* output_sv, integer input_integer);
-# endif
+//# endif
 
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
 SV* integer_to_string(SV* input_integer);
 # elif defined __CPP__TYPES
-//string integer_to_string(integer input_integer);
-std::string integer_to_string(integer input_integer);
+string integer_to_string(integer input_integer);
+//std::string integer_to_string(integer input_integer);
 # endif
+//string integer_to_string_CPPTYPES(integer input_integer);
+std::string integer_to_string_CPPTYPES(integer input_integer);
 
 // [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES

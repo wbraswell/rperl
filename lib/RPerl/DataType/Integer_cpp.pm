@@ -10,7 +10,6 @@ our $VERSION = 0.001_010;
 
 # [[[ SUBROUTINES ]]]
 our void_method $cpp_load = sub {
-#    print "HOWDY from Integer_cpp::cpp_load()\n";
     my $need_load_cpp = 0;
     if (    ( exists $main::{'RPerl__DataType__Integer__MODE_ID'} )
         and ( defined &{ $main::{'RPerl__DataType__Integer__MODE_ID'} } ) )
