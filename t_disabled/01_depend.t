@@ -7,7 +7,7 @@ use Test::More tests => 14;
 use Test::Exception;
 
 BEGIN {
-    if ( $ENV{TEST_VERBOSE} ) {
+    if ( $ENV{RPERL_VERBOSE} ) {
         diag("[[[ Beginning Dependency Tests ]]]");
     }
 }

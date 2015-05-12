@@ -44,11 +44,13 @@ our @EXPORT
 # changed on a per-file basis by preprocessor directive, see RPerl::CompileUnit::Module::Class::INIT
 # NEED UPGRADE: enable in RPerl system code when bootstrapping compiler
 our $CHECK = 'OFF';
-our $DEBUG = 0; # Perl variable $RPerl::DEBUG and environmental variable RPERL_DEBUG are equivalent, see diag*() below
-our $VERBOSE = 0; # Perl variable $RPerl::VERBOSE and environmental variable RPERL_VERBOSE are equivalent, see verbose*() below
+our $DEBUG = 0; # $RPerl::DEBUG & env var RPERL_DEBUG are equivalent, default to off, see diag*() below
+our $VERBOSE = 0; # $RPerl::VERBOSE & env var RPERL_VERBOSE are equivalent, default to off, see verbose*() below
+our $WARNINGS = 1; # $RPerl::WARNINGS & env var RPERL_WARNINGS are equivalent, default to on, see warn*() below
 
 # [[[ SUBROUTINES SPECIAL ]]]
 
+=DISABLE
 # NEED UPGRADE: replace Data::Dumper with pure-RPerl equivalent?
 sub DUMPER {
     ( my $dumpee ) = @_;
@@ -59,6 +61,7 @@ sub DUMPER {
         if ( defined( eval( q{$} . ref($dumpee) . q{::DUMPER} ) ) );
     return Dumper($dumpee);
 }
+=cut
 
 # NEED UPGRADE: enable variable number of arguments as seen below
 sub diag {
@@ -66,6 +69,7 @@ sub diag {
     #    ( my $message ) = @_;
     my @messages = @_;
 
+    # default to off; if either variable is set to true, then do emit messages
   #    if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) { print {*STDERR} $message; }
     if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) {
         foreach my $message (@messages) { print {*STDERR} $message; }
@@ -86,6 +90,8 @@ sub diag_pause {
 
 sub verbose {
     my @messages = @_;
+
+    # default to off; if either variable is set to true, then do emit messages
     if ( $ENV{RPERL_VERBOSE} or $RPerl::VERBOSE ) {
         foreach my $message (@messages) { print {*STDOUT} $message; }
     }
@@ -103,6 +109,16 @@ sub verbose_pause {
 
 sub verbose_reset {
     if ( $ENV{RPERL_VERBOSE} or $RPerl::VERBOSE ) { system 'reset'; }
+    return 1;
+}
+
+sub warn {
+    my @messages = @_;
+    
+    # default to on; if either variable is set to false, then do not emit messages
+    if (((not defined $ENV{RPERL_WARNINGS}) or $ENV{RPERL_WARNINGS}) and $RPerl::WARNINGS) {
+        foreach my $message (@messages) { print {*STDERR} $message; }
+    }
     return 1;
 }
 
@@ -269,9 +285,7 @@ if ( scalar @{$rperls_found} == 0 ) {
 }
 my $rperl_found = $rperls_found->[0];
 if ( scalar @{$rperls_found} > 1 ) {
-    if ((not defined $ENV{RPERL_WARNINGS}) or ($ENV{RPERL_WARNINGS} != 0)) {
-        print {*STDERR} 'WARNING WEXRP00: Found multiple rperl executables, using first located, ', $rperl_found, "\n";
-    }
+    RPerl::warn('WARNING WEXRP00: Found multiple rperl executables, using first located, ' . $rperl_found . "\n");
 }
 
 my $rperl_pm_found = undef;

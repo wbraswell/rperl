@@ -13,7 +13,7 @@ use Test::Exception;
 use RPerl::Test;
 
 BEGIN {
-    if ( $ENV{TEST_VERBOSE} ) {
+    if ( $ENV{RPERL_VERBOSE} ) {
         diag(
             '[[[ Beginning Object-Oriented Inheritance Pre-Test Loading, RPerl Type System ]]]'
         );
@@ -39,7 +39,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 #for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
 #    RPerl::diag "in 07_oo_inherit.t, top of for() loop, have \$mode_id = $mode_id\n";
     my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
-    if ( $ENV{TEST_VERBOSE} ) {
+    if ( $ENV{RPERL_VERBOSE} ) {
         Test::More::diag( 
                   '[[[ Beginning RPerl Object-Oriented Inheritance Tests, '
                 . RPerl::Test::mode_description($mode)

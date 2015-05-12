@@ -4,8 +4,8 @@ use warnings;
 our $VERSION = 0.001_010;
 
 #use RPerl;  # ERROR: Too late to run INIT block at ...
-
 #use Config;
+use RPerl::Config;  # for $RPerl::DEBUG
 
 # long form
 #use Inline CPP => config => classes =>
@@ -24,12 +24,12 @@ our @ARGS = (
 
 # NEED UPGRADE: strip C++ incompat CFLAGS
 #  ccflags => $Config{ccflags} . ' -DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
-    ccflagsex =>
-        '-DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
+#    ccflagsex => '-DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
+    ccflagsex => '-DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix',  # replace -std=c++0x w/ -std=c++11 for std::string::pop_back()
     inc               => "-I$RPerl::INCLUDE_PATH",
-    build_noisy       => $ENV{TEST_VERBOSE},
+    build_noisy       => ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ),  # suppress or display actual g++ compiler commands
     clean_after_build => 0,                          # cache it
-    warnings          => 1,
+    warnings          => (((not defined $ENV{RPERL_WARNINGS}) or $ENV{RPERL_WARNINGS}) and $RPerl::WARNINGS),  # suppress or display Inline warnings
     filters           => 'Preprocess',
     auto_include => # DEV NOTE: include non-RPerl files using AUTO_INCLUDE so they are not parsed by the 'Preprocess' filter
         [

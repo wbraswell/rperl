@@ -13,12 +13,12 @@ use English qw(-no_match_vars);
 my $ERROR_MAX = 0.00000001;
 
 BEGIN {
-    if ( $ENV{TEST_VERBOSE} ) {
+    if ( $ENV{RPERL_VERBOSE} ) {
         diag('[[[ Beginning Inline::CPP Pre-Test Loading ]]]');
     }
 }
 
-if ( $ENV{TEST_VERBOSE} ) {
+if ( $ENV{RPERL_VERBOSE} ) {
     diag('[[[ Beginning Entirety Of Tests From The Inline::CPP POD ]]]');
 }
 

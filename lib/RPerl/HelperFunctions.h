@@ -1,5 +1,5 @@
 #ifndef __CPP__INCLUDED__RPerl__HelperFunctions_h
-#define __CPP__INCLUDED__RPerl__HelperFunctions_h 0.002_030
+#define __CPP__INCLUDED__RPerl__HelperFunctions_h 0.002_040
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
@@ -15,21 +15,21 @@ ostringstream RPerl__diag;
 
 ostream& operator<<(ostream& ostream_object, const char* char_star_input)
 {
-        if (getenv("TEST_VERBOSE") { cerr << char_star_input; }
+        if (getenv("RPERL_DEBUG") { cerr << char_star_input; }
         return ostream_object;
 }
 
 ostream& operator<<(ostream& ostream_object, std::string string_input)
 {
-        if (getenv("TEST_VERBOSE") { cerr << string_input; }
+        if (getenv("RPERL_DEBUG") { cerr << string_input; }
         return ostream_object;
 }
 */
 
 // [[[ DEBUG DEFINES ]]]
-#define TEST_VERBOSE 1  // NEED FIX: access actual environmental variable TEST_VERBOSE!
-#define TEST_VERBOSE2 1
-#define TEST_VERBOSE3 1  // NEED FIX: these debug statements cause memory leaks by increasing the refcounts of data_i, data_i_plus_1, and swap
+#define RPERL_DEBUG 1  // NEED FIX: access actual environmental variable RPERL_DEBUG!
+#define RPERL_DEBUG2 1
+#define RPERL_DEBUG3 1  // NEED FIX: these debug statements cause memory leaks by increasing the refcounts of data_i, data_i_plus_1, and swap
 
 // [[[ HELPER MACROS ]]]
 #define SvAROKp(input_av_ref) (SvROK(input_av_ref) && (SvTYPE(SvRV(input_av_ref)) == SVt_PVAV))  // DEV NOTE: look P5P, I invented macros that should probably be in the P5 core!

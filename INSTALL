@@ -1,5 +1,5 @@
 # RPerl v1.0 Beta 2, Install Notes
-# Last Updated April 24, 2015
+# Last Updated May 11, 2015
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # NOTE: STEPS 0 AND 1 ARE ONLY FOR SINGLE-USER INSTALL, NOT SYSTEM-WIDE INSTALL
@@ -80,6 +80,8 @@ $ cd rperl*
 $ perl Makefile.PL
 $ cpanm --installdeps .  # note the dot at the end of this command
 $ make; make test; make install
+# OR
+$ make; make test TEST_VERBOSE=1; make install
 
 ################################################################################
 # STEP 3.

@@ -15,7 +15,7 @@ use Test::More tests => 211;
 use Test::Exception;
 
 BEGIN {
-    if ( $ENV{TEST_VERBOSE} ) {
+    if ( $ENV{RPERL_VERBOSE} ) {
         diag(
             '[[[ Beginning Array Type Pre-Test Loading, RPerl Type System ]]]'
         );
@@ -37,7 +37,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 #for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
 #    RPerl::diag "in 05_type_array.t, top of for() loop, have \$mode_id = $mode_id\n";
     my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
-    if ( $ENV{TEST_VERBOSE} ) {
+    if ( $ENV{RPERL_VERBOSE} ) {
         Test::More::diag( '[[[ Beginning RPerl Array Type Tests, '
                 . RPerl::Test::mode_description($mode)
                 . ' ]]]' );

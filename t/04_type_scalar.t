@@ -12,17 +12,13 @@ our $VERSION = 0.005_021;
 # suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s)
 BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
-# TEMP DEBUGGING
-BEGIN { $ENV{RPERL_DEBUG} = 1; }
-#BEGIN { $ENV{TEST_VERBOSE} = 1; }  # should be set by .travis.yml instead of here
-
 use RPerl::Test;
 use Test::More tests => 289;
 use Test::Exception;
 my $ERROR_MAX = 0.00000001;
 
 BEGIN {
-    if ( $ENV{TEST_VERBOSE} ) {
+    if ( $ENV{RPERL_VERBOSE} ) {
         Test::More::diag(
             "[[[ Beginning Scalar Type Pre-Test Loading, RPerl Type System ]]]"
         );
@@ -60,7 +56,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 #for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
 #    RPerl::diag "in 04_type_scalar.t, top of for() loop, have \$mode_id = $mode_id\n";
     my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
-    if ( $ENV{TEST_VERBOSE} ) {
+    if ( $ENV{RPERL_VERBOSE} ) {
         Test::More::diag( '[[[ Beginning RPerl Scalar Type Tests, '
                 . RPerl::Test::mode_description($mode)
                 . ' ]]]' );

@@ -16,11 +16,11 @@ my $ERROR_MAX = 0.00000001;
 #$SIG{__WARN__}=sub {cluck $_[0]};  # DEBUGGING
 
 BEGIN {
-    if ( $ENV{TEST_VERBOSE} ) {
+    if ( $ENV{RPERL_VERBOSE} ) {
         diag('[[[ Beginning Inline::C Pre-Test Loading ]]]');
     }
 }
-if ( $ENV{TEST_VERBOSE} ) {
+if ( $ENV{RPERL_VERBOSE} ) {
     diag('[[[ Beginning Selection Of Tests From The Inline::C Cookbook ]]]');
 }
 
