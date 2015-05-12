@@ -80,6 +80,7 @@ SV* integer_to_string(SV* input_integer)
 //	integer_CHECK(input_integer);
 	integer_CHECKTRACE(input_integer, "input_integer", "integer_to_string()");
 //	fprintf(stderr, "in CPPOPS_PERLTYPES integer_to_string(), top of subroutine, received unformatted input_integer = %d\n", (integer)SvIV(input_integer));
+//	fprintf(stderr, "in CPPOPS_PERLTYPES integer_to_string()...\n");
 
     // DEV NOTE: disable old stringify w/out underscores
 //	return(newSVpvf("%d", (integer)SvIV(input_integer)));
@@ -93,18 +94,6 @@ SV* integer_to_string(SV* input_integer)
 string integer_to_string(integer input_integer) {
     return(integer_to_string_CPPTYPES(input_integer));
 }
-
-/*
-string integer_to_string(integer input_integer)
-//std::string integer_to_string(integer input_integer)
-{
-    fprintf(stderr, "in CPPOPS_CPPTYPES integer_to_string(), top of subroutine, received input_integer = %d\n", input_integer);
-	string output_string = "";
-//	std::string output_string = "";
-	sprintf((char*)output_string.c_str(), "%d", input_integer);
-	return(output_string);
-}
-*/
 
 # endif
 

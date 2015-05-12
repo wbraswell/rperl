@@ -38,8 +38,7 @@ typedef double number;
 # ifdef __PERL__TYPES
 SV* RPerl__DataType__Number__MODE_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
 # elif defined __CPP__TYPES
-//integer RPerl__DataType__Number__MODE_ID() { integer retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 2
-int RPerl__DataType__Number__MODE_ID() { int retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 2
+integer RPerl__DataType__Number__MODE_ID() { integer retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 2
 # else
 Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_exactly_one!
 # endif
@@ -55,10 +54,10 @@ void XS_pack_number(SV* output_sv, number input_number);
 # ifdef __PERL__TYPES
 SV* number_to_string(SV* input_number);
 # elif defined __CPP__TYPES
-std::string number_to_string(number input_number);
+string number_to_string(number input_number);
 # endif
 //string number_to_string_CPPTYPES(number input_number);
-std::string number_to_string_CPPTYPES(number input_number);
+string number_to_string_CPPTYPES(number input_number);
 
 // [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES

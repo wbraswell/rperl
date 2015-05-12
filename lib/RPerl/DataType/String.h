@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_h
-#define __CPP__INCLUDED__RPerl__DataType__String_h 0.003_060
+#define __CPP__INCLUDED__RPerl__DataType__String_h 0.004_000
 
 // [[[ TYPEDEFS ]]]
 // must be above Integer.cpp include, as Integer.cpp uses string type for it's own integer_to_string() subroutines [NO LONGER OVERRIDDEN BY DEV NOTE CORRELATION #12 BELOW???]
@@ -36,8 +36,7 @@ typedef std::ostringstream ostringstream;
 # ifdef __PERL__TYPES
 SV* RPerl__DataType__String__MODE_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
 # elif defined __CPP__TYPES
-//integer RPerl__DataType__String__MODE_ID() { integer retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 2
-int RPerl__DataType__String__MODE_ID() { int retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 2
+integer RPerl__DataType__String__MODE_ID() { integer retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 2
 # else
 Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_exactly_one!
 # endif

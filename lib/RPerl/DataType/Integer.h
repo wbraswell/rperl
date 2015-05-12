@@ -54,10 +54,8 @@ void XS_pack_integer(SV* output_sv, integer input_integer);
 SV* integer_to_string(SV* input_integer);
 # elif defined __CPP__TYPES
 string integer_to_string(integer input_integer);
-//std::string integer_to_string(integer input_integer);
 # endif
-//string integer_to_string_CPPTYPES(integer input_integer);
-std::string integer_to_string_CPPTYPES(integer input_integer);
+string integer_to_string_CPPTYPES(integer input_integer);
 
 // [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
