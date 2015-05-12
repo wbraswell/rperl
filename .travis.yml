@@ -9,6 +9,16 @@ perl:
   - "5.18"
   - "5.20"
 
+# DEV NOTE, CORRELATION #11: update g++ to 4.8 for full C++11 support, including:
+# -std=c++11, std::string::pop_back(), etc.
+before_install:
+- sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+- sudo apt-get update -qq
+
+install:
+- sudo apt-get install -qq g++-4.8
+- export CXX="g++-4.8"
+
 before_script:
 # UNCOMMENT LINE BELOW TO ENABLE TEST_VERBOSE STDOUT DURING `make test`
     - "export RPERL_VERBOSE=1"
