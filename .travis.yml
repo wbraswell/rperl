@@ -24,9 +24,10 @@ before_script:
     - "export RPERL_VERBOSE=1"
 # UNCOMMENT LINE BELOW TO ENABLE NOISY BUILD DURING `make test`; REQUIRES RPERL_VERBOSE=1
     - "export RPERL_DEBUG=1"
-# travis already calls `cpanm --quiet --installdeps --notest .` itself
 # UNCOMMENT LINE BELOW FOR DEV VERSIONS OF MODULES, which travis can't get from Makefile.PL
 #  - cpanm -n INGY/Inline-C-0.62_03.tar.gz
+# travis already calls `cpanm --quiet --installdeps --notest .` itself
+    - cpanm --quiet --installdeps --notest .
 
 # replace default build command "perl Makefile.PL && make test"
 # DEV NOTE: TEST_VERBOSE variable for ExtUtils::MakeMaker 'make' command disables suppression of stdout;
