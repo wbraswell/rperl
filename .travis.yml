@@ -18,6 +18,7 @@ before_install:
 install:
 - sudo apt-get install -qq g++-4.8
 - export CXX="g++-4.8"
+- sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
 
 before_script:
 # UNCOMMENT LINE BELOW TO ENABLE TEST_VERBOSE STDOUT DURING `make test`
