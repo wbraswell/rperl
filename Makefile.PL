@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-our $VERSION = 0.001_071;
+our $VERSION = 0.001_072;
 use ExtUtils::MakeMaker;
 
 BEGIN { use English; }
@@ -21,7 +21,7 @@ WriteMakefile(
         'Inline::C'       => 0.64,
         'Inline::CPP' => 0.63, # davido & mohawk fixed ntype warnings; davido & wbraswell fixed namespace hack
         'Inline::Filters' => 0.16, # wbraswell, rurban, & bulk88 added preprocess inc array
-
+        'PadWalker'       => 2.1,
         #        'Module::Compile' => 0,  # not yet utilized
     },
 

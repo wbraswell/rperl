@@ -3,7 +3,7 @@ package rperltypes;
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.000_102;
+our $VERSION = 0.001_010;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
@@ -35,6 +35,7 @@ use RPerl::DataType::Number;
 use RPerl::DataType::Character;
 use RPerl::DataType::String;
 use RPerl::DataType::Scalar;
+use RPerl::DataType::Undefined;
 use RPerl::DataType::Unknown;
 use RPerl::DataType::FileHandle;
 
@@ -72,7 +73,7 @@ our string_arrayref $supported = [
         )
 ];
 
-# DEV NOTE, CORRELATION #08: export type() and types() to main:: namespace;
+# DEV NOTE, CORRELATION #08: export to_string(), type() and types() to main:: namespace;
 # can't achieve via Exporter due to circular dependency issue caused by Exporter in Config.pm and solved by 'require rperltypes;' in RPerl.pm
 package main;
 use Scalar::Util qw(blessed);
@@ -84,10 +85,22 @@ INIT {
     RPerl::HelperFunctions_cpp::cpp_load();
 }
 
+# NEED UPGRADE: don't fall back to Dumper(), it will fail to call *_to_string() until stringification overloading is implemented
+#my string $to_string = sub {
+sub to_string {
+    ( my unknown $variable) = @_;
+    my string $type = type($variable);
+    if    ( $type eq 'undefined' ) { return 'undef'; }
+    elsif ( $type eq 'integer' )   { return integer_to_string($variable); }
+    elsif ( $type eq 'number' )    { return number_to_string($variable); }
+    elsif ( $type eq 'string' )    { return string_to_string($variable); }
+    else                           { my $retval = Dumper($variable); $retval =~ s/\$VAR1\ =\ //gxms; chop $retval; return $retval; }
+}
+
 #my string $type = sub {
 sub type {
     ( my unknown $variable, my integer $recurse_level ) = @_;
-    if ( not defined $variable ) { return 'undef'; }
+    if ( not defined $variable ) { return 'undefined'; }
     if ( not defined $recurse_level ) { $recurse_level = 10; } # default to limited recursion
     my integer_hashref $is_type = build_is_type($variable);
     if    ( $is_type->{integer} ) { return 'integer'; }
@@ -103,7 +116,7 @@ sub type {
 #my string_hashref $types = sub {
 sub types {
     ( my unknown $variable, my integer $recurse_level ) = @_;
-    if ( not defined $variable ) { return 'undef'; }
+    if ( not defined $variable ) { return 'undefined'; }
     if ( not defined $recurse_level ) { $recurse_level = 10; } # default to limited recursion
     my integer_hashref $is_type = build_is_type($variable);
     if    ( $is_type->{integer} ) { return { 'integer' => undef }; }
@@ -147,6 +160,7 @@ sub types_recurse {
 
     if ( not defined $recurse_level ) { $recurse_level = 999; } # default to full recursion
     if ( not defined $is_type ) { $is_type = build_is_type($variable); }
+
 #    RPerl::diag 'in rperltypes::types_recurse(), have $recurse_level = ' . $recurse_level . "\n";
 
 #    RPerl::diag 'in rperltypes::types_recurse(), have $is_type =' . "\n" . Dumper($is_type) . "\n";
@@ -154,12 +168,13 @@ sub types_recurse {
     my string $type          = undef;
     my string_hashref $types = undef;
 
-    if    ( not defined $variable ) { $type = 'undef'; }
+    if    ( not defined $variable ) { $type = 'undefined'; }
     elsif ( $is_type->{integer} )   { $type = 'integer'; }
     elsif ( $is_type->{number} )    { $type = 'number'; }
     elsif ( $is_type->{string} )    { $type = 'string'; }
 
     if ( defined $type ) {
+
 #        RPerl::diag 'in rperltypes::types_recurse(), about to return undef or scalar $type = ' . $type . "\n";
         return [ $type, $types ];
     }
@@ -173,6 +188,7 @@ sub types_recurse {
         elsif ( $is_type->{arrayref} ) { $type = 'arrayref'; }
         elsif ( $is_type->{hashref} )  { $type = 'hashref'; }
         else                           { $type = 'UNRECOGNIZED'; }
+
 #        RPerl::diag 'in rperltypes::types_recurse(), max recurse reached, about to return unrecognized or non-scalar $type = ' . $type . "\n";
         return [ $type, $types ];
     }
@@ -186,6 +202,7 @@ sub types_recurse {
             $types->{$type} = { '_CLASSNAME' => $is_type->{class} };
             my string $subtype         = undef;
             my integer $is_homogeneous = 1;
+
 #            RPerl::diag 'in rperltypes::types_recurse(), top of blessed class...' . "\n";
 
             foreach my $hash_key ( sort keys %{$variable} ) {
@@ -235,11 +252,12 @@ sub types_recurse {
                         $is_homogeneous = 0;
                     }
                 }
+
 #                RPerl::diag 'in rperltypes::types_recurse(), inside blessed class, have $subtype = ' . $subtype . "\n";
             }
             if ($is_homogeneous) {
                 my string $type_old = $type;
-                if ( not defined $subtype ) { $subtype = 'undef' }
+                if ( not defined $subtype ) { $subtype = 'undefined' }
                 elsif ( $is_homogeneous == 0.5 ) {
                     $subtype = 'mixed' . '_' . $subtype;
                 }
@@ -253,6 +271,7 @@ sub types_recurse {
                 $types->{$type} = $types->{$type_old};
                 delete $types->{$type_old};
             }
+
 #            RPerl::diag 'in rperltypes::types_recurse(), bottom of blessed class, have $type = ' . $type . "\n";
         }
         elsif ( $is_type->{arrayref} ) {
@@ -261,6 +280,7 @@ sub types_recurse {
             $types->{$type} = [];
             my string $subtype         = undef;
             my integer $is_homogeneous = 1;
+
 #            RPerl::diag 'in rperltypes::types_recurse(), top of arrayref...' . "\n";
 
             foreach my $array_element ( @{$variable} ) {
@@ -310,11 +330,12 @@ sub types_recurse {
                         $is_homogeneous = 0;
                     }
                 }
+
 #                RPerl::diag 'in rperltypes::types_recurse(), inside arrayref, have $subtype = ' . $subtype . "\n";
             }
             if ($is_homogeneous) {
                 my string $type_old = $type;
-                if ( not defined $subtype ) { $subtype = 'undef' }
+                if ( not defined $subtype ) { $subtype = 'undefined' }
                 elsif ( $is_homogeneous == 0.5 ) {
                     $subtype = 'mixed' . '_' . $subtype;
                 }
@@ -328,6 +349,7 @@ sub types_recurse {
                 $types->{$type} = $types->{$type_old};
                 delete $types->{$type_old};
             }
+
 #            RPerl::diag 'in rperltypes::types_recurse(), bottom of arrayref, have $type = ' . $type . "\n";
         }
         elsif ( $is_type->{hashref} ) {
@@ -336,6 +358,7 @@ sub types_recurse {
             $types->{$type} = {};
             my string $subtype         = undef;
             my integer $is_homogeneous = 1;
+
 #            RPerl::diag 'in rperltypes::types_recurse(), top of hashref...' . "\n";
 
             foreach my $hash_key ( sort keys %{$variable} ) {
@@ -385,11 +408,12 @@ sub types_recurse {
                         $is_homogeneous = 0;
                     }
                 }
+
 #                RPerl::diag 'in rperltypes::types_recurse(), inside hashref, have $subtype = ' . $subtype . "\n";
             }
             if ($is_homogeneous) {
                 my string $type_old = $type;
-                if ( not defined $subtype ) { $subtype = 'undef' }
+                if ( not defined $subtype ) { $subtype = 'undefined' }
                 elsif ( $is_homogeneous == 0.5 ) {
                     $subtype = 'mixed' . '_' . $subtype;
                 }
@@ -403,6 +427,7 @@ sub types_recurse {
                 $types->{$type} = $types->{$type_old};
                 delete $types->{$type_old};
             }
+
 #            RPerl::diag 'in rperltypes::types_recurse(), bottom of hashref, have $type = ' . $type . "\n";
         }
         else {

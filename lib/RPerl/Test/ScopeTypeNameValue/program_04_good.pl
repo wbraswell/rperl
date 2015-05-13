@@ -1,7 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: '42.23 number' >>>
+# <<< RUN_SUCCESS: "my integer_hashref $bar = {'any old thing' => 12,'one' => 1,'three" >>>
+# <<< RUN_SUCCESS: "howdy' => 3,'two' => 2,'zero' => 0};" >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -15,10 +16,9 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my scalartype $foo = undef;
-$foo = 23;
-$foo = 9_123.456_789;
-$foo = 'howdy';
-$foo = 42.23;
+my string $my_key = 'any old thing';
+my integer_hashref $bar
+    = { zero => 0, one => 1, two => 2, "three\nhowdy" => 3, $my_key => 12 };
 
-print $foo . q{ } . type($foo) . "\n";
+$Data::Dumper::Indent = 0;
+print scope_type_name_value($bar) . "\n";

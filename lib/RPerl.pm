@@ -5,7 +5,7 @@ use warnings;
 
 our $VERSION = 1.000_002;    # ONE POINT OH BETA TWO!!!
 
-#our $VERSION = 20150509;    # NON-RELEASE VERSION
+#our $VERSION = 20150512;    # NON-RELEASE VERSION
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -20,5 +20,9 @@ require RPerl::Config;
 # DEV NOTE, CORRELATION #08: circular dependency causes "subroutine FOO redefined" errors, solved by replacing use with require below
 #use rperltypes;
 require rperltypes;
+#require rperloperations;
+#require rperlrules;
+require rperlnames;
+#require rperlnamespaces;
 
 1;    # end of class

@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: "$VAR1 = {'a' => '42','b' => 'is','c' => 'the','d' => 'answer'}; string_hashref" >>>
+# <<< RUN_SUCCESS: "my string_hashref $foo = {'a' => '42','b' => 'is','c' => 'the','d' => 'answer'};" >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -22,4 +22,4 @@ $foo = 'howdy';
 $foo = { a => '42', b => 'is', c => 'the', d => 'answer' };
 
 $Data::Dumper::Indent = 0;
-print Dumper($foo) . q{ } . type($foo) . "\n";
+print scope_type_name_value($foo) . "\n";

@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: "$VAR1 = ['42','is','the','answer']; string_arrayref" >>>
+# <<< RUN_SUCCESS: "my string_arrayref $foo = ['42','is','the','answer'];" >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -22,4 +22,4 @@ $foo = 'howdy';
 $foo = [ '42', 'is', 'the', 'answer' ];
 
 $Data::Dumper::Indent = 0;
-print Dumper($foo) . q{ } . type($foo) . "\n";
+print scope_type_name_value($foo) . "\n";

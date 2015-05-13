@@ -1,7 +1,11 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: 'undef' >>>
+# <<< RUN_SUCCESS: 'my undefined $foo = undef;' >>>
+# <<< RUN_SUCCESS: 'my integer $foo = 23_456;' >>>
+# <<< RUN_SUCCESS: 'my number $foo = 9_123.456_789;' >>>
+# <<< RUN_SUCCESS: "my string $foo = 'howdy';" >>>
+# <<< RUN_SUCCESS: 'my undefined $foo = undef;' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -16,9 +20,12 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 
 my scalartype $foo = undef;
-$foo = 23;
+print scope_type_name_value($foo) . "\n";
+$foo = 23_456;
+print scope_type_name_value($foo) . "\n";
 $foo = 9_123.456_789;
+print scope_type_name_value($foo) . "\n";
 $foo = 'howdy';
+print scope_type_name_value($foo) . "\n";
 $foo = undef;
-
-print type($foo) . "\n";
+print scope_type_name_value($foo) . "\n";

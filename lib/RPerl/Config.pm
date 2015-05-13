@@ -14,7 +14,7 @@ $Data::Dumper::Sortkeys = 1;  # Dumper() output must be sorted for lib/RPerl/Tes
 use Carp;
 use English qw(-no_match_vars);
 use Exporter 'import';
-# DEV NOTE, CORRELATION #08: can't include type() and types() in @EXPORT here or in RPerl:: namespace below
+# DEV NOTE, CORRELATION #08: can't include to_string(), type(), types(), name(), or scope_type_name_value() in @EXPORT here or in RPerl:: namespace below
 our @EXPORT
     = qw(Dumper carp croak confess $OS_ERROR $EVAL_ERROR $CHILD_ERROR $EXECUTABLE_NAME $PROGRAM_NAME);
 
