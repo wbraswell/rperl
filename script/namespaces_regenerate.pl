@@ -4,6 +4,17 @@ use warnings;
 use rperlnamespaces;
 our $VERSION = 0.001_000;
 
+## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
+
+print 'ARE YOU AN RPERL SYSTEM DEVELOPER? ';
+my $stdin_confirm = <STDIN>;
+if ($stdin_confirm =~ /^[Yy]/) {
+    print 'Regenerating RPerl Namespaces...' . "\n"; 
+}
+else {
+    exit;
+}
+
 my $namespaces_filename = 'lib/rperlnamespaces_generated.pm';
 
 use English qw(-no_match_vars);
@@ -93,3 +104,5 @@ if ( not $open_close_retval ) {
 
 system 'perltidy', '-pbp', '--ignore-side-comment-lengths', '--converge',
     '-b', '-nst', q{-bext='/'}, '-q', $namespaces_filename;
+
+print 'Regenerating RPerl Namespaces... DONE!' . "\n"; 
