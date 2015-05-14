@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.005_030;
+our $VERSION = 0.005_040;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -163,15 +163,16 @@ sub verify_and_default_modes {
         my string_hashref $modes_default,
         my arrayref_hashref $modes_supported,
         my integer $compile_flag,
-        my integer $execute_flag
+        my integer $execute_flag,
+        my integer $test_flag
     ) = @_;
 
     if ( defined $compile_flag ) {
         if ($compile_flag) {
             $modes->{compile} = 'COMPILE';
         }
-        else { # --nocompile command-line argument (option) disables compile & generate, parse remains enabled
-            $modes->{compile} = 'PARSE';
+        else { # --nocompile command-line argument (option) disables SAVE & COMPILE steps, PARSE & GENERATE remain enabled
+            $modes->{compile} = 'GENERATE';
         }
     }
 
@@ -181,6 +182,15 @@ sub verify_and_default_modes {
         }
         else {
             $modes->{execute} = 'OFF';
+        }
+    }
+
+    # test mode is PERLOPS_PERLTYPES_GENERATE, do not save files to disk; test mode flag ignored if false
+    if ( defined $test_flag ) {
+        if ($test_flag) {
+            $modes->{ops} = 'PERL';
+            $modes->{types} = 'PERL';
+            $modes->{compile} = 'GENERATE';
         }
     }
 
@@ -256,7 +266,7 @@ sub store_unlabeled_options {
 
 # print value of option flags
 sub verbose_flags {
-    ( my integer $compile_flag, my integer $execute_flag ) = @_;
+    ( my integer $compile_flag, my integer $execute_flag, my integer $test_flag ) = @_;
     RPerl::verbose( 'Debug Flag:    ', $RPerl::DEBUG,   "\n" );
     RPerl::verbose( 'Verbose Flag:  ', $RPerl::VERBOSE, "\n" );
     if ( defined $compile_flag ) {
@@ -264,6 +274,9 @@ sub verbose_flags {
     }
     if ( defined $execute_flag ) {
         RPerl::verbose( 'Execute Flag:  ', $execute_flag, "\n" );
+    }
+    if ( defined $test_flag ) {
+        RPerl::verbose( 'Test Flag:  ', $test_flag, "\n" );
     }
 }
 
@@ -291,9 +304,9 @@ sub parse_generate_compile_execute_files {
 
     if ( $modes->{ops} eq 'PERL' ) {
 
-    # PERL ops does not actually COMPILE, set compile mode to GENERATE instead
+    # PERL ops does not actually COMPILE, set compile mode to SAVE instead
         if ( $modes->{compile} eq 'COMPILE' ) {
-            $modes->{compile} = 'GENERATE';
+            $modes->{compile} = 'SAVE';
         }
 
         # PERL ops does not have CPP types, set types mode to PERL instead
@@ -367,6 +380,7 @@ sub parse_generate_compile_execute_files {
 my integer $help                                = 0;
 my integer $compile_flag                        = undef;
 my integer $execute_flag                        = undef;
+my integer $test_flag                        = undef;
 my string_arrayref $input_file_names          = [];
 my string_arrayref $output_file_name_prefixes = [];
 my hashref_arrayref $output_file_name_groups       = [];
@@ -383,7 +397,7 @@ my arrayref_hashref $modes_supported = {
     ops     => [ 'PERL',  'CPP' ],
     types   => [ 'PERL',  'CPP' ],
     check   => [ 'OFF',   'ON', 'TRACE' ],
-    compile => [ 'PARSE', 'GENERATE', 'COMPILE' ],
+    compile => [ 'PARSE', 'GENERATE', 'SAVE', 'COMPILE' ],
     execute => [ 'OFF',   'ON' ],
     label => [ 'OFF',   'ON' ]
 };
@@ -395,6 +409,7 @@ GetOptions(
     'verbose!'      => \$RPerl::VERBOSE,
     'compile!'      => \$compile_flag,
     'execute!'      => \$execute_flag,
+    'test'          => \$test_flag,
     'infile=s{1,}'  => \@{$input_file_names},
     'outfile=s{1,}' => \@{$output_file_name_prefixes},
     'mode=s%'       => \$modes,
@@ -403,10 +418,10 @@ GetOptions(
     or die "ERROR EARG00: Failure processing command line arguments, dying\n";
 
 if ($help) { pod2usage( -verbose => 1 ); }
-verbose_flags( $compile_flag, $execute_flag );
+verbose_flags( $compile_flag, $execute_flag, $test_flag );
 $input_file_names = accept_and_verify_input_files( $input_file_names, $input_file_names_unlabeled );
 $input_files_count = scalar @{$input_file_names};
-$modes = verify_and_default_modes( $modes, $modes_default, $modes_supported, $compile_flag, $execute_flag );
+$modes = verify_and_default_modes( $modes, $modes_default, $modes_supported, $compile_flag, $execute_flag, $test_flag );
 $output_file_name_groups = generate_output_file_names( $input_file_names, $output_file_name_prefixes, $modes, $input_files_count );
 verbose_multi_file_settings( $input_file_names, $output_file_name_groups,
     $modes, $input_files_count );
@@ -513,6 +528,11 @@ Print a brief help message.
 
  Include system diagnostic information in output, or not.
  Disabled by default, equivalent to `export RPERL_DEBUG=1` shell command.
+
+=item B<--test _OR_ -t>
+
+ Test mode: Perl ops, Perl types, Parse & Generate (no Save or Compile)
+ Disabled by default, equivalent to '--mode ops=PERL --mode types=PERL --compile=GENERATE' options.
  
 =back
 

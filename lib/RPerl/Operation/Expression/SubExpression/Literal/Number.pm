@@ -21,7 +21,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in Literal::Number->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $value           = $self->{children}->[0];
-    my string $value_type = type($value);
+    my string $value_type = main::type($value);
     if ($value_type eq 'integer') {
         $rperl_source_group->{PMC} .= integer_to_string($value);
     }

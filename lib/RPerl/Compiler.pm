@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_110;
+our $VERSION = 0.003_200;
 
 # [[[ CRITICS ]]]
 
@@ -37,7 +37,8 @@ our void $rperl_to_rperl__parse_generate = sub {
     # [[[ PARSE RPERL TO AST ]]]
 
     if (   ( $modes->{compile} eq 'PARSE' )
-        or ( $modes->{compile} eq 'GENERATE' ) )
+        or ( $modes->{compile} eq 'GENERATE' )
+        or ( $modes->{compile} eq 'SAVE' ) )
     {
         $rperl_ast
             = RPerl::Parser::rperl_to_ast__parse($rperl_input_file_name);
@@ -45,9 +46,16 @@ our void $rperl_to_rperl__parse_generate = sub {
 
     # [[[ GENERATE AST TO RPERL ]]]
 
-    if ( $modes->{compile} eq 'GENERATE' ) {
+    if (   ( $modes->{compile} eq 'GENERATE' )
+        or ( $modes->{compile} eq 'SAVE' ) )
+    {
         $rperl_source_group
             = RPerl::Generator::ast_to_rperl__generate( $rperl_ast, $modes );
+    }
+
+    # [[[ SAVE RPERL TO DISK ]]]
+
+    if ( $modes->{compile} eq 'SAVE' ) {
         save_source_files( $rperl_source_group,
             $rperl_output_file_name_group );
     }
@@ -69,6 +77,7 @@ our void $rperl_to_xsbinary__parse_generate_compile = sub {
 
     if (   ( $modes->{compile} eq 'PARSE' )
         or ( $modes->{compile} eq 'GENERATE' )
+        or ( $modes->{compile} eq 'SAVE' )
         or ( $modes->{compile} eq 'COMPILE' ) )
     {
         $rperl_ast
@@ -78,10 +87,18 @@ our void $rperl_to_xsbinary__parse_generate_compile = sub {
     # [[[ GENERATE AST TO C++ ]]]
 
     if (   ( $modes->{compile} eq 'GENERATE' )
+        or ( $modes->{compile} eq 'SAVE' )
         or ( $modes->{compile} eq 'COMPILE' ) )
     {
         $source_group
             = RPerl::Generator::ast_to_cpp__generate( $rperl_ast, $modes );
+    }
+
+    # [[[ SAVE C++ TO DISK ]]]
+
+    if (   ( $modes->{compile} eq 'SAVE' )
+        or ( $modes->{compile} eq 'COMPILE' ) )
+    {
         save_source_files( $source_group, $cpp_output_file_name_group );
     }
 
@@ -95,9 +112,8 @@ our void $rperl_to_xsbinary__parse_generate_compile = sub {
 
 # Write Source Code Files To File System
 our void $save_source_files = sub {
-    (   my string_hashref $source_group,
-        my string_hashref $file_name_group
-    ) = @_;
+    ( my string_hashref $source_group, my string_hashref $file_name_group )
+        = @_;
 
 #    RPerl::diag( q{in Compiler::save_source_files(), received $source_group =}, "\n", Dumper($source_group), "\n" );
 #    RPerl::diag( q{in Compiler::save_source_files(), received $file_name_group =}, "\n", Dumper($file_name_group), "\n" );
@@ -152,7 +168,8 @@ our void $save_source_files = sub {
         if ( ( $suffix_key eq 'PMC' ) or ( $suffix_key eq 'EXE' ) ) {
 
 #            `perltidy -pbp --ignore-side-comment-lengths --converge -b -nst -bext='/' -q $file_name`;
-            system 'perltidy', '-pbp', '--ignore-side-comment-lengths', '--converge', '-b', '-nst', q{-bext='/'}, '-q', $file_name;
+            system 'perltidy', '-pbp', '--ignore-side-comment-lengths',
+                '--converge', '-b', '-nst', q{-bext='/'}, '-q', $file_name;
         }
     }
 
