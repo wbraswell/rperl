@@ -1,11 +1,11 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: 'my undefined $foo = undef;' >>>
+# <<< RUN_SUCCESS: 'my unknown $foo = undef;' >>>
 # <<< RUN_SUCCESS: 'my integer $foo = 23_456;' >>>
 # <<< RUN_SUCCESS: 'my number $foo = 9_123.456_789;' >>>
 # <<< RUN_SUCCESS: "my string $foo = 'howdy';" >>>
-# <<< RUN_SUCCESS: 'my undefined $foo = undef;' >>>
+# <<< RUN_SUCCESS: 'my unknown $foo = undef;' >>>
 
 # [[[ HEADER ]]]
 use strict;

@@ -34,12 +34,12 @@ sub name {
         [ '%', 'HASH' ],
         [ '&', 'CODE' ]
     ];
-    foreach my string $caller (
+    foreach my string $namespace (
         ( caller() . '::' ),
         sort keys %{ rperlnamespaces::hash_noncore_nonrperl() }
         )
     {
-        $pad = do { no strict 'refs'; \%{$caller} };    # pad stash
+        $pad = do { no strict 'refs'; \%{$namespace} };    # pad stash
         for my string $name ( keys %{$pad} ) {
             if ( ( ref \$pad->{$name} ) ne 'GLOB' ) { next; }
             for my string_arrayref $sigil_reftype ( @{$sigil_reftypes} ) {
@@ -48,7 +48,7 @@ sub name {
                 if (    ( defined $variable_ref )
                     and ( $variable_ref == $input_variable_ref ) )
                 {
-                    return ( $sigil_reftype->[0] . $caller . $name );
+                    return ( $sigil_reftype->[0] . $namespace . $name );
                 }
             }
         }
@@ -89,13 +89,13 @@ sub scope_type_name_value {
         [ '&', 'CODE' ]
     ];
 
-    foreach my string $caller (
+    foreach my string $namespace (
         ( caller() . '::' ),
         sort keys %{ rperlnamespaces::hash_noncore_nonrperl() }
         )
     {
-#        RPerl::diag( 'in scope_type_name_value(), have $caller = ' . $caller . "\n" );
-        $pad = do { no strict 'refs'; \%{$caller} };    # pad stash
+#        RPerl::diag( 'in scope_type_name_value(), have $namespace = ' . $namespace . "\n" );
+        $pad = do { no strict 'refs'; \%{$namespace} };    # pad stash
         for my string $name ( keys %{$pad} ) {
             if ( ( ref \$pad->{$name} ) ne 'GLOB' ) { next; }
             for my string_arrayref $sigil_reftype ( @{$sigil_reftypes} ) {
@@ -105,15 +105,11 @@ sub scope_type_name_value {
                     and ( $variable_ref == $input_variable_ref ) )
                 {
                     return (  $sigil_reftype->[0]
-                            . $caller
-                            . $name
-                            . q{ = my }
-                            . $type
-                            . q{ $TYPED_}
-                            . ( join '__', ( split /::/, $caller ) ) . q{__}
+                            . $namespace
                             . $name . q{ = }
                             . $value
-                            . q{;} );
+                            . q{;  # }
+                            . $type );
                 }
             }
         }

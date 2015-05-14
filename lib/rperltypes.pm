@@ -35,7 +35,6 @@ use RPerl::DataType::Number;
 use RPerl::DataType::Character;
 use RPerl::DataType::String;
 use RPerl::DataType::Scalar;
-use RPerl::DataType::Undefined;
 use RPerl::DataType::Unknown;
 use RPerl::DataType::FileHandle;
 
@@ -76,6 +75,7 @@ our string_arrayref $supported = [
 # DEV NOTE, CORRELATION #08: export to_string(), type() and types() to main:: namespace;
 # can't achieve via Exporter due to circular dependency issue caused by Exporter in Config.pm and solved by 'require rperltypes;' in RPerl.pm
 package main;
+use RPerl::Config;
 use Scalar::Util qw(blessed);
 
 # for type-checking via SvIOKp(), SvNOKp(), and SvPOKp(); inside INIT to delay until after 'use MyConfig'
@@ -90,17 +90,17 @@ INIT {
 sub to_string {
     ( my unknown $variable) = @_;
     my string $type = type($variable);
-    if    ( $type eq 'undefined' ) { return 'undef'; }
+    if    ( $type eq 'unknown' ) { return 'undef'; }
     elsif ( $type eq 'integer' )   { return integer_to_string($variable); }
     elsif ( $type eq 'number' )    { return number_to_string($variable); }
     elsif ( $type eq 'string' )    { return string_to_string($variable); }
-    else                           { my $retval = Dumper($variable); $retval =~ s/\$VAR1\ =\ //gxms; chop $retval; return $retval; }
+    else                           { my $retval = Dumper($variable); $retval =~ s/\$VAR1\ =\ //gxms; chomp $retval; chop $retval; return $retval; }
 }
 
 #my string $type = sub {
 sub type {
     ( my unknown $variable, my integer $recurse_level ) = @_;
-    if ( not defined $variable ) { return 'undefined'; }
+    if ( not defined $variable ) { return 'unknown'; }
     if ( not defined $recurse_level ) { $recurse_level = 10; } # default to limited recursion
     my integer_hashref $is_type = build_is_type($variable);
     if    ( $is_type->{integer} ) { return 'integer'; }
@@ -116,7 +116,7 @@ sub type {
 #my string_hashref $types = sub {
 sub types {
     ( my unknown $variable, my integer $recurse_level ) = @_;
-    if ( not defined $variable ) { return 'undefined'; }
+    if ( not defined $variable ) { return 'unknown'; }
     if ( not defined $recurse_level ) { $recurse_level = 10; } # default to limited recursion
     my integer_hashref $is_type = build_is_type($variable);
     if    ( $is_type->{integer} ) { return { 'integer' => undef }; }
@@ -168,7 +168,7 @@ sub types_recurse {
     my string $type          = undef;
     my string_hashref $types = undef;
 
-    if    ( not defined $variable ) { $type = 'undefined'; }
+    if    ( not defined $variable ) { $type = 'unknown'; }
     elsif ( $is_type->{integer} )   { $type = 'integer'; }
     elsif ( $is_type->{number} )    { $type = 'number'; }
     elsif ( $is_type->{string} )    { $type = 'string'; }
@@ -257,7 +257,7 @@ sub types_recurse {
             }
             if ($is_homogeneous) {
                 my string $type_old = $type;
-                if ( not defined $subtype ) { $subtype = 'undefined' }
+                if ( not defined $subtype ) { $subtype = 'unknown' }
                 elsif ( $is_homogeneous == 0.5 ) {
                     $subtype = 'mixed' . '_' . $subtype;
                 }
@@ -335,7 +335,7 @@ sub types_recurse {
             }
             if ($is_homogeneous) {
                 my string $type_old = $type;
-                if ( not defined $subtype ) { $subtype = 'undefined' }
+                if ( not defined $subtype ) { $subtype = 'unknown' }
                 elsif ( $is_homogeneous == 0.5 ) {
                     $subtype = 'mixed' . '_' . $subtype;
                 }
@@ -413,7 +413,7 @@ sub types_recurse {
             }
             if ($is_homogeneous) {
                 my string $type_old = $type;
-                if ( not defined $subtype ) { $subtype = 'undefined' }
+                if ( not defined $subtype ) { $subtype = 'unknown' }
                 elsif ( $is_homogeneous == 0.5 ) {
                     $subtype = 'mixed' . '_' . $subtype;
                 }
