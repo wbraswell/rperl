@@ -1,10 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: 'my unknown $foo = undef;' >>>
-# <<< RUN_SUCCESS: 'my integer $bar = -23_456;' >>>
-# <<< RUN_SUCCESS: 'my number $bat = 9_123.456_789;' >>>
-# <<< RUN_SUCCESS: "my string $baz = 'howdy';" >>>
+# <<< RUN_SUCCESS: "my integer_hashref $bar = {'any old thing' => 12,'one' => 1,'three" >>>
+# <<< RUN_SUCCESS: "howdy' => 3,'two' => 2,'zero' => 0};" >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -18,12 +16,9 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my unknown $foo = undef;
-my integer $bar = -23_456;
-my number $bat  = 9_123.456_789;
-my string $baz  = 'howdy';
+my string $my_key = 'any old thing';
+my integer_hashref $bar
+    = { zero => 0, one => 1, two => 2, "three\nhowdy" => 3, $my_key => 12 };
 
-print scope_type_name_value($foo) . "\n";
+$Data::Dumper::Indent = 0;
 print scope_type_name_value($bar) . "\n";
-print scope_type_name_value($bat) . "\n";
-print scope_type_name_value($baz) . "\n";

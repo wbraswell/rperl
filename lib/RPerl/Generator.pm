@@ -28,7 +28,7 @@ our hashref $properties = {};
 our string_hashref $ast_to_rperl__generate = sub {
     ( my object $node, my string_hashref $modes) = @_;
 
-    RPerl::diag "in Generator::ast_to_rperl__generate(), received \$node =\n" . RPerl::Parser::rperl_ast__dump($node) . "\n";
+#    RPerl::diag "in Generator::ast_to_rperl__generate(), received \$node =\n" . RPerl::Parser::rperl_ast__dump($node) . "\n";
 #    RPerl::diag "in Generator::ast_to_rperl__generate(), received \$modes =\n" . Dumper($modes) . "\n";
 
     if ( not( defined $modes->{types} ) ) {
@@ -52,10 +52,8 @@ our string_hashref $ast_to_rperl__generate = sub {
 our string_hashref $ast_to_cpp__generate = sub {
     ( my object $node, my string_hashref $modes) = @_;
 
-    RPerl::diag "in Generator::ast_to_cpp__generate(), received \$node =\n"
-        . RPerl::Parser::rperl_ast__dump($node) . "\n";
-    RPerl::diag "in Generator::ast_to_cpp__generate(), received \$modes =\n"
-        . Dumper($modes) . "\n";
+#    RPerl::diag "in Generator::ast_to_cpp__generate(), received \$node =\n" . RPerl::Parser::rperl_ast__dump($node) . "\n";
+#    RPerl::diag "in Generator::ast_to_cpp__generate(), received \$modes =\n" . Dumper($modes) . "\n";
 
     if ( not( defined $modes->{types} ) ) {
         croak(

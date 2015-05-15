@@ -1,10 +1,12 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: 'my unknown $foo = undef;' >>>
-# <<< RUN_SUCCESS: 'my integer $bar = 23_456;' >>>
-# <<< RUN_SUCCESS: 'my number $bat = 9_123.456_789;' >>>
-# <<< RUN_SUCCESS: "my string $baz = 'howdy';" >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'arrayref' => []};" >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'arrayref' => ['unknown']};" >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'arrayref' => ['unknown','unknown']};" >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'arrayref' => ['unknown','integer']};" >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'arrayref' => ['unknown','unknown','unknown','unknown','unknown']};" >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'arrayref' => ['unknown','unknown','unknown','integer','unknown']};" >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -18,12 +20,16 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my unknown $foo = undef;
-my integer $bar = 23_456;
-my number $bat  = 9_123.456_789;
-my string $baz  = 'howdy';
-
-print scope_type_name_value($foo) . "\n";
-print scope_type_name_value($bar) . "\n";
-print scope_type_name_value($bat) . "\n";
-print scope_type_name_value($baz) . "\n";
+$Data::Dumper::Indent = 0;
+my arrayref $u = [];
+print Dumper( types($u) ) . "\n";
+$u = [undef];
+print Dumper( types($u) ) . "\n";
+$u = [ undef, undef ];
+print Dumper( types($u) ) . "\n";
+$u = [ undef, 1 ];
+print Dumper( types($u) ) . "\n";
+$u = [ undef, undef, undef, undef, undef ];
+print Dumper( types($u) ) . "\n";
+$u = [ undef, undef, undef, 1, undef ];
+print Dumper( types($u) ) . "\n";

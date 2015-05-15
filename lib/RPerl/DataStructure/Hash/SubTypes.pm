@@ -605,12 +605,6 @@ our string_hashref $string_hashref__typetest1 = sub {
 package scalartype_hashref;
 use parent -norequire, ('hashref');
 
-# [[[ MIXED HASHES ]]]
-
-# (ref to hash) of mixed types
-package mixed_hashref;
-use parent -norequire, ('hashref');
-
 # [[[ ARRAY HASHES (2-dimensional) ]]]
 
 # (ref to hash) of (refs to arrays)
@@ -639,10 +633,6 @@ use parent -norequire, ('hashref_hashref');
 
 # (ref to hash) of (refs to (hashs of scalars))
 package scalartype_hashref_hashref;
-use parent -norequire, ('hashref_hashref');
-
-# (ref to hash) of (refs to (hashs of mixed types))
-package mixed_hashref_hashref;
 use parent -norequire, ('hashref_hashref');
 
 # [[[ OBJECT HASHES (2-dimensional) ]]]

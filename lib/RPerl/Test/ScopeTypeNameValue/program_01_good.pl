@@ -1,11 +1,11 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: 'my unknown $foo = undef;' >>>
-# <<< RUN_SUCCESS: 'my integer $foo = 23_456;' >>>
-# <<< RUN_SUCCESS: 'my number $foo = 9_123.456_789;' >>>
-# <<< RUN_SUCCESS: "my string $foo = 'howdy';" >>>
-# <<< RUN_SUCCESS: 'my unknown $foo = undef;' >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'integer_arrayref' => ['integer']};" >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'integer_arrayref' => ['integer','integer']};" >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'arrayref' => ['integer','number']};" >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'integer_arrayref' => ['integer','integer','integer','integer','integer']};" >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'arrayref' => ['integer','integer','integer','number','integer']};" >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -19,13 +19,14 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my scalartype $foo = undef;
-print scope_type_name_value($foo) . "\n";
-$foo = 23_456;
-print scope_type_name_value($foo) . "\n";
-$foo = 9_123.456_789;
-print scope_type_name_value($foo) . "\n";
-$foo = 'howdy';
-print scope_type_name_value($foo) . "\n";
-$foo = undef;
-print scope_type_name_value($foo) . "\n";
+$Data::Dumper::Indent = 0;
+my arrayref $u = [2];
+print Dumper( types($u) ) . "\n";
+$u = [ 2, 3 ];
+print Dumper( types($u) ) . "\n";
+$u = [ 2, 3.3 ];
+print Dumper( types($u) ) . "\n";
+$u = [ 2, 3, 5, 7, 9 ];
+print Dumper( types($u) ) . "\n";
+$u = [ 2, 3, 5, 7.7, 9 ];
+print Dumper( types($u) ) . "\n";

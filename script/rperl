@@ -193,6 +193,10 @@ sub verify_and_default_modes {
             $modes->{compile} = 'GENERATE';
         }
     }
+    
+    # must put Perl variables into environmental variables for the values to be properly utilized
+    $ENV{RPERL_DEBUG} = $RPerl::DEBUG;
+    $ENV{RPERL_VERBOSE} = $RPerl::VERBOSE;
 
     # verify modes
     foreach my string $mode_key ( keys %{$modes} ) {

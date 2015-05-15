@@ -1,8 +1,11 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: "my integer_hashref $bar = {'any old thing' => 12,'one' => 1,'three" >>>
-# <<< RUN_SUCCESS: "howdy' => 3,'two' => 2,'zero' => 0};" >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'object_arrayref' => [{'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}}]};" >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'object_arrayref' => [{'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},{'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}}]};" >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'arrayref' => [{'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},{'object' => {'__CLASS' => 'RPerl::Test::SimpleB','drup' => 'integer'}}]};" >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'object_arrayref' => [{'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},{'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},{'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},{'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},{'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}}]};" >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'arrayref' => [{'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},{'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},{'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},{'object' => {'__CLASS' => 'RPerl::Test::SimpleB','drup' => 'integer'}},{'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}}]};" >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -14,11 +17,31 @@ our $VERSION = 0.001_000;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
+# [[[ INCLUDES ]]]
+use RPerl::Test::SimpleA;
+use RPerl::Test::SimpleB;
+
 # [[[ OPERATIONS ]]]
 
-my string $my_key = 'any old thing';
-my integer_hashref $bar
-    = { zero => 0, one => 1, two => 2, "three\nhowdy" => 3, $my_key => 12 };
-
 $Data::Dumper::Indent = 0;
-print scope_type_name_value($bar) . "\n";
+my arrayref $u = [ RPerl::Test::SimpleA->new() ];
+print Dumper( types($u) ) . "\n";
+
+$u = [ RPerl::Test::SimpleA->new(), RPerl::Test::SimpleA->new() ];
+print Dumper( types($u) ) . "\n";
+$u = [ RPerl::Test::SimpleA->new(), RPerl::Test::SimpleB->new() ];
+print Dumper( types($u) ) . "\n";
+
+$u = [
+    RPerl::Test::SimpleA->new(), RPerl::Test::SimpleA->new(),
+    RPerl::Test::SimpleA->new(), RPerl::Test::SimpleA->new(),
+    RPerl::Test::SimpleA->new()
+];
+print Dumper( types($u) ) . "\n";
+
+$u = [
+    RPerl::Test::SimpleA->new(), RPerl::Test::SimpleA->new(),
+    RPerl::Test::SimpleA->new(), RPerl::Test::SimpleB->new(),
+    RPerl::Test::SimpleA->new()
+];
+print Dumper( types($u) ) . "\n";

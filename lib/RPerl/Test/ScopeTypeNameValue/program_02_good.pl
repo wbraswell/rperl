@@ -1,7 +1,11 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: "my string_hashref $foo = {'a' => '42','b' => 'is','c' => 'the','d' => 'answer'};" >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'number_arrayref' => ['number']};" >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'number_arrayref' => ['number','number']};" >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'arrayref' => ['number','integer']};" >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'number_arrayref' => ['number','number','number','number','number']};" >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'arrayref' => ['number','number','number','integer','number']};" >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -15,11 +19,14 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my unknown $foo = undef;
-$foo = 23;
-$foo = 9_123.456_789;
-$foo = 'howdy';
-$foo = { a => '42', b => 'is', c => 'the', d => 'answer' };
-
 $Data::Dumper::Indent = 0;
-print scope_type_name_value($foo) . "\n";
+my arrayref $u = [2.2];
+print Dumper( types($u) ) . "\n";
+$u = [ 2.2, 3.3 ];
+print Dumper( types($u) ) . "\n";
+$u = [ 2.2, 3 ];
+print Dumper( types($u) ) . "\n";
+$u = [ 2.2, 3.3, 5.5, 7.7, 9.9 ];
+print Dumper( types($u) ) . "\n";
+$u = [ 2.2, 3.3, 5.5, 7, 9.9 ];
+print Dumper( types($u) ) . "\n";

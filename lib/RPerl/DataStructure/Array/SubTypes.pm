@@ -544,12 +544,6 @@ so we can keep the no critic sections at the top of the file for reference
 package scalartype_arrayref;
 use parent -norequire, ('arrayref');
 
-# [[[ MIXED ARRAYS ]]]
-
-# (ref to array) of mixed types
-package mixed_arrayref;
-use parent -norequire, ('arrayref');
-
 # [[[ ARRAY ARRAYS (2-dimensional) ]]]
 
 # (ref to array) of (refs to arrays)
@@ -572,10 +566,6 @@ use parent -norequire, ('arrayref_arrayref');
 
 # (ref to array) of (refs to (arrays of scalars))
 package scalartype_arrayref_arrayref;
-use parent -norequire, ('arrayref_arrayref');
-
-# (ref to array) of (refs to (arrays of mixed types))
-package mixed_arrayref_arrayref;
 use parent -norequire, ('arrayref_arrayref');
 
 # [[[ HASH ARRAYS (2-dimesional) ]]]

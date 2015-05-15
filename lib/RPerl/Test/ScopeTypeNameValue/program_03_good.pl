@@ -1,7 +1,11 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: "my string_arrayref $foo = ['42','is','the','answer'];" >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'string_arrayref' => ['string']};" >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'string_arrayref' => ['string','string']};" >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'arrayref' => ['string','integer']};" >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'string_arrayref' => ['string','string','string','string','string']};" >>>
+# <<< RUN_SUCCESS: "$VAR1 = {'arrayref' => ['string','string','string','integer','string']};" >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -15,11 +19,14 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my unknown $foo = undef;
-$foo = 23;
-$foo = 9_123.456_789;
-$foo = 'howdy';
-$foo = [ '42', 'is', 'the', 'answer' ];
-
 $Data::Dumper::Indent = 0;
-print scope_type_name_value($foo) . "\n";
+my arrayref $u = ['2'];
+print Dumper( types($u) ) . "\n";
+$u = [ '2', '3' ];
+print Dumper( types($u) ) . "\n";
+$u = [ '2', 3 ];
+print Dumper( types($u) ) . "\n";
+$u = [ '2', '3', '5', '7', '9' ];
+print Dumper( types($u) ) . "\n";
+$u = [ '2', '3', '5', 7, '9' ];
+print Dumper( types($u) ) . "\n";
