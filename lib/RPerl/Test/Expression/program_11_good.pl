@@ -1,8 +1,12 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: 'twenty-threetwenty-threetwenty-three' >>>
-# <<< RUN_SUCCESS: 'guffawguffawguffaw' >>>
+# <<< RUN_SUCCESS: "'a' => 'twenty-threetwenty-threetwenty-threetwenty-threetwenty-threetwenty-threetwenty-three'" >>>
+# <<< RUN_SUCCESS: "'b' => 'howdy'" >>>
+# <<< RUN_SUCCESS: "'c' => '-23.42'" >>>
+# <<< RUN_SUCCESS: "'a' => 'guffawguffawguffawguffawguffawguffawguffawguffawguffawguffawguffaw'" >>>
+# <<< RUN_SUCCESS: "'b' => 'howdy'" >>>
+# <<< RUN_SUCCESS: "'c' => '-23.42'" >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -19,6 +23,6 @@ use RPerl::Test::Foo;
 
 # [[[ OPERATIONS ]]]
 my object $my_foo = RPerl::Test::Foo->new();
-print $my_foo->corge(), "\n";
+print Dumper($my_foo->qorge(7)) . "\n";
 $my_foo->{xyzzy} = 'guffaw';
-print $my_foo->corge(), "\n";
+print Dumper($my_foo->qorge(11)) . "\n";

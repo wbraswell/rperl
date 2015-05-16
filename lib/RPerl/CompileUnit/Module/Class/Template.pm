@@ -96,26 +96,38 @@ our hashref $properties = {
 
 # [[[ OO METHODS ]]]
 
-# START HERE: update Foo.pm to copy new methods & subs below, update Tests which call Foo.pm
-# START HERE: update Foo.pm to copy new methods & subs below, update Tests which call Foo.pm
-# START HERE: update Foo.pm to copy new methods & subs below, update Tests which call Foo.pm
-
 # <<< CHANGE_ME: delete for no methods, or replace with real method(s) >>>
-our integer_method $quince = sub {
-    my string $quince_def
-        = '...Cydonia vulgaris ... Cydonia, a city in Crete ... [1913 Webster]';
-    print $quince_def;
-    return length $quince_def;
-};
-
 our void_method $quux = sub {
     ( my object $self) = @_;
     $self->{plugh} = $self->{plugh} * 2;
 };
 
-our string_method $qorge = sub {
-    ( my object $self, my number $corge_input ) = @_;
-    return $self->{xyzzy} x $corge_input;
+our integer_method $quince = sub {
+    my string $quince_def
+        = '...Cydonia vulgaris ... Cydonia, a city in Crete ... [1913 Webster]';
+    print $quince_def;
+    return (length $quince_def);
+};
+
+our string_hashref_method $qorge = sub {
+    ( my object $self, my integer $qorge_input ) = @_;
+    return {
+        a => $self->{xyzzy} x $qorge_input,
+        b => 'howdy',
+        c => q{-23.42}
+    };
+};
+
+our object_arrayref_method $qaft = sub {
+    ( my object $self) = @_;
+    my object_arrayref $retval = [];
+    $retval->[0] = RPerl::CompileUnit::Module::Class::Template->new();
+    $retval->[0]->{xyzzy} = 'larry';
+    $retval->[1] = RPerl::CompileUnit::Module::Class::Template->new();
+    $retval->[1]->{xyzzy} = 'curly';
+    $retval->[2] = RPerl::CompileUnit::Module::Class::Template->new();
+    $retval->[2]->{xyzzy} = 'moe';
+    return $retval;
 };
 
 # [[[ SUBROUTINES ]]]
@@ -141,13 +153,14 @@ our number_arrayref $garply = sub {
 };
 
 our string_hashref $gorce = sub {
-    (my integer $a, my number $b, my string $c, my string_hashref $d) = @_;
-    my string_hashref $gorce_output = {
-        alpha => integer_to_string($a),
-        beta => number_to_string($b),
-        gamma => $c,
-        delta => %{$d}
-    }
+    ( my integer $al, my number $be, my string $ga, my string_hashref $de)
+        = @_;
+    return {
+        alpha => integer_to_string($al),
+        beta  => number_to_string($be),
+        gamma => $ga,
+        delta => %{$de}
+    };
 };
 
 1;    # end of class

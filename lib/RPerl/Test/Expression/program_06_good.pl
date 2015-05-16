@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: '18.7' >>>
-# <<< RUN_SUCCESS: '37.4' >>>
-# <<< RUN_SUCCESS: '56.1' >>>
+# <<< RUN_SUCCESS: '161.7' >>>
+# <<< RUN_SUCCESS: '295.4' >>>
+# <<< RUN_SUCCESS: '516.6' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -19,4 +19,4 @@ our $VERSION = 0.001_000;
 use RPerl::Test::Foo;
 
 # [[[ OPERATIONS ]]]
-print Dumper( garply( 17, 23, 42 ) );
+print Dumper( garply( 7, [ 23.1, 42.2, 73.8 ] ) );

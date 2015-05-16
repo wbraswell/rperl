@@ -18,7 +18,7 @@ use RPerl::Test;
 ## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
 
 # [[[ INCLUDES ]]]
-#use RPerl::Test::Foo qw(quux corge);
+#use RPerl::Test::Foo qw(quux qorge);
 #use RPerl::Test::Bar;
 
 # [[[ CONSTANTS ]]]

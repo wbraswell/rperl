@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: '18966.6466070478' >>>
+# <<< RUN_SUCCESS: '18_966.646_607_047_8' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -17,4 +17,4 @@ our $VERSION = 0.001_000;
 use RPerl::Test::Foo;
 
 # [[[ OPERATIONS ]]]
-RPerl::Test::Foo::grault(23);
+print to_string(RPerl::Test::Foo::grault(23));
