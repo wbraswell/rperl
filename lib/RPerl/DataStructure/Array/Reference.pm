@@ -35,6 +35,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in Array::Reference->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
+    # unwrap ArrayReference_182 from SubExpression_130
     if ( ref $self eq 'SubExpression_130' ) {
         $self = $self->{children}->[0];
     }
@@ -68,7 +69,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
-        = { CPP => q{<<< RP::DS::A::R DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>}
+        = { CPP => q{// <<< RP::DS::A::R DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>}
             . "\n" };
 
     #...
@@ -78,7 +79,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
-        = { CPP => q{<<< RP::DS::A::R DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>}
+        = { CPP => q{// <<< RP::DS::A::R DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>}
             . "\n" };
 
     #...

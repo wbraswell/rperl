@@ -20,6 +20,7 @@
 
 %token SHEBANG               = /(^#!\/(?:\w+\/)*perl)/                   # begin line, hash (octothorpe), bang, *NIX path to Perl; ex. '#!/usr/bin/perl'
 %token VERSION_NUMBER_ASSIGN = /\$VERSION\ =\ (\d\d?\.\d{3}\_\d{3});/    # $VERSION assign v-number, only capture v-number, not a normal number; ex. '$VERSION = 12.345_678;' returns '12.345_678'
+%token MY                    = /(my)/  # 'my'
 %token LITERAL_NUMBER        = /(-?(((\d{1,2}_)?(\d{3}_)*\d{3})|\d{1,2})(\.((\d{3}(_\d{3})*(_\d{1,2})?)|\d{1,2}))?)/   # number w/ underscores; ex. '12_345_678.910_1'
 %token LITERAL_STRING        = /(('[^']+')|("[^"\@\$]*((\\n)|(\\t))+[^"\@\$]*")|(q{[^}]*}))/  # single quotes non-empty; double quotes non-empty w/out sigils & w/ newline or tab; or single q-braces
 %token VARIABLE_SYMBOL       = /(\$(?:[a-zA-Z]\w*)?[a-z]\w*(::[a-zA-Z]\w*)*)/ # dollar sigil, scoped word with at least one lowercase in the first scope segment
@@ -145,18 +146,18 @@ Constant:                'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeIn
 #ConstantValue:          Literal | LBRACKET TypeInnerConstant? Literal (OP21_LIST_COMMA TypeInnerConstant? Literal)* ']' | 
 #                        LBRACE WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant? Literal (OP21_LIST_COMMA WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant? Literal)* '}' ;
 Subroutine:              'our' Type VARIABLE_SYMBOL '= sub {' SubroutineArguments? Operation* '}' ';' ;
-SubroutineArguments:     LPAREN_MY Type VARIABLE_SYMBOL (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
+SubroutineArguments:     LPAREN_MY Type VARIABLE_SYMBOL (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
 Class:                   'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties MethodOrSubroutine* LITERAL_NUMBER ';' ;
 Properties:              'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE HashEntryTyped (OP21_LIST_COMMA HashEntryTyped)* '}' ';' |
                          'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE '}' ';' ;
 Method:                  'our' TYPE_METHOD VARIABLE_SYMBOL '= sub {' MethodArguments? Operation* '}' ';' ;
-MethodArguments:         LPAREN_MY TYPE_SELF (OP21_LIST_COMMA 'my' Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
+MethodArguments:         LPAREN_MY TYPE_SELF (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
 MethodOrSubroutine:      Method | Subroutine;
 
 Operation:               Expression ';' | Statement ;
 Operator:                LPAREN OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ')' |
                          OP01_NAMED SubExpression | LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')' |
-                         OP01_OPEN 'my' 'filehandleref' FH_REF_SYMBOL OP21_LIST_COMMA LITERAL_STRING OP21_LIST_COMMA SubExpression |
+                         OP01_OPEN MY 'filehandleref' FH_REF_SYMBOL OP21_LIST_COMMA LITERAL_STRING OP21_LIST_COMMA SubExpression |
                          OP01_CLOSE FH_REF_SYMBOL | OP03_MATH_INC_DEC Variable | Variable OP03_MATH_INC_DEC | SubExpression OP04_MATH_POW SubExpression |
                          OP05_LOGICAL_NEG SubExpression | OP05_MATH_NEG_LPAREN SubExpression ')' | SubExpression OP06_REGEX_MATCH OP06_REGEX_PATTERN |
                          SubExpression OP07_STRING_REPEAT SubExpression | SubExpression OP07_MATH_MULT_DIV_MOD SubExpression |
@@ -176,14 +177,14 @@ SubExpressionOrStdin:    SubExpression | STDIN;
 Statement:               Conditional | (LoopLabel COLON)? Loop | OperatorVoid | VariableDeclaration | VariableModification ;
 Conditional:             'if' LPAREN SubExpression ')' CodeBlock ('elsif' LPAREN SubExpression ')' CodeBlock)* ('else' CodeBlock)? ;
 Loop:                    LoopFor | LoopForEach | LoopWhile ;
-LoopFor:                 'for' 'my' TYPE_INTEGER VARIABLE_SYMBOL LPAREN SubExpression OP17_LIST_RANGE SubExpression ')' CodeBlock ;
-LoopForEach:             'foreach' 'my' Type VARIABLE_SYMBOL LPAREN ListElements ')' CodeBlock ;
+LoopFor:                 'for' MY TYPE_INTEGER VARIABLE_SYMBOL LPAREN SubExpression OP17_LIST_RANGE SubExpression ')' CodeBlock ;
+LoopForEach:             'foreach' MY Type VARIABLE_SYMBOL LPAREN ListElements ')' CodeBlock ;
 LoopWhile:               'while' LPAREN SubExpression ')' CodeBlock ;
 CodeBlock:               LBRACE Operation+ '}' ;
 
 Variable:                VARIABLE_SYMBOL VariableRetrieval* ;
 VariableRetrieval:       OP02_ARRAY_THINARROW SubExpression ']' | OP02_HASH_THINARROW SubExpression '}' | OP02_HASH_THINARROW WORD '}' ;
-VariableDeclaration:     'my' Type VARIABLE_SYMBOL ';' | 'my' Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';' ;
+VariableDeclaration:     MY Type VARIABLE_SYMBOL ';' | MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';' ;
 VariableModification:    Variable OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';' | Variable OP19_VARIABLE_ASSIGN_BY SubExpression ';' ;
 ListElements:            ListElement (OP21_LIST_COMMA ListElement)* ;
 ListElement:             SubExpression | TypeInner SubExpression | OP01_QW WORD+ ')' ;
@@ -197,8 +198,8 @@ HashDereference:         '%{' Variable '}' | '%{' TypeInner? HashReference '}' ;
 WordScoped:              WORD | WORD_SCOPED;
 LoopLabel:               WORD_UPPERCASE ;
 Type:                    WORD | TYPE_INTEGER ;
-TypeInner:               'my' Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN ;
-TypeInnerConstant:       'my' Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN ;
+TypeInner:               MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN ;
+TypeInnerConstant:       MY Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN ;
 VariableOrLiteral:       Variable | Literal;
 VariableOrLiteralOrWord: Variable | Literal | WORD;
 Literal:                 LITERAL_NUMBER | LITERAL_STRING ;
@@ -236,7 +237,7 @@ MethodArguments_73 => 'RPerl::CodeBlock::Subroutine::Method::Arguments',  # Meth
 MethodOrSubroutine_74 => 'RPerl::CodeBlock::Subroutine::Method',  # MethodOrSubroutine -> Method
 MethodOrSubroutine_75 => 'RPerl::CodeBlock::Subroutine',  # MethodOrSubroutine -> Subroutine
 Operation_76 => 'RPerl::Operation::Expression',
-Operation_77 => 'RPerl::Operation::Statement',
+Operation_77 => 'RPerl::Operation::Statement',  # Operation -> Statement
 Operator_78 => 'RPerl::Operation::Expression::Operator::Print',
 Operator_79 => 'RPerl::Operation::Expression::Operator::Named',
 Operator_80 => 'RPerl::Operation::Expression::Operator::Named',
@@ -330,8 +331,8 @@ WordScoped_203 => 'RPerl::NonGenerator',
 LoopLabel_204 => 'RPerl::NonGenerator',
 Type_205 => 'RPerl::NonGenerator',                  # Type -> WORD
 Type_206 => 'RPerl::NonGenerator',                  # Type -> TYPE_INTEGER
-TypeInner_207 => 'RPerl::NonGenerator',             # TypeInner -> 'my' Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN
-TypeInnerConstant_208 => 'RPerl::NonGenerator',     # TypeInnerConstant -> 'my' Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN
+TypeInner_207 => 'RPerl::NonGenerator',             # TypeInner -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN
+TypeInnerConstant_208 => 'RPerl::NonGenerator',     # TypeInnerConstant -> MY Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN
 VariableOrLiteral_209 => 'RPerl::Operation::Expression::SubExpression::Variable',
 VariableOrLiteral_210 => 'RPerl::Operation::Expression::SubExpression::Literal',
 VariableOrLiteralOrWord_211 => 'RPerl::Operation::Expression::SubExpression::Variable',  # VariableOrLiteralOrWord -> Variable

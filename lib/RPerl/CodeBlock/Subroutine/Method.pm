@@ -1,24 +1,98 @@
+# [[[ HEADER ]]]
 package RPerl::CodeBlock::Subroutine::Method;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_000;
+our $VERSION = 0.003_010;
 
+# [[[ OO INHERITANCE ]]]
+use parent qw(RPerl::CodeBlock::Subroutine);
+use RPerl::CodeBlock::Subroutine;
+
+# [[[ CRITICS ]]]
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 
-use parent qw(RPerl::CodeBlock::Subroutine);
+# [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
 
-# [[[ SETUP ]]]
-# [[[ SETUP ]]]
-# [[[ SETUP ]]]
+# [[[ OO METHODS ]]]
+
+our string_hashref_method $ast_to_rperl__generate = sub {
+    ( my object $self, my string_hashref $modes) = @_;
+    my string_hashref $rperl_source_group = { PMC => q{} };
+    my string_hashref $rperl_source_subgroup;
+
+#    RPerl::diag( 'in Method->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+
+    # unwrap Method_69 from MethodOrSubroutine_74
+    if ( ( ref $self ) eq 'MethodOrSubroutine_74' ) {
+        $self = $self->{children}->[0];
+    }
+
+    if ( ref $self ne 'Method_69' ) {
+        croak
+            'ERROR ECVGEAS00, Code Generator, Abstract Syntax to RPerl, token'
+            . ( ref $self )
+            . 'found where Method_69 expected, croaking';
+    }
+
+    my string $our                = $self->{children}->[0];
+    my string $return_type        = $self->{children}->[1];
+    my string $name               = $self->{children}->[2];
+    my string $equal_sub          = $self->{children}->[3];
+    my object $optional_arguments = $self->{children}->[4];
+    my object $star_operations    = $self->{children}->[5];
+    my string $right_brace        = $self->{children}->[6];
+    my string $semicolon          = $self->{children}->[7];
+
+    $rperl_source_group->{PMC} .= $our . q{ } . $return_type . q{ } . $name . q{ } . $equal_sub;
+
+    if ( exists $optional_arguments->{children}->[0] ) {
+        $rperl_source_subgroup = $optional_arguments->{children}->[0]->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group,
+            $rperl_source_subgroup );
+    }
+
+    foreach my object $operation (@{$star_operations->{children}}) {
+        $rperl_source_subgroup = $operation->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group,
+            $rperl_source_subgroup ); 
+    }
+
+    $rperl_source_group->{PMC} .= $right_brace . $semicolon;
+    return $rperl_source_group;
+};
+
+our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
+    ( my object $self, my string_hashref $modes) = @_;
+    my string_hashref $cpp_source_group
+        = {
+        CPP => q{// <<< RP::CB::S::M DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>}
+            . "\n"
+        };
+
+    #...
+    return $cpp_source_group;
+};
+
+our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
+    ( my object $self, my string_hashref $modes) = @_;
+    my string_hashref $cpp_source_group
+        = {
+        CPP => q{// <<< RP::CB::S::M DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>}
+            . "\n"
+        };
+
+    #...
+    return $cpp_source_group;
+};
+
+# [[[ TYPES & SUBTYPES BELOW THIS LINE ]]]
 
 # a method is a subroutine belonging to a class or object
 package method;
 use parent ('RPerl::CodeBlock::Subroutine::Method');
 
-# [[[ SCALAR & SCALAR REF METHODS ]]]
-# [[[ SCALAR & SCALAR REF METHODS ]]]
 # [[[ SCALAR & SCALAR REF METHODS ]]]
 
 # method with void return type
@@ -58,8 +132,6 @@ package object_method;
 use parent -norequire, ('method');
 
 # [[[ HASH METHODS ]]]
-# [[[ HASH METHODS ]]]
-# [[[ HASH METHODS ]]]
 
 package integer_hashref_method;
 use parent -norequire, ('method');
@@ -76,8 +148,6 @@ use parent -norequire, ('method');
 package hashref_hashref_method;
 use parent -norequire, ('method');
 
-# [[[ ARRAY METHODS ]]]
-# [[[ ARRAY METHODS ]]]
 # [[[ ARRAY METHODS ]]]
 
 package integer_arrayref_method;

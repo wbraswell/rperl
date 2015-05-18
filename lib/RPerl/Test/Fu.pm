@@ -22,14 +22,14 @@ use RPerl::Test;
 #use RPerl::Test::Bar;
 
 # [[[ CONSTANTS ]]]
-use constant PI  => my number $TYPED_PI  = 3.141_59;
-use constant PIE => my string $TYPED_PIE = 'pecan';
+#use constant PI  => my number $TYPED_PI  = 3.141_59;
+#use constant PIE => my string $TYPED_PIE = 'pecan';
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {
-    plugh => my integer $TYPED_plugh           = 23,
+#    plugh => my integer $TYPED_plugh           = 23,
 #    xyzzy => my string $TYPED_xyzzy            = 'twenty-three',
-#    thud  => my integer_arrayref $TYPED_thud = [ ],
+    thud  => my integer_arrayref $TYPED_thud = [ ]#,
 #    thud  => my integer_arrayref $TYPED_thud = [ 2 ]#,
 #    thud  => my integer_arrayref $TYPED_thud = [ 2, 4, 6, 8 ],
 #    thud  => my integer_arrayref $TYPED_thud = [ qw(hi howdy hello) ],
@@ -38,6 +38,15 @@ our hashref $properties = {
 #    yyz => my number_hashref $TYPED_yyz = { a => 3.1, b => 6.2, c => 9.3 },
 #    pals => my string_hashref $TYPED_pals = { a => 'howdy', b => 'buffalo', c => 'clarabell' }
 #    pals => my string_hashref $TYPED_pals = { a21 => 'howdy', 21 => 'buffalo', 21.3 => 'clarabell', '21.3' => 'bozo' }
+};
+
+# [[[ OO METHODS ]]]
+
+our void_method $quux = sub {
+#    ( my object $self) = @_;
+    ( my object $self, my integer $howdy, my string_hashref $doody) = @_;
+#    $self->{plugh} = $self->{plugh} * 2;
+    return 2;
 };
 
 1;    # end of class

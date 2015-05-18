@@ -23,6 +23,8 @@ use RPerl::CompileUnit::Include;
 use RPerl::CompileUnit::Critic;
 use RPerl::CompileUnit::Constant;
 use RPerl::CodeBlock::Subroutine;
+use RPerl::CodeBlock::Subroutine::Method;
+use RPerl::CodeBlock::Subroutine::Method::Arguments;
 use RPerl::NonGenerator;
 
 # [[[ OPERATIONS ]]]
