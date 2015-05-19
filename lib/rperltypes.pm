@@ -11,11 +11,11 @@ our $VERSION = 0.001_030;
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
-## no critic qw(ProhibitExcessComplexity)  # SYSTEM SPECIAL 6: allow complex code inside subroutines, must be after line 1
-## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 7: PERL CRITIC UNFILED ISSUE, not postfix foreach or if
-## no critic qw(ProhibitDeepNests)  # SYSTEM SPECIAL 8: allow deeply-nested code
-## no critic qw(RequireBriefOpen)  # SYSTEM SPECIAL 10: allow complex processing with open filehandle
-## no critic qw(ProhibitCascadingIfElse)  # SYSTEM SPECIAL 12: allow complex conditional logic
+## no critic qw(ProhibitExcessComplexity)  # SYSTEM SPECIAL 5: allow complex code inside subroutines, must be after line 1
+## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC UNFILED ISSUE, not postfix foreach or if
+## no critic qw(ProhibitDeepNests)  # SYSTEM SPECIAL 7: allow deeply-nested code
+## no critic qw(RequireBriefOpen)  # SYSTEM SPECIAL 9: allow complex processing with open filehandle
+## no critic qw(ProhibitCascadingIfElse)  # SYSTEM SPECIAL 11: allow complex conditional logic
 
 # [[[ NON-RPERL MODULES ]]]
 use File::Copy qw(move);
@@ -57,7 +57,7 @@ use RPerl::CodeBlock::Subroutine::Method; # Method is the only item that is both
 
 # these types are currently implemented for all 3 primary RPerl modes: PERLOPS_PERLTYPES, CPPOPS_PERLTYPES, CPPOPS_CPPTYPES
 # NEED REMOVE: hard-coded list
-our string_arrayref $supported = [
+our string_arrayref $SUPPORTED = [
     qw(
         void
         integer

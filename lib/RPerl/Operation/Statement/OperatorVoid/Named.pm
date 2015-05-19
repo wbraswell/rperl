@@ -16,4 +16,8 @@ use RPerl::Operation::Statement::OperatorVoid;
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
 
+# START HERE: implement OperatorVoid_112 & OperatorVoid_113
+# START HERE: implement OperatorVoid_112 & OperatorVoid_113
+# START HERE: implement OperatorVoid_112 & OperatorVoid_113
+
 1;    # end of class

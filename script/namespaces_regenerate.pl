@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use rperlnamespaces;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_001;
 
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
 
@@ -53,9 +53,9 @@ foreach my $namespace ( keys %{$namespaces_rperl} ) {
 }
 
 my $namespaces_core_string = Dumper($namespaces_core);
-$namespaces_core_string =~ s/\$VAR1/\$rperlnamespaces_generated::core/gxms;
+$namespaces_core_string =~ s/\$VAR1/\$rperlnamespaces_generated::CORE/gxms;
 my $namespaces_rperl_string = Dumper($namespaces_rperl);
-$namespaces_rperl_string =~ s/\$VAR1/\$rperlnamespaces_generated::rperl/gxms;
+$namespaces_rperl_string =~ s/\$VAR1/\$rperlnamespaces_generated::RPERL/gxms;
 
 #print 'have $namespaces_rperl_string = ' . "\n" . $namespaces_rperl_string . "\n\n";
 
@@ -67,13 +67,12 @@ use warnings;
 our $VERSION = 0.001_000;
 
 ## no critic qw(ProhibitParensWithBuiltins ProhibitNoisyQuotes)  # SYSTEM SPECIAL 3: allow auto-generated code
-## no critic qw(ProhibitPackageVars)  # SYSTEM SPECIAL 4d: allow $rperlnamespaces::*
 
-$rperlnamespaces_generated::core = undef;
+$rperlnamespaces_generated::CORE = undef;
 EOF
 
 $namespaces_generated .= $namespaces_core_string . "\n";
-$namespaces_generated .= q{$rperlnamespaces_generated::rperl = undef;} . "\n";
+$namespaces_generated .= q{$rperlnamespaces_generated::RPERL = undef;} . "\n";
 $namespaces_generated .= $namespaces_rperl_string . "\n";
 $namespaces_generated .= q{1;} . "\n";
 

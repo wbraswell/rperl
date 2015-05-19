@@ -30,10 +30,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     }
 
     if ( ref $self ne 'Method_69' ) {
-        croak
-            'ERROR ECVGEAS00, Code Generator, Abstract Syntax to RPerl, token'
-            . ( ref $self )
-            . 'found where Method_69 expected, croaking';
+        croak 'ERROR ECVGEAS00, Code Generator, Abstract Syntax to RPerl, token' . ( ref $self ) . 'found where Method_69 expected, croaking';
     }
 
     my string $our                = $self->{children}->[0];

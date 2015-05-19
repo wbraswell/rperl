@@ -1,4 +1,4 @@
-## no critic qw(ProhibitExcessMainComplexity)  # SYSTEM SPECIAL 5: allow complex code outside subroutines, must be on line 1
+## no critic qw(ProhibitExcessMainComplexity)  # SYSTEM SPECIAL 4: allow complex code outside subroutines, must be on line 1
 package RPerl::CompileUnit::Module::Package;
 use strict;
 use warnings;

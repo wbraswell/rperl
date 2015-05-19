@@ -3,7 +3,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_015;
+our $VERSION = 0.004_016;
 
 # [[[ OO INHERITANCE ]]]
 #use RPerl::CompileUnit::Module::Class;
@@ -11,8 +11,8 @@ our $VERSION = 0.004_015;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
-## no critic qw(ProhibitBacktickOperators)  ## SYSTEM SPECIAL 11: allow system command execution
-## no critic qw(RequireCarping)  # SYSTEM SPECIAL 13: allow die instead of croak
+## no critic qw(ProhibitBacktickOperators)  ## SYSTEM SPECIAL 10: allow system command execution
+## no critic qw(RequireCarping)  # SYSTEM SPECIAL 12: allow die instead of croak
 
 # [[[ INCLUDES ]]]
 use Perl::Critic;
@@ -260,9 +260,9 @@ our string $rperl_ast__dump = sub {
     $rperl_ast_dumped =~ s/\ \ /\ \ \ \ /g;  # set tabs from 2 to 4 spaces
     my string $replacee;
     my string $replacer;
-    foreach my string $rule ( sort keys %{$RPerl::Grammar::rules} ) {
+    foreach my string $rule ( sort keys %{$RPerl::Grammar::RULES} ) {
         $replacee = q{'} . $rule . q{'};
-        $replacer = q{'} . $rule . ' ISA ' . $RPerl::Grammar::rules->{$rule} . q{'};
+        $replacer = q{'} . $rule . ' ISA ' . $RPerl::Grammar::RULES->{$rule} . q{'};
         $rperl_ast_dumped =~ s/$replacee/$replacer/g;
     }
     return $rperl_ast_dumped;

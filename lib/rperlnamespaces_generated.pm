@@ -5,10 +5,9 @@ use warnings;
 our $VERSION = 0.001_000;
 
 ## no critic qw(ProhibitParensWithBuiltins ProhibitNoisyQuotes)  # SYSTEM SPECIAL 3: allow auto-generated code
-## no critic qw(ProhibitPackageVars)  # SYSTEM SPECIAL 4d: allow $rperlnamespaces::*
 
-$rperlnamespaces_generated::core = undef;
-$rperlnamespaces_generated::core = {
+$rperlnamespaces_generated::CORE = undef;
+$rperlnamespaces_generated::CORE = {
     '!'             => 1,
     'B::'           => 1,
     'CORE::'        => 1,
@@ -47,8 +46,8 @@ $rperlnamespaces_generated::core = {
     'warnings::'    => 1
 };
 
-$rperlnamespaces_generated::rperl = undef;
-$rperlnamespaces_generated::rperl = {
+$rperlnamespaces_generated::RPERL = undef;
+$rperlnamespaces_generated::RPERL = {
     'Config::'                       => 1,
     'Cwd::'                          => 1,
     'Digest::'                       => 1,

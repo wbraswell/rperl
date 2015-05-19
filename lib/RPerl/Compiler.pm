@@ -1,4 +1,4 @@
-## no critic qw(ProhibitExcessMainComplexity)  # SYSTEM SPECIAL 5: allow complex code outside subroutines, must be on line 1
+## no critic qw(ProhibitExcessMainComplexity)  # SYSTEM SPECIAL 4: allow complex code outside subroutines, must be on line 1
 # [[[ PREPROCESSOR ]]]
 # <<< TYPE_CHECKING: OFF >>>
 
@@ -13,7 +13,7 @@ our $VERSION = 0.003_200;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
-## no critic qw(RequireBriefOpen)  # SYSTEM SPECIAL 10: allow complex processing with open filehandle
+## no critic qw(RequireBriefOpen)  # SYSTEM SPECIAL 9: allow complex processing with open filehandle
 
 # [[[ INCLUDES ]]]
 
@@ -129,7 +129,7 @@ our void $save_source_files = sub {
         }
     }
 
-    foreach my string $suffix_key ( sort keys %{$file_name_group} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 7: PERL CRITIC UNFILED ISSUE, not postfix foreach or if
+    foreach my string $suffix_key ( sort keys %{$file_name_group} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC UNFILED ISSUE, not postfix foreach or if
         if (   ( not exists $source_group->{$suffix_key} )
             or ( not defined $source_group->{$suffix_key} )
             or ( $source_group->{$suffix_key} eq q{} ) )

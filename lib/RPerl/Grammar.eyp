@@ -214,7 +214,7 @@ Literal:                 LITERAL_NUMBER | LITERAL_STRING ;
 # 3. Run new & existing grammar tests
 # 4. Copy updates from Grammar.output file into this file, below this line only
 # 5. Run scripts/grammar_recompile.sh again
-our string_hashref $rules = {
+our string_hashref $RULES = {
 CompileUnit_4 => 'RPerl::CompileUnit::Program',  # CompileUnit -> Program
 CompileUnit_5 => 'RPerl::CompileUnit::Module',  # CompileUnit -> PLUS-2
 Program_18 => 'RPerl::CompileUnit::Program',  # Program -> SHEBANG OPTIONAL-3 Header STAR-4 STAR-5 STAR-6 STAR-7 PLUS-8
@@ -267,13 +267,13 @@ Operator_103 => 'RPerl::Operation::Expression::Operator::Ternary',
 Operator_104 => 'RPerl::Operation::Expression::Operator::Logical::Negation',
 Operator_015 => 'RPerl::Operation::Expression::Operator::Logical::And',
 Operator_106 => 'RPerl::Operation::Expression::Operator::Logical::OrXor',
-OperatorVoid_110 => 'RPerl::Operation::Statement::OperatorVoid::Print',
-OperatorVoid_111 => 'RPerl::Operation::Statement::OperatorVoid::Print',
-OperatorVoid_112 => 'RPerl::Operation::Statement::OperatorVoid::Named',
-OperatorVoid_113 => 'RPerl::Operation::Statement::OperatorVoid::Named',
-OperatorVoid_114 => 'RPerl::Operation::Expression::Operator::Named',
-OperatorVoid_115 => 'RPerl::Operation::Statement::OperatorVoid::LoopControl',
-OperatorVoid_116 => 'RPerl::Operation::Statement::OperatorVoid::LoopControl',
+OperatorVoid_110 => 'RPerl::Operation::Statement::OperatorVoid::Print',        # OperatorVoid -> OP01_PRINT OPTIONAL-31 ListElements ';'
+OperatorVoid_111 => 'RPerl::Operation::Statement::OperatorVoid::Print',        # OperatorVoid -> OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ';'
+OperatorVoid_112 => 'RPerl::Operation::Statement::OperatorVoid::Named',        # OperatorVoid -> OP01_NAMED_VOID_SCOLON
+OperatorVoid_113 => 'RPerl::Operation::Statement::OperatorVoid::Named',        # OperatorVoid -> OP01_NAMED_VOID ListElements ';'
+OperatorVoid_114 => 'RPerl::Operation::Expression::Operator::Named',           # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
+OperatorVoid_115 => 'RPerl::Operation::Statement::OperatorVoid::LoopControl',  # OperatorVoid -> OP19_LOOP_CONTROL_SCOLON
+OperatorVoid_116 => 'RPerl::Operation::Statement::OperatorVoid::LoopControl',  # OperatorVoid -> OP19_LOOP_CONTROL LoopLabel ';'
 Expression_121 => 'RPerl::Operation::Expression::Operator',
 Expression_122 => 'RPerl::Operation::Expression::SubroutineCall',
 Expression_123 => 'RPerl::Operation::Expression::ConstantCall',
@@ -292,7 +292,7 @@ SubExpressionOrStdin_135 => 'RPerl::Operation::Expression::SubExpression',      
 SubExpressionOrStdin_136 => 'RPerl::InputOutput::Stdin',
 Statement_140 => 'RPerl::Operation::Statement::Conditional',
 Statement_141 => 'RPerl::Operation::Statement::Loop',
-Statement_142 => 'RPerl::Operation::Statement::OperatorVoid',
+Statement_142 => 'RPerl::Operation::Statement::OperatorVoid',  # Statement -> OperatorVoid
 Statement_143 => 'RPerl::Operation::Statement::VariableDeclaration',
 Statement_144 => 'RPerl::Operation::Statement::VariableModification',
 Conditional_151 => 'RPerl::Operation::Statement::Conditional',

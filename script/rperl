@@ -10,7 +10,7 @@ our $VERSION = 0.005_040;
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(ProhibitBooleanGrep)  # SYSTEM SPECIAL 1: allow grep
-## no critic qw(RequireCarping)  # SYSTEM SPECIAL 13: allow die instead of croak
+## no critic qw(RequireCarping)  # SYSTEM SPECIAL 12: allow die instead of croak
 
 # [[[ INCLUDES ]]]
 use RPerl::Parser;    # includes Perl::Critic
@@ -222,7 +222,7 @@ sub verify_and_default_modes {
     }
 
     # defaults when mode(s) not provided
-    foreach my string $mode_default_key ( keys %{$modes_default} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 7: PERL CRITIC UNFILED ISSUE, not postfix foreach or if
+    foreach my string $mode_default_key ( keys %{$modes_default} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC UNFILED ISSUE, not postfix foreach or if
         if ( not( exists $modes->{$mode_default_key} ) ) {
             $modes->{$mode_default_key} = $modes_default->{$mode_default_key};
         }
