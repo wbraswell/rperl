@@ -20,8 +20,8 @@ use RPerl::Operation::Statement::OperatorVoid::Named;
 
 # [[[ CONSTANTS ]]]
 use constant NAME_PERL  => my string $TYPED_NAME_PERL  = 'return';
-use constant ARGUMENTS_MIN  => my integer $TYPED_ARGUMENTS_MIN = 0;  # call return() for all subroutines which return void
-use constant ARGUMENTS_MAX  => my integer $TYPED_ARGUMENTS_MAX = 1;  # call return((ELEM0, ELEM1, ...)) for all subroutines which return an array; disallow return(ELEM0, ELEM1, ...) multiple return values
+use constant ARGUMENTS_MIN  => my integer $TYPED_ARGUMENTS_MIN = 0;  # call 'return;' for all subroutines which return void
+use constant ARGUMENTS_MAX  => my integer $TYPED_ARGUMENTS_MAX = 1;  # call 'return @{[ELEM0, ELEM1, ...]};' for all subroutines which return an array; disallow return(ELEM0, ELEM1, ...) multiple return values
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
@@ -31,7 +31,6 @@ our hashref $properties = {};
 our string_hashref_method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes, my object $operator_void_named) = @_;
     my string_hashref $rperl_source_group = { PMC => q{} };
-    $rperl_source_subgroup;
 
     RPerl::diag(
         'in OperatorVoid::Named::Return->ast_to_rperl__generate(), received $self = '
@@ -46,8 +45,8 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
     if (exists $operator_void_named->{children}->[2]) {
         my object $arguments = $operator_void_named->{children}->[1];
-        $rperl_source_subgroup = $arguments->ast_to_rperl__generate($modes, $self);
-        my string_hashref RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+        my string_hashref $rperl_source_subgroup = $arguments->ast_to_rperl__generate($modes, $self);
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
         $semicolon = $operator_void_named->{children}->[2];
     }
     else {
