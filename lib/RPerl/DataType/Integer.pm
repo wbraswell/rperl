@@ -3,7 +3,7 @@ package RPerl::DataType::Integer;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_000;
+our $VERSION = 0.004_001;
 
 # [[[ OO INHERITANCE ]]]
 use parent ('RPerl::DataType::Scalar');
@@ -21,6 +21,9 @@ use parent ('RPerl::DataType::Integer');
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataType::Integer;
+
+# [[[ INCLUDES ]]]
+use RPerl::DataType::String;    # need string type
 
 # [[[ TYPE-CHECKING ]]]
 our void $integer_CHECK = sub {
