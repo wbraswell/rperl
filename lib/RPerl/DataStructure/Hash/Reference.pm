@@ -44,9 +44,9 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         and ( ref $self ne 'HashReference_197' ) )
     {
         croak
-            'ERROR ECVGEAS00, Code Generator, Abstract Syntax to RPerl, token'
+            'ERROR ECVGEAS00, Code Generator, Abstract Syntax to RPerl, token '
             . ( ref $self )
-            . 'found where HashReference_196 or HashReference_197 expected, croaking';
+            . ' found where HashReference_196 or HashReference_197 expected, croaking';
     }
 
     if ( ref $self eq 'HashReference_197' ) {

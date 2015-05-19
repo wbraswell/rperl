@@ -1,8 +1,9 @@
+# [[[ HEADER ]]]
 package RPerl::DataType::String;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_000;
+our $VERSION = 0.004_001;
 
 # [[[ OO INHERITANCE ]]]
 use parent ('RPerl::DataType::Scalar');
@@ -12,7 +13,7 @@ use RPerl::DataType::Scalar;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 
-# [[[ SUB-TYPES BEFORE INCLUDES ]]]
+# [[[ SUB-TYPES ]]]
 # a string is 0 or more letters, digits, or other ASCII (Unicode???) symbols
 package string;
 use parent ('RPerl::DataType::String');

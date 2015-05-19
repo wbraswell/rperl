@@ -14,7 +14,7 @@ use RPerl::DataType::Scalar;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 
-# [[[ SUB-TYPES BEFORE INCLUDES ]]]
+# [[[ SUB-TYPES ]]]
 # DEV NOTE, CORRELATION #07:
 # a number is any numeric value, meaning either an integer or a floating-point number;
 # Integer and Float are both sub-classes of Number;
@@ -28,10 +28,6 @@ use parent ('RPerl::DataType::Number');
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataType::Number;
-
-# [[[ OO INHERITANCE ]]]
-use parent ('RPerl::DataType::Scalar');
-use RPerl::DataType::Scalar;
 
 # [[[ INCLUDES ]]]
 use RPerl::DataType::String;    # need string type

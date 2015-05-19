@@ -42,9 +42,9 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
     if ( ref $self ne 'ArrayReference_182' ) {
         croak
-            'ERROR ECVGEAS00, Code Generator, Abstract Syntax to RPerl, token'
+            'ERROR ECVGEAS00, Code Generator, Abstract Syntax to RPerl, token '
             . ( ref $self )
-            . 'found where ArrayReference_182 expected, croaking';
+            . ' found where ArrayReference_182 expected, croaking';
     }
 
     my string $left_bracket           = $self->{children}->[0];

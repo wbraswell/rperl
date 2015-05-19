@@ -18,18 +18,7 @@ use RPerl::Test::Foo;
 use RPerl::Test::Bar;
 
 # [[[ OO PROPERTIES ]]]
-our hashref $properties = {
-
- #name => my string $TYPED_name = undef,  # object property
- #arguments => my object_arrayref $TYPED_arguments = undef,  # object property
-};
-
-# [[[ OO PROPERTIES, CLASS PROPERTY AKA PACKAGE VARIABLE ]]]
-our string_hashref $NAMES = {
-    'return' => 'RPerl::Operation::Statement::OperatorVoid::Named::Return',
-    'croak'  => 'RPerl::Operation::Statement::OperatorVoid::Named::Croak',
-    'exit'   => 'RPerl::Operation::Statement::OperatorVoid::Named::Exit',
-};
+our hashref $properties = {};
 
 # [[[ OO METHODS ]]]
 
@@ -59,10 +48,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             $rperl_source_subgroup );
     }
     else {
-        croak
-            'ERROR ECVGEAS00, Code Generator, Abstract Syntax to RPerl, token'
-            . $child0_class
-            . 'found where OperatorVoid_110, OperatorVoid_111, OperatorVoid_112, OperatorVoid_113, OperatorVoid_114, OperatorVoid_115, or OperatorVoid_116 expected, croaking';
+        croak 'ERROR ECVGEAS00, Code Generator, Abstract Syntax to RPerl, token ' . $child0_class . ' found where OperatorVoid_110, OperatorVoid_111, OperatorVoid_112, OperatorVoid_113, OperatorVoid_114, OperatorVoid_115, or OperatorVoid_116 expected, croaking';
     }
 
     return $rperl_source_group;

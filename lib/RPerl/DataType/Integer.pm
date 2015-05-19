@@ -1,27 +1,26 @@
+# [[[ HEADER ]]]
 package RPerl::DataType::Integer;
 use strict;
 use warnings;
 use RPerl;
 our $VERSION = 0.004_000;
 
+# [[[ OO INHERITANCE ]]]
+use parent ('RPerl::DataType::Scalar');
+use RPerl::DataType::Scalar;
+
+# [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 
-use parent ('RPerl::DataType');
-use RPerl::DataType;
-
-# [[[ SUB-TYPES BEFORE SETUP ]]]
+# [[[ SUB-TYPES ]]]
 # an integer is a whole number, it has no floating-pointeger (fractional/decimal) component
 package integer;
 use parent ('RPerl::DataType::Integer');
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataType::Integer;
-
-# [[[ SETUP ]]]
-use parent ('RPerl::DataType::Number');
-use RPerl::DataType::Number;
 
 # [[[ TYPE-CHECKING ]]]
 our void $integer_CHECK = sub {

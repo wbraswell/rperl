@@ -29,7 +29,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup ); 
     }
     else {
-        croak 'ERROR ECVGEAS00, Code Generator, Abstract Syntax to RPerl, token' . ( ref $self ) . 'found where SubExpressionOrStdin_135, ListElement_177, or ListElement_178 expected, croaking';
+        croak 'ERROR ECVGEAS00, Code Generator, Abstract Syntax to RPerl, token ' . ( ref $self ) . ' found where SubExpressionOrStdin_135, ListElement_177, or ListElement_178 expected, croaking';
     }
 
     return $rperl_source_group;

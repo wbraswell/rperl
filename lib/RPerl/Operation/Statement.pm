@@ -56,7 +56,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             $rperl_source_subgroup );
     }
     else {
-        croak 'ERROR ECVGEAS00, Code Generator, Abstract Syntax to RPerl, token' . $child0_class . 'found where Statement_140, Statement_141, Statement_142, Statement_143, or Statement_144 expected, croaking';
+        croak 'ERROR ECVGEAS00, Code Generator, Abstract Syntax to RPerl, token ' . $child0_class . ' found where Statement_140, Statement_141, Statement_142, Statement_143, or Statement_144 expected, croaking';
     }
 
     return $rperl_source_group;
