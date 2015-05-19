@@ -29,6 +29,7 @@ use Scalar::Util qw(blessed);
 
 # [[[ DATA TYPES ]]]
 use RPerl::DataType::Void;
+use RPerl::DataType::Boolean;
 use RPerl::DataType::Integer;
 use RPerl::DataType::Float;
 use RPerl::DataType::Number;

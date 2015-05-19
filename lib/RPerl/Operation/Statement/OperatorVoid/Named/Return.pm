@@ -20,8 +20,6 @@ use RPerl::Operation::Statement::OperatorVoid::Named;
 
 # [[[ CONSTANTS ]]]
 use constant NAME_PERL  => my string $TYPED_NAME_PERL  = 'return';
-use constant PARENTHESIS_REQUIRE  => my bool $TYPED_PARENTHESIS_REQUIRE = 1;  # disallow ambiguous'ish calling of return w/out parens
-use constant PARENTHESIS_ALLOW  => my bool $TYPED_PARENTHESIS_ALLOW = 1;  # exempt from Perl::Critic brutal CodeLayout::ProhibitParensWithBuiltins
 use constant ARGUMENTS_MIN  => my integer $TYPED_ARGUMENTS_MIN = 0;  # call return() for all subroutines which return void
 use constant ARGUMENTS_MAX  => my integer $TYPED_ARGUMENTS_MAX = 1;  # call return((ELEM0, ELEM1, ...)) for all subroutines which return an array; disallow return(ELEM0, ELEM1, ...) multiple return values
 

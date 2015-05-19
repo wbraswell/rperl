@@ -1,5 +1,5 @@
 # [[[ HEADER ]]]
-package RPerl::DataType::Bool;
+package RPerl::DataType::Boolean;
 use strict;
 use warnings;
 use RPerl;
@@ -17,10 +17,13 @@ use RPerl::DataType::Scalar;
 # [[[ SUB-TYPES ]]]
 # a bool is a binary boolean value, the only valid values are 0 (false) or 1 (true)
 package bool;
-use parent ('RPerl::DataType::Bool');
+use parent ('RPerl::DataType::Boolean');
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
-package RPerl::DataType::Bool;
+package RPerl::DataType::Boolean;
+
+# [[[ INCLUDES ]]]
+use RPerl::DataType::String;    # need string type
 
 # NEED UPGRADE: using SvIOKp() integer type check for boolean type check, need implement SvBOKp() and full bool semantics
 
@@ -83,7 +86,7 @@ our string $bool_to_string = sub {
 # [[[ TYPE TESTING ]]]
 our bool $bool__typetest0 = sub {
     my bool $retval
-        = ( 21 / 7 ) + main::RPerl__DataType__Bool__MODE_ID(); # return bool (not number) value, don't do (22 / 7) etc.
+        = ( 21 / 7 ) + main::RPerl__DataType__Boolean__MODE_ID(); # return bool (not number) value, don't do (22 / 7) etc.
 
 #    RPerl::diag "in PERLOPS_PERLTYPES bool__typetest0(), have \$retval = $retval\n";
     return ($retval);
@@ -97,7 +100,7 @@ our bool $bool__typetest1 = sub {
 
 #    RPerl::diag 'in PERLOPS_PERLTYPES bool__typetest1(), received $lucky_bool = ' . bool_to_string($lucky_bool) . "\n";
     return (
-        ( $lucky_bool * 2 ) + main::RPerl__DataType__Bool__MODE_ID() );
+        ( $lucky_bool * 2 ) + main::RPerl__DataType__Boolean__MODE_ID() );
 };
 
 1;
