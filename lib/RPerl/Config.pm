@@ -1,7 +1,16 @@
+## no critic qw(ProhibitUselessNoCritic PodSpelling ProhibitExcessMainComplexity) # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code, must be on line 1; SYSTEM SPECIAL 4: allow complex code outside subroutines, must be on line 1
 package RPerl::Config;
 use strict;
 use warnings;
-our $VERSION = 0.002_022;
+our $VERSION = 0.003_000;
+
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd) # DEVELOPER DEFAULT 1b: allow POD & unreachable or POD-commented code, must be after line 1
+## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
+## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
+## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
+## no critic qw(ProhibitAutomaticExportation)  # SYSTEM SPECIAL 13: allow global exports from Config.pm
 
 # DEV NOTE: this package exists to serve as the header file for RPerl.pm itself,
 # as well as for RPerl.pm dependencies such as Class.pm, HelperFunctions_cpp.pm, and rperltypes.pm
@@ -10,28 +19,37 @@ our $VERSION = 0.002_022;
 
 # export various subroutines and variables to all who call 'use RPerl::Config;'
 use Data::Dumper;
-$Data::Dumper::Sortkeys = 1;  # Dumper() output must be sorted for lib/RPerl/Tests/Type_Types/* etc.
+$Data::Dumper::Sortkeys = 1; # Dumper() output must be sorted for lib/RPerl/Tests/Type_Types/* etc.
 use Carp;
 use English qw(-no_match_vars);
 use Exporter 'import';
+
 # DEV NOTE, CORRELATION #08: can't include to_string(), type(), types(), name(), or scope_type_name_value() in @EXPORT here or in RPerl:: namespace below
 our @EXPORT
     = qw(Dumper carp croak confess $OS_ERROR $EVAL_ERROR $CHILD_ERROR $EXECUTABLE_NAME $PROGRAM_NAME);
 
-1;    # end of package
+1;                           # end of package
 
 package RPerl;
 use File::Find qw(find);
 use File::Spec;
 
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd) # DEVELOPER DEFAULT 1b: allow POD & unreachable or POD-commented code, must be after line 1
+## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
+## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
+## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
+## no critic qw(ProhibitAutomaticExportation)  # SYSTEM SPECIAL 13: allow global exports from Config.pm
+
 # export $RPerl::MODES, as well as various subroutines and variables to all who call 'use RPerl;'
-our $MODES = {  # see perl_modes.txt for more info
-    0 => { ops => 'PERL', types => 'PERL' },  # NEED FIX: should be types => 'PERL_STATIC'
-    1 => { ops => 'CPP',  types => 'PERL' },  # NEED FIX: should be types => 'PERL_STATIC'
-    2 => { ops => 'CPP',  types => 'CPP' }
+our $MODES = {    # see perl_modes.txt for more info
+    0 => { ops => 'PERL', types => 'PERL' }, # NEED FIX: should be types => 'PERL_STATIC'
+    1 => { ops => 'CPP', types => 'PERL' }, # NEED FIX: should be types => 'PERL_STATIC'
+    2 => { ops => 'CPP', types => 'CPP' }
 };
 use Data::Dumper;
-$Data::Dumper::Sortkeys = 1;  # Dumper() output must be sorted for lib/RPerl/Tests/Type_Types/* etc.
+$Data::Dumper::Sortkeys = 1; # Dumper() output must be sorted for lib/RPerl/Tests/Type_Types/* etc.
 use Carp;
 use English qw(-no_match_vars);
 use Exporter 'import';
@@ -69,7 +87,7 @@ sub diag {
     #    ( my $message ) = @_;
     my @messages = @_;
 
-    # default to off; if either variable is set to true, then do emit messages
+  # default to off; if either variable is set to true, then do emit messages
   #    if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) { print {*STDERR} $message; }
     if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) {
         foreach my $message (@messages) { print {*STDERR} $message; }
@@ -112,20 +130,24 @@ sub verbose_reset {
     return 1;
 }
 
-sub warn {
+sub warning {
     my @messages = @_;
-    
-    # default to on; if either variable is set to false, then do not emit messages
-    if (((not defined $ENV{RPERL_WARNINGS}) or $ENV{RPERL_WARNINGS}) and $RPerl::WARNINGS) {
+
+# default to on; if either variable is set to false, then do not emit messages
+    if ( ( ( not defined $ENV{RPERL_WARNINGS} ) or $ENV{RPERL_WARNINGS} )
+        and $RPerl::WARNINGS )
+    {
+        # NEED FIX: the two following lines should be equivalent, but warn causes false ECVPAPL03
         foreach my $message (@messages) { print {*STDERR} $message; }
+#        foreach my $message (@messages) { warn $message . "\n"; }
     }
     return 1;
 }
 
 sub analyze_class_symtab_entries {
     ( my $class ) = @_;
-    my $retval = q{};
-    my @isa_array = eval '@' . $class . '::ISA';
+    my $retval    = q{};
+    my @isa_array = eval q{@} . $class . q{::ISA};
 
     #print Dumper(\@isa_array);
     my $isa_string = join ', ', @isa_array;
@@ -165,6 +187,7 @@ sub analyze_class_symtab_entries {
         $retval .= "\n";
     }
     $retval .= '<<<<< END SYMTAB ENTRIES >>>>>' . "\n";
+    return $retval;
 }
 
 # [[[ OPERATIONS SPECIAL ]]]
@@ -182,7 +205,8 @@ if (   ( not exists $INC{'RPerl/Config.pm'} )
 }
 my $rperl_config_pm_loaded = $INC{'RPerl/Config.pm'};
 if ( not -e $rperl_config_pm_loaded ) {
-    Carp::croak 'BIZARRE ERROR EINPL01: Non-existent file ', $rperl_config_pm_loaded,
+    Carp::croak 'BIZARRE ERROR EINPL01: Non-existent file ',
+        $rperl_config_pm_loaded,
         ' supposedly loaded in %INC, reported from within RPerl::Config, croaking';
 }
 ( my $volume_loaded, my $directories_loaded, my $file_loaded )
@@ -190,7 +214,7 @@ if ( not -e $rperl_config_pm_loaded ) {
 my @directories_loaded_split = File::Spec->splitdir($directories_loaded);
 
 # pop twice if empty entry on top
-if ( pop @directories_loaded_split eq '' ) { pop @directories_loaded_split; }
+if ( pop @directories_loaded_split eq q{} ) { pop @directories_loaded_split; }
 my $rperl_pm_wanted = File::Spec->catpath( $volume_loaded,
     ( File::Spec->catdir(@directories_loaded_split) ), 'RPerl.pm' );
 
@@ -201,13 +225,14 @@ my $rperl_pm_loaded = undef;
 if ( ( exists $INC{'RPerl.pm'} ) and ( defined $INC{'RPerl.pm'} ) ) {
     $rperl_pm_loaded = $INC{'RPerl.pm'};
     if ( not -e $rperl_pm_loaded ) {
-        Carp::croak 'BIZARRE ERROR EINPL02: Non-existent file ', $rperl_pm_loaded,
+        Carp::croak 'BIZARRE ERROR EINPL02: Non-existent file ',
+            $rperl_pm_loaded,
             ' supposedly loaded in %INC, reported from within RPerl::Config, croaking';
     }
 }
 
 # remove trailing '/'
-if ( ( substr $directories_loaded, -1, 1 ) eq '/' ) {
+if ( ( substr $directories_loaded, -1, 1 ) eq q{/} ) {
     $directories_loaded = substr $directories_loaded, 0, -1;
 }
 
@@ -235,7 +260,7 @@ foreach my $inc_path ( $directories_loaded, @INC ) {
     foreach my $sub_inc_path ( @{$sub_inc_paths} ) {
         push @{$possible_rperls},
             File::Spec->catpath( $inc_volume, $sub_inc_path, 'rperl' );
-        if ( $sub_inc_path ne '' ) {
+        if ( $sub_inc_path ne q{} ) {
             push @{$possible_rperls},
                 File::Spec->catpath( $inc_volume,
                 File::Spec->catdir( $sub_inc_path, 'script' ), 'rperl' );
@@ -281,11 +306,15 @@ foreach my $inc_path ( $directories_loaded, @INC ) {
 #print {*STDERR} 'in RPerl::Config, have $rperl_pms_found = ', "\n", Dumper($rperl_pms_found), "\n";
 
 if ( scalar @{$rperls_found} == 0 ) {
-    Carp::croak 'ERROR EEXRP00: Failed to find rperl executable, croaking';
+    die 'ERROR EEXRP00: Failed to find `rperl` executable, dying' . "\n";
 }
 my $rperl_found = $rperls_found->[0];
 if ( scalar @{$rperls_found} > 1 ) {
-    RPerl::warn('WARNING WEXRP00: Found multiple rperl executables, using first located, ' . $rperl_found . "\n");
+    RPerl::warning(
+        'WARNING WEXRP00: Found multiple `rperl` executables, using first located, '
+            . q{`}
+            . $rperl_found . q{`}
+            . "\n" );
 }
 
 my $rperl_pm_found = undef;
@@ -312,9 +341,11 @@ else {
 #print {*STDERR} 'in RPerl::Config, have $rperl_pm_found = ', $rperl_pm_found, "\n";
 #print {*STDERR} 'in RPerl::Config, have $rperl_found = ', $rperl_found, "\n";
 
-( my $volume_rperl_pm, my $directories_rperl_pm, my $file_rperl_pm )
+#( my $volume_rperl_pm, my $directories_rperl_pm, my $file_rperl_pm ) = File::Spec->splitpath( $rperl_pm_found, $no_file = 0 );
+#( my $volume_rperl, my $directories_rperl, my $file_rperl ) = File::Spec->splitpath( $rperl_found, $no_file = 0 );
+( undef, my $directories_rperl_pm, my $file_rperl_pm )
     = File::Spec->splitpath( $rperl_pm_found, $no_file = 0 );
-( my $volume_rperl, my $directories_rperl, my $file_rperl )
+( undef, my $directories_rperl, my $file_rperl )
     = File::Spec->splitpath( $rperl_found, $no_file = 0 );
 
 #print {*STDERR} 'in RPerl::Config, have $volume_rperl_pm = ', $volume_rperl_pm, "\n";
@@ -343,7 +374,7 @@ for my $i ( 0 .. ( ( scalar @directories_rperl_pm_split ) - 1 ) ) {
 
 # NEED FIX: how do we catpath() with some $volume instead of catdir() below, without breaking relative paths?
 $BASE_PATH = File::Spec->catdir(@directories_base_split);
-if ( $BASE_PATH eq '' ) {
+if ( $BASE_PATH eq q{} ) {
     $INCLUDE_PATH = File::Spec->catdir(@directories_rperl_pm_split);
     $SCRIPT_PATH  = File::Spec->catdir(@directories_rperl_split);
 }

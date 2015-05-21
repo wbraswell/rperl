@@ -50,10 +50,11 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in Array::ListElements->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     if ( ref $self ne 'ListElements_174' ) {
-        croak
-            'ERROR ECVGEAS00, Code Generator, Abstract Syntax to RPerl, token '
-            . ( ref $self )
-            . ' found where ListElements_174 expected, croaking';
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEAS00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+                . ( ref $self )
+                . ' found where ListElements_174 expected, dying' )
+            . "\n";
     }
 
     my object $list_element0      = $self->{children}->[0];
@@ -69,10 +70,11 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 #        RPerl::diag( 'in Array::ListElements->ast_to_rperl__generate(), top of foreach() loop, have $list_element = ' . "\n" . RPerl::Parser::rperl_ast__dump($list_element) . "\n" );
         if ( ref $list_element eq 'TERMINAL' ) {
             if ( $list_element->{attr} ne q{,} ) {
-                croak
-                    q{ERROR ECVGEAS00, Code Generator, Abstract Syntax to RPerl, token '}
-                    . $list_element->{attr}
-                    . q{' found where OP21_LIST_COMMA ',' expected, croaking};
+                die RPerl::Parser::rperl_rule__replace(
+                    q{ERROR ECVGEAS00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '}
+                        . $list_element->{attr}
+                        . q{' found where OP21_LIST_COMMA ',' expected, dying}
+                ) . "\n";
             }
             $rperl_source_group->{PMC} .= $list_element->{attr} . q{ }; # OP21_LIST_COMMA
         }

@@ -222,7 +222,7 @@ sub verify_and_default_modes {
     }
 
     # defaults when mode(s) not provided
-    foreach my string $mode_default_key ( keys %{$modes_default} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC UNFILED ISSUE, not postfix foreach or if
+    foreach my string $mode_default_key ( keys %{$modes_default} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
         if ( not( exists $modes->{$mode_default_key} ) ) {
             $modes->{$mode_default_key} = $modes_default->{$mode_default_key};
         }

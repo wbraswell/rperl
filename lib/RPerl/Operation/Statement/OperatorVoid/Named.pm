@@ -37,17 +37,22 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             . "\n" );
 
     my string $child0_name = $self->{children}->[0];
-    if ((substr $child0_name, -1, 1) eq ';') {
+    if ( ( substr $child0_name, -1, 1 ) eq q{;} ) {
         chop $child0_name;
     }
-    if (not exists $NAMES->{$child0_name}) {
-        croak q{ERROR ECVGEAS01, Code Generator, Abstract Syntax to RPerl, unsupported or unrecognized named void operator '} . $child0_name . q{' found where } . (join ', ', (sort keys %{$NAMES})) . ' expected, croaking';
+    if ( not exists $NAMES->{$child0_name} ) {
+        die
+            q{ERROR ECVGEAS01, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named void operator '}
+            . $child0_name
+            . q{' found where }
+            . ( join ', ', ( sort keys %{$NAMES} ) )
+            . ' expected, dying' . "\n";
     }
-    my string $child0_class = $NAMES->{$child0_name};
+    my string $child0_class  = $NAMES->{$child0_name};
     my object $child0_object = $child0_class->new();
-    
+
     $rperl_source_subgroup
-        = $child0_object->ast_to_rperl__generate($modes, $self);
+        = $child0_object->ast_to_rperl__generate( $modes, $self );
     RPerl::Generator::source_group_append( $rperl_source_group,
         $rperl_source_subgroup );
 

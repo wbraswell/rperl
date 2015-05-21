@@ -43,13 +43,14 @@ use RPerl::CompileUnit::Module::Class;
 ## no critic qw(ProhibitParensWithBuiltins ProhibitNoisyQuotes)  # SYSTEM SPECIAL 3: allow auto-generated code
 ## no critic qw(ProhibitExcessMainComplexity)  # SYSTEM SPECIAL 4: allow complex code outside subroutines, must be on line 1
 ## no critic qw(ProhibitExcessComplexity)  # SYSTEM SPECIAL 5: allow complex code inside subroutines, must be after line 1
-## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC UNFILED ISSUE, not postfix foreach or if
+## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
 ## no critic qw(ProhibitDeepNests)  # SYSTEM SPECIAL 7: allow deeply-nested code
 ## no critic qw(ProhibitNoStrict)  # SYSTEM SPECIAL 8: allow no strict
 ## no critic qw(RequireBriefOpen)  # SYSTEM SPECIAL 9: allow complex processing with open filehandle
 ## no critic qw(ProhibitBacktickOperators)  # SYSTEM SPECIAL 10: allow system command execution
 ## no critic qw(ProhibitCascadingIfElse)  # SYSTEM SPECIAL 11: allow complex conditional logic
 ## no critic qw(RequireCarping)  # SYSTEM SPECIAL 12: allow die instead of croak
+## no critic qw(ProhibitAutomaticExportation)  # SYSTEM SPECIAL 13: allow global exports from Config.pm
 
 # COMBO CRITICS
 ## no critic qw(ProhibitUselessNoCritic PodSpelling ProhibitExcessMainComplexity)  # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code; SYSTEM SPECIAL 4: allow complex code outside subroutines, must be on line 1

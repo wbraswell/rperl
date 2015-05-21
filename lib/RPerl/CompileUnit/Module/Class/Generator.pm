@@ -78,7 +78,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             $rperl_source_group->{PMC} .= "\n" . '# [[[ INCLUDES ]]]' . "\n";
         }
     }
-    foreach my object $include ( @{ $include_star->{children} } ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC UNFILED ISSUE, not postfix foreach or if
+    foreach my object $include ( @{ $include_star->{children} } ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
         $rperl_source_subgroup
             = $include->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
@@ -90,7 +90,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             $rperl_source_group->{PMC} .= "\n" . '# [[[ CONSTANTS ]]]' . "\n";
         }
     }
-    foreach my object $constant ( @{ $constant_star->{children} } ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC UNFILED ISSUE, not postfix foreach or if
+    foreach my object $constant ( @{ $constant_star->{children} } ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
         $rperl_source_subgroup
             = $constant->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
@@ -100,7 +100,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     if ( $modes->{label} eq 'ON' ) {
         $rperl_source_group->{PMC} .= "\n" . '# [[[ OO PROPERTIES ]]]' . "\n";
     }
-    if ( ref $properties eq 'Properties_63' ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC UNFILED ISSUE, not postfix foreach or if
+    if ( ref $properties eq 'Properties_63' ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
                                                 # non-empty $properties
         my string $properties_our_hashref = $properties->{children}->[0];
         my string $properties_equal       = $properties->{children}->[1];
@@ -155,7 +155,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
                 .= "\n" . '# [[[ OO METHODS & SUBROUTINES ]]]' . "\n";
         }
     }
-    foreach my object $method_or_subroutine ( ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC UNFILED ISSUE, not postfix foreach or if
+    foreach my object $method_or_subroutine ( ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
         @{ $method_or_subroutine_star->{children} }
         )
     {

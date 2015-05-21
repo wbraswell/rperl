@@ -41,10 +41,11 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     }
 
     if ( ref $self ne 'ArrayReference_182' ) {
-        croak
-            'ERROR ECVGEAS00, Code Generator, Abstract Syntax to RPerl, token '
-            . ( ref $self )
-            . ' found where ArrayReference_182 expected, croaking';
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEAS00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+                . ( ref $self )
+                . ' found where ArrayReference_182 expected, dying' )
+            . "\n";
     }
 
     my string $left_bracket           = $self->{children}->[0];
@@ -69,8 +70,10 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
-        = { CPP => q{// <<< RP::DS::A::R DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>}
-            . "\n" };
+        = {
+        CPP => q{// <<< RP::DS::A::R DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>}
+            . "\n"
+        };
 
     #...
     return $cpp_source_group;
@@ -79,8 +82,10 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
-        = { CPP => q{// <<< RP::DS::A::R DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>}
-            . "\n" };
+        = {
+        CPP => q{// <<< RP::DS::A::R DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>}
+            . "\n"
+        };
 
     #...
     return $cpp_source_group;

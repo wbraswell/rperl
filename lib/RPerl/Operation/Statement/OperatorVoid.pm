@@ -48,7 +48,11 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             $rperl_source_subgroup );
     }
     else {
-        croak 'ERROR ECVGEAS00, Code Generator, Abstract Syntax to RPerl, token ' . $child0_class . ' found where OperatorVoid_110, OperatorVoid_111, OperatorVoid_112, OperatorVoid_113, OperatorVoid_114, OperatorVoid_115, or OperatorVoid_116 expected, croaking';
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEAS00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+                . $child0_class
+                . ' found where OperatorVoid_110, OperatorVoid_111, OperatorVoid_112, OperatorVoid_113, OperatorVoid_114, OperatorVoid_115, or OperatorVoid_116 expected, dying'
+        ) . "\n";
     }
 
     return $rperl_source_group;

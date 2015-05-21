@@ -14,9 +14,10 @@ use RPerl::Operation::Statement::OperatorVoid::Named;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
-## no critic qw(RequireCarping)  # SYSTEM SPECIAL 12: allow die instead of croak
 
 # [[[ CONSTANTS ]]]
+use constant NAME => my string $TYPED_NAME = 'return';
+
 # DEV NOTE: (ARGUMENTS_MIN = 0) already handled by inclusion (or not) in grammar token OP01_NAMED_VOID_SCOLON
 use constant ARGUMENTS_MIN => my integer $TYPED_ARGUMENTS_MIN = 0; # call 'return;' for all subroutines which return void
 use constant ARGUMENTS_MAX => my integer $TYPED_ARGUMENTS_MAX = 1; # call 'return @{[ELEM0, ELEM1, ...]};' for all subroutines which return an array; disallow return(ELEM0, ELEM1, ...) multiple return values
@@ -48,19 +49,15 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         my object $arguments       = $operator_void_named->{children}->[1];
         my integer $argument_count = $arguments->length();
         if ( $argument_count > ARGUMENTS_MAX() ) {
-
-# START HERE: decide if we should replace all generator croaks with dies?
-# START HERE: decide if we should replace all generator croaks with dies?
-# START HERE: decide if we should replace all generator croaks with dies?
-            
-            # DEV NOTE: carp's output is not helpful here
             die
-                'ERROR ECVGEAS02, Code Generator, Abstract Syntax to RPerl, argument count '
+                'ERROR ECVGEASRP02, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
+                . "\n"
+                . 'Argument count '
                 . $argument_count
                 . ' exceeds maximum argument limit '
                 . ARGUMENTS_MAX()
                 . ' for operation ' . q{'}
-                . $name_possible_semicolon . q{'}
+                . NAME() . q{'}
                 . ', dying' . "\n";
         }
         my string_hashref $rperl_source_subgroup

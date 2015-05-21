@@ -10,6 +10,7 @@ use parent qw(RPerl::CodeBlock::Subroutine);
 use RPerl::CodeBlock::Subroutine;
 
 # [[[ CRITICS ]]]
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 
 # [[[ OO PROPERTIES ]]]
@@ -30,7 +31,11 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     }
 
     if ( ref $self ne 'Method_69' ) {
-        croak 'ERROR ECVGEAS00, Code Generator, Abstract Syntax to RPerl, token ' . ( ref $self ) . ' found where Method_69 expected, croaking';
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEAS00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+                . ( ref $self )
+                . ' found where Method_69 expected, dying' )
+            . "\n";
     }
 
     my string $our                = $self->{children}->[0];
@@ -42,18 +47,20 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     my string $right_brace        = $self->{children}->[6];
     my string $semicolon          = $self->{children}->[7];
 
-    $rperl_source_group->{PMC} .= $our . q{ } . $return_type . q{ } . $name . q{ } . $equal_sub;
+    $rperl_source_group->{PMC}
+        .= $our . q{ } . $return_type . q{ } . $name . q{ } . $equal_sub;
 
     if ( exists $optional_arguments->{children}->[0] ) {
-        $rperl_source_subgroup = $optional_arguments->{children}->[0]->ast_to_rperl__generate($modes);
+        $rperl_source_subgroup = $optional_arguments->{children}->[0]
+            ->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
     }
 
-    foreach my object $operation (@{$star_operations->{children}}) {
+    foreach my object $operation ( @{ $star_operations->{children} } ) {
         $rperl_source_subgroup = $operation->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
-            $rperl_source_subgroup ); 
+            $rperl_source_subgroup );
     }
 
     $rperl_source_group->{PMC} .= $right_brace . $semicolon;

@@ -3,7 +3,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_016;
+our $VERSION = 0.004_020;
 
 # [[[ OO INHERITANCE ]]]
 #use RPerl::CompileUnit::Module::Class;
@@ -11,6 +11,7 @@ our $VERSION = 0.004_016;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
 ## no critic qw(ProhibitBacktickOperators)  ## SYSTEM SPECIAL 10: allow system command execution
 ## no critic qw(RequireCarping)  # SYSTEM SPECIAL 12: allow die instead of croak
 
@@ -92,7 +93,7 @@ our void $rperl_source__check_syntax = sub {
     }
 
     my string_arrayref $rperl_source__perl_syntax_retstring_lines;
-    @{$rperl_source__perl_syntax_retstring_lines} = split "\n",
+    @{$rperl_source__perl_syntax_retstring_lines} = split /\n/xms,
         $rperl_source__perl_syntax_retstring;
 
 #    RPerl::diag 'in rperl_source__check_syntax(), have $rperl_source__perl_syntax_retstring_lines = ', "\n", Dumper($rperl_source__perl_syntax_retstring_lines), "\n";
@@ -100,9 +101,9 @@ our void $rperl_source__check_syntax = sub {
     foreach my string $rperl_source__perl_syntax_retstring_line (
         @{$rperl_source__perl_syntax_retstring_lines} )
     {
-        if (( $rperl_source__perl_syntax_retstring_line !~ /WARNING W/ ) and # RPerl Warning
-            ( $rperl_source__perl_syntax_retstring_line !~ /ERROR E/ ) # RPerl Error
-            and ( $rperl_source__perl_syntax_retstring_line !~ /syntax OK/ ) # Perl Non-Error
+        if (( $rperl_source__perl_syntax_retstring_line !~ /WARNING W/xms ) and # RPerl Warning
+            ( $rperl_source__perl_syntax_retstring_line !~ /ERROR E/xms ) # RPerl Error
+            and ( $rperl_source__perl_syntax_retstring_line !~ /syntax OK/xms ) # Perl Non-Error
             )
         {
             push @{$rperl_source__perl_syntax_retstring_warnings},
@@ -252,20 +253,39 @@ our void $rperl_source__parse = sub {
     return ($rperl_ast);
 };
 
+# condense AST dump, replace all instances of RPerl rule(s) with more meaningful RPerl class(es)
 our string $rperl_ast__dump = sub {
     ( my object $rperl_ast) = @_;
-    $Data::Dumper::Indent = 1;  # do not attempt to align hash values based on hash key length
+    $Data::Dumper::Indent = 1; # do not attempt to align hash values based on hash key length
     my string $rperl_ast_dumped = Dumper($rperl_ast);
-    $Data::Dumper::Indent = 2;  # restore default
-    $rperl_ast_dumped =~ s/\ \ /\ \ \ \ /g;  # set tabs from 2 to 4 spaces
+    $Data::Dumper::Indent = 2;                   # restore default
+    $rperl_ast_dumped =~ s/\ \ /\ \ \ \ /gxms;   # set tabs from 2 to 4 spaces
     my string $replacee;
     my string $replacer;
     foreach my string $rule ( sort keys %{$RPerl::Grammar::RULES} ) {
         $replacee = q{'} . $rule . q{'};
-        $replacer = q{'} . $rule . ' ISA ' . $RPerl::Grammar::RULES->{$rule} . q{'};
-        $rperl_ast_dumped =~ s/$replacee/$replacer/g;
+        $replacer
+            = q{'} . $rule . ' ISA ' . $RPerl::Grammar::RULES->{$rule} . q{'};
+        $rperl_ast_dumped =~ s/$replacee/$replacer/gxms;
     }
     return $rperl_ast_dumped;
+};
+
+# replace all instances of RPerl rule(s) with more meaningful RPerl class(es)
+our string $rperl_rule__replace = sub {
+    ( my string $rperl_rule_string) = @_;
+    my string $replacer;
+    foreach my string $rule ( sort keys %{$RPerl::Grammar::RULES} ) {
+        if ( $RPerl::Grammar::RULES->{$rule} ne 'RPerl::NonGenerator' ) {
+            $replacer
+                = q{(}
+                . $rule . ' ISA '
+                . $RPerl::Grammar::RULES->{$rule} . q{)};
+            $replacer =~ s/RPerl:://gxms;
+            $rperl_rule_string =~ s/$rule/$replacer/gxms;
+        }
+    }
+    return $rperl_rule_string;
 };
 
 1;    # end of class

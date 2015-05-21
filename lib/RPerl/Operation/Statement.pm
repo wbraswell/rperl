@@ -43,8 +43,10 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
     # Loop
     elsif ( ( ref $self->{children}->[1] ) eq 'Statement_144' ) {
+
         # optional LoopLabel COLON
         if ( exists $self->{children}->[0]->{children}->[0] ) {
+
             # NEED FIX: implement loop label
             $rperl_source_group->{PMC}
                 .= q{# <<< RP::O::S DUMMY PERLOPS_PERLTYPES SOURCE CODE, NEED IMPLEMENT LOOP LABEL!!! >>>}
@@ -56,7 +58,11 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             $rperl_source_subgroup );
     }
     else {
-        croak 'ERROR ECVGEAS00, Code Generator, Abstract Syntax to RPerl, token ' . $child0_class . ' found where Statement_140, Statement_141, Statement_142, Statement_143, or Statement_144 expected, croaking';
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEAS00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+                . $child0_class
+                . ' found where Statement_140, Statement_141, Statement_142, Statement_143, or Statement_144 expected, dying'
+        ) . "\n";
     }
 
     return $rperl_source_group;

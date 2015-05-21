@@ -23,7 +23,10 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     my string_hashref $rperl_source_group = { PMC => q{} };
     my string_hashref $rperl_source_subgroup;
 
-    RPerl::diag( 'in Hash::Entry->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+    RPerl::diag(
+        'in Hash::Entry->ast_to_rperl__generate(), received $self = ' . "\n"
+            . RPerl::Parser::rperl_ast__dump($self)
+            . "\n" );
 
     my string $key                 = $self->{children}->[0];
     my string $key_class           = ref $key;
@@ -41,10 +44,11 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         $rperl_source_group->{PMC} .= $key->{children}->[0] . q{ };
     }
     else {
-        croak
-            q{ERROR ECVGEAS00, Code Generator, Abstract Syntax to RPerl, token '}
-            . ($key_class)
-            . q{' found where VariableOrLiteralOrWord_211 (Variable), VariableOrLiteralOrWord_212 (Literal) or VariableOrLiteralOrWord_213 (WORD) expected, croaking};
+        die RPerl::Parser::rperl_rule__replace(
+            q{ERROR ECVGEAS00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '}
+                . ($key_class)
+                . q{' found where VariableOrLiteralOrWord_211, VariableOrLiteralOrWord_212, or VariableOrLiteralOrWord_213 expected, dying}
+        ) . "\n";
     }
 
     $rperl_source_group->{PMC} .= $fat_arrow . q{ };
@@ -81,8 +85,10 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
-        = { CPP => q{// <<< RP::DS::H::ET DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>}
-            . "\n" };
+        = {
+        CPP => q{// <<< RP::DS::H::ET DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>}
+            . "\n"
+        };
 
     #...
     return $cpp_source_group;
@@ -91,8 +97,10 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
-        = { CPP => q{// <<< RP::DS::H::ET DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>}
-            . "\n" };
+        = {
+        CPP => q{// <<< RP::DS::H::ET DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>}
+            . "\n"
+        };
 
     #...
     return $cpp_source_group;
