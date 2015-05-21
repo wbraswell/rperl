@@ -3,7 +3,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_020;
+our $VERSION = 0.004_030;
 
 # [[[ OO INHERITANCE ]]]
 #use RPerl::CompileUnit::Module::Class;
@@ -101,9 +101,12 @@ our void $rperl_source__check_syntax = sub {
     foreach my string $rperl_source__perl_syntax_retstring_line (
         @{$rperl_source__perl_syntax_retstring_lines} )
     {
-        if (( $rperl_source__perl_syntax_retstring_line !~ /WARNING W/xms ) and # RPerl Warning
-            ( $rperl_source__perl_syntax_retstring_line !~ /ERROR E/xms ) # RPerl Error
-            and ( $rperl_source__perl_syntax_retstring_line !~ /syntax OK/xms ) # Perl Non-Error
+        # NEED FIX: figure out how to use /xms flags in following regexs
+        if (( $rperl_source__perl_syntax_retstring_line !~ /WARNING W/ ) # RPerl Warning
+            and
+            ( $rperl_source__perl_syntax_retstring_line !~ /ERROR E/ )   # RPerl Error
+            and
+            ( $rperl_source__perl_syntax_retstring_line !~ /syntax OK/ ) # Perl Non-Error
             )
         {
             push @{$rperl_source__perl_syntax_retstring_warnings},
@@ -188,13 +191,12 @@ our void $rperl_grammar_error = sub {
         $value = '<<< NO TOKEN FOUND >>>';
     }
     my string $helpful_hint = q{};
-    if ( $value =~ /[0-9]/ ) {
-        $helpful_hint = q{
-    Helpful Hint:      Possible case of PBP RequireNumberSeparators (see below)
-    Policy:            Perl::Critic::Policy::ValuesAndExpressions::RequireNumberSeparators
-    Description:       Long number not separated with underscores
-    Explanation:       See Perl Best Practices page(s) 59
-        };
+    if ( $value =~ /\d/xms ) {
+        $helpful_hint
+            = q{Helpful Hint:      Possible case of PBP RequireNumberSeparators (see below)}
+            . q{Policy:            Perl::Critic::Policy::ValuesAndExpressions::RequireNumberSeparators}
+            . q{Description:       Long number not separated with underscores}
+            . q{Explanation:       See Perl Best Practices page(s) 59};
     }
 
     my integer $line_number = $argument->{TOKENLINE};
@@ -258,8 +260,10 @@ our string $rperl_ast__dump = sub {
     ( my object $rperl_ast) = @_;
     $Data::Dumper::Indent = 1; # do not attempt to align hash values based on hash key length
     my string $rperl_ast_dumped = Dumper($rperl_ast);
-    $Data::Dumper::Indent = 2;                   # restore default
-    $rperl_ast_dumped =~ s/\ \ /\ \ \ \ /gxms;   # set tabs from 2 to 4 spaces
+    $Data::Dumper::Indent = 2;    # restore default
+
+#    $rperl_ast_dumped =~ s/\ \ /\ \ \ \ /gxms;   # set tabs from 2 to 4 spaces
+    $rperl_ast_dumped =~ s/[ ]{2}/    /gxms;    # set tabs from 2 to 4 spaces
     my string $replacee;
     my string $replacer;
     foreach my string $rule ( sort keys %{$RPerl::Grammar::RULES} ) {
