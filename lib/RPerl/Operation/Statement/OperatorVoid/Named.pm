@@ -37,6 +37,9 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             . "\n" );
 
     my string $child0_name = $self->{children}->[0];
+    if ((substr $child0_name, -1, 1) eq ';') {
+        chop $child0_name;
+    }
     if (not exists $NAMES->{$child0_name}) {
         croak q{ERROR ECVGEAS01, Code Generator, Abstract Syntax to RPerl, unsupported or unrecognized named void operator '} . $child0_name . q{' found where } . (join ', ', (sort keys %{$NAMES})) . ' expected, croaking';
     }
