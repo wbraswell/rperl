@@ -1,139 +1,97 @@
+# [[[ HEADER ]]]
 package RPerl::Operation::Expression;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_011;
-
-# [[[ SETUP ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
-## no critic qw(ProhibitBooleanGrep)  # SYSTEM SPECIAL 1: allow grep
-use Scalar::Util 'blessed';
+our $VERSION = 0.000_020;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation);
+use RPerl::Operation;
+
+# [[[ CRITICS ]]]
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OO PROPERTIES ]]]
-# DEV NOTE: no active properties, this is a stub object for now, see children objects for active properties
 our hashref $properties = {};
 
 # [[[ OO METHODS ]]]
-# TRANSLATE
-our object_method $ppi_to_rperl__translate = sub {
-    ( my string $class, my object $node) = @_;    # class method
 
-    # variable declarations
-    my string $rule_name = 'EXPRESSION';
-    my string $production_name;
-    my string $component_name;
-    my string $node_class;
-    my string_arrayref $node_classes_expected;
-    my integer $node_disqualified;
-    my object $node_translated;
-    my object $child;
-    my string $child_key;
-    my integer $child_index;
-    my integer $child_index_max;
-    my string $child_class;
-    my string_arrayref $child_classes_expected;
-    my string $child_content;
-    my string $child_content_expected;
-    my integer $child_disqualified;
+our string_hashref_method $ast_to_rperl__generate = sub {
+    ( my object $self, my string_hashref $modes) = @_;
+    my string_hashref $rperl_source_group = { PMC => q{} };
+    my string_hashref $rperl_source_subgroup;
 
-    RPerl::diag
-        "in Expression::ppi_to_rperl__translate(), received \$node =\n"
-        . Dumper($node) . "\n";
+    RPerl::diag(
+        'in Expression->ast_to_rperl__generate(), received $self = ' . "\n"
+            . RPerl::Parser::rperl_ast__dump($self)
+            . "\n" );
 
-    if ( not( defined $node ) ) {
-        croak(
-            "\nERROR ECVTRPI00, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, PPI OBJECT FAILURE:\nobject expected but undefined/null value found,\ncroaking"
-        );
-    }
-    $node_class = blessed($node);
-    if ( not( defined $node_class ) ) {
-        croak(
-            "\nERROR ECVTRPI01, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, PPI OBJECT FAILURE:\nobject expected but non-object value found,\ncroaking"
-        );
+# START HERE: is Operation_76 for return(2) valid?  should it be allowed in the grammar?
+# START HERE: is Operation_76 for return(2) valid?  should it be allowed in the grammar?
+# START HERE: is Operation_76 for return(2) valid?  should it be allowed in the grammar?
+
+=WRONG CODE
+    # Conditional, OperatorVoid, VariableDeclaration, or VariableModification
+    my string $child0_class = ref $self->{children}->[0];
+    if (   ( $child0_class eq 'Statement_140' )
+        or ( $child0_class eq 'Statement_142' )
+        or ( $child0_class eq 'Statement_143' )
+        or ( $child0_class eq 'Statement_144' ) )
+    {
+        $rperl_source_subgroup
+            = $self->{children}->[0]->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group,
+            $rperl_source_subgroup );
     }
 
-    RPerl::diag
-        "in Expression::ppi_to_rperl__translate(), have \$node_class = '$node_class'\n";
+    # Loop
+    elsif ( ( ref $self->{children}->[1] ) eq 'Statement_144' ) {
 
-    # EXPRESSION rule, POSSIBLE _LITERAL PRODUCTION
-    $production_name = 'POSSIBLE _LITERAL';
-    $component_name  = '<default>';
-    $node_classes_expected
-        = [
-        qw(PPI::Token::Number PPI::Token::Quote::Single PPI::Token::Quote::Double)
-        ];
-    $node_disqualified = 0;
-    if ( not( grep { $_ eq $node_class } @{$node_classes_expected} ) ) {
-        $node_disqualified = 1;
-    }
+        # optional LoopLabel COLON
+        if ( exists $self->{children}->[0]->{children}->[0] ) {
 
-    # EXPRESSION rule, _LITERAL PRODUCTION
-    if ( not $node_disqualified ) {
-        $production_name = '_LITERAL';
-        $component_name  = '<default>';
-        $node_translated = RPerl::Operation::Expression::SubExpression::Literal->new();
-        $node_translated->{value} = $node->{content};
-        if ( $node_class eq $node_classes_expected->[0] ) {    # NUMBER
-            $node_translated->{type} = 'number';
+            # NEED FIX: implement loop label
+            $rperl_source_group->{PMC}
+                .= q{# <<< RP::O::E DUMMY PERLOPS_PERLTYPES SOURCE CODE, NEED IMPLEMENT LOOP LABEL!!! >>>}
+                . "\n";
         }
-        else {
-            $node_translated->{type}             = 'string';
-            $node_translated->{string_separator} = $node->{separator};
-        }
-        RPerl::diag
-            "in Expression::ppi_to_rperl__translate(), _LITERAL production, about to return \$node_translated=\n"
-            . Dumper($node_translated) . "\n";
-        return ($node_translated);
+        $rperl_source_subgroup
+            = $self->{children}->[1]->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group,
+            $rperl_source_subgroup );
     }
-
-# NEED FIX: handle multi-object VARIABLE production (VARIABLE_RETRIEVAL, not just _variable_symbol)
-# EXPRESSION rule, POSSIBLE VARIABLE PRODUCTION
-    $production_name       = 'POSSIBLE VARIABLE';
-    $component_name        = '<default>';
-    $node_classes_expected = [qw(PPI::Token::Symbol)];
-    $node_disqualified     = 0;
-    if ( not( grep { $_ eq $node_class } @{$node_classes_expected} ) ) {
-        $node_disqualified = 1;
+    else {
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEAS00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+                . $child0_class
+                . ' found where Statement_140, Statement_141, Statement_142, Statement_143, or Statement_144 expected, dying'
+        ) . "\n";
     }
+=cut
 
-    # EXPRESSION rule, VARIABLE PRODUCTION
-    if ( not $node_disqualified ) {
-        $production_name = 'VARIABLE';
-        $component_name  = '<default>';
-
-# NEED FIX: wrapping _variable_symbol in PPI::Statement, short-circuiting check for multi-object VARIABLE production
-        my object $variable_node = PPI::Statement->new();
-        $variable_node->{children} = [$node];
-        $node_translated = RPerl::Operation::Expression::SubExpression::Variable
-            ->ppi_to_rperl__translate($variable_node);
-        RPerl::diag
-            "in Expression::ppi_to_rperl__translate(), _LITERAL production, about to return \$node_translated=\n"
-            . Dumper($node_translated) . "\n";
-        return ($node_translated);
-    }
-
-    croak('SORRY, MANY FEATURES ARE CURRENTLY DISABLED, croaking ');
+    return $rperl_source_group;
 };
 
-# GENERATE CPPOPS_PERLTYPES
-our string_method $rperl_to_cpp__generate__CPPOPS_PERLTYPES = sub {
-    ( my object $self ) = @_;    # object method
-    my string $self_generated = q{};
-    $self_generated
-        .= ' STUB PERL CODE STRING, CREATED BY RPerl::Operation::Expression ';
-    return ($self_generated);
+our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
+    ( my object $self, my string_hashref $modes) = @_;
+    my string_hashref $cpp_source_group
+        = { CPP => q{// <<< RP::O::E DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>}
+            . "\n" };
+
+    #...
+    return $cpp_source_group;
 };
 
-# GENERATE CPPOPS_CPPTYPES
-our string_method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
-    ( my object $self ) = @_;    # object method
-    my string $self_generated = q{};
-    $self_generated
-        .= ' STUB CPP CODE STRING, CREATED BY RPerl::Operation::Expression ';
-    return ($self_generated);
+our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
+    ( my object $self, my string_hashref $modes) = @_;
+    my string_hashref $cpp_source_group
+        = { CPP => q{// <<< RP::O::E DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>}
+            . "\n" };
+
+    #...
+    return $cpp_source_group;
 };
 
-1;
+1;    # end of class

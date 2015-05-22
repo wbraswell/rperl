@@ -54,6 +54,7 @@ use RPerl::DataStructure::Hash::Entry;
 use RPerl::DataStructure::Hash::EntryTyped;
 use RPerl::Operation::Expression::SubExpression::Literal::Number;
 use RPerl::Operation::Expression::SubExpression::Literal::String;
+use RPerl::Operation::Expression::SubExpression::Parenthesis;
 
 # [[[ OBJECT-ORIENTED ]]]
 use RPerl::CompileUnit::Module::Class;

@@ -47,10 +47,14 @@ our void_method $quux = sub {
     ( my object $self, my integer $howdy, my string_hashref $doody) = @_;
 #    $self->{plugh} = $self->{plugh} * 2;
 
+# START HERE: continue with code generation for BAD? returns below
+# START HERE: continue with code generation for BAD? returns below
+# START HERE: continue with code generation for BAD? returns below
+
 #    return;  # GOOD
 #    return 2;  # GOOD
-#    return (2);  # BAD? generator, SubExpression_134
-#    return(2);  # BAD? need generator, Operation_76
+#    return (2);  # GOOD, parens as subexpression not list
+    return(2);  # BAD? need generator, Operation_76
 #    return -234_567.890_12;  # GOOD
 #    return 'howdy';  # GOOD
 #    return [];  # GOOD
@@ -61,8 +65,8 @@ our void_method $quux = sub {
 #    return {};  # GOOD
 #    return {a => 2};  # GOOD
 #    return {a => 2, b => 3};  # GOOD
-    return {a => 2, b => 3, c => 5};  # GOOD
-#    return 3, 4;  # BAD
+#    return {a => 2, b => 3, c => 5};  # GOOD
+#    return 3, 4;  # BAD, generator
 #    return (3, 4);  # BAD, parser
 #    return 3, 4, 5;  # BAD, generator
 };
