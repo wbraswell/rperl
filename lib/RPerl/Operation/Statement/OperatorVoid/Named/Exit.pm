@@ -26,7 +26,7 @@ use constant ARGUMENTS_MAX  => my integer $TYPED_ARGUMENTS_MAX = 1;  # call 'ret
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
 our string_hashref_method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes, my object $operator_void_named) = @_;

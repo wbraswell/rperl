@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
-# <<< COMPILE_ERROR: 'Perl::Critic::Policy::ValuesAndExpressions::RequireNumberSeparators' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPC02' >>>
+# <<< PARSE_ERROR: 'Perl::Critic::Policy::ValuesAndExpressions::RequireNumberSeparators' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::LiteralNumber::Package_15_Bad_01;

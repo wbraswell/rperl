@@ -9,7 +9,7 @@ our $VERSION = 0.004_010;
 use parent qw(RPerl::CompileUnit::Module::Class); # no non-system inheritance, RPerl::CompileUnit::Module::Class is the base class of all RPerl classes
 use RPerl::CompileUnit::Module::Class;
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
 # OO INHERITANCE TESTING
 our void_method $inherited__Algorithm = sub {

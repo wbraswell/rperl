@@ -1,11 +1,11 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: "have $foo = ''" >>>
-# <<< RUN_SUCCESS: "have $bar = 'bar'" >>>
-# <<< RUN_SUCCESS: "have $bat = 'batbat'" >>>
-# <<< RUN_SUCCESS: "have $baz = 'bazbazbazbaz'" >>>
-# <<< RUN_SUCCESS: "have $bax = 'baxbaxbaxbaxbaxbaxbaxbax'" >>>
+# <<< EXECUTE_SUCCESS: "have $foo = ''" >>>
+# <<< EXECUTE_SUCCESS: "have $bar = 'bar'" >>>
+# <<< EXECUTE_SUCCESS: "have $bat = 'batbat'" >>>
+# <<< EXECUTE_SUCCESS: "have $baz = 'bazbazbazbaz'" >>>
+# <<< EXECUTE_SUCCESS: "have $bax = 'baxbaxbaxbaxbaxbaxbaxbax'" >>>
 
 # [[[ HEADER ]]]
 use strict;

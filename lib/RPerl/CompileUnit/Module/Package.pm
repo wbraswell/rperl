@@ -21,7 +21,7 @@ our hashref $properties = {
     subroutines => my object_arrayref $TYPED_subroutines = undef
 };
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
 # GENERATE CPPOPS_CPPTYPES
 our string_method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {

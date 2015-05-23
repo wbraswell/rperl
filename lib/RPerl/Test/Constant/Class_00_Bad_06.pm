@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected Token:  $TYPD_PI' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  $TYPD_PI' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::Constant::Class_00_Bad_06;
@@ -22,7 +22,7 @@ use constant PIE => my string $TYPED_PIE = 'pecan';
 our hashref $properties
     = { empty_property => my integer $TYPED_empty_property = 2 };
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 our void_method $empty_method = sub { return 2; };
 
 1;    # end of class

@@ -1,8 +1,8 @@
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
-# <<< COMPILE_ERROR: 'Perl::Critic::Policy::Modules::RequireExplicitPackage' >>>
-# <<< COMPILE_ERROR: 'Perl::Critic::Policy::TestingAndDebugging::RequireUseStrict' >>>
-# <<< COMPILE_ERROR: 'Perl::Critic::Policy::TestingAndDebugging::RequireUseWarnings' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPC02' >>>
+# <<< PARSE_ERROR: 'Perl::Critic::Policy::Modules::RequireExplicitPackage' >>>
+# <<< PARSE_ERROR: 'Perl::Critic::Policy::TestingAndDebugging::RequireUseStrict' >>>
+# <<< PARSE_ERROR: 'Perl::Critic::Policy::TestingAndDebugging::RequireUseWarnings' >>>
 
 # [[[ HEADER ]]]
 packaged RPerl::Test::Header::Package_00_Bad_00;

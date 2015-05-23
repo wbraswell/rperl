@@ -15,7 +15,7 @@ use parent qw(RPerl::Operation::Statement);
 # DEV NOTE: no active properties, this is a stub object for now, see children objects for active properties
 our hashref $properties = {};
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
 # TRANSLATE
 our object_method $ppi_to_rperl__translate = sub {

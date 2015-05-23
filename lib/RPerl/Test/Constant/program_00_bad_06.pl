@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'No such class number' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< PARSE_ERROR: 'No such class number' >>>
 
 # [[[ HEADER ]]]
 use constant PI  => my number $TYPED_PI  = 3.141_59;

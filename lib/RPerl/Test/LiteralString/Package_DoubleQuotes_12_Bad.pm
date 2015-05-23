@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
-# <<< COMPILE_ERROR: 'Perl::Critic::Policy::ValuesAndExpressions::ProhibitInterpolationOfLiterals' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPC02' >>>
+# <<< PARSE_ERROR: 'Perl::Critic::Policy::ValuesAndExpressions::ProhibitInterpolationOfLiterals' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::LiteralString::Package_DoubleQuotes_12_Bad;

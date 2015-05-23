@@ -16,7 +16,7 @@ use parent qw(RPerl::GrammarRule);
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
 our string_hashref_method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
@@ -33,21 +33,21 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     my string $fat_arrow           = $self->{children}->[1];
     my object $optional_type_inner = $self->{children}->[2];
 
-    if (   ( $key_class eq 'VariableOrLiteralOrWord_211' )
-        or ( $key_class eq 'VariableOrLiteralOrWord_212' ) )
+    if (   ( $key_class eq 'VariableOrLiteralOrWord_214' )
+        or ( $key_class eq 'VariableOrLiteralOrWord_215' ) )
     {    # Variable or Literal
         $rperl_source_subgroup = $key->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
     }
-    elsif ( $key_class eq 'VariableOrLiteralOrWord_213' ) {    # WORD
+    elsif ( $key_class eq 'VariableOrLiteralOrWord_216' ) {    # WORD
         $rperl_source_group->{PMC} .= $key->{children}->[0] . q{ };
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
             q{ERROR ECVGEAS00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '}
                 . ($key_class)
-                . q{' found where VariableOrLiteralOrWord_211, VariableOrLiteralOrWord_212, or VariableOrLiteralOrWord_213 expected, dying}
+                . q{' found where VariableOrLiteralOrWord_214, VariableOrLiteralOrWord_215, or VariableOrLiteralOrWord_216 expected, dying}
         ) . "\n";
     }
 

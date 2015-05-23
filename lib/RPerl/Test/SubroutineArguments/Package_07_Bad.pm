@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'near "@;' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< PARSE_ERROR: 'near "@;' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::SubroutineArguments::Package_07_Bad;

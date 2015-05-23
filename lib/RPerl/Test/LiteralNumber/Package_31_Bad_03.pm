@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPL03' >>>
-# <<< COMPILE_ERROR: 'Misplaced _ in number' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL03' >>>
+# <<< PARSE_ERROR: 'Misplaced _ in number' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::LiteralNumber::Package_31_Bad_03;

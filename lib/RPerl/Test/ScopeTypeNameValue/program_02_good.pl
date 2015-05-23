@@ -1,11 +1,11 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: "$VAR1 = {'number_arrayref' => ['number']};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'number_arrayref' => ['number','number']};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'arrayref' => ['number','integer']};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'number_arrayref' => ['number','number','number','number','number']};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'arrayref' => ['number','number','number','integer','number']};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'number_arrayref' => ['number']};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'number_arrayref' => ['number','number']};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'arrayref' => ['number','integer']};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'number_arrayref' => ['number','number','number','number','number']};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'arrayref' => ['number','number','number','integer','number']};" >>>
 
 # [[[ HEADER ]]]
 use strict;

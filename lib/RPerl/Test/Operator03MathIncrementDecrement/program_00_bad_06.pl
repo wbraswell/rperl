@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'Can't modify constant item in postincrement' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< PARSE_ERROR: 'Can't modify constant item in postincrement' >>>
 
 # [[[ HEADER ]]]
 use strict;

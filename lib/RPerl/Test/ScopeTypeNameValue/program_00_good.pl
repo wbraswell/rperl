@@ -1,12 +1,12 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: "$VAR1 = {'arrayref' => []};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'arrayref' => ['unknown']};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'arrayref' => ['unknown','unknown']};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'arrayref' => ['unknown','integer']};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'arrayref' => ['unknown','unknown','unknown','unknown','unknown']};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'arrayref' => ['unknown','unknown','unknown','integer','unknown']};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'arrayref' => []};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'arrayref' => ['unknown']};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'arrayref' => ['unknown','unknown']};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'arrayref' => ['unknown','integer']};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'arrayref' => ['unknown','unknown','unknown','unknown','unknown']};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'arrayref' => ['unknown','unknown','unknown','integer','unknown']};" >>>
 
 # [[[ HEADER ]]]
 use strict;

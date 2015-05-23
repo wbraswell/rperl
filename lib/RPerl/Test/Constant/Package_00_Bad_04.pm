@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected Token:  use constant' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  use constant' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::Constant::Package_00_Bad_04;

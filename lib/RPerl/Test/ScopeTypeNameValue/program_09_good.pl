@@ -1,11 +1,11 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: "$VAR1 = {'object_hashref' => {'a' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}}}};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'object_hashref' => {'a' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},'b' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}}}};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'hashref' => {'a' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},'b' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleB','drup' => 'integer'}}}};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'object_hashref' => {'a' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},'b' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},'c' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},'d' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},'e' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}}}};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'hashref' => {'a' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},'b' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},'c' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},'d' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleB','drup' => 'integer'}},'e' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}}}};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'object_hashref' => {'a' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}}}};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'object_hashref' => {'a' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},'b' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}}}};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'hashref' => {'a' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},'b' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleB','drup' => 'integer'}}}};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'object_hashref' => {'a' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},'b' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},'c' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},'d' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},'e' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}}}};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'hashref' => {'a' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},'b' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},'c' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},'d' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleB','drup' => 'integer'}},'e' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}}}};" >>>
 
 # [[[ HEADER ]]]
 use strict;

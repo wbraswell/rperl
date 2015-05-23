@@ -13,7 +13,7 @@ using std::cout;  using std::cerr;
 // [[[<<< BEGIN PERL TYPES >>>]]]
 // [[[<<< BEGIN PERL TYPES >>>]]]
 
-////# [[[ OO METHODS ]]]
+////# [[[ OO METHODS & SUBROUTINES ]]]
 
 // INHERITANCE TESTING
 ////our void_method $inherited__Algorithm = sub { ( my object $self, my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Algorithm->inherited__Algorithm(), received \$self = '$self' and \$person = '$person', FNORD\n"; };
@@ -41,7 +41,7 @@ SV* uninherited__Algorithm(SV* person) { cout << "in CPPOPS_PERLTYPES Algorithm:
 // [[[<<< BEGIN CPP TYPES >>>]]]
 // [[[<<< BEGIN CPP TYPES >>>]]]
 
-////# [[[ OO METHODS ]]]
+////# [[[ OO METHODS & SUBROUTINES ]]]
 
 // INHERITANCE TESTING
 ////our void_method $inherited__Algorithm = sub { ( my object $self, my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Algorithm->inherited__Algorithm(), received \$self = '$self' and \$person = '$person', FNORD\n"; };

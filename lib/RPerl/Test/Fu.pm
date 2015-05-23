@@ -8,6 +8,7 @@ our $VERSION = 0.001_000;
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Test);
 use RPerl::Test;
+
 #use RPerl::Test qw(mode_tagline);
 #use RPerl::Test qw(mode_tagline mode_description);
 #use RPerl::Test qw(mode_tagline mode_description mode_enable);
@@ -27,9 +28,11 @@ use RPerl::Test;
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {
-#    plugh => my integer $TYPED_plugh           = 23,
-#    xyzzy => my string $TYPED_xyzzy            = 'twenty-three',
-    thud  => my integer_arrayref $TYPED_thud = [ ]#,
+
+    #    plugh => my integer $TYPED_plugh           = 23,
+    #    xyzzy => my string $TYPED_xyzzy            = 'twenty-three',
+    thud => my integer_arrayref $TYPED_thud = []    #,
+
 #    thud  => my integer_arrayref $TYPED_thud = [ 2 ]#,
 #    thud  => my integer_arrayref $TYPED_thud = [ 2, 4, 6, 8 ],
 #    thud  => my integer_arrayref $TYPED_thud = [ qw(hi howdy hello) ],
@@ -40,35 +43,40 @@ our hashref $properties = {
 #    pals => my string_hashref $TYPED_pals = { a21 => 'howdy', 21 => 'buffalo', 21.3 => 'clarabell', '21.3' => 'bozo' }
 };
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
 our void_method $quux = sub {
-#    ( my object $self) = @_;
+
+    #    ( my object $self) = @_;
     ( my object $self, my integer $howdy, my string_hashref $doody) = @_;
-#    $self->{plugh} = $self->{plugh} * 2;
 
-# START HERE: continue with code generation for BAD? returns below
-# START HERE: continue with code generation for BAD? returns below
-# START HERE: continue with code generation for BAD? returns below
+    #    $self->{plugh} = $self->{plugh} * 2;
 
-#    return;  # GOOD
-#    return 2;  # GOOD
-#    return (2);  # GOOD, parens as subexpression not list
-    return(2);  # BAD? need generator, Operation_76
-#    return -234_567.890_12;  # GOOD
-#    return 'howdy';  # GOOD
-#    return [];  # GOOD
-#    return [2];  # GOOD
-#    return [2, 3];  # GOOD
-#    return [2, 3, 5, 7];  # GOOD
-#    return @{[2]};  # BAD? generator, SubExpression_131
-#    return {};  # GOOD
-#    return {a => 2};  # GOOD
-#    return {a => 2, b => 3};  # GOOD
-#    return {a => 2, b => 3, c => 5};  # GOOD
-#    return 3, 4;  # BAD, generator
-#    return (3, 4);  # BAD, parser
-#    return 3, 4, 5;  # BAD, generator
+    # START HERE: continue with code generation for BAD? returns below
+    # START HERE: continue with code generation for BAD? returns below
+    # START HERE: continue with code generation for BAD? returns below
+
+    #    return;    # GOOD
+    #    return();  # GOOD, parens as args list
+    #    return ();  # BAD, empty parens as subexpression
+    #    return 2;  # GOOD
+    #    return(2);  # GOOD, parens as args list
+    #    return (2);  # GOOD, parens as subexpression
+    #    return -234_567.890_12;  # GOOD
+    #    return 'howdy';  # GOOD
+    #    return [];  # GOOD
+    #    return [2];  # GOOD
+    #    return [2, 3];  # GOOD
+    #    return [2, 3, 5, 7];  # GOOD
+        return @{[2]};  # BAD? generator, SubExpression_134
+    #    return {};  # GOOD
+    #    return {a => 2};  # GOOD
+    #    return {a => 2, b => 3};  # GOOD
+    #    return {a => 2, b => 3, c => 5};  # GOOD
+    #    return 3, 4;  # BAD, generator
+    #    return (3, 4);  # BAD, parser
+    #    return 3, 4, 5, 6, 7;  # BAD, generator
+    #    return (3, 4, 5, 6, 7);  # BAD, parser
 };
 
 1;    # end of class

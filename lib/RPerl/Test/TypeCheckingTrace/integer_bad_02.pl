@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_ERROR: 'ERROR EIV01, TYPE-CHECKING MISMATCH' >>>
-# <<< RUN_ERROR: 'integer value expected but non-integer value found' >>>
-# <<< RUN_ERROR: 'in variable $input_1 from subroutine check_integer()' >>>
+# <<< EXECUTE_ERROR: 'ERROR EIV01, TYPE-CHECKING MISMATCH' >>>
+# <<< EXECUTE_ERROR: 'integer value expected but non-integer value found' >>>
+# <<< EXECUTE_ERROR: 'in variable $input_1 from subroutine check_integer()' >>>
 
 # [[[ HEADER ]]]
 use strict;

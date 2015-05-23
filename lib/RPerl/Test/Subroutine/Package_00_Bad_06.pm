@@ -1,5 +1,5 @@
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::Subroutine::Package_00_Bad_06;

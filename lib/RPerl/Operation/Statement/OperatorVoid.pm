@@ -20,7 +20,7 @@ use RPerl::Test::Bar;
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
 our string_hashref_method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
@@ -34,13 +34,14 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
     # Print, OperatorNamedVoid, OperatorNamed, LoopControl
     my string $child0_class = ref $self->{children}->[0];
-    if (   ( $child0_class eq 'OperatorVoid_110' )
-        or ( $child0_class eq 'OperatorVoid_111' )
-        or ( $child0_class eq 'OperatorVoid_112' )
+    if (   ( $child0_class eq 'OperatorVoid_112' )
         or ( $child0_class eq 'OperatorVoid_113' )
         or ( $child0_class eq 'OperatorVoid_114' )
         or ( $child0_class eq 'OperatorVoid_115' )
-        or ( $child0_class eq 'OperatorVoid_116' ) )
+        or ( $child0_class eq 'OperatorVoid_116' )
+        or ( $child0_class eq 'OperatorVoid_117' )
+        or ( $child0_class eq 'OperatorVoid_118' )
+        or ( $child0_class eq 'OperatorVoid_119' ) )
     {
         $rperl_source_subgroup
             = $self->{children}->[0]->ast_to_rperl__generate($modes);
@@ -51,7 +52,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEAS00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $child0_class
-                . ' found where OperatorVoid_110, OperatorVoid_111, OperatorVoid_112, OperatorVoid_113, OperatorVoid_114, OperatorVoid_115, or OperatorVoid_116 expected, dying'
+                . ' found where OperatorVoid_112, OperatorVoid_113, OperatorVoid_114, OperatorVoid_115, OperatorVoid_116, OperatorVoid_117, OperatorVoid_118, or OperatorVoid_119 expected, dying'
         ) . "\n";
     }
 

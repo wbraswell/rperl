@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPL03' >>>
-# <<< COMPILE_ERROR: 'Useless use of push with no values' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL03' >>>
+# <<< PARSE_ERROR: 'Useless use of push with no values' >>>
 
 # [[[ HEADER ]]]
 use strict;

@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'near "( my strin"' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< PARSE_ERROR: 'near "( my strin"' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::SubroutineArguments::Package_01_Bad;

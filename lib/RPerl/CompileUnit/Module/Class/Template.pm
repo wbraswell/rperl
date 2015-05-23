@@ -3,9 +3,12 @@
 # <<< TYPE_CHECKING: OFF >>>
 # <<< TYPE_CHECKING: ON >>>
 # <<< TYPE_CHECKING: TRACE >>>
-# <<< RUN_SUCCESS: 'FOO' >>>
-# <<< RUN_ERROR: 'FOO' >>>
+# <<< PARSE_ERROR: 'FOO' >>>
+# <<< GENERATE_SUCCESS_PERLOPS_PERLTYPES: DIFF >>>
+# <<< GENERATE_ERROR: 'FOO' >>>
 # <<< COMPILE_ERROR: 'FOO' >>>
+# <<< EXECUTE_SUCCESS: 'FOO' >>>
+# <<< EXECUTE_ERROR: 'FOO' >>>
 
 # [[[ HEADER ]]]
 # <<< CHANGE_ME: replace with real class name >>>
@@ -90,9 +93,9 @@ our hashref $properties = {
     yyz => my number_hashref $TYPED_yyz = { a => 3.1, b => 6.2, c => 9.3 }
 };
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
-# <<< CHANGE_ME: delete for no methods, or replace with real method(s) >>>
+# <<< CHANGE_ME: delete for no methods/subroutines, or replace with real method(s)/subroutine(s) >>>
 our void_method $quux = sub {
     ( my object $self) = @_;
     $self->{plugh} = $self->{plugh} * 2;
@@ -126,9 +129,6 @@ our object_arrayref_method $qaft = sub {
     return $retval;
 };
 
-# [[[ SUBROUTINES ]]]
-
-# <<< CHANGE_ME: delete for no subroutines, or replace with real subroutine(s) >>>
 our void $grunt = sub {
     print 'PIE() = ' . PIE() . "\n";
 };

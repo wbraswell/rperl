@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
-# <<< COMPILE_ERROR: 'Perl::Critic::Policy::References::ProhibitDoubleSigils' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPC02' >>>
+# <<< PARSE_ERROR: 'Perl::Critic::Policy::References::ProhibitDoubleSigils' >>>
 
 # [[[ HEADER ]]]
 use strict;

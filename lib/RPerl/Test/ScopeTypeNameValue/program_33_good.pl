@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: "my string_arrayref $foo = ['42','is','the','answer'];" >>>
+# <<< EXECUTE_SUCCESS: "my string_arrayref $foo = ['42','is','the','answer'];" >>>
 
 # [[[ HEADER ]]]
 use strict;

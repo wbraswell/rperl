@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'Can't locate RPerl/T.pm' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< PARSE_ERROR: 'Can't locate RPerl/T.pm' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::Include::Package_00_Bad_04;

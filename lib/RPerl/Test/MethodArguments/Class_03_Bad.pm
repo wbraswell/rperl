@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'near ") @_"' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< PARSE_ERROR: 'near ") @_"' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::MethodArguments::Class_03_Bad;
@@ -17,7 +17,7 @@ use RPerl::Test;
 our hashref $properties
     = { empty_property => my integer $TYPED_empty_property = 2 };
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 our void_method $empty_method = sub {
     (   my object $self,
         my number $foo,

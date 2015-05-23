@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
-# <<< COMPILE_ERROR: 'Perl::Critic::Policy::Variables::ProhibitPackageVars' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPC02' >>>
+# <<< PARSE_ERROR: 'Perl::Critic::Policy::Variables::ProhibitPackageVars' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::Subroutine::Package_00_Bad_01;

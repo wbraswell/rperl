@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPL03' >>>
-# <<< COMPILE_ERROR: 'Useless use of a constant' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL03' >>>
+# <<< PARSE_ERROR: 'Useless use of a constant' >>>
 
 # [[[ HEADER ]]]
 use strict;

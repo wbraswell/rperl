@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_ERROR: 'ERROR ENVHVRV03, TYPE-CHECKING MISMATCH' >>>
-# <<< RUN_ERROR: "number_hashref element value expected but non-number value found at key 'd'" >>>
-# <<< RUN_ERROR: 'in variable $input_1 from subroutine check_number_hashref()' >>>
+# <<< EXECUTE_ERROR: 'ERROR ENVHVRV03, TYPE-CHECKING MISMATCH' >>>
+# <<< EXECUTE_ERROR: "number_hashref element value expected but non-number value found at key 'd'" >>>
+# <<< EXECUTE_ERROR: 'in variable $input_1 from subroutine check_number_hashref()' >>>
 
 # [[[ HEADER ]]]
 use strict;

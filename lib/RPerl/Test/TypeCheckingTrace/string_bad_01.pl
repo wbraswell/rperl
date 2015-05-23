@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_ERROR: 'ERROR EPV01, TYPE-CHECKING MISMATCH' >>>
-# <<< RUN_ERROR: 'string value expected but non-string value found' >>>
-# <<< RUN_ERROR: 'in variable $input_1 from subroutine check_string()' >>>
+# <<< EXECUTE_ERROR: 'ERROR EPV01, TYPE-CHECKING MISMATCH' >>>
+# <<< EXECUTE_ERROR: 'string value expected but non-string value found' >>>
+# <<< EXECUTE_ERROR: 'in variable $input_1 from subroutine check_string()' >>>
 
 # [[[ HEADER ]]]
 use strict;

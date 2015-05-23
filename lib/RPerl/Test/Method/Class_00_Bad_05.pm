@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'Illegal declaration of anonymous subroutine' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< PARSE_ERROR: 'Illegal declaration of anonymous subroutine' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::Method::Class_00_Bad_05;
@@ -17,7 +17,7 @@ use RPerl::Test;
 our hashref $properties
     = { empty_property => my integer $TYPED_empty_property = 2 };
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 our void_method $empty_method = sub 2;
 };
 

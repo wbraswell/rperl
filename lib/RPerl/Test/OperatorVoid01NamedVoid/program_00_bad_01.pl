@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected Token:  croak;' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  croak;' >>>
 
 # [[[ HEADER ]]]
 use strict;

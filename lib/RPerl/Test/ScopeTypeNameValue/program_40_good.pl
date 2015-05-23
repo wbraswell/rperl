@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: 'our integer_hashref $properties = {'some_integer' => 23};' >>>
+# <<< EXECUTE_SUCCESS: 'our integer_hashref $properties = {'some_integer' => 23};' >>>
 
 # [[[ HEADER ]]]
 use strict;

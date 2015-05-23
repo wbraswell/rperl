@@ -1,11 +1,11 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: "$VAR1 = {'number_hashref' => {'a' => 'number'}};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'number_hashref' => {'a' => 'number','b' => 'number'}};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'hashref' => {'a' => 'number','b' => 'integer'}};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'number_hashref' => {'a' => 'number','b' => 'number','c' => 'number','d' => 'number','e' => 'number'}};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'hashref' => {'a' => 'number','b' => 'number','c' => 'number','d' => 'integer','e' => 'number'}};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'number_hashref' => {'a' => 'number'}};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'number_hashref' => {'a' => 'number','b' => 'number'}};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'hashref' => {'a' => 'number','b' => 'integer'}};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'number_hashref' => {'a' => 'number','b' => 'number','c' => 'number','d' => 'number','e' => 'number'}};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'hashref' => {'a' => 'number','b' => 'number','c' => 'number','d' => 'integer','e' => 'number'}};" >>>
 
 # [[[ HEADER ]]]
 use strict;

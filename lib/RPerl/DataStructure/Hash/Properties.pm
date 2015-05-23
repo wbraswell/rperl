@@ -18,7 +18,7 @@ our hashref $properties = {  # whoah, so meta
     property_entries => my object_hashref $TYPED_property_entries = undef
 };
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
 # TRANSLATE
 our object_method $ppi_to_rperl__translate = sub {

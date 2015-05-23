@@ -13,7 +13,7 @@ use RPerl::Algorithm;
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
 our void_method $inherited__Inefficient = sub {
     ( my object $self, my string $person) = @_;

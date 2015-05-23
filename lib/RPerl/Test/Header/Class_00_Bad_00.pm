@@ -1,8 +1,8 @@
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
-# <<< COMPILE_ERROR: 'Perl::Critic::Policy::Modules::RequireExplicitPackage' >>>
-# <<< COMPILE_ERROR: 'Perl::Critic::Policy::TestingAndDebugging::RequireUseStrict' >>>
-# <<< COMPILE_ERROR: 'Perl::Critic::Policy::TestingAndDebugging::RequireUseWarnings' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPC02' >>>
+# <<< PARSE_ERROR: 'Perl::Critic::Policy::Modules::RequireExplicitPackage' >>>
+# <<< PARSE_ERROR: 'Perl::Critic::Policy::TestingAndDebugging::RequireUseStrict' >>>
+# <<< PARSE_ERROR: 'Perl::Critic::Policy::TestingAndDebugging::RequireUseWarnings' >>>
 
 # [[[ HEADER ]]]
 packaged RPerl::Test::Header::Class_00_Bad_00;
@@ -19,7 +19,7 @@ use RPerl::Test;
 our hashref $properties
     = { empty_property => my integer $TYPED_empty_property = 2 };
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 our void_method $empty_method = sub { return 2; };
 
 1;                  # end of class

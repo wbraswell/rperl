@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_ERROR: 'ERROR EHVRV01, TYPE-CHECKING MISMATCH' >>>
-# <<< RUN_ERROR: 'hashref value expected but non-hashref value found' >>>
-# <<< RUN_ERROR: 'in variable $input_1 from subroutine check_hashref()' >>>
+# <<< EXECUTE_ERROR: 'ERROR EHVRV01, TYPE-CHECKING MISMATCH' >>>
+# <<< EXECUTE_ERROR: 'hashref value expected but non-hashref value found' >>>
+# <<< EXECUTE_ERROR: 'in variable $input_1 from subroutine check_hashref()' >>>
 
 # [[[ HEADER ]]]
 use strict;

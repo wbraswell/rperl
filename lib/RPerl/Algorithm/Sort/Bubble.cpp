@@ -13,7 +13,7 @@ using std::cout;  using std::cerr;
 // [[[<<< BEGIN PERL TYPES >>>]]]
 // [[[<<< BEGIN PERL TYPES >>>]]]
 
-////# [[[ OO METHODS ]]]
+////# [[[ OO METHODS & SUBROUTINES ]]]
 
 ////# call out to sort integer_data, return nothing
 ////our void_method $integer_sort = sub {(my object $self) = @_;
@@ -277,7 +277,7 @@ SV* number_bubblesort__typetest0(SV* lucky_numbers)
 // [[[<<< BEGIN CPP TYPES >>>]]]
 // [[[<<< BEGIN CPP TYPES >>>]]]
 
-////# [[[ OO METHODS ]]]
+////# [[[ OO METHODS & SUBROUTINES ]]]
 
 ////# call out to sort integer_data, return nothing
 ////our void_method $integer_sort = sub {(my object $self) = @_;

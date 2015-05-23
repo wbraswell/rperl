@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
-# <<< COMPILE_ERROR: 'Perl::Critic::Policy::RegularExpressions::RequireDotMatchAnything' >>>
-# <<< COMPILE_ERROR: 'Perl::Critic::Policy::RegularExpressions::RequireLineBoundaryMatching' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPC02' >>>
+# <<< PARSE_ERROR: 'Perl::Critic::Policy::RegularExpressions::RequireDotMatchAnything' >>>
+# <<< PARSE_ERROR: 'Perl::Critic::Policy::RegularExpressions::RequireLineBoundaryMatching' >>>
 
 # [[[ HEADER ]]]
 use strict;

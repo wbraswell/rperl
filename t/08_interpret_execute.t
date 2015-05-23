@@ -47,7 +47,7 @@ find(
                 . $OS_ERROR
                 . ', croaking';
             while (<$fh>) {
-                if (m/^\#\s*\<\<\<\s*RUN_SUCCESS\s*\:\s*['"](.*)['"]\s*\>\>\>/xms
+                if (m/^\#\s*\<\<\<\s*EXECUTE_SUCCESS\s*\:\s*['"](.*)['"]\s*\>\>\>/xms
                     )
                 {
                     push @{ $test_files->{$file}->{successes} }, $1;
@@ -69,7 +69,7 @@ find(
                 . $OS_ERROR
                 . ', croaking';
             while (<$fh>) {
-                if (m/^\#\s*\<\<\<\s*RUN_ERROR\s*\:\s*['"](.*)['"]\s*\>\>\>/xms
+                if (m/^\#\s*\<\<\<\s*EXECUTE_ERROR\s*\:\s*['"](.*)['"]\s*\>\>\>/xms
                     )
                 {
                     push @{ $test_files->{$file}->{errors} }, $1;

@@ -28,7 +28,7 @@ our %class_properties = (
     arguments_max => my integer $TYPED_arguments_max = 999,
 );
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
 # GENERATE CPPOPS_PERLTYPES
 our string_method $rperl_to_cpp__generate__CPPOPS_PERLTYPES = sub {

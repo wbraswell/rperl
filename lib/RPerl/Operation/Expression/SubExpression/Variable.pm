@@ -18,7 +18,7 @@ our hashref $properties = {
     retrievals => my object_arrayref $TYPED_retrievals = undef
 };
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
 # TRANSLATE
 our object_method $ppi_to_rperl__translate = sub {

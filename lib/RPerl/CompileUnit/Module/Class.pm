@@ -22,7 +22,7 @@ use File::Basename;
 # [[[ OO PROPERTIES ]]]
 # BASE CLASS HAS NO PROPERTIES
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
 # RPerl object constructor, shorthand
 sub new {

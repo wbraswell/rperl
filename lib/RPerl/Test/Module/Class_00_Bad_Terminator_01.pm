@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'Bareword "b" not allowed' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< PARSE_ERROR: 'Bareword "b" not allowed' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::Module::Class_00_Bad_Terminator_01;
@@ -17,7 +17,7 @@ use RPerl::Test;
 our hashref $properties
     = { empty_property => my integer $TYPED_empty_property = 2 };
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 our void_method $empty_method = sub { return 2; };
 
 b;                  # end of class

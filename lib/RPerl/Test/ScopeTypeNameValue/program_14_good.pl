@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: "$VAR1 = {'string_hashref_arrayref_arrayref' => [{'string_hashref_arrayref' => [{'string_hashref' => {'g' => 'string','h' => 'string'}}]},{'string_hashref_arrayref' => [{'string_hashref' => {'m' => 'string','n' => 'string'}}]},{'string_hashref_arrayref' => [{'string_hashref' => {'a' => 'string','b' => 'string'}}]}]};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'hashref_arrayref_arrayref' => [{'string_hashref_arrayref' => [{'string_hashref' => {'g' => 'string','h' => 'string'}}]},{'string_hashref_arrayref' => [{'string_hashref' => {'m' => 'string','n' => 'string'}}]},{'hashref_arrayref' => [{'hashref' => {'a' => 'string','b' => 'integer'}}]}]};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'string_hashref_arrayref_arrayref' => [{'string_hashref_arrayref' => [{'string_hashref' => {'g' => 'string','h' => 'string'}}]},{'string_hashref_arrayref' => [{'string_hashref' => {'m' => 'string','n' => 'string'}}]},{'string_hashref_arrayref' => [{'string_hashref' => {'a' => 'string','b' => 'string'}}]}]};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'hashref_arrayref_arrayref' => [{'string_hashref_arrayref' => [{'string_hashref' => {'g' => 'string','h' => 'string'}}]},{'string_hashref_arrayref' => [{'string_hashref' => {'m' => 'string','n' => 'string'}}]},{'hashref_arrayref' => [{'hashref' => {'a' => 'string','b' => 'integer'}}]}]};" >>>
 
 # [[[ HEADER ]]]
 use strict;

@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'syntax error' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< PARSE_ERROR: 'syntax error' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::Properties::Class_00_Bad_05;
@@ -17,7 +17,7 @@ use RPerl::Test;
 our hashref $properties
     = {  => my integer $TYPED_empty_property = 2 };
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 our void_method $empty_method = sub { return 2; };
 
 1;                  # end of class

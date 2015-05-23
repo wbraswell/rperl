@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: '7_337.802_644_490_13' >>>
+# <<< EXECUTE_SUCCESS: '7_337.802_644_490_13' >>>
 
 # [[[ HEADER ]]]
 use strict;

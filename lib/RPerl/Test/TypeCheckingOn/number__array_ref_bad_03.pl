@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_ERROR: 'ERROR ENVAVRV03, TYPE-CHECKING MISMATCH' >>>
-# <<< RUN_ERROR: 'number_arrayref element value expected but non-number value found at index 3' >>>
+# <<< EXECUTE_ERROR: 'ERROR ENVAVRV03, TYPE-CHECKING MISMATCH' >>>
+# <<< EXECUTE_ERROR: 'number_arrayref element value expected but non-number value found at index 3' >>>
 
 # [[[ HEADER ]]]
 use strict;

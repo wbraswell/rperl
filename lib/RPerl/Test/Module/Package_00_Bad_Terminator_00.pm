@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPC02' >>>
-# <<< COMPILE_ERROR: 'RequireEndWithOne' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPC02' >>>
+# <<< PARSE_ERROR: 'RequireEndWithOne' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::Module::Package_00_Bad_Terminator_00;

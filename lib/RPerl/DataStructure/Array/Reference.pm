@@ -27,7 +27,7 @@ package RPerl::DataStructure::Array::Reference;
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
 our string_hashref_method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
@@ -35,16 +35,16 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in Array::Reference->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    # unwrap ArrayReference_182 from SubExpression_130
-    if ( ref $self eq 'SubExpression_130' ) {
+    # unwrap ArrayReference_185 from SubExpression_133
+    if ( ref $self eq 'SubExpression_133' ) {
         $self = $self->{children}->[0];
     }
 
-    if ( ref $self ne 'ArrayReference_182' ) {
+    if ( ref $self ne 'ArrayReference_185' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEAS00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $self )
-                . ' found where ArrayReference_182 expected, dying' )
+                . ' found where ArrayReference_185 expected, dying' )
             . "\n";
     }
 

@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_ERROR: 'ERROR EPV01, TYPE-CHECKING MISMATCH' >>>
-# <<< RUN_ERROR: 'string value expected but non-string value found' >>>
+# <<< EXECUTE_ERROR: 'ERROR EPV01, TYPE-CHECKING MISMATCH' >>>
+# <<< EXECUTE_ERROR: 'string value expected but non-string value found' >>>
 
 # [[[ HEADER ]]]
 use strict;

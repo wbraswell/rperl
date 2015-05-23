@@ -1,7 +1,7 @@
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'No such class properties' >>>
-# <<< COMPILE_ERROR: 'syntax error' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< PARSE_ERROR: 'No such class properties' >>>
+# <<< PARSE_ERROR: 'syntax error' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::Properties::Class_00_Bad_01;
@@ -18,7 +18,7 @@ use RPerl::Test;
 our properties
     = { empty_property => my integer $TYPED_empty_property = 2 };
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 our void_method $empty_method = sub { return 2; };
 
 1;                  # end of class

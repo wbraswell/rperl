@@ -27,7 +27,7 @@ our hashref $properties = {
     yyz => my number_hashref $TYPED_yyz = { a => 3.1, b => 6.2, c => 9.3 }
 };
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
 our void_method $quux = sub {
     ( my object $self) = @_;

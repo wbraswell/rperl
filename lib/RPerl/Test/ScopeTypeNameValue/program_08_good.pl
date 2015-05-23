@@ -1,11 +1,11 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: "$VAR1 = {'string_hashref' => {'a' => 'string'}};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'string_hashref' => {'a' => 'string','b' => 'string'}};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'hashref' => {'a' => 'string','b' => 'integer'}};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'string_hashref' => {'a' => 'string','b' => 'string','c' => 'string','d' => 'string','e' => 'string'}};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'hashref' => {'a' => 'string','b' => 'string','c' => 'string','d' => 'integer','e' => 'string'}};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'string_hashref' => {'a' => 'string'}};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'string_hashref' => {'a' => 'string','b' => 'string'}};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'hashref' => {'a' => 'string','b' => 'integer'}};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'string_hashref' => {'a' => 'string','b' => 'string','c' => 'string','d' => 'string','e' => 'string'}};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'hashref' => {'a' => 'string','b' => 'string','c' => 'string','d' => 'integer','e' => 'string'}};" >>>
 
 # [[[ HEADER ]]]
 use strict;

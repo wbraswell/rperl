@@ -26,7 +26,7 @@ our hashref $properties = {
     number_data  => my number_arrayref $TYPED_number_data   = undef
 };
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
 # call out to sort integer data, return nothing
 our void_method $integer_sort = sub {

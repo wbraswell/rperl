@@ -74,6 +74,7 @@
 %token OP19_VARIABLE_ASSIGN      = /(=)/                         # precedence 19 infix: assign
 %token OP01_PRINT                = /(print|printf)\s/            # precedence 01 prefix void: print to STDOUT, STDERR, or filehandle
 %token OP01_NAMED_VOID_SCOLON    = /(croak;|return;|exit;)/      # precedence 01 prefix void: "terms and list operators (leftward)" [1] AKA builtins, no return value
+%token OP01_NAMED_VOID_LPAREN    = /(return\()/                  # precedence 01 prefix void: same as above, except w/ parenthesis; return() is only exception, see ProhibitParensWithBuiltins.pm
 %token OP01_NAMED_VOID           = /(croak|return|exit)\s/       # precedence 01 prefix void: same as above, except accepts argument(s)
 %token OP01_QW                   = /(qw\()/                      # precedence 01 prefix: quoted words
 %token OP01_OPEN                 = /(open)\s/                    # precedence 01 prefix: open filehandle
@@ -120,6 +121,7 @@
 %left       OP01_OPEN
 %left       OP01_QW
 %left       OP01_NAMED_VOID_SCOLON
+%left       OP01_NAMED_VOID_LPAREN
 %left       OP01_NAMED_VOID
 %left       OP01_PRINT
 
@@ -168,8 +170,8 @@ Operator:                LPAREN OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ')'
                          SubExpression OP17_LIST_RANGE SubExpression | SubExpression OP18_TERNARY VariableOrLiteral COLON VariableOrLiteral |
                          OP22_LOGICAL_NEG SubExpression | SubExpression OP23_LOGICAL_AND SubExpression | SubExpression OP24_LOGICAL_OR_XOR SubExpression ;
 OperatorVoid:            OP01_PRINT (STDOUT_STDERR)? ListElements ';' | OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ';' |
-                         OP01_NAMED_VOID_SCOLON | OP01_NAMED_VOID ListElements ';' | OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';' |
-                         OP19_LOOP_CONTROL_SCOLON | OP19_LOOP_CONTROL LoopLabel ';' ;
+                         OP01_NAMED_VOID_SCOLON | OP01_NAMED_VOID_LPAREN ListElements? ')' ';' | OP01_NAMED_VOID ListElements ';' | 
+                         OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';' | OP19_LOOP_CONTROL_SCOLON | OP19_LOOP_CONTROL LoopLabel ';' ;
 Expression:              Operator | WordScoped LPAREN ListElements? ')' | WORD_UPPERCASE LPAREN ')' | Variable OP02_METHOD_THINARROW LPAREN ListElements? ')' |
                          WordScoped OP02_METHOD_THINARROW_NEW ')' ;
 SubExpression:           Expression | 'undef' | Literal | Variable | ArrayReference | ArrayDereference | HashReference | HashDereference | LPAREN SubExpression ')' ;
@@ -265,81 +267,82 @@ Operator_101 => 'RPerl::Operation::Expression::Operator::Logical::OrXor',
 Operator_102 => 'RPerl::Operation::Expression::Operator::List::Range',
 Operator_103 => 'RPerl::Operation::Expression::Operator::Ternary',
 Operator_104 => 'RPerl::Operation::Expression::Operator::Logical::Negation',
-Operator_015 => 'RPerl::Operation::Expression::Operator::Logical::And',
+Operator_105 => 'RPerl::Operation::Expression::Operator::Logical::And',
 Operator_106 => 'RPerl::Operation::Expression::Operator::Logical::OrXor',
-OperatorVoid_110 => 'RPerl::Operation::Statement::OperatorVoid::Print',        # OperatorVoid -> OP01_PRINT OPTIONAL-31 ListElements ';'
-OperatorVoid_111 => 'RPerl::Operation::Statement::OperatorVoid::Print',        # OperatorVoid -> OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ';'
-OperatorVoid_112 => 'RPerl::Operation::Statement::OperatorVoid::Named',        # OperatorVoid -> OP01_NAMED_VOID_SCOLON
-OperatorVoid_113 => 'RPerl::Operation::Statement::OperatorVoid::Named',        # OperatorVoid -> OP01_NAMED_VOID ListElements ';'
-OperatorVoid_114 => 'RPerl::Operation::Expression::Operator::Named',           # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
-OperatorVoid_115 => 'RPerl::Operation::Statement::OperatorVoid::LoopControl',  # OperatorVoid -> OP19_LOOP_CONTROL_SCOLON
-OperatorVoid_116 => 'RPerl::Operation::Statement::OperatorVoid::LoopControl',  # OperatorVoid -> OP19_LOOP_CONTROL LoopLabel ';'
-Expression_121 => 'RPerl::Operation::Expression::Operator',
-Expression_122 => 'RPerl::Operation::Expression::SubroutineCall',
-Expression_123 => 'RPerl::Operation::Expression::ConstantCall',
-Expression_124 => 'RPerl::Operation::Expression::SubroutineCall::MethodCall',
-Expression_125 => 'RPerl::Operation::Expression::SubroutineCall::MethodCall::ConstructorCall',
-SubExpression_126 => 'RPerl::Operation::Expression',
-SubExpression_127 => 'RPerl::Operation::Expression::SubExpression::Literal::Undefined',
-SubExpression_128 => 'RPerl::Operation::Expression::SubExpression::Literal',      # SubExpression -> Literal
-SubExpression_129 => 'RPerl::Operation::Expression::SubExpression::Variable',
-SubExpression_130 => 'RPerl::DataStructure::Array::Reference',                    # SubExpression -> ArrayReference
-SubExpression_131 => 'RPerl::Operation::Expression::SubExpression::ArrayDereference',
-SubExpression_132 => 'RPerl::DataStructure::Hash::Reference',                     # SubExpression -> HashReference
-SubExpression_133 => 'RPerl::Operation::Expression::SubExpression::HashDereference',
-SubExpression_134 => 'RPerl::Operation::Expression::SubExpression::Parenthesis',  # SubExpression -> LPAREN SubExpression ')'
-SubExpressionOrStdin_135 => 'RPerl::Operation::Expression::SubExpression',        # SubExpressionOrStdin -> SubExpression
-SubExpressionOrStdin_136 => 'RPerl::InputOutput::Stdin',
-Statement_140 => 'RPerl::Operation::Statement::Conditional',
-Statement_141 => 'RPerl::Operation::Statement::Loop',
-Statement_142 => 'RPerl::Operation::Statement::OperatorVoid',  # Statement -> OperatorVoid
-Statement_143 => 'RPerl::Operation::Statement::VariableDeclaration',
-Statement_144 => 'RPerl::Operation::Statement::VariableModification',
-Conditional_151 => 'RPerl::Operation::Statement::Conditional',
-Loop_152 => 'RPerl::Operation::Statement::Loop::For',
-Loop_153 => 'RPerl::Operation::Statement::Loop::ForEach',
-Loop_154 => 'RPerl::Operation::Statement::Loop::While',
-LoopFor_155 => 'RPerl::Operation::Statement::Loop::For',
-LoopForEach_156 => 'RPerl::Operation::Statement::Loop::ForEach',
-LoopWhile_157 => 'RPerl::Operation::Statement::Loop::While',
-CodeBlock_160 => 'RPerl::CodeBlock',
-Variable_163 => 'RPerl::Operation::Expression::SubExpression::Variable',
-VariableRetrieval_164 => 'RPerl::Operation::Expression::SubExpression::Variable::Retrieval',
-VariableRetrieval_165 => 'RPerl::Operation::Expression::SubExpression::Variable::Retrieval',
-VariableRetrieval_166 => 'RPerl::Operation::Expression::SubExpression::Variable::Retrieval',
-VariableDeclaration_167 => 'RPerl::Operation::Statement::VariableDeclaration',
-VariableDeclaration_168 => 'RPerl::Operation::Statement::VariableDeclaration',
-VariableModification_169 => 'RPerl::Operation::Statement::VariableModification',
-VariableModification_170 => 'RPerl::Operation::Statement::VariableModification',
-ListElements_174 => 'RPerl::DataStructure::Array::ListElements',    # ListElements -> ListElement STAR-43
-ListElement_177 => 'RPerl::Operation::Expression::SubExpression',   # ListElement -> SubExpression
-ListElement_178 => 'RPerl::Operation::Expression::SubExpression',   # ListElement -> TypeInner SubExpression
-ListElement_179 => 'RPerl::DataStructure::Array::ListElement',      # ListElement -> OP01_QW PLUS-44 ')'
-ArrayReference_182 => 'RPerl::DataStructure::Array::Reference',     # ArrayReference -> LBRACKET OPTIONAL-45 ']'
-ArrayDereference_185 => 'RPerl::Operation::Expression::SubExpression::ArrayDereference',
-ArrayDereference_186 => 'RPerl::Operation::Expression::SubExpression::ArrayDereference',
-HashEntry_189 => 'RPerl::DataStructure::Hash::Entry',                                   # HashEntry -> VariableOrLiteralOrWord OP20_HASH_FATARROW OPTIONAL-47 SubExpression
-HashEntry_190 => 'RPerl::Operation::Expression::SubExpression::HashDereference',        # HashEntry -> HashDereference
-HashEntryTyped_191 => 'RPerl::DataStructure::Hash::EntryTyped',                         # HashEntryTyped -> WORD OP20_HASH_FATARROW TypeInner SubExpression
-HashEntryTyped_192 => 'RPerl::Operation::Expression::SubExpression::HashDereference',   # HashEntryTyped -> HashDereference
-HashReference_196 => 'RPerl::DataStructure::Hash::Reference',
-HashReference_197 => 'RPerl::DataStructure::Hash::Reference',
-HashDereference_200 => 'RPerl::Operation::Expression::SubExpression::HashDereference',
-HashDereference_201 => 'RPerl::Operation::Expression::SubExpression::HashDereference',
-WordScoped_202 => 'RPerl::NonGenerator',
-WordScoped_203 => 'RPerl::NonGenerator',
-LoopLabel_204 => 'RPerl::NonGenerator',
-Type_205 => 'RPerl::NonGenerator',                  # Type -> WORD
-Type_206 => 'RPerl::NonGenerator',                  # Type -> TYPE_INTEGER
-TypeInner_207 => 'RPerl::NonGenerator',             # TypeInner -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN
-TypeInnerConstant_208 => 'RPerl::NonGenerator',     # TypeInnerConstant -> MY Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN
-VariableOrLiteral_209 => 'RPerl::Operation::Expression::SubExpression::Variable',
-VariableOrLiteral_210 => 'RPerl::Operation::Expression::SubExpression::Literal',
-VariableOrLiteralOrWord_211 => 'RPerl::Operation::Expression::SubExpression::Variable',  # VariableOrLiteralOrWord -> Variable
-VariableOrLiteralOrWord_212 => 'RPerl::Operation::Expression::SubExpression::Literal',   # VariableOrLiteralOrWord -> Literal
-VariableOrLiteralOrWord_213 => 'RPerl::NonGenerator',                                    # VariableOrLiteralOrWord -> WORD
-Literal_214 => 'RPerl::Operation::Expression::SubExpression::Literal::Number',  # Literal -> LITERAL_NUMBER
-Literal_215 => 'RPerl::Operation::Expression::SubExpression::Literal::String'   # Literal -> LITERAL_STRING
+OperatorVoid_112 => 'RPerl::Operation::Statement::OperatorVoid::Print',        # OperatorVoid -> OP01_PRINT OPTIONAL-31 ListElements ';'
+OperatorVoid_113 => 'RPerl::Operation::Statement::OperatorVoid::Print',        # OperatorVoid -> OP01_PRINT FH_REF_SYMBOL_BRACES ListElements ';'
+OperatorVoid_114 => 'RPerl::Operation::Statement::OperatorVoid::Named',        # OperatorVoid -> OP01_NAMED_VOID_SCOLON
+OperatorVoid_115 => 'RPerl::Operation::Statement::OperatorVoid::Named',        # OperatorVoid -> OP01_NAMED_VOID_LPAREN OPTIONAL-32 ')' ';'
+OperatorVoid_116 => 'RPerl::Operation::Statement::OperatorVoid::Named',        # OperatorVoid -> OP01_NAMED_VOID ListElements ';'
+OperatorVoid_117 => 'RPerl::Operation::Expression::Operator::Named',           # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
+OperatorVoid_118 => 'RPerl::Operation::Statement::OperatorVoid::LoopControl',  # OperatorVoid -> OP19_LOOP_CONTROL_SCOLON
+OperatorVoid_119 => 'RPerl::Operation::Statement::OperatorVoid::LoopControl',  # OperatorVoid -> OP19_LOOP_CONTROL LoopLabel ';'
+Expression_124 => 'RPerl::Operation::Expression::Operator',
+Expression_125 => 'RPerl::Operation::Expression::SubroutineCall',
+Expression_126 => 'RPerl::Operation::Expression::ConstantCall',
+Expression_127 => 'RPerl::Operation::Expression::SubroutineCall::MethodCall',
+Expression_128 => 'RPerl::Operation::Expression::SubroutineCall::MethodCall::ConstructorCall',
+SubExpression_129 => 'RPerl::Operation::Expression',
+SubExpression_130 => 'RPerl::Operation::Expression::SubExpression::Literal::Undefined',
+SubExpression_131 => 'RPerl::Operation::Expression::SubExpression::Literal',      # SubExpression -> Literal
+SubExpression_132 => 'RPerl::Operation::Expression::SubExpression::Variable',
+SubExpression_133 => 'RPerl::DataStructure::Array::Reference',                    # SubExpression -> ArrayReference
+SubExpression_134 => 'RPerl::Operation::Expression::SubExpression::ArrayDereference',
+SubExpression_135 => 'RPerl::DataStructure::Hash::Reference',                     # SubExpression -> HashReference
+SubExpression_136 => 'RPerl::Operation::Expression::SubExpression::HashDereference',
+SubExpression_137 => 'RPerl::Operation::Expression::SubExpression::Parenthesis',  # SubExpression -> LPAREN SubExpression ')'
+SubExpressionOrStdin_138 => 'RPerl::Operation::Expression::SubExpression',        # SubExpressionOrStdin -> SubExpression
+SubExpressionOrStdin_139 => 'RPerl::InputOutput::Stdin',
+Statement_143 => 'RPerl::Operation::Statement::Conditional',
+Statement_144 => 'RPerl::Operation::Statement::Loop',
+Statement_145 => 'RPerl::Operation::Statement::OperatorVoid',  # Statement -> OperatorVoid
+Statement_146 => 'RPerl::Operation::Statement::VariableDeclaration',
+Statement_147 => 'RPerl::Operation::Statement::VariableModification',
+Conditional_154 => 'RPerl::Operation::Statement::Conditional',
+Loop_155 => 'RPerl::Operation::Statement::Loop::For',
+Loop_156 => 'RPerl::Operation::Statement::Loop::ForEach',
+Loop_157 => 'RPerl::Operation::Statement::Loop::While',
+LoopFor_158 => 'RPerl::Operation::Statement::Loop::For',
+LoopForEach_159 => 'RPerl::Operation::Statement::Loop::ForEach',
+LoopWhile_160 => 'RPerl::Operation::Statement::Loop::While',
+CodeBlock_163 => 'RPerl::CodeBlock',
+Variable_166 => 'RPerl::Operation::Expression::SubExpression::Variable',
+VariableRetrieval_167 => 'RPerl::Operation::Expression::SubExpression::Variable::Retrieval',
+VariableRetrieval_168 => 'RPerl::Operation::Expression::SubExpression::Variable::Retrieval',
+VariableRetrieval_169 => 'RPerl::Operation::Expression::SubExpression::Variable::Retrieval',
+VariableDeclaration_170 => 'RPerl::Operation::Statement::VariableDeclaration',
+VariableDeclaration_171 => 'RPerl::Operation::Statement::VariableDeclaration',
+VariableModification_172 => 'RPerl::Operation::Statement::VariableModification',
+VariableModification_173 => 'RPerl::Operation::Statement::VariableModification',
+ListElements_177 => 'RPerl::DataStructure::Array::ListElements',    # ListElements -> ListElement STAR-43
+ListElement_180 => 'RPerl::Operation::Expression::SubExpression',   # ListElement -> SubExpression
+ListElement_181 => 'RPerl::Operation::Expression::SubExpression',   # ListElement -> TypeInner SubExpression
+ListElement_182 => 'RPerl::DataStructure::Array::ListElement',      # ListElement -> OP01_QW PLUS-44 ')'
+ArrayReference_185 => 'RPerl::DataStructure::Array::Reference',     # ArrayReference -> LBRACKET OPTIONAL-45 ']'
+ArrayDereference_188 => 'RPerl::Operation::Expression::SubExpression::ArrayDereference',
+ArrayDereference_189 => 'RPerl::Operation::Expression::SubExpression::ArrayDereference',
+HashEntry_192 => 'RPerl::DataStructure::Hash::Entry',                                   # HashEntry -> VariableOrLiteralOrWord OP20_HASH_FATARROW OPTIONAL-47 SubExpression
+HashEntry_193 => 'RPerl::Operation::Expression::SubExpression::HashDereference',        # HashEntry -> HashDereference
+HashEntryTyped_194 => 'RPerl::DataStructure::Hash::EntryTyped',                         # HashEntryTyped -> WORD OP20_HASH_FATARROW TypeInner SubExpression
+HashEntryTyped_195 => 'RPerl::Operation::Expression::SubExpression::HashDereference',   # HashEntryTyped -> HashDereference
+HashReference_199 => 'RPerl::DataStructure::Hash::Reference',
+HashReference_200 => 'RPerl::DataStructure::Hash::Reference',
+HashDereference_203 => 'RPerl::Operation::Expression::SubExpression::HashDereference',
+HashDereference_204 => 'RPerl::Operation::Expression::SubExpression::HashDereference',
+WordScoped_205 => 'RPerl::NonGenerator',
+WordScoped_206 => 'RPerl::NonGenerator',
+LoopLabel_207 => 'RPerl::NonGenerator',
+Type_208 => 'RPerl::NonGenerator',                  # Type -> WORD
+Type_209 => 'RPerl::NonGenerator',                  # Type -> TYPE_INTEGER
+TypeInner_210 => 'RPerl::NonGenerator',             # TypeInner -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN
+TypeInnerConstant_211 => 'RPerl::NonGenerator',     # TypeInnerConstant -> MY Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN
+VariableOrLiteral_212 => 'RPerl::Operation::Expression::SubExpression::Variable',
+VariableOrLiteral_213 => 'RPerl::Operation::Expression::SubExpression::Literal',
+VariableOrLiteralOrWord_214 => 'RPerl::Operation::Expression::SubExpression::Variable',  # VariableOrLiteralOrWord -> Variable
+VariableOrLiteralOrWord_215 => 'RPerl::Operation::Expression::SubExpression::Literal',   # VariableOrLiteralOrWord -> Literal
+VariableOrLiteralOrWord_216 => 'RPerl::NonGenerator',                                    # VariableOrLiteralOrWord -> WORD
+Literal_217 => 'RPerl::Operation::Expression::SubExpression::Literal::Number',  # Literal -> LITERAL_NUMBER
+Literal_218 => 'RPerl::Operation::Expression::SubExpression::Literal::String'   # Literal -> LITERAL_STRING
 };
 
     1;

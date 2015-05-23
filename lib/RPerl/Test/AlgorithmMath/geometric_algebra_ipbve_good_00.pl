@@ -1,10 +1,10 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: 'undef' >>>
-# <<< RUN_SUCCESS: '-10.153846' >>>
-# <<< RUN_SUCCESS: '3' >>>
-# <<< RUN_SUCCESS: '1.538461' >>>
+# <<< EXECUTE_SUCCESS: 'undef' >>>
+# <<< EXECUTE_SUCCESS: '-10.153846' >>>
+# <<< EXECUTE_SUCCESS: '3' >>>
+# <<< EXECUTE_SUCCESS: '1.538461' >>>
 
 # [[[ HEADER ]]]
 use strict;

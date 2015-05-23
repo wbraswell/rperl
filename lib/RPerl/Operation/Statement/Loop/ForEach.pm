@@ -20,7 +20,7 @@ our hashref $properties = {
     body            => my object $TYPED_body             = undef,
 };
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
 # TRANSLATE
 our object_method $ppi_to_rperl__translate = sub {

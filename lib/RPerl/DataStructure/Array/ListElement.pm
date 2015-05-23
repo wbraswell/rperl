@@ -16,7 +16,7 @@ use RPerl::GrammarRule;
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
 our string_hashref_method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
@@ -24,13 +24,13 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in Array::ListElement->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ref $self eq 'ListElement_177' ) {
+    if ( ref $self eq 'ListElement_180' ) {
         my string_hashref $rperl_source_subgroup
             = $self->{children}->[0]->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
     }
-    elsif ( ref $self eq 'ListElement_178' ) {
+    elsif ( ref $self eq 'ListElement_181' ) {
         my object $type_inner    = $self->{children}->[0];
         my string $type_inner_my = $type_inner->{children}->[0];
         my string $type_inner_type
@@ -51,7 +51,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
     }
-    elsif ( ref $self eq 'ListElement_179' ) {
+    elsif ( ref $self eq 'ListElement_182' ) {
         my string $qw            = $self->{children}->[0];
         my string $element_names = q{};
         my object $elements      = $self->{children}->[1];

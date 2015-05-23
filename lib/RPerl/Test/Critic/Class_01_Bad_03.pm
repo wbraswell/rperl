@@ -1,8 +1,8 @@
 ## no critic qw(ProhibitUselessNoCritic PodSpelling ProhibitExcessMainComplexity
 
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected Token:  package' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  package' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::Critic::Class_01_Bad_03;
@@ -22,7 +22,7 @@ use RPerl::Test;
 our hashref $properties
     = { empty_property => my integer $TYPED_empty_property = 2 };
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 our void_method $empty_method = sub { return 2; };
 
 1;                  # end of class

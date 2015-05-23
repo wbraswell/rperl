@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'Undefined subroutine &RPerl::Test::Foo::grault called' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< PARSE_ERROR: 'Undefined subroutine &RPerl::Test::Foo::grault called' >>>
 
 # [[[ HEADER ]]]
 use strict;

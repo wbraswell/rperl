@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: 'MODE_ID = 0' >>>
-# <<< RUN_SUCCESS: "ops = 'PERL'" >>>
-# <<< RUN_SUCCESS: "types = 'PERL'" >>>
+# <<< EXECUTE_SUCCESS: 'MODE_ID = 0' >>>
+# <<< EXECUTE_SUCCESS: "ops = 'PERL'" >>>
+# <<< EXECUTE_SUCCESS: "types = 'PERL'" >>>
 
 # [[[ HEADER ]]]
 use strict;

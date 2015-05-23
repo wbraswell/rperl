@@ -1,12 +1,12 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: "'a' => 'twenty-threetwenty-threetwenty-threetwenty-threetwenty-threetwenty-threetwenty-three'" >>>
-# <<< RUN_SUCCESS: "'b' => 'howdy'" >>>
-# <<< RUN_SUCCESS: "'c' => '-23.42'" >>>
-# <<< RUN_SUCCESS: "'a' => 'guffawguffawguffawguffawguffawguffawguffawguffawguffawguffawguffaw'" >>>
-# <<< RUN_SUCCESS: "'b' => 'howdy'" >>>
-# <<< RUN_SUCCESS: "'c' => '-23.42'" >>>
+# <<< EXECUTE_SUCCESS: "'a' => 'twenty-threetwenty-threetwenty-threetwenty-threetwenty-threetwenty-threetwenty-three'" >>>
+# <<< EXECUTE_SUCCESS: "'b' => 'howdy'" >>>
+# <<< EXECUTE_SUCCESS: "'c' => '-23.42'" >>>
+# <<< EXECUTE_SUCCESS: "'a' => 'guffawguffawguffawguffawguffawguffawguffawguffawguffawguffawguffaw'" >>>
+# <<< EXECUTE_SUCCESS: "'b' => 'howdy'" >>>
+# <<< EXECUTE_SUCCESS: "'c' => '-23.42'" >>>
 
 # [[[ HEADER ]]]
 use strict;

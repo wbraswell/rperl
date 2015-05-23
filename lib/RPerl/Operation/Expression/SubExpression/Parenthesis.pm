@@ -16,7 +16,7 @@ use RPerl::Operation::Expression::SubExpression;
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
 our string_hashref_method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
@@ -24,11 +24,11 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in Parenthesis->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ref $self ne 'SubExpression_134' ) {
+    if ( ref $self ne 'SubExpression_137' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEAS00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $self )
-                . ' found where SubExpression_134 expected, dying' )
+                . ' found where SubExpression_137 expected, dying' )
             . "\n";
     }
 

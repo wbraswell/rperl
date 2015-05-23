@@ -17,7 +17,7 @@ our hashref $properties = {
     value => my object $TYPED_value = undef,
 };
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 # VARIABLE_MODIFICATION RULE
 our object_method $ppi_to_rperl__translate = sub {
     ( my string $class, my object $node) = @_;    # class method

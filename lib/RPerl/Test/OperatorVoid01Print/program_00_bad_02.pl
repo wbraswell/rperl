@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPL03' >>>
-# <<< COMPILE_ERROR: 'Name "main::STDOU" used only once: possible typo' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL03' >>>
+# <<< PARSE_ERROR: 'Name "main::STDOU" used only once: possible typo' >>>
 
 # [[[ HEADER ]]]
 use strict;

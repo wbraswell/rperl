@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'Global symbol "$empty_method" requires explicit package name' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< PARSE_ERROR: 'Global symbol "$empty_method" requires explicit package name' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::Method::Class_00_Bad_00;
@@ -17,7 +17,7 @@ use RPerl::Test;
 our hashref $properties
     = { empty_property => my integer $TYPED_empty_property = 2 };
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 ou void_method $empty_method = sub { return 2; };
 
 1;                  # end of class

@@ -16,7 +16,7 @@ use RPerl::Operation;
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
 our string_hashref_method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
@@ -30,10 +30,10 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
     # Conditional, OperatorVoid, VariableDeclaration, or VariableModification
     my string $child0_class = ref $self->{children}->[0];
-    if (   ( $child0_class eq 'Statement_140' )
-        or ( $child0_class eq 'Statement_142' )
-        or ( $child0_class eq 'Statement_143' )
-        or ( $child0_class eq 'Statement_144' ) )
+    if (   ( $child0_class eq 'Statement_143' )
+        or ( $child0_class eq 'Statement_145' )
+        or ( $child0_class eq 'Statement_146' )
+        or ( $child0_class eq 'Statement_147' ) )
     {
         $rperl_source_subgroup
             = $self->{children}->[0]->ast_to_rperl__generate($modes);
@@ -42,7 +42,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     }
 
     # Loop
-    elsif ( ( ref $self->{children}->[1] ) eq 'Statement_144' ) {
+    elsif ( ( ref $self->{children}->[1] ) eq 'Statement_147' ) {
 
         # optional LoopLabel COLON
         if ( exists $self->{children}->[0]->{children}->[0] ) {
@@ -61,7 +61,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEAS00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $child0_class
-                . ' found where Statement_140, Statement_141, Statement_142, Statement_143, or Statement_144 expected, dying'
+                . ' found where Statement_143, Statement_144, Statement_145, Statement_146, or Statement_147 expected, dying'
         ) . "\n";
     }
 

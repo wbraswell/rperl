@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'near "' >>>
-# <<< COMPILE_ERROR: "'foobar' 4.23" >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< PARSE_ERROR: 'near "' >>>
+# <<< PARSE_ERROR: "'foobar' 4.23" >>>
 
 # [[[ HEADER ]]]
 use strict;

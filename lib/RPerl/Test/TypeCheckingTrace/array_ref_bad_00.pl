@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_ERROR: 'ERROR EAVRV01, TYPE-CHECKING MISMATCH' >>>
-# <<< RUN_ERROR: 'arrayref value expected but non-arrayref value found' >>>
-# <<< RUN_ERROR: 'in variable $input_1 from subroutine check_arrayref()' >>>
+# <<< EXECUTE_ERROR: 'ERROR EAVRV01, TYPE-CHECKING MISMATCH' >>>
+# <<< EXECUTE_ERROR: 'arrayref value expected but non-arrayref value found' >>>
+# <<< EXECUTE_ERROR: 'in variable $input_1 from subroutine check_arrayref()' >>>
 
 # [[[ HEADER ]]]
 use strict;

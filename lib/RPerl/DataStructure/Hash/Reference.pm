@@ -27,7 +27,7 @@ package RPerl::DataStructure::Hash::Reference;
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
 our string_hashref_method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
@@ -35,22 +35,22 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in Hash::Reference->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    # unwrap HashReference_196 & HashReference_197 from SubExpression_132
-    if ( ref $self eq 'SubExpression_132' ) {
+    # unwrap HashReference_199 & HashReference_200 from SubExpression_135
+    if ( ref $self eq 'SubExpression_135' ) {
         $self = $self->{children}->[0];
     }
 
-    if (    ( ref $self ne 'HashReference_196' )
-        and ( ref $self ne 'HashReference_197' ) )
+    if (    ( ref $self ne 'HashReference_199' )
+        and ( ref $self ne 'HashReference_200' ) )
     {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEAS00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $self )
-                . ' found where HashReference_196 or HashReference_197 expected, dying'
+                . ' found where HashReference_199 or HashReference_200 expected, dying'
         ) . "\n";
     }
 
-    if ( ref $self eq 'HashReference_197' ) {
+    if ( ref $self eq 'HashReference_200' ) {
         my string $left_brace  = $self->{children}->[0];
         my string $right_brace = $self->{children}->[1];
         $rperl_source_group->{PMC} .= $left_brace . $right_brace;

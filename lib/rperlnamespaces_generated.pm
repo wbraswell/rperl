@@ -72,6 +72,7 @@ $rperlnamespaces_generated::RPERL = {
     'arrayref_arrayref_method::'     => 1,
     'arrayref_hashref::'             => 1,
     'base::'                         => 1,
+    'bool::'                         => 1,
     'char::'                         => 1,
     'char_arrayref::'                => 1,
     'char_hashref::'                 => 1,

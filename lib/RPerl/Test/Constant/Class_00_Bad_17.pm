@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< COMPILE_ERROR: 'Unexpected Token:  use constant' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  use constant' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::Constant::Class_00_Bad_17;
@@ -23,7 +23,7 @@ our hashref $properties
 
 use constant PIE => my string $TYPED_PIE = 'pecan';
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 our void_method $empty_method = sub { return 2; };
 
 1;    # end of class

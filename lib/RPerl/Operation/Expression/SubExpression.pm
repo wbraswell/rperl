@@ -16,7 +16,7 @@ use RPerl::Operation::Expression;
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
 our string_hashref_method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
@@ -24,9 +24,9 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in SubExpression->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if (   ( ref $self eq 'SubExpressionOrStdin_135' )
-        or ( ref $self eq 'ListElement_177' )
-        or ( ref $self eq 'ListElement_178' ) )
+    if (   ( ref $self eq 'SubExpressionOrStdin_138' )
+        or ( ref $self eq 'ListElement_180' )
+        or ( ref $self eq 'ListElement_181' ) )
     {
         my string_hashref $rperl_source_subgroup
             = $self->{children}->[0]->ast_to_rperl__generate($modes);
@@ -37,7 +37,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEAS00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $self )
-                . ' found where SubExpressionOrStdin_135, ListElement_177, or ListElement_178 expected, dying'
+                . ' found where SubExpressionOrStdin_138, ListElement_180, or ListElement_181 expected, dying'
         ) . "\n";
     }
 

@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_ERROR: 'ERROR EAVRV01, TYPE-CHECKING MISMATCH' >>>
-# <<< RUN_ERROR: 'arrayref value expected but non-arrayref value found' >>>
+# <<< EXECUTE_ERROR: 'ERROR EAVRV01, TYPE-CHECKING MISMATCH' >>>
+# <<< EXECUTE_ERROR: 'arrayref value expected but non-arrayref value found' >>>
 
 # [[[ HEADER ]]]
 use strict;

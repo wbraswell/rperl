@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPA' >>>
-# <<< COMPILE_ERROR: '@TYPED_PI' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPA' >>>
+# <<< PARSE_ERROR: '@TYPED_PI' >>>
 
 # [[[ HEADER ]]]
 use strict;

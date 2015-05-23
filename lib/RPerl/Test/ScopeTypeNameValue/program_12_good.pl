@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: "$VAR1 = {'string_hashref_hashref' => {'x' => {'string_hashref' => {'a' => 'string','b' => 'string'}},'y' => {'string_hashref' => {'m' => 'string','n' => 'string'}},'z' => {'string_hashref' => {'g' => 'string','h' => 'string'}}}};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'hashref_hashref' => {'x' => {'hashref' => {'a' => 'string','b' => 'integer'}},'y' => {'string_hashref' => {'m' => 'string','n' => 'string'}},'z' => {'string_hashref' => {'g' => 'string','h' => 'string'}}}};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'string_hashref_hashref' => {'x' => {'string_hashref' => {'a' => 'string','b' => 'string'}},'y' => {'string_hashref' => {'m' => 'string','n' => 'string'}},'z' => {'string_hashref' => {'g' => 'string','h' => 'string'}}}};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'hashref_hashref' => {'x' => {'hashref' => {'a' => 'string','b' => 'integer'}},'y' => {'string_hashref' => {'m' => 'string','n' => 'string'}},'z' => {'string_hashref' => {'g' => 'string','h' => 'string'}}}};" >>>
 
 # [[[ HEADER ]]]
 use strict;

@@ -10,7 +10,7 @@ our $VERSION = 0.004_030;
 use parent ('RPerl::Algorithm');
 use RPerl::Algorithm;
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
 # OO INHERITANCE TESTING
 our void_method $inherited__Sort = sub {

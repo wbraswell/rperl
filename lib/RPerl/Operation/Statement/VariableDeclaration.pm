@@ -16,6 +16,6 @@ our hashref $properties = {
     value => my object $TYPED_value = undef,
 };
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
 1;

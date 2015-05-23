@@ -23,7 +23,7 @@ our string_hashref $NAMES = {
     'exit'   => 'RPerl::Operation::Statement::OperatorVoid::Named::Exit',
 };
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
 our string_hashref_method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
@@ -37,7 +37,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             . "\n" );
 
     my string $child0_name = $self->{children}->[0];
-    if ( ( substr $child0_name, -1, 1 ) eq q{;} ) {
+    if ( ( ( substr $child0_name, -1, 1 ) eq q{;} ) or ( ( substr $child0_name, -1, 1 ) eq q{(} )) {
         chop $child0_name;
     }
     if ( not exists $NAMES->{$child0_name} ) {

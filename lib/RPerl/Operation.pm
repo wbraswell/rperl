@@ -18,6 +18,6 @@ our hashref $properties = {
     arguments => my object_arrayref $TYPED_arguments = undef,
 };
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
 1;

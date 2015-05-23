@@ -33,9 +33,9 @@ SV* uninherited__Inefficient(SV* person);
 class RPerl__Algorithm__Inefficient : public RPerl__Algorithm
 {
 public:
-    ////# [[[ OO METHODS ]]]
-    ////# [[[ OO METHODS ]]]
-    ////# [[[ OO METHODS ]]]
+    ////# [[[ OO METHODS & SUBROUTINES ]]]
+    ////# [[[ OO METHODS & SUBROUTINES ]]]
+    ////# [[[ OO METHODS & SUBROUTINES ]]]
 
 // [[[ INHERITANCE TESTING ]]]
     void inherited__Inefficient(SV* person);
@@ -80,9 +80,9 @@ string uninherited__Inefficient(string person);
 ////use parent qw(RPerl::Algorithm);
 class RPerl__Algorithm__Inefficient: public RPerl__Algorithm {
 public:
-    ////# [[[ OO METHODS ]]]
-    ////# [[[ OO METHODS ]]]
-    ////# [[[ OO METHODS ]]]
+    ////# [[[ OO METHODS & SUBROUTINES ]]]
+    ////# [[[ OO METHODS & SUBROUTINES ]]]
+    ////# [[[ OO METHODS & SUBROUTINES ]]]
 
 // [[[ INHERITANCE TESTING ]]]
     void inherited__Inefficient(string person);

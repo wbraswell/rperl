@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: "my integer_hashref $bar = {'any old thing' => 12,'one' => 1,'three" >>>
-# <<< RUN_SUCCESS: "howdy' => 3,'two' => 2,'zero' => 0};" >>>
+# <<< EXECUTE_SUCCESS: "my integer_hashref $bar = {'any old thing' => 12,'one' => 1,'three" >>>
+# <<< EXECUTE_SUCCESS: "howdy' => 3,'two' => 2,'zero' => 0};" >>>
 
 # [[[ HEADER ]]]
 use strict;

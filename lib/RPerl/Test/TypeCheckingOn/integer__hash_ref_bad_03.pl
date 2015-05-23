@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_ERROR: 'ERROR EIVHVRV03, TYPE-CHECKING MISMATCH' >>>
-# <<< RUN_ERROR: "integer_hashref element value expected but non-integer value found at key 'd'" >>>
+# <<< EXECUTE_ERROR: 'ERROR EIVHVRV03, TYPE-CHECKING MISMATCH' >>>
+# <<< EXECUTE_ERROR: "integer_hashref element value expected but non-integer value found at key 'd'" >>>
 
 # [[[ HEADER ]]]
 use strict;

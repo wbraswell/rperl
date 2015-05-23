@@ -16,7 +16,7 @@ use RPerl::GrammarRule;
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 
 our integer_method $length = sub {
     ( my object $self, my string_hashref $modes) = @_;
@@ -49,11 +49,11 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in Array::ListElements->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ref $self ne 'ListElements_174' ) {
+    if ( ref $self ne 'ListElements_177' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEAS00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $self )
-                . ' found where ListElements_174 expected, dying' )
+                . ' found where ListElements_177 expected, dying' )
             . "\n";
     }
 

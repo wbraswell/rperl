@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_ERROR: 'ERROR EPVHVRV03, TYPE-CHECKING MISMATCH' >>>
-# <<< RUN_ERROR: "string_hashref element value expected but non-string value found at key 'd'" >>>
+# <<< EXECUTE_ERROR: 'ERROR EPVHVRV03, TYPE-CHECKING MISMATCH' >>>
+# <<< EXECUTE_ERROR: "string_hashref element value expected but non-string value found at key 'd'" >>>
 
 # [[[ HEADER ]]]
 use strict;

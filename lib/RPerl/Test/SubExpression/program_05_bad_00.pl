@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'near "pop"' >>>
-# <<< COMPILE_ERROR: 'Global symbol "$foo" requires explicit package name' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< PARSE_ERROR: 'near "pop"' >>>
+# <<< PARSE_ERROR: 'Global symbol "$foo" requires explicit package name' >>>
 
 # [[[ HEADER ]]]
 use strict;

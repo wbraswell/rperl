@@ -1,8 +1,8 @@
 # DEV NOTE: DO NOT RUN PERLTIDY ON THIS FILE!  it will wrongly separate the '0_' from the '.' and the '2' below
 
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPL03' >>>
-# <<< COMPILE_ERROR: 'Misplaced _ in number' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL03' >>>
+# <<< PARSE_ERROR: 'Misplaced _ in number' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::LiteralNumber::Package_16_Bad_02;

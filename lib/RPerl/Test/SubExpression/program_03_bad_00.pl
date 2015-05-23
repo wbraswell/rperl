@@ -1,10 +1,10 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'near "my string"' >>>
-# <<< COMPILE_ERROR: 'Global symbol "$bar" requires explicit package name' >>>
-# <<< COMPILE_ERROR: 'Global symbol "$foo" requires explicit package name' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< PARSE_ERROR: 'near "my string"' >>>
+# <<< PARSE_ERROR: 'Global symbol "$bar" requires explicit package name' >>>
+# <<< PARSE_ERROR: 'Global symbol "$foo" requires explicit package name' >>>
 
 # [[[ HEADER ]]]
 use strict;

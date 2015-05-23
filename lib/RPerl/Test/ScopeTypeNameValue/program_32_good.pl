@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: "my string_hashref $foo = {'a' => '42','b' => 'is','c' => 'the','d' => 'answer'};" >>>
+# <<< EXECUTE_SUCCESS: "my string_hashref $foo = {'a' => '42','b' => 'is','c' => 'the','d' => 'answer'};" >>>
 
 # [[[ HEADER ]]]
 use strict;

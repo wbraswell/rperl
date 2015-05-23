@@ -21,7 +21,7 @@ our hashref $properties = {
     else_body        => my object $TYPED_else_body                   = undef,
 };
 
-# [[[ OO METHODS ]]]
+# [[[ OO METHODS & SUBROUTINES ]]]
 # TRANSLATE
 our object_method $ppi_to_rperl__translate = sub {
     ( my string $class, my object $node) = @_;    # class method

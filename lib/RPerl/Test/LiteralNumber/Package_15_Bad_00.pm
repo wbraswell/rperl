@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'Can't modify constant item in predecrement' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< PARSE_ERROR: 'Can't modify constant item in predecrement' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::LiteralNumber::Package_15_Bad_00;

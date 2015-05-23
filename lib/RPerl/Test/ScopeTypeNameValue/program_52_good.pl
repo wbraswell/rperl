@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: "$qui::BAT = 'hal';  # string" >>>
+# <<< EXECUTE_SUCCESS: "$qui::BAT = 'hal';  # string" >>>
 
 # [[[ HEADER ]]]
 use strict;

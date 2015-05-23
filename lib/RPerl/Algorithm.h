@@ -22,7 +22,7 @@ using std::cout;  using std::cerr;
 class RPerl__Algorithm  // no inheritance
 {
 public:
-    ////# [[[ OO METHODS ]]]
+    ////# [[[ OO METHODS & SUBROUTINES ]]]
 
     // INHERITANCE TESTING
         void inherited__Algorithm(SV* person);
@@ -63,7 +63,7 @@ SV* RPerl__Algorithm__MODE_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 
 class RPerl__Algorithm  // no inheritance
 {
 public:
-    ////# [[[ OO METHODS ]]]
+    ////# [[[ OO METHODS & SUBROUTINES ]]]
 
     // INHERITANCE TESTING
         void inherited__Algorithm(string person);

@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< COMPILE_ERROR: 'near "( my number__arrayref"' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< PARSE_ERROR: 'near "( my number__arrayref"' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::SubroutineArguments::Package_02_Bad;

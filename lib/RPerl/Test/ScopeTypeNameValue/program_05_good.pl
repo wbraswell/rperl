@@ -1,12 +1,12 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: "$VAR1 = {'hashref' => {}};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'hashref' => {'a' => 'unknown'}};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'hashref' => {'a' => 'unknown','b' => 'unknown'}};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'hashref' => {'a' => 'unknown','b' => 'integer'}};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'hashref' => {'a' => 'unknown','b' => 'unknown','c' => 'unknown','d' => 'unknown','e' => 'unknown'}};" >>>
-# <<< RUN_SUCCESS: "$VAR1 = {'hashref' => {'a' => 'unknown','b' => 'unknown','c' => 'unknown','d' => 'integer','e' => 'unknown'}};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'hashref' => {}};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'hashref' => {'a' => 'unknown'}};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'hashref' => {'a' => 'unknown','b' => 'unknown'}};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'hashref' => {'a' => 'unknown','b' => 'integer'}};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'hashref' => {'a' => 'unknown','b' => 'unknown','c' => 'unknown','d' => 'unknown','e' => 'unknown'}};" >>>
+# <<< EXECUTE_SUCCESS: "$VAR1 = {'hashref' => {'a' => 'unknown','b' => 'unknown','c' => 'unknown','d' => 'integer','e' => 'unknown'}};" >>>
 
 # [[[ HEADER ]]]
 use strict;

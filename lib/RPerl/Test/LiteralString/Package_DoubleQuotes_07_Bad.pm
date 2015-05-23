@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'ERROR ECVPAPL03' >>>
-# <<< COMPILE_ERROR: 'Unrecognized escape \m passed through' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL03' >>>
+# <<< PARSE_ERROR: 'Unrecognized escape \m passed through' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::LiteralString::Package_DoubleQuotes_07_Bad;

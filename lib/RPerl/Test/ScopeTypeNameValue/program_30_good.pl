@@ -1,10 +1,10 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< RUN_SUCCESS: 'my unknown $foo = undef;' >>>
-# <<< RUN_SUCCESS: 'my integer $bar = -23_456;' >>>
-# <<< RUN_SUCCESS: 'my number $bat = 9_123.456_789;' >>>
-# <<< RUN_SUCCESS: "my string $baz = 'howdy';" >>>
+# <<< EXECUTE_SUCCESS: 'my unknown $foo = undef;' >>>
+# <<< EXECUTE_SUCCESS: 'my integer $bar = -23_456;' >>>
+# <<< EXECUTE_SUCCESS: 'my number $bat = 9_123.456_789;' >>>
+# <<< EXECUTE_SUCCESS: "my string $baz = 'howdy';" >>>
 
 # [[[ HEADER ]]]
 use strict;
