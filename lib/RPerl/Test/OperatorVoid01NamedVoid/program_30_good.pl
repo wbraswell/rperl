@@ -1,9 +1,4 @@
 #!/usr/bin/perl
-
-# [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVPAPC02' >>>
-# <<< PARSE_ERROR: 'Perl::Critic::Policy::ValuesAndExpressions::ProhibitMismatchedOperators' >>>
-
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -15,4 +10,4 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OPERATIONS ]]]
-return ();
+croak;

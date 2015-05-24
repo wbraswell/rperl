@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  -' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  }' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -15,4 +15,5 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OPERATIONS ]]]
-return - 1;
+our void $foo = sub { return 23 };
+foo();

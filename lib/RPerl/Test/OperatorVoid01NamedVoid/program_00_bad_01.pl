@@ -1,8 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  croak;' >>>
+# <<< EXECUTE_ERROR: "Can't return outside a subroutine" >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -15,4 +14,4 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OPERATIONS ]]]
-0 or croak;
+return;

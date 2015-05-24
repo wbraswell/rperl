@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  croak' >>>
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -10,6 +15,4 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OPERATIONS ]]]
-
-# DEV NOTE: DO NOT RUN PERLTIDY ON THIS FILE!  the line below should read 'return();' not 'return ();'
-return();
+(croak 'Not a real error, croaking');
