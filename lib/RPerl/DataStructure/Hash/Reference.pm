@@ -35,22 +35,22 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in Hash::Reference->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    # unwrap HashReference_199 & HashReference_200 from SubExpression_135
+    # unwrap HashReference_200 & HashReference_201 from SubExpression_135
     if ( ref $self eq 'SubExpression_135' ) {
         $self = $self->{children}->[0];
     }
 
-    if (    ( ref $self ne 'HashReference_199' )
-        and ( ref $self ne 'HashReference_200' ) )
+    if (    ( ref $self ne 'HashReference_200' )
+        and ( ref $self ne 'HashReference_201' ) )
     {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEAS00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $self )
-                . ' found where HashReference_199 or HashReference_200 expected, dying'
+                . ' found where HashReference_200 or HashReference_201 expected, dying'
         ) . "\n";
     }
 
-    if ( ref $self eq 'HashReference_200' ) {
+    if ( ref $self eq 'HashReference_201' ) {
         my string $left_brace  = $self->{children}->[0];
         my string $right_brace = $self->{children}->[1];
         $rperl_source_group->{PMC} .= $left_brace . $right_brace;

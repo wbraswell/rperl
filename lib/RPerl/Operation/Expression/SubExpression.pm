@@ -25,8 +25,8 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in SubExpression->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     if (   ( ref $self eq 'SubExpressionOrStdin_138' )
-        or ( ref $self eq 'ListElement_180' )
-        or ( ref $self eq 'ListElement_181' ) )
+        or ( ref $self eq 'ListElement_181' )
+        or ( ref $self eq 'ListElement_182' ) )
     {
         my string_hashref $rperl_source_subgroup
             = $self->{children}->[0]->ast_to_rperl__generate($modes);
@@ -37,7 +37,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEAS00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $self )
-                . ' found where SubExpressionOrStdin_138, ListElement_180, or ListElement_181 expected, dying'
+                . ' found where SubExpressionOrStdin_138, ListElement_181, or ListElement_182 expected, dying'
         ) . "\n";
     }
 

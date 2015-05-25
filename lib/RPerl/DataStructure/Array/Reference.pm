@@ -35,16 +35,16 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in Array::Reference->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    # unwrap ArrayReference_185 from SubExpression_133
+    # unwrap ArrayReference_186 from SubExpression_133
     if ( ref $self eq 'SubExpression_133' ) {
         $self = $self->{children}->[0];
     }
 
-    if ( ref $self ne 'ArrayReference_185' ) {
+    if ( ref $self ne 'ArrayReference_186' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEAS00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $self )
-                . ' found where ArrayReference_185 expected, dying' )
+                . ' found where ArrayReference_186 expected, dying' )
             . "\n";
     }
 

@@ -2,9 +2,6 @@
 # START HERE: create 11_generate.t, create remaining Class*.pm & program*.pl for 'return', add 'die' to grammar
 # START HERE: create 11_generate.t, create remaining Class*.pm & program*.pl for 'return', add 'die' to grammar
 
-# [[[ PREPROCESSOR ]]]
-# <<< GENERATE_SUCCESS_PERLOPS_PERLTYPES: DIFF >>>
-
 # [[[ HEADER ]]]
 package RPerl::Test::OperatorVoid01NamedVoid::Class_00_Good;
 use strict;

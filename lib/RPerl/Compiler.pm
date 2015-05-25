@@ -28,7 +28,7 @@ use RPerl::Generator;
 
 our void $rperl_to_rperl__parse_generate = sub {
     (   my string $rperl_input_file_name,
-        my string $rperl_output_file_name_group,
+        my string_hashref $rperl_output_file_name_group,
         my string_hashref $modes
     ) = @_;
     my object $rperl_ast;
@@ -67,7 +67,7 @@ our void $rperl_to_rperl__parse_generate = sub {
 
 our void $rperl_to_xsbinary__parse_generate_compile = sub {
     (   my string $rperl_input_file_name,
-        my string $cpp_output_file_name_group,
+        my string_hashref $cpp_output_file_name_group,
         my string_hashref $modes
     ) = @_;
     my object $rperl_ast;
@@ -140,6 +140,10 @@ our void $save_source_files = sub {
         }
         my string $file_name = $file_name_group->{$suffix_key};
         my string $source    = $source_group->{$suffix_key};
+        
+#        if ($file_name eq '_TEMPFILE') {
+#           ($fh, $filename) = tempfile($template, SUFFIX => $suffix) 
+#        }
 
         # actually save file(s)
         if ( -f $file_name ) {

@@ -4,11 +4,10 @@
 # <<< TYPE_CHECKING: ON >>>
 # <<< TYPE_CHECKING: TRACE >>>
 # <<< PARSE_ERROR: 'FOO' >>>
-# <<< GENERATE_SUCCESS_PERLOPS_PERLTYPES: DIFF >>>
 # <<< GENERATE_ERROR: 'FOO' >>>
 # <<< COMPILE_ERROR: 'FOO' >>>
-# <<< EXECUTE_SUCCESS: 'FOO' >>>
 # <<< EXECUTE_ERROR: 'FOO' >>>
+# <<< EXECUTE_SUCCESS: 'FOO' >>>
 
 # [[[ HEADER ]]]
 # <<< CHANGE_ME: replace with real class name >>>

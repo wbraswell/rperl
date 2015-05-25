@@ -174,7 +174,7 @@ for my $test_file ( sort keys %{$test_files} ) {
                 }
             }
             RPerl::verbose( 'in 08_interpret_execute.t, have missing successes =' . "\n" . Dumper($test_files->{$test_file}->{successes}) . "\n" );
-            ok( ( ( scalar @{$test_files->{$test_file}->{successes}} ) == 0 ), "Program $test_file interprets and runs without errors" );
+            ok( ( ( scalar @{$test_files->{$test_file}->{successes}} ) == 0 ), "Program $test_file interprets and executes without errors" );
 #=cut
  
 =DISABLE
@@ -190,11 +190,11 @@ for my $test_file ( sort keys %{$test_files} ) {
                 }
             }
             RPerl::verbose( 'in 08_interpret_execute.t, have $missing_successes =' . "\n" . Dumper($missing_successes) . "\n" );
-            ok( ( ( scalar @{$missing_successes} ) == 0 ), "Program $test_file interprets and runs without errors" );
+            ok( ( ( scalar @{$missing_successes} ) == 0 ), "Program $test_file interprets and executes without errors" );
 =cut
         }
         else {
-            ok( 0, "Program $test_file interprets and runs with errors" );
+            ok( 0, "Program $test_file interprets and executes with errors" );
         }
     }
     else {    # UNIX process return code not 0, error
@@ -212,11 +212,11 @@ for my $test_file ( sort keys %{$test_files} ) {
                 }
             }
             ok( ( ( scalar @{$missing_errors} ) == 0 ),
-                "Program $test_file interprets and runs with expected error(s)"
+                "Program $test_file interprets and executes with expected error(s)"
             );
         }
         else {
-            ok( 0, "Program $test_file interprets and runs without errors" );
+            ok( 0, "Program $test_file interprets and executes without errors" );
         }
     }
 }
