@@ -42,18 +42,18 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     }
 
     # Loop
-    elsif ( ( ref $self->{children}->[1] ) eq 'Statement_147' ) {
+    elsif ( $child0_class eq 'Statement_144' ) {
 
         # optional LoopLabel COLON
         if ( exists $self->{children}->[0]->{children}->[0] ) {
 
             # NEED FIX: implement loop label
             $rperl_source_group->{PMC}
-                .= q{# <<< RP::O::S DUMMY PERLOPS_PERLTYPES SOURCE CODE, NEED IMPLEMENT LOOP LABEL!!! >>>}
+                .= q{# <<< RP::O::S DUMMY SOURCE CODE PERLOPS_PERLTYPES, NEED IMPLEMENT LOOP LABEL!!! >>>}
                 . "\n";
         }
         $rperl_source_subgroup
-            = $self->{children}->[1]->ast_to_rperl__generate($modes);
+            = $self->{children}->[0]->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
     }
@@ -71,7 +71,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
-        = { CPP => q{// <<< RP::O::S DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>}
+        = { CPP => q{// <<< RP::O::S DUMMY SOURCE CODE CPPOPS_PERLTYPES >>>}
             . "\n" };
 
     #...
@@ -81,7 +81,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
-        = { CPP => q{// <<< RP::O::S DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>}
+        = { CPP => q{// <<< RP::O::S DUMMY SOURCE CODE CPPOPS_CPPTYPES >>>}
             . "\n" };
 
     #...

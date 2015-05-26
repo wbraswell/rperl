@@ -2,7 +2,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_997;
+    our $VERSION = 0.000_998;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -10,7 +10,7 @@
 
 %strict                               # require all tokens to be declared, etc.
 %tree                                 # automatically create AST
-%whites /((?:\s*(?:#[^#!].*)?\s*)*)/  # actual whitespace, or one or more normal comments; neither shebang '#!', nor double-hash critics '##'
+%whites /((?:\s*(?:[#][^#!].*)?\s*)*)/  # actual whitespace, or one or more normal comments; neither shebang '#!', nor double-hash critics '##'
 
 %defaultaction {
     my $self = shift;

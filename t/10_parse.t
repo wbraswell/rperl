@@ -41,20 +41,20 @@ find(
         elsif ( ( $file =~ m/Bad/ms ) or ( $file =~ m/bad/ms ) ) {
 
             # NEED FIX: remove use of $_ magic variable
-            open my $fh, '<', $_
+            open my filehandleref $FILE_HANDLE, '<', $_
                 or croak 'ERROR, Cannot open file '
                 . $file
                 . ' for reading,'
                 . $OS_ERROR
                 . ', croaking';
-            while (<$fh>) {
+            while (<$FILE_HANDLE>) {
                 if (m/^\#\s*\<\<\<\s*PARSE_ERROR\s*\:\s*['"](.*)['"]\s*\>\>\>/xms
                     )
                 {
                     push @{ $test_files->{$file}->{errors} }, $1;
                 }
             }
-            close $fh
+            close $FILE_HANDLE
                 or croak 'ERROR, Cannot close file '
                 . $file
                 . ' after reading,'
@@ -82,8 +82,10 @@ for my $test_file ( sort keys %{$test_files} ) {
             undef,  # empty output file group, no files will be saved in PARSE mode
             {   ops     => 'PERL',
                 types   => 'PERL',
+                check   => 'TRACE',  # unneeded?
                 compile => 'PARSE',
-                execute => 'OFF'
+#                execute => 'OFF',  # unneeded
+#                label   => 'OFF'  # unneeded
             }
         );  # returns void
         1;  # return true

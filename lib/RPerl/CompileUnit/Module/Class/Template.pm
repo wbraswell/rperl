@@ -53,6 +53,7 @@ use RPerl::CompileUnit::Module::Class;
 ## no critic qw(ProhibitCascadingIfElse)  # SYSTEM SPECIAL 11: allow complex conditional logic
 ## no critic qw(RequireCarping)  # SYSTEM SPECIAL 12: allow die instead of croak
 ## no critic qw(ProhibitAutomaticExportation)  # SYSTEM SPECIAL 13: allow global exports from Config.pm
+## no critic qw(RequireExtendedFormatting)  # SYSTEM SPECIAL 14: allow matching whitespace & octothorpes (#) in regex, do not require /x modifier
 
 # COMBO CRITICS
 ## no critic qw(ProhibitUselessNoCritic PodSpelling ProhibitExcessMainComplexity)  # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code; SYSTEM SPECIAL 4: allow complex code outside subroutines, must be on line 1

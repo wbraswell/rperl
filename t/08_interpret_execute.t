@@ -40,20 +40,20 @@ find(
 
         if ( ( $file =~ m/Good/ms ) or ( $file =~ m/good/ms ) ) {
             # NEED FIX: remove use of $_ magic variable
-            open my $fh, '<', $_
+            open my filehandleref $FILE_HANDLE, '<', $_
                 or croak 'ERROR, Cannot open file '
                 . $file
                 . ' for reading,'
                 . $OS_ERROR
                 . ', croaking';
-            while (<$fh>) {
+            while (<$FILE_HANDLE>) {
                 if (m/^\#\s*\<\<\<\s*EXECUTE_SUCCESS\s*\:\s*['"](.*)['"]\s*\>\>\>/xms
                     )
                 {
                     push @{ $test_files->{$file}->{successes} }, $1;
                 }
             }
-            close $fh
+            close $FILE_HANDLE
                 or croak 'ERROR, Cannot close file '
                 . $file
                 . ' after reading,'
@@ -62,20 +62,20 @@ find(
         }
         elsif ( ( $file =~ m/Bad/ms ) or ( $file =~ m/bad/ms ) ) {
             # NEED FIX: remove use of $_ magic variable
-            open my $fh, '<', $_
+            open my filehandleref $FILE_HANDLE, '<', $_
                 or croak 'ERROR, Cannot open file '
                 . $file
                 . ' for reading,'
                 . $OS_ERROR
                 . ', croaking';
-            while (<$fh>) {
+            while (<$FILE_HANDLE>) {
                 if (m/^\#\s*\<\<\<\s*EXECUTE_ERROR\s*\:\s*['"](.*)['"]\s*\>\>\>/xms
                     )
                 {
                     push @{ $test_files->{$file}->{errors} }, $1;
                 }
             }
-            close $fh
+            close $FILE_HANDLE
                 or croak 'ERROR, Cannot close file '
                 . $file
                 . ' after reading,'

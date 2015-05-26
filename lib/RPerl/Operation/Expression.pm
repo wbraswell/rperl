@@ -50,7 +50,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
             # NEED FIX: implement loop label
             $rperl_source_group->{PMC}
-                .= q{# <<< RP::O::E DUMMY PERLOPS_PERLTYPES SOURCE CODE, NEED IMPLEMENT LOOP LABEL!!! >>>}
+                .= q{# <<< RP::O::E DUMMY SOURCE CODE PERLOPS_PERLTYPES, NEED IMPLEMENT LOOP LABEL!!! >>>}
                 . "\n";
         }
         $rperl_source_subgroup
@@ -73,7 +73,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
-        = { CPP => q{// <<< RP::O::E DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>}
+        = { CPP => q{// <<< RP::O::E DUMMY SOURCE CODE CPPOPS_PERLTYPES >>>}
             . "\n" };
 
     #...
@@ -83,7 +83,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
-        = { CPP => q{// <<< RP::O::E DUMMY CPPOPS_PERLTYPES SOURCE CODE >>>}
+        = { CPP => q{// <<< RP::O::E DUMMY SOURCE CODE CPPOPS_CPPTYPES >>>}
             . "\n" };
 
     #...

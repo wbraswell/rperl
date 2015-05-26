@@ -19,6 +19,9 @@ our $VERSION = 0.003_200;
 
 use RPerl::Parser;
 use RPerl::Generator;
+use File::Temp qw(tempfile);
+use File::Basename;
+use English qw(-no_match_vars); # for $OSNAME; why isn't this included from 'require RPerl::Config', which is included from 'use RPerl' above?
 
 # [[[ SUBROUTINES ]]]
 
@@ -110,6 +113,98 @@ our void $rperl_to_xsbinary__parse_generate_compile = sub {
     }
 };
 
+# generate output file name group(s) based on input file name(s)
+#sub generate_output_file_names {
+our hashref_arrayref $generate_output_file_names = sub {
+    (   my string_arrayref $input_file_names,
+        my string_arrayref $output_file_name_prefixes,
+        my string_hashref $modes,
+        my integer $input_files_count
+    ) = @_;
+
+    # NEED FIX: add string_hashref_arrayref type
+    #    my string_hashref_arrayref $output_file_name_groups = [];
+    my hashref_arrayref $output_file_name_groups = [];
+    my string $input_file_name;
+    my string $input_file_name_path;
+    my string $input_file_name_prefix;
+    my string $input_file_name_suffix;
+
+    for my $i ( 0 .. ( $input_files_count - 1 ) ) {
+        $input_file_name = $input_file_names->[$i];
+
+        $output_file_name_groups->[$i] = {};
+
+# if output file prefix(es) provided, then use to generate output file name(s)
+        if ( defined $output_file_name_prefixes->[$i] ) {
+
+# explicitly provided option should already be only prefix, but fileparse() to make sure
+            (   $input_file_name_prefix, $input_file_name_path,
+                $input_file_name_suffix
+                )
+                = fileparse( $output_file_name_prefixes->[$i],
+                qr/[.][^.]*/xms );
+            if ( $input_file_name_prefix eq q{} ) {
+                die
+                    "ERROR EARG08: Invalid RPerl source code output file option specified, dying\n";
+            }
+        }
+
+# if output file prefix(es) not provided, then generate output file name(s) from input file name(s)
+        else {
+#            RPerl::diag 'have $input_file_name = ' . $input_file_name . "\n";
+# should not already be only prefix, fileparse() to isolate prefix
+            (   $input_file_name_prefix, $input_file_name_path,
+                $input_file_name_suffix
+            ) = fileparse( $input_file_name, qr/[.][^.]*/xms );
+        }
+
+#        RPerl::diag '$output_file_name_groups->[' . $i . ']' . "\n" . Dumper($output_file_name_groups->[$i]) . "\n";
+
+        my string $output_file_name_path_prefix
+            = $input_file_name_path . $input_file_name_prefix;
+
+        # all *.pl input files require EXE output file
+        if ( $input_file_name =~ /[.]pl$/xms ) {
+
+# Micro$oft Windows uses *.exe file extension (suffix) for compiled executables
+            if ( $OSNAME eq 'MSWin32' ) {
+                $output_file_name_groups->[$i]->{EXE}
+                    = $output_file_name_path_prefix . '.exe';
+            }
+
+ # traditionally, *NIX has no file extension (suffix) for compiled executables
+            else {
+                $output_file_name_groups->[$i]->{EXE}
+                    = $output_file_name_path_prefix;
+            }
+
+            if ( $modes->{ops} eq 'CPP' ) {
+
+# *.pl input files in CPPOPS mode requires PMC loader module; *.pl input files in PERLOPS test mode does not require PMC file, only EXE file
+                $output_file_name_groups->[$i]->{PMC}
+                    = $output_file_name_path_prefix . '.pmc';
+            }
+        }
+        else { # all *.pm input files require PMC output file; PMC is the only output file for *.pm input files in PERLOPS mode
+            $output_file_name_groups->[$i]->{PMC}
+                = $output_file_name_path_prefix . '.pmc';
+        }
+
+        # all CPP ops modes require CPP & H output files
+        if ( $modes->{ops} eq 'CPP' ) {
+            $output_file_name_groups->[$i]->{CPP}
+                = $output_file_name_path_prefix . '.cpp';
+            $output_file_name_groups->[$i]->{H}
+                = $output_file_name_path_prefix . '.h';
+        }
+
+#        RPerl::diag 'in rperl::generate_output_file_names(), bottom of loop ' . $i . ' of ' . $input_files_count . ", have \$output_file_name_groups->[$i] = \n" . Dumper( $output_file_name_groups->[$i] ) . "\n";
+    }
+
+    return $output_file_name_groups;
+};
+
 # Write Source Code Files To File System
 our void $save_source_files = sub {
     ( my string_hashref $source_group, my string_hashref $file_name_group )
@@ -138,36 +233,44 @@ our void $save_source_files = sub {
                 "\nERROR ECVCOFI01, COMPILER, SAVE OUTPUT FILES: Expecting source code for suffix '$suffix_key', but received empty or no value, croaking"
             );
         }
+        my filehandleref $SOURCE_FILE_HANDLE;
         my string $file_name = $file_name_group->{$suffix_key};
         my string $source    = $source_group->{$suffix_key};
-        
-#        if ($file_name eq '_TEMPFILE') {
-#           ($fh, $filename) = tempfile($template, SUFFIX => $suffix) 
-#        }
 
-        # actually save file(s)
-        if ( -f $file_name ) {
-            unlink $file_name
+        if ( $file_name eq '_TEMPFILE' ) {
+            ( $SOURCE_FILE_HANDLE, $file_name )
+                = tempfile( 'tempfileXXXX', SUFFIX => ( lc $suffix_key ) );
+
+            print {$SOURCE_FILE_HANDLE} $source
                 or croak(
-                "\nERROR ECVCOFI02, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot delete existing file,\ncroaking: $OS_ERROR"
+                "\nERROR ECVCOFI04, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot write to file,\ncroaking: $OS_ERROR"
                 );
         }
+        else {
 
-        my $SOURCE_FILEHANDLE;
-        open $SOURCE_FILEHANDLE, '>', $file_name
-            or croak(
-            "\nERROR ECVCOFI03, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot open file for writing,\ncroaking: $OS_ERROR"
-            );
+            # overwrite existing file
+            if ( -f $file_name ) {
+                unlink $file_name
+                    or croak(
+                    "\nERROR ECVCOFI02, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot delete existing file,\ncroaking: $OS_ERROR"
+                    );
+            }
 
-        print {$SOURCE_FILEHANDLE} $source
-            or croak(
-            "\nERROR ECVCOFI04, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot write to file,\ncroaking: $OS_ERROR"
-            );
+            open $SOURCE_FILE_HANDLE, '>', $file_name
+                or croak(
+                "\nERROR ECVCOFI03, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot open file for writing,\ncroaking: $OS_ERROR"
+                );
 
-        close $SOURCE_FILEHANDLE
-            or croak(
-            "\nERROR ECVCOFI05, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot close file,\ncroaking: $OS_ERROR"
-            );
+            print {$SOURCE_FILE_HANDLE} $source
+                or croak(
+                "\nERROR ECVCOFI04, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot write to file,\ncroaking: $OS_ERROR"
+                );
+
+            close $SOURCE_FILE_HANDLE
+                or croak(
+                "\nERROR ECVCOFI05, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot close file,\ncroaking: $OS_ERROR"
+                );
+        }
 
         if ( ( $suffix_key eq 'PMC' ) or ( $suffix_key eq 'EXE' ) ) {
 

@@ -56,6 +56,8 @@ our void_method $quux = sub {
     # START HERE: continue with code generation for BAD? returns below
     # START HERE: continue with code generation for BAD? returns below
 
+    foreach my scalartype $foooo (@{[0, 2, 5, 7]}) { print 'howdy'; }
+
     #    return;    # GOOD
     #    return();  # GOOD, parens as args list
     #    return ();  # BAD, empty parens as subexpression

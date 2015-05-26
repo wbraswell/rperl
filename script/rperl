@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.005_040;
+our $VERSION = 0.005_042;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -18,8 +18,6 @@ use RPerl::Generator;
 use RPerl::Compiler;    # includes Inline
 use Getopt::Long;
 use Pod::Usage;
-use English; # for $OSNAME; why isn't this included from 'require RPerl::Config', which is included from 'use RPerl' above?
-use File::Basename;
 
 # [[[ SUBROUTINES ]]]
 
@@ -87,75 +85,6 @@ sub accept_and_verify_input_files {
 
     }
     return $input_file_names;
-}
-
-sub generate_output_file_names {
-    (   my string_arrayref $input_file_names,
-        my string_arrayref $output_file_name_prefixes,
-        my string_hashref $modes,
-        my integer $input_files_count
-    ) = @_;
-
-    my hashref_arrayref $output_file_name_groups = [];
-    my string $input_file_name;
-    my string $input_file_name_path;
-    my string $input_file_name_prefix;
-    my string $input_file_name_suffix;
-
-    for my $i ( 0 .. ( $input_files_count - 1 ) ) {
-        $input_file_name = $input_file_names->[$i];
-
-        $output_file_name_groups->[$i] = {};
-
-        # if output file prefix(es) provided, then use to generate output file name(s)
-        if ( defined $output_file_name_prefixes->[$i] ) {
-            
-            # explicitly provided option should already be only prefix, but fileparse() to make sure
-            ($input_file_name_prefix, $input_file_name_path, $input_file_name_suffix) = fileparse($output_file_name_prefixes->[$i], qr/\.[^.]*/);
-            if ( $input_file_name_prefix eq '' ) {
-                die
-                    "ERROR EARG08: Invalid RPerl source code output file option specified, dying\n";
-            }
-        }
-
-        # if output file prefix(es) not provided, then generate output file name(s) from input file name(s)
-        else {
-#            RPerl::diag 'have $input_file_name = ' . $input_file_name . "\n";
-            # should not already be only prefix, fileparse() to isolate prefix
-            ($input_file_name_prefix, $input_file_name_path, $input_file_name_suffix) = fileparse($input_file_name, qr/\.[^.]*/);
-        }
-        
-#        RPerl::diag '$output_file_name_groups->[' . $i . ']' . "\n" . Dumper($output_file_name_groups->[$i]) . "\n";
-        
-        my string $output_file_name_path_prefix = $input_file_name_path . $input_file_name_prefix;
-
-        # all options require PMC output file; this is the only output file for PERL ops with *.pm input files
-        $output_file_name_groups->[$i]->{PMC} = $output_file_name_path_prefix . '.pmc';
-        
-        # all *.pl input files require EXE output file
-        if ( $input_file_name =~ /[.]pl$/xms ) {
-            # Micro$oft Windows uses *.exe file extension (suffix) for compiled executables
-            if ( $OSNAME eq 'MSWin32' ) {
-                $output_file_name_groups->[$i]->{EXE}
-                    = $output_file_name_path_prefix . '.exe';
-            }
-            # traditionally, *NIX has no file extension (suffix) for compiled executables
-            else {
-                $output_file_name_groups->[$i]->{EXE}
-                    = $output_file_name_path_prefix;
-            }
-        }
-
-        # all CPP ops modes require CPP & H output files
-        if ( $modes->{ops} eq 'CPP' ) {
-                $output_file_name_groups->[$i]->{CPP} = $output_file_name_path_prefix . '.cpp';
-                $output_file_name_groups->[$i]->{H} = $output_file_name_path_prefix . '.h';
-        }
-
-#        RPerl::diag 'in rperl::generate_output_file_names(), bottom of loop ' . $i . ' of ' . $input_files_count . ", have \$output_file_name_groups->[$i] = \n" . Dumper( $output_file_name_groups->[$i] ) . "\n";
-    }
-
-    return $output_file_name_groups;
 }
 
 sub verify_and_default_modes {
@@ -340,7 +269,9 @@ sub parse_generate_compile_execute_files {
             . ', compile => '
             . $modes->{compile}
             . ', execute => '
-            . $modes->{execute} . "\n\n";
+            . $modes->{execute}
+            . ', label => '
+            . $modes->{label} . "\n\n";
         if ( $input_files_count > 1 ) {
             RPerl::diag_pause "PRESS <ENTER> TO CONTINUE\n";
         }
