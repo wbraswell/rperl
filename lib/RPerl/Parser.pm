@@ -102,11 +102,11 @@ our void $rperl_source__check_syntax = sub {
         @{$rperl_source__perl_syntax_retstring_lines} )
     {
         # NEED FIX: figure out how to use /xms flags in following regexs
-        if (( $rperl_source__perl_syntax_retstring_line !~ /WARNING W/ ) # RPerl Warning
+        if (( $rperl_source__perl_syntax_retstring_line !~ /WARNING\sW/xms ) # RPerl Warning
             and
-            ( $rperl_source__perl_syntax_retstring_line !~ /ERROR E/ )   # RPerl Error
+            ( $rperl_source__perl_syntax_retstring_line !~ /ERROR\sE/xms )   # RPerl Error
             and
-            ( $rperl_source__perl_syntax_retstring_line !~ /syntax OK/ ) # Perl Non-Error
+            ( $rperl_source__perl_syntax_retstring_line !~ /syntax\sOK/xms ) # Perl Non-Error
             )
         {
             push @{$rperl_source__perl_syntax_retstring_warnings},
