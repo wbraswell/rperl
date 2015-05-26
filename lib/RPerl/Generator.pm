@@ -57,8 +57,8 @@ our integer $diff_check_file_vs_string = sub {
 
 # strip all whitespace & comments, leave critics & shebangs, using unmodified regex from Grammar.eyp
         # NEED FIX: xms regex modifiers don't work here
-        $file_line =~ s/((?:\s*(?:[#][^#!].*)?\s*)*)//gx;
-        $string_line =~ s/((?:\s*(?:[#][^#!].*)?\s*)*)//gx;
+        $file_line =~ s/((?:\s*(?:[#][^#!].*)?\s*)*)//gxms;
+        $string_line =~ s/((?:\s*(?:[#][^#!].*)?\s*)*)//gxms;
         if ( $file_line ne $string_line ) {
             if ( $string_line =~ /DUMMY\sSOURCE\sCODE/xms ) {
                 RPerl::warn(
