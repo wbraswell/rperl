@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::OperatorVoid::Named::Return;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_001;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: is not a Grammar Rule so should not inherit from OperatorVoid, need create Grammar Production class
@@ -35,22 +35,19 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     my string_hashref $rperl_source_group = { PMC => q{} };
 
 #    RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
-    RPerl::diag(
-        'in OperatorVoid::Named::Return->ast_to_rperl__generate(), received $operator_void_named = '
-            . "\n"
-            . RPerl::Parser::rperl_ast__dump($operator_void_named)
-            . "\n" );
+#    RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_rperl__generate(), received $operator_void_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_void_named) . "\n" );
 
     if ( ref $operator_void_named eq 'OperatorVoid_114' ) { # OperatorVoid -> OP01_NAMED_VOID_SCOLON
         $rperl_source_group->{PMC} .= $operator_void_named->{children}->[0]; # name semicolon
     }
     elsif ( ref $operator_void_named eq 'OperatorVoid_115' ) {
-        # DEV NOTE: if $optional_arguments is empty, will generate 'return();' which perltidy will change to 'return ();', both return undef not empty array so it's okay
+
+# DEV NOTE: if $optional_arguments is empty, will generate 'return();' which perltidy will change to 'return ();', both return undef, not empty array, so it's okay
         $rperl_source_group->{PMC}
             .= $operator_void_named->{children}->[0];    # name lparen
         my object $optional_arguments = $operator_void_named->{children}->[1];
         if ( exists $optional_arguments->{children}->[0] ) {
-            my object $arguments = $optional_arguments->{children}->[0];
+            my object $arguments       = $optional_arguments->{children}->[0];
             my integer $argument_count = $arguments->length();
             if ( $argument_count > ARGUMENTS_MAX() ) {
                 die
@@ -96,7 +93,11 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         $rperl_source_group->{PMC} .= $operator_void_named->{children}->[2]; # semicolon
     }
     else {
-        die 'FOOOOOO' . "\n";
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+                . ( ref $operator_void_named )
+                . ' found where OperatorVoid_114, OperatorVoid_115, or OperatorVoid_116 expected, dying'
+        ) . "\n";
     }
 
     $rperl_source_group->{PMC} .= "\n";
@@ -107,7 +108,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
         = { CPP =>
-            q{// <<< RP::O::S::OV::N::R DUMMY SOURCE CODE CPPOPS_PERLTYPES >>>}
+            q{// <<< RP::O::S::OV::N::R __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
             . "\n" };
 
     #...
@@ -118,7 +119,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
         = { CPP =>
-            q{// <<< RP::O::S::OV::N::R DUMMY SOURCE CODE CPPOPS_CPPTYPES >>>}
+            q{// <<< RP::O::S::OV::N::R __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
             . "\n" };
 
     #...

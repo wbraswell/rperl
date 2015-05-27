@@ -3,7 +3,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_030;
+our $VERSION = 0.004_040;
 
 # [[[ OO INHERITANCE ]]]
 #use RPerl::CompileUnit::Module::Class;
@@ -101,7 +101,6 @@ our void $rperl_source__check_syntax = sub {
     foreach my string $rperl_source__perl_syntax_retstring_line (
         @{$rperl_source__perl_syntax_retstring_lines} )
     {
-        # NEED FIX: figure out how to use /xms flags in following regexs
         if (( $rperl_source__perl_syntax_retstring_line !~ /WARNING\sW/xms ) # RPerl Warning
             and
             ( $rperl_source__perl_syntax_retstring_line !~ /ERROR\sE/xms )   # RPerl Error

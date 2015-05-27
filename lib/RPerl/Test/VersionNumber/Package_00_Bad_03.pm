@@ -9,6 +9,8 @@ use RPerl;
 our $VERSION = 100.001_000;
 
 # [[[ SUBROUTINES ]]]
-our void $empty_sub = sub { return 2; };
+our void $empty_sub = sub {
+    return 2;
+};
 
 1;                  # end of package

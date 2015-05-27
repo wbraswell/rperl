@@ -7,7 +7,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.005_010;
+our $VERSION = 0.006_010;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -17,14 +17,22 @@ our $VERSION = 0.005_010;
 ## no critic qw(ProhibitDeepNests)  # SYSTEM SPECIAL 7: allow deeply-nested code
 
 # [[[ INCLUDES ]]]
+use RPerl::Test;
 use RPerl::Parser;
 use RPerl::Generator;
 use RPerl::Compiler;
 use Test::More;
+use Test::Exception;
 use File::Find qw(find);
+use Perl::Tidy;
 
 # [[[ OPERATIONS ]]]
 
+# TEMP DEBUGGING, ONLY LOAD SPECIFIC FILES
+#my $test_files = { 'lib/RPerl/Test/OperatorVoid01NamedVoid/Class_00_Bad_01.pm' => undef };
+
+#=DEBUG_DISABLE
+# NEED UPDATE: add string_arrayref_hashref_hashref type
 #my string_arrayref_hashref_hashref $test_files = {};
 my $test_files = {};
 find(
@@ -33,6 +41,7 @@ find(
 
        #        RPerl::diag('in 11_generate.t, have $file = ' . $file . "\n");
 
+#        if ( $file !~ m/.pm$/xms ) { # TEMP DEBUGGING, ONLY CHECK PM FILES, NOT PL FILES
         if ( ( $file !~ m/.pm$/xms ) and ( $file !~ m/.pl$/xms ) ) {
             return;
         }
@@ -70,34 +79,31 @@ find(
     $RPerl::INCLUDE_PATH . '/RPerl/Test'
 );
 
+#=cut
+
 #RPerl::diag( 'in 11_generate.t, have $test_files = ' . "\n" . Dumper($test_files) . "\n" );
 
 my string_hashref $modes_argument;
+my hashref_arrayref $output_file_name_groups;
 my string $test_file_reference;
 my bool $perform_diff_check;
 my unknown $eval_return_value;
-my bool $diff_check_success;
 my integer $diff_line;
 my integer $number_of_tests_run = 0;
 
 # [[[ PRIMARY RUNLOOP ]]]
-# [[[ PRIMARY RUNLOOP ]]]
-# [[[ PRIMARY RUNLOOP ]]]
-
 # loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
 foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
-#for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
-#    RPerl::diag "in 06_type_hash.t, top of for() loop, have \$mode_id = $mode_id\n";
+    #for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
+#    RPerl::diag "in 11_generate.t, top of for() loop, have \$mode_id = $mode_id\n";
     my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
     if ( $ENV{RPERL_VERBOSE} ) {
-        Test::More::diag( '[[[ Beginning RPerl Hash Type Tests, '
+        Test::More::diag( '[[[ Beginning RPerl Generator Tests, '
                 . RPerl::Test::mode_description($mode)
                 . ' ]]]' );
     }
 
-    # [[[ MODE SETUP ]]]
-    # [[[ MODE SETUP ]]]
     # [[[ MODE SETUP ]]]
     my $ops                 = $mode->{ops};
     my $types               = $mode->{types};
@@ -107,41 +113,36 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         q{mode '} . RPerl::Test::mode_description($mode) . q{' enabled} );
     $number_of_tests_run++;
 
-    if ( $ops eq 'PERL' ) {
-    }
-    else {    # $ops eq 'CPP'
-        if ( $types eq 'PERL' ) {
-
-            # foo
-        }
-        else {    # $types eq 'CPP'
-                  # foo
-        }
-    }
-
     for my $test_file ( sort keys %{$test_files} ) {
 
-#    RPerl::diag( 'in 11_generate.t, have $test_file = ' . $test_file . "\n" );
+#        RPerl::diag( 'in 11_generate.t, have $test_file = ' . $test_file . "\n" );
 
-        my hashref_arrayref $output_file_name_groups; # only used for CPPOPS, original non-compiled file used for PERLOPS
+        $modes_argument = {
+            ops   => $ops,
+            types => $types,
+            check => 'TRACE',
+            compile => 'GENERATE', # don't save source code to disk, will diff check from memory
+            execute => 'OFF',
+            label => 'OFF' # don't label source code, will strip comments before diff check
+        };
+        $output_file_name_groups
+            = generate_output_file_names( [$test_file], [], $modes_argument,
+            1 );
 
         if ( $ops eq 'PERL' ) {
             $perform_diff_check = 1; # Perl source code is it's own reference file, always perform diff check for PERLOPS_PERLTYPES
         }
         else {                       # $ops eq 'CPP'
-            $output_file_name_groups
-                = generate_output_file_names( [$test_file], [],
-                $modes_argument, 1 );
             $perform_diff_check = 1; # begin by assuming diff check, all reference file(s) found
             foreach my string $suffix_key (
                 sort keys %{ $output_file_name_groups->[0] } )
             {
                 $test_file_reference
-                    = $output_file_name_groups->[0]->{$suffix_key} . q{.}
-                    . $ops . 'ops_'
-                    . $types . 'types';
+                    = $output_file_name_groups->[0]->{$suffix_key} . q{-}
+                    . $ops . 'OPS_'
+                    . $types . 'TYPES';
                 if ( not -f $test_file_reference ) {
-                    RPerl::warn(
+                    RPerl::warning(
                         'WARNING WTE11GE00: Test Group 11, Code Generator; Missing pre-compiled source code reference file '
                             . q{'}
                             . $test_file_reference . q{'}
@@ -153,63 +154,67 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
             }
         }
 
-        $modes_argument = {
-            ops   => $ops,
-            types => $types,
-            check => 'TRACE',
-            compile => 'GENERATE', # don't save source code to disk, will diff check from memory
-            execute => 'OFF',
-            label => 'OFF' # don't label source code, will strip comments before diff check
-        };
-
         my object $rperl_ast = RPerl::Parser::rperl_to_ast__parse($test_file);
 
-        $eval_return_value = eval {
-            RPerl::Generator::ast_to_cpp__generate( $rperl_ast,
-                $modes_argument );
-        };
+        if ( $ops eq 'PERL' ) {
+            $eval_return_value = eval {
+                RPerl::Generator::ast_to_rperl__generate( $rperl_ast,
+                    $modes_argument );
+            };
+        }
+        else {    # $ops eq 'CPP'
+            $eval_return_value = eval {
+                RPerl::Generator::ast_to_cpp__generate( $rperl_ast,
+                    $modes_argument );
+            };
+        }
 
-#    RPerl::diag( 'in 11_generate.t, have $eval_return_value = ' . $eval_return_value . "\n" );  # warning if undef retval
+#        RPerl::diag( 'in 11_generate.t, have $eval_return_value = ' . Dumper($eval_return_value) . "\n" );    # warning if undef retval
 
         if ( ( defined $eval_return_value ) and $eval_return_value ) { # Perl eval return code defined & true, success
+#            RPerl::diag( 'in 11_generate.t, have defined and true $eval_return_value' . "\n" );
             my string_hashref $source_group = $eval_return_value;
             if (   ( $test_file =~ m/Good/xms )
                 or ( $test_file =~ m/good/xms ) )
             {
+#                RPerl::diag( 'in 11_generate.t, have $test_file named *Good* or *good*' . "\n" );
                 if ($perform_diff_check) {
-                    $diff_check_success = 1;
+#                    RPerl::diag( 'in 11_generate.t, need to perform diff check(s)' . "\n" );
+#                    RPerl::diag( 'in 11_generate.t, have $output_file_name_groups->[0] = ' . Dumper( $output_file_name_groups->[0] ) . "\n" );
                     foreach my string $suffix_key (
                         sort keys %{ $output_file_name_groups->[0] } )
                     {
-                        if ( $ops eq 'PERL' ) {
-
-# single reference file; use original Perl source file as reference for diff check
+                        if ( $ops eq 'PERL' ) { # single reference file; use original Perl source file as reference for diff check
                             $test_file_reference = $test_file;
                         }
-                        else {    # $ops eq 'CPP'
+                        else {                  # $ops eq 'CPP'
                              # multiple reference files; use pre-compiled CPP source files as references for diff check
                             $test_file_reference
                                 = $output_file_name_groups->[0]->{$suffix_key}
-                                . q{.}
-                                . $ops . 'ops_'
-                                . $types . 'types';
+                                . q{-}
+                                . $ops . 'OPS_'
+                                . $types . 'TYPES';
                         }
+#                        RPerl::diag( 'in 11_generate.t, have $test_file_reference = ' . $test_file_reference . "\n" );
 
                         $diff_line
-                            = diff_check_file_vs_string( $test_file_reference,
+                            = RPerl::Generator::diff_check_file_vs_string(
+                            $test_file_reference,
                             $source_group->{$suffix_key}, $ops );
-                        if ($diff_line) {
-                            $diff_check_success = 0;
+#                        RPerl::diag( 'in 11_generate.t, have $diff_line = ' . $diff_line . "\n" );
+                        if ( $diff_line != 0 ) {
                             last;
                         }
                     }
-                    if ($diff_check_success) {
+
+             # ignore __DUMMY_SOURCE_CODE results, indicated by $diff_line < 0
+                    if ( $diff_line == 0 ) {
                         ok( 1,
                             "Program or module $test_file generates without errors, yes diff check"
                         );
                         $number_of_tests_run++;
                     }
-                    else {
+                    elsif ( $diff_line > 0 ) {
                         ok( 0,
                             "Program or module $test_file generates with errors, yes diff check, files differ beginning at line "
                                 . $diff_line );
@@ -223,14 +228,31 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                     $number_of_tests_run++;
                 }
             }
-            else {
-                ok( 0, "Program or module $test_file generates with errors" );
-                $number_of_tests_run++;
+            else {    # file named *Bad* or *bad*
+                my bool $dummy_source_code_found = 0;
+                foreach my string $suffix_key (
+                    sort keys %{ $output_file_name_groups->[0] } )
+                {
+                    if ( $source_group->{$suffix_key}
+                        =~ /__DUMMY_SOURCE_CODE/xms )
+                    {
+                        $dummy_source_code_found = 1;
+                        last;
+                    }
+                }
+
+                # skip test if dummy source code found
+                if ( not $dummy_source_code_found ) {
+                    ok( 0,
+                        "Program or module $test_file generates with errors"
+                    );
+                    $number_of_tests_run++;
+                }
             }
         }
         else {    # Perl eval return code undefined or false, error
-
-#        RPerl::diag( 'in 11_generate.t, have $EVAL_ERROR = ' . $EVAL_ERROR . "\n" );
+#            RPerl::diag( 'in 11_generate.t, have undefined or false $eval_return_value' . "\n" );
+#            RPerl::diag( 'in 11_generate.t, have $EVAL_ERROR = ' . $EVAL_ERROR . "\n" );
             if (   ( $test_file =~ m/Bad/ms )
                 or ( $test_file =~ m/bad/ms ) )
             {
@@ -251,10 +273,22 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                 $number_of_tests_run++;
             }
             else {
-                # ADD CODE: MISSING GENERATOR CODE NOT A REAL FAILURE
-                ok( 0,
-                    "Program or module $test_file generates without errors" );
-                $number_of_tests_run++;
+                if ( $EVAL_ERROR
+                    =~ /Can't\slocate\sobject\smethod\s"ast_to_\w*__generate"\svia\spackage/xms
+                    )
+                {
+                    RPerl::warning(
+                        'WARNING WTE11GE01: Test Group 11, Code Generator; Missing code generation method, received error message...'
+                            . "\n"
+                            . $EVAL_ERROR
+                            . "\n" );
+                }
+                else {
+                    ok( 0,
+                        "Program or module $test_file generates without errors"
+                    );
+                    $number_of_tests_run++;
+                }
             }
         }
     }

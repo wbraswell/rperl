@@ -18,6 +18,8 @@ our hashref $properties
     = { empty_property => my integer $TYPED_empty_property = 2 };
 
 # [[[ OO METHODS & SUBROUTINES ]]]
-ou void_method $empty_method = sub { return 2; };
+ou void_method $empty_method = sub {
+    return 2;
+};
 
 1;                  # end of class

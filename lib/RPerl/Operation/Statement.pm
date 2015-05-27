@@ -23,10 +23,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     my string_hashref $rperl_source_group = { PMC => q{} };
     my string_hashref $rperl_source_subgroup;
 
-    RPerl::diag(
-        'in Statement->ast_to_rperl__generate(), received $self = ' . "\n"
-            . RPerl::Parser::rperl_ast__dump($self)
-            . "\n" );
+#    RPerl::diag( 'in Statement->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     # Conditional, OperatorVoid, VariableDeclaration, or VariableModification
     my string $child0_class = ref $self->{children}->[0];
@@ -49,7 +46,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
             # NEED FIX: implement loop label
             $rperl_source_group->{PMC}
-                .= q{# <<< RP::O::S DUMMY SOURCE CODE PERLOPS_PERLTYPES, NEED IMPLEMENT LOOP LABEL!!! >>>}
+                .= q{# <<< RP::O::S __DUMMY_SOURCE_CODE PERLOPS_PERLTYPES, NEED IMPLEMENT LOOP LABEL!!! >>>}
                 . "\n";
         }
         $rperl_source_subgroup
@@ -59,7 +56,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEAS00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $child0_class
                 . ' found where Statement_143, Statement_144, Statement_145, Statement_146, or Statement_147 expected, dying'
         ) . "\n";
@@ -71,7 +68,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
-        = { CPP => q{// <<< RP::O::S DUMMY SOURCE CODE CPPOPS_PERLTYPES >>>}
+        = { CPP => q{// <<< RP::O::S __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
             . "\n" };
 
     #...
@@ -81,7 +78,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
-        = { CPP => q{// <<< RP::O::S DUMMY SOURCE CODE CPPOPS_CPPTYPES >>>}
+        = { CPP => q{// <<< RP::O::S __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
             . "\n" };
 
     #...

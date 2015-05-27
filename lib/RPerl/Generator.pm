@@ -3,7 +3,7 @@
 package RPerl::Generator;
 use strict;
 use warnings;
-our $VERSION = 0.000_032;
+our $VERSION = 0.001_000;
 use RPerl;
 
 # [[[ OO INHERITANCE ]]]
@@ -26,8 +26,15 @@ our hashref $properties = {};
 
 # [[[ PROCEDURAL SUBROUTINES ]]]
 
+# line-by-line comparison of file contents vs string contents;
+# returns -1 __DUMMY_SOURCE_CODE found, 0 no difference, >0 line number of first difference
 our integer $diff_check_file_vs_string = sub {
     ( my string $file_name, my string $source_string, my string $ops) = @_;
+
+#    RPerl::diag('in Generator->diff_check_file_vs_string(), received $file_name = ' . $file_name . "\n");
+#    RPerl::diag('in Generator->diff_check_file_vs_string(), contents of file = ' . "\n");
+#    system 'cat', $file_name;
+#    RPerl::diag('in Generator->diff_check_file_vs_string(), received $source_string = ' . "\n" . $source_string . "\n\n");
 
     if ( not -f $file_name ) {
         die 'ERROR ECVGEDI00, RPERL GENERATOR, DIFF CHECK: file not found, '
@@ -44,33 +51,22 @@ our integer $diff_check_file_vs_string = sub {
         . $OS_ERROR
         . ', dying' . "\n";
 
-    my string_arrayref $source_string_split
-        = [ ( split /\n/xms, $source_string ) ];
-    my integer $line_number = 0;
+    # read in file, strip comments & blank lines
     my string $file_line;
-    my string $string_line;
-    my $return_value = 0;    # default return value, files do not differ
+    my string $file_string = q{};
     while ( $file_line = <$FILE_HANDLE> ) {
-
-# set $string_line before incrementing $line_number; arrays indexed from 0, file lines indexed from 1
-        $string_line = $source_string_split->[$line_number];
-        $line_number++;
-
-# strip all whitespace & comments, leave critics & shebangs, using unmodified regex from Grammar.eyp
-# NEED FIX: xms regex modifiers don't work here
-        $file_line =~ s/((?:\s*(?:[#][^#!].*)?\s*)*)//gxms;
-        $string_line =~ s/((?:\s*(?:[#][^#!].*)?\s*)*)//gxms;
-        if ( $file_line ne $string_line ) {
-            if ( $string_line =~ /DUMMY\sSOURCE\sCODE/xms ) {
-                RPerl::warn(
-                    'WARNING WCVGEDI00, RPERL GENERATOR, DIFF CHECK: Dummy source code found, abandoning check, pretending files do not differ'
-                        . "\n" );
-            }
-            else {
-                $return_value = $line_number;
-            }
-            last;
+        $file_line =~ s/^\s+//xms;    # strip leading whitespace
+        if ( $file_line =~ /^[#][^#!]/xms ) {
+            next; # discard whole-line comment
         }
+        elsif ( $file_line =~ /^\s*$/xms ) {
+            next;  # discard blank & all-whitespace lines
+        }
+
+        # strip partial-line comment and trailing whitespace, if present
+        $file_line =~ s/[^#][#][^#!].*$/\n/gxms;
+        $file_line =~ s/[ \t]+$//;
+        $file_string .= $file_line;
     }
 
     close $FILE_HANDLE
@@ -80,6 +76,90 @@ our integer $diff_check_file_vs_string = sub {
         . ' after reading,'
         . $OS_ERROR
         . ', dying' . "\n";
+
+    # tidy file string
+    my string $file_string_tidied;
+    my string $perltidy_stderr_string = undef;
+    my scalartype $perltidy_errored = Perl::Tidy::perltidy(
+
+# same as Compiler::save_source_files() except '-se' to redirect STDERR
+        argv =>
+            q{-pbp --ignore-side-comment-lengths --converge -b -nst -bext='/' -q -se},
+        source      => \$file_string,
+        destination => \$file_string_tidied,
+        stderr      => \$perltidy_stderr_string,
+    );
+    if ($perltidy_errored) { # serious error in input parameters, no tidied output
+        die
+            'ERROR ECVGEDIXX: Perl::Tidy major failure with the following STDERR output, dying'
+            . "\n"
+            . $perltidy_stderr_string . "\n";
+    }
+    elsif ($perltidy_stderr_string) {
+        die
+            'ERROR ECVGEDIXX: Perl::Tidy minor failure with the following STDERR output, dying'
+            . "\n"
+            . $perltidy_stderr_string . "\n";
+    }
+
+    # tidy source string
+    my string $source_string_tidied;
+    $perltidy_errored = Perl::Tidy::perltidy(
+        argv =>
+            q{-pbp --ignore-side-comment-lengths --converge -b -nst -bext='/' -q -se},
+        source      => \$source_string,
+        destination => \$source_string_tidied,
+        stderr      => \$perltidy_stderr_string,
+    );
+    if ($perltidy_errored) {
+        die
+            'ERROR ECVGEDIXX: Perl::Tidy major failure with the following STDERR output, dying'
+            . "\n"
+            . $perltidy_stderr_string . "\n";
+    }
+    elsif ($perltidy_stderr_string) {
+        die
+            'ERROR ECVGEDIXX: Perl::Tidy minor failure with the following STDERR output, dying'
+            . "\n"
+            . $perltidy_stderr_string . "\n";
+    }
+
+#    RPerl::diag('in Generator->diff_check_file_vs_string(), have $file_string_tidied = ' . "\n" . $file_string_tidied . "\n\n");
+#    RPerl::diag('in Generator->diff_check_file_vs_string(), have $source_string_tidied = ' . "\n" . $source_string_tidied . "\n\n");
+
+    my string_arrayref $file_string_split
+        = [ ( split /\n/xms, $file_string_tidied ) ];
+    my string_arrayref $source_string_split
+        = [ ( split /\n/xms, $source_string_tidied ) ];
+    my string_arrayref $source_string_split_tmp = [];
+    my string $string_line;
+
+    # discard blank & all-whitespace lines
+    foreach $string_line (@{$source_string_split}) {
+        if ( $string_line !~ /^\s*$/xms ) {
+            push @{$source_string_split_tmp}, $string_line;
+        }
+    }
+    $source_string_split = $source_string_split_tmp;
+    $source_string_split_tmp = undef;
+
+    my $return_value = 0;    # default return value, files do not differ
+    for my integer $i ( 0 .. ((scalar @{$file_string_split}) - 1) ) {
+        $file_line   = $file_string_split->[$i];
+        $string_line = $source_string_split->[$i];
+        if ( $string_line =~ /__DUMMY_SOURCE_CODE/xms ) {
+            RPerl::warning( 'WARNING WCVGEDI00, RPERL GENERATOR, DIFF CHECK: Dummy source code found, abandoning check' . "\n" );
+            $return_value = -1;
+            last;
+        }
+
+        if ( $file_line ne $string_line ) {
+#            RPerl::diag( 'in Generator->diff_check_file_vs_string(), have non-matching $file_line =' . "\n" . $file_line . "\n" );
+#            RPerl::diag( 'in Generator->diff_check_file_vs_string(), have non-matching $string_line =' . "\n" . $string_line . "\n" );
+            $return_value = $i + 1;  # arrays indexed from 0, file lines indexed from 1
+            last;
+        }
+    }
 
     return $return_value;
 };
@@ -162,6 +242,13 @@ our void $source_group_append = sub {
 };
 
 our void $grammar_rules__map = sub {
+
+    # do not attempt to re-map grammar rules if already mapped
+    if (    ( exists &CompileUnit_5::ast_to_rperl__generate )
+        and ( defined &CompileUnit_5::ast_to_rperl__generate ) )
+    {
+        return;
+    }
 
 #    RPerl::diag "in Generator::grammar_rules__map(), have \$RPerl::Grammar::RULES =\n" . Dumper($RPerl::Grammar::RULES) . "\n";
     foreach my string $rule ( sort keys %{$RPerl::Grammar::RULES} ) {

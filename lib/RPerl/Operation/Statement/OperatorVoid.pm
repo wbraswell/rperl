@@ -14,8 +14,8 @@ use RPerl::Operation::Statement;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ INCLUDES ]]]
-use RPerl::Test::Foo;
-use RPerl::Test::Bar;
+#use RPerl::Test::Foo;  # NEED ANSWER: why are these here?  old debugging code to be deleted?
+#use RPerl::Test::Bar;
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
@@ -27,10 +27,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     my string_hashref $rperl_source_group = { PMC => q{} };
     my string_hashref $rperl_source_subgroup;
 
-    RPerl::diag(
-        'in OperatorVoid->ast_to_rperl__generate(), received $self = ' . "\n"
-            . RPerl::Parser::rperl_ast__dump($self)
-            . "\n" );
+#    RPerl::diag( 'in OperatorVoid->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     # Print, OperatorNamedVoid, OperatorNamed, LoopControl
     my string $child0_class = ref $self->{children}->[0];
@@ -50,7 +47,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEAS00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $child0_class
                 . ' found where OperatorVoid_112, OperatorVoid_113, OperatorVoid_114, OperatorVoid_115, OperatorVoid_116, OperatorVoid_117, OperatorVoid_118, or OperatorVoid_119 expected, dying'
         ) . "\n";
@@ -63,7 +60,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
         = {
-        CPP => q{// <<< RP::O::S::OV DUMMY SOURCE CODE CPPOPS_PERLTYPES >>>}
+        CPP => q{// <<< RP::O::S::OV __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
             . "\n"
         };
 
@@ -75,7 +72,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
         = {
-        CPP => q{// <<< RP::O::S::OV DUMMY SOURCE CODE CPPOPS_CPPTYPES >>>}
+        CPP => q{// <<< RP::O::S::OV __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
             . "\n"
         };
 

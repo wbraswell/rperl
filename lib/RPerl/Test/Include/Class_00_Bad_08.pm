@@ -23,6 +23,8 @@ our hashref $properties
 use RPerl::Test::Bar;
 
 # [[[ OO METHODS & SUBROUTINES ]]]
-our void_method $empty_method = sub { return 2; };
+our void_method $empty_method = sub {
+    return 2;
+};
 
 1;                  # end of class

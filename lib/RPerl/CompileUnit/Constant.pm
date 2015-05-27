@@ -22,7 +22,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $rperl_source_group = { PMC => q{} };
 
-    RPerl::diag( 'in CompileUnit::Constant->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in CompileUnit::Constant->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $use_constant           = $self->{children}->[0];
     my string $name           = $self->{children}->[1];
@@ -49,7 +49,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     my string_hashref $rperl_source_subgroup = $subexpression->ast_to_rperl__generate($modes);
     RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     
-    $rperl_source_group->{PMC} .= $semicolon;
+    $rperl_source_group->{PMC} .= $semicolon . "\n";
 
     return $rperl_source_group;
 };
@@ -57,7 +57,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
-        = { CPP => q{// <<< RP::CU::Co DUMMY SOURCE CODE CPPOPS_PERLTYPES >>>}
+        = { CPP => q{// <<< RP::CU::Co __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
             . "\n" };
 
     #...
@@ -67,7 +67,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
-        = { CPP => q{// <<< RP::CU::Co DUMMY SOURCE CODE CPPOPS_CPPTYPES >>>}
+        = { CPP => q{// <<< RP::CU::Co __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
             . "\n" };
 
     #...

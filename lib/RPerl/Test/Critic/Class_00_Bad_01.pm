@@ -21,6 +21,8 @@ our hashref $properties
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 
 # [[[ OO METHODS & SUBROUTINES ]]]
-our void_method $empty_method = sub { return 2; };
+our void_method $empty_method = sub {
+    return 2;
+};
 
 1;                  # end of class

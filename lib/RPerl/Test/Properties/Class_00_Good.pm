@@ -15,7 +15,7 @@ our hashref $properties
 
 # [[[ OO METHODS & SUBROUTINES ]]]
 our void_method $test_method = sub {
-    ( my object $self, my integer $input_integer) = @_;
+    ( my object $self, my integer $input_integer ) = @_;
     $self->{test_property} *= $input_integer;
     return $self->{test_property};
 };

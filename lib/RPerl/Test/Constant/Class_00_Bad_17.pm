@@ -24,6 +24,8 @@ our hashref $properties
 use constant PIE => my string $TYPED_PIE = 'pecan';
 
 # [[[ OO METHODS & SUBROUTINES ]]]
-our void_method $empty_method = sub { return 2; };
+our void_method $empty_method = sub {
+    return 2;
+};
 
 1;    # end of class

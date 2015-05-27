@@ -26,11 +26,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $rperl_source_group = {};
 
-    RPerl::diag(
-        'in Class::Generator->ast_to_rperl__generate(), received $self = '
-            . "\n"
-            . RPerl::Parser::rperl_ast__dump($self)
-            . "\n" );
+#    RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my object $class                 = $self->{children}->[0];
     my string $use_parent_qw_keyword = $class->{children}->[0];
@@ -183,7 +179,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
-        = { CPP => q{// <<< RP::CU::M::C DUMMY SOURCE CODE CPPOPS_PERLTYPES >>>}
+        = { CPP => q{// <<< RP::CU::M::C __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
             . "\n" };
 
     #...
@@ -193,7 +189,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
-        = { CPP => q{// <<< RP::CU::M::C DUMMY SOURCE CODE CPPOPS_CPPTYPES >>>}
+        = { CPP => q{// <<< RP::CU::M::C __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
             . "\n" };
 
     #...

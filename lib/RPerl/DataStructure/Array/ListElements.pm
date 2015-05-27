@@ -51,7 +51,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
     if ( ref $self ne 'ListElements_178' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEAS00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $self )
                 . ' found where ListElements_178 expected, dying' )
             . "\n";
@@ -71,7 +71,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         if ( ref $list_element eq 'TERMINAL' ) {
             if ( $list_element->{attr} ne q{,} ) {
                 die RPerl::Parser::rperl_rule__replace(
-                    q{ERROR ECVGEAS00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '}
+                    q{ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '}
                         . $list_element->{attr}
                         . q{' found where OP21_LIST_COMMA ',' expected, dying}
                 ) . "\n";
@@ -93,7 +93,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
         = {
-        CPP => q{// <<< RP::DS::A::LEs DUMMY SOURCE CODE CPPOPS_PERLTYPES >>>}
+        CPP => q{// <<< RP::DS::A::LEs __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
             . "\n"
         };
 
@@ -105,7 +105,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
         = {
-        CPP => q{// <<< RP::DS::A::LEs DUMMY SOURCE CODE CPPOPS_CPPTYPES >>>}
+        CPP => q{// <<< RP::DS::A::LEs __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
             . "\n"
         };
 

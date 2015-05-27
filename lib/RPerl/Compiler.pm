@@ -275,8 +275,7 @@ our void $save_source_files = sub {
         if ( ( $suffix_key eq 'PMC' ) or ( $suffix_key eq 'EXE' ) ) {
 
 #            `perltidy -pbp --ignore-side-comment-lengths --converge -b -nst -bext='/' -q $file_name`;
-            system 'perltidy', '-pbp', '--ignore-side-comment-lengths',
-                '--converge', '-b', '-nst', q{-bext='/'}, '-q', $file_name;
+            system 'perltidy', '-pbp', '--ignore-side-comment-lengths', '--converge', '-b', '-nst', q{-bext='/'}, '-q', $file_name;
         }
     }
 
