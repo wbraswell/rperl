@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-our $VERSION = 0.001_073;
+our $VERSION = 0.001_074;
 use ExtUtils::MakeMaker;
 
 BEGIN { use English; }
@@ -27,9 +27,10 @@ WriteMakefile(
 
 # NEED UPDATE, CORRELATION #05: list of _Inline directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
 # NEED UPDATE, CORRELATION #06: list of CPAN files & directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
+# NEED UPDATE, CORRELATION #13: list of RPerl build files & directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
     clean => {
         FILES =>
-            'Makefile.old MANIFEST.bak _Inline lib/RPerl/Algorithm/Sort/_Inline script/_Inline script/development/_Inline script/development/unused/_Inline t/_Inline lib/RPerl/Test/OperationsTypesReporting/_Inline lib/RPerl/Test/Module/_Inline lib/RPerl/Test/Properties/_Inline lib/RPerl/Test/Type_Types/_Inline lib/RPerl/Operation/Statement/_Inline lib/RPerl/DataStructure/Array/_Inline lib/RPerl/_Inline'
+            'Makefile.old MANIFEST.bak lib/RPerl/Test/Fu.pmc lib/rperltypes_mode.h.orig lib/rperltypes_mode.h.swap _Inline lib/RPerl/Algorithm/Sort/_Inline script/_Inline script/development/_Inline script/development/unused/_Inline t/_Inline lib/RPerl/Test/OperationsTypesReporting/_Inline lib/RPerl/Test/Module/_Inline lib/RPerl/Test/Properties/_Inline lib/RPerl/Test/Type_Types/_Inline lib/RPerl/Operation/Statement/_Inline lib/RPerl/DataStructure/Array/_Inline lib/RPerl/_Inline'
     },
 );
 

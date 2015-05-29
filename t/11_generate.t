@@ -316,7 +316,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                     }
                 }
                 ok( ( ( scalar @{$missing_errors} ) == 0 ),
-                    'Program or module ' . $test_file . 'generates with expected error(s)'
+                    'Program or module ' . $test_file . ' generates with expected error(s)'
                 );
                 $number_of_tests_run++;
             }

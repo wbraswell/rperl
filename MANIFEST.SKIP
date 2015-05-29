@@ -45,4 +45,8 @@ swp$
 ^script\/development\/unused
 
 # [ RPerl Compile ]
+# NEED UPDATE, CORRELATION #13: list of RPerl build files & directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
 ^lib\/RPerl\/Test\/Fu\.pmc
+^lib\/rperltypes_mode\.h\.orig
+^lib\/rperltypes_mode\.h\.swap
+
