@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_010;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -23,7 +23,7 @@ our hashref $properties = {};
 # [[[ OO METHODS & SUBROUTINES ]]]
 
 our string_hashref_method $ast_to_rperl__generate = sub {
-    ( my object $self, my string_hashref $modes) = @_;
+    ( my object $self, my string_hashref $modes ) = @_;
     my string_hashref $rperl_source_group = {};
 
 #    RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
@@ -63,8 +63,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         }
     }
     foreach my object $critic ( @{ $critic_star->{children} } ) {
-        $rperl_source_subgroup
-            = $critic->ast_to_rperl__generate($modes);
+        $rperl_source_subgroup = $critic->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
     }
@@ -75,8 +74,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         }
     }
     foreach my object $include ( @{ $include_star->{children} } ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
-        $rperl_source_subgroup
-            = $include->ast_to_rperl__generate($modes);
+        $rperl_source_subgroup = $include->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
     }
@@ -87,8 +85,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         }
     }
     foreach my object $constant ( @{ $constant_star->{children} } ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
-        $rperl_source_subgroup
-            = $constant->ast_to_rperl__generate($modes);
+        $rperl_source_subgroup = $constant->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
     }
@@ -111,8 +108,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             . $properties_equal . q{ }
             . $properties_left_brace . "\n";
 
-        $rperl_source_subgroup
-            = $property_0->ast_to_rperl__generate($modes);
+        $rperl_source_subgroup = $property_0->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
 
@@ -177,20 +173,35 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 };
 
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
-    ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $cpp_source_group
-        = { CPP => q{// <<< RP::CU::M::C __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
-            . "\n" };
+    ( my object $self, my string_hashref $modes ) = @_;
+    my string_hashref $cpp_source_group = {
+        CPP =>
+            q{// <<< RP::CU::M::C::G __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
+            . "\n",
+        H =>
+            q{// <<< RP::CU::M::C::G __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
+            . "\n",
+        PMC =>
+            q{# <<< RP::CU::M::C::G __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
+            . "\n"
+    };
 
     #...
     return $cpp_source_group;
 };
 
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
-    ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $cpp_source_group
-        = { CPP => q{// <<< RP::CU::M::C __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
-            . "\n" };
+    ( my object $self, my string_hashref $modes ) = @_;
+    my string_hashref $cpp_source_group = {
+        CPP =>
+            q{// <<< RP::CU::M::C::G __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
+            . "\n",
+        H => q{// <<< RP::CU::M::C::G __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
+            . "\n",
+        PMC =>
+            q{# <<< RP::CU::M::C::G __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
+            . "\n"
+    };
 
     #...
     return $cpp_source_group;

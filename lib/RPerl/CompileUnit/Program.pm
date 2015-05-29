@@ -21,7 +21,6 @@ our hashref $properties = {};
 our string_hashref_method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $rperl_source_group = {
-        PMC => q{# <<< RP::CU::P __DUMMY_SOURCE_CODE PERLOPS_PERLTYPES >>>} . "\n",
         EXE => q{# <<< RP::CU::P __DUMMY_SOURCE_CODE PERLOPS_PERLTYPES >>>} . "\n"
     };
 

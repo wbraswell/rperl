@@ -52,9 +52,9 @@ our void_method $quux = sub {
 
     #    $self->{plugh} = $self->{plugh} * 2;
 
-    # START HERE: continue with code generation for BAD? returns below
-    # START HERE: continue with code generation for BAD? returns below
-    # START HERE: continue with code generation for BAD? returns below
+    # START HERE: continue with code generation for BAD? returns below, add 'die' to grammar
+    # START HERE: continue with code generation for BAD? returns below, add 'die' to grammar
+    # START HERE: continue with code generation for BAD? returns below, add 'die' to grammar
 
     foreach my scalartype $foooo (@{[0, 2, 5, 7]}) { print 'howdy'; }
 

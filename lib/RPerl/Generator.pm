@@ -3,7 +3,7 @@
 package RPerl::Generator;
 use strict;
 use warnings;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_010;
 use RPerl;
 
 # [[[ OO INHERITANCE ]]]
@@ -25,6 +25,17 @@ use English qw(-no_match_vars); # for $OSNAME; why isn't this included from 'req
 our hashref $properties = {};
 
 # [[[ PROCEDURAL SUBROUTINES ]]]
+
+# search for dummy source code
+our bool $dummy_source_code_find = sub {
+    ( my string_hashref $source_group ) = @_;
+    foreach my string $suffix_key ( sort keys %{$source_group} ) {
+        if ( $source_group->{$suffix_key} =~ /__DUMMY_SOURCE_CODE/xms ) {
+            return 1;
+        }
+    }
+    return 0;
+};
 
 # line-by-line comparison of file contents vs string contents;
 # returns -1 __DUMMY_SOURCE_CODE found, 0 no difference, >0 line number of first difference
@@ -56,15 +67,26 @@ our integer $diff_check_file_vs_string = sub {
     my string $file_string = q{};
     while ( $file_line = <$FILE_HANDLE> ) {
         $file_line =~ s/^\s+//xms;    # strip leading whitespace
-        if ( $file_line =~ /^[#][^#!]/xms ) {
-            next; # discard whole-line comment
+        if ( ( $ops eq 'PERL' ) and ( $file_line =~ /^[#][^#!]/xms ) ) {
+            next;                     # discard whole-line comment, PERLOPS
+        }
+        elsif ( ( $ops eq 'CPP' ) and ( $file_line =~ m{^//}xms ) ) {
+            next;                     # discard whole-line comment, CPPOPS
         }
         elsif ( $file_line =~ /^\s*$/xms ) {
-            next;  # discard blank & all-whitespace lines
+            next;                     # discard blank & all-whitespace lines
         }
 
-        # strip partial-line comment and trailing whitespace, if present
-        $file_line =~ s/[^#][#][^#!].*$/\n/gxms;
+        # strip partial-line comment, if present
+        if ( $ops eq 'PERL' ) {
+            $file_line =~ s/[^#][#][^#!].*$/\n/gxms;
+        }
+        else {                        # $ops eq 'CPP'
+            $file_line =~ s{//.*$}{\n}gxms;     # // comments
+            $file_line =~ s{/\*.*\*/}{}gxms;    # /* comments */
+        }
+
+        # strip trailing whitespace, if present
         $file_line =~ s/[ \t]+$//;
         $file_string .= $file_line;
     }
@@ -77,51 +99,62 @@ our integer $diff_check_file_vs_string = sub {
         . $OS_ERROR
         . ', dying' . "\n";
 
-    # tidy file string
+    # tidy all code
     my string $file_string_tidied;
-    my string $perltidy_stderr_string = undef;
-    my scalartype $perltidy_errored = Perl::Tidy::perltidy(
-
-# same as Compiler::save_source_files() except '-se' to redirect STDERR
-        argv =>
-            q{-pbp --ignore-side-comment-lengths --converge -b -nst -bext='/' -q -se},
-        source      => \$file_string,
-        destination => \$file_string_tidied,
-        stderr      => \$perltidy_stderr_string,
-    );
-    if ($perltidy_errored) { # serious error in input parameters, no tidied output
-        die
-            'ERROR ECVGEDIXX: Perl::Tidy major failure with the following STDERR output, dying'
-            . "\n"
-            . $perltidy_stderr_string . "\n";
-    }
-    elsif ($perltidy_stderr_string) {
-        die
-            'ERROR ECVGEDIXX: Perl::Tidy minor failure with the following STDERR output, dying'
-            . "\n"
-            . $perltidy_stderr_string . "\n";
-    }
-
-    # tidy source string
     my string $source_string_tidied;
-    $perltidy_errored = Perl::Tidy::perltidy(
-        argv =>
-            q{-pbp --ignore-side-comment-lengths --converge -b -nst -bext='/' -q -se},
-        source      => \$source_string,
-        destination => \$source_string_tidied,
-        stderr      => \$perltidy_stderr_string,
-    );
-    if ($perltidy_errored) {
-        die
-            'ERROR ECVGEDIXX: Perl::Tidy major failure with the following STDERR output, dying'
-            . "\n"
-            . $perltidy_stderr_string . "\n";
+    if ( $ops eq 'PERL' ) {
+
+        # tidy file string
+        my string $perltidy_stderr_string = undef;
+        my scalartype $perltidy_errored   = Perl::Tidy::perltidy(
+
+       # same as Compiler::save_source_files() except '-se' to redirect STDERR
+            argv =>
+                q{-pbp --ignore-side-comment-lengths --converge -b -nst -bext='/' -q -se},
+            source      => \$file_string,
+            destination => \$file_string_tidied,
+            stderr      => \$perltidy_stderr_string,
+        );
+        if ($perltidy_errored) { # serious error in input parameters, no tidied output
+            die
+                'ERROR ECVGEDIXX: Perl::Tidy major failure with the following STDERR output, dying'
+                . "\n"
+                . $perltidy_stderr_string . "\n";
+        }
+        elsif ($perltidy_stderr_string) {
+            die
+                'ERROR ECVGEDIXX: Perl::Tidy minor failure with the following STDERR output, dying'
+                . "\n"
+                . $perltidy_stderr_string . "\n";
+        }
+
+        # tidy source string
+        $perltidy_errored = Perl::Tidy::perltidy(
+            argv =>
+                q{-pbp --ignore-side-comment-lengths --converge -b -nst -bext='/' -q -se},
+            source      => \$source_string,
+            destination => \$source_string_tidied,
+            stderr      => \$perltidy_stderr_string,
+        );
+        if ($perltidy_errored) {
+            die
+                'ERROR ECVGEDIXX: Perl::Tidy major failure with the following STDERR output, dying'
+                . "\n"
+                . $perltidy_stderr_string . "\n";
+        }
+        elsif ($perltidy_stderr_string) {
+            die
+                'ERROR ECVGEDIXX: Perl::Tidy minor failure with the following STDERR output, dying'
+                . "\n"
+                . $perltidy_stderr_string . "\n";
+        }
     }
-    elsif ($perltidy_stderr_string) {
-        die
-            'ERROR ECVGEDIXX: Perl::Tidy minor failure with the following STDERR output, dying'
-            . "\n"
-            . $perltidy_stderr_string . "\n";
+    else {    # $ops eq 'CPP'
+        die 'NEED FIX: add tidy C++ code';
+
+        # NEED FIX: add tidy C++ code
+        # NEED FIX: add tidy C++ code
+        # NEED FIX: add tidy C++ code
     }
 
 #    RPerl::diag('in Generator->diff_check_file_vs_string(), have $file_string_tidied = ' . "\n" . $file_string_tidied . "\n\n");
@@ -135,28 +168,31 @@ our integer $diff_check_file_vs_string = sub {
     my string $string_line;
 
     # discard blank & all-whitespace lines
-    foreach $string_line (@{$source_string_split}) {
+    foreach $string_line ( @{$source_string_split} ) {
         if ( $string_line !~ /^\s*$/xms ) {
             push @{$source_string_split_tmp}, $string_line;
         }
     }
-    $source_string_split = $source_string_split_tmp;
+    $source_string_split     = $source_string_split_tmp;
     $source_string_split_tmp = undef;
 
     my $return_value = 0;    # default return value, files do not differ
-    for my integer $i ( 0 .. ((scalar @{$file_string_split}) - 1) ) {
+    for my integer $i ( 0 .. ( ( scalar @{$file_string_split} ) - 1 ) ) {
         $file_line   = $file_string_split->[$i];
         $string_line = $source_string_split->[$i];
         if ( $string_line =~ /__DUMMY_SOURCE_CODE/xms ) {
-            RPerl::warning( 'WARNING WCVGEDI00, RPERL GENERATOR, DIFF CHECK: Dummy source code found, abandoning check' . "\n" );
+            RPerl::warning(
+                'WARNING WCVGEDI00, RPERL GENERATOR, DIFF CHECK: Dummy source code found, abandoning check'
+                    . "\n" );
             $return_value = -1;
             last;
         }
 
         if ( $file_line ne $string_line ) {
+
 #            RPerl::diag( 'in Generator->diff_check_file_vs_string(), have non-matching $file_line =' . "\n" . $file_line . "\n" );
 #            RPerl::diag( 'in Generator->diff_check_file_vs_string(), have non-matching $string_line =' . "\n" . $string_line . "\n" );
-            $return_value = $i + 1;  # arrays indexed from 0, file lines indexed from 1
+            $return_value = $i + 1; # arrays indexed from 0, file lines indexed from 1
             last;
         }
     }
