@@ -1,9 +1,9 @@
 # [[[ HEADER ]]]
-package RPerl::Operation::Statement::OperatorVoid::Named::Exit;
+package RPerl::Operation::Statement::OperatorVoid::Named::Die;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_001;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: is not a Grammar Rule so should not inherit from OperatorVoid, need create Grammar Production class
@@ -16,11 +16,11 @@ use RPerl::Operation::Statement::OperatorVoid::Named;
 ## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
 
 # [[[ CONSTANTS ]]]
-use constant NAME => my string $TYPED_NAME = 'exit';
+use constant NAME => my string $TYPED_NAME = 'die';
 
 # DEV NOTE: ARGUMENTS_MIN of 0 can be ignored, no such thing as negative number of args!
 use constant ARGUMENTS_MIN => my integer $TYPED_ARGUMENTS_MIN = 0;
-use constant ARGUMENTS_MAX => my integer $TYPED_ARGUMENTS_MAX = 1;
+use constant ARGUMENTS_MAX => my integer $TYPED_ARGUMENTS_MAX = 999;
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
@@ -34,8 +34,8 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         = @_;
     my string_hashref $rperl_source_group = { PMC => q{} };
 
-#    RPerl::diag( 'in OperatorVoid::Named::Exit->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
-#    RPerl::diag( 'in OperatorVoid::Named::Exit->ast_to_rperl__generate(), received $operator_void_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_void_named) . "\n" );
+#    RPerl::diag( 'in OperatorVoid::Named::Die->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in OperatorVoid::Named::Die->ast_to_rperl__generate(), received $operator_void_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_void_named) . "\n" );
 
     if ( ref $operator_void_named eq 'OperatorVoid_114' ) { # OperatorVoid -> OP01_NAMED_VOID_SCOLON
         $rperl_source_group->{PMC} .= $operator_void_named->{children}->[0]; # name semicolon
@@ -58,7 +58,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
                 . ', dying' . "\n";
         }
 
-#        RPerl::diag( 'in OperatorVoid::Named::Exit->ast_to_rperl__generate(), have $arguments = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments) . "\n" );
+#        RPerl::diag( 'in OperatorVoid::Named::Die->ast_to_rperl__generate(), have $arguments = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments) . "\n" );
         if (    ( ( ref $arguments->{children}->[0] ) eq 'ListElement_181' )
             and ( exists $arguments->{children}->[0]->{children}->[0] ) )
         {
@@ -73,17 +73,17 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             }
             if ( ( ref $arguments_subexpression ) eq 'SubExpression_134' ) {
                 die
-                    'ERROR ECVGEASRP05, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
+                    'ERROR ECVGEASRP07, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
                     . "\n"
-                    . 'Attempt to exit with dereferenced array, please exit with integer instead, dying'
+                    . 'Attempt to die with dereferenced array, please die with string instead, like this, dying'
                     . "\n";
             }
             elsif ( ( ref $arguments_subexpression ) eq 'SubExpression_136' )
             {
                 die
-                    'ERROR ECVGEASRP06, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
+                    'ERROR ECVGEASRP08, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
                     . "\n"
-                    . 'Attempt to exit with dereferenced hash, please exit with integer instead, dying'
+                    . 'Attempt to die with dereferenced hash, please die with string instead, like this, dying'
                     . "\n";
             }
         }
@@ -109,7 +109,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
         = { CPP =>
-            q{// <<< RP::O::S::OV::N::E __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
+            q{// <<< RP::O::S::OV::N::D __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
             . "\n" };
 
     #...
@@ -120,7 +120,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
         = { CPP =>
-            q{// <<< RP::O::S::OV::N::E __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
+            q{// <<< RP::O::S::OV::N::D __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
             . "\n" };
 
     #...

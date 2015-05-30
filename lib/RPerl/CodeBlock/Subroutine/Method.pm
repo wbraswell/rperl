@@ -48,7 +48,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     my string $semicolon          = $self->{children}->[7];
 
     $rperl_source_group->{PMC}
-        .= $our . q{ } . $return_type . q{ } . $name . q{ } . $equal_sub;
+        .= $our . q{ } . $return_type . q{ } . $name . q{ } . $equal_sub . "\n";
 
     if ( exists $optional_arguments->{children}->[0] ) {
         $rperl_source_subgroup = $optional_arguments->{children}->[0]
@@ -63,7 +63,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             $rperl_source_subgroup );
     }
 
-    $rperl_source_group->{PMC} .= $right_brace . $semicolon;
+    $rperl_source_group->{PMC} .= $right_brace . $semicolon . "\n";
     return $rperl_source_group;
 };
 

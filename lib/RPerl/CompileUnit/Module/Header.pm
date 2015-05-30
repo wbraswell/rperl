@@ -50,7 +50,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     $rperl_source_group->{PMC} .= $use_strict . "\n";
     $rperl_source_group->{PMC} .= $use_warnings . "\n";
     $rperl_source_group->{PMC} .= $use_rperl . "\n";
-    # DEV NOTE: as of v1.0b2, the hard-coded ' $VERSION = ' & ';' below are the only discarded tokens in the RPerl grammar,
+    # DEV NOTE, CORRELATION #14: the hard-coded ' $VERSION = ' & ';' below are the only discarded tokens in the RPerl grammar,
     # due to the need to differentiate between v-numbers and otherwise-identical normal numbers
     $rperl_source_group->{PMC} .= $our_keyword . ' $VERSION = ' . $version_number . q{;} . "\n";
 

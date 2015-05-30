@@ -10,4 +10,4 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OPERATIONS ]]]
-croak 'Not a real error, croaking';
+croak 'Make-believe error, ', q{FAKE_ERROR_CODE_2112}, ', croaking';

@@ -3,7 +3,7 @@ package RPerl::Operation::Expression;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_020;
+our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation);
@@ -20,50 +20,32 @@ our hashref $properties = {};
 
 our string_hashref_method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $rperl_source_group = { PMC => q{# <<< RP::O::E __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
-            . "\n" };
+    my string_hashref $rperl_source_group
+        = { PMC => q{} };
     my string_hashref $rperl_source_subgroup;
 
 #    RPerl::diag( 'in Expression->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-=WRONG CODE
-    # Conditional, OperatorVoid, VariableDeclaration, or VariableModification
-    my string $child0_class = ref $self->{children}->[0];
-    if (   ( $child0_class eq 'Statement_143' )
-        or ( $child0_class eq 'Statement_145' )
-        or ( $child0_class eq 'Statement_146' )
-        or ( $child0_class eq 'Statement_147' ) )
-    {
+    if ( ( ref $self ) eq 'Operation_76' ) {    # Operation -> Expression ';'
         $rperl_source_subgroup
             = $self->{children}->[0]->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
+        $rperl_source_group->{PMC} .= $self->{children}->[1];  # semicolon
     }
-
-    # Loop
-    elsif ( ( ref $self->{children}->[1] ) eq 'Statement_147' ) {
-
-        # optional LoopLabel COLON
-        if ( exists $self->{children}->[0]->{children}->[0] ) {
-
-            # NEED FIX: implement loop label
-            $rperl_source_group->{PMC}
-                .= q{# <<< RP::O::E __DUMMY_SOURCE_CODE PERLOPS_PERLTYPES, NEED IMPLEMENT LOOP LABEL!!! >>>}
-                . "\n";
-        }
+    elsif ( ( ref $self ) eq 'SubExpression_129' ) {  # SubExpression -> Expression
         $rperl_source_subgroup
-            = $self->{children}->[1]->ast_to_rperl__generate($modes);
+            = $self->{children}->[0]->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
-                . $child0_class
-                . ' found where Statement_143, Statement_144, Statement_145, Statement_146, or Statement_147 expected, dying'
+                . ( ref $self )
+                . ' found where Operation_76 or SubExpression_129 expected, dying'
         ) . "\n";
     }
-=cut
 
     return $rperl_source_group;
 };

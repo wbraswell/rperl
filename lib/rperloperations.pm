@@ -16,6 +16,8 @@ use Carp;
 
 use RPerl::Operation::Statement::OperatorVoid::Print;
 use RPerl::Operation::Statement::OperatorVoid::Named::Return;
+use RPerl::Operation::Statement::OperatorVoid::Named::Exit;
+use RPerl::Operation::Statement::OperatorVoid::Named::Die;
 use RPerl::Operation::Statement::OperatorVoid::Named::Croak;
 use RPerl::Operation::Statement::Conditional; # both an Operation & a Grammar Rule
 use RPerl::Operation::Statement::Loop;    # both an Operation & a Grammar Rule

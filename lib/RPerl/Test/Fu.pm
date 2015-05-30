@@ -45,16 +45,17 @@ our hashref $properties = {
 
 # [[[ OO METHODS & SUBROUTINES ]]]
 
-our unknown_method $quux = sub {
+our integer $fong = sub {
+    ( my integer $fong_in ) = @_;
+    return $fong_in;
+};
+
+#our unknown_method $quux = sub {
 
     #    ( my object $self) = @_;
     #    ( my object $self, my integer $howdy, my string_hashref $doody) = @_;
 
     #    $self->{plugh} = $self->{plugh} * 2;
-
-# START HERE: add 'die' to grammar
-# START HERE: add 'die' to grammar
-# START HERE: add 'die' to grammar
 
     #    foreach my scalartype $foooo (@{[0, 2, 5, 7]}) { print 'howdy'; }
 
@@ -97,6 +98,6 @@ our unknown_method $quux = sub {
     #    return((%{{a => 2}}));  # BAD, generator, outer parens as args, inner parens as subexpression; program_15_bad_06.pl
     #    return(((%{{a => 2}})));  # BAD, generator, outer parens as args, inner parens as subexpressions; program_15_bad_07.pl
     #    return((((%{{a => 2}}))));  # BAD, generator, outer parens as args, inner parens as subexpressions; program_15_bad_08.pl
-};
+#};
 
 1;    # end of class

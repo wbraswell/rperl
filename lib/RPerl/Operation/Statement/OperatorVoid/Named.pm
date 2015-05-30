@@ -19,8 +19,9 @@ our hashref $properties = {};
 # [[[ OO PROPERTIES, CLASS PROPERTY AKA PACKAGE VARIABLE ]]]
 our string_hashref $NAMES = {
     'return' => 'RPerl::Operation::Statement::OperatorVoid::Named::Return',
-    'croak'  => 'RPerl::Operation::Statement::OperatorVoid::Named::Croak',
     'exit'   => 'RPerl::Operation::Statement::OperatorVoid::Named::Exit',
+    'die'    => 'RPerl::Operation::Statement::OperatorVoid::Named::Die',
+    'croak'  => 'RPerl::Operation::Statement::OperatorVoid::Named::Croak',
 };
 
 # [[[ OO METHODS & SUBROUTINES ]]]

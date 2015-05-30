@@ -2,7 +2,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.000_998;
+    our $VERSION = 0.000_999;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -19,7 +19,7 @@
 }
 
 %token SHEBANG               = /(^#!\/(?:\w+\/)*perl)/                   # begin line, hash (octothorpe), bang, *NIX path to Perl; ex. '#!/usr/bin/perl'
-%token VERSION_NUMBER_ASSIGN = /\$VERSION\ =\ (\d\d?\.\d{3}\_\d{3});/    # $VERSION assign v-number, only capture v-number, not a normal number; ex. '$VERSION = 12.345_678;' returns '12.345_678'
+%token VERSION_NUMBER_ASSIGN = /\$VERSION\ =\ (\d\d?\.\d{3}\_\d{3});/    # DEV NOTE, CORRELATION #14: $VERSION assign v-number, only capture v-number, not a normal number; ex. '$VERSION = 12.345_678;' returns '12.345_678'
 %token MY                    = /(my)/                                    # 'my'
 %token LITERAL_NUMBER        = /(-?(((\d{1,2}_)?(\d{3}_)*\d{3})|\d{1,2})(\.((\d{3}(_\d{3})*(_\d{1,2})?)|\d{1,2}))?)/   # number w/ underscores; ex. '12_345_678.910_1'
 %token LITERAL_STRING        = /(('[^']+')|("[^"\@\$]*((\\n)|(\\t))+[^"\@\$]*")|(q{[^}]*}))/  # single quotes non-empty; double quotes non-empty w/out sigils & w/ newline or tab; or single q-braces
@@ -74,9 +74,9 @@
 %token OP11_COMPARE_LT_GT        = /(<=|>=|<|>|lt|gt|le|ge)\s/   # precedence 11 infix: comparison less than, greater than, less or equal, greater or equal
 %token OP19_VARIABLE_ASSIGN      = /(=)/                         # precedence 19 infix: assign
 %token OP01_PRINT                = /(print|printf)\s/            # precedence 01 prefix void: print to STDOUT, STDERR, or filehandle
-%token OP01_NAMED_VOID_SCOLON    = /(croak;|return;|exit;)/      # precedence 01 prefix void: "terms and list operators (leftward)" [1] AKA builtins, no return value
-%token OP01_NAMED_VOID_LPAREN    = /(return\()/                  # precedence 01 prefix void: same as above, except w/ parenthesis; return() is only exception, see ProhibitParensWithBuiltins.pm
-%token OP01_NAMED_VOID           = /(croak|return|exit)\s/       # precedence 01 prefix void: same as above, except accepts argument(s)
+%token OP01_NAMED_VOID_SCOLON    = /(return;|exit;|die;|croak;)/ # precedence 01 prefix void: "terms and list operators (leftward)" [1] AKA builtins, no return value
+%token OP01_NAMED_VOID_LPAREN    = /(return\(|croak\()/          # precedence 01 prefix void: same as above, except w/ parenthesis; ProhibitParensWithBuiltins excepts return(); RequireTidyCode & RequireCarping excepts croak() 
+%token OP01_NAMED_VOID           = /(return|exit|die|croak)\s/   # precedence 01 prefix void: same as above, except accepts argument(s)
 %token OP01_QW                   = /(qw\()/                      # precedence 01 prefix: quoted words
 %token OP01_OPEN                 = /(open)\s/                    # precedence 01 prefix: open filehandle
 %token OP01_CLOSE                = /(close)\s/                   # precedence 01 prefix: close filehandle
@@ -239,7 +239,7 @@ Method_69 => 'RPerl::CodeBlock::Subroutine::Method',  # Method -> 'our' TYPE_MET
 MethodArguments_73 => 'RPerl::CodeBlock::Subroutine::Method::Arguments',  # MethodArguments -> LPAREN_MY TYPE_SELF STAR-29 ')' OP19_VARIABLE_ASSIGN '@_;'
 MethodOrSubroutine_74 => 'RPerl::CodeBlock::Subroutine::Method',  # MethodOrSubroutine -> Method
 MethodOrSubroutine_75 => 'RPerl::CodeBlock::Subroutine',  # MethodOrSubroutine -> Subroutine
-Operation_76 => 'RPerl::Operation::Expression',
+Operation_76 => 'RPerl::Operation::Expression',  # Operation -> Expression ';'
 Operation_77 => 'RPerl::Operation::Statement',  # Operation -> Statement
 Operator_78 => 'RPerl::Operation::Expression::Operator::Print',
 Operator_79 => 'RPerl::Operation::Expression::Operator::Named',
@@ -279,11 +279,11 @@ OperatorVoid_117 => 'RPerl::Operation::Expression::Operator::Named',           #
 OperatorVoid_118 => 'RPerl::Operation::Statement::OperatorVoid::LoopControl',  # OperatorVoid -> OP19_LOOP_CONTROL_SCOLON
 OperatorVoid_119 => 'RPerl::Operation::Statement::OperatorVoid::LoopControl',  # OperatorVoid -> OP19_LOOP_CONTROL LoopLabel ';'
 Expression_124 => 'RPerl::Operation::Expression::Operator',
-Expression_125 => 'RPerl::Operation::Expression::SubroutineCall',
+Expression_125 => 'RPerl::Operation::Expression::SubroutineCall',  # Expression -> WordScoped LPAREN OPTIONAL-33 ')'
 Expression_126 => 'RPerl::Operation::Expression::ConstantCall',
 Expression_127 => 'RPerl::Operation::Expression::SubroutineCall::MethodCall',
 Expression_128 => 'RPerl::Operation::Expression::SubroutineCall::MethodCall::ConstructorCall',
-SubExpression_129 => 'RPerl::Operation::Expression',
+SubExpression_129 => 'RPerl::Operation::Expression',  # SubExpression -> Expression
 SubExpression_130 => 'RPerl::Operation::Expression::SubExpression::Literal::Undefined',
 SubExpression_131 => 'RPerl::Operation::Expression::SubExpression::Literal',      # SubExpression -> Literal
 SubExpression_132 => 'RPerl::Operation::Expression::SubExpression::Variable',

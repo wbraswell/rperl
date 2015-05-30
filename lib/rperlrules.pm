@@ -32,6 +32,7 @@ use RPerl::NonGenerator;
 use RPerl::Operation;
 use RPerl::Operation::Expression;
 use RPerl::Operation::Expression::Operator;
+use RPerl::Operation::Expression::SubroutineCall;
 use RPerl::Operation::Statement;
 use RPerl::Operation::Statement::OperatorVoid;
 use RPerl::Operation::Statement::OperatorVoid::Named;
