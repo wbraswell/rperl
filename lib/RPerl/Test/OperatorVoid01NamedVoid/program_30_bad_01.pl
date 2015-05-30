@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  die;' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  die' >>>
 
 # [[[ HEADER ]]]
 use strict;
