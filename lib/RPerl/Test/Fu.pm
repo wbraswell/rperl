@@ -52,9 +52,9 @@ our unknown_method $quux = sub {
 
     #    $self->{plugh} = $self->{plugh} * 2;
 
-# START HERE: continue with code generation for BAD returns below, add 'die' to grammar
-# START HERE: continue with code generation for BAD returns below, add 'die' to grammar
-# START HERE: continue with code generation for BAD returns below, add 'die' to grammar
+# START HERE: add 'die' to grammar
+# START HERE: add 'die' to grammar
+# START HERE: add 'die' to grammar
 
     #    foreach my scalartype $foooo (@{[0, 2, 5, 7]}) { print 'howdy'; }
 
@@ -81,22 +81,22 @@ our unknown_method $quux = sub {
     #    return((@{[2]}));  # BAD, generator, outer parens as args, inner parens as subexpression; program_11_bad_06.pl
     #    return(((@{[2]})));  # BAD, generator, outer parens as args, inner parens as subexpressions; program_11_bad_07.pl
     #    return((((@{[2]}))));  # BAD, generator, outer parens as args, inner parens as subexpressions; program_11_bad_08.pl
-    #    return {};  # GOOD
-    #    return {a => 2};  # GOOD
-    #    return {a => 2, b => 3};  # GOOD
-    #    return {a => 2, b => 3, c => 5, d => 7};  # GOOD
-    #    return %{{a => 2}};  # BAD, generator
-    #    return (%{{a => 2}});  # BAD, generator, parens as subexpression
-    #    return ((%{{a => 2}}));  # BAD, generator, parens as subexpressions
-    #    return (((%{{a => 2}})));  # BAD, generator, parens as subexpressions
-    #    return(%{{a => 2}});  # BAD, generator, parens as args
-    #    return((%{{a => 2}}));  # BAD, generator, outer parens as args, inner parens as subexpression
-    #    return(((%{{a => 2}})));  # BAD, generator, outer parens as args, inner parens as subexpressions
-    #    return((((%{{a => 2}}))));  # BAD, generator, outer parens as args, inner parens as subexpressions
-    #    return 2, 3;  # BAD, generator
-    #    return 2, 3, 5, 7;  # BAD, generator
-    #    return (2, 3);  # BAD, parser, parens as subexpression cannot be list with commas
-    #    return (2, 3, 5, 7);  # BAD, parser, parens as subexpression cannot be list with commas
+    #    return 2, 3;  # BAD, generator; program_12_bad_01.pl
+    #    return 2, 3, 5, 7;  # BAD, generator; program_12_bad_02.pl
+    #    return (2, 3);  # BAD, parser, parens as subexpression cannot be list with commas; program_12_bad_03.pl
+    #    return (2, 3, 5, 7);  # BAD, parser, parens as subexpression cannot be list with commas; program_12_bad_04.pl
+    #    return {};  # GOOD; program_14*
+    #    return {a => 2};  # GOOD; program_15*
+    #    return {a => 2, b => 3};  # GOOD; program_16*
+    #    return {a => 2, b => 3, c => 5, d => 7};  # GOOD; program_17*
+    #    return %{{a => 2}};  # BAD, generator; program_15_bad_01.pl
+    #    return (%{{a => 2}});  # BAD, generator, parens as subexpression; program_15_bad_02.pl
+    #    return ((%{{a => 2}}));  # BAD, generator, parens as subexpressions; program_15_bad_03.pl
+    #    return (((%{{a => 2}})));  # BAD, generator, parens as subexpressions; program_15_bad_04.pl
+    #    return(%{{a => 2}});  # BAD, generator, parens as args; program_15_bad_05.pl
+    #    return((%{{a => 2}}));  # BAD, generator, outer parens as args, inner parens as subexpression; program_15_bad_06.pl
+    #    return(((%{{a => 2}})));  # BAD, generator, outer parens as args, inner parens as subexpressions; program_15_bad_07.pl
+    #    return((((%{{a => 2}}))));  # BAD, generator, outer parens as args, inner parens as subexpressions; program_15_bad_08.pl
 };
 
 1;    # end of class
