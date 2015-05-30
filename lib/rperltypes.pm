@@ -3,7 +3,7 @@ package rperltypes;
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.001_030;
+our $VERSION = 0.001_040;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
@@ -478,14 +478,14 @@ sub types_enable {
         $rperltypes_h_filename;
     if ( not $open_close_retval ) {
         croak(
-            "ERROR XYZZY: Problem opening rperltypes_mode.h input file: $OS_ERROR, croaking"
+            "ERROR ERPTYMO00: Problem opening rperltypes_mode.h input file: $OS_ERROR, croaking"
         );
     }
     $open_close_retval = open my $TYPES_H_FILEHANDLE_OUT, '>',
         ( $rperltypes_h_filename . '.swap' );
     if ( not $open_close_retval ) {
         croak(
-            "ERROR XYZZY: Problem opening rperltypes_mode.h.swap output file: $OS_ERROR, croaking"
+            "ERROR ERPTYMO01: Problem opening rperltypes_mode.h.swap output file: $OS_ERROR, croaking"
         );
     }
 
@@ -522,18 +522,18 @@ sub types_enable {
                 $open_close_retval = close $TYPES_H_FILEHANDLE_IN;
                 if ( not $open_close_retval ) {
                     croak(
-                        "ERROR XYZZY: Problem while closing rperltypes_mode.h input file: $OS_ERROR, croaking"
+                        "ERROR ERPTYMO02: Problem while closing rperltypes_mode.h input file: $OS_ERROR, croaking"
                     );
                 }
 
                 $open_close_retval = close $TYPES_H_FILEHANDLE_OUT;
                 if ( not $open_close_retval ) {
                     croak(
-                        "ERROR XYZZY: Problem while closing rperltypes_mode.h.swap output file: $OS_ERROR, croaking"
+                        "ERROR ERPTYMO03: Problem while closing rperltypes_mode.h.swap output file: $OS_ERROR, croaking"
                     );
                 }
                 croak(
-                    'ERROR XYZZY: Found invalid __$types_current__TYPES definition in rperltypes_mode.h, neither properly disabled nor enabled, croaking'
+                    'ERROR ERPTYMO04: Found invalid __$types_current__TYPES definition in rperltypes_mode.h, neither properly disabled nor enabled, croaking'
                 );
             }
         }
@@ -543,29 +543,29 @@ sub types_enable {
     $open_close_retval = close $TYPES_H_FILEHANDLE_IN;
     if ( not $open_close_retval ) {
         croak(
-            "ERROR XYZZY: Problem while closing rperltypes_mode.h input file: $OS_ERROR, croaking"
+            "ERROR ERPTYMO05: Problem while closing rperltypes_mode.h input file: $OS_ERROR, croaking"
         );
     }
 
     $open_close_retval = close $TYPES_H_FILEHANDLE_OUT;
     if ( not $open_close_retval ) {
         croak(
-            "ERROR XYZZY: Problem while closing rperltypes_mode.h.swap output file: $OS_ERROR, croaking"
+            "ERROR ERPTYMO06: Problem while closing rperltypes_mode.h.swap output file: $OS_ERROR, croaking"
         );
     }
 
     if ($rperltypes_h_modified) {
         move( $rperltypes_h_filename, ( $rperltypes_h_filename . '.orig' ) )
             or croak(
-            "ERROR XYZZY: Problem moving (renaming) rperltypes_mode.h input file to rperltypes_mode.h.orig: $OS_ERROR, croaking"
+            "ERROR ERPTYMO07: Problem moving (renaming) rperltypes_mode.h input file to rperltypes_mode.h.orig: $OS_ERROR, croaking"
             );
         move( ( $rperltypes_h_filename . '.swap' ), $rperltypes_h_filename )
             or croak(
-            "ERROR XYZZY: Problem moving (renaming) rperltypes_mode.h.swap output file to rperltypes_mode.h: $OS_ERROR, croaking"
+            "ERROR ERPTYMO08: Problem moving (renaming) rperltypes_mode.h.swap output file to rperltypes_mode.h: $OS_ERROR, croaking"
             );
     }
 
-    return ();
+    return;
 
     #};
 }

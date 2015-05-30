@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use rperlnamespaces;
-our $VERSION = 0.001_001;
+our $VERSION = 0.001_010;
 
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
 
@@ -82,7 +82,7 @@ my $open_close_retval = open my $NAMESPACES_FILEHANDLE_OUT, '>',
     $namespaces_filename;
 if ( not $open_close_retval ) {
     croak(
-        'ERROR XYZZY: Problem opening output file ' . q{'}
+        'ERROR ERPNS00: Problem opening output file ' . q{'}
             . $namespaces_filename . q{': }
             . $OS_ERROR,
         'croaking'
@@ -94,7 +94,7 @@ print {$NAMESPACES_FILEHANDLE_OUT} $namespaces_generated;
 $open_close_retval = close $NAMESPACES_FILEHANDLE_OUT;
 if ( not $open_close_retval ) {
     croak(
-        'ERROR XYZZY: Problem closing output file ' . q{'}
+        'ERROR ERPNS01: Problem closing output file ' . q{'}
             . $namespaces_filename . q{': }
             . $OS_ERROR,
         'croaking'

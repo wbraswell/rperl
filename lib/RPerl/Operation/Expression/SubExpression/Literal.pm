@@ -46,4 +46,4 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     return $cpp_source_group;
 };
 
-1;
+1;  # end of class

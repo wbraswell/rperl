@@ -2,7 +2,7 @@
 package rperlrules;    # yes, yes it does
 use strict;
 use warnings;
-our $VERSION = 0.000_011;
+our $VERSION = 0.000_012;
 
 #use RPerl;
 
@@ -46,15 +46,17 @@ use RPerl::CodeBlock;
 
 use RPerl::Operation::Expression::SubExpression::Variable;
 use RPerl::Operation::Expression::SubExpression::Literal; # NEED ANSWER: not a full Grammar Rule, just a Production???
+use RPerl::Operation::Expression::SubExpression::Literal::Number;
+use RPerl::Operation::Expression::SubExpression::Literal::String;
+use RPerl::Operation::Expression::SubExpression::Parenthesis;
+use RPerl::Operation::Expression::SubExpression::ArrayDereference;
+use RPerl::Operation::Expression::SubExpression::HashDereference;
 use RPerl::Operation::Statement::VariableDeclaration;
 use RPerl::Operation::Statement::VariableModification;
 use RPerl::DataStructure::Array::ListElements;
 use RPerl::DataStructure::Array::ListElement;
 use RPerl::DataStructure::Hash::Entry;
 use RPerl::DataStructure::Hash::EntryTyped;
-use RPerl::Operation::Expression::SubExpression::Literal::Number;
-use RPerl::Operation::Expression::SubExpression::Literal::String;
-use RPerl::Operation::Expression::SubExpression::Parenthesis;
 
 # [[[ OBJECT-ORIENTED ]]]
 use RPerl::CompileUnit::Module::Class;

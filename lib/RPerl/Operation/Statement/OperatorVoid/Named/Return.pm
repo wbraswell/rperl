@@ -40,7 +40,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     if ( ref $operator_void_named eq 'OperatorVoid_114' ) { # OperatorVoid -> OP01_NAMED_VOID_SCOLON
         $rperl_source_group->{PMC} .= $operator_void_named->{children}->[0]; # name semicolon
     }
-    elsif ( ref $operator_void_named eq 'OperatorVoid_115' ) {
+    elsif ( ref $operator_void_named eq 'OperatorVoid_115' ) {  # OperatorVoid -> OP01_NAMED_VOID_LPAREN OPTIONAL-32 ')' ';'
 
 # DEV NOTE: if $optional_arguments is empty, will generate 'return();' which perltidy will change to 'return ();', both return undef, not empty array, so it's okay
         $rperl_source_group->{PMC}
@@ -60,6 +60,21 @@ our string_hashref_method $ast_to_rperl__generate = sub {
                     . ' for operation ' . q{'}
                     . NAME() . q{'}
                     . ', dying' . "\n";
+            }
+            RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_rperl__generate(), have $arguments = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments) . "\n" );
+            if ((( ref $arguments->{children}->[0] ) eq 'ListElement_181' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
+            {
+                my object $arguments_subexpression = $arguments->{children}->[0]->{children}->[0];
+                # look inside nested parenthesis-as-subexpressions
+                while ((ref $arguments_subexpression) eq 'SubExpression_137') {  # RPerl::Operation::Expression::SubExpression::Parenthesis
+                    $arguments_subexpression = $arguments_subexpression->{children}->[1];
+                }
+                if (( ref $arguments_subexpression ) eq 'SubExpression_134' ) {
+                    die 'ERROR ECVGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying' . "\n";
+                }
+                elsif (( ref $arguments_subexpression ) eq 'SubExpression_136' ) {
+                    die 'ERROR ECVGEASRP04, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying' . "\n";
+                }
             }
             my string_hashref $rperl_source_subgroup
                 = $arguments->ast_to_rperl__generate( $modes, $self );
@@ -85,6 +100,21 @@ our string_hashref_method $ast_to_rperl__generate = sub {
                 . ' for operation ' . q{'}
                 . NAME() . q{'}
                 . ', dying' . "\n";
+        }
+        RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_rperl__generate(), have $arguments = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments) . "\n" );
+        if ((( ref $arguments->{children}->[0] ) eq 'ListElement_181' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
+        {
+            my object $arguments_subexpression = $arguments->{children}->[0]->{children}->[0];
+            # look inside nested parenthesis-as-subexpressions
+            while ((ref $arguments_subexpression) eq 'SubExpression_137') {  # RPerl::Operation::Expression::SubExpression::Parenthesis
+                $arguments_subexpression = $arguments_subexpression->{children}->[1];
+            }
+            if (( ref $arguments_subexpression ) eq 'SubExpression_134' ) {
+                die 'ERROR ECVGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying' . "\n";
+            }
+            elsif (( ref $arguments_subexpression ) eq 'SubExpression_136' ) {
+                die 'ERROR ECVGEASRP04, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying' . "\n";
+            }
         }
         my string_hashref $rperl_source_subgroup
             = $arguments->ast_to_rperl__generate( $modes, $self );

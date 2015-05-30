@@ -31,7 +31,7 @@ our hashref $properties = {
 
     #    plugh => my integer $TYPED_plugh           = 23,
     #    xyzzy => my string $TYPED_xyzzy            = 'twenty-three',
-    thud => my integer_arrayref $TYPED_thud = []    #,
+    #    thud => my integer_arrayref $TYPED_thud = []    #,
 
 #    thud  => my integer_arrayref $TYPED_thud = [ 2 ]#,
 #    thud  => my integer_arrayref $TYPED_thud = [ 2, 4, 6, 8 ],
@@ -45,40 +45,58 @@ our hashref $properties = {
 
 # [[[ OO METHODS & SUBROUTINES ]]]
 
-our void_method $quux = sub {
+our unknown_method $quux = sub {
 
     #    ( my object $self) = @_;
-    ( my object $self, my integer $howdy, my string_hashref $doody) = @_;
+    #    ( my object $self, my integer $howdy, my string_hashref $doody) = @_;
 
     #    $self->{plugh} = $self->{plugh} * 2;
 
-    # START HERE: continue with code generation for BAD? returns below, add 'die' to grammar
-    # START HERE: continue with code generation for BAD? returns below, add 'die' to grammar
-    # START HERE: continue with code generation for BAD? returns below, add 'die' to grammar
+# START HERE: continue with code generation for BAD returns below, add 'die' to grammar
+# START HERE: continue with code generation for BAD returns below, add 'die' to grammar
+# START HERE: continue with code generation for BAD returns below, add 'die' to grammar
 
-    foreach my scalartype $foooo (@{[0, 2, 5, 7]}) { print 'howdy'; }
+    #    foreach my scalartype $foooo (@{[0, 2, 5, 7]}) { print 'howdy'; }
 
-    #    return;    # GOOD
-    #    return();  # GOOD, parens as args list
-    #    return ();  # BAD, empty parens as subexpression
-    #    return 2;  # GOOD
-    #    return(2);  # GOOD, parens as args list
-    #    return (2);  # GOOD, parens as subexpression
-    #    return -234_567.890_12;  # GOOD
-    #    return 'howdy';  # GOOD
-    #    return [];  # GOOD
-    #    return [2];  # GOOD
-    #    return [2, 3];  # GOOD
-    #    return [2, 3, 5, 7];  # GOOD
-        return @{[2]};  # BAD? generator, SubExpression_134
+    #    return;    # GOOD; program_00* Class_00*
+    #    return();  # GOOD, parens as args; program_01_good.pl
+    #    return ();  # BAD, empty parens as subexpression; program_01_bad_00.pl
+    #    return 0;  # GOOD; program_02*
+    #    return 1;  # GOOD; program_03*
+    #    return 23;  # GOOD; program_04*
+    #    return -1;  # GOOD; program_05*
+    #    return -234_567.890_12;  # GOOD; program_06*
+    #    return 'ahoy';  # GOOD; program_07*
+    #    return(2);  # GOOD, parens as args; program_08*
+    #    return (2);  # GOOD, parens as subexpression; program_09*
+    #    return [];  # GOOD; program_10*
+    #    return [2];  # GOOD; program_11*
+    #    return [2, 3];  # GOOD; program_12*
+    #    return [2, 3, 5, 7];  # GOOD; program_13*
+    #    return @{[2]};  # BAD, generator; program_11_bad_01.pl
+    #    return (@{[2]});  # BAD, generator, parens as subexpression; program_11_bad_02.pl
+    #    return ((@{[2]}));  # BAD, generator, parens as subexpressions; program_11_bad_03.pl
+    #    return (((@{[2]})));  # BAD, generator, parens as subexpressions; program_11_bad_04.pl
+    #    return(@{[2]});  # BAD, generator, parens as args; program_11_bad_05.pl
+    #    return((@{[2]}));  # BAD, generator, outer parens as args, inner parens as subexpression; program_11_bad_06.pl
+    #    return(((@{[2]})));  # BAD, generator, outer parens as args, inner parens as subexpressions; program_11_bad_07.pl
+    #    return((((@{[2]}))));  # BAD, generator, outer parens as args, inner parens as subexpressions; program_11_bad_08.pl
     #    return {};  # GOOD
     #    return {a => 2};  # GOOD
     #    return {a => 2, b => 3};  # GOOD
-    #    return {a => 2, b => 3, c => 5};  # GOOD
-    #    return 3, 4;  # BAD, generator
-    #    return (3, 4);  # BAD, parser
-    #    return 3, 4, 5, 6, 7;  # BAD, generator
-    #    return (3, 4, 5, 6, 7);  # BAD, parser
+    #    return {a => 2, b => 3, c => 5, d => 7};  # GOOD
+    #    return %{{a => 2}};  # BAD, generator
+    #    return (%{{a => 2}});  # BAD, generator, parens as subexpression
+    #    return ((%{{a => 2}}));  # BAD, generator, parens as subexpressions
+    #    return (((%{{a => 2}})));  # BAD, generator, parens as subexpressions
+    #    return(%{{a => 2}});  # BAD, generator, parens as args
+    #    return((%{{a => 2}}));  # BAD, generator, outer parens as args, inner parens as subexpression
+    #    return(((%{{a => 2}})));  # BAD, generator, outer parens as args, inner parens as subexpressions
+    #    return((((%{{a => 2}}))));  # BAD, generator, outer parens as args, inner parens as subexpressions
+    #    return 2, 3;  # BAD, generator
+    #    return 2, 3, 5, 7;  # BAD, generator
+    #    return (2, 3);  # BAD, parser, parens as subexpression cannot be list with commas
+    #    return (2, 3, 5, 7);  # BAD, parser, parens as subexpression cannot be list with commas
 };
 
 1;    # end of class
