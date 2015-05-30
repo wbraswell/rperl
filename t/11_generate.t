@@ -43,7 +43,7 @@ find(
        #        RPerl::diag('in 11_generate.t, have $file = ' . $file . "\n");
 
 #        if ( $file !~ m/[.]pm$/xms ) { # TEMP DEBUGGING, ONLY FIND *.pm, NOT *.pl
-#        if ( $file !~ m/.*LiteralNumber.*[.]p[ml]$/xms ) { # TEMP DEBUGGING, ONLY FIND LiteralNumber/*.pm & *.pl
+#        if ( $file !~ m/.*OperatorVoid01NamedVoid.*[.]p[ml]$/xms ) { # TEMP DEBUGGING, ONLY FIND OperatorVoid01NamedVoid/*.pm & *.pl
         if ( $file !~ m/[.]p[ml]$/xms ) {  # find all *.pm & *.pl files
             return;
         }
@@ -157,8 +157,19 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
             }
         }
 
-        my object $rperl_ast = RPerl::Parser::rperl_to_ast__parse($test_file);
+        # [[[ PARSE ]]]
+#        my object $rperl_ast = RPerl::Parser::rperl_to_ast__parse($test_file);  # UNGRACEFUL DIE; Tests were run but no plan was declared and done_testing() was not seen.
+#        my object $rperl_ast = eval { RPerl::Parser::rperl_to_ast__parse($test_file); };  # FAIL TEST; not ok
+        # GRACEFUL DIE
+        $eval_return_value = eval { RPerl::Parser::rperl_to_ast__parse($test_file); };
+        if ( not ( ( defined $eval_return_value ) and $eval_return_value ) ) { 
+                done_testing($number_of_tests_run);
+                croak 'ERROR ETE11GE02: Parser error in Generator test for file ' . q{'} . $test_file . q{'} . ', croaking';
+        }
+        my object $rperl_ast = $eval_return_value;
 
+
+        # [[[ GENERATE ]]]
         if ( $ops eq 'PERL' ) {
             $eval_return_value = eval {
                 RPerl::Generator::ast_to_rperl__generate( $rperl_ast,
