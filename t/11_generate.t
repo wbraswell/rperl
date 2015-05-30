@@ -8,7 +8,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.006_010;
+our $VERSION = 0.006_020;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -43,8 +43,8 @@ find(
        #        RPerl::diag('in 11_generate.t, have $file = ' . $file . "\n");
 
 #        if ( $file !~ m/[.]pm$/xms ) { # TEMP DEBUGGING, ONLY FIND *.pm, NOT *.pl
-#        if ( $file !~ m/.*OperatorVoid01NamedVoid.*[.]p[ml]$/xms ) { # TEMP DEBUGGING, ONLY FIND OperatorVoid01NamedVoid/*.pm & *.pl
-        if ( $file !~ m/[.]p[ml]$/xms ) {  # find all *.pm & *.pl files
+        if ( $file !~ m/.*OperatorVoid01NamedVoid.*[.]p[ml]$/xms ) { # TEMP DEBUGGING, ONLY FIND OperatorVoid01NamedVoid/*.pm & *.pl
+#        if ( $file !~ m/[.]p[ml]$/xms ) {  # find all *.pm & *.pl files
             return;
         }
 
@@ -158,16 +158,13 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         }
 
         # [[[ PARSE ]]]
-#        my object $rperl_ast = RPerl::Parser::rperl_to_ast__parse($test_file);  # UNGRACEFUL DIE; Tests were run but no plan was declared and done_testing() was not seen.
-#        my object $rperl_ast = eval { RPerl::Parser::rperl_to_ast__parse($test_file); };  # FAIL TEST; not ok
-        # GRACEFUL DIE
         $eval_return_value = eval { RPerl::Parser::rperl_to_ast__parse($test_file); };
         if ( not ( ( defined $eval_return_value ) and $eval_return_value ) ) { 
-                done_testing($number_of_tests_run);
-                croak 'ERROR ETE11GE02: Parser error in Generator test for file ' . q{'} . $test_file . q{'} . ', croaking';
+            ok( 0, 'Program or module ' . $test_file . ' parses with errors, code generation not reached, test aborted' );
+            $number_of_tests_run++;
+            next;
         }
         my object $rperl_ast = $eval_return_value;
-
 
         # [[[ GENERATE ]]]
         if ( $ops eq 'PERL' ) {
@@ -248,9 +245,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                         $number_of_tests_run++;
                     }
                     elsif ( $diff_line > 0 ) {
-                        ok( 0,
-                            'Program or module ' . $test_file . ' generates with errors, yes diff check, files differ beginning at line '
-                                . $diff_line );
+                        ok( 0, 'Program or module ' . $test_file . ' generates with errors, yes diff check, files differ beginning at line ' . $diff_line );
                         $number_of_tests_run++;
                     }
                     else {    # $diff_line < 0
