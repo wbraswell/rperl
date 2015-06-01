@@ -6,7 +6,7 @@ package RPerl::Algorithm::Math::GeometricAlgebra;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_005;
+our $VERSION = 0.000_006;
 
 # [[[ OO INHERITANCE ]]]
 use parent ('RPerl::Algorithm::Math');
@@ -29,11 +29,11 @@ our number $inner_product__vector_vector_euclidean = sub {
     # bound checking
     ( ( scalar @{$input_vector_1} ) == 4 )
         or croak(
-        'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_vector_1 is not of magnitude 4, croaking'
+        'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_vector_1 is not of length 4, croaking'
         );
     ( ( scalar @{$input_vector_2} ) == 4 )
         or croak(
-        'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_vector_2 is not of magnitude 4, croaking'
+        'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_vector_2 is not of length 4, croaking'
         );
 
     my number $return_value_number = 0.0;
@@ -65,11 +65,11 @@ our number_arrayref $inner_product__bivector_vector_euclidean = sub {
     # bound checking
     ( ( scalar @{$input_bivector} ) == 4 )
         or croak(
-        'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_bivector is not of magnitude 4, croaking'
+        'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_bivector is not of length 4, croaking'
         );
     ( ( scalar @{$input_vector} ) == 4 )
         or croak(
-        'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_vector is not of magnitude 4, croaking'
+        'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_vector is not of length 4, croaking'
         );
 
     my number_arrayref $return_value_vector = [];
@@ -97,11 +97,11 @@ our number_arrayref $outer_product__vector_vector_euclidean = sub {
     # bound checking
     ( ( scalar @{$input_vector_1} ) == 4 )
         or croak(
-        'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_vector_1 is not of magnitude 4, croaking'
+        'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_vector_1 is not of length 4, croaking'
         );
     ( ( scalar @{$input_vector_2} ) == 4 )
         or croak(
-        'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_vector_2 is not of magnitude 4, croaking'
+        'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_vector_2 is not of length 4, croaking'
         );
 
     my number_arrayref $return_value_bivector = [];
@@ -132,11 +132,11 @@ our number $outer_product__bivector_vector_euclidean = sub {
     # bound checking
     ( ( scalar @{$input_bivector} ) == 4 )
         or croak(
-        'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_bivector is not of magnitude 4, croaking'
+        'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_bivector is not of length 4, croaking'
         );
     ( ( scalar @{$input_vector} ) == 4 )
         or croak(
-        'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_vector is not of magnitude 4, croaking'
+        'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_vector is not of length 4, croaking'
         );
 
     my number $return_value_number;

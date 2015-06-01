@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_ERROR: 'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_bivector is not of magnitude 4' >>>
+# <<< EXECUTE_ERROR: 'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_bivector is not of length 4' >>>
 
 # [[[ HEADER ]]]
 use strict;
