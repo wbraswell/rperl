@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Program;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_020;
+our $VERSION = 0.001_030;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit);
@@ -57,11 +57,16 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     my object $subroutine_star = $self->{children}->[6];
     my object $operation_plus  = $self->{children}->[7];
 
-    $rperl_source_group->{PMC} = $shebang . "\n";
+    $rperl_source_group->{PMC} = $shebang;
     if ((exists $critic_optional->{children}->[0]) and (defined $critic_optional->{children}->[0])) {
+        $rperl_source_group->{PMC} .= q{  };
         $rperl_source_subgroup = $critic_optional->{children}->[0]->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
+    else {
+        $rperl_source_group->{PMC} .= "\n";
+    }
+ 
     if ($modes->{label} eq 'ON') {
         $rperl_source_group->{PMC} .= '# [[[ HEADER ]]]' . "\n";
     }

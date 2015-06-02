@@ -1,49 +1,55 @@
+# [[[ HEADER ]]]
 package RPerl::Operation::Statement::Loop;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_010;
-
-# [[[ SETUP ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
-use Scalar::Util 'blessed';
+our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement);
 
+# [[[ CRITICS ]]]
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
 # [[[ OO PROPERTIES ]]]
-# DEV NOTE: no active properties, this is a stub object for now, see children objects for active properties
 our hashref $properties = {};
 
 # [[[ OO METHODS & SUBROUTINES ]]]
 
-# TRANSLATE
-our object_method $ppi_to_rperl__translate = sub {
-    ( my string $class, my object $node) = @_;    # class method
-    my object $node_translated;
-    $node_translated
+our string_hashref_method $ast_to_rperl__generate = sub {
+    ( my object $self, my string_hashref $modes) = @_;
+    my string_hashref $rperl_source_group
         = {
-        STUB_AST_OBJECT => 'CREATED BY RPerl::Operation::Statement::Loop'
+        PMC => q{# <<< RP::O::S::L __DUMMY_SOURCE_CODE PERLOPS_PERLTYPES >>>}
+            . "\n"
         };
-    return ($node_translated);
+
+    return $rperl_source_group;
 };
 
-# GENERATE CPPOPS_PERLTYPES
-our string_method $rperl_to_cpp__generate__CPPOPS_PERLTYPES = sub {
-    ( my object $self ) = @_;                     # object method
-    my string $self_generated = q{};
-    $self_generated
-        .= 'STUB PERL CODE STRING, CREATED BY RPerl::Operation::Statement::Loop';
-    return ($self_generated);
+our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
+    ( my object $self, my string_hashref $modes) = @_;
+    my string_hashref $cpp_source_group
+        = {
+        CPP => q{// <<< RP::O::S::L __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
+            . "\n"
+        };
+
+    #...
+    return $cpp_source_group;
 };
 
-# GENERATE CPPOPS_CPPTYPES
-our string_method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
-    ( my object $self ) = @_;                     # object method
-    my string $self_generated = q{};
-    $self_generated
-        .= 'STUB CPP CODE STRING, CREATED BY RPerl::Operation::Statement::Loop';
-    return ($self_generated);
+our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
+    ( my object $self, my string_hashref $modes) = @_;
+    my string_hashref $cpp_source_group
+        = {
+        CPP => q{// <<< RP::O::S::L __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
+            . "\n"
+        };
+
+    #...
+    return $cpp_source_group;
 };
 
-1;
+1;    # end of class

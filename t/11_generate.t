@@ -30,7 +30,7 @@ use Perl::Tidy;
 # [[[ OPERATIONS ]]]
 
 # TEMP DEBUGGING, ONLY LOAD SPECIFIC FILES
-#my $test_files = { 'lib/RPerl/Test/OperatorVoid01NamedVoid/Class_00_Bad_01.pm' => undef };
+#my $test_files = { './lib/RPerl/Test/Critic/program_01_good.pl' => undef };
 
 #=DEBUG_DISABLE
 # NEED UPDATE: add string_arrayref_hashref_hashref type
@@ -249,7 +249,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                         $number_of_tests_run++;
                     }
                     elsif ( $diff_line > 0 ) {
-                        ok( 0, 'Program or module ' . $test_file . ' generates with errors, yes diff check, files differ beginning at line ' . $diff_line );
+                        ok( 0, 'Program or module ' . $test_file . ' generates without errors, yes diff check, files differ beginning at line ' . $diff_line );
                         $number_of_tests_run++;
                     }
                     else {    # $diff_line < 0

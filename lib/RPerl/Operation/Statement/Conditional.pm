@@ -1,52 +1,55 @@
+# [[[ HEADER ]]]
 package RPerl::Operation::Statement::Conditional;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_011;
-
-# [[[ SETUP ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
-use Scalar::Util 'blessed';
+our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement);
 
+# [[[ CRITICS ]]]
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
 # [[[ OO PROPERTIES ]]]
-our hashref $properties = {
-    if_condition     => my object $TYPED_condition                   = undef,
-    if_body          => my object $TYPED_body                        = undef,
-    elsif_conditions => my object_arrayref $TYPED_elsif_conditions = undef,
-    elsif_bodies     => my object_arrayref $TYPED_elsif_bodies     = undef,
-    else_condition   => my object $TYPED_else_condition              = undef,
-    else_body        => my object $TYPED_else_body                   = undef,
-};
+our hashref $properties = {};
 
 # [[[ OO METHODS & SUBROUTINES ]]]
-# TRANSLATE
-our object_method $ppi_to_rperl__translate = sub {
-    ( my string $class, my object $node) = @_;    # class method
-    my object $node_translated;
-    $node_translated = { STUB_AST_OBJECT =>
-            'CREATED BY RPerl::Operation::Statement::Conditional' };
-    return ($node_translated);
+
+our string_hashref_method $ast_to_rperl__generate = sub {
+    ( my object $self, my string_hashref $modes) = @_;
+    my string_hashref $rperl_source_group
+        = {
+        PMC => q{# <<< RP::O::S::C __DUMMY_SOURCE_CODE PERLOPS_PERLTYPES >>>}
+            . "\n"
+        };
+
+    return $rperl_source_group;
 };
 
-# GENERATE CPPOPS_PERLTYPES
-our string_method $rperl_to_cpp__generate__CPPOPS_PERLTYPES = sub {
-    ( my object $self ) = @_;                     # object method
-    my string $self_generated = q{};
-    $self_generated
-        .= 'STUB PERL CODE STRING, CREATED BY RPerl::Operation::Statement::Conditional';
-    return ($self_generated);
+our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
+    ( my object $self, my string_hashref $modes) = @_;
+    my string_hashref $cpp_source_group
+        = {
+        CPP => q{// <<< RP::O::S::C __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
+            . "\n"
+        };
+
+    #...
+    return $cpp_source_group;
 };
 
-# GENERATE CPPOPS_CPPTYPES
-our string_method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
-    ( my object $self ) = @_;                     # object method
-    my string $self_generated = q{};
-    $self_generated
-        .= 'STUB CPP CODE STRING, CREATED BY RPerl::Operation::Statement::Conditional';
-    return ($self_generated);
+our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
+    ( my object $self, my string_hashref $modes) = @_;
+    my string_hashref $cpp_source_group
+        = {
+        CPP => q{// <<< RP::O::S::C __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
+            . "\n"
+        };
+
+    #...
+    return $cpp_source_group;
 };
 
-1;
+1;    # end of class
