@@ -17,7 +17,7 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 
 our integer $foo = sub {
-    ( my string $bar, my integer $bat, my integer $baz) = @_;
+    ( my string $bar, my integer $bat, my integer $baz ) = @_;
     print $bar, "\n";
     return $bat + $baz;
 }

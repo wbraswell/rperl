@@ -30,7 +30,7 @@ use Perl::Tidy;
 # [[[ OPERATIONS ]]]
 
 # TEMP DEBUGGING, ONLY LOAD SPECIFIC FILES
-#my $test_files = { './lib/RPerl/Test/Critic/program_01_good.pl' => undef };
+#my $test_files = { './lib/RPerl/Test/Expression/program_10_good.pl' => undef };
 
 #=DEBUG_DISABLE
 # NEED UPDATE: add string_arrayref_hashref_hashref type
@@ -47,8 +47,8 @@ find(
 # START HERE: fix errors when re-enabling full search below, flesh out all exit/die/croak tests in Fu.pm
 
 #        if ( $file !~ m/[.]pm$/xms ) { # TEMP DEBUGGING, ONLY FIND *.pm, NOT *.pl
-        if ( $file !~ m/.*OperatorVoid01NamedVoid.*[.]p[ml]$/xms ) { # TEMP DEBUGGING, ONLY FIND OperatorVoid01NamedVoid/*.pm & *.pl
-#        if ( $file !~ m/[.]p[ml]$/xms ) {  # find all *.pm & *.pl files
+#        if ( $file !~ m/.*OperatorVoid01NamedVoid.*[.]p[ml]$/xms ) { # TEMP DEBUGGING, ONLY FIND OperatorVoid01NamedVoid/*.pm & *.pl
+        if ( $file !~ m/[.]p[ml]$/xms ) {  # find all *.pm & *.pl files
             return;
         }
 

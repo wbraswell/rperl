@@ -157,8 +157,8 @@ our integer $diff_check_file_vs_string = sub {
         # NEED FIX: add tidy C++ code
     }
 
-#    RPerl::diag('in Generator->diff_check_file_vs_string(), have $file_string_tidied = ' . "\n" . $file_string_tidied . "\n\n");
-#    RPerl::diag('in Generator->diff_check_file_vs_string(), have $source_string_tidied = ' . "\n" . $source_string_tidied . "\n\n");
+#    RPerl::diag('in Generator->diff_check_file_vs_string(), have $file_string_tidied = ' . "\n" . (q{=} x 60) . "\n" . $file_string_tidied . "\n" . (q{=} x 60) . "\n\n");
+#    RPerl::diag('in Generator->diff_check_file_vs_string(), have $source_string_tidied = ' . "\n" . (q{=} x 60) . "\n" . $source_string_tidied . "\n" . (q{=} x 60) . "\n\n");
 
     my string_arrayref $file_string_split
         = [ ( split /\n/xms, $file_string_tidied ) ];

@@ -16,5 +16,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-our integer $foo = sub { return 23; };
+our integer $foo = sub {
+    return 23;
+};
 foo()
