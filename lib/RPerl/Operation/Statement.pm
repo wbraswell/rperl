@@ -21,38 +21,34 @@ our hashref $properties = {};
 our string_hashref_method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $rperl_source_group = { PMC => q{} };
+    my object $child0 = $self->{children}->[0];
+    my string $child0_class = ref $child0;
     my string_hashref $rperl_source_subgroup;
 
 #    RPerl::diag( 'in Statement->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     # Conditional, OperatorVoid, VariableDeclaration, or VariableModification
-    my string $child0_class = ref $self->{children}->[0];
     if (   ( $child0_class eq 'Statement_143' )
         or ( $child0_class eq 'Statement_145' )
         or ( $child0_class eq 'Statement_146' )
         or ( $child0_class eq 'Statement_147' ) )
     {
         $rperl_source_subgroup
-            = $self->{children}->[0]->ast_to_rperl__generate($modes);
+            = $child0->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
     }
 
     # Loop
     elsif ( $child0_class eq 'Statement_144' ) {
-
-        # optional LoopLabel COLON
-        if ( exists $self->{children}->[0]->{children}->[0] ) {
-
-            # NEED FIX: implement loop label
-            $rperl_source_group->{PMC}
-                .= q{# <<< RP::O::S __DUMMY_SOURCE_CODE PERLOPS_PERLTYPES, NEED IMPLEMENT LOOP LABEL!!! >>>}
-                . "\n";
+        my $optional_loop_label = $child0->{children}->[0];
+        my $loop = $child0->{children}->[1];
+#        RPerl::diag( 'in Statement->ast_to_rperl__generate(), have $optional_loop_label = ' . "\n" . RPerl::Parser::rperl_ast__dump($optional_loop_label) . "\n" );
+        if ( exists $optional_loop_label->{children}->[0] ) {  # LoopLabel COLON
+            $rperl_source_group->{PMC} .= "\n" . $optional_loop_label->{children}->[0]->{children}->[0] . $optional_loop_label->{children}->[1]->{attr} . "\n";
         }
-        $rperl_source_subgroup
-            = $self->{children}->[0]->ast_to_rperl__generate($modes);
-        RPerl::Generator::source_group_append( $rperl_source_group,
-            $rperl_source_subgroup );
+        $rperl_source_subgroup = $loop->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
     else {
         die RPerl::Parser::rperl_rule__replace(

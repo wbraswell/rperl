@@ -98,6 +98,11 @@ our integer $fong = sub {
     #    return((%{{a => 2}}));  # BAD, generator, outer parens as args, inner parens as subexpression; program_15_bad_06.pl
     #    return(((%{{a => 2}})));  # BAD, generator, outer parens as args, inner parens as subexpressions; program_15_bad_07.pl
     #    return((((%{{a => 2}}))));  # BAD, generator, outer parens as args, inner parens as subexpressions; program_15_bad_08.pl
+    
+# START HERE: flesh out all exit/die/croak tests in Fu.pm
+# START HERE: flesh out all exit/die/croak tests in Fu.pm
+# START HERE: flesh out all exit/die/croak tests in Fu.pm
+
 #};
 
 1;    # end of class

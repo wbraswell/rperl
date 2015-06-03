@@ -1,0 +1,31 @@
+#!/usr/bin/perl
+# [[[ HEADER ]]]
+use strict;
+use warnings;
+use RPerl;
+our $VERSION = 0.001_000;
+
+# [[[ CRITICS ]]]
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)
+## no critic qw(RequireInterpolationOfMetachars)
+
+# [[[ OPERATIONS ]]]
+my number $foo = 9_123.456_789;
+my number_arrayref $bar = [ 21, 12, 43.23, 987.654_321 ];
+my string $bat = main::number_to_string( # <<< RP::O::E::SE::V __DUMMY_SOURCE_CODE PERLOPS_CPPTYPES >>>
+);
+my string $baz = ::number_arrayref_to_string( # <<< RP::O::E::SE::V __DUMMY_SOURCE_CODE PERLOPS_CPPTYPES >>>
+);
+my string $bax = ::string_arrayref_to_string( [ 'abc', '123', 'lalala' ] );
+
+# <<< RP::O::S::OV::P __DUMMY_SOURCE_CODE PERLOPS_PERLTYPES >>>
+# <<< RP::O::S::OV::P __DUMMY_SOURCE_CODE PERLOPS_PERLTYPES >>>
+# <<< RP::O::S::OV::P __DUMMY_SOURCE_CODE PERLOPS_PERLTYPES >>>
+# <<< RP::O::S::OV::P __DUMMY_SOURCE_CODE PERLOPS_PERLTYPES >>>
+# <<< RP::O::S::OV::P __DUMMY_SOURCE_CODE PERLOPS_PERLTYPES >>>
+# <<< RP::O::S::VM __DUMMY_SOURCE_CODE PERLOPS_PERLTYPES >>>
+# <<< RP::O::S::VM __DUMMY_SOURCE_CODE PERLOPS_PERLTYPES >>>
+# <<< RP::O::S::VM __DUMMY_SOURCE_CODE PERLOPS_PERLTYPES >>>
+# <<< RP::O::S::OV::P __DUMMY_SOURCE_CODE PERLOPS_PERLTYPES >>>
+# <<< RP::O::S::OV::P __DUMMY_SOURCE_CODE PERLOPS_PERLTYPES >>>
+# <<< RP::O::S::OV::P __DUMMY_SOURCE_CODE PERLOPS_PERLTYPES >>>

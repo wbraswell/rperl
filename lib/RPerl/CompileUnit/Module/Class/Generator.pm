@@ -47,8 +47,8 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         $rperl_source_group->{PMC} .= '# [[[ OO INHERITANCE ]]]' . "\n";
     }
     $rperl_source_group->{PMC}
-        .= $use_parent_qw_keyword
-        . $parent_name
+        .= $use_parent_qw_keyword . q{ }
+        . $parent_name . q{ }
         . $right_parenthesis
         . $use_parent_semicolon . "\n";
 

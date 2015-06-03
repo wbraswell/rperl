@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array::SubTypes;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.006_001;
+our $VERSION = 0.006_010;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd) # DEVELOPER DEFAULT 1b: allow unreachable & POD-commented code, must be after line 1
@@ -24,7 +24,8 @@ use parent ('RPerl::DataStructure::Array');
 
 # ref to array
 package arrayref;
-use parent -norequire, ('ref');
+#use parent -norequire, ('ref');  # NEED REMOVE: properly replaced by line below?
+use parent -norequire, ('RPerl::DataStructure::Array::Reference');
 use Carp;
 
 # [[[ TYPE-CHECKING ]]]

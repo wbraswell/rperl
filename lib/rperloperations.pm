@@ -10,7 +10,11 @@ use Carp;
 #use parent qw(RPerl::GrammarComponent)
 
 # [[[ EXPRESSIONS ]]]
-#use RPerl::Operation::Expression::Operator::FOO;
+use RPerl::Operation::Expression::Operator::NamedUnary;
+use RPerl::Operation::Expression::Operator::String::Concatenate;
+use RPerl::Operation::Expression::Operator::Logical::Negation;
+use RPerl::Operation::Expression::Operator::Math::AddSubtract;
+use RPerl::Operation::Expression::Operator::Compare::LessThanGreaterThan;
 
 # [[[ STATEMENTS ]]]
 

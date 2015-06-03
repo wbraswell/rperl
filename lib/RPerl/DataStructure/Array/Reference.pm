@@ -49,14 +49,14 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     }
 
     my string $left_bracket           = $self->{children}->[0];
-    my object $optional_list_elements = $self->{children}->[1];
+    my object $list_elements_optional = $self->{children}->[1];
     my string $right_bracket          = $self->{children}->[2];
 
     $rperl_source_group->{PMC} .= $left_bracket;
 
-    if ( exists $optional_list_elements->{children}->[0] ) {
+    if ( exists $list_elements_optional->{children}->[0] ) {
         my string_hashref $rperl_source_subgroup
-            = $optional_list_elements->{children}->[0]
+            = $list_elements_optional->{children}->[0]
             ->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );

@@ -59,7 +59,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     else {
         my string $left_brace        = $self->{children}->[0];
         my object $hash_entry        = $self->{children}->[1];
-        my object $star_hash_entries = $self->{children}->[2];
+        my object $hash_entries_star = $self->{children}->[2];
         my string $right_brace       = $self->{children}->[3];
 
         $rperl_source_group->{PMC} .= $left_brace;
@@ -68,21 +68,21 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
 
-        foreach my $star_hash_entry ( @{ $star_hash_entries->{children} } ) {
-            if ( ref $star_hash_entry eq 'TERMINAL' ) {
-                if ( $star_hash_entry->{attr} ne q{,} ) {
+        foreach my $hash_entry_star ( @{ $hash_entries_star->{children} } ) {
+            if ( ref $hash_entry_star eq 'TERMINAL' ) {
+                if ( $hash_entry_star->{attr} ne q{,} ) {
                     die RPerl::Parser::rperl_rule__replace(
                         q{ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '}
-                            . $star_hash_entry->{attr}
+                            . $hash_entry_star->{attr}
                             . q{' found where OP21_LIST_COMMA ',' expected, dying}
                     ) . "\n";
                 }
                 $rperl_source_group->{PMC}
-                    .= $star_hash_entry->{attr} . q{ };    # OP21_LIST_COMMA
+                    .= $hash_entry_star->{attr} . q{ };    # OP21_LIST_COMMA
             }
             else {
                 $rperl_source_subgroup
-                    = $star_hash_entry->ast_to_rperl__generate($modes);
+                    = $hash_entry_star->ast_to_rperl__generate($modes);
                 RPerl::Generator::source_group_append( $rperl_source_group,
                     $rperl_source_subgroup );
             }

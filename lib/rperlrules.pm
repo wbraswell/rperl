@@ -2,7 +2,7 @@
 package rperlrules;    # yes, yes it does
 use strict;
 use warnings;
-our $VERSION = 0.000_012;
+our $VERSION = 0.000_015;
 
 #use RPerl;
 
@@ -22,6 +22,7 @@ use RPerl::CompileUnit::Module::Package;
 use RPerl::CompileUnit::Include;
 use RPerl::CompileUnit::Critic;
 use RPerl::CompileUnit::Constant;
+use RPerl::CodeBlock;
 use RPerl::CodeBlock::Subroutine;
 use RPerl::CodeBlock::Subroutine::Method;
 use RPerl::CodeBlock::Subroutine::Method::Arguments;
@@ -49,9 +50,11 @@ use RPerl::CodeBlock;
 # [[[ VARIABLES & TYPES ]]]
 
 use RPerl::Operation::Expression::SubExpression::Variable;
+use RPerl::Operation::Expression::SubExpression::Variable::Retrieval;
 use RPerl::Operation::Expression::SubExpression::Literal; # NEED ANSWER: not a full Grammar Rule, just a Production???
 use RPerl::Operation::Expression::SubExpression::Literal::Number;
 use RPerl::Operation::Expression::SubExpression::Literal::String;
+use RPerl::Operation::Expression::SubExpression::Literal::Undefined;
 use RPerl::Operation::Expression::SubExpression::Parenthesis;
 use RPerl::Operation::Expression::SubExpression::ArrayDereference;
 use RPerl::Operation::Expression::SubExpression::HashDereference;
@@ -61,6 +64,7 @@ use RPerl::DataStructure::Array::ListElements;
 use RPerl::DataStructure::Array::ListElement;
 use RPerl::DataStructure::Hash::Entry;
 use RPerl::DataStructure::Hash::EntryTyped;
+use RPerl::DataType::TypeInner;
 
 # [[[ OBJECT-ORIENTED ]]]
 use RPerl::CompileUnit::Module::Class;

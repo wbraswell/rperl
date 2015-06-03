@@ -30,9 +30,9 @@ our integer_method $length = sub {
     else {
         return $length;
     }
-    my object $star_list_elements = $self->{children}->[1];
+    my object $list_elements_star = $self->{children}->[1];
 
-    foreach my object $list_element ( @{ $star_list_elements->{children} } ) {
+    foreach my object $list_element ( @{ $list_elements_star->{children} } ) {
 
 #        RPerl::diag( 'in Array::ListElements->length(), top of foreach() loop, have $list_element = ' . "\n" . RPerl::Parser::rperl_ast__dump($list_element) . "\n" );
         if ( ref $list_element ne 'TERMINAL' ) {
@@ -58,14 +58,14 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     }
 
     my object $list_element0      = $self->{children}->[0];
-    my object $star_list_elements = $self->{children}->[1];
+    my object $list_elements_star = $self->{children}->[1];
 
     my string_hashref $rperl_source_subgroup
         = $list_element0->ast_to_rperl__generate($modes);
     RPerl::Generator::source_group_append( $rperl_source_group,
         $rperl_source_subgroup );
 
-    foreach my object $list_element ( @{ $star_list_elements->{children} } ) {
+    foreach my object $list_element ( @{ $list_elements_star->{children} } ) {
 
 #        RPerl::diag( 'in Array::ListElements->ast_to_rperl__generate(), top of foreach() loop, have $list_element = ' . "\n" . RPerl::Parser::rperl_ast__dump($list_element) . "\n" );
         if ( ref $list_element eq 'TERMINAL' ) {

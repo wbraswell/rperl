@@ -9,11 +9,41 @@ our $VERSION = 0.001_000;
 use parent qw(RPerl::Operation::Expression::SubExpression::Literal);
 use RPerl::Operation::Expression::SubExpression::Literal;
 
-# [[[ CRITICS ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
-## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
-
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
 
-1;    # end of class
+# [[[ OO METHODS & SUBROUTINES ]]]
+
+our string_hashref_method $ast_to_rperl__generate = sub {
+    ( my object $self, my string_hashref $modes) = @_;
+    my string_hashref $rperl_source_group = { PMC => q{} };
+
+#    RPerl::diag( 'in Literal::Undefined->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+
+    my string $value           = $self->{children}->[0];
+    $rperl_source_group->{PMC} .= $value;
+
+    return $rperl_source_group;
+};
+
+our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
+    ( my object $self, my string_hashref $modes) = @_;
+    my string_hashref $cpp_source_group
+        = { CPP => q{// <<< RP::O::E::SE::L::U __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
+            . "\n" };
+
+    #...
+    return $cpp_source_group;
+};
+
+our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
+    ( my object $self, my string_hashref $modes) = @_;
+    my string_hashref $cpp_source_group
+        = { CPP => q{// <<< RP::O::E::SE::L::U __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
+            . "\n" };
+
+    #...
+    return $cpp_source_group;
+};
+
+1;

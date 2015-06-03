@@ -1,52 +1,90 @@
+# [[[ HEADER ]]]
 package RPerl::Operation::Statement::Loop::For;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_012;
-
-# [[[ SETUP ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
-use Scalar::Util 'blessed';
+our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement::Loop);
+use RPerl::Operation::Statement::Loop;
+
+# [[[ CRITICS ]]]
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OO PROPERTIES ]]]
-our hashref $properties = {
-    label           => my string $TYPED_label           = undef,
-    iterator_symbol => my string $TYPED_iterator_symbol = undef,
-    range_min       => my object $TYPED_range_min       = undef,
-    range_max       => my object $TYPED_range_max       = undef,
-    body            => my object $TYPED_body            = undef,
-};
+our hashref $properties = {};
 
 # [[[ OO METHODS & SUBROUTINES ]]]
 
-# TRANSLATE
-our object_method $ppi_to_rperl__translate = sub {
-    ( my string $class, my object $node) = @_;    # class method
-    my object $node_translated;
-    $node_translated = { STUB_AST_OBJECT =>
-            'CREATED BY RPerl::Operation::Statement::Loop::For' };
-    return ($node_translated);
+our string_hashref_method $ast_to_rperl__generate = sub {
+    ( my object $self, my string_hashref $modes) = @_;
+    my string_hashref $rperl_source_group = { PMC => q{} };
+
+#    RPerl::diag( 'in Loop::For->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+
+    my string $self_class = ref $self;
+
+    # unwrap LoopFor_158 from Loop_155
+    if ( $self_class eq 'Loop_155' ) {    # Loop -> LoopFor
+        $self = $self->{children}->[0];
+        $self_class = ref $self;
+    }
+
+    # LoopFor -> 'for' MY TYPE_INTEGER VARIABLE_SYMBOL LPAREN SubExpression OP17_LIST_RANGE SubExpression ')' CodeBlock
+    if ( $self_class eq 'LoopFor_158' ) {
+        my string $for             = $self->{children}->[0];
+        my string $my              = $self->{children}->[1];
+        my string $type_integer    = $self->{children}->[2];
+        my string $variable_symbol = $self->{children}->[3];
+        my string $left_paren      = $self->{children}->[4];
+        my object $subexpression0  = $self->{children}->[5];
+        my string $list_range      = $self->{children}->[6];
+        my object $subexpression1  = $self->{children}->[7];
+        my string $right_paren     = $self->{children}->[8];
+        my object $codeblock       = $self->{children}->[9];
+
+        $rperl_source_group->{PMC} .= $for . q{ } . $my . q{ } . $type_integer . q{ } . $variable_symbol . q{ } . $left_paren . q{ };
+        my object $rperl_source_subgroup = $subexpression0->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+        $rperl_source_group->{PMC} .= q{ } . $list_range . q{ };
+        $rperl_source_subgroup = $subexpression1->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+        $rperl_source_group->{PMC} .= q{ } . $right_paren . q{ };
+        $rperl_source_subgroup = $codeblock->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+    }
+    else {
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+                . $self_class
+                . ' found where LoopFor_158 expected, dying' )
+            . "\n";
+    }
+    return $rperl_source_group;
 };
 
-# GENERATE CPPOPS_PERLTYPES
-our string_method $rperl_to_cpp__generate__CPPOPS_PERLTYPES = sub {
-    ( my object $self ) = @_;                     # object method
-    my string $self_generated = q{};
-    $self_generated
-        .= 'STUB PERL CODE STRING, CREATED BY RPerl::Operation::Statement::Loop::For';
-    return ($self_generated);
+our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
+    ( my object $self, my string_hashref $modes) = @_;
+    my string_hashref $cpp_source_group
+        = { CPP =>
+            q{// <<< RP::O::S::L::F __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
+            . "\n" };
+
+    #...
+    return $cpp_source_group;
 };
 
-# GENERATE CPPOPS_CPPTYPES
-our string_method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
-    ( my object $self ) = @_;                     # object method
-    my string $self_generated = q{};
-    $self_generated
-        .= 'STUB CPP CODE STRING, CREATED BY RPerl::Operation::Statement::Loop::For';
-    return ($self_generated);
+our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
+    ( my object $self, my string_hashref $modes) = @_;
+    my string_hashref $cpp_source_group
+        = { CPP =>
+              q{// <<< RP::O::S::L::F __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
+            . "\n" };
+
+    #...
+    return $cpp_source_group;
 };
 
-1;
+1;    # end of class

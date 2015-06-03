@@ -29,8 +29,12 @@ use Perl::Tidy;
 
 # [[[ OPERATIONS ]]]
 
+# START HERE: create new test for Bubble as seen on the following line; solve failing tests
+# START HERE: create new test for Bubble as seen on the following line; solve failing tests
+# START HERE: create new test for Bubble as seen on the following line; solve failing tests
+
 # TEMP DEBUGGING, ONLY LOAD SPECIFIC FILES
-#my $test_files = { './lib/RPerl/Test/Expression/program_10_good.pl' => undef };
+#my $test_files = { './lib/RPerl/Algorithm/Sort/Bubble.pm' => undef };
 
 #=DEBUG_DISABLE
 # NEED UPDATE: add string_arrayref_hashref_hashref type
@@ -41,10 +45,6 @@ find(
         my $file = $File::Find::name;
 
        #        RPerl::diag('in 11_generate.t, have $file = ' . $file . "\n");
-
-# START HERE: fix errors when re-enabling full search below, flesh out all exit/die/croak tests in Fu.pm
-# START HERE: fix errors when re-enabling full search below, flesh out all exit/die/croak tests in Fu.pm
-# START HERE: fix errors when re-enabling full search below, flesh out all exit/die/croak tests in Fu.pm
 
 #        if ( $file !~ m/[.]pm$/xms ) { # TEMP DEBUGGING, ONLY FIND *.pm, NOT *.pl
 #        if ( $file !~ m/.*OperatorVoid01NamedVoid.*[.]p[ml]$/xms ) { # TEMP DEBUGGING, ONLY FIND OperatorVoid01NamedVoid/*.pm & *.pl
@@ -99,9 +99,8 @@ my integer $number_of_tests_run = 0;
 
 # [[[ PRIMARY RUNLOOP ]]]
 # loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
-foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
-
-#for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
+#foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
+for my $mode_id ( 0 .. 0 ) {  # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
 #    RPerl::diag "in 11_generate.t, top of for() loop, have \$mode_id = $mode_id\n";
     my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
     if ( $ENV{RPERL_VERBOSE} ) {
@@ -191,8 +190,34 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                 'in 11_generate.t, have defined and true $eval_return_value'
                     . "\n" );
             my string_hashref $source_group = $eval_return_value;
-            if (   ( $test_file =~ m/Good/xms )
-                or ( $test_file =~ m/good/xms ) )
+            if ( ( $test_file =~ m/Bad/xms ) or ( $test_file =~ m/bad/xms ) )
+            {    # file named *Bad* or *bad*
+                RPerl::diag(
+                    'in 11_generate.t, have $test_file NOT named *Good* or *good*'
+                        . "\n" );
+                RPerl::diag(
+                    'in 11_generate.t, have sort keys %{ $output_file_name_groups->[0] } = '
+                        . Dumper(
+                        [ sort keys %{ $output_file_name_groups->[0] } ]
+                        )
+                );
+                RPerl::diag(
+                    'in 11_generate.t, have sort keys %{ $source_group } = '
+                        . Dumper( [ sort keys %{$source_group} ] ) );
+
+                # skip test if dummy source code found
+                if ( not dummy_source_code_find($source_group) ) {
+                    ok( 0,
+                        'Program or module ' . $test_file . ' generates with errors'
+                    );
+                    $number_of_tests_run++;
+                }
+                else {
+                    RPerl::diag( 'in 11_generate.t, DUMMY SOURCE CODE found, from $source_group:' . "\n" . Dumper($source_group) . "\n" );
+                }
+            }
+#            elsif ( ( $test_file =~ m/Good/xms ) or ( $test_file =~ m/good/xms ) )
+            else  # default assuming files are good
             {
                 RPerl::diag(
                     'in 11_generate.t, have $test_file named *Good* or *good*'
@@ -274,31 +299,6 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                     else {
                         RPerl::diag( 'in 11_generate.t, DUMMY SOURCE CODE found, from $source_group:' . "\n" . Dumper($source_group) . "\n" );
                     }
-                }
-            }
-            else {    # file named *Bad* or *bad*
-                RPerl::diag(
-                    'in 11_generate.t, have $test_file NOT named *Good* or *good*'
-                        . "\n" );
-                RPerl::diag(
-                    'in 11_generate.t, have sort keys %{ $output_file_name_groups->[0] } = '
-                        . Dumper(
-                        [ sort keys %{ $output_file_name_groups->[0] } ]
-                        )
-                );
-                RPerl::diag(
-                    'in 11_generate.t, have sort keys %{ $source_group } = '
-                        . Dumper( [ sort keys %{$source_group} ] ) );
-
-                # skip test if dummy source code found
-                if ( not dummy_source_code_find($source_group) ) {
-                    ok( 0,
-                        'Program or module ' . $test_file . ' generates with errors'
-                    );
-                    $number_of_tests_run++;
-                }
-                else {
-                    RPerl::diag( 'in 11_generate.t, DUMMY SOURCE CODE found, from $source_group:' . "\n" . Dumper($source_group) . "\n" );
                 }
             }
         }

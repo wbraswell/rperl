@@ -27,24 +27,15 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     my string $key           = $self->{children}->[0];
     my string $fat_arrow     = $self->{children}->[1];
     my object $type_inner    = $self->{children}->[2];
-    my string $type_inner_my = $type_inner->{children}->[0];
-    my string $type_inner_type
-        = $type_inner->{children}->[1]->{children}->[0];
-    my string $type_inner_TYPED = $type_inner->{children}->[2];
-    my string $type_inner_name  = $type_inner->{children}->[3];
-    my string $type_inner_equal = $type_inner->{children}->[4];
     my object $subexpression    = $self->{children}->[3];
 
-    $rperl_source_group->{PMC}
-        .= $key . q{ }
-        . $fat_arrow . q{ }
-        . $type_inner_my . q{ }
-        . $type_inner_type . q{ }
-        . $type_inner_TYPED
-        . $type_inner_name . q{ }
-        . $type_inner_equal . q{ };
+    $rperl_source_group->{PMC} .= $key . q{ } . $fat_arrow . q{ };
 
-    my string_hashref $rperl_source_subgroup = $subexpression->ast_to_rperl__generate($modes);
+    my string_hashref $rperl_source_subgroup = $type_inner->ast_to_rperl__generate($modes);
+    RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+
+    $rperl_source_group->{PMC} .= q{ };
+    $rperl_source_subgroup = $subexpression->ast_to_rperl__generate($modes);
     RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
 
     return $rperl_source_group;

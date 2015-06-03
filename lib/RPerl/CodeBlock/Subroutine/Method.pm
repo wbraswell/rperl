@@ -42,28 +42,28 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     my string $return_type        = $self->{children}->[1];
     my string $name               = $self->{children}->[2];
     my string $equal_sub          = $self->{children}->[3];
-    my object $optional_arguments = $self->{children}->[4];
-    my object $star_operations    = $self->{children}->[5];
+    my object $arguments_optional = $self->{children}->[4];
+    my object $operations_star    = $self->{children}->[5];
     my string $right_brace        = $self->{children}->[6];
     my string $semicolon          = $self->{children}->[7];
 
     $rperl_source_group->{PMC}
         .= $our . q{ } . $return_type . q{ } . $name . q{ } . $equal_sub . "\n";
 
-    if ( exists $optional_arguments->{children}->[0] ) {
-        $rperl_source_subgroup = $optional_arguments->{children}->[0]
+    if ( exists $arguments_optional->{children}->[0] ) {
+        $rperl_source_subgroup = $arguments_optional->{children}->[0]
             ->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
     }
 
-    foreach my object $operation ( @{ $star_operations->{children} } ) {
+    foreach my object $operation ( @{ $operations_star->{children} } ) {
         $rperl_source_subgroup = $operation->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
     }
 
-    $rperl_source_group->{PMC} .= $right_brace . $semicolon . "\n";
+    $rperl_source_group->{PMC} .= $right_brace . $semicolon . "\n\n";
     return $rperl_source_group;
 };
 

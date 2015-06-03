@@ -27,18 +27,20 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
     my string $lparen_my               = $self->{children}->[0];
     my string $object_self             = $self->{children}->[1];
-    my object $star_arguments          = $self->{children}->[2];
+    my object $arguments_star          = $self->{children}->[2];
     my string $rparen                  = $self->{children}->[3];
     my string $equal                   = $self->{children}->[4];
     my string $at_underscore_semicolon = $self->{children}->[5];
 
     $rperl_source_group->{PMC} .= $lparen_my . q{ } . $object_self;
 
-    while ( exists $star_arguments->{children}->[0] ) {
-        my object $comma = shift @{ $star_arguments->{children} };
-        my object $my    = shift @{ $star_arguments->{children} };
-        my object $type  = shift @{ $star_arguments->{children} };
-        my object $name  = shift @{ $star_arguments->{children} };
+    # (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)*
+    # DEV NOTE: destructive to AST!!!
+    while ( exists $arguments_star->{children}->[0] ) {
+        my object $comma = shift @{ $arguments_star->{children} };
+        my object $my    = shift @{ $arguments_star->{children} };
+        my object $type  = shift @{ $arguments_star->{children} };
+        my object $name  = shift @{ $arguments_star->{children} };
         $rperl_source_group->{PMC}
             .= $comma->{attr} . q{ }
             . $my->{attr} . q{ }

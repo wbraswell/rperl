@@ -42,12 +42,12 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     }
     elsif ( ref $operator_void_named eq 'OperatorVoid_115' ) {  # OperatorVoid -> OP01_NAMED_VOID_LPAREN OPTIONAL-32 ')' ';'
 
-# DEV NOTE: if $optional_arguments is empty, will generate 'return();' which perltidy will change to 'return ();', both return undef, not empty array, so it's okay
+# DEV NOTE: if $arguments_optional is empty, will generate 'return();' which perltidy will change to 'return ();', both return undef, not empty array, so it's okay
         $rperl_source_group->{PMC}
             .= $operator_void_named->{children}->[0];    # name lparen
-        my object $optional_arguments = $operator_void_named->{children}->[1];
-        if ( exists $optional_arguments->{children}->[0] ) {
-            my object $arguments       = $optional_arguments->{children}->[0];
+        my object $arguments_optional = $operator_void_named->{children}->[1];
+        if ( exists $arguments_optional->{children}->[0] ) {
+            my object $arguments       = $arguments_optional->{children}->[0];
             my integer $argument_count = $arguments->length();
             if ( $argument_count > ARGUMENTS_MAX() ) {
                 die

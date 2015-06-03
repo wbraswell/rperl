@@ -16,10 +16,33 @@ our hashref $properties = {};
 
 our string_hashref_method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $rperl_source_group = { PMC => q{# <<< RP::O::E::SE::V __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
-            . "\n" };
+    my string_hashref $rperl_source_group = { PMC => q{} };
 
-    RPerl::diag( 'in Variable->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in Variable->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+    
+    my string $self_class = ref $self;
+
+    # unwrap Variable_166 from SubExpression_132, VariableOrLiteral_213, or VariableOrLiteralOrWord_215
+    if (($self_class eq 'SubExpression_132') or ($self_class eq 'VariableOrLiteral_213') or ($self_class eq 'VariableOrLiteralOrWord_215')) {
+        $self = $self->{children}->[0];
+    }
+    
+    $self_class = ref $self;
+    if ($self_class eq 'Variable_166') {  # Variable -> VARIABLE_SYMBOL STAR-42
+        my string $symbol = $self->{children}->[0];
+        $rperl_source_group->{PMC} .= $symbol;
+        foreach my object $variable_retrieval (@{$self->{children}->[1]->{children}}) {
+            my string_hashref $rperl_source_subgroup = $variable_retrieval->ast_to_rperl__generate($modes);
+            RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup ); 
+        }
+    }
+    else {
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+                . ( $self_class )
+                . ' found where SubExpression_132, VariableOrLiteral_213, VariableOrLiteralOrWord_215, or Variable_166 expected, dying'
+        ) . "\n"; 
+    }
 
     return $rperl_source_group;
 };
