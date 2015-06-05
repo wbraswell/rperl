@@ -30,9 +30,9 @@ use Perl::Tidy;
 # [[[ OPERATIONS ]]]
 
 # TEMP DEBUGGING, ONLY LOAD SPECIFIC FILES
-my $test_files = { './lib/RPerl/Test/TypeCheckingTrace/all_types_good.pl' => undef };
+#my $test_files = { './lib/RPerl/Test/VariableRetrieval/program_04_good.pl' => undef };
 
-=DEBUG_DISABLE
+#=DEBUG_DISABLE
 # NEED UPDATE: add string_arrayref_hashref_hashref type
 #my string_arrayref_hashref_hashref $test_files = {};
 my $test_files = {};
@@ -71,7 +71,7 @@ find(
     $RPerl::INCLUDE_PATH . '/RPerl/Test'
 );
 
-=cut
+#=cut
 
 #RPerl::diag( 'in 11_generate.t, have $test_files = ' . "\n" . Dumper($test_files) . "\n" );
 
