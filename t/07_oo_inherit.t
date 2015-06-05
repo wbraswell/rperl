@@ -14,19 +14,11 @@ use RPerl::Test;
 
 BEGIN {
     if ( $ENV{RPERL_VERBOSE} ) {
-        diag(
-            '[[[ Beginning Object-Oriented Inheritance Pre-Test Loading, RPerl Type System ]]]'
-        );
+        diag('[[[ Beginning Object-Oriented Inheritance Pre-Test Loading, RPerl Type System ]]]');
     }
-    lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
-    lives_and(
-        sub { use_ok('RPerl::Algorithm::Sort::Bubble'); },
-        q{use_ok('RPerl::Algorithm::Sort::Bubble') lives}
-    );
-    lives_and(
-        sub { use_ok('RPerl::Algorithm::Sort::Bubble_cpp'); },
-        q{use_ok('RPerl::Algorithm::Sort::Bubble_cpp') lives}
-    );
+    lives_and( sub { use_ok('RPerl'); },                              q{use_ok('RPerl') lives} );
+    lives_and( sub { use_ok('RPerl::Algorithm::Sort::Bubble'); },     q{use_ok('RPerl::Algorithm::Sort::Bubble') lives} );
+    lives_and( sub { use_ok('RPerl::Algorithm::Sort::Bubble_cpp'); }, q{use_ok('RPerl::Algorithm::Sort::Bubble_cpp') lives} );
 }
 
 # [[[ PRIMARY RUNLOOP ]]]
@@ -36,14 +28,11 @@ BEGIN {
 # loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
 foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
-#for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
-#    RPerl::diag "in 07_oo_inherit.t, top of for() loop, have \$mode_id = $mode_id\n";
+    #for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
+    #    RPerl::diag "in 07_oo_inherit.t, top of for() loop, have \$mode_id = $mode_id\n";
     my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
     if ( $ENV{RPERL_VERBOSE} ) {
-        Test::More::diag( 
-                  '[[[ Beginning RPerl Object-Oriented Inheritance Tests, '
-                . RPerl::Test::mode_description($mode)
-                . ' ]]]' );
+        Test::More::diag( '[[[ Beginning RPerl Object-Oriented Inheritance Tests, ' . RPerl::Test::mode_description($mode) . ' ]]]' );
     }
 
     # [[[ MODE SETUP ]]]
@@ -53,14 +42,10 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     my $types               = $mode->{types};
     my string $mode_tagline = RPerl::Test::mode_tagline($mode);
 
-    lives_ok( sub { RPerl::Test::mode_enable($mode) },
-        q{mode '} . RPerl::Test::mode_description($mode) . q{' enabled} );
+    lives_ok( sub { RPerl::Test::mode_enable($mode) }, q{mode '} . RPerl::Test::mode_description($mode) . q{' enabled} );
 
     if ( $ops eq 'PERL' ) {
-        lives_and(
-            sub { require_ok('RPerl::Algorithm::Sort::Bubble'); },
-            q{require_ok('RPerl::Algorithm::Sort::Bubble') lives}
-        );
+        lives_and( sub { require_ok('RPerl::Algorithm::Sort::Bubble'); }, q{require_ok('RPerl::Algorithm::Sort::Bubble') lives} );
     }
     else {
         if ( $types eq 'CPP' ) {
@@ -70,29 +55,15 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         }
 
         # C++ use, load, link
-        lives_and(
-            sub { require_ok('RPerl::Algorithm::Sort::Bubble_cpp'); },
-            q{require_ok('RPerl::Algorithm::Sort::Bubble_cpp') lives}
-        );
-        lives_ok(
-            sub { RPerl::Algorithm::Sort::Bubble_cpp::cpp_load(); },
-            q{RPerl::Algorithm::Sort::Bubble_cpp::cpp_load() lives}
-        );
+        lives_and( sub { require_ok('RPerl::Algorithm::Sort::Bubble_cpp'); }, q{require_ok('RPerl::Algorithm::Sort::Bubble_cpp') lives} );
+        lives_ok( sub { RPerl::Algorithm::Sort::Bubble_cpp::cpp_load(); }, q{RPerl::Algorithm::Sort::Bubble_cpp::cpp_load() lives} );
     }
 
     foreach my string $type (qw(DataType__Integer DataType__Number DataType__String DataStructure__Array DataStructure__Hash Algorithm__Sort__Bubble)) {
         lives_and(
             sub {
-                is( $RPerl::MODES->{ main->can(
-                            'RPerl__' . $type . '__MODE_ID'
-                        )->()
-                        }->{ops},
-                    $ops,
-                    'main::RPerl__'
-                        . $type
-                        . '__MODE_ID() ops returns '
-                        . $ops
-                );
+                is( $RPerl::MODES->{ main->can( 'RPerl__' . $type . '__MODE_ID' )->() }->{ops},
+                    $ops, 'main::RPerl__' . $type . '__MODE_ID() ops returns ' . $ops );
             },
             'main::RPerl__' . $type . '__MODE_ID() lives'
         );
@@ -143,10 +114,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     can_ok( 'RPerl::Algorithm::Sort::Bubble', 'uninherited__Sort' );
     lives_and(    # TOOIN06
         sub {
-            is( uninherited__Sort('Claws'),
-                'Sort::uninherited__Sort() RULES! ' . $mode_tagline,
-                q{TOOIN06 uninherited__Sort('Claws') returns correct value}
-            );
+            is( uninherited__Sort('Claws'), 'Sort::uninherited__Sort() RULES! ' . $mode_tagline, q{TOOIN06 uninherited__Sort('Claws') returns correct value} );
         },
         q{TOOIN06 uninherited__Sort('Claws') lives}
     );
@@ -165,10 +133,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     can_ok( 'RPerl::Algorithm::Sort::Bubble', 'uninherited' );
     lives_and(    # TOOIN08
         sub {
-            is( uninherited('Wolverine'),
-                'Bubble::uninherited() ROCKS! ' . $mode_tagline,
-                q{TOOIN08 uninherited('Wolverine') returns correct value}
-            );
+            is( uninherited('Wolverine'), 'Bubble::uninherited() ROCKS! ' . $mode_tagline, q{TOOIN08 uninherited('Wolverine') returns correct value} );
         },
         q{TOOIN08 uninherited('Wolverine') lives}
     );

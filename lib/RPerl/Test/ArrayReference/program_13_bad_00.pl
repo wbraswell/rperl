@@ -17,11 +17,7 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 
 my arrayref $unknown_array = [
-    my integer $TYPED_unknown_array_0           = -23,
+    my integer $TYPED_unknown_array_0         = -23,
     my number_arrayref $TYPED_unknown_array_1 = [ 42 / 1_701, 21.12, 2_112.23 ],
-    my string_hashref $TYPED_unknown_array_2  = {
-        alpha => 'strings are scalars, too',
-        beta  => 'hello world',
-        gamma => 'last one'
-    },
+    my string_hashref $TYPED_unknown_array_2  = { alpha => 'strings are scalars, too', beta => 'hello world', gamma => 'last one' },
 ];

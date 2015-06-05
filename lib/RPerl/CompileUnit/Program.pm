@@ -59,7 +59,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
     $rperl_source_group->{PMC} = $shebang;
     if ((exists $critic_optional->{children}->[0]) and (defined $critic_optional->{children}->[0])) {
-        $rperl_source_group->{PMC} .= q{  };
+        $rperl_source_group->{PMC} .= q{ };
         $rperl_source_subgroup = $critic_optional->{children}->[0]->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }

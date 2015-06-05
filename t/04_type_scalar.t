@@ -19,17 +19,12 @@ my $ERROR_MAX = 0.00000001;
 
 BEGIN {
     if ( $ENV{RPERL_VERBOSE} ) {
-        Test::More::diag(
-            "[[[ Beginning Scalar Type Pre-Test Loading, RPerl Type System ]]]"
-        );
+        Test::More::diag("[[[ Beginning Scalar Type Pre-Test Loading, RPerl Type System ]]]");
     }
     lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
 
     foreach my string $type (qw(Integer Number String)) {
-        lives_and(
-            sub { use_ok( 'RPerl::DataType::' . $type . '_cpp' ); },
-            q{use_ok('RPerl::DataType::' . $type . '_cpp') lives}
-        );
+        lives_and( sub { use_ok( 'RPerl::DataType::' . $type . '_cpp' ); }, q{use_ok('RPerl::DataType::' . $type . '_cpp') lives} );
     }
 }
 
@@ -38,7 +33,7 @@ BEGIN {
 sub string_dumperify {
     ( my string $input_string ) = @_;
 
-#    RPerl::diag "in 04_type_scalar.t string_dumperify(), received have \$input_string =\n$input_string\n\n";
+    #    RPerl::diag "in 04_type_scalar.t string_dumperify(), received have \$input_string =\n$input_string\n\n";
     $input_string = Dumper( [$input_string] );
     $input_string =~ s/^\s+|\s+$//xmsg;    # strip leading whitespace
     my @input_string_split = split "\n", $input_string;
@@ -53,13 +48,11 @@ sub string_dumperify {
 # loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
 foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
-#for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
-#    RPerl::diag "in 04_type_scalar.t, top of for() loop, have \$mode_id = $mode_id\n";
+    #for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
+    #    RPerl::diag "in 04_type_scalar.t, top of for() loop, have \$mode_id = $mode_id\n";
     my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
     if ( $ENV{RPERL_VERBOSE} ) {
-        Test::More::diag( '[[[ Beginning RPerl Scalar Type Tests, '
-                . RPerl::Test::mode_description($mode)
-                . ' ]]]' );
+        Test::More::diag( '[[[ Beginning RPerl Scalar Type Tests, ' . RPerl::Test::mode_description($mode) . ' ]]]' );
     }
 
     # [[[ MODE SETUP ]]]
@@ -74,8 +67,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     #    RPerl::diag('have $types = ' . $types . "\n");
     #    RPerl::diag('have $mode_tagline = ' . $mode_tagline . "\n");
 
-    lives_ok( sub { RPerl::Test::mode_enable($mode) },
-        q{mode '} . RPerl::Test::mode_description($mode) . q{' enabled} );
+    lives_ok( sub { RPerl::Test::mode_enable($mode) }, q{mode '} . RPerl::Test::mode_description($mode) . q{' enabled} );
 
     foreach my string $type (qw(Integer Number String)) {
         if ( $ops eq 'CPP' ) {
@@ -84,44 +76,29 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
             delete $main::{ 'RPerl__DataType__' . $type . '__MODE_ID' };
 
             my $package = 'RPerl::DataType::' . $type . '_cpp';
-            lives_and(
-                sub { require_ok($package); },
-                'require_ok(' . $package . ') lives'
-            );
+            lives_and( sub { require_ok($package); }, 'require_ok(' . $package . ') lives' );
 
-#            lives_and( sub { use_ok($package); }, 'use_ok(' . $package . ') lives' );
+            #            lives_and( sub { use_ok($package); }, 'use_ok(' . $package . ') lives' );
 
-            lives_ok( sub { eval( $package . '::cpp_load();' ) },
-                $package . '::cpp_load() lives' );
+            lives_ok( sub { eval( $package . '::cpp_load();' ) }, $package . '::cpp_load() lives' );
         }
 
-        lives_ok(
-            sub { main->can( 'RPerl__DataType__' . $type . '__MODE_ID' ) },
-            'main::RPerl__DataType__' . $type . '__MODE_ID() exists'
-        );
+        lives_ok( sub { main->can( 'RPerl__DataType__' . $type . '__MODE_ID' ) }, 'main::RPerl__DataType__' . $type . '__MODE_ID() exists' );
 
-# NEED ANSWER: why does direct-calling *MODE_ID() always return 0, but main->can(...) and eval(...) returns correct values?
-#        RPerl::diag('have $type = ' . $type . "\n");
-#        my string $eval_string = 'main::RPerl__DataType__' . $type . '__MODE_ID();';
-#        RPerl::diag('have $eval_string = ' . $eval_string . "\n");
-#        my string $eval_retval = eval($eval_string);
-#        RPerl::diag('have $eval_retval = ' . $eval_retval . "\n");
-#        RPerl::diag q{have main::RPerl__DataType__Integer__MODE_ID() = '} . main::RPerl__DataType__Integer__MODE_ID() . "'\n";
-#        RPerl::diag q{have main::RPerl__DataType__Number__MODE_ID() = '} . main::RPerl__DataType__Number__MODE_ID() . "'\n";
-#        RPerl::diag q{have main::RPerl__DataType__String__MODE_ID() = '} . main::RPerl__DataType__String__MODE_ID() . "'\n";
+        # NEED ANSWER: why does direct-calling *MODE_ID() always return 0, but main->can(...) and eval(...) returns correct values?
+        #        RPerl::diag('have $type = ' . $type . "\n");
+        #        my string $eval_string = 'main::RPerl__DataType__' . $type . '__MODE_ID();';
+        #        RPerl::diag('have $eval_string = ' . $eval_string . "\n");
+        #        my string $eval_retval = eval($eval_string);
+        #        RPerl::diag('have $eval_retval = ' . $eval_retval . "\n");
+        #        RPerl::diag q{have main::RPerl__DataType__Integer__MODE_ID() = '} . main::RPerl__DataType__Integer__MODE_ID() . "'\n";
+        #        RPerl::diag q{have main::RPerl__DataType__Number__MODE_ID() = '} . main::RPerl__DataType__Number__MODE_ID() . "'\n";
+        #        RPerl::diag q{have main::RPerl__DataType__String__MODE_ID() = '} . main::RPerl__DataType__String__MODE_ID() . "'\n";
 
         lives_and(
             sub {
-                is( $RPerl::MODES->{ main->can(
-                            'RPerl__DataType__' . $type . '__MODE_ID'
-                        )->()
-                        }->{ops},
-                    $ops,
-                    'main::RPerl__DataType__'
-                        . $type
-                        . '__MODE_ID() ops returns '
-                        . $ops
-                );
+                is( $RPerl::MODES->{ main->can( 'RPerl__DataType__' . $type . '__MODE_ID' )->() }->{ops},
+                    $ops, 'main::RPerl__DataType__' . $type . '__MODE_ID() ops returns ' . $ops );
             },
             'main::RPerl__DataType__' . $type . '__MODE_ID() lives'
         );
@@ -133,189 +110,159 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
     throws_ok(    # TIV00
         sub { integer_to_string() },
-        "/(EIV00.*$mode_tagline)|(Usage.*integer_to_string)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(EIV00.*$mode_tagline)|(Usage.*integer_to_string)/",    # DEV NOTE: 2 different error messages, RPerl & C
         q{TIV00 integer_to_string() throws correct exception}
     );
-    throws_ok(                                                  # TIV01
+    throws_ok(                                                    # TIV01
         sub { integer_to_string(undef) },
         "/EIV00.*$mode_tagline/",
         q{TIV01 integer_to_string(undef) throws correct exception}
     );
-    lives_and(                                                  # TIV02
+    lives_and(                                                    # TIV02
         sub {
-            is( integer_to_string(0), '0',
-                q{TIV02 integer_to_string(0) returns correct value} );
+            is( integer_to_string(0), '0', q{TIV02 integer_to_string(0) returns correct value} );
         },
         q{TIV02 integer_to_string(0) lives}
     );
-    lives_and(                                                  # TIV03
+    lives_and(                                                    # TIV03
         sub {
-            is( integer_to_string(-0), '0',
-                q{TIV03 integer_to_string(-0) returns correct value} );
+            is( integer_to_string(-0), '0', q{TIV03 integer_to_string(-0) returns correct value} );
         },
         q{TIV03 integer_to_string(-0) lives}
     );
-    lives_and(                                                  # TIV04
+    lives_and(                                                    # TIV04
         sub {
-            is( integer_to_string(3), '3',
-                q{TIV04 integer_to_string(3) returns correct value} );
+            is( integer_to_string(3), '3', q{TIV04 integer_to_string(3) returns correct value} );
         },
         q{TIV04 integer_to_string(3) lives}
     );
-    lives_and(                                                  # TIV05
+    lives_and(                                                    # TIV05
         sub {
-            is( integer_to_string(-17), '-17',
-                q{TIV05 integer_to_string(-17) returns correct value} );
+            is( integer_to_string(-17), '-17', q{TIV05 integer_to_string(-17) returns correct value} );
         },
         q{TIV05 integer_to_string(-17) lives}
     );
-    throws_ok(                                                  # TIV06
+    throws_ok(                                                    # TIV06
         sub { integer_to_string(-17.3) },
         "/EIV01.*$mode_tagline/",
         q{TIV06 integer_to_string(-17.3) throws correct exception}
     );
-    throws_ok(                                                  # TIV07
+    throws_ok(                                                    # TIV07
         sub { integer_to_string('-17.3') },
         "/EIV01.*$mode_tagline/",
         q{TIV07 integer_to_string('-17.3') throws correct exception}
     );
-    throws_ok(                                                  # TIV08
+    throws_ok(                                                    # TIV08
         sub { integer_to_string( [3] ) },
         "/EIV01.*$mode_tagline/",
         q{TIV08 integer_to_string([3]) throws correct exception}
     );
-    throws_ok(                                                  # TIV09
+    throws_ok(                                                    # TIV09
         sub { integer_to_string( { a_key => 3 } ) },
         "/EIV01.*$mode_tagline/",
         q{TIV09 integer_to_string({a_key => 3}) throws correct exception}
     );
-    lives_and(                                                  # TIV10
+    lives_and(                                                    # TIV10
         sub {
-            is( integer_to_string(34_567_890), '34_567_890',
-                q{TIV10 integer_to_string(34_567_890) returns correct value}
-            );
+            is( integer_to_string(34_567_890), '34_567_890', q{TIV10 integer_to_string(34_567_890) returns correct value} );
         },
         q{TIV10 integer_to_string(34_567_890) lives}
     );
-    lives_and(                                                  # TIV11
+    lives_and(                                                    # TIV11
         sub {
-            is( integer_to_string(-34_567_890), '-34_567_890',
-                q{TIV11 integer_to_string(-34_567_890) returns correct value}
-            );
+            is( integer_to_string(-34_567_890), '-34_567_890', q{TIV11 integer_to_string(-34_567_890) returns correct value} );
         },
         q{TIV11 integer_to_string(-34_567_890) lives}
     );
-    lives_and(                                                  # TIV12
+    lives_and(                                                    # TIV12
         sub {
-            is( integer_to_string(234_567_890), '234_567_890',
-                q{TIV12 integer_to_string(234_567_890) returns correct value}
-            );
+            is( integer_to_string(234_567_890), '234_567_890', q{TIV12 integer_to_string(234_567_890) returns correct value} );
         },
         q{TIV12 integer_to_string(234_567_890) lives}
     );
-    lives_and(                                                  # TIV13
+    lives_and(                                                    # TIV13
         sub {
-            is( integer_to_string(-234_567_890), '-234_567_890',
-                q{TIV13 integer_to_string(-234_567_890) returns correct value}
-            );
+            is( integer_to_string(-234_567_890), '-234_567_890', q{TIV13 integer_to_string(-234_567_890) returns correct value} );
         },
         q{TIV13 integer_to_string(-234_567_890) lives}
     );
-    lives_and(                                                  # TIV14
+    lives_and(                                                    # TIV14
         sub {
-            is( integer_to_string(1_234_567_890), '1_234_567_890',
-                q{TIV14 integer_to_string(1_234_567_890) returns correct value}
-            );
+            is( integer_to_string(1_234_567_890), '1_234_567_890', q{TIV14 integer_to_string(1_234_567_890) returns correct value} );
         },
         q{TIV14 integer_to_string(1_234_567_890) lives}
     );
-    lives_and(                                                  # TIV15
+    lives_and(                                                    # TIV15
         sub {
-            is( integer_to_string(-1_234_567_890), '-1_234_567_890',
-                q{TIV15 integer_to_string(-1_234_567_890) returns correct value}
-            );
+            is( integer_to_string(-1_234_567_890), '-1_234_567_890', q{TIV15 integer_to_string(-1_234_567_890) returns correct value} );
         },
         q{TIV15 integer_to_string(-1_234_567_890) lives}
     );
-    throws_ok(                                                  # TIV16
+    throws_ok(                                                    # TIV16
         sub {
-            integer_to_string(
-                -1_234_567_890_000_000_000_000_000_000_000_000);
+            integer_to_string(-1_234_567_890_000_000_000_000_000_000_000_000);
         },
         "/EIV01.*$mode_tagline/",
         q{TIV16 integer_to_string(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
     );
-    lives_and(                                                  # TIV20
+    lives_and(                                                    # TIV20
         sub {
-            is( integer__typetest0(),
-                ( 3 + $mode_id ),
-                q{TIV20 integer__typetest0() returns correct value}
-            );
+            is( integer__typetest0(), ( 3 + $mode_id ), q{TIV20 integer__typetest0() returns correct value} );
         },
         q{TIV20 integer__typetest0() lives}
     );
-    throws_ok(                                                  # TIV30
+    throws_ok(                                                    # TIV30
         sub { integer__typetest1() },
         "/(EIV00.*$mode_tagline)|(Usage.*integer__typetest1)/"
-        ,    # DEV NOTE: 2 different error messages, RPerl & C
+        ,                                                         # DEV NOTE: 2 different error messages, RPerl & C
         q{TIV30 integer__typetest1() throws correct exception}
     );
-    throws_ok(    # TIV31
+    throws_ok(                                                    # TIV31
         sub { integer__typetest1(undef) },
         "/EIV00.*$mode_tagline/",
         q{TIV31 integer__typetest1(undef) throws correct exception}
     );
-    lives_and(    # TIV32
+    lives_and(                                                    # TIV32
         sub {
-            is( integer__typetest1(3),
-                ( ( 3 * 2 ) + $mode_id ),
-                q{TIV32 integer__typetest1(3) returns correct value}
-            );
+            is( integer__typetest1(3), ( ( 3 * 2 ) + $mode_id ), q{TIV32 integer__typetest1(3) returns correct value} );
         },
         q{TIV32 integer__typetest1(3) lives}
     );
-    lives_and(    # TIV33
+    lives_and(                                                    # TIV33
         sub {
-            is( integer__typetest1(-17),
-                ( ( -17 * 2 ) + $mode_id ),
-                q{TIV33 integer__typetest1(-17) returns correct value}
-            );
+            is( integer__typetest1(-17), ( ( -17 * 2 ) + $mode_id ), q{TIV33 integer__typetest1(-17) returns correct value} );
         },
         q{TIV33 integer__typetest1(-17) lives}
     );
-    throws_ok(    # TIV34
+    throws_ok(                                                    # TIV34
         sub { integer__typetest1(-17.3) },
         "/EIV01.*$mode_tagline/",
         q{TIV34 integer__typetest1(-17.3) throws correct exception}
     );
-    throws_ok(    # TIV35
+    throws_ok(                                                    # TIV35
         sub { integer__typetest1('-17.3') },
         "/EIV01.*$mode_tagline/",
         q{TIV35 integer__typetest1('-17.3') throws correct exception}
     );
-    throws_ok(    # TIV36
+    throws_ok(                                                    # TIV36
         sub { integer__typetest1( [3] ) },
         "/EIV01.*$mode_tagline/",
         q{TIV36 integer__typetest1([3]) throws correct exception}
     );
-    throws_ok(    # TIV37
+    throws_ok(                                                    # TIV37
         sub { integer__typetest1( { a_key => 3 } ) },
         "/EIV01.*$mode_tagline/",
         q{TIV37 integer__typetest1({a_key => 3}) throws correct exception}
     );
-    lives_and(    # TIV38
+    lives_and(                                                    # TIV38
         sub {
-            is( integer__typetest1(-234_567_890),
-                ( ( -234_567_890 * 2 ) + $mode_id ),
-                q{TIV38 integer__typetest1(-234_567_890) returns correct value}
-            );
+            is( integer__typetest1(-234_567_890), ( ( -234_567_890 * 2 ) + $mode_id ), q{TIV38 integer__typetest1(-234_567_890) returns correct value} );
         },
         q{TIV38 integer__typetest1(-234_567_890) lives}
     );
-    throws_ok(    # TIV39
+    throws_ok(                                                    # TIV39
         sub {
-            integer__typetest1(
-                -1_234_567_890_000_000_000_000_000_000_000_000);
+            integer__typetest1(-1_234_567_890_000_000_000_000_000_000_000_000);
         },
         "/EIV01.*$mode_tagline/",
         q{TIV39 integer__typetest1(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
@@ -327,130 +274,102 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
     throws_ok(    # TNV00
         sub { number_to_string() },
-        "/(ENV00.*$mode_tagline)|(Usage.*number_to_string)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(ENV00.*$mode_tagline)|(Usage.*number_to_string)/",    # DEV NOTE: 2 different error messages, RPerl & C
         q{TNV00 number_to_string() throws correct exception}
     );
-    throws_ok(                                                 # TNV01
+    throws_ok(                                                   # TNV01
         sub { number_to_string(undef) },
         "/ENV00.*$mode_tagline/",
         q{TNV01 number_to_string(undef) throws correct exception}
     );
-    lives_and(                                                 # TNV02
+    lives_and(                                                   # TNV02
         sub {
-            is( number_to_string(3), '3',
-                q{TNV02 number_to_string(3) returns correct value} );
+            is( number_to_string(3), '3', q{TNV02 number_to_string(3) returns correct value} );
         },
         q{TNV02 number_to_string(3) lives}
     );
-    lives_and(                                                 # TNV03
+    lives_and(                                                   # TNV03
         sub {
-            is( number_to_string(-17), '-17',
-                q{TNV03 number_to_string(-17) returns correct value} );
+            is( number_to_string(-17), '-17', q{TNV03 number_to_string(-17) returns correct value} );
         },
         q{TNV03 number_to_string(-17) lives}
     );
-    lives_and(                                                 # TNV04
+    lives_and(                                                   # TNV04
         sub {
-            is( number_to_string(-17.3),
-                '-17.3',
-                q{TNV04 number_to_string(-17.3) returns correct value} );
+            is( number_to_string(-17.3), '-17.3', q{TNV04 number_to_string(-17.3) returns correct value} );
         },
         q{TNV04 number_to_string(-17.3) lives}
     );
-    throws_ok(                                                 # TNV05
+    throws_ok(                                                   # TNV05
         sub { number_to_string('-17.3') },
         "/ENV01.*$mode_tagline/",
         q{TNV05 number_to_string('-17.3') throws correct exception}
     );
-    throws_ok(                                                 # TNV06
+    throws_ok(                                                   # TNV06
         sub { number_to_string( [3] ) },
         "/ENV01.*$mode_tagline/",
         q{TNV06 number_to_string([3]) throws correct exception}
     );
-    throws_ok(                                                 # TNV07
+    throws_ok(                                                   # TNV07
         sub { number_to_string( { a_key => 3 } ) },
         "/ENV01.*$mode_tagline/",
         q{TNV07 number_to_string({a_key => 3}) throws correct exception}
     );
-    lives_and(                                                 # TNV08
+    lives_and(                                                   # TNV08
         sub {
-            is( number_to_string(
-                    3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679
-                ),
+            is( number_to_string(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679),
                 '3.141_592_653_589_79',
                 q{TNV08 number_to_string(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679) returns correct value}
             );
         },
         q{TNV08 number_to_string(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679) lives}
     );
-    lives_and(                                                 # TNV09
+    lives_and(                                                   # TNV09
         sub {
-            is( number_to_string(1_234_567.890_123_456),
-                '1_234_567.890_123_46',
-                q{TNV09 number_to_string(1_234_567.890_123_456) returns correct value}
-            );
+            is( number_to_string(1_234_567.890_123_456), '1_234_567.890_123_46', q{TNV09 number_to_string(1_234_567.890_123_456) returns correct value} );
         },
         q{TNV09 number_to_string(1_234_567.890_123_456) lives}
     );
-    lives_and(                                                 # TNV10
+    lives_and(                                                   # TNV10
         sub {
-            is( number_to_string(123_456_789.678_90),
-                '123_456_789.678_9',
-                q{TNV10 number_to_string(123_456_789.678_90) returns correct value}
-            );
+            is( number_to_string(123_456_789.678_90), '123_456_789.678_9', q{TNV10 number_to_string(123_456_789.678_90) returns correct value} );
         },
         q{TNV10 number_to_string(123_456_789.678_90) lives}
     );
-    lives_and(                                                 # TNV11
+    lives_and(                                                   # TNV11
         sub {
-            is( number_to_string(123_456_789.0),
-                '123_456_789',
-                q{TNV11 number_to_string(123_456_789.0) returns correct value}
-            );
+            is( number_to_string(123_456_789.0), '123_456_789', q{TNV11 number_to_string(123_456_789.0) returns correct value} );
         },
         q{TNV11 number_to_string(123_456_789.0) lives}
     );
-    lives_and(                                                 # TNV12
+    lives_and(                                                   # TNV12
         sub {
-            is( number_to_string(0.011_111_122_22),
-                '0.011_111_122_22',
-                q{TNV12 number_to_string(0.011_111_122_22) returns correct value}
-            );
+            is( number_to_string(0.011_111_122_22), '0.011_111_122_22', q{TNV12 number_to_string(0.011_111_122_22) returns correct value} );
         },
         q{TNV12 number_to_string(0.011_111_122_22) lives}
     );
-    lives_and(                                                 # TNV13
+    lives_and(                                                   # TNV13
         sub {
-            is( number_to_string(.011_111_122_22),
-                '0.011_111_122_22',
-                q{TNV13 number_to_string(.011_111_122_22) returns correct value}
-            );
+            is( number_to_string(.011_111_122_22), '0.011_111_122_22', q{TNV13 number_to_string(.011_111_122_22) returns correct value} );
         },
         q{TNV13 number_to_string(.011_111_122_22) lives}
     );
-    lives_and(                                                 # TNV14
+    lives_and(                                                   # TNV14
         sub {
-            is( number_to_string(-10.011_111_122_22),
-                '-10.011_111_122_22',
-                q{TNV14 number_to_string(-10.011_111_122_22) returns correct value}
-            );
+            is( number_to_string(-10.011_111_122_22), '-10.011_111_122_22', q{TNV14 number_to_string(-10.011_111_122_22) returns correct value} );
         },
         q{TNV14 number_to_string(-10.011_111_122_22) lives}
     );
-    lives_and(                                                 # TNV15
+    lives_and(                                                   # TNV15
         sub {
-            is( number_to_string(-103.011_111_122_22),
-                '-103.011_111_122_22',
-                q{TNV15 number_to_string(-103.011_111_122_22) returns correct value}
-            );
+            is( number_to_string(-103.011_111_122_22), '-103.011_111_122_22', q{TNV15 number_to_string(-103.011_111_122_22) returns correct value} );
         },
         q{TNV15 number_to_string(-103.011_111_122_22) lives}
     );
-    lives_and(                                                 # TNV20
+    lives_and(                                                   # TNV20
         sub {
             cmp_ok(
-                abs( number__typetest0() - ( 3.14285714285714 + $mode_id ) )
-                ,    ## PERLTIDY BUG comma on newline
+                abs( number__typetest0() - ( 3.14285714285714 + $mode_id ) ),    ## PERLTIDY BUG comma on newline
                 '<',
                 $ERROR_MAX,
                 q{TNV20 number__typetest0() returns correct value}
@@ -458,65 +377,55 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         },
         q{TNV20 number__typetest0() lives}
     );
-    throws_ok(       # TNV30
+    throws_ok(                                                                   # TNV30
         sub { number__typetest1() },
         "/(ENV00.*$mode_tagline)|(Usage.*number__typetest1)/"
-        ,            # DEV NOTE: 2 different error messages, RPerl & C
+        ,                                                                        # DEV NOTE: 2 different error messages, RPerl & C
         q{TNV30 number__typetest1() throws correct exception}
     );
-    throws_ok(       # TNV31
+    throws_ok(                                                                   # TNV31
         sub { number__typetest1(undef) },
         "/ENV00.*$mode_tagline/",
         q{TNV31 number__typetest1(undef) throws correct exception}
     );
-    lives_and(       # TNV32
+    lives_and(                                                                   # TNV32
         sub {
-            is( number__typetest1(3),
-                ( ( 3 * 2 ) + $mode_id ),
-                q{TNV32 number__typetest1(3) returns correct value}
-            );
+            is( number__typetest1(3), ( ( 3 * 2 ) + $mode_id ), q{TNV32 number__typetest1(3) returns correct value} );
         },
         q{TNV32 number__typetest1(3) lives}
     );
-    lives_and(       # TNV33
+    lives_and(                                                                   # TNV33
         sub {
-            is( number__typetest1(-17),
-                ( ( -17 * 2 ) + $mode_id ),
-                q{TNV33 number__typetest1(-17) returns correct value}
-            );
+            is( number__typetest1(-17), ( ( -17 * 2 ) + $mode_id ), q{TNV33 number__typetest1(-17) returns correct value} );
         },
         q{TNV33 number__typetest1(-17) lives}
     );
-    lives_and(       # TNV34
+    lives_and(                                                                   # TNV34
         sub {
-            is( number__typetest1(-17.3),
-                ( ( -17.3 * 2 ) + $mode_id ),
-                q{TNV34 number__typetest1(-17.3) returns correct value}
-            );
+            is( number__typetest1(-17.3), ( ( -17.3 * 2 ) + $mode_id ), q{TNV34 number__typetest1(-17.3) returns correct value} );
         },
         q{TNV34 number__typetest1(-17.3) lives}
     );
-    throws_ok(       # TNV35
+    throws_ok(                                                                   # TNV35
         sub { number__typetest1('-17.3') },
         "/ENV01.*$mode_tagline/",
         q{TNV35 number__typetest1('-17.3') throws correct exception}
     );
-    throws_ok(       # TNV36
+    throws_ok(                                                                   # TNV36
         sub { number__typetest1( [3] ) },
         "/ENV01.*$mode_tagline/",
         q{TNV36 number__typetest1([3]) throws correct exception}
     );
-    throws_ok(       # TNV37
+    throws_ok(                                                                   # TNV37
         sub { number__typetest1( { a_key => 3 } ) },
         "/ENV01.*$mode_tagline/",
         q{TNV37 number__typetest1({a_key => 3}) throws correct exception}
     );
-    lives_and(       # TNV38
+    lives_and(                                                                   # TNV38
         sub {
             cmp_ok(
-                abs(number__typetest1(
-                        3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679
-                    ) - ( ( 3.14159265358979 * 2 ) + $mode_id )
+                abs(number__typetest1(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679)
+                        - ( ( 3.14159265358979 * 2 ) + $mode_id )
                 ),
                 '<',
                 $ERROR_MAX,
@@ -532,60 +441,54 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
     throws_ok(    # TPV00
         sub { string_to_string() },
-        "/(EPV00.*$mode_tagline)|(Usage.*string_to_string)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(EPV00.*$mode_tagline)|(Usage.*string_to_string)/",    # DEV NOTE: 2 different error messages, RPerl & C
         q{TPV00 string_to_string() throws correct exception}
     );
-    throws_ok(                                                 # TPV01
+    throws_ok(                                                   # TPV01
         sub { string_to_string(undef) },
         "/EPV00.*$mode_tagline/",
         q{TPV01 string_to_string(undef) throws correct exception}
     );
-    throws_ok(                                                 # TPV02
+    throws_ok(                                                   # TPV02
         sub { string_to_string(3) },
         "/EPV01.*$mode_tagline/",
         q{TPV02 string_to_string(3) throws correct exception}
     );
-    throws_ok(                                                 # TPV03
+    throws_ok(                                                   # TPV03
         sub { string_to_string(-17) },
         "/EPV01.*$mode_tagline/",
         q{TPV03 string_to_string(-17) throws correct exception}
     );
-    throws_ok(                                                 # TPV04
+    throws_ok(                                                   # TPV04
         sub { string_to_string(-17.3) },
         "/EPV01.*$mode_tagline/",
         q{TPV04 string_to_string(-17.3) throws correct exception}
     );
-    lives_and(                                                 # TPV05
+    lives_and(                                                   # TPV05
         sub {
-            is( string_to_string('-17.3'),
-                "'-17.3'",
-                q{TPV05 string_to_string('-17.3') returns correct value} );
+            is( string_to_string('-17.3'), "'-17.3'", q{TPV05 string_to_string('-17.3') returns correct value} );
         },
         q{TPV05 string_to_string('-17.3') lives}
     );
-    throws_ok(                                                 # TPV06
+    throws_ok(                                                   # TPV06
         sub { string_to_string( [3] ) },
         "/EPV01.*$mode_tagline/",
         q{TPV06 string_to_string([3]) throws correct exception}
     );
-    throws_ok(                                                 # TPV07
+    throws_ok(                                                   # TPV07
         sub { string_to_string( { a_key => 3 } ) },
         "/EPV01.*$mode_tagline/",
         q{TPV07 string_to_string({a_key => 3}) throws correct exception}
     );
-    lives_and(                                                 # TPV08
+    lives_and(                                                   # TPV08
         sub {
-            is( string_to_string('Melange'),
-                "'Melange'",
-                q{TPV08 string_to_string('Melange') returns correct value} );
+            is( string_to_string('Melange'), "'Melange'", q{TPV08 string_to_string('Melange') returns correct value} );
         },
         q{TPV08 string_to_string('Melange') lives}
     );
-    lives_and(                                                 # TPV09
+    lives_and(                                                   # TPV09
         sub {
-            is( string_to_string(
-                    "\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n"
-                ),
+            is( string_to_string("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n"),
                 "'\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n'",
                 q{TPV09 string_to_string("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n") returns correct value}
             );
@@ -593,7 +496,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         q{TPV09 string_to_string("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n") lives}
     );
 
-    lives_and(                                                 # TPV10
+    lives_and(                                                   # TPV10
         sub {
             is( string_to_string(
                     '\'I am a single-quoted string, in a single-quoted string with back-slash control chars\', the first string said introspectively.'
@@ -608,12 +511,8 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(    # TPV11
         sub {
-            is( string_to_string(
-                    '"I am a double-quoted string, in a single-quoted string with no back-slash chars", the second string observed.'
-                ),
-                string_dumperify(
-                    '"I am a double-quoted string, in a single-quoted string with no back-slash chars", the second string observed.'
-                ),
+            is( string_to_string('"I am a double-quoted string, in a single-quoted string with no back-slash chars", the second string observed.'),
+                string_dumperify('"I am a double-quoted string, in a single-quoted string with no back-slash chars", the second string observed.'),
                 q{TPV11 string_to_string('"I am a double-quoted string...", the second string observed.') returns correct value}
             );
         },
@@ -621,12 +520,8 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(    # TPV12
         sub {
-            is( string_to_string(
-                    "'I am a single-quoted string, in a double-quoted string with no back-slash chars', the third string added."
-                ),
-                string_dumperify(
-                    "'I am a single-quoted string, in a double-quoted string with no back-slash chars', the third string added."
-                ),
+            is( string_to_string("'I am a single-quoted string, in a double-quoted string with no back-slash chars', the third string added."),
+                string_dumperify("'I am a single-quoted string, in a double-quoted string with no back-slash chars', the third string added."),
                 q{TPV12 string_to_string("'I am a single-quoted string...', the third string added.") returns correct value}
             );
         },
@@ -634,12 +529,8 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(    # TPV13
         sub {
-            is( string_to_string(
-                    "\"I am a double-quoted string, in a double-quoted string with back-slash control chars\", the fourth string offered."
-                ),
-                string_dumperify(
-                    "\"I am a double-quoted string, in a double-quoted string with back-slash control chars\", the fourth string offered."
-                ),
+            is( string_to_string("\"I am a double-quoted string, in a double-quoted string with back-slash control chars\", the fourth string offered."),
+                string_dumperify("\"I am a double-quoted string, in a double-quoted string with back-slash control chars\", the fourth string offered."),
                 q{TPV13 string_to_string("\"I am a double-quoted string...\", the fourth string offered.") returns correct value}
             );
         },
@@ -660,12 +551,8 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(    # TPV15
         sub {
-            is( string_to_string(
-                    '"I am a double-quoted string, in a single-quoted string with back-slash \ display \ chars", the sixth string hollered.'
-                ),
-                string_dumperify(
-                    '"I am a double-quoted string, in a single-quoted string with back-slash \ display \ chars", the sixth string hollered.'
-                ),
+            is( string_to_string('"I am a double-quoted string, in a single-quoted string with back-slash \ display \ chars", the sixth string hollered.'),
+                string_dumperify('"I am a double-quoted string, in a single-quoted string with back-slash \ display \ chars", the sixth string hollered.'),
                 q{TPV15 string_to_string('"I am a double-quoted string... \ display \ chars", the sixth string hollered.') returns correct value}
             );
         },
@@ -673,12 +560,8 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(    # TPV16
         sub {
-            is( string_to_string(
-                    "'I am a single-quoted string, in a double-quoted string with back-slash \\ display \\ chars', the seventh string yelled."
-                ),
-                string_dumperify(
-                    "'I am a single-quoted string, in a double-quoted string with back-slash \\ display \\ chars', the seventh string yelled."
-                ),
+            is( string_to_string("'I am a single-quoted string, in a double-quoted string with back-slash \\ display \\ chars', the seventh string yelled."),
+                string_dumperify("'I am a single-quoted string, in a double-quoted string with back-slash \\ display \\ chars', the seventh string yelled."),
                 q{TPV16 string_to_string("'I am a single-quoted string... \\ display \\ chars', the seventh string yelled.") returns correct value}
             );
         },
@@ -699,12 +582,8 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(    # TPV20
         sub {
-            is( string_to_string(
-                    q{'I am a single-quoted string, in a single-quoted q{} string with no back-slash chars', the ninth string chimed in.}
-                ),
-                string_dumperify(
-                    q{'I am a single-quoted string, in a single-quoted q{} string with no back-slash chars', the ninth string chimed in.}
-                ),
+            is( string_to_string(q{'I am a single-quoted string, in a single-quoted q{} string with no back-slash chars', the ninth string chimed in.}),
+                string_dumperify(q{'I am a single-quoted string, in a single-quoted q{} string with no back-slash chars', the ninth string chimed in.}),
                 q{TPV20 string_to_string(q{'I am a single-quoted string...', the ninth string chimed in.}) returns correct value}
             );
         },
@@ -712,12 +591,8 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(    # TPV21
         sub {
-            is( string_to_string(
-                    q{"I am a double-quoted string, in a single-quoted q{} string with no back-slash chars", the tenth string opined.}
-                ),
-                string_dumperify(
-                    q{"I am a double-quoted string, in a single-quoted q{} string with no back-slash chars", the tenth string opined.}
-                ),
+            is( string_to_string(q{"I am a double-quoted string, in a single-quoted q{} string with no back-slash chars", the tenth string opined.}),
+                string_dumperify(q{"I am a double-quoted string, in a single-quoted q{} string with no back-slash chars", the tenth string opined.}),
                 q{TPV21 string_to_string(q{"I am a double-quoted string...", the tenth string opined.}) returns correct value}
             );
         },
@@ -725,12 +600,8 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(    # TPV22
         sub {
-            is( string_to_string(
-                    qq{'I am a single-quoted string, in a double-quoted qq{} string with no back-slash chars', the eleventh string asserted.}
-                ),
-                string_dumperify(
-                    qq{'I am a single-quoted string, in a double-quoted qq{} string with no back-slash chars', the eleventh string asserted.}
-                ),
+            is( string_to_string(qq{'I am a single-quoted string, in a double-quoted qq{} string with no back-slash chars', the eleventh string asserted.}),
+                string_dumperify(qq{'I am a single-quoted string, in a double-quoted qq{} string with no back-slash chars', the eleventh string asserted.}),
                 q{TPV22 string_to_string(qq{'I am a single-quoted string...', the eleventh string asserted.}) returns correct value}
             );
         },
@@ -738,12 +609,8 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(    # TPV23
         sub {
-            is( string_to_string(
-                    qq{"I am a double-quoted string, in a double-quoted qq{} string with no back-slash chars", the twelfth string insisted.}
-                ),
-                string_dumperify(
-                    qq{"I am a double-quoted string, in a double-quoted qq{} string with no back-slash chars", the twelfth string insisted.}
-                ),
+            is( string_to_string(qq{"I am a double-quoted string, in a double-quoted qq{} string with no back-slash chars", the twelfth string insisted.}),
+                string_dumperify(qq{"I am a double-quoted string, in a double-quoted qq{} string with no back-slash chars", the twelfth string insisted.}),
                 q{TPV23 string_to_string(qq{"I am a double-quoted string...", the twelfth string insisted.}) returns correct value}
             );
         },
@@ -803,10 +670,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(    # TPV30
         sub {
-            is( string__typetest0(),
-                "Spice $mode_tagline",
-                q{TPV30 string__typetest0() returns correct value}
-            );
+            is( string__typetest0(), "Spice $mode_tagline", q{TPV30 string__typetest0() returns correct value} );
         },
         q{TPV30 string__typetest0() lives}
     );
@@ -838,10 +702,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(    # TPV45
         sub {
-            is( string__typetest1('-17.3'),
-                "'-17.3' $mode_tagline",
-                q{TPV45 string__typetest1('-17.3') returns correct value}
-            );
+            is( string__typetest1('-17.3'), "'-17.3' $mode_tagline", q{TPV45 string__typetest1('-17.3') returns correct value} );
         },
         q{TPV45 string__typetest1('-17.3') lives}
     );
@@ -857,18 +718,13 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(    # TPV48
         sub {
-            is( string__typetest1('Melange'),
-                "'Melange' $mode_tagline",
-                q{TPV48 string__typetest1('Melange') returns correct value}
-            );
+            is( string__typetest1('Melange'), "'Melange' $mode_tagline", q{TPV48 string__typetest1('Melange') returns correct value} );
         },
         q{TPV48 string__typetest1('Melange') lives}
     );
     lives_and(    # TPV49
         sub {
-            is( string__typetest1(
-                    "\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n"
-                ),
+            is( string__typetest1("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n"),
                 "'\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n' $mode_tagline",
                 q{TPV49 string__typetest1("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n") returns correct value}
             );

@@ -14,6 +14,7 @@ our $VERSION = 0.001_000;
 my string_arrayref $s_array_0 = [ 'a', 'b', 'c' ];
 my string_arrayref $s_array_1 = [ 'd', 'e', 'f' ];
 my string_arrayref $s_array_2 = [ 'g', 'h', 'i' ];
-my string_arrayref $s_array_all
-    = [ @{$s_array_0}, @{$s_array_1}, @{$s_array_2} ];
-foreach my string_arrayref $s ( @{$s_array_all} ) { print '$s = ', Dumper($s), "\n"; }
+my string_arrayref $s_array_all = [ @{$s_array_0}, @{$s_array_1}, @{$s_array_2} ];
+foreach my string_arrayref $s ( @{$s_array_all} ) {
+    print '$s = ', Dumper($s), "\n";
+}

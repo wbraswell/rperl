@@ -16,15 +16,10 @@ use Test::Exception;
 
 BEGIN {
     if ( $ENV{RPERL_VERBOSE} ) {
-        diag(
-            '[[[ Beginning Hash Type Pre-Test Loading, RPerl Type System ]]]'
-        );
+        diag('[[[ Beginning Hash Type Pre-Test Loading, RPerl Type System ]]]');
     }
     lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
-    lives_and(
-        sub { use_ok('RPerl::DataStructure::Hash_cpp'); },
-        q{use_ok('RPerl::DataStructure::Hash_cpp') lives}
-    );
+    lives_and( sub { use_ok('RPerl::DataStructure::Hash_cpp'); }, q{use_ok('RPerl::DataStructure::Hash_cpp') lives} );
 }
 
 # [[[ PRIMARY RUNLOOP ]]]
@@ -34,13 +29,11 @@ BEGIN {
 # loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
 foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
-#for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
-#    RPerl::diag "in 06_type_hash.t, top of for() loop, have \$mode_id = $mode_id\n";
+    #for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
+    #    RPerl::diag "in 06_type_hash.t, top of for() loop, have \$mode_id = $mode_id\n";
     my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
     if ( $ENV{RPERL_VERBOSE} ) {
-        Test::More::diag( '[[[ Beginning RPerl Hash Type Tests, '
-                . RPerl::Test::mode_description($mode)
-                . ' ]]]' );
+        Test::More::diag( '[[[ Beginning RPerl Hash Type Tests, ' . RPerl::Test::mode_description($mode) . ' ]]]' );
     }
 
     # [[[ MODE SETUP ]]]
@@ -50,14 +43,10 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     my $types               = $mode->{types};
     my string $mode_tagline = RPerl::Test::mode_tagline($mode);
 
-    lives_ok( sub { RPerl::Test::mode_enable($mode) },
-        q{mode '} . RPerl::Test::mode_description($mode) . q{' enabled} );
+    lives_ok( sub { RPerl::Test::mode_enable($mode) }, q{mode '} . RPerl::Test::mode_description($mode) . q{' enabled} );
 
     if ( $ops eq 'PERL' ) {
-        lives_and(
-            sub { require_ok('RPerl::DataStructure::Hash'); },
-            q{require_ok('RPerl::DataStructure::Hash') lives}
-        );
+        lives_and( sub { require_ok('RPerl::DataStructure::Hash'); }, q{require_ok('RPerl::DataStructure::Hash') lives} );
     }
     else {
         if ( $types eq 'CPP' ) {
@@ -67,29 +56,15 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         }
 
         # C++ use, load, link
-        lives_and(
-            sub { require_ok('RPerl::DataStructure::Hash_cpp'); },
-            q{require_ok('RPerl::DataStructure::Hash_cpp') lives}
-        );
-        lives_ok(
-            sub { RPerl::DataStructure::Hash_cpp::cpp_load(); },
-            q{RPerl::DataStructure::Hash_cpp::cpp_load() lives}
-        );
+        lives_and( sub { require_ok('RPerl::DataStructure::Hash_cpp'); }, q{require_ok('RPerl::DataStructure::Hash_cpp') lives} );
+        lives_ok( sub { RPerl::DataStructure::Hash_cpp::cpp_load(); }, q{RPerl::DataStructure::Hash_cpp::cpp_load() lives} );
     }
 
     foreach my string $type (qw(DataType__Integer DataType__Number DataType__String DataStructure__Hash)) {
         lives_and(
             sub {
-                is( $RPerl::MODES->{ main->can(
-                            'RPerl__' . $type . '__MODE_ID'
-                        )->()
-                        }->{ops},
-                    $ops,
-                    'main::RPerl__'
-                        . $type
-                        . '__MODE_ID() ops returns '
-                        . $ops
-                );
+                is( $RPerl::MODES->{ main->can( 'RPerl__' . $type . '__MODE_ID' )->() }->{ops},
+                    $ops, 'main::RPerl__' . $type . '__MODE_ID() ops returns ' . $ops );
             },
             'main::RPerl__' . $type . '__MODE_ID() lives'
         );
@@ -101,35 +76,35 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
     throws_ok(    # TIVHVRV00
         sub { integer_hashref_to_string() },
-        "/(EIVHVRV00.*$mode_tagline)|(Usage.*integer_hashref_to_string)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(EIVHVRV00.*$mode_tagline)|(Usage.*integer_hashref_to_string)/",    # DEV NOTE: 2 different error messages, RPerl & C
         q{TIVHVRV00 integer_hashref_to_string() throws correct exception}
     );
-    throws_ok(    # TIVHVRV01
+    throws_ok(                                                                # TIVHVRV01
         sub { integer_hashref_to_string(undef) },
         "/EIVHVRV00.*$mode_tagline/",
         q{TIVHVRV01 integer_hashref_to_string(undef) throws correct exception}
     );
-    throws_ok(    # TIVHVRV02
+    throws_ok(                                                                # TIVHVRV02
         sub { integer_hashref_to_string(2) },
         "/EIVHVRV01.*$mode_tagline/",
         q{TIVHVRV02 integer_hashref_to_string(2) throws correct exception}
     );
-    throws_ok(    # TIVHVRV03
+    throws_ok(                                                                # TIVHVRV03
         sub { integer_hashref_to_string(2.3) },
         "/EIVHVRV01.*$mode_tagline/",
         q{TIVHVRV03 integer_hashref_to_string(2.3) throws correct exception}
     );
-    throws_ok(    # TIVHVRV04
+    throws_ok(                                                                # TIVHVRV04
         sub { integer_hashref_to_string('2') },
         "/EIVHVRV01.*$mode_tagline/",
         q{TIVHVRV04 integer_hashref_to_string('2') throws correct exception}
     );
-    throws_ok(    # TIVHVRV05
+    throws_ok(                                                                # TIVHVRV05
         sub { integer_hashref_to_string( [2] ) },
         "/EIVHVRV01.*$mode_tagline/",
         q{TIVHVRV05 integer_hashref_to_string([2]) throws correct exception}
     );
-    throws_ok(    # TIVHVRV10
+    throws_ok(                                                                # TIVHVRV10
         sub {
             integer_hashref_to_string(
                 {   a_key => 2,
@@ -213,10 +188,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(    # TIVHVRV20
         sub {
-            is( integer_hashref_to_string( { a_key => 23 } ),
-                q{{'a_key' => 23}},
-                q{TIVHVRV20 integer_hashref_to_string({a_key => 23}) returns correct value}
-            );
+            is( integer_hashref_to_string( { a_key => 23 } ), q{{'a_key' => 23}}, q{TIVHVRV20 integer_hashref_to_string({a_key => 23}) returns correct value} );
         },
         q{TIVHVRV20 integer_hashref_to_string({a_key => 23}) lives}
     );
@@ -234,7 +206,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                     }
                 ),
 
-# NEED FIX: replace ".*" near end of this & following regexes with syntax to match exactly 6 occurrences of ", "; (,\s)* and variations don't work?
+             # NEED FIX: replace ".*" near end of this & following regexes with syntax to match exactly 6 occurrences of ", "; (,\s)* and variations don't work?
                 q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2112\b)(?=.*'c_key' => 42\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => -33\b)(?=.*'g_key' => 1701\b).*\}$/m},
                 q{TIVHVRV21 integer_hashref_to_string({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => -33, g_key => 1701}) returns correct value}
             );
@@ -243,15 +215,15 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     throws_ok(    # TIVHVRV30
         sub { integer_hashref__typetest0() },
-        "/(EIVHVRV00.*$mode_tagline)|(Usage.*integer_hashref__typetest0)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(EIVHVRV00.*$mode_tagline)|(Usage.*integer_hashref__typetest0)/",    # DEV NOTE: 2 different error messages, RPerl & C
         q{TIVHVRV30 integer_hashref__typetest0() throws correct exception}
     );
-    throws_ok(    # TIVHVRV31
+    throws_ok(                                                                 # TIVHVRV31
         sub { integer_hashref__typetest0(2) },
         "/EIVHVRV01.*$mode_tagline/",
         q{TIVHVRV31 integer_hashref__typetest0(2) throws correct exception}
     );
-    throws_ok(    # TIVHVRV32
+    throws_ok(                                                                 # TIVHVRV32
         sub {
             integer_hashref__typetest0(
                 {   'binary'       => 2,
@@ -329,35 +301,35 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
     throws_ok(    # TNVHVRV00
         sub { number_hashref_to_string() },
-        "/(ENVHVRV00.*$mode_tagline)|(Usage.*number_hashref_to_string)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(ENVHVRV00.*$mode_tagline)|(Usage.*number_hashref_to_string)/",    # DEV NOTE: 2 different error messages, RPerl & C
         q{TNVHVRV00 number_hashref_to_string() throws correct exception}
     );
-    throws_ok(    # TNVHVRV01
+    throws_ok(                                                               # TNVHVRV01
         sub { number_hashref_to_string(undef) },
         "/ENVHVRV00.*$mode_tagline/",
         q{TNVHVRV01 number_hashref_to_string(undef) throws correct exception}
     );
-    throws_ok(    # TNVHVRV02
+    throws_ok(                                                               # TNVHVRV02
         sub { number_hashref_to_string(2) },
         "/ENVHVRV01.*$mode_tagline/",
         q{TNVHVRV02 number_hashref_to_string(2) throws correct exception}
     );
-    throws_ok(    # TNVHVRV03
+    throws_ok(                                                               # TNVHVRV03
         sub { number_hashref_to_string(2.3) },
         "/ENVHVRV01.*$mode_tagline/",
         q{TNVHVRV03 number_hashref_to_string(2.3) throws correct exception}
     );
-    throws_ok(    # TNVHVRV04
+    throws_ok(                                                               # TNVHVRV04
         sub { number_hashref_to_string('2') },
         "/ENVHVRV01.*$mode_tagline/",
         q{TNVHVRV04 number_hashref_to_string('2') throws correct exception}
     );
-    throws_ok(    # TNVHVRV05
+    throws_ok(                                                               # TNVHVRV05
         sub { number_hashref_to_string( [2] ) },
         "/ENVHVRV01.*$mode_tagline/",
         q{TNVHVRV05 number_hashref_to_string([2]) throws correct exception}
     );
-    throws_ok(    # TNVHVRV10
+    throws_ok(                                                               # TNVHVRV10
         sub {
             number_hashref_to_string(
                 {   a_key => 2,
@@ -425,10 +397,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(    # TNVHVRV20
         sub {
-            is( number_hashref_to_string( { a_key => 23 } ),
-                q{{'a_key' => 23}},
-                q{TNVHVRV20 number_hashref_to_string({a_key => 23}) returns correct value}
-            );
+            is( number_hashref_to_string( { a_key => 23 } ), q{{'a_key' => 23}}, q{TNVHVRV20 number_hashref_to_string({a_key => 23}) returns correct value} );
         },
         q{TNVHVRV20 number_hashref_to_string({a_key => 23}) lives}
     );
@@ -454,9 +423,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(    # TNVHVRV22
         sub {
-            is( number_hashref_to_string(
-                    { a_key => 2.1234432112344321 }
-                ),
+            is( number_hashref_to_string( { a_key => 2.1234432112344321 } ),
                 q{{'a_key' => 2.12344321123443}},
                 q{TNVHVRV22 number_hashref_to_string({a_key => 2.1234432112344321}) returns correct value}
             );
@@ -486,15 +453,15 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     throws_ok(    # TNVHVRV30
         sub { number_hashref__typetest0() },
-        "/(ENVHVRV00.*$mode_tagline)|(Usage.*number_hashref__typetest0)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(ENVHVRV00.*$mode_tagline)|(Usage.*number_hashref__typetest0)/",    # DEV NOTE: 2 different error messages, RPerl & C
         q{TNVHVRV30 number_hashref__typetest0() throws correct exception}
     );
-    throws_ok(    # TNVHVRV31
+    throws_ok(                                                                # TNVHVRV31
         sub { number_hashref__typetest0(2) },
         "/ENVHVRV01.*$mode_tagline/",
         q{TNVHVRV31 number_hashref__typetest0(2) throws correct exception}
     );
-    throws_ok(    # TNVHVRV32
+    throws_ok(                                                                # TNVHVRV32
         sub {
             number_hashref__typetest0(
                 {   'binary'       => 2.1234432112344321,
@@ -570,35 +537,35 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
     throws_ok(    # TPVHVRV00
         sub { string_hashref_to_string() },
-        "/(EPVHVRV00.*$mode_tagline)|(Usage.*string_hashref_to_string)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(EPVHVRV00.*$mode_tagline)|(Usage.*string_hashref_to_string)/",    # DEV NOTE: 2 different error messages, RPerl & C
         q{TPVHVRV00 string_hashref_to_string() throws correct exception}
     );
-    throws_ok(    # TPVHVRV01
+    throws_ok(                                                               # TPVHVRV01
         sub { string_hashref_to_string(undef) },
         "/EPVHVRV00.*$mode_tagline/",
         q{TPVHVRV01 string_hashref_to_string(undef) throws correct exception}
     );
-    throws_ok(    # TPVHVRV02
+    throws_ok(                                                               # TPVHVRV02
         sub { string_hashref_to_string(2) },
         "/EPVHVRV01.*$mode_tagline/",
         q{TPVHVRV02 string_hashref_to_string(2) throws correct exception}
     );
-    throws_ok(    # TPVHVRV03
+    throws_ok(                                                               # TPVHVRV03
         sub { string_hashref_to_string(2.3) },
         "/EPVHVRV01.*$mode_tagline/",
         q{TPVHVRV03 string_hashref_to_string(2.3) throws correct exception}
     );
-    throws_ok(    # TPVHVRV04
+    throws_ok(                                                               # TPVHVRV04
         sub { string_hashref_to_string('Lone Ranger') },
         "/EPVHVRV01.*$mode_tagline/",
         q{TPVHVRV04 string_hashref_to_string('Lone Ranger') throws correct exception}
     );
-    throws_ok(    # TPVHVRV05
+    throws_ok(                                                               # TPVHVRV05
         sub { string_hashref_to_string( ['Lone Ranger'] ) },
         "/EPVHVRV01.*$mode_tagline/",
         q{TPVHVRV05 string_hashref_to_string(['Lone Ranger']) throws correct exception}
     );
-    throws_ok(    # TPVHVRV10
+    throws_ok(                                                               # TPVHVRV10
         sub {
             string_hashref_to_string(
                 {   'kryptonian_manofsteel_clarkkent'  => 'Superman',
@@ -610,7 +577,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         "/EPVHVRV02.*$mode_tagline/",
         q{TPVHVRV10 string_hashref_to_string({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'UNDEF_NOT_STRING' => undef}) throws correct exception}
     );
-    throws_ok(    # TPVHVRV11
+    throws_ok(                                                               # TPVHVRV11
         sub {
             string_hashref_to_string(
                 {   'kryptonian_manofsteel_clarkkent'  => 'Superman',
@@ -622,7 +589,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         "/EPVHVRV03.*$mode_tagline/",
         q{TPVHVRV11 string_hashref_to_string({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'INTEGER_NOT_STRING' => 23}) throws correct exception}
     );
-    throws_ok(    # TPVHVRV12
+    throws_ok(                                                               # TPVHVRV12
         sub {
             string_hashref_to_string(
                 {   'kryptonian_manofsteel_clarkkent'  => 'Superman',
@@ -634,7 +601,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         "/EPVHVRV03.*$mode_tagline/",
         q{TPVHVRV12 string_hashref_to_string({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'NUMBER_NOT_STRING' => -2112.23}) throws correct exception}
     );
-    throws_ok(    # TPVHVRV13
+    throws_ok(                                                               # TPVHVRV13
         sub {
             string_hashref_to_string(
                 {   'kryptonian_manofsteel_clarkkent'  => 'Superman',
@@ -646,7 +613,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         "/EPVHVRV03.*$mode_tagline/",
         q{TPVHVRV13 string_hashref_to_string({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'ARRAY_NOT_STRING' => ['Tonto']}) throws correct exception}
     );
-    throws_ok(    # TPVHVRV14
+    throws_ok(                                                               # TPVHVRV14
         sub {
             string_hashref_to_string(
                 {   'kryptonian_manofsteel_clarkkent'  => 'Superman',
@@ -658,21 +625,18 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         "/EPVHVRV03.*$mode_tagline/",
         q{TPVHVRV14 string_hashref_to_string({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'HASH_NOT_STRING' => {fizz => 3}}) throws correct exception}
     );
-    lives_and(    # TPVHVRV20
+    lives_and(                                                               # TPVHVRV20
         sub {
             like(
                 string_hashref_to_string(
-                    {   'stuckinaworldhenevercreated' => 'Howard The Duck',
-                        'kryptonian_manofsteel_clarkkent' => 'Superman',
-                        'gothamite_darkknight_brucewayne' => 'Batman',
-                        'amazonian_dianathemyscira_dianaprince' =>
-                            'Wonder Woman',
-                        'scarletspeedster_barryallenetal' => 'Flash',
-                        'alanscottetal'                   => 'Green Lantern',
-                        'atlanteanhybrid_aquaticace_arthurcurryorin' =>
-                            'Aquaman',
-                        'greenmartian_bloodwynd_jonnjonnz' =>
-                            'Martian Manhunter'
+                    {   'stuckinaworldhenevercreated'                => 'Howard The Duck',
+                        'kryptonian_manofsteel_clarkkent'            => 'Superman',
+                        'gothamite_darkknight_brucewayne'            => 'Batman',
+                        'amazonian_dianathemyscira_dianaprince'      => 'Wonder Woman',
+                        'scarletspeedster_barryallenetal'            => 'Flash',
+                        'alanscottetal'                              => 'Green Lantern',
+                        'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman',
+                        'greenmartian_bloodwynd_jonnjonnz'           => 'Martian Manhunter'
                     }
                 ),
                 q{/^\{(?=.*'stuckinaworldhenevercreated' => 'Howard The Duck')(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'gothamite_darkknight_brucewayne' => 'Batman')(?=.*'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman')(?=.*'scarletspeedster_barryallenetal' => 'Flash')(?=.*'alanscottetal' => 'Green Lantern')(?=.*'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter').*\}$/m}
@@ -686,10 +650,9 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         sub {
             like(
                 string_hashref_to_string(
-                    {   'kryptonian_manofsteel_clarkkent' => 'Superman',
-                        'greenmartian_bloodwynd_jonnjonnz' =>
-                            'Martian Manhunter',
-                        'STRING_NOT_UNDEF' => 'undef'
+                    {   'kryptonian_manofsteel_clarkkent'  => 'Superman',
+                        'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter',
+                        'STRING_NOT_UNDEF'                 => 'undef'
                     }
                 ),
                 q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'STRING_NOT_UNDEF' => 'undef').*\}$/m}
@@ -703,10 +666,9 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         sub {
             like(
                 string_hashref_to_string(
-                    {   'kryptonian_manofsteel_clarkkent' => 'Superman',
-                        'greenmartian_bloodwynd_jonnjonnz' =>
-                            'Martian Manhunter',
-                        'STRING_NOT_INTEGER' => '23'
+                    {   'kryptonian_manofsteel_clarkkent'  => 'Superman',
+                        'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter',
+                        'STRING_NOT_INTEGER'               => '23'
                     }
                 ),
                 q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'STRING_NOT_INTEGER' => '23').*\}$/m}
@@ -720,10 +682,9 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         sub {
             like(
                 string_hashref_to_string(
-                    {   'kryptonian_manofsteel_clarkkent' => 'Superman',
-                        'greenmartian_bloodwynd_jonnjonnz' =>
-                            'Martian Manhunter',
-                        'STRING_NOT_NUMBER' => '-2112.23'
+                    {   'kryptonian_manofsteel_clarkkent'  => 'Superman',
+                        'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter',
+                        'STRING_NOT_NUMBER'                => '-2112.23'
                     }
                 ),
                 q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'STRING_NOT_NUMBER' => '-2112.23').*\}$/m}
@@ -737,10 +698,9 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         sub {
             like(
                 string_hashref_to_string(
-                    {   'kryptonian_manofsteel_clarkkent' => 'Superman',
-                        'greenmartian_bloodwynd_jonnjonnz' =>
-                            'Martian Manhunter',
-                        "STRING_NOT_ARRAY" => "[Tonto]"
+                    {   'kryptonian_manofsteel_clarkkent'  => 'Superman',
+                        'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter',
+                        "STRING_NOT_ARRAY"                 => "[Tonto]"
                     }
                 ),
                 q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'STRING_NOT_ARRAY' => '\[Tonto\]').*\}$/m}
@@ -754,10 +714,9 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         sub {
             like(
                 string_hashref_to_string(
-                    {   'kryptonian_manofsteel_clarkkent' => 'Superman',
-                        'greenmartian_bloodwynd_jonnjonnz' =>
-                            'Martian Manhunter',
-                        "STRING_NOT_HASH" => "{buzz => 5}"
+                    {   'kryptonian_manofsteel_clarkkent'  => 'Superman',
+                        'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter',
+                        "STRING_NOT_HASH"                  => "{buzz => 5}"
                     }
                 ),
                 q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'STRING_NOT_HASH' => '\{buzz => 5\}').*\}$/m}
@@ -769,25 +728,25 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     throws_ok(       # TPVHVRV30
         sub { string_hashref__typetest0() },
-        "/(EPVHVRV00.*$mode_tagline)|(Usage.*string_hashref__typetest0)/", # DEV NOTE: 2 different error messages, RPerl & C
+        "/(EPVHVRV00.*$mode_tagline)|(Usage.*string_hashref__typetest0)/",    # DEV NOTE: 2 different error messages, RPerl & C
         q{TPVHVRV30 string_hashref__typetest0() throws correct exception}
     );
-    throws_ok(    # TPVHVRV31
+    throws_ok(                                                                # TPVHVRV31
         sub { string_hashref__typetest0(2) },
         "/EPVHVRV01.*$mode_tagline/",
         q{TPVHVRV31 string_hashref__typetest0(2) throws correct exception}
     );
-    throws_ok(    # TPVHVRV32
+    throws_ok(                                                                # TPVHVRV32
         sub {
             string_hashref__typetest0(
-                {   'kryptonian_manofsteel_clarkkent'       => 'Superman',
-                    'gothamite_darkknight_brucewayne'       => 'Batman',
-                    'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman',
-                    'scarletspeedster_barryallenetal'       => 'Flash',
-                    'alanscottetal' => 'Green Lantern',
+                {   'kryptonian_manofsteel_clarkkent'            => 'Superman',
+                    'gothamite_darkknight_brucewayne'            => 'Batman',
+                    'amazonian_dianathemyscira_dianaprince'      => 'Wonder Woman',
+                    'scarletspeedster_barryallenetal'            => 'Flash',
+                    'alanscottetal'                              => 'Green Lantern',
                     'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman',
-                    'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter',
-                    'UNDEF_NOT_STRING'                 => undef
+                    'greenmartian_bloodwynd_jonnjonnz'           => 'Martian Manhunter',
+                    'UNDEF_NOT_STRING'                           => undef
                 }
             );
         },
@@ -797,14 +756,14 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     throws_ok(    # TPVHVRV33
         sub {
             string_hashref__typetest0(
-                {   'kryptonian_manofsteel_clarkkent'       => 'Superman',
-                    'gothamite_darkknight_brucewayne'       => 'Batman',
-                    'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman',
-                    'scarletspeedster_barryallenetal'       => 'Flash',
-                    'alanscottetal' => 'Green Lantern',
+                {   'kryptonian_manofsteel_clarkkent'            => 'Superman',
+                    'gothamite_darkknight_brucewayne'            => 'Batman',
+                    'amazonian_dianathemyscira_dianaprince'      => 'Wonder Woman',
+                    'scarletspeedster_barryallenetal'            => 'Flash',
+                    'alanscottetal'                              => 'Green Lantern',
                     'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman',
-                    'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter',
-                    'ARRAY_NOT_STRING'                 => [ 23, -42.3 ]
+                    'greenmartian_bloodwynd_jonnjonnz'           => 'Martian Manhunter',
+                    'ARRAY_NOT_STRING'                           => [ 23, -42.3 ]
                 }
             );
         },
@@ -815,11 +774,9 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         sub {
             like(
                 string_hashref__typetest0(
-                    {   'stuckinaworldhenevercreated' => 'Howard The Duck',
-                        'atlanteanhybrid_aquaticace_arthurcurryorin' =>
-                            'Aquaman',
-                        'greenmartian_bloodwynd_jonnjonnz' =>
-                            'Martian Manhunter'
+                    {   'stuckinaworldhenevercreated'                => 'Howard The Duck',
+                        'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman',
+                        'greenmartian_bloodwynd_jonnjonnz'           => 'Martian Manhunter'
                     }
                 ),
                 q{/^\{(?=.*'stuckinaworldhenevercreated' => 'Howard The Duck')(?=.*'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter').*\}}

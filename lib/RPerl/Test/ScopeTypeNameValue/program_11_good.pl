@@ -17,8 +17,7 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 
 $Data::Dumper::Indent = 0;
-my hashref $u
-    = { a => [ q{11}, '2' ], b => [ '23.3', '1' ], c => [ '23', '3' ] };
+my hashref $u = { a => [ q{11}, '2' ], b => [ '23.3', '1' ], c => [ '23', '3' ] };
 print Dumper( types($u) ) . "\n";
 
 $u = { a => [ q{11}, '2' ], b => [ '23.3', '1' ], c => [ '23', 3 ] };

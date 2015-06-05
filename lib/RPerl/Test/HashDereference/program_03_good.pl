@@ -11,17 +11,6 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-foreach my string $key (
-    sort keys %{
-        my integer_hashref $TYPED_i_hash = {
-            a => my integer $TYPED_a = 10,
-            b => 20,
-            c => 30,
-            d => 40,
-            e => 50
-        }
-    }
-    )
-{
+foreach my string $key ( sort keys %{ my integer_hashref $TYPED_i_hash = { a => my integer $TYPED_a = 10, b => 20, c => 30, d => 40, e => 50 } }) {
     print '$key = ', $key, "\n";
 }

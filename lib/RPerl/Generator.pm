@@ -19,7 +19,7 @@ use RPerl::CompileUnit::Module::Class;
 # [[[ INCLUDES ]]]
 use RPerl::Grammar;
 use RPerl::Parser;
-use English qw(-no_match_vars); # for $OSNAME; why isn't this included from 'require RPerl::Config', which is included from 'use RPerl' above?
+use English qw(-no_match_vars);    # for $OSNAME; why isn't this included from 'require RPerl::Config', which is included from 'use RPerl' above?
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
@@ -42,25 +42,17 @@ our bool $dummy_source_code_find = sub {
 our integer $diff_check_file_vs_string = sub {
     ( my string $file_name, my string $source_string, my string $ops) = @_;
 
-#    RPerl::diag('in Generator->diff_check_file_vs_string(), received $file_name = ' . $file_name . "\n");
-#    RPerl::diag('in Generator->diff_check_file_vs_string(), contents of file = ' . "\n");
-#    system 'cat', $file_name;
-#    RPerl::diag('in Generator->diff_check_file_vs_string(), received $source_string = ' . "\n" . $source_string . "\n\n");
+    #    RPerl::diag('in Generator->diff_check_file_vs_string(), received $file_name = ' . $file_name . "\n");
+    #    RPerl::diag('in Generator->diff_check_file_vs_string(), contents of file = ' . "\n");
+    #    system 'cat', $file_name;
+    #    RPerl::diag('in Generator->diff_check_file_vs_string(), received $source_string = ' . "\n" . $source_string . "\n\n");
 
     if ( not -f $file_name ) {
-        die 'ERROR ECVGEDI00, RPERL GENERATOR, DIFF CHECK: file not found, '
-            . q{'}
-            . $file_name . q{'} . "\n"
-            . ', dying' . "\n";
+        die 'ERROR ECVGEDI00, RPERL GENERATOR, DIFF CHECK: file not found, ' . q{'} . $file_name . q{'} . "\n" . ', dying' . "\n";
     }
 
     open my filehandleref $FILE_HANDLE, '<', $file_name
-        or die
-        'ERROR ECVGEDI01, RPERL GENERATOR, DIFF CHECK: Cannot open file '
-        . $file_name
-        . ' for reading,'
-        . $OS_ERROR
-        . ', dying' . "\n";
+        or die 'ERROR ECVGEDI01, RPERL GENERATOR, DIFF CHECK: Cannot open file ' . $file_name . ' for reading,' . $OS_ERROR . ', dying' . "\n";
 
     # read in file, strip comments & blank lines
     my string $file_line;
@@ -80,34 +72,40 @@ our integer $diff_check_file_vs_string = sub {
         # strip partial-line comment, if present
         if ( $ops eq 'PERL' ) {
 
-   # DEV NOTE: this regex does not account for strings containing # characters
-   #            $file_line =~ s/[^#][#][^#!].*$/\n/gxms;
+            # DEV NOTE: this regex does not account for strings containing # characters
+            #            $file_line =~ s/[^#][#][^#!].*$/\n/gxms;
 
+            my string $file_line_tmp = q{};
             my string $current_character;
             my string $next_character;
             my bool $inside_string = 0;
-            my bool $skip_extra    = 0;
+            my bool $advance_one   = 0;
             my string $open_quote;
             for my integer $i ( 0 .. ( ( length $file_line ) - 1 ) ) {
+                $current_character = substr $file_line, $i, 1;
 
-                # skip one extra character for q{ OR #! OR ##
-                if ($skip_extra) {
-                    $skip_extra = 0;
+                # advance one extra character for q{ OR #! OR ##
+                if ($advance_one) {
+                    $advance_one = 0;
+                    $file_line_tmp .= $current_character;
                     next;
                 }
-                $current_character = substr $file_line, $i, 1;
                 if ( not $inside_string ) {
                     if ( $current_character eq '#' ) {
                         $next_character = substr $file_line, ( $i + 1 ), 1;
                         if (   ( $next_character eq '!' )
                             or ( $next_character eq '#' ) )
                         {
-                            $skip_extra = 1;
-                            next;
+                            $advance_one = 1;
+
+                            #                            next;
                         }
-                        $file_line = substr $file_line, 0, $i;
-                        $file_line .= "\n";
-                        last;
+                        else {
+                            #                           $file_line = substr $file_line, 0, $i;
+                            #                           $file_line .= "\n";
+                            $file_line_tmp .= "\n";
+                            last;
+                        }
                     }
                     elsif ( $current_character eq q{'} ) {
                         $inside_string = 1;
@@ -121,34 +119,42 @@ our integer $diff_check_file_vs_string = sub {
                         $next_character = substr $file_line, ( $i + 1 ), 1;
                         if ( $next_character eq '{' ) {
                             $inside_string = 1;
-                            $skip_extra    = 1;
+                            $advance_one   = 1;
                             $open_quote    = 'q{';
                         }
                     }
+                    elsif ( $current_character =~ m/[ \t]/ ) {    # remove extra whitespace inserted by Perl::Tidy
+                        $next_character = substr $file_line, ( $i + 1 ), 1;
+                        if ( $next_character =~ m/[ \t]/ ) {
+                            next;
+                        }
+                    }
                 }
-                else {    # $inside_string
+                else {                                            # $inside_string
                     if (    ( $current_character eq q{'} )
                         and ( $open_quote eq q{'} ) )
                     {
                         $inside_string = 0;
                     }
-                    elsif (    ( $current_character eq q{"} )
+                    elsif ( ( $current_character eq q{"} )
                         and ( $open_quote eq q{"} ) )
                     {
                         $inside_string = 0;
                     }
-                    elsif (    ( $current_character eq '}' )
+                    elsif ( ( $current_character eq '}' )
                         and ( $open_quote eq 'q{' ) )
                     {
                         $inside_string = 0;
                     }
                 }
+                $file_line_tmp .= $current_character;
             }
+            $file_line = $file_line_tmp;
         }
         else {    # $ops eq 'CPP'
-             # NEED FIX: add comment-strip C++ code, accounting for strings containing // and /*
-             # NEED FIX: add comment-strip C++ code, accounting for strings containing // and /*
-             # NEED FIX: add comment-strip C++ code, accounting for strings containing // and /*
+                  # NEED FIX: add comment-strip C++ code, accounting for strings containing // and /*
+                  # NEED FIX: add comment-strip C++ code, accounting for strings containing // and /*
+                  # NEED FIX: add comment-strip C++ code, accounting for strings containing // and /*
 
             #            $file_line =~ s{//.*$}{\n}gxms;     # // comments
             #            $file_line =~ s{/\*.*\*/}{}gxms;    # /* comments */
@@ -160,12 +166,13 @@ our integer $diff_check_file_vs_string = sub {
     }
 
     close $FILE_HANDLE
-        or die
-        'ERROR ECVGEDI02, RPERL GENERATOR, DIFF CHECK: Cannot close file '
-        . $file_name
-        . ' after reading,'
-        . $OS_ERROR
-        . ', dying' . "\n";
+        or die 'ERROR ECVGEDI02, RPERL GENERATOR, DIFF CHECK: Cannot close file ' . $file_name . ' after reading,' . $OS_ERROR . ', dying' . "\n";
+
+    # remove extra blank lines inserted by RPerl generators 
+    $source_string =~ s/\n\n/\n/gxms;
+
+#    RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $file_string = ' . "\n" . ( q{=} x 60 ) . "\n" . $file_string . "\n" . ( q{=} x 60 ) . "\n\n" );
+#    RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $source_string = ' . "\n" . ( q{=} x 60 ) . "\n" . $source_string . "\n" . ( q{=} x 60 ) . "\n\n" );
 
     # tidy all code
     my string $file_string_tidied;
@@ -176,45 +183,31 @@ our integer $diff_check_file_vs_string = sub {
         my string $perltidy_stderr_string = undef;
         my scalartype $perltidy_errored   = Perl::Tidy::perltidy(
 
-       # same as Compiler::save_source_files() except '-se' to redirect STDERR
-            argv =>
-                q{-pbp --ignore-side-comment-lengths --converge -b -nst -bext='/' -q -se},
+            # same as Compiler::save_source_files() except '-se' to redirect STDERR
+            argv        => q{-pbp --ignore-side-comment-lengths --converge -l=160 -b -nst -bext='/' -q -se},
             source      => \$file_string,
             destination => \$file_string_tidied,
             stderr      => \$perltidy_stderr_string,
         );
-        if ($perltidy_errored) { # serious error in input parameters, no tidied output
-            die
-                'ERROR ECVGEDIXX: Perl::Tidy major failure with the following STDERR output, dying'
-                . "\n"
-                . $perltidy_stderr_string . "\n";
+        if ($perltidy_errored) {    # serious error in input parameters, no tidied output
+            die 'ERROR ECVGEDIXX: Perl::Tidy major failure with the following STDERR output, dying' . "\n" . $perltidy_stderr_string . "\n";
         }
         elsif ($perltidy_stderr_string) {
-            die
-                'ERROR ECVGEDIXX: Perl::Tidy minor failure with the following STDERR output, dying'
-                . "\n"
-                . $perltidy_stderr_string . "\n";
+            die 'ERROR ECVGEDIXX: Perl::Tidy minor failure with the following STDERR output, dying' . "\n" . $perltidy_stderr_string . "\n";
         }
 
         # tidy source string
         $perltidy_errored = Perl::Tidy::perltidy(
-            argv =>
-                q{-pbp --ignore-side-comment-lengths --converge -b -nst -bext='/' -q -se},
+            argv        => q{-pbp --ignore-side-comment-lengths --converge -l=160 -b -nst -bext='/' -q -se},
             source      => \$source_string,
             destination => \$source_string_tidied,
             stderr      => \$perltidy_stderr_string,
         );
         if ($perltidy_errored) {
-            die
-                'ERROR ECVGEDIXX: Perl::Tidy major failure with the following STDERR output, dying'
-                . "\n"
-                . $perltidy_stderr_string . "\n";
+            die 'ERROR ECVGEDIXX: Perl::Tidy major failure with the following STDERR output, dying' . "\n" . $perltidy_stderr_string . "\n";
         }
         elsif ($perltidy_stderr_string) {
-            die
-                'ERROR ECVGEDIXX: Perl::Tidy minor failure with the following STDERR output, dying'
-                . "\n"
-                . $perltidy_stderr_string . "\n";
+            die 'ERROR ECVGEDIXX: Perl::Tidy minor failure with the following STDERR output, dying' . "\n" . $perltidy_stderr_string . "\n";
         }
     }
     else {    # $ops eq 'CPP'
@@ -229,13 +222,11 @@ our integer $diff_check_file_vs_string = sub {
     $file_string_tidied =~ s/\n\n/\n/gxms;
     $source_string_tidied =~ s/\n\n/\n/gxms;
 
-#    RPerl::diag('in Generator->diff_check_file_vs_string(), have $file_string_tidied = ' . "\n" . (q{=} x 60) . "\n" . $file_string_tidied . "\n" . (q{=} x 60) . "\n\n");
-#    RPerl::diag('in Generator->diff_check_file_vs_string(), have $source_string_tidied = ' . "\n" . (q{=} x 60) . "\n" . $source_string_tidied . "\n" . (q{=} x 60) . "\n\n");
+    RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $file_string_tidied = ' . "\n" . ( q{=} x 60 ) . "\n" . $file_string_tidied . "\n" . ( q{=} x 60 ) . "\n\n" );
+    RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $source_string_tidied = ' . "\n" . ( q{=} x 60 ) . "\n" . $source_string_tidied . "\n" . ( q{=} x 60 ) . "\n\n" );
 
-    my string_arrayref $file_string_split
-        = [ ( split /\n/xms, $file_string_tidied ) ];
-    my string_arrayref $source_string_split
-        = [ ( split /\n/xms, $source_string_tidied ) ];
+    my string_arrayref $file_string_split   = [ ( split /\n/xms, $file_string_tidied ) ];
+    my string_arrayref $source_string_split = [ ( split /\n/xms, $source_string_tidied ) ];
     my string_arrayref $source_string_split_tmp = [];
     my string $string_line;
 
@@ -253,18 +244,16 @@ our integer $diff_check_file_vs_string = sub {
         $file_line   = $file_string_split->[$i];
         $string_line = $source_string_split->[$i];
         if ( $string_line =~ /__DUMMY_SOURCE_CODE/xms ) {
-            RPerl::warning(
-                'WARNING WCVGEDI00, RPERL GENERATOR, DIFF CHECK: Dummy source code found, abandoning check'
-                    . "\n" );
+            RPerl::warning( 'WARNING WCVGEDI00, RPERL GENERATOR, DIFF CHECK: Dummy source code found, abandoning check' . "\n" );
             $return_value = -1;
             last;
         }
 
         if ( $file_line ne $string_line ) {
 
-#            RPerl::diag( 'in Generator->diff_check_file_vs_string(), have non-matching $file_line =' . "\n" . $file_line . "\n" );
-#            RPerl::diag( 'in Generator->diff_check_file_vs_string(), have non-matching $string_line =' . "\n" . $string_line . "\n" );
-            $return_value = $i + 1; # arrays indexed from 0, file lines indexed from 1
+            #            RPerl::diag( 'in Generator->diff_check_file_vs_string(), have non-matching $file_line =' . "\n" . $file_line . "\n" );
+            #            RPerl::diag( 'in Generator->diff_check_file_vs_string(), have non-matching $string_line =' . "\n" . $string_line . "\n" );
+            $return_value = $i + 1;    # arrays indexed from 0, file lines indexed from 1
             last;
         }
     }
@@ -276,18 +265,14 @@ our integer $diff_check_file_vs_string = sub {
 our string_hashref $ast_to_rperl__generate = sub {
     ( my object $node, my string_hashref $modes) = @_;
 
-#    RPerl::diag "in Generator::ast_to_rperl__generate(), received \$node =\n" . RPerl::Parser::rperl_ast__dump($node) . "\n";
-#    RPerl::diag "in Generator::ast_to_rperl__generate(), received \$modes =\n" . Dumper($modes) . "\n";
+    #    RPerl::diag "in Generator::ast_to_rperl__generate(), received \$node =\n" . RPerl::Parser::rperl_ast__dump($node) . "\n";
+    #    RPerl::diag "in Generator::ast_to_rperl__generate(), received \$modes =\n" . Dumper($modes) . "\n";
 
     if ( not( defined $modes->{types} ) ) {
-        die 'ERROR ECVGEMO00, RPERL GENERATOR, RPERL TYPES MODE:' . "\n"
-            . q{'PERL'}
-            . 'expected but undefined/null value found, dying' . "\n";
+        die 'ERROR ECVGEMO00, RPERL GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL'} . 'expected but undefined/null value found, dying' . "\n";
     }
     if ( not( $modes->{types} eq 'PERL' ) ) {
-        die 'ERROR ECVGEMO01, RPERL GENERATOR, RPERL TYPES MODE:' . "\n"
-            . q{'PERL'}
-            . 'expected but non-matching value found, dying' . "\n";
+        die 'ERROR ECVGEMO01, RPERL GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL'} . 'expected but non-matching value found, dying' . "\n";
     }
 
     grammar_rules__map();
@@ -300,19 +285,14 @@ our string_hashref $ast_to_rperl__generate = sub {
 our string_hashref $ast_to_cpp__generate = sub {
     ( my object $node, my string_hashref $modes) = @_;
 
-#    RPerl::diag "in Generator::ast_to_cpp__generate(), received \$node =\n" . RPerl::Parser::rperl_ast__dump($node) . "\n";
-#    RPerl::diag "in Generator::ast_to_cpp__generate(), received \$modes =\n" . Dumper($modes) . "\n";
+    #    RPerl::diag "in Generator::ast_to_cpp__generate(), received \$node =\n" . RPerl::Parser::rperl_ast__dump($node) . "\n";
+    #    RPerl::diag "in Generator::ast_to_cpp__generate(), received \$modes =\n" . Dumper($modes) . "\n";
 
     if ( not( defined $modes->{types} ) ) {
-        die 'ERROR ECVGEMO02, C++ GENERATOR, RPERL TYPES MODE:' . "\n"
-            . q{'PERL' or 'CPP'}
-            . 'expected but undefined/null value found, dying' . "\n";
+        die 'ERROR ECVGEMO02, C++ GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL' or 'CPP'} . 'expected but undefined/null value found, dying' . "\n";
     }
-    if (not( ( $modes->{types} eq 'PERL' ) or ( $modes->{types} eq 'CPP' ) ) )
-    {
-        die 'ERROR ECVGEMO03, C++ GENERATOR, RPERL TYPES MODE:' . "\n"
-            . q{'PERL' or 'CPP'}
-            . 'expected but non-matching value found, dying' . "\n";
+    if ( not( ( $modes->{types} eq 'PERL' ) or ( $modes->{types} eq 'CPP' ) ) ) {
+        die 'ERROR ECVGEMO03, C++ GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL' or 'CPP'} . 'expected but non-matching value found, dying' . "\n";
     }
 
     grammar_rules__map();
@@ -327,12 +307,10 @@ our string_hashref $ast_to_cpp__generate = sub {
 # Append All Source Code Entries From Group 2 Onto The Respective Entries In Group 1
 #our string_hashref $source_group_append = sub {
 our void $source_group_append = sub {
-    (   my string_hashref $rperl_source_group_1,
-        my string_hashref $rperl_source_group_2)
-        = @_;
+    ( my string_hashref $rperl_source_group_1, my string_hashref $rperl_source_group_2) = @_;
 
-#    RPerl::diag('in Generator::source_group_append(), received $rperl_source_group_1 =' . "\n" . Dumper($rperl_source_group_1) . "\n");
-#    RPerl::diag('in Generator::source_group_append(), received $rperl_source_group_2 =' . "\n" . Dumper($rperl_source_group_2) . "\n");
+    #    RPerl::diag('in Generator::source_group_append(), received $rperl_source_group_1 =' . "\n" . Dumper($rperl_source_group_1) . "\n");
+    #    RPerl::diag('in Generator::source_group_append(), received $rperl_source_group_2 =' . "\n" . Dumper($rperl_source_group_2) . "\n");
 
     foreach my string $suffix_key ( sort keys %{$rperl_source_group_2} ) {
         if ( defined $rperl_source_group_2->{$suffix_key} ) {
@@ -343,8 +321,7 @@ our void $source_group_append = sub {
             {
                 $rperl_source_group_1->{$suffix_key} = q{};
             }
-            $rperl_source_group_1->{$suffix_key}
-                .= $rperl_source_group_2->{$suffix_key};
+            $rperl_source_group_1->{$suffix_key} .= $rperl_source_group_2->{$suffix_key};
         }
     }
 };
@@ -358,7 +335,7 @@ our void $grammar_rules__map = sub {
         return;
     }
 
-#    RPerl::diag "in Generator::grammar_rules__map(), have \$RPerl::Grammar::RULES =\n" . Dumper($RPerl::Grammar::RULES) . "\n";
+    #    RPerl::diag "in Generator::grammar_rules__map(), have \$RPerl::Grammar::RULES =\n" . Dumper($RPerl::Grammar::RULES) . "\n";
     foreach my string $rule ( sort keys %{$RPerl::Grammar::RULES} ) {
 
         # create mapped class/package (namespace) and set up Perl inheritance
@@ -371,7 +348,7 @@ our void $grammar_rules__map = sub {
             . $RPerl::Grammar::RULES->{$rule}
             . q{; our hashref $properties = {}; 1;};
 
-#        RPerl::diag 'in Generator::grammar_rules_map(), have 1st $eval_string = ' . "\n" . $eval_string . "\n";
+        #        RPerl::diag 'in Generator::grammar_rules_map(), have 1st $eval_string = ' . "\n" . $eval_string . "\n";
         my integer $eval_retval = eval $eval_string;
         if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne q{} ) ) {
             die $EVAL_ERROR . "\n";
@@ -393,7 +370,7 @@ our void $grammar_rules__map = sub {
             . $RPerl::Grammar::RULES->{$rule}
             . q[::{'> . $key . q<'} }(@_); };>) {die $EVAL_ERROR . "\n";} } }];
 
-#        RPerl::diag 'in Generator::grammar_rules_map(), have 2nd $eval_string = ' . "\n" . $eval_string . "\n";
+        #        RPerl::diag 'in Generator::grammar_rules_map(), have 2nd $eval_string = ' . "\n" . $eval_string . "\n";
         $eval_retval = eval $eval_string;
         if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne q{} ) ) {
             die $EVAL_ERROR . "\n";

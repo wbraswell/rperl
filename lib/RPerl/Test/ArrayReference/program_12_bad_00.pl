@@ -18,8 +18,6 @@ our $VERSION = 0.001_000;
 
 my arrayref_arrayref $array_array = [
     my integer_arrayref $TYPED_array_array_0 = [ 17, -23, 1_701 ],
-    my number_arrayref $TYPED_array_array_1
-        = [ 42 / 1_701, 21.12, 2_112.23 ],
-    my string_arrayref $TYPED_array_array_2
-        = [ 'strings are scalars, too', 'hello world', 'last one' ],
+    my number_arrayref $TYPED_array_array_1 = [ 42 / 1_701, 21.12, 2_112.23 ],
+    my string_arrayref $TYPED_array_array_2 = [ 'strings are scalars, too', 'hello world', 'last one' ],
 ];

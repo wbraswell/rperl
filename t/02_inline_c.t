@@ -31,17 +31,13 @@ if ( $ENV{RPERL_VERBOSE} ) {
 #lives_ok( sub { use Inline C => q{charge* greet(){return("Hello, world");}}; }, q{Inline::C, define greet() lives} );  # bad: invokes Inline during syntax check and crashes all tests
 lives_and(
     sub {
-        my $EVAL_RETVAL
-            = eval 'use Inline C=>q{char* greet(){return("Hello, world");}};';
+        my $EVAL_RETVAL = eval 'use Inline C=>q{char* greet(){return("Hello, world");}};';
 
-#            '$SIG{__WARN__}=sub {cluck $_[0]};  use Inline C=>q{char* greet(){return("Hello, world");}};';
+        #            '$SIG{__WARN__}=sub {cluck $_[0]};  use Inline C=>q{char* greet(){return("Hello, world");}};';
         if ( $EVAL_ERROR ne q{} ) {
-            croak(
-                "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
-            );
+            croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
-        is( $EVAL_RETVAL, undef,
-            q{Inline::C, define greet() returns correct value} );
+        is( $EVAL_RETVAL, undef, q{Inline::C, define greet() returns correct value} );
     },
     q{Inline::C, define greet() lives}
 );
@@ -49,12 +45,9 @@ lives_and(
     sub {
         my $EVAL_RETVAL = eval 'greet();';
         if ( $EVAL_ERROR ne q{} ) {
-            croak(
-                "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
-            );
+            croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
-        is( $EVAL_RETVAL, 'Hello, world',
-            q{Inline::C, call greet() returns correct value} );
+        is( $EVAL_RETVAL, 'Hello, world', q{Inline::C, call greet() returns correct value} );
     },
     q{Inline::C, call greet() lives}
 );
@@ -62,15 +55,12 @@ lives_and(
 # greet_bind()
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval
-            'use Inline; Inline->bind(C=>q{char* greet_bind(){return("Hello again, world");}})';
+        my $EVAL_RETVAL = eval 'use Inline; Inline->bind(C=>q{char* greet_bind(){return("Hello again, world");}})';
         if ( $EVAL_ERROR ne q{} ) {
-            croak(
-                "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
-            );
+            croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
         like(
-            $EVAL_RETVAL, '/HASH\(0x\w*\)/', ## RPERL SYSTEM allow like() regex
+            $EVAL_RETVAL, '/HASH\(0x\w*\)/',    ## RPERL SYSTEM allow like() regex
             q{Inline::C, define greet_bind() returns correct value}
         );
     },
@@ -80,14 +70,9 @@ lives_and(
     sub {
         my $EVAL_RETVAL = eval 'greet_bind();';
         if ( $EVAL_ERROR ne q{} ) {
-            croak(
-                "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
-            );
+            croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
-        is( $EVAL_RETVAL,
-            'Hello again, world',
-            q{Inline::C, call greet_bind() returns correct value}
-        );
+        is( $EVAL_RETVAL, 'Hello again, world', q{Inline::C, call greet_bind() returns correct value} );
     },
     q{Inline::C, call greet_bind() lives}
 );
@@ -95,15 +80,11 @@ lives_and(
 # JAxH()
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval
-            'use Inline C=>q{SV*JAxH(char*x){return newSVpvf("Just Another %s Hacker",x);}};';
+        my $EVAL_RETVAL = eval 'use Inline C=>q{SV*JAxH(char*x){return newSVpvf("Just Another %s Hacker",x);}};';
         if ( $EVAL_ERROR ne q{} ) {
-            croak(
-                "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
-            );
+            croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
-        is( $EVAL_RETVAL, undef,
-            q{Inline::C, define JAxH() returns correct value} );
+        is( $EVAL_RETVAL, undef, q{Inline::C, define JAxH() returns correct value} );
     },
     q{Inline::C, define JAxH() lives}
 );
@@ -111,14 +92,9 @@ lives_and(
     sub {
         my $EVAL_RETVAL = eval 'JAxH("Perl");';
         if ( $EVAL_ERROR ne q{} ) {
-            croak(
-                "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
-            );
+            croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
-        is( $EVAL_RETVAL,
-            'Just Another Perl Hacker',
-            q{Inline::C, call JAxH() returns correct value}
-        );
+        is( $EVAL_RETVAL, 'Just Another Perl Hacker', q{Inline::C, call JAxH() returns correct value} );
     },
     q{Inline::C, call JAxH() lives}
 );
@@ -144,23 +120,17 @@ lives_and(
     sub {
         my $EVAL_RETVAL = eval $greetings_char_eval_string;
         if ( $EVAL_ERROR ne q{} ) {
-            croak(
-                "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
-            );
+            croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
-        is( $EVAL_RETVAL, undef,
-            q{Inline::C, define greetings_char() returns correct value} );
+        is( $EVAL_RETVAL, undef, q{Inline::C, define greetings_char() returns correct value} );
     },
     q{Inline::C, define greetings_char() lives}
 );
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval
-            'greetings_char("Larry", "Ingy", "Reini", "Neil", "Sisyphus", "Davido");';
+        my $EVAL_RETVAL = eval 'greetings_char("Larry", "Ingy", "Reini", "Neil", "Sisyphus", "Davido");';
         if ( $EVAL_ERROR ne q{} ) {
-            croak(
-                "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
-            );
+            croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
         is( $EVAL_RETVAL,
             'Hello Larry!  Hello Ingy!  Hello Reini!  Hello Neil!  Hello Sisyphus!  Hello Davido!  ',
@@ -190,24 +160,18 @@ lives_and(
     sub {
         my $EVAL_RETVAL = eval $greetings_sv_eval_string;
         if ( $EVAL_ERROR ne q{} ) {
-            croak(
-                "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
-            );
+            croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
-        is( $EVAL_RETVAL, undef,
-            q{Inline::C, define greetings_sv() returns correct value} );
+        is( $EVAL_RETVAL, undef, q{Inline::C, define greetings_sv() returns correct value} );
     },
     q{Inline::C, define greetings_sv() lives}
 );
 lives_and(
     sub {
         my $greetings_sv_retval = q{};
-        my $EVAL_RETVAL         = eval
-            'greetings_sv($greetings_sv_retval, "Larry", "Ingy", "Reini", "Neil", "Sisyphus", "Davido");';
+        my $EVAL_RETVAL         = eval 'greetings_sv($greetings_sv_retval, "Larry", "Ingy", "Reini", "Neil", "Sisyphus", "Davido");';
         if ( $EVAL_ERROR ne q{} ) {
-            croak(
-                "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
-            );
+            croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
         is( $EVAL_RETVAL,
             'Hello Larry!  Hello Ingy!  Hello Reini!  Hello Neil!  Hello Sisyphus!  Hello Davido!  ',
@@ -240,23 +204,17 @@ lives_and(
     sub {
         my $EVAL_RETVAL = eval $greetings_void_eval_string;
         if ( $EVAL_ERROR ne q{} ) {
-            croak(
-                "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
-            );
+            croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
-        is( $EVAL_RETVAL, undef,
-            q{Inline::C, define greetings_void() returns correct value} );
+        is( $EVAL_RETVAL, undef, q{Inline::C, define greetings_void() returns correct value} );
     },
     q{Inline::C, define greetings_void() lives}
 );
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval
-            'greetings_void("Larry", "Ingy", "Reini", "Neil", "Sisyphus", "Davido");';
+        my $EVAL_RETVAL = eval 'greetings_void("Larry", "Ingy", "Reini", "Neil", "Sisyphus", "Davido");';
         if ( $EVAL_ERROR ne q{} ) {
-            croak(
-                "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
-            );
+            croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
         is( $EVAL_RETVAL,
             'Hello Larry!  Hello Ingy!  Hello Reini!  Hello Neil!  Hello Sisyphus!  Hello Davido!  ',
@@ -280,12 +238,9 @@ lives_and(
     sub {
         my $EVAL_RETVAL = eval $change_eval_string;
         if ( $EVAL_ERROR ne q{} ) {
-            croak(
-                "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
-            );
+            croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
-        is( $EVAL_RETVAL, undef,
-            q{Inline::C, define change() returns correct value} );
+        is( $EVAL_RETVAL, undef, q{Inline::C, define change() returns correct value} );
     },
     q{Inline::C, define change() lives}
 );
@@ -294,18 +249,11 @@ lives_and(
         my ( $foo, $bar );
         my $EVAL_RETVAL = eval 'change($foo, $bar);';
         if ( $EVAL_ERROR ne q{} ) {
-            croak(
-                "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
-            );
+            croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
-        cmp_ok( $EVAL_RETVAL, q{==}, 1,
-            q{Inline::C, call change() returns correct value} );
-        is( $foo, 'Perl Rocks!',
-            'Inline::C, call change(), correctly change variable 1' );
-        is( $bar,
-            'Inline Rules!',
-            'Inline::C, call change(), correctly change variable 2'
-        );
+        cmp_ok( $EVAL_RETVAL, q{==}, 1, q{Inline::C, call change() returns correct value} );
+        is( $foo, 'Perl Rocks!',   'Inline::C, call change(), correctly change variable 1' );
+        is( $bar, 'Inline Rules!', 'Inline::C, call change(), correctly change variable 2' );
     },
     q{Inline::C, call change() lives}
 );

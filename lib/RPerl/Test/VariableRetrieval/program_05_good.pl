@@ -12,10 +12,5 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 
 my string_hashref $s_hash;
-$s_hash = {
-    titans     => 'ccm',
-    redhawks   => 'msu',
-    redraiders => 'ttu',
-    bears      => 'bu'
-};
+$s_hash = { titans => 'ccm', redhawks => 'msu', redraiders => 'ttu', bears => 'bu' };
 print $s_hash->{ 'red' . 'hawks' };

@@ -17,13 +17,7 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 
 my hashref_hashref $hash_hash = {
-    key0 => my integer_hashref $TYPED_key0
-        = { a => 17, b => -23, c => 1_701 },
-    key1 => my number_hashref $TYPED_key1
-        = { d => 42 / 1_701, e => 21.12, f => 2_112.23 },
-    key2 => my string_hashref $TYPED_key2 = {
-        g => 'strings are scalars, too',
-        h => 'hello world',
-        i => 'last one'
+    key0 => my integer_hashref $TYPED_key0 = { a => 17, b => -23, c => 1_701 },
+    key1 => my number_hashref $TYPED_key1 = { d => 42 / 1_701, e => 21.12, f => 2_112.23 },
+    key2 => my string_hashref $TYPED_key2 = { g => 'strings are scalars, too', h => 'hello world', i => 'last one' }
     }
-}

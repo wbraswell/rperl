@@ -17,4 +17,6 @@ my arrayref_arrayref $array_array = [
     my integer_arrayref $TYPED_array_array_1 = [ -1,   444, 2_987 ],
     my integer_arrayref $TYPED_array_array_2 = [ -321, 7,   24_851 ]
 ];
-foreach my arrayref $array ( @{$array_array} ) { print '$array = ', Dumper($array), "\n"; }
+foreach my arrayref $array ( @{$array_array} ) {
+    print '$array = ', Dumper($array), "\n";
+}

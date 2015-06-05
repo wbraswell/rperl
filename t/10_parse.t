@@ -42,24 +42,14 @@ find(
 
             # NEED FIX: remove use of $_ magic variable
             open my filehandleref $FILE_HANDLE, '<', $_
-                or croak 'ERROR, Cannot open file '
-                . $file
-                . ' for reading,'
-                . $OS_ERROR
-                . ', croaking';
+                or croak 'ERROR, Cannot open file ' . $file . ' for reading,' . $OS_ERROR . ', croaking';
             while (<$FILE_HANDLE>) {
-                if (m/^\#\s*\<\<\<\s*PARSE_ERROR\s*\:\s*['"](.*)['"]\s*\>\>\>/xms
-                    )
-                {
+                if (m/^\#\s*\<\<\<\s*PARSE_ERROR\s*\:\s*['"](.*)['"]\s*\>\>\>/xms) {
                     push @{ $test_files->{$file}->{errors} }, $1;
                 }
             }
             close $FILE_HANDLE
-                or croak 'ERROR, Cannot close file '
-                . $file
-                . ' after reading,'
-                . $OS_ERROR
-                . ', croaking';
+                or croak 'ERROR, Cannot close file ' . $file . ' after reading,' . $OS_ERROR . ', croaking';
         }
         else {
             return;
@@ -74,25 +64,27 @@ plan tests => scalar keys %{$test_files};
 
 for my $test_file ( sort keys %{$test_files} ) {
 
-#    RPerl::diag( 'in 10_parse.t, have $test_file = ' . $test_file . "\n" );
+    #    RPerl::diag( 'in 10_parse.t, have $test_file = ' . $test_file . "\n" );
 
     my $eval_return_value = eval {
         rperl_to_xsbinary__parse_generate_compile(
             $test_file,
-            undef,  # empty output file group, no files will be saved in PARSE mode
+            undef,    # empty output file group, no files will be saved in PARSE mode
             {   ops     => 'PERL',
                 types   => 'PERL',
-                check   => 'TRACE',  # unneeded?
+                check   => 'TRACE',    # unneeded?
                 compile => 'PARSE',
-#                execute => 'OFF',  # unneeded
-#                label   => 'OFF'  # unneeded
-            }
-        );  # returns void
-        1;  # return true
-    };
-#    RPerl::diag( 'in 10_parse.t, have $eval_return_value = ' . $eval_return_value . "\n" );  # warning if undef retval
 
-    if ((defined $eval_return_value) and $eval_return_value) {    # Perl eval return code defined & true, success
+                #                execute => 'OFF',  # unneeded
+                #                label   => 'OFF'  # unneeded
+            }
+        );    # returns void
+        1;    # return true
+    };
+
+    #    RPerl::diag( 'in 10_parse.t, have $eval_return_value = ' . $eval_return_value . "\n" );  # warning if undef retval
+
+    if ( ( defined $eval_return_value ) and $eval_return_value ) {    # Perl eval return code defined & true, success
         if ( ( $test_file =~ m/Good/xms ) or ( $test_file =~ m/good/xms ) ) {
             ok( 1, "Program or module $test_file parses without errors" );
         }
@@ -100,23 +92,19 @@ for my $test_file ( sort keys %{$test_files} ) {
             ok( 0, "Program or module $test_file parses with errors" );
         }
     }
-    else {                       # Perl eval return code undefined or false, error
+    else {                                                            # Perl eval return code undefined or false, error
 
-#        RPerl::diag( 'in 10_parse.t, have $EVAL_ERROR = ' . $EVAL_ERROR . "\n" );
+        #        RPerl::diag( 'in 10_parse.t, have $EVAL_ERROR = ' . $EVAL_ERROR . "\n" );
         if ( ( $test_file =~ m/Bad/ms ) or ( $test_file =~ m/bad/ms ) ) {
             my $missing_errors = [];
             if ( defined $test_files->{$test_file}->{errors} ) {
-                foreach my $error ( @{ $test_files->{$test_file}->{errors} } )
-                {
+                foreach my $error ( @{ $test_files->{$test_file}->{errors} } ) {
                     if ( $EVAL_ERROR !~ /\Q$error\E/xms ) {
-                        push @{$missing_errors},
-                            "Error message '$error' expected, but not found";
+                        push @{$missing_errors}, "Error message '$error' expected, but not found";
                     }
                 }
             }
-            ok( ( ( scalar @{$missing_errors} ) == 0 ),
-                "Program or module $test_file parses with expected error(s)"
-            );
+            ok( ( ( scalar @{$missing_errors} ) == 0 ), "Program or module $test_file parses with expected error(s)" );
         }
         else {
             ok( 0, "Program or module $test_file parses without errors" );

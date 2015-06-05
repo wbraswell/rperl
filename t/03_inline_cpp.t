@@ -61,12 +61,9 @@ lives_and(
     sub {
         my $EVAL_RETVAL = eval $farmer_define_eval_string;
         if ( $EVAL_ERROR ne q{} ) {
-            croak(
-                "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
-            );
+            croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
-        is( $EVAL_RETVAL, undef,
-            q{Inline::CPP, define class Farmer returns correct value} );
+        is( $EVAL_RETVAL, undef, q{Inline::CPP, define class Farmer returns correct value} );
     },
     q{Inline::CPP, define class Farmer lives}
 );
@@ -83,14 +80,9 @@ lives_and(
     sub {
         my $EVAL_RETVAL = eval $farmer_call_eval_string;
         if ( $EVAL_ERROR ne q{} ) {
-            croak(
-                "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
-            );
+            croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
-        is( $EVAL_RETVAL,
-            'Wow!  The farmer worked 15 hours!',
-            q{Inline::CPP, call Farmer methods returns correct value}
-        );
+        is( $EVAL_RETVAL, 'Wow!  The farmer worked 15 hours!', q{Inline::CPP, call Farmer methods returns correct value} );
     },
     q{Inline::CPP, call Farmer methods lives}
 );
@@ -131,12 +123,9 @@ lives_and(
     sub {
         my $EVAL_RETVAL = eval $airplane_define_eval_string;
         if ( $EVAL_ERROR ne q{} ) {
-            croak(
-                "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
-            );
+            croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
-        is( $EVAL_RETVAL, undef,
-            q{Inline::CPP, define class Airplane returns correct value} );
+        is( $EVAL_RETVAL, undef, q{Inline::CPP, define class Airplane returns correct value} );
     },
     q{Inline::CPP, define class Airplane lives}
 );
@@ -150,22 +139,12 @@ return($plane_retval1, $plane_retval2);
 EOF
 lives_and(
     sub {
-        my ( $airplane_retval1, $airplane_retval2 )
-            = eval $airplane_call_eval_string;
+        my ( $airplane_retval1, $airplane_retval2 ) = eval $airplane_call_eval_string;
         if ( $EVAL_ERROR ne q{} ) {
-            croak(
-                "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
-            );
+            croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
-        like(
-            $airplane_retval1,
-            '/Object\ \(0x\w*\)/',
-            'Inline::CPP, call Airplane methods, return correct value 1'
-        );
-        is( $airplane_retval2,
-            'Plane is an Object!  This plane sucks!',
-            'Inline::CPP, call Airplane methods, return correct value 2'
-        );
+        like( $airplane_retval1, '/Object\ \(0x\w*\)/', 'Inline::CPP, call Airplane methods, return correct value 1' );
+        is( $airplane_retval2, 'Plane is an Object!  This plane sucks!', 'Inline::CPP, call Airplane methods, return correct value 2' );
     },
     q{Inline::CPP, call Airplane methods lives}
 );
@@ -199,13 +178,9 @@ lives_and(
     sub {
         my $EVAL_RETVAL = eval $average_define_eval_string;
         if ( $EVAL_ERROR ne q{} ) {
-            croak(
-                "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
-            );
+            croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
-        is( $EVAL_RETVAL, undef,
-            q{Inline::CPP, define average() and avg() returns correct value}
-        );
+        is( $EVAL_RETVAL, undef, q{Inline::CPP, define average() and avg() returns correct value} );
     },
     q{Inline::CPP, define average() and avg() lives}
 );
@@ -219,13 +194,9 @@ return($average_retval, $avg_retval, $average_retval_string, $avg_retval_string)
 EOF
 lives_and(
     sub {
-        my ($average_retval,        $avg_retval,
-            $average_retval_string, $avg_retval_string
-        ) = eval $average_call_eval_string;
+        my ( $average_retval, $avg_retval, $average_retval_string, $avg_retval_string ) = eval $average_call_eval_string;
         if ( $EVAL_ERROR ne q{} ) {
-            croak(
-                "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
-            );
+            croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
         like(
             $average_retval_string,
@@ -237,9 +208,7 @@ lives_and(
             '/The C\/C\+\+ average of 10000 random numbers is: \d+.\d+/',
             q{Inline::CPP, call average() and avg() returns correct value 2}
         );
-        cmp_ok( abs( $average_retval - $avg_retval ), '<', $ERROR_MAX,
-            q{Inline::CPP, call average() and avg() return values are equivalent}
-        );
+        cmp_ok( abs( $average_retval - $avg_retval ), '<', $ERROR_MAX, q{Inline::CPP, call average() and avg() return values are equivalent} );
     },
     q{Inline::CPP, call average() and avg() lives}
 );
@@ -276,13 +245,9 @@ lives_and(
     sub {
         my $EVAL_RETVAL = eval $queuestack_define_eval_string;
         if ( $EVAL_ERROR ne q{} ) {
-            croak(
-                "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
-            );
+            croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
-        is( $EVAL_RETVAL, undef,
-            q{Inline::CPP, define classes Queue and Stack returns correct value}
-        );
+        is( $EVAL_RETVAL, undef, q{Inline::CPP, define classes Queue and Stack returns correct value} );
     },
     q{Inline::CPP, define classes Queue and Stack lives}
 );
@@ -312,21 +277,12 @@ return($queue_retval, $stack_retval);
 EOF
 lives_and(
     sub {
-        my ( $queue_retval, $stack_retval )
-            = eval $queuestack_call_eval_string;
+        my ( $queue_retval, $stack_retval ) = eval $queuestack_call_eval_string;
         if ( $EVAL_ERROR ne q{} ) {
-            croak(
-                "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
-            );
+            croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
-        is( $queue_retval,
-            '50  Where am I?  In a queue.  ',
-            q{Inline::CPP, call Queue and Stack methods returns correct value 1}
-        );
-        is( $stack_retval,
-            'What?  42  ',
-            q{Inline::CPP, call Queue and Stack methods returns correct value 2}
-        );
+        is( $queue_retval, '50  Where am I?  In a queue.  ', q{Inline::CPP, call Queue and Stack methods returns correct value 1} );
+        is( $stack_retval, 'What?  42  ', q{Inline::CPP, call Queue and Stack methods returns correct value 2} );
     },
     q{Inline::CPP, call Queue and Stack methods lives}
 );
@@ -359,26 +315,19 @@ lives_and(
     sub {
         my $EVAL_RETVAL = eval $multiadd_define_eval_string;
         if ( $EVAL_ERROR ne q{} ) {
-            croak(
-                "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
-            );
+            croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
-        is( $EVAL_RETVAL, undef,
-            q{Inline::CPP, define multiadd() returns correct value} );
+        is( $EVAL_RETVAL, undef, q{Inline::CPP, define multiadd() returns correct value} );
     },
     q{Inline::CPP, define multiadd() lives}
 );
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval
-            'return(multiadd(1));  # No dispatch; just return the value';
+        my $EVAL_RETVAL = eval 'return(multiadd(1));  # No dispatch; just return the value';
         if ( $EVAL_ERROR ne q{} ) {
-            croak(
-                "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
-            );
+            croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
-        cmp_ok( $EVAL_RETVAL, q{==}, 1,
-            q{Inline::CPP, call multiadd(1) returns correct value} );
+        cmp_ok( $EVAL_RETVAL, q{==}, 1, q{Inline::CPP, call multiadd(1) returns correct value} );
     },
     q{Inline::CPP, call multiadd(1) lives}
 );
@@ -386,38 +335,26 @@ lives_and(
     sub {
         my $EVAL_RETVAL = eval 'multiadd(1, 2);  # Dispatch add(int, int)';
         if ( $EVAL_ERROR ne q{} ) {
-            croak(
-                "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
-            );
+            croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
-        cmp_ok( $EVAL_RETVAL, q{==}, 3,
-            q{Inline::CPP, call multiadd(1, 2) returns correct value} );
+        cmp_ok( $EVAL_RETVAL, q{==}, 3, q{Inline::CPP, call multiadd(1, 2) returns correct value} );
     },
     q{Inline::CPP, call multiadd(1, 2) lives}
 );
 lives_and(
     sub {
-        my $EVAL_RETVAL
-            = eval 'multiadd(1, 2, 3);  # Dispatch add(int, int, int)';
+        my $EVAL_RETVAL = eval 'multiadd(1, 2, 3);  # Dispatch add(int, int, int)';
         if ( $EVAL_ERROR ne q{} ) {
-            croak(
-                "Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking"
-            );
+            croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
-        cmp_ok( $EVAL_RETVAL, q{==}, 6,
-            q{Inline::CPP, call multiadd(1, 2, 3) returns correct value} );
+        cmp_ok( $EVAL_RETVAL, q{==}, 6, q{Inline::CPP, call multiadd(1, 2, 3) returns correct value} );
     },
     q{Inline::CPP, call multiadd(1, 2, 3) lives}
 );
-lives_and( # can't use throws_ok() because we are trapping the exception inside of eval
+lives_and(    # can't use throws_ok() because we are trapping the exception inside of eval
     sub {
-        my $EVAL_RETVAL
-            = eval 'multiadd(1, 2, 3, 4);  # No dispatch; throw an exception';
-        like(
-            $EVAL_ERROR,
-            '/^multiadd\(\) \- Too many args in function call at/',
-            q{Inline::CPP, call multiadd(1, 2, 3, 4) throws correct exception}
-        );
+        my $EVAL_RETVAL = eval 'multiadd(1, 2, 3, 4);  # No dispatch; throw an exception';
+        like( $EVAL_ERROR, '/^multiadd\(\) \- Too many args in function call at/', q{Inline::CPP, call multiadd(1, 2, 3, 4) throws correct exception} );
     },
     q{Inline::CPP, call multiadd(1, 2, 3, 4) lives}
 );

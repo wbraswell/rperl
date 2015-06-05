@@ -17,5 +17,4 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 
 # homogeneous 2-dimensional array of arrays, using outer type
-my integer_arrayref_arrayref $array_array
-    = [ [ 17, -23, 1_701 ], [ -1, 444, 2_987 ], [ -321, 7, 24_851 ], ];
+my integer_arrayref_arrayref $array_array = [ [ 17, -23, 1_701 ], [ -1, 444, 2_987 ], [ -321, 7, 24_851 ], ];

@@ -24,7 +24,7 @@ using std::cout;  using std::cerr;
 
 ////# [[[ OO INHERITANCE ]]]
 ////package RPerl::Algorithm::Sort::Bubble;
-////use parent qw( RPerl::Algorithm::Sort ); # OO INHERITANCE TESTING; SINGLE OO INHERITANCE
+////use parent qw(RPerl::Algorithm::Sort); # OO INHERITANCE TESTING; SINGLE OO INHERITANCE
 class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort  // SINGLE OO INHERITANCE
 //class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort, public RPerl__Algorithm__Inefficient  // NEED UPGRADE: multiple inheritance not currently supported by Inline::CPP
 {
@@ -87,7 +87,7 @@ SV* RPerl__Algorithm__Sort__Bubble__MODE_ID() { return(newSViv(1)); }  // CPPOPS
 
 ////# [[[ OO INHERITANCE ]]]
 ////package RPerl::Algorithm::Sort::Bubble;
-////use parent qw( RPerl::Algorithm::Sort ); # OO INHERITANCE TESTING; SINGLE OO INHERITANCE
+////use parent qw(RPerl::Algorithm::Sort); # OO INHERITANCE TESTING; SINGLE OO INHERITANCE
 class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort  // SINGLE OO INHERITANCE
 //class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort, public RPerl__Algorithm__Inefficient  // NEED UPGRADE: multiple inheritance not currently supported by Inline::CPP
 {
