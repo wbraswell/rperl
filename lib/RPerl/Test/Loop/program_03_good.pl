@@ -13,6 +13,5 @@ our $VERSION = 0.001_000;
 
 foreach my number $my_number ( 1.1, 2.2, 3.3, 4.4 ) {
     print 'Production rule Loop matched by LoopForEach, iteration item ',
-        $my_number,
-        "\n";
+        $my_number, "\n";
 }

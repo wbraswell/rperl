@@ -12,14 +12,8 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 
 foreach my string $key (
-    sort keys %{
-        {   a => my integer $TYPED_a = 10,
-            b => 20,
-            c => 30,
-            d => 40,
-            e => 50
-        }
-    }
+    sort keys
+    %{ { a => my integer $TYPED_a = 10, b => 20, c => 30, d => 40, e => 50 } }
     )
 {
     print '$key = ', $key, "\n";

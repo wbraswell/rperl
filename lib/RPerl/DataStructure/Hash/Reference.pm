@@ -40,6 +40,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     # unwrap HashReference_200 & HashReference_201 from SubExpression_135
     if ( $self_class eq 'SubExpression_135' ) {
         $self = $self->{children}->[0];
+        $self_class = ref $self;
     }
 
     if ( $self_class eq 'HashReference_200' ) { # HashReference -> LBRACE HashEntry STAR-50 '}'
@@ -85,7 +86,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ($self_class)
-                . ' found where HashReference_200 or HashReference_201 expected, dying'
+                . ' found where HashReference_200, HashReference_201, or SubExpression_135 expected, dying'
         ) . "\n";
     }
 

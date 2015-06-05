@@ -35,6 +35,7 @@ use Perl::Tidy;
 
 # TEMP DEBUGGING, ONLY LOAD SPECIFIC FILES
 #my $test_files = { './lib/RPerl/Algorithm/Sort/Bubble.pm' => undef };
+#my $test_files = { './lib/RPerl/Test/TypeCheckingTrace/all_types_good.pl' => undef };
 
 #=DEBUG_DISABLE
 # NEED UPDATE: add string_arrayref_hashref_hashref type

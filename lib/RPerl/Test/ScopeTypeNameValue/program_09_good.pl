@@ -27,16 +27,10 @@ $Data::Dumper::Indent = 0;
 my hashref $u = { a => RPerl::Test::SimpleA->new() };
 print Dumper( types($u) ) . "\n";
 
-$u = {
-    a => RPerl::Test::SimpleA->new(),
-    b => RPerl::Test::SimpleA->new()
-};
+$u = { a => RPerl::Test::SimpleA->new(), b => RPerl::Test::SimpleA->new() };
 print Dumper( types($u) ) . "\n";
 
-$u = {
-    a => RPerl::Test::SimpleA->new(),
-    b => RPerl::Test::SimpleB->new()
-};
+$u = { a => RPerl::Test::SimpleA->new(), b => RPerl::Test::SimpleB->new() };
 print Dumper( types($u) ) . "\n";
 
 $u = {

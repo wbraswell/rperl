@@ -12,7 +12,8 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 
 my integer $i = 10;
-FOOBARLOOP: while ( $i < 23 ) {
+FOOBARLOOP:
+while ( $i < 23 ) {
     print 'Production rule Statement matched by Loop, iteration number ', $i,
         "\n";
     $i += 2;

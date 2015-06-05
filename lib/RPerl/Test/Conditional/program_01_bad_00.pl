@@ -16,5 +16,8 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-if    (0) { print 'yes if',    "\n"; }
-elsif (1) { }
+if    (0) {
+    print 'yes if',    "\n";
+}
+elsif (1) {
+}

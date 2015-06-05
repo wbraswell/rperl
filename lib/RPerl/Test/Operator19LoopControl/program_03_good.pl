@@ -11,6 +11,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-HOWDYLOOP: while (1) {
+HOWDYLOOP:
+while (1) {
     last HOWDYLOOP;
 }

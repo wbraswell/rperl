@@ -31,6 +31,8 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         $self_class = ref $self;
     }
 
+#    RPerl::diag( 'in Conditional->ast_to_rperl__generate(), have possibly-unwrapped $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+
   # Conditional -> 'if' LPAREN SubExpression ')' CodeBlock STAR-38 OPTIONAL-40
     if ( $self_class eq 'Conditional_154' ) {
         my string $if            = $self->{children}->[0];
@@ -41,6 +43,15 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         my object $elsif_star    = $self->{children}->[5];
         my object $else_optional = $self->{children}->[6];
 
+#        RPerl::diag( 'in Conditional->ast_to_rperl__generate(), have $if = ' . $if . "\n" );
+#        RPerl::diag( 'in Conditional->ast_to_rperl__generate(), have $left_paren = ' . $left_paren . "\n" );
+#        RPerl::diag( 'in Conditional->ast_to_rperl__generate(), have ( ref $subexpression ) = ' . ( ref $subexpression ) . "\n" );
+#        RPerl::diag( 'in Conditional->ast_to_rperl__generate(), have $right_paren = ' . $right_paren . "\n" );
+#        RPerl::diag( 'in Conditional->ast_to_rperl__generate(), have ( ref $codeblock ) = ' . ( ref $codeblock ) . "\n" );
+#        RPerl::diag( 'in Conditional->ast_to_rperl__generate(), have ( ref $elsif_star ) = ' . ( ref $elsif_star ) . "\n" );
+#        RPerl::diag( 'in Conditional->ast_to_rperl__generate(), have $elsif_star = ' . "\n" . RPerl::Parser::rperl_ast__dump($elsif_star) . "\n" );
+#        RPerl::diag( 'in Conditional->ast_to_rperl__generate(), have ( ref $else_optional ) = ' . ( ref $else_optional ) . "\n" );
+
         $rperl_source_group->{PMC} .= $if . q{ } . $left_paren . q{ };
         my object $rperl_source_subgroup
             = $subexpression->ast_to_rperl__generate($modes);
@@ -48,33 +59,52 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= q{ } . $right_paren . q{ };
         $rperl_source_subgroup = $codeblock->ast_to_rperl__generate($modes);
-        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+        RPerl::Generator::source_group_append( $rperl_source_group,
+            $rperl_source_subgroup );
 
         # ('elsif' LPAREN SubExpression ')' CodeBlock)*
-        # DEV NOTE: destructive to AST!!!
+        # NEED FIX: destructive to AST!!!
         while ( exists $elsif_star->{children}->[0] ) {
-            my string $elsif = shift @{ $elsif_star->{children} };
-            my string $elsif_left_paren    = shift @{ $elsif_star->{children} };
-            my object $elsif_subexpression  = shift @{ $elsif_star->{children} };
-            my string $elsif_right_paren  = shift @{ $elsif_star->{children} };
-            my object $elsif_codeblock  = shift @{ $elsif_star->{children} };
- 
-            $rperl_source_group->{PMC} .= $elsif->{attr} . q{ } . $elsif_left_paren->{attr} . q{ };
-            $rperl_source_subgroup = $elsif_subexpression->ast_to_rperl__generate($modes);
-            RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
-            $rperl_source_group->{PMC} .= q{ } . $elsif_right_paren->{attr} . q{ };
-            $rperl_source_subgroup = $elsif_codeblock->ast_to_rperl__generate($modes);
-            RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+
+# DEV NOTE: 'elsif' and ')' are automatically dropped by EYAPP, presumably because they are hard-coded strings inside EYAPP parenthesis, possibly EYAPP bug?
+#            my object $elsif = shift @{ $elsif_star->{children} };
+            my string $elsif            = 'elsif';
+            my string $elsif_left_paren = shift @{ $elsif_star->{children} };
+            my object $elsif_subexpression
+                = shift @{ $elsif_star->{children} };
+
+#            my object $elsif_right_paren  = shift @{ $elsif_star->{children} };
+            my string $elsif_right_paren = ')';
+            my object $elsif_codeblock   = shift @{ $elsif_star->{children} };
+
+#            RPerl::diag( 'in Conditional->ast_to_rperl__generate(), have $elsif = ' . "\n" . RPerl::Parser::rperl_ast__dump($elsif) . "\n" );
+#            RPerl::diag( 'in Conditional->ast_to_rperl__generate(), have $elsif_left_paren = ' . "\n" . RPerl::Parser::rperl_ast__dump($elsif_left_paren) . "\n" );
+
+            $rperl_source_group->{PMC}
+                .= $elsif . q{ } . $elsif_left_paren->{attr} . q{ };
+            $rperl_source_subgroup
+                = $elsif_subexpression->ast_to_rperl__generate($modes);
+            RPerl::Generator::source_group_append( $rperl_source_group,
+                $rperl_source_subgroup );
+            $rperl_source_group->{PMC} .= q{ } . $elsif_right_paren . q{ };
+            $rperl_source_subgroup
+                = $elsif_codeblock->ast_to_rperl__generate($modes);
+            RPerl::Generator::source_group_append( $rperl_source_group,
+                $rperl_source_subgroup );
         }
 
         # ('else' CodeBlock)?
         if ( exists $else_optional->{children}->[0] ) {
-            my string $else = $else_optional->{children}->[0];
-            my object $else_codeblock  = shift @{ $elsif_star->{children} };
- 
-            $rperl_source_group->{PMC} .= $else->{attr} . q{ };
-            $rperl_source_subgroup = $else_codeblock->ast_to_rperl__generate($modes);
-            RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+
+            #            my string $else = $else_optional->{children}->[0];
+            my string $else           = 'else';
+            my object $else_codeblock = $else_optional->{children}->[0];
+
+            $rperl_source_group->{PMC} .= $else . q{ };
+            $rperl_source_subgroup
+                = $else_codeblock->ast_to_rperl__generate($modes);
+            RPerl::Generator::source_group_append( $rperl_source_group,
+                $rperl_source_subgroup );
         }
     }
     else {

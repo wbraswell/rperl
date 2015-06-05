@@ -15,6 +15,5 @@ my string_arrayref $my_array
     = [ 'howdy', 'doody', 'clarabell' ];
 foreach my string $my_element ( @{$my_array} ) {
     print 'Production rule Loop matched by LoopForEach, iteration item ',
-        $my_element,
-        "\n";
+        $my_element, "\n";
 }

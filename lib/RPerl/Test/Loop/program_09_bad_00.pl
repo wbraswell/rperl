@@ -16,4 +16,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-TESTFOREACHLOOP: foreach my number $my_number ( 1.1, 2.2, 3.3, 4.4 ) { }
+TESTFOREACHLOOP:
+foreach my number $my_number ( 1.1, 2.2, 3.3, 4.4 ) { }

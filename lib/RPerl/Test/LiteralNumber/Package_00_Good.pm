@@ -10,4 +10,4 @@ our integer $empty_sub = sub {
     return 2;
 };
 
-1;                  # end of package
+1;    # end of package

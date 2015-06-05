@@ -15,6 +15,5 @@ my string_hashref $my_hash
     = { a_key => 'howdy', b_key => 'doody', c_key => 'clarabell' };
 foreach my string $my_key ( keys %{$my_hash} ) {
     print 'Production rule Loop matched by LoopForEach, iteration item ',
-        $my_key,
-        "\n";
+        $my_key, "\n";
 }

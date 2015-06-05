@@ -11,7 +11,8 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-TESTFORLOOP: for my integer $i ( 0 .. 4 ) {
+TESTFORLOOP:
+for my integer $i ( 0 .. 4 ) {
     print 'Production rule Loop matched by LoopFor, iteration number ', $i,
         "\n";
     if ( $i > 1 ) {

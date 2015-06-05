@@ -16,6 +16,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-howdyloop: while (1) {
+howdyloop:
+while (1) {
     next howdyloop;
 }

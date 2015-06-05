@@ -23,22 +23,22 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     my string_hashref $rperl_source_group = { PMC => q{} };
     my string_hashref $rperl_source_subgroup;
 
-    RPerl::diag(
-              'in Program->ast_to_rperl__generate(), received $self = ' . "\n"
-            . RPerl::Parser::rperl_ast__dump($self)
-            . "\n" );
+#    RPerl::diag( 'in Program->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
 #    RPerl::diag('in Program->ast_to_rperl__generate(), received $modes = ' . "\n" . Dumper($modes) . "\n");
 
+    my string $self_class = ref $self;
+
     # unwrap Program_18 from CompileUnit_4
-    if ( ( ref $self ) eq 'CompileUnit_4' ) {
+    if ( ( $self_class ) eq 'CompileUnit_4' ) {
         $self = $self->{children}->[0];
+        $self_class = ref $self;
     }
 
-    if ( ( ref $self ) ne 'Program_18' ) {
+    if ( ( $self_class ) ne 'Program_18' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
-                . ( ref $self )
+                . ( $self_class )
                 . ' found where Program_18 expected, dying' )
             . "\n";
     }

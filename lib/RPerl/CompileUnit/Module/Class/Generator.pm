@@ -33,6 +33,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     # unwrap Class_59 from Module_23
     if ( ($self_class) eq 'Module_23' ) {
         $self = $self->{children}->[0];
+        $self_class = ref $self;
     }
 
     if ( ($self_class) ne 'Class_59' ) {
@@ -63,8 +64,8 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         $rperl_source_group->{PMC} .= '# [[[ OO INHERITANCE ]]]' . "\n";
     }
     $rperl_source_group->{PMC}
-        .= $use_parent_qw_keyword . q{ }
-        . $parent_name . q{ }
+        .= $use_parent_qw_keyword
+        . $parent_name
         . $right_parenthesis
         . $use_parent_semicolon . "\n";
 

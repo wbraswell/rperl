@@ -146,11 +146,6 @@ check_string_hashref(
         f => q{0123abcd\n}
     }
 );
-check_string_hashref(
-    {   a => "0\n",
-        b => "a\n",
-        c => "0123abcd\n"
-    }
-);
+check_string_hashref( {   a => "0\n", b => "a\n", c => "0123abcd\n" });
 
 print "1\n";

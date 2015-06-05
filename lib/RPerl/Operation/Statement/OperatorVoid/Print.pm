@@ -31,12 +31,14 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         my object $stdout_stderr_optional = $self->{children}->[1];
         my object $list_elements          = $self->{children}->[2];
         my string $semicolon              = $self->{children}->[3];
+ 
+#        RPerl::diag( 'in OperatorVoid::Print->ast_to_rperl__generate(), have $stdout_stderr_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($stdout_stderr_optional) . "\n" );
 
         $rperl_source_group->{PMC} .= $print . q{ };
         # DEV NOTE: STDOUT & STDERR are generated below, they are only grammar tokens, not grammar rules, so they do not get their own classes, the following do not exist:
         # RPerl::InputOutput::Stderr & RPerl::InputOutput::Stdout
         if (exists $stdout_stderr_optional->{children}->[0]) {
-            $rperl_source_group->{PMC} .= $stdout_stderr_optional->{children}->[0] . q{ };
+            $rperl_source_group->{PMC} .= $stdout_stderr_optional->{children}->[0]->{attr} . q{ };
         }
         $rperl_source_subgroup = $list_elements->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );

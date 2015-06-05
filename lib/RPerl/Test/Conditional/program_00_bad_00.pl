@@ -16,4 +16,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-if (1) { }
+if (1) {
+}

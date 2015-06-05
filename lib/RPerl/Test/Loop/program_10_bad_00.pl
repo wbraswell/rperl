@@ -17,4 +17,5 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 
 my integer $i = 0;
-TESTWHILELOOP: while ( $i < 7 ) { }
+TESTWHILELOOP:
+while ( $i < 7 ) { }

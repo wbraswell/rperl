@@ -79,11 +79,79 @@ our integer $diff_check_file_vs_string = sub {
 
         # strip partial-line comment, if present
         if ( $ops eq 'PERL' ) {
-            $file_line =~ s/[^#][#][^#!].*$/\n/gxms;
+
+   # DEV NOTE: this regex does not account for strings containing # characters
+   #            $file_line =~ s/[^#][#][^#!].*$/\n/gxms;
+
+            my string $current_character;
+            my string $next_character;
+            my bool $inside_string = 0;
+            my bool $skip_extra    = 0;
+            my string $open_quote;
+            for my integer $i ( 0 .. ( ( length $file_line ) - 1 ) ) {
+
+                # skip one extra character for q{ OR #! OR ##
+                if ($skip_extra) {
+                    $skip_extra = 0;
+                    next;
+                }
+                $current_character = substr $file_line, $i, 1;
+                if ( not $inside_string ) {
+                    if ( $current_character eq '#' ) {
+                        $next_character = substr $file_line, ( $i + 1 ), 1;
+                        if (   ( $next_character eq '!' )
+                            or ( $next_character eq '#' ) )
+                        {
+                            $skip_extra = 1;
+                            next;
+                        }
+                        $file_line = substr $file_line, 0, $i;
+                        $file_line .= "\n";
+                        last;
+                    }
+                    elsif ( $current_character eq q{'} ) {
+                        $inside_string = 1;
+                        $open_quote    = q{'};
+                    }
+                    elsif ( $current_character eq q{"} ) {
+                        $inside_string = 1;
+                        $open_quote    = q{"};
+                    }
+                    elsif ( $current_character eq 'q' ) {
+                        $next_character = substr $file_line, ( $i + 1 ), 1;
+                        if ( $next_character eq '{' ) {
+                            $inside_string = 1;
+                            $skip_extra    = 1;
+                            $open_quote    = 'q{';
+                        }
+                    }
+                }
+                else {    # $inside_string
+                    if (    ( $current_character eq q{'} )
+                        and ( $open_quote eq q{'} ) )
+                    {
+                        $inside_string = 0;
+                    }
+                    elsif (    ( $current_character eq q{"} )
+                        and ( $open_quote eq q{"} ) )
+                    {
+                        $inside_string = 0;
+                    }
+                    elsif (    ( $current_character eq '}' )
+                        and ( $open_quote eq 'q{' ) )
+                    {
+                        $inside_string = 0;
+                    }
+                }
+            }
         }
-        else {                        # $ops eq 'CPP'
-            $file_line =~ s{//.*$}{\n}gxms;     # // comments
-            $file_line =~ s{/\*.*\*/}{}gxms;    # /* comments */
+        else {    # $ops eq 'CPP'
+             # NEED FIX: add comment-strip C++ code, accounting for strings containing // and /*
+             # NEED FIX: add comment-strip C++ code, accounting for strings containing // and /*
+             # NEED FIX: add comment-strip C++ code, accounting for strings containing // and /*
+
+            #            $file_line =~ s{//.*$}{\n}gxms;     # // comments
+            #            $file_line =~ s{/\*.*\*/}{}gxms;    # /* comments */
         }
 
         # strip trailing whitespace, if present
@@ -156,7 +224,7 @@ our integer $diff_check_file_vs_string = sub {
         # NEED FIX: add tidy C++ code
         # NEED FIX: add tidy C++ code
     }
-    
+
     # remove extra blank lines inserted by Perl::Tidy
     $file_string_tidied =~ s/\n\n/\n/gxms;
     $source_string_tidied =~ s/\n\n/\n/gxms;

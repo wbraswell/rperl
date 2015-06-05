@@ -33,6 +33,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     # unwrap Package_32 from Module_22
     if ( ($self_class) eq 'Module_22' ) {
         $self = $self->{children}->[0];
+        $self_class = ref $self;
     }
 
     if ( ($self_class) ne 'Package_32' ) {
@@ -107,7 +108,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             .= "\n"
             . $retval_literal_number
             . $retval_semicolon
-            . '  # end of class' . "\n";
+            . '  # end of package' . "\n";
     }
     else {
         $rperl_source_group->{PMC}

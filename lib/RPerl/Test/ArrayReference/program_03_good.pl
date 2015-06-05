@@ -12,4 +12,6 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 
 my number_arrayref $n_array = [ 17 / 23, 42 / 1_701, 21.12 ];
-foreach my number $n ( @{$n_array} ) { print '$n = ', $n, "\n"; }
+foreach my number $n ( @{$n_array} ) {
+    print '$n = ', $n, "\n";
+}
