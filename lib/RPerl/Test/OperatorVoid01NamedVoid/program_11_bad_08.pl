@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< GENERATOR_ERROR: 'ERROR ECVGEASRP04' >>>
-# <<< GENERATOR_ERROR: 'Attempt to return dereferenced array' >>>
+# <<< GENERATE_ERROR: 'ERROR ECVGEASRP04' >>>
+# <<< GENERATE_ERROR: 'Attempt to return dereferenced array' >>>
 
 # [[[ HEADER ]]]
 use strict;

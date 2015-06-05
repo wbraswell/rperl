@@ -29,13 +29,13 @@ use Perl::Tidy;
 
 # [[[ OPERATIONS ]]]
 
-# START HERE: create new test for Bubble as seen on the following line; calculate test numbers 357???
-# START HERE: create new test for Bubble as seen on the following line; calculate test numbers 357???
-# START HERE: create new test for Bubble as seen on the following line; calculate test numbers 357???
+# START HERE: create new test for Bubble as seen on the following line
+# START HERE: create new test for Bubble as seen on the following line
+# START HERE: create new test for Bubble as seen on the following line
 
 # TEMP DEBUGGING, ONLY LOAD SPECIFIC FILES
 #my $test_files = { './lib/RPerl/Algorithm/Sort/Bubble.pm' => undef };
-#my $test_files = { './lib/RPerl/Test/TypeCheckingTrace/all_types_good.pl' => undef };
+#my $test_files = { './lib/RPerl/Test/OperatorVoid01NamedVoid/program_11_bad_03.pl' => undef };
 
 #=DEBUG_DISABLE
 # NEED UPDATE: add string_arrayref_hashref_hashref type
@@ -164,7 +164,7 @@ for my $mode_id ( 0 .. 0 ) {  # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
         # [[[ PARSE ]]]
         $eval_return_value = eval { RPerl::Parser::rperl_to_ast__parse($test_file); };
         if ( not ( ( defined $eval_return_value ) and $eval_return_value ) ) { 
-            ok( 0, 'Program or module ' . $test_file . ' parses with errors, code generation not reached, test aborted' );
+            ok( 0, 'Program or module parses with errors, code generation not reached, test aborted: ' . $test_file );
             $number_of_tests_run++;
             next;
         }
@@ -208,9 +208,7 @@ for my $mode_id ( 0 .. 0 ) {  # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
 
                 # skip test if dummy source code found
                 if ( not dummy_source_code_find($source_group) ) {
-                    ok( 0,
-                        'Program or module ' . $test_file . ' generates with errors'
-                    );
+                    ok( 0, 'Program or module generates with errors: ' . $test_file );
                     $number_of_tests_run++;
                 }
                 else {
@@ -269,13 +267,11 @@ for my $mode_id ( 0 .. 0 ) {  # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
                     }
 
                     if ( $diff_line == 0 ) {
-                        ok( 1,
-                            'Program or module ' . $test_file . ' generates without errors, yes diff check'
-                        );
+                        ok( 1, 'Program or module generates without errors, yes diff check: ' . $test_file );
                         $number_of_tests_run++;
                     }
                     elsif ( $diff_line > 0 ) {
-                        ok( 0, 'Program or module ' . $test_file . ' generates without errors, yes diff check, files differ beginning at line ' . $diff_line );
+                        ok( 0, 'Program or module generates without errors, yes diff check, files differ beginning at line ' . $diff_line . ': ' . $test_file );
                         $number_of_tests_run++;
                     }
                     else {    # $diff_line < 0
@@ -292,9 +288,7 @@ for my $mode_id ( 0 .. 0 ) {  # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
 
                     # skip test if dummy source code found
                     if ( not dummy_source_code_find($source_group) ) {
-                        ok( 1,
-                            'Program or module ' . $test_file . ' generates without errors, no diff check'
-                        );
+                        ok( 1, 'Program or module generates without errors, no diff check: ' . $test_file );
                         $number_of_tests_run++;
                     }
                     else {
@@ -326,9 +320,7 @@ for my $mode_id ( 0 .. 0 ) {  # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
                         }
                     }
                 }
-                ok( ( ( scalar @{$missing_errors} ) == 0 ),
-                    'Program or module ' . $test_file . ' generates with expected error(s)'
-                );
+                ok( ( ( scalar @{$missing_errors} ) == 0 ), 'Program or module generates with expected error(s): ' . $test_file );
                 $number_of_tests_run++;
             }
             else {
@@ -346,9 +338,7 @@ for my $mode_id ( 0 .. 0 ) {  # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
                             . "\n" );
                 }
                 else {
-                    ok( 0,
-                        'Program or module ' . $test_file . ' generates without errors'
-                    );
+                    ok( 0, 'Program or module generates without errors: ' . $test_file );
                     $number_of_tests_run++;
                 }
             }

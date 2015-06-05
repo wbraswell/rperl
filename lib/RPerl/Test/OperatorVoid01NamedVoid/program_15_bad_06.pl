@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< GENERATOR_ERROR: 'ERROR ECVGEASRP05' >>>
-# <<< GENERATOR_ERROR: 'Attempt to return dereferenced hash' >>>
+# <<< GENERATE_ERROR: 'ERROR ECVGEASRP05' >>>
+# <<< GENERATE_ERROR: 'Attempt to return dereferenced hash' >>>
 
 # [[[ HEADER ]]]
 use strict;
