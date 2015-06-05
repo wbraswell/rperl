@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::OperatorVoid::Print;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement::OperatorVoid);
@@ -20,13 +20,46 @@ our hashref $properties = {};
 
 our string_hashref_method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $rperl_source_group
-        = { PMC =>
-            q{# <<< RP::O::S::OV::P __DUMMY_SOURCE_CODE PERLOPS_PERLTYPES >>>}
-            . "\n" };
+    my string_hashref $rperl_source_group = { PMC => q{} };
     my string_hashref $rperl_source_subgroup;
 
 #    RPerl::diag( 'in OperatorVoid::Print->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+
+    my string $self_class = ref $self;
+    if ( $self_class eq 'OperatorVoid_112' ) { # OperatorVoid -> OP01_PRINT OPTIONAL-31 ListElements ';'
+        my string $print                  = $self->{children}->[0];
+        my object $stdout_stderr_optional = $self->{children}->[1];
+        my object $list_elements          = $self->{children}->[2];
+        my string $semicolon              = $self->{children}->[3];
+
+        $rperl_source_group->{PMC} .= $print . q{ };
+        # DEV NOTE: STDOUT & STDERR are generated below, they are only grammar tokens, not grammar rules, so they do not get their own classes, the following do not exist:
+        # RPerl::InputOutput::Stderr & RPerl::InputOutput::Stdout
+        if (exists $stdout_stderr_optional->{children}->[0]) {
+            $rperl_source_group->{PMC} .= $stdout_stderr_optional->{children}->[0] . q{ };
+        }
+        $rperl_source_subgroup = $list_elements->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+        $rperl_source_group->{PMC} .= $semicolon . "\n";
+    }
+    elsif ( $self_class eq 'OperatorVoid_113' ) { # OperatorVoid -> OP01_PRINT FHREF_SYMBOL_BRACES ListElements ';'
+        my string $print                  = $self->{children}->[0];
+        my string $fhref_symbol_braces = $self->{children}->[1];
+        my object $list_elements          = $self->{children}->[2];
+        my string $semicolon              = $self->{children}->[3];
+
+        $rperl_source_group->{PMC} .= $print . q{ } . $fhref_symbol_braces . q{ };
+        $rperl_source_subgroup = $list_elements->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+        $rperl_source_group->{PMC} .= $semicolon . "\n";
+    }
+    else {
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+                . $self_class
+                . ' found where OperatorVoid_112 or OperatorVoid_113 expected, dying'
+        ) . "\n";
+    }
 
     return $rperl_source_group;
 };

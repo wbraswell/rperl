@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::SubExpression::Literal;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_011;
+our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::SubExpression);
@@ -20,8 +20,23 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in Literal->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    my object $number_or_string = $self->{children}->[0];
-    $rperl_source_group = $number_or_string->ast_to_rperl__generate($modes);
+    my string $self_class = ref $self;
+
+    if (( $self_class eq 'SubExpression_131' )    # SubExpression -> Literal
+        or ( $self_class eq 'VariableOrLiteral_214' ) # VariableOrLiteral -> Literal
+        or ( $self_class eq 'VariableOrLiteralOrWord_216' ) # VariableOrLiteralOrWord -> Literal
+        )
+    {
+        my object $number_or_string = $self->{children}->[0];
+        $rperl_source_group = $number_or_string->ast_to_rperl__generate($modes);
+    }
+    else {
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+                . $self_class
+                . ' found where SubExpression_131, VariableOrLiteral_214, or VariableOrLiteralOrWord_216 expected, dying'
+        ) . "\n"; 
+    }
 
     return $rperl_source_group;
 };
@@ -29,7 +44,8 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
-        = { CPP => q{// <<< RP::O::E::SE::L __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
+        = { CPP =>
+            q{// <<< RP::O::E::SE::L __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
             . "\n" };
 
     #...
@@ -39,11 +55,12 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
-        = { CPP => q{// <<< RP::O::E::SE::L __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
+        = { CPP =>
+            q{// <<< RP::O::E::SE::L __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
             . "\n" };
 
     #...
     return $cpp_source_group;
 };
 
-1;  # end of class
+1;    # end of class

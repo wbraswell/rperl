@@ -1,18 +1,156 @@
-## no critic qw(ProhibitExcessMainComplexity)  # SYSTEM SPECIAL 4: allow complex code outside subroutines, must be on line 1
+# [[[ HEADER ]]]
 package RPerl::CompileUnit::Module::Package;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_017;
-
-# [[[ SETUP ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
-## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
-use Scalar::Util 'blessed';
+our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module);
+use RPerl::CompileUnit::Module;
 
+# [[[ CRITICS ]]]
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+# [[[ INCLUDES ]]]
+use RPerl::Parser;
+use RPerl::Generator;
+
+# [[[ OO PROPERTIES ]]]
+our hashref $properties = {};
+
+# [[[ OO METHODS & SUBROUTINES ]]]
+
+our string_hashref_method $ast_to_rperl__generate = sub {
+    ( my object $self, my string_hashref $modes ) = @_;
+    my string_hashref $rperl_source_group = {};
+
+#    RPerl::diag( 'in Package->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+
+    my string $self_class = ref $self;
+
+    # unwrap Package_32 from Module_22
+    if ( ($self_class) eq 'Module_22' ) {
+        $self = $self->{children}->[0];
+    }
+
+    if ( ($self_class) ne 'Package_32' ) {
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+                . ($self_class)
+                . ' found where Module_22 or Package_32 expected, dying' )
+            . "\n";
+    }
+
+    # Package:   Critic* Include* Constant* Subroutine+ LITERAL_NUMBER ';' ;
+    # Package -> STAR-10 STAR-11  STAR-12   PLUS-13     LITERAL_NUMBER ';'
+    my object $critic_star           = $self->{children}->[0];
+    my object $include_star          = $self->{children}->[1];
+    my object $constant_star         = $self->{children}->[2];
+    my object $subroutine_plus       = $self->{children}->[3];
+    my string $retval_literal_number = $self->{children}->[4];
+    my string $retval_semicolon      = $self->{children}->[5];
+
+    my string_hashref $rperl_source_subgroup;
+
+    if ( exists $critic_star->{children}->[0] ) {
+        if ( $modes->{label} eq 'ON' ) {
+            $rperl_source_group->{PMC} .= '# [[[ CRITICS ]]]' . "\n";
+        }
+    }
+    foreach my object $critic ( @{ $critic_star->{children} } ) {
+        $rperl_source_subgroup = $critic->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group,
+            $rperl_source_subgroup );
+    }
+
+    if ( exists $include_star->{children}->[0] ) {
+        if ( $modes->{label} eq 'ON' ) {
+            $rperl_source_group->{PMC} .= "\n" . '# [[[ INCLUDES ]]]' . "\n";
+        }
+    }
+    foreach my object $include ( @{ $include_star->{children} } ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
+        $rperl_source_subgroup = $include->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group,
+            $rperl_source_subgroup );
+    }
+
+    if ( exists $constant_star->{children}->[0] ) {
+        if ( $modes->{label} eq 'ON' ) {
+            $rperl_source_group->{PMC} .= "\n" . '# [[[ CONSTANTS ]]]' . "\n";
+        }
+    }
+    foreach my object $constant ( @{ $constant_star->{children} } ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
+        $rperl_source_subgroup = $constant->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group,
+            $rperl_source_subgroup );
+    }
+
+    # always have at least one subroutine, don't need to check if they exist to label
+        if ( $modes->{label} eq 'ON' ) {
+            $rperl_source_group->{PMC}
+                .= "\n" . '# [[[ SUBROUTINES ]]]' . "\n";
+        }
+    foreach my object $subroutine ( ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
+        @{ $subroutine_plus->{children} }
+        )
+    {
+        $rperl_source_subgroup
+            = $subroutine->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group,
+            $rperl_source_subgroup );
+    }
+
+    if ( $modes->{label} eq 'ON' ) {
+        $rperl_source_group->{PMC}
+            .= "\n"
+            . $retval_literal_number
+            . $retval_semicolon
+            . '  # end of class' . "\n";
+    }
+    else {
+        $rperl_source_group->{PMC}
+            .= $retval_literal_number . $retval_semicolon . "\n";
+    }
+
+    return $rperl_source_group;
+};
+
+our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
+    ( my object $self, my string_hashref $modes ) = @_;
+    my string_hashref $cpp_source_group = {
+        CPP =>
+            q{// <<< RP::CU::M::P __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
+            . "\n",
+        H => q{// <<< RP::CU::M::P __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
+            . "\n",
+        PMC => q{# <<< RP::CU::M::P __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
+            . "\n"
+    };
+
+    #...
+    return $cpp_source_group;
+};
+
+our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
+    ( my object $self, my string_hashref $modes ) = @_;
+    my string_hashref $cpp_source_group = {
+        CPP => q{// <<< RP::CU::M::P __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
+            . "\n",
+        H => q{// <<< RP::CU::M::P __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
+            . "\n",
+        PMC => q{# <<< RP::CU::M::P __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
+            . "\n"
+    };
+
+    #...
+    return $cpp_source_group;
+};
+
+1;    # end of class
+
+=DISABLED OLD
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {
     name => my string $TYPED_name = undef,
@@ -20,8 +158,6 @@ our hashref $properties = {
     includes    => my string_arrayref $TYPED_includes    = undef,
     subroutines => my object_arrayref $TYPED_subroutines = undef
 };
-
-# [[[ OO METHODS & SUBROUTINES ]]]
 
 # GENERATE CPPOPS_CPPTYPES
 our string_method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
@@ -79,421 +215,4 @@ our string_method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     return ($self_generated);
 };
-
-# TRANSLATE
-# NEED UPGRADE: use arg0 to determine if (class/object) method, remove confusing _method type suffix or some other solution???
-our object_method $ppi_to_rperl__translate = sub { # DEV NOTE: object is the return type, _method is the OO namespace keyword for Class.pm INIT magic
-    ( my string $class, my object $node) = @_; # DEV NOTE: arg0 of $class means this is a class method, arg0 of $self would mean object method
-
-    # variable declarations
-    my string $rule_name = 'PACKAGE';
-    my string $production_name;
-    my string $component_name;
-    my string $node_class;
-    my string $node_class_expected = 'PPI::Document';
-    my object $node_translated;
-    my object $child;
-    my string $child_class;
-    my string $child_class_expected;
-    my string $child_content;
-    my string $child_content_expected;
-    my string $child_key;
-    my integer $child_index;
-    my integer $child_index_max;
-    my object $child_translated;
-    my object $grandchild;
-    my string $grandchild_key;
-    my integer $grandchild_index;
-    my string $grandchild_class_expected;
-    my string $grandchild_class;
-    my string $grandchild_content_expected;
-    my string $grandchild_content;
-
-#    RPerl::diag "in Package::ppi_to_rperl__translate(), received \$node =\n" . Dumper($node) . "\n";
-
-    if ( not( defined $node ) ) {
-        croak(
-            "\nERROR ECVTRPI00, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, PPI OBJECT FAILURE:\nobject expected but undefined/null value found,\ncroaking"
-        );
-    }
-
-    $node_class = blessed($node);
-    if ( not( defined $node_class ) ) {
-        croak(
-            "\nERROR ECVTRPI01, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, PPI OBJECT FAILURE:\nobject expected but non-object value found,\ncroaking"
-        );
-    }
-
-    RPerl::diag
-        "in Package::ppi_to_rperl__translate(), have \$node_class = '$node_class'\n";
-
-    # PACKAGE rule begin
-    if ( $node_class ne $node_class_expected ) {
-        croak(
-            "\nERROR ECVTRPI02, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, PPI OBJECT FAILURE:\n$node_class_expected object expected but $node_class object found,\ncroaking"
-        );
-    }
-    $child_key = 'children';
-    if ( not( defined $node->{$child_key} ) ) {
-        croak(
-            "\nERROR ECVTRPI03, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, PPI OBJECT FAILURE:\nchildren sub-objects arrayref value expected but undefined/null value found,\ncroaking"
-        );
-    }
-
-    $child_index_max = ( scalar @{ $node->{$child_key} } ) - 1;
-
-    if ( $child_index_max < 0 ) {
-        croak(
-            "\nERROR ECVTRPI04, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, PPI OBJECT FAILURE:\nmultiple children sub-objects expected but none found,\ncroaking"
-        );
-    }
-
-# DEV NOTE: do we need to add more fine-grained syntax checking for child objects' sub-components accessed below,
-# or can we make AST configuration assumptions safely based on input from Perl Critic & PPI?
-
-    # PACKAGE rule, PACKAGE_NAME component @ KEY 'children', INDEX 0
-    $production_name           = '<default>';
-    $component_name            = 'PACKAGE_NAME';
-    $child_key                 = 'children';
-    $child_index               = 0;
-    $child_class_expected      = 'PPI::Statement::Package';
-    $grandchild_key            = 'children';
-    $grandchild_index          = 1;
-    $grandchild_class_expected = 'PPI::Token::Word';
-    $child                     = $node->{$child_key}->[$child_index];
-    if ( not( defined $child ) ) {
-        croak(
-            "\nERROR ECVTRPI05, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, PPI OBJECT FAILURE:\nin $node_class object, $child_class_expected child sub-object expected at index $child_index but undefined/null value found,\ncroaking"
-        );
-    }
-    $child_class = blessed($child);
-    if ( not( defined $child_class ) ) {
-        croak(
-            "\nERROR ECVTRPI06, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, PPI OBJECT FAILURE:\nin $node_class object, $child_class_expected child sub-object expected at index $child_index but non-object value found,\ncroaking"
-        );
-    }
-    if ( $child_class ne $child_class_expected ) {
-        croak(
-            "\nERROR ECVTRSY00, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, RPERL SYNTAX:\nin $node_class object, $child_class_expected child sub-object expected at index $child_index but $child_class child sub-object found,\ncroaking"
-        );
-    }
-
-    $grandchild = $node->{$child_key}->[$child_index]->{$grandchild_key}
-        ->[$grandchild_index];
-    if ( not( defined $grandchild ) ) {
-        croak(
-            "\nERROR ECVTRPI05, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, PPI OBJECT FAILURE:\nin $node_class object, $grandchild_class_expected grandchild sub-sub-object expected at key '$grandchild_key' and index $grandchild_index but undefined/null value found,\ncroaking"
-        );
-    }
-    $grandchild_class = blessed($grandchild);
-    if ( not( defined $grandchild_class ) ) {
-        croak(
-            "\nERROR ECVTRPI06, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, PPI OBJECT FAILURE:\nin $node_class object, $grandchild_class_expected grandchild sub-sub-object expected at key '$grandchild_key' and index $grandchild_index but non-object value found,\ncroaking"
-        );
-    }
-    if ( $grandchild_class ne $grandchild_class_expected ) {
-        croak(
-            "\nERROR ECVTRSY00, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, RPERL SYNTAX:\nin $node_class object, $grandchild_class_expected grandchild sub-sub-object expected at key '$grandchild_key' and index $grandchild_index,\nbut $grandchild_class grandchild sub-sub-object found,\ncroaking"
-        );
-    }
-
-    $grandchild_content = $grandchild->{content}; # assume PPI::Token::Word contains _package
-    $node_translated = RPerl::CompileUnit::Module::Package->new();
-    $node_translated->{name} = $grandchild_content;
-
-#RPerl::diag "in Package::ppi_to_rperl__translate(), PACKAGE_NAME component, have \$grandchild = \n" . Dumper($grandchild) . "\n";
-#RPerl::diag "in Package::ppi_to_rperl__translate(), PACKAGE_NAME component, have \$node_translated = \n" . Dumper($node_translated) . "\n";
-
-# PACKAGE rule, RPERL_HEADER rule/component begin, USE_STRICT component @ KEY 'children', INDEX 1
-    $production_name        = '<default>';
-    $component_name         = 'RPERL_HEADER / USE_STRICT';
-    $child_key              = 'children';
-    $child_index            = 1;
-    $child_class_expected   = 'PPI::Statement::Include';
-    $child_content_expected = 'strict';
-    $grandchild_key         = 'children';
-    $grandchild_index       = '1';
-    $child                  = $node->{$child_key}->[$child_index];
-    if ( not( defined $child ) ) {
-        croak(
-            "\nERROR ECVTRPI05, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, PPI OBJECT FAILURE:\nin $node_class object, $child_class_expected child sub-object expected at index $child_index but undefined/null value found,\ncroaking"
-        );
-    }
-    $child_class = blessed($child);
-    if ( not( defined $child_class ) ) {
-        croak(
-            "\nERROR ECVTRPI06, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, PPI OBJECT FAILURE:\nin $node_class object, $child_class_expected child sub-object expected at index $child_index but non-object value found,\ncroaking"
-        );
-    }
-    if ( $child_class ne $child_class_expected ) {
-        croak(
-            "\nERROR ECVTRSY00, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, RPERL SYNTAX:\nin $node_class object, $child_class_expected child sub-object expected at index $child_index but $child_class child sub-object found,\ncroaking"
-        );
-    }
-    $child_content
-        = $child->{$grandchild_key}->[$grandchild_index]->{content}; # assume grandchild at index 1 of PPI::Statement::Include is PPI::Token::Word containing _package or _pragma
-    if ( $child_content ne $child_content_expected ) {
-        croak(
-            "\nERROR ECVTRSY01, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, RPERL SYNTAX:\nin $node_class object, in $child_class child sub-object at index $child_index, '$child_content_expected' expected but '$child_content' found,\ncroaking"
-        );
-    }
-
-# PACKAGE rule, RPERL_HEADER rule/component begin, USE_WARNINGS component @ KEY 'children', INDEX 2
-    $production_name        = '<default>';
-    $component_name         = 'RPERL_HEADER / USE_WARNINGS';
-    $child_key              = 'children';
-    $child_index            = 2;
-    $child_class_expected   = 'PPI::Statement::Include';
-    $child_content_expected = 'warnings';
-    $grandchild_key         = 'children';
-    $grandchild_index       = '1';
-    $child                  = $node->{$child_key}->[$child_index];
-    if ( not( defined $child ) ) {
-        croak(
-            "\nERROR ECVTRPI05, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, PPI OBJECT FAILURE:\nin $node_class object, $child_class_expected child sub-object expected at index $child_index but undefined/null value found,\ncroaking"
-        );
-    }
-    $child_class = blessed($child);
-    if ( not( defined $child_class ) ) {
-        croak(
-            "\nERROR ECVTRPI06, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, PPI OBJECT FAILURE:\nin $node_class object, $child_class_expected child sub-object expected at index $child_index but non-object value found,\ncroaking"
-        );
-    }
-    if ( $child_class ne $child_class_expected ) {
-        croak(
-            "\nERROR ECVTRSY00, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, RPERL SYNTAX:\nin $node_class object, $child_class_expected child sub-object expected at index $child_index but $child_class child sub-object found,\ncroaking"
-        );
-    }
-    $child_content
-        = $child->{$grandchild_key}->[$grandchild_index]->{content}; # assume child at index 1 of PPI::Statement::Include is PPI::Token::Word containing _package or _pragma
-    if ( $child_content ne $child_content_expected ) {
-        croak(
-            "\nERROR ECVTRSY01, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, RPERL SYNTAX:\nin $node_class object, in $child_class child sub-object at index $child_index, '$child_content_expected' expected but '$child_content' found,\ncroaking"
-        );
-    }
-
-# PACKAGE rule, RPERL_HEADER rule/component begin, OUR_VERSION component @ KEY 'children', INDEX 3
-    $production_name        = '<default>';
-    $component_name         = 'RPERL_HEADER / OUR_VERSION';
-    $child_key              = 'children';
-    $child_index            = 3;
-    $child_class_expected   = 'PPI::Statement::Variable';
-    $child_content_expected = '$VERSION';
-    $grandchild_key         = 'children';
-    $grandchild_index       = '1';
-    $child                  = $node->{$child_key}->[$child_index];
-    if ( not( defined $child ) ) {
-        croak(
-            "\nERROR ECVTRPI05, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, PPI OBJECT FAILURE:\nin $node_class object, $child_class_expected child sub-object expected at index $child_index but undefined/null value found,\ncroaking"
-        );
-    }
-    $child_class = blessed($child);
-    if ( not( defined $child_class ) ) {
-        croak(
-            "\nERROR ECVTRPI06, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, PPI OBJECT FAILURE:\nin $node_class object, $child_class_expected child sub-object expected at index $child_index but non-object value found,\ncroaking"
-        );
-    }
-    if ( $child_class ne $child_class_expected ) {
-        croak(
-            "\nERROR ECVTRSY00, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, RPERL SYNTAX:\nin $node_class object, $child_class_expected child sub-object expected at index $child_index but $child_class child sub-object found,\ncroaking"
-        );
-    }
-    $child_content
-        = $child->{$grandchild_key}->[$grandchild_index]->{content}; # assume grandchild at index 1 of PPI::Statement::Variable is PPI::Token::Symbol containing variable name
-    if ( $child_content ne $child_content_expected ) {
-        croak(
-            "\nERROR ECVTRSY01, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, RPERL SYNTAX:\nin $node_class object, in $child_class child sub-object at index $child_index, '$child_content_expected' expected but '$child_content' found,\ncroaking"
-        );
-    }
-
-# assume grandchild at index 3 of PPI::Statement::Variable is PPI::Token::Number::Float containing package version number
-    $grandchild_index = 3;
-    $node_translated->{version}
-        = $child->{$grandchild_key}->[$grandchild_index]->{content};
-
-# PACKAGE rule, RPERL_HEADER rule/component begin, USE_CARP component @ KEY 'children', INDEX 4
-    $production_name        = '<default>';
-    $component_name         = 'RPERL_HEADER / USE_CARP';
-    $child_key              = 'children';
-    $child_index            = 4;
-    $child_class_expected   = 'PPI::Statement::Include';
-    $child_content_expected = 'Carp';
-    $grandchild_key         = 'children';
-    $grandchild_index       = '1';
-    $child                  = $node->{$child_key}->[$child_index];
-    if ( not( defined $child ) ) {
-        croak(
-            "\nERROR ECVTRPI05, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, PPI OBJECT FAILURE:\nin $node_class object, $child_class_expected child sub-object expected at index $child_index but undefined/null value found,\ncroaking"
-        );
-    }
-    $child_class = blessed($child);
-    if ( not( defined $child_class ) ) {
-        croak(
-            "\nERROR ECVTRPI06, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, PPI OBJECT FAILURE:\nin $node_class object, $child_class_expected child sub-object expected at index $child_index but non-object value found,\ncroaking"
-        );
-    }
-    if ( $child_class ne $child_class_expected ) {
-        croak(
-            "\nERROR ECVTRSY00, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, RPERL SYNTAX:\nin $node_class object, $child_class_expected child sub-object expected at index $child_index but $child_class child sub-object found,\ncroaking"
-        );
-    }
-    $child_content
-        = $child->{$grandchild_key}->[$grandchild_index]->{content}; # assume grandchild at index 1 of PPI::Statement::Include is PPI::Token::Word containing _package or _pragma
-    if ( $child_content ne $child_content_expected ) {
-        croak(
-            "\nERROR ECVTRSY01, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, RPERL SYNTAX:\nin $node_class object, in $child_class child sub-object at index $child_index, '$child_content_expected' expected but '$child_content' found,\ncroaking"
-        );
-    }
-
-# PACKAGE rule, RPERL_HEADER rule/component begin, USE_RPERL component @ KEY 'children', INDEX 5
-    $production_name        = '<default>';
-    $component_name         = 'RPERL_HEADER / USE_RPERL';
-    $child_key              = 'children';
-    $child_index            = 5;
-    $child_class_expected   = 'PPI::Statement::Include';
-    $child_content_expected = 'RPerl';
-    $grandchild_key         = 'children';
-    $grandchild_index       = '1';
-    $child                  = $node->{$child_key}->[$child_index];
-    if ( not( defined $child ) ) {
-        croak(
-            "\nERROR ECVTRPI05, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, PPI OBJECT FAILURE:\nin $node_class object, $child_class_expected child sub-object expected at index $child_index but undefined/null value found,\ncroaking"
-        );
-    }
-    $child_class = blessed($child);
-    if ( not( defined $child_class ) ) {
-        croak(
-            "\nERROR ECVTRPI06, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, PPI OBJECT FAILURE:\nin $node_class object, $child_class_expected child sub-object expected at index $child_index but non-object value found,\ncroaking"
-        );
-    }
-    if ( $child_class ne $child_class_expected ) {
-        croak(
-            "\nERROR ECVTRSY00, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, RPERL SYNTAX:\nin $node_class object, $child_class_expected child sub-object expected at index $child_index but $child_class child sub-object found,\ncroaking"
-        );
-    }
-    $child_content
-        = $child->{$grandchild_key}->[$grandchild_index]->{content}; # assume grandchild at index 1 of PPI::Statement::Include is PPI::Token::Word containing _package or _pragma
-    if ( $child_content ne $child_content_expected ) {
-        croak(
-            "\nERROR ECVTRSY01, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, RPERL SYNTAX:\nin $node_class object, in $child_class child sub-object at index $child_index, '$child_content_expected' expected but '$child_content' found,\ncroaking"
-        );
-    }
-
-    # PACKAGE rule, SUBROUTINE+ component @ 6 <= INDEX < max
-    $child_key = 'children';
-    $child_index++;
-    $node_translated->{subroutines} = []; # DEV NOTE: cannot include object_arrayref type due to 'my' syntax masking error
-    for my integer $child_index_loop (
-        $child_index .. ( $child_index_max - 1 ) )
-    {
-        RPerl::diag
-            'in Package::ppi_to_rperl__translate(), top of SUBROUTINE+ for() loop '
-            . ( $child_index_loop - 6 ) . q{/}
-            . ( $child_index_max - 7 ) . "...\n";
-
-# DEV NOTE: due to unique 'sub' placement, able to pre-qualify SUBROUTINE here;
-# due to unique PPI::Statement::Variable class in PACKAGE rule, also able to pre-disqualify SUBROUTINE here, thus croak() instead of carp() here
-# PACKAGE rule, PACKAGE rule/production, SUBROUTINE component pre-qualify @ 6 <= INDEX < max
-        $production_name             = '<default>';
-        $component_name              = 'SUBROUTINE';
-        $child_key                   = 'children';
-        $child_class_expected        = 'PPI::Statement::Variable';
-        $grandchild_key              = 'children';
-        $grandchild_index            = 4;
-        $grandchild_class_expected   = 'PPI::Token::Word';
-        $grandchild_content_expected = 'sub';
-        $child = $node->{$child_key}->[$child_index_loop];
-
-        if ( not( defined $child ) ) {
-            croak(
-                "\nERROR ECVTRPI05, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, PPI OBJECT FAILURE:\nin $node_class object, $child_class_expected child sub-object expected at index $child_index but undefined/null value found,\ncroaking"
-            );
-        }
-        $child_class = blessed($child);
-        if ( not( defined $child_class ) ) {
-            croak(
-                "\nERROR ECVTRPI06, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, PPI OBJECT FAILURE:\nin $node_class object, $child_class_expected child sub-object expected at index $child_index but non-object value found,\ncroaking"
-            );
-        }
-        if ( $child_class ne $child_class_expected ) {
-            croak(
-                "\nERROR ECVTRSY00, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, RPERL SYNTAX:\nin $node_class object, $child_class_expected child sub-object expected at index $child_index but $child_class child sub-object found,\ncroaking"
-            );
-        }
-        $grandchild
-            = $node->{$child_key}->[$child_index]->{$grandchild_key}
-            ->[$grandchild_index];
-        if ( not( defined $grandchild ) ) {
-            croak(
-                "\nERROR ECVTRPI05, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, PPI OBJECT FAILURE:\nin $node_class object, $grandchild_class_expected grandchild sub-sub-object expected at key '$grandchild_key' and index $grandchild_index but undefined/null value found,\ncroaking"
-            );
-        }
-        $grandchild_class = blessed($grandchild);
-        if ( not( defined $grandchild_class ) ) {
-            croak(
-                "\nERROR ECVTRPI06, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, PPI OBJECT FAILURE:\nin $node_class object, $grandchild_class_expected grandchild sub-sub-object expected at key '$grandchild_key' and index $grandchild_index but non-object value found,\ncroaking"
-            );
-        }
-        if ( $grandchild_class ne $grandchild_class_expected ) {
-            croak(
-                "\nERROR ECVTRSY00, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, RPERL SYNTAX:\nin $node_class object, $grandchild_class_expected grandchild sub-sub-object expected at key '$grandchild_key' and index $grandchild_index,\nbut $grandchild_class grandchild sub-sub-object found,\ncroaking"
-            );
-        }
-        $grandchild_content = $grandchild->{content}; # assume PPI::Token::Word contains sub
-        if ( $grandchild_content ne $grandchild_content_expected ) {
-            croak(
-                "\nERROR ECVTRSY01, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, RPERL SYNTAX:\nin $node_class object, in $grandchild_class grandchild sub-sub-object at key '$grandchild_key' and index $grandchild_index,\n'$grandchild_content_expected' expected but '$grandchild_content' found,\ncroaking"
-            );
-        }
-
-#RPerl::diag 'in Package::ppi_to_rperl__translate(), SUBROUTINE+ for() loop ' . ($child_index_loop - 6) . q{/} . ($child_index_max - 7) . ", about to call RPerl::CodeBlock::Subroutine::ppi_to_rperl__translate( \$child )...\n";
-
-        $child_translated
-            = RPerl::CodeBlock::Subroutine->ppi_to_rperl__translate($child); # class method call
-
-#RPerl::diag 'in Package::ppi_to_rperl__translate(), SUBROUTINE+ for() loop ' . ($child_index_loop - 6) . q{/} . ($child_index_max - 7) . ", returned from RPerl::CodeBlock::Subroutine::ppi_to_rperl__translate( \$child ), received \$child_translated = \n" . Dumper($child_translated) . "\n";
-
-        push @{ $node_translated->{subroutines} }, $child_translated;
-    }
-
-    # PACKAGE rule, _NUMBER_ONE component @ KEY 'children', INDEX max
-    $production_name        = '<default>';
-    $component_name         = '_NUMBER_ONE';
-    $child_key              = 'children';
-    $child_index            = $child_index_max;
-    $child_class_expected   = 'PPI::Statement';
-    $child_content_expected = '1';
-    $grandchild_key         = 'children';
-    $grandchild_index       = '0';
-    $child                  = $node->{$child_key}->[$child_index];
-    if ( not( defined $child ) ) {
-        croak(
-            "\nERROR ECVTRPI05, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, PPI OBJECT FAILURE:\nin $node_class object, $child_class_expected child sub-object expected at index $child_index but undefined/null value found,\ncroaking"
-        );
-    }
-    $child_class = blessed($child);
-    if ( not( defined $child_class ) ) {
-        croak(
-            "\nERROR ECVTRPI06, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, PPI OBJECT FAILURE:\nin $node_class object, $child_class_expected child sub-object expected at index $child_index but non-object value found,\ncroaking"
-        );
-    }
-    if ( $child_class ne $child_class_expected ) {
-        croak(
-            "\nERROR ECVTRSY00, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, RPERL SYNTAX:\nin $node_class object, $child_class_expected child sub-object expected at index $child_index but $child_class child sub-object found,\ncroaking"
-        );
-    }
-    $child_content
-        = $child->{$grandchild_key}->[$grandchild_index]->{content}; # assume grandchild at index 0 of PPI::Statement is PPI::Token::Number containing stringified numeric value
-    if ( $child_content ne $child_content_expected ) {
-        croak(
-            "\nERROR ECVTRSY01, PPI DOCTREE TO RPERL AST TRANSLATOR, $rule_name RULE, $production_name PRODUCTION, $component_name COMPONENT, RPERL SYNTAX:\nin $node_class object, in $child_class child sub-object at index $child_index, '$child_content_expected' expected but '$child_content' found,\ncroaking"
-        );
-    }
-
-#    RPerl::diag "in Package::ppi_to_rperl__translate(), bottom of subroutine, about to return \$node_translated=\n" . Dumper($node_translated) . "\n";
-
-    # this rule never matches empty
-    return ($node_translated);
-};
-
-1;
+=cut

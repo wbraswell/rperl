@@ -40,7 +40,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         $self = $self->{children}->[0];
     }
 
-    if ( ref $self ne 'ArrayReference_186' ) {
+    if ( ( ref $self ) ne 'ArrayReference_186' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $self )
@@ -48,6 +48,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             . "\n";
     }
 
+    # ArrayReference -> LBRACKET OPTIONAL-45 ']'
     my string $left_bracket           = $self->{children}->[0];
     my object $list_elements_optional = $self->{children}->[1];
     my string $right_bracket          = $self->{children}->[2];

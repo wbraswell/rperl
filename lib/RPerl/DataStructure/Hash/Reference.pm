@@ -35,28 +35,14 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in Hash::Reference->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
+    my string $self_class = ref $self;
+
     # unwrap HashReference_200 & HashReference_201 from SubExpression_135
-    if ( ref $self eq 'SubExpression_135' ) {
+    if ( $self_class eq 'SubExpression_135' ) {
         $self = $self->{children}->[0];
     }
 
-    if (    ( ref $self ne 'HashReference_200' )
-        and ( ref $self ne 'HashReference_201' ) )
-    {
-        die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
-                . ( ref $self )
-                . ' found where HashReference_200 or HashReference_201 expected, dying'
-        ) . "\n";
-    }
-
-    if ( ref $self eq 'HashReference_201' ) {
-        my string $left_brace  = $self->{children}->[0];
-        my string $right_brace = $self->{children}->[1];
-        $rperl_source_group->{PMC} .= $left_brace . $right_brace;
-        return $rperl_source_group;
-    }
-    else {
+    if ( $self_class eq 'HashReference_200' ) { # HashReference -> LBRACE HashEntry STAR-50 '}'
         my string $left_brace        = $self->{children}->[0];
         my object $hash_entry        = $self->{children}->[1];
         my object $hash_entries_star = $self->{children}->[2];
@@ -89,15 +75,28 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         }
 
         $rperl_source_group->{PMC} .= $right_brace;
-        return $rperl_source_group;
     }
+    elsif ( $self_class eq 'HashReference_201' ) { # HashReference -> LBRACE '}'
+        my string $left_brace  = $self->{children}->[0];
+        my string $right_brace = $self->{children}->[1];
+        $rperl_source_group->{PMC} .= $left_brace . $right_brace;
+    }
+    else {
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+                . ($self_class)
+                . ' found where HashReference_200 or HashReference_201 expected, dying'
+        ) . "\n";
+    }
+
+    return $rperl_source_group;
 };
 
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
         = {
-        CPP => q{// <<< RP::DS::A::R __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
+        CPP => q{// <<< RP::DS::H::R __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
             . "\n"
         };
 
@@ -109,7 +108,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
         = {
-        CPP => q{// <<< RP::DS::A::R __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
+        CPP => q{// <<< RP::DS::H::R __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
             . "\n"
         };
 

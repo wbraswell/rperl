@@ -46,7 +46,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             = $subexpression_or_stdin->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
-        $rperl_source_group->{PMC} .= $semicolon;
+        $rperl_source_group->{PMC} .= $semicolon . "\n";
     }
     elsif ( $self_class eq 'VariableModification_174' ) { # VariableModification -> Variable OP19_VARIABLE_ASSIGN_BY SubExpression ';'
         my object $variable      = $self->{children}->[0];
@@ -62,7 +62,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             = $subexpression->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
-        $rperl_source_group->{PMC} .= $semicolon;
+        $rperl_source_group->{PMC} .= $semicolon . "\n";
     }
     else {
         die RPerl::Parser::rperl_rule__replace(

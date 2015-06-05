@@ -20,13 +20,29 @@ our hashref $properties = {};
 
 our string_hashref_method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $rperl_source_group
-        = { PMC =>
-            q{# <<< RP::O::S::OV::LC __DUMMY_SOURCE_CODE PERLOPS_PERLTYPES >>>}
-            . "\n" };
+    my string_hashref $rperl_source_group = { PMC => q{} };
     my string_hashref $rperl_source_subgroup;
 
 #    RPerl::diag( 'in OperatorVoid::LoopControl->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+
+    my string $self_class = ref $self;
+    if ( $self_class eq 'OperatorVoid_118' ) { # OperatorVoid -> OP19_LOOP_CONTROL_SCOLON
+        $rperl_source_group->{PMC} .= $self->{children}->[0] . "\n";
+    }
+    elsif ( $self_class eq 'OperatorVoid_119' ) { # OperatorVoid -> OP19_LOOP_CONTROL LoopLabel ';'
+        my string $loop_control = $self->{children}->[0];
+        my string $loop_label   = $self->{children}->[1]->{children}->[0];
+        my string $semicolon    = $self->{children}->[2];
+        $rperl_source_group->{PMC}
+            .= $loop_control . q{ } . $loop_label . $semicolon . "\n";
+    }
+    else {
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+                . $self_class
+                . ' found where OperatorVoid_118 or OperatorVoid_119 expected, dying'
+        ) . "\n";
+    }
 
     return $rperl_source_group;
 };

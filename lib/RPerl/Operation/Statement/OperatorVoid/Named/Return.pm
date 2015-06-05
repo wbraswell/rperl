@@ -51,7 +51,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             my integer $argument_count = $arguments->length();
             if ( $argument_count > ARGUMENTS_MAX() ) {
                 die
-                    'ERROR ECVGEASRP02, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
+                    'ERROR ECVGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
                     . "\n"
                     . 'Argument count '
                     . $argument_count
@@ -70,10 +70,10 @@ our string_hashref_method $ast_to_rperl__generate = sub {
                     $arguments_subexpression = $arguments_subexpression->{children}->[1];
                 }
                 if (( ref $arguments_subexpression ) eq 'SubExpression_134' ) {
-                    die 'ERROR ECVGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying' . "\n";
+                    die 'ERROR ECVGEASRP04, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying' . "\n";
                 }
                 elsif (( ref $arguments_subexpression ) eq 'SubExpression_136' ) {
-                    die 'ERROR ECVGEASRP04, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying' . "\n";
+                    die 'ERROR ECVGEASRP05, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying' . "\n";
                 }
             }
             my string_hashref $rperl_source_subgroup
@@ -91,7 +91,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         my integer $argument_count = $arguments->length();
         if ( $argument_count > ARGUMENTS_MAX() ) {
             die
-                'ERROR ECVGEASRP02, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
+                'ERROR ECVGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
                 . "\n"
                 . 'Argument count '
                 . $argument_count
@@ -110,10 +110,10 @@ our string_hashref_method $ast_to_rperl__generate = sub {
                 $arguments_subexpression = $arguments_subexpression->{children}->[1];
             }
             if (( ref $arguments_subexpression ) eq 'SubExpression_134' ) {
-                die 'ERROR ECVGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying' . "\n";
+                die 'ERROR ECVGEASRP04, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying' . "\n";
             }
             elsif (( ref $arguments_subexpression ) eq 'SubExpression_136' ) {
-                die 'ERROR ECVGEASRP04, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying' . "\n";
+                die 'ERROR ECVGEASRP05, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying' . "\n";
             }
         }
         my string_hashref $rperl_source_subgroup

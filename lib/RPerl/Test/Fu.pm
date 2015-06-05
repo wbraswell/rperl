@@ -99,9 +99,9 @@ our integer $fong = sub {
     #    return(((%{{a => 2}})));  # BAD, generator, outer parens as args, inner parens as subexpressions; program_15_bad_07.pl
     #    return((((%{{a => 2}}))));  # BAD, generator, outer parens as args, inner parens as subexpressions; program_15_bad_08.pl
     
-# START HERE: flesh out all exit/die/croak tests in Fu.pm
-# START HERE: flesh out all exit/die/croak tests in Fu.pm
-# START HERE: flesh out all exit/die/croak tests in Fu.pm
+# START HERE: flesh out all OperatorVoid::Named (exit/die/croak) & Operator::Named (cos/sin/push etc) tests in Fu.pm
+# START HERE: flesh out all OperatorVoid::Named (exit/die/croak) & Operator::Named (cos/sin/push etc) tests in Fu.pm
+# START HERE: flesh out all OperatorVoid::Named (exit/die/croak) & Operator::Named (cos/sin/push etc) tests in Fu.pm
 
 #};
 

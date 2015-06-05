@@ -47,7 +47,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         my integer $argument_count = $arguments->length();
         if ( $argument_count > ARGUMENTS_MAX() ) {
             die
-                'ERROR ECVGEASRP02, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
+                'ERROR ECVGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
                 . "\n"
                 . 'Argument count '
                 . $argument_count
@@ -73,7 +73,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             }
             if ( ( ref $arguments_subexpression ) eq 'SubExpression_134' ) {
                 die
-                    'ERROR ECVGEASRP05, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
+                    'ERROR ECVGEASRP06, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
                     . "\n"
                     . 'Attempt to exit with dereferenced array, please exit with integer instead, dying'
                     . "\n";
@@ -81,7 +81,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             elsif ( ( ref $arguments_subexpression ) eq 'SubExpression_136' )
             {
                 die
-                    'ERROR ECVGEASRP06, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
+                    'ERROR ECVGEASRP07, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
                     . "\n"
                     . 'Attempt to exit with dereferenced hash, please exit with integer instead, dying'
                     . "\n";

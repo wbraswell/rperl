@@ -2,7 +2,7 @@
 package rperlrules;    # yes, yes it does
 use strict;
 use warnings;
-our $VERSION = 0.000_015;
+our $VERSION = 0.001_000;
 
 #use RPerl;
 
@@ -33,25 +33,25 @@ use RPerl::NonGenerator;
 use RPerl::Operation;
 use RPerl::Operation::Expression;
 use RPerl::Operation::Expression::Operator;
-use RPerl::Operation::Expression::ConstantCall;
-use RPerl::Operation::Expression::SubroutineCall;
-use RPerl::Operation::Expression::SubroutineCall::MethodCall;
-use RPerl::Operation::Expression::SubroutineCall::MethodCall::ConstructorCall;
+use RPerl::Operation::Expression::ConstantCall;                                 # grammar rule & operation
+use RPerl::Operation::Expression::SubroutineCall;                               # grammar rule & operation
+use RPerl::Operation::Expression::SubroutineCall::MethodCall;                   # grammar rule & operation
+use RPerl::Operation::Expression::SubroutineCall::MethodCall::ConstructorCall;  # grammar rule & operation
 use RPerl::Operation::Statement;
+use RPerl::Operation::Statement::Conditional;           # grammar rule & operation
+use RPerl::Operation::Statement::Loop;                  # grammar rule & operation
+use RPerl::Operation::Statement::Loop::For;             # grammar rule & operation
+use RPerl::Operation::Statement::Loop::ForEach;         # grammar rule & operation
+use RPerl::Operation::Statement::Loop::While;           # grammar rule & operation
 use RPerl::Operation::Statement::OperatorVoid;
 use RPerl::Operation::Statement::OperatorVoid::Named;
-use RPerl::Operation::Statement::Conditional;
-use RPerl::Operation::Statement::Loop;
-use RPerl::Operation::Statement::Loop::For;
-use RPerl::Operation::Statement::Loop::ForEach;
-use RPerl::Operation::Statement::Loop::While;
 use RPerl::CodeBlock;
 
 # [[[ VARIABLES & TYPES ]]]
 
 use RPerl::Operation::Expression::SubExpression::Variable;
 use RPerl::Operation::Expression::SubExpression::Variable::Retrieval;
-use RPerl::Operation::Expression::SubExpression::Literal; # NEED ANSWER: not a full Grammar Rule, just a Production???
+use RPerl::Operation::Expression::SubExpression::Literal;
 use RPerl::Operation::Expression::SubExpression::Literal::Number;
 use RPerl::Operation::Expression::SubExpression::Literal::String;
 use RPerl::Operation::Expression::SubExpression::Literal::Undefined;
@@ -66,7 +66,12 @@ use RPerl::DataStructure::Hash::Entry;
 use RPerl::DataStructure::Hash::EntryTyped;
 use RPerl::DataType::TypeInner;
 
+# [[[ INPUT / OUTPUT ]]]
+
+use RPerl::InputOutput::Stdin;
+
 # [[[ OBJECT-ORIENTED ]]]
+
 use RPerl::CompileUnit::Module::Class;
 use RPerl::DataStructure::Hash::Properties;
 use RPerl::CodeBlock::Subroutine::Method; # Method is the only item that is both a Data Type & a Grammar Rule

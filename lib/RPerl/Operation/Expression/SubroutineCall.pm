@@ -25,7 +25,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in SubroutineCall->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ref $self ne 'Expression_125' ) {
+    if ( ( ref $self ) ne 'Expression_125' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $self )
@@ -33,6 +33,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             . "\n";
     }
 
+    # Expression -> WordScoped LPAREN OPTIONAL-33 ')'
     my object $name               = $self->{children}->[0];
     my string $left_paren         = $self->{children}->[1];
     my object $arguments_optional = $self->{children}->[2];
@@ -48,7 +49,6 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     }
 
     $rperl_source_group->{PMC} .= $right_paren;
-
     return $rperl_source_group;
 };
 

@@ -21,7 +21,7 @@ our string_hashref $NAMES = {
     'return' => 'RPerl::Operation::Statement::OperatorVoid::Named::Return',
     'exit'   => 'RPerl::Operation::Statement::OperatorVoid::Named::Exit',
     'die'    => 'RPerl::Operation::Statement::OperatorVoid::Named::Die',
-    'croak'  => 'RPerl::Operation::Statement::OperatorVoid::Named::Croak',
+    'croak'  => 'RPerl::Operation::Statement::OperatorVoid::Named::Croak'
 };
 
 # [[[ OO METHODS & SUBROUTINES ]]]
@@ -33,23 +33,23 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in OperatorVoid::Named->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    my string $child0_name = $self->{children}->[0];
-    if ( ( ( substr $child0_name, -1, 1 ) eq q{;} ) or ( ( substr $child0_name, -1, 1 ) eq q{(} )) {
-        chop $child0_name;
+    my string $operator_void_name = $self->{children}->[0];
+    if ( ( ( substr $operator_void_name, -1, 1 ) eq q{;} ) or ( ( substr $operator_void_name, -1, 1 ) eq q{(} )) {
+        chop $operator_void_name;
     }
-    if ( not exists $NAMES->{$child0_name} ) {
+    if ( not exists $NAMES->{$operator_void_name} ) {
         die
             q{ERROR ECVGEASRP01, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named void operator '}
-            . $child0_name
+            . $operator_void_name
             . q{' found where }
             . ( join ', ', ( sort keys %{$NAMES} ) )
             . ' expected, dying' . "\n";
     }
-    my string $child0_class  = $NAMES->{$child0_name};
-    my object $child0_object = $child0_class->new();
+    my string $operator_void_class  = $NAMES->{$operator_void_name};
+    my object $operator_void_object = $operator_void_class->new();
 
     $rperl_source_subgroup
-        = $child0_object->ast_to_rperl__generate( $modes, $self );
+        = $operator_void_object->ast_to_rperl__generate( $modes, $self );
     RPerl::Generator::source_group_append( $rperl_source_group,
         $rperl_source_subgroup );
 

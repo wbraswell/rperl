@@ -35,7 +35,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         $self = $self->{children}->[0];
     }
 
-    if ( ref $self ne 'Program_18' ) {
+    if ( ( ref $self ) ne 'Program_18' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $self )

@@ -20,11 +20,24 @@ our hashref $properties = {};
 
 our string_hashref_method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $rperl_source_group = { PMC => q{# <<< RP::O::E::CC __DUMMY_SOURCE_CODE PERLOPS_PERLTYPES >>>}
-            . "\n" };
+    my string_hashref $rperl_source_group = { PMC => q{} };
 
 #    RPerl::diag( 'in ConstantCall->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
+    if ( ( ref $self ) ne 'Expression_126' ) {
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+                . ( ref $self )
+                . ' found where Expression_126 expected, dying' )
+            . "\n";
+    }
+
+    # Expression -> WORD_UPPERCASE LPAREN ')'
+    my string $name        = $self->{children}->[0];
+    my string $left_paren  = $self->{children}->[1];
+    my string $right_paren = $self->{children}->[2];
+
+    $rperl_source_group->{PMC} .= $name . $left_paren . $right_paren;
     return $rperl_source_group;
 };
 

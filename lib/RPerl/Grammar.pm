@@ -32,7 +32,7 @@ sub unexpendedInput { defined($_) ? substr($_, (defined(pos $_) ? pos $_ : 0)) :
 
     use strict;
     use warnings;
-    our $VERSION = 0.000_999;
+    our $VERSION = 0.001_000;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -48,7 +48,7 @@ our $LEX = sub {
 
       /\G((?:\s*(?:[#][^#!].*)?\s*)*)/gc and $self->tokenline($1 =~ tr{\n}{});
 
-      m{\G(our\ hashref\ \$properties|\#\#\ no\ critic\ qw\(|use\ parent\ qw\(|use\ warnings\;|use\ constant|use\ strict\;|use\ RPerl\;|foreach|\$TYPED_|package|\=\ sub\ \{|elsif|while|undef|else|for|our|\@_\;|use|\@\{|\%\{|if|\;|\)|\}|\])}gc and return ($1, $1);
+      m{\G(our\ hashref\ \$properties|\#\#\ no\ critic\ qw\(|use\ parent\ qw\(|use\ warnings\;|use\ constant|use\ strict\;|use\ RPerl\;|package|\=\ sub\ \{|\$TYPED_|foreach|while|elsif|undef|else|use|for|\@_\;|our|\%\{|if|\@\{|\}|\]|\;|\))}gc and return ($1, $1);
 
       /\G(^#!\/(?:\w+\/)*perl)/gc and return ('SHEBANG', $1);
       /\G\$VERSION\ =\ (\d\d?\.\d{3}\_\d{3});/gc and return ('VERSION_NUMBER_ASSIGN', $1);
@@ -105,7 +105,7 @@ our $LEX = sub {
       /\G(qw\()/gc and return ('OP01_QW', $1);
       /\G(open)\s/gc and return ('OP01_OPEN', $1);
       /\G(close)\s/gc and return ('OP01_CLOSE', $1);
-      /\G(sin|cos|push|pop|keys|values|sort|length|ETC)\s/gc and return ('OP01_NAMED', $1);
+      /\G(sin|cos|push|pop|keys|values|sort|length|fakebuiltin)\s/gc and return ('OP01_NAMED', $1);
       /\G([a-z]\w*|[A-Z]\w*[a-z]\w*)/gc and return ('WORD', $1);
       /\G([A-Z][A-Z0-9_]*|[A-Z])/gc and return ('WORD_UPPERCASE', $1);
       /\G(:)/gc and return ('COLON', $1);
@@ -686,399 +686,435 @@ sub new {
 [
 	{#State 0
 		ACTIONS => {
-			"package" => -20,
-			'SHEBANG' => 7,
-			"## no critic qw(" => 8
+			'SHEBANG' => 2,
+			"## no critic qw(" => 7,
+			"package" => -20
 		},
 		GOTOS => {
-			'OPTIONAL-9' => 3,
-			'Program' => 4,
-			'PLUS-2' => 9,
-			'Critic' => 6,
-			'PAREN-1' => 1,
+			'OPTIONAL-9' => 9,
 			'ModuleHeader' => 5,
-			'CompileUnit' => 2
+			'CompileUnit' => 1,
+			'Program' => 8,
+			'Critic' => 4,
+			'PLUS-2' => 3,
+			'PAREN-1' => 6
 		}
 	},
 	{#State 1
-		DEFAULT => -3
-	},
-	{#State 2
 		ACTIONS => {
 			'' => 10
 		}
 	},
+	{#State 2
+		ACTIONS => {
+			"use strict;" => -7,
+			"## no critic qw(" => 7
+		},
+		GOTOS => {
+			'OPTIONAL-3' => 12,
+			'Critic' => 11
+		}
+	},
 	{#State 3
 		ACTIONS => {
-			"package" => 11
+			"package" => -20,
+			'' => -5,
+			"## no critic qw(" => 7
+		},
+		GOTOS => {
+			'ModuleHeader' => 5,
+			'OPTIONAL-9' => 9,
+			'PAREN-1' => 13,
+			'Critic' => 4
 		}
 	},
 	{#State 4
-		DEFAULT => -4
+		DEFAULT => -19
 	},
 	{#State 5
 		ACTIONS => {
-			"use parent qw(" => 13,
-			"our" => -25,
 			"use" => -25,
 			"## no critic qw(" => -25,
+			"our" => -25,
+			"use parent qw(" => 15,
 			"use constant" => -25
 		},
 		GOTOS => {
-			'Package' => 16,
-			'Class' => 12,
-			'Module' => 15,
-			'STAR-10' => 14
+			'STAR-10' => 14,
+			'Module' => 18,
+			'Package' => 17,
+			'Class' => 16
 		}
 	},
 	{#State 6
-		DEFAULT => -19
+		DEFAULT => -3
 	},
 	{#State 7
 		ACTIONS => {
-			"## no critic qw(" => 8,
-			"use strict;" => -7
+			'WORD' => 20
 		},
 		GOTOS => {
-			'Critic' => 18,
-			'OPTIONAL-3' => 17
+			'PLUS-14' => 19
 		}
 	},
 	{#State 8
-		ACTIONS => {
-			'WORD' => 19
-		},
-		GOTOS => {
-			'PLUS-14' => 20
-		}
+		DEFAULT => -4
 	},
 	{#State 9
 		ACTIONS => {
-			"## no critic qw(" => 8,
-			"package" => -20,
-			'' => -5
-		},
-		GOTOS => {
-			'OPTIONAL-9' => 3,
-			'Critic' => 6,
-			'PAREN-1' => 21,
-			'ModuleHeader' => 5
+			"package" => 21
 		}
 	},
 	{#State 10
 		DEFAULT => 0
 	},
 	{#State 11
-		ACTIONS => {
-			'WORD_SCOPED' => 23,
-			'WORD' => 24
-		},
-		GOTOS => {
-			'WordScoped' => 22
-		}
+		DEFAULT => -6
 	},
 	{#State 12
-		DEFAULT => -23
-	},
-	{#State 13
 		ACTIONS => {
-			'WORD_SCOPED' => 23,
-			'WORD' => 24
+			"use strict;" => 22
 		},
 		GOTOS => {
-			'WordScoped' => 25
+			'Header' => 23
 		}
+	},
+	{#State 13
+		DEFAULT => -2
 	},
 	{#State 14
 		ACTIONS => {
 			"our" => -27,
+			"## no critic qw(" => 7,
 			"use" => -27,
-			"use constant" => -27,
-			"## no critic qw(" => 8
+			"use constant" => -27
 		},
 		GOTOS => {
-			'Critic' => 26,
-			'STAR-11' => 27
+			'Critic' => 25,
+			'STAR-11' => 24
 		}
 	},
 	{#State 15
-		DEFAULT => -1
-	},
-	{#State 16
-		DEFAULT => -22
-	},
-	{#State 17
 		ACTIONS => {
-			"use strict;" => 28
+			'WORD_SCOPED' => 27,
+			'WORD' => 26
 		},
 		GOTOS => {
-			'Header' => 29
+			'WordScoped' => 28
 		}
+	},
+	{#State 16
+		DEFAULT => -23
+	},
+	{#State 17
+		DEFAULT => -22
 	},
 	{#State 18
-		DEFAULT => -6
+		DEFAULT => -1
 	},
 	{#State 19
-		DEFAULT => -35
-	},
-	{#State 20
 		ACTIONS => {
-			'WORD' => 31,
-			")" => 30
+			")" => 30,
+			'WORD' => 29
 		}
 	},
+	{#State 20
+		DEFAULT => -35
+	},
 	{#State 21
-		DEFAULT => -2
+		ACTIONS => {
+			'WORD_SCOPED' => 27,
+			'WORD' => 26
+		},
+		GOTOS => {
+			'WordScoped' => 31
+		}
 	},
 	{#State 22
 		ACTIONS => {
-			";" => 32
+			"use warnings;" => 32
 		}
 	},
 	{#State 23
-		DEFAULT => -207
+		DEFAULT => -9,
+		GOTOS => {
+			'STAR-4' => 33
+		}
 	},
 	{#State 24
-		DEFAULT => -206
-	},
-	{#State 25
 		ACTIONS => {
-			")" => 33
-		}
-	},
-	{#State 26
-		DEFAULT => -24
-	},
-	{#State 27
-		ACTIONS => {
+			"use constant" => -29,
 			"our" => -29,
-			"use" => 36,
-			"use constant" => -29
+			"use" => 34
 		},
 		GOTOS => {
-			'Include' => 34,
-			'STAR-12' => 35
+			'Include' => 35,
+			'STAR-12' => 36
 		}
+	},
+	{#State 25
+		DEFAULT => -24
+	},
+	{#State 26
+		DEFAULT => -206
+	},
+	{#State 27
+		DEFAULT => -207
 	},
 	{#State 28
 		ACTIONS => {
-			"use warnings;" => 37
+			")" => 37
 		}
 	},
 	{#State 29
-		DEFAULT => -9,
-		GOTOS => {
-			'STAR-4' => 38
-		}
+		DEFAULT => -34
 	},
 	{#State 30
 		DEFAULT => -36
 	},
 	{#State 31
-		DEFAULT => -34
+		ACTIONS => {
+			";" => 38
+		}
 	},
 	{#State 32
 		ACTIONS => {
-			"use strict;" => 28
-		},
-		GOTOS => {
-			'Header' => 39
+			"use RPerl;" => 39
 		}
 	},
 	{#State 33
 		ACTIONS => {
-			";" => 40
+			'OP22_LOGICAL_NEG' => -11,
+			"## no critic qw(" => 7,
+			'OP19_LOOP_CONTROL' => -11,
+			'OP10_NAMED_UNARY' => -11,
+			"foreach" => -11,
+			'OP05_MATH_NEG_LPAREN' => -11,
+			'LBRACKET' => -11,
+			'OP01_PRINT' => -11,
+			"\@{" => -11,
+			'OP03_MATH_INC_DEC' => -11,
+			'OP01_NAMED' => -11,
+			"our" => -11,
+			'OP01_NAMED_VOID_SCOLON' => -11,
+			"for" => -11,
+			'WORD_UPPERCASE' => -11,
+			'LITERAL_STRING' => -11,
+			'OP05_LOGICAL_NEG' => -11,
+			"while" => -11,
+			'LPAREN' => -11,
+			'WORD' => -11,
+			"if" => -11,
+			'OP01_CLOSE' => -11,
+			"use constant" => -11,
+			'LBRACE' => -11,
+			'OP19_LOOP_CONTROL_SCOLON' => -11,
+			'WORD_SCOPED' => -11,
+			'OP01_OPEN' => -11,
+			'OP01_NAMED_VOID_LPAREN' => -11,
+			'LITERAL_NUMBER' => -11,
+			"use" => -11,
+			'MY' => -11,
+			"%{" => -11,
+			"undef" => -11,
+			'OP01_NAMED_VOID' => -11,
+			'VARIABLE_SYMBOL' => -11
+		},
+		GOTOS => {
+			'Critic' => 41,
+			'STAR-5' => 40
 		}
 	},
 	{#State 34
-		DEFAULT => -26
-	},
-	{#State 35
 		ACTIONS => {
-			"our" => 45,
-			"use constant" => 41
+			'WORD' => 26,
+			'WORD_SCOPED' => 27
 		},
 		GOTOS => {
-			'Subroutine' => 43,
-			'PLUS-13' => 42,
-			'Constant' => 44
+			'WordScoped' => 42
 		}
+	},
+	{#State 35
+		DEFAULT => -26
 	},
 	{#State 36
 		ACTIONS => {
-			'WORD_SCOPED' => 23,
-			'WORD' => 24
+			"use constant" => 47,
+			"our" => 44
 		},
 		GOTOS => {
-			'WordScoped' => 46
+			'PLUS-13' => 46,
+			'Constant' => 43,
+			'Subroutine' => 45
 		}
 	},
 	{#State 37
 		ACTIONS => {
-			"use RPerl;" => 47
+			";" => 48
 		}
 	},
 	{#State 38
 		ACTIONS => {
-			'OP03_MATH_INC_DEC' => -11,
-			"## no critic qw(" => 8,
-			'OP05_MATH_NEG_LPAREN' => -11,
-			'WORD_SCOPED' => -11,
-			'OP01_PRINT' => -11,
-			'OP01_NAMED' => -11,
-			"%{" => -11,
-			'LITERAL_STRING' => -11,
-			'OP10_NAMED_UNARY' => -11,
-			'LBRACE' => -11,
-			"\@{" => -11,
-			"foreach" => -11,
-			'WORD' => -11,
-			'OP01_NAMED_VOID_SCOLON' => -11,
-			"our" => -11,
-			'MY' => -11,
-			'OP22_LOGICAL_NEG' => -11,
-			"for" => -11,
-			'OP05_LOGICAL_NEG' => -11,
-			'OP19_LOOP_CONTROL_SCOLON' => -11,
-			"use constant" => -11,
-			'OP01_NAMED_VOID_LPAREN' => -11,
-			"if" => -11,
-			'OP01_OPEN' => -11,
-			"use" => -11,
-			'OP19_LOOP_CONTROL' => -11,
-			"undef" => -11,
-			'WORD_UPPERCASE' => -11,
-			'LITERAL_NUMBER' => -11,
-			'VARIABLE_SYMBOL' => -11,
-			'OP01_CLOSE' => -11,
-			'OP01_NAMED_VOID' => -11,
-			"while" => -11,
-			'LPAREN' => -11,
-			'LBRACKET' => -11
+			"use strict;" => 22
 		},
 		GOTOS => {
-			'STAR-5' => 49,
-			'Critic' => 48
+			'Header' => 49
 		}
 	},
 	{#State 39
-		DEFAULT => -21
+		ACTIONS => {
+			"our" => 50
+		}
 	},
 	{#State 40
 		ACTIONS => {
-			"use" => 36
+			'OP22_LOGICAL_NEG' => -13,
+			"foreach" => -13,
+			'OP10_NAMED_UNARY' => -13,
+			'OP19_LOOP_CONTROL' => -13,
+			"\@{" => -13,
+			'OP01_PRINT' => -13,
+			'OP01_NAMED' => -13,
+			'OP03_MATH_INC_DEC' => -13,
+			'LBRACKET' => -13,
+			'OP05_MATH_NEG_LPAREN' => -13,
+			'WORD' => -13,
+			"if" => -13,
+			'LPAREN' => -13,
+			'OP19_LOOP_CONTROL_SCOLON' => -13,
+			'WORD_SCOPED' => -13,
+			'LBRACE' => -13,
+			'OP01_CLOSE' => -13,
+			"use constant" => -13,
+			"for" => -13,
+			'OP01_NAMED_VOID_SCOLON' => -13,
+			"our" => -13,
+			"while" => -13,
+			'OP05_LOGICAL_NEG' => -13,
+			'LITERAL_STRING' => -13,
+			'WORD_UPPERCASE' => -13,
+			'OP01_NAMED_VOID' => -13,
+			'VARIABLE_SYMBOL' => -13,
+			"undef" => -13,
+			'MY' => -13,
+			"use" => 34,
+			'LITERAL_NUMBER' => -13,
+			'OP01_NAMED_VOID_LPAREN' => -13,
+			'OP01_OPEN' => -13,
+			"%{" => -13
 		},
 		GOTOS => {
-			'Include' => 50
+			'Include' => 52,
+			'STAR-6' => 51
 		}
 	},
 	{#State 41
-		ACTIONS => {
-			'WORD_UPPERCASE' => 51
-		}
+		DEFAULT => -8
 	},
 	{#State 42
 		ACTIONS => {
-			"our" => 45,
-			'LITERAL_NUMBER' => 52
-		},
-		GOTOS => {
-			'Subroutine' => 53
+			";" => 53,
+			'OP01_QW' => 54
 		}
 	},
 	{#State 43
-		DEFAULT => -31
-	},
-	{#State 44
 		DEFAULT => -28
 	},
-	{#State 45
+	{#State 44
 		ACTIONS => {
-			'WORD' => 56,
-			'TYPE_INTEGER' => 55
+			'TYPE_INTEGER' => 55,
+			'WORD' => 56
 		},
 		GOTOS => {
-			'Type' => 54
+			'Type' => 57
 		}
+	},
+	{#State 45
+		DEFAULT => -31
 	},
 	{#State 46
 		ACTIONS => {
-			";" => 58,
-			'OP01_QW' => 57
+			"our" => 44,
+			'LITERAL_NUMBER' => 59
+		},
+		GOTOS => {
+			'Subroutine' => 58
 		}
 	},
 	{#State 47
 		ACTIONS => {
-			"our" => 59
+			'WORD_UPPERCASE' => 60
 		}
 	},
 	{#State 48
-		DEFAULT => -8
-	},
-	{#State 49
 		ACTIONS => {
-			'OP22_LOGICAL_NEG' => -13,
-			'MY' => -13,
-			"our" => -13,
-			"for" => -13,
-			"\@{" => -13,
-			'LITERAL_STRING' => -13,
-			'OP10_NAMED_UNARY' => -13,
-			'LBRACE' => -13,
-			'OP01_NAMED_VOID_SCOLON' => -13,
-			'WORD' => -13,
-			"foreach" => -13,
-			"%{" => -13,
-			'OP01_NAMED' => -13,
-			'OP03_MATH_INC_DEC' => -13,
-			'OP01_PRINT' => -13,
-			'WORD_SCOPED' => -13,
-			'OP05_MATH_NEG_LPAREN' => -13,
-			"while" => -13,
-			'OP01_NAMED_VOID' => -13,
-			'OP01_CLOSE' => -13,
-			'LBRACKET' => -13,
-			'LPAREN' => -13,
-			'WORD_UPPERCASE' => -13,
-			'VARIABLE_SYMBOL' => -13,
-			'LITERAL_NUMBER' => -13,
-			'OP19_LOOP_CONTROL' => -13,
-			"use" => 36,
-			"undef" => -13,
-			'OP19_LOOP_CONTROL_SCOLON' => -13,
-			'OP05_LOGICAL_NEG' => -13,
-			'OP01_OPEN' => -13,
-			'OP01_NAMED_VOID_LPAREN' => -13,
-			"if" => -13,
-			"use constant" => -13
+			"use" => 34
 		},
 		GOTOS => {
-			'STAR-6' => 61,
-			'Include' => 60
+			'Include' => 61
 		}
 	},
+	{#State 49
+		DEFAULT => -21
+	},
 	{#State 50
-		DEFAULT => -52,
-		GOTOS => {
-			'STAR-20' => 62
+		ACTIONS => {
+			'VERSION_NUMBER_ASSIGN' => 62
 		}
 	},
 	{#State 51
 		ACTIONS => {
-			'OP20_HASH_FATARROW' => 63
+			'LBRACKET' => -15,
+			'OP05_MATH_NEG_LPAREN' => -15,
+			'OP01_NAMED' => -15,
+			'OP03_MATH_INC_DEC' => -15,
+			'OP01_PRINT' => -15,
+			"\@{" => -15,
+			'OP19_LOOP_CONTROL' => -15,
+			'OP10_NAMED_UNARY' => -15,
+			"foreach" => -15,
+			'OP22_LOGICAL_NEG' => -15,
+			"%{" => -15,
+			'LITERAL_NUMBER' => -15,
+			'OP01_OPEN' => -15,
+			'OP01_NAMED_VOID_LPAREN' => -15,
+			'MY' => -15,
+			"undef" => -15,
+			'OP01_NAMED_VOID' => -15,
+			'VARIABLE_SYMBOL' => -15,
+			'WORD_UPPERCASE' => -15,
+			"while" => -15,
+			'LITERAL_STRING' => -15,
+			'OP05_LOGICAL_NEG' => -15,
+			"for" => -15,
+			'OP01_NAMED_VOID_SCOLON' => -15,
+			"our" => -15,
+			"use constant" => 47,
+			'OP01_CLOSE' => -15,
+			'OP19_LOOP_CONTROL_SCOLON' => -15,
+			'WORD_SCOPED' => -15,
+			'LBRACE' => -15,
+			'LPAREN' => -15,
+			'WORD' => -15,
+			"if" => -15
+		},
+		GOTOS => {
+			'Constant' => 63,
+			'STAR-7' => 64
 		}
 	},
 	{#State 52
-		ACTIONS => {
-			";" => 64
-		}
+		DEFAULT => -10
 	},
 	{#State 53
-		DEFAULT => -30
+		DEFAULT => -39
 	},
 	{#State 54
 		ACTIONS => {
-			'VARIABLE_SYMBOL' => 65
+			'WORD' => 65
+		},
+		GOTOS => {
+			'PLUS-15' => 66
 		}
 	},
 	{#State 55
@@ -1089,982 +1125,1027 @@ sub new {
 	},
 	{#State 57
 		ACTIONS => {
-			'WORD' => 67
-		},
-		GOTOS => {
-			'PLUS-15' => 66
+			'VARIABLE_SYMBOL' => 67
 		}
 	},
 	{#State 58
-		DEFAULT => -39
+		DEFAULT => -30
 	},
 	{#State 59
 		ACTIONS => {
-			'VERSION_NUMBER_ASSIGN' => 68
+			";" => 68
 		}
 	},
 	{#State 60
-		DEFAULT => -10
+		ACTIONS => {
+			'OP20_HASH_FATARROW' => 69
+		}
 	},
 	{#State 61
-		ACTIONS => {
-			'LPAREN' => -15,
-			'LBRACKET' => -15,
-			'OP01_CLOSE' => -15,
-			'OP01_NAMED_VOID' => -15,
-			"while" => -15,
-			'LITERAL_NUMBER' => -15,
-			'VARIABLE_SYMBOL' => -15,
-			'WORD_UPPERCASE' => -15,
-			"undef" => -15,
-			'OP19_LOOP_CONTROL' => -15,
-			"use constant" => 41,
-			'OP01_NAMED_VOID_LPAREN' => -15,
-			"if" => -15,
-			'OP01_OPEN' => -15,
-			'OP05_LOGICAL_NEG' => -15,
-			'OP19_LOOP_CONTROL_SCOLON' => -15,
-			"for" => -15,
-			"our" => -15,
-			'MY' => -15,
-			'OP22_LOGICAL_NEG' => -15,
-			"foreach" => -15,
-			'WORD' => -15,
-			'OP01_NAMED_VOID_SCOLON' => -15,
-			'LITERAL_STRING' => -15,
-			'OP10_NAMED_UNARY' => -15,
-			'LBRACE' => -15,
-			"\@{" => -15,
-			'OP01_NAMED' => -15,
-			"%{" => -15,
-			'WORD_SCOPED' => -15,
-			'OP05_MATH_NEG_LPAREN' => -15,
-			'OP01_PRINT' => -15,
-			'OP03_MATH_INC_DEC' => -15
-		},
+		DEFAULT => -52,
 		GOTOS => {
-			'STAR-7' => 69,
-			'Constant' => 70
+			'STAR-20' => 70
 		}
 	},
 	{#State 62
-		ACTIONS => {
-			"our hashref \$properties" => -54,
-			"use" => -54,
-			"use constant" => -54,
-			"## no critic qw(" => 8
-		},
-		GOTOS => {
-			'STAR-21' => 71,
-			'Critic' => 72
-		}
+		DEFAULT => -33
 	},
 	{#State 63
-		ACTIONS => {
-			'MY' => 74
-		},
-		GOTOS => {
-			'TypeInnerConstant' => 73
-		}
+		DEFAULT => -12
 	},
 	{#State 64
-		DEFAULT => -32
+		ACTIONS => {
+			'OP01_NAMED_VOID' => 103,
+			'VARIABLE_SYMBOL' => 101,
+			"undef" => 100,
+			'MY' => 95,
+			'OP01_NAMED_VOID_LPAREN' => 92,
+			'OP01_OPEN' => 93,
+			'LITERAL_NUMBER' => 94,
+			"%{" => 97,
+			"if" => 111,
+			'WORD' => 26,
+			'LPAREN' => 110,
+			'LBRACE' => 115,
+			'OP19_LOOP_CONTROL_SCOLON' => 117,
+			'WORD_SCOPED' => 27,
+			'OP01_CLOSE' => 114,
+			'OP01_NAMED_VOID_SCOLON' => 106,
+			"for" => -142,
+			"our" => 44,
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108,
+			"while" => -142,
+			'WORD_UPPERCASE' => 107,
+			"\@{" => 79,
+			'OP01_PRINT' => 78,
+			'OP03_MATH_INC_DEC' => 80,
+			'OP01_NAMED' => 81,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LBRACKET' => 75,
+			'OP22_LOGICAL_NEG' => 87,
+			'OP10_NAMED_UNARY' => 91,
+			"foreach" => -142,
+			'OP19_LOOP_CONTROL' => 88
+		},
+		GOTOS => {
+			'Expression' => 99,
+			'Variable' => 104,
+			'Conditional' => 102,
+			'PLUS-8' => 82,
+			'ArrayReference' => 71,
+			'Operator' => 73,
+			'Subroutine' => 74,
+			'Operation' => 96,
+			'PAREN-35' => 76,
+			'HashReference' => 98,
+			'OPTIONAL-36' => 77,
+			'OperatorVoid' => 89,
+			'WordScoped' => 113,
+			'VariableModification' => 112,
+			'VariableDeclaration' => 116,
+			'Statement' => 90,
+			'SubExpression' => 83,
+			'LoopLabel' => 105,
+			'Literal' => 84,
+			'HashDereference' => 85,
+			'ArrayDereference' => 86
+		}
 	},
 	{#State 65
-		ACTIONS => {
-			"= sub {" => 75
-		}
+		DEFAULT => -38
 	},
 	{#State 66
 		ACTIONS => {
-			'WORD' => 76,
-			")" => 77
+			")" => 119,
+			'WORD' => 118
 		}
 	},
 	{#State 67
-		DEFAULT => -38
+		ACTIONS => {
+			"= sub {" => 120
+		}
 	},
 	{#State 68
-		DEFAULT => -33
+		DEFAULT => -32
 	},
 	{#State 69
 		ACTIONS => {
-			'OP01_NAMED' => 79,
-			"%{" => 80,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP01_PRINT' => 83,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'WORD_SCOPED' => 23,
-			'MY' => 89,
-			'OP22_LOGICAL_NEG' => 90,
-			"our" => 45,
-			"for" => -142,
-			"\@{" => 99,
-			'LITERAL_STRING' => 94,
-			'OP10_NAMED_UNARY' => 96,
-			'LBRACE' => 95,
-			'OP01_NAMED_VOID_SCOLON' => 92,
-			"foreach" => -142,
-			'WORD' => 24,
-			'OP19_LOOP_CONTROL' => 103,
-			"undef" => 100,
-			'OP19_LOOP_CONTROL_SCOLON' => 109,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP01_OPEN' => 106,
-			"if" => 105,
-			'OP01_NAMED_VOID_LPAREN' => 104,
-			'OP01_NAMED_VOID' => 115,
-			"while" => -142,
-			'OP01_CLOSE' => 114,
-			'LPAREN' => 110,
-			'LBRACKET' => 112,
-			'WORD_UPPERCASE' => 124,
-			'VARIABLE_SYMBOL' => 120,
-			'LITERAL_NUMBER' => 118
+			'MY' => 121
 		},
 		GOTOS => {
-			'Literal' => 116,
-			'Expression' => 117,
-			'VariableModification' => 88,
-			'SubExpression' => 113,
-			'Variable' => 87,
-			'Conditional' => 111,
-			'Operation' => 93,
-			'PAREN-35' => 122,
-			'Subroutine' => 98,
-			'HashDereference' => 123,
-			'PLUS-8' => 97,
-			'HashReference' => 91,
-			'ArrayReference' => 121,
-			'WordScoped' => 119,
-			'Operator' => 102,
-			'OPTIONAL-36' => 101,
-			'LoopLabel' => 78,
-			'Statement' => 86,
-			'OperatorVoid' => 107,
-			'VariableDeclaration' => 85,
-			'ArrayDereference' => 81
+			'TypeInnerConstant' => 122
 		}
 	},
 	{#State 70
-		DEFAULT => -12
+		ACTIONS => {
+			"## no critic qw(" => 7,
+			"use" => -54,
+			"use constant" => -54,
+			"our hashref \$properties" => -54
+		},
+		GOTOS => {
+			'STAR-21' => 124,
+			'Critic' => 123
+		}
 	},
 	{#State 71
-		ACTIONS => {
-			"use constant" => -56,
-			"use" => 36,
-			"our hashref \$properties" => -56
-		},
-		GOTOS => {
-			'STAR-22' => 125,
-			'Include' => 126
-		}
+		DEFAULT => -133
 	},
 	{#State 72
-		DEFAULT => -51
+		ACTIONS => {
+			'WORD_UPPERCASE' => 125,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109,
+			'OP01_CLOSE' => 114,
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115,
+			'WORD_SCOPED' => 27,
+			'LPAREN' => 110,
+			'OP22_LOGICAL_NEG' => 87,
+			'WORD' => 26,
+			"%{" => 97,
+			'OP01_OPEN' => 93,
+			'LITERAL_NUMBER' => 94,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LBRACKET' => 75,
+			"undef" => 100,
+			'OP03_MATH_INC_DEC' => 80,
+			'OP01_NAMED' => 129,
+			'VARIABLE_SYMBOL' => 101,
+			"\@{" => 79
+		},
+		GOTOS => {
+			'ArrayDereference' => 86,
+			'HashReference' => 98,
+			'Literal' => 84,
+			'SubExpression' => 128,
+			'ArrayReference' => 71,
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'WordScoped' => 113,
+			'Variable' => 126,
+			'Expression' => 127
+		}
 	},
 	{#State 73
-		ACTIONS => {
-			'LITERAL_STRING' => 94,
-			'LITERAL_NUMBER' => 118
-		},
-		GOTOS => {
-			'Literal' => 127
-		}
+		DEFAULT => -124
 	},
 	{#State 74
-		ACTIONS => {
-			'WORD' => 56,
-			'TYPE_INTEGER' => 55
-		},
-		GOTOS => {
-			'Type' => 128
-		}
+		DEFAULT => -14
 	},
 	{#State 75
 		ACTIONS => {
-			'LITERAL_NUMBER' => -43,
-			'VARIABLE_SYMBOL' => -43,
-			'WORD_UPPERCASE' => -43,
-			'LPAREN' => -43,
-			'LBRACKET' => -43,
-			'OP01_CLOSE' => -43,
-			'OP01_NAMED_VOID' => -43,
-			"while" => -43,
-			"if" => -43,
-			'OP01_NAMED_VOID_LPAREN' => -43,
-			'OP01_OPEN' => -43,
-			'OP05_LOGICAL_NEG' => -43,
-			'LPAREN_MY' => 131,
-			'OP19_LOOP_CONTROL_SCOLON' => -43,
-			"undef" => -43,
-			'OP19_LOOP_CONTROL' => -43,
-			"foreach" => -43,
-			'WORD' => -43,
-			'OP01_NAMED_VOID_SCOLON' => -43,
-			"}" => -43,
-			'OP10_NAMED_UNARY' => -43,
-			'LBRACE' => -43,
-			'LITERAL_STRING' => -43,
-			"\@{" => -43,
-			"for" => -43,
-			'MY' => -43,
-			'OP22_LOGICAL_NEG' => -43,
-			'OP05_MATH_NEG_LPAREN' => -43,
-			'WORD_SCOPED' => -43,
-			'OP01_PRINT' => -43,
-			'OP03_MATH_INC_DEC' => -43,
-			'OP01_NAMED' => -43,
-			"%{" => -43
+			'OP22_LOGICAL_NEG' => 87,
+			'LPAREN' => 110,
+			'WORD' => 26,
+			'OP01_CLOSE' => 114,
+			"]" => -185,
+			'WORD_SCOPED' => 27,
+			'LBRACE' => 115,
+			'OP10_NAMED_UNARY' => 91,
+			'WORD_UPPERCASE' => 125,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109,
+			"\@{" => 79,
+			'OP01_NAMED' => 129,
+			'OP03_MATH_INC_DEC' => 80,
+			"undef" => 100,
+			'VARIABLE_SYMBOL' => 101,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'MY' => 133,
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			"%{" => 97,
+			'OP01_QW' => 131
 		},
 		GOTOS => {
-			'OPTIONAL-16' => 129,
-			'SubroutineArguments' => 130
+			'ArrayReference' => 71,
+			'Literal' => 84,
+			'SubExpression' => 134,
+			'Operator' => 73,
+			'HashDereference' => 85,
+			'ListElement' => 132,
+			'ArrayDereference' => 86,
+			'TypeInner' => 136,
+			'HashReference' => 98,
+			'Expression' => 127,
+			'ListElements' => 135,
+			'WordScoped' => 113,
+			'OPTIONAL-46' => 130,
+			'Variable' => 126
 		}
 	},
 	{#State 76
-		DEFAULT => -37
+		DEFAULT => -141
 	},
 	{#State 77
 		ACTIONS => {
-			";" => 132
+			"foreach" => 142,
+			"while" => 140,
+			"for" => 139
+		},
+		GOTOS => {
+			'LoopForEach' => 141,
+			'Loop' => 138,
+			'LoopFor' => 137,
+			'LoopWhile' => 143
 		}
 	},
 	{#State 78
 		ACTIONS => {
-			'COLON' => 133
+			"%{" => -109,
+			'FHREF_SYMBOL_BRACES' => 147,
+			'OP01_QW' => -109,
+			'OP01_OPEN' => -109,
+			'LITERAL_NUMBER' => -109,
+			'OP05_MATH_NEG_LPAREN' => -109,
+			'MY' => -109,
+			'LBRACKET' => -109,
+			'OP03_MATH_INC_DEC' => -109,
+			"undef" => -109,
+			'OP01_NAMED' => -109,
+			'VARIABLE_SYMBOL' => -109,
+			"\@{" => -109,
+			'WORD_UPPERCASE' => -109,
+			'LITERAL_STRING' => -109,
+			'OP05_LOGICAL_NEG' => -109,
+			'STDOUT_STDERR' => 146,
+			'OP01_CLOSE' => -109,
+			'OP10_NAMED_UNARY' => -109,
+			'LBRACE' => -109,
+			'WORD_SCOPED' => -109,
+			'LPAREN' => -109,
+			'OP22_LOGICAL_NEG' => -109,
+			'WORD' => -109
+		},
+		GOTOS => {
+			'OPTIONAL-31' => 145,
+			'PAREN-30' => 144
 		}
 	},
 	{#State 79
 		ACTIONS => {
-			'LPAREN' => 110,
-			'LBRACKET' => 112,
-			'OP01_CLOSE' => 114,
-			'MY' => 138,
-			'OP22_LOGICAL_NEG' => 90,
-			'LITERAL_NUMBER' => 118,
-			'WORD' => 24,
-			'VARIABLE_SYMBOL' => 120,
-			'LBRACE' => 95,
-			'OP10_NAMED_UNARY' => 96,
-			'LITERAL_STRING' => 94,
-			"\@{" => 99,
-			'WORD_UPPERCASE' => 136,
-			"undef" => 100,
-			'OP01_NAMED' => 140,
-			'OP01_QW' => 137,
-			"%{" => 80,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'WORD_SCOPED' => 23,
-			'OP01_OPEN' => 106,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP03_MATH_INC_DEC' => 84
+			'VARIABLE_SYMBOL' => 101,
+			'MY' => 133,
+			'LBRACKET' => -188
 		},
 		GOTOS => {
-			'TypeInner' => 142,
-			'HashDereference' => 123,
-			'ArrayDereference' => 81,
-			'WordScoped' => 119,
-			'HashReference' => 91,
-			'ArrayReference' => 121,
-			'Operator' => 102,
-			'Literal' => 116,
-			'Expression' => 134,
-			'Variable' => 139,
-			'ListElement' => 141,
-			'SubExpression' => 135
+			'OPTIONAL-47' => 149,
+			'Variable' => 150,
+			'TypeInner' => 148
 		}
 	},
 	{#State 80
 		ACTIONS => {
-			'LBRACE' => -203,
-			'MY' => 138,
-			'VARIABLE_SYMBOL' => 120
-		},
-		GOTOS => {
-			'Variable' => 144,
-			'OPTIONAL-51' => 145,
-			'TypeInner' => 143
-		}
-	},
-	{#State 81
-		DEFAULT => -134
-	},
-	{#State 82
-		ACTIONS => {
-			'OP01_CLOSE' => 114,
-			'OP22_LOGICAL_NEG' => 90,
-			'LBRACKET' => 112,
-			'LPAREN' => 110,
-			'LBRACE' => 95,
-			'OP10_NAMED_UNARY' => 96,
-			'LITERAL_STRING' => 94,
-			'WORD_UPPERCASE' => 136,
-			"\@{" => 99,
-			'WORD' => 24,
-			'LITERAL_NUMBER' => 118,
-			'VARIABLE_SYMBOL' => 120,
-			"%{" => 80,
-			'OP01_NAMED' => 140,
-			"undef" => 100,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP03_MATH_INC_DEC' => 84,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'OP01_OPEN' => 106
-		},
-		GOTOS => {
-			'ArrayReference' => 121,
-			'HashReference' => 91,
-			'ArrayDereference' => 81,
-			'WordScoped' => 119,
-			'HashDereference' => 123,
-			'SubExpression' => 146,
-			'Variable' => 139,
-			'Expression' => 134,
-			'Operator' => 102,
-			'Literal' => 116
-		}
-	},
-	{#State 83
-		ACTIONS => {
-			"undef" => -109,
-			"%{" => -109,
-			'OP01_QW' => -109,
-			'OP01_NAMED' => -109,
-			'WORD_SCOPED' => -109,
-			'OP05_MATH_NEG_LPAREN' => -109,
-			'OP01_OPEN' => -109,
-			'STDOUT_STDERR' => 150,
-			'OP05_LOGICAL_NEG' => -109,
-			'OP03_MATH_INC_DEC' => -109,
-			'FHREF_SYMBOL_BRACES' => 147,
-			'LBRACKET' => -109,
-			'LPAREN' => -109,
-			'OP01_CLOSE' => -109,
-			'OP22_LOGICAL_NEG' => -109,
-			'MY' => -109,
-			'WORD' => -109,
-			'LITERAL_NUMBER' => -109,
-			'VARIABLE_SYMBOL' => -109,
-			'LBRACE' => -109,
-			'OP10_NAMED_UNARY' => -109,
-			'LITERAL_STRING' => -109,
-			'WORD_UPPERCASE' => -109,
-			"\@{" => -109
-		},
-		GOTOS => {
-			'OPTIONAL-31' => 148,
-			'PAREN-30' => 149
-		}
-	},
-	{#State 84
-		ACTIONS => {
-			'VARIABLE_SYMBOL' => 120
+			'VARIABLE_SYMBOL' => 101
 		},
 		GOTOS => {
 			'Variable' => 151
 		}
 	},
+	{#State 81
+		ACTIONS => {
+			"%{" => 97,
+			'OP01_QW' => 131,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'LBRACKET' => 75,
+			'MY' => 133,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'OP01_NAMED' => 129,
+			"undef" => 100,
+			'OP03_MATH_INC_DEC' => 80,
+			'VARIABLE_SYMBOL' => 101,
+			"\@{" => 79,
+			'WORD_UPPERCASE' => 125,
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108,
+			'OP01_CLOSE' => 114,
+			'WORD_SCOPED' => 27,
+			'LBRACE' => 115,
+			'OP10_NAMED_UNARY' => 91,
+			'LPAREN' => 110,
+			'OP22_LOGICAL_NEG' => 87,
+			'WORD' => 26
+		},
+		GOTOS => {
+			'ArrayReference' => 71,
+			'SubExpression' => 153,
+			'Literal' => 84,
+			'Operator' => 73,
+			'HashDereference' => 85,
+			'ListElement' => 152,
+			'ArrayDereference' => 86,
+			'TypeInner' => 136,
+			'HashReference' => 98,
+			'Expression' => 127,
+			'WordScoped' => 113,
+			'Variable' => 126
+		}
+	},
+	{#State 82
+		ACTIONS => {
+			'OP19_LOOP_CONTROL_SCOLON' => 117,
+			'WORD_SCOPED' => 27,
+			'LBRACE' => 115,
+			'OP01_CLOSE' => 114,
+			'WORD' => 26,
+			"if" => 111,
+			'' => -18,
+			'LPAREN' => 110,
+			"while" => -142,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109,
+			'WORD_UPPERCASE' => 107,
+			"for" => -142,
+			'OP01_NAMED_VOID_SCOLON' => 106,
+			'OP01_NAMED_VOID' => 103,
+			'VARIABLE_SYMBOL' => 101,
+			"undef" => 100,
+			"%{" => 97,
+			'MY' => 95,
+			'LITERAL_NUMBER' => 94,
+			'OP01_NAMED_VOID_LPAREN' => 92,
+			'OP01_OPEN' => 93,
+			"foreach" => -142,
+			'OP10_NAMED_UNARY' => 91,
+			'OP19_LOOP_CONTROL' => 88,
+			'OP22_LOGICAL_NEG' => 87,
+			'OP01_NAMED' => 81,
+			'OP03_MATH_INC_DEC' => 80,
+			"\@{" => 79,
+			'OP01_PRINT' => 78,
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72
+		},
+		GOTOS => {
+			'OperatorVoid' => 89,
+			'VariableModification' => 112,
+			'WordScoped' => 113,
+			'Statement' => 90,
+			'VariableDeclaration' => 116,
+			'ArrayDereference' => 86,
+			'Literal' => 84,
+			'LoopLabel' => 105,
+			'SubExpression' => 83,
+			'HashDereference' => 85,
+			'Conditional' => 102,
+			'Variable' => 104,
+			'Expression' => 99,
+			'Operation' => 154,
+			'PAREN-35' => 76,
+			'HashReference' => 98,
+			'OPTIONAL-36' => 77,
+			'ArrayReference' => 71,
+			'Operator' => 73
+		}
+	},
+	{#State 83
+		ACTIONS => {
+			'OP18_TERNARY' => 156,
+			'OP14_BITWISE_OR_XOR' => 157,
+			'OP04_MATH_POW' => 163,
+			'OP08_MATH_ADD_SUB' => 165,
+			'OP23_LOGICAL_AND' => 164,
+			'OP13_BITWISE_AND' => 155,
+			'OP12_COMPARE_EQ_NE' => 170,
+			'OP15_LOGICAL_AND' => 161,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			'OP11_COMPARE_LT_GT' => 171,
+			'OP07_STRING_REPEAT' => 158,
+			'OP09_BITWISE_SHIFT' => 166,
+			'OP24_LOGICAL_OR_XOR' => 167,
+			'OP16_LOGICAL_OR' => 168,
+			'OP17_LIST_RANGE' => 159,
+			'OP08_STRING_CAT' => 160,
+			'OP06_REGEX_MATCH' => 169
+		}
+	},
+	{#State 84
+		DEFAULT => -131
+	},
 	{#State 85
-		DEFAULT => -146
+		DEFAULT => -136
 	},
 	{#State 86
-		DEFAULT => -77
+		DEFAULT => -134
 	},
 	{#State 87
 		ACTIONS => {
-			'OP14_BITWISE_OR_XOR' => -132,
-			'OP24_LOGICAL_OR_XOR' => -132,
-			'OP19_VARIABLE_ASSIGN_BY' => 153,
-			'OP08_MATH_ADD_SUB' => -132,
-			'OP16_LOGICAL_OR' => -132,
-			'OP03_MATH_INC_DEC' => 152,
-			'OP08_STRING_CAT' => -132,
-			'OP15_LOGICAL_AND' => -132,
-			'OP06_REGEX_MATCH' => -132,
-			'OP13_BITWISE_AND' => -132,
-			'OP11_COMPARE_LT_GT' => -132,
-			'OP17_LIST_RANGE' => -132,
-			'OP18_TERNARY' => -132,
-			'OP09_BITWISE_SHIFT' => -132,
-			'OP04_MATH_POW' => -132,
-			'OP07_STRING_REPEAT' => -132,
-			'OP02_METHOD_THINARROW' => 154,
-			'OP07_MATH_MULT_DIV_MOD' => -132,
-			'OP23_LOGICAL_AND' => -132,
-			'OP12_COMPARE_EQ_NE' => -132,
-			'OP19_VARIABLE_ASSIGN' => 155
+			"\@{" => 79,
+			'VARIABLE_SYMBOL' => 101,
+			'OP01_NAMED' => 129,
+			'OP03_MATH_INC_DEC' => 80,
+			"undef" => 100,
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			"%{" => 97,
+			'WORD' => 26,
+			'LPAREN' => 110,
+			'OP22_LOGICAL_NEG' => 87,
+			'WORD_SCOPED' => 27,
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115,
+			'OP01_CLOSE' => 114,
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108,
+			'WORD_UPPERCASE' => 125
+		},
+		GOTOS => {
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'Literal' => 84,
+			'SubExpression' => 172,
+			'ArrayReference' => 71,
+			'HashReference' => 98,
+			'ArrayDereference' => 86,
+			'Expression' => 127,
+			'Variable' => 126,
+			'WordScoped' => 113
 		}
 	},
 	{#State 88
-		DEFAULT => -147
+		ACTIONS => {
+			'WORD_UPPERCASE' => 173
+		},
+		GOTOS => {
+			'LoopLabel' => 174
+		}
 	},
 	{#State 89
-		ACTIONS => {
-			'TYPE_FHREF' => 156,
-			'WORD' => 56,
-			'TYPE_INTEGER' => 55
-		},
-		GOTOS => {
-			'Type' => 157
-		}
+		DEFAULT => -145
 	},
 	{#State 90
-		ACTIONS => {
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'WORD_SCOPED' => 23,
-			'OP01_OPEN' => 106,
-			"%{" => 80,
-			'OP01_NAMED' => 140,
-			"undef" => 100,
-			'LBRACE' => 95,
-			'OP10_NAMED_UNARY' => 96,
-			'LITERAL_STRING' => 94,
-			'WORD_UPPERCASE' => 136,
-			"\@{" => 99,
-			'WORD' => 24,
-			'LITERAL_NUMBER' => 118,
-			'VARIABLE_SYMBOL' => 120,
-			'OP01_CLOSE' => 114,
-			'OP22_LOGICAL_NEG' => 90,
-			'LBRACKET' => 112,
-			'LPAREN' => 110
-		},
-		GOTOS => {
-			'HashDereference' => 123,
-			'ArrayReference' => 121,
-			'HashReference' => 91,
-			'ArrayDereference' => 81,
-			'WordScoped' => 119,
-			'Expression' => 134,
-			'Operator' => 102,
-			'Literal' => 116,
-			'SubExpression' => 158,
-			'Variable' => 139
-		}
+		DEFAULT => -77
 	},
 	{#State 91
-		DEFAULT => -135
+		ACTIONS => {
+			'OP06_REGEX_MATCH' => -95,
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108,
+			'WORD_UPPERCASE' => 125,
+			'OP16_LOGICAL_OR' => -95,
+			'OP24_LOGICAL_OR_XOR' => -95,
+			'OP09_BITWISE_SHIFT' => -95,
+			'WORD_SCOPED' => 27,
+			'LBRACE' => 115,
+			'OP11_COMPARE_LT_GT' => -95,
+			'OP01_CLOSE' => 114,
+			'WORD' => 26,
+			'LPAREN' => 110,
+			'OP12_COMPARE_EQ_NE' => -95,
+			'OP08_MATH_ADD_SUB' => -95,
+			'OP23_LOGICAL_AND' => -95,
+			'OP04_MATH_POW' => -95,
+			"%{" => 97,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'VARIABLE_SYMBOL' => 101,
+			"undef" => 100,
+			'OP08_STRING_CAT' => -95,
+			'OP17_LIST_RANGE' => -95,
+			'OP07_STRING_REPEAT' => -95,
+			'OP21_LIST_COMMA' => -95,
+			"]" => -95,
+			'OP10_NAMED_UNARY' => 91,
+			'OP07_MATH_MULT_DIV_MOD' => -95,
+			";" => -95,
+			'OP15_LOGICAL_AND' => -95,
+			'OP22_LOGICAL_NEG' => 87,
+			'OP13_BITWISE_AND' => -95,
+			"}" => -95,
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'OP01_NAMED' => 129,
+			")" => -95,
+			'OP03_MATH_INC_DEC' => 80,
+			"\@{" => 79,
+			'OP14_BITWISE_OR_XOR' => -95,
+			'OP18_TERNARY' => -95
+		},
+		GOTOS => {
+			'Expression' => 127,
+			'Variable' => 126,
+			'WordScoped' => 113,
+			'Operator' => 73,
+			'HashDereference' => 85,
+			'ArrayReference' => 71,
+			'SubExpression' => 175,
+			'Literal' => 84,
+			'HashReference' => 98,
+			'ArrayDereference' => 86
+		}
 	},
 	{#State 92
-		DEFAULT => -114
+		ACTIONS => {
+			'WORD_SCOPED' => 27,
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115,
+			'OP01_CLOSE' => 114,
+			'WORD' => 26,
+			'LPAREN' => 110,
+			'OP22_LOGICAL_NEG' => 87,
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108,
+			'WORD_UPPERCASE' => 125,
+			'VARIABLE_SYMBOL' => 101,
+			'OP01_NAMED' => 129,
+			")" => -111,
+			"undef" => 100,
+			'OP03_MATH_INC_DEC' => 80,
+			"\@{" => 79,
+			'OP01_QW' => 131,
+			"%{" => 97,
+			'MY' => 133,
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93
+		},
+		GOTOS => {
+			'Literal' => 84,
+			'SubExpression' => 134,
+			'ArrayReference' => 71,
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'ArrayDereference' => 86,
+			'OPTIONAL-32' => 177,
+			'ListElement' => 132,
+			'HashReference' => 98,
+			'TypeInner' => 136,
+			'ListElements' => 176,
+			'Expression' => 127,
+			'WordScoped' => 113,
+			'Variable' => 126
+		}
 	},
 	{#State 93
-		DEFAULT => -17
+		ACTIONS => {
+			'MY' => 178
+		}
 	},
 	{#State 94
-		DEFAULT => -219
+		DEFAULT => -218
 	},
 	{#State 95
 		ACTIONS => {
-			'VARIABLE_SYMBOL' => 120,
-			"}" => 164,
-			'LITERAL_NUMBER' => 118,
-			'WORD' => 163,
-			"%{" => 80,
-			'LITERAL_STRING' => 94
+			'WORD' => 56,
+			'TYPE_INTEGER' => 55,
+			'TYPE_FHREF' => 180
 		},
 		GOTOS => {
-			'Literal' => 161,
-			'HashDereference' => 160,
-			'VariableOrLiteralOrWord' => 162,
-			'HashEntry' => 159,
-			'Variable' => 165
+			'Type' => 179
 		}
 	},
 	{#State 96
-		ACTIONS => {
-			'LITERAL_NUMBER' => 118,
-			'VARIABLE_SYMBOL' => 120,
-			'OP04_MATH_POW' => -95,
-			'WORD_UPPERCASE' => 136,
-			'LPAREN' => 110,
-			'OP18_TERNARY' => -95,
-			'LBRACKET' => 112,
-			'OP01_CLOSE' => 114,
-			'OP01_OPEN' => 106,
-			'OP17_LIST_RANGE' => -95,
-			'OP08_STRING_CAT' => -95,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP06_REGEX_MATCH' => -95,
-			'OP13_BITWISE_AND' => -95,
-			'OP08_MATH_ADD_SUB' => -95,
-			")" => -95,
-			"undef" => 100,
-			'WORD' => 24,
-			"}" => -95,
-			'OP10_NAMED_UNARY' => 96,
-			'OP07_STRING_REPEAT' => -95,
-			'LITERAL_STRING' => 94,
-			'OP21_LIST_COMMA' => -95,
-			'LBRACE' => 95,
-			'OP07_MATH_MULT_DIV_MOD' => -95,
-			"\@{" => 99,
-			'OP23_LOGICAL_AND' => -95,
-			'OP12_COMPARE_EQ_NE' => -95,
-			";" => -95,
-			"]" => -95,
-			'OP09_BITWISE_SHIFT' => -95,
-			'OP22_LOGICAL_NEG' => 90,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'WORD_SCOPED' => 23,
-			'OP11_COMPARE_LT_GT' => -95,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP15_LOGICAL_AND' => -95,
-			'OP16_LOGICAL_OR' => -95,
-			'OP14_BITWISE_OR_XOR' => -95,
-			'OP01_NAMED' => 140,
-			'OP24_LOGICAL_OR_XOR' => -95,
-			"%{" => 80
-		},
-		GOTOS => {
-			'Operator' => 102,
-			'Literal' => 116,
-			'Expression' => 134,
-			'Variable' => 139,
-			'SubExpression' => 166,
-			'HashDereference' => 123,
-			'ArrayDereference' => 81,
-			'WordScoped' => 119,
-			'HashReference' => 91,
-			'ArrayReference' => 121
-		}
+		DEFAULT => -17
 	},
 	{#State 97
 		ACTIONS => {
-			"\@{" => 99,
-			'LITERAL_STRING' => 94,
-			'OP10_NAMED_UNARY' => 96,
-			'LBRACE' => 95,
-			'OP01_NAMED_VOID_SCOLON' => 92,
-			'WORD' => 24,
-			"foreach" => -142,
-			'OP22_LOGICAL_NEG' => 90,
-			'MY' => 89,
-			"for" => -142,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP01_PRINT' => 83,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			"%{" => 80,
-			'OP01_NAMED' => 79,
-			'WORD_UPPERCASE' => 124,
-			'' => -18,
-			'VARIABLE_SYMBOL' => 120,
-			'LITERAL_NUMBER' => 118,
-			"while" => -142,
-			'OP01_NAMED_VOID' => 115,
-			'OP01_CLOSE' => 114,
-			'LBRACKET' => 112,
-			'LPAREN' => 110,
-			'OP19_LOOP_CONTROL_SCOLON' => 109,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP01_OPEN' => 106,
-			'OP01_NAMED_VOID_LPAREN' => 104,
-			"if" => 105,
-			'OP19_LOOP_CONTROL' => 103,
-			"undef" => 100
+			'VARIABLE_SYMBOL' => 101,
+			'LBRACE' => -203,
+			'MY' => 133
 		},
 		GOTOS => {
-			'ArrayReference' => 121,
-			'HashReference' => 91,
-			'WordScoped' => 119,
-			'HashDereference' => 123,
-			'Operation' => 167,
-			'PAREN-35' => 122,
-			'SubExpression' => 113,
-			'Conditional' => 111,
-			'Variable' => 87,
-			'Expression' => 117,
-			'Literal' => 116,
-			'VariableModification' => 88,
-			'ArrayDereference' => 81,
-			'Statement' => 86,
-			'VariableDeclaration' => 85,
-			'OperatorVoid' => 107,
-			'LoopLabel' => 78,
-			'Operator' => 102,
-			'OPTIONAL-36' => 101
+			'OPTIONAL-51' => 183,
+			'TypeInner' => 181,
+			'Variable' => 182
 		}
 	},
 	{#State 98
-		DEFAULT => -14
+		DEFAULT => -135
 	},
 	{#State 99
 		ACTIONS => {
-			'LBRACKET' => -188,
-			'VARIABLE_SYMBOL' => 120,
-			'MY' => 138
-		},
-		GOTOS => {
-			'TypeInner' => 168,
-			'OPTIONAL-47' => 169,
-			'Variable' => 170
+			'OP13_BITWISE_AND' => -129,
+			'OP08_MATH_ADD_SUB' => -129,
+			'OP23_LOGICAL_AND' => -129,
+			'OP04_MATH_POW' => -129,
+			'OP14_BITWISE_OR_XOR' => -129,
+			'OP18_TERNARY' => -129,
+			'OP06_REGEX_MATCH' => -129,
+			'OP08_STRING_CAT' => -129,
+			'OP17_LIST_RANGE' => -129,
+			'OP24_LOGICAL_OR_XOR' => -129,
+			'OP16_LOGICAL_OR' => -129,
+			'OP09_BITWISE_SHIFT' => -129,
+			'OP07_STRING_REPEAT' => -129,
+			'OP11_COMPARE_LT_GT' => -129,
+			'OP07_MATH_MULT_DIV_MOD' => -129,
+			";" => 184,
+			'OP15_LOGICAL_AND' => -129,
+			'OP12_COMPARE_EQ_NE' => -129
 		}
 	},
 	{#State 100
 		DEFAULT => -130
 	},
 	{#State 101
-		ACTIONS => {
-			"foreach" => 176,
-			"for" => 175,
-			"while" => 173
-		},
+		DEFAULT => -165,
 		GOTOS => {
-			'LoopFor' => 174,
-			'LoopForEach' => 177,
-			'LoopWhile' => 172,
-			'Loop' => 171
+			'STAR-42' => 185
 		}
 	},
 	{#State 102
-		DEFAULT => -124
+		DEFAULT => -143
 	},
 	{#State 103
 		ACTIONS => {
-			'WORD_UPPERCASE' => 178
+			'VARIABLE_SYMBOL' => 101,
+			'OP03_MATH_INC_DEC' => 80,
+			"undef" => 100,
+			'OP01_NAMED' => 129,
+			"\@{" => 79,
+			'OP01_QW' => 131,
+			"%{" => 97,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LBRACKET' => 75,
+			'MY' => 133,
+			'OP01_OPEN' => 93,
+			'LITERAL_NUMBER' => 94,
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115,
+			'WORD_SCOPED' => 27,
+			'OP01_CLOSE' => 114,
+			'WORD' => 26,
+			'OP22_LOGICAL_NEG' => 87,
+			'LPAREN' => 110,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109,
+			'WORD_UPPERCASE' => 125
 		},
 		GOTOS => {
-			'LoopLabel' => 179
+			'ArrayDereference' => 86,
+			'ListElement' => 132,
+			'TypeInner' => 136,
+			'HashReference' => 98,
+			'Literal' => 84,
+			'SubExpression' => 134,
+			'ArrayReference' => 71,
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'WordScoped' => 113,
+			'Variable' => 126,
+			'ListElements' => 186,
+			'Expression' => 127
 		}
 	},
 	{#State 104
 		ACTIONS => {
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'OP01_OPEN' => 106,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_LOGICAL_NEG' => 108,
-			")" => -111,
-			"undef" => 100,
-			"%{" => 80,
-			'OP01_QW' => 137,
-			'OP01_NAMED' => 140,
-			'WORD' => 24,
-			'LITERAL_NUMBER' => 118,
-			'VARIABLE_SYMBOL' => 120,
-			'LBRACE' => 95,
-			'LITERAL_STRING' => 94,
-			'OP10_NAMED_UNARY' => 96,
-			'WORD_UPPERCASE' => 136,
-			"\@{" => 99,
-			'LBRACKET' => 112,
-			'LPAREN' => 110,
-			'OP01_CLOSE' => 114,
-			'OP22_LOGICAL_NEG' => 90,
-			'MY' => 138
-		},
-		GOTOS => {
-			'HashReference' => 91,
-			'ArrayReference' => 121,
-			'WordScoped' => 119,
-			'ArrayDereference' => 81,
-			'HashDereference' => 123,
-			'TypeInner' => 142,
-			'OPTIONAL-32' => 183,
-			'ListElements' => 181,
-			'SubExpression' => 180,
-			'Variable' => 139,
-			'ListElement' => 182,
-			'Operator' => 102,
-			'Literal' => 116,
-			'Expression' => 134
+			'OP19_VARIABLE_ASSIGN' => 188,
+			'OP19_VARIABLE_ASSIGN_BY' => 189,
+			'OP04_MATH_POW' => -132,
+			'OP23_LOGICAL_AND' => -132,
+			'OP08_MATH_ADD_SUB' => -132,
+			'OP13_BITWISE_AND' => -132,
+			'OP18_TERNARY' => -132,
+			'OP14_BITWISE_OR_XOR' => -132,
+			'OP03_MATH_INC_DEC' => 190,
+			'OP07_STRING_REPEAT' => -132,
+			'OP09_BITWISE_SHIFT' => -132,
+			'OP24_LOGICAL_OR_XOR' => -132,
+			'OP16_LOGICAL_OR' => -132,
+			'OP17_LIST_RANGE' => -132,
+			'OP08_STRING_CAT' => -132,
+			'OP06_REGEX_MATCH' => -132,
+			'OP12_COMPARE_EQ_NE' => -132,
+			'OP15_LOGICAL_AND' => -132,
+			'OP07_MATH_MULT_DIV_MOD' => -132,
+			'OP11_COMPARE_LT_GT' => -132,
+			'OP02_METHOD_THINARROW' => 187
 		}
 	},
 	{#State 105
 		ACTIONS => {
-			'LPAREN' => 184
+			'COLON' => 191
 		}
 	},
 	{#State 106
-		ACTIONS => {
-			'MY' => 185
-		}
+		DEFAULT => -114
 	},
 	{#State 107
-		DEFAULT => -145
-	},
-	{#State 108
 		ACTIONS => {
-			'OP01_OPEN' => 106,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP03_MATH_INC_DEC' => 84,
-			"undef" => 100,
-			'OP01_NAMED' => 140,
-			"%{" => 80,
-			'VARIABLE_SYMBOL' => 120,
-			'LITERAL_NUMBER' => 118,
-			'WORD' => 24,
-			"\@{" => 99,
-			'WORD_UPPERCASE' => 136,
-			'LBRACE' => 95,
-			'OP10_NAMED_UNARY' => 96,
-			'LITERAL_STRING' => 94,
-			'LPAREN' => 110,
-			'LBRACKET' => 112,
-			'OP22_LOGICAL_NEG' => 90,
-			'OP01_CLOSE' => 114
-		},
-		GOTOS => {
-			'Variable' => 139,
-			'SubExpression' => 186,
-			'Literal' => 116,
-			'Operator' => 102,
-			'Expression' => 134,
-			'ArrayDereference' => 81,
-			'WordScoped' => 119,
-			'HashReference' => 91,
-			'ArrayReference' => 121,
-			'HashDereference' => 123
+			'LPAREN' => 192,
+			'COLON' => -208
 		}
 	},
+	{#State 108
+		DEFAULT => -219
+	},
 	{#State 109
-		DEFAULT => -118
+		ACTIONS => {
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109,
+			'WORD_UPPERCASE' => 125,
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115,
+			'WORD_SCOPED' => 27,
+			'OP01_CLOSE' => 114,
+			'WORD' => 26,
+			'LPAREN' => 110,
+			'OP22_LOGICAL_NEG' => 87,
+			"%{" => 97,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LBRACKET' => 75,
+			'OP01_OPEN' => 93,
+			'LITERAL_NUMBER' => 94,
+			'VARIABLE_SYMBOL' => 101,
+			"undef" => 100,
+			'OP03_MATH_INC_DEC' => 80,
+			'OP01_NAMED' => 129,
+			"\@{" => 79
+		},
+		GOTOS => {
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'SubExpression' => 193,
+			'Literal' => 84,
+			'ArrayReference' => 71,
+			'HashReference' => 98,
+			'ArrayDereference' => 86,
+			'Expression' => 127,
+			'Variable' => 126,
+			'WordScoped' => 113
+		}
 	},
 	{#State 110
 		ACTIONS => {
+			'VARIABLE_SYMBOL' => 101,
 			"undef" => 100,
-			'OP01_NAMED' => 188,
-			"%{" => 80,
-			'OP01_OPEN' => 106,
-			'OP01_PRINT' => 189,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_LOGICAL_NEG' => 108,
-			'LPAREN' => 110,
-			'LBRACKET' => 112,
-			'OP22_LOGICAL_NEG' => 90,
+			'OP03_MATH_INC_DEC' => 80,
+			'OP01_NAMED' => 195,
+			"\@{" => 79,
+			'OP01_PRINT' => 196,
+			"%{" => 97,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LBRACKET' => 75,
+			'OP01_OPEN' => 93,
+			'LITERAL_NUMBER' => 94,
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115,
+			'WORD_SCOPED' => 27,
 			'OP01_CLOSE' => 114,
-			'VARIABLE_SYMBOL' => 120,
-			'LITERAL_NUMBER' => 118,
-			'WORD' => 24,
-			"\@{" => 99,
-			'WORD_UPPERCASE' => 136,
-			'LITERAL_STRING' => 94,
-			'LBRACE' => 95,
-			'OP10_NAMED_UNARY' => 96
+			'WORD' => 26,
+			'LPAREN' => 110,
+			'OP22_LOGICAL_NEG' => 87,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109,
+			'WORD_UPPERCASE' => 125
 		},
 		GOTOS => {
-			'Literal' => 116,
-			'Operator' => 102,
-			'Expression' => 134,
-			'SubExpression' => 187,
-			'Variable' => 139,
-			'HashDereference' => 123,
-			'HashReference' => 91,
-			'ArrayReference' => 121,
-			'ArrayDereference' => 81,
-			'WordScoped' => 119
+			'Operator' => 73,
+			'HashDereference' => 85,
+			'ArrayReference' => 71,
+			'SubExpression' => 194,
+			'Literal' => 84,
+			'HashReference' => 98,
+			'ArrayDereference' => 86,
+			'Expression' => 127,
+			'Variable' => 126,
+			'WordScoped' => 113
 		}
 	},
 	{#State 111
-		DEFAULT => -143
+		ACTIONS => {
+			'LPAREN' => 197
+		}
 	},
 	{#State 112
-		ACTIONS => {
-			'OP22_LOGICAL_NEG' => 90,
-			'MY' => 138,
-			'OP01_CLOSE' => 114,
-			"]" => -185,
-			'LBRACKET' => 112,
-			'LPAREN' => 110,
-			'WORD_UPPERCASE' => 136,
-			"\@{" => 99,
-			'OP10_NAMED_UNARY' => 96,
-			'LITERAL_STRING' => 94,
-			'LBRACE' => 95,
-			'VARIABLE_SYMBOL' => 120,
-			'WORD' => 24,
-			'LITERAL_NUMBER' => 118,
-			"%{" => 80,
-			'OP01_QW' => 137,
-			'OP01_NAMED' => 140,
-			"undef" => 100,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP01_OPEN' => 106,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'WORD_SCOPED' => 23
-		},
-		GOTOS => {
-			'OPTIONAL-46' => 191,
-			'Operator' => 102,
-			'Literal' => 116,
-			'Expression' => 134,
-			'Variable' => 139,
-			'ListElement' => 182,
-			'ListElements' => 190,
-			'SubExpression' => 180,
-			'HashDereference' => 123,
-			'TypeInner' => 142,
-			'ArrayDereference' => 81,
-			'WordScoped' => 119,
-			'HashReference' => 91,
-			'ArrayReference' => 121
-		}
+		DEFAULT => -147
 	},
 	{#State 113
 		ACTIONS => {
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP23_LOGICAL_AND' => 206,
-			'OP12_COMPARE_EQ_NE' => 205,
-			'OP04_MATH_POW' => 197,
-			'OP07_STRING_REPEAT' => 204,
-			'OP09_BITWISE_SHIFT' => 208,
-			'OP18_TERNARY' => 198,
-			'OP15_LOGICAL_AND' => 200,
-			'OP13_BITWISE_AND' => 195,
-			'OP06_REGEX_MATCH' => 194,
-			'OP08_STRING_CAT' => 193,
-			'OP11_COMPARE_LT_GT' => 199,
-			'OP17_LIST_RANGE' => 192,
-			'OP14_BITWISE_OR_XOR' => 203,
-			'OP24_LOGICAL_OR_XOR' => 202,
-			'OP08_MATH_ADD_SUB' => 196,
-			'OP16_LOGICAL_OR' => 201
+			'LPAREN' => 199,
+			'OP02_METHOD_THINARROW_NEW' => 198
 		}
 	},
 	{#State 114
 		ACTIONS => {
-			'FHREF_SYMBOL' => 209
+			'FHREF_SYMBOL' => 200
 		}
 	},
 	{#State 115
 		ACTIONS => {
-			"undef" => 100,
-			'OP01_NAMED' => 140,
-			'OP01_QW' => 137,
-			"%{" => 80,
-			'OP01_OPEN' => 106,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP03_MATH_INC_DEC' => 84,
-			'LPAREN' => 110,
-			'LBRACKET' => 112,
-			'MY' => 138,
-			'OP22_LOGICAL_NEG' => 90,
-			'OP01_CLOSE' => 114,
-			'VARIABLE_SYMBOL' => 120,
-			'LITERAL_NUMBER' => 118,
-			'WORD' => 24,
-			"\@{" => 99,
-			'WORD_UPPERCASE' => 136,
-			'OP10_NAMED_UNARY' => 96,
-			'LITERAL_STRING' => 94,
-			'LBRACE' => 95
+			'LITERAL_NUMBER' => 94,
+			'WORD' => 203,
+			"%{" => 97,
+			"}" => 204,
+			'LITERAL_STRING' => 108,
+			'VARIABLE_SYMBOL' => 101
 		},
 		GOTOS => {
-			'ListElements' => 210,
-			'SubExpression' => 180,
-			'Variable' => 139,
-			'ListElement' => 182,
-			'Operator' => 102,
-			'Literal' => 116,
-			'Expression' => 134,
-			'HashReference' => 91,
-			'ArrayReference' => 121,
-			'WordScoped' => 119,
-			'ArrayDereference' => 81,
-			'TypeInner' => 142,
-			'HashDereference' => 123
+			'VariableOrLiteralOrWord' => 201,
+			'HashDereference' => 206,
+			'Literal' => 207,
+			'Variable' => 202,
+			'HashEntry' => 205
 		}
 	},
 	{#State 116
-		DEFAULT => -131
+		DEFAULT => -146
 	},
 	{#State 117
-		ACTIONS => {
-			'OP07_STRING_REPEAT' => -129,
-			'OP04_MATH_POW' => -129,
-			'OP12_COMPARE_EQ_NE' => -129,
-			'OP07_MATH_MULT_DIV_MOD' => -129,
-			'OP23_LOGICAL_AND' => -129,
-			";" => 211,
-			'OP18_TERNARY' => -129,
-			'OP09_BITWISE_SHIFT' => -129,
-			'OP08_STRING_CAT' => -129,
-			'OP06_REGEX_MATCH' => -129,
-			'OP13_BITWISE_AND' => -129,
-			'OP15_LOGICAL_AND' => -129,
-			'OP11_COMPARE_LT_GT' => -129,
-			'OP17_LIST_RANGE' => -129,
-			'OP24_LOGICAL_OR_XOR' => -129,
-			'OP14_BITWISE_OR_XOR' => -129,
-			'OP16_LOGICAL_OR' => -129,
-			'OP08_MATH_ADD_SUB' => -129
-		}
+		DEFAULT => -118
 	},
 	{#State 118
-		DEFAULT => -218
+		DEFAULT => -37
 	},
 	{#State 119
 		ACTIONS => {
-			'OP02_METHOD_THINARROW_NEW' => 213,
-			'LPAREN' => 212
+			";" => 208
 		}
 	},
 	{#State 120
-		DEFAULT => -165,
+		ACTIONS => {
+			"while" => -43,
+			'OP05_LOGICAL_NEG' => -43,
+			'LITERAL_STRING' => -43,
+			'WORD_UPPERCASE' => -43,
+			'OP01_NAMED_VOID_SCOLON' => -43,
+			"for" => -43,
+			'WORD_SCOPED' => -43,
+			'OP19_LOOP_CONTROL_SCOLON' => -43,
+			'LBRACE' => -43,
+			'OP01_CLOSE' => -43,
+			"if" => -43,
+			'WORD' => -43,
+			'LPAREN' => -43,
+			"%{" => -43,
+			'MY' => -43,
+			'LITERAL_NUMBER' => -43,
+			'OP01_NAMED_VOID_LPAREN' => -43,
+			'OP01_OPEN' => -43,
+			'OP01_NAMED_VOID' => -43,
+			'VARIABLE_SYMBOL' => -43,
+			"undef" => -43,
+			'LPAREN_MY' => 209,
+			"foreach" => -43,
+			'OP10_NAMED_UNARY' => -43,
+			'OP19_LOOP_CONTROL' => -43,
+			'OP22_LOGICAL_NEG' => -43,
+			"}" => -43,
+			'LBRACKET' => -43,
+			'OP05_MATH_NEG_LPAREN' => -43,
+			'OP01_NAMED' => -43,
+			'OP03_MATH_INC_DEC' => -43,
+			"\@{" => -43,
+			'OP01_PRINT' => -43
+		},
 		GOTOS => {
-			'STAR-42' => 214
+			'OPTIONAL-16' => 211,
+			'SubroutineArguments' => 210
 		}
 	},
 	{#State 121
-		DEFAULT => -133
+		ACTIONS => {
+			'WORD' => 56,
+			'TYPE_INTEGER' => 55
+		},
+		GOTOS => {
+			'Type' => 212
+		}
 	},
 	{#State 122
-		DEFAULT => -141
+		ACTIONS => {
+			'LITERAL_NUMBER' => 94,
+			'LITERAL_STRING' => 108
+		},
+		GOTOS => {
+			'Literal' => 213
+		}
 	},
 	{#State 123
-		DEFAULT => -136
+		DEFAULT => -51
 	},
 	{#State 124
 		ACTIONS => {
-			'LPAREN' => 215,
-			'COLON' => -208
+			"use" => 34,
+			"our hashref \$properties" => -56,
+			"use constant" => -56
+		},
+		GOTOS => {
+			'STAR-22' => 214,
+			'Include' => 215
 		}
 	},
 	{#State 125
 		ACTIONS => {
-			"use constant" => 41,
-			"our hashref \$properties" => 217
-		},
-		GOTOS => {
-			'Constant' => 218,
-			'Properties' => 216
+			'LPAREN' => 192
 		}
 	},
 	{#State 126
-		DEFAULT => -53
+		ACTIONS => {
+			'OP13_BITWISE_AND' => -132,
+			'OP08_MATH_ADD_SUB' => -132,
+			"}" => -132,
+			'OP23_LOGICAL_AND' => -132,
+			'OP04_MATH_POW' => -132,
+			")" => -132,
+			'OP03_MATH_INC_DEC' => 190,
+			'OP14_BITWISE_OR_XOR' => -132,
+			'OP18_TERNARY' => -132,
+			'OP06_REGEX_MATCH' => -132,
+			'OP08_STRING_CAT' => -132,
+			'OP17_LIST_RANGE' => -132,
+			'OP24_LOGICAL_OR_XOR' => -132,
+			'OP16_LOGICAL_OR' => -132,
+			'OP09_BITWISE_SHIFT' => -132,
+			'OP07_STRING_REPEAT' => -132,
+			'OP21_LIST_COMMA' => -132,
+			'OP02_METHOD_THINARROW' => 187,
+			"]" => -132,
+			'OP11_COMPARE_LT_GT' => -132,
+			'OP07_MATH_MULT_DIV_MOD' => -132,
+			";" => -132,
+			'OP12_COMPARE_EQ_NE' => -132,
+			'OP15_LOGICAL_AND' => -132
+		}
 	},
 	{#State 127
-		ACTIONS => {
-			";" => 219
-		}
+		DEFAULT => -129
 	},
 	{#State 128
 		ACTIONS => {
-			"\$TYPED_" => 220
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			'OP11_COMPARE_LT_GT' => 171,
+			'OP15_LOGICAL_AND' => 161,
+			'OP12_COMPARE_EQ_NE' => 170,
+			'OP17_LIST_RANGE' => 159,
+			'OP08_STRING_CAT' => 160,
+			'OP06_REGEX_MATCH' => 169,
+			'OP09_BITWISE_SHIFT' => 166,
+			'OP07_STRING_REPEAT' => 158,
+			'OP24_LOGICAL_OR_XOR' => 167,
+			'OP16_LOGICAL_OR' => 168,
+			")" => 216,
+			'OP14_BITWISE_OR_XOR' => 157,
+			'OP18_TERNARY' => 156,
+			'OP04_MATH_POW' => 163,
+			'OP13_BITWISE_AND' => 155,
+			'OP08_MATH_ADD_SUB' => 165,
+			'OP23_LOGICAL_AND' => 164
 		}
 	},
 	{#State 129
-		DEFAULT => -45,
+		ACTIONS => {
+			'WORD_UPPERCASE' => 125,
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108,
+			'OP01_CLOSE' => 114,
+			'LBRACE' => 115,
+			'OP10_NAMED_UNARY' => 91,
+			'WORD_SCOPED' => 27,
+			'OP22_LOGICAL_NEG' => 87,
+			'LPAREN' => 110,
+			'WORD' => 26,
+			"%{" => 97,
+			'OP01_OPEN' => 93,
+			'LITERAL_NUMBER' => 94,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LBRACKET' => 75,
+			"undef" => 100,
+			'OP03_MATH_INC_DEC' => 80,
+			'OP01_NAMED' => 129,
+			'VARIABLE_SYMBOL' => 101,
+			"\@{" => 79
+		},
 		GOTOS => {
-			'STAR-17' => 221
+			'WordScoped' => 113,
+			'Variable' => 126,
+			'Expression' => 127,
+			'ArrayDereference' => 86,
+			'HashReference' => 98,
+			'ArrayReference' => 71,
+			'Literal' => 84,
+			'SubExpression' => 217,
+			'Operator' => 73,
+			'HashDereference' => 85
 		}
 	},
 	{#State 130
-		DEFAULT => -42
+		ACTIONS => {
+			"]" => 218
+		}
 	},
 	{#State 131
+		ACTIONS => {
+			'WORD' => 220
+		},
+		GOTOS => {
+			'PLUS-45' => 219
+		}
+	},
+	{#State 132
+		DEFAULT => -177,
+		GOTOS => {
+			'STAR-44' => 221
+		}
+	},
+	{#State 133
 		ACTIONS => {
 			'WORD' => 56,
 			'TYPE_INTEGER' => 55
@@ -2073,3253 +2154,3191 @@ sub new {
 			'Type' => 222
 		}
 	},
-	{#State 132
-		DEFAULT => -40
-	},
-	{#State 133
-		DEFAULT => -140
-	},
 	{#State 134
-		DEFAULT => -129
+		ACTIONS => {
+			'OP24_LOGICAL_OR_XOR' => 167,
+			'OP16_LOGICAL_OR' => 168,
+			'OP07_STRING_REPEAT' => 158,
+			'OP21_LIST_COMMA' => -181,
+			'OP09_BITWISE_SHIFT' => 166,
+			'OP08_STRING_CAT' => 160,
+			'OP06_REGEX_MATCH' => 169,
+			'OP17_LIST_RANGE' => 159,
+			'OP15_LOGICAL_AND' => 161,
+			'OP12_COMPARE_EQ_NE' => 170,
+			";" => -181,
+			"]" => -181,
+			'OP11_COMPARE_LT_GT' => 171,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			'OP08_MATH_ADD_SUB' => 165,
+			'OP23_LOGICAL_AND' => 164,
+			'OP13_BITWISE_AND' => 155,
+			'OP04_MATH_POW' => 163,
+			'OP18_TERNARY' => 156,
+			'OP14_BITWISE_OR_XOR' => 157,
+			")" => -181
+		}
 	},
 	{#State 135
-		ACTIONS => {
-			'OP16_LOGICAL_OR' => -79,
-			")" => -79,
-			'OP08_MATH_ADD_SUB' => -79,
-			'OP24_LOGICAL_OR_XOR' => -79,
-			'OP14_BITWISE_OR_XOR' => -79,
-			'OP11_COMPARE_LT_GT' => -79,
-			'OP17_LIST_RANGE' => -79,
-			'OP08_STRING_CAT' => -79,
-			'OP13_BITWISE_AND' => -79,
-			'OP06_REGEX_MATCH' => -79,
-			'OP15_LOGICAL_AND' => -79,
-			";" => -79,
-			'OP18_TERNARY' => -79,
-			'OP09_BITWISE_SHIFT' => -79,
-			'OP07_STRING_REPEAT' => -79,
-			'OP21_LIST_COMMA' => -181,
-			'OP04_MATH_POW' => -79,
-			'OP12_COMPARE_EQ_NE' => -79,
-			'OP23_LOGICAL_AND' => -79,
-			'OP07_MATH_MULT_DIV_MOD' => -79
-		}
+		DEFAULT => -184
 	},
 	{#State 136
 		ACTIONS => {
-			'LPAREN' => 215
+			"\@{" => 79,
+			'OP01_NAMED' => 129,
+			'OP03_MATH_INC_DEC' => 80,
+			"undef" => 100,
+			'VARIABLE_SYMBOL' => 101,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			"%{" => 97,
+			'OP22_LOGICAL_NEG' => 87,
+			'LPAREN' => 110,
+			'WORD' => 26,
+			'OP01_CLOSE' => 114,
+			'WORD_SCOPED' => 27,
+			'LBRACE' => 115,
+			'OP10_NAMED_UNARY' => 91,
+			'WORD_UPPERCASE' => 125,
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108
+		},
+		GOTOS => {
+			'HashReference' => 98,
+			'ArrayDereference' => 86,
+			'Operator' => 73,
+			'HashDereference' => 85,
+			'ArrayReference' => 71,
+			'SubExpression' => 223,
+			'Literal' => 84,
+			'Variable' => 126,
+			'WordScoped' => 113,
+			'Expression' => 127
 		}
 	},
 	{#State 137
-		ACTIONS => {
-			'WORD' => 224
-		},
-		GOTOS => {
-			'PLUS-45' => 223
-		}
+		DEFAULT => -155
 	},
 	{#State 138
-		ACTIONS => {
-			'WORD' => 56,
-			'TYPE_INTEGER' => 55
-		},
-		GOTOS => {
-			'Type' => 225
-		}
+		DEFAULT => -144
 	},
 	{#State 139
 		ACTIONS => {
-			'OP09_BITWISE_SHIFT' => -132,
-			"]" => -132,
-			";" => -132,
-			'OP18_TERNARY' => -132,
-			"}" => -132,
-			'OP12_COMPARE_EQ_NE' => -132,
-			'OP07_MATH_MULT_DIV_MOD' => -132,
-			'OP23_LOGICAL_AND' => -132,
-			'OP07_STRING_REPEAT' => -132,
-			'OP04_MATH_POW' => -132,
-			'OP21_LIST_COMMA' => -132,
-			'OP02_METHOD_THINARROW' => 154,
-			")" => -132,
-			'OP16_LOGICAL_OR' => -132,
-			'OP08_MATH_ADD_SUB' => -132,
-			'OP24_LOGICAL_OR_XOR' => -132,
-			'OP14_BITWISE_OR_XOR' => -132,
-			'OP17_LIST_RANGE' => -132,
-			'OP11_COMPARE_LT_GT' => -132,
-			'OP06_REGEX_MATCH' => -132,
-			'OP13_BITWISE_AND' => -132,
-			'OP15_LOGICAL_AND' => -132,
-			'OP03_MATH_INC_DEC' => 152,
-			'OP08_STRING_CAT' => -132
+			'MY' => 224
 		}
 	},
 	{#State 140
 		ACTIONS => {
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_LOGICAL_NEG' => 108,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'OP01_OPEN' => 106,
-			"%{" => 80,
-			'OP01_NAMED' => 140,
-			"undef" => 100,
-			'LITERAL_STRING' => 94,
-			'LBRACE' => 95,
-			'OP10_NAMED_UNARY' => 96,
-			'WORD_UPPERCASE' => 136,
-			"\@{" => 99,
-			'WORD' => 24,
-			'LITERAL_NUMBER' => 118,
-			'VARIABLE_SYMBOL' => 120,
-			'OP01_CLOSE' => 114,
-			'OP22_LOGICAL_NEG' => 90,
-			'LBRACKET' => 112,
-			'LPAREN' => 110
-		},
-		GOTOS => {
-			'WordScoped' => 119,
-			'ArrayDereference' => 81,
-			'HashReference' => 91,
-			'ArrayReference' => 121,
-			'HashDereference' => 123,
-			'Variable' => 139,
-			'SubExpression' => 226,
-			'Literal' => 116,
-			'Operator' => 102,
-			'Expression' => 134
+			'LPAREN' => 225
 		}
 	},
 	{#State 141
-		ACTIONS => {
-			'OP21_LIST_COMMA' => 227
-		}
+		DEFAULT => -156
 	},
 	{#State 142
 		ACTIONS => {
-			'OP01_OPEN' => 106,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'WORD_SCOPED' => 23,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP03_MATH_INC_DEC' => 84,
-			"undef" => 100,
-			"%{" => 80,
-			'OP01_NAMED' => 140,
-			'VARIABLE_SYMBOL' => 120,
-			'WORD' => 24,
-			'LITERAL_NUMBER' => 118,
-			'WORD_UPPERCASE' => 136,
-			"\@{" => 99,
-			'LITERAL_STRING' => 94,
-			'OP10_NAMED_UNARY' => 96,
-			'LBRACE' => 95,
-			'LBRACKET' => 112,
-			'LPAREN' => 110,
-			'OP22_LOGICAL_NEG' => 90,
-			'OP01_CLOSE' => 114
-		},
-		GOTOS => {
-			'Variable' => 139,
-			'SubExpression' => 228,
-			'Literal' => 116,
-			'Operator' => 102,
-			'Expression' => 134,
-			'ArrayDereference' => 81,
-			'WordScoped' => 119,
-			'HashReference' => 91,
-			'ArrayReference' => 121,
-			'HashDereference' => 123
+			'MY' => 226
 		}
 	},
 	{#State 143
-		DEFAULT => -202
+		DEFAULT => -157
 	},
 	{#State 144
-		ACTIONS => {
-			"}" => 229
-		}
+		DEFAULT => -108
 	},
 	{#State 145
 		ACTIONS => {
-			'LBRACE' => 95
+			'OP01_QW' => 131,
+			"%{" => 97,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'MY' => 133,
+			'LBRACKET' => 75,
+			'OP01_OPEN' => 93,
+			'LITERAL_NUMBER' => 94,
+			'VARIABLE_SYMBOL' => 101,
+			"undef" => 100,
+			'OP03_MATH_INC_DEC' => 80,
+			'OP01_NAMED' => 129,
+			"\@{" => 79,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109,
+			'WORD_UPPERCASE' => 125,
+			'LBRACE' => 115,
+			'OP10_NAMED_UNARY' => 91,
+			'WORD_SCOPED' => 27,
+			'OP01_CLOSE' => 114,
+			'WORD' => 26,
+			'LPAREN' => 110,
+			'OP22_LOGICAL_NEG' => 87
 		},
 		GOTOS => {
-			'HashReference' => 230
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'SubExpression' => 134,
+			'Literal' => 84,
+			'ArrayReference' => 71,
+			'HashReference' => 98,
+			'TypeInner' => 136,
+			'ArrayDereference' => 86,
+			'ListElement' => 132,
+			'ListElements' => 227,
+			'Expression' => 127,
+			'Variable' => 126,
+			'WordScoped' => 113
 		}
 	},
 	{#State 146
-		ACTIONS => {
-			'OP17_LIST_RANGE' => 192,
-			'OP11_COMPARE_LT_GT' => 199,
-			'OP08_STRING_CAT' => 193,
-			'OP15_LOGICAL_AND' => 200,
-			'OP13_BITWISE_AND' => 195,
-			'OP06_REGEX_MATCH' => 194,
-			'OP08_MATH_ADD_SUB' => 196,
-			")" => 231,
-			'OP16_LOGICAL_OR' => 201,
-			'OP14_BITWISE_OR_XOR' => 203,
-			'OP24_LOGICAL_OR_XOR' => 202,
-			'OP07_STRING_REPEAT' => 204,
-			'OP04_MATH_POW' => 197,
-			'OP23_LOGICAL_AND' => 206,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP12_COMPARE_EQ_NE' => 205,
-			'OP18_TERNARY' => 198,
-			'OP09_BITWISE_SHIFT' => 208
-		}
+		DEFAULT => -107
 	},
 	{#State 147
 		ACTIONS => {
-			'OP22_LOGICAL_NEG' => 90,
-			'MY' => 138,
-			'OP01_CLOSE' => 114,
-			'LBRACKET' => 112,
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108,
+			'WORD_UPPERCASE' => 125,
+			'WORD' => 26,
 			'LPAREN' => 110,
-			'WORD_UPPERCASE' => 136,
-			"\@{" => 99,
-			'OP10_NAMED_UNARY' => 96,
-			'LITERAL_STRING' => 94,
-			'LBRACE' => 95,
-			'VARIABLE_SYMBOL' => 120,
-			'WORD' => 24,
-			'LITERAL_NUMBER' => 118,
-			"%{" => 80,
-			'OP01_QW' => 137,
-			'OP01_NAMED' => 140,
+			'OP22_LOGICAL_NEG' => 87,
+			'WORD_SCOPED' => 27,
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115,
+			'OP01_CLOSE' => 114,
+			'LBRACKET' => 75,
+			'MY' => 133,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'OP01_QW' => 131,
+			"%{" => 97,
+			"\@{" => 79,
+			'VARIABLE_SYMBOL' => 101,
+			'OP01_NAMED' => 129,
 			"undef" => 100,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP01_OPEN' => 106,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82
+			'OP03_MATH_INC_DEC' => 80
 		},
 		GOTOS => {
-			'WordScoped' => 119,
-			'ArrayDereference' => 81,
-			'HashReference' => 91,
-			'ArrayReference' => 121,
-			'TypeInner' => 142,
-			'HashDereference' => 123,
-			'Variable' => 139,
-			'ListElement' => 182,
-			'ListElements' => 232,
-			'SubExpression' => 180,
-			'Literal' => 116,
-			'Operator' => 102,
-			'Expression' => 134
+			'WordScoped' => 113,
+			'Variable' => 126,
+			'ListElements' => 228,
+			'Expression' => 127,
+			'ArrayDereference' => 86,
+			'ListElement' => 132,
+			'TypeInner' => 136,
+			'HashReference' => 98,
+			'Literal' => 84,
+			'SubExpression' => 134,
+			'ArrayReference' => 71,
+			'HashDereference' => 85,
+			'Operator' => 73
 		}
 	},
 	{#State 148
-		ACTIONS => {
-			'OP01_QW' => 137,
-			'OP01_NAMED' => 140,
-			"%{" => 80,
-			"undef" => 100,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP01_OPEN' => 106,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'MY' => 138,
-			'OP22_LOGICAL_NEG' => 90,
-			'OP01_CLOSE' => 114,
-			'LPAREN' => 110,
-			'LBRACKET' => 112,
-			"\@{" => 99,
-			'WORD_UPPERCASE' => 136,
-			'LITERAL_STRING' => 94,
-			'LBRACE' => 95,
-			'OP10_NAMED_UNARY' => 96,
-			'VARIABLE_SYMBOL' => 120,
-			'LITERAL_NUMBER' => 118,
-			'WORD' => 24
-		},
-		GOTOS => {
-			'TypeInner' => 142,
-			'HashDereference' => 123,
-			'HashReference' => 91,
-			'ArrayReference' => 121,
-			'ArrayDereference' => 81,
-			'WordScoped' => 119,
-			'Operator' => 102,
-			'Literal' => 116,
-			'Expression' => 134,
-			'ListElements' => 233,
-			'SubExpression' => 180,
-			'Variable' => 139,
-			'ListElement' => 182
-		}
+		DEFAULT => -187
 	},
 	{#State 149
-		DEFAULT => -108
+		ACTIONS => {
+			'LBRACKET' => 75
+		},
+		GOTOS => {
+			'ArrayReference' => 229
+		}
 	},
 	{#State 150
-		DEFAULT => -107
+		ACTIONS => {
+			"}" => 230
+		}
 	},
 	{#State 151
 		DEFAULT => -83
 	},
 	{#State 152
-		DEFAULT => -84
+		ACTIONS => {
+			'OP21_LIST_COMMA' => 231
+		}
 	},
 	{#State 153
 		ACTIONS => {
-			"undef" => 100,
-			'OP01_NAMED' => 140,
-			"%{" => 80,
-			'OP01_OPEN' => 106,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_LOGICAL_NEG' => 108,
-			'LPAREN' => 110,
-			'LBRACKET' => 112,
-			'OP22_LOGICAL_NEG' => 90,
-			'OP01_CLOSE' => 114,
-			'VARIABLE_SYMBOL' => 120,
-			'LITERAL_NUMBER' => 118,
-			'WORD' => 24,
-			"\@{" => 99,
-			'WORD_UPPERCASE' => 136,
-			'LITERAL_STRING' => 94,
-			'OP10_NAMED_UNARY' => 96,
-			'LBRACE' => 95
-		},
-		GOTOS => {
-			'HashDereference' => 123,
-			'ArrayReference' => 121,
-			'HashReference' => 91,
-			'WordScoped' => 119,
-			'ArrayDereference' => 81,
-			'Expression' => 134,
-			'Operator' => 102,
-			'Literal' => 116,
-			'SubExpression' => 234,
-			'Variable' => 139
+			'OP08_STRING_CAT' => -79,
+			'OP06_REGEX_MATCH' => -79,
+			'OP17_LIST_RANGE' => -79,
+			'OP24_LOGICAL_OR_XOR' => -79,
+			'OP16_LOGICAL_OR' => -79,
+			'OP09_BITWISE_SHIFT' => -79,
+			'OP21_LIST_COMMA' => -181,
+			'OP07_STRING_REPEAT' => -79,
+			'OP07_MATH_MULT_DIV_MOD' => -79,
+			'OP11_COMPARE_LT_GT' => -79,
+			";" => -79,
+			'OP15_LOGICAL_AND' => -79,
+			'OP12_COMPARE_EQ_NE' => -79,
+			'OP13_BITWISE_AND' => -79,
+			'OP08_MATH_ADD_SUB' => -79,
+			'OP23_LOGICAL_AND' => -79,
+			'OP04_MATH_POW' => -79,
+			")" => -79,
+			'OP14_BITWISE_OR_XOR' => -79,
+			'OP18_TERNARY' => -79
 		}
 	},
 	{#State 154
-		ACTIONS => {
-			'LPAREN' => 235
-		}
+		DEFAULT => -16
 	},
 	{#State 155
 		ACTIONS => {
+			"%{" => 97,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'OP01_NAMED' => 129,
 			"undef" => 100,
-			"%{" => 80,
-			'OP01_NAMED' => 140,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'OP01_OPEN' => 106,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_LOGICAL_NEG' => 108,
-			'LBRACKET' => 112,
-			'LPAREN' => 110,
+			'OP03_MATH_INC_DEC' => 80,
+			'VARIABLE_SYMBOL' => 101,
+			"\@{" => 79,
+			'WORD_UPPERCASE' => 125,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109,
 			'OP01_CLOSE' => 114,
-			'OP22_LOGICAL_NEG' => 90,
-			'WORD' => 24,
-			'LITERAL_NUMBER' => 118,
-			'VARIABLE_SYMBOL' => 120,
-			'LITERAL_STRING' => 94,
-			'OP10_NAMED_UNARY' => 96,
-			'LBRACE' => 95,
-			'STDIN' => 236,
-			'WORD_UPPERCASE' => 136,
-			"\@{" => 99
+			'WORD_SCOPED' => 27,
+			'LBRACE' => 115,
+			'OP10_NAMED_UNARY' => 91,
+			'OP22_LOGICAL_NEG' => 87,
+			'LPAREN' => 110,
+			'WORD' => 26
 		},
 		GOTOS => {
-			'Expression' => 134,
-			'Literal' => 116,
-			'Operator' => 102,
-			'SubExpression' => 238,
-			'Variable' => 139,
-			'HashDereference' => 123,
-			'SubExpressionOrStdin' => 237,
-			'ArrayReference' => 121,
-			'HashReference' => 91,
-			'ArrayDereference' => 81,
-			'WordScoped' => 119
+			'Literal' => 84,
+			'SubExpression' => 232,
+			'ArrayReference' => 71,
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'ArrayDereference' => 86,
+			'HashReference' => 98,
+			'Expression' => 127,
+			'WordScoped' => 113,
+			'Variable' => 126
 		}
 	},
 	{#State 156
 		ACTIONS => {
-			'FHREF_SYMBOL' => 239
+			'LITERAL_NUMBER' => 94,
+			'VARIABLE_SYMBOL' => 101,
+			'LITERAL_STRING' => 108
+		},
+		GOTOS => {
+			'Variable' => 233,
+			'VariableOrLiteral' => 234,
+			'Literal' => 235
 		}
 	},
 	{#State 157
 		ACTIONS => {
-			'VARIABLE_SYMBOL' => 240
+			'OP01_CLOSE' => 114,
+			'WORD_SCOPED' => 27,
+			'LBRACE' => 115,
+			'OP10_NAMED_UNARY' => 91,
+			'OP22_LOGICAL_NEG' => 87,
+			'LPAREN' => 110,
+			'WORD' => 26,
+			'WORD_UPPERCASE' => 125,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109,
+			'OP01_NAMED' => 129,
+			"undef" => 100,
+			'OP03_MATH_INC_DEC' => 80,
+			'VARIABLE_SYMBOL' => 101,
+			"\@{" => 79,
+			"%{" => 97,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72
+		},
+		GOTOS => {
+			'ArrayReference' => 71,
+			'Literal' => 84,
+			'SubExpression' => 236,
+			'Operator' => 73,
+			'HashDereference' => 85,
+			'ArrayDereference' => 86,
+			'HashReference' => 98,
+			'Expression' => 127,
+			'WordScoped' => 113,
+			'Variable' => 126
 		}
 	},
 	{#State 158
 		ACTIONS => {
-			'OP17_LIST_RANGE' => 192,
-			'OP11_COMPARE_LT_GT' => 199,
-			'OP15_LOGICAL_AND' => 200,
-			'OP06_REGEX_MATCH' => 194,
-			'OP13_BITWISE_AND' => 195,
-			'OP08_STRING_CAT' => 193,
-			'OP08_MATH_ADD_SUB' => 196,
-			'OP16_LOGICAL_OR' => 201,
-			")" => -104,
-			'OP14_BITWISE_OR_XOR' => 203,
-			'OP24_LOGICAL_OR_XOR' => -104,
-			"}" => -104,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP23_LOGICAL_AND' => -104,
-			'OP12_COMPARE_EQ_NE' => 205,
-			'OP07_STRING_REPEAT' => 204,
-			'OP21_LIST_COMMA' => -104,
-			'OP04_MATH_POW' => 197,
-			"]" => -104,
-			'OP09_BITWISE_SHIFT' => 208,
-			";" => -104,
-			'OP18_TERNARY' => 198
+			'WORD_UPPERCASE' => 125,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109,
+			'OP22_LOGICAL_NEG' => 87,
+			'LPAREN' => 110,
+			'WORD' => 26,
+			'OP01_CLOSE' => 114,
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115,
+			'WORD_SCOPED' => 27,
+			'OP01_OPEN' => 93,
+			'LITERAL_NUMBER' => 94,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LBRACKET' => 75,
+			"%{" => 97,
+			"\@{" => 79,
+			"undef" => 100,
+			'OP03_MATH_INC_DEC' => 80,
+			'OP01_NAMED' => 129,
+			'VARIABLE_SYMBOL' => 101
+		},
+		GOTOS => {
+			'Expression' => 127,
+			'Variable' => 126,
+			'WordScoped' => 113,
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'Literal' => 84,
+			'SubExpression' => 237,
+			'ArrayReference' => 71,
+			'HashReference' => 98,
+			'ArrayDereference' => 86
 		}
 	},
 	{#State 159
-		DEFAULT => -199,
+		ACTIONS => {
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115,
+			'WORD_SCOPED' => 27,
+			'OP01_CLOSE' => 114,
+			'WORD' => 26,
+			'OP22_LOGICAL_NEG' => 87,
+			'LPAREN' => 110,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109,
+			'WORD_UPPERCASE' => 125,
+			'VARIABLE_SYMBOL' => 101,
+			"undef" => 100,
+			'OP03_MATH_INC_DEC' => 80,
+			'OP01_NAMED' => 129,
+			"\@{" => 79,
+			"%{" => 97,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LBRACKET' => 75,
+			'OP01_OPEN' => 93,
+			'LITERAL_NUMBER' => 94
+		},
 		GOTOS => {
-			'STAR-50' => 241
+			'Literal' => 84,
+			'SubExpression' => 238,
+			'ArrayReference' => 71,
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'ArrayDereference' => 86,
+			'HashReference' => 98,
+			'Expression' => 127,
+			'WordScoped' => 113,
+			'Variable' => 126
 		}
 	},
 	{#State 160
-		DEFAULT => -194
+		ACTIONS => {
+			"%{" => 97,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'OP01_NAMED' => 129,
+			"undef" => 100,
+			'OP03_MATH_INC_DEC' => 80,
+			'VARIABLE_SYMBOL' => 101,
+			"\@{" => 79,
+			'WORD_UPPERCASE' => 125,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109,
+			'OP01_CLOSE' => 114,
+			'WORD_SCOPED' => 27,
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115,
+			'OP22_LOGICAL_NEG' => 87,
+			'LPAREN' => 110,
+			'WORD' => 26
+		},
+		GOTOS => {
+			'ArrayReference' => 71,
+			'Literal' => 84,
+			'SubExpression' => 239,
+			'Operator' => 73,
+			'HashDereference' => 85,
+			'ArrayDereference' => 86,
+			'HashReference' => 98,
+			'Expression' => 127,
+			'WordScoped' => 113,
+			'Variable' => 126
+		}
 	},
 	{#State 161
-		DEFAULT => -216
+		ACTIONS => {
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115,
+			'WORD_SCOPED' => 27,
+			'OP01_CLOSE' => 114,
+			'WORD' => 26,
+			'LPAREN' => 110,
+			'OP22_LOGICAL_NEG' => 87,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109,
+			'WORD_UPPERCASE' => 125,
+			'VARIABLE_SYMBOL' => 101,
+			"undef" => 100,
+			'OP03_MATH_INC_DEC' => 80,
+			'OP01_NAMED' => 129,
+			"\@{" => 79,
+			"%{" => 97,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LBRACKET' => 75,
+			'OP01_OPEN' => 93,
+			'LITERAL_NUMBER' => 94
+		},
+		GOTOS => {
+			'Operator' => 73,
+			'HashDereference' => 85,
+			'ArrayReference' => 71,
+			'SubExpression' => 240,
+			'Literal' => 84,
+			'HashReference' => 98,
+			'ArrayDereference' => 86,
+			'Expression' => 127,
+			'Variable' => 126,
+			'WordScoped' => 113
+		}
 	},
 	{#State 162
 		ACTIONS => {
-			'OP20_HASH_FATARROW' => 242
+			"%{" => 97,
+			'OP01_OPEN' => 93,
+			'LITERAL_NUMBER' => 94,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LBRACKET' => 75,
+			'OP03_MATH_INC_DEC' => 80,
+			"undef" => 100,
+			'OP01_NAMED' => 129,
+			'VARIABLE_SYMBOL' => 101,
+			"\@{" => 79,
+			'WORD_UPPERCASE' => 125,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109,
+			'OP01_CLOSE' => 114,
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115,
+			'WORD_SCOPED' => 27,
+			'OP22_LOGICAL_NEG' => 87,
+			'LPAREN' => 110,
+			'WORD' => 26
+		},
+		GOTOS => {
+			'HashReference' => 98,
+			'ArrayDereference' => 86,
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'SubExpression' => 241,
+			'Literal' => 84,
+			'ArrayReference' => 71,
+			'Variable' => 126,
+			'WordScoped' => 113,
+			'Expression' => 127
 		}
 	},
 	{#State 163
-		DEFAULT => -217
+		ACTIONS => {
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			"%{" => 97,
+			"\@{" => 79,
+			'VARIABLE_SYMBOL' => 101,
+			'OP01_NAMED' => 129,
+			'OP03_MATH_INC_DEC' => 80,
+			"undef" => 100,
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108,
+			'WORD_UPPERCASE' => 125,
+			'WORD' => 26,
+			'LPAREN' => 110,
+			'OP22_LOGICAL_NEG' => 87,
+			'WORD_SCOPED' => 27,
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115,
+			'OP01_CLOSE' => 114
+		},
+		GOTOS => {
+			'Expression' => 127,
+			'Variable' => 126,
+			'WordScoped' => 113,
+			'Operator' => 73,
+			'HashDereference' => 85,
+			'ArrayReference' => 71,
+			'Literal' => 84,
+			'SubExpression' => 242,
+			'HashReference' => 98,
+			'ArrayDereference' => 86
+		}
 	},
 	{#State 164
-		DEFAULT => -201
+		ACTIONS => {
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108,
+			'WORD_UPPERCASE' => 125,
+			'WORD' => 26,
+			'LPAREN' => 110,
+			'OP22_LOGICAL_NEG' => 87,
+			'WORD_SCOPED' => 27,
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115,
+			'OP01_CLOSE' => 114,
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			"%{" => 97,
+			"\@{" => 79,
+			'VARIABLE_SYMBOL' => 101,
+			'OP01_NAMED' => 129,
+			"undef" => 100,
+			'OP03_MATH_INC_DEC' => 80
+		},
+		GOTOS => {
+			'HashReference' => 98,
+			'ArrayDereference' => 86,
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'SubExpression' => 243,
+			'Literal' => 84,
+			'ArrayReference' => 71,
+			'Variable' => 126,
+			'WordScoped' => 113,
+			'Expression' => 127
+		}
 	},
 	{#State 165
-		DEFAULT => -215
+		ACTIONS => {
+			'OP01_CLOSE' => 114,
+			'LBRACE' => 115,
+			'OP10_NAMED_UNARY' => 91,
+			'WORD_SCOPED' => 27,
+			'OP22_LOGICAL_NEG' => 87,
+			'LPAREN' => 110,
+			'WORD' => 26,
+			'WORD_UPPERCASE' => 125,
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108,
+			'OP03_MATH_INC_DEC' => 80,
+			"undef" => 100,
+			'OP01_NAMED' => 129,
+			'VARIABLE_SYMBOL' => 101,
+			"\@{" => 79,
+			"%{" => 97,
+			'OP01_OPEN' => 93,
+			'LITERAL_NUMBER' => 94,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LBRACKET' => 75
+		},
+		GOTOS => {
+			'Literal' => 84,
+			'SubExpression' => 244,
+			'ArrayReference' => 71,
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'ArrayDereference' => 86,
+			'HashReference' => 98,
+			'Expression' => 127,
+			'WordScoped' => 113,
+			'Variable' => 126
+		}
 	},
 	{#State 166
 		ACTIONS => {
-			'OP08_STRING_CAT' => 193,
-			'OP15_LOGICAL_AND' => -94,
-			'OP13_BITWISE_AND' => -94,
-			'OP06_REGEX_MATCH' => 194,
-			'OP17_LIST_RANGE' => -94,
-			'OP11_COMPARE_LT_GT' => -94,
-			'OP14_BITWISE_OR_XOR' => -94,
-			'OP24_LOGICAL_OR_XOR' => -94,
-			'OP08_MATH_ADD_SUB' => 196,
-			'OP16_LOGICAL_OR' => -94,
-			")" => -94,
-			'OP21_LIST_COMMA' => -94,
-			'OP04_MATH_POW' => 197,
-			'OP07_STRING_REPEAT' => 204,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP23_LOGICAL_AND' => -94,
-			'OP12_COMPARE_EQ_NE' => -94,
-			"}" => -94,
-			";" => -94,
-			'OP18_TERNARY' => -94,
-			"]" => -94,
-			'OP09_BITWISE_SHIFT' => 208
+			"%{" => 97,
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'VARIABLE_SYMBOL' => 101,
+			'OP01_NAMED' => 129,
+			'OP03_MATH_INC_DEC' => 80,
+			"undef" => 100,
+			"\@{" => 79,
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108,
+			'WORD_UPPERCASE' => 125,
+			'WORD_SCOPED' => 27,
+			'LBRACE' => 115,
+			'OP10_NAMED_UNARY' => 91,
+			'OP01_CLOSE' => 114,
+			'WORD' => 26,
+			'OP22_LOGICAL_NEG' => 87,
+			'LPAREN' => 110
+		},
+		GOTOS => {
+			'Variable' => 126,
+			'WordScoped' => 113,
+			'Expression' => 127,
+			'HashReference' => 98,
+			'ArrayDereference' => 86,
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'Literal' => 84,
+			'SubExpression' => 245,
+			'ArrayReference' => 71
 		}
 	},
 	{#State 167
-		DEFAULT => -16
+		ACTIONS => {
+			"\@{" => 79,
+			'VARIABLE_SYMBOL' => 101,
+			"undef" => 100,
+			'OP03_MATH_INC_DEC' => 80,
+			'OP01_NAMED' => 129,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LBRACKET' => 75,
+			'OP01_OPEN' => 93,
+			'LITERAL_NUMBER' => 94,
+			"%{" => 97,
+			'WORD' => 26,
+			'OP22_LOGICAL_NEG' => 87,
+			'LPAREN' => 110,
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115,
+			'WORD_SCOPED' => 27,
+			'OP01_CLOSE' => 114,
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108,
+			'WORD_UPPERCASE' => 125
+		},
+		GOTOS => {
+			'Expression' => 127,
+			'Variable' => 126,
+			'WordScoped' => 113,
+			'Operator' => 73,
+			'HashDereference' => 85,
+			'ArrayReference' => 71,
+			'SubExpression' => 246,
+			'Literal' => 84,
+			'HashReference' => 98,
+			'ArrayDereference' => 86
+		}
 	},
 	{#State 168
-		DEFAULT => -187
+		ACTIONS => {
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			"%{" => 97,
+			"\@{" => 79,
+			'OP01_NAMED' => 129,
+			'OP03_MATH_INC_DEC' => 80,
+			"undef" => 100,
+			'VARIABLE_SYMBOL' => 101,
+			'WORD_UPPERCASE' => 125,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109,
+			'OP22_LOGICAL_NEG' => 87,
+			'LPAREN' => 110,
+			'WORD' => 26,
+			'OP01_CLOSE' => 114,
+			'WORD_SCOPED' => 27,
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115
+		},
+		GOTOS => {
+			'HashReference' => 98,
+			'ArrayDereference' => 86,
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'Literal' => 84,
+			'SubExpression' => 247,
+			'ArrayReference' => 71,
+			'Variable' => 126,
+			'WordScoped' => 113,
+			'Expression' => 127
+		}
 	},
 	{#State 169
 		ACTIONS => {
-			'LBRACKET' => 112
-		},
-		GOTOS => {
-			'ArrayReference' => 243
+			'OP06_REGEX_PATTERN' => 248
 		}
 	},
 	{#State 170
 		ACTIONS => {
-			"}" => 244
+			"\@{" => 79,
+			'OP03_MATH_INC_DEC' => 80,
+			"undef" => 100,
+			'OP01_NAMED' => 129,
+			'VARIABLE_SYMBOL' => 101,
+			'OP01_OPEN' => 93,
+			'LITERAL_NUMBER' => 94,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LBRACKET' => 75,
+			"%{" => 97,
+			'OP22_LOGICAL_NEG' => 87,
+			'LPAREN' => 110,
+			'WORD' => 26,
+			'OP01_CLOSE' => 114,
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115,
+			'WORD_SCOPED' => 27,
+			'WORD_UPPERCASE' => 125,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109
+		},
+		GOTOS => {
+			'HashReference' => 98,
+			'ArrayDereference' => 86,
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'SubExpression' => 249,
+			'Literal' => 84,
+			'ArrayReference' => 71,
+			'Variable' => 126,
+			'WordScoped' => 113,
+			'Expression' => 127
 		}
 	},
 	{#State 171
-		DEFAULT => -144
-	},
-	{#State 172
-		DEFAULT => -157
-	},
-	{#State 173
 		ACTIONS => {
-			'LPAREN' => 245
+			"%{" => 97,
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'VARIABLE_SYMBOL' => 101,
+			'OP01_NAMED' => 129,
+			'OP03_MATH_INC_DEC' => 80,
+			"undef" => 100,
+			"\@{" => 79,
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108,
+			'WORD_UPPERCASE' => 125,
+			'WORD_SCOPED' => 27,
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115,
+			'OP01_CLOSE' => 114,
+			'WORD' => 26,
+			'LPAREN' => 110,
+			'OP22_LOGICAL_NEG' => 87
+		},
+		GOTOS => {
+			'HashReference' => 98,
+			'ArrayDereference' => 86,
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'Literal' => 84,
+			'SubExpression' => 250,
+			'ArrayReference' => 71,
+			'Variable' => 126,
+			'WordScoped' => 113,
+			'Expression' => 127
 		}
 	},
+	{#State 172
+		ACTIONS => {
+			'OP04_MATH_POW' => 163,
+			'OP13_BITWISE_AND' => 155,
+			"}" => -104,
+			'OP23_LOGICAL_AND' => -104,
+			'OP08_MATH_ADD_SUB' => 165,
+			")" => -104,
+			'OP14_BITWISE_OR_XOR' => 157,
+			'OP18_TERNARY' => 156,
+			'OP17_LIST_RANGE' => 159,
+			'OP08_STRING_CAT' => 160,
+			'OP06_REGEX_MATCH' => 169,
+			'OP09_BITWISE_SHIFT' => 166,
+			'OP21_LIST_COMMA' => -104,
+			'OP07_STRING_REPEAT' => 158,
+			'OP16_LOGICAL_OR' => 168,
+			'OP24_LOGICAL_OR_XOR' => -104,
+			'OP11_COMPARE_LT_GT' => 171,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			"]" => -104,
+			";" => -104,
+			'OP15_LOGICAL_AND' => 161,
+			'OP12_COMPARE_EQ_NE' => 170
+		}
+	},
+	{#State 173
+		DEFAULT => -208
+	},
 	{#State 174
-		DEFAULT => -155
+		ACTIONS => {
+			";" => 251
+		}
 	},
 	{#State 175
 		ACTIONS => {
-			'MY' => 246
+			'OP16_LOGICAL_OR' => -94,
+			'OP24_LOGICAL_OR_XOR' => -94,
+			'OP09_BITWISE_SHIFT' => 166,
+			'OP07_STRING_REPEAT' => 158,
+			'OP21_LIST_COMMA' => -94,
+			'OP06_REGEX_MATCH' => 169,
+			'OP08_STRING_CAT' => 160,
+			'OP17_LIST_RANGE' => -94,
+			";" => -94,
+			'OP12_COMPARE_EQ_NE' => -94,
+			'OP15_LOGICAL_AND' => -94,
+			"]" => -94,
+			'OP11_COMPARE_LT_GT' => -94,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			'OP13_BITWISE_AND' => -94,
+			"}" => -94,
+			'OP08_MATH_ADD_SUB' => 165,
+			'OP23_LOGICAL_AND' => -94,
+			'OP04_MATH_POW' => 163,
+			'OP14_BITWISE_OR_XOR' => -94,
+			'OP18_TERNARY' => -94,
+			")" => -94
 		}
 	},
 	{#State 176
-		ACTIONS => {
-			'MY' => 247
-		}
+		DEFAULT => -110
 	},
 	{#State 177
-		DEFAULT => -156
+		ACTIONS => {
+			")" => 252
+		}
 	},
 	{#State 178
-		DEFAULT => -208
+		ACTIONS => {
+			'TYPE_FHREF' => 253
+		}
 	},
 	{#State 179
 		ACTIONS => {
-			";" => 248
+			'VARIABLE_SYMBOL' => 254
 		}
 	},
 	{#State 180
 		ACTIONS => {
-			'OP24_LOGICAL_OR_XOR' => 202,
-			'OP14_BITWISE_OR_XOR' => 203,
-			")" => -181,
-			'OP16_LOGICAL_OR' => 201,
-			'OP08_MATH_ADD_SUB' => 196,
-			'OP06_REGEX_MATCH' => 194,
-			'OP13_BITWISE_AND' => 195,
-			'OP15_LOGICAL_AND' => 200,
-			'OP08_STRING_CAT' => 193,
-			'OP11_COMPARE_LT_GT' => 199,
-			'OP17_LIST_RANGE' => 192,
-			'OP09_BITWISE_SHIFT' => 208,
-			"]" => -181,
-			'OP18_TERNARY' => 198,
-			";" => -181,
-			'OP12_COMPARE_EQ_NE' => 205,
-			'OP23_LOGICAL_AND' => 206,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP04_MATH_POW' => 197,
-			'OP21_LIST_COMMA' => -181,
-			'OP07_STRING_REPEAT' => 204
+			'FHREF_SYMBOL' => 255
 		}
 	},
 	{#State 181
-		DEFAULT => -110
+		DEFAULT => -202
 	},
 	{#State 182
-		DEFAULT => -177,
-		GOTOS => {
-			'STAR-44' => 249
+		ACTIONS => {
+			"}" => 256
 		}
 	},
 	{#State 183
 		ACTIONS => {
-			")" => 250
+			'LBRACE' => 115
+		},
+		GOTOS => {
+			'HashReference' => 257
 		}
 	},
 	{#State 184
-		ACTIONS => {
-			'LPAREN' => 110,
-			'LBRACKET' => 112,
-			'OP01_CLOSE' => 114,
-			'OP22_LOGICAL_NEG' => 90,
-			'LITERAL_NUMBER' => 118,
-			'WORD' => 24,
-			'VARIABLE_SYMBOL' => 120,
-			'OP10_NAMED_UNARY' => 96,
-			'LBRACE' => 95,
-			'LITERAL_STRING' => 94,
-			"\@{" => 99,
-			'WORD_UPPERCASE' => 136,
-			"undef" => 100,
-			'OP01_NAMED' => 140,
-			"%{" => 80,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'WORD_SCOPED' => 23,
-			'OP01_OPEN' => 106,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_LOGICAL_NEG' => 108
-		},
-		GOTOS => {
-			'Expression' => 134,
-			'Literal' => 116,
-			'Operator' => 102,
-			'SubExpression' => 251,
-			'Variable' => 139,
-			'HashDereference' => 123,
-			'ArrayReference' => 121,
-			'HashReference' => 91,
-			'WordScoped' => 119,
-			'ArrayDereference' => 81
-		}
+		DEFAULT => -76
 	},
 	{#State 185
 		ACTIONS => {
-			'TYPE_FHREF' => 252
+			'OP16_LOGICAL_OR' => -166,
+			'OP24_LOGICAL_OR_XOR' => -166,
+			'OP07_STRING_REPEAT' => -166,
+			'OP21_LIST_COMMA' => -166,
+			'OP09_BITWISE_SHIFT' => -166,
+			'COLON' => -166,
+			'OP08_STRING_CAT' => -166,
+			'OP02_HASH_THINARROW' => 258,
+			'OP06_REGEX_MATCH' => -166,
+			'OP17_LIST_RANGE' => -166,
+			'OP20_HASH_FATARROW' => -166,
+			'OP15_LOGICAL_AND' => -166,
+			'OP12_COMPARE_EQ_NE' => -166,
+			";" => -166,
+			"]" => -166,
+			'OP02_METHOD_THINARROW' => -166,
+			'OP07_MATH_MULT_DIV_MOD' => -166,
+			'OP11_COMPARE_LT_GT' => -166,
+			'OP19_VARIABLE_ASSIGN_BY' => -166,
+			'OP19_VARIABLE_ASSIGN' => -166,
+			'OP23_LOGICAL_AND' => -166,
+			"}" => -166,
+			'OP08_MATH_ADD_SUB' => -166,
+			'OP13_BITWISE_AND' => -166,
+			'OP04_MATH_POW' => -166,
+			'OP02_ARRAY_THINARROW' => 260,
+			'OP18_TERNARY' => -166,
+			'OP14_BITWISE_OR_XOR' => -166,
+			'OP03_MATH_INC_DEC' => -166,
+			")" => -166
+		},
+		GOTOS => {
+			'VariableRetrieval' => 259
 		}
 	},
 	{#State 186
 		ACTIONS => {
-			'OP08_MATH_ADD_SUB' => -86,
-			")" => -86,
-			'OP16_LOGICAL_OR' => -86,
-			'OP14_BITWISE_OR_XOR' => -86,
-			'OP24_LOGICAL_OR_XOR' => -86,
-			'OP11_COMPARE_LT_GT' => -86,
-			'OP17_LIST_RANGE' => -86,
-			'OP15_LOGICAL_AND' => -86,
-			'OP06_REGEX_MATCH' => -86,
-			'OP13_BITWISE_AND' => -86,
-			'OP08_STRING_CAT' => -86,
-			"]" => -86,
-			'OP09_BITWISE_SHIFT' => -86,
-			";" => -86,
-			'OP18_TERNARY' => -86,
-			"}" => -86,
-			'OP23_LOGICAL_AND' => -86,
-			'OP07_MATH_MULT_DIV_MOD' => -86,
-			'OP12_COMPARE_EQ_NE' => -86,
-			'OP21_LIST_COMMA' => -86,
-			'OP04_MATH_POW' => 197,
-			'OP07_STRING_REPEAT' => -86
+			";" => 261
 		}
 	},
 	{#State 187
 		ACTIONS => {
-			'OP07_STRING_REPEAT' => 204,
-			'OP04_MATH_POW' => 197,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP23_LOGICAL_AND' => 206,
-			'OP12_COMPARE_EQ_NE' => 205,
-			'OP18_TERNARY' => 198,
-			'OP09_BITWISE_SHIFT' => 208,
-			'OP17_LIST_RANGE' => 192,
-			'OP11_COMPARE_LT_GT' => 199,
-			'OP08_STRING_CAT' => 193,
-			'OP15_LOGICAL_AND' => 200,
-			'OP13_BITWISE_AND' => 195,
-			'OP06_REGEX_MATCH' => 194,
-			'OP08_MATH_ADD_SUB' => 196,
-			")" => 253,
-			'OP16_LOGICAL_OR' => 201,
-			'OP14_BITWISE_OR_XOR' => 203,
-			'OP24_LOGICAL_OR_XOR' => 202
+			'LPAREN' => 262
 		}
 	},
 	{#State 188
 		ACTIONS => {
-			'VARIABLE_SYMBOL' => 120,
-			'LITERAL_NUMBER' => 118,
-			'WORD' => 24,
-			"\@{" => 99,
-			'WORD_UPPERCASE' => 136,
-			'OP10_NAMED_UNARY' => 96,
-			'LBRACE' => 95,
-			'LITERAL_STRING' => 94,
 			'LPAREN' => 110,
-			'LBRACKET' => 112,
-			'MY' => 138,
-			'OP22_LOGICAL_NEG' => 90,
+			'OP22_LOGICAL_NEG' => 87,
+			'WORD' => 26,
 			'OP01_CLOSE' => 114,
-			'OP01_OPEN' => 106,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP03_MATH_INC_DEC' => 84,
+			'WORD_SCOPED' => 27,
+			'LBRACE' => 115,
+			'OP10_NAMED_UNARY' => 91,
+			'WORD_UPPERCASE' => 125,
+			'STDIN' => 265,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109,
+			"\@{" => 79,
+			'OP01_NAMED' => 129,
 			"undef" => 100,
-			'OP01_QW' => 137,
-			'OP01_NAMED' => 140,
-			"%{" => 80
+			'OP03_MATH_INC_DEC' => 80,
+			'VARIABLE_SYMBOL' => 101,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			"%{" => 97
 		},
 		GOTOS => {
-			'Operator' => 102,
-			'Literal' => 116,
-			'Expression' => 134,
-			'SubExpression' => 135,
-			'Variable' => 139,
-			'ListElement' => 254,
-			'TypeInner' => 142,
-			'HashDereference' => 123,
-			'HashReference' => 91,
-			'ArrayReference' => 121,
-			'ArrayDereference' => 81,
-			'WordScoped' => 119
+			'Expression' => 127,
+			'WordScoped' => 113,
+			'Variable' => 126,
+			'SubExpression' => 264,
+			'Literal' => 84,
+			'ArrayReference' => 71,
+			'SubExpressionOrStdin' => 263,
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'ArrayDereference' => 86,
+			'HashReference' => 98
 		}
 	},
 	{#State 189
 		ACTIONS => {
-			'FHREF_SYMBOL_BRACES' => 255
+			"%{" => 97,
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'VARIABLE_SYMBOL' => 101,
+			'OP01_NAMED' => 129,
+			"undef" => 100,
+			'OP03_MATH_INC_DEC' => 80,
+			"\@{" => 79,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109,
+			'WORD_UPPERCASE' => 125,
+			'WORD_SCOPED' => 27,
+			'LBRACE' => 115,
+			'OP10_NAMED_UNARY' => 91,
+			'OP01_CLOSE' => 114,
+			'WORD' => 26,
+			'LPAREN' => 110,
+			'OP22_LOGICAL_NEG' => 87
+		},
+		GOTOS => {
+			'ArrayDereference' => 86,
+			'HashReference' => 98,
+			'SubExpression' => 266,
+			'Literal' => 84,
+			'ArrayReference' => 71,
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'WordScoped' => 113,
+			'Variable' => 126,
+			'Expression' => 127
 		}
 	},
 	{#State 190
-		DEFAULT => -184
+		DEFAULT => -84
 	},
 	{#State 191
-		ACTIONS => {
-			"]" => 256
-		}
+		DEFAULT => -140
 	},
 	{#State 192
 		ACTIONS => {
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'WORD_SCOPED' => 23,
-			'OP01_OPEN' => 106,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_LOGICAL_NEG' => 108,
-			"undef" => 100,
-			"%{" => 80,
-			'OP01_NAMED' => 140,
-			'WORD' => 24,
-			'LITERAL_NUMBER' => 118,
-			'VARIABLE_SYMBOL' => 120,
-			'LITERAL_STRING' => 94,
-			'LBRACE' => 95,
-			'OP10_NAMED_UNARY' => 96,
-			'WORD_UPPERCASE' => 136,
-			"\@{" => 99,
-			'LBRACKET' => 112,
-			'LPAREN' => 110,
-			'OP01_CLOSE' => 114,
-			'OP22_LOGICAL_NEG' => 90
-		},
-		GOTOS => {
-			'Operator' => 102,
-			'Literal' => 116,
-			'Expression' => 134,
-			'SubExpression' => 257,
-			'Variable' => 139,
-			'HashDereference' => 123,
-			'HashReference' => 91,
-			'ArrayReference' => 121,
-			'WordScoped' => 119,
-			'ArrayDereference' => 81
+			")" => 267
 		}
 	},
 	{#State 193
 		ACTIONS => {
-			"undef" => 100,
-			'OP01_NAMED' => 140,
-			"%{" => 80,
-			'OP01_OPEN' => 106,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'WORD_SCOPED' => 23,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_LOGICAL_NEG' => 108,
-			'LPAREN' => 110,
-			'LBRACKET' => 112,
-			'OP22_LOGICAL_NEG' => 90,
-			'OP01_CLOSE' => 114,
-			'VARIABLE_SYMBOL' => 120,
-			'LITERAL_NUMBER' => 118,
-			'WORD' => 24,
-			"\@{" => 99,
-			'WORD_UPPERCASE' => 136,
-			'LBRACE' => 95,
-			'OP10_NAMED_UNARY' => 96,
-			'LITERAL_STRING' => 94
-		},
-		GOTOS => {
-			'HashDereference' => 123,
-			'WordScoped' => 119,
-			'ArrayDereference' => 81,
-			'ArrayReference' => 121,
-			'HashReference' => 91,
-			'Expression' => 134,
-			'Literal' => 116,
-			'Operator' => 102,
-			'Variable' => 139,
-			'SubExpression' => 258
+			'OP12_COMPARE_EQ_NE' => -86,
+			'OP15_LOGICAL_AND' => -86,
+			";" => -86,
+			"]" => -86,
+			'OP11_COMPARE_LT_GT' => -86,
+			'OP07_MATH_MULT_DIV_MOD' => -86,
+			'OP16_LOGICAL_OR' => -86,
+			'OP24_LOGICAL_OR_XOR' => -86,
+			'OP07_STRING_REPEAT' => -86,
+			'OP21_LIST_COMMA' => -86,
+			'OP09_BITWISE_SHIFT' => -86,
+			'OP06_REGEX_MATCH' => -86,
+			'OP08_STRING_CAT' => -86,
+			'OP17_LIST_RANGE' => -86,
+			'OP18_TERNARY' => -86,
+			'OP14_BITWISE_OR_XOR' => -86,
+			")" => -86,
+			'OP08_MATH_ADD_SUB' => -86,
+			"}" => -86,
+			'OP23_LOGICAL_AND' => -86,
+			'OP13_BITWISE_AND' => -86,
+			'OP04_MATH_POW' => 163
 		}
 	},
 	{#State 194
 		ACTIONS => {
-			'OP06_REGEX_PATTERN' => 259
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			'OP11_COMPARE_LT_GT' => 171,
+			'OP12_COMPARE_EQ_NE' => 170,
+			'OP15_LOGICAL_AND' => 161,
+			'OP08_STRING_CAT' => 160,
+			'OP06_REGEX_MATCH' => 169,
+			'OP17_LIST_RANGE' => 159,
+			'OP24_LOGICAL_OR_XOR' => 167,
+			'OP16_LOGICAL_OR' => 168,
+			'OP07_STRING_REPEAT' => 158,
+			'OP09_BITWISE_SHIFT' => 166,
+			")" => 268,
+			'OP18_TERNARY' => 156,
+			'OP14_BITWISE_OR_XOR' => 157,
+			'OP08_MATH_ADD_SUB' => 165,
+			'OP23_LOGICAL_AND' => 164,
+			'OP13_BITWISE_AND' => 155,
+			'OP04_MATH_POW' => 163
 		}
 	},
 	{#State 195
 		ACTIONS => {
-			'OP10_NAMED_UNARY' => 96,
-			'LBRACE' => 95,
-			'LITERAL_STRING' => 94,
-			'WORD_UPPERCASE' => 136,
-			"\@{" => 99,
-			'WORD' => 24,
-			'LITERAL_NUMBER' => 118,
-			'VARIABLE_SYMBOL' => 120,
-			'OP01_CLOSE' => 114,
-			'OP22_LOGICAL_NEG' => 90,
-			'LBRACKET' => 112,
+			"\@{" => 79,
+			'OP01_NAMED' => 129,
+			'OP03_MATH_INC_DEC' => 80,
+			"undef" => 100,
+			'VARIABLE_SYMBOL' => 101,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'LBRACKET' => 75,
+			'MY' => 133,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			"%{" => 97,
+			'OP01_QW' => 131,
+			'OP22_LOGICAL_NEG' => 87,
 			'LPAREN' => 110,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'WORD_SCOPED' => 23,
-			'OP01_OPEN' => 106,
-			"%{" => 80,
-			'OP01_NAMED' => 140,
-			"undef" => 100
+			'WORD' => 26,
+			'OP01_CLOSE' => 114,
+			'WORD_SCOPED' => 27,
+			'LBRACE' => 115,
+			'OP10_NAMED_UNARY' => 91,
+			'WORD_UPPERCASE' => 125,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109
 		},
 		GOTOS => {
-			'Operator' => 102,
-			'Literal' => 116,
-			'Expression' => 134,
-			'SubExpression' => 260,
-			'Variable' => 139,
-			'HashDereference' => 123,
-			'HashReference' => 91,
-			'ArrayReference' => 121,
-			'WordScoped' => 119,
-			'ArrayDereference' => 81
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'Literal' => 84,
+			'SubExpression' => 153,
+			'ArrayReference' => 71,
+			'HashReference' => 98,
+			'TypeInner' => 136,
+			'ArrayDereference' => 86,
+			'ListElement' => 269,
+			'Expression' => 127,
+			'Variable' => 126,
+			'WordScoped' => 113
 		}
 	},
 	{#State 196
 		ACTIONS => {
-			'OP22_LOGICAL_NEG' => 90,
-			'OP01_CLOSE' => 114,
-			'LBRACKET' => 112,
-			'LPAREN' => 110,
-			'WORD_UPPERCASE' => 136,
-			"\@{" => 99,
-			'OP10_NAMED_UNARY' => 96,
-			'LITERAL_STRING' => 94,
-			'LBRACE' => 95,
-			'VARIABLE_SYMBOL' => 120,
-			'WORD' => 24,
-			'LITERAL_NUMBER' => 118,
-			"%{" => 80,
-			'OP01_NAMED' => 140,
-			"undef" => 100,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP01_OPEN' => 106,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'WORD_SCOPED' => 23
-		},
-		GOTOS => {
-			'HashReference' => 91,
-			'ArrayReference' => 121,
-			'WordScoped' => 119,
-			'ArrayDereference' => 81,
-			'HashDereference' => 123,
-			'SubExpression' => 261,
-			'Variable' => 139,
-			'Literal' => 116,
-			'Operator' => 102,
-			'Expression' => 134
+			'FHREF_SYMBOL_BRACES' => 270
 		}
 	},
 	{#State 197
 		ACTIONS => {
-			'LBRACKET' => 112,
-			'LPAREN' => 110,
-			'OP22_LOGICAL_NEG' => 90,
-			'OP01_CLOSE' => 114,
-			'VARIABLE_SYMBOL' => 120,
-			'WORD' => 24,
-			'LITERAL_NUMBER' => 118,
-			'WORD_UPPERCASE' => 136,
-			"\@{" => 99,
-			'LITERAL_STRING' => 94,
-			'LBRACE' => 95,
-			'OP10_NAMED_UNARY' => 96,
 			"undef" => 100,
-			"%{" => 80,
-			'OP01_NAMED' => 140,
-			'OP01_OPEN' => 106,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP03_MATH_INC_DEC' => 84
+			'OP03_MATH_INC_DEC' => 80,
+			'OP01_NAMED' => 129,
+			'VARIABLE_SYMBOL' => 101,
+			"\@{" => 79,
+			"%{" => 97,
+			'OP01_OPEN' => 93,
+			'LITERAL_NUMBER' => 94,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LBRACKET' => 75,
+			'OP01_CLOSE' => 114,
+			'LBRACE' => 115,
+			'OP10_NAMED_UNARY' => 91,
+			'WORD_SCOPED' => 27,
+			'LPAREN' => 110,
+			'OP22_LOGICAL_NEG' => 87,
+			'WORD' => 26,
+			'WORD_UPPERCASE' => 125,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109
 		},
 		GOTOS => {
-			'HashDereference' => 123,
-			'ArrayDereference' => 81,
-			'WordScoped' => 119,
-			'ArrayReference' => 121,
-			'HashReference' => 91,
-			'Expression' => 134,
-			'Literal' => 116,
-			'Operator' => 102,
-			'Variable' => 139,
-			'SubExpression' => 262
+			'ArrayReference' => 71,
+			'SubExpression' => 271,
+			'Literal' => 84,
+			'Operator' => 73,
+			'HashDereference' => 85,
+			'ArrayDereference' => 86,
+			'HashReference' => 98,
+			'Expression' => 127,
+			'WordScoped' => 113,
+			'Variable' => 126
 		}
 	},
 	{#State 198
 		ACTIONS => {
-			'LITERAL_NUMBER' => 118,
-			'VARIABLE_SYMBOL' => 120,
-			'LITERAL_STRING' => 94
-		},
-		GOTOS => {
-			'Literal' => 265,
-			'VariableOrLiteral' => 263,
-			'Variable' => 264
+			")" => 272
 		}
 	},
 	{#State 199
 		ACTIONS => {
-			"%{" => 80,
-			'OP01_NAMED' => 140,
-			"undef" => 100,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'WORD_SCOPED' => 23,
-			'OP01_OPEN' => 106,
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108,
+			'WORD_UPPERCASE' => 125,
+			'WORD_SCOPED' => 27,
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115,
 			'OP01_CLOSE' => 114,
-			'OP22_LOGICAL_NEG' => 90,
-			'LBRACKET' => 112,
+			'WORD' => 26,
 			'LPAREN' => 110,
-			'OP10_NAMED_UNARY' => 96,
-			'LITERAL_STRING' => 94,
-			'LBRACE' => 95,
-			'WORD_UPPERCASE' => 136,
-			"\@{" => 99,
-			'WORD' => 24,
-			'LITERAL_NUMBER' => 118,
-			'VARIABLE_SYMBOL' => 120
+			'OP22_LOGICAL_NEG' => 87,
+			'OP01_QW' => 131,
+			"%{" => 97,
+			'MY' => 133,
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'VARIABLE_SYMBOL' => 101,
+			'OP01_NAMED' => 129,
+			")" => -121,
+			"undef" => 100,
+			'OP03_MATH_INC_DEC' => 80,
+			"\@{" => 79
 		},
 		GOTOS => {
-			'HashDereference' => 123,
-			'HashReference' => 91,
-			'ArrayReference' => 121,
-			'ArrayDereference' => 81,
-			'WordScoped' => 119,
-			'Literal' => 116,
-			'Operator' => 102,
-			'Expression' => 134,
-			'SubExpression' => 266,
-			'Variable' => 139
+			'ListElements' => 274,
+			'Expression' => 127,
+			'Variable' => 126,
+			'WordScoped' => 113,
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'SubExpression' => 134,
+			'Literal' => 84,
+			'ArrayReference' => 71,
+			'HashReference' => 98,
+			'TypeInner' => 136,
+			'ArrayDereference' => 86,
+			'OPTIONAL-33' => 273,
+			'ListElement' => 132
 		}
 	},
 	{#State 200
-		ACTIONS => {
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'WORD_SCOPED' => 23,
-			'OP01_OPEN' => 106,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_LOGICAL_NEG' => 108,
-			"undef" => 100,
-			'OP01_NAMED' => 140,
-			"%{" => 80,
-			'LITERAL_NUMBER' => 118,
-			'WORD' => 24,
-			'VARIABLE_SYMBOL' => 120,
-			'LBRACE' => 95,
-			'LITERAL_STRING' => 94,
-			'OP10_NAMED_UNARY' => 96,
-			"\@{" => 99,
-			'WORD_UPPERCASE' => 136,
-			'LPAREN' => 110,
-			'LBRACKET' => 112,
-			'OP01_CLOSE' => 114,
-			'OP22_LOGICAL_NEG' => 90
-		},
-		GOTOS => {
-			'Operator' => 102,
-			'Literal' => 116,
-			'Expression' => 134,
-			'Variable' => 139,
-			'SubExpression' => 267,
-			'HashDereference' => 123,
-			'ArrayDereference' => 81,
-			'WordScoped' => 119,
-			'HashReference' => 91,
-			'ArrayReference' => 121
-		}
+		DEFAULT => -82
 	},
 	{#State 201
 		ACTIONS => {
-			"undef" => 100,
-			'OP01_NAMED' => 140,
-			"%{" => 80,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'OP01_OPEN' => 106,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_LOGICAL_NEG' => 108,
-			'LPAREN' => 110,
-			'LBRACKET' => 112,
-			'OP01_CLOSE' => 114,
-			'OP22_LOGICAL_NEG' => 90,
-			'LITERAL_NUMBER' => 118,
-			'WORD' => 24,
-			'VARIABLE_SYMBOL' => 120,
-			'LBRACE' => 95,
-			'LITERAL_STRING' => 94,
-			'OP10_NAMED_UNARY' => 96,
-			"\@{" => 99,
-			'WORD_UPPERCASE' => 136
-		},
-		GOTOS => {
-			'Expression' => 134,
-			'Literal' => 116,
-			'Operator' => 102,
-			'SubExpression' => 268,
-			'Variable' => 139,
-			'HashDereference' => 123,
-			'ArrayReference' => 121,
-			'HashReference' => 91,
-			'WordScoped' => 119,
-			'ArrayDereference' => 81
+			'OP20_HASH_FATARROW' => 275
 		}
 	},
 	{#State 202
-		ACTIONS => {
-			'LITERAL_NUMBER' => 118,
-			'WORD' => 24,
-			'VARIABLE_SYMBOL' => 120,
-			'LITERAL_STRING' => 94,
-			'LBRACE' => 95,
-			'OP10_NAMED_UNARY' => 96,
-			"\@{" => 99,
-			'WORD_UPPERCASE' => 136,
-			'LPAREN' => 110,
-			'LBRACKET' => 112,
-			'OP01_CLOSE' => 114,
-			'OP22_LOGICAL_NEG' => 90,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'OP01_OPEN' => 106,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_LOGICAL_NEG' => 108,
-			"undef" => 100,
-			'OP01_NAMED' => 140,
-			"%{" => 80
-		},
-		GOTOS => {
-			'Expression' => 134,
-			'Literal' => 116,
-			'Operator' => 102,
-			'Variable' => 139,
-			'SubExpression' => 269,
-			'HashDereference' => 123,
-			'ArrayDereference' => 81,
-			'WordScoped' => 119,
-			'ArrayReference' => 121,
-			'HashReference' => 91
-		}
+		DEFAULT => -215
 	},
 	{#State 203
-		ACTIONS => {
-			'OP01_NAMED' => 140,
-			"%{" => 80,
-			"undef" => 100,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP03_MATH_INC_DEC' => 84,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'OP01_OPEN' => 106,
-			'OP01_CLOSE' => 114,
-			'OP22_LOGICAL_NEG' => 90,
-			'LPAREN' => 110,
-			'LBRACKET' => 112,
-			'LITERAL_STRING' => 94,
-			'LBRACE' => 95,
-			'OP10_NAMED_UNARY' => 96,
-			"\@{" => 99,
-			'WORD_UPPERCASE' => 136,
-			'LITERAL_NUMBER' => 118,
-			'WORD' => 24,
-			'VARIABLE_SYMBOL' => 120
-		},
-		GOTOS => {
-			'ArrayReference' => 121,
-			'HashReference' => 91,
-			'ArrayDereference' => 81,
-			'WordScoped' => 119,
-			'HashDereference' => 123,
-			'SubExpression' => 270,
-			'Variable' => 139,
-			'Expression' => 134,
-			'Operator' => 102,
-			'Literal' => 116
-		}
+		DEFAULT => -217
 	},
 	{#State 204
-		ACTIONS => {
-			'LBRACE' => 95,
-			'LITERAL_STRING' => 94,
-			'OP10_NAMED_UNARY' => 96,
-			"\@{" => 99,
-			'WORD_UPPERCASE' => 136,
-			'LITERAL_NUMBER' => 118,
-			'WORD' => 24,
-			'VARIABLE_SYMBOL' => 120,
-			'OP01_CLOSE' => 114,
-			'OP22_LOGICAL_NEG' => 90,
-			'LPAREN' => 110,
-			'LBRACKET' => 112,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP03_MATH_INC_DEC' => 84,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'OP01_OPEN' => 106,
-			'OP01_NAMED' => 140,
-			"%{" => 80,
-			"undef" => 100
-		},
-		GOTOS => {
-			'HashDereference' => 123,
-			'ArrayDereference' => 81,
-			'WordScoped' => 119,
-			'ArrayReference' => 121,
-			'HashReference' => 91,
-			'Expression' => 134,
-			'Operator' => 102,
-			'Literal' => 116,
-			'Variable' => 139,
-			'SubExpression' => 271
-		}
+		DEFAULT => -201
 	},
 	{#State 205
-		ACTIONS => {
-			"undef" => 100,
-			'OP01_NAMED' => 140,
-			"%{" => 80,
-			'OP01_OPEN' => 106,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'WORD_SCOPED' => 23,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP03_MATH_INC_DEC' => 84,
-			'LPAREN' => 110,
-			'LBRACKET' => 112,
-			'OP22_LOGICAL_NEG' => 90,
-			'OP01_CLOSE' => 114,
-			'VARIABLE_SYMBOL' => 120,
-			'LITERAL_NUMBER' => 118,
-			'WORD' => 24,
-			"\@{" => 99,
-			'WORD_UPPERCASE' => 136,
-			'LITERAL_STRING' => 94,
-			'LBRACE' => 95,
-			'OP10_NAMED_UNARY' => 96
-		},
+		DEFAULT => -199,
 		GOTOS => {
-			'WordScoped' => 119,
-			'ArrayDereference' => 81,
-			'ArrayReference' => 121,
-			'HashReference' => 91,
-			'HashDereference' => 123,
-			'Variable' => 139,
-			'SubExpression' => 272,
-			'Expression' => 134,
-			'Literal' => 116,
-			'Operator' => 102
+			'STAR-50' => 276
 		}
 	},
 	{#State 206
-		ACTIONS => {
-			"%{" => 80,
-			'OP01_NAMED' => 140,
-			"undef" => 100,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP01_OPEN' => 106,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'WORD_SCOPED' => 23,
-			'OP22_LOGICAL_NEG' => 90,
-			'OP01_CLOSE' => 114,
-			'LBRACKET' => 112,
-			'LPAREN' => 110,
-			'WORD_UPPERCASE' => 136,
-			"\@{" => 99,
-			'LITERAL_STRING' => 94,
-			'LBRACE' => 95,
-			'OP10_NAMED_UNARY' => 96,
-			'VARIABLE_SYMBOL' => 120,
-			'WORD' => 24,
-			'LITERAL_NUMBER' => 118
-		},
-		GOTOS => {
-			'HashReference' => 91,
-			'ArrayReference' => 121,
-			'WordScoped' => 119,
-			'ArrayDereference' => 81,
-			'HashDereference' => 123,
-			'SubExpression' => 273,
-			'Variable' => 139,
-			'Literal' => 116,
-			'Operator' => 102,
-			'Expression' => 134
-		}
+		DEFAULT => -194
 	},
 	{#State 207
-		ACTIONS => {
-			'LBRACKET' => 112,
-			'LPAREN' => 110,
-			'OP22_LOGICAL_NEG' => 90,
-			'OP01_CLOSE' => 114,
-			'VARIABLE_SYMBOL' => 120,
-			'WORD' => 24,
-			'LITERAL_NUMBER' => 118,
-			'WORD_UPPERCASE' => 136,
-			"\@{" => 99,
-			'LITERAL_STRING' => 94,
-			'LBRACE' => 95,
-			'OP10_NAMED_UNARY' => 96,
-			"undef" => 100,
-			"%{" => 80,
-			'OP01_NAMED' => 140,
-			'OP01_OPEN' => 106,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'WORD_SCOPED' => 23,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_LOGICAL_NEG' => 108
-		},
-		GOTOS => {
-			'Operator' => 102,
-			'Literal' => 116,
-			'Expression' => 134,
-			'Variable' => 139,
-			'SubExpression' => 274,
-			'HashDereference' => 123,
-			'WordScoped' => 119,
-			'ArrayDereference' => 81,
-			'HashReference' => 91,
-			'ArrayReference' => 121
-		}
+		DEFAULT => -216
 	},
 	{#State 208
-		ACTIONS => {
-			"undef" => 100,
-			"%{" => 80,
-			'OP01_NAMED' => 140,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'WORD_SCOPED' => 23,
-			'OP01_OPEN' => 106,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP03_MATH_INC_DEC' => 84,
-			'LBRACKET' => 112,
-			'LPAREN' => 110,
-			'OP01_CLOSE' => 114,
-			'OP22_LOGICAL_NEG' => 90,
-			'WORD' => 24,
-			'LITERAL_NUMBER' => 118,
-			'VARIABLE_SYMBOL' => 120,
-			'OP10_NAMED_UNARY' => 96,
-			'LITERAL_STRING' => 94,
-			'LBRACE' => 95,
-			'WORD_UPPERCASE' => 136,
-			"\@{" => 99
-		},
-		GOTOS => {
-			'SubExpression' => 275,
-			'Variable' => 139,
-			'Expression' => 134,
-			'Operator' => 102,
-			'Literal' => 116,
-			'ArrayReference' => 121,
-			'HashReference' => 91,
-			'ArrayDereference' => 81,
-			'WordScoped' => 119,
-			'HashDereference' => 123
-		}
+		DEFAULT => -40
 	},
 	{#State 209
-		DEFAULT => -82
-	},
-	{#State 210
-		ACTIONS => {
-			";" => 276
-		}
-	},
-	{#State 211
-		DEFAULT => -76
-	},
-	{#State 212
-		ACTIONS => {
-			'MY' => 138,
-			'OP22_LOGICAL_NEG' => 90,
-			'OP01_CLOSE' => 114,
-			'LPAREN' => 110,
-			'LBRACKET' => 112,
-			"\@{" => 99,
-			'WORD_UPPERCASE' => 136,
-			'LBRACE' => 95,
-			'OP10_NAMED_UNARY' => 96,
-			'LITERAL_STRING' => 94,
-			'VARIABLE_SYMBOL' => 120,
-			'LITERAL_NUMBER' => 118,
-			'WORD' => 24,
-			'OP01_NAMED' => 140,
-			'OP01_QW' => 137,
-			"%{" => 80,
-			"undef" => 100,
-			")" => -121,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP01_OPEN' => 106,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'WORD_SCOPED' => 23
-		},
-		GOTOS => {
-			'Operator' => 102,
-			'Literal' => 116,
-			'Expression' => 134,
-			'ListElements' => 278,
-			'OPTIONAL-33' => 277,
-			'SubExpression' => 180,
-			'Variable' => 139,
-			'ListElement' => 182,
-			'HashDereference' => 123,
-			'TypeInner' => 142,
-			'HashReference' => 91,
-			'ArrayReference' => 121,
-			'ArrayDereference' => 81,
-			'WordScoped' => 119
-		}
-	},
-	{#State 213
-		ACTIONS => {
-			")" => 279
-		}
-	},
-	{#State 214
-		ACTIONS => {
-			'OP19_VARIABLE_ASSIGN' => -166,
-			"}" => -166,
-			'OP20_HASH_FATARROW' => -166,
-			'OP07_STRING_REPEAT' => -166,
-			'OP02_METHOD_THINARROW' => -166,
-			'OP04_MATH_POW' => -166,
-			'OP21_LIST_COMMA' => -166,
-			'OP23_LOGICAL_AND' => -166,
-			'OP07_MATH_MULT_DIV_MOD' => -166,
-			'OP12_COMPARE_EQ_NE' => -166,
-			";" => -166,
-			'OP18_TERNARY' => -166,
-			"]" => -166,
-			'OP09_BITWISE_SHIFT' => -166,
-			'OP02_ARRAY_THINARROW' => 281,
-			'OP11_COMPARE_LT_GT' => -166,
-			'OP17_LIST_RANGE' => -166,
-			'OP08_STRING_CAT' => -166,
-			'OP03_MATH_INC_DEC' => -166,
-			'OP15_LOGICAL_AND' => -166,
-			'OP06_REGEX_MATCH' => -166,
-			'OP13_BITWISE_AND' => -166,
-			'OP08_MATH_ADD_SUB' => -166,
-			'OP16_LOGICAL_OR' => -166,
-			'COLON' => -166,
-			")" => -166,
-			'OP14_BITWISE_OR_XOR' => -166,
-			'OP02_HASH_THINARROW' => 280,
-			'OP24_LOGICAL_OR_XOR' => -166,
-			'OP19_VARIABLE_ASSIGN_BY' => -166
-		},
-		GOTOS => {
-			'VariableRetrieval' => 282
-		}
-	},
-	{#State 215
-		ACTIONS => {
-			")" => 283
-		}
-	},
-	{#State 216
-		DEFAULT => -58,
-		GOTOS => {
-			'STAR-23' => 284
-		}
-	},
-	{#State 217
-		ACTIONS => {
-			'OP19_VARIABLE_ASSIGN' => 285
-		}
-	},
-	{#State 218
-		DEFAULT => -55
-	},
-	{#State 219
-		DEFAULT => -41
-	},
-	{#State 220
-		ACTIONS => {
-			'WORD_UPPERCASE' => 286
-		}
-	},
-	{#State 221
-		ACTIONS => {
-			'OP22_LOGICAL_NEG' => 90,
-			'MY' => 89,
-			"for" => -142,
-			'LBRACE' => 95,
-			'LITERAL_STRING' => 94,
-			'OP10_NAMED_UNARY' => 96,
-			"\@{" => 99,
-			'WORD' => 24,
-			"foreach" => -142,
-			"}" => 288,
-			'OP01_NAMED_VOID_SCOLON' => 92,
-			"%{" => 80,
-			'OP01_NAMED' => 79,
-			'OP03_MATH_INC_DEC' => 84,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'OP01_PRINT' => 83,
-			'OP01_CLOSE' => 114,
-			"while" => -142,
-			'OP01_NAMED_VOID' => 115,
-			'LBRACKET' => 112,
-			'LPAREN' => 110,
-			'WORD_UPPERCASE' => 124,
-			'LITERAL_NUMBER' => 118,
-			'VARIABLE_SYMBOL' => 120,
-			'OP19_LOOP_CONTROL' => 103,
-			"undef" => 100,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP19_LOOP_CONTROL_SCOLON' => 109,
-			"if" => 105,
-			'OP01_NAMED_VOID_LPAREN' => 104,
-			'OP01_OPEN' => 106
-		},
-		GOTOS => {
-			'LoopLabel' => 78,
-			'Operator' => 102,
-			'OPTIONAL-36' => 101,
-			'ArrayDereference' => 81,
-			'Statement' => 86,
-			'OperatorVoid' => 107,
-			'VariableDeclaration' => 85,
-			'SubExpression' => 113,
-			'Variable' => 87,
-			'Conditional' => 111,
-			'Literal' => 116,
-			'Expression' => 117,
-			'VariableModification' => 88,
-			'HashReference' => 91,
-			'ArrayReference' => 121,
-			'WordScoped' => 119,
-			'PAREN-35' => 122,
-			'Operation' => 287,
-			'HashDereference' => 123
-		}
-	},
-	{#State 222
-		ACTIONS => {
-			'VARIABLE_SYMBOL' => 289
-		}
-	},
-	{#State 223
-		ACTIONS => {
-			'WORD' => 290,
-			")" => 291
-		}
-	},
-	{#State 224
-		DEFAULT => -180
-	},
-	{#State 225
-		ACTIONS => {
-			"\$TYPED_" => 292
-		}
-	},
-	{#State 226
-		ACTIONS => {
-			'OP11_COMPARE_LT_GT' => -79,
-			'OP17_LIST_RANGE' => -79,
-			'OP06_REGEX_MATCH' => -79,
-			'OP13_BITWISE_AND' => -79,
-			'OP15_LOGICAL_AND' => -79,
-			'OP08_STRING_CAT' => -79,
-			'OP16_LOGICAL_OR' => -79,
-			")" => -79,
-			'OP08_MATH_ADD_SUB' => -79,
-			'OP24_LOGICAL_OR_XOR' => -79,
-			'OP14_BITWISE_OR_XOR' => -79,
-			"}" => -79,
-			'OP12_COMPARE_EQ_NE' => -79,
-			'OP23_LOGICAL_AND' => -79,
-			'OP07_MATH_MULT_DIV_MOD' => -79,
-			'OP21_LIST_COMMA' => -79,
-			'OP07_STRING_REPEAT' => -79,
-			'OP04_MATH_POW' => -79,
-			'OP09_BITWISE_SHIFT' => -79,
-			"]" => -79,
-			'OP18_TERNARY' => -79,
-			";" => -79
-		}
-	},
-	{#State 227
-		ACTIONS => {
-			'OP10_NAMED_UNARY' => 96,
-			'LBRACE' => 95,
-			'LITERAL_STRING' => 94,
-			'WORD_UPPERCASE' => 136,
-			"\@{" => 99,
-			'WORD' => 24,
-			'LITERAL_NUMBER' => 118,
-			'VARIABLE_SYMBOL' => 120,
-			'OP01_CLOSE' => 114,
-			'OP22_LOGICAL_NEG' => 90,
-			'MY' => 138,
-			'LBRACKET' => 112,
-			'LPAREN' => 110,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_LOGICAL_NEG' => 108,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'OP01_OPEN' => 106,
-			"%{" => 80,
-			'OP01_NAMED' => 140,
-			'OP01_QW' => 137,
-			"undef" => 100
-		},
-		GOTOS => {
-			'SubExpression' => 180,
-			'ListElements' => 293,
-			'ListElement' => 182,
-			'Variable' => 139,
-			'Expression' => 134,
-			'Operator' => 102,
-			'Literal' => 116,
-			'ArrayReference' => 121,
-			'HashReference' => 91,
-			'ArrayDereference' => 81,
-			'WordScoped' => 119,
-			'HashDereference' => 123,
-			'TypeInner' => 142
-		}
-	},
-	{#State 228
-		ACTIONS => {
-			"]" => -182,
-			'OP09_BITWISE_SHIFT' => 208,
-			";" => -182,
-			'OP18_TERNARY' => 198,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP23_LOGICAL_AND' => 206,
-			'OP12_COMPARE_EQ_NE' => 205,
-			'OP21_LIST_COMMA' => -182,
-			'OP04_MATH_POW' => 197,
-			'OP07_STRING_REPEAT' => 204,
-			'OP08_MATH_ADD_SUB' => 196,
-			")" => -182,
-			'OP16_LOGICAL_OR' => 201,
-			'OP14_BITWISE_OR_XOR' => 203,
-			'OP24_LOGICAL_OR_XOR' => 202,
-			'OP17_LIST_RANGE' => 192,
-			'OP11_COMPARE_LT_GT' => 199,
-			'OP15_LOGICAL_AND' => 200,
-			'OP06_REGEX_MATCH' => 194,
-			'OP13_BITWISE_AND' => 195,
-			'OP08_STRING_CAT' => 193
-		}
-	},
-	{#State 229
-		DEFAULT => -204
-	},
-	{#State 230
-		ACTIONS => {
-			"}" => 294
-		}
-	},
-	{#State 231
-		DEFAULT => -87
-	},
-	{#State 232
-		ACTIONS => {
-			";" => 295
-		}
-	},
-	{#State 233
-		ACTIONS => {
-			";" => 296
-		}
-	},
-	{#State 234
-		ACTIONS => {
-			'OP09_BITWISE_SHIFT' => 208,
-			";" => 297,
-			'OP18_TERNARY' => 198,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP23_LOGICAL_AND' => 206,
-			'OP12_COMPARE_EQ_NE' => 205,
-			'OP07_STRING_REPEAT' => 204,
-			'OP04_MATH_POW' => 197,
-			'OP14_BITWISE_OR_XOR' => 203,
-			'OP24_LOGICAL_OR_XOR' => 202,
-			'OP08_MATH_ADD_SUB' => 196,
-			'OP16_LOGICAL_OR' => 201,
-			'OP15_LOGICAL_AND' => 200,
-			'OP13_BITWISE_AND' => 195,
-			'OP06_REGEX_MATCH' => 194,
-			'OP08_STRING_CAT' => 193,
-			'OP17_LIST_RANGE' => 192,
-			'OP11_COMPARE_LT_GT' => 199
-		}
-	},
-	{#State 235
-		ACTIONS => {
-			'WORD' => 24,
-			'LITERAL_NUMBER' => 118,
-			'VARIABLE_SYMBOL' => 120,
-			'LITERAL_STRING' => 94,
-			'LBRACE' => 95,
-			'OP10_NAMED_UNARY' => 96,
-			'WORD_UPPERCASE' => 136,
-			"\@{" => 99,
-			'LBRACKET' => 112,
-			'LPAREN' => 110,
-			'OP01_CLOSE' => 114,
-			'OP22_LOGICAL_NEG' => 90,
-			'MY' => 138,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'OP01_OPEN' => 106,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_LOGICAL_NEG' => 108,
-			")" => -123,
-			"undef" => 100,
-			"%{" => 80,
-			'OP01_QW' => 137,
-			'OP01_NAMED' => 140
-		},
-		GOTOS => {
-			'Expression' => 134,
-			'Operator' => 102,
-			'Literal' => 116,
-			'ListElement' => 182,
-			'Variable' => 139,
-			'SubExpression' => 180,
-			'ListElements' => 298,
-			'TypeInner' => 142,
-			'HashDereference' => 123,
-			'OPTIONAL-34' => 299,
-			'ArrayDereference' => 81,
-			'WordScoped' => 119,
-			'ArrayReference' => 121,
-			'HashReference' => 91
-		}
-	},
-	{#State 236
-		DEFAULT => -139
-	},
-	{#State 237
-		ACTIONS => {
-			";" => 300
-		}
-	},
-	{#State 238
-		ACTIONS => {
-			'OP11_COMPARE_LT_GT' => 199,
-			'OP17_LIST_RANGE' => 192,
-			'OP08_STRING_CAT' => 193,
-			'OP06_REGEX_MATCH' => 194,
-			'OP13_BITWISE_AND' => 195,
-			'OP15_LOGICAL_AND' => 200,
-			'OP16_LOGICAL_OR' => 201,
-			'OP08_MATH_ADD_SUB' => 196,
-			'OP24_LOGICAL_OR_XOR' => 202,
-			'OP14_BITWISE_OR_XOR' => 203,
-			'OP04_MATH_POW' => 197,
-			'OP07_STRING_REPEAT' => 204,
-			'OP12_COMPARE_EQ_NE' => 205,
-			'OP23_LOGICAL_AND' => 206,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			";" => -138,
-			'OP18_TERNARY' => 198,
-			'OP09_BITWISE_SHIFT' => 208
-		}
-	},
-	{#State 239
-		ACTIONS => {
-			";" => 301
-		}
-	},
-	{#State 240
-		ACTIONS => {
-			'OP19_VARIABLE_ASSIGN' => 302,
-			";" => 303
-		}
-	},
-	{#State 241
-		ACTIONS => {
-			"}" => 304,
-			'OP21_LIST_COMMA' => 305
-		},
-		GOTOS => {
-			'PAREN-49' => 306
-		}
-	},
-	{#State 242
-		ACTIONS => {
-			'OP01_NAMED' => -192,
-			"%{" => -192,
-			"undef" => -192,
-			'OP03_MATH_INC_DEC' => -192,
-			'OP05_LOGICAL_NEG' => -192,
-			'OP01_OPEN' => -192,
-			'WORD_SCOPED' => -192,
-			'OP05_MATH_NEG_LPAREN' => -192,
-			'MY' => 138,
-			'OP22_LOGICAL_NEG' => -192,
-			'OP01_CLOSE' => -192,
-			'LPAREN' => -192,
-			'LBRACKET' => -192,
-			"\@{" => -192,
-			'WORD_UPPERCASE' => -192,
-			'LITERAL_STRING' => -192,
-			'OP10_NAMED_UNARY' => -192,
-			'LBRACE' => -192,
-			'VARIABLE_SYMBOL' => -192,
-			'LITERAL_NUMBER' => -192,
-			'WORD' => -192
-		},
-		GOTOS => {
-			'OPTIONAL-48' => 307,
-			'TypeInner' => 308
-		}
-	},
-	{#State 243
-		ACTIONS => {
-			"}" => 309
-		}
-	},
-	{#State 244
-		DEFAULT => -189
-	},
-	{#State 245
-		ACTIONS => {
-			'OP01_OPEN' => 106,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_LOGICAL_NEG' => 108,
-			"undef" => 100,
-			'OP01_NAMED' => 140,
-			"%{" => 80,
-			'VARIABLE_SYMBOL' => 120,
-			'LITERAL_NUMBER' => 118,
-			'WORD' => 24,
-			"\@{" => 99,
-			'WORD_UPPERCASE' => 136,
-			'LITERAL_STRING' => 94,
-			'LBRACE' => 95,
-			'OP10_NAMED_UNARY' => 96,
-			'LPAREN' => 110,
-			'LBRACKET' => 112,
-			'OP22_LOGICAL_NEG' => 90,
-			'OP01_CLOSE' => 114
-		},
-		GOTOS => {
-			'Expression' => 134,
-			'Operator' => 102,
-			'Literal' => 116,
-			'SubExpression' => 310,
-			'Variable' => 139,
-			'HashDereference' => 123,
-			'ArrayReference' => 121,
-			'HashReference' => 91,
-			'WordScoped' => 119,
-			'ArrayDereference' => 81
-		}
-	},
-	{#State 246
-		ACTIONS => {
-			'TYPE_INTEGER' => 311
-		}
-	},
-	{#State 247
 		ACTIONS => {
 			'TYPE_INTEGER' => 55,
 			'WORD' => 56
 		},
 		GOTOS => {
-			'Type' => 312
+			'Type' => 277
+		}
+	},
+	{#State 210
+		DEFAULT => -42
+	},
+	{#State 211
+		DEFAULT => -45,
+		GOTOS => {
+			'STAR-17' => 278
+		}
+	},
+	{#State 212
+		ACTIONS => {
+			"\$TYPED_" => 279
+		}
+	},
+	{#State 213
+		ACTIONS => {
+			";" => 280
+		}
+	},
+	{#State 214
+		ACTIONS => {
+			"our hashref \$properties" => 282,
+			"use constant" => 47
+		},
+		GOTOS => {
+			'Properties' => 283,
+			'Constant' => 281
+		}
+	},
+	{#State 215
+		DEFAULT => -53
+	},
+	{#State 216
+		DEFAULT => -87
+	},
+	{#State 217
+		ACTIONS => {
+			'OP18_TERNARY' => -79,
+			'OP14_BITWISE_OR_XOR' => -79,
+			")" => -79,
+			'OP04_MATH_POW' => -79,
+			'OP23_LOGICAL_AND' => -79,
+			"}" => -79,
+			'OP08_MATH_ADD_SUB' => -79,
+			'OP13_BITWISE_AND' => -79,
+			'OP15_LOGICAL_AND' => -79,
+			'OP12_COMPARE_EQ_NE' => -79,
+			";" => -79,
+			'OP11_COMPARE_LT_GT' => -79,
+			'OP07_MATH_MULT_DIV_MOD' => -79,
+			"]" => -79,
+			'OP21_LIST_COMMA' => -79,
+			'OP07_STRING_REPEAT' => -79,
+			'OP09_BITWISE_SHIFT' => -79,
+			'OP24_LOGICAL_OR_XOR' => -79,
+			'OP16_LOGICAL_OR' => -79,
+			'OP17_LIST_RANGE' => -79,
+			'OP06_REGEX_MATCH' => -79,
+			'OP08_STRING_CAT' => -79
+		}
+	},
+	{#State 218
+		DEFAULT => -186
+	},
+	{#State 219
+		ACTIONS => {
+			'WORD' => 284,
+			")" => 285
+		}
+	},
+	{#State 220
+		DEFAULT => -180
+	},
+	{#State 221
+		ACTIONS => {
+			";" => -178,
+			'OP21_LIST_COMMA' => 286,
+			"]" => -178,
+			")" => -178
+		},
+		GOTOS => {
+			'PAREN-43' => 287
+		}
+	},
+	{#State 222
+		ACTIONS => {
+			"\$TYPED_" => 288
+		}
+	},
+	{#State 223
+		ACTIONS => {
+			'OP13_BITWISE_AND' => 155,
+			'OP08_MATH_ADD_SUB' => 165,
+			'OP23_LOGICAL_AND' => 164,
+			'OP04_MATH_POW' => 163,
+			'OP14_BITWISE_OR_XOR' => 157,
+			'OP18_TERNARY' => 156,
+			")" => -182,
+			'OP24_LOGICAL_OR_XOR' => 167,
+			'OP16_LOGICAL_OR' => 168,
+			'OP09_BITWISE_SHIFT' => 166,
+			'OP07_STRING_REPEAT' => 158,
+			'OP21_LIST_COMMA' => -182,
+			'OP06_REGEX_MATCH' => 169,
+			'OP08_STRING_CAT' => 160,
+			'OP17_LIST_RANGE' => 159,
+			";" => -182,
+			'OP15_LOGICAL_AND' => 161,
+			'OP12_COMPARE_EQ_NE' => 170,
+			"]" => -182,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			'OP11_COMPARE_LT_GT' => 171
+		}
+	},
+	{#State 224
+		ACTIONS => {
+			'TYPE_INTEGER' => 289
+		}
+	},
+	{#State 225
+		ACTIONS => {
+			'OP01_NAMED' => 129,
+			"undef" => 100,
+			'OP03_MATH_INC_DEC' => 80,
+			'VARIABLE_SYMBOL' => 101,
+			"\@{" => 79,
+			"%{" => 97,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'OP01_CLOSE' => 114,
+			'WORD_SCOPED' => 27,
+			'LBRACE' => 115,
+			'OP10_NAMED_UNARY' => 91,
+			'LPAREN' => 110,
+			'OP22_LOGICAL_NEG' => 87,
+			'WORD' => 26,
+			'WORD_UPPERCASE' => 125,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109
+		},
+		GOTOS => {
+			'ArrayReference' => 71,
+			'SubExpression' => 290,
+			'Literal' => 84,
+			'Operator' => 73,
+			'HashDereference' => 85,
+			'ArrayDereference' => 86,
+			'HashReference' => 98,
+			'Expression' => 127,
+			'WordScoped' => 113,
+			'Variable' => 126
+		}
+	},
+	{#State 226
+		ACTIONS => {
+			'TYPE_INTEGER' => 55,
+			'WORD' => 56
+		},
+		GOTOS => {
+			'Type' => 291
+		}
+	},
+	{#State 227
+		ACTIONS => {
+			";" => 292
+		}
+	},
+	{#State 228
+		ACTIONS => {
+			";" => 293
+		}
+	},
+	{#State 229
+		ACTIONS => {
+			"}" => 294
+		}
+	},
+	{#State 230
+		DEFAULT => -189
+	},
+	{#State 231
+		ACTIONS => {
+			'OP01_OPEN' => 93,
+			'LITERAL_NUMBER' => 94,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LBRACKET' => 75,
+			'MY' => 133,
+			"%{" => 97,
+			'OP01_QW' => 131,
+			"\@{" => 79,
+			'OP03_MATH_INC_DEC' => 80,
+			"undef" => 100,
+			'OP01_NAMED' => 129,
+			'VARIABLE_SYMBOL' => 101,
+			'WORD_UPPERCASE' => 125,
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108,
+			'LPAREN' => 110,
+			'OP22_LOGICAL_NEG' => 87,
+			'WORD' => 26,
+			'OP01_CLOSE' => 114,
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115,
+			'WORD_SCOPED' => 27
+		},
+		GOTOS => {
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'SubExpression' => 134,
+			'Literal' => 84,
+			'ArrayReference' => 71,
+			'TypeInner' => 136,
+			'HashReference' => 98,
+			'ArrayDereference' => 86,
+			'ListElement' => 132,
+			'ListElements' => 295,
+			'Expression' => 127,
+			'Variable' => 126,
+			'WordScoped' => 113
+		}
+	},
+	{#State 232
+		ACTIONS => {
+			'OP04_MATH_POW' => 163,
+			'OP23_LOGICAL_AND' => -98,
+			"}" => -98,
+			'OP08_MATH_ADD_SUB' => 165,
+			'OP13_BITWISE_AND' => -98,
+			'OP18_TERNARY' => -98,
+			'OP14_BITWISE_OR_XOR' => -98,
+			")" => -98,
+			'OP21_LIST_COMMA' => -98,
+			'OP07_STRING_REPEAT' => 158,
+			'OP09_BITWISE_SHIFT' => 166,
+			'OP16_LOGICAL_OR' => -98,
+			'OP24_LOGICAL_OR_XOR' => -98,
+			'OP17_LIST_RANGE' => -98,
+			'OP06_REGEX_MATCH' => 169,
+			'OP08_STRING_CAT' => 160,
+			'OP15_LOGICAL_AND' => -98,
+			'OP12_COMPARE_EQ_NE' => 170,
+			";" => -98,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			'OP11_COMPARE_LT_GT' => 171,
+			"]" => -98
+		}
+	},
+	{#State 233
+		DEFAULT => -213
+	},
+	{#State 234
+		ACTIONS => {
+			'COLON' => 296
+		}
+	},
+	{#State 235
+		DEFAULT => -214
+	},
+	{#State 236
+		ACTIONS => {
+			")" => -99,
+			'OP18_TERNARY' => -99,
+			'OP14_BITWISE_OR_XOR' => -99,
+			'OP08_MATH_ADD_SUB' => 165,
+			"}" => -99,
+			'OP23_LOGICAL_AND' => -99,
+			'OP13_BITWISE_AND' => 155,
+			'OP04_MATH_POW' => 163,
+			"]" => -99,
+			'OP11_COMPARE_LT_GT' => 171,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			'OP12_COMPARE_EQ_NE' => 170,
+			'OP15_LOGICAL_AND' => -99,
+			";" => -99,
+			'OP08_STRING_CAT' => 160,
+			'OP06_REGEX_MATCH' => 169,
+			'OP17_LIST_RANGE' => -99,
+			'OP16_LOGICAL_OR' => -99,
+			'OP24_LOGICAL_OR_XOR' => -99,
+			'OP07_STRING_REPEAT' => 158,
+			'OP21_LIST_COMMA' => -99,
+			'OP09_BITWISE_SHIFT' => 166
+		}
+	},
+	{#State 237
+		ACTIONS => {
+			'OP14_BITWISE_OR_XOR' => -89,
+			'OP18_TERNARY' => -89,
+			")" => -89,
+			'OP13_BITWISE_AND' => -89,
+			"}" => -89,
+			'OP23_LOGICAL_AND' => -89,
+			'OP08_MATH_ADD_SUB' => -89,
+			'OP04_MATH_POW' => 163,
+			";" => -89,
+			'OP12_COMPARE_EQ_NE' => -89,
+			'OP15_LOGICAL_AND' => -89,
+			"]" => -89,
+			'OP11_COMPARE_LT_GT' => -89,
+			'OP07_MATH_MULT_DIV_MOD' => -89,
+			'OP16_LOGICAL_OR' => -89,
+			'OP24_LOGICAL_OR_XOR' => -89,
+			'OP09_BITWISE_SHIFT' => -89,
+			'OP07_STRING_REPEAT' => -89,
+			'OP21_LIST_COMMA' => -89,
+			'OP08_STRING_CAT' => -89,
+			'OP06_REGEX_MATCH' => 169,
+			'OP17_LIST_RANGE' => -89
+		}
+	},
+	{#State 238
+		ACTIONS => {
+			'OP17_LIST_RANGE' => undef,
+			'OP06_REGEX_MATCH' => 169,
+			'OP08_STRING_CAT' => 160,
+			'OP09_BITWISE_SHIFT' => 166,
+			'OP21_LIST_COMMA' => -102,
+			'OP07_STRING_REPEAT' => 158,
+			'OP16_LOGICAL_OR' => 168,
+			'OP24_LOGICAL_OR_XOR' => -102,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			'OP11_COMPARE_LT_GT' => 171,
+			"]" => -102,
+			";" => -102,
+			'OP12_COMPARE_EQ_NE' => 170,
+			'OP15_LOGICAL_AND' => 161,
+			'OP04_MATH_POW' => 163,
+			'OP13_BITWISE_AND' => 155,
+			"}" => -102,
+			'OP08_MATH_ADD_SUB' => 165,
+			'OP23_LOGICAL_AND' => -102,
+			")" => -102,
+			'OP14_BITWISE_OR_XOR' => 157,
+			'OP18_TERNARY' => -102
+		}
+	},
+	{#State 239
+		ACTIONS => {
+			'OP13_BITWISE_AND' => -92,
+			"}" => -92,
+			'OP23_LOGICAL_AND' => -92,
+			'OP08_MATH_ADD_SUB' => 165,
+			'OP04_MATH_POW' => 163,
+			'OP14_BITWISE_OR_XOR' => -92,
+			'OP18_TERNARY' => -92,
+			")" => -92,
+			'OP16_LOGICAL_OR' => -92,
+			'OP24_LOGICAL_OR_XOR' => -92,
+			'OP09_BITWISE_SHIFT' => -92,
+			'OP07_STRING_REPEAT' => 158,
+			'OP21_LIST_COMMA' => -92,
+			'OP08_STRING_CAT' => -92,
+			'OP06_REGEX_MATCH' => 169,
+			'OP17_LIST_RANGE' => -92,
+			";" => -92,
+			'OP12_COMPARE_EQ_NE' => -92,
+			'OP15_LOGICAL_AND' => -92,
+			"]" => -92,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			'OP11_COMPARE_LT_GT' => -92
+		}
+	},
+	{#State 240
+		ACTIONS => {
+			'OP04_MATH_POW' => 163,
+			'OP13_BITWISE_AND' => 155,
+			"}" => -100,
+			'OP23_LOGICAL_AND' => -100,
+			'OP08_MATH_ADD_SUB' => 165,
+			")" => -100,
+			'OP14_BITWISE_OR_XOR' => 157,
+			'OP18_TERNARY' => -100,
+			'OP17_LIST_RANGE' => -100,
+			'OP06_REGEX_MATCH' => 169,
+			'OP08_STRING_CAT' => 160,
+			'OP09_BITWISE_SHIFT' => 166,
+			'OP21_LIST_COMMA' => -100,
+			'OP07_STRING_REPEAT' => 158,
+			'OP16_LOGICAL_OR' => -100,
+			'OP24_LOGICAL_OR_XOR' => -100,
+			'OP11_COMPARE_LT_GT' => 171,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			"]" => -100,
+			";" => -100,
+			'OP12_COMPARE_EQ_NE' => 170,
+			'OP15_LOGICAL_AND' => -100
+		}
+	},
+	{#State 241
+		ACTIONS => {
+			'OP13_BITWISE_AND' => -90,
+			"}" => -90,
+			'OP23_LOGICAL_AND' => -90,
+			'OP08_MATH_ADD_SUB' => -90,
+			'OP04_MATH_POW' => 163,
+			'OP14_BITWISE_OR_XOR' => -90,
+			'OP18_TERNARY' => -90,
+			")" => -90,
+			'OP16_LOGICAL_OR' => -90,
+			'OP24_LOGICAL_OR_XOR' => -90,
+			'OP09_BITWISE_SHIFT' => -90,
+			'OP07_STRING_REPEAT' => 158,
+			'OP21_LIST_COMMA' => -90,
+			'OP08_STRING_CAT' => -90,
+			'OP06_REGEX_MATCH' => 169,
+			'OP17_LIST_RANGE' => -90,
+			";" => -90,
+			'OP12_COMPARE_EQ_NE' => -90,
+			'OP15_LOGICAL_AND' => -90,
+			"]" => -90,
+			'OP11_COMPARE_LT_GT' => -90,
+			'OP07_MATH_MULT_DIV_MOD' => -90
+		}
+	},
+	{#State 242
+		ACTIONS => {
+			'OP08_STRING_CAT' => -85,
+			'OP06_REGEX_MATCH' => -85,
+			'OP17_LIST_RANGE' => -85,
+			'OP16_LOGICAL_OR' => -85,
+			'OP24_LOGICAL_OR_XOR' => -85,
+			'OP07_STRING_REPEAT' => -85,
+			'OP21_LIST_COMMA' => -85,
+			'OP09_BITWISE_SHIFT' => -85,
+			"]" => -85,
+			'OP11_COMPARE_LT_GT' => -85,
+			'OP07_MATH_MULT_DIV_MOD' => -85,
+			'OP15_LOGICAL_AND' => -85,
+			'OP12_COMPARE_EQ_NE' => -85,
+			";" => -85,
+			'OP23_LOGICAL_AND' => -85,
+			"}" => -85,
+			'OP08_MATH_ADD_SUB' => -85,
+			'OP13_BITWISE_AND' => -85,
+			'OP04_MATH_POW' => 163,
+			")" => -85,
+			'OP18_TERNARY' => -85,
+			'OP14_BITWISE_OR_XOR' => -85
+		}
+	},
+	{#State 243
+		ACTIONS => {
+			'OP04_MATH_POW' => 163,
+			'OP08_MATH_ADD_SUB' => 165,
+			"}" => -105,
+			'OP23_LOGICAL_AND' => -105,
+			'OP13_BITWISE_AND' => 155,
+			'OP18_TERNARY' => 156,
+			'OP14_BITWISE_OR_XOR' => 157,
+			")" => -105,
+			'OP21_LIST_COMMA' => -105,
+			'OP07_STRING_REPEAT' => 158,
+			'OP09_BITWISE_SHIFT' => 166,
+			'OP24_LOGICAL_OR_XOR' => -105,
+			'OP16_LOGICAL_OR' => 168,
+			'OP17_LIST_RANGE' => 159,
+			'OP08_STRING_CAT' => 160,
+			'OP06_REGEX_MATCH' => 169,
+			'OP12_COMPARE_EQ_NE' => 170,
+			'OP15_LOGICAL_AND' => 161,
+			";" => -105,
+			'OP11_COMPARE_LT_GT' => 171,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			"]" => -105
+		}
+	},
+	{#State 244
+		ACTIONS => {
+			"}" => -91,
+			'OP23_LOGICAL_AND' => -91,
+			'OP08_MATH_ADD_SUB' => -91,
+			'OP13_BITWISE_AND' => -91,
+			'OP04_MATH_POW' => 163,
+			'OP18_TERNARY' => -91,
+			'OP14_BITWISE_OR_XOR' => -91,
+			")" => -91,
+			'OP24_LOGICAL_OR_XOR' => -91,
+			'OP16_LOGICAL_OR' => -91,
+			'OP07_STRING_REPEAT' => 158,
+			'OP21_LIST_COMMA' => -91,
+			'OP09_BITWISE_SHIFT' => -91,
+			'OP08_STRING_CAT' => -91,
+			'OP06_REGEX_MATCH' => 169,
+			'OP17_LIST_RANGE' => -91,
+			'OP15_LOGICAL_AND' => -91,
+			'OP12_COMPARE_EQ_NE' => -91,
+			";" => -91,
+			"]" => -91,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			'OP11_COMPARE_LT_GT' => -91
+		}
+	},
+	{#State 245
+		ACTIONS => {
+			'OP04_MATH_POW' => 163,
+			'OP13_BITWISE_AND' => -93,
+			'OP08_MATH_ADD_SUB' => 165,
+			"}" => -93,
+			'OP23_LOGICAL_AND' => -93,
+			'OP14_BITWISE_OR_XOR' => -93,
+			'OP18_TERNARY' => -93,
+			")" => -93,
+			'OP09_BITWISE_SHIFT' => -93,
+			'OP21_LIST_COMMA' => -93,
+			'OP07_STRING_REPEAT' => 158,
+			'OP16_LOGICAL_OR' => -93,
+			'OP24_LOGICAL_OR_XOR' => -93,
+			'OP17_LIST_RANGE' => -93,
+			'OP06_REGEX_MATCH' => 169,
+			'OP08_STRING_CAT' => 160,
+			";" => -93,
+			'OP15_LOGICAL_AND' => -93,
+			'OP12_COMPARE_EQ_NE' => -93,
+			'OP11_COMPARE_LT_GT' => -93,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			"]" => -93
+		}
+	},
+	{#State 246
+		ACTIONS => {
+			";" => -106,
+			'OP15_LOGICAL_AND' => 161,
+			'OP12_COMPARE_EQ_NE' => 170,
+			"]" => -106,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			'OP11_COMPARE_LT_GT' => 171,
+			'OP16_LOGICAL_OR' => 168,
+			'OP24_LOGICAL_OR_XOR' => -106,
+			'OP09_BITWISE_SHIFT' => 166,
+			'OP07_STRING_REPEAT' => 158,
+			'OP21_LIST_COMMA' => -106,
+			'OP06_REGEX_MATCH' => 169,
+			'OP08_STRING_CAT' => 160,
+			'OP17_LIST_RANGE' => 159,
+			'OP14_BITWISE_OR_XOR' => 157,
+			'OP18_TERNARY' => 156,
+			")" => -106,
+			'OP13_BITWISE_AND' => 155,
+			"}" => -106,
+			'OP08_MATH_ADD_SUB' => 165,
+			'OP23_LOGICAL_AND' => 164,
+			'OP04_MATH_POW' => 163
+		}
+	},
+	{#State 247
+		ACTIONS => {
+			'OP11_COMPARE_LT_GT' => 171,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			"]" => -101,
+			";" => -101,
+			'OP15_LOGICAL_AND' => 161,
+			'OP12_COMPARE_EQ_NE' => 170,
+			'OP17_LIST_RANGE' => -101,
+			'OP08_STRING_CAT' => 160,
+			'OP06_REGEX_MATCH' => 169,
+			'OP09_BITWISE_SHIFT' => 166,
+			'OP21_LIST_COMMA' => -101,
+			'OP07_STRING_REPEAT' => 158,
+			'OP24_LOGICAL_OR_XOR' => -101,
+			'OP16_LOGICAL_OR' => -101,
+			")" => -101,
+			'OP14_BITWISE_OR_XOR' => 157,
+			'OP18_TERNARY' => -101,
+			'OP04_MATH_POW' => 163,
+			'OP13_BITWISE_AND' => 155,
+			'OP08_MATH_ADD_SUB' => 165,
+			"}" => -101,
+			'OP23_LOGICAL_AND' => -101
 		}
 	},
 	{#State 248
-		DEFAULT => -119
+		DEFAULT => -88
 	},
 	{#State 249
 		ACTIONS => {
-			"]" => -178,
-			")" => -178,
-			";" => -178,
-			'OP21_LIST_COMMA' => 313
-		},
-		GOTOS => {
-			'PAREN-43' => 314
+			'OP12_COMPARE_EQ_NE' => undef,
+			'OP15_LOGICAL_AND' => -97,
+			";" => -97,
+			'OP11_COMPARE_LT_GT' => 171,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			"]" => -97,
+			'OP21_LIST_COMMA' => -97,
+			'OP07_STRING_REPEAT' => 158,
+			'OP09_BITWISE_SHIFT' => 166,
+			'OP24_LOGICAL_OR_XOR' => -97,
+			'OP16_LOGICAL_OR' => -97,
+			'OP17_LIST_RANGE' => -97,
+			'OP08_STRING_CAT' => 160,
+			'OP06_REGEX_MATCH' => 169,
+			'OP18_TERNARY' => -97,
+			'OP14_BITWISE_OR_XOR' => -97,
+			")" => -97,
+			'OP04_MATH_POW' => 163,
+			'OP23_LOGICAL_AND' => -97,
+			"}" => -97,
+			'OP08_MATH_ADD_SUB' => 165,
+			'OP13_BITWISE_AND' => -97
 		}
 	},
 	{#State 250
 		ACTIONS => {
-			";" => 315
+			'OP21_LIST_COMMA' => -96,
+			'OP07_STRING_REPEAT' => 158,
+			'OP09_BITWISE_SHIFT' => 166,
+			'OP24_LOGICAL_OR_XOR' => -96,
+			'OP16_LOGICAL_OR' => -96,
+			'OP17_LIST_RANGE' => -96,
+			'OP06_REGEX_MATCH' => 169,
+			'OP08_STRING_CAT' => 160,
+			'OP15_LOGICAL_AND' => -96,
+			'OP12_COMPARE_EQ_NE' => -96,
+			";" => -96,
+			'OP11_COMPARE_LT_GT' => undef,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			"]" => -96,
+			'OP04_MATH_POW' => 163,
+			'OP23_LOGICAL_AND' => -96,
+			"}" => -96,
+			'OP08_MATH_ADD_SUB' => 165,
+			'OP13_BITWISE_AND' => -96,
+			'OP18_TERNARY' => -96,
+			'OP14_BITWISE_OR_XOR' => -96,
+			")" => -96
 		}
 	},
 	{#State 251
-		ACTIONS => {
-			'OP07_STRING_REPEAT' => 204,
-			'OP04_MATH_POW' => 197,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP23_LOGICAL_AND' => 206,
-			'OP12_COMPARE_EQ_NE' => 205,
-			'OP18_TERNARY' => 198,
-			'OP09_BITWISE_SHIFT' => 208,
-			'OP08_STRING_CAT' => 193,
-			'OP15_LOGICAL_AND' => 200,
-			'OP13_BITWISE_AND' => 195,
-			'OP06_REGEX_MATCH' => 194,
-			'OP17_LIST_RANGE' => 192,
-			'OP11_COMPARE_LT_GT' => 199,
-			'OP14_BITWISE_OR_XOR' => 203,
-			'OP24_LOGICAL_OR_XOR' => 202,
-			'OP08_MATH_ADD_SUB' => 196,
-			")" => 316,
-			'OP16_LOGICAL_OR' => 201
-		}
+		DEFAULT => -119
 	},
 	{#State 252
 		ACTIONS => {
-			'FHREF_SYMBOL' => 317
+			";" => 297
 		}
 	},
 	{#State 253
-		DEFAULT => -137
+		ACTIONS => {
+			'FHREF_SYMBOL' => 298
+		}
 	},
 	{#State 254
 		ACTIONS => {
-			'OP21_LIST_COMMA' => 318
+			'OP19_VARIABLE_ASSIGN' => 300,
+			";" => 299
 		}
 	},
 	{#State 255
 		ACTIONS => {
-			'LBRACKET' => 112,
-			'LPAREN' => 110,
-			'OP01_CLOSE' => 114,
-			'OP22_LOGICAL_NEG' => 90,
-			'MY' => 138,
-			'WORD' => 24,
-			'LITERAL_NUMBER' => 118,
-			'VARIABLE_SYMBOL' => 120,
-			'LBRACE' => 95,
-			'LITERAL_STRING' => 94,
-			'OP10_NAMED_UNARY' => 96,
-			'WORD_UPPERCASE' => 136,
-			"\@{" => 99,
-			"undef" => 100,
-			"%{" => 80,
-			'OP01_QW' => 137,
-			'OP01_NAMED' => 140,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'WORD_SCOPED' => 23,
-			'OP01_OPEN' => 106,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_LOGICAL_NEG' => 108
-		},
-		GOTOS => {
-			'Expression' => 134,
-			'Literal' => 116,
-			'Operator' => 102,
-			'ListElement' => 182,
-			'Variable' => 139,
-			'SubExpression' => 180,
-			'ListElements' => 319,
-			'TypeInner' => 142,
-			'HashDereference' => 123,
-			'WordScoped' => 119,
-			'ArrayDereference' => 81,
-			'ArrayReference' => 121,
-			'HashReference' => 91
+			";" => 301
 		}
 	},
 	{#State 256
-		DEFAULT => -186
+		DEFAULT => -204
 	},
 	{#State 257
 		ACTIONS => {
-			'OP04_MATH_POW' => 197,
-			'OP21_LIST_COMMA' => -102,
-			'OP07_STRING_REPEAT' => 204,
-			'OP23_LOGICAL_AND' => -102,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP12_COMPARE_EQ_NE' => 205,
-			"}" => -102,
-			";" => -102,
-			'OP18_TERNARY' => -102,
-			"]" => -102,
-			'OP09_BITWISE_SHIFT' => 208,
-			'OP08_STRING_CAT' => 193,
-			'OP15_LOGICAL_AND' => 200,
-			'OP06_REGEX_MATCH' => 194,
-			'OP13_BITWISE_AND' => 195,
-			'OP17_LIST_RANGE' => undef,
-			'OP11_COMPARE_LT_GT' => 199,
-			'OP14_BITWISE_OR_XOR' => 203,
-			'OP24_LOGICAL_OR_XOR' => -102,
-			'OP08_MATH_ADD_SUB' => 196,
-			'OP16_LOGICAL_OR' => 201,
-			")" => -102
+			"}" => 302
 		}
 	},
 	{#State 258
 		ACTIONS => {
-			'OP16_LOGICAL_OR' => -92,
-			")" => -92,
-			'OP08_MATH_ADD_SUB' => 196,
-			'OP24_LOGICAL_OR_XOR' => -92,
-			'OP14_BITWISE_OR_XOR' => -92,
-			'OP17_LIST_RANGE' => -92,
-			'OP11_COMPARE_LT_GT' => -92,
-			'OP08_STRING_CAT' => -92,
-			'OP06_REGEX_MATCH' => 194,
-			'OP13_BITWISE_AND' => -92,
-			'OP15_LOGICAL_AND' => -92,
-			";" => -92,
-			'OP18_TERNARY' => -92,
-			'OP09_BITWISE_SHIFT' => -92,
-			"]" => -92,
-			"}" => -92,
-			'OP07_STRING_REPEAT' => 204,
-			'OP21_LIST_COMMA' => -92,
-			'OP04_MATH_POW' => 197,
-			'OP12_COMPARE_EQ_NE' => -92,
-			'OP23_LOGICAL_AND' => -92,
-			'OP07_MATH_MULT_DIV_MOD' => 207
+			'WORD_UPPERCASE' => 125,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109,
+			'OP01_CLOSE' => 114,
+			'LBRACE' => 115,
+			'OP10_NAMED_UNARY' => 91,
+			'WORD_SCOPED' => 27,
+			'OP22_LOGICAL_NEG' => 87,
+			'LPAREN' => 110,
+			'WORD' => 304,
+			"%{" => 97,
+			'OP01_OPEN' => 93,
+			'LITERAL_NUMBER' => 94,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LBRACKET' => 75,
+			"undef" => 100,
+			'OP03_MATH_INC_DEC' => 80,
+			'OP01_NAMED' => 129,
+			'VARIABLE_SYMBOL' => 101,
+			"\@{" => 79
+		},
+		GOTOS => {
+			'Expression' => 127,
+			'Variable' => 126,
+			'WordScoped' => 113,
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'SubExpression' => 303,
+			'Literal' => 84,
+			'ArrayReference' => 71,
+			'HashReference' => 98,
+			'ArrayDereference' => 86
 		}
 	},
 	{#State 259
-		DEFAULT => -88
+		DEFAULT => -164
 	},
 	{#State 260
 		ACTIONS => {
-			'OP16_LOGICAL_OR' => -98,
-			")" => -98,
-			'OP08_MATH_ADD_SUB' => 196,
-			'OP24_LOGICAL_OR_XOR' => -98,
-			'OP14_BITWISE_OR_XOR' => -98,
-			'OP11_COMPARE_LT_GT' => 199,
-			'OP17_LIST_RANGE' => -98,
-			'OP08_STRING_CAT' => 193,
-			'OP06_REGEX_MATCH' => 194,
-			'OP13_BITWISE_AND' => -98,
-			'OP15_LOGICAL_AND' => -98,
-			";" => -98,
-			'OP18_TERNARY' => -98,
-			'OP09_BITWISE_SHIFT' => 208,
-			"]" => -98,
-			"}" => -98,
-			'OP21_LIST_COMMA' => -98,
-			'OP04_MATH_POW' => 197,
-			'OP07_STRING_REPEAT' => 204,
-			'OP12_COMPARE_EQ_NE' => 205,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP23_LOGICAL_AND' => -98
+			"%{" => 97,
+			'OP01_OPEN' => 93,
+			'LITERAL_NUMBER' => 94,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LBRACKET' => 75,
+			"undef" => 100,
+			'OP03_MATH_INC_DEC' => 80,
+			'OP01_NAMED' => 129,
+			'VARIABLE_SYMBOL' => 101,
+			"\@{" => 79,
+			'WORD_UPPERCASE' => 125,
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108,
+			'OP01_CLOSE' => 114,
+			'LBRACE' => 115,
+			'OP10_NAMED_UNARY' => 91,
+			'WORD_SCOPED' => 27,
+			'LPAREN' => 110,
+			'OP22_LOGICAL_NEG' => 87,
+			'WORD' => 26
+		},
+		GOTOS => {
+			'WordScoped' => 113,
+			'Variable' => 126,
+			'Expression' => 127,
+			'ArrayDereference' => 86,
+			'HashReference' => 98,
+			'Literal' => 84,
+			'SubExpression' => 305,
+			'ArrayReference' => 71,
+			'HashDereference' => 85,
+			'Operator' => 73
 		}
 	},
 	{#State 261
-		ACTIONS => {
-			'OP14_BITWISE_OR_XOR' => -91,
-			'OP24_LOGICAL_OR_XOR' => -91,
-			'OP08_MATH_ADD_SUB' => -91,
-			")" => -91,
-			'OP16_LOGICAL_OR' => -91,
-			'OP08_STRING_CAT' => -91,
-			'OP15_LOGICAL_AND' => -91,
-			'OP06_REGEX_MATCH' => 194,
-			'OP13_BITWISE_AND' => -91,
-			'OP11_COMPARE_LT_GT' => -91,
-			'OP17_LIST_RANGE' => -91,
-			";" => -91,
-			'OP18_TERNARY' => -91,
-			"]" => -91,
-			'OP09_BITWISE_SHIFT' => -91,
-			'OP07_STRING_REPEAT' => 204,
-			'OP21_LIST_COMMA' => -91,
-			'OP04_MATH_POW' => 197,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP23_LOGICAL_AND' => -91,
-			'OP12_COMPARE_EQ_NE' => -91,
-			"}" => -91
-		}
+		DEFAULT => -116
 	},
 	{#State 262
 		ACTIONS => {
-			";" => -85,
-			'OP18_TERNARY' => -85,
-			'OP09_BITWISE_SHIFT' => -85,
-			"]" => -85,
-			"}" => -85,
-			'OP21_LIST_COMMA' => -85,
-			'OP07_STRING_REPEAT' => -85,
-			'OP04_MATH_POW' => 197,
-			'OP12_COMPARE_EQ_NE' => -85,
-			'OP23_LOGICAL_AND' => -85,
-			'OP07_MATH_MULT_DIV_MOD' => -85,
-			'OP16_LOGICAL_OR' => -85,
-			")" => -85,
-			'OP08_MATH_ADD_SUB' => -85,
-			'OP24_LOGICAL_OR_XOR' => -85,
-			'OP14_BITWISE_OR_XOR' => -85,
-			'OP11_COMPARE_LT_GT' => -85,
-			'OP17_LIST_RANGE' => -85,
-			'OP08_STRING_CAT' => -85,
-			'OP13_BITWISE_AND' => -85,
-			'OP06_REGEX_MATCH' => -85,
-			'OP15_LOGICAL_AND' => -85
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108,
+			'WORD_UPPERCASE' => 125,
+			'WORD' => 26,
+			'LPAREN' => 110,
+			'OP22_LOGICAL_NEG' => 87,
+			'WORD_SCOPED' => 27,
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115,
+			'OP01_CLOSE' => 114,
+			'LBRACKET' => 75,
+			'MY' => 133,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'OP01_QW' => 131,
+			"%{" => 97,
+			"\@{" => 79,
+			'VARIABLE_SYMBOL' => 101,
+			'OP01_NAMED' => 129,
+			")" => -123,
+			'OP03_MATH_INC_DEC' => 80,
+			"undef" => 100
+		},
+		GOTOS => {
+			'ArrayReference' => 71,
+			'Literal' => 84,
+			'SubExpression' => 134,
+			'Operator' => 73,
+			'HashDereference' => 85,
+			'ListElement' => 132,
+			'ArrayDereference' => 86,
+			'TypeInner' => 136,
+			'HashReference' => 98,
+			'Expression' => 127,
+			'ListElements' => 306,
+			'WordScoped' => 113,
+			'OPTIONAL-34' => 307,
+			'Variable' => 126
 		}
 	},
 	{#State 263
 		ACTIONS => {
-			'COLON' => 320
+			";" => 308
 		}
 	},
 	{#State 264
-		DEFAULT => -213
+		ACTIONS => {
+			'OP04_MATH_POW' => 163,
+			'OP13_BITWISE_AND' => 155,
+			'OP08_MATH_ADD_SUB' => 165,
+			'OP23_LOGICAL_AND' => 164,
+			'OP14_BITWISE_OR_XOR' => 157,
+			'OP18_TERNARY' => 156,
+			'OP17_LIST_RANGE' => 159,
+			'OP06_REGEX_MATCH' => 169,
+			'OP08_STRING_CAT' => 160,
+			'OP09_BITWISE_SHIFT' => 166,
+			'OP07_STRING_REPEAT' => 158,
+			'OP16_LOGICAL_OR' => 168,
+			'OP24_LOGICAL_OR_XOR' => 167,
+			'OP11_COMPARE_LT_GT' => 171,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			";" => -138,
+			'OP12_COMPARE_EQ_NE' => 170,
+			'OP15_LOGICAL_AND' => 161
+		}
 	},
 	{#State 265
-		DEFAULT => -214
+		DEFAULT => -139
 	},
 	{#State 266
 		ACTIONS => {
-			";" => -96,
-			'OP18_TERNARY' => -96,
-			"]" => -96,
-			'OP09_BITWISE_SHIFT' => 208,
-			'OP21_LIST_COMMA' => -96,
-			'OP07_STRING_REPEAT' => 204,
-			'OP04_MATH_POW' => 197,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP23_LOGICAL_AND' => -96,
-			'OP12_COMPARE_EQ_NE' => -96,
-			"}" => -96,
-			'OP14_BITWISE_OR_XOR' => -96,
-			'OP24_LOGICAL_OR_XOR' => -96,
-			'OP08_MATH_ADD_SUB' => 196,
-			")" => -96,
-			'OP16_LOGICAL_OR' => -96,
-			'OP08_STRING_CAT' => 193,
-			'OP15_LOGICAL_AND' => -96,
-			'OP06_REGEX_MATCH' => 194,
-			'OP13_BITWISE_AND' => -96,
-			'OP17_LIST_RANGE' => -96,
-			'OP11_COMPARE_LT_GT' => undef
+			'OP04_MATH_POW' => 163,
+			'OP23_LOGICAL_AND' => 164,
+			'OP08_MATH_ADD_SUB' => 165,
+			'OP13_BITWISE_AND' => 155,
+			'OP18_TERNARY' => 156,
+			'OP14_BITWISE_OR_XOR' => 157,
+			'OP07_STRING_REPEAT' => 158,
+			'OP09_BITWISE_SHIFT' => 166,
+			'OP16_LOGICAL_OR' => 168,
+			'OP24_LOGICAL_OR_XOR' => 167,
+			'OP17_LIST_RANGE' => 159,
+			'OP08_STRING_CAT' => 160,
+			'OP06_REGEX_MATCH' => 169,
+			'OP12_COMPARE_EQ_NE' => 170,
+			'OP15_LOGICAL_AND' => 161,
+			";" => 309,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			'OP11_COMPARE_LT_GT' => 171
 		}
 	},
 	{#State 267
-		ACTIONS => {
-			'OP21_LIST_COMMA' => -100,
-			'OP04_MATH_POW' => 197,
-			'OP07_STRING_REPEAT' => 204,
-			'OP12_COMPARE_EQ_NE' => 205,
-			'OP23_LOGICAL_AND' => -100,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			"}" => -100,
-			";" => -100,
-			'OP18_TERNARY' => -100,
-			'OP09_BITWISE_SHIFT' => 208,
-			"]" => -100,
-			'OP08_STRING_CAT' => 193,
-			'OP13_BITWISE_AND' => 195,
-			'OP06_REGEX_MATCH' => 194,
-			'OP15_LOGICAL_AND' => -100,
-			'OP17_LIST_RANGE' => -100,
-			'OP11_COMPARE_LT_GT' => 199,
-			'OP24_LOGICAL_OR_XOR' => -100,
-			'OP14_BITWISE_OR_XOR' => 203,
-			'OP16_LOGICAL_OR' => -100,
-			")" => -100,
-			'OP08_MATH_ADD_SUB' => 196
-		}
+		DEFAULT => -126
 	},
 	{#State 268
-		ACTIONS => {
-			'OP11_COMPARE_LT_GT' => 199,
-			'OP17_LIST_RANGE' => -101,
-			'OP08_STRING_CAT' => 193,
-			'OP15_LOGICAL_AND' => 200,
-			'OP06_REGEX_MATCH' => 194,
-			'OP13_BITWISE_AND' => 195,
-			'OP08_MATH_ADD_SUB' => 196,
-			")" => -101,
-			'OP16_LOGICAL_OR' => -101,
-			'OP14_BITWISE_OR_XOR' => 203,
-			'OP24_LOGICAL_OR_XOR' => -101,
-			"}" => -101,
-			'OP21_LIST_COMMA' => -101,
-			'OP04_MATH_POW' => 197,
-			'OP07_STRING_REPEAT' => 204,
-			'OP23_LOGICAL_AND' => -101,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP12_COMPARE_EQ_NE' => 205,
-			";" => -101,
-			'OP18_TERNARY' => -101,
-			"]" => -101,
-			'OP09_BITWISE_SHIFT' => 208
-		}
+		DEFAULT => -137
 	},
 	{#State 269
 		ACTIONS => {
-			'OP21_LIST_COMMA' => -106,
-			'OP07_STRING_REPEAT' => 204,
-			'OP04_MATH_POW' => 197,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP23_LOGICAL_AND' => 206,
-			'OP12_COMPARE_EQ_NE' => 205,
-			"}" => -106,
-			";" => -106,
-			'OP18_TERNARY' => 198,
-			"]" => -106,
-			'OP09_BITWISE_SHIFT' => 208,
-			'OP08_STRING_CAT' => 193,
-			'OP15_LOGICAL_AND' => 200,
-			'OP13_BITWISE_AND' => 195,
-			'OP06_REGEX_MATCH' => 194,
-			'OP11_COMPARE_LT_GT' => 199,
-			'OP17_LIST_RANGE' => 192,
-			'OP14_BITWISE_OR_XOR' => 203,
-			'OP24_LOGICAL_OR_XOR' => -106,
-			'OP08_MATH_ADD_SUB' => 196,
-			'OP16_LOGICAL_OR' => 201,
-			")" => -106
+			'OP21_LIST_COMMA' => 310
 		}
 	},
 	{#State 270
 		ACTIONS => {
-			";" => -99,
-			'OP18_TERNARY' => -99,
-			"]" => -99,
-			'OP09_BITWISE_SHIFT' => 208,
-			'OP21_LIST_COMMA' => -99,
-			'OP04_MATH_POW' => 197,
-			'OP07_STRING_REPEAT' => 204,
-			'OP23_LOGICAL_AND' => -99,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP12_COMPARE_EQ_NE' => 205,
-			"}" => -99,
-			'OP14_BITWISE_OR_XOR' => -99,
-			'OP24_LOGICAL_OR_XOR' => -99,
-			'OP08_MATH_ADD_SUB' => 196,
-			")" => -99,
-			'OP16_LOGICAL_OR' => -99,
-			'OP08_STRING_CAT' => 193,
-			'OP15_LOGICAL_AND' => -99,
-			'OP06_REGEX_MATCH' => 194,
-			'OP13_BITWISE_AND' => 195,
-			'OP17_LIST_RANGE' => -99,
-			'OP11_COMPARE_LT_GT' => 199
+			"%{" => 97,
+			'OP01_QW' => 131,
+			'OP01_OPEN' => 93,
+			'LITERAL_NUMBER' => 94,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LBRACKET' => 75,
+			'MY' => 133,
+			'OP03_MATH_INC_DEC' => 80,
+			"undef" => 100,
+			'OP01_NAMED' => 129,
+			'VARIABLE_SYMBOL' => 101,
+			"\@{" => 79,
+			'WORD_UPPERCASE' => 125,
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108,
+			'OP01_CLOSE' => 114,
+			'LBRACE' => 115,
+			'OP10_NAMED_UNARY' => 91,
+			'WORD_SCOPED' => 27,
+			'LPAREN' => 110,
+			'OP22_LOGICAL_NEG' => 87,
+			'WORD' => 26
+		},
+		GOTOS => {
+			'HashReference' => 98,
+			'TypeInner' => 136,
+			'ArrayDereference' => 86,
+			'ListElement' => 132,
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'Literal' => 84,
+			'SubExpression' => 134,
+			'ArrayReference' => 71,
+			'Variable' => 126,
+			'WordScoped' => 113,
+			'ListElements' => 311,
+			'Expression' => 127
 		}
 	},
 	{#State 271
 		ACTIONS => {
-			'OP08_STRING_CAT' => -89,
-			'OP15_LOGICAL_AND' => -89,
-			'OP06_REGEX_MATCH' => 194,
-			'OP13_BITWISE_AND' => -89,
-			'OP17_LIST_RANGE' => -89,
-			'OP11_COMPARE_LT_GT' => -89,
-			'OP14_BITWISE_OR_XOR' => -89,
-			'OP24_LOGICAL_OR_XOR' => -89,
-			'OP08_MATH_ADD_SUB' => -89,
-			'OP16_LOGICAL_OR' => -89,
-			")" => -89,
-			'OP07_STRING_REPEAT' => -89,
-			'OP21_LIST_COMMA' => -89,
-			'OP04_MATH_POW' => 197,
-			'OP23_LOGICAL_AND' => -89,
-			'OP07_MATH_MULT_DIV_MOD' => -89,
-			'OP12_COMPARE_EQ_NE' => -89,
-			"}" => -89,
-			";" => -89,
-			'OP18_TERNARY' => -89,
-			"]" => -89,
-			'OP09_BITWISE_SHIFT' => -89
+			'OP12_COMPARE_EQ_NE' => 170,
+			'OP15_LOGICAL_AND' => 161,
+			'OP11_COMPARE_LT_GT' => 171,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			'OP24_LOGICAL_OR_XOR' => 167,
+			'OP16_LOGICAL_OR' => 168,
+			'OP07_STRING_REPEAT' => 158,
+			'OP09_BITWISE_SHIFT' => 166,
+			'OP06_REGEX_MATCH' => 169,
+			'OP08_STRING_CAT' => 160,
+			'OP17_LIST_RANGE' => 159,
+			'OP18_TERNARY' => 156,
+			'OP14_BITWISE_OR_XOR' => 157,
+			")" => 312,
+			'OP08_MATH_ADD_SUB' => 165,
+			'OP23_LOGICAL_AND' => 164,
+			'OP13_BITWISE_AND' => 155,
+			'OP04_MATH_POW' => 163
 		}
 	},
 	{#State 272
-		ACTIONS => {
-			'OP13_BITWISE_AND' => -97,
-			'OP06_REGEX_MATCH' => 194,
-			'OP15_LOGICAL_AND' => -97,
-			'OP08_STRING_CAT' => 193,
-			'OP11_COMPARE_LT_GT' => 199,
-			'OP17_LIST_RANGE' => -97,
-			'OP24_LOGICAL_OR_XOR' => -97,
-			'OP14_BITWISE_OR_XOR' => -97,
-			'OP16_LOGICAL_OR' => -97,
-			")" => -97,
-			'OP08_MATH_ADD_SUB' => 196,
-			'OP12_COMPARE_EQ_NE' => undef,
-			'OP23_LOGICAL_AND' => -97,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP07_STRING_REPEAT' => 204,
-			'OP21_LIST_COMMA' => -97,
-			'OP04_MATH_POW' => 197,
-			"}" => -97,
-			'OP09_BITWISE_SHIFT' => 208,
-			"]" => -97,
-			'OP18_TERNARY' => -97,
-			";" => -97
-		}
+		DEFAULT => -128
 	},
 	{#State 273
 		ACTIONS => {
-			'OP08_MATH_ADD_SUB' => 196,
-			'OP16_LOGICAL_OR' => 201,
-			")" => -105,
-			'OP14_BITWISE_OR_XOR' => 203,
-			'OP24_LOGICAL_OR_XOR' => -105,
-			'OP17_LIST_RANGE' => 192,
-			'OP11_COMPARE_LT_GT' => 199,
-			'OP08_STRING_CAT' => 193,
-			'OP15_LOGICAL_AND' => 200,
-			'OP06_REGEX_MATCH' => 194,
-			'OP13_BITWISE_AND' => 195,
-			";" => -105,
-			'OP18_TERNARY' => 198,
-			"]" => -105,
-			'OP09_BITWISE_SHIFT' => 208,
-			"}" => -105,
-			'OP07_STRING_REPEAT' => 204,
-			'OP21_LIST_COMMA' => -105,
-			'OP04_MATH_POW' => 197,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP23_LOGICAL_AND' => -105,
-			'OP12_COMPARE_EQ_NE' => 205
+			")" => 313
 		}
 	},
 	{#State 274
-		ACTIONS => {
-			"]" => -90,
-			'OP09_BITWISE_SHIFT' => -90,
-			'OP18_TERNARY' => -90,
-			";" => -90,
-			"}" => -90,
-			'OP07_MATH_MULT_DIV_MOD' => -90,
-			'OP23_LOGICAL_AND' => -90,
-			'OP12_COMPARE_EQ_NE' => -90,
-			'OP21_LIST_COMMA' => -90,
-			'OP04_MATH_POW' => 197,
-			'OP07_STRING_REPEAT' => 204,
-			'OP08_MATH_ADD_SUB' => -90,
-			")" => -90,
-			'OP16_LOGICAL_OR' => -90,
-			'OP14_BITWISE_OR_XOR' => -90,
-			'OP24_LOGICAL_OR_XOR' => -90,
-			'OP17_LIST_RANGE' => -90,
-			'OP11_COMPARE_LT_GT' => -90,
-			'OP15_LOGICAL_AND' => -90,
-			'OP06_REGEX_MATCH' => 194,
-			'OP13_BITWISE_AND' => -90,
-			'OP08_STRING_CAT' => -90
-		}
+		DEFAULT => -120
 	},
 	{#State 275
 		ACTIONS => {
-			";" => -93,
-			'OP18_TERNARY' => -93,
-			"]" => -93,
-			'OP09_BITWISE_SHIFT' => -93,
-			'OP21_LIST_COMMA' => -93,
-			'OP07_STRING_REPEAT' => 204,
-			'OP04_MATH_POW' => 197,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP23_LOGICAL_AND' => -93,
-			'OP12_COMPARE_EQ_NE' => -93,
-			"}" => -93,
-			'OP14_BITWISE_OR_XOR' => -93,
-			'OP24_LOGICAL_OR_XOR' => -93,
-			'OP08_MATH_ADD_SUB' => 196,
-			")" => -93,
-			'OP16_LOGICAL_OR' => -93,
-			'OP08_STRING_CAT' => 193,
-			'OP15_LOGICAL_AND' => -93,
-			'OP13_BITWISE_AND' => -93,
-			'OP06_REGEX_MATCH' => 194,
-			'OP17_LIST_RANGE' => -93,
-			'OP11_COMPARE_LT_GT' => -93
+			"\@{" => -192,
+			'VARIABLE_SYMBOL' => -192,
+			'OP01_NAMED' => -192,
+			'OP03_MATH_INC_DEC' => -192,
+			"undef" => -192,
+			'LBRACKET' => -192,
+			'MY' => 133,
+			'OP05_MATH_NEG_LPAREN' => -192,
+			'LITERAL_NUMBER' => -192,
+			'OP01_OPEN' => -192,
+			"%{" => -192,
+			'WORD' => -192,
+			'OP22_LOGICAL_NEG' => -192,
+			'LPAREN' => -192,
+			'WORD_SCOPED' => -192,
+			'LBRACE' => -192,
+			'OP10_NAMED_UNARY' => -192,
+			'OP01_CLOSE' => -192,
+			'OP05_LOGICAL_NEG' => -192,
+			'LITERAL_STRING' => -192,
+			'WORD_UPPERCASE' => -192
+		},
+		GOTOS => {
+			'TypeInner' => 314,
+			'OPTIONAL-48' => 315
 		}
 	},
 	{#State 276
-		DEFAULT => -116
+		ACTIONS => {
+			"}" => 317,
+			'OP21_LIST_COMMA' => 316
+		},
+		GOTOS => {
+			'PAREN-49' => 318
+		}
 	},
 	{#State 277
 		ACTIONS => {
-			")" => 321
+			'VARIABLE_SYMBOL' => 319
 		}
 	},
 	{#State 278
-		DEFAULT => -120
+		ACTIONS => {
+			'OP01_NAMED' => 81,
+			'OP03_MATH_INC_DEC' => 80,
+			'OP01_PRINT' => 78,
+			"\@{" => 79,
+			"}" => 320,
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'OP19_LOOP_CONTROL' => 88,
+			"foreach" => -142,
+			'OP10_NAMED_UNARY' => 91,
+			'OP22_LOGICAL_NEG' => 87,
+			"undef" => 100,
+			'VARIABLE_SYMBOL' => 101,
+			'OP01_NAMED_VOID' => 103,
+			"%{" => 97,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'OP01_NAMED_VOID_LPAREN' => 92,
+			'MY' => 95,
+			'OP01_CLOSE' => 114,
+			'WORD_SCOPED' => 27,
+			'OP19_LOOP_CONTROL_SCOLON' => 117,
+			'LBRACE' => 115,
+			'LPAREN' => 110,
+			'WORD' => 26,
+			"if" => 111,
+			'WORD_UPPERCASE' => 107,
+			"while" => -142,
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108,
+			"for" => -142,
+			'OP01_NAMED_VOID_SCOLON' => 106
+		},
+		GOTOS => {
+			'Operation' => 321,
+			'PAREN-35' => 76,
+			'HashReference' => 98,
+			'OPTIONAL-36' => 77,
+			'ArrayReference' => 71,
+			'Operator' => 73,
+			'Variable' => 104,
+			'Conditional' => 102,
+			'Expression' => 99,
+			'ArrayDereference' => 86,
+			'SubExpression' => 83,
+			'Literal' => 84,
+			'LoopLabel' => 105,
+			'HashDereference' => 85,
+			'OperatorVoid' => 89,
+			'WordScoped' => 113,
+			'VariableModification' => 112,
+			'Statement' => 90,
+			'VariableDeclaration' => 116
+		}
 	},
 	{#State 279
-		DEFAULT => -128
+		ACTIONS => {
+			'WORD_UPPERCASE' => 322
+		}
 	},
 	{#State 280
-		ACTIONS => {
-			'VARIABLE_SYMBOL' => 120,
-			'LITERAL_NUMBER' => 118,
-			'WORD' => 322,
-			"\@{" => 99,
-			'WORD_UPPERCASE' => 136,
-			'LBRACE' => 95,
-			'OP10_NAMED_UNARY' => 96,
-			'LITERAL_STRING' => 94,
-			'LPAREN' => 110,
-			'LBRACKET' => 112,
-			'OP22_LOGICAL_NEG' => 90,
-			'OP01_CLOSE' => 114,
-			'OP01_OPEN' => 106,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_LOGICAL_NEG' => 108,
-			"undef" => 100,
-			'OP01_NAMED' => 140,
-			"%{" => 80
-		},
-		GOTOS => {
-			'SubExpression' => 323,
-			'Variable' => 139,
-			'Expression' => 134,
-			'Operator' => 102,
-			'Literal' => 116,
-			'ArrayReference' => 121,
-			'HashReference' => 91,
-			'WordScoped' => 119,
-			'ArrayDereference' => 81,
-			'HashDereference' => 123
-		}
+		DEFAULT => -41
 	},
 	{#State 281
-		ACTIONS => {
-			'OP10_NAMED_UNARY' => 96,
-			'LITERAL_STRING' => 94,
-			'LBRACE' => 95,
-			'WORD_UPPERCASE' => 136,
-			"\@{" => 99,
-			'WORD' => 24,
-			'LITERAL_NUMBER' => 118,
-			'VARIABLE_SYMBOL' => 120,
-			'OP01_CLOSE' => 114,
-			'OP22_LOGICAL_NEG' => 90,
-			'LBRACKET' => 112,
-			'LPAREN' => 110,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP03_MATH_INC_DEC' => 84,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'OP01_OPEN' => 106,
-			"%{" => 80,
-			'OP01_NAMED' => 140,
-			"undef" => 100
-		},
-		GOTOS => {
-			'Operator' => 102,
-			'Literal' => 116,
-			'Expression' => 134,
-			'SubExpression' => 324,
-			'Variable' => 139,
-			'HashDereference' => 123,
-			'HashReference' => 91,
-			'ArrayReference' => 121,
-			'ArrayDereference' => 81,
-			'WordScoped' => 119
-		}
+		DEFAULT => -55
 	},
 	{#State 282
-		DEFAULT => -164
+		ACTIONS => {
+			'OP19_VARIABLE_ASSIGN' => 323
+		}
 	},
 	{#State 283
-		DEFAULT => -126
+		DEFAULT => -58,
+		GOTOS => {
+			'STAR-23' => 324
+		}
 	},
 	{#State 284
-		ACTIONS => {
-			'LITERAL_NUMBER' => 327,
-			"our" => 325
-		},
-		GOTOS => {
-			'MethodOrSubroutine' => 329,
-			'Subroutine' => 326,
-			'Method' => 328
-		}
+		DEFAULT => -179
 	},
 	{#State 285
-		ACTIONS => {
-			'LBRACE' => 330
-		}
+		DEFAULT => -183
 	},
 	{#State 286
 		ACTIONS => {
-			'OP19_VARIABLE_ASSIGN' => 331
+			'MY' => 133,
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'OP01_QW' => 131,
+			"%{" => 97,
+			"\@{" => 79,
+			'VARIABLE_SYMBOL' => 101,
+			'OP01_NAMED' => 129,
+			'OP03_MATH_INC_DEC' => 80,
+			"undef" => 100,
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108,
+			'WORD_UPPERCASE' => 125,
+			'WORD' => 26,
+			'OP22_LOGICAL_NEG' => 87,
+			'LPAREN' => 110,
+			'WORD_SCOPED' => 27,
+			'LBRACE' => 115,
+			'OP10_NAMED_UNARY' => 91,
+			'OP01_CLOSE' => 114
+		},
+		GOTOS => {
+			'Variable' => 126,
+			'WordScoped' => 113,
+			'Expression' => 127,
+			'TypeInner' => 136,
+			'HashReference' => 98,
+			'ArrayDereference' => 86,
+			'ListElement' => 325,
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'SubExpression' => 134,
+			'Literal' => 84,
+			'ArrayReference' => 71
 		}
 	},
 	{#State 287
-		DEFAULT => -44
+		DEFAULT => -176
 	},
 	{#State 288
 		ACTIONS => {
-			";" => 332
+			'WORD' => 326
 		}
 	},
 	{#State 289
-		DEFAULT => -49,
-		GOTOS => {
-			'STAR-19' => 333
+		ACTIONS => {
+			'VARIABLE_SYMBOL' => 327
 		}
 	},
 	{#State 290
-		DEFAULT => -179
+		ACTIONS => {
+			'OP18_TERNARY' => 156,
+			'OP14_BITWISE_OR_XOR' => 157,
+			")" => 328,
+			'OP04_MATH_POW' => 163,
+			'OP23_LOGICAL_AND' => 164,
+			'OP08_MATH_ADD_SUB' => 165,
+			'OP13_BITWISE_AND' => 155,
+			'OP12_COMPARE_EQ_NE' => 170,
+			'OP15_LOGICAL_AND' => 161,
+			'OP11_COMPARE_LT_GT' => 171,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			'OP07_STRING_REPEAT' => 158,
+			'OP09_BITWISE_SHIFT' => 166,
+			'OP24_LOGICAL_OR_XOR' => 167,
+			'OP16_LOGICAL_OR' => 168,
+			'OP17_LIST_RANGE' => 159,
+			'OP06_REGEX_MATCH' => 169,
+			'OP08_STRING_CAT' => 160
+		}
 	},
 	{#State 291
-		DEFAULT => -183
+		ACTIONS => {
+			'VARIABLE_SYMBOL' => 329
+		}
 	},
 	{#State 292
-		ACTIONS => {
-			'WORD' => 334
-		}
-	},
-	{#State 293
-		ACTIONS => {
-			";" => 335
-		}
-	},
-	{#State 294
-		DEFAULT => -205
-	},
-	{#State 295
-		DEFAULT => -113
-	},
-	{#State 296
 		DEFAULT => -112
 	},
-	{#State 297
-		DEFAULT => -174
+	{#State 293
+		DEFAULT => -113
 	},
-	{#State 298
-		DEFAULT => -122
+	{#State 294
+		DEFAULT => -190
 	},
-	{#State 299
+	{#State 295
 		ACTIONS => {
-			")" => 336
+			";" => 330
 		}
 	},
+	{#State 296
+		ACTIONS => {
+			'LITERAL_STRING' => 108,
+			'VARIABLE_SYMBOL' => 101,
+			'LITERAL_NUMBER' => 94
+		},
+		GOTOS => {
+			'Variable' => 233,
+			'VariableOrLiteral' => 331,
+			'Literal' => 235
+		}
+	},
+	{#State 297
+		DEFAULT => -115
+	},
+	{#State 298
+		ACTIONS => {
+			'OP21_LIST_COMMA' => 332
+		}
+	},
+	{#State 299
+		DEFAULT => -170
+	},
 	{#State 300
-		DEFAULT => -173
+		ACTIONS => {
+			"%{" => 97,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'OP01_NAMED' => 129,
+			"undef" => 100,
+			'OP03_MATH_INC_DEC' => 80,
+			'VARIABLE_SYMBOL' => 101,
+			"\@{" => 79,
+			'WORD_UPPERCASE' => 125,
+			'STDIN' => 265,
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108,
+			'OP01_CLOSE' => 114,
+			'WORD_SCOPED' => 27,
+			'LBRACE' => 115,
+			'OP10_NAMED_UNARY' => 91,
+			'OP22_LOGICAL_NEG' => 87,
+			'LPAREN' => 110,
+			'WORD' => 26
+		},
+		GOTOS => {
+			'Expression' => 127,
+			'Variable' => 126,
+			'WordScoped' => 113,
+			'Operator' => 73,
+			'HashDereference' => 85,
+			'SubExpressionOrStdin' => 333,
+			'ArrayReference' => 71,
+			'SubExpression' => 264,
+			'Literal' => 84,
+			'HashReference' => 98,
+			'ArrayDereference' => 86
+		}
 	},
 	{#State 301
 		DEFAULT => -172
 	},
 	{#State 302
-		ACTIONS => {
-			'OP01_CLOSE' => 114,
-			'OP22_LOGICAL_NEG' => 90,
-			'LBRACKET' => 112,
-			'LPAREN' => 110,
-			'LBRACE' => 95,
-			'OP10_NAMED_UNARY' => 96,
-			'LITERAL_STRING' => 94,
-			'STDIN' => 236,
-			'WORD_UPPERCASE' => 136,
-			"\@{" => 99,
-			'WORD' => 24,
-			'LITERAL_NUMBER' => 118,
-			'VARIABLE_SYMBOL' => 120,
-			"%{" => 80,
-			'OP01_NAMED' => 140,
-			"undef" => 100,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'WORD_SCOPED' => 23,
-			'OP01_OPEN' => 106
-		},
-		GOTOS => {
-			'Expression' => 134,
-			'Literal' => 116,
-			'Operator' => 102,
-			'SubExpression' => 238,
-			'Variable' => 139,
-			'HashDereference' => 123,
-			'SubExpressionOrStdin' => 337,
-			'ArrayReference' => 121,
-			'HashReference' => 91,
-			'WordScoped' => 119,
-			'ArrayDereference' => 81
-		}
+		DEFAULT => -205
 	},
 	{#State 303
-		DEFAULT => -170
+		ACTIONS => {
+			'OP04_MATH_POW' => 163,
+			'OP13_BITWISE_AND' => 155,
+			'OP23_LOGICAL_AND' => 164,
+			"}" => 334,
+			'OP08_MATH_ADD_SUB' => 165,
+			'OP14_BITWISE_OR_XOR' => 157,
+			'OP18_TERNARY' => 156,
+			'OP17_LIST_RANGE' => 159,
+			'OP08_STRING_CAT' => 160,
+			'OP06_REGEX_MATCH' => 169,
+			'OP09_BITWISE_SHIFT' => 166,
+			'OP07_STRING_REPEAT' => 158,
+			'OP24_LOGICAL_OR_XOR' => 167,
+			'OP16_LOGICAL_OR' => 168,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			'OP11_COMPARE_LT_GT' => 171,
+			'OP15_LOGICAL_AND' => 161,
+			'OP12_COMPARE_EQ_NE' => 170
+		}
 	},
 	{#State 304
-		DEFAULT => -200
+		ACTIONS => {
+			"}" => 335,
+			'OP02_METHOD_THINARROW_NEW' => -206,
+			'LPAREN' => -206
+		}
 	},
 	{#State 305
 		ACTIONS => {
-			"%{" => 80,
-			'LITERAL_STRING' => 94,
-			'WORD' => 163,
-			'LITERAL_NUMBER' => 118,
-			'VARIABLE_SYMBOL' => 120
-		},
-		GOTOS => {
-			'VariableOrLiteralOrWord' => 162,
-			'HashEntry' => 338,
-			'Variable' => 165,
-			'HashDereference' => 160,
-			'Literal' => 161
+			'OP04_MATH_POW' => 163,
+			'OP08_MATH_ADD_SUB' => 165,
+			'OP23_LOGICAL_AND' => 164,
+			'OP13_BITWISE_AND' => 155,
+			'OP18_TERNARY' => 156,
+			'OP14_BITWISE_OR_XOR' => 157,
+			'OP07_STRING_REPEAT' => 158,
+			'OP09_BITWISE_SHIFT' => 166,
+			'OP24_LOGICAL_OR_XOR' => 167,
+			'OP16_LOGICAL_OR' => 168,
+			'OP17_LIST_RANGE' => 159,
+			'OP06_REGEX_MATCH' => 169,
+			'OP08_STRING_CAT' => 160,
+			'OP12_COMPARE_EQ_NE' => 170,
+			'OP15_LOGICAL_AND' => 161,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			'OP11_COMPARE_LT_GT' => 171,
+			"]" => 336
 		}
 	},
 	{#State 306
-		DEFAULT => -198
+		DEFAULT => -122
 	},
 	{#State 307
 		ACTIONS => {
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'OP01_OPEN' => 106,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP03_MATH_INC_DEC' => 84,
-			"undef" => 100,
-			"%{" => 80,
-			'OP01_NAMED' => 140,
-			'WORD' => 24,
-			'LITERAL_NUMBER' => 118,
-			'VARIABLE_SYMBOL' => 120,
-			'OP10_NAMED_UNARY' => 96,
-			'LITERAL_STRING' => 94,
-			'LBRACE' => 95,
-			'WORD_UPPERCASE' => 136,
-			"\@{" => 99,
-			'LBRACKET' => 112,
-			'LPAREN' => 110,
-			'OP01_CLOSE' => 114,
-			'OP22_LOGICAL_NEG' => 90
-		},
-		GOTOS => {
-			'SubExpression' => 339,
-			'Variable' => 139,
-			'Literal' => 116,
-			'Operator' => 102,
-			'Expression' => 134,
-			'HashReference' => 91,
-			'ArrayReference' => 121,
-			'ArrayDereference' => 81,
-			'WordScoped' => 119,
-			'HashDereference' => 123
+			")" => 337
 		}
 	},
 	{#State 308
-		DEFAULT => -191
+		DEFAULT => -173
 	},
 	{#State 309
-		DEFAULT => -190
+		DEFAULT => -174
 	},
 	{#State 310
 		ACTIONS => {
-			'OP14_BITWISE_OR_XOR' => 203,
-			'OP24_LOGICAL_OR_XOR' => 202,
-			'OP08_MATH_ADD_SUB' => 196,
-			'OP16_LOGICAL_OR' => 201,
-			")" => 340,
-			'OP15_LOGICAL_AND' => 200,
-			'OP06_REGEX_MATCH' => 194,
-			'OP13_BITWISE_AND' => 195,
-			'OP08_STRING_CAT' => 193,
-			'OP17_LIST_RANGE' => 192,
-			'OP11_COMPARE_LT_GT' => 199,
-			'OP09_BITWISE_SHIFT' => 208,
-			'OP18_TERNARY' => 198,
-			'OP23_LOGICAL_AND' => 206,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP12_COMPARE_EQ_NE' => 205,
-			'OP04_MATH_POW' => 197,
-			'OP07_STRING_REPEAT' => 204
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'LBRACKET' => 75,
+			'MY' => 133,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			"%{" => 97,
+			'OP01_QW' => 131,
+			"\@{" => 79,
+			'OP01_NAMED' => 129,
+			'OP03_MATH_INC_DEC' => 80,
+			"undef" => 100,
+			'VARIABLE_SYMBOL' => 101,
+			'WORD_UPPERCASE' => 125,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109,
+			'LPAREN' => 110,
+			'OP22_LOGICAL_NEG' => 87,
+			'WORD' => 26,
+			'OP01_CLOSE' => 114,
+			'WORD_SCOPED' => 27,
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115
+		},
+		GOTOS => {
+			'SubExpression' => 134,
+			'Literal' => 84,
+			'ArrayReference' => 71,
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'ArrayDereference' => 86,
+			'ListElement' => 132,
+			'HashReference' => 98,
+			'TypeInner' => 136,
+			'ListElements' => 338,
+			'Expression' => 127,
+			'WordScoped' => 113,
+			'Variable' => 126
 		}
 	},
 	{#State 311
 		ACTIONS => {
-			'VARIABLE_SYMBOL' => 341
+			")" => 339
 		}
 	},
 	{#State 312
 		ACTIONS => {
-			'VARIABLE_SYMBOL' => 342
+			'LBRACE' => 341
+		},
+		GOTOS => {
+			'CodeBlock' => 340
 		}
 	},
 	{#State 313
-		ACTIONS => {
-			"undef" => 100,
-			'OP01_NAMED' => 140,
-			'OP01_QW' => 137,
-			"%{" => 80,
-			'OP01_OPEN' => 106,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'WORD_SCOPED' => 23,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_LOGICAL_NEG' => 108,
-			'LPAREN' => 110,
-			'LBRACKET' => 112,
-			'MY' => 138,
-			'OP22_LOGICAL_NEG' => 90,
-			'OP01_CLOSE' => 114,
-			'VARIABLE_SYMBOL' => 120,
-			'LITERAL_NUMBER' => 118,
-			'WORD' => 24,
-			"\@{" => 99,
-			'WORD_UPPERCASE' => 136,
-			'LITERAL_STRING' => 94,
-			'OP10_NAMED_UNARY' => 96,
-			'LBRACE' => 95
-		},
-		GOTOS => {
-			'WordScoped' => 119,
-			'ArrayDereference' => 81,
-			'HashReference' => 91,
-			'ArrayReference' => 121,
-			'TypeInner' => 142,
-			'HashDereference' => 123,
-			'Variable' => 139,
-			'ListElement' => 343,
-			'SubExpression' => 180,
-			'Operator' => 102,
-			'Literal' => 116,
-			'Expression' => 134
-		}
+		DEFAULT => -125
 	},
 	{#State 314
-		DEFAULT => -176
+		DEFAULT => -191
 	},
 	{#State 315
-		DEFAULT => -115
+		ACTIONS => {
+			'OP01_NAMED' => 129,
+			'OP03_MATH_INC_DEC' => 80,
+			"undef" => 100,
+			'VARIABLE_SYMBOL' => 101,
+			"\@{" => 79,
+			"%{" => 97,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'OP01_CLOSE' => 114,
+			'WORD_SCOPED' => 27,
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115,
+			'LPAREN' => 110,
+			'OP22_LOGICAL_NEG' => 87,
+			'WORD' => 26,
+			'WORD_UPPERCASE' => 125,
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108
+		},
+		GOTOS => {
+			'ArrayDereference' => 86,
+			'HashReference' => 98,
+			'ArrayReference' => 71,
+			'Literal' => 84,
+			'SubExpression' => 342,
+			'Operator' => 73,
+			'HashDereference' => 85,
+			'WordScoped' => 113,
+			'Variable' => 126,
+			'Expression' => 127
+		}
 	},
 	{#State 316
 		ACTIONS => {
-			'LBRACE' => 344
+			'WORD' => 203,
+			'LITERAL_NUMBER' => 94,
+			'LITERAL_STRING' => 108,
+			'VARIABLE_SYMBOL' => 101,
+			"%{" => 97
 		},
 		GOTOS => {
-			'CodeBlock' => 345
+			'Variable' => 202,
+			'HashEntry' => 343,
+			'VariableOrLiteralOrWord' => 201,
+			'HashDereference' => 206,
+			'Literal' => 207
 		}
 	},
 	{#State 317
-		ACTIONS => {
-			'OP21_LIST_COMMA' => 346
-		}
+		DEFAULT => -200
 	},
 	{#State 318
-		ACTIONS => {
-			'LITERAL_NUMBER' => 118,
-			'WORD' => 24,
-			'VARIABLE_SYMBOL' => 120,
-			'LBRACE' => 95,
-			'LITERAL_STRING' => 94,
-			'OP10_NAMED_UNARY' => 96,
-			"\@{" => 99,
-			'WORD_UPPERCASE' => 136,
-			'LPAREN' => 110,
-			'LBRACKET' => 112,
-			'OP01_CLOSE' => 114,
-			'MY' => 138,
-			'OP22_LOGICAL_NEG' => 90,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'WORD_SCOPED' => 23,
-			'OP01_OPEN' => 106,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_LOGICAL_NEG' => 108,
-			"undef" => 100,
-			'OP01_QW' => 137,
-			'OP01_NAMED' => 140,
-			"%{" => 80
-		},
-		GOTOS => {
-			'Variable' => 139,
-			'ListElement' => 182,
-			'ListElements' => 347,
-			'SubExpression' => 180,
-			'Literal' => 116,
-			'Operator' => 102,
-			'Expression' => 134,
-			'WordScoped' => 119,
-			'ArrayDereference' => 81,
-			'HashReference' => 91,
-			'ArrayReference' => 121,
-			'HashDereference' => 123,
-			'TypeInner' => 142
-		}
+		DEFAULT => -198
 	},
 	{#State 319
-		ACTIONS => {
-			")" => 348
+		DEFAULT => -49,
+		GOTOS => {
+			'STAR-19' => 344
 		}
 	},
 	{#State 320
 		ACTIONS => {
-			'LITERAL_NUMBER' => 118,
-			'VARIABLE_SYMBOL' => 120,
-			'LITERAL_STRING' => 94
-		},
-		GOTOS => {
-			'Variable' => 264,
-			'VariableOrLiteral' => 349,
-			'Literal' => 265
+			";" => 345
 		}
 	},
 	{#State 321
-		DEFAULT => -125
+		DEFAULT => -44
 	},
 	{#State 322
 		ACTIONS => {
-			"}" => 350,
-			'LPAREN' => -206,
-			'OP02_METHOD_THINARROW_NEW' => -206
+			'OP19_VARIABLE_ASSIGN' => 346
 		}
 	},
 	{#State 323
 		ACTIONS => {
-			'OP08_STRING_CAT' => 193,
-			'OP13_BITWISE_AND' => 195,
-			'OP06_REGEX_MATCH' => 194,
-			'OP15_LOGICAL_AND' => 200,
-			'OP11_COMPARE_LT_GT' => 199,
-			'OP17_LIST_RANGE' => 192,
-			'OP24_LOGICAL_OR_XOR' => 202,
-			'OP14_BITWISE_OR_XOR' => 203,
-			'OP16_LOGICAL_OR' => 201,
-			'OP08_MATH_ADD_SUB' => 196,
-			'OP07_STRING_REPEAT' => 204,
-			'OP04_MATH_POW' => 197,
-			'OP12_COMPARE_EQ_NE' => 205,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP23_LOGICAL_AND' => 206,
-			"}" => 351,
-			'OP18_TERNARY' => 198,
-			'OP09_BITWISE_SHIFT' => 208
+			'LBRACE' => 347
 		}
 	},
 	{#State 324
 		ACTIONS => {
-			'OP04_MATH_POW' => 197,
-			'OP07_STRING_REPEAT' => 204,
-			'OP23_LOGICAL_AND' => 206,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP12_COMPARE_EQ_NE' => 205,
-			'OP18_TERNARY' => 198,
-			"]" => 352,
-			'OP09_BITWISE_SHIFT' => 208,
-			'OP17_LIST_RANGE' => 192,
-			'OP11_COMPARE_LT_GT' => 199,
-			'OP08_STRING_CAT' => 193,
-			'OP15_LOGICAL_AND' => 200,
-			'OP06_REGEX_MATCH' => 194,
-			'OP13_BITWISE_AND' => 195,
-			'OP08_MATH_ADD_SUB' => 196,
-			'OP16_LOGICAL_OR' => 201,
-			'OP14_BITWISE_OR_XOR' => 203,
-			'OP24_LOGICAL_OR_XOR' => 202
+			'LITERAL_NUMBER' => 349,
+			"our" => 348
+		},
+		GOTOS => {
+			'MethodOrSubroutine' => 350,
+			'Subroutine' => 352,
+			'Method' => 351
 		}
 	},
 	{#State 325
-		ACTIONS => {
-			'TYPE_METHOD' => 353,
-			'TYPE_INTEGER' => 55,
-			'WORD' => 56
-		},
-		GOTOS => {
-			'Type' => 54
-		}
+		DEFAULT => -175
 	},
 	{#State 326
-		DEFAULT => -75
+		ACTIONS => {
+			'OP19_VARIABLE_ASSIGN' => 353
+		}
 	},
 	{#State 327
 		ACTIONS => {
-			";" => 354
+			'LPAREN' => 354
 		}
 	},
 	{#State 328
-		DEFAULT => -74
-	},
-	{#State 329
-		DEFAULT => -57
-	},
-	{#State 330
 		ACTIONS => {
-			"}" => 358,
-			'WORD' => 357,
-			"%{" => 80
+			'LBRACE' => 341
 		},
 		GOTOS => {
-			'HashDereference' => 356,
-			'HashEntryTyped' => 355
+			'CodeBlock' => 355
 		}
 	},
+	{#State 329
+		ACTIONS => {
+			'LPAREN' => 356
+		}
+	},
+	{#State 330
+		DEFAULT => -117
+	},
 	{#State 331
-		DEFAULT => -212
+		DEFAULT => -103
 	},
 	{#State 332
-		DEFAULT => -46
+		ACTIONS => {
+			'LITERAL_STRING' => 357
+		}
 	},
 	{#State 333
 		ACTIONS => {
-			'OP21_LIST_COMMA' => 361,
-			")" => 360
-		},
-		GOTOS => {
-			'PAREN-18' => 359
+			";" => 358
 		}
 	},
 	{#State 334
-		ACTIONS => {
-			'OP19_VARIABLE_ASSIGN' => 362
-		}
+		DEFAULT => -168
 	},
 	{#State 335
-		DEFAULT => -117
+		DEFAULT => -169
 	},
 	{#State 336
-		DEFAULT => -127
+		DEFAULT => -167
 	},
 	{#State 337
-		ACTIONS => {
-			";" => 363
-		}
+		DEFAULT => -127
 	},
 	{#State 338
-		DEFAULT => -197
-	},
-	{#State 339
 		ACTIONS => {
-			'OP17_LIST_RANGE' => 192,
-			'OP11_COMPARE_LT_GT' => 199,
-			'OP08_STRING_CAT' => 193,
-			'OP15_LOGICAL_AND' => 200,
-			'OP06_REGEX_MATCH' => 194,
-			'OP13_BITWISE_AND' => 195,
-			'OP08_MATH_ADD_SUB' => 196,
-			'OP16_LOGICAL_OR' => 201,
-			'OP14_BITWISE_OR_XOR' => 203,
-			'OP24_LOGICAL_OR_XOR' => 202,
-			"}" => -193,
-			'OP21_LIST_COMMA' => -193,
-			'OP07_STRING_REPEAT' => 204,
-			'OP04_MATH_POW' => 197,
-			'OP23_LOGICAL_AND' => 206,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP12_COMPARE_EQ_NE' => 205,
-			'OP18_TERNARY' => 198,
-			'OP09_BITWISE_SHIFT' => 208
+			")" => 359
 		}
 	},
+	{#State 339
+		DEFAULT => -78
+	},
 	{#State 340
-		ACTIONS => {
-			'LBRACE' => 344
-		},
+		DEFAULT => -150,
 		GOTOS => {
-			'CodeBlock' => 364
+			'STAR-38' => 360
 		}
 	},
 	{#State 341
 		ACTIONS => {
-			'LPAREN' => 365
+			'OP01_NAMED' => 81,
+			'OP03_MATH_INC_DEC' => 80,
+			"\@{" => 79,
+			'OP01_PRINT' => 78,
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'OP10_NAMED_UNARY' => 91,
+			"foreach" => -142,
+			'OP19_LOOP_CONTROL' => 88,
+			'OP22_LOGICAL_NEG' => 87,
+			'VARIABLE_SYMBOL' => 101,
+			'OP01_NAMED_VOID' => 103,
+			"undef" => 100,
+			"%{" => 97,
+			'MY' => 95,
+			'LITERAL_NUMBER' => 94,
+			'OP01_NAMED_VOID_LPAREN' => 92,
+			'OP01_OPEN' => 93,
+			'WORD_SCOPED' => 27,
+			'OP19_LOOP_CONTROL_SCOLON' => 117,
+			'LBRACE' => 115,
+			'OP01_CLOSE' => 114,
+			"if" => 111,
+			'WORD' => 26,
+			'LPAREN' => 110,
+			"while" => -142,
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108,
+			'WORD_UPPERCASE' => 107,
+			"for" => -142,
+			'OP01_NAMED_VOID_SCOLON' => 106
+		},
+		GOTOS => {
+			'Variable' => 104,
+			'Conditional' => 102,
+			'Expression' => 99,
+			'Operation' => 361,
+			'PAREN-35' => 76,
+			'PLUS-41' => 362,
+			'OPTIONAL-36' => 77,
+			'HashReference' => 98,
+			'ArrayReference' => 71,
+			'Operator' => 73,
+			'OperatorVoid' => 89,
+			'VariableModification' => 112,
+			'WordScoped' => 113,
+			'Statement' => 90,
+			'VariableDeclaration' => 116,
+			'ArrayDereference' => 86,
+			'Literal' => 84,
+			'SubExpression' => 83,
+			'LoopLabel' => 105,
+			'HashDereference' => 85
 		}
 	},
 	{#State 342
 		ACTIONS => {
-			'LPAREN' => 366
+			'OP11_COMPARE_LT_GT' => 171,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			'OP12_COMPARE_EQ_NE' => 170,
+			'OP15_LOGICAL_AND' => 161,
+			'OP17_LIST_RANGE' => 159,
+			'OP08_STRING_CAT' => 160,
+			'OP06_REGEX_MATCH' => 169,
+			'OP21_LIST_COMMA' => -193,
+			'OP07_STRING_REPEAT' => 158,
+			'OP09_BITWISE_SHIFT' => 166,
+			'OP16_LOGICAL_OR' => 168,
+			'OP24_LOGICAL_OR_XOR' => 167,
+			'OP18_TERNARY' => 156,
+			'OP14_BITWISE_OR_XOR' => 157,
+			'OP04_MATH_POW' => 163,
+			"}" => -193,
+			'OP08_MATH_ADD_SUB' => 165,
+			'OP23_LOGICAL_AND' => 164,
+			'OP13_BITWISE_AND' => 155
 		}
 	},
 	{#State 343
-		DEFAULT => -175
+		DEFAULT => -197
 	},
 	{#State 344
 		ACTIONS => {
-			'OP01_NAMED' => 79,
-			"%{" => 80,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'WORD_SCOPED' => 23,
-			'OP01_PRINT' => 83,
-			'OP03_MATH_INC_DEC' => 84,
-			"for" => -142,
-			'MY' => 89,
-			'OP22_LOGICAL_NEG' => 90,
-			"foreach" => -142,
-			'WORD' => 24,
-			'OP01_NAMED_VOID_SCOLON' => 92,
-			'LBRACE' => 95,
-			'OP10_NAMED_UNARY' => 96,
-			'LITERAL_STRING' => 94,
-			"\@{" => 99,
-			"undef" => 100,
-			'OP19_LOOP_CONTROL' => 103,
-			"if" => 105,
-			'OP01_NAMED_VOID_LPAREN' => 104,
-			'OP01_OPEN' => 106,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP19_LOOP_CONTROL_SCOLON' => 109,
-			'LPAREN' => 110,
-			'LBRACKET' => 112,
-			'OP01_CLOSE' => 114,
-			'OP01_NAMED_VOID' => 115,
-			"while" => -142,
-			'LITERAL_NUMBER' => 118,
-			'VARIABLE_SYMBOL' => 120,
-			'WORD_UPPERCASE' => 124
+			'OP21_LIST_COMMA' => 364,
+			")" => 365
 		},
 		GOTOS => {
-			'LoopLabel' => 78,
-			'PLUS-41' => 368,
-			'OPTIONAL-36' => 101,
-			'Operator' => 102,
-			'ArrayDereference' => 81,
-			'VariableDeclaration' => 85,
-			'OperatorVoid' => 107,
-			'Statement' => 86,
-			'Conditional' => 111,
-			'Variable' => 87,
-			'SubExpression' => 113,
-			'VariableModification' => 88,
-			'Expression' => 117,
-			'Literal' => 116,
-			'WordScoped' => 119,
-			'ArrayReference' => 121,
-			'HashReference' => 91,
-			'HashDereference' => 123,
-			'PAREN-35' => 122,
-			'Operation' => 367
+			'PAREN-18' => 363
 		}
 	},
 	{#State 345
-		DEFAULT => -150,
-		GOTOS => {
-			'STAR-38' => 369
-		}
+		DEFAULT => -46
 	},
 	{#State 346
-		ACTIONS => {
-			'LITERAL_STRING' => 370
-		}
+		DEFAULT => -212
 	},
 	{#State 347
 		ACTIONS => {
-			")" => 371
+			"%{" => 97,
+			"}" => 369,
+			'WORD' => 366
+		},
+		GOTOS => {
+			'HashEntryTyped' => 367,
+			'HashDereference' => 368
 		}
 	},
 	{#State 348
-		DEFAULT => -78
+		ACTIONS => {
+			'TYPE_METHOD' => 370,
+			'WORD' => 56,
+			'TYPE_INTEGER' => 55
+		},
+		GOTOS => {
+			'Type' => 57
+		}
 	},
 	{#State 349
-		DEFAULT => -103
+		ACTIONS => {
+			";" => 371
+		}
 	},
 	{#State 350
-		DEFAULT => -169
+		DEFAULT => -57
 	},
 	{#State 351
-		DEFAULT => -168
+		DEFAULT => -74
 	},
 	{#State 352
-		DEFAULT => -167
+		DEFAULT => -75
 	},
 	{#State 353
-		ACTIONS => {
-			'VARIABLE_SYMBOL' => 372
-		}
+		DEFAULT => -211
 	},
 	{#State 354
-		DEFAULT => -59
-	},
-	{#State 355
-		DEFAULT => -62,
+		ACTIONS => {
+			"%{" => 97,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'OP01_NAMED' => 129,
+			"undef" => 100,
+			'OP03_MATH_INC_DEC' => 80,
+			'VARIABLE_SYMBOL' => 101,
+			"\@{" => 79,
+			'WORD_UPPERCASE' => 125,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109,
+			'OP01_CLOSE' => 114,
+			'WORD_SCOPED' => 27,
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115,
+			'OP22_LOGICAL_NEG' => 87,
+			'LPAREN' => 110,
+			'WORD' => 26
+		},
 		GOTOS => {
-			'STAR-25' => 373
+			'ArrayDereference' => 86,
+			'HashReference' => 98,
+			'ArrayReference' => 71,
+			'SubExpression' => 372,
+			'Literal' => 84,
+			'Operator' => 73,
+			'HashDereference' => 85,
+			'WordScoped' => 113,
+			'Variable' => 126,
+			'Expression' => 127
 		}
 	},
+	{#State 355
+		DEFAULT => -160
+	},
 	{#State 356
-		DEFAULT => -196
+		ACTIONS => {
+			'LPAREN' => 110,
+			'OP22_LOGICAL_NEG' => 87,
+			'WORD' => 26,
+			'OP01_CLOSE' => 114,
+			'WORD_SCOPED' => 27,
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115,
+			'WORD_UPPERCASE' => 125,
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108,
+			"\@{" => 79,
+			'OP01_NAMED' => 129,
+			'OP03_MATH_INC_DEC' => 80,
+			"undef" => 100,
+			'VARIABLE_SYMBOL' => 101,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'LBRACKET' => 75,
+			'MY' => 133,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			"%{" => 97,
+			'OP01_QW' => 131
+		},
+		GOTOS => {
+			'ListElements' => 373,
+			'Expression' => 127,
+			'Variable' => 126,
+			'WordScoped' => 113,
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'SubExpression' => 134,
+			'Literal' => 84,
+			'ArrayReference' => 71,
+			'HashReference' => 98,
+			'TypeInner' => 136,
+			'ArrayDereference' => 86,
+			'ListElement' => 132
+		}
 	},
 	{#State 357
 		ACTIONS => {
-			'OP20_HASH_FATARROW' => 374
+			'OP21_LIST_COMMA' => 374
 		}
 	},
 	{#State 358
-		ACTIONS => {
-			";" => 375
-		}
+		DEFAULT => -171
 	},
 	{#State 359
-		DEFAULT => -48
+		DEFAULT => -80
 	},
 	{#State 360
 		ACTIONS => {
-			'OP19_VARIABLE_ASSIGN' => 376
+			"}" => -153,
+			'LBRACKET' => -153,
+			'OP05_MATH_NEG_LPAREN' => -153,
+			'OP01_NAMED' => -153,
+			'OP03_MATH_INC_DEC' => -153,
+			"\@{" => -153,
+			'OP01_PRINT' => -153,
+			"foreach" => -153,
+			'OP10_NAMED_UNARY' => -153,
+			"else" => 378,
+			'OP19_LOOP_CONTROL' => -153,
+			'OP22_LOGICAL_NEG' => -153,
+			"%{" => -153,
+			'MY' => -153,
+			'LITERAL_NUMBER' => -153,
+			'OP01_OPEN' => -153,
+			'OP01_NAMED_VOID_LPAREN' => -153,
+			'VARIABLE_SYMBOL' => -153,
+			'OP01_NAMED_VOID' => -153,
+			"undef" => -153,
+			"while" => -153,
+			'OP05_LOGICAL_NEG' => -153,
+			'LITERAL_STRING' => -153,
+			'WORD_UPPERCASE' => -153,
+			"for" => -153,
+			'OP01_NAMED_VOID_SCOLON' => -153,
+			'OP19_LOOP_CONTROL_SCOLON' => -153,
+			'WORD_SCOPED' => -153,
+			'LBRACE' => -153,
+			'OP01_CLOSE' => -153,
+			"elsif" => 376,
+			"if" => -153,
+			'WORD' => -153,
+			'' => -153,
+			'LPAREN' => -153
+		},
+		GOTOS => {
+			'PAREN-39' => 379,
+			'PAREN-37' => 377,
+			'OPTIONAL-40' => 375
 		}
 	},
 	{#State 361
-		ACTIONS => {
-			'MY' => 377
-		}
+		DEFAULT => -162
 	},
 	{#State 362
-		DEFAULT => -211
+		ACTIONS => {
+			"%{" => 97,
+			'MY' => 95,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'OP01_NAMED_VOID_LPAREN' => 92,
+			'VARIABLE_SYMBOL' => 101,
+			'OP01_NAMED_VOID' => 103,
+			"undef" => 100,
+			"while" => -142,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109,
+			'WORD_UPPERCASE' => 107,
+			'OP01_NAMED_VOID_SCOLON' => 106,
+			"for" => -142,
+			'OP19_LOOP_CONTROL_SCOLON' => 117,
+			'WORD_SCOPED' => 27,
+			'LBRACE' => 115,
+			'OP01_CLOSE' => 114,
+			'WORD' => 26,
+			"if" => 111,
+			'LPAREN' => 110,
+			"}" => 380,
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'OP01_NAMED' => 81,
+			'OP03_MATH_INC_DEC' => 80,
+			"\@{" => 79,
+			'OP01_PRINT' => 78,
+			'OP10_NAMED_UNARY' => 91,
+			"foreach" => -142,
+			'OP19_LOOP_CONTROL' => 88,
+			'OP22_LOGICAL_NEG' => 87
+		},
+		GOTOS => {
+			'HashDereference' => 85,
+			'LoopLabel' => 105,
+			'SubExpression' => 83,
+			'Literal' => 84,
+			'ArrayDereference' => 86,
+			'VariableDeclaration' => 116,
+			'Statement' => 90,
+			'WordScoped' => 113,
+			'VariableModification' => 112,
+			'OperatorVoid' => 89,
+			'Operator' => 73,
+			'ArrayReference' => 71,
+			'OPTIONAL-36' => 77,
+			'HashReference' => 98,
+			'PAREN-35' => 76,
+			'Operation' => 381,
+			'Expression' => 99,
+			'Variable' => 104,
+			'Conditional' => 102
+		}
 	},
 	{#State 363
-		DEFAULT => -171
+		DEFAULT => -48
 	},
 	{#State 364
-		DEFAULT => -160
+		ACTIONS => {
+			'MY' => 382
+		}
 	},
 	{#State 365
 		ACTIONS => {
-			'VARIABLE_SYMBOL' => 120,
-			'LITERAL_NUMBER' => 118,
-			'WORD' => 24,
-			"\@{" => 99,
-			'WORD_UPPERCASE' => 136,
-			'LBRACE' => 95,
-			'LITERAL_STRING' => 94,
-			'OP10_NAMED_UNARY' => 96,
-			'LPAREN' => 110,
-			'LBRACKET' => 112,
-			'OP22_LOGICAL_NEG' => 90,
-			'OP01_CLOSE' => 114,
-			'OP01_OPEN' => 106,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_LOGICAL_NEG' => 108,
-			"undef" => 100,
-			'OP01_NAMED' => 140,
-			"%{" => 80
-		},
-		GOTOS => {
-			'HashDereference' => 123,
-			'ArrayDereference' => 81,
-			'WordScoped' => 119,
-			'ArrayReference' => 121,
-			'HashReference' => 91,
-			'Expression' => 134,
-			'Literal' => 116,
-			'Operator' => 102,
-			'Variable' => 139,
-			'SubExpression' => 378
+			'OP19_VARIABLE_ASSIGN' => 383
 		}
 	},
 	{#State 366
 		ACTIONS => {
-			'LITERAL_NUMBER' => 118,
-			'WORD' => 24,
-			'VARIABLE_SYMBOL' => 120,
-			'OP10_NAMED_UNARY' => 96,
-			'LBRACE' => 95,
-			'LITERAL_STRING' => 94,
-			"\@{" => 99,
-			'WORD_UPPERCASE' => 136,
-			'LPAREN' => 110,
-			'LBRACKET' => 112,
-			'OP01_CLOSE' => 114,
-			'MY' => 138,
-			'OP22_LOGICAL_NEG' => 90,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'OP01_OPEN' => 106,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP03_MATH_INC_DEC' => 84,
-			"undef" => 100,
-			'OP01_QW' => 137,
-			'OP01_NAMED' => 140,
-			"%{" => 80
-		},
-		GOTOS => {
-			'ListElement' => 182,
-			'Variable' => 139,
-			'SubExpression' => 180,
-			'ListElements' => 379,
-			'Expression' => 134,
-			'Literal' => 116,
-			'Operator' => 102,
-			'ArrayDereference' => 81,
-			'WordScoped' => 119,
-			'ArrayReference' => 121,
-			'HashReference' => 91,
-			'HashDereference' => 123,
-			'TypeInner' => 142
+			'OP20_HASH_FATARROW' => 384
 		}
 	},
 	{#State 367
-		DEFAULT => -162
+		DEFAULT => -62,
+		GOTOS => {
+			'STAR-25' => 385
+		}
 	},
 	{#State 368
-		ACTIONS => {
-			'OP01_CLOSE' => 114,
-			"while" => -142,
-			'OP01_NAMED_VOID' => 115,
-			'LBRACKET' => 112,
-			'LPAREN' => 110,
-			'WORD_UPPERCASE' => 124,
-			'LITERAL_NUMBER' => 118,
-			'VARIABLE_SYMBOL' => 120,
-			'OP19_LOOP_CONTROL' => 103,
-			"undef" => 100,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP19_LOOP_CONTROL_SCOLON' => 109,
-			'OP01_NAMED_VOID_LPAREN' => 104,
-			"if" => 105,
-			'OP01_OPEN' => 106,
-			'OP22_LOGICAL_NEG' => 90,
-			'MY' => 89,
-			"for" => -142,
-			'LITERAL_STRING' => 94,
-			'OP10_NAMED_UNARY' => 96,
-			'LBRACE' => 95,
-			"\@{" => 99,
-			'WORD' => 24,
-			"foreach" => -142,
-			'OP01_NAMED_VOID_SCOLON' => 92,
-			"}" => 380,
-			"%{" => 80,
-			'OP01_NAMED' => 79,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'WORD_SCOPED' => 23,
-			'OP01_PRINT' => 83
-		},
-		GOTOS => {
-			'SubExpression' => 113,
-			'Variable' => 87,
-			'Conditional' => 111,
-			'Literal' => 116,
-			'Expression' => 117,
-			'VariableModification' => 88,
-			'HashReference' => 91,
-			'ArrayReference' => 121,
-			'WordScoped' => 119,
-			'PAREN-35' => 122,
-			'Operation' => 381,
-			'HashDereference' => 123,
-			'LoopLabel' => 78,
-			'Operator' => 102,
-			'OPTIONAL-36' => 101,
-			'ArrayDereference' => 81,
-			'Statement' => 86,
-			'OperatorVoid' => 107,
-			'VariableDeclaration' => 85
-		}
+		DEFAULT => -196
 	},
 	{#State 369
 		ACTIONS => {
-			"%{" => -153,
-			'OP01_NAMED' => -153,
-			'OP01_PRINT' => -153,
-			'WORD_SCOPED' => -153,
-			'OP05_MATH_NEG_LPAREN' => -153,
-			'OP03_MATH_INC_DEC' => -153,
-			"elsif" => 384,
-			"for" => -153,
-			'OP22_LOGICAL_NEG' => -153,
-			'MY' => -153,
-			'OP01_NAMED_VOID_SCOLON' => -153,
-			"}" => -153,
-			'WORD' => -153,
-			"foreach" => -153,
-			"\@{" => -153,
-			'OP10_NAMED_UNARY' => -153,
-			'LBRACE' => -153,
-			'LITERAL_STRING' => -153,
-			"undef" => -153,
-			'OP19_LOOP_CONTROL' => -153,
-			'OP01_OPEN' => -153,
-			'OP01_NAMED_VOID_LPAREN' => -153,
-			"if" => -153,
-			'OP19_LOOP_CONTROL_SCOLON' => -153,
-			'OP05_LOGICAL_NEG' => -153,
-			"else" => 382,
-			'LBRACKET' => -153,
-			'LPAREN' => -153,
-			"while" => -153,
-			'OP01_NAMED_VOID' => -153,
-			'OP01_CLOSE' => -153,
-			'' => -153,
-			'VARIABLE_SYMBOL' => -153,
-			'LITERAL_NUMBER' => -153,
-			'WORD_UPPERCASE' => -153
-		},
-		GOTOS => {
-			'OPTIONAL-40' => 386,
-			'PAREN-37' => 385,
-			'PAREN-39' => 383
+			";" => 386
 		}
 	},
 	{#State 370
 		ACTIONS => {
-			'OP21_LIST_COMMA' => 387
+			'VARIABLE_SYMBOL' => 387
 		}
 	},
 	{#State 371
-		DEFAULT => -80
+		DEFAULT => -59
 	},
 	{#State 372
 		ACTIONS => {
-			"= sub {" => 388
+			'OP18_TERNARY' => 156,
+			'OP14_BITWISE_OR_XOR' => 157,
+			'OP04_MATH_POW' => 163,
+			'OP08_MATH_ADD_SUB' => 165,
+			'OP23_LOGICAL_AND' => 164,
+			'OP13_BITWISE_AND' => 155,
+			'OP12_COMPARE_EQ_NE' => 170,
+			'OP15_LOGICAL_AND' => 161,
+			'OP11_COMPARE_LT_GT' => 171,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			'OP07_STRING_REPEAT' => 158,
+			'OP09_BITWISE_SHIFT' => 166,
+			'OP24_LOGICAL_OR_XOR' => 167,
+			'OP16_LOGICAL_OR' => 168,
+			'OP17_LIST_RANGE' => 388,
+			'OP06_REGEX_MATCH' => 169,
+			'OP08_STRING_CAT' => 160
 		}
 	},
 	{#State 373
 		ACTIONS => {
-			"}" => 390,
-			'OP21_LIST_COMMA' => 391
-		},
-		GOTOS => {
-			'PAREN-24' => 389
+			")" => 389
 		}
 	},
 	{#State 374
 		ACTIONS => {
-			'MY' => 138
+			'LPAREN' => 110,
+			'OP22_LOGICAL_NEG' => 87,
+			'WORD' => 26,
+			'OP01_CLOSE' => 114,
+			'WORD_SCOPED' => 27,
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115,
+			'WORD_UPPERCASE' => 125,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109,
+			"\@{" => 79,
+			'OP01_NAMED' => 129,
+			'OP03_MATH_INC_DEC' => 80,
+			"undef" => 100,
+			'VARIABLE_SYMBOL' => 101,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			"%{" => 97
 		},
 		GOTOS => {
-			'TypeInner' => 392
+			'Expression' => 127,
+			'Variable' => 126,
+			'WordScoped' => 113,
+			'Operator' => 73,
+			'HashDereference' => 85,
+			'ArrayReference' => 71,
+			'SubExpression' => 390,
+			'Literal' => 84,
+			'HashReference' => 98,
+			'ArrayDereference' => 86
 		}
 	},
 	{#State 375
-		DEFAULT => -64
+		DEFAULT => -154
 	},
 	{#State 376
 		ACTIONS => {
-			"\@_;" => 393
+			'LPAREN' => 391
 		}
 	},
 	{#State 377
-		ACTIONS => {
-			'TYPE_INTEGER' => 55,
-			'WORD' => 56
-		},
-		GOTOS => {
-			'Type' => 394
-		}
+		DEFAULT => -149
 	},
 	{#State 378
 		ACTIONS => {
-			'OP14_BITWISE_OR_XOR' => 203,
-			'OP24_LOGICAL_OR_XOR' => 202,
-			'OP08_MATH_ADD_SUB' => 196,
-			'OP16_LOGICAL_OR' => 201,
-			'OP15_LOGICAL_AND' => 200,
-			'OP06_REGEX_MATCH' => 194,
-			'OP13_BITWISE_AND' => 195,
-			'OP08_STRING_CAT' => 193,
-			'OP17_LIST_RANGE' => 395,
-			'OP11_COMPARE_LT_GT' => 199,
-			'OP09_BITWISE_SHIFT' => 208,
-			'OP18_TERNARY' => 198,
-			'OP23_LOGICAL_AND' => 206,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP12_COMPARE_EQ_NE' => 205,
-			'OP04_MATH_POW' => 197,
-			'OP07_STRING_REPEAT' => 204
+			'LBRACE' => 341
+		},
+		GOTOS => {
+			'CodeBlock' => 392
 		}
 	},
 	{#State 379
-		ACTIONS => {
-			")" => 396
-		}
+		DEFAULT => -152
 	},
 	{#State 380
 		DEFAULT => -163
@@ -5329,484 +5348,465 @@ sub new {
 	},
 	{#State 382
 		ACTIONS => {
-			'LBRACE' => 344
+			'TYPE_INTEGER' => 55,
+			'WORD' => 56
 		},
 		GOTOS => {
-			'CodeBlock' => 397
+			'Type' => 393
 		}
 	},
 	{#State 383
-		DEFAULT => -152
+		ACTIONS => {
+			"\@_;" => 394
+		}
 	},
 	{#State 384
 		ACTIONS => {
-			'LPAREN' => 398
+			'MY' => 133
+		},
+		GOTOS => {
+			'TypeInner' => 395
 		}
 	},
 	{#State 385
-		DEFAULT => -149
+		ACTIONS => {
+			'OP21_LIST_COMMA' => 398,
+			"}" => 397
+		},
+		GOTOS => {
+			'PAREN-24' => 396
+		}
 	},
 	{#State 386
-		DEFAULT => -154
+		DEFAULT => -64
 	},
 	{#State 387
 		ACTIONS => {
-			'OP22_LOGICAL_NEG' => 90,
-			'OP01_CLOSE' => 114,
-			'LBRACKET' => 112,
-			'LPAREN' => 110,
-			'WORD_UPPERCASE' => 136,
-			"\@{" => 99,
-			'LBRACE' => 95,
-			'LITERAL_STRING' => 94,
-			'OP10_NAMED_UNARY' => 96,
-			'VARIABLE_SYMBOL' => 120,
-			'WORD' => 24,
-			'LITERAL_NUMBER' => 118,
-			"%{" => 80,
-			'OP01_NAMED' => 140,
-			"undef" => 100,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP01_OPEN' => 106,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82
-		},
-		GOTOS => {
-			'ArrayReference' => 121,
-			'HashReference' => 91,
-			'WordScoped' => 119,
-			'ArrayDereference' => 81,
-			'HashDereference' => 123,
-			'SubExpression' => 399,
-			'Variable' => 139,
-			'Expression' => 134,
-			'Literal' => 116,
-			'Operator' => 102
+			"= sub {" => 399
 		}
 	},
 	{#State 388
 		ACTIONS => {
-			"%{" => -66,
-			'OP01_NAMED' => -66,
-			'OP03_MATH_INC_DEC' => -66,
-			'OP05_MATH_NEG_LPAREN' => -66,
-			'WORD_SCOPED' => -66,
-			'OP01_PRINT' => -66,
-			'OP22_LOGICAL_NEG' => -66,
-			'MY' => -66,
-			"for" => -66,
-			'OP10_NAMED_UNARY' => -66,
-			'LITERAL_STRING' => -66,
-			'LBRACE' => -66,
-			"\@{" => -66,
-			'WORD' => -66,
-			"foreach" => -66,
-			'OP01_NAMED_VOID_SCOLON' => -66,
-			"}" => -66,
-			'OP19_LOOP_CONTROL' => -66,
-			"undef" => -66,
-			'LPAREN_MY' => 401,
-			'OP05_LOGICAL_NEG' => -66,
-			'OP19_LOOP_CONTROL_SCOLON' => -66,
-			'OP01_NAMED_VOID_LPAREN' => -66,
-			"if" => -66,
-			'OP01_OPEN' => -66,
-			'OP01_CLOSE' => -66,
-			"while" => -66,
-			'OP01_NAMED_VOID' => -66,
-			'LBRACKET' => -66,
-			'LPAREN' => -66,
-			'WORD_UPPERCASE' => -66,
-			'LITERAL_NUMBER' => -66,
-			'VARIABLE_SYMBOL' => -66
+			'OP01_CLOSE' => 114,
+			'OP10_NAMED_UNARY' => 91,
+			'LBRACE' => 115,
+			'WORD_SCOPED' => 27,
+			'OP22_LOGICAL_NEG' => 87,
+			'LPAREN' => 110,
+			'WORD' => 26,
+			'WORD_UPPERCASE' => 125,
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108,
+			'OP03_MATH_INC_DEC' => 80,
+			"undef" => 100,
+			'OP01_NAMED' => 129,
+			'VARIABLE_SYMBOL' => 101,
+			"\@{" => 79,
+			"%{" => 97,
+			'OP01_OPEN' => 93,
+			'LITERAL_NUMBER' => 94,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LBRACKET' => 75
 		},
 		GOTOS => {
-			'MethodArguments' => 402,
-			'OPTIONAL-26' => 400
+			'HashReference' => 98,
+			'ArrayDereference' => 86,
+			'HashDereference' => 85,
+			'Operator' => 73,
+			'Literal' => 84,
+			'SubExpression' => 400,
+			'ArrayReference' => 71,
+			'Variable' => 126,
+			'WordScoped' => 113,
+			'Expression' => 127
 		}
 	},
 	{#State 389
-		DEFAULT => -61
+		ACTIONS => {
+			'LBRACE' => 341
+		},
+		GOTOS => {
+			'CodeBlock' => 401
+		}
 	},
 	{#State 390
 		ACTIONS => {
-			";" => 403
+			'OP09_BITWISE_SHIFT' => 166,
+			'OP21_LIST_COMMA' => -81,
+			'OP07_STRING_REPEAT' => 158,
+			'OP16_LOGICAL_OR' => 168,
+			'OP24_LOGICAL_OR_XOR' => -81,
+			'OP17_LIST_RANGE' => 159,
+			'OP06_REGEX_MATCH' => 169,
+			'OP08_STRING_CAT' => 160,
+			";" => -81,
+			'OP12_COMPARE_EQ_NE' => 170,
+			'OP15_LOGICAL_AND' => 161,
+			'OP11_COMPARE_LT_GT' => 171,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			"]" => -81,
+			'OP04_MATH_POW' => 163,
+			'OP13_BITWISE_AND' => 155,
+			'OP08_MATH_ADD_SUB' => 165,
+			"}" => -81,
+			'OP23_LOGICAL_AND' => -81,
+			'OP14_BITWISE_OR_XOR' => 157,
+			'OP18_TERNARY' => 156,
+			")" => -81
 		}
 	},
 	{#State 391
 		ACTIONS => {
-			"%{" => 80,
-			'WORD' => 357
+			'OP01_CLOSE' => 114,
+			'WORD_SCOPED' => 27,
+			'LBRACE' => 115,
+			'OP10_NAMED_UNARY' => 91,
+			'OP22_LOGICAL_NEG' => 87,
+			'LPAREN' => 110,
+			'WORD' => 26,
+			'WORD_UPPERCASE' => 125,
+			'OP05_LOGICAL_NEG' => 109,
+			'LITERAL_STRING' => 108,
+			'OP01_NAMED' => 129,
+			'OP03_MATH_INC_DEC' => 80,
+			"undef" => 100,
+			'VARIABLE_SYMBOL' => 101,
+			"\@{" => 79,
+			"%{" => 97,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72
 		},
 		GOTOS => {
-			'HashDereference' => 356,
-			'HashEntryTyped' => 404
+			'HashReference' => 98,
+			'ArrayDereference' => 86,
+			'Operator' => 73,
+			'HashDereference' => 85,
+			'ArrayReference' => 71,
+			'Literal' => 84,
+			'SubExpression' => 402,
+			'Variable' => 126,
+			'WordScoped' => 113,
+			'Expression' => 127
 		}
 	},
 	{#State 392
-		ACTIONS => {
-			'OP05_LOGICAL_NEG' => 108,
-			'OP03_MATH_INC_DEC' => 84,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'OP01_OPEN' => 106,
-			"%{" => 80,
-			'OP01_NAMED' => 140,
-			"undef" => 100,
-			'LBRACE' => 95,
-			'OP10_NAMED_UNARY' => 96,
-			'LITERAL_STRING' => 94,
-			'WORD_UPPERCASE' => 136,
-			"\@{" => 99,
-			'WORD' => 24,
-			'LITERAL_NUMBER' => 118,
-			'VARIABLE_SYMBOL' => 120,
-			'OP01_CLOSE' => 114,
-			'OP22_LOGICAL_NEG' => 90,
-			'LBRACKET' => 112,
-			'LPAREN' => 110
-		},
-		GOTOS => {
-			'HashDereference' => 123,
-			'ArrayReference' => 121,
-			'HashReference' => 91,
-			'ArrayDereference' => 81,
-			'WordScoped' => 119,
-			'Expression' => 134,
-			'Operator' => 102,
-			'Literal' => 116,
-			'SubExpression' => 405,
-			'Variable' => 139
-		}
+		DEFAULT => -151
 	},
 	{#State 393
-		DEFAULT => -50
+		ACTIONS => {
+			'VARIABLE_SYMBOL' => 403
+		}
 	},
 	{#State 394
-		ACTIONS => {
-			'VARIABLE_SYMBOL' => 406
-		}
+		DEFAULT => -50
 	},
 	{#State 395
 		ACTIONS => {
-			'WORD' => 24,
-			'LITERAL_NUMBER' => 118,
-			'VARIABLE_SYMBOL' => 120,
-			'LBRACE' => 95,
-			'OP10_NAMED_UNARY' => 96,
-			'LITERAL_STRING' => 94,
-			'WORD_UPPERCASE' => 136,
-			"\@{" => 99,
-			'LBRACKET' => 112,
+			'WORD' => 26,
 			'LPAREN' => 110,
+			'OP22_LOGICAL_NEG' => 87,
+			'WORD_SCOPED' => 27,
+			'LBRACE' => 115,
+			'OP10_NAMED_UNARY' => 91,
 			'OP01_CLOSE' => 114,
-			'OP22_LOGICAL_NEG' => 90,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'WORD_SCOPED' => 23,
-			'OP01_OPEN' => 106,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP03_MATH_INC_DEC' => 84,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109,
+			'WORD_UPPERCASE' => 125,
+			"\@{" => 79,
+			'VARIABLE_SYMBOL' => 101,
+			'OP01_NAMED' => 129,
+			'OP03_MATH_INC_DEC' => 80,
 			"undef" => 100,
-			"%{" => 80,
-			'OP01_NAMED' => 140
+			'LBRACKET' => 75,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LITERAL_NUMBER' => 94,
+			'OP01_OPEN' => 93,
+			"%{" => 97
 		},
 		GOTOS => {
-			'Operator' => 102,
-			'Literal' => 116,
-			'Expression' => 134,
-			'SubExpression' => 407,
-			'Variable' => 139,
-			'HashDereference' => 123,
-			'HashReference' => 91,
-			'ArrayReference' => 121,
-			'WordScoped' => 119,
-			'ArrayDereference' => 81
+			'HashReference' => 98,
+			'ArrayDereference' => 86,
+			'Operator' => 73,
+			'HashDereference' => 85,
+			'ArrayReference' => 71,
+			'Literal' => 84,
+			'SubExpression' => 404,
+			'Variable' => 126,
+			'WordScoped' => 113,
+			'Expression' => 127
 		}
 	},
 	{#State 396
-		ACTIONS => {
-			'LBRACE' => 344
-		},
-		GOTOS => {
-			'CodeBlock' => 408
-		}
+		DEFAULT => -61
 	},
 	{#State 397
-		DEFAULT => -151
+		ACTIONS => {
+			";" => 405
+		}
 	},
 	{#State 398
 		ACTIONS => {
-			'LPAREN' => 110,
-			'LBRACKET' => 112,
-			'OP01_CLOSE' => 114,
-			'OP22_LOGICAL_NEG' => 90,
-			'LITERAL_NUMBER' => 118,
-			'WORD' => 24,
-			'VARIABLE_SYMBOL' => 120,
-			'LITERAL_STRING' => 94,
-			'LBRACE' => 95,
-			'OP10_NAMED_UNARY' => 96,
-			"\@{" => 99,
-			'WORD_UPPERCASE' => 136,
-			"undef" => 100,
-			'OP01_NAMED' => 140,
-			"%{" => 80,
-			'WORD_SCOPED' => 23,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'OP01_OPEN' => 106,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP05_LOGICAL_NEG' => 108
+			'WORD' => 366,
+			"%{" => 97
 		},
 		GOTOS => {
-			'HashDereference' => 123,
-			'HashReference' => 91,
-			'ArrayReference' => 121,
-			'WordScoped' => 119,
-			'ArrayDereference' => 81,
-			'Operator' => 102,
-			'Literal' => 116,
-			'Expression' => 134,
-			'SubExpression' => 409,
-			'Variable' => 139
+			'HashEntryTyped' => 406,
+			'HashDereference' => 368
 		}
 	},
 	{#State 399
 		ACTIONS => {
-			'OP08_MATH_ADD_SUB' => 196,
-			")" => -81,
-			'OP16_LOGICAL_OR' => 201,
-			'OP14_BITWISE_OR_XOR' => 203,
-			'OP24_LOGICAL_OR_XOR' => -81,
-			'OP17_LIST_RANGE' => 192,
-			'OP11_COMPARE_LT_GT' => 199,
-			'OP15_LOGICAL_AND' => 200,
-			'OP06_REGEX_MATCH' => 194,
-			'OP13_BITWISE_AND' => 195,
-			'OP08_STRING_CAT' => 193,
-			"]" => -81,
-			'OP09_BITWISE_SHIFT' => 208,
-			";" => -81,
-			'OP18_TERNARY' => 198,
-			"}" => -81,
-			'OP23_LOGICAL_AND' => -81,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP12_COMPARE_EQ_NE' => 205,
-			'OP04_MATH_POW' => 197,
-			'OP21_LIST_COMMA' => -81,
-			'OP07_STRING_REPEAT' => 204
+			'OP05_LOGICAL_NEG' => -66,
+			'LITERAL_STRING' => -66,
+			"while" => -66,
+			'WORD_UPPERCASE' => -66,
+			'OP01_NAMED_VOID_SCOLON' => -66,
+			"for" => -66,
+			'LBRACE' => -66,
+			'OP19_LOOP_CONTROL_SCOLON' => -66,
+			'WORD_SCOPED' => -66,
+			'OP01_CLOSE' => -66,
+			'WORD' => -66,
+			"if" => -66,
+			'LPAREN' => -66,
+			"%{" => -66,
+			'MY' => -66,
+			'OP01_OPEN' => -66,
+			'OP01_NAMED_VOID_LPAREN' => -66,
+			'LITERAL_NUMBER' => -66,
+			'OP01_NAMED_VOID' => -66,
+			'VARIABLE_SYMBOL' => -66,
+			"undef" => -66,
+			'LPAREN_MY' => 407,
+			"foreach" => -66,
+			'OP10_NAMED_UNARY' => -66,
+			'OP19_LOOP_CONTROL' => -66,
+			'OP22_LOGICAL_NEG' => -66,
+			"}" => -66,
+			'OP05_MATH_NEG_LPAREN' => -66,
+			'LBRACKET' => -66,
+			'OP03_MATH_INC_DEC' => -66,
+			'OP01_NAMED' => -66,
+			"\@{" => -66,
+			'OP01_PRINT' => -66
+		},
+		GOTOS => {
+			'MethodArguments' => 408,
+			'OPTIONAL-26' => 409
 		}
 	},
 	{#State 400
-		DEFAULT => -68,
-		GOTOS => {
-			'STAR-27' => 410
+		ACTIONS => {
+			")" => 410,
+			'OP18_TERNARY' => -102,
+			'OP14_BITWISE_OR_XOR' => 157,
+			'OP23_LOGICAL_AND' => -102,
+			'OP08_MATH_ADD_SUB' => 165,
+			'OP13_BITWISE_AND' => 155,
+			'OP04_MATH_POW' => 163,
+			'OP11_COMPARE_LT_GT' => 171,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			'OP12_COMPARE_EQ_NE' => 170,
+			'OP15_LOGICAL_AND' => 161,
+			'OP08_STRING_CAT' => 160,
+			'OP06_REGEX_MATCH' => 169,
+			'OP17_LIST_RANGE' => undef,
+			'OP16_LOGICAL_OR' => 168,
+			'OP24_LOGICAL_OR_XOR' => -102,
+			'OP07_STRING_REPEAT' => 158,
+			'OP09_BITWISE_SHIFT' => 166
 		}
 	},
 	{#State 401
-		ACTIONS => {
-			'TYPE_SELF' => 411
-		}
+		DEFAULT => -159
 	},
 	{#State 402
-		DEFAULT => -65
-	},
-	{#State 403
-		DEFAULT => -63
-	},
-	{#State 404
-		DEFAULT => -60
-	},
-	{#State 405
 		ACTIONS => {
-			"}" => -195,
-			'OP12_COMPARE_EQ_NE' => 205,
-			'OP23_LOGICAL_AND' => 206,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP07_STRING_REPEAT' => 204,
-			'OP21_LIST_COMMA' => -195,
-			'OP04_MATH_POW' => 197,
-			'OP09_BITWISE_SHIFT' => 208,
-			'OP18_TERNARY' => 198,
-			'OP11_COMPARE_LT_GT' => 199,
-			'OP17_LIST_RANGE' => 192,
-			'OP06_REGEX_MATCH' => 194,
-			'OP13_BITWISE_AND' => 195,
-			'OP15_LOGICAL_AND' => 200,
-			'OP08_STRING_CAT' => 193,
-			'OP16_LOGICAL_OR' => 201,
-			'OP08_MATH_ADD_SUB' => 196,
-			'OP24_LOGICAL_OR_XOR' => 202,
-			'OP14_BITWISE_OR_XOR' => 203
+			'OP16_LOGICAL_OR' => 168,
+			'OP24_LOGICAL_OR_XOR' => 167,
+			'OP09_BITWISE_SHIFT' => 166,
+			'OP07_STRING_REPEAT' => 158,
+			'OP06_REGEX_MATCH' => 169,
+			'OP08_STRING_CAT' => 160,
+			'OP17_LIST_RANGE' => 159,
+			'OP15_LOGICAL_AND' => 161,
+			'OP12_COMPARE_EQ_NE' => 170,
+			'OP07_MATH_MULT_DIV_MOD' => 162,
+			'OP11_COMPARE_LT_GT' => 171,
+			'OP13_BITWISE_AND' => 155,
+			'OP08_MATH_ADD_SUB' => 165,
+			'OP23_LOGICAL_AND' => 164,
+			'OP04_MATH_POW' => 163,
+			'OP14_BITWISE_OR_XOR' => 157,
+			'OP18_TERNARY' => 156,
+			")" => 411
 		}
 	},
-	{#State 406
+	{#State 403
 		DEFAULT => -47
+	},
+	{#State 404
+		ACTIONS => {
+			'OP04_MATH_POW' => 163,
+			'OP13_BITWISE_AND' => 155,
+			"}" => -195,
+			'OP23_LOGICAL_AND' => 164,
+			'OP08_MATH_ADD_SUB' => 165,
+			'OP14_BITWISE_OR_XOR' => 157,
+			'OP18_TERNARY' => 156,
+			'OP09_BITWISE_SHIFT' => 166,
+			'OP21_LIST_COMMA' => -195,
+			'OP07_STRING_REPEAT' => 158,
+			'OP24_LOGICAL_OR_XOR' => 167,
+			'OP16_LOGICAL_OR' => 168,
+			'OP17_LIST_RANGE' => 159,
+			'OP06_REGEX_MATCH' => 169,
+			'OP08_STRING_CAT' => 160,
+			'OP15_LOGICAL_AND' => 161,
+			'OP12_COMPARE_EQ_NE' => 170,
+			'OP11_COMPARE_LT_GT' => 171,
+			'OP07_MATH_MULT_DIV_MOD' => 162
+		}
+	},
+	{#State 405
+		DEFAULT => -63
+	},
+	{#State 406
+		DEFAULT => -60
 	},
 	{#State 407
 		ACTIONS => {
-			'OP14_BITWISE_OR_XOR' => 203,
-			'OP24_LOGICAL_OR_XOR' => -102,
-			'OP08_MATH_ADD_SUB' => 196,
-			'OP16_LOGICAL_OR' => 201,
-			")" => 412,
-			'OP15_LOGICAL_AND' => 200,
-			'OP13_BITWISE_AND' => 195,
-			'OP06_REGEX_MATCH' => 194,
-			'OP08_STRING_CAT' => 193,
-			'OP11_COMPARE_LT_GT' => 199,
-			'OP17_LIST_RANGE' => undef,
-			'OP09_BITWISE_SHIFT' => 208,
-			'OP18_TERNARY' => -102,
-			'OP23_LOGICAL_AND' => -102,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP12_COMPARE_EQ_NE' => 205,
-			'OP04_MATH_POW' => 197,
-			'OP07_STRING_REPEAT' => 204
+			'TYPE_SELF' => 412
 		}
 	},
 	{#State 408
-		DEFAULT => -159
+		DEFAULT => -65
 	},
 	{#State 409
-		ACTIONS => {
-			'OP24_LOGICAL_OR_XOR' => 202,
-			'OP14_BITWISE_OR_XOR' => 203,
-			'OP16_LOGICAL_OR' => 201,
-			")" => 413,
-			'OP08_MATH_ADD_SUB' => 196,
-			'OP06_REGEX_MATCH' => 194,
-			'OP13_BITWISE_AND' => 195,
-			'OP15_LOGICAL_AND' => 200,
-			'OP08_STRING_CAT' => 193,
-			'OP17_LIST_RANGE' => 192,
-			'OP11_COMPARE_LT_GT' => 199,
-			'OP09_BITWISE_SHIFT' => 208,
-			'OP18_TERNARY' => 198,
-			'OP12_COMPARE_EQ_NE' => 205,
-			'OP23_LOGICAL_AND' => 206,
-			'OP07_MATH_MULT_DIV_MOD' => 207,
-			'OP04_MATH_POW' => 197,
-			'OP07_STRING_REPEAT' => 204
+		DEFAULT => -68,
+		GOTOS => {
+			'STAR-27' => 413
 		}
 	},
 	{#State 410
 		ACTIONS => {
-			'OP01_NAMED' => 79,
-			"%{" => 80,
-			'OP03_MATH_INC_DEC' => 84,
-			'OP01_PRINT' => 83,
-			'OP05_MATH_NEG_LPAREN' => 82,
-			'WORD_SCOPED' => 23,
-			'MY' => 89,
-			'OP22_LOGICAL_NEG' => 90,
-			"for" => -142,
-			"\@{" => 99,
-			'LITERAL_STRING' => 94,
-			'LBRACE' => 95,
-			'OP10_NAMED_UNARY' => 96,
-			'OP01_NAMED_VOID_SCOLON' => 92,
-			"}" => 415,
-			"foreach" => -142,
-			'WORD' => 24,
-			'OP19_LOOP_CONTROL' => 103,
-			"undef" => 100,
-			'OP19_LOOP_CONTROL_SCOLON' => 109,
-			'OP05_LOGICAL_NEG' => 108,
-			'OP01_OPEN' => 106,
-			'OP01_NAMED_VOID_LPAREN' => 104,
-			"if" => 105,
-			'OP01_NAMED_VOID' => 115,
-			"while" => -142,
-			'OP01_CLOSE' => 114,
-			'LPAREN' => 110,
-			'LBRACKET' => 112,
-			'WORD_UPPERCASE' => 124,
-			'VARIABLE_SYMBOL' => 120,
-			'LITERAL_NUMBER' => 118
+			'LBRACE' => 341
 		},
 		GOTOS => {
-			'HashDereference' => 123,
-			'Operation' => 414,
-			'PAREN-35' => 122,
-			'ArrayReference' => 121,
-			'HashReference' => 91,
-			'WordScoped' => 119,
-			'Expression' => 117,
-			'Literal' => 116,
-			'VariableModification' => 88,
-			'SubExpression' => 113,
-			'Conditional' => 111,
-			'Variable' => 87,
-			'Statement' => 86,
-			'VariableDeclaration' => 85,
-			'OperatorVoid' => 107,
-			'ArrayDereference' => 81,
-			'Operator' => 102,
-			'OPTIONAL-36' => 101,
-			'LoopLabel' => 78
+			'CodeBlock' => 414
 		}
 	},
 	{#State 411
+		ACTIONS => {
+			'LBRACE' => 341
+		},
+		GOTOS => {
+			'CodeBlock' => 415
+		}
+	},
+	{#State 412
 		DEFAULT => -72,
 		GOTOS => {
 			'STAR-29' => 416
 		}
 	},
-	{#State 412
-		ACTIONS => {
-			'LBRACE' => 344
-		},
-		GOTOS => {
-			'CodeBlock' => 417
-		}
-	},
 	{#State 413
 		ACTIONS => {
-			'LBRACE' => 344
+			"undef" => 100,
+			'VARIABLE_SYMBOL' => 101,
+			'OP01_NAMED_VOID' => 103,
+			"%{" => 97,
+			'OP01_OPEN' => 93,
+			'OP01_NAMED_VOID_LPAREN' => 92,
+			'LITERAL_NUMBER' => 94,
+			'MY' => 95,
+			'OP01_CLOSE' => 114,
+			'LBRACE' => 115,
+			'WORD_SCOPED' => 27,
+			'OP19_LOOP_CONTROL_SCOLON' => 117,
+			'LPAREN' => 110,
+			'WORD' => 26,
+			"if" => 111,
+			'WORD_UPPERCASE' => 107,
+			'LITERAL_STRING' => 108,
+			'OP05_LOGICAL_NEG' => 109,
+			"while" => -142,
+			"for" => -142,
+			'OP01_NAMED_VOID_SCOLON' => 106,
+			'OP03_MATH_INC_DEC' => 80,
+			'OP01_NAMED' => 81,
+			'OP01_PRINT' => 78,
+			"\@{" => 79,
+			"}" => 418,
+			'OP05_MATH_NEG_LPAREN' => 72,
+			'LBRACKET' => 75,
+			'OP19_LOOP_CONTROL' => 88,
+			"foreach" => -142,
+			'OP10_NAMED_UNARY' => 91,
+			'OP22_LOGICAL_NEG' => 87
 		},
 		GOTOS => {
-			'CodeBlock' => 418
+			'ArrayDereference' => 86,
+			'LoopLabel' => 105,
+			'Literal' => 84,
+			'SubExpression' => 83,
+			'HashDereference' => 85,
+			'WordScoped' => 113,
+			'VariableModification' => 112,
+			'OperatorVoid' => 89,
+			'Statement' => 90,
+			'VariableDeclaration' => 116,
+			'PAREN-35' => 76,
+			'Operation' => 417,
+			'HashReference' => 98,
+			'OPTIONAL-36' => 77,
+			'ArrayReference' => 71,
+			'Operator' => 73,
+			'Variable' => 104,
+			'Conditional' => 102,
+			'Expression' => 99
 		}
 	},
 	{#State 414
-		DEFAULT => -67
+		DEFAULT => -158
 	},
 	{#State 415
-		ACTIONS => {
-			";" => 419
-		}
+		DEFAULT => -148
 	},
 	{#State 416
 		ACTIONS => {
-			'OP21_LIST_COMMA' => 422,
-			")" => 420
+			'OP21_LIST_COMMA' => 421,
+			")" => 419
 		},
 		GOTOS => {
-			'PAREN-28' => 421
+			'PAREN-28' => 420
 		}
 	},
 	{#State 417
-		DEFAULT => -158
+		DEFAULT => -67
 	},
 	{#State 418
-		DEFAULT => -148
+		ACTIONS => {
+			";" => 422
+		}
 	},
 	{#State 419
-		DEFAULT => -69
-	},
-	{#State 420
 		ACTIONS => {
 			'OP19_VARIABLE_ASSIGN' => 423
 		}
 	},
-	{#State 421
+	{#State 420
 		DEFAULT => -71
 	},
-	{#State 422
+	{#State 421
 		ACTIONS => {
 			'MY' => 424
 		}
+	},
+	{#State 422
+		DEFAULT => -69
 	},
 	{#State 423
 		ACTIONS => {
@@ -8131,133 +8131,133 @@ sub {
 # 4. Copy updates from Grammar.output file into this file, below this line only
 # 5. Run scripts/grammar_recompile.sh again
 our string_hashref $RULES = {
-CompileUnit_4 => 'RPerl::CompileUnit::Program',  # CompileUnit -> Program
-CompileUnit_5 => 'RPerl::CompileUnit::Module',  # CompileUnit -> PLUS-2
-Program_18 => 'RPerl::CompileUnit::Program',  # Program -> SHEBANG OPTIONAL-3 Header STAR-4 STAR-5 STAR-6 STAR-7 PLUS-8
-ModuleHeader_21 => 'RPerl::CompileUnit::Module::Header',  # ModuleHeader -> OPTIONAL-9 'package' WordScoped ';' Header
-Module_22 => 'RPerl::CompileUnit::Module::Package',  # Module -> Package
-Module_23 => 'RPerl::CompileUnit::Module::Class::Generator',  # Module -> Class
-Package_32 => 'RPerl::CompileUnit::Module::Package',  # Package -> STAR-10 STAR-11 STAR-12 PLUS-13 LITERAL_NUMBER ';'
-Header_33 => 'RPerl::NonGenerator',  # Header -> 'use strict;' 'use warnings;' 'use RPerl;' 'our' VERSION_NUMBER_ASSIGN
-Critic_36 => 'RPerl::CompileUnit::Critic',  # Critic -> '## no critic qw(' PLUS-14 ')'
-Include_39 => 'RPerl::CompileUnit::Include',  # Include -> 'use' WordScoped ';'
-Include_40 => 'RPerl::CompileUnit::Include',  # Include -> 'use' WordScoped OP01_QW PLUS-15 ')' ';'
-Constant_41 => 'RPerl::CompileUnit::Constant',  # Constant -> 'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant Literal ';'
-Subroutine_46 => 'RPerl::CodeBlock::Subroutine',  # Subroutine -> 'our' Type VARIABLE_SYMBOL '= sub {' OPTIONAL-16 STAR-17 '}' ';'
-SubroutineArguments_50 => 'RPerl::CodeBlock::Subroutine::Arguments',  # SubroutineArguments -> LPAREN_MY Type VARIABLE_SYMBOL STAR-19 ')' OP19_VARIABLE_ASSIGN '@_;'
-Class_59 => 'RPerl::NonGenerator',  # Class -> 'use parent qw(' WordScoped ')' ';' Include STAR-20 STAR-21 STAR-22 Properties STAR-23 LITERAL_NUMBER ';'
-Properties_63 => 'RPerl::DataStructure::Hash::Properties',  # Properties -> 'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE HashEntryTyped STAR-25 '}' ';'
-Properties_64 => 'RPerl::DataStructure::Hash::Properties',  # Properties -> 'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE '}' ';'
-Method_69 => 'RPerl::CodeBlock::Subroutine::Method',  # Method -> 'our' TYPE_METHOD VARIABLE_SYMBOL '= sub {' OPTIONAL-26 STAR-27 '}' ';'
-MethodArguments_73 => 'RPerl::CodeBlock::Subroutine::Method::Arguments',  # MethodArguments -> LPAREN_MY TYPE_SELF STAR-29 ')' OP19_VARIABLE_ASSIGN '@_;'
-MethodOrSubroutine_74 => 'RPerl::CodeBlock::Subroutine::Method',  # MethodOrSubroutine -> Method
-MethodOrSubroutine_75 => 'RPerl::CodeBlock::Subroutine',  # MethodOrSubroutine -> Subroutine
-Operation_76 => 'RPerl::Operation::Expression',  # Operation -> Expression ';'
-Operation_77 => 'RPerl::Operation::Statement',  # Operation -> Statement
-Operator_78 => 'RPerl::Operation::Expression::Operator::Print',
-Operator_79 => 'RPerl::Operation::Expression::Operator::Named',
-Operator_80 => 'RPerl::Operation::Expression::Operator::Named',
-Operator_81 => 'RPerl::Operation::Expression::Operator::Open',
-Operator_82 => 'RPerl::Operation::Expression::Operator::Close',
-Operator_83 => 'RPerl::Operation::Expression::Operator::Math::IncrementDecrement',
-Operator_84 => 'RPerl::Operation::Expression::Operator::Math::IncrementDecrement',
-Operator_85 => 'RPerl::Operation::Expression::Operator::Math::Power',
-Operator_86 => 'RPerl::Operation::Expression::Operator::Logical::Negation',
-Operator_87 => 'RPerl::Operation::Expression::Operator::Math::Negative',
-Operator_88 => 'RPerl::Operation::Expression::Operator::RegularExpression',
-Operator_89 => 'RPerl::Operation::Expression::Operator::String::Repeat',
-Operator_90 => 'RPerl::Operation::Expression::Operator::Math::MultiplyDivideModulo',
+CompileUnit_4 => 'RPerl::CompileUnit::Program',                             # CompileUnit -> Program
+CompileUnit_5 => 'RPerl::CompileUnit::Module',                              # CompileUnit -> PLUS-2
+Program_18 => 'RPerl::CompileUnit::Program',                                # Program -> SHEBANG OPTIONAL-3 Header STAR-4 STAR-5 STAR-6 STAR-7 PLUS-8
+ModuleHeader_21 => 'RPerl::CompileUnit::Module::Header',                    # ModuleHeader -> OPTIONAL-9 'package' WordScoped ';' Header
+Module_22 => 'RPerl::CompileUnit::Module::Package',                         # Module -> Package
+Module_23 => 'RPerl::CompileUnit::Module::Class::Generator',                # Module -> Class
+Package_32 => 'RPerl::CompileUnit::Module::Package',                        # Package -> STAR-10 STAR-11 STAR-12 PLUS-13 LITERAL_NUMBER ';'
+Header_33 => 'RPerl::NonGenerator',                                         # Header -> 'use strict;' 'use warnings;' 'use RPerl;' 'our' VERSION_NUMBER_ASSIGN
+Critic_36 => 'RPerl::CompileUnit::Critic',                                  # Critic -> '## no critic qw(' PLUS-14 ')'
+Include_39 => 'RPerl::CompileUnit::Include',                                # Include -> 'use' WordScoped ';'
+Include_40 => 'RPerl::CompileUnit::Include',                                # Include -> 'use' WordScoped OP01_QW PLUS-15 ')' ';'
+Constant_41 => 'RPerl::CompileUnit::Constant',                              # Constant -> 'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant Literal ';'
+Subroutine_46 => 'RPerl::CodeBlock::Subroutine',                            # Subroutine -> 'our' Type VARIABLE_SYMBOL '= sub {' OPTIONAL-16 STAR-17 '}' ';'
+SubroutineArguments_50 => 'RPerl::CodeBlock::Subroutine::Arguments',        # SubroutineArguments -> LPAREN_MY Type VARIABLE_SYMBOL STAR-19 ')' OP19_VARIABLE_ASSIGN '@_;'
+Class_59 => 'RPerl::CompileUnit::Module::Class::Generator',                 # Class -> 'use parent qw(' WordScoped ')' ';' Include STAR-20 STAR-21 STAR-22 Properties STAR-23 LITERAL_NUMBER ';'
+Properties_63 => 'RPerl::DataStructure::Hash::Properties',                  # Properties -> 'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE HashEntryTyped STAR-25 '}' ';'
+Properties_64 => 'RPerl::DataStructure::Hash::Properties',                  # Properties -> 'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE '}' ';'
+Method_69 => 'RPerl::CodeBlock::Subroutine::Method',                        # Method -> 'our' TYPE_METHOD VARIABLE_SYMBOL '= sub {' OPTIONAL-26 STAR-27 '}' ';'
+MethodArguments_73 => 'RPerl::CodeBlock::Subroutine::Method::Arguments',    # MethodArguments -> LPAREN_MY TYPE_SELF STAR-29 ')' OP19_VARIABLE_ASSIGN '@_;'
+MethodOrSubroutine_74 => 'RPerl::CodeBlock::Subroutine::Method',            # MethodOrSubroutine -> Method
+MethodOrSubroutine_75 => 'RPerl::CodeBlock::Subroutine',                    # MethodOrSubroutine -> Subroutine
+Operation_76 => 'RPerl::Operation::Expression',                             # Operation -> Expression ';'
+Operation_77 => 'RPerl::Operation::Statement',                              # Operation -> Statement
+Operator_78 => 'RPerl::Operation::Expression::Operator::Print',             # Operator -> LPAREN OP01_PRINT FHREF_SYMBOL_BRACES ListElements ')'
+Operator_79 => 'RPerl::Operation::Expression::Operator::Named',             # Operator -> OP01_NAMED SubExpression
+Operator_80 => 'RPerl::Operation::Expression::Operator::Named',             # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
+Operator_81 => 'RPerl::Operation::Expression::Operator::Open',              # Operator -> OP01_OPEN MY TYPE_FHREF FHREF_SYMBOL OP21_LIST_COMMA LITERAL_STRING OP21_LIST_COMMA SubExpression
+Operator_82 => 'RPerl::Operation::Expression::Operator::Close',             # Operator -> OP01_CLOSE FHREF_SYMBOL
+Operator_83 => 'RPerl::Operation::Expression::Operator::Math::IncrementDecrement',      # Operator -> OP03_MATH_INC_DEC Variable
+Operator_84 => 'RPerl::Operation::Expression::Operator::Math::IncrementDecrement',      # Operator -> Variable OP03_MATH_INC_DEC
+Operator_85 => 'RPerl::Operation::Expression::Operator::Math::Power',                   # Operator -> SubExpression OP04_MATH_POW SubExpression
+Operator_86 => 'RPerl::Operation::Expression::Operator::Logical::Negation',             # Operator -> OP05_LOGICAL_NEG SubExpression
+Operator_87 => 'RPerl::Operation::Expression::Operator::Math::Negative',                # Operator -> OP05_MATH_NEG_LPAREN SubExpression ')'
+Operator_88 => 'RPerl::Operation::Expression::Operator::RegularExpression',             # Operator -> SubExpression OP06_REGEX_MATCH OP06_REGEX_PATTERN
+Operator_89 => 'RPerl::Operation::Expression::Operator::String::Repeat',                # Operator -> SubExpression OP07_STRING_REPEAT SubExpression
+Operator_90 => 'RPerl::Operation::Expression::Operator::Math::MultiplyDivideModulo',    # Operator -> SubExpression OP07_MATH_MULT_DIV_MOD SubExpression
 Operator_91 => 'RPerl::Operation::Expression::Operator::Math::AddSubtract',             # Operator -> SubExpression OP08_MATH_ADD_SUB SubExpression
 Operator_92 => 'RPerl::Operation::Expression::Operator::String::Concatenate',           # Operator -> SubExpression OP08_STRING_CAT SubExpression
-Operator_93 => 'RPerl::Operation::Expression::Operator::Bitwise::Shift',
+Operator_93 => 'RPerl::Operation::Expression::Operator::Bitwise::Shift',                # Operator -> SubExpression OP09_BITWISE_SHIFT SubExpression
 Operator_94 => 'RPerl::Operation::Expression::Operator::NamedUnary',                    # Operator -> OP10_NAMED_UNARY SubExpression
 Operator_95 => 'RPerl::Operation::Expression::Operator::NamedUnary',                    # Operator -> OP10_NAMED_UNARY
 Operator_96 => 'RPerl::Operation::Expression::Operator::Compare::LessThanGreaterThan',  # Operator -> SubExpression OP11_COMPARE_LT_GT SubExpression
-Operator_97 => 'RPerl::Operation::Expression::Operator::Compare::EqualNotEqual',
-Operator_98 => 'RPerl::Operation::Expression::Operator::Bitwise::And',
-Operator_99 => 'RPerl::Operation::Expression::Operator::Bitwise::OrXor',
-Operator_100 => 'RPerl::Operation::Expression::Operator::Logical::And',
-Operator_101 => 'RPerl::Operation::Expression::Operator::Logical::OrXor',
-Operator_102 => 'RPerl::Operation::Expression::Operator::List::Range',
-Operator_103 => 'RPerl::Operation::Expression::Operator::Ternary',
-Operator_104 => 'RPerl::Operation::Expression::Operator::Logical::Negation',   # Operator -> OP22_LOGICAL_NEG SubExpression
-Operator_105 => 'RPerl::Operation::Expression::Operator::Logical::And',
-Operator_106 => 'RPerl::Operation::Expression::Operator::Logical::OrXor',
-OperatorVoid_112 => 'RPerl::Operation::Statement::OperatorVoid::Print',        # OperatorVoid -> OP01_PRINT OPTIONAL-31 ListElements ';'
-OperatorVoid_113 => 'RPerl::Operation::Statement::OperatorVoid::Print',        # OperatorVoid -> OP01_PRINT FHREF_SYMBOL_BRACES ListElements ';'
-OperatorVoid_114 => 'RPerl::Operation::Statement::OperatorVoid::Named',        # OperatorVoid -> OP01_NAMED_VOID_SCOLON
-OperatorVoid_115 => 'RPerl::Operation::Statement::OperatorVoid::Named',        # OperatorVoid -> OP01_NAMED_VOID_LPAREN OPTIONAL-32 ')' ';'
-OperatorVoid_116 => 'RPerl::Operation::Statement::OperatorVoid::Named',        # OperatorVoid -> OP01_NAMED_VOID ListElements ';'
-OperatorVoid_117 => 'RPerl::Operation::Expression::Operator::Named',           # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
-OperatorVoid_118 => 'RPerl::Operation::Statement::OperatorVoid::LoopControl',  # OperatorVoid -> OP19_LOOP_CONTROL_SCOLON
-OperatorVoid_119 => 'RPerl::Operation::Statement::OperatorVoid::LoopControl',  # OperatorVoid -> OP19_LOOP_CONTROL LoopLabel ';'
-Expression_124 => 'RPerl::Operation::Expression::Operator',        # Expression -> Operator
-Expression_125 => 'RPerl::Operation::Expression::SubroutineCall',  # Expression -> WordScoped LPAREN OPTIONAL-33 ')'
-Expression_126 => 'RPerl::Operation::Expression::ConstantCall',
-Expression_127 => 'RPerl::Operation::Expression::SubroutineCall::MethodCall',
-Expression_128 => 'RPerl::Operation::Expression::SubroutineCall::MethodCall::ConstructorCall',
-SubExpression_129 => 'RPerl::Operation::Expression',                                   # SubExpression -> Expression
-SubExpression_130 => 'RPerl::Operation::Expression::SubExpression::Literal::Undefined',
-SubExpression_131 => 'RPerl::Operation::Expression::SubExpression::Literal',           # SubExpression -> Literal
-SubExpression_132 => 'RPerl::Operation::Expression::SubExpression::Variable',          # SubExpression -> Variable
-SubExpression_133 => 'RPerl::DataStructure::Array::Reference',                         # SubExpression -> ArrayReference
-SubExpression_134 => 'RPerl::Operation::Expression::SubExpression::ArrayDereference',  # SubExpression -> ArrayDereference
-SubExpression_135 => 'RPerl::DataStructure::Hash::Reference',                          # SubExpression -> HashReference
-SubExpression_136 => 'RPerl::Operation::Expression::SubExpression::HashDereference',   # SubExpression -> HashDereference
-SubExpression_137 => 'RPerl::Operation::Expression::SubExpression::Parenthesis',       # SubExpression -> LPAREN SubExpression ')'
-SubExpressionOrStdin_138 => 'RPerl::Operation::Expression::SubExpression',             # SubExpressionOrStdin -> SubExpression
-SubExpressionOrStdin_139 => 'RPerl::InputOutput::Stdin',
-Statement_143 => 'RPerl::Operation::Statement::Conditional',           # Statement -> Conditional
-Statement_144 => 'RPerl::Operation::Statement::Loop',                  # Statement -> OPTIONAL-36 Loop
-Statement_145 => 'RPerl::Operation::Statement::OperatorVoid',          # Statement -> OperatorVoid
-Statement_146 => 'RPerl::Operation::Statement::VariableDeclaration',   # Statement -> VariableDeclaration
-Statement_147 => 'RPerl::Operation::Statement::VariableModification',  # Statement -> VariableModification
-Conditional_154 => 'RPerl::Operation::Statement::Conditional',    # Conditional -> 'if' LPAREN SubExpression ')' CodeBlock STAR-38 OPTIONAL-40
-Loop_155 => 'RPerl::Operation::Statement::Loop::For',             # Loop -> LoopFor
-Loop_156 => 'RPerl::Operation::Statement::Loop::ForEach',         # Loop -> LoopForEach
-Loop_157 => 'RPerl::Operation::Statement::Loop::While',           # Loop -> LoopWhile
-LoopFor_158 => 'RPerl::Operation::Statement::Loop::For',          # LoopFor -> 'for' MY TYPE_INTEGER VARIABLE_SYMBOL LPAREN SubExpression OP17_LIST_RANGE SubExpression ')' CodeBlock
-LoopForEach_159 => 'RPerl::Operation::Statement::Loop::ForEach',  # LoopForEach -> 'foreach' MY Type VARIABLE_SYMBOL LPAREN ListElements ')' CodeBlock
-LoopWhile_160 => 'RPerl::Operation::Statement::Loop::While',      # LoopWhile -> 'while' LPAREN SubExpression ')' CodeBlock
-CodeBlock_163 => 'RPerl::CodeBlock',  # CodeBlock -> LBRACE PLUS-41 '}'
-Variable_166 => 'RPerl::Operation::Expression::SubExpression::Variable',  # Variable -> VARIABLE_SYMBOL STAR-42
-VariableRetrieval_167 => 'RPerl::Operation::Expression::SubExpression::Variable::Retrieval',  # VariableRetrieval -> OP02_ARRAY_THINARROW SubExpression ']'
-VariableRetrieval_168 => 'RPerl::Operation::Expression::SubExpression::Variable::Retrieval',  # VariableRetrieval -> OP02_HASH_THINARROW SubExpression '}'
-VariableRetrieval_169 => 'RPerl::Operation::Expression::SubExpression::Variable::Retrieval',  # VariableRetrieval -> OP02_HASH_THINARROW WORD '}'
-VariableDeclaration_170 => 'RPerl::Operation::Statement::VariableDeclaration',    # VariableDeclaration -> MY Type VARIABLE_SYMBOL ';'
-VariableDeclaration_171 => 'RPerl::Operation::Statement::VariableDeclaration',    # VariableDeclaration -> MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';'
-VariableDeclaration_172 => 'RPerl::Operation::Statement::VariableDeclaration',    # VariableDeclaration -> MY TYPE_FHREF FHREF_SYMBOL ';'
-VariableModification_173 => 'RPerl::Operation::Statement::VariableModification',  # VariableModification -> Variable OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';'
-VariableModification_174 => 'RPerl::Operation::Statement::VariableModification',  # VariableModification -> Variable OP19_VARIABLE_ASSIGN_BY SubExpression ';'
-ListElements_178 => 'RPerl::DataStructure::Array::ListElements',    # ListElements -> ListElement STAR-43
-ListElement_181 => 'RPerl::Operation::Expression::SubExpression',   # ListElement -> SubExpression
-ListElement_182 => 'RPerl::Operation::Expression::SubExpression',   # ListElement -> TypeInner SubExpression
-ListElement_183 => 'RPerl::DataStructure::Array::ListElement',      # ListElement -> OP01_QW PLUS-44 ')'
-ArrayReference_186 => 'RPerl::DataStructure::Array::Reference',     # ArrayReference -> LBRACKET OPTIONAL-45 ']'
-ArrayDereference_189 => 'RPerl::Operation::Expression::SubExpression::ArrayDereference',  # ArrayDereference -> '@{' Variable '}'
-ArrayDereference_190 => 'RPerl::Operation::Expression::SubExpression::ArrayDereference',  # ArrayDereference -> '@{' OPTIONAL-47 ArrayReference '}'
-HashEntry_193 => 'RPerl::DataStructure::Hash::Entry',                                   # HashEntry -> VariableOrLiteralOrWord OP20_HASH_FATARROW OPTIONAL-47 SubExpression
-HashEntry_194 => 'RPerl::Operation::Expression::SubExpression::HashDereference',        # HashEntry -> HashDereference
-HashEntryTyped_195 => 'RPerl::DataStructure::Hash::EntryTyped',                         # HashEntryTyped -> WORD OP20_HASH_FATARROW TypeInner SubExpression
-HashEntryTyped_196 => 'RPerl::Operation::Expression::SubExpression::HashDereference',   # HashEntryTyped -> HashDereference
-HashReference_200 => 'RPerl::DataStructure::Hash::Reference',
-HashReference_201 => 'RPerl::DataStructure::Hash::Reference',
-HashDereference_204 => 'RPerl::Operation::Expression::SubExpression::HashDereference',  # HashDereference -> '%{' Variable '}'
-HashDereference_205 => 'RPerl::Operation::Expression::SubExpression::HashDereference',  # HashDereference -> '%{' OPTIONAL-51 HashReference '}'
-WordScoped_206 => 'RPerl::NonGenerator',
-WordScoped_207 => 'RPerl::NonGenerator',
-LoopLabel_208 => 'RPerl::NonGenerator',
-Type_209 => 'RPerl::NonGenerator',                  # Type -> WORD
-Type_210 => 'RPerl::NonGenerator',                  # Type -> TYPE_INTEGER
-TypeInner_211 => 'RPerl::DataType::TypeInner',      # TypeInner -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN
-TypeInnerConstant_212 => 'RPerl::NonGenerator',     # TypeInnerConstant -> MY Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN
-VariableOrLiteral_213 => 'RPerl::Operation::Expression::SubExpression::Variable',  # VariableOrLiteral -> Variable
-VariableOrLiteral_214 => 'RPerl::Operation::Expression::SubExpression::Literal',
-VariableOrLiteralOrWord_215 => 'RPerl::Operation::Expression::SubExpression::Variable',  # VariableOrLiteralOrWord -> Variable
-VariableOrLiteralOrWord_216 => 'RPerl::Operation::Expression::SubExpression::Literal',   # VariableOrLiteralOrWord -> Literal
-VariableOrLiteralOrWord_217 => 'RPerl::NonGenerator',                                    # VariableOrLiteralOrWord -> WORD
-Literal_218 => 'RPerl::Operation::Expression::SubExpression::Literal::Number',  # Literal -> LITERAL_NUMBER
-Literal_219 => 'RPerl::Operation::Expression::SubExpression::Literal::String'   # Literal -> LITERAL_STRING
+Operator_97 => 'RPerl::Operation::Expression::Operator::Compare::EqualNotEqual',        # Operator -> SubExpression OP12_COMPARE_EQ_NE SubExpression
+Operator_98 => 'RPerl::Operation::Expression::Operator::Bitwise::And',                  # Operator -> SubExpression OP13_BITWISE_AND SubExpression
+Operator_99 => 'RPerl::Operation::Expression::Operator::Bitwise::OrXor',                # Operator -> SubExpression OP14_BITWISE_OR_XOR SubExpression
+Operator_100 => 'RPerl::Operation::Expression::Operator::Logical::And',                 # Operator -> SubExpression OP15_LOGICAL_AND SubExpression
+Operator_101 => 'RPerl::Operation::Expression::Operator::Logical::OrXor',               # Operator -> SubExpression OP16_LOGICAL_OR SubExpression
+Operator_102 => 'RPerl::Operation::Expression::Operator::List::Range',                  # Operator -> SubExpression OP17_LIST_RANGE SubExpression
+Operator_103 => 'RPerl::Operation::Expression::Operator::Ternary',                      # Operator -> SubExpression OP18_TERNARY VariableOrLiteral COLON VariableOrLiteral
+Operator_104 => 'RPerl::Operation::Expression::Operator::Logical::Negation',            # Operator -> OP22_LOGICAL_NEG SubExpression
+Operator_105 => 'RPerl::Operation::Expression::Operator::Logical::And',                 # Operator -> SubExpression OP23_LOGICAL_AND SubExpression
+Operator_106 => 'RPerl::Operation::Expression::Operator::Logical::OrXor',               # Operator -> SubExpression OP24_LOGICAL_OR_XOR SubExpression
+OperatorVoid_112 => 'RPerl::Operation::Statement::OperatorVoid::Print',                 # OperatorVoid -> OP01_PRINT OPTIONAL-31 ListElements ';'
+OperatorVoid_113 => 'RPerl::Operation::Statement::OperatorVoid::Print',                 # OperatorVoid -> OP01_PRINT FHREF_SYMBOL_BRACES ListElements ';'
+OperatorVoid_114 => 'RPerl::Operation::Statement::OperatorVoid::Named',                 # OperatorVoid -> OP01_NAMED_VOID_SCOLON
+OperatorVoid_115 => 'RPerl::Operation::Statement::OperatorVoid::Named',                 # OperatorVoid -> OP01_NAMED_VOID_LPAREN OPTIONAL-32 ')' ';'
+OperatorVoid_116 => 'RPerl::Operation::Statement::OperatorVoid::Named',                 # OperatorVoid -> OP01_NAMED_VOID ListElements ';'
+OperatorVoid_117 => 'RPerl::Operation::Expression::Operator::Named',                    # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
+OperatorVoid_118 => 'RPerl::Operation::Statement::OperatorVoid::LoopControl',           # OperatorVoid -> OP19_LOOP_CONTROL_SCOLON
+OperatorVoid_119 => 'RPerl::Operation::Statement::OperatorVoid::LoopControl',           # OperatorVoid -> OP19_LOOP_CONTROL LoopLabel ';'
+Expression_124 => 'RPerl::Operation::Expression::Operator',                             # Expression -> Operator
+Expression_125 => 'RPerl::Operation::Expression::SubroutineCall',                       # Expression -> WordScoped LPAREN OPTIONAL-33 ')'
+Expression_126 => 'RPerl::Operation::Expression::ConstantCall',                         # Expression -> WORD_UPPERCASE LPAREN ')'
+Expression_127 => 'RPerl::Operation::Expression::SubroutineCall::MethodCall',           # Expression -> Variable OP02_METHOD_THINARROW LPAREN OPTIONAL-34 ')'
+Expression_128 => 'RPerl::Operation::Expression::SubroutineCall::MethodCall::ConstructorCall',  # Expression -> WordScoped OP02_METHOD_THINARROW_NEW ')'
+SubExpression_129 => 'RPerl::Operation::Expression',                                    # SubExpression -> Expression
+SubExpression_130 => 'RPerl::Operation::Expression::SubExpression::Literal::Undefined', # SubExpression -> 'undef'
+SubExpression_131 => 'RPerl::Operation::Expression::SubExpression::Literal',            # SubExpression -> Literal
+SubExpression_132 => 'RPerl::Operation::Expression::SubExpression::Variable',           # SubExpression -> Variable
+SubExpression_133 => 'RPerl::DataStructure::Array::Reference',                          # SubExpression -> ArrayReference
+SubExpression_134 => 'RPerl::Operation::Expression::SubExpression::ArrayDereference',   # SubExpression -> ArrayDereference
+SubExpression_135 => 'RPerl::DataStructure::Hash::Reference',                           # SubExpression -> HashReference
+SubExpression_136 => 'RPerl::Operation::Expression::SubExpression::HashDereference',    # SubExpression -> HashDereference
+SubExpression_137 => 'RPerl::Operation::Expression::SubExpression::Parenthesis',        # SubExpression -> LPAREN SubExpression ')'
+SubExpressionOrStdin_138 => 'RPerl::Operation::Expression::SubExpression',              # SubExpressionOrStdin -> SubExpression
+SubExpressionOrStdin_139 => 'RPerl::InputOutput::Stdin',                                # SubExpressionOrStdin -> STDIN
+Statement_143 => 'RPerl::Operation::Statement::Conditional',                            # Statement -> Conditional
+Statement_144 => 'RPerl::Operation::Statement::Loop',                                   # Statement -> OPTIONAL-36 Loop
+Statement_145 => 'RPerl::Operation::Statement::OperatorVoid',                           # Statement -> OperatorVoid
+Statement_146 => 'RPerl::Operation::Statement::VariableDeclaration',                    # Statement -> VariableDeclaration
+Statement_147 => 'RPerl::Operation::Statement::VariableModification',                   # Statement -> VariableModification
+Conditional_154 => 'RPerl::Operation::Statement::Conditional',                          # Conditional -> 'if' LPAREN SubExpression ')' CodeBlock STAR-38 OPTIONAL-40
+Loop_155 => 'RPerl::Operation::Statement::Loop::For',                                   # Loop -> LoopFor
+Loop_156 => 'RPerl::Operation::Statement::Loop::ForEach',                               # Loop -> LoopForEach
+Loop_157 => 'RPerl::Operation::Statement::Loop::While',                                 # Loop -> LoopWhile
+LoopFor_158 => 'RPerl::Operation::Statement::Loop::For',                                # LoopFor -> 'for' MY TYPE_INTEGER VARIABLE_SYMBOL LPAREN SubExpression OP17_LIST_RANGE SubExpression ')' CodeBlock
+LoopForEach_159 => 'RPerl::Operation::Statement::Loop::ForEach',                        # LoopForEach -> 'foreach' MY Type VARIABLE_SYMBOL LPAREN ListElements ')' CodeBlock
+LoopWhile_160 => 'RPerl::Operation::Statement::Loop::While',                            # LoopWhile -> 'while' LPAREN SubExpression ')' CodeBlock
+CodeBlock_163 => 'RPerl::CodeBlock',                                                    # CodeBlock -> LBRACE PLUS-41 '}'
+Variable_166 => 'RPerl::Operation::Expression::SubExpression::Variable',                        # Variable -> VARIABLE_SYMBOL STAR-42
+VariableRetrieval_167 => 'RPerl::Operation::Expression::SubExpression::Variable::Retrieval',    # VariableRetrieval -> OP02_ARRAY_THINARROW SubExpression ']'
+VariableRetrieval_168 => 'RPerl::Operation::Expression::SubExpression::Variable::Retrieval',    # VariableRetrieval -> OP02_HASH_THINARROW SubExpression '}'
+VariableRetrieval_169 => 'RPerl::Operation::Expression::SubExpression::Variable::Retrieval',    # VariableRetrieval -> OP02_HASH_THINARROW WORD '}'
+VariableDeclaration_170 => 'RPerl::Operation::Statement::VariableDeclaration',                  # VariableDeclaration -> MY Type VARIABLE_SYMBOL ';'
+VariableDeclaration_171 => 'RPerl::Operation::Statement::VariableDeclaration',                  # VariableDeclaration -> MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';'
+VariableDeclaration_172 => 'RPerl::Operation::Statement::VariableDeclaration',                  # VariableDeclaration -> MY TYPE_FHREF FHREF_SYMBOL ';'
+VariableModification_173 => 'RPerl::Operation::Statement::VariableModification',                # VariableModification -> Variable OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';'
+VariableModification_174 => 'RPerl::Operation::Statement::VariableModification',                # VariableModification -> Variable OP19_VARIABLE_ASSIGN_BY SubExpression ';'
+ListElements_178 => 'RPerl::DataStructure::Array::ListElements',                                # ListElements -> ListElement STAR-43
+ListElement_181 => 'RPerl::Operation::Expression::SubExpression',                               # ListElement -> SubExpression
+ListElement_182 => 'RPerl::Operation::Expression::SubExpression',                               # ListElement -> TypeInner SubExpression
+ListElement_183 => 'RPerl::DataStructure::Array::ListElement',                                  # ListElement -> OP01_QW PLUS-44 ')'
+ArrayReference_186 => 'RPerl::DataStructure::Array::Reference',                                 # ArrayReference -> LBRACKET OPTIONAL-45 ']'
+ArrayDereference_189 => 'RPerl::Operation::Expression::SubExpression::ArrayDereference',        # ArrayDereference -> '@{' Variable '}'
+ArrayDereference_190 => 'RPerl::Operation::Expression::SubExpression::ArrayDereference',        # ArrayDereference -> '@{' OPTIONAL-47 ArrayReference '}'
+HashEntry_193 => 'RPerl::DataStructure::Hash::Entry',                                           # HashEntry -> VariableOrLiteralOrWord OP20_HASH_FATARROW OPTIONAL-47 SubExpression
+HashEntry_194 => 'RPerl::Operation::Expression::SubExpression::HashDereference',                # HashEntry -> HashDereference
+HashEntryTyped_195 => 'RPerl::DataStructure::Hash::EntryTyped',                                 # HashEntryTyped -> WORD OP20_HASH_FATARROW TypeInner SubExpression
+HashEntryTyped_196 => 'RPerl::Operation::Expression::SubExpression::HashDereference',           # HashEntryTyped -> HashDereference
+HashReference_200 => 'RPerl::DataStructure::Hash::Reference',                                   # HashReference -> LBRACE HashEntry STAR-50 '}'
+HashReference_201 => 'RPerl::DataStructure::Hash::Reference',                                   # HashReference -> LBRACE '}'
+HashDereference_204 => 'RPerl::Operation::Expression::SubExpression::HashDereference',          # HashDereference -> '%{' Variable '}'
+HashDereference_205 => 'RPerl::Operation::Expression::SubExpression::HashDereference',          # HashDereference -> '%{' OPTIONAL-51 HashReference '}'
+WordScoped_206 => 'RPerl::NonGenerator',                                                        # WordScoped -> WORD
+WordScoped_207 => 'RPerl::NonGenerator',                                                        # WordScoped -> WORD_SCOPED
+LoopLabel_208 => 'RPerl::NonGenerator',                                                         # LoopLabel -> WORD_UPPERCASE  # RPerl::Operation::Statement -> LoopLabel COLON
+Type_209 => 'RPerl::NonGenerator',                                                              # Type -> WORD
+Type_210 => 'RPerl::NonGenerator',                                                              # Type -> TYPE_INTEGER
+TypeInner_211 => 'RPerl::DataType::TypeInner',                                                  # TypeInner -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN
+TypeInnerConstant_212 => 'RPerl::NonGenerator',                                                 # TypeInnerConstant -> MY Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN
+VariableOrLiteral_213 => 'RPerl::Operation::Expression::SubExpression::Variable',               # VariableOrLiteral -> Variable
+VariableOrLiteral_214 => 'RPerl::Operation::Expression::SubExpression::Literal',                # VariableOrLiteral -> Literal
+VariableOrLiteralOrWord_215 => 'RPerl::Operation::Expression::SubExpression::Variable',         # VariableOrLiteralOrWord -> Variable
+VariableOrLiteralOrWord_216 => 'RPerl::Operation::Expression::SubExpression::Literal',          # VariableOrLiteralOrWord -> Literal
+VariableOrLiteralOrWord_217 => 'RPerl::NonGenerator',                                           # VariableOrLiteralOrWord -> WORD
+Literal_218 => 'RPerl::Operation::Expression::SubExpression::Literal::Number',                  # Literal -> LITERAL_NUMBER
+Literal_219 => 'RPerl::Operation::Expression::SubExpression::Literal::String'                   # Literal -> LITERAL_STRING
 };
 
     1;

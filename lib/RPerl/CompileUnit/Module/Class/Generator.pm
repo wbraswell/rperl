@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_010;
+our $VERSION = 0.001_020;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -28,19 +28,35 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    my object $class                 = $self->{children}->[0];
-    my string $use_parent_qw_keyword = $class->{children}->[0];
-    my string $parent_name       = $class->{children}->[1]->{children}->[0];
-    my string $right_parenthesis = $class->{children}->[2];
-    my string $use_parent_semicolon      = $class->{children}->[3];
-    my object $parent_include            = $class->{children}->[4];
-    my object $critic_star               = $class->{children}->[5];
-    my object $include_star              = $class->{children}->[6];
-    my object $constant_star             = $class->{children}->[7];
-    my object $properties                = $class->{children}->[8];
-    my object $method_or_subroutine_star = $class->{children}->[9];
-    my string $retval_literal_number     = $class->{children}->[10];
-    my string $retval_semicolon          = $class->{children}->[11];
+    my string $self_class = ref $self;
+
+    # unwrap Class_59 from Module_23
+    if ( ($self_class) eq 'Module_23' ) {
+        $self = $self->{children}->[0];
+    }
+
+    if ( ($self_class) ne 'Class_59' ) {
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+                . ($self_class)
+                . ' found where Module_23 or Class_59 expected, dying' )
+            . "\n";
+    }
+
+    # Class:   'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties MethodOrSubroutine* LITERAL_NUMBER ';' ;
+    # Class -> 'use parent qw(' WordScoped ')' ';' Include STAR-20 STAR-21  STAR-22   Properties STAR-23             LITERAL_NUMBER ';'
+    my string $use_parent_qw_keyword = $self->{children}->[0];
+    my string $parent_name          = $self->{children}->[1]->{children}->[0];
+    my string $right_parenthesis    = $self->{children}->[2];
+    my string $use_parent_semicolon = $self->{children}->[3];
+    my object $parent_include       = $self->{children}->[4];
+    my object $critic_star          = $self->{children}->[5];
+    my object $include_star         = $self->{children}->[6];
+    my object $constant_star        = $self->{children}->[7];
+    my object $properties           = $self->{children}->[8];
+    my object $method_or_subroutine_star = $self->{children}->[9];
+    my string $retval_literal_number     = $self->{children}->[10];
+    my string $retval_semicolon          = $self->{children}->[11];
 
     $rperl_source_group->{PMC} = q{};
     if ( $modes->{label} eq 'ON' ) {

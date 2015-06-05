@@ -20,6 +20,15 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in Literal::Number->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
+    if ( ( ref $self ) ne 'Literal_218' ) {
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+                . ( ref $self )
+                . ' found where Literal_218 expected, dying' )
+            . "\n";
+    }
+ 
+    # Literal -> LITERAL_NUMBER
     my string $value           = $self->{children}->[0];
     my string $value_type = main::type($value);
     if ($value_type eq 'integer') {
