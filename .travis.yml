@@ -1,5 +1,5 @@
 language: perl
-# v0.001_030
+# v0.001_031
 perl:
 # NEED FIX? Perl v5.8 $CPP_LINKED global symbol errors, leave disabled?
 #  - "5.8"
@@ -9,7 +9,7 @@ perl:
   - "5.16"
   - "5.18"
   - "5.20"
-  - "5.22"
+#  - "5.22"  # NOT YET AVAILABLE VIA PERLBREW ON TRAVIS
 
 # DEV NOTE, CORRELATION #11: update g++ to 4.8 for full C++11 support, including:
 # -std=c++11, std::string::pop_back(), etc.
