@@ -1,9 +1,4 @@
 #!/usr/bin/perl
-
-# [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVPAPC02' >>>
-# <<< PARSE_ERROR: 'Perl::Critic::Policy::CodeLayout::ProhibitParensWithBuiltins' >>>
-
 # [[[ HEADER ]]]
 use strict;
 use warnings;
@@ -16,5 +11,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-# DEV NOTE: DO NOT RUN PERLTIDY ON THIS FILE!  the line below should read 'die ();' not 'die();'
-die ( @{ [ 2, 3, 5, 7 ] } );
+# DEV NOTE: DO NOT RUN PERLTIDY ON THIS FILE!  the line below should read 'croak(...' not 'croak (...'
+croak( ( %{ { a => 2, b => 3, c => 5, d => 7 } } ) );
