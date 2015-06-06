@@ -3,7 +3,7 @@
 # <<< PARSE_ERROR: 'Unexpected Token:  }' >>>
 
 # [[[ HEADER ]]]
-package RPerl::Test::OperatorVoid01NamedVoid::Class_00_Bad_00;
+package RPerl::Test::OperatorVoid01NamedVoidReturn::Class_00_Bad_00;
 use strict;
 use warnings;
 use RPerl;

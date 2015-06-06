@@ -3,7 +3,7 @@
 # <<< GENERATE_ERROR: "Argument count 4 exceeds maximum argument limit 1 for operation 'return'" >>>
 
 # [[[ HEADER ]]]
-package RPerl::Test::OperatorVoid01NamedVoid::Class_12_Bad_00;
+package RPerl::Test::OperatorVoid01NamedVoidReturn::Class_12_Bad_00;
 use strict;
 use warnings;
 use RPerl;

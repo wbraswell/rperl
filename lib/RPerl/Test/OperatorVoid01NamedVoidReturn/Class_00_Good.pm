@@ -1,5 +1,5 @@
 # [[[ HEADER ]]]
-package RPerl::Test::OperatorVoid01NamedVoid::Class_00_Good;
+package RPerl::Test::OperatorVoid01NamedVoidReturn::Class_00_Good;
 use strict;
 use warnings;
 use RPerl;
