@@ -9,10 +9,5 @@ our $VERSION = 0.001_000;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
-# [[[ SUBROUTINES ]]]
-our integer_hashref $foo = sub {
-    croak { a => 2 };
-};
-
 # [[[ OPERATIONS ]]]
-foo();
+croak { a => 2 };

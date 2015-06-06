@@ -14,10 +14,5 @@ our $VERSION = 0.001_000;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
-# [[[ SUBROUTINES ]]]
-our bool $foo = sub {
-    croak & 1;
-};
-
 # [[[ OPERATIONS ]]]
-foo();
+croak & 1;

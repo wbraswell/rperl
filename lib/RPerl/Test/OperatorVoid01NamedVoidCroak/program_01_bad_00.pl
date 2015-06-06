@@ -14,10 +14,7 @@ our $VERSION = 0.001_000;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
-# [[[ SUBROUTINES ]]]
-our void $foo = sub {
-    croak ();
-};
-
 # [[[ OPERATIONS ]]]
-foo();
+
+# DEV NOTE: DO NOT RUN PERLTIDY ON THIS FILE!  the line below should read 'croak ();' not 'croak();'
+croak ();
