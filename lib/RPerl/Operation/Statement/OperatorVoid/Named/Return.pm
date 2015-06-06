@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::OperatorVoid::Named::Return;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_001;
+our $VERSION = 0.002_010;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: is not a Grammar Rule so should not inherit from OperatorVoid, need create Grammar Production class
@@ -65,7 +65,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             if ((( ref $arguments->{children}->[0] ) eq 'ListElement_181' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
             {
                 my object $arguments_subexpression = $arguments->{children}->[0]->{children}->[0];
-                # look inside nested parenthesis-as-subexpressions
+                # look inside nested parenthesis-as-subexpressions, always length 1 so no need to check length
                 while ((ref $arguments_subexpression) eq 'SubExpression_137') {  # RPerl::Operation::Expression::SubExpression::Parenthesis
                     $arguments_subexpression = $arguments_subexpression->{children}->[1];
                 }
@@ -105,7 +105,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         if ((( ref $arguments->{children}->[0] ) eq 'ListElement_181' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
         {
             my object $arguments_subexpression = $arguments->{children}->[0]->{children}->[0];
-            # look inside nested parenthesis-as-subexpressions
+            # look inside nested parenthesis-as-subexpressions, always length 1 so no need to check length
             while ((ref $arguments_subexpression) eq 'SubExpression_137') {  # RPerl::Operation::Expression::SubExpression::Parenthesis
                 $arguments_subexpression = $arguments_subexpression->{children}->[1];
             }

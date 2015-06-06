@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::OperatorVoid::Named::Exit;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_001;
+our $VERSION = 0.002_010;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: is not a Grammar Rule so should not inherit from OperatorVoid, need create Grammar Production class
@@ -28,27 +28,22 @@ our hashref $properties = {};
 # [[[ OO METHODS & SUBROUTINES ]]]
 
 our string_hashref_method $ast_to_rperl__generate = sub {
-    (   my object $self,
-        my string_hashref $modes,
-        my object $operator_void_named)
-        = @_;
+    ( my object $self, my string_hashref $modes, my object $operator_void_named) = @_;
     my string_hashref $rperl_source_group = { PMC => q{} };
 
 #    RPerl::diag( 'in OperatorVoid::Named::Exit->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 #    RPerl::diag( 'in OperatorVoid::Named::Exit->ast_to_rperl__generate(), received $operator_void_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_void_named) . "\n" );
 
-    if ( ref $operator_void_named eq 'OperatorVoid_114' ) { # OperatorVoid -> OP01_NAMED_VOID_SCOLON
-        $rperl_source_group->{PMC} .= $operator_void_named->{children}->[0]; # name semicolon
+    if ( ref $operator_void_named eq 'OperatorVoid_114' ) {    # OperatorVoid -> OP01_NAMED_VOID_SCOLON
+        $rperl_source_group->{PMC} .= $operator_void_named->{children}->[0];    # name semicolon
     }
-    elsif ( ref $operator_void_named eq 'OperatorVoid_116' ) { # OperatorVoid -> OP01_NAMED_VOID ListElements ';'
+    elsif ( ref $operator_void_named eq 'OperatorVoid_116' ) {                  # OperatorVoid -> OP01_NAMED_VOID ListElements ';'
         $rperl_source_group->{PMC}
-            .= $operator_void_named->{children}->[0] . q{ };    # name
+            .= $operator_void_named->{children}->[0] . q{ };                    # name
         my object $arguments       = $operator_void_named->{children}->[1];
         my integer $argument_count = $arguments->length();
         if ( $argument_count > ARGUMENTS_MAX() ) {
-            die
-                'ERROR ECVGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
-                . "\n"
+            die 'ERROR ECVGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n"
                 . 'Argument count '
                 . $argument_count
                 . ' exceeds maximum argument limit '
@@ -59,46 +54,34 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         }
 
 #        RPerl::diag( 'in OperatorVoid::Named::Exit->ast_to_rperl__generate(), have $arguments = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments) . "\n" );
-        if (    ( ( ref $arguments->{children}->[0] ) eq 'ListElement_181' )
-            and ( exists $arguments->{children}->[0]->{children}->[0] ) )
+=DISABLE; allow dereferenced hashes and arrays
+        if ( ( ( ref $arguments->{children}->[0] ) eq 'ListElement_181' ) and ( exists $arguments->{children}->[0]->{children}->[0] ) )
         {
-            my object $arguments_subexpression
-                = $arguments->{children}->[0]->{children}->[0];
+            my object $arguments_subexpression = $arguments->{children}->[0]->{children}->[0];
 
-            # look inside nested parenthesis-as-subexpressions
-            while ( ( ref $arguments_subexpression ) eq 'SubExpression_137' )
-            {    # RPerl::Operation::Expression::SubExpression::Parenthesis
-                $arguments_subexpression
-                    = $arguments_subexpression->{children}->[1];
+            # look inside nested parenthesis-as-subexpressions, always length 1 so no need to check length
+            while ( ( ref $arguments_subexpression ) eq 'SubExpression_137' ) {    # RPerl::Operation::Expression::SubExpression::Parenthesis
+                $arguments_subexpression = $arguments_subexpression->{children}->[1];
             }
             if ( ( ref $arguments_subexpression ) eq 'SubExpression_134' ) {
-                die
-                    'ERROR ECVGEASRP06, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
-                    . "\n"
-                    . 'Attempt to exit with dereferenced array, please exit with integer instead, dying'
-                    . "\n";
+                die 'ERROR ECVGEASRP06, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n"
+                    . 'Attempt to exit with dereferenced array, please exit with integer instead, dying' . "\n";
             }
-            elsif ( ( ref $arguments_subexpression ) eq 'SubExpression_136' )
-            {
-                die
-                    'ERROR ECVGEASRP07, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
-                    . "\n"
-                    . 'Attempt to exit with dereferenced hash, please exit with integer instead, dying'
-                    . "\n";
+            elsif ( ( ref $arguments_subexpression ) eq 'SubExpression_136' ) {
+                die 'ERROR ECVGEASRP07, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n"
+                    . 'Attempt to exit with dereferenced hash, please exit with integer instead, dying' . "\n";
             }
         }
-        my string_hashref $rperl_source_subgroup
-            = $arguments->ast_to_rperl__generate( $modes, $self );
-        RPerl::Generator::source_group_append( $rperl_source_group,
-            $rperl_source_subgroup );
-        $rperl_source_group->{PMC} .= $operator_void_named->{children}->[2]; # semicolon
+=cut        
+        my string_hashref $rperl_source_subgroup = $arguments->ast_to_rperl__generate( $modes, $self );
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+        $rperl_source_group->{PMC} .= $operator_void_named->{children}->[2];    # semicolon
     }
     else {
-        die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $operator_void_named )
-                . ' found where OperatorVoid_114 or OperatorVoid_116 expected, dying'
-        ) . "\n";
+                . ' found where OperatorVoid_114 or OperatorVoid_116 expected, dying' )
+            . "\n";
     }
 
     $rperl_source_group->{PMC} .= "\n";
@@ -107,10 +90,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $cpp_source_group
-        = { CPP =>
-            q{// <<< RP::O::S::OV::N::E __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
-            . "\n" };
+    my string_hashref $cpp_source_group = { CPP => q{// <<< RP::O::S::OV::N::E __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>} . "\n" };
 
     #...
     return $cpp_source_group;
@@ -118,10 +98,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $cpp_source_group
-        = { CPP =>
-            q{// <<< RP::O::S::OV::N::E __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
-            . "\n" };
+    my string_hashref $cpp_source_group = { CPP => q{// <<< RP::O::S::OV::N::E __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>} . "\n" };
 
     #...
     return $cpp_source_group;
