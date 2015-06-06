@@ -1,8 +1,9 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  ,' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL03' >>>
+# <<< PARSE_ERROR: 'Useless use of a constant' >>>
+# <<< PARSE_ERROR: 'in void context' >>>
 
 # [[[ HEADER ]]]
 use strict;

@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  )' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPC02' >>>
+# <<< PARSE_ERROR: 'Perl::Critic::Policy::CodeLayout::ProhibitParensWithBuiltins' >>>
 
 # [[[ HEADER ]]]
 use strict;

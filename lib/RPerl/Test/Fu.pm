@@ -105,10 +105,10 @@ our unknown $quux_die = sub {
     #    die((2, "\n"));            # BAD  OperatorVoid_115, parser, outer parens as args, inner parens as subexpressions; program_11*
     #    die(((2, "\n")));          # BAD  OperatorVoid_115, parser, outer parens as args, inner parens as subexpressions; program_12*
     #    die((((2, "\n"))));        # BAD  OperatorVoid_115, parser, outer parens as args, inner parens as subexpressions; program_13*
-    #    die (2, "\n");             # GOOD OperatorVoid_116, parens as subexpression; program_14*
-    #    die ((2, "\n"));           # GOOD OperatorVoid_116, parens as subexpressions; program_15*
-    #    die (((2, "\n")));         # GOOD OperatorVoid_116, parens as subexpressions; program_16*
-    #    die ((((2, "\n"))));       # GOOD OperatorVoid_116, parens as subexpressions; program_17*
+    #    die (2, "\n");             # BAD  OperatorVoid_116, parser, parens as Perl::Critic args; program_14*
+    #    die ((2, "\n"));           # BAD  OperatorVoid_116, parser, parens as Perl::Critic args; program_15*
+    #    die (((2, "\n")));         # BAD  OperatorVoid_116, parser, parens as Perl::Critic args; program_16*
+    #    die ((((2, "\n"))));       # BAD  OperatorVoid_116, parser, parens as Perl::Critic args; program_17*
     #    die [], "\n";              # GOOD OperatorVoid_116; program_20*
     #    die [2], "\n";             # GOOD OperatorVoid_116; program_21*
     #    die [2, 3], "\n";          # GOOD OperatorVoid_116; program_22*
@@ -118,7 +118,7 @@ our unknown $quux_die = sub {
     #    die(((@{[2]}, "\n")));     # BAD  OperatorVoid_115, parser, outer parens as args, inner parens as subexpressions; program_21_bad_03.pl
     #    die((((@{[2]}, "\n"))));   # BAD  OperatorVoid_115, parser, outer parens as args, inner parens as subexpressions; program_21_bad_04.pl
     #    die @{[2]}, "\n";          # GOOD OperatorVoid_116; program_26_good.pl
-    #    die (@{[2]}), "\n";        # GOOD OperatorVoid_116, parens as subexpression; program_27_good.pl
+    #    die (@{[2]}), "\n";        # BAD  OperatorVoid_116, parser, parens as Perl::Critic args; program_27*
     #    die 2, 3, "\n";            # GOOD OperatorVoid_116; program_28*
     #    die 2, 3, 5, 7, "\n";      # GOOD OperatorVoid_116; program_29*
     #    die (2, 3, "\n");          # BAD  OperatorVoid_116, parser, parens as subexpression cannot be list with commas; program_28_bad_00.pl
@@ -134,7 +134,7 @@ our unknown $quux_die = sub {
     #    die(((%{{a => 2}}, "\n")));                    # BAD  OperatorVoid_115, parser, outer parens as args, inner parens as subexpressions; program_41_bad_03.pl
     #    die((((%{{a => 2}}, "\n"))));                  # BAD  OperatorVoid_115, parser, outer parens as args, inner parens as subexpressions; program_41_bad_04.pl 
     #    die %{{a => 2}}, "\n";                         # GOOD OperatorVoid_116; program_44_good.pl
-    #    die (%{{a => 2}}, "\n");                       # GOOD OperatorVoid_116, parens as subexpression; program_45_good.pl
+    #    die (%{{a => 2}}, "\n");                       # BAD  OperatorVoid_116, parser, parens as Perl::Critic args; program_45*
 };
 
 our unknown $quux_exit = sub {

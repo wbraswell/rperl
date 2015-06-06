@@ -31,6 +31,7 @@ find(
 
         #        RPerl::diag('in 10_parse.t, have $file = ' . $file . "\n");
 
+#        if ( $file !~ m/.*OperatorVoid01NamedVoid.*[.]p[ml]$/xms ) { # TEMP DEBUGGING, ONLY FIND OperatorVoid01NamedVoid*/*.pm & *.pl
         if ( ( $file !~ m/.pm$/xms ) and ( $file !~ m/.pl$/xms ) ) {
             return;
         }
