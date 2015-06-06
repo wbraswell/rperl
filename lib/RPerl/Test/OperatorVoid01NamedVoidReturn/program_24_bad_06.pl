@@ -16,6 +16,8 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 our integer_arrayref $foo = sub {
+
+# DEV NOTE: DO NOT RUN PERLTIDY ON THIS FILE!  the line below should read 'return (...);' not 'return(...);'
     return ( 2, 3, 5, 7 );
 };
 

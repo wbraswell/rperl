@@ -164,6 +164,74 @@ our unknown $quux_die = sub {
     #    die (((%{{a => 2}})));                  # BAD  OperatorVoid_116, generator, parens as subexpressions; program_31_bad_08.pl
 };
 
+our unknown $quux_exit = sub {
+    #    exit;        # GOOD OperatorVoid_114; program_00* Class_00*
+ 
+    # MAKE BAD
+    #    exit();      # GOOD OperatorVoid_115, parens as args; program_01_good.pl
+ 
+    #    exit ();     # BAD  OperatorVoid_116, parser, empty parens as subexpression; program_01_bad_00.pl
+    #    exit 0;      # GOOD OperatorVoid_116; program_02*
+    #    exit 1;      # GOOD OperatorVoid_116; program_03*
+    #    exit 23;     # GOOD OperatorVoid_116; program_04*
+    #    exit -1;     # GOOD OperatorVoid_116; program_05*
+    #    exit -234_567.890_12;    # GOOD OperatorVoid_116; program_06*
+    #    exit 'ahoy';             # GOOD OperatorVoid_116; program_07*
+ 
+    # MAKE BAD
+    #    exit(2);                 # GOOD OperatorVoid_115, parens as args; program_08*
+    #    exit((2));               # GOOD OperatorVoid_115, outer parens as args, inner parens as subexpressions; program_09*
+    #    exit(((2)));             # GOOD OperatorVoid_115, outer parens as args, inner parens as subexpressions; program_10*
+    #    exit((((2))));           # GOOD OperatorVoid_115, outer parens as args, inner parens as subexpressions; program_11*
+
+    #    exit (2);                # GOOD OperatorVoid_116, parens as subexpression; program_12*
+    #    exit ((2));              # GOOD OperatorVoid_116, parens as subexpressions; program_13*
+    #    exit (((2)));            # GOOD OperatorVoid_116, parens as subexpressions; program_14*
+    #    exit ((((2))));          # GOOD OperatorVoid_116, parens as subexpressions; program_15*
+    #    exit [];                 # GOOD OperatorVoid_116; program_20*
+    #    exit [2];                # GOOD OperatorVoid_116; program_21*
+    #    exit [2, 3];             # GOOD OperatorVoid_116; program_22*
+    #    exit [2, 3, 5, 7];       # GOOD OperatorVoid_116; program_23*
+ 
+    # MAKE BAD
+    #    exit(@{[2]});            # BAD  OperatorVoid_115, generator, parens as args; program_21_bad_01.pl
+    #    exit((@{[2]}));          # BAD  OperatorVoid_115, generator, outer parens as args, inner parens as subexpression; program_21_bad_02.pl
+    #    exit(((@{[2]})));        # BAD  OperatorVoid_115, generator, outer parens as args, inner parens as subexpressions; program_21_bad_03.pl
+    #    exit((((@{[2]}))));      # BAD  OperatorVoid_115, generator, outer parens as args, inner parens as subexpressions; program_21_bad_04.pl
+ 
+    #    exit @{[2]};             # BAD  OperatorVoid_116, generator; program_21_bad_05.pl
+    #    exit (@{[2]});           # BAD  OperatorVoid_116, generator, parens as subexpression; program_21_bad_06.pl
+    #    exit ((@{[2]}));         # BAD  OperatorVoid_116, generator, parens as subexpressions; program_21_bad_07.pl
+    #    exit (((@{[2]})));       # BAD  OperatorVoid_116, generator, parens as subexpressions; program_21_bad_08.pl
+ 
+    # MAKE BAD
+    #    exit 2, 3;               # GOOD OperatorVoid_116, generator; program_24*
+    #    exit 2, 3, 5, 7;         # GOOD OperatorVoid_116, generator; program_25*
+ 
+    #    exit (2, 3);             # BAD  OperatorVoid_116, parser, parens as subexpression cannot be list with commas; program_24_bad_05.pl
+    #    exit (2, 3, 5, 7);       # BAD  OperatorVoid_116, parser, parens as subexpression cannot be list with commas; program_24_bad_06.pl
+ 
+    # MAKE BAD
+    #    exit(2, 3);              # GOOD OperatorVoid_115, generator, parens as args; program_26*
+    #    exit(2, 3, 5, 7);        # GOOD OperatorVoid_115, generator, parens as args; program_27*
+ 
+    #    exit {};                                 # GOOD OperatorVoid_116; program_30*
+    #    exit {a => 2};                           # GOOD OperatorVoid_116; program_31*
+    #    exit {a => 2, b => 3};                   # GOOD OperatorVoid_116; program_32*
+    #    exit {a => 2, b => 3, c => 5, d => 7};   # GOOD OperatorVoid_116; program_33*
+ 
+    # MAKE BAD
+    #    exit(%{{a => 2}});                       # BAD  OperatorVoid_115, generator, parens as args; program_31_bad_01.pl
+    #    exit((%{{a => 2}}));                     # BAD  OperatorVoid_115, generator, outer parens as args, inner parens as subexpression; program_31_bad_02.pl
+    #    exit(((%{{a => 2}})));                   # BAD  OperatorVoid_115, generator, outer parens as args, inner parens as subexpressions; program_31_bad_03.pl
+    #    exit((((%{{a => 2}}))));                 # BAD  OperatorVoid_115, generator, outer parens as args, inner parens as subexpressions; program_31_bad_04.pl 
+ 
+    #    exit %{{a => 2}};                        # BAD  OperatorVoid_116, generator; program_31_bad_05.pl
+    #    exit (%{{a => 2}});                      # BAD  OperatorVoid_116, generator, parens as subexpression; program_31_bad_06.pl
+    #    exit ((%{{a => 2}}));                    # BAD  OperatorVoid_116, generator, parens as subexpressions; program_31_bad_07.pl
+    #    exit (((%{{a => 2}})));                  # BAD  OperatorVoid_116, generator, parens as subexpressions; program_31_bad_08.pl
+};
+
 our unknown $quux_return = sub {
     #    return;        # GOOD OperatorVoid_114; program_00* Class_00*
     #    return();      # GOOD OperatorVoid_115, parens as args; program_01_good.pl
