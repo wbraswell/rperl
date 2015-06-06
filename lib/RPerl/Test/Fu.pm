@@ -50,7 +50,7 @@ our hashref $properties = {
 # START HERE: flesh out all OperatorVoid::Named (exit/die/croak) & Operator::Named (cos/sin/push etc) tests in Fu.pm
 
 our unknown $quux_croak = sub {
-    #    croak;        # GOOD OperatorVoid_114; program_00* Class_00*
+    #    croak;        # GOOD OperatorVoid_114; program_00*
     #    croak();      # GOOD OperatorVoid_115, parens as args; program_01_good.pl
     #    croak ();     # BAD  OperatorVoid_116, parser, empty parens as subexpression; program_01_bad_01.pl
     #    croak 0;      # GOOD OperatorVoid_116; program_02*
@@ -92,7 +92,7 @@ our unknown $quux_croak = sub {
 };
 
 our unknown $quux_die = sub {
-    #    die "\n";      # GOOD OperatorVoid_114; program_00* Class_00*
+    #    die "\n";      # GOOD OperatorVoid_114; program_00*
     #    die("\n");     # BAD  OperatorVoid_115, parser, parens as args; program_01_bad_00.pl
     #    die ("\n");    # BAD  OperatorVoid_116, parser, empty parens as subexpression; program_01_bad_01.pl
     #    die 0, "\n";   # GOOD OperatorVoid_116; program_02*
@@ -138,6 +138,49 @@ our unknown $quux_die = sub {
 };
 
 our unknown $quux_exit = sub {
+    #    exit "\n";      # GOOD OperatorVoid_114; program_00*
+    #    exit("\n");     # BAD  OperatorVoid_115, parser, parens as args; program_01_bad_00.pl
+    #    exit ("\n");    # BAD  OperatorVoid_116, parser, empty parens as subexpression; program_01_bad_01.pl
+    #    exit 0, "\n";   # GOOD OperatorVoid_116; program_02*
+    #    exit 1, "\n";   # GOOD OperatorVoid_116; program_03*
+    #    exit 23, "\n";  # GOOD OperatorVoid_116; program_04*
+    #    exit -1, "\n";  # GOOD OperatorVoid_116; program_05*
+    #    exit -234_567.890_12, "\n"; # GOOD OperatorVoid_116; program_06*
+    #    exit 'ahoy', "\n";          # GOOD OperatorVoid_116; program_07*
+    #    exit(2, "\n");              # BAD  OperatorVoid_115, parser, parens as args; program_10*
+    #    exit((2, "\n"));            # BAD  OperatorVoid_115, parser, outer parens as args, inner parens as subexpressions; program_11*
+    #    exit(((2, "\n")));          # BAD  OperatorVoid_115, parser, outer parens as args, inner parens as subexpressions; program_12*
+    #    exit((((2, "\n"))));        # BAD  OperatorVoid_115, parser, outer parens as args, inner parens as subexpressions; program_13*
+    #    exit (2, "\n");             # BAD  OperatorVoid_116, parser, parens as Perl::Critic args; program_14*
+    #    exit ((2, "\n"));           # BAD  OperatorVoid_116, parser, parens as Perl::Critic args; program_15*
+    #    exit (((2, "\n")));         # BAD  OperatorVoid_116, parser, parens as Perl::Critic args; program_16*
+    #    exit ((((2, "\n"))));       # BAD  OperatorVoid_116, parser, parens as Perl::Critic args; program_17*
+    #    exit [], "\n";              # GOOD OperatorVoid_116; program_20*
+    #    exit [2], "\n";             # GOOD OperatorVoid_116; program_21*
+    #    exit [2, 3], "\n";          # GOOD OperatorVoid_116; program_22*
+    #    exit [2, 3, 5, 7], "\n";    # GOOD OperatorVoid_116; program_23*
+    #    exit(@{[2]}, "\n");         # BAD  OperatorVoid_115, parser, parens as args; program_21_bad_01.pl
+    #    exit((@{[2]}, "\n"));       # BAD  OperatorVoid_115, parser, outer parens as args, inner parens as subexpression; program_21_bad_02.pl
+    #    exit(((@{[2]}, "\n")));     # BAD  OperatorVoid_115, parser, outer parens as args, inner parens as subexpressions; program_21_bad_03.pl
+    #    exit((((@{[2]}, "\n"))));   # BAD  OperatorVoid_115, parser, outer parens as args, inner parens as subexpressions; program_21_bad_04.pl
+    #    exit @{[2]}, "\n";          # GOOD OperatorVoid_116; program_26_good.pl
+    #    exit (@{[2]}), "\n";        # BAD  OperatorVoid_116, parser, parens as Perl::Critic args; program_27*
+    #    exit 2, 3, "\n";            # GOOD OperatorVoid_116; program_28*
+    #    exit 2, 3, 5, 7, "\n";      # GOOD OperatorVoid_116; program_29*
+    #    exit (2, 3, "\n");          # BAD  OperatorVoid_116, parser, parens as subexpression cannot be list with commas; program_28_bad_00.pl
+    #    exit (2, 3, 5, 7, "\n");    # BAD  OperatorVoid_116, parser, parens as subexpression cannot be list with commas; program_29_bad_00.pl
+    #    exit(2, 3, "\n");           # BAD  OperatorVoid_115, parser, parens as args; program_30*
+    #    exit(2, 3, 5, 7, "\n");     # BAD  OperatorVoid_115, parser, parens as args; program_31*
+    #    exit {}, "\n";                                  # GOOD OperatorVoid_116; program_40*
+    #    exit {a => 2}, "\n";                            # GOOD OperatorVoid_116; program_41*
+    #    exit {a => 2, b => 3}, "\n";                    # GOOD OperatorVoid_116; program_42*
+    #    exit {a => 2, b => 3, c => 5, d => 7}, "\n";    # GOOD OperatorVoid_116; program_43*
+    #    exit(%{{a => 2}}, "\n");                        # BAD  OperatorVoid_115, parser, parens as args; program_41_bad_01.pl
+    #    exit((%{{a => 2}}, "\n"));                      # BAD  OperatorVoid_115, parser, outer parens as args, inner parens as subexpression; program_41_bad_02.pl
+    #    exit(((%{{a => 2}}, "\n")));                    # BAD  OperatorVoid_115, parser, outer parens as args, inner parens as subexpressions; program_41_bad_03.pl
+    #    exit((((%{{a => 2}}, "\n"))));                  # BAD  OperatorVoid_115, parser, outer parens as args, inner parens as subexpressions; program_41_bad_04.pl 
+    #    exit %{{a => 2}}, "\n";                         # GOOD OperatorVoid_116; program_44_good.pl
+    #    exit (%{{a => 2}}, "\n");                       # BAD  OperatorVoid_116, parser, parens as Perl::Critic args; program_45*
 };
 
 our unknown $quux_return = sub {

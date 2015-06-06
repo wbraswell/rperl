@@ -52,27 +52,6 @@ our string_hashref_method $ast_to_rperl__generate = sub {
                 . NAME() . q{'}
                 . ', dying' . "\n";
         }
-
-#        RPerl::diag( 'in OperatorVoid::Named::Die->ast_to_rperl__generate(), have $arguments = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments) . "\n" );
-=DISABLE; allow dereferenced hashes and arrays
-        if ( ( ( ref $arguments->{children}->[0] ) eq 'ListElement_181' ) and ( exists $arguments->{children}->[0]->{children}->[0] ) ) {
-            my object $arguments_subexpression = $arguments->{children}->[0]->{children}->[0];
-
-            # look inside nested parenthesis-as-subexpressions, always length 1 so no need to check length
-            while ( ( ref $arguments_subexpression ) eq 'SubExpression_137' ) {    # RPerl::Operation::Expression::SubExpression::Parenthesis
-                $arguments_subexpression = $arguments_subexpression->{children}->[1];
-            }
-            if ( ( ref $arguments_subexpression ) eq 'SubExpression_134' ) {
-                die 'ERROR ECVGEASRP08, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n"
-                    . 'Attempt to die with dereferenced array, please die with string instead, like this, dying' . "\n";
-            }
-            elsif ( ( ref $arguments_subexpression ) eq 'SubExpression_136' ) {
-                die 'ERROR ECVGEASRP09, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n"
-                    . 'Attempt to die with dereferenced hash, please die with string instead, like this, dying' . "\n";
-            }
-        }
-=cut
- 
         my string_hashref $rperl_source_subgroup = $arguments->ast_to_rperl__generate( $modes, $self );
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= $operator_void_named->{children}->[2];    # semicolon
