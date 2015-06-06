@@ -40,10 +40,10 @@ find(
     sub {
         my $file = $File::Find::name;
 
-        #        RPerl::diag('in 11_generate.t, have $file = ' . $file . "\n");
+#        RPerl::diag('in 11_generate.t, have $file = ' . $file . "\n");
 
-        #        if ( $file !~ m/[.]pm$/xms ) { # TEMP DEBUGGING, ONLY FIND *.pm, NOT *.pl
-        #        if ( $file !~ m/.*OperatorVoid01NamedVoid.*[.]p[ml]$/xms ) { # TEMP DEBUGGING, ONLY FIND OperatorVoid01NamedVoid/*.pm & *.pl
+#        if ( $file !~ m/[.]pm$/xms ) { # TEMP DEBUGGING, ONLY FIND *.pm, NOT *.pl
+#        if ( $file !~ m/.*OperatorVoid01NamedVoid.*[.]p[ml]$/xms ) { # TEMP DEBUGGING, ONLY FIND OperatorVoid01NamedVoid/*.pm & *.pl
         if ( $file !~ m/[.]p[ml]$/xms ) {    # find all *.pm & *.pl files
             return;
         }

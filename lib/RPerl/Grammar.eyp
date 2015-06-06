@@ -1,8 +1,8 @@
-# DEV NOTE: DO NOT RUN PERLTIDY ON THIS FILE!  this is EYAPP syntax, not Perl syntax
+# DEV NOTE: DO NOT RUN PERLTIDY ON THIS FILE!  this is EYAPP syntax, not pure Perl syntax
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.001_000;
+    our $VERSION = 0.001_001;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -278,35 +278,35 @@ OperatorVoid_116 => 'RPerl::Operation::Statement::OperatorVoid::Named',         
 OperatorVoid_117 => 'RPerl::Operation::Expression::Operator::Named',                    # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
 OperatorVoid_118 => 'RPerl::Operation::Statement::OperatorVoid::LoopControl',           # OperatorVoid -> OP19_LOOP_CONTROL_SCOLON
 OperatorVoid_119 => 'RPerl::Operation::Statement::OperatorVoid::LoopControl',           # OperatorVoid -> OP19_LOOP_CONTROL LoopLabel ';'
-Expression_124 => 'RPerl::Operation::Expression::Operator',                             # Expression -> Operator
-Expression_125 => 'RPerl::Operation::Expression::SubroutineCall',                       # Expression -> WordScoped LPAREN OPTIONAL-33 ')'
-Expression_126 => 'RPerl::Operation::Expression::ConstantCall',                         # Expression -> WORD_UPPERCASE LPAREN ')'
-Expression_127 => 'RPerl::Operation::Expression::SubroutineCall::MethodCall',           # Expression -> Variable OP02_METHOD_THINARROW LPAREN OPTIONAL-34 ')'
+Expression_124 => 'RPerl::Operation::Expression::Operator',                                     # Expression -> Operator
+Expression_125 => 'RPerl::Operation::Expression::SubroutineCall',                               # Expression -> WordScoped LPAREN OPTIONAL-33 ')'
+Expression_126 => 'RPerl::Operation::Expression::ConstantCall',                                 # Expression -> WORD_UPPERCASE LPAREN ')'
+Expression_127 => 'RPerl::Operation::Expression::SubroutineCall::MethodCall',                   # Expression -> Variable OP02_METHOD_THINARROW LPAREN OPTIONAL-34 ')'
 Expression_128 => 'RPerl::Operation::Expression::SubroutineCall::MethodCall::ConstructorCall',  # Expression -> WordScoped OP02_METHOD_THINARROW_NEW ')'
-SubExpression_129 => 'RPerl::Operation::Expression',                                    # SubExpression -> Expression
-SubExpression_130 => 'RPerl::Operation::Expression::SubExpression::Literal::Undefined', # SubExpression -> 'undef'
-SubExpression_131 => 'RPerl::Operation::Expression::SubExpression::Literal',            # SubExpression -> Literal
-SubExpression_132 => 'RPerl::Operation::Expression::SubExpression::Variable',           # SubExpression -> Variable
-SubExpression_133 => 'RPerl::DataStructure::Array::Reference',                          # SubExpression -> ArrayReference
-SubExpression_134 => 'RPerl::Operation::Expression::SubExpression::ArrayDereference',   # SubExpression -> ArrayDereference
-SubExpression_135 => 'RPerl::DataStructure::Hash::Reference',                           # SubExpression -> HashReference
-SubExpression_136 => 'RPerl::Operation::Expression::SubExpression::HashDereference',    # SubExpression -> HashDereference
-SubExpression_137 => 'RPerl::Operation::Expression::SubExpression::Parenthesis',        # SubExpression -> LPAREN SubExpression ')'
-SubExpressionOrStdin_138 => 'RPerl::Operation::Expression::SubExpression',              # SubExpressionOrStdin -> SubExpression
-SubExpressionOrStdin_139 => 'RPerl::InputOutput::Stdin',                                # SubExpressionOrStdin -> STDIN
-Statement_143 => 'RPerl::Operation::Statement::Conditional',                            # Statement -> Conditional
-Statement_144 => 'RPerl::Operation::Statement::Loop',                                   # Statement -> OPTIONAL-36 Loop
-Statement_145 => 'RPerl::Operation::Statement::OperatorVoid',                           # Statement -> OperatorVoid
-Statement_146 => 'RPerl::Operation::Statement::VariableDeclaration',                    # Statement -> VariableDeclaration
-Statement_147 => 'RPerl::Operation::Statement::VariableModification',                   # Statement -> VariableModification
-Conditional_154 => 'RPerl::Operation::Statement::Conditional',                          # Conditional -> 'if' LPAREN SubExpression ')' CodeBlock STAR-38 OPTIONAL-40
-Loop_155 => 'RPerl::Operation::Statement::Loop::For',                                   # Loop -> LoopFor
-Loop_156 => 'RPerl::Operation::Statement::Loop::ForEach',                               # Loop -> LoopForEach
-Loop_157 => 'RPerl::Operation::Statement::Loop::While',                                 # Loop -> LoopWhile
-LoopFor_158 => 'RPerl::Operation::Statement::Loop::For',                                # LoopFor -> 'for' MY TYPE_INTEGER VARIABLE_SYMBOL LPAREN SubExpression OP17_LIST_RANGE SubExpression ')' CodeBlock
-LoopForEach_159 => 'RPerl::Operation::Statement::Loop::ForEach',                        # LoopForEach -> 'foreach' MY Type VARIABLE_SYMBOL LPAREN ListElements ')' CodeBlock
-LoopWhile_160 => 'RPerl::Operation::Statement::Loop::While',                            # LoopWhile -> 'while' LPAREN SubExpression ')' CodeBlock
-CodeBlock_163 => 'RPerl::CodeBlock',                                                    # CodeBlock -> LBRACE PLUS-41 '}'
+SubExpression_129 => 'RPerl::Operation::Expression',                                            # SubExpression -> Expression
+SubExpression_130 => 'RPerl::Operation::Expression::SubExpression::Literal::Undefined',         # SubExpression -> 'undef'
+SubExpression_131 => 'RPerl::Operation::Expression::SubExpression::Literal',                    # SubExpression -> Literal
+SubExpression_132 => 'RPerl::Operation::Expression::SubExpression::Variable',                   # SubExpression -> Variable
+SubExpression_133 => 'RPerl::DataStructure::Array::Reference',                                  # SubExpression -> ArrayReference
+SubExpression_134 => 'RPerl::Operation::Expression::SubExpression::ArrayDereference',           # SubExpression -> ArrayDereference
+SubExpression_135 => 'RPerl::DataStructure::Hash::Reference',                                   # SubExpression -> HashReference
+SubExpression_136 => 'RPerl::Operation::Expression::SubExpression::HashDereference',            # SubExpression -> HashDereference
+SubExpression_137 => 'RPerl::Operation::Expression::SubExpression::Parenthesis',                # SubExpression -> LPAREN SubExpression ')'
+SubExpressionOrStdin_138 => 'RPerl::Operation::Expression::SubExpression',                      # SubExpressionOrStdin -> SubExpression
+SubExpressionOrStdin_139 => 'RPerl::InputOutput::Stdin',                                        # SubExpressionOrStdin -> STDIN
+Statement_143 => 'RPerl::Operation::Statement::Conditional',                                    # Statement -> Conditional
+Statement_144 => 'RPerl::Operation::Statement::Loop',                                           # Statement -> OPTIONAL-36 Loop
+Statement_145 => 'RPerl::Operation::Statement::OperatorVoid',                                   # Statement -> OperatorVoid
+Statement_146 => 'RPerl::Operation::Statement::VariableDeclaration',                            # Statement -> VariableDeclaration
+Statement_147 => 'RPerl::Operation::Statement::VariableModification',                           # Statement -> VariableModification
+Conditional_154 => 'RPerl::Operation::Statement::Conditional',                                  # Conditional -> 'if' LPAREN SubExpression ')' CodeBlock STAR-38 OPTIONAL-40
+Loop_155 => 'RPerl::Operation::Statement::Loop::For',                                           # Loop -> LoopFor
+Loop_156 => 'RPerl::Operation::Statement::Loop::ForEach',                                       # Loop -> LoopForEach
+Loop_157 => 'RPerl::Operation::Statement::Loop::While',                                         # Loop -> LoopWhile
+LoopFor_158 => 'RPerl::Operation::Statement::Loop::For',                                        # LoopFor -> 'for' MY TYPE_INTEGER VARIABLE_SYMBOL LPAREN SubExpression OP17_LIST_RANGE SubExpression ')' CodeBlock
+LoopForEach_159 => 'RPerl::Operation::Statement::Loop::ForEach',                                # LoopForEach -> 'foreach' MY Type VARIABLE_SYMBOL LPAREN ListElements ')' CodeBlock
+LoopWhile_160 => 'RPerl::Operation::Statement::Loop::While',                                    # LoopWhile -> 'while' LPAREN SubExpression ')' CodeBlock
+CodeBlock_163 => 'RPerl::CodeBlock',                                                            # CodeBlock -> LBRACE PLUS-41 '}'
 Variable_166 => 'RPerl::Operation::Expression::SubExpression::Variable',                        # Variable -> VARIABLE_SYMBOL STAR-42
 VariableRetrieval_167 => 'RPerl::Operation::Expression::SubExpression::Variable::Retrieval',    # VariableRetrieval -> OP02_ARRAY_THINARROW SubExpression ']'
 VariableRetrieval_168 => 'RPerl::Operation::Expression::SubExpression::Variable::Retrieval',    # VariableRetrieval -> OP02_HASH_THINARROW SubExpression '}'

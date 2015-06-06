@@ -45,64 +45,60 @@ our hashref $properties = {
 
 # [[[ OO METHODS & SUBROUTINES ]]]
 
-our integer $fong = sub {
-    ( my integer $fong_in ) = @_;
-    return $fong_in;
+# START HERE: flesh out all OperatorVoid::Named (exit/die/croak) & Operator::Named (cos/sin/push etc) tests in Fu.pm
+# START HERE: flesh out all OperatorVoid::Named (exit/die/croak) & Operator::Named (cos/sin/push etc) tests in Fu.pm
+# START HERE: flesh out all OperatorVoid::Named (exit/die/croak) & Operator::Named (cos/sin/push etc) tests in Fu.pm
+
+our unknown $quux_return = sub {
+    #    return;        # GOOD OperatorVoid_114; program_00* Class_00*
+    #    return();      # GOOD OperatorVoid_115, parens as args; program_01_good.pl
+    #    return ();     # BAD  OperatorVoid_116, parser, empty parens as subexpression; program_01_bad_00.pl
+    #    return 0;      # GOOD OperatorVoid_116; program_02*
+    #    return 1;      # GOOD OperatorVoid_116; program_03*
+    #    return 23;     # GOOD OperatorVoid_116; program_04*
+    #    return -1;     # GOOD OperatorVoid_116; program_05*
+    #    return -234_567.890_12;    # GOOD OperatorVoid_116; program_06*
+    #    return 'ahoy';             # GOOD OperatorVoid_116; program_07*
+    #    return(2);                 # GOOD OperatorVoid_115, parens as args; program_08*
+    #    return((2));               # GOOD OperatorVoid_115, outer parens as args, inner parens as subexpressions; program_09*
+    #    return(((2)));             # GOOD OperatorVoid_115, outer parens as args, inner parens as subexpressions; program_10*
+    #    return((((2))));           # GOOD OperatorVoid_115, outer parens as args, inner parens as subexpressions; program_11*
+    #    return (2);                # GOOD OperatorVoid_116, parens as subexpression; program_12*
+    #    return ((2));              # GOOD OperatorVoid_116, parens as subexpressions; program_13*
+    #    return (((2)));            # GOOD OperatorVoid_116, parens as subexpressions; program_14*
+    #    return ((((2))));          # GOOD OperatorVoid_116, parens as subexpressions; program_15*
+    #    return [];                 # GOOD OperatorVoid_116; program_20*
+    #    return [2];                # GOOD OperatorVoid_116; program_21*
+    #    return [2, 3];             # GOOD OperatorVoid_116; program_22*
+    #    return [2, 3, 5, 7];       # GOOD OperatorVoid_116; program_23*
+    #    return(@{[2]});            # BAD  OperatorVoid_115, generator, parens as args; program_21_bad_01.pl
+    #    return((@{[2]}));          # BAD  OperatorVoid_115, generator, outer parens as args, inner parens as subexpression; program_21_bad_02.pl
+    #    return(((@{[2]})));        # BAD  OperatorVoid_115, generator, outer parens as args, inner parens as subexpressions; program_21_bad_03.pl
+    #    return((((@{[2]}))));      # BAD  OperatorVoid_115, generator, outer parens as args, inner parens as subexpressions; program_21_bad_04.pl
+    #    return @{[2]};             # BAD  OperatorVoid_116, generator; program_21_bad_05.pl
+    #    return (@{[2]});           # BAD  OperatorVoid_116, generator, parens as subexpression; program_21_bad_06.pl
+    #    return ((@{[2]}));         # BAD  OperatorVoid_116, generator, parens as subexpressions; program_21_bad_07.pl
+    #    return (((@{[2]})));       # BAD  OperatorVoid_116, generator, parens as subexpressions; program_21_bad_08.pl
+    #    return 2, 3;               # BAD  OperatorVoid_116, generator; program_22_bad_01.pl
+    #    return 2, 3, 5, 7;         # BAD  OperatorVoid_116, generator; program_22_bad_02.pl
+    #    return (2, 3);             # BAD  OperatorVoid_116, parser, parens as subexpression cannot be list with commas; program_22_bad_03.pl
+    #    return (2, 3, 5, 7);       # BAD  OperatorVoid_116, parser, parens as subexpression cannot be list with commas; program_22_bad_04.pl
+    #    return {};                                 # GOOD OperatorVoid_116; program_24*
+    #    return {a => 2};                           # GOOD OperatorVoid_116; program_25*
+    #    return {a => 2, b => 3};                   # GOOD OperatorVoid_116; program_26*
+    #    return {a => 2, b => 3, c => 5, d => 7};   # GOOD OperatorVoid_116; program_27*
+    #    return(%{{a => 2}});                       # BAD  OperatorVoid_115, generator, parens as args; program_25_bad_01.pl
+    #    return((%{{a => 2}}));                     # BAD  OperatorVoid_115, generator, outer parens as args, inner parens as subexpression; program_25_bad_02.pl
+    #    return(((%{{a => 2}})));                   # BAD  OperatorVoid_115, generator, outer parens as args, inner parens as subexpressions; program_25_bad_03.pl
+    #    return((((%{{a => 2}}))));                 # BAD  OperatorVoid_115, generator, outer parens as args, inner parens as subexpressions; program_25_bad_04.pl 
+    #    return %{{a => 2}};                        # BAD  OperatorVoid_116, generator; program_25_bad_05.pl
+    #    return (%{{a => 2}});                      # BAD  OperatorVoid_116, generator, parens as subexpression; program_25_bad_06.pl
+    #    return ((%{{a => 2}}));                    # BAD  OperatorVoid_116, generator, parens as subexpressions; program_25_bad_07.pl
+    #    return (((%{{a => 2}})));                  # BAD  OperatorVoid_116, generator, parens as subexpressions; program_25_bad_08.pl
+ 
 };
 
-#our unknown_method $quux = sub {
-
-    #    ( my object $self) = @_;
-    #    ( my object $self, my integer $howdy, my string_hashref $doody) = @_;
-
-    #    $self->{plugh} = $self->{plugh} * 2;
-
-    #    foreach my scalartype $foooo (@{[0, 2, 5, 7]}) { print 'howdy'; }
-
-    #    return;    # GOOD; program_00* Class_00*
-    #    return();  # GOOD, parens as args; program_01_good.pl
-    #    return ();  # BAD, empty parens as subexpression; program_01_bad_00.pl
-    #    return 0;  # GOOD; program_02*
-    #    return 1;  # GOOD; program_03*
-    #    return 23;  # GOOD; program_04*
-    #    return -1;  # GOOD; program_05*
-    #    return -234_567.890_12;  # GOOD; program_06*
-    #    return 'ahoy';  # GOOD; program_07*
-    #    return(2);  # GOOD, parens as args; program_08*
-    #    return (2);  # GOOD, parens as subexpression; program_09*
-    #    return [];  # GOOD; program_10*
-    #    return [2];  # GOOD; program_11*
-    #    return [2, 3];  # GOOD; program_12*
-    #    return [2, 3, 5, 7];  # GOOD; program_13*
-    #    return @{[2]};  # BAD, generator; program_11_bad_01.pl
-    #    return (@{[2]});  # BAD, generator, parens as subexpression; program_11_bad_02.pl
-    #    return ((@{[2]}));  # BAD, generator, parens as subexpressions; program_11_bad_03.pl
-    #    return (((@{[2]})));  # BAD, generator, parens as subexpressions; program_11_bad_04.pl
-    #    return(@{[2]});  # BAD, generator, parens as args; program_11_bad_05.pl
-    #    return((@{[2]}));  # BAD, generator, outer parens as args, inner parens as subexpression; program_11_bad_06.pl
-    #    return(((@{[2]})));  # BAD, generator, outer parens as args, inner parens as subexpressions; program_11_bad_07.pl
-    #    return((((@{[2]}))));  # BAD, generator, outer parens as args, inner parens as subexpressions; program_11_bad_08.pl
-    #    return 2, 3;  # BAD, generator; program_12_bad_01.pl
-    #    return 2, 3, 5, 7;  # BAD, generator; program_12_bad_02.pl
-    #    return (2, 3);  # BAD, parser, parens as subexpression cannot be list with commas; program_12_bad_03.pl
-    #    return (2, 3, 5, 7);  # BAD, parser, parens as subexpression cannot be list with commas; program_12_bad_04.pl
-    #    return {};  # GOOD; program_14*
-    #    return {a => 2};  # GOOD; program_15*
-    #    return {a => 2, b => 3};  # GOOD; program_16*
-    #    return {a => 2, b => 3, c => 5, d => 7};  # GOOD; program_17*
-    #    return %{{a => 2}};  # BAD, generator; program_15_bad_01.pl
-    #    return (%{{a => 2}});  # BAD, generator, parens as subexpression; program_15_bad_02.pl
-    #    return ((%{{a => 2}}));  # BAD, generator, parens as subexpressions; program_15_bad_03.pl
-    #    return (((%{{a => 2}})));  # BAD, generator, parens as subexpressions; program_15_bad_04.pl
-    #    return(%{{a => 2}});  # BAD, generator, parens as args; program_15_bad_05.pl
-    #    return((%{{a => 2}}));  # BAD, generator, outer parens as args, inner parens as subexpression; program_15_bad_06.pl
-    #    return(((%{{a => 2}})));  # BAD, generator, outer parens as args, inner parens as subexpressions; program_15_bad_07.pl
-    #    return((((%{{a => 2}}))));  # BAD, generator, outer parens as args, inner parens as subexpressions; program_15_bad_08.pl
-    
-# START HERE: flesh out all OperatorVoid::Named (exit/die/croak) & Operator::Named (cos/sin/push etc) tests in Fu.pm
-# START HERE: flesh out all OperatorVoid::Named (exit/die/croak) & Operator::Named (cos/sin/push etc) tests in Fu.pm
-# START HERE: flesh out all OperatorVoid::Named (exit/die/croak) & Operator::Named (cos/sin/push etc) tests in Fu.pm
-
-#};
+our unknown $quux_croak = sub {
+};
 
 1;    # end of class

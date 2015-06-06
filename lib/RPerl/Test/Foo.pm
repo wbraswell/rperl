@@ -62,8 +62,6 @@ our object_arrayref_method $qaft = sub {
     return $retval;
 };
 
-# [[[ SUBROUTINES ]]]
-
 our void $grunt = sub {
     print 'PIE() = ' . PIE() . "\n";
 };
