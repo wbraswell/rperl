@@ -213,11 +213,14 @@ if ( not -e $rperl_config_pm_loaded ) {
     = File::Spec->splitpath( $rperl_config_pm_loaded, my $no_file = 0 );
 my @directories_loaded_split = File::Spec->splitdir($directories_loaded);
 
+#print {*STDERR} 'in RPerl::Config, have pre-pop @directories_loaded_split = ', "\n", Dumper(@directories_loaded_split), "\n";
+
 # pop twice if empty entry on top
 if ( pop @directories_loaded_split eq q{} ) { pop @directories_loaded_split; }
 my $rperl_pm_wanted = File::Spec->catpath( $volume_loaded,
     ( File::Spec->catdir(@directories_loaded_split) ), 'RPerl.pm' );
 
+#print {*STDERR} 'in RPerl::Config, have post-pop @directories_loaded_split = ', "\n", Dumper(@directories_loaded_split), "\n";
 #print {*STDERR} 'in RPerl::Config, have $rperl_config_pm_loaded = ', $rperl_config_pm_loaded, "\n";
 #print {*STDERR} 'in RPerl::Config, have $rperl_pm_wanted = ', $rperl_pm_wanted, "\n";
 
@@ -245,9 +248,12 @@ foreach my $inc_path ( $directories_loaded, @INC ) {
 
 #    print {*STDERR} 'in RPerl::Config, top of main foreach() loop, have $inc_path = ', $inc_path, "\n";
     my $sub_inc_paths = [];
-    push @{$sub_inc_paths}, $inc_path;
+#    push @{$sub_inc_paths}, $inc_path;
     ( my $inc_volume, my $inc_directories, my $inc_file )
         = File::Spec->splitpath( $inc_path, my $no_file = 1 );
+ 
+    push @{$sub_inc_paths}, $inc_directories;
+ 
     my @directories_split = File::Spec->splitdir($inc_directories);
     pop @directories_split;
     push @{$sub_inc_paths}, File::Spec->catdir(@directories_split);
@@ -255,6 +261,9 @@ foreach my $inc_path ( $directories_loaded, @INC ) {
     push @{$sub_inc_paths}, File::Spec->catdir(@directories_split);
 
 #    print {*STDERR} 'in RPerl::Config, in main foreach() loop, have $sub_inc_paths = ', "\n", Dumper($sub_inc_paths), "\n";
+#    print {*STDERR} 'in RPerl::Config, in main foreach() loop, have $inc_volume = ', "\n", Dumper($inc_volume), "\n";
+#    print {*STDERR} 'in RPerl::Config, in main foreach() loop, have $inc_directories = ', "\n", Dumper($inc_directories), "\n";
+#    print {*STDERR} 'in RPerl::Config, in main foreach() loop, have $inc_file = ', "\n", Dumper($inc_file), "\n";
 
     my $possible_rperls = [];
     foreach my $sub_inc_path ( @{$sub_inc_paths} ) {

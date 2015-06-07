@@ -45,9 +45,9 @@ our hashref $properties = {
 
 # [[[ OO METHODS & SUBROUTINES ]]]
 
-# START HERE: flesh out all OperatorVoid::Named (exit/die/croak) & Operator::Named (cos/sin/push etc) tests in Fu.pm
-# START HERE: flesh out all OperatorVoid::Named (exit/die/croak) & Operator::Named (cos/sin/push etc) tests in Fu.pm
-# START HERE: flesh out all OperatorVoid::Named (exit/die/croak) & Operator::Named (cos/sin/push etc) tests in Fu.pm
+# START HERE: flesh out all Operator::Named (cos/sin/push etc) tests below (or in another file) and then implement
+# START HERE: flesh out all Operator::Named (cos/sin/push etc) tests below (or in another file) and then implement
+# START HERE: flesh out all Operator::Named (cos/sin/push etc) tests below (or in another file) and then implement
 
 our unknown $quux_croak = sub {
     #    croak;        # GOOD OperatorVoid_114; program_00*

@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.005_042;
+our $VERSION = 0.005_043;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -30,11 +30,9 @@ my string_arrayref $input_file_names_unlabeled = [];
 # [[[ ACCEPT, CHECK, REPORT OPTIONS (COMMAND-LINE ARGUMENTS) ]]]
 
 sub accept_and_verify_input_files {
-    (   my string_arrayref $input_file_names,
-        my string_arrayref $input_file_names_unlabeled
-    ) = @_;
+    ( my string_arrayref $input_file_names, my string_arrayref $input_file_names_unlabeled ) = @_;
 
-    RPerl::diag "\n\n"; # move output away from initial Inline compiler output
+    RPerl::diag "\n\n";    # move output away from initial Inline compiler output
     RPerl::diag 'in rperl, have $RPerl::DEBUG = ' . $RPerl::DEBUG . "\n";
     RPerl::diag 'in rperl, have $RPerl::VERBOSE = ' . $RPerl::VERBOSE . "\n";
 
@@ -44,37 +42,32 @@ sub accept_and_verify_input_files {
             $input_file_names = $input_file_names_unlabeled;
         }
         else {
-            die
-                "ERROR EARG08: Both labeled & unlabeled RPerl source code input file option(s) specified, dying\n";
+            die "ERROR EARG08: Both labeled & unlabeled RPerl source code input file option(s) specified, dying\n";
         }
     }
 
     if ( ( scalar @{$input_file_names} ) == 0 ) {
-        die
-            "ERROR EARG01: No RPerl source code input file(s) specified, dying\n";
+        die "ERROR EARG01: No RPerl source code input file(s) specified, dying\n";
     }
 
     # verify input file(s)
     my $input_files_count = scalar @{$input_file_names};
 
-# DEV NOTE: Perl::Critic BUG!  'integer' triggers false positive RequireFinalReturn
-#    for my integer $i ( 0 .. ( $input_files_count - 1 ) ) {
+    # DEV NOTE: Perl::Critic BUG!  'integer' triggers false positive RequireFinalReturn
+    #    for my integer $i ( 0 .. ( $input_files_count - 1 ) ) {
     for my $i ( 0 .. ( $input_files_count - 1 ) ) {
         my string $input_file_name = $input_file_names->[$i];
 
-#    RPerl::diag 'in rperl, top of file verifying loop ' . $i . ' of ' . $input_files_count . ", have \$input_file_names->[$i] = '" . $input_file_name . "'\n";
+ #    RPerl::diag 'in rperl, top of file verifying loop ' . $i . ' of ' . $input_files_count . ", have \$input_file_names->[$i] = '" . $input_file_name . "'\n";
 
-        if ( not( -e $input_file_name ) ) { ## no critic qw(ProhibitCascadingIfElse)  # SYSTEM DEFAULT 2: allow argument-handling logic
-            die
-                "ERROR EARG02: Specified RPerl source code input file '$input_file_name' does not exist, dying\n";
+        if ( not( -e $input_file_name ) ) {    ## no critic qw(ProhibitCascadingIfElse)  # SYSTEM DEFAULT 2: allow argument-handling logic
+            die "ERROR EARG02: Specified RPerl source code input file '$input_file_name' does not exist, dying\n";
         }
         elsif ( not( -r $input_file_name ) ) {
-            die
-                "ERROR EARG03: Specified RPerl source code input file '$input_file_name' is not readable, dying\n";
+            die "ERROR EARG03: Specified RPerl source code input file '$input_file_name' is not readable, dying\n";
         }
         elsif ( not( -f $input_file_name ) ) {
-            die
-                "ERROR EARG04: Specified RPerl source code input file '$input_file_name' is not a plain file, dying\n";
+            die "ERROR EARG04: Specified RPerl source code input file '$input_file_name' is not a plain file, dying\n";
         }
         elsif ( ( $input_file_name !~ /[.]pm$/xms )
             and ( $input_file_name !~ /[.]pl$/xms ) )
@@ -100,7 +93,7 @@ sub verify_and_default_modes {
         if ($compile_flag) {
             $modes->{compile} = 'COMPILE';
         }
-        else { # --nocompile command-line argument (option) disables SAVE & COMPILE steps, PARSE & GENERATE remain enabled
+        else {    # --nocompile command-line argument (option) disables SAVE & COMPILE steps, PARSE & GENERATE remain enabled
             $modes->{compile} = 'GENERATE';
         }
     }
@@ -117,29 +110,24 @@ sub verify_and_default_modes {
     # test mode is PERLOPS_PERLTYPES_GENERATE, do not save files to disk; test mode flag ignored if false
     if ( defined $test_flag ) {
         if ($test_flag) {
-            $modes->{ops} = 'PERL';
-            $modes->{types} = 'PERL';
+            $modes->{ops}     = 'PERL';
+            $modes->{types}   = 'PERL';
             $modes->{compile} = 'GENERATE';
         }
     }
-    
+
     # must put Perl variables into environmental variables for the values to be properly utilized
-    $ENV{RPERL_DEBUG} = $RPerl::DEBUG;
+    $ENV{RPERL_DEBUG}   = $RPerl::DEBUG;
     $ENV{RPERL_VERBOSE} = $RPerl::VERBOSE;
 
     # verify modes
     foreach my string $mode_key ( keys %{$modes} ) {
         if ( not( exists $modes_supported->{$mode_key} ) ) {
-            die
-                "ERROR EARG06: Unsupported or invalid mode category '$mode_key' specified, supported categories are ("
+            die "ERROR EARG06: Unsupported or invalid mode category '$mode_key' specified, supported categories are ("
                 . join( ', ', keys %{$modes_supported} )
                 . '), dying' . "\n";
         }
-        elsif (
-            not( grep { $_ eq $modes->{$mode_key} }
-                @{ $modes_supported->{$mode_key} } )
-            )
-        {
+        elsif ( not( grep { $_ eq $modes->{$mode_key} } @{ $modes_supported->{$mode_key} } ) ) {
             die 'ERROR EARG07: Unsupported or invalid mode ' . q{'}
                 . $modes->{$mode_key}
                 . ' in mode category ' . q{'}
@@ -157,17 +145,13 @@ sub verify_and_default_modes {
         }
     }
 
-    1; # DEV NOTE: Perl::Critic BUG!  must have this '1;' to avoid false positive ProhibitPostfixControls & RequireFinalReturn
+    1;    # DEV NOTE: Perl::Critic BUG!  must have this '1;' to avoid false positive ProhibitPostfixControls & RequireFinalReturn
 
     return $modes;
 }
 
 sub verbose_multi_file_settings {
-    (   my string_arrayref $input_file_names,
-        my hashref_arrayref $output_file_name_groups,
-        my string_hashref $modes,
-        my integer $input_files_count
-    ) = @_;
+    ( my string_arrayref $input_file_names, my hashref_arrayref $output_file_name_groups, my string_hashref $modes, my integer $input_files_count ) = @_;
 
     if ( $input_files_count > 1 ) {
         RPerl::verbose "Input File(s):\n";
@@ -180,9 +164,7 @@ sub verbose_multi_file_settings {
         }
         RPerl::verbose "Modes:\n";
         foreach my string $mode_key ( keys %{$modes} ) {
-            RPerl::verbose q{    }
-                . $mode_key . ' => '
-                . $modes->{$mode_key} . "\n";
+            RPerl::verbose q{    } . $mode_key . ' => ' . $modes->{$mode_key} . "\n";
         }
         RPerl::verbose_pause "\nPRESS <ENTER> TO CONTINUE\n";
     }
@@ -214,10 +196,10 @@ sub verbose_flags {
 }
 
 sub stringify_output_file_name_group {
-    (my string_hashref $output_file_name_group) = @_;
+    ( my string_hashref $output_file_name_group) = @_;
     my string $output_file_names = q{};
     foreach my string $suffix_key (qw(EXE PMC CPP H)) {
-        if (exists $output_file_name_group->{$suffix_key}) {
+        if ( exists $output_file_name_group->{$suffix_key} ) {
             $output_file_names .= $output_file_name_group->{$suffix_key} . q{  };
         }
     }
@@ -229,15 +211,11 @@ sub stringify_output_file_name_group {
 # [[[ CALL COMPILER ]]]
 
 sub parse_generate_compile_execute_files {
-    (   my string_arrayref $input_file_names,
-        my hashref_arrayref $output_file_name_groups,
-        my string_hashref $modes,
-        my integer $input_files_count
-    ) = @_;
+    ( my string_arrayref $input_file_names, my hashref_arrayref $output_file_name_groups, my string_hashref $modes, my integer $input_files_count ) = @_;
 
     if ( $modes->{ops} eq 'PERL' ) {
 
-    # PERL ops does not actually COMPILE, set compile mode to SAVE instead
+        # PERL ops does not actually COMPILE, set compile mode to SAVE instead
         if ( $modes->{compile} eq 'COMPILE' ) {
             $modes->{compile} = 'SAVE';
         }
@@ -246,17 +224,15 @@ sub parse_generate_compile_execute_files {
         if ( $modes->{types} eq 'CPP' ) { $modes->{types} = 'PERL'; }
     }
 
-# DEV NOTE: Perl::Critic BUG!  'integer' triggers false positive RequireFinalReturn
-#    for my integer $i ( 0 .. ( $input_files_count - 1 ) ) {
+    # DEV NOTE: Perl::Critic BUG!  'integer' triggers false positive RequireFinalReturn
+    #    for my integer $i ( 0 .. ( $input_files_count - 1 ) ) {
     for my $i ( 0 .. ( $input_files_count - 1 ) ) {
-        my string $input_file_name      = $input_file_names->[$i];
+        my string $input_file_name                = $input_file_names->[$i];
         my string_hashref $output_file_name_group = $output_file_name_groups->[$i];
 
         if ( $input_files_count > 1 ) {
             RPerl::verbose_reset();
-            RPerl::verbose 'Input File number: '
-                . ( $i + 1 ) . ' of '
-                . $input_files_count . "\n";
+            RPerl::verbose 'Input File number: ' . ( $i + 1 ) . ' of ' . $input_files_count . "\n";
         }
         RPerl::verbose 'Input File:       ' . $input_file_name . "\n";
         RPerl::verbose 'Output File(s):   ' . stringify_output_file_name_group($output_file_name_group) . "\n";
@@ -277,15 +253,14 @@ sub parse_generate_compile_execute_files {
         }
 
         if ( $modes->{ops} eq 'PERL' ) {
-            RPerl::Compiler::rperl_to_rperl__parse_generate( $input_file_name, $output_file_name_group,
-                $modes );
+            RPerl::Compiler::rperl_to_rperl__parse_generate( $input_file_name, $output_file_name_group, $modes );
         }
         elsif ( $modes->{ops} eq 'CPP' ) {
+
             # use eval to trap C++ compiler errors
             my integer $eval_retval = eval {
-                RPerl::Compiler::rperl_to_xsbinary__parse_generate_compile(
-                    $input_file_name, $output_file_name_group, $modes ); # returns void
-                1;    # return true
+                RPerl::Compiler::rperl_to_xsbinary__parse_generate_compile( $input_file_name, $output_file_name_group, $modes );    # returns void
+                1;                                                                                                                  # return true
             };
             if ( not defined $eval_retval ) {
                 print $EVAL_ERROR;
@@ -312,29 +287,29 @@ sub parse_generate_compile_execute_files {
 # [[[ ACTUALLY RUN CODE ]]]
 # [[[ ACTUALLY RUN CODE ]]]
 
-my integer $help                                = 0;
-my integer $compile_flag                        = undef;
-my integer $execute_flag                        = undef;
-my integer $test_flag                        = undef;
+my integer $help                              = 0;
+my integer $compile_flag                      = undef;
+my integer $execute_flag                      = undef;
+my integer $test_flag                         = undef;
 my string_arrayref $input_file_names          = [];
 my string_arrayref $output_file_name_prefixes = [];
-my hashref_arrayref $output_file_name_groups       = [];
-my string_hashref $modes = {}; # can't store defaults here, erased by GetOptions()
-my string_hashref $modes_default = { # default to CPPOPS_CPPTYPES_CHECKTRACE_COMPILE_EXECUTE_LABEL in C++ output code
+my hashref_arrayref $output_file_name_groups  = [];
+my string_hashref $modes                      = {};      # can't store defaults here, erased by GetOptions()
+my string_hashref $modes_default              = {        # default to CPPOPS_CPPTYPES_CHECKTRACE_COMPILE_EXECUTE_LABEL in C++ output code
     ops     => 'CPP',
     types   => 'CPP',
     check   => 'TRACE',
     compile => 'COMPILE',
     execute => 'ON',
-    label => 'ON'
+    label   => 'ON'
 };
 my arrayref_hashref $modes_supported = {
     ops     => [ 'PERL',  'CPP' ],
-    types   => [ 'PERL',  'CPP' ],
+    types   => [ 'PERL',  'CPP', 'DUAL' ],
     check   => [ 'OFF',   'ON', 'TRACE' ],
     compile => [ 'PARSE', 'GENERATE', 'SAVE', 'COMPILE' ],
     execute => [ 'OFF',   'ON' ],
-    label => [ 'OFF',   'ON' ]
+    label   => [ 'OFF',   'ON' ]
 };
 my integer $input_files_count = 0;
 
@@ -349,19 +324,16 @@ GetOptions(
     'outfile=s{1,}' => \@{$output_file_name_prefixes},
     'mode=s%'       => \$modes,
     '<>'            => \&store_unlabeled_options
-    )
-    or die "ERROR EARG00: Failure processing command line arguments, dying\n";
+) or die "ERROR EARG00: Failure processing command line arguments, dying\n";
 
 if ($help) { pod2usage( -verbose => 1 ); }
 verbose_flags( $compile_flag, $execute_flag, $test_flag );
-$input_file_names = accept_and_verify_input_files( $input_file_names, $input_file_names_unlabeled );
-$input_files_count = scalar @{$input_file_names};
-$modes = verify_and_default_modes( $modes, $modes_default, $modes_supported, $compile_flag, $execute_flag, $test_flag );
+$input_file_names        = accept_and_verify_input_files( $input_file_names, $input_file_names_unlabeled );
+$input_files_count       = scalar @{$input_file_names};
+$modes                   = verify_and_default_modes( $modes, $modes_default, $modes_supported, $compile_flag, $execute_flag, $test_flag );
 $output_file_name_groups = generate_output_file_names( $input_file_names, $output_file_name_prefixes, $modes, $input_files_count );
-verbose_multi_file_settings( $input_file_names, $output_file_name_groups,
-    $modes, $input_files_count );
-parse_generate_compile_execute_files( $input_file_names,
-    $output_file_name_groups, $modes, $input_files_count );
+verbose_multi_file_settings( $input_file_names, $output_file_name_groups, $modes, $input_files_count );
+parse_generate_compile_execute_files( $input_file_names, $output_file_name_groups, $modes, $input_files_count );
 
 __END__
 =head1 NAME
@@ -406,7 +378,10 @@ Print a brief help message.
 
 =item B<--mode types=CPP _OR_ -m types=CPP>
 
+=item B<--mode types=DUAL _OR_ -m types=DUAL>
+
  Specify data types mode, CPP by default.
+ DUAL mode allows generate-once-compile-many types, selected by '#define __FOO__TYPES' in lib/rperltypes_mode.h file.
 
 =item B<--mode check=OFF _OR_ -m check=OFF>
 

@@ -47,5 +47,4 @@ EOF
 #    else { RPerl::diag "in Bubble_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"; }
 };
 
-1;
-1;
+1;  # end of package
