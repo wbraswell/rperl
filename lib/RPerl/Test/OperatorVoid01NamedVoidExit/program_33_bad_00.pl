@@ -1,8 +1,9 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  &' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL03' >>>
+# <<< PARSE_ERROR: 'Useless use of a constant' >>>
+# <<< PARSE_ERROR: 'in void context' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -15,4 +16,4 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OPERATIONS ]]]
-exit & 1;
+exit 2, 3, 5, 7;

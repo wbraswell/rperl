@@ -37,6 +37,28 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     if ( ref $operator_void_named eq 'OperatorVoid_114' ) {    # OperatorVoid -> OP01_NAMED_VOID_SCOLON
         $rperl_source_group->{PMC} .= $operator_void_named->{children}->[0];    # name semicolon
     }
+    elsif ( ref $operator_void_named eq 'OperatorVoid_115' ) { # OperatorVoid -> OP01_NAMED_VOID_LPAREN OPTIONAL-32 ')' ';'
+        $rperl_source_group->{PMC}
+            .= $operator_void_named->{children}->[0];                           # name lparen
+        my object $arguments_optional = $operator_void_named->{children}->[1];
+        if ( exists $arguments_optional->{children}->[0] ) {
+            my object $arguments       = $arguments_optional->{children}->[0];
+            my integer $argument_count = $arguments->length();
+            if ( $argument_count > ARGUMENTS_MAX() ) {
+                die 'ERROR ECVGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n"
+                    . 'Argument count '
+                    . $argument_count
+                    . ' exceeds maximum argument limit '
+                    . ARGUMENTS_MAX()
+                    . ' for operator ' . q{'}
+                    . NAME() . q{'}
+                    . ', dying' . "\n";
+            }
+            my string_hashref $rperl_source_subgroup = $arguments->ast_to_rperl__generate( $modes, $self );
+            RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+        }
+        $rperl_source_group->{PMC} .= $operator_void_named->{children}->[2] . $operator_void_named->{children}->[3];    # rparen semicolon
+    }
     elsif ( ref $operator_void_named eq 'OperatorVoid_116' ) {                  # OperatorVoid -> OP01_NAMED_VOID ListElements ';'
         $rperl_source_group->{PMC}
             .= $operator_void_named->{children}->[0] . q{ };                    # name
@@ -48,7 +70,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
                 . $argument_count
                 . ' exceeds maximum argument limit '
                 . ARGUMENTS_MAX()
-                . ' for operation ' . q{'}
+                . ' for operator ' . q{'}
                 . NAME() . q{'}
                 . ', dying' . "\n";
         }

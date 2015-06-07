@@ -7,7 +7,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.005_020;
+our $VERSION = 0.005_030;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -87,10 +87,10 @@ for my $test_file ( sort keys %{$test_files} ) {
 
     if ( ( defined $eval_return_value ) and $eval_return_value ) {    # Perl eval return code defined & true, success
         if ( ( $test_file =~ m/Good/xms ) or ( $test_file =~ m/good/xms ) ) {
-            ok( 1, "Program or module $test_file parses without errors" );
+            ok( 1, 'Program or module parses without errors:' . (q{ } x 10) . $test_file );
         }
         else {
-            ok( 0, "Program or module $test_file parses with errors" );
+            ok( 0, 'Program or module parses with errors:' . (q{ } x 13) . $test_file );
         }
     }
     else {                                                            # Perl eval return code undefined or false, error
@@ -105,10 +105,10 @@ for my $test_file ( sort keys %{$test_files} ) {
                     }
                 }
             }
-            ok( ( ( scalar @{$missing_errors} ) == 0 ), "Program or module $test_file parses with expected error(s)" );
+            ok( ( ( scalar @{$missing_errors} ) == 0 ), 'Program or module parses with expected error(s):' . (q{ } x 2) . $test_file );
         }
         else {
-            ok( 0, "Program or module $test_file parses without errors" );
+            ok( 0, 'Program or module parses without errors:' . (q{ } x 10) . $test_file );
         }
     }
 }

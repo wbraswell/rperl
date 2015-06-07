@@ -137,7 +137,7 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
         # [[[ PARSE ]]]
         $eval_return_value = eval { RPerl::Parser::rperl_to_ast__parse($test_file); };
         if ( not( ( defined $eval_return_value ) and $eval_return_value ) ) {
-            ok( 0, 'Program or module parses with errors, code generation not reached, test aborted: ' . $test_file );
+            ok( 0, 'Program or module parses with errors, code generation not reached, test aborted:' . (q{ } x 2) . $test_file );
             $number_of_tests_run++;
             next;
         }
@@ -164,7 +164,7 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
 
                 # skip test if dummy source code found
                 if ( not dummy_source_code_find($source_group) ) {
-                    ok( 0, 'Program or module generates with errors: ' . $test_file );
+                    ok( 0, 'Program or module generates with errors:' . (q{ } x 21) . $test_file );
                     $number_of_tests_run++;
                 }
                 else {
@@ -203,11 +203,11 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
                     }
 
                     if ( $diff_line == 0 ) {
-                        ok( 1, 'Program or module generates without errors, yes diff check: ' . $test_file );
+                        ok( 1, 'Program or module generates without errors, yes diff check:' . (q{ } x 2) . $test_file );
                         $number_of_tests_run++;
                     }
                     elsif ( $diff_line > 0 ) {
-                        ok( 0, 'Program or module generates without errors, yes diff check, files differ beginning at line ' . $diff_line . ': ' . $test_file );
+                        ok( 0, 'Program or module generates without errors, yes diff check, files differ beginning at line ' . $diff_line . ':' . (q{ } x 2) . $test_file );
                         $number_of_tests_run++;
                     }
                     else {    # $diff_line < 0
@@ -220,7 +220,7 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
 
                     # skip test if dummy source code found
                     if ( not dummy_source_code_find($source_group) ) {
-                        ok( 1, 'Program or module generates without errors, no diff check: ' . $test_file );
+                        ok( 1, 'Program or module generates without errors, no diff check:' . (q{ } x 3) . $test_file );
                         $number_of_tests_run++;
                     }
                     else {
@@ -245,7 +245,7 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
                         }
                     }
                 }
-                ok( ( ( scalar @{$missing_errors} ) == 0 ), 'Program or module generates with expected error(s): ' . $test_file );
+                ok( ( ( scalar @{$missing_errors} ) == 0 ), 'Program or module generates with expected error(s):' . (q{ } x 10) . $test_file );
                 $number_of_tests_run++;
             }
             else {
@@ -256,7 +256,7 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
                             . "\n" );
                 }
                 else {
-                    ok( 0, 'Program or module generates without errors: ' . $test_file );
+                    ok( 0, 'Program or module generates without errors:' . (q{ } x 18) . $test_file );
                     $number_of_tests_run++;
                 }
             }

@@ -7,7 +7,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_050;
+our $VERSION = 0.002_060;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -34,6 +34,7 @@ find(
 
         #        RPerl::diag('in 08_interpret_execute.t, have $file = ' . $file . "\n");
 
+#        if ( $file !~ m/.*OperatorVoid01NamedVoid.*[.]p[ml]$/xms ) { # TEMP DEBUGGING, ONLY FIND OperatorVoid01NamedVoid*/*.pm & *.pl
         if ( $file !~ m/.pl$/xms ) {
             return;
         }
@@ -159,7 +160,7 @@ for my $test_file ( sort keys %{$test_files} ) {
                 }
             }
             RPerl::verbose( 'in 08_interpret_execute.t, have missing successes =' . "\n" . Dumper( $test_files->{$test_file}->{successes} ) . "\n" );
-            ok( ( ( scalar @{ $test_files->{$test_file}->{successes} } ) == 0 ), "Program $test_file interprets and executes without errors" );
+            ok( ( ( scalar @{ $test_files->{$test_file}->{successes} } ) == 0 ), 'Program interprets and executes without errors:' . (q{ } x 10) . $test_file );
 
             #=cut
 
@@ -176,12 +177,12 @@ for my $test_file ( sort keys %{$test_files} ) {
                 }
             }
             RPerl::verbose( 'in 08_interpret_execute.t, have $missing_successes =' . "\n" . Dumper($missing_successes) . "\n" );
-            ok( ( ( scalar @{$missing_successes} ) == 0 ), "Program $test_file interprets and executes without errors" );
+            ok( ( ( scalar @{$missing_successes} ) == 0 ), 'Program interprets and executes without errors:' . (q{ } x 10) . $test_file );
 =cut
 
         }
         else {
-            ok( 0, "Program $test_file interprets and executes with errors" );
+            ok( 0, 'Program interprets and executes with errors:' . (q{ } x 13) . $test_file );
         }
     }
     else {    # UNIX process return code not 0, error
@@ -196,10 +197,10 @@ for my $test_file ( sort keys %{$test_files} ) {
                     }
                 }
             }
-            ok( ( ( scalar @{$missing_errors} ) == 0 ), "Program $test_file interprets and executes with expected error(s)" );
+            ok( ( ( scalar @{$missing_errors} ) == 0 ), 'Program interprets and executes with expected error(s):' . (q{ } x 2) . $test_file );
         }
         else {
-            ok( 0, "Program $test_file interprets and executes without errors" );
+            ok( 0, 'Program interprets and executes without errors:' . (q{ } x 10) . $test_file );
         }
     }
 }

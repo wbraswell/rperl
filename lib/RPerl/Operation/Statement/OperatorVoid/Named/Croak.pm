@@ -50,7 +50,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
                     . $argument_count
                     . ' exceeds maximum argument limit '
                     . ARGUMENTS_MAX()
-                    . ' for operation ' . q{'}
+                    . ' for operator ' . q{'}
                     . NAME() . q{'}
                     . ', dying' . "\n";
             }
@@ -70,7 +70,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
                 . $argument_count
                 . ' exceeds maximum argument limit '
                 . ARGUMENTS_MAX()
-                . ' for operation ' . q{'}
+                . ' for operator ' . q{'}
                 . NAME() . q{'}
                 . ', dying' . "\n";
         }

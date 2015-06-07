@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVPAPL03' >>>
-# <<< PARSE_ERROR: 'Use of "exit" without parentheses is ambiguous' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< PARSE_ERROR: 'Too many arguments for exit' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -15,4 +15,4 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OPERATIONS ]]]
-exit - 'ahoy';
+exit( 2, 3, 5, 7 );

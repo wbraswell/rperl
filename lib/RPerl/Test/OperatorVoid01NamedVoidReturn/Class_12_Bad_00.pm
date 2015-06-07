@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
 # <<< GENERATE_ERROR: 'ERROR ECVGEASRP03' >>>
-# <<< GENERATE_ERROR: "Argument count 4 exceeds maximum argument limit 1 for operation 'return'" >>>
+# <<< GENERATE_ERROR: "Argument count 4 exceeds maximum argument limit 1 for operator 'return'" >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::OperatorVoid01NamedVoidReturn::Class_12_Bad_00;

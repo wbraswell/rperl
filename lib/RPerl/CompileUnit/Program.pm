@@ -24,7 +24,6 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     my string_hashref $rperl_source_subgroup;
 
 #    RPerl::diag( 'in Program->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
-
 #    RPerl::diag('in Program->ast_to_rperl__generate(), received $modes = ' . "\n" . Dumper($modes) . "\n");
 
     my string $self_class = ref $self;

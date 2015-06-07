@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  <<< NO TOKEN FOUND >>>' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< PARSE_ERROR: 'Too many arguments for exit' >>>
 
 # [[[ HEADER ]]]
 use strict;
@@ -15,4 +15,4 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OPERATIONS ]]]
-exit 23
+exit( 2, 3 );
