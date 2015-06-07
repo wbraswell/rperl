@@ -382,20 +382,22 @@ for my $i ( 0 .. ( ( scalar @directories_rperl_pm_split ) - 1 ) ) {
 }
 
 #print {*STDERR} 'in RPerl::Config, have @directories_base_split = ', "\n", Dumper(\@directories_base_split), "\n";
+print {*STDERR} 'in RPerl::Config, have @directories_rperl_pm_split = ', "\n", Dumper(\@directories_rperl_pm_split), "\n";
+print {*STDERR} 'in RPerl::Config, have @directories_rperl_split = ', "\n", Dumper(\@directories_rperl_split), "\n";
 
 # NEED FIX: how do we catpath() with some $volume instead of catdir() below, without breaking relative paths?
 $BASE_PATH = File::Spec->catdir(@directories_base_split);
-#if ( $BASE_PATH eq q{} ) {
+if ( $BASE_PATH eq q{} ) {
     $INCLUDE_PATH = File::Spec->catdir(@directories_rperl_pm_split);
     $SCRIPT_PATH  = File::Spec->catdir(@directories_rperl_split);
-    print {*STDERR} 'in RPerl::Config, have $BASE_PATH eq q{} ', "\n";
-#}
-#else {
-#    $INCLUDE_PATH
-#        = File::Spec->catdir( $BASE_PATH, @directories_rperl_pm_split );
-#    $SCRIPT_PATH = File::Spec->catdir( $BASE_PATH, @directories_rperl_split );
-#    print {*STDERR} 'in RPerl::Config, have $BASE_PATH ne q{} ', "\n";
-#}
+    print {*STDERR} 'in RPerl::Config, have $BASE_PATH eq q{} = ', $BASE_PATH, "\n";
+}
+else {
+    $INCLUDE_PATH
+        = File::Spec->catdir( $BASE_PATH, @directories_rperl_pm_split );
+    $SCRIPT_PATH = File::Spec->catdir( $BASE_PATH, @directories_rperl_split );
+    print {*STDERR} 'in RPerl::Config, have $BASE_PATH ne q{} ', $BASE_PATH, "\n";
+}
 
 #print {*STDERR} 'in RPerl::Config, have $BASE_PATH = ', $BASE_PATH, "\n";
 #print {*STDERR} 'in RPerl::Config, have $INCLUDE_PATH = ', $INCLUDE_PATH, "\n";

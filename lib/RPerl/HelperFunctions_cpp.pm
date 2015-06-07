@@ -39,7 +39,7 @@ sub cpp_load {
         my $eval_string = <<"EOF";
 package main;
 use RPerl::Inline;
-use Inline (CPP => "$RPerl::INCLUDE_PATH/RPerl/HelperFunctions.cpp", \@RPerl::Inline::ARGS);
+use Inline (CPP => '$RPerl::INCLUDE_PATH/RPerl/HelperFunctions.cpp', \@RPerl::Inline::ARGS);
 1;
 EOF
 

@@ -4,7 +4,7 @@ use warnings;
 use Carp;
 
 BEGIN { print "[[[ BEGIN 'use Inline' STAGE for '_debugging/ntype.cpp' ]]]\n"x3; }
-use Inline (CPP => "blib/lib/_debugging/ntype_string_9.cpp", 
+use Inline (CPP => 'blib/lib/_debugging/ntype_string_9.cpp', 
 TYPEMAPS => "blib/lib/typemap.rperl",
   CCFLAGSEX => '-DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
   INC => "-Iblib/lib",
