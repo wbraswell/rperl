@@ -2,7 +2,7 @@
 package RPerl::Config;
 use strict;
 use warnings;
-our $VERSION = 0.003_000;
+our $VERSION = 0.003_010;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -227,6 +227,8 @@ my $rperl_pm_wanted = File::Spec->catpath( $volume_loaded,
 my $rperl_pm_loaded = undef;
 if ( ( exists $INC{'RPerl.pm'} ) and ( defined $INC{'RPerl.pm'} ) ) {
     $rperl_pm_loaded = $INC{'RPerl.pm'};
+# BULK88 20150608 2015.159: Win32 Bug Fix
+#    if ( not -e $rperl_pm_loaded ) {
     if ( not -f $rperl_pm_loaded ) {
         Carp::croak 'BIZARRE ERROR EINPL02: Non-existent file ',
             $rperl_pm_loaded,
@@ -244,6 +246,8 @@ if ( ( substr $directories_loaded, -1, 1 ) eq q{/} ) {
 
 my $rperls_found    = [];
 my $rperl_pms_found = [];
+# BULK88 20150608 2015.159: Win32 Bug Fix
+#foreach my $inc_path ( $directories_loaded, @INC ) {
 foreach my $inc_path ( File::Spec->catpath($volume_loaded, $directories_loaded), @INC ) {
 
 #    print {*STDERR} 'in RPerl::Config, top of main foreach() loop, have $inc_path = ', $inc_path, "\n";
@@ -288,6 +292,8 @@ foreach my $inc_path ( File::Spec->catpath($volume_loaded, $directories_loaded),
     foreach my $possible_rperl ( @{$possible_rperls} ) {
 
 #        print {*STDERR} 'in RPerl::Config, have $possible_rperl = ', $possible_rperl, "\n";
+# BULK88 20150608 2015.159: Win32 Bug Fix
+#        if ( ( -e $possible_rperl ) and ( -x $possible_rperl ) ) {
         if ( ( -f $possible_rperl ) and (  $^O eq 'MSWin32' ? 1 : -x $possible_rperl ) ) {
             my $is_unique = 1;
             foreach my $rperl_found ( @{$rperls_found} ) {
@@ -299,6 +305,8 @@ foreach my $inc_path ( File::Spec->catpath($volume_loaded, $directories_loaded),
 
     if ( not defined $rperl_pm_loaded ) {
         my $possible_rperl_pm = $inc_path . '/RPerl.pm';
+# BULK88 20150608 2015.159: Win32 Bug Fix
+#        if ( -e $possible_rperl_pm ) {
         if ( -f $possible_rperl_pm ) {
             my $is_unique = 1;
             foreach my $rperl_pm_found ( @{$rperl_pms_found} ) {
