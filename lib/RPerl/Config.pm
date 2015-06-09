@@ -227,7 +227,7 @@ my $rperl_pm_wanted = File::Spec->catpath( $volume_loaded,
 my $rperl_pm_loaded = undef;
 if ( ( exists $INC{'RPerl.pm'} ) and ( defined $INC{'RPerl.pm'} ) ) {
     $rperl_pm_loaded = $INC{'RPerl.pm'};
-    if ( not -e $rperl_pm_loaded ) {
+    if ( not -f $rperl_pm_loaded ) {
         Carp::croak 'BIZARRE ERROR EINPL02: Non-existent file ',
             $rperl_pm_loaded,
             ' supposedly loaded in %INC, reported from within RPerl::Config, croaking';
@@ -244,7 +244,7 @@ if ( ( substr $directories_loaded, -1, 1 ) eq q{/} ) {
 
 my $rperls_found    = [];
 my $rperl_pms_found = [];
-foreach my $inc_path ( $directories_loaded, @INC ) {
+foreach my $inc_path ( File::Spec->catpath($volume_loaded, $directories_loaded), @INC ) {
 
 #    print {*STDERR} 'in RPerl::Config, top of main foreach() loop, have $inc_path = ', $inc_path, "\n";
     my $sub_inc_paths = [];
@@ -288,7 +288,7 @@ foreach my $inc_path ( $directories_loaded, @INC ) {
     foreach my $possible_rperl ( @{$possible_rperls} ) {
 
 #        print {*STDERR} 'in RPerl::Config, have $possible_rperl = ', $possible_rperl, "\n";
-        if ( ( -e $possible_rperl ) and ( -x $possible_rperl ) ) {
+        if ( ( -f $possible_rperl ) and (  $^O eq 'MSWin32' ? 1 : -x $possible_rperl ) ) {
             my $is_unique = 1;
             foreach my $rperl_found ( @{$rperls_found} ) {
                 if ( $rperl_found eq $possible_rperl ) { $is_unique = 0; }
@@ -299,7 +299,7 @@ foreach my $inc_path ( $directories_loaded, @INC ) {
 
     if ( not defined $rperl_pm_loaded ) {
         my $possible_rperl_pm = $inc_path . '/RPerl.pm';
-        if ( -e $possible_rperl_pm ) {
+        if ( -f $possible_rperl_pm ) {
             my $is_unique = 1;
             foreach my $rperl_pm_found ( @{$rperl_pms_found} ) {
                 if ( $rperl_pm_found eq $possible_rperl_pm ) {
