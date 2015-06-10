@@ -248,7 +248,7 @@ my $rperls_found    = [];
 my $rperl_pms_found = [];
 # BULK88 20150608 2015.159: Win32 Bug Fix
 #foreach my $inc_path ( $directories_loaded, @INC ) {
-foreach my $inc_path ( File::Spec->catpath($volume_loaded, $directories_loaded), @INC ) {
+foreach my $inc_path ( File::Spec->catpath($volume_loaded, $directories_loaded, ''), @INC ) {
 
 #    print {*STDERR} 'in RPerl::Config, top of main foreach() loop, have $inc_path = ', $inc_path, "\n";
     my $sub_inc_paths = [];
