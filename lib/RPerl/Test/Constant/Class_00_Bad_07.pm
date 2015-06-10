@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< PARSE_ERROR: 'Missing operator before 3.141_59?' >>>
+# <<< PARSE_ERROR: 'Number found where operator expected' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::Constant::Class_00_Bad_07;

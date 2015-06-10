@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< PARSE_ERROR: 'near "scala @"' >>>
+# <<< PARSE_ERROR: 'Array found where operator expected' >>>
 
 # [[[ HEADER ]]]
 use strict;

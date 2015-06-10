@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< PARSE_ERROR: 'near "use RPerl::Test:"' >>>
+# <<< PARSE_ERROR: 'Bareword found where operator expected' >>>
 
 # [[[ HEADER ]]]
 use strict;

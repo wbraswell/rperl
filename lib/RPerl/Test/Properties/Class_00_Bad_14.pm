@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< PARSE_ERROR: 'syntax error' >>>
+# <<< PARSE_ERROR: 'Number found where operator expected' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::Properties::Class_00_Bad_14;

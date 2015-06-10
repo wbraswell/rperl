@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< PARSE_ERROR: 'syntax error' >>>
+# <<< PARSE_ERROR: 'Unquoted string "foo" may clash with future reserved word' >>>
 
 foo
 # [[[ HEADER ]]]

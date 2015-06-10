@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< PARSE_ERROR: 'near ") @_"' >>>
+# <<< PARSE_ERROR: 'Array found where operator expected' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::MethodArguments::Class_03_Bad;

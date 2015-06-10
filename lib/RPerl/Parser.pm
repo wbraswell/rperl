@@ -52,14 +52,14 @@ our void $rperl_source__check_syntax = sub {
 
     my string $nul = $^O eq 'MSWin32' ? 'NUL' : '/dev/null';
     my string $rperl_source__perl_syntax_command
-        = q{perl -Iblib/lib -M"warnings FATAL=>q(all)" -cW }
+        = q{perl -Iblib/lib -M"warnings FATAL=>q(all)" -cw }
         . $rperl_source__file_name;
     my string $rperl_source__perl_syntax_command__no_output
         = $rperl_source__perl_syntax_command . ' > '.$nul.' 2> '.$nul;
     my string $rperl_source__perl_syntax_command__all_output
         = $rperl_source__perl_syntax_command . ' 2>&1';
 
-#my string $rperl_source__perl_syntax_command = q{perl -Iblib/lib -cW } . $rperl_source__file_name;
+#my string $rperl_source__perl_syntax_command = q{perl -Iblib/lib -cw } . $rperl_source__file_name;
 
 #RPerl::diag "in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_command =\n$rperl_source__perl_syntax_command\n";
 #RPerl::diag "in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_command__no_output =\n$rperl_source__perl_syntax_command__no_output\n\n";
@@ -84,7 +84,7 @@ our void $rperl_source__check_syntax = sub {
     if ( $rperl_source__perl_syntax_retval != 0 ) {
         die "\n"
             . 'ERROR ECVPAPL02, RPERL PARSER, PERL SYNTAX ERROR' . "\n"
-            . 'Failed `perl -cW` syntax check with return value '
+            . 'Failed `perl -cw` syntax check with return value '
             . ( $rperl_source__perl_syntax_retval >> 8 )
             . ' and the following message(s):' . "\n\n"
 
@@ -117,7 +117,7 @@ our void $rperl_source__check_syntax = sub {
     if ( ( scalar @{$rperl_source__perl_syntax_retstring_warnings} ) != 0 ) {
         die "\n"
             . 'ERROR ECVPAPL03, RPERL PARSER, PERL SYNTAX WARNING' . "\n"
-            . 'Failed `perl -cW` syntax check with the following message(s): '
+            . 'Failed `perl -cw` syntax check with the following message(s): '
             . "\n\n"
             . ( join "\n", @{$rperl_source__perl_syntax_retstring_warnings} )
             . "\n";

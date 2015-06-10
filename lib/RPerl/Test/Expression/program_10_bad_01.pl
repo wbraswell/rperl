@@ -2,8 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< PARSE_ERROR: 'near ")' >>>
-# <<< PARSE_ERROR: 'Global symbol "$my_foo" requires explicit package name' >>>
+# <<< PARSE_ERROR: 'Scalar found where operator expected' >>>
 
 # [[[ HEADER ]]]
 use strict;
