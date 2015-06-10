@@ -110,12 +110,22 @@ for my $test_file ( sort keys %{$test_files} ) {
     #        if ( $stdout_select->can_read(0) )  { RPerl::diag('in 08_interpret_execute.t, can read STDOUT_TEST for $test_file = ' . $test_file . "\n"); }
     #        if ( $stderr_select->can_read(0) )  { RPerl::diag('in 08_interpret_execute.t, can read STDERR_TEST for $test_file = ' . $test_file . "\n"); }
 
-    waitpid $pid, 0;
     if ( $^O eq 'MSWin32' || $stdout_select->can_read(0) ) {
         sysread STDOUT_TEST, $stdout_generated, 4096;
     }
     if ( $^O eq 'MSWin32' || $stderr_select->can_read(0) ) {
         sysread STDERR_TEST, $stderr_generated, 4096;
+    }
+    waitpid $pid, 0;
+    if ( $^O eq 'MSWin32' || $stdout_select->can_read(0) ) {
+        my $s;
+        sysread STDOUT_TEST, $s, 4096;
+        $stdout_generated .= $s;
+    }
+    if ( $^O eq 'MSWin32' || $stderr_select->can_read(0) ) {
+        my $s;
+        sysread STDERR_TEST, $s, 4096;
+        $stderr_generated .= $s;
     }
 
     # DISABLED: no user input accepted
