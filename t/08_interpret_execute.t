@@ -87,10 +87,15 @@ for my $test_file ( sort keys %{$test_files} ) {
         $pid = open3( 0, \*STDOUT_TEST, \*STDERR_TEST, ( $EXECUTABLE_NAME . ' -I' . $RPerl::INCLUDE_PATH . ' ' . $test_file ) );         # disable STDIN w/ 0
     }
 
-    my $stdout_select = IO::Select->new();
-    my $stderr_select = IO::Select->new();
-    $stdout_select->add( \*STDOUT_TEST );
-    $stderr_select->add( \*STDERR_TEST );
+    my $stdout_select;
+    my $stderr_select;
+    if($^O ne 'MSWin32') {
+        $stdout_select = IO::Select->new();
+        $stderr_select = IO::Select->new();
+        $stdout_select->add( \*STDOUT_TEST );
+        $stderr_select->add( \*STDERR_TEST );
+    }
+
     my $stdout_generated = q{};
     my $stderr_generated = q{};
 
@@ -106,10 +111,10 @@ for my $test_file ( sort keys %{$test_files} ) {
     #        if ( $stderr_select->can_read(0) )  { RPerl::diag('in 08_interpret_execute.t, can read STDERR_TEST for $test_file = ' . $test_file . "\n"); }
 
     waitpid $pid, 0;
-    if ( $stdout_select->can_read(0) ) {
+    if ( $^O eq 'MSWin32' || $stdout_select->can_read(0) ) {
         sysread STDOUT_TEST, $stdout_generated, 4096;
     }
-    if ( $stderr_select->can_read(0) ) {
+    if ( $^O eq 'MSWin32' || $stderr_select->can_read(0) ) {
         sysread STDERR_TEST, $stderr_generated, 4096;
     }
 
