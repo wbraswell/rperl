@@ -1,5 +1,5 @@
 # RPerl v1.0 Beta 2, Install Notes
-# Last Updated May 11, 2015
+# Last Updated June 11, 2015
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # NOTE: STEPS 0 AND 1 ARE ONLY FOR SINGLE-USER INSTALL, NOT SYSTEM-WIDE INSTALL
@@ -31,9 +31,9 @@ $ source ~/.bashrc;  set | grep perl5
 # INSTALL PERLBREW & CPANMINUS, DO NOT MIX WITH 1A (LOCAL::LIB)
 ################################################################################
 
-$ wget http://www.cpan.org/src/5.0/perl-5.XX.YY.tar.bz2; tar -xjvf perl-5.XX.YY.tar.bz2; cd perl-5.XX.YY; Configure; make; make test; make install  # IS THIS CORRECT???
+$ wget http://www.cpan.org/src/5.0/perl-5.20.2.tar.bz2; tar -xjvf perl-5.20.2.tar.bz2; cd perl-5.20.2; ./Configure -des; make; make test; make install  # IS THIS CORRECT???
 # OR
-$ curl https://raw.githubusercontent.com/tokuhirom/Perl-Build/master/perl-build | perl - 5.XX.YY /install/path/perl-5.XX.YY/
+$ curl https://raw.githubusercontent.com/tokuhirom/Perl-Build/master/perl-build | perl - 5.20.2 /install/path/perl-5.20.2/
 # OR
 $ sudo apt-get install perlbrew
 # OR
