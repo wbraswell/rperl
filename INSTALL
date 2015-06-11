@@ -31,7 +31,9 @@ $ source ~/.bashrc;  set | grep perl5
 # INSTALL PERLBREW & CPANMINUS, DO NOT MIX WITH 1A (LOCAL::LIB)
 ################################################################################
 
-$ wget http://www.cpan.org/src/5.0/perl-5.20.1.tar.bz2; bunzip2 perl-5.20.1.tar.bz2; cd perl-5.20.1; perl Makefile.PL; make; make test; make install
+$ wget http://www.cpan.org/src/5.0/perl-5.XX.YY.tar.bz2; tar -xjvf perl-5.XX.YY.tar.bz2; cd perl-5.XX.YY; Configure; make; make test; make install  # IS THIS CORRECT???
+# OR
+$ curl https://raw.githubusercontent.com/tokuhirom/Perl-Build/master/perl-build | perl - 5.XX.YY /install/path/perl-5.XX.YY/
 # OR
 $ sudo apt-get install perlbrew
 # OR
