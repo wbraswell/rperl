@@ -3,9 +3,9 @@ package RPerl;
 use strict;
 use warnings;
 
-our $VERSION = 1.000_002;    # ONE POINT OH BETA TWO!!!
-
-#our $VERSION = 20150512;    # NON-RELEASE VERSION
+our $VERSION = 1.000_003;    # ONE POINT OH BETA THREE!!!
+#our $VERSION = 20150612;    # NON-RELEASE VERSION
+#our $VERSION = 2015.163;    # NON-RELEASE VERSION, OFFICIAL STARDATE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
