@@ -66,7 +66,7 @@ $ vi lib/RPerl.pm
 $ rm -Rf ~/perl5; curl -L cpanmin.us | perl - -l $HOME/perl5 App::cpanminus local::lib
     # optionally create clean ~/perl5 for local::lib single-user installation
     # remember to re-enable Perl::Critic & Eclipse EPIC Integration Fix above
-$ make distclean
+$ perl Makefile.pl; make distclean
 $ rm RPerl*.tar.gz
 $ perl Makefile.PL
 $ make manifest

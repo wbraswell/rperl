@@ -1,8 +1,8 @@
 ////# [[[ HEADER ]]]
 using std::cout;  using std::cerr;
 
-#ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp 0.004_020
+#ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble 0.004_020
 
 ////# [[[ INCLUDES ]]]
 #include <RPerl/Algorithm/Sort/Bubble.h>  // -> HelperFunctions.cpp && Sort.cpp && NOT Inefficient.cpp (NEED UPGRADE: multiple inheritance not currently supported by Inline::CPP)
