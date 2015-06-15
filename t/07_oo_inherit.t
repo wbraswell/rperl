@@ -23,18 +23,18 @@ BEGIN {
     lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
 
     # NEED FIX: duplicate code
-    my string $bubble_pmc_file        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.pmc';
-#    RPerl::diag 'in 09_precompiled_sort.t, have $bubble_pmc_file = ' . $bubble_pmc_file . "\n";
+    my string $bubble_pmc_filename        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.pmc';
+#    RPerl::diag 'in 09_precompiled_sort.t, have $bubble_pmc_filename = ' . $bubble_pmc_filename . "\n";
 
     # delete PMC file if it exists;
     # for PERLOPS_PERLTYPES we need no PMC file; for CPPOPS_xTYPES we need the proper manually-compiled file, not some other file
-    if ( -e $bubble_pmc_file ) {
-        my integer $unlink_success = unlink $bubble_pmc_file;
+    if ( -e $bubble_pmc_filename ) {
+        my integer $unlink_success = unlink $bubble_pmc_filename;
         if ($unlink_success) {
-            ok( 1, 'Unlink (delete) existing PMC file ' . $bubble_pmc_file );
+            ok( 1, 'Unlink (delete) existing PMC file ' . $bubble_pmc_filename );
         }
         else {
-            ok( 0, 'Unlink (delete) existing PMC file ' . $bubble_pmc_file . q{ ... } . $OS_ERROR );
+            ok( 0, 'Unlink (delete) existing PMC file ' . $bubble_pmc_filename . q{ ... } . $OS_ERROR );
 
             # skip all tests in this mode if we cannot remove the PMC file (and presumably the other 2 modes, as well)
             next;
@@ -44,14 +44,14 @@ BEGIN {
     lives_and( sub { require_ok('RPerl::Algorithm::Sort::Bubble'); }, q{require_ok('RPerl::Algorithm::Sort::Bubble') lives} );
 }
 
-my string $module_filename = 'RPerl/Algorithm/Sort/Bubble.pm';
+my string $module_filenamename = 'RPerl/Algorithm/Sort/Bubble.pm';
 my object $refresher       = Module::Refresh->new();
 
 # NEED FIX: duplicate code
-my string $bubble_pmc_file        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.pmc';
-my string $bubble_pmc_file_manual = $bubble_pmc_file . '.MANUAL';
-#RPerl::diag 'in 09_precompiled_sort.t, have $bubble_pmc_file = ' . $bubble_pmc_file . "\n";
-#RPerl::diag 'in 09_precompiled_sort.t, have $bubble_pmc_file_manual = ' . $bubble_pmc_file_manual . "\n";
+my string $bubble_pmc_filename        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.pmc';
+my string $bubble_pmc_filename_manual = $bubble_pmc_filename . '.CPPOPS_DUALTYPES';
+#RPerl::diag 'in 09_precompiled_sort.t, have $bubble_pmc_filename = ' . $bubble_pmc_filename . "\n";
+#RPerl::diag 'in 09_precompiled_sort.t, have $bubble_pmc_filename_manual = ' . $bubble_pmc_filename_manual . "\n";
 
 # [[[ PRIMARY RUNLOOP ]]]
 # [[[ PRIMARY RUNLOOP ]]]
@@ -78,13 +78,13 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
     # delete PMC file if it exists;
     # for PERLOPS_PERLTYPES we need no PMC file; for CPPOPS_xTYPES we need the proper manually-compiled file, not some other file
-    if ( -e $bubble_pmc_file ) {
-        my integer $unlink_success = unlink $bubble_pmc_file;
+    if ( -e $bubble_pmc_filename ) {
+        my integer $unlink_success = unlink $bubble_pmc_filename;
         if ($unlink_success) {
-            ok( 1, 'Unlink (delete) existing PMC file ' . $bubble_pmc_file );
+            ok( 1, 'Unlink (delete) existing PMC file ' . $bubble_pmc_filename );
         }
         else {
-            ok( 0, 'Unlink (delete) existing PMC file ' . $bubble_pmc_file . q{ ... } . $OS_ERROR );
+            ok( 0, 'Unlink (delete) existing PMC file ' . $bubble_pmc_filename . q{ ... } . $OS_ERROR );
 
             # skip all tests in this mode if we cannot remove the PMC file (and presumably the other 2 modes, as well)
             next;
@@ -95,22 +95,22 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 #        RPerl::diag 'in 09_precompiled_sort.t, have Bubble symtab entries:' . "\n" . RPerl::analyze_class_symtab_entries('RPerl::Algorithm::Sort::Bubble') . "\n\n";
     }
     else {    # $ops eq 'CPP'
-        if ( -e ($bubble_pmc_file_manual) ) {
-            my integer $copy_success = copy( $bubble_pmc_file_manual, $bubble_pmc_file );
+        if ( -e ($bubble_pmc_filename_manual) ) {
+            my integer $copy_success = copy( $bubble_pmc_filename_manual, $bubble_pmc_filename );
             if ($copy_success) {
-                ok( 1, 'Copy manually-compiled PMC file ' . $bubble_pmc_file_manual . ' to ' . $bubble_pmc_file );
+                ok( 1, 'Copy manually-compiled PMC file ' . $bubble_pmc_filename_manual . ' to ' . $bubble_pmc_filename );
             }
             else {
-                ok( 0, 'Copy manually-compiled PMC file ' . $bubble_pmc_file_manual . ' to ' . $bubble_pmc_file . q{ ... } . $OS_ERROR );
+                ok( 0, 'Copy manually-compiled PMC file ' . $bubble_pmc_filename_manual . ' to ' . $bubble_pmc_filename . q{ ... } . $OS_ERROR );
             }
         }
         else {
-            ok( 0, 'Copy manually-compiled PMC file ' . $bubble_pmc_file_manual . ' to ' . $bubble_pmc_file . q{ ... } . 'File does not exist' );
+            ok( 0, 'Copy manually-compiled PMC file ' . $bubble_pmc_filename_manual . ' to ' . $bubble_pmc_filename . q{ ... } . 'File does not exist' );
         }
  
         # C++ use, load, link
 
-    lives_ok( sub { $refresher->refresh_module($module_filename) }, 'Refresh previously-loaded module: ' . $module_filename );
+    lives_ok( sub { $refresher->refresh_module($module_filenamename) }, 'Refresh previously-loaded module: ' . $module_filenamename );
 
         lives_and( sub { require_ok('RPerl::Algorithm::Sort::Bubble'); }, q{require_ok('RPerl::Algorithm::Sort::Bubble') lives} );
         

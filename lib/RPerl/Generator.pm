@@ -40,19 +40,19 @@ our bool $dummy_source_code_find = sub {
 # line-by-line comparison of file contents vs string contents;
 # returns -1 __DUMMY_SOURCE_CODE found, 0 no difference, >0 line number of first difference
 our integer $diff_check_file_vs_string = sub {
-    ( my string $file_name, my string $source_string, my string $ops) = @_;
+    ( my string $filename, my string $source_string, my string $ops) = @_;
 
-    #    RPerl::diag('in Generator->diff_check_file_vs_string(), received $file_name = ' . $file_name . "\n");
+    #    RPerl::diag('in Generator->diff_check_file_vs_string(), received $filename = ' . $filename . "\n");
     #    RPerl::diag('in Generator->diff_check_file_vs_string(), contents of file = ' . "\n");
-    #    system 'cat', $file_name;
+    #    system 'cat', $filename;
     #    RPerl::diag('in Generator->diff_check_file_vs_string(), received $source_string = ' . "\n" . $source_string . "\n\n");
 
-    if ( not -f $file_name ) {
-        die 'ERROR ECVGEDI00, RPERL GENERATOR, DIFF CHECK: file not found, ' . q{'} . $file_name . q{'} . "\n" . ', dying' . "\n";
+    if ( not -f $filename ) {
+        die 'ERROR ECVGEDI00, RPERL GENERATOR, DIFF CHECK: file not found, ' . q{'} . $filename . q{'} . "\n" . ', dying' . "\n";
     }
 
-    open my filehandleref $FILE_HANDLE, '<', $file_name
-        or die 'ERROR ECVGEDI01, RPERL GENERATOR, DIFF CHECK: Cannot open file ' . $file_name . ' for reading,' . $OS_ERROR . ', dying' . "\n";
+    open my filehandleref $FILE_HANDLE, '<', $filename
+        or die 'ERROR ECVGEDI01, RPERL GENERATOR, DIFF CHECK: Cannot open file ' . $filename . ' for reading,' . $OS_ERROR . ', dying' . "\n";
 
     # read in file, strip comments & blank lines
     my string $file_line;
@@ -166,7 +166,7 @@ our integer $diff_check_file_vs_string = sub {
     }
 
     close $FILE_HANDLE
-        or die 'ERROR ECVGEDI02, RPERL GENERATOR, DIFF CHECK: Cannot close file ' . $file_name . ' after reading,' . $OS_ERROR . ', dying' . "\n";
+        or die 'ERROR ECVGEDI02, RPERL GENERATOR, DIFF CHECK: Cannot close file ' . $filename . ' after reading,' . $OS_ERROR . ', dying' . "\n";
 
     # remove extra blank lines inserted by RPerl generators 
     $source_string =~ s/\n\n/\n/gxms;

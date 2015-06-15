@@ -1,0 +1,36 @@
+# [[[ HEADER ]]]
+package RPerl::CompileUnit::Module;
+use strict;
+use warnings;
+use RPerl;
+our $VERSION = 0.001_000;
+
+# [[[ CRITICS ]]]
+## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
+our $need_load_cpp = 0;
+
+# [[[ SUBROUTINES ]]]
+sub cpp_load {
+    if ($RPerl::CompileUnit::Module::need_load_cpp) {
+
+#        RPerl::diag "in RPerl::CompileUnit::Module::cpp_load, need load CPP code\n";
+
+        my $eval_string = <<"EOF";
+package main;
+use RPerl::Inline;
+BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/CompileUnit/Module.cpp' ]]]\n" x 0); }
+use Inline (CPP => '$RPerl::INCLUDE_PATH/RPerl/CompileUnit/Module.cpp', \@RPerl::Inline::ARGS);
+RPerl::diag("[[[ END 'use Inline' STAGE for 'RPerl/CompileUnit/Module.cpp' ]]]\n" x 0);
+1;
+EOF
+
+#        RPerl::diag "in RPerl::CompileUnit::Module::cpp_load(), CPP not yet loaded, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
+
+        eval $eval_string or croak($OS_ERROR . "\n" . $EVAL_ERROR);
+        if ($EVAL_ERROR) { croak($EVAL_ERROR); }
+    }
+
+#    else { RPerl::diag "in RPerl::CompileUnit::Module::cpp_load(), CPP already loaded, DOING NOTHING\n"; }
+}
+
+1;  # end of package
