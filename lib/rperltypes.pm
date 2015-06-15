@@ -3,7 +3,7 @@ package rperltypes;
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.001_040;
+our $VERSION = 0.002_000;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
@@ -18,7 +18,7 @@ our $VERSION = 0.001_040;
 ## no critic qw(ProhibitCascadingIfElse)  # SYSTEM SPECIAL 11: allow complex conditional logic
 
 # [[[ NON-RPERL MODULES ]]]
-use File::Copy qw(move);
+use File::Copy qw(copy);
 use Scalar::Util qw(blessed);
 
 # DEV NOTE, CORRELATION #08: can't use Exporter here
@@ -54,7 +54,7 @@ use RPerl::DataStructure::Hash::Reference;
 
 # [[[ OBJECT-ORIENTED ]]]
 use RPerl::Object;
-use RPerl::CodeBlock::Subroutine::Method; # Method is the only item that is both a Data Type & a Grammar Rule???
+use RPerl::CodeBlock::Subroutine::Method;    # Method is the only item that is both a Data Type & a Grammar Rule???
 
 # these types are currently implemented for all 3 primary RPerl modes: PERLOPS_PERLTYPES, CPPOPS_PERLTYPES, CPPOPS_CPPTYPES
 # NEED REMOVE: hard-coded list
@@ -86,7 +86,7 @@ INIT {
     RPerl::HelperFunctions_cpp::cpp_load();
 }
 
-# NEED UPGRADE: don't fall back to Perl qq{} string interpolation or Dumper() for stringification; 
+# NEED UPGRADE: don't fall back to Perl qq{} string interpolation or Dumper() for stringification;
 # Dumper will fail to call *_to_string() until stringification overloading is implemented
 #my string $to_string = sub {
 sub to_string {
@@ -110,15 +110,14 @@ sub to_string {
 sub type {
     ( my unknown $variable, my integer $recurse_level ) = @_;
     if ( not defined $variable ) { return 'unknown'; }
-    if ( not defined $recurse_level ) { $recurse_level = 10; } # default to limited recursion
+    if ( not defined $recurse_level ) { $recurse_level = 10; }    # default to limited recursion
     my integer_hashref $is_type = build_is_type($variable);
     if    ( $is_type->{integer} ) { return 'integer'; }
     elsif ( $is_type->{number} )  { return 'number'; }
     elsif ( $is_type->{string} )  { return 'string'; }
     else {    # arrayref, hash, or blessed object
-        my arrayref $types
-            = types_recurse( $variable, $recurse_level, $is_type );
-        return $types->[0]; # only return flat type string, discard nested type hashref
+        my arrayref $types = types_recurse( $variable, $recurse_level, $is_type );
+        return $types->[0];    # only return flat type string, discard nested type hashref
     }
 }
 
@@ -126,15 +125,14 @@ sub type {
 sub types {
     ( my unknown $variable, my integer $recurse_level ) = @_;
     if ( not defined $variable ) { return 'unknown'; }
-    if ( not defined $recurse_level ) { $recurse_level = 10; } # default to limited recursion
+    if ( not defined $recurse_level ) { $recurse_level = 10; }    # default to limited recursion
     my integer_hashref $is_type = build_is_type($variable);
     if    ( $is_type->{integer} ) { return { 'integer' => undef }; }
     elsif ( $is_type->{number} )  { return { 'number'  => undef }; }
     elsif ( $is_type->{string} )  { return { 'string'  => undef }; }
     else {    # arrayref, hash, or blessed object
-        my arrayref $types
-            = types_recurse( $variable, $recurse_level, $is_type );
-        return $types->[1]; # only return nested type hashref, discard flat type string
+        my arrayref $types = types_recurse( $variable, $recurse_level, $is_type );
+        return $types->[1];    # only return nested type hashref, discard flat type string
     }
 }
 
@@ -153,26 +151,23 @@ sub build_is_type {
     };
     if ( defined $is_type->{class} ) { $is_type->{blessed} = 1; }
 
-#    RPerl::diag 'in rperltypes::build_is_type(), have $is_type =' . "\n" . Dumper($is_type) . "\n";
+    #    RPerl::diag 'in rperltypes::build_is_type(), have $is_type =' . "\n" . Dumper($is_type) . "\n";
 
     return $is_type;
 }
 
 #my string_hashref $types_recurse = sub {
 sub types_recurse {
-    (   my unknown $variable,
-        my integer $recurse_level,
-        my integer_hashref $is_type
-    ) = @_;
+    ( my unknown $variable, my integer $recurse_level, my integer_hashref $is_type ) = @_;
 
-#    RPerl::diag 'in rperltypes::types_recurse(), received $variable =' . "\n" . Dumper($variable) . "\n";
+    #    RPerl::diag 'in rperltypes::types_recurse(), received $variable =' . "\n" . Dumper($variable) . "\n";
 
-    if ( not defined $recurse_level ) { $recurse_level = 999; } # default to full recursion
-    if ( not defined $is_type ) { $is_type = build_is_type($variable); }
+    if ( not defined $recurse_level ) { $recurse_level = 999; }                        # default to full recursion
+    if ( not defined $is_type )       { $is_type       = build_is_type($variable); }
 
-#    RPerl::diag 'in rperltypes::types_recurse(), have $recurse_level = ' . $recurse_level . "\n";
+    #    RPerl::diag 'in rperltypes::types_recurse(), have $recurse_level = ' . $recurse_level . "\n";
 
-#    RPerl::diag 'in rperltypes::types_recurse(), have $is_type =' . "\n" . Dumper($is_type) . "\n";
+    #    RPerl::diag 'in rperltypes::types_recurse(), have $is_type =' . "\n" . Dumper($is_type) . "\n";
 
     my string $type          = undef;
     my string_hashref $types = undef;
@@ -184,12 +179,12 @@ sub types_recurse {
 
     if ( defined $type ) {
 
-#        RPerl::diag 'in rperltypes::types_recurse(), about to return undef or scalar $type = ' . $type . "\n";
+        #        RPerl::diag 'in rperltypes::types_recurse(), about to return undef or scalar $type = ' . $type . "\n";
         return [ $type, $types ];
     }
     elsif ( $recurse_level <= 0 ) {
 
-      # blessed class must be tested first, because it also matches on hashref
+        # blessed class must be tested first, because it also matches on hashref
         if ( $is_type->{blessed} ) {
             $type = 'object';
             $types = { $type => { '__CLASS' => $is_type->{class} } };
@@ -198,7 +193,7 @@ sub types_recurse {
         elsif ( $is_type->{hashref} )  { $type = 'hashref'; }
         else                           { $type = '__UNRECOGNIZED_TYPE'; }
 
-#        RPerl::diag 'in rperltypes::types_recurse(), max recurse reached, about to return unrecognized or non-scalar $type = ' . $type . "\n";
+        #        RPerl::diag 'in rperltypes::types_recurse(), max recurse reached, about to return unrecognized or non-scalar $type = ' . $type . "\n";
         return [ $type, $types ];
     }
     else {
@@ -212,103 +207,98 @@ sub types_recurse {
             $types = {};
             $types->{$type} = { '__CLASS' => $is_type->{class} };
 
-#            RPerl::diag 'in rperltypes::types_recurse(), top of blessed class...' . "\n";
+            #            RPerl::diag 'in rperltypes::types_recurse(), top of blessed class...' . "\n";
 
             foreach my $hash_key ( sort keys %{$variable} ) {
-                my hashref $subtypes
-                    = types_recurse( $variable->{$hash_key}, $recurse_level );
+                my hashref $subtypes = types_recurse( $variable->{$hash_key}, $recurse_level );
                 if ( not defined $subtypes->[1] ) {
 
-# for scalar subtypes or non-scalar subtypes w/ max recurse reached, discard undef nested type hashref
+                    # for scalar subtypes or non-scalar subtypes w/ max recurse reached, discard undef nested type hashref
                     $types->{$type}->{$hash_key} = $subtypes->[0];
                 }
                 else {
-# for non-scalar subtypes w/out max recurse reached, append nested subtype hashref to list of types for this arrayref
+                    # for non-scalar subtypes w/out max recurse reached, append nested subtype hashref to list of types for this arrayref
                     $types->{$type}->{$hash_key} = $subtypes->[1];
                 }
-                RPerl::diag
-                    'in rperltypes::types_recurse(), inside blessed class, have $types = '
-                    . "\n"
-                    . Dumper($types) . "\n";
-                RPerl::diag
-                    'in rperltypes::types_recurse(), inside blessed class, have $subtypes = '
-                    . "\n"
-                    . Dumper($subtypes) . "\n";
+                RPerl::diag 'in rperltypes::types_recurse(), inside blessed class, have $types = ' . "\n" . Dumper($types) . "\n";
+                RPerl::diag 'in rperltypes::types_recurse(), inside blessed class, have $subtypes = ' . "\n" . Dumper($subtypes) . "\n";
 
             }
 
-#            RPerl::diag 'in rperltypes::types_recurse(), bottom of blessed class, have $type = ' . $type . "\n";
+            #            RPerl::diag 'in rperltypes::types_recurse(), bottom of blessed class, have $type = ' . $type . "\n";
         }
         elsif ( $is_type->{arrayref} ) {
             $type           = 'arrayref';
             $types          = {};
             $types->{$type} = [];
-            my string $subtype         = undef;
-            my string $subtype_class = undef;
+            my string $subtype          = undef;
+            my string $subtype_class    = undef;
             my integer $object_mismatch = 0;
-            my integer $is_homogeneous = 1;
+            my integer $is_homogeneous  = 1;
 
-#            RPerl::diag 'in rperltypes::types_recurse(), top of arrayref...' . "\n";
+            #            RPerl::diag 'in rperltypes::types_recurse(), top of arrayref...' . "\n";
 
             foreach my $array_element ( @{$variable} ) {
                 my hashref $subtypes = types_recurse( $array_element, $recurse_level );
                 if ( not defined $subtypes->[1] ) {
 
-# for scalar subtypes or non-scalar subtypes w/ max recurse reached, discard undef nested type hashref
+                    # for scalar subtypes or non-scalar subtypes w/ max recurse reached, discard undef nested type hashref
                     push @{ $types->{$type} }, $subtypes->[0];
                 }
                 else {
-# for non-scalar subtypes w/out max recurse reached, append nested subtype hashref to list of types for this arrayref
+                    # for non-scalar subtypes w/out max recurse reached, append nested subtype hashref to list of types for this arrayref
                     push @{ $types->{$type} }, $subtypes->[1];
                 }
-#                RPerl::diag 'in rperltypes::types_recurse(), inside arrayref, have $types = ' . "\n" . Dumper($types) . "\n";
-#                RPerl::diag 'in rperltypes::types_recurse(), inside arrayref, have $subtypes = ' . "\n" . Dumper($subtypes) . "\n";
-                
-                # use first element's type as test for remaining element types 
-                if ( not defined $subtype ) { 
-                    $subtype = $subtypes->[0]; 
-                    if ($subtype eq 'object') {
+
+                #                RPerl::diag 'in rperltypes::types_recurse(), inside arrayref, have $types = ' . "\n" . Dumper($types) . "\n";
+                #                RPerl::diag 'in rperltypes::types_recurse(), inside arrayref, have $subtypes = ' . "\n" . Dumper($subtypes) . "\n";
+
+                # use first element's type as test for remaining element types
+                if ( not defined $subtype ) {
+                    $subtype = $subtypes->[0];
+                    if ( $subtype eq 'object' ) {
                         $subtype_class = $subtypes->[1]->{object}->{__CLASS};
                     }
-                } 
+                }
                 elsif ($is_homogeneous) {
-#                    RPerl::diag 'in rperltypes::types_recurse(), inside arrayref, have $subtype = ' . $subtype . "\n";
-#                    RPerl::diag 'in rperltypes::types_recurse(), inside arrayref, have $subtypes->[0] = ' . $subtypes->[0] . "\n";
+
+                    #                    RPerl::diag 'in rperltypes::types_recurse(), inside arrayref, have $subtype = ' . $subtype . "\n";
+                    #                    RPerl::diag 'in rperltypes::types_recurse(), inside arrayref, have $subtypes->[0] = ' . $subtypes->[0] . "\n";
 
 #                    RPerl::diag 'in rperltypes::types_recurse(), inside arrayref, have $subtype_class = ' . $subtype_class . "\n";
 #                    RPerl::diag 'in rperltypes::types_recurse(), inside arrayref, have $subtypes->[1]->{object}->{__CLASS} = ' . $subtypes->[1]->{object}->{__CLASS} . "\n";
-                    # object classes must match for homogeneity
-                    if (( $subtype eq 'object' ) and ( $subtypes->[0] eq 'object' ) and ($subtype_class ne $subtypes->[1]->{object}->{__CLASS})) {
-#                        RPerl::diag 'in rperltypes::types_recurse(), inside arrayref, MISMATCH OF OBJECT CLASSES' . "\n";
-#                        RPerl::diag 'in rperltypes::types_recurse(), inside arrayref, have $types = ' . "\n" . Dumper($types) . "\n";
-#                        RPerl::diag 'in rperltypes::types_recurse(), inside arrayref, have $subtypes = ' . "\n" . Dumper($subtypes) . "\n";
+# object classes must match for homogeneity
+                    if ( ( $subtype eq 'object' ) and ( $subtypes->[0] eq 'object' ) and ( $subtype_class ne $subtypes->[1]->{object}->{__CLASS} ) ) {
+
+                    #                        RPerl::diag 'in rperltypes::types_recurse(), inside arrayref, MISMATCH OF OBJECT CLASSES' . "\n";
+                    #                        RPerl::diag 'in rperltypes::types_recurse(), inside arrayref, have $types = ' . "\n" . Dumper($types) . "\n";
+                    #                        RPerl::diag 'in rperltypes::types_recurse(), inside arrayref, have $subtypes = ' . "\n" . Dumper($subtypes) . "\n";
                         $object_mismatch = 1;
                     }
                     else { $object_mismatch = 0; }
 
-                    if ( $object_mismatch or ( $subtype ne $subtypes->[0] )) {
-                        my string_arrayref $reverse_split_subtype = [ reverse split /_/xms, $subtype ];
+                    if ( $object_mismatch or ( $subtype ne $subtypes->[0] ) ) {
+                        my string_arrayref $reverse_split_subtype    = [ reverse split /_/xms, $subtype ];
                         my string_arrayref $reverse_split_subtypes_0 = [ reverse split /_/xms, $subtypes->[0] ];
+
 #                        RPerl::diag 'in rperltypes::types_recurse(), inside arrayref, have $reverse_split_subtype = ' . "\n" . Dumper($reverse_split_subtype) . "\n";
 #                        RPerl::diag 'in rperltypes::types_recurse(), inside arrayref, have $reverse_split_subtypes_0 = ' . "\n" . Dumper($reverse_split_subtypes_0) . "\n";
-                        # discard non-matching 'object' subtype
+# discard non-matching 'object' subtype
                         if ($object_mismatch) {
                             pop @{$reverse_split_subtype};
                             pop @{$reverse_split_subtypes_0};
                             $object_mismatch = 0;
                         }
-                        my string $new_subtype = q{};
+                        my string $new_subtype           = q{};
                         my integer $shorter_split_length = scalar @{$reverse_split_subtype};
-                        if (scalar @{$reverse_split_subtypes_0} < $shorter_split_length )
-                        {
+                        if ( scalar @{$reverse_split_subtypes_0} < $shorter_split_length ) {
                             $shorter_split_length = scalar @{$reverse_split_subtypes_0};
                         }
-                        for my integer $i ( 0 .. ( $shorter_split_length - 1 ) )
-                        {
+                        for my integer $i ( 0 .. ( $shorter_split_length - 1 ) ) {
+
 #                            RPerl::diag 'in rperltypes::types_recurse(), inside arrayref, have $reverse_split_subtype->[' . $i . '] = ' . $reverse_split_subtype->[$i] . "\n";
 #                            RPerl::diag 'in rperltypes::types_recurse(), inside arrayref, have $reverse_split_subtypes_0->[' . $i . '] = ' . $reverse_split_subtypes_0->[$i] . "\n";
-                            if ( $reverse_split_subtype->[$i] eq $reverse_split_subtypes_0->[$i] )
-                            {
+                            if ( $reverse_split_subtype->[$i] eq $reverse_split_subtypes_0->[$i] ) {
                                 if ( $new_subtype eq q{} ) {
                                     $new_subtype = $reverse_split_subtype->[$i];
                                 }
@@ -326,12 +316,13 @@ sub types_recurse {
                     }
                 }
 
-#                RPerl::diag 'in rperltypes::types_recurse(), inside arrayref, have $subtype = ' . $subtype . "\n";
+                #                RPerl::diag 'in rperltypes::types_recurse(), inside arrayref, have $subtype = ' . $subtype . "\n";
             }
             if ($is_homogeneous) {
+
                 # DEV NOTE: flatten unknown_hashref to hashref
-                if ((not defined $subtype) or ($subtype eq 'unknown')) { $subtype = q{} }
-                if ($subtype ne q{}) {
+                if ( ( not defined $subtype ) or ( $subtype eq 'unknown' ) ) { $subtype = q{} }
+                if ( $subtype ne q{} ) {
                     my string $type_old = $type;
                     $type = $subtype . '_' . $type;
                     $types->{$type} = $types->{$type_old};
@@ -339,77 +330,80 @@ sub types_recurse {
                 }
             }
 
-#            RPerl::diag 'in rperltypes::types_recurse(), bottom of arrayref, have $type = ' . $type . "\n";
+            #            RPerl::diag 'in rperltypes::types_recurse(), bottom of arrayref, have $type = ' . $type . "\n";
         }
         elsif ( $is_type->{hashref} ) {
             $type           = 'hashref';
             $types          = {};
             $types->{$type} = {};
-            my string $subtype         = undef;
-            my string $subtype_class = undef;
+            my string $subtype          = undef;
+            my string $subtype_class    = undef;
             my integer $object_mismatch = 0;
-            my integer $is_homogeneous = 1;
+            my integer $is_homogeneous  = 1;
 
-#            RPerl::diag 'in rperltypes::types_recurse(), top of hashref...' . "\n";
+            #            RPerl::diag 'in rperltypes::types_recurse(), top of hashref...' . "\n";
 
             foreach my $hash_key ( sort keys %{$variable} ) {
                 my hashref $subtypes = types_recurse( $variable->{$hash_key}, $recurse_level );
                 if ( not defined $subtypes->[1] ) {
-# for scalar subtypes or non-scalar subtypes w/ max recurse reached, discard undef nested type hashref
+
+                    # for scalar subtypes or non-scalar subtypes w/ max recurse reached, discard undef nested type hashref
                     $types->{$type}->{$hash_key} = $subtypes->[0];
                 }
                 else {
-# for non-scalar subtypes w/out max recurse reached, append nested subtype hashref to list of types for this hashref
+                    # for non-scalar subtypes w/out max recurse reached, append nested subtype hashref to list of types for this hashref
                     $types->{$type}->{$hash_key} = $subtypes->[1];
                 }
-#                RPerl::diag 'in rperltypes::types_recurse(), inside hashref, have $types = ' . "\n" . Dumper($types) . "\n";
-#                RPerl::diag 'in rperltypes::types_recurse(), inside hashref, have $subtypes = ' . "\n" . Dumper($subtypes) . "\n";
-                
-                # use first element's type as test for remaining element types 
-                if ( not defined $subtype ) { 
-                    $subtype = $subtypes->[0]; 
-                    if ($subtype eq 'object') {
+
+                #                RPerl::diag 'in rperltypes::types_recurse(), inside hashref, have $types = ' . "\n" . Dumper($types) . "\n";
+                #                RPerl::diag 'in rperltypes::types_recurse(), inside hashref, have $subtypes = ' . "\n" . Dumper($subtypes) . "\n";
+
+                # use first element's type as test for remaining element types
+                if ( not defined $subtype ) {
+                    $subtype = $subtypes->[0];
+                    if ( $subtype eq 'object' ) {
                         $subtype_class = $subtypes->[1]->{object}->{__CLASS};
                     }
-                } 
+                }
                 elsif ($is_homogeneous) {
-#                    RPerl::diag 'in rperltypes::types_recurse(), inside hashref, have $subtype = ' . $subtype . "\n";
-#                    RPerl::diag 'in rperltypes::types_recurse(), inside hashref, have $subtypes->[0] = ' . $subtypes->[0] . "\n";
+
+                    #                    RPerl::diag 'in rperltypes::types_recurse(), inside hashref, have $subtype = ' . $subtype . "\n";
+                    #                    RPerl::diag 'in rperltypes::types_recurse(), inside hashref, have $subtypes->[0] = ' . $subtypes->[0] . "\n";
 
 #                    RPerl::diag 'in rperltypes::types_recurse(), inside hashref, have $subtype_class = ' . $subtype_class . "\n";
 #                    RPerl::diag 'in rperltypes::types_recurse(), inside hashref, have $subtypes->[1]->{object}->{__CLASS} = ' . $subtypes->[1]->{object}->{__CLASS} . "\n";
-                    # object classes must match for homogeneity
-                    if (( $subtype eq 'object' ) and ( $subtypes->[0] eq 'object' ) and ($subtype_class ne $subtypes->[1]->{object}->{__CLASS})) {
-#                        RPerl::diag 'in rperltypes::types_recurse(), inside hashref, MISMATCH OF OBJECT CLASSES' . "\n";
-#                        RPerl::diag 'in rperltypes::types_recurse(), inside hashref, have $types = ' . "\n" . Dumper($types) . "\n";
-#                        RPerl::diag 'in rperltypes::types_recurse(), inside hashref, have $subtypes = ' . "\n" . Dumper($subtypes) . "\n";
+# object classes must match for homogeneity
+                    if ( ( $subtype eq 'object' ) and ( $subtypes->[0] eq 'object' ) and ( $subtype_class ne $subtypes->[1]->{object}->{__CLASS} ) ) {
+
+                     #                        RPerl::diag 'in rperltypes::types_recurse(), inside hashref, MISMATCH OF OBJECT CLASSES' . "\n";
+                     #                        RPerl::diag 'in rperltypes::types_recurse(), inside hashref, have $types = ' . "\n" . Dumper($types) . "\n";
+                     #                        RPerl::diag 'in rperltypes::types_recurse(), inside hashref, have $subtypes = ' . "\n" . Dumper($subtypes) . "\n";
                         $object_mismatch = 1;
                     }
                     else { $object_mismatch = 0; }
 
-                    if ( $object_mismatch or ( $subtype ne $subtypes->[0] )) {
-                        my string_arrayref $reverse_split_subtype = [ reverse split /_/xms, $subtype ];
+                    if ( $object_mismatch or ( $subtype ne $subtypes->[0] ) ) {
+                        my string_arrayref $reverse_split_subtype    = [ reverse split /_/xms, $subtype ];
                         my string_arrayref $reverse_split_subtypes_0 = [ reverse split /_/xms, $subtypes->[0] ];
+
 #                        RPerl::diag 'in rperltypes::types_recurse(), inside hashref, have $reverse_split_subtype = ' . "\n" . Dumper($reverse_split_subtype) . "\n";
 #                        RPerl::diag 'in rperltypes::types_recurse(), inside hashref, have $reverse_split_subtypes_0 = ' . "\n" . Dumper($reverse_split_subtypes_0) . "\n";
-                        # discard non-matching 'object' subtype
+# discard non-matching 'object' subtype
                         if ($object_mismatch) {
                             pop @{$reverse_split_subtype};
                             pop @{$reverse_split_subtypes_0};
                             $object_mismatch = 0;
                         }
-                        my string $new_subtype = q{};
+                        my string $new_subtype           = q{};
                         my integer $shorter_split_length = scalar @{$reverse_split_subtype};
-                        if (scalar @{$reverse_split_subtypes_0} < $shorter_split_length )
-                        {
+                        if ( scalar @{$reverse_split_subtypes_0} < $shorter_split_length ) {
                             $shorter_split_length = scalar @{$reverse_split_subtypes_0};
                         }
-                        for my integer $i ( 0 .. ( $shorter_split_length - 1 ) )
-                        {
+                        for my integer $i ( 0 .. ( $shorter_split_length - 1 ) ) {
+
 #                            RPerl::diag 'in rperltypes::types_recurse(), inside hashref, have $reverse_split_subtype->[' . $i . '] = ' . $reverse_split_subtype->[$i] . "\n";
 #                            RPerl::diag 'in rperltypes::types_recurse(), inside hashref, have $reverse_split_subtypes_0->[' . $i . '] = ' . $reverse_split_subtypes_0->[$i] . "\n";
-                            if ( $reverse_split_subtype->[$i] eq $reverse_split_subtypes_0->[$i] )
-                            {
+                            if ( $reverse_split_subtype->[$i] eq $reverse_split_subtypes_0->[$i] ) {
                                 if ( $new_subtype eq q{} ) {
                                     $new_subtype = $reverse_split_subtype->[$i];
                                 }
@@ -427,12 +421,13 @@ sub types_recurse {
                     }
                 }
 
-#                RPerl::diag 'in rperltypes::types_recurse(), inside hashref, have $subtype = ' . $subtype . "\n";
+                #                RPerl::diag 'in rperltypes::types_recurse(), inside hashref, have $subtype = ' . $subtype . "\n";
             }
             if ($is_homogeneous) {
+
                 # DEV NOTE: flatten unknown_arrayref to arrayref
-                if ((not defined $subtype) or ($subtype eq 'unknown')) { $subtype = q{} }
-                if ($subtype ne q{}) {
+                if ( ( not defined $subtype ) or ( $subtype eq 'unknown' ) ) { $subtype = q{} }
+                if ( $subtype ne q{} ) {
                     my string $type_old = $type;
                     $type = $subtype . '_' . $type;
                     $types->{$type} = $types->{$type_old};
@@ -440,7 +435,7 @@ sub types_recurse {
                 }
             }
 
-#            RPerl::diag 'in rperltypes::types_recurse(), bottom of hashref, have $type = ' . $type . "\n";
+            #            RPerl::diag 'in rperltypes::types_recurse(), bottom of hashref, have $type = ' . $type . "\n";
         }
         else {
             $type = '__UNRECOGNIZED_TYPE';
@@ -463,111 +458,47 @@ package rperltypes;
 sub types_enable {
     ( my $types_input ) = @_;
 
-#	RPerl::diag "in rperltypes::types_enable(), received \$types_input = '$types_input'\n";
+    #	RPerl::diag "in rperltypes::types_enable(), received \$types_input = '$types_input'\n";
 
-    my string $rperltypes_h_filename
-        = $RPerl::INCLUDE_PATH . '/rperltypes_mode.h';
+    my string $rperltypes_mode_h_filename       = $RPerl::INCLUDE_PATH . '/rperltypes_mode.h';
+    my string $rperltypes_mode_h_filename_TYPES = $rperltypes_mode_h_filename . '.CPPOPS_' . $types_input . 'TYPES';
 
-    #	my bool $rperltypes_h_modified = 0;
-    my integer $rperltypes_h_modified = 0;
+    #	my bool $rperltypes_mode_h_modified = 0;
+    my integer $rperltypes_mode_h_modified = 0;
 
-#	RPerl::diag "in rperltypes::types_enable(), have \$rperltypes_h_filename = '$rperltypes_h_filename'\n";
+    #	RPerl::diag "in rperltypes::types_enable(), have \$rperltypes_mode_h_filename = '$rperltypes_mode_h_filename'\n";
 
-    my integer $open_close_retval = open my $TYPES_H_FILEHANDLE_IN,
-        '<',
-        $rperltypes_h_filename;
-    if ( not $open_close_retval ) {
-        croak(
-            "ERROR ERPTYMO00: Problem opening rperltypes_mode.h input file: $OS_ERROR, croaking"
-        );
-    }
-    $open_close_retval = open my $TYPES_H_FILEHANDLE_OUT, '>',
-        ( $rperltypes_h_filename . '.swap' );
-    if ( not $open_close_retval ) {
-        croak(
-            "ERROR ERPTYMO01: Problem opening rperltypes_mode.h.swap output file: $OS_ERROR, croaking"
-        );
-    }
-
-    while ( defined( my $line_current = <$TYPES_H_FILEHANDLE_IN> ) ) {
-        my string $types_current;
-
-#		RPerl::diag "in rperltypes::types_enable(), have \$line_current =\n$line_current";
-        if ( $line_current =~ /\#\s*define\s+\_\_(\w+)\_\_TYPES/xms ) {
-            $types_current = $1;
-
-#			RPerl::diag "in rperltypes::types_enable(), FOUND $types_current TYPES DEFINITION\n";
-
-            if ( $line_current =~ /^\s*\/\//xms ) {
-
-#				RPerl::diag "in rperltypes::types_enable(), FOUND $types_current TYPES DISABLED\n";
-                if ( $types_current eq $types_input ) {
-
-#					RPerl::diag "in rperltypes::types_enable(), ENABLE $types_current TYPES\n";
-                    $line_current =~ s/\/\///xms; # remove first occurence of // comment
-                    $rperltypes_h_modified = 1;
-                }
-            }
-            elsif ( $line_current =~ /^\s*\#\s*define/xms ) {
-
-#				RPerl::diag "in rperltypes::types_enable(), FOUND $types_current TYPES ENABLED\n";
-                if ( $types_current ne $types_input ) {
-
-#					RPerl::diag "in rperltypes::types_enable(), DISABLE $types_current TYPES\n";
-                    $line_current          = q{//} . $line_current;
-                    $rperltypes_h_modified = 1;
-                }
-            }
-            else {
-                $open_close_retval = close $TYPES_H_FILEHANDLE_IN;
-                if ( not $open_close_retval ) {
-                    croak(
-                        "ERROR ERPTYMO02: Problem while closing rperltypes_mode.h input file: $OS_ERROR, croaking"
-                    );
-                }
-
-                $open_close_retval = close $TYPES_H_FILEHANDLE_OUT;
-                if ( not $open_close_retval ) {
-                    croak(
-                        "ERROR ERPTYMO03: Problem while closing rperltypes_mode.h.swap output file: $OS_ERROR, croaking"
-                    );
-                }
-                croak(
-                    'ERROR ERPTYMO04: Found invalid __$types_current__TYPES definition in rperltypes_mode.h, neither properly disabled nor enabled, croaking'
-                );
-            }
+=DISABLED_only_copy_overwrite_do_not_delete
+    # delete rperltypes_mode.h if it exists
+    if ( -e $rperltypes_mode_h_filename ) {
+        my integer $unlink_success = unlink $rperltypes_mode_h_filename;
+        if ( not $unlink_success ) {
+            croak(    'ERROR ERPTYMO00: Problem unlinking (deleting) existing file '
+                    . $rperltypes_mode_h_filename
+                    . q{ ... } . "\n"
+                    . $OS_ERROR . "\n"
+                    . ' croaking' );
         }
-        print {$TYPES_H_FILEHANDLE_OUT} $line_current; # WRITE DATA BACK TO FILE
     }
+=cut
 
-    $open_close_retval = close $TYPES_H_FILEHANDLE_IN;
-    if ( not $open_close_retval ) {
-        croak(
-            "ERROR ERPTYMO05: Problem while closing rperltypes_mode.h input file: $OS_ERROR, croaking"
-        );
+    # copy new rperltypes_mode.h, overwriting if it already exists
+    if ( -e $rperltypes_mode_h_filename_TYPES ) {
+        my integer $copy_success = copy( $rperltypes_mode_h_filename_TYPES, $rperltypes_mode_h_filename );
+        if ( not $copy_success ) {
+            croak(    'ERROR ERPTYMO01: Problem copying file '
+                    . $rperltypes_mode_h_filename_TYPES . ' to '
+                    . $rperltypes_mode_h_filename
+                    . q{ ... }
+                    . $OS_ERROR . "\n"
+                    . ' croaking' );
+        }
     }
-
-    $open_close_retval = close $TYPES_H_FILEHANDLE_OUT;
-    if ( not $open_close_retval ) {
-        croak(
-            "ERROR ERPTYMO06: Problem while closing rperltypes_mode.h.swap output file: $OS_ERROR, croaking"
-        );
-    }
-
-    if ($rperltypes_h_modified) {
-        move( $rperltypes_h_filename, ( $rperltypes_h_filename . '.orig' ) )
-            or croak(
-            "ERROR ERPTYMO07: Problem moving (renaming) rperltypes_mode.h input file to rperltypes_mode.h.orig: $OS_ERROR, croaking"
-            );
-        move( ( $rperltypes_h_filename . '.swap' ), $rperltypes_h_filename )
-            or croak(
-            "ERROR ERPTYMO08: Problem moving (renaming) rperltypes_mode.h.swap output file to rperltypes_mode.h: $OS_ERROR, croaking"
-            );
+    else {
+        croak( 'ERROR ERPTYMO02: Required file ' . $rperltypes_mode_h_filename_TYPES . ' does not exist, croaking' );
     }
 
     return;
-
-    #};
 }
 
-1;
+1;  # end of package
