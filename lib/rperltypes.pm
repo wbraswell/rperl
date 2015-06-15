@@ -3,7 +3,7 @@ package rperltypes;
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_010;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
@@ -468,7 +468,6 @@ sub types_enable {
 
     #	RPerl::diag "in rperltypes::types_enable(), have \$rperltypes_mode_h_filename = '$rperltypes_mode_h_filename'\n";
 
-=DISABLED_only_copy_overwrite_do_not_delete
     # delete rperltypes_mode.h if it exists
     if ( -e $rperltypes_mode_h_filename ) {
         my integer $unlink_success = unlink $rperltypes_mode_h_filename;
@@ -480,7 +479,6 @@ sub types_enable {
                     . ' croaking' );
         }
     }
-=cut
 
     # copy new rperltypes_mode.h, overwriting if it already exists
     if ( -e $rperltypes_mode_h_filename_TYPES ) {

@@ -84,6 +84,10 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     }
 
 
+# START HERE: defer setting module name and path until files are saved by Compiler.pm???
+# START HERE: defer setting module name and path until files are saved by Compiler.pm???
+# START HERE: defer setting module name and path until files are saved by Compiler.pm???
+
     my string $module_name = 'FOO::MODULE::NAME';
     my string $module_path = 'FOO/MODULE/PATH';
 
