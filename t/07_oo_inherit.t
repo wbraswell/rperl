@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_010;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -10,11 +10,13 @@ our $VERSION = 0.002_000;
 # suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s)
 BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
-use Test::More tests => 104;
+use Test::More tests => 110;
 use Test::Exception;
 use RPerl::Test;
 use File::Copy;
 use Module::Refresh;
+
+#use File::Path qw(remove_tree);
 
 BEGIN {
     if ( $ENV{RPERL_VERBOSE} ) {
@@ -23,21 +25,27 @@ BEGIN {
     lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
 
     # NEED FIX: duplicate code
-    my string $bubble_pmc_filename        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.pmc';
-#    RPerl::diag 'in 09_precompiled_sort.t, have $bubble_pmc_filename = ' . $bubble_pmc_filename . "\n";
+    my string $bubble_cpp_filename = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.cpp';
+    my string $bubble_h_filename   = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.h';
+    my string $bubble_pmc_filename = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.pmc';
 
-    # delete PMC file if it exists;
-    # for PERLOPS_PERLTYPES we need no PMC file; for CPPOPS_xTYPES we need the proper manually-compiled file, not some other file
-    if ( -e $bubble_pmc_filename ) {
-        my integer $unlink_success = unlink $bubble_pmc_filename;
-        if ($unlink_success) {
-            ok( 1, 'Unlink (delete) existing PMC file ' . $bubble_pmc_filename );
-        }
-        else {
-            ok( 0, 'Unlink (delete) existing PMC file ' . $bubble_pmc_filename . q{ ... } . $OS_ERROR );
+    #    RPerl::diag 'in 07_00_inherit.t, have $bubble_pmc_filename = ' . $bubble_pmc_filename . "\n";
 
-            # skip all tests in this mode if we cannot remove the PMC file (and presumably the other 2 modes, as well)
-            next;
+    # NEED FIX: duplicate code
+    # delete CPP, H, and PMC files if they exist;
+    # for PERLOPS_PERLTYPES we need none of these files; for CPPOPS_xTYPES we need the proper manually-compiled files, not some other files
+    foreach my string $filename ( @{ [ $bubble_cpp_filename, $bubble_h_filename, $bubble_pmc_filename ] } ) {
+        if ( -e $filename ) {
+            my integer $unlink_success = unlink $filename;
+            if ($unlink_success) {
+                ok( 1, 'Unlink (delete) existing file ' . $filename );
+            }
+            else {
+                ok( 0, 'Unlink (delete) existing file ' . $filename . q{ ... } . $OS_ERROR );
+
+                # skip all tests in this mode if we cannot remove the PMC file (and presumably the other 2 modes, as well)
+                next;
+            }
         }
     }
 
@@ -45,13 +53,18 @@ BEGIN {
 }
 
 my string $module_filenamename = 'RPerl/Algorithm/Sort/Bubble.pm';
-my object $refresher       = Module::Refresh->new();
+my object $refresher           = Module::Refresh->new();
 
 # NEED FIX: duplicate code
+my string $bubble_cpp_filename        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.cpp';
+my string $bubble_cpp_filename_manual = $bubble_cpp_filename . '.CPPOPS_DUALTYPES';
+my string $bubble_h_filename          = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.h';
+my string $bubble_h_filename_manual   = $bubble_h_filename . '.CPPOPS_DUALTYPES';
 my string $bubble_pmc_filename        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.pmc';
 my string $bubble_pmc_filename_manual = $bubble_pmc_filename . '.CPPOPS_DUALTYPES';
-#RPerl::diag 'in 09_precompiled_sort.t, have $bubble_pmc_filename = ' . $bubble_pmc_filename . "\n";
-#RPerl::diag 'in 09_precompiled_sort.t, have $bubble_pmc_filename_manual = ' . $bubble_pmc_filename_manual . "\n";
+
+#RPerl::diag 'in 07_00_inherit.t, have $bubble_pmc_filename = ' . $bubble_pmc_filename . "\n";
+#RPerl::diag 'in 07_00_inherit.t, have $bubble_pmc_filename_manual = ' . $bubble_pmc_filename_manual . "\n";
 
 # [[[ PRIMARY RUNLOOP ]]]
 # [[[ PRIMARY RUNLOOP ]]]
@@ -61,7 +74,7 @@ my string $bubble_pmc_filename_manual = $bubble_pmc_filename . '.CPPOPS_DUALTYPE
 foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
     #for my $mode_id ( 1 .. 2 ) {    # TEMPORARY DEBUGGING xOPS_xTYPES ONLY
-    #    RPerl::diag "in 09_precompiled_sort.t, top of for() loop, have \$mode_id = $mode_id\n";
+    #    RPerl::diag "in 07_00_inherit.t, top of for() loop, have \$mode_id = $mode_id\n";
     my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
     if ( $ENV{RPERL_VERBOSE} ) {
         Test::More::diag( '[[[ Beginning RPerl Pre-Compiled Sort Tests, ' . RPerl::Test::mode_description($mode) . ' ]]]' );
@@ -76,53 +89,89 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
     lives_ok( sub { RPerl::Test::mode_enable($mode) }, q{Mode '} . RPerl::Test::mode_description($mode) . q{' enabled in CPP header file(s)} );
 
-    # delete PMC file if it exists;
-    # for PERLOPS_PERLTYPES we need no PMC file; for CPPOPS_xTYPES we need the proper manually-compiled file, not some other file
-    if ( -e $bubble_pmc_filename ) {
-        my integer $unlink_success = unlink $bubble_pmc_filename;
-        if ($unlink_success) {
-            ok( 1, 'Unlink (delete) existing PMC file ' . $bubble_pmc_filename );
-        }
-        else {
-            ok( 0, 'Unlink (delete) existing PMC file ' . $bubble_pmc_filename . q{ ... } . $OS_ERROR );
+    # NEED FIX: duplicate code
+    # delete CPP, H, and PMC files if they exist;
+    # for PERLOPS_PERLTYPES we need none of these files; for CPPOPS_xTYPES we need the proper manually-compiled files, not some other files
+    foreach my string $filename ( @{ [ $bubble_cpp_filename, $bubble_h_filename, $bubble_pmc_filename ] } ) {
+        if ( -e $filename ) {
+            my integer $unlink_success = unlink $filename;
+            if ($unlink_success) {
+                ok( 1, 'Unlink (delete) existing file ' . $filename );
+            }
+            else {
+                ok( 0, 'Unlink (delete) existing file ' . $filename . q{ ... } . $OS_ERROR );
 
-            # skip all tests in this mode if we cannot remove the PMC file (and presumably the other 2 modes, as well)
-            next;
+                # skip all tests in this mode if we cannot remove the PMC file (and presumably the other 2 modes, as well)
+                next;
+            }
         }
     }
 
     if ( $ops eq 'PERL' ) {
-#        RPerl::diag 'in 09_precompiled_sort.t, have Bubble symtab entries:' . "\n" . RPerl::analyze_class_symtab_entries('RPerl::Algorithm::Sort::Bubble') . "\n\n";
+
+#        RPerl::diag 'in 07_00_inherit.t, have Bubble symtab entries:' . "\n" . RPerl::analyze_class_symtab_entries('RPerl::Algorithm::Sort::Bubble') . "\n\n";
     }
     else {    # $ops eq 'CPP'
-        if ( -e ($bubble_pmc_filename_manual) ) {
-            my integer $copy_success = copy( $bubble_pmc_filename_manual, $bubble_pmc_filename );
-            if ($copy_success) {
-                ok( 1, 'Copy manually-compiled PMC file ' . $bubble_pmc_filename_manual . ' to ' . $bubble_pmc_filename );
+        foreach my string_arrayref $filenames (
+            @{ [ [ $bubble_cpp_filename, $bubble_cpp_filename_manual ], [ $bubble_h_filename, $bubble_h_filename_manual ], [ $bubble_pmc_filename, $bubble_pmc_filename_manual ] ] } )
+        {
+            my string $filename        = $filenames->[0];
+            my string $filename_manual = $filenames->[1];
+            if ( -e ($filename_manual) ) {
+                my integer $copy_success = copy( $filename_manual, $filename );
+                if ($copy_success) {
+                    ok( 1, 'Copy manually-compiled file ' . $filename_manual . ' to ' . $filename );
+                }
+                else {
+                    ok( 0, 'Copy manually-compiled file ' . $filename_manual . ' to ' . $filename . q{ ... } . $OS_ERROR );
+                }
             }
             else {
-                ok( 0, 'Copy manually-compiled PMC file ' . $bubble_pmc_filename_manual . ' to ' . $bubble_pmc_filename . q{ ... } . $OS_ERROR );
+                ok( 0, 'Copy manually-compiled file ' . $filename_manual . ' to ' . $filename . q{ ... } . 'File does not exist' );
             }
-        }
-        else {
-            ok( 0, 'Copy manually-compiled PMC file ' . $bubble_pmc_filename_manual . ' to ' . $bubble_pmc_filename . q{ ... } . 'File does not exist' );
         }
  
         # C++ use, load, link
+        lives_ok( sub { $refresher->refresh_module($module_filenamename) }, 'Refresh previously-loaded module: ' . $module_filenamename );
 
-    lives_ok( sub { $refresher->refresh_module($module_filenamename) }, 'Refresh previously-loaded module: ' . $module_filenamename );
+=DISABLED_because_unnecessary
+        # NEED FIX: enable string_hashref_arrayref type
+        #    my string_hashref_arrayref $remove_tree_errors = undef;
+        my hashref_arrayref $remove_tree_errors = undef;
+        remove_tree( '_Inline', { error => \$remove_tree_errors, keep_root => 1 } );
+
+        # no errors returned on success
+        if ( ( defined $remove_tree_errors ) and ( exists $remove_tree_errors->[0] ) ) {
+            foreach my string_hashref $remove_tree_error ( @{$remove_tree_errors} ) {
+
+                # remove_tree only creates one key/value pair per string_hashref
+                my string $remove_tree_error_filenamename;
+                my string $remove_tree_error_message;
+                ( $remove_tree_error_filenamename, $remove_tree_error_message ) = %{$remove_tree_error};
+                if ( $remove_tree_error_filenamename eq '' ) {
+                    ok( 0, 'Remove tree (delete) existing _Inline build directory ... ' . $remove_tree_error_message );
+                }
+                else {
+                    ok( 0, 'Remove tree (delete) existing _Inline build directory ... ' . $remove_tree_error_message . q{ ... } . $remove_tree_error_filenamename );
+                }
+            }
+        }
+        else {
+            ok( 1, 'Remove tree (delete) existing _Inline build directory' );
+        }
+=cut
 
         lives_and( sub { require_ok('RPerl::Algorithm::Sort::Bubble'); }, q{require_ok('RPerl::Algorithm::Sort::Bubble') lives} );
-        
+
         # allow cpp_load() to actually (re-)compile
-        $RPerl::Algorithm::Sort::Bubble::need_load_cpp = 1;  # duplicate lines to avoid 'used only once, possible typo' warning
+        $RPerl::Algorithm::Sort::Bubble::need_load_cpp = 1;    # duplicate lines to avoid 'used only once, possible typo' warning
         $RPerl::Algorithm::Sort::Bubble::need_load_cpp = 1;
 
-# DEV NOTE: must call long form of cpp_load() to bypass mysterious 'undefined subroutine' symtab weirdness
-#        lives_ok( sub { RPerl::Algorithm::Sort::Bubble::cpp_load(); }, q{RPerl::Algorithm::Sort::Bubble::cpp_load() lives} ); 
-        lives_ok( sub { &{$RPerl::Algorithm::Sort::Bubble::{'cpp_load'}}(); }, q{RPerl::Algorithm::Sort::Bubble::cpp_load() lives} );  # long form
- 
-#        RPerl::diag 'in 09_precompiled_sort.t, have post-re-use, post-re-cpp_load Bubble symtab entries:' . "\n" . RPerl::analyze_class_symtab_entries('RPerl::Algorithm::Sort::Bubble') . "\n\n";
+        # DEV NOTE: must call long form of cpp_load() to bypass mysterious 'undefined subroutine' symtab weirdness
+        #        lives_ok( sub { RPerl::Algorithm::Sort::Bubble::cpp_load(); }, q{RPerl::Algorithm::Sort::Bubble::cpp_load() lives} );
+        lives_ok( sub { &{ $RPerl::Algorithm::Sort::Bubble::{'cpp_load'} }(); }, q{RPerl::Algorithm::Sort::Bubble::cpp_load() lives} );    # long form
+
+#        RPerl::diag 'in 07_00_inherit.t, have post-re-use, post-re-cpp_load Bubble symtab entries:' . "\n" . RPerl::analyze_class_symtab_entries('RPerl::Algorithm::Sort::Bubble') . "\n\n";
     }
 
     foreach my string $type (qw(DataType__Integer DataType__Number DataType__String DataStructure__Array DataStructure__Hash Algorithm__Sort__Bubble)) {
@@ -141,7 +190,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
             'main::RPerl__' . $type . '__MODE_ID() lives'
         );
     }
-
+ 
     # [[[ OO INHERITANCE TESTS ]]]
     # [[[ OO INHERITANCE TESTS ]]]
     # [[[ OO INHERITANCE TESTS ]]]

@@ -108,7 +108,7 @@ our void $rperl_to_xsbinary__parse_generate_compile = sub {
     # [[[ COMPILE C++ TO XS & BINARY ]]]
 
     if ( $modes->{compile} eq 'COMPILE' ) {
-        cpp_to_xsbinary__compile( $source_group,
+        cpp_to_xsbinary__subcompile( $source_group,
             $cpp_output_file_name_group );
     }
 };
@@ -281,12 +281,12 @@ our void $save_source_files = sub {
 
 };
 
-# Compile from C++-Parsable String to Perl-Linkable XS & Machine-Readable Binary
-our void $cpp_to_xsbinary__compile = sub {
+# Sub-Compile from C++-Parsable String to Perl-Linkable XS & Machine-Readable Binary
+our void $cpp_to_xsbinary__subcompile = sub {
     ( my string $file_name_group ) = @_;
 
     RPerl::diag(
-        q{in Compiler::cpp_to_xsbinary__compile(), received $file_name_group =},
+        q{in Compiler::cpp_to_xsbinary__subcompile(), received $file_name_group =},
         "\n", Dumper($file_name_group), "\n"
     );
 
