@@ -10,7 +10,7 @@ our $VERSION = 0.002_010;
 # suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s)
 BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
-use Test::More tests => 110;
+use Test::More tests => 119;
 use Test::Exception;
 use RPerl::Test;
 use File::Copy;
@@ -46,6 +46,9 @@ BEGIN {
                 # skip all tests in this mode if we cannot remove the PMC file (and presumably the other 2 modes, as well)
                 next;
             }
+        }
+        else {
+            ok( 1, 'No need to unlink (delete) existing file ' . $filename );
         }
     }
 
@@ -104,6 +107,9 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                 # skip all tests in this mode if we cannot remove the PMC file (and presumably the other 2 modes, as well)
                 next;
             }
+        }
+        else {
+            ok( 1, 'No need to unlink (delete) existing file ' . $filename );
         }
     }
 
