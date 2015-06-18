@@ -10,6 +10,9 @@ our $VERSION = 0.002_030;
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
 
+# [[[ INCLUDES ]]]
+use RPerl::Inline;
+
 # [[[ SUBROUTINES ]]]
 #our void_method $cpp_load = sub {  # DEV NOTE: remove dependency on RPerl
 sub cpp_load {
@@ -39,11 +42,14 @@ sub cpp_load {
         my $eval_string = <<"EOF";
 package main;
 use RPerl::Inline;
-use Inline (CPP => '$RPerl::INCLUDE_PATH/RPerl/HelperFunctions.cpp', \@RPerl::Inline::ARGS);
+use Inline (CPP => '$RPerl::INCLUDE_PATH/RPerl/HelperFunctions.cpp', \%RPerl::Inline::ARGS);
 1;
 EOF
 
+        $RPerl::Inline::ARGS{ccflagsex} = $RPerl::Inline::CCFLAGSEX . $RPerl::TYPES_CCFLAG;
+        $RPerl::Inline::ARGS{cppflags} = $RPerl::TYPES_CCFLAG;
 #        RPerl::diag "in HelperFunctions_cpp::cpp_load(), CPP not yet loaded, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
+        RPerl::diag "in HelperFunctions_cpp::cpp_load(), CPP not yet loaded, have \%RPerl::Inline::ARGS =\n" . Dumper(\%RPerl::Inline::ARGS) . "\n";
 
         eval $eval_string or croak( $OS_ERROR . "\n" . $EVAL_ERROR );
         if ($EVAL_ERROR) { croak($EVAL_ERROR); }

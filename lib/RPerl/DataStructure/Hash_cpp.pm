@@ -3,10 +3,13 @@ package RPerl::DataStructure::Hash_cpp;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_010;
+our $VERSION = 0.004_020;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
+
+# [[[ INCLUDES ]]]
+use RPerl::Inline;
 
 # [[[ SUBROUTINES ]]]
 our void_method $cpp_load = sub {
@@ -33,11 +36,13 @@ our void_method $cpp_load = sub {
 package main;
 use RPerl::Inline;
 BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/DataStructure/Hash.cpp' ]]]\n" x 0); }
-use Inline (CPP => '$RPerl::INCLUDE_PATH/RPerl/DataStructure/Hash.cpp', \@RPerl::Inline::ARGS);
+use Inline (CPP => '$RPerl::INCLUDE_PATH/RPerl/DataStructure/Hash.cpp', \%RPerl::Inline::ARGS);
 RPerl::diag("[[[ END 'use Inline' STAGE for 'RPerl/DataStructure/Hash.cpp' ]]]\n" x 0);
 1;
 EOF
 
+        $RPerl::Inline::ARGS{ccflagsex} = $RPerl::Inline::CCFLAGSEX . $RPerl::TYPES_CCFLAG;
+        $RPerl::Inline::ARGS{cppflags} = $RPerl::TYPES_CCFLAG;
 #        RPerl::diag "in Hash_cpp::cpp_load(), CPP not yet loaded, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n";
 
         eval $eval_string or croak( $OS_ERROR . "\n" . $EVAL_ERROR );
@@ -47,5 +52,4 @@ EOF
 #    else { RPerl::diag "in Hash_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"; }
 };
 
-1;
-1;
+1;  # end of package
