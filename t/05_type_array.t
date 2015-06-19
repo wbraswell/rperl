@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.004_040;
+our $VERSION = 0.004_041;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
@@ -11,7 +11,7 @@ our $VERSION = 0.004_040;
 BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
 use RPerl::Test;
-use Test::More tests => 211;
+use Test::More tests => 223;
 use Test::Exception;
 
 BEGIN {
@@ -65,6 +65,13 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
             sub {
                 is( $RPerl::MODES->{ main->can( 'RPerl__' . $type . '__MODE_ID' )->() }->{ops},
                     $ops, 'main::RPerl__' . $type . '__MODE_ID() ops returns ' . $ops );
+            },
+            'main::RPerl__' . $type . '__MODE_ID() lives'
+        );
+        lives_and(
+            sub {
+                is( $RPerl::MODES->{ main->can( 'RPerl__' . $type . '__MODE_ID' )->() }->{types},
+                    $types, 'main::RPerl__' . $type . '__MODE_ID() types returns ' . $types );
             },
             'main::RPerl__' . $type . '__MODE_ID() lives'
         );

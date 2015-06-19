@@ -13,7 +13,7 @@ our $VERSION = 0.005_021;
 BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
 use RPerl::Test;
-use Test::More tests => 310;
+use Test::More tests => 319;
 use Test::Exception;
 my $ERROR_MAX = 0.00000001;
 
@@ -101,6 +101,13 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                     $ops, 'main::RPerl__DataType__' . $type . '__MODE_ID() ops returns ' . $ops );
             },
             'main::RPerl__DataType__' . $type . '__MODE_ID() lives'
+        );
+        lives_and(
+            sub {
+                is( $RPerl::MODES->{ main->can( 'RPerl__DataType__' . $type . '__MODE_ID' )->() }->{types},
+                    $types, 'main::RPerl__DataType__' . $type . '__MODE_ID() types returns ' . $types );
+            },
+            'main::RPerl__' . $type . '__MODE_ID() lives'
         );
     }
 

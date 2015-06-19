@@ -90,6 +90,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     my string $module_name = 'FOO::MODULE::NAME';
     my string $module_path = 'FOO/MODULE/PATH';
+    my string $module_underscores = 'FOO__MODULE__PATH';
 
 
     # utilize modified copy of Module PMC template file
