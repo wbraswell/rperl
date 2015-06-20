@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.002_010;
+our $VERSION = 0.002_020;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -115,11 +115,16 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
     if ( $ops eq 'PERL' ) {
 
-#        RPerl::diag 'in 07_00_inherit.t, have Bubble symtab entries:' . "\n" . RPerl::analyze_class_symtab_entries('RPerl::Algorithm::Sort::Bubble') . "\n\n";
+ #        RPerl::diag 'in 07_00_inherit.t, have Bubble symtab entries:' . "\n" . RPerl::analyze_class_symtab_entries('RPerl::Algorithm::Sort::Bubble') . "\n\n";
     }
     else {    # $ops eq 'CPP'
         foreach my string_arrayref $filenames (
-            @{ [ [ $bubble_cpp_filename, $bubble_cpp_filename_manual ], [ $bubble_h_filename, $bubble_h_filename_manual ], [ $bubble_pmc_filename, $bubble_pmc_filename_manual ] ] } )
+            @{  [   [ $bubble_cpp_filename, $bubble_cpp_filename_manual ],
+                    [ $bubble_h_filename,   $bubble_h_filename_manual ],
+                    [ $bubble_pmc_filename, $bubble_pmc_filename_manual ]
+                ]
+            }
+            )
         {
             my string $filename        = $filenames->[0];
             my string $filename_manual = $filenames->[1];
@@ -136,48 +141,19 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                 ok( 0, 'Copy manually-compiled file ' . $filename_manual . ' to ' . $filename . q{ ... } . 'File does not exist' );
             }
         }
- 
+
         # C++ use, load, link
         lives_ok( sub { $refresher->refresh_module($module_filenamename) }, 'Refresh previously-loaded module: ' . $module_filenamename );
-
-=DISABLED_because_unnecessary
-        # NEED FIX: enable string_hashref_arrayref type
-        #    my string_hashref_arrayref $remove_tree_errors = undef;
-        my hashref_arrayref $remove_tree_errors = undef;
-        remove_tree( '_Inline', { error => \$remove_tree_errors, keep_root => 1 } );
-
-        # no errors returned on success
-        if ( ( defined $remove_tree_errors ) and ( exists $remove_tree_errors->[0] ) ) {
-            foreach my string_hashref $remove_tree_error ( @{$remove_tree_errors} ) {
-
-                # remove_tree only creates one key/value pair per string_hashref
-                my string $remove_tree_error_filenamename;
-                my string $remove_tree_error_message;
-                ( $remove_tree_error_filenamename, $remove_tree_error_message ) = %{$remove_tree_error};
-                if ( $remove_tree_error_filenamename eq '' ) {
-                    ok( 0, 'Remove tree (delete) existing _Inline build directory ... ' . $remove_tree_error_message );
-                }
-                else {
-                    ok( 0, 'Remove tree (delete) existing _Inline build directory ... ' . $remove_tree_error_message . q{ ... } . $remove_tree_error_filenamename );
-                }
-            }
-        }
-        else {
-            ok( 1, 'Remove tree (delete) existing _Inline build directory' );
-        }
-=cut
-
         lives_and( sub { require_ok('RPerl::Algorithm::Sort::Bubble'); }, q{require_ok('RPerl::Algorithm::Sort::Bubble') lives} );
 
-        # allow cpp_load() to actually (re-)compile
-        $RPerl::Algorithm::Sort::Bubble::need_load_cpp = 1;    # duplicate lines to avoid 'used only once, possible typo' warning
-        $RPerl::Algorithm::Sort::Bubble::need_load_cpp = 1;
+        # force reload
+        delete $main::{'RPerl__Algorithm__Sort__Bubble__MODE_ID'};
 
         # DEV NOTE: must call long form of cpp_load() to bypass mysterious 'undefined subroutine' symtab weirdness
-        #        lives_ok( sub { RPerl::Algorithm::Sort::Bubble::cpp_load(); }, q{RPerl::Algorithm::Sort::Bubble::cpp_load() lives} );
+        #lives_ok( sub { RPerl::Algorithm::Sort::Bubble::cpp_load(); }, q{RPerl::Algorithm::Sort::Bubble::cpp_load() lives} );
         lives_ok( sub { &{ $RPerl::Algorithm::Sort::Bubble::{'cpp_load'} }(); }, q{RPerl::Algorithm::Sort::Bubble::cpp_load() lives} );    # long form
 
-#        RPerl::diag 'in 07_00_inherit.t, have post-re-use, post-re-cpp_load Bubble symtab entries:' . "\n" . RPerl::analyze_class_symtab_entries('RPerl::Algorithm::Sort::Bubble') . "\n\n";
+#RPerl::diag 'in 07_00_inherit.t, have post-re-use, post-re-cpp_load Bubble symtab entries:' . "\n" . RPerl::analyze_class_symtab_entries('RPerl::Algorithm::Sort::Bubble') . "\n\n";
     }
 
     foreach my string $type (qw(DataType__Integer DataType__Number DataType__String DataStructure__Array DataStructure__Hash Algorithm__Sort__Bubble)) {
@@ -196,7 +172,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
             'main::RPerl__' . $type . '__MODE_ID() lives'
         );
     }
- 
+
     # [[[ OO INHERITANCE TESTS ]]]
     # [[[ OO INHERITANCE TESTS ]]]
     # [[[ OO INHERITANCE TESTS ]]]

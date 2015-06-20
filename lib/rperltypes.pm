@@ -3,7 +3,7 @@ package rperltypes;
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.002_010;
+our $VERSION = 0.002_020;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
@@ -460,42 +460,16 @@ sub types_enable {
 
     #	RPerl::diag "in rperltypes::types_enable(), received \$types_input = '$types_input'\n";
 
-    my string $rperltypes_mode_h_filename       = $RPerl::INCLUDE_PATH . '/rperltypes_mode.h';
-    my string $rperltypes_mode_h_filename_TYPES = $rperltypes_mode_h_filename . '.CPPOPS_' . $types_input . 'TYPES';
-
-    #	my bool $rperltypes_mode_h_modified = 0;
-    my integer $rperltypes_mode_h_modified = 0;
-
-    #	RPerl::diag "in rperltypes::types_enable(), have \$rperltypes_mode_h_filename = '$rperltypes_mode_h_filename'\n";
-
-    # delete rperltypes_mode.h if it exists
-    if ( -e $rperltypes_mode_h_filename ) {
-        my integer $unlink_success = unlink $rperltypes_mode_h_filename;
-        if ( not $unlink_success ) {
-            croak(    'ERROR ERPTYMO00: Problem unlinking (deleting) existing file '
-                    . $rperltypes_mode_h_filename
-                    . q{ ... } . "\n"
-                    . $OS_ERROR . "\n"
-                    . ' croaking' );
-        }
+    if ($types_input eq 'PERL') {
+        $RPerl::TYPES_CCFLAG = ' -D__PERL__TYPES';
     }
-
-    # copy new rperltypes_mode.h, overwriting if it already exists
-    if ( -e $rperltypes_mode_h_filename_TYPES ) {
-        my integer $copy_success = copy( $rperltypes_mode_h_filename_TYPES, $rperltypes_mode_h_filename );
-        if ( not $copy_success ) {
-            croak(    'ERROR ERPTYMO01: Problem copying file '
-                    . $rperltypes_mode_h_filename_TYPES . ' to '
-                    . $rperltypes_mode_h_filename
-                    . q{ ... }
-                    . $OS_ERROR . "\n"
-                    . ' croaking' );
-        }
+    elsif ($types_input eq 'CPP') {
+        $RPerl::TYPES_CCFLAG = ' -D__CPP__TYPES';
     }
     else {
-        croak( 'ERROR ERPTYMO02: Required file ' . $rperltypes_mode_h_filename_TYPES . ' does not exist, croaking' );
+        croak q{ERROR ERPTY00: Invalid RPerl types '} . $types_input . q{' specified where PERL or CPP expected, croaking};
     }
-
+ 
     return;
 }
 

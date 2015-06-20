@@ -1,9 +1,11 @@
 #ifndef __CPP__INCLUDED__rperltypes_mode_h
 #define __CPP__INCLUDED__rperltypes_mode_h 1
 
-// AUTOMATICALLY MODIFIED BY rperltypes::types_enable()
 // <<< TYPE DEFINES >>>
-//#define __PERL__TYPES  // must choose exactly ONE of this,
-#define __CPP__TYPES  // or this
+# ifndef __PERL__TYPES  // if not explicitly set to PERLTYPES mode, and
+#  ifndef __CPP__TYPES  // if not explicitly set to CPPTYPES mode
+#define __CPP__TYPES    // then default to CPPTYPES mode
+#  endif
+# endif
 
 #endif

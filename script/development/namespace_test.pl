@@ -8,7 +8,7 @@ our $VERSION = 0.004_001;
 # [[[ CRITICS, INCLUDES ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
 use RPerl::Inline;
-use Inline ( CPP => 'DATA', @RPerl::Inline::ARGS );
+use Inline ( CPP => 'DATA', %RPerl::Inline::ARGS );
 
 # [[[ OPERATIONS ]]]
 my $myobject      = Foo::Bar::MyClass->new();

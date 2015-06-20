@@ -1,7 +1,7 @@
 package RPerl::Inline;
 use strict;
 use warnings;
-our $VERSION = 0.001_010;
+our $VERSION = 0.001_040;
 
 #use RPerl;  # ERROR: Too late to run INIT block at ...
 #use Config;
@@ -19,15 +19,16 @@ use RPerl::Config;  # for $RPerl::DEBUG
 # short form
 #use Inline CPP => config => classes => sub { join('::', split('__', shift)); };
 
-our @ARGS = (
+# DEV NOTE, CORRELATION #11: replace -std=c++0x w/ -std=c++11 for std::string::pop_back()
+# DEV NOTE: move ccflags outside %ARGS, make individual modules compose ccflags with possible cppflags right before calling Inline
+#our $CCFLAGSEX = '-DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
+our $CCFLAGSEX = '-DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix',
+
+our %ARGS = (
     typemaps => "$RPerl::INCLUDE_PATH/typemap.rperl",
 
 # NEED UPGRADE: strip C++ incompat CFLAGS
 #  ccflags => $Config{ccflags} . ' -DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
-
-    # DEV NOTE, CORRELATION #11: replace -std=c++0x w/ -std=c++11 for std::string::pop_back()
-#    ccflagsex => '-DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
-    ccflagsex => '-DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix',
     inc               => "-I$RPerl::INCLUDE_PATH",
     build_noisy       => ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ),  # suppress or display actual g++ compiler commands
     clean_after_build => 0,                          # cache it

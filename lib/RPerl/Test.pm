@@ -42,9 +42,7 @@ sub mode_description {
 #my void $mode_enable = sub {
 sub mode_enable {
     ( my scalartype_hashref $mode ) = @_;
-    if ( $mode->{ops} eq 'CPP' ) {
-        rperltypes::types_enable( $mode->{types} );
-    }
+    rperltypes::types_enable( $mode->{types} );
 }
 
 1;                  # end of class

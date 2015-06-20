@@ -2,7 +2,7 @@
 package RPerl::Config;
 use strict;
 use warnings;
-our $VERSION = 0.003_010;
+our $VERSION = 0.003_020;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -65,6 +65,7 @@ our $CHECK = 'OFF';
 our $DEBUG = 0; # $RPerl::DEBUG & env var RPERL_DEBUG are equivalent, default to off, see diag*() below
 our $VERBOSE = 0; # $RPerl::VERBOSE & env var RPERL_VERBOSE are equivalent, default to off, see verbose*() below
 our $WARNINGS = 1; # $RPerl::WARNINGS & env var RPERL_WARNINGS are equivalent, default to on, see warn*() below
+our $TYPES_CCFLAG = ' -D__CPP__TYPES';  # rperltypes_mode.h defaults to CPPTYPES if PERLTYPES not explicitly set in this variable via rperltypes::types_enable()
 
 # [[[ SUBROUTINES SPECIAL ]]]
 
