@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-our $VERSION = 0.001_080;
+our $VERSION = 0.001_082;
 use ExtUtils::MakeMaker;
 
 BEGIN { use English; }
@@ -13,14 +13,15 @@ WriteMakefile(
     VERSION_FROM => 'lib/RPerl.pm',
     EXE_FILES    => ['script/rperl'],
     PREREQ_PM    => {
+        'ExtUtils::MakeMaker' => 7.04,  # for compatibility with Inline::C >= v0.75
         'Test::Exception' => 0.32,
         'Perl::Critic'    => 1.121,
         'Perl::Tidy'      => 20140711,
         'Parse::Eyapp'    => 1.182,
         'Inline'          => 0.76,
-        'Inline::C'       => 0.64,
-        'Inline::CPP' => 0.63, # davido & mohawk fixed ntype warnings; davido & wbraswell fixed namespace hack
-        'Inline::Filters' => 0.16, # wbraswell, rurban, & bulk88 added preprocess inc array
+        'Inline::C'       => 0.76,  # wbraswell added CPPFLAGS
+        'Inline::CPP'     => 0.63,  # davido & mohawk fixed ntype warnings; davido & wbraswell fixed namespace hack
+        'Inline::Filters' => 0.17,  # wbraswell, rurban, & bulk88 added preprocess inc array; wbraswell added CPPFLAGS
         'PadWalker'       => 2.1,
         'Module::Refresh' => 0.17,
         #        'Module::Compile' => 0,  # not yet utilized

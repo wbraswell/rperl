@@ -75,22 +75,19 @@ my string $bubble_pmc_filename_manual = $bubble_pmc_filename . '.CPPOPS_DUALTYPE
 
 # loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
 foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
+#for my $mode_id ( 1 .. 2 ) {    # TEMPORARY DEBUGGING xOPS_xTYPES ONLY
 
-    #for my $mode_id ( 1 .. 2 ) {    # TEMPORARY DEBUGGING xOPS_xTYPES ONLY
+    # [[[ MODE SETUP ]]]
     #    RPerl::diag "in 07_00_inherit.t, top of for() loop, have \$mode_id = $mode_id\n";
     my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
-    if ( $ENV{RPERL_VERBOSE} ) {
-        Test::More::diag( '[[[ Beginning RPerl Pre-Compiled Sort Tests, ' . RPerl::Test::mode_description($mode) . ' ]]]' );
-    }
-
-    # [[[ MODE SETUP ]]]
-    # [[[ MODE SETUP ]]]
-    # [[[ MODE SETUP ]]]
     my $ops                 = $mode->{ops};
     my $types               = $mode->{types};
-    my string $mode_tagline = RPerl::Test::mode_tagline($mode);
+    my string $mode_tagline = $ops . 'OPS_' . $types . 'TYPES';
+    if ( $ENV{RPERL_VERBOSE} ) {
+        Test::More::diag( '[[[ Beginning RPerl Pre-Compiled Sort Tests, ' . $ops . ' operations and ' . $types . ' data types' . ' ]]]' );
+    }
 
-    lives_ok( sub { RPerl::Test::mode_enable($mode) }, q{Mode '} . RPerl::Test::mode_description($mode) . q{' enabled in CPP header file(s)} );
+    lives_ok( sub { rperltypes::types_enable($types) }, q{Mode '} . $ops . ' operations and ' . $types . ' data types' . q{' enabled in CPP header file(s)} );
 
     # NEED FIX: duplicate code
     # delete CPP, H, and PMC files if they exist;

@@ -219,6 +219,9 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             q{# <<< RP::CU::M::C::G __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
             . "\n"
     };
+    
+    # TEMP DEBUGGING
+    $cpp_source_group->{PMC} = q{};
 
     #...
     return $cpp_source_group;

@@ -47,27 +47,24 @@ sub string_dumperify {
 
 # loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
 foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
+#for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
 
-    #for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
+    # [[[ MODE SETUP ]]]
     #    RPerl::diag "in 04_type_scalar.t, top of for() loop, have \$mode_id = $mode_id\n";
     my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
-    if ( $ENV{RPERL_VERBOSE} ) {
-        Test::More::diag( '[[[ Beginning RPerl Scalar Type Tests, ' . RPerl::Test::mode_description($mode) . ' ]]]' );
-    }
-
-    # [[[ MODE SETUP ]]]
-    # [[[ MODE SETUP ]]]
-    # [[[ MODE SETUP ]]]
     my string $ops          = $mode->{ops};
     my string $types        = $mode->{types};
-    my string $mode_tagline = RPerl::Test::mode_tagline($mode);
+    my string $mode_tagline = $ops . 'OPS_' . $types . 'TYPES';
+    if ( $ENV{RPERL_VERBOSE} ) {
+        Test::More::diag( '[[[ Beginning RPerl Scalar Type Tests, ' . $ops . ' operations and ' . $types . ' data types' . ' ]]]' );
+    }
 
     #    $RPerl::DEBUG = 1;
     #    RPerl::diag('have $ops = ' . $ops . "\n");
     #    RPerl::diag('have $types = ' . $types . "\n");
     #    RPerl::diag('have $mode_tagline = ' . $mode_tagline . "\n");
 
-    lives_ok( sub { RPerl::Test::mode_enable($mode) }, q{mode '} . RPerl::Test::mode_description($mode) . q{' enabled} );
+    lives_ok( sub { rperltypes::types_enable($types) }, q{mode '} . $ops . ' operations and ' . $types . ' data types' . q{' enabled} );
 
     foreach my string $type (qw(Integer Number String)) {
         if ( $ops eq 'CPP' ) {

@@ -87,19 +87,18 @@ my integer $number_of_tests_run = 0;
 # loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
 #foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
-
-    #    RPerl::diag "in 11_generate.t, top of for() loop, have \$mode_id = $mode_id\n";
-    my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
-    if ( $ENV{RPERL_VERBOSE} ) {
-        Test::More::diag( '[[[ Beginning RPerl Generator Tests, ' . RPerl::Test::mode_description($mode) . ' ]]]' );
-    }
+#    RPerl::diag "in 11_generate.t, top of for() loop, have \$mode_id = $mode_id\n";
 
     # [[[ MODE SETUP ]]]
+    my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
     my $ops                 = $mode->{ops};
     my $types               = $mode->{types};
-    my string $mode_tagline = RPerl::Test::mode_tagline($mode);
+    my string $mode_tagline = $ops . 'OPS_' . $types . 'TYPES';
+    if ( $ENV{RPERL_VERBOSE} ) {
+        Test::More::diag( '[[[ Beginning RPerl Generator Tests, ' . $ops . ' operations and ' . $types . ' data types' . ' ]]]' );
+    }
 
-    lives_ok( sub { RPerl::Test::mode_enable($mode) }, q{mode '} . RPerl::Test::mode_description($mode) . q{' enabled} );
+    lives_ok( sub { rperltypes::types_enable($types) }, q{mode '} . $ops . ' operations and ' . $types . ' data types' . q{' enabled} );
     $number_of_tests_run++;
 
     for my $test_file ( sort keys %{$test_files} ) {

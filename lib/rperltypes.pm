@@ -3,7 +3,7 @@ package rperltypes;
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.002_020;
+our $VERSION = 0.002_030;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
@@ -460,16 +460,11 @@ sub types_enable {
 
     #	RPerl::diag "in rperltypes::types_enable(), received \$types_input = '$types_input'\n";
 
-    if ($types_input eq 'PERL') {
-        $RPerl::TYPES_CCFLAG = ' -D__PERL__TYPES';
-    }
-    elsif ($types_input eq 'CPP') {
-        $RPerl::TYPES_CCFLAG = ' -D__CPP__TYPES';
-    }
-    else {
+    if (($types_input ne 'PERL') and ($types_input ne 'CPP')) {
         croak q{ERROR ERPTY00: Invalid RPerl types '} . $types_input . q{' specified where PERL or CPP expected, croaking};
     }
- 
+
+    $RPerl::TYPES_CCFLAG = ' -D__' . $types_input . '__TYPES';
     return;
 }
 

@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 # <<< CHANGE_ME: leave as base class for no inheritance, or replace with real parent package name >>>
@@ -82,39 +82,6 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         my string_hashref $cpp_source_subgroup = $header_or_module->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
         RPerl::Generator::source_group_append($cpp_source_group, $cpp_source_subgroup);
     }
-
-
-# START HERE: defer setting module name and path until files are saved by Compiler.pm???
-# START HERE: defer setting module name and path until files are saved by Compiler.pm???
-# START HERE: defer setting module name and path until files are saved by Compiler.pm???
-
-    my string $module_name = 'FOO::MODULE::NAME';
-    my string $module_path = 'FOO/MODULE/PATH';
-    my string $module_underscores = 'FOO__MODULE__PATH';
-
-
-    # utilize modified copy of Module PMC template file
-    my string $module_pmc_filename_manual        = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES';
-    RPerl::diag 'in Module->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $module_pmc_filename_manual = ' . $module_pmc_filename_manual . "\n";
-
-    if ( not -f $module_pmc_filename_manual ) {
-        die 'ERROR ECVGEDI00, RPERL GENERATOR, DIFF CHECK: file not found, ' . q{'} . $module_pmc_filename_manual . q{'} . "\n" . ', dying' . "\n";
-    }
-
-    open my filehandleref $FILE_HANDLE, '<', $module_pmc_filename_manual
-        or die 'ERROR ECVGEMO00, RPERL GENERATOR, MODULE TEMPLATE COPY: Cannot open file ' . $module_pmc_filename_manual . ' for reading,' . $OS_ERROR . ', dying' . "\n";
-
-    # read in Module PMC template file, replace package name and paths
-    my string $file_line;
-    my string $file_string = q{};
-    while ( $file_line = <$FILE_HANDLE> ) {
-        $file_line =~ s/RPerl::CompileUnit::Module/$module_name/xms;
-        $file_line =~ s/RPerl\/CompileUnit\/Module/$module_path/xms;
-        $cpp_source_group->{PMC} .= $file_line;
-    }
-
-    close $FILE_HANDLE
-        or die 'ERROR ECVGEMO01, RPERL GENERATOR, MODULE TEMPLATE COPY: Cannot close file ' . $module_pmc_filename_manual . ' after reading,' . $OS_ERROR . ', dying' . "\n";
 
     return $cpp_source_group;
 
