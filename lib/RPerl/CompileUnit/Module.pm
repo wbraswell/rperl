@@ -78,7 +78,9 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my object_arrayref $modules_and_headers = $self->{children}->[0]->{children};
     my string_hashref $cpp_source_subgroup;
     my string_hashref $cpp_source_subgroup_saved;
+    my string $package_name_underscores;  # get from Header to Class or Package
     my bool $header_started = 0;
+ 
     foreach my object $header_or_module (@{$modules_and_headers}) {
 #        RPerl::diag('in Module->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $header_or_module = ' . "\n" . RPerl::Parser::rperl_ast__dump($header_or_module) . "\n\n");
         # C++ Module::Header wraps around Module, must call both *generate_begin*() and *generate_end*()
@@ -89,13 +91,15 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             else {
                 $header_started = 1;
                 $cpp_source_subgroup = $header_or_module->ast_to_cpp__generate_begin__CPPOPS_CPPTYPES($modes);
+                $package_name_underscores = $cpp_source_subgroup->{package_name_underscores};
+                delete $cpp_source_subgroup->{package_name_underscores};
                 RPerl::Generator::source_group_append($cpp_source_group, $cpp_source_subgroup);
                 $cpp_source_subgroup_saved = $header_or_module->ast_to_cpp__generate_end__CPPOPS_CPPTYPES($modes);
             }
         }
         elsif (((ref $header_or_module) eq 'Module_22') or ((ref $header_or_module) eq 'Module_23')) {
             if ($header_started) {
-                $cpp_source_subgroup = $header_or_module->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+                $cpp_source_subgroup = $header_or_module->ast_to_cpp__generate__CPPOPS_CPPTYPES($package_name_underscores, $modes);
                 RPerl::Generator::source_group_append($cpp_source_group, $cpp_source_subgroup);
                 RPerl::Generator::source_group_append($cpp_source_group, $cpp_source_subgroup_saved);
                 $header_started = 0;

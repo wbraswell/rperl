@@ -31,14 +31,14 @@ class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort  // SINGLE 
 public:
     ////# [[[ OO METHODS & SUBROUTINES ]]]
 
-    void integer_sort();  // NEED ANSWER: no named argument required for $self object?
+    void integer_sort();
     void number_sort();
 
     // OO INHERITANCE TESTING
     void inherited__Bubble(SV* person);
     void inherited(SV* person);
 
-    // <<< ACCESSORS & MUTATORS >>>
+    // <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>
     SV* get_integer_data() { return SvREFCNT_inc(this->integer_data); }
     void set_integer_data(SV* integer_data_new) { this->integer_data = integer_data_new; }
     SV* get_number_data() { return SvREFCNT_inc(this->number_data); }
@@ -94,14 +94,14 @@ class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort  // SINGLE 
 public:
     ////# [[[ OO METHODS & SUBROUTINES ]]]
 
-    void integer_sort();  // NEED ANSWER: no named argument required for $self object?
+    void integer_sort();
     void number_sort();
 
 // OO INHERITANCE TESTING
     void inherited__Bubble(string person);
     void inherited(string person);
 
-    // <<< ACCESSORS & MUTATORS >>>
+    // <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>
     integer_arrayref get_integer_data() { return(this->integer_data); }
     void set_integer_data(integer_arrayref integer_data_new) { this->integer_data = integer_data_new; }  // NEED ANSWERS: do we need to use some vector copy feature here???
     number_arrayref get_number_data() { return(this->number_data); }

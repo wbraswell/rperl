@@ -70,8 +70,7 @@ our string_hashref_method $ast_to_cpp__generate_begin__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group = {};
 
-    RPerl::diag( 'in Header->ast_to_cpp__generate_begin__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
-
+    #RPerl::diag( 'in Header->ast_to_cpp__generate_begin__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
     #RPerl::diag('in Header->ast_to_cpp__generate_begin__CPPOPS_CPPTYPES(), received $modes = ' . "\n" . Dumper($modes) . "\n");
 
 #my $class = ref $self;
@@ -83,14 +82,6 @@ our string_hashref_method $ast_to_cpp__generate_begin__CPPOPS_CPPTYPES = sub {
     $cpp_source_group->{H} = q{};
     $cpp_source_group->{CPP} = q{};
     
-    #  NEED ADDRESS: is this Critic utilized by CPPOPS in any way?
-=DISABLE
-    if ( ( exists $critic_optional->{children}->[0] ) and ( defined $critic_optional->{children}->[0] ) ) {
-        my string_hashref $rperl_source_subgroup = $critic_optional->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
-        RPerl::Generator::source_group_append( $cpp_source_group, $rperl_source_subgroup );
-    }
-=cut
-
     if ( $modes->{label} eq 'ON' ) {
         $cpp_source_group->{H} .= '// [[[ HEADER ]]]' . "\n";
         $cpp_source_group->{CPP} .= '// [[[ HEADER ]]]' . "\n";
@@ -105,6 +96,8 @@ our string_hashref_method $ast_to_cpp__generate_begin__CPPOPS_CPPTYPES = sub {
     $cpp_source_group->{CPP} .= '#ifndef __CPP__INCLUDED__' . $package_name_underscores . "\n";
     $cpp_source_group->{CPP} .= '#define __CPP__INCLUDED__' . $package_name_underscores . q{ } . $version_number . "\n\n";
  
+    $cpp_source_group->{package_name_underscores} = $package_name_underscores;
+
     return $cpp_source_group;
 };
 

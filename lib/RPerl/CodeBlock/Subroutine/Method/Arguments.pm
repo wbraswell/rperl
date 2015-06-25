@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine::Method::Arguments;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_001;
+our $VERSION = 0.001_010;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CodeBlock::Subroutine::Arguments);
@@ -12,6 +12,9 @@ use RPerl::CodeBlock::Subroutine::Arguments;
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+# [[[ INCLUDES ]]]
+use Storable qw(dclone);
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
@@ -35,12 +38,12 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     $rperl_source_group->{PMC} .= $lparen_my . q{ } . $object_self;
 
     # (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)*
-    # NEED FIX: destructive to AST!!!
-    while ( exists $arguments_star->{children}->[0] ) {
-        my object $comma = shift @{ $arguments_star->{children} };
-        my object $my    = shift @{ $arguments_star->{children} };
-        my object $type  = shift @{ $arguments_star->{children} };
-        my object $name  = shift @{ $arguments_star->{children} };
+    my object $arguments_star_dclone = dclone($arguments_star);
+    while ( exists $arguments_star_dclone->{children}->[0] ) {
+        my object $comma = shift @{ $arguments_star_dclone->{children} };
+        my object $my    = shift @{ $arguments_star_dclone->{children} };
+        my object $type  = shift @{ $arguments_star_dclone->{children} };
+        my object $name  = shift @{ $arguments_star_dclone->{children} };
         $rperl_source_group->{PMC}
             .= $comma->{attr} . q{ }
             . $my->{attr} . q{ }

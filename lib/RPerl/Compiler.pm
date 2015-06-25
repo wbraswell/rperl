@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_210;
+our $VERSION = 0.003_220;
 
 # [[[ CRITICS ]]]
 
@@ -191,7 +191,7 @@ our void $save_source_files = sub {
         }
     }
 
-    # finally create PMC file for CPPOPS
+    # finally create PMC file and set H path in CPP file for CPPOPS
     if ( $modes->{ops} eq 'CPP' ) {
 
         if ( $source_group->{PMC} ne q{} ) {
@@ -203,16 +203,26 @@ our void $save_source_files = sub {
         # NEED FIX WIN32: handle back-slash for Win32 instead of forward-slash only for *NIX
 
         my string $module_path = $file_name_group->{CPP};
+        my string $module_header_path = $file_name_group->{H};
 
         # remove leading './' if present
         if ( ( substr $module_path, 0, 2 ) eq './' ) {
             substr $module_path, 0, 2, '';
         }
-
+        if ( ( substr $module_header_path, 0, 2 ) eq './' ) {
+            substr $module_header_path, 0, 2, '';
+        }
+ 
         # remove leading 'lib/' if present
         if ( ( substr $module_path, 0, 4 ) eq 'lib/' ) {
             substr $module_path, 0, 4, '';
         }
+        if ( ( substr $module_header_path, 0, 4 ) eq 'lib/' ) {
+            substr $module_header_path, 0, 4, '';
+        }
+        
+        # deferred, finally set path to H module header file in CPP module file
+        $source_group->{CPP} =~ s/__NEED_MODULE_HEADER_PATH/$module_header_path/gxms;
 
         my string $module_name = $module_path;
         
@@ -220,7 +230,7 @@ our void $save_source_files = sub {
         if ( ( substr $module_name, -4, 4 ) eq '.cpp' ) {
             substr $module_name, -4, 4, '';
         }
-
+        
         # replace forward-slashes with double underscores
         my string $module_underscores = $module_name;
         $module_underscores =~ s/\//__/gxms;
@@ -249,7 +259,7 @@ our void $save_source_files = sub {
             . $OS_ERROR
             . ', dying' . "\n";
 
-        # read in Module PMC template file, replace package name and paths
+        # deferred, finally read in Module PMC template file, replace package name and paths
         my string $file_line;
         my string $file_string = q{};
         while ( $file_line = <$FILE_HANDLE> ) {
@@ -265,7 +275,6 @@ our void $save_source_files = sub {
             . ' after reading,'
             . $OS_ERROR
             . ', dying' . "\n";
-
     }
 
     foreach my string $suffix_key ( sort keys %{$file_name_group} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
