@@ -26,19 +26,18 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes ) = @_;
     my string_hashref $rperl_source_group = {};
 
-#    RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+    #    RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
 
     # unwrap Class_59 from Module_23
     if ( ($self_class) eq 'Module_23' ) {
-        $self = $self->{children}->[0];
+        $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
 
     if ( ($self_class) ne 'Class_59' ) {
-        die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ($self_class)
                 . ' found where Module_23 or Class_59 expected, dying' )
             . "\n";
@@ -46,15 +45,15 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
     # Class:   'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties MethodOrSubroutine* LITERAL_NUMBER ';' ;
     # Class -> 'use parent qw(' WordScoped ')' ';' Include STAR-20 STAR-21  STAR-22   Properties STAR-23             LITERAL_NUMBER ';'
-    my string $use_parent_qw_keyword = $self->{children}->[0];
-    my string $parent_name          = $self->{children}->[1]->{children}->[0];
-    my string $right_parenthesis    = $self->{children}->[2];
-    my string $use_parent_semicolon = $self->{children}->[3];
-    my object $parent_include       = $self->{children}->[4];
-    my object $critic_star          = $self->{children}->[5];
-    my object $include_star         = $self->{children}->[6];
-    my object $constant_star        = $self->{children}->[7];
-    my object $properties           = $self->{children}->[8];
+    my string $use_parent_qw_keyword     = $self->{children}->[0];
+    my string $parent_name               = $self->{children}->[1]->{children}->[0];
+    my string $right_parenthesis         = $self->{children}->[2];
+    my string $use_parent_semicolon      = $self->{children}->[3];
+    my object $parent_include            = $self->{children}->[4];
+    my object $critic_star               = $self->{children}->[5];
+    my object $include_star              = $self->{children}->[6];
+    my object $constant_star             = $self->{children}->[7];
+    my object $properties                = $self->{children}->[8];
     my object $method_or_subroutine_star = $self->{children}->[9];
     my string $retval_literal_number     = $self->{children}->[10];
     my string $retval_semicolon          = $self->{children}->[11];
@@ -63,16 +62,10 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     if ( $modes->{label} eq 'ON' ) {
         $rperl_source_group->{PMC} .= '# [[[ OO INHERITANCE ]]]' . "\n";
     }
-    $rperl_source_group->{PMC}
-        .= $use_parent_qw_keyword
-        . $parent_name
-        . $right_parenthesis
-        . $use_parent_semicolon . "\n";
+    $rperl_source_group->{PMC} .= $use_parent_qw_keyword . $parent_name . $right_parenthesis . $use_parent_semicolon . "\n";
 
-    my string_hashref $rperl_source_subgroup
-        = $parent_include->ast_to_rperl__generate($modes);
-    RPerl::Generator::source_group_append( $rperl_source_group,
-        $rperl_source_subgroup );
+    my string_hashref $rperl_source_subgroup = $parent_include->ast_to_rperl__generate($modes);
+    RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
 
     if ( exists $critic_star->{children}->[0] ) {
         if ( $modes->{label} eq 'ON' ) {
@@ -81,8 +74,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     }
     foreach my object $critic ( @{ $critic_star->{children} } ) {
         $rperl_source_subgroup = $critic->ast_to_rperl__generate($modes);
-        RPerl::Generator::source_group_append( $rperl_source_group,
-            $rperl_source_subgroup );
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
 
     if ( exists $include_star->{children}->[0] ) {
@@ -92,8 +84,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     }
     foreach my object $include ( @{ $include_star->{children} } ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
         $rperl_source_subgroup = $include->ast_to_rperl__generate($modes);
-        RPerl::Generator::source_group_append( $rperl_source_group,
-            $rperl_source_subgroup );
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
 
     if ( exists $constant_star->{children}->[0] ) {
@@ -103,8 +94,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     }
     foreach my object $constant ( @{ $constant_star->{children} } ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
         $rperl_source_subgroup = $constant->ast_to_rperl__generate($modes);
-        RPerl::Generator::source_group_append( $rperl_source_group,
-            $rperl_source_subgroup );
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
 
     if ( $modes->{label} eq 'ON' ) {
@@ -120,70 +110,51 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         my string $properties_right_brace = $properties->{children}->[5];
         my string $properties_semicolon   = $properties->{children}->[6];
 
-        $rperl_source_group->{PMC}
-            .= $properties_our_hashref . q{ }
-            . $properties_equal . q{ }
-            . $properties_left_brace . "\n";
+        $rperl_source_group->{PMC} .= $properties_our_hashref . q{ } . $properties_equal . q{ } . $properties_left_brace . "\n";
 
         $rperl_source_subgroup = $property_0->ast_to_rperl__generate($modes);
-        RPerl::Generator::source_group_append( $rperl_source_group,
-            $rperl_source_subgroup );
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
 
         foreach my object $property ( @{ $properties_1_to_n->{children} } ) {
             if ( ( ref $property ) eq 'TERMINAL' ) {
-                $rperl_source_group->{PMC} .= $property->{attr}; # comma between properties
+                $rperl_source_group->{PMC} .= $property->{attr};    # comma between properties
             }
             else {
-                $rperl_source_subgroup
-                    = $property->ast_to_rperl__generate($modes);
-                RPerl::Generator::source_group_append( $rperl_source_group,
-                    $rperl_source_subgroup );
+                $rperl_source_subgroup = $property->ast_to_rperl__generate($modes);
+                RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
             }
         }
-        $rperl_source_group->{PMC}
-            .= "\n" . $properties_right_brace . $properties_semicolon . "\n";
+        $rperl_source_group->{PMC} .= "\n" . $properties_right_brace . $properties_semicolon . "\n";
     }
-    else {    # Properties_64
-              # empty $properties
+    else {                                                          # Properties_64
+                                                                    # empty $properties
         my string $properties_our_hashref = $properties->{children}->[0];
         my string $properties_equal       = $properties->{children}->[1];
         my string $properties_left_brace  = $properties->{children}->[2];
         my string $properties_right_brace = $properties->{children}->[3];
         my string $properties_semicolon   = $properties->{children}->[4];
         $rperl_source_group->{PMC}
-            .= $properties_our_hashref . q{ }
-            . $properties_equal . q{ }
-            . $properties_left_brace
-            . $properties_right_brace
-            . $properties_semicolon . "\n";
+            .= $properties_our_hashref . q{ } . $properties_equal . q{ } . $properties_left_brace . $properties_right_brace . $properties_semicolon . "\n";
     }
 
     if ( exists $method_or_subroutine_star->{children}->[0] ) {
         if ( $modes->{label} eq 'ON' ) {
-            $rperl_source_group->{PMC}
-                .= "\n" . '# [[[ OO METHODS & SUBROUTINES ]]]' . "\n";
+            $rperl_source_group->{PMC} .= "\n" . '# [[[ OO METHODS & SUBROUTINES ]]]' . "\n";
         }
     }
     foreach my object $method_or_subroutine ( ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
         @{ $method_or_subroutine_star->{children} }
         )
     {
-        $rperl_source_subgroup
-            = $method_or_subroutine->ast_to_rperl__generate($modes);
-        RPerl::Generator::source_group_append( $rperl_source_group,
-            $rperl_source_subgroup );
+        $rperl_source_subgroup = $method_or_subroutine->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
 
     if ( $modes->{label} eq 'ON' ) {
-        $rperl_source_group->{PMC}
-            .= "\n"
-            . $retval_literal_number
-            . $retval_semicolon
-            . '  # end of class' . "\n";
+        $rperl_source_group->{PMC} .= "\n" . $retval_literal_number . $retval_semicolon . '  # end of class' . "\n";
     }
     else {
-        $rperl_source_group->{PMC}
-            .= $retval_literal_number . $retval_semicolon . "\n";
+        $rperl_source_group->{PMC} .= $retval_literal_number . $retval_semicolon . "\n";
     }
 
     return $rperl_source_group;
@@ -192,15 +163,9 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes ) = @_;
     my string_hashref $cpp_source_group = {
-        CPP =>
-            q{// <<< RP::CU::M::C::G __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
-            . "\n",
-        H =>
-            q{// <<< RP::CU::M::C::G __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
-            . "\n",
-        PMC =>
-            q{# <<< RP::CU::M::C::G __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
-            . "\n"
+        CPP => q{// <<< RP::CU::M::C::G __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>} . "\n",
+        H   => q{// <<< RP::CU::M::C::G __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>} . "\n",
+        PMC => q{# <<< RP::CU::M::C::G __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>} . "\n"
     };
 
     #...
@@ -209,21 +174,158 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes ) = @_;
-    my string_hashref $cpp_source_group = {
-        CPP =>
-            q{// <<< RP::CU::M::C::G __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
-            . "\n",
-        H => q{// <<< RP::CU::M::C::G __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
-            . "\n",
-        PMC =>
-            q{# <<< RP::CU::M::C::G __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
-            . "\n"
-    };
-    
-    # TEMP DEBUGGING
-    $cpp_source_group->{PMC} = q{};
+    my string_hashref $cpp_source_group = { H => q{}, CPP => q{} };
 
-    #...
+    #    RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+
+    my string $self_class = ref $self;
+
+    # unwrap Class_59 from Module_23
+    if ( ($self_class) eq 'Module_23' ) {
+        $self       = $self->{children}->[0];
+        $self_class = ref $self;
+    }
+
+    if ( ($self_class) ne 'Class_59' ) {
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL, CPPOPS_CPPTYPES: grammar rule '
+                . ($self_class)
+                . ' found where Module_23 or Class_59 expected, dying' )
+            . "\n";
+    }
+
+    # Class:   'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties MethodOrSubroutine* LITERAL_NUMBER ';' ;
+    # Class -> 'use parent qw(' WordScoped ')' ';' Include STAR-20 STAR-21  STAR-22   Properties STAR-23             LITERAL_NUMBER ';'
+    my string $parent_name               = $self->{children}->[1]->{children}->[0];
+    #my object $critic_star               = $self->{children}->[5];
+    my object $include_star              = $self->{children}->[6];
+    my object $constant_star             = $self->{children}->[7];
+    my object $properties                = $self->{children}->[8];
+    my object $method_or_subroutine_star = $self->{children}->[9];
+
+
+
+    if ( $modes->{label} eq 'ON' ) {
+        $cpp_source_group->{H} .= "\n" . '// [[[ INCLUDES ]]]' . "\n";
+        $cpp_source_group->{CPP} .= "\n" . '// [[[ INCLUDES ]]]' . "\n";
+    }
+
+    $cpp_source_group->{H} .= <<EOL;
+#include <rperltypes_mode.h>  // for default definitions of __PERL__TYPES or __CPP__TYPES
+#include <rperltypes.h>  // for data types and structures
+#include <RPerl/HelperFunctions.cpp>        // -> HelperFunctions.h
+EOL
+
+    my string $parent_name_path = $parent_name;
+    $parent_name_path =~ s/::/\//gxms;
+    $parent_name_path .= '.cpp';
+    $cpp_source_group->{H} .= '#include <' . $parent_name_path . '>' . "\n";
+
+
+
+
+    # TMP DEBUG
+    return $cpp_source_group;
+
+
+
+    foreach my object $include ( @{ $include_star->{children} } ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
+        $cpp_source_subgroup = $include->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+    }
+
+
+
+
+
+
+    if ( $modes->{label} eq 'ON' ) {
+        $cpp_source_group->{CPP} .= '# [[[ OO INHERITANCE ]]]' . "\n";
+    }
+    $cpp_source_group->{CPP} .= $use_parent_qw_keyword . $parent_name . $right_parenthesis . $use_parent_semicolon . "\n";
+
+    my string_hashref $cpp_source_subgroup = $parent_include->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+    RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+
+    if ( exists $critic_star->{children}->[0] ) {
+        if ( $modes->{label} eq 'ON' ) {
+            $cpp_source_group->{CPP} .= '# [[[ CRITICS ]]]' . "\n";
+        }
+    }
+    foreach my object $critic ( @{ $critic_star->{children} } ) {
+        $cpp_source_subgroup = $critic->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+    }
+
+    if ( exists $constant_star->{children}->[0] ) {
+        if ( $modes->{label} eq 'ON' ) {
+            $cpp_source_group->{CPP} .= "\n" . '# [[[ CONSTANTS ]]]' . "\n";
+        }
+    }
+    foreach my object $constant ( @{ $constant_star->{children} } ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
+        $cpp_source_subgroup = $constant->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+    }
+
+    if ( $modes->{label} eq 'ON' ) {
+        $cpp_source_group->{CPP} .= "\n" . '# [[[ OO PROPERTIES ]]]' . "\n";
+    }
+    if ( ref $properties eq 'Properties_63' ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
+                                                # non-empty $properties
+        my string $properties_our_hashref = $properties->{children}->[0];
+        my string $properties_equal       = $properties->{children}->[1];
+        my string $properties_left_brace  = $properties->{children}->[2];
+        my object $property_0             = $properties->{children}->[3];
+        my object $properties_1_to_n      = $properties->{children}->[4];
+        my string $properties_right_brace = $properties->{children}->[5];
+        my string $properties_semicolon   = $properties->{children}->[6];
+
+        $cpp_source_group->{CPP} .= $properties_our_hashref . q{ } . $properties_equal . q{ } . $properties_left_brace . "\n";
+
+        $cpp_source_subgroup = $property_0->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+
+        foreach my object $property ( @{ $properties_1_to_n->{children} } ) {
+            if ( ( ref $property ) eq 'TERMINAL' ) {
+                $cpp_source_group->{CPP} .= $property->{attr};    # comma between properties
+            }
+            else {
+                $cpp_source_subgroup = $property->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+                RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+            }
+        }
+        $cpp_source_group->{CPP} .= "\n" . $properties_right_brace . $properties_semicolon . "\n";
+    }
+    else {                                                        # Properties_64
+                                                                  # empty $properties
+        my string $properties_our_hashref = $properties->{children}->[0];
+        my string $properties_equal       = $properties->{children}->[1];
+        my string $properties_left_brace  = $properties->{children}->[2];
+        my string $properties_right_brace = $properties->{children}->[3];
+        my string $properties_semicolon   = $properties->{children}->[4];
+        $cpp_source_group->{CPP}
+            .= $properties_our_hashref . q{ } . $properties_equal . q{ } . $properties_left_brace . $properties_right_brace . $properties_semicolon . "\n";
+    }
+
+    if ( exists $method_or_subroutine_star->{children}->[0] ) {
+        if ( $modes->{label} eq 'ON' ) {
+            $cpp_source_group->{CPP} .= "\n" . '# [[[ OO METHODS & SUBROUTINES ]]]' . "\n";
+        }
+    }
+    foreach my object $method_or_subroutine ( ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
+        @{ $method_or_subroutine_star->{children} }
+        )
+    {
+        $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+    }
+
+    if ( $modes->{label} eq 'ON' ) {
+        $cpp_source_group->{CPP} .= "\n" . $retval_literal_number . $retval_semicolon . '  # end of class' . "\n";
+    }
+    else {
+        $cpp_source_group->{CPP} .= $retval_literal_number . $retval_semicolon . "\n";
+    }
+
     return $cpp_source_group;
 };
 

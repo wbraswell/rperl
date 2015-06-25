@@ -54,4 +54,9 @@ EOF
     #else { RPerl::diag 'in Bubble::cpp_load(), CPP already loaded, DOING NOTHING' . "\n"; }
 }
 
+INIT {
+    # actually compile and load C++ code when 'use RPerl::Algorithm::Sort::Bubble' is called
+    RPerl::Algorithm::Sort::Bubble::cpp_load();
+}
+
 1;    # end of package

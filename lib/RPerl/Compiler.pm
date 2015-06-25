@@ -234,7 +234,7 @@ our void $save_source_files = sub {
 
         # utilize modified copy of Module PMC template file
         my string $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES';
-        RPerl::diag 'in Compiler->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $module_pmc_filename_manual = ' . $module_pmc_filename_manual . "\n";
+        #RPerl::diag 'in Compiler::save_source_files(), have $module_pmc_filename_manual = ' . $module_pmc_filename_manual . "\n";
 
         if ( not -f $module_pmc_filename_manual ) {
             die 'ERROR ECVCOFI02, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: File not found, ' . q{'}
@@ -319,7 +319,7 @@ our void $save_source_files = sub {
 our void $cpp_to_xsbinary__subcompile = sub {
     ( my string $file_name_group ) = @_;
 
-    RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), received $file_name_group =}, "\n", Dumper($file_name_group), "\n" );
+    #RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), received $file_name_group =}, "\n", Dumper($file_name_group), "\n" );
 
     # ADD CALLS TO TRIGGER Inline::CPP COMPILATION
 };

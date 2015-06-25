@@ -20,7 +20,7 @@ use RPerl::Algorithm::Sort;
 # [[[ INCLUDES ]]]
 use Data::Dumper;
 
-# [[[ OO OBJECT PROPERTIES ]]]
+# [[[ OO PROPERTIES ]]]
 our hashref $properties = {
     integer_data => my integer_arrayref $TYPED_integer_data = undef,
     number_data  => my number_arrayref $TYPED_number_data   = undef
@@ -56,8 +56,6 @@ our void_method $inherited = sub {
 
     #    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited(), received $self = ' . $self . ' and $person = ' . $person . ', ILLOGICAL' . "\n");
 };
-
-# [[[ SUBROUTINES ]]]
 
 # original algorithm: comparison-based and stable [O(n**2) average time, O(1) worst-case extra space]
 # sort integer data, return sorted data

@@ -21,35 +21,36 @@ our hashref $properties = {};
 our string_hashref_method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $rperl_source_group = {};
-    
-#    RPerl::diag('in Header->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n");
-#    RPerl::diag('in Header->ast_to_rperl__generate(), received $modes = ' . "\n" . Dumper($modes) . "\n");
 
-#    my $class = ref $self;
-#    RPerl::diag('in Header->ast_to_rperl__generate(), have symtab entries for ' . $class . "\n" . RPerl::analyze_class_symtab_entries($class) . "\n");
+    #    RPerl::diag('in Header->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n");
+    #    RPerl::diag('in Header->ast_to_rperl__generate(), received $modes = ' . "\n" . Dumper($modes) . "\n");
 
-    my object $critic_optional = $self->{children}->[0];
-    my string $package_keyword = $self->{children}->[1];  # PERLOPS only
-    my object $package_name = $self->{children}->[2]->{children}->[0];
-    my string $package_semicolon = $self->{children}->[3];  # PERLOPS only
-    my string $use_strict = $self->{children}->[4]->{children}->[0];  # PERLOPS only
-    my string $use_warnings = $self->{children}->[4]->{children}->[1];  # PERLOPS only
-    my string $use_rperl = $self->{children}->[4]->{children}->[2];  # PERLOPS only
-    my string $our_keyword = $self->{children}->[4]->{children}->[3];  # PERLOPS only
-    my string $version_number = $self->{children}->[4]->{children}->[4];
-    
+    #    my $class = ref $self;
+    #    RPerl::diag('in Header->ast_to_rperl__generate(), have symtab entries for ' . $class . "\n" . RPerl::analyze_class_symtab_entries($class) . "\n");
+
+    my object $critic_optional   = $self->{children}->[0];
+    my string $package_keyword   = $self->{children}->[1];                     # PERLOPS only
+    my object $package_name      = $self->{children}->[2]->{children}->[0];
+    my string $package_semicolon = $self->{children}->[3];                     # PERLOPS only
+    my string $use_strict        = $self->{children}->[4]->{children}->[0];    # PERLOPS only
+    my string $use_warnings      = $self->{children}->[4]->{children}->[1];    # PERLOPS only
+    my string $use_rperl         = $self->{children}->[4]->{children}->[2];    # PERLOPS only
+    my string $our_keyword       = $self->{children}->[4]->{children}->[3];    # PERLOPS only
+    my string $version_number    = $self->{children}->[4]->{children}->[4];
+
     $rperl_source_group->{PMC} = q{};
-    if ((exists $critic_optional->{children}->[0]) and (defined $critic_optional->{children}->[0])) {
+    if ( ( exists $critic_optional->{children}->[0] ) and ( defined $critic_optional->{children}->[0] ) ) {
         my string_hashref $rperl_source_subgroup = $critic_optional->{children}->[0]->ast_to_rperl__generate($modes);
-        RPerl::Generator::source_group_append($rperl_source_group, $rperl_source_subgroup);
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
-    if ($modes->{label} eq 'ON') {
+    if ( $modes->{label} eq 'ON' ) {
         $rperl_source_group->{PMC} .= '# [[[ HEADER ]]]' . "\n";
     }
     $rperl_source_group->{PMC} .= $package_keyword . ' ' . $package_name . $package_semicolon . "\n";
     $rperl_source_group->{PMC} .= $use_strict . "\n";
     $rperl_source_group->{PMC} .= $use_warnings . "\n";
     $rperl_source_group->{PMC} .= $use_rperl . "\n";
+
     # DEV NOTE, CORRELATION #14: the hard-coded ' $VERSION = ' & ';' below are the only discarded tokens in the RPerl grammar,
     # due to the need to differentiate between v-numbers and otherwise-identical normal numbers
     $rperl_source_group->{PMC} .= $our_keyword . ' $VERSION = ' . $version_number . q{;} . "\n";
@@ -65,11 +66,57 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     return $cpp_source_group;
 };
 
-our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
+our string_hashref_method $ast_to_cpp__generate_begin__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $cpp_source_group = { CPP =>  q{// <<< RP::CU::M::H __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>} . "\n" };
+    my string_hashref $cpp_source_group = {};
 
-    #...
+    RPerl::diag( 'in Header->ast_to_cpp__generate_begin__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+
+    #RPerl::diag('in Header->ast_to_cpp__generate_begin__CPPOPS_CPPTYPES(), received $modes = ' . "\n" . Dumper($modes) . "\n");
+
+#my $class = ref $self;
+#RPerl::diag('in Header->ast_to_cpp__generate_begin__CPPOPS_CPPTYPES(), have symtab entries for ' . $class . "\n" . RPerl::analyze_class_symtab_entries($class) . "\n");
+
+    my object $package_name      = $self->{children}->[2]->{children}->[0];
+    my string $version_number    = $self->{children}->[4]->{children}->[4];
+
+    $cpp_source_group->{H} = q{};
+    $cpp_source_group->{CPP} = q{};
+    
+    #  NEED ADDRESS: is this Critic utilized by CPPOPS in any way?
+=DISABLE
+    if ( ( exists $critic_optional->{children}->[0] ) and ( defined $critic_optional->{children}->[0] ) ) {
+        my string_hashref $rperl_source_subgroup = $critic_optional->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $rperl_source_subgroup );
+    }
+=cut
+
+    if ( $modes->{label} eq 'ON' ) {
+        $cpp_source_group->{H} .= '// [[[ HEADER ]]]' . "\n";
+        $cpp_source_group->{CPP} .= '// [[[ HEADER ]]]' . "\n";
+    }
+    $cpp_source_group->{H} .= 'using std::cout;  using std::cerr;' . "\n\n";
+    $cpp_source_group->{CPP} .= 'using std::cout;  using std::cerr;' . "\n\n";
+    
+    my string $package_name_underscores = $package_name;
+    $package_name_underscores =~ s/::/__/gxms;
+    $cpp_source_group->{H} .= '#ifndef __CPP__INCLUDED__' . $package_name_underscores . '_h' . "\n";
+    $cpp_source_group->{H} .= '#define __CPP__INCLUDED__' . $package_name_underscores . '_h ' . $version_number . "\n\n";
+    $cpp_source_group->{CPP} .= '#ifndef __CPP__INCLUDED__' . $package_name_underscores . "\n";
+    $cpp_source_group->{CPP} .= '#define __CPP__INCLUDED__' . $package_name_underscores . q{ } . $version_number . "\n\n";
+ 
+    return $cpp_source_group;
+};
+
+our string_hashref_method $ast_to_cpp__generate_end__CPPOPS_CPPTYPES = sub {
+    ( my object $self, my string_hashref $modes) = @_;
+    my string_hashref $cpp_source_group = {};
+
+    #RPerl::diag( 'in Header->ast_to_cpp__generate_end__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+    #RPerl::diag('in Header->ast_to_cpp__generate_end__CPPOPS_CPPTYPES(), received $modes = ' . "\n" . Dumper($modes) . "\n");
+
+    $cpp_source_group->{H} = '#endif' . "\n";
+    $cpp_source_group->{CPP} = '#endif' . "\n";
     return $cpp_source_group;
 };
 
