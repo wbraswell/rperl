@@ -269,78 +269,25 @@ EOL
     }
 
     my string_arrayref $method_declarations     = [];
+    my string_arrayref $method_definitions     = [];
     my string_arrayref $subroutine_declarations = [];
+    my string_arrayref $subroutine_definitions = [];
 
     foreach my object $method_or_subroutine ( ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
         @{ $method_or_subroutine_star->{children} }
         )
     {
         if ( ( ref $method_or_subroutine ) eq 'MethodOrSubroutine_74' ) {
-            my object $method             = $method_or_subroutine->{children}->[0];    # unwrap Method_69 from MethodOrSubroutine_74
-            my string $method_return_type = $method->{children}->[1];
-            substr $method_return_type, -7, 7, '';                                     # remove leading 'method_'
-            my string $method_name = $method->{children}->[2];
-            substr $method_name, 0, 1, '';                                             # remove leading $ sigil
-            my object $method_arguments_optional = $method->{children}->[4];
-            my string_arrayref $method_arguments = [];
-
-#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $method_arguments_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($method_arguments_optional) . "\n" );
-
-            if ( exists $method_arguments_optional->{children}->[0] ) {
-                my object $method_arguments_star = $method_arguments_optional->{children}->[0]->{children}->[2];
-
-#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $method_arguments_star = ' . "\n" . RPerl::Parser::rperl_ast__dump($method_arguments_star) . "\n" );
-
-                # (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)*
-                my object $method_arguments_star_dclone = dclone($method_arguments_star);
-                while ( exists $method_arguments_star_dclone->{children}->[0] ) {
-                    shift @{ $method_arguments_star_dclone->{children} };    # discard $comma
-                    shift @{ $method_arguments_star_dclone->{children} };    # discard $my
-                    my object $method_arguments_type = shift @{ $method_arguments_star_dclone->{children} };
-                    my object $method_arguments_name = shift @{ $method_arguments_star_dclone->{children} };
-                    push @{$method_arguments}, ( $method_arguments_type->{children}->[0] . q{ } . ( substr $method_arguments_name->{attr}, 1 ) );
-                }
-
-            }
-            push @{$method_declarations}, ( q{    } . $method_return_type . q{ } . $method_name . '(' . ( join ', ', @{$method_arguments} ) . ');' );
+            $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES($modes);
+            push @{$method_declarations}, $cpp_source_subgroup->{H};
+            $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES($package_name_underscores, $modes);
+            push @{$method_definitions}, $cpp_source_subgroup->{CPP};
         }
         elsif ( ( ref $method_or_subroutine ) eq 'MethodOrSubroutine_75' ) {
-            my object $subroutine             = $method_or_subroutine->{children}->[0];          # unwrap Subroutine_46 from MethodOrSubroutine_75
-            my string $subroutine_return_type = $subroutine->{children}->[1]->{children}->[0];
-            my string $subroutine_name        = $subroutine->{children}->[2];
-            substr $subroutine_name, 0, 1, '';                                                   # remove leading $ sigil
-            my object $subroutine_arguments_optional = $subroutine->{children}->[4];
-            my string_arrayref $subroutine_arguments = [];
-
-#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subroutine_arguments_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($subroutine_arguments_optional) . "\n" );
-#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subroutine_return_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($subroutine_return_type) . "\n" );
-
-            if ( exists $subroutine_arguments_optional->{children}->[0] ) {
-                my object $subroutine_arguments_type = $subroutine_arguments_optional->{children}->[0]->{children}->[1];
-                my object $subroutine_arguments_name = $subroutine_arguments_optional->{children}->[0]->{children}->[2];
-
-#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subroutine_arguments_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($subroutine_arguments_type) . "\n" );
-#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subroutine_arguments_name = ' . "\n" . RPerl::Parser::rperl_ast__dump($subroutine_arguments_name) . "\n" );
-
-                push @{$subroutine_arguments}, ( $subroutine_arguments_type->{children}->[0] . q{ } . ( substr $subroutine_arguments_name, 1 ) );
-
-                my object $subroutine_arguments_star = $subroutine_arguments_optional->{children}->[0]->{children}->[3];
-
-#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subroutine_arguments_star = ' . "\n" . RPerl::Parser::rperl_ast__dump($subroutine_arguments_star) . "\n" );
-
-                # (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)*
-                my object $subroutine_arguments_star_dclone = dclone($subroutine_arguments_star);
-                while ( exists $subroutine_arguments_star_dclone->{children}->[0] ) {
-                    shift @{ $subroutine_arguments_star_dclone->{children} };    # discard $comma
-                    shift @{ $subroutine_arguments_star_dclone->{children} };    # discard $my
-                    $subroutine_arguments_type = shift @{ $subroutine_arguments_star_dclone->{children} };
-                    $subroutine_arguments_name = shift @{ $subroutine_arguments_star_dclone->{children} };
-#                    RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subroutine_arguments_name = ' . "\n" . RPerl::Parser::rperl_ast__dump($subroutine_arguments_name) . "\n" );
-                    push @{$subroutine_arguments}, ( $subroutine_arguments_type->{children}->[0] . q{ } . ( substr $subroutine_arguments_name->{attr}, 1 ) );
-                }
-
-            }
-            push @{$subroutine_declarations}, ( $subroutine_return_type . q{ } . $subroutine_name . '(' . ( join ', ', @{$subroutine_arguments} ) . ');' );
+            $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES($modes);
+            push @{$subroutine_declarations}, $cpp_source_subgroup->{H};
+            $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+            push @{$subroutine_definitions}, $cpp_source_subgroup->{CPP};
         }
         else {
             die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: grammar rule '
@@ -355,6 +302,14 @@ EOL
             $cpp_source_group->{H} .= '// [[[ OO METHODS ]]]' . "\n";
         }
         $cpp_source_group->{H} .= ( join "\n", @{$method_declarations} ) . "\n\n";
+    }
+
+    if (( exists $method_definitions->[0] ) or ( exists $subroutine_definitions->[0] )) {
+        if ( $modes->{label} eq 'ON' ) {
+            $cpp_source_group->{CPP} .= '// [[[ OO METHODS & SUBROUTINES ]]]' . "\n\n";
+        }
+        $cpp_source_group->{CPP} .= ( join "\n", @{$method_definitions} ) . "\n\n";
+        $cpp_source_group->{CPP} .= ( join "\n", @{$subroutine_definitions} ) . "\n\n";
     }
 
     my string_arrayref $properties_accessors_mutators = [];
@@ -481,10 +436,6 @@ EOL
         $cpp_source_group->{H}   .= $cpp_source_tmp;
         $cpp_source_group->{CPP} .= $cpp_source_tmp;
     }
-
-    # START HERE: generate CPP code here and elsewhere
-    # START HERE: generate CPP code here and elsewhere
-    # START HERE: generate CPP code here and elsewhere
 
     $cpp_source_tmp = <<EOL;
 # else

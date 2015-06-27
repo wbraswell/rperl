@@ -5,7 +5,7 @@ using std::cout;  using std::cerr;
 #define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble 0.004_030
 
 // [[[ INCLUDES ]]]
-#include <RPerl/Algorithm/Sort/Bubble.h>  // -> HelperFunctions.cpp && Sort.cpp
+#include <RPerl/Algorithm/Sort/Bubble.h>
 
 # ifdef __PERL__TYPES
 
@@ -19,7 +19,6 @@ Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.
 
 // [[[ OO METHODS & SUBROUTINES ]]]
 
-// call out to sort integer_data, return nothing
 void RPerl__Algorithm__Sort__Bubble::integer_sort() {
     this->integer_data = integer_bubblesort(this->integer_data);
 }
@@ -27,8 +26,6 @@ void RPerl__Algorithm__Sort__Bubble::integer_sort() {
 void RPerl__Algorithm__Sort__Bubble::number_sort() {
     this->number_data = number_bubblesort(this->number_data);
 }
-
-// OO INHERITANCE TESTING
 
 void RPerl__Algorithm__Sort__Bubble::inherited__Bubble(string person) {
     cout << "in CPPOPS_CPPTYPES Bubble->inherited__Bubble(), received this = '" << this << "' and person = '" << person << "', FRIED\n";
@@ -38,36 +35,28 @@ void RPerl__Algorithm__Sort__Bubble::inherited(string person) {
     cout << "in CPPOPS_CPPTYPES Bubble->inherited(), received this = '" << this << "' and person = '" << person << "', ILLOGICAL\n";
 }
 
-// original algorithm: comparison-based and stable [O(n**2) average time, O(1) worst-case extra space]
-// sort integer_data, return sorted integer_data
-integer_arrayref integer_bubblesort(integer_arrayref integer_data) {  // DEV NOTE: properly creates local-to-function integer_arrayref integer_data here, does not get confused with this->integer_data object property, even though they share a name
+integer_arrayref integer_bubblesort(integer_arrayref integer_data) {
     integer is_sorted = 0;
     integer i;
     integer integer_data_length = integer_data.size();
-    integer integer_data_i = -9999;  // OPTIMIZE, LONG-HAND: integer_data element i accessed more than once, declare integer_data_i and re-use;  all new integer's given initial -9999 value to avoid fprintf(stderr, ) errors during debugging
-    integer integer_data_i_plus_1 = -9999;  // OPTIMIZE, LONG-HAND
-
+    integer integer_data_i = -9999;
+    integer integer_data_i_plus_1 = -9999;
     integer swap = -9999;
-
-    // iterate through the length-n list up to n times (n * n == n**2), larger elements "bubble to the top" (end) of the list
     while (not(is_sorted)) {
         is_sorted = 1;
         for (i = 0; i < (integer_data_length - 1); i++) {
-            // compare elements and swap if out-of-order, this is the core sort comparison
-            integer_data_i = integer_data[i];  // OPTIMIZE, LONG-HAND: use integer_data_i
-            integer_data_i_plus_1 = integer_data[(i + 1)];  // OPTIMIZE, LONG-HAND: use integer_data_i_plus_1
+            integer_data_i = integer_data[i];
+            integer_data_i_plus_1 = integer_data[(i + 1)];
 
-            // DEV NOTE: integer_data is of type integer_arrayref, assuming numeric values for integer_data elements and using C++ numeric comparator
-            if (integer_data_i > integer_data_i_plus_1) {  // OPTIMIZE, LONG-HAND: use integer_data_i and integer_data_i_plus_1
+            if (integer_data_i > integer_data_i_plus_1) {
                 is_sorted = 0;
-                swap = integer_data_i;  // OPTIMIZE, LONG-HAND: use integer_data_i
-                integer_data[i] = integer_data_i_plus_1;  // OPTIMIZE, LONG-HAND: use integer_data_i_plus_1
+                swap = integer_data_i;
+                integer_data[i] = integer_data_i_plus_1;
                 integer_data[(i + 1)] = swap;
             }
         }
     }
 
-    // integer_data is now sorted via top-level nested iteration [O(n**2) total time, O(1) total extra space]
     return(integer_data);
 }
 
@@ -94,18 +83,13 @@ number_arrayref number_bubblesort(number_arrayref number_data) {
     return(number_data);
 }
 
-// OO INHERITANCE TESTING, CONTINUED
-
 string uninherited__Bubble(string person) {
     cout << "in CPPOPS_CPPTYPES Bubble::uninherited__Bubble(), received person = '" << person << "', MITOCHONDRIAL\n"; return((string)"Bubble::uninherited__Bubble() RULES! CPPOPS_CPPTYPES");
 }
 
-// DEV NOTE, CORRELATION #04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
 string uninherited(string person) {
     cout << "in CPPOPS_CPPTYPES Bubble::uninherited(), received person = '" << person << "', TETRAHEDRON\n"; return((string)"Bubble::uninherited() ROCKS! CPPOPS_CPPTYPES");
 }
-
-// TYPE TESTING
 
 string integer_bubblesort__typetest0(integer_arrayref lucky_integers) {
     return(integer_arrayref_to_string(integer_bubblesort(lucky_integers)) + "CPPOPS_CPPTYPES");
