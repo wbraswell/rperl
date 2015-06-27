@@ -48,9 +48,8 @@ public:
     RPerl__Algorithm__Sort__Bubble() {}
     ~RPerl__Algorithm__Sort__Bubble() {}
 
-////# [[[ OO PROPERTIES ]]]
-
 private:
+////# [[[ OO PROPERTIES ]]]
 ////our hashref $properties = { integer_data => my integer_arrayref $TYPED_integer_data, number_data  => my number_arrayref $TYPED_number_data };
     SV* integer_data;
     SV* number_data;
@@ -111,9 +110,8 @@ public:
     RPerl__Algorithm__Sort__Bubble() {}
     ~RPerl__Algorithm__Sort__Bubble() {}
 
-    ////# [[[ OO PROPERTIES ]]]
-
 private:
+////# [[[ OO PROPERTIES ]]]
 ////our hashref $properties = { integer_data => my integer_arrayref $TYPED_integer_data, number_data  => my number_arrayref $TYPED_number_data };
     integer_arrayref integer_data;
     number_arrayref number_data;

@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array::Reference;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Modifier::Reference);
@@ -85,13 +85,41 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $cpp_source_group
-        = {
-        CPP => q{// <<< RP::DS::A::R __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
-            . "\n"
-        };
+    my string_hashref $cpp_source_group = { CPP => q{} };
 
-    #...
+#    RPerl::diag( 'in Array::Reference->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+
+    my string $self_class = ref $self;
+
+    # unwrap ArrayReference_186 from SubExpression_133
+    if ( $self_class eq 'SubExpression_133' ) {
+        $self = $self->{children}->[0];
+        $self_class = ref $self;
+    }
+
+    if ( ( $self_class ) ne 'ArrayReference_186' ) {
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+                . ( $self_class )
+                . ' found where ArrayReference_186 or SubExpression_133 expected, dying' )
+            . "\n";
+    }
+
+    # ArrayReference -> LBRACKET OPTIONAL-45 ']'
+    my object $list_elements_optional = $self->{children}->[1];
+
+    $cpp_source_group->{CPP} .= '{';
+
+    if ( exists $list_elements_optional->{children}->[0] ) {
+        my string_hashref $cpp_source_subgroup
+            = $list_elements_optional->{children}->[0]
+            ->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group,
+            $cpp_source_subgroup );
+    }
+
+    $cpp_source_group->{CPP} .= '}';
+
     return $cpp_source_group;
 };
 

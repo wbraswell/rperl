@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array::ListElements;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_010;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -103,13 +103,47 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $cpp_source_group
-        = {
-        CPP => q{// <<< RP::DS::A::LEs __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
-            . "\n"
-        };
+    my string_hashref $cpp_source_group = { CPP => q{} };
 
-    #...
+#    RPerl::diag( 'in Array::ListElements->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+
+    if ( ( ref $self ) ne 'ListElements_178' ) {
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+                . ( ref $self )
+                . ' found where ListElements_178 expected, dying' )
+            . "\n";
+    }
+
+    my object $list_element0      = $self->{children}->[0];
+    my object $list_elements_star = $self->{children}->[1];
+
+    my string_hashref $cpp_source_subgroup
+        = $list_element0->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+    RPerl::Generator::source_group_append( $cpp_source_group,
+        $cpp_source_subgroup );
+
+    foreach my object $list_element ( @{ $list_elements_star->{children} } ) {
+
+#        RPerl::diag( 'in Array::ListElements->ast_to_cpp__generate__CPPOPS_CPPTYPES(), top of foreach() loop, have $list_element = ' . "\n" . RPerl::Parser::rperl_ast__dump($list_element) . "\n" );
+        if ( ref $list_element eq 'TERMINAL' ) {
+            if ( $list_element->{attr} ne q{,} ) {
+                die RPerl::Parser::rperl_rule__replace(
+                    q{ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '}
+                        . $list_element->{attr}
+                        . q{' found where OP21_LIST_COMMA ',' expected, dying}
+                ) . "\n";
+            }
+            $cpp_source_group->{CPP} .= $list_element->{attr} . q{ }; # OP21_LIST_COMMA
+        }
+        else {
+            my string_hashref $cpp_source_subgroup
+                = $list_element->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+            RPerl::Generator::source_group_append( $cpp_source_group,
+                $cpp_source_subgroup );
+        }
+    }
+
     return $cpp_source_group;
 };
 

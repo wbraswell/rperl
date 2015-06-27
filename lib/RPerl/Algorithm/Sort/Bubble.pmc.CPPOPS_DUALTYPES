@@ -54,9 +54,12 @@ EOF
     #else { RPerl::diag 'in Bubble::cpp_load(), CPP already loaded, DOING NOTHING' . "\n"; }
 }
 
+# suppress 'Too late to run INIT block' at run-time loading via require or eval, as in t/07_oo_inherit.t & t/09_precompiled_sort.t
+no warnings;
 INIT {
     # actually compile and load C++ code when 'use RPerl::Algorithm::Sort::Bubble' is called
     RPerl::Algorithm::Sort::Bubble::cpp_load();
 }
+use warnings;
 
 1;    # end of package

@@ -117,7 +117,7 @@ our string_hashref_method $qorge = sub {
 };
 
 our object_arrayref_method $qaft = sub {
-    ( my object $self) = @_;
+    ( my object $self, my integer $foo, my number $bar, my string $bat, my string_hashref $baz ) = @_;
     my object_arrayref $retval = [];
     $retval->[0] = RPerl::CompileUnit::Module::Class::Template->new();
     $retval->[0]->{xyzzy} = 'larry';

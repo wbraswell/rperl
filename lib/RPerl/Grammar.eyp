@@ -2,7 +2,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.001_002;
+    our $VERSION = 0.001_003;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -26,7 +26,7 @@
 %token VARIABLE_SYMBOL       = /(\$(?:[a-zA-Z]\w*)?[a-z]\w*(::[a-zA-Z]\w*)*)/ # dollar sigil, scoped word with at least one lowercase in the first scope segment
 %token FHREF_SYMBOL_BRACES   = /(\{\$[A-Z][A-Z0-9_]*\})/                 # left brace, dollar sigil, uppercase letter, uppercase letters & numbers & underscores, right brace; ex. '{$MY_FILEHANDLE_23}'
 %token FHREF_SYMBOL          = /(\$[A-Z][A-Z0-9_]*)/                     # dollar sigil, uppercase letter, uppercase letters & numbers & underscores; ex. '$MY_FILEHANDLE_23'
-%token TYPE_INTEGER          = /(integer\s+)/                            # 'integer' followed by whitespace
+%token TYPE_INTEGER          = /(integer)\s+/                            # 'integer' followed by whitespace
 %token TYPE_FHREF            = /(filehandleref\s+)/                      # 'filehandleref' followed by whitespace
 %token TYPE_METHOD           = /([a-zA-Z]\w*_method)/                    # letter followed by letters, numbers, and underscores, followed by '_method'; ex. 'string_arrayref_method'
 %token WORD_SCOPED           = /((?:[a-zA-Z]\w*)?(?:::[a-zA-Z]\w*)+)/

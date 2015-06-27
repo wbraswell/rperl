@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash::Entry;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 use RPerl::GrammarRule;
@@ -76,13 +76,52 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $cpp_source_group
-        = {
-        CPP => q{// <<< RP::DS::H::ET __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
-            . "\n"
-        };
+    my string_hashref $cpp_source_group = { CPP => q{} };
+    my string_hashref $cpp_source_subgroup;
 
-    #...
+#    RPerl::diag( 'in Hash::Entry->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+
+    my string $key                 = $self->{children}->[0];
+    my string $key_class           = ref $key;
+    my object $type_inner_optional = $self->{children}->[2];
+
+    $cpp_source_group->{CPP} .= '{';
+
+    if (   ( $key_class eq 'VariableOrLiteralOrWord_215' )
+        or ( $key_class eq 'VariableOrLiteralOrWord_216' ) )
+    {    # Variable or Literal
+        $cpp_source_subgroup = $key->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group,
+            $cpp_source_subgroup );
+    }
+    elsif ( $key_class eq 'VariableOrLiteralOrWord_217' ) {    # WORD
+        $cpp_source_group->{CPP} .= q{"} . $key->{children}->[0] . q{" };
+    }
+    else {
+        die RPerl::Parser::rperl_rule__replace(
+            q{ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '}
+                . ($key_class)
+                . q{' found where VariableOrLiteralOrWord_215, VariableOrLiteralOrWord_216, or VariableOrLiteralOrWord_217 expected, dying}
+        ) . "\n";
+    }
+
+    $cpp_source_group->{CPP} .= q{, };
+
+# NEED ADDRESS: what to do with the optional TypeInner info below?  is this useless in CPPTYPES and only needed in PERLTYPES?
+=DISABLE_tmp
+    if ( exists $type_inner_optional->{children}->[0] ) {
+        $cpp_source_subgroup = $type_inner_optional->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+    }
+=cut
+
+    my object $subexpression = $self->{children}->[3];
+
+    $cpp_source_subgroup = $subexpression->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+    RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+ 
+    $cpp_source_group->{CPP} .= '}';
+
     return $cpp_source_group;
 };
 

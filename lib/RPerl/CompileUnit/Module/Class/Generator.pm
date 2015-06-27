@@ -190,7 +190,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     }
 
     if ( ($self_class) ne 'Class_59' ) {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL, CPPOPS_CPPTYPES: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: grammar rule '
                 . ($self_class)
                 . ' found where Module_23 or Class_59 expected, dying' )
             . "\n";
@@ -256,6 +256,17 @@ EOL
     $parent_name_underscores =~ s/::/__/gxms;
     $cpp_source_group->{H} .= 'class ' . $package_name_underscores . ' : public ' . $parent_name_underscores . ' {' . "\n";
     $cpp_source_group->{H} .= 'public:' . "\n";
+
+    if ( exists $constant_star->{children}->[0] ) {
+        if ( $modes->{label} eq 'ON' ) {
+            $cpp_source_group->{H} .= '// [[[ CONSTANTS ]]]' . "\n";
+        }
+        foreach my object $constant ( @{ $constant_star->{children} } ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
+            $cpp_source_subgroup = $constant->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+            $cpp_source_group->{H} .= q{    } . $cpp_source_subgroup->{H};
+        }
+        $cpp_source_group->{H} .= "\n";
+    }
 
     my string_arrayref $method_declarations     = [];
     my string_arrayref $subroutine_declarations = [];
@@ -324,14 +335,15 @@ EOL
                     shift @{ $subroutine_arguments_star_dclone->{children} };    # discard $my
                     $subroutine_arguments_type = shift @{ $subroutine_arguments_star_dclone->{children} };
                     $subroutine_arguments_name = shift @{ $subroutine_arguments_star_dclone->{children} };
-                    push @{$subroutine_arguments}, ( $subroutine_arguments_type->{children}->[0] . q{ } . ( substr $subroutine_arguments_name, 1 ) );
+#                    RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subroutine_arguments_name = ' . "\n" . RPerl::Parser::rperl_ast__dump($subroutine_arguments_name) . "\n" );
+                    push @{$subroutine_arguments}, ( $subroutine_arguments_type->{children}->[0] . q{ } . ( substr $subroutine_arguments_name->{attr}, 1 ) );
                 }
 
             }
             push @{$subroutine_declarations}, ( $subroutine_return_type . q{ } . $subroutine_name . '(' . ( join ', ', @{$subroutine_arguments} ) . ');' );
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL, CPPOPS_CPPTYPES: grammar rule '
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: grammar rule '
                     . ( ref $method_or_subroutine )
                     . ' found where MethodOrSubroutine_74 or MethodOrSubroutine_75 expected, dying' )
                 . "\n";
@@ -443,30 +455,12 @@ EOL
     $cpp_source_group->{H} .= q{    } . '~' . $package_name_underscores . '() {}' . "\n\n";    # DESTRUCTOR
 
     if ( exists $properties_declarations->[0] ) {
+        $cpp_source_group->{H} .= 'private:' . "\n";
         if ( $modes->{label} eq 'ON' ) {
             $cpp_source_group->{H} .= '// [[[ OO PROPERTIES ]]]' . "\n";
         }
-        $cpp_source_group->{H} .= 'private:' . "\n";
         $cpp_source_group->{H} .= ( join "\n", @{$properties_declarations} ) . "\n";
     }
-
-# START HERE: handle constants
-# START HERE: handle constants
-# START HERE: handle constants
-
-=DISABLE_tmp
-
-    if ( exists $constant_star->{children}->[0] ) {
-        if ( $modes->{label} eq 'ON' ) {
-            $cpp_source_group->{CPP} .= "\n" . '# [[[ CONSTANTS ]]]' . "\n";
-        }
-    }
-    foreach my object $constant ( @{ $constant_star->{children} } ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
-        $cpp_source_subgroup = $constant->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
-        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
-    }
-
-=cut
 
     $cpp_source_group->{H} .= '};' . "\n\n";
 
@@ -487,6 +481,10 @@ EOL
         $cpp_source_group->{H}   .= $cpp_source_tmp;
         $cpp_source_group->{CPP} .= $cpp_source_tmp;
     }
+
+    # START HERE: generate CPP code here and elsewhere
+    # START HERE: generate CPP code here and elsewhere
+    # START HERE: generate CPP code here and elsewhere
 
     $cpp_source_tmp = <<EOL;
 # else

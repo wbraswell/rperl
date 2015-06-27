@@ -54,9 +54,12 @@ EOF
     #else { RPerl::diag 'in RPerl::CompileUnit::Module::cpp_load(), CPP already loaded, DOING NOTHING' . "\n"; }
 }
 
+# suppress 'Too late to run INIT block' at run-time loading via require or eval
+no warnings;
 INIT {
     # actually compile and load C++ code when 'use RPerl::CompileUnit::Module' is called
     RPerl::CompileUnit::Module::cpp_load();
 }
+use warnings;
 
 1;    # end of package

@@ -44,5 +44,8 @@
 /lib/RPerl/Algorithm/Sort/Bubble.h
 /lib/RPerl/Algorithm/Sort/Bubble.cpp
 /lib/RPerl/Test/Fu.pmc
+/lib/RPerl/Test/Foo.pmc
+/lib/RPerl/Test/Foo.h
+/lib/RPerl/Test/Foo.cpp
 /lib/rperltypes_mode.h.orig
 /lib/rperltypes_mode.h.swap

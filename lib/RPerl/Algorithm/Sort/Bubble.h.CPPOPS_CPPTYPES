@@ -39,8 +39,8 @@ public:
     RPerl__Algorithm__Sort__Bubble() {}
     ~RPerl__Algorithm__Sort__Bubble() {}
 
-// [[[ OO PROPERTIES ]]]
 private:
+// [[[ OO PROPERTIES ]]]
     integer_arrayref integer_data;
     number_arrayref number_data;
 };
