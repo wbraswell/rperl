@@ -3,7 +3,7 @@ package RPerl::Operation::Expression;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_010;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation);
@@ -31,7 +31,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             = $self->{children}->[0]->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
-        $rperl_source_group->{PMC} .= $self->{children}->[1];  # semicolon
+        $rperl_source_group->{PMC} .= $self->{children}->[1] . "\n";  # semicolon
     }
     elsif ( ( ref $self ) eq 'SubExpression_129' ) {  # SubExpression -> Expression
         $rperl_source_subgroup
@@ -63,10 +63,32 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
-        = { CPP => q{// <<< RP::O::E __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
-            . "\n" };
+        = { CPP => q{} };
+    my string_hashref $cpp_source_subgroup;
 
-    #...
+#    RPerl::diag( 'in Expression->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+
+    if ( ( ref $self ) eq 'Operation_76' ) {    # Operation -> Expression ';'
+        $cpp_source_subgroup
+            = $self->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group,
+            $cpp_source_subgroup );
+        $cpp_source_group->{CPP} .= $self->{children}->[1] . "\n";  # semicolon
+    }
+    elsif ( ( ref $self ) eq 'SubExpression_129' ) {  # SubExpression -> Expression
+        $cpp_source_subgroup
+            = $self->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group,
+            $cpp_source_subgroup );
+    }
+    else {
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+                . ( ref $self )
+                . ' found where Operation_76 or SubExpression_129 expected, dying'
+        ) . "\n";
+    }
+
     return $cpp_source_group;
 };
 

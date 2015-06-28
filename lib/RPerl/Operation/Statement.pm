@@ -3,7 +3,7 @@ package RPerl::Operation::Statement;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_012;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation);
@@ -73,11 +73,44 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $cpp_source_group
-        = { CPP => q{// <<< RP::O::S __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
-            . "\n" };
+    my string_hashref $cpp_source_group = { CPP => q{} };
+    my object $child0 = $self->{children}->[0];
+    my string $child0_class = ref $child0;
+    my string_hashref $cpp_source_subgroup;
 
-    #...
+#    RPerl::diag( 'in Statement->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+
+    # Conditional, OperatorVoid, VariableDeclaration, or VariableModification
+    if (   ( $child0_class eq 'Statement_143' )
+        or ( $child0_class eq 'Statement_145' )
+        or ( $child0_class eq 'Statement_146' )
+        or ( $child0_class eq 'Statement_147' ) )
+    {
+        $cpp_source_subgroup
+            = $child0->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group,
+            $cpp_source_subgroup );
+    }
+
+    # Loop
+    elsif ( $child0_class eq 'Statement_144' ) {
+        my $optional_loop_label = $child0->{children}->[0];
+        my $loop = $child0->{children}->[1];
+#        RPerl::diag( 'in Statement->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $optional_loop_label = ' . "\n" . RPerl::Parser::rperl_ast__dump($optional_loop_label) . "\n" );
+        if ( exists $optional_loop_label->{children}->[0] ) {  # LoopLabel COLON
+            $cpp_source_group->{CPP} .= "\n" . $optional_loop_label->{children}->[0]->{children}->[0] . $optional_loop_label->{children}->[1]->{attr} . "\n";
+        }
+        $cpp_source_subgroup = $loop->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+    }
+    else {
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+                . $child0_class
+                . ' found where Statement_143, Statement_144, Statement_145, Statement_146, or Statement_147 expected, dying'
+        ) . "\n";
+    }
+
     return $cpp_source_group;
 };
 

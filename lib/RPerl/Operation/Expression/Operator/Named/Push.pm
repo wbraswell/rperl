@@ -30,7 +30,7 @@ our hashref $properties = {};
 # [[[ OO METHODS & SUBROUTINES ]]]
 
 our string_hashref_method $ast_to_rperl__generate = sub {
-    ( my object $self, my string_hashref $modes, my object $operator_named)
+    ( my object $self, my object $operator_named, my string_hashref $modes)
         = @_;
     my string_hashref $rperl_source_group = { PMC => q{} };
 

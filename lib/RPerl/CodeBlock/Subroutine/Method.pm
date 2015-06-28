@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine::Method;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_100;
+our $VERSION = 0.003_110;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CodeBlock::Subroutine);
@@ -78,20 +78,20 @@ our string_hashref_method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = s
 
 #    RPerl::diag( 'in Method->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    my object $method             = $self->{children}->[0];     # unwrap Method_69 from MethodOrSubroutine_74
-    my string $method_return_type = $method->{children}->[1];
-    substr $method_return_type, -7, 7, '';                      # remove leading 'method_'
-    my string $method_name = $method->{children}->[2];
-    substr $method_name, 0, 1, '';                              # remove leading $ sigil
-    my object $method_arguments_optional = $method->{children}->[4];
+    $self             = $self->{children}->[0];     # unwrap Method_69 from MethodOrSubroutine_74
+    my string $return_type = $self->{children}->[1];
+    substr $return_type, -7, 7, '';                      # remove leading 'method_'
+    my string $name = $self->{children}->[2];
+    substr $name, 0, 1, '';                              # remove leading $ sigil
+    my object $arguments_optional = $self->{children}->[4];
 
-#    RPerl::diag( 'in Method->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $method_name = ' . $method_name . "\n" );
-#    RPerl::diag( 'in Method->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $method_arguments_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($method_arguments_optional) . "\n" );
+#    RPerl::diag( 'in Method->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $name = ' . $name . "\n" );
+#    RPerl::diag( 'in Method->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $arguments_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_optional) . "\n" );
 
-    $cpp_source_group->{H} .= q{    } . $method_return_type . q{ } . $method_name . '(';
-    if ( exists $method_arguments_optional->{children}->[0] ) {
-        my object $method_arguments = $method_arguments_optional->{children}->[0];
-        my string_hashref $cpp_source_subgroup = $method_arguments->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+    $cpp_source_group->{H} .= q{    } . $return_type . q{ } . $name . '(';
+    if ( exists $arguments_optional->{children}->[0] ) {
+        my object $arguments = $arguments_optional->{children}->[0];
+        my string_hashref $cpp_source_subgroup = $arguments->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
         $cpp_source_group->{H} .= $cpp_source_subgroup->{CPP};
     }
     $cpp_source_group->{H} .= ');';

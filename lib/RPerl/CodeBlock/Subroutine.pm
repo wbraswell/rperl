@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_010;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -29,9 +29,6 @@ BEGIN {
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CodeBlock);
 use RPerl::CodeBlock;
-
-# [[[ INCLUDES ]]]
-use Storable qw(dclone);
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
@@ -92,61 +89,62 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     return $cpp_source_group;
 };
 
-# START HERE: move args-generating code from below into Subroutine::Arguments, then implement ast_to_cpp__generate__CPPOPS_CPPTYPES() below
-# START HERE: move args-generating code from below into Subroutine::Arguments, then implement ast_to_cpp__generate__CPPOPS_CPPTYPES() below
-# START HERE: move args-generating code from below into Subroutine::Arguments, then implement ast_to_cpp__generate__CPPOPS_CPPTYPES() below
-
 our string_hashref_method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group = { H => q{} };
 
-    my object $subroutine             = $self->{children}->[0];                          # unwrap Subroutine_46 from MethodOrSubroutine_75
-    my string $subroutine_return_type = $subroutine->{children}->[1]->{children}->[0];
-    my string $subroutine_name        = $subroutine->{children}->[2];
-    substr $subroutine_name, 0, 1, '';                                                   # remove leading $ sigil
-    my object $subroutine_arguments_optional = $subroutine->{children}->[4];
-    my string_arrayref $subroutine_arguments = [];
+    $self             = $self->{children}->[0];                          # unwrap Subroutine_46 from MethodOrSubroutine_75
+    my string $return_type = $self->{children}->[1]->{children}->[0];
+    my string $name        = $self->{children}->[2];
+    substr $name, 0, 1, '';                                                   # remove leading $ sigil
+    my object $arguments_optional = $self->{children}->[4];
+    my string_arrayref $arguments = [];
 
-#RPerl::diag( 'in Subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subroutine_arguments_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($subroutine_arguments_optional) . "\n" );
-#RPerl::diag( 'in Subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subroutine_return_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($subroutine_return_type) . "\n" );
+#RPerl::diag( 'in Subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), have $arguments_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_optional) . "\n" );
+#RPerl::diag( 'in Subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), have $return_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($return_type) . "\n" );
 
-    if ( exists $subroutine_arguments_optional->{children}->[0] ) {
-        my object $subroutine_arguments_type = $subroutine_arguments_optional->{children}->[0]->{children}->[1];
-        my object $subroutine_arguments_name = $subroutine_arguments_optional->{children}->[0]->{children}->[2];
+    $cpp_source_group->{H} .= $return_type . q{ } . $name . '(';
 
-#RPerl::diag( 'in Subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subroutine_arguments_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($subroutine_arguments_type) . "\n" );
-#RPerl::diag( 'in Subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subroutine_arguments_name = ' . "\n" . RPerl::Parser::rperl_ast__dump($subroutine_arguments_name) . "\n" );
-
-        push @{$subroutine_arguments}, ( $subroutine_arguments_type->{children}->[0] . q{ } . ( substr $subroutine_arguments_name, 1 ) );
-
-        my object $subroutine_arguments_star = $subroutine_arguments_optional->{children}->[0]->{children}->[3];
-
-#RPerl::diag( 'in Subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subroutine_arguments_star = ' . "\n" . RPerl::Parser::rperl_ast__dump($subroutine_arguments_star) . "\n" );
-
-        # (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)*
-        my object $subroutine_arguments_star_dclone = dclone($subroutine_arguments_star);
-        while ( exists $subroutine_arguments_star_dclone->{children}->[0] ) {
-            shift @{ $subroutine_arguments_star_dclone->{children} };    # discard $comma
-            shift @{ $subroutine_arguments_star_dclone->{children} };    # discard $my
-            $subroutine_arguments_type = shift @{ $subroutine_arguments_star_dclone->{children} };
-            $subroutine_arguments_name = shift @{ $subroutine_arguments_star_dclone->{children} };
-
-#                    RPerl::diag( 'in Subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subroutine_arguments_name = ' . "\n" . RPerl::Parser::rperl_ast__dump($subroutine_arguments_name) . "\n" );
-            push @{$subroutine_arguments}, ( $subroutine_arguments_type->{children}->[0] . q{ } . ( substr $subroutine_arguments_name->{attr}, 1 ) );
-        }
-
+    if ( exists $arguments_optional->{children}->[0] ) {
+        my object $cpp_source_subgroup = $arguments_optional->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        $cpp_source_group->{H} .= $cpp_source_subgroup->{CPP};
     }
 
-    $cpp_source_group->{H} .= $subroutine_return_type . q{ } . $subroutine_name . '(' . ( join ', ', @{$subroutine_arguments} ) . ');';
-
+    $cpp_source_group->{H} .= ');';
     return $cpp_source_group;
 };
 
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $cpp_source_group = { CPP => q{// <<< RP::CB::S __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>} . "\n" };
+    my string_hashref $cpp_source_group = { CPP => q{} };
 
-    #...
+    $self             = $self->{children}->[0];                          # unwrap Subroutine_46 from MethodOrSubroutine_75
+    my string $return_type = $self->{children}->[1]->{children}->[0];
+    my string $name        = $self->{children}->[2];
+    substr $name, 0, 1, '';                                                   # remove leading $ sigil
+    my object $arguments_optional = $self->{children}->[4];
+    my string_arrayref $arguments = [];
+    my object $operations_star    = $self->{children}->[5];
+    my object $cpp_source_subgroup;
+
+#RPerl::diag( 'in Subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), have $arguments_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_optional) . "\n" );
+#RPerl::diag( 'in Subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), have $return_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($return_type) . "\n" );
+
+    $cpp_source_group->{CPP} .= $return_type . q{ } . $name . '(';
+
+    if ( exists $arguments_optional->{children}->[0] ) {
+        $cpp_source_subgroup = $arguments_optional->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+    }
+
+    $cpp_source_group->{CPP} .= ') {' . "\n";
+
+    foreach my object $operation ( @{ $operations_star->{children} } ) {
+        $cpp_source_subgroup = $operation->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+    }
+
+    $cpp_source_group->{CPP} .= '}';
     return $cpp_source_group;
 };
 

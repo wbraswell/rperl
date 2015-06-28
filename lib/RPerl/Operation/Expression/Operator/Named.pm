@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::Operator::Named;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_010;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::Operator);
@@ -70,7 +70,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     my object $operator_object = $operator_class->new();
 
     $rperl_source_subgroup
-        = $operator_object->ast_to_rperl__generate( $modes, $self );
+        = $operator_object->ast_to_rperl__generate( $self, $modes );
     RPerl::Generator::source_group_append( $rperl_source_group,
         $rperl_source_subgroup );
 

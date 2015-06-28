@@ -16,4 +16,39 @@ use RPerl::Operation::Expression::Operator::NamedUnary;
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
 
+# [[[ OO METHODS & SUBROUTINES ]]]
+
+our string_hashref_method $ast_to_rperl__generate = sub {
+    ( my object $self, my object $operator_named, my string_hashref $modes) = @_;
+    my string_hashref $rperl_source_group = { PMC => q{// <<< RP::O::E::O::NU::S __DUMMY_SOURCE_CODE PERLOPS_PERLTYPES >>>} . "\n" };
+
+#    RPerl::diag( 'in NamedUnary::Scalar->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in NamedUnary::Scalar->ast_to_rperl__generate(), received $operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_named) . "\n" );
+
+    return $rperl_source_group;
+};
+
+our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
+    ( my object $self, my string_hashref $modes) = @_;
+    my string_hashref $cpp_source_group = { CPP => q{// <<< RP::O::E::O::NU::S __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>} . "\n" };
+
+    #...
+    return $cpp_source_group;
+};
+
+our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
+    ( my object $self, my object $operator_named, my string_hashref $modes) = @_;
+    my string_hashref $cpp_source_group = { CPP => q{// <<< RP::O::E::O::NU::S __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>} . "\n" };
+
+#    RPerl::diag( 'in NamedUnary::Scalar->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+    RPerl::diag( 'in NamedUnary::Scalar->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_named) . "\n" );
+
+# START HERE: implement the PERLOPS & CPPOPS version of this operator in this file
+# START HERE: implement the PERLOPS & CPPOPS version of this operator in this file
+# START HERE: implement the PERLOPS & CPPOPS version of this operator in this file
+
+    return $cpp_source_group;
+};
+
+
 1;    # end of class

@@ -68,7 +68,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     my object $arguments_star = $self->{children}->[2];
 
-    my string_arrayref $method_arguments = [];
+    my string_arrayref $arguments = [];
 
 #RPerl::diag( 'in Method::Arguments->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $arguments_star = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_star) . "\n" );
 
@@ -77,11 +77,11 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     while ( exists $arguments_star_dclone->{children}->[0] ) {
         shift @{ $arguments_star_dclone->{children} };    # discard $comma
         shift @{ $arguments_star_dclone->{children} };    # discard $my
-        my object $method_arguments_type = shift @{ $arguments_star_dclone->{children} };
-        my object $method_arguments_name = shift @{ $arguments_star_dclone->{children} };
-        push @{$method_arguments}, ( $method_arguments_type->{children}->[0] . q{ } . ( substr $method_arguments_name->{attr}, 1 ) );
+        my object $arguments_type = shift @{ $arguments_star_dclone->{children} };
+        my object $arguments_name = shift @{ $arguments_star_dclone->{children} };
+        push @{$arguments}, ( $arguments_type->{children}->[0] . q{ } . ( substr $arguments_name->{attr}, 1 ) );
     }
-    $cpp_source_group->{CPP} .= join ', ', @{$method_arguments};
+    $cpp_source_group->{CPP} .= join ', ', @{$arguments};
     return $cpp_source_group;
 };
 

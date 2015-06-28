@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_010;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -308,8 +308,8 @@ EOL
         if ( $modes->{label} eq 'ON' ) {
             $cpp_source_group->{CPP} .= '// [[[ OO METHODS & SUBROUTINES ]]]' . "\n\n";
         }
-        $cpp_source_group->{CPP} .= ( join "\n", @{$method_definitions} ) . "\n\n";
-        $cpp_source_group->{CPP} .= ( join "\n", @{$subroutine_definitions} ) . "\n\n";
+        $cpp_source_group->{CPP} .= ( join "\n\n", @{$method_definitions} ) . "\n\n";
+        $cpp_source_group->{CPP} .= ( join "\n\n", @{$subroutine_definitions} ) . "\n\n";
     }
 
     my string_arrayref $properties_accessors_mutators = [];
