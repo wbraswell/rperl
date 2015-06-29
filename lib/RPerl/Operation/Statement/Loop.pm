@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::Loop;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_010;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement);
@@ -63,14 +63,35 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 };
 
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
-    ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $cpp_source_group
-        = {
-        CPP => q{// <<< RP::O::S::L __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
-            . "\n"
-        };
+    ( my object $self, my string $loop_label, my string_hashref $modes) = @_;
+    my string_hashref $cpp_source_group = { CPP => q{} };
 
-    #...
+#    RPerl::diag( 'in Loop->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in Loop->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $loop_label = ' . $loop_label . "\n" );
+
+    my string $self_class = ref $self;
+
+    # unwrap Loop_155, Loop_156, and Loop_157 from Statement_144
+    if ( $self_class eq 'Statement_144' ) {
+        $self = $self->{children}->[0];
+        $self_class = ref $self;
+    }
+
+    if (   ( $self_class eq 'Loop_155' )  # Loop -> LoopFor
+        or ( $self_class eq 'Loop_156' )  # Loop -> LoopForEach
+        or ( $self_class eq 'Loop_157' ) )  # Loop -> LoopWhile
+    {
+        my object $cpp_source_subgroup = $self->ast_to_cpp__generate__CPPOPS_CPPTYPES($loop_label, $modes);
+        RPerl::Generator::source_group_append( $cpp_source_group,
+            $cpp_source_subgroup );
+    }
+    else {
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+                . $self_class
+                . ' found where Loop_155, Loop_156, or Loop_157 expected, dying'
+        ) . "\n";
+    }
     return $cpp_source_group;
 };
 

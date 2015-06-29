@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_010;
+our $VERSION = 0.002_020;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -93,10 +93,10 @@ our string_hashref_method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = s
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group = { H => q{} };
 
-    $self             = $self->{children}->[0];                          # unwrap Subroutine_46 from MethodOrSubroutine_75
+    $self = $self->{children}->[0];    # unwrap Subroutine_46 from MethodOrSubroutine_75
     my string $return_type = $self->{children}->[1]->{children}->[0];
     my string $name        = $self->{children}->[2];
-    substr $name, 0, 1, '';                                                   # remove leading $ sigil
+    substr $name, 0, 1, '';            # remove leading $ sigil
     my object $arguments_optional = $self->{children}->[4];
     my string_arrayref $arguments = [];
 
@@ -118,10 +118,10 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group = { CPP => q{} };
 
-    $self             = $self->{children}->[0];                          # unwrap Subroutine_46 from MethodOrSubroutine_75
+    $self = $self->{children}->[0];    # unwrap Subroutine_46 from MethodOrSubroutine_75
     my string $return_type = $self->{children}->[1]->{children}->[0];
     my string $name        = $self->{children}->[2];
-    substr $name, 0, 1, '';                                                   # remove leading $ sigil
+    substr $name, 0, 1, '';            # remove leading $ sigil
     my object $arguments_optional = $self->{children}->[4];
     my string_arrayref $arguments = [];
     my object $operations_star    = $self->{children}->[5];
@@ -140,6 +140,16 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     $cpp_source_group->{CPP} .= ') {' . "\n";
 
     foreach my object $operation ( @{ $operations_star->{children} } ) {
+
+#        RPerl::diag( 'in Subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), have $operation = ' . "\n" . RPerl::Parser::rperl_ast__dump($operation) . "\n" );
+        # disable *_CHECK() and *_CHECKTRACE() data checking routines in CPPOPS_CPPTYPES mode, this is instead handled in xs_unpack_*() called by typemap.rperl
+        if (( exists $operation->{children}->[0]->{children}->[0]->{children}->[0] ) and
+            (( ( substr $operation->{children}->[0]->{children}->[0]->{children}->[0], -6, 6 ) eq '_CHECK' ) or
+            ( ( substr $operation->{children}->[0]->{children}->[0]->{children}->[0], -11, 11 ) eq '_CHECKTRACE' ))
+            )
+        {
+            next;
+        }
         $cpp_source_subgroup = $operation->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }

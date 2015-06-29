@@ -3,7 +3,7 @@ package RPerl::DataType::TypeInner;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -57,11 +57,24 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $cpp_source_group
-        = { CPP => q{// <<< RP::DT::TI __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
-            . "\n" };
+    my string_hashref $cpp_source_group = {};
 
-    #...
+#    RPerl::diag( 'in TypeInner->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+
+    my string $self_class = ref $self;
+    if ( $self_class eq 'TypeInner_211' ) {  # TypeInner -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN
+        my string $type = $self->{children}->[1]->{children}->[0];
+
+        $cpp_source_group->{CPP} = $type;
+    }
+    else {
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+                . $self_class
+                . ' found where TypeInner_211 expected, dying'
+        ) . "\n";
+    }
+
     return $cpp_source_group;
 };
 

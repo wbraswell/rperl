@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h 0.004_021
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h 0.004_050
 
 ////# [[[ INCLUDES ]]]
 #include <rperltypes_mode.h>  // for default definitions of __PERL__TYPES or __CPP__TYPES

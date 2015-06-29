@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_220;
+our $VERSION = 0.004_000;
 
 # [[[ CRITICS ]]]
 
@@ -22,6 +22,7 @@ use RPerl::Generator;
 use File::Temp qw(tempfile);
 use File::Basename;
 use English qw(-no_match_vars);    # for $OSNAME; why isn't this included from 'require RPerl::Config', which is included from 'use RPerl' above?
+use IPC::Cmd qw(can_run);  # to check for `astyle`
 
 # [[[ SUBROUTINES ]]]
 
@@ -223,6 +224,11 @@ our void $save_source_files = sub {
         
         # deferred, finally set path to H module header file in CPP module file
         $source_group->{CPP} =~ s/__NEED_MODULE_HEADER_PATH/$module_header_path/gxms;
+        
+        # deferred, finally change hard-coded PERLOPS_PERLTYPES to CPPOPS_*TYPES
+        my string $mode_tagline = $modes->{ops} . 'OPS_' . $modes->{types} . 'TYPES';
+        $source_group->{H} =~ s/PERLOPS_PERLTYPES/$mode_tagline/gxms;
+        $source_group->{CPP} =~ s/PERLOPS_PERLTYPES/$mode_tagline/gxms;
 
         my string $module_name = $module_path;
         
@@ -315,13 +321,29 @@ our void $save_source_files = sub {
                 or croak("\nERROR ECVCOFI09, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot close file,\ncroaking: $OS_ERROR");
         }
 
+        # format output code
         if ( ( $suffix_key eq 'PMC' ) or ( $suffix_key eq 'EXE' ) ) {
-
-            #            `perltidy -pbp --ignore-side-comment-lengths --converge -b -nst -bext='/' -q $file_name`;
-            system 'perltidy', '-pbp', '--ignore-side-comment-lengths', '--converge', '-b', '-nst', q{-bext='/'}, '-q', $file_name;
+            my string $perltidy_path = can_run('perltidy');
+            if (defined $perltidy_path) {
+                system $perltidy_path, '-pbp', '--ignore-side-comment-lengths', '--converge', '-b', '-nst', q{-bext='/'}, '-q', $file_name;
+            }
+            else {
+                RPerl::warning( 'WARNING WCVCOFO00, COMPILER, PERL CODE FORMATTING: Perltidy command `perltidy` not found, abandoning formatting' . "\n" );
+            }
+        }
+        elsif ( ( $suffix_key eq 'H' ) or ( $suffix_key eq 'CPP' ) ) {
+            my string $astyle_path = can_run('astyle');
+            if (defined $astyle_path) {
+#                system $astyle_path, '-q', $file_name;
+                # don't insert extra newlines, which causes accessors, mutators, and ops_types reporting subroutines to be broken into multiple lines
+                system $astyle_path, '-q', '--keep-one-line-blocks', '--keep-one-line-statements', $file_name;
+                unlink ($file_name . '.orig');
+            }
+            else {
+                RPerl::warning( 'WARNING WCVCOFO01, COMPILER, C++ CODE FORMATTING: Artistic Style command `astyle` not found, abandoning formatting' . "\n" );
+            }
         }
     }
-
 };
 
 # Sub-Compile from C++-Parsable String to Perl-Linkable XS & Machine-Readable Binary

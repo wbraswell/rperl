@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::SubExpression::ArrayDereference;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_010;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::SubExpression);
@@ -26,7 +26,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in ArrayDereference->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    # unwrap ArrayDereference_189 and ArrayDereference_189 from SubExpression_134
+    # unwrap ArrayDereference_189 and ArrayDereference_190 from SubExpression_134
     if ( $self_class eq 'SubExpression_134' ) {  # SubExpression -> ArrayDereference
         $self = $self->{children}->[0];
     }
@@ -81,12 +81,9 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $cpp_source_group
-        = { CPP => q{// <<< RP::O::E::SE::AD __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
-            . "\n" };
 
-    #...
-    return $cpp_source_group;
+#    RPerl::diag( 'in ArrayDereference->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+    die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP12, CODE GENERATOR, ABSTRACT SYNTAX TO C++: array dereference not supported in CPPOPS_CPPTYPES mode, dying' ) . "\n";
 };
 
 1;    # end of class

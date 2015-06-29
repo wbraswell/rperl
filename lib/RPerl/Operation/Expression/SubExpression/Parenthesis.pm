@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::SubExpression::Parenthesis;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::SubExpression);
@@ -54,14 +54,29 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     return $cpp_source_group;
 };
 
+# DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES code generation are exactly equivalent
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $cpp_source_group
-        = { CPP =>
-              q{// <<< RP::O::E::SE::P __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
-            . "\n" };
+    my string_hashref $cpp_source_group = { CPP => q{} };
 
-    #...
+#    RPerl::diag( 'in Parenthesis->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+
+    if ( ( ref $self ) ne 'SubExpression_137' ) {
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+                . ( ref $self )
+                . ' found where SubExpression_137 expected, dying' )
+            . "\n";
+    }
+
+    my string $lparen = $self->{children}->[0];
+    my string $rparen = $self->{children}->[2];
+    
+    $cpp_source_group->{CPP} .= $lparen;
+    my string_hashref $cpp_source_subgroup = $self->{children}->[1]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+    RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+    $cpp_source_group->{CPP} .= $rparen;
+
     return $cpp_source_group;
 };
 

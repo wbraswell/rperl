@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::VariableModification;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_010;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement);

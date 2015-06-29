@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::Operator::NamedUnary;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_010;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::Operator);
@@ -36,6 +36,8 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     my string $operator_name;
     if (( $self_class eq 'Operator_94' ) or    # Operator -> OP10_NAMED_UNARY SubExpression
         ( $self_class eq 'Operator_95' )) {  # Operator -> OP10_NAMED_UNARY
+        # remove trailing whitespace, caused by the need to have the grammar match some tokens with a trailing whitespace, as with 'scalar ', etc.
+        $self->{children}->[0] =~ s/^(\w+)\s*$/$1/gxms;
         $operator_name = $self->{children}->[0];
     }
     else {
@@ -45,7 +47,6 @@ our string_hashref_method $ast_to_rperl__generate = sub {
                 . ' found where Operator_94 or Operator_95 expected, dying' )
             . "\n";
     }
-    $operator_name =~ s/^(scalar)\s*$/$1/gxms;  # remove trailing whitespace, as with 'scalar ', etc.
 #    RPerl::diag( 'in Operator::NamedUnary->ast_to_rperl__generate(), have $operator_name = ' . q{'} . $operator_name . q{'} . "\n" );
 
     if ( not exists $NAMES->{$operator_name} ) {
@@ -59,10 +60,8 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     my string $operator_class  = $NAMES->{$operator_name};
     my object $operator_object = $operator_class->new();
 
-    $rperl_source_subgroup
-        = $operator_object->ast_to_rperl__generate( $self, $modes );
-    RPerl::Generator::source_group_append( $rperl_source_group,
-        $rperl_source_subgroup );
+    $rperl_source_subgroup = $operator_object->ast_to_rperl__generate( $self, $modes );
+    RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
 
     return $rperl_source_group;
 };
@@ -90,6 +89,8 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my string $operator_name;
     if (( $self_class eq 'Operator_94' ) or    # Operator -> OP10_NAMED_UNARY SubExpression
         ( $self_class eq 'Operator_95' )) {  # Operator -> OP10_NAMED_UNARY
+        # remove trailing whitespace, caused by the need to have the grammar match some tokens with a trailing whitespace, as with 'scalar ', etc.
+        $self->{children}->[0] =~ s/^(\w+)\s*$/$1/gxms;
         $operator_name = $self->{children}->[0];
     }
     else {
@@ -99,7 +100,6 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 . ' found where Operator_94 or Operator_95 expected, dying' )
             . "\n";
     }
-    $operator_name =~ s/^(scalar)\s*$/$1/gxms;  # remove trailing whitespace, as with 'scalar ', etc.
 #    RPerl::diag( 'in Operator::NamedUnary->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $operator_name = ' . q{'} . $operator_name . q{'} . "\n" );
 
     if ( not exists $NAMES->{$operator_name} ) {

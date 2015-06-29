@@ -1,3 +1,8 @@
+# [[[ DOCUMENTATION ]]]
+# http://perldoc.perl.org/functions/return.html
+#     SUPPORTED:  return EXPR
+#     SUPPORTED:  return
+
 # [[[ HEADER ]]]
 package RPerl::Operation::Statement::OperatorVoid::Named::Return;
 use strict;
@@ -16,8 +21,9 @@ use RPerl::Operation::Statement::OperatorVoid::Named;
 ## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
 
 # [[[ CONSTANTS ]]]
-use constant NAME => my string $TYPED_NAME = 'return';
-
+use constant NAME_PERLOPS_PERLTYPES => my string $TYPED_NAME_PERLOPS_PERLTYPES = 'return';
+use constant NAME_CPPOPS_PERLTYPES  => my string $TYPED_NAME_CPPOPS_PERLTYPES  = 'return';
+use constant NAME_CPPOPS_CPPTYPES   => my string $TYPED_NAME_CPPOPS_CPPTYPES   = 'return';
 # DEV NOTE: ARGUMENTS_MIN of 0 can be ignored, no such thing as negative number of args!
 use constant ARGUMENTS_MIN => my integer $TYPED_ARGUMENTS_MIN = 0; # call 'return;' for all subroutines which return void
 use constant ARGUMENTS_MAX => my integer $TYPED_ARGUMENTS_MAX = 1; # call 'return @{[ELEM0, ELEM1, ...]};' for all subroutines which return an array; disallow return(ELEM0, ELEM1, ...) multiple return values
@@ -58,7 +64,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
                     . ' exceeds maximum argument limit '
                     . ARGUMENTS_MAX()
                     . ' for operator ' . q{'}
-                    . NAME() . q{'}
+                    . NAME_PERLOPS_PERLTYPES() . q{'}
                     . ', dying' . "\n";
             }
 #            RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_rperl__generate(), have $arguments = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments) . "\n" );
@@ -98,7 +104,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
                 . ' exceeds maximum argument limit '
                 . ARGUMENTS_MAX()
                 . ' for operator ' . q{'}
-                . NAME() . q{'}
+                . NAME_PERLOPS_PERLTYPES() . q{'}
                 . ', dying' . "\n";
         }
 #        RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_rperl__generate(), have $arguments = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments) . "\n" );
@@ -145,14 +151,111 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     return $cpp_source_group;
 };
 
+# DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES code generation are exactly equivalent
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
-    ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $cpp_source_group
-        = { CPP =>
-            q{// <<< RP::O::S::OV::N::R __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
-            . "\n" };
+    (   my object $self,
+        my string_hashref $modes,
+        my object $operator_void_named)
+        = @_;
+    my string_hashref $cpp_source_group = { CPP => q{} };
 
-    #...
+#    RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $operator_void_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_void_named) . "\n" );
+
+    if ( ref $operator_void_named eq 'OperatorVoid_114' ) { # OperatorVoid -> OP01_NAMED_VOID_SCOLON
+        $cpp_source_group->{CPP} .= $operator_void_named->{children}->[0]; # name semicolon
+    }
+    elsif ( ref $operator_void_named eq 'OperatorVoid_115' ) {  # OperatorVoid -> OP01_NAMED_VOID_LPAREN OPTIONAL-32 ')' ';'
+
+# DEV NOTE: if $arguments_optional is empty, will generate 'return();' which perltidy will change to 'return ();', both return undef, not empty array, so it's okay
+        $cpp_source_group->{CPP}
+            .= $operator_void_named->{children}->[0];    # name lparen
+        my object $arguments_optional = $operator_void_named->{children}->[1];
+        if ( exists $arguments_optional->{children}->[0] ) {
+            my object $arguments       = $arguments_optional->{children}->[0];
+            my integer $argument_count = $arguments->length();
+            if ( $argument_count > ARGUMENTS_MAX() ) {
+                die
+                    'ERROR ECVGEASCP03, CODE GENERATOR, ABSTRACT SYNTAX TO C++:'
+                    . "\n"
+                    . 'Argument count '
+                    . $argument_count
+                    . ' exceeds maximum argument limit '
+                    . ARGUMENTS_MAX()
+                    . ' for operator ' . q{'}
+                    . NAME_PERLOPS_PERLTYPES() . q{'}
+                    . ', dying' . "\n";
+            }
+#            RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $arguments = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments) . "\n" );
+            if ((( ref $arguments->{children}->[0] ) eq 'ListElement_181' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
+            {
+                my object $arguments_subexpression = $arguments->{children}->[0]->{children}->[0];
+                # look inside nested parenthesis-as-subexpressions, always length 1 so no need to check length
+                while ((ref $arguments_subexpression) eq 'SubExpression_137') {  # RPerl::Operation::Expression::SubExpression::Parenthesis
+                    $arguments_subexpression = $arguments_subexpression->{children}->[1];
+                }
+                if (( ref $arguments_subexpression ) eq 'SubExpression_134' ) {
+                    die 'ERROR ECVGEASCP04, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying' . "\n";
+                }
+                elsif (( ref $arguments_subexpression ) eq 'SubExpression_136' ) {
+                    die 'ERROR ECVGEASCP05, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying' . "\n";
+                }
+            }
+            my string_hashref $cpp_source_subgroup
+                = $arguments->ast_to_cpp__generate__CPPOPS_CPPTYPES( $modes, $self );
+            RPerl::Generator::source_group_append( $cpp_source_group,
+                $cpp_source_subgroup );
+        }
+        $cpp_source_group->{CPP} .= $operator_void_named->{children}->[2]
+            . $operator_void_named->{children}->[3];    # rparen semicolon
+    }
+    elsif ( ref $operator_void_named eq 'OperatorVoid_116' ) { # OperatorVoid -> OP01_NAMED_VOID ListElements ';'
+        $cpp_source_group->{CPP}
+            .= $operator_void_named->{children}->[0] . q{ };    # name
+        my object $arguments       = $operator_void_named->{children}->[1];
+        my integer $argument_count = $arguments->length();
+        if ( $argument_count > ARGUMENTS_MAX() ) {
+            die
+                'ERROR ECVGEASCP03, CODE GENERATOR, ABSTRACT SYNTAX TO C++:'
+                . "\n"
+                . 'Argument count '
+                . $argument_count
+                . ' exceeds maximum argument limit '
+                . ARGUMENTS_MAX()
+                . ' for operator ' . q{'}
+                . NAME_PERLOPS_PERLTYPES() . q{'}
+                . ', dying' . "\n";
+        }
+#        RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $arguments = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments) . "\n" );
+        if ((( ref $arguments->{children}->[0] ) eq 'ListElement_181' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
+        {
+            my object $arguments_subexpression = $arguments->{children}->[0]->{children}->[0];
+            # look inside nested parenthesis-as-subexpressions, always length 1 so no need to check length
+            while ((ref $arguments_subexpression) eq 'SubExpression_137') {  # RPerl::Operation::Expression::SubExpression::Parenthesis
+                $arguments_subexpression = $arguments_subexpression->{children}->[1];
+            }
+            if (( ref $arguments_subexpression ) eq 'SubExpression_134' ) {
+                die 'ERROR ECVGEASCP04, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying' . "\n";
+            }
+            elsif (( ref $arguments_subexpression ) eq 'SubExpression_136' ) {
+                die 'ERROR ECVGEASCP05, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying' . "\n";
+            }
+        }
+        my string_hashref $cpp_source_subgroup
+            = $arguments->ast_to_cpp__generate__CPPOPS_CPPTYPES( $modes, $self );
+        RPerl::Generator::source_group_append( $cpp_source_group,
+            $cpp_source_subgroup );
+        $cpp_source_group->{CPP} .= $operator_void_named->{children}->[2]; # semicolon
+    }
+    else {
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+                . ( ref $operator_void_named )
+                . ' found where OperatorVoid_114, OperatorVoid_115, or OperatorVoid_116 expected, dying'
+        ) . "\n";
+    }
+
+    $cpp_source_group->{CPP} .= "\n";
     return $cpp_source_group;
 };
 

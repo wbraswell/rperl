@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::Loop::For;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement::Loop);
@@ -78,12 +78,48 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $cpp_source_group
-        = { CPP =>
-              q{// <<< RP::O::S::L::F __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
-            . "\n" };
+    my string_hashref $cpp_source_group = { CPP => q{} };
 
-    #...
+#    RPerl::diag( 'in Loop::For->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+
+    my string $self_class = ref $self;
+
+    # unwrap LoopFor_158 from Loop_155
+    if ( $self_class eq 'Loop_155' ) {    # Loop -> LoopFor
+        $self = $self->{children}->[0];
+        $self_class = ref $self;
+    }
+
+    # LoopFor -> 'for' MY TYPE_INTEGER VARIABLE_SYMBOL LPAREN SubExpression OP17_LIST_RANGE SubExpression ')' CodeBlock
+    if ( $self_class eq 'LoopFor_158' ) {
+        my string $for             = $self->{children}->[0];
+        my string $type_integer    = $self->{children}->[2];
+        my string $variable_symbol = $self->{children}->[3];
+        my string $left_paren      = $self->{children}->[4];
+        my object $subexpression0  = $self->{children}->[5];
+        my object $subexpression1  = $self->{children}->[7];
+        my string $right_paren     = $self->{children}->[8];
+        my object $codeblock       = $self->{children}->[9];
+
+        substr $variable_symbol, 0, 1, '';  # remove leading $ sigil
+
+        $cpp_source_group->{CPP} .= $for . q{ } . $left_paren . q{ } . $type_integer . q{ } . $variable_symbol . q{ = };
+        my object $cpp_source_subgroup = $subexpression0->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+        $cpp_source_group->{CPP} .= q{; } . $variable_symbol . ' <= ';
+        $cpp_source_subgroup = $subexpression1->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+        $cpp_source_group->{CPP} .= q{; } . $variable_symbol . '++ ' . $right_paren . q{ };
+        $cpp_source_subgroup = $codeblock->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+    }
+    else {
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+                . $self_class
+                . ' found where LoopFor_158 expected, dying' )
+            . "\n";
+    }
     return $cpp_source_group;
 };
 

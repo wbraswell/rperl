@@ -3,7 +3,7 @@ package RPerl::Operation::Statement;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_010;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation);
@@ -86,21 +86,20 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         or ( $child0_class eq 'Statement_146' )
         or ( $child0_class eq 'Statement_147' ) )
     {
-        $cpp_source_subgroup
-            = $child0->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
-        RPerl::Generator::source_group_append( $cpp_source_group,
-            $cpp_source_subgroup );
+        $cpp_source_subgroup = $child0->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
 
     # Loop
     elsif ( $child0_class eq 'Statement_144' ) {
-        my $optional_loop_label = $child0->{children}->[0];
-        my $loop = $child0->{children}->[1];
+        my object $optional_loop_label = $child0->{children}->[0];
+        my object $loop = $child0->{children}->[1];
+        my string $loop_label = undef;
 #        RPerl::diag( 'in Statement->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $optional_loop_label = ' . "\n" . RPerl::Parser::rperl_ast__dump($optional_loop_label) . "\n" );
         if ( exists $optional_loop_label->{children}->[0] ) {  # LoopLabel COLON
-            $cpp_source_group->{CPP} .= "\n" . $optional_loop_label->{children}->[0]->{children}->[0] . $optional_loop_label->{children}->[1]->{attr} . "\n";
+            $loop_label = $optional_loop_label->{children}->[0]->{children}->[0];
         }
-        $cpp_source_subgroup = $loop->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        $cpp_source_subgroup = $loop->ast_to_cpp__generate__CPPOPS_CPPTYPES($loop_label, $modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
     else {

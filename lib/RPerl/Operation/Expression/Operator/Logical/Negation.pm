@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::Operator::Logical::Negation;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::Operator::Logical);
@@ -57,14 +57,32 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     return $cpp_source_group;
 };
 
+# DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES code generation are exactly equivalent
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $cpp_source_group
-        = { CPP =>
-            q{// <<< RP::O::E::O::Lo::N __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
-            . "\n" };
+    my string_hashref $cpp_source_group = { CPP => q{} };
 
-    #...
+#    RPerl::diag( 'in Operator::Logical::Negation->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+
+    my string $self_class = ref $self;
+    if (( $self_class eq 'Operator_86' ) # Operator -> OP05_LOGICAL_NEG SubExpression
+        or ( $self_class eq 'Operator_104' ) # Operator -> OP22_LOGICAL_NEG SubExpression
+        )
+    {
+        $cpp_source_group->{CPP} .= $self->{children}->[0] . q{ };
+        my string_hashref $cpp_source_subgroup
+            = $self->{children}->[1]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group,
+            $cpp_source_subgroup );
+    }
+    else {
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+                . $self_class
+                . ' found where Operator_86 or Operator_104 expected, dying' )
+            . "\n";
+    }
+
     return $cpp_source_group;
 };
 

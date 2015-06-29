@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble 0.004_020
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble 0.004_050
 
 // [[[ INCLUDES ]]]
 #include <RPerl/Algorithm/Sort/Bubble.h>
@@ -40,7 +40,6 @@ SV* integer_bubblesort(SV* integer_data) {
     integer_arrayref_CHECKTRACE(integer_data, "integer_data", "integer_bubblesort()");
 
     integer is_sorted = 0;
-    integer i;
     AV* integer_data_av = (AV*) SvRV(integer_data);
     integer integer_data_length = av_len(integer_data_av) + 1;
     SV* integer_data_i = newSV(0);
@@ -48,13 +47,13 @@ SV* integer_bubblesort(SV* integer_data) {
 
     SV* swap = newSV(0);
 
-    while (not(is_sorted)) {
+    while ( not is_sorted ) {
         is_sorted = 1;
-        for (i = 0; i < (integer_data_length - 1); i++) {
+        for ( integer i = 0; i <= (integer_data_length - 2); i++ ) {
             integer_data_i = AV_ELEMENT(integer_data_av, i);
             integer_data_i_plus_1 = AV_ELEMENT(integer_data_av, (i + 1));
 
-            if (SvIV(integer_data_i) > SvIV(integer_data_i_plus_1)) {
+            if ( SvIV(integer_data_i) > SvIV(integer_data_i_plus_1) ) {
                 is_sorted = 0;
                 integer_data_i = AV_ELEMENT(integer_data_av, i);
                 swap = integer_data_i;
@@ -65,7 +64,7 @@ SV* integer_bubblesort(SV* integer_data) {
         }
     }
 
-    return(integer_data);
+    return integer_data;
 }
 
 SV* number_bubblesort(SV* number_data) {
@@ -74,20 +73,19 @@ SV* number_bubblesort(SV* number_data) {
     number_arrayref_CHECKTRACE(number_data, "number_data", "number_bubblesort()");
 
     integer is_sorted = 0;
-    integer i;
     AV* number_data_av = (AV*) SvRV(number_data);
     integer number_data_length = av_len(number_data_av) + 1;
     SV* number_data_i = newSV(0);
     SV* number_data_i_plus_1 = newSV(0);
 
     SV* swap = newSV(0);
-    while (not(is_sorted)) {
+    while ( not is_sorted ) {
         is_sorted = 1;
-        for (i = 0; i < (number_data_length - 1); i++) {
+        for ( integer i = 0; i <= (number_data_length - 2); i++ ) {
             number_data_i = AV_ELEMENT(number_data_av, i);
             number_data_i_plus_1 = AV_ELEMENT(number_data_av, (i + 1));
 
-            if (SvNV(number_data_i) > SvNV(number_data_i_plus_1)) {
+            if ( SvNV(number_data_i) > SvNV(number_data_i_plus_1) ) {
                 is_sorted = 0;
                 number_data_i = AV_ELEMENT(number_data_av, i);
                 swap = number_data_i;
@@ -97,25 +95,27 @@ SV* number_bubblesort(SV* number_data) {
             }
         }
     }
-    return(number_data);
+    return number_data;
 }
 
 SV* uninherited__Bubble(SV* person) {
-    cout << "in CPPOPS_PERLTYPES Bubble::uninherited__Bubble(), received person = '" << SvPV_nolen(person) << "', MITOCHONDRIAL\n"; return(newSVpv("Bubble::uninherited__Bubble() RULES! CPPOPS_PERLTYPES", 0));
+    cout << "in CPPOPS_PERLTYPES Bubble::uninherited__Bubble(), received person = '" << SvPV_nolen(person) << "', MITOCHONDRIAL\n";
+    return (newSVpv("Bubble::uninherited__Bubble() RULES! CPPOPS_PERLTYPES", 0));
 }
 
 SV* uninherited(SV* person) {
-    cout << "in CPPOPS_PERLTYPES Bubble::uninherited(), received person = '" << SvPV_nolen(person) << "', TETRAHEDRON\n"; return(newSVpv("Bubble::uninherited() ROCKS! CPPOPS_PERLTYPES", 0));
+    cout << "in CPPOPS_PERLTYPES Bubble::uninherited(), received person = '" << SvPV_nolen(person) << "', TETRAHEDRON\n";
+    return (newSVpv("Bubble::uninherited() ROCKS! CPPOPS_PERLTYPES", 0));
 }
 
 SV* integer_bubblesort__typetest0(SV* lucky_integers) {
     integer_arrayref_CHECKTRACE(lucky_integers, "lucky_integers", "integer_bubblesort__typetest0()");
-    return(newSVpvf("%s%s", SvPV_nolen(integer_arrayref_to_string(integer_bubblesort(lucky_integers))), "CPPOPS_PERLTYPES"));
+    return (newSVpvf("%s%s", SvPV_nolen(integer_arrayref_to_string(integer_bubblesort(lucky_integers))), "CPPOPS_PERLTYPES"));
 }
 
 SV* number_bubblesort__typetest0(SV* lucky_numbers) {
     number_arrayref_CHECKTRACE(lucky_numbers, "lucky_numbers", "number_bubblesort__typetest0()");
-    return(newSVpvf("%s%s", SvPV_nolen(number_arrayref_to_string(number_bubblesort(lucky_numbers))), "CPPOPS_PERLTYPES"));
+    return (newSVpvf("%s%s", SvPV_nolen(number_arrayref_to_string(number_bubblesort(lucky_numbers))), "CPPOPS_PERLTYPES"));
 }
 
 // [[[<<< END PERL TYPES >>>]]]
@@ -148,20 +148,19 @@ void RPerl__Algorithm__Sort__Bubble::inherited(string person) {
 
 integer_arrayref integer_bubblesort(integer_arrayref integer_data) {
     integer is_sorted = 0;
-    integer i;
     integer integer_data_length = integer_data.size();
     integer integer_data_i = -9999;
     integer integer_data_i_plus_1 = -9999;
 
     integer swap = -9999;
 
-    while (not(is_sorted)) {
+    while ( not is_sorted ) {
         is_sorted = 1;
-        for (i = 0; i < (integer_data_length - 1); i++) {
+        for ( integer i = 0; i <= (integer_data_length - 2); i++ ) {
             integer_data_i = integer_data[i];
             integer_data_i_plus_1 = integer_data[(i + 1)];
 
-            if (integer_data_i > integer_data_i_plus_1) {
+            if ( integer_data_i > integer_data_i_plus_1 ) {
                 is_sorted = 0;
                 swap = integer_data_i;
                 integer_data[i] = integer_data_i_plus_1;
@@ -170,22 +169,21 @@ integer_arrayref integer_bubblesort(integer_arrayref integer_data) {
         }
     }
 
-    return(integer_data);
+    return integer_data;
 }
 
 number_arrayref number_bubblesort(number_arrayref number_data) {
     integer is_sorted = 0;
-    integer i;
     integer number_data_length = number_data.size();
     number number_data_i = -9999;
     number number_data_i_plus_1 = -9999;
     number swap = -9999;
-    while (not(is_sorted)) {
+    while ( not is_sorted ) {
         is_sorted = 1;
-        for (i = 0; i < (number_data_length - 1); i++) {
+        for ( integer i = 0; i <= (number_data_length - 2); i++ ) {
             number_data_i = number_data[i];
             number_data_i_plus_1 = number_data[(i + 1)];
-            if (number_data_i > number_data_i_plus_1) {
+            if ( number_data_i > number_data_i_plus_1 ) {
                 is_sorted = 0;
                 swap = number_data_i;
                 number_data[i] = number_data_i_plus_1;
@@ -193,23 +191,27 @@ number_arrayref number_bubblesort(number_arrayref number_data) {
             }
         }
     }
-    return(number_data);
+    return number_data;
 }
 
 string uninherited__Bubble(string person) {
-    cout << "in CPPOPS_CPPTYPES Bubble::uninherited__Bubble(), received person = '" << person << "', MITOCHONDRIAL\n"; return((string)"Bubble::uninherited__Bubble() RULES! CPPOPS_CPPTYPES");
+    cout << "in CPPOPS_CPPTYPES Bubble::uninherited__Bubble(), received person = '" << person << "', MITOCHONDRIAL\n";
+    string retval = "Bubble::uninherited__Bubble() RULES! CPPOPS_CPPTYPES";
+    return retval;
 }
 
 string uninherited(string person) {
-    cout << "in CPPOPS_CPPTYPES Bubble::uninherited(), received person = '" << person << "', TETRAHEDRON\n"; return((string)"Bubble::uninherited() ROCKS! CPPOPS_CPPTYPES");
+    cout << "in CPPOPS_CPPTYPES Bubble::uninherited(), received person = '" << person << "', TETRAHEDRON\n";
+    string retval = "Bubble::uninherited() ROCKS! CPPOPS_CPPTYPES";
+    return retval;
 }
 
 string integer_bubblesort__typetest0(integer_arrayref lucky_integers) {
-    return(integer_arrayref_to_string(integer_bubblesort(lucky_integers)) + "CPPOPS_CPPTYPES");
+    return (integer_arrayref_to_string(integer_bubblesort(lucky_integers)) + "CPPOPS_CPPTYPES");
 }
 
 string number_bubblesort__typetest0(number_arrayref lucky_numbers) {
-    return(number_arrayref_to_string(number_bubblesort(lucky_numbers)) + "CPPOPS_CPPTYPES");
+    return (number_arrayref_to_string(number_bubblesort(lucky_numbers)) + "CPPOPS_CPPTYPES");
 }
 
 // [[[<<< END CPP TYPES >>>]]]

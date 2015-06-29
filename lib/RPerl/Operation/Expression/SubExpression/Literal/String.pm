@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::SubExpression::Literal::String;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_010;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::SubExpression::Literal);
@@ -63,12 +63,22 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             substr $cpp_source_group->{CPP}, -1, 1, q{"};
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP04, CODE GENERATOR, ABSTRACT SYNTAX TO C++: string literal started with single-quote but not terminated with single-quote, dying' ) . "\n";
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP09, CODE GENERATOR, ABSTRACT SYNTAX TO C++: string literal started with single-quote but not terminated with single-quote, dying' ) . "\n";
         }
     }
-    else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP03, CODE GENERATOR, ABSTRACT SYNTAX TO C++: string literal not started with single-quote, dying' ) . "\n";
+    elsif ((substr $cpp_source_group->{CPP}, 0, 2) eq 'q{') {
+        if ((substr $cpp_source_group->{CPP}, -1, 1) eq '}') {
+            substr $cpp_source_group->{CPP}, 0, 2, q{"};
+            substr $cpp_source_group->{CPP}, -1, 1, q{"};
+        }
+        else {
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: string literal started with q-left-brace single-quote but not terminated with right-brace, dying' ) . "\n";
+        }
     }
+# NEED ADD ERROR CHECKING: double-quoted strings are okay for non-sigils containing newline or tab, non-quoted strings are not okay?
+#    else {
+#        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP08, CODE GENERATOR, ABSTRACT SYNTAX TO C++: string literal not started with single-quote, dying' ) . "\n";
+#    }
 
     return $cpp_source_group;
 };
