@@ -3,7 +3,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_040;
+our $VERSION = 0.004_043;
 
 # [[[ OO INHERITANCE ]]]
 #use RPerl::CompileUnit::Module::Class;
@@ -50,7 +50,7 @@ our void $rperl_source__check_syntax = sub {
 
     RPerl::verbose 'PARSE PHASE 0: Check Perl syntax...    ';
 
-    my string $nul = $^O eq 'MSWin32' ? 'NUL' : '/dev/null';
+    my string $nul = $OSNAME eq 'MSWin32' ? 'NUL' : '/dev/null';
     my string $rperl_source__perl_syntax_command
         = q{perl -Iblib/lib -M"warnings FATAL=>q(all)" -cw }
         . $rperl_source__file_name;
@@ -61,9 +61,9 @@ our void $rperl_source__check_syntax = sub {
 
 #my string $rperl_source__perl_syntax_command = q{perl -Iblib/lib -cw } . $rperl_source__file_name;
 
-#RPerl::diag "in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_command =\n$rperl_source__perl_syntax_command\n";
-#RPerl::diag "in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_command__no_output =\n$rperl_source__perl_syntax_command__no_output\n\n";
-#RPerl::diag "in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_command__all_output =\n$rperl_source__perl_syntax_command__all_output\n\n";
+#RPerl::diag("in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_command =\n$rperl_source__perl_syntax_command\n");
+#RPerl::diag("in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_command__no_output =\n$rperl_source__perl_syntax_command__no_output\n\n");
+#RPerl::diag("in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_command__all_output =\n$rperl_source__perl_syntax_command__all_output\n\n");
 
 #my integer $rperl_source__perl_syntax_retval = system $rperl_source__perl_syntax_command;
     my integer $rperl_source__perl_syntax_retval
@@ -74,10 +74,10 @@ our void $rperl_source__check_syntax = sub {
     my string $rperl_source__perl_syntax_retstring
         = `$rperl_source__perl_syntax_command__all_output`;
 
-#RPerl::diag "in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_retval = $rperl_source__perl_syntax_retval\n";
-#RPerl::diag "in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_retstring =\n$rperl_source__perl_syntax_retstring\n";
-#RPerl::diag "in rperl_source__check_syntax(), have \$OS_ERROR = $OS_ERROR\n";  # $OS_ERROR seems to contain random error messages that I can't trace?
-#RPerl::diag "in rperl_source__check_syntax(), have \$? = $?\n";
+#RPerl::diag("in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_retval = $rperl_source__perl_syntax_retval\n");
+#RPerl::diag("in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_retstring =\n$rperl_source__perl_syntax_retstring\n");
+#RPerl::diag("in rperl_source__check_syntax(), have \$OS_ERROR = $OS_ERROR\n");  # $OS_ERROR seems to contain random error messages that I can't trace?
+#RPerl::diag("in rperl_source__check_syntax(), have \$? = $?\n");
 
 # NEED ADD ERROR CHECKING: ECVPAPL00 FILE DOES NOT EXIST, ECVPAPL01 FILE IS EMPTY
 
@@ -97,7 +97,7 @@ our void $rperl_source__check_syntax = sub {
     @{$rperl_source__perl_syntax_retstring_lines} = split /\n/xms,
         $rperl_source__perl_syntax_retstring;
 
-#    RPerl::diag 'in rperl_source__check_syntax(), have $rperl_source__perl_syntax_retstring_lines = ', "\n", Dumper($rperl_source__perl_syntax_retstring_lines), "\n";
+#    RPerl::diag('in rperl_source__check_syntax(), have $rperl_source__perl_syntax_retstring_lines = ' . "\n" . Dumper($rperl_source__perl_syntax_retstring_lines) . "\n");
     my string_arrayref $rperl_source__perl_syntax_retstring_warnings = [];
     foreach my string $rperl_source__perl_syntax_retstring_line (
         @{$rperl_source__perl_syntax_retstring_lines} )
@@ -145,9 +145,9 @@ our void $rperl_source__criticize = sub {
     my integer $rperl_source__critic_num_violations
         = scalar @rperl_source__critic_violations;
 
-#RPerl::diag "in rperl_source__criticize(), have \$rperl_source__critic_num_violations = $rperl_source__critic_num_violations\n";
+#RPerl::diag("in rperl_source__criticize(), have \$rperl_source__critic_num_violations = $rperl_source__critic_num_violations\n");
 #    my string $rperl_source__critic_dumperified_violations = Dumper( \@rperl_source__critic_violations );
-#RPerl::diag "in rperl_source__criticize(), have Dumper(\\\@rperl_source__critic_violations) =\n" . $rperl_source__critic_dumperified_violations . "\n";
+#RPerl::diag("in rperl_source__criticize(), have Dumper(\\\@rperl_source__critic_violations) =\n" . $rperl_source__critic_dumperified_violations . "\n");
 
 # NEED ADD ERROR CHECKING: ECVPAPC00 FILE DOES NOT EXIST, ECVPAPC01 FILE IS EMPTY; or would that be redundant with ECVPAPL0x error checking when added above?
 
@@ -249,8 +249,8 @@ our void $rperl_source__parse = sub {
 
     RPerl::verbose ' done.' . "\n";
 
-#    RPerl::diag "in rperl_source__parse(), have \$rperl_ast->str() =\n" . $rperl_ast->str() . "\n\n";
-#    RPerl::diag "in rperl_source__parse(), have \$rperl_ast =\n" . rperl_ast__dump($rperl_ast) . "\n\n";
+#    RPerl::diag("in rperl_source__parse(), have \$rperl_ast->str() =\n" . $rperl_ast->str() . "\n\n");
+#    RPerl::diag("in rperl_source__parse(), have \$rperl_ast =\n" . rperl_ast__dump($rperl_ast) . "\n\n");
 
     return ($rperl_ast);
 };

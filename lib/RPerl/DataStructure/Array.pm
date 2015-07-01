@@ -1,7 +1,7 @@
 package RPerl::DataStructure::Array;
 use strict;
 use warnings;
-our $VERSION = 0.003_010;
+our $VERSION = 0.003_011;
 use parent ('RPerl::DataStructure');
 use RPerl::DataStructure;
 use Carp;
@@ -11,7 +11,7 @@ use RPerl::DataStructure::Array::SubTypes;
 
 # [[[ INCLUDES ]]]
 # for type-checking via SvIOKp(), SvNOKp(), and SvPOKp(); inside INIT to delay until after 'use MyConfig'
-#INIT { RPerl::diag "in Array.pm, loading C++ helper functions for type-checking...\n"; }
+#INIT { RPerl::diag("in Array.pm, loading C++ helper functions for type-checking...\n"); }
 INIT {
     use RPerl::HelperFunctions_cpp;
     RPerl::HelperFunctions_cpp::cpp_load();

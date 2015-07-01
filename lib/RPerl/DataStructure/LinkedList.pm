@@ -20,7 +20,7 @@ our hashref $properties =
 
 our RPerl::DataStructure::LinkedListReference $new_from_arrayref = sub {(my string $class, my arrayref $input) = @_;
 ;
-#	RPerl::diag "in new_from_arrayref(), received \$class = '$class', and \$input =\n" . RPerl::DUMPER($input) . "\n";
+#	RPerl::diag("in new_from_arrayref(), received \$class = '$class', and \$input =\n" . RPerl::DUMPER($input) . "\n");
 	my unknown $output = $class->new();
 	my integer $i;
 	for ($i = (scalar(@{$input}) - 1); $i >= 0; $i--)

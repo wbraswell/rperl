@@ -19,7 +19,7 @@ use RPerl::Test::Print_00_cpp;
 RPerl::Test::Print_00_cpp::cpp_load();    # OR this
 
 # disabled to avoid attempt to compile Print_00__*() from RPerl to CPP
-#RPerl::diag q{in compiled_test__print_00.pl, have RPerl_Test_Print_00__MODE_ID() = '} . RPerl_Test_Print_00__MODE_ID() . "'\n"();
+#RPerl::diag(q{in compiled_test__print_00.pl, have RPerl_Test_Print_00__MODE_ID() = '} . RPerl_Test_Print_00__MODE_ID() . "'\n");
 
 greet_planet(23);
 

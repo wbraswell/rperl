@@ -3,7 +3,7 @@ package RPerl::DataType::Integer;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_001;
+our $VERSION = 0.004_002;
 
 # [[[ OO INHERITANCE ]]]
 use parent ('RPerl::DataType::Scalar');
@@ -61,8 +61,8 @@ our string $integer_to_string = sub {
     integer_CHECKTRACE( $input_integer, '$input_integer',
         'integer_to_string()' );
 
-#    RPerl::diag "in PERLOPS_PERLTYPES integer_to_string(), received \$input_integer = $input_integer\n";
-#    RPerl::diag "in PERLOPS_PERLTYPES integer_to_string()...\n";
+#    RPerl::diag("in PERLOPS_PERLTYPES integer_to_string(), received \$input_integer = $input_integer\n");
+#    RPerl::diag("in PERLOPS_PERLTYPES integer_to_string()...\n");
 
     # DEV NOTE: disable old stringify w/out underscores
     #    return "$input_integer";
@@ -77,7 +77,7 @@ our string $integer_to_string = sub {
 
     if ($is_negative) { $retval = q{-} . $retval; }
 
-#    RPerl::diag 'in PERLOPS_PERLTYPES integer_to_string(), have $retval = ' . q{'} . $retval . q{'} . "\n";
+#    RPerl::diag('in PERLOPS_PERLTYPES integer_to_string(), have $retval = ' . q{'} . $retval . q{'} . "\n");
     return $retval;
 };
 
@@ -86,7 +86,7 @@ our integer $integer__typetest0 = sub {
     my integer $retval
         = ( 21 / 7 ) + main::RPerl__DataType__Integer__MODE_ID(); # return integer (not number) value, don't do (22 / 7) etc.
 
-#    RPerl::diag "in PERLOPS_PERLTYPES integer__typetest0(), have \$retval = $retval\n";
+#    RPerl::diag("in PERLOPS_PERLTYPES integer__typetest0(), have \$retval = $retval\n");
     return ($retval);
 };
 our integer $integer__typetest1 = sub {
@@ -96,7 +96,7 @@ our integer $integer__typetest1 = sub {
     integer_CHECKTRACE( $lucky_integer, '$lucky_integer',
         'integer__typetest1()' );
 
-#    RPerl::diag 'in PERLOPS_PERLTYPES integer__typetest1(), received $lucky_integer = ' . integer_to_string($lucky_integer) . "\n";
+#    RPerl::diag('in PERLOPS_PERLTYPES integer__typetest1(), received $lucky_integer = ' . integer_to_string($lucky_integer) . "\n");
     return (
         ( $lucky_integer * 2 ) + main::RPerl__DataType__Integer__MODE_ID() );
 };

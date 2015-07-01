@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.001_004;
+our $VERSION = 0.001_005;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
@@ -257,20 +257,20 @@ my $queue_retval = '';
 $q->enqueue(50);
 $q->enqueue("Where am I?");
 $q->enqueue("In a queue.");
-#RPerl::diag "There are ", $q->size, " items in the queue\n";
+#RPerl::diag("There are " . $q->size . " items in the queue\n");
 while($q->size) {
-#	RPerl::diag "About to dequeue: ", $q->peek, "\n";
-#	RPerl::diag "Actually dequeued: ", $q->dequeue, "\n";
+#	RPerl::diag("About to dequeue: " . $q->peek . "\n");
+#	RPerl::diag("Actually dequeued: " . $q->dequeue . "\n");
 	$queue_retval .= $q->dequeue . '  ';
 }
 my $s = new Stack;
 my $stack_retval = '';
 $s->push(42);
 $s->push("What?");
-#RPerl::diag "There are ", $s->size, " items on the stack\n";
+#RPerl::diag("There are " . $s->size . " items on the stack\n");
 while($s->size) {
-#	RPerl::diag "About to pop: ", $s->peek, "\n";
-#	RPerl::diag "Actually popped: ", $s->pop, "\n";
+#	RPerl::diag("About to pop: " . $s->peek . "\n");
+#	RPerl::diag("Actually popped: " . $s->pop . "\n");
 	$stack_retval .= $s->pop . '  ';
 }
 return($queue_retval, $stack_retval);

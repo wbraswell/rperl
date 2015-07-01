@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_000;
+our $VERSION = 0.004_010;
 
 # [[[ CRITICS ]]]
 
@@ -22,7 +22,7 @@ use RPerl::Generator;
 use File::Temp qw(tempfile);
 use File::Basename;
 use English qw(-no_match_vars);    # for $OSNAME; why isn't this included from 'require RPerl::Config', which is included from 'use RPerl' above?
-use IPC::Cmd qw(can_run);  # to check for `astyle`
+use IPC::Cmd qw(can_run);  # to check for `perltidy` and `astyle`
 
 # [[[ SUBROUTINES ]]]
 
@@ -132,12 +132,12 @@ our hashref_arrayref $generate_output_file_names = sub {
 
         # if output file prefix(es) not provided, then generate output file name(s) from input file name(s)
         else {
-            #            RPerl::diag 'have $input_file_name = ' . $input_file_name . "\n";
+            #            RPerl::diag('have $input_file_name = ' . $input_file_name . "\n");
             # should not already be only prefix, fileparse() to isolate prefix
             ( $input_file_name_prefix, $input_file_name_path, $input_file_name_suffix ) = fileparse( $input_file_name, qr/[.][^.]*/xms );
         }
 
-        #        RPerl::diag '$output_file_name_groups->[' . $i . ']' . "\n" . Dumper($output_file_name_groups->[$i]) . "\n";
+        #        RPerl::diag('$output_file_name_groups->[' . $i . ']' . "\n" . Dumper($output_file_name_groups->[$i]) . "\n");
 
         my string $output_file_name_path_prefix = $input_file_name_path . $input_file_name_prefix;
 
@@ -170,7 +170,7 @@ our hashref_arrayref $generate_output_file_names = sub {
             $output_file_name_groups->[$i]->{H}   = $output_file_name_path_prefix . '.h';
         }
 
-#        RPerl::diag 'in rperl::generate_output_file_names(), bottom of loop ' . $i . ' of ' . $input_files_count . ", have \$output_file_name_groups->[$i] = \n" . Dumper( $output_file_name_groups->[$i] ) . "\n";
+#        RPerl::diag('in rperl::generate_output_file_names(), bottom of loop ' . $i . ' of ' . $input_files_count . ", have \$output_file_name_groups->[$i] = \n" . Dumper( $output_file_name_groups->[$i] ) . "\n");
     }
 
     return $output_file_name_groups;
@@ -180,8 +180,8 @@ our hashref_arrayref $generate_output_file_names = sub {
 our void $save_source_files = sub {
     ( my string_hashref $source_group, my string_hashref $file_name_group, my string_hashref $modes ) = @_;
 
-    #    RPerl::diag( q{in Compiler::save_source_files(), received $source_group =}, "\n", Dumper($source_group), "\n" );
-    #    RPerl::diag( q{in Compiler::save_source_files(), received $file_name_group =}, "\n", Dumper($file_name_group), "\n" );
+    #    RPerl::diag( q{in Compiler::save_source_files(), received $source_group =} . "\n" . Dumper($source_group) . "\n" );
+    #    RPerl::diag( q{in Compiler::save_source_files(), received $file_name_group =} . "\n" . Dumper($file_name_group) . "\n" );
 
     foreach my string $suffix_key ( sort keys %{$source_group} ) {
         if (   ( not exists $file_name_group->{$suffix_key} )
@@ -250,7 +250,7 @@ our void $save_source_files = sub {
 
         # utilize modified copy of Module PMC template file
         my string $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES';
-        #RPerl::diag 'in Compiler::save_source_files(), have $module_pmc_filename_manual = ' . $module_pmc_filename_manual . "\n";
+        #RPerl::diag('in Compiler::save_source_files(), have $module_pmc_filename_manual = ' . $module_pmc_filename_manual . "\n");
 
         if ( not -f $module_pmc_filename_manual ) {
             die 'ERROR ECVCOFI02, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: File not found, ' . q{'}
@@ -269,9 +269,9 @@ our void $save_source_files = sub {
         my string $file_line;
         my string $file_string = q{};
         while ( $file_line = <$FILE_HANDLE> ) {
-            $file_line =~ s/RPerl\/CompileUnit\/Module\.cpp/$module_path/xms;
-            $file_line =~ s/RPerl::CompileUnit::Module/$module_name/xms;
-            $file_line =~ s/RPerl__CompileUnit__Module/$module_underscores/xms;
+            $file_line =~ s/RPerl\/CompileUnit\/Module\.cpp/$module_path/gxms;
+            $file_line =~ s/RPerl::CompileUnit::Module/$module_name/gxms;
+            $file_line =~ s/RPerl__CompileUnit__Module/$module_underscores/gxms;
             $source_group->{PMC} .= $file_line;
         }
 
@@ -325,7 +325,7 @@ our void $save_source_files = sub {
         if ( ( $suffix_key eq 'PMC' ) or ( $suffix_key eq 'EXE' ) ) {
             my string $perltidy_path = can_run('perltidy');
             if (defined $perltidy_path) {
-                system $perltidy_path, '-pbp', '--ignore-side-comment-lengths', '--converge', '-b', '-nst', q{-bext='/'}, '-q', $file_name;
+                system $perltidy_path, '-pbp', '--ignore-side-comment-lengths', '--converge', '-l=160', '-b', '-nst', q{-bext='/'}, '-q', $file_name;
             }
             else {
                 RPerl::warning( 'WARNING WCVCOFO00, COMPILER, PERL CODE FORMATTING: Perltidy command `perltidy` not found, abandoning formatting' . "\n" );
@@ -350,7 +350,7 @@ our void $save_source_files = sub {
 our void $cpp_to_xsbinary__subcompile = sub {
     ( my string $file_name_group ) = @_;
 
-    #RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), received $file_name_group =}, "\n", Dumper($file_name_group), "\n" );
+    #RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), received $file_name_group =} . "\n" . Dumper($file_name_group) . "\n" );
 
     # ADD CALLS TO TRIGGER Inline::CPP COMPILATION
 };

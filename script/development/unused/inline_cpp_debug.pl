@@ -7,14 +7,14 @@
 use Inline (CPP => 'DATA', classes => { 'RPerl__Test__Inline_CPP_Debug' => 'RPerl::Test::Inline_CPP_Debug'} );
 
 # SUBROUTINE IS ALWAYS IN SYMBOL TABLE: "have \%main:: symbol table entry for my_subroutine() = '*main::my_subroutine'"
-RPerl::diag q{in inline_cpp_debug.pl, have \%main:: symbol table entry for my_subroutine() = '} . (\%main::)->{'my_subroutine'} . "'\n";
+RPerl::diag(q{in inline_cpp_debug.pl, have \%main:: symbol table entry for my_subroutine() = '} . (\%main::)->{'my_subroutine'} . "'\n");
 
 # METHOD CALL
 my $my_object = RPerl::Test::Inline_CPP_Debug->new();
-RPerl::diag "in inline_cpp_debug.pl, have \$my_object->my_method() = '" . $my_object->my_method() . "'\n";  # OO INTERFACE
+RPerl::diag("in inline_cpp_debug.pl, have \$my_object->my_method() = '" . $my_object->my_method() . "'\n");  # OO INTERFACE
 
 # SUBROUTINE CALL
-RPerl::diag q{in inline_cpp_debug.pl, have my_subroutine() = '} . my_subroutine() . "'\n";
+RPerl::diag(q{in inline_cpp_debug.pl, have my_subroutine() = '} . my_subroutine() . "'\n");
 
 __DATA__
 __CPP__

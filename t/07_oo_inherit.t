@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.002_020;
+our $VERSION = 0.002_022;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -29,7 +29,7 @@ BEGIN {
     my string $bubble_h_filename   = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.h';
     my string $bubble_pmc_filename = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.pmc';
 
-    #    RPerl::diag 'in 07_00_inherit.t, have $bubble_pmc_filename = ' . $bubble_pmc_filename . "\n";
+    #    RPerl::diag('in 07_00_inherit.t, have $bubble_pmc_filename = ' . $bubble_pmc_filename . "\n");
 
     # NEED FIX: duplicate code
     # delete CPP, H, and PMC files if they exist;
@@ -52,6 +52,7 @@ BEGIN {
         }
     }
 
+    # DEV NOTE, CORRELATION #15: suppress 'Too late to run INIT block' at run-time loading via require or eval
     lives_and( sub { require_ok('RPerl::Algorithm::Sort::Bubble'); }, q{require_ok('RPerl::Algorithm::Sort::Bubble') lives} );
 }
 
@@ -66,8 +67,8 @@ my string $bubble_h_filename_manual   = $bubble_h_filename . '.CPPOPS_DUALTYPES'
 my string $bubble_pmc_filename        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.pmc';
 my string $bubble_pmc_filename_manual = $bubble_pmc_filename . '.CPPOPS_DUALTYPES';
 
-#RPerl::diag 'in 07_00_inherit.t, have $bubble_pmc_filename = ' . $bubble_pmc_filename . "\n";
-#RPerl::diag 'in 07_00_inherit.t, have $bubble_pmc_filename_manual = ' . $bubble_pmc_filename_manual . "\n";
+#RPerl::diag('in 07_00_inherit.t, have $bubble_pmc_filename = ' . $bubble_pmc_filename . "\n");
+#RPerl::diag('in 07_00_inherit.t, have $bubble_pmc_filename_manual = ' . $bubble_pmc_filename_manual . "\n");
 
 # [[[ PRIMARY RUNLOOP ]]]
 # [[[ PRIMARY RUNLOOP ]]]
@@ -78,7 +79,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 #for my $mode_id ( 1 .. 2 ) {    # TEMPORARY DEBUGGING xOPS_xTYPES ONLY
 
     # [[[ MODE SETUP ]]]
-    #    RPerl::diag "in 07_00_inherit.t, top of for() loop, have \$mode_id = $mode_id\n";
+    #    RPerl::diag("in 07_00_inherit.t, top of for() loop, have \$mode_id = $mode_id\n");
     my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
     my $ops                 = $mode->{ops};
     my $types               = $mode->{types};
@@ -112,7 +113,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
     if ( $ops eq 'PERL' ) {
 
- #        RPerl::diag 'in 07_00_inherit.t, have Bubble symtab entries:' . "\n" . RPerl::analyze_class_symtab_entries('RPerl::Algorithm::Sort::Bubble') . "\n\n";
+ #        RPerl::diag('in 07_00_inherit.t, have Bubble symtab entries:' . "\n" . RPerl::analyze_class_symtab_entries('RPerl::Algorithm::Sort::Bubble') . "\n\n");
     }
     else {    # $ops eq 'CPP'
         foreach my string_arrayref $filenames (
@@ -141,6 +142,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
         # C++ use, load, link
         lives_ok( sub { $refresher->refresh_module($module_filenamename) }, 'Refresh previously-loaded module: ' . $module_filenamename );
+        # DEV NOTE, CORRELATION #15: suppress 'Too late to run INIT block' at run-time loading via require or eval
         lives_and( sub { require_ok('RPerl::Algorithm::Sort::Bubble'); }, q{require_ok('RPerl::Algorithm::Sort::Bubble') lives} );
 
         # force reload
@@ -150,7 +152,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         #lives_ok( sub { RPerl::Algorithm::Sort::Bubble::cpp_load(); }, q{RPerl::Algorithm::Sort::Bubble::cpp_load() lives} );
         lives_ok( sub { &{ $RPerl::Algorithm::Sort::Bubble::{'cpp_load'} }(); }, q{RPerl::Algorithm::Sort::Bubble::cpp_load() lives} );    # long form
 
-#RPerl::diag 'in 07_00_inherit.t, have post-re-use, post-re-cpp_load Bubble symtab entries:' . "\n" . RPerl::analyze_class_symtab_entries('RPerl::Algorithm::Sort::Bubble') . "\n\n";
+#RPerl::diag('in 07_00_inherit.t, have post-re-use, post-re-cpp_load Bubble symtab entries:' . "\n" . RPerl::analyze_class_symtab_entries('RPerl::Algorithm::Sort::Bubble') . "\n\n");
     }
 
     foreach my string $type (qw(DataType__Integer DataType__Number DataType__String DataStructure__Array DataStructure__Hash Algorithm__Sort__Bubble)) {

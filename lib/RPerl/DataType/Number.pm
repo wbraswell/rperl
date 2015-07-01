@@ -3,7 +3,7 @@ package RPerl::DataType::Number;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_001;
+our $VERSION = 0.004_002;
 
 # [[[ OO INHERITANCE ]]]
 use parent ('RPerl::DataType::Scalar');
@@ -74,8 +74,8 @@ our string $number_to_string = sub {
     #    number_CHECK($input_number);
     number_CHECKTRACE( $input_number, '$input_number', 'number_to_string()' );
 
-#    RPerl::diag "in PERLOPS_PERLTYPES number_to_string(), received \$input_number = $input_number\n";
-#    RPerl::diag "in PERLOPS_PERLTYPES number_to_string()...\n";
+#    RPerl::diag("in PERLOPS_PERLTYPES number_to_string(), received \$input_number = $input_number\n");
+#    RPerl::diag("in PERLOPS_PERLTYPES number_to_string()...\n");
 
     # DEV NOTE: disable old stringify w/out underscores
 #    return "$input_number";
@@ -104,7 +104,7 @@ our string $number_to_string = sub {
 
     if ($is_negative) { $retval = q{-} . $retval; }
 
-#    RPerl::diag 'in PERLOPS_PERLTYPES number_to_string(), have $retval = ' . q{'} . $retval . q{'} . "\n";
+#    RPerl::diag('in PERLOPS_PERLTYPES number_to_string(), have $retval = ' . q{'} . $retval . q{'} . "\n");
     return $retval;
 };
 
@@ -113,7 +113,7 @@ our number $number__typetest0 = sub {
     my number $retval
         = ( 22 / 7 ) + main::RPerl__DataType__Number__MODE_ID(); # return floating-point number value
 
-#    RPerl::diag "in PERLOPS_PERLTYPES number__typetest0(), have \$retval = $retval\n";
+#    RPerl::diag("in PERLOPS_PERLTYPES number__typetest0(), have \$retval = $retval\n");
     return ($retval);
 };
 our number $number__typetest1 = sub {
@@ -123,7 +123,7 @@ our number $number__typetest1 = sub {
     number_CHECKTRACE( $lucky_number, '$lucky_number',
         'number__typetest1()' );
 
-#    RPerl::diag 'in PERLOPS_PERLTYPES number__typetest1(), received $lucky_number = ' . number_to_string($lucky_number) . "\n";
+#    RPerl::diag('in PERLOPS_PERLTYPES number__typetest1(), received $lucky_number = ' . number_to_string($lucky_number) . "\n");
     return (
         ( $lucky_number * 2 ) + main::RPerl__DataType__Number__MODE_ID() );
 };

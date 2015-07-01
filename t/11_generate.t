@@ -8,7 +8,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.007_000;
+our $VERSION = 0.007_001;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -87,7 +87,7 @@ my integer $number_of_tests_run = 0;
 # loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
 #foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
-#    RPerl::diag "in 11_generate.t, top of for() loop, have \$mode_id = $mode_id\n";
+#    RPerl::diag("in 11_generate.t, top of for() loop, have \$mode_id = $mode_id\n");
 
     # [[[ MODE SETUP ]]]
     my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};

@@ -74,12 +74,12 @@ our string $string_to_string = sub {
     string_CHECKTRACE( $input_string, '$input_string',
         'string_to_string()' );
 
-#    RPerl::diag "in PERLOPS_PERLTYPES string_to_string(), received \$input_string =\n$input_string\n\n";
+#    RPerl::diag("in PERLOPS_PERLTYPES string_to_string(), received \$input_string =\n$input_string\n\n");
     $input_string =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
     $input_string =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
     $input_string = "'$input_string'";
 
-#    RPerl::diag "in PERLOPS_PERLTYPES string_to_string(), bottom of subroutine, returning possibly-modified \$input_string =\n$input_string\n\n";
+#    RPerl::diag("in PERLOPS_PERLTYPES string_to_string(), bottom of subroutine, returning possibly-modified \$input_string =\n$input_string\n\n");
 
     return ($input_string);
 };
@@ -88,7 +88,7 @@ our string $string_to_string = sub {
 our string $string__typetest0 = sub {
     my string $retval = 'Spice PERLOPS_PERLTYPES';
 
-#    RPerl::diag "in PERLOPS_PERLTYPES string__typetest0(), have \$retval = '$retval'\n";
+#    RPerl::diag("in PERLOPS_PERLTYPES string__typetest0(), have \$retval = '$retval'\n");
     return ($retval);
 };
 our string $string__typetest1 = sub {
@@ -98,7 +98,7 @@ our string $string__typetest1 = sub {
     string_CHECKTRACE( $lucky_string, '$lucky_string',
         'string__typetest1()' );
 
-#    RPerl::diag "in PERLOPS_PERLTYPES string__typetest1(), received \$lucky_string = '$lucky_string'\n";
+#    RPerl::diag("in PERLOPS_PERLTYPES string__typetest1(), received \$lucky_string = '$lucky_string'\n");
     return ( string_to_string($lucky_string) . ' PERLOPS_PERLTYPES' );
 };
 

@@ -3,7 +3,7 @@ package RPerl::Algorithm::Sort::Bubble;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_030;
+our $VERSION = 0.005_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Algorithm::Sort);
@@ -33,12 +33,12 @@ our void_method $number_sort = sub {
 
 our void_method $inherited__Bubble = sub {
     ( my object $self, my string $person ) = @_;
-    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), received $self = ' . $self . ' and $person = ' . $person . ', FRIED' . "\n");
+    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FRIED' . "\n");
 };
 
 our void_method $inherited = sub {
     ( my object $self, my string $person ) = @_;
-    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited(), received $self = ' . $self . ' and $person = ' . $person . ', ILLOGICAL' . "\n");
+    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', ILLOGICAL' . "\n");
 };
 
 our integer_arrayref $integer_bubblesort = sub {
@@ -70,9 +70,9 @@ our number_arrayref $number_bubblesort = sub {
     ::number_arrayref_CHECKTRACE( $number_data, '$number_data', 'number_bubblesort()' );
     my integer $is_sorted          = 0;
     my integer $number_data_length = scalar @{$number_data};    # CONSTANT
-    my integer $number_data_i;
-    my integer $number_data_i_plus_1;
-    my integer $swap;
+    my number $number_data_i;
+    my number $number_data_i_plus_1;
+    my number $swap;
     while ( not $is_sorted ) {
         $is_sorted = 1;
         for my integer $i ( 0 .. ( $number_data_length - 2 ) ) {
@@ -92,16 +92,14 @@ our number_arrayref $number_bubblesort = sub {
 our string $uninherited__Bubble = sub {
     ( my string $person ) = @_;
     RPerl::diag( 'in PERLOPS_PERLTYPES Bubble::uninherited__Bubble(), received $person = ' . $person . ', MITOCHONDRIAL' . "\n");
-    my string $retval = 'Bubble::uninherited__Bubble() RULES! PERLOPS_PERLTYPES';
-    return $retval;
+    return 'Bubble::uninherited__Bubble() RULES! PERLOPS_PERLTYPES';
 };
 
 # DEV NOTE, CORRELATION #04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
 our string $uninherited = sub {
     ( my string $person ) = @_;
     RPerl::diag( 'in PERLOPS_PERLTYPES Bubble::uninherited(), received $person = ' . $person . ', TETRAHEDRON' . "\n");
-    my string $retval = 'Bubble::uninherited() ROCKS! PERLOPS_PERLTYPES';
-    return $retval;
+    return 'Bubble::uninherited() ROCKS! PERLOPS_PERLTYPES';
 };
 
 our string $integer_bubblesort__typetest0 = sub {

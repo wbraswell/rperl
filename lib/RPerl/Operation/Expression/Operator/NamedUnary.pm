@@ -33,6 +33,8 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in Operator::NamedUnary->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
+#    RPerl::diag( 'in Operator::NamedUnary->ast_to_rperl__generate(), have $self_class = ' . $self_class . "\n");
+
     my string $operator_name;
     if (( $self_class eq 'Operator_94' ) or    # Operator -> OP10_NAMED_UNARY SubExpression
         ( $self_class eq 'Operator_95' )) {  # Operator -> OP10_NAMED_UNARY

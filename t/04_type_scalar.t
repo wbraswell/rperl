@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.005_021;
+our $VERSION = 0.005_024;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
@@ -33,7 +33,7 @@ BEGIN {
 sub string_dumperify {
     ( my string $input_string ) = @_;
 
-    #    RPerl::diag "in 04_type_scalar.t string_dumperify(), received have \$input_string =\n$input_string\n\n";
+    #    RPerl::diag("in 04_type_scalar.t string_dumperify(), received have \$input_string =\n$input_string\n\n");
     $input_string = Dumper( [$input_string] );
     $input_string =~ s/^\s+|\s+$//xmsg;    # strip leading whitespace
     my @input_string_split = split "\n", $input_string;
@@ -50,7 +50,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 #for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
 
     # [[[ MODE SETUP ]]]
-    #    RPerl::diag "in 04_type_scalar.t, top of for() loop, have \$mode_id = $mode_id\n";
+    #    RPerl::diag("in 04_type_scalar.t, top of for() loop, have \$mode_id = $mode_id\n");
     my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
     my string $ops          = $mode->{ops};
     my string $types        = $mode->{types};
@@ -88,9 +88,9 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         #        RPerl::diag('have $eval_string = ' . $eval_string . "\n");
         #        my string $eval_retval = eval($eval_string);
         #        RPerl::diag('have $eval_retval = ' . $eval_retval . "\n");
-        #        RPerl::diag q{have main::RPerl__DataType__Integer__MODE_ID() = '} . main::RPerl__DataType__Integer__MODE_ID() . "'\n";
-        #        RPerl::diag q{have main::RPerl__DataType__Number__MODE_ID() = '} . main::RPerl__DataType__Number__MODE_ID() . "'\n";
-        #        RPerl::diag q{have main::RPerl__DataType__String__MODE_ID() = '} . main::RPerl__DataType__String__MODE_ID() . "'\n";
+        #        RPerl::diag(q{have main::RPerl__DataType__Integer__MODE_ID() = '} . main::RPerl__DataType__Integer__MODE_ID() . "'\n");
+        #        RPerl::diag(q{have main::RPerl__DataType__Number__MODE_ID() = '} . main::RPerl__DataType__Number__MODE_ID() . "'\n");
+        #        RPerl::diag(q{have main::RPerl__DataType__String__MODE_ID() = '} . main::RPerl__DataType__String__MODE_ID() . "'\n");
 
         lives_and(
             sub {

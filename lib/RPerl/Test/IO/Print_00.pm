@@ -2,7 +2,7 @@ package RPerl::Test::IO::Print_00;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_010;
+our $VERSION = 0.003_011;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
 
@@ -43,8 +43,8 @@ our void $greet_planet = sub {
 #print;
 #print 'Hello, world! dot ' . $arg0 . "\n"; # parses to 1 PPI::Statement object; NEED FIX: . dot string concatenation operator not yet implemented
 #print 'Hello, world! comma ' , $arg0 , "\n"; # parses to 1 PPI::Statement object
-#RPerl::diag 'Hello, world! comma ' , $arg0 , "\n"; # parses to 1 PPI::Statement object, w/ PPI::Structure::Block at child index 1
-    RPerl::diag 'Hello, world! comma ', $arg0, ' and ', 42, "\n"; # parses to 1 PPI::Statement object, w/ PPI::Structure::Block at child index 1
+#RPerl::diag('Hello, world! comma ' . $arg0 . "\n"); # parses to 1 PPI::Statement object, w/ PPI::Structure::Block at child index 1
+    RPerl::diag('Hello, world! comma ' . $arg0 . ' and ' . 42 . "\n"); # parses to 1 PPI::Statement object, w/ PPI::Structure::Block at child index 1
 
 #print 'Hello, world! ' . $arg0 . q{ } . $arg1 . "\n";
 #print 'Hello, world! ' . $arg0 . q{ } . $arg1 . q{ } . ::number_arrayref_to_string($arg2) . "\n";

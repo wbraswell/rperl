@@ -25,4 +25,6 @@ require rperltypes;
 require rperlnames;
 #require rperlnamespaces;
 
+# NEED ADD: use/require HelperFunctions*.pm here (not just in rperltypes.pm) to match dependency path of C++ code?
+
 1;    # end of class

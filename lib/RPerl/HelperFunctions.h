@@ -1,30 +1,7 @@
 #ifndef __CPP__INCLUDED__RPerl__HelperFunctions_h
-#define __CPP__INCLUDED__RPerl__HelperFunctions_h 0.002_040
+#define __CPP__INCLUDED__RPerl__HelperFunctions_h 0.004_000
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
-
-// START HERE: implement RPerl__diag, use in files called by 07_oo_inherit.t
-// START HERE: implement RPerl__diag, use in files called by 07_oo_inherit.t
-// START HERE: implement RPerl__diag, use in files called by 07_oo_inherit.t
-
-/*
-#include <stdlib.h>  // for getenv()
-#include <stdio.h>  // for ostream object type
-
-ostringstream RPerl__diag;
-
-ostream& operator<<(ostream& ostream_object, const char* char_star_input)
-{
-        if (getenv("RPERL_DEBUG") { cerr << char_star_input; }
-        return ostream_object;
-}
-
-ostream& operator<<(ostream& ostream_object, std::string string_input)
-{
-        if (getenv("RPERL_DEBUG") { cerr << string_input; }
-        return ostream_object;
-}
-*/
 
 // [[[ DEBUG DEFINES ]]]
 #define RPERL_DEBUG 1  // NEED FIX: access actual environmental variable RPERL_DEBUG!
@@ -45,13 +22,12 @@ int RPerl_SvAROKp(SV* input_av_ref);
 int RPerl_SvHROKp(SV* input_hv_ref);
 
 void RPerl_object_property_init(SV* initee); // NEED ANSWER: what in the hades does this property init function even do?  why do we need it???
-char* RPerl_DUMPER__perl_from_c(SV* dumpee);
 
-// [[[ OPERATIONS & DATA TYPES REPORTING ]]]
+// [[[ OPERATIONS & DATA TYPES REPORTER ]]]
 # ifdef __PERL__TYPES
 SV* RPerl__HelperFunctions__MODE_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
 # elif defined __CPP__TYPES
-int RPerl__HelperFunctions__MODE_ID() { int retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 2
+int RPerl__HelperFunctions__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2
 # else
 Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_exactly_one!
 # endif

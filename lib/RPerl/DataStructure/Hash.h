@@ -60,11 +60,11 @@ void number_hashref_CHECKTRACE(SV* possible_number_hashref, const char* variable
 void string_hashref_CHECK(SV* possible_string_hashref);
 void string_hashref_CHECKTRACE(SV* possible_string_hashref, const char* variable_name, const char* subroutine_name);
 
-// [[[ OPERATIONS & DATA TYPES REPORTING ]]]
+// [[[ OPERATIONS & DATA TYPES REPORTER ]]]
 # ifdef __PERL__TYPES
 SV* RPerl__DataStructure__Hash__MODE_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
 # elif defined __CPP__TYPES
-integer RPerl__DataStructure__Hash__MODE_ID() { integer retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 2
+integer RPerl__DataStructure__Hash__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2
 # else
 Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_exactly_one!
 # endif

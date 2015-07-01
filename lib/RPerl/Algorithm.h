@@ -44,7 +44,7 @@ public:
 SV* uninherited__Algorithm(SV* person);
 //SV* uninherited(SV* person);
 
-// <<< OPERATIONS & DATA TYPES REPORTING >>>
+// <<< OPERATIONS & DATA TYPES REPORTER >>>
 SV* RPerl__Algorithm__MODE_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
 
 // [[[<<< END PERL TYPES >>>]]]
@@ -85,8 +85,8 @@ public:
 string uninherited__Algorithm(string person);
 //string uninherited(string person);
 
-// <<< OPERATIONS & DATA TYPES REPORTING >>>
-integer RPerl__Algorithm__MODE_ID() { integer retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 1
+// <<< OPERATIONS & DATA TYPES REPORTER >>>
+integer RPerl__Algorithm__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 1
 
 // [[[<<< END CPP TYPES >>>]]]
 // [[[<<< END CPP TYPES >>>]]]

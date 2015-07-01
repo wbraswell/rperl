@@ -3,7 +3,7 @@
 package RPerl::Generator;
 use strict;
 use warnings;
-our $VERSION = 0.001_010;
+our $VERSION = 0.001_011;
 use RPerl;
 
 # [[[ OO INHERITANCE ]]]
@@ -265,8 +265,8 @@ our integer $diff_check_file_vs_string = sub {
 our string_hashref $ast_to_rperl__generate = sub {
     ( my object $node, my string_hashref $modes) = @_;
 
-    #    RPerl::diag "in Generator::ast_to_rperl__generate(), received \$node =\n" . RPerl::Parser::rperl_ast__dump($node) . "\n";
-    #    RPerl::diag "in Generator::ast_to_rperl__generate(), received \$modes =\n" . Dumper($modes) . "\n";
+    #    RPerl::diag("in Generator::ast_to_rperl__generate(), received \$node =\n" . RPerl::Parser::rperl_ast__dump($node) . "\n");
+    #    RPerl::diag("in Generator::ast_to_rperl__generate(), received \$modes =\n" . Dumper($modes) . "\n");
 
     if ( not( defined $modes->{types} ) ) {
         die 'ERROR ECVGEMO00, RPERL GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL'} . 'expected but undefined/null value found, dying' . "\n";
@@ -285,8 +285,8 @@ our string_hashref $ast_to_rperl__generate = sub {
 our string_hashref $ast_to_cpp__generate = sub {
     ( my object $node, my string_hashref $modes) = @_;
 
-    #    RPerl::diag "in Generator::ast_to_cpp__generate(), received \$node =\n" . RPerl::Parser::rperl_ast__dump($node) . "\n";
-    #    RPerl::diag "in Generator::ast_to_cpp__generate(), received \$modes =\n" . Dumper($modes) . "\n";
+    #    RPerl::diag("in Generator::ast_to_cpp__generate(), received \$node =\n" . RPerl::Parser::rperl_ast__dump($node) . "\n");
+    #    RPerl::diag("in Generator::ast_to_cpp__generate(), received \$modes =\n" . Dumper($modes) . "\n");
 
     if ( not( defined $modes->{types} ) ) {
         die 'ERROR ECVGEMO02, C++ GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL' or 'CPP'} . 'expected but undefined/null value found, dying' . "\n";
@@ -335,7 +335,7 @@ our void $grammar_rules__map = sub {
         return;
     }
 
-    #    RPerl::diag "in Generator::grammar_rules__map(), have \$RPerl::Grammar::RULES =\n" . Dumper($RPerl::Grammar::RULES) . "\n";
+    #    RPerl::diag("in Generator::grammar_rules__map(), have \$RPerl::Grammar::RULES =\n" . Dumper($RPerl::Grammar::RULES) . "\n");
     foreach my string $rule ( sort keys %{$RPerl::Grammar::RULES} ) {
 
         # create mapped class/package (namespace) and set up Perl inheritance
@@ -348,7 +348,7 @@ our void $grammar_rules__map = sub {
             . $RPerl::Grammar::RULES->{$rule}
             . q{; our hashref $properties = {}; 1;};
 
-        #        RPerl::diag 'in Generator::grammar_rules_map(), have 1st $eval_string = ' . "\n" . $eval_string . "\n";
+        #        RPerl::diag('in Generator::grammar_rules_map(), have 1st $eval_string = ' . "\n" . $eval_string . "\n");
         my integer $eval_retval = eval $eval_string;
         if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne q{} ) ) {
             die $EVAL_ERROR . "\n";
@@ -370,7 +370,7 @@ our void $grammar_rules__map = sub {
             . $RPerl::Grammar::RULES->{$rule}
             . q[::{'> . $key . q<'} }(@_); };>) {die $EVAL_ERROR . "\n";} } }];
 
-        #        RPerl::diag 'in Generator::grammar_rules_map(), have 2nd $eval_string = ' . "\n" . $eval_string . "\n";
+        #        RPerl::diag('in Generator::grammar_rules_map(), have 2nd $eval_string = ' . "\n" . $eval_string . "\n");
         $eval_retval = eval $eval_string;
         if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne q{} ) ) {
             die $EVAL_ERROR . "\n";

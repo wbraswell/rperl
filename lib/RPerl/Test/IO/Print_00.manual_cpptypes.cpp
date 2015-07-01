@@ -23,8 +23,5 @@ void greet_planet(integer arg0) {
     cout << "Goodbye from CPPOPS_CPPTYPES\n";
 }
 
-// [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-integer RPerl__Test__IO__Print_00__MODE_ID() {
-    integer retval = 2;  // CPPOPS_CPPTYPES is 2
-    return (retval);
-}
+// [[[ OPERATIONS & DATA TYPES REPORTER ]]]
+integer RPerl__Test__IO__Print_00__MODE_ID() { return 2; }

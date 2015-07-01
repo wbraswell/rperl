@@ -2,6 +2,7 @@
 #define __CPP__INCLUDED__rperltypes_h 1
 
 #include <rperltypes_mode.h>
+#include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
 
 #include <RPerl/DataType/Integer.cpp>	// -> Integer.h
 #include <RPerl/DataType/Number.cpp>	// -> Number.h

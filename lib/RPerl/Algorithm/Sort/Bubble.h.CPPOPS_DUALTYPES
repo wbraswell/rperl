@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h 0.004_050
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h 0.005_000
 
 // [[[ INCLUDES ]]]
 #include <rperltypes_mode.h>  // for default definitions of __PERL__TYPES or __CPP__TYPES
@@ -37,6 +37,9 @@ public:
     RPerl__Algorithm__Sort__Bubble() {}
     ~RPerl__Algorithm__Sort__Bubble() {}
 
+    // <<< CLASS NAME REPORTER >>>
+    virtual SV* myclassname() { return newSVpv("RPerl::Algorithm::Sort::Bubble", 0); }
+ 
 private:
 // [[[ OO PROPERTIES ]]]
     SV* integer_data;
@@ -52,8 +55,8 @@ SV* uninherited(SV* person);
 SV* integer_bubblesort__typetest0(SV* lucky_integers);
 SV* number_bubblesort__typetest0(SV* lucky_numbers);
 
-// <<< OPERATIONS & DATA TYPES REPORTING >>>
-SV* RPerl__Algorithm__Sort__Bubble__MODE_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
+// <<< OPERATIONS & DATA TYPES REPORTER >>>
+SV* RPerl__Algorithm__Sort__Bubble__MODE_ID() { return newSViv(1); }  // CPPOPS_PERLTYPES is 1
 
 // [[[<<< END PERL TYPES >>>]]]
 // [[[<<< END PERL TYPES >>>]]]
@@ -71,20 +74,21 @@ public:
 // [[[ OO METHODS ]]]
     void integer_sort();
     void number_sort();
-
-    // OO INHERITANCE TESTING
     void inherited__Bubble(string person);
     void inherited(string person);
 
     // <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>
-    integer_arrayref get_integer_data() { return(this->integer_data); }
+    integer_arrayref get_integer_data() { return this->integer_data; }
     void set_integer_data(integer_arrayref integer_data_new) { this->integer_data = integer_data_new; }
-    number_arrayref get_number_data() { return(this->number_data); }
+    number_arrayref get_number_data() { return this->number_data; }
     void set_number_data(number_arrayref number_data_new) { this->number_data = number_data_new; }
 
     // <<< CONSTRUCTOR & DESTRUCTOR >>>
     RPerl__Algorithm__Sort__Bubble() {}
     ~RPerl__Algorithm__Sort__Bubble() {}
+
+    // <<< CLASS NAME REPORTER >>>
+    virtual string myclassname() { return (const string) "RPerl::Algorithm::Sort::Bubble"; }
 
 private:
 // [[[ OO PROPERTIES ]]]
@@ -101,8 +105,8 @@ string uninherited(string person);
 string integer_bubblesort__typetest0(integer_arrayref lucky_integers);
 string number_bubblesort__typetest0(number_arrayref lucky_numbers);
 
-// <<< OPERATIONS & DATA TYPES REPORTING >>>
-integer RPerl__Algorithm__Sort__Bubble__MODE_ID() { integer retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 2
+// <<< OPERATIONS & DATA TYPES REPORTER >>>
+integer RPerl__Algorithm__Sort__Bubble__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2
 
 // [[[<<< END CPP TYPES >>>]]]
 // [[[<<< END CPP TYPES >>>]]]

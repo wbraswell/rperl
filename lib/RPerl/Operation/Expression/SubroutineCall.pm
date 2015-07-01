@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::SubroutineCall;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_010;
+our $VERSION = 0.002_020;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression);
@@ -86,11 +86,17 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my string $right_paren        = $self->{children}->[3];
     
     # remove leading double-colon scope operator '::'
-    my string $name_double_colon_removed = $name->{children}->[0];
-    if ((substr $name_double_colon_removed, 0, 2) eq '::') {
-        substr $name_double_colon_removed, 0, 2, '';
+    my string $name_string = $name->{children}->[0];
+    if ((substr $name_string, 0, 2) eq '::') {
+        substr $name_string, 0, 2, '';
     }
-    $cpp_source_group->{CPP} .= $name_double_colon_removed . $left_paren;
+    
+    # replace RPerl system builtin functions with proper C++ name alternatives
+    if (exists $rperloperations::BUILTINS->{$name_string}) {
+        $name_string = $rperloperations::BUILTINS->{$name_string};
+    }
+    
+    $cpp_source_group->{CPP} .= $name_string . $left_paren;
 
     if ( exists $arguments_optional->{children}->[0] ) {
         $cpp_source_subgroup = $arguments_optional->{children}->[0]

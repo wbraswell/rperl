@@ -7,7 +7,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_060;
+our $VERSION = 0.002_062;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -89,7 +89,7 @@ for my $test_file ( sort keys %{$test_files} ) {
 
     my $stdout_select;
     my $stderr_select;
-    if($^O ne 'MSWin32') {
+    if($OSNAME ne 'MSWin32') {
         $stdout_select = IO::Select->new();
         $stderr_select = IO::Select->new();
         $stdout_select->add( \*STDOUT_TEST );
@@ -110,19 +110,19 @@ for my $test_file ( sort keys %{$test_files} ) {
     #        if ( $stdout_select->can_read(0) )  { RPerl::diag('in 08_interpret_execute.t, can read STDOUT_TEST for $test_file = ' . $test_file . "\n"); }
     #        if ( $stderr_select->can_read(0) )  { RPerl::diag('in 08_interpret_execute.t, can read STDERR_TEST for $test_file = ' . $test_file . "\n"); }
 
-    if ( $^O eq 'MSWin32' || $stdout_select->can_read(0) ) {
+    if ( $OSNAME eq 'MSWin32' || $stdout_select->can_read(0) ) {
         sysread STDOUT_TEST, $stdout_generated, 4096;
     }
-    if ( $^O eq 'MSWin32' || $stderr_select->can_read(0) ) {
+    if ( $OSNAME eq 'MSWin32' || $stderr_select->can_read(0) ) {
         sysread STDERR_TEST, $stderr_generated, 4096;
     }
     waitpid $pid, 0;
-    if ( $^O eq 'MSWin32' || $stdout_select->can_read(0) ) {
+    if ( $OSNAME eq 'MSWin32' || $stdout_select->can_read(0) ) {
         my $s;
         sysread STDOUT_TEST, $s, 4096;
         $stdout_generated .= $s;
     }
-    if ( $^O eq 'MSWin32' || $stderr_select->can_read(0) ) {
+    if ( $OSNAME eq 'MSWin32' || $stderr_select->can_read(0) ) {
         my $s;
         sysread STDERR_TEST, $s, 4096;
         $stderr_generated .= $s;

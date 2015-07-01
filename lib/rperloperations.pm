@@ -9,6 +9,11 @@ use Carp;
 # NEED UPGRADE: make Grammars first-class citizens for full Perl 6 compatibility, we should have it done by Christmas  XD
 #use parent qw(RPerl::GrammarComponent)
 
+# RPerl system builtin functions, RPerl to C++ name mapping, used in SubroutineCall.pm
+our $BUILTINS = {
+    'class' => 'classname'
+};
+
 # [[[ EXPRESSIONS ]]]
 use RPerl::Operation::Expression::Operator::Bitwise::And;
 use RPerl::Operation::Expression::Operator::Bitwise::OrXor;

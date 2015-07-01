@@ -12,7 +12,7 @@ use Inline (CPP => 'DATA',
 print "[[[ END 'use Inline' STAGE for 'DATA' ]]]\n"x3;
 
 my $string_retval = string__typetest0();
-RPerl::diag "in ntype_string_1a.pl have \$string_retval = '$string_retval'\n";
+RPerl::diag("in ntype_string_1a.pl have \$string_retval = '$string_retval'\n");
 
 __DATA__
 __CPP__

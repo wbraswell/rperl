@@ -8,7 +8,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_001;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -31,7 +31,7 @@ use Perl::Tidy;
 # TEMP DEBUGGING, ONLY LOAD SPECIFIC FILES
 my $test_files = { './lib/RPerl/Algorithm/Sort/Bubble.pm' => undef };
 
-#RPerl::diag( 'in 12_compile_sort.t, have $test_files = ' . "\n" . Dumper($test_files) . "\n" );
+#RPerl::diag('in 12_compile_sort.t, have $test_files = ' . "\n" . Dumper($test_files) . "\n");
 
 my string_hashref $modes_argument;
 my hashref_arrayref $output_file_name_groups;
@@ -47,7 +47,7 @@ my integer $number_of_tests_run = 0;
 for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
 
     # [[[ MODE SETUP ]]]
-    #    RPerl::diag "in 12_compile_sort.t, top of for() loop, have \$mode_id = $mode_id\n";
+    #    RPerl::diag("in 12_compile_sort.t, top of for() loop, have \$mode_id = $mode_id\n");
     my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
     my $ops                 = $mode->{ops};
     my $types               = $mode->{types};

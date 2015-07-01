@@ -5,8 +5,8 @@ using std::cout;  using std::cerr;
 typedef std::string string;
 typedef std::ostringstream ostringstream;
 
-// [[[ OPERATIONS & DATA TYPES REPORTING ]]]
-integer RPerl__DataType__String__MODE_ID() { integer retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 2
+// [[[ OPERATIONS & DATA TYPES REPORTER ]]]
+integer RPerl__DataType__String__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 string XS_unpack_string(SV* input_sv);

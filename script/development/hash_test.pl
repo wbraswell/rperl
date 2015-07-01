@@ -17,10 +17,10 @@ rperltypes::types_enable('CPP');
 use RPerl::DataStructure::Hash_cpp;  RPerl::DataStructure::Hash_cpp::cpp_load();
 
 $RPerl::DEBUG = 1;
-RPerl::diag q{in hash_test.pl, have RPerl__DataType__Integer__MODE_ID() = '} . RPerl__DataType__Integer__MODE_ID() . "'\n";
-RPerl::diag q{in hash_test.pl, have RPerl__DataType__Number__MODE_ID() = '} . RPerl__DataType__Number__MODE_ID() . "'\n";
-RPerl::diag q{in hash_test.pl, have RPerl__DataType__String__MODE_ID() = '} . RPerl__DataType__String__MODE_ID() . "'\n";
-RPerl::diag q{in hash_test.pl, have hash__MODE_ID() = '} . hash__MODE_ID() . "'\n";
+RPerl::diag(q{in hash_test.pl, have RPerl__DataType__Integer__MODE_ID() = '} . RPerl__DataType__Integer__MODE_ID() . "'\n");
+RPerl::diag(q{in hash_test.pl, have RPerl__DataType__Number__MODE_ID() = '} . RPerl__DataType__Number__MODE_ID() . "'\n");
+RPerl::diag(q{in hash_test.pl, have RPerl__DataType__String__MODE_ID() = '} . RPerl__DataType__String__MODE_ID() . "'\n");
+RPerl::diag(q{in hash_test.pl, have hash__MODE_ID() = '} . hash__MODE_ID() . "'\n");
 
 # variable declarations
 my string $retval_stringify;
@@ -32,7 +32,7 @@ my string_hashref $retval_jeffys;
 # loop to test for memory leaks
 my integer $i_MAX = 0;  # CONSTANT
 for my integer $i ( 0 .. $i_MAX ) {
-	RPerl::diag "in hash_test.pl, top of for() loop $i/$i_MAX\n";
+	RPerl::diag("in hash_test.pl, top of for() loop $i/$i_MAX\n");
 
     # [[[ INTEGER TESTS ]]]
 
@@ -49,17 +49,17 @@ for my integer $i ( 0 .. $i_MAX ) {
 #	$retval_stringify = integer_hashref_to_string({a_key => 2, b_key => 2112, c_key => 42, d_key => {a_subkey => 23}, e_key => -877, f_key => -33, g_key => 1701});  # TIVHVRV14; error EIVHVRV03
 #	$retval_stringify = integer_hashref_to_string({a_key => 23});  # TIVHVRV20
 	$retval_stringify = integer_hashref_to_string({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => -33, g_key => 1701});  # TIVHVRV21
-	RPerl::diag "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
+	RPerl::diag("in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n");
 
 #	$retval_stringify = integer_hashref__typetest0();  # TIVHVRV30; error PERLOPS EIVHVRV00, CPPOPS "Usage: main::integer_hashref__typetest0(input_unordered_map)"
 #	$retval_stringify = integer_hashref__typetest0(2);  # TIVHVRV31; error EIVHVRV01
 #	$retval_stringify = integer_hashref__typetest0({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => undef, 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => -33, 'ncc' => 1701});  # TIVHVRV32; error EIVHVRV02
 #	$retval_stringify = integer_hashref__typetest0({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => 'abcdefg', 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => -33, 'ncc' => 1701});  # TIVHVRV33; error EIVHVRV03
 #	$retval_stringify = integer_hashref__typetest0({'binary' => 2, 'rush' => 2112, 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => -33, 'ncc' => 1701});  # TIVHVRV34
-#	RPerl::diag "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
+#	RPerl::diag("in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n");
 
 #	$retval_integer_hashref = integer_hashref__typetest1(5);  # TIVHVRV40
-#	RPerl::diag "in hash_test.pl $i/$i_MAX, have \$retval_integer_hashref = \n" . Dumper($retval_integer_hashref) . "\n";
+#	RPerl::diag("in hash_test.pl $i/$i_MAX, have \$retval_integer_hashref = \n" . Dumper($retval_integer_hashref) . "\n");
 
     # [[[ NUMBER TESTS ]]]
 
@@ -77,17 +77,17 @@ for my integer $i ( 0 .. $i_MAX ) {
 #	$retval_stringify = number_hashref_to_string({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => -33, g_key => 1701});  # TNVHVRV21
 #	$retval_stringify = number_hashref_to_string({a_key => 2.1234432112344321});  # TNVHVRV22
 #	$retval_stringify = number_hashref_to_string({a_key => 2.1234432112344321, b_key => 2112.4321, c_key => 42.4567, d_key => 23.765444444444444444, e_key => -877.5678, f_key => -33.876587658765875687658765, g_key => 1701.6789});  # TNVHVRV23
-#	RPerl::diag "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
+#	RPerl::diag("in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n");
 
 #	$retval_stringify = number_hashref__typetest0();  # TNVHVRV30; error PERLOPS ENVHVRV00, CPPOPS "Usage: main::number_hashref__typetest0(input_unordered_map)"
 #	$retval_stringify = number_hashref__typetest0(2);  # TNVHVRV31; error ENVHVRV01
 #	$retval_stringify = number_hashref__typetest0({'binary' => 2.1234432112344321, 'rush' => 2112.4321, 'ERROR_FUNKEY' => undef, 'answer' => 42.4567, 'fnord' => 23.765444444444444444, 'units' => -877.5678, 'degree' => -33.876587658765875687658765, 'ncc' => 1701.6789});  # TNVHVRV32; error ENVHVRV02
 #	$retval_stringify = number_hashref__typetest0({'binary' => 2.1234432112344321, 'rush' => 2112.4321, 'ERROR_FUNKEY' => 'abcdefg', 'answer' => 42.4567, 'fnord' => 23.765444444444444444, 'units' => -877.5678, 'degree' => -33.876587658765875687658765, 'ncc' => 1701.6789});  # TNVHVRV33; error ENVHVRV03
 #	$retval_stringify = number_hashref__typetest0({'binary' => 2.1234432112344321, 'rush' => 2112.4321, 'answer' => 42.4567, 'fnord' => 23.765444444444444444, 'units' => -877.5678, 'degree' => -33.876587658765875687658765, 'ncc' => 1701.6789});  # TNVHVRV34
-#	RPerl::diag "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
+#	RPerl::diag("in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n");
 
 #	$retval_number_hashref = number_hashref__typetest1(5);  # TNVHVRV40
-#	RPerl::diag "in hash_test.pl $i/$i_MAX, have \$retval_number_hashref = \n" . Dumper($retval_number_hashref) . "\n";
+#	RPerl::diag("in hash_test.pl $i/$i_MAX, have \$retval_number_hashref = \n" . Dumper($retval_number_hashref) . "\n");
 
     # [[[ STRING TESTS ]]]
 
@@ -108,19 +108,19 @@ for my integer $i ( 0 .. $i_MAX ) {
 #	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'STRING_NOT_NUMBER' => '-2112.23'};  # TPVHVRV23
 #	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', "STRING_NOT_ARRAY" => "[Tonto]"};  # TPVHVRV24
 #	$my_peeps = {'kryptonian_manofsteel_clarkkent' => 'Superman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'STRING_NOT_HASH' => '{buzz => 5}'};  # TPVHVRV25
-#	RPerl::diag "in hash_test.pl, have \$my_peeps =\n" . RPerl::DUMPER($my_peeps) . "\n";
+#	RPerl::diag("in hash_test.pl, have \$my_peeps =\n" . RPerl::DUMPER($my_peeps) . "\n");
 #	$retval_stringify = string_hashref_to_string($my_peeps);	
-#	RPerl::diag "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
+#	RPerl::diag("in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n");
 
 #	$retval_stringify = string_hashref__typetest0();  # TPVHVRV30; error PERLOPS EPVHVRV00, CPPOPS "Usage: main::string_hashref__typetest0(input_unordered_map)"
 #	$retval_stringify = string_hashref__typetest0(2);  # TPVHVRV31; error EPVHVRV01
 #	$retval_stringify = string_hashref__typetest0({'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'UNDEF_NOT_STRING' => undef});  # TPVHVRV32; error EPVHVRV02
 #	$retval_stringify = string_hashref__typetest0({'kryptonian_manofsteel_clarkkent' => 'Superman', 'gothamite_darkknight_brucewayne' => 'Batman', 'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman', 'scarletspeedster_barryallenetal' => 'Flash', 'alanscottetal' => 'Green Lantern', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter', 'ARRAY_NOT_STRING' => [23, -42.3]});  # TPVHVRV33; error EPVHVRV03
 #	$retval_stringify = string_hashref__typetest0({'stuckinaworldhenevercreated' => 'Howard The Duck', 'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman', 'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter'});  # TPVHVRV34
-#	RPerl::diag "in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n";
+#	RPerl::diag("in hash_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n");
 
 #	$retval_jeffys = string_hashref__typetest1(5);  # TPVHVRV40
-#	RPerl::diag "in hash_test.pl, have \$retval_jeffys =\n" . RPerl::DUMPER($retval_jeffys) . "\n";
+#	RPerl::diag("in hash_test.pl, have \$retval_jeffys =\n" . RPerl::DUMPER($retval_jeffys) . "\n");
 
 croak('Done for now, croaking');
 }

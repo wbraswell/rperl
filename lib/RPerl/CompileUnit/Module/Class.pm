@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.020_020;
+our $VERSION = 0.020_030;
 
 # [[[ OO INHERITANCE ]]]
 # BASE CLASS HAS NO INHERITANCE
@@ -27,6 +27,9 @@ use File::Basename;
 # RPerl object constructor, shorthand
 sub new {
     no strict;
+    if (not defined ${ $_[0] . '::properties' }) {
+        croak 'ERROR ECVOOCO00, SOURCE CODE, OO OBJECT CONSTRUCTOR: Undefined hashref $properties for class ' . $_[0] . ', croaking' . "\n";
+    }
     return bless { %{ ${ $_[0] . '::properties' } } }, $_[0];
 }
 
@@ -51,7 +54,7 @@ INIT {
     # DEV NOTE: should be safe to use basename() here instead of fileparse(), because $PROGRAM_NAME should never end in a directory
     $INC{ basename($PROGRAM_NAME) } = $PROGRAM_NAME;
 
-#	RPerl::diag "in Class.pm INIT block, have \%INC =\n" . Dumper(\%INC) . "\n";
+#	RPerl::diag("in Class.pm INIT block, have \%INC =\n" . Dumper(\%INC) . "\n");
 
     my $module_file_long;               # string
     my $package_name;                   # string
@@ -64,7 +67,7 @@ INIT {
     my $inside_subroutine_arguments;    # bool
     my $subroutine_arguments_line;      # string
 
-#	RPerl::diag q{in Class.pm INIT block, have $PROGRAM_NAME = '} . $PROGRAM_NAME . "'\n";
+#	RPerl::diag(q{in Class.pm INIT block, have $PROGRAM_NAME = '} . $PROGRAM_NAME . "'\n");
 
     foreach my $module_file_short ( sort keys %INC ) {
         $package_name = q{};
@@ -78,16 +81,16 @@ INIT {
             || ( $module_file_short =~ /^rperl/xms )
             || ( $module_file_short =~ /\.pl$/xms ) )
         {
-#			RPerl::diag "in Class.pm INIT block, have \$module_file_short = '$module_file_short'\n";
+#			RPerl::diag("in Class.pm INIT block, have \$module_file_short = '$module_file_short'\n");
             $module_file_long = $INC{$module_file_short};
 
-#            RPerl::diag "in Class.pm INIT block, have \$module_file_long = '$module_file_long'\n";
+#            RPerl::diag("in Class.pm INIT block, have \$module_file_long = '$module_file_long'\n");
 
             open my $MODULE_FILE, '<', $module_file_long or croak $OS_ERROR;
             while ( my $module_file_line = <$MODULE_FILE> ) {
                 chomp $module_file_line;
 
-#				RPerl::diag "in Class.pm INIT block, have \$module_file_line =\n$module_file_line\n";
+#				RPerl::diag("in Class.pm INIT block, have \$module_file_line =\n$module_file_line\n");
 
                 # set data type checking mode
                 if ( $module_file_line
@@ -117,7 +120,7 @@ INIT {
                 # skip multi-line POD comments
                 if ( $module_file_line =~ /^\=(\w+)/xms ) {
 
-#					RPerl::diag "in Class.pm INIT block, skipping multi-line POD comment, have \$1 = '$1'\n";
+#					RPerl::diag("in Class.pm INIT block, skipping multi-line POD comment, have \$1 = '$1'\n");
                     $module_file_line = <$MODULE_FILE>;
                     if ( not defined $module_file_line ) {
                         croak
@@ -141,7 +144,7 @@ INIT {
                         =~ /\=\s*\<\<\s*\"(\w+)\"\s*\;\s*$/xms )
                     )
                 {
-#					RPerl::diag "in Class.pm INIT block, skipping multi-line heredoc, have \$1 = '$1'\n";
+#					RPerl::diag("in Class.pm INIT block, skipping multi-line heredoc, have \$1 = '$1'\n");
                     $module_file_line = <$MODULE_FILE>;
                     if ( not defined $module_file_line ) {
                         croak
@@ -167,7 +170,7 @@ INIT {
                                 . "\n" );
                     }
 
-#                    else { RPerl::diag 'in Class.pm INIT block, skipping __DATA__ footer' . "\n"; }
+#                    else { RPerl::diag('in Class.pm INIT block, skipping __DATA__ footer' . "\n"); }
                     last;
                 }
 
@@ -181,7 +184,7 @@ INIT {
                                 . "\n" );
                     }
 
-#                    else { RPerl::diag 'in Class.pm INIT block, skipping __END__ footer' . "\n"; }
+#                    else { RPerl::diag('in Class.pm INIT block, skipping __END__ footer' . "\n"); }
                     last;
                 }
 
@@ -202,7 +205,7 @@ INIT {
                         last;
                     }
 
-#                    else { RPerl::diag 'in Class.pm INIT block, have $package name = ' . $package_name . "\n"; }
+#                    else { RPerl::diag('in Class.pm INIT block, have $package name = ' . $package_name . "\n"); }
 
                     # ops/types reporting subroutine
 
@@ -231,7 +234,7 @@ INIT {
                     foreach my $object_property_name (
                         sort keys %{$object_properties} )
                     {
-#						RPerl::diag "in Class.pm INIT block, have \$object_property_name = '$object_property_name'\n";
+#						RPerl::diag("in Class.pm INIT block, have \$object_property_name = '$object_property_name'\n");
 # DEV NOTE, CORRELATION #03: avoid re-defining class accessor/mutator methods; so far only triggered by RPerl::CodeBlock::Subroutine
 # because it has a special BEGIN{} block with multiple package names including it's own package name
                         if (not eval(
@@ -253,7 +256,7 @@ INIT {
                                 or croak($EVAL_ERROR);
                             if ($EVAL_ERROR) { croak($EVAL_ERROR); }
 
-#eval "\*\{$package_name\:\:get_$object_property_name\} \= sub \{ RPerl::diag \"IN POST\-INIT\, accessor MODE $package_name\:\:get_$object_property_name\\n\"\; return \$\_\[0\]\-\>\{$object_property_name\}\; \}\;";
+#eval "\*\{$package_name\:\:get_$object_property_name\} \= sub \{ RPerl::diag(\"IN POST\-INIT\, accessor MODE $package_name\:\:get_$object_property_name\\n\"\; return \$\_\[0\]\-\>\{$object_property_name\}\; \}\;";
                         }
 
                         if (not eval(
@@ -277,7 +280,7 @@ INIT {
                                 or croak($EVAL_ERROR);
                             if ($EVAL_ERROR) { croak($EVAL_ERROR); }
 
-#eval "\*\{$package_name\:\:set_$object_property_name\} \= sub \{ RPerl::diag \"IN POST\-INIT\, mutator MODE $package_name\:\:set_$object_property_name\\n\"\; \$\_\[0\]\-\>\{$object_property_name\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$object_property_name\}\; \}\;";
+#eval "\*\{$package_name\:\:set_$object_property_name\} \= sub \{ RPerl::diag(\"IN POST\-INIT\, mutator MODE $package_name\:\:set_$object_property_name\\n\"\; \$\_\[0\]\-\>\{$object_property_name\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$object_property_name\}\; \}\;";
                         }
                     }
                     next;
@@ -321,7 +324,7 @@ INIT {
                 if ($inside_subroutine) {
 
 #                    RPerl::diag( q{in Class.pm INIT block, have $inside_subroutine = 1} . "\n" );
-#                    RPerl::diag "in Class.pm INIT block, have \$module_file_line =\n$module_file_line\n";
+#                    RPerl::diag("in Class.pm INIT block, have \$module_file_line =\n$module_file_line\n");
                     if ( $module_file_line =~ /^\s*\(\s*my/xms ) {
                         $inside_subroutine_arguments = 1;
                     }
@@ -426,7 +429,7 @@ INIT {
                         'Did not find @_ to end subroutine arguments before end of file, croaking'
                     );
                 }
-#                RPerl::diag( 'in Class.pm INIT block, activating final subroutine in file, no subroutine arguments found', "\n" );
+#                RPerl::diag( 'in Class.pm INIT block, activating final subroutine in file, no subroutine arguments found' . "\n" );
                 activate_subroutine( $package_name, $subroutine_name,
                     $subroutine_type, q{} );
                 $inside_subroutine = 0;
@@ -453,7 +456,7 @@ sub activate_subroutine {
                 $subroutine_name, ', croaking' );
         }
 
-#        $subroutine_definition_diag_code = "\n" . q{RPerl::diag "IN POST-INIT, method direct call MODE } . $package_name . '::' . $subroutine_name . q{\n"; } . "\n";
+#        $subroutine_definition_diag_code = "\n" . q{RPerl::diag("IN POST-INIT, method direct call MODE } . $package_name . '::' . $subroutine_name . q{\n"); } . "\n";
 #        RPerl::diag("in Class::activate_subroutine(), $subroutine_name is a method\n");
 # NEED UPGRADE: is it possible to activate non-type-checked RPerl subroutines & methods w/out creating new subroutines?
         $subroutine_definition_code
@@ -485,7 +488,7 @@ sub activate_subroutine {
         if   ( $package_name eq '' ) { $package_name_tmp = 'main'; }
         else                         { $package_name_tmp = $package_name; }
 
-#        $subroutine_definition_diag_code = "\n" . q{RPerl::diag "IN POST-INIT, subroutine direct call MODE main::} . $subroutine_name . q{\n"; } . "\n";
+#        $subroutine_definition_diag_code = "\n" . q{RPerl::diag("IN POST-INIT, subroutine direct call MODE main::} . $subroutine_name . q{\n"; } . "\n");
         $subroutine_definition_code
             = '*{main::'
             . $subroutine_name
@@ -505,7 +508,7 @@ sub activate_subroutine {
         # no package name means 'main', handled above
         if ( $package_name ne '' ) {
 
-#            $subroutine_definition_diag_code = "\n" . {RPerl::diag "IN POST-INIT, subroutine direct call MODE } . $package_name . '::' . $subroutine_name . q{\n"; } . "\n";
+#            $subroutine_definition_diag_code = "\n" . {RPerl::diag("IN POST-INIT, subroutine direct call MODE } . $package_name . '::' . $subroutine_name . q{\n"; } . "\n");
             $subroutine_definition_code
                 = '*{'
                 . $package_name . '::'
@@ -538,7 +541,7 @@ __END__
 our $AUTOLOAD;
 sub AUTOLOAD
 {
-	RPerl::diag "IN AUTOLOAD, top of subroutine, received \$AUTOLOAD = '$AUTOLOAD', and \@_ =\n" . Dumper(\@_) . "\n";
+	RPerl::diag("IN AUTOLOAD, top of subroutine, received \$AUTOLOAD = '$AUTOLOAD', and \@_ =\n" . Dumper(\@_) . "\n");
 	no strict;
 	my $retval;
 
@@ -546,31 +549,31 @@ sub AUTOLOAD
 #	if ($AUTOLOAD =~ /^([\w+::]*)(get|set)_(\w+)$/)
 	if (0)
 	{
-		RPerl::diag "IN AUTOLOAD, accessor/mutator MODE, have \$1 = '$1', \$2 = '$2', \$3 = '$3'\n";
+		RPerl::diag("IN AUTOLOAD, accessor/mutator MODE, have \$1 = '$1', \$2 = '$2', \$3 = '$3'\n");
 		if ($2 eq 'get')	
 		{
-			RPerl::diag "IN AUTOLOAD, accessor MODE\n";
+			RPerl::diag("IN AUTOLOAD, accessor MODE\n");
 #			eval "\*\{$AUTOLOAD\} \= sub \{ return \$\_\[0\]\-\>\{$3\}\; \}\;";
-			eval "\*\{$AUTOLOAD\} \= sub \{ RPerl::diag \"IN POST\-AUTOLOAD\, accessor MODE $AUTOLOAD\\n\"\; return \$\_\[0\]\-\>\{$3\}\; \}\;";
+			eval "\*\{$AUTOLOAD\} \= sub \{ RPerl::diag(\"IN POST\-AUTOLOAD\, accessor MODE $AUTOLOAD\\n\"\; return \$\_\[0\]\-\>\{$3\}\; \}\;";
 			$retval = $_[0]->{$3};
 		}
 		else  # ($2 eq 'set')
 		{
-			RPerl::diag "IN AUTOLOAD, mutator MODE\n";
+			RPerl::diag("IN AUTOLOAD, mutator MODE\n");
 #			eval "\*\{$AUTOLOAD\} \= sub \{ \$\_\[0\]\-\>\{$3\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$3\}\; \}\;";
-			eval "\*\{$AUTOLOAD\} \= sub \{ RPerl::diag \"IN POST\-AUTOLOAD\, mutator MODE $AUTOLOAD\\n\"\; \$\_\[0\]\-\>\{$3\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$3\}\; \}\;";
+			eval "\*\{$AUTOLOAD\} \= sub \{ RPerl::diag(\"IN POST\-AUTOLOAD\, mutator MODE $AUTOLOAD\\n\"\; \$\_\[0\]\-\>\{$3\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$3\}\; \}\;";
 			$_[0]->{$3} = $_[1];
 			$retval = $_[0]->{$3};
 		}
 	}
 	else
 	{
-		RPerl::diag "IN AUTOLOAD, direct call MODE\n";
+		RPerl::diag("IN AUTOLOAD, direct call MODE\n");
 		# disable creating symtab entries here to avoid redefining subroutines in INIT block above;
 		# still need direct call mode here in case we want to call an RPerl function/method before the INIT block executes,
 		# such as when an RPerl class calls one of it's own functions/methods during compile time
 #		eval "\*\{$AUTOLOAD\} \= sub \{ return \&\$\{$AUTOLOAD\}\(\@\_\)\; \}\;";  # NEED UPGRADE: how can I do this w/out a subroutine?
-#		eval "\*\{$AUTOLOAD\} \= sub \{ RPerl::diag \"IN POST\-AUTOLOAD\, direct call MODE $AUTOLOAD\\n\"\; return \&\$\{$AUTOLOAD\}\(\@\_\)\; \}\;";  # NEED UPGRADE: how can I do this w/out a subroutine?
+#		eval "\*\{$AUTOLOAD\} \= sub \{ RPerl::diag(\"IN POST\-AUTOLOAD\, direct call MODE $AUTOLOAD\\n\"\; return \&\$\{$AUTOLOAD\}\(\@\_\)\; \}\;";  # NEED UPGRADE: how can I do this w/out a subroutine?
 		if (defined(${$AUTOLOAD})) { $retval = &${$AUTOLOAD}(@_); }
 		else { die "Attempt to AUTOLOAD undefined subroutine '$AUTOLOAD', dying"; }
 	}
@@ -579,7 +582,7 @@ sub AUTOLOAD
 	else
 	{
 		my $eval_string = '&$' . $AUTOLOAD . '(@_);';
-		RPerl::diag "IN AUTOLOAD, eval call MODE, have \$eval_string = '$eval_string'\n";
+		RPerl::diag("IN AUTOLOAD, eval call MODE, have \$eval_string = '$eval_string'\n");
 		$retval = eval $eval_string;
 	}
 =cut
@@ -587,7 +590,7 @@ sub AUTOLOAD
 	croak $EVAL_ERROR if ($EVAL_ERROR);  # suppress '...propagated at RPerl/Class.pm' appended exception	
 #	croak if ($EVAL_ERROR);  # allow '...propagated at RPerl/Class.pm' appended exception	
 
-#	RPerl::diag "IN AUTOLOAD, bottom of subroutine, about to return \$retval = '$retval'\n";
+#	RPerl::diag("IN AUTOLOAD, bottom of subroutine, about to return \$retval = '$retval'\n");
 	return $retval;
 }
 
@@ -597,13 +600,13 @@ sub AUTOLOAD
 sub new_longhand
 {
 	(my $class_name_const_str) = @_;
-RPerl::diag "in Class.pm, have \$class_name_const_str = '$class_name_const_str'\n";
+RPerl::diag("in Class.pm, have \$class_name_const_str = '$class_name_const_str'\n");
 	my $properties_name_const_str = $class_name_const_str . '::properties';
-RPerl::diag "in Class.pm, have \$properties_name_const_str = '$properties_name_const_str'\n";
+RPerl::diag("in Class.pm, have \$properties_name_const_str = '$properties_name_const_str'\n");
 	my %properties = %{$properties_name_const_str};
-RPerl::diag "in Class.pm, have \%properties =\n" . Dumper(\%properties) . "\n";
+RPerl::diag("in Class.pm, have \%properties =\n" . Dumper(\%properties) . "\n");
 #	my $new_obj = bless({%{$class_name_const_str . '::properties'}}, $class_name_const_str);
 	my $new_obj = bless({%properties}, $class_name_const_str);
-RPerl::diag "in Class.pm, have \$new_obj =\n" . Dumper($new_obj) . "\n";
+RPerl::diag("in Class.pm, have \$new_obj =\n" . Dumper($new_obj) . "\n");
 	return $new_obj;
 }

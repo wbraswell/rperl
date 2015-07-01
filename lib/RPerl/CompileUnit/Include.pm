@@ -24,7 +24,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in Include->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-#    RPerl::diag( 'in Include->ast_to_rperl__generate(), have ref $self = ' . (ref $self) . "\n" );
+#    RPerl::diag( 'in Include->ast_to_rperl__generate(), have ::class($self) = ' . ::class($self) . "\n" );
 #    RPerl::diag( 'in Include->ast_to_rperl__generate(), have $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
     if ( ref $self eq 'Include_39' ) {
         my string $use_keyword = $self->{children}->[0];

@@ -33,8 +33,8 @@ our scalartype_arrayref $mergesort_array_topdown = sub {(my scalartype_arrayref 
 ;
 	my integer $data_length = scalar(@{$data});  # CONSTANT
 	
-#	RPerl::diag "in mergesort_array_topdown(), have \$data = \n" . RPerl::DUMPER($data) . "\n";
-#	RPerl::diag "in mergesort_array_topdown(), have \$data_length = $data_length\n";
+#	RPerl::diag("in mergesort_array_topdown(), have \$data = \n" . RPerl::DUMPER($data) . "\n");
+#	RPerl::diag("in mergesort_array_topdown(), have \$data_length = $data_length\n");
 
 	# singleton or empty sublists are sorted
 	return $data if ($data_length <= 1);
@@ -90,16 +90,16 @@ our scalartype_arrayref $mergesort_array_bottomup = sub {(my scalartype_arrayref
 	# temporary storage for partially sorted data [O(n) total extra space; counted for this function, not the merge_array_bottomup() function]
 	my scalartype_arrayref $tmp_data = [];
 	
-#	RPerl::diag "in mergesort_array_bottomup(), have \$data = \n" . RPerl::DUMPER($data) . "\n";
-#	RPerl::diag "in mergesort_array_bottomup(), have \$data_length = $data_length\n";
+#	RPerl::diag("in mergesort_array_bottomup(), have \$data = \n" . RPerl::DUMPER($data) . "\n");
+#	RPerl::diag("in mergesort_array_bottomup(), have \$data_length = $data_length\n");
 	
 	# iterate through the length-n list with logarithmic iterator growth [O(log n) time]
 	for ($width = 1; $width < $data_length; $width = $width * 2)
 	{
-#		RPerl::diag "in mergesort_array_bottomup(), top of outer for() loop, have \$width = $width\n";
+#		RPerl::diag("in mergesort_array_bottomup(), top of outer for() loop, have \$width = $width\n");
 		for ($i = 0; $i < $data_length; $i = $i + ($width * 2))
 		{
-#			RPerl::diag "in mergesort_array_bottomup(), top of inner for() loop, have \$i = $i\n";
+#			RPerl::diag("in mergesort_array_bottomup(), top of inner for() loop, have \$i = $i\n");
 			merge_array_bottomup($data, $tmp_data, $i, min(($i + $width), $data_length), min(($i + ($width * 2)), $data_length));
 		}
 		$data = [@$tmp_data];
@@ -117,27 +117,27 @@ our void $merge_array_bottomup = sub {(my scalartype_arrayref $data, my scalarty
 	my integer $i1 = $i_right;
 	my integer $j;
 	
-#	RPerl::diag "in merge_array_bottomup(), have \$data = \n" . RPerl::DUMPER($data) . "\n";
-#	RPerl::diag "in merge_array_bottomup(), have \$tmp_data = \n" . RPerl::DUMPER($tmp_data) . "\n";
-#	RPerl::diag "in merge_array_bottomup(), have \$i_left = $i_left\n";
-#	RPerl::diag "in merge_array_bottomup(), have \$i_right = $i_right\n";
-#	RPerl::diag "in merge_array_bottomup(), have \$i_end = $i_end\n";
+#	RPerl::diag("in merge_array_bottomup(), have \$data = \n" . RPerl::DUMPER($data) . "\n");
+#	RPerl::diag("in merge_array_bottomup(), have \$tmp_data = \n" . RPerl::DUMPER($tmp_data) . "\n");
+#	RPerl::diag("in merge_array_bottomup(), have \$i_left = $i_left\n");
+#	RPerl::diag("in merge_array_bottomup(), have \$i_right = $i_right\n");
+#	RPerl::diag("in merge_array_bottomup(), have \$i_end = $i_end\n");
 		
 	# iteratively merge elements of lengths-add-to-n sublists [O(n) time, O(1) extra space]
 	for ($j = $i_left; $j < $i_end; $j++)
 	{
-#		RPerl::diag "in merge_array_bottomup(), top of for() loop, have \$j = $j\n";
+#		RPerl::diag("in merge_array_bottomup(), top of for() loop, have \$j = $j\n");
 
 		# compare elements and merge in smaller element, this is the core sort comparison
 		if (($i0 < $i_right) && (($i1 >= $i_end) || ($data->[$i0] <= $data->[$i1])))
 		{
-#			RPerl::diag "in merge_array_bottomup(), setting \$tmp_data->[$j] = \$data->[\$i0] = \$data->[$i0] = " . $data->[$i0] . "\n";
+#			RPerl::diag("in merge_array_bottomup(), setting \$tmp_data->[$j] = \$data->[\$i0] = \$data->[$i0] = " . $data->[$i0] . "\n");
 			$tmp_data->[$j] = $data->[$i0];
 			$i0++;
 		}
 		else
 		{
-#			RPerl::diag "in merge_array_bottomup(), setting \$tmp_data->[$j] = \$data->[\$i1] = \$data->[$i1] = " . $data->[$i1] . "\n";
+#			RPerl::diag("in merge_array_bottomup(), setting \$tmp_data->[$j] = \$data->[\$i1] = \$data->[$i1] = " . $data->[$i1] . "\n");
 			$tmp_data->[$j] = $data->[$i1];
 			$i1++;
 		}
@@ -151,7 +151,7 @@ our scalartype $min = sub {(my scalartype $a, my scalartype $b) = @_; if ($a < $
 # sort data starting at head node, return new head node of sorted data
 our linkedlistnoderef $mergesort_linkedlist_topdown = sub {(my linkedlistnoderef $head) = @_;
 ;
-#	RPerl::diag "in mergesort_linkedlist_topdown(), received \$head = " . RPerl::DUMPER($head) . "\n";
+#	RPerl::diag("in mergesort_linkedlist_topdown(), received \$head = " . RPerl::DUMPER($head) . "\n");
 
 	my linkedlistnoderef $left;
 	my linkedlistnoderef $right;
@@ -160,16 +160,16 @@ our linkedlistnoderef $mergesort_linkedlist_topdown = sub {(my linkedlistnoderef
 	return $head if (not(defined($head)) or not(defined($head->{next})));
 	
 	($left, $right) = @{split_linkedlist($head)};
-#	RPerl::diag "in mergesort_linkedlist_topdown(), after split_linkedlist() have \$left = " . RPerl::DUMPER($left) . "\n";
-#	RPerl::diag "in mergesort_linkedlist_topdown(), after split_linkedlist() have \$right = " . RPerl::DUMPER($right) . "\n";
+#	RPerl::diag("in mergesort_linkedlist_topdown(), after split_linkedlist() have \$left = " . RPerl::DUMPER($left) . "\n");
+#	RPerl::diag("in mergesort_linkedlist_topdown(), after split_linkedlist() have \$right = " . RPerl::DUMPER($right) . "\n");
 
 	$left = mergesort_linkedlist_topdown($left);
 	$right = mergesort_linkedlist_topdown($right);
-#	RPerl::diag "in mergesort_linkedlist_topdown(), after recursion to mergesort_linkedlist_topdown() have \$left = " . RPerl::DUMPER($left) . "\n";
-#	RPerl::diag "in mergesort_linkedlist_topdown(), after recursion to mergesort_linkedlist_topdown() have \$right = " . RPerl::DUMPER($right) . "\n";
+#	RPerl::diag("in mergesort_linkedlist_topdown(), after recursion to mergesort_linkedlist_topdown() have \$left = " . RPerl::DUMPER($left) . "\n");
+#	RPerl::diag("in mergesort_linkedlist_topdown(), after recursion to mergesort_linkedlist_topdown() have \$right = " . RPerl::DUMPER($right) . "\n");
 	
 	$head = merge_linkedlist_topdown($left, $right);
-#	RPerl::diag "in mergesort_linkedlist_topdown(), after merge_linkedlist_topdown(), about to return \$head = " . RPerl::DUMPER($head) . "\n";
+#	RPerl::diag("in mergesort_linkedlist_topdown(), after merge_linkedlist_topdown(), about to return \$head = " . RPerl::DUMPER($head) . "\n");
 	
 	return $head;
 };
@@ -177,7 +177,7 @@ our linkedlistnoderef $mergesort_linkedlist_topdown = sub {(my linkedlistnoderef
 # linked list, top-down variant; split into sublists, return sublists [O(n) time, O(1) extra space]
 our arrayref $split_linkedlist = sub {(my scalartype_linkedlistref $head) = @_;
 ;	
-#	RPerl::diag "in split_linkedlist(), received \$head->{data} = " . $head->{data} . "\n";
+#	RPerl::diag("in split_linkedlist(), received \$head->{data} = " . $head->{data} . "\n");
 	
 	my linkedlistnoderef $left;
 	my linkedlistnoderef $right;
@@ -212,43 +212,43 @@ our arrayref $split_linkedlist = sub {(my scalartype_linkedlistref $head) = @_;
 		$slow->{next} = undef;
 	}
 	
-#	RPerl::diag "in split_linkedlist(), have final \$left = " . RPerl::DUMPER($left) . "\n";
-#	RPerl::diag "in split_linkedlist(), have final \$right = " . RPerl::DUMPER($right) . "\n";
+#	RPerl::diag("in split_linkedlist(), have final \$left = " . RPerl::DUMPER($left) . "\n");
+#	RPerl::diag("in split_linkedlist(), have final \$right = " . RPerl::DUMPER($right) . "\n");
 	return [$left, $right];
 };
 
 # linked list, top-down variant; merge sublists, return sublists [O(n) time, O(1) extra space]
 our linkedlistnoderef $merge_linkedlist_topdown = sub {(my linkedlistnoderef $left, my linkedlistnoderef $right) = @_;
 ;
-#	RPerl::diag "in merge_linkedlist_topdown(), received \$left = " . RPerl::DUMPER($left) . "\n";
-#	RPerl::diag "in merge_linkedlist_topdown(), received \$right = " . RPerl::DUMPER($right) . "\n";
+#	RPerl::diag("in merge_linkedlist_topdown(), received \$left = " . RPerl::DUMPER($left) . "\n");
+#	RPerl::diag("in merge_linkedlist_topdown(), received \$right = " . RPerl::DUMPER($right) . "\n");
 
 	my linkedlistnoderef $merged;
 	
 	if (not(defined($left)))
 	{
-#		RPerl::diag "in merge_linkedlist_topdown(), have undefined \$left, returning only \$right\n";
+#		RPerl::diag("in merge_linkedlist_topdown(), have undefined \$left, returning only \$right\n");
 		return $right;
 	}
 	elsif (not(defined($right)))
 	{
-#		RPerl::diag "in merge_linkedlist_topdown(), have undefined \$right, returning only \$left\n";
+#		RPerl::diag("in merge_linkedlist_topdown(), have undefined \$right, returning only \$left\n");
 		return $left;
 	}
 	
 	if ($left->{data} <= $right->{data})
 	{
-#		RPerl::diag "in merge_linkedlist_topdown(), have \$left->{data} <= \$right->{data} === " . $left->{data} . " <= " . $right->{data} . "\n";
+#		RPerl::diag("in merge_linkedlist_topdown(), have \$left->{data} <= \$right->{data} === " . $left->{data} . " <= " . $right->{data} . "\n");
 		$merged = $left;
 		$merged->{next} = merge_linkedlist_topdown($left->{next}, $right);
 	}
 	else
 	{
-#		RPerl::diag "in merge_linkedlist_topdown(), have \$left->{data} > \$right->{data} === " . $left->{data} . " > " . $right->{data} . "\n";
+#		RPerl::diag("in merge_linkedlist_topdown(), have \$left->{data} > \$right->{data} === " . $left->{data} . " > " . $right->{data} . "\n");
 		$merged = $right;
 		$merged->{next} = merge_linkedlist_topdown($left, $right->{next});
 	}
 	
-#	RPerl::diag "in merge_linkedlist_topdown(), returning \$merged = " . RPerl::DUMPER($merged) . "\n";
+#	RPerl::diag("in merge_linkedlist_topdown(), returning \$merged = " . RPerl::DUMPER($merged) . "\n");
 	return $merged;
 };

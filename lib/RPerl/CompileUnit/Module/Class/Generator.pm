@@ -205,14 +205,12 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my object $method_or_subroutine_star = $self->{children}->[9];
 
     if ( $modes->{label} eq 'ON' ) {
-        $cpp_source_group->{H}   .= '// [[[ INCLUDES ]]]' . "\n";
+        $cpp_source_group->{H}   .= '// [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]' . "\n";
         $cpp_source_group->{CPP} .= '// [[[ INCLUDES ]]]' . "\n";
     }
 
     $cpp_source_group->{H} .= <<EOL;
-#include <rperltypes_mode.h>  // for default definitions of __PERL__TYPES or __CPP__TYPES
-#include <rperltypes.h>  // for data types and structures
-#include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
+#include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperltypes.h; HelperFunctions.cpp)
 EOL
 
     # NEED FIX WIN32: change hard-coded forward-slash in generated path name below?
@@ -269,9 +267,9 @@ EOL
     }
 
     my string_arrayref $method_declarations     = [];
-    my string_arrayref $method_definitions     = [];
+    my string_arrayref $method_definitions      = [];
     my string_arrayref $subroutine_declarations = [];
-    my string_arrayref $subroutine_definitions = [];
+    my string_arrayref $subroutine_definitions  = [];
 
     foreach my object $method_or_subroutine ( ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
         @{ $method_or_subroutine_star->{children} }
@@ -280,7 +278,7 @@ EOL
         if ( ( ref $method_or_subroutine ) eq 'MethodOrSubroutine_74' ) {
             $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES($modes);
             push @{$method_declarations}, $cpp_source_subgroup->{H};
-            $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES($package_name_underscores, $modes);
+            $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES( $package_name_underscores, $modes );
             push @{$method_definitions}, $cpp_source_subgroup->{CPP};
         }
         elsif ( ( ref $method_or_subroutine ) eq 'MethodOrSubroutine_75' ) {
@@ -304,7 +302,7 @@ EOL
         $cpp_source_group->{H} .= ( join "\n", @{$method_declarations} ) . "\n\n";
     }
 
-    if (( exists $method_definitions->[0] ) or ( exists $subroutine_definitions->[0] )) {
+    if ( ( exists $method_definitions->[0] ) or ( exists $subroutine_definitions->[0] ) ) {
         if ( $modes->{label} eq 'ON' ) {
             $cpp_source_group->{CPP} .= '// [[[ OO METHODS & SUBROUTINES ]]]' . "\n\n";
         }
@@ -343,7 +341,7 @@ EOL
 
         $property_declaration .= ';';
         push @{$properties_declarations}, $property_declaration;
-        push @{$properties_accessors_mutators}, ( q{    } . $property_type . ' get_' . $property_key . '() { return(this->' . $property_key . '); }' );  # ACCESSOR
+        push @{$properties_accessors_mutators}, ( q{    } . $property_type . ' get_' . $property_key . '() { return this->' . $property_key . '; }' ); # ACCESSOR
         push @{$properties_accessors_mutators},
             (     q{    }
                 . 'void set_'
@@ -353,7 +351,7 @@ EOL
                 . '_new) { this->'
                 . $property_key . ' = '
                 . $property_key
-                . '_new; }' );                                                                                                                        # MUTATOR
+                . '_new; }' );    # MUTATOR
 
         foreach my object $property ( @{ $properties_1_to_n->{children} } ) {
             if ( ( ref $property ) eq 'TERMINAL' ) {    # skip comma between properties
@@ -381,7 +379,7 @@ EOL
 
             $property_declaration .= ';';
             push @{$properties_declarations}, $property_declaration;
-            push @{$properties_accessors_mutators}, ( q{    } . $property_type . ' get_' . $property_key . '() { return(this->' . $property_key . '); }' ); # ACCESSOR
+            push @{$properties_accessors_mutators}, ( q{    } . $property_type . ' get_' . $property_key . '() { return this->' . $property_key . '; }' ); # ACCESSOR
             push @{$properties_accessors_mutators},
                 (     q{    }
                     . 'void set_'
@@ -409,8 +407,15 @@ EOL
     $cpp_source_group->{H} .= q{    } . $package_name_underscores . '() {}' . "\n";            # CONSTRUCTOR
     $cpp_source_group->{H} .= q{    } . '~' . $package_name_underscores . '() {}' . "\n\n";    # DESTRUCTOR
 
+    if ( $modes->{label} eq 'ON' ) {
+        $cpp_source_group->{H} .= q{    } . '// <<< CLASS NAME REPORTER >>>' . "\n";
+    }
+    my string $package_name_scoped = $package_name_underscores;
+    $package_name_scoped =~ s/__/::/gxms;
+    $cpp_source_group->{H} .= '    virtual string myclassname() { return (const string) "' . $package_name_scoped . '"; }' . "\n";    # CLASS NAME REPORTER
+
     if ( exists $properties_declarations->[0] ) {
-        $cpp_source_group->{H} .= 'private:' . "\n";
+        $cpp_source_group->{H} .= "\n" . 'private:' . "\n";
         if ( $modes->{label} eq 'ON' ) {
             $cpp_source_group->{H} .= '// [[[ OO PROPERTIES ]]]' . "\n";
         }
@@ -427,9 +432,9 @@ EOL
     }
 
     if ( $modes->{label} eq 'ON' ) {
-        $cpp_source_group->{H} .= '// <<< OPERATIONS & DATA TYPES REPORTING >>>' . "\n";
+        $cpp_source_group->{H} .= '// <<< OPERATIONS & DATA TYPES REPORTER >>>' . "\n";
     }
-    $cpp_source_group->{H} .= 'integer ' . $package_name_underscores . '__MODE_ID() { integer retval = 2;  return(retval); }  // CPPOPS_CPPTYPES is 2' . "\n\n";
+    $cpp_source_group->{H} .= 'integer ' . $package_name_underscores . '__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2' . "\n\n";
 
     if ( $modes->{label} eq 'ON' ) {
         $cpp_source_tmp = ( ( '// [[[<<< END CPP TYPES >>>]]]' . "\n" ) x 3 ) . "\n";

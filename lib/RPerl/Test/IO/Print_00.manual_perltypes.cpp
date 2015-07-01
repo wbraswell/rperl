@@ -31,7 +31,7 @@ void greet_planet(SV* arg0) {
     cout << "Goodbye from CPPOPS_PERLTYPES\n";
 }
 
-// [[[ OPERATIONS & DATA TYPES REPORTING ]]]
+// [[[ OPERATIONS & DATA TYPES REPORTER ]]]
 SV* RPerl__Test__IO__Print_00__MODE_ID() {
     return (newSViv(1));  // CPPOPS_PERLTYPES is 1
 }

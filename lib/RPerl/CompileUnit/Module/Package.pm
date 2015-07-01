@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Package;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_001;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module);
@@ -150,70 +150,3 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 };
 
 1;    # end of class
-
-=DISABLED OLD
-# [[[ OO PROPERTIES ]]]
-our hashref $properties = {
-    name => my string $TYPED_name = undef,
-    version => my string $TYPED_version = undef, # NEED UPGRADE: convert vstring from string type to number type?
-    includes    => my string_arrayref $TYPED_includes    = undef,
-    subroutines => my object_arrayref $TYPED_subroutines = undef
-};
-
-# GENERATE CPPOPS_CPPTYPES
-our string_method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
-    ( my object $self ) = @_;    # object method
-    my string $self_generated = q{};
-
-#RPerl::diag "in Package::rperl_to_cpp__generate__CPPOPS_CPPTYPES(), received \$self = \n" . Dumper($self) . "\n";
-#$self_generated .= "// <<< PACKAGE RULE, BEGIN CPPOPS_CPPTYPES >>>\n"; # DEBUG TEMP
-
-    $self_generated
-        .= q{// namespace }
-        . $self->{name}
-        . q{;  // NEED UPGRADE: Perl vs C++ namespace compatibility} . "\n";
-    $self_generated .= q{using std::cout;} . "\n";
-    $self_generated .= q{using std::cerr;} . "\n";
-    $self_generated .= q{// VERSION } . $self->{version} . "\n";
-    $self_generated
-        .= q{#include <rperltypes.h>  // for data types and structures}
-        . "\n";
-    $self_generated
-        .= q{#include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h}
-        . "\n\n";
-
-    $self_generated
-        .= q{// [[[ PROCEDURAL SUBROUTINE DECLARATION(S) ]]]} . "\n";
-    foreach my object $subroutine ( @{ $self->{subroutines} } ) {
-        $self_generated
-            .= $subroutine->rperl_to_cpp__header_generate__CPPOPS_CPPTYPES();
-        $self_generated .= q{;} . "\n";
-    }
-    $self_generated .= "\n";
-
-    $self_generated
-        .= q{// [[[ PROCEDURAL SUBROUTINE DEFINITION(S) ]]]} . "\n";
-    foreach my object $subroutine ( @{ $self->{subroutines} } ) {
-        $self_generated
-            .= $subroutine->rperl_to_cpp__generate__CPPOPS_CPPTYPES();
-    }
-    $self_generated .= "\n";
-
-    my $self_name_underscores = $self->{name};
-    $self_name_underscores =~ s/::/_/gxms;
-
-    $self_generated .= q{// [[[ OPERATIONS & DATA TYPES REPORTING ]]]} . "\n";
-    $self_generated
-        .= q{integer } . $self_name_underscores . q[__MODE_ID() {] . "\n";
-    $self_generated .= q{    integer retval = 2;  // CPPOPS_CPPTYPES is 2} . "\n";
-    $self_generated .= q{    return (retval);} . "\n";
-    $self_generated .= q[}] . "\n";
-
-#$self_generated .= "// <<< PACKAGE RULE, END CPPOPS_CPPTYPES >>>\n"; # DEBUG TEMP
-    RPerl::diag
-        "in Package::rperl_to_cpp__generate__CPPOPS_CPPTYPES(), about to return \$self_generated = \n\n\n"
-        . $self_generated . "\n\n";
-
-    return ($self_generated);
-};
-=cut

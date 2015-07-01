@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array::SubTypes;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.006_010;
+our $VERSION = 0.006_011;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd) # DEVELOPER DEFAULT 1b: allow unreachable & POD-commented code, must be after line 1
@@ -143,7 +143,7 @@ our void $integer_arrayref_CHECKTRACE = sub {
 our string $integer_arrayref_to_string = sub {
     ( my $input_av_ref ) = @_;
 
-#    RPerl::diag "in PERLOPS_PERLTYPES integer_arrayref_to_string(), top of subroutine\n";
+#    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_to_string(), top of subroutine\n");
 
     #    ::integer_arrayref_CHECK($input_av_ref);
     ::integer_arrayref_CHECKTRACE( $input_av_ref, '$input_av_ref',
@@ -158,7 +158,7 @@ our string $integer_arrayref_to_string = sub {
     @input_av        = @{$input_av_ref};
     $input_av_length = scalar @input_av;
 
-#	RPerl::diag "in PERLOPS_PERLTYPES integer_arrayref_to_string(), have \$input_av_length = $input_av_length\n";
+#	RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_to_string(), have \$input_av_length = $input_av_length\n");
 
     $output_sv = '[';
 
@@ -177,8 +177,8 @@ our string $integer_arrayref_to_string = sub {
 
     $output_sv .= ']';
 
-#    RPerl::diag "in PERLOPS_PERLTYPES integer_arrayref_to_string(), after for() loop, have \$output_sv =\n$output_sv\n";
-#    RPerl::diag "in PERLOPS_PERLTYPES integer_arrayref_to_string(), bottom of subroutine\n";
+#    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_to_string(), after for() loop, have \$output_sv =\n$output_sv\n");
+#    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_to_string(), bottom of subroutine\n");
 
     return ($output_sv);
 };
@@ -195,9 +195,9 @@ our string $integer_arrayref__typetest0 = sub {
 #    my integer $how_lucky = scalar @{$lucky_integers};
 #    for my integer $i ( 0 .. ( $how_lucky - 1 ) ) {
 #        my $lucky_integer = $lucky_integers->[$i];
-#        RPerl::diag "in PERLOPS_PERLTYPES integer_arrayref__typetest0(), have lucky integer $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_integers->[$i] . ", BARBAT\n";
+#        RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref__typetest0(), have lucky integer $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_integers->[$i] . ", BARBAT\n");
 #    }
-#    RPerl::diag "in PERLOPS_PERLTYPES integer_arrayref__typetest0(), bottom of subroutine\n";
+#    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref__typetest0(), bottom of subroutine\n");
     return (
         integer_arrayref_to_string($lucky_integers) . 'PERLOPS_PERLTYPES' );
 };
@@ -212,7 +212,7 @@ our integer_arrayref $integer_arrayref__typetest1 = sub {
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $new_array->[$i] = $i * 5;
 
-#        RPerl::diag "in PERLOPS_PERLTYPES integer_arrayref__typetest1(), setting element $i/" . ( $my_size - 1 ) . ' = ' . $new_array->[$i] . ", BARBAT\n";
+#        RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref__typetest1(), setting element $i/" . ( $my_size - 1 ) . ' = ' . $new_array->[$i] . ", BARBAT\n");
     }
     return ($new_array);
 };
@@ -307,7 +307,7 @@ our void $number_arrayref_CHECKTRACE = sub {
 our string $number_arrayref_to_string = sub {
     ( my $input_av_ref ) = @_;
 
-#    RPerl::diag "in PERLOPS_PERLTYPES number_arrayref_to_string(), top of subroutine\n";
+#    RPerl::diag("in PERLOPS_PERLTYPES number_arrayref_to_string(), top of subroutine\n");
 
     #    ::number_arrayref_CHECK($input_av_ref);
     ::number_arrayref_CHECKTRACE( $input_av_ref, '$input_av_ref',
@@ -322,7 +322,7 @@ our string $number_arrayref_to_string = sub {
     @input_av        = @{$input_av_ref};
     $input_av_length = scalar @input_av;
 
-#	RPerl::diag "in PERLOPS_PERLTYPES number_arrayref_to_string(), have \$input_av_length = $input_av_length\n";
+#	RPerl::diag("in PERLOPS_PERLTYPES number_arrayref_to_string(), have \$input_av_length = $input_av_length\n");
 
     $output_sv = '[';
 
@@ -337,8 +337,8 @@ our string $number_arrayref_to_string = sub {
 
     $output_sv .= ']';
 
-#    RPerl::diag "in PERLOPS_PERLTYPES number_arrayref_to_string(), after for() loop, have \$output_sv =\n$output_sv\n";
-#    RPerl::diag "in PERLOPS_PERLTYPES number_arrayref_to_string(), bottom of subroutine\n";
+#    RPerl::diag("in PERLOPS_PERLTYPES number_arrayref_to_string(), after for() loop, have \$output_sv =\n$output_sv\n");
+#    RPerl::diag("in PERLOPS_PERLTYPES number_arrayref_to_string(), bottom of subroutine\n");
 
     return ($output_sv);
 };
@@ -355,9 +355,9 @@ our string $number_arrayref__typetest0 = sub {
 #    my integer $how_lucky = scalar @{$lucky_numbers};
 #    for my integer $i ( 0 .. ( $how_lucky - 1 ) ) {
 #        my $lucky_number = $lucky_numbers->[$i];
-#        RPerl::diag "in PERLOPS_PERLTYPES number_arrayref__typetest0(), have lucky number $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_numbers->[$i] . ", BARBAZ\n";
+#        RPerl::diag("in PERLOPS_PERLTYPES number_arrayref__typetest0(), have lucky number $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_numbers->[$i] . ", BARBAZ\n");
 #    }
-#    RPerl::diag "in PERLOPS_PERLTYPES number_arrayref__typetest0(), bottom of subroutine\n";
+#    RPerl::diag("in PERLOPS_PERLTYPES number_arrayref__typetest0(), bottom of subroutine\n");
     return (
         number_arrayref_to_string($lucky_numbers) . 'PERLOPS_PERLTYPES' );
 };
@@ -372,7 +372,7 @@ our number_arrayref $number_arrayref__typetest1 = sub {
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $new_array->[$i] = $i * 5.123456789;
 
-#        RPerl::diag "in PERLOPS_PERLTYPES number_arrayref__typetest1(), setting element $i/" . ( $my_size - 1 ) . ' = ' . $new_array->[$i] . ", BARBAZ\n";
+#        RPerl::diag("in PERLOPS_PERLTYPES number_arrayref__typetest1(), setting element $i/" . ( $my_size - 1 ) . ' = ' . $new_array->[$i] . ", BARBAZ\n");
     }
     return ($new_array);
 };
@@ -461,7 +461,7 @@ our void $string_arrayref_CHECKTRACE = sub {
 our string $string_arrayref_to_string = sub {
     ( my $input_av_ref ) = @_;
 
-#    RPerl::diag "in PERLOPS_PERLTYPES string_arrayref_to_string(), top of subroutine\n";
+#    RPerl::diag("in PERLOPS_PERLTYPES string_arrayref_to_string(), top of subroutine\n");
 
     #    ::string_arrayref_CHECK($input_av_ref);
     ::string_arrayref_CHECKTRACE( $input_av_ref, '$input_av_ref',
@@ -476,7 +476,7 @@ our string $string_arrayref_to_string = sub {
     @input_av        = @{$input_av_ref};
     $input_av_length = scalar @input_av;
 
-#	RPerl::diag "in PERLOPS_PERLTYPES string_arrayref_to_string(), have \$input_av_length = $input_av_length\n";
+#	RPerl::diag("in PERLOPS_PERLTYPES string_arrayref_to_string(), have \$input_av_length = $input_av_length\n");
 
     $output_sv = '[';
 
@@ -493,8 +493,8 @@ our string $string_arrayref_to_string = sub {
 
     $output_sv .= ']';
 
-#    RPerl::diag "in PERLOPS_PERLTYPES string_arrayref_to_string(), after for() loop, have \$output_sv =\n$output_sv\n";
-#    RPerl::diag "in PERLOPS_PERLTYPES string_arrayref_to_string(), bottom of subroutine\n";
+#    RPerl::diag("in PERLOPS_PERLTYPES string_arrayref_to_string(), after for() loop, have \$output_sv =\n$output_sv\n");
+#    RPerl::diag("in PERLOPS_PERLTYPES string_arrayref_to_string(), bottom of subroutine\n");
 
     return ($output_sv);
 };
@@ -511,9 +511,9 @@ our string $string_arrayref__typetest0 = sub {
 #    my integer $how_crowded = scalar @{$people};
 #    for my integer $i ( 0 .. ( $how_crowded - 1 ) ) {
 #        my $person = $people->[$i];
-#        RPerl::diag "in PERLOPS_PERLTYPES string_arrayref__typetest0(), have person $i/" . ( $how_crowded - 1 ) . ' = ' . $people->[$i] . ", BARBAR\n";
+#        RPerl::diag("in PERLOPS_PERLTYPES string_arrayref__typetest0(), have person $i/" . ( $how_crowded - 1 ) . ' = ' . $people->[$i] . ", BARBAR\n");
 #    }
-#    RPerl::diag "in PERLOPS_PERLTYPES string_arrayref__typetest0(), bottom of subroutine\n";
+#    RPerl::diag("in PERLOPS_PERLTYPES string_arrayref__typetest0(), bottom of subroutine\n");
     return ( string_arrayref_to_string($people) . 'PERLOPS_PERLTYPES' );
 };
 
@@ -528,7 +528,7 @@ our string_arrayref $string_arrayref__typetest1 = sub {
         $new_array->[$i]
             = "Jeffy Ten! $i/" . ( $my_size - 1 ) . ' PERLOPS_PERLTYPES';
 
-#        RPerl::diag "in PERLOPS_PERLTYPES string_arrayref__typetest1(), bottom of for() loop, have i = $i, just set another Jeffy, BARBAR\n";
+#        RPerl::diag("in PERLOPS_PERLTYPES string_arrayref__typetest1(), bottom of for() loop, have i = $i, just set another Jeffy, BARBAR\n");
     }
     return ($new_array);
 };

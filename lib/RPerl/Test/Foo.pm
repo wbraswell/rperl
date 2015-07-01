@@ -73,9 +73,9 @@ our number $grault = sub {
 
 our number_arrayref $garply = sub {
     ( my integer $garply_input, my number_arrayref $garply_array ) = @_;
-    my integer $garply_input_size = scalar @{$garply_input};
+    my integer $garply_input_size = scalar @{$garply_array};
     my integer $ungarply_size_typed = scalar @{my integer_arrayref $TYPED_ungarply = [4, 6, 8, 10]};
-#    my integer $ungarply_size_untyped = scalar @{[4, 6, 8, 10]};
+#    my integer $ungarply_size_untyped = scalar @{[4, 6, 8, 10]};  missing type_inner, not supported in CPPOPS_CPPTYPES
     my number_arrayref $garply_output = [
         $garply_input * $garply_array->[0],
         $garply_input * $garply_array->[1],

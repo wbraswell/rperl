@@ -3,7 +3,7 @@ package RPerl::Algorithm::Sort::Bubble;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.005_010;
+our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
@@ -18,20 +18,20 @@ sub cpp_load {
     if (    ( exists $main::{'RPerl__Algorithm__Sort__Bubble__MODE_ID'} )
         and ( defined &{ $main::{'RPerl__Algorithm__Sort__Bubble__MODE_ID'} } ) )
     {
- #RPerl::diag 'in Bubble::cpp_load, RPerl__Algorithm__Sort__Bubble__MODE_ID() exists & defined' . "\n";
- #RPerl::diag q{in Bubble::cpp_load, have RPerl__Algorithm__Sort__Bubble__MODE_ID() retval = '} . main::RPerl__Algorithm__Sort__Bubble__MODE_ID() . q{'} . "\n";
+#RPerl::diag('in RPerl::Algorithm::Sort::Bubble::cpp_load, RPerl__Algorithm__Sort__Bubble__MODE_ID() exists & defined' . "\n");
+#RPerl::diag(q{in RPerl::Algorithm::Sort::Bubble::cpp_load, have RPerl__Algorithm__Sort__Bubble__MODE_ID() retval = '} . main::RPerl__Algorithm__Sort__Bubble__MODE_ID() . q{'} . "\n");
         if ( $RPerl::MODES->{ main::RPerl__Algorithm__Sort__Bubble__MODE_ID() }->{ops} ne 'CPP' ) {
             $need_load_cpp = 1;
         }
     }
     else {
-        #RPerl::diag 'in Bubble::cpp_load, RPerl__Algorithm__Sort__Bubble__MODE_ID() does not exist or undefined' . "\n";
+        #RPerl::diag('in RPerl::Algorithm::Sort::Bubble::cpp_load, RPerl__Algorithm__Sort__Bubble__MODE_ID() does not exist or undefined' . "\n");
         $need_load_cpp = 1;
     }
 
     if ($need_load_cpp) {
 
-        #RPerl::diag 'in Bubble::cpp_load, need load CPP code' . "\n";
+        #RPerl::diag('in RPerl::Algorithm::Sort::Bubble::cpp_load, need load CPP code' . "\n");
 
         my $eval_string = <<"EOF";
 package main;
@@ -45,16 +45,16 @@ EOF
         $RPerl::Inline::ARGS{ccflagsex} = $RPerl::Inline::CCFLAGSEX . $RPerl::TYPES_CCFLAG;
         $RPerl::Inline::ARGS{cppflags}  = $RPerl::TYPES_CCFLAG;
 
-#RPerl::diag 'in Bubble::cpp_load(), CPP not yet loaded, about to call eval() on $eval_string =' . "\n" . '<<< BEGIN EVAL STRING>>>' . "\n" . $eval_string . '<<< END EVAL STRING >>>' . "\n";
+#RPerl::diag('in RPerl::Algorithm::Sort::Bubble::cpp_load(), CPP not yet loaded, about to call eval() on $eval_string =' . "\n" . '<<< BEGIN EVAL STRING>>>' . "\n" . $eval_string . '<<< END EVAL STRING >>>' . "\n");
 
         eval $eval_string or croak( $OS_ERROR . "\n" . $EVAL_ERROR );
         if ($EVAL_ERROR) { croak($EVAL_ERROR); }
     }
 
-    #else { RPerl::diag 'in Bubble::cpp_load(), CPP already loaded, DOING NOTHING' . "\n"; }
+    #else { RPerl::diag('in RPerl::Algorithm::Sort::Bubble::cpp_load(), CPP already loaded, DOING NOTHING' . "\n"); }
 }
 
-# suppress 'Too late to run INIT block' at run-time loading via require or eval, as in t/07_oo_inherit.t & t/09_precompiled_sort.t
+# DEV NOTE, CORRELATION #15: suppress 'Too late to run INIT block' at run-time loading via require or eval
 no warnings;
 INIT {
     # actually compile and load C++ code when 'use RPerl::Algorithm::Sort::Bubble' is called

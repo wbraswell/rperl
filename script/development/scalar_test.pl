@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_020;
+our $VERSION = 0.003_021;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd PodSpelling) # DEVELOPER DEFAULT 1: allow unreachable & POD-commented code
@@ -22,18 +22,18 @@ use RPerl::DataType::Integer_cpp;  RPerl::DataType::Integer_cpp::cpp_load();
 use RPerl::DataType::Number_cpp;  RPerl::DataType::Number_cpp::cpp_load();
 use RPerl::DataType::String_cpp; RPerl::DataType::String_cpp::cpp_load();
 
-#RPerl::diag q{in scalar_test.pl, have RPerl__DataType__Integer__MODE_ID() = '} . RPerl__DataType__Integer__MODE_ID() . "'\n";
-#RPerl::diag q{in scalar_test.pl, have RPerl__DataType__Number__MODE_ID() = '} . RPerl__DataType__Number__MODE_ID() . "'\n";
-#RPerl::diag q{in scalar_test.pl, have RPerl__DataType__String__MODE_ID() = '} . RPerl__DataType__String__MODE_ID() . "'\n";
-RPerl::diag q{in scalar_test.pl, have main::RPerl__DataType__Integer__MODE_ID() = '} . main::RPerl__DataType__Integer__MODE_ID() . "'\n";
-RPerl::diag q{in scalar_test.pl, have main::RPerl__DataType__Number__MODE_ID() = '} . main::RPerl__DataType__Number__MODE_ID() . "'\n";
-RPerl::diag q{in scalar_test.pl, have main::RPerl__DataType__String__MODE_ID() = '} . main::RPerl__DataType__String__MODE_ID() . "'\n";
+#RPerl::diag(q{in scalar_test.pl, have RPerl__DataType__Integer__MODE_ID() = '} . RPerl__DataType__Integer__MODE_ID() . "'\n");
+#RPerl::diag(q{in scalar_test.pl, have RPerl__DataType__Number__MODE_ID() = '} . RPerl__DataType__Number__MODE_ID() . "'\n");
+#RPerl::diag(q{in scalar_test.pl, have RPerl__DataType__String__MODE_ID() = '} . RPerl__DataType__String__MODE_ID() . "'\n");
+RPerl::diag(q{in scalar_test.pl, have main::RPerl__DataType__Integer__MODE_ID() = '} . main::RPerl__DataType__Integer__MODE_ID() . "'\n");
+RPerl::diag(q{in scalar_test.pl, have main::RPerl__DataType__Number__MODE_ID() = '} . main::RPerl__DataType__Number__MODE_ID() . "'\n");
+RPerl::diag(q{in scalar_test.pl, have main::RPerl__DataType__String__MODE_ID() = '} . main::RPerl__DataType__String__MODE_ID() . "'\n");
 
 # use Data::Dumper() to to stringify a string
 #our string $string_dumperify = sub {  # NEED FIX: RPerl subroutines disabled here
 sub string_dumperify {
     ( my string $input_string ) = @_;
-        RPerl::diag "in scalar_test.pl string_dumperify(), received have \$input_string =\n$input_string\n\n";
+        RPerl::diag("in scalar_test.pl string_dumperify(), received have \$input_string =\n$input_string\n\n");
         $input_string = Dumper( [$input_string] );
         $input_string =~ s/^\s+|\s+$//xmsg;         # strip leading whitespace
         my @input_string_split = split "\n", $input_string;
@@ -51,7 +51,7 @@ my string $dumper_string;
 # loop to test for memory leaks
 my integer $i_MAX = 0;  # CONSTANT
 for my integer $i ( 0 .. $i_MAX ) {
-    RPerl::diag "in scalar_test.pl, top of for() loop $i/$i_MAX\n\n";
+    RPerl::diag("in scalar_test.pl, top of for() loop $i/$i_MAX\n\n");
 
     # [[[ INTEGER TESTS ]]]
 
@@ -65,10 +65,10 @@ for my integer $i ( 0 .. $i_MAX ) {
 #    $string_retval = integer_to_string({a_key => 3});  # TIV07; error EIV01
 #    $string_retval = integer_to_string(-1_234_567_890);  # TIV08
 #    $string_retval = integer_to_string(-1_234_567_890_000);  # TIV09; error EIV01
-#    RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n";
+#    RPerl::diag("in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n");
 
 #    $integer_retval = integer__typetest0();  # TIV10
-#    RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$integer_retval = $integer_retval\n";
+#    RPerl::diag("in scalar_test.pl $i/$i_MAX, have \$integer_retval = $integer_retval\n");
     
 
 #    $integer_retval = integer__typetest1();  # TIV20; error PERLOPS EIV00, CPPOPS "Usage: main::integer__typetest1(lucky_integer)"
@@ -82,7 +82,7 @@ for my integer $i ( 0 .. $i_MAX ) {
 ##    $integer_retval = integer__typetest1(-1_234_567_890);  # NOT TEST-WORTHY: arithmetic overflow, incorrect results
 #    $integer_retval = integer__typetest1(-234_567_890);  # TIV28
 #    $integer_retval = integer__typetest1(-1_234_567_890_000);  # TIV29; error EIV01
-#    RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$integer_retval = $integer_retval\n";
+#    RPerl::diag("in scalar_test.pl $i/$i_MAX, have \$integer_retval = $integer_retval\n");
 
     # [[[ NUMBER TESTS ]]]
 
@@ -96,10 +96,10 @@ for my integer $i ( 0 .. $i_MAX ) {
 #    $string_retval = number_to_string({a_key => 3});  # TNV07; error ENV01
 #    $string_retval = number_to_string(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679);  # TNV08
     $string_retval = number_to_string(1_234_567.890_123_456);  # TNV08
-    RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n";
+    RPerl::diag("in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n");
 
 #    $number_retval = number__typetest0();  # TNV10
-#    RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$number_retval = $number_retval\n";
+#    RPerl::diag("in scalar_test.pl $i/$i_MAX, have \$number_retval = $number_retval\n");
 
     croak('done');
 
@@ -112,7 +112,7 @@ for my integer $i ( 0 .. $i_MAX ) {
 #    $number_retval = number__typetest1([3]);  # TNV26; error ENV01
 #    $number_retval = number__typetest1({a_key => 3});  # TNV27; error ENV01
 #    $number_retval = number__typetest1(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679);  # TNV28
-#    RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$number_retval = $number_retval\n";
+#    RPerl::diag("in scalar_test.pl $i/$i_MAX, have \$number_retval = $number_retval\n");
 
     # [[[ STRING TESTS ]]]
 
@@ -126,7 +126,7 @@ for my integer $i ( 0 .. $i_MAX ) {
 #    $string_retval = string_to_string({a_key => 3});  # TPV07; error EPV01
 #    $string_retval = string_to_string('Melange');  # TPV08
 #    $string_retval = string_to_string("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n");  # TPV09
-#    RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$string_retval =\n$string_retval\n";
+#    RPerl::diag("in scalar_test.pl $i/$i_MAX, have \$string_retval =\n$string_retval\n");
 
     # DEV NOTE: in English grammar, I prefer the comma after the right-quote
     $my_string = '\'I am a single-quoted string, in a single-quoted string with back-slash control chars\', the first string said introspectively.' ;    # TPV10
@@ -148,21 +148,21 @@ for my integer $i ( 0 .. $i_MAX ) {
 #    $my_string = qq{"I am a double-quoted string, in a double-quoted qq{} string with back-slash \\ display \\ chars", the sixteenth string implied.};  # TPV27
 
 =disable
-    RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$my_string =\n$my_string\n\n";
+    RPerl::diag("in scalar_test.pl $i/$i_MAX, have \$my_string =\n$my_string\n\n");
     $dumper_string = Dumper([$my_string]);  # retrieve Dumper()'s version of the stringified string
     $dumper_string =~ s/^\s+|\s+$//xmsg;  # strip leading whitespace
     my @dumper_split = split "\n", $dumper_string;
     $dumper_string = $dumper_split[1];  # only select the data line
-#    RPerl::diag "in scalar_test.pl $i/$i_MAX, have Dumper([\$my_string]) =\n" . Dumper([$my_string]) . "\n";
+#    RPerl::diag("in scalar_test.pl $i/$i_MAX, have Dumper([\$my_string]) =\n" . Dumper([$my_string]) . "\n");
 =cut
 
     $dumper_string = string_dumperify($my_string);
     $string_retval = string_to_string($my_string);
-    RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$string_retval =\n$string_retval STRINGIFY\n\n";
-    RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$dumper_string =\n$dumper_string DUMPERIFY\n\n";
+    RPerl::diag("in scalar_test.pl $i/$i_MAX, have \$string_retval =\n$string_retval STRINGIFY\n\n");
+    RPerl::diag("in scalar_test.pl $i/$i_MAX, have \$dumper_string =\n$dumper_string DUMPERIFY\n\n");
 
 #    $string_retval = string__typetest0();  # TPV30
-#    RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$string_retval =\n$string_retval\n";
+#    RPerl::diag("in scalar_test.pl $i/$i_MAX, have \$string_retval =\n$string_retval\n");
 
 #    $string_retval = string__typetest1();  # TPV40; error PERLOPS EPV00, CPPOPS "Usage: main::string__typetest1(lucky_string)"
 #    $string_retval = string__typetest1(undef);  # TPV41; error EPV00
@@ -174,7 +174,7 @@ for my integer $i ( 0 .. $i_MAX ) {
 #    $string_retval = string__typetest1({a_key => 3});  # TPV47; error EPV01
     $string_retval = string__typetest1('Melange');  # TPV48
 #    $string_retval = string__typetest1("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n");  # TPV49
-#    RPerl::diag "in scalar_test.pl $i/$i_MAX, have \$string_retval =\n$string_retval\n";
+#    RPerl::diag("in scalar_test.pl $i/$i_MAX, have \$string_retval =\n$string_retval\n");
 
     croak('Done for now, croaking');
 }

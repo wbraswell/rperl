@@ -3,7 +3,7 @@ package RPerl::DataType::Boolean;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_001;
 
 # [[[ OO INHERITANCE ]]]
 use parent ('RPerl::DataType::Scalar');
@@ -63,8 +63,8 @@ our string $bool_to_string = sub {
     bool_CHECKTRACE( $input_bool, '$input_bool',
         'bool_to_string()' );
 
-#    RPerl::diag "in PERLOPS_PERLTYPES bool_to_string(), received \$input_bool = $input_bool\n";
-#    RPerl::diag "in PERLOPS_PERLTYPES bool_to_string()...\n";
+#    RPerl::diag("in PERLOPS_PERLTYPES bool_to_string(), received \$input_bool = $input_bool\n");
+#    RPerl::diag("in PERLOPS_PERLTYPES bool_to_string()...\n");
 
     # DEV NOTE: disable old stringify w/out underscores
     #    return "$input_bool";
@@ -79,7 +79,7 @@ our string $bool_to_string = sub {
 
     if ($is_negative) { $retval = q{-} . $retval; }
 
-#    RPerl::diag 'in PERLOPS_PERLTYPES bool_to_string(), have $retval = ' . q{'} . $retval . q{'} . "\n";
+#    RPerl::diag('in PERLOPS_PERLTYPES bool_to_string(), have $retval = ' . q{'} . $retval . q{'} . "\n");
     return $retval;
 };
 
@@ -88,7 +88,7 @@ our bool $bool__typetest0 = sub {
     my bool $retval
         = ( 21 / 7 ) + main::RPerl__DataType__Boolean__MODE_ID(); # return bool (not number) value, don't do (22 / 7) etc.
 
-#    RPerl::diag "in PERLOPS_PERLTYPES bool__typetest0(), have \$retval = $retval\n";
+#    RPerl::diag("in PERLOPS_PERLTYPES bool__typetest0(), have \$retval = $retval\n");
     return ($retval);
 };
 our bool $bool__typetest1 = sub {
@@ -98,7 +98,7 @@ our bool $bool__typetest1 = sub {
     bool_CHECKTRACE( $lucky_bool, '$lucky_bool',
         'bool__typetest1()' );
 
-#    RPerl::diag 'in PERLOPS_PERLTYPES bool__typetest1(), received $lucky_bool = ' . bool_to_string($lucky_bool) . "\n";
+#    RPerl::diag('in PERLOPS_PERLTYPES bool__typetest1(), received $lucky_bool = ' . bool_to_string($lucky_bool) . "\n");
     return (
         ( $lucky_bool * 2 ) + main::RPerl__DataType__Boolean__MODE_ID() );
 };

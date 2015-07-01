@@ -55,8 +55,9 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule ' . ( ref $self ) . ' found where Literal_219 expected, dying' ) . "\n";
     }
     
-    # replace single-quoted Perl string with double-quoted C++ string, both non-interpolated
     $cpp_source_group->{CPP} = $self->{children}->[0];
+ 
+    # replace single-quoted Perl string with double-quoted C++ string, both non-interpolated
     if ((substr $cpp_source_group->{CPP}, 0, 1) eq q{'}) {
         if ((substr $cpp_source_group->{CPP}, -1, 1) eq q{'}) {
             substr $cpp_source_group->{CPP}, 0, 1, q{"};
@@ -79,6 +80,9 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #    else {
 #        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP08, CODE GENERATOR, ABSTRACT SYNTAX TO C++: string literal not started with single-quote, dying' ) . "\n";
 #    }
+
+    # cast all string literals to the RPerl-defined C++ string type
+    $cpp_source_group->{CPP} = '(const string) ' . $cpp_source_group->{CPP};
 
     return $cpp_source_group;
 };

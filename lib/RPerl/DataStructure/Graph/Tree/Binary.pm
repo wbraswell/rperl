@@ -25,7 +25,7 @@ our hashref $properties =
 
 our RPerl::DataStructure::Graph::Tree::BinaryReference $new_from_nested_arrayrefs = sub {(my string $class, my arrayref $input) = @_;
 ;
-#	RPerl::diag "in ...Tree::BinaryReference::new_from_nested_arrayrefs(), received \$class = '$class', and \$input =\n" . RPerl::DUMPER($input) . "\n";
+#	RPerl::diag("in ...Tree::BinaryReference::new_from_nested_arrayrefs(), received \$class = '$class', and \$input =\n" . RPerl::DUMPER($input) . "\n");
 	my unknown $output = $class->new();
 
 	$output->{root} = binarytreenoderef->new_from_nested_arrayrefs($input);

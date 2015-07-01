@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble 0.004_050
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble 0.005_000
 
 // [[[ INCLUDES ]]]
 #include <RPerl/Algorithm/Sort/Bubble.h>  // -> HelperFunctions.cpp && Sort.cpp && NOT Inefficient.cpp (NEED UPGRADE: multiple inheritance not currently supported by Inline::CPP)
@@ -29,11 +29,11 @@ void RPerl__Algorithm__Sort__Bubble::number_sort() {
 // OO INHERITANCE TESTING
 
 void RPerl__Algorithm__Sort__Bubble::inherited__Bubble(SV* person) {
-    cout << "in CPPOPS_PERLTYPES Bubble->inherited__Bubble(), received this = '" << this << "' and person = '" << SvPV_nolen(person) << "', FRIED\n";
+    cout << "in CPPOPS_PERLTYPES Bubble->inherited__Bubble(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", FRIED\n";
 }
 
 void RPerl__Algorithm__Sort__Bubble::inherited(SV* person) {
-    cout << "in CPPOPS_PERLTYPES Bubble->inherited(), received this = '" << this << "' and person = '" << SvPV_nolen(person) << "', ILLOGICAL\n";
+    cout << "in CPPOPS_PERLTYPES Bubble->inherited(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", ILLOGICAL\n";
 }
 
 // original algorithm: comparison-based and stable [O(n**2) average time, O(1) worst-case extra space]
@@ -111,14 +111,15 @@ SV* number_bubblesort(SV* number_data) {
 
 // OO INHERITANCE TESTING, CONTINUED
 
+
 SV* uninherited__Bubble(SV* person) {
-    cout << "in CPPOPS_PERLTYPES Bubble::uninherited__Bubble(), received person = '" << SvPV_nolen(person) << "', MITOCHONDRIAL\n";
+    cout << "in CPPOPS_PERLTYPES Bubble::uninherited__Bubble(), received person = " << SvPV_nolen(person) << ", MITOCHONDRIAL\n";
     return (newSVpv("Bubble::uninherited__Bubble() RULES! CPPOPS_PERLTYPES", 0));
 }
 
 // DEV NOTE, CORRELATION #04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
 SV* uninherited(SV* person) {
-    cout << "in CPPOPS_PERLTYPES Bubble::uninherited(), received person = '" << SvPV_nolen(person) << "', TETRAHEDRON\n";
+    cout << "in CPPOPS_PERLTYPES Bubble::uninherited(), received person = " << SvPV_nolen(person) << ", TETRAHEDRON\n";
     return (newSVpv("Bubble::uninherited() ROCKS! CPPOPS_PERLTYPES", 0));
 }
 
@@ -158,11 +159,11 @@ void RPerl__Algorithm__Sort__Bubble::number_sort() {
 // OO INHERITANCE TESTING
 
 void RPerl__Algorithm__Sort__Bubble::inherited__Bubble(string person) {
-    cout << "in CPPOPS_CPPTYPES Bubble->inherited__Bubble(), received this = '" << this << "' and person = '" << person << "', FRIED\n";
+    RPerl::diag((const string) "in CPPOPS_CPPTYPES Bubble->inherited__Bubble(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", FRIED" + (const string) "\n");
 }
 
 void RPerl__Algorithm__Sort__Bubble::inherited(string person) {
-    cout << "in CPPOPS_CPPTYPES Bubble->inherited(), received this = '" << this << "' and person = '" << person << "', ILLOGICAL\n";
+    RPerl::diag((const string) "in CPPOPS_CPPTYPES Bubble->inherited(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", ILLOGICAL" + (const string) "\n");
 }
 
 // original algorithm: comparison-based and stable [O(n**2) average time, O(1) worst-case extra space]
@@ -170,10 +171,10 @@ void RPerl__Algorithm__Sort__Bubble::inherited(string person) {
 integer_arrayref integer_bubblesort(integer_arrayref integer_data) {  // DEV NOTE: properly creates local-to-function integer_arrayref integer_data here, does not get confused with this->integer_data object property, even though they share a name
     integer is_sorted = 0;
     integer integer_data_length = integer_data.size();
-    integer integer_data_i = -9999;  // OPTIMIZE, LONG-HAND: integer_data element i accessed more than once, declare integer_data_i and re-use;  all new integer's given initial -9999 value to avoid fprintf(stderr, ) errors during debugging
-    integer integer_data_i_plus_1 = -9999;  // OPTIMIZE, LONG-HAND
 
-    integer swap = -9999;
+    integer integer_data_i;  // OPTIMIZE, LONG-HAND: integer_data element i accessed more than once, declare integer_data_i and re-use
+    integer integer_data_i_plus_1;  // OPTIMIZE, LONG-HAND
+    integer swap;
 
     // iterate through the length-n list up to n times (n * n == n**2), larger elements "bubble to the top" (end) of the list
     while ( not is_sorted ) {
@@ -200,9 +201,9 @@ integer_arrayref integer_bubblesort(integer_arrayref integer_data) {  // DEV NOT
 number_arrayref number_bubblesort(number_arrayref number_data) {
     integer is_sorted = 0;
     integer number_data_length = number_data.size();
-    number number_data_i = -9999;
-    number number_data_i_plus_1 = -9999;
-    number swap = -9999;
+    number number_data_i;
+    number number_data_i_plus_1;
+    number swap;
     while ( not is_sorted ) {
         is_sorted = 1;
         for ( integer i = 0; i <= (number_data_length - 2); i++ ) {
@@ -222,26 +223,23 @@ number_arrayref number_bubblesort(number_arrayref number_data) {
 // OO INHERITANCE TESTING, CONTINUED
 
 string uninherited__Bubble(string person) {
-    cout << "in CPPOPS_CPPTYPES Bubble::uninherited__Bubble(), received person = '" << person << "', MITOCHONDRIAL\n";
-    string retval = "Bubble::uninherited__Bubble() RULES! CPPOPS_CPPTYPES";
-    return retval;
+    RPerl::diag((const string) "in CPPOPS_CPPTYPES Bubble::uninherited__Bubble(), received $person = " + person + (const string) ", MITOCHONDRIAL" + (const string) "\n");
+    return (const string) "Bubble::uninherited__Bubble() RULES! CPPOPS_CPPTYPES";
 }
 
-// DEV NOTE, CORRELATION #04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
 string uninherited(string person) {
-    cout << "in CPPOPS_CPPTYPES Bubble::uninherited(), received person = '" << person << "', TETRAHEDRON\n";
-    string retval = "Bubble::uninherited() ROCKS! CPPOPS_CPPTYPES";
-    return retval;
+    RPerl::diag((const string) "in CPPOPS_CPPTYPES Bubble::uninherited(), received person = " + person + (const string) ", TETRAHEDRON" + (const string) "\n");
+    return (const string) "Bubble::uninherited() ROCKS! CPPOPS_CPPTYPES";
 }
 
 // TYPE TESTING
 
 string integer_bubblesort__typetest0(integer_arrayref lucky_integers) {
-    return (integer_arrayref_to_string(integer_bubblesort(lucky_integers)) + "CPPOPS_CPPTYPES");
+    return (integer_arrayref_to_string(integer_bubblesort(lucky_integers)) + (const string) "CPPOPS_CPPTYPES");
 }
 
 string number_bubblesort__typetest0(number_arrayref lucky_numbers) {
-    return (number_arrayref_to_string(number_bubblesort(lucky_numbers)) + "CPPOPS_CPPTYPES");
+    return (number_arrayref_to_string(number_bubblesort(lucky_numbers)) + (const string) "CPPOPS_CPPTYPES");
 }
 
 // [[[<<< END CPP TYPES >>>]]]

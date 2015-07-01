@@ -2,7 +2,7 @@ using std::cout;
 using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Inefficient_cpp
-#define __CPP__INCLUDED__RPerl__Algorithm__Inefficient_cpp 0.003_060
+#define __CPP__INCLUDED__RPerl__Algorithm__Inefficient_cpp 0.003_061
 
 #include <RPerl/Algorithm/Inefficient.h>  // -> HelperFunctions.cpp && Algorithm.cpp
 
@@ -12,17 +12,17 @@ using std::cerr;
 // [[[<<< BEGIN PERL TYPES >>>]]]
 // [[[<<< BEGIN PERL TYPES >>>]]]
 
-////our void_method $inherited__Inefficient = sub { ( my object $self, my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Inefficient->inherited__Inefficient(), received \$self = '$self' and \$person = '$person', FLUFFY\n"; };
-void RPerl__Algorithm__Inefficient::inherited__Inefficient(SV* person) {cout << "in CPPOPS_PERLTYPES Inefficient->inherited__Inefficient(), received this = '" << this << "' and person = '" << SvPV_nolen(person) << "', FLUFFY\n";}
+////our void_method $inherited__Inefficient = sub { ( my object $self, my string $person) = @_; RPerl::diag('in PERLOPS_PERLTYPES Inefficient->inherited__Inefficient(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FLUFFY' . "\n"); };
+void RPerl__Algorithm__Inefficient::inherited__Inefficient(SV* person) {cout << "in CPPOPS_PERLTYPES Inefficient->inherited__Inefficient(), have ::class($self) = '" << classname(this) << "' and person = '" << SvPV_nolen(person) << "', FLUFFY\n";}
 
-////our void_method $inherited = sub { ( my object $self, my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Inefficient->inherited(), received \$self = '$self' and \$person = '$person', INCOMPATIBLE\n"; };
+////our void_method $inherited = sub { ( my object $self, my string $person) = @_; RPerl::diag("in PERLOPS_PERLTYPES Inefficient->inherited(), received \$self = '$self' and \$person = '$person', INCOMPATIBLE\n"); };
 void RPerl__Algorithm__Inefficient::inherited(SV* person) {cout << "in CPPOPS_PERLTYPES Inefficient->inherited(), received this = '" << this << "' and person = '" << SvPV_nolen(person) << "', INCOMPATIBLE\n";}
 
-////our string $uninherited__Inefficient = sub { ( my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Inefficient::uninherited__Inefficient(), received \$person = '$person', MESSY\n"; return 'Inefficient::uninherited__Inefficient() RULES! PERLOPS_PERLTYPES'; };
+////our string $uninherited__Inefficient = sub { ( my string $person) = @_; RPerl::diag("in PERLOPS_PERLTYPES Inefficient::uninherited__Inefficient(), received \$person = '$person', MESSY\n"; return 'Inefficient::uninherited__Inefficient() RULES! PERLOPS_PERLTYPES'); };
 SV* uninherited__Inefficient(SV* person) {cout << "in CPPOPS_PERLTYPES Inefficient::uninherited__Inefficient(), received person = '" << SvPV_nolen(person) << "', MESSY\n"; return newSVpv("Inefficient::uninherited__Inefficient() RULES! CPPOPS_PERLTYPES", 0);}
 
 // DEV NOTE, CORRELATION #04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
-////our string $uninherited = sub { ( my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Inefficient::uninherited(), received \$person = '$person', TRICKS\n"; return 'Inefficient::uninherited() ROCKS! PERLOPS_PERLTYPES'; };
+////our string $uninherited = sub { ( my string $person) = @_; RPerl::diag("in PERLOPS_PERLTYPES Inefficient::uninherited(), received \$person = '$person', TRICKS\n"; return 'Inefficient::uninherited() ROCKS! PERLOPS_PERLTYPES'); };
 //SV* uninherited(SV* person) { cout << "in CPPOPS_PERLTYPES Inefficient::uninherited(), received person = '" << SvPV_nolen(person) << "', TRICKS\n";  return newSVpv("Inefficient::uninherited() RULES! CPPOPS_PERLTYPES", 0); }
 
 // [[[<<< END PERL TYPES >>>]]]
@@ -35,17 +35,17 @@ SV* uninherited__Inefficient(SV* person) {cout << "in CPPOPS_PERLTYPES Inefficie
 // [[[<<< BEGIN CPP TYPES >>>]]]
 // [[[<<< BEGIN CPP TYPES >>>]]]
 
-////our void_method $inherited__Inefficient = sub { ( my object $self, my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Inefficient->inherited__Inefficient(), received \$self = '$self' and \$person = '$person', FLUFFY\n"; };
+////our void_method $inherited__Inefficient = sub { ( my object $self, my string $person) = @_; RPerl::diag("in PERLOPS_PERLTYPES Inefficient->inherited__Inefficient(), received \$self = '$self' and \$person = '$person', FLUFFY\n"); };
 void RPerl__Algorithm__Inefficient::inherited__Inefficient(string person) { cout << "in CPPOPS_CPPTYPES Inefficient->inherited__Inefficient(), received this = '" << this << "' and person = '" << person << "', FLUFFY\n"; }
 
-////our void_method $inherited = sub { ( my object $self, my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Inefficient->inherited(), received \$self = '$self' and \$person = '$person', INCOMPATIBLE\n"; };
+////our void_method $inherited = sub { ( my object $self, my string $person) = @_; RPerl::diag("in PERLOPS_PERLTYPES Inefficient->inherited(), received \$self = '$self' and \$person = '$person', INCOMPATIBLE\n"); };
 void RPerl__Algorithm__Inefficient::inherited(string person) { cout << "in CPPOPS_CPPTYPES Inefficient->inherited(), received this = '" << this << "' and person = '" << person << "', INCOMPATIBLE\n"; }
 
-////our string $uninherited__Inefficient = sub { ( my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Inefficient::uninherited__Inefficient(), received \$person = '$person', MESSY\n"; return 'Inefficient::uninherited__Inefficient() RULES! PERLOPS_PERLTYPES'; };
+////our string $uninherited__Inefficient = sub { ( my string $person) = @_; RPerl::diag("in PERLOPS_PERLTYPES Inefficient::uninherited__Inefficient(), received \$person = '$person', MESSY\n"; return 'Inefficient::uninherited__Inefficient() RULES! PERLOPS_PERLTYPES'); };
 string uninherited__Inefficient(string person) { cout << "in CPPOPS_CPPTYPES Inefficient::uninherited__Inefficient(), received person = '" << person << "', MESSY\n"; return ((string) "Inefficient::uninherited__Inefficient() RULES! CPPOPS_CPPTYPES"); }
 
 // DEV NOTE, CORRELATION #04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
-////our string $uninherited = sub { ( my string $person) = @_; RPerl::diag "in PERLOPS_PERLTYPES Inefficient::uninherited(), received \$person = '$person', TRICKS\n"; return 'Inefficient::uninherited() ROCKS! PERLOPS_PERLTYPES'; };
+////our string $uninherited = sub { ( my string $person) = @_; RPerl::diag("in PERLOPS_PERLTYPES Inefficient::uninherited(), received \$person = '$person', TRICKS\n"; return 'Inefficient::uninherited() ROCKS! PERLOPS_PERLTYPES'); };
 //string uninherited(string person) { cout << "in CPPOPS_CPPTYPES Inefficient::uninherited(), received person = '" << person << "', TRICKS\n"; return((string)"Inefficient::uninherited() ROCKS! CPPOPS_CPPTYPES"); }
 
 // [[[<<< END CPP TYPES >>>]]]
