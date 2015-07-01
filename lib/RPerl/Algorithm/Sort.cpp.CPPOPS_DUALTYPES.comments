@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort_cpp
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort_cpp 0.002_000
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort_cpp 0.005_000
 
 // [[[ INCLUDES ]]]
 #include <RPerl/Algorithm/Sort.h>  // -> (RPerl.cpp; Algorithm.cpp)

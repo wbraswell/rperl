@@ -1,12 +1,12 @@
 // [[[ HEADER ]]]
 using std::cout;  using std::cerr;
 
-#ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort_h
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort_h 0.005_000
+#ifndef __CPP__INCLUDED__RPerl__Algorithm_h
+#define __CPP__INCLUDED__RPerl__Algorithm_h 0.005_000
 
 // [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]
 #include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperltypes.h; HelperFunctions.cpp)
-#include <RPerl/Algorithm.cpp>
+#include <RPerl/CompileUnit/Module/Class.cpp>
 
 # ifdef __PERL__TYPES
 
@@ -19,25 +19,25 @@ Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.
 // [[[<<< BEGIN CPP TYPES >>>]]]
 
 // [[[ OO INHERITANCE ]]]
-class RPerl__Algorithm__Sort : public RPerl__Algorithm {
+class RPerl__Algorithm : public RPerl__CompileUnit__Module__Class {
 public:
 // [[[ OO METHODS ]]]
-    void inherited__Sort(string person);
+    void inherited__Algorithm(string person);
 
     // <<< CONSTRUCTOR & DESTRUCTOR >>>
-    RPerl__Algorithm__Sort() {}
-    ~RPerl__Algorithm__Sort() {}
+    RPerl__Algorithm() {}
+    ~RPerl__Algorithm() {}
 
     // <<< CLASS NAME REPORTER >>>
-    virtual string myclassname() { return (const string) "RPerl::Algorithm::Sort"; }
+    virtual string myclassname() { return (const string) "RPerl::Algorithm"; }
 };
 
 // [[[ SUBROUTINES ]]]
 
-string uninherited__Sort(string person);
+string uninherited__Algorithm(string person);
 
 // <<< OPERATIONS & DATA TYPES REPORTER >>>
-integer RPerl__Algorithm__Sort__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2
+integer RPerl__Algorithm__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2
 
 // [[[<<< END CPP TYPES >>>]]]
 // [[[<<< END CPP TYPES >>>]]]

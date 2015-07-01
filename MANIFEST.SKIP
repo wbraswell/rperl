@@ -47,6 +47,12 @@ swp$
 
 # [ RPerl Compile ]
 # NEED UPDATE, CORRELATION #13: list of RPerl build files & directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
+^lib\/RPerl\/Algorithm\.pmc
+^lib\/RPerl\/Algorithm\.h
+^lib\/RPerl\/Algorithm\.cpp
+^lib\/RPerl\/Algorithm\/Sort\.pmc
+^lib\/RPerl\/Algorithm\/Sort\.h
+^lib\/RPerl\/Algorithm\/Sort\.cpp
 ^lib\/RPerl\/Algorithm\/Sort\/Bubble\.pmc
 ^lib\/RPerl\/Algorithm\/Sort\/Bubble\.h
 ^lib\/RPerl\/Algorithm\/Sort\/Bubble\.cpp

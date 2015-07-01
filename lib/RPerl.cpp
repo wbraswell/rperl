@@ -3,13 +3,6 @@
 
 #include <RPerl.h>  // -> (rperltypes_mode.h; rperltypes.h; HelperFunctions.cpp)
 
-
-// START HERE: implement RPerl__diag, use in files called by 07_oo_inherit.t
-// START HERE: implement RPerl__diag, use in files called by 07_oo_inherit.t
-// START HERE: implement RPerl__diag, use in files called by 07_oo_inherit.t
-
-
-
 # ifdef __PERL__TYPES
 
 // [[[<<< BEGIN PERL TYPES >>>]]]

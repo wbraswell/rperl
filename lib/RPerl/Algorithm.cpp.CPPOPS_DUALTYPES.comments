@@ -1,0 +1,76 @@
+// [[[ HEADER ]]]
+using std::cout;  using std::cerr;
+
+#ifndef __CPP__INCLUDED__RPerl__Algorithm_cpp
+#define __CPP__INCLUDED__RPerl__Algorithm_cpp 0.005_000
+
+// [[[ INCLUDES ]]]
+#include <RPerl/Algorithm.h>  // -> (RPerl.cpp; Class.cpp)
+
+# ifdef __PERL__TYPES
+
+// [[[<<< BEGIN PERL TYPES >>>]]]
+// [[[<<< BEGIN PERL TYPES >>>]]]
+// [[[<<< BEGIN PERL TYPES >>>]]]
+
+// [[[ OO METHODS & SUBROUTINES ]]]
+
+void RPerl__Algorithm::inherited__Algorithm(SV* person) {
+    cout << "in CPPOPS_PERLTYPES Algorithm->inherited__Algorithm(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", FNORD" << "\n";
+}
+
+//void RPerl__Algorithm::inherited(SV* person) {
+//    cout << "in CPPOPS_PERLTYPES Algorithm->inherited(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", IS" << "\n";
+//}
+
+SV* uninherited__Algorithm(SV* person) {
+    cout << "in CPPOPS_PERLTYPES Algorithm::uninherited__Algorithm(), received $person = " << SvPV_nolen(person) << ", MYSTIC" << "\n";
+    return newSVpv("Algorithm::uninherited__Algorithm() RULES! CPPOPS_PERLTYPES", 0);
+}
+
+//SV* uninherited(SV* person) {
+//    cout << "in CPPOPS_PERLTYPES Algorithm::uninherited(), received $person = " << SvPV_nolen(person) << ", TERRITORY" << "\n";
+//    return newSVpv("Algorithm::uninherited() ROCKS! CPPOPS_PERLTYPES", 0);
+//}
+
+// [[[<<< END PERL TYPES >>>]]]
+// [[[<<< END PERL TYPES >>>]]]
+// [[[<<< END PERL TYPES >>>]]]
+
+# elif defined __CPP__TYPES
+
+// [[[<<< BEGIN CPP TYPES >>>]]]
+// [[[<<< BEGIN CPP TYPES >>>]]]
+// [[[<<< BEGIN CPP TYPES >>>]]]
+
+// [[[ OO METHODS & SUBROUTINES ]]]
+
+void RPerl__Algorithm::inherited__Algorithm(string person) {
+    RPerl::diag((const string) "in CPPOPS_CPPTYPES Algorithm->inherited__Algorithm(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", FNORD" + (const string) "\n");
+}
+
+//void RPerl__Algorithm::inherited(SV* person) {
+//    RPerl::diag((const string) "in CPPOPS_CPPTYPES Algorithm->inherited(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", IS" + (const string) "\n");
+//}
+
+string uninherited__Algorithm(string person) {
+    RPerl::diag((const string) "in CPPOPS_CPPTYPES Algorithm::uninherited__Algorithm(), received $person = " + person + (const string) ", MYSTIC" + (const string) "\n");
+    return (const string) "Algorithm::uninherited__Algorithm() RULES! CPPOPS_CPPTYPES";
+}
+
+//string uninherited(string person) {
+//    RPerl::diag((const string) "in CPPOPS_CPPTYPES Algorithm::uninherited(), received $person = " + person + (const string) ", TERRITORY" + (const string) "\n");
+//    return (const string) "Algorithm::uninherited() ROCKS! CPPOPS_CPPTYPES";
+//}
+
+// [[[<<< END CPP TYPES >>>]]]
+// [[[<<< END CPP TYPES >>>]]]
+// [[[<<< END CPP TYPES >>>]]]
+
+# else
+
+Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_exactly_one!
+
+# endif
+
+#endif

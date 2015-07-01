@@ -1,5 +1,5 @@
 # RPerl v1.0 Beta 3, Install Notes
-# Last Updated June 22, 2015
+# Last Updated July 1, 2015
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # NOTE: STEPS 0 AND 1 ARE ONLY FOR SINGLE-USER INSTALL, NOT SYSTEM-WIDE INSTALL
@@ -16,6 +16,9 @@ $ mv ~/perl5 ~/perl5.old  # disable any previous local::lib or Perlbrew
 $ perl -v  # NOTE! the version of Perl determines whether you take step 1A or 1B
 $ perl -MExtUtils::MakeMaker\ 999  # v7.04 or greater required by Inline::C
 $ sudo cpan ExtUtils::MakeMaker  # cpan system-wide, not cpanm single-user
+
+# NEED UPDATE: add non-apt & non-Linux options
+$ sudo apt-get install astyle
 
 ################################################################################
 # STEP 1A.  ONLY FOR NORMAL OPERATING SYSTEMS, NOT DEBIAN WITH BROKEN PERL v5.14
@@ -101,3 +104,28 @@ $ export RPERL_WARNINGS=0  # additional user & system warnings, on by default
 	
 # Display command usage
 $ rperl -?
+
+# Compile & run test commands
+$ export RPERL_DEBUG=1
+$ perl Makefile.PL; make realclean
+$ perl -e 'use RPerl::Algorithm::Sort::Bubble; my $o = RPerl::Algorithm::Sort::Bubble->new(); $o->inherited__Bubble("logan");  $o->inherited__Sort("wolvie");  $o->inherited__Algorithm("claws");'
+    # should be PERLOPS_PERLTYPES, PERLOPS_PERLTYPES, PERLOPS_PERLTYPES
+
+$ rperl -v ./lib/RPerl/Algorithm.pm
+$ perl -e 'use RPerl::Algorithm::Sort::Bubble; my $o = RPerl::Algorithm::Sort::Bubble->new(); $o->inherited__Bubble("logan");  $o->inherited__Sort("wolvie");  $o->inherited__Algorithm("claws");'
+    # should be PERLOPS_PERLTYPES, PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
+
+$ rperl -v ./lib/RPerl/Algorithm/Sort.pm
+$ perl -e 'use RPerl::Algorithm::Sort::Bubble; my $o = RPerl::Algorithm::Sort::Bubble->new(); $o->inherited__Bubble("logan");  $o->inherited__Sort("wolvie");  $o->inherited__Algorithm("claws");'
+    # should be PERLOPS_PERLTYPES, CPPOPS_CPPTYPES, CPPOPS_CPPTYPES
+
+$ rperl -v ./lib/RPerl/Algorithm/Sort/Bubble.pm
+$ perl -e 'use RPerl::Algorithm::Sort::Bubble; my $o = RPerl::Algorithm::Sort::Bubble->new(); $o->inherited__Bubble("logan");  $o->inherited__Sort("wolvie");  $o->inherited__Algorithm("claws");'
+    # should be CPPOPS_CPPTYPES, CPPOPS_CPPTYPES, CPPOPS_CPPTYPES
+
+$ perl Makefile.PL; make realclean
+$ perl -e 'use RPerl::Algorithm::Sort::Bubble; my $a = [reverse 0 .. 5000]; use Time::HiRes qw(time); my $start = time; my $s = integer_bubblesort($a); my $elapsed = time - $start; print Dumper($s); print "elapsed: " . $elapsed . "\n";'
+    # slow...  :-(  approx 15 seconds for 5000 elements, 60 for 10000
+$ rperl -v ./lib/RPerl/Algorithm.pm ./lib/RPerl/Algorithm/Sort.pm ./lib/RPerl/Algorithm/Sort/Bubble.pm
+$ perl -e 'use RPerl::Algorithm::Sort::Bubble; my $a = [reverse 0 .. 5000]; use Time::HiRes qw(time); my $start = time; my $s = integer_bubblesort($a); my $elapsed = time - $start; print Dumper($s); print "elapsed: " . $elapsed . "\n";'
+    # FAST!!!  :-D  approx 0.045 seconds for 5000 elements, 0.18 for 10000

@@ -1,3 +1,8 @@
+# START HERE: enable Inefficient* to compile; remove old pmc files; enable dependencies compile; update existing tests, create new tests
+# START HERE: enable Inefficient* to compile; remove old pmc files; enable dependencies compile; update existing tests, create new tests
+# START HERE: enable Inefficient* to compile; remove old pmc files; enable dependencies compile; update existing tests, create new tests
+
+
 # [[[ PACKAGE, HEADER ]]]
 package RPerl::Algorithm::Inefficient;
 use strict;

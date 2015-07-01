@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Header;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.003_000;
+our $VERSION = 0.003_001;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -93,8 +93,8 @@ our string_hashref_method $ast_to_cpp__generate_begin__CPPOPS_CPPTYPES = sub {
     $package_name_underscores =~ s/::/__/gxms;
     $cpp_source_group->{H} .= '#ifndef __CPP__INCLUDED__' . $package_name_underscores . '_h' . "\n";
     $cpp_source_group->{H} .= '#define __CPP__INCLUDED__' . $package_name_underscores . '_h ' . $version_number . "\n\n";
-    $cpp_source_group->{CPP} .= '#ifndef __CPP__INCLUDED__' . $package_name_underscores . "\n";
-    $cpp_source_group->{CPP} .= '#define __CPP__INCLUDED__' . $package_name_underscores . q{ } . $version_number . "\n\n";
+    $cpp_source_group->{CPP} .= '#ifndef __CPP__INCLUDED__' . $package_name_underscores . '_cpp' . "\n";
+    $cpp_source_group->{CPP} .= '#define __CPP__INCLUDED__' . $package_name_underscores . '_cpp ' . $version_number . "\n\n";
  
     $cpp_source_group->{package_name_underscores} = $package_name_underscores;
 
