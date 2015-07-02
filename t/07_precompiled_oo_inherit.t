@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.002_022;
+our $VERSION = 0.003_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -10,7 +10,7 @@ our $VERSION = 0.002_022;
 # suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s)
 BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
-use Test::More tests => 119;
+use Test::More tests => 155;
 use Test::Exception;
 use RPerl::Test;
 use File::Copy;
@@ -29,12 +29,20 @@ BEGIN {
     my string $bubble_h_filename   = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.h';
     my string $bubble_pmc_filename = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.pmc';
 
-    #    RPerl::diag('in 07_00_inherit.t, have $bubble_pmc_filename = ' . $bubble_pmc_filename . "\n");
+    my string $sort_cpp_filename = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort.cpp';
+    my string $sort_h_filename   = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort.h';
+    my string $sort_pmc_filename = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort.pmc';
+
+    my string $algorithm_cpp_filename = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm.cpp';
+    my string $algorithm_h_filename   = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm.h';
+    my string $algorithm_pmc_filename = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm.pmc';
+
+    #    RPerl::diag('in 07_precompiled_oo_inherit.t, have $bubble_pmc_filename = ' . $bubble_pmc_filename . "\n");
 
     # NEED FIX: duplicate code
     # delete CPP, H, and PMC files if they exist;
     # for PERLOPS_PERLTYPES we need none of these files; for CPPOPS_xTYPES we need the proper manually-compiled files, not some other files
-    foreach my string $filename ( @{ [ $bubble_cpp_filename, $bubble_h_filename, $bubble_pmc_filename ] } ) {
+    foreach my string $filename ( @{ [ $bubble_cpp_filename, $bubble_h_filename, $bubble_pmc_filename, $sort_cpp_filename, $sort_h_filename, $sort_pmc_filename, $algorithm_cpp_filename, $algorithm_h_filename, $algorithm_pmc_filename ] } ) {
         if ( -e $filename ) {
             my integer $unlink_success = unlink $filename;
             if ($unlink_success) {
@@ -67,8 +75,22 @@ my string $bubble_h_filename_manual   = $bubble_h_filename . '.CPPOPS_DUALTYPES'
 my string $bubble_pmc_filename        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.pmc';
 my string $bubble_pmc_filename_manual = $bubble_pmc_filename . '.CPPOPS_DUALTYPES';
 
-#RPerl::diag('in 07_00_inherit.t, have $bubble_pmc_filename = ' . $bubble_pmc_filename . "\n");
-#RPerl::diag('in 07_00_inherit.t, have $bubble_pmc_filename_manual = ' . $bubble_pmc_filename_manual . "\n");
+my string $sort_cpp_filename        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort.cpp';
+my string $sort_cpp_filename_manual = $sort_cpp_filename . '.CPPOPS_DUALTYPES';
+my string $sort_h_filename          = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort.h';
+my string $sort_h_filename_manual   = $sort_h_filename . '.CPPOPS_DUALTYPES';
+my string $sort_pmc_filename        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort.pmc';
+my string $sort_pmc_filename_manual = $sort_pmc_filename . '.CPPOPS_DUALTYPES';
+
+my string $algorithm_cpp_filename        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm.cpp';
+my string $algorithm_cpp_filename_manual = $algorithm_cpp_filename . '.CPPOPS_DUALTYPES';
+my string $algorithm_h_filename          = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm.h';
+my string $algorithm_h_filename_manual   = $algorithm_h_filename . '.CPPOPS_DUALTYPES';
+my string $algorithm_pmc_filename        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm.pmc';
+my string $algorithm_pmc_filename_manual = $algorithm_pmc_filename . '.CPPOPS_DUALTYPES';
+
+#RPerl::diag('in 07_precompiled_oo_inherit.t, have $bubble_pmc_filename = ' . $bubble_pmc_filename . "\n");
+#RPerl::diag('in 07_precompiled_oo_inherit.t, have $bubble_pmc_filename_manual = ' . $bubble_pmc_filename_manual . "\n");
 
 # [[[ PRIMARY RUNLOOP ]]]
 # [[[ PRIMARY RUNLOOP ]]]
@@ -79,7 +101,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 #for my $mode_id ( 1 .. 2 ) {    # TEMPORARY DEBUGGING xOPS_xTYPES ONLY
 
     # [[[ MODE SETUP ]]]
-    #    RPerl::diag("in 07_00_inherit.t, top of for() loop, have \$mode_id = $mode_id\n");
+    #    RPerl::diag("in 07_precompiled_oo_inherit.t, top of for() loop, have \$mode_id = $mode_id\n");
     my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
     my $ops                 = $mode->{ops};
     my $types               = $mode->{types};
@@ -93,7 +115,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     # NEED FIX: duplicate code
     # delete CPP, H, and PMC files if they exist;
     # for PERLOPS_PERLTYPES we need none of these files; for CPPOPS_xTYPES we need the proper manually-compiled files, not some other files
-    foreach my string $filename ( @{ [ $bubble_cpp_filename, $bubble_h_filename, $bubble_pmc_filename ] } ) {
+    foreach my string $filename ( @{ [ $bubble_cpp_filename, $bubble_h_filename, $bubble_pmc_filename, $sort_cpp_filename, $sort_h_filename, $sort_pmc_filename, $algorithm_cpp_filename, $algorithm_h_filename, $algorithm_pmc_filename ] } ) {
         if ( -e $filename ) {
             my integer $unlink_success = unlink $filename;
             if ($unlink_success) {
@@ -113,13 +135,21 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
     if ( $ops eq 'PERL' ) {
 
- #        RPerl::diag('in 07_00_inherit.t, have Bubble symtab entries:' . "\n" . RPerl::analyze_class_symtab_entries('RPerl::Algorithm::Sort::Bubble') . "\n\n");
+ #        RPerl::diag('in 07_precompiled_oo_inherit.t, have Bubble symtab entries:' . "\n" . RPerl::analyze_class_symtab_entries('RPerl::Algorithm::Sort::Bubble') . "\n\n");
     }
     else {    # $ops eq 'CPP'
         foreach my string_arrayref $filenames (
             @{  [   [ $bubble_cpp_filename, $bubble_cpp_filename_manual ],
                     [ $bubble_h_filename,   $bubble_h_filename_manual ],
-                    [ $bubble_pmc_filename, $bubble_pmc_filename_manual ]
+                    [ $bubble_pmc_filename, $bubble_pmc_filename_manual ],
+                    
+                    [ $sort_cpp_filename, $sort_cpp_filename_manual ],
+                    [ $sort_h_filename,   $sort_h_filename_manual ],
+                    [ $sort_pmc_filename, $sort_pmc_filename_manual ],
+                    
+                    [ $algorithm_cpp_filename, $algorithm_cpp_filename_manual ],
+                    [ $algorithm_h_filename,   $algorithm_h_filename_manual ],
+                    [ $algorithm_pmc_filename, $algorithm_pmc_filename_manual ]
                 ]
             }
             )
@@ -152,7 +182,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         #lives_ok( sub { RPerl::Algorithm::Sort::Bubble::cpp_load(); }, q{RPerl::Algorithm::Sort::Bubble::cpp_load() lives} );
         lives_ok( sub { &{ $RPerl::Algorithm::Sort::Bubble::{'cpp_load'} }(); }, q{RPerl::Algorithm::Sort::Bubble::cpp_load() lives} );    # long form
 
-#RPerl::diag('in 07_00_inherit.t, have post-re-use, post-re-cpp_load Bubble symtab entries:' . "\n" . RPerl::analyze_class_symtab_entries('RPerl::Algorithm::Sort::Bubble') . "\n\n");
+#RPerl::diag('in 07_precompiled_oo_inherit.t, have post-re-use, post-re-cpp_load Bubble symtab entries:' . "\n" . RPerl::analyze_class_symtab_entries('RPerl::Algorithm::Sort::Bubble') . "\n\n");
     }
 
     foreach my string $type (qw(DataType__Integer DataType__Number DataType__String DataStructure__Array DataStructure__Hash Algorithm__Sort__Bubble)) {
