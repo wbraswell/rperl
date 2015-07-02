@@ -19,10 +19,12 @@ Many thanks to irc.perl.org:
 
 \#inline founders ingy (again) & nwatkiss
 
-\#inline members davido & mohawk
+\#inline members davido & mohawk & sisyphus
 
 For more information, please see <a href="http://www.rperl.org">http://www.rperl.org</a>
 
 Copyright © 2013, 2014, 2015, William N. Braswell, Jr..  All Rights Reserved.  This work is Free & Open Source; you can redistribute it and/or modify it under the same terms as Perl 5.20.0.
+
+Perl may be copied only under the terms of either the Artistic License or the GNU General Public License, which may be found in the Perl 5 source kit.
 
 For licensing details, please see <a href="http://dev.perl.org/licenses/">http://dev.perl.org/licenses/</a>

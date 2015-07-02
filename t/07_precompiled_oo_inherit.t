@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.003_000;
+our $VERSION = 0.003_010;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -10,7 +10,7 @@ our $VERSION = 0.003_000;
 # suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s)
 BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
-use Test::More tests => 155;
+use Test::More tests => 164;
 use Test::Exception;
 use RPerl::Test;
 use File::Copy;
@@ -24,7 +24,7 @@ BEGIN {
     }
     lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
 
-    # NEED FIX: duplicate code
+    # NEED FIX: duplicate code, is it redundant to do this here and also at the top of the main for() loop?
     my string $bubble_cpp_filename = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.cpp';
     my string $bubble_h_filename   = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.h';
     my string $bubble_pmc_filename = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.pmc';
@@ -39,7 +39,7 @@ BEGIN {
 
     #    RPerl::diag('in 07_precompiled_oo_inherit.t, have $bubble_pmc_filename = ' . $bubble_pmc_filename . "\n");
 
-    # NEED FIX: duplicate code
+    # NEED FIX: triplicate code, is it redundant to do this here and also at the top of the main for() loop?
     # delete CPP, H, and PMC files if they exist;
     # for PERLOPS_PERLTYPES we need none of these files; for CPPOPS_xTYPES we need the proper manually-compiled files, not some other files
     foreach my string $filename ( @{ [ $bubble_cpp_filename, $bubble_h_filename, $bubble_pmc_filename, $sort_cpp_filename, $sort_h_filename, $sort_pmc_filename, $algorithm_cpp_filename, $algorithm_h_filename, $algorithm_pmc_filename ] } ) {
@@ -112,7 +112,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
     lives_ok( sub { rperltypes::types_enable($types) }, q{Mode '} . $ops . ' operations and ' . $types . ' data types' . q{' enabled in CPP header file(s)} );
 
-    # NEED FIX: duplicate code
+    # NEED FIX: triplicate code
     # delete CPP, H, and PMC files if they exist;
     # for PERLOPS_PERLTYPES we need none of these files; for CPPOPS_xTYPES we need the proper manually-compiled files, not some other files
     foreach my string $filename ( @{ [ $bubble_cpp_filename, $bubble_h_filename, $bubble_pmc_filename, $sort_cpp_filename, $sort_h_filename, $sort_pmc_filename, $algorithm_cpp_filename, $algorithm_h_filename, $algorithm_pmc_filename ] } ) {
@@ -270,6 +270,33 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         },
         q{TOOIN08 uninherited('Wolverine') lives}
     );
+}
+
+# NEED FIX: triplicate code
+# delete CPP, H, and PMC files if they exist;
+# for PERLOPS_PERLTYPES we need none of these files; for CPPOPS_xTYPES we need the proper manually-compiled files, not some other files
+foreach my string $filename (
+    @{  [   $bubble_cpp_filename, $bubble_h_filename,      $bubble_pmc_filename,  $sort_cpp_filename, $sort_h_filename,
+            $sort_pmc_filename,   $algorithm_cpp_filename, $algorithm_h_filename, $algorithm_pmc_filename
+        ]
+    }
+    )
+{
+    if ( -e $filename ) {
+        my integer $unlink_success = unlink $filename;
+        if ($unlink_success) {
+            ok( 1, 'Unlink (delete) existing file ' . $filename );
+        }
+        else {
+            ok( 0, 'Unlink (delete) existing file ' . $filename . q{ ... } . $OS_ERROR );
+
+            # skip all tests in this mode if we cannot remove the PMC file (and presumably the other 2 modes, as well)
+            next;
+        }
+    }
+    else {
+        ok( 1, 'No need to unlink (delete) existing file ' . $filename );
+    }
 }
 
 done_testing();

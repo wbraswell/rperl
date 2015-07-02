@@ -3,9 +3,10 @@ package RPerl;
 use strict;
 use warnings;
 
-our $VERSION = 1.000_003;    # ONE POINT OH BETA THREE!!!
-#our $VERSION = 20150612;    # NON-RELEASE VERSION
-#our $VERSION = 2015.163;    # NON-RELEASE VERSION, OFFICIAL STARDATE
+# DEV NOTE, CORRELATION #16: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
+our $VERSION = 1.000_000;    # ONE POINT OH BETA THREE!!!
+#our $VERSION = 20150702;    # NON-RELEASE VERSION, OFFICIAL LONGDATE
+#our $VERSION = 2015.183;    # NON-RELEASE VERSION, OFFICIAL STARDATE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator

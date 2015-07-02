@@ -1,12 +1,13 @@
 # [[[ EXCLUDE ALL GITHUB, UNUSED, AND AUTOMATICALLY-GENERATED FILES FROM CPAN ]]]
 # [ GitHub ]
 ^\.git
-^\.gitignore
-^\.travis\.yml
+^\.gitignore$
+^\.travis\.yml$
 
 # [ Inline Build ]
 # NEED UPDATE, CORRELATION #05: list of _Inline directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
 ^_Inline
+^lib\/_Inline
 ^lib\/RPerl\/Algorithm\/Sort\/_Inline
 ^script\/_Inline
 ^script\/development\/_Inline
@@ -41,25 +42,25 @@ swp$
 
 # [ RPerl Unused ]
 ^backup
-^lib\/3rd_party_debugging
+^lib\/RPerl\/3rd_party_debugging
 ^script\/3rd_party_debugging
 ^script\/development\/unused
 
 # [ RPerl Compile ]
 # NEED UPDATE, CORRELATION #13: list of RPerl build files & directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
-^lib\/RPerl\/Algorithm\.pmc
-^lib\/RPerl\/Algorithm\.h
-^lib\/RPerl\/Algorithm\.cpp
-^lib\/RPerl\/Algorithm\/Sort\.pmc
-^lib\/RPerl\/Algorithm\/Sort\.h
-^lib\/RPerl\/Algorithm\/Sort\.cpp
-^lib\/RPerl\/Algorithm\/Sort\/Bubble\.pmc
-^lib\/RPerl\/Algorithm\/Sort\/Bubble\.h
-^lib\/RPerl\/Algorithm\/Sort\/Bubble\.cpp
-^lib\/RPerl\/Test\/Fu\.pmc
-^lib\/RPerl\/Test\/Foo\.pmc
-^lib\/RPerl\/Test\/Foo\.h
-^lib\/RPerl\/Test\/Foo\.cpp
-^lib\/rperltypes_mode\.h\.orig
-^lib\/rperltypes_mode\.h\.swap
+^lib\/RPerl\/Algorithm\.pmc$
+^lib\/RPerl\/Algorithm\.h$
+^lib\/RPerl\/Algorithm\.cpp$
+^lib\/RPerl\/Algorithm\/Sort\.pmc$
+^lib\/RPerl\/Algorithm\/Sort\.h$
+^lib\/RPerl\/Algorithm\/Sort\.cpp$
+^lib\/RPerl\/Algorithm\/Sort\/Bubble\.pmc$
+^lib\/RPerl\/Algorithm\/Sort\/Bubble\.h$
+^lib\/RPerl\/Algorithm\/Sort\/Bubble\.cpp$
+^lib\/RPerl\/Test\/Fu\.pmc$
+^lib\/RPerl\/Test\/Foo\.pmc$
+^lib\/RPerl\/Test\/Foo\.h$
+^lib\/RPerl\/Test\/Foo\.cpp$
+^lib\/rperltypes_mode\.h\.orig$
+^lib\/rperltypes_mode\.h\.swap$
 

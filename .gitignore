@@ -5,6 +5,7 @@
 # [ Inline Build ]
 # NEED UPDATE, CORRELATION #05: list of _Inline directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
 /_Inline/
+/lib/_Inline/
 /lib/RPerl/Algorithm/Sort/_Inline/
 /script/_Inline/
 /script/development/_Inline/

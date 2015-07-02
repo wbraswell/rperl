@@ -1,5 +1,5 @@
 # RPerl v1.0 Beta 3, Install Notes
-# Last Updated July 1, 2015
+# Last Updated July 2, 2015
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # NOTE: STEPS 0 AND 1 ARE ONLY FOR SINGLE-USER INSTALL, NOT SYSTEM-WIDE INSTALL
@@ -17,8 +17,10 @@ $ perl -v  # NOTE! the version of Perl determines whether you take step 1A or 1B
 $ perl -MExtUtils::MakeMaker\ 999  # v7.04 or greater required by Inline::C
 $ sudo cpan ExtUtils::MakeMaker  # cpan system-wide, not cpanm single-user
 
-# NEED UPDATE: add non-apt & non-Linux options
+# Optional C++ formatter, Artistic Style
 $ sudo apt-get install astyle
+# OR
+# visit http://astyle.sourceforge.net/
 
 ################################################################################
 # STEP 1A.  ONLY FOR NORMAL OPERATING SYSTEMS, NOT DEBIAN WITH BROKEN PERL v5.14
@@ -101,31 +103,40 @@ $ make; make test TEST_VERBOSE=1; make install
 $ export RPERL_VERBOSE=1   # additional user output, off by default
 $ export RPERL_DEBUG=1     # additional system output, off by default
 $ export RPERL_WARNINGS=0  # additional user & system warnings, on by default
-	
+
+# Run RPerl test commands from within RPerl installation directory
+$ cd ~/perl5/lib/perl5  # for step 1A local::lib installs
+# OR
+$ cd OTHER_RPERL_INSTALL_DIRECTORY
+
 # Display command usage
 $ rperl -?
 
-# Compile & run test commands
+# Compile & run RPerl test commands
 $ export RPERL_DEBUG=1
-$ perl Makefile.PL; make realclean
+
+# Test command sequence #1
+$ rm -Rf _Inline RPerl/Algorithm.pmc RPerl/Algorithm.h RPerl/Algorithm.cpp RPerl/Algorithm/Sort.pmc RPerl/Algorithm/Sort.h RPerl/Algorithm/Sort.cpp RPerl/Algorithm/Sort/Bubble.pmc RPerl/Algorithm/Sort/Bubble.h RPerl/Algorithm/Sort/Bubble.cpp
 $ perl -e 'use RPerl::Algorithm::Sort::Bubble; my $o = RPerl::Algorithm::Sort::Bubble->new(); $o->inherited__Bubble("logan");  $o->inherited__Sort("wolvie");  $o->inherited__Algorithm("claws");'
     # should be PERLOPS_PERLTYPES, PERLOPS_PERLTYPES, PERLOPS_PERLTYPES
-
-$ rperl -v ./lib/RPerl/Algorithm.pm
+    
+$ rperl -V RPerl/Algorithm.pm
 $ perl -e 'use RPerl::Algorithm::Sort::Bubble; my $o = RPerl::Algorithm::Sort::Bubble->new(); $o->inherited__Bubble("logan");  $o->inherited__Sort("wolvie");  $o->inherited__Algorithm("claws");'
     # should be PERLOPS_PERLTYPES, PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
 
-$ rperl -v ./lib/RPerl/Algorithm/Sort.pm
+$ rperl -V RPerl/Algorithm/Sort.pm
 $ perl -e 'use RPerl::Algorithm::Sort::Bubble; my $o = RPerl::Algorithm::Sort::Bubble->new(); $o->inherited__Bubble("logan");  $o->inherited__Sort("wolvie");  $o->inherited__Algorithm("claws");'
     # should be PERLOPS_PERLTYPES, CPPOPS_CPPTYPES, CPPOPS_CPPTYPES
 
-$ rperl -v ./lib/RPerl/Algorithm/Sort/Bubble.pm
+$ rperl -V RPerl/Algorithm/Sort/Bubble.pm
 $ perl -e 'use RPerl::Algorithm::Sort::Bubble; my $o = RPerl::Algorithm::Sort::Bubble->new(); $o->inherited__Bubble("logan");  $o->inherited__Sort("wolvie");  $o->inherited__Algorithm("claws");'
     # should be CPPOPS_CPPTYPES, CPPOPS_CPPTYPES, CPPOPS_CPPTYPES
 
-$ perl Makefile.PL; make realclean
+# Test command sequence #2
+$ rm -Rf _Inline RPerl/Algorithm.pmc RPerl/Algorithm.h RPerl/Algorithm.cpp RPerl/Algorithm/Sort.pmc RPerl/Algorithm/Sort.h RPerl/Algorithm/Sort.cpp RPerl/Algorithm/Sort/Bubble.pmc RPerl/Algorithm/Sort/Bubble.h RPerl/Algorithm/Sort/Bubble.cpp
 $ perl -e 'use RPerl::Algorithm::Sort::Bubble; my $a = [reverse 0 .. 5000]; use Time::HiRes qw(time); my $start = time; my $s = integer_bubblesort($a); my $elapsed = time - $start; print Dumper($s); print "elapsed: " . $elapsed . "\n";'
-    # slow...  :-(  approx 15 seconds for 5000 elements, 60 for 10000
-$ rperl -v ./lib/RPerl/Algorithm.pm ./lib/RPerl/Algorithm/Sort.pm ./lib/RPerl/Algorithm/Sort/Bubble.pm
+    # SLOW...  :-(  approx 15 seconds for 5000 elements, 60 for 10000
+
+$ rperl -V RPerl/Algorithm.pm RPerl/Algorithm/Sort.pm RPerl/Algorithm/Sort/Bubble.pm
 $ perl -e 'use RPerl::Algorithm::Sort::Bubble; my $a = [reverse 0 .. 5000]; use Time::HiRes qw(time); my $start = time; my $s = integer_bubblesort($a); my $elapsed = time - $start; print Dumper($s); print "elapsed: " . $elapsed . "\n";'
     # FAST!!!  :-D  approx 0.045 seconds for 5000 elements, 0.18 for 10000

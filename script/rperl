@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.005_046;
+our $VERSION = 0.005_050;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -16,7 +16,7 @@ our $VERSION = 0.005_046;
 use RPerl::Parser;    # includes Perl::Critic
 use RPerl::Generator;
 use RPerl::Compiler;    # includes Inline
-use Getopt::Long;
+use Getopt::Long qw(:config no_ignore_case);
 use Pod::Usage;
 
 # [[[ SUBROUTINES ]]]
@@ -288,6 +288,7 @@ sub parse_generate_compile_execute_files {
 # [[[ ACTUALLY RUN CODE ]]]
 
 my integer $help                              = 0;
+my integer $version                           = 0;
 my integer $compile_flag                      = undef;
 my integer $execute_flag                      = undef;
 my integer $test_flag                         = undef;
@@ -315,8 +316,9 @@ my integer $input_files_count = 0;
 
 GetOptions(
     'help|?'        => \$help,
+    'version'       => \$version,
     'debug!'        => \$RPerl::DEBUG,
-    'verbose!'      => \$RPerl::VERBOSE,
+    'Verbose!'      => \$RPerl::VERBOSE,
     'compile!'      => \$compile_flag,
     'execute!'      => \$execute_flag,
     'test'          => \$test_flag,
@@ -326,7 +328,30 @@ GetOptions(
     '<>'            => \&store_unlabeled_options
 ) or die "ERROR EARG00: Failure processing command line arguments, dying\n";
 
-if ($help) { pod2usage( -verbose => 1 ); }
+if ($help) { pod2usage( -verbose => 1 ); exit; }
+if ($version) {
+    # DEV NOTE, CORRELATION #16: numbering schemes mentioned below
+    my $version_message =<<EOL;
+
+This is RPerl version 1.0, pre-release beta 3 (v1.0b3)
+v1.000_000 using RPerl's underscore-is-comma numbering scheme
+v1.000_003 using  CPAN's underscore-is-beta  numbering scheme
+
+Copyright © 2013, 2014, 2015, William N. Braswell, Jr..  All Rights Reserved.
+This work is Free & Open Source; you can redistribute it and/or modify it 
+under the same terms as Perl 5.20.0.
+
+Perl may be copied only under the terms of either the Artistic License or the
+GNU General Public License, which may be found in the Perl 5 source kit.
+For licensing details, please see http://dev.perl.org/licenses/
+
+Complete documentation for RPerl, including FAQ lists, should be found on 
+the Internet, point your browser at http://www.rperl.org/, the RPerl Home Page.
+
+EOL
+    print $version_message;
+    exit;
+}
 verbose_flags( $compile_flag, $execute_flag, $test_flag );
 $input_file_names        = accept_and_verify_input_files( $input_file_names, $input_file_names_unlabeled );
 $input_files_count       = scalar @{$input_file_names};
@@ -350,7 +375,12 @@ rperl - Optimizing Perl 5 Compiler
 
 =item B<--help _OR_ -h _OR_ -?>
 
-Print a brief help message.
+ Print a brief help message.
+
+=item B<--version _OR_ -v>
+
+ Print version number and copyright information.
+ Lowercase 'v' not to be confused with uppercase 'V' in 'Verbose' option below.
 
 =item B<--infile=MyFile.pm _OR_ -i=MyFile.pm>
 
@@ -425,12 +455,13 @@ Print a brief help message.
  Run input code after optional compile, or not.
  Enabled by default, equivalent to '--mode execute=ON' option.
 
-=item B<--verbose _OR_ -v>
+=item B<--Verbose _OR_ -V>
 
-=item B<--noverbose _OR_ -nov>
+=item B<--noVerbose _OR_ -noV>
 
  Include additional user information in output, or not.
  Disabled by default, equivalent to `export RPERL_VERBOSE=1` shell command.
+ Uppercase 'V' not to be confused with lowercase 'v' in 'version' option above.
 
 =item B<--debug _OR_ -d>
 
