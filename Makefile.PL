@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-our $VERSION = 0.001_090;
+our $VERSION = 0.001_091;
 use ExtUtils::MakeMaker;
 
 BEGIN { use English; }
@@ -32,7 +32,7 @@ WriteMakefile(
 # NEED UPDATE, CORRELATION #13: list of RPerl build files & directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
     clean => {
         FILES =>
-            'Makefile.old MANIFEST.bak lib/RPerl/Algorithm.pmc lib/RPerl/Algorithm.h lib/RPerl/Algorithm.cpp lib/RPerl/Algorithm/Sort.pmc lib/RPerl/Algorithm/Sort.h lib/RPerl/Algorithm/Sort.cpp lib/RPerl/Algorithm/Sort/Bubble.pmc lib/RPerl/Algorithm/Sort/Bubble.h lib/RPerl/Algorithm/Sort/Bubble.cpp lib/RPerl/Test/Fu.pmc lib/RPerl/Test/Foo.pmc lib/RPerl/Test/Foo.h lib/RPerl/Test/Foo.cpp lib/rperltypes_mode.h.orig lib/rperltypes_mode.h.swap _Inline lib/_Inline lib/RPerl/Algorithm/Sort/_Inline script/_Inline script/development/_Inline script/development/unused/_Inline t/_Inline lib/RPerl/Test/OperationsTypesReporting/_Inline lib/RPerl/Test/Module/_Inline lib/RPerl/Test/Properties/_Inline lib/RPerl/Test/Type_Types/_Inline lib/RPerl/Operation/Statement/_Inline lib/RPerl/DataStructure/Array/_Inline lib/RPerl/_Inline lib/RPerl/CompileUnit/_Inline'
+            'Makefile.old MANIFEST.bak lib/RPerl/Algorithm.pmc lib/RPerl/Algorithm.h lib/RPerl/Algorithm.cpp lib/RPerl/Algorithm/Inefficient.pmc lib/RPerl/Algorithm/Inefficient.h lib/RPerl/Algorithm/Inefficient.cpp lib/RPerl/Algorithm/Sort.pmc lib/RPerl/Algorithm/Sort.h lib/RPerl/Algorithm/Sort.cpp lib/RPerl/Algorithm/Sort/Bubble.pmc lib/RPerl/Algorithm/Sort/Bubble.h lib/RPerl/Algorithm/Sort/Bubble.cpp lib/RPerl/Test/Fu.pmc lib/RPerl/Test/Foo.pmc lib/RPerl/Test/Foo.h lib/RPerl/Test/Foo.cpp lib/rperltypes_mode.h.orig lib/rperltypes_mode.h.swap _Inline lib/_Inline lib/RPerl/Algorithm/Sort/_Inline script/_Inline script/development/_Inline script/development/unused/_Inline t/_Inline lib/RPerl/Test/OperationsTypesReporting/_Inline lib/RPerl/Test/Module/_Inline lib/RPerl/Test/Properties/_Inline lib/RPerl/Test/Type_Types/_Inline lib/RPerl/Operation/Statement/_Inline lib/RPerl/DataStructure/Array/_Inline lib/RPerl/_Inline lib/RPerl/CompileUnit/_Inline'
     },
 );
 

@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.005_050;
+our $VERSION = 0.005_071;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -91,9 +91,9 @@ sub verify_and_default_modes {
 
     if ( defined $compile_flag ) {
         if ($compile_flag) {
-            $modes->{compile} = 'COMPILE';
+            $modes->{compile} = 'SUBCOMPILE';
         }
-        else {    # --nocompile command-line argument (option) disables SAVE & COMPILE steps, PARSE & GENERATE remain enabled
+        else {    # --nocompile command-line argument (option) disables SAVE & SUBCOMPILE steps, PARSE & GENERATE remain enabled
             $modes->{compile} = 'GENERATE';
         }
     }
@@ -210,13 +210,13 @@ sub stringify_output_file_name_group {
 # [[[ CALL COMPILER ]]]
 # [[[ CALL COMPILER ]]]
 
-sub parse_generate_compile_execute_files {
+sub parse_generate_save_subcompile_execute_files {
     ( my string_arrayref $input_file_names, my hashref_arrayref $output_file_name_groups, my string_hashref $modes, my integer $input_files_count ) = @_;
 
     if ( $modes->{ops} eq 'PERL' ) {
 
-        # PERL ops does not actually COMPILE, set compile mode to SAVE instead
-        if ( $modes->{compile} eq 'COMPILE' ) {
+        # PERL ops does not actually SUBCOMPILE, set compile mode to SAVE instead
+        if ( $modes->{compile} eq 'SUBCOMPILE' ) {
             $modes->{compile} = 'SAVE';
         }
 
@@ -224,11 +224,21 @@ sub parse_generate_compile_execute_files {
         if ( $modes->{types} eq 'CPP' ) { $modes->{types} = 'PERL'; }
     }
 
+    # only execute single *.pl program files, executing multiple files may cause unexpected behavior
+    if ( $input_files_count > 1) {
+        $modes->{execute} = 'OFF';
+    }
+
     # DEV NOTE: Perl::Critic BUG!  'integer' triggers false positive RequireFinalReturn
     #    for my integer $i ( 0 .. ( $input_files_count - 1 ) ) {
     for my $i ( 0 .. ( $input_files_count - 1 ) ) {
         my string $input_file_name                = $input_file_names->[$i];
         my string_hashref $output_file_name_group = $output_file_name_groups->[$i];
+
+        # only execute *.pl program files, executing *.pm module files causes useless additional subcompile to occur
+        if (($modes->{execute} eq 'ON') and ($input_file_name !~ /[.]pl$/xms)) {
+            $modes->{execute} = 'OFF';
+        }
 
         if ( $input_files_count > 1 ) {
             RPerl::verbose_clear_screen();
@@ -267,7 +277,7 @@ sub parse_generate_compile_execute_files {
             }
         }
         if ( $modes->{execute} eq 'ON' ) {
-            RPerl::verbose( 'EXECUTE:       Run RPerl code...' . "\n" );
+            RPerl::verbose( 'EXECUTE:       Run code...' . "\n" );
             RPerl::verbose("\n");
             my integer $execute_retval = system( 'perl', $input_file_name );
         }
@@ -296,11 +306,11 @@ my string_arrayref $input_file_names          = [];
 my string_arrayref $output_file_name_prefixes = [];
 my hashref_arrayref $output_file_name_groups  = [];
 my string_hashref $modes                      = {};      # can't store defaults here, erased by GetOptions()
-my string_hashref $modes_default              = {        # default to CPPOPS_CPPTYPES_CHECKTRACE_COMPILE_EXECUTE_LABEL in C++ output code
+my string_hashref $modes_default              = {        # default to CPPOPS_CPPTYPES_CHECKTRACE_SUBCOMPILE_EXECUTE_LABEL in C++ output code
     ops     => 'CPP',
     types   => 'CPP',
     check   => 'TRACE',
-    compile => 'COMPILE',
+    compile => 'SUBCOMPILE',
     execute => 'ON',
     label   => 'ON'
 };
@@ -308,7 +318,7 @@ my arrayref_hashref $modes_supported = {
     ops     => [ 'PERL',  'CPP' ],
     types   => [ 'PERL',  'CPP', 'DUAL' ],
     check   => [ 'OFF',   'ON', 'TRACE' ],
-    compile => [ 'PARSE', 'GENERATE', 'SAVE', 'COMPILE' ],
+    compile => [ 'PARSE', 'GENERATE', 'SAVE', 'SUBCOMPILE' ],
     execute => [ 'OFF',   'ON' ],
     label   => [ 'OFF',   'ON' ]
 };
@@ -358,7 +368,7 @@ $input_files_count       = scalar @{$input_file_names};
 $modes                   = verify_and_default_modes( $modes, $modes_default, $modes_supported, $compile_flag, $execute_flag, $test_flag );
 $output_file_name_groups = generate_output_file_names( $input_file_names, $output_file_name_prefixes, $modes, $input_files_count );
 verbose_multi_file_settings( $input_file_names, $output_file_name_groups, $modes, $input_files_count );
-parse_generate_compile_execute_files( $input_file_names, $output_file_name_groups, $modes, $input_files_count );
+parse_generate_save_subcompile_execute_files( $input_file_names, $output_file_name_groups, $modes, $input_files_count );
 
 __END__
 =head1 NAME
@@ -425,9 +435,9 @@ rperl - Optimizing Perl 5 Compiler
 
 =item B<--mode compile=GENERATE _OR_ -m compile=GENERATE>
 
-=item B<--mode compile=COMPILE _OR_ -m compile=COMPILE>
+=item B<--mode compile=SUBCOMPILE _OR_ -m compile=SUBCOMPILE>
 
- Specify compile mode, COMPILE by default.
+ Specify compile mode, SUBCOMPILE by default.
 
 =item B<--mode execute=OFF _OR_ -m execute=OFF>
 
@@ -445,15 +455,16 @@ rperl - Optimizing Perl 5 Compiler
 
 =item B<--nocompile _OR_ -noc>
 
- Generate & compile C++ source code, or not.
- Enabled by default, equivalent to '--mode compile=COMPILE' option.
+ Generate & subcompile C++ source code, or not.
+ Enabled by default, equivalent to '--mode compile=SUBCOMPILE' option.
 
 =item B<--execute _OR_ -e>
 
 =item B<--noexecute _OR_ -noe>
 
  Run input code after optional compile, or not.
- Enabled by default, equivalent to '--mode execute=ON' option.
+ Enabled by default for *.pl program input files, always disabled for *.pm module input files or multiple input files.
+ Equivalent to '--mode execute=ON' option.
 
 =item B<--Verbose _OR_ -V>
 

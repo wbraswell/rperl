@@ -4,10 +4,8 @@ using std::cout;  using std::cerr;
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h
 #define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h 0.005_000
 
-// [[[ INCLUDES ]]]
-#include <rperltypes_mode.h>  // for default definitions of __PERL__TYPES or __CPP__TYPES
-#include <rperltypes.h>  // for data types and structures
-#include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
+// [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]
+#include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperltypes.h; HelperFunctions.cpp)
 #include <RPerl/Algorithm/Sort.cpp>
 
 # ifdef __PERL__TYPES

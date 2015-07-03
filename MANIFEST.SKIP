@@ -54,6 +54,9 @@ swp$
 ^lib\/RPerl\/Algorithm\/Sort\.pmc$
 ^lib\/RPerl\/Algorithm\/Sort\.h$
 ^lib\/RPerl\/Algorithm\/Sort\.cpp$
+^lib\/RPerl\/Algorithm\/Inefficient\.pmc$
+^lib\/RPerl\/Algorithm\/Inefficient\.h$
+^lib\/RPerl\/Algorithm\/Inefficient\.cpp$
 ^lib\/RPerl\/Algorithm\/Sort\/Bubble\.pmc$
 ^lib\/RPerl\/Algorithm\/Sort\/Bubble\.h$
 ^lib\/RPerl\/Algorithm\/Sort\/Bubble\.cpp$

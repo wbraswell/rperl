@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_010;
+our $VERSION = 0.004_020;
 
 # [[[ CRITICS ]]]
 
@@ -73,7 +73,7 @@ our void $rperl_to_xsbinary__parse_generate_compile = sub {
     if (   ( $modes->{compile} eq 'PARSE' )
         or ( $modes->{compile} eq 'GENERATE' )
         or ( $modes->{compile} eq 'SAVE' )
-        or ( $modes->{compile} eq 'COMPILE' ) )
+        or ( $modes->{compile} eq 'SUBCOMPILE' ) )
     {
         $rperl_ast = RPerl::Parser::rperl_to_ast__parse($rperl_input_file_name);
     }
@@ -82,7 +82,7 @@ our void $rperl_to_xsbinary__parse_generate_compile = sub {
 
     if (   ( $modes->{compile} eq 'GENERATE' )
         or ( $modes->{compile} eq 'SAVE' )
-        or ( $modes->{compile} eq 'COMPILE' ) )
+        or ( $modes->{compile} eq 'SUBCOMPILE' ) )
     {
         $source_group = RPerl::Generator::ast_to_cpp__generate( $rperl_ast, $modes );
     }
@@ -90,14 +90,14 @@ our void $rperl_to_xsbinary__parse_generate_compile = sub {
     # [[[ SAVE C++ TO DISK ]]]
 
     if (   ( $modes->{compile} eq 'SAVE' )
-        or ( $modes->{compile} eq 'COMPILE' ) )
+        or ( $modes->{compile} eq 'SUBCOMPILE' ) )
     {
         save_source_files( $source_group, $cpp_output_file_name_group, $modes );
     }
 
-    # [[[ COMPILE C++ TO XS & BINARY ]]]
+    # [[[ SUBCOMPILE C++ TO XS & BINARY ]]]
 
-    if ( $modes->{compile} eq 'COMPILE' ) {
+    if ( $modes->{compile} eq 'SUBCOMPILE' ) {
         cpp_to_xsbinary__subcompile( $source_group, $cpp_output_file_name_group );
     }
 };
@@ -194,6 +194,7 @@ our void $save_source_files = sub {
 
     # finally create PMC file and set H path in CPP file for CPPOPS
     if ( $modes->{ops} eq 'CPP' ) {
+        RPerl::verbose('SAVE  PHASE 0: Deferred file modifications... ');
 
         if ( $source_group->{PMC} ne q{} ) {
             die 'ERROR ECVCOFI01, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Received non-empty PMC source, dying' . "\n";
@@ -281,7 +282,11 @@ our void $save_source_files = sub {
             . ' after reading,'
             . $OS_ERROR
             . ', dying' . "\n";
+
+        RPerl::verbose(' done.' . "\n");
     }
+
+    RPerl::verbose('SAVE  PHASE 1: Format & write files to disk...');
 
     foreach my string $suffix_key ( sort keys %{$file_name_group} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
         if (   ( not exists $source_group->{$suffix_key} )
@@ -344,6 +349,8 @@ our void $save_source_files = sub {
             }
         }
     }
+
+    RPerl::verbose(' done.' . "\n");
 };
 
 # Sub-Compile from C++-Parsable String to Perl-Linkable XS & Machine-Readable Binary
@@ -352,7 +359,11 @@ our void $cpp_to_xsbinary__subcompile = sub {
 
     #RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), received $file_name_group =} . "\n" . Dumper($file_name_group) . "\n" );
 
+    RPerl::verbose('SUBCOMPILE:    Generate XS & binary...     ');
+
     # ADD CALLS TO TRIGGER Inline::CPP COMPILATION
+
+    RPerl::verbose(' skipped.' . "\n");
 };
 
 1;    # end of package

@@ -1,0 +1,78 @@
+// [[[ HEADER ]]]
+using std::cout;  using std::cerr;
+
+#ifndef __CPP__INCLUDED__RPerl__Algorithm__Inefficient_cpp
+#define __CPP__INCLUDED__RPerl__Algorithm__Inefficient_cpp 0.005_000
+
+// [[[ INCLUDES ]]]
+#include <RPerl/Algorithm/Inefficient.h>
+
+# ifdef __PERL__TYPES
+
+// [[[<<< BEGIN PERL TYPES >>>]]]
+// [[[<<< BEGIN PERL TYPES >>>]]]
+// [[[<<< BEGIN PERL TYPES >>>]]]
+
+// [[[ OO METHODS & SUBROUTINES ]]]
+
+void RPerl__Algorithm__Inefficient::inherited__Inefficient(SV* person) {
+    cout << "in CPPOPS_PERLTYPES Inefficient->inherited__Inefficient(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", FLUFFY" << "\n";
+}
+
+void RPerl__Algorithm__Inefficient::inherited(SV* person) {
+    cout << "in CPPOPS_PERLTYPES Inefficient->inherited(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", INCOMPATIBLE" << "\n";
+}
+
+SV* uninherited__Inefficient(SV* person) {
+    cout << "in CPPOPS_PERLTYPES Inefficient::uninherited__Inefficient(), received $person = " << SvPV_nolen(person) << ", MESSY" << "\n";
+    return newSVpv("Inefficient::uninherited__Inefficient() RULES! CPPOPS_PERLTYPES", 0);
+}
+
+// DEV NOTE, CORRELATION #04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
+//SV* uninherited(SV* person) {
+//    cout << "in CPPOPS_PERLTYPES Inefficient::uninherited(), received $person = " << SvPV_nolen(person) << ", TRICKS" << "\n";
+//    return newSVpv("Inefficient::uninherited() RULES! CPPOPS_PERLTYPES", 0);
+//}
+
+// [[[<<< END PERL TYPES >>>]]]
+// [[[<<< END PERL TYPES >>>]]]
+// [[[<<< END PERL TYPES >>>]]]
+
+# elif defined __CPP__TYPES
+
+// [[[<<< BEGIN CPP TYPES >>>]]]
+// [[[<<< BEGIN CPP TYPES >>>]]]
+// [[[<<< BEGIN CPP TYPES >>>]]]
+
+// [[[ OO METHODS & SUBROUTINES ]]]
+
+void RPerl__Algorithm__Inefficient::inherited__Inefficient(string person) {
+    RPerl::diag((const string) "in CPPOPS_CPPTYPES Inefficient->inherited__Inefficient(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", FLUFFY" + (const string) "\n");
+}
+
+void RPerl__Algorithm__Inefficient::inherited(string person) {
+    RPerl::diag((const string) "in CPPOPS_CPPTYPES Inefficient->inherited(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", INCOMPATIBLE" + (const string) "\n");
+}
+
+string uninherited__Inefficient(string person) {
+    RPerl::diag((const string) "in CPPOPS_CPPTYPES Inefficient::uninherited__Inefficient(), received $person = " + person + (const string) ", MESSY" + (const string) "\n");
+    return (const string) "Inefficient::uninherited__Inefficient() RULES! CPPOPS_CPPTYPES";
+}
+
+// DEV NOTE, CORRELATION #04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
+//string uninherited(string person) {
+//    RPerl::diag((const string) "in CPPOPS_CPPTYPES Inefficient::uninherited(), received $person = " + person + (const string) ", TRICKS" + (const string) "\n");
+//    return (const string) "Inefficient::uninherited() ROCKS! CPPOPS_CPPTYPES";
+//}
+
+// [[[<<< END CPP TYPES >>>]]]
+// [[[<<< END CPP TYPES >>>]]]
+// [[[<<< END CPP TYPES >>>]]]
+
+# else
+
+Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_exactly_one!
+
+# endif
+
+#endif

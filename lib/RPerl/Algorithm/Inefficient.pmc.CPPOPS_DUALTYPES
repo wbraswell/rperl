@@ -1,0 +1,65 @@
+# [[[ HEADER ]]]
+package RPerl::Algorithm::Inefficient;
+use strict;
+use warnings;
+use RPerl;
+our $VERSION = 0.001_000;
+
+# [[[ CRITICS ]]]
+## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
+
+# [[[ INCLUDES ]]]
+use RPerl::Inline;
+
+# [[[ SUBROUTINES ]]]
+#our void_method $cpp_load = sub {
+sub cpp_load {
+    my $need_load_cpp = 0;
+    if (    ( exists $main::{'RPerl__Algorithm__Inefficient__MODE_ID'} )
+        and ( defined &{ $main::{'RPerl__Algorithm__Inefficient__MODE_ID'} } ) )
+    {
+#RPerl::diag('in RPerl::Algorithm::Inefficient::cpp_load, RPerl__Algorithm__Inefficient__MODE_ID() exists & defined' . "\n");
+#RPerl::diag(q{in RPerl::Algorithm::Inefficient::cpp_load, have RPerl__Algorithm__Inefficient__MODE_ID() retval = '} . main::RPerl__Algorithm__Inefficient__MODE_ID() . q{'} . "\n");
+        if ( $RPerl::MODES->{ main::RPerl__Algorithm__Inefficient__MODE_ID() }->{ops} ne 'CPP' ) {
+            $need_load_cpp = 1;
+        }
+    }
+    else {
+        #RPerl::diag('in RPerl::Algorithm::Inefficient::cpp_load, RPerl__Algorithm__Inefficient__MODE_ID() does not exist or undefined' . "\n");
+        $need_load_cpp = 1;
+    }
+
+    if ($need_load_cpp) {
+
+        #RPerl::diag('in RPerl::Algorithm::Inefficient::cpp_load, need load CPP code' . "\n");
+
+        my $eval_string = <<"EOF";
+package main;
+use RPerl::Inline;
+BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/Algorithm/Inefficient.cpp' ]]]\n" x 1); }
+use Inline (CPP => '$RPerl::INCLUDE_PATH/RPerl/Algorithm/Inefficient.cpp', \%RPerl::Inline::ARGS);
+RPerl::diag("[[[ END 'use Inline' STAGE for 'RPerl/Algorithm/Inefficient.cpp' ]]]\n" x 1);
+1;
+EOF
+
+        $RPerl::Inline::ARGS{ccflagsex} = $RPerl::Inline::CCFLAGSEX . $RPerl::TYPES_CCFLAG;
+        $RPerl::Inline::ARGS{cppflags}  = $RPerl::TYPES_CCFLAG;
+
+#RPerl::diag('in RPerl::Algorithm::Inefficient::cpp_load(), CPP not yet loaded, about to call eval() on $eval_string =' . "\n" . '<<< BEGIN EVAL STRING>>>' . "\n" . $eval_string . '<<< END EVAL STRING >>>' . "\n");
+
+        eval $eval_string or croak( $OS_ERROR . "\n" . $EVAL_ERROR );
+        if ($EVAL_ERROR) { croak($EVAL_ERROR); }
+    }
+
+    #else { RPerl::diag('in RPerl::Algorithm::Inefficient::cpp_load(), CPP already loaded, DOING NOTHING' . "\n"); }
+}
+
+# DEV NOTE, CORRELATION #15: suppress 'Too late to run INIT block' at run-time loading via require or eval
+no warnings;
+INIT {
+    # actually compile and load C++ code when 'use RPerl::Algorithm::Inefficient' is called
+    RPerl::Algorithm::Inefficient::cpp_load();
+}
+use warnings;
+
+1;    # end of package

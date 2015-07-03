@@ -3,7 +3,7 @@
 package RPerl::Generator;
 use strict;
 use warnings;
-our $VERSION = 0.001_011;
+our $VERSION = 0.001_020;
 use RPerl;
 
 # [[[ OO INHERITANCE ]]]
@@ -268,6 +268,8 @@ our string_hashref $ast_to_rperl__generate = sub {
     #    RPerl::diag("in Generator::ast_to_rperl__generate(), received \$node =\n" . RPerl::Parser::rperl_ast__dump($node) . "\n");
     #    RPerl::diag("in Generator::ast_to_rperl__generate(), received \$modes =\n" . Dumper($modes) . "\n");
 
+    RPerl::verbose('GENERATE:      Generate RPerl syntax...');
+
     if ( not( defined $modes->{types} ) ) {
         die 'ERROR ECVGEMO00, RPERL GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL'} . 'expected but undefined/null value found, dying' . "\n";
     }
@@ -278,7 +280,10 @@ our string_hashref $ast_to_rperl__generate = sub {
     grammar_rules__map();
 
     # NEED FIX: check to ensure we are generating a valid return object
-    return ( $node->ast_to_rperl__generate($modes) );
+    my string_hashref $rperl_source_group = $node->ast_to_rperl__generate($modes);
+ 
+    RPerl::verbose(' done.' . "\n");
+    return $rperl_source_group;
 };
 
 # Generate from RPerl AST to C++ Source Code
@@ -287,6 +292,8 @@ our string_hashref $ast_to_cpp__generate = sub {
 
     #    RPerl::diag("in Generator::ast_to_cpp__generate(), received \$node =\n" . RPerl::Parser::rperl_ast__dump($node) . "\n");
     #    RPerl::diag("in Generator::ast_to_cpp__generate(), received \$modes =\n" . Dumper($modes) . "\n");
+
+    RPerl::verbose('GENERATE:      Generate   C++ syntax...       ');
 
     if ( not( defined $modes->{types} ) ) {
         die 'ERROR ECVGEMO02, C++ GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL' or 'CPP'} . 'expected but undefined/null value found, dying' . "\n";
@@ -298,10 +305,17 @@ our string_hashref $ast_to_cpp__generate = sub {
     grammar_rules__map();
 
     # NEED FIX: check to ensure we are generating a valid return object
+    my string_hashref $cpp_source_group;
+
     if ( $modes->{types} eq 'PERL' ) {
-        return ( $node->ast_to_cpp__generate__CPPOPS_PERLTYPES($modes) );
+        $cpp_source_group = $node->ast_to_cpp__generate__CPPOPS_PERLTYPES($modes);
     }
-    else { return ( $node->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes) ); }
+    else { 
+        $cpp_source_group = $node->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+    }
+
+    RPerl::verbose(' done.' . "\n");
+    return $cpp_source_group;
 };
 
 # Append All Source Code Entries From Group 2 Onto The Respective Entries In Group 1

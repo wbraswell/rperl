@@ -3,7 +3,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_043;
+our $VERSION = 0.004_050;
 
 # [[[ OO INHERITANCE ]]]
 #use RPerl::CompileUnit::Module::Class;
@@ -48,7 +48,7 @@ our object $rperl_to_ast__parse = sub {
 our void $rperl_source__check_syntax = sub {
     ( my string $rperl_source__file_name) = @_;
 
-    RPerl::verbose 'PARSE PHASE 0: Check Perl syntax...    ';
+    RPerl::verbose('PARSE PHASE 0: Check     Perl syntax...       ');
 
     my string $nul = $OSNAME eq 'MSWin32' ? 'NUL' : '/dev/null';
     my string $rperl_source__perl_syntax_command
@@ -123,14 +123,14 @@ our void $rperl_source__check_syntax = sub {
             . "\n";
     }
 
-    RPerl::verbose ' done.' . "\n";
+    RPerl::verbose(' done.' . "\n");
 };
 
 # Criticize Perl Syntax Using Perl::Critic
 our void $rperl_source__criticize = sub {
     ( my string $rperl_source__file_name) = @_;
 
-    RPerl::verbose 'PARSE PHASE 1: Criticize Perl syntax...';
+    RPerl::verbose('PARSE PHASE 1: Criticize Perl syntax...       ');
 
 # DEV NOTE: disable RequireTidyCode because perltidy may not be stable
 #    my object $rperl_source__critic = Perl::Critic->new( -severity => 'brutal' );
@@ -178,7 +178,7 @@ our void $rperl_source__criticize = sub {
             . $violation_pretty;
     }
     else {
-        RPerl::verbose ' done.' . "\n";
+        RPerl::verbose(' done.' . "\n");
     }
 };
 
@@ -236,7 +236,7 @@ our void $rperl_grammar_error = sub {
 our void $rperl_source__parse = sub {
     ( my string $rperl_source__file_name) = @_;
 
-    RPerl::verbose 'PARSE PHASE 2: Parse RPerl syntax...   ';
+    RPerl::verbose('PARSE PHASE 2: Parse    RPerl syntax...       ');
 
     my object $eyapp_parser = RPerl::Grammar->new();
     $eyapp_parser->YYSlurpFile($rperl_source__file_name);
@@ -247,7 +247,7 @@ our void $rperl_source__parse = sub {
         yyerror => $rperl_grammar_error
     );
 
-    RPerl::verbose ' done.' . "\n";
+    RPerl::verbose(' done.' . "\n");
 
 #    RPerl::diag("in rperl_source__parse(), have \$rperl_ast->str() =\n" . $rperl_ast->str() . "\n\n");
 #    RPerl::diag("in rperl_source__parse(), have \$rperl_ast =\n" . rperl_ast__dump($rperl_ast) . "\n\n");
