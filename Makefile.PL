@@ -10,6 +10,7 @@ push( @ExtUtils::MakeMaker::Overridable, qw(pm_to_blib) )
 
 WriteMakefile(
     NAME         => 'RPerl',
+    ABSTRACT     => 'Restricted Perl - Optimizing Perl 5 Compiler',
     VERSION_FROM => 'lib/RPerl.pm',
     EXE_FILES    => ['script/rperl'],
     PREREQ_PM    => {
