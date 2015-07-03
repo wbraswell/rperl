@@ -52,7 +52,7 @@ our void $rperl_source__check_syntax = sub {
 
     my string $nul = $OSNAME eq 'MSWin32' ? 'NUL' : '/dev/null';
     my string $rperl_source__perl_syntax_command
-        = q{perl -Iblib/lib -M"warnings FATAL=>q(all)" -cw }
+        = qq{$^X -Iblib/lib -M"warnings FATAL=>q(all)" -cw }
         . $rperl_source__file_name;
     my string $rperl_source__perl_syntax_command__no_output
         = $rperl_source__perl_syntax_command . ' > '.$nul.' 2> '.$nul;
@@ -84,7 +84,7 @@ our void $rperl_source__check_syntax = sub {
     if ( $rperl_source__perl_syntax_retval != 0 ) {
         die "\n"
             . 'ERROR ECVPAPL02, RPERL PARSER, PERL SYNTAX ERROR' . "\n"
-            . 'Failed `perl -cw` syntax check with return value '
+            . 'Failed `$^X -cw` syntax check with return value '
             . ( $rperl_source__perl_syntax_retval >> 8 )
             . ' and the following message(s):' . "\n\n"
 
@@ -117,7 +117,7 @@ our void $rperl_source__check_syntax = sub {
     if ( ( scalar @{$rperl_source__perl_syntax_retstring_warnings} ) != 0 ) {
         die "\n"
             . 'ERROR ECVPAPL03, RPERL PARSER, PERL SYNTAX WARNING' . "\n"
-            . 'Failed `perl -cw` syntax check with the following message(s): '
+            . 'Failed `$^X -cw` syntax check with the following message(s): '
             . "\n\n"
             . ( join "\n", @{$rperl_source__perl_syntax_retstring_warnings} )
             . "\n";

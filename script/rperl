@@ -279,7 +279,7 @@ sub parse_generate_save_subcompile_execute_files {
         if ( $modes->{execute} eq 'ON' ) {
             RPerl::verbose( 'EXECUTE:       Run code...' . "\n" );
             RPerl::verbose("\n");
-            my integer $execute_retval = system( 'perl', $input_file_name );
+            my integer $execute_retval = system( $^X, $input_file_name );
         }
 
         if (    ( $input_files_count > 1 )
