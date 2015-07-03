@@ -1,6 +1,4 @@
-# START HERE: remove old pmc files; enable dependencies compile; update existing tests, create new tests
-# START HERE: remove old pmc files; enable dependencies compile; update existing tests, create new tests
-# START HERE: remove old pmc files; enable dependencies compile; update existing tests, create new tests
+# START HERE: enable dependencies compile; update existing tests, create new tests
 
 # THEN: enable Foo.pm to compile; fix & compile Merge/Quick; finish all CPPOPS_CPPTYPES generation; fix & compile nbody
 # THEN: enable Foo.pm to compile; fix & compile Merge/Quick; finish all CPPOPS_CPPTYPES generation; fix & compile nbody
