@@ -72,7 +72,7 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
             execute => 'OFF',
             label   => 'OFF'          # don't label source code, will strip comments before diff check
         };
-        $output_file_name_groups = generate_output_file_names( [$test_file], [], $modes_argument, 1 );
+        $output_file_name_groups = generate_output_file_names( [$test_file], [], 1, $modes_argument );
 
         if ( $ops eq 'PERL' ) {
             $perform_diff_check = 1;    # Perl source code is it's own reference file, always perform diff check for PERLOPS_PERLTYPES

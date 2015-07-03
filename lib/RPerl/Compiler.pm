@@ -30,6 +30,53 @@ our string_arrayref $find_dependencies = sub {
     (my string $file_name) = @_;
     my string_arrayref $dependencies = [$file_name];
     
+    RPerl::diag('in Compiler::find_dependencies(), received $file_name = ' . $file_name . "\n");
+
+
+
+=DISABLE
+        # utilize modified copy of Module PMC template file
+        my string $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES';
+        #RPerl::diag('in Compiler::save_source_files(), have $module_pmc_filename_manual = ' . $module_pmc_filename_manual . "\n");
+
+        if ( not -f $module_pmc_filename_manual ) {
+            die 'ERROR ECVCOFI02, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: File not found, ' . q{'}
+                . $module_pmc_filename_manual . q{'} . "\n"
+                . ', dying' . "\n";
+        }
+
+        open my filehandleref $FILE_HANDLE, '<', $module_pmc_filename_manual
+            or die 'ERROR ECVCOFI03, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot open file '
+            . $module_pmc_filename_manual
+            . ' for reading,'
+            . $OS_ERROR
+            . ', dying' . "\n";
+
+        # deferred, finally read in Module PMC template file, replace package name and paths
+        my string $file_line;
+        my string $file_string = q{};
+        while ( $file_line = <$FILE_HANDLE> ) {
+            $file_line =~ s/RPerl\/CompileUnit\/Module\.cpp/$module_path/gxms;
+            $file_line =~ s/RPerl::CompileUnit::Module/$module_name/gxms;
+            $file_line =~ s/RPerl__CompileUnit__Module/$module_underscores/gxms;
+            $source_group->{PMC} .= $file_line;
+        }
+
+        close $FILE_HANDLE
+            or die 'ECVCOFI04, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot close file '
+            . $module_pmc_filename_manual
+            . ' after reading,'
+            . $OS_ERROR
+            . ', dying' . "\n";
+=cut
+
+
+
+
+
+
+
+    
     return $dependencies;
 };
 
@@ -112,7 +159,7 @@ our void $rperl_to_xsbinary__parse_generate_compile = sub {
 # generate output file name group(s) based on input file name(s)
 #sub generate_output_file_names {
 our hashref_arrayref $generate_output_file_names = sub {
-    ( my string_arrayref $input_file_names, my string_arrayref $output_file_name_prefixes, my string_hashref $modes, my integer $input_files_count ) = @_;
+    ( my string_arrayref $input_file_names, my string_arrayref $output_file_name_prefixes, my integer $input_files_count, my string_hashref $modes ) = @_;
 
     # NEED FIX: add string_hashref_arrayref type
     #    my string_hashref_arrayref $output_file_name_groups = [];
@@ -201,7 +248,7 @@ our void $save_source_files = sub {
 
     # finally create PMC file and set H path in CPP file for CPPOPS
     if ( $modes->{ops} eq 'CPP' ) {
-        RPerl::verbose('SAVE  PHASE 0: Deferred file modifications... ');
+        RPerl::verbose('SAVE  PHASE 0:      Deferred file modifications... ');
 
         if ( $source_group->{PMC} ne q{} ) {
             die 'ERROR ECVCOFI01, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Received non-empty PMC source, dying' . "\n";
@@ -293,7 +340,7 @@ our void $save_source_files = sub {
         RPerl::verbose(' done.' . "\n");
     }
 
-    RPerl::verbose('SAVE  PHASE 1: Format & write files to disk...');
+    RPerl::verbose('SAVE  PHASE 1:      Format & write files to disk...');
 
     foreach my string $suffix_key ( sort keys %{$file_name_group} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
         if (   ( not exists $source_group->{$suffix_key} )
@@ -366,7 +413,7 @@ our void $cpp_to_xsbinary__subcompile = sub {
 
     #RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), received $file_name_group =} . "\n" . Dumper($file_name_group) . "\n" );
 
-    RPerl::verbose('SUBCOMPILE:    Generate XS & binary...     ');
+    RPerl::verbose('SUBCOMPILE:         Generate XS & binary...     ');
 
     # ADD CALLS TO TRIGGER Inline::CPP COMPILATION
 

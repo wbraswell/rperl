@@ -268,7 +268,7 @@ our string_hashref $ast_to_rperl__generate = sub {
     #    RPerl::diag("in Generator::ast_to_rperl__generate(), received \$node =\n" . RPerl::Parser::rperl_ast__dump($node) . "\n");
     #    RPerl::diag("in Generator::ast_to_rperl__generate(), received \$modes =\n" . Dumper($modes) . "\n");
 
-    RPerl::verbose('GENERATE:      Generate RPerl syntax...');
+    RPerl::verbose('GENERATE:           Generate RPerl syntax...');
 
     if ( not( defined $modes->{types} ) ) {
         die 'ERROR ECVGEMO00, RPERL GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL'} . 'expected but undefined/null value found, dying' . "\n";
@@ -293,7 +293,7 @@ our string_hashref $ast_to_cpp__generate = sub {
     #    RPerl::diag("in Generator::ast_to_cpp__generate(), received \$node =\n" . RPerl::Parser::rperl_ast__dump($node) . "\n");
     #    RPerl::diag("in Generator::ast_to_cpp__generate(), received \$modes =\n" . Dumper($modes) . "\n");
 
-    RPerl::verbose('GENERATE:      Generate   C++ syntax...       ');
+    RPerl::verbose('GENERATE:           Generate   C++ syntax...       ');
 
     if ( not( defined $modes->{types} ) ) {
         die 'ERROR ECVGEMO02, C++ GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL' or 'CPP'} . 'expected but undefined/null value found, dying' . "\n";

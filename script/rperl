@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.005_071;
+our $VERSION = 0.006_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -161,24 +161,40 @@ sub verify_and_default_modes {
 }
 
 sub verbose_multi_file_settings {
-    ( my string_arrayref $input_file_names, my hashref_arrayref $output_file_name_groups, my string_hashref $modes, my integer $input_files_count ) = @_;
-
+    ( my string_arrayref $input_file_names, my hashref_arrayref $output_file_name_groups, my integer $input_files_count, my string_hashref $modes ) = @_;
     if ( $input_files_count > 1 ) {
-        RPerl::verbose("Input File(s):\n");
-        foreach my string $input_file_name ( @{$input_file_names} ) {
-            RPerl::verbose( q{    } . $input_file_name . "\n" );
-        }
-        RPerl::verbose("Output File(s):\n");
-        foreach my string_hashref $output_file_name_group ( @{$output_file_name_groups} ) {
-            RPerl::verbose( q{    } . stringify_output_file_name_group($output_file_name_group) . "\n" );
-        }
-        RPerl::verbose("Modes:\n");
-        foreach my string $mode_key ( keys %{$modes} ) {
-            RPerl::verbose( q{    } . $mode_key . ' => ' . $modes->{$mode_key} . "\n" );
-        }
-        RPerl::verbose_pause("\nPRESS <ENTER> TO CONTINUE\n");
+        RPerl::verbose( multi_file_settings( $input_file_names, $output_file_name_groups, $input_files_count, $modes ) );
+        RPerl::diag_pause( "\n" . 'PRESS <ENTER> TO CONTINUE' . "\n" );
     }
     return;
+}
+
+sub diag_multi_file_settings {
+    ( my string_arrayref $input_file_names, my hashref_arrayref $output_file_name_groups, my integer $input_files_count, my string_hashref $modes ) = @_;
+    if ( $input_files_count > 1 ) {
+        RPerl::diag( multi_file_settings( $input_file_names, $output_file_name_groups, $input_files_count, $modes ) );
+        RPerl::diag_pause( "\n" . 'PRESS <ENTER> TO CONTINUE' . "\n" );
+    }
+    return;
+}
+
+sub multi_file_settings {
+    ( my string_arrayref $input_file_names, my hashref_arrayref $output_file_name_groups, my integer $input_files_count, my string_hashref $modes ) = @_;
+    my string $retval = q{};
+
+    $retval .= 'Input File(s):' . "\n";
+    foreach my string $input_file_name ( @{$input_file_names} ) {
+        $retval .= q{    } . $input_file_name . "\n";
+    }
+    $retval .= 'Output File(s):' . "\n";
+    foreach my string_hashref $output_file_name_group ( @{$output_file_name_groups} ) {
+        $retval .= q{    } . stringify_output_file_name_group($output_file_name_group) . "\n";
+    }
+    $retval .= 'Modes:' . "\n";
+    foreach my string $mode_key ( keys %{$modes} ) {
+        $retval .= q{    } . $mode_key . ' => ' . $modes->{$mode_key} . "\n";
+    }
+    return $retval;
 }
 
 # allow omission of "-infile" on command line
@@ -191,43 +207,21 @@ sub store_unlabeled_options {
 
 # print value of option flags
 sub verbose_flags {
-    (  my integer $dependencies_flag, my integer $compile_flag, my integer $execute_flag, my integer $test_flag ) = @_;
-    RPerl::verbose( 'Verbose Flag:  ' . $RPerl::VERBOSE . "\n" );
-    RPerl::verbose( 'Debug Flag:    ' . $RPerl::DEBUG . "\n" );
+    ( my integer $dependencies_flag, my integer $compile_flag, my integer $execute_flag, my integer $test_flag ) = @_;
+    RPerl::verbose( 'Verbose Flag:       ' . $RPerl::VERBOSE . "\n" );
+    RPerl::verbose( 'Debug Flag:         ' . $RPerl::DEBUG . "\n" );
     if ( defined $dependencies_flag ) {
         RPerl::verbose( 'Dependencies Flag:  ' . $dependencies_flag . "\n" );
     }
     if ( defined $compile_flag ) {
-        RPerl::verbose( 'Compile Flag:  ' . $compile_flag . "\n" );
+        RPerl::verbose( 'Compile Flag:       ' . $compile_flag . "\n" );
     }
     if ( defined $execute_flag ) {
-        RPerl::verbose( 'Execute Flag:  ' . $execute_flag . "\n" );
+        RPerl::verbose( 'Execute Flag:       ' . $execute_flag . "\n" );
     }
     if ( defined $test_flag ) {
-        RPerl::verbose( 'Test Flag:  ' . $test_flag . "\n" );
+        RPerl::verbose( 'Test Flag:          ' . $test_flag . "\n" );
     }
-}
-
-sub follow_dependencies {
-    ( my string_arrayref $input_file_names, my string_hashref $modes ) = @_;
-    if ($modes->{dependencies} eq 'OFF') {
-        return $input_file_names;
-    }
- 
-    my string_arrayref $input_file_names_dependencies = [];
-    my string_arrayref $input_file_names_tmp;
- 
-    foreach my string $input_file_name (@{$input_file_names}) {
-        $input_file_names_tmp = find_dependencies($input_file_name);
-        $input_file_names_dependencies = [@{$input_file_names_dependencies}, @{$input_file_names_tmp}];
-    }
-    
-    RPerl::diag('in follow_dependencies(), have $input_file_names_dependencies = ' . Dumper($input_file_names_dependencies) . "\n");
- 
-    # re-verify input files with dependencies added
-    $input_file_names_dependencies        = accept_and_verify_input_files( $input_file_names_dependencies, [] );
-
-    return $input_file_names_dependencies;
 }
 
 sub stringify_output_file_name_group {
@@ -246,7 +240,12 @@ sub stringify_output_file_name_group {
 # [[[ CALL COMPILER ]]]
 
 sub parse_generate_save_subcompile_execute_files {
-    ( my string_arrayref $input_file_names, my hashref_arrayref $output_file_name_groups, my string_hashref $modes, my integer $input_files_count ) = @_;
+    (   my string_arrayref $input_file_names,
+        my hashref_arrayref $output_file_name_groups,
+        my string_arrayref $output_file_name_prefixes,
+        my integer $input_files_count,
+        my string_hashref $modes
+    ) = @_;
 
     if ( $modes->{ops} eq 'PERL' ) {
 
@@ -279,49 +278,76 @@ sub parse_generate_save_subcompile_execute_files {
             RPerl::verbose_clear_screen();
             RPerl::verbose( 'Input File number: ' . ( $i + 1 ) . ' of ' . $input_files_count . "\n" );
         }
-        RPerl::verbose( 'Input File:       ' . $input_file_name . "\n" );
-        RPerl::verbose( 'Output File(s):   ' . stringify_output_file_name_group($output_file_name_group) . "\n" );
-        RPerl::verbose( 'Modes:            ops => '
-                . $modes->{ops}
-                . ', types => '
-                . $modes->{types}
-                . ', check => '
-                . $modes->{check}
-                . ', compile => '
-                . $modes->{compile}
-                . ', execute => '
-                . $modes->{execute}
-                . ', label => '
-                . $modes->{label}
-                . "\n\n" );
-        if ( $input_files_count > 1 ) {
-            RPerl::diag_pause("PRESS <ENTER> TO CONTINUE\n");
+
+        RPerl::verbose( 'Input File:         ' . $input_file_name . "\n" );
+        RPerl::verbose( 'Output File(s):     ' . stringify_output_file_name_group($output_file_name_group) . "\n" );
+        RPerl::verbose( 'Modes:              ops => ' . $modes->{ops} . ', types => ' . $modes->{types} . ', check => ' . 
+            $modes->{check} . ', compile => ' . $modes->{compile} . ', execute => ' . $modes->{execute} . ', label => ' . 
+            $modes->{label} . "\n\n" );
+
+        my string_arrayref $input_file_name_deps;
+        my integer $input_file_and_deps_count;
+        my integer $input_file_deps_count;
+        my hashref_arrayref $output_file_name_dep_groups;
+
+        if ( $modes->{dependencies} eq 'ON' ) {
+            $input_file_name_deps = find_dependencies($input_file_name);
+            RPerl::verbose('DEPENDENCIES:       Follow & find all deps... ');
+            if (exists $input_file_name_deps->[0]) {
+                $input_file_name_deps = accept_and_verify_input_files( $input_file_name_deps, [] );    # verify deps input files
+            }
+            $input_file_name_deps = [ @{$input_file_name_deps}, $input_file_name ];                # append input file to deps list
+            $input_file_and_deps_count = scalar @{$input_file_name_deps};
+            $input_file_deps_count = $input_file_and_deps_count - 1;
+            $output_file_name_dep_groups = generate_output_file_names( $input_file_name_deps, $output_file_name_prefixes, $input_file_and_deps_count, $modes ); # generate deps output file names
+            RPerl::verbose( sprintf("%4d", $input_file_deps_count) . ' found.' . "\n" );
+            diag_multi_file_settings( $input_file_name_deps, $output_file_name_dep_groups, $input_file_and_deps_count, $modes );
         }
 
-        if ( $modes->{ops} eq 'PERL' ) {
-            RPerl::Compiler::rperl_to_rperl__parse_generate( $input_file_name, $output_file_name_group, $modes );
-        }
-        elsif ( $modes->{ops} eq 'CPP' ) {
+        for my $j ( 0 .. $input_file_deps_count ) {
+            my string $input_file_name_dep                = $input_file_name_deps->[$j];
+            my string_hashref $output_file_name_dep_group = $output_file_name_dep_groups->[$j];
 
-            # use eval to trap C++ compiler errors
-            my integer $eval_retval = eval {
-                RPerl::Compiler::rperl_to_xsbinary__parse_generate_compile( $input_file_name, $output_file_name_group, $modes );    # returns void
-                1;                                                                                                                  # return true
-            };
-            if ( not defined $eval_retval ) {
-                print $EVAL_ERROR;
+            if ($input_file_deps_count > 0) {
+                if ($j < $input_file_deps_count) {
+                    RPerl::verbose( "\n" . 'Dep Input File:     ' . $input_file_name_dep . "\n" );
+                    RPerl::verbose( 'Dep Output File(s): ' . stringify_output_file_name_group($output_file_name_dep_group) . "\n" );
+                }
+                else {
+                    RPerl::verbose( "\n" . 'Input File:         ' . $input_file_name_dep . "\n" );
+                    RPerl::verbose( 'Output File(s):     ' . stringify_output_file_name_group($output_file_name_dep_group) . "\n" );
+                }
+            }
+
+            if ( $modes->{ops} eq 'PERL' ) {
+                RPerl::Compiler::rperl_to_rperl__parse_generate( $input_file_name_dep, $output_file_name_dep_group, $modes );
+            }
+            elsif ( $modes->{ops} eq 'CPP' ) {
+
+                # use eval to trap C++ compiler errors
+                my integer $eval_retval = eval {
+                    RPerl::Compiler::rperl_to_xsbinary__parse_generate_compile( $input_file_name_dep, $output_file_name_dep_group, $modes );    # returns void
+                    1;                                                                                                                  # return true
+                };
+                if ( not defined $eval_retval ) {
+                    print $EVAL_ERROR;
+                }
+            }
+            if ( $modes->{execute} eq 'ON' ) {
+                RPerl::verbose( 'EXECUTE:       Run code...' . "\n" );
+                RPerl::verbose("\n");
+                my integer $execute_retval = system( $EXECUTABLE_NAME, $input_file_name_dep );
+            }
+
+            if (    ( $input_files_count > 1 )
+                and ( $i < ( $input_files_count - 1 ) ) )
+            {
+                RPerl::verbose_pause("\nPRESS <ENTER> TO CONTINUE\n");
             }
         }
-        if ( $modes->{execute} eq 'ON' ) {
-            RPerl::verbose( 'EXECUTE:       Run code...' . "\n" );
-            RPerl::verbose("\n");
-            my integer $execute_retval = system( 'perl', $input_file_name );
-        }
 
-        if (    ( $input_files_count > 1 )
-            and ( $i < ( $input_files_count - 1 ) ) )
-        {
-            RPerl::verbose_pause("\nPRESS <ENTER> TO CONTINUE\n");
+        if ( $input_files_count > 1 ) {
+            RPerl::diag_pause("PRESS <ENTER> TO CONTINUE\n");
         }
     }
     return;
@@ -407,10 +433,9 @@ verbose_flags( $dependencies_flag, $compile_flag, $execute_flag, $test_flag );
 $input_file_names        = accept_and_verify_input_files( $input_file_names, $input_file_names_unlabeled );
 $input_files_count       = scalar @{$input_file_names};
 $modes                   = verify_and_default_modes( $modes, $modes_default, $modes_supported, $dependencies_flag, $compile_flag, $execute_flag, $test_flag );
-$input_file_names        = follow_dependencies( $input_file_names, $modes );
-$output_file_name_groups = generate_output_file_names( $input_file_names, $output_file_name_prefixes, $modes, $input_files_count );
-verbose_multi_file_settings( $input_file_names, $output_file_name_groups, $modes, $input_files_count );
-parse_generate_save_subcompile_execute_files( $input_file_names, $output_file_name_groups, $modes, $input_files_count );
+$output_file_name_groups = generate_output_file_names( $input_file_names, $output_file_name_prefixes, $input_files_count, $modes );
+verbose_multi_file_settings( $input_file_names, $output_file_name_groups, $input_files_count, $modes );
+parse_generate_save_subcompile_execute_files( $input_file_names, $output_file_name_groups, $output_file_name_prefixes, $input_files_count, $modes );
 
 __END__
 =head1 NAME
