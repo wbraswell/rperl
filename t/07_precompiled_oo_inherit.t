@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.003_010;
+our $VERSION = 0.003_030;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -10,7 +10,7 @@ our $VERSION = 0.003_010;
 # suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s)
 BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
-use Test::More tests => 164;
+use Test::More tests => 246;
 use Test::Exception;
 use RPerl::Test;
 use File::Copy;
@@ -33,6 +33,10 @@ BEGIN {
     my string $sort_h_filename   = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort.h';
     my string $sort_pmc_filename = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort.pmc';
 
+    my string $inefficient_cpp_filename = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Inefficient.cpp';
+    my string $inefficient_h_filename   = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Inefficient.h';
+    my string $inefficient_pmc_filename = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Inefficient.pmc';
+
     my string $algorithm_cpp_filename = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm.cpp';
     my string $algorithm_h_filename   = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm.h';
     my string $algorithm_pmc_filename = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm.pmc';
@@ -42,7 +46,14 @@ BEGIN {
     # NEED FIX: triplicate code, is it redundant to do this here and also at the top of the main for() loop?
     # delete CPP, H, and PMC files if they exist;
     # for PERLOPS_PERLTYPES we need none of these files; for CPPOPS_xTYPES we need the proper manually-compiled files, not some other files
-    foreach my string $filename ( @{ [ $bubble_cpp_filename, $bubble_h_filename, $bubble_pmc_filename, $sort_cpp_filename, $sort_h_filename, $sort_pmc_filename, $algorithm_cpp_filename, $algorithm_h_filename, $algorithm_pmc_filename ] } ) {
+    foreach my string $filename (
+        @{  [   $bubble_cpp_filename,      $bubble_h_filename,      $bubble_pmc_filename,      $sort_cpp_filename,
+                $sort_h_filename,          $sort_pmc_filename,      $inefficient_cpp_filename, $inefficient_h_filename,
+                $inefficient_pmc_filename, $algorithm_cpp_filename, $algorithm_h_filename,     $algorithm_pmc_filename
+            ]
+        }
+        )
+    {
         if ( -e $filename ) {
             my integer $unlink_success = unlink $filename;
             if ($unlink_success) {
@@ -62,9 +73,11 @@ BEGIN {
 
     # DEV NOTE, CORRELATION #15: suppress 'Too late to run INIT block' at run-time loading via require or eval
     lives_and( sub { require_ok('RPerl::Algorithm::Sort::Bubble'); }, q{require_ok('RPerl::Algorithm::Sort::Bubble') lives} );
+    lives_and( sub { require_ok('RPerl::Algorithm::Inefficient'); }, q{require_ok('RPerl::Algorithm::Inefficient') lives} );
 }
 
-my string $module_filenamename = 'RPerl/Algorithm/Sort/Bubble.pm';
+my string $bubble_pm_filename = 'RPerl/Algorithm/Sort/Bubble.pm';
+my string $inefficient_pm_filename = 'RPerl/Algorithm/Inefficient.pm';
 my object $refresher           = Module::Refresh->new();
 
 # NEED FIX: duplicate code
@@ -82,6 +95,13 @@ my string $sort_h_filename_manual   = $sort_h_filename . '.CPPOPS_DUALTYPES';
 my string $sort_pmc_filename        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort.pmc';
 my string $sort_pmc_filename_manual = $sort_pmc_filename . '.CPPOPS_DUALTYPES';
 
+my string $inefficient_cpp_filename        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Inefficient.cpp';
+my string $inefficient_cpp_filename_manual = $inefficient_cpp_filename . '.CPPOPS_DUALTYPES';
+my string $inefficient_h_filename          = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Inefficient.h';
+my string $inefficient_h_filename_manual   = $inefficient_h_filename . '.CPPOPS_DUALTYPES';
+my string $inefficient_pmc_filename        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Inefficient.pmc';
+my string $inefficient_pmc_filename_manual = $inefficient_pmc_filename . '.CPPOPS_DUALTYPES';
+
 my string $algorithm_cpp_filename        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm.cpp';
 my string $algorithm_cpp_filename_manual = $algorithm_cpp_filename . '.CPPOPS_DUALTYPES';
 my string $algorithm_h_filename          = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm.h';
@@ -98,14 +118,15 @@ my string $algorithm_pmc_filename_manual = $algorithm_pmc_filename . '.CPPOPS_DU
 
 # loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
 foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
-#for my $mode_id ( 1 .. 2 ) {    # TEMPORARY DEBUGGING xOPS_xTYPES ONLY
+
+    #for my $mode_id ( 1 .. 2 ) {    # TEMPORARY DEBUGGING xOPS_xTYPES ONLY
 
     # [[[ MODE SETUP ]]]
     #    RPerl::diag("in 07_precompiled_oo_inherit.t, top of for() loop, have \$mode_id = $mode_id\n");
     my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
-    my $ops                 = $mode->{ops};
-    my $types               = $mode->{types};
-    my string $mode_tagline = $ops . 'OPS_' . $types . 'TYPES';
+    my $ops                     = $mode->{ops};
+    my $types                   = $mode->{types};
+    my string $mode_tagline     = $ops . 'OPS_' . $types . 'TYPES';
     if ( $ENV{RPERL_VERBOSE} ) {
         Test::More::diag( '[[[ Beginning RPerl Pre-Compiled Sort Tests, ' . $ops . ' operations and ' . $types . ' data types' . ' ]]]' );
     }
@@ -115,7 +136,14 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     # NEED FIX: triplicate code
     # delete CPP, H, and PMC files if they exist;
     # for PERLOPS_PERLTYPES we need none of these files; for CPPOPS_xTYPES we need the proper manually-compiled files, not some other files
-    foreach my string $filename ( @{ [ $bubble_cpp_filename, $bubble_h_filename, $bubble_pmc_filename, $sort_cpp_filename, $sort_h_filename, $sort_pmc_filename, $algorithm_cpp_filename, $algorithm_h_filename, $algorithm_pmc_filename ] } ) {
+    foreach my string $filename (
+        @{  [   $bubble_cpp_filename,      $bubble_h_filename,      $bubble_pmc_filename,      $sort_cpp_filename,
+                $sort_h_filename,          $sort_pmc_filename,      $inefficient_cpp_filename, $inefficient_h_filename,
+                $inefficient_pmc_filename, $algorithm_cpp_filename, $algorithm_h_filename,     $algorithm_pmc_filename
+            ]
+        }
+        )
+    {
         if ( -e $filename ) {
             my integer $unlink_success = unlink $filename;
             if ($unlink_success) {
@@ -135,18 +163,22 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
     if ( $ops eq 'PERL' ) {
 
- #        RPerl::diag('in 07_precompiled_oo_inherit.t, have Bubble symtab entries:' . "\n" . RPerl::analyze_class_symtab_entries('RPerl::Algorithm::Sort::Bubble') . "\n\n");
+#        RPerl::diag('in 07_precompiled_oo_inherit.t, have Bubble symtab entries:' . "\n" . RPerl::analyze_class_symtab_entries('RPerl::Algorithm::Sort::Bubble') . "\n\n");
     }
     else {    # $ops eq 'CPP'
         foreach my string_arrayref $filenames (
             @{  [   [ $bubble_cpp_filename, $bubble_cpp_filename_manual ],
                     [ $bubble_h_filename,   $bubble_h_filename_manual ],
                     [ $bubble_pmc_filename, $bubble_pmc_filename_manual ],
-                    
-                    [ $sort_cpp_filename, $sort_cpp_filename_manual ],
-                    [ $sort_h_filename,   $sort_h_filename_manual ],
-                    [ $sort_pmc_filename, $sort_pmc_filename_manual ],
-                    
+
+                    [ $sort_cpp_filename,   $sort_cpp_filename_manual ],
+                    [ $sort_h_filename,     $sort_h_filename_manual ],
+                    [ $sort_pmc_filename,   $sort_pmc_filename_manual ],
+
+                    [ $inefficient_cpp_filename, $inefficient_cpp_filename_manual ],
+                    [ $inefficient_h_filename,   $inefficient_h_filename_manual ],
+                    [ $inefficient_pmc_filename, $inefficient_pmc_filename_manual ],
+
                     [ $algorithm_cpp_filename, $algorithm_cpp_filename_manual ],
                     [ $algorithm_h_filename,   $algorithm_h_filename_manual ],
                     [ $algorithm_pmc_filename, $algorithm_pmc_filename_manual ]
@@ -171,21 +203,26 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         }
 
         # C++ use, load, link
-        lives_ok( sub { $refresher->refresh_module($module_filenamename) }, 'Refresh previously-loaded module: ' . $module_filenamename );
+        lives_ok( sub { $refresher->refresh_module($bubble_pm_filename) }, 'Refresh previously-loaded module: ' . $bubble_pm_filename );
+        lives_ok( sub { $refresher->refresh_module($inefficient_pm_filename) }, 'Refresh previously-loaded module: ' . $inefficient_pm_filename );
+
         # DEV NOTE, CORRELATION #15: suppress 'Too late to run INIT block' at run-time loading via require or eval
         lives_and( sub { require_ok('RPerl::Algorithm::Sort::Bubble'); }, q{require_ok('RPerl::Algorithm::Sort::Bubble') lives} );
+        lives_and( sub { require_ok('RPerl::Algorithm::Inefficient'); }, q{require_ok('RPerl::Algorithm::Inefficient') lives} );
 
         # force reload
         delete $main::{'RPerl__Algorithm__Sort__Bubble__MODE_ID'};
+        delete $main::{'RPerl__Algorithm__Inefficient__MODE_ID'};
 
         # DEV NOTE: must call long form of cpp_load() to bypass mysterious 'undefined subroutine' symtab weirdness
         #lives_ok( sub { RPerl::Algorithm::Sort::Bubble::cpp_load(); }, q{RPerl::Algorithm::Sort::Bubble::cpp_load() lives} );
         lives_ok( sub { &{ $RPerl::Algorithm::Sort::Bubble::{'cpp_load'} }(); }, q{RPerl::Algorithm::Sort::Bubble::cpp_load() lives} );    # long form
+        lives_ok( sub { &{ $RPerl::Algorithm::Inefficient::{'cpp_load'} }(); }, q{RPerl::Algorithm::Inefficient::cpp_load() lives} );    # long form
 
 #RPerl::diag('in 07_precompiled_oo_inherit.t, have post-re-use, post-re-cpp_load Bubble symtab entries:' . "\n" . RPerl::analyze_class_symtab_entries('RPerl::Algorithm::Sort::Bubble') . "\n\n");
     }
 
-    foreach my string $type (qw(DataType__Integer DataType__Number DataType__String DataStructure__Array DataStructure__Hash Algorithm__Sort__Bubble)) {
+    foreach my string $type (qw(DataType__Integer DataType__Number DataType__String DataStructure__Array DataStructure__Hash Algorithm Algorithm__Sort Algorithm__Inefficient Algorithm__Sort__Bubble)) {
         lives_and(
             sub {
                 is( $RPerl::MODES->{ main->can( 'RPerl__' . $type . '__MODE_ID' )->() }->{ops},
@@ -206,6 +243,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     # [[[ OO INHERITANCE TESTS ]]]
     # [[[ OO INHERITANCE TESTS ]]]
 
+    # TOOIN00
     can_ok( 'RPerl::Algorithm::Sort::Bubble', 'new' );
     my $sorter = new_ok('RPerl::Algorithm::Sort::Bubble');
 
@@ -270,33 +308,93 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         },
         q{TOOIN08 uninherited('Wolverine') lives}
     );
+
+
+
+
+
+
+
+
+    # TOOIN09
+    can_ok( 'RPerl::Algorithm::Inefficient', 'new' );
+    my $inefficient = new_ok('RPerl::Algorithm::Inefficient');
+
+    can_ok( 'RPerl::Algorithm::Inefficient', 'inherited__Inefficient' );
+    lives_ok(    # TOOIN10
+        sub { $inefficient->inherited__Inefficient('Frozen') },
+        q{TOOIN10 inherited__Inefficient('Frozen') lives}
+    );
+
+    can_ok( 'RPerl::Algorithm::Inefficient', 'inherited__Algorithm' );
+    lives_ok(    # TOOIN11
+        sub { $inefficient->inherited__Algorithm('Frozen') },
+        q{TOOIN11 inherited__Algorithm('Frozen') lives}
+    );
+
+    can_ok( 'RPerl::Algorithm::Inefficient', 'inherited' );
+    lives_ok(    # TOOIN12
+        sub { $inefficient->inherited('Logan') },
+        q{TOOIN12 inherited('Logan') lives}
+    );
+
+    can_ok( 'RPerl::Algorithm::Inefficient', 'uninherited__Inefficient' );
+    lives_and(    # TOOIN13
+        sub {
+            is( uninherited__Inefficient('Claws'), 'Inefficient::uninherited__Inefficient() RULES! ' . $mode_tagline, q{TOOIN13 uninherited__Inefficient('Claws') returns correct value} );
+        },
+        q{TOOIN13 uninherited__Inefficient('Claws') lives}
+    );
+
+    can_ok( 'RPerl::Algorithm::Inefficient', 'uninherited__Algorithm' );
+    lives_and(    # TOOIN14
+        sub {
+            is( uninherited__Algorithm('Claws'),
+                'Algorithm::uninherited__Algorithm() RULES! ' . $mode_tagline,
+                q{TOOIN14 uninherited__Algorithm('Claws') returns correct value}
+            );
+        },
+        q{TOOIN14 uninherited__Algorithm('Claws') lives}
+    );
+
+# DEV NOTE, CORRELATION #04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
+#    can_ok( 'RPerl::Algorithm::Inefficient', 'uninherited' );
+#    lives_and(    # TOOIN15
+#        sub {
+#            is( uninherited('Wolverine'), 'Inefficient::uninherited() ROCKS! ' . $mode_tagline, q{TOOIN15 uninherited('Wolverine') returns correct value} );
+#        },
+#        q{TOOIN15 uninherited('Wolverine') lives}
+#    );
+
 }
 
 # NEED FIX: triplicate code
 # delete CPP, H, and PMC files if they exist;
 # for PERLOPS_PERLTYPES we need none of these files; for CPPOPS_xTYPES we need the proper manually-compiled files, not some other files
 foreach my string $filename (
-    @{  [   $bubble_cpp_filename, $bubble_h_filename,      $bubble_pmc_filename,  $sort_cpp_filename, $sort_h_filename,
-            $sort_pmc_filename,   $algorithm_cpp_filename, $algorithm_h_filename, $algorithm_pmc_filename
+    @{  [   $bubble_cpp_filename,      $bubble_h_filename,      $bubble_pmc_filename,      $sort_cpp_filename,
+            $sort_h_filename,          $sort_pmc_filename,      $inefficient_cpp_filename, $inefficient_h_filename,
+            $inefficient_pmc_filename, $algorithm_cpp_filename, $algorithm_h_filename,     $algorithm_pmc_filename
         ]
     }
     )
 {
-    if ( -e $filename ) {
-        my integer $unlink_success = unlink $filename;
-        if ($unlink_success) {
-            ok( 1, 'Unlink (delete) existing file ' . $filename );
+    {
+        if ( -e $filename ) {
+            my integer $unlink_success = unlink $filename;
+            if ($unlink_success) {
+                ok( 1, 'Unlink (delete) existing file ' . $filename );
+            }
+            else {
+                ok( 0, 'Unlink (delete) existing file ' . $filename . q{ ... } . $OS_ERROR );
+
+                # skip all tests in this mode if we cannot remove the PMC file (and presumably the other 2 modes, as well)
+                next;
+            }
         }
         else {
-            ok( 0, 'Unlink (delete) existing file ' . $filename . q{ ... } . $OS_ERROR );
-
-            # skip all tests in this mode if we cannot remove the PMC file (and presumably the other 2 modes, as well)
-            next;
+            ok( 1, 'No need to unlink (delete) existing file ' . $filename );
         }
     }
-    else {
-        ok( 1, 'No need to unlink (delete) existing file ' . $filename );
-    }
 }
-
 done_testing();
