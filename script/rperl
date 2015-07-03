@@ -33,8 +33,8 @@ sub accept_and_verify_input_files {
     ( my string_arrayref $input_file_names, my string_arrayref $input_file_names_unlabeled ) = @_;
 
     RPerl::diag("\n\n");    # move output away from initial Inline compiler output
-    RPerl::diag('in rperl, have $RPerl::DEBUG = ' . $RPerl::DEBUG . "\n");
-    RPerl::diag('in rperl, have $RPerl::VERBOSE = ' . $RPerl::VERBOSE . "\n");
+    RPerl::diag( 'in rperl, have $RPerl::DEBUG = ' . $RPerl::DEBUG . "\n" );
+    RPerl::diag( 'in rperl, have $RPerl::VERBOSE = ' . $RPerl::VERBOSE . "\n" );
 
     # accept unlabeled input file name(s) if no labeled values specified
     if ( ( scalar @{$input_file_names_unlabeled} ) > 0 ) {
@@ -58,7 +58,7 @@ sub accept_and_verify_input_files {
     for my $i ( 0 .. ( $input_files_count - 1 ) ) {
         my string $input_file_name = $input_file_names->[$i];
 
- #    RPerl::diag('in rperl, top of file verifying loop ' . $i . ' of ' . $input_files_count . ", have \$input_file_names->[$i] = '" . $input_file_name . "'\n");
+#    RPerl::diag('in rperl, top of file verifying loop ' . $i . ' of ' . $input_files_count . ", have \$input_file_names->[$i] = '" . $input_file_name . "'\n");
 
         if ( not( -e $input_file_name ) ) {    ## no critic qw(ProhibitCascadingIfElse)  # SYSTEM DEFAULT 2: allow argument-handling logic
             die "ERROR EARG02: Specified RPerl source code input file '$input_file_name' does not exist, dying\n";
@@ -84,10 +84,20 @@ sub verify_and_default_modes {
     (   my string_hashref $modes,
         my string_hashref $modes_default,
         my arrayref_hashref $modes_supported,
+        my integer $dependencies_flag,
         my integer $compile_flag,
         my integer $execute_flag,
         my integer $test_flag
     ) = @_;
+
+    if ( defined $dependencies_flag ) {
+        if ($dependencies_flag) {
+            $modes->{dependencies} = 'ON';
+        }
+        else {
+            $modes->{dependencies} = 'OFF';
+        }
+    }
 
     if ( defined $compile_flag ) {
         if ($compile_flag) {
@@ -156,15 +166,15 @@ sub verbose_multi_file_settings {
     if ( $input_files_count > 1 ) {
         RPerl::verbose("Input File(s):\n");
         foreach my string $input_file_name ( @{$input_file_names} ) {
-            RPerl::verbose(q{    } . $input_file_name . "\n");
+            RPerl::verbose( q{    } . $input_file_name . "\n" );
         }
         RPerl::verbose("Output File(s):\n");
         foreach my string_hashref $output_file_name_group ( @{$output_file_name_groups} ) {
-            RPerl::verbose(q{    } . stringify_output_file_name_group($output_file_name_group) . "\n");
+            RPerl::verbose( q{    } . stringify_output_file_name_group($output_file_name_group) . "\n" );
         }
         RPerl::verbose("Modes:\n");
         foreach my string $mode_key ( keys %{$modes} ) {
-            RPerl::verbose(q{    } . $mode_key . ' => ' . $modes->{$mode_key} . "\n");
+            RPerl::verbose( q{    } . $mode_key . ' => ' . $modes->{$mode_key} . "\n" );
         }
         RPerl::verbose_pause("\nPRESS <ENTER> TO CONTINUE\n");
     }
@@ -181,9 +191,12 @@ sub store_unlabeled_options {
 
 # print value of option flags
 sub verbose_flags {
-    ( my integer $compile_flag, my integer $execute_flag, my integer $test_flag ) = @_;
-    RPerl::verbose( 'Debug Flag:    ' . $RPerl::DEBUG . "\n" );
+    (  my integer $dependencies_flag, my integer $compile_flag, my integer $execute_flag, my integer $test_flag ) = @_;
     RPerl::verbose( 'Verbose Flag:  ' . $RPerl::VERBOSE . "\n" );
+    RPerl::verbose( 'Debug Flag:    ' . $RPerl::DEBUG . "\n" );
+    if ( defined $dependencies_flag ) {
+        RPerl::verbose( 'Dependencies Flag:  ' . $dependencies_flag . "\n" );
+    }
     if ( defined $compile_flag ) {
         RPerl::verbose( 'Compile Flag:  ' . $compile_flag . "\n" );
     }
@@ -193,6 +206,28 @@ sub verbose_flags {
     if ( defined $test_flag ) {
         RPerl::verbose( 'Test Flag:  ' . $test_flag . "\n" );
     }
+}
+
+sub follow_dependencies {
+    ( my string_arrayref $input_file_names, my string_hashref $modes ) = @_;
+    if ($modes->{dependencies} eq 'OFF') {
+        return $input_file_names;
+    }
+ 
+    my string_arrayref $input_file_names_dependencies = [];
+    my string_arrayref $input_file_names_tmp;
+ 
+    foreach my string $input_file_name (@{$input_file_names}) {
+        $input_file_names_tmp = find_dependencies($input_file_name);
+        $input_file_names_dependencies = [@{$input_file_names_dependencies}, @{$input_file_names_tmp}];
+    }
+    
+    RPerl::diag('in follow_dependencies(), have $input_file_names_dependencies = ' . Dumper($input_file_names_dependencies) . "\n");
+ 
+    # re-verify input files with dependencies added
+    $input_file_names_dependencies        = accept_and_verify_input_files( $input_file_names_dependencies, [] );
+
+    return $input_file_names_dependencies;
 }
 
 sub stringify_output_file_name_group {
@@ -225,7 +260,7 @@ sub parse_generate_save_subcompile_execute_files {
     }
 
     # only execute single *.pl program files, executing multiple files may cause unexpected behavior
-    if ( $input_files_count > 1) {
+    if ( $input_files_count > 1 ) {
         $modes->{execute} = 'OFF';
     }
 
@@ -236,28 +271,29 @@ sub parse_generate_save_subcompile_execute_files {
         my string_hashref $output_file_name_group = $output_file_name_groups->[$i];
 
         # only execute *.pl program files, executing *.pm module files causes useless additional subcompile to occur
-        if (($modes->{execute} eq 'ON') and ($input_file_name !~ /[.]pl$/xms)) {
+        if ( ( $modes->{execute} eq 'ON' ) and ( $input_file_name !~ /[.]pl$/xms ) ) {
             $modes->{execute} = 'OFF';
         }
 
         if ( $input_files_count > 1 ) {
             RPerl::verbose_clear_screen();
-            RPerl::verbose('Input File number: ' . ( $i + 1 ) . ' of ' . $input_files_count . "\n");
+            RPerl::verbose( 'Input File number: ' . ( $i + 1 ) . ' of ' . $input_files_count . "\n" );
         }
-        RPerl::verbose('Input File:       ' . $input_file_name . "\n");
-        RPerl::verbose('Output File(s):   ' . stringify_output_file_name_group($output_file_name_group) . "\n");
-        RPerl::verbose('Modes:            ops => '
-            . $modes->{ops}
-            . ', types => '
-            . $modes->{types}
-            . ', check => '
-            . $modes->{check}
-            . ', compile => '
-            . $modes->{compile}
-            . ', execute => '
-            . $modes->{execute}
-            . ', label => '
-            . $modes->{label} . "\n\n");
+        RPerl::verbose( 'Input File:       ' . $input_file_name . "\n" );
+        RPerl::verbose( 'Output File(s):   ' . stringify_output_file_name_group($output_file_name_group) . "\n" );
+        RPerl::verbose( 'Modes:            ops => '
+                . $modes->{ops}
+                . ', types => '
+                . $modes->{types}
+                . ', check => '
+                . $modes->{check}
+                . ', compile => '
+                . $modes->{compile}
+                . ', execute => '
+                . $modes->{execute}
+                . ', label => '
+                . $modes->{label}
+                . "\n\n" );
         if ( $input_files_count > 1 ) {
             RPerl::diag_pause("PRESS <ENTER> TO CONTINUE\n");
         }
@@ -299,6 +335,7 @@ sub parse_generate_save_subcompile_execute_files {
 
 my integer $help                              = 0;
 my integer $version                           = 0;
+my integer $dependencies_flag                 = undef;
 my integer $compile_flag                      = undef;
 my integer $execute_flag                      = undef;
 my integer $test_flag                         = undef;
@@ -307,28 +344,31 @@ my string_arrayref $output_file_name_prefixes = [];
 my hashref_arrayref $output_file_name_groups  = [];
 my string_hashref $modes                      = {};      # can't store defaults here, erased by GetOptions()
 my string_hashref $modes_default              = {        # default to CPPOPS_CPPTYPES_CHECKTRACE_SUBCOMPILE_EXECUTE_LABEL in C++ output code
-    ops     => 'CPP',
-    types   => 'CPP',
-    check   => 'TRACE',
-    compile => 'SUBCOMPILE',
-    execute => 'ON',
-    label   => 'ON'
+    dependencies => 'ON',
+    ops          => 'CPP',
+    types        => 'CPP',
+    check        => 'TRACE',
+    compile      => 'SUBCOMPILE',
+    execute      => 'ON',
+    label        => 'ON'
 };
 my arrayref_hashref $modes_supported = {
-    ops     => [ 'PERL',  'CPP' ],
-    types   => [ 'PERL',  'CPP', 'DUAL' ],
-    check   => [ 'OFF',   'ON', 'TRACE' ],
-    compile => [ 'PARSE', 'GENERATE', 'SAVE', 'SUBCOMPILE' ],
-    execute => [ 'OFF',   'ON' ],
-    label   => [ 'OFF',   'ON' ]
+    dependencies => [ 'OFF',   'ON' ],
+    ops          => [ 'PERL',  'CPP' ],
+    types        => [ 'PERL',  'CPP', 'DUAL' ],
+    check        => [ 'OFF',   'ON', 'TRACE' ],
+    compile      => [ 'PARSE', 'GENERATE', 'SAVE', 'SUBCOMPILE' ],
+    execute      => [ 'OFF',   'ON' ],
+    label        => [ 'OFF',   'ON' ]
 };
 my integer $input_files_count = 0;
 
 GetOptions(
     'help|?'        => \$help,
     'version'       => \$version,
-    'debug!'        => \$RPerl::DEBUG,
+    'dependencies!' => \$dependencies_flag,
     'Verbose!'      => \$RPerl::VERBOSE,
+    'Debug!'        => \$RPerl::DEBUG,
     'compile!'      => \$compile_flag,
     'execute!'      => \$execute_flag,
     'test'          => \$test_flag,
@@ -340,8 +380,9 @@ GetOptions(
 
 if ($help) { pod2usage( -verbose => 1 ); exit; }
 if ($version) {
+
     # DEV NOTE, CORRELATION #16: numbering schemes mentioned below
-    my $version_message =<<EOL;
+    my $version_message = <<EOL;
 
 This is RPerl version 1.0, pre-release beta 3 (v1.0b3)
 v1.000_000 using RPerl's underscore-is-comma numbering scheme
@@ -362,10 +403,11 @@ EOL
     print $version_message;
     exit;
 }
-verbose_flags( $compile_flag, $execute_flag, $test_flag );
+verbose_flags( $dependencies_flag, $compile_flag, $execute_flag, $test_flag );
 $input_file_names        = accept_and_verify_input_files( $input_file_names, $input_file_names_unlabeled );
 $input_files_count       = scalar @{$input_file_names};
-$modes                   = verify_and_default_modes( $modes, $modes_default, $modes_supported, $compile_flag, $execute_flag, $test_flag );
+$modes                   = verify_and_default_modes( $modes, $modes_default, $modes_supported, $dependencies_flag, $compile_flag, $execute_flag, $test_flag );
+$input_file_names        = follow_dependencies( $input_file_names, $modes );
 $output_file_name_groups = generate_output_file_names( $input_file_names, $output_file_name_prefixes, $modes, $input_files_count );
 verbose_multi_file_settings( $input_file_names, $output_file_name_groups, $modes, $input_files_count );
 parse_generate_save_subcompile_execute_files( $input_file_names, $output_file_name_groups, $modes, $input_files_count );
@@ -391,6 +433,14 @@ rperl - Optimizing Perl 5 Compiler
 
  Print version number and copyright information.
  Lowercase 'v' not to be confused with uppercase 'V' in 'Verbose' option below.
+ 
+=item B<--dependencies _OR_ -d>
+
+=item B<--nodependencies _OR_ -nod>
+
+ Follow and compile dependencies, or not.
+ Enabled by default, equivalent to '--mode dependencies=ON' option.
+ Lowercase 'd' not to be confused with uppercase 'D' in 'Debug' option below.
 
 =item B<--infile=MyFile.pm _OR_ -i=MyFile.pm>
 
@@ -474,12 +524,13 @@ rperl - Optimizing Perl 5 Compiler
  Disabled by default, equivalent to `export RPERL_VERBOSE=1` shell command.
  Uppercase 'V' not to be confused with lowercase 'v' in 'version' option above.
 
-=item B<--debug _OR_ -d>
+=item B<--Debug _OR_ -D>
 
-=item B<--nodebug _OR_ -nod>
+=item B<--noDebug _OR_ -noD>
 
  Include system diagnostic information in output, or not.
  Disabled by default, equivalent to `export RPERL_DEBUG=1` shell command.
+ Uppercase 'D' not to be confused with lowercase 'd' in 'dependencies' option above.
 
 =item B<--test _OR_ -t>
 

@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-our $VERSION = 0.001_091;
+our $VERSION = 0.001_100;
 use ExtUtils::MakeMaker;
 
 BEGIN { use English; }
@@ -10,6 +10,7 @@ push( @ExtUtils::MakeMaker::Overridable, qw(pm_to_blib) )
 
 WriteMakefile(
     NAME         => 'RPerl',
+    ABSTRACT     => 'Restricted Perl, The Optimizing Perl 5 Compiler',
     VERSION_FROM => 'lib/RPerl.pm',
     EXE_FILES    => ['script/rperl'],
     PREREQ_PM    => {

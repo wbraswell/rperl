@@ -26,6 +26,13 @@ use IPC::Cmd qw(can_run);  # to check for `perltidy` and `astyle`
 
 # [[[ SUBROUTINES ]]]
 
+our string_arrayref $find_dependencies = sub {
+    (my string $file_name) = @_;
+    my string_arrayref $dependencies = [$file_name];
+    
+    return $dependencies;
+};
+
 # [[[ COMPILE RPERL TO RPERL, TEST MODE ]]]
 # [[[ COMPILE RPERL TO RPERL, TEST MODE ]]]
 # [[[ COMPILE RPERL TO RPERL, TEST MODE ]]]
