@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_010;
+our $VERSION = 0.002_060;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -175,7 +175,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 
 our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string $package_name_underscores, my string_hashref $modes ) = @_;
-    my string_hashref $cpp_source_group = { H => q{}, CPP => q{} };
+    my string_hashref $cpp_source_group = { H_INCLUDES => q{}, H => q{}, CPP => q{} };
 
     #RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
     #RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $package_name_underscores = ' . $package_name_underscores . "\n");
@@ -205,11 +205,11 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my object $method_or_subroutine_star = $self->{children}->[9];
 
     if ( $modes->{label} eq 'ON' ) {
-        $cpp_source_group->{H}   .= '// [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]' . "\n";
+        $cpp_source_group->{H_INCLUDES}   .= '// [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]' . "\n";
         $cpp_source_group->{CPP} .= '// [[[ INCLUDES ]]]' . "\n";
     }
 
-    $cpp_source_group->{H} .= <<EOL;
+    $cpp_source_group->{H_INCLUDES} .= <<EOL;
 #include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperltypes.h; HelperFunctions.cpp)
 EOL
 
@@ -218,7 +218,7 @@ EOL
     my string $parent_name_path = $parent_name;
     $parent_name_path =~ s/::/\//gxms;
     $parent_name_path        .= '.cpp';
-    $cpp_source_group->{H}   .= '#include <' . $parent_name_path . '>' . "\n";
+    $cpp_source_group->{H_INCLUDES}   .= '#include <' . $parent_name_path . '>' . "\n";
     $cpp_source_group->{CPP} .= '#include <__NEED_MODULE_HEADER_PATH>' . "\n";    # defer setting header include path until files are saved in Compiler
 
     my string_hashref $cpp_source_subgroup;
@@ -280,12 +280,18 @@ EOL
             push @{$method_declarations}, $cpp_source_subgroup->{H};
             $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES( $package_name_underscores, $modes );
             push @{$method_definitions}, $cpp_source_subgroup->{CPP};
+            if ((exists $cpp_source_subgroup->{H_INCLUDES}) and (defined $cpp_source_subgroup->{H_INCLUDES})) {
+                $cpp_source_group->{H_INCLUDES} .= $cpp_source_subgroup->{H_INCLUDES};
+            }
         }
         elsif ( ( ref $method_or_subroutine ) eq 'MethodOrSubroutine_75' ) {
             $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES($modes);
             push @{$subroutine_declarations}, $cpp_source_subgroup->{H};
             $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
             push @{$subroutine_definitions}, $cpp_source_subgroup->{CPP};
+            if ((exists $cpp_source_subgroup->{H_INCLUDES}) and (defined $cpp_source_subgroup->{H_INCLUDES})) {
+                $cpp_source_group->{H_INCLUDES} .= $cpp_source_subgroup->{H_INCLUDES};
+            }
         }
         else {
             die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: grammar rule '
@@ -453,6 +459,16 @@ EOL
 
     $cpp_source_group->{H}   .= $cpp_source_tmp;
     $cpp_source_group->{CPP} .= $cpp_source_tmp;
+
+    # deferred, prepend possibly-updated H_INCLUDES to H, discarding duplicates
+    my string $H_INCLUDES_UNIQUE = '';
+    foreach my string $H_INCLUDE (split /\n/, $cpp_source_group->{H_INCLUDES}) {
+        if ($H_INCLUDES_UNIQUE !~ /$H_INCLUDE/) {
+            $H_INCLUDES_UNIQUE .= $H_INCLUDE . "\n";
+        }
+    }
+    $cpp_source_group->{H} = $H_INCLUDES_UNIQUE . $cpp_source_group->{H} ;
+    delete $cpp_source_group->{H_INCLUDES};
 
     return $cpp_source_group;
 };

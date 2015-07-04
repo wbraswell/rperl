@@ -74,9 +74,9 @@ $ perlbrew install-cpanm
 # INSTALL RPERL & DEPENDENCIES, CPAN RELEASE VERSION, DO NOT MIX WITH 2B
 ################################################################################
 
-$ cpanm RPerl  # single-user install
+$ cpanm RPerl
 # OR
-$ cpan RPerl   # system-wide install
+$ cpan RPerl  # if cpanm is not installed
 
 ################################################################################
 # STEP 2B.  ONLY FOR RPERL DEVELOPERS
@@ -85,7 +85,9 @@ $ cpan RPerl   # system-wide install
 
 # Complete 'SET UP SSH KEYS' section of Git Notes before `git clone` below.
 # https://github.com/wbraswell/lampuniversity.org/blob/master/docs/git_notes.txt
-$ git clone git@github.com:wbraswell/rperl.git
+$ git clone https://github.com/wbraswell/rperl.git  # public git
+# OR
+$ git clone git@github.com:wbraswell/rperl.git  # secured git
 # OR
 $ wget https://github.com/wbraswell/rperl/archive/master.zip;  unzip master.zip
 

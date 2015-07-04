@@ -107,7 +107,12 @@ our string_hashref_method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = s
 
     if ( exists $arguments_optional->{children}->[0] ) {
         my object $cpp_source_subgroup = $arguments_optional->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+#        RPerl::diag( 'in Subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), have $cpp_source_subgroup = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_subgroup) . "\n" );
+        # DEV NOTE: don't use RPerl::Generator::source_group_append() due to cross-wiring H-from-CPP below
         $cpp_source_group->{H} .= $cpp_source_subgroup->{CPP};
+        if ((exists $cpp_source_subgroup->{H_INCLUDES}) and (defined $cpp_source_subgroup->{H_INCLUDES})) {
+            $cpp_source_group->{H_INCLUDES} .= $cpp_source_subgroup->{H_INCLUDES};
+        }
     }
 
     $cpp_source_group->{H} .= ');';
@@ -134,6 +139,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     if ( exists $arguments_optional->{children}->[0] ) {
         $cpp_source_subgroup = $arguments_optional->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+#        RPerl::diag( 'in Subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_subgroup = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_subgroup) . "\n" );
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
 
@@ -151,6 +157,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             next;
         }
         $cpp_source_subgroup = $operation->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+#        RPerl::diag( 'in Subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_subgroup = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_subgroup) . "\n" );
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
 

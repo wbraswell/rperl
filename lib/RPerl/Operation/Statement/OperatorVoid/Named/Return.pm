@@ -203,6 +203,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             }
             my string_hashref $cpp_source_subgroup
                 = $arguments->ast_to_cpp__generate__CPPOPS_CPPTYPES( $modes, $self );
+#            RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_subgroup = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_subgroup) . "\n" );
             RPerl::Generator::source_group_append( $cpp_source_group,
                 $cpp_source_subgroup );
         }
@@ -243,6 +244,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         }
         my string_hashref $cpp_source_subgroup
             = $arguments->ast_to_cpp__generate__CPPOPS_CPPTYPES( $modes, $self );
+#        RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_subgroup = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_subgroup) . "\n" );
         RPerl::Generator::source_group_append( $cpp_source_group,
             $cpp_source_subgroup );
         $cpp_source_group->{CPP} .= $operator_void_named->{children}->[2]; # semicolon

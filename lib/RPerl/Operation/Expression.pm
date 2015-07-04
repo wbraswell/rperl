@@ -71,6 +71,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     if ( ( ref $self ) eq 'Operation_76' ) {    # Operation -> Expression ';'
         $cpp_source_subgroup
             = $self->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+#        RPerl::diag( 'in Expression->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_subgroup = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_subgroup) . "\n" );
         RPerl::Generator::source_group_append( $cpp_source_group,
             $cpp_source_subgroup );
         $cpp_source_group->{CPP} .= $self->{children}->[1] . "\n";  # semicolon
@@ -78,6 +79,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     elsif ( ( ref $self ) eq 'SubExpression_129' ) {  # SubExpression -> Expression
         $cpp_source_subgroup
             = $self->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+#        RPerl::diag( 'in Expression->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_subgroup = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_subgroup) . "\n" );
         RPerl::Generator::source_group_append( $cpp_source_group,
             $cpp_source_subgroup );
     }

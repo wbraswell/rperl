@@ -31,7 +31,14 @@ our hashref $properties = {
 
 our void_method $quux = sub {
     ( my object $self) = @_;
-    $self->{plugh} = $self->{plugh} * 2;
+    $self->{plugh} = $self->{plugh} + 2;
+    $self->{plugh} = $self->{plugh} - 3;
+    $self->{plugh} = $self->{plugh} * 4;  # ensure integer outcome
+    $self->{plugh} = $self->{plugh} / 2;  # ensure integer outcome
+    $self->{plugh} = $self->{plugh} % 5;
+    $self->{plugh} = -($self->{plugh});
+    $self->{plugh}++;
+    $self->{plugh}--;
 };
 
 our integer_method $quince = sub {
@@ -68,6 +75,9 @@ our void $grunt = sub {
 
 our number $grault = sub {
     ( my integer $grault_input ) = @_;
+    $grault_input++;
+    $grault_input--;
+    $grault_input = $grault_input**2;
     return $grault_input**PI();
 };
 

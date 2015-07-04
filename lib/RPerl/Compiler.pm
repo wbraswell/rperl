@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.005_000;
+our $VERSION = 0.005_010;
 
 # [[[ CRITICS ]]]
 
@@ -57,7 +57,12 @@ our string_arrayref $find_dependencies = sub {
             }
         }
         if ($file_line =~ /use\s+[\w:]+/xms) {
-            if (($file_line =~ /use\s+strict\s*;/) or ($file_line =~ /use\s+warnings\s*;/) or ($file_line =~ /use\s+RPerl::CompileUnit::Module::Class\s*;/) or ($file_line =~ /use\s+RPerl\s*;/) or ($file_line =~ /use\s+parent/)) {
+            if (($file_line =~ /use\s+strict\s*;/) or 
+                ($file_line =~ /use\s+warnings\s*;/) or 
+                ($file_line =~ /use\s+RPerl::CompileUnit::Module::Class\s*;/) or 
+                ($file_line =~ /use\s+RPerl\s*;/) or 
+                ($file_line =~ /use\s+parent/) or
+                ($file_line =~ /use\s+constant/)) {
                 next;
             }
             $file_line =~ s/^\s*use\s+([\w:]+)\s*;\s*$/$1/gxms;  # remove everything except the package name
