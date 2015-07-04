@@ -1,8 +1,8 @@
-# RPerl v1.0 Beta 3, Install Notes
-# Last Updated July 3, 2015
+# RPerl v1.0, Install Notes
+# Last Updated July 4, 2015
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# NOTE: STEPS 0 AND 1 ARE ONLY FOR SINGLE-USER INSTALL, NOT SYSTEM-WIDE INSTALL
+# NOTE: STEP 1 IS ONLY FOR SINGLE-USER INSTALL, NOT SYSTEM-WIDE INSTALL
 # IMPORTANT WARNING: ONLY USE ONE OF STEP 1A, 1B, OR 1C - NOT ALL THREE
 # IMPORTANT WARNING: ONLY USE ONE OF STEP 2A OR 2B - NOT BOTH
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -53,9 +53,9 @@ $ source ~/.bashrc; set | grep perl5
     # Ensure the following 3 environmental variables are updated to include ~/perl5: 
     # PERLBREW_MANPATH, PERLBREW_PATH, PERLBREW_ROOT
 
-$ perlbrew install perl-5.20.1
-$ perlbrew use perl-5.20.1  # TEMPORARY
-$ perlbrew switch perl-5.20.1  # PERMANENT
+$ perlbrew install perl-5.20.2
+$ perlbrew use perl-5.20.2  # TEMPORARY
+$ perlbrew switch perl-5.20.2  # PERMANENT
 $ perlbrew install-cpanm
 
 ################################################################################
@@ -70,11 +70,13 @@ $ perlbrew install-cpanm
 # The Mingw64 GCC v4.6 and older compilers are not compatible.
 
 ################################################################################
-# STEP 2A.  FOR ALL RPERL USERS
+# STEP 2A.  FOR NORMAL RPERL USERS
 # INSTALL RPERL & DEPENDENCIES, CPAN RELEASE VERSION, DO NOT MIX WITH 2B
 ################################################################################
 
-$ cpanm WBRASWELL/RPerl-1.000_003.tar.gz
+$ cpanm RPerl  # single-user install
+# OR
+$ cpan RPerl   # system-wide install
 
 ################################################################################
 # STEP 2B.  ONLY FOR RPERL DEVELOPERS

@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.006_000;
+our $VERSION = 0.006_010;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -31,9 +31,9 @@ my string_arrayref $input_file_names_unlabeled = [];
 
 sub accept_and_verify_input_files {
     ( my string_arrayref $input_file_names, my string_arrayref $input_file_names_unlabeled ) = @_;
-    
-    RPerl::diag( 'in rperl::accept_and_verify_input_files(), received $input_file_names = ' . Dumper($input_file_names) . "\n" );
-    RPerl::diag( 'in rperl::accept_and_verify_input_files(), received $input_file_names_unlabeled = ' . Dumper($input_file_names_unlabeled) . "\n" );
+
+    #    RPerl::diag( 'in rperl::accept_and_verify_input_files(), received $input_file_names = ' . Dumper($input_file_names) . "\n" );
+    #    RPerl::diag( 'in rperl::accept_and_verify_input_files(), received $input_file_names_unlabeled = ' . Dumper($input_file_names_unlabeled) . "\n" );
 
     RPerl::diag("\n\n");    # move output away from initial Inline compiler output
     RPerl::diag( 'in rperl, have $RPerl::DEBUG = ' . $RPerl::DEBUG . "\n" );
@@ -284,9 +284,19 @@ sub depends_parse_generate_save_subcompile_execute {
 
         RPerl::verbose( 'Input File:         ' . $input_file_name . "\n" );
         RPerl::verbose( 'Output File(s):     ' . stringify_output_file_name_group($output_file_name_group) . "\n" );
-        RPerl::verbose( 'Modes:              ops => ' . $modes->{ops} . ', types => ' . $modes->{types} . ', check => ' . 
-            $modes->{check} . ', compile => ' . $modes->{compile} . ', execute => ' . $modes->{execute} . ', label => ' . 
-            $modes->{label} . "\n\n" );
+        RPerl::verbose( 'Modes:              ops => '
+                . $modes->{ops}
+                . ', types => '
+                . $modes->{types}
+                . ', check => '
+                . $modes->{check}
+                . ', compile => '
+                . $modes->{compile}
+                . ', execute => '
+                . $modes->{execute}
+                . ', label => '
+                . $modes->{label}
+                . "\n\n" );
 
         my string_arrayref $input_file_name_deps;
         my integer $input_file_and_deps_count;
@@ -296,14 +306,15 @@ sub depends_parse_generate_save_subcompile_execute {
         if ( $modes->{dependencies} eq 'ON' ) {
             $input_file_name_deps = find_dependencies($input_file_name);
             RPerl::verbose('DEPENDENCIES:       Follow & find all deps... ');
-            if (exists $input_file_name_deps->[0]) {
+            if ( exists $input_file_name_deps->[0] ) {
                 $input_file_name_deps = accept_and_verify_input_files( $input_file_name_deps, [] );    # verify deps input files
             }
-            $input_file_name_deps = [ @{$input_file_name_deps}, $input_file_name ];                # append input file to deps list
+            $input_file_name_deps      = [ @{$input_file_name_deps}, $input_file_name ];               # append input file to deps list
             $input_file_and_deps_count = scalar @{$input_file_name_deps};
-            $input_file_deps_count = $input_file_and_deps_count - 1;
-            $output_file_name_dep_groups = generate_output_file_names( $input_file_name_deps, $output_file_name_prefixes, $input_file_and_deps_count, $modes ); # generate deps output file names
-            RPerl::verbose( sprintf("%4d", $input_file_deps_count) . ' found.' . "\n" );
+            $input_file_deps_count     = $input_file_and_deps_count - 1;
+            $output_file_name_dep_groups
+                = generate_output_file_names( $input_file_name_deps, $output_file_name_prefixes, $input_file_and_deps_count, $modes ); # generate deps output file names
+            RPerl::verbose( sprintf( "%4d", $input_file_deps_count ) . ' found.' . "\n" );
             diag_multi_file_settings( $input_file_name_deps, $output_file_name_dep_groups, $input_file_and_deps_count, $modes );
         }
 
@@ -311,8 +322,8 @@ sub depends_parse_generate_save_subcompile_execute {
             my string $input_file_name_dep                = $input_file_name_deps->[$j];
             my string_hashref $output_file_name_dep_group = $output_file_name_dep_groups->[$j];
 
-            if ($input_file_deps_count > 0) {
-                if ($j < $input_file_deps_count) {
+            if ( $input_file_deps_count > 0 ) {
+                if ( $j < $input_file_deps_count ) {
                     RPerl::verbose( "\n" . 'Dep Input File:     ' . $input_file_name_dep . "\n" );
                     RPerl::verbose( 'Dep Output File(s): ' . stringify_output_file_name_group($output_file_name_dep_group) . "\n" );
                 }
@@ -330,7 +341,7 @@ sub depends_parse_generate_save_subcompile_execute {
                 # use eval to trap C++ compiler errors
                 my integer $eval_retval = eval {
                     RPerl::Compiler::rperl_to_xsbinary__parse_generate_compile( $input_file_name_dep, $output_file_name_dep_group, $modes );    # returns void
-                    1;                                                                                                                  # return true
+                    1;                                                                                                                          # return true
                 };
                 if ( not defined $eval_retval ) {
                     print $EVAL_ERROR;
