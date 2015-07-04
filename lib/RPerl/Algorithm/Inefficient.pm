@@ -1,6 +1,6 @@
-# START HERE: enable dependencies compile; update existing tests, create new tests
-# START HERE: enable dependencies compile; update existing tests, create new tests
-# START HERE: enable dependencies compile; update existing tests, create new tests
+# START HERE: enable dependencies compile; update existing tests, create new tests; remove all symlinks
+# START HERE: enable dependencies compile; update existing tests, create new tests; remove all symlinks
+# START HERE: enable dependencies compile; update existing tests, create new tests; remove all symlinks
 
 # THEN: POD in RPerl.pm; enable Foo.pm to compile; fix & compile Merge/Quick; finish all CPPOPS_CPPTYPES generation; fix & compile nbody; write user docs
 # THEN: POD in RPerl.pm; enable Foo.pm to compile; fix & compile Merge/Quick; finish all CPPOPS_CPPTYPES generation; fix & compile nbody; write user docs

@@ -22,61 +22,54 @@ use RPerl::Generator;
 use File::Temp qw(tempfile);
 use File::Basename;
 use English qw(-no_match_vars);    # for $OSNAME; why isn't this included from 'require RPerl::Config', which is included from 'use RPerl' above?
-use IPC::Cmd qw(can_run);  # to check for `perltidy` and `astyle`
+use IPC::Cmd qw(can_run);          # to check for `perltidy` and `astyle`
 
 # [[[ SUBROUTINES ]]]
 
 our string_arrayref $find_dependencies = sub {
-    (my string $file_name) = @_;
-    my string_arrayref $dependencies = [$file_name];
-    
-    RPerl::diag('in Compiler::find_dependencies(), received $file_name = ' . $file_name . "\n");
+    ( my string $file_name) = @_;
+    my string_arrayref $dependencies = [];
 
+    RPerl::diag( 'in Compiler::find_dependencies(), received $file_name = ' . $file_name . "\n" );
 
+    if ( not -f $file_name ) {
+        die 'ERROR ECVCODE00, COMPILER, FIND DEPENDENCIES: File not found, ' . q{'} . $file_name . q{'} . "\n" . ', dying' . "\n";
+    }
 
-=DISABLE
-        # utilize modified copy of Module PMC template file
-        my string $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES';
-        #RPerl::diag('in Compiler::save_source_files(), have $module_pmc_filename_manual = ' . $module_pmc_filename_manual . "\n");
+    open my filehandleref $FILE_HANDLE, '<', $file_name
+        or die 'ERROR ECVCODE01, COMPILER, FIND DEPENDENCIES: Cannot open file ' . $file_name . ' for reading,' . $OS_ERROR . ', dying' . "\n";
 
-        if ( not -f $module_pmc_filename_manual ) {
-            die 'ERROR ECVCOFI02, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: File not found, ' . q{'}
-                . $module_pmc_filename_manual . q{'} . "\n"
-                . ', dying' . "\n";
+    # read in input file, match on 'use' includes for dependencies
+    my string $file_line;
+    while ( $file_line = <$FILE_HANDLE> ) {
+        if ($file_line =~ /use\s+[\w:]+/xms) {
+            if (($file_line =~ /use\s+strict\s*;/) or ($file_line =~ /use\s+warnings\s*;/) or ($file_line =~ /use\s+RPerl::CompileUnit::Module::Class\s*;/) or ($file_line =~ /use\s+RPerl\s*;/) or ($file_line =~ /use\s+parent/)) {
+                next;
+            }
+            $file_line =~ s/^\s*use\s+([\w:]+)\s*;\s*$/$1/gxms;  # remove everything except the package name
+            $file_line =~ s/::/\//gxms;  # replace double-colon :: scope delineator with forward-slash / directory delineator
+            $file_line .= '.pm';
+
+            # NEED FIX: INCLUDE_PATH is incorrect below, needs to search through all @INC paths a'la Class.pm deps finder
+            $file_line = $RPerl::INCLUDE_PATH . q{/} . $file_line;
+            RPerl::diag( 'in Compiler::find_dependencies(), have MATCHING $file_line = ' . $file_line . "\n" );
+            push @{$dependencies}, $file_line;
+            RPerl::diag( 'in Compiler::find_dependencies(), have PRE-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
+
+            my string_arrayref $subdependencies = find_dependencies($file_line);
+            if (exists $subdependencies->[0]) {
+                $dependencies = [@{$subdependencies}, @{$dependencies}];
+            }
+
+            RPerl::diag( 'in Compiler::find_dependencies(), have POST-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
         }
+    }
 
-        open my filehandleref $FILE_HANDLE, '<', $module_pmc_filename_manual
-            or die 'ERROR ECVCOFI03, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot open file '
-            . $module_pmc_filename_manual
-            . ' for reading,'
-            . $OS_ERROR
-            . ', dying' . "\n";
+    close $FILE_HANDLE
+        or die 'ECVCODE02, COMPILER, FIND DEPENDENCIES: Cannot close file '
+        . $file_name . ' after reading,' . $OS_ERROR . ', dying' . "\n";
 
-        # deferred, finally read in Module PMC template file, replace package name and paths
-        my string $file_line;
-        my string $file_string = q{};
-        while ( $file_line = <$FILE_HANDLE> ) {
-            $file_line =~ s/RPerl\/CompileUnit\/Module\.cpp/$module_path/gxms;
-            $file_line =~ s/RPerl::CompileUnit::Module/$module_name/gxms;
-            $file_line =~ s/RPerl__CompileUnit__Module/$module_underscores/gxms;
-            $source_group->{PMC} .= $file_line;
-        }
-
-        close $FILE_HANDLE
-            or die 'ECVCOFI04, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot close file '
-            . $module_pmc_filename_manual
-            . ' after reading,'
-            . $OS_ERROR
-            . ', dying' . "\n";
-=cut
-
-
-
-
-
-
-
-    
+    RPerl::diag( 'in Compiler::find_dependencies(), returning $dependencies = ' . Dumper($dependencies) . "\n" );
     return $dependencies;
 };
 
@@ -180,7 +173,9 @@ our hashref_arrayref $generate_output_file_names = sub {
             # explicitly provided option should already be only prefix, but fileparse() to make sure
             ( $input_file_name_prefix, $input_file_name_path, $input_file_name_suffix ) = fileparse( $output_file_name_prefixes->[$i], qr/[.][^.]*/xms );
             if ( $input_file_name_prefix eq q{} ) {
-                die "ERROR EARG08: Invalid RPerl source code output file option specified, dying\n";
+
+                # DEV NOTE: correlates to errors EARG* in script/rperl
+                die "ERROR EARG09: Invalid RPerl source code output file option specified, dying\n";
             }
         }
 
@@ -258,7 +253,7 @@ our void $save_source_files = sub {
         # is this file path munging done correctly for files that do not reside in RPerl/* directories, or even those that are in RPerl/* ?
         # NEED FIX WIN32: handle back-slash for Win32 instead of forward-slash only for *NIX
 
-        my string $module_path = $file_name_group->{CPP};
+        my string $module_path        = $file_name_group->{CPP};
         my string $module_header_path = $file_name_group->{H};
 
         # remove leading './' if present
@@ -268,7 +263,7 @@ our void $save_source_files = sub {
         if ( ( substr $module_header_path, 0, 2 ) eq './' ) {
             substr $module_header_path, 0, 2, '';
         }
- 
+
         # remove leading 'lib/' if present
         if ( ( substr $module_path, 0, 4 ) eq 'lib/' ) {
             substr $module_path, 0, 4, '';
@@ -276,22 +271,22 @@ our void $save_source_files = sub {
         if ( ( substr $module_header_path, 0, 4 ) eq 'lib/' ) {
             substr $module_header_path, 0, 4, '';
         }
-        
+
         # deferred, finally set path to H module header file in CPP module file
         $source_group->{CPP} =~ s/__NEED_MODULE_HEADER_PATH/$module_header_path/gxms;
-        
+
         # deferred, finally change hard-coded PERLOPS_PERLTYPES to CPPOPS_*TYPES
         my string $mode_tagline = $modes->{ops} . 'OPS_' . $modes->{types} . 'TYPES';
         $source_group->{H} =~ s/PERLOPS_PERLTYPES/$mode_tagline/gxms;
         $source_group->{CPP} =~ s/PERLOPS_PERLTYPES/$mode_tagline/gxms;
 
         my string $module_name = $module_path;
-        
+
         # remove trailing '.cpp' if present
         if ( ( substr $module_name, -4, 4 ) eq '.cpp' ) {
             substr $module_name, -4, 4, '';
         }
-        
+
         # replace forward-slashes with double underscores
         my string $module_underscores = $module_name;
         $module_underscores =~ s/\//__/gxms;
@@ -305,6 +300,7 @@ our void $save_source_files = sub {
 
         # utilize modified copy of Module PMC template file
         my string $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES';
+
         #RPerl::diag('in Compiler::save_source_files(), have $module_pmc_filename_manual = ' . $module_pmc_filename_manual . "\n");
 
         if ( not -f $module_pmc_filename_manual ) {
@@ -337,7 +333,7 @@ our void $save_source_files = sub {
             . $OS_ERROR
             . ', dying' . "\n";
 
-        RPerl::verbose(' done.' . "\n");
+        RPerl::verbose( ' done.' . "\n" );
     }
 
     RPerl::verbose('SAVE  PHASE 1:      Format & write files to disk...');
@@ -383,7 +379,7 @@ our void $save_source_files = sub {
         # format output code
         if ( ( $suffix_key eq 'PMC' ) or ( $suffix_key eq 'EXE' ) ) {
             my string $perltidy_path = can_run('perltidy');
-            if (defined $perltidy_path) {
+            if ( defined $perltidy_path ) {
                 system $perltidy_path, '-pbp', '--ignore-side-comment-lengths', '--converge', '-l=160', '-b', '-nst', q{-bext='/'}, '-q', $file_name;
             }
             else {
@@ -392,11 +388,12 @@ our void $save_source_files = sub {
         }
         elsif ( ( $suffix_key eq 'H' ) or ( $suffix_key eq 'CPP' ) ) {
             my string $astyle_path = can_run('astyle');
-            if (defined $astyle_path) {
-#                system $astyle_path, '-q', $file_name;
+            if ( defined $astyle_path ) {
+
+                #                system $astyle_path, '-q', $file_name;
                 # don't insert extra newlines, which causes accessors, mutators, and ops_types reporting subroutines to be broken into multiple lines
                 system $astyle_path, '-q', '--keep-one-line-blocks', '--keep-one-line-statements', $file_name;
-                unlink ($file_name . '.orig');
+                unlink( $file_name . '.orig' );
             }
             else {
                 RPerl::warning( 'WARNING WCVCOFO01, COMPILER, C++ CODE FORMATTING: Artistic Style command `astyle` not found, abandoning formatting' . "\n" );
@@ -404,7 +401,7 @@ our void $save_source_files = sub {
         }
     }
 
-    RPerl::verbose(' done.' . "\n");
+    RPerl::verbose( ' done.' . "\n" );
 };
 
 # Sub-Compile from C++-Parsable String to Perl-Linkable XS & Machine-Readable Binary
@@ -417,7 +414,7 @@ our void $cpp_to_xsbinary__subcompile = sub {
 
     # ADD CALLS TO TRIGGER Inline::CPP COMPILATION
 
-    RPerl::verbose(' skipped.' . "\n");
+    RPerl::verbose( ' skipped.' . "\n" );
 };
 
 1;    # end of package

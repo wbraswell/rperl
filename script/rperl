@@ -31,6 +31,9 @@ my string_arrayref $input_file_names_unlabeled = [];
 
 sub accept_and_verify_input_files {
     ( my string_arrayref $input_file_names, my string_arrayref $input_file_names_unlabeled ) = @_;
+    
+    RPerl::diag( 'in rperl::accept_and_verify_input_files(), received $input_file_names = ' . Dumper($input_file_names) . "\n" );
+    RPerl::diag( 'in rperl::accept_and_verify_input_files(), received $input_file_names_unlabeled = ' . Dumper($input_file_names_unlabeled) . "\n" );
 
     RPerl::diag("\n\n");    # move output away from initial Inline compiler output
     RPerl::diag( 'in rperl, have $RPerl::DEBUG = ' . $RPerl::DEBUG . "\n" );
@@ -239,7 +242,7 @@ sub stringify_output_file_name_group {
 # [[[ CALL COMPILER ]]]
 # [[[ CALL COMPILER ]]]
 
-sub parse_generate_save_subcompile_execute_files {
+sub depends_parse_generate_save_subcompile_execute {
     (   my string_arrayref $input_file_names,
         my hashref_arrayref $output_file_name_groups,
         my string_arrayref $output_file_name_prefixes,
@@ -435,7 +438,7 @@ $input_files_count       = scalar @{$input_file_names};
 $modes                   = verify_and_default_modes( $modes, $modes_default, $modes_supported, $dependencies_flag, $compile_flag, $execute_flag, $test_flag );
 $output_file_name_groups = generate_output_file_names( $input_file_names, $output_file_name_prefixes, $input_files_count, $modes );
 verbose_multi_file_settings( $input_file_names, $output_file_name_groups, $input_files_count, $modes );
-parse_generate_save_subcompile_execute_files( $input_file_names, $output_file_name_groups, $output_file_name_prefixes, $input_files_count, $modes );
+depends_parse_generate_save_subcompile_execute( $input_file_names, $output_file_name_groups, $output_file_name_prefixes, $input_files_count, $modes );
 
 __END__
 =head1 NAME
