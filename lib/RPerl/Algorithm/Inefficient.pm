@@ -1,10 +1,7 @@
-# START HERE: compile Foo.pm; update tests; POD in RPerl.pm; basic user docs; CPAN; rperl.org; PerlMonks; blogs.perl.org; Facebook; Kickstarter
-# START HERE: compile Foo.pm; update tests; POD in RPerl.pm; basic user docs; CPAN; rperl.org; PerlMonks; blogs.perl.org; Facebook; Kickstarter
-# START HERE: compile Foo.pm; update tests; POD in RPerl.pm; basic user docs; CPAN; rperl.org; PerlMonks; blogs.perl.org; Facebook; Kickstarter
+# START HERE: compile Foo.pm; update tests; POD in RPerl.pm; basic user docs; CPAN; blogs.perl.org; Kickstarter
 
-# THEN: fix RPerl/Test/ScopeTypeNameValue/program_5*_good.pl.DISABLED_PERL_V5_22; Merge/Quick; finish all CPPOPS_CPPTYPES generation; alioth nbody; full user docs
-# THEN: fix RPerl/Test/ScopeTypeNameValue/program_5*_good.pl.DISABLED_PERL_V5_22; Merge/Quick; finish all CPPOPS_CPPTYPES generation; alioth nbody; full user docs
-# THEN: fix RPerl/Test/ScopeTypeNameValue/program_5*_good.pl.DISABLED_PERL_V5_22; Merge/Quick; finish all CPPOPS_CPPTYPES generation; alioth nbody; full user docs
+# THEN: fix RPerl/Test/ScopeTypeNameValue/program_5*_good.pl.DISABLED_PERL_V5_22 and RPerl/Test/Expression/program_*_good.pl.DISABLED_NEED_FIX
+# THEN: Merge/Quick; finish all CPPOPS_CPPTYPES generation; alioth nbody; full user docs
 
 # [[[ HEADER ]]]
 package RPerl::Algorithm::Inefficient;

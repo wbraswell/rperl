@@ -85,6 +85,8 @@ Use of /x means that if you want real whitespace or # characters in the pattern 
 # Makefile.PL uses ExtUtils::MakeMaker
 $ vi lib/RPerl.pm
     # set $VERSION
+$ vi script/rperl
+    # set -v option
 $ rm -Rf ~/perl5; curl -L cpanmin.us | perl - -l $HOME/perl5 App::cpanminus local::lib
     # optionally create clean ~/perl5 for local::lib single-user installation
     # remember to re-enable Perl::Critic & Eclipse EPIC Integration Fix above

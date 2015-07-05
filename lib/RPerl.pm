@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 # DEV NOTE, CORRELATION #16: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
-our $VERSION = 1.000_000;    # ONE POINT OH FULL RELEASE!!!  It may not be Christmas, but it sure is INDEPENDENCE DAY!
+our $VERSION = 1.000_001;    # ONE POINT OH FULL RELEASE!!!  It may not be Christmas, but it sure is INDEPENDENCE DAY!
 #our $VERSION = 20150704;    # NON-RELEASE VERSION, OFFICIAL LONGDATE
 #our $VERSION = 2015.185;    # NON-RELEASE VERSION, OFFICIAL STARDATE
 
