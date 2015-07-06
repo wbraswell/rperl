@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.001_002;
+our $VERSION = 0.002_000;
 
-use Test::More tests => 14;
+use Test::More tests => 22;
 use Test::Exception;
 
 BEGIN {
@@ -11,6 +11,11 @@ BEGIN {
         diag("[[[ Beginning Dependency Tests ]]]");
     }
 }
+
+BEGIN {
+    lives_and( sub { use_ok('ExtUtils::MakeMaker'); }, q{use_ok('ExtUtils::MakeMaker') lives} );
+}
+lives_and( sub { require_ok('ExtUtils::MakeMaker'); }, q{require_ok('ExtUtils::MakeMaker') lives} );
 
 BEGIN {
     lives_and( sub { use_ok('Test::Exception'); }, q{use_ok('Test::Exception') lives} );
@@ -47,7 +52,21 @@ lives_and( sub { require_ok('Inline::CPP'); }, q{require_ok('Inline::CPP') lives
 BEGIN {
     lives_and( sub { use_ok('Inline::Filters'); }, q{use_ok('Inline::Filters') lives} );
 }
-
 lives_and( sub { require_ok('Inline::Filters'); }, q{require_ok('Inline::Filters') lives} );
+
+BEGIN {
+    lives_and( sub { use_ok('PadWalker'); }, q{use_ok('PadWalker') lives} );
+}
+lives_and( sub { require_ok('PadWalker'); }, q{require_ok('PadWalker') lives} );
+
+BEGIN {
+    lives_and( sub { use_ok('Module::Refresh'); }, q{use_ok('Module::Refresh') lives} );
+}
+lives_and( sub { require_ok('Module::Refresh'); }, q{require_ok('Module::Refresh') lives} );
+
+BEGIN {
+    lives_and( sub { use_ok('Test::CPAN::Changes'); }, q{use_ok('Test::CPAN::Changes') lives} );
+}
+lives_and( sub { require_ok('Test::CPAN::Changes'); }, q{require_ok('Test::CPAN::Changes') lives} );
 
 done_testing();

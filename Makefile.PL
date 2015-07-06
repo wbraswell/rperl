@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-our $VERSION = 0.001_100;
+our $VERSION = 0.001_110;
 use ExtUtils::MakeMaker;
 
 BEGIN { use English; }
@@ -16,6 +16,7 @@ WriteMakefile(
     PREREQ_PM    => {
         'ExtUtils::MakeMaker' => 7.04,  # for compatibility with Inline::C >= v0.75
         'Test::Exception' => 0.32,
+        'Test::CPAN::Changes' => 0.400002,
         'Perl::Critic'    => 1.121,
         'Perl::Tidy'      => 20140711,
         'Parse::Eyapp'    => 1.182,

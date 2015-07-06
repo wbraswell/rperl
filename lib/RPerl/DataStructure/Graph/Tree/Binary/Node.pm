@@ -134,20 +134,16 @@ our RPerl::DataStructure::Graph::Tree::Binary::NodeReference $new_from_nested_ar
 	return $output;
 };
 
-=UNUSED CODE (Using default Data::Dumper for now)
-our string_method $DUMPER = sub {(my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $node) = @_;
-;
-	my string $dumped = '[';
-
+# DISABLE UNUSED CODE (Using default Data::Dumper for now)
+#our string_method $DUMPER = sub {(my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $node) = @_;
+#	my string $dumped = '[';
 # START HERE
 # START HERE
 # START HERE
-	$dumped .= "**FAKE_DUMP_STRING**";
-	
-	$dumped .= ']';
-	return $dumped;
-};
-=cut
+#	$dumped .= "**FAKE_DUMP_STRING**";
+#	$dumped .= ']';
+#	return $dumped;
+#};
 
 
 # ref to (binary tree node)

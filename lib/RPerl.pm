@@ -4,9 +4,9 @@ use strict;
 use warnings;
 
 # DEV NOTE, CORRELATION #16: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
-our $VERSION = 1.000_001;    # ONE POINT OH FULL RELEASE!!!  It may not be Christmas, but it sure is INDEPENDENCE DAY!
-#our $VERSION = 20150704;    # NON-RELEASE VERSION, OFFICIAL LONGDATE
-#our $VERSION = 2015.185;    # NON-RELEASE VERSION, OFFICIAL STARDATE
+our $VERSION = 1.000_002;    # ONE POINT OH FULL RELEASE!!  It may not be Christmas, but it sure is INDEPENDENCE DAY!!!
+#our $VERSION = 20150706;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
+#our $VERSION = 2015.187;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -29,3 +29,32 @@ require rperlnames;
 # NEED ADD: use/require HelperFunctions*.pm here (not just in rperltypes.pm) to match dependency path of C++ code?
 
 1;    # end of class
+
+__END__
+=head1 NAME
+
+Restricted Perl, The Optimizing Perl 5 Compiler
+
+Back-End Module
+
+=head1 SYNOPSIS
+
+        use RPerl;
+
+=head1 DESCRIPTION
+
+B<RPerl> is a compiler.  For more info:
+
+L<https://github.com/wbraswell/rperl/blob/master/README.md>
+
+=head1 SEE ALSO
+
+L<rperl>
+
+=head1 AUTHOR
+
+B<William N. Braswell, Jr.>
+
+L<mailto:william.braswell@autoparallel.com>
+
+=cut

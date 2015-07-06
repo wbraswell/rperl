@@ -32,7 +32,7 @@ use Perl::Tidy;
 # TEMP DEBUGGING, ONLY LOAD SPECIFIC FILES
 my $test_files = { './lib/RPerl/Algorithm/Sort/Bubble.pm' => undef };
 
-#RPerl::diag('in 12_compile_sort.t, have $test_files = ' . "\n" . Dumper($test_files) . "\n");
+#RPerl::diag('in 13_compile_sort.t, have $test_files = ' . "\n" . Dumper($test_files) . "\n");
 
 my string_hashref $modes_argument;
 my hashref_arrayref $output_file_name_groups;
@@ -48,7 +48,7 @@ my integer $number_of_tests_run = 0;
 for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
 
     # [[[ MODE SETUP ]]]
-    #    RPerl::diag("in 12_compile_sort.t, top of for() loop, have \$mode_id = $mode_id\n");
+    #    RPerl::diag("in 13_compile_sort.t, top of for() loop, have \$mode_id = $mode_id\n");
     my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
     my $ops                 = $mode->{ops};
     my $types               = $mode->{types};
@@ -62,7 +62,7 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
 
     for my $test_file ( sort keys %{$test_files} ) {
 
-        RPerl::diag( 'in 12_compile_sort.t, have $test_file = ' . $test_file . "\n" );
+        RPerl::diag( 'in 13_compile_sort.t, have $test_file = ' . $test_file . "\n" );
 
         $modes_argument = {
             ops     => $ops,
@@ -109,20 +109,20 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
             $eval_return_value = eval { RPerl::Generator::ast_to_cpp__generate( $rperl_ast, $modes_argument ); };
         }
 
-        #        RPerl::diag( 'in 12_compile_sort.t, have $eval_return_value = ' . Dumper($eval_return_value) . "\n" );    # warning if undef retval
+        #        RPerl::diag( 'in 13_compile_sort.t, have $eval_return_value = ' . Dumper($eval_return_value) . "\n" );    # warning if undef retval
 
         if ( ( defined $eval_return_value ) and $eval_return_value ) {    # Perl eval return code defined & true, success
-            RPerl::diag( 'in 12_compile_sort.t, have defined and true $eval_return_value' . "\n" );
+            RPerl::diag( 'in 13_compile_sort.t, have defined and true $eval_return_value' . "\n" );
             my string_hashref $source_group = $eval_return_value;
-            RPerl::diag( 'in 12_compile_sort.t, have $test_file named *Good* or *good*' . "\n" );
+            RPerl::diag( 'in 13_compile_sort.t, have $test_file named *Good* or *good*' . "\n" );
             if ($perform_diff_check) {
-                RPerl::diag( 'in 12_compile_sort.t, need to perform diff check(s)' . "\n" );
+                RPerl::diag( 'in 13_compile_sort.t, need to perform diff check(s)' . "\n" );
 
-             #                    RPerl::diag( 'in 12_compile_sort.t, have $output_file_name_groups->[0] = ' . Dumper( $output_file_name_groups->[0] ) . "\n" );
+             #                    RPerl::diag( 'in 13_compile_sort.t, have $output_file_name_groups->[0] = ' . Dumper( $output_file_name_groups->[0] ) . "\n" );
                 foreach my string $suffix_key ( sort keys %{ $output_file_name_groups->[0] } ) {
-                    RPerl::diag( 'in 12_compile_sort.t, have sort keys %{ $output_file_name_groups->[0] } = '
+                    RPerl::diag( 'in 13_compile_sort.t, have sort keys %{ $output_file_name_groups->[0] } = '
                             . Dumper( [ sort keys %{ $output_file_name_groups->[0] } ] ) );
-                    RPerl::diag( 'in 12_compile_sort.t, have sort keys %{ $source_group } = ' . Dumper( [ sort keys %{$source_group} ] ) );
+                    RPerl::diag( 'in 13_compile_sort.t, have sort keys %{ $source_group } = ' . Dumper( [ sort keys %{$source_group} ] ) );
                     if ( $ops eq 'PERL' ) {                               # single reference file; use original Perl source file as reference for diff check
                         $test_file_reference = $test_file;
                     }
@@ -131,11 +131,11 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
                         $test_file_reference = $output_file_name_groups->[0]->{$suffix_key} . q{-} . $ops . 'OPS_' . $types . 'TYPES';
                     }
 
-                    #                        RPerl::diag( 'in 12_compile_sort.t, have $test_file_reference = ' . $test_file_reference . "\n" );
+                    #                        RPerl::diag( 'in 13_compile_sort.t, have $test_file_reference = ' . $test_file_reference . "\n" );
 
                     $diff_line = RPerl::Generator::diff_check_file_vs_string( $test_file_reference, $source_group->{$suffix_key}, $ops );
 
-                    #                        RPerl::diag( 'in 12_compile_sort.t, have $diff_line = ' . $diff_line . "\n" );
+                    #                        RPerl::diag( 'in 13_compile_sort.t, have $diff_line = ' . $diff_line . "\n" );
                     if ( $diff_line != 0 ) {
                         last;
                     }
@@ -151,11 +151,11 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
                 }
                 else {    # $diff_line < 0
                           # ignore __DUMMY_SOURCE_CODE results, indicated by $diff_line < 0
-                    RPerl::diag( 'in 12_compile_sort.t, DUMMY SOURCE CODE found in diff check' . "\n" );
+                    RPerl::diag( 'in 13_compile_sort.t, DUMMY SOURCE CODE found in diff check' . "\n" );
                 }
             }
             else {
-                RPerl::diag( 'in 12_compile_sort.t, do NOT need to perform diff check(s)' . "\n" );
+                RPerl::diag( 'in 13_compile_sort.t, do NOT need to perform diff check(s)' . "\n" );
 
                 # skip test if dummy source code found
                 if ( not dummy_source_code_find($source_group) ) {
@@ -163,14 +163,14 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
                     $number_of_tests_run++;
                 }
                 else {
-                    RPerl::diag( 'in 12_compile_sort.t, DUMMY SOURCE CODE found, from $source_group:' . "\n" . Dumper($source_group) . "\n" );
+                    RPerl::diag( 'in 13_compile_sort.t, DUMMY SOURCE CODE found, from $source_group:' . "\n" . Dumper($source_group) . "\n" );
                 }
             }
         }
         else {    # Perl eval return code undefined or false, error
-            RPerl::diag( 'in 12_compile_sort.t, have undefined or false $eval_return_value' . "\n" );
+            RPerl::diag( 'in 13_compile_sort.t, have undefined or false $eval_return_value' . "\n" );
 
-            RPerl::diag( 'in 12_compile_sort.t, have $EVAL_ERROR = ' . $EVAL_ERROR . "\n" );
+            RPerl::diag( 'in 13_compile_sort.t, have $EVAL_ERROR = ' . $EVAL_ERROR . "\n" );
             if ( $EVAL_ERROR =~ /Can't\slocate\sobject\smethod\s"ast_to_\w*__generate"\svia\spackage/xms ) {
                 RPerl::warning(
                     'WARNING WTE11GE01: Test Group 11, Code Generator; Missing code generation method, received error message...' . "\n" . $EVAL_ERROR . "\n" );

@@ -1,18 +1,3 @@
-# START HERE: 
-#Kickstarter;
-#POD in RPerl.pm; 
-#POD in RPerl/Config.pm?;
-#changelog; 
-#FAQ; 
-#data type package names; 
-#compile Foo.pm; 
-#update tests; 
-#basic user docs; 
-#website total
-
-# THEN: fix RPerl/Test/ScopeTypeNameValue/program_5*_good.pl.DISABLED_PERL_V5_22 and RPerl/Test/Expression/program_*_good.pl.DISABLED_NEED_FIX
-# THEN: Merge/Quick; finish all CPPOPS_CPPTYPES generation; alioth nbody; full user docs
-
 # [[[ HEADER ]]]
 package RPerl::Algorithm::Inefficient;
 use strict;

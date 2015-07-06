@@ -33,7 +33,7 @@ BEGIN {
 sub string_dumperify {
     ( my string $input_string ) = @_;
 
-    #    RPerl::diag("in 03_type_scalar.t string_dumperify(), received have \$input_string =\n$input_string\n\n");
+    #    RPerl::diag("in 04_type_scalar.t string_dumperify(), received have \$input_string =\n$input_string\n\n");
     $input_string = Dumper( [$input_string] );
     $input_string =~ s/^\s+|\s+$//xmsg;    # strip leading whitespace
     my @input_string_split = split "\n", $input_string;
@@ -50,7 +50,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 #for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
 
     # [[[ MODE SETUP ]]]
-    #    RPerl::diag("in 03_type_scalar.t, top of for() loop, have \$mode_id = $mode_id\n");
+    #    RPerl::diag("in 04_type_scalar.t, top of for() loop, have \$mode_id = $mode_id\n");
     my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
     my string $ops          = $mode->{ops};
     my string $types        = $mode->{types};

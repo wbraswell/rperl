@@ -108,12 +108,10 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     $cpp_source_group->{CPP} .= q{, };
 
 # NEED ADDRESS: what to do with the optional TypeInner info below?  is this useless in CPPTYPES and only needed in PERLTYPES?
-=DISABLE_tmp
-    if ( exists $type_inner_optional->{children}->[0] ) {
-        $cpp_source_subgroup = $type_inner_optional->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
-        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
-    }
-=cut
+#    if ( exists $type_inner_optional->{children}->[0] ) {
+#        $cpp_source_subgroup = $type_inner_optional->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+#        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+#    }
 
     my object $subexpression = $self->{children}->[3];
 

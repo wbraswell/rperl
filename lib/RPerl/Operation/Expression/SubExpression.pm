@@ -89,27 +89,31 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     }
     elsif ( ref $self eq 'ListElement_182' ) {
         $cpp_source_group = { CPP => q{// <<< RP::O::E::SE __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>} . "\n" };
-=DISABLE_tmp
-        my object $type_inner    = $self->{children}->[0];
-        my string $type_inner_my = $type_inner->{children}->[0];
-        my string $type_inner_type
-            = $type_inner->{children}->[1]->{children}->[0];
-        my string $type_inner_TYPED = $type_inner->{children}->[2];
-        my string $type_inner_name  = $type_inner->{children}->[3];
-        my string $type_inner_equal = $type_inner->{children}->[4];
 
-        $cpp_source_group->{CPP}
-            .= $type_inner_my . q{ }
-            . $type_inner_type . q{ }
-            . $type_inner_TYPED
-            . $type_inner_name . q{ }
-            . $type_inner_equal . q{ };
 
-        my string_hashref $cpp_source_subgroup
-            = $self->{children}->[1]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
-        RPerl::Generator::source_group_append( $cpp_source_group,
-            $cpp_source_subgroup );
-=cut
+
+#        my object $type_inner    = $self->{children}->[0];
+##        my string $type_inner_my = $type_inner->{children}->[0];
+#        my string $type_inner_type
+#            = $type_inner->{children}->[1]->{children}->[0];
+#        my string $type_inner_TYPED = $type_inner->{children}->[2];
+#        my string $type_inner_name  = $type_inner->{children}->[3];
+#        my string $type_inner_equal = $type_inner->{children}->[4];
+
+#        $cpp_source_group->{CPP}
+#            .= $type_inner_my . q{ }
+#            . $type_inner_type . q{ }
+#            . $type_inner_TYPED
+#            . $type_inner_name . q{ }
+#            . $type_inner_equal . q{ };
+
+#        my string_hashref $cpp_source_subgroup
+#            = $self->{children}->[1]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+#        RPerl::Generator::source_group_append( $cpp_source_group,
+#            $cpp_source_subgroup );
+
+
+
     }
     else {
         die RPerl::Parser::rperl_rule__replace(

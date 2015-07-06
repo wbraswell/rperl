@@ -577,15 +577,13 @@ sub AUTOLOAD
 		if (defined(${$AUTOLOAD})) { $retval = &${$AUTOLOAD}(@_); }
 		else { die "Attempt to AUTOLOAD undefined subroutine '$AUTOLOAD', dying"; }
 	}
-=SNIP
 	# is there any reason to encapsulate calls in an eval() to trap their errors???
-	else
-	{
-		my $eval_string = '&$' . $AUTOLOAD . '(@_);';
-		RPerl::diag("IN AUTOLOAD, eval call MODE, have \$eval_string = '$eval_string'\n");
-		$retval = eval $eval_string;
-	}
-=cut
+#	else
+#	{
+#		my $eval_string = '&$' . $AUTOLOAD . '(@_);';
+#		RPerl::diag("IN AUTOLOAD, eval call MODE, have \$eval_string = '$eval_string'\n");
+#		$retval = eval $eval_string;
+#	}
 
 	croak $EVAL_ERROR if ($EVAL_ERROR);  # suppress '...propagated at RPerl/Class.pm' appended exception	
 #	croak if ($EVAL_ERROR);  # allow '...propagated at RPerl/Class.pm' appended exception	

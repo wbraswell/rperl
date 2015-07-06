@@ -2,7 +2,7 @@
 package RPerl::Config;
 use strict;
 use warnings;
-our $VERSION = 0.003_030;
+our $VERSION = 0.003_031;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -68,18 +68,15 @@ our $TYPES_CCFLAG = ' -D__CPP__TYPES';  # rperltypes_mode.h defaults to CPPTYPES
 
 # [[[ SUBROUTINES SPECIAL ]]]
 
-=DISABLE
 # NEED UPGRADE: replace Data::Dumper with pure-RPerl equivalent?
-sub DUMPER {
-    ( my $dumpee ) = @_;
-
+#sub DUMPER {
+#    ( my $dumpee ) = @_;
 #	die ('in RPerl::DUMPER(), received undef argument, dying') if (not(defined($_[0])));
-    return '**UNDEF**' if ( not( defined $dumpee ) );
-    return $dumpee->DUMPER()
-        if ( defined( eval( q{$} . ref($dumpee) . q{::DUMPER} ) ) );
-    return Dumper($dumpee);
-}
-=cut
+#    return '**UNDEF**' if ( not( defined $dumpee ) );
+#    return $dumpee->DUMPER()
+#        if ( defined( eval( q{$} . ref($dumpee) . q{::DUMPER} ) ) );
+#    return Dumper($dumpee);
+#}
 
 # print diagnostic (debug) message to STDERR, if either RPERL_DEBUG environmental variable or $RPerl::DEBUG global variable are true
 sub diag {

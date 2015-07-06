@@ -1,0 +1,26 @@
+FAQ
+data type package names
+
+RELEASE v1.000003
+
+compile Foo.pm
+update tests
+basic user docs
+website total
+
+RELEASE v1.000004
+
+fix RPerl/Test/ScopeTypeNameValue/program_5*_good.pl.DISABLED_PERL_V5_22 and RPerl/Test/Expression/program_*_good.pl.DISABLED_NEED_FIX
+
+RELEASE v1.000005
+
+merge
+quick
+finish all CPPOPS_CPPTYPES generation
+alioth nbody
+
+RELEASE v1.000006
+
+full user docs
+
+RELEASE v1.000007

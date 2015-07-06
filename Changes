@@ -1,0 +1,34 @@
+Revision history for Perl compiler RPerl.
+
+1.000002 2015-07-06
+
+    - Add Changes File
+    - Add & Update POD
+
+1.000001 2015-07-04
+
+    - Fix Version Numbers
+
+1 2015-07-04 Codename Apollo
+
+    - Happy Independence Day!
+    - First Full Release
+
+1.000_003 2015-07-02 Beta 3
+
+    - Test & Prepare For v1.0
+
+1.000_002 2014-12-25 Beta 2
+
+    - Merry Christmas!
+    - EYAPP Grammar Demo
+	
+1.000_001 2014-01-01 Beta 1
+
+    - Happy New Year!
+    - PPI Hello World Demo
+
+0.000001 2013-01-01 Unreleased
+
+    - Happy New Year!
+    - Created RPerl

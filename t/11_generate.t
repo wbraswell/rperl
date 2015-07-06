@@ -40,7 +40,7 @@ find(
     sub {
         my $file = $File::Find::name;
 
-#        RPerl::diag('in 10_generate.t, have $file = ' . $file . "\n");
+#        RPerl::diag('in 11_generate.t, have $file = ' . $file . "\n");
 
 #        if ( $file !~ m/[.]pm$/xms ) { # TEMP DEBUGGING, ONLY FIND *.pm, NOT *.pl
 #        if ( $file !~ m/.*OperatorVoid01NamedVoid.*[.]p[ml]$/xms ) { # TEMP DEBUGGING, ONLY FIND OperatorVoid01NamedVoid*/*.pm & *.pl
@@ -73,7 +73,7 @@ find(
 
 #=cut
 
-#RPerl::diag( 'in 10_generate.t, have $test_files = ' . "\n" . Dumper($test_files) . "\n" );
+#RPerl::diag( 'in 11_generate.t, have $test_files = ' . "\n" . Dumper($test_files) . "\n" );
 
 my string_hashref $modes_argument;
 my hashref_arrayref $output_file_name_groups;
@@ -87,7 +87,7 @@ my integer $number_of_tests_run = 0;
 # loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
 #foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
-#    RPerl::diag("in 10_generate.t, top of for() loop, have \$mode_id = $mode_id\n");
+#    RPerl::diag("in 11_generate.t, top of for() loop, have \$mode_id = $mode_id\n");
 
     # [[[ MODE SETUP ]]]
     my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
@@ -103,7 +103,7 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
 
     for my $test_file ( sort keys %{$test_files} ) {
 
-        RPerl::diag( 'in 10_generate.t, have $test_file = ' . $test_file . "\n" );
+        RPerl::diag( 'in 11_generate.t, have $test_file = ' . $test_file . "\n" );
 
         $modes_argument = {
             ops     => $ops,
@@ -150,16 +150,16 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
             $eval_return_value = eval { RPerl::Generator::ast_to_cpp__generate( $rperl_ast, $modes_argument ); };
         }
 
-        #        RPerl::diag( 'in 10_generate.t, have $eval_return_value = ' . Dumper($eval_return_value) . "\n" );    # warning if undef retval
+        #        RPerl::diag( 'in 11_generate.t, have $eval_return_value = ' . Dumper($eval_return_value) . "\n" );    # warning if undef retval
 
         if ( ( defined $eval_return_value ) and $eval_return_value ) {    # Perl eval return code defined & true, success
-            RPerl::diag( 'in 10_generate.t, have defined and true $eval_return_value' . "\n" );
+            RPerl::diag( 'in 11_generate.t, have defined and true $eval_return_value' . "\n" );
             my string_hashref $source_group = $eval_return_value;
             if ( ( $test_file =~ m/Bad/xms ) or ( $test_file =~ m/bad/xms ) ) {    # file named *Bad* or *bad*
-                RPerl::diag( 'in 10_generate.t, have $test_file NOT named *Good* or *good*' . "\n" );
+                RPerl::diag( 'in 11_generate.t, have $test_file NOT named *Good* or *good*' . "\n" );
                 RPerl::diag(
-                    'in 10_generate.t, have sort keys %{ $output_file_name_groups->[0] } = ' . Dumper( [ sort keys %{ $output_file_name_groups->[0] } ] ) );
-                RPerl::diag( 'in 10_generate.t, have sort keys %{ $source_group } = ' . Dumper( [ sort keys %{$source_group} ] ) );
+                    'in 11_generate.t, have sort keys %{ $output_file_name_groups->[0] } = ' . Dumper( [ sort keys %{ $output_file_name_groups->[0] } ] ) );
+                RPerl::diag( 'in 11_generate.t, have sort keys %{ $source_group } = ' . Dumper( [ sort keys %{$source_group} ] ) );
 
                 # skip test if dummy source code found
                 if ( not dummy_source_code_find($source_group) ) {
@@ -167,22 +167,22 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
                     $number_of_tests_run++;
                 }
                 else {
-                    RPerl::diag( 'in 10_generate.t, DUMMY SOURCE CODE found, from $source_group:' . "\n" . Dumper($source_group) . "\n" );
+                    RPerl::diag( 'in 11_generate.t, DUMMY SOURCE CODE found, from $source_group:' . "\n" . Dumper($source_group) . "\n" );
                 }
             }
 
             #            elsif ( ( $test_file =~ m/Good/xms ) or ( $test_file =~ m/good/xms ) )
             else    # default assuming files are good
             {
-                RPerl::diag( 'in 10_generate.t, have $test_file named *Good* or *good*' . "\n" );
+                RPerl::diag( 'in 11_generate.t, have $test_file named *Good* or *good*' . "\n" );
                 if ($perform_diff_check) {
-                    RPerl::diag( 'in 10_generate.t, need to perform diff check(s)' . "\n" );
+                    RPerl::diag( 'in 11_generate.t, need to perform diff check(s)' . "\n" );
 
-                 #                    RPerl::diag( 'in 10_generate.t, have $output_file_name_groups->[0] = ' . Dumper( $output_file_name_groups->[0] ) . "\n" );
+                 #                    RPerl::diag( 'in 11_generate.t, have $output_file_name_groups->[0] = ' . Dumper( $output_file_name_groups->[0] ) . "\n" );
                     foreach my string $suffix_key ( sort keys %{ $output_file_name_groups->[0] } ) {
-                        RPerl::diag( 'in 10_generate.t, have sort keys %{ $output_file_name_groups->[0] } = '
+                        RPerl::diag( 'in 11_generate.t, have sort keys %{ $output_file_name_groups->[0] } = '
                                 . Dumper( [ sort keys %{ $output_file_name_groups->[0] } ] ) );
-                        RPerl::diag( 'in 10_generate.t, have sort keys %{ $source_group } = ' . Dumper( [ sort keys %{$source_group} ] ) );
+                        RPerl::diag( 'in 11_generate.t, have sort keys %{ $source_group } = ' . Dumper( [ sort keys %{$source_group} ] ) );
                         if ( $ops eq 'PERL' ) {    # single reference file; use original Perl source file as reference for diff check
                             $test_file_reference = $test_file;
                         }
@@ -191,11 +191,11 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
                             $test_file_reference = $output_file_name_groups->[0]->{$suffix_key} . q{-} . $ops . 'OPS_' . $types . 'TYPES';
                         }
 
-                        #                        RPerl::diag( 'in 10_generate.t, have $test_file_reference = ' . $test_file_reference . "\n" );
+                        #                        RPerl::diag( 'in 11_generate.t, have $test_file_reference = ' . $test_file_reference . "\n" );
 
                         $diff_line = RPerl::Generator::diff_check_file_vs_string( $test_file_reference, $source_group->{$suffix_key}, $ops );
 
-                        #                        RPerl::diag( 'in 10_generate.t, have $diff_line = ' . $diff_line . "\n" );
+                        #                        RPerl::diag( 'in 11_generate.t, have $diff_line = ' . $diff_line . "\n" );
                         if ( $diff_line != 0 ) {
                             last;
                         }
@@ -211,11 +211,11 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
                     }
                     else {    # $diff_line < 0
                               # ignore __DUMMY_SOURCE_CODE results, indicated by $diff_line < 0
-                        RPerl::diag( 'in 10_generate.t, DUMMY SOURCE CODE found in diff check' . "\n" );
+                        RPerl::diag( 'in 11_generate.t, DUMMY SOURCE CODE found in diff check' . "\n" );
                     }
                 }
                 else {
-                    RPerl::diag( 'in 10_generate.t, do NOT need to perform diff check(s)' . "\n" );
+                    RPerl::diag( 'in 11_generate.t, do NOT need to perform diff check(s)' . "\n" );
 
                     # skip test if dummy source code found
                     if ( not dummy_source_code_find($source_group) ) {
@@ -223,19 +223,19 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
                         $number_of_tests_run++;
                     }
                     else {
-                        RPerl::diag( 'in 10_generate.t, DUMMY SOURCE CODE found, from $source_group:' . "\n" . Dumper($source_group) . "\n" );
+                        RPerl::diag( 'in 11_generate.t, DUMMY SOURCE CODE found, from $source_group:' . "\n" . Dumper($source_group) . "\n" );
                     }
                 }
             }
         }
         else {    # Perl eval return code undefined or false, error
-            RPerl::diag( 'in 10_generate.t, have undefined or false $eval_return_value' . "\n" );
+            RPerl::diag( 'in 11_generate.t, have undefined or false $eval_return_value' . "\n" );
 
-            RPerl::diag( 'in 10_generate.t, have $EVAL_ERROR = ' . $EVAL_ERROR . "\n" );
+            RPerl::diag( 'in 11_generate.t, have $EVAL_ERROR = ' . $EVAL_ERROR . "\n" );
             if (   ( $test_file =~ m/Bad/ms )
                 or ( $test_file =~ m/bad/ms ) )
             {
-                RPerl::diag( 'in 10_generate.t, have $test_file named *Bad* or *bad*' . "\n" );
+                RPerl::diag( 'in 11_generate.t, have $test_file named *Bad* or *bad*' . "\n" );
                 my $missing_errors = [];
                 if ( defined $test_files->{$test_file}->{errors} ) {
                     foreach my $error ( @{ $test_files->{$test_file}->{errors} } ) {
@@ -248,7 +248,7 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
                 $number_of_tests_run++;
             }
             else {
-                RPerl::diag( 'in 10_generate.t, have $test_file NOT named *Bad* or *bad*' . "\n" );
+                RPerl::diag( 'in 11_generate.t, have $test_file NOT named *Bad* or *bad*' . "\n" );
                 if ( $EVAL_ERROR =~ /Can't\slocate\sobject\smethod\s"ast_to_\w*__generate"\svia\spackage/xms ) {
                     RPerl::warning( 'WARNING WTE11GE01: Test Group 11, Code Generator; Missing code generation method, received error message...' . "\n"
                             . $EVAL_ERROR

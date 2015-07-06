@@ -204,16 +204,14 @@ our string $integer_hashref__typetest0 = sub {
     ::integer_hashref_CHECKTRACE( $lucky_integers, '$lucky_integers',
         'integer_hashref__typetest0()' );
 
-=disable
-    foreach my string $key ( keys %{$lucky_integers} ) {
-        my $lucky_integer = $lucky_integers->{$key};
-        $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
-        $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-
-        RPerl::diag("in PERLOPS_PERLTYPES integer_hashref__typetest0(), have lucky integer '$key' => " . $lucky_integer . ", BARSTOOL\n");
-    }
-    RPerl::diag("in PERLOPS_PERLTYPES integer_hashref__typetest0(), bottom of subroutine\n");
-=cut
+#    foreach my string $key ( keys %{$lucky_integers} ) {
+#        my $lucky_integer = $lucky_integers->{$key};
+#        $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
+#        $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
+#
+#        RPerl::diag("in PERLOPS_PERLTYPES integer_hashref__typetest0(), have lucky integer '$key' => " . $lucky_integer . ", BARSTOOL\n");
+#    }
+#    RPerl::diag("in PERLOPS_PERLTYPES integer_hashref__typetest0(), bottom of subroutine\n");
 
     return (
         integer_hashref_to_string($lucky_integers) . 'PERLOPS_PERLTYPES' );
@@ -389,14 +387,12 @@ our string $number_hashref__typetest0 = sub {
     ::number_hashref_CHECKTRACE( $lucky_numbers, '$lucky_numbers',
         'number_hashref__typetest0()' );
 
-=disable
-    foreach my string $key ( keys %{$lucky_numbers} ) {
-        my $lucky_number = $lucky_numbers->{$key};
-        $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
-        $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
+#    foreach my string $key ( keys %{$lucky_numbers} ) {
+#        my $lucky_number = $lucky_numbers->{$key};
+#        $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
+#        $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
 #        RPerl::diag("in PERLOPS_PERLTYPES number_hashref__typetest0(), have lucky number '$key' => " . $lucky_number . ", BARSTOOL\n");
-    }
-=cut
+#    }
 
     return (
         number_hashref_to_string($lucky_numbers) . 'PERLOPS_PERLTYPES' );
@@ -568,14 +564,12 @@ our string $string_hashref__typetest0 = sub {
     ::string_hashref_CHECKTRACE( $people, '$people',
         'string_hashref__typetest0()' );
 
-=disable
-    foreach my string $key ( keys %{$people} ) {
-        my $person = $people->{$key};
-        $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
-        $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
+#    foreach my string $key ( keys %{$people} ) {
+#        my $person = $people->{$key};
+#        $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
+#        $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
 #        RPerl::diag("in PERLOPS_PERLTYPES string_hashref__typetest0(), have person '$key' => '" . $person . "', STARBOOL\n");
-    }
-=cut
+#    }
 
     return ( string_hashref_to_string($people) . 'PERLOPS_PERLTYPES' );
 };
