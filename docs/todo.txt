@@ -1,3 +1,9 @@
+flexvault bug
+unescaped left braces
+POD titles (not "Restricted")
+POD-to-POD links
+POD broken links
+website Apollo codename
 FAQ
 data type package names
 
@@ -21,6 +27,12 @@ alioth nbody
 
 RELEASE v1.000006
 
-full user docs
+Book of RPerl next chapter
+Learning RPerl chapter 1 & 2
 
 RELEASE v1.000007
+
+cloud machines
+Shiny APTech site
+Shiny RPerl site
+Shiny App Store
