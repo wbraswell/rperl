@@ -40,7 +40,7 @@
       <div class="inner clearfix">
         <section id="main-content">
           <h1><a name="faq" class="anchor" href="#faq"><span class="octicon octicon-link"></span></a>Frequently Asked Questions</h1>
-            <h2>Last Update: July 5th, 2015</h2>
+            <h2>Last Update: July 7th, 2015</h2>
 
 <h2>Table Of Contents</h2>
 <a href="#faq_who">Who needs RPerl?</a><br>
@@ -70,11 +70,11 @@
 
 <a name="faq_who" class="anchor" href="#faq_who"></a>
 <h3>Q: Who needs RPerl?</h3>
-A: Normal computer users will like running RPerl apps because it will empower them to finally take full advantage of all their shiny, new multi-core processors and cloud accounts.  Software developers will like programming in RPerl because it will automatically parallelize their applications to be compatible with current and future high-performance computing platforms.<br>
+A: Normal computer users will like running RPerl compiled apps because the software will run up to hundreds of times faster than Perl interpreted apps.  RPerl v2.0 will further empower them to finally take full advantage of all the shiny, new multi-core processors and cloud accounts.  Software developers will like programming in RPerl because it will provide superior serial performance, and RPerl v2.0 automatically parallelize their applications to be compatible with current and future high-performance computing platforms.<br>
 
 <a name="faq_what" class="anchor" href="#faq_what"></a>
 <h3>Q: What is RPerl?</h3>
-A: RPerl is an upgrade to the popular Perl 5 programming language.  RPerl gives software developers a compiler to make their apps run really fast on parallel computing platforms like multi-core processors, the cloud, clusters, and supercomputers.  RPerl stands for Restricted Perl, in that we restrict our use of Perl to those parts which can be made to run fast.  RPerl also stands for Revolutionary Perl, in that we hope RPerl's speed will revolutionize the software development industry.  RPerl might even stand for Roadrunner Perl, in that it RUNS REALLY FAST.
+A: RPerl is the optimizing compiler for the popular Perl 5 programming language.  RPerl stands for Restricted Perl, in that we restrict our use of Perl to those parts which can be made to run fast.  RPerl also stands for Revolutionary Perl, in that we hope RPerl's speed will revolutionize the software development industry.  RPerl might even stand for Roadrunner Perl, in that it RUNS REALLY FAST.
 
 <a name="faq_when" class="anchor" href="#faq_when"></a>
 <h3>Q: When will RPerl v1.0 be released?</h3>
@@ -82,15 +82,16 @@ A: RPerl v1.0 was released on July 4th, 2015.  Happy Independence Day!
 
 <a name="faq_where" class="anchor" href="#faq_where"></a>
 <h3>Q: Where can I download RPerl now?</h3>
-A: Pre-release RPerl source code can be found at Github.  <a href="https://github.com/wbraswell/rperl">https://github.com/wbraswell/rperl</a>
+A: Pre-release RPerl source code can be found <a href="https://github.com/wbraswell/rperl">on Github</a>.<br>
+Production RPerl source code can be found <a href ="https://metacpan.org/author/WBRASWELL">on CPAN</a>.
 
 <a name="faq_why" class="anchor" href="#faq_why"></a>
 <h3>Q: Why should I care about RPerl?</h3>
-A: All new computers come equipped with parallel multi-core processors.  Common apps are not designed to take advantage of those parallel cores or the cloud.  RPerl helps solve that problem for you.
+A: Perl 5 is very slow for many common cases.  RPerl helps solve that problem for you.  All new computers come equipped with parallel multi-core processors.  Common apps are not designed to take advantage of those parallel cores or the cloud.  RPerl v2.0 will help solve that problem for you.
 
 <a name="faq_how" class="anchor" href="#faq_how"></a>
 <h3>Q: How much does RPerl cost?</h3>
-A: RPerl is 100% free-of-charge and is licensed under the <a href="http://dev.perl.org/licenses/">same terms as Perl 5.18.0.</a>  This means you can use RPerl for free at home or at work, but you can't re-sell RPerl without the source code and you can't change the copyright terms.<br><br>
+A: RPerl is 100% free-of-charge and is licensed under the <a href="http://dev.perl.org/licenses/">same terms as Perl 5.22.0.</a>  This means you can use RPerl for free at home or at work, but you can't re-sell RPerl without the source code and you can't change the copyright terms.<br><br>
 
 
 <a name="faq_who_team" class="anchor" href="#faq_who_team"></a>
@@ -127,7 +128,7 @@ A: Much of the Internet was built using Perl and still runs Perl underneath all 
 
 <a name="faq_how_fast" class="anchor" href="#faq_how_fast"></a>
 <h3>Q: How fast does RPerl code run?</h3>
-A: Early hand-compiled tests show the potential to run RPerl apps about 7x faster than normal Perl 5 when using Perl data structures, and up to 200x faster when using C++ data structures.  This does not include any fancy optimization techniques which could add even more speed in the future.
+A: Early tests show the potential to run RPerl apps about 7x faster than normal Perl 5 when using Perl data structures, and up to 170x-350x faster when using C++ data structures.  This does not include any fancy optimization techniques which could add even more speed in the future.
 
 <a name="faq_how_fund" class="anchor" href="#faq_how_fund"></a>
 <h3>Q: How is RPerl development funded?</h3>
@@ -140,16 +141,21 @@ A: The input to the RPerl compiler is low-magic Perl 5 source code.  RPerl conve
 
 <a name="faq_how_install" class="anchor" href="#faq_how_install"></a>
 <h3>Q: How can I get RPerl installed on my operating system?</h3>
-A: First, be a competent software developer.  Second, download the RPerl source code from Github.  Third, read the install_notes.txt document.
+A: Run the command <b><i>cpan RPerl</i></b> or see the <a href="https://github.com/wbraswell/rperl/blob/master/INSTALL">INSTALL notes</a> for more information.
 
 <a name="faq_how_compile" class="anchor" href="#faq_how_compile"></a>
 <h3>Q: How can I get RPerl to compile my code?</h3>
-A: Only the hand-compiled RPerl code is currently available.  We're working on the automated compiling mechanisms now.  So you can either hand-compile your code to use the RPerl data structures, or help finish the RPerl compiler.
+A: See step 3 of the <a href="https://github.com/wbraswell/rperl/blob/master/INSTALL">INSTALL notes</a> for simple examples, and the <a href="https://metacpan.org/pod/distribution/RPerl/script/rperl">`rperl` command documentation</a> for more information.
 
 <a name="faq_how_tech_support" class="anchor" href="#faq_how_tech_support"></a>
 <h3>Q: How can I get technical support for RPerl?</h3>
-A: You can either: join the RPerl repository on Github and officially file an issue (bug report); post your question to the Seekers of Perl Wisdom forum on Perl Monks and send a message to Perl Monks user Will_the_Chill; or visit the RPerl homepage for direct contact info.
-
+A: You can do one or more of the following: 
+<ul>
+    <li><a href="https://github.com/wbraswell/rperl/issues">File an issue</a> on Github</li>
+    <li><a href="https://rt.cpan.org/Dist/Display.html?Queue=RPerl">File a bug report (ticket)</a> on CPAN</li>
+    <li>Ask for help on internet relay chat (IRC) channel (chat room) #perl11 on IRC server irc.perl.org</li>
+</ul>
+ 
 <a name="faq_how_contrib_skills" class="anchor" href="#faq_how_contrib_skills"></a>
 <h3>Q: How can I contribute my technical skills?</h3>
 A: A good place to start is to get RPerl installed on your system and run the test suite.  Then, contact us with ideas about what you'd like to work on.  We'd love to have you join the RPerl development team!
@@ -210,7 +216,7 @@ A: We are currently seeking funding in the form of private investment and grants
     , Will the Chill AKA The Voice In The Wilderness.  All Rites Reversed.
     <br><small>(Copyright &copy;
 <script type="text/javascript"> var d = new Date(); document.write(d.getFullYear()); </script>
-    , William N. Braswell, Jr..  All Rights Reserved.  This work is Free & Open Source; you can redistribute it and/or modify it under the <a href="http://dev.perl.org/licenses/">same terms as Perl 5.18.0.</a>)
+    , William N. Braswell, Jr..  All Rights Reserved.  This work is Free & Open Source; you can redistribute it and/or modify it under the <a href="http://dev.perl.org/licenses/">same terms as Perl 5.22.0.</a>)
     </small>
     </p></footer>
 
