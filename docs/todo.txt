@@ -1,16 +1,14 @@
-website Apollo codename
-FAQ
 
 RELEASE v1.000003
 
 CHECK
-	README.md copy to README
 	tmp unescaped left braces
 	POD titles (not "Restricted")
 	POD-to-POD links
-	tmp data type package names
 	POD broken links???
 	CPAN meta info, Makefile.PL
+	tmp data type package names
+	README.md copy to README
 
 
 Eyapp unescaped left braces

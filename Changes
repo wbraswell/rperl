@@ -1,9 +1,18 @@
 Revision history for Perl compiler RPerl.
 
+1.000003 2015-07-07
+
+    - Perl v5.22 Compatibility, 'Unescaped left brace in regex'
+        Fixes Bug https://rt.cpan.org/Ticket/Display.html?id=105696
+    - Update POD Documentation
+    - Update Makefile.PL With CPAN Metadata
+    - Temporarily Resolve PAUSE Indexing Conflicts
+    - Add LICENSE, Artistic, and Copying Files
+
 1.000002 2015-07-06
 
     - Add Changes File
-    - Add & Update POD
+    - Add & Update POD Documentation
 
 1.000001 2015-07-04
 
