@@ -33,9 +33,9 @@ require rperlnames;
 __END__
 =head1 NAME
 
-Restricted Perl, The Optimizing Perl 5 Compiler
+RPerl Back-End Module
 
-Back-End Module
+Restricted Perl, The Optimizing Perl 5 Compiler
 
 =head1 SYNOPSIS
 
@@ -49,7 +49,7 @@ L<https://github.com/wbraswell/rperl/blob/master/README.md>
 
 =head1 SEE ALSO
 
-L<rperl>
+L<distribution/RPerl/script/rperl>
 
 =head1 AUTHOR
 

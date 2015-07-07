@@ -1,13 +1,17 @@
-flexvault bug
-unescaped left braces
-POD titles (not "Restricted")
-POD-to-POD links
 POD broken links
+CPAN meta info, META.json?
+README.md copy to README
 website Apollo codename
 FAQ
 data type package names
 
 RELEASE v1.000003
+
+CHECK
+	unescaped left braces
+	POD titles (not "Restricted")
+	POD-to-POD links
+
 
 compile Foo.pm
 update tests

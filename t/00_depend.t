@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_010;
 
-use Test::More tests => 22;
+use Test::More tests => 20;
 use Test::Exception;
 
 BEGIN {
@@ -32,10 +32,11 @@ BEGIN {
 }
 lives_and( sub { require_ok('Perl::Tidy'); }, q{require_ok('Perl::Tidy') lives} );
 
-BEGIN {
-    lives_and( sub { use_ok('Parse::Eyapp'); }, q{use_ok('Parse::Eyapp') lives} );
-}
-lives_and( sub { require_ok('Parse::Eyapp'); }, q{require_ok('Parse::Eyapp') lives} );
+# 3RD-PARTY ISSUE #0: Perl v5.22, Unescaped left brace in regex
+#BEGIN {
+#    lives_and( sub { use_ok('Parse::Eyapp'); }, q{use_ok('Parse::Eyapp') lives} );
+#}
+#lives_and( sub { require_ok('Parse::Eyapp'); }, q{require_ok('Parse::Eyapp') lives} );
 
 BEGIN {
     lives_and( sub { use_ok('Inline'); }, q{use_ok('Inline') lives} );

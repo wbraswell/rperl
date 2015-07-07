@@ -457,9 +457,9 @@ depends_parse_generate_save_subcompile_execute( $input_file_names, $output_file_
 __END__
 =head1 NAME
 
-Restricted Perl, The Optimizing Perl 5 Compiler
+rperl Front-End Program
 
-Front-End Program
+Restricted Perl, The Optimizing Perl 5 Compiler
 
 =head1 SYNOPSIS
 
