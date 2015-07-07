@@ -153,6 +153,8 @@ $ cpanm ./RPerl-VERSION.tar.gz
 $ which rperl
 $ perl -e 'use RPerl;'
 	# SEE INSTALL NOTES FOR ADDITIONAL TEST COMMANDS
+$ apt-get install libssl-dev
+	# to avoid 'fatal error: openssl/err.h: No such file or directory' during install of Net::SSLeay, subdep of CPAN::Uploader
 $ cpanm CPAN::Uploader
 $ cpan-upload -v -u WBRASWELL --dry-run RPerl-VERSION.tar.gz
 	# ARE YOU SURE YOU WISH TO PROCEED?!?

@@ -1,20 +1,13 @@
-
-RELEASE v1.000003
-
 CHECK
 	tmp unescaped left braces
-	POD titles (not "Restricted")
-	POD-to-POD links
-	POD broken links???
-	CPAN meta info, Makefile.PL
-	tmp data type package names
-	README.md copy to README
-
+NO	POD-to-POD links
 
 Eyapp unescaped left braces
 
 RELEASE Parse::Eyap vX.YZZY
 
+remove extra character before copyright (c) in plain text files
+change all publicly-visible e-mail addresses to wbraswell@cpan.org
 data type package names
 compile Foo.pm
 update tests
