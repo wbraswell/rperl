@@ -11,27 +11,53 @@ push( @ExtUtils::MakeMaker::Overridable, qw(pm_to_blib) )
 WriteMakefile(
     NAME         => 'RPerl',
     ABSTRACT     => 'Restricted Perl, The Optimizing Perl 5 Compiler',
+    AUTHOR       => ['Will Braswell <wbraswell@cpan.org>'],
     VERSION_FROM => 'lib/RPerl.pm',
+    LICENSE      => 'perl_5',
     EXE_FILES    => ['script/rperl'],
+    MIN_PERL_VERSION => '5.10.1',  # NEED ANSWER: is RPerl truly incompatible with Perl v5.8 and earlier?
     PREREQ_PM    => {
-        'ExtUtils::MakeMaker' => 7.04,  # for compatibility with Inline::C >= v0.75
-        'Test::Exception' => 0.32,
+        'ExtUtils::MakeMaker' => 7.04,        # for compatibility with Inline::C >= v0.75
+        'CPAN::Meta'          => 2.150005,    # RPerl system developers only, used for generating CPAN metadata from this file during dist build
+        'Test::Exception'     => 0.32,
         'Test::CPAN::Changes' => 0.400002,
-        'Perl::Critic'    => 1.121,
-        'Perl::Tidy'      => 20140711,
-        'Parse::Eyapp'    => 1.182,
-        'Inline'          => 0.76,
-        'Inline::C'       => 0.76,  # wbraswell added CPPFLAGS
-        'Inline::CPP'     => 0.63,  # davido & mohawk fixed ntype warnings; davido & wbraswell fixed namespace hack
-        'Inline::Filters' => 0.17,  # wbraswell, rurban, & bulk88 added preprocess inc array; wbraswell added CPPFLAGS
-        'PadWalker'       => 2.1,
-        'Module::Refresh' => 0.17,
-        #        'Module::Compile' => 0,  # not yet utilized
+        'Perl::Critic'        => 1.121,
+        'Perl::Tidy'          => 20140711,
+        'Parse::Eyapp'        => 1.182,
+        'Inline'              => 0.76,
+        'Inline::C'           => 0.76,        # wbraswell added CPPFLAGS
+        'Inline::CPP'         => 0.63,        # davido & mohawk fixed ntype warnings; davido & wbraswell fixed namespace hack
+        'Inline::Filters'     => 0.17,        # wbraswell, rurban, & bulk88 added preprocess inc array; wbraswell added CPPFLAGS
+        'PadWalker'           => 2.1,
+        'Module::Refresh'     => 0.17,
+    },
+    META_MERGE       => {
+        'meta-spec' => {
+            version => 2,
+            url     => 'https://metacpan.org/pod/CPAN::Meta::Spec'
+        },
+
+        # NEED FIX: no_index is a temporary solution to the CPAN indexing and data type package naming issue
+        no_index       => { package => [ 'array', 'bool', 'char', 'float', 'hash', 'integer', 'method', 'number', 'object', 'ref', 'string', 'unknown' ] },
+        release_status => 'stable',
+        keywords    => [qw(rperl perl5 optimizing compiler optimize compile)],
+        description => 'RPerl is the optimizing compiler for the Perl 5 programming language.  '
+            . 'RPerl compiles slow low-magic Perl 5 code into fast binary code, which can optionally be mixed back into high-magic Perl apps.',
+        resources => {
+            license    => ['http://dev.perl.org/licenses/'],
+            homepage   => 'http://www.rperl.org',
+            bugtracker => { web => 'http://rt.cpan.org/Public/Dist/Display.html?Name=RPerl' },
+            repository => {
+                type => 'git',
+                url  => 'git://github.com/wbraswell/rperl.git',
+                web  => 'https://github.com/wbraswell/rperl',
+            },
+        },
     },
 
-# NEED UPDATE, CORRELATION #05: list of _Inline directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
-# NEED UPDATE, CORRELATION #06: list of CPAN files & directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
-# NEED UPDATE, CORRELATION #13: list of RPerl build files & directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
+    # NEED UPDATE, CORRELATION #05: list of _Inline directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
+    # NEED UPDATE, CORRELATION #06: list of CPAN files & directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
+    # NEED UPDATE, CORRELATION #13: list of RPerl build files & directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
     clean => {
         FILES =>
             'Makefile.old MANIFEST.bak lib/RPerl/Algorithm.pmc lib/RPerl/Algorithm.h lib/RPerl/Algorithm.cpp lib/RPerl/Algorithm/Inefficient.pmc lib/RPerl/Algorithm/Inefficient.h lib/RPerl/Algorithm/Inefficient.cpp lib/RPerl/Algorithm/Sort.pmc lib/RPerl/Algorithm/Sort.h lib/RPerl/Algorithm/Sort.cpp lib/RPerl/Algorithm/Sort/Bubble.pmc lib/RPerl/Algorithm/Sort/Bubble.h lib/RPerl/Algorithm/Sort/Bubble.cpp lib/RPerl/Test/Fu.pmc lib/RPerl/Test/Foo.pmc lib/RPerl/Test/Foo.h lib/RPerl/Test/Foo.cpp lib/rperltypes_mode.h.orig lib/rperltypes_mode.h.swap _Inline lib/_Inline lib/RPerl/Algorithm/Sort/_Inline script/_Inline script/development/_Inline script/development/unused/_Inline t/_Inline lib/RPerl/Test/OperationsTypesReporting/_Inline lib/RPerl/Test/Module/_Inline lib/RPerl/Test/Properties/_Inline lib/RPerl/Test/Type_Types/_Inline lib/RPerl/Operation/Statement/_Inline lib/RPerl/DataStructure/Array/_Inline lib/RPerl/_Inline lib/RPerl/CompileUnit/_Inline'
@@ -45,7 +71,7 @@ sub pm_to_blib {
     my $self = shift;
     my $blib = $self->SUPER::pm_to_blib(@_);
 
-# un-read-only blib/lib for tests to pass, files are modified at runtime there
+    # un-read-only blib/lib for tests to pass, files are modified at runtime there
     if ( $OSNAME eq 'MSWin32' ) {
         my ( $lastline, $start ) = qq{\t\$(NOECHO) \$(TOUCH) pm_to_blib\n};
         ( $start = index( $blib, $lastline ) ) == -1

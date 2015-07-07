@@ -1,9 +1,6 @@
-POD broken links
-CPAN meta info, META.json?
 README.md copy to README
 website Apollo codename
 FAQ
-data type package names
 
 RELEASE v1.000003
 
@@ -11,8 +8,12 @@ CHECK
 	unescaped left braces
 	POD titles (not "Restricted")
 	POD-to-POD links
+	tmp data type package names
+	POD broken links???
+	CPAN meta info, Makefile.PL
 
 
+data type package names
 compile Foo.pm
 update tests
 basic user docs
