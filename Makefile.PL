@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-our $VERSION = 0.001_110;
+our $VERSION = 0.001_120;
 use ExtUtils::MakeMaker;
 
 BEGIN { use English; }
@@ -15,7 +15,7 @@ WriteMakefile(
     VERSION_FROM => 'lib/RPerl.pm',
     LICENSE      => 'perl_5',
     EXE_FILES    => ['script/rperl'],
-    MIN_PERL_VERSION => '5.10.1',  # NEED ANSWER: is RPerl truly incompatible with Perl v5.8 and earlier?
+    MIN_PERL_VERSION => '5.10.0',  # NEED ANSWER: is RPerl truly incompatible with Perl v5.8 and earlier?
     PREREQ_PM    => {
         'ExtUtils::MakeMaker' => 7.04,        # for compatibility with Inline::C >= v0.75
         'CPAN::Meta'          => 2.150005,    # RPerl system developers only, used for generating CPAN metadata from this file during dist build

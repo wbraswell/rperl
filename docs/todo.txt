@@ -1,13 +1,11 @@
-CHECK
-	tmp unescaped left braces
-NO	POD-to-POD links
-
 Eyapp unescaped left braces
 
 RELEASE Parse::Eyap vX.YZZY
 
+POD-to-POD links
 remove extra character before copyright (c) in plain text files
 change all publicly-visible e-mail addresses to wbraswell@cpan.org
+
 data type package names
 compile Foo.pm
 update tests
