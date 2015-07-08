@@ -12,6 +12,9 @@ our $VERSION = 0.001_000;
 package main;
 use rperltypes;
 use rperlnamespaces;
+
+#BEGIN { print 'in rperlnames.pm, have @INC = ' . "\n" . Dumper(\@INC) . "\n"; }
+
 use PadWalker qw(peek_my peek_our);
 
 # NEED UPGRADE: somehow reduce duplicate code of name() and scope_type_name_value(), not easy due to PadWalker magic!

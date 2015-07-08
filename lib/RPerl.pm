@@ -17,6 +17,8 @@ our $VERSION = 1.000_003;    # ONE POINT OH FULL RELEASE!!  It may not be Christ
 # [[[ INCLUDES SPECIAL ]]]
 require RPerl::Config;
 
+#BEGIN { use Data::Dumper; print 'in RPerl.pm, have @INC = ' . "\n" . Dumper(\@INC) . "\n"; }
+
 #no magic;  # require data types, full declarations, other non-magic
 # DEV NOTE, CORRELATION #08: circular dependency causes "subroutine FOO redefined" errors, solved by replacing use with require below
 #use rperltypes;
@@ -55,6 +57,6 @@ L<distribution/RPerl/script/rperl>
 
 B<William N. Braswell, Jr.>
 
-L<mailto:william.braswell@autoparallel.com>
+L<mailto:wbraswell@NOSPAM.cpan.org>
 
 =cut

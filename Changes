@@ -1,8 +1,15 @@
 Revision history for Perl compiler RPerl.
 
+1.000004 2015-07-07
+
+    - Add $ENV{PATH} To `rperl` Command Search Path,
+        Fixes Bug https://github.com/wbraswell/rperl/issues/17
+    - Update Compiler Dependency & Sub-Dependency Error Checking,
+        Fixes Bug https://github.com/wbraswell/rperl/issues/23
+
 1.000003 2015-07-07
 
-    - Perl v5.22 Compatibility, 'Unescaped left brace in regex'
+    - Perl v5.22 Compatibility, 'Unescaped left brace in regex',
         Fixes Bug https://rt.cpan.org/Ticket/Display.html?id=105696
     - Update POD Documentation
     - Update Makefile.PL With CPAN Metadata
@@ -11,7 +18,7 @@ Revision history for Perl compiler RPerl.
 
 1.000002 2015-07-06
 
-    - Add Changes File
+    - Add Changes File,
         Fixes Bug https://rt.cpan.org/Ticket/Display.html?id=105663
     - Add & Update POD Documentation
 
