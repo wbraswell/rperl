@@ -2,9 +2,9 @@ Eyapp unescaped left braces
 
 RELEASE Parse::Eyap vX.YZZY
 
-Disable Perl::Critic PodSpelling To Avoid Aspell Error "No word lists can be found for the language"
 
-RELEASE v1.000005
+CHECK
+	Disable Perl::Critic PodSpelling To Avoid Aspell Error "No word lists can be found for the language"
 
 Fix CPAN Testers Bugs
 
