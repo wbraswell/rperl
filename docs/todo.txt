@@ -2,18 +2,11 @@ Eyapp unescaped left braces
 
 RELEASE Parse::Eyap vX.YZZY
 
-
-RELEASE v1.000004
-
-CHECK
-	POD-to-POD links
-	copyright special char in LICENSE & README
-	POD e-mail addresses
-
-
-Fix CPAN Testers Bugs
+Disable Perl::Critic PodSpelling To Avoid Aspell Error "No word lists can be found for the language"
 
 RELEASE v1.000005
+
+Fix CPAN Testers Bugs
 
 data type package names
 compile Foo.pm
@@ -21,23 +14,23 @@ update tests
 basic user docs
 website total
 
-RELEASE v1.000006
+RELEASE v1.0000XY
 
 fix RPerl/Test/ScopeTypeNameValue/program_5*_good.pl.DISABLED_PERL_V5_22 and RPerl/Test/Expression/program_*_good.pl.DISABLED_NEED_FIX
 
-RELEASE v1.000007
+RELEASE v1.0000XY
 
 merge
 quick
 finish all CPPOPS_CPPTYPES generation
 alioth nbody
 
-RELEASE v1.000008
+RELEASE v1.0000XY
 
 Book of RPerl next chapter
 Learning RPerl chapter 1 & 2
 
-RELEASE v1.000009
+RELEASE v1.0000XY
 
 cloud machines
 Shiny APTech site

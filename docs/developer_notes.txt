@@ -113,7 +113,10 @@ https://rt.cpan.org
 # CPAN TESTERS
 ##########################################################################################
 
+http://www.cpantesters.org/distro/R/RPerl.html
+
 https://admin.cpantesters.org/cgi-bin/pages.cgi?act=user-author
+https://admin.cpantesters.org/cgi-bin/pages.cgi?act=author-dist&dist=RPerl
 
 
 ##########################################################################################

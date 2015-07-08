@@ -4,9 +4,9 @@ use strict;
 use warnings;
 use RPerl;
 # DEV NOTE, CORRELATION #16: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
-our $VERSION = 1.000_003;
-#our $VERSION = 20150707;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
-#our $VERSION = 2015.188;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
+our $VERSION = 1.000_005;
+#our $VERSION = 20150708;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
+#our $VERSION = 2015.189;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -427,9 +427,9 @@ if ($version) {
     # DEV NOTE, CORRELATION #16: numbering schemes mentioned below
     my $version_message = <<EOL;
 
-This is RPerl version 1.000_003, Long Date 20150707, Star Date 2015.188
-v1.000_003 using RPerl's underscore-is-comma numbering scheme
-v1.000003  using  CPAN's underscore-is-beta  numbering scheme
+This is RPerl version 1.000_005, Long Date 20150708, Star Date 2015.189
+v1.000_005 using RPerl's underscore-is-comma numbering scheme
+v1.000005  using  CPAN's underscore-is-beta  numbering scheme
 
 Copyright © 2013, 2014, 2015, William N. Braswell, Jr..  All Rights Reserved.
 This work is Free & Open Source; you can redistribute it and/or modify it 

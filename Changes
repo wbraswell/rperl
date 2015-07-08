@@ -1,5 +1,10 @@
 Revision history for Perl compiler RPerl.
 
+1.000005 2015-07-08
+
+    - Disable Perl::Critic PodSpelling To Avoid Aspell Error "No word lists can be found for the language",
+        Maybe Fixes Bug https://github.com/wbraswell/rperl/issues/26
+
 1.000004 2015-07-08
 
     - Add $ENV{PATH} To `rperl` Command Search Path,

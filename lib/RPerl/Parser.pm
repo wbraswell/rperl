@@ -3,7 +3,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_060;
+our $VERSION = 0.004_070;
 
 # [[[ OO INHERITANCE ]]]
 #use RPerl::CompileUnit::Module::Class;
@@ -136,7 +136,10 @@ our void $rperl_source__criticize = sub {
 #    my object $rperl_source__critic = Perl::Critic->new( -severity => 'brutal' );
 #    my object $rperl_source__critic = Perl::Critic->new( -exclude => ['RequireTidyCode'] -severity => 'brutal' );  # DEV NOTE: Perl::Critic's own docs-recommended syntax throws a violation
     my object $rperl_source__critic = Perl::Critic->new(
-        '-exclude'  => ['RequireTidyCode'],
+        # DEV NOTE: disable RequireTidyCode because Perl::Tidy is not perfect and may complain even if the code is tidy;
+        # disable PodSpelling because calling the external spellchecker can cause errors such as aspell's "No word lists can be found for the language FOO"
+        '-exclude'  => ['RequireTidyCode', 'PodSpelling'],
+#        '-exclude'  => ['RequireTidyCode'],
         '-severity' => 'brutal'
     );
     my @rperl_source__critic_violations
