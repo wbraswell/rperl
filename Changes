@@ -1,11 +1,12 @@
 Revision history for Perl compiler RPerl.
 
-1.000004 2015-07-07
+1.000004 2015-07-08
 
     - Add $ENV{PATH} To `rperl` Command Search Path,
         Fixes Bug https://github.com/wbraswell/rperl/issues/17
-    - Update Compiler Dependency & Sub-Dependency Error Checking,
+    - Update Error Checking In Compiler Dependency Finder,
         Fixes Bug https://github.com/wbraswell/rperl/issues/23
+    - Fix POD-to-POD 'See Also' Link
 
 1.000003 2015-07-07
 

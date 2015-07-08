@@ -51,7 +51,7 @@ L<https://github.com/wbraswell/rperl/blob/master/README.md>
 
 =head1 SEE ALSO
 
-L<distribution/RPerl/script/rperl>
+L<rperl>
 
 =head1 AUTHOR
 
