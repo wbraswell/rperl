@@ -1,8 +1,9 @@
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
-package rperlnamespaces_generated;
+package  # hide from PAUSE indexing
+    rperlnamespaces_generated;
 use strict;
 use warnings;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_010;
 
 ## no critic qw(ProhibitParensWithBuiltins ProhibitNoisyQuotes)  # SYSTEM SPECIAL 3: allow auto-generated code
 

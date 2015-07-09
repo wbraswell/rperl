@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-our $VERSION = 0.001_120;
+our $VERSION = 0.001_200;
 use ExtUtils::MakeMaker;
 
 BEGIN { use English; }
@@ -38,7 +38,13 @@ WriteMakefile(
         },
 
         # NEED FIX: no_index is a temporary solution to the CPAN indexing and data type package naming issue
-        no_index       => { package => [ 'array', 'bool', 'char', 'float', 'hash', 'integer', 'method', 'number', 'object', 'ref', 'string', 'unknown' ] },
+        no_index       => { 
+            # DEV NOTE: the following 12 package namespaces are already controlled by some other PAUSE owner on CPAN,
+            # their indexing is double-disabled in that they are both listed here and also given newlines-in-package-declarations
+            package => [ 'array', 'bool', 'char', 'float', 'hash', 'integer', 'method', 'number', 'object', 'ref', 'string', 'unknown' ],
+            # DEV NOTE: disable indexing of all test package namespaces
+            namespace => [ 'RPerl::Test' ],
+        },
         release_status => 'stable',
         keywords    => [qw(rperl perl5 optimizing compiler optimize compile)],
         description => 'RPerl is the optimizing compiler for the Perl 5 programming language.  '

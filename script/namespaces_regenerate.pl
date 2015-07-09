@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use rperlnamespaces;
-our $VERSION = 0.001_010;
+our $VERSION = 0.001_020;
 
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
 
@@ -61,7 +61,8 @@ $namespaces_rperl_string =~ s/\$VAR1/\$rperlnamespaces_generated::RPERL/gxms;
 
 my $namespaces_generated = <<'EOF';
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
-package rperlnamespaces_generated;
+package  # hide from PAUSE indexing
+    rperlnamespaces_generated;
 use strict;
 use warnings;
 our $VERSION = 0.001_000;

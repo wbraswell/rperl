@@ -3,7 +3,7 @@ package RPerl::DataType::FileHandle;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_010;
+our $VERSION = 0.001_020;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -17,7 +17,8 @@ use RPerl::DataType;
 # [[[ SUB-TYPES BEFORE SETUP ]]]
 # a filehandleref is "a reference to a newly allocated anonymous filehandle";  http://perldoc.perl.org/functions/open.html
 # we do not ever directly use filehandle type, only filehandleref
-package filehandleref;
+package  # hide from PAUSE indexing
+    filehandleref;
 use parent -norequire, ('ref');
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]

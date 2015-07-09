@@ -3,7 +3,7 @@ package RPerl::CodeBlock;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_010;
+our $VERSION = 0.002_020;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -100,7 +100,8 @@ package RPerl::CodeReference;
 use parent qw(RPerl::DataType::Modifier::Reference);
 use RPerl::DataType::Modifier::Reference;
 
-package coderef;
+package  # hide from PAUSE indexing
+    coderef;
 use parent -norequire, ('RPerl::CodeReference');
 
 1;    # end of class

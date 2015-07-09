@@ -148,7 +148,8 @@ our RPerl::DataStructure::Graph::Tree::Binary::NodeReference $new_from_nested_ar
 
 # ref to (binary tree node)
 # DEV NOTE: for naming conventions, see DEV NOTE in same code section of LinkedList.pm
-package binarytreenoderef;
+package  # hide from PAUSE indexing
+    binarytreenoderef;
 our @ISA = ('RPerl::DataStructure::Graph::Tree::Binary::NodeReference');
 use RPerl::DataStructure::Graph::Tree::Binary::Node;
 our $properties = $properties; our $new_from_nested_arrayrefs = $new_from_nested_arrayrefs; our $traverse_depthfirst_preorder = $traverse_depthfirst_preorder; our $to_nested_arrayrefs = $to_nested_arrayrefs; our $traverse_breadthfirst_queue = $traverse_breadthfirst_queue;

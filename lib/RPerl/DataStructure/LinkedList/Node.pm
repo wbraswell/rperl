@@ -37,7 +37,8 @@ our string_method $DUMPER = sub {(my RPerl::DataStructure::LinkedList::NodeRefer
 
 # ref to (linked list node)
 # DEV NOTE: for naming conventions, see DEV NOTE in same code section of LinkedList.pm
-package linkedlistnoderef;
+package  # hide from PAUSE indexing
+    linkedlistnoderef;
 our @ISA = ('RPerl::DataStructure::LinkedList::NodeReference');
 use RPerl::DataStructure::LinkedList::Node;
 our $properties = $properties;

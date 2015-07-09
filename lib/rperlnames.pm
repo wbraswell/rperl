@@ -1,9 +1,10 @@
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
-package rperlnames;
+package  # hide from PAUSE indexing
+    rperlnames;
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_010;
 
 1;
 

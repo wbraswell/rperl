@@ -3,7 +3,7 @@ package RPerl::DataType::Number;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_002;
+our $VERSION = 0.004_010;
 
 # [[[ OO INHERITANCE ]]]
 use parent ('RPerl::DataType::Scalar');
@@ -23,7 +23,8 @@ use RPerl::DataType::Scalar;
 # there is no SvFOKp() for floats, so float currently inherits everything from number,
 # and we generate C doubles instead of C floats;
 # in the future, this can be optimized (for at least memory usage) by implementing full Float semantics
-package number;
+package  # hide from PAUSE indexing
+    number;
 use parent ('RPerl::DataType::Number');
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
@@ -80,9 +81,12 @@ our string $number_to_string = sub {
     # DEV NOTE: disable old stringify w/out underscores
 #    return "$input_number";
 
+    # NEED FIX: if using RPerl data types here, causes errors for `perl -e 'use RPerl::DataType::Integer;'`
     my integer $is_negative = 0;
+#    my $is_negative = 0;
     if ($input_number < 0) { $is_negative = 1; }
     my string $retval;
+#    my $retval;
     my $split_parts = [ split /[.]/xms, "$input_number" ];   # string_arrayref
 
     if ( exists $split_parts->[0] ) {
@@ -128,4 +132,4 @@ our number $number__typetest1 = sub {
         ( $lucky_number * 2 ) + main::RPerl__DataType__Number__MODE_ID() );
 };
 
-1;
+1;  # end of class

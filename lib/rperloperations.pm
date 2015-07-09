@@ -1,7 +1,9 @@
-package rperloperations; ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
+# [[[ HEADER ]]]
+package  # hide from PAUSE indexing
+    rperloperations; ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 use strict;
 use warnings;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_010;
 use Carp;
 
 #use RPerl;

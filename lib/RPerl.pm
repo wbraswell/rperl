@@ -4,9 +4,9 @@ use strict;
 use warnings;
 
 # DEV NOTE, CORRELATION #16: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
-our $VERSION = 1.000_005;    # ONE POINT OH FULL RELEASE!!  It may not be Christmas, but it sure is INDEPENDENCE DAY!!!
-#our $VERSION = 20150708;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
-#our $VERSION = 2015.189;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
+our $VERSION = 1.000_006;    # ONE POINT OH FULL RELEASE!!  It may not be Christmas, but it sure is INDEPENDENCE DAY!!!
+#our $VERSION = 20150709;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
+#our $VERSION = 2015.190;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator

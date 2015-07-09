@@ -2,7 +2,7 @@ package RPerl::DataStructure::Hash::Properties;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.000_012;
+our $VERSION = 0.000_020;
 
 # [[[ SETUP ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -50,7 +50,8 @@ our string_method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 # [[[ SUB-TYPES ]]]
 
 # a property is a data structure belonging to a class or object, each RPerl object has a properties hash
-package properties;
+package  # hide from PAUSE indexing
+    properties;
 use base qw(RPerl::DataStructure::Hash::Properties);
 
 1;

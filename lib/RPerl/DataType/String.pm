@@ -3,7 +3,7 @@ package RPerl::DataType::String;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_001;
+our $VERSION = 0.004_010;
 
 # [[[ OO INHERITANCE ]]]
 use parent ('RPerl::DataType::Scalar');
@@ -15,7 +15,8 @@ use RPerl::DataType::Scalar;
 
 # [[[ SUB-TYPES ]]]
 # a string is 0 or more letters, digits, or other ASCII (Unicode???) symbols
-package string;
+package  # hide from PAUSE indexing
+    string;
 use parent ('RPerl::DataType::String');
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
@@ -102,4 +103,4 @@ our string $string__typetest1 = sub {
     return ( string_to_string($lucky_string) . ' PERLOPS_PERLTYPES' );
 };
 
-1;
+1;  # end of class

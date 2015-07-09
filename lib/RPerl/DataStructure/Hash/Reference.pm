@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash::Reference;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_010;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Modifier::Reference);
@@ -17,10 +17,12 @@ use RPerl::DataType::Modifier::Reference;
 # [[[ INCLUDES ]]]
 # DEV NOTE: must pre-declare string_hashref_method and object types here, because this file appears on a lower line number in rperltypes.pm
 #require RPerl::CodeBlock::Subroutine::Method;
-package string_hashref_method;
+package  # hide from PAUSE indexing
+    string_hashref_method;
 
 #require RPerl::Object;
-package object;
+package  # hide from PAUSE indexing
+    object;
 
 package RPerl::DataStructure::Hash::Reference;
 

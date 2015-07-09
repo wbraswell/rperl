@@ -3,7 +3,7 @@ package RPerl::DataType::Boolean;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_001;
+our $VERSION = 0.001_010;
 
 # [[[ OO INHERITANCE ]]]
 use parent ('RPerl::DataType::Scalar');
@@ -16,7 +16,8 @@ use RPerl::DataType::Scalar;
 
 # [[[ SUB-TYPES ]]]
 # a bool is a binary boolean value, the only valid values are 0 (false) or 1 (true)
-package bool;
+package  # hide from PAUSE indexing
+    bool;
 use parent ('RPerl::DataType::Boolean');
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
@@ -103,4 +104,4 @@ our bool $bool__typetest1 = sub {
         ( $lucky_bool * 2 ) + main::RPerl__DataType__Boolean__MODE_ID() );
 };
 
-1;
+1;  # end of class

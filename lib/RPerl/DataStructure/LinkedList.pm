@@ -49,7 +49,8 @@ our string_method $DUMPER = sub {(my RPerl::DataStructure::LinkedListReference $
 # because an RPerl::CompileUnit::Module::Class is a blessed hash _reference_, and we are not natively implementing the data structures in C here;
 # thus the slightly weird naming convention where some places have delimeters (:: or _) and some don't,
 # I favored the consistency of user-side RPerl data type short-form package alias _ delimeter over the Perl system-side package name scope :: delimeter 
-package linkedlistref;
+package  # hide from PAUSE indexing
+    linkedlistref;
 our @ISA = ('RPerl::DataStructure::LinkedListReference');
 use RPerl::DataStructure::LinkedList;
 # TODO: check if these (and other) symbol copies can be shortened???   move integer import() subroutine to be automatically called by 'use' command?
@@ -58,7 +59,8 @@ our $properties = $properties; our $new_from_arrayref = $new_from_arrayref; our 
 # [[[ INT LINKED LISTS ]]]
 
 # (ref to linked list) of integers
-package integer_linkedlistref;
+package  # hide from PAUSE indexing
+    integer_linkedlistref;
 our @ISA = ('linkedlistref');
 
 # NEED ADD: remaining sub-types

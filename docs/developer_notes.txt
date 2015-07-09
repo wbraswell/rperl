@@ -1,4 +1,4 @@
-# RPerl Developer Notes 20150707 2015.188
+# RPerl Developer Notes 20150709 2015.190
 
 ##########################################################################################
 # WARNING & ERROR CODES
@@ -137,7 +137,9 @@ https://pause.perl.org
 # CPAN DISTRIBUTION
 ##########################################################################################
 
-# Makefile.PL uses ExtUtils::MakeMaker
+# DEV NOTE: Makefile.PL uses ExtUtils::MakeMaker to interface with PAUSE & CPAN
+
+# UPDATE VERSION NUMBERS
 $ vi Changes
 	# version, date, name, notes
 $ vi lib/RPerl.pm
@@ -145,6 +147,8 @@ $ vi lib/RPerl.pm
 $ vi script/rperl
     # $VERSION
     # -v option
+
+# CLEAN & UNINSTALL PREVIOUS DIST
 $ rm -Rf ~/perl5; curl -L cpanmin.us | perl - -l $HOME/perl5 App::cpanminus local::lib
     # optionally create clean ~/perl5 for local::lib single-user installation
     # remember to re-enable Perl::Critic & Eclipse EPIC Integration Fix above
@@ -153,14 +157,17 @@ $ script/development/rperl_locallib_uninstall.sh
 	# optionally keep ~/perl5 from previous local::lib single-user installation
 	# selectively delete only RPerl files from ~/perl5
 $ perl Makefile.PL; make distclean
+$ perl Makefile.PL; make realclean
 $ rm RPerl*.tar.gz; rm MANIFEST
+
+# MAKE MANIFEST & DIST
 $ perl Makefile.PL; make manifest
-    # review MANIFEST contents
+$ less MANIFEST
 $ vi MANIFEST.SKIP
     # update with new files to exclude from CPAN
     # correlated with Makefile.PL & .gitignore
 $ make manifest
-    # review MANIFEST contents again
+$ less MANIFEST
 $ cpanm --installdeps .; make disttest
 	# optionally install deps and test before creating tarball
 $ make dist
@@ -169,17 +176,28 @@ $ mv ./RPerl-VERSION.tar.gz ./RPerl-VERSION_BETAVERSION.tar.gz
 	# DEV NOTE, CORRELATION #16: must manually rename beta releases only to include underscore in version number,
 	# moving from RPerl's underscore-is-comma numbering scheme (underscores and zeros now hidden) 
 	# to CPAN's underscore-is-beta (underscores and zeros now shown) numbering scheme
+
+# INSTALL & TEST DIST, LOCAL COPY
 $ cpanm ./RPerl-VERSION.tar.gz
     # install from local tarball, ensure tests run & installation is successful
 $ which rperl
 $ perl -e 'use RPerl;'
 	# SEE INSTALL NOTES FOR ADDITIONAL TEST COMMANDS
+
+# UPLOAD TO GITHUB & CPAN
+$ mv RPerl*.tar.gz backup/
+$ git add -A
+$ git commit -a
+	# CPAN Release, v1.00000X; FOO, BAR BAZ
+$ git push origin master
 $ apt-get install libssl-dev
 	# to avoid 'fatal error: openssl/err.h: No such file or directory' during install of Net::SSLeay, subdep of CPAN::Uploader
 $ cpanm CPAN::Uploader
-$ cpan-upload -v -u WBRASWELL --dry-run RPerl-VERSION.tar.gz
+$ cpan-upload -v -u WBRASWELL --dry-run backup/RPerl-VERSION.tar.gz
 	# ARE YOU SURE YOU WISH TO PROCEED?!?
-$ cpan-upload -v -u WBRASWELL RPerl-VERSION.tar.gz
+$ cpan-upload -v -u WBRASWELL backup/RPerl-VERSION.tar.gz
+
+# INSTALL & TEST DIST, DOWNLOAD COPY
 $ script/development/rperl_locallib_uninstall.sh
 $ cpanm WBRASWELL/RPerl-VERSION.tar.gz  # beta pre-release versions
 # OR

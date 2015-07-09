@@ -3,20 +3,23 @@ package RPerl::CodeBlock::Subroutine;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_020;
+our $VERSION = 0.002_030;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 BEGIN {
 
-    package object_method;
+    package  # hide from PAUSE indexing
+        object_method;
     1;
 
-    package hashref_method;
+    package  # hide from PAUSE indexing
+        hashref_method;
     1;
 
-    package string_method;
+    package  # hide from PAUSE indexing
+        string_method;
     1;
 
     # DEV NOTE, CORRELATION #03: method types reside in Subroutine.pm, which is a sub-type of Subroutine.pm, causing the need to have this special BEGIN block

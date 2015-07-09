@@ -10,7 +10,8 @@ use RPerl::DataStructure;
 # [[[ GRAPHS ]]]
 
 # ref to graph
-package graphref;
+package  # hide from PAUSE indexing
+    graphref;
 our @ISA = ('RPerl::DataStructure::GraphReference'); 
 use RPerl::DataStructure::Graph;
 

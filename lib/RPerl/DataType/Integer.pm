@@ -3,7 +3,7 @@ package RPerl::DataType::Integer;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_002;
+our $VERSION = 0.004_010;
 
 # [[[ OO INHERITANCE ]]]
 use parent ('RPerl::DataType::Scalar');
@@ -16,7 +16,8 @@ use RPerl::DataType::Scalar;
 
 # [[[ SUB-TYPES ]]]
 # an integer is a whole number, it has no floating-pointeger (fractional/decimal) component
-package integer;
+package  # hide from PAUSE indexing
+    integer;
 use parent ('RPerl::DataType::Integer');
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
@@ -101,4 +102,4 @@ our integer $integer__typetest1 = sub {
         ( $lucky_integer * 2 ) + main::RPerl__DataType__Integer__MODE_ID() );
 };
 
-1;
+1;  # end of class

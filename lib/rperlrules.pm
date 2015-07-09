@@ -1,8 +1,10 @@
+# [[[ HEADER ]]]
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
-package rperlrules;    # yes, yes it does
+package  # hide from PAUSE indexing
+    rperlrules;    # yes, yes it does
 use strict;
 use warnings;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_010;
 
 #use RPerl;
 

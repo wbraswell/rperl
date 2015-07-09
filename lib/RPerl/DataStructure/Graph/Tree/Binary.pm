@@ -43,7 +43,8 @@ our arrayref $to_nested_arrayrefs = sub {(my RPerl::DataStructure::Graph::Tree::
 
 # ref to binary tree
 # DEV NOTE: for naming conventions, see DEV NOTE in same code section of LinkedList.pm
-package binarytreeref;
+package  # hide from PAUSE indexing
+    binarytreeref;
 our @ISA = ('RPerl::DataStructure::Graph::Tree::BinaryReference');
 use RPerl::DataStructure::Graph::Tree::Binary;
 our $properties = $properties; our $new_from_nested_arrayrefs = $new_from_nested_arrayrefs; our $traverse_depthfirst_preorder = $traverse_depthfirst_preorder; our $to_nested_arrayrefs = $to_nested_arrayrefs; our $traverse_breadthfirst_queue = $traverse_breadthfirst_queue;
@@ -51,7 +52,8 @@ our $properties = $properties; our $new_from_nested_arrayrefs = $new_from_nested
 # [[[ INT BINARY TREES ]]]
 
 # (ref to binary tree) of integers
-package integer_binarytreeref;
+package  # hide from PAUSE indexing
+    integer_binarytreeref;
 our @ISA = ('binarytreeref');
 our $properties = $properties; our $new_from_arrayref = $new_from_arrayref; our $binarytree_unshift = $binarytree_unshift; our $DUMPER = $DUMPER;
 

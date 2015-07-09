@@ -1,9 +1,10 @@
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
-package rperlnamespaces;
+package  # hide from PAUSE indexing
+    rperlnamespaces;
 use strict;
 use warnings;
 use rperlnamespaces_generated;
-our $VERSION = 0.001_001;
+our $VERSION = 0.001_010;
 
 use Data::Dumper;
 

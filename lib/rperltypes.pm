@@ -1,9 +1,11 @@
+# [[[ HEADER ]]]
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
-package rperltypes;
+package  # hide from PAUSE indexing
+    rperltypes;
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.002_031;
+our $VERSION = 0.002_040;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
@@ -462,7 +464,8 @@ if ( not defined $RPerl::INCLUDE_PATH ) {
 }
 1;    # suppress warnings about typo in types_enable() below
 
-package rperltypes;
+package  # hide from PAUSE indexing
+    rperltypes;
 
 #our void $types_input_enable = sub { (my $types_input) = @_;  # NEED FIX: RPerl typed functions not working in types.pm, must call as normal Perl function
 sub types_enable {

@@ -1,12 +1,26 @@
+# [[[ HEADER ]]]
+package RPerl::DataType::Float;
+use strict;
+use warnings;
+use RPerl;
+our $VERSION = 0.002_010;
+
+# [[[ OO INHERITANCE ]]]
 # DEV NOTE, CORRELATION #07:
 # NEED FIX, OUTDATED
 # Float should have it's own functionality and compile to float C/C++ type for memory optimization, not just be a sub-type of Number
-use strict;  use warnings;
-package RPerl::DataType::Float;
-
 our @ISA = ('RPerl::DataType::Number');
 use RPerl::DataType::Number;
 
+# [[[ CRITICS ]]]
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
+
+# [[[ SUB-TYPES ]]]
 # a floating-point number has a fractional/decimal component
-package float;
+package  # hide from PAUSE indexing
+    float;
 our @ISA = ('RPerl::DataType::Float');
+
+1;  # end of class
