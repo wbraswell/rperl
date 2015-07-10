@@ -337,7 +337,7 @@ our string $number_arrayref_to_string = sub {
 
         if ($i_is_0) { $i_is_0 = 0; }
         else         { $output_sv .= ', '; }
-        $output_sv .= $input_av_element;
+        $output_sv .= RPerl::DataType::Number::number_to_string($input_av_element);
     }
 
     $output_sv .= ']';

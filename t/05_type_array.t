@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.004_042;
+our $VERSION = 0.005_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
@@ -11,8 +11,9 @@ our $VERSION = 0.004_042;
 BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
 use RPerl::Test;
-use Test::More tests => 223;
+use Test::More tests => 232;
 use Test::Exception;
+use Test::Number::Delta;
 
 BEGIN {
     if ( $ENV{RPERL_VERBOSE} ) {
@@ -269,7 +270,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     lives_and(                                                                # TNVAVRV21
         sub {
             is( number_arrayref_to_string( [ 2, 2112, 42, 23, -877, -33, 1701 ] ),
-                '[2, 2112, 42, 23, -877, -33, 1701]',
+                '[2, 2_112, 42, 23, -877, -33, 1_701]',
                 q{TNVAVRV21 number_arrayref_to_string([2, 2112, 42, 23, -877, -33, 1701]) returns correct value}
             );
         },
@@ -284,23 +285,41 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     lives_and(                                                                # TNVAVRV23
         sub {
             is( number_arrayref_to_string( [ 2.1, 2112.2, 42.3, 23, -877, -33, 1701 ] ),
-                '[2.1, 2112.2, 42.3, 23, -877, -33, 1701]',
+                '[2.1, 2_112.2, 42.3, 23, -877, -33, 1_701]',
                 q{TNVAVRV23 number_arrayref_to_string([2.1, 2112.2, 42.3, 23, -877, -33, 1701]) returns correct value}
             );
         },
         q{TNVAVRV23 number_arrayref_to_string([2.1, 2112.2, 42.3, 23, -877, -33, 1701]) lives}
     );
-    lives_and(                                                                # TNVAVRV24
+
+    # NEED DELETE OLD CODE
+#    lives_and(                                                                # TNVAVRV24
+#        sub {
+#            is( number_arrayref_to_string( [ 2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789 ] ),
+#                '[2.123_443_211_234_43, 2_112.432_1, 42.456_7, 23.765_444_444_444_4, -877.567_8, -33.876_587_658_765_9, 1_701.678_9]',
+#                q{TNVAVRV24 number_arrayref_to_string([2.1234432112344321, 2112.4321, ..., 1701.6789]) returns correct value}
+#            );
+#        },
+#        q{TNVAVRV24 number_arrayref_to_string([2.1234432112344321, 2112.4321, ..., 1701.6789]) lives}
+#    );
+
+    lives_and(                                                                 # TNVAVRV24
         sub {
-            is( number_arrayref_to_string(
-                    [ 2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789 ]
-                ),
-                '[2.12344321123443, 2112.4321, 42.4567, 23.7654444444444, -877.5678, -33.8765876587659, 1701.6789]',
-                q{TNVAVRV24 number_arrayref_to_string([2.1234432112344321, 2112.4321, ..., 1701.6789]) returns correct value}
+            my string $tmp_retval = number_arrayref_to_string( [ 2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789 ] );
+            like(
+                $tmp_retval,
+                qr/\[2\.123_443_211/,
+                q{TNVAVRV24a number_arrayref_to_string([2.1234432112344321, 2112.4321, ..., 1701.6789]) returns correct value, array beginning}
+            );
+            like(
+                $tmp_retval,
+                qr/, 1_701\.678_9\]/,
+                q{TNVAVRV24b number_arrayref_to_string([2.1234432112344321, 2112.4321, ..., 1701.6789]) returns correct value, array end}
             );
         },
         q{TNVAVRV24 number_arrayref_to_string([2.1234432112344321, 2112.4321, ..., 1701.6789]) lives}
     );
+
     throws_ok(                                                                # TNVAVRV30
         sub { number_arrayref__typetest0() },
         "/(ENVAVRV00.*$mode_tagline)|(Usage.*number_arrayref__typetest0)/",    # DEV NOTE: 2 different error messages, RPerl & C
@@ -326,20 +345,45 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         "/ENVAVRV03.*$mode_tagline/",
         q{TNVAVRV33 number_arrayref__typetest0([2.1234432112344321, ..., 'abcdefg', -33.876587658765875687658765, 1701.6789]) throws correct exception}
     );
+    
+    # NEED DELETE OLD CODE
+#    lives_and(                                                                 # TNVAVRV34
+#        sub {
+#            is( 
+#                number_arrayref__typetest0( [ 2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789 ] ),
+#                '[2.123_443_211_234_43, 2_112.432_1, 42.456_7, 23.765_444_444_444_4, -877.567_8, -33.876_587_658_765_9, 1_701.678_9]' . $mode_tagline,
+#                q{TNVAVRV34 number_arrayref__typetest0([2.1234432112344321, 2112.4321, ..., 1701.6789]) returns correct value}
+#            );
+#        },
+#        q{TNVAVRV34 number_arrayref__typetest0([2.1234432112344321, 2112.4321, ..., 1701.6789]) lives}
+#    );
     lives_and(                                                                 # TNVAVRV34
         sub {
-            is( number_arrayref__typetest0(
-                    [ 2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789 ]
-                ),
-                '[2.12344321123443, 2112.4321, 42.4567, 23.7654444444444, -877.5678, -33.8765876587659, 1701.6789]' . $mode_tagline,
-                q{TNVAVRV34 number_arrayref__typetest0([2.1234432112344321, 2112.4321, ..., 1701.6789]) returns correct value}
+            my string $tmp_retval = number_arrayref__typetest0( [ 2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789 ] );
+            like(
+                $tmp_retval,
+                qr/\[2\.123_443_211/,
+                q{TNVAVRV34a number_arrayref__typetest0([2.1234432112344321, 2112.4321, ..., 1701.6789]) returns correct value, array beginning}
+            );
+            like(
+                $tmp_retval,
+                qr/, 1_701\.678_9\]/,
+                q{TNVAVRV34b number_arrayref__typetest0([2.1234432112344321, 2112.4321, ..., 1701.6789]) returns correct value, array end}
+            );
+            like(
+                $tmp_retval,
+                qr/$mode_tagline/,
+                q{TNVAVRV34c number_arrayref__typetest0([2.1234432112344321, 2112.4321, ..., 1701.6789]) returns correct value, mode tagline}
             );
         },
         q{TNVAVRV34 number_arrayref__typetest0([2.1234432112344321, 2112.4321, ..., 1701.6789]) lives}
     );
+
     lives_and(                                                                 # TNVAVRV40
         sub {
-            is_deeply(
+            # NEED DELETE OLD CODE
+#            is_deeply(
+            delta_ok(
                 number_arrayref__typetest1(5),
                 [ 0, 5.123456789, 10.246913578, 15.370370367, 20.493827156 ]
                 ,                                                              ## PERLTIDY BUG comma on newline

@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;  using std::to_string;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array_cpp
-#define __CPP__INCLUDED__RPerl__DataStructure__Array_cpp 0.004_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Array_cpp 0.004_020
 
 #include <RPerl/DataStructure/Array.h>		// -> NULL (relies on <vector> being included via Inline::CPP's AUTO_INCLUDE config option)
 
@@ -469,7 +469,7 @@ SV* number_arrayref_to_string(SV* input_av_ref)
 
 		if (i_is_0) { i_is_0 = 0; } else { temp_stream << ", "; }
 //		if (i_is_0) { i_is_0 = 0; } else { sv_catpvn(output_sv, ", ", 2); }
-		temp_stream << (number)SvNV(*input_av_element);
+		temp_stream << (string)SvPV_nolen(number_to_string(*input_av_element));
 //		sv_catpvf(output_sv, "%Lf", (number)SvNV(*input_av_element));  // NEED ANSWER: can we make fprintf(stderr, )-like "%Lf" act like ostringstream's precision?
 	}
 
@@ -601,7 +601,8 @@ string number_arrayref_to_string(number_arrayref input_vector)
 		// utilizes i in element retrieval
 		input_vector_element = input_vector[i];
 		if (i_is_0) { i_is_0 = 0; } else { output_stream << ", "; }
-		output_stream << input_vector_element;
+//		output_stream << input_vector_element;
+		output_stream << number_to_string(input_vector_element);
 	}
 
 	output_stream << ']';

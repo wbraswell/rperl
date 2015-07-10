@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.003_010;
+our $VERSION = 0.004_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -10,8 +10,9 @@ our $VERSION = 0.003_010;
 # suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s)
 BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
-use Test::More tests => 242;
+use Test::More tests => 254;
 use Test::Exception;
+use Test::Number::Delta;
 use RPerl::Test;
 use File::Copy;
 use Module::Refresh;
@@ -466,13 +467,17 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(                                                        # TNVALSOBU23
         sub {
-            is_deeply( number_bubblesort( [23.2] ), [23.2], q{TNVALSOBU23 number_bubblesort([23.2]) returns correct value} );
+# NEED DELETE OLD CODE
+#            is_deeply( number_bubblesort( [23.2] ), [23.2], q{TNVALSOBU23 number_bubblesort([23.2]) returns correct value} );
+            delta_ok( number_bubblesort( [23.2] ), [23.2], q{TNVALSOBU23 number_bubblesort([23.2]) returns correct value} );
         },
         q{TNVALSOBU23 number_bubblesort([23.2]) lives}
     );
     lives_and(                                                        # TNVALSOBU24
         sub {
-            is_deeply(
+# NEED DELETE OLD CODE
+#            is_deeply(
+            delta_ok(
                 number_bubblesort( [ 2.1, 2112.2, 42.3, 23, -877, -33, 1701 ] ),
                 [ -877, -33, 2.1, 23, 42.3, 1701, 2112.2 ],
                 q{TNVALSOBU24 number_bubblesort([2.1, 2112.2, 42.3, 23, -877, -33, 1701]) returns correct value}
@@ -482,7 +487,9 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(                                                        # TNVALSOBU25
         sub {
-            is_deeply(
+            # NEED DELETE OLD CODE
+            #            is_deeply(
+            delta_ok(
                 number_bubblesort( [ 2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789 ] ),
                 [ -877.5678, -33.8765876587659, 2.12344321123443, 23.7654444444444, 42.4567, 1701.6789, 2112.4321 ],
                 q{TNVALSOBU25 number_bubblesort([2.1234432112344321, ..., -33.876587658765875687658765, 1701.6789]) returns correct value}
@@ -490,25 +497,25 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         },
         q{TNVALSOBU25 number_bubblesort([2.1234432112344321, ..., -33.876587658765875687658765, 1701.6789]) lives}
     );
-    throws_ok(                                                        # TNVALSOBU30
+    throws_ok(    # TNVALSOBU30
         sub { number_bubblesort__typetest0() },
         "/(ENVAVRV00.*$mode_tagline)|(Usage.*number_bubblesort__typetest0)/"
-        ,                                                             # DEV NOTE: 2 different error messages, RPerl & C
+        ,         # DEV NOTE: 2 different error messages, RPerl & C
         q{TNVALSOBU30 number_bubblesort__typetest0() throws correct exception}
     );
-    throws_ok(                                                        # TNVALSOBU31
+    throws_ok(    # TNVALSOBU31
         sub { number_bubblesort__typetest0(2) },
         "/ENVAVRV01.*$mode_tagline/",
         q{TNVALSOBU31 number_bubblesort__typetest0(2) throws correct exception}
     );
-    throws_ok(                                                        # TNVALSOBU32
+    throws_ok(    # TNVALSOBU32
         sub {
             number_bubblesort__typetest0( [ 2.1234432112344321, 2112.4321, undef, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789 ] );
         },
         "/ENVAVRV02.*$mode_tagline/",
         q{TNVALSOBU32 number_bubblesort__typetest0([2.1234432112344321, 2112.4321, undef, ..., 1701.6789]) throws correct exception}
     );
-    throws_ok(                                                        # TNVALSOBU33
+    throws_ok(    # TNVALSOBU33
         sub {
             number_bubblesort__typetest0(
                 [ 2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, 'abcdefg', -33.876587658765875687658765, 1701.6789 ] );
@@ -516,30 +523,67 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         "/ENVAVRV03.*$mode_tagline/",
         q{TNVALSOBU33 number_bubblesort__typetest0([2.1234432112344321, ..., 'abcdefg', -33.876587658765875687658765, 1701.6789]) throws correct exception}
     );
-    lives_and(                                                        # TNVALSOBU34
+
+    lives_and(    # TNVALSOBU34
         sub {
-            is( number_bubblesort__typetest0(
-                    [ 2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789 ]
-                ),
-                '[-877.5678, -33.8765876587659, 2.12344321123443, 23.7654444444444, 42.4567, 1701.6789, 2112.4321]' . $mode_tagline,
-                q{TNVALSOBU34 number_bubblesort__typetest0([2.1234432112344321, ..., -33.876587658765875687658765, 1701.6789]) returns correct value}
+# NEED DELETE OLD CODE
+#            is( number_bubblesort__typetest0( [ 2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789 ] ),
+#                '[-877.567_8, -33.876_587_658_765_9, 2.123_443_211_234_43, 23.765_444_444_444_4, 42.456_7, 1_701.678_9, 2_112.432_1]' . $mode_tagline,
+#                q{TNVALSOBU34 number_bubblesort__typetest0([2.1234432112344321, ..., -33.876587658765875687658765, 1701.6789]) returns correct value}
+#            );
+
+            my string $tmp_retval = number_bubblesort__typetest0(
+                [ 2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789 ] );
+            like(
+                $tmp_retval,
+                qr/\[-877\.567_8, -33\.876_587_658_765/,
+                q{TNVALSOBU34a number_bubblesort__typetest0([2.1234432112344321, ..., -33.876587658765875687658765, 1701.6789]) returns correct value, array beginning}
+            );
+            like(
+                $tmp_retval,
+                qr/42\.456_7, 1_701\.678_9, 2_112\.432_1\]/,
+                q{TNVALSOBU34b number_bubblesort__typetest0([2.1234432112344321, ..., -33.876587658765875687658765, 1701.6789]) returns correct value, array end}
+            );
+            like( $tmp_retval, qr/$mode_tagline/,
+                q{TNVALSOBU34c number_bubblesort__typetest0([2.1234432112344321, ..., -33.876587658765875687658765, 1701.6789]) returns correct value, mode tagline}
             );
         },
         q{TNVALSOBU34 number_bubblesort__typetest0([2.1234432112344321, ..., -33.876587658765875687658765, 1701.6789]) lives}
     );
-    lives_and(                                                        # TNVALSOBU34a
+
+    # same as TNVALSOBU34, but inside an eval block
+    lives_and(    # TNVALSOBU35
         sub {
-            is( eval {
-                    my $retval
-                        = number_bubblesort__typetest0(
-                        [ 2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789 ] );
-                    return $retval;
-                },
-                '[-877.5678, -33.8765876587659, 2.12344321123443, 23.7654444444444, 42.4567, 1701.6789, 2112.4321]' . $mode_tagline,
-                q{TNVALSOBU34a eval { my $retval = number_bubblesort__typetest0( [2.1234432112344321, ..., 1701.6789] ); return $retval; } returns correct value}
+# NEED DELETE OLD CODE
+#            is( eval {
+#                    my $retval = number_bubblesort__typetest0( [ 2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789 ] );
+#                    return $retval;
+#                },
+#                '[-877.567_8, -33.876_587_658_765_9, 2.123_443_211_234_43, 23.765_444_444_444_4, 42.456_7, 1_701.678_9, 2_112.432_1]' . $mode_tagline,
+#                q{TNVALSOBU35 eval { my $retval = number_bubblesort__typetest0( [2.1234432112344321, ..., 1701.6789] ); return $retval; } returns correct value}
+#            );
+
+            my string $tmp_retval = eval {
+                my $inner_retval
+                    = number_bubblesort__typetest0(
+                    [ 2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789 ] );
+                return $inner_retval;
+            };
+            like(
+                $tmp_retval,
+                qr/\[-877\.567_8, -33\.876_587_658_765/,
+                q{TNVALSOBU35 eval { my $inner_retval = number_bubblesort__typetest0( [2.1234432112344321, ..., 1701.6789] ); return $inner_retval; } returns correct value, array beginning}
+            );
+            like(
+                $tmp_retval,
+                qr/42\.456_7, 1_701\.678_9, 2_112\.432_1\]/,
+                q{TNVALSOBU35 eval { my $inner_retval = number_bubblesort__typetest0( [2.1234432112344321, ..., 1701.6789] ); return $inner_retval; } returns correct value, array end}
+            );
+            like( $tmp_retval, qr/$mode_tagline/,
+                q{TTNVALSOBU35 eval { my $inner_retval = number_bubblesort__typetest0( [2.1234432112344321, ..., 1701.6789] ); return $inner_retval; } returns correct value, mode tagline}
             );
         },
-        q{TNVALSOBU34a eval { my $retval = number_bubblesort__typetest0( [2.1234432112344321, ..., 1701.6789] ); return $retval; } lives}
+        q{TNVALSOBU35 eval { my $inner_retval = number_bubblesort__typetest0( [2.1234432112344321, ..., 1701.6789] ); return $inner_retval; } lives}
     );
 }
 

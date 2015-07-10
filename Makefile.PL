@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-our $VERSION = 0.001_200;
+our $VERSION = 0.001_210;
 use ExtUtils::MakeMaker;
 
 BEGIN { use English; }
@@ -21,6 +21,7 @@ WriteMakefile(
         'CPAN::Meta'          => 2.150005,    # RPerl system developers only, used for generating CPAN metadata from this file during dist build
         'Test::Exception'     => 0.32,
         'Test::CPAN::Changes' => 0.400002,
+        'Test::Number::Delta' => 1.06,        # for compatibility with Perls compiled using -Duselongdouble
         'Perl::Critic'        => 1.121,
         'Perl::Tidy'          => 20140711,
         'Parse::Eyapp'        => 1.182,
@@ -38,6 +39,7 @@ WriteMakefile(
         },
 
         # NEED FIX: no_index is a temporary solution to the CPAN indexing and data type package naming issue
+        # mst says we need to set data type package names without using 'package FOO;' like how Lexical::Types works
         no_index       => { 
             # DEV NOTE: the following 12 package namespaces are already controlled by some other PAUSE owner on CPAN,
             # their indexing is double-disabled in that they are both listed here and also given newlines-in-package-declarations

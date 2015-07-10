@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash_cpp
-#define __CPP__INCLUDED__RPerl__DataStructure__Hash_cpp 0.004_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Hash_cpp 0.004_020
 
 #include <RPerl/DataStructure/Hash.h>		// -> NULL (relies on <unordered_map> being included via Inline::CPP's AUTO_INCLUDE config option)
 
@@ -770,7 +770,7 @@ SV* number_hashref_to_string(SV* input_hv_ref)
 		}
 
 //      temp_stream << "'" << SvPV_nolen(input_hv_entry_key) << "' => " << (double)SvNV(input_hv_entry_value);
-		temp_stream << "'" << input_hv_entry_key_string << "' => " << (double)SvNV(input_hv_entry_value);
+		temp_stream << "'" << input_hv_entry_key_string << "' => " << (string)SvPV_nolen(number_to_string(input_hv_entry_value));
 	}
 
 	temp_stream << "}";
@@ -940,7 +940,7 @@ string number_hashref_to_string(number_hashref input_unordered_map)
 		}
 
 //		output_stream << "'" << (i->first).c_str() << "' => " << i->second;
-		output_stream << "'" << key_string.c_str() << "' => " << i->second;
+		output_stream << "'" << key_string.c_str() << "' => " << number_to_string(i->second);
 	}
 
 	output_stream << '}';

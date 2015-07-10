@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash::SubTypes;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.006_020;
+our $VERSION = 0.006_030;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd) # DEVELOPER DEFAULT 1b: allow unreachable & POD-commented code, must be after line 1
@@ -372,7 +372,8 @@ our string $number_hashref_to_string = sub {
 
         if ($i_is_0) { $i_is_0 = 0; }
         else         { $output_sv .= ', '; }
-        $output_sv .= "'$key' => $input_hv_entry_value";
+#        $output_sv .= "'$key' => $input_hv_entry_value";
+        $output_sv .= q{'} . $key . q{' => } . RPerl::DataType::Number::number_to_string($input_hv_entry_value);
     }
 
     $output_sv .= '}';

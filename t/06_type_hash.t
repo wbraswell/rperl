@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.004_050;
+our $VERSION = 0.005_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
@@ -11,8 +11,9 @@ our $VERSION = 0.004_050;
 BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
 use RPerl::Test;
-use Test::More tests => 220;
+use Test::More tests => 247;
 use Test::Exception;
+use Test::Number::Delta;
 
 BEGIN {
     if ( $ENV{RPERL_VERBOSE} ) {
@@ -28,14 +29,15 @@ BEGIN {
 
 # loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
 foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
-#for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
+
+    #for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
 
     # [[[ MODE SETUP ]]]
     #    RPerl::diag("in 06_type_hash.t, top of for() loop, have \$mode_id = $mode_id\n");
     my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
-    my $ops                 = $mode->{ops};
-    my $types               = $mode->{types};
-    my string $mode_tagline = $ops . 'OPS_' . $types . 'TYPES';
+    my $ops                     = $mode->{ops};
+    my $types                   = $mode->{types};
+    my string $mode_tagline     = $ops . 'OPS_' . $types . 'TYPES';
     if ( $ENV{RPERL_VERBOSE} ) {
         Test::More::diag( '[[[ Beginning RPerl Hash Type Tests, ' . $ops . ' operations and ' . $types . ' data types' . ' ]]]' );
     }
@@ -419,7 +421,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                     }
                 ),
 
-                q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2112\b)(?=.*'c_key' => 42\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => -33\b)(?=.*'g_key' => 1701\b).*\}$/m},
+                q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2_112\b)(?=.*'c_key' => 42\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => -33\b)(?=.*'g_key' => 1_701\b).*\}$/m},
                 q{TNVHVRV21 number_hashref_to_string({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => -33, g_key => 1701}) returns correct value}
             );
         },
@@ -427,8 +429,9 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(    # TNVHVRV22
         sub {
-            is( number_hashref_to_string( { a_key => 2.1234432112344321 } ),
-                q{{'a_key' => 2.12344321123443}},
+            like(
+                number_hashref_to_string( { a_key => 2.1234432112344321 } ),
+                qr/\{'a_key' => 2\.123_443_211_234/,
                 q{TNVHVRV22 number_hashref_to_string({a_key => 2.1234432112344321}) returns correct value}
             );
         },
@@ -447,7 +450,10 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                         g_key => 1701.6789
                     }
                 ),
-                q{/^\{(?=.*'a_key' => 2\.12344321123443\b)(?=.*'b_key' => 2112\.4321\b)(?=.*'c_key' => 42\.4567\b)(?=.*'d_key' => 23\.7654444444444\b)(?=.*'e_key' => -877\.5678\b)(?=.*'f_key' => -33\.8765876587659\b)(?=.*'g_key' => 1701\.6789\b).*\}$/m},
+
+# NEED DELETE OLD CODE
+#                q{/^\{(?=.*'a_key' => 2\.123_443_211_234_4\b)(?=.*'b_key' => 2_112\.432_1\b)(?=.*'c_key' => 42\.456_7\b)(?=.*'d_key' => 23\.765_444_444_444\b)(?=.*'e_key' => -877\.5_678\b)(?=.*'f_key' => -33\.876_587_658_765\b)(?=.*'g_key' => 1_701\.6_789\b).*\}$/m},
+                q{/^\{(?=.*'a_key' => 2\.123_443_211_234)(?=.*'b_key' => 2_112\.432_1)(?=.*'c_key' => 42\.456_7)(?=.*'d_key' => 23\.765_444_444_44)(?=.*'e_key' => -877\.567_8)(?=.*'f_key' => -33\.876_587_658_76)(?=.*'g_key' => 1_701\.678_9).*\}$/m},
 
 #                q{TNVHVRV23 number_hashref_to_string(a_key => 2.1234432112344321, b_key => 2112.4321, c_key => 42.4567, d_key => 23.765444444444444444, e_key => -877.5678, f_key => -33.876587658765875687658765, g_key => 1701.6789) returns correct value}
                 q{TNVHVRV23 number_hashref_to_string(a_key => 2.1234432112344321, b_key => 2112.4321, c_key => 42.4567, ..., g_key => 1701.6789) returns correct value}
@@ -512,7 +518,10 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                         'ncc'    => 1701.6789
                     }
                 ),
-                q{/^\{(?=.*'binary' => 2\.12344321123443\b)(?=.*'rush' => 2112\.4321\b)(?=.*'answer' => 42\.4567\b)(?=.*'fnord' => 23\.7654444444444\b)(?=.*'units' => -877\.5678\b)(?=.*'degree' => -33\.8765876587659\b)(?=.*'ncc' => 1701\.6789\b).*\}}
+
+# NEED DELETE OLD CODE
+#                q{/^\{(?=.*'binary' => 2\.12344321123443\b)(?=.*'rush' => 2112\.4321\b)(?=.*'answer' => 42\.4567\b)(?=.*'fnord' => 23\.7654444444444\b)(?=.*'units' => -877\.5678\b)(?=.*'degree' => -33\.8765876587659\b)(?=.*'ncc' => 1701\.6789\b).*\}}
+                q{/^\{(?=.*'binary' => 2\.123_443_211_234)(?=.*'rush' => 2_112\.432_1)(?=.*'answer' => 42\.456_7)(?=.*'fnord' => 23\.765_444_444_44)(?=.*'units' => -877\.567_8)(?=.*'degree' => -33\.876_587_658_76)(?=.*'ncc' => 1_701\.678_9).*\}}
                     . $mode_tagline . q{$/m},
                 q{TNVHVRV34 number_hashref__typetest0({'binary' => 2.1234432112344321, 'rush' => 2112.4321, ..., 'ncc' => 1701.6789}) returns correct value}
             );
@@ -521,16 +530,36 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(    # TNVHVRV40
         sub {
-            is_deeply(
-                number_hashref__typetest1(5),
-                {   "$mode_tagline\_funkey2" => 10.246913578,
-                    "$mode_tagline\_funkey3" => 15.370370367,
-                    "$mode_tagline\_funkey4" => 20.493827156,
-                    "$mode_tagline\_funkey1" => 5.123456789,
-                    "$mode_tagline\_funkey0" => 0
-                },
-                q{TNVHVRV40 number_hashref__typetest1(5) returns correct value}
-            );
+            # NEED DELETE OLD CODE
+            #            is_deeply(
+            #                number_hashref__typetest1(5),
+            #                {   "$mode_tagline\_funkey2" => 10.246913578,
+            #                    "$mode_tagline\_funkey3" => 15.370370367,
+            #                    "$mode_tagline\_funkey4" => 20.493827156,
+            #                    "$mode_tagline\_funkey1" => 5.123456789,
+            #                    "$mode_tagline\_funkey0" => 0
+            #                },
+            #                q{TNVHVRV40 number_hashref__typetest1(5) returns correct value}
+            #            );
+
+            my number_hashref $tmp_retval    = number_hashref__typetest1(5);
+            my number_hashref $correct_retval = {
+                "$mode_tagline\_funkey2" => 10.246913578,
+                "$mode_tagline\_funkey3" => 15.370370367,
+                "$mode_tagline\_funkey4" => 20.493827156,
+                "$mode_tagline\_funkey1" => 5.123456789,
+                "$mode_tagline\_funkey0" => 0
+            };
+            foreach my string $correct_retval_key ( keys %{$correct_retval} ) {
+                ok( ( ( exists $tmp_retval->{$correct_retval_key} ) and ( defined $tmp_retval->{$correct_retval_key} ) ),
+                    q{TNVHVRV40a number_hashref__typetest1(5) returns defined value, at key } . $correct_retval_key
+                );
+                delta_ok(
+                    $correct_retval->{$correct_retval_key},
+                    $tmp_retval->{$correct_retval_key},
+                    q{TNVHVRV40b number_hashref__typetest1(5) returns correct value, at key } . $correct_retval_key
+                );
+            }
         },
         q{TNVHVRV40 number_hashref__typetest1(5) lives}
     );
@@ -723,8 +752,9 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                         "STRING_NOT_HASH"                  => "{buzz => 5}"
                     }
                 ),
-                # DEV NOTE: must surround single-q-quote below with square brackets instead of curly braces, so that the backslash-escaped curly braces inside the string
-                # will stay backslash-escaped as they are passed to the regex, to fix Perl v5.22 error 'Unescaped left brace in regex is deprecated, passed through in regex'
+
+   # DEV NOTE: must surround single-q-quote below with square brackets instead of curly braces, so that the backslash-escaped curly braces inside the string
+   # will stay backslash-escaped as they are passed to the regex, to fix Perl v5.22 error 'Unescaped left brace in regex is deprecated, passed through in regex'
                 q[/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'STRING_NOT_HASH' => '\{buzz => 5\}').*\}$/m]
                 ,    ## PERLTIDY BUG comma on newline
                 q{TPVHVRV25 string_hashref_to_string({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., "STRING_NOT_HASH" => "{buzz => 5}"}) returns correct value}

@@ -1,9 +1,19 @@
 Revision history for Perl compiler RPerl.
 
+1.000007 2015-07-09
+
+    - Use Test::Number::Delta For Compatibility With Perls Compiled Using -Duselongdouble,
+        Maybe Fixes Duplicate Bugs
+        https://github.com/wbraswell/rperl/issues/24 &
+        https://rt.cpan.org/Ticket/Display.html?id=105781
+    
+    - Disable Return Operator Parse Failures,
+        Maybe Temporarily Fixes Bug https://github.com/wbraswell/rperl/issues/25
+
 1.000006 2015-07-09
 
     - Disable PAUSE Indexing For Data Type & Test Packages,
-        Maybe Fixes Bug https://rt.cpan.org/Ticket/Display.html?id=105757
+        Fixes Bug https://rt.cpan.org/Ticket/Display.html?id=105757
 
 1.000005 2015-07-08
 

@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.001_002;
+our $VERSION = 0.001_010;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
@@ -11,7 +11,6 @@ use Test::More tests => 16;
 use Test::Exception;
 use Carp;
 use English qw(-no_match_vars);
-my $ERROR_MAX = 0.00000001;
 
 #$SIG{__WARN__}=sub {cluck $_[0]};  # DEBUGGING
 

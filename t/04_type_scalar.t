@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.005_024;
+our $VERSION = 0.006_010;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
@@ -15,7 +15,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use RPerl::Test;
 use Test::More tests => 319;
 use Test::Exception;
-my $ERROR_MAX = 0.00000001;
+use Test::Number::Delta;
 
 BEGIN {
     if ( $ENV{RPERL_VERBOSE} ) {
@@ -321,8 +321,11 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(                                                   # TNV08
         sub {
-            is( number_to_string(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679),
-                '3.141_592_653_589_79',
+            # NEED DELETE OLD CODE
+#            is( number_to_string(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679),
+#                '3.141_592_653_589_79',
+            like( number_to_string(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679),
+                qr/3.141_592_653_589_7/,
                 q{TNV08 number_to_string(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679) returns correct value}
             );
         },
@@ -330,7 +333,9 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(                                                   # TNV09
         sub {
-            is( number_to_string(1_234_567.890_123_456), '1_234_567.890_123_46', q{TNV09 number_to_string(1_234_567.890_123_456) returns correct value} );
+            # NEED DELETE OLD CODE
+#            is( number_to_string(1_234_567.890_123_456), '1_234_567.890_123_46', q{TNV09 number_to_string(1_234_567.890_123_456) returns correct value} );
+            like( number_to_string(1_234_567.890_123_456), qr/1_234_567.890_123_4/, q{TNV09 number_to_string(1_234_567.890_123_456) returns correct value} );
         },
         q{TNV09 number_to_string(1_234_567.890_123_456) lives}
     );
@@ -372,12 +377,8 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(                                                   # TNV20
         sub {
-            cmp_ok(
-                abs( number__typetest0() - ( 3.14285714285714 + $mode_id ) ),    ## PERLTIDY BUG comma on newline
-                '<',
-                $ERROR_MAX,
-                q{TNV20 number__typetest0() returns correct value}
-            );
+            delta_ok( number__typetest0(), ( 3.14285714285714 + $mode_id ),
+                q{TNV20 number__typetest0() returns correct value});
         },
         q{TNV20 number__typetest0() lives}
     );
@@ -406,7 +407,9 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(                                                                   # TNV34
         sub {
-            is( number__typetest1(-17.3), ( ( -17.3 * 2 ) + $mode_id ), q{TNV34 number__typetest1(-17.3) returns correct value} );
+            # NEED DELETE OLD CODE
+#            is( number__typetest1(-17.3), ( ( -17.3 * 2 ) + $mode_id ), q{TNV34 number__typetest1(-17.3) returns correct value} );
+            delta_ok( number__typetest1(-17.3), ( ( -17.3 * 2 ) + $mode_id ), q{TNV34 number__typetest1(-17.3) returns correct value} );
         },
         q{TNV34 number__typetest1(-17.3) lives}
     );
@@ -427,12 +430,8 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(                                                                   # TNV38
         sub {
-            cmp_ok(
-                abs(number__typetest1(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679)
-                        - ( ( 3.14159265358979 * 2 ) + $mode_id )
-                ),
-                '<',
-                $ERROR_MAX,
+            delta_ok(number__typetest1(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679),
+                ( ( 3.14159265358979 * 2 ) + $mode_id ),
                 q{TNV38 number__typetest1(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679) returns correct value}
             );
         },

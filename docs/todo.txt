@@ -2,10 +2,16 @@ Eyapp unescaped left braces
 
 RELEASE Parse::Eyap vX.YZZY
 
+Fix Numeric Accuracy
+
+RELEASE v1.000007
+
 
 Fix CPAN Testers Bugs
 
-data type package names
+fix lib/RPerl/Test/OperatorVoid01NamedVoidReturn/*.DISABLED_NEED_FIX
+	https://github.com/wbraswell/rperl/issues/25
+
 RPerl::Test package indexing
 compile Foo.pm
 update tests
@@ -14,7 +20,8 @@ website total
 
 RELEASE v1.0000XY
 
-fix RPerl/Test/ScopeTypeNameValue/program_5*_good.pl.DISABLED_PERL_V5_22 and RPerl/Test/Expression/program_*_good.pl.DISABLED_NEED_FIX
+fix RPerl/Test/ScopeTypeNameValue/program_5*_good.pl.DISABLED_PERL_V5_22
+fix RPerl/Test/Expression/program_*_good.pl.DISABLED_NEED_FIX
 
 RELEASE v1.0000XY
 
@@ -34,3 +41,6 @@ cloud machines
 Shiny APTech site
 Shiny RPerl site
 Shiny App Store
+
+
+

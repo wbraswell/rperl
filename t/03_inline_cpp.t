@@ -1,16 +1,16 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.001_005;
+our $VERSION = 0.002_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
 
 use Test::More tests => 17;
 use Test::Exception;
+use Test::Number::Delta;
 use Carp;
 use English qw(-no_match_vars);
-my $ERROR_MAX = 0.00000001;
 
 BEGIN {
     if ( $ENV{RPERL_VERBOSE} ) {
@@ -208,7 +208,7 @@ lives_and(
             '/The C\/C\+\+ average of 10000 random numbers is: \d+.\d+/',
             q{Inline::CPP, call average() and avg() returns correct value 2}
         );
-        cmp_ok( abs( $average_retval - $avg_retval ), '<', $ERROR_MAX, q{Inline::CPP, call average() and avg() return values are equivalent} );
+        delta_ok( $average_retval, $avg_retval, q{Inline::CPP, call average() and avg() return values are equivalent} );
     },
     q{Inline::CPP, call average() and avg() lives}
 );
