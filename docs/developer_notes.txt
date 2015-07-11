@@ -114,6 +114,7 @@ https://rt.cpan.org
 ##########################################################################################
 
 http://www.cpantesters.org/distro/R/RPerl.html
+http://www.cpantesters.org/author/W/WBRASWELL.html
 
 https://admin.cpantesters.org/cgi-bin/pages.cgi?act=user-author
 https://admin.cpantesters.org/cgi-bin/pages.cgi?act=author-dist&dist=RPerl

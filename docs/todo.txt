@@ -2,10 +2,10 @@ Eyapp unescaped left braces
 
 RELEASE Parse::Eyap vX.YZZY
 
-Fix Numeric Accuracy
 
-RELEASE v1.000007
-
+CHECK
+	Fix Numeric Accuracy
+	tmp fix lib/RPerl/Test/OperatorVoid01NamedVoidReturn/*.DISABLED_NEED_FIX
 
 Fix CPAN Testers Bugs
 
