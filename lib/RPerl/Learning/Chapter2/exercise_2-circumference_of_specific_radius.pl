@@ -10,7 +10,7 @@ our $VERSION = 0.001_000;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
 
-use constant $PI = 3.141_592_654;
+use constant PI => 3.141_592_654;
 
 # [[[ OPERATIONS ]]]
 my number $radius = 12.5;
