@@ -18,4 +18,4 @@ my number $circumference = 2 * PI() * $radius;
 
 print 'Pi = ' . PI() . "\n";
 print 'Radius = ' . $radius . "\n";
-print 'Circumference = ' . $circumference . "\n";
+print 'Circumference = 2 * Pi * Radius = 2 * ' . PI() . ' * ' . $radius . ' = ' . $circumference . "\n";
