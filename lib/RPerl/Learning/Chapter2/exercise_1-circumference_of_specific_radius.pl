@@ -1,5 +1,8 @@
 #!/usr/bin/perl
 
+# Learning RPerl, Chapter 2, Exercise 1
+# Find the circumference of a circle with hard-coded radius of 12.5 units
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;

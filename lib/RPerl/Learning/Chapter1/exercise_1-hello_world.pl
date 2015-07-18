@@ -1,5 +1,8 @@
 #!/usr/bin/perl
 
+# Learning RPerl, Chapter 1, Exercise 1
+# Print "Hello, world!"; the classic first program for new programmers
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;

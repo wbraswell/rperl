@@ -1,5 +1,8 @@
 #!/usr/bin/perl
 
+# Learning RPerl, Chapter 2, Exercise 4
+# Find the product of any two numbers entered by the user
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
