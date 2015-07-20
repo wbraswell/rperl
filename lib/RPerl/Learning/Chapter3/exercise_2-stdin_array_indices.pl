@@ -1,5 +1,8 @@
 #!/usr/bin/perl
 
+# Learning RPerl, Chapter 3, Exercise 2
+# Print string array elements indexed by user-supplied integers
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;

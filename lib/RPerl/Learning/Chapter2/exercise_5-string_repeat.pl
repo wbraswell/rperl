@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # Learning RPerl, Chapter 2, Exercise 5
-# Repeat any string any number of times, both entered by the user
+# Repeat any string any number of times, both values entered by the user
 
 # [[[ HEADER ]]]
 use strict;

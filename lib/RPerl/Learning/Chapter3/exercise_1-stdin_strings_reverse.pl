@@ -1,5 +1,8 @@
 #!/usr/bin/perl
 
+# Learning RPerl, Chapter 3, Exercise 1
+# Print user-supplied list of strings in reverse order
+
 # [[[ HEADER ]]]
 use strict;
 use warnings;
