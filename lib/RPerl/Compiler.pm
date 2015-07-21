@@ -23,6 +23,7 @@ use File::Temp qw(tempfile);
 use File::Basename;
 use English qw(-no_match_vars);    # for $OSNAME; why isn't this included from 'require RPerl::Config', which is included from 'use RPerl' above?
 use IPC::Cmd qw(can_run);          # to check for `perltidy` and `astyle`
+use List::MoreUtils qw(uniq);
 
 # [[[ SUBROUTINES ]]]
 
@@ -110,19 +111,7 @@ our string_arrayref $find_dependencies = sub {
             my string_arrayref $subdependencies = find_dependencies( $INC{$file_line} );
 
             # discard duplicate dependencies that now appear in subdependencies
-            my bool $is_subdependency = 0;
-            foreach my string $dependency ( @{$dependencies} ) {
-                foreach my string $subdependency ( @{$subdependencies} ) {
-                    if ( $dependency eq $subdependency ) {
-                        $is_subdependency = 1;
-                    }
-                }
-                if ( not $is_subdependency ) {
-                    push @{$subdependencies}, $dependency;
-                }
-                $is_subdependency = 0;
-            }
-            $dependencies = $subdependencies;
+            $dependencies = [uniq @{$dependencies} , @{$subdependencies}];
 
             #            RPerl::diag( 'in Compiler::find_dependencies(), have POST-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
         }
