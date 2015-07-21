@@ -7,12 +7,13 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.005_100;
+our $VERSION = 0.005_200;
 
 # [[[ CRITICS ]]]
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
 ## no critic qw(RequireBriefOpen)  # SYSTEM SPECIAL 9: allow complex processing with open filehandle
 
 # [[[ INCLUDES ]]]
@@ -45,7 +46,7 @@ our string_arrayref $find_dependencies = sub {
     my string $first_package_name = undef;
     my string $eval_string;
     my integer $eval_retval;
-    
+
     # NEED FIX: do not make recursive calls until after closing file, to avoid
     # ERROR ECVCODE01, COMPILER, FIND DEPENDENCIES: Cannot open file Foo/Bar.pm for reading, Too many open files, dying
     while ( $file_line = <$FILE_HANDLE> ) {
@@ -72,29 +73,30 @@ our string_arrayref $find_dependencies = sub {
                 or ( $file_line =~ /use\s+RPerl::CompileUnit::Module::Class\s*;/ )
                 or ( $file_line =~ /use\s+RPerl\s*;/ )
                 or ( $file_line =~ /use\s+parent/ )
-                or ( $file_line =~ /use\s+constant/ ) 
+                or ( $file_line =~ /use\s+constant/ )
                 or ( $file_line =~ /use\s+[0-9]/ ) )
             {
                 # safely ignore these possibly-valid but not-subdependency uses
                 next;
             }
 
-            if ( $file_line =~ /use\s+lib/ )
-            {
-                die q{ERROR ECVCODE03, COMPILER, FIND DEPENDENCIES: 'use lib...' not currently supported, please set @INC using the PERL5LIB environment variable, dying} . "\n";
+            if ( $file_line =~ /use\s+lib/ ) {
+                die
+                    q{ERROR ECVCODE03, COMPILER, FIND DEPENDENCIES: 'use lib...' not currently supported, please set @INC using the PERL5LIB environment variable, dying}
+                    . "\n";
             }
 
             $file_line =~ s/^\s*use\s+([\w:]+)\s*.*\s*;\s*$/$1/gxms;    # remove everything except the package name
             $eval_string = 'use ' . $file_line . '; 1;';
 
-            RPerl::diag('in Compiler::find_dependencies(), about to call DEP $eval_string = ' . $eval_string . "\n");
+            RPerl::diag( 'in Compiler::find_dependencies(), about to call DEP $eval_string = ' . $eval_string . "\n" );
             $eval_retval = eval($eval_string);
 
-#            RPerl::diag('in Compiler::find_dependencies(), have POST-EVAL DEP %INC = ' . Dumper(\%INC) . "\n");
+            #            RPerl::diag('in Compiler::find_dependencies(), have POST-EVAL DEP %INC = ' . Dumper(\%INC) . "\n");
             if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne q{} ) ) {
                 die 'ERROR ECVCODE02, COMPILER, FIND DEPENDENCIES: Failed to eval-use package ' . $file_line . '  ...  ' . $EVAL_ERROR . ', dying' . "\n";
             }
-            $file_line =~ s/::/\//gxms;                            # replace double-colon :: scope delineator with forward-slash / directory delineator
+            $file_line =~ s/::/\//gxms;                                 # replace double-colon :: scope delineator with forward-slash / directory delineator
             $file_line .= '.pm';
             if ( not exists $INC{$file_line} ) {
                 die 'ERROR ECVCODE04, COMPILER, FIND DEPENDENCIES: After successful eval-use, still failed to find package file '
@@ -111,7 +113,7 @@ our string_arrayref $find_dependencies = sub {
             my string_arrayref $subdependencies = find_dependencies( $INC{$file_line} );
 
             # discard duplicate dependencies that now appear in subdependencies
-            $dependencies = [uniq @{$dependencies} , @{$subdependencies}];
+            $dependencies = [ uniq @{$subdependencies}, @{$dependencies} ];
 
             #            RPerl::diag( 'in Compiler::find_dependencies(), have POST-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
         }

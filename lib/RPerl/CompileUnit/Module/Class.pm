@@ -97,12 +97,7 @@ INIT {
 
                     #                    RPerl::diag( "in Class.pm INIT block, have \$module_file_long = '$module_file_long'\n" );
                     if ($inside_subroutine) {
-                        RPerl::diag( 'in Class.pm INIT block, found <<< TYPE_CHECKING: '
-                                . $1
-                                . ' >>> while inside subroutine '
-                                . $subroutine_name
-                                . '(), aborting RPerl activation of entire file'
-                                . "\n" );
+#                        RPerl::diag( 'in Class.pm INIT block, found <<< TYPE_CHECKING: ' . $1 . ' >>> while inside subroutine ' . $subroutine_name . '(), aborting RPerl activation of entire file' . "\n" );
                         last;
                     }
                     else {
@@ -153,10 +148,7 @@ INIT {
                 # skip __DATA__ footer
                 if ( $module_file_line eq '__DATA__' ) {
                     if ($inside_subroutine) {
-                        RPerl::diag( 'in Class.pm INIT block, skipping __DATA__ footer while inside subroutine '
-                                . $subroutine_name
-                                . '(), aborting RPerl activation of entire file'
-                                . "\n" );
+#                        RPerl::diag( 'in Class.pm INIT block, skipping __DATA__ footer while inside subroutine ' . $subroutine_name . '(), aborting RPerl activation of entire file' . "\n" );
                     }
 
                     #                    else { RPerl::diag('in Class.pm INIT block, skipping __DATA__ footer' . "\n"); }
@@ -166,10 +158,7 @@ INIT {
                 # skip __END__ footer
                 if ( $module_file_line eq '__END__' ) {
                     if ($inside_subroutine) {
-                        RPerl::diag( 'in Class.pm INIT block, skipping __END__ footer while inside subroutine '
-                                . $subroutine_name
-                                . '(), aborting RPerl activation of entire file'
-                                . "\n" );
+#                        RPerl::diag( 'in Class.pm INIT block, skipping __END__ footer while inside subroutine ' . $subroutine_name . '(), aborting RPerl activation of entire file' . "\n" );
                     }
 
                     #                    else { RPerl::diag('in Class.pm INIT block, skipping __END__ footer' . "\n"); }
@@ -204,15 +193,10 @@ INIT {
                     }
 
                     if ($inside_subroutine) {
-                        RPerl::diag( 'in Class.pm INIT block, have $package name = '
-                                . $package_name
-                                . 'while inside subroutine '
-                                . $subroutine_name
-                                . '(), aborting RPerl activation of entire file'
-                                . "\n" );
+#                        RPerl::diag( 'in Class.pm INIT block, have $package name = ' . $package_name . 'while inside subroutine ' . $subroutine_name . '(), aborting RPerl activation of entire file' . "\n" );
                         last;
                     }
-                    else { RPerl::diag( 'in Class.pm INIT block, have $package name = ' . $package_name . "\n" ); }
+#                    else { RPerl::diag( 'in Class.pm INIT block, have $package name = ' . $package_name . "\n" ); }
 
                     # ops/types reporting subroutine
 
@@ -269,14 +253,7 @@ INIT {
                 # create symbol table entries for methods and plain-old non-method subroutines
                 if ( $module_file_line =~ /^\s*our\s+(\w+)\s+\$(\w+)\s+\=\s+sub\s+\{/xms ) {
                     if ($inside_subroutine_arguments) {
-                        RPerl::diag( q{in Class.pm INIT block, have $subroutine_type = }
-                                . $1
-                                . q{, and $subroutine_name = }
-                                . $2
-                                . '() while inside arguments of subroutine '
-                                . $subroutine_name
-                                . '(), aborting RPerl activation of entire file'
-                                . "\n" );
+#                        RPerl::diag( q{in Class.pm INIT block, have $subroutine_type = } . $1 . q{, and $subroutine_name = } . $2 . '() while inside arguments of subroutine ' . $subroutine_name . '(), aborting RPerl activation of entire file' . "\n" );
                         last;    # last line of file
                     }
 
@@ -318,12 +295,7 @@ INIT {
                         $subroutine_arguments_line .= $module_file_line;
                         if ( $subroutine_arguments_line =~ /\@\_\;/xms ) {    # @_; found
                             if ( not( $subroutine_arguments_line =~ /\@\_\;$/xms ) ) {    # @_; found not at end-of-line
-                                RPerl::diag( q{in Class.pm INIT block, found @_; NOT at end-of-line while inside subroutine }
-                                        . $subroutine_name
-                                        . '(), have $subroutine_arguments_line = ' . "\n"
-                                        . $subroutine_arguments_line . "\n\n"
-                                        . 'aborting RPerl activation of entire file'
-                                        . "\n" );
+#                                RPerl::diag( q{in Class.pm INIT block, found @_; NOT at end-of-line while inside subroutine } . $subroutine_name . '(), have $subroutine_arguments_line = ' . "\n" . $subroutine_arguments_line . "\n\n" . 'aborting RPerl activation of entire file' . "\n" );
                                 last;
                             }
 

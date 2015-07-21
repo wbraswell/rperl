@@ -2,7 +2,7 @@
 package RPerl::Config;
 use strict;
 use warnings;
-our $VERSION = 0.003_040;
+our $VERSION = 0.003_041;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -82,7 +82,9 @@ our $TYPES_CCFLAG = ' -D__CPP__TYPES';  # rperltypes_mode.h defaults to CPPTYPES
 sub diag {
     ( my $message ) = @_;
 
-    # default to off; if either variable is set to true, then do emit messages
+#    print {*STDERR} 'in diag(), have $ENV{RPERL_DEBUG} = ' . $ENV{RPERL_DEBUG} . "\n";
+
+    # DEV NOTE, CORRELATION #17: default to off; if either variable is set to true, then do emit messages
     if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) { print {*STDERR} $message; }
 
     #    if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) { print {*STDERR} "\e[1;31m $message \e[0m"; }  # print in red
@@ -103,7 +105,7 @@ sub diag_pause {
 sub verbose {
     ( my $message ) = @_;
 
-    # default to off; if either variable is set to true, then do emit messages
+    # DEV NOTE, CORRELATION #17: default to off; if either variable is set to true, then do emit messages
     if ( $ENV{RPERL_VERBOSE} or $RPerl::VERBOSE ) {
         print {*STDOUT} $message;
     }

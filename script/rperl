@@ -132,9 +132,16 @@ sub verify_and_default_modes {
         }
     }
 
-    # must put Perl variables into environmental variables for the values to be properly utilized
-    $ENV{RPERL_DEBUG}   = $RPerl::DEBUG;
-    $ENV{RPERL_VERBOSE} = $RPerl::VERBOSE;
+    # must put Perl variables into environmental variables for the values to be properly utilized,
+    # do not simply overwrite values, check for applicability first
+
+    # DEV NOTE, CORRELATION #17: default to off; if either variable is set to true, then do emit messages
+    if ($RPerl::DEBUG) {
+        $ENV{RPERL_DEBUG} = $RPerl::DEBUG;
+    }
+    if ($RPerl::VERBOSE) {
+        $ENV{RPERL_VERBOSE} = $RPerl::VERBOSE;
+    }
 
     # verify modes
     foreach my string $mode_key ( keys %{$modes} ) {
