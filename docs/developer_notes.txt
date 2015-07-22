@@ -1,4 +1,4 @@
-# RPerl Developer Notes 20150709 2015.190
+# RPerl Developer Notes 20150721 2015.202
 
 ##########################################################################################
 # WARNING & ERROR CODES
@@ -100,6 +100,14 @@ Used together, as /ms, they let the "." match any character whatsoever, while st
 /x
 /x tells the regular expression parser to ignore most whitespace that is neither backslashed nor within a bracketed character class. You can use this to break up your regular expression into (slightly) more readable parts. Also, the # character is treated as a metacharacter introducing a comment that runs up to the pattern's closing delimiter, or to the end of the current line if the pattern extends onto the next line. Hence, this is very much like an ordinary Perl code comment. (You can include the closing delimiter within the comment only if you precede it with a backslash, so be careful!)
 Use of /x means that if you want real whitespace or # characters in the pattern (outside a bracketed character class, which is unaffected by /x), then you'll either have to escape them (using backslashes or \Q...\E ) or encode them using octal, hex, or \N{} escapes. It is ineffective to try to continue a comment onto the next line by escaping the \n with a backslash or \Q .
+
+
+##########################################################################################
+# CPAN & METACPAN
+##########################################################################################
+
+http://search.cpan.org/~wbraswell/
+https://metacpan.org/author/WBRASWELL
 
 
 ##########################################################################################

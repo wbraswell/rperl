@@ -1,5 +1,5 @@
 # RPerl Install Notes
-# Last Updated July 7, 2015
+# Last Updated July 21, 2015
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # NOTE: STEP 1 IS ONLY FOR SINGLE-USER INSTALL, NOT SYSTEM-WIDE INSTALL
@@ -46,16 +46,16 @@ $ sudo apt-get install perlbrew
 # OR
 $ curl -L http://install.perlbrew.pl | bash
 
-$ perlbrew init
-$ perlbrew mirror  # Arlington, TX #222 http://mirror.uta.edu/CPAN/
 $ echo 'source ~/perl5/perlbrew/etc/bashrc' >> ~/.bashrc
-$ source ~/.bashrc; set | grep perl5
+$ source ~/.bashrc; set | grep PERL
     # Ensure the following 3 environmental variables are updated to include ~/perl5: 
     # PERLBREW_MANPATH, PERLBREW_PATH, PERLBREW_ROOT
+$ perlbrew init
+$ perlbrew mirror  # Arlington, TX #222 http://mirror.uta.edu/CPAN/
 
 $ perlbrew install perl-5.20.2
-$ perlbrew use perl-5.20.2  # TEMPORARY
-$ perlbrew switch perl-5.20.2  # PERMANENT
+$ perlbrew use perl-5.20.2  # TEMPORARY, THIS SESSION ONLY
+$ perlbrew switch perl-5.20.2  # PERMANENT, FUTURE SESSIONS
 $ perlbrew off
 $ perlbrew install-cpanm
 
