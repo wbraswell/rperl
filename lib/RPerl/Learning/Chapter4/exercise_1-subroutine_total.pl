@@ -15,10 +15,10 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 
-our number $total = sub {
+our number $total_stringified = sub {
     (my string_arrayref $input_numbers_stringified) = @_;
     my number $retval = 0;
-    foreach my number $input_number_stringified (@{$input_numbers_stringified}) {
+    foreach my string $input_number_stringified (@{$input_numbers_stringified}) {
         $retval += string_to_number($input_number_stringified);
     }
     return $retval;
@@ -27,9 +27,9 @@ our number $total = sub {
 # [[[ OPERATIONS ]]]
 
 my string_arrayref $fred = [qw(1 3 5 7 9)];
-my number $fred_total = total($fred);
+my number $fred_total = total_stringified($fred);
 print 'The total of $fred is ' . $fred_total . '.' . "\n";
 
 print 'Please input zero or more numbers, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
-my number $user_total = total([<STDIN>]);
+my number $user_total = total_stringified([<STDIN>]);
 print 'The total of those numbers is ' . $user_total . '.' . "\n";

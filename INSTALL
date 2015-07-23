@@ -9,8 +9,25 @@
 
 ################################################################################
 # STEP 0.
-# PRE-INSTALL, MAKEMAKER MUST BE UP-TO-DATE & INSTALLED SYSTEM-WIDE
+# PRE-INSTALL, GCC & MAKEMAKER MUST BE UP-TO-DATE & INSTALLED SYSTEM-WIDE
 ################################################################################
+
+$ g++ --version
+	# must be v4.7 or higher
+$ apt-get install g++
+	# OR
+$ wget http://people.centos.org/tru/devtools-1.1/devtools-1.1.repo -P /etc/yum.repos.d
+$ sh -c 'echo "enabled=1" >> /etc/yum.repos.d/devtools-1.1.repo'
+$ yum install devtoolset-1.1
+$ export CC=/opt/centos/devtoolset-1.1/root/usr/bin/gcc  
+$ export CPP=/opt/centos/devtoolset-1.1/root/usr/bin/cpp
+$ export CXX=/opt/centos/devtoolset-1.1/root/usr/bin/c++
+	# OR
+$ wget http://www.netgull.com/gcc/releases/gcc-5.2.0/gcc-5.2.0.tar.bz2  # or other mirror
+$ tar -xjvf gcc-5.2.0.tar.bz2
+$ cd gcc-5.2.0
+$ ./configure
+$ make
 
 $ mv ~/perl5 ~/perl5.old  # disable any previous local::lib or Perlbrew
 $ perl -v  # NOTE! the version of Perl determines whether you take step 1A or 1B
