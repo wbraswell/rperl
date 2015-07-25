@@ -1,7 +1,7 @@
 package RPerl::Inline;
 use strict;
 use warnings;
-our $VERSION = 0.001_040;
+our $VERSION = 0.001_050;
 
 #use RPerl;  # ERROR: Too late to run INIT block at ...
 #use Config;
@@ -21,8 +21,9 @@ use RPerl::Config;  # for $RPerl::DEBUG
 
 # DEV NOTE, CORRELATION #11: replace -std=c++0x w/ -std=c++11 for std::string::pop_back()
 # DEV NOTE: move ccflags outside %ARGS, make individual modules compose ccflags with possible cppflags right before calling Inline
-#our $CCFLAGSEX = '-DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
-our $CCFLAGSEX = '-DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix',
+#our $CCFLAGSEX = '-DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix';
+#our $CCFLAGSEX = '-DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix';
+our $CCFLAGSEX = '-Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix';
 
 our %ARGS = (
     typemaps => "$RPerl::INCLUDE_PATH/typemap.rperl",
