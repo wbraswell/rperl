@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array::SubTypes;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.006_020;
+our $VERSION = 0.007_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd) # DEVELOPER DEFAULT 1b: allow unreachable & POD-commented code, must be after line 1
@@ -17,6 +17,9 @@ our $VERSION = 0.006_020;
 # per LMPC #27: Thou Shalt Not Use Direct Access To Arrays & Hashes Stored In @ Or % Non-Scalar Variables
 package  # hide from PAUSE indexing
     array;
+use strict;
+use warnings;
+use RPerl;
 use parent ('RPerl::DataStructure::Array');
 
 # [[[ ARRAY REF ]]]
@@ -26,6 +29,9 @@ use parent ('RPerl::DataStructure::Array');
 # ref to array
 package  # hide from PAUSE indexing
     arrayref;
+use strict;
+use warnings;
+use RPerl;
 #use parent -norequire, ('ref');  # NEED REMOVE: properly replaced by line below?
 use parent -norequire, ('RPerl::DataStructure::Array::Reference');
 use Carp;
@@ -68,6 +74,9 @@ our void $arrayref_CHECKTRACE = sub {
 # (ref to array) of integers
 package  # hide from PAUSE indexing
     integer_arrayref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('arrayref');
 use Carp;
 
@@ -225,6 +234,9 @@ our integer_arrayref $integer_arrayref__typetest1 = sub {
 # (ref to array) of floats
 package  # hide from PAUSE indexing
     float_arrayref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('arrayref');
 
 # [[[ NUMBER ARRAY REF ]]]
@@ -234,6 +246,9 @@ use parent -norequire, ('arrayref');
 # (ref to array) of numbers
 package  # hide from PAUSE indexing
     number_arrayref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('arrayref');
 use Carp;
 
@@ -387,6 +402,9 @@ our number_arrayref $number_arrayref__typetest1 = sub {
 # (ref to array) of chars
 package  # hide from PAUSE indexing
     char_arrayref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('arrayref');
 
 # [[[ STRING ARRAY REF ]]]
@@ -396,6 +414,9 @@ use parent -norequire, ('arrayref');
 # (ref to array) of strings
 package  # hide from PAUSE indexing
     string_arrayref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('arrayref');
 use Carp;
 
@@ -551,6 +572,9 @@ so we can keep the no critic sections at the top of the file for reference
 # (ref to array) of scalartypes
 package  # hide from PAUSE indexing
     scalartype_arrayref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('arrayref');
 
 # [[[ ARRAY ARRAYS (2-dimensional) ]]]
@@ -558,6 +582,9 @@ use parent -norequire, ('arrayref');
 # (ref to array) of (refs to arrays)
 package  # hide from PAUSE indexing
     arrayref_arrayref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('arrayref');
 
 # [ HOMOGENEOUS ARRAY ARRAYS (2-dimensional) ]
@@ -565,21 +592,33 @@ use parent -norequire, ('arrayref');
 # (ref to array) of (refs to (arrays of integers))
 package  # hide from PAUSE indexing
     integer_arrayref_arrayref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('arrayref_arrayref');
 
 # (ref to array) of (refs to (arrays of numbers))
 package  # hide from PAUSE indexing
     number_arrayref_arrayref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('arrayref_arrayref');
 
 # (ref to array) of (refs to (arrays of strings))
 package  # hide from PAUSE indexing
     string_arrayref_arrayref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('arrayref_arrayref');
 
 # (ref to array) of (refs to (arrays of scalars))
 package  # hide from PAUSE indexing
     scalartype_arrayref_arrayref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('arrayref_arrayref');
 
 # [[[ HASH ARRAYS (2-dimesional) ]]]
@@ -587,6 +626,9 @@ use parent -norequire, ('arrayref_arrayref');
 # (ref to array) of (refs to hashs)
 package  # hide from PAUSE indexing
     hashref_arrayref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('arrayref');
 
 # [[[ OBJECT ARRAYS (2-dimesional) ]]]
@@ -594,6 +636,9 @@ use parent -norequire, ('arrayref');
 # (ref to array) of objects
 package  # hide from PAUSE indexing
     object_arrayref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('arrayref');
 
 1;

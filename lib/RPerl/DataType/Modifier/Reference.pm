@@ -3,7 +3,7 @@ package RPerl::DataType::Modifier::Reference;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_010;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent('RPerl::DataType::Modifier');
@@ -15,6 +15,9 @@ use RPerl::DataType::Modifier;
 # NEED FIX???: overload Perl's 'ref' keyword
 package  # hide from PAUSE indexing
     ref;
+use strict;
+use warnings;
+use RPerl;
 use parent('RPerl::DataType::Modifier::Reference');
 
 1;  # end of class

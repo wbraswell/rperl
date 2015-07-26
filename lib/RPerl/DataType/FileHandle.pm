@@ -3,7 +3,7 @@ package RPerl::DataType::FileHandle;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_020;
+our $VERSION = 0.002_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -19,10 +19,16 @@ use RPerl::DataType;
 # we do not ever directly use filehandle type, only filehandleref
 package  # hide from PAUSE indexing
     filehandleref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('ref');
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataType::FileHandle;
+use strict;
+use warnings;
+use RPerl;
 
 # [[[ OO INHERITANCE ]]]
 use parent ('RPerl::DataType');

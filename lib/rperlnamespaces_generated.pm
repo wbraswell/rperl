@@ -1,9 +1,9 @@
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
-package  # hide from PAUSE indexing
+package    # hide from PAUSE indexing
     rperlnamespaces_generated;
 use strict;
 use warnings;
-our $VERSION = 0.001_010;
+our $VERSION = 0.001_000;
 
 ## no critic qw(ProhibitParensWithBuiltins ProhibitNoisyQuotes)  # SYSTEM SPECIAL 3: allow auto-generated code
 
@@ -57,14 +57,25 @@ $rperlnamespaces_generated::RPERL = {
     'ExtUtils::'                     => 1,
     'Fcntl::'                        => 1,
     'File::'                         => 1,
+    'FileHandle::'                   => 1,
     'FindBin::'                      => 1,
+    'IPC::'                          => 1,
     'Inline::'                       => 1,
     'List::'                         => 1,
+    'Locale::'                       => 1,
+    'Log::'                          => 1,
     'MIME::'                         => 1,
+    'Module::'                       => 1,
     'POSIX::'                        => 1,
     'PadWalker::'                    => 1,
+    'Params::'                       => 1,
     'RPerl::'                        => 1,
+    'SelectSaver::'                  => 1,
     'Socket::'                       => 1,
+    'Storable::'                     => 1,
+    'Symbol::'                       => 1,
+    'Text::'                         => 1,
+    'Time::'                         => 1,
     'VMS::'                          => 1,
     'Win32::'                        => 1,
     'array::'                        => 1,
@@ -113,6 +124,7 @@ $rperlnamespaces_generated::RPERL = {
     'object_hashref_method::'        => 1,
     'object_method::'                => 1,
     'parent::'                       => 1,
+    'psSnake::'                      => 1,
     'ref::'                          => 1,
     'rperlnames::'                   => 1,
     'rperlnamespaces::'              => 1,

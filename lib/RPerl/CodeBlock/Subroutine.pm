@@ -3,29 +3,41 @@ package RPerl::CodeBlock::Subroutine;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_030;
+our $VERSION = 0.003_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 BEGIN {
 
-    package  # hide from PAUSE indexing
+    package    # hide from PAUSE indexing
         object_method;
+    use strict;
+    use warnings;
+    use RPerl;
     1;
 
-    package  # hide from PAUSE indexing
+    package    # hide from PAUSE indexing
         hashref_method;
+    use strict;
+    use warnings;
+    use RPerl;
     1;
 
-    package  # hide from PAUSE indexing
+    package    # hide from PAUSE indexing
         string_method;
+    use strict;
+    use warnings;
+    use RPerl;
     1;
 
     # DEV NOTE, CORRELATION #03: method types reside in Subroutine.pm, which is a sub-type of Subroutine.pm, causing the need to have this special BEGIN block
     # to enable the *_method types, and Class.pm's INIT block symbol table entry generator needs us to switch back into the primary package so we have
     # that happen in the following line, which furthermore triggers the need to avoid re-defining class accessor/mutator methods; how to fix?
     package RPerl::CodeBlock::Subroutine;
+    use strict;
+    use warnings;
+    use RPerl;
     1;
 }
 
@@ -110,10 +122,11 @@ our string_hashref_method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = s
 
     if ( exists $arguments_optional->{children}->[0] ) {
         my object $cpp_source_subgroup = $arguments_optional->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+
 #        RPerl::diag( 'in Subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), have $cpp_source_subgroup = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_subgroup) . "\n" );
-        # DEV NOTE: don't use RPerl::Generator::source_group_append() due to cross-wiring H-from-CPP below
+# DEV NOTE: don't use RPerl::Generator::source_group_append() due to cross-wiring H-from-CPP below
         $cpp_source_group->{H} .= $cpp_source_subgroup->{CPP};
-        if ((exists $cpp_source_subgroup->{H_INCLUDES}) and (defined $cpp_source_subgroup->{H_INCLUDES})) {
+        if ( ( exists $cpp_source_subgroup->{H_INCLUDES} ) and ( defined $cpp_source_subgroup->{H_INCLUDES} ) ) {
             $cpp_source_group->{H_INCLUDES} .= $cpp_source_subgroup->{H_INCLUDES};
         }
     }
@@ -142,6 +155,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     if ( exists $arguments_optional->{children}->[0] ) {
         $cpp_source_subgroup = $arguments_optional->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+
 #        RPerl::diag( 'in Subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_subgroup = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_subgroup) . "\n" );
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
@@ -151,15 +165,16 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     foreach my object $operation ( @{ $operations_star->{children} } ) {
 
 #        RPerl::diag( 'in Subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), have $operation = ' . "\n" . RPerl::Parser::rperl_ast__dump($operation) . "\n" );
-        # disable *_CHECK() and *_CHECKTRACE() data checking routines in CPPOPS_CPPTYPES mode, this is instead handled in xs_unpack_*() called by typemap.rperl
-        if (( exists $operation->{children}->[0]->{children}->[0]->{children}->[0] ) and
-            (( ( substr $operation->{children}->[0]->{children}->[0]->{children}->[0], -6, 6 ) eq '_CHECK' ) or
-            ( ( substr $operation->{children}->[0]->{children}->[0]->{children}->[0], -11, 11 ) eq '_CHECKTRACE' ))
+# disable *_CHECK() and *_CHECKTRACE() data checking routines in CPPOPS_CPPTYPES mode, this is instead handled in xs_unpack_*() called by typemap.rperl
+        if (( exists $operation->{children}->[0]->{children}->[0]->{children}->[0] )
+            and (  ( ( substr $operation->{children}->[0]->{children}->[0]->{children}->[0], -6, 6 ) eq '_CHECK' )
+                or ( ( substr $operation->{children}->[0]->{children}->[0]->{children}->[0], -11, 11 ) eq '_CHECKTRACE' ) )
             )
         {
             next;
         }
         $cpp_source_subgroup = $operation->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+
 #        RPerl::diag( 'in Subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_subgroup = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_subgroup) . "\n" );
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }

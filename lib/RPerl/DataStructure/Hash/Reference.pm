@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash::Reference;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_010;
+our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Modifier::Reference);
@@ -19,12 +19,21 @@ use RPerl::DataType::Modifier::Reference;
 #require RPerl::CodeBlock::Subroutine::Method;
 package  # hide from PAUSE indexing
     string_hashref_method;
+use strict;
+use warnings;
+use RPerl;
 
 #require RPerl::Object;
 package  # hide from PAUSE indexing
     object;
+use strict;
+use warnings;
+use RPerl;
 
 package RPerl::DataStructure::Hash::Reference;
+use strict;
+use warnings;
+use RPerl;
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};

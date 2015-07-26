@@ -3,13 +3,13 @@ package RPerl::DataType::Float;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_010;
+our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
 # DEV NOTE, CORRELATION #07:
 # NEED FIX, OUTDATED
 # Float should have it's own functionality and compile to float C/C++ type for memory optimization, not just be a sub-type of Number
-our @ISA = ('RPerl::DataType::Number');
+use parent ('RPerl::DataType::Number');
 use RPerl::DataType::Number;
 
 # [[[ CRITICS ]]]
@@ -21,6 +21,9 @@ use RPerl::DataType::Number;
 # a floating-point number has a fractional/decimal component
 package  # hide from PAUSE indexing
     float;
-our @ISA = ('RPerl::DataType::Float');
+use strict;
+use warnings;
+use RPerl;
+use parent ('RPerl::DataType::Float');
 
 1;  # end of class

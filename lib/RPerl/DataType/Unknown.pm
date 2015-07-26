@@ -3,10 +3,10 @@ package RPerl::DataType::Unknown;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_010;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
-our @ISA = ('RPerl::DataType');
+use parent ('RPerl::DataType');
 use RPerl::DataType;
 
 # [[[ CRITICS ]]]
@@ -18,6 +18,9 @@ use RPerl::DataType;
 # unknown means it could be any data type or data structure
 package  # hide from PAUSE indexing
     unknown;
-our @ISA = ('RPerl::DataType::Unknown');
+use strict;
+use warnings;
+use RPerl;
+use parent ('RPerl::DataType::Unknown');
 
 1;  # end of class

@@ -145,6 +145,9 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 # a method is a subroutine belonging to a class or object
 package  # hide from PAUSE indexing
     method;
+use strict;
+use warnings;
+use RPerl;
 use parent ('RPerl::CodeBlock::Subroutine::Method');
 
 # [[[ SCALAR & SCALAR REF METHODS ]]]
@@ -152,90 +155,147 @@ use parent ('RPerl::CodeBlock::Subroutine::Method');
 # method with void return type
 package  # hide from PAUSE indexing
     void_method;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('method');
 
 # method with integer return type
 package  # hide from PAUSE indexing
     integer_method;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('method');
 
 # method with float return type
 package  # hide from PAUSE indexing
     float_method;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('method');
 
 # method with number return type
 package  # hide from PAUSE indexing
     number_method;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('method');
 
 # method with char return type
 package  # hide from PAUSE indexing
     char_method;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('method');
 
 # method with string return type
 package  # hide from PAUSE indexing
     string_method;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('method');
 
 # method with scalartype return type
 package  # hide from PAUSE indexing
     scalartype_method;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('method');
 
 # method with unknown return type
 package  # hide from PAUSE indexing
     unknown_method;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('method');
 
 # method with object return type
 package  # hide from PAUSE indexing
     object_method;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('method');
 
 # [[[ HASH METHODS ]]]
 
 package  # hide from PAUSE indexing
     integer_hashref_method;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('method');
 
 package  # hide from PAUSE indexing
     number_hashref_method;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('method');
 
 package  # hide from PAUSE indexing
     string_hashref_method;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('method');
 
 package  # hide from PAUSE indexing
     object_hashref_method;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('method');
 
 package  # hide from PAUSE indexing
     hashref_hashref_method;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('method');
 
 # [[[ ARRAY METHODS ]]]
 
 package  # hide from PAUSE indexing
     integer_arrayref_method;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('method');
 
 package  # hide from PAUSE indexing
     number_arrayref_method;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('method');
 
 package  # hide from PAUSE indexing
     string_arrayref_method;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('method');
 
 package  # hide from PAUSE indexing
     object_arrayref_method;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('method');
 
 package  # hide from PAUSE indexing
     arrayref_arrayref_method;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('method');
 
 1;

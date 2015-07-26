@@ -23,6 +23,7 @@ use RPerl::Config;  # for $RPerl::DEBUG
 # DEV NOTE: move ccflags outside %ARGS, make individual modules compose ccflags with possible cppflags right before calling Inline
 #our $CCFLAGSEX = '-DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix';
 #our $CCFLAGSEX = '-DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix';
+# DEV NOTE: add -Wno-unused-variable to suppress warnings in GCC v4.9
 our $CCFLAGSEX = '-Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix';
 
 our %ARGS = (

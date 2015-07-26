@@ -3,10 +3,10 @@ package RPerl::DataType::Void;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_010;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
-our @ISA = ('RPerl::DataType');
+use parent ('RPerl::DataType');
 use RPerl::DataType;
 
 # [[[ CRITICS ]]]
@@ -18,6 +18,9 @@ use RPerl::DataType;
 # void means no type, void does NOT mean unknown data type, that is RPerl::DataType::Unknown
 package  # hide from PAUSE indexing
     void;
-our @ISA = ('RPerl::DataType::Void');
+use strict;
+use warnings;
+use RPerl;
+use parent ('RPerl::DataType::Void');
 
 1;  # end of class

@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.020_100;
+our $VERSION = 0.021_001;
 
 # [[[ OO INHERITANCE ]]]
 # BASE CLASS HAS NO INHERITANCE
@@ -54,11 +54,13 @@ INIT {
     # DEV NOTE: should be safe to use basename() here instead of fileparse(), because $PROGRAM_NAME should never end in a directory
     $INC{ basename($PROGRAM_NAME) } = $PROGRAM_NAME;
 
-    #	RPerl::diag("in Class.pm INIT block, have \%INC =\n" . Dumper(\%INC) . "\n");
+#	RPerl::diag('in Class.pm INIT block, have %INC =' . "\n" . Dumper(\%INC) . "\n");
+#	RPerl::diag('in Class.pm INIT block, have $rperlnamespaces_generated::CORE =' . "\n" . Dumper($rperlnamespaces_generated::CORE) . "\n");
 
     my $module_file_long;               # string
     my $package_name;                   # string
     my $package_name_underscores;       # string
+    my $namespace_guess;                # string
     my $object_properties;              # hashref
     my $subroutine_type;                # string
     my $subroutine_name;                # string
@@ -67,41 +69,48 @@ INIT {
     my $inside_subroutine_arguments;    # bool
     my $subroutine_arguments_line;      # string
 
-    #	RPerl::diag(q{in Class.pm INIT block, have $PROGRAM_NAME = '} . $PROGRAM_NAME . "'\n");
+#	RPerl::diag(q{in Class.pm INIT block, have $PROGRAM_NAME = '} . $PROGRAM_NAME . "'\n");
 
     foreach my $module_file_short ( sort keys %INC ) {
+#        RPerl::diag("in Class.pm INIT block, have \$module_file_short = '$module_file_short'\n");
+
         $package_name                = q{};
         $CHECK                       = $RPerl::CHECK;    # reset data type checking to RPerl default for every file
         $inside_subroutine           = 0;
         $inside_subroutine_arguments = 0;
         $subroutine_arguments_line   = q{};
 
-        # DEV NOTE: for now, only scan for RPerl subroutines in files or dirs that start with RPerl or rperl
-        if (   ( $module_file_short =~ /^RPerl/xms )
-            || ( $module_file_short =~ /^rperl/xms )
-            || ( $module_file_short =~ /\.pl$/xms ) )
+        my $module_file_short_split = [(split /\./, $module_file_short)];
+        $namespace_guess = $module_file_short_split->[0];
+        $module_file_short_split = [(split /\//, $namespace_guess)];
+        $namespace_guess = $module_file_short_split->[0];
+        $namespace_guess .= '::';
+#	    RPerl::diag(q{in Class.pm INIT block, have $namespace_guess = '} . $namespace_guess . "'\n");
+
+        # NEED UPGRADE: split non-core RPerl deps from $rperlnamespaces_generated::RPERL for additional skipping of known files below
+        if (not exists $rperlnamespaces_generated::CORE->{$namespace_guess})
         {
-            #			RPerl::diag("in Class.pm INIT block, have \$module_file_short = '$module_file_short'\n");
             $module_file_long = $INC{$module_file_short};
 
-            #            RPerl::diag("in Class.pm INIT block, have \$module_file_long = '$module_file_long'\n");
+#            RPerl::diag("in Class.pm INIT block, have \$module_file_long = '$module_file_long'\n");
 
             open my $MODULE_FILE, '<', $module_file_long or croak $OS_ERROR;
+            MODULE_FILE_LINE_LOOP:
             while ( my $module_file_line = <$MODULE_FILE> ) {
                 chomp $module_file_line;
 
-                #				RPerl::diag("in Class.pm INIT block, have \$module_file_line =\n$module_file_line\n");
+#				RPerl::diag("in Class.pm INIT block, have \$module_file_line =\n$module_file_line\n");
 
                 # set data type checking mode
                 if ( $module_file_line =~ /^\s*\#\s*\<\<\<\s*TYPE_CHECKING\s*\:\s*(\w+)\s*\>\>\>/xms ) {
 
-                    #                    RPerl::diag( "in Class.pm INIT block, have \$module_file_long = '$module_file_long'\n" );
+#                    RPerl::diag( "in Class.pm INIT block, have \$module_file_long = '$module_file_long'\n" );
                     if ($inside_subroutine) {
 #                        RPerl::diag( 'in Class.pm INIT block, found <<< TYPE_CHECKING: ' . $1 . ' >>> while inside subroutine ' . $subroutine_name . '(), aborting RPerl activation of entire file' . "\n" );
                         last;
                     }
                     else {
-                        #                        RPerl::diag( 'in Class.pm INIT block, found <<< TYPE_CHECKING: ' . $1 . " >>>\n" );
+#                        RPerl::diag( 'in Class.pm INIT block, found <<< TYPE_CHECKING: ' . $1 . " >>>\n" );
                         $CHECK = $1;
                     }
                 }
@@ -197,6 +206,23 @@ INIT {
                         last;
                     }
 #                    else { RPerl::diag( 'in Class.pm INIT block, have $package name = ' . $package_name . "\n" ); }
+                    
+                    # DEV NOTE: one non-RPerl package skips entire file
+                    # check for required RPerl header:
+                    # use strict;
+                    # use warnings;
+                    # use RPerl;
+                    my $rperl_header_lines = ['use strict;', 'use warnings;', 'use RPerl;'];
+                    foreach my $rperl_header_line (@{$rperl_header_lines}) {
+                        $module_file_line = <$MODULE_FILE>;
+#                        RPerl::diag( 'in Class.pm INIT block, have $module_file_line = ' . "\n" . $module_file_line . "\n" );
+                        if ($module_file_line !~ /\Q$rperl_header_line/xms) {
+#                			RPerl::diag(q{in Class.pm INIT block, failed to find RPerl header line '} . $rperl_header_line . q{' for $module_file_short = } . $module_file_short . ', aborting RPerl activation of entire file' . "\n");
+                            last MODULE_FILE_LINE_LOOP;
+                        }
+                    }
+
+#        			RPerl::diag('in Class.pm INIT block, found RPerl header for $module_file_short = ' . $module_file_short . "\n");
 
                     # ops/types reporting subroutine
 
@@ -373,6 +399,7 @@ INIT {
             }
             close $MODULE_FILE or croak $OS_ERROR;
         }
+#        else { RPerl::diag('in Class.pm INIT block, found existing $rperlnamespaces_generated::CORE->{' . $namespace_guess . '}, aborting RPerl activation of entire file' . "\n"); }
     }
 }
 

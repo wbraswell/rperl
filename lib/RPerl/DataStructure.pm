@@ -1,8 +1,8 @@
+package RPerl::DataStructure;
 use strict;
 use warnings;
-
-package RPerl::DataStructure;
+our $VERSION = 0.001_000;
 
 # a data structure is a compound data type
-our @ISA = ('RPerl::DataType');
+use parent ('RPerl::DataType');
 use RPerl::DataType;

@@ -3,7 +3,7 @@ package RPerl::DataType::Boolean;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.001_010;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent ('RPerl::DataType::Scalar');
@@ -18,10 +18,16 @@ use RPerl::DataType::Scalar;
 # a bool is a binary boolean value, the only valid values are 0 (false) or 1 (true)
 package  # hide from PAUSE indexing
     bool;
+use strict;
+use warnings;
+use RPerl;
 use parent ('RPerl::DataType::Boolean');
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataType::Boolean;
+use strict;
+use warnings;
+use RPerl;
 
 # [[[ INCLUDES ]]]
 use RPerl::DataType::String;    # need string type

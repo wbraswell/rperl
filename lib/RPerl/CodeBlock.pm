@@ -3,7 +3,7 @@ package RPerl::CodeBlock;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.002_020;
+our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -97,11 +97,17 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 # [[[ SUB-TYPES ]]]
 
 package RPerl::CodeReference;
+use strict;
+use warnings;
+use RPerl;
 use parent qw(RPerl::DataType::Modifier::Reference);
 use RPerl::DataType::Modifier::Reference;
 
 package  # hide from PAUSE indexing
     coderef;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('RPerl::CodeReference');
 
 1;    # end of class

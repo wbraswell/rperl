@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash::SubTypes;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.006_030;
+our $VERSION = 0.007_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd) # DEVELOPER DEFAULT 1b: allow unreachable & POD-commented code, must be after line 1
@@ -17,6 +17,9 @@ our $VERSION = 0.006_030;
 # per LMPC #27: Thou Shalt Not Use Direct Access To Arrays & Hashes Stored In @ Or % Non-Scalar Variables
 package  # hide from PAUSE indexing
     hash;
+use strict;
+use warnings;
+use RPerl;
 use parent ('RPerl::DataStructure::Hash');
 
 # [[[ HASH REF ]]]
@@ -26,6 +29,9 @@ use parent ('RPerl::DataStructure::Hash');
 # ref to hash
 package  # hide from PAUSE indexing
     hashref;
+use strict;
+use warnings;
+use RPerl;
 #use parent -norequire, ('ref');  # NEED REMOVE: properly replaced by line below?
 use parent -norequire, ('RPerl::DataStructure::Hash::Reference');
 use Carp;
@@ -68,6 +74,9 @@ our void $hashref_CHECKTRACE = sub {
 # (ref to hash) of integers
 package  # hide from PAUSE indexing
     integer_hashref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('hashref');
 use Carp;
 
@@ -242,6 +251,9 @@ our integer_hashref $integer_hashref__typetest1 = sub {
 # (ref to hash) of floats
 package  # hide from PAUSE indexing
     float_hashref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('hashref');
 
 # [[[ NUMBER HASH REF ]]]
@@ -251,6 +263,9 @@ use parent -norequire, ('hashref');
 # (ref to hash) of numbers
 package  # hide from PAUSE indexing
     number_hashref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('hashref');
 use Carp;
 
@@ -426,6 +441,9 @@ our number_hashref $number_hashref__typetest1 = sub {
 # (ref to hash) of chars
 package  # hide from PAUSE indexing
     char_hashref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('hashref');
 
 # [[[ STRING HASH REF ]]]
@@ -435,6 +453,9 @@ use parent -norequire, ('hashref');
 # (ref to hash) of strings
 package  # hide from PAUSE indexing
     string_hashref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('hashref');
 use Carp;
 
@@ -603,6 +624,9 @@ our string_hashref $string_hashref__typetest1 = sub {
 # (ref to hash) of scalartypes
 package  # hide from PAUSE indexing
     scalartype_hashref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('hashref');
 
 # [[[ ARRAY HASHES (2-dimensional) ]]]
@@ -610,6 +634,9 @@ use parent -norequire, ('hashref');
 # (ref to hash) of (refs to arrays)
 package  # hide from PAUSE indexing
     arrayref_hashref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('hashref');
 
 # [[[ HASH HASHES (2-dimesional) ]]]
@@ -617,6 +644,9 @@ use parent -norequire, ('hashref');
 # (ref to hash) of (refs to hashs)
 package  # hide from PAUSE indexing
     hashref_hashref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('hashref');
 
 # [ HOMOGENEOUS HASH HASHES (2-dimensional) ]
@@ -624,21 +654,33 @@ use parent -norequire, ('hashref');
 # (ref to hash) of (refs to (hashs of integers))
 package  # hide from PAUSE indexing
     integer_hashref_hashref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('hashref_hashref');
 
 # (ref to hash) of (refs to (hashs of numbers))
 package  # hide from PAUSE indexing
     number_hashref_hashref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('hashref_hashref');
 
 # (ref to hash) of (refs to (hashs of strings))
 package  # hide from PAUSE indexing
     string_hashref_hashref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('hashref_hashref');
 
 # (ref to hash) of (refs to (hashs of scalars))
 package  # hide from PAUSE indexing
     scalartype_hashref_hashref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('hashref_hashref');
 
 # [[[ OBJECT HASHES (2-dimensional) ]]]
@@ -646,6 +688,9 @@ use parent -norequire, ('hashref_hashref');
 # (ref to hash) of objects
 package  # hide from PAUSE indexing
     object_hashref;
+use strict;
+use warnings;
+use RPerl;
 use parent -norequire, ('hashref');
 
 1;

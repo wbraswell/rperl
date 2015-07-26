@@ -2,11 +2,10 @@
 package RPerl::NonGenerator;
 use strict;
 use warnings;
-our $VERSION = 0.000_001;
 use RPerl;
+our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
-# <<< CHANGE_ME: leave as base class for no inheritance, or replace with real parent package name >>>
 use parent qw(RPerl::CompileUnit::Module::Class);
 use RPerl::CompileUnit::Module::Class;
 

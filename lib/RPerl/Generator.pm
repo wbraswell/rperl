@@ -3,8 +3,8 @@
 package RPerl::Generator;
 use strict;
 use warnings;
-our $VERSION = 0.001_020;
 use RPerl;
+our $VERSION = 0.001_020;
 
 # [[[ OO INHERITANCE ]]]
 # <<< CHANGE_ME: leave as base class for no inheritance, or replace with real parent package name >>>

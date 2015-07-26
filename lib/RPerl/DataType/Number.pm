@@ -3,7 +3,7 @@ package RPerl::DataType::Number;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_010;
+our $VERSION = 0.005_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent ('RPerl::DataType::Scalar');
@@ -25,10 +25,16 @@ use RPerl::DataType::Scalar;
 # in the future, this can be optimized (for at least memory usage) by implementing full Float semantics
 package  # hide from PAUSE indexing
     number;
+use strict;
+use warnings;
+use RPerl;
 use parent ('RPerl::DataType::Number');
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataType::Number;
+use strict;
+use warnings;
+use RPerl;
 
 # [[[ INCLUDES ]]]
 use RPerl::DataType::String;    # need string type

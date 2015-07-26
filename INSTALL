@@ -1,5 +1,5 @@
 # RPerl Install Notes
-# Last Updated July 21, 2015
+# Last Updated July 25, 2015
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # NOTE: STEP 1 IS ONLY FOR SINGLE-USER INSTALL, NOT SYSTEM-WIDE INSTALL
@@ -159,6 +159,7 @@ $ rm -Rf _Inline RPerl/Algorithm.pmc RPerl/Algorithm.h RPerl/Algorithm.cpp RPerl
 $ perl -e 'use RPerl::Algorithm::Sort::Bubble; my $a = [reverse 0 .. 5000]; use Time::HiRes qw(time); my $start = time; my $s = integer_bubblesort($a); my $elapsed = time - $start; print Dumper($s); print "elapsed: " . $elapsed . "\n";'
     # SLOW...  :-(  approx 15 seconds for 5000 elements, 60 for 10000
 
-$ rperl -V RPerl/Algorithm.pm RPerl/Algorithm/Sort.pm RPerl/Algorithm/Sort/Bubble.pm
+$ rperl -V lib/RPerl/Algorithm/Sort/Bubble.pm
 $ perl -e 'use RPerl::Algorithm::Sort::Bubble; my $a = [reverse 0 .. 5000]; use Time::HiRes qw(time); my $start = time; my $s = integer_bubblesort($a); my $elapsed = time - $start; print Dumper($s); print "elapsed: " . $elapsed . "\n";'
+	# same exact command as above...
     # FAST!!!  :-D  approx 0.045 seconds for 5000 elements, 0.18 for 10000
