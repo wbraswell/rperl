@@ -30,21 +30,21 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     my string $fat_arrow           = $self->{children}->[1];
     my object $type_inner_optional = $self->{children}->[2];
 
-    if (   ( $key_class eq 'VariableOrLiteralOrWord_215' )
-        or ( $key_class eq 'VariableOrLiteralOrWord_216' ) )
+    if (   ( $key_class eq 'VariableOrLiteralOrWord_216' )
+        or ( $key_class eq 'VariableOrLiteralOrWord_217' ) )
     {    # Variable or Literal
         $rperl_source_subgroup = $key->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
     }
-    elsif ( $key_class eq 'VariableOrLiteralOrWord_217' ) {    # WORD
+    elsif ( $key_class eq 'VariableOrLiteralOrWord_218' ) {    # WORD
         $rperl_source_group->{PMC} .= $key->{children}->[0] . q{ };
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
             q{ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '}
                 . ($key_class)
-                . q{' found where VariableOrLiteralOrWord_215, VariableOrLiteralOrWord_216, or VariableOrLiteralOrWord_217 expected, dying}
+                . q{' found where VariableOrLiteralOrWord_216, VariableOrLiteralOrWord_217, or VariableOrLiteralOrWord_218 expected, dying}
         ) . "\n";
     }
 
@@ -87,21 +87,21 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     $cpp_source_group->{CPP} .= '{';
 
-    if (   ( $key_class eq 'VariableOrLiteralOrWord_215' )
-        or ( $key_class eq 'VariableOrLiteralOrWord_216' ) )
+    if (   ( $key_class eq 'VariableOrLiteralOrWord_216' )
+        or ( $key_class eq 'VariableOrLiteralOrWord_217' ) )
     {    # Variable or Literal
         $cpp_source_subgroup = $key->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
         RPerl::Generator::source_group_append( $cpp_source_group,
             $cpp_source_subgroup );
     }
-    elsif ( $key_class eq 'VariableOrLiteralOrWord_217' ) {    # WORD
+    elsif ( $key_class eq 'VariableOrLiteralOrWord_218' ) {    # WORD
         $cpp_source_group->{CPP} .= q{"} . $key->{children}->[0] . q{" };
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
             q{ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '}
                 . ($key_class)
-                . q{' found where VariableOrLiteralOrWord_215, VariableOrLiteralOrWord_216, or VariableOrLiteralOrWord_217 expected, dying}
+                . q{' found where VariableOrLiteralOrWord_216, VariableOrLiteralOrWord_217, or VariableOrLiteralOrWord_218 expected, dying}
         ) . "\n";
     }
 

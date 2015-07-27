@@ -48,13 +48,13 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap HashReference_200 & HashReference_201 from SubExpression_135
-    if ( $self_class eq 'SubExpression_135' ) {
+    # unwrap HashReference_201 & HashReference_202 from SubExpression_136
+    if ( $self_class eq 'SubExpression_136' ) {
         $self = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if ( $self_class eq 'HashReference_200' ) { # HashReference -> LBRACE HashEntry STAR-50 '}'
+    if ( $self_class eq 'HashReference_201' ) { # HashReference -> LBRACE HashEntry STAR-50 '}'
         my string $left_brace        = $self->{children}->[0];
         my object $hash_entry        = $self->{children}->[1];
         my object $hash_entries_star = $self->{children}->[2];
@@ -88,7 +88,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
         $rperl_source_group->{PMC} .= $right_brace;
     }
-    elsif ( $self_class eq 'HashReference_201' ) { # HashReference -> LBRACE '}'
+    elsif ( $self_class eq 'HashReference_202' ) { # HashReference -> LBRACE '}'
         my string $left_brace  = $self->{children}->[0];
         my string $right_brace = $self->{children}->[1];
         $rperl_source_group->{PMC} .= $left_brace . $right_brace;
@@ -97,7 +97,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ($self_class)
-                . ' found where HashReference_200, HashReference_201, or SubExpression_135 expected, dying'
+                . ' found where HashReference_201, HashReference_202, or SubExpression_136 expected, dying'
         ) . "\n";
     }
 
@@ -124,13 +124,13 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap HashReference_200 & HashReference_201 from SubExpression_135
-    if ( $self_class eq 'SubExpression_135' ) {
+    # unwrap HashReference_201 & HashReference_202 from SubExpression_136
+    if ( $self_class eq 'SubExpression_136' ) {
         $self = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if ( $self_class eq 'HashReference_200' ) { # HashReference -> LBRACE HashEntry STAR-50 '}'
+    if ( $self_class eq 'HashReference_201' ) { # HashReference -> LBRACE HashEntry STAR-50 '}'
         my object $hash_entry        = $self->{children}->[1];
         my object $hash_entries_star = $self->{children}->[2];
 
@@ -162,14 +162,14 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
         $cpp_source_group->{CPP} .= ' }';
     }
-    elsif ( $self_class eq 'HashReference_201' ) { # HashReference -> LBRACE '}'
+    elsif ( $self_class eq 'HashReference_202' ) { # HashReference -> LBRACE '}'
         $cpp_source_group->{CPP} .= '{}';
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . ($self_class)
-                . ' found where HashReference_200, HashReference_201, or SubExpression_135 expected, dying'
+                . ' found where HashReference_201, HashReference_202, or SubExpression_136 expected, dying'
         ) . "\n";
     }
 

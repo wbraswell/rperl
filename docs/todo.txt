@@ -3,11 +3,9 @@ Eyapp unescaped left braces
 RELEASE Parse::Eyap vX.YZZY
 
 Add scientific notation and leading+ numeric tests
+Add scoped constant call generating & tests
 
-
-CHECK
-	Fix Numeric Accuracy
-	tmp fix lib/RPerl/Test/OperatorVoid01NamedVoidReturn/*.DISABLED_NEED_FIX
+alioth nbody
 
 Fix CPAN Testers Bugs
 
@@ -30,7 +28,6 @@ RELEASE v1.0000XY
 merge
 quick
 finish all CPPOPS_CPPTYPES generation
-alioth nbody
 
 RELEASE v1.0000XY
 

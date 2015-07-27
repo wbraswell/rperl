@@ -22,9 +22,9 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
     my string $self_class = ref $self;
 
-    if (( $self_class eq 'SubExpression_131' )    # SubExpression -> Literal
-        or ( $self_class eq 'VariableOrLiteral_214' ) # VariableOrLiteral -> Literal
-        or ( $self_class eq 'VariableOrLiteralOrWord_216' ) # VariableOrLiteralOrWord -> Literal
+    if (( $self_class eq 'SubExpression_132' )    # SubExpression -> Literal
+        or ( $self_class eq 'VariableOrLiteral_215' ) # VariableOrLiteral -> Literal
+        or ( $self_class eq 'VariableOrLiteralOrWord_217' ) # VariableOrLiteralOrWord -> Literal
         )
     {
         my object $number_or_string = $self->{children}->[0];
@@ -34,7 +34,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where SubExpression_131, VariableOrLiteral_214, or VariableOrLiteralOrWord_216 expected, dying'
+                . ' found where SubExpression_132, VariableOrLiteral_215, or VariableOrLiteralOrWord_217 expected, dying'
         ) . "\n"; 
     }
 
@@ -60,9 +60,9 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     my string $self_class = ref $self;
 
-    if (( $self_class eq 'SubExpression_131' )    # SubExpression -> Literal
-        or ( $self_class eq 'VariableOrLiteral_214' ) # VariableOrLiteral -> Literal
-        or ( $self_class eq 'VariableOrLiteralOrWord_216' ) # VariableOrLiteralOrWord -> Literal
+    if (( $self_class eq 'SubExpression_132' )    # SubExpression -> Literal
+        or ( $self_class eq 'VariableOrLiteral_215' ) # VariableOrLiteral -> Literal
+        or ( $self_class eq 'VariableOrLiteralOrWord_217' ) # VariableOrLiteralOrWord -> Literal
         )
     {
         my object $number_or_string = $self->{children}->[0];
@@ -72,7 +72,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where SubExpression_131, VariableOrLiteral_214, or VariableOrLiteralOrWord_216 expected, dying'
+                . ' found where SubExpression_132, VariableOrLiteral_215, or VariableOrLiteralOrWord_217 expected, dying'
         ) . "\n"; 
     }
 

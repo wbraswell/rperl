@@ -24,14 +24,14 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in Stdin->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
     
-    if ( ( ref $self ) eq 'SubExpressionOrStdin_139') {  # SubExpressionOrStdin -> STDIN
+    if ( ( ref $self ) eq 'SubExpressionOrStdin_140') {  # SubExpressionOrStdin -> STDIN
         $rperl_source_group->{PMC} .= $self->{children}->[0];
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $self )
-                . ' found where SubExpressionOrStdin_139 expected, dying'
+                . ' found where SubExpressionOrStdin_140 expected, dying'
         ) . "\n"; 
     }
 

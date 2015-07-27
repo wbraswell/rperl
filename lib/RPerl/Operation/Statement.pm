@@ -28,10 +28,10 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in Statement->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     # Conditional, OperatorVoid, VariableDeclaration, or VariableModification
-    if (   ( $child0_class eq 'Statement_143' )
-        or ( $child0_class eq 'Statement_145' )
+    if (   ( $child0_class eq 'Statement_144' )
         or ( $child0_class eq 'Statement_146' )
-        or ( $child0_class eq 'Statement_147' ) )
+        or ( $child0_class eq 'Statement_147' )
+        or ( $child0_class eq 'Statement_148' ) )
     {
         $rperl_source_subgroup
             = $child0->ast_to_rperl__generate($modes);
@@ -40,7 +40,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     }
 
     # Loop
-    elsif ( $child0_class eq 'Statement_144' ) {
+    elsif ( $child0_class eq 'Statement_145' ) {
         my $optional_loop_label = $child0->{children}->[0];
         my $loop = $child0->{children}->[1];
 #        RPerl::diag( 'in Statement->ast_to_rperl__generate(), have $optional_loop_label = ' . "\n" . RPerl::Parser::rperl_ast__dump($optional_loop_label) . "\n" );
@@ -54,7 +54,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $child0_class
-                . ' found where Statement_143, Statement_144, Statement_145, Statement_146, or Statement_147 expected, dying'
+                . ' found where Statement_144, Statement_145, Statement_146, Statement_147, or Statement_148 expected, dying'
         ) . "\n";
     }
 
@@ -81,10 +81,10 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #    RPerl::diag( 'in Statement->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     # Conditional, OperatorVoid, VariableDeclaration, or VariableModification
-    if (   ( $child0_class eq 'Statement_143' )
-        or ( $child0_class eq 'Statement_145' )
+    if (   ( $child0_class eq 'Statement_144' )
         or ( $child0_class eq 'Statement_146' )
-        or ( $child0_class eq 'Statement_147' ) )
+        or ( $child0_class eq 'Statement_147' )
+        or ( $child0_class eq 'Statement_148' ) )
     {
         $cpp_source_subgroup = $child0->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
 #        RPerl::diag( 'in Statement->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_subgroup = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_subgroup) . "\n" );
@@ -92,7 +92,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     }
 
     # Loop
-    elsif ( $child0_class eq 'Statement_144' ) {
+    elsif ( $child0_class eq 'Statement_145' ) {
         my object $optional_loop_label = $child0->{children}->[0];
         my object $loop = $child0->{children}->[1];
         my string $loop_label = undef;
@@ -107,7 +107,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . $child0_class
-                . ' found where Statement_143, Statement_144, Statement_145, Statement_146, or Statement_147 expected, dying'
+                . ' found where Statement_144, Statement_145, Statement_146, Statement_147, or Statement_148 expected, dying'
         ) . "\n";
     }
 

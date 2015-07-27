@@ -338,9 +338,9 @@ EOL
 
         $property_declaration = q{    } . $property_type . q{ } . $property_key;
 
-        # SubExpression_130 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined,
+        # SubExpression_131 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined,
         # don't perform any C++ initialization for properties initialized to 'undef' in Perl
-        if ( ( ref $property_subexpression ) ne 'SubExpression_130' ) {
+        if ( ( ref $property_subexpression ) ne 'SubExpression_131' ) {
             $cpp_source_subgroup = $property_subexpression->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
             $property_declaration .= ' = ' . $cpp_source_subgroup->{CPP};
         }
@@ -376,9 +376,9 @@ EOL
 
             $property_declaration = q{    } . $property_type . q{ } . $property_key;
 
-            # SubExpression_130 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined,
+            # SubExpression_131 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined,
             # don't perform any C++ initialization for properties initialized to 'undef' in Perl
-            if ( ( ref $property_subexpression ) ne 'SubExpression_130' ) {
+            if ( ( ref $property_subexpression ) ne 'SubExpression_131' ) {
                 $cpp_source_subgroup = $property_subexpression->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
                 $property_declaration .= ' = ' . $cpp_source_subgroup->{CPP};
             }

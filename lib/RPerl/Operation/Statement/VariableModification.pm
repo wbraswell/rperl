@@ -26,13 +26,13 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in VariableModification->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-# unwrap VariableModification_173, and VariableModification_174 from Statement_147
-    if ( $self_class eq 'Statement_147' ) { # Statement -> VariableModification
+# unwrap VariableModification_174, and VariableModification_175 from Statement_148
+    if ( $self_class eq 'Statement_148' ) { # Statement -> VariableModification
         $self = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if ( $self_class eq 'VariableModification_173' ) { # VariableModification -> Variable OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';'
+    if ( $self_class eq 'VariableModification_174' ) { # VariableModification -> Variable OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';'
         my object $variable               = $self->{children}->[0];
         my string $assign                 = $self->{children}->[1];
         my object $subexpression_or_stdin = $self->{children}->[2];
@@ -48,7 +48,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= $semicolon . "\n";
     }
-    elsif ( $self_class eq 'VariableModification_174' ) { # VariableModification -> Variable OP19_VARIABLE_ASSIGN_BY SubExpression ';'
+    elsif ( $self_class eq 'VariableModification_175' ) { # VariableModification -> Variable OP19_VARIABLE_ASSIGN_BY SubExpression ';'
         my object $variable      = $self->{children}->[0];
         my string $assign_by     = $self->{children}->[1];
         my object $subexpression = $self->{children}->[2];
@@ -68,7 +68,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where VariableModification_173 or VariableModification_174 expected, dying'
+                . ' found where VariableModification_174 or VariableModification_175 expected, dying'
         ) . "\n";
     }
 
@@ -96,13 +96,13 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
 #    RPerl::diag( 'in VariableModification->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-# unwrap VariableModification_173, and VariableModification_174 from Statement_147
-    if ( $self_class eq 'Statement_147' ) { # Statement -> VariableModification
+# unwrap VariableModification_174, and VariableModification_175 from Statement_148
+    if ( $self_class eq 'Statement_148' ) { # Statement -> VariableModification
         $self = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if ( $self_class eq 'VariableModification_173' ) { # VariableModification -> Variable OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';'
+    if ( $self_class eq 'VariableModification_174' ) { # VariableModification -> Variable OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';'
         my object $variable               = $self->{children}->[0];
         my string $assign                 = $self->{children}->[1];
         my object $subexpression_or_stdin = $self->{children}->[2];
@@ -118,7 +118,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             $cpp_source_subgroup );
         $cpp_source_group->{CPP} .= $semicolon . "\n";
     }
-    elsif ( $self_class eq 'VariableModification_174' ) { # VariableModification -> Variable OP19_VARIABLE_ASSIGN_BY SubExpression ';'
+    elsif ( $self_class eq 'VariableModification_175' ) { # VariableModification -> Variable OP19_VARIABLE_ASSIGN_BY SubExpression ';'
         my object $variable      = $self->{children}->[0];
         my string $assign_by     = $self->{children}->[1];
         my object $subexpression = $self->{children}->[2];
@@ -138,7 +138,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where VariableModification_173 or VariableModification_174 expected, dying'
+                . ' found where VariableModification_174 or VariableModification_175 expected, dying'
         ) . "\n";
     }
 

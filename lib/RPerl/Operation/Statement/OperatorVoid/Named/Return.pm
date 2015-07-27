@@ -68,17 +68,17 @@ our string_hashref_method $ast_to_rperl__generate = sub {
                     . ', dying' . "\n";
             }
 #            RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_rperl__generate(), have $arguments = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments) . "\n" );
-            if ((( ref $arguments->{children}->[0] ) eq 'ListElement_181' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
+            if ((( ref $arguments->{children}->[0] ) eq 'ListElement_182' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
             {
                 my object $arguments_subexpression = $arguments->{children}->[0]->{children}->[0];
                 # look inside nested parenthesis-as-subexpressions, always length 1 so no need to check length
-                while ((ref $arguments_subexpression) eq 'SubExpression_137') {  # RPerl::Operation::Expression::SubExpression::Parenthesis
+                while ((ref $arguments_subexpression) eq 'SubExpression_138') {  # RPerl::Operation::Expression::SubExpression::Parenthesis
                     $arguments_subexpression = $arguments_subexpression->{children}->[1];
                 }
-                if (( ref $arguments_subexpression ) eq 'SubExpression_134' ) {
+                if (( ref $arguments_subexpression ) eq 'SubExpression_135' ) {
                     die 'ERROR ECVGEASRP04, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying' . "\n";
                 }
-                elsif (( ref $arguments_subexpression ) eq 'SubExpression_136' ) {
+                elsif (( ref $arguments_subexpression ) eq 'SubExpression_137' ) {
                     die 'ERROR ECVGEASRP05, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying' . "\n";
                 }
             }
@@ -108,17 +108,17 @@ our string_hashref_method $ast_to_rperl__generate = sub {
                 . ', dying' . "\n";
         }
 #        RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_rperl__generate(), have $arguments = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments) . "\n" );
-        if ((( ref $arguments->{children}->[0] ) eq 'ListElement_181' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
+        if ((( ref $arguments->{children}->[0] ) eq 'ListElement_182' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
         {
             my object $arguments_subexpression = $arguments->{children}->[0]->{children}->[0];
             # look inside nested parenthesis-as-subexpressions, always length 1 so no need to check length
-            while ((ref $arguments_subexpression) eq 'SubExpression_137') {  # RPerl::Operation::Expression::SubExpression::Parenthesis
+            while ((ref $arguments_subexpression) eq 'SubExpression_138') {  # RPerl::Operation::Expression::SubExpression::Parenthesis
                 $arguments_subexpression = $arguments_subexpression->{children}->[1];
             }
-            if (( ref $arguments_subexpression ) eq 'SubExpression_134' ) {
+            if (( ref $arguments_subexpression ) eq 'SubExpression_135' ) {
                 die 'ERROR ECVGEASRP04, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying' . "\n";
             }
-            elsif (( ref $arguments_subexpression ) eq 'SubExpression_136' ) {
+            elsif (( ref $arguments_subexpression ) eq 'SubExpression_137' ) {
                 die 'ERROR ECVGEASRP05, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying' . "\n";
             }
         }
@@ -187,17 +187,17 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                     . ', dying' . "\n";
             }
 #            RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $arguments = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments) . "\n" );
-            if ((( ref $arguments->{children}->[0] ) eq 'ListElement_181' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
+            if ((( ref $arguments->{children}->[0] ) eq 'ListElement_182' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
             {
                 my object $arguments_subexpression = $arguments->{children}->[0]->{children}->[0];
                 # look inside nested parenthesis-as-subexpressions, always length 1 so no need to check length
-                while ((ref $arguments_subexpression) eq 'SubExpression_137') {  # RPerl::Operation::Expression::SubExpression::Parenthesis
+                while ((ref $arguments_subexpression) eq 'SubExpression_138') {  # RPerl::Operation::Expression::SubExpression::Parenthesis
                     $arguments_subexpression = $arguments_subexpression->{children}->[1];
                 }
-                if (( ref $arguments_subexpression ) eq 'SubExpression_134' ) {
+                if (( ref $arguments_subexpression ) eq 'SubExpression_135' ) {
                     die 'ERROR ECVGEASCP04, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying' . "\n";
                 }
-                elsif (( ref $arguments_subexpression ) eq 'SubExpression_136' ) {
+                elsif (( ref $arguments_subexpression ) eq 'SubExpression_137' ) {
                     die 'ERROR ECVGEASCP05, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying' . "\n";
                 }
             }
@@ -228,17 +228,17 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 . ', dying' . "\n";
         }
 #        RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $arguments = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments) . "\n" );
-        if ((( ref $arguments->{children}->[0] ) eq 'ListElement_181' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
+        if ((( ref $arguments->{children}->[0] ) eq 'ListElement_182' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
         {
             my object $arguments_subexpression = $arguments->{children}->[0]->{children}->[0];
             # look inside nested parenthesis-as-subexpressions, always length 1 so no need to check length
-            while ((ref $arguments_subexpression) eq 'SubExpression_137') {  # RPerl::Operation::Expression::SubExpression::Parenthesis
+            while ((ref $arguments_subexpression) eq 'SubExpression_138') {  # RPerl::Operation::Expression::SubExpression::Parenthesis
                 $arguments_subexpression = $arguments_subexpression->{children}->[1];
             }
-            if (( ref $arguments_subexpression ) eq 'SubExpression_134' ) {
+            if (( ref $arguments_subexpression ) eq 'SubExpression_135' ) {
                 die 'ERROR ECVGEASCP04, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying' . "\n";
             }
-            elsif (( ref $arguments_subexpression ) eq 'SubExpression_136' ) {
+            elsif (( ref $arguments_subexpression ) eq 'SubExpression_137' ) {
                 die 'ERROR ECVGEASCP05, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying' . "\n";
             }
         }

@@ -27,16 +27,16 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap HashDereference_204 and HashDereference_205 from SubExpression_136, HashEntry_194, and HashEntryTyped_196
-    if (   ( $self_class eq 'SubExpression_136' )  # SubExpression -> HashDereference
-        or ( $self_class eq 'HashEntry_194' )  # HashEntry -> HashDereference
-        or ( $self_class eq 'HashEntryTyped_196' ) )  # HashEntryTyped -> HashDereference
+    # unwrap HashDereference_205 and HashDereference_206 from SubExpression_137, HashEntry_195, and HashEntryTyped_197
+    if (   ( $self_class eq 'SubExpression_137' )  # SubExpression -> HashDereference
+        or ( $self_class eq 'HashEntry_195' )  # HashEntry -> HashDereference
+        or ( $self_class eq 'HashEntryTyped_197' ) )  # HashEntryTyped -> HashDereference
     {
         $self = $self->{children}->[0];
     }
 
     $self_class = ref $self;
-    if ( $self_class eq 'HashDereference_204' ) {  # HashDereference -> '%{' Variable '}'
+    if ( $self_class eq 'HashDereference_205' ) {  # HashDereference -> '%{' Variable '}'
         my string $percent_left_brace = $self->{children}->[0];
         my object $variable      = $self->{children}->[1];
         my string $right_brace   = $self->{children}->[2];
@@ -47,7 +47,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
             $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= q{ } . $right_brace;
     }
-    elsif ( $self_class eq 'HashDereference_205' ) {  # HashDereference -> '%{' OPTIONAL-51 HashReference '}'
+    elsif ( $self_class eq 'HashDereference_206' ) {  # HashDereference -> '%{' OPTIONAL-51 HashReference '}'
         my string $percent_left_brace       = $self->{children}->[0];
         my object $type_inner_optional = $self->{children}->[1];
         my object $hash_reference     = $self->{children}->[2];

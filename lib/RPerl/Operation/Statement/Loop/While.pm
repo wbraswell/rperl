@@ -26,14 +26,14 @@ our string_hashref_method $ast_to_rperl__generate = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap LoopWhile_160 from Loop_157
-    if ( $self_class eq 'Loop_157' ) {    # Loop -> LoopWhile
+    # unwrap LoopWhile_161 from Loop_158
+    if ( $self_class eq 'Loop_158' ) {    # Loop -> LoopWhile
         $self = $self->{children}->[0];
         $self_class = ref $self;
     }
 
     # LoopWhile -> 'while' LPAREN SubExpression ')' CodeBlock
-    if ( $self_class eq 'LoopWhile_160' ) {
+    if ( $self_class eq 'LoopWhile_161' ) {
         my string $while         = $self->{children}->[0];
         my string $left_paren    = $self->{children}->[1];
         my object $subexpression = $self->{children}->[2];
@@ -51,7 +51,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where LoopWhile_160 expected, dying' )
+                . ' found where LoopWhile_161 expected, dying' )
             . "\n";
     }
     return $rperl_source_group;
@@ -77,14 +77,14 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap LoopWhile_160 from Loop_157
-    if ( $self_class eq 'Loop_157' ) {    # Loop -> LoopWhile
+    # unwrap LoopWhile_161 from Loop_158
+    if ( $self_class eq 'Loop_158' ) {    # Loop -> LoopWhile
         $self = $self->{children}->[0];
         $self_class = ref $self;
     }
 
     # LoopWhile -> 'while' LPAREN SubExpression ')' CodeBlock
-    if ( $self_class eq 'LoopWhile_160' ) {
+    if ( $self_class eq 'LoopWhile_161' ) {
         my string $while         = $self->{children}->[0];
         my string $left_paren    = $self->{children}->[1];
         my object $subexpression = $self->{children}->[2];
@@ -102,7 +102,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . $self_class
-                . ' found where LoopWhile_160 expected, dying' )
+                . ' found where LoopWhile_161 expected, dying' )
             . "\n";
     }
     return $cpp_source_group;
