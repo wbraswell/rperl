@@ -1,7 +1,7 @@
 package RPerl::DataStructure::Hash;
 use strict;
 use warnings;
-our $VERSION = 0.003_011;
+our $VERSION = 0.004_000;
 use parent ('RPerl::DataStructure');
 use RPerl::DataStructure;
 use Carp;
@@ -26,5 +26,11 @@ use RPerl::DataType::String;
 use RPerl::DataType::Scalar;
 use RPerl::DataType::Unknown;
 use RPerl::DataStructure::Array;
+
+# DEV NOTE, CORRELATION #18: RPerl::DataStructure::Array & Hash can not 'use RPerl;' so *__MODE_ID() subroutines are hard-coded here
+package main;
+use strict;
+use warnings;
+sub RPerl__DataStructure__Hash__MODE_ID { return 0; }
 
 1;

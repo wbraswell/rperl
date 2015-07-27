@@ -16,7 +16,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my number $foo = 222 + +33;
+my number $foo = 222 + + 33;
 my number $bar = 222 - 33;
 my number $bat = 222 + -33;
 my number $baz = $foo - $bar + $bat - 4;

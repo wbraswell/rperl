@@ -2,6 +2,8 @@ Eyapp unescaped left braces
 
 RELEASE Parse::Eyap vX.YZZY
 
+Add scientific notation and leading+ numeric tests
+
 
 CHECK
 	Fix Numeric Accuracy

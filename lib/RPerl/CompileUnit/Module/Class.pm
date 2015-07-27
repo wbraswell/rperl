@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.021_001;
+our $VERSION = 0.022_000;
 
 # [[[ OO INHERITANCE ]]]
 # BASE CLASS HAS NO INHERITANCE
@@ -225,10 +225,9 @@ INIT {
 #        			RPerl::diag('in Class.pm INIT block, found RPerl header for $module_file_short = ' . $module_file_short . "\n");
 
                     # ops/types reporting subroutine
-
+                    # DEV NOTE, CORRELATION #18: RPerl::DataStructure::Array & Hash can not 'use RPerl;' so they are skipped in the header-checking loop above, their *__MODE_ID() subroutines are not created below
                     $package_name_underscores = $package_name;
                     $package_name_underscores =~ s/::/__/g;
-
                     if ( not eval( 'defined &main::' . $package_name_underscores . '__MODE_ID' ) ) {
                         eval( '*main::' . $package_name_underscores . '__MODE_ID = sub { return 0; };' )    # PERLOPS_PERLTYPES is 0
 
