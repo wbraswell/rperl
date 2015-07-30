@@ -2,11 +2,11 @@
 package RPerl::DataType::Void;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
-use parent ('RPerl::DataType');
+use parent qw(RPerl::DataType);
 use RPerl::DataType;
 
 # [[[ CRITICS ]]]
@@ -20,7 +20,6 @@ package  # hide from PAUSE indexing
     void;
 use strict;
 use warnings;
-use RPerl;
-use parent ('RPerl::DataType::Void');
+use parent qw(RPerl::DataType::Void);
 
 1;  # end of class

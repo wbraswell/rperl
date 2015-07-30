@@ -21,7 +21,7 @@ BEGIN {
     if ( $ENV{RPERL_VERBOSE} ) {
         Test::More::diag("[[[ Beginning Scalar Type Pre-Test Loading, RPerl Type System ]]]");
     }
-    lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
+    lives_and( sub { use_ok('RPerl::AfterFilter'); }, q{use_ok('RPerl::AfterFilter') lives} );
 
     foreach my string $type (qw(Integer Number String)) {
         lives_and( sub { use_ok( 'RPerl::DataType::' . $type . '_cpp' ); }, q{use_ok('RPerl::DataType::' . $type . '_cpp') lives} );

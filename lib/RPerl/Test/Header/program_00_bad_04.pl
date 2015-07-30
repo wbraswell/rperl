@@ -7,7 +7,7 @@
 # [[[ HEADER ]]]
 use warnings;
 use strict;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]

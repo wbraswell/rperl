@@ -11,10 +11,10 @@
 
 # [[[ HEADER ]]]
 # <<< CHANGE_ME: replace with real class name >>>
+use RPerl;
 package RPerl::CompileUnit::Module::Class::Template;
 use strict;
 use warnings;
-use RPerl;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -48,11 +48,12 @@ use RPerl::CompileUnit::Module::Class;
 ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
 ## no critic qw(ProhibitDeepNests)  # SYSTEM SPECIAL 7: allow deeply-nested code
 ## no critic qw(ProhibitNoStrict)  # SYSTEM SPECIAL 8: allow no strict
-## no critic qw(RequireBriefOpen)  # SYSTEM SPECIAL 9: allow complex processing with open filehandle
-## no critic qw(ProhibitBacktickOperators)  # SYSTEM SPECIAL 10: allow system command execution
-## no critic qw(ProhibitCascadingIfElse)  # SYSTEM SPECIAL 11: allow complex conditional logic
-## no critic qw(RequireCarping)  # SYSTEM SPECIAL 12: allow die instead of croak
-## no critic qw(ProhibitAutomaticExportation)  # SYSTEM SPECIAL 13: allow global exports from Config.pm
+## no critic qw(RequireUseStrict)  # SYSTEM SPECIAL 9: allow omitted strict
+## no critic qw(RequireBriefOpen)  # SYSTEM SPECIAL 10: allow complex processing with open filehandle
+## no critic qw(ProhibitBacktickOperators)  # SYSTEM SPECIAL 11: allow system command execution
+## no critic qw(ProhibitCascadingIfElse)  # SYSTEM SPECIAL 12: allow complex conditional logic
+## no critic qw(RequireCarping)  # SYSTEM SPECIAL 13: allow die instead of croak
+## no critic qw(ProhibitAutomaticExportation)  # SYSTEM SPECIAL 14: allow global exports from Config.pm
 
 # COMBO CRITICS
 ## no critic qw(ProhibitUselessNoCritic PodSpelling ProhibitExcessMainComplexity)  # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code; SYSTEM SPECIAL 4: allow complex code outside subroutines, must be on line 1
@@ -95,19 +96,19 @@ our hashref $properties = {
 # [[[ OO METHODS & SUBROUTINES ]]]
 
 # <<< CHANGE_ME: delete for no methods/subroutines, or replace with real method(s)/subroutine(s) >>>
-our void_method $quux = sub {
+our void::method $quux = sub {
     ( my object $self) = @_;
     $self->{plugh} = $self->{plugh} * 2;
 };
 
-our integer_method $quince = sub {
+our integer::method $quince = sub {
     my string $quince_def
         = '...Cydonia vulgaris ... Cydonia, a city in Crete ... [1913 Webster]';
     print $quince_def;
     return (length $quince_def);
 };
 
-our string_hashref_method $qorge = sub {
+our string_hashref::method $qorge = sub {
     ( my object $self, my integer $qorge_input ) = @_;
     return {
         a => $self->{xyzzy} x $qorge_input,
@@ -116,7 +117,7 @@ our string_hashref_method $qorge = sub {
     };
 };
 
-our object_arrayref_method $qaft = sub {
+our object_arrayref::method $qaft = sub {
     ( my object $self, my integer $foo, my number $bar, my string $bat, my string_hashref $baz ) = @_;
     my object_arrayref $retval = [];
     $retval->[0] = RPerl::CompileUnit::Module::Class::Template->new();

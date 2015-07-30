@@ -2,7 +2,7 @@
 package RPerl::CodeBlock::Subroutine;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.003_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -10,34 +10,24 @@ our $VERSION = 0.003_000;
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 BEGIN {
 
-    package    # hide from PAUSE indexing
-        object_method;
+        package    # hide from PAUSE indexing
+        hashref::method;
     use strict;
     use warnings;
-    use RPerl;
     1;
 
-    package    # hide from PAUSE indexing
-        hashref_method;
+        package    # hide from PAUSE indexing
+        string::method;
     use strict;
     use warnings;
-    use RPerl;
-    1;
-
-    package    # hide from PAUSE indexing
-        string_method;
-    use strict;
-    use warnings;
-    use RPerl;
     1;
 
     # DEV NOTE, CORRELATION #03: method types reside in Subroutine.pm, which is a sub-type of Subroutine.pm, causing the need to have this special BEGIN block
-    # to enable the *_method types, and Class.pm's INIT block symbol table entry generator needs us to switch back into the primary package so we have
+    # to enable the *::method types, and Class.pm's INIT block symbol table entry generator needs us to switch back into the primary package so we have
     # that happen in the following line, which furthermore triggers the need to avoid re-defining class accessor/mutator methods; how to fix?
-    package RPerl::CodeBlock::Subroutine;
+        package RPerl::CodeBlock::Subroutine;
     use strict;
     use warnings;
-    use RPerl;
     1;
 }
 
@@ -50,7 +40,7 @@ our hashref $properties = {};
 
 # [[[ OO METHODS & SUBROUTINES ]]]
 
-our string_hashref_method $ast_to_rperl__generate = sub {
+our string_hashref::method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $rperl_source_group = { PMC => q{} };
     my string_hashref $rperl_source_subgroup;
@@ -96,7 +86,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     return $rperl_source_group;
 };
 
-our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
+our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group = { CPP => q{// <<< RP::CB::S __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>} . "\n" };
 
@@ -104,7 +94,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     return $cpp_source_group;
 };
 
-our string_hashref_method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = sub {
+our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group = { H => q{} };
 
@@ -135,7 +125,7 @@ our string_hashref_method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = s
     return $cpp_source_group;
 };
 
-our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
+our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group = { CPP => q{} };
 

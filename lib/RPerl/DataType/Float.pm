@@ -2,14 +2,14 @@
 package RPerl::DataType::Float;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
 # DEV NOTE, CORRELATION #07:
 # NEED FIX, OUTDATED
 # Float should have it's own functionality and compile to float C/C++ type for memory optimization, not just be a sub-type of Number
-use parent ('RPerl::DataType::Number');
+use parent qw(RPerl::DataType::Number);
 use RPerl::DataType::Number;
 
 # [[[ CRITICS ]]]
@@ -23,7 +23,6 @@ package  # hide from PAUSE indexing
     float;
 use strict;
 use warnings;
-use RPerl;
-use parent ('RPerl::DataType::Float');
+use parent qw(RPerl::DataType::Float);
 
 1;  # end of class

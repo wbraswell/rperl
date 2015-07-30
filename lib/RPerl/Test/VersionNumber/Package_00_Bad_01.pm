@@ -5,7 +5,7 @@
 package RPerl::Test::VersionNumber::Package_00_Bad_01;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.01_000;
 
 # [[[ SUBROUTINES ]]]

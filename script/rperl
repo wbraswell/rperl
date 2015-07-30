@@ -2,7 +2,7 @@
 # [[[ HEADER ]]]
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 # DEV NOTE, CORRELATION #16: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
 our $VERSION = 1.000_007;
 #our $VERSION = 20150709;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
@@ -13,7 +13,7 @@ our $VERSION = 1.000_007;
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(ProhibitBooleanGrep)  # SYSTEM SPECIAL 1: allow grep
-## no critic qw(RequireCarping)  # SYSTEM SPECIAL 12: allow die instead of croak
+## no critic qw(RequireCarping)  # SYSTEM SPECIAL 13: allow die instead of croak
 
 # [[[ INCLUDES ]]]
 use RPerl::Parser;    # includes Perl::Critic

@@ -5,7 +5,7 @@
 package RPerl::Test::Method::Class_00_Bad_01;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]

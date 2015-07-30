@@ -2,18 +2,18 @@
 package RPerl::Parser;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.004_070;
 
 # [[[ OO INHERITANCE ]]]
 #use RPerl::CompileUnit::Module::Class;
-#use parent ('RPerl::CompileUnit::Module::Class');
+#use parent qw(RPerl::CompileUnit::Module::Class);
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
-## no critic qw(ProhibitBacktickOperators)  ## SYSTEM SPECIAL 10: allow system command execution
-## no critic qw(RequireCarping)  # SYSTEM SPECIAL 12: allow die instead of croak
+## no critic qw(ProhibitBacktickOperators)  ## SYSTEM SPECIAL 11: allow system command execution
+## no critic qw(RequireCarping)  # SYSTEM SPECIAL 13: allow die instead of croak
 
 # [[[ INCLUDES ]]]
 use Perl::Critic;

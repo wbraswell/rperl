@@ -1,13 +1,13 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< PARSE_ERROR: 'Scalar found where operator expected' >>>
+# <<< EXECUTE_SUCCESS: '46' >>>
+# <<< EXECUTE_SUCCESS: '84' >>>
 
 # [[[ HEADER ]]]
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]
@@ -18,7 +18,7 @@ our $VERSION = 0.001_000;
 use RPerl::Test::Foo;
 
 # [[[ OPERATIONS ]]]
-my object $my_foo = RPerl::Test::Foo->new()
+my object $my_foo = RPerl::Test::Foo->new();
 $my_foo->quux();
 print $my_foo->{plugh}, "\n";
 $my_foo->{plugh} = 42;

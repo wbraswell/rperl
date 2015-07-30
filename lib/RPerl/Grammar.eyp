@@ -2,7 +2,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.001_110;
+    our $VERSION = 0.001_200;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -28,7 +28,7 @@
 %token FHREF_SYMBOL          = /(\$[A-Z][A-Z0-9_]*)/                     # dollar sigil, uppercase letter, uppercase letters & numbers & underscores; ex. '$MY_FILEHANDLE_23'
 %token TYPE_INTEGER          = /(integer)\s+/                            # 'integer' followed by whitespace
 %token TYPE_FHREF            = /(filehandleref\s+)/                      # 'filehandleref' followed by whitespace
-%token TYPE_METHOD           = /([a-zA-Z]\w*_method)/                    # letter followed by letters, numbers, and underscores, followed by '_method'; ex. 'string_arrayref_method'
+%token TYPE_METHOD           = /([a-zA-Z]\w*::method)/                    # letter followed by letters, numbers, and underscores, followed by '::method'; ex. 'string_arrayref::method'
 %token WORD_SCOPED           = /((?:[a-zA-Z]\w*)?(?:::[a-zA-Z]\w*)+)/
 %token TYPE_SELF             = /(object\s+\$self)/                       # 'object $self'
 %token STDOUT_STDERR         = /(\{\*STDOUT\}|\{\*STDERR\})/             # '{*STDOUT}' or '{*STDERR}'
@@ -203,7 +203,8 @@ HashDereference:         '%{' Variable '}' | '%{' TypeInner? HashReference '}' ;
 
 WordScoped:              WORD | WORD_SCOPED;
 LoopLabel:               WORD_UPPERCASE ;
-Type:                    WORD | TYPE_INTEGER ;
+#Type:                    WORD | TYPE_INTEGER ;
+Type:                    WORD | WORD_SCOPED | TYPE_INTEGER ;
 TypeInner:               MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN ;
 TypeInnerConstant:       MY Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN ;
 VariableOrLiteral:       Variable | Literal;
@@ -339,16 +340,17 @@ WordScoped_207 => 'RPerl::NonGenerator',                                        
 WordScoped_208 => 'RPerl::NonGenerator',                                                        # WordScoped -> WORD_SCOPED
 LoopLabel_209 => 'RPerl::NonGenerator',                                                         # LoopLabel -> WORD_UPPERCASE  # RPerl::Operation::Statement -> LoopLabel COLON
 Type_210 => 'RPerl::NonGenerator',                                                              # Type -> WORD
-Type_211 => 'RPerl::NonGenerator',                                                              # Type -> TYPE_INTEGER
-TypeInner_212 => 'RPerl::DataType::TypeInner',                                                  # TypeInner -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN
-TypeInnerConstant_213 => 'RPerl::NonGenerator',                                                 # TypeInnerConstant -> MY Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN
-VariableOrLiteral_214 => 'RPerl::Operation::Expression::SubExpression::Variable',               # VariableOrLiteral -> Variable
-VariableOrLiteral_215 => 'RPerl::Operation::Expression::SubExpression::Literal',                # VariableOrLiteral -> Literal
-VariableOrLiteralOrWord_216 => 'RPerl::Operation::Expression::SubExpression::Variable',         # VariableOrLiteralOrWord -> Variable
-VariableOrLiteralOrWord_217 => 'RPerl::Operation::Expression::SubExpression::Literal',          # VariableOrLiteralOrWord -> Literal
-VariableOrLiteralOrWord_218 => 'RPerl::NonGenerator',                                           # VariableOrLiteralOrWord -> WORD
-Literal_219 => 'RPerl::Operation::Expression::SubExpression::Literal::Number',                  # Literal -> LITERAL_NUMBER
-Literal_220 => 'RPerl::Operation::Expression::SubExpression::Literal::String'                   # Literal -> LITERAL_STRING
+Type_211 => 'RPerl::NonGenerator',                                                              # Type -> WORD_SCOPED
+Type_212 => 'RPerl::NonGenerator',                                                              # Type -> TYPE_INTEGER
+TypeInner_213 => 'RPerl::DataType::TypeInner',                                                  # TypeInner -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN
+TypeInnerConstant_214 => 'RPerl::NonGenerator',                                                 # TypeInnerConstant -> MY Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN
+VariableOrLiteral_215 => 'RPerl::Operation::Expression::SubExpression::Variable',               # VariableOrLiteral -> Variable
+VariableOrLiteral_216 => 'RPerl::Operation::Expression::SubExpression::Literal',                # VariableOrLiteral -> Literal
+VariableOrLiteralOrWord_217 => 'RPerl::Operation::Expression::SubExpression::Variable',         # VariableOrLiteralOrWord -> Variable
+VariableOrLiteralOrWord_218 => 'RPerl::Operation::Expression::SubExpression::Literal',          # VariableOrLiteralOrWord -> Literal
+VariableOrLiteralOrWord_219 => 'RPerl::NonGenerator',                                           # VariableOrLiteralOrWord -> WORD
+Literal_220 => 'RPerl::Operation::Expression::SubExpression::Literal::Number',                  # Literal -> LITERAL_NUMBER
+Literal_221 => 'RPerl::Operation::Expression::SubExpression::Literal::String'                   # Literal -> LITERAL_STRING
 };
 
     1;

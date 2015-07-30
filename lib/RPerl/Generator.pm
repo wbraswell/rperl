@@ -3,11 +3,10 @@
 package RPerl::Generator;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_020;
 
 # [[[ OO INHERITANCE ]]]
-# <<< CHANGE_ME: leave as base class for no inheritance, or replace with real parent package name >>>
 use parent qw(RPerl::CompileUnit::Module::Class);
 use RPerl::CompileUnit::Module::Class;
 
@@ -18,7 +17,17 @@ use RPerl::CompileUnit::Module::Class;
 
 # [[[ INCLUDES ]]]
 use RPerl::Grammar;
-use RPerl::Parser;
+
+#use RPerl::Parser;
+#require RPerl::Parser;
+#eval 'require RPerl::Parser;';
+eval {require RPerl::Parser;};
+if ($EVAL_ERROR and ($EVAL_ERROR =~ /attempt to reload/i)){
+    delete $INC{'RPerl::Parser'};
+    require RPerl::Parser;
+}
+elsif ($EVAL_ERROR ne q{}) { die $EVAL_ERROR; }
+
 use English qw(-no_match_vars);    # for $OSNAME; why isn't this included from 'require RPerl::Config', which is included from 'use RPerl' above?
 
 # [[[ OO PROPERTIES ]]]

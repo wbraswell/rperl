@@ -4,9 +4,9 @@
 # Find the circumference of a circle with hard-coded radius of 12.5 units
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

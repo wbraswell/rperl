@@ -2,7 +2,7 @@
 package RPerl::Algorithm::Inefficient;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.005_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -18,12 +18,12 @@ our hashref $properties = {};
 
 # [[[ OO METHODS & SUBROUTINES ]]]
 
-our void_method $inherited__Inefficient = sub {
+our void::method $inherited__Inefficient = sub {
     ( my object $self, my string $person) = @_;
     RPerl::diag( 'in PERLOPS_PERLTYPES Inefficient->inherited__Inefficient(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FLUFFY' . "\n" );
 };
 
-our void_method $inherited = sub {
+our void::method $inherited = sub {
     ( my object $self, my string $person) = @_;
     RPerl::diag('in PERLOPS_PERLTYPES Inefficient->inherited(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', INCOMPATIBLE' . "\n");
 };

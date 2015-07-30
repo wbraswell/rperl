@@ -12,7 +12,7 @@ our $VERSION = 0.001_000;
 use RPerl::Inline;
 
 # [[[ SUBROUTINES ]]]
-#our void_method $cpp_load = sub {
+#our void::method $cpp_load = sub {
 sub cpp_load {
     my $need_load_cpp = 0;
     if (    ( exists $main::{'RPerl__Algorithm__Inefficient__MODE_ID'} )

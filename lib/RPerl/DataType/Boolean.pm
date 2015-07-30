@@ -2,11 +2,11 @@
 package RPerl::DataType::Boolean;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
-use parent ('RPerl::DataType::Scalar');
+use parent qw(RPerl::DataType::Scalar);
 use RPerl::DataType::Scalar;
 
 # [[[ CRITICS ]]]
@@ -20,14 +20,12 @@ package  # hide from PAUSE indexing
     bool;
 use strict;
 use warnings;
-use RPerl;
-use parent ('RPerl::DataType::Boolean');
+use parent qw(RPerl::DataType::Boolean);
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataType::Boolean;
 use strict;
 use warnings;
-use RPerl;
 
 # [[[ INCLUDES ]]]
 use RPerl::DataType::String;    # need string type

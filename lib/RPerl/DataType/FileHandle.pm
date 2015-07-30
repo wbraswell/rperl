@@ -2,7 +2,7 @@
 package RPerl::DataType::FileHandle;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.002_000;
 
 # [[[ CRITICS ]]]
@@ -11,7 +11,7 @@ our $VERSION = 0.002_000;
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 
 # [[[ OO INHERITANCE ]]]
-use parent ('RPerl::DataType');
+use parent qw(RPerl::DataType);
 use RPerl::DataType;
 
 # [[[ SUB-TYPES BEFORE SETUP ]]]
@@ -21,17 +21,15 @@ package  # hide from PAUSE indexing
     filehandleref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('ref');
+use parent -norequire, qw(ref);
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataType::FileHandle;
 use strict;
 use warnings;
-use RPerl;
 
 # [[[ OO INHERITANCE ]]]
-use parent ('RPerl::DataType');
+use parent qw(RPerl::DataType);
 use RPerl::DataType;
 
 # NEED FIX: is a filehandleref really an integer?!?

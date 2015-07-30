@@ -5,7 +5,7 @@
 package RPerl::Test::LiteralNumber::Package_15_Bad_02;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

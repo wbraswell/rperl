@@ -2,7 +2,7 @@
 package RPerl::DataStructure::Hash_cpp;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.004_021;
 
 # [[[ CRITICS ]]]
@@ -12,7 +12,7 @@ our $VERSION = 0.004_021;
 use RPerl::Inline;
 
 # [[[ SUBROUTINES ]]]
-our void_method $cpp_load = sub {
+our void::method $cpp_load = sub {
     my $need_load_cpp = 0;
     if (    ( exists $main::{'RPerl__DataStructure__Hash__MODE_ID'} )
         and ( defined &{ $main::{'RPerl__DataStructure__Hash__MODE_ID'} } ) )

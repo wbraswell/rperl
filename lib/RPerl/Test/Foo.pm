@@ -2,7 +2,7 @@
 package RPerl::Test::Foo;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -29,7 +29,7 @@ our hashref $properties = {
 
 # [[[ OO METHODS & SUBROUTINES ]]]
 
-our void_method $quux = sub {
+our void::method $quux = sub {
     ( my object $self) = @_;
     $self->{plugh} = $self->{plugh} + 2;
     $self->{plugh} = $self->{plugh} - 3;
@@ -41,14 +41,14 @@ our void_method $quux = sub {
     $self->{plugh}--;
 };
 
-our integer_method $quince = sub {
+our integer::method $quince = sub {
     my string $quince_def
         = '...Cydonia vulgaris ... Cydonia, a city in Crete ... [1913 Webster]';
     print $quince_def;
     return (length $quince_def);
 };
 
-our string_hashref_method $qorge = sub {
+our string_hashref::method $qorge = sub {
     ( my object $self, my integer $qorge_input ) = @_;
     return {
         a => $self->{xyzzy} x $qorge_input,
@@ -57,14 +57,14 @@ our string_hashref_method $qorge = sub {
     };
 };
 
-our object_arrayref_method $qaft = sub {
+our RPerl::Test::Foo_arrayref::method $qaft = sub {
     ( my object $self, my integer $foo, my number $bar, my string $bat, my string_hashref $baz ) = @_;
-    my object_arrayref $retval = [];
-    $retval->[0] = RPerl::CompileUnit::Module::Class::Template->new();
+    my RPerl::Test::Foo_arrayref $retval = [];
+    $retval->[0] = RPerl::Test::Foo->new();
     $retval->[0]->{xyzzy} = 'larry';
-    $retval->[1] = RPerl::CompileUnit::Module::Class::Template->new();
+    $retval->[1] = RPerl::Test::Foo->new();
     $retval->[1]->{xyzzy} = 'curly';
-    $retval->[2] = RPerl::CompileUnit::Module::Class::Template->new();
+    $retval->[2] = RPerl::Test::Foo->new();
     $retval->[2]->{xyzzy} = 'moe';
     return $retval;
 };

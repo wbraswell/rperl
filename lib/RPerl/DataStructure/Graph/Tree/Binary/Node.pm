@@ -1,9 +1,12 @@
-use strict;  use warnings;
 package RPerl::DataStructure::Graph::Tree::Binary::Node;
+use strict;
+use warnings;
+use RPerl::AfterFilter;
+our $VERSION = 0.001_000;
 
 package RPerl::DataStructure::Graph::Tree::Binary::NodeReference;
-our @ISA = ('RPerl::DataStructure', 'RPerl::DataType::Modifier::Reference');
-use RPerl::DataStructure;
+use parent qw(RPerl::DataType::Modifier::Reference);
+use RPerl::DataType::Modifier::Reference;
 
 # coderef parameter accepted by traverse method(s)
 use RPerl::Code;
@@ -21,8 +24,7 @@ our hashref $properties =
 };
 
 # traverse nodes breadth-first
-our unknown_method $traverse_breadthfirst_queue = sub {(my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $self, my RPerl::CodeReference $callback) = @_;
-;
+our unknown::method $traverse_breadthfirst_queue = sub {(my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $self, my RPerl::CodeReference $callback) = @_;
 	RPerl::diag("in ...Tree::Binary::NodeReference::traverse_breadthfirst_queue(), received \$self = \n" . RPerl::DUMPER($self) . "\n");
 	my @return_value = ();
 	my $return_value_tmp;
@@ -51,8 +53,7 @@ our unknown_method $traverse_breadthfirst_queue = sub {(my RPerl::DataStructure:
 };
 
 # traverse nodes depth-first in pre-order
-our unknown_method $traverse_depthfirst_preorder = sub {(my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $self, my RPerl::CodeReference $callback) = @_;
-;
+our unknown::method $traverse_depthfirst_preorder = sub {(my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $self, my RPerl::CodeReference $callback) = @_;
 	RPerl::diag("in ...Tree::Binary::NodeReference::traverse_depthfirst_preorder(), received \$self = \n" . RPerl::DUMPER($self) . "\n");
 #	RPerl::diag("in ...Tree::Binary::NodeReference::traverse_depthfirst_preorder(), received \$callback = " . RPerl::DUMPER($callback) . "\n");
 	my @return_value = ();
@@ -84,8 +85,7 @@ our unknown_method $traverse_depthfirst_preorder = sub {(my RPerl::DataStructure
 
 # accept binary tree nodes, return nested array refs;
 # modified pre-order traversal to achieve the opposite of new_from_nested_arrayrefs()
-our unknown_method $to_nested_arrayrefs = sub {(my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $self) = @_;
-;
+our unknown::method $to_nested_arrayrefs = sub {(my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $self) = @_;
 #	RPerl::diag("in ...Tree::Binary::NodeReference::to_nested_arrayrefs(), received \$self = \n" . RPerl::DUMPER($self) . "\n");
 	my arrayref $return_value = [];
 	my arrayref $return_value_children = [];
@@ -117,7 +117,6 @@ our unknown_method $to_nested_arrayrefs = sub {(my RPerl::DataStructure::Graph::
 
 # accept nested array refs, return binary tree nodes
 our RPerl::DataStructure::Graph::Tree::Binary::NodeReference $new_from_nested_arrayrefs = sub {(my string $class, my arrayref $input) = @_;
-;
 #	RPerl::diag("in ...Tree::Binary::NodeReference::new_from_nested_arrayrefs(), received \$class = '$class', and \$input =\n" . RPerl::DUMPER($input) . "\n");
 	my unknown $output = $class->new();
 
@@ -135,7 +134,7 @@ our RPerl::DataStructure::Graph::Tree::Binary::NodeReference $new_from_nested_ar
 };
 
 # DISABLE UNUSED CODE (Using default Data::Dumper for now)
-#our string_method $DUMPER = sub {(my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $node) = @_;
+#our string::method $DUMPER = sub {(my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $node) = @_;
 #	my string $dumped = '[';
 # START HERE
 # START HERE
@@ -150,6 +149,8 @@ our RPerl::DataStructure::Graph::Tree::Binary::NodeReference $new_from_nested_ar
 # DEV NOTE: for naming conventions, see DEV NOTE in same code section of LinkedList.pm
 package  # hide from PAUSE indexing
     binarytreenoderef;
-our @ISA = ('RPerl::DataStructure::Graph::Tree::Binary::NodeReference');
+use parent qw(RPerl::DataStructure::Graph::Tree::Binary::NodeReference);
 use RPerl::DataStructure::Graph::Tree::Binary::Node;
 our $properties = $properties; our $new_from_nested_arrayrefs = $new_from_nested_arrayrefs; our $traverse_depthfirst_preorder = $traverse_depthfirst_preorder; our $to_nested_arrayrefs = $to_nested_arrayrefs; our $traverse_breadthfirst_queue = $traverse_breadthfirst_queue;
+
+1;  # end of class

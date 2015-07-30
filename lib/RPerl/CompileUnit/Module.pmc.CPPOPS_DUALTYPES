@@ -1,8 +1,8 @@
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::CompileUnit::Module;
 use strict;
 use warnings;
-use RPerl;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]
@@ -12,7 +12,7 @@ our $VERSION = 0.001_000;
 use RPerl::Inline;
 
 # [[[ SUBROUTINES ]]]
-#our void_method $cpp_load = sub {
+#our void::method $cpp_load = sub {
 sub cpp_load {
     my $need_load_cpp = 0;
     if (    ( exists $main::{'RPerl__CompileUnit__Module__MODE_ID'} )

@@ -5,7 +5,7 @@
 package RPerl::Test::Subroutine::Package_00_Bad_06;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]

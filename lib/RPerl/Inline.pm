@@ -1,3 +1,4 @@
+# [[[ HEADER ]]]
 package RPerl::Inline;
 use strict;
 use warnings;

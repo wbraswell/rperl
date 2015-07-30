@@ -4,9 +4,9 @@
 # Repeat any string any number of times, both values entered by the user
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

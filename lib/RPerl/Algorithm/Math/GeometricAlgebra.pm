@@ -5,11 +5,11 @@
 package RPerl::Algorithm::Math::GeometricAlgebra;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.000_007;
 
 # [[[ OO INHERITANCE ]]]
-use parent ('RPerl::Algorithm::Math');
+use parent qw(RPerl::Algorithm::Math);
 use RPerl::Algorithm::Math;
 
 # [[[ CRITICS ]]]

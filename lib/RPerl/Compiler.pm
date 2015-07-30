@@ -6,18 +6,20 @@
 package RPerl::Compiler;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.005_200;
 
-# [[[ CRITICS ]]]
+# [[[ OO INHERITANCE ]]]
+use parent qw(RPerl::CompileUnit::Module::Class);
+use RPerl::CompileUnit::Module::Class;
 
+# [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
-## no critic qw(RequireBriefOpen)  # SYSTEM SPECIAL 9: allow complex processing with open filehandle
+## no critic qw(RequireBriefOpen)  # SYSTEM SPECIAL 10: allow complex processing with open filehandle
 
 # [[[ INCLUDES ]]]
-
 use RPerl::Parser;
 use RPerl::Generator;
 use File::Temp qw(tempfile);
@@ -470,4 +472,4 @@ our void $cpp_to_xsbinary__subcompile = sub {
     RPerl::verbose( ' skipped.' . "\n" );
 };
 
-1;    # end of package
+1;    # end of class

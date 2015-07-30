@@ -8,7 +8,7 @@
 use strict;
 use warnings;
 use RPerl::Test::Foo;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ INCLUDES ]]]

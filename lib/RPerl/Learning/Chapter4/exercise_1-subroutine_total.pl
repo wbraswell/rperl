@@ -4,9 +4,9 @@
 # Subroutine & driver to calculate the totals of arrays of stringified numbers, both hard-coded and user-supplied
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

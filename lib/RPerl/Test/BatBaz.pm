@@ -2,7 +2,7 @@
 package RPerl::Test::BatBaz;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -23,7 +23,6 @@ our hashref $properties = {};
 package RPerl::Test::Baz;
 use strict;
 use warnings;
-use RPerl;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]

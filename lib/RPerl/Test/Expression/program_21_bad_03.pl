@@ -1,13 +1,13 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< PARSE_ERROR: 'near ")' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  <<< NO TOKEN FOUND >>>' >>>
 
 # [[[ HEADER ]]]
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]
@@ -19,8 +19,6 @@ use RPerl::Test::Foo;
 
 # [[[ OPERATIONS ]]]
 my object $my_foo = RPerl::Test::Foo->new();
-$my_foo->quux()
-print $my_foo->{plugh}, "\n";
-$my_foo->{plugh} = 42;
-$my_foo->quux();
-print $my_foo->{plugh}, "\n";
+print $my_foo->qorge(), "\n";
+$my_foo->{xyzzy} = 'guffaw';
+print $my_foo->qorge(), "\n"

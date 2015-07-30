@@ -5,7 +5,7 @@
 package RPerl::Test::LiteralString::Package_DoubleQuotes_06_Bad;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]

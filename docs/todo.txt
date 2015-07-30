@@ -3,9 +3,13 @@ Eyapp unescaped left braces
 RELEASE Parse::Eyap vX.YZZY
 
 Add scientific notation and leading+ numeric tests
-Add scoped constant call generating & tests
+Fix scoped types
+Add scoped type tests
+Remove all object* types?
 
 alioth nbody
+
+identify filename-per-error in multi-file compiles
 
 Fix CPAN Testers Bugs
 

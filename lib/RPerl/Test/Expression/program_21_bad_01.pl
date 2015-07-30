@@ -2,12 +2,13 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< PARSE_ERROR: 'near ")' >>>
 # <<< PARSE_ERROR: 'Global symbol "$my_foo" requires explicit package name' >>>
 
 # [[[ HEADER ]]]
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]
@@ -15,10 +16,10 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ INCLUDES ]]]
-use RPerl::Test::Foo
+use RPerl::Test::Foo;
 
 # [[[ OPERATIONS ]]]
-my object $my_foo = RPerl::Test::Foo->new();
+my object $my_foo = RPerl::Test::Foo->new()
 print $my_foo->qorge(), "\n";
 $my_foo->{xyzzy} = 'guffaw';
 print $my_foo->qorge(), "\n";

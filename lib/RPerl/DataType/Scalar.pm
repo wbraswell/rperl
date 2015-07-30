@@ -2,11 +2,11 @@
 package RPerl::DataType::Scalar;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
-use parent ('RPerl::DataType');
+use parent qw(RPerl::DataType);
 use RPerl::DataType;
 
 # [[[ CRITICS ]]]
@@ -21,7 +21,6 @@ package  # hide from PAUSE indexing
     scalartype;
 use strict;
 use warnings;
-use RPerl;
-use parent ('RPerl::DataType::Scalar');
+use parent qw(RPerl::DataType::Scalar);
 
 1;  # end of class

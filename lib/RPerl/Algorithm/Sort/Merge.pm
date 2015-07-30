@@ -1,18 +1,25 @@
+# [[[ HEADER ]]]
 package RPerl::Algorithm::Sort::Merge;
-use strict;  use warnings;
+use strict;
+use warnings;
+use RPerl::AfterFilter;
+our $VERSION = 0.001_000;
 
-our @ISA = ('RPerl::Algorithm::Sort');
+# [[[ OO INHERITANCE ]]]
+use parent qw(RPerl::Algorithm::Sort);
 use RPerl::Algorithm::Sort;
 
+# [[[ OO PROPERTIES ]]]
 our hashref $properties =
 {
 	variant => my string $TYPED_mode = 'topdown',  # default to top-down variant
 	data => my unknown $TYPED_data  # TODO: create nonscalarref data type?
 };
 
+# [[[ OO METHODS & SUBROUTINES ]]]
+
 # call out to sort data, return nothing
-our void_method $sort = sub {(my object $self) = @_;
-;
+our void::method $sort = sub {(my object $self) = @_;
 	if ((ref($self->{data}) eq 'ARRAY') or ($self->{data}->isa('arrayref')))
 	{
 		if ($self->{variant} eq 'topdown') { $self->{data} = mergesort_array_topdown($self->{data}); }
@@ -30,7 +37,6 @@ our void_method $sort = sub {(my object $self) = @_;
 # top-down variant: comparison-based and stable and online [O(n log n) average total time, O(n) worst-case total extra space]
 # sort data, return sorted data
 our scalartype_arrayref $mergesort_array_topdown = sub {(my scalartype_arrayref $data) = @_;
-;
 	my integer $data_length = scalar(@{$data});  # CONSTANT
 	
 #	RPerl::diag("in mergesort_array_topdown(), have \$data = \n" . RPerl::DUMPER($data) . "\n");
@@ -56,7 +62,6 @@ our scalartype_arrayref $mergesort_array_topdown = sub {(my scalartype_arrayref 
 
 # top-down variant; merge sublists data, return merged data [O(n) time, O(n) total extra space]
 our scalartype_arrayref $merge_array_topdown = sub {(my scalartype_arrayref $left, my scalartype_arrayref $right) = @_;
-;
 	my integer $left_length = scalar(@{$left});
 	my integer $right_length = scalar(@{$right});
 	
@@ -82,7 +87,6 @@ our scalartype_arrayref $merge_array_topdown = sub {(my scalartype_arrayref $lef
 # bottom-up variant: comparison-based and stable and online [O(n log n) average total time, O(n) worst-case total extra space]
 # sort data, return sorted data
 our scalartype_arrayref $mergesort_array_bottomup = sub {(my scalartype_arrayref $data) = @_;
-;
 	my integer $data_length = scalar(@{$data});  # CONSTANT
 	my integer $width;	
 	my integer $i;
@@ -112,7 +116,6 @@ our scalartype_arrayref $mergesort_array_bottomup = sub {(my scalartype_arrayref
 
 # bottom-up variant; merge sublists, return nothing [O(n) time, O(1) extra space]
 our void $merge_array_bottomup = sub {(my scalartype_arrayref $data, my scalartype_arrayref $tmp_data, my integer $i_left, my integer $i_right, my integer $i_end) = @_;  # CONSTANTS $i_left, $i_right, $i_end
-;
 	my integer $i0 = $i_left;
 	my integer $i1 = $i_right;
 	my integer $j;
@@ -150,7 +153,6 @@ our scalartype $min = sub {(my scalartype $a, my scalartype $b) = @_; if ($a < $
 # linked list, top-down variant: comparison-based and stable and online [O(n log n) average total time, O(1) worst-case total extra space]
 # sort data starting at head node, return new head node of sorted data
 our linkedlistnoderef $mergesort_linkedlist_topdown = sub {(my linkedlistnoderef $head) = @_;
-;
 #	RPerl::diag("in mergesort_linkedlist_topdown(), received \$head = " . RPerl::DUMPER($head) . "\n");
 
 	my linkedlistnoderef $left;
@@ -176,7 +178,6 @@ our linkedlistnoderef $mergesort_linkedlist_topdown = sub {(my linkedlistnoderef
 
 # linked list, top-down variant; split into sublists, return sublists [O(n) time, O(1) extra space]
 our arrayref $split_linkedlist = sub {(my scalartype_linkedlistref $head) = @_;
-;	
 #	RPerl::diag("in split_linkedlist(), received \$head->{data} = " . $head->{data} . "\n");
 	
 	my linkedlistnoderef $left;
@@ -219,7 +220,6 @@ our arrayref $split_linkedlist = sub {(my scalartype_linkedlistref $head) = @_;
 
 # linked list, top-down variant; merge sublists, return sublists [O(n) time, O(1) extra space]
 our linkedlistnoderef $merge_linkedlist_topdown = sub {(my linkedlistnoderef $left, my linkedlistnoderef $right) = @_;
-;
 #	RPerl::diag("in merge_linkedlist_topdown(), received \$left = " . RPerl::DUMPER($left) . "\n");
 #	RPerl::diag("in merge_linkedlist_topdown(), received \$right = " . RPerl::DUMPER($right) . "\n");
 
@@ -252,3 +252,5 @@ our linkedlistnoderef $merge_linkedlist_topdown = sub {(my linkedlistnoderef $le
 #	RPerl::diag("in merge_linkedlist_topdown(), returning \$merged = " . RPerl::DUMPER($merged) . "\n");
 	return $merged;
 };
+
+1;  # end of class

@@ -4,9 +4,9 @@
 # Find the circumference of a circle with any positive radius entered by the user
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

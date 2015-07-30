@@ -2,8 +2,8 @@
 package RPerl::Operation::Expression::ConstantCall;
 use strict;
 use warnings;
-use RPerl;
-our $VERSION = 0.001_000;
+use RPerl::AfterFilter;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression);
@@ -18,50 +18,76 @@ our hashref $properties = {};
 
 # [[[ OO METHODS & SUBROUTINES ]]]
 
-our string_hashref_method $ast_to_rperl__generate = sub {
+our string_hashref::method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $rperl_source_group = { PMC => q{} };
 
 #    RPerl::diag( 'in ConstantCall->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) ne 'Expression_126' ) {
-        die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+    if ( ( ref $self ) eq 'Expression_126' ) {
+        # Expression -> WORD_UPPERCASE LPAREN ')'
+        my string $name        = $self->{children}->[0];
+        my string $left_paren  = $self->{children}->[1];
+        my string $right_paren = $self->{children}->[2];
+
+        $rperl_source_group->{PMC} .= $name . $left_paren . $right_paren;
+    }
+    elsif ( ( ref $self ) eq 'Expression_127' ) {
+        # Expression -> WordScoped SCOPE WORD_UPPERCASE LPAREN ')' 
+        my string_hashref $rperl_source_subgroup = $self->{children}->[0]->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+        my string $scope       = $self->{children}->[1];
+        my string $name        = $self->{children}->[2];
+        my string $left_paren  = $self->{children}->[3];
+        my string $right_paren = $self->{children}->[4];
+
+        $rperl_source_group->{PMC} .= $scope . $name . $left_paren . $right_paren;
+    }
+    else {
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $self )
-                . ' found where Expression_126 expected, dying' )
+                . ' found where Expression_126 or Expression_127 expected, dying' )
             . "\n";
     }
 
-    # Expression -> WORD_UPPERCASE LPAREN ')'
-    my string $name        = $self->{children}->[0];
-    my string $left_paren  = $self->{children}->[1];
-    my string $right_paren = $self->{children}->[2];
-
-    $rperl_source_group->{PMC} .= $name . $left_paren . $right_paren;
     return $rperl_source_group;
 };
 
-our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
+our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $cpp_source_group
-        = {
-        CPP => q{// <<< RP::O::E::CC __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
-            . "\n"
-        };
+    my string_hashref $cpp_source_group = { CPP => q{// <<< RP::O::E::CC __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>} . "\n" };
 
     #...
     return $cpp_source_group;
 };
 
-our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
+our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $cpp_source_group
-        = {
-        CPP => q{// <<< RP::O::E::CC __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
-            . "\n"
-        };
+    my string_hashref $cpp_source_group = { CPP => q{} };
 
-    #...
+#    RPerl::diag( 'in ConstantCall->ast_to_cpp__generate(), received $self = ' . "\n" . RPerl::Parser::cpp_ast__dump($self) . "\n" );
+
+    if ( ( ref $self ) eq 'Expression_126' ) {
+        # Expression -> WORD_UPPERCASE LPAREN ')'
+        my string $name        = $self->{children}->[0];
+        $cpp_source_group->{CPP} .= $name;
+    }
+    elsif ( ( ref $self ) eq 'Expression_127' ) {
+        # Expression -> WordScoped SCOPE WORD_UPPERCASE LPAREN ')' 
+        my string_hashref $cpp_source_subgroup = $self->{children}->[0]->ast_to_cpp__generate($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+        my string $scope       = $self->{children}->[1];
+        my string $name        = $self->{children}->[2];
+        $cpp_source_group->{CPP} .= $scope . $name;
+    }
+    else {
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+                . ( ref $self )
+                . ' found where Expression_126 or Expression_127 expected, dying' )
+            . "\n";
+    }
+
     return $cpp_source_group;
 };
 

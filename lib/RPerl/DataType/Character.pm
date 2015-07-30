@@ -2,11 +2,11 @@
 package RPerl::DataType::Character;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
-use parent ('RPerl::DataType::String');
+use parent qw(RPerl::DataType::String);
 use RPerl::DataType::String;
 
 # [[[ SUB-TYPES ]]]
@@ -15,7 +15,6 @@ package  # hide from PAUSE indexing
     char;
 use strict;
 use warnings;
-use RPerl;
-use parent ('RPerl::DataType::Integer');
+use parent qw(RPerl::DataType::Integer);
 
 1;  # end of class

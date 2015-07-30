@@ -2,14 +2,14 @@
 package RPerl::Test::IO::Print_00_cpp;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_011;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
 
 # [[[ SUBROUTINES ]]]
-our void_method $cpp_load = sub {
+our void::method $cpp_load = sub {
     my $need_load_cpp = 0;
     if (    ( exists $main::{'RPerl__Test__IO__Print_00__MODE_ID'} )
         and ( defined &{ $main::{'RPerl__Test__IO__Print_00__MODE_ID'} } ) )

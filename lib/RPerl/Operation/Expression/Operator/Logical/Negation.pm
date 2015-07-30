@@ -2,7 +2,7 @@
 package RPerl::Operation::Expression::Operator::Logical::Negation;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -18,7 +18,7 @@ our hashref $properties = {};
 
 # [[[ OO METHODS & SUBROUTINES ]]]
 
-our string_hashref_method $ast_to_rperl__generate = sub {
+our string_hashref::method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $rperl_source_group = { PMC => q{} };
 
@@ -46,7 +46,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     return $rperl_source_group;
 };
 
-our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
+our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
         = { CPP =>
@@ -58,7 +58,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 };
 
 # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES code generation are exactly equivalent
-our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
+our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group = { CPP => q{} };
 

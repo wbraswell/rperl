@@ -5,11 +5,11 @@
 package RPerl::Test::TypeCheckingOn::AllTypes;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_001;
 
 # [[[ OO INHERITANCE ]]]
-use parent ('RPerl::Test');
+use parent qw(RPerl::Test);
 use RPerl::Test;
 
 # [[[ CRITICS ]]]

@@ -2,7 +2,7 @@
 package RPerl::Operation::Expression::SubExpression::Variable;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.002_020;
 
 # [[[ OO INHERITANCE ]]]
@@ -14,7 +14,7 @@ our hashref $properties = {};
 
 # [[[ OO METHODS & SUBROUTINES ]]]
 
-our string_hashref_method $ast_to_rperl__generate = sub {
+our string_hashref::method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $rperl_source_group = { PMC => q{} };
 
@@ -22,8 +22,8 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     
     my string $self_class = ref $self;
 
-    # unwrap Variable_167 from SubExpression_133, VariableOrLiteral_214, or VariableOrLiteralOrWord_216
-    if (($self_class eq 'SubExpression_133') or ($self_class eq 'VariableOrLiteral_214') or ($self_class eq 'VariableOrLiteralOrWord_216')) {
+    # unwrap Variable_167 from SubExpression_133, VariableOrLiteral_215, or VariableOrLiteralOrWord_217
+    if (($self_class eq 'SubExpression_133') or ($self_class eq 'VariableOrLiteral_215') or ($self_class eq 'VariableOrLiteralOrWord_217')) {
         $self = $self->{children}->[0];
     }
     
@@ -40,14 +40,14 @@ our string_hashref_method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( $self_class )
-                . ' found where SubExpression_133, VariableOrLiteral_214, VariableOrLiteralOrWord_216, or Variable_167 expected, dying'
+                . ' found where SubExpression_133, VariableOrLiteral_215, VariableOrLiteralOrWord_217, or Variable_167 expected, dying'
         ) . "\n"; 
     }
 
     return $rperl_source_group;
 };
 
-our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
+our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
         = { CPP => q{// <<< RP::O::E::SE::V __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
@@ -57,7 +57,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     return $cpp_source_group;
 };
 
-our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
+our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group = { CPP => q{} };
 
@@ -65,8 +65,8 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     
     my string $self_class = ref $self;
 
-    # unwrap Variable_167 from SubExpression_133, VariableOrLiteral_214, or VariableOrLiteralOrWord_216
-    if (($self_class eq 'SubExpression_133') or ($self_class eq 'VariableOrLiteral_214') or ($self_class eq 'VariableOrLiteralOrWord_216')) {
+    # unwrap Variable_167 from SubExpression_133, VariableOrLiteral_215, or VariableOrLiteralOrWord_217
+    if (($self_class eq 'SubExpression_133') or ($self_class eq 'VariableOrLiteral_215') or ($self_class eq 'VariableOrLiteralOrWord_217')) {
         $self = $self->{children}->[0];
     }
     
@@ -88,7 +88,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( $self_class )
-                . ' found where SubExpression_133, VariableOrLiteral_214, VariableOrLiteralOrWord_216, or Variable_167 expected, dying'
+                . ' found where SubExpression_133, VariableOrLiteral_215, VariableOrLiteralOrWord_217, or Variable_167 expected, dying'
         ) . "\n"; 
     }
 

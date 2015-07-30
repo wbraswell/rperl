@@ -1,17 +1,21 @@
+# [[[ HEADER ]]]
 package RPerl::DataStructure::Hash::Properties;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
-# [[[ SETUP ]]]
+# [[[ OO INHERITANCE ]]]
+#use parent qw(RPerl::GrammarRule RPerl::DataStructure::Hash);  # NEED UPGRADE: multiple inheritance
+use parent qw(RPerl::GrammarRule);
+use RPerl::GrammarRule;
+
+# [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 
+# [[[ INCLUDES ]]]
 use Scalar::Util 'blessed';
-
-# [[[ OO INHERITANCE ]]]
-use parent qw(RPerl::GrammarRule RPerl::DataStructure::Hash);
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {  # whoah, so meta
@@ -20,32 +24,7 @@ our hashref $properties = {  # whoah, so meta
 
 # [[[ OO METHODS & SUBROUTINES ]]]
 
-# TRANSLATE
-our object_method $ppi_to_rperl__translate = sub {
-    ( my string $class, my object $node) = @_;    # class method
-    my object $node_translated;
-    $node_translated = { STUB_AST_OBJECT =>
-            'CREATED BY RPerl::DataStructure::Hash::Properties' };
-    return ($node_translated);
-};
-
-# GENERATE CPPOPS_PERLTYPES
-our string_method $rperl_to_cpp__generate__CPPOPS_PERLTYPES = sub {
-    ( my object $self ) = @_;                     # object method
-    my string $self_generated = q{};
-    $self_generated
-        .= 'STUB PERL CODE STRING, CREATED BY RPerl::DataStructure::Hash::Properties';
-    return ($self_generated);
-};
-
-# GENERATE CPPOPS_CPPTYPES
-our string_method $rperl_to_cpp__generate__CPPOPS_CPPTYPES = sub {
-    ( my object $self ) = @_;                     # object method
-    my string $self_generated = q{};
-    $self_generated
-        .= 'STUB CPP CODE STRING, CREATED BY RPerl::DataStructure::Hash::Properties';
-    return ($self_generated);
-};
+# ...
 
 # [[[ SUB-TYPES ]]]
 
@@ -54,7 +33,6 @@ package  # hide from PAUSE indexing
     properties;
 use strict;
 use warnings;
-use RPerl;
-use base qw(RPerl::DataStructure::Hash::Properties);
+use parent qw(RPerl::DataStructure::Hash::Properties);
 
-1;
+1;  # end of class

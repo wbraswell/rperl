@@ -22,7 +22,7 @@ BEGIN {
     if ( $ENV{RPERL_VERBOSE} ) {
         diag('[[[ Beginning Object-Oriented Inheritance Pre-Test Loading, RPerl Type System ]]]');
     }
-    lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
+    lives_and( sub { use_ok('RPerl::AfterFilter'); }, q{use_ok('RPerl::AfterFilter') lives} );
 
     # NEED FIX: duplicate code, is it redundant to do this here and also at the top of the main for() loop?
     my string $bubble_cpp_filename = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.cpp';

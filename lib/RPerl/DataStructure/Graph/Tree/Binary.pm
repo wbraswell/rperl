@@ -1,9 +1,12 @@
-use strict;  use warnings;
 package RPerl::DataStructure::Graph::Tree::Binary;
+use strict;
+use warnings;
+use RPerl::AfterFilter;
+our $VERSION = 0.001_000;
 
 # NEED FIX: weird inheritance for these as-reference-only data structures
 package RPerl::DataStructure::Graph::Tree::BinaryReference;
-our @ISA = ('RPerl::DataStructure::Graph::TreeReference');
+use parent qw(RPerl::DataStructure::Graph::TreeReference);
 use RPerl::DataStructure::Graph::Tree;
 
 # trees are comprised of nodes
@@ -24,7 +27,6 @@ our hashref $properties =
 };
 
 our RPerl::DataStructure::Graph::Tree::BinaryReference $new_from_nested_arrayrefs = sub {(my string $class, my arrayref $input) = @_;
-;
 #	RPerl::diag("in ...Tree::BinaryReference::new_from_nested_arrayrefs(), received \$class = '$class', and \$input =\n" . RPerl::DUMPER($input) . "\n");
 	my unknown $output = $class->new();
 
@@ -45,7 +47,7 @@ our arrayref $to_nested_arrayrefs = sub {(my RPerl::DataStructure::Graph::Tree::
 # DEV NOTE: for naming conventions, see DEV NOTE in same code section of LinkedList.pm
 package  # hide from PAUSE indexing
     binarytreeref;
-our @ISA = ('RPerl::DataStructure::Graph::Tree::BinaryReference');
+use parent qw(RPerl::DataStructure::Graph::Tree::BinaryReference);
 use RPerl::DataStructure::Graph::Tree::Binary;
 our $properties = $properties; our $new_from_nested_arrayrefs = $new_from_nested_arrayrefs; our $traverse_depthfirst_preorder = $traverse_depthfirst_preorder; our $to_nested_arrayrefs = $to_nested_arrayrefs; our $traverse_breadthfirst_queue = $traverse_breadthfirst_queue;
 
@@ -54,9 +56,9 @@ our $properties = $properties; our $new_from_nested_arrayrefs = $new_from_nested
 # (ref to binary tree) of integers
 package  # hide from PAUSE indexing
     integer_binarytreeref;
-our @ISA = ('binarytreeref');
+use parent qw(binarytreeref);
 our $properties = $properties; our $new_from_arrayref = $new_from_arrayref; our $binarytree_unshift = $binarytree_unshift; our $DUMPER = $DUMPER;
 
 # NEED ADD: remaining sub-types
 
-1;
+1;  # end of class

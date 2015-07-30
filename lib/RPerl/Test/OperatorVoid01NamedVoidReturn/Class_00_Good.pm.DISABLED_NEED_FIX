@@ -2,7 +2,7 @@
 package RPerl::Test::OperatorVoid01NamedVoidReturn::Class_00_Good;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -13,7 +13,7 @@ use RPerl::Test;
 our hashref $properties = {};
 
 # [[[ OO METHODS & SUBROUTINES ]]]
-our void_method $foo = sub {
+our void::method $foo = sub {
     return;
 };
 

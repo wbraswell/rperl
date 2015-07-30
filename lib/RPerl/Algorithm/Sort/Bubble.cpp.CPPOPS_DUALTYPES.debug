@@ -16,7 +16,7 @@ using std::cout;  using std::cerr;
 ////# [[[ OO METHODS & SUBROUTINES ]]]
 
 ////# call out to sort integer_data, return nothing
-////our void_method $integer_sort = sub {(my object $self) = @_;
+////our void::method $integer_sort = sub {(my object $self) = @_;
 void RPerl__Algorithm__Sort__Bubble::integer_sort()
 ////;
 {
@@ -42,13 +42,13 @@ void RPerl__Algorithm__Sort__Bubble::number_sort()
 
 
 
-////our void_method $inherited__Bubble = sub { ( my object $self, my string $person ) = @_;
+////our void::method $inherited__Bubble = sub { ( my object $self, my string $person ) = @_;
 ////    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FRIED' . "\n"); };
 void RPerl__Algorithm__Sort__Bubble::inherited__Bubble(SV* person) {
     cout << "in CPPOPS_PERLTYPES Bubble->inherited__Bubble(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", FRIED\n";
 }
 
-////our void_method $inherited = sub { ( my object $self, my string $person ) = @_;
+////our void::method $inherited = sub { ( my object $self, my string $person ) = @_;
 ////    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', ILLOGICAL' . "\n"); };
 void RPerl__Algorithm__Sort__Bubble::inherited(SV* person) {
     cout << "in CPPOPS_PERLTYPES Bubble->inherited(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", ILLOGICAL\n";
@@ -284,7 +284,7 @@ SV* number_bubblesort__typetest0(SV* lucky_numbers)
 ////# [[[ OO METHODS & SUBROUTINES ]]]
 
 ////# call out to sort integer_data, return nothing
-////our void_method $integer_sort = sub {(my object $self) = @_;
+////our void::method $integer_sort = sub {(my object $self) = @_;
 void RPerl__Algorithm__Sort__Bubble::integer_sort()
 ////;
 {
@@ -306,13 +306,13 @@ void RPerl__Algorithm__Sort__Bubble::number_sort()
 
 
 
-////our void_method $inherited__Bubble = sub { ( my object $self, my string $person ) = @_; 
+////our void::method $inherited__Bubble = sub { ( my object $self, my string $person ) = @_; 
 ////    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FRIED' . "\n"); };
 void RPerl__Algorithm__Sort__Bubble::inherited__Bubble(string person) {
     RPerl::diag((const string) "in CPPOPS_CPPTYPES Bubble->inherited__Bubble(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", FRIED" + (const string) "\n");
 }
 
-////our void_method $inherited = sub { ( my object $self, my string $person ) = @_; 
+////our void::method $inherited = sub { ( my object $self, my string $person ) = @_; 
 ////    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', ILLOGICAL' . "\n"); };
 void RPerl__Algorithm__Sort__Bubble::inherited(string person) {
     RPerl::diag((const string) "in CPPOPS_CPPTYPES Bubble->inherited(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", ILLOGICAL" + (const string) "\n");

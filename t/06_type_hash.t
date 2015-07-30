@@ -19,7 +19,7 @@ BEGIN {
     if ( $ENV{RPERL_VERBOSE} ) {
         diag('[[[ Beginning Hash Type Pre-Test Loading, RPerl Type System ]]]');
     }
-    lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
+    lives_and( sub { use_ok('RPerl::AfterFilter'); }, q{use_ok('RPerl::AfterFilter') lives} );
     lives_and( sub { use_ok('RPerl::DataStructure::Hash_cpp'); }, q{use_ok('RPerl::DataStructure::Hash_cpp') lives} );
 }
 

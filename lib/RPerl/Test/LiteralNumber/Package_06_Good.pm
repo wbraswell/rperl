@@ -2,7 +2,7 @@
 package RPerl::Test::LiteralNumber::Package_06_Good;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

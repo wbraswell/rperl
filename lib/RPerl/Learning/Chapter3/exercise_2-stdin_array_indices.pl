@@ -4,9 +4,9 @@
 # Print string array elements indexed by user-supplied integers
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

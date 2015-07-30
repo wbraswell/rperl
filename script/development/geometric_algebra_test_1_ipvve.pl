@@ -2,7 +2,7 @@
 # [[[ HEADER ]]]
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.000_021;
 
 # [[[ CRITICS ]]]

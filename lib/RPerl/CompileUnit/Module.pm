@@ -2,7 +2,7 @@
 package RPerl::CompileUnit::Module;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.002_010;
 
 # [[[ OO INHERITANCE ]]]
@@ -15,7 +15,15 @@ use RPerl::CompileUnit;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ INCLUDES ]]]
-use RPerl::Parser;
+#use RPerl::Parser;
+#eval 'require RPerl::Parser;';
+eval {require RPerl::Parser;};
+if ($EVAL_ERROR and ($EVAL_ERROR =~ /attempt to reload/i)){
+    delete $INC{'RPerl::Parser'};
+    require RPerl::Parser;
+}
+elsif ($EVAL_ERROR ne q{}) { die $EVAL_ERROR; }
+
 use RPerl::Generator;
 
 # [[[ OO PROPERTIES ]]]
@@ -23,7 +31,7 @@ our hashref $properties = {};
 
 # [[[ OO METHODS & SUBROUTINES ]]]
 
-our string_hashref_method $ast_to_rperl__generate = sub {
+our string_hashref::method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $rperl_source_group = {};
 
@@ -50,7 +58,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     return $rperl_source_group;
 };
 
-our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
+our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes ) = @_;
     my string_hashref $cpp_source_group = {
         CPP =>
@@ -68,7 +76,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     return $cpp_source_group;
 };
 
-our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
+our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes ) = @_;
     my string_hashref $cpp_source_group = { CPP => q{}, H => q{}, PMC => q{} };
 

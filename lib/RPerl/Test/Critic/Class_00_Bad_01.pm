@@ -6,7 +6,7 @@
 package RPerl::Test::Critic::Class_00_Bad_01;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -21,7 +21,7 @@ our hashref $properties
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 
 # [[[ OO METHODS & SUBROUTINES ]]]
-our void_method $empty_method = sub {
+our void::method $empty_method = sub {
     return 2;
 };
 

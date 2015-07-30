@@ -1,13 +1,17 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< PARSE_ERROR: 'near "$my_foo"' >>>
+# <<< EXECUTE_SUCCESS: "'a' => 'twenty-threetwenty-threetwenty-threetwenty-threetwenty-threetwenty-threetwenty-three'" >>>
+# <<< EXECUTE_SUCCESS: "'b' => 'howdy'" >>>
+# <<< EXECUTE_SUCCESS: "'c' => '-23.42'" >>>
+# <<< EXECUTE_SUCCESS: "'a' => 'guffawguffawguffawguffawguffawguffawguffawguffawguffawguffawguffaw'" >>>
+# <<< EXECUTE_SUCCESS: "'b' => 'howdy'" >>>
+# <<< EXECUTE_SUCCESS: "'c' => '-23.42'" >>>
 
 # [[[ HEADER ]]]
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]
@@ -19,6 +23,6 @@ use RPerl::Test::Foo;
 
 # [[[ OPERATIONS ]]]
 my object $my_foo = RPerl::Test::Foo->new();
-print $my_foo->qorge(), "\n"
+print Dumper($my_foo->qorge(7)) . "\n";
 $my_foo->{xyzzy} = 'guffaw';
-print $my_foo->qorge(), "\n";
+print Dumper($my_foo->qorge(11)) . "\n";

@@ -1,15 +1,19 @@
+# [[[ HEADER ]]]
 package RPerl::Operation;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.000_010;
-
-# [[[ SETUP ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
-use rperloperations;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
+use RPerl::GrammarRule;
+
+# [[[ CRITICS ]]]
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+
+# [[[ INCLUDES ]]]
+use rperloperations;
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {
@@ -18,6 +22,4 @@ our hashref $properties = {
     arguments => my object_arrayref $TYPED_arguments = undef,
 };
 
-# [[[ OO METHODS & SUBROUTINES ]]]
-
-1;
+1;  # end of class

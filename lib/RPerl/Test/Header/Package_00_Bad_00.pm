@@ -8,7 +8,7 @@
 packaged RPerl::Test::Header::Package_00_Bad_00;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]

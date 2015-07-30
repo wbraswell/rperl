@@ -2,11 +2,11 @@
 package RPerl::DataType::String;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.005_000;
 
 # [[[ OO INHERITANCE ]]]
-use parent ('RPerl::DataType::Scalar');
+use parent qw(RPerl::DataType::Scalar);
 use RPerl::DataType::Scalar;
 
 # [[[ CRITICS ]]]
@@ -19,14 +19,12 @@ package  # hide from PAUSE indexing
     string;
 use strict;
 use warnings;
-use RPerl;
-use parent ('RPerl::DataType::String');
+use parent qw(RPerl::DataType::String);
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataType::String;
 use strict;
 use warnings;
-use RPerl;
 
 # [[[ INCLUDES ]]]
 use RPerl::DataType::Integer; # need integer type, normally included by rperltypes.pm but put here in case we don't use rperltypes.pm

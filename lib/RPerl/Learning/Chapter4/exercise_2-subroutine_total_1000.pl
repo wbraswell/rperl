@@ -4,9 +4,9 @@
 # Subroutine & driver to calculate the total of 1 to 1,000
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

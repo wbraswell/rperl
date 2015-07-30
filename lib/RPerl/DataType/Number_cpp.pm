@@ -2,7 +2,7 @@
 package RPerl::DataType::Number_cpp;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_011;
 
 # [[[ CRITICS ]]]
@@ -12,7 +12,7 @@ our $VERSION = 0.001_011;
 use RPerl::Inline;
 
 # [[[ SUBROUTINES ]]]
-our void_method $cpp_load = sub {
+our void::method $cpp_load = sub {
     my $need_load_cpp = 0;
     if (    ( exists $main::{'RPerl__DataType__Number__MODE_ID'} )
         and ( defined &{ $main::{'RPerl__DataType__Number__MODE_ID'} } ) )
@@ -51,4 +51,4 @@ EOF
 #    else { RPerl::diag("in Number_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"); }
 };
 
-1;
+1;  # end of package

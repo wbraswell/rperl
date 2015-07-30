@@ -1,7 +1,15 @@
-use strict;  use warnings;
-package RPerl::Algorithm::Math;
+# [[[ HEADER ]]]
+package RPerl::Algorithm::Sort;
+use strict;
+use warnings;
+use RPerl::AfterFilter;
+our $VERSION = 0.001_000;
 
-use parent ('RPerl::Algorithm');
+# [[[ OO INHERITANCE ]]]
+use parent qw(RPerl::Algorithm);
 use RPerl::Algorithm;
 
-1;
+# [[[ OO PROPERTIES ]]]
+our hashref $properties = {};
+
+1;    # end of class

@@ -12,7 +12,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
 use Test::More tests => 3;
 
-BEGIN { use_ok('RPerl'); }
+BEGIN { use_ok('RPerl::AfterFilter'); }
 
 # PERLOPS_PERLTYPES
 rperltypes::types_enable('PERL');

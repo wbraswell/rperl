@@ -2,7 +2,7 @@
 package RPerl::Test;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -18,7 +18,7 @@ our hashref $properties = {};
 # [[[ OO METHODS & SUBROUTINES ]]]
 
 # OO INHERITANCE TESTING
-our void_method $empty_method = sub {
+our void::method $empty_method = sub {
     ( my object $self ) = @_;
     2;
 };

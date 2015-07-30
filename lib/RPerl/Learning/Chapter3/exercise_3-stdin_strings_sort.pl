@@ -4,9 +4,9 @@
 # Print user-supplied list of strings in ASCIIbetical order, optionally on single line of output
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

@@ -2,7 +2,7 @@
 package RPerl::Algorithm;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.005_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -18,12 +18,12 @@ our hashref $properties = {};
 
 # [[[ OO METHODS & SUBROUTINES ]]]
 
-our void_method $inherited__Algorithm = sub {
+our void::method $inherited__Algorithm = sub {
     ( my object $self, my string $person) = @_;
     RPerl::diag( 'in PERLOPS_PERLTYPES Algorithm->inherited__Algorithm(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FNORD' . "\n" );
 };
 
-#our void_method $inherited = sub {
+#our void::method $inherited = sub {
 #    ( my object $self, my string $person) = @_;
 #    RPerl::diag('in PERLOPS_PERLTYPES Algorithm->inherited(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', IS' . "\n");
 #};

@@ -6,7 +6,7 @@
 package RPerl::Test::OperatorVoid01NamedVoidReturn::Class_12_Bad_00;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -21,6 +21,6 @@ use RPerl::Test;
 our hashref $properties = {};
 
 # [[[ OO METHODS & SUBROUTINES ]]]
-our void_method $foo = sub { return 2, 3, 5, 7; };
+our void::method $foo = sub { return 2, 3, 5, 7; };
 
 1;    # end of class

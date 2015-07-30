@@ -1,4 +1,6 @@
 ## no critic qw(ProhibitUselessNoCritic PodSpelling ProhibitExcessMainComplexity) # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code, must be on line 1; SYSTEM SPECIAL 4: allow complex code outside subroutines, must be on line 1
+
+# NEED FIX: triplicate export code
 package RPerl::Config;
 use strict;
 use warnings;
@@ -10,7 +12,7 @@ our $VERSION = 0.003_041;
 ## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
-## no critic qw(ProhibitAutomaticExportation)  # SYSTEM SPECIAL 13: allow global exports from Config.pm
+## no critic qw(ProhibitAutomaticExportation)  # SYSTEM SPECIAL 14: allow global exports from Config.pm
 
 # DEV NOTE: this package exists to serve as the header file for RPerl.pm itself,
 # as well as for RPerl.pm dependencies such as Class.pm, HelperFunctions_cpp.pm, and rperltypes.pm
@@ -29,6 +31,26 @@ our @EXPORT = qw(Dumper carp croak confess $OS_ERROR $EVAL_ERROR $CHILD_ERROR $E
 
 1;                              # end of package
 
+# NEED FIX: triplicate export code
+package RPerl::AfterFilter;
+
+## no critic qw(ProhibitAutomaticExportation)  # SYSTEM SPECIAL 14: allow global exports from Config.pm
+
+# $OS_ERROR == $ERRNO == $!, $EVAL_ERROR == $@, $CHILD_ERROR == $?, $EXECUTABLE_NAME == $^X, $PROGRAM_NAME == $0, $OSNAME == $^O
+
+# export various subroutines and variables to all who call 'use RPerl::AfterFilter;'
+use Data::Dumper;
+$Data::Dumper::Sortkeys = 1;    # Dumper() output must be sorted for lib/RPerl/Tests/Type_Types/* etc.
+use Carp;
+use English qw(-no_match_vars);
+use Exporter 'import';
+
+# DEV NOTE, CORRELATION #08: can't include to_string(), type(), types(), name(), or scope_type_name_value() in @EXPORT here or in RPerl:: namespace below
+our @EXPORT = qw(Dumper carp croak confess $OS_ERROR $EVAL_ERROR $CHILD_ERROR $EXECUTABLE_NAME $PROGRAM_NAME $OSNAME);
+
+1;                              # end of package
+
+# NEED FIX: triplicate export code
 package RPerl;
 use File::Find qw(find);
 use File::Spec;
@@ -40,7 +62,7 @@ use IPC::Cmd qw(can_run);       # to check for `reset`
 ## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
-## no critic qw(ProhibitAutomaticExportation)  # SYSTEM SPECIAL 13: allow global exports from Config.pm
+## no critic qw(ProhibitAutomaticExportation)  # SYSTEM SPECIAL 14: allow global exports from Config.pm
 
 # export $RPerl::MODES, as well as various subroutines and variables to all who call 'use RPerl;'
 our $MODES = {                  # see perl_modes.txt for more info

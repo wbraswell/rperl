@@ -6,7 +6,7 @@
 package RPerl::Test::Constant::Class_00_Bad_17;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -24,7 +24,7 @@ our hashref $properties
 use constant PIE => my string $TYPED_PIE = 'pecan';
 
 # [[[ OO METHODS & SUBROUTINES ]]]
-our void_method $empty_method = sub {
+our void::method $empty_method = sub {
     return 2;
 };
 

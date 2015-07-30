@@ -2,7 +2,7 @@
 package RPerl::DataStructure::Array::Reference;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -15,32 +15,29 @@ use RPerl::DataType::Modifier::Reference;
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 
 # [[[ INCLUDES ]]]
-# DEV NOTE: must pre-declare string_hashref_method and object types here, because this file appears on a lower line number in rperltypes.pm
+# DEV NOTE: must pre-declare string_hashref::method and object types here, because this file appears on a lower line number in rperltypes.pm
 #require RPerl::CodeBlock::Subroutine::Method;
 package  # hide from PAUSE indexing
-    string_hashref_method;
+    string_hashref::method;
 use strict;
 use warnings;
-use RPerl;
 
 #require RPerl::Object;
 package  # hide from PAUSE indexing
     object;
 use strict;
 use warnings;
-use RPerl;
 
 package RPerl::DataStructure::Array::Reference;
 use strict;
 use warnings;
-use RPerl;
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
 
 # [[[ OO METHODS & SUBROUTINES ]]]
 
-our string_hashref_method $ast_to_rperl__generate = sub {
+our string_hashref::method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $rperl_source_group = { PMC => q{} };
 
@@ -82,7 +79,7 @@ our string_hashref_method $ast_to_rperl__generate = sub {
     return $rperl_source_group;
 };
 
-our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
+our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
         = {
@@ -94,7 +91,7 @@ our string_hashref_method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     return $cpp_source_group;
 };
 
-our string_hashref_method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
+our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group = { CPP => q{} };
 

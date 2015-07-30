@@ -1,10 +1,11 @@
-use strict;  use warnings; 
 package RPerl::DataStructure::Graph;
+use strict;
+use warnings; 
+use RPerl::AfterFilter;
+our $VERSION = 0.001_000;
 
-# NEED ADDRESS: which inheritance???
-our @ISA = ('RPerl::DataStructure', 'RPerl::DataType::Modifier::Reference');
-#our @ISA = ('RPerl::DataType::Modifier::Reference');
-use RPerl::DataStructure;
+use parent qw(RPerl::DataType::Modifier::Reference);
+use RPerl::DataType::Modifier::Reference;
 
 
 # [[[ GRAPHS ]]]
@@ -12,7 +13,9 @@ use RPerl::DataStructure;
 # ref to graph
 package  # hide from PAUSE indexing
     graphref;
-our @ISA = ('RPerl::DataStructure::GraphReference'); 
+use parent qw(RPerl::DataStructure::GraphReference); 
 use RPerl::DataStructure::Graph;
 
 # NEED ADD: remaining sub-types
+
+1;  # end of class

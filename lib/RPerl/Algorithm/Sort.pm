@@ -2,7 +2,7 @@
 package RPerl::Algorithm::Sort;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.005_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -18,12 +18,12 @@ our hashref $properties = {};
 
 # [[[ OO METHODS & SUBROUTINES ]]]
 
-our void_method $inherited__Sort = sub {
+our void::method $inherited__Sort = sub {
     ( my object $self, my string $person) = @_;
     RPerl::diag( 'in PERLOPS_PERLTYPES Sort->inherited__Sort(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FISH' . "\n" );
 };
 
-#our void_method $inherited = sub {
+#our void::method $inherited = sub {
 #    ( my object $self, my string $person) = @_;
 #    RPerl::diag( 'in PERLOPS_PERLTYPES Sort->inherited(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', IN' . "\n" );
 #};

@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.000_010;
 use RPerl::Config;
+our $VERSION = 0.000_010;
 
 use RPerl::Grammar;
 

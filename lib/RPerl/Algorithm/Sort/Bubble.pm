@@ -2,7 +2,7 @@
 package RPerl::Algorithm::Sort::Bubble;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.005_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -21,22 +21,22 @@ our hashref $properties = {
 
 # [[[ OO METHODS & SUBROUTINES ]]]
 
-our void_method $integer_sort = sub {
+our void::method $integer_sort = sub {
     ( my object $self ) = @_;
     $self->{integer_data} = integer_bubblesort( $self->{integer_data} );
 };
 
-our void_method $number_sort = sub {
+our void::method $number_sort = sub {
     ( my object $self ) = @_;
     $self->{number_data} = number_bubblesort( $self->{number_data} );
 };
 
-our void_method $inherited__Bubble = sub {
+our void::method $inherited__Bubble = sub {
     ( my object $self, my string $person ) = @_;
     RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FRIED' . "\n");
 };
 
-our void_method $inherited = sub {
+our void::method $inherited = sub {
     ( my object $self, my string $person ) = @_;
     RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', ILLOGICAL' . "\n");
 };

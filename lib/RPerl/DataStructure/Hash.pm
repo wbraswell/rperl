@@ -1,9 +1,13 @@
+# [[[ HEADER ]]]
 package RPerl::DataStructure::Hash;
 use strict;
 use warnings;
 our $VERSION = 0.004_000;
-use parent ('RPerl::DataStructure');
+
+# [[[ OO INHERITANCE ]]]
+use parent qw(RPerl::DataStructure);
 use RPerl::DataStructure;
+
 use Carp;
 
 # [[[ SUB-TYPES BEFORE INCLUDES ]]]
@@ -33,4 +37,4 @@ use strict;
 use warnings;
 sub RPerl__DataStructure__Hash__MODE_ID { return 0; }
 
-1;
+1;  # end of class

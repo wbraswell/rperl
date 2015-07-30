@@ -2,7 +2,7 @@
 package RPerl::Test::MethodArguments::Class_01_Good;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -14,7 +14,7 @@ our hashref $properties
     = { empty_property => my integer $TYPED_empty_property = 2 };
 
 # [[[ OO METHODS & SUBROUTINES ]]]
-our void_method $empty_method = sub {
+our void::method $empty_method = sub {
     ( my object $self, my integer $foo ) = @_;
     return 2;
 };

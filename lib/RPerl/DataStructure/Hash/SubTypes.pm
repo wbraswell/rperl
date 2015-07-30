@@ -2,7 +2,7 @@
 package RPerl::DataStructure::Hash::SubTypes;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.007_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -19,8 +19,7 @@ package  # hide from PAUSE indexing
     hash;
 use strict;
 use warnings;
-use RPerl;
-use parent ('RPerl::DataStructure::Hash');
+use parent qw(RPerl::DataStructure::Hash);
 
 # [[[ HASH REF ]]]
 # [[[ HASH REF ]]]
@@ -31,9 +30,8 @@ package  # hide from PAUSE indexing
     hashref;
 use strict;
 use warnings;
-use RPerl;
-#use parent -norequire, ('ref');  # NEED REMOVE: properly replaced by line below?
-use parent -norequire, ('RPerl::DataStructure::Hash::Reference');
+#use parent -norequire, qw(ref);  # NEED REMOVE: properly replaced by line below?
+use parent -norequire, qw(RPerl::DataStructure::Hash::Reference);
 use Carp;
 
 # [[[ TYPE-CHECKING ]]]
@@ -76,8 +74,7 @@ package  # hide from PAUSE indexing
     integer_hashref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('hashref');
+use parent -norequire, qw(hashref);
 use Carp;
 
 # [[[ TYPE-CHECKING ]]]
@@ -119,6 +116,7 @@ our void $integer_hashref_CHECK = sub {
         }
     }
 };
+
 our void $integer_hashref_CHECKTRACE = sub {
     ( my $possible_integer_hashref, my $variable_name, my $subroutine_name )
         = @_;
@@ -253,8 +251,7 @@ package  # hide from PAUSE indexing
     float_hashref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('hashref');
+use parent -norequire, qw(hashref);
 
 # [[[ NUMBER HASH REF ]]]
 # [[[ NUMBER HASH REF ]]]
@@ -265,8 +262,7 @@ package  # hide from PAUSE indexing
     number_hashref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('hashref');
+use parent -norequire, qw(hashref);
 use Carp;
 
 # [[[ TYPE-CHECKING ]]]
@@ -311,6 +307,7 @@ our void $number_hashref_CHECK = sub {
         }
     }
 };
+
 our void $number_hashref_CHECKTRACE = sub {
     ( my $possible_number_hashref, my $variable_name, my $subroutine_name )
         = @_;
@@ -443,8 +440,7 @@ package  # hide from PAUSE indexing
     char_hashref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('hashref');
+use parent -norequire, qw(hashref);
 
 # [[[ STRING HASH REF ]]]
 # [[[ STRING HASH REF ]]]
@@ -455,8 +451,7 @@ package  # hide from PAUSE indexing
     string_hashref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('hashref');
+use parent -norequire, qw(hashref);
 use Carp;
 
 # [[[ TYPE-CHECKING ]]]
@@ -498,6 +493,7 @@ our void $string_hashref_CHECK = sub {
         }
     }
 };
+
 our void $string_hashref_CHECKTRACE = sub {
     ( my $possible_string_hashref, my $variable_name, my $subroutine_name )
         = @_;
@@ -626,8 +622,7 @@ package  # hide from PAUSE indexing
     scalartype_hashref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('hashref');
+use parent -norequire, qw(hashref);
 
 # [[[ ARRAY HASHES (2-dimensional) ]]]
 
@@ -636,8 +631,7 @@ package  # hide from PAUSE indexing
     arrayref_hashref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('hashref');
+use parent -norequire, qw(hashref);
 
 # [[[ HASH HASHES (2-dimesional) ]]]
 
@@ -646,8 +640,7 @@ package  # hide from PAUSE indexing
     hashref_hashref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('hashref');
+use parent -norequire, qw(hashref);
 
 # [ HOMOGENEOUS HASH HASHES (2-dimensional) ]
 
@@ -656,32 +649,28 @@ package  # hide from PAUSE indexing
     integer_hashref_hashref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('hashref_hashref');
+use parent -norequire, qw(hashref_hashref);
 
 # (ref to hash) of (refs to (hashs of numbers))
 package  # hide from PAUSE indexing
     number_hashref_hashref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('hashref_hashref');
+use parent -norequire, qw(hashref_hashref);
 
 # (ref to hash) of (refs to (hashs of strings))
 package  # hide from PAUSE indexing
     string_hashref_hashref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('hashref_hashref');
+use parent -norequire, qw(hashref_hashref);
 
 # (ref to hash) of (refs to (hashs of scalars))
 package  # hide from PAUSE indexing
     scalartype_hashref_hashref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('hashref_hashref');
+use parent -norequire, qw(hashref_hashref);
 
 # [[[ OBJECT HASHES (2-dimensional) ]]]
 
@@ -690,7 +679,6 @@ package  # hide from PAUSE indexing
     object_hashref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('hashref');
+use parent -norequire, qw(hashref);
 
-1;
+1;  # end of package

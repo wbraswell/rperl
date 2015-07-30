@@ -6,7 +6,7 @@
 package RPerl::Test::Constant::Package_00_Bad_04;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CONSTANTS ]]]

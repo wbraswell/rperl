@@ -2,7 +2,7 @@
 package RPerl::DataStructure::Array::SubTypes;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.007_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -19,8 +19,7 @@ package  # hide from PAUSE indexing
     array;
 use strict;
 use warnings;
-use RPerl;
-use parent ('RPerl::DataStructure::Array');
+use parent qw(RPerl::DataStructure::Array);
 
 # [[[ ARRAY REF ]]]
 # [[[ ARRAY REF ]]]
@@ -31,9 +30,8 @@ package  # hide from PAUSE indexing
     arrayref;
 use strict;
 use warnings;
-use RPerl;
-#use parent -norequire, ('ref');  # NEED REMOVE: properly replaced by line below?
-use parent -norequire, ('RPerl::DataStructure::Array::Reference');
+#use parent -norequire, qw(ref);  # NEED REMOVE: properly replaced by line below?
+use parent -norequire, qw(RPerl::DataStructure::Array::Reference);
 use Carp;
 
 # [[[ TYPE-CHECKING ]]]
@@ -76,8 +74,7 @@ package  # hide from PAUSE indexing
     integer_arrayref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('arrayref');
+use parent -norequire, qw(arrayref);
 use Carp;
 
 # [[[ TYPE-CHECKING ]]]
@@ -236,8 +233,7 @@ package  # hide from PAUSE indexing
     float_arrayref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('arrayref');
+use parent -norequire, qw(arrayref);
 
 # [[[ NUMBER ARRAY REF ]]]
 # [[[ NUMBER ARRAY REF ]]]
@@ -248,8 +244,7 @@ package  # hide from PAUSE indexing
     number_arrayref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('arrayref');
+use parent -norequire, qw(arrayref);
 use Carp;
 
 # [[[ TYPE-CHECKING ]]]
@@ -404,8 +399,7 @@ package  # hide from PAUSE indexing
     char_arrayref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('arrayref');
+use parent -norequire, qw(arrayref);
 
 # [[[ STRING ARRAY REF ]]]
 # [[[ STRING ARRAY REF ]]]
@@ -416,8 +410,7 @@ package  # hide from PAUSE indexing
     string_arrayref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('arrayref');
+use parent -norequire, qw(arrayref);
 use Carp;
 
 # [[[ TYPE-CHECKING ]]]
@@ -452,6 +445,7 @@ our void $string_arrayref_CHECK = sub {
         }
     }
 };
+
 our void $string_arrayref_CHECKTRACE = sub {
     ( my $possible_string_arrayref, my $variable_name, my $subroutine_name )
         = @_;
@@ -574,8 +568,7 @@ package  # hide from PAUSE indexing
     scalartype_arrayref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('arrayref');
+use parent -norequire, qw(arrayref);
 
 # [[[ ARRAY ARRAYS (2-dimensional) ]]]
 
@@ -584,8 +577,7 @@ package  # hide from PAUSE indexing
     arrayref_arrayref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('arrayref');
+use parent -norequire, qw(arrayref);
 
 # [ HOMOGENEOUS ARRAY ARRAYS (2-dimensional) ]
 
@@ -594,32 +586,28 @@ package  # hide from PAUSE indexing
     integer_arrayref_arrayref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('arrayref_arrayref');
+use parent -norequire, qw(arrayref_arrayref);
 
 # (ref to array) of (refs to (arrays of numbers))
 package  # hide from PAUSE indexing
     number_arrayref_arrayref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('arrayref_arrayref');
+use parent -norequire, qw(arrayref_arrayref);
 
 # (ref to array) of (refs to (arrays of strings))
 package  # hide from PAUSE indexing
     string_arrayref_arrayref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('arrayref_arrayref');
+use parent -norequire, qw(arrayref_arrayref);
 
 # (ref to array) of (refs to (arrays of scalars))
 package  # hide from PAUSE indexing
     scalartype_arrayref_arrayref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('arrayref_arrayref');
+use parent -norequire, qw(arrayref_arrayref);
 
 # [[[ HASH ARRAYS (2-dimesional) ]]]
 
@@ -628,8 +616,7 @@ package  # hide from PAUSE indexing
     hashref_arrayref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('arrayref');
+use parent -norequire, qw(arrayref);
 
 # [[[ OBJECT ARRAYS (2-dimesional) ]]]
 
@@ -638,7 +625,6 @@ package  # hide from PAUSE indexing
     object_arrayref;
 use strict;
 use warnings;
-use RPerl;
-use parent -norequire, ('arrayref');
+use parent -norequire, qw(arrayref);
 
-1;
+1;  # end of package

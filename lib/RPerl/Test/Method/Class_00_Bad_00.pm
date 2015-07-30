@@ -6,7 +6,7 @@
 package RPerl::Test::Method::Class_00_Bad_00;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -18,7 +18,7 @@ our hashref $properties
     = { empty_property => my integer $TYPED_empty_property = 2 };
 
 # [[[ OO METHODS & SUBROUTINES ]]]
-ou void_method $empty_method = sub {
+ou void::method $empty_method = sub {
     return 2;
 };
 

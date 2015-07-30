@@ -4,9 +4,9 @@
 # Print "Hello, world!"; the classic first program for new programmers
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

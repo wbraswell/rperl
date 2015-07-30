@@ -2,7 +2,9 @@
 # NEED FIX, OUTDATED
 # NEED FIX, OUTDATED
 # NEED FIX, OUTDATED
-use strict;  use warnings;  use RPerl;  our @ISA = ('RPerl');
+use strict;
+use warnings;
+use RPerl::AfterFilter;
 
 # supported algorithms
 #use RPerl::Algorithm::Graph::Tree::FOOBAZ;

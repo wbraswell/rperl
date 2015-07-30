@@ -7,7 +7,7 @@ package RPerl::Test::Constant::Package_00_Bad_06;
 use constant PI  => my number $TYPED_PI  = 3.141_59;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CONSTANTS ]]]
