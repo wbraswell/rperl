@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.022_000;
+our $VERSION = 0.023_000;
 
 # [[[ OO INHERITANCE ]]]
 # BASE CLASS HAS NO INHERITANCE
@@ -61,7 +61,7 @@ INIT {
     my $use_rperl;                      # bool
     my $package_name;                   # string
     my $package_name_underscores;       # string
-    my $namespace_guess;                # string
+    my $namespace_root;                # string
     my $object_properties;              # hashref
     my $subroutine_type;                # string
     my $subroutine_name;                # string
@@ -88,21 +88,17 @@ INIT {
         $inside_subroutine_arguments = 0;
         $subroutine_arguments_line   = q{};
 
-        my $module_filename_short_split = [ ( split /\./, $module_filename_short ) ];
-        $namespace_guess         = $module_filename_short_split->[0];
-        $module_filename_short_split = [ ( split /\//, $namespace_guess ) ];
-        $namespace_guess         = $module_filename_short_split->[0];
-        $namespace_guess .= '::';
+        $namespace_root = RPerl::filename_short_to_namespace_root_guess($module_filename_short);
 
-        #	    RPerl::diag(q{in Class.pm INIT block, have $namespace_guess = '} . $namespace_guess . "'\n");
+#	    RPerl::diag(q{in Class.pm INIT block, have $namespace_root = '} . $namespace_root . "'\n");
 
         # DEV NOTE: avoid error...
         # Name "rperlnamespaces_generated::RPERL_DEPS" used only once: possible typo
         my $tmp = $rperlnamespaces_generated::CORE;
         $tmp = $rperlnamespaces_generated::RPERL_DEPS;
 
-        if (    ( not exists $rperlnamespaces_generated::CORE->{$namespace_guess} )
-            and ( not exists $rperlnamespaces_generated::RPERL_DEPS->{$namespace_guess} ) )
+        if (    ( not exists $rperlnamespaces_generated::CORE->{$namespace_root} )
+            and ( not exists $rperlnamespaces_generated::RPERL_DEPS->{$namespace_root} ) )
         {
             $module_filename_long = $INC{$module_filename_short};
 
@@ -447,7 +443,7 @@ INIT {
             close $MODULE_FILE or croak $OS_ERROR;
         }
 
-#        else { RPerl::diag('in Class.pm INIT block, found existing $rperlnamespaces_generated::CORE->{' . $namespace_guess . '}, aborting RPerl activation of entire file' . "\n"); }
+#        else { RPerl::diag('in Class.pm INIT block, found existing $rperlnamespaces_generated::CORE->{' . $namespace_root . '}, aborting RPerl activation of entire file' . "\n"); }
     }
 }
 

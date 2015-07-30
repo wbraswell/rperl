@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-our $VERSION = 0.001_210;
+our $VERSION = 0.001_220;
 use ExtUtils::MakeMaker;
 
 BEGIN { use English; }
@@ -31,6 +31,8 @@ WriteMakefile(
         'Inline::Filters'     => 0.17,        # wbraswell, rurban, & bulk88 added preprocess inc array; wbraswell added CPPFLAGS
         'PadWalker'           => 2.1,
         'Module::Refresh'     => 0.17,
+        'Filter::Simple'      => 0.91,
+        'Module::ScanDeps'    => 1.19,
     },
     META_MERGE       => {
         'meta-spec' => {

@@ -1,9 +1,9 @@
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::Foo;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
-our $VERSION = 0.002_000;
+our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);

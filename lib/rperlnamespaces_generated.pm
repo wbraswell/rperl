@@ -142,7 +142,6 @@ $rperlnamespaces_generated::RPERL = {
     'float_hashref::'                => 1,
     'hash::'                         => 1,
     'hashref::'                      => 1,
-    'hashref::method::'              => 1,
     'hashref_arrayref::'             => 1,
     'hashref_hashref::'              => 1,
     'integer_arrayref::'             => 1,

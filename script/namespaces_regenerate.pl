@@ -29,9 +29,10 @@ my $namespaces_core = rperlnamespaces::hash();
 # NEED FIX: remove hard-coded list of packages
 # DEV NOTE, CORRELATION #03: some RPerl packages are missed due to BEGIN{} or INIT{} blocks, etc.
 my $namespaces_rperl_missed = { 
-    'hashref::method::' => 1,
-#    'rperlnames::' => 1,
-#    'rperltypes::' => 1,
+    'rperlnames::' => 1,
+    'rperlnamespaces::' => 1,
+    'rperlnamespaces_generated::' => 1,
+    'rperltypes::' => 1,
     'rperloperations::' => 1,
     'rperlrules::' => 1,
 };

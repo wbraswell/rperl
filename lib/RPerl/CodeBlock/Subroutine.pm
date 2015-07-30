@@ -11,7 +11,7 @@ our $VERSION = 0.003_000;
 BEGIN {
 
         package    # hide from PAUSE indexing
-        hashref::method;
+        string_hashref::method;
     use strict;
     use warnings;
     1;
