@@ -2,7 +2,7 @@
 package RPerl::Object;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.003_000;
 
 # NEED FIX?: RPerl Object, no inheritance from RPerl or RPerl::CompileUnit::Module::Class

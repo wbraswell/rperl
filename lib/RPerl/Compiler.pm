@@ -6,7 +6,7 @@
 package RPerl::Compiler;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.005_200;
 
 # [[[ OO INHERITANCE ]]]
@@ -75,7 +75,7 @@ our string_arrayref $find_dependencies = sub {
                 or ( $file_line =~ /use\s+RPerl::CompileUnit::Module::Class\s*;/ )
                 or ( $file_line =~ /use\s+RPerl::Class\s*;/ )
                 or ( $file_line =~ /use\s+RPerl\s*;/ )
-                or ( $file_line =~ /use\s+RPerl::AfterFilter\s*;/ )
+                or ( $file_line =~ /use\s+RPerl::AfterSubclass\s*;/ )
                 or ( $file_line =~ /use\s+RPerl::Config\s*;/ )
                 or ( $file_line =~ /use\s+parent/ )
                 or ( $file_line =~ /use\s+constant/ )

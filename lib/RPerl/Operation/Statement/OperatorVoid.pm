@@ -2,7 +2,7 @@
 package RPerl::Operation::Statement::OperatorVoid;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -31,14 +31,14 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     # Print, OperatorNamedVoid, OperatorNamed, LoopControl
     my string $child0_class = ref $self->{children}->[0];
-    if (   ( $child0_class eq 'OperatorVoid_112' )
-        or ( $child0_class eq 'OperatorVoid_113' )
-        or ( $child0_class eq 'OperatorVoid_114' )
-        or ( $child0_class eq 'OperatorVoid_115' )
-        or ( $child0_class eq 'OperatorVoid_116' )
+    if (   ( $child0_class eq 'OperatorVoid_116' )
         or ( $child0_class eq 'OperatorVoid_117' )
         or ( $child0_class eq 'OperatorVoid_118' )
-        or ( $child0_class eq 'OperatorVoid_119' ) )
+        or ( $child0_class eq 'OperatorVoid_119' )
+        or ( $child0_class eq 'OperatorVoid_120' )
+        or ( $child0_class eq 'OperatorVoid_121' )
+        or ( $child0_class eq 'OperatorVoid_122' )
+        or ( $child0_class eq 'OperatorVoid_123' ) )
     {
         $rperl_source_subgroup
             = $self->{children}->[0]->ast_to_rperl__generate($modes);
@@ -49,7 +49,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $child0_class
-                . ' found where OperatorVoid_112, OperatorVoid_113, OperatorVoid_114, OperatorVoid_115, OperatorVoid_116, OperatorVoid_117, OperatorVoid_118, or OperatorVoid_119 expected, dying'
+                . ' found where OperatorVoid_116, OperatorVoid_117, OperatorVoid_118, OperatorVoid_119, OperatorVoid_120, OperatorVoid_121, OperatorVoid_122, or OperatorVoid_123 expected, dying'
         ) . "\n";
     }
 
@@ -77,14 +77,14 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     # Print, OperatorNamedVoid, OperatorNamed, LoopControl
     my string $child0_class = ref $self->{children}->[0];
-    if (   ( $child0_class eq 'OperatorVoid_112' )
-        or ( $child0_class eq 'OperatorVoid_113' )
-        or ( $child0_class eq 'OperatorVoid_114' )
-        or ( $child0_class eq 'OperatorVoid_115' )
-        or ( $child0_class eq 'OperatorVoid_116' )
+    if (   ( $child0_class eq 'OperatorVoid_116' )
         or ( $child0_class eq 'OperatorVoid_117' )
         or ( $child0_class eq 'OperatorVoid_118' )
-        or ( $child0_class eq 'OperatorVoid_119' ) )
+        or ( $child0_class eq 'OperatorVoid_119' )
+        or ( $child0_class eq 'OperatorVoid_120' )
+        or ( $child0_class eq 'OperatorVoid_121' )
+        or ( $child0_class eq 'OperatorVoid_122' )
+        or ( $child0_class eq 'OperatorVoid_123' ) )
     {
         $cpp_source_subgroup
             = $self->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
@@ -96,7 +96,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . $child0_class
-                . ' found where OperatorVoid_112, OperatorVoid_113, OperatorVoid_114, OperatorVoid_115, OperatorVoid_116, OperatorVoid_117, OperatorVoid_118, or OperatorVoid_119 expected, dying'
+                . ' found where OperatorVoid_116, OperatorVoid_117, OperatorVoid_118, OperatorVoid_119, OperatorVoid_120, OperatorVoid_121, OperatorVoid_122, or OperatorVoid_123 expected, dying'
         ) . "\n";
     }
 

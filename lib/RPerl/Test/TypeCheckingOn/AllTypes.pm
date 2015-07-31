@@ -2,10 +2,10 @@
 # <<< TYPE_CHECKING: ON >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::TypeCheckingOn::AllTypes;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_001;
 
 # [[[ OO INHERITANCE ]]]

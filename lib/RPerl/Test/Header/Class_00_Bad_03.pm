@@ -3,6 +3,7 @@
 # <<< PARSE_ERROR: 'Perl::Critic::Policy::Modules::RequireVersionVar' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::Header::Class_00_Bad_03;
 use strict;
 use warnings;

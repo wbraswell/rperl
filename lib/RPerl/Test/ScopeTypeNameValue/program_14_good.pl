@@ -5,9 +5,9 @@
 # <<< EXECUTE_SUCCESS: "$VAR1 = {'hashref_arrayref_arrayref' => [{'string_hashref_arrayref' => [{'string_hashref' => {'g' => 'string','h' => 'string'}}]},{'string_hashref_arrayref' => [{'string_hashref' => {'m' => 'string','n' => 'string'}}]},{'hashref_arrayref' => [{'hashref' => {'a' => 'string','b' => 'integer'}}]}]};" >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

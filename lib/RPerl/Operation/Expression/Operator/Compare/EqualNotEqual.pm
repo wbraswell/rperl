@@ -2,7 +2,7 @@
 package RPerl::Operation::Expression::Operator::Compare::EqualNotEqual;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -25,7 +25,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in Operator::Compare::EqualNotEqual->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if ( $self_class eq 'Operator_97' ) {  # Operator -> SubExpression OP12_COMPARE_EQ_NE SubExpression
+    if ( $self_class eq 'Operator_101' ) {  # Operator -> SubExpression OP12_COMPARE_EQ_NE SubExpression
         my string_hashref $rperl_source_subgroup = $self->{children}->[0]->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= q{ } . $self->{children}->[1] . q{ };
@@ -36,7 +36,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where Operator_97 expected, dying' )
+                . ' found where Operator_101 expected, dying' )
             . "\n";
     }
 

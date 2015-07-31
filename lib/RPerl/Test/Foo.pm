@@ -1,5 +1,6 @@
 # [[[ HEADER ]]]
 use RPerl;
+use RPerl;
 package RPerl::Test::Foo;
 use strict;
 use warnings;

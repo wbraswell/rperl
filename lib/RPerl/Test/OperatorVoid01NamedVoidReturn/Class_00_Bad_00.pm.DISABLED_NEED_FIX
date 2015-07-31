@@ -6,7 +6,7 @@
 package RPerl::Test::OperatorVoid01NamedVoidReturn::Class_00_Bad_00;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]

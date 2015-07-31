@@ -5,9 +5,9 @@
 # <<< EXECUTE_ERROR: "integer_hashref element value expected but non-integer value found at key 'c'" >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.000_001;
 
 # [[[ CRITICS ]]]

@@ -5,9 +5,9 @@
 # <<< PARSE_ERROR: 'Too many arguments for exit' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

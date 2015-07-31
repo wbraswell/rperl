@@ -2,10 +2,10 @@
 # <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::VersionNumber::Package_00_Bad_03;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 100.001_000;
 
 # [[[ SUBROUTINES ]]]

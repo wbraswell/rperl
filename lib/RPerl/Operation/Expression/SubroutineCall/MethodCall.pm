@@ -2,7 +2,7 @@
 package RPerl::Operation::Expression::SubroutineCall::MethodCall;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -25,11 +25,11 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in MethodCall->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) ne 'Expression_128' ) {
+    if ( ( ref $self ) ne 'Expression_132' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $self )
-                . ' found where Expression_128 expected, dying' )
+                . ' found where Expression_132 expected, dying' )
             . "\n";
     }
 

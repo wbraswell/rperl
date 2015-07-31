@@ -1,8 +1,8 @@
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::SimpleA;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]

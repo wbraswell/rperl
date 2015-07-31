@@ -4,7 +4,7 @@
 # NEED FIX, OUTDATED
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 
 # supported algorithms
 #use RPerl::Algorithm::Graph::Tree::FOOBAZ;

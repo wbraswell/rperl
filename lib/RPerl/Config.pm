@@ -32,13 +32,13 @@ our @EXPORT = qw(Dumper carp croak confess $OS_ERROR $EVAL_ERROR $CHILD_ERROR $E
 1;                              # end of package
 
 # NEED FIX: triplicate export code
-package RPerl::AfterFilter;
+package RPerl::AfterSubclass;
 
 ## no critic qw(ProhibitAutomaticExportation)  # SYSTEM SPECIAL 14: allow global exports from Config.pm
 
 # $OS_ERROR == $ERRNO == $!, $EVAL_ERROR == $@, $CHILD_ERROR == $?, $EXECUTABLE_NAME == $^X, $PROGRAM_NAME == $0, $OSNAME == $^O
 
-# export various subroutines and variables to all who call 'use RPerl::AfterFilter;'
+# export various subroutines and variables to all who call 'use RPerl::AfterSubclass;'
 use Data::Dumper;
 $Data::Dumper::Sortkeys = 1;    # Dumper() output must be sorted for lib/RPerl/Tests/Type_Types/* etc.
 use Carp;

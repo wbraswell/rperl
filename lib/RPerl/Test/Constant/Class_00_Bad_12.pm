@@ -1,12 +1,12 @@
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< PARSE_ERROR: 'Global symbol "$TYPED_PIE" requires explicit package name' >>>
+# <<< PARSE_ERROR: 'Global symbol "$TYPED_PIE" requires explicit use RPerl;
+package name' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::Constant::Class_00_Bad_12;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]

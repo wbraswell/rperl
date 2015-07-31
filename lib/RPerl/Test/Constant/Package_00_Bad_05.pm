@@ -3,10 +3,10 @@
 # <<< PARSE_ERROR: 'Perl::Critic::Policy::ValuesAndExpressions::ProhibitConstantPragma' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::Constant::Package_00_Bad_05;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 use constant PI  => my number $TYPED_PI  = 3.141_59;
 our $VERSION = 0.001_000;
 

@@ -5,10 +5,11 @@
 # <<< PARSE_ERROR: 'Unexpected Token:  use' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
 use RPerl::Test::Foo;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.001_000;
 
 # [[[ INCLUDES ]]]

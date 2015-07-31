@@ -2,7 +2,7 @@
 package RPerl::Operation::Expression::SubExpression::Literal::Number;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -20,11 +20,11 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in Literal::Number->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) ne 'Literal_220' ) {
+    if ( ( ref $self ) ne 'Literal_224' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $self )
-                . ' found where Literal_220 expected, dying' )
+                . ' found where Literal_224 expected, dying' )
             . "\n";
     }
  
@@ -60,11 +60,11 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
 #    RPerl::diag( 'in Literal::Number->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) ne 'Literal_220' ) {
+    if ( ( ref $self ) ne 'Literal_224' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . ( ref $self )
-                . ' found where Literal_220 expected, dying' )
+                . ' found where Literal_224 expected, dying' )
             . "\n";
     }
  

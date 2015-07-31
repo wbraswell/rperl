@@ -5,9 +5,9 @@
 # <<< PARSE_ERROR: 'Use of "exit" without parentheses is ambiguous' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

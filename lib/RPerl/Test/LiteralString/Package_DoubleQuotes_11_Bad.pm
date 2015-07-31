@@ -3,10 +3,10 @@
 # <<< PARSE_ERROR: 'Unrecognized escape \T passed through' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::LiteralString::Package_DoubleQuotes_11_Bad;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]

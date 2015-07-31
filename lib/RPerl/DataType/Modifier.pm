@@ -2,7 +2,7 @@
 package RPerl::DataType::Modifier;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.001_010;
 
 # NEED FIX?: RPerl Data Type, no inheritance from RPerl or RPerl::CompileUnit::Module::Class

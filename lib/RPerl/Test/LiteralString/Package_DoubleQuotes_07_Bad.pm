@@ -3,10 +3,10 @@
 # <<< PARSE_ERROR: 'Unrecognized escape \m passed through' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::LiteralString::Package_DoubleQuotes_07_Bad;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]

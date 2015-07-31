@@ -3,10 +3,10 @@
 # <<< PARSE_ERROR: 'near "@;' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::SubroutineArguments::Package_07_Bad;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]

@@ -4,9 +4,9 @@
 # <<< EXECUTE_ERROR: 'ERROR EAVRV10, BOUND-CHECKING MISMATCH: Argument $input_vector_1 is not of length 4' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.000_020;
 
 # [[[ CRITICS ]]]

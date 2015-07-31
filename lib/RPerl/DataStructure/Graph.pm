@@ -1,7 +1,7 @@
 package RPerl::DataStructure::Graph;
 use strict;
 use warnings; 
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.001_000;
 
 use parent qw(RPerl::DataType::Modifier::Reference);

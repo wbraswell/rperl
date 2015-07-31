@@ -5,9 +5,9 @@
 # <<< EXECUTE_ERROR: 'number_arrayref element value expected but non-number value found at index 3' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.000_020;
 
 # [[[ CRITICS ]]]

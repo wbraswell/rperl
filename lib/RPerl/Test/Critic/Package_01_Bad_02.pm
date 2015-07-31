@@ -5,10 +5,10 @@
 # <<< PARSE_ERROR: 'Perl::Critic::Policy::Miscellanea::ProhibitUnrestrictedNoCritic' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::Critic::Package_01_Bad_02;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

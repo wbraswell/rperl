@@ -2,7 +2,7 @@
 package RPerl::Operation::Statement::Loop::ForEach;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -26,14 +26,14 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap LoopForEach_160 from Loop_157
-    if ( $self_class eq 'Loop_157' ) {    # Loop -> LoopForEach
+    # unwrap LoopForEach_164 from Loop_161
+    if ( $self_class eq 'Loop_161' ) {    # Loop -> LoopForEach
         $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
 
 # LoopForEach -> 'foreach' MY Type VARIABLE_SYMBOL LPAREN ListElements ')' CodeBlock
-    if ( $self_class eq 'LoopForEach_160' ) {
+    if ( $self_class eq 'LoopForEach_164' ) {
         my string $foreach         = $self->{children}->[0];
         my string $my              = $self->{children}->[1];
         my string $type            = $self->{children}->[2]->{children}->[0];
@@ -61,7 +61,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where LoopForEach_160 expected, dying' )
+                . ' found where LoopForEach_164 expected, dying' )
             . "\n";
     }
     return $rperl_source_group;

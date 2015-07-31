@@ -3,10 +3,10 @@
 # <<< PARSE_ERROR: "Can't find string terminator" >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::Constant::Package_00_Bad_03;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CONSTANTS ]]]

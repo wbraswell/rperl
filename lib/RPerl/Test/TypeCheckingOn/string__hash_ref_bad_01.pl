@@ -5,9 +5,9 @@
 # <<< EXECUTE_ERROR: "string_hashref element value expected but non-string value found at key 'd'" >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.000_001;
 
 # [[[ CRITICS ]]]

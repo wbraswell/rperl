@@ -4,9 +4,9 @@
 # <<< EXECUTE_SUCCESS: 'our integer_hashref $properties = {'some_integer' => 23};' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

@@ -2,7 +2,7 @@
 package RPerl::DataType::Integer_cpp;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.001_021;
 
 # [[[ CRITICS ]]]

@@ -5,9 +5,9 @@
 # <<< PARSE_ERROR: 'Perl::Critic::Policy::InputOutput::RequireBracedFileHandleWithPrint' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

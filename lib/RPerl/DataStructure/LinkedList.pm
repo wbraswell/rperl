@@ -1,7 +1,7 @@
 package RPerl::DataStructure::LinkedList;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.001_000;
 
 # NEED FIX: this is also a valid RPerl Class, but we can't inherit from RPerl::CompileUnit::Module::Class due to circular references?

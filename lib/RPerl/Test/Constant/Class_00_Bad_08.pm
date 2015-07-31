@@ -3,10 +3,10 @@
 # <<< PARSE_ERROR: '"use" not allowed in expression' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::Constant::Class_00_Bad_08;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]

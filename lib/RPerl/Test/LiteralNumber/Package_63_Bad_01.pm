@@ -2,10 +2,10 @@
 # <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::LiteralNumber::Package_63_Bad_01;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

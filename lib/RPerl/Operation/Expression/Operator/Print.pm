@@ -2,7 +2,7 @@
 package RPerl::Operation::Expression::Operator::Print;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -25,7 +25,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in Operator::Print->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if ( $self_class eq 'Operator_78' ) { # Operator -> LPAREN OP01_PRINT FHREF_SYMBOL_BRACES ListElements ')'
+    if ( $self_class eq 'Operator_82' ) { # Operator -> LPAREN OP01_PRINT FHREF_SYMBOL_BRACES ListElements ')'
         my string $left_paren          = $self->{children}->[0];
         my string $print               = $self->{children}->[1];
         my string $fhref_symbol_braces = $self->{children}->[2];
@@ -46,7 +46,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where Operator_78 expected, dying' )
+                . ' found where Operator_82 expected, dying' )
             . "\n";
     }
 

@@ -3,10 +3,10 @@
 # <<< PARSE_ERROR: 'Can't modify constant item in predecrement' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::LiteralNumber::Package_31_Bad_00;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

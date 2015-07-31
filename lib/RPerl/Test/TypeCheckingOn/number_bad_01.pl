@@ -5,9 +5,9 @@
 # <<< EXECUTE_ERROR: 'number value expected but non-number value found' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.000_001;
 
 # [[[ CRITICS ]]]

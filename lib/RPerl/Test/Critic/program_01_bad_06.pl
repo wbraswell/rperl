@@ -7,9 +7,9 @@
 # <<< PARSE_ERROR: 'Perl::Critic::Policy::Modules::RequireEndWithOne' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

@@ -4,10 +4,10 @@
 
 # [[[ HEADER ]]]
 use RPerl::Test::Foo;
+use RPerl;
 package RPerl::Test::Include::Package_00_Bad_07;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ INCLUDES ]]]

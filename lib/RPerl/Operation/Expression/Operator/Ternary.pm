@@ -2,7 +2,7 @@
 package RPerl::Operation::Expression::Operator::Ternary;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -25,7 +25,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in Operator::Ternary->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if ( $self_class eq 'Operator_103' ) { # Operator -> SubExpression OP18_TERNARY VariableOrLiteral COLON VariableOrLiteral
+    if ( $self_class eq 'Operator_107' ) { # Operator -> SubExpression OP18_TERNARY VariableOrLiteral COLON VariableOrLiteral
         my object $subexpression        = $self->{children}->[0];
         my string $ternary              = $self->{children}->[1];
         my object $variable_or_literal0 = $self->{children}->[2];
@@ -51,7 +51,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where Operator_103 expected, dying' )
+                . ' found where Operator_107 expected, dying' )
             . "\n";
     }
 

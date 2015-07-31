@@ -5,9 +5,9 @@
 # <<< PARSE_ERROR: 'Perl::Critic::Policy::NamingConventions::Capitalization' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CONSTANTS ]]]

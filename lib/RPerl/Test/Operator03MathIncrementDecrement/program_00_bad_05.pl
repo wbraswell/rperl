@@ -5,9 +5,9 @@
 # <<< PARSE_ERROR: 'Can't modify constant item in preincrement' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

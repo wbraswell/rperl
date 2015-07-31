@@ -5,6 +5,7 @@ RELEASE Parse::Eyap vX.YZZY
 Add scientific notation and leading+ numeric tests
 Fix scoped types
 Add scoped type tests, including multiple-packages-per-file tests
+update RPerl::filter() to properly handle *.pl files
 
 Remove all object* types?
 

@@ -6,9 +6,9 @@
 
 # [[[ HEADER ]]]
 use constant PI  => my number $TYPED_PI  = 3.141_59;
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CONSTANTS ]]]

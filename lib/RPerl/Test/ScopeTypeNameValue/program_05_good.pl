@@ -9,9 +9,9 @@
 # <<< EXECUTE_SUCCESS: "$VAR1 = {'hashref' => {'a' => 'unknown','b' => 'unknown','c' => 'unknown','d' => 'integer','e' => 'unknown'}};" >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

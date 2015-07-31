@@ -5,9 +5,9 @@
 # <<< PARSE_ERROR: 'RequireVersionVar' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $ERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]

@@ -2,7 +2,7 @@
 package RPerl::DataType::Float;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]

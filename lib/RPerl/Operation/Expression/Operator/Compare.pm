@@ -2,7 +2,7 @@
 package RPerl::Operation::Expression::Operator::Compare;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]

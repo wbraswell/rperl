@@ -2,7 +2,7 @@
 package RPerl::Operation::Expression::SubExpression::Literal::Undefined;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -20,11 +20,11 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in Literal::Undefined->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) ne 'SubExpression_131' ) {
+    if ( ( ref $self ) ne 'SubExpression_135' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $self )
-                . ' found where SubExpression_131 expected, dying' )
+                . ' found where SubExpression_135 expected, dying' )
             . "\n";
     }
  

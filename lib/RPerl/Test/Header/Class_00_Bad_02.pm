@@ -3,10 +3,11 @@
 # <<< PARSE_ERROR: 'Perl::Critic::Policy::TestingAndDebugging::RequireUseWarnings' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::Header::Class_00_Bad_02;
 use strict;
 used warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]

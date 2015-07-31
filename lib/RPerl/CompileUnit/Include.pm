@@ -2,7 +2,7 @@
 package RPerl::CompileUnit::Include;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -26,7 +26,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in Include->ast_to_rperl__generate(), have ::class($self) = ' . ::class($self) . "\n" );
 #    RPerl::diag( 'in Include->ast_to_rperl__generate(), have $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
-    if ( ref $self eq 'Include_39' ) {
+    if ( ref $self eq 'Include_43' ) {
         my string $use_keyword = $self->{children}->[0];
         my string $parent_name
             = $self->{children}->[1]->{children}->[0];
@@ -36,7 +36,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
 #        RPerl::diag( 'in Include->ast_to_rperl__generate(), have $parent_name = '  . $parent_name . "\n" );
     }
-    else {    # Include_40
+    else {    # Include_44
         my string $use_keyword = $self->{children}->[0];
         my string $parent_name
             = $self->{children}->[1]->{children}->[0];

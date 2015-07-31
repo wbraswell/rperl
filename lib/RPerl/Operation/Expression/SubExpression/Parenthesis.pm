@@ -2,7 +2,7 @@
 package RPerl::Operation::Expression::SubExpression::Parenthesis;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -24,11 +24,11 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in Parenthesis->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) ne 'SubExpression_138' ) {
+    if ( ( ref $self ) ne 'SubExpression_142' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $self )
-                . ' found where SubExpression_138 expected, dying' )
+                . ' found where SubExpression_142 expected, dying' )
             . "\n";
     }
 
@@ -61,11 +61,11 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
 #    RPerl::diag( 'in Parenthesis->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) ne 'SubExpression_138' ) {
+    if ( ( ref $self ) ne 'SubExpression_142' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . ( ref $self )
-                . ' found where SubExpression_138 expected, dying' )
+                . ' found where SubExpression_142 expected, dying' )
             . "\n";
     }
 

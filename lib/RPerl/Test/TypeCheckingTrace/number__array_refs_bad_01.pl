@@ -6,9 +6,9 @@
 # <<< EXECUTE_ERROR: 'in variable $input_3 from subroutine check_number_arrayrefs()' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.000_001;
 
 # [[[ CRITICS ]]]

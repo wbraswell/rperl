@@ -4,9 +4,9 @@
 # <<< EXECUTE_SUCCESS: '168' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.000_020;
 
 # [[[ CRITICS ]]]

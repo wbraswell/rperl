@@ -3,10 +3,10 @@
 # <<< PARSE_ERROR: 'near "1;' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::SubroutineArguments::Package_04_Bad;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]

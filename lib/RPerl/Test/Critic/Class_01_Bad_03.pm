@@ -2,13 +2,13 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  package' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  use RPerl;
+package' >>>
 
 # [[[ HEADER ]]]
 package RPerl::Test::Critic::Class_01_Bad_03;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]

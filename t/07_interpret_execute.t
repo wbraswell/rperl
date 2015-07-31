@@ -4,9 +4,9 @@
 BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
 # [[[ HEADER ]]]
-use RPerl::AfterFilter;
 use strict;
 use warnings;
+use RPerl::AfterSubclass;
 our $VERSION = 0.002_062;
 
 # [[[ CRITICS ]]]

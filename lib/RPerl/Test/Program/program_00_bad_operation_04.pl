@@ -5,9 +5,9 @@
 # <<< PARSE_ERROR: 'Bareword "i" not allowed while "strict subs" in use' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]

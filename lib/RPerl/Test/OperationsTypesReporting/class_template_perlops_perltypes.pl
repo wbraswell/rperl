@@ -6,9 +6,9 @@
 # <<< EXECUTE_SUCCESS: "types = 'PERL'" >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.000_010;
 
 # [[[ CRITICS ]]]

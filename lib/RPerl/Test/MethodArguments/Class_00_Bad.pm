@@ -3,10 +3,10 @@
 # <<< PARSE_ERROR: 'Transliteration replacement not terminated' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::MethodArguments::Class_00_Bad;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]

@@ -2,7 +2,7 @@
 package RPerl::Operation::Expression::Operator::Bitwise::And;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -25,7 +25,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in Operator::Bitwise::And->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if ( $self_class eq 'Operator_98' ) {  # Operator -> SubExpression OP13_BITWISE_AND SubExpression
+    if ( $self_class eq 'Operator_102' ) {  # Operator -> SubExpression OP13_BITWISE_AND SubExpression
         my string_hashref $rperl_source_subgroup
             = $self->{children}->[0]->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
@@ -40,7 +40,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where Operator_98 expected, dying' )
+                . ' found where Operator_102 expected, dying' )
             . "\n";
     }
 

@@ -1,8 +1,8 @@
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::IO::Print_00_cpp;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_011;
 
 # [[[ CRITICS ]]]

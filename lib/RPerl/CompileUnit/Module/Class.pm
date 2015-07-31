@@ -233,10 +233,10 @@ INIT {
 
                     #                    else { RPerl::diag( 'in Class.pm INIT block, have $package name = ' . $package_name . "\n" ); }
 
-                    # system-style RPerl header, 'use strict; use warnings; use RPerl::AfterFilter;' on 3 lines
+                    # system-style RPerl header, 'use strict; use warnings; use RPerl::AfterSubclass;' on 3 lines
                     # don't check for $VERSION due to numerous un-versioned subtypes
                     if (not $use_rperl) {
-                        foreach my $rperl_header_line ('use strict;', 'use warnings;', 'use RPerl::AfterFilter;') {
+                        foreach my $rperl_header_line ('use strict;', 'use warnings;', 'use RPerl::AfterSubclass;') {
                             $module_file_line = <$MODULE_FILE>;
                             chomp $module_file_line;
                             if ( $module_file_line !~ /\Q$rperl_header_line/xms ) {

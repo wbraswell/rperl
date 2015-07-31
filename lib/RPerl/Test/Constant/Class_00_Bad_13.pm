@@ -3,10 +3,10 @@
 # <<< PARSE_ERROR: 'Unexpected Token:  $TYPED_' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::Constant::Class_00_Bad_13;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]

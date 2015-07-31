@@ -6,8 +6,9 @@
 
 # [[[ HEADER ]]]
 use warnings;
+use RPerl;
 use strict;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]

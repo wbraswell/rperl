@@ -3,10 +3,10 @@
 # <<< PARSE_ERROR: 'Missing right curly or square bracket' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::Method::Class_00_Bad_08;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]

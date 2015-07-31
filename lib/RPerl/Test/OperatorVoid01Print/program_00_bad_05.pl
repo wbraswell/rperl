@@ -5,9 +5,9 @@
 # <<< PARSE_ERROR: 'Name "main::sTDERR" used only once: possible typo' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

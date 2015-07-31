@@ -5,6 +5,7 @@
 # <<< PARSE_ERROR: "Can't locate RPerly.pm" >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
 use RPerly;

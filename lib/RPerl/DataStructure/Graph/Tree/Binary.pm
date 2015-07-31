@@ -1,7 +1,7 @@
 package RPerl::DataStructure::Graph::Tree::Binary;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.001_000;
 
 # NEED FIX: weird inheritance for these as-reference-only data structures

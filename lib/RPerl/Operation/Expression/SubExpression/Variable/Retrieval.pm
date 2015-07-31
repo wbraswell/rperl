@@ -2,7 +2,7 @@
 package RPerl::Operation::Expression::SubExpression::Variable::Retrieval;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -25,7 +25,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in Variable::Retrieval->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
     
     my string $self_class = ref $self;
-    if ($self_class eq 'VariableRetrieval_168') {  # VariableRetrieval -> OP02_ARRAY_THINARROW SubExpression ']'
+    if ($self_class eq 'VariableRetrieval_172') {  # VariableRetrieval -> OP02_ARRAY_THINARROW SubExpression ']'
         my string $arrow_left_bracket = $self->{children}->[0];
         my object $subexpression = $self->{children}->[1];
         my string $right_bracket = $self->{children}->[2];
@@ -35,7 +35,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup ); 
         $rperl_source_group->{PMC} .= q{ } . $right_bracket;
     }
-    elsif ($self_class eq 'VariableRetrieval_169') {  # VariableRetrieval -> OP02_HASH_THINARROW SubExpression '}'
+    elsif ($self_class eq 'VariableRetrieval_173') {  # VariableRetrieval -> OP02_HASH_THINARROW SubExpression '}'
         my string $arrow_left_brace = $self->{children}->[0];
         my object $subexpression = $self->{children}->[1];
         my string $right_brace = $self->{children}->[2];
@@ -45,7 +45,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup ); 
         $rperl_source_group->{PMC} .= q{ } . $right_brace;
     }
-    elsif ($self_class eq 'VariableRetrieval_170') {  # VariableRetrieval -> OP02_HASH_THINARROW WORD '}'
+    elsif ($self_class eq 'VariableRetrieval_174') {  # VariableRetrieval -> OP02_HASH_THINARROW WORD '}'
         my string $arrow_left_brace = $self->{children}->[0];
         my string $word = $self->{children}->[1];
         my string $right_brace = $self->{children}->[2];
@@ -56,7 +56,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( $self_class )
-                . ' found where VariableRetrieval_168, VariableRetrieval_168, or VariableRetrieval_168 expected, dying'
+                . ' found where VariableRetrieval_172, VariableRetrieval_172, or VariableRetrieval_172 expected, dying'
         ) . "\n"; 
     }
 
@@ -80,14 +80,14 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #    RPerl::diag( 'in Variable::Retrieval->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
     
     my string $self_class = ref $self;
-    if ($self_class eq 'VariableRetrieval_168') {  # VariableRetrieval -> OP02_ARRAY_THINARROW SubExpression ']'
+    if ($self_class eq 'VariableRetrieval_172') {  # VariableRetrieval -> OP02_ARRAY_THINARROW SubExpression ']'
         my object $subexpression = $self->{children}->[1];
         $cpp_source_group->{CPP} .= '[';
         my string_hashref $cpp_source_subgroup = $subexpression->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup ); 
         $cpp_source_group->{CPP} .= ']';
     }
-    elsif ($self_class eq 'VariableRetrieval_169') {  # VariableRetrieval -> OP02_HASH_THINARROW SubExpression '}'
+    elsif ($self_class eq 'VariableRetrieval_173') {  # VariableRetrieval -> OP02_HASH_THINARROW SubExpression '}'
         my object $subexpression = $self->{children}->[1];
         if ($variable_symbol eq 'this') {
             $cpp_source_group->{CPP} .= '->';
@@ -101,7 +101,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             $cpp_source_group->{CPP} .= ']';
         }
     }
-    elsif ($self_class eq 'VariableRetrieval_170') {  # VariableRetrieval -> OP02_HASH_THINARROW WORD '}'
+    elsif ($self_class eq 'VariableRetrieval_174') {  # VariableRetrieval -> OP02_HASH_THINARROW WORD '}'
         my string $word = $self->{children}->[1];
         if ($variable_symbol eq 'this') {
             $cpp_source_group->{CPP} .= '->' . $word;
@@ -114,7 +114,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . ( $self_class )
-                . ' found where VariableRetrieval_168, VariableRetrieval_168, or VariableRetrieval_168 expected, dying'
+                . ' found where VariableRetrieval_172, VariableRetrieval_172, or VariableRetrieval_172 expected, dying'
         ) . "\n"; 
     }
 

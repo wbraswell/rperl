@@ -2,7 +2,7 @@
 package RPerl::CodeBlock::Subroutine;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.003_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -47,14 +47,14 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     #    RPerl::diag( 'in Subroutine->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    # unwrap Subroutine_46 from MethodOrSubroutine_75
-    if ( ( ref $self ) eq 'MethodOrSubroutine_75' ) {
+    # unwrap Subroutine_50 from MethodOrSubroutine_79
+    if ( ( ref $self ) eq 'MethodOrSubroutine_79' ) {
         $self = $self->{children}->[0];
     }
 
-    if ( ( ref $self ) ne 'Subroutine_46' ) {
+    if ( ( ref $self ) ne 'Subroutine_50' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule ' . ( ref $self ) . ' found where Subroutine_46 expected, dying' )
+            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule ' . ( ref $self ) . ' found where Subroutine_50 expected, dying' )
             . "\n";
     }
 
@@ -98,7 +98,7 @@ our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = 
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group = { H => q{} };
 
-    $self = $self->{children}->[0];    # unwrap Subroutine_46 from MethodOrSubroutine_75
+    $self = $self->{children}->[0];    # unwrap Subroutine_50 from MethodOrSubroutine_79
     my string $return_type = $self->{children}->[1]->{children}->[0];
     my string $name        = $self->{children}->[2];
     substr $name, 0, 1, '';            # remove leading $ sigil
@@ -129,7 +129,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group = { CPP => q{} };
 
-    $self = $self->{children}->[0];    # unwrap Subroutine_46 from MethodOrSubroutine_75
+    $self = $self->{children}->[0];    # unwrap Subroutine_50 from MethodOrSubroutine_79
     my string $return_type = $self->{children}->[1]->{children}->[0];
     my string $name        = $self->{children}->[2];
     substr $name, 0, 1, '';            # remove leading $ sigil

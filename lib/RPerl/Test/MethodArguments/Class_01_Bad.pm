@@ -3,10 +3,10 @@
 # <<< PARSE_ERROR: 'near "( my oject"' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::MethodArguments::Class_01_Bad;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]

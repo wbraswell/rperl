@@ -3,7 +3,7 @@
 # THIS FILE SHOWS HOW TO COPY ALL SUBROUTINES FROM ONE CLASS INTO ANOTHER CLASS AT RUNTIME
 
 #=DISABLE
-package ArrayDereference_190;
+package ArrayDereference_194;
 sub foosub { print "in foosub()!!!\n"; }
 our $properties = {FAKE=>'property'};
 1;
@@ -25,8 +25,8 @@ foreach my $symtab_entry (
     print 'have $symtab_entry = ' . $symtab_entry . "\n";
     if (defined &{ $RPerl::CompileUnit::Module::Header::{ $symtab_entry} } )
     {
-#        *{ ArrayDereference_190::{$symtab_entry} } = sub { return &{ $RPerl::CompileUnit::Module::Header::{$symtab_entry} }(@_); };  # DOES NOT WORK
-        my $eval_string = '*{ ArrayDereference_190::' . $symtab_entry . q(} = sub { return &{ $RPerl::CompileUnit::Module::Header::{') . $symtab_entry . q<'} }(@_); };>;  # DOES WORK
+#        *{ ArrayDereference_194::{$symtab_entry} } = sub { return &{ $RPerl::CompileUnit::Module::Header::{$symtab_entry} }(@_); };  # DOES NOT WORK
+        my $eval_string = '*{ ArrayDereference_194::' . $symtab_entry . q(} = sub { return &{ $RPerl::CompileUnit::Module::Header::{') . $symtab_entry . q<'} }(@_); };>;  # DOES WORK
         print 'have $eval_string = ' . "\n" . $eval_string . "\n";
         my $eval_retval = eval $eval_string;
         if (not defined $eval_retval) {croak $EVAL_ERROR;}
@@ -40,29 +40,29 @@ foreach my $symtab_entry ( keys %RPerl::CompileUnit::Module::Header:: )
 {
     if (defined &{ $RPerl::CompileUnit::Module::Header::{ $symtab_entry} } )
     {
-        my $eval_string = '*{ ArrayDereference_190::' . $symtab_entry . q(} = sub { return &{ $RPerl::CompileUnit::Module::Header::{') . $symtab_entry . q<'} }(@_); };>;
+        my $eval_string = '*{ ArrayDereference_194::' . $symtab_entry . q(} = sub { return &{ $RPerl::CompileUnit::Module::Header::{') . $symtab_entry . q<'} }(@_); };>;
         if (not defined eval $eval_string) {croak $EVAL_ERROR;}
     }
 }
 =cut
 
 # SHORT FORM, DOUBLE EVAL'ED
-my $class1 = 'ArrayDereference_190';
+my $class1 = 'ArrayDereference_194';
 my $class2 = 'RPerl::CompileUnit::Module::Header';
 my $eval_string = q[foreach my $key ( keys %] . $class2 . q[:: ) { if (defined &{ $] . $class2 . q[::{ $key} } ) { if (not defined eval q<*{] . $class1 . q[::> . $key . q<} = sub { return &{ $] . $class2 . q[::{'> . $key . q<'} }(@_); };>) {croak $EVAL_ERROR;} } }];
 #print $eval_string;
 eval $eval_string;
 
-ArrayDereference_190::foosub();
+ArrayDereference_194::foosub();
 
-#*{ArrayDereference_190::ast_to_rperl__generate} = sub {return &{ $RPerl::CompileUnit::Module::Header::{'ast_to_rperl__generate'} }(@_); };  # DOES WORK
-#ArrayDereference_190::ast_to_rperl__generate({FAKE=>'object'}, {FAKE=>'ast'}, {FAKE=>'mode'});  # DOES WORK
+#*{ArrayDereference_194::ast_to_rperl__generate} = sub {return &{ $RPerl::CompileUnit::Module::Header::{'ast_to_rperl__generate'} }(@_); };  # DOES WORK
+#ArrayDereference_194::ast_to_rperl__generate({FAKE=>'object'}, {FAKE=>'ast'}, {FAKE=>'mode'});  # DOES WORK
 
-#*{ArrayDereference_190::new} = &{$RPerl::CompileUnit::Module::Class::{'new'}};  # DOES NOT WORK?
-*{ArrayDereference_190::new} = sub {return &{$RPerl::CompileUnit::Module::Class::{'new'}}(@_);};  # DOES WORK
-ArrayDereference_190::new if 0;  # remove "used only once" warning
+#*{ArrayDereference_194::new} = &{$RPerl::CompileUnit::Module::Class::{'new'}};  # DOES NOT WORK?
+*{ArrayDereference_194::new} = sub {return &{$RPerl::CompileUnit::Module::Class::{'new'}}(@_);};  # DOES WORK
+ArrayDereference_194::new if 0;  # remove "used only once" warning
 
-my $foo = ArrayDereference_190->new();  # DOES WORK
-#my $foo = ArrayDereference_190::new('ArrayDereference_190');  # DOES WORK
+my $foo = ArrayDereference_194->new();  # DOES WORK
+#my $foo = ArrayDereference_194::new('ArrayDereference_194');  # DOES WORK
 
 $foo->ast_to_rperl__generate({FAKEMODE => 'bar'});

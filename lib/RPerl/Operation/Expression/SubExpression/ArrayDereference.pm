@@ -2,7 +2,7 @@
 package RPerl::Operation::Expression::SubExpression::ArrayDereference;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.002_010;
 
 # [[[ OO INHERITANCE ]]]
@@ -26,13 +26,13 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in ArrayDereference->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    # unwrap ArrayDereference_190 and ArrayDereference_191 from SubExpression_135
-    if ( $self_class eq 'SubExpression_135' ) {  # SubExpression -> ArrayDereference
+    # unwrap ArrayDereference_194 and ArrayDereference_195 from SubExpression_139
+    if ( $self_class eq 'SubExpression_139' ) {  # SubExpression -> ArrayDereference
         $self = $self->{children}->[0];
     }
 
     $self_class = ref $self;
-    if ( $self_class eq 'ArrayDereference_190' ) {  # ArrayDereference -> '@{' Variable '}'
+    if ( $self_class eq 'ArrayDereference_194' ) {  # ArrayDereference -> '@{' Variable '}'
         my string $at_left_brace = $self->{children}->[0];
         my object $variable = $self->{children}->[1];
         my string $right_brace = $self->{children}->[2];
@@ -42,7 +42,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= q{ } . $right_brace;
     }
-    elsif ( $self_class eq 'ArrayDereference_191' ) {  # ArrayDereference -> '@{' OPTIONAL-47 ArrayReference '}'
+    elsif ( $self_class eq 'ArrayDereference_195' ) {  # ArrayDereference -> '@{' OPTIONAL-47 ArrayReference '}'
         my string $at_left_brace = $self->{children}->[0];
         my object $type_inner_optional = $self->{children}->[1];
         my object $array_reference = $self->{children}->[2];
@@ -62,7 +62,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where ArrayDereference_190 or ArrayDereference_191 expected, dying'
+                . ' found where ArrayDereference_194 or ArrayDereference_195 expected, dying'
         ) . "\n";
     }
 

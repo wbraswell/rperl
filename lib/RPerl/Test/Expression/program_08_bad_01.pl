@@ -5,9 +5,9 @@
 # <<< PARSE_ERROR: 'Global symbol "$pi_over_2" requires explicit package name' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CONSTANTS ]]]

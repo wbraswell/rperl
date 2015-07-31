@@ -8,9 +8,9 @@
 # <<< EXECUTE_SUCCESS: "$VAR1 = {'arrayref' => [{'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},{'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},{'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},{'object' => {'__CLASS' => 'RPerl::Test::SimpleB','drup' => 'integer'}},{'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}}]};" >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

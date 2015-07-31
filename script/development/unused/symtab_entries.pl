@@ -21,7 +21,7 @@ RPerl::Generator::grammar_rules__map();
 my $class = 'RPerl::CompileUnit::Module::Header';
 print RPerl::analyze_class_symtab_entries($class) . "\n\n";
 
-$class = 'ModuleHeader_21';
+$class = 'ModuleHeader_23';
 print RPerl::analyze_class_symtab_entries($class) . "\n\n";
 
 exit;
@@ -30,10 +30,10 @@ print q{=} x 50;
 print "\n";
 print q{=} x 50;
 print "\n";
-my $mh21 = ModuleHeader_21->new();
+my $mh21 = ModuleHeader_23->new();
 print q{$mh21 =} . "\n" . Dumper($mh21) . "\n";
 
-#my $generate_retval = ModuleHeader_21::ast_to_rperl__generate({FAKE => 'self'}, {FAKE => 'modes'});
+#my $generate_retval = ModuleHeader_23::ast_to_rperl__generate({FAKE => 'self'}, {FAKE => 'modes'});
 my $generate_retval = $mh21->ast_to_rperl__generate( { FAKE => 'modes' } );
 print q{$generate_retval =} . "\n" . Dumper($generate_retval) . "\n";
 

@@ -2,7 +2,7 @@
 package RPerl::Operation::Expression::Operator::Named;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.001_010;
 
 # [[[ OO INHERITANCE ]]]
@@ -39,20 +39,20 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     my string $self_class = ref $self;
     my string $operator_name;
-    if (( $self_class eq 'Operator_79' ) # Operator -> OP01_NAMED SubExpression
-        or ( $self_class eq 'OperatorVoid_117' )
+    if (( $self_class eq 'Operator_83' ) # Operator -> OP01_NAMED SubExpression
+        or ( $self_class eq 'OperatorVoid_121' )
         ) # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
     {
         $operator_name = $self->{children}->[0];
     }
-    elsif ( $self_class eq 'Operator_80' ) { # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
+    elsif ( $self_class eq 'Operator_84' ) { # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
         $operator_name = $self->{children}->[1];
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where Operator_79, Operator_80, or OperatorVoid_117 expected, dying'
+                . ' found where Operator_83, Operator_84, or OperatorVoid_121 expected, dying'
         ) . "\n";
     }
 

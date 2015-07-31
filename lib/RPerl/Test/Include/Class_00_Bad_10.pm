@@ -3,10 +3,10 @@
 # <<< PARSE_ERROR: 'Unexpected Token:  use parent qw(' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::Include::Class_00_Bad_10;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 use RPerl::Test::Foo;

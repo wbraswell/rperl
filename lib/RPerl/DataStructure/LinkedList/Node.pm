@@ -1,7 +1,7 @@
 package RPerl::DataStructure::LinkedList::Node;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.001_000;
 
 package RPerl::DataStructure::LinkedList::NodeReference;

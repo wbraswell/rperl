@@ -3,10 +3,10 @@
 # <<< PARSE_ERROR: 'String found where operator expected' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::Constant::Class_00_Bad_15;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]

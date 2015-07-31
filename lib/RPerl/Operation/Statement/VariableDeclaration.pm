@@ -2,7 +2,7 @@
 package RPerl::Operation::Statement::VariableDeclaration;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -25,13 +25,13 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in VariableDeclaration->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-# unwrap VariableDeclaration_171, VariableDeclaration_172, and VariableDeclaration_173 from Statement_147
-    if ( $self_class eq 'Statement_147' ) {   # Statement -> VariableDeclaration
+# unwrap VariableDeclaration_175, VariableDeclaration_176, and VariableDeclaration_177 from Statement_151
+    if ( $self_class eq 'Statement_151' ) {   # Statement -> VariableDeclaration
         $self = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if ( $self_class eq 'VariableDeclaration_171' ) { # VariableDeclaration -> MY Type VARIABLE_SYMBOL ';'
+    if ( $self_class eq 'VariableDeclaration_175' ) { # VariableDeclaration -> MY Type VARIABLE_SYMBOL ';'
         my string $my        = $self->{children}->[0];
         my string $type      = $self->{children}->[1]->{children}->[0];
         my string $symbol    = $self->{children}->[2];
@@ -39,7 +39,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         $rperl_source_group->{PMC}
             .= $my . q{ } . $type . q{ } . $symbol . $semicolon . "\n";
     }
-    elsif ( $self_class eq 'VariableDeclaration_172' ) { # VariableDeclaration -> MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';'
+    elsif ( $self_class eq 'VariableDeclaration_176' ) { # VariableDeclaration -> MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';'
         my string $my     = $self->{children}->[0];
         my string $type   = $self->{children}->[1]->{children}->[0];
         my string $symbol = $self->{children}->[2];
@@ -55,7 +55,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= $semicolon . "\n";
     }
-    elsif ( $self_class eq 'VariableDeclaration_173' ) { # VariableDeclaration -> MY TYPE_FHREF FHREF_SYMBOL ';'
+    elsif ( $self_class eq 'VariableDeclaration_177' ) { # VariableDeclaration -> MY TYPE_FHREF FHREF_SYMBOL ';'
         my string $my           = $self->{children}->[0];
         my string $type_fhref   = $self->{children}->[1];
         my string $fhref_symbol = $self->{children}->[2];
@@ -70,7 +70,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where VariableDeclaration_171, VariableDeclaration_172, or VariableDeclaration_173 expected, dying'
+                . ' found where VariableDeclaration_175, VariableDeclaration_176, or VariableDeclaration_177 expected, dying'
         ) . "\n";
     }
 
@@ -97,19 +97,19 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
 #    RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-# unwrap VariableDeclaration_171, VariableDeclaration_172, and VariableDeclaration_173 from Statement_147
-    if ( $self_class eq 'Statement_147' ) {   # Statement -> VariableDeclaration
+# unwrap VariableDeclaration_175, VariableDeclaration_176, and VariableDeclaration_177 from Statement_151
+    if ( $self_class eq 'Statement_151' ) {   # Statement -> VariableDeclaration
         $self = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if ( $self_class eq 'VariableDeclaration_171' ) { # VariableDeclaration -> MY Type VARIABLE_SYMBOL ';'
+    if ( $self_class eq 'VariableDeclaration_175' ) { # VariableDeclaration -> MY Type VARIABLE_SYMBOL ';'
         my string $type      = $self->{children}->[1]->{children}->[0];
         my string $symbol    = $self->{children}->[2];
         $cpp_source_group->{CPP}
             .= $type . q{ } . (substr $symbol, 1) . ';' . "\n";
     }
-    elsif ( $self_class eq 'VariableDeclaration_172' ) { # VariableDeclaration -> MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';'
+    elsif ( $self_class eq 'VariableDeclaration_176' ) { # VariableDeclaration -> MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';'
         my string $type   = $self->{children}->[1]->{children}->[0];
         my string $symbol = $self->{children}->[2];
         my object $subexpression_or_stdin = $self->{children}->[4];
@@ -122,7 +122,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             $cpp_source_subgroup );
         $cpp_source_group->{CPP} .= ';' . "\n";
     }
-    elsif ( $self_class eq 'VariableDeclaration_173' ) { # VariableDeclaration -> MY TYPE_FHREF FHREF_SYMBOL ';'
+    elsif ( $self_class eq 'VariableDeclaration_177' ) { # VariableDeclaration -> MY TYPE_FHREF FHREF_SYMBOL ';'
         my string $type_fhref   = $self->{children}->[1];
         my string $fhref_symbol = $self->{children}->[2];
         $cpp_source_group->{CPP} .= $type_fhref . q{ } . (substr $fhref_symbol, 1) . ';' . "\n";
@@ -131,7 +131,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . $self_class
-                . ' found where VariableDeclaration_171, VariableDeclaration_172, or VariableDeclaration_173 expected, dying'
+                . ' found where VariableDeclaration_175, VariableDeclaration_176, or VariableDeclaration_177 expected, dying'
         ) . "\n";
     }
 

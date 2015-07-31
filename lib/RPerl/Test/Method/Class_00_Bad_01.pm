@@ -2,10 +2,10 @@
 # <<< PARSE_ERROR: 'ERROR ECVPAPC02' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::Method::Class_00_Bad_01;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]

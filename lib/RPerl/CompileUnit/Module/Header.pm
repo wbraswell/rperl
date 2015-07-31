@@ -2,7 +2,7 @@
 package RPerl::CompileUnit::Module::Header;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.003_001;
 
 # [[[ OO INHERITANCE ]]]

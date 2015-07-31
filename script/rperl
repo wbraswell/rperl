@@ -2,7 +2,7 @@
 # [[[ HEADER ]]]
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 # DEV NOTE, CORRELATION #16: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
 our $VERSION = 1.000_007;
 #our $VERSION = 20150709;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE

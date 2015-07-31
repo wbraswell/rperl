@@ -4,10 +4,10 @@
 # <<< PARSE_ERROR: 'syntax error' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::Properties::Class_00_Bad_01;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]

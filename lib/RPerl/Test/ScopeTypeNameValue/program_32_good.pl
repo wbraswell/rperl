@@ -4,9 +4,9 @@
 # <<< EXECUTE_SUCCESS: "my string_hashref $foo = {'a' => '42','b' => 'is','c' => 'the','d' => 'answer'};" >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

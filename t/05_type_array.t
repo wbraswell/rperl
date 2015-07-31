@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
+use RPerl::AfterSubclass;
 our $VERSION = 0.005_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -19,7 +20,7 @@ BEGIN {
     if ( $ENV{RPERL_VERBOSE} ) {
         diag('[[[ Beginning Array Type Pre-Test Loading, RPerl Type System ]]]');
     }
-    lives_and( sub { use_ok('RPerl::AfterFilter'); }, q{use_ok('RPerl::AfterFilter') lives} );
+    lives_and( sub { use_ok('RPerl::AfterSubclass'); }, q{use_ok('RPerl::AfterSubclass') lives} );
     lives_and( sub { use_ok('RPerl::DataStructure::Array_cpp'); }, q{use_ok('RPerl::DataStructure::Array_cpp') lives} );
 }
 

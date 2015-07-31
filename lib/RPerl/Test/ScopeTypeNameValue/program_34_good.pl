@@ -5,9 +5,9 @@
 # <<< EXECUTE_SUCCESS: "howdy' => 3,'two' => 2,'zero' => 0};" >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

@@ -5,9 +5,9 @@
 # <<< EXECUTE_ERROR: "isn't numeric in exit" >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

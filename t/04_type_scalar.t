@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
+use RPerl::AfterSubclass;
 our $VERSION = 0.006_010;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -21,7 +22,7 @@ BEGIN {
     if ( $ENV{RPERL_VERBOSE} ) {
         Test::More::diag("[[[ Beginning Scalar Type Pre-Test Loading, RPerl Type System ]]]");
     }
-    lives_and( sub { use_ok('RPerl::AfterFilter'); }, q{use_ok('RPerl::AfterFilter') lives} );
+    lives_and( sub { use_ok('RPerl::AfterSubclass'); }, q{use_ok('RPerl::AfterSubclass') lives} );
 
     foreach my string $type (qw(Integer Number String)) {
         lives_and( sub { use_ok( 'RPerl::DataType::' . $type . '_cpp' ); }, q{use_ok('RPerl::DataType::' . $type . '_cpp') lives} );

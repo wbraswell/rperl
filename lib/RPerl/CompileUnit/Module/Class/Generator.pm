@@ -2,7 +2,7 @@
 package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.002_060;
 
 # [[[ OO INHERITANCE ]]]
@@ -31,16 +31,16 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap Class_59 from Module_23
-    if ( ($self_class) eq 'Module_23' ) {
+    # unwrap Class_63 from Module_25
+    if ( ($self_class) eq 'Module_25' ) {
         $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if ( ($self_class) ne 'Class_59' ) {
+    if ( ($self_class) ne 'Class_63' ) {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ($self_class)
-                . ' found where Module_23 or Class_59 expected, dying' )
+                . ' found where Module_25 or Class_63 expected, dying' )
             . "\n";
     }
 
@@ -101,7 +101,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     if ( $modes->{label} eq 'ON' ) {
         $rperl_source_group->{PMC} .= "\n" . '# [[[ OO PROPERTIES ]]]' . "\n";
     }
-    if ( ref $properties eq 'Properties_63' ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
+    if ( ref $properties eq 'Properties_67' ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
                                                 # non-empty $properties
         my string $properties_our_hashref = $properties->{children}->[0];
         my string $properties_equal       = $properties->{children}->[1];
@@ -127,7 +127,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         }
         $rperl_source_group->{PMC} .= "\n" . $properties_right_brace . $properties_semicolon . "\n";
     }
-    else {                                                          # Properties_64
+    else {                                                          # Properties_68
                                                                     # empty $properties
         my string $properties_our_hashref = $properties->{children}->[0];
         my string $properties_equal       = $properties->{children}->[1];
@@ -183,16 +183,16 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap Class_59 from Module_23
-    if ( ($self_class) eq 'Module_23' ) {
+    # unwrap Class_63 from Module_25
+    if ( ($self_class) eq 'Module_25' ) {
         $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if ( ($self_class) ne 'Class_59' ) {
+    if ( ($self_class) ne 'Class_63' ) {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: grammar rule '
                 . ($self_class)
-                . ' found where Module_23 or Class_59 expected, dying' )
+                . ' found where Module_25 or Class_63 expected, dying' )
             . "\n";
     }
 
@@ -275,7 +275,7 @@ EOL
         @{ $method_or_subroutine_star->{children} }
         )
     {
-        if ( ( ref $method_or_subroutine ) eq 'MethodOrSubroutine_74' ) {
+        if ( ( ref $method_or_subroutine ) eq 'MethodOrSubroutine_78' ) {
             $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES($modes);
             push @{$method_declarations}, $cpp_source_subgroup->{H};
             $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES( $package_name_underscores, $modes );
@@ -284,7 +284,7 @@ EOL
                 $cpp_source_group->{H_INCLUDES} .= $cpp_source_subgroup->{H_INCLUDES};
             }
         }
-        elsif ( ( ref $method_or_subroutine ) eq 'MethodOrSubroutine_75' ) {
+        elsif ( ( ref $method_or_subroutine ) eq 'MethodOrSubroutine_79' ) {
             $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES($modes);
             push @{$subroutine_declarations}, $cpp_source_subgroup->{H};
             $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
@@ -296,7 +296,7 @@ EOL
         else {
             die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: grammar rule '
                     . ( ref $method_or_subroutine )
-                    . ' found where MethodOrSubroutine_74 or MethodOrSubroutine_75 expected, dying' )
+                    . ' found where MethodOrSubroutine_78 or MethodOrSubroutine_79 expected, dying' )
                 . "\n";
         }
     }
@@ -321,7 +321,7 @@ EOL
     my string $property_declaration;
 
     # non-empty $properties
-    if ( ref $properties eq 'Properties_63' ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
+    if ( ref $properties eq 'Properties_67' ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
         $property_declaration = q{};
         my object $property_0        = $properties->{children}->[3];
         my object $properties_1_to_n = $properties->{children}->[4];
@@ -338,9 +338,9 @@ EOL
 
         $property_declaration = q{    } . $property_type . q{ } . $property_key;
 
-        # SubExpression_131 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined,
+        # SubExpression_135 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined,
         # don't perform any C++ initialization for properties initialized to 'undef' in Perl
-        if ( ( ref $property_subexpression ) ne 'SubExpression_131' ) {
+        if ( ( ref $property_subexpression ) ne 'SubExpression_135' ) {
             $cpp_source_subgroup = $property_subexpression->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
             $property_declaration .= ' = ' . $cpp_source_subgroup->{CPP};
         }
@@ -376,9 +376,9 @@ EOL
 
             $property_declaration = q{    } . $property_type . q{ } . $property_key;
 
-            # SubExpression_131 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined,
+            # SubExpression_135 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined,
             # don't perform any C++ initialization for properties initialized to 'undef' in Perl
-            if ( ( ref $property_subexpression ) ne 'SubExpression_131' ) {
+            if ( ( ref $property_subexpression ) ne 'SubExpression_135' ) {
                 $cpp_source_subgroup = $property_subexpression->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
                 $property_declaration .= ' = ' . $cpp_source_subgroup->{CPP};
             }

@@ -2,7 +2,7 @@
 package RPerl::CodeBlock::Subroutine::Method;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -28,14 +28,14 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     #    RPerl::diag( 'in Method->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    # unwrap Method_69 from MethodOrSubroutine_74
-    if ( ( ref $self ) eq 'MethodOrSubroutine_74' ) {
+    # unwrap Method_73 from MethodOrSubroutine_78
+    if ( ( ref $self ) eq 'MethodOrSubroutine_78' ) {
         $self = $self->{children}->[0];
     }
 
-    if ( ( ref $self ) ne 'Method_69' ) {
+    if ( ( ref $self ) ne 'Method_73' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule ' . ( ref $self ) . ' found where Method_69 expected, dying' )
+            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule ' . ( ref $self ) . ' found where Method_73 expected, dying' )
             . "\n";
     }
 
@@ -78,7 +78,7 @@ our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = 
 
 #    RPerl::diag( 'in Method->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    $self             = $self->{children}->[0];     # unwrap Method_69 from MethodOrSubroutine_74
+    $self             = $self->{children}->[0];     # unwrap Method_73 from MethodOrSubroutine_78
     my string $return_type = $self->{children}->[1];
     substr $return_type, -7, 7, '';                      # remove leading 'method_'
     my string $name = $self->{children}->[2];
@@ -106,14 +106,14 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     #    RPerl::diag( 'in Method->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    # unwrap Method_69 from MethodOrSubroutine_74
-    if ( ( ref $self ) eq 'MethodOrSubroutine_74' ) {
+    # unwrap Method_73 from MethodOrSubroutine_78
+    if ( ( ref $self ) eq 'MethodOrSubroutine_78' ) {
         $self = $self->{children}->[0];
     }
 
-    if ( ( ref $self ) ne 'Method_69' ) {
+    if ( ( ref $self ) ne 'Method_73' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule ' . ( ref $self ) . ' found where Method_69 expected, dying' )
+            'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule ' . ( ref $self ) . ' found where Method_73 expected, dying' )
             . "\n";
     }
 

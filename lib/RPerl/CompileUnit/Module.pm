@@ -2,7 +2,7 @@
 package RPerl::CompileUnit::Module;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.002_010;
 
 # [[[ OO INHERITANCE ]]]
@@ -43,10 +43,10 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     # disable unused symbol table testing
 #    RPerl::diag('in Module->ast_to_rperl__generate(), have %RPerl::Generator:: symbol table = ' . "\n" . Dumper(\%RPerl::Generator::) . "\n");
 #    RPerl::diag('in Module->ast_to_rperl__generate(), have %RPerl::CompileUnit::Module::Header:: symbol table dumped = ' . "\n" . Dumper(\%RPerl::CompileUnit::Module::Header::) . "\n");
-#    RPerl::diag('in Module->ast_to_rperl__generate(), have %ModuleHeader_21:: symbol table dumped = ' . "\n" . Dumper(\%ModuleHeader_21::) . "\n");
+#    RPerl::diag('in Module->ast_to_rperl__generate(), have %ModuleHeader_23:: symbol table dumped = ' . "\n" . Dumper(\%ModuleHeader_23::) . "\n");
 #    my $class = 'RPerl::CompileUnit::Module::Header';
 #    RPerl::diag('in Module->ast_to_rperl__generate(), have symtab entries for ' . $class . "\n" . RPerl::analyze_class_symtab_entries($class) . "\n\n");
-#    $class = 'ModuleHeader_21';
+#    $class = 'ModuleHeader_23';
 #    RPerl::diag('in Module->ast_to_rperl__generate(), have symtab entries for ' . $class . "\n" . RPerl::analyze_class_symtab_entries($class) . "\n\n");
 
     foreach my object $header_or_module (@{$modules_and_headers}) {
@@ -92,7 +92,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     foreach my object $header_or_module (@{$modules_and_headers}) {
 #        RPerl::diag('in Module->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $header_or_module = ' . "\n" . RPerl::Parser::rperl_ast__dump($header_or_module) . "\n\n");
         # C++ Module::Header wraps around Module, must call both *generate_begin*() and *generate_end*()
-        if ((ref $header_or_module) eq 'ModuleHeader_21') {
+        if ((ref $header_or_module) eq 'ModuleHeader_23') {
             if ($header_started) {
                 die 'ERROR ECVGEASCP06, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: ModuleHeader found without first finding Module for previous ModuleHeader, dying' . "\n";
             }
@@ -105,7 +105,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 $cpp_source_subgroup_saved = $header_or_module->ast_to_cpp__generate_end__CPPOPS_CPPTYPES($modes);
             }
         }
-        elsif (((ref $header_or_module) eq 'Module_22') or ((ref $header_or_module) eq 'Module_23')) {
+        elsif (((ref $header_or_module) eq 'Module_24') or ((ref $header_or_module) eq 'Module_25')) {
             if ($header_started) {
                 $cpp_source_subgroup = $header_or_module->ast_to_cpp__generate__CPPOPS_CPPTYPES($package_name_underscores, $modes);
                 RPerl::Generator::source_group_append($cpp_source_group, $cpp_source_subgroup);
@@ -120,7 +120,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             die RPerl::Parser::rperl_rule__replace(
                 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: grammar rule '
                     . ( ref $header_or_module )
-                    . ' found where ModuleHeader_21, Module_22, or Module_23 expected, dying' )
+                    . ' found where ModuleHeader_23, Module_24, or Module_25 expected, dying' )
                 . "\n";
         }
     }

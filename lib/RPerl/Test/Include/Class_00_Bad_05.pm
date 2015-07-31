@@ -3,10 +3,10 @@
 # <<< PARSE_ERROR: 'Bareword "RPerl::Test::Bar" not allowed' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::Include::Class_00_Bad_05;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]

@@ -3,10 +3,10 @@
 # <<< PARSE_ERROR: 'Useless use of a constant' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::Module::Class_00_Bad_Terminator_02;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]

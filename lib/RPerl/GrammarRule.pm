@@ -2,7 +2,7 @@
 package RPerl::GrammarRule;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.000_002;
 
 # [[[ OO INHERITANCE ]]]

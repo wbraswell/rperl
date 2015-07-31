@@ -3,10 +3,10 @@
 # <<< PARSE_ERROR: 'Unexpected Token:  ###' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::Critic::Package_00_Bad_00;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

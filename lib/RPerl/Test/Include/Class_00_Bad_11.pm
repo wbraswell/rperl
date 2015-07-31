@@ -3,11 +3,11 @@
 # <<< PARSE_ERROR: 'Unexpected Token:  use' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::Include::Class_00_Bad_11;
 use strict;
 use RPerl::Test::Foo;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]

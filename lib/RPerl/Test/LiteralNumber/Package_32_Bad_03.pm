@@ -3,10 +3,10 @@
 # <<< PARSE_ERROR: 'Misplaced _ in number' >>>
 
 # [[[ HEADER ]]]
-package RPerl::Test::LiteralNumber::Package_32_Bad_03;
+use RPerl;
+package RPerl::Test::LiteralNumber::Package_34_Bad_03;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

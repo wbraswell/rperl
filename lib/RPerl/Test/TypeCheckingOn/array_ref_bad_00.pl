@@ -5,9 +5,9 @@
 # <<< EXECUTE_ERROR: 'arrayref value expected but non-arrayref value found' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.000_001;
 
 # [[[ CRITICS ]]]

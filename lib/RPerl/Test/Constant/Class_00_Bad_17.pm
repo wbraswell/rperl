@@ -3,10 +3,10 @@
 # <<< PARSE_ERROR: 'Unexpected Token:  use constant' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::Constant::Class_00_Bad_17;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]

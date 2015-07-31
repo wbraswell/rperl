@@ -2,7 +2,7 @@
 package RPerl::Algorithm::Sort::Bubble;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.005_000;
 
 # [[[ OO INHERITANCE ]]]

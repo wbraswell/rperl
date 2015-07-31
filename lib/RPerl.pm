@@ -44,7 +44,7 @@ use rperlnamespaces;
 
 # DEV NOTE: causes circular (or other weird) dependencies, error "Subroutine import redefined...",
 # so we can't use RPerl::diag, RPerl types, or subroutines in this files
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 
 use Module::ScanDeps;
 
@@ -171,7 +171,7 @@ sub filter {
                 my $input_line_prepend = q{};
                 $input_line_prepend .= '# <<<=== BEGIN $input_line_prepend ===>>>' . "\n";
                 $input_line_prepend .= 'use RPerl::Config;' . "\n";
-                $input_line_prepend .= 'use RPerl::AfterFilter;' . "\n";
+                $input_line_prepend .= 'use RPerl::AfterSubclass;' . "\n";
                 $input_line_prepend .= '1;  # end class, original' . "\n";
                 my $subclasses = {
                     '_arrayref'         => [ 'RPerl::DataStructure::Array',          'arrayref' ],
@@ -186,7 +186,7 @@ sub filter {
 
                     #                    $input_line_prepend .= 'use strict;' . "\n";
                     #                    $input_line_prepend .= 'use warnings;' . "\n";
-                    #                    $input_line_prepend .= 'use RPerl::AfterFilter;' . "\n";
+                    #                    $input_line_prepend .= 'use RPerl::AfterSubclass;' . "\n";
                     $input_line_prepend .= 'use ' . $subclasses->{$subclass_key}->[0] . ';' . "\n";
                     $input_line_prepend .= 'use parent -norequire, qw(' . $subclasses->{$subclass_key}->[1] . ');' . "\n";
                     $input_line_prepend .= '1;  # end class, auto-generated subclass' . "\n";
@@ -206,11 +206,11 @@ sub filter {
                 #                $input_line .= 'use strict;' . "\n";
                 #                $input_line .= 'use warnings;' . "\n";
                 $input_line .= 'use RPerl::Config;' . "\n";
-                $input_line .= 'use RPerl::AfterFilter;';
+                $input_line .= 'use RPerl::AfterSubclass;';
 
                 #                print 'in RPerl::filter(), have modified $input_line = ' . "\n" . $input_line . "\n";
             }
-#            else { print {*STDERR} 'in RPerl::filter(), NOT enabling subclasses or RPerl::AfterFilter for $package = ' . $package . "\n"; }
+#            else { print {*STDERR} 'in RPerl::filter(), NOT enabling subclasses or RPerl::AfterSubclass for $package = ' . $package . "\n"; }
             $output .= $input_line . "\n";
             $package = q{};
             $package_line = q{};

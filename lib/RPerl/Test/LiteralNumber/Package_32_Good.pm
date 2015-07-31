@@ -1,8 +1,8 @@
 # [[[ HEADER ]]]
-package RPerl::Test::LiteralNumber::Package_32_Good;
+use RPerl;
+package RPerl::Test::LiteralNumber::Package_34_Good;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

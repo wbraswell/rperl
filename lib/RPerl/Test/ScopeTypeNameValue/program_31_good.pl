@@ -8,9 +8,9 @@
 # <<< EXECUTE_SUCCESS: 'my unknown $foo = undef;' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

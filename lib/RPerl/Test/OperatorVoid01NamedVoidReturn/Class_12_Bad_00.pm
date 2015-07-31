@@ -3,10 +3,10 @@
 # <<< GENERATE_ERROR: "Argument count 4 exceeds maximum argument limit 1 for operator 'return'" >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::OperatorVoid01NamedVoidReturn::Class_12_Bad_00;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]

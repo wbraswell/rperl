@@ -5,6 +5,7 @@
 # <<< PARSE_ERROR: 'No such class integer' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
 used RPerl;

@@ -3,10 +3,10 @@
 # <<< PARSE_ERROR: 'Can't locate RPerl/T.pm' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::Include::Package_00_Bad_04;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ INCLUDES ]]]

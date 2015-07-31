@@ -3,10 +3,10 @@
 # <<< PARSE_ERROR: 'Unexpected Token:  our hashref $properties' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::Critic::Class_00_Bad_07;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]

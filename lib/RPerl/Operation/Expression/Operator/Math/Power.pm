@@ -2,7 +2,7 @@
 package RPerl::Operation::Expression::Operator::Math::Power;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -25,7 +25,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in Operator::Math::Power->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if ( $self_class eq 'Operator_85' ) {  # Operator -> SubExpression OP04_MATH_POW SubExpression
+    if ( $self_class eq 'Operator_89' ) {  # Operator -> SubExpression OP04_MATH_POW SubExpression
         my string_hashref $rperl_source_subgroup = $self->{children}->[0]->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= q{ } . $self->{children}->[1] . q{ };
@@ -36,7 +36,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where Operator_85 expected, dying' )
+                . ' found where Operator_89 expected, dying' )
             . "\n";
     }
 
@@ -63,7 +63,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #    RPerl::diag( 'in Operator::Math::Power->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if ( $self_class eq 'Operator_85' ) {  # Operator -> SubExpression OP04_MATH_POW SubExpression
+    if ( $self_class eq 'Operator_89' ) {  # Operator -> SubExpression OP04_MATH_POW SubExpression
         $cpp_source_group->{H_INCLUDES} .= '#include <math.h>' . "\n";
 
         $cpp_source_group->{CPP} .= 'pow(';
@@ -78,7 +78,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . $self_class
-                . ' found where Operator_85 expected, dying' )
+                . ' found where Operator_89 expected, dying' )
             . "\n";
     }
 

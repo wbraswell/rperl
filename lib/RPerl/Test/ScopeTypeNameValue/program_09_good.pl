@@ -8,9 +8,9 @@
 # <<< EXECUTE_SUCCESS: "$VAR1 = {'hashref' => {'a' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},'b' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},'c' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}},'d' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleB','drup' => 'integer'}},'e' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}}}};" >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

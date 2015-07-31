@@ -5,9 +5,10 @@
 # <<< PARSE_ERROR: "Can't locate arnings.pm in @INC" >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use arnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]

@@ -3,10 +3,10 @@
 # <<< PARSE_ERROR: 'RequireEndWithOne' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::Module::Class_00_Bad_Terminator_00;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]

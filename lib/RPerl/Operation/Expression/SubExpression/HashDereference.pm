@@ -2,7 +2,7 @@
 package RPerl::Operation::Expression::SubExpression::HashDereference;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -27,16 +27,16 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap HashDereference_205 and HashDereference_206 from SubExpression_137, HashEntry_195, and HashEntryTyped_197
-    if (   ( $self_class eq 'SubExpression_137' )  # SubExpression -> HashDereference
-        or ( $self_class eq 'HashEntry_195' )  # HashEntry -> HashDereference
-        or ( $self_class eq 'HashEntryTyped_197' ) )  # HashEntryTyped -> HashDereference
+    # unwrap HashDereference_209 and HashDereference_210 from SubExpression_141, HashEntry_199, and HashEntryTyped_201
+    if (   ( $self_class eq 'SubExpression_141' )  # SubExpression -> HashDereference
+        or ( $self_class eq 'HashEntry_199' )  # HashEntry -> HashDereference
+        or ( $self_class eq 'HashEntryTyped_201' ) )  # HashEntryTyped -> HashDereference
     {
         $self = $self->{children}->[0];
     }
 
     $self_class = ref $self;
-    if ( $self_class eq 'HashDereference_205' ) {  # HashDereference -> '%{' Variable '}'
+    if ( $self_class eq 'HashDereference_209' ) {  # HashDereference -> '%{' Variable '}'
         my string $percent_left_brace = $self->{children}->[0];
         my object $variable      = $self->{children}->[1];
         my string $right_brace   = $self->{children}->[2];
@@ -47,7 +47,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= q{ } . $right_brace;
     }
-    elsif ( $self_class eq 'HashDereference_206' ) {  # HashDereference -> '%{' OPTIONAL-51 HashReference '}'
+    elsif ( $self_class eq 'HashDereference_210' ) {  # HashDereference -> '%{' OPTIONAL-51 HashReference '}'
         my string $percent_left_brace       = $self->{children}->[0];
         my object $type_inner_optional = $self->{children}->[1];
         my object $hash_reference     = $self->{children}->[2];

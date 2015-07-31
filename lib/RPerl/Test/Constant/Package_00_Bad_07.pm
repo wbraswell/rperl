@@ -4,10 +4,10 @@
 
 # [[[ HEADER ]]]
 use constant PI  => my number $TYPED_PI  = 3.141_59;
+use RPerl;
 package RPerl::Test::Constant::Package_00_Bad_07;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CONSTANTS ]]]

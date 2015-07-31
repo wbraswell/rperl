@@ -2,7 +2,7 @@
 package RPerl::Operation::Statement::Conditional;
 use strict;
 use warnings;
-use RPerl::AfterFilter;
+use RPerl::AfterSubclass;
 our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -25,8 +25,8 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap Conditional_155 from Statement_144
-    if ( $self_class eq 'Statement_144' ) {    # Statement -> Conditional
+    # unwrap Conditional_159 from Statement_148
+    if ( $self_class eq 'Statement_148' ) {    # Statement -> Conditional
         $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
@@ -34,7 +34,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in Conditional->ast_to_rperl__generate(), have possibly-unwrapped $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
   # Conditional -> 'if' LPAREN SubExpression ')' CodeBlock STAR-38 OPTIONAL-40
-    if ( $self_class eq 'Conditional_155' ) {
+    if ( $self_class eq 'Conditional_159' ) {
         my string $if            = $self->{children}->[0];
         my string $left_paren    = $self->{children}->[1];
         my object $subexpression = $self->{children}->[2];
@@ -111,7 +111,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where Conditional_155 expected, dying' )
+                . ' found where Conditional_159 expected, dying' )
             . "\n";
     }
     return $rperl_source_group;
@@ -137,8 +137,8 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap Conditional_155 from Statement_144
-    if ( $self_class eq 'Statement_144' ) {    # Statement -> Conditional
+    # unwrap Conditional_159 from Statement_148
+    if ( $self_class eq 'Statement_148' ) {    # Statement -> Conditional
         $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
@@ -146,7 +146,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #    RPerl::diag( 'in Conditional->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have possibly-unwrapped $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
   # Conditional -> 'if' LPAREN SubExpression ')' CodeBlock STAR-38 OPTIONAL-40
-    if ( $self_class eq 'Conditional_155' ) {
+    if ( $self_class eq 'Conditional_159' ) {
         my string $if            = $self->{children}->[0];
         my string $left_paren    = $self->{children}->[1];
         my object $subexpression = $self->{children}->[2];
@@ -223,7 +223,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . $self_class
-                . ' found where Conditional_155 expected, dying' )
+                . ' found where Conditional_159 expected, dying' )
             . "\n";
     }
     return $cpp_source_group;
