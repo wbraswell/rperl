@@ -1,8 +1,8 @@
 # [[[ HEADER ]]]
-use RPerl;
 package RPerl::CompileUnit::Module;
 use strict;
 use warnings;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]

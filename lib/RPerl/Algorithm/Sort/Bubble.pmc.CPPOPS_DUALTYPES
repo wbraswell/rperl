@@ -2,7 +2,7 @@
 package RPerl::Algorithm::Sort::Bubble;
 use strict;
 use warnings;
-use RPerl;
+use RPerl::AfterFilter;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]
@@ -31,7 +31,7 @@ sub cpp_load {
 
     if ($need_load_cpp) {
 
-        #RPerl::diag('in RPerl::Algorithm::Sort::Bubble::cpp_load, need load CPP code' . "\n");
+#        RPerl::diag('in RPerl::Algorithm::Sort::Bubble::cpp_load, need load CPP code' . "\n");
 
         my $eval_string = <<"EOF";
 package main;

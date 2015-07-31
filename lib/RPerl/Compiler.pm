@@ -34,7 +34,7 @@ our string_arrayref $find_dependencies = sub {
     ( my string $file_name) = @_;
     my string_arrayref $dependencies = [];
 
-    #    RPerl::diag( 'in Compiler::find_dependencies(), received $file_name = ' . $file_name . "\n" );
+#    RPerl::diag( 'in Compiler::find_dependencies(), received $file_name = ' . $file_name . "\n" );
 
     if ( not -f $file_name ) {
         die 'ERROR ECVCODE00, COMPILER, FIND DEPENDENCIES: File not found, ' . q{'} . $file_name . q{'} . "\n" . ', dying' . "\n";
@@ -57,10 +57,10 @@ our string_arrayref $find_dependencies = sub {
             $first_package_name =~ s/^\s*package\s+([\w:]+)\s*;\s*$/$1/gxms;
             $eval_string = 'use ' . $first_package_name . '; 1;';
 
-            #        	RPerl::diag('in Compiler::find_dependencies(), about to call NON-DEP $eval_string = ' . $eval_string . "\n");
+#        	RPerl::diag('in Compiler::find_dependencies(), about to call NON-DEP $eval_string = ' . $eval_string . "\n");
             $eval_retval = eval($eval_string);
 
-            #        	RPerl::diag('in Compiler::find_dependencies(), have POST-EVAL NON-DEP %INC = ' . Dumper(\%INC) . "\n");
+##        	RPerl::diag('in Compiler::find_dependencies(), have POST-EVAL NON-DEP %INC = ' . Dumper(\%INC) . "\n");
             if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne q{} ) ) {
                 die 'ERROR ECVCODE02, COMPILER, FIND DEPENDENCIES: Failed to eval-use package '
                     . $first_package_name
@@ -73,7 +73,10 @@ our string_arrayref $find_dependencies = sub {
             if (   ( $file_line =~ /use\s+strict\s*;/ )
                 or ( $file_line =~ /use\s+warnings\s*;/ )
                 or ( $file_line =~ /use\s+RPerl::CompileUnit::Module::Class\s*;/ )
+                or ( $file_line =~ /use\s+RPerl::Class\s*;/ )
                 or ( $file_line =~ /use\s+RPerl\s*;/ )
+                or ( $file_line =~ /use\s+RPerl::AfterFilter\s*;/ )
+                or ( $file_line =~ /use\s+RPerl::Config\s*;/ )
                 or ( $file_line =~ /use\s+parent/ )
                 or ( $file_line =~ /use\s+constant/ )
                 or ( $file_line =~ /use\s+[0-9]/ ) )
@@ -91,7 +94,7 @@ our string_arrayref $find_dependencies = sub {
             $file_line =~ s/^\s*use\s+([\w:]+)\s*.*\s*;\s*$/$1/gxms;    # remove everything except the package name
             $eval_string = 'use ' . $file_line . '; 1;';
 
-            RPerl::diag( 'in Compiler::find_dependencies(), about to call DEP $eval_string = ' . $eval_string . "\n" );
+#            RPerl::diag( 'in Compiler::find_dependencies(), about to call DEP $eval_string = ' . $eval_string . "\n" );
             $eval_retval = eval($eval_string);
 
             #            RPerl::diag('in Compiler::find_dependencies(), have POST-EVAL DEP %INC = ' . Dumper(\%INC) . "\n");
@@ -106,25 +109,25 @@ our string_arrayref $find_dependencies = sub {
                     . ' in %INC, dying' . "\n";
             }
 
-            #            RPerl::diag( 'in Compiler::find_dependencies(), have MATCHING $file_line = ' . $file_line . "\n" );
-            #            RPerl::diag( 'in Compiler::find_dependencies(), have $INC{$file_line} = ' . $INC{$file_line} . "\n" );
+#            RPerl::diag( 'in Compiler::find_dependencies(), have MATCHING $file_line = ' . $file_line . "\n" );
+#            RPerl::diag( 'in Compiler::find_dependencies(), have $INC{$file_line} = ' . $INC{$file_line} . "\n" );
             push @{$dependencies}, $INC{$file_line};
 
-            #            RPerl::diag( 'in Compiler::find_dependencies(), have PRE-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
+#            RPerl::diag( 'in Compiler::find_dependencies(), have PRE-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
 
             my string_arrayref $subdependencies = find_dependencies( $INC{$file_line} );
 
             # discard duplicate dependencies that now appear in subdependencies
             $dependencies = [ uniq @{$subdependencies}, @{$dependencies} ];
 
-            #            RPerl::diag( 'in Compiler::find_dependencies(), have POST-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
+#            RPerl::diag( 'in Compiler::find_dependencies(), have POST-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
         }
     }
 
     close $FILE_HANDLE
         or die 'ECVCODE05, COMPILER, FIND DEPENDENCIES: Cannot close file ' . $file_name . ' after reading, ' . $OS_ERROR . ', dying' . "\n";
 
-    #    RPerl::diag( 'in Compiler::find_dependencies(), returning $dependencies = ' . Dumper($dependencies) . "\n" );
+#    RPerl::diag( 'in Compiler::find_dependencies(), returning $dependencies = ' . Dumper($dependencies) . "\n" );
     return $dependencies;
 };
 

@@ -355,6 +355,8 @@ sub depends_parse_generate_save_subcompile_execute {
                 };
                 if ( not defined $eval_retval ) {
                     print $EVAL_ERROR;
+                    # force-disable execution if an error is trapped in eval() above
+                    $modes->{execute} = 'OFF';
                 }
             }
             if ( $modes->{execute} eq 'ON' ) {

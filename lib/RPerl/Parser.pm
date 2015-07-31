@@ -3,7 +3,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl::AfterFilter;
-our $VERSION = 0.004_070;
+our $VERSION = 0.005_000;
 
 # [[[ OO INHERITANCE ]]]
 #use RPerl::CompileUnit::Module::Class;
@@ -11,6 +11,7 @@ our $VERSION = 0.004_070;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
 ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
 ## no critic qw(ProhibitBacktickOperators)  ## SYSTEM SPECIAL 11: allow system command execution
 ## no critic qw(RequireCarping)  # SYSTEM SPECIAL 13: allow die instead of croak
@@ -18,6 +19,9 @@ our $VERSION = 0.004_070;
 # [[[ INCLUDES ]]]
 use Perl::Critic;
 use RPerl::Grammar;
+
+# [[[ CONSTANTS ]]]
+use constant MAX_SINGLE_ERROR_LINE_LENGTH  => my integer $TYPED_MAX_SINGLE_ERROR_LINE_LENGTH = 120;
 
 # [[[ SUBROUTINES ]]]
 
@@ -82,15 +86,20 @@ our void $rperl_source__check_syntax = sub {
 # NEED ADD ERROR CHECKING: ECVPAPL00 FILE DOES NOT EXIST, ECVPAPL01 FILE IS EMPTY
 
     if ( $rperl_source__perl_syntax_retval != 0 ) {
-        die "\n"
+        my $error_pretty = "\n"
             . 'ERROR ECVPAPL02, RPERL PARSER, PERL SYNTAX ERROR' . "\n"
-            . 'Failed `' . $EXECUTABLE_NAME . ' -cw` syntax check with return value '
-            . ( $rperl_source__perl_syntax_retval >> 8 )
-            . ' and the following message(s):' . "\n\n"
-
-            #            . `$rperl_source__perl_syntax_command__all_output`
-            . $rperl_source__perl_syntax_retstring # NEED FIX: get error return string instead of re-running command to get error string!
-            . "\n";
+            . 'Failed `' . $EXECUTABLE_NAME . ' -cw` syntax check with the following information:' . "\n\n" 
+            . '    File Name:        ' . $rperl_source__file_name . "\n"
+            . '    Return Value:     ' . ( $rperl_source__perl_syntax_retval >> 8 ) . "\n"
+            . '    Error Message(s): ';
+        if ( (length $rperl_source__perl_syntax_retstring) < MAX_SINGLE_ERROR_LINE_LENGTH() ) {
+            $error_pretty .= $rperl_source__perl_syntax_retstring . "\n\n";
+        }
+        else {
+            $error_pretty .= "\n\n" . $rperl_source__perl_syntax_retstring . "\n\n";
+        }
+          
+        die $error_pretty;
     }
 
     my string_arrayref $rperl_source__perl_syntax_retstring_lines;
@@ -115,12 +124,20 @@ our void $rperl_source__check_syntax = sub {
     }
 
     if ( ( scalar @{$rperl_source__perl_syntax_retstring_warnings} ) != 0 ) {
-        die "\n"
+        my $error_pretty = "\n"
             . 'ERROR ECVPAPL03, RPERL PARSER, PERL SYNTAX WARNING' . "\n"
-            . 'Failed `' . $EXECUTABLE_NAME . ' -cw` syntax check with the following message(s): '
-            . "\n\n"
-            . ( join "\n", @{$rperl_source__perl_syntax_retstring_warnings} )
-            . "\n";
+            . 'Failed `' . $EXECUTABLE_NAME . ' -cw` syntax check with the following information:' . "\n\n" 
+            . '    File Name:        ' . $rperl_source__file_name . "\n"
+            . '    Error Message(s): ';
+           
+        if ( ( ( scalar @{$rperl_source__perl_syntax_retstring_warnings} ) == 1 )
+            and ( (length $rperl_source__perl_syntax_retstring_warnings->[0]) < MAX_SINGLE_ERROR_LINE_LENGTH() ) ) {
+            $error_pretty .= $rperl_source__perl_syntax_retstring_warnings->[0] . "\n\n";
+        }
+        else {
+            $error_pretty .=  "\n\n" . ( join "\n", @{$rperl_source__perl_syntax_retstring_warnings} ) . "\n\n";
+        } 
+        die $error_pretty;
     }
 
     RPerl::verbose(' done.' . "\n");
@@ -157,26 +174,21 @@ our void $rperl_source__criticize = sub {
     if ( $rperl_source__critic_num_violations > 0 ) {
         my string $violation_pretty = q{};
         foreach my object $violation (@rperl_source__critic_violations) {
-            $violation_pretty
-                .= '    Line number:  ' . $violation->{_location}->[0] . "\n";
-            $violation_pretty
-                .= '    Policy:       ' . $violation->{_policy} . "\n";
-            $violation_pretty
-                .= '    Description:  ' . $violation->{_description} . "\n";
+            $violation_pretty .= '    File Name:    ' . $rperl_source__file_name . "\n";
+            $violation_pretty .= '    Line number:  ' . $violation->{_location}->[0] . "\n";
+            $violation_pretty .= '    Policy:       ' . $violation->{_policy} . "\n";
+            $violation_pretty .= '    Description:  ' . $violation->{_description} . "\n";
             if ( ref( $violation->{_explanation} ) eq 'ARRAY' ) {
-                $violation_pretty
-                    .= '    Explanation:  See Perl Best Practices page(s) '
-                    . join( ', ', @{ $violation->{_explanation} } ) . "\n\n";
+                $violation_pretty .= '    Explanation:  See Perl Best Practices page(s) ' . join( ', ', @{ $violation->{_explanation} } ) . "\n\n";
             }
             else {
-                $violation_pretty .= '    Explanation:  '
-                    . $violation->{_explanation} . "\n\n";
+                $violation_pretty .= '    Explanation:  ' . $violation->{_explanation} . "\n\n";
             }
         }
         die "\n"
             . 'ERROR ECVPAPC02, RPERL PARSER, PERL CRITIC VIOLATION'
             . "\n"
-            . 'Failed Perl::Critic brutal review with the following message:'
+            . 'Failed Perl::Critic brutal review with the following information:'
             . "\n\n"
             . $violation_pretty;
     }
@@ -203,8 +215,10 @@ our void $rperl_grammar_error = sub {
     }
 
     my integer $line_number = $argument->{TOKENLINE};
+    my string $rperl_source__file_name = $argument->{rperl_source__file_name};
 
-#    die( "\nERROR ECVPARP00, RPERL PARSER, SYNTAX ERROR; have \$argument =\n" . Dumper($argument) . "\n" );
+#    die( "\n" . 'ERROR ECVPARP00, RPERL PARSER, SYNTAX ERROR; have $argument =' . "\n" . Dumper($argument) . "\n" );
+#    die( "\n" . 'ERROR ECVPARP00, RPERL PARSER, SYNTAX ERROR; have $argument->{rperl_source__file_name} = ' . $argument->{rperl_source__file_name} . "\n" );
 
     my $current_state_num        = $argument->{STACK}[-1][0];
     my $current_state            = $argument->{STATES}[$current_state_num];
@@ -224,14 +238,12 @@ our void $rperl_grammar_error = sub {
 
     die "\n"
         . 'ERROR ECVPARP00, RPERL PARSER, RPERL SYNTAX ERROR' . "\n"
-        . 'Failed RPerl grammar syntax check with the following message:'
+        . 'Failed RPerl grammar syntax check with the following information:'
         . "\n\n"
-        . '    Line Number:       '
-        . $line_number . "\n"
-        . '    Unexpected Token:  '
-        . $value . "\n"
-        . '    Expected Token(s): '
-        . $expected_tokens
+        . '    File Name:         ' . $rperl_source__file_name . "\n"
+        . '    Line Number:       ' . $line_number . "\n"
+        . '    Unexpected Token:  ' . $value . "\n"
+        . '    Expected Token(s): ' . $expected_tokens
         . $helpful_hint . "\n";
 };
 
@@ -242,6 +254,7 @@ our void $rperl_source__parse = sub {
     RPerl::verbose('PARSE PHASE 2:      Parse    RPerl syntax...       ');
 
     my object $eyapp_parser = RPerl::Grammar->new();
+    $eyapp_parser->{rperl_source__file_name} = $rperl_source__file_name;
     $eyapp_parser->YYSlurpFile($rperl_source__file_name);
     my object $rperl_ast = $eyapp_parser->YYParse(
         yydebug => 0x00,    # disable eyapp DBG DEBUGGING
