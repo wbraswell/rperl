@@ -1,4 +1,8 @@
 #!/usr/bin/perl
+
+# suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s)
+BEGIN { $ENV{RPERL_WARNINGS} = 0; }
+
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
@@ -9,9 +13,6 @@ our $VERSION = 0.006_010;
 ## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(RequireCheckingReturnValueOfEval)  # SYSTEM DEFAULT 4: allow eval() test code blocks
-
-# suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s)
-BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
 use RPerl::Test;
 use Test::More tests => 319;

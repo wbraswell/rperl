@@ -6,6 +6,7 @@ Add scientific notation and leading+ numeric tests
 Fix scoped types
 Add scoped type tests, including multiple-packages-per-file tests
 update RPerl::filter() to properly handle *.pl files
+Fix `rperl -nod`
 
 Remove all object* types?
 

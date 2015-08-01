@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  object' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  $sel' >>>
 
 # [[[ HEADER ]]]
 use RPerl;

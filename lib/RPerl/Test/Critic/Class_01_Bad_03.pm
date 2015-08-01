@@ -2,10 +2,10 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  use RPerl;
-package' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  use RPerl;' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 package RPerl::Test::Critic::Class_01_Bad_03;
 use strict;
 use warnings;

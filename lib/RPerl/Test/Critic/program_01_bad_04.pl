@@ -2,10 +2,10 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  use RPerl;
-use strict;' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  use RPerl;' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 use strict;
 use warnings;
 our $VERSION = 0.001_000;

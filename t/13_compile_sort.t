@@ -1,8 +1,9 @@
 #!/usr/bin/perl
 ## no critic qw(ProhibitExcessMainComplexity)  # SYSTEM SPECIAL 4: allow complex code outside subroutines, must be on line 1
 
-# suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s)
-# also suppress other warnings generated in this file due to partially-incomplete generator code
+# suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s),
+# also 'WARNING WCVCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package' due to RPerl/Test/*/*Bad*.pm & RPerl/Test/*/*bad*.pl,
+# also other warnings generated in this file due to partially-incomplete generator code,
 BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
 # [[[ HEADER ]]]

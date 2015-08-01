@@ -1,13 +1,13 @@
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVPAPC02' >>>
-# <<< PARSE_ERROR: 'Perl::Critic::Policy::Modules::RequireExplicitPackage' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  use' >>>
 
 # [[[ HEADER ]]]
 use RPerl::Test::Foo;
-use RPerl;
 package RPerl::Test::Include::Package_00_Bad_07;
 use strict;
 use warnings;
+use RPerl::AfterSubclass;
 our $VERSION = 0.001_000;
 
 # [[[ INCLUDES ]]]

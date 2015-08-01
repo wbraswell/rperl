@@ -5,6 +5,7 @@
 # <<< PARSE_ERROR: 'RequireUseStrict' >>>
 
 # [[[ HEADER ]]]
+use RPerl;
 us strict;
 use warnings;
 our $VERSION = 0.001_000;

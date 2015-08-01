@@ -1,14 +1,17 @@
 #!/usr/bin/perl
+
+# suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s),
+# also 'WARNING WCVCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package' due to RPerl/Test/*/*Bad*.pm & RPerl/Test/*/*bad*.pl
+BEGIN { $ENV{RPERL_WARNINGS} = 0; }
+
 use strict;
 use warnings;
+use RPerl::AfterSubclass;
 our $VERSION = 0.000_003;
 
 # START HERE: full test file template, not just this short baby test
 # START HERE: full test file template, not just this short baby test
 # START HERE: full test file template, not just this short baby test
-
-# suppress 'WEXRP00: Found multiple rperl executables'
-BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
 use Test::More tests => 3;
 

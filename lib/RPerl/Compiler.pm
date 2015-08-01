@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_200;
+our $VERSION = 0.005_210;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -61,12 +61,10 @@ our string_arrayref $find_dependencies = sub {
             $eval_retval = eval($eval_string);
 
 ##        	RPerl::diag('in Compiler::find_dependencies(), have POST-EVAL NON-DEP %INC = ' . Dumper(\%INC) . "\n");
+            # warn instead of dying on eval error here and below, in order to preserve proper parser errors instead of weird eval errors
+            # in RPerl/Test/*/*Bad*.pm and RPerl/Test/*/*bad*.pl
             if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne q{} ) ) {
-                die 'ERROR ECVCODE02, COMPILER, FIND DEPENDENCIES: Failed to eval-use package '
-                    . $first_package_name
-                    . '  ...  '
-                    . $EVAL_ERROR
-                    . ', dying' . "\n";
+                RPerl::warning('WARNING WCVCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package ' . $first_package_name . '  ...  ' . $EVAL_ERROR . "\n");
             }
         }
         if ( $file_line =~ /^\s*use\s+[\w:]+/xms ) {
@@ -87,7 +85,7 @@ our string_arrayref $find_dependencies = sub {
 
             if ( $file_line =~ /use\s+lib/ ) {
                 die
-                    q{ERROR ECVCODE03, COMPILER, FIND DEPENDENCIES: 'use lib...' not currently supported, please set @INC using the PERL5LIB environment variable, dying}
+                    q{ERROR ECVCODE02, COMPILER, FIND DEPENDENCIES: 'use lib...' not currently supported, please set @INC using the PERL5LIB environment variable, dying}
                     . "\n";
             }
 
@@ -99,12 +97,12 @@ our string_arrayref $find_dependencies = sub {
 
             #            RPerl::diag('in Compiler::find_dependencies(), have POST-EVAL DEP %INC = ' . Dumper(\%INC) . "\n");
             if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne q{} ) ) {
-                die 'ERROR ECVCODE02, COMPILER, FIND DEPENDENCIES: Failed to eval-use package ' . $file_line . '  ...  ' . $EVAL_ERROR . ', dying' . "\n";
+                RPerl::warning('WARNING WCVCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package ' . $file_line . '  ...  ' . $EVAL_ERROR . "\n");
             }
             $file_line =~ s/::/\//gxms;                                 # replace double-colon :: scope delineator with forward-slash / directory delineator
             $file_line .= '.pm';
             if ( not exists $INC{$file_line} ) {
-                die 'ERROR ECVCODE04, COMPILER, FIND DEPENDENCIES: After successful eval-use, still failed to find package file '
+                die 'ERROR ECVCODE03, COMPILER, FIND DEPENDENCIES: After successful eval-use, still failed to find package file '
                     . $file_line
                     . ' in %INC, dying' . "\n";
             }
@@ -125,7 +123,7 @@ our string_arrayref $find_dependencies = sub {
     }
 
     close $FILE_HANDLE
-        or die 'ECVCODE05, COMPILER, FIND DEPENDENCIES: Cannot close file ' . $file_name . ' after reading, ' . $OS_ERROR . ', dying' . "\n";
+        or die 'ECVCODE04, COMPILER, FIND DEPENDENCIES: Cannot close file ' . $file_name . ' after reading, ' . $OS_ERROR . ', dying' . "\n";
 
 #    RPerl::diag( 'in Compiler::find_dependencies(), returning $dependencies = ' . Dumper($dependencies) . "\n" );
     return $dependencies;

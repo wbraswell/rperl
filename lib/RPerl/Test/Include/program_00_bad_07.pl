@@ -3,7 +3,6 @@ use RPerl::Test::Foo;
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECVPAPC02' >>>
-# <<< PARSE_ERROR: 'Perl::Critic::Policy::Modules::RequireExplicitPackage' >>>
 # <<< PARSE_ERROR: 'Perl::Critic::Policy::Modules::RequireEndWithOne' >>>
 
 # [[[ HEADER ]]]

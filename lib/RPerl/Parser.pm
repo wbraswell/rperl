@@ -154,9 +154,9 @@ our void $rperl_source__criticize = sub {
 #    my object $rperl_source__critic = Perl::Critic->new( -exclude => ['RequireTidyCode'] -severity => 'brutal' );  # DEV NOTE: Perl::Critic's own docs-recommended syntax throws a violation
     my object $rperl_source__critic = Perl::Critic->new(
         # DEV NOTE: disable RequireTidyCode because Perl::Tidy is not perfect and may complain even if the code is tidy;
-        # disable PodSpelling because calling the external spellchecker can cause errors such as aspell's "No word lists can be found for the language FOO"
-        '-exclude'  => ['RequireTidyCode', 'PodSpelling'],
-#        '-exclude'  => ['RequireTidyCode'],
+        # disable PodSpelling because calling the external spellchecker can cause errors such as aspell's "No word lists can be found for the language FOO";
+        # disable RequireExplicitPackage because 'use RPerl;' comes before package name(s), and Grammar.eyp will catch any other violations
+        '-exclude'  => ['RequireTidyCode', 'PodSpelling', 'RequireExplicitPackage'],
         '-severity' => 'brutal'
     );
     my @rperl_source__critic_violations

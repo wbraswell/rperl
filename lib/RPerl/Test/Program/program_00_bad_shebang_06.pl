@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECVPAPC02' >>>
-# <<< PARSE_ERROR: 'RequireExplicitPackage' >>>
+# <<< PARSE_ERROR: 'RequireEndWithOne' >>>
 
 # [[[ HEADER ]]]
 use RPerl;

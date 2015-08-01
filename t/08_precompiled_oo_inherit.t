@@ -1,14 +1,17 @@
 #!/usr/bin/perl
+
+# suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s),
+# also 'WARNING WCVCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package' due to RPerl/Test/*/*Bad*.pm & RPerl/Test/*/*bad*.pl
+BEGIN { $ENV{RPERL_WARNINGS} = 0; }
+
 use strict;
 use warnings;
+use RPerl::AfterSubclass;
 our $VERSION = 0.003_030;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(RequireCheckingReturnValueOfEval)  ## SYSTEM DEFAULT 4: allow eval() test code blocks
-
-# suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s)
-BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
 use Test::More tests => 246;
 use Test::Exception;

@@ -20,7 +20,7 @@ our hashref $properties = {};
 # OO INHERITANCE TESTING
 our void::method $empty_method = sub {
     ( my object $self ) = @_;
-    2;
+    print 'Hello, world!' . "\n";
 };
 
 1;                  # end of class

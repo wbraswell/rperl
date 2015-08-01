@@ -5,10 +5,9 @@
 # <<< PARSE_ERROR: 'No such class integer' >>>
 
 # [[[ HEADER ]]]
-use RPerl;
+used RPerl;
 use strict;
 use warnings;
-used RPerl;
 our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]

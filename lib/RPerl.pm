@@ -43,7 +43,8 @@ FILTER { $_ = filter($_) };
 use rperlnamespaces;
 
 # DEV NOTE: causes circular (or other weird) dependencies, error "Subroutine import redefined...",
-# so we can't use RPerl::diag, RPerl types, or subroutines in this files
+# so we can't use RPerl::diag, RPerl types, or subroutines in this files;
+# UPDATE: and yet now it works (and in fact seems required) after further development, gotta love unpredictable high-magic code!  :-/
 use RPerl::AfterSubclass;
 
 use Module::ScanDeps;
