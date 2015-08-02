@@ -19,12 +19,12 @@ our hashref $properties = {};
 # [[[ OO METHODS & SUBROUTINES ]]]
 
 our void::method $inherited__Algorithm = sub {
-    ( my object $self, my string $person) = @_;
+    ( my RPerl::Algorithm $self, my string $person) = @_;
     RPerl::diag( 'in PERLOPS_PERLTYPES Algorithm->inherited__Algorithm(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FNORD' . "\n" );
 };
 
 #our void::method $inherited = sub {
-#    ( my object $self, my string $person) = @_;
+#    ( my RPerl::Algorithm $self, my string $person) = @_;
 #    RPerl::diag('in PERLOPS_PERLTYPES Algorithm->inherited(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', IS' . "\n");
 #};
 

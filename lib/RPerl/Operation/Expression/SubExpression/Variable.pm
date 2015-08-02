@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::SubExpression::Variable;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_020;
+our $VERSION = 0.002_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::SubExpression);
@@ -28,9 +28,11 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     }
     
     $self_class = ref $self;
-    if ($self_class eq 'Variable_171') {  # Variable -> VARIABLE_SYMBOL STAR-42
-        my string $symbol = $self->{children}->[0];
-        $rperl_source_group->{PMC} .= $symbol;
+    if ($self_class eq 'Variable_171') {
+        # Variable -> VariableSymbolOrSelf VariableRetrieval*
+        my string $symbol_or_self = $self->{children}->[0];
+        $rperl_source_group->{PMC} .= $symbol_or_self->{children}->[0];
+
         foreach my object $variable_retrieval (@{$self->{children}->[1]->{children}}) {
             my string_hashref $rperl_source_subgroup = $variable_retrieval->ast_to_rperl__generate($modes);
             RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup ); 

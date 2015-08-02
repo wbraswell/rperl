@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine::Method::Arguments;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CodeBlock::Subroutine::Arguments);
@@ -28,14 +28,16 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     #    RPerl::diag( 'in Method::Arguments->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
+    # MethodArguments -> LPAREN_MY Type SELF (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;'
     my string $lparen_my               = $self->{children}->[0];
-    my string $object_self             = $self->{children}->[1];
-    my object $arguments_star          = $self->{children}->[2];
-    my string $rparen                  = $self->{children}->[3];
-    my string $equal                   = $self->{children}->[4];
-    my string $at_underscore_semicolon = $self->{children}->[5];
+    my object $self_type             = $self->{children}->[1];
+    my string $self_symbol             = $self->{children}->[2];
+    my object $arguments_star          = $self->{children}->[3];
+    my string $rparen                  = $self->{children}->[4];
+    my string $equal                   = $self->{children}->[5];
+    my string $at_underscore_semicolon = $self->{children}->[6];
 
-    $rperl_source_group->{PMC} .= $lparen_my . q{ } . $object_self;
+    $rperl_source_group->{PMC} .= $lparen_my . q{ } . $self_type->{children}->[0] . q{ } . $self_symbol;
 
     # (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)*
     my object $arguments_star_dclone = dclone($arguments_star);
