@@ -1,5 +1,5 @@
 # RPerl Install Notes
-# Last Updated July 25, 2015
+# Last Updated August 3, 2015
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # NOTE: STEP 1 IS ONLY FOR SINGLE-USER INSTALL, NOT SYSTEM-WIDE INSTALL
@@ -75,6 +75,8 @@ $ perlbrew use perl-5.20.2  # TEMPORARY, THIS SESSION ONLY
 $ perlbrew switch perl-5.20.2  # PERMANENT, FUTURE SESSIONS
 $ perlbrew off
 $ perlbrew install-cpanm
+$ perl -MExtUtils::MakeMaker\ 999  # v7.04 or greater required by Inline::C
+$ cpanm ExtUtils::MakeMaker  # cpanm single-user, due to perlbrew overriding cpan system-wide
 
 ################################################################################
 # STEP 1C.  ONLY FOR WINDOWS
