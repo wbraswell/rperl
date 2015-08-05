@@ -23,12 +23,8 @@ our $VERSION = 1.000_007;    # ONE POINT OH FULL RELEASE!!
 use parent qw();
 use IPC::Cmd;
 use English;
-
-# works on Perl >=v5.16, errors on Perl <=v5.14
-# Useless use of "re" pragma
-no warnings;
-use re;
-use warnings;
+#use re 'strict';  # doesn't work in all versions of Perl
+use re 'taint';  # hopefully doesn't actually do anything!
 
 # actually used in this file
 use Data::Dumper;
