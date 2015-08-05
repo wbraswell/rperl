@@ -11,7 +11,7 @@ push( @ExtUtils::MakeMaker::Overridable, qw(pm_to_blib) )
 WriteMakefile(
     NAME         => 'RPerl',
     ABSTRACT     => 'Restricted Perl, The Optimizing Perl 5 Compiler',
-    AUTHOR       => ['Will Braswell <wbraswell@cpan.org>'],
+    AUTHOR       => 'Will Braswell <wbraswell@cpan.org>',
     VERSION_FROM => 'lib/RPerl.pm',
     LICENSE      => 'perl_5',
     EXE_FILES    => ['script/rperl'],
