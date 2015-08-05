@@ -6,8 +6,8 @@ use warnings;
 # DEV NOTE, CORRELATION #16: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
 our $VERSION = 1.000_007;    # ONE POINT OH FULL RELEASE!!
 
-#our $VERSION = 20150730;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
-#our $VERSION = 2015.211;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
+#our $VERSION = 20150805;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
+#our $VERSION = 2015.217;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -21,9 +21,14 @@ our $VERSION = 1.000_007;    # ONE POINT OH FULL RELEASE!!
 # NEED FIX: pre-load all RPerl deps instead of only these?
 # force pre-loading so they make it into $inc_skip
 use parent qw();
-use re;
 use IPC::Cmd;
 use English;
+
+# works on Perl >=v5.16, errors on Perl <=v5.14
+# Useless use of "re" pragma
+no warnings;
+use re;
+use warnings;
 
 # actually used in this file
 use Data::Dumper;
