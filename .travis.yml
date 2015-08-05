@@ -35,9 +35,9 @@ install:
 
 before_script:
 # MODIFY FOLLOWING LINE TO ENABLE TEST_VERBOSE STDOUT DURING `make test`
-    - export RPERL_VERBOSE=1
+    - export RPERL_VERBOSE=0
 # UNCOMMENT FOLLOWING LINE TO ENABLE NOISY BUILD DURING `make test`; REQUIRES RPERL_VERBOSE=1 ABOVE
-    - export RPERL_DEBUG=1
+#    - export RPERL_DEBUG=1
 # UNCOMMENT FOLLOWING LINE FOR DEV VERSIONS OF MODULES, which travis can't get from Makefile.PL
 #  - cpanm -n INGY/Inline-C-0.62_03.tar.gz
 # DEV NOTE, CORRELATION #11: following line was not necessary until before_install & install sections added
@@ -46,12 +46,11 @@ before_script:
 # replace default build command "perl Makefile.PL && make test"
 # DEV NOTE: TEST_VERBOSE variable for ExtUtils::MakeMaker 'make' command disables suppression of stdout;
 # this variable is different than, and inherits the value of, the $RPERL_VERBOSE environmental variable 
-#script: perl Makefile.PL && make test TEST_VERBOSE=$RPERL_VERBOSE
+script: perl Makefile.PL && make test TEST_VERBOSE=$RPERL_VERBOSE
 
 
 # TEMP DEBUG
-#script: script/rperl lib/RPerl/Test/AlgorithmMath/geometric_algebra_ipbve_good_00.pl
-script: export PERL5LIB=blib:lib:$PERL5LIB && perl Makefile.PL && make && script/rperl lib/RPerl/Test/AlgorithmMath/geometric_algebra_ipbve_good_00.pl
+#script: export PERL5LIB=blib:lib:$PERL5LIB && perl Makefile.PL && make && script/rperl lib/RPerl/Test/AlgorithmMath/geometric_algebra_ipbve_good_00.pl
 
 
 # TEMP DISABLE
