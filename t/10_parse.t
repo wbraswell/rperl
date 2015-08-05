@@ -32,8 +32,8 @@ find(
 
         #        RPerl::diag('in 10_parse.t, have $file = ' . $file . "\n");
 
-        if ( $file !~ m/.*geometric_algebra_ipbve_good_00.*[.]p[ml]$/xms ) { # TEMP DEBUGGING, ONLY FIND geometric_algebra_ipbve_good_00*/*.pm & *.pl
-#        if ( ( $file !~ m/.pm$/xms ) and ( $file !~ m/.pl$/xms ) ) {
+#        if ( $file !~ m/.*geometric_algebra_ipbve_good_00.*[.]p[ml]$/xms ) { # TEMP DEBUGGING, ONLY FIND geometric_algebra_ipbve_good_00*/*.pm & *.pl
+        if ( ( $file !~ m/.pm$/xms ) and ( $file !~ m/.pl$/xms ) ) {
             return;
         }
 
@@ -66,7 +66,7 @@ plan tests => scalar keys %{$test_files};
 
 for my $test_file ( sort keys %{$test_files} ) {
 
-    RPerl::diag( 'in 10_parse.t, have $test_file = ' . $test_file . "\n" );
+    #    RPerl::diag( 'in 10_parse.t, have $test_file = ' . $test_file . "\n" );
 
     my $eval_return_value = eval {
         rperl_to_xsbinary__parse_generate_compile(
@@ -84,7 +84,7 @@ for my $test_file ( sort keys %{$test_files} ) {
         1;    # return true
     };
 
-    RPerl::diag( 'in 10_parse.t, have $eval_return_value = ' . $eval_return_value . "\n" );  # warning if undef retval
+    #    RPerl::diag( 'in 10_parse.t, have $eval_return_value = ' . $eval_return_value . "\n" );  # warning if undef retval
 
     if ( ( defined $eval_return_value ) and $eval_return_value ) {    # Perl eval return code defined & true, success
         if ( ( $test_file =~ m/Good/xms ) or ( $test_file =~ m/good/xms ) ) {
@@ -96,7 +96,7 @@ for my $test_file ( sort keys %{$test_files} ) {
     }
     else {                                                            # Perl eval return code undefined or false, error
 
-        RPerl::diag( 'in 10_parse.t, have $EVAL_ERROR = ' . $EVAL_ERROR . "\n" );
+        #        RPerl::diag( 'in 10_parse.t, have $EVAL_ERROR = ' . $EVAL_ERROR . "\n" );
         if ( ( $test_file =~ m/Bad/ms ) or ( $test_file =~ m/bad/ms ) ) {
             my $missing_errors = [];
             if ( defined $test_files->{$test_file}->{errors} ) {
