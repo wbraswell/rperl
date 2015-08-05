@@ -51,20 +51,21 @@ before_script:
 
 # TEMP DEBUG
 #script: script/rperl lib/RPerl/Test/AlgorithmMath/geometric_algebra_ipbve_good_00.pl
-script: EXPORT PERL5LIB=./blib:./lib:$PERL5LIB && perl Makefile.PL && make && script/rperl lib/RPerl/Test/AlgorithmMath/geometric_algebra_ipbve_good_00.pl
+script: export PERL5LIB=./blib:./lib:$PERL5LIB && perl Makefile.PL && make && script/rperl lib/RPerl/Test/AlgorithmMath/geometric_algebra_ipbve_good_00.pl
 
 
-notifications:
-  irc:
-    channels:
-      - "irc.perl.org#perl11"
-    on_success: always
-    on_failure: always
+# TEMP DISABLE
+#notifications:
+#  irc:
+#    channels:
+#      - "irc.perl.org#perl11"
+#    on_success: always
+#    on_failure: always
     # to enable skip_join, in IRC channel first execute `/mode -n`
-    skip_join: true
-    template:
-      - "RPerl build %{result}. %{author} says '%{commit_message}'"
-      - "%{build_url} %{compare_url}"
+#    skip_join: true
+#    template:
+#      - "RPerl build %{result}. %{author} says '%{commit_message}'"
+#      - "%{build_url} %{compare_url}"
 
     # DEFAULT TEMPLATE
 #      - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
