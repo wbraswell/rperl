@@ -80,7 +80,7 @@ our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = 
 
     $self             = $self->{children}->[0];     # unwrap Method_73 from MethodOrSubroutine_78
     my string $return_type = $self->{children}->[1];
-    substr $return_type, -7, 7, '';                      # remove leading 'method_'
+    substr $return_type, -8, 8, '';                      # remove trailing '::method'
     my string $name = $self->{children}->[2];
     substr $name, 0, 1, '';                              # remove leading $ sigil
     my object $arguments_optional = $self->{children}->[4];
@@ -122,7 +122,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my object $arguments_optional = $self->{children}->[4];
     my object $operations_star    = $self->{children}->[5];
 
-    $cpp_source_group->{CPP} .= (substr $return_type, 0, ((length $return_type) - 7)) . q{ } . $package_name_underscores . '::' . (substr $name, 1) . '(';
+    $cpp_source_group->{CPP} .= (substr $return_type, 0, ((length $return_type) - 8)) . q{ } . $package_name_underscores . '::' . (substr $name, 1) . '(';
 
     if ( exists $arguments_optional->{children}->[0] ) {
         $cpp_source_subgroup = $arguments_optional->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);

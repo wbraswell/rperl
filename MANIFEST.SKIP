@@ -60,6 +60,13 @@ swp$
 ^lib\/RPerl\/Algorithm\/Sort\/Bubble\.pmc$
 ^lib\/RPerl\/Algorithm\/Sort\/Bubble\.h$
 ^lib\/RPerl\/Algorithm\/Sort\/Bubble\.cpp$
+^lib\/RPerl\/Algorithm\/Math\.pmc$
+^lib\/RPerl\/Algorithm\/Math\.h$
+^lib\/RPerl\/Algorithm\/Math\.cpp$
+^lib\/RPerl\/Algorithm\/Math\/GeometricAlgebra\.pmc$
+^lib\/RPerl\/Algorithm\/Math\/GeometricAlgebra\.h$
+^lib\/RPerl\/Algorithm\/Math\/GeometricAlgebra\.cpp$
+^lib\/RPerl\/Test\/AlgorithmMath\/geometric_algebra_ipbve_good_00
 ^lib\/RPerl\/Test\/Fu\.pmc$
 ^lib\/RPerl\/Test\/Foo\.pmc$
 ^lib\/RPerl\/Test\/Foo\.h$

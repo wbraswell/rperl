@@ -94,7 +94,7 @@ $ cpanm ExtUtils::MakeMaker  # cpanm single-user, due to perlbrew overriding cpa
 # INSTALL RPERL & DEPENDENCIES, CPAN RELEASE VERSION, DO NOT MIX WITH 2B
 ################################################################################
 
-$ cpanm RPerl
+$ cpanm -v RPerl
 # OR
 $ cpan RPerl  # if cpanm is not installed
 

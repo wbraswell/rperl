@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Header;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_100;
+our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -22,19 +22,19 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $rperl_source_group = {};
 
-#    RPerl::diag('in Header->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n");
-#    RPerl::diag('in Header->ast_to_rperl__generate(), received $modes = ' . "\n" . Dumper($modes) . "\n");
-#    die 'tmp debug';
+    #    RPerl::diag('in Header->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n");
+    #    RPerl::diag('in Header->ast_to_rperl__generate(), received $modes = ' . "\n" . Dumper($modes) . "\n");
+    #    die 'tmp debug';
 
     #    my $class = ref $self;
     #    RPerl::diag('in Header->ast_to_rperl__generate(), have symtab entries for ' . $class . "\n" . RPerl::analyze_class_symtab_entries($class) . "\n");
 
     # ModuleHeader -> Critic? USE_RPERL? 'package' WordScoped ';' Header
-    my object $critic_optional   = $self->{children}->[0];
-    my string $use_rperl_optional         = $self->{children}->[1];                    # PERLOPS only
-    my string $package_keyword   = $self->{children}->[2];                    # PERLOPS only
-    my object $package_name      = $self->{children}->[3]->{children}->[0];
-    my string $package_semicolon = $self->{children}->[4];                    # PERLOPS only
+    my object $critic_optional    = $self->{children}->[0];
+    my string $use_rperl_optional = $self->{children}->[1];                    # PERLOPS only
+    my string $package_keyword    = $self->{children}->[2];                    # PERLOPS only
+    my object $package_name       = $self->{children}->[3]->{children}->[0];
+    my string $package_semicolon  = $self->{children}->[4];                    # PERLOPS only
 
     # Header -> 'use strict;' 'use warnings;' USE_RPERL_AFTER? 'our' VERSION_NUMBER_ASSIGN;
     my string $use_strict               = $self->{children}->[5]->{children}->[0];    # PERLOPS only
@@ -86,8 +86,8 @@ our string_hashref::method $ast_to_cpp__generate_begin__CPPOPS_CPPTYPES = sub {
 #my $class = ref $self;
 #RPerl::diag('in Header->ast_to_cpp__generate_begin__CPPOPS_CPPTYPES(), have symtab entries for ' . $class . "\n" . RPerl::analyze_class_symtab_entries($class) . "\n");
 
-    my object $package_name   = $self->{children}->[2]->{children}->[0];
-    my string $version_number = $self->{children}->[4]->{children}->[4];
+    my object $package_name   = $self->{children}->[3]->{children}->[0];
+    my string $version_number = $self->{children}->[5]->{children}->[4];
 
     $cpp_source_group->{H}   = q{};
     $cpp_source_group->{CPP} = q{};

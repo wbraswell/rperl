@@ -2,17 +2,23 @@ Eyapp unescaped left braces
 
 RELEASE Parse::Eyap vX.YZZY
 
-Add scientific notation and leading+ numeric tests
-Fix scoped types
+DONE identify filename-per-error in multi-file compiles
+DONE Fix scoped types
 Add scoped type tests, including multiple-packages-per-file tests
-update RPerl::filter() to properly handle *.pl files
-Fix `rperl -nod`
-
-Remove all object* types?
-
+Add scientific notation and leading+ numeric tests
+Remove all object* types
 alioth nbody
 
-identify filename-per-error in multi-file compiles
+RELEASE v1.0000XY
+
+gauge
+
+RELEASE v1.0000XY
+
+Fix `rperl -nod`
+update RPerl::filter() to properly handle *.pl files
+update INSTALL to use installed dirs, ~/perl5/lib/perl5 for local::lib
+check t/13_compile_sort.t for proper functionality
 
 Fix CPAN Testers Bugs
 

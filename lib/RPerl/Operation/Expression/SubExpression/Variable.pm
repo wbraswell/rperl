@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::SubExpression::Variable;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_100;
+our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::SubExpression);
@@ -30,8 +30,8 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     $self_class = ref $self;
     if ($self_class eq 'Variable_171') {
         # Variable -> VariableSymbolOrSelf VariableRetrieval*
-        my string $symbol_or_self = $self->{children}->[0];
-        $rperl_source_group->{PMC} .= $symbol_or_self->{children}->[0];
+        my string $symbol_or_self = $self->{children}->[0]->{children}->[0];
+        $rperl_source_group->{PMC} .= $symbol_or_self;
 
         foreach my object $variable_retrieval (@{$self->{children}->[1]->{children}}) {
             my string_hashref $rperl_source_subgroup = $variable_retrieval->ast_to_rperl__generate($modes);
@@ -73,16 +73,20 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     }
     
     $self_class = ref $self;
-    if ($self_class eq 'Variable_171') {  # Variable -> VARIABLE_SYMBOL STAR-42
-        my string $symbol = $self->{children}->[0];
-        substr $symbol, 0, 1, '';  # remove leading $ sigil
-        if ($symbol eq 'self') { 
+    if ($self_class eq 'Variable_171') {
+        # Variable -> VariableSymbolOrSelf VariableRetrieval*
+        my string $symbol_or_self = $self->{children}->[0]->{children}->[0];
+
+
+
+        substr $symbol_or_self, 0, 1, '';  # remove leading $ sigil
+        if ($symbol_or_self eq 'self') { 
             # Perl OO $self becomes C++ OO this
-            $symbol = 'this';
+            $symbol_or_self = 'this';
         }
-        $cpp_source_group->{CPP} = $symbol;
+        $cpp_source_group->{CPP} = $symbol_or_self;
         foreach my object $variable_retrieval (@{$self->{children}->[1]->{children}}) {
-            my string_hashref $cpp_source_subgroup = $variable_retrieval->ast_to_cpp__generate__CPPOPS_CPPTYPES($symbol, $modes);
+            my string_hashref $cpp_source_subgroup = $variable_retrieval->ast_to_cpp__generate__CPPOPS_CPPTYPES($symbol_or_self, $modes);
             RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup ); 
         }
     }
