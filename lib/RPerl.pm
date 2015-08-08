@@ -6,8 +6,8 @@ use warnings;
 # DEV NOTE, CORRELATION #16: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
 our $VERSION = 1.000_007;    # ONE POINT OH FULL RELEASE!!
 
-#our $VERSION = 20150805;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
-#our $VERSION = 2015.217;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
+#our $VERSION = 20150807;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
+#our $VERSION = 2015.219;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -102,9 +102,9 @@ sub filter {
     $inc_skip = { %{$inc_skip}, %{$INC_SCANNED} };
     $package = q{};
 
-    #    print {*STDERR} 'in RPerl::filter(), $rand_serial = ' . $rand_serial . ', have $INC_SCANNED = ' . Dumper( $INC_SCANNED ) . "\n";
-    #    print {*STDERR} 'in RPerl::filter(), have $inc_skip = ' . Dumper( $inc_skip ) . "\n";
-    #    print {*STDERR} 'in RPerl::filter(), have [sort keys %{$inc_skip}] = ' . Dumper( [ sort keys %{$inc_skip} ] ) . "\n";
+#    print {*STDERR} 'in RPerl::filter(), $rand_serial = ' . $rand_serial . ', have $INC_SCANNED = ' . Dumper( $INC_SCANNED ) . "\n";
+#    print {*STDERR} 'in RPerl::filter(), have $inc_skip = ' . Dumper( $inc_skip ) . "\n";
+#    print {*STDERR} 'in RPerl::filter(), have [sort keys %{$inc_skip}] = ' . Dumper( [ sort keys %{$inc_skip} ] ) . "\n";
 
     # ORIGINAL PURPOSE: generate $dependencies_rperl & $dependencies_nonsystem
     # NEW PURPOSE: recursively filter all non-skipped dependencies and sub-dependencies
@@ -122,8 +122,7 @@ sub filter {
 #            print {*STDERR} 'in RPerl::filter(), have $INC{$included_filename_short} = ' . $INC{$included_filename_short} . ' and [sort keys %{$dependencies}] = ' . Dumper( [ sort keys %{$dependencies} ] ) . "\n";
 
         }
-
-        #        else { print {*STDERR} 'in RPerl::filter(), SKIPPING system $included_filename_short = ' . $included_filename_short . "\n"; }
+#        else { print {*STDERR} 'in RPerl::filter(), SKIPPING system $included_filename_short = ' . $included_filename_short . "\n"; }
     }
 
     #    print {*STDERR} 'in RPerl::filter(), have %INC = ' . Dumper( \%INC ) . "\n";
@@ -143,7 +142,7 @@ sub filter {
             $package_line = $input_line;
             $package = $1;
             $post_package_lines = q{};
-            $output = '# [[[ HEADER, PART 1 ]]]' . "\n";
+            $output .= '# [[[ HEADER, PART 1 ]]]' . "\n";
             $output .= $input_line . "\n";
 
 #            print {*STDERR} 'in RPerl::filter(), found $package_line = ' . $package_line . "\n";
@@ -210,7 +209,7 @@ sub filter {
                 $input_line .= 'use RPerl::Config;' . "\n";
                 $input_line .= 'use RPerl::AfterSubclass;';
 
-                #                print 'in RPerl::filter(), have modified $input_line = ' . "\n" . $input_line . "\n";
+#               print {*STDERR} 'in RPerl::filter(), have modified $input_line = ' . "\n" . $input_line . "\n";
             }
 #            else { print {*STDERR} 'in RPerl::filter(), NOT enabling subclasses or RPerl::AfterSubclass for $package = ' . $package . "\n"; }
             $output .= $input_line . "\n";
