@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::Operator::Named;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_010;
+our $VERSION = 0.001_020;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::Operator);
@@ -17,14 +17,17 @@ use RPerl::Operation::Expression::Operator;
 our hashref $properties = {};
 
 # [[[ OO PROPERTIES, CLASS PROPERTY AKA PACKAGE VARIABLE ]]]
+# DEV NOTE, CORRELATION #20: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named/* also add in Grammar.eyp, Named.pm, and rperloperations.pm
 our string_hashref $NAMES = {
     'cos'    => 'RPerl::Operation::Expression::Operator::Named::Cosine',
+    'join'   => 'RPerl::Operation::Expression::Operator::Named::Join',
     'keys'   => 'RPerl::Operation::Expression::Operator::Named::Keys',
     'length' => 'RPerl::Operation::Expression::Operator::Named::Length',
     'pop'    => 'RPerl::Operation::Expression::Operator::Named::Pop',
     'push'   => 'RPerl::Operation::Expression::Operator::Named::Push',
     'sin'    => 'RPerl::Operation::Expression::Operator::Named::Sine',
     'sort'   => 'RPerl::Operation::Expression::Operator::Named::Sort',
+    'split'  => 'RPerl::Operation::Expression::Operator::Named::Split',
     'values' => 'RPerl::Operation::Expression::Operator::Named::Values'
 };
 
@@ -64,7 +67,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             . $operator_name
             . q{' found where }
             . ( join ', ', ( sort keys %{$NAMES} ) )
-            . ' expected, dying' . "\n";
+            . ' expected, operator may not be properly listed in $RPerl::Operation::Expression::Operator::Named::NAMES, dying' . "\n";
     }
     my string $operator_class  = $NAMES->{$operator_name};
     my object $operator_object = $operator_class->new();

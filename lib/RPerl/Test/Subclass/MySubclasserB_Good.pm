@@ -15,7 +15,10 @@ use RPerl::Test::Subclass::MySubclasserA_Good;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OO PROPERTIES ]]]
-our hashref $properties = { preschool => my string $TYPED_preschool = 'Eager Muskrat', kindergarten => my string $TYPED_kindergarten = 'Eagle Elementary' };
+our hashref $properties = {
+    preschool    => my string $TYPED_preschool    = 'Eager Muskrat',
+    kindergarten => my string $TYPED_kindergarten = 'Eagle Elementary'
+};
 
 # [[[ OO METHODS & SUBROUTINES ]]]
 
@@ -56,10 +59,8 @@ our RPerl::Test::Subclass::MySubclasserB_Good_arrayref $seesaw = sub {
 };
 
 our RPerl::Test::Subclass::MySubclasserB_Good_hashref $erector_set = sub {
-    my RPerl::Test::Subclass::MySubclasserA_Good_hashref $teachers = {
-        'launchpad' => RPerl::Test::Subclass::MySubclasserA_Good->new(),
-        'donald'    => RPerl::Test::Subclass::MySubclasserA_Good->new()
-    };
+    my RPerl::Test::Subclass::MySubclasserA_Good_hashref $teachers
+        = { 'launchpad' => RPerl::Test::Subclass::MySubclasserA_Good->new(), 'donald' => RPerl::Test::Subclass::MySubclasserA_Good->new() };
     my RPerl::Test::Subclass::MySubclasserB_Good_hashref $peers = { 'webbigail' => RPerl::Test::Subclass::MySubclasserB_Good->new() };
     return $peers;
 };

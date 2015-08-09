@@ -53,11 +53,9 @@ our RPerl::Test::Subclass::MySubclasserA_Good_arrayref $swings = sub {
 };
 
 our RPerl::Test::Subclass::MySubclasserA_Good_hashref $tinker_toys = sub {
-    my RPerl::Test::Subclass::MySubclasserA_Good_hashref $peers = {
-        'chip' => RPerl::Test::Subclass::MySubclasserA_Good->new(),
-        'dale' => RPerl::Test::Subclass::MySubclasserA_Good->new()
-    };
+    my RPerl::Test::Subclass::MySubclasserA_Good_hashref $peers
+        = { 'chip' => RPerl::Test::Subclass::MySubclasserA_Good->new(), 'dale' => RPerl::Test::Subclass::MySubclasserA_Good->new() };
     return $peers;
 };
 
-1;                     # end of class
+1;    # end of class

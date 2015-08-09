@@ -50,8 +50,8 @@ my RPerl::Test::Subclass::MySubclasserB_Good_arrayref $some_kids = tardies();
 print $some_kids->[1]->{preschool} . "\n";
 
 my RPerl::Test::Subclass::MySubclasserB_Good_hashref $more_kids = earlies();
-print( ( join ',', ( sort keys %{$more_kids} ) ) . "\n" );
-
+my string $more_kids_keys = ( join q{,}, ( sort keys %{$more_kids} ) );
+print $more_kids_keys . "\n";
 
 my RPerl::Test::Subclass::MySubclasserA_Good $new_kid = $some_kids->[0]->building_blocks();
 print $some_kids->[0]->{preschool} . "\n";
@@ -61,13 +61,15 @@ print $new_kid->{preschool} . "\n";
 
 my RPerl::Test::Subclass::MySubclasserA_Good_hashref $classmates = $friends->[1]->sand_box();
 print $friends->[1]->{preschool} . "\n";
-print( ( join ',', ( sort keys %{$classmates} ) ) . "\n" );
+my string $classmates_keys = ( join q{,}, ( sort keys %{$classmates} ) );
+print $classmates_keys . "\n";
 
 my RPerl::Test::Subclass::MySubclasserA_Good_arrayref $others = swings();
 print $others->[0]->{preschool} . "\n";
 
 my RPerl::Test::Subclass::MySubclasserA_Good_hashref $peers = tinker_toys();
-print( ( join ',', ( sort keys %{$peers} ) ) . "\n" );
+my string $peers_keys = ( join q{,}, ( sort keys %{$peers} ) );
+print $peers_keys . "\n";
 
 
 my RPerl::Test::Subclass::MySubclasserB_Good $another_new_kid = $some_kids->[0]->alphabet();
@@ -78,10 +80,12 @@ print $another_new_kid->{kindergarten} . "\n";
 
 my RPerl::Test::Subclass::MySubclasserB_Good_hashref $more_classmates = $more_friends->[1]->clay();
 print $more_friends->[1]->{kindergarten} . "\n";
-print( ( join ',', ( sort keys %{$more_classmates} ) ) . "\n" );
+my string $more_classmates_keys = ( join q{,}, ( sort keys %{$more_classmates} ) );
+print $more_classmates_keys . "\n";
 
 my RPerl::Test::Subclass::MySubclasserB_Good_arrayref $more_others = seesaw();
 print $more_others->[0]->{kindergarten} . "\n";
 
 my RPerl::Test::Subclass::MySubclasserB_Good_hashref $more_peers = erector_set();
-print( ( join ',', ( sort keys %{$more_peers} ) ) . "\n" );
+my string $more_peers_keys = ( join q{,}, ( sort keys %{$more_peers} ) );
+print $more_peers_keys . "\n";

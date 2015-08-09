@@ -21,6 +21,7 @@ update RPerl::filter() to properly handle *.pl files
 update INSTALL to use installed dirs, ~/perl5/lib/perl5 for local::lib
 check t/13_compile_sort.t for proper functionality
 fix 'x' string repeat operator vs 'x' string or bareword hash key
+create generator & tests for named ops: split, join, etc
 
 Fix CPAN Testers Bugs
 

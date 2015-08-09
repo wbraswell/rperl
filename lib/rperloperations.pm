@@ -3,7 +3,7 @@ package  # hide from PAUSE indexing
     rperloperations; ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 use strict;
 use warnings;
-our $VERSION = 0.001_010;
+our $VERSION = 0.001_020;
 use Carp;
 
 #use RPerl;
@@ -32,14 +32,17 @@ use RPerl::Operation::Expression::Operator::Math::IncrementDecrement;
 use RPerl::Operation::Expression::Operator::Math::MultiplyDivideModulo;
 use RPerl::Operation::Expression::Operator::Math::Negative;
 use RPerl::Operation::Expression::Operator::Math::Power;
+# DEV NOTE, CORRELATION #20: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named/* also add in Grammar.eyp, Named.pm, and rperloperations.pm
 use RPerl::Operation::Expression::Operator::Named;
 use RPerl::Operation::Expression::Operator::Named::Cosine;
 use RPerl::Operation::Expression::Operator::Named::Keys;
+use RPerl::Operation::Expression::Operator::Named::Join;
 use RPerl::Operation::Expression::Operator::Named::Length;
 use RPerl::Operation::Expression::Operator::Named::Pop;
 use RPerl::Operation::Expression::Operator::Named::Push;
 use RPerl::Operation::Expression::Operator::Named::Sine;
 use RPerl::Operation::Expression::Operator::Named::Sort;
+use RPerl::Operation::Expression::Operator::Named::Split;
 use RPerl::Operation::Expression::Operator::Named::Values;
 use RPerl::Operation::Expression::Operator::NamedUnary;
 use RPerl::Operation::Expression::Operator::NamedUnary::Scalar;
