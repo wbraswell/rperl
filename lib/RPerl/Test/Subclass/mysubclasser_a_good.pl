@@ -32,13 +32,10 @@ our RPerl::Test::Subclass::MySubclasserA_Good_arrayref $tardies = sub {
 };
 
 our RPerl::Test::Subclass::MySubclasserA_Good_hashref $earlies = sub {
-    my RPerl::Test::Subclass::MySubclasserA_Good_hashref $retval = {
-        'susie'  => RPerl::Test::Subclass::MySubclasserA_Good->new(),
-        'calvin' => RPerl::Test::Subclass::MySubclasserA_Good->new()
-    };
+    my RPerl::Test::Subclass::MySubclasserA_Good_hashref $retval
+        = { 'susie' => RPerl::Test::Subclass::MySubclasserA_Good->new(), 'calvin' => RPerl::Test::Subclass::MySubclasserA_Good->new() };
     return $retval;
 };
-
 # [[[ OPERATIONS ]]]
 my RPerl::Test::Subclass::MySubclasserA_Good_arrayref $some_kids = tardies();
 print $some_kids->[1]->{preschool} . "\n";

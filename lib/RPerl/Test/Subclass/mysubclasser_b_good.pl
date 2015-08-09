@@ -38,10 +38,8 @@ our RPerl::Test::Subclass::MySubclasserB_Good_arrayref $tardies = sub {
 };
 
 our RPerl::Test::Subclass::MySubclasserB_Good_hashref $earlies = sub {
-    my RPerl::Test::Subclass::MySubclasserB_Good_hashref $retval = {
-        'susie'  => RPerl::Test::Subclass::MySubclasserB_Good->new(),
-        'calvin' => RPerl::Test::Subclass::MySubclasserB_Good->new()
-    };
+    my RPerl::Test::Subclass::MySubclasserB_Good_hashref $retval
+        = { 'susie' => RPerl::Test::Subclass::MySubclasserB_Good->new(), 'calvin' => RPerl::Test::Subclass::MySubclasserB_Good->new() };
     return $retval;
 };
 
@@ -70,7 +68,6 @@ print $others->[0]->{preschool} . "\n";
 my RPerl::Test::Subclass::MySubclasserA_Good_hashref $peers = tinker_toys();
 my string $peers_keys = ( join q{,}, ( sort keys %{$peers} ) );
 print $peers_keys . "\n";
-
 
 my RPerl::Test::Subclass::MySubclasserB_Good $another_new_kid = $some_kids->[0]->alphabet();
 print $some_kids->[0]->{kindergarten} . "\n";
