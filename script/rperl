@@ -308,10 +308,10 @@ sub depends_parse_generate_save_subcompile_execute {
                 . $modes->{label}
                 . "\n\n" );
 
-        my string_arrayref $input_file_name_deps;
+        my string_arrayref $input_file_name_deps = [$input_file_name];
         my integer $input_file_and_deps_count;
-        my integer $input_file_deps_count;
-        my hashref_arrayref $output_file_name_dep_groups;
+        my integer $input_file_deps_count = 0;
+        my hashref_arrayref $output_file_name_dep_groups = [$output_file_name_group];
 
         if ( $modes->{dependencies} eq 'ON' ) {
             $input_file_name_deps = find_dependencies($input_file_name);

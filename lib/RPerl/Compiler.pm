@@ -285,8 +285,8 @@ our hashref_arrayref $generate_output_file_names = sub {
 our void $save_source_files = sub {
     ( my string_hashref $source_group, my string_hashref $file_name_group, my string_hashref $modes ) = @_;
 
-    #    RPerl::diag( q{in Compiler::save_source_files(), received $source_group =} . "\n" . Dumper($source_group) . "\n" );
-    #    RPerl::diag( q{in Compiler::save_source_files(), received $file_name_group =} . "\n" . Dumper($file_name_group) . "\n" );
+#    RPerl::diag( q{in Compiler::save_source_files(), received $source_group =} . "\n" . Dumper($source_group) . "\n" );
+#    RPerl::diag( q{in Compiler::save_source_files(), received $file_name_group =} . "\n" . Dumper($file_name_group) . "\n" );
 
     foreach my string $suffix_key ( sort keys %{$source_group} ) {
         if (   ( not exists $file_name_group->{$suffix_key} )

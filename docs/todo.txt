@@ -4,7 +4,9 @@ RELEASE Parse::Eyap vX.YZZY
 
 DONE identify filename-per-error in multi-file compiles
 DONE Implement automatic subclasses
-Add automatic subclass tests, including multiple-packages-per-file tests
+DONE Add automatic subclass tests, including multiple-packages-per-file tests
+DONE Fix `rperl -nod`
+Fix `rperl -d` w/ subclasses
 alioth nbody
 
 RELEASE v1.0000XY
@@ -16,7 +18,6 @@ RELEASE v1.0000XY
 Remove all object* types
 Add scientific notation and leading+ numeric tests
 Fix ::number_to_string() in MyTest.pm
-Fix `rperl -nod`
 update RPerl::filter() to properly handle *.pl files
 update INSTALL to use installed dirs, ~/perl5/lib/perl5 for local::lib
 check t/13_compile_sort.t for proper functionality
