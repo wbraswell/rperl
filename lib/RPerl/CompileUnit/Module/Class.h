@@ -1,8 +1,8 @@
 // [[[ HEADER ]]]
 using std::cout;  using std::cerr;
 
-#ifndef __CPP__INCLUDED__RPerl__CompileUnit__Module__Class_h
-#define __CPP__INCLUDED__RPerl__CompileUnit__Module__Class_h 0.001_000
+#ifndef __CPP__INCLUDED__RPerl__CompileUnit__Module__Class__CPP_h
+#define __CPP__INCLUDED__RPerl__CompileUnit__Module__Class__CPP_h 0.001_000
 
 // [[[ INCLUDES ]]]
 // BASE CLASS DOES NOT INCLUDE RPerl.cpp OR HelperFunctions.cpp
@@ -17,7 +17,7 @@ using std::cout;  using std::cerr;
 
 // [[[ OO INHERITANCE ]]]
 // BASE CLASS HAS NO INHERITANCE
-class RPerl__CompileUnit__Module__Class
+class RPerl__CompileUnit__Module__Class__CPP
 {
 public:
 // [[[ OO METHODS ]]]
@@ -25,8 +25,8 @@ public:
     // BASE CLASS HAS NO PROPERTIES
 
     // <<< CONSTRUCTOR & DESTRUCTOR >>>
-    RPerl__CompileUnit__Module__Class() {}
-    ~RPerl__CompileUnit__Module__Class() {}
+    RPerl__CompileUnit__Module__Class__CPP() {}
+    ~RPerl__CompileUnit__Module__Class__CPP() {}
 
     // <<< CLASS NAME REPORTER >>>
     virtual SV* myclassname() { return newSVpv("RPerl::CompileUnit::Module::Class", 0); }
@@ -39,7 +39,7 @@ public:
 // [[[ SUBROUTINES ]]]
 
 // DEV NOTE: this is inherited by all RPerl C++ classes, which allows us to call C++ classname(object) as generated from RPerl class($object)
-SV* classname(RPerl__CompileUnit__Module__Class* my_object) { return my_object->myclassname(); }
+SV* classname(RPerl__CompileUnit__Module__Class__CPP* my_object) { return my_object->myclassname(); }
 
 // [[[<<< END PERL TYPES >>>]]]
 // [[[<<< END PERL TYPES >>>]]]
@@ -53,7 +53,7 @@ SV* classname(RPerl__CompileUnit__Module__Class* my_object) { return my_object->
 
 // [[[ OO INHERITANCE ]]]
 // BASE CLASS HAS NO INHERITANCE
-class RPerl__CompileUnit__Module__Class
+class RPerl__CompileUnit__Module__Class__CPP
 {
 public:
 // [[[ OO METHODS ]]]
@@ -61,8 +61,8 @@ public:
     // BASE CLASS HAS NO PROPERTIES
 
     // <<< CONSTRUCTOR & DESTRUCTOR >>>
-    RPerl__CompileUnit__Module__Class() {}
-    ~RPerl__CompileUnit__Module__Class() {}
+    RPerl__CompileUnit__Module__Class__CPP() {}
+    ~RPerl__CompileUnit__Module__Class__CPP() {}
 
     // <<< CLASS NAME REPORTER >>>
     virtual string myclassname() { return (const string) "RPerl::CompileUnit::Module::Class"; }
@@ -75,7 +75,7 @@ public:
 // [[[ SUBROUTINES ]]]
 
 // DEV NOTE: this is inherited by all RPerl C++ classes, which allows us to call C++ classname(object) as generated from RPerl class($object)
-string classname(RPerl__CompileUnit__Module__Class* my_object) { return my_object->myclassname(); }
+string classname(RPerl__CompileUnit__Module__Class__CPP* my_object) { return my_object->myclassname(); }
 
 // [[[<<< END CPP TYPES >>>]]]
 // [[[<<< END CPP TYPES >>>]]]

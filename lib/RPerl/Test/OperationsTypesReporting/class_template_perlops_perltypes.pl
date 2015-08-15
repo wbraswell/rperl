@@ -22,6 +22,6 @@ use RPerl::CompileUnit::Module::Class::Template;
 
 #print '%main:: = ', "\n", Dumper( \%main:: ), "\n";
 
-print 'MODE_ID = ', RPerl__CompileUnit__Module__Class__Template__MODE_ID(), "\n";
-print q{ops = '}, $RPerl::MODES->{RPerl__CompileUnit__Module__Class__Template__MODE_ID()}->{ops}, q{'}, "\n";
-print q{types = '}, $RPerl::MODES->{RPerl__CompileUnit__Module__Class__Template__MODE_ID()}->{types}, q{'}, "\n";
+print 'MODE_ID = ', RPerl__CompileUnit__Module__Class__CPP__Template__MODE_ID(), "\n";
+print q{ops = '}, $RPerl::MODES->{RPerl__CompileUnit__Module__Class__CPP__Template__MODE_ID()}->{ops}, q{'}, "\n";
+print q{types = '}, $RPerl::MODES->{RPerl__CompileUnit__Module__Class__CPP__Template__MODE_ID()}->{types}, q{'}, "\n";

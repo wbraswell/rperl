@@ -6,7 +6,6 @@ DONE identify filename-per-error in multi-file compiles
 DONE Implement automatic subclasses
 DONE Add automatic subclass tests, including multiple-packages-per-file tests
 DONE Fix `rperl -nod`
-Fix `rperl -d` w/ subclasses
 alioth nbody
 
 RELEASE v1.0000XY
@@ -15,6 +14,10 @@ gauge
 
 RELEASE v1.0000XY
 
+file bug, I::CPP comments
+file bug, I::CPP std::array
+file bug, I::CPP new() clobber
+Fix `rperl -d` w/ subclasses??? (maybe fix itself after DUMMY code removed?)
 Remove all object* types
 Add scientific notation and leading+ numeric tests
 Fix ::number_to_string() in MyTest.pm

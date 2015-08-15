@@ -1,8 +1,8 @@
 // [[[ HEADER ]]]
 using std::cout;  using std::cerr;
 
-#ifndef __CPP__INCLUDED__RPerl__CompileUnit__Module__Class_cpp
-#define __CPP__INCLUDED__RPerl__CompileUnit__Module__Class_cpp 0.001_000
+#ifndef __CPP__INCLUDED__RPerl__CompileUnit__Module__Class__CPP_cpp
+#define __CPP__INCLUDED__RPerl__CompileUnit__Module__Class__CPP_cpp 0.001_000
 
 // [[[ INCLUDES ]]]
 // BASE CLASS DOES NOT INCLUDE RPerl.cpp OR HelperFunctions.cpp

@@ -19,7 +19,7 @@ Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.
 // [[[<<< BEGIN CPP TYPES >>>]]]
 
 // [[[ OO INHERITANCE ]]]
-class RPerl__Algorithm : public RPerl__CompileUnit__Module__Class {
+class RPerl__Algorithm : public RPerl__CompileUnit__Module__Class__CPP {
 public:
 // [[[ OO METHODS ]]]
     void inherited__Algorithm(string person);
