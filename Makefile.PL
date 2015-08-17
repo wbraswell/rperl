@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-our $VERSION = 0.001_250;
+our $VERSION = 0.001_260;
 use ExtUtils::MakeMaker;
 
 BEGIN { use English; }
@@ -9,14 +9,14 @@ push( @ExtUtils::MakeMaker::Overridable, qw(pm_to_blib) )
     if ( $OSNAME eq 'MSWin32' );
 
 WriteMakefile(
-    NAME         => 'RPerl',
-    ABSTRACT     => 'Restricted Perl, The Optimizing Perl 5 Compiler',
-    AUTHOR       => 'Will Braswell <wbraswell@cpan.org>',
-    VERSION_FROM => 'lib/RPerl.pm',
-    LICENSE      => 'perl_5',
-    EXE_FILES    => ['script/rperl'],
-    MIN_PERL_VERSION => '5.10.0',  # NEED ANSWER: is RPerl truly incompatible with Perl v5.8 and earlier?
-    PREREQ_PM    => {
+    NAME             => 'RPerl',
+    ABSTRACT         => 'Restricted Perl, The Optimizing Perl 5 Compiler',
+    AUTHOR           => 'Will Braswell <wbraswell@cpan.org>',
+    VERSION_FROM     => 'lib/RPerl.pm',
+    LICENSE          => 'perl_5',
+    EXE_FILES        => ['script/rperl'],
+    MIN_PERL_VERSION => '5.10.0',                                            # NEED ANSWER: is RPerl truly incompatible with Perl v5.8 and earlier?
+    PREREQ_PM        => {
         'ExtUtils::MakeMaker' => 7.04,        # for compatibility with Inline::C >= v0.75
         'CPAN::Meta'          => 2.150005,    # RPerl system developers only, used for generating CPAN metadata from this file during dist build
         'Test::Exception'     => 0.32,
@@ -33,8 +33,9 @@ WriteMakefile(
         'Module::Refresh'     => 0.17,
         'Filter::Simple'      => 0.91,
         'Module::ScanDeps'    => 1.19,
+        'Time::HiRes'         => 1.9726,
     },
-    META_MERGE       => {
+    META_MERGE => {
         'meta-spec' => {
             version => 2,
             url     => 'https://metacpan.org/pod/CPAN::Meta::Spec'
@@ -42,16 +43,18 @@ WriteMakefile(
 
         # NEED FIX: no_index is a temporary solution to the CPAN indexing and data type package naming issue
         # mst says we need to set data type package names without using 'package FOO;' like how Lexical::Types works
-        no_index       => { 
+        no_index => {
+
             # DEV NOTE: the following 12 package namespaces are already controlled by some other PAUSE owner on CPAN,
             # their indexing is double-disabled in that they are both listed here and also given newlines-in-package-declarations
             package => [ 'array', 'bool', 'char', 'float', 'hash', 'integer', 'method', 'number', 'object', 'ref', 'string', 'unknown' ],
+
             # DEV NOTE: disable indexing of all test package namespaces
-            namespace => [ 'RPerl::Test' ],
+            namespace => ['RPerl::Test'],
         },
         release_status => 'stable',
-        keywords    => [qw(rperl perl5 optimizing compiler optimize compile)],
-        description => 'RPerl is the optimizing compiler for the Perl 5 programming language.  '
+        keywords       => [qw(rperl perl5 optimizing compiler optimize compile)],
+        description    => 'RPerl is the optimizing compiler for the Perl 5 programming language.  '
             . 'RPerl compiles slow low-magic Perl 5 code into fast binary code, which can optionally be mixed back into high-magic Perl apps.',
         resources => {
             license    => ['http://dev.perl.org/licenses/'],

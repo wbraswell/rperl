@@ -68,7 +68,7 @@ $ source ~/.bashrc; set | grep PERL
     # Ensure the following 3 environmental variables are updated to include ~/perl5: 
     # PERLBREW_MANPATH, PERLBREW_PATH, PERLBREW_ROOT
 $ perlbrew init
-$ perlbrew mirror  # Arlington, TX #222 http://mirror.uta.edu/CPAN/
+$ perlbrew mirror  # Arlington, TX  http://mirror.uta.edu/CPAN/
 
 $ perlbrew install perl-5.20.2
 $ perlbrew use perl-5.20.2  # TEMPORARY, THIS SESSION ONLY
