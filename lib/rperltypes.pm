@@ -23,7 +23,7 @@ our $VERSION = 0.002_040;
 use File::Copy qw(copy);
 use Scalar::Util qw(blessed);
 
-# DEV NOTE, CORRELATION #08: can't use Exporter here
+# DEV NOTE, CORRELATION #rp08: can't use Exporter here
 #use Exporter 'import';
 #our @EXPORT = qw(type types ETC);
 
@@ -75,7 +75,7 @@ our string_arrayref $SUPPORTED = [
         )
 ];
 
-# DEV NOTE, CORRELATION #08: export to_string(), class(), type() and types() to main:: namespace;
+# DEV NOTE, CORRELATION #rp08: export to_string(), class(), type() and types() to main:: namespace;
 # can't achieve via Exporter due to circular dependency issue caused by Exporter in Config.pm and solved by 'require rperltypes;' in RPerl.pm
 package main;
 use RPerl::Config;

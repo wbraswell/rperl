@@ -26,7 +26,7 @@ require RPerl::Config;
 #BEGIN { use Data::Dumper; print 'in RPerl::AfterSubclass, have @INC = ' . "\n" . Dumper(\@INC) . "\n"; }
 
 #no magic;  # require data types, full declarations, other non-magic
-# DEV NOTE, CORRELATION #08: circular dependency causes "subroutine FOO redefined" errors, solved by replacing use with require below
+# DEV NOTE, CORRELATION #rp08: circular dependency causes "subroutine FOO redefined" errors, solved by replacing use with require below
 #use rperltypes;
 require rperltypes;
 #require rperloperations;

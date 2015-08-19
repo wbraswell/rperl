@@ -36,7 +36,7 @@ void integer_CHECKTRACE(SV* possible_integer, const char* variable_name, const c
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 
-// DEV NOTE, CORRELATION #10: the pack/unpack subs (below) are called by *_to_string_CPPTYPES(), moved outside #ifdef blocks
+// DEV NOTE, CORRELATION #rp10: the pack/unpack subs (below) are called by *_to_string_CPPTYPES(), moved outside #ifdef blocks
 //# ifdef __CPP__TYPES
 
 // convert from (Perl SV containing integer) to (C integer)
@@ -90,16 +90,16 @@ SV* integer_to_string(SV* input_integer)
 
 # elif defined __CPP__TYPES
 
-// DEV NOTE, CORRELATION #10: shim CPPTYPES sub
+// DEV NOTE, CORRELATION #rp10: shim CPPTYPES sub
 string integer_to_string(integer input_integer) {
     return(integer_to_string_CPPTYPES(input_integer));
 }
 
 # endif
 
-// DEV NOTE, CORRELATION #09: must use return type 'string' instead of 'std::string' for proper typemap pack/unpack function name alignment;
+// DEV NOTE, CORRELATION #rp09: must use return type 'string' instead of 'std::string' for proper typemap pack/unpack function name alignment;
 // can cause silent failure, falling back to __PERL__TYPES implementation and NOT failure of tests!
-// DEV NOTE, CORRELATION #10: the real CPPTYPES sub (below) is called by the wrapper PERLTYPES sub and shim CPPTYPES subs (above), moved outside #ifdef blocks
+// DEV NOTE, CORRELATION #rp10: the real CPPTYPES sub (below) is called by the wrapper PERLTYPES sub and shim CPPTYPES subs (above), moved outside #ifdef blocks
 string integer_to_string_CPPTYPES(integer input_integer)
 {
 //    fprintf(stderr, "in CPPOPS_CPPTYPES integer_to_string_CPPTYPES(), top of subroutine, received unformatted input_integer = %d\n", input_integer);

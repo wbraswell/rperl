@@ -1,6 +1,6 @@
 Eyapp unescaped left braces
 
-RELEASE Parse::Eyap vX.YZZY
+RELEASE Parse::Eyapp vX.YZZY
 
 DONE identify filename-per-error in multi-file compiles
 DONE Implement automatic subclasses
@@ -8,12 +8,13 @@ DONE Add automatic subclass tests, including multiple-packages-per-file tests
 DONE Fix `rperl -nod`
 alioth nbody
 
-RELEASE v1.0000XY
+RELEASE v1.1
 
 gauge
 
 RELEASE v1.0000XY
 
+alioth nbody, optimize graphics speed
 file bug, I::CPP comments
 file bug, I::CPP std::array
 file bug, I::CPP new() clobber
@@ -37,8 +38,6 @@ compile Foo.pm
 update tests
 basic user docs
 website total
-
-RELEASE v1.0000XY
 
 fix RPerl/Test/ScopeTypeNameValue/program_5*_good.pl.DISABLED_PERL_V5_22
 fix RPerl/Test/Expression/program_*_good.pl.DISABLED_NEED_FIX

@@ -3,7 +3,7 @@ package RPerl;
 use strict;
 use warnings;
 
-# DEV NOTE, CORRELATION #16: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
+# DEV NOTE, CORRELATION #rp16: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
 our $VERSION = 1.000_007;    # ONE POINT OH FULL RELEASE!!
 
 #our $VERSION = 20150807;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
@@ -83,7 +83,7 @@ sub filter {
                 or ( exists $rperlnamespaces_generated::RPERL->{$namespace_root} ) )
             )
         {
-            # DEV NOTE, CORRELATION #19: need remove hard-coded allowance of RPerl::Test namespace, at least move to rperlnamespaces.pm or friends
+            # DEV NOTE, CORRELATION #rp19: need remove hard-coded allowance of RPerl::Test namespace, at least move to rperlnamespaces.pm or friends
             if ( $namespace_root eq 'RPerl::' ) {
 #                $package = filename_short_to_package_guess($included_filename_short);
 #                if ( $package !~ /^RPerl::Test/xms ) {
@@ -161,7 +161,7 @@ sub filter {
 #            print {*STDERR} 'in RPerl::filter(), have $rperlnamespaces_generated::RPERL_DEPS->{' . $namespace_root . '} = ' . Dumper($rperlnamespaces_generated::RPERL_DEPS->{$namespace_root}) . "\n";
 #            print {*STDERR} 'in RPerl::filter(), have $rperlnamespaces_generated::RPERL->{' . $namespace_root . '} = ' . Dumper($rperlnamespaces_generated::RPERL->{$namespace_root}) . "\n";
 
-            # DEV NOTE, CORRELATION #19: need remove hard-coded allowance of RPerl::Test namespace, at least move to rperlnamespaces.pm or friends
+            # DEV NOTE, CORRELATION #rp19: need remove hard-coded allowance of RPerl::Test namespace, at least move to rperlnamespaces.pm or friends
             if (    ($package =~ /RPerl::Test/xms)
                 or ( ( not exists $rperlnamespaces_generated::CORE->{$namespace_root} )
                 and ( not exists $rperlnamespaces_generated::RPERL_DEPS->{$namespace_root} )

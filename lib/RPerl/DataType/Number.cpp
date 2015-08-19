@@ -36,7 +36,7 @@ void number_CHECKTRACE(SV* possible_number, const char* variable_name, const cha
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 
-// DEV NOTE, CORRELATION #10: the pack/unpack subs (below) are called by *_to_string_CPPTYPES(), moved outside #ifdef blocks
+// DEV NOTE, CORRELATION #rp10: the pack/unpack subs (below) are called by *_to_string_CPPTYPES(), moved outside #ifdef blocks
 //# ifdef __CPP__TYPES
 
 // convert from (Perl SV containing number) to (C number)
@@ -75,7 +75,7 @@ void XS_pack_number(SV* output_sv, number input_number) {
 
 # ifdef __PERL__TYPES
 
-// DEV NOTE, CORRELATION #10: wrapper PERLTYPES sub
+// DEV NOTE, CORRELATION #rp10: wrapper PERLTYPES sub
 SV* number_to_string(SV* input_number)
 {
 //	number_CHECK(input_number);
@@ -100,16 +100,16 @@ SV* number_to_string(SV* input_number)
 
 # elif defined __CPP__TYPES
 
-// DEV NOTE, CORRELATION #10: shim CPPTYPES sub
+// DEV NOTE, CORRELATION #rp10: shim CPPTYPES sub
 string number_to_string(number input_number) {
     return(number_to_string_CPPTYPES(input_number));
 }
 
 # endif
 
-// DEV NOTE, CORRELATION #09: must use return type 'string' instead of 'std::string' for proper typemap pack/unpack function name alignment;
+// DEV NOTE, CORRELATION #rp09: must use return type 'string' instead of 'std::string' for proper typemap pack/unpack function name alignment;
 // can cause silent failure, falling back to __PERL__TYPES implementation and NOT failure of tests!
-// DEV NOTE, CORRELATION #10: the real CPPTYPES sub (below) is called by the wrapper PERLTYPES sub and shim CPPTYPES subs (above), moved outside #ifdef blocks
+// DEV NOTE, CORRELATION #rp10: the real CPPTYPES sub (below) is called by the wrapper PERLTYPES sub and shim CPPTYPES subs (above), moved outside #ifdef blocks
 string number_to_string_CPPTYPES(number input_number)
 {
 //fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), top of subroutine, received unformatted input_number = %Lf\n", input_number);

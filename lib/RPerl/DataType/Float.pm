@@ -6,7 +6,7 @@ use RPerl::AfterSubclass;
 our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
-# DEV NOTE, CORRELATION #07:
+# DEV NOTE, CORRELATION #rp07:
 # NEED FIX, OUTDATED
 # Float should have it's own functionality and compile to float C/C++ type for memory optimization, not just be a sub-type of Number
 use parent qw(RPerl::DataType::Number);

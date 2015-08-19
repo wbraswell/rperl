@@ -7,7 +7,7 @@ using std::cout;  using std::cerr;  using std::to_string;
 #include <RPerl/DataStructure/Array.h>		// -> NULL (relies on <vector> being included via Inline::CPP's AUTO_INCLUDE config option)
 
 /*
- * NEED FIX, CORRELATION #02: bug, possibly in Inline, causing inability to declare 3rd count_FOO argument to T_PACKEDARRAY;
+ * NEED FIX, CORRELATION #rp02: bug, possibly in Inline, causing inability to declare 3rd count_FOO argument to T_PACKEDARRAY;
  * temporarily fixed by changing typemap to set char** to T_PACKED;
  * may need Inline to add declaration of count_FOO to PREINIT section of auto-generated XS code
  *

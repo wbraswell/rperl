@@ -251,7 +251,7 @@ INIT {
 #                    RPerl::diag(q{in Class.pm INIT block, have $use_rperl, enabling package in $module_filename_short = } . $module_filename_short . "\n");
 
 # ops/types reporting subroutine
-# DEV NOTE, CORRELATION #18: RPerl::DataStructure::Array & Hash can not 'use RPerl;' so they are skipped in the header-checking loop above, their *__MODE_ID() subroutines are not created below
+# DEV NOTE, CORRELATION #rp18: RPerl::DataStructure::Array & Hash can not 'use RPerl;' so they are skipped in the header-checking loop above, their *__MODE_ID() subroutines are not created below
                     $package_name_underscores = $package_name;
                     $package_name_underscores =~ s/::/__/g;
                     if ( not eval( 'defined &main::' . $package_name_underscores . '__MODE_ID' ) ) {
@@ -268,7 +268,7 @@ INIT {
                     foreach my $object_property_name ( sort keys %{$object_properties} ) {
 
                         #						RPerl::diag("in Class.pm INIT block, have \$object_property_name = '$object_property_name'\n");
-                        # DEV NOTE, CORRELATION #03: avoid re-defining class accessor/mutator methods; so far only triggered by RPerl::CodeBlock::Subroutine
+                        # DEV NOTE, CORRELATION #rp03: avoid re-defining class accessor/mutator methods; so far only triggered by RPerl::CodeBlock::Subroutine
                         # because it has a special BEGIN{} block with multiple package names including it's own package name
                         if ( not eval( 'defined &' . $package_name . '::get_' . $object_property_name ) ) {
 

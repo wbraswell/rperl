@@ -3,7 +3,7 @@
 # .gitignore is not auto-generated, do not exclude self
 
 # [ Inline Build ]
-# NEED UPDATE, CORRELATION #05: list of _Inline directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
+# NEED UPDATE, CORRELATION #rp05: list of _Inline directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
 /_Inline/
 /lib/_Inline/
 /lib/RPerl/Algorithm/Sort/_Inline/
@@ -21,7 +21,7 @@
 /lib/RPerl/CompileUnit/_Inline
 
 # [ CPAN Build & Distribution ]
-# NEED UPDATE, CORRELATION #06: list of CPAN files & directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
+# NEED UPDATE, CORRELATION #rp06: list of CPAN files & directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
 # MANIFEST.SKIP is not auto-generated, do not exclude
 /MANIFEST
 /MANIFEST.bak
@@ -40,7 +40,7 @@
 /out
 
 # [ RPerl Compile ]
-# NEED UPDATE, CORRELATION #13: list of RPerl build files & directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
+# NEED UPDATE, CORRELATION #rp13: list of RPerl build files & directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
 /lib/RPerl/Algorithm.pmc
 /lib/RPerl/Algorithm.h
 /lib/RPerl/Algorithm.cpp

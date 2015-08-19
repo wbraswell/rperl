@@ -32,7 +32,7 @@ use RPerl::Operation::Expression::Operator::Math::IncrementDecrement;
 use RPerl::Operation::Expression::Operator::Math::MultiplyDivideModulo;
 use RPerl::Operation::Expression::Operator::Math::Negative;
 use RPerl::Operation::Expression::Operator::Math::Power;
-# DEV NOTE, CORRELATION #20: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named/* also add in Grammar.eyp, Named.pm, and rperloperations.pm
+# DEV NOTE, CORRELATION #rp20: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named/* also add in Grammar.eyp, Named.pm, and rperloperations.pm
 use RPerl::Operation::Expression::Operator::Named;
 use RPerl::Operation::Expression::Operator::Named::Cosine;
 use RPerl::Operation::Expression::Operator::Named::Keys;

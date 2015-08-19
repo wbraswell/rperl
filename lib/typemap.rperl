@@ -1,5 +1,5 @@
 # VERSION 0.002_001
-# NEED FIX, CORRELATION #02: bug, possibly in Inline, causing inability to declare 3rd count_FOO argument to T_PACKEDARRAY; temporarily solved here
+# NEED FIX, CORRELATION #rp02: bug, possibly in Inline, causing inability to declare 3rd count_FOO argument to T_PACKEDARRAY; temporarily solved here
 # DEV NOTE: all comments must be on their own line or typemapping will silently fail and typemapped subroutines will fail to bind from Inline to Perl
 
 # SCALAR TYPES

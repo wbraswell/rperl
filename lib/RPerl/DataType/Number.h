@@ -8,8 +8,8 @@ using std::cout;  using std::cerr;
 typedef double number;
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
-// DEV NOTE, CORRELATION #12: basic data types must be wholly independent of one another, to avoid weird redefining or undefining of subroutine errors [INCORRECT???]
-// DEV NOTE, CORRELATION #09: must use return type 'string' instead of 'std::string' for proper typemap pack/unpack function name alignment;
+// DEV NOTE, CORRELATION #rp12: basic data types must be wholly independent of one another, to avoid weird redefining or undefining of subroutine errors [INCORRECT???]
+// DEV NOTE, CORRELATION #rp09: must use return type 'string' instead of 'std::string' for proper typemap pack/unpack function name alignment;
 // can cause silent failure, falling back to __PERL__TYPES implementation and NOT failure of tests!
 // include String and Integer here for 'string' and 'integer' types used in number_to_string_CPPTYPES()
 #include <RPerl/DataType/Integer.cpp>  // integer types used in *MODE_ID() subroutines
@@ -44,7 +44,7 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 # endif
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
-// DEV NOTE, CORRELATION #10: the pack/unpack subs (below) are called by *_to_string_CPPTYPES(), moved outside #ifdef blocks
+// DEV NOTE, CORRELATION #rp10: the pack/unpack subs (below) are called by *_to_string_CPPTYPES(), moved outside #ifdef blocks
 //# ifdef __CPP__TYPES
 number XS_unpack_number(SV* input_sv);
 void XS_pack_number(SV* output_sv, number input_number);

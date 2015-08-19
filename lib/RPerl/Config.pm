@@ -26,7 +26,7 @@ use Carp;
 use English qw(-no_match_vars);
 use Exporter 'import';
 
-# DEV NOTE, CORRELATION #08: can't include to_string(), type(), types(), name(), or scope_type_name_value() in @EXPORT here or in RPerl:: namespace below
+# DEV NOTE, CORRELATION #rp08: can't include to_string(), type(), types(), name(), or scope_type_name_value() in @EXPORT here or in RPerl:: namespace below
 our @EXPORT = qw(Dumper carp croak confess $OS_ERROR $EVAL_ERROR $CHILD_ERROR $EXECUTABLE_NAME $PROGRAM_NAME $OSNAME);
 
 1;                              # end of package
@@ -45,7 +45,7 @@ use Carp;
 use English qw(-no_match_vars);
 use Exporter 'import';
 
-# DEV NOTE, CORRELATION #08: can't include to_string(), type(), types(), name(), or scope_type_name_value() in @EXPORT here or in RPerl:: namespace below
+# DEV NOTE, CORRELATION #rp08: can't include to_string(), type(), types(), name(), or scope_type_name_value() in @EXPORT here or in RPerl:: namespace below
 our @EXPORT = qw(Dumper carp croak confess $OS_ERROR $EVAL_ERROR $CHILD_ERROR $EXECUTABLE_NAME $PROGRAM_NAME $OSNAME);
 
 1;                              # end of package
@@ -106,7 +106,7 @@ sub diag {
 
 #    print {*STDERR} 'in diag(), have $ENV{RPERL_DEBUG} = ' . $ENV{RPERL_DEBUG} . "\n";
 
-    # DEV NOTE, CORRELATION #17: default to off; if either variable is set to true, then do emit messages
+    # DEV NOTE, CORRELATION #rp17: default to off; if either variable is set to true, then do emit messages
     if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) { print {*STDERR} $message; }
 
     #    if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) { print {*STDERR} "\e[1;31m $message \e[0m"; }  # print in red
@@ -127,7 +127,7 @@ sub diag_pause {
 sub verbose {
     ( my $message ) = @_;
 
-    # DEV NOTE, CORRELATION #17: default to off; if either variable is set to true, then do emit messages
+    # DEV NOTE, CORRELATION #rp17: default to off; if either variable is set to true, then do emit messages
     if ( $ENV{RPERL_VERBOSE} or $RPerl::VERBOSE ) {
         print {*STDOUT} $message;
     }

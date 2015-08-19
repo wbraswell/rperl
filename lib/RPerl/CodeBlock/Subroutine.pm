@@ -22,7 +22,7 @@ BEGIN {
     use warnings;
     1;
 
-    # DEV NOTE, CORRELATION #03: method types reside in Subroutine.pm, which is a sub-type of Subroutine.pm, causing the need to have this special BEGIN block
+    # DEV NOTE, CORRELATION #rp03: method types reside in Subroutine.pm, which is a sub-type of Subroutine.pm, causing the need to have this special BEGIN block
     # to enable the *::method types, and Class.pm's INIT block symbol table entry generator needs us to switch back into the primary package so we have
     # that happen in the following line, which furthermore triggers the need to avoid re-defining class accessor/mutator methods; how to fix?
         package RPerl::CodeBlock::Subroutine;

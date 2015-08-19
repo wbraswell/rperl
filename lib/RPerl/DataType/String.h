@@ -5,12 +5,12 @@ using std::cout;  using std::cerr;
 #define __CPP__INCLUDED__RPerl__DataType__String_h 0.004_000
 
 // [[[ TYPEDEFS ]]]
-// must be above Integer.cpp include, as Integer.cpp uses string type for it's own integer_to_string() subroutines [NO LONGER OVERRIDDEN BY DEV NOTE CORRELATION #12 BELOW???]
+// must be above Integer.cpp include, as Integer.cpp uses string type for it's own integer_to_string() subroutines [NO LONGER OVERRIDDEN BY DEV NOTE CORRELATION #rp12 BELOW???]
 typedef std::string string;
 typedef std::ostringstream ostringstream;
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
-// DEV NOTE, CORRELATION #12: basic data types must be wholly independent of one another, to avoid weird redefining or undefining of subroutine errors [INCORRECT???]
+// DEV NOTE, CORRELATION #rp12: basic data types must be wholly independent of one another, to avoid weird redefining or undefining of subroutine errors [INCORRECT???]
 #include <RPerl/DataType/Integer.cpp>  // integer types used in *MODE_ID() subroutines
 
 // [[[ TYPE-CHECKING MACROS ]]]
@@ -42,7 +42,7 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 # endif
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
-// DEV NOTE, CORRELATION #10: the pack/unpack subs (below) are called by number_to_string_CPPTYPES(), moved outside #ifdef blocks
+// DEV NOTE, CORRELATION #rp10: the pack/unpack subs (below) are called by number_to_string_CPPTYPES(), moved outside #ifdef blocks
 //# ifdef __CPP__TYPES
 string XS_unpack_string(SV* input_sv);
 void XS_pack_string(SV* output_sv, string input_string);

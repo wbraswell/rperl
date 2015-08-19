@@ -28,7 +28,7 @@ SV* uninherited__Inefficient(SV* person) {
     return newSVpv("Inefficient::uninherited__Inefficient() RULES! CPPOPS_PERLTYPES", 0);
 }
 
-// DEV NOTE, CORRELATION #04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
+// DEV NOTE, CORRELATION #rp04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
 //SV* uninherited(SV* person) {
 //    cout << "in CPPOPS_PERLTYPES Inefficient::uninherited(), received $person = " << SvPV_nolen(person) << ", TRICKS" << "\n";
 //    return newSVpv("Inefficient::uninherited() RULES! CPPOPS_PERLTYPES", 0);
@@ -59,7 +59,7 @@ string uninherited__Inefficient(string person) {
     return (const string) "Inefficient::uninherited__Inefficient() RULES! CPPOPS_CPPTYPES";
 }
 
-// DEV NOTE, CORRELATION #04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
+// DEV NOTE, CORRELATION #rp04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
 //string uninherited(string person) {
 //    RPerl::diag((const string) "in CPPOPS_CPPTYPES Inefficient::uninherited(), received $person = " + person + (const string) ", TRICKS" + (const string) "\n");
 //    return (const string) "Inefficient::uninherited() ROCKS! CPPOPS_CPPTYPES";

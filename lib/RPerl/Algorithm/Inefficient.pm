@@ -46,7 +46,7 @@ our string $uninherited__Inefficient = sub {
     return 'Inefficient::uninherited__Inefficient() RULES! PERLOPS_PERLTYPES';
 };
 
-# DEV NOTE, CORRELATION #04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
+# DEV NOTE, CORRELATION #rp04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
 #our string $uninherited = sub {
 #    ( my string $person) = @_;
 #    RPerl::diag('in PERLOPS_PERLTYPES Inefficient::uninherited(), received $person = ' . $person . ', TRICKS' . "\n");
