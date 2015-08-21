@@ -5,7 +5,7 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.002_040;
+our $VERSION = 0.002_050;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
@@ -24,6 +24,7 @@ use File::Copy qw(copy);
 use Scalar::Util qw(blessed);
 
 # DEV NOTE, CORRELATION #rp08: can't use Exporter here
+# [[[ EXPORTS ]]]
 #use Exporter 'import';
 #our @EXPORT = qw(type types ETC);
 
@@ -46,6 +47,7 @@ use RPerl::DataStructure::Array;
 use RPerl::DataStructure::Array::Reference;
 use RPerl::DataStructure::Hash::Reference;
 use RPerl::DataStructure::Hash::Reference;
+use RPerl::DataStructure::SSENumberPair;
 
 #use RPerl::DataStructure::LinkedList;
 #use RPerl::DataStructure::LinkedList::Node;

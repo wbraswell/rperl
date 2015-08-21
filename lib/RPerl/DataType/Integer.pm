@@ -3,7 +3,7 @@ package RPerl::DataType::Integer;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_000;
+our $VERSION = 0.005_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -18,6 +18,18 @@ use RPerl::DataType::Scalar;
 # an integer is a whole number, it has no floating-pointeger (fractional/decimal) component
 package  # hide from PAUSE indexing
     integer;
+use strict;
+use warnings;
+use parent qw(RPerl::DataType::Integer);
+
+package  # hide from PAUSE indexing
+    constant_integer;
+use strict;
+use warnings;
+use parent qw(RPerl::DataType::Integer);
+
+package  # hide from PAUSE indexing
+    constant_unsigned_integer;
 use strict;
 use warnings;
 use parent qw(RPerl::DataType::Integer);

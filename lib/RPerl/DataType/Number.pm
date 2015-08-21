@@ -29,6 +29,12 @@ use strict;
 use warnings;
 use parent qw(RPerl::DataType::Number);
 
+package  # hide from PAUSE indexing
+    constant_number;
+use strict;
+use warnings;
+use parent qw(RPerl::DataType::Number);
+
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataType::Number;
 use strict;

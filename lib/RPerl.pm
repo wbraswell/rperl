@@ -227,6 +227,11 @@ sub filter {
 
     # package but not a class
     $output .= $post_package_lines;
+    
+    # replace fake SSE infix operators with their actually-overloaded single-character selves
+    foreach my $sse_define_pair (['sse_add', '+'], ['sse_sub', '-'], ['sse_mul', '*'], ['sse_div', '/']) {
+        $output =~ s/$sse_define_pair->[0]/$sse_define_pair->[1]/gxms;
+    }
 
 #    print {*STDERR} "\n" . 'in RPerl::filter(), have post-modification $output = ' . "\n" . '<<<<<<<<<<<<<<<<================ BEGIN OUTPUT FILE ================>>>>>>>>>>>>>>' . "\n" . $output . '<<<<<<<<<<<<<<<<================ END OUTPUT FILE ================>>>>>>>>>>>>>>' . "\n\n";
 
