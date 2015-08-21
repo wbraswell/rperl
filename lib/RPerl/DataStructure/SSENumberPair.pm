@@ -1,9 +1,9 @@
 # [[[ HEADER ]]]
-use RPerl;
-
+#use RPerl;
 package RPerl::DataStructure::SSENumberPair;
 use strict;
 use warnings;
+use RPerl::AfterSubclass;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
@@ -43,12 +43,6 @@ package RPerl::DataStructure::SSENumberPair;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-
-#INIT {
-#    package number;
-#    package bool;
-#    package string;
-#}
 
 # [[[ OPERATOR OVERLOADING ]]]
 
