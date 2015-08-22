@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::VariableModification;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_010;
+our $VERSION = 0.002_200;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement);
@@ -24,53 +24,53 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     my string_hashref $rperl_source_subgroup;
     my string $self_class = ref $self;
 
-#    RPerl::diag( 'in VariableModification->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+    #    RPerl::diag( 'in VariableModification->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-# unwrap VariableModification_178, and VariableModification_179 from Statement_152
-    if ( $self_class eq 'Statement_152' ) { # Statement -> VariableModification
-        $self = $self->{children}->[0];
+    # yes semicolon for Statement_154, no semicolon for SubExpressionOrVarMod_146, VariableModification_182, and VariableModification_183
+    my string $semicolon = q{};
+
+    if ( $self_class eq 'SubExpressionOrVarMod_146' ) {    # SubExpressionOrVarMod -> VariableModification
+        # unwrap VariableModification_182 and VariableModification_183 from SubExpressionOrVarMod_146
+        $self       = $self->{children}->[0];
+        $self_class = ref $self;
+    }
+    elsif ( $self_class eq 'Statement_154' ) {    # Statement -> VariableModification ';'
+        # unwrap VariableModification_182 and VariableModification_183 from Statement_154; grab semicolon
+        $semicolon  = $self->{children}->[1];
+        $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if ( $self_class eq 'VariableModification_178' ) { # VariableModification -> Variable OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';'
+    if ( $self_class eq 'VariableModification_182' ) {    # VariableModification -> Variable OP19_VARIABLE_ASSIGN SubExpressionOrStdin
         my object $variable               = $self->{children}->[0];
         my string $assign                 = $self->{children}->[1];
         my object $subexpression_or_stdin = $self->{children}->[2];
-        my string $semicolon              = $self->{children}->[3];
 
         $rperl_source_subgroup = $variable->ast_to_rperl__generate($modes);
-        RPerl::Generator::source_group_append( $rperl_source_group,
-            $rperl_source_subgroup );
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= q{ } . $assign . q{ };
-        $rperl_source_subgroup
-            = $subexpression_or_stdin->ast_to_rperl__generate($modes);
-        RPerl::Generator::source_group_append( $rperl_source_group,
-            $rperl_source_subgroup );
-        $rperl_source_group->{PMC} .= $semicolon . "\n";
+        $rperl_source_subgroup = $subexpression_or_stdin->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
-    elsif ( $self_class eq 'VariableModification_179' ) { # VariableModification -> Variable OP19_VARIABLE_ASSIGN_BY SubExpression ';'
+    elsif ( $self_class eq 'VariableModification_183' ) {    # VariableModification -> Variable OP19_VARIABLE_ASSIGN_BY SubExpression
         my object $variable      = $self->{children}->[0];
         my string $assign_by     = $self->{children}->[1];
         my object $subexpression = $self->{children}->[2];
-        my string $semicolon     = $self->{children}->[3];
 
         $rperl_source_subgroup = $variable->ast_to_rperl__generate($modes);
-        RPerl::Generator::source_group_append( $rperl_source_group,
-            $rperl_source_subgroup );
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= q{ } . $assign_by . q{ };
-        $rperl_source_subgroup
-            = $subexpression->ast_to_rperl__generate($modes);
-        RPerl::Generator::source_group_append( $rperl_source_group,
-            $rperl_source_subgroup );
-        $rperl_source_group->{PMC} .= $semicolon . "\n";
+        $rperl_source_subgroup = $subexpression->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
     else {
-        die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where VariableModification_178 or VariableModification_179 expected, dying'
-        ) . "\n";
+                . ' found where SubExpressionOrVarMod_146, Statement_154, VariableModification_182, or VariableModification_183 expected, dying' )
+            . "\n";
     }
+
+    $rperl_source_group->{PMC} .= $semicolon . "\n";
 
 #    RPerl::diag( 'in VariableModification->ast_to_rperl__generate(), returning $rperl_source_group = ' . "\n" . RPerl::Parser::rperl_ast__dump($rperl_source_group) . "\n" );
     return $rperl_source_group;
@@ -78,11 +78,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
 our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $cpp_source_group
-        = {
-        CPP => q{// <<< RP::O::S::VM __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
-            . "\n"
-        };
+    my string_hashref $cpp_source_group = { CPP => q{// <<< RP::O::S::VM __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>} . "\n" };
 
     #...
     return $cpp_source_group;
@@ -96,51 +92,51 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
 #    RPerl::diag( 'in VariableModification->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-# unwrap VariableModification_178, and VariableModification_179 from Statement_152
-    if ( $self_class eq 'Statement_152' ) { # Statement -> VariableModification
-        $self = $self->{children}->[0];
+    # yes semicolon for Statement_154, no semicolon for SubExpressionOrVarMod_146, VariableModification_182, and VariableModification_183
+    my string $semicolon = q{};
+
+    if ( $self_class eq 'SubExpressionOrVarMod_146' ) {    # SubExpressionOrVarMod -> VariableModification
+        # unwrap VariableModification_182 and VariableModification_183 from SubExpressionOrVarMod_146
+        $self       = $self->{children}->[0];
+        $self_class = ref $self;
+    }
+    elsif ( $self_class eq 'Statement_154' ) {    # Statement -> VariableModification ';'
+        # unwrap VariableModification_182 and VariableModification_183 from Statement_154; grab semicolon
+        $semicolon  = $self->{children}->[1];
+        $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if ( $self_class eq 'VariableModification_178' ) { # VariableModification -> Variable OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';'
+    if ( $self_class eq 'VariableModification_182' ) {    # VariableModification -> Variable OP19_VARIABLE_ASSIGN SubExpressionOrStdin
         my object $variable               = $self->{children}->[0];
         my string $assign                 = $self->{children}->[1];
         my object $subexpression_or_stdin = $self->{children}->[2];
-        my string $semicolon              = $self->{children}->[3];
 
         $cpp_source_subgroup = $variable->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
-        RPerl::Generator::source_group_append( $cpp_source_group,
-            $cpp_source_subgroup );
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
         $cpp_source_group->{CPP} .= q{ } . $assign . q{ };
-        $cpp_source_subgroup
-            = $subexpression_or_stdin->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
-        RPerl::Generator::source_group_append( $cpp_source_group,
-            $cpp_source_subgroup );
-        $cpp_source_group->{CPP} .= $semicolon . "\n";
+        $cpp_source_subgroup = $subexpression_or_stdin->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
-    elsif ( $self_class eq 'VariableModification_179' ) { # VariableModification -> Variable OP19_VARIABLE_ASSIGN_BY SubExpression ';'
+    elsif ( $self_class eq 'VariableModification_183' ) {    # VariableModification -> Variable OP19_VARIABLE_ASSIGN_BY SubExpression
         my object $variable      = $self->{children}->[0];
         my string $assign_by     = $self->{children}->[1];
         my object $subexpression = $self->{children}->[2];
-        my string $semicolon     = $self->{children}->[3];
 
         $cpp_source_subgroup = $variable->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
-        RPerl::Generator::source_group_append( $cpp_source_group,
-            $cpp_source_subgroup );
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
         $cpp_source_group->{CPP} .= q{ } . $assign_by . q{ };
-        $cpp_source_subgroup
-            = $subexpression->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
-        RPerl::Generator::source_group_append( $cpp_source_group,
-            $cpp_source_subgroup );
-        $cpp_source_group->{CPP} .= $semicolon . "\n";
+        $cpp_source_subgroup = $subexpression->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
     else {
-        die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where VariableModification_178 or VariableModification_179 expected, dying'
-        ) . "\n";
+                . ' found where SubExpressionOrVarMod_146, Statement_154, VariableModification_182, or VariableModification_183 expected, dying' )
+            . "\n";
     }
+
+    $cpp_source_group->{CPP} .= $semicolon . "\n";
 
 #    RPerl::diag( 'in VariableModification->ast_to_cpp__generate__CPPOPS_CPPTYPES(), returning $cpp_source_group = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_group) . "\n" );
     return $cpp_source_group;

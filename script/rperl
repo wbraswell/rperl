@@ -590,7 +590,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 =item B<--test _OR_ -t>
 
  Test mode: Perl ops, Perl types, Parse & Generate (no Save or Compile)
- Disabled by default, equivalent to '--mode ops=PERL --mode types=PERL --compile=GENERATE' options.
+ Disabled by default, equivalent to '--mode ops=PERL --mode types=PERL --mode compile=GENERATE' options.
  
 =back
 

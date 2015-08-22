@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::SubExpression;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_010;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression);
@@ -25,14 +25,15 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in SubExpression->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     if (   ( ref $self eq 'SubExpressionOrStdin_143' )
-        or ( ref $self eq 'ListElement_186' ) )
+        or ( ref $self eq 'SubExpressionOrVarMod_145' )
+        or ( ref $self eq 'ListElement_190' ) )
     {
         my string_hashref $rperl_source_subgroup
             = $self->{children}->[0]->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
     }
-    elsif ( ref $self eq 'ListElement_187' ) {
+    elsif ( ref $self eq 'ListElement_191' ) {
         my object $type_inner    = $self->{children}->[0];
         my string $type_inner_my = $type_inner->{children}->[0];
         my string $type_inner_type
@@ -57,7 +58,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $self )
-                . ' found where SubExpressionOrStdin_143, ListElement_186, or ListElement_187 expected, dying'
+                . ' found where SubExpressionOrStdin_143, SubExpressionOrVarMod_145, ListElement_190, or ListElement_191 expected, dying'
         ) . "\n";
     }
 
@@ -79,7 +80,8 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #    RPerl::diag( 'in SubExpression->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     if (   ( ref $self eq 'SubExpressionOrStdin_143' )
-        or ( ref $self eq 'ListElement_186' ) )
+        or ( ref $self eq 'SubExpressionOrVarMod_145' )
+        or ( ref $self eq 'ListElement_190' ) )
     {
         my string_hashref $cpp_source_subgroup
             = $self->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
@@ -87,7 +89,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         RPerl::Generator::source_group_append( $cpp_source_group,
             $cpp_source_subgroup );
     }
-    elsif ( ref $self eq 'ListElement_187' ) {
+    elsif ( ref $self eq 'ListElement_191' ) {
         $cpp_source_group = { CPP => q{// <<< RP::O::E::SE __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>} . "\n" };
 
 
@@ -119,7 +121,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . ( ref $self )
-                . ' found where SubExpressionOrStdin_143, ListElement_186, or ListElement_187 expected, dying'
+                . ' found where SubExpressionOrStdin_143, SubExpressionOrVarMod_145, ListElement_190, or ListElement_191 expected, dying'
         ) . "\n";
     }
 

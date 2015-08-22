@@ -23,8 +23,8 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     my string $self_class = ref $self;
 
     if (( $self_class eq 'SubExpression_136' )    # SubExpression -> Literal
-        or ( $self_class eq 'VariableOrLiteral_220' ) # VariableOrLiteral -> Literal
-        or ( $self_class eq 'VariableOrLiteralOrWord_222' ) # VariableOrLiteralOrWord -> Literal
+        or ( $self_class eq 'VariableOrLiteral_224' ) # VariableOrLiteral -> Literal
+        or ( $self_class eq 'VariableOrLiteralOrWord_226' ) # VariableOrLiteralOrWord -> Literal
         )
     {
         my object $number_or_string = $self->{children}->[0];
@@ -34,7 +34,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where SubExpression_136, VariableOrLiteral_220, or VariableOrLiteralOrWord_222 expected, dying'
+                . ' found where SubExpression_136, VariableOrLiteral_224, or VariableOrLiteralOrWord_226 expected, dying'
         ) . "\n"; 
     }
 
@@ -61,8 +61,8 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my string $self_class = ref $self;
 
     if (( $self_class eq 'SubExpression_136' )    # SubExpression -> Literal
-        or ( $self_class eq 'VariableOrLiteral_220' ) # VariableOrLiteral -> Literal
-        or ( $self_class eq 'VariableOrLiteralOrWord_222' ) # VariableOrLiteralOrWord -> Literal
+        or ( $self_class eq 'VariableOrLiteral_224' ) # VariableOrLiteral -> Literal
+        or ( $self_class eq 'VariableOrLiteralOrWord_226' ) # VariableOrLiteralOrWord -> Literal
         )
     {
         my object $number_or_string = $self->{children}->[0];
@@ -72,7 +72,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where SubExpression_136, VariableOrLiteral_220, or VariableOrLiteralOrWord_222 expected, dying'
+                . ' found where SubExpression_136, VariableOrLiteral_224, or VariableOrLiteralOrWord_226 expected, dying'
         ) . "\n"; 
     }
 
