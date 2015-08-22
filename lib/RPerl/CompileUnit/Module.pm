@@ -99,8 +99,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             else {
                 $header_started = 1;
                 $cpp_source_subgroup = $header_or_module->ast_to_cpp__generate_begin__CPPOPS_CPPTYPES($modes);
-                $package_name_underscores = $cpp_source_subgroup->{package_name_underscores};
-                delete $cpp_source_subgroup->{package_name_underscores};
+                $package_name_underscores = $cpp_source_subgroup->{_package_name_underscores};
                 RPerl::Generator::source_group_append($cpp_source_group, $cpp_source_subgroup);
                 $cpp_source_subgroup_saved = $header_or_module->ast_to_cpp__generate_end__CPPOPS_CPPTYPES($modes);
             }

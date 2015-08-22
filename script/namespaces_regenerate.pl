@@ -29,12 +29,15 @@ my $namespaces_core = rperlnamespaces::hash();
 # NEED FIX: remove hard-coded list of packages
 # DEV NOTE, CORRELATION #rp03: some RPerl packages are missed due to BEGIN{} or INIT{} blocks, etc.
 my $namespaces_rperl_missed = { 
+    # DEV NOTE, CORRELATION #rp21: remove hard-coded fake 'rperl::' namespace?
+    'rperl::' => 1,
     'rperlnames::' => 1,
     'rperlnamespaces::' => 1,
     'rperlnamespaces_generated::' => 1,
     'rperltypes::' => 1,
     'rperloperations::' => 1,
     'rperlrules::' => 1,
+    'rperlsse::' => 1,
 };
 
 # NEED FIX: remove hard-coded list of packages
@@ -65,6 +68,7 @@ my $namespaces_rperl_deps = {
     'Filter::'       => 1,
     'FindBin::'      => 1,
     'Getopt::'      => 1,
+    'HTML::' => 1,
     'I18N::'         => 1,
     'Inline::'       => 1,
     'IPC::'          => 1,
@@ -84,6 +88,7 @@ my $namespaces_rperl_deps = {
     'PPI::'        => 1,
     'PPIx::'        => 1,
     'Readonly::'  => 1,
+    'Role::'   => 1,
     'SelectSaver::'  => 1,
     'SelfLoader::'   => 1,
     'Socket::'       => 1,

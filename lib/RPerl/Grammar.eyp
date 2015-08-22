@@ -2,7 +2,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.001_441;
+    our $VERSION = 0.001_500;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -63,7 +63,7 @@
 %token OP08_STRING_CAT           = /(\.)/                        # precedence 08 infix: string concatenate
 %token OP03_MATH_INC_DEC         = /(\+\+|--)/                   # precedence 03 prefix and postfix: increment, decrement
 %token OP04_MATH_POW             = /(\*\*)/                      # precedence 04 infix: arithmetic exponent AKA power
-%token OP07_MATH_MULT_DIV_MOD    = /(\*|\/|\%)/                  # precedence 07 infix: arithmetic multiply, divide, modulo
+%token OP07_MATH_MULT_DIV_MOD    = /(\*|\/|\%|sse_mul|sse_div)/  # precedence 07 infix: arithmetic multiply, divide, modulo
 %token OP07_STRING_REPEAT        = /(x)\s/                       # precedence 07 infix: string repetition
 %token OP06_REGEX_PATTERN        = /([ms]\/.*(?:\/.*)?\/[a-z]*)/ # precedence 06 infix: regular expression pattern
 %token OP06_REGEX_MATCH          = /(=\~|!\~)/                   # precedence 06 infix: regular expression match, not match
@@ -73,7 +73,7 @@
 %token OP02_METHOD_THINARROW_NEW = /(->new\()/                   # precedence 02 infix: thin arrow, class constructor
 %token OP02_METHOD_THINARROW     = /(->[a-zA-Z]\w*)/             # precedence 02 infix: thin arrow, method dereference and call
 %token OP05_MATH_NEG_LPAREN      = /(-\()/                       # precedence 05 prefix: arithmetic negative
-%token OP08_MATH_ADD_SUB         = /(\+|-)/                      # precedence 08 infix: arithmetic add, subtract
+%token OP08_MATH_ADD_SUB         = /(\+|-|sse_add|sse_sub)/      # precedence 08 infix: arithmetic add, subtract
 %token OP11_COMPARE_LT_GT        = /(<=|>=|<|>|lt|gt|le|ge)\s/   # precedence 11 infix: comparison less than, greater than, less or equal, greater or equal
 %token OP19_VARIABLE_ASSIGN      = /(=)/                         # precedence 19 infix: assign
 %token OP01_PRINT                = /(print|printf)\s/            # precedence 01 prefix void: print to STDOUT, STDERR, or filehandle

@@ -62,7 +62,7 @@ sub filter {
     my $post_package_lines = q{};
     my $use_parent_line = q{};
 
-    #    my $dependencies;
+        my $dependencies;
     #    my $dependencies_rperl                   = {};
     #    my $dependencies_rperl_package_names     = [];
     #    my $dependencies_nonsystem               = {};
@@ -73,8 +73,7 @@ sub filter {
 
     # pre-generate $inc_skip to use in this file and in Module::ScanDeps::scan_deps()
     foreach my $included_filename_short ( sort keys %INC ) {
-#    print {*STDERR} 'in RPerl::filter(), $rand_serial = ' . $rand_serial . ', top of $inc_skip loop, have $included_filename_short = ' . $included_filename_short . "\n";
-
+#        print {*STDERR} 'in RPerl::filter(), $rand_serial = ' . $rand_serial . ', top of $inc_skip loop, have $included_filename_short = ' . $included_filename_short . "\n";
         $namespace_root = filename_short_to_namespace_root_guess($included_filename_short);
 #        print {*STDERR} 'in RPerl::filter(), $rand_serial = ' . $rand_serial . ', in $inc_skip loop, have $namespace_root = ' . $namespace_root . "\n";
         if (( $namespace_root ne q{} )
@@ -115,8 +114,8 @@ sub filter {
 #            print {*STDERR} 'in RPerl::filter(), $rand_serial = ' . $rand_serial . ', SCANNING non-system $included_filename_short = ' . $included_filename_short . "\n";
 
             # DEV NOTE: Easter Egg!!  scan_deps() plus filter() equals recursive source filtering!!!
-            #            $dependencies = scan_deps( files => [ $INC{$included_filename_short} ], skip => { reverse %{$inc_skip} }, recurse => 1, execute => 0 );
-            scan_deps( files => [ $INC{$included_filename_short} ], skip => { reverse %{$inc_skip} }, recurse => 1, execute => 0 );
+            $dependencies = scan_deps( files => [ $INC{$included_filename_short} ], skip => { reverse %{$inc_skip} }, recurse => 1, execute => 0 );
+#            scan_deps( files => [ $INC{$included_filename_short} ], skip => { reverse %{$inc_skip} }, recurse => 1, execute => 0 );
 
 #            print {*STDERR} 'in RPerl::filter(), have $INC{$included_filename_short} = ' . $INC{$included_filename_short} . ' and $dependencies = ' . Dumper($dependencies) . "\n";
 #            print {*STDERR} 'in RPerl::filter(), have $INC{$included_filename_short} = ' . $INC{$included_filename_short} . ' and [sort keys %{$dependencies}] = ' . Dumper( [ sort keys %{$dependencies} ] ) . "\n";
@@ -125,6 +124,7 @@ sub filter {
 #        else { print {*STDERR} 'in RPerl::filter(), SKIPPING system $included_filename_short = ' . $included_filename_short . "\n"; }
     }
 
+#    print {*STDERR} 'in RPerl::filter(), have $INC_SCANNED = ' . Dumper( $INC_SCANNED ) . "\n";
     #    print {*STDERR} 'in RPerl::filter(), have %INC = ' . Dumper( \%INC ) . "\n";
     #    print {*STDERR} 'in RPerl::filter(), have [sort keys %{$dependencies_rperl}] = ' . Dumper(     [ sort keys %{$dependencies_rperl} ] ) . "\n";
     #    print {*STDERR} 'in RPerl::filter(), have [sort keys %{$dependencies_nonsystem}] = ' . Dumper( [ sort keys %{$dependencies_nonsystem} ] ) . "\n";

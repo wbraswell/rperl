@@ -3,12 +3,8 @@ package  # hide from PAUSE indexing
     rperloperations; ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 use strict;
 use warnings;
-our $VERSION = 0.001_020;
+our $VERSION = 0.001_030;
 use Carp;
-
-# [[[ EXPORTS ]]]
-use Exporter 'import';
-our @EXPORT = qw(sse_recip_sqrt_32bit);
 
 # NEED UPGRADE: make Grammars first-class citizens for full Perl 6 compatibility, we should have it done by Christmas  XD
 #use parent qw(RPerl::GrammarComponent)
@@ -53,7 +49,6 @@ use RPerl::Operation::Expression::Operator::NamedUnary::ChangeDirectory;
 use RPerl::Operation::Expression::Operator::Open;
 use RPerl::Operation::Expression::Operator::Print;
 use RPerl::Operation::Expression::Operator::RegularExpression;
-use RPerl::Operation::Expression::Operator::SSEIntrinsics;
 use RPerl::Operation::Expression::Operator::String::Concatenate;
 use RPerl::Operation::Expression::Operator::String::Repeat;
 use RPerl::Operation::Expression::Operator::Ternary;

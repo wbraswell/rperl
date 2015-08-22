@@ -5,7 +5,7 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.002_050;
+our $VERSION = 0.002_060;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
@@ -47,7 +47,6 @@ use RPerl::DataStructure::Array;
 use RPerl::DataStructure::Array::Reference;
 use RPerl::DataStructure::Hash::Reference;
 use RPerl::DataStructure::Hash::Reference;
-use RPerl::DataStructure::SSENumberPair;
 
 #use RPerl::DataStructure::LinkedList;
 #use RPerl::DataStructure::LinkedList::Node;

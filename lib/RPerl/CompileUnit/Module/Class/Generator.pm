@@ -252,6 +252,8 @@ EOL
     }
     my string $parent_name_underscores = $parent_name;
     $parent_name_underscores =~ s/::/__/gxms;
+#    RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $parent_name_underscores = ' . $parent_name_underscores . "\n");
+ 
     $cpp_source_group->{H} .= 'class ' . $package_name_underscores . ' : public ' . $parent_name_underscores . ' {' . "\n";
     $cpp_source_group->{H} .= 'public:' . "\n";
 

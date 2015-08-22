@@ -21,10 +21,39 @@ use strict;
 use warnings;
 
 package    # hide from PAUSE indexing
+    sse_number_pair::method;
+use strict;
+use warnings;
+use parent -norequire, qw(RPerl::DataStructure::SSENumberPair::method);
+
+package    # hide from PAUSE indexing
+    sse_constant_number_pair::method;
+use strict;
+use warnings;
+use parent -norequire, qw(RPerl::DataStructure::SSENumberPair::method);
+
+package    # hide from PAUSE indexing
     sse_number_pair;
 use strict;
 use warnings;
 use parent qw(RPerl::DataStructure::SSENumberPair);
+
+our sse_number_pair::method $new_from_singleton_duplicate = sub {
+    ( my number $single ) = @_;
+    my sse_number_pair $retval = RPerl::DataStructure::SSENumberPair::new('sse_number_pair');
+    $retval->[0] = $single;
+    $retval->[1] = $single;
+    return $retval;
+};
+
+# NEED TEST
+our sse_number_pair::method $new_from_pair = sub {
+    ( my number $pair_0, my number $pair_1 ) = @_;
+    my sse_number_pair $retval = RPerl::DataStructure::SSENumberPair::new('sse_number_pair');
+    $retval->[0] = $pair_0;
+    $retval->[1] = $pair_1;
+    return $retval;
+};
 
 package    # hide from PAUSE indexing
     sse_constant_number_pair;
@@ -32,11 +61,22 @@ use strict;
 use warnings;
 use parent qw(RPerl::DataStructure::SSENumberPair);
 
-package    # hide from PAUSE indexing
-    sse_number_pair::method;
-use strict;
-use warnings;
-use parent -norequire, qw(RPerl::DataStructure::SSENumberPair::method);
+our sse_constant_number_pair::method $new_from_singleton_duplicate = sub {
+    ( my number $single ) = @_;
+    my sse_constant_number_pair $retval = RPerl::DataStructure::SSENumberPair::new('sse_constant_number_pair');
+    $retval->[0] = $single;
+    $retval->[1] = $single;
+    return $retval;
+};
+
+# NEED TEST
+our sse_constant_number_pair::method $new_from_pair = sub {
+    ( my number $pair_0, my number $pair_1 ) = @_;
+    my sse_constant_number_pair $retval = RPerl::DataStructure::SSENumberPair::new('sse_constant_number_pair');
+    $retval->[0] = $pair_0;
+    $retval->[1] = $pair_1;
+    return $retval;
+};
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataStructure::SSENumberPair;
@@ -126,23 +166,6 @@ sub sse_div {
 our RPerl::DataStructure::SSENumberPair::method $new = sub {
     ( my string $class ) = @_;
     my RPerl::DataStructure::SSENumberPair $retval = bless [], $class;
-    return $retval;
-};
-
-our RPerl::DataStructure::SSENumberPair::method $new_from_singleton_duplicate = sub {
-    ( my string $class, my number $single ) = @_;
-    my RPerl::DataStructure::SSENumberPair $retval = RPerl::DataStructure::SSENumberPair::new($class);
-    $retval->[0] = $single;
-    $retval->[1] = $single;
-    return $retval;
-};
-
-# NEED TEST
-our RPerl::DataStructure::SSENumberPair::method $new_from_pair = sub {
-    ( my string $class, my number $pair_0, my number $pair_1 ) = @_;
-    my RPerl::DataStructure::SSENumberPair $retval = RPerl::DataStructure::SSENumberPair::new($class);
-    $retval->[0] = $pair_0;
-    $retval->[1] = $pair_1;
     return $retval;
 };
 

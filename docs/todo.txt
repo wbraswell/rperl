@@ -18,7 +18,6 @@ alioth nbody, optimize graphics speed
 file bug, I::CPP comments
 file bug, I::CPP std::array
 file bug, I::CPP new() clobber
-Fix `rperl -d` w/ subclasses??? (maybe fix itself after DUMMY code removed?)
 Remove all object* types
 Add scientific notation and leading+ numeric tests
 Fix ::number_to_string() in MyTest.pm

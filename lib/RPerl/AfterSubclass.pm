@@ -59,6 +59,8 @@ sub package_to_namespace_root {
 sub filename_short_to_namespace_root_guess {
     ( my $filename_short ) = @_;
 #    print {*STDERR} 'in RPerl::filename_short_to_namespace_root_guess(), received $filename_short = ' . $filename_short . "\n";
+    # # DEV NOTE, CORRELATION #rp21: remove hard-coded fake 'rperl::' namespace?
+    if ($filename_short eq 'rperl') { return 'rperl::'; }
     my $namespace_root = q{};
     ( my $filename_prefix, my $filename_path, my $filename_suffix ) = fileparse( $filename_short, qr/[.][^.]*/xms );
     # DEV NOTE: allow *.pl files to guess a namespace instead of empty string, both here and in filename_short_to_package_guess() below

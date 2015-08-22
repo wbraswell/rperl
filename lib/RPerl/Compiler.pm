@@ -67,6 +67,8 @@ our string_arrayref $find_dependencies = sub {
                 RPerl::warning('WARNING WCVCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package ' . $first_package_name . '  ...  ' . $EVAL_ERROR . "\n");
             }
         }
+        
+        # NEED FIX: remove hard-coded list of not-subdependency uses
         if ( $file_line =~ /^\s*use\s+[\w:]+/xms ) {
             if (   ( $file_line =~ /use\s+strict\s*;/ )
                 or ( $file_line =~ /use\s+warnings\s*;/ )
@@ -75,8 +77,10 @@ our string_arrayref $find_dependencies = sub {
                 or ( $file_line =~ /use\s+RPerl\s*;/ )
                 or ( $file_line =~ /use\s+RPerl::AfterSubclass\s*;/ )
                 or ( $file_line =~ /use\s+RPerl::Config\s*;/ )
+                or ( $file_line =~ /use\s+rperlsse\s*;/ )
                 or ( $file_line =~ /use\s+parent/ )
                 or ( $file_line =~ /use\s+constant/ )
+                or ( $file_line =~ /use\s+overload/ )
                 or ( $file_line =~ /use\s+[0-9]/ ) )
             {
                 # safely ignore these possibly-valid but not-subdependency uses
@@ -95,7 +99,7 @@ our string_arrayref $find_dependencies = sub {
 #            RPerl::diag( 'in Compiler::find_dependencies(), about to call DEP $eval_string = ' . $eval_string . "\n" );
             $eval_retval = eval($eval_string);
 
-            #            RPerl::diag('in Compiler::find_dependencies(), have POST-EVAL DEP %INC = ' . Dumper(\%INC) . "\n");
+#            RPerl::diag('in Compiler::find_dependencies(), have POST-EVAL DEP %INC = ' . Dumper(\%INC) . "\n");
             if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne q{} ) ) {
                 RPerl::warning('WARNING WCVCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package ' . $file_line . '  ...  ' . $EVAL_ERROR . "\n");
             }
@@ -289,6 +293,7 @@ our void $save_source_files = sub {
 #    RPerl::diag( q{in Compiler::save_source_files(), received $file_name_group =} . "\n" . Dumper($file_name_group) . "\n" );
 
     foreach my string $suffix_key ( sort keys %{$source_group} ) {
+        if ((substr $suffix_key, 0, 1) eq '_') { next; }
         if (   ( not exists $file_name_group->{$suffix_key} )
             or ( not defined $file_name_group->{$suffix_key} )
             or ( $file_name_group->{$suffix_key} eq q{} ) )
@@ -336,23 +341,15 @@ our void $save_source_files = sub {
         $source_group->{H} =~ s/PERLOPS_PERLTYPES/$mode_tagline/gxms;
         $source_group->{CPP} =~ s/PERLOPS_PERLTYPES/$mode_tagline/gxms;
 
-        my string $module_name = $module_path;
+#        RPerl::diag( q{in Compiler::save_source_files(), have %INC = } . Dumper(\%INC) . "\n" );
+#        RPerl::diag( q{in Compiler::save_source_files(), have @INC = } . Dumper(\@INC) . "\n" );
 
-        # remove trailing '.cpp' if present
-        if ( ( substr $module_name, -4, 4 ) eq '.cpp' ) {
-            substr $module_name, -4, 4, '';
-        }
+        my string $module_name = $source_group->{_package_name};
+        my string $module_name_underscores = $source_group->{_package_name_underscores};
 
-        # replace forward-slashes with double underscores
-        my string $module_underscores = $module_name;
-        $module_underscores =~ s/\//__/gxms;
-
-        # replace forward-slashes with scopes (double colons)
-        $module_name =~ s/\//\:\:/gxms;
-
-        #RPerl::diag( q{in Compiler::save_source_files(), have $module_path = }, $module_path, "\n" );
-        #RPerl::diag( q{in Compiler::save_source_files(), have $module_name = }, $module_name, "\n" );
-        #RPerl::diag( q{in Compiler::save_source_files(), have $module_underscores = }, $module_underscores, "\n" );
+#        RPerl::diag( q{in Compiler::save_source_files(), have $module_path = } . $module_path . "\n" );
+#        RPerl::diag( q{in Compiler::save_source_files(), have $module_name = } . $module_name . "\n" );
+#        RPerl::diag( q{in Compiler::save_source_files(), have $module_name_underscores = } . $module_name_underscores . "\n" );
 
         # utilize modified copy of Module PMC template file
         my string $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES';
@@ -378,7 +375,7 @@ our void $save_source_files = sub {
         while ( $file_line = <$FILE_HANDLE> ) {
             $file_line =~ s/RPerl\/CompileUnit\/Module\.cpp/$module_path/gxms;
             $file_line =~ s/RPerl::CompileUnit::Module/$module_name/gxms;
-            $file_line =~ s/RPerl__CompileUnit__Module/$module_underscores/gxms;
+            $file_line =~ s/RPerl__CompileUnit__Module/$module_name_underscores/gxms;
             $source_group->{PMC} .= $file_line;
         }
 
