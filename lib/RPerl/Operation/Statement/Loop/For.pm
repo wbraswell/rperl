@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::Loop::For;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_000;
+our $VERSION = 0.003_010;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement::Loop);

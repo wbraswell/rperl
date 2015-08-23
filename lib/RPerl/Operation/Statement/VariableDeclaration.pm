@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::VariableDeclaration;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement);
@@ -129,11 +129,11 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         my object $subexpression      = $self->{children}->[4];
         my string $semicolon          = $self->{children}->[8];
 
-        $rperl_source_group->{PMC} .= $type . q{ } . ( substr $symbol, 1 ) . $semicolon . "\n";
-        $rperl_source_group->{PMC} .= ( substr $symbol, 1 ) . q{.resize(};
-        $rperl_source_subgroup = $subexpression->ast_to_rperl__generate($modes);
-        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
-        $rperl_source_group->{PMC} .= q{)} . $semicolon . "\n";
+        $cpp_source_group->{PMC} .= $type . q{ } . ( substr $symbol, 1 ) . $semicolon . "\n";
+        $cpp_source_group->{PMC} .= ( substr $symbol, 1 ) . q{.resize(};
+        $cpp_source_subgroup = $subexpression->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+        $cpp_source_group->{PMC} .= q{)} . $semicolon . "\n";
     }
     elsif ( $self_class eq 'VariableDeclaration_181' ) {    # VariableDeclaration -> MY TYPE_FHREF FHREF_SYMBOL ';'
         my string $type_fhref   = $self->{children}->[1];
