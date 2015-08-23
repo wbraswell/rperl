@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  }' >>>
+
 # [[[ HEADER ]]]
 use RPerl;
 use strict;
@@ -11,11 +16,6 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-TESTFORLOOP:
-for my integer $i ( 0 .. 4 ) {
-    print 'Production rule Loop matched by LoopFor, iteration number ', $i,
-        "\n";
-    if ( $i > 1 ) {
-        last TESTFORLOOP;
-    }
-}
+my string_arrayref $my_array
+    = [ 'howdy', 'doody', 'clarabell' ];
+foreach my string $my_element ( @{$my_array} ) { }

@@ -2,11 +2,13 @@ Eyapp unescaped left braces
 
 RELEASE Parse::Eyapp vX.YZZY
 
-DONE identify filename-per-error in multi-file compiles
-DONE Implement automatic subclasses
-DONE Add automatic subclass tests, including multiple-packages-per-file tests
-DONE Fix `rperl -nod`
-alioth nbody
+DONE Error Messages, Identify Filename-Per-Error In Multi-File Compiles
+DONE Implement, Automatic Subclasses For User-Defined Classes, Via RPerl.pm Source Filter
+DONE Tests, Automatic Subclasses, Including Multiple-Packages-Per-File
+DONE Bug Fix, `rperl -nod` No-Dependencies Compiles
+DONE Implement, C-Style For Loop & Array Size Declaration
+Tests, C-Style For Loop & Array Size Declaration
+App, PhysicsPerl, Alioth Shootout N-Body Benchmark
 
 RELEASE v1.1
 
@@ -14,16 +16,16 @@ gauge
 
 RELEASE v1.0000XY
 
+Tests, t/13_compile_sort.t for proper functionality
+Tests, Numeric, scientific notation and leading+
 alioth nbody, optimize graphics speed
 file bug, I::CPP comments
 file bug, I::CPP std::array
 file bug, I::CPP new() clobber
 Remove all object* types
-Add scientific notation and leading+ numeric tests
 Fix ::number_to_string() in MyTest.pm
 update RPerl::filter() to properly handle *.pl files
 update INSTALL to use installed dirs, ~/perl5/lib/perl5 for local::lib
-check t/13_compile_sort.t for proper functionality
 fix 'x' string repeat operator vs 'x' string or bareword hash key
 create generator & tests for named ops: split, join, etc
 

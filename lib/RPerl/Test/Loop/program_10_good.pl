@@ -11,13 +11,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer $i = 0;
-TESTWHILELOOP:
-while ( $i < 7 ) {
-    $i++;
-    if ( $i == 3 ) {
-        next TESTWHILELOOP;
-    }
-    print 'Production rule Loop matched by LoopWhile, iteration item ', $i,
-        "\n";
+foreach my number $my_number ( 1.1, 2.2, 3.3, 4.4 ) {
+    print 'Production rule Loop matched by LoopForEach, iteration item ',
+        $my_number, "\n";
 }

@@ -208,10 +208,10 @@ our void $rperl_grammar_error = sub {
     my string $helpful_hint = q{};
     if ( $value =~ /\d/xms ) {
         $helpful_hint
-            = q{Helpful Hint:      Possible case of PBP RequireNumberSeparators (see below)}
-            . q{Policy:            Perl::Critic::Policy::ValuesAndExpressions::RequireNumberSeparators}
-            . q{Description:       Long number not separated with underscores}
-            . q{Explanation:       See Perl Best Practices page(s) 59};
+            = q{    Helpful Hint:      Possible case of PBP RequireNumberSeparators (see below)} . "\n"
+            . q{    Policy:            Perl::Critic::Policy::ValuesAndExpressions::RequireNumberSeparators} . "\n"
+            . q{    Description:       Long number not separated with underscores} . "\n"
+            . q{    Explanation:       See Perl Best Practices page(s) 59} . "\n";
     }
 
     my integer $line_number = $argument->{TOKENLINE};

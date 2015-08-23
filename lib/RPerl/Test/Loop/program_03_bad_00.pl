@@ -16,4 +16,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-foreach my number $my_number ( 1.1, 2.2, 3.3, 4.4 ) { }
+TESTFORLOOP:
+for my integer $i ( 0 .. 4 ) { }

@@ -80,7 +80,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 . $variable_symbol0 . q{'}
                 . ' is different than exit-condition variable ' . q{'}
                 . $variable_symbol1 . q{'}
-                . ' , dying' . "\n";
+                . ', dying' . "\n";
         }
 
         $rperl_source_group->{PMC} .= $for . q{ } . $left_paren_my . q{ } . $type_integer . q{ } . $variable_symbol0 . q{ } . $assign . q{ };
