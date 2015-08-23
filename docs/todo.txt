@@ -4,20 +4,20 @@ RELEASE Parse::Eyapp vX.YZZY
 
 DONE Error Messages, Identify Filename-Per-Error In Multi-File Compiles
 DONE Implement, Automatic Subclasses For User-Defined Classes, Via RPerl.pm Source Filter
-DONE Tests, Automatic Subclasses, Including Multiple-Packages-Per-File
 DONE Bug Fix, `rperl -nod` No-Dependencies Compiles
-DONE Implement, C-Style For Loop & Array Size Declaration
-Tests, C-Style For Loop & Array Size Declaration
+DONE Implement, C-Style For Loop
+DONE Implement, Array Size Declaration
+Implement, Numbers, Positive '+' Prefix & Scientific Notation
 App, PhysicsPerl, Alioth Shootout N-Body Benchmark
 
 RELEASE v1.1
 
-gauge
+Gauge
 
 RELEASE v1.0000XY
 
+Loops, optimize exit-condition minus-one and less-than
 Tests, t/13_compile_sort.t for proper functionality
-Tests, Numeric, scientific notation and leading+
 alioth nbody, optimize graphics speed
 file bug, I::CPP comments
 file bug, I::CPP std::array
