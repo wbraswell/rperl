@@ -179,18 +179,18 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         substr $variable_symbol0, 0, 1, '';    # remove leading $ sigil
         substr $variable_symbol1, 0, 1, '';    # remove leading $ sigil
 
-        $rperl_source_group->{CPP} .= $for . q{ } . $left_paren_my . q{ } . $type_integer . q{ } . $variable_symbol0 . q{ } . $assign . q{ };
-        my object $rperl_source_subgroup = $subexpression0->ast_to_rperl__generate($modes);
-        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
-        $rperl_source_group->{CPP} .= $semicolon0 . q{ } . $variable_symbol1 . q{ } . $compare . q{ };
-        $rperl_source_subgroup = $subexpression1->ast_to_rperl__generate($modes);
-        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
-        $rperl_source_group->{CPP} .= $semicolon1 . q{ };
-        $rperl_source_subgroup = $subexpression_or_varmod->ast_to_rperl__generate($modes);
-        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
-        $rperl_source_group->{CPP} .= q{ } . $right_paren . q{ };
-        $rperl_source_subgroup = $codeblock->ast_to_rperl__generate($modes);
-        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+        $cpp_source_group->{CPP} .= $for . q{ } . $left_paren_my . q{ } . $type_integer . q{ } . $variable_symbol0 . q{ } . $assign . q{ };
+        my object $cpp_source_subgroup = $subexpression0->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+        $cpp_source_group->{CPP} .= $semicolon0 . q{ } . $variable_symbol1 . q{ } . $compare . q{ };
+        $cpp_source_subgroup = $subexpression1->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+        $cpp_source_group->{CPP} .= $semicolon1 . q{ };
+        $cpp_source_subgroup = $subexpression_or_varmod->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+        $cpp_source_group->{CPP} .= q{ } . $right_paren . q{ };
+        $cpp_source_subgroup = $codeblock->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
