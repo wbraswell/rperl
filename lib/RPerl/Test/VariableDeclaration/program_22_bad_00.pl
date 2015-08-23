@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  <<< NO TOKEN FOUND >>>' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< PARSE_ERROR: 'Useless use of array element in void context' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -16,4 +16,6 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer $i = 23
+my integer $size_max = 10;
+my number_arrayref $foo->[$size_max - 1];
+print 'size of $foo is ' . ( scalar @{$foo} ) . "\n";

@@ -62,7 +62,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my string $undef              = $self->{children}->[7];
         my string $semicolon          = $self->{children}->[8];
 
-        $rperl_source_group->{PMC} .= $my . q{ } . $type . q{ } . $symbol . q{ } . $arrow_left_bracket . q{ };
+        $rperl_source_group->{PMC} .= $my . q{ } . $type . q{ } . $symbol . $arrow_left_bracket . q{ };
         $rperl_source_subgroup = $subexpression->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= q{ } . $right_bracket . q{ } . $assign . q{ } . $undef . $semicolon . "\n";

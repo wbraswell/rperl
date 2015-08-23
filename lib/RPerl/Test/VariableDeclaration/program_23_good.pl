@@ -1,8 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  <<< NO TOKEN FOUND >>>' >>>
+# <<< EXECUTE_SUCCESS: 'size of $foo is 10' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -16,4 +15,6 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer $i = 23
+my integer $size_max_half = 5;
+my number_arrayref $foo->[($size_max_half * 2) - 1] = undef;
+print 'size of $foo is ' . ( scalar @{$foo} ) . "\n";

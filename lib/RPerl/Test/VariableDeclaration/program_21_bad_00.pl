@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  <<< NO TOKEN FOUND >>>' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  and' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -16,4 +16,6 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer $i = 23
+my integer $i_max = 9;
+my number_arrayref $foo->[$i_max] = undef and 1;
+print 'size of $foo is ' . ( scalar @{$foo} ) . "\n";
