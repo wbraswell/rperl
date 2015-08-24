@@ -1,5 +1,5 @@
 #ifndef __CPP__INCLUDED__rperltypes_h
-#define __CPP__INCLUDED__rperltypes_h 1
+#define __CPP__INCLUDED__rperltypes_h 0.001_000
 
 #include <rperltypes_mode.h>
 #include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h

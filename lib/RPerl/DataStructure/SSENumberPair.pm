@@ -27,7 +27,7 @@ use warnings;
 use parent -norequire, qw(RPerl::DataStructure::SSENumberPair::method);
 
 package    # hide from PAUSE indexing
-    sse_constant_number_pair::method;
+    constant_sse_number_pair::method;
 use strict;
 use warnings;
 use parent -norequire, qw(RPerl::DataStructure::SSENumberPair::method);
@@ -56,23 +56,23 @@ our sse_number_pair::method $new_from_pair = sub {
 };
 
 package    # hide from PAUSE indexing
-    sse_constant_number_pair;
+    constant_sse_number_pair;
 use strict;
 use warnings;
 use parent qw(RPerl::DataStructure::SSENumberPair);
 
-our sse_constant_number_pair::method $new_from_singleton_duplicate = sub {
+our constant_sse_number_pair::method $new_from_singleton_duplicate = sub {
     ( my number $single ) = @_;
-    my sse_constant_number_pair $retval = RPerl::DataStructure::SSENumberPair::new('sse_constant_number_pair');
+    my constant_sse_number_pair $retval = RPerl::DataStructure::SSENumberPair::new('constant_sse_number_pair');
     $retval->[0] = $single;
     $retval->[1] = $single;
     return $retval;
 };
 
 # NEED TEST
-our sse_constant_number_pair::method $new_from_pair = sub {
+our constant_sse_number_pair::method $new_from_pair = sub {
     ( my number $pair_0, my number $pair_1 ) = @_;
-    my sse_constant_number_pair $retval = RPerl::DataStructure::SSENumberPair::new('sse_constant_number_pair');
+    my constant_sse_number_pair $retval = RPerl::DataStructure::SSENumberPair::new('constant_sse_number_pair');
     $retval->[0] = $pair_0;
     $retval->[1] = $pair_1;
     return $retval;

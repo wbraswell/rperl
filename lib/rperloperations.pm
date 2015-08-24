@@ -3,7 +3,7 @@ package  # hide from PAUSE indexing
     rperloperations; ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 use strict;
 use warnings;
-our $VERSION = 0.001_030;
+our $VERSION = 0.001_100;
 use Carp;
 
 # NEED UPGRADE: make Grammars first-class citizens for full Perl 6 compatibility, we should have it done by Christmas  XD
@@ -11,7 +11,12 @@ use Carp;
 
 # RPerl system builtin functions, RPerl to C++ name mapping, used in SubroutineCall.pm
 our $BUILTINS = {
-    'class' => 'classname'
+    'class' => 'classname',
+    # NEED REFACTOR: move SSE builtins to rperlsse.pm, create second $BUILTINS to be used in SubroutineCall.pm?
+    'sse_number_pair::new_from_singleton_duplicate' => 'sse_number_pair__new_from_singleton_duplicate',
+    'sse_number_pair::new_from_pair' => 'sse_number_pair__new_from_pair',
+    'constant_sse_number_pair::new_from_singleton_duplicate' => 'constant_sse_number_pair__new_from_singleton_duplicate',
+    'constant_sse_number_pair::new_from_pair' => 'constant_sse_number_pair__new_from_pair'
 };
 
 # [[[ EXPRESSIONS ]]]

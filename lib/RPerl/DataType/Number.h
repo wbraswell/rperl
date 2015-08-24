@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Number_h
-#define __CPP__INCLUDED__RPerl__DataType__Number_h 0.004_000
+#define __CPP__INCLUDED__RPerl__DataType__Number_h 0.004_010
 
 // [[[ TYPEDEFS ]]]
 typedef double number;

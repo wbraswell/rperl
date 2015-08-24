@@ -93,7 +93,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #    RPerl::diag( 'in VariableModification->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     # yes semicolon for Statement_154, no semicolon for SubExpressionOrVarMod_146, VariableModification_182, and VariableModification_183
-    my string $semicolon = q{};
+    my string $semicolon = undef;
 
     if ( $self_class eq 'SubExpressionOrVarMod_146' ) {    # SubExpressionOrVarMod -> VariableModification
         # unwrap VariableModification_182 and VariableModification_183 from SubExpressionOrVarMod_146
@@ -136,7 +136,9 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             . "\n";
     }
 
-    $cpp_source_group->{CPP} .= $semicolon . "\n";
+    if (defined $semicolon) {
+        $cpp_source_group->{CPP} .= $semicolon . "\n";
+    }
 
 #    RPerl::diag( 'in VariableModification->ast_to_cpp__generate__CPPOPS_CPPTYPES(), returning $cpp_source_group = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_group) . "\n" );
     return $cpp_source_group;

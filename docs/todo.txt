@@ -1,4 +1,4 @@
-Eyapp unescaped left braces
+Eyapp unescaped left braces for Perl v5.22 compatibility
 
 RELEASE Parse::Eyapp vX.YZZY
 
@@ -7,17 +7,19 @@ DONE Implement, Automatic Subclasses For User-Defined Classes, Via RPerl.pm Sour
 DONE Bug Fix, `rperl -nod` No-Dependencies Compiles
 DONE Implement, C-Style For Loop
 DONE Implement, Array Size Declaration
-Implement, Numbers, Positive '+' Prefix & Scientific Notation
+DONE Implement, Numbers, Positive '+' Prefix & Scientific Notation
+Loops, optimize exit-condition minus-one and less-than
 App, PhysicsPerl, Alioth Shootout N-Body Benchmark
+tests; constructor type mismatch, array size declaration compensation
 
 RELEASE v1.1
 
+finish all CPPOPS_CPPTYPES generation
+Tests, t/13_compile_execute.t (?) for proper functionality
 Gauge
 
-RELEASE v1.0000XY
+RELEASE v1.XY
 
-Loops, optimize exit-condition minus-one and less-than
-Tests, t/13_compile_sort.t for proper functionality
 alioth nbody, optimize graphics speed
 file bug, I::CPP comments
 file bug, I::CPP std::array
@@ -43,18 +45,17 @@ website total
 fix RPerl/Test/ScopeTypeNameValue/program_5*_good.pl.DISABLED_PERL_V5_22
 fix RPerl/Test/Expression/program_*_good.pl.DISABLED_NEED_FIX
 
-RELEASE v1.0000XY
+RELEASE v1.XY
 
 merge
 quick
-finish all CPPOPS_CPPTYPES generation
 
-RELEASE v1.0000XY
+RELEASE v1.XY
 
 Book of RPerl next chapter
 Learning RPerl chapter 1 & 2
 
-RELEASE v1.0000XY
+RELEASE v1.XY
 
 cloud machines
 Shiny APTech site

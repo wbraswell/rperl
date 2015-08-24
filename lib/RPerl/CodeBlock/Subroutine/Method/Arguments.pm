@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine::Method::Arguments;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_000;
+our $VERSION = 0.003_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CodeBlock::Subroutine::Arguments);
@@ -81,6 +81,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         shift @{ $arguments_star_dclone->{children} };    # discard $my
         my object $arguments_type = shift @{ $arguments_star_dclone->{children} };
         my object $arguments_name = shift @{ $arguments_star_dclone->{children} };
+        $arguments_type->{children}->[0] =~ s/^constant_/const\ /gxms;  # 'constant_foo' becomes 'const foo'
         push @{$arguments}, ( $arguments_type->{children}->[0] . q{ } . ( substr $arguments_name->{attr}, 1 ) );
     }
     $cpp_source_group->{CPP} .= join ', ', @{$arguments};

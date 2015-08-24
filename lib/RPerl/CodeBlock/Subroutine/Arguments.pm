@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine::Arguments;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -87,6 +87,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $arguments_type = shift @{ $arguments_star_dclone->{children} };
         $arguments_name = shift @{ $arguments_star_dclone->{children} };
 #        RPerl::diag( 'in Subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $arguments_name = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_name) . "\n" );
+        $arguments_type->{children}->[0] =~ s/^constant_/const\ /gxms;  # 'constant_foo' becomes 'const foo'
         push @{$arguments}, ( $arguments_type->{children}->[0] . q{ } . ( substr $arguments_name->{attr}, 1 ) );
     }
     $cpp_source_group->{CPP} .= join ', ', @{$arguments};

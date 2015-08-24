@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_060;
+our $VERSION = 0.002_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -218,8 +218,15 @@ EOL
     my string $parent_name_path = $parent_name;
     $parent_name_path =~ s/::/\//gxms;
     $parent_name_path        .= '.cpp';
-    $cpp_source_group->{H_INCLUDES}   .= '#include <' . $parent_name_path . '>' . "\n";
-    $cpp_source_group->{CPP} .= '#include <__NEED_MODULE_HEADER_PATH>' . "\n";    # defer setting header include path until files are saved in Compiler
+    if (((substr $parent_name_path, 0, 5) ne 'RPerl') and ((substr $parent_name_path, 0, 5) ne 'rperl')) {
+        # non-RPerl user module, wrapped in double-quotes " " to denote user nature
+        $cpp_source_group->{H_INCLUDES}   .= '#include "' . $parent_name_path . '"' . "\n";
+    }
+    else {
+        # RPerl system module, wrapped in angle-brackets < > to denote system nature
+        $cpp_source_group->{H_INCLUDES}   .= '#include <' . $parent_name_path . '>' . "\n";
+    }
+    $cpp_source_group->{CPP} .= '#include "__NEED_MODULE_HEADER_PATH"' . "\n";    # defer setting header include path until files are saved in Compiler
 
     my string_hashref $cpp_source_subgroup;
 
