@@ -177,9 +177,10 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string $package_name_underscores, my string_hashref $modes ) = @_;
     my string_hashref $cpp_source_group = { H_INCLUDES => q{}, H => q{}, CPP => q{} };
 
-    #RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
-    #RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $package_name_underscores = ' . $package_name_underscores . "\n");
-    #RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $modes = ' . "\n" . Dumper($modes) . "\n");
+#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $package_name_underscores = ' . $package_name_underscores . "\n");
+#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $modes = ' . "\n" . Dumper($modes) . "\n");
+#    RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n");
 
     my string $self_class = ref $self;
 
@@ -205,8 +206,8 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my object $method_or_subroutine_star = $self->{children}->[9];
 
     if ( $modes->{label} eq 'ON' ) {
-        $cpp_source_group->{H_INCLUDES}   .= '// [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]' . "\n";
-        $cpp_source_group->{CPP} .= '// [[[ INCLUDES ]]]' . "\n";
+        $cpp_source_group->{H_INCLUDES} .= '// [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]' . "\n";
+        $cpp_source_group->{CPP}        .= '// [[[ INCLUDES ]]]' . "\n";
     }
 
     $cpp_source_group->{H_INCLUDES} .= <<EOL;
@@ -217,14 +218,15 @@ EOL
     # NEED FIX: handle absolute vs relative include paths
     my string $parent_name_path = $parent_name;
     $parent_name_path =~ s/::/\//gxms;
-    $parent_name_path        .= '.cpp';
-    if (((substr $parent_name_path, 0, 5) ne 'RPerl') and ((substr $parent_name_path, 0, 5) ne 'rperl')) {
+    $parent_name_path .= '.cpp';
+    if ( ( ( substr $parent_name_path, 0, 5 ) ne 'RPerl' ) and ( ( substr $parent_name_path, 0, 5 ) ne 'rperl' ) ) {
+
         # non-RPerl user module, wrapped in double-quotes " " to denote user nature
-        $cpp_source_group->{H_INCLUDES}   .= '#include "' . $parent_name_path . '"' . "\n";
+        $cpp_source_group->{H_INCLUDES} .= '#include "' . $parent_name_path . '"' . "\n";
     }
     else {
         # RPerl system module, wrapped in angle-brackets < > to denote system nature
-        $cpp_source_group->{H_INCLUDES}   .= '#include <' . $parent_name_path . '>' . "\n";
+        $cpp_source_group->{H_INCLUDES} .= '#include <' . $parent_name_path . '>' . "\n";
     }
     $cpp_source_group->{CPP} .= '#include "__NEED_MODULE_HEADER_PATH"' . "\n";    # defer setting header include path until files are saved in Compiler
 
@@ -259,8 +261,9 @@ EOL
     }
     my string $parent_name_underscores = $parent_name;
     $parent_name_underscores =~ s/::/__/gxms;
-#    RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $parent_name_underscores = ' . $parent_name_underscores . "\n");
- 
+
+    #    RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $parent_name_underscores = ' . $parent_name_underscores . "\n");
+
     $cpp_source_group->{H} .= 'class ' . $package_name_underscores . ' : public ' . $parent_name_underscores . ' {' . "\n";
     $cpp_source_group->{H} .= 'public:' . "\n";
 
@@ -289,7 +292,7 @@ EOL
             push @{$method_declarations}, $cpp_source_subgroup->{H};
             $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES( $package_name_underscores, $modes );
             push @{$method_definitions}, $cpp_source_subgroup->{CPP};
-            if ((exists $cpp_source_subgroup->{H_INCLUDES}) and (defined $cpp_source_subgroup->{H_INCLUDES})) {
+            if ( ( exists $cpp_source_subgroup->{H_INCLUDES} ) and ( defined $cpp_source_subgroup->{H_INCLUDES} ) ) {
                 $cpp_source_group->{H_INCLUDES} .= $cpp_source_subgroup->{H_INCLUDES};
             }
         }
@@ -298,7 +301,7 @@ EOL
             push @{$subroutine_declarations}, $cpp_source_subgroup->{H};
             $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
             push @{$subroutine_definitions}, $cpp_source_subgroup->{CPP};
-            if ((exists $cpp_source_subgroup->{H_INCLUDES}) and (defined $cpp_source_subgroup->{H_INCLUDES})) {
+            if ( ( exists $cpp_source_subgroup->{H_INCLUDES} ) and ( defined $cpp_source_subgroup->{H_INCLUDES} ) ) {
                 $cpp_source_group->{H_INCLUDES} .= $cpp_source_subgroup->{H_INCLUDES};
             }
         }
@@ -345,6 +348,18 @@ EOL
 #RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_subexpression = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_subexpression) . "\n" );
 #RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_type) . "\n" );
 
+        if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$property_key} ) {
+            die 'ERROR ECVGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+                . $property_key
+                . ' already declared in this scope, namespace '
+                . $modes->{_symbol_table}->{_namespace}
+                . ', subroutine/method '
+                . $modes->{_symbol_table}->{_subroutine}
+                . '(), dying' . "\n";
+        }
+        $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}
+            = { isa => 'RPerl::DataStructure::Hash::Properties', type => $property_type };
+
         $property_declaration = q{    } . $property_type . q{ } . $property_key;
 
         # SubExpression_135 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined,
@@ -366,7 +381,7 @@ EOL
                 . '_new) { this->'
                 . $property_key . ' = '
                 . $property_key
-                . '_new; }' );    # MUTATOR
+                . '_new; }' );                                                                                                                         # MUTATOR
 
         foreach my object $property ( @{ $properties_1_to_n->{children} } ) {
             if ( ( ref $property ) eq 'TERMINAL' ) {    # skip comma between properties
@@ -383,6 +398,18 @@ EOL
 #RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_subexpression = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_subexpression) . "\n" );
 #RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_type) . "\n" );
 
+            if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$property_key} ) {
+                die 'ERROR ECVGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+                    . $property_key
+                    . ' already declared in this scope, namespace '
+                    . $modes->{_symbol_table}->{_namespace}
+                    . ', subroutine/method '
+                    . $modes->{_symbol_table}->{_subroutine}
+                    . '(), dying' . "\n";
+            }
+            $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}
+                = { isa => 'RPerl::DataStructure::Hash::Properties', type => $property_type };
+ 
             $property_declaration = q{    } . $property_type . q{ } . $property_key;
 
             # SubExpression_135 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined,
@@ -471,12 +498,12 @@ EOL
 
     # deferred, prepend possibly-updated H_INCLUDES to H, discarding duplicates
     my string $H_INCLUDES_UNIQUE = '';
-    foreach my string $H_INCLUDE (split /\n/, $cpp_source_group->{H_INCLUDES}) {
-        if ($H_INCLUDES_UNIQUE !~ /$H_INCLUDE/) {
+    foreach my string $H_INCLUDE ( split /\n/, $cpp_source_group->{H_INCLUDES} ) {
+        if ( $H_INCLUDES_UNIQUE !~ /$H_INCLUDE/ ) {
             $H_INCLUDES_UNIQUE .= $H_INCLUDE . "\n";
         }
     }
-    $cpp_source_group->{H} = $H_INCLUDES_UNIQUE . $cpp_source_group->{H} ;
+    $cpp_source_group->{H} = $H_INCLUDES_UNIQUE . $cpp_source_group->{H};
     delete $cpp_source_group->{H_INCLUDES};
 
     return $cpp_source_group;

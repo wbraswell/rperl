@@ -112,7 +112,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 $header_started = 0;
             }
             else {
-                die 'ERROR ECVGEASCP07, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: Module found without first finding ModuleHeader, dying' . "\n";
+                die 'ERROR ECVGEASCP50, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: Module found without first finding ModuleHeader, dying' . "\n";
             }
         }
         else {

@@ -77,9 +77,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         # Variable -> VariableSymbolOrSelf VariableRetrieval*
         my string $symbol_or_self = $self->{children}->[0]->{children}->[0];
 
-
-
-        substr $symbol_or_self, 0, 1, '';  # remove leading $ sigil
+        substr $symbol_or_self, 0, 1, q{};  # remove leading $ sigil
         if ($symbol_or_self eq 'self') { 
             # Perl OO $self becomes C++ OO this
             $symbol_or_self = 'this';

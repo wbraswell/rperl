@@ -161,6 +161,10 @@ sub verify_and_default_modes {
         }
     }
 
+    
+    # initialize empty symbol table, to be populated during GENERATE phase
+    $modes->{_symbol_table} = { _namespace => 'main::', _subroutine => q{}};
+ 
     # defaults when mode(s) not provided
     foreach my string $mode_default_key ( keys %{$modes_default} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
         if ( not( exists $modes->{$mode_default_key} ) ) {
@@ -347,6 +351,7 @@ sub depends_parse_generate_save_subcompile_execute {
                 RPerl::Compiler::rperl_to_rperl__parse_generate( $input_file_name_dep, $output_file_name_dep_group, $modes );
             }
             elsif ( $modes->{ops} eq 'CPP' ) {
+#                RPerl::diag( 'in depends_parse_generate_save_subcompile_execute(), have $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
 
                 # use eval to trap C++ compiler errors
                 my integer $eval_retval = eval {

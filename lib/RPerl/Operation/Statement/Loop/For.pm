@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::Loop::For;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_010;
+our $VERSION = 0.003_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement::Loop);
@@ -114,7 +114,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 };
 
 our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
-    ( my object $self, my string_hashref $modes) = @_;
+    ( my object $self, my string $loop_label, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group = { CPP => q{} };
 
     #    RPerl::diag( 'in Loop::For->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
@@ -138,8 +138,27 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         my string $right_paren     = $self->{children}->[8];
         my object $codeblock       = $self->{children}->[9];
 
-        substr $variable_symbol, 0, 1, '';    # remove leading $ sigil
+        substr $variable_symbol, 0, 1, q{};    # remove leading $ sigil
 
+#        RPerl::diag( 'in Loop::For->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
+#        RPerl::diag( 'in Loop::For->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_symbol_table}->{_namespace} = ' . "\n" . Dumper($modes->{_symbol_table}->{_namespace}) . "\n" );
+#        RPerl::diag( 'in Loop::For->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_symbol_table}->{_subroutine} = ' . "\n" . Dumper($modes->{_symbol_table}->{_subroutine}) . "\n" );
+  
+        # DEV NOTE: allow re-declaration of loop iterator variables within other loop headers, they should not conflict
+        if (( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$variable_symbol} )
+            and ($modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$variable_symbol}->{isa} ne 'RPerl::Operation::Expression::SubExpression::Variable::LoopIterator')) {
+            die 'ERROR ECVGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+                . $variable_symbol
+                . ' already declared in this scope, namespace '
+                . $modes->{_symbol_table}->{_namespace}
+                . ', subroutine/method '
+                . $modes->{_symbol_table}->{_subroutine}
+                . '(), dying'
+                . "\n";
+        }
+        $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$variable_symbol}
+            = { isa => 'RPerl::Operation::Expression::SubExpression::Variable::LoopIterator', type => $type_integer };  # NEED UPGRADE: replace fake class isa w/ real class here and below?
+ 
         $cpp_source_group->{CPP} .= $for . q{ } . $left_paren . q{ } . $type_integer . q{ } . $variable_symbol . q{ = };
         my object $cpp_source_subgroup = $subexpression0->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
@@ -147,7 +166,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $cpp_source_subgroup = $subexpression1->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
         $cpp_source_group->{CPP} .= q{; } . $variable_symbol . '++ ' . $right_paren . q{ };
-        $cpp_source_subgroup = $codeblock->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        $cpp_source_subgroup = $codeblock->ast_to_cpp__generate__CPPOPS_CPPTYPES($loop_label, $modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
     elsif ( $self_class eq 'LoopFor_166' ) {
@@ -175,8 +194,22 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 . ' , dying' . "\n";
         }
 
-        substr $variable_symbol0, 0, 1, '';    # remove leading $ sigil
-        substr $variable_symbol1, 0, 1, '';    # remove leading $ sigil
+        substr $variable_symbol0, 0, 1, q{};    # remove leading $ sigil
+        substr $variable_symbol1, 0, 1, q{};    # remove leading $ sigil
+
+        if (( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$variable_symbol0} ) 
+            and ($modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$variable_symbol0}->{isa} ne 'RPerl::Operation::Expression::SubExpression::Variable::LoopIterator')) {
+            die 'ERROR ECVGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+                . $variable_symbol0
+                . ' already declared in this scope, namespace '
+                . $modes->{_symbol_table}->{_namespace}
+                . ', subroutine/method '
+                . $modes->{_symbol_table}->{_subroutine}
+                . '(), dying'
+                . "\n";
+        }
+        $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$variable_symbol0}
+            = { isa => 'RPerl::Operation::Expression::SubExpression::Variable::LoopIterator', type => $type_integer };
 
         $cpp_source_group->{CPP} .= $for . q{ ( } . $type_integer . q{ } . $variable_symbol0 . q{ } . $assign . q{ };
         my object $cpp_source_subgroup = $subexpression0->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
@@ -188,7 +221,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $cpp_source_subgroup = $subexpression_or_varmod->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
         $cpp_source_group->{CPP} .= q{ } . $right_paren . q{ };
-        $cpp_source_subgroup = $codeblock->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        $cpp_source_subgroup = $codeblock->ast_to_cpp__generate__CPPOPS_CPPTYPES($loop_label, $modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
     else {

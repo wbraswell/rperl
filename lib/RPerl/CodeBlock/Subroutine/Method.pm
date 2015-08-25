@@ -48,6 +48,11 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     my string $right_brace        = $self->{children}->[6];
     my string $semicolon          = $self->{children}->[7];
 
+    if ((substr $name, 1, 1) eq '_') {
+        die 'ERROR ECVGEASRP09, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: method name ' . ($name)
+                . ' must not start with underscore, dying' . "\n";
+    }
+ 
     $rperl_source_group->{PMC} .= $our . q{ } . $return_type . q{ } . $name . q{ } . $equal_sub . "\n";
 
     if ( exists $arguments_optional->{children}->[0] ) {
@@ -74,17 +79,28 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 
 our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
+#    RPerl::diag( 'in Method->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n");
+
     my string_hashref $cpp_source_group = { H => q{} };
 
 #    RPerl::diag( 'in Method->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     $self             = $self->{children}->[0];     # unwrap Method_73 from MethodOrSubroutine_78
     my string $return_type = $self->{children}->[1];
-    substr $return_type, -8, 8, '';                      # remove trailing '::method'
-    $return_type =~ s/^constant_/const\ /gxms;  # 'constant_foo' becomes 'const foo'
     my string $name = $self->{children}->[2];
-    substr $name, 0, 1, '';                              # remove leading $ sigil
     my object $arguments_optional = $self->{children}->[4];
+
+    substr $name, 0, 1, q{};            # remove leading $ sigil
+    substr $return_type, -8, 8, '';                      # remove trailing '::method'
+
+    if ((substr $name, 0, 1) eq '_') {
+        die 'ERROR ECVGEASCP09, CODE GENERATOR, ABSTRACT SYNTAX TO C++: method name ' . ($name)
+                . ' must not start with underscore, dying' . "\n";
+    }
+    $modes->{_symbol_table}->{_subroutine} = $name;  # set current subroutine/method
+    $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{_global}->{$name} = {isa => 'RPerl::CodeBlock::Subroutine::Method', type => $return_type};  # create individual symtab entry
+
+    $return_type =~ s/^constant_/const\ /gxms;  # 'constant_foo' becomes 'const foo'
 
 #    RPerl::diag( 'in Method->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $name = ' . $name . "\n" );
 #    RPerl::diag( 'in Method->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $arguments_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_optional) . "\n" );
@@ -102,6 +118,8 @@ our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = 
 
 our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string $package_name_underscores, my string_hashref $modes) = @_;
+#    RPerl::diag( 'in Method->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n");
+
     my string_hashref $cpp_source_group = { CPP => q{} };
     my string_hashref $cpp_source_subgroup;
 
@@ -122,9 +140,10 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my string $name               = $self->{children}->[2];
     my object $arguments_optional = $self->{children}->[4];
     my object $operations_star    = $self->{children}->[5];
-
+ 
+    substr $name, 0, 1, q{};            # remove leading $ sigil
     $return_type =~ s/^constant_/const\ /gxms;  # 'constant_foo' becomes 'const foo'
-    $cpp_source_group->{CPP} .= (substr $return_type, 0, ((length $return_type) - 8)) . q{ } . $package_name_underscores . '::' . (substr $name, 1) . '(';
+    $cpp_source_group->{CPP} .= (substr $return_type, 0, ((length $return_type) - 8)) . q{ } . $package_name_underscores . '::' . $name . '(';
 
     if ( exists $arguments_optional->{children}->[0] ) {
         $cpp_source_subgroup = $arguments_optional->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);

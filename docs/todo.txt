@@ -10,7 +10,7 @@ DONE Implement, Array Size Declaration
 DONE Implement, Numbers, Positive '+' Prefix & Scientific Notation
 Loops, optimize exit-condition minus-one and less-than
 App, PhysicsPerl, Alioth Shootout N-Body Benchmark
-tests; constructor type mismatch, array size declaration compensation
+tests; constructor type mismatch, array size declaration compensation, package/subroutine/method names starting w/ underscore, variable redeclaration (masking)
 
 RELEASE v1.1
 
@@ -21,6 +21,7 @@ Gauge
 RELEASE v1.XY
 
 alioth nbody, optimize graphics speed
+add symtab building and checking to PERLOPS_PERLTYPES
 file bug, I::CPP comments
 file bug, I::CPP std::array
 file bug, I::CPP new() clobber

@@ -43,6 +43,11 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     my string $our_keyword              = $self->{children}->[5]->{children}->[3];    # PERLOPS only
     my string $version_number           = $self->{children}->[5]->{children}->[4];
 
+    if ((substr $package_name, 0, 1) eq '_') {
+        die 'ERROR ECVGEASRP07, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: package name ' . ($package_name)
+                . ' must not start with underscore, dying' . "\n";
+    }
+
     $rperl_source_group->{PMC} = q{};
     if ( ( exists $critic_optional->{children}->[0] ) and ( defined $critic_optional->{children}->[0] ) ) {
         my string_hashref $rperl_source_subgroup = $critic_optional->{children}->[0]->ast_to_rperl__generate($modes);
@@ -82,12 +87,21 @@ our string_hashref::method $ast_to_cpp__generate_begin__CPPOPS_CPPTYPES = sub {
 
     #RPerl::diag( 'in Header->ast_to_cpp__generate_begin__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
     #RPerl::diag('in Header->ast_to_cpp__generate_begin__CPPOPS_CPPTYPES(), received $modes = ' . "\n" . Dumper($modes) . "\n");
+#    RPerl::diag( 'in Header->ast_to_cpp__generate_begin__CPPOPS_CPPTYPES(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
 
 #my $class = ref $self;
 #RPerl::diag('in Header->ast_to_cpp__generate_begin__CPPOPS_CPPTYPES(), have symtab entries for ' . $class . "\n" . RPerl::analyze_class_symtab_entries($class) . "\n");
 
     my object $package_name   = $self->{children}->[3]->{children}->[0];
     my string $version_number = $self->{children}->[5]->{children}->[4];
+
+    if ((substr $package_name, 0, 1) eq '_') {
+        die 'ERROR ECVGEASCP07, CODE GENERATOR, ABSTRACT SYNTAX TO C++: package name ' . ($package_name)
+                . ' must not start with underscore, dying' . "\n";
+    }
+    $modes->{_symbol_table}->{_namespace} = $package_name . '::';  # set current namespace
+ 
+#    RPerl::diag( 'in Header->ast_to_cpp__generate_begin__CPPOPS_CPPTYPES(), have $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
 
     $cpp_source_group->{H}   = q{};
     $cpp_source_group->{CPP} = q{};
@@ -118,6 +132,7 @@ our string_hashref::method $ast_to_cpp__generate_end__CPPOPS_CPPTYPES = sub {
 
     #RPerl::diag( 'in Header->ast_to_cpp__generate_end__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
     #RPerl::diag('in Header->ast_to_cpp__generate_end__CPPOPS_CPPTYPES(), received $modes = ' . "\n" . Dumper($modes) . "\n");
+#    RPerl::diag( 'in Header->ast_to_cpp__generate_end__CPPOPS_CPPTYPES(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
 
     $cpp_source_group->{H}   = '#endif' . "\n";
     $cpp_source_group->{CPP} = '#endif' . "\n";

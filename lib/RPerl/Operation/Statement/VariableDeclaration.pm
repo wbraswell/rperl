@@ -52,9 +52,11 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         {
             my string $constructor_type = $subexpression_or_stdin->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0];
             if ( $type ne $constructor_type ) {
-                die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP16, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: data type mismatch, '
-                         . q{'} . $type . q{'}
-                        . ' type is different than ' . q{'} . $constructor_type . q{'} . ' constructor type, dying' )
+                die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP16, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: data type mismatch, ' . q{'}
+                        . $type . q{'}
+                        . ' type is different than ' . q{'}
+                        . $constructor_type . q{'}
+                        . ' constructor type, dying' )
                     . "\n";
             }
         }
@@ -83,9 +85,9 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     elsif ( $self_class eq 'VariableDeclaration_181' ) {    # VariableDeclaration -> MY TYPE_FHREF FHREF_SYMBOL ';'
         my string $my           = $self->{children}->[0];
         my string $type_fhref   = $self->{children}->[1];
-        my string $fhref_symbol = $self->{children}->[2];
+        my string $symbol_fhref = $self->{children}->[2];
         my string $semicolon    = $self->{children}->[3];
-        $rperl_source_group->{PMC} .= $my . q{ } . $type_fhref . q{ } . $fhref_symbol . $semicolon . "\n";
+        $rperl_source_group->{PMC} .= $my . q{ } . $type_fhref . q{ } . $symbol_fhref . $semicolon . "\n";
     }
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
@@ -122,16 +124,32 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     if ( $self_class eq 'VariableDeclaration_178' ) {    # VariableDeclaration -> MY Type VARIABLE_SYMBOL ';'
         my string $type   = $self->{children}->[1]->{children}->[0];
         my string $symbol = $self->{children}->[2];
+        substr $symbol, 0, 1, q{};                       # remove leading $ sigil
+
+        if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
+            die 'ERROR ECVGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+                . $symbol
+                . ' already declared in this scope, namespace '
+                . $modes->{_symbol_table}->{_namespace}
+                . ', subroutine/method '
+                . $modes->{_symbol_table}->{_subroutine}
+                . '(), dying'
+                . "\n";
+        }
+        $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}
+            = { isa => 'RPerl::Operation::Expression::SubExpression::Variable', type => $type };
         $type =~ s/^constant_/const\ /gxms;              # 'constant_foo' becomes 'const foo'
-        $cpp_source_group->{CPP} .= $type . q{ } . ( substr $symbol, 1 ) . ';' . "\n";
+        $type =~ s/::/__/gxms;                           # 'Class::Subclass' becomes 'Class__Subclass'
+        $cpp_source_group->{CPP} .= $type . q{ } . $symbol . ';' . "\n";
     }
     elsif ( $self_class eq 'VariableDeclaration_179' ) {    # VariableDeclaration -> MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';'
-        my string $type                   = $self->{children}->[1]->{children}->[0];
-        my string $symbol                 = $self->{children}->[2];
+        my string $type   = $self->{children}->[1]->{children}->[0];
+        my string $symbol = $self->{children}->[2];
         my string $assign                 = $self->{children}->[3];
         my object $subexpression_or_stdin = $self->{children}->[4];
         my string $semicolon              = $self->{children}->[5];
 
+        substr $symbol, 0, 1, q{};                          # remove leading $ sigil
         my bool $is_constructor_call = 0;
         if (    ( exists $subexpression_or_stdin->{children}->[0]->{children}->[0] )
             and
@@ -140,24 +158,41 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             $is_constructor_call = 1;
             my string $constructor_type = $subexpression_or_stdin->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0];
             if ( $type ne $constructor_type ) {
-                die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP16, CODE GENERATOR, ABSTRACT SYNTAX TO C++: data type mismatch, '
-                         . q{'} . $type . q{'}
-                        . ' type is different than ' . q{'} . $constructor_type . q{'} . ' constructor type, dying' )
+                die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP16, CODE GENERATOR, ABSTRACT SYNTAX TO C++: data type mismatch, ' . q{'}
+                        . $type . q{'}
+                        . ' type is different than ' . q{'}
+                        . $constructor_type . q{'}
+                        . ' constructor type, dying' )
                     . "\n";
             }
         }
-#        my string $tmp_debug_string = RPerl::Parser::rperl_ast__dump($subexpression_or_stdin);
-#        if ( $tmp_debug_string =~ /constant_sse_number_pair::new_from_singleton_duplicate/ ) {
-#            RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subexpression_or_stdin = ' . "\n"
-#                    . RPerl::Parser::rperl_ast__dump($subexpression_or_stdin)
-#                    . "\n" );
-#            die 'TMP DEBUG';
-#        }
 
+        #        my string $tmp_debug_string = RPerl::Parser::rperl_ast__dump($subexpression_or_stdin);
+        #        if ( $tmp_debug_string =~ /constant_sse_number_pair::new_from_singleton_duplicate/ ) {
+        #            RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subexpression_or_stdin = ' . "\n"
+        #                    . RPerl::Parser::rperl_ast__dump($subexpression_or_stdin)
+        #                    . "\n" );
+        #            die 'TMP DEBUG';
+        #        }
+
+        if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
+            die 'ERROR ECVGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+                . $symbol
+                . ' already declared in this scope, namespace '
+                . $modes->{_symbol_table}->{_namespace}
+                . ', subroutine/method '
+                . $modes->{_symbol_table}->{_subroutine}
+                . '(), dying'
+                . "\n";
+        }
+        $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}
+            = { isa => 'RPerl::Operation::Expression::SubExpression::Variable', type => $type };
         $type =~ s/^constant_/const\ /gxms;    # 'constant_foo' becomes 'const foo'
-        $cpp_source_group->{CPP} .= $type . q{ } . ( substr $symbol, 1 );
+        $type =~ s/::/__/gxms;                 # 'Class::Subclass' becomes 'Class__Subclass'
+        $cpp_source_group->{CPP} .= $type . q{ } . $symbol;
+
         # do not explicitly call C++ new() constructor
-        if (not $is_constructor_call) {
+        if ( not $is_constructor_call ) {
             $cpp_source_group->{CPP} .= q{ } . $assign . q{ };
             $cpp_source_subgroup = $subexpression_or_stdin->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
             RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
@@ -165,15 +200,30 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $cpp_source_group->{CPP} .= $semicolon . "\n";
     }
     elsif ( $self_class eq 'VariableDeclaration_180' ) { # VariableDeclaration -> MY Type VARIABLE_SYMBOL OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef' ';'
-        my string $type          = $self->{children}->[1]->{children}->[0];
-        my string $symbol        = $self->{children}->[2];
+        my string $type   = $self->{children}->[1]->{children}->[0];
+        my string $symbol = $self->{children}->[2];
         my object $subexpression = $self->{children}->[4];
         my string $semicolon     = $self->{children}->[8];
 
+        substr $symbol, 0, 1, q{};                       # remove leading $ sigil
 #        RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subexpression = ' . RPerl::Parser::rperl_ast__dump($subexpression) . "\n" );
 
+        if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
+            die 'ERROR ECVGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+                . $symbol
+                . ' already declared in this scope, namespace '
+                . $modes->{_symbol_table}->{_namespace}
+                . ', subroutine/method '
+                . $modes->{_symbol_table}->{_subroutine}
+                . '(), dying'
+                . "\n";
+        }
+        $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}
+            = { isa => 'RPerl::Operation::Expression::SubExpression::Variable', type => $type };
         $type =~ s/^constant_/const\ /gxms;              # 'constant_foo' becomes 'const foo'
-                                                         # compensate for array size vs array max index (difference of 1)
+        $type =~ s/::/__/gxms;                           # 'Class::Subclass' becomes 'Class__Subclass'
+
+        # compensate for array size vs array max index (difference of 1)
         my bool $size_compensated = 0;
         if ( $subexpression->{children}->[0]->isa('RPerl::Operation::Expression::Operator') ) {
             if ( $subexpression->{children}->[0]->{children}->[0]->isa('RPerl::Operation::Expression::Operator::Math::AddSubtract') ) {
@@ -204,8 +254,8 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 }
             }
         }
-        $cpp_source_group->{CPP} .= $type . q{ } . ( substr $symbol, 1 ) . $semicolon . "\n";
-        $cpp_source_group->{CPP} .= ( substr $symbol, 1 ) . q{.resize(};
+        $cpp_source_group->{CPP} .= $type . q{ } . $symbol . $semicolon . "\n";
+        $cpp_source_group->{CPP} .= $symbol . q{.resize(};
         $cpp_source_subgroup = $subexpression->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
         if ( not $size_compensated ) {
 
@@ -217,9 +267,25 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     }
     elsif ( $self_class eq 'VariableDeclaration_181' ) {    # VariableDeclaration -> MY TYPE_FHREF FHREF_SYMBOL ';'
         my string $type_fhref   = $self->{children}->[1];
-        my string $fhref_symbol = $self->{children}->[2];
-        $type_fhref =~ s/^constant_/const\ /gxms;           # 'constant_foo' becomes 'const foo'
-        $cpp_source_group->{CPP} .= $type_fhref . q{ } . ( substr $fhref_symbol, 1 ) . ';' . "\n";
+        my string $symbol_fhref = $self->{children}->[2];
+        substr $symbol_fhref, 0, 1, q{};                    # remove leading $ sigil
+
+        if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol_fhref} ) {
+            die 'ERROR ECVGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+                . $symbol_fhref
+                . ' already declared in this scope, namespace '
+                . $modes->{_symbol_table}->{_namespace}
+                . ', subroutine/method '
+                . $modes->{_symbol_table}->{_subroutine}
+                . '(), dying'
+                . "\n";
+        }
+        $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol_fhref}
+            = { isa => 'RPerl::Operation::Expression::SubExpression::Variable', type => $type_fhref };
+
+        # NEED ANSWER: do we enable constant_filehandleref type???
+        #        $type_fhref =~ s/^constant_/const\ /gxms;           # 'constant_foo' becomes 'const foo'
+        $cpp_source_group->{CPP} .= $type_fhref . q{ } . $symbol_fhref . ';' . "\n";
     }
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '

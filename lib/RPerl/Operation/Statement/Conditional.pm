@@ -170,7 +170,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         RPerl::Generator::source_group_append( $cpp_source_group,
             $cpp_source_subgroup );
         $cpp_source_group->{CPP} .= q{ } . $right_paren . q{ };
-        $cpp_source_subgroup = $codeblock->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        $cpp_source_subgroup = $codeblock->ast_to_cpp__generate__CPPOPS_CPPTYPES(undef, $modes);  # undef $loop_label
         RPerl::Generator::source_group_append( $cpp_source_group,
             $cpp_source_subgroup );
 

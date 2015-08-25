@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine::Method::Arguments;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_100;
+our $VERSION = 0.003_200;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CodeBlock::Subroutine::Arguments);
@@ -30,7 +30,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     # MethodArguments -> LPAREN_MY Type SELF (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;'
     my string $lparen_my               = $self->{children}->[0];
-    my object $self_type             = $self->{children}->[1];
+    my object $self_type               = $self->{children}->[1];
     my string $self_symbol             = $self->{children}->[2];
     my object $arguments_star          = $self->{children}->[3];
     my string $rparen                  = $self->{children}->[4];
@@ -71,6 +71,11 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my object $arguments_star = $self->{children}->[3];
 
     my string_arrayref $arguments = [];
+    # discard trailing '::' to go from namespace to class-name-as-type
+    $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{this} = {
+        isa  => 'RPerl::CodeBlock::Subroutine::Arguments',
+        type => ( substr $modes->{_symbol_table}->{_namespace}, 0, ( ( length $modes->{_symbol_table}->{_namespace} ) - 2 ) )
+    };
 
 #RPerl::diag( 'in Method::Arguments->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $arguments_star = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_star) . "\n" );
 
@@ -81,11 +86,16 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         shift @{ $arguments_star_dclone->{children} };    # discard $my
         my object $arguments_type = shift @{ $arguments_star_dclone->{children} };
         my object $arguments_name = shift @{ $arguments_star_dclone->{children} };
-        $arguments_type->{children}->[0] =~ s/^constant_/const\ /gxms;  # 'constant_foo' becomes 'const foo'
-        push @{$arguments}, ( $arguments_type->{children}->[0] . q{ } . ( substr $arguments_name->{attr}, 1 ) );
+        substr $arguments_name->{attr}, 0, 1, q{};        # remove leading $ sigil
+
+        $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{ $arguments_name->{attr} }
+            = { isa => 'RPerl::CodeBlock::Subroutine::Method::Arguments', type => $arguments_type->{children}->[0] };
+        $arguments_type->{children}->[0] =~ s/^constant_/const\ /gxms;    # 'constant_foo' becomes 'const foo'
+        $arguments_type->{children}->[0] =~ s/::/__/gxms;                 # 'Class::Subclass' becomes 'Class__Subclass'
+        push @{$arguments}, ( $arguments_type->{children}->[0] . q{ } . $arguments_name->{attr} );
     }
     $cpp_source_group->{CPP} .= join ', ', @{$arguments};
     return $cpp_source_group;
 };
 
-1;                                                        # end of class
+1;                                                                        # end of class

@@ -68,6 +68,11 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     my object $operations_star    = $self->{children}->[5];
     my string $right_brace        = $self->{children}->[6];
     my string $semicolon          = $self->{children}->[7];
+ 
+    if ((substr $name, 1, 1) eq '_') {
+        die 'ERROR ECVGEASRP08, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: subroutine name ' . ($name)
+                . ' must not start with underscore, dying' . "\n";
+    }
 
     $rperl_source_group->{PMC}
         .= $our . q{ } . $return_type->{children}->[0] . q{ } . $name . q{ } . $equal_sub . "\n";
@@ -96,14 +101,24 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 
 our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
+#    RPerl::diag( 'in Subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n");
+ 
     my string_hashref $cpp_source_group = { H => q{} };
 
     $self = $self->{children}->[0];    # unwrap Subroutine_50 from MethodOrSubroutine_79
     my string $return_type = $self->{children}->[1]->{children}->[0];
     my string $name        = $self->{children}->[2];
-    substr $name, 0, 1, '';            # remove leading $ sigil
     my object $arguments_optional = $self->{children}->[4];
+
+    substr $name, 0, 1, q{};            # remove leading $ sigil
     my string_arrayref $arguments = [];
+ 
+    if ((substr $name, 0, 1) eq '_') {
+        die 'ERROR ECVGEASCP08, CODE GENERATOR, ABSTRACT SYNTAX TO C++: subroutine name ' . ($name)
+                . ' must not start with underscore, dying' . "\n";
+    }
+    $modes->{_symbol_table}->{_subroutine} = $name;  # set current subroutine/method
+    $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{_global}->{$name} = {isa => 'RPerl::CodeBlock::Subroutine', type => $return_type};  # create individual symtab entry
 
 #RPerl::diag( 'in Subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), have $arguments_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_optional) . "\n" );
 #RPerl::diag( 'in Subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), have $return_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($return_type) . "\n" );
@@ -133,12 +148,13 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     $self = $self->{children}->[0];    # unwrap Subroutine_50 from MethodOrSubroutine_79
     my string $return_type = $self->{children}->[1]->{children}->[0];
     my string $name        = $self->{children}->[2];
-    substr $name, 0, 1, '';            # remove leading $ sigil
     my object $arguments_optional = $self->{children}->[4];
-    my string_arrayref $arguments = [];
     my object $operations_star    = $self->{children}->[5];
-    my object $cpp_source_subgroup;
 
+    substr $name, 0, 1, q{};            # remove leading $ sigil
+    my string_arrayref $arguments = [];
+    my object $cpp_source_subgroup;
+ 
 #RPerl::diag( 'in Subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), have $arguments_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_optional) . "\n" );
 #RPerl::diag( 'in Subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), have $return_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($return_type) . "\n" );
 

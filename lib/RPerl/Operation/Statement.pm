@@ -73,6 +73,8 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 
 our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
+#    RPerl::diag( 'in Statement->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n");
+
     my string_hashref $cpp_source_group = { CPP => q{} };
     my object $child0 = $self->{children}->[0];
     my string $child0_class = ref $child0;

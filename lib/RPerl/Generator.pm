@@ -301,6 +301,7 @@ our string_hashref $ast_to_cpp__generate = sub {
 
     #    RPerl::diag("in Generator::ast_to_cpp__generate(), received \$node =\n" . RPerl::Parser::rperl_ast__dump($node) . "\n");
     #    RPerl::diag("in Generator::ast_to_cpp__generate(), received \$modes =\n" . Dumper($modes) . "\n");
+#    RPerl::diag( 'in Generator::ast_to_cpp__generate(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
 
     RPerl::verbose('GENERATE:           Generate   C++ syntax...       ');
 

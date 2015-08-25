@@ -64,7 +64,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             substr $cpp_source_group->{CPP}, -1, 1, q{"};
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP09, CODE GENERATOR, ABSTRACT SYNTAX TO C++: string literal started with single-quote but not terminated with single-quote, dying' ) . "\n";
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP52, CODE GENERATOR, ABSTRACT SYNTAX TO C++: string literal started with single-quote but not terminated with single-quote, dying' ) . "\n";
         }
     }
     elsif ((substr $cpp_source_group->{CPP}, 0, 2) eq 'q{') {
@@ -73,12 +73,12 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             substr $cpp_source_group->{CPP}, -1, 1, q{"};
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: string literal started with q-left-brace single-quote but not terminated with right-brace, dying' ) . "\n";
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP53, CODE GENERATOR, ABSTRACT SYNTAX TO C++: string literal started with q-left-brace single-quote but not terminated with right-brace, dying' ) . "\n";
         }
     }
 # NEED ADD ERROR CHECKING: double-quoted strings are okay for non-sigils containing newline or tab, non-quoted strings are not okay?
 #    else {
-#        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP08, CODE GENERATOR, ABSTRACT SYNTAX TO C++: string literal not started with single-quote, dying' ) . "\n";
+#        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP51, CODE GENERATOR, ABSTRACT SYNTAX TO C++: string literal not started with single-quote, dying' ) . "\n";
 #    }
 
     # cast all string literals to the RPerl-defined C++ string type

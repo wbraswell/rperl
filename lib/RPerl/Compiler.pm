@@ -175,6 +175,8 @@ our void $rperl_to_xsbinary__parse_generate_compile = sub {
     my object $rperl_ast;
     my string_hashref $source_group;
 
+#    RPerl::diag( 'in Compiler->rperl_to_xsbinary__parse_generate_compile(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
+
     # [[[ PARSE RPERL TO AST ]]]
 
     if (   ( $modes->{compile} eq 'PARSE' )
@@ -289,8 +291,13 @@ our hashref_arrayref $generate_output_file_names = sub {
 our void $save_source_files = sub {
     ( my string_hashref $source_group, my string_hashref $file_name_group, my string_hashref $modes ) = @_;
 
+    # START HERE: use symtab to properly generate variables
+    # START HERE: use symtab to properly generate variables
+    # START HERE: use symtab to properly generate variables
+
 #    RPerl::diag( q{in Compiler::save_source_files(), received $source_group =} . "\n" . Dumper($source_group) . "\n" );
 #    RPerl::diag( q{in Compiler::save_source_files(), received $file_name_group =} . "\n" . Dumper($file_name_group) . "\n" );
+    RPerl::diag( 'in Compiler::save_source_files(), received $modes->{_symbol_table} =' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
 
     foreach my string $suffix_key ( sort keys %{$source_group} ) {
         if ((substr $suffix_key, 0, 1) eq '_') { next; }
