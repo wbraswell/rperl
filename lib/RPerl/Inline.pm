@@ -33,6 +33,7 @@ our %ARGS = (
 
 # NEED UPGRADE: strip C++ incompat CFLAGS
 #  ccflags => $Config{ccflags} . ' -DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
+#    force_build => 1,  # debug use only
     inc               => "-I$RPerl::INCLUDE_PATH -Ilib",
     build_noisy       => ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ),  # suppress or display actual g++ compiler commands
     clean_after_build => 0,                          # cache it

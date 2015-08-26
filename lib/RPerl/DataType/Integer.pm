@@ -15,7 +15,7 @@ use RPerl::DataType::Scalar;
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 
 # [[[ SUB-TYPES ]]]
-# an integer is a whole number, it has no floating-pointeger (fractional/decimal) component
+# an integer is a whole number, it has no floating-pointer (fractional/decimal) component
 package  # hide from PAUSE indexing
     integer;
 use strict;

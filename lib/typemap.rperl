@@ -1,4 +1,4 @@
-# VERSION 0.002_001
+# VERSION 0.002_010
 # NEED FIX, CORRELATION #rp02: bug, possibly in Inline, causing inability to declare 3rd count_FOO argument to T_PACKEDARRAY; temporarily solved here
 # DEV NOTE: all comments must be on their own line or typemapping will silently fail and typemapped subroutines will fail to bind from Inline to Perl
 
@@ -16,3 +16,7 @@ string_arrayref	T_PACKED
 integer_hashref	T_PACKED
 number_hashref	T_PACKED
 string_hashref	T_PACKED
+
+# CORRELATION #pp04: attempt to manually define pack/unpack for object return type
+# USER TYPES
+#PhysicsPerl__Astro__Body T_PACKED

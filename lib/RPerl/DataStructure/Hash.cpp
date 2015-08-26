@@ -486,7 +486,7 @@ void XS_pack_integer_hashref(SV* output_hv_ref, integer_hashref input_unordered_
 	HV* output_hv = newHV();  // initialize output hash to empty
 	integer input_unordered_map_num_keys = input_unordered_map.size();
 	integer_hashref_const_iterator i;
-	SV* temp_sv_pointegerer;
+	SV* temp_sv_pointer;
 
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_hashref(), have input_unordered_map_num_keys = %d\n", input_unordered_map_num_keys);
 
@@ -497,9 +497,9 @@ void XS_pack_integer_hashref(SV* output_hv_ref, integer_hashref input_unordered_
 	}
 //	else warn("in CPPOPS_CPPTYPES XS_pack_integer_hashref(), hash was empty, returning empty hash via newHV()");
 
-	temp_sv_pointegerer = newSVrv(output_hv_ref, NULL);	  // upgrade output stack SV to an RV
-	SvREFCNT_dec(temp_sv_pointegerer);		 // discard temporary pointegerer
-	SvRV(output_hv_ref) = (SV*)output_hv;	   // make output stack RV pointeger at our output HV
+	temp_sv_pointer = newSVrv(output_hv_ref, NULL);	  // upgrade output stack SV to an RV
+	SvREFCNT_dec(temp_sv_pointer);		 // discard temporary pointer
+	SvRV(output_hv_ref) = (SV*)output_hv;	   // make output stack RV pointer at our output HV
 
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_hashref(), bottom of subroutine\n");
 }
@@ -555,7 +555,7 @@ void XS_pack_number_hashref(SV* output_hv_ref, number_hashref input_unordered_ma
 	HV* output_hv = newHV();  // initialize output hash to empty
 	integer input_unordered_map_num_keys = input_unordered_map.size();
 	number_hashref_const_iterator i;
-	SV* temp_sv_pointegerer;
+	SV* temp_sv_pointer;
 
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_hashref(), have input_unordered_map_num_keys = %d\n", input_unordered_map_num_keys);
 
@@ -566,9 +566,9 @@ void XS_pack_number_hashref(SV* output_hv_ref, number_hashref input_unordered_ma
 	}
 //	else warn("in CPPOPS_CPPTYPES XS_pack_number_hashref(), hash was empty, returning empty hash via newHV()");
 
-	temp_sv_pointegerer = newSVrv(output_hv_ref, NULL);	  // upgrade output stack SV to an RV
-	SvREFCNT_dec(temp_sv_pointegerer);		 // discard temporary pointegerer
-	SvRV(output_hv_ref) = (SV*)output_hv;	   // make output stack RV pointeger at our output HV
+	temp_sv_pointer = newSVrv(output_hv_ref, NULL);	  // upgrade output stack SV to an RV
+	SvREFCNT_dec(temp_sv_pointer);		 // discard temporary pointer
+	SvRV(output_hv_ref) = (SV*)output_hv;	   // make output stack RV pointer at our output HV
 
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_hashref(), bottom of subroutine\n");
 }
@@ -624,7 +624,7 @@ void XS_pack_string_hashref(SV* output_hv_ref, string_hashref input_unordered_ma
 	HV* output_hv = newHV();  // initialize output hash to empty
 	integer input_unordered_map_num_keys = input_unordered_map.size();
 	string_hashref_const_iterator i;
-	SV* temp_sv_pointegerer;
+	SV* temp_sv_pointer;
 
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_hashref(), have input_unordered_map_num_keys = %d\n", input_unordered_map_num_keys);
 
@@ -635,9 +635,9 @@ void XS_pack_string_hashref(SV* output_hv_ref, string_hashref input_unordered_ma
 	}
 //	else warn("in CPPOPS_CPPTYPES XS_pack_string_hashref(), hash was empty, returning empty hash via newHV()");
 
-	temp_sv_pointegerer = newSVrv(output_hv_ref, NULL);	  // upgrade output stack SV to an RV
-	SvREFCNT_dec(temp_sv_pointegerer);		 // discard temporary pointegerer
-	SvRV(output_hv_ref) = (SV*)output_hv;	   // make output stack RV pointeger at our output HV
+	temp_sv_pointer = newSVrv(output_hv_ref, NULL);	  // upgrade output stack SV to an RV
+	SvREFCNT_dec(temp_sv_pointer);		 // discard temporary pointer
+	SvRV(output_hv_ref) = (SV*)output_hv;	   // make output stack RV pointer at our output HV
 
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_hashref(), bottom of subroutine\n");
 }

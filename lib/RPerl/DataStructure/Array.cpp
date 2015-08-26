@@ -230,16 +230,16 @@ void XS_pack_integer_arrayref(SV* output_av_ref, integer_arrayref input_vector)
 	AV* output_av = newAV();  // initialize output array to empty
 	integer input_vector_length = input_vector.size();
 	integer i;
-	SV* temp_sv_pointegerer;
+	SV* temp_sv_pointer;
 
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref(), have input_vector_length = %d\n", input_vector_length);
 
 	if (input_vector_length > 0) { for (i = 0;  i < input_vector_length;  ++i) { av_push(output_av, newSViv(input_vector[i])); } }
 //	else warn("in CPPOPS_CPPTYPES XS_pack_integer_arrayref(), array was empty, returning empty array via newAV()");
 
-	temp_sv_pointegerer = newSVrv(output_av_ref, NULL);	  // upgrade output stack SV to an RV
-	SvREFCNT_dec(temp_sv_pointegerer);		 // discard temporary pointegerer
-	SvRV(output_av_ref) = (SV*)output_av;	   // make output stack RV pointeger at our output AV
+	temp_sv_pointer = newSVrv(output_av_ref, NULL);	  // upgrade output stack SV to an RV
+	SvREFCNT_dec(temp_sv_pointer);		 // discard temporary pointer
+	SvRV(output_av_ref) = (SV*)output_av;	   // make output stack RV pointer at our output AV
 
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref(), bottom of subroutine\n");
 }
@@ -290,16 +290,16 @@ void XS_pack_number_arrayref(SV* output_av_ref, number_arrayref input_vector)
 	AV* output_av = newAV();  // initialize output array to empty
 	integer input_vector_length = input_vector.size();
 	integer i;
-	SV* temp_sv_pointegerer;
+	SV* temp_sv_pointer;
 
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_arrayref(), have input_vector_length = %d\n", input_vector_length);
 
 	if (input_vector_length > 0) { for (i = 0;  i < input_vector_length;  ++i) { av_push(output_av, newSVnv(input_vector[i])); } }
 //	else warn("in CPPOPS_CPPTYPES XS_pack_number_arrayref(), array was empty, returning empty array via newAV()");
 
-	temp_sv_pointegerer = newSVrv(output_av_ref, NULL);	  // upgrade output stack SV to an RV
-	SvREFCNT_dec(temp_sv_pointegerer);		 // discard temporary pointegerer
-	SvRV(output_av_ref) = (SV*)output_av;	   // make output stack RV pointeger at our output AV
+	temp_sv_pointer = newSVrv(output_av_ref, NULL);	  // upgrade output stack SV to an RV
+	SvREFCNT_dec(temp_sv_pointer);		 // discard temporary pointer
+	SvRV(output_av_ref) = (SV*)output_av;	   // make output stack RV pointer at our output AV
 
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_arrayref(), bottom of subroutine\n");
 }
@@ -350,16 +350,16 @@ void XS_pack_string_arrayref(SV* output_av_ref, string_arrayref input_vector)
 	AV* output_av = newAV();  // initialize output array to empty
 	integer input_vector_length = input_vector.size();
 	integer i;
-	SV* temp_sv_pointegerer;
+	SV* temp_sv_pointer;
 
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_arrayref(), have input_vector_length = %d\n", input_vector_length);
 
 	if (input_vector_length > 0) { for (i = 0;  i < input_vector_length;  ++i) { av_push(output_av, newSVpv(input_vector[i].data(), input_vector[i].size())); } }
 //	else warn("in CPPOPS_CPPTYPES XS_pack_string_arrayref(), array was empty, returning empty array via newAV()");
 
-	temp_sv_pointegerer = newSVrv(output_av_ref, NULL);	  // upgrade output stack SV to an RV
-	SvREFCNT_dec(temp_sv_pointegerer);		 // discard temporary pointegerer
-	SvRV(output_av_ref) = (SV*)output_av;	   // make output stack RV pointeger at our output AV
+	temp_sv_pointer = newSVrv(output_av_ref, NULL);	  // upgrade output stack SV to an RV
+	SvREFCNT_dec(temp_sv_pointer);		 // discard temporary pointer
+	SvRV(output_av_ref) = (SV*)output_av;	   // make output stack RV pointer at our output AV
 
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_arrayref(), bottom of subroutine\n");
 }

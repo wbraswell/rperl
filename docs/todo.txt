@@ -25,6 +25,14 @@ add symtab building and checking to PERLOPS_PERLTYPES
 file bug, I::CPP comments
 file bug, I::CPP std::array
 file bug, I::CPP new() clobber
+file bug, I::CPP when attempting to return object type, CORRELATION #pp04
+	In function ‘void XS_PhysicsPerl__Astro__System_get_bodies_element(PerlInterpreter*, CV*)’: ... error: ‘CLASS’ was not declared in this scope ... sv_setref_pv( ST(0), CLASS, (void*)RETVAL );
+	hand-patched code below allows one-time use, then segfault
+	vi build/eval_637_3400/eval_637_3400.c
+	char *  CLASS = (char *)"PhysicsPerl::Astro::Body"
+;
+	chmod a-w build/eval_637_3400/eval_637_3400.c
+	
 Remove all object* types
 Fix ::number_to_string() in MyTest.pm
 update RPerl::filter() to properly handle *.pl files
