@@ -10,7 +10,9 @@ DONE Implement, Array Size Declaration
 DONE Implement, Numbers, Positive '+' Prefix & Scientific Notation
 Loops, optimize exit-condition minus-one and less-than
 App, PhysicsPerl, Alioth Shootout N-Body Benchmark
-tests; constructor type mismatch, array size declaration compensation, package/subroutine/method names starting w/ underscore, variable redeclaration (masking)
+tests; constructor type mismatch, array size declaration compensation, package/subroutine/method names starting w/ underscore, variable redeclaration (masking), 
+	properties & hash type-inner type-vs-key name mismatch (PERLOPS Class.pm properties accessors/mutators, CPPOPS entry & entrytyped),
+	accessors/mutators including get_*_element() & get_*_value()
 
 RELEASE v1.1
 

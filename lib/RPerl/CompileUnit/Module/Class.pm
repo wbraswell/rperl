@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.023_000;
+our $VERSION = 0.030_000;
 
 # [[[ OO INHERITANCE ]]]
 # BASE CLASS HAS NO INHERITANCE
@@ -54,15 +54,19 @@ INIT {
     # DEV NOTE: should be safe to use basename() here instead of fileparse(), because $PROGRAM_NAME should never end in a directory
     $INC{ basename($PROGRAM_NAME) } = $PROGRAM_NAME;
 
-#    RPerl::diag('in Class.pm INIT block, have %INC =' . "\n" . Dumper(\%INC) . "\n");
-#    RPerl::diag('in Class.pm INIT block, have $rperlnamespaces_generated::CORE =' . "\n" . Dumper($rperlnamespaces_generated::CORE) . "\n");
+    #    RPerl::diag('in Class.pm INIT block, have %INC =' . "\n" . Dumper(\%INC) . "\n");
+    #    RPerl::diag('in Class.pm INIT block, have $rperlnamespaces_generated::CORE =' . "\n" . Dumper($rperlnamespaces_generated::CORE) . "\n");
 
-    my $module_filename_long;               # string
+    my $module_filename_long;           # string
     my $use_rperl;                      # bool
+    my $inside_package;                 # bool
     my $package_name;                   # string
     my $package_name_underscores;       # string
-    my $namespace_root;                # string
+    my $namespace_root;                 # string
     my $object_properties;              # hashref
+    my $object_properties_string;       # string
+    my $object_properties_types;        # hashref
+    my $inside_object_properties;       # bool
     my $subroutine_type;                # string
     my $subroutine_name;                # string
     my $CHECK;                          # string
@@ -82,15 +86,19 @@ INIT {
         }
 
         $use_rperl                   = 0;
+        $inside_package              = 0;
         $package_name                = q{};
         $CHECK                       = $RPerl::CHECK;    # reset data type checking to RPerl default for every file
+        $object_properties_string    = q{};
+        $object_properties_types     = {};
+        $inside_object_properties    = 0;
         $inside_subroutine           = 0;
         $inside_subroutine_arguments = 0;
         $subroutine_arguments_line   = q{};
 
         $namespace_root = RPerl::filename_short_to_namespace_root_guess($module_filename_short);
 
-#	    RPerl::diag(q{in Class.pm INIT block, have $namespace_root = '} . $namespace_root . "'\n");
+        #	    RPerl::diag(q{in Class.pm INIT block, have $namespace_root = '} . $namespace_root . "'\n");
 
         # DEV NOTE: avoid error...
         # Name "rperlnamespaces_generated::RPERL_DEPS" used only once: possible typo
@@ -190,19 +198,30 @@ INIT {
                 #				RPerl::diag("in Class.pm INIT block, have \$module_file_line =\n$module_file_line\n");
 
                 # create ops/types reporting subroutine & accessor/mutator object methods for each RPerl package
- 
+
                 # user-style RPerl header, anything that starts with 'use RPerl;'
                 if ( $module_file_line =~ /^\s*(use\s+RPerl\s*;)/xms ) {
-#    				RPerl::diag(q{in Class.pm INIT block, found '} . $1 . q{' in $module_filename_short = } . $module_filename_short . "\n");
+
+                    #    				RPerl::diag(q{in Class.pm INIT block, found '} . $1 . q{' in $module_filename_short = } . $module_filename_short . "\n");
                     $use_rperl = 1;
                     next;
                 }
 
+                # package declaration
                 if ( $module_file_line =~ /^\s*package\s+/xms ) {
+
+                    # object properties, save types from just-finished package
+                    if ($inside_package) {
+                        $object_properties_types = save_object_properties_types( $package_name, $object_properties_string, $object_properties_types );
+                        $object_properties_string = q{};
+                    }
+                    $inside_package = 1;
+
                     # one-line package declaration, indexed by PAUSE unless listed in no_index in Makefile.PL
                     if ( $module_file_line =~ /^\s*package\s+(\w+(::\w+)*)\;.*$/xms ) {
                         $package_name = $1;
-#                        RPerl::diag( 'in Class.pm INIT block, one-line package declaration, have $package name = ' . $package_name . "\n" );
+
+                   #                        RPerl::diag( 'in Class.pm INIT block, one-line package declaration, have $package name = ' . $package_name . "\n" );
                     }
 
                     # two-line package declaration, not indexed by PAUSE
@@ -211,7 +230,8 @@ INIT {
                         chomp $module_file_line;
                         if ( $module_file_line =~ /^\s*(\w+(::\w+)*)\;.*$/xms ) {
                             $package_name = $1;
-#                            RPerl::diag( 'in Class.pm INIT block, two-line package declaration, have $package name = ' . $package_name . "\n" );
+
+               #                            RPerl::diag( 'in Class.pm INIT block, two-line package declaration, have $package name = ' . $package_name . "\n" );
                         }
                         else {
                             croak q{Improperly formed two-line package declaration found in file '}
@@ -222,7 +242,11 @@ INIT {
                         }
                     }
                     else {
-                        croak q{Improperly formed package declaration found in file '} . $module_filename_long . q{' near '} . $module_file_line . q{', croaking};
+                        croak q{Improperly formed package declaration found in file '}
+                            . $module_filename_long
+                            . q{' near '}
+                            . $module_file_line
+                            . q{', croaking};
                     }
 
                     if ($inside_subroutine) {
@@ -235,20 +259,22 @@ INIT {
 
                     # system-style RPerl header, 'use strict; use warnings; use RPerl::AfterSubclass;' on 3 lines
                     # don't check for $VERSION due to numerous un-versioned subtypes
-                    if (not $use_rperl) {
-                        foreach my $rperl_header_line ('use strict;', 'use warnings;', 'use RPerl::AfterSubclass;') {
+                    if ( not $use_rperl ) {
+                        foreach my $rperl_header_line ( 'use strict;', 'use warnings;', 'use RPerl::AfterSubclass;' ) {
                             $module_file_line = <$MODULE_FILE>;
                             chomp $module_file_line;
                             if ( $module_file_line !~ /\Q$rperl_header_line/xms ) {
+
 #                    			RPerl::diag(q{in Class.pm INIT block, failed to find RPerl header line '} . $rperl_header_line . q{' for $module_filename_short = } . $module_filename_short . ', aborting RPerl activation of entire file' . "\n");
                                 next MODULE_FILE_LINE_LOOP;
                             }
                         }
-#                        RPerl::diag('in Class.pm INIT block, found RPerl header in $module_filename_short = ' . $module_filename_short . "\n");
+
+                #                        RPerl::diag('in Class.pm INIT block, found RPerl header in $module_filename_short = ' . $module_filename_short . "\n");
                         $use_rperl = 1;
                     }
 
-#                    RPerl::diag(q{in Class.pm INIT block, have $use_rperl, enabling package in $module_filename_short = } . $module_filename_short . "\n");
+    #                    RPerl::diag(q{in Class.pm INIT block, have $use_rperl, enabling package in $module_filename_short = } . $module_filename_short . "\n");
 
 # ops/types reporting subroutine
 # DEV NOTE, CORRELATION #rp18: RPerl::DataStructure::Array & Hash can not 'use RPerl;' so they are skipped in the header-checking loop above, their *__MODE_ID() subroutines are not created below
@@ -262,51 +288,29 @@ INIT {
                         if ($EVAL_ERROR) { croak($EVAL_ERROR); }
                     }
 
-                    # accessor/mutator object methods
-                    $object_properties = eval "\$$package_name\:\:properties";
-
-                    foreach my $object_property_name ( sort keys %{$object_properties} ) {
-
-                        #						RPerl::diag("in Class.pm INIT block, have \$object_property_name = '$object_property_name'\n");
-                        # DEV NOTE, CORRELATION #rp03: avoid re-defining class accessor/mutator methods; so far only triggered by RPerl::CodeBlock::Subroutine
-                        # because it has a special BEGIN{} block with multiple package names including it's own package name
-                        if ( not eval( 'defined &' . $package_name . '::get_' . $object_property_name ) ) {
-
-             #                            eval "\*\{$package_name\:\:get_$object_property_name\} \= sub \{ return \$\_\[0\]\-\>\{$object_property_name\}\; \}\;"
-                            eval( '*{' . $package_name . '::get_' . $object_property_name . '} = sub { return $_[0]->{' . $object_property_name . '}; };' )
-                                or croak($EVAL_ERROR);
-                            if ($EVAL_ERROR) { croak($EVAL_ERROR); }
-
-#eval "\*\{$package_name\:\:get_$object_property_name\} \= sub \{ RPerl::diag(\"IN POST\-INIT\, accessor MODE $package_name\:\:get_$object_property_name\\n\"\; return \$\_\[0\]\-\>\{$object_property_name\}\; \}\;";
-                        }
-
-                        if ( not eval( 'defined &' . $package_name . '::set_' . $object_property_name ) ) {
-
-#                            eval "\*\{$package_name\:\:set_$object_property_name\} \= sub \{ \$\_\[0\]\-\>\{$object_property_name\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$object_property_name\}\; \}\;"
-                            eval(     '*{'
-                                    . $package_name
-                                    . '::set_'
-                                    . $object_property_name
-                                    . '} = sub { $_[0]->{'
-                                    . $object_property_name
-                                    . '} = $_[1]; return $_[0]->{'
-                                    . $object_property_name
-                                    . '}; };' )
-                                or croak($EVAL_ERROR);
-                            if ($EVAL_ERROR) { croak($EVAL_ERROR); }
-
-#eval "\*\{$package_name\:\:set_$object_property_name\} \= sub \{ RPerl::diag(\"IN POST\-INIT\, mutator MODE $package_name\:\:set_$object_property_name\\n\"\; \$\_\[0\]\-\>\{$object_property_name\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$object_property_name\}\; \}\;";
-                        }
-                    }
                     next;
                 }
- 
+
+                # object properties, remember types for deferred accessor/mutator generation below
+                if ( $module_file_line =~ /^\s*our\s+hashref\s+\$properties/xms ) {
+
+                    # hard-coded example
+                    #our hashref $properties = { foo => my Foo::Bar_arrayref $TYPED_foo = undef, quux => my integer_hashref $TYPED_quux = {a => 12, b => 21} };
+                    $inside_object_properties = 1;
+                    chomp $module_file_line;    # strip trailing newline
+                    $object_properties_string .= $module_file_line;
+                    next;
+                }
+
                 # create symbol table entries for methods and plain-old non-method subroutines
                 if ( $module_file_line =~ /^\s*our\s+([\w:]+)\s+\$(\w+)\s+\=\s+sub\s+\{/xms ) {
-                    if (not $use_rperl) {
+                    $inside_object_properties = 0;
+                    if ( not $use_rperl ) {
+
 #                        RPerl::diag(q{in Class.pm INIT block, do NOT have $use_rperl, skipping subroutine in $module_filename_short = } . $module_filename_short . "\n");
                         next;
                     }
+
 #                    else { RPerl::diag(q{in Class.pm INIT block, have $use_rperl, enabling subroutine in $module_filename_short = } . $module_filename_short . "\n"); }
 
                     if ($inside_subroutine_arguments) {
@@ -317,6 +321,7 @@ INIT {
 
                     # activate previous subroutine, no arguments
                     if ($inside_subroutine) {
+
 #                        RPerl::diag( q{in Class.pm INIT block, have $inside_subroutine = } . $inside_subroutine . q{, about to call activate_subroutine() while inside subroutine } . $subroutine_name . '()' . "\n" );
                         activate_subroutine( $package_name, $subroutine_name, $subroutine_type, q{}, $module_filename_long );
                     }
@@ -328,7 +333,8 @@ INIT {
 #                    RPerl::diag( q{in Class.pm INIT block, have $CHECK = '} . $CHECK . "'\n" );
 
                     if ( $CHECK eq 'OFF' ) {
-#                        RPerl::diag( q{in Class.pm INIT block, CHECK IS OFF, about to call activate_subroutine()...} . "\n" );
+
+                        #                        RPerl::diag( q{in Class.pm INIT block, CHECK IS OFF, about to call activate_subroutine()...} . "\n" );
                         activate_subroutine( $package_name, $subroutine_name, $subroutine_type, q{}, $module_filename_long );
                     }
                     elsif ( ( $CHECK ne 'ON' ) and ( $CHECK ne 'TRACE' ) ) {
@@ -342,13 +348,37 @@ INIT {
                     next;
                 }
 
+                # skip class properties AKA package variables
+                if ( $module_file_line =~ /^\s*our\s+[\w:]+\s+\$\w+\s+\=/xms ) {
+                    $inside_object_properties = 0;
+                }
+
+                # skip non-RPerl-enabled subroutine/method, using normal Perl 'sub foo {}' syntax instead of RPerl 'our type $foo = sub {};' syntax
+                if ( $module_file_line =~ /^\s*sub\s+[\w:]+\s+\{/xms ) {
+                    $inside_object_properties = 0;
+                }
+
+                # skip end-of-module line
+                if ( $module_file_line =~ /^\s*1\;\s+\#\ end\ of/xms ) {
+                    $inside_object_properties = 0;
+                }
+
+                # object properties, continue to aggregate types
+                if ($inside_object_properties) {
+                    chomp $module_file_line;    # strip trailing newline
+                    $object_properties_string .= $module_file_line;
+                    next;
+                }
+
+                # subroutine/method, process arguments and activate
                 if ($inside_subroutine) {
-                    if (not $use_rperl) {
+                    if ( not $use_rperl ) {
+
 #                        RPerl::diag(q{in Class.pm INIT block, do NOT have $use_rperl, skipping inside subroutine in $module_filename_short = } . $module_filename_short . "\n");
                         next;
                     }
+
 #                    else { RPerl::diag(q{in Class.pm INIT block, have $use_rperl, enabling inside subroutine in $module_filename_short = } . $module_filename_short . "\n"); }
-                    
 
                     #                    RPerl::diag( q{in Class.pm INIT block, have $inside_subroutine = 1} . "\n" );
                     #                    RPerl::diag("in Class.pm INIT block, have \$module_file_line =\n$module_file_line\n");
@@ -383,21 +413,23 @@ INIT {
 
                             if ( $CHECK eq 'ON' ) {
 
-#                                RPerl::diag( 'in Class.pm INIT block, CHECK IS ON' . "\n" );
+                                #                                RPerl::diag( 'in Class.pm INIT block, CHECK IS ON' . "\n" );
                                 my $i = 0;                                                # integer
                                 foreach my $subroutine_argument ( @{$subroutine_arguments} ) {
                                     $subroutine_arguments_check_code .= q{    } . '::' . $subroutine_argument->[0] . '_CHECK( $_[' . $i . '] );' . "\n";
                                     $i++;
                                 }
-#                                RPerl::diag( 'in Class.pm INIT block, CHECK IS ON, about to call activate_subroutine()...' . "\n" );
-                                activate_subroutine( $package_name, $subroutine_name, $subroutine_type, $subroutine_arguments_check_code, $module_filename_long );
+
+                           #                                RPerl::diag( 'in Class.pm INIT block, CHECK IS ON, about to call activate_subroutine()...' . "\n" );
+                                activate_subroutine( $package_name, $subroutine_name, $subroutine_type, $subroutine_arguments_check_code,
+                                    $module_filename_long );
                                 $inside_subroutine         = 0;
                                 $subroutine_arguments_line = q{};
                             }
                             elsif ( $CHECK eq 'TRACE' ) {
 
-#                                RPerl::diag( 'in Class.pm INIT block, CHECK IS TRACE' . "\n" );
-                                my $i = 0;                                                # integer
+                                #                                RPerl::diag( 'in Class.pm INIT block, CHECK IS TRACE' . "\n" );
+                                my $i = 0;    # integer
                                 foreach my $subroutine_argument ( @{$subroutine_arguments} ) {
                                     $subroutine_arguments_check_code
                                         .= q{    } . '::'
@@ -410,8 +442,10 @@ INIT {
                                         . q{()' );} . "\n";
                                     $i++;
                                 }
-#                                RPerl::diag( 'in Class.pm INIT block, CHECK IS TRACE, about to call activate_subroutine()...' . "\n" );
-                                activate_subroutine( $package_name, $subroutine_name, $subroutine_type, $subroutine_arguments_check_code, $module_filename_long );
+
+                        #                                RPerl::diag( 'in Class.pm INIT block, CHECK IS TRACE, about to call activate_subroutine()...' . "\n" );
+                                activate_subroutine( $package_name, $subroutine_name, $subroutine_type, $subroutine_arguments_check_code,
+                                    $module_filename_long );
                                 $inside_subroutine         = 0;
                                 $subroutine_arguments_line = q{};
                             }
@@ -430,21 +464,297 @@ INIT {
                 }
             }
 
+            close $MODULE_FILE or croak $OS_ERROR;
+
             # activate final subroutine in file, no arguments
             if ($inside_subroutine) {
                 if ($inside_subroutine_arguments) {
                     croak('Did not find @_ to end subroutine arguments before end of file, croaking');
                 }
 
-#                RPerl::diag( 'in Class.pm INIT block, activating final subroutine in file, no subroutine arguments found' . "\n" );
+                #                RPerl::diag( 'in Class.pm INIT block, activating final subroutine in file, no subroutine arguments found' . "\n" );
                 activate_subroutine( $package_name, $subroutine_name, $subroutine_type, q{}, $module_filename_long );
                 $inside_subroutine = 0;
             }
-            close $MODULE_FILE or croak $OS_ERROR;
+
+            # object properties, save final package's types
+            $object_properties_types = save_object_properties_types( $package_name, $object_properties_string, $object_properties_types );
+
+#            RPerl::diag( 'in Class.pm INIT block, have $object_properties_types = ' . "\n" . Dumper($object_properties_types) . "\n" ) if ( keys %{$object_properties_types} );
+
+            # accessor/mutator object methods, deferred creation for all packages found in this file
+            foreach $package_name ( sort keys %{$object_properties_types} ) {
+                $object_properties = eval "\$$package_name\:\:properties";
+
+                foreach my $object_property_name ( sort keys %{$object_properties} ) {
+
+                    #						RPerl::diag("in Class.pm INIT block, have \$object_property_name = '$object_property_name'\n");
+                    # DEV NOTE, CORRELATION #rp03: avoid re-defining class accessor/mutator methods; so far only triggered by RPerl::CodeBlock::Subroutine
+                    # because it has a special BEGIN{} block with multiple package names including it's own package name
+
+                    # normal accessor
+                    if ( not eval( 'defined &' . $package_name . '::get_' . $object_property_name ) ) {
+
+             #                            eval "\*\{$package_name\:\:get_$object_property_name\} \= sub \{ return \$\_\[0\]\-\>\{$object_property_name\}\; \}\;"
+                        eval( '*{' . $package_name . '::get_' . $object_property_name . '} = sub { return $_[0]->{' . $object_property_name . '}; };' )
+                            or croak($EVAL_ERROR);
+                        if ($EVAL_ERROR) { croak($EVAL_ERROR); }
+
+#eval "\*\{$package_name\:\:get_$object_property_name\} \= sub \{ RPerl::diag(\"IN POST\-INIT\, accessor MODE $package_name\:\:get_$object_property_name\\n\"\; return \$\_\[0\]\-\>\{$object_property_name\}\; \}\;";
+                    }
+
+                    # normal mutator
+                    if ( not eval( 'defined &' . $package_name . '::set_' . $object_property_name ) ) {
+
+#                            eval "\*\{$package_name\:\:set_$object_property_name\} \= sub \{ \$\_\[0\]\-\>\{$object_property_name\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$object_property_name\}\; \}\;"
+                        eval(     '*{'
+                                . $package_name
+                                . '::set_'
+                                . $object_property_name
+                                . '} = sub { $_[0]->{'
+                                . $object_property_name
+                                . '} = $_[1]; return $_[0]->{'
+                                . $object_property_name
+                                . '}; };' )
+                            or croak($EVAL_ERROR);
+                        if ($EVAL_ERROR) { croak($EVAL_ERROR); }
+
+#eval "\*\{$package_name\:\:set_$object_property_name\} \= sub \{ RPerl::diag(\"IN POST\-INIT\, mutator MODE $package_name\:\:set_$object_property_name\\n\"\; \$\_\[0\]\-\>\{$object_property_name\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$object_property_name\}\; \}\;";
+                    }
+
+                    my $object_property_type = $object_properties_types->{$package_name}->{$object_property_name};
+
+                    # array element accessors
+                    if ( $object_property_type =~ /_arrayref$/ ) {
+                        if ( not eval( 'defined &' . $package_name . '::get_' . $object_property_name . '_element' ) ) {
+                            my $eval_string;
+                            my $object_property_element_type = substr $object_property_type, 0, ( ( length $object_property_type ) - 9 );
+                            if ( exists $rperlnamespaces_generated::RPERL->{ $object_property_element_type . '::' } ) {
+
+                                # arrayref of RPerl data types
+                                if (($object_property_element_type eq 'object') or ($object_property_element_type eq 'hashref')) {
+                                    # arrayref of objects or hashrefs (same as Perl object which is a blessed hashref), set address in $element_tmp, return void
+                                    $eval_string
+                                        = '*{'
+                                        . $package_name
+                                        . '::get_'
+                                        . $object_property_name
+                                        . '_element'
+                                        . '} = sub { ' . '( my '
+                                        . $package_name
+                                        . ' $self, my integer $i, my '
+                                        . $object_property_element_type . ' $'
+                                        . $object_property_name
+                                        . '_element_tmp ) = @_; %{$'
+                                        . $object_property_name
+                                        . '_element_tmp} = %{$self->{'
+                                        . $object_property_name
+                                        . '}->[$i]}; };';
+                                }
+                                elsif ($object_property_element_type eq 'arrayref') {
+                                    # arrayref of arrayrefs, set address in $element_tmp, return void
+                                    $eval_string
+                                        = '*{'
+                                        . $package_name
+                                        . '::get_'
+                                        . $object_property_name
+                                        . '_element'
+                                        . '} = sub { ' . '( my '
+                                        . $package_name
+                                        . ' $self, my integer $i, my '
+                                        . $object_property_element_type . ' $'
+                                        . $object_property_name
+                                        . '_element_tmp ) = @_; @{$'
+                                        . $object_property_name
+                                        . '_element_tmp} = @{$self->{'
+                                        . $object_property_name
+                                        . '}->[$i]}; };';
+                                }
+                                else {
+                                    # arrayref of scalars, return value
+                                    $eval_string
+                                        = '*{'
+                                        . $package_name
+                                        . '::get_'
+                                        . $object_property_name
+                                        . '_element'
+                                        . '} = sub { ' . '( my '
+                                        . $package_name
+                                        . ' $self, my integer $i ) = @_; return $self->{'
+                                        . $object_property_name
+                                        . '}->[$i]; };';
+                                }
+
+#                                RPerl::diag( 'in Class.pm INIT block, have RPerl type array element accessor $eval_string = ' . "\n" . $eval_string . "\n" );
+                            }
+                            else {
+                                #arrayref of user-defined data types (objects), set address in $element_tmp, return void
+# hard-coded example
+#our void::method $get_foo_element = sub { ( my Foo::Bar $self, my integer $i, my Foo::Quux $foo_element_tmp ) = @_; %{$foo_element_tmp} = %{$self->{foo}->[$i]}; };
+                                $eval_string
+                                    = '*{'
+                                    . $package_name
+                                    . '::get_'
+                                    . $object_property_name
+                                    . '_element'
+                                    . '} = sub { ' . '( my '
+                                    . $package_name
+                                    . ' $self, my integer $i, my '
+                                    . $object_property_element_type . ' $'
+                                    . $object_property_name
+                                    . '_element_tmp ) = @_; %{$'
+                                    . $object_property_name
+                                    . '_element_tmp} = %{$self->{'
+                                    . $object_property_name
+                                    . '}->[$i]}; };';
+#                                RPerl::diag( 'in Class::INIT() block, have user-defined object array element accessor $eval_string = ' . "\n" . $eval_string . "\n" );
+                            }
+                            eval($eval_string) or croak($EVAL_ERROR);
+                            if ($EVAL_ERROR) { croak($EVAL_ERROR); }
+                        }
+                    }
+
+                    # hash value accessors
+                    elsif ( $object_property_type =~ /_hashref$/ ) {
+                        if ( not eval( 'defined &' . $package_name . '::get_' . $object_property_name . '_value' ) ) {
+                            my $eval_string;
+                            my $object_property_value_type = substr $object_property_type, 0, ( ( length $object_property_type ) - 8 );
+                            if ( exists $rperlnamespaces_generated::RPERL->{ $object_property_value_type . '::' } ) {
+
+                                # hashref of RPerl data types
+                                if (($object_property_value_type eq 'object') or ($object_property_value_type eq 'hashref')) {
+                                    # hashref of objects or hashrefs (same as Perl object which is a blessed hashref), set address in $value_tmp, return void
+                                    $eval_string
+                                        = '*{'
+                                        . $package_name
+                                        . '::get_'
+                                        . $object_property_name
+                                        . '_value'
+                                        . '} = sub { ' . '( my '
+                                        . $package_name
+                                        . ' $self, my string $key, my '
+                                        . $object_property_value_type . ' $'
+                                        . $object_property_name
+                                        . '_value_tmp ) = @_; %{$'
+                                        . $object_property_name
+                                        . '_value_tmp} = %{$self->{'
+                                        . $object_property_name
+                                        . '}->{$key}}; };';
+                                }
+                                elsif ($object_property_value_type eq 'arrayref') {
+                                    # hashref of arrayrefs, set address in $value_tmp, return void
+                                    $eval_string
+                                        = '*{'
+                                        . $package_name
+                                        . '::get_'
+                                        . $object_property_name
+                                        . '_value'
+                                        . '} = sub { ' . '( my '
+                                        . $package_name
+                                        . ' $self, my string $key, my '
+                                        . $object_property_value_type . ' $'
+                                        . $object_property_name
+                                        . '_value_tmp ) = @_; @{$'
+                                        . $object_property_name
+                                        . '_value_tmp} = @{$self->{'
+                                        . $object_property_name
+                                        . '}->{$key}}; };';
+                                }
+                                else {
+                                    # hashref of scalars, return value
+                                    $eval_string
+                                        = '*{'
+                                        . $package_name
+                                        . '::get_'
+                                        . $object_property_name
+                                        . '_value'
+                                        . '} = sub { ' . '( my '
+                                        . $package_name
+                                        . ' $self, my string $key ) = @_; return $self->{'
+                                        . $object_property_name
+                                        . '}->{$key}; };';
+                                }
+
+#                                RPerl::diag( 'in Class.pm INIT block, have RPerl type hash value accessor $eval_string = ' . "\n" . $eval_string . "\n" );
+                            }
+                            else {
+                                #hashref of user-defined data types (objects), set address in $value_tmp, return void
+# hard-coded example
+#our void::method $get_foo_value = sub { ( my Foo::Bar $self, my string $key, my Foo::Quux $foo_value_tmp ) = @_; %{$foo_value_tmp} = %{$self->{foo}->{$key}}; };
+                                $eval_string
+                                    = '*{'
+                                    . $package_name
+                                    . '::get_'
+                                    . $object_property_name
+                                    . '_value'
+                                    . '} = sub { ' . '( my '
+                                    . $package_name
+                                    . ' $self, my string $key, my '
+                                    . $object_property_value_type . ' $'
+                                    . $object_property_name
+                                    . '_value_tmp ) = @_; %{$'
+                                    . $object_property_name
+                                    . '_value_tmp} = %{$self->{'
+                                    . $object_property_name
+                                    . '}->{$key}}; };';
+#                                RPerl::diag( 'in Class::INIT() block, have user-defined object hash value accessor $eval_string = ' . "\n" . $eval_string . "\n" );
+                            }
+                            eval($eval_string) or croak($EVAL_ERROR);
+                            if ($EVAL_ERROR) { croak($EVAL_ERROR); }
+                        }
+                    }
+                }
+            }
         }
 
 #        else { RPerl::diag('in Class.pm INIT block, found existing $rperlnamespaces_generated::CORE->{' . $namespace_root . '}, aborting RPerl activation of entire file' . "\n"); }
     }
+}
+
+sub save_object_properties_types {
+    ( my $package_name, my $object_properties_string, my $object_properties_types ) = @_;
+    if ( $object_properties_string eq q{} ) {
+
+        #        RPerl::diag( 'in Class::save_object_properties_types(), have NO PROPERTIES $object_properties_string ' . "\n" );
+    }
+    elsif ( $object_properties_string =~ /^\s*our\s+hashref\s+\$properties\s*=\s*\{\s*\}\;/xms ) {
+
+#        RPerl::diag( 'in Class::save_object_properties_types(), have EMPTY PROPERTIES $object_properties_string = ' . "\n" . $object_properties_string . "\n" );
+    }
+    else {
+        $object_properties_string =~ s/^\s*our\s+hashref\s+\$properties\s*=\s*\{(.*)\}\;\s*$/$1/xms;
+
+#        RPerl::diag( 'in Class::save_object_properties_types(), have NON-EMPTY PROPERTIES $object_properties_string = ' . "\n" . $object_properties_string . "\n\n" );
+        $object_properties_string =~ /(\w+)\s*\=\>\s*my\s+([\w:]+)\s+\$TYPED_(\w+)\s*\=\s*/gxms;
+
+        #        RPerl::diag( 'in Class::save_object_properties_types(), have $1 = ' . $1 . "\n" );
+        #        RPerl::diag( 'in Class::save_object_properties_types(), have $2 = ' . $2 . "\n" );
+        #        RPerl::diag( 'in Class::save_object_properties_types(), have $3 = ' . $3 . "\n" );
+        if ( $1 ne $3 ) {
+            die 'ERROR ECVGEPPRP17, CODE GENERATOR, PURE PERL TO RPERL: redundant name mismatch, OO properties key '
+                . $1
+                . ' is different than inner type name '
+                . $3
+                . ', dying' . "\n";
+        }
+        $object_properties_types->{$package_name}->{$1} = $2;
+        while ( $object_properties_string =~ /(\w+)\s*\=\>\s*my\s+([\w:]+)\s+\$TYPED_(\w+)\s*\=\s*/gxms ) {
+
+            #            RPerl::diag( 'in Class::save_object_properties_types(), have $1 = ' . $1 . "\n" );
+            #            RPerl::diag( 'in Class::save_object_properties_types(), have $2 = ' . $2 . "\n" );
+            #            RPerl::diag( 'in Class::save_object_properties_types(), have $3 = ' . $3 . "\n" );
+
+            if ( $1 ne $3 ) {
+                die 'ERROR ECVGEPPRP17, CODE GENERATOR, PURE PERL TO RPERL: redundant name mismatch, OO properties key '
+                    . $1
+                    . ' is different than inner type name '
+                    . $3
+                    . ', dying' . "\n";
+            }
+            $object_properties_types->{$package_name}->{$1} = $2;
+        }
+    }
+    return $object_properties_types;
 }
 
 # create Perl symbol table entries for RPerl subroutines and methods

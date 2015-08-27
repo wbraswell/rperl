@@ -29,6 +29,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     my string $key_class           = ref $key;
     my string $fat_arrow           = $self->{children}->[1];
     my object $type_inner_optional = $self->{children}->[2];
+    my string $key_name            = undef;
 
     if (   ( $key_class eq 'VariableOrLiteralOrWord_225' )
         or ( $key_class eq 'VariableOrLiteralOrWord_226' ) )
@@ -38,6 +39,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             $rperl_source_subgroup );
     }
     elsif ( $key_class eq 'VariableOrLiteralOrWord_227' ) {    # WORD
+        $key_name = $key->{children}->[0];
         $rperl_source_group->{PMC} .= $key->{children}->[0] . q{ };
     }
     else {
@@ -46,6 +48,14 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 . ($key_class)
                 . q{' found where VariableOrLiteralOrWord_225, VariableOrLiteralOrWord_226, or VariableOrLiteralOrWord_227 expected, dying}
         ) . "\n";
+    }
+
+    if (( exists $type_inner_optional->{children}->[0] ) and (defined $key_name)) {
+        my string $type_inner_name = $type_inner_optional->{children}->[0]->{children}->[3];
+        if ($key_name ne $type_inner_name) {
+            die 'ERROR ECVGEASRP17, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, OO properties or hash key '
+                . $key_name . ' is different than inner type name ' . $type_inner_name . ', dying' . "\n";
+        }
     }
 
     $rperl_source_group->{PMC} .= $fat_arrow . q{ };
@@ -84,6 +94,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my string $key                 = $self->{children}->[0];
     my string $key_class           = ref $key;
     my object $type_inner_optional = $self->{children}->[2];
+    my string $key_name            = undef;
 
     $cpp_source_group->{CPP} .= '{';
 
@@ -95,7 +106,8 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             $cpp_source_subgroup );
     }
     elsif ( $key_class eq 'VariableOrLiteralOrWord_227' ) {    # WORD
-        $cpp_source_group->{CPP} .= q{"} . $key->{children}->[0] . q{" };
+        $key_name = $key->{children}->[0];
+        $cpp_source_group->{CPP} .= q{"} . $key_name . q{" };
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
@@ -105,13 +117,15 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         ) . "\n";
     }
 
-    $cpp_source_group->{CPP} .= q{, };
+    if (( exists $type_inner_optional->{children}->[0] ) and (defined $key_name)) {
+        my string $type_inner_name = $type_inner_optional->{children}->[0]->{children}->[3];
+        if ($key_name ne $type_inner_name) {
+            die 'ERROR ECVGEASCP17, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, OO properties or hash key '
+                . $key_name . ' is different than inner type name ' . $type_inner_name . ', dying' . "\n";
+        }
+    }
 
-# NEED ADDRESS: what to do with the optional TypeInner info below?  is this useless in CPPTYPES and only needed in PERLTYPES?
-#    if ( exists $type_inner_optional->{children}->[0] ) {
-#        $cpp_source_subgroup = $type_inner_optional->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
-#        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
-#    }
+    $cpp_source_group->{CPP} .= q{, };
 
     my object $subexpression = $self->{children}->[3];
 

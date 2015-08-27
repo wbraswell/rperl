@@ -19,7 +19,7 @@ use rperloperations;
 our hashref $properties = {
     type      => my string $TYPED_type                 = undef,
     name      => my string $TYPED_name                 = undef,
-    arguments => my object_arrayref $TYPED_arguments = undef,
+    arguments => my object_arrayref $TYPED_arguments = undef
 };
 
 1;  # end of class
