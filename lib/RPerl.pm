@@ -6,8 +6,8 @@ use warnings;
 # DEV NOTE, CORRELATION #rp16: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
 our $VERSION = 1.000_007;    # ONE POINT OH FULL RELEASE!!
 
-#our $VERSION = 20150807;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
-#our $VERSION = 2015.219;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
+#our $VERSION = 20150827;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
+#our $VERSION = 2015.239;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -175,6 +175,7 @@ sub filter {
                 $input_line_prepend .= 'use RPerl::AfterSubclass;' . "\n";
                 $input_line_prepend .= '1;  # end class, original' . "\n";
                 my $subclasses = {
+                    '_raw'              => [ 'RPerl::DataType::Modifier::Reference', 'ref' ],
                     '_arrayref'         => [ 'RPerl::DataStructure::Array',          'arrayref' ],
                     '_hashref'          => [ 'RPerl::DataStructure::Hash',           'hashref' ],
                     '::method'          => [ 'RPerl::CodeBlock::Subroutine::Method', 'method' ],

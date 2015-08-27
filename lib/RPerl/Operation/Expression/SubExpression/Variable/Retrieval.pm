@@ -78,6 +78,10 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my string_hashref $cpp_source_group = { CPP => q{} };
 
 #    RPerl::diag( 'in Variable::Retrieval->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+
+# START HERE: use symtab to make correct retrievals
+# START HERE: use symtab to make correct retrievals
+# START HERE: use symtab to make correct retrievals
     
     my string $self_class = ref $self;
     if ($self_class eq 'VariableRetrieval_175') {  # VariableRetrieval -> OP02_ARRAY_THINARROW SubExpression ']'

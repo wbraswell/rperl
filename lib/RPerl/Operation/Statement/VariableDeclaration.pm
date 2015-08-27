@@ -138,14 +138,15 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         }
         $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}
             = { isa => 'RPerl::Operation::Expression::SubExpression::Variable', type => $type };
-        $type =~ s/^constant_/const\ /gxms;              # 'constant_foo' becomes 'const foo'
-        $type =~ s/::/__/gxms;                           # 'Class::Subclass' becomes 'Class__Subclass'
+
+        $type = RPerl::Generator::type_convert($type, 1);  # $pointerify_classes = 1
+        $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}->{type_cpp} = $type;  # add converted C++ type to symtab entry
+
         $cpp_source_group->{CPP} .= $type . q{ } . $symbol . ';' . "\n";
     }
     elsif ( $self_class eq 'VariableDeclaration_179' ) {    # VariableDeclaration -> MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';'
         my string $type   = $self->{children}->[1]->{children}->[0];
         my string $symbol = $self->{children}->[2];
-        my string $assign                 = $self->{children}->[3];
         my object $subexpression_or_stdin = $self->{children}->[4];
         my string $semicolon              = $self->{children}->[5];
 
@@ -187,17 +188,16 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         }
         $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}
             = { isa => 'RPerl::Operation::Expression::SubExpression::Variable', type => $type };
-        $type =~ s/^constant_/const\ /gxms;    # 'constant_foo' becomes 'const foo'
-        $type =~ s/::/__/gxms;                 # 'Class::Subclass' becomes 'Class__Subclass'
+
+        $type = RPerl::Generator::type_convert($type, 1);  # $pointerify_classes = 1
+        $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}->{type_cpp} = $type;  # add converted C++ type to symtab entry
+
         $cpp_source_group->{CPP} .= $type . q{ } . $symbol;
 
-        # do not explicitly call C++ new() constructor
-        if ( not $is_constructor_call ) {
-            $cpp_source_group->{CPP} .= q{ } . $assign . q{ };
-            $cpp_source_subgroup = $subexpression_or_stdin->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
-            RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
-        }
-        $cpp_source_group->{CPP} .= $semicolon . "\n";
+        $cpp_source_group->{CPP} .= '(';
+        $cpp_source_subgroup = $subexpression_or_stdin->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+        $cpp_source_group->{CPP} .= ')' . $semicolon . "\n";
     }
     elsif ( $self_class eq 'VariableDeclaration_180' ) { # VariableDeclaration -> MY Type VARIABLE_SYMBOL OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef' ';'
         my string $type   = $self->{children}->[1]->{children}->[0];
@@ -220,8 +220,9 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         }
         $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}
             = { isa => 'RPerl::Operation::Expression::SubExpression::Variable', type => $type };
-        $type =~ s/^constant_/const\ /gxms;              # 'constant_foo' becomes 'const foo'
-        $type =~ s/::/__/gxms;                           # 'Class::Subclass' becomes 'Class__Subclass'
+
+        $type = RPerl::Generator::type_convert($type, 1);  # $pointerify_classes = 1
+        $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}->{type_cpp} = $type;  # add converted C++ type to symtab entry
 
         # compensate for array size vs array max index (difference of 1)
         my bool $size_compensated = 0;
@@ -283,8 +284,11 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol_fhref}
             = { isa => 'RPerl::Operation::Expression::SubExpression::Variable', type => $type_fhref };
 
-        # NEED ANSWER: do we enable constant_filehandleref type???
-        #        $type_fhref =~ s/^constant_/const\ /gxms;           # 'constant_foo' becomes 'const foo'
+
+        # NEED ANSWER: should we enable type_convert() for future use of constant_filehandleref type?
+#        $type_fhref = RPerl::Generator::type_convert($type_fhref, 1);  # $pointerify_classes = 1
+        $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol_fhref}->{type_cpp} = $type_fhref;  # add converted C++ type to symtab entry
+
         $cpp_source_group->{CPP} .= $type_fhref . q{ } . $symbol_fhref . ';' . "\n";
     }
     else {

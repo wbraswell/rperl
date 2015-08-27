@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::SubExpression::Literal::Number;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::SubExpression::Literal);
@@ -70,17 +70,9 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
  
     # Literal -> LITERAL_NUMBER
     my string $value           = $self->{children}->[0];
-    my string $value_type = main::type($value);
-    if ($value_type eq 'integer') {
-        $cpp_source_group->{CPP} .= integer_to_string($value);
-    }
-    elsif ($value_type eq 'number') {
-        $cpp_source_group->{CPP} .= number_to_string($value);
-    }
-    else {
-        $cpp_source_group->{CPP} .= $value;
-    }
- 
+    # DEV NOTE: don't use RPerl-style underscores in C++ literal numbers
+    $value =~ s/_//gxms;  # strip underscores
+    $cpp_source_group->{CPP} .= $value;
     return $cpp_source_group;
 };
 

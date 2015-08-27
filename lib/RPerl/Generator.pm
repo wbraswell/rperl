@@ -35,6 +35,30 @@ our hashref $properties = {};
 
 # [[[ PROCEDURAL SUBROUTINES ]]]
 
+# convert RPerl types to C++ types
+our string $type_convert = sub {
+    ( my string $return_type, my bool $pointerify_classes ) = @_;
+#    RPerl::diag('in Generator->type_convert_ptr(), received $return_type = ' . $return_type . "\n");
+#    RPerl::diag('in Generator->type_convert_ptr(), received $pointerify_classes = ' . $pointerify_classes . "\n");
+
+    if ( exists $rperlnamespaces_generated::RPERL->{ $return_type . '::' } ) {  # RPerl types
+        $return_type =~ s/^constant_/const\ /gxms;  # 'constant_foo' becomes 'const foo'
+    }
+    else {  # user-defined types AKA classes
+        $return_type =~ s/:/_/gxms;  # 'Foo::Bar::Baz' becomes 'Foo__Bar__Baz'
+        if ($pointerify_classes) {
+            if ($return_type =~ /_raw$/) {
+                $return_type =~ s/_raw$/_rawptr/xms;  # 'Foo__Bar__Baz_raw' becomes 'Foo__Bar__Baz_rawptr'
+            }
+            elsif (($return_type !~ /_arrayref$/) and ($return_type !~ /_hashref$/)) {
+                # don't pointerify arrayrefs or hashrefs, they are already pointerified
+                $return_type .= '_ptr';  # 'Foo__Bar__Baz' becomes 'Foo__Bar__Baz_ptr'
+            }
+        }
+    }
+    return $return_type;  # much meta
+};
+
 # search for dummy source code
 our bool $dummy_source_code_find = sub {
     ( my string_hashref $source_group ) = @_;

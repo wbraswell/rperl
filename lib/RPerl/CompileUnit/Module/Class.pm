@@ -532,7 +532,8 @@ INIT {
                             if ( exists $rperlnamespaces_generated::RPERL->{ $object_property_element_type . '::' } ) {
 
                                 # arrayref of RPerl data types
-                                if (($object_property_element_type eq 'object') or ($object_property_element_type eq 'hashref')) {
+                                if ( ( $object_property_element_type eq 'object' ) or ( $object_property_element_type eq 'hashref' ) ) {
+
                                     # arrayref of objects or hashrefs (same as Perl object which is a blessed hashref), set address in $element_tmp, return void
                                     $eval_string
                                         = '*{'
@@ -551,7 +552,8 @@ INIT {
                                         . $object_property_name
                                         . '}->[$i]}; };';
                                 }
-                                elsif ($object_property_element_type eq 'arrayref') {
+                                elsif ( $object_property_element_type eq 'arrayref' ) {
+
                                     # arrayref of arrayrefs, set address in $element_tmp, return void
                                     $eval_string
                                         = '*{'
@@ -585,10 +587,10 @@ INIT {
                                         . '}->[$i]; };';
                                 }
 
-#                                RPerl::diag( 'in Class.pm INIT block, have RPerl type array element accessor $eval_string = ' . "\n" . $eval_string . "\n" );
+  #                                RPerl::diag( 'in Class.pm INIT block, have RPerl type array element accessor $eval_string = ' . "\n" . $eval_string . "\n" );
                             }
                             else {
-                                #arrayref of user-defined data types (objects), set address in $element_tmp, return void
+#arrayref of user-defined data types (objects), set address in $element_tmp, return void
 # hard-coded example
 #our void::method $get_foo_element = sub { ( my Foo::Bar $self, my integer $i, my Foo::Quux $foo_element_tmp ) = @_; %{$foo_element_tmp} = %{$self->{foo}->[$i]}; };
                                 $eval_string
@@ -607,6 +609,7 @@ INIT {
                                     . '_element_tmp} = %{$self->{'
                                     . $object_property_name
                                     . '}->[$i]}; };';
+
 #                                RPerl::diag( 'in Class::INIT() block, have user-defined object array element accessor $eval_string = ' . "\n" . $eval_string . "\n" );
                             }
                             eval($eval_string) or croak($EVAL_ERROR);
@@ -622,7 +625,8 @@ INIT {
                             if ( exists $rperlnamespaces_generated::RPERL->{ $object_property_value_type . '::' } ) {
 
                                 # hashref of RPerl data types
-                                if (($object_property_value_type eq 'object') or ($object_property_value_type eq 'hashref')) {
+                                if ( ( $object_property_value_type eq 'object' ) or ( $object_property_value_type eq 'hashref' ) ) {
+
                                     # hashref of objects or hashrefs (same as Perl object which is a blessed hashref), set address in $value_tmp, return void
                                     $eval_string
                                         = '*{'
@@ -641,7 +645,8 @@ INIT {
                                         . $object_property_name
                                         . '}->{$key}}; };';
                                 }
-                                elsif ($object_property_value_type eq 'arrayref') {
+                                elsif ( $object_property_value_type eq 'arrayref' ) {
+
                                     # hashref of arrayrefs, set address in $value_tmp, return void
                                     $eval_string
                                         = '*{'
@@ -675,10 +680,10 @@ INIT {
                                         . '}->{$key}; };';
                                 }
 
-#                                RPerl::diag( 'in Class.pm INIT block, have RPerl type hash value accessor $eval_string = ' . "\n" . $eval_string . "\n" );
+     #                                RPerl::diag( 'in Class.pm INIT block, have RPerl type hash value accessor $eval_string = ' . "\n" . $eval_string . "\n" );
                             }
                             else {
-                                #hashref of user-defined data types (objects), set address in $value_tmp, return void
+#hashref of user-defined data types (objects), set address in $value_tmp, return void
 # hard-coded example
 #our void::method $get_foo_value = sub { ( my Foo::Bar $self, my string $key, my Foo::Quux $foo_value_tmp ) = @_; %{$foo_value_tmp} = %{$self->{foo}->{$key}}; };
                                 $eval_string
@@ -697,6 +702,7 @@ INIT {
                                     . '_value_tmp} = %{$self->{'
                                     . $object_property_name
                                     . '}->{$key}}; };';
+
 #                                RPerl::diag( 'in Class::INIT() block, have user-defined object hash value accessor $eval_string = ' . "\n" . $eval_string . "\n" );
                             }
                             eval($eval_string) or croak($EVAL_ERROR);
@@ -730,14 +736,16 @@ sub save_object_properties_types {
         #        RPerl::diag( 'in Class::save_object_properties_types(), have $1 = ' . $1 . "\n" );
         #        RPerl::diag( 'in Class::save_object_properties_types(), have $2 = ' . $2 . "\n" );
         #        RPerl::diag( 'in Class::save_object_properties_types(), have $3 = ' . $3 . "\n" );
-        if ( $1 ne $3 ) {
-            die 'ERROR ECVGEPPRP17, CODE GENERATOR, PURE PERL TO RPERL: redundant name mismatch, OO properties key '
-                . $1
-                . ' is different than inner type name '
-                . $3
-                . ', dying' . "\n";
+        if ( ( defined $1 ) and ( defined $3 ) ) {
+            if ( $1 ne $3 ) {
+                die 'ERROR ECVGEPPRP17, CODE GENERATOR, PURE PERL TO RPERL: redundant name mismatch, OO properties key '
+                    . $1
+                    . ' is different than inner type name '
+                    . $3
+                    . ', dying' . "\n";
+            }
+            $object_properties_types->{$package_name}->{$1} = $2;
         }
-        $object_properties_types->{$package_name}->{$1} = $2;
         while ( $object_properties_string =~ /(\w+)\s*\=\>\s*my\s+([\w:]+)\s+\$TYPED_(\w+)\s*\=\s*/gxms ) {
 
             #            RPerl::diag( 'in Class::save_object_properties_types(), have $1 = ' . $1 . "\n" );

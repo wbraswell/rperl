@@ -33,12 +33,12 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     }
 
     # Expression -> WordScoped OP02_METHOD_THINARROW_NEW ')'
-    my object $name                      = $self->{children}->[0];
+    my object $type                      = $self->{children}->[0];
     my string $thin_arrow_new_left_paren = $self->{children}->[1];
     my string $right_paren               = $self->{children}->[2];
 
     $rperl_source_group->{PMC}
-        .= $name->{children}->[0] . $thin_arrow_new_left_paren . $right_paren;
+        .= $type->{children}->[0] . $thin_arrow_new_left_paren . $right_paren;
     return $rperl_source_group;
 };
 
@@ -68,9 +68,10 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     }
 
     # Expression -> WordScoped OP02_METHOD_THINARROW_NEW ')'
-    my object $name                      = $self->{children}->[0];
- 
-    $cpp_source_group->{CPP} .= 'new ' . $name->{children}->[0];
+    my object $type                      = $self->{children}->[0]->{children}->[0];
+    $type = RPerl::Generator::type_convert($type, 0);  # $pointerify_classes = 0
+
+    $cpp_source_group->{CPP} .= 'new ' . $type;
     return $cpp_source_group;
 };
 

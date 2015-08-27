@@ -12,7 +12,7 @@ Loops, optimize exit-condition minus-one and less-than
 App, PhysicsPerl, Alioth Shootout N-Body Benchmark
 tests; constructor type mismatch, array size declaration compensation, package/subroutine/method names starting w/ underscore, variable redeclaration (masking), 
 	properties & hash type-inner type-vs-key name mismatch (PERLOPS Class.pm properties accessors/mutators, CPPOPS entry & entrytyped),
-	accessors/mutators including get_*_element() & get_*_value()
+	accessors/mutators including get_*_element() & get_*_value(), subclasses Foo_raw type
 
 RELEASE v1.1
 
@@ -24,6 +24,7 @@ RELEASE v1.XY
 
 alioth nbody, optimize graphics speed
 add symtab building and checking to PERLOPS_PERLTYPES
+add mutators set_*_element() & set_*_value()
 file bug, I::CPP comments
 file bug, I::CPP std::array
 file bug, I::CPP new() clobber

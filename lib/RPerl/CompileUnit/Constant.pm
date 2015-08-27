@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Constant;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_100;
+our $VERSION = 0.001_200;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit);
@@ -64,7 +64,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 };
 
 our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
-    ( my object $self, my string_hashref $modes) = @_;
+    ( my object $self, my string $package_name_underscores, my string_hashref $modes ) = @_;
     my string_hashref $cpp_source_group = { H => q{} };
 
    #RPerl::diag( 'in CompileUnit::Constant->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
@@ -85,7 +85,9 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_global}->{$name}
         = { isa => 'RPerl::CompileUnit::Constant', type => $type_inner_constant_type };
 
-    $cpp_source_group->{H} .= 'const ' . $type_inner_constant_type . q{ } . $name . ' = ';
+    $cpp_source_group->{H} .= 'const ' . $type_inner_constant_type . q{ } . $package_name_underscores . '__' . $name . ' = ';
+
+#    RPerl::diag( 'in CompileUnit::Constant->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subexpression = ' . "\n" . RPerl::Parser::rperl_ast__dump($subexpression) . "\n" );
 
     my string_hashref $cpp_source_subgroup = $subexpression->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
     $cpp_source_group->{H} .= $cpp_source_subgroup->{CPP};

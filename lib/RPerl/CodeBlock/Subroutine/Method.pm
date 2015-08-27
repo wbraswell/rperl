@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine::Method;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.004_100;
+our $VERSION = 0.004_200;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CodeBlock::Subroutine);
@@ -92,6 +92,9 @@ our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = 
 
     substr $name, 0, 1, q{};            # remove leading $ sigil
     substr $return_type, -8, 8, '';                      # remove trailing '::method'
+ 
+#    RPerl::diag( 'in Method->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $name = ' . $name . "\n" );
+#    RPerl::diag( 'in Method->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $arguments_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_optional) . "\n" );
 
     if ((substr $name, 0, 1) eq '_') {
         die 'ERROR ECVGEASCP09, CODE GENERATOR, ABSTRACT SYNTAX TO C++: method name ' . ($name)
@@ -100,10 +103,8 @@ our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = 
     $modes->{_symbol_table}->{_subroutine} = $name;  # set current subroutine/method
     $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{_global}->{$name} = {isa => 'RPerl::CodeBlock::Subroutine::Method', type => $return_type};  # create individual symtab entry
 
-    $return_type =~ s/^constant_/const\ /gxms;  # 'constant_foo' becomes 'const foo'
-
-#    RPerl::diag( 'in Method->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $name = ' . $name . "\n" );
-#    RPerl::diag( 'in Method->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $arguments_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_optional) . "\n" );
+    $return_type = RPerl::Generator::type_convert($return_type, 1);  # $pointerify_classes = 1
+    $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{_global}->{$name}->{type_cpp} = $return_type;  # add converted C++ type to symtab entry
 
     $cpp_source_group->{H} .= q{    } . $return_type . q{ } . $name . '(';
     if ( exists $arguments_optional->{children}->[0] ) {
@@ -142,8 +143,10 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my object $operations_star    = $self->{children}->[5];
  
     substr $name, 0, 1, q{};            # remove leading $ sigil
-    $return_type =~ s/^constant_/const\ /gxms;  # 'constant_foo' becomes 'const foo'
-    $cpp_source_group->{CPP} .= (substr $return_type, 0, ((length $return_type) - 8)) . q{ } . $package_name_underscores . '::' . $name . '(';
+    substr $return_type, -8, 8, '';                      # remove trailing '::method'
+
+    $return_type = RPerl::Generator::type_convert($return_type, 1);  # $pointerify_classes = 1
+    $cpp_source_group->{CPP} .= $return_type . q{ } . $package_name_underscores . '::' . $name . '(';
 
     if ( exists $arguments_optional->{children}->[0] ) {
         $cpp_source_subgroup = $arguments_optional->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);

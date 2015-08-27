@@ -251,9 +251,20 @@ EOL
     $cpp_source_group->{CPP} .= $cpp_source_tmp;
 
     if ( $modes->{label} eq 'ON' ) {
-        $cpp_source_tmp = ( ( '// [[[<<< BEGIN CPP TYPES >>>]]]' . "\n" ) x 3 ) . "\n";
+        $cpp_source_tmp = ( ( '// [[[<<< BEGIN CPP TYPES >>>]]]' . "\n" ) x 3 );
         $cpp_source_group->{H}   .= $cpp_source_tmp;
         $cpp_source_group->{CPP} .= $cpp_source_tmp;
+    }
+
+    if ( exists $constant_star->{children}->[0] ) {
+        if ( $modes->{label} eq 'ON' ) {
+            $cpp_source_group->{H} .= '// [[[ CONSTANTS ]]]' . "\n";
+        }
+        foreach my object $constant ( @{ $constant_star->{children} } ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
+            $cpp_source_subgroup = $constant->ast_to_cpp__generate__CPPOPS_CPPTYPES( $package_name_underscores, $modes );
+            $cpp_source_group->{H} .= $cpp_source_subgroup->{H};
+        }
+        $cpp_source_group->{H} .= "\n";
     }
 
     if ( $modes->{label} eq 'ON' ) {
@@ -264,19 +275,163 @@ EOL
 
     #    RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $parent_name_underscores = ' . $parent_name_underscores . "\n");
 
+    # DEV NOTE: avoid namespace clobbering of CPPOPS base class over PERLOPS base class
+    if ( $parent_name_underscores eq 'RPerl__CompileUnit__Module__Class' ) {
+        $parent_name_underscores .= '__CPP';
+    }
+
     $cpp_source_group->{H} .= 'class ' . $package_name_underscores . ' : public ' . $parent_name_underscores . ' {' . "\n";
     $cpp_source_group->{H} .= 'public:' . "\n";
 
-    if ( exists $constant_star->{children}->[0] ) {
-        if ( $modes->{label} eq 'ON' ) {
-            $cpp_source_group->{H} .= '// [[[ CONSTANTS ]]]' . "\n";
+    my string_arrayref $properties_accessors_mutators = [];
+    my string_arrayref $properties_declarations       = [];
+    my string $property_declaration;
+
+    # non-empty $properties
+    if ( ref $properties eq 'Properties_67' ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
+        $property_declaration = q{};
+        my object $property_0        = $properties->{children}->[3];
+        my object $properties_1_to_n = $properties->{children}->[4];
+
+        my string $property_key           = $property_0->{children}->[0];
+        my object $property_type_inner    = $property_0->{children}->[2];
+        my object $property_subexpression = $property_0->{children}->[3];
+        my string $property_type          = $property_type_inner->{children}->[1]->{children}->[0];
+
+#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_key = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_key) . "\n" );
+#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_type_inner = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_type_inner) . "\n" );
+#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_subexpression = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_subexpression) . "\n" );
+#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_type) . "\n" );
+
+        if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$property_key} ) {
+            die 'ERROR ECVGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+                . $property_key
+                . ' already declared in this scope, namespace '
+                . $modes->{_symbol_table}->{_namespace}
+                . ', subroutine/method '
+                . $modes->{_symbol_table}->{_subroutine}
+                . '(), dying' . "\n";
         }
-        foreach my object $constant ( @{ $constant_star->{children} } ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
-            $cpp_source_subgroup = $constant->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
-            $cpp_source_group->{H} .= q{    } . $cpp_source_subgroup->{H};
+        $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}
+            = { isa => 'RPerl::DataStructure::Hash::Properties', type => $property_type };
+
+        $property_type = RPerl::Generator::type_convert( $property_type, 1 );    # $pointerify_classes = 1
+        $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}->{type_cpp} = $property_type; # add converted C++ type to symtab entry
+
+        $property_declaration = q{    } . $property_type . q{ } . $property_key;
+
+        # SubExpression_135 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined,
+        # don't perform any C++ initialization for properties initialized to 'undef' in Perl
+        if ( ( ref $property_subexpression ) ne 'SubExpression_135' ) {
+            $cpp_source_subgroup = $property_subexpression->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+            $property_declaration .= ' = ' . $cpp_source_subgroup->{CPP};
         }
-        $cpp_source_group->{H} .= "\n";
+
+        $property_declaration .= ';';
+        push @{$properties_declarations}, $property_declaration;
+        push @{$properties_accessors_mutators}, ( q{    } . $property_type . ' get_' . $property_key . '() { return this->' . $property_key . '; }' ); # ACCESSOR
+        push @{$properties_accessors_mutators},
+            (     q{    }
+                . 'void set_'
+                . $property_key . '('
+                . $property_type . q{ }
+                . $property_key
+                . '_new) { this->'
+                . $property_key . ' = '
+                . $property_key
+                . '_new; }' );                                                                                                                         # MUTATOR
+
+        $property_declaration = ast_to_cpp__generate_accessors_array_hash__CPPOPS_CPPTYPES( $property_key, $modes );
+        if ($property_declaration ne q{}) {
+            push @{$properties_accessors_mutators}, $property_declaration;
+        }
+
+        foreach my object $property ( @{ $properties_1_to_n->{children} } ) {
+            if ( ( ref $property ) eq 'TERMINAL' ) {    # skip comma between properties
+                next;
+            }
+
+            $property_key           = $property->{children}->[0];
+            $property_type_inner    = $property->{children}->[2];
+            $property_subexpression = $property->{children}->[3];
+            $property_type          = $property_type_inner->{children}->[1]->{children}->[0];
+
+#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_key = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_key) . "\n" );
+#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_type_inner = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_type_inner) . "\n" );
+#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_subexpression = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_subexpression) . "\n" );
+#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_type) . "\n" );
+
+            if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$property_key} ) {
+                die 'ERROR ECVGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+                    . $property_key
+                    . ' already declared in this scope, namespace '
+                    . $modes->{_symbol_table}->{_namespace}
+                    . ', subroutine/method '
+                    . $modes->{_symbol_table}->{_subroutine}
+                    . '(), dying' . "\n";
+            }
+            $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}
+                = { isa => 'RPerl::DataStructure::Hash::Properties', type => $property_type };
+
+            $property_type = RPerl::Generator::type_convert( $property_type, 1 );    # $pointerify_classes = 1
+            $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}->{type_cpp} = $property_type; # add converted C++ type to symtab entry
+
+            $property_declaration = q{    } . $property_type . q{ } . $property_key;
+
+            # SubExpression_135 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined,
+            # don't perform any C++ initialization for properties initialized to 'undef' in Perl
+            if ( ( ref $property_subexpression ) ne 'SubExpression_135' ) {
+                $cpp_source_subgroup = $property_subexpression->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+                $property_declaration .= ' = ' . $cpp_source_subgroup->{CPP};
+            }
+
+            $property_declaration .= ';';
+            push @{$properties_declarations}, $property_declaration;
+            push @{$properties_accessors_mutators}, ( q{    } . $property_type . ' get_' . $property_key . '() { return this->' . $property_key . '; }' ); # ACCESSOR
+            push @{$properties_accessors_mutators},
+                (     q{    }
+                    . 'void set_'
+                    . $property_key . '('
+                    . $property_type . q{ }
+                    . $property_key
+                    . '_new) { this->'
+                    . $property_key . ' = '
+                    . $property_key
+                    . '_new; }' );    # MUTATOR
+
+        }
     }
+
+    if ( exists $properties_declarations->[0] ) {
+        if ( $modes->{label} eq 'ON' ) {
+            $cpp_source_group->{H} .= '    // [[[ OO PROPERTIES ]]]' . "\n";
+        }
+        $cpp_source_group->{H} .= ( join "\n", @{$properties_declarations} ) . "\n";
+    }
+
+    if ( $modes->{label} eq 'ON' ) {
+        $cpp_source_group->{H} .= "\n" . '    // [[[ OO METHODS ]]]' . "\n";
+    }
+
+    if ( exists $properties_accessors_mutators->[0] ) {
+        if ( $modes->{label} eq 'ON' ) {
+            $cpp_source_group->{H} .= "\n" . q{    } . '// <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>' . "\n";
+        }
+        $cpp_source_group->{H} .= ( join "\n", @{$properties_accessors_mutators} ) . "\n";
+    }
+
+    if ( $modes->{label} eq 'ON' ) {
+        $cpp_source_group->{H} .= "\n" . q{    } . '// <<< CONSTRUCTOR & DESTRUCTOR >>>' . "\n";
+    }
+    $cpp_source_group->{H} .= q{    } . $package_name_underscores . '() {}' . "\n";          # CONSTRUCTOR
+    $cpp_source_group->{H} .= q{    } . '~' . $package_name_underscores . '() {}' . "\n";    # DESTRUCTOR
+
+    if ( $modes->{label} eq 'ON' ) {
+        $cpp_source_group->{H} .= "\n" . q{    } . '// <<< CLASS NAME REPORTER >>>' . "\n";
+    }
+    my string $package_name_scoped = $package_name_underscores;
+    $package_name_scoped =~ s/__/::/gxms;
+    $cpp_source_group->{H} .= '    virtual string myclassname() { return (const string) "' . $package_name_scoped . '"; }' . "\n";    # CLASS NAME REPORTER
 
     my string_arrayref $method_declarations     = [];
     my string_arrayref $method_definitions      = [];
@@ -315,160 +470,34 @@ EOL
 
     if ( exists $method_declarations->[0] ) {
         if ( $modes->{label} eq 'ON' ) {
-            $cpp_source_group->{H} .= '// [[[ OO METHODS ]]]' . "\n";
+            $cpp_source_group->{H} .= "\n" . '    // <<< USER-DEFINED METHODS >>>' . "\n";
         }
-        $cpp_source_group->{H} .= ( join "\n", @{$method_declarations} ) . "\n\n";
+        $cpp_source_group->{H} .= ( join "\n", @{$method_declarations} ) . "\n";
     }
 
     if ( ( exists $method_definitions->[0] ) or ( exists $subroutine_definitions->[0] ) ) {
         if ( $modes->{label} eq 'ON' ) {
-            $cpp_source_group->{CPP} .= '// [[[ OO METHODS & SUBROUTINES ]]]' . "\n\n";
+            $cpp_source_group->{CPP} .= "\n" . '// [[[ OO METHODS & SUBROUTINES ]]]';
         }
         $cpp_source_group->{CPP} .= ( join "\n\n", @{$method_definitions} ) . "\n\n";
-        $cpp_source_group->{CPP} .= ( join "\n\n", @{$subroutine_definitions} ) . "\n\n";
+        $cpp_source_group->{CPP} .= ( join "\n\n", @{$subroutine_definitions} ) . "\n";
     }
 
-    my string_arrayref $properties_accessors_mutators = [];
-    my string_arrayref $properties_declarations       = [];
-    my string $property_declaration;
-
-    # non-empty $properties
-    if ( ref $properties eq 'Properties_67' ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
-        $property_declaration = q{};
-        my object $property_0        = $properties->{children}->[3];
-        my object $properties_1_to_n = $properties->{children}->[4];
-
-        my string $property_key           = $property_0->{children}->[0];
-        my object $property_type_inner    = $property_0->{children}->[2];
-        my object $property_subexpression = $property_0->{children}->[3];
-        my string $property_type          = $property_type_inner->{children}->[1]->{children}->[0];
-
-#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_key = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_key) . "\n" );
-#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_type_inner = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_type_inner) . "\n" );
-#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_subexpression = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_subexpression) . "\n" );
-#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_type) . "\n" );
-
-        if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$property_key} ) {
-            die 'ERROR ECVGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
-                . $property_key
-                . ' already declared in this scope, namespace '
-                . $modes->{_symbol_table}->{_namespace}
-                . ', subroutine/method '
-                . $modes->{_symbol_table}->{_subroutine}
-                . '(), dying' . "\n";
-        }
-        $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}
-            = { isa => 'RPerl::DataStructure::Hash::Properties', type => $property_type };
-
-        $property_declaration = q{    } . $property_type . q{ } . $property_key;
-
-        # SubExpression_135 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined,
-        # don't perform any C++ initialization for properties initialized to 'undef' in Perl
-        if ( ( ref $property_subexpression ) ne 'SubExpression_135' ) {
-            $cpp_source_subgroup = $property_subexpression->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
-            $property_declaration .= ' = ' . $cpp_source_subgroup->{CPP};
-        }
-
-        $property_declaration .= ';';
-        push @{$properties_declarations}, $property_declaration;
-        push @{$properties_accessors_mutators}, ( q{    } . $property_type . ' get_' . $property_key . '() { return this->' . $property_key . '; }' ); # ACCESSOR
-        push @{$properties_accessors_mutators},
-            (     q{    }
-                . 'void set_'
-                . $property_key . '('
-                . $property_type . q{ }
-                . $property_key
-                . '_new) { this->'
-                . $property_key . ' = '
-                . $property_key
-                . '_new; }' );                                                                                                                         # MUTATOR
-
-        foreach my object $property ( @{ $properties_1_to_n->{children} } ) {
-            if ( ( ref $property ) eq 'TERMINAL' ) {    # skip comma between properties
-                next;
-            }
-
-            $property_key           = $property->{children}->[0];
-            $property_type_inner    = $property->{children}->[2];
-            $property_subexpression = $property->{children}->[3];
-            $property_type          = $property_type_inner->{children}->[1]->{children}->[0];
-
-#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_key = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_key) . "\n" );
-#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_type_inner = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_type_inner) . "\n" );
-#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_subexpression = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_subexpression) . "\n" );
-#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_type) . "\n" );
-
-            if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$property_key} ) {
-                die 'ERROR ECVGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
-                    . $property_key
-                    . ' already declared in this scope, namespace '
-                    . $modes->{_symbol_table}->{_namespace}
-                    . ', subroutine/method '
-                    . $modes->{_symbol_table}->{_subroutine}
-                    . '(), dying' . "\n";
-            }
-            $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}
-                = { isa => 'RPerl::DataStructure::Hash::Properties', type => $property_type };
- 
-            $property_declaration = q{    } . $property_type . q{ } . $property_key;
-
-            # SubExpression_135 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined,
-            # don't perform any C++ initialization for properties initialized to 'undef' in Perl
-            if ( ( ref $property_subexpression ) ne 'SubExpression_135' ) {
-                $cpp_source_subgroup = $property_subexpression->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
-                $property_declaration .= ' = ' . $cpp_source_subgroup->{CPP};
-            }
-
-            $property_declaration .= ';';
-            push @{$properties_declarations}, $property_declaration;
-            push @{$properties_accessors_mutators}, ( q{    } . $property_type . ' get_' . $property_key . '() { return this->' . $property_key . '; }' ); # ACCESSOR
-            push @{$properties_accessors_mutators},
-                (     q{    }
-                    . 'void set_'
-                    . $property_key . '('
-                    . $property_type . q{ }
-                    . $property_key
-                    . '_new) { this->'
-                    . $property_key . ' = '
-                    . $property_key
-                    . '_new; }' );    # MUTATOR
-
-        }
-    }
-
-    if ( exists $properties_accessors_mutators->[0] ) {
-        if ( $modes->{label} eq 'ON' ) {
-            $cpp_source_group->{H} .= q{    } . '// <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>' . "\n";
-        }
-        $cpp_source_group->{H} .= ( join "\n", @{$properties_accessors_mutators} ) . "\n\n";
-    }
+    $cpp_source_group->{H} .= '};  // end of class' . "\n\n";
 
     if ( $modes->{label} eq 'ON' ) {
-        $cpp_source_group->{H} .= q{    } . '// <<< CONSTRUCTOR & DESTRUCTOR >>>' . "\n";
+        $cpp_source_group->{H} .= '// [[[ OO SUBCLASSES ]]]' . "\n";
     }
-    $cpp_source_group->{H} .= q{    } . $package_name_underscores . '() {}' . "\n";            # CONSTRUCTOR
-    $cpp_source_group->{H} .= q{    } . '~' . $package_name_underscores . '() {}' . "\n\n";    # DESTRUCTOR
-
-    if ( $modes->{label} eq 'ON' ) {
-        $cpp_source_group->{H} .= q{    } . '// <<< CLASS NAME REPORTER >>>' . "\n";
-    }
-    my string $package_name_scoped = $package_name_underscores;
-    $package_name_scoped =~ s/__/::/gxms;
-    $cpp_source_group->{H} .= '    virtual string myclassname() { return (const string) "' . $package_name_scoped . '"; }' . "\n";    # CLASS NAME REPORTER
-
-    if ( exists $properties_declarations->[0] ) {
-        $cpp_source_group->{H} .= "\n" . 'private:' . "\n";
-        if ( $modes->{label} eq 'ON' ) {
-            $cpp_source_group->{H} .= '// [[[ OO PROPERTIES ]]]' . "\n";
-        }
-        $cpp_source_group->{H} .= ( join "\n", @{$properties_declarations} ) . "\n";
-    }
-
-    $cpp_source_group->{H} .= '};' . "\n\n";
+    $cpp_source_group->{H} .= '#define ' . $package_name_underscores . '_rawptr ' . $package_name_underscores . '*' . "\n";
+    $cpp_source_group->{H} .= 'typedef std::unique_ptr<' . $package_name_underscores . '> ' . $package_name_underscores . '_ptr;' . "\n";
+    $cpp_source_group->{H} .= 'typedef std::vector<' . $package_name_underscores . '_ptr> ' . $package_name_underscores . '_arrayref;' . "\n";
+    $cpp_source_group->{H} .= 'typedef std::unordered_map<string, ' . $package_name_underscores . '_ptr> ' . $package_name_underscores . '_hashref;' . "\n";
+    $cpp_source_group->{H}
+        .= 'typedef std::unordered_map<string, ' . $package_name_underscores . '_ptr>::iterator ' . $package_name_underscores . '_hashref_iterator;' . "\n\n";
 
     if ( exists $subroutine_declarations->[0] ) {
         if ( $modes->{label} eq 'ON' ) {
-            $cpp_source_group->{H} .= '// [[[ SUBROUTINES ]]]' . "\n\n";
+            $cpp_source_group->{H} .= '// [[[ SUBROUTINES ]]]' . "\n";
         }
         $cpp_source_group->{H} .= ( join "\n", @{$subroutine_declarations} ) . "\n\n";
     }
@@ -507,6 +536,89 @@ EOL
     delete $cpp_source_group->{H_INCLUDES};
 
     return $cpp_source_group;
+};
+
+# generate accessors for array elements and hash values
+our string $ast_to_cpp__generate_accessors_array_hash__CPPOPS_CPPTYPES = sub {
+    ( my string $property_key, my string_hashref $modes ) = @_;
+    my string $retval = q{};
+
+    my string $property_type = $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}->{type};
+
+    # array element accessors
+    if ( $property_type =~ /_arrayref$/ ) {
+        my $property_element_type = substr $property_type, 0, ( ( length $property_type ) - 9 );
+        if ( exists $rperlnamespaces_generated::RPERL->{ $property_element_type . '::' } ) {
+
+# START HERE: add remaining accessors below
+# START HERE: add remaining accessors below
+# START HERE: add remaining accessors below
+
+            # arrayref of RPerl data types
+            if ( ( $property_element_type eq 'object' ) or ( $property_element_type eq 'hashref' ) ) {
+                # arrayref of objects or hashrefs (same as Perl object which is a blessed hashref), set address in $element_tmp, return void
+                $retval = 'NEED CODE HERE!!!';
+            }
+            elsif ( $property_element_type eq 'arrayref' ) {
+                # arrayref of arrayrefs, set address in $element_tmp, return void
+                $retval = 'NEED CODE HERE!!!';
+            }
+            else {
+                # arrayref of scalars, return value
+                $retval = 'NEED CODE HERE!!!';
+            }
+
+            RPerl::diag( 'in Class::Generator::ast_to_cpp__generate_accessors_array_hash__CPPOPS_CPPTYPES(), have RPerl type array element accessor $retval = ' . "\n" . $retval . "\n" );
+        }
+        else {
+            #arrayref of user-defined data types (objects), set address in $element_tmp, return void
+# hard-coded example
+#void get_bodies_element(integer i, PhysicsPerl__Astro__Body_ptr& bodies_tmp_ptr) { *(bodies_tmp_ptr.get()) = *(this->bodies[i].get()); }
+#void get_bodies_element(integer i, PhysicsPerl__Astro__Body_rawptr bodies_tmp_rawptr) { *bodies_tmp_rawptr = *(this->bodies[i].get()); }
+
+            my string $property_element_type_cpp_nopointerify = RPerl::Generator::type_convert( $property_element_type, 0 );    # $pointerify_classes = 0
+
+            $retval = 'void get_' . $property_key . '_element(integer i, ' . $property_element_type_cpp_nopointerify . '_ptr& ' . $property_key . '_tmp_ptr) { *(' .
+                $property_key . '_tmp_ptr.get()) = *(this->' . $property_key . '[i].get()); }' . "\n";
+            $retval .= 'void get_' . $property_key . '_element(integer i, ' . $property_element_type_cpp_nopointerify . '_rawptr ' . $property_key . '_tmp_rawptr) { *' .
+                $property_key . '_tmp_rawptr = *(this->' . $property_key . '[i].get()); }';
+                
+            RPerl::diag( 'in Class::Generator::ast_to_cpp__generate_accessors_array_hash__CPPOPS_CPPTYPES(), have user-defined object array element accessor $retval = ' . "\n" . $retval . "\n" );
+        }
+    }
+
+    # hash value accessors
+    elsif ( $property_type =~ /_hashref$/ ) {
+        my $retval;
+        my $property_value_type = substr $property_type, 0, ( ( length $property_type ) - 8 );
+        if ( exists $rperlnamespaces_generated::RPERL->{ $property_value_type . '::' } ) {
+
+            # hashref of RPerl data types
+            if ( ( $property_value_type eq 'object' ) or ( $property_value_type eq 'hashref' ) ) {
+
+                # hashref of objects or hashrefs (same as Perl object which is a blessed hashref), set address in $value_tmp, return void
+                $retval = 'NEED CODE HERE!!!';
+            }
+            elsif ( $property_value_type eq 'arrayref' ) {
+
+                # hashref of arrayrefs, set address in $value_tmp, return void
+                $retval = 'NEED CODE HERE!!!';
+            }
+            else {
+                # hashref of scalars, return value
+                $retval = 'NEED CODE HERE!!!';
+            }
+
+            RPerl::diag( 'in Class::Generator::ast_to_cpp__generate_accessors_array_hash__CPPOPS_CPPTYPES(), have RPerl type hash value accessor $retval = ' . "\n" . $retval . "\n" );
+        }
+        else {
+            #hashref of user-defined data types (objects), set address in $value_tmp, return void
+            $retval = 'NEED CODE HERE!!!';
+
+            RPerl::diag( 'in Class::Generator::ast_to_cpp__generate_accessors_array_hash__CPPOPS_CPPTYPES(), have user-defined object hash value accessor $retval = ' . "\n" . $retval . "\n" );
+        }
+    }
+    return $retval;
 };
 
 1;    # end of class
