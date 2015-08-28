@@ -251,7 +251,7 @@ EOL
     $cpp_source_group->{CPP} .= $cpp_source_tmp;
 
     if ( $modes->{label} eq 'ON' ) {
-        $cpp_source_tmp = ( ( '// [[[<<< BEGIN CPP TYPES >>>]]]' . "\n" ) x 3 );
+        $cpp_source_tmp = ( ( '// [[[<<< BEGIN CPP TYPES >>>]]]' . "\n" ) x 3 ) . "\n";
         $cpp_source_group->{H}   .= $cpp_source_tmp;
         $cpp_source_group->{CPP} .= $cpp_source_tmp;
     }
@@ -284,6 +284,7 @@ EOL
     $cpp_source_group->{H} .= 'public:' . "\n";
 
     my string_arrayref $properties_accessors_mutators = [];
+    my string_arrayref $properties_accessors_mutators_shims = [];
     my string_arrayref $properties_declarations       = [];
     my string $property_declaration;
 
@@ -315,7 +316,7 @@ EOL
         $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}
             = { isa => 'RPerl::DataStructure::Hash::Properties', type => $property_type };
 
-        $property_type = RPerl::Generator::type_convert( $property_type, 1 );    # $pointerify_classes = 1
+        $property_type = RPerl::Generator::type_convert_perl_to_cpp( $property_type, 1 );    # $pointerify_classes = 1
         $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}->{type_cpp} = $property_type; # add converted C++ type to symtab entry
 
         $property_declaration = q{    } . $property_type . q{ } . $property_key;
@@ -329,21 +330,13 @@ EOL
 
         $property_declaration .= ';';
         push @{$properties_declarations}, $property_declaration;
-        push @{$properties_accessors_mutators}, ( q{    } . $property_type . ' get_' . $property_key . '() { return this->' . $property_key . '; }' ); # ACCESSOR
-        push @{$properties_accessors_mutators},
-            (     q{    }
-                . 'void set_'
-                . $property_key . '('
-                . $property_type . q{ }
-                . $property_key
-                . '_new) { this->'
-                . $property_key . ' = '
-                . $property_key
-                . '_new; }' );                                                                                                                         # MUTATOR
 
-        $property_declaration = ast_to_cpp__generate_accessors_array_hash__CPPOPS_CPPTYPES( $property_key, $modes );
-        if ($property_declaration ne q{}) {
-            push @{$properties_accessors_mutators}, $property_declaration;
+        $cpp_source_subgroup = ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES( $property_key, $modes );
+        if ( $cpp_source_subgroup->{H} ne q{} ) {
+            push @{$properties_accessors_mutators}, $cpp_source_subgroup->{H};
+        }
+        if ( $cpp_source_subgroup->{PMC} ne q{} ) {
+            push @{$properties_accessors_mutators_shims}, $cpp_source_subgroup->{PMC};
         }
 
         foreach my object $property ( @{ $properties_1_to_n->{children} } ) {
@@ -373,7 +366,7 @@ EOL
             $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}
                 = { isa => 'RPerl::DataStructure::Hash::Properties', type => $property_type };
 
-            $property_type = RPerl::Generator::type_convert( $property_type, 1 );    # $pointerify_classes = 1
+            $property_type = RPerl::Generator::type_convert_perl_to_cpp( $property_type, 1 );    # $pointerify_classes = 1
             $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}->{type_cpp} = $property_type; # add converted C++ type to symtab entry
 
             $property_declaration = q{    } . $property_type . q{ } . $property_key;
@@ -387,18 +380,14 @@ EOL
 
             $property_declaration .= ';';
             push @{$properties_declarations}, $property_declaration;
-            push @{$properties_accessors_mutators}, ( q{    } . $property_type . ' get_' . $property_key . '() { return this->' . $property_key . '; }' ); # ACCESSOR
-            push @{$properties_accessors_mutators},
-                (     q{    }
-                    . 'void set_'
-                    . $property_key . '('
-                    . $property_type . q{ }
-                    . $property_key
-                    . '_new) { this->'
-                    . $property_key . ' = '
-                    . $property_key
-                    . '_new; }' );    # MUTATOR
 
+            $cpp_source_subgroup = ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES( $property_key, $modes );
+            if ( $cpp_source_subgroup->{H} ne q{} ) {
+                push @{$properties_accessors_mutators}, $cpp_source_subgroup->{H};
+            }
+            if ( $cpp_source_subgroup->{PMC} ne q{} ) {
+                push @{$properties_accessors_mutators_shims}, $cpp_source_subgroup->{PMC};
+            }
         }
     }
 
@@ -418,6 +407,10 @@ EOL
             $cpp_source_group->{H} .= "\n" . q{    } . '// <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>' . "\n";
         }
         $cpp_source_group->{H} .= ( join "\n", @{$properties_accessors_mutators} ) . "\n";
+    }
+
+    if ( exists $properties_accessors_mutators_shims->[0] ) {
+        $cpp_source_group->{_PMC_accessors_mutators_shims} .= ( join "\n", @{$properties_accessors_mutators_shims} ) . "\n";
     }
 
     if ( $modes->{label} eq 'ON' ) {
@@ -538,87 +531,120 @@ EOL
     return $cpp_source_group;
 };
 
-# generate accessors for array elements and hash values
-our string $ast_to_cpp__generate_accessors_array_hash__CPPOPS_CPPTYPES = sub {
+# generate accessors/mutators
+our string_hashref $ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES = sub {
     ( my string $property_key, my string_hashref $modes ) = @_;
-    my string $retval = q{};
+    my string_hashref $cpp_source_group = { PMC => q{}, H => q{} };
 
+    # grab RPerl-style type out of symtab, instead of accepting-as-arg now-C++-style type from $property_type in caller
     my string $property_type = $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}->{type};
+    my bool $is_direct       = 0;
+    my $property_element_or_value_type;
 
-    # array element accessors
+    # array element accessors/mutators
     if ( $property_type =~ /_arrayref$/ ) {
-        my $property_element_type = substr $property_type, 0, ( ( length $property_type ) - 9 );
-        if ( exists $rperlnamespaces_generated::RPERL->{ $property_element_type . '::' } ) {
-
-# START HERE: add remaining accessors below
-# START HERE: add remaining accessors below
-# START HERE: add remaining accessors below
-
+        $property_element_or_value_type = substr $property_type, 0, ( ( length $property_type ) - 9 );  # strip trailing '_arrayref'
+        if ( exists $rperlnamespaces_generated::RPERL->{ $property_element_or_value_type . '::' } ) {
             # arrayref of RPerl data types
-            if ( ( $property_element_type eq 'object' ) or ( $property_element_type eq 'hashref' ) ) {
-                # arrayref of objects or hashrefs (same as Perl object which is a blessed hashref), set address in $element_tmp, return void
-                $retval = 'NEED CODE HERE!!!';
+            if ( ( $property_element_or_value_type eq 'object' ) or ( $property_element_or_value_type eq 'hashref' ) ) {
+                # arrayref of objects or hashrefs (same as Perl object which is a blessed hashref), set address, return void
+                $is_direct = 0;
             }
-            elsif ( $property_element_type eq 'arrayref' ) {
-                # arrayref of arrayrefs, set address in $element_tmp, return void
-                $retval = 'NEED CODE HERE!!!';
+            elsif ( $property_element_or_value_type eq 'arrayref' ) {
+                # arrayref of arrayrefs, set address, return void
+                $is_direct = 0;
             }
             else {
                 # arrayref of scalars, return value
-                $retval = 'NEED CODE HERE!!!';
+                $is_direct = 1;
             }
-
-            RPerl::diag( 'in Class::Generator::ast_to_cpp__generate_accessors_array_hash__CPPOPS_CPPTYPES(), have RPerl type array element accessor $retval = ' . "\n" . $retval . "\n" );
         }
         else {
-            #arrayref of user-defined data types (objects), set address in $element_tmp, return void
-# hard-coded example
-#void get_bodies_element(integer i, PhysicsPerl__Astro__Body_ptr& bodies_tmp_ptr) { *(bodies_tmp_ptr.get()) = *(this->bodies[i].get()); }
-#void get_bodies_element(integer i, PhysicsPerl__Astro__Body_rawptr bodies_tmp_rawptr) { *bodies_tmp_rawptr = *(this->bodies[i].get()); }
-
-            my string $property_element_type_cpp_nopointerify = RPerl::Generator::type_convert( $property_element_type, 0 );    # $pointerify_classes = 0
-
-            $retval = 'void get_' . $property_key . '_element(integer i, ' . $property_element_type_cpp_nopointerify . '_ptr& ' . $property_key . '_tmp_ptr) { *(' .
-                $property_key . '_tmp_ptr.get()) = *(this->' . $property_key . '[i].get()); }' . "\n";
-            $retval .= 'void get_' . $property_key . '_element(integer i, ' . $property_element_type_cpp_nopointerify . '_rawptr ' . $property_key . '_tmp_rawptr) { *' .
-                $property_key . '_tmp_rawptr = *(this->' . $property_key . '[i].get()); }';
-                
-            RPerl::diag( 'in Class::Generator::ast_to_cpp__generate_accessors_array_hash__CPPOPS_CPPTYPES(), have user-defined object array element accessor $retval = ' . "\n" . $retval . "\n" );
+            # arrayref of user-defined data types (objects), set address, return void
+            $is_direct = 0;
         }
     }
-
-    # hash value accessors
+    # hash value accessors/mutators
     elsif ( $property_type =~ /_hashref$/ ) {
-        my $retval;
-        my $property_value_type = substr $property_type, 0, ( ( length $property_type ) - 8 );
-        if ( exists $rperlnamespaces_generated::RPERL->{ $property_value_type . '::' } ) {
-
+        $property_element_or_value_type = substr $property_type, 0, ( ( length $property_type ) - 8 );  # strip trailing '_hashref'
+        if ( exists $rperlnamespaces_generated::RPERL->{ $property_element_or_value_type . '::' } ) {
             # hashref of RPerl data types
-            if ( ( $property_value_type eq 'object' ) or ( $property_value_type eq 'hashref' ) ) {
-
-                # hashref of objects or hashrefs (same as Perl object which is a blessed hashref), set address in $value_tmp, return void
-                $retval = 'NEED CODE HERE!!!';
+            if ( ( $property_element_or_value_type eq 'object' ) or ( $property_element_or_value_type eq 'hashref' ) ) {
+                # hashref of objects or hashrefs (same as Perl object which is a blessed hashref), set address, return void
+                $is_direct = 0;
             }
-            elsif ( $property_value_type eq 'arrayref' ) {
-
-                # hashref of arrayrefs, set address in $value_tmp, return void
-                $retval = 'NEED CODE HERE!!!';
+            elsif ( $property_element_or_value_type eq 'arrayref' ) {
+                # hashref of arrayrefs, set address, return void
+                $is_direct = 0;
             }
             else {
                 # hashref of scalars, return value
-                $retval = 'NEED CODE HERE!!!';
+                $is_direct = 1;
             }
-
-            RPerl::diag( 'in Class::Generator::ast_to_cpp__generate_accessors_array_hash__CPPOPS_CPPTYPES(), have RPerl type hash value accessor $retval = ' . "\n" . $retval . "\n" );
         }
         else {
-            #hashref of user-defined data types (objects), set address in $value_tmp, return void
-            $retval = 'NEED CODE HERE!!!';
-
-            RPerl::diag( 'in Class::Generator::ast_to_cpp__generate_accessors_array_hash__CPPOPS_CPPTYPES(), have user-defined object hash value accessor $retval = ' . "\n" . $retval . "\n" );
+            # hashref of user-defined data types (objects), set address, return void
+            $is_direct = 0;
         }
     }
-    return $retval;
+    # scalar accessors/mutators, return value
+    else {
+        $is_direct = 1;
+    }
+
+    if ($is_direct) {
+        $cpp_source_group->{H} = $property_type . ' get_' . $property_key . '() { return this->' . $property_key . '; }' . "\n";
+        $cpp_source_group->{H} .= 'void set_' . $property_key . '(' . $property_type . q{ } . $property_key . '_new) { this->' . $property_key . ' = ' . $property_key . '_new; }';
+    }
+    else {
+        # hard-coded example
+#integer get_bodies_size() { return this->bodies.size(); }  // call from Perl or C++
+#string_arrayref get_bodies_keys() { string_arrayref keys; keys.reserve(this->keys.size()); for(auto hash_entry : this->bodies) { keys.push_back(hash_entry.first); } }  // call from Perl or C++
+#PhysicsPerl__Astro__Body_ptr& get_bodies_element(integer i) { return this->bodies[i]; }  // call from C++
+#void get_bodies_element_indirect(integer i, PhysicsPerl__Astro__Body_rawptr bodies_element_rawptr) { *bodies_element_rawptr = *(this->bodies[i].get()); }  // call from Perl shim
+#void set_bodies_element(integer i, PhysicsPerl__Astro__Body_ptr& bodies_element_ptr) { *(this->bodies[i].get()) = *(bodies_element_ptr.get()); }  // call from C++
+#void set_bodies_element(integer i, PhysicsPerl__Astro__Body_rawptr bodies_element_rawptr) { *(this->bodies[i].get()) = *bodies_element_rawptr; }  // call from Perl
+#sub get_bodies_element {
+#    ( my PhysicsPerl::Astro::System $self, my integer $i ) = @_;
+#    my PhysicsPerl::Astro::Body $bodies_element = PhysicsPerl::Astro::Body->new();
+#    $self->get_bodies_element_indirect($i, $bodies_element);
+#    return $bodies_element;
+#}
+
+        my string $property_element_or_value_type_cpp_nopointerify = RPerl::Generator::type_convert_perl_to_cpp( $property_element_or_value_type, 0 );    # $pointerify_classes = 0
+
+        # C++ code
+        if ( $property_type =~ /_arrayref$/ ) {
+            $cpp_source_group->{H} = 'integer get_' . $property_key . '_size() { return this->' . $property_key . '.size(); }  // call from Perl or C++' . "\n";
+        }
+        elsif ( $property_type =~ /_hashref$/ ) {
+            $cpp_source_group->{H} = 'string_arrayref get_' . $property_key . '_keys() { string_arrayref keys; keys.reserve(this->' . $property_key 
+            . '.size()); for(auto hash_entry : this->' . $property_key . ') { keys.push_back(hash_entry.first); } }  // call from Perl or C++' . "\n";
+        }
+        $cpp_source_group->{H} .= $property_element_or_value_type_cpp_nopointerify . '_ptr& get_' . $property_key . '_element(integer i) { return this->' 
+            . $property_key . '[i]; }  // call from C++' . "\n";
+        $cpp_source_group->{H} .= 'void get_' . $property_key . '_element_indirect(integer i, ' . $property_element_or_value_type_cpp_nopointerify . '_rawptr ' . $property_key
+            . '_element_rawptr) { *' . $property_key . '_element_rawptr = *(this->' . $property_key . '[i].get()); }  // call from Perl shim' . "\n";
+        $cpp_source_group->{H} .= 'void set_' . $property_key . '_element(integer i, ' . $property_element_or_value_type_cpp_nopointerify . '_ptr& ' . $property_key
+            . '_element_ptr) { *(this->' . $property_key . '[i].get()) = *(' . $property_key . '_element_ptr.get()); }  // call from C++' . "\n";
+        $cpp_source_group->{H} .= 'void set_' . $property_key . '_element(integer i, ' . $property_element_or_value_type_cpp_nopointerify . '_rawptr ' . $property_key
+            . '_element_rawptr) { *(this->' . $property_key . '[i].get()) = *' . $property_key . '_element_rawptr; }  // call from Perl';
+
+        # Perl shim code
+        # DEV NOTE: must create return variable object in Perl so it will be memory-managed by Perl,
+        # and not wrongly destructed or double-destructed by Perl garbage collector and/or C++ memory.h,
+        # even though Perl object contents will be replaced by C++ memory address, TRICKY!
+        $cpp_source_group->{PMC} = 'sub get_' . $property_key . '_element {' . "\n";
+        $cpp_source_group->{PMC} .= '( my ' . (substr $modes->{_symbol_table}->{_namespace}, 0, ((length $modes->{_symbol_table}->{_namespace}) - 2)) . ' $self, my integer $i ) = @_;' . "\n";
+        $cpp_source_group->{PMC} .= 'my ' . $property_element_or_value_type . ' $' . $property_key . '_element = ' . $property_element_or_value_type . '->new();' . "\n"; 
+        $cpp_source_group->{PMC} .= '$self->get_' . $property_key . '_element_indirect($i, $' . $property_key . '_element);' . "\n";
+        $cpp_source_group->{PMC} .= 'return $' . $property_key . '_element;' . "\n";
+        $cpp_source_group->{PMC} .= '}';
+
+#            RPerl::diag( 'in Class::Generator::ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES(), have $cpp_source_group->{H} = ' . "\n" . $cpp_source_group->{H} . "\n" );
+    }
+
+    return $cpp_source_group;
 };
 
 1;    # end of class

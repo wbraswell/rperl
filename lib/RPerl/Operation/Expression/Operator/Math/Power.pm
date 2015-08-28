@@ -64,7 +64,8 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     my string $self_class = ref $self;
     if ( $self_class eq 'Operator_89' ) {  # Operator -> SubExpression OP04_MATH_POW SubExpression
-        $cpp_source_group->{H_INCLUDES} .= '#include <math.h>' . "\n";
+        # DEV NOTE: including math.h here causes compiler errors, instead it is always included via RPerl/Inline.pm
+#        $cpp_source_group->{H_INCLUDES} .= '#include <math.h>' . "\n";
 
         $cpp_source_group->{CPP} .= 'pow(';
         my string_hashref $cpp_source_subgroup = $self->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);

@@ -24,8 +24,8 @@ RELEASE v1.XY
 
 alioth nbody, optimize graphics speed
 add symtab building and checking to PERLOPS_PERLTYPES
-add mutators set_*_element() & set_*_value()
-file bug, I::CPP comments
+add mutators pass-by-reference for scalars?  see SystemRenderer2D::show()
+file bug, I::CPP comments, 7 lines okay, 8 lines broken
 file bug, I::CPP std::array
 file bug, I::CPP new() clobber
 file bug, I::CPP when attempting to return object type, CORRELATION #pp04

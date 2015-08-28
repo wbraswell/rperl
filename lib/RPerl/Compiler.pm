@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_210;
+our $VERSION = 0.005_500;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -291,10 +291,6 @@ our hashref_arrayref $generate_output_file_names = sub {
 our void $save_source_files = sub {
     ( my string_hashref $source_group, my string_hashref $file_name_group, my string_hashref $modes ) = @_;
 
-    # START HERE: use symtab to properly generate variables
-    # START HERE: use symtab to properly generate variables
-    # START HERE: use symtab to properly generate variables
-
 #    RPerl::diag( q{in Compiler::save_source_files(), received $source_group =} . "\n" . Dumper($source_group) . "\n" );
 #    RPerl::diag( q{in Compiler::save_source_files(), received $file_name_group =} . "\n" . Dumper($file_name_group) . "\n" );
     RPerl::diag( 'in Compiler::save_source_files(), received $modes->{_symbol_table} =' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
@@ -317,31 +313,26 @@ our void $save_source_files = sub {
             die 'ERROR ECVCOFI01, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Received non-empty PMC source, dying' . "\n";
         }
 
-        # NEED ADDRESS: replace $RPerl::INCLUDE_PATH/RPerl/CompileUnit/Module.cpp different than RPerl/CompileUnit/Module.cpp ???
-        # is this file path munging done correctly for files that do not reside in RPerl/* directories, or even those that are in RPerl/* ?
         # NEED FIX WIN32: handle back-slash for Win32 instead of forward-slash only for *NIX
 
         my string $module_path        = $file_name_group->{CPP};
-        my string $module_header_path = $file_name_group->{H};
+        my string $module_header_path_nolib = $file_name_group->{H};
 
         # remove leading './' if present
         if ( ( substr $module_path, 0, 2 ) eq './' ) {
-            substr $module_path, 0, 2, '';
+            substr $module_path, 0, 2, q{};
         }
-        if ( ( substr $module_header_path, 0, 2 ) eq './' ) {
-            substr $module_header_path, 0, 2, '';
+        if ( ( substr $module_header_path_nolib, 0, 2 ) eq './' ) {
+            substr $module_header_path_nolib, 0, 2, q{};
         }
 
-        # remove leading 'lib/' if present
-        if ( ( substr $module_path, 0, 4 ) eq 'lib/' ) {
-            substr $module_path, 0, 4, '';
-        }
-        if ( ( substr $module_header_path, 0, 4 ) eq 'lib/' ) {
-            substr $module_header_path, 0, 4, '';
+        # remove leading 'lib/' if present, because -Ilib enabled in RPerl/Inline.pm
+        if ( ( substr $module_header_path_nolib, 0, 4 ) eq 'lib/' ) {
+            substr $module_header_path_nolib, 0, 4, q{};
         }
 
         # deferred, finally set path to H module header file in CPP module file
-        $source_group->{CPP} =~ s/__NEED_MODULE_HEADER_PATH/$module_header_path/gxms;
+        $source_group->{CPP} =~ s/__NEED_MODULE_HEADER_PATH/$module_header_path_nolib/gxms;
 
         # deferred, finally change hard-coded PERLOPS_PERLTYPES to CPPOPS_*TYPES
         my string $mode_tagline = $modes->{ops} . 'OPS_' . $modes->{types} . 'TYPES';
@@ -355,7 +346,6 @@ our void $save_source_files = sub {
         my string $module_name_underscores = $source_group->{_package_name_underscores};
 
 #        RPerl::diag( q{in Compiler::save_source_files(), have $module_path = } . $module_path . "\n" );
-#        RPerl::diag( q{in Compiler::save_source_files(), have $module_name = } . $module_name . "\n" );
 #        RPerl::diag( q{in Compiler::save_source_files(), have $module_name_underscores = } . $module_name_underscores . "\n" );
 
         # utilize modified copy of Module PMC template file
@@ -376,14 +366,24 @@ our void $save_source_files = sub {
             . $OS_ERROR
             . ', dying' . "\n";
 
-        # deferred, finally read in Module PMC template file, replace package name and paths
+        # deferred, finally read in Module PMC template file, replace package name and paths, add accessor/mutator shim methods
         my string $file_line;
         my string $file_string = q{};
+#        RPerl::diag('in Compiler::save_source_files(), have $accessors_mutators_shims = ' . "\n" . $accessors_mutators_shims . "\n\n");
         while ( $file_line = <$FILE_HANDLE> ) {
-            $file_line =~ s/RPerl\/CompileUnit\/Module\.cpp/$module_path/gxms;
+            $file_line =~ s/lib\/RPerl\/CompileUnit\/Module\.cpp/$module_path/gxms;
             $file_line =~ s/RPerl::CompileUnit::Module/$module_name/gxms;
             $file_line =~ s/RPerl__CompileUnit__Module/$module_name_underscores/gxms;
-            $source_group->{PMC} .= $file_line;
+            if ($file_line eq ('# <<< OO PROPERTIES, ACCESSORS & MUTATORS, SHIMS >>>  # <<< CHANGE_ME: add real shims after this line or delete it >>>' . "\n")) {
+                if (defined $source_group->{_PMC_accessors_mutators_shims}) { 
+                    $file_line = (substr $file_line, 0, 52) . "\n" . $source_group->{_PMC_accessors_mutators_shims} . "\n\n"; }
+                else { $file_line = undef; }
+            }
+            elsif ($file_line eq ('# <<< CHANGE_ME: add user-defined includes here >>>' . "\n")) {
+                if (defined $source_group->{_PMC_includes}) { $file_line = $source_group->{_PMC_includes} . "\n\n"; }
+                else { $file_line = undef; }
+            }
+            if (defined $file_line) { $source_group->{PMC} .= $file_line; }
         }
 
         close $FILE_HANDLE

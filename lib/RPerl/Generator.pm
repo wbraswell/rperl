@@ -36,10 +36,10 @@ our hashref $properties = {};
 # [[[ PROCEDURAL SUBROUTINES ]]]
 
 # convert RPerl types to C++ types
-our string $type_convert = sub {
+our string $type_convert_perl_to_cpp = sub {
     ( my string $return_type, my bool $pointerify_classes ) = @_;
-#    RPerl::diag('in Generator->type_convert_ptr(), received $return_type = ' . $return_type . "\n");
-#    RPerl::diag('in Generator->type_convert_ptr(), received $pointerify_classes = ' . $pointerify_classes . "\n");
+#    RPerl::diag('in Generator->type_convert_perl_to_cpp(), received $return_type = ' . $return_type . "\n");
+#    RPerl::diag('in Generator->type_convert_perl_to_cpp(), received $pointerify_classes = ' . $pointerify_classes . "\n");
 
     if ( exists $rperlnamespaces_generated::RPERL->{ $return_type . '::' } ) {  # RPerl types
         $return_type =~ s/^constant_/const\ /gxms;  # 'constant_foo' becomes 'const foo'

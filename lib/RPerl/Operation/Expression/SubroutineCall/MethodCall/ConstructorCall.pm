@@ -69,7 +69,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     # Expression -> WordScoped OP02_METHOD_THINARROW_NEW ')'
     my object $type                      = $self->{children}->[0]->{children}->[0];
-    $type = RPerl::Generator::type_convert($type, 0);  # $pointerify_classes = 0
+    $type = RPerl::Generator::type_convert_perl_to_cpp($type, 0);  # $pointerify_classes = 0
 
     $cpp_source_group->{CPP} .= 'new ' . $type;
     return $cpp_source_group;

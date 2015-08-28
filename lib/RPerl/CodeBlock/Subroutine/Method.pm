@@ -103,7 +103,7 @@ our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = 
     $modes->{_symbol_table}->{_subroutine} = $name;  # set current subroutine/method
     $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{_global}->{$name} = {isa => 'RPerl::CodeBlock::Subroutine::Method', type => $return_type};  # create individual symtab entry
 
-    $return_type = RPerl::Generator::type_convert($return_type, 1);  # $pointerify_classes = 1
+    $return_type = RPerl::Generator::type_convert_perl_to_cpp($return_type, 1);  # $pointerify_classes = 1
     $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{_global}->{$name}->{type_cpp} = $return_type;  # add converted C++ type to symtab entry
 
     $cpp_source_group->{H} .= q{    } . $return_type . q{ } . $name . '(';
@@ -145,7 +145,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     substr $name, 0, 1, q{};            # remove leading $ sigil
     substr $return_type, -8, 8, '';                      # remove trailing '::method'
 
-    $return_type = RPerl::Generator::type_convert($return_type, 1);  # $pointerify_classes = 1
+    $return_type = RPerl::Generator::type_convert_perl_to_cpp($return_type, 1);  # $pointerify_classes = 1
     $cpp_source_group->{CPP} .= $return_type . q{ } . $package_name_underscores . '::' . $name . '(';
 
     if ( exists $arguments_optional->{children}->[0] ) {

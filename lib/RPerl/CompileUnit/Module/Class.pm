@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.030_000;
+our $VERSION = 0.033_000;
 
 # [[[ OO INHERITANCE ]]]
 # BASE CLASS HAS NO INHERITANCE
@@ -486,226 +486,156 @@ INIT {
             foreach $package_name ( sort keys %{$object_properties_types} ) {
                 $object_properties = eval "\$$package_name\:\:properties";
 
-                foreach my $object_property_name ( sort keys %{$object_properties} ) {
+                foreach my $property_name ( sort keys %{$object_properties} ) {
 
-                    #						RPerl::diag("in Class.pm INIT block, have \$object_property_name = '$object_property_name'\n");
+                    #						RPerl::diag("in Class.pm INIT block, have \$property_name = '$property_name'\n");
                     # DEV NOTE, CORRELATION #rp03: avoid re-defining class accessor/mutator methods; so far only triggered by RPerl::CodeBlock::Subroutine
                     # because it has a special BEGIN{} block with multiple package names including it's own package name
 
-                    # normal accessor
-                    if ( not eval( 'defined &' . $package_name . '::get_' . $object_property_name ) ) {
+                    my $property_type = $object_properties_types->{$package_name}->{$property_name};
+                    my $eval_string;
+                    my $return_whole = 0;
 
-             #                            eval "\*\{$package_name\:\:get_$object_property_name\} \= sub \{ return \$\_\[0\]\-\>\{$object_property_name\}\; \}\;"
-                        eval( '*{' . $package_name . '::get_' . $object_property_name . '} = sub { return $_[0]->{' . $object_property_name . '}; };' )
-                            or croak($EVAL_ERROR);
-                        if ($EVAL_ERROR) { croak($EVAL_ERROR); }
-
-#eval "\*\{$package_name\:\:get_$object_property_name\} \= sub \{ RPerl::diag(\"IN POST\-INIT\, accessor MODE $package_name\:\:get_$object_property_name\\n\"\; return \$\_\[0\]\-\>\{$object_property_name\}\; \}\;";
-                    }
-
-                    # normal mutator
-                    if ( not eval( 'defined &' . $package_name . '::set_' . $object_property_name ) ) {
-
-#                            eval "\*\{$package_name\:\:set_$object_property_name\} \= sub \{ \$\_\[0\]\-\>\{$object_property_name\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$object_property_name\}\; \}\;"
-                        eval(     '*{'
+                    # array element accessor/mutator
+                    if (    ( $property_type =~ /_arrayref$/ )
+                        and ( not eval( 'defined &' . $package_name . '::get_' . $property_name . '_element' ) ) )
+                    {
+          # hard-coded example
+          #our int::method $get_foo_size = sub { ( my Foo::Bar $self ) = @_; return (scalar @{$self->{foo}}); };
+          #our Foo::Quux::method $get_foo_element = sub { ( my Foo::Bar $self, my integer $i ) = @_; return $self->{foo}->[$i]; };
+          #our void::method $set_foo_element = sub { ( my Foo::Bar $self, my integer $i, my Foo::Quux $foo_element ) = @_; $self->{foo}->[$i] = $foo_element; };
+                        my $property_element_type = substr $property_type, 0, ( ( length $property_type ) - 9 );    # strip trailing '_arrayref'
+                        if ( exists $rperlnamespaces_generated::RPERL->{ $property_element_type . '::' } ) {
+                            $return_whole = 1;
+                        }
+                        else {
+                            $eval_string
+                                = '*{'
+                                . $package_name
+                                . '::get_'
+                                . $property_name
+                                . '_size'
+                                . '} = sub { ( my '
+                                . $package_name
+                                . ' $self ) = @_; return (scalar @{$self->{'
+                                . $property_name
+                                . '}}); };';
+                            $eval_string
+                                .= '*{'
+                                . $package_name
+                                . '::get_'
+                                . $property_name
+                                . '_element'
+                                . '} = sub { ( my '
+                                . $package_name
+                                . ' $self, my integer $i ) = @_; return $self->{'
+                                . $property_name
+                                . '}->[$i]; };';
+                            $eval_string
+                                .= '*{'
                                 . $package_name
                                 . '::set_'
-                                . $object_property_name
-                                . '} = sub { $_[0]->{'
-                                . $object_property_name
-                                . '} = $_[1]; return $_[0]->{'
-                                . $object_property_name
-                                . '}; };' )
-                            or croak($EVAL_ERROR);
-                        if ($EVAL_ERROR) { croak($EVAL_ERROR); }
+                                . $property_name
+                                . '_element'
+                                . '} = sub { ( my '
+                                . $package_name
+                                . ' $self, my integer $i, my '
+                                . $property_element_type . ' $'
+                                . $property_name
+                                . '_element ) = @_; $self->{'
+                                . $property_name
+                                . '}->[$i] = $'
+                                . $property_name
+                                . '_element; };';
 
-#eval "\*\{$package_name\:\:set_$object_property_name\} \= sub \{ RPerl::diag(\"IN POST\-INIT\, mutator MODE $package_name\:\:set_$object_property_name\\n\"\; \$\_\[0\]\-\>\{$object_property_name\} \= \$\_\[1\]\; return \$\_\[0\]\-\>\{$object_property_name\}\; \}\;";
-                    }
-
-                    my $object_property_type = $object_properties_types->{$package_name}->{$object_property_name};
-
-                    # array element accessors
-                    if ( $object_property_type =~ /_arrayref$/ ) {
-                        if ( not eval( 'defined &' . $package_name . '::get_' . $object_property_name . '_element' ) ) {
-                            my $eval_string;
-                            my $object_property_element_type = substr $object_property_type, 0, ( ( length $object_property_type ) - 9 );
-                            if ( exists $rperlnamespaces_generated::RPERL->{ $object_property_element_type . '::' } ) {
-
-                                # arrayref of RPerl data types
-                                if ( ( $object_property_element_type eq 'object' ) or ( $object_property_element_type eq 'hashref' ) ) {
-
-                                    # arrayref of objects or hashrefs (same as Perl object which is a blessed hashref), set address in $element_tmp, return void
-                                    $eval_string
-                                        = '*{'
-                                        . $package_name
-                                        . '::get_'
-                                        . $object_property_name
-                                        . '_element'
-                                        . '} = sub { ' . '( my '
-                                        . $package_name
-                                        . ' $self, my integer $i, my '
-                                        . $object_property_element_type . ' $'
-                                        . $object_property_name
-                                        . '_element_tmp ) = @_; %{$'
-                                        . $object_property_name
-                                        . '_element_tmp} = %{$self->{'
-                                        . $object_property_name
-                                        . '}->[$i]}; };';
-                                }
-                                elsif ( $object_property_element_type eq 'arrayref' ) {
-
-                                    # arrayref of arrayrefs, set address in $element_tmp, return void
-                                    $eval_string
-                                        = '*{'
-                                        . $package_name
-                                        . '::get_'
-                                        . $object_property_name
-                                        . '_element'
-                                        . '} = sub { ' . '( my '
-                                        . $package_name
-                                        . ' $self, my integer $i, my '
-                                        . $object_property_element_type . ' $'
-                                        . $object_property_name
-                                        . '_element_tmp ) = @_; @{$'
-                                        . $object_property_name
-                                        . '_element_tmp} = @{$self->{'
-                                        . $object_property_name
-                                        . '}->[$i]}; };';
-                                }
-                                else {
-                                    # arrayref of scalars, return value
-                                    $eval_string
-                                        = '*{'
-                                        . $package_name
-                                        . '::get_'
-                                        . $object_property_name
-                                        . '_element'
-                                        . '} = sub { ' . '( my '
-                                        . $package_name
-                                        . ' $self, my integer $i ) = @_; return $self->{'
-                                        . $object_property_name
-                                        . '}->[$i]; };';
-                                }
-
-  #                                RPerl::diag( 'in Class.pm INIT block, have RPerl type array element accessor $eval_string = ' . "\n" . $eval_string . "\n" );
-                            }
-                            else {
-#arrayref of user-defined data types (objects), set address in $element_tmp, return void
-# hard-coded example
-#our void::method $get_foo_element = sub { ( my Foo::Bar $self, my integer $i, my Foo::Quux $foo_element_tmp ) = @_; %{$foo_element_tmp} = %{$self->{foo}->[$i]}; };
-                                $eval_string
-                                    = '*{'
-                                    . $package_name
-                                    . '::get_'
-                                    . $object_property_name
-                                    . '_element'
-                                    . '} = sub { ' . '( my '
-                                    . $package_name
-                                    . ' $self, my integer $i, my '
-                                    . $object_property_element_type . ' $'
-                                    . $object_property_name
-                                    . '_element_tmp ) = @_; %{$'
-                                    . $object_property_name
-                                    . '_element_tmp} = %{$self->{'
-                                    . $object_property_name
-                                    . '}->[$i]}; };';
-
-#                                RPerl::diag( 'in Class::INIT() block, have user-defined object array element accessor $eval_string = ' . "\n" . $eval_string . "\n" );
-                            }
+#                            RPerl::diag( 'in Class::INIT() block, have user-defined object array element accessor $eval_string = ' . "\n" . $eval_string . "\n" );
                             eval($eval_string) or croak($EVAL_ERROR);
                             if ($EVAL_ERROR) { croak($EVAL_ERROR); }
                         }
                     }
 
-                    # hash value accessors
-                    elsif ( $object_property_type =~ /_hashref$/ ) {
-                        if ( not eval( 'defined &' . $package_name . '::get_' . $object_property_name . '_value' ) ) {
-                            my $eval_string;
-                            my $object_property_value_type = substr $object_property_type, 0, ( ( length $object_property_type ) - 8 );
-                            if ( exists $rperlnamespaces_generated::RPERL->{ $object_property_value_type . '::' } ) {
+                    # hash value accessor/mutator
+                    elsif ( ( $property_type =~ /_hashref$/ )
+                        and ( not eval( 'defined &' . $package_name . '::get_' . $property_name . '_element' ) ) )
+                    {
+          # hard-coded example
+          #our string_arrayref::method $get_foo_keys = sub { ( my Foo::Bar $self ) = @_; return [sort keys %{$self->{foo}}]; };
+          #our Foo::Quux::method $get_foo_element = sub { ( my Foo::Bar $self, my integer $i ) = @_; return $self->{foo}->{$i}; };
+          #our void::method $set_foo_element = sub { ( my Foo::Bar $self, my integer $i, my Foo::Quux $foo_element ) = @_; $self->{foo}->{$i} = $foo_element; };
+                        my $property_value_type = substr $property_type, 0, ( ( length $property_type ) - 8 );    # strip trailing '_hashref'
+                        if ( exists $rperlnamespaces_generated::RPERL->{ $property_value_type . '::' } ) {
+                            $return_whole = 1;
+                        }
+                        else {
+                            $eval_string
+                                = '*{'
+                                . $package_name
+                                . '::get_'
+                                . $property_name
+                                . '_keys'
+                                . '} = sub { ( my '
+                                . $package_name
+                                . ' $self ) = @_; return [sort keys %{$self->{'
+                                . $property_name
+                                . '}}]; };';
+                            $eval_string
+                                .= '*{'
+                                . $package_name
+                                . '::get_'
+                                . $property_name
+                                . '_element'
+                                . '} = sub { ( my '
+                                . $package_name
+                                . ' $self, my integer $i ) = @_; return $self->{'
+                                . $property_name
+                                . '}->{$i}; };';
+                            $eval_string
+                                .= '*{'
+                                . $package_name
+                                . '::set_'
+                                . $property_name
+                                . '_element'
+                                . '} = sub { ( my '
+                                . $package_name
+                                . ' $self, my integer $i, my '
+                                . $property_value_type . ' $'
+                                . $property_name
+                                . '_element ) = @_; $self->{'
+                                . $property_name
+                                . '}->{$i} = $'
+                                . $property_name
+                                . '_element; };';
 
-                                # hashref of RPerl data types
-                                if ( ( $object_property_value_type eq 'object' ) or ( $object_property_value_type eq 'hashref' ) ) {
-
-                                    # hashref of objects or hashrefs (same as Perl object which is a blessed hashref), set address in $value_tmp, return void
-                                    $eval_string
-                                        = '*{'
-                                        . $package_name
-                                        . '::get_'
-                                        . $object_property_name
-                                        . '_value'
-                                        . '} = sub { ' . '( my '
-                                        . $package_name
-                                        . ' $self, my string $key, my '
-                                        . $object_property_value_type . ' $'
-                                        . $object_property_name
-                                        . '_value_tmp ) = @_; %{$'
-                                        . $object_property_name
-                                        . '_value_tmp} = %{$self->{'
-                                        . $object_property_name
-                                        . '}->{$key}}; };';
-                                }
-                                elsif ( $object_property_value_type eq 'arrayref' ) {
-
-                                    # hashref of arrayrefs, set address in $value_tmp, return void
-                                    $eval_string
-                                        = '*{'
-                                        . $package_name
-                                        . '::get_'
-                                        . $object_property_name
-                                        . '_value'
-                                        . '} = sub { ' . '( my '
-                                        . $package_name
-                                        . ' $self, my string $key, my '
-                                        . $object_property_value_type . ' $'
-                                        . $object_property_name
-                                        . '_value_tmp ) = @_; @{$'
-                                        . $object_property_name
-                                        . '_value_tmp} = @{$self->{'
-                                        . $object_property_name
-                                        . '}->{$key}}; };';
-                                }
-                                else {
-                                    # hashref of scalars, return value
-                                    $eval_string
-                                        = '*{'
-                                        . $package_name
-                                        . '::get_'
-                                        . $object_property_name
-                                        . '_value'
-                                        . '} = sub { ' . '( my '
-                                        . $package_name
-                                        . ' $self, my string $key ) = @_; return $self->{'
-                                        . $object_property_name
-                                        . '}->{$key}; };';
-                                }
-
-     #                                RPerl::diag( 'in Class.pm INIT block, have RPerl type hash value accessor $eval_string = ' . "\n" . $eval_string . "\n" );
-                            }
-                            else {
-#hashref of user-defined data types (objects), set address in $value_tmp, return void
-# hard-coded example
-#our void::method $get_foo_value = sub { ( my Foo::Bar $self, my string $key, my Foo::Quux $foo_value_tmp ) = @_; %{$foo_value_tmp} = %{$self->{foo}->{$key}}; };
-                                $eval_string
-                                    = '*{'
-                                    . $package_name
-                                    . '::get_'
-                                    . $object_property_name
-                                    . '_value'
-                                    . '} = sub { ' . '( my '
-                                    . $package_name
-                                    . ' $self, my string $key, my '
-                                    . $object_property_value_type . ' $'
-                                    . $object_property_name
-                                    . '_value_tmp ) = @_; %{$'
-                                    . $object_property_name
-                                    . '_value_tmp} = %{$self->{'
-                                    . $object_property_name
-                                    . '}->{$key}}; };';
-
-#                                RPerl::diag( 'in Class::INIT() block, have user-defined object hash value accessor $eval_string = ' . "\n" . $eval_string . "\n" );
-                            }
+#                            RPerl::diag( 'in Class::INIT() block, have user-defined object hash value accessor $eval_string = ' . "\n" . $eval_string . "\n" );
                             eval($eval_string) or croak($EVAL_ERROR);
+                            if ($EVAL_ERROR) { croak($EVAL_ERROR); }
+                        }
+                    }
+                    # scalar accessor/mutator
+                    else {
+                        $return_whole = 1;
+                    }
+
+                    # return whole values for scalars, scalar arrayrefs, and scalar hashrefs
+                    if ($return_whole) {
+                        if ( not eval( 'defined &' . $package_name . '::get_' . $property_name ) ) {
+                            $eval_string = '*{' . $package_name . '::get_' . $property_name . '} = sub { return $_[0]->{' . $property_name . '}; };';
+                            eval($eval_string) or croak($EVAL_ERROR);
+                            if ($EVAL_ERROR) { croak($EVAL_ERROR); }
+                        }
+
+                        if ( not eval( 'defined &' . $package_name . '::set_' . $property_name ) ) {
+                            $eval_string
+                                = '*{'
+                                . $package_name
+                                . '::set_'
+                                . $property_name
+                                . '} = sub { $_[0]->{'
+                                . $property_name
+                                . '} = $_[1]; return $_[0]->{'
+                                . $property_name . '}; };';
+                            eval($eval_string)
+                                or croak($EVAL_ERROR);
                             if ($EVAL_ERROR) { croak($EVAL_ERROR); }
                         }
                     }

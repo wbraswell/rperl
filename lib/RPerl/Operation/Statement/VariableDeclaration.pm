@@ -139,7 +139,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}
             = { isa => 'RPerl::Operation::Expression::SubExpression::Variable', type => $type };
 
-        $type = RPerl::Generator::type_convert($type, 1);  # $pointerify_classes = 1
+        $type = RPerl::Generator::type_convert_perl_to_cpp($type, 1);  # $pointerify_classes = 1
         $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}->{type_cpp} = $type;  # add converted C++ type to symtab entry
 
         $cpp_source_group->{CPP} .= $type . q{ } . $symbol . ';' . "\n";
@@ -189,7 +189,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}
             = { isa => 'RPerl::Operation::Expression::SubExpression::Variable', type => $type };
 
-        $type = RPerl::Generator::type_convert($type, 1);  # $pointerify_classes = 1
+        $type = RPerl::Generator::type_convert_perl_to_cpp($type, 1);  # $pointerify_classes = 1
         $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}->{type_cpp} = $type;  # add converted C++ type to symtab entry
 
         $cpp_source_group->{CPP} .= $type . q{ } . $symbol;
@@ -221,7 +221,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}
             = { isa => 'RPerl::Operation::Expression::SubExpression::Variable', type => $type };
 
-        $type = RPerl::Generator::type_convert($type, 1);  # $pointerify_classes = 1
+        $type = RPerl::Generator::type_convert_perl_to_cpp($type, 1);  # $pointerify_classes = 1
         $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}->{type_cpp} = $type;  # add converted C++ type to symtab entry
 
         # compensate for array size vs array max index (difference of 1)
@@ -285,8 +285,8 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             = { isa => 'RPerl::Operation::Expression::SubExpression::Variable', type => $type_fhref };
 
 
-        # NEED ANSWER: should we enable type_convert() for future use of constant_filehandleref type?
-#        $type_fhref = RPerl::Generator::type_convert($type_fhref, 1);  # $pointerify_classes = 1
+        # NEED ANSWER: should we enable type_convert_perl_to_cpp() for future use of constant_filehandleref type?
+#        $type_fhref = RPerl::Generator::type_convert_perl_to_cpp($type_fhref, 1);  # $pointerify_classes = 1
         $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol_fhref}->{type_cpp} = $type_fhref;  # add converted C++ type to symtab entry
 
         $cpp_source_group->{CPP} .= $type_fhref . q{ } . $symbol_fhref . ';' . "\n";
