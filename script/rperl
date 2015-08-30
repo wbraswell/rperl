@@ -280,7 +280,7 @@ sub depends_parse_generate_save_subcompile_execute {
         $modes->{execute} = 'OFF';
     }
 
-    # DEV NOTE: Perl::Critic BUG!  'integer' triggers false positive RequireFinalReturn
+    # NEED FIX: Perl::Critic BUG!  'integer' triggers false positive RequireFinalReturn
     #    for my integer $i ( 0 .. ( $input_files_count - 1 ) ) {
     for my $i ( 0 .. ( $input_files_count - 1 ) ) {
         my string $input_file_name                = $input_file_names->[$i];
@@ -331,6 +331,10 @@ sub depends_parse_generate_save_subcompile_execute {
             RPerl::verbose( sprintf( "%4d", $input_file_deps_count ) . ' found.' . "\n" );
             diag_multi_file_settings( $input_file_name_deps, $output_file_name_dep_groups, $input_file_and_deps_count, $modes );
         }
+
+        # START HERE: refactor this loop to allow deferred file saving for multiple input files, in order to build full symtab from original *.pm files
+        # START HERE: refactor this loop to allow deferred file saving for multiple input files, in order to build full symtab from original *.pm files
+        # START HERE: refactor this loop to allow deferred file saving for multiple input files, in order to build full symtab from original *.pm files
 
         for my $j ( 0 .. $input_file_deps_count ) {
             my string $input_file_name_dep                = $input_file_name_deps->[$j];

@@ -82,7 +82,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 # START HERE: use symtab to make correct retrievals
 # START HERE: use symtab to make correct retrievals
 # START HERE: use symtab to make correct retrievals
-    
+
     my string $self_class = ref $self;
     if ($self_class eq 'VariableRetrieval_175') {  # VariableRetrieval -> OP02_ARRAY_THINARROW SubExpression ']'
         my object $subexpression = $self->{children}->[1];
