@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_500;
+our $VERSION = 0.006_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -137,10 +137,9 @@ our string_arrayref $find_dependencies = sub {
 # [[[ COMPILE RPERL TO RPERL, TEST MODE ]]]
 # [[[ COMPILE RPERL TO RPERL, TEST MODE ]]]
 
-our void $rperl_to_rperl__parse_generate = sub {
-    ( my string $rperl_input_file_name, my string_hashref $rperl_output_file_name_group, my string_hashref $modes ) = @_;
+our string_hashref $rperl_to_rperl__parse_generate = sub {
+    ( my string $rperl_input_file_name, my string_hashref $rperl_output_file_name_group, my string_hashref $rperl_source_group, my string_hashref $modes ) = @_;
     my object $rperl_ast;
-    my string_hashref $rperl_source_group;
 
     # [[[ PARSE RPERL TO AST ]]]
 
@@ -161,19 +160,23 @@ our void $rperl_to_rperl__parse_generate = sub {
 
     # [[[ SAVE RPERL TO DISK ]]]
 
-    if ( $modes->{compile} eq 'SAVE' ) {
+    if ((    $modes->{compile} eq 'SAVE' )
+        or ( $modes->{compile} eq 'SAVE_DEFERRED' )) {
         save_source_files( $rperl_source_group, $rperl_output_file_name_group, $modes );
     }
+    
+    # always return $rperl_source_group to maintain consistent return type,
+    # only utilized for GENERATE compile mode during dependencies
+    return $rperl_source_group;
 };
 
 # [[[ COMPILE RPERL TO XS & BINARY ]]]
 # [[[ COMPILE RPERL TO XS & BINARY ]]]
 # [[[ COMPILE RPERL TO XS & BINARY ]]]
 
-our void $rperl_to_xsbinary__parse_generate_compile = sub {
-    ( my string $rperl_input_file_name, my string_hashref $cpp_output_file_name_group, my string_hashref $modes ) = @_;
+our string_hashref $rperl_to_xsbinary__parse_generate_compile = sub {
+    ( my string $rperl_input_file_name, my string_hashref $cpp_output_file_name_group, my string_hashref $cpp_source_group, my string_hashref $modes ) = @_;
     my object $rperl_ast;
-    my string_hashref $source_group;
 
 #    RPerl::diag( 'in Compiler->rperl_to_xsbinary__parse_generate_compile(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
 
@@ -193,22 +196,29 @@ our void $rperl_to_xsbinary__parse_generate_compile = sub {
         or ( $modes->{compile} eq 'SAVE' )
         or ( $modes->{compile} eq 'SUBCOMPILE' ) )
     {
-        $source_group = RPerl::Generator::ast_to_cpp__generate( $rperl_ast, $modes );
+        $cpp_source_group = RPerl::Generator::ast_to_cpp__generate( $rperl_ast, $modes );
     }
 
     # [[[ SAVE C++ TO DISK ]]]
 
     if (   ( $modes->{compile} eq 'SAVE' )
-        or ( $modes->{compile} eq 'SUBCOMPILE' ) )
+        or ( $modes->{compile} eq 'SAVE_DEFERRED' )
+        or ( $modes->{compile} eq 'SUBCOMPILE' )
+        or ( $modes->{compile} eq 'SUBCOMPILE_DEFERRED' ) )
     {
-        save_source_files( $source_group, $cpp_output_file_name_group, $modes );
+        save_source_files( $cpp_source_group, $cpp_output_file_name_group, $modes );
     }
 
     # [[[ SUBCOMPILE C++ TO XS & BINARY ]]]
 
-    if ( $modes->{compile} eq 'SUBCOMPILE' ) {
-        cpp_to_xsbinary__subcompile( $source_group, $cpp_output_file_name_group );
+    if (   ( $modes->{compile} eq 'SUBCOMPILE' )
+        or ( $modes->{compile} eq 'SUBCOMPILE_DEFERRED' ) ) {
+        cpp_to_xsbinary__subcompile( $cpp_source_group, $cpp_output_file_name_group );
     }
+    
+    # always return $cpp_source_group to maintain consistent return type,
+    # only utilized for GENERATE compile mode during dependencies
+    return $cpp_source_group;
 };
 
 # generate output file name group(s) based on input file name(s)
@@ -293,7 +303,7 @@ our void $save_source_files = sub {
 
 #    RPerl::diag( q{in Compiler::save_source_files(), received $source_group =} . "\n" . Dumper($source_group) . "\n" );
 #    RPerl::diag( q{in Compiler::save_source_files(), received $file_name_group =} . "\n" . Dumper($file_name_group) . "\n" );
-    RPerl::diag( 'in Compiler::save_source_files(), received $modes->{_symbol_table} =' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
+#    RPerl::diag( 'in Compiler::save_source_files(), received $modes->{_symbol_table} =' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
 
     foreach my string $suffix_key ( sort keys %{$source_group} ) {
         if ((substr $suffix_key, 0, 1) eq '_') { next; }
@@ -307,7 +317,7 @@ our void $save_source_files = sub {
 
     # finally create PMC file and set H path in CPP file for CPPOPS
     if ( $modes->{ops} eq 'CPP' ) {
-        RPerl::verbose('SAVE  PHASE 0:      Deferred file modifications... ');
+        RPerl::verbose('SAVE  PHASE 0:      Final file modifications...    ');
 
         if ( $source_group->{PMC} ne q{} ) {
             die 'ERROR ECVCOFI01, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Received non-empty PMC source, dying' . "\n";

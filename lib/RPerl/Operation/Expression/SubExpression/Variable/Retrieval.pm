@@ -74,14 +74,87 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 };
 
 our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
-    ( my object $self, my string $variable_symbol, my string_hashref $modes) = @_;
+    ( my object $self, my string $variable_symbol, my string $base_type, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group = { CPP => q{} };
 
 #    RPerl::diag( 'in Variable::Retrieval->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-# START HERE: use symtab to make correct retrievals
-# START HERE: use symtab to make correct retrievals
-# START HERE: use symtab to make correct retrievals
+
+
+
+
+=DISABLE
+                # array
+                if ( $types->[$i] =~ /_arrayref$/ ) {
+                    $subtype = substr $types->[$i], 0, ( ( length $types->[$i] ) - 9 );      # strip trailing '_arrayref'
+                    if ( exists $rperlnamespaces_generated::RPERL->{ $subtype . '::' } ) {
+
+                        # arrayref of RPerl data types
+                        if ( ( $subtype eq 'object' ) or ( $subtype eq 'hashref' ) ) {
+
+                            # arrayref of objects or hashrefs (same as Perl object which is a blessed hashref)
+                            $is_direct = 0;
+                        }
+                        elsif ( $subtype eq 'arrayref' ) {
+
+                            # arrayref of arrayrefs
+                            $is_direct = 0;
+                        }
+                        else {
+                            # arrayref of scalars
+                            $is_direct = 1;
+                        }
+                    }
+                    else {
+                        # arrayref of user-defined data types (objects)
+                        $is_direct = 0;
+                    }
+                }
+
+                # hash
+                elsif ( $types->[$i] =~ /_hashref$/ ) {
+                    $subtype = substr $types->[$i], 0, ( ( length $types->[$i] ) - 8 );      # strip trailing '_hashref'
+                    if ( exists $rperlnamespaces_generated::RPERL->{ $subtype . '::' } ) {
+
+                        # hashref of RPerl data types
+                        if ( ( $subtype eq 'object' ) or ( $subtype eq 'hashref' ) ) {
+
+                            # hashref of objects or hashrefs (same as Perl object which is a blessed hashref)
+                            $is_direct = 0;
+                        }
+                        elsif ( $subtype eq 'arrayref' ) {
+
+                            # hashref of arrayrefs
+                            $is_direct = 0;
+                        }
+                        else {
+                            # hashref of scalars
+                            $is_direct = 1;
+                        }
+                    }
+                    else {
+                        # hashref of user-defined data types (objects)
+                        $is_direct = 0;
+                    }
+                }
+
+                # scalar
+                elsif (exists $rperlnamespaces_generated::RPERL->{ $types->[$i] . '::' }) {
+                    $is_direct = 1;
+                }
+                
+                # user-defined type AKA class
+                else {
+                    'FOOOOOOO';
+                }
+=cut
+
+
+# START HERE: use above logic template in each of the 3 conditions below to select proper C++ retrieval syntax based on $base_type
+# START HERE: use above logic template in each of the 3 conditions below to select proper C++ retrieval syntax based on $base_type
+# START HERE: use above logic template in each of the 3 conditions below to select proper C++ retrieval syntax based on $base_type
+
+
 
     my string $self_class = ref $self;
     if ($self_class eq 'VariableRetrieval_175') {  # VariableRetrieval -> OP02_ARRAY_THINARROW SubExpression ']'
