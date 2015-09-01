@@ -21,12 +21,12 @@ use RPerl::Grammar;
 #use RPerl::Parser;
 #require RPerl::Parser;
 #eval 'require RPerl::Parser;';
-eval {require RPerl::Parser;};
-if ($EVAL_ERROR and ($EVAL_ERROR =~ /attempt to reload/i)){
+eval { require RPerl::Parser; };
+if ( $EVAL_ERROR and ( $EVAL_ERROR =~ /attempt to reload/i ) ) {
     delete $INC{'RPerl::Parser'};
     require RPerl::Parser;
 }
-elsif ($EVAL_ERROR ne q{}) { die $EVAL_ERROR; }
+elsif ( $EVAL_ERROR ne q{} ) { die $EVAL_ERROR; }
 
 use English qw(-no_match_vars);    # for $OSNAME; why isn't this included from 'require RPerl::Config', which is included from 'use RPerl' above?
 
@@ -35,28 +35,66 @@ our hashref $properties = {};
 
 # [[[ PROCEDURAL SUBROUTINES ]]]
 
-# convert RPerl types to C++ types
-our string $type_convert_perl_to_cpp = sub {
-    ( my string $return_type, my bool $pointerify_classes ) = @_;
-#    RPerl::diag('in Generator->type_convert_perl_to_cpp(), received $return_type = ' . $return_type . "\n");
-#    RPerl::diag('in Generator->type_convert_perl_to_cpp(), received $pointerify_classes = ' . $pointerify_classes . "\n");
+# convert array max index to array size (difference of 1)
+our object $arrayref_convert_index_max_to_size = sub {
+    ( my object $subexpression ) = @_;
 
-    if ( exists $rperlnamespaces_generated::RPERL->{ $return_type . '::' } ) {  # RPerl types
-        $return_type =~ s/^constant_/const\ /gxms;  # 'constant_foo' becomes 'const foo'
-    }
-    else {  # user-defined types AKA classes
-        $return_type =~ s/:/_/gxms;  # 'Foo::Bar::Baz' becomes 'Foo__Bar__Baz'
-        if ($pointerify_classes) {
-            if ($return_type =~ /_raw$/) {
-                $return_type =~ s/_raw$/_rawptr/xms;  # 'Foo__Bar__Baz_raw' becomes 'Foo__Bar__Baz_rawptr'
-            }
-            elsif (($return_type !~ /_arrayref$/) and ($return_type !~ /_hashref$/)) {
-                # don't pointerify arrayrefs or hashrefs, they are already pointerified
-                $return_type .= '_ptr';  # 'Foo__Bar__Baz' becomes 'Foo__Bar__Baz_ptr'
+#    RPerl::diag( 'in Generator->arrayref_convert_index_max_to_size(), received $subexpression = ' . "\n" . RPerl::Parser::rperl_ast__dump($subexpression) . "\n" );
+
+    if ( $subexpression->{children}->[0]->isa('RPerl::Operation::Expression::Operator') ) {
+        if ( $subexpression->{children}->[0]->{children}->[0]->isa('RPerl::Operation::Expression::Operator::Math::AddSubtract') ) {
+            if (    ( exists $subexpression->{children}->[0]->{children}->[0]->{children}->[1] )
+                and ( $subexpression->{children}->[0]->{children}->[0]->{children}->[1] eq q{-} ) )
+            {
+                if ( $subexpression->{children}->[0]->{children}->[0]->{children}->[2]->isa('RPerl::Operation::Expression::SubExpression::Literal') ) {
+                    if ( $subexpression->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]
+                        ->isa('RPerl::Operation::Expression::SubExpression::Literal::Number') )
+                    {
+                        if ( $subexpression->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]->{children}->[0] eq q{1} ) {
+
+                            # COMPILE-TIME OPTIMIZATION: '$foo - 1' becomes '$foo'
+                            $subexpression = $subexpression->{children}->[0]->{children}->[0]->{children}->[0];
+                        }
+                        else {
+                            # '$foo - 10' becomes '$foo - 9'
+                            my number $tmp_number
+                                = ::string_to_number( $subexpression->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]->{children}->[0] );
+                            $tmp_number--;
+                            $subexpression->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]->{children}->[0]
+                                = ::number_to_string($tmp_number);
+                        }
+                    }
+                }
             }
         }
     }
-    return $return_type;  # much meta
+    return $subexpression;
+};
+
+# convert RPerl types to C++ types
+our string $type_convert_perl_to_cpp = sub {
+    ( my string $return_type, my bool $pointerify_classes ) = @_;
+
+    #    RPerl::diag('in Generator->type_convert_perl_to_cpp(), received $return_type = ' . $return_type . "\n");
+    #    RPerl::diag('in Generator->type_convert_perl_to_cpp(), received $pointerify_classes = ' . $pointerify_classes . "\n");
+
+    if ( exists $rperlnamespaces_generated::RPERL->{ $return_type . '::' } ) {    # RPerl types
+        $return_type =~ s/^constant_/const\ /gxms;                                # 'constant_foo' becomes 'const foo'
+    }
+    else {                                                                        # user-defined types AKA classes
+        $return_type =~ s/:/_/gxms;                                               # 'Foo::Bar::Baz' becomes 'Foo__Bar__Baz'
+        if ($pointerify_classes) {
+            if ( $return_type =~ /_raw$/ ) {
+                $return_type =~ s/_raw$/_rawptr/xms;                              # 'Foo__Bar__Baz_raw' becomes 'Foo__Bar__Baz_rawptr'
+            }
+            elsif ( ( $return_type !~ /_arrayref$/ ) and ( $return_type !~ /_hashref$/ ) ) {
+
+                # don't pointerify arrayrefs or hashrefs, they are already pointerified
+                $return_type .= '_ptr';                                           # 'Foo__Bar__Baz' becomes 'Foo__Bar__Baz_ptr'
+            }
+        }
+    }
+    return $return_type;                                                          # much meta
 };
 
 # search for dummy source code
@@ -201,7 +239,7 @@ our integer $diff_check_file_vs_string = sub {
     close $FILE_HANDLE
         or die 'ERROR ECVGEDI02, RPERL GENERATOR, DIFF CHECK: Cannot close file ' . $filename . ' after reading,' . $OS_ERROR . ', dying' . "\n";
 
-    # remove extra blank lines inserted by RPerl generators 
+    # remove extra blank lines inserted by RPerl generators
     $source_string =~ s/\n\n/\n/gxms;
 
 #    RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $file_string = ' . "\n" . ( q{=} x 60 ) . "\n" . $file_string . "\n" . ( q{=} x 60 ) . "\n\n" );
@@ -314,8 +352,8 @@ our string_hashref $ast_to_rperl__generate = sub {
 
     # NEED FIX: check to ensure we are generating a valid return object
     my string_hashref $rperl_source_group = $node->ast_to_rperl__generate($modes);
- 
-    RPerl::verbose(' done.' . "\n");
+
+    RPerl::verbose( ' done.' . "\n" );
     return $rperl_source_group;
 };
 
@@ -325,7 +363,7 @@ our string_hashref $ast_to_cpp__generate = sub {
 
     #    RPerl::diag("in Generator::ast_to_cpp__generate(), received \$node =\n" . RPerl::Parser::rperl_ast__dump($node) . "\n");
     #    RPerl::diag("in Generator::ast_to_cpp__generate(), received \$modes =\n" . Dumper($modes) . "\n");
-#    RPerl::diag( 'in Generator::ast_to_cpp__generate(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
+    #    RPerl::diag( 'in Generator::ast_to_cpp__generate(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
 
     RPerl::verbose('GENERATE:           Generate   C++ syntax...       ');
 
@@ -344,11 +382,11 @@ our string_hashref $ast_to_cpp__generate = sub {
     if ( $modes->{types} eq 'PERL' ) {
         $cpp_source_group = $node->ast_to_cpp__generate__CPPOPS_PERLTYPES($modes);
     }
-    else { 
+    else {
         $cpp_source_group = $node->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
     }
 
-    RPerl::verbose(' done.' . "\n");
+    RPerl::verbose( ' done.' . "\n" );
     return $cpp_source_group;
 };
 

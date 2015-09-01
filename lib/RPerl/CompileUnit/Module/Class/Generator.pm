@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_200;
+our $VERSION = 0.002_500;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -113,22 +113,162 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
         $rperl_source_group->{PMC} .= $properties_our_hashref . q{ } . $properties_equal . q{ } . $properties_left_brace . "\n";
 
-        $rperl_source_subgroup = $property_0->ast_to_rperl__generate($modes);
-        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+        my string $property_key;
+        my string $property_fat_arrow;
+        my object $property_type_inner;
+        my string $property_my;
+        my string $property_type;
+        my string $property_TYPED;
+        my string $property_name;
+        my string $property_arrayref_thinarrow;
+        my object $property_arrayref_index_max;
+        my string $property_arrayref_rightbracket;
+        my string $property_assign;
+        my object $property_subexpression;
+        my string $property_subexpression_string;
+
+        $property_key        = $property_0->{children}->[0];
+        $property_fat_arrow  = $property_0->{children}->[1];
+        $property_type_inner = $property_0->{children}->[2];
+        $property_name       = $property_type_inner->{children}->[3];
+
+        if ( $property_key ne $property_name ) {
+            die 'ERROR ECVGEASRP17, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, OO properties or hash key '
+                . $property_key
+                . ' is different than inner type name '
+                . $property_name
+                . ', dying' . "\n";
+        }
+
+        # TypeInnerProperties -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN SubExpression
+        if ( ref $property_type_inner eq 'TypeInnerProperties_221' ) {
+            $property_my            = $property_type_inner->{children}->[0];
+            $property_type          = $property_type_inner->{children}->[1]->{children}->[0];
+            $property_TYPED         = $property_type_inner->{children}->[2];
+            $property_assign        = $property_type_inner->{children}->[4];
+            $property_subexpression = $property_type_inner->{children}->[5];
+
+            $rperl_source_group->{PMC}
+                .= $property_key . q{ }
+                . $property_fat_arrow . q{ }
+                . $property_my . q{ }
+                . $property_type . q{ }
+                . $property_TYPED
+                . $property_name . q{ }
+                . $property_assign . q{ };
+
+            $rperl_source_subgroup = $property_subexpression->ast_to_rperl__generate($modes);
+            RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+        }
+
+        # TypeInnerProperties -> MY Type '$TYPED_' WORD OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef'
+        elsif ( ref $property_type_inner eq 'TypeInnerProperties_222' ) {
+            $property_my                    = $property_type_inner->{children}->[0];
+            $property_type                  = $property_type_inner->{children}->[1]->{children}->[0];
+            $property_TYPED                 = $property_type_inner->{children}->[2];
+            $property_arrayref_thinarrow    = $property_type_inner->{children}->[4];
+            $property_arrayref_index_max    = $property_type_inner->{children}->[5];
+            $property_arrayref_rightbracket = $property_type_inner->{children}->[6];
+            $property_assign                = $property_type_inner->{children}->[7];
+            $property_subexpression_string  = $property_type_inner->{children}->[8];
+
+            $rperl_source_group->{PMC}
+                .= $property_key . q{ }
+                . $property_fat_arrow . q{ }
+                . $property_my . q{ }
+                . $property_type . q{ }
+                . $property_TYPED
+                . $property_name
+                . $property_arrayref_thinarrow;
+
+            $rperl_source_subgroup = $property_arrayref_index_max->ast_to_rperl__generate($modes);
+            RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+
+            $rperl_source_group->{PMC} .= $property_arrayref_rightbracket . q{ } . $property_assign . q{ } . $property_subexpression_string;
+        }
+        else {
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+                    . ( ref $self )
+                    . ' found where TypeInnerProperties_221 or TypeInnerProperties_222 expected, dying' )
+                . "\n";
+        }
 
         foreach my object $property ( @{ $properties_1_to_n->{children} } ) {
             if ( ( ref $property ) eq 'TERMINAL' ) {
                 $rperl_source_group->{PMC} .= $property->{attr};    # comma between properties
             }
             else {
-                $rperl_source_subgroup = $property->ast_to_rperl__generate($modes);
-                RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+                $property_key        = $property_0->{children}->[0];
+                $property_fat_arrow  = $property_0->{children}->[1];
+                $property_type_inner = $property_0->{children}->[2];
+                $property_name       = $property_type_inner->{children}->[3];
+
+                if ( $property_key ne $property_name ) {
+                    die 'ERROR ECVGEASRP17, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, OO properties or hash key '
+                        . $property_key
+                        . ' is different than inner type name '
+                        . $property_name
+                        . ', dying' . "\n";
+                }
+
+                # TypeInnerProperties -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN SubExpression
+                if ( ref $property_type_inner eq 'TypeInnerProperties_221' ) {
+                    $property_my            = $property_type_inner->{children}->[0];
+                    $property_type          = $property_type_inner->{children}->[1]->{children}->[0];
+                    $property_TYPED         = $property_type_inner->{children}->[2];
+                    $property_assign        = $property_type_inner->{children}->[4];
+                    $property_subexpression = $property_type_inner->{children}->[5];
+
+                    $rperl_source_group->{PMC}
+                        .= $property_key . q{ }
+                        . $property_fat_arrow . q{ }
+                        . $property_my . q{ }
+                        . $property_type . q{ }
+                        . $property_TYPED
+                        . $property_name . q{ }
+                        . $property_assign . q{ };
+
+                    $rperl_source_subgroup = $property_subexpression->ast_to_rperl__generate($modes);
+                    RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+                }
+
+                # TypeInnerProperties -> MY Type '$TYPED_' WORD OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef'
+                elsif ( ref $property_type_inner eq 'TypeInnerProperties_222' ) {
+                    $property_my                    = $property_type_inner->{children}->[0];
+                    $property_type                  = $property_type_inner->{children}->[1]->{children}->[0];
+                    $property_TYPED                 = $property_type_inner->{children}->[2];
+                    $property_arrayref_thinarrow    = $property_type_inner->{children}->[4];
+                    $property_arrayref_index_max    = $property_type_inner->{children}->[5];
+                    $property_arrayref_rightbracket = $property_type_inner->{children}->[6];
+                    $property_assign                = $property_type_inner->{children}->[7];
+                    $property_subexpression_string  = $property_type_inner->{children}->[8];
+
+                    $rperl_source_group->{PMC}
+                        .= $property_key . q{ }
+                        . $property_fat_arrow . q{ }
+                        . $property_my . q{ }
+                        . $property_type . q{ }
+                        . $property_TYPED
+                        . $property_name
+                        . $property_arrayref_thinarrow;
+
+                    $rperl_source_subgroup = $property_arrayref_index_max->ast_to_rperl__generate($modes);
+                    RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+
+                    $rperl_source_group->{PMC} .= $property_arrayref_rightbracket . q{ } . $property_assign . q{ } . $property_subexpression_string;
+                }
+                else {
+                    die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+                            . ( ref $self )
+                            . ' found where TypeInnerProperties_221 or TypeInnerProperties_222 expected, dying' )
+                        . "\n";
+                }
             }
         }
         $rperl_source_group->{PMC} .= "\n" . $properties_right_brace . $properties_semicolon . "\n";
     }
-    else {                                                          # Properties_68
-                                                                    # empty $properties
+    else {           # Properties_68
+                     # empty $properties
         my string $properties_our_hashref = $properties->{children}->[0];
         my string $properties_equal       = $properties->{children}->[1];
         my string $properties_left_brace  = $properties->{children}->[2];
@@ -286,23 +426,56 @@ EOL
     my string_arrayref $properties_accessors_mutators       = [];
     my string_arrayref $properties_accessors_mutators_shims = [];
     my string_arrayref $properties_declarations             = [];
+    my string_arrayref $properties_initializations          = [];
     my string $property_declaration;
 
     # non-empty $properties
+    # Properties -> 'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE HashEntryProperties STAR-27 '}' ';'
+    # HashEntryProperties -> WORD OP20_HASH_FATARROW TypeInnerProperties
     if ( ref $properties eq 'Properties_67' ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
         $property_declaration = q{};
         my object $property_0        = $properties->{children}->[3];
         my object $properties_1_to_n = $properties->{children}->[4];
 
-        my string $property_key           = $property_0->{children}->[0];
-        my object $property_type_inner    = $property_0->{children}->[2];
-        my object $property_subexpression = $property_0->{children}->[3];
-        my string $property_type          = $property_type_inner->{children}->[1]->{children}->[0];
+        my string $property_key                = $property_0->{children}->[0];
+        my object $property_type_inner         = $property_0->{children}->[2];
+        my string $property_type               = undef;
+        my object $property_subexpression      = undef;
+        my object $property_arrayref_index_max = undef;
 
-#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_key = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_key) . "\n" );
-#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_type_inner = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_type_inner) . "\n" );
-#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_subexpression = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_subexpression) . "\n" );
-#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_type) . "\n" );
+        # TypeInnerProperties -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN SubExpression
+        if ( ref $property_type_inner eq 'TypeInnerProperties_221' ) {
+            $property_type          = $property_type_inner->{children}->[1]->{children}->[0];
+            $property_subexpression = $property_type_inner->{children}->[5];
+        }
+
+        # TypeInnerProperties -> MY Type '$TYPED_' WORD OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef'
+        elsif ( ref $property_type_inner eq 'TypeInnerProperties_222' ) {
+            $property_type               = $property_type_inner->{children}->[1]->{children}->[0];
+            $property_arrayref_index_max = $property_type_inner->{children}->[5];
+        }
+        else {
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+                    . ( ref $self )
+                    . ' found where TypeInnerProperties_221 or TypeInnerProperties_222 expected, dying' )
+                . "\n";
+        }
+
+        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property 0, have $property_key = ' . "\n"
+                . RPerl::Parser::rperl_ast__dump($property_key)
+                . "\n" );
+        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property 0, have $property_type_inner = ' . "\n"
+                . RPerl::Parser::rperl_ast__dump($property_type_inner)
+                . "\n" );
+        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property 0, have $property_subexpression = ' . "\n"
+                . RPerl::Parser::rperl_ast__dump($property_subexpression)
+                . "\n" );
+        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property 0, have $property_type = ' . "\n"
+                . RPerl::Parser::rperl_ast__dump($property_type)
+                . "\n" );
+        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property 0, have $property_arrayref_index_max = ' . "\n"
+                . RPerl::Parser::rperl_ast__dump($property_arrayref_index_max)
+                . "\n" );
 
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key} ) {
             die 'ERROR ECVGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: OO property '
@@ -317,11 +490,21 @@ EOL
         $property_type = RPerl::Generator::type_convert_perl_to_cpp( $property_type, 1 );    # $pointerify_classes = 1
         $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}->{type_cpp} = $property_type; # add converted C++ type to symtab entry
 
+        if ( defined $property_arrayref_index_max ) {
+            my string $property_arrayref_index_max_address = "$property_arrayref_index_max";
+            $property_arrayref_index_max = RPerl::Generator::arrayref_convert_index_max_to_size($property_arrayref_index_max);
+            $cpp_source_subgroup         = $property_arrayref_index_max->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+            if ( $property_arrayref_index_max_address eq "$property_arrayref_index_max" ) {    # not compensated automatically, must compensate manually
+                $cpp_source_subgroup->{CPP} = q{(} . $cpp_source_subgroup->{CPP} . q{) + 1};
+            }
+            push @{$properties_initializations}, ( q{        } . 'this->' . $property_key . '.resize(' . $cpp_source_subgroup->{CPP} . ');' );
+        }
+
         $property_declaration = q{    } . $property_type . q{ } . $property_key;
 
         # SubExpression_135 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined,
         # don't perform any C++ initialization for properties initialized to 'undef' in Perl
-        if ( ( ref $property_subexpression ) ne 'SubExpression_135' ) {
+        if ( ( defined $property_subexpression ) and ( ( ref $property_subexpression ) ne 'SubExpression_135' ) ) {
             $cpp_source_subgroup = $property_subexpression->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
             $property_declaration .= ' = ' . $cpp_source_subgroup->{CPP};
         }
@@ -337,20 +520,62 @@ EOL
             push @{$properties_accessors_mutators_shims}, $cpp_source_subgroup->{PMC};
         }
 
+        my integer $i = 0;
         foreach my object $property ( @{ $properties_1_to_n->{children} } ) {
             if ( ( ref $property ) eq 'TERMINAL' ) {    # skip comma between properties
                 next;
             }
+            $i++;
 
-            $property_key           = $property->{children}->[0];
-            $property_type_inner    = $property->{children}->[2];
-            $property_subexpression = $property->{children}->[3];
-            $property_type          = $property_type_inner->{children}->[1]->{children}->[0];
+            $property_subexpression      = undef;
+            $property_arrayref_index_max = undef;
 
-#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_key = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_key) . "\n" );
-#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_type_inner = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_type_inner) . "\n" );
-#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_subexpression = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_subexpression) . "\n" );
-#RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_type) . "\n" );
+            $property_key        = $property->{children}->[0];
+            $property_type_inner = $property->{children}->[2];
+
+            # TypeInnerProperties -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN SubExpression
+            if ( ref $property_type_inner eq 'TypeInnerProperties_221' ) {
+                $property_type          = $property_type_inner->{children}->[1]->{children}->[0];
+                $property_subexpression = $property_type_inner->{children}->[5];
+            }
+
+            # TypeInnerProperties -> MY Type '$TYPED_' WORD OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef'
+            elsif ( ref $property_type_inner eq 'TypeInnerProperties_222' ) {
+                $property_type               = $property_type_inner->{children}->[1]->{children}->[0];
+                $property_arrayref_index_max = $property_type_inner->{children}->[5];
+            }
+            else {
+                die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+                        . ( ref $self )
+                        . ' found where TypeInnerProperties_221 or TypeInnerProperties_222 expected, dying' )
+                    . "\n";
+            }
+
+            RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property '
+                    . $i
+                    . ', have $property_key = ' . "\n"
+                    . RPerl::Parser::rperl_ast__dump($property_key)
+                    . "\n" );
+            RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property '
+                    . $i
+                    . ', have $property_type_inner = ' . "\n"
+                    . RPerl::Parser::rperl_ast__dump($property_type_inner)
+                    . "\n" );
+            RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property '
+                    . $i
+                    . ', have $property_subexpression = ' . "\n"
+                    . RPerl::Parser::rperl_ast__dump($property_subexpression)
+                    . "\n" );
+            RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property '
+                    . $i
+                    . ', have $property_type = ' . "\n"
+                    . RPerl::Parser::rperl_ast__dump($property_type)
+                    . "\n" );
+            RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property '
+                    . $i
+                    . ', have $property_arrayref_index_max = ' . "\n"
+                    . RPerl::Parser::rperl_ast__dump($property_arrayref_index_max)
+                    . "\n" );
 
             if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key} ) {
                 die 'ERROR ECVGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: OO property '
@@ -365,11 +590,21 @@ EOL
             $property_type = RPerl::Generator::type_convert_perl_to_cpp( $property_type, 1 );    # $pointerify_classes = 1
             $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}->{type_cpp} = $property_type; # add converted C++ type to symtab entry
 
+            if ( defined $property_arrayref_index_max ) {
+                my string $property_arrayref_index_max_address = "$property_arrayref_index_max";
+                $property_arrayref_index_max = RPerl::Generator::arrayref_convert_index_max_to_size($property_arrayref_index_max);
+                $cpp_source_subgroup         = $property_arrayref_index_max->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+                if ( $property_arrayref_index_max_address eq "$property_arrayref_index_max" ) {    # not compensated automatically, must compensate manually
+                    $cpp_source_subgroup->{CPP} = q{(} . $cpp_source_subgroup->{CPP} . q{) + 1};
+                }
+                push @{$properties_initializations}, ( q{        } . 'this->' . $property_key . '.resize(' . $cpp_source_subgroup->{CPP} . ');' );
+            }
+
             $property_declaration = q{    } . $property_type . q{ } . $property_key;
 
             # SubExpression_135 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined,
             # don't perform any C++ initialization for properties initialized to 'undef' in Perl
-            if ( ( ref $property_subexpression ) ne 'SubExpression_135' ) {
+            if ( ( defined $property_subexpression ) and ( ( ref $property_subexpression ) ne 'SubExpression_135' ) ) {
                 $cpp_source_subgroup = $property_subexpression->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
                 $property_declaration .= ' = ' . $cpp_source_subgroup->{CPP};
             }
@@ -391,18 +626,18 @@ EOL
         if ( $modes->{label} eq 'ON' ) {
             $cpp_source_group->{H} .= '    // [[[ OO PROPERTIES ]]]' . "\n";
         }
-        $cpp_source_group->{H} .= ( join "\n", @{$properties_declarations} ) . "\n";
+        $cpp_source_group->{H} .= ( join "\n", @{$properties_declarations} ) . "\n\n";
     }
 
     if ( $modes->{label} eq 'ON' ) {
-        $cpp_source_group->{H} .= "\n" . '    // [[[ OO METHODS ]]]' . "\n";
+        $cpp_source_group->{H} .= '    // [[[ OO METHODS ]]]' . "\n\n";
     }
 
     if ( exists $properties_accessors_mutators->[0] ) {
         if ( $modes->{label} eq 'ON' ) {
-            $cpp_source_group->{H} .= "\n" . q{    } . '// <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>' . "\n";
+            $cpp_source_group->{H} .= '    // <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>' . "\n";
         }
-        $cpp_source_group->{H} .= ( join "\n", @{$properties_accessors_mutators} ) . "\n";
+        $cpp_source_group->{H} .= ( join "\n", @{$properties_accessors_mutators} ) . "\n\n";
     }
 
     if ( exists $properties_accessors_mutators_shims->[0] ) {
@@ -410,13 +645,18 @@ EOL
     }
 
     if ( $modes->{label} eq 'ON' ) {
-        $cpp_source_group->{H} .= "\n" . q{    } . '// <<< CONSTRUCTOR & DESTRUCTOR >>>' . "\n";
+        $cpp_source_group->{H} .= '    // <<< CONSTRUCTOR & DESTRUCTOR >>>' . "\n";
     }
-    $cpp_source_group->{H} .= q{    } . $package_name_underscores . '() {}' . "\n";          # CONSTRUCTOR
-    $cpp_source_group->{H} .= q{    } . '~' . $package_name_underscores . '() {}' . "\n";    # DESTRUCTOR
+    if ( exists $properties_initializations->[0] ) {    # initialize properties in constructor
+        $cpp_source_group->{H} .= q{    } . $package_name_underscores . '() {' . "\n" . ( join "\n", @{$properties_initializations} ) . "\n" . '}' . "\n"; # CONSTRUCTOR
+    }
+    else {    # empty constructor
+        $cpp_source_group->{H} .= q{    } . $package_name_underscores . '() {}' . "\n";    # CONSTRUCTOR
+    }
+    $cpp_source_group->{H} .= q{    } . '~' . $package_name_underscores . '() {}' . "\n\n";    # DESTRUCTOR
 
     if ( $modes->{label} eq 'ON' ) {
-        $cpp_source_group->{H} .= "\n" . q{    } . '// <<< CLASS NAME REPORTER >>>' . "\n";
+        $cpp_source_group->{H} .= '    // <<< CLASS NAME REPORTER >>>' . "\n";
     }
     my string $package_name_scoped = $package_name_underscores;
     $package_name_scoped =~ s/__/::/gxms;
@@ -466,10 +706,10 @@ EOL
 
     if ( ( exists $method_definitions->[0] ) or ( exists $subroutine_definitions->[0] ) ) {
         if ( $modes->{label} eq 'ON' ) {
-            $cpp_source_group->{CPP} .= "\n" . '// [[[ OO METHODS & SUBROUTINES ]]]';
+            $cpp_source_group->{CPP} .= '// [[[ OO METHODS & SUBROUTINES ]]]' . "\n";
         }
         $cpp_source_group->{CPP} .= ( join "\n\n", @{$method_definitions} ) . "\n\n";
-        $cpp_source_group->{CPP} .= ( join "\n\n", @{$subroutine_definitions} ) . "\n";
+        $cpp_source_group->{CPP} .= ( join "\n\n", @{$subroutine_definitions} ) . "\n\n";
     }
 
     $cpp_source_group->{H} .= '};  // end of class' . "\n\n";

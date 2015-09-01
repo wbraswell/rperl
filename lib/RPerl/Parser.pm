@@ -267,6 +267,7 @@ our void $rperl_source__parse = sub {
 
 #    RPerl::diag("in rperl_source__parse(), have \$rperl_ast->str() =\n" . $rperl_ast->str() . "\n\n");
 #    RPerl::diag("in rperl_source__parse(), have \$rperl_ast =\n" . rperl_ast__dump($rperl_ast) . "\n\n");
+#    die 'TMP DEBUG';
 
     return ($rperl_ast);
 };

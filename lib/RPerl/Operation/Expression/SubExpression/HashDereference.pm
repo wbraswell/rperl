@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::SubExpression::HashDereference;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::SubExpression);
@@ -27,16 +27,15 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap HashDereference_213 and HashDereference_214 from SubExpression_141, HashEntry_203, and HashEntryTyped_205
+    # unwrap HashDereference_212 and HashDereference_213 from SubExpression_141 and HashEntry_203
     if (   ( $self_class eq 'SubExpression_141' )  # SubExpression -> HashDereference
-        or ( $self_class eq 'HashEntry_203' )  # HashEntry -> HashDereference
-        or ( $self_class eq 'HashEntryTyped_205' ) )  # HashEntryTyped -> HashDereference
+        or ( $self_class eq 'HashEntry_203' ) )  # HashEntry -> HashDereference
     {
         $self = $self->{children}->[0];
     }
 
     $self_class = ref $self;
-    if ( $self_class eq 'HashDereference_213' ) {  # HashDereference -> '%{' Variable '}'
+    if ( $self_class eq 'HashDereference_212' ) {  # HashDereference -> '%{' Variable '}'
         my string $percent_left_brace = $self->{children}->[0];
         my object $variable      = $self->{children}->[1];
         my string $right_brace   = $self->{children}->[2];
@@ -47,7 +46,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= q{ } . $right_brace;
     }
-    elsif ( $self_class eq 'HashDereference_214' ) {  # HashDereference -> '%{' OPTIONAL-51 HashReference '}'
+    elsif ( $self_class eq 'HashDereference_213' ) {  # HashDereference -> '%{' OPTIONAL-51 HashReference '}'
         my string $percent_left_brace       = $self->{children}->[0];
         my object $type_inner_optional = $self->{children}->[1];
         my object $hash_reference     = $self->{children}->[2];
@@ -71,7 +70,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where HashDereference_189 or HashDereference_190 expected, dying'
+                . ' found where HashDereference_212 or HashDereference_213 expected, dying'
         ) . "\n";
     }
 

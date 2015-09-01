@@ -4,7 +4,7 @@ package  # hide from PAUSE indexing
     rperlrules;    # yes, yes it does
 use strict;
 use warnings;
-our $VERSION = 0.001_010;
+our $VERSION = 0.001_020;
 
 #use RPerl;
 
@@ -65,7 +65,6 @@ use RPerl::Operation::Statement::VariableModification;
 use RPerl::DataStructure::Array::ListElements;
 use RPerl::DataStructure::Array::ListElement;
 use RPerl::DataStructure::Hash::Entry;
-use RPerl::DataStructure::Hash::EntryTyped;
 use RPerl::DataType::TypeInner;
 
 # [[[ INPUT / OUTPUT ]]]

@@ -338,7 +338,7 @@ sub depends_parse_generate_save_subcompile_execute {
             diag_multi_file_settings( $input_file_name_deps, $output_file_name_dep_groups, $input_file_and_deps_count, $modes );
         }
 
-        if ( $input_file_deps_count > 0 ) {
+        if (( $input_file_deps_count > 0 ) and ($modes->{compile} ne 'PARSE')){
             $modes->{_compile_saved} = $modes->{compile};
             $modes->{compile}        = 'GENERATE';
         }
@@ -377,7 +377,7 @@ sub depends_parse_generate_save_subcompile_execute {
             }
         }
 
-        if (    ( $input_file_deps_count > 0 )
+        if (    ( $input_file_deps_count > 0 ) and ($modes->{compile} ne 'PARSE')
             and ( ( $modes->{_compile_saved} eq 'SAVE' ) or ( $modes->{_compile_saved} = 'SUBCOMPILE' ) ) )
         {
             RPerl::verbose( "\n" . 'DEPENDENCIES:       Complete deferred actions...' . "\n" );

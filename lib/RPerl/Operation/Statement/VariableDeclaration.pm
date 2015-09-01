@@ -224,42 +224,13 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $type = RPerl::Generator::type_convert_perl_to_cpp($type, 1);  # $pointerify_classes = 1
         $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}->{type_cpp} = $type;  # add converted C++ type to symtab entry
 
-        # compensate for array size vs array max index (difference of 1)
-        my bool $size_compensated = 0;
-        if ( $subexpression->{children}->[0]->isa('RPerl::Operation::Expression::Operator') ) {
-            if ( $subexpression->{children}->[0]->{children}->[0]->isa('RPerl::Operation::Expression::Operator::Math::AddSubtract') ) {
-                if (    ( exists $subexpression->{children}->[0]->{children}->[0]->{children}->[1] )
-                    and ( $subexpression->{children}->[0]->{children}->[0]->{children}->[1] eq q{-} ) )
-                {
-                    if ( $subexpression->{children}->[0]->{children}->[0]->{children}->[2]->isa('RPerl::Operation::Expression::SubExpression::Literal') ) {
-                        if ( $subexpression->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]
-                            ->isa('RPerl::Operation::Expression::SubExpression::Literal::Number') )
-                        {
-                            if ( $subexpression->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]->{children}->[0] eq q{1} ) {
+        my string $subexpression_address = "$subexpression";
+        $subexpression = RPerl::Generator::arrayref_convert_index_max_to_size($subexpression);
 
-                                # COMPILE-TIME OPTIMIZATION: '$foo - 1' becomes '$foo'
-                                $subexpression    = $subexpression->{children}->[0]->{children}->[0]->{children}->[0];
-                                $size_compensated = 1;
-                            }
-                            else {
-                                # '$foo - 10' becomes '$foo - 9'
-                                my number $tmp_number
-                                    = ::string_to_number( $subexpression->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]->{children}->[0] );
-                                $tmp_number--;
-                                $subexpression->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]->{children}->[0]
-                                    = ::number_to_string($tmp_number);
-                                $size_compensated = 1;
-                            }
-                        }
-                    }
-                }
-            }
-        }
         $cpp_source_group->{CPP} .= $type . q{ } . $symbol . $semicolon . "\n";
         $cpp_source_group->{CPP} .= $symbol . q{.resize(};
         $cpp_source_subgroup = $subexpression->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
-        if ( not $size_compensated ) {
-
+        if ( $subexpression_address eq "$subexpression" ) {  # not compensated automatically, must compensate manually
             # 'foo() * $bar' becomes '(foo() * $bar) + 1'
             $cpp_source_subgroup->{CPP} = q{(} . $cpp_source_subgroup->{CPP} . q{) + 1};
         }

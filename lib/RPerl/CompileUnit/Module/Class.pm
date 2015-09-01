@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.033_000;
+our $VERSION = 0.034_000;
 
 # [[[ OO INHERITANCE ]]]
 # BASE CLASS HAS NO INHERITANCE
@@ -513,8 +513,7 @@ INIT {
                                 = '*{'
                                 . $package_name
                                 . '::get_'
-                                . $property_name
-                                . '_size'
+                                . $property_name . '_size'
                                 . '} = sub { ( my '
                                 . $package_name
                                 . ' $self ) = @_; return (scalar @{$self->{'
@@ -571,8 +570,7 @@ INIT {
                                 = '*{'
                                 . $package_name
                                 . '::get_'
-                                . $property_name
-                                . '_keys'
+                                . $property_name . '_keys'
                                 . '} = sub { ( my '
                                 . $package_name
                                 . ' $self ) = @_; return [sort keys %{$self->{'
@@ -611,6 +609,7 @@ INIT {
                             if ($EVAL_ERROR) { croak($EVAL_ERROR); }
                         }
                     }
+
                     # scalar accessor/mutator
                     else {
                         $return_whole = 1;
@@ -658,38 +657,48 @@ sub save_object_properties_types {
 #        RPerl::diag( 'in Class::save_object_properties_types(), have EMPTY PROPERTIES $object_properties_string = ' . "\n" . $object_properties_string . "\n" );
     }
     else {
-        $object_properties_string =~ s/^\s*our\s+hashref\s+\$properties\s*=\s*\{(.*)\}\;\s*$/$1/xms;
+        my $object_property_key             = undef;
+        my $object_property_type            = undef;
+        my $object_property_inner_type_name = undef;
+
+        $object_properties_string =~ s/^\s*our\s+hashref\s+\$properties\s*=\s*\{(.*)\}\;\s*$/$1/xms;    # strip everything but hash entries
 
 #        RPerl::diag( 'in Class::save_object_properties_types(), have NON-EMPTY PROPERTIES $object_properties_string = ' . "\n" . $object_properties_string . "\n\n" );
-        $object_properties_string =~ /(\w+)\s*\=\>\s*my\s+([\w:]+)\s+\$TYPED_(\w+)\s*\=\s*/gxms;
 
-        #        RPerl::diag( 'in Class::save_object_properties_types(), have $1 = ' . $1 . "\n" );
-        #        RPerl::diag( 'in Class::save_object_properties_types(), have $2 = ' . $2 . "\n" );
-        #        RPerl::diag( 'in Class::save_object_properties_types(), have $3 = ' . $3 . "\n" );
-        if ( ( defined $1 ) and ( defined $3 ) ) {
-            if ( $1 ne $3 ) {
-                die 'ERROR ECVGEPPRP17, CODE GENERATOR, PURE PERL TO RPERL: redundant name mismatch, OO properties key '
-                    . $1
-                    . ' is different than inner type name '
-                    . $3
-                    . ', dying' . "\n";
-            }
-            $object_properties_types->{$package_name}->{$1} = $2;
+        if ( $object_properties_string =~ /(\w+)\s*\=\>\s*my\s+([\w:]+)\s+\$TYPED_(\w+)/gxms ) {
+            $object_property_key             = $1;
+            $object_property_type            = $2;
+            $object_property_inner_type_name = $3;
         }
-        while ( $object_properties_string =~ /(\w+)\s*\=\>\s*my\s+([\w:]+)\s+\$TYPED_(\w+)\s*\=\s*/gxms ) {
 
-            #            RPerl::diag( 'in Class::save_object_properties_types(), have $1 = ' . $1 . "\n" );
-            #            RPerl::diag( 'in Class::save_object_properties_types(), have $2 = ' . $2 . "\n" );
-            #            RPerl::diag( 'in Class::save_object_properties_types(), have $3 = ' . $3 . "\n" );
+#        RPerl::diag( 'in Class::save_object_properties_types(), before while() loop, have $object_property_key = ' . $object_property_key . "\n" );
+#        RPerl::diag( 'in Class::save_object_properties_types(), before while() loop, have $object_property_type = ' . $object_property_type . "\n" );
+#        RPerl::diag( 'in Class::save_object_properties_types(), before while() loop, have $object_property_inner_type_name = ' . $object_property_inner_type_name . "\n" );
 
-            if ( $1 ne $3 ) {
+        while ( ( defined $object_property_key ) and ( defined $object_property_type ) and ( defined $object_property_inner_type_name ) ) {
+            if ( $object_property_key ne $object_property_inner_type_name ) {
                 die 'ERROR ECVGEPPRP17, CODE GENERATOR, PURE PERL TO RPERL: redundant name mismatch, OO properties key '
-                    . $1
+                    . $object_property_key
                     . ' is different than inner type name '
-                    . $3
+                    . $object_property_inner_type_name
                     . ', dying' . "\n";
             }
-            $object_properties_types->{$package_name}->{$1} = $2;
+            $object_properties_types->{$package_name}->{$object_property_key} = $object_property_type;
+
+            if ( $object_properties_string =~ /(\w+)\s*\=\>\s*my\s+([\w:]+)\s+\$TYPED_(\w+)/gxms ) {
+                $object_property_key             = $1;
+                $object_property_type            = $2;
+                $object_property_inner_type_name = $3;
+            }
+            else {
+                $object_property_key             = undef;
+                $object_property_type            = undef;
+                $object_property_inner_type_name = undef;
+            }
+            
+#            RPerl::diag( 'in Class::save_object_properties_types(), bottom of while() loop, have $object_property_key = ' . $object_property_key . "\n" );
+#            RPerl::diag( 'in Class::save_object_properties_types(), bottom of while() loop, have $object_property_type = ' . $object_property_type . "\n" );
+#            RPerl::diag( 'in Class::save_object_properties_types(), bottom of while() loop, have $object_property_inner_type_name = ' . $object_property_inner_type_name . "\n" );
         }
     }
     return $object_properties_types;
