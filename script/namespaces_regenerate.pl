@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use rperlnamespaces;
-our $VERSION = 0.001_100;
+our $VERSION = 0.001_200;
 
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
 
@@ -120,8 +120,10 @@ my $namespaces_rperl_deps = {
     'utf8_heavy::'   => 1,
 };
 
-# NEED ADDRESS: should we not be doing 'use RPerl;' below now that it does filter()???  replace w/ 'use RPerl::AFilter;' ???
-eval 'use RPerl';
+# DEV NOTE: can not use eval{}, must use stringy eval
+eval 'use RPerl::AfterSubclass';
+eval 'use rperlsse';
+
 my $namespaces_rperl = rperlnamespaces::hash();
 $namespaces_rperl = { %{$namespaces_rperl}, %{$namespaces_rperl_missed} };
 

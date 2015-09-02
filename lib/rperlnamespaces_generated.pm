@@ -140,6 +140,7 @@ $rperlnamespaces_generated::RPERL = {
     'coderef::'                      => 1,
     'constant_integer::'             => 1,
     'constant_number::'              => 1,
+    'constant_sse_number_pair::'     => 1,
     'constant_unsigned_integer::'    => 1,
     'filehandleref::'                => 1,
     'float::'                        => 1,
@@ -177,12 +178,14 @@ $rperlnamespaces_generated::RPERL = {
     'scalartype_arrayref_arrayref::' => 1,
     'scalartype_hashref::'           => 1,
     'scalartype_hashref_hashref::'   => 1,
+    'sse_number_pair::'              => 1,
     'string::'                       => 1,
     'string_arrayref::'              => 1,
     'string_arrayref_arrayref::'     => 1,
     'string_hashref::'               => 1,
     'string_hashref_hashref::'       => 1,
     'unknown::'                      => 1,
+    'unsigned_integer::'             => 1,
     'void::'                         => 1
 };
 

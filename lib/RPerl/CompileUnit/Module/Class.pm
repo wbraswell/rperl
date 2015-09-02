@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.034_000;
+our $VERSION = 0.035_000;
 
 # [[[ OO INHERITANCE ]]]
 # BASE CLASS HAS NO INHERITANCE
@@ -644,6 +644,18 @@ INIT {
 
 #        else { RPerl::diag('in Class.pm INIT block, found existing $rperlnamespaces_generated::CORE->{' . $namespace_root . '}, aborting RPerl activation of entire file' . "\n"); }
     }
+}
+
+# fake getting and setting values of *_raw subclass of user-defined type (AKA class),
+# achieved by treating normal Perl object reference (C++ std::unique_ptr<Foo> AKA Foo_ptr) as Perl object raw reference (C++ Foo* AKA Foo_rawptr)
+sub get_raw {
+    ( my $self ) = @_;
+    return $self;
+}
+
+sub set_raw {
+    ( my $self, my $self_new ) = @_;
+    %{$self} = %{$self_new};
 }
 
 sub save_object_properties_types {

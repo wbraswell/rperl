@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::SubExpression::Variable;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_000;
+our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::SubExpression);
@@ -80,10 +80,10 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #        RPerl::diag( 'in Variable->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have pre-modification $symbol_or_self = ' . $symbol_or_self . "\n" );
 
         substr $symbol_or_self, 0, 1, q{};    # remove leading $ sigil
-        if ( $symbol_or_self eq 'self' ) {
 
-            # Perl OO $self becomes C++ OO this
-            $symbol_or_self = 'this';
+        # determine first type
+        if ( $symbol_or_self eq 'self' ) {
+            $symbol_or_self = 'this';  # Perl OO $self becomes C++ OO this
             $types->[0] = $modes->{_symbol_table}->{_namespace};
         }
         else {
@@ -101,12 +101,10 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #            RPerl::diag( 'in Variable->ast_to_cpp__generate__CPPOPS_CPPTYPES(), for loop $i = ' . $i . ', have $types->[$i] = ' . $types->[$i] . "\n" );
 #            RPerl::diag( 'in Variable->ast_to_cpp__generate__CPPOPS_CPPTYPES(), for loop $i = ' . $i . ', have $variable_retrieval = ' . "\n" . RPerl::Parser::rperl_ast__dump($variable_retrieval) . "\n" );
 
-# START HERE: fill in error messages here and Retrieval.pm, create get_raw() and set_raw(), finish compile!!!
-# START HERE: fill in error messages here and Retrieval.pm, create get_raw() and set_raw(), finish compile!!!
-# START HERE: fill in error messages here and Retrieval.pm, create get_raw() and set_raw(), finish compile!!!
-
             my string_hashref $cpp_source_subgroup = $variable_retrieval->ast_to_cpp__generate__CPPOPS_CPPTYPES( $symbol_or_self, $types->[$i], $modes );
             RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+
+            # determine next type
             if ( $i < $i_max ) {
                 if ( $types->[$i] =~ /_arrayref$/ ) { # array
                     $types->[ $i + 1 ] = substr $types->[$i], 0, ( ( length $types->[$i] ) - 9 );    # strip trailing '_arrayref'
@@ -114,8 +112,11 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 elsif ( $types->[$i] =~ /_hashref$/ ) { # hash
                     $types->[ $i + 1 ] = substr $types->[$i], 0, ( ( length $types->[$i] ) - 8 );    # strip trailing '_hashref'
                 }
+                elsif ( $types->[$i] =~ /sse_number_pair$/xms ) { # SSE number pair
+                    $types->[ $i + 1 ] = 'number';
+                }
                 elsif ( exists $rperlnamespaces_generated::RPERL->{ $types->[$i] . '::' } ) { # scalar
-                    die 'NEED ERROR MESSAGE'; # ERROR, can't retrieve from scalar
+                    die 'ERROR ECVGEASCP18, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not retrieve data subcomponent from scalar type ' . $types->[$i] . ', dying' . "\n";
                 }
                 else { # user-defined type AKA class
                     if ( ( ref $variable_retrieval ) eq 'VariableRetrieval_176' ) {    # VariableRetrieval -> OP02_HASH_THINARROW SubExpression '}'
@@ -131,11 +132,12 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                                 $types->[ $i + 1 ] = $modes->{_symbol_table}->{ $types->[$i] }->{_properties}->{$number_or_string_literal}->{type};
                             }
                             else {
-                                die 'NEED ERROR MESSAGE'; # ERROR, invalid property key $number_or_string_literal
+                                die 'ERROR ECVGEASCP19, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not retrieve invalid OO property ' . $number_or_string_literal . ' in user-defined class ' . $types->[$i] . ', dying' . "\n";
                             }
                         }
                         else {
-                            die 'NEED ERROR MESSAGE'; # ERROR, can't determine property key from non-literal subexpression
+                            my string $subexpression_generated = ($subexpression->ast_to_cpp__generate__CPPOPS_CPPTYPES( $modes ))->{CPP};
+                            die 'ERROR ECVGEASCP20, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not determine OO property name (and thus type) from non-literal subexpression...' . "\n" . $subexpression_generated . "\n" . '...in user-defined class ' . $types->[$i] . ', dying' . "\n";
                         }
                     }
                     elsif ( ( ref $variable_retrieval ) eq 'VariableRetrieval_177' ) {        # VariableRetrieval -> OP02_HASH_THINARROW WORD '}'
@@ -144,18 +146,18 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                             $types->[ $i + 1 ] = $modes->{_symbol_table}->{ $types->[$i] }->{_properties}->{$word}->{type};
                         }
                         else {
-                            die 'NEED ERROR MESSAGE'; # ERROR, invalid property key bareword
+                            die 'ERROR ECVGEASCP19, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not retrieve invalid OO property ' . $word . ' in user-defined class ' . $types->[$i] . ', dying' . "\n";
                         }
                     }
                     else {
-                        die 'NEED ERROR MESSAGE'; # ERROR, can't use array retrieval on object of user-defined type
+                        die 'ERROR ECVGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use arrayref retrieval on object of user-defined class ' . $types->[$i] . ', dying' . "\n";
                     }
                 }
             }
         }
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . ($self_class)
                 . ' found where SubExpression_137, VariableOrLiteral_224, VariableOrLiteralOrWord_226, or Variable_174 expected, dying' )
             . "\n";

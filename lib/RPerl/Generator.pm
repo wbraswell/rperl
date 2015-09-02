@@ -41,6 +41,16 @@ our object $arrayref_convert_index_max_to_size = sub {
 
 #    RPerl::diag( 'in Generator->arrayref_convert_index_max_to_size(), received $subexpression = ' . "\n" . RPerl::Parser::rperl_ast__dump($subexpression) . "\n" );
 
+    my object $subexpression_original = $subexpression;
+    my bool $is_modified = 0;
+    my integer $nested_parenthesis = 0;
+    
+    # look inside nested parenthesis-as-subexpressions, always length 1 so no need to check length
+    while ((ref $subexpression) eq 'SubExpression_142') {  # RPerl::Operation::Expression::SubExpression::Parenthesis
+        $subexpression = $subexpression->{children}->[1];
+        $nested_parenthesis++;
+    }
+
     if ( $subexpression->{children}->[0]->isa('RPerl::Operation::Expression::Operator') ) {
         if ( $subexpression->{children}->[0]->{children}->[0]->isa('RPerl::Operation::Expression::Operator::Math::AddSubtract') ) {
             if (    ( exists $subexpression->{children}->[0]->{children}->[0]->{children}->[1] )
@@ -51,9 +61,10 @@ our object $arrayref_convert_index_max_to_size = sub {
                         ->isa('RPerl::Operation::Expression::SubExpression::Literal::Number') )
                     {
                         if ( $subexpression->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]->{children}->[0] eq q{1} ) {
-
-                            # COMPILE-TIME OPTIMIZATION: '$foo - 1' becomes '$foo'
+                            # '$foo - 1' becomes '$foo'
                             $subexpression = $subexpression->{children}->[0]->{children}->[0]->{children}->[0];
+                            $is_modified = 1;
+                            $nested_parenthesis = 0;  # discard parens if present
                         }
                         else {
                             # '$foo - 10' becomes '$foo - 9'
@@ -62,10 +73,28 @@ our object $arrayref_convert_index_max_to_size = sub {
                             $tmp_number--;
                             $subexpression->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]->{children}->[0]
                                 = ::number_to_string($tmp_number);
+                            $is_modified = 1;
+                            if ($nested_parenthesis) { $nested_parenthesis = 1; }  # keep 1 set of parens if 1 or more is present
                         }
                     }
                 }
             }
+        }
+    }
+    if ($is_modified) {
+        if ($nested_parenthesis) {
+            # create new-but-equivalent object to alert caller of modification
+            my object $subexpression_modified = RPerl::CompileUnit::Module::Class::new('SubExpression_142');
+            $subexpression_modified->{children}->[0] = '(';
+            $subexpression_modified->{children}->[1] = $subexpression;
+            $subexpression_modified->{children}->[2] = ')';
+            $subexpression = $subexpression_modified;
+        }
+        else {
+            # create new-but-equivalent object to alert caller of modification
+            my object $subexpression_modified = RPerl::CompileUnit::Module::Class::new(ref $subexpression);
+            $subexpression_modified->{children} = $subexpression->{children};
+            $subexpression = $subexpression_modified;
         }
     }
     return $subexpression;

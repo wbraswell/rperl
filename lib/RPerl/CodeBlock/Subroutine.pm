@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_200;
+our $VERSION = 0.005_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -126,7 +126,10 @@ our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = 
     $return_type = RPerl::Generator::type_convert_perl_to_cpp($return_type, 1);  # $pointerify_classes = 1
     $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{_global}->{$name}->{type_cpp} = $return_type;  # add converted C++ type to symtab entry
 
-    $cpp_source_group->{H} .= $return_type . q{ } . $name . '(';
+    # DEV NOTE: must prefix subroutine names with namespace-underscores to simulate Perl's behavior of not exporting subroutines by default
+    my string $namespace_underscores = $modes->{_symbol_table}->{_namespace};
+    $namespace_underscores =~ s/:/_/gxms;
+    $cpp_source_group->{H} .= $return_type . q{ } . $namespace_underscores . $name . '(';
 
     if ( exists $arguments_optional->{children}->[0] ) {
         my object $cpp_source_subgroup = $arguments_optional->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
@@ -161,7 +164,11 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #RPerl::diag( 'in Subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), have $return_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($return_type) . "\n" );
 
     $return_type = RPerl::Generator::type_convert_perl_to_cpp($return_type, 1);  # $pointerify_classes = 1
-    $cpp_source_group->{CPP} .= $return_type . q{ } . $name . '(';
+    
+    # DEV NOTE: must prefix subroutine names with namespace-underscores to simulate Perl's behavior of not exporting subroutines by default
+    my string $namespace_underscores = $modes->{_symbol_table}->{_namespace};
+    $namespace_underscores =~ s/:/_/gxms;
+    $cpp_source_group->{CPP} .= $return_type . q{ } . $namespace_underscores . $name . '(';
 
     if ( exists $arguments_optional->{children}->[0] ) {
         $cpp_source_subgroup = $arguments_optional->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
@@ -171,6 +178,8 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     }
 
     $cpp_source_group->{CPP} .= ') {' . "\n";
+    my string $CPP_saved = $cpp_source_group->{CPP};
+    $cpp_source_group->{CPP} = q{};
 
     foreach my object $operation ( @{ $operations_star->{children} } ) {
 
@@ -189,7 +198,19 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
 
+    # COMPILE-TIME OPTIMIZATION #02: declare all loop iterators at top of subroutine/method to avoid re-declarations in nested loops
+    if ((exists $modes->{_loop_iterators}) and (defined $modes->{_loop_iterators})) {
+        foreach my string $loop_iterator_symbol (sort keys %{$modes->{_loop_iterators}}) {
+            $CPP_saved .= $modes->{_loop_iterators}->{$loop_iterator_symbol} . q{ } . $loop_iterator_symbol . ';' . "\n";
+        }
+        delete $modes->{_loop_iterators};
+    }
+    
+    $CPP_saved .= $cpp_source_group->{CPP};
+    $cpp_source_group->{CPP} = $CPP_saved;
+
     $cpp_source_group->{CPP} .= '}';
+
     return $cpp_source_group;
 };
 

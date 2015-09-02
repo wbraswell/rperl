@@ -1,8 +1,7 @@
 #ifndef __CPP__INCLUDED__rperlsse_h
-#define __CPP__INCLUDED__rperlsse_h 0.001_000
+#define __CPP__INCLUDED__rperlsse_h 0.001_100
 
 typedef __m128d sse_number_pair;
-typedef const __m128d constant_sse_number_pair;
 #define sse_number_pair__new_from_singleton_duplicate(X) _mm_set1_pd(X)
 #define sse_number_pair__new_from_pair(X, Y) _mm_setr_pd(X, Y)  // NEED TEST
 #define constant_sse_number_pair__new_from_singleton_duplicate(X) _mm_set1_pd(X)

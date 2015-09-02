@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__CompileUnit__Module__Class__CPP_h
-#define __CPP__INCLUDED__RPerl__CompileUnit__Module__Class__CPP_h 0.001_000
+#define __CPP__INCLUDED__RPerl__CompileUnit__Module__Class__CPP_h 0.002_000
 
 // [[[ INCLUDES ]]]
 // BASE CLASS DOES NOT INCLUDE RPerl.cpp OR HelperFunctions.cpp
@@ -50,6 +50,10 @@ SV* classname(RPerl__CompileUnit__Module__Class__CPP* my_object) { return my_obj
 // [[[<<< BEGIN CPP TYPES >>>]]]
 // [[[<<< BEGIN CPP TYPES >>>]]]
 // [[[<<< BEGIN CPP TYPES >>>]]]
+
+// [[[ RAWPTR DEFINES ]]]
+#define get_raw() get()
+#define set_raw(X) reset(X)
 
 // [[[ OO INHERITANCE ]]]
 // BASE CLASS HAS NO INHERITANCE

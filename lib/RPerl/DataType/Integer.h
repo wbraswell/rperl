@@ -2,13 +2,14 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_h
-#define __CPP__INCLUDED__RPerl__DataType__Integer_h 0.004_010
+#define __CPP__INCLUDED__RPerl__DataType__Integer_h 0.004_100
 
 // [[[ TYPEDEFS ]]]
 // DEV NOTE: must use "integer" typedef because "int" is already defined by Inline's default typemap, even if we put our own integer entry into typemap.rperl;
 // if we allow Inline default int, then it will accept all kinds of non-integer values which should be filtered by XS_unpack_integer() and CHECK();
 // must be above String.cpp include, as String.cpp uses integer type for it's own *MODE_ID() subroutines [NO LONGER OVERRIDDEN BY DEV NOTE CORRELATION #rp12 BELOW???]
 typedef int integer;
+typedef unsigned int unsigned_integer;
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 // DEV NOTE, CORRELATION #rp12: basic data types must be wholly independent of one another, to avoid weird redefining or undefining of subroutine errors [INCORRECT???]

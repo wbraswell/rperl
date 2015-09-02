@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::SubroutineCall;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_020;
+our $VERSION = 0.002_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression);
@@ -95,7 +95,10 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     if (exists $rperloperations::BUILTINS->{$name_string}) {
         $name_string = $rperloperations::BUILTINS->{$name_string};
     }
-    
+
+    # replace all semicolons with underscores
+    $name_string =~ s/:/_/gxms;
+
     $cpp_source_group->{CPP} .= $name_string . $left_paren;
 
     if ( exists $arguments_optional->{children}->[0] ) {

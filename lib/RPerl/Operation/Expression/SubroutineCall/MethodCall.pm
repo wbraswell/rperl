@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::SubroutineCall::MethodCall;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::SubroutineCall);
@@ -70,12 +70,47 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 
 our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $cpp_source_group
-        = { CPP =>
-            q{// <<< RP::O::E::SC::MC __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
-            . "\n" };
+    my string_hashref $cpp_source_group = { CPP => q{} };
+    my string_hashref $cpp_source_subgroup;
 
-    #...
+#    RPerl::diag( 'in MethodCall->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+
+    if ( ( ref $self ) ne 'Expression_132' ) {
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO CPP: grammar rule '
+                . ( ref $self )
+                . ' found where Expression_132 expected, dying' )
+            . "\n";
+    }
+
+    # Expression -> Variable OP02_METHOD_THINARROW LPAREN OPTIONAL-34 ')'
+    my object $variable           = $self->{children}->[0];
+    my string $thin_arrow_name    = $self->{children}->[1];
+    my string $left_paren         = $self->{children}->[2];
+    my object $arguments_optional = $self->{children}->[3];
+    my string $right_paren        = $self->{children}->[4];
+
+    $cpp_source_subgroup = $variable->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+    RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+
+    if ($thin_arrow_name eq '->get_raw') {
+        $cpp_source_group->{CPP} .= '.get_raw' . $left_paren;
+    }
+    elsif ($thin_arrow_name eq '->set_raw') {
+        $cpp_source_group->{CPP} .= '.set_raw' . $left_paren;
+    }
+    else {
+        $cpp_source_group->{CPP} .= $thin_arrow_name . $left_paren;
+    }
+
+    if ( exists $arguments_optional->{children}->[0] ) {
+        $cpp_source_subgroup = $arguments_optional->{children}->[0]
+            ->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group,
+            $cpp_source_subgroup );
+    }
+
+    $cpp_source_group->{CPP} .= $right_paren;
     return $cpp_source_group;
 };
 

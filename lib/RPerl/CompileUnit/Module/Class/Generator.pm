@@ -706,10 +706,12 @@ EOL
 
     if ( ( exists $method_definitions->[0] ) or ( exists $subroutine_definitions->[0] ) ) {
         if ( $modes->{label} eq 'ON' ) {
-            $cpp_source_group->{CPP} .= '// [[[ OO METHODS & SUBROUTINES ]]]' . "\n";
+            $cpp_source_group->{CPP} .= '// [[[ OO METHODS & SUBROUTINES ]]]' . "\n\n";
         }
-        $cpp_source_group->{CPP} .= ( join "\n\n", @{$method_definitions} ) . "\n\n";
-        $cpp_source_group->{CPP} .= ( join "\n\n", @{$subroutine_definitions} ) . "\n\n";
+        $cpp_source_group->{CPP} .= ( join "\n\n", @{$method_definitions} );
+        if ( exists $method_definitions->[0] ) { $cpp_source_group->{CPP} .= "\n\n"; }
+        $cpp_source_group->{CPP} .= ( join "\n\n", @{$subroutine_definitions} );
+        if ( exists $subroutine_definitions->[0] ) { $cpp_source_group->{CPP} .= "\n\n"; }
     }
 
     $cpp_source_group->{H} .= '};  // end of class' . "\n\n";
@@ -846,9 +848,9 @@ our string_hashref $ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES = s
 #integer get_bodies_size() { return this->bodies.size(); }  // call from Perl or C++
 #string_arrayref get_bodies_keys() { string_arrayref keys; keys.reserve(this->keys.size()); for(auto hash_entry : this->bodies) { keys.push_back(hash_entry.first); } }  // call from Perl or C++
 #PhysicsPerl__Astro__Body_ptr& get_bodies_element(integer i) { return this->bodies[i]; }  // call from C++
-#void get_bodies_element_indirect(integer i, PhysicsPerl__Astro__Body_rawptr bodies_element_rawptr) { *bodies_element_rawptr = *(this->bodies[i].get()); }  // call from Perl shim
-#void set_bodies_element(integer i, PhysicsPerl__Astro__Body_ptr& bodies_element_ptr) { *(this->bodies[i].get()) = *(bodies_element_ptr.get()); }  // call from C++
-#void set_bodies_element(integer i, PhysicsPerl__Astro__Body_rawptr bodies_element_rawptr) { *(this->bodies[i].get()) = *bodies_element_rawptr; }  // call from Perl
+#void get_bodies_element_indirect(integer i, PhysicsPerl__Astro__Body_rawptr bodies_element_rawptr) { *bodies_element_rawptr = *(this->bodies[i].get_raw()); }  // call from Perl shim
+#void set_bodies_element(integer i, PhysicsPerl__Astro__Body_ptr& bodies_element_ptr) { *(this->bodies[i].get_raw()) = *(bodies_element_ptr.get_raw()); }  // call from C++
+#void set_bodies_element(integer i, PhysicsPerl__Astro__Body_rawptr bodies_element_rawptr) { *(this->bodies[i].get_raw()) = *bodies_element_rawptr; }  // call from Perl
 #sub get_bodies_element {
 #    ( my PhysicsPerl::Astro::System $self, my integer $i ) = @_;
 #    my PhysicsPerl::Astro::Body $bodies_element = PhysicsPerl::Astro::Body->new();
@@ -890,7 +892,7 @@ our string_hashref $ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES = s
             . $property_key
             . '_element_rawptr = *(this->'
             . $property_key
-            . '[i].get()); }  // call from Perl shim' . "\n";
+            . '[i].get_raw()); }  // call from Perl shim' . "\n";
         $cpp_source_group->{H}
             .= 'void set_'
             . $property_key
@@ -900,9 +902,9 @@ our string_hashref $ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES = s
             . $property_key
             . '_element_ptr) { *(this->'
             . $property_key
-            . '[i].get()) = *('
+            . '[i].get_raw()) = *('
             . $property_key
-            . '_element_ptr.get()); }  // call from C++' . "\n";
+            . '_element_ptr.get_raw()); }  // call from C++' . "\n";
         $cpp_source_group->{H}
             .= 'void set_'
             . $property_key
@@ -912,7 +914,7 @@ our string_hashref $ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES = s
             . $property_key
             . '_element_rawptr) { *(this->'
             . $property_key
-            . '[i].get()) = *'
+            . '[i].get_raw()) = *'
             . $property_key
             . '_element_rawptr; }  // call from Perl';
 

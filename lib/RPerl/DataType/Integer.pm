@@ -23,6 +23,12 @@ use warnings;
 use parent qw(RPerl::DataType::Integer);
 
 package  # hide from PAUSE indexing
+    unsigned_integer;
+use strict;
+use warnings;
+use parent qw(RPerl::DataType::Integer);
+
+package  # hide from PAUSE indexing
     constant_integer;
 use strict;
 use warnings;

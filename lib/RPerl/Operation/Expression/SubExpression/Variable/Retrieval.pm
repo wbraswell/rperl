@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::SubExpression::Variable::Retrieval;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_000;
+our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::SubExpression);
@@ -89,6 +89,9 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 elsif ( $subtype eq 'hashref' ) {                                    # arrayref of hashrefs
                     die 'NEED TEST & IMPLEMENT!!!';
                 }
+                elsif ( $subtype =~ /sse_number_pair$/xms ) {                        # arrayref of SSE number pairs
+                    die 'NEED TEST & IMPLEMENT!!!';
+                }
                 else {                                                               # arrayref of scalars
                     $cpp_source_group->{CPP} .= '[';
                     my string_hashref $cpp_source_subgroup = $subexpression->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
@@ -110,22 +113,22 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             $cpp_source_group->{CPP} .= ']';
         }
         elsif ( $base_type =~ /_hashref$/ ) {                                        # hash
-            die 'NEED ERROR MESSAGE';                                                # ERROR, can't use arrayref retrieval on hashref
+            die 'ERROR ECVGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use arrayref retrieval on hashref type ' . $base_type . ', dying' . "\n";
         }
         elsif ( exists $rperlnamespaces_generated::RPERL->{ $base_type . '::' } ) {    # scalar
-            die 'NEED ERROR MESSAGE';                                                  # ERROR, can't use arrayref retrieval on scalar
+            die 'ERROR ECVGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use arrayref retrieval on scalar type ' . $base_type . ', dying' . "\n";
         }
         else {                                                                         # user-defined type AKA class
-            die 'NEED ERROR MESSAGE';                                                  # ERROR, can't use arrayref retrieval on class object
+            die 'ERROR ECVGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use arrayref retrieval on object of user-defined class ' . $base_type . ', dying' . "\n";
         }
     }
     elsif ( $self_class eq 'VariableRetrieval_176' ) {                                 # VariableRetrieval -> OP02_HASH_THINARROW SubExpression '}'
         my object $subexpression = $self->{children}->[1];
         if ( $base_type =~ /_arrayref$/ ) {                                            # array
-            die 'NEED ERROR MESSAGE';                                                  # ERROR, can't use hashref retrieval on arrayref
+            die 'ERROR ECVGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on arrayref type ' . $base_type . ', dying' . "\n";
         }
         elsif ( $base_type eq 'sse_number_pair' ) {
-            die 'NEED ERROR MESSAGE';                                                  # ERROR, can't use hashref retrieval on SSE number pair
+            die 'ERROR ECVGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on SSE type ' . $base_type . ', dying' . "\n";
         }
         elsif ( $base_type =~ /_hashref$/ ) {                                          # hash
             $subtype = substr $base_type, 0, ( ( length $base_type ) - 8 );            # strip trailing '_hashref'
@@ -134,6 +137,9 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                     die 'NEED TEST & IMPLEMENT!!!';
                 }
                 elsif ( $subtype eq 'hashref' ) {                                      # hashrefs of hashrefs
+                    die 'NEED TEST & IMPLEMENT!!!';
+                }
+                elsif ( $subtype =~ /sse_number_pair$/xms ) {                          # hashref of SSE number pairs
                     die 'NEED TEST & IMPLEMENT!!!';
                 }
                 else {                                                                 # hashrefs of scalars
@@ -151,7 +157,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             }
         }
         elsif ( exists $rperlnamespaces_generated::RPERL->{ $base_type . '::' } ) {    # scalar
-            die 'NEED ERROR MESSAGE';                                                  # ERROR, can't use arrayref retrieval on scalar
+            die 'ERROR ECVGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on scalar type ' . $base_type . ', dying' . "\n";
         }
         else {                                                                         # user-defined type AKA class
             $cpp_source_group->{CPP} .= '->';
@@ -163,10 +169,10 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         my string $word = $self->{children}->[1];
 
         if ( $base_type =~ /_arrayref$/ ) {                                            # array
-            die 'NEED ERROR MESSAGE';                                                  # ERROR, can't use hashref retrieval on arrayref
+            die 'ERROR ECVGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on arrayref type ' . $base_type . ', dying' . "\n";
         }
         elsif ( $base_type eq 'sse_number_pair' ) {
-            die 'NEED ERROR MESSAGE';                                                  # ERROR, can't use hashref retrieval on SSE number pair
+            die 'ERROR ECVGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on SSE type ' . $base_type . ', dying' . "\n";
         }
         elsif ( $base_type =~ /_hashref$/ ) {                                          # hash
             $subtype = substr $base_type, 0, ( ( length $base_type ) - 8 );            # strip trailing '_hashref'
@@ -175,6 +181,9 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                     die 'NEED TEST & IMPLEMENT!!!';
                 }
                 elsif ( $subtype eq 'hashref' ) {                                      # hashrefs of hashrefs
+                    die 'NEED TEST & IMPLEMENT!!!';
+                }
+                elsif ( $subtype =~ /sse_number_pair$/xms ) {                          # hashref of SSE number pairs
                     die 'NEED TEST & IMPLEMENT!!!';
                 }
                 else {                                                                 # hashrefs of scalars
@@ -186,7 +195,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             }
         }
         elsif ( exists $rperlnamespaces_generated::RPERL->{ $base_type . '::' } ) {    # scalar
-            die 'NEED ERROR MESSAGE';                                                  # ERROR, can't use arrayref retrieval on scalar
+            die 'ERROR ECVGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on scalar type ' . $base_type . ', dying' . "\n";
         }
         else {                                                                         # user-defined type AKA class
             $cpp_source_group->{CPP} .= '->' . $word;

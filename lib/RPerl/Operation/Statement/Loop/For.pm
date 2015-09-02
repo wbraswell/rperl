@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::Loop::For;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_100;
+our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement::Loop);
@@ -158,13 +158,36 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         }
         $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$variable_symbol}
             = { isa => 'RPerl::Operation::Expression::SubExpression::Variable::LoopIterator', type => $type_integer };  # NEED UPGRADE: replace fake class isa w/ real class here and below?
- 
-        $cpp_source_group->{CPP} .= $for . q{ } . $left_paren . q{ } . $type_integer . q{ } . $variable_symbol . q{ = };
+
+        # COMPILE-TIME OPTIMIZATION #02: save loop iterators for declaration at the top of the subroutine/method
+        if ((not exists $modes->{_loop_iterators}) or (not defined $modes->{_loop_iterators})) {
+            $modes->{_loop_iterators} = { $variable_symbol => $type_integer };
+        }
+        else {
+            if ((exists $modes->{_loop_iterators}->{$variable_symbol}) and ($modes->{_loop_iterators}->{$variable_symbol} ne $type_integer)) {
+                die 'ERROR ECVGEASCP22, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Compile-time optimization, loop iterator ' . $variable_symbol . ' declared as non-integer type ' . $modes->{_loop_iterators}->{$variable_symbol} . ', dying' . "\n";
+            }
+            $modes->{_loop_iterators}->{$variable_symbol} = $type_integer;
+        }
+
+        $cpp_source_group->{CPP} .= $for . q{ } . $left_paren . q{ } . $variable_symbol . q{ = };
         my object $cpp_source_subgroup = $subexpression0->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
-        $cpp_source_group->{CPP} .= q{; } . $variable_symbol . ' <= ';
-        $cpp_source_subgroup = $subexpression1->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
-        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+
+        my string $subexpression1_address = "$subexpression1";
+        my object $subexpression1_modified = RPerl::Generator::arrayref_convert_index_max_to_size($subexpression1);
+        if ($subexpression1_address ne "$subexpression1_modified") {
+            # COMPILE-TIME OPTIMIZATION #03: avoids subtraction and is-equal
+            $cpp_source_group->{CPP} .= q{; } . $variable_symbol . ' < ';
+            $cpp_source_subgroup = $subexpression1_modified->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+            RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+        }
+        else {
+            $cpp_source_group->{CPP} .= q{; } . $variable_symbol . ' <= ';
+            $cpp_source_subgroup = $subexpression1->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+            RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+        }
+
         $cpp_source_group->{CPP} .= q{; } . $variable_symbol . '++ ' . $right_paren . q{ };
         $cpp_source_subgroup = $codeblock->ast_to_cpp__generate__CPPOPS_CPPTYPES($loop_label, $modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
@@ -211,7 +234,18 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$variable_symbol0}
             = { isa => 'RPerl::Operation::Expression::SubExpression::Variable::LoopIterator', type => $type_integer };
 
-        $cpp_source_group->{CPP} .= $for . q{ ( } . $type_integer . q{ } . $variable_symbol0 . q{ } . $assign . q{ };
+        # COMPILE-TIME OPTIMIZATION #02: save loop iterators for declaration at the top of the subroutine/method
+        if ((not exists $modes->{_loop_iterators}) or (not defined $modes->{_loop_iterators})) {
+            $modes->{_loop_iterators} = { $variable_symbol0 => $type_integer };
+        }
+        else {
+            if ((exists $modes->{_loop_iterators}->{$variable_symbol0}) and ($modes->{_loop_iterators}->{$variable_symbol0} ne $type_integer)) {
+                die 'ERROR ECVGEASCP22, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Compile-time optimization, loop iterator ' . $variable_symbol0 . ' declared as non-integer type ' . $modes->{_loop_iterators}->{$variable_symbol0} . ', dying' . "\n";
+            }
+            $modes->{_loop_iterators}->{$variable_symbol0} = $type_integer;
+        }
+
+        $cpp_source_group->{CPP} .= $for . q{ ( } . $variable_symbol0 . q{ } . $assign . q{ };
         my object $cpp_source_subgroup = $subexpression0->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
         $cpp_source_group->{CPP} .= $semicolon0 . q{ } . $variable_symbol1 . q{ } . $compare . q{ };

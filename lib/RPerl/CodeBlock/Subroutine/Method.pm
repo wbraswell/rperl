@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine::Method;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.004_200;
+our $VERSION = 0.005_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CodeBlock::Subroutine);
@@ -154,11 +154,24 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     }
 
     $cpp_source_group->{CPP} .= ') {' . "\n";
+    my string $CPP_saved = $cpp_source_group->{CPP};
+    $cpp_source_group->{CPP} = q{};
 
     foreach my object $operation ( @{ $operations_star->{children} } ) {
         $cpp_source_subgroup = $operation->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
+
+    # COMPILE-TIME OPTIMIZATION #02: declare all loop iterators at top of subroutine/method to avoid re-declarations in nested loops
+    if ((exists $modes->{_loop_iterators}) and (defined $modes->{_loop_iterators})) {
+        foreach my string $loop_iterator_symbol (sort keys %{$modes->{_loop_iterators}}) {
+            $CPP_saved .= $modes->{_loop_iterators}->{$loop_iterator_symbol} . q{ } . $loop_iterator_symbol . ';' . "\n";
+        }
+        delete $modes->{_loop_iterators};
+    }
+    
+    $CPP_saved .= $cpp_source_group->{CPP};
+    $cpp_source_group->{CPP} = $CPP_saved;
 
     $cpp_source_group->{CPP} .= '}';
     return $cpp_source_group;

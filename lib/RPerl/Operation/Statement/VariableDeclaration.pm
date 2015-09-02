@@ -147,6 +147,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     elsif ( $self_class eq 'VariableDeclaration_179' ) {    # VariableDeclaration -> MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrStdin ';'
         my string $type   = $self->{children}->[1]->{children}->[0];
         my string $symbol = $self->{children}->[2];
+        my string $assign = $self->{children}->[3];
         my object $subexpression_or_stdin = $self->{children}->[4];
         my string $semicolon              = $self->{children}->[5];
 
@@ -194,10 +195,20 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
         $cpp_source_group->{CPP} .= $type . q{ } . $symbol;
 
-        $cpp_source_group->{CPP} .= '(';
-        $cpp_source_subgroup = $subexpression_or_stdin->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
-        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
-        $cpp_source_group->{CPP} .= ')' . $semicolon . "\n";
+        if ($is_constructor_call) {
+            if ( not exists $rperlnamespaces_generated::RPERL->{ $type . '::' } ) { # not scalar or SSE number pair
+                $cpp_source_group->{CPP} .= '(';
+                $cpp_source_subgroup = $subexpression_or_stdin->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+                RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+                $cpp_source_group->{CPP} .= ')';
+            }
+        }
+        else {
+            $cpp_source_group->{CPP} .= q{ } . $assign . q{ };
+            $cpp_source_subgroup = $subexpression_or_stdin->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+            RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+        }
+        $cpp_source_group->{CPP} .= $semicolon . "\n";
     }
     elsif ( $self_class eq 'VariableDeclaration_180' ) { # VariableDeclaration -> MY Type VARIABLE_SYMBOL OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef' ';'
         my string $type   = $self->{children}->[1]->{children}->[0];
@@ -225,6 +236,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}->{type_cpp} = $type;  # add converted C++ type to symtab entry
 
         my string $subexpression_address = "$subexpression";
+        # POSSIBLE COMPILE-TIME OPTIMIZATION #01: avoids compensation addition below
         $subexpression = RPerl::Generator::arrayref_convert_index_max_to_size($subexpression);
 
         $cpp_source_group->{CPP} .= $type . q{ } . $symbol . $semicolon . "\n";
