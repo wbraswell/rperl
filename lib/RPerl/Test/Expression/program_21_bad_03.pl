@@ -18,7 +18,7 @@ our $VERSION = 0.001_000;
 use RPerl::Test::Foo;
 
 # [[[ OPERATIONS ]]]
-my object $my_foo = RPerl::Test::Foo->new();
+my RPerl::Test::Foo $my_foo = RPerl::Test::Foo->new();
 print $my_foo->qorge(), "\n";
 $my_foo->{xyzzy} = 'guffaw';
 print $my_foo->qorge(), "\n"

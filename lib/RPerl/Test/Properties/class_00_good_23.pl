@@ -19,7 +19,7 @@ use RPerl::Test::Properties::Class_00_Good;
 # [[[ OPERATIONS ]]]
 # set and get object property ourself
 # using direct access to blessed $property hashref, breaking object encapsulation
-my object $test_object = RPerl::Test::Properties::Class_00_Good->new();
+my RPerl::Test::Properties::Class_00_Good $test_object = RPerl::Test::Properties::Class_00_Good->new();
 $test_object->{test_property} = 5;
 $test_object->test_method(23);
 print $test_object->{test_property} . "\n";

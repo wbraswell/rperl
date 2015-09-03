@@ -14,8 +14,8 @@ use RPerl::Test::Module::Class_00_Good;
 
 # [[[ OPERATIONS ]]]
 
-my object $foo = RPerl::Test::Module::Class_00_Good->new();
-my object $bar = RPerl::Test::Module::Class_00_Good->new();
+my RPerl::Test::Module::Class_00_Good $foo = RPerl::Test::Module::Class_00_Good->new();
+my RPerl::Test::Module::Class_00_Good $bar = RPerl::Test::Module::Class_00_Good->new();
 
 print 'have $foo->{empty_property} = ', $foo->{empty_property}, "\n";
 print 'have $bar->{empty_property} = ', $bar->{empty_property}, "\n";

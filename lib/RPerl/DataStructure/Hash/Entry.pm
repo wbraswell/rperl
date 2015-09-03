@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash::Entry;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -52,9 +52,9 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     if (( exists $type_inner_optional->{children}->[0] ) and (defined $key_name)) {
         my string $type_inner_name = $type_inner_optional->{children}->[0]->{children}->[3];
-        if ($key_name ne $type_inner_name) {
-            die 'ERROR ECVGEASRP17, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, OO properties or hash key '
-                . $key_name . ' is different than inner type name ' . $type_inner_name . ', dying' . "\n";
+        if ($type_inner_name !~ /$key_name$/xms) {
+            die 'ERROR ECVGEASRP17, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
+                . $type_inner_name . q{'} . ' does not end with OO properties or hash key ' . q{'} . $key_name . q{'} . ', dying' . "\n";
         }
     }
 
@@ -119,9 +119,9 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     if (( exists $type_inner_optional->{children}->[0] ) and (defined $key_name)) {
         my string $type_inner_name = $type_inner_optional->{children}->[0]->{children}->[3];
-        if ($key_name ne $type_inner_name) {
-            die 'ERROR ECVGEASCP17, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, OO properties or hash key '
-                . $key_name . ' is different than inner type name ' . $type_inner_name . ', dying' . "\n";
+        if ($type_inner_name !~ /$key_name$/xms) {
+            die 'ERROR ECVGEASCP17, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
+                . $type_inner_name . q{'} . ' does not end with OO properties or hash key ' . q{'} . $key_name . q{'} . ', dying' . "\n";
         }
     }
 

@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_500;
+our $VERSION = 0.002_510;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -132,12 +132,9 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         $property_type_inner = $property_0->{children}->[2];
         $property_name       = $property_type_inner->{children}->[3];
 
-        if ( $property_key ne $property_name ) {
-            die 'ERROR ECVGEASRP17, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, OO properties or hash key '
-                . $property_key
-                . ' is different than inner type name '
-                . $property_name
-                . ', dying' . "\n";
+        if ($property_name !~ /$property_key$/xms) {
+            die 'ERROR ECVGEASRP17, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
+                . $property_name . q{'} . ' does not end with OO properties key ' . q{'} . $property_key . q{'} . ', dying' . "\n";
         }
 
         # TypeInnerProperties -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN SubExpression
@@ -203,12 +200,9 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 $property_type_inner = $property_0->{children}->[2];
                 $property_name       = $property_type_inner->{children}->[3];
 
-                if ( $property_key ne $property_name ) {
-                    die 'ERROR ECVGEASRP17, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, OO properties or hash key '
-                        . $property_key
-                        . ' is different than inner type name '
-                        . $property_name
-                        . ', dying' . "\n";
+                if ($property_name !~ /$property_key$/xms) {
+                    die 'ERROR ECVGEASRP17, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
+                        . $property_name . q{'} . ' does not end with OO properties key ' . q{'} . $property_key . q{'} . ', dying' . "\n";
                 }
 
                 # TypeInnerProperties -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN SubExpression
