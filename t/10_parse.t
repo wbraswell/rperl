@@ -8,7 +8,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_030;
+our $VERSION = 0.005_100;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -67,11 +67,14 @@ plan tests => scalar keys %{$test_files};
 for my $test_file ( sort keys %{$test_files} ) {
 
     #    RPerl::diag( 'in 10_parse.t, have $test_file = ' . $test_file . "\n" );
+    ( my string $rperl_input_file_name, my string_hashref $cpp_output_file_name_group, my string_hashref $cpp_source_group, my string_hashref $modes ) = @_;
 
+    # NEED UPGRADE: enable file dependencies as in script/rperl depends_parse_generate_save_subcompile_execute()
     my $eval_return_value = eval {
         rperl_to_xsbinary__parse_generate_compile(
             $test_file,
-            undef,    # empty output file group, no files will be saved in PARSE mode
+            undef,    # empty $cpp_output_file_name_group, no files will be saved in PARSE mode
+            {},       # empty $cpp_source_group, starting compile process from scratch, not continued
             {   ops     => 'PERL',
                 types   => 'PERL',
                 check   => 'TRACE',    # unneeded?

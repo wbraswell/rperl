@@ -15,7 +15,7 @@ use RPerl::Test;
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties
-    = { some_integer => my integer $TYPED_empty_property = 23 };
+    = { some_integer => my integer $TYPED_some_integer = 23 };
 
 # [[[ OO METHODS & SUBROUTINES ]]]
 our string::method $properties_stnv = sub {
