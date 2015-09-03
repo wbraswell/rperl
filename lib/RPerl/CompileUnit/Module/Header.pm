@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Header;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.004_000;
+our $VERSION = 0.004_010;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -63,6 +63,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     $rperl_source_group->{PMC} .= $use_strict . "\n";
     $rperl_source_group->{PMC} .= $use_warnings . "\n";
     if ( ( exists $use_rperl_after_optional->{children}->[0] ) and ( defined $use_rperl_after_optional->{children}->[0] ) ) {
+        chomp $use_rperl_after_optional->{children}->[0]->{attr};
         $rperl_source_group->{PMC} .= $use_rperl_after_optional->{children}->[0]->{attr} . "\n";
     }
 

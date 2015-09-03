@@ -195,9 +195,9 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 $rperl_source_group->{PMC} .= $property->{attr};    # comma between properties
             }
             else {
-                $property_key        = $property_0->{children}->[0];
-                $property_fat_arrow  = $property_0->{children}->[1];
-                $property_type_inner = $property_0->{children}->[2];
+                $property_key        = $property->{children}->[0];
+                $property_fat_arrow  = $property->{children}->[1];
+                $property_type_inner = $property->{children}->[2];
                 $property_name       = $property_type_inner->{children}->[3];
 
                 if ($property_name !~ /$property_key$/xms) {
@@ -274,7 +274,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     if ( exists $method_or_subroutine_star->{children}->[0] ) {
         if ( $modes->{label} eq 'ON' ) {
-            $rperl_source_group->{PMC} .= "\n" . '# [[[ OO METHODS & SUBROUTINES ]]]' . "\n";
+            $rperl_source_group->{PMC} .= "\n" . '# [[[ OO METHODS & SUBROUTINES ]]]' . "\n\n";
         }
     }
     foreach my object $method_or_subroutine ( ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
