@@ -15,6 +15,7 @@ use RPerl::Inline;
 # [[[ SUBROUTINES ]]]
 
 # <<< OO PROPERTIES, ACCESSORS & MUTATORS, SHIMS >>>  # <<< CHANGE_ME: add real shims after this line or delete it >>>
+# <<< OO PROPERTIES, SUBROUTINES, SHIMS >>>  # <<< CHANGE_ME: add real shims after this line or delete it >>>
 # <<< C++ LOADER >>>
 #our void::method $cpp_load = sub {
 sub cpp_load {

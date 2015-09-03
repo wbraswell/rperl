@@ -13,6 +13,7 @@ App, PhysicsPerl, Alioth Shootout N-Body Benchmark
 
 RELEASE v1.1
 
+ensure perfect match for compiled Algorithm.*, Sort.*, Bubble.* files with hand-compiled *.CPPOPS_CPPTYPES versions
 tests
 	constructor type mismatch: array size declaration compensation; package/subroutine/method names starting w/ underscore; variable redeclaration (masking); 
 	properties & hash type-inner type-vs-key name mismatch (ECVGEASRP17: PERLOPS Class.pm properties accessors/mutators; CPPOPS entry & entrytyped);

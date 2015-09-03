@@ -23,12 +23,12 @@ our hashref $properties = {
 
 our void::method $integer_sort = sub {
     ( my object $self ) = @_;
-    $self->{integer_data} = integer_bubblesort( $self->{integer_data} );
+    $self->{integer_data} = RPerl::Algorithm::Sort::Bubble::integer_bubblesort( $self->{integer_data} );
 };
 
 our void::method $number_sort = sub {
     ( my object $self ) = @_;
-    $self->{number_data} = number_bubblesort( $self->{number_data} );
+    $self->{number_data} = RPerl::Algorithm::Sort::Bubble::number_bubblesort( $self->{number_data} );
 };
 
 our void::method $inherited__Bubble = sub {
@@ -105,13 +105,13 @@ our string $uninherited = sub {
 our string $integer_bubblesort__typetest0 = sub {
     ( my integer_arrayref $lucky_integers ) = @_;
     ::integer_arrayref_CHECKTRACE( $lucky_integers, '$lucky_integers', 'integer_bubblesort__typetest0()' );
-    return ( ::integer_arrayref_to_string( integer_bubblesort($lucky_integers) ) . 'PERLOPS_PERLTYPES' );
+    return ( ::integer_arrayref_to_string( RPerl::Algorithm::Sort::Bubble::integer_bubblesort($lucky_integers) ) . 'PERLOPS_PERLTYPES' );
 };
 
 our string $number_bubblesort__typetest0 = sub {
     ( my number_arrayref $lucky_numbers ) = @_;
     ::number_arrayref_CHECKTRACE( $lucky_numbers, '$lucky_numbers', 'number_bubblesort__typetest0()' );
-    return ( ::number_arrayref_to_string( number_bubblesort($lucky_numbers) ) . 'PERLOPS_PERLTYPES' );
+    return ( ::number_arrayref_to_string( RPerl::Algorithm::Sort::Bubble::number_bubblesort($lucky_numbers) ) . 'PERLOPS_PERLTYPES' );
 };
 
 1;    # end of class

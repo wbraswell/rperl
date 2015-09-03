@@ -425,7 +425,7 @@ sub depends_parse_generate_save_subcompile_execute {
             my integer $execute_retval = system( $EXECUTABLE_NAME, $input_file_name );
         }
 
-        RPerl::diag( 'in depends_parse_generate_save_subcompile_execute(), have $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
+#        RPerl::diag( 'in depends_parse_generate_save_subcompile_execute(), have $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
 
         if (    ( $input_files_count > 1 )
             and ( $i < ( $input_files_count - 1 ) ) )

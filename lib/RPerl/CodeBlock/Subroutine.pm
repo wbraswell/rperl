@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_000;
+our $VERSION = 0.006_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -101,7 +101,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 
 our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
-#    RPerl::diag( 'in Subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n");
+#    RPerl::diag( 'in Subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n");
  
     my string_hashref $cpp_source_group = { H => q{} };
 
@@ -126,7 +126,7 @@ our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = 
     $return_type = RPerl::Generator::type_convert_perl_to_cpp($return_type, 1);  # $pointerify_classes = 1
     $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{_global}->{$name}->{type_cpp} = $return_type;  # add converted C++ type to symtab entry
 
-    # DEV NOTE: must prefix subroutine names with namespace-underscores to simulate Perl's behavior of not exporting subroutines by default
+    # DEV NOTE, CORRELATION #rp22: must prefix subroutine names with namespace-underscores to simulate Perl's behavior of not exporting subroutines by default
     my string $namespace_underscores = $modes->{_symbol_table}->{_namespace};
     $namespace_underscores =~ s/:/_/gxms;
     $cpp_source_group->{H} .= $return_type . q{ } . $namespace_underscores . $name . '(';
@@ -211,6 +211,37 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     $cpp_source_group->{CPP} .= '}';
 
+    return $cpp_source_group;
+};
+
+our string_hashref::method $ast_to_cpp__generate_shim__CPPOPS_CPPTYPES = sub {
+    ( my object $self, my string_hashref $modes) = @_;
+#    RPerl::diag( 'in Subroutine->ast_to_cpp__generate_shim__CPPOPS_CPPTYPES(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n");
+ 
+    my string_hashref $cpp_source_group = { PMC => q{} };
+
+    $self = $self->{children}->[0];    # unwrap Subroutine_50 from MethodOrSubroutine_79
+    my string $name        = $self->{children}->[2];
+
+#RPerl::diag( 'in Subroutine->ast_to_cpp__generate_shim__CPPOPS_CPPTYPES(), have $arguments_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_optional) . "\n" );
+#RPerl::diag( 'in Subroutine->ast_to_cpp__generate_shim__CPPOPS_CPPTYPES(), have $return_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($return_type) . "\n" );
+
+    substr $name, 0, 1, q{};            # remove leading $ sigil
+ 
+    if ((substr $name, 0, 1) eq '_') {
+        die 'ERROR ECVGEASCP08, CODE GENERATOR, ABSTRACT SYNTAX TO C++: subroutine name ' . ($name)
+                . ' must not start with underscore, dying' . "\n";
+    }
+
+    # DEV NOTE, CORRELATION #rp22: must create shims to un-prefix subroutine names with namespace-underscores to un-simulate Perl's behavior of not exporting subroutines by default
+    my string $namespace_colons = $modes->{_symbol_table}->{_namespace};
+    my string $namespace_underscores = $namespace_colons;
+    $namespace_underscores =~ s/:/_/gxms;
+ 
+# hard-coded example
+#sub integer_bubblesort { return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort(@_); }
+
+    $cpp_source_group->{PMC} .= 'sub ' . $name . ' { return main::' . $namespace_underscores . $name . '(@_); }';
     return $cpp_source_group;
 };
 

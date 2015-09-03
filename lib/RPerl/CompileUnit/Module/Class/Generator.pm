@@ -455,21 +455,11 @@ EOL
                 . "\n";
         }
 
-        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property 0, have $property_key = ' . "\n"
-                . RPerl::Parser::rperl_ast__dump($property_key)
-                . "\n" );
-        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property 0, have $property_type_inner = ' . "\n"
-                . RPerl::Parser::rperl_ast__dump($property_type_inner)
-                . "\n" );
-        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property 0, have $property_subexpression = ' . "\n"
-                . RPerl::Parser::rperl_ast__dump($property_subexpression)
-                . "\n" );
-        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property 0, have $property_type = ' . "\n"
-                . RPerl::Parser::rperl_ast__dump($property_type)
-                . "\n" );
-        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property 0, have $property_arrayref_index_max = ' . "\n"
-                . RPerl::Parser::rperl_ast__dump($property_arrayref_index_max)
-                . "\n" );
+#        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property 0, have $property_key = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_key) . "\n" );
+#        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property 0, have $property_type_inner = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_type_inner) . "\n" );
+#        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property 0, have $property_subexpression = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_subexpression) . "\n" );
+#        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property 0, have $property_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_type) . "\n" );
+#        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property 0, have $property_arrayref_index_max = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_arrayref_index_max) . "\n" );
 
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key} ) {
             die 'ERROR ECVGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: OO property '
@@ -545,31 +535,11 @@ EOL
                     . "\n";
             }
 
-            RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property '
-                    . $i
-                    . ', have $property_key = ' . "\n"
-                    . RPerl::Parser::rperl_ast__dump($property_key)
-                    . "\n" );
-            RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property '
-                    . $i
-                    . ', have $property_type_inner = ' . "\n"
-                    . RPerl::Parser::rperl_ast__dump($property_type_inner)
-                    . "\n" );
-            RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property '
-                    . $i
-                    . ', have $property_subexpression = ' . "\n"
-                    . RPerl::Parser::rperl_ast__dump($property_subexpression)
-                    . "\n" );
-            RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property '
-                    . $i
-                    . ', have $property_type = ' . "\n"
-                    . RPerl::Parser::rperl_ast__dump($property_type)
-                    . "\n" );
-            RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property '
-                    . $i
-                    . ', have $property_arrayref_index_max = ' . "\n"
-                    . RPerl::Parser::rperl_ast__dump($property_arrayref_index_max)
-                    . "\n" );
+#            RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property ' . $i . ', have $property_key = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_key) . "\n" );
+#            RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property ' . $i . ', have $property_type_inner = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_type_inner) . "\n" );
+#            RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property ' . $i . ', have $property_subexpression = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_subexpression) . "\n" );
+#            RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property ' . $i . ', have $property_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_type) . "\n" );
+#            RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property ' . $i . ', have $property_arrayref_index_max = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_arrayref_index_max) . "\n" );
 
             if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key} ) {
                 die 'ERROR ECVGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: OO property '
@@ -660,12 +630,13 @@ EOL
     my string_arrayref $method_definitions      = [];
     my string_arrayref $subroutine_declarations = [];
     my string_arrayref $subroutine_definitions  = [];
+    my string_arrayref $subroutines_shims       = [];
 
     foreach my object $method_or_subroutine ( ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
         @{ $method_or_subroutine_star->{children} }
         )
     {
-        if ( ( ref $method_or_subroutine ) eq 'MethodOrSubroutine_78' ) {
+        if ( ( ref $method_or_subroutine ) eq 'MethodOrSubroutine_78' ) {  # METHOD
             $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES($modes);
             push @{$method_declarations}, $cpp_source_subgroup->{H};
             $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES( $package_name_underscores, $modes );
@@ -674,11 +645,13 @@ EOL
                 $cpp_source_group->{H_INCLUDES} .= $cpp_source_subgroup->{H_INCLUDES};
             }
         }
-        elsif ( ( ref $method_or_subroutine ) eq 'MethodOrSubroutine_79' ) {
+        elsif ( ( ref $method_or_subroutine ) eq 'MethodOrSubroutine_79' ) {  # SUBROUTINE
             $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES($modes);
             push @{$subroutine_declarations}, $cpp_source_subgroup->{H};
             $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
             push @{$subroutine_definitions}, $cpp_source_subgroup->{CPP};
+            $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate_shim__CPPOPS_CPPTYPES($modes);
+            push @{$subroutines_shims}, $cpp_source_subgroup->{PMC};
             if ( ( exists $cpp_source_subgroup->{H_INCLUDES} ) and ( defined $cpp_source_subgroup->{H_INCLUDES} ) ) {
                 $cpp_source_group->{H_INCLUDES} .= $cpp_source_subgroup->{H_INCLUDES};
             }
@@ -706,6 +679,9 @@ EOL
         if ( exists $method_definitions->[0] ) { $cpp_source_group->{CPP} .= "\n\n"; }
         $cpp_source_group->{CPP} .= ( join "\n\n", @{$subroutine_definitions} );
         if ( exists $subroutine_definitions->[0] ) { $cpp_source_group->{CPP} .= "\n\n"; }
+        if ( exists $subroutines_shims->[0] ) {
+            $cpp_source_group->{_PMC_subroutines_shims} .= ( join "\n", @{$subroutines_shims} ) . "\n";
+        }
     }
 
     $cpp_source_group->{H} .= '};  // end of class' . "\n\n";

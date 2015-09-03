@@ -85,6 +85,13 @@ INIT {
             next;
         }
 
+        $module_filename_long = $INC{$module_filename_short};
+        
+        # skip already-compiled files with PMC counterparts
+        if (-e ($module_filename_long . 'c')) {
+            next;
+        }
+
         $use_rperl                   = 0;
         $inside_package              = 0;
         $package_name                = q{};
@@ -108,8 +115,6 @@ INIT {
         if (    ( not exists $rperlnamespaces_generated::CORE->{$namespace_root} )
             and ( not exists $rperlnamespaces_generated::RPERL_DEPS->{$namespace_root} ) )
         {
-            $module_filename_long = $INC{$module_filename_short};
-
 #            RPerl::diag( 'in Class.pm INIT block, not skipping due to CORE & RPERL_DEPS namespaces, $module_filename_long = ' . $module_filename_long . "\n" );
 
             open my $MODULE_FILE, '<', $module_filename_long or croak $OS_ERROR;
@@ -720,7 +725,12 @@ sub save_object_properties_types {
 sub activate_subroutine {
     ( my $package_name, my $subroutine_name, my $subroutine_type, my $subroutine_arguments_check_code, my $module_filename_long ) = @_;
 
-    #    RPerl::diag("in Class::activate_subroutine(), top of subroutine\n");
+#    RPerl::diag('in Class::activate_subroutine(), received $package_name = ' . $package_name . "\n");
+#    RPerl::diag('in Class::activate_subroutine(), received $subroutine_name = ' . $subroutine_name . "\n");
+#    RPerl::diag('in Class::activate_subroutine(), received $subroutine_type = ' . $subroutine_type . "\n");
+#    RPerl::diag('in Class::activate_subroutine(), received $subroutine_arguments_check_code = ' . $subroutine_arguments_check_code . "\n");
+#    RPerl::diag('in Class::activate_subroutine(), received $module_filename_long = ' . $module_filename_long . "\n");
+ 
     my $package_name_tmp;              # string
     my $subroutine_definition_code;    # string
     my $subroutine_definition_diag_code = q{};    # string

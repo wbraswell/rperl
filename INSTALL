@@ -139,7 +139,8 @@ $ rperl -?
 # Compile & run RPerl test commands
 $ export RPERL_DEBUG=1
 
-# Test command sequence #1
+# [[[ Test command sequence #1: OO INHERITANCE TEST ]]]
+
 $ rm -Rf _Inline RPerl/Algorithm.pmc RPerl/Algorithm.h RPerl/Algorithm.cpp RPerl/Algorithm/Sort.pmc RPerl/Algorithm/Sort.h RPerl/Algorithm/Sort.cpp RPerl/Algorithm/Sort/Bubble.pmc RPerl/Algorithm/Sort/Bubble.h RPerl/Algorithm/Sort/Bubble.cpp
 $ perl -e 'use RPerl::Algorithm::Sort::Bubble; my $o = RPerl::Algorithm::Sort::Bubble->new(); $o->inherited__Bubble("logan");  $o->inherited__Sort("wolvie");  $o->inherited__Algorithm("claws");'
     # should be PERLOPS_PERLTYPES, PERLOPS_PERLTYPES, PERLOPS_PERLTYPES
@@ -156,7 +157,8 @@ $ rperl -V RPerl/Algorithm/Sort/Bubble.pm
 $ perl -e 'use RPerl::Algorithm::Sort::Bubble; my $o = RPerl::Algorithm::Sort::Bubble->new(); $o->inherited__Bubble("logan");  $o->inherited__Sort("wolvie");  $o->inherited__Algorithm("claws");'
     # should be CPPOPS_CPPTYPES, CPPOPS_CPPTYPES, CPPOPS_CPPTYPES
 
-# Test command sequence #2
+# [[[ Test command sequence #2: BUBBLESORT TIMING TEST ]]]
+
 $ rm -Rf _Inline RPerl/Algorithm.pmc RPerl/Algorithm.h RPerl/Algorithm.cpp RPerl/Algorithm/Sort.pmc RPerl/Algorithm/Sort.h RPerl/Algorithm/Sort.cpp RPerl/Algorithm/Sort/Bubble.pmc RPerl/Algorithm/Sort/Bubble.h RPerl/Algorithm/Sort/Bubble.cpp
 $ perl -e 'use RPerl::Algorithm::Sort::Bubble; my $a = [reverse 0 .. 5000]; use Time::HiRes qw(time); my $start = time; my $s = integer_bubblesort($a); my $elapsed = time - $start; print Dumper($s); print "elapsed: " . $elapsed . "\n";'
     # SLOW...  :-(  approx 15 seconds for 5000 elements, 60 for 10000
@@ -165,3 +167,19 @@ $ rperl -V lib/RPerl/Algorithm/Sort/Bubble.pm
 $ perl -e 'use RPerl::Algorithm::Sort::Bubble; my $a = [reverse 0 .. 5000]; use Time::HiRes qw(time); my $start = time; my $s = integer_bubblesort($a); my $elapsed = time - $start; print Dumper($s); print "elapsed: " . $elapsed . "\n";'
 	# same exact command as above...
     # FAST!!!  :-D  approx 0.045 seconds for 5000 elements, 0.18 for 10000
+
+# [[[ Test command sequence #3: N-BODY TIMING TEST ]]]
+
+$ export PATH=script:$PATH
+$ export PERL5LIB=lib:$PATH
+$ wget https://github.com/wbraswell/physicsperl/archive/master.zip
+$ unzip master.zip
+$ cd physicsperl-master
+$ ./script/unlink_astro.sh
+
+$ ./script/nbody.perl-3.pl
+    # SLOW...  :-(  thousands of seconds for 50M steps w/out graphics
+	
+$ rperl lib/PhysicsPerl/Astro/System.pm
+$ ./script/nbody.perl-3.pl
+    # FAST!!!  :-D  approx 13 seconds for 50M steps w/out graphics!

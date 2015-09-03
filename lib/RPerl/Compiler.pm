@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.006_000;
+our $VERSION = 0.006_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -387,6 +387,11 @@ our void $save_source_files = sub {
             if ($file_line eq ('# <<< OO PROPERTIES, ACCESSORS & MUTATORS, SHIMS >>>  # <<< CHANGE_ME: add real shims after this line or delete it >>>' . "\n")) {
                 if (defined $source_group->{_PMC_accessors_mutators_shims}) { 
                     $file_line = (substr $file_line, 0, 52) . "\n" . $source_group->{_PMC_accessors_mutators_shims} . "\n\n"; }
+                else { $file_line = undef; }
+            }
+            elsif ($file_line eq ('# <<< OO PROPERTIES, SUBROUTINES, SHIMS >>>  # <<< CHANGE_ME: add real shims after this line or delete it >>>' . "\n")) {
+                if (defined $source_group->{_PMC_subroutines_shims}) { 
+                    $file_line = (substr $file_line, 0, 43) . "\n" . $source_group->{_PMC_subroutines_shims} . "\n\n"; }
                 else { $file_line = undef; }
             }
             elsif ($file_line eq ('# <<< CHANGE_ME: add user-defined includes here >>>' . "\n")) {

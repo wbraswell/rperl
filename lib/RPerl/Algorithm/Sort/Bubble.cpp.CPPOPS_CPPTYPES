@@ -5,7 +5,7 @@ using std::cout;  using std::cerr;
 #define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp 0.005_000
 
 // [[[ INCLUDES ]]]
-#include <RPerl/Algorithm/Sort/Bubble.h>
+#include "RPerl/Algorithm/Sort/Bubble.h"
 
 # ifdef __PERL__TYPES
 

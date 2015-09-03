@@ -26,7 +26,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     my string_hashref $rperl_source_group = { PMC => q{} };
     my string_hashref $rperl_source_subgroup;
 
-    #    RPerl::diag( 'in Method::Arguments->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in Method::Arguments->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     # MethodArguments -> LPAREN_MY Type SELF (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;'
     my string $lparen_my               = $self->{children}->[0];
@@ -46,6 +46,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my object $my    = shift @{ $arguments_star_dclone->{children} };
         my object $type  = shift @{ $arguments_star_dclone->{children} };
         my object $name  = shift @{ $arguments_star_dclone->{children} };
+        # strings inside of STAR grammar production becomes TERMINAL object, must retrieve data from attr property
         $rperl_source_group->{PMC} .= $comma->{attr} . q{ } . $my->{attr} . q{ } . $type->{children}->[0] . q{ } . $name->{attr};
     }
 
@@ -85,14 +86,15 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         shift @{ $arguments_star_dclone->{children} };    # discard $comma
         shift @{ $arguments_star_dclone->{children} };    # discard $my
         my object $arguments_type = shift @{ $arguments_star_dclone->{children} };
-        my object $arguments_name = shift @{ $arguments_star_dclone->{children} };
-        substr $arguments_name->{attr}, 0, 1, q{};        # remove leading $ sigil
+        my string $arguments_name = shift @{ $arguments_star_dclone->{children} };
+        $arguments_name = $arguments_name->{attr};  # strings inside of STAR grammar production becomes TERMINAL object, must retrieve data from attr property
+        substr $arguments_name, 0, 1, q{};        # remove leading $ sigil
 
-        $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{ $arguments_name->{attr} }
+        $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{ $arguments_name }
             = { isa => 'RPerl::CodeBlock::Subroutine::Method::Arguments', type => $arguments_type->{children}->[0] };
         $arguments_type->{children}->[0] =~ s/^constant_/const\ /gxms;    # 'constant_foo' becomes 'const foo'
         $arguments_type->{children}->[0] =~ s/::/__/gxms;                 # 'Class::Subclass' becomes 'Class__Subclass'
-        push @{$arguments}, ( $arguments_type->{children}->[0] . q{ } . $arguments_name->{attr} );
+        push @{$arguments}, ( $arguments_type->{children}->[0] . q{ } . $arguments_name );
     }
     $cpp_source_group->{CPP} .= join ', ', @{$arguments};
     return $cpp_source_group;

@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::VariableDeclaration;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_200;
+our $VERSION = 0.003_400;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement);
@@ -157,11 +157,11 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         substr $symbol, 0, 1, q{};                          # remove leading $ sigil
         my bool $is_constructor_call = 0;
 
-        if ( ((ref $subexpression_or_stdin) eq 'HASH' ) and
+#        RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subexpression_or_stdin = ' . "\n" . RPerl::Parser::rperl_ast__dump($subexpression_or_stdin) . "\n" );
+
+        if ( ((ref $subexpression_or_stdin) eq 'SubExpressionOrStdin_143' ) and
             ( exists $subexpression_or_stdin->{children} ) and
-            ( exists $subexpression_or_stdin->{children}->[0] ) and
             ( exists $subexpression_or_stdin->{children}->[0]->{children} ) and
-            ( exists $subexpression_or_stdin->{children}->[0]->{children}->[0] ) and
             ( $subexpression_or_stdin->{children}->[0]->{children}->[0]->isa('RPerl::Operation::Expression::SubroutineCall::MethodCall::ConstructorCall') ) )
         {
             $is_constructor_call = 1;
