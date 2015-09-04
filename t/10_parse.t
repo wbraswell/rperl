@@ -61,6 +61,7 @@ find(
 );
 
 #RPerl::diag( 'in 10_parse.t, have $test_files = ' . "\n" . Dumper($test_files) . "\n" );
+#RPerl::diag( 'in 10_parse.t, have sort keys %{$test_files} = ' . "\n" . Dumper(sort keys %{$test_files}) . "\n" );
 
 plan tests => scalar keys %{$test_files};
 
