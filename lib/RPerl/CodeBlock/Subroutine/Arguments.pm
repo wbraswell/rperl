@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine::Arguments;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_200;
+our $VERSION = 0.002_201;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -47,7 +47,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my object $type  = shift @{ $arguments_star->{children} };
         my object $name  = shift @{ $arguments_star->{children} };
         # strings inside of STAR grammar production becomes TERMINAL object, must retrieve data from attr property
-        $rperl_source_group->{PMC} .= $comma->{attr} . q{ } . $my . q{ } . $type->{children}->[0] . q{ } . $name->{attr};
+        $rperl_source_group->{PMC} .= $comma->{attr} . q{ } . $my->{attr} . q{ } . $type->{children}->[0] . q{ } . $name->{attr};
     }
 
     $rperl_source_group->{PMC} .= q{ } . $rparen . q{ } . $equal . q{ } . $at_underscore_semicolon . "\n";
