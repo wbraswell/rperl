@@ -1,14 +1,24 @@
 Revision history for Perl compiler RPerl.
 
+1.100000 2015-09-05 Codename Jupiter
+
+    - Support N-Body Application In PhysicsPerl Suite, 
+        Solar System Simulator Used For Alioth Benchmark Game (AKA Shootout)
+    - Implement SSE Parallel 128-Bit Floating-Point Arithmetic, Performance Optimization
+    - Implement Arrays & Hashes Of Objects
+    - Implement Access To Raw Pointers Of Objects, Performance Optimization
+    - Implement Loop Iterator Pre-Declaration & Completion Condition Compensation, Performance Optimization
+    - Implement Sub-Accessors & Sub-Mutators,
+        Used For Individual Elements Of Object Property Arrays & Entries Of Object Property Hashes
+
 1.000007 2015-07-09
 
     - Use Test::Number::Delta For Compatibility With Perls Compiled Using -Duselongdouble,
-        Maybe Fixes Duplicate Bugs
+        Fixes Duplicate Bugs
         https://github.com/wbraswell/rperl/issues/24 &
         https://rt.cpan.org/Ticket/Display.html?id=105781
-    
     - Disable Return Operator Parse Failures,
-        Maybe Temporarily Fixes Bug https://github.com/wbraswell/rperl/issues/25
+        Temporarily Fixes Bug https://github.com/wbraswell/rperl/issues/25
 
 1.000006 2015-07-09
 

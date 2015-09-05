@@ -4,10 +4,10 @@ use strict;
 use warnings;
 
 # DEV NOTE, CORRELATION #rp16: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
-our $VERSION = 1.000_007;    # ONE POINT OH FULL RELEASE!!
+our $VERSION = 1.100_000;    # CODENAME JUPITER
 
-#our $VERSION = 20150827;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
-#our $VERSION = 2015.239;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
+#our $VERSION = 20150905;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
+#our $VERSION = 2015.248;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
