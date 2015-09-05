@@ -1,5 +1,5 @@
 # RPerl Install Notes
-# Last Updated September 3, 2015
+# Last Updated September 5, 2015
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # NOTE: STEP 1 IS ONLY FOR SINGLE-USER INSTALL, NOT SYSTEM-WIDE INSTALL
@@ -175,6 +175,7 @@ $ export PERL5LIB=lib:$PATH
 $ wget https://github.com/wbraswell/physicsperl/archive/master.zip
 $ unzip master.zip
 $ cd physicsperl-master
+$ cpanm --installdeps .  # note the dot at the end of this command
 $ ./script/unlink_astro.sh
 
 $ ./script/nbody.perl-3.pl
