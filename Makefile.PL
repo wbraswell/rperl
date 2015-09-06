@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-our $VERSION = 0.001_260;
+our $VERSION = 0.001_261;
 use ExtUtils::MakeMaker;
 
 BEGIN { use English; }
@@ -25,9 +25,9 @@ WriteMakefile(
         'Perl::Critic'        => 1.121,
         'Perl::Tidy'          => 20140711,
         'Parse::Eyapp'        => 1.182,
-        'Inline'              => 0.76,
+        'Inline'              => 0.80,
         'Inline::C'           => 0.76,        # wbraswell added CPPFLAGS
-        'Inline::CPP'         => 0.63,        # davido & mohawk fixed ntype warnings; davido & wbraswell fixed namespace hack
+        'Inline::CPP'         => 0.73,        # davido & mohawk fixed ntype warnings; davido & wbraswell fixed namespace hack; nanis fixed Win32 filename space bug
         'Inline::Filters'     => 0.17,        # wbraswell, rurban, & bulk88 added preprocess inc array; wbraswell added CPPFLAGS
         'PadWalker'           => 2.1,
         'Module::Refresh'     => 0.17,
