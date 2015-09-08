@@ -7,8 +7,8 @@ use RPerl::AfterSubclass;
 # DEV NOTE, CORRELATION #rp16: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
 our $VERSION = 1.100_000;    # CODENAME JUPITER
 
-#our $VERSION = 20150905;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
-#our $VERSION = 2015.248;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
+#our $VERSION = 20150908;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
+#our $VERSION = 2015.251;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -478,6 +478,7 @@ GetOptions(
     'dependencies!' => \$dependencies_flag,
     'Verbose!'      => \$RPerl::VERBOSE,
     'Debug!'        => \$RPerl::DEBUG,
+    'Warnings!'     => \$RPerl::WARNINGS,
     'compile!'      => \$compile_flag,
     'execute!'      => \$execute_flag,
     'test'          => \$test_flag,
@@ -650,6 +651,13 @@ Restricted Perl, The Optimizing Perl 5 Compiler
  Include system diagnostic information in output, or not.
  Disabled by default, equivalent to `export RPERL_DEBUG=1` shell command.
  Uppercase 'D' not to be confused with lowercase 'd' in 'dependencies' option above.
+
+=item B<--Warnings _OR_ -W>
+
+=item B<--noWarnings _OR_ -noW>
+
+ Include system warnings in output, or not.
+ Enabled by default, equivalent to `export RPERL_WARNINGS=0` shell command.
 
 =item B<--test _OR_ -t>
 
