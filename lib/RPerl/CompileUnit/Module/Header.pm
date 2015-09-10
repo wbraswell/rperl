@@ -121,8 +121,21 @@ our string_hashref::method $ast_to_cpp__generate_begin__CPPOPS_CPPTYPES = sub {
     $cpp_source_group->{CPP} .= '#ifndef __CPP__INCLUDED__' . $package_name_underscores . '_cpp' . "\n";
     $cpp_source_group->{CPP} .= '#define __CPP__INCLUDED__' . $package_name_underscores . '_cpp ' . $version_number . "\n\n";
 
+#    RPerl::diag( 'in Header->ast_to_cpp__generate_begin__CPPOPS_CPPTYPES(), have $package_name = ' . $package_name . "\n" );
+#    RPerl::diag( 'in Header->ast_to_cpp__generate_begin__CPPOPS_CPPTYPES(), have $package_name_underscores = ' . $package_name_underscores . "\n" );
+#    RPerl::diag( 'in Header->ast_to_cpp__generate_begin__CPPOPS_CPPTYPES(), have $cpp_source_group->{_package_names} = ' . "\n" . Dumper($cpp_source_group->{_package_names}) . "\n" );
+#    RPerl::diag( 'in Header->ast_to_cpp__generate_begin__CPPOPS_CPPTYPES(), have $cpp_source_group->{_package_names_underscores} = ' . "\n" . Dumper($cpp_source_group->{_package_names_underscores}) . "\n" );
+
     $cpp_source_group->{_package_name} = $package_name;
     $cpp_source_group->{_package_name_underscores} = $package_name_underscores;
+    if ((not exists $cpp_source_group->{_package_names}) or (not defined $cpp_source_group->{_package_names})) {
+        $cpp_source_group->{_package_names} = q{};
+    }
+    $cpp_source_group->{_package_names} .= $package_name . "\n";
+    if ((not exists $cpp_source_group->{_package_names_underscores}) or (not defined $cpp_source_group->{_package_names_underscores})) {
+        $cpp_source_group->{_package_names_underscores} = q{};
+    }
+    $cpp_source_group->{_package_names_underscores} .= $package_name_underscores . "\n";
 
     return $cpp_source_group;
 };

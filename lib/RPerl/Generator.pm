@@ -424,19 +424,49 @@ our string_hashref $ast_to_cpp__generate = sub {
 our void $source_group_append = sub {
     ( my string_hashref $rperl_source_group_1, my string_hashref $rperl_source_group_2) = @_;
 
-    #    RPerl::diag('in Generator::source_group_append(), received $rperl_source_group_1 =' . "\n" . Dumper($rperl_source_group_1) . "\n");
-    #    RPerl::diag('in Generator::source_group_append(), received $rperl_source_group_2 =' . "\n" . Dumper($rperl_source_group_2) . "\n");
+#    RPerl::diag('in Generator::source_group_append(), received $rperl_source_group_1 =' . "\n" . Dumper($rperl_source_group_1) . "\n");
+#    RPerl::diag('in Generator::source_group_append(), received $rperl_source_group_2 =' . "\n" . Dumper($rperl_source_group_2) . "\n");
 
+    my string $type_1;
+    my string $type_2;
     foreach my string $suffix_key ( sort keys %{$rperl_source_group_2} ) {
         if ( defined $rperl_source_group_2->{$suffix_key} ) {
-
-            # init to empty string if not already defined
-            if (   ( not exists $rperl_source_group_1->{$suffix_key} )
-                or ( not defined $rperl_source_group_1->{$suffix_key} ) )
-            {
-                $rperl_source_group_1->{$suffix_key} = q{};
+            $type_2 = ref $rperl_source_group_2->{$suffix_key};
+            if ($type_2 eq q{}) { $type_2 = 'SCALAR'; }
+            if (   ( exists $rperl_source_group_1->{$suffix_key} )
+                and ( defined $rperl_source_group_1->{$suffix_key} ) ) {
+                $type_1 = ref $rperl_source_group_1->{$suffix_key};
+                if ($type_1 eq q{}) { $type_1 = 'SCALAR'; }
+                if ($type_1 ne $type_2) {
+                    die 'ERROR ECVGE00, GENERATOR: source group entries type mismatch, ' . q{'} . $type_1 . q{'} . ' is different than ' . q{'} . $type_2 . q{'} . ', dying' . "\n";
+                }
             }
-            $rperl_source_group_1->{$suffix_key} .= $rperl_source_group_2->{$suffix_key};
+            else { $type_1 = undef; }
+
+#    RPerl::diag('in Generator::source_group_append(), have $type_1 =' .  $type_1 . "\n");
+#    RPerl::diag('in Generator::source_group_append(), have $type_2 =' .  $type_2 . "\n");
+
+            # init to empty thing if not already defined
+            if ( not defined $type_1 ) {
+                if ($type_2 eq 'ARRAY') {
+                    $rperl_source_group_1->{$suffix_key} = [];
+                }
+                elsif ($type_2 eq 'HASH') {
+                    $rperl_source_group_1->{$suffix_key} = {};
+                }
+                else {
+                    $rperl_source_group_1->{$suffix_key} = q{};
+                }
+            }
+            if ($type_2 eq 'ARRAY') {
+                $rperl_source_group_1->{$suffix_key} = [@{$rperl_source_group_1->{$suffix_key}}, @{$rperl_source_group_2->{$suffix_key}}];
+            }
+            elsif ($type_2 eq 'HASH') {
+                $rperl_source_group_1->{$suffix_key} = {%{$rperl_source_group_1->{$suffix_key}}, %{$rperl_source_group_2->{$suffix_key}}};
+            }
+            else {
+                $rperl_source_group_1->{$suffix_key} .= $rperl_source_group_2->{$suffix_key};
+            }
         }
     }
 };

@@ -367,7 +367,7 @@ EOL
     my string_hashref $cpp_source_subgroup;
 
     foreach my object $include ( @{ $include_star->{children} } ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
-        $cpp_source_subgroup = $include->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        $cpp_source_subgroup = $include->ast_to_cpp__generate__CPPOPS_CPPTYPES($package_name_underscores, $modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
 
@@ -605,7 +605,14 @@ EOL
     }
 
     if ( exists $properties_accessors_mutators_shims->[0] ) {
-        $cpp_source_group->{_PMC_accessors_mutators_shims} .= ( join "\n", @{$properties_accessors_mutators_shims} ) . "\n";
+        if ((not exists $cpp_source_group->{_PMC_accessors_mutators_shims}) or (not defined $cpp_source_group->{_PMC_accessors_mutators_shims})) {
+            $cpp_source_group->{_PMC_accessors_mutators_shims} = {};
+        }
+        elsif ((not exists $cpp_source_group->{_PMC_accessors_mutators_shims}->{$package_name_underscores}) 
+            or (not defined $cpp_source_group->{_PMC_accessors_mutators_shims}->{$package_name_underscores})) {
+            $cpp_source_group->{_PMC_accessors_mutators_shims}->{$package_name_underscores} = q{};
+        }
+        $cpp_source_group->{_PMC_accessors_mutators_shims}->{$package_name_underscores} .= ( join "\n", @{$properties_accessors_mutators_shims} ) . "\n";
     }
 
     if ( $modes->{label} eq 'ON' ) {
@@ -680,7 +687,14 @@ EOL
         $cpp_source_group->{CPP} .= ( join "\n\n", @{$subroutine_definitions} );
         if ( exists $subroutine_definitions->[0] ) { $cpp_source_group->{CPP} .= "\n\n"; }
         if ( exists $subroutines_shims->[0] ) {
-            $cpp_source_group->{_PMC_subroutines_shims} .= ( join "\n", @{$subroutines_shims} ) . "\n";
+            if ((not exists $cpp_source_group->{_PMC_subroutines_shims}) or (not defined $cpp_source_group->{_PMC_subroutines_shims})) {
+                $cpp_source_group->{_PMC_subroutines_shims} = {};
+            }
+            elsif ((not exists $cpp_source_group->{_PMC_subroutines_shims}->{$package_name_underscores}) 
+                or (not defined $cpp_source_group->{_PMC_subroutines_shims}->{$package_name_underscores})) {
+                $cpp_source_group->{_PMC_subroutines_shims}->{$package_name_underscores} = q{};
+            }
+            $cpp_source_group->{_PMC_subroutines_shims}->{$package_name_underscores} .= ( join "\n", @{$subroutines_shims} ) . "\n";
         }
     }
 

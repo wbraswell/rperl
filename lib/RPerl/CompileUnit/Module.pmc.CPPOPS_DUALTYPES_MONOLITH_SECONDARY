@@ -1,0 +1,17 @@
+# [[[ HEADER ]]]
+package RPerl::CompileUnit::Module;
+use strict;
+use warnings;
+use RPerl::AfterSubclass;
+our $VERSION = 0.001_000;
+
+# [[[ INCLUDES ]]]
+use RPerl::Inline;
+# <<< CHANGE_ME: add user-defined includes here >>>
+
+# [[[ SUBROUTINES ]]]
+
+# <<< OO PROPERTIES, ACCESSORS & MUTATORS, SHIMS >>>  # <<< CHANGE_ME: add real shims after this line or delete it >>>
+# <<< OO PROPERTIES, SUBROUTINES, SHIMS >>>  # <<< CHANGE_ME: add real shims after this line or delete it >>>
+
+1;    # end of package

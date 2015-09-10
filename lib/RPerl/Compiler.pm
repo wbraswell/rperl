@@ -34,7 +34,7 @@ our string_arrayref $find_dependencies = sub {
     ( my string $file_name) = @_;
     my string_arrayref $dependencies = [];
 
-#    RPerl::diag( 'in Compiler::find_dependencies(), received $file_name = ' . $file_name . "\n" );
+    #    RPerl::diag( 'in Compiler::find_dependencies(), received $file_name = ' . $file_name . "\n" );
 
     if ( not -f $file_name ) {
         die 'ERROR ECVCODE00, COMPILER, FIND DEPENDENCIES: File not found, ' . q{'} . $file_name . q{'} . "\n" . ', dying' . "\n";
@@ -57,17 +57,18 @@ our string_arrayref $find_dependencies = sub {
             $first_package_name =~ s/^\s*package\s+([\w:]+)\s*;\s*$/$1/gxms;
             $eval_string = 'use ' . $first_package_name . '; 1;';
 
-#        	RPerl::diag('in Compiler::find_dependencies(), about to call NON-DEP $eval_string = ' . $eval_string . "\n");
+            #        	RPerl::diag('in Compiler::find_dependencies(), about to call NON-DEP $eval_string = ' . $eval_string . "\n");
             $eval_retval = eval($eval_string);
 
 ##        	RPerl::diag('in Compiler::find_dependencies(), have POST-EVAL NON-DEP %INC = ' . Dumper(\%INC) . "\n");
             # warn instead of dying on eval error here and below, in order to preserve proper parser errors instead of weird eval errors
             # in RPerl/Test/*/*Bad*.pm and RPerl/Test/*/*bad*.pl
             if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne q{} ) ) {
-                RPerl::warning('WARNING WCVCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package ' . $first_package_name . '  ...  ' . $EVAL_ERROR . "\n");
+                RPerl::warning(
+                    'WARNING WCVCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package ' . $first_package_name . '  ...  ' . $EVAL_ERROR . "\n" );
             }
         }
-        
+
         # NEED FIX: remove hard-coded list of not-subdependency uses
         if ( $file_line =~ /^\s*use\s+[\w:]+/xms ) {
             if (   ( $file_line =~ /use\s+strict\s*;/ )
@@ -96,12 +97,12 @@ our string_arrayref $find_dependencies = sub {
             $file_line =~ s/^\s*use\s+([\w:]+)\s*.*\s*;\s*$/$1/gxms;    # remove everything except the package name
             $eval_string = 'use ' . $file_line . '; 1;';
 
-#            RPerl::diag( 'in Compiler::find_dependencies(), about to call DEP $eval_string = ' . $eval_string . "\n" );
+            #            RPerl::diag( 'in Compiler::find_dependencies(), about to call DEP $eval_string = ' . $eval_string . "\n" );
             $eval_retval = eval($eval_string);
 
-#            RPerl::diag('in Compiler::find_dependencies(), have POST-EVAL DEP %INC = ' . Dumper(\%INC) . "\n");
+            #            RPerl::diag('in Compiler::find_dependencies(), have POST-EVAL DEP %INC = ' . Dumper(\%INC) . "\n");
             if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne q{} ) ) {
-                RPerl::warning('WARNING WCVCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package ' . $file_line . '  ...  ' . $EVAL_ERROR . "\n");
+                RPerl::warning( 'WARNING WCVCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package ' . $file_line . '  ...  ' . $EVAL_ERROR . "\n" );
             }
             $file_line =~ s/::/\//gxms;                                 # replace double-colon :: scope delineator with forward-slash / directory delineator
             $file_line .= '.pm';
@@ -111,25 +112,25 @@ our string_arrayref $find_dependencies = sub {
                     . ' in %INC, dying' . "\n";
             }
 
-#            RPerl::diag( 'in Compiler::find_dependencies(), have MATCHING $file_line = ' . $file_line . "\n" );
-#            RPerl::diag( 'in Compiler::find_dependencies(), have $INC{$file_line} = ' . $INC{$file_line} . "\n" );
+            #            RPerl::diag( 'in Compiler::find_dependencies(), have MATCHING $file_line = ' . $file_line . "\n" );
+            #            RPerl::diag( 'in Compiler::find_dependencies(), have $INC{$file_line} = ' . $INC{$file_line} . "\n" );
             push @{$dependencies}, $INC{$file_line};
 
-#            RPerl::diag( 'in Compiler::find_dependencies(), have PRE-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
+            #            RPerl::diag( 'in Compiler::find_dependencies(), have PRE-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
 
             my string_arrayref $subdependencies = find_dependencies( $INC{$file_line} );
 
             # discard duplicate dependencies that now appear in subdependencies
             $dependencies = [ uniq @{$subdependencies}, @{$dependencies} ];
 
-#            RPerl::diag( 'in Compiler::find_dependencies(), have POST-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
+            #            RPerl::diag( 'in Compiler::find_dependencies(), have POST-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
         }
     }
 
     close $FILE_HANDLE
         or die 'ECVCODE04, COMPILER, FIND DEPENDENCIES: Cannot close file ' . $file_name . ' after reading, ' . $OS_ERROR . ', dying' . "\n";
 
-#    RPerl::diag( 'in Compiler::find_dependencies(), returning $dependencies = ' . Dumper($dependencies) . "\n" );
+    #    RPerl::diag( 'in Compiler::find_dependencies(), returning $dependencies = ' . Dumper($dependencies) . "\n" );
     return $dependencies;
 };
 
@@ -160,11 +161,12 @@ our string_hashref $rperl_to_rperl__parse_generate = sub {
 
     # [[[ SAVE RPERL TO DISK ]]]
 
-    if ((    $modes->{compile} eq 'SAVE' )
-        or ( $modes->{compile} eq 'SAVE_DEFERRED' )) {
+    if (   ( $modes->{compile} eq 'SAVE' )
+        or ( $modes->{compile} eq 'SAVE_DEFERRED' ) )
+    {
         save_source_files( $rperl_source_group, $rperl_output_file_name_group, $modes );
     }
-    
+
     # always return $rperl_source_group to maintain consistent return type,
     # only utilized for GENERATE compile mode during dependencies
     return $rperl_source_group;
@@ -212,10 +214,11 @@ our string_hashref $rperl_to_xsbinary__parse_generate_compile = sub {
     # [[[ SUBCOMPILE C++ TO XS & BINARY ]]]
 
     if (   ( $modes->{compile} eq 'SUBCOMPILE' )
-        or ( $modes->{compile} eq 'SUBCOMPILE_DEFERRED' ) ) {
+        or ( $modes->{compile} eq 'SUBCOMPILE_DEFERRED' ) )
+    {
         cpp_to_xsbinary__subcompile( $cpp_source_group, $cpp_output_file_name_group );
     }
-    
+
     # always return $cpp_source_group to maintain consistent return type,
     # only utilized for GENERATE compile mode during dependencies
     return $cpp_source_group;
@@ -301,12 +304,12 @@ our hashref_arrayref $generate_output_file_names = sub {
 our void $save_source_files = sub {
     ( my string_hashref $source_group, my string_hashref $file_name_group, my string_hashref $modes ) = @_;
 
-#    RPerl::diag( q{in Compiler::save_source_files(), received $source_group =} . "\n" . Dumper($source_group) . "\n" );
-#    RPerl::diag( q{in Compiler::save_source_files(), received $file_name_group =} . "\n" . Dumper($file_name_group) . "\n" );
-#    RPerl::diag( 'in Compiler::save_source_files(), received $modes->{_symbol_table} =' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
+    #    RPerl::diag( q{in Compiler::save_source_files(), received $source_group =} . "\n" . Dumper($source_group) . "\n" );
+    #    RPerl::diag( q{in Compiler::save_source_files(), received $file_name_group =} . "\n" . Dumper($file_name_group) . "\n" );
+    #    RPerl::diag( 'in Compiler::save_source_files(), received $modes->{_symbol_table} =' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
 
     foreach my string $suffix_key ( sort keys %{$source_group} ) {
-        if ((substr $suffix_key, 0, 1) eq '_') { next; }
+        if ( ( substr $suffix_key, 0, 1 ) eq '_' ) { next; }
         if (   ( not exists $file_name_group->{$suffix_key} )
             or ( not defined $file_name_group->{$suffix_key} )
             or ( $file_name_group->{$suffix_key} eq q{} ) )
@@ -325,19 +328,26 @@ our void $save_source_files = sub {
 
         # NEED FIX WIN32: handle back-slash for Win32 instead of forward-slash only for *NIX
 
-        my string $module_path        = $file_name_group->{CPP};
+        my string $module_path              = $file_name_group->{CPP};
         my string $module_header_path_nolib = $file_name_group->{H};
 
-        # remove leading './' if present
-        if ( ( substr $module_path, 0, 2 ) eq './' ) {
-            substr $module_path, 0, 2, q{};
+        # DEV NOTE: barely-documented Inline::CPP bug, must have leading './' if no other directories in path
+        if (( $OSNAME eq 'MSWin32' ) and ( $module_path !~ /\\/ )) {
+            $module_path .= q{.\\};
         }
-        if ( ( substr $module_header_path_nolib, 0, 2 ) eq './' ) {
+        elsif ( $module_path !~ /\// ) {
+            $module_path .= q{./};
+        }
+ 
+        # remove leading '.\' or './' if present
+        if ((( $OSNAME eq 'MSWin32' ) and (( substr $module_header_path_nolib, 0, 2 ) eq q{.\\} ))
+            or (( substr $module_header_path_nolib, 0, 2 ) eq './' )) {
             substr $module_header_path_nolib, 0, 2, q{};
         }
 
         # remove leading 'lib/' if present, because -Ilib enabled in RPerl/Inline.pm
-        if ( ( substr $module_header_path_nolib, 0, 4 ) eq 'lib/' ) {
+        if ((( $OSNAME eq 'MSWin32' ) and (( substr $module_header_path_nolib, 0, 4 ) eq 'lib\\' ))
+            or (( substr $module_header_path_nolib, 0, 4 ) eq 'lib/' )) {
             substr $module_header_path_nolib, 0, 4, q{};
         }
 
@@ -351,63 +361,100 @@ our void $save_source_files = sub {
 
 #        RPerl::diag( q{in Compiler::save_source_files(), have %INC = } . Dumper(\%INC) . "\n" );
 #        RPerl::diag( q{in Compiler::save_source_files(), have @INC = } . Dumper(\@INC) . "\n" );
+#        RPerl::diag( q{in Compiler::save_source_files(), have $source_group->{_package_names_underscores} = } . Dumper($source_group->{_package_names_underscores}) . "\n" );
+#        RPerl::diag( q{in Compiler::save_source_files(), have $source_group->{_package_names} = } . Dumper($source_group->{_package_names}) . "\n" );
 
-        my string $module_name = $source_group->{_package_name};
-        my string $module_name_underscores = $source_group->{_package_name_underscores};
+        my string_arrayref $module_names_split = [(split /\n/, $source_group->{_package_names})];
+        my string_arrayref $module_names_underscores_split = [(split /\n/, $source_group->{_package_names_underscores})];
+#        RPerl::diag( q{in Compiler::save_source_files(), have $module_names_split = } . Dumper($module_names_split) . "\n" );
+ 
+        my integer $module_count           = scalar @{ $module_names_split };
+        my string $module_name = shift @{ $module_names_split };
+        my string $module_name_underscores = shift @{ $module_names_underscores_split };
+        my integer $i = 0;
 
-#        RPerl::diag( q{in Compiler::save_source_files(), have $module_path = } . $module_path . "\n" );
-#        RPerl::diag( q{in Compiler::save_source_files(), have $module_name_underscores = } . $module_name_underscores . "\n" );
+        while ( defined $module_name_underscores ) {
+#            RPerl::diag( q{in Compiler::save_source_files(), have $module_path = } . $module_path . "\n" );
+#            RPerl::diag( q{in Compiler::save_source_files(), have $module_name_underscores = } . $module_name_underscores . "\n" );
 
-        # utilize modified copy of Module PMC template file
-        my string $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES';
+            # utilize modified copies of Module PMC template file
+            my string $module_pmc_filename_manual;
+            if ($module_count == 1) {
+                $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES';
+            }
+            else {
+                if ($i == ($module_count - 1)) {
+                    $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES_MONOLITH';
+                }
+                else {
+                    $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES_MONOLITH_SECONDARY';
+                }
+            }
 
-        #RPerl::diag('in Compiler::save_source_files(), have $module_pmc_filename_manual = ' . $module_pmc_filename_manual . "\n");
+#            RPerl::diag( 'in Compiler::save_source_files(), have $module_pmc_filename_manual = ' . $module_pmc_filename_manual . "\n" );
+#            RPerl::diag( 'in Compiler::save_source_files(), have $source_group->{_PMC_accessors_mutators_shims} = ' . Dumper($source_group->{_PMC_accessors_mutators_shims}) . "\n" );
+#            RPerl::diag( 'in Compiler::save_source_files(), have $source_group->{_PMC_subroutines_shims} = ' . Dumper($source_group->{_PMC_subroutines_shims}) . "\n" );
+#            RPerl::diag( 'in Compiler::save_source_files(), have $source_group->{_PMC_includes} = ' . Dumper($source_group->{_PMC_includes}) . "\n" );
 
-        if ( not -f $module_pmc_filename_manual ) {
-            die 'ERROR ECVCOFI02, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: File not found, ' . q{'}
-                . $module_pmc_filename_manual . q{'} . "\n"
+            if ( not -f $module_pmc_filename_manual ) {
+                die 'ERROR ECVCOFI02, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: File not found, ' . q{'}
+                    . $module_pmc_filename_manual . q{'} . "\n"
+                    . ', dying' . "\n";
+            }
+
+            open my filehandleref $FILE_HANDLE, '<', $module_pmc_filename_manual
+                or die 'ERROR ECVCOFI03, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot open file '
+                . $module_pmc_filename_manual
+                . ' for reading, '
+                . $OS_ERROR
                 . ', dying' . "\n";
+
+            # deferred, finally read in Module PMC template file, replace package name and paths, add accessor/mutator shim methods
+            my string $file_line;
+            my string $file_string = q{};
+            while ( $file_line = <$FILE_HANDLE> ) {
+                $file_line =~ s/lib\/RPerl\/CompileUnit\/Module\.cpp/$module_path/gxms;
+                $file_line =~ s/RPerl::CompileUnit::Module/$module_name/gxms;
+                $file_line =~ s/RPerl__CompileUnit__Module/$module_name_underscores/gxms;
+                if ( $file_line eq
+                    ( '# <<< OO PROPERTIES, ACCESSORS & MUTATORS, SHIMS >>>  # <<< CHANGE_ME: add real shims after this line or delete it >>>' . "\n" ) )
+                {
+                    if (( defined $source_group->{_PMC_accessors_mutators_shims}->{$module_name_underscores} ) 
+                        and ( exists $source_group->{_PMC_accessors_mutators_shims}->{$module_name_underscores} )) {
+                        $file_line = ( substr $file_line, 0, 52 ) . "\n" . $source_group->{_PMC_accessors_mutators_shims}->{$module_name_underscores} . "\n\n";
+                    }
+                    else { $file_line = undef; }
+                }
+                elsif (
+                    $file_line eq ( '# <<< OO PROPERTIES, SUBROUTINES, SHIMS >>>  # <<< CHANGE_ME: add real shims after this line or delete it >>>' . "\n" ) )
+                {
+                    if (( defined $source_group->{_PMC_subroutines_shims}->{$module_name_underscores} ) 
+                        and ( exists $source_group->{_PMC_subroutines_shims}->{$module_name_underscores} )) {
+                        $file_line = ( substr $file_line, 0, 43 ) . "\n" . $source_group->{_PMC_subroutines_shims}->{$module_name_underscores} . "\n\n";
+                    }
+                    else { $file_line = undef; }
+                }
+                elsif ( $file_line eq ( '# <<< CHANGE_ME: add user-defined includes here >>>' . "\n" ) ) {
+                    if (( defined $source_group->{_PMC_includes}->{$module_name_underscores} ) 
+                        and ( exists $source_group->{_PMC_includes}->{$module_name_underscores} )) {
+                        $file_line = $source_group->{_PMC_includes}->{$module_name_underscores} . "\n\n";
+                    }
+                    else                                            { $file_line = undef; }
+                }
+                if ( defined $file_line ) { $source_group->{PMC} .= $file_line; }
+            }
+
+            close $FILE_HANDLE
+                or die 'ECVCOFI04, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot close file '
+                . $module_pmc_filename_manual
+                . ' after reading, '
+                . $OS_ERROR
+                . ', dying' . "\n";
+
+            $module_name = shift @{ $module_names_split };
+            $module_name_underscores = shift @{ $module_names_underscores_split };
+            $i++;
         }
-
-        open my filehandleref $FILE_HANDLE, '<', $module_pmc_filename_manual
-            or die 'ERROR ECVCOFI03, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot open file '
-            . $module_pmc_filename_manual
-            . ' for reading, '
-            . $OS_ERROR
-            . ', dying' . "\n";
-
-        # deferred, finally read in Module PMC template file, replace package name and paths, add accessor/mutator shim methods
-        my string $file_line;
-        my string $file_string = q{};
-#        RPerl::diag('in Compiler::save_source_files(), have $accessors_mutators_shims = ' . "\n" . $accessors_mutators_shims . "\n\n");
-        while ( $file_line = <$FILE_HANDLE> ) {
-            $file_line =~ s/lib\/RPerl\/CompileUnit\/Module\.cpp/$module_path/gxms;
-            $file_line =~ s/RPerl::CompileUnit::Module/$module_name/gxms;
-            $file_line =~ s/RPerl__CompileUnit__Module/$module_name_underscores/gxms;
-            if ($file_line eq ('# <<< OO PROPERTIES, ACCESSORS & MUTATORS, SHIMS >>>  # <<< CHANGE_ME: add real shims after this line or delete it >>>' . "\n")) {
-                if (defined $source_group->{_PMC_accessors_mutators_shims}) { 
-                    $file_line = (substr $file_line, 0, 52) . "\n" . $source_group->{_PMC_accessors_mutators_shims} . "\n\n"; }
-                else { $file_line = undef; }
-            }
-            elsif ($file_line eq ('# <<< OO PROPERTIES, SUBROUTINES, SHIMS >>>  # <<< CHANGE_ME: add real shims after this line or delete it >>>' . "\n")) {
-                if (defined $source_group->{_PMC_subroutines_shims}) { 
-                    $file_line = (substr $file_line, 0, 43) . "\n" . $source_group->{_PMC_subroutines_shims} . "\n\n"; }
-                else { $file_line = undef; }
-            }
-            elsif ($file_line eq ('# <<< CHANGE_ME: add user-defined includes here >>>' . "\n")) {
-                if (defined $source_group->{_PMC_includes}) { $file_line = $source_group->{_PMC_includes} . "\n\n"; }
-                else { $file_line = undef; }
-            }
-            if (defined $file_line) { $source_group->{PMC} .= $file_line; }
-        }
-
-        close $FILE_HANDLE
-            or die 'ECVCOFI04, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot close file '
-            . $module_pmc_filename_manual
-            . ' after reading, '
-            . $OS_ERROR
-            . ', dying' . "\n";
-
         RPerl::verbose( ' done.' . "\n" );
     }
 
