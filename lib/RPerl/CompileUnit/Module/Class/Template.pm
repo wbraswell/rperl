@@ -22,14 +22,6 @@ our $VERSION = 0.001_000;
 use parent qw(RPerl::CompileUnit::Module::Class);
 use RPerl::CompileUnit::Module::Class;
 
-
-
-# START HERE: don't forget to add RequireFilenameMatchesPackage exemption for monoliths
-# START HERE: don't forget to add RequireFilenameMatchesPackage exemption for monoliths
-# START HERE: don't forget to add RequireFilenameMatchesPackage exemption for monoliths
-
-
-
 # [[[ CRITICS ]]]
 # <<< CHANGE_ME: delete unused directives >>>
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
