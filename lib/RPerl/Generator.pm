@@ -4,7 +4,7 @@ package RPerl::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_020;
+our $VERSION = 0.001_030;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -465,7 +465,13 @@ our void $source_group_append = sub {
                 $rperl_source_group_1->{$suffix_key} = {%{$rperl_source_group_1->{$suffix_key}}, %{$rperl_source_group_2->{$suffix_key}}};
             }
             else {
-                $rperl_source_group_1->{$suffix_key} .= $rperl_source_group_2->{$suffix_key};
+                if (($suffix_key eq '_package_name') or ($suffix_key eq '_package_name_underscores')) {
+                    # replace (don't append) special system data items
+                    $rperl_source_group_1->{$suffix_key} = $rperl_source_group_2->{$suffix_key};
+                }
+                else {
+                    $rperl_source_group_1->{$suffix_key} .= $rperl_source_group_2->{$suffix_key};
+                }
             }
         }
     }

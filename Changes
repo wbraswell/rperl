@@ -1,6 +1,10 @@
 Revision history for Perl compiler RPerl.
 
-1.100001 2015-09-10 
+1.100002 2015-09-11
+
+    - Enable Subcompile Phase During Compile Time
+
+1.100001 2015-09-10
 
     - Support Monolithic Modules, Multiple Classes Per Module
 

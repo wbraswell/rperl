@@ -93,6 +93,9 @@ our string_hashref::method $ast_to_cpp__generate_begin__CPPOPS_CPPTYPES = sub {
 #my $class = ref $self;
 #RPerl::diag('in Header->ast_to_cpp__generate_begin__CPPOPS_CPPTYPES(), have symtab entries for ' . $class . "\n" . RPerl::analyze_class_symtab_entries($class) . "\n");
 
+#RPerl::diag('in Header->ast_to_cpp__generate_begin__CPPOPS_CPPTYPES(), have $self->{children}->[3]->{children}->[0] = ' . "\n" . Dumper($self->{children}->[3]->{children}->[0]) . "\n");
+
+
     my object $package_name   = $self->{children}->[3]->{children}->[0];
     my string $version_number = $self->{children}->[5]->{children}->[4];
 

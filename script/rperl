@@ -5,10 +5,10 @@ use warnings;
 use RPerl::AfterSubclass;
 
 # DEV NOTE, CORRELATION #rp16: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
-our $VERSION = 1.100_001;    # CODENAME JUPITER
+our $VERSION = 1.100_002;    # CODENAME JUPITER
 
-#our $VERSION = 20150910;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
-#our $VERSION = 2015.253;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
+#our $VERSION = 20150911;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
+#our $VERSION = 2015.254;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -250,6 +250,19 @@ sub stringify_output_file_name_group {
             $output_file_names .= $output_file_name_group->{$suffix_key} . q{  };
         }
     }
+    if ((length $output_file_names) > 55) {
+        my @output_file_names_split = split q{  }, $output_file_names;
+        my bool $is_first = 1;
+        foreach my string $output_file_name (@output_file_names_split) {
+            if ($is_first) {
+                $output_file_names = $output_file_name;
+                $is_first = 0;
+            }
+            else {
+                $output_file_names .= "\n" . (q{ } x 20) . $output_file_name;
+            }
+        }
+    }
     return $output_file_names;
 }
 
@@ -381,10 +394,10 @@ sub depends_parse_generate_save_subcompile_execute {
             and ( ( $modes->{_compile_saved} eq 'SAVE' ) or ( $modes->{_compile_saved} = 'SUBCOMPILE' ) ) )
         {
             RPerl::verbose( "\n" . 'DEPENDENCIES:       Complete deferred actions...' . "\n" );
-            $modes->{compile} = $modes->{_compile_saved} . '_DEFERRED';
 
             # [[[ SECOND INNER COMPILE LOOP, 1 INPUT FILE & ITS DEPENDENCIES, DEFERRED SAVE & SUBCOMPILE ]]]
             for my $j ( 0 .. $input_file_deps_count ) {
+                $modes->{compile} = $modes->{_compile_saved} . '_DEFERRED';
                 my string $input_file_name_dep                = $input_file_name_deps->[$j];
                 my string_hashref $output_file_name_dep_group = $output_file_name_dep_groups->[$j];
                 my string_hashref $source_dep_group           = $source_dep_groups->[$j];
@@ -402,6 +415,11 @@ sub depends_parse_generate_save_subcompile_execute {
                 elsif ( $modes->{ops} eq 'CPP' ) {
 
 #                RPerl::diag( 'in depends_parse_generate_save_subcompile_execute(), have $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
+
+                    # do not subcompile deps
+                    if (($j < $input_file_deps_count ) and ($modes->{compile} eq 'SUBCOMPILE_DEFERRED')) {
+                        $modes->{compile} = 'SAVE_DEFERRED';
+                    }
 
                     # use eval to trap C++ compiler errors
                     my integer $eval_retval = eval {
@@ -496,9 +514,9 @@ if ($version) {
     # DEV NOTE, CORRELATION #rp16: numbering schemes mentioned below
     my $version_message = <<EOL;
 
-This is RPerl version 1.100_001, Long Date 20150910, Star Date 2015.253
-v1.100_001 using RPerl's underscore-is-comma numbering scheme
-v1.100001  using  CPAN's underscore-is-beta  numbering scheme
+This is RPerl version 1.100_002, Long Date 20150911, Star Date 2015.254
+v1.100_002 using RPerl's underscore-is-comma numbering scheme
+v1.100002  using  CPAN's underscore-is-beta  numbering scheme
 
 Copyright © 2013, 2014, 2015, William N. Braswell, Jr..  All Rights Reserved.
 This work is Free & Open Source; you can redistribute it and/or modify it 

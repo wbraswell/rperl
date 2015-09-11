@@ -27,6 +27,7 @@ use File::Basename;
 use English qw(-no_match_vars);    # for $OSNAME; why isn't this included from 'require RPerl::Config', which is included from 'use RPerl' above?
 use IPC::Cmd qw(can_run);          # to check for `perltidy` and `astyle`
 use List::MoreUtils qw(uniq);
+use File::Spec;
 
 # [[[ SUBROUTINES ]]]
 
@@ -216,7 +217,7 @@ our string_hashref $rperl_to_xsbinary__parse_generate_compile = sub {
     if (   ( $modes->{compile} eq 'SUBCOMPILE' )
         or ( $modes->{compile} eq 'SUBCOMPILE_DEFERRED' ) )
     {
-        cpp_to_xsbinary__subcompile( $cpp_source_group, $cpp_output_file_name_group );
+        cpp_to_xsbinary__subcompile( $cpp_output_file_name_group );
     }
 
     # always return $cpp_source_group to maintain consistent return type,
@@ -528,15 +529,66 @@ our void $save_source_files = sub {
 
 # Sub-Compile from C++-Parsable String to Perl-Linkable XS & Machine-Readable Binary
 our void $cpp_to_xsbinary__subcompile = sub {
-    ( my string $file_name_group ) = @_;
+    ( my string_hashref $cpp_output_file_name_group ) = @_;
 
-    #RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), received $file_name_group =} . "\n" . Dumper($file_name_group) . "\n" );
+#RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), received $cpp_output_file_name_group =} . "\n" . Dumper($cpp_output_file_name_group) . "\n" );
 
-    RPerl::verbose('SUBCOMPILE:         Generate XS & binary...     ');
+    RPerl::verbose('SUBCOMPILE:         Generate XS & binary...');
 
-    # ADD CALLS TO TRIGGER Inline::CPP COMPILATION
+    ( my string $volume_pmc, my string $directories_pmc, my string $file_pmc ) = File::Spec->splitpath( $cpp_output_file_name_group->{PMC}, my $no_file = 0 );
+#RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), have $directories_pmc = } . $directories_pmc . "\n" );
 
-    RPerl::verbose( ' skipped.' . "\n" );
+    # strip trailing / or \ as long as they are not the only characters, which could indicate the root directory
+    if (((length $directories_pmc) > 1) and 
+        (((substr $directories_pmc, -1, 1) eq q{/}) or ((substr $directories_pmc, -1, 1) eq q{\\}))) {
+        substr $directories_pmc, -1, 1, q{};
+    }
+
+    my @INC_sorted = sort { length $b <=> length $a } @INC;
+#RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), have @INC =} . "\n" . Dumper(\@INC) . "\n" );
+#RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), have @INC_sorted =} . "\n" . Dumper(\@INC_sorted) . "\n" );
+
+    # strip leading INC directory if present
+    foreach my string $INC_directory (@INC_sorted) {
+#RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), have $INC_directory = } . $INC_directory . "\n" );
+        if ($directories_pmc =~ /^$INC_directory/) {
+            substr $directories_pmc, 0, (length $INC_directory), q{};
+            last;
+        }
+    }
+
+#RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), have POSSIBLY-MODIFIED $directories_pmc = } . $directories_pmc . "\n" );
+
+    my string_arrayref $directories_pmc_split = [File::Spec->splitdir($directories_pmc)];
+#RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), have $directories_pmc_split =} . "\n" . Dumper($directories_pmc_split) . "\n" );
+
+    # discard '.' or empty directory names
+    my $directories_pmc_split_tmp = [];
+    foreach my $directory (@{$directories_pmc_split}) {
+        if (($directory ne q{.}) and ($directory ne q{})) {
+            push @{$directories_pmc_split_tmp}, $directory;
+        }
+    }
+    $directories_pmc_split = $directories_pmc_split_tmp;
+    
+    # strip trailing .pmc file suffix
+    substr $file_pmc, -4, 4, q{};
+
+    my string $eval_string = join '::', @{$directories_pmc_split}, $file_pmc;
+    $eval_string = 'use ' . $eval_string . ';';
+
+#RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), have $eval_string =} . "\n" . $eval_string . "\n" );
+
+    # NEED FIX: why does Inline::CPP require double-subcompiling???
+    # DEV NOTE: exec() and system() don't work, only backticks
+    `export RPERL_WARNINGS=0; perl -e '$eval_string'`;  # should build
+#RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), done with backticks 1...} . "\n" );
+    `export RPERL_WARNINGS=0; perl -e '$eval_string'`;  # should not build, but does
+#RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), done with backticks 2...} . "\n" );
+    `export RPERL_WARNINGS=0; perl -e '$eval_string'`;  # should not build, does not seem to
+#RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), done with backticks 3...} . "\n" );
+
+    RPerl::verbose( '         done.' . "\n" );
 };
 
 1;    # end of class
