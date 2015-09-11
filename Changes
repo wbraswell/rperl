@@ -1,5 +1,9 @@
 Revision history for Perl compiler RPerl.
 
+1.100001 2015-09-10 
+
+    - Support Monolithic Modules, Multiple Classes Per Module
+
 1.100000 2015-09-05 Codename Jupiter
 
     - Support N-Body Application In PhysicsPerl Suite, 
@@ -10,6 +14,10 @@ Revision history for Perl compiler RPerl.
     - Implement Loop Iterator Pre-Declaration & Completion Condition Compensation, Performance Optimization
     - Implement Sub-Accessors & Sub-Mutators,
         Used For Individual Elements Of Object Property Arrays & Entries Of Object Property Hashes
+
+1.001001 2112-12-21 SOS
+
+    - Plan Support For Acme::Rush Module
 
 1.000007 2015-07-09
 

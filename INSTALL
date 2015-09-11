@@ -1,5 +1,5 @@
 # RPerl Install Notes
-# Last Updated September 5, 2015
+# Last Updated September 10, 2015
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # NOTE: STEP 1 IS ONLY FOR SINGLE-USER INSTALL, NOT SYSTEM-WIDE INSTALL
@@ -160,13 +160,13 @@ $ perl -e 'use RPerl::Algorithm::Sort::Bubble; my $o = RPerl::Algorithm::Sort::B
 # [[[ Test command sequence #2: BUBBLESORT TIMING TEST ]]]
 
 $ rm -Rf _Inline RPerl/Algorithm.pmc RPerl/Algorithm.h RPerl/Algorithm.cpp RPerl/Algorithm/Sort.pmc RPerl/Algorithm/Sort.h RPerl/Algorithm/Sort.cpp RPerl/Algorithm/Sort/Bubble.pmc RPerl/Algorithm/Sort/Bubble.h RPerl/Algorithm/Sort/Bubble.cpp
-$ perl -e 'use RPerl::Algorithm::Sort::Bubble; my $a = [reverse 0 .. 5000]; use Time::HiRes qw(time); my $start = time; my $s = integer_bubblesort($a); my $elapsed = time - $start; print Dumper($s); print "elapsed: " . $elapsed . "\n";'
+$ perl -e 'use RPerl::Algorithm::Sort::Bubble; my $a = [reverse 0 .. 5000]; use Time::HiRes qw(time); my $start = time; my $s = RPerl::Algorithm::Sort::Bubble::integer_bubblesort($a); my $elapsed = time - $start; print Dumper($s); print "elapsed: " . $elapsed . "\n";'
     # SLOW...  :-(  approx 15 seconds for 5000 elements, 60 for 10000
 
 $ rperl -V lib/RPerl/Algorithm/Sort/Bubble.pm
-$ perl -e 'use RPerl::Algorithm::Sort::Bubble; my $a = [reverse 0 .. 5000]; use Time::HiRes qw(time); my $start = time; my $s = integer_bubblesort($a); my $elapsed = time - $start; print Dumper($s); print "elapsed: " . $elapsed . "\n";'
+$ perl -e 'use RPerl::Algorithm::Sort::Bubble; my $a = [reverse 0 .. 5000]; use Time::HiRes qw(time); my $start = time; my $s = RPerl::Algorithm::Sort::Bubble::integer_bubblesort($a); my $elapsed = time - $start; print Dumper($s); print "elapsed: " . $elapsed . "\n";'
 	# same exact command as above...
-    # FAST!!!  :-D  approx 0.045 seconds for 5000 elements, 0.18 for 10000
+    # ULTRA FAST!!!  :-D  approx 0.045 seconds for 5000 elements, 0.18 for 10000
 
 # [[[ Test command sequence #3: N-BODY TIMING TEST ]]]
 
@@ -183,4 +183,4 @@ $ ./script/nbody.perl-3.pl
 	
 $ rperl lib/PhysicsPerl/Astro/System.pm
 $ ./script/nbody.perl-3.pl
-    # FAST!!!  :-D  approx 13 seconds for 50M steps w/out graphics!
+    # ULTRA FAST!!!  :-D  approx 13 seconds for 50M steps w/out graphics!
