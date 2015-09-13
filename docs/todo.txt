@@ -13,9 +13,9 @@ DONE App, PhysicsPerl, Alioth Shootout N-Body Benchmark
 
 DONE RELEASE v1.1
 
-Monolithic Modules, Fix Deps Warning
-App, PhysicsPerl, Alioth Shootout N-Body Benchmark, Submitted
+DONE App, PhysicsPerl, Alioth Shootout N-Body Benchmark, Submitted
 App, PhysicsPerl, Alioth Shootout N-Body Benchmark, Approved
+Monolithic Modules, Fix Deps Warning
 
 ensure perfect match for compiled Algorithm.*, Sort.*, Bubble.* files with hand-compiled *.CPPOPS_CPPTYPES versions
 tests
