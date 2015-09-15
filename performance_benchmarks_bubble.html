@@ -54,7 +54,7 @@ Bubble sort includes 3 execution modes: <a href="https://github.com/wbraswell/rp
 
 <a name="benchmarks_bubblesort_raw_table" class="anchor" href="#benchmarks_bubblesort_raw_table"></a>
 <h2>Bubble Sort, Raw Timings, Table</h2>
-This table shows the most basic data which was gathered directly from running the benchmarks.  The far left column shows increasingly-large input data set sizes, which is important because running the sort algorithm on a larger amount of input data should take a longer time.  There is then 1 column for each of the 3 execution modes.  Each execution mode was run for each data size, with the exception of the 1 largest data size on the slowest execution modes.  In that case, we project the values that would have otherwise taken a long time to produce, which is okay because bubble sort's run-time scales very, very predictably.  In other words, it wasn't necessary to wait for Perl to sort 100,000 pieces of data, because for our purposes we can safely predict how long it would take to run.<br><br>
+This table shows the most basic data which was gathered directly from running the benchmarks.  The far left column shows increasingly-large input data set sizes, which is important because running the sort algorithm on a larger amount of input data should take a longer time.  There is then 1 column for each of the 3 execution modes.  Each execution mode was run for each data size.<br><br>
 
 <table class="timings">                             
     <thead> <tr>    <th class="header1"></th>   <th class="header1"></th>   <th class="header1">Time, Seconds</th>  <th class="header1"></th>   </tr>   
@@ -65,7 +65,7 @@ This table shows the most basic data which was gathered directly from running th
         <tr>    <td class="leader">25,000</td>  <td class="body">400</td>   <td class="body">59</td>    <td class="body">1.13</td>  </tr>   
         <tr>    <td class="leader">50,000</td>  <td class="body">1,610</td> <td class="body">236</td>   <td class="body">4.50</td>  </tr>   
         <tr>    <td class="leader">75,000</td>  <td class="body">3,389</td> <td class="body">538</td>   <td class="body">10.10</td> </tr>   
-        <tr>    <td class="leader">100,000</td> <td class="body">6,440 (PROJECTED VALUE)</td>   <td class="body">955</td>   <td class="body">18.20</td> </tr>   
+        <tr>    <td class="leader">100,000</td> <td class="body">6,163</td>   <td class="body">955</td>   <td class="body">18.20</td> </tr>   
     </tbody>                            
 </table>                                
 
@@ -95,7 +95,7 @@ The use of logarithmic axes can morph smooth curves into smooth lines, as shown 
 
 <a name="benchmarks_bubblesort_ratios_table" class="anchor" href="#benchmarks_bubblesort_ratios_table"></a>
 <h2>Bubble Sort, Performance Ratios, Table</h2>
-This table shows the important performance ratios extrapolated from the first raw data table.  The 4 columns are the same as the first table.  Projected values are created from performance ratios, not used to create performance ratios, so we exclude the row for data size 100,000 and the 2 projected values therein.  The last row shows the simple rounded averages for each column, which gives us meaningful ratios from which we may evaluate all 3 execution modes.  The ratios are normalized to pure Perl's performance, so the first ratio column is shown as all 1.0 values.  This means for a data size of 5,000 we can see RPerl's Perl data mode runs 6.5 times faster than pure Perl, and RPerl's C/C++ data mode runs 342.8 times faster than pure Perl.<br><br>
+This table shows the important performance ratios extrapolated from the first raw data table.  The 4 columns are the same as the first table.  The last row shows the simple rounded averages for each column, which gives us meaningful ratios from which we may evaluate all 3 execution modes.  The ratios are normalized to pure Perl's performance, so the first ratio column is shown as all 1.0 values.  This means for a data size of 5,000 we can see RPerl's Perl data mode runs 6.5 times faster than pure Perl, and RPerl's C/C++ data mode runs 342.8 times faster than pure Perl.<br><br>
 
 Of special interest are the performance ratios of both RPerl data modes, which stay relatively steady as data size increases, indicating proper RPerl run-time performance scalability.<br><br>
 
@@ -108,6 +108,7 @@ Of special interest are the performance ratios of both RPerl data modes, which s
             <td class="leader">25,000</td>  <td class="body">1.0</td>   <td class="body">6.7</td>   <td class="body">353.6</td> </tr>   
             <td class="leader">50,000</td>  <td class="body">1.0</td>   <td class="body">6.8</td>   <td class="body">357.8</td> </tr>   
             <td class="leader">75,000</td>  <td class="body">1.0</td>   <td class="body">6.3</td>   <td class="body">335.6</td> </tr>   
+            <td class="leader">100,000</td> <td class="body">1.0</td>   <td class="body">6.7</td>   <td class="body">353.9</td> </tr>
             <td class="leader">Rounded Average</td> <td class="leader">1</td>   <td class="leader">6.5</td>   <td class="leader">352</td> </tr> 
     </tbody>                            
 </table>                                
