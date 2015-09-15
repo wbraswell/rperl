@@ -3,6 +3,7 @@ Eyapp unescaped left braces for Perl v5.22 compatibility
 RELEASE Parse::Eyapp vX.YZZY
 
 DONE split n-body SSE from normal code, create linking in scripts
+broken shims!
 RPerl website, bubblesort timings, update
 RPerl website, n-body timings, update
 
