@@ -15,12 +15,9 @@ using std::cout;  using std::cerr;
 // [[[<<< BEGIN PERL TYPES >>>]]]
 
 // [[[ OO INHERITANCE ]]]
-class RPerl__Algorithm__Inefficient : public RPerl__Algorithm
-{
+class RPerl__Algorithm__Inefficient : public RPerl__Algorithm {
 public:
-// [[[ OO METHODS ]]]
-    void inherited__Inefficient(SV* person);
-    void inherited(SV* person);
+    // [[[ OO METHODS ]]]
 
     // <<< CONSTRUCTOR & DESTRUCTOR >>>
     RPerl__Algorithm__Inefficient() {}
@@ -28,11 +25,21 @@ public:
 
     // <<< CLASS NAME REPORTER >>>
     virtual SV* myclassname() { return newSVpv("RPerl::Algorithm::Inefficient", 0); }
-};
+
+    // <<< USER-DEFINED METHODS >>>
+    void inherited__Inefficient(SV* person);
+    void inherited(SV* person);
+};  // end of class
+
+// [[[ OO SUBCLASSES ]]]
+#define RPerl__Algorithm__Inefficient_rawptr RPerl__Algorithm__Inefficient*
+typedef std::unique_ptr<RPerl__Algorithm__Inefficient> RPerl__Algorithm__Inefficient_ptr;
+typedef std::vector<RPerl__Algorithm__Inefficient_ptr> RPerl__Algorithm__Inefficient_arrayref;
+typedef std::unordered_map<string, RPerl__Algorithm__Inefficient_ptr> RPerl__Algorithm__Inefficient_hashref;
+typedef std::unordered_map<string, RPerl__Algorithm__Inefficient_ptr>::iterator RPerl__Algorithm__Inefficient_hashref_iterator;
 
 // [[[ SUBROUTINES ]]]
-
-SV* uninherited__Inefficient(SV* person);
+SV* RPerl__Algorithm__Inefficient__uninherited__Inefficient(SV* person);
 
 // <<< OPERATIONS & DATA TYPES REPORTER >>>
 SV* RPerl__Algorithm__Inefficient__MODE_ID() { return newSViv(1); }  // CPPOPS_PERLTYPES is 1
@@ -50,9 +57,7 @@ SV* RPerl__Algorithm__Inefficient__MODE_ID() { return newSViv(1); }  // CPPOPS_P
 // [[[ OO INHERITANCE ]]]
 class RPerl__Algorithm__Inefficient : public RPerl__Algorithm {
 public:
-// [[[ OO METHODS ]]]
-    void inherited__Inefficient(string person);
-    void inherited(string person);
+    // [[[ OO METHODS ]]]
 
     // <<< CONSTRUCTOR & DESTRUCTOR >>>
     RPerl__Algorithm__Inefficient() {}
@@ -60,11 +65,21 @@ public:
 
     // <<< CLASS NAME REPORTER >>>
     virtual string myclassname() { return (const string) "RPerl::Algorithm::Inefficient"; }
-};
+
+    // <<< USER-DEFINED METHODS >>>
+    void inherited__Inefficient(string person);
+    void inherited(string person);
+};  // end of class
+
+// [[[ OO SUBCLASSES ]]]
+#define RPerl__Algorithm__Inefficient_rawptr RPerl__Algorithm__Inefficient*
+typedef std::unique_ptr<RPerl__Algorithm__Inefficient> RPerl__Algorithm__Inefficient_ptr;
+typedef std::vector<RPerl__Algorithm__Inefficient_ptr> RPerl__Algorithm__Inefficient_arrayref;
+typedef std::unordered_map<string, RPerl__Algorithm__Inefficient_ptr> RPerl__Algorithm__Inefficient_hashref;
+typedef std::unordered_map<string, RPerl__Algorithm__Inefficient_ptr>::iterator RPerl__Algorithm__Inefficient_hashref_iterator;
 
 // [[[ SUBROUTINES ]]]
-
-string uninherited__Inefficient(string person);
+string RPerl__Algorithm__Inefficient__uninherited__Inefficient(string person);
 
 // <<< OPERATIONS & DATA TYPES REPORTER >>>
 integer RPerl__Algorithm__Inefficient__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2
