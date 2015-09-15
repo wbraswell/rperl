@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript">
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-45600112-1', 'rperl.org');
+      ga('send', 'pageview');
+    </script>
+
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>RPerl N-Body Performance Benchmarks</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>N-Body Performance Benchmarks</h1>
+        <h2>Just Heavenly.</h2>
+        <img class="centered_h" src="images/stopwatch.png" width="100%">
+        <a href="https://github.com/wbraswell/rperl" class="button_github"><small>Free & Open Source on&nbsp;</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1><a name="benchmarks" class="anchor" href="#benchmarks"><span class="octicon octicon-link"></span></a>N-Body Performance Benchmarks</h1>
+            <h2>Last Update: September 15th, 2015</h2>
+            <h2>Overview</h2>
+<a href="https://en.wikipedia.org/wiki/N-body_simulation">N-body</a> is used, in our case, as a solar system simulator.<br><br>
+N-body includes 4 execution modes:<br>
+                <ul>
+<li><a href="https://github.com/wbraswell/physicsperl/blob/master/lib/PhysicsPerl/Astro/System.pm.PERLOPS_PERLTYPES_SSE">Pure Perl with SSE emulation is blue</a></li>
+<li><a href="https://github.com/wbraswell/physicsperl/blob/master/lib/PhysicsPerl/Astro/System.pm.PERLOPS_PERLTYPES">Pure Perl is red</a></li>
+<li><a href="https://github.com/wbraswell/physicsperl/blob/master/lib/PhysicsPerl/Astro/System.cpp.CPPOPS_CPPTYPES">RPerl's C++ data mode is yellow</a></li>
+<li><a href="https://github.com/wbraswell/physicsperl/blob/master/lib/PhysicsPerl/Astro/System.cpp.CPPOPS_CPPTYPES_SSE">RPerl's C++ data mode with SSE is green</a></li>
+                </ul>
+
+<h2>Table Of Contents</h2>
+<a href="#benchmarks_nbody_raw_table">N-Body, Raw Timings, Table</a><br>
+<a href="#benchmarks_nbody_raw_graph">N-Body, Raw Timings, Graph</a><br>
+<a href="#benchmarks_nbody_logarithmic_graph">N-Body, Logarithmic Scale Timings, Graph</a><br>
+<a href="#benchmarks_nbody_ratios_table">N-Body, Performance Ratios, Table</a><br>
+<a href="#benchmarks_nbody_ratios_graph">N-Body, Performance Ratios, Graph</a><br>
+<a href="#benchmarks_nbody_avgratios_chart">N-Body, Average Performance Ratios, Chart</a><br><br>
+
+<a name="benchmarks_nbody_raw_table" class="anchor" href="#benchmarks_nbody_raw_table"></a>
+<h2>N-Body, Raw Timings, Table</h2>
+This table shows the most basic data which was gathered directly from running the benchmarks.  The far left column shows increasingly-large number of iterations, which is important because running the solar system simulator for more steps should take a longer time.  There is then 1 column for each of the 4 execution modes.  Each execution mode was run for each number of iterations.<br><br>
+
+<table class="timings">                                 
+    <thead> <tr>    <th class="header1"></th>   <th class="header1"></th>   <th class="header1">Time, Seconds</th>  <th class="header1"></th>   <th class="header1"></th>   </tr>   
+        <tr>    <th class="header2">Iteration Count</th>    <th class="header2">Perl: Perl Types, Perl Ops, SSE Emulated,  Interpreted</th> <th class="header2">Perl: Perl Types, Perl Ops, Interpreted</th>    <th class="header2">RPerl: C++ Types, C++ Ops, Automatically Compiled</th>  <th class="header2">RPerl: C++ Types, C++ Ops, SSE, Automatically Compiled</th> </tr>   </thead>
+    <tbody>                             
+        <tr>    <td class="leader">5,000</td>   <td class="body">3</td> <td class="body">0.3</td>   <td class="body">0.01</td>  <td class="body">0.002</td> </tr>   
+        <tr>    <td class="leader">10,000</td>  <td class="body">7</td> <td class="body">0.6</td>   <td class="body">0.02</td>  <td class="body">0.003</td> </tr>   
+        <tr>    <td class="leader">25,000</td>  <td class="body">17</td>    <td class="body">1.5</td>   <td class="body">0.04</td>  <td class="body">0.007</td> </tr>   
+        <tr>    <td class="leader">50,000</td>  <td class="body">33</td>    <td class="body">2.9</td>   <td class="body">0.09</td>  <td class="body">0.014</td> </tr>   
+        <tr>    <td class="leader">75,000</td>  <td class="body">50</td>    <td class="body">4.4</td>   <td class="body">0.12</td>  <td class="body">0.021</td> </tr>   
+        <tr>    <td class="leader">100,000</td> <td class="body">67</td>    <td class="body">6.0</td>   <td class="body">0.17</td>  <td class="body">0.028</td> </tr>   
+        <tr>    <td class="leader">1,000,000</td>   <td class="body">668</td>   <td class="body">59</td>    <td class="body">1.65</td>  <td class="body">0.275</td> </tr>   
+        <tr>    <td class="leader">10,000,000</td>  <td class="body">6,680</td> <td class="body">605</td>   <td class="body">16.46</td> <td class="body">2.66</td>  </tr>   
+        <tr>    <td class="leader">50,000,000</td>  <td class="body">33,400</td>    <td class="body">2,955</td> <td class="body">85.85</td> <td class="body">13.26</td> </tr>   
+    </tbody>                                
+</table>
+
+<br><br>                        
+
+<a name="benchmarks_nbody_raw_graph" class="anchor" href="#benchmarks_nbody_raw_graph"></a>
+<h2>N-Body, Raw Timings, Graph</h2>
+Predictable computing algorithms possess a quality known as computational complexity, which is a mathematical measurement used to predict how long an algorithm will take to run when given input data of different sizes.  The n-body algorithm used in these performance benchmarks has a computational complexity known as O(n), pronounced as "big oh of n" where n, in this O(n) usage, refers to the number of iterations.  (This is a bit confusing, because the 'n' in n-body stands for the number of heavenly bodies, not the number of iterations).  This means if we give n-body an iteration count of 5, then it will take a time factor of 5 multiplied by some system-dependent constant.  If we give nbody an iteration count of 10, then it will take twice as long to run as it did for 5 iterations.  This computational complexity of O(n) is specific (but not unique) to the n-body algorithm.  When we measure n-body's run-time, we can be reasonably sure our measurements are related to the 2 primary computational resources of CPU speed and RAM capacity, as opposed to misleading measurements of secondary computational resources such as hard-drive read/write or network bandwidth.  This makes our measurements more meaningful.<br><br>
+
+This line graph shows linearly-increasing iteration counts on the horizontal x-axis also-linearly-increasing time on the vertical y-axis.  The O(n) computational complexity of n-body directly converts to the graph of y=m*x or "y equals m times x" where m is the system-dependent run-time performance constant mentioned in the previous paragraph.  This produces graphs with straight lines.  You can see how pure Perl SSE emulation in blue has a very steep slope, whereas normal pure Perl mode in red is significantly less steep.  Contrastingly, RPerl's C++ SSE mode in green is so fast it barely raises off the 0-second mark for the entire graph.<br><br>
+
+<table class="timings"><tbody><tr><td>
+<a href="images/benchmarks/nbody_raw_graph.png"><img class="centered_h" src="images/benchmarks/nbody_raw_graph.png" width="100%"></a>
+</td></tr></tbody></table>
+                        
+<br><br>                        
+
+<a name="benchmarks_nbody_logarithmic_graph" class="anchor" href="#benchmarks_nbody_logarithmic_graph"></a>
+<h2>N-Body, Logarithmic Scale Timings, Graph</h2>
+This line graph show logarithmically-increasing values on both the x-axis and y-axis.  On a linear graph axis, the distance between 1-to-10 is equal to the distance between 101-to-110, and is one-tenth of the distance between 10-to-100.  This means large values are shown far away from small values on a linear axis.  On a logarithmic graph axis, the distance between 1-to-10 is about one-tenth of the distance between 101-to-110, and is equal to the distances between both 10-to-100 and 100-to-1,000.  This means large values are shown close to small values on a logarithmic axis.<br><br>
+
+The use of logarithmic axes can morph smooth curves into smooth lines, as shown in this line graph.  Although there are tiny variances in the lines, to the human eye all 4 lines appear to be perfectly straight and running parallel to one another.  The straightness of the lines indicates the n-body algorithm's computational complexity is scaling smoothly as predicted.  In other words, the computational complexity is staying very close to O(n) as the iteration count increases.  The constant relative distances between the lines indicate the 4 execution modes are all scaling at a steady rate and closely proportionate to one another.  This means our benchmark algorithms are running correctly, and scaling nearly perfectly.<br><br>
+<table class="timings"><tbody><tr><td>
+<a href="images/benchmarks/nbody_logarithmic_graph.png"><img class="centered_h" src="images/benchmarks/nbody_logarithmic_graph.png" width="100%"></a>
+</td></tr></tbody></table>
+
+<br>
+
+<a name="benchmarks_nbody_ratios_table" class="anchor" href="#benchmarks_nbody_ratios_table"></a>
+<h2>N-Body, Performance Ratios, Table</h2>
+This table shows the important performance ratios extrapolated from the first raw data table.  The 4 columns are the same as the first table.  The last row shows the simple rounded averages for each column, which gives us meaningful ratios from which we may evaluate all 4 execution modes.  The ratios are normalized to pure Perl's performance, so the second ratio column is shown as all 1.0 values.  This means for a iteration count of 1,000,000 we can see RPerl's C++ data mode runs 36.2 times faster than pure Perl, and RPerl's C++ data mode with SSE runs 216.3 times faster than pure Perl.<br><br>
+
+Of special interest are the performance ratios of both RPerl data modes, which stay relatively steady as iteration count increases, indicating proper RPerl run-time performance scalability.<br><br>
+
+</table>                                    
+<table class="timings">                                 
+    <thead> <tr>    <th class="header1"></th>   <th class="header1"></th>   <th class="header1">Performance, Multiples</th> <th class="header1"></th>   <th class="header1"></th>   </tr>   
+            <th class="header2">Iteration Count</th>    <th class="header2">Perl: Perl Types, Perl Ops, SSE Emulated,  Interpreted</th> <th class="header2">Perl: Perl Types, Perl Ops, Interpreted</th>    <th class="header2">RPerl: C++ Types, C++ Ops, Automatically Compiled</th>  <th class="header2">RPerl: C++ Types, C++ Ops, SSE, Automatically Compiled</th> </tr>   </thead>
+    <tbody>                             
+        <tr>    <td class="leader">5,000</td>   <td class="body">0.1</td>   <td class="body">1.0</td>   <td class="body">37.3</td>  <td class="body">175.3</td> </tr>   
+            <td class="leader">10,000</td>  <td class="body">0.1</td>   <td class="body">1.0</td>   <td class="body">35.0</td>  <td class="body">180.3</td> </tr>   
+            <td class="leader">25,000</td>  <td class="body">0.1</td>   <td class="body">1.0</td>   <td class="body">36.6</td>  <td class="body">219.9</td> </tr>   
+            <td class="leader">50,000</td>  <td class="body">0.1</td>   <td class="body">1.0</td>   <td class="body">34.6</td>  <td class="body">210.1</td> </tr>   
+            <td class="leader">75,000</td>  <td class="body">0.1</td>   <td class="body">1.0</td>   <td class="body">35.3</td>  <td class="body">208.5</td> </tr>   
+            <td class="leader">100,000</td> <td class="body">0.1</td>   <td class="body">1.0</td>   <td class="body">36.6</td>  <td class="body">215.8</td> </tr>   
+            <td class="leader">1,000,000</td>   <td class="body">0.1</td>   <td class="body">1.0</td>   <td class="body">36.2</td>  <td class="body">216.3</td> </tr>   
+            <td class="leader">10,000,000</td>  <td class="body">0.1</td>   <td class="body">1.0</td>   <td class="body">36.8</td>  <td class="body">228.0</td> </tr>   
+            <td class="leader">50,000,000</td>	<td class="body">0.1</td>	<td class="body">1.0</td>	<td class="body">34.4</td>	<td class="body">222.9</td>	</tr>
+            <td class="leader">Rounded Average</td> <td class="leader">0.1</td>   <td class="leader">1</td>   <td class="leader">36</td>   <td class="leader">217</td> </tr> 
+    </tbody>                                
+</table>                                    
+
+<br>
+
+<a name="benchmarks_nbody_ratios_graph" class="anchor" href="#benchmarks_nbody_ratios_graph"></a>
+<h2>N-Body, Performance Ratios, Graph</h2>
+This line graph illustrates the non-averaged data from the performance ratios table.  Like the raw and logarithmic timing graphs, the x-axis represents iteration count.  Unlike the timing graphs, the y-axis represents performance ratios, not time in seconds.  Pure Perl in blue is, by definition, a totally flat line at the 1.0 value along the bottom of the graph.  RPerl's C++ data mode in yellow is a relatively steady line near the value of 36, hovering above pure Perl near the bottom.  RPerl's C++ data mode with SSE is shown in green, and flies far above the other 3 execution modes at the top of the graph, showing the steadily-scaling performance ratios as the iteration count increases while moving to the right.<br><br>
+<table class="timings"><tbody><tr><td>
+<a href="images/benchmarks/nbody_ratios_graph.png"><img class="centered_h" src="images/benchmarks/nbody_ratios_graph.png" width="100%"></a>
+</td></tr></tbody></table>
+
+<br>
+
+<a name="benchmarks_nbody_avgratios_chart" class="anchor" href="#benchmarks_nbody_avgratios_chart"></a>
+<h2>N-Body, Average Performance Ratios, Chart</h2>
+This pie chart illustrates the averaged data from the performance ratios table.  The size of the pie slices represent relative speed, so a bigger slice means higher run-time performance.  Pure Perl in blue is only about 0.39% of the total pie, while RPerl's C++ data mode with SSE in green clearly dominates.<br><br>
+
+<table class="timings"><tbody><tr><td>
+<a href="images/benchmarks/nbody_avgratios_chart.png"><img class="centered_h" src="images/benchmarks/nbody_avgratios_chart.png" width="100%"></a>
+</td></tr></tbody></table>
+
+        </section>
+
+        <aside id="sidebar">
+          <a href="/" class="button_home">Home Page</a>
+          <hr/>
+          <a href="faq.html" class="button_faq">FAQ</a>
+          <hr/>
+          <a href="finances.html" class="button_finances">Finances</a>
+          <hr/>
+          <a href="use_rperl.html" class="button_use_rperl">use RPerl;</a>
+          <hr/>
+          <a href="performance_benchmarks.html" class="button_performance_benchmarks">Performance Benchmarks</a>
+          <hr/>
+          <a href="the_low_magic_perl_commandments.html" class="button_the_low_magic_perl_commandments">The Low-Magic Perl Commandments</a>
+          <hr/>
+          <a href="the_book_of_rperl.html" class="button_the_book_of_rperl">The Book Of RPerl</a>
+
+          <a href="https://trello.com/board/austin-pm-rperl-development/51b6b97215f60f9460006538" class="button_blank">
+            <div class="centered_outer"><div class="centered_inner"><p>
+            <small>Project Management on</small>
+            Trello.com
+            </p></div></div>
+          </a>
+          <a href="http://perl11.org" class="button_blank">
+            <div class="centered_outer"><div class="centered_inner"><p>
+            <small>Affiliated with</small>
+            Perl 1 1 .org
+            </p></div></div>
+          </a>
+          <a href="https://github.com/wbraswell/rperl/zipball/master" class="button_download">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/wbraswell/rperl/tarball/master" class="button_download">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+          <p class="centered_h"><a href="https://github.com/wbraswell/rperl">RPerl</a> is<br>maintained by<br><a href="https://github.com/wbraswell"><img src="http://en.gravatar.com/userimage/56186802/80da94d6b6efabf2e3ae85f12f3ae0bc.jpg"><br>Will Braswell</a></p>
+        </aside>
+      </div>
+    </div>
+    <footer><p class="centered_h">
+    Copyleft
+<!--[if lte IE 8]><span style="filter: FlipH; -ms-filter: "FlipH"; display: inline-block;"><![endif]-->
+<span style="-moz-transform: scaleX(-1); -o-transform: scaleX(-1); -webkit-transform: scaleX(-1); transform: scaleX(-1); display: inline-block;">
+    ©
+</span>
+<!--[if lte IE 8]></span><![endif]-->
+<script type="text/javascript"> var d = new Date(); document.write(d.getFullYear()); </script>
+    , Will the Chill AKA The Voice In The Wilderness.  All Rites Reversed.
+    <br><small>(Copyright &copy;
+<script type="text/javascript"> var d = new Date(); document.write(d.getFullYear()); </script>
+    , William N. Braswell, Jr..  All Rights Reserved.  This work is Free & Open Source; you can redistribute it and/or modify it under the <a href="http://dev.perl.org/licenses/">same terms as Perl 5.22.0.</a>)
+    </small>
+    </p></footer>
+
+<!-- Start of StatCounter Code for Default Guide -->
+<script type="text/javascript">
+var sc_project=9393259; 
+var sc_invisible=1; 
+var sc_security="94374ac7"; 
+var scJsHost = (("https:" == document.location.protocol) ?
+"https://secure." : "http://www.");
+document.write("<sc"+"ript type='text/javascript' src='" +
+scJsHost+
+"statcounter.com/counter/counter.js'></"+"script>");
+</script>
+<noscript><div class="statcounter"><a title="web analytics"
+href="http://statcounter.com/" target="_blank"><img
+class="statcounter"
+src="http://c.statcounter.com/9393259/0/94374ac7/1/"
+alt="web analytics"></a></div></noscript>
+<!-- End of StatCounter Code for Default Guide -->
+
+  </body>
+</html>
+
