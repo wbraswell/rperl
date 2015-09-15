@@ -12,6 +12,11 @@ our $VERSION = 0.001_000;
 use RPerl::Inline;
 
 # [[[ SUBROUTINES ]]]
+
+# <<< OO PROPERTIES, SUBROUTINES, SHIMS >>>
+sub uninherited__Inefficient { return main::RPerl__Algorithm__Inefficient__uninherited__Inefficient(@_); }
+
+# <<< C++ LOADER >>>
 #our void::method $cpp_load = sub {
 sub cpp_load {
     my $need_load_cpp = 0;
@@ -36,9 +41,9 @@ sub cpp_load {
         my $eval_string = <<"EOF";
 package main;
 use RPerl::Inline;
-BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/Algorithm/Inefficient.cpp' ]]]\n" x 1); }
-use Inline (CPP => '$RPerl::INCLUDE_PATH/RPerl/Algorithm/Inefficient.cpp', \%RPerl::Inline::ARGS);
-RPerl::diag("[[[ END 'use Inline' STAGE for 'RPerl/Algorithm/Inefficient.cpp' ]]]\n" x 1);
+BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'lib/RPerl/Algorithm/Inefficient.cpp' ]]]\n" x 1); }
+use Inline (CPP => 'lib/RPerl/Algorithm/Inefficient.cpp', \%RPerl::Inline::ARGS);
+RPerl::diag("[[[ END 'use Inline' STAGE for 'lib/RPerl/Algorithm/Inefficient.cpp' ]]]\n" x 1);
 1;
 EOF
 

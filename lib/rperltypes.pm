@@ -472,7 +472,7 @@ package  # hide from PAUSE indexing
 sub types_enable {
     ( my $types_input ) = @_;
 
-    #	RPerl::diag("in rperltypes::types_enable(), received \$types_input = '$types_input'\n");
+#	RPerl::diag('in rperltypes::types_enable(), received $types_input = ' . $types_input . "\n");
 
     if (($types_input ne 'PERL') and ($types_input ne 'CPP')) {
         croak q{ERROR ERPTY00: Invalid RPerl types '} . $types_input . q{' specified where PERL or CPP expected, croaking};

@@ -1,0 +1,45 @@
+// [[[ HEADER ]]]
+using std::cout;  using std::cerr;
+
+#ifndef __CPP__INCLUDED__RPerl__Algorithm__Inefficient_cpp
+#define __CPP__INCLUDED__RPerl__Algorithm__Inefficient_cpp 0.005_000
+
+// [[[ INCLUDES ]]]
+#include <RPerl/Algorithm/Inefficient.h>
+
+# ifdef __PERL__TYPES
+
+// [[[<<< BEGIN PERL TYPES >>>]]]
+// [[[<<< BEGIN PERL TYPES >>>]]]
+// [[[<<< BEGIN PERL TYPES >>>]]]
+
+// [[[ OO METHODS & SUBROUTINES ]]]
+
+void RPerl__Algorithm__Inefficient::inherited__Inefficient(SV* person) {
+    cout << "in CPPOPS_PERLTYPES Inefficient->inherited__Inefficient(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", FLUFFY" << "\n";
+}
+
+void RPerl__Algorithm__Inefficient::inherited(SV* person) {
+    cout << "in CPPOPS_PERLTYPES Inefficient->inherited(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", INCOMPATIBLE" << "\n";
+}
+
+SV* RPerl__Algorithm__Inefficient__uninherited__Inefficient(SV* person) {
+    cout << "in CPPOPS_PERLTYPES Inefficient::uninherited__Inefficient(), received $person = " << SvPV_nolen(person) << ", MESSY" << "\n";
+    return newSVpv("Inefficient::uninherited__Inefficient() RULES! CPPOPS_PERLTYPES", 0);
+}
+
+// [[[<<< END PERL TYPES >>>]]]
+// [[[<<< END PERL TYPES >>>]]]
+// [[[<<< END PERL TYPES >>>]]]
+
+# elif defined __CPP__TYPES
+
+Purposefully_die_from_a_compile-time_error,_due_to____CPP__TYPES_being_defined.__We_need_to_define_only___PERL__TYPES_in_this_file!
+
+# else
+
+Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_only___PERL__TYPES_in_this_file!
+
+# endif
+
+#endif

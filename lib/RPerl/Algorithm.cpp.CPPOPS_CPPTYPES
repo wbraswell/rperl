@@ -5,7 +5,7 @@ using std::cout;  using std::cerr;
 #define __CPP__INCLUDED__RPerl__Algorithm_cpp 0.005_000
 
 // [[[ INCLUDES ]]]
-#include <RPerl/Algorithm.h>
+#include "/home/wbraswell/austin_perl_mongers/rperl/rperl-latest/lib/RPerl/Algorithm.h"
 
 # ifdef __PERL__TYPES
 
@@ -20,11 +20,11 @@ Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.
 // [[[ OO METHODS & SUBROUTINES ]]]
 
 void RPerl__Algorithm::inherited__Algorithm(string person) {
-    RPerl::diag((const string) "in CPPOPS_CPPTYPES Algorithm->inherited__Algorithm(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", FNORD" + (const string) "\n");
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Algorithm->inherited__Algorithm(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", FNORD" + (const string) "\n");
 }
 
-string uninherited__Algorithm(string person) {
-    RPerl::diag((const string) "in CPPOPS_CPPTYPES Algorithm::uninherited__Algorithm(), received $person = " + person + (const string) ", MYSTIC" + (const string) "\n");
+string RPerl__Algorithm__uninherited__Algorithm(string person) {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Algorithm::uninherited__Algorithm(), received $person = " + person + (const string) ", MYSTIC" + (const string) "\n");
     return (const string) "Algorithm::uninherited__Algorithm() RULES! CPPOPS_CPPTYPES";
 }
 

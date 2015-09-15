@@ -2,22 +2,18 @@ Eyapp unescaped left braces for Perl v5.22 compatibility
 
 RELEASE Parse::Eyapp vX.YZZY
 
-DONE Error Messages, Identify Filename-Per-Error In Multi-File Compiles
-DONE Implement, Automatic Subclasses For User-Defined Classes, Via RPerl.pm Source Filter
-DONE Bug Fix, `rperl -nod` No-Dependencies Compiles
-DONE Implement, C-Style For Loop
-DONE Implement, Array Size Declaration
-DONE Implement, Numbers, Positive '+' Prefix & Scientific Notation
-DONE Loops, optimize exit-condition minus-one and less-than
-DONE App, PhysicsPerl, Alioth Shootout N-Body Benchmark
+RPerl website, bubblesort timings, update
+RPerl website, n-body timings, update
 
-DONE RELEASE v1.1
+split n-body SSE from normal code, create linking in scripts
 
-DONE App, PhysicsPerl, Alioth Shootout N-Body Benchmark, Submitted
+Travis Windows, add ci.appconveyor.com github webhook
+
 App, PhysicsPerl, Alioth Shootout N-Body Benchmark, Approved
+	OR New Benchmark Org
 Monolithic Modules, Fix Deps Warning
 
-ensure perfect match for compiled Algorithm.*, Sort.*, Bubble.* files with hand-compiled *.CPPOPS_CPPTYPES versions
+DONE ensure perfect match for compiled Algorithm.*, Sort.*, Bubble.*, Inefficient.* files with hand-compiled *.CPPOPS_CPPTYPES versions
 tests
 	constructor type mismatch: array size declaration compensation; package/subroutine/method names starting w/ underscore; variable redeclaration (masking); 
 	properties & hash type-inner type-vs-key name mismatch (ECVGEASRP17: PERLOPS Class.pm properties accessors/mutators; CPPOPS entry & entrytyped);
@@ -25,6 +21,7 @@ tests
 	$properties array size PERLOPS_PERLTYPES generation; variable & retrieval type mismatches, etc; get_raw() & set_raw()
 finish all CPPOPS_CPPTYPES generation
 Tests, t/13_compile_execute.t (?) for proper functionality
+figure out <> vs "" and also long-path-deps in includes in Bubble.cpp & Bubble.h
 
 RELEASE v1.XY
 
@@ -34,7 +31,6 @@ add symtab building and checking to PERLOPS_PERLTYPES
 add mutators pass-by-reference for scalars?  see SystemRenderer2D::show()
 file bug, I::CPP comments, 7 lines okay, 8 lines broken
 file bug, I::CPP std::array
-file bug, I::CPP new() clobber
 file bug, I::CPP when attempting to return object type, CORRELATION #pp04
 	In function ‘void XS_PhysicsPerl__Astro__System_get_bodies_element(PerlInterpreter*, CV*)’: ... error: ‘CLASS’ was not declared in this scope ... sv_setref_pv( ST(0), CLASS, (void*)RETVAL );
 	hand-patched code below allows one-time use, then segfault
@@ -49,6 +45,9 @@ update RPerl::filter() to properly handle *.pl files
 update INSTALL to use installed dirs, ~/perl5/lib/perl5 for local::lib
 fix 'x' string repeat operator vs 'x' string or bareword hash key
 create generator & tests for named ops: split, join, etc
+
+PERLOPS_PERLTYPES
+	C++ subclasses using AV* instead of std::vector, etc?
 
 Fix CPAN Testers Bugs
 

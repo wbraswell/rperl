@@ -10,13 +10,9 @@ using std::cout;  using std::cerr;
 
 # ifdef __PERL__TYPES
 
-Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.__We_need_to_define_only___CPP__TYPES_in_this_file!
-
-# elif defined __CPP__TYPES
-
-// [[[<<< BEGIN CPP TYPES >>>]]]
-// [[[<<< BEGIN CPP TYPES >>>]]]
-// [[[<<< BEGIN CPP TYPES >>>]]]
+// [[[<<< BEGIN PERL TYPES >>>]]]
+// [[[<<< BEGIN PERL TYPES >>>]]]
+// [[[<<< BEGIN PERL TYPES >>>]]]
 
 // [[[ OO INHERITANCE ]]]
 class RPerl__Algorithm__Inefficient : public RPerl__Algorithm {
@@ -28,11 +24,11 @@ public:
     ~RPerl__Algorithm__Inefficient() {}
 
     // <<< CLASS NAME REPORTER >>>
-    virtual string myclassname() { return (const string) "RPerl::Algorithm::Inefficient"; }
+    virtual SV* myclassname() { return newSVpv("RPerl::Algorithm::Inefficient", 0); }
 
     // <<< USER-DEFINED METHODS >>>
-    void inherited__Inefficient(string person);
-    void inherited(string person);
+    void inherited__Inefficient(SV* person);
+    void inherited(SV* person);
 };  // end of class
 
 // [[[ OO SUBCLASSES ]]]
@@ -43,18 +39,22 @@ typedef std::unordered_map<string, RPerl__Algorithm__Inefficient_ptr> RPerl__Alg
 typedef std::unordered_map<string, RPerl__Algorithm__Inefficient_ptr>::iterator RPerl__Algorithm__Inefficient_hashref_iterator;
 
 // [[[ SUBROUTINES ]]]
-string RPerl__Algorithm__Inefficient__uninherited__Inefficient(string person);
+SV* RPerl__Algorithm__Inefficient__uninherited__Inefficient(SV* person);
 
 // <<< OPERATIONS & DATA TYPES REPORTER >>>
-integer RPerl__Algorithm__Inefficient__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2
+SV* RPerl__Algorithm__Inefficient__MODE_ID() { return newSViv(1); }  // CPPOPS_PERLTYPES is 1
 
-// [[[<<< END CPP TYPES >>>]]]
-// [[[<<< END CPP TYPES >>>]]]
-// [[[<<< END CPP TYPES >>>]]]
+// [[[<<< END PERL TYPES >>>]]]
+// [[[<<< END PERL TYPES >>>]]]
+// [[[<<< END PERL TYPES >>>]]]
+
+# elif defined __CPP__TYPES
+
+Purposefully_die_from_a_compile-time_error,_due_to____CPP__TYPES_being_defined.__We_need_to_define_only___PERL__TYPES_in_this_file!
 
 # else
 
-Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_only___CPP__TYPES_in_this_file!
+Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_only___PERL__TYPES_in_this_file!
 
 # endif
 

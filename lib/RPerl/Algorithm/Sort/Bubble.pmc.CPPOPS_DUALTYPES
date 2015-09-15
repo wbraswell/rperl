@@ -12,6 +12,16 @@ our $VERSION = 0.001_000;
 use RPerl::Inline;
 
 # [[[ SUBROUTINES ]]]
+
+# <<< OO PROPERTIES, SUBROUTINES, SHIMS >>>
+sub integer_bubblesort            { return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort(@_); }
+sub number_bubblesort             { return main::RPerl__Algorithm__Sort__Bubble__number_bubblesort(@_); }
+sub uninherited__Bubble           { return main::RPerl__Algorithm__Sort__Bubble__uninherited__Bubble(@_); }
+sub uninherited                   { return main::RPerl__Algorithm__Sort__Bubble__uninherited(@_); }
+sub integer_bubblesort__typetest0 { return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort__typetest0(@_); }
+sub number_bubblesort__typetest0  { return main::RPerl__Algorithm__Sort__Bubble__number_bubblesort__typetest0(@_); }
+
+# <<< C++ LOADER >>>
 #our void::method $cpp_load = sub {
 sub cpp_load {
     my $need_load_cpp = 0;
@@ -31,14 +41,14 @@ sub cpp_load {
 
     if ($need_load_cpp) {
 
-#        RPerl::diag('in RPerl::Algorithm::Sort::Bubble::cpp_load, need load CPP code' . "\n");
+        #RPerl::diag('in RPerl::Algorithm::Sort::Bubble::cpp_load, need load CPP code' . "\n");
 
         my $eval_string = <<"EOF";
 package main;
 use RPerl::Inline;
-BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/Algorithm/Sort/Bubble.cpp' ]]]\n" x 1); }
-use Inline (CPP => '$RPerl::INCLUDE_PATH/RPerl/Algorithm/Sort/Bubble.cpp', \%RPerl::Inline::ARGS);
-RPerl::diag("[[[ END 'use Inline' STAGE for 'RPerl/Algorithm/Sort/Bubble.cpp' ]]]\n" x 1);
+BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'lib/RPerl/Algorithm/Sort/Bubble.cpp' ]]]\n" x 1); }
+use Inline (CPP => 'lib/RPerl/Algorithm/Sort/Bubble.cpp', \%RPerl::Inline::ARGS);
+RPerl::diag("[[[ END 'use Inline' STAGE for 'lib/RPerl/Algorithm/Sort/Bubble.cpp' ]]]\n" x 1);
 1;
 EOF
 

@@ -86,7 +86,7 @@ our $CHECK        = 'OFF';
 our $DEBUG        = 0;                  # $RPerl::DEBUG & env var RPERL_DEBUG are equivalent, default to off, see diag*() below
 our $VERBOSE      = 0;                  # $RPerl::VERBOSE & env var RPERL_VERBOSE are equivalent, default to off, see verbose*() below
 our $WARNINGS     = 1;                  # $RPerl::WARNINGS & env var RPERL_WARNINGS are equivalent, default to on, see warn*() below
-our $TYPES_CCFLAG = ' -D__CPP__TYPES';  # rperltypes_mode.h defaults to CPPTYPES if PERLTYPES not explicitly set in this variable via rperltypes::types_enable()
+our $TYPES_CCFLAG = ' -D__CPP__TYPES';  # rperltypes_mode.h & here default to CPPTYPES if PERLTYPES not explicitly set in this variable via rperltypes::types_enable()
 
 # [[[ SUBROUTINES SPECIAL ]]]
 
