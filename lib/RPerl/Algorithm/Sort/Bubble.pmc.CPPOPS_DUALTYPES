@@ -58,7 +58,10 @@ package main;
 use RPerl::Inline;
 BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'lib/RPerl/Algorithm/Sort/Bubble.cpp' ]]]\n" x 1); }
 #use Inline (CPP => 'lib/RPerl/Algorithm/Sort/Bubble.cpp', \%RPerl::Inline::ARGS);
-use Inline (CPP => $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.cpp', \%RPerl::Inline::ARGS);
+
+print 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), have \$RPerl::INCLUDE_PATH = ' . $RPerl::INCLUDE_PATH . "\n";
+use Inline (CPP => $RPerl::INCLUDE_PATH . '/lib/RPerl/Algorithm/Sort/Bubble.cpp', \%RPerl::Inline::ARGS);
+
 RPerl::diag("[[[ END 'use Inline' STAGE for 'lib/RPerl/Algorithm/Sort/Bubble.cpp' ]]]\n" x 1);
 1;
 EOF
