@@ -43,7 +43,8 @@ sub cpp_load {
 package main;
 use RPerl::Inline;
 BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for '/home/wbraswell/austin_perl_mongers/rperl/rperl-latest/lib/RPerl/Algorithm/Sort.cpp' ]]]\n" x 1); }
-use Inline (CPP => '/home/wbraswell/austin_perl_mongers/rperl/rperl-latest/lib/RPerl/Algorithm/Sort.cpp', \%RPerl::Inline::ARGS);
+#use Inline (CPP => '/home/wbraswell/austin_perl_mongers/rperl/rperl-latest/lib/RPerl/Algorithm/Sort.cpp', \%RPerl::Inline::ARGS);
+use Inline (CPP => $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort.cpp', \%RPerl::Inline::ARGS);
 RPerl::diag("[[[ END 'use Inline' STAGE for '/home/wbraswell/austin_perl_mongers/rperl/rperl-latest/lib/RPerl/Algorithm/Sort.cpp' ]]]\n" x 1);
 1;
 EOF
