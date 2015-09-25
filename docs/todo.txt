@@ -58,12 +58,14 @@ DONE ensure perfect match for compiled Algorithm.*, Sort.*, Bubble.*, Inefficien
 
 broken shims!
 
+
 App, PhysicsPerl, Alioth Shootout N-Body Benchmark, Approved
 	OR New Benchmark Org
 
 
 RELEASE v1.XY
 
+Class.pm, remove auto-export of subroutines from their package's namespace into main:: namespace?
 alioth nbody, optimize graphics speed
 add arrayref::grow_capacity() as safe version of std::vector::resize()
 add symtab building and checking to PERLOPS_PERLTYPES

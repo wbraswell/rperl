@@ -14,7 +14,8 @@ use RPerl::Inline;
 # [[[ SUBROUTINES ]]]
 
 # <<< OO PROPERTIES, SUBROUTINES, SHIMS >>>
-sub uninherited__Algorithm { return main::RPerl__Algorithm__uninherited__Algorithm(@_); }
+undef &RPerl::Algorithm::uninherited__Algorithm;
+*RPerl::Algorithm::uninherited__Algorithm = sub { return main::RPerl__Algorithm__uninherited__Algorithm(@_); };
 
 # <<< C++ LOADER >>>
 #our void::method $cpp_load = sub {

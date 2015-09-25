@@ -13,13 +13,23 @@ use RPerl::Inline;
 
 # [[[ SUBROUTINES ]]]
 
+# START HERE: update shim generator to use new format below, compile bubble & n-body, compare all .pmc files to ensure match
+# START HERE: update shim generator to use new format below, compile bubble & n-body, compare all .pmc files to ensure match
+# START HERE: update shim generator to use new format below, compile bubble & n-body, compare all .pmc files to ensure match
+
 # <<< OO PROPERTIES, SUBROUTINES, SHIMS >>>
-sub integer_bubblesort            { return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort(@_); }
-sub number_bubblesort             { return main::RPerl__Algorithm__Sort__Bubble__number_bubblesort(@_); }
-sub uninherited__Bubble           { return main::RPerl__Algorithm__Sort__Bubble__uninherited__Bubble(@_); }
-sub uninherited                   { return main::RPerl__Algorithm__Sort__Bubble__uninherited(@_); }
-sub integer_bubblesort__typetest0 { return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort__typetest0(@_); }
-sub number_bubblesort__typetest0  { return main::RPerl__Algorithm__Sort__Bubble__number_bubblesort__typetest0(@_); }
+undef &RPerl::Algorithm::Sort::Bubble::integer_bubblesort;
+*RPerl::Algorithm::Sort::Bubble::integer_bubblesort = sub { return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort(@_); };
+undef &RPerl::Algorithm::Sort::Bubble::number_bubblesort;
+*RPerl::Algorithm::Sort::Bubble::number_bubblesort = sub { return main::RPerl__Algorithm__Sort__Bubble__number_bubblesort(@_); };
+undef &RPerl::Algorithm::Sort::Bubble::uninherited__Bubble;
+*RPerl::Algorithm::Sort::Bubble::uninherited__Bubble = sub { return main::RPerl__Algorithm__Sort__Bubble__uninherited__Bubble(@_); };
+undef &RPerl::Algorithm::Sort::Bubble::uninherited;
+*RPerl::Algorithm::Sort::Bubble::uninherited = sub { return main::RPerl__Algorithm__Sort__Bubble__uninherited(@_); };
+undef &RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0;
+*RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0 = sub { return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort__typetest0(@_); };
+undef &RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0;
+*RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0 = sub { return main::RPerl__Algorithm__Sort__Bubble__number_bubblesort__typetest0(@_); };
 
 # <<< C++ LOADER >>>
 #our void::method $cpp_load = sub {

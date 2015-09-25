@@ -7,13 +7,13 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_030;
+our $VERSION = 0.004_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(RequireCheckingReturnValueOfEval)  ## SYSTEM DEFAULT 4: allow eval() test code blocks
 
-use Test::More tests => 246;
+use Test::More tests => 250;
 use Test::Exception;
 use RPerl::Test;
 use File::Copy;
@@ -76,12 +76,14 @@ BEGIN {
 
     # DEV NOTE, CORRELATION #rp15: suppress 'Too late to run INIT block' at run-time loading via require or eval
     lives_and( sub { require_ok('RPerl::Algorithm::Sort::Bubble'); }, q{require_ok('RPerl::Algorithm::Sort::Bubble') lives} );
-    lives_and( sub { require_ok('RPerl::Algorithm::Inefficient'); }, q{require_ok('RPerl::Algorithm::Inefficient') lives} );
+    lives_and( sub { require_ok('RPerl::Algorithm::Inefficient'); },  q{require_ok('RPerl::Algorithm::Inefficient') lives} );
 }
 
-my string $bubble_pm_filename = 'RPerl/Algorithm/Sort/Bubble.pm';
+my string $bubble_pm_filename      = 'RPerl/Algorithm/Sort/Bubble.pm';
+my string $sort_pm_filename        = 'RPerl/Algorithm/Sort.pm';
 my string $inefficient_pm_filename = 'RPerl/Algorithm/Inefficient.pm';
-my object $refresher           = Module::Refresh->new();
+my string $algorithm_pm_filename   = 'RPerl/Algorithm.pm';
+my object $refresher               = Module::Refresh->new();
 
 # NEED FIX: duplicate code
 my string $bubble_cpp_filename        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.cpp';
@@ -171,9 +173,9 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     else {    # $ops eq 'CPP'
         foreach my string_arrayref $filenames (
             @{  [   [ $bubble_cpp_filename, $bubble_cpp_filename_manual ],
+
                     [ $bubble_h_filename,   $bubble_h_filename_manual ],
                     [ $bubble_pmc_filename, $bubble_pmc_filename_manual ],
-
                     [ $sort_cpp_filename,   $sort_cpp_filename_manual ],
                     [ $sort_h_filename,     $sort_h_filename_manual ],
                     [ $sort_pmc_filename,   $sort_pmc_filename_manual ],
@@ -189,43 +191,56 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
             }
             )
         {
-            my string $filename        = $filenames->[0];
-            my string $filename_manual = $filenames->[1];
+            my string $filename              = $filenames->[0];
+            my string $filename_manual       = $filenames->[1];
+            my string $filename_short        = $filename;
+            my string $filename_manual_short = $filename_manual;
+            if ( ( length $filename_short ) > 55 )        { $filename_short        = '...' . substr $filename_short,        -55; }
+            if ( ( length $filename_manual_short ) > 55 ) { $filename_manual_short = '...' . substr $filename_manual_short, -55; }
             if ( -e ($filename_manual) ) {
                 my integer $copy_success = copy( $filename_manual, $filename );
                 if ($copy_success) {
-                    ok( 1, 'Copy manually-compiled file ' . $filename_manual . ' to ' . $filename );
+                    ok( 1, 'Copy manually-compiled file ' . $filename_manual_short . ' to ' . $filename_short );
                 }
                 else {
-                    ok( 0, 'Copy manually-compiled file ' . $filename_manual . ' to ' . $filename . q{ ... } . $OS_ERROR );
+                    ok( 0, 'Copy manually-compiled file ' . $filename_manual_short . ' to ' . $filename_short . q{ ... } . $OS_ERROR );
                 }
             }
             else {
-                ok( 0, 'Copy manually-compiled file ' . $filename_manual . ' to ' . $filename . q{ ... } . 'File does not exist' );
+                ok( 0, 'Copy manually-compiled file ' . $filename_manual_short . ' to ' . $filename_short . q{ ... } . 'File does not exist' );
             }
         }
 
         # C++ use, load, link
-        lives_ok( sub { $refresher->refresh_module($bubble_pm_filename) }, 'Refresh previously-loaded module: ' . $bubble_pm_filename );
+        # ALL 4 MODULES
+        lives_ok( sub { $refresher->refresh_module($bubble_pm_filename) },      'Refresh previously-loaded module: ' . $bubble_pm_filename );
+        lives_ok( sub { $refresher->refresh_module($sort_pm_filename) },        'Refresh previously-loaded module: ' . $sort_pm_filename );
         lives_ok( sub { $refresher->refresh_module($inefficient_pm_filename) }, 'Refresh previously-loaded module: ' . $inefficient_pm_filename );
+        lives_ok( sub { $refresher->refresh_module($algorithm_pm_filename) },   'Refresh previously-loaded module: ' . $algorithm_pm_filename );
 
         # DEV NOTE, CORRELATION #rp15: suppress 'Too late to run INIT block' at run-time loading via require or eval
+        # ONLY 2 MODULES
         lives_and( sub { require_ok('RPerl::Algorithm::Sort::Bubble'); }, q{require_ok('RPerl::Algorithm::Sort::Bubble') lives} );
-        lives_and( sub { require_ok('RPerl::Algorithm::Inefficient'); }, q{require_ok('RPerl::Algorithm::Inefficient') lives} );
+        lives_and( sub { require_ok('RPerl::Algorithm::Inefficient'); },  q{require_ok('RPerl::Algorithm::Inefficient') lives} );
 
         # force reload
+        # ONLY 2 MODULES
         delete $main::{'RPerl__Algorithm__Sort__Bubble__MODE_ID'};
         delete $main::{'RPerl__Algorithm__Inefficient__MODE_ID'};
 
         # DEV NOTE: must call long form of cpp_load() to bypass mysterious 'undefined subroutine' symtab weirdness
+        # ONLY 2 MODULES
         #lives_ok( sub { RPerl::Algorithm::Sort::Bubble::cpp_load(); }, q{RPerl::Algorithm::Sort::Bubble::cpp_load() lives} );
         lives_ok( sub { &{ $RPerl::Algorithm::Sort::Bubble::{'cpp_load'} }(); }, q{RPerl::Algorithm::Sort::Bubble::cpp_load() lives} );    # long form
-        lives_ok( sub { &{ $RPerl::Algorithm::Inefficient::{'cpp_load'} }(); }, q{RPerl::Algorithm::Inefficient::cpp_load() lives} );    # long form
+        lives_ok( sub { &{ $RPerl::Algorithm::Inefficient::{'cpp_load'} }(); },  q{RPerl::Algorithm::Inefficient::cpp_load() lives} );     # long form
 
 #RPerl::diag('in 08_precompiled_oo_inherit.t, have post-re-use, post-re-cpp_load Bubble symtab entries:' . "\n" . RPerl::analyze_class_symtab_entries('RPerl::Algorithm::Sort::Bubble') . "\n\n");
     }
 
-    foreach my string $type (qw(DataType__Integer DataType__Number DataType__String DataStructure__Array DataStructure__Hash Algorithm Algorithm__Sort Algorithm__Inefficient Algorithm__Sort__Bubble)) {
+    foreach my string $type (
+        qw(DataType__Integer DataType__Number DataType__String DataStructure__Array DataStructure__Hash Algorithm Algorithm__Sort Algorithm__Inefficient Algorithm__Sort__Bubble)
+        )
+    {
         lives_and(
             sub {
                 is( $RPerl::MODES->{ main->can( 'RPerl__' . $type . '__MODE_ID' )->() }->{ops},
@@ -277,7 +292,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     can_ok( 'RPerl::Algorithm::Sort::Bubble', 'uninherited__Bubble' );
     lives_and(    # TOOIN05
         sub {
-            is( uninherited__Bubble('Claws'),
+            is( RPerl::Algorithm::Sort::Bubble::uninherited__Bubble('Claws'),
                 'Bubble::uninherited__Bubble() RULES! ' . $mode_tagline,
                 q{TOOIN05 uninherited__Bubble('Claws') returns correct value}
             );
@@ -285,18 +300,21 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         q{TOOIN05 uninherited__Bubble('Claws') lives}
     );
 
-    can_ok( 'RPerl::Algorithm::Sort::Bubble', 'uninherited__Sort' );
+    can_ok( 'RPerl::Algorithm::Sort', 'uninherited__Sort' );
     lives_and(    # TOOIN06
         sub {
-            is( uninherited__Sort('Claws'), 'Sort::uninherited__Sort() RULES! ' . $mode_tagline, q{TOOIN06 uninherited__Sort('Claws') returns correct value} );
+            is( RPerl::Algorithm::Sort::uninherited__Sort('Claws'),
+                'Sort::uninherited__Sort() RULES! ' . $mode_tagline,
+                q{TOOIN06 uninherited__Sort('Claws') returns correct value}
+            );
         },
         q{TOOIN06 uninherited__Sort('Claws') lives}
     );
 
-    can_ok( 'RPerl::Algorithm::Sort::Bubble', 'uninherited__Algorithm' );
+    can_ok( 'RPerl::Algorithm', 'uninherited__Algorithm' );
     lives_and(    # TOOIN07
         sub {
-            is( uninherited__Algorithm('Claws'),
+            is( RPerl::Algorithm::uninherited__Algorithm('Claws'),
                 'Algorithm::uninherited__Algorithm() RULES! ' . $mode_tagline,
                 q{TOOIN07 uninherited__Algorithm('Claws') returns correct value}
             );
@@ -307,17 +325,13 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     can_ok( 'RPerl::Algorithm::Sort::Bubble', 'uninherited' );
     lives_and(    # TOOIN08
         sub {
-            is( uninherited('Wolverine'), 'Bubble::uninherited() ROCKS! ' . $mode_tagline, q{TOOIN08 uninherited('Wolverine') returns correct value} );
+            is( RPerl::Algorithm::Sort::Bubble::uninherited('Wolverine'),
+                'Bubble::uninherited() ROCKS! ' . $mode_tagline,
+                q{TOOIN08 uninherited('Wolverine') returns correct value}
+            );
         },
         q{TOOIN08 uninherited('Wolverine') lives}
     );
-
-
-
-
-
-
-
 
     # TOOIN09
     can_ok( 'RPerl::Algorithm::Inefficient', 'new' );
@@ -344,15 +358,18 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     can_ok( 'RPerl::Algorithm::Inefficient', 'uninherited__Inefficient' );
     lives_and(    # TOOIN13
         sub {
-            is( uninherited__Inefficient('Claws'), 'Inefficient::uninherited__Inefficient() RULES! ' . $mode_tagline, q{TOOIN13 uninherited__Inefficient('Claws') returns correct value} );
+            is( RPerl::Algorithm::Inefficient::uninherited__Inefficient('Claws'),
+                'Inefficient::uninherited__Inefficient() RULES! ' . $mode_tagline,
+                q{TOOIN13 uninherited__Inefficient('Claws') returns correct value}
+            );
         },
         q{TOOIN13 uninherited__Inefficient('Claws') lives}
     );
 
-    can_ok( 'RPerl::Algorithm::Inefficient', 'uninherited__Algorithm' );
+    can_ok( 'RPerl::Algorithm', 'uninherited__Algorithm' );
     lives_and(    # TOOIN14
         sub {
-            is( uninherited__Algorithm('Claws'),
+            is( RPerl::Algorithm::uninherited__Algorithm('Claws'),
                 'Algorithm::uninherited__Algorithm() RULES! ' . $mode_tagline,
                 q{TOOIN14 uninherited__Algorithm('Claws') returns correct value}
             );
@@ -360,14 +377,14 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         q{TOOIN14 uninherited__Algorithm('Claws') lives}
     );
 
-# DEV NOTE, CORRELATION #rp04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
-#    can_ok( 'RPerl::Algorithm::Inefficient', 'uninherited' );
-#    lives_and(    # TOOIN15
-#        sub {
-#            is( uninherited('Wolverine'), 'Inefficient::uninherited() ROCKS! ' . $mode_tagline, q{TOOIN15 uninherited('Wolverine') returns correct value} );
-#        },
-#        q{TOOIN15 uninherited('Wolverine') lives}
-#    );
+   # DEV NOTE, CORRELATION #rp04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
+   #    can_ok( 'RPerl::Algorithm::Inefficient', 'uninherited' );
+   #    lives_and(    # TOOIN15
+   #        sub {
+   #            is( uninherited('Wolverine'), 'Inefficient::uninherited() ROCKS! ' . $mode_tagline, q{TOOIN15 uninherited('Wolverine') returns correct value} );
+   #        },
+   #        q{TOOIN15 uninherited('Wolverine') lives}
+   #    );
 
 }
 
@@ -400,4 +417,5 @@ foreach my string $filename (
         }
     }
 }
+
 done_testing();
