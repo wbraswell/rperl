@@ -53,13 +53,31 @@ sub cpp_load {
 
         #RPerl::diag('in RPerl::Algorithm::Sort::Bubble::cpp_load, need load CPP code' . "\n");
 
+my $tmp_include_path = $RPerl::INCLUDE_PATH;
+$tmp_include_path =~ s/\//\ __\ /gxms;
+
         my $eval_string = <<"EOF";
 package main;
 use RPerl::Inline;
 BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'lib/RPerl/Algorithm/Sort/Bubble.cpp' ]]]\n" x 1); }
 #use Inline (CPP => 'lib/RPerl/Algorithm/Sort/Bubble.cpp', \%RPerl::Inline::ARGS);
 
-print 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), have \$RPerl::INCLUDE_PATH = ' . $RPerl::INCLUDE_PATH . "\n";
+
+# START HERE: fix paths!!!
+# START HERE: fix paths!!!
+# START HERE: fix paths!!!
+
+
+#print 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), have \$RPerl::INCLUDE_PATH = ' . $RPerl::INCLUDE_PATH . "\n";
+print '[[[ DEBUG DEBUG DEBUG ]]]' . "\n";
+print '[[[ DEBUG DEBUG DEBUG ]]]' . "\n";
+print '[[[ DEBUG DEBUG DEBUG ]]]' . "\n";
+print 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), have \$tmp_include_path = ' . $tmp_include_path . "\n";
+print '[[[ DEBUG DEBUG DEBUG ]]]' . "\n";
+print '[[[ DEBUG DEBUG DEBUG ]]]' . "\n";
+print '[[[ DEBUG DEBUG DEBUG ]]]' . "\n";
+
+
 use Inline (CPP => $RPerl::INCLUDE_PATH . '/lib/RPerl/Algorithm/Sort/Bubble.cpp', \%RPerl::Inline::ARGS);
 
 RPerl::diag("[[[ END 'use Inline' STAGE for 'lib/RPerl/Algorithm/Sort/Bubble.cpp' ]]]\n" x 1);
