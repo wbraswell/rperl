@@ -67,31 +67,28 @@ sub cpp_load {
 #print '[[[ DEBUG DEBUG DEBUG ]]]' . "\n";
 
 my $file_path = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.cpp';
-print '[[[ BEGIN DEBUG ]]]' . "\n";
-print '[[[ BEGIN DEBUG ]]]' . "\n";
-print '[[[ BEGIN DEBUG ]]]' . "\n";
-print 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), have $file_path = ' . $file_path . "\n";
+my $tmp_debug = '[[[ BEGIN DEBUG ]]]' . "\n";
+$tmp_debug .= 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), have $file_path = ' . $file_path . "\n";
 if (-e $file_path) {
-    print 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), $file_path exists' . "\n";
+    $tmp_debug .= 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), $file_path exists' . "\n";
     if (-f $file_path) {
-        print 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), $file_path is plain file' . "\n";
+        $tmp_debug .= 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), $file_path is plain file' . "\n";
         if (-r $file_path) {
-            print 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), $file_path is readable' . "\n";
+            $tmp_debug .= 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), $file_path is readable' . "\n";
         }
         else {
-            print 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), $file_path is NOT readable' . "\n";
+            $tmp_debug .= 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), $file_path is NOT readable' . "\n";
         }
     }
     else {
-        print 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), $file_path is NOT plain file' . "\n";
+        $tmp_debug .= 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), $file_path is NOT plain file' . "\n";
     }
 }
 else {
-    print 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), $file_path does NOT exist' . "\n";
+    $tmp_debug .= 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), $file_path does NOT exist' . "\n";
 }
-print '[[[ END DEBUG ]]]' . "\n";
-print '[[[ END DEBUG ]]]' . "\n";
-print '[[[ END DEBUG ]]]' . "\n";
+$tmp_debug .= '[[[ END DEBUG ]]]' . "\n";
+die $tmp_debug;
 
         my $eval_string = <<"EOF";
 package main;
