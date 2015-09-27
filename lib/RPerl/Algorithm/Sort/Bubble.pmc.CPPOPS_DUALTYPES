@@ -66,11 +66,38 @@ sub cpp_load {
 #print 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), have \$tmp_include_path = ' . $tmp_include_path . "\n";
 #print '[[[ DEBUG DEBUG DEBUG ]]]' . "\n";
 
+my $file_path = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.cpp';
+print '[[[ BEGIN DEBUG ]]]' . "\n";
+print '[[[ BEGIN DEBUG ]]]' . "\n";
+print '[[[ BEGIN DEBUG ]]]' . "\n";
+print 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), have $file_path = ' . $file_path . "\n";
+if (-e $file_path) {
+    print 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), $file_path exists' . "\n";
+    if (-f $file_path) {
+        print 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), $file_path is plain file' . "\n";
+        if (-r $file_path) {
+            print 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), $file_path is readable' . "\n";
+        }
+        else {
+            print 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), $file_path is NOT readable' . "\n";
+        }
+    }
+    else {
+        print 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), $file_path is NOT plain file' . "\n";
+    }
+}
+else {
+    print 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), $file_path does NOT exist' . "\n";
+}
+print '[[[ END DEBUG ]]]' . "\n";
+print '[[[ END DEBUG ]]]' . "\n";
+print '[[[ END DEBUG ]]]' . "\n";
+
         my $eval_string = <<"EOF";
 package main;
 use RPerl::Inline;
 BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/Algorithm/Sort/Bubble.cpp' ]]]\n" x 1); }
-use Inline (CPP => $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.cpp', \%RPerl::Inline::ARGS);
+use Inline (CPP => $file_path, \%RPerl::Inline::ARGS);
 RPerl::diag("[[[ END 'use Inline' STAGE for 'RPerl/Algorithm/Sort/Bubble.cpp' ]]]\n" x 1);
 1;
 EOF
