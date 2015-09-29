@@ -9,6 +9,7 @@ tests
 	accessors/mutators including get_*_element() & get_*_value(); subclasses Foo_raw type; $properties & VariableDeclaration array size on non-arrayref type;
 	$properties array size PERLOPS_PERLTYPES generation; variable & retrieval type mismatches, etc; get_raw() & set_raw()
     t/13_compile_execute.t (?) for proper functionality
+	*_arrayref_arrayref_arrayref
 figure out <> vs "" and also long-path-deps in includes in Bubble.cpp & Bubble.h
 
 RELEASE v1.2 HALLOWEEN 
@@ -57,6 +58,7 @@ DONE RPerl website, n-body timings, update
 DONE ensure perfect match for compiled Algorithm.*, Sort.*, Bubble.*, Inefficient.* files with hand-compiled *.CPPOPS_CPPTYPES versions
 
 broken shims!
+
 
 
 App, PhysicsPerl, Alioth Shootout N-Body Benchmark, Approved

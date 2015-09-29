@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array::SubTypes;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_000;
+our $VERSION = 0.007_100;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd) # DEVELOPER DEFAULT 1b: allow unreachable & POD-commented code, must be after line 1
@@ -609,7 +609,46 @@ use strict;
 use warnings;
 use parent -norequire, qw(arrayref_arrayref);
 
-# [[[ HASH ARRAYS (2-dimesional) ]]]
+# [[[ ARRAY ARRAY ARRAYS (3-dimensional) ]]]
+
+# (ref to array) of (refs to arrays) of (refs to arrays)
+package  # hide from PAUSE indexing
+    arrayref_arrayref_arrayref;
+use strict;
+use warnings;
+use parent -norequire, qw(arrayref);
+
+# [ HOMOGENEOUS ARRAY ARRAY ARRAYS (3-dimensional) ]
+
+# (ref to array) of (refs to arrays) of (refs to (arrays of integers))
+package  # hide from PAUSE indexing
+    integer_arrayref_arrayref_arrayref;
+use strict;
+use warnings;
+use parent -norequire, qw(arrayref_arrayref_arrayref);
+
+# (ref to array) of (refs to arrays) of (refs to (arrays of numbers))
+package  # hide from PAUSE indexing
+    number_arrayref_arrayref_arrayref;
+use strict;
+use warnings;
+use parent -norequire, qw(arrayref_arrayref_arrayref);
+
+# (ref to array) of (refs to arrays) of (refs to (arrays of strings))
+package  # hide from PAUSE indexing
+    string_arrayref_arrayref_arrayref;
+use strict;
+use warnings;
+use parent -norequire, qw(arrayref_arrayref_arrayref);
+
+# (ref to array) of (refs to arrays) of (refs to (arrays of scalars))
+package  # hide from PAUSE indexing
+    scalartype_arrayref_arrayref_arrayref;
+use strict;
+use warnings;
+use parent -norequire, qw(arrayref_arrayref_arrayref);
+
+# [[[ HASH ARRAYS (2-dimensional) ]]]
 
 # (ref to array) of (refs to hashs)
 package  # hide from PAUSE indexing
@@ -618,7 +657,7 @@ use strict;
 use warnings;
 use parent -norequire, qw(arrayref);
 
-# [[[ OBJECT ARRAYS (2-dimesional) ]]]
+# [[[ OBJECT ARRAYS (2-dimensional) ]]]
 
 # (ref to array) of objects
 package  # hide from PAUSE indexing
