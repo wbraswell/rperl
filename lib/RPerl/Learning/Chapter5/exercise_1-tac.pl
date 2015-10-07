@@ -7,7 +7,7 @@
 use RPerl;
 use strict;
 use warnings;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -38,9 +38,15 @@ our string_arrayref $tac = sub {
 
         my string_arrayref $file_lines = [];
 
-        # START HERE: read input lines, reverse, print
-        # START HERE: read input lines, reverse, print
-        # START HERE: read input lines, reverse, print
+        foreach my string $file_line (<$FILE>) {
+            push @{$file_lines}, $file_line;
+        }
+
+        $file_lines = [ reverse @{$file_lines} ];
+
+        foreach my string $file_line ( @{$file_lines} ) {
+            print $file_line;
+        }
 
         if ( not close $FILE ) {
             croak 'ERROR: Failed to close file ' . $file_name . ' after reading, croaking';
