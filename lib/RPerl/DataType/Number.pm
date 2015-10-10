@@ -43,6 +43,7 @@ use warnings;
 # [[[ INCLUDES ]]]
 use RPerl::DataType::String;    # need string type
 use RPerl::DataType::Integer; # need integer type, normally included by rperltypes.pm but put here in case we don't use rperltypes.pm
+use POSIX qw(floor);
 
 # [[[ TYPE-CHECKING ]]]
 our void $number_CHECK = sub {
@@ -76,6 +77,12 @@ our void $number_CHECKTRACE = sub {
             "\nERROR ENV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but non-number value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
         );
     }
+};
+
+# [[[ INTEGERIFY ]]]
+our integer $number_to_integer = sub {
+    (my number $input_number) = @_;
+    return floor $input_number;
 };
 
 # [[[ STRINGIFY ]]]

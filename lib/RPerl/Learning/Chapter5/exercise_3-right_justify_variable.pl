@@ -7,7 +7,7 @@
 use RPerl;
 use strict;
 use warnings;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -27,10 +27,7 @@ our string_arrayref $right_justify_20 = sub {
 
     my integer $ruler_width_tens = 6;  # default to ruler line width 60
     if ($column_width > 60) {
-# START HERE: fix number-to-integer math
-# START HERE: fix number-to-integer math
-# START HERE: fix number-to-integer math
-        $ruler_width_tens = (number_to_integer($column_width / 10) * 10) + 10;
+        $ruler_width_tens = number_to_integer($column_width / 10) + 1;
     }
 
     print "\n";
