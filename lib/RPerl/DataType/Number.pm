@@ -3,7 +3,7 @@ package RPerl::DataType::Number;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_000;
+our $VERSION = 0.005_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
