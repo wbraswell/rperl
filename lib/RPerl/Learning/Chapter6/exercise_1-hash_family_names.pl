@@ -14,7 +14,7 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 
-our string_arrayref $given_to_family_name = sub {
+our void $given_to_family_name = sub {
     my string_hashref $names = {
         fred => 'flintstone',
         barney => 'rubble',

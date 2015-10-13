@@ -15,7 +15,7 @@ our $VERSION = 0.002_000;
 
 # [[[ SUBROUTINES ]]]
 
-our string_arrayref $right_justify_20 = sub {
+our void $right_justify_20 = sub {
     my string_arrayref $input_strings = [];
     print 'Please input integer column width, then press <ENTER>, then press <CTRL-D>:' . "\n";
     my integer $column_width = string_to_integer(<STDIN>);

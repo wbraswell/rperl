@@ -22,4 +22,4 @@ my string $repeat_integer_string = <STDIN>;
 my integer $repeat_integer = string_to_integer($repeat_integer_string);
 
 print "\n";
-print ($repeat_string x $repeat_integer);
+print $repeat_string x $repeat_integer;

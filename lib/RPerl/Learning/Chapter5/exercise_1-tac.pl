@@ -14,7 +14,7 @@ our $VERSION = 0.002_000;
 
 # [[[ SUBROUTINES ]]]
 
-our string_arrayref $tac = sub {
+our void $tac = sub {
     ( my string_arrayref $ARGV ) = @_;
     $ARGV = [ reverse @{$ARGV} ];
     foreach my string $file_name ( @{$ARGV} ) {

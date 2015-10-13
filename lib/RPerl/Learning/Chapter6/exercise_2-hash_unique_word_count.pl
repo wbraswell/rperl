@@ -14,7 +14,7 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 
-our string_arrayref $unique_word_count = sub {
+our void $unique_word_count = sub {
     my string_hashref $words = {};
 
     print 'Please input zero or more words, separated by <ENTER>, ended by <CTRL-D>:' . "\n";

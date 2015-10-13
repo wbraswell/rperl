@@ -15,7 +15,7 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 
-our string_arrayref $right_justify_20 = sub {
+our void $right_justify_20 = sub {
     my string_arrayref $input_strings = [];
     print 'Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
     while (my string $input_string = <STDIN>) {

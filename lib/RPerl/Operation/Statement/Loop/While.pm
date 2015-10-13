@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::Loop::While;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_010;
+our $VERSION = 0.002_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement::Loop);
@@ -26,14 +26,13 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap LoopWhile_168 from Loop_164
+    # unwrap LoopWhile_168 and LoopWhile_169 from Loop_164
     if ( $self_class eq 'Loop_164' ) {    # Loop -> LoopWhile
         $self = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    # LoopWhile -> 'while' LPAREN SubExpression ')' CodeBlock
-    if ( $self_class eq 'LoopWhile_168' ) {
+    if ( $self_class eq 'LoopWhile_168' ) {  # LoopWhile -> 'while' LPAREN SubExpression ')' CodeBlock
         my string $while         = $self->{children}->[0];
         my string $left_paren    = $self->{children}->[1];
         my object $subexpression = $self->{children}->[2];
@@ -47,11 +46,28 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         $rperl_source_subgroup = $codeblock->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
+    elsif ( $self_class eq 'LoopWhile_169' ) {  # LoopWhile -> 'while' LPAREN_MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrStdin ')' CodeBlock
+        my string $while         = $self->{children}->[0];
+        my string $left_paren_my    = $self->{children}->[1];
+        my string $type = $self->{children}->[2];
+        my string $variable_symbol = $self->{children}->[3];
+        my string $assign                  = $self->{children}->[4];
+        my object $subexpression_or_stdin = $self->{children}->[5];
+        my string $right_paren   = $self->{children}->[6];
+        my object $codeblock     = $self->{children}->[7];
+
+        $rperl_source_group->{PMC} .= $while . q{ } . $left_paren_my . q{ } . $type . q{ } . $variable_symbol . q{ } . $assign . q{ };
+        my object $rperl_source_subgroup = $subexpression_or_stdin->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+        $rperl_source_group->{PMC} .= q{ } . $right_paren . q{ };
+        $rperl_source_subgroup = $codeblock->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+    }
     else {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where LoopWhile_168 expected, dying' )
+                . ' found where LoopWhile_168 or LoopWhile_169 expected, dying' )
             . "\n";
     }
     return $rperl_source_group;
@@ -83,8 +99,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $self_class = ref $self;
     }
 
-    # LoopWhile -> 'while' LPAREN SubExpression ')' CodeBlock
-    if ( $self_class eq 'LoopWhile_168' ) {
+    if ( $self_class eq 'LoopWhile_168' ) {  # LoopWhile -> 'while' LPAREN SubExpression ')' CodeBlock
         my string $while         = $self->{children}->[0];
         my string $left_paren    = $self->{children}->[1];
         my object $subexpression = $self->{children}->[2];
@@ -98,11 +113,14 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $cpp_source_subgroup = $codeblock->ast_to_cpp__generate__CPPOPS_CPPTYPES($loop_label, $modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
+    elsif ( $self_class eq 'LoopWhile_169' ) {  # LoopWhile -> 'while' LPAREN_MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrStdin ')' CodeBlock
+        $cpp_source_group = { CPP => q{// <<< RP::O::S::L::W __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>} . "\n" };
+    }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where LoopWhile_168 expected, dying' )
+                . ' found where LoopWhile_168 or LoopWhile_169 expected, dying' )
             . "\n";
     }
     return $cpp_source_group;

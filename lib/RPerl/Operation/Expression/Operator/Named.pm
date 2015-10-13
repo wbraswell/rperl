@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::Operator::Named;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_020;
+our $VERSION = 0.001_030;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::Operator);
@@ -28,6 +28,7 @@ our string_hashref $NAMES = {
     'sin'    => 'RPerl::Operation::Expression::Operator::Named::Sine',
     'sort'   => 'RPerl::Operation::Expression::Operator::Named::Sort',
     'split'  => 'RPerl::Operation::Expression::Operator::Named::Split',
+    'reverse'  => 'RPerl::Operation::Expression::Operator::Named::Reverse',
     'values' => 'RPerl::Operation::Expression::Operator::Named::Values'
 };
 
