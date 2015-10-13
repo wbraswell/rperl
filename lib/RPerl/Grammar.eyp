@@ -2,7 +2,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.001_960;
+    our $VERSION = 0.001_970;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -74,7 +74,7 @@
 %token OP02_METHOD_THINARROW_NEW = /(->new\()/                   # precedence 02 infix: thin arrow, class constructor
 %token OP02_METHOD_THINARROW     = /(->[a-zA-Z]\w*)/             # precedence 02 infix: thin arrow, method dereference and call
 %token OP05_MATH_NEG_LPAREN      = /(-\()/                       # precedence 05 prefix: arithmetic negative
-%token OP08_MATH_ADD_SUB         = /(\+|-|sse_add|sse_sub)/      # precedence 08 infix: arithmetic add, subtract
+%token OP08_MATH_ADD_SUB         = /(\+|-\s|sse_add|sse_sub)/    # precedence 08 infix: arithmetic add, subtract
 %token OP11_COMPARE_LT_GT        = /(<=|>=|<|>|lt|gt|le|ge)\s/   # precedence 11 infix: comparison less than, greater than, less or equal, greater or equal
 %token OP19_VARIABLE_ASSIGN      = /(=)/                         # precedence 19 infix: assign
 %token OP01_PRINT                = /(print|printf)\s/            # precedence 01 prefix void: print to STDOUT, STDERR, or filehandle
@@ -131,6 +131,7 @@
 %left       OP01_NAMED_VOID
 %left       OP01_PRINT
 
+%token NON_WHITESPACE       = /(\w+[^\w\s()]+\w*)/  # one or more word characters, one or more non-word non-whitespace non-parentheses characters, zero or more word characters
 %token WORD                 = /([a-z]\w*|[A-Z]\w*[a-z]\w*)/   # lowercase letter followed by optional word characters; or uppercase letter followed by at least one lowercase letter and optional word characters
 %token WORD_UPPERCASE       = /([A-Z][A-Z0-9_]*|[A-Z])/       # single uppercase letter, or uppercase letter followed by uppercase letters, numbers, and underscores; ex. 'FOOBAR_42_HOWDY'
 %token COLON                = /(:)/
@@ -138,7 +139,6 @@
 %token LPAREN               = /(\()/
 %token LBRACKET             = /(\[)/
 %token LBRACE               = /(\{)/
-%token NON_WHITESPACE       = /(\S+)/  # one or more non-whitespace characters
 
 %%
 

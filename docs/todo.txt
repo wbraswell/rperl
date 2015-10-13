@@ -14,6 +14,7 @@ tests
     t/13_compile_execute.t (?) for proper functionality
 	*_arrayref_arrayref_arrayref
 	while (my FOO)
+	non-whitespace qw(foo*baz bar-hypenated bla+rgh)
 figure out <> vs "" and also long-path-deps in includes in Bubble.cpp & Bubble.h
 
 RELEASE v1.2 HALLOWEEN 

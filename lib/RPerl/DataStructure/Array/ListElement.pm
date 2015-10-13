@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array::ListElement;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -44,7 +44,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
         foreach my object $element ( @{ $elements->{children} } ) {
 #            RPerl::diag( 'in Array::ListElement->ast_to_rperl__generate(), have $element = ' . "\n" . RPerl::Parser::rperl_ast__dump($element) . "\n" );
-            my string $element_name = $element->{attr};
+            my string $element_name = $element->{children}->[0];
             if ( $element_names ne q{} ) {
                 $element_names .= q{ };
             }
