@@ -6,7 +6,6 @@
 # <<< EXECUTE_SUCCESS: '@' >>>
 # <<< EXECUTE_SUCCESS: '$%^&*-' >>>
 # <<< EXECUTE_SUCCESS: "_=+[]{}|;:'" >>>
-# <<< EXECUTE_SUCCESS: '".<>/?' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
