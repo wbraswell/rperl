@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  |' >>>
+
 # [[[ HEADER ]]]
 use RPerl;
 use strict;
@@ -11,7 +16,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string_arrayref $s_array = ['buffalo', qw(alpha beta gamma), 'howdy'];
+my string_arrayref $s_array = [qw(` ~! @ $%^&*- _=+[]{} |;:'".<>/?)];
 foreach my string $s ( @{$s_array} ) {
     print '$s = ', $s, "\n";
 }

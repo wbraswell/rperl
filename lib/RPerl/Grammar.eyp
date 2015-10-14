@@ -2,7 +2,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.001_970;
+    our $VERSION = 0.001_980;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -131,14 +131,14 @@
 %left       OP01_NAMED_VOID
 %left       OP01_PRINT
 
-%token NON_WHITESPACE       = /(\w+[^\w\s()]+\w*)/  # one or more word characters, one or more non-word non-whitespace non-parentheses characters, zero or more word characters
-%token WORD                 = /([a-z]\w*|[A-Z]\w*[a-z]\w*)/   # lowercase letter followed by optional word characters; or uppercase letter followed by at least one lowercase letter and optional word characters
-%token WORD_UPPERCASE       = /([A-Z][A-Z0-9_]*|[A-Z])/       # single uppercase letter, or uppercase letter followed by uppercase letters, numbers, and underscores; ex. 'FOOBAR_42_HOWDY'
 %token COLON                = /(:)/
 %token LPAREN_MY            = /(\(\s*my)/
 %token LPAREN               = /(\()/
 %token LBRACKET             = /(\[)/
 %token LBRACE               = /(\{)/
+%token NON_WHITESPACE       = /([^\s()]*[^\w\s()]+[^\s()]*)/  # non-whitespace, including word characters and special characters, except for parentheses
+%token WORD                 = /([a-z]\w*|[A-Z]\w*[a-z]\w*)/   # lowercase letter followed by optional word characters; or uppercase letter followed by at least one lowercase letter and optional word characters
+%token WORD_UPPERCASE       = /([A-Z][A-Z0-9_]*|[A-Z])/       # single uppercase letter, or uppercase letter followed by uppercase letters, numbers, and underscores; ex. 'FOOBAR_42_HOWDY'
 
 %%
 

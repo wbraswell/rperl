@@ -30,13 +30,13 @@ our void $greet_planet = sub {
 
     # NEED FIX: handle possibility of pre-existing CHECK/TRACEs
     #::integer_CHECK($arg0);
-    #::integer_CHECKTRACE( $arg0, qw{$arg0}, 'greet_planet()' );
+    #::integer_CHECKTRACE( $arg0, qw($arg0), 'greet_planet()' );
 
     #::string_CHECK($arg1);
-    #::string_CHECKTRACE( $arg1, qw{$arg1}, 'greet_planet()' );
+    #::string_CHECKTRACE( $arg1, qw($arg1), 'greet_planet()' );
 
     #::number_arrayref_CHECK($arg2);
-    #::number_arrayref_CHECKTRACE( $arg2, qw{$arg2}, 'greet_planet()' );
+    #::number_arrayref_CHECKTRACE( $arg2, qw($arg2), 'greet_planet()' );
 
     # [[[ PRINT ARGUMENT(S) ]]]
 

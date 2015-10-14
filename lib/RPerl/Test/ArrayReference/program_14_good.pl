@@ -13,5 +13,5 @@ our $VERSION = 0.001_000;
 
 my string_arrayref $s_array = [qw(alpha beta gamma)];
 foreach my string $s ( @{$s_array} ) {
-    print '$s= ', $s, "\n";
+    print '$s = ', $s, "\n";
 }

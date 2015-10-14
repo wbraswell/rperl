@@ -1,5 +1,6 @@
 DONE split n-body SSE from normal code, create linking in scripts
 DONE ensure perfect match for compiled Algorithm.*, Sort.*, Bubble.*, Inefficient.* files with hand-compiled *.CPPOPS_CPPTYPES versions
+Learning RPerl, all exercises parse
 
 sort out Operator::Expression::Operator::Named vs NamedUnary
 10 more builtins, CPPOPS_CPPTYPES mode

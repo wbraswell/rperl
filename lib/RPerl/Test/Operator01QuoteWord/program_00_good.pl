@@ -1,4 +1,12 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< EXECUTE_SUCCESS: 'foo' >>>
+# <<< EXECUTE_SUCCESS: 'quux' >>>
+# <<< EXECUTE_SUCCESS: 'zorg' >>>
+# <<< EXECUTE_SUCCESS: 'munge' >>>
+# <<< EXECUTE_SUCCESS: 'frob' >>>
+
 # [[[ HEADER ]]]
 use RPerl;
 use strict;
@@ -11,7 +19,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string_arrayref $s_array = ['buffalo', qw(alpha beta gamma), 'howdy'];
+my string_arrayref $s_array = [qw(foo quux zorg munge frob)];
 foreach my string $s ( @{$s_array} ) {
     print '$s = ', $s, "\n";
 }
