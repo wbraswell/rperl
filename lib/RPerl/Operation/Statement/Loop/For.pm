@@ -26,13 +26,13 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap LoopFor_165 and LoopFor_166 from Loop_162
-    if ( $self_class eq 'Loop_162' ) {    # Loop -> LoopFor
+    # unwrap LoopFor_163 and LoopFor_164 from Loop_160
+    if ( $self_class eq 'Loop_160' ) {    # Loop -> LoopFor
         $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if ( $self_class eq 'LoopFor_165' ) {
+    if ( $self_class eq 'LoopFor_163' ) {
 
         # LoopFor -> 'for' MY TYPE_INTEGER VARIABLE_SYMBOL LPAREN SubExpression OP17_LIST_RANGE SubExpression ')' CodeBlock
         my string $for             = $self->{children}->[0];
@@ -56,7 +56,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         $rperl_source_subgroup = $codeblock->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
-    elsif ( $self_class eq 'LoopFor_166' ) {
+    elsif ( $self_class eq 'LoopFor_164' ) {
 
 # LoopFor -> 'for' LPAREN_MY TYPE_INTEGER VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpression ';' VARIABLE_SYMBOL OP11_COMPARE_LT_GT SubExpression ';' SubExpressionOrVarMod ')' CodeBlock
         my string $for                     = $self->{children}->[0];
@@ -99,7 +99,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where Loop_162, LoopFor_165, or LoopFor_166 expected, dying' )
+                . ' found where Loop_160, LoopFor_163, or LoopFor_164 expected, dying' )
             . "\n";
     }
     return $rperl_source_group;
@@ -121,14 +121,14 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap LoopFor_165 and LoopFor_166 from Loop_162
-    if ( $self_class eq 'Loop_162' ) {    # Loop -> LoopFor
+    # unwrap LoopFor_163 and LoopFor_164 from Loop_160
+    if ( $self_class eq 'Loop_160' ) {    # Loop -> LoopFor
         $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
 
     # LoopFor -> 'for' MY TYPE_INTEGER VARIABLE_SYMBOL LPAREN SubExpression OP17_LIST_RANGE SubExpression ')' CodeBlock
-    if ( $self_class eq 'LoopFor_165' ) {
+    if ( $self_class eq 'LoopFor_163' ) {
         my string $for             = $self->{children}->[0];
         my string $type_integer    = $self->{children}->[2];
         my string $variable_symbol = $self->{children}->[3];
@@ -192,7 +192,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $cpp_source_subgroup = $codeblock->ast_to_cpp__generate__CPPOPS_CPPTYPES($loop_label, $modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
-    elsif ( $self_class eq 'LoopFor_166' ) {
+    elsif ( $self_class eq 'LoopFor_164' ) {
 
 # LoopFor -> 'for' LPAREN_MY TYPE_INTEGER VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpression ';' VARIABLE_SYMBOL OP11_COMPARE_LT_GT SubExpression ';' SubExpressionOrVarMod ')' CodeBlock
         my string $for                     = $self->{children}->[0];
@@ -261,7 +261,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . $self_class
-                . ' found where Loop_162, LoopFor_165, or LoopFor_166 expected, dying' )
+                . ' found where Loop_160, LoopFor_163, or LoopFor_164 expected, dying' )
             . "\n";
     }
     return $cpp_source_group;

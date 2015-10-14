@@ -47,14 +47,14 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     #    RPerl::diag( 'in Subroutine->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    # unwrap Subroutine_50 from MethodOrSubroutine_79
-    if ( ( ref $self ) eq 'MethodOrSubroutine_79' ) {
+    # unwrap Subroutine_48 from MethodOrSubroutine_77
+    if ( ( ref $self ) eq 'MethodOrSubroutine_77' ) {
         $self = $self->{children}->[0];
     }
 
-    if ( ( ref $self ) ne 'Subroutine_50' ) {
+    if ( ( ref $self ) ne 'Subroutine_48' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule ' . ( ref $self ) . ' found where Subroutine_50 expected, dying' )
+            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule ' . ( ref $self ) . ' found where Subroutine_48 expected, dying' )
             . "\n";
     }
 
@@ -105,7 +105,7 @@ our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = 
  
     my string_hashref $cpp_source_group = { H => q{} };
 
-    $self = $self->{children}->[0];    # unwrap Subroutine_50 from MethodOrSubroutine_79
+    $self = $self->{children}->[0];    # unwrap Subroutine_48 from MethodOrSubroutine_77
     my string $return_type = $self->{children}->[1]->{children}->[0];
     my string $name        = $self->{children}->[2];
     my object $arguments_optional = $self->{children}->[4];
@@ -150,7 +150,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group = { CPP => q{} };
 
-    $self = $self->{children}->[0];    # unwrap Subroutine_50 from MethodOrSubroutine_79
+    $self = $self->{children}->[0];    # unwrap Subroutine_48 from MethodOrSubroutine_77
     my string $return_type = $self->{children}->[1]->{children}->[0];
     my string $name        = $self->{children}->[2];
     my object $arguments_optional = $self->{children}->[4];
@@ -220,7 +220,7 @@ our string_hashref::method $ast_to_cpp__generate_shim__CPPOPS_CPPTYPES = sub {
  
     my string_hashref $cpp_source_group = { PMC => q{} };
 
-    $self = $self->{children}->[0];    # unwrap Subroutine_50 from MethodOrSubroutine_79
+    $self = $self->{children}->[0];    # unwrap Subroutine_48 from MethodOrSubroutine_77
     my string $name        = $self->{children}->[2];
 
 #RPerl::diag( 'in Subroutine->ast_to_cpp__generate_shim__CPPOPS_CPPTYPES(), have $arguments_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_optional) . "\n" );

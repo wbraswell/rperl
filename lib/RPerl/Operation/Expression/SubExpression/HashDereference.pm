@@ -27,15 +27,15 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap HashDereference_213 and HashDereference_214 from SubExpression_141 and HashEntry_204
-    if (   ( $self_class eq 'SubExpression_141' )  # SubExpression -> HashDereference
-        or ( $self_class eq 'HashEntry_204' ) )  # HashEntry -> HashDereference
+    # unwrap HashDereference_209 and HashDereference_210 from SubExpression_139 and HashEntry_200
+    if (   ( $self_class eq 'SubExpression_139' )  # SubExpression -> HashDereference
+        or ( $self_class eq 'HashEntry_200' ) )  # HashEntry -> HashDereference
     {
         $self = $self->{children}->[0];
     }
 
     $self_class = ref $self;
-    if ( $self_class eq 'HashDereference_213' ) {  # HashDereference -> '%{' Variable '}'
+    if ( $self_class eq 'HashDereference_209' ) {  # HashDereference -> '%{' Variable '}'
         my string $percent_left_brace = $self->{children}->[0];
         my object $variable      = $self->{children}->[1];
         my string $right_brace   = $self->{children}->[2];
@@ -46,7 +46,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= q{ } . $right_brace;
     }
-    elsif ( $self_class eq 'HashDereference_214' ) {  # HashDereference -> '%{' OPTIONAL-51 HashReference '}'
+    elsif ( $self_class eq 'HashDereference_210' ) {  # HashDereference -> '%{' OPTIONAL-51 HashReference '}'
         my string $percent_left_brace       = $self->{children}->[0];
         my object $type_inner_optional = $self->{children}->[1];
         my object $hash_reference     = $self->{children}->[2];
@@ -70,7 +70,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where HashDereference_213 or HashDereference_214 expected, dying'
+                . ' found where HashDereference_209 or HashDereference_210 expected, dying'
         ) . "\n";
     }
 

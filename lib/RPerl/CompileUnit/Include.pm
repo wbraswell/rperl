@@ -24,7 +24,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in Include->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 #    RPerl::diag( 'in Include->ast_to_rperl__generate(), have ::class($self) = ' . ::class($self) . "\n" );
-    if ( ref $self eq 'Include_43' ) {
+    if ( ref $self eq 'Include_41' ) {
         # Include -> USE WordScoped ';'
         my string $use_keyword = $self->{children}->[0];
         my string $module_name
@@ -35,7 +35,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
 #        RPerl::diag( 'in Include->ast_to_rperl__generate(), have $module_name = '  . $module_name . "\n" );
     }
-    elsif ( ref $self eq 'Include_44' ) {
+    elsif ( ref $self eq 'Include_42' ) {
         # Include -> USE WordScoped OP01_QW PLUS-15 ')' ';'
         my string $use_keyword = $self->{children}->[0];
         my string $module_name
@@ -68,7 +68,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $self )
-                . ' found where Include_43 or Include_44 expected, dying' )
+                . ' found where Include_41 or Include_42 expected, dying' )
             . "\n";
     }
 
@@ -91,7 +91,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my string_hashref $cpp_source_group = { H => q{} };
 
     # NEED ANSWER: no difference between wholesale includes and selective includes in C++?
-    if (( ref $self eq 'Include_43' ) or ( ref $self eq 'Include_44' )) {
+    if (( ref $self eq 'Include_41' ) or ( ref $self eq 'Include_42' )) {
         # Include -> USE WordScoped ...
         # DEV NOTE: ignore manually included RPerl* and rperl* modules, presumably they will all be automatically included
         my string $module_name = $self->{children}->[1]->{children}->[0];
@@ -113,7 +113,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . ( ref $self )
-                . ' found where Include_43 or Include_44 expected, dying' )
+                . ' found where Include_41 or Include_42 expected, dying' )
             . "\n";
     }
     

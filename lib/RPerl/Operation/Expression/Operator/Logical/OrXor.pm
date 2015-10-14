@@ -25,8 +25,8 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in Operator::Logical::OrXor->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if (( $self_class eq 'Operator_105' )  # Operator -> SubExpression OP16_LOGICAL_OR SubExpression
-        or ( $self_class eq 'Operator_110' )  # Operator -> SubExpression OP24_LOGICAL_OR_XOR SubExpression
+    if (( $self_class eq 'Operator_103' )  # Operator -> SubExpression OP16_LOGICAL_OR SubExpression
+        or ( $self_class eq 'Operator_108' )  # Operator -> SubExpression OP24_LOGICAL_OR_XOR SubExpression
         )
     {
         my string_hashref $rperl_source_subgroup
@@ -43,7 +43,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where Operator_105 or Operator_110 expected, dying' )
+                . ' found where Operator_103 or Operator_108 expected, dying' )
             . "\n";
     }
 

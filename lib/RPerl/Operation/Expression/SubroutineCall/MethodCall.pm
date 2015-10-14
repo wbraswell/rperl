@@ -25,11 +25,11 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in MethodCall->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) ne 'Expression_132' ) {
+    if ( ( ref $self ) ne 'Expression_130' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $self )
-                . ' found where Expression_132 expected, dying' )
+                . ' found where Expression_130 expected, dying' )
             . "\n";
     }
 
@@ -75,11 +75,11 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
 #    RPerl::diag( 'in MethodCall->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) ne 'Expression_132' ) {
+    if ( ( ref $self ) ne 'Expression_130' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO CPP: grammar rule '
                 . ( ref $self )
-                . ' found where Expression_132 expected, dying' )
+                . ' found where Expression_130 expected, dying' )
             . "\n";
     }
 

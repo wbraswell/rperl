@@ -36,8 +36,8 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in Operator::NamedUnary->ast_to_rperl__generate(), have $self_class = ' . $self_class . "\n");
 
     my string $operator_name;
-    if (( $self_class eq 'Operator_98' ) or    # Operator -> OP10_NAMED_UNARY SubExpression
-        ( $self_class eq 'Operator_99' )) {  # Operator -> OP10_NAMED_UNARY
+    if (( $self_class eq 'Operator_96' ) or    # Operator -> OP10_NAMED_UNARY SubExpression
+        ( $self_class eq 'Operator_97' )) {  # Operator -> OP10_NAMED_UNARY
         # remove trailing whitespace, caused by the need to have the grammar match some tokens with a trailing whitespace, as with 'scalar ', etc.
         $self->{children}->[0] =~ s/^(\w+)\s*$/$1/gxms;
         $operator_name = $self->{children}->[0];
@@ -46,7 +46,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where Operator_98 or Operator_99 expected, dying' )
+                . ' found where Operator_96 or Operator_97 expected, dying' )
             . "\n";
     }
 #    RPerl::diag( 'in Operator::NamedUnary->ast_to_rperl__generate(), have $operator_name = ' . q{'} . $operator_name . q{'} . "\n" );
@@ -89,8 +89,8 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     my string $self_class = ref $self;
     my string $operator_name;
-    if (( $self_class eq 'Operator_98' ) or    # Operator -> OP10_NAMED_UNARY SubExpression
-        ( $self_class eq 'Operator_99' )) {  # Operator -> OP10_NAMED_UNARY
+    if (( $self_class eq 'Operator_96' ) or    # Operator -> OP10_NAMED_UNARY SubExpression
+        ( $self_class eq 'Operator_97' )) {  # Operator -> OP10_NAMED_UNARY
         # remove trailing whitespace, caused by the need to have the grammar match some tokens with a trailing whitespace, as with 'scalar ', etc.
         $self->{children}->[0] =~ s/^(\w+)\s*$/$1/gxms;
         $operator_name = $self->{children}->[0];
@@ -99,7 +99,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . $self_class
-                . ' found where Operator_98 or Operator_99 expected, dying' )
+                . ' found where Operator_96 or Operator_97 expected, dying' )
             . "\n";
     }
 #    RPerl::diag( 'in Operator::NamedUnary->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $operator_name = ' . q{'} . $operator_name . q{'} . "\n" );

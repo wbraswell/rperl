@@ -43,20 +43,20 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     my string $self_class = ref $self;
     my string $operator_name;
-    if (( $self_class eq 'Operator_83' ) # Operator -> OP01_NAMED SubExpression
-        or ( $self_class eq 'OperatorVoid_121' )
+    if (( $self_class eq 'Operator_81' ) # Operator -> OP01_NAMED SubExpression
+        or ( $self_class eq 'OperatorVoid_119' )
         ) # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
     {
         $operator_name = $self->{children}->[0];
     }
-    elsif ( $self_class eq 'Operator_84' ) { # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
+    elsif ( $self_class eq 'Operator_82' ) { # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
         $operator_name = $self->{children}->[1];
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where Operator_83, Operator_84, or OperatorVoid_121 expected, dying'
+                . ' found where Operator_81, Operator_82, or OperatorVoid_119 expected, dying'
         ) . "\n";
     }
 

@@ -36,7 +36,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in Operator::Named::Reverse->ast_to_rperl__generate(), received $operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_named) . "\n" );
 
     my string $operator_named_class = ref $operator_named;
-    if ( $operator_named_class eq 'Operator_83' ) # Operator -> OP01_NAMED SubExpression
+    if ( $operator_named_class eq 'Operator_81' ) # Operator -> OP01_NAMED SubExpression
     {
         $rperl_source_group->{PMC} .= $operator_named->{children}->[0] . q{ };
         my string_hashref $rperl_source_subgroup
@@ -45,7 +45,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
     }
-    elsif ( $operator_named_class eq 'Operator_84' ) { # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
+    elsif ( $operator_named_class eq 'Operator_82' ) { # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
         my string $left_paren = $operator_named->{children}->[0];
         my string $operator_name = $operator_named->{children}->[1];
         my object $argument0 = $operator_named->{children}->[2];
@@ -87,7 +87,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= q{ } . $right_paren;
     }
-    elsif ( $operator_named_class eq 'OperatorVoid_121' ) { # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
+    elsif ( $operator_named_class eq 'OperatorVoid_119' ) { # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
         my string $operator_name = $operator_named->{children}->[0];
         my object $argument0 = $operator_named->{children}->[1];
         my string $list_comma = $operator_named->{children}->[2];
@@ -132,7 +132,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ($operator_named_class)
-                . ' found where Operator_83, Operator_84, or OperatorVoid_121 expected, dying'
+                . ' found where Operator_81, Operator_82, or OperatorVoid_119 expected, dying'
         ) . "\n";
     }
 
