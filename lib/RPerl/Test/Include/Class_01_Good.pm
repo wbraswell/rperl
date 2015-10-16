@@ -1,10 +1,6 @@
-# [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
-# <<< PARSE_ERROR: 'near "use RPerl::Test,"' >>>
-
 # [[[ HEADER ]]]
 use RPerl;
-package RPerl::Test::Include::Class_00_Bad_07;
+package RPerl::Test::Include::Class_01_Good;
 use strict;
 use warnings;
 our $VERSION = 0.001_000;
@@ -14,8 +10,8 @@ use parent qw(RPerl::Test);
 use RPerl::Test;
 
 # [[[ INCLUDES ]]]
-use RPerl::Test::Foo;
-use RPerl::Test,:Bar;
+use RPerl::Test::Foo qw(quux quince qorge);
+use RPerl::Test::Bar;
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties
@@ -23,7 +19,7 @@ our hashref $properties
 
 # [[[ OO METHODS & SUBROUTINES ]]]
 our integer::method $empty_method = sub {
-    return 2;
+    return RPerl::Test::Foo::quince();
 };
 
 1;                  # end of class

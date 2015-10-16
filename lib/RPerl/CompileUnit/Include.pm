@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Include;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -36,32 +36,16 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #        RPerl::diag( 'in Include->ast_to_rperl__generate(), have $module_name = '  . $module_name . "\n" );
     }
     elsif ( ref $self eq 'Include_42' ) {
-        # Include -> USE WordScoped OP01_QW PLUS-15 ')' ';'
+        # Include -> USE WordScoped OP01_QW ';'
         my string $use_keyword = $self->{children}->[0];
         my string $module_name
             = $self->{children}->[1]->{children}->[0];
         my string $qw            = $self->{children}->[2];
-        my string $element_names = q{};
-        my object $elements      = $self->{children}->[3];
-
-#        RPerl::diag( 'in Include->ast_to_rperl__generate(), have $elements = ' . "\n" . RPerl::Parser::rperl_ast__dump($elements) . "\n" );
-        foreach my object $element ( @{ $elements->{children} } ) {
-
-#            RPerl::diag( 'in Include->ast_to_rperl__generate(), have $element = ' . "\n" . RPerl::Parser::rperl_ast__dump($element) . "\n" );
-            my string $element_name = $element->{attr};
-            if ( $element_names ne q{} ) {
-                $element_names .= q{ };
-            }
-            $element_names .= $element_name;
-        }
-        my string $right_parenthesis = $self->{children}->[4];
-        my string $semicolon         = $self->{children}->[5];
+        my string $semicolon         = $self->{children}->[3];
         $rperl_source_group->{PMC}
             .= $use_keyword . q{ }
             . $module_name . q{ }
             . $qw
-            . $element_names
-            . $right_parenthesis
             . $semicolon . "\n";
     }
     else {

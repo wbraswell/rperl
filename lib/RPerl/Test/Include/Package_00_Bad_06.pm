@@ -13,7 +13,7 @@ our $VERSION = 0.001_000;
 use RPerl::Test::Foo;
 
 # [[[ SUBROUTINES ]]]
-our void $empty_sub = sub {
+our integer $empty_sub = sub {
     return 2;
 };
 

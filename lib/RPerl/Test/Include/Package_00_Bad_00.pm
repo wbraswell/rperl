@@ -14,7 +14,7 @@ us RPerl::Test::Foo;
 use RPerl::Test::Bar;
 
 # [[[ SUBROUTINES ]]]
-our void $empty_sub = sub {
+our integer $empty_sub = sub {
     return 2;
 };
 
