@@ -1,6 +1,7 @@
 DONE split n-body SSE from normal code, create linking in scripts
 DONE ensure perfect match for compiled Algorithm.*, Sort.*, Bubble.*, Inefficient.* files with hand-compiled *.CPPOPS_CPPTYPES versions
 Learning RPerl, all exercises parse
+	chpt3 ex3, RequireCheckedSyscalls failure
 
 sort out Operator::Expression::Operator::Named vs NamedUnary
 10 more builtins, CPPOPS_CPPTYPES mode
@@ -15,7 +16,7 @@ tests
     t/13_compile_execute.t (?) for proper functionality
 	*_arrayref_arrayref_arrayref
 	while (my FOO)
-	non-whitespace qw(foo*baz bar-hypenated bla+rgh)
+	DONE non-whitespace qw(foo*baz bar-hypenated bla+rgh)
 figure out <> vs "" and also long-path-deps in includes in Bubble.cpp & Bubble.h
 
 RELEASE v1.2 HALLOWEEN 

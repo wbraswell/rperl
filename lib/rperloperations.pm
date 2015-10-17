@@ -3,7 +3,7 @@ package  # hide from PAUSE indexing
     rperloperations; ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 use strict;
 use warnings;
-our $VERSION = 0.001_110;
+our $VERSION = 0.001_120;
 use Carp;
 
 # NEED UPGRADE: make Grammars first-class citizens for full Perl 6 compatibility, we should have it done by Christmas  XD
@@ -38,6 +38,7 @@ use RPerl::Operation::Expression::Operator::Math::Power;
 # DEV NOTE, CORRELATION #rp20: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named/* also add in Grammar.eyp, Named.pm, and rperloperations.pm
 use RPerl::Operation::Expression::Operator::Named;
 use RPerl::Operation::Expression::Operator::Named::Cosine;
+use RPerl::Operation::Expression::Operator::Named::Chomp;
 use RPerl::Operation::Expression::Operator::Named::Keys;
 use RPerl::Operation::Expression::Operator::Named::Join;
 use RPerl::Operation::Expression::Operator::Named::Length;

@@ -11,6 +11,7 @@ our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
+## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
 
 # [[[ SUBROUTINES ]]]
@@ -28,8 +29,13 @@ our number $total_stringified = sub {
 
 my string_arrayref $fred = [qw(1 3 5 7 9)];
 my number $fred_total = total_stringified($fred);
-print 'The total of $fred is ' . $fred_total . '.' . "\n";
+print 'The total of $fred is ' . $fred_total . q{.} . "\n";
 
 print 'Please input zero or more numbers, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
+
+# START HERE: fix STDIN below
+# START HERE: fix STDIN below
+# START HERE: fix STDIN below
+
 my number $user_total = total_stringified([<STDIN>]);
-print 'The total of those numbers is ' . $user_total . '.' . "\n";
+print 'The total of those numbers is ' . $user_total . q{.} . "\n";

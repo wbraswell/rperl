@@ -34,9 +34,14 @@ my string_arrayref $input_strings_sorted = [sort @{$input_strings}];
 foreach my string $input_strings_sorted_element (@{$input_strings_sorted}) {
     if (SINGLE_LINE_OUTPUT()) {
         # strip trailing newline, if present
-        chomp($input_strings_sorted_element);
+        chomp $input_strings_sorted_element;
         $input_strings_sorted_element .= q{ };
     }
+
+# START HERE: fix print below
+# START HERE: fix print below
+# START HERE: fix print below
+
     print $input_strings_sorted_element;
 }
 

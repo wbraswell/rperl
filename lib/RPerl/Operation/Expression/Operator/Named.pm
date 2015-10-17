@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::Operator::Named;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_030;
+our $VERSION = 0.001_040;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::Operator);
@@ -20,6 +20,7 @@ our hashref $properties = {};
 # DEV NOTE, CORRELATION #rp20: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named/* also add in Grammar.eyp, Named.pm, and rperloperations.pm
 our string_hashref $NAMES = {
     'cos'    => 'RPerl::Operation::Expression::Operator::Named::Cosine',
+    'chomp'  => 'RPerl::Operation::Expression::Operator::Named::Chomp',
     'join'   => 'RPerl::Operation::Expression::Operator::Named::Join',
     'keys'   => 'RPerl::Operation::Expression::Operator::Named::Keys',
     'length' => 'RPerl::Operation::Expression::Operator::Named::Length',
