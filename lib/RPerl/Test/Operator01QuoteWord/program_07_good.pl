@@ -1,11 +1,33 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: '`' >>>
+# <<< EXECUTE_SUCCESS: '`~' >>>
 # <<< EXECUTE_SUCCESS: '~!' >>>
-# <<< EXECUTE_SUCCESS: '@' >>>
-# <<< EXECUTE_SUCCESS: '$%^&*-' >>>
-# <<< EXECUTE_SUCCESS: "_=+[]{}|;:'" >>>
+# <<< EXECUTE_SUCCESS: '!@' >>>
+# <<< EXECUTE_SUCCESS: '@$' >>>
+# <<< EXECUTE_SUCCESS: '$%' >>>
+# <<< EXECUTE_SUCCESS: '%^' >>>
+# <<< EXECUTE_SUCCESS: '^&' >>>
+# <<< EXECUTE_SUCCESS: '&*' >>>
+# <<< EXECUTE_SUCCESS: '*-' >>>
+# <<< EXECUTE_SUCCESS: '-_' >>>
+# <<< EXECUTE_SUCCESS: '_=' >>>
+# <<< EXECUTE_SUCCESS: '=+' >>>
+# <<< EXECUTE_SUCCESS: '+[' >>>
+# <<< EXECUTE_SUCCESS: '[]' >>>
+# <<< EXECUTE_SUCCESS: ']{' >>>
+# <<< EXECUTE_SUCCESS: '{}' >>>
+# <<< EXECUTE_SUCCESS: '}|' >>>
+# <<< EXECUTE_SUCCESS: '|;' >>>
+# <<< EXECUTE_SUCCESS: ';:' >>>
+# <<< EXECUTE_SUCCESS: ':' >>>
+# <<< EXECUTE_SUCCESS: '"' >>>
+# <<< EXECUTE_SUCCESS: '".' >>>
+# <<< EXECUTE_SUCCESS: '.<' >>>
+# <<< EXECUTE_SUCCESS: '<>' >>>
+# <<< EXECUTE_SUCCESS: '>/' >>>
+# <<< EXECUTE_SUCCESS: '/?' >>>
+# <<< EXECUTE_SUCCESS: '?`' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -19,7 +41,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string_arrayref $s_array = [qw(` ~! @ $%^&*- _=+[]{}|;:'".<>/?)];
+my string_arrayref $s_array = [qw(`~ ~! !@ @$ $% %^ ^& &* *- -_ _= =+ +[ [] ]{ {} }| |; ;: :' '" ". .< <> >/ /? ?`)];
 foreach my string $s ( @{$s_array} ) {
     print '$s = ', $s, "\n";
 }
