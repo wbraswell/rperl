@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVCODE03' >>>
-# <<< PARSE_ERROR: 'failed to find package file use RPerl/Test/Foo qw(quux quince qorge)' >>>
+# <<< PARSE_ERROR: 'WARNING WCVCODE00' >>>
+# <<< PARSE_ERROR: 'Failed to eval-use package' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
