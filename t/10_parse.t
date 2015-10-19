@@ -32,8 +32,9 @@ find(
 
         #        RPerl::diag('in 10_parse.t, have $file = ' . $file . "\n");
 
-#        if ( $file !~ m/.*geometric_algebra_ipbve_good_00.*[.]p[ml]$/xms ) { # TEMP DEBUGGING, ONLY FIND geometric_algebra_ipbve_good_00*/*.pm & *.pl
-        if ( ( $file !~ m/.pm$/xms ) and ( $file !~ m/.pl$/xms ) ) {
+
+        if ( $file !~ m/.*Include\/Class_01_Bad_00[.]pm$/xms ) { # TEMP DEBUGGING, ONLY FIND CERTAIN FILES
+#        if ( ( $file !~ m/.pm$/xms ) and ( $file !~ m/.pl$/xms ) ) {
             return;
         }
 

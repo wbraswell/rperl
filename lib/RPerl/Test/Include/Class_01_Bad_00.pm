@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'WARNING WCVCODE00' >>>
-# <<< PARSE_ERROR: 'Failed to eval-use package' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< PARSE_ERROR: '"use" not allowed in expression' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
