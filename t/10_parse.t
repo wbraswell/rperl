@@ -8,7 +8,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_100;
+our $VERSION = 0.005_110;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -33,8 +33,8 @@ find(
         #        RPerl::diag('in 10_parse.t, have $file = ' . $file . "\n");
 
 
-        if ( $file !~ m/.*Include\/Class_01_Bad_00[.]pm$/xms ) { # TEMP DEBUGGING, ONLY FIND CERTAIN FILES
-#        if ( ( $file !~ m/.pm$/xms ) and ( $file !~ m/.pl$/xms ) ) {
+#        if ( $file !~ m/.*Include\/Class_01_Bad_00[.]pm$/xms ) { # TEMP DEBUGGING, ONLY FIND CERTAIN FILES
+        if ( ( $file !~ m/.pm$/xms ) and ( $file !~ m/.pl$/xms ) ) {
             return;
         }
 
