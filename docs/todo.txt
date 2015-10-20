@@ -1,5 +1,6 @@
 DONE split n-body SSE from normal code, create linking in scripts
 DONE ensure perfect match for compiled Algorithm.*, Sort.*, Bubble.*, Inefficient.* files with hand-compiled *.CPPOPS_CPPTYPES versions
+DONE support for special chars in qw()
 Learning RPerl, all exercises parse
 	chpt3 ex3, RequireCheckedSyscalls failure
 

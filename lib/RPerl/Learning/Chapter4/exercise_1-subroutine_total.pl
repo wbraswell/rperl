@@ -7,7 +7,7 @@
 use RPerl;
 use strict;
 use warnings;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -16,26 +16,27 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 
-our number $total_stringified = sub {
-    (my string_arrayref $input_numbers_stringified) = @_;
+our number $total = sub {
+    (my number_arrayref $input_numbers) = @_;
     my number $retval = 0;
-    foreach my string $input_number_stringified (@{$input_numbers_stringified}) {
-        $retval += string_to_number($input_number_stringified);
+    foreach my number $input_number (@{$input_numbers}) {
+        $retval += $input_number;
     }
     return $retval;
 };
 
 # [[[ OPERATIONS ]]]
 
-my string_arrayref $fred = [qw(1 3 5 7 9)];
-my number $fred_total = total_stringified($fred);
+my number_arrayref $fred = [1, 3, 5, 7, 9];
+my number $fred_total = total($fred);
 print 'The total of $fred is ' . $fred_total . q{.} . "\n";
 
 print 'Please input zero or more numbers, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
 
-# START HERE: fix STDIN below
-# START HERE: fix STDIN below
-# START HERE: fix STDIN below
+my number_arrayref $input_numbers = [];
+while (my string $input_string = <STDIN>) {
+    push @{$input_numbers}, string_to_number($input_string);
+}
 
-my number $user_total = total_stringified([<STDIN>]);
+my number $user_total = total($input_numbers);
 print 'The total of those numbers is ' . $user_total . q{.} . "\n";
