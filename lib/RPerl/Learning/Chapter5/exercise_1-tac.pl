@@ -7,7 +7,7 @@
 use RPerl;
 use strict;
 use warnings;
-our $VERSION = 0.002_000;
+our $VERSION = 0.003_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -39,7 +39,7 @@ our void $tac = sub {
 
         my string_arrayref $file_lines = [];
 
-        foreach my string $file_line (<$FILE>) {
+        while (my string $file_line = <$FILE>) {
             push @{$file_lines}, $file_line;
         }
 

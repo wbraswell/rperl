@@ -2,7 +2,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.001_996;
+    our $VERSION = 0.001_998;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -28,6 +28,7 @@
 %token LITERAL_STRING        = /(('[^']+')|("[^"\@\$]*((\\n)|(\\t))+[^"\@\$]*")|(q\{[^}]*\}))/  # single quotes non-empty; double quotes non-empty w/out sigils & w/ newline or tab; or single q-braces
 %token SELF                  = /(\$self)/                                # '$self'
 %token VARIABLE_SYMBOL       = /(\$(?:[a-zA-Z]\w*)?[a-z]\w*(::[a-zA-Z]\w*)*)/ # dollar sigil, scoped word with at least one lowercase in the first scope segment
+%token FHREF_SYMBOL_IN       = /(\<\$[A-Z][A-Z0-9_]*\>)/                 # less-than, dollar sigil, uppercase letter, uppercase letters & numbers & underscores, greater-than; ex. '<$MY_FILEHANDLE_23>'
 %token FHREF_SYMBOL_BRACES   = /(\{\$[A-Z][A-Z0-9_]*\})/                 # left brace, dollar sigil, uppercase letter, uppercase letters & numbers & underscores, right brace; ex. '{$MY_FILEHANDLE_23}'
 %token FHREF_SYMBOL          = /(\$[A-Z][A-Z0-9_]*)/                     # dollar sigil, uppercase letter, uppercase letters & numbers & underscores; ex. '$MY_FILEHANDLE_23'
 %token TYPE_INTEGER          = /(integer)\s+/                            # 'integer' followed by whitespace
@@ -84,7 +85,7 @@
 %token OP01_QW                   = /(qw\([^()]*\))/              # precedence 01 prefix: quoted words
 %token OP01_OPEN                 = /(open)\s/                    # precedence 01 prefix: open filehandle
 %token OP01_CLOSE                = /(close)\s/                   # precedence 01 prefix: close filehandle
-%token OP01_NAMED                = /(sin|cos|push|pop|keys|values|sort|length|split|join|reverse|chomp|fakebuiltin)\s/
+%token OP01_NAMED                = /(sin|cos|push|pop|keys|values|sort|length|split|join|reverse|chomp|-e|-r|-f|-T|fakebuiltin)\s/
                                                                  # precedence 01 prefix: "terms and list operators (leftward)" [1] AKA builtins
 # DEV NOTE, CORRELATION #rp20: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named/* also add in Grammar.eyp, Named.pm, and rperloperations.pm
 
