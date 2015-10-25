@@ -70,27 +70,27 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my object $subexpression       = $operator_named->{children}->[1];
     my string $subexpression_class = ref $subexpression;
     if (    ( $subexpression_class ne 'SubExpression_137' )
-        and ( $subexpression_class ne 'ArrayDereference_195' )
-        and ( $subexpression_class ne 'ArrayDereference_196' ) )
+        and ( $subexpression_class ne 'ArrayDereference_197' )
+        and ( $subexpression_class ne 'ArrayDereference_198' ) )
     {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . $subexpression_class
-                . ' found where SubExpression_137, ArrayDereference_195 or ArrayDereference_196 expected, dying' )
+                . ' found where SubExpression_137, ArrayDereference_197 or ArrayDereference_198 expected, dying' )
             . "\n";
     }
 
-    # unwrap ArrayDereference_195 and ArrayDereference_196 from SubExpression_137
+    # unwrap ArrayDereference_197 and ArrayDereference_198 from SubExpression_137
     if ( $subexpression_class eq 'SubExpression_137' ) {    # SubExpression -> ArrayDereference
         $subexpression = $subexpression->{children}->[0];
     }
 
     $subexpression_class = ref $subexpression;
     my string_hashref $cpp_source_subgroup;
-    if ( $subexpression_class eq 'ArrayDereference_195' ) {    # ArrayDereference -> '@{' Variable '}'
+    if ( $subexpression_class eq 'ArrayDereference_197' ) {    # ArrayDereference -> '@{' Variable '}'
         $cpp_source_subgroup = $subexpression->{children}->[1]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
-    elsif ( $subexpression_class eq 'ArrayDereference_196' ) {    # ArrayDereference -> '@{' OPTIONAL-47 ArrayReference '}'
+    elsif ( $subexpression_class eq 'ArrayDereference_198' ) {    # ArrayDereference -> '@{' OPTIONAL-47 ArrayReference '}'
         my object $type_inner_optional = $subexpression->{children}->[1];
         my object $array_reference     = $subexpression->{children}->[2];
 
@@ -115,7 +115,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . $subexpression_class
-                . ' found where ArrayDereference_195 or ArrayDereference_196 expected, dying' )
+                . ' found where ArrayDereference_197 or ArrayDereference_198 expected, dying' )
             . "\n";
     }
 

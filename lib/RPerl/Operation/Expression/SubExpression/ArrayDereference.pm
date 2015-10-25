@@ -26,13 +26,13 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in ArrayDereference->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    # unwrap ArrayDereference_195 and ArrayDereference_196 from SubExpression_137
+    # unwrap ArrayDereference_197 and ArrayDereference_198 from SubExpression_137
     if ( $self_class eq 'SubExpression_137' ) {  # SubExpression -> ArrayDereference
         $self = $self->{children}->[0];
     }
 
     $self_class = ref $self;
-    if ( $self_class eq 'ArrayDereference_195' ) {  # ArrayDereference -> '@{' Variable '}'
+    if ( $self_class eq 'ArrayDereference_197' ) {  # ArrayDereference -> '@{' Variable '}'
         my string $at_left_brace = $self->{children}->[0];
         my object $variable = $self->{children}->[1];
         my string $right_brace = $self->{children}->[2];
@@ -42,7 +42,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= q{ } . $right_brace;
     }
-    elsif ( $self_class eq 'ArrayDereference_196' ) {  # ArrayDereference -> '@{' OPTIONAL-47 ArrayReference '}'
+    elsif ( $self_class eq 'ArrayDereference_198' ) {  # ArrayDereference -> '@{' OPTIONAL-47 ArrayReference '}'
         my string $at_left_brace = $self->{children}->[0];
         my object $type_inner_optional = $self->{children}->[1];
         my object $array_reference = $self->{children}->[2];
@@ -62,7 +62,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where ArrayDereference_195 or ArrayDereference_196 expected, dying'
+                . ' found where ArrayDereference_197 or ArrayDereference_198 expected, dying'
         ) . "\n";
     }
 

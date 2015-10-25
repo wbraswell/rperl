@@ -26,14 +26,14 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap LoopForEach_165 from Loop_161
-    if ( $self_class eq 'Loop_161' ) {    # Loop -> LoopForEach
+    # unwrap LoopForEach_166 from Loop_162
+    if ( $self_class eq 'Loop_162' ) {    # Loop -> LoopForEach
         $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
 
 # LoopForEach -> 'foreach' MY Type VARIABLE_SYMBOL LPAREN ListElements ')' CodeBlock
-    if ( $self_class eq 'LoopForEach_165' ) {
+    if ( $self_class eq 'LoopForEach_166' ) {
         my string $foreach         = $self->{children}->[0];
         my string $my              = $self->{children}->[1];
         my string $type            = $self->{children}->[2]->{children}->[0];
@@ -61,7 +61,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where LoopForEach_165 expected, dying' )
+                . ' found where LoopForEach_166 expected, dying' )
             . "\n";
     }
     return $rperl_source_group;

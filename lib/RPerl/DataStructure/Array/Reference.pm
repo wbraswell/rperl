@@ -45,17 +45,17 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap ArrayReference_192 from SubExpression_136
+    # unwrap ArrayReference_194 from SubExpression_136
     if ( $self_class eq 'SubExpression_136' ) {
         $self = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if ( ( $self_class ) ne 'ArrayReference_192' ) {
+    if ( ( $self_class ) ne 'ArrayReference_194' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( $self_class )
-                . ' found where ArrayReference_192 or SubExpression_136 expected, dying' )
+                . ' found where ArrayReference_194 or SubExpression_136 expected, dying' )
             . "\n";
     }
 
@@ -99,17 +99,17 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap ArrayReference_192 from SubExpression_136
+    # unwrap ArrayReference_194 from SubExpression_136
     if ( $self_class eq 'SubExpression_136' ) {
         $self = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if ( ( $self_class ) ne 'ArrayReference_192' ) {
+    if ( ( $self_class ) ne 'ArrayReference_194' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . ( $self_class )
-                . ' found where ArrayReference_192 or SubExpression_136 expected, dying' )
+                . ' found where ArrayReference_194 or SubExpression_136 expected, dying' )
             . "\n";
     }
 

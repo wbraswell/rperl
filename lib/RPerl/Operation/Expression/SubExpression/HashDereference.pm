@@ -27,15 +27,15 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap HashDereference_209 and HashDereference_210 from SubExpression_139 and HashEntry_200
+    # unwrap HashDereference_211 and HashDereference_212 from SubExpression_139 and HashEntry_202
     if (   ( $self_class eq 'SubExpression_139' )  # SubExpression -> HashDereference
-        or ( $self_class eq 'HashEntry_200' ) )  # HashEntry -> HashDereference
+        or ( $self_class eq 'HashEntry_202' ) )  # HashEntry -> HashDereference
     {
         $self = $self->{children}->[0];
     }
 
     $self_class = ref $self;
-    if ( $self_class eq 'HashDereference_209' ) {  # HashDereference -> '%{' Variable '}'
+    if ( $self_class eq 'HashDereference_211' ) {  # HashDereference -> '%{' Variable '}'
         my string $percent_left_brace = $self->{children}->[0];
         my object $variable      = $self->{children}->[1];
         my string $right_brace   = $self->{children}->[2];
@@ -46,7 +46,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= q{ } . $right_brace;
     }
-    elsif ( $self_class eq 'HashDereference_210' ) {  # HashDereference -> '%{' OPTIONAL-51 HashReference '}'
+    elsif ( $self_class eq 'HashDereference_212' ) {  # HashDereference -> '%{' OPTIONAL-51 HashReference '}'
         my string $percent_left_brace       = $self->{children}->[0];
         my object $type_inner_optional = $self->{children}->[1];
         my object $hash_reference     = $self->{children}->[2];
@@ -70,7 +70,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where HashDereference_209 or HashDereference_210 expected, dying'
+                . ' found where HashDereference_211 or HashDereference_212 expected, dying'
         ) . "\n";
     }
 

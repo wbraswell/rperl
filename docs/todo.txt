@@ -18,6 +18,8 @@ tests
 	*_arrayref_arrayref_arrayref
 	while (my FOO)
 	DONE non-whitespace qw(foo*baz bar-hypenated bla+rgh)
+	<$FILEHANDLE>
+	@ARGV
 figure out <> vs "" and also long-path-deps in includes in Bubble.cpp & Bubble.h
 
 RELEASE v1.2 HALLOWEEN 

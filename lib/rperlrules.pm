@@ -4,7 +4,7 @@ package  # hide from PAUSE indexing
     rperlrules;    # yes, yes it does
 use strict;
 use warnings;
-our $VERSION = 0.001_020;
+our $VERSION = 0.001_100;
 
 #use RPerl;
 
@@ -69,6 +69,7 @@ use RPerl::DataType::TypeInner;
 
 # [[[ INPUT / OUTPUT ]]]
 
+use RPerl::InputOutput::FilehandleIn;
 use RPerl::InputOutput::Stdin;
 
 # [[[ OBJECT-ORIENTED ]]]

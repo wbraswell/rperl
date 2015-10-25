@@ -68,7 +68,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                     . ', dying' . "\n";
             }
 #            RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_rperl__generate(), have $arguments = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments) . "\n" );
-            if ((( ref $arguments->{children}->[0] ) eq 'ListElement_187' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
+            if ((( ref $arguments->{children}->[0] ) eq 'ListElement_188' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
             {
                 my object $arguments_subexpression = $arguments->{children}->[0]->{children}->[0];
                 # look inside nested parenthesis-as-subexpressions, always length 1 so no need to check length
@@ -108,7 +108,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 . ', dying' . "\n";
         }
 #        RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_rperl__generate(), have $arguments = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments) . "\n" );
-        if ((( ref $arguments->{children}->[0] ) eq 'ListElement_187' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
+        if ((( ref $arguments->{children}->[0] ) eq 'ListElement_188' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
         {
             my object $arguments_subexpression = $arguments->{children}->[0]->{children}->[0];
             # look inside nested parenthesis-as-subexpressions, always length 1 so no need to check length
@@ -187,7 +187,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                     . ', dying' . "\n";
             }
 #            RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $arguments = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments) . "\n" );
-            if ((( ref $arguments->{children}->[0] ) eq 'ListElement_187' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
+            if ((( ref $arguments->{children}->[0] ) eq 'ListElement_188' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
             {
                 my object $arguments_subexpression = $arguments->{children}->[0]->{children}->[0];
                 # look inside nested parenthesis-as-subexpressions, always length 1 so no need to check length
@@ -228,7 +228,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 . ', dying' . "\n";
         }
 #        RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $arguments = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments) . "\n" );
-        if ((( ref $arguments->{children}->[0] ) eq 'ListElement_187' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
+        if ((( ref $arguments->{children}->[0] ) eq 'ListElement_188' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
         {
             my object $arguments_subexpression = $arguments->{children}->[0]->{children}->[0];
             # look inside nested parenthesis-as-subexpressions, always length 1 so no need to check length

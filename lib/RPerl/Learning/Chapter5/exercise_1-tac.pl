@@ -39,7 +39,7 @@ our void $tac = sub {
 
         my string_arrayref $file_lines = [];
 
-        while (my string $file_line = <$FILE>) {
+        while ( my string $file_line = <$FILE> ) {
             push @{$file_lines}, $file_line;
         }
 
@@ -57,4 +57,4 @@ our void $tac = sub {
 
 # [[[ OPERATIONS ]]]
 
-tac( \@ARGV );
+tac( [@ARGV] );
