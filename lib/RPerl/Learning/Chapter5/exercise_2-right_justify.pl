@@ -7,7 +7,7 @@
 use RPerl;
 use strict;
 use warnings;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -18,16 +18,16 @@ our $VERSION = 0.001_000;
 our void $right_justify_20 = sub {
     my string_arrayref $input_strings = [];
     print 'Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
-    while (my string $input_string = <STDIN>) {
+    while ( my string $input_string = <STDIN> ) {
         push @{$input_strings}, $input_string;
-    } 
+    }
 
     print "\n";
-    print '1234567890' x 6;
+    print '1234567890'x 6;
     print "\n";
 
-    foreach my $input_string (@{$input_strings}) {
-        print q{ } x (21 - (length $input_string));
+    foreach my string $input_string ( @{$input_strings} ) {
+        print q{ }x ( 21 - ( length $input_string ) );
         print $input_string;
     }
 };
