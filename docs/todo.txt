@@ -61,8 +61,12 @@ RELEASE v3.0beta1 CHRISTMAS
 
 
 
-
-
+Macintosh:
+	Failed test 'Inline::CPP, call Airplane methods, return correct value 1' at t/03_inline_cpp.t line 146.   '' doesn't match '/Object\ \(0x\w*\)/'
+	unknown warning option '-Wno-literal-suffix'; did you mean '-Wno-literal-range'? [-Wunknown-warning-option]
+	duplicate 'extern' declaration specifier [-Wduplicate-decl-specifier] XS_EXTERNAL(boot_eval_412_3a53); /* prototype to pass -Wmissing-prototypes */
+		/System/Library/Perl/5.18/darwin-thread-multi-2level/CORE/XSUB.h:145:33: note: expanded from macro 'XS_EXTERNAL'
+		#      define XS_EXTERNAL(name) extern "C" XSPROTO(name)
 
 App, PhysicsPerl, Alioth Shootout N-Body Benchmark, Approved
 	OR New Benchmark Org
