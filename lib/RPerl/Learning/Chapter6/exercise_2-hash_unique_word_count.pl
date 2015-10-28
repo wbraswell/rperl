@@ -11,6 +11,7 @@ our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
+## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
 
 # [[[ SUBROUTINES ]]]
 
@@ -26,7 +27,7 @@ our void $unique_word_count = sub {
         else {
             $words->{$input_word} += 1;
         }
-    } 
+    }
 
     print "\n" . 'Unique word count:' . "\n";
 
