@@ -2,7 +2,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.001_999;
+    our $VERSION = 0.002_000;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -86,7 +86,7 @@
 %token OP01_QW                   = /(qw\([^()]*\))/              # precedence 01 prefix: quoted words
 %token OP01_OPEN                 = /(open)\s/                    # precedence 01 prefix: open filehandle
 %token OP01_CLOSE                = /(close)\s/                   # precedence 01 prefix: close filehandle
-%token OP01_NAMED                = /(sin|cos|push|pop|keys|values|sort|length|split|join|reverse|chomp|-e|-r|-f|-T|fakebuiltin)\s/
+%token OP01_NAMED                = /(sin|cos|push|pop|keys|values|sort|length|split|join|reverse|chomp|-e|-r|-f|-T|defined|exists|fakebuiltin)\s/
                                                                  # precedence 01 prefix: "terms and list operators (leftward)" [1] AKA builtins
 # DEV NOTE, CORRELATION #rp20: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named/* also add in Grammar.eyp, Named.pm, and rperloperations.pm
 

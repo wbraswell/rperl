@@ -3,7 +3,7 @@ package  # hide from PAUSE indexing
     rperloperations; ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 use strict;
 use warnings;
-our $VERSION = 0.001_130;
+our $VERSION = 0.001_140;
 use Carp;
 
 # NEED UPGRADE: make Grammars first-class citizens for full Perl 6 compatibility, we should have it done by Christmas  XD
@@ -39,6 +39,8 @@ use RPerl::Operation::Expression::Operator::Math::Power;
 use RPerl::Operation::Expression::Operator::Named;
 use RPerl::Operation::Expression::Operator::Named::Cosine;
 use RPerl::Operation::Expression::Operator::Named::Chomp;
+use RPerl::Operation::Expression::Operator::Named::Defined;
+use RPerl::Operation::Expression::Operator::Named::Exists;
 use RPerl::Operation::Expression::Operator::Named::FileExists;
 use RPerl::Operation::Expression::Operator::Named::FileReadable;
 use RPerl::Operation::Expression::Operator::Named::FileRegular;

@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::Operator::Named;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_050;
+our $VERSION = 0.001_060;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::Operator);
@@ -21,6 +21,8 @@ our hashref $properties = {};
 our string_hashref $NAMES = {
     'cos'     => 'RPerl::Operation::Expression::Operator::Named::Cosine',
     'chomp'   => 'RPerl::Operation::Expression::Operator::Named::Chomp',
+    'defined' => 'RPerl::Operation::Expression::Operator::Named::Defined',
+    'exists'  => 'RPerl::Operation::Expression::Operator::Named::Exists',
     '-e'      => 'RPerl::Operation::Expression::Operator::Named::FileExists',
     '-r'      => 'RPerl::Operation::Expression::Operator::Named::FileReadable',
     '-f'      => 'RPerl::Operation::Expression::Operator::Named::FileRegular',
