@@ -1,12 +1,36 @@
 DONE split n-body SSE from normal code, create linking in scripts
 DONE ensure perfect match for compiled Algorithm.*, Sort.*, Bubble.*, Inefficient.* files with hand-compiled *.CPPOPS_CPPTYPES versions
 DONE support for special chars in qw()
-Learning RPerl, all exercises parse
+DONE Learning RPerl, all exercises parse
 	chpt3 ex3, RequireCheckedSyscalls failure
+
+
+
+Eyapp unescaped left braces for Perl v5.22 compatibility
+RELEASE Parse::Eyapp vX.YZZY
 
 sort out Operator::Expression::Operator::Named vs NamedUnary
 10 more builtins, CPPOPS_CPPTYPES mode
-	Reverse
+	sin
+	cos
+	sqrt
+	length
+	scalar
+	defined
+	exists
+	reverse
+	push
+	pop
+	keys
+	values
+	sort
+	split
+	join
+	chomp
+	-e
+	-r
+	-f
+	-T
 Travis Windows, add ci.appveyor.com github webhook
 Monolithic Modules, Fix Deps Warning
 tests
@@ -23,7 +47,9 @@ tests
 	%ENV
 figure out <> vs "" and also long-path-deps in includes in Bubble.cpp & Bubble.h
 
-RELEASE v1.2 HALLOWEEN 
+RELEASE v1.2 HALLOWEEN
+
+
 
 1 New Benchmark Application
 Finish All CPPOPS_CPPTYPES Code Generation
@@ -70,9 +96,6 @@ Macintosh:
 
 App, PhysicsPerl, Alioth Shootout N-Body Benchmark, Approved
 	OR New Benchmark Org
-
-Eyapp unescaped left braces for Perl v5.22 compatibility
-RELEASE Parse::Eyapp vX.YZZY
 
 RELEASE v1.XY
 
