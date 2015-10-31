@@ -2,7 +2,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.002_100;
+    our $VERSION = 0.002_101;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -65,7 +65,7 @@
                                                                  # precedence 10 prefix: "named unary operators" [1] and Programming Perl, Chapter 3, List of All Named Unary Operators; 'scalar' not 'scalartype'
 %token OP10_NAMED_UNARY          = /(-A|-B|-C|-M|-O|-R|-S|-T|-W|-X|-b|-c|-d|-e|-f|-g|-k|-l|-o|-p|-r|-s|-t|-u|-w|-x|-z|
                                      alarm|caller|chdir|chroot|cos|defined|delete|do|eval|exists|gethostbyname|getnetbyname|getpgrp|
-                                     getprotobyname|glob|gmtime|goto|hex|int|lc|lcfirst|length|localtime|lock|log|lstat|oct|ord|quotemeta|
+                                     getprotobyname|glob|gmtime|goto|hex|int\s|lc|lcfirst|length|localtime|lock|log|lstat|oct|ord|quotemeta|
                                      rand|readlink|ref|require|rmdir|scalar\s|sin|sleep|sqrt|srand|stat|uc|ucfirst|umask)/
 %token OP19_VARIABLE_ASSIGN_BY   = /(\+=|-=|\*=|\/=|\.=)/        # precedence 19 infix: add assign, subtract assign, multiply assign, divide assign, cat assign
 %token OP08_STRING_CAT           = /(\.)/                        # precedence 08 infix: string concatenate
