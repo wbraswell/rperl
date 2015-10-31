@@ -9,39 +9,56 @@ DONE Learning RPerl, all exercises parse
 Eyapp unescaped left braces for Perl v5.22 compatibility
 RELEASE Parse::Eyapp vX.YZZY
 
-sort out Operator::Expression::Operator::Named vs NamedUnary
+DONE sort out Operator::Expression::Operator::Named vs NamedUnary
+DONE all named and named unary operators AKA builtins, PERLOPS_PERLTYPES mode
+all named, add support for Operation_79 ( Operation -> OP01_NAMED_SCOLON ) as in Wait.pm
+all named unary, add support for Operation_80 ( Operation -> OP10_NAMED_UNARY_SCOLON ) as in Defined.pm
 10 more builtins, CPPOPS_CPPTYPES mode
-	sin
-	cos
-	sqrt
-	length
-	scalar
-	defined
-	exists
-	reverse
-	push
-	pop
+	NAMED
+	chomp
+	join
 	keys
-	values
+	pop
+	push
+	reverse
 	sort
 	split
-	join
-	chomp
+	values
+	wait
+
+	NAMED_UNARY
+	chdir
+	cos
+	defined
+	exists
 	-e
 	-r
 	-f
 	-T
+	length
+	rand
+	scalar
+	sin
+	sqrt (need create)
+
 Travis Windows, add ci.appveyor.com github webhook
 Monolithic Modules, Fix Deps Warning
 tests
-	constructor type mismatch: array size declaration compensation; package/subroutine/method names starting w/ underscore; variable redeclaration (masking); 
-	properties & hash type-inner type-vs-key name mismatch (ECVGEASRP17: PERLOPS Class.pm properties accessors/mutators; CPPOPS entry & entrytyped);
-	accessors/mutators including get_*_element() & get_*_value(); subclasses Foo_raw type; $properties & VariableDeclaration array size on non-arrayref type;
-	$properties array size PERLOPS_PERLTYPES generation; variable & retrieval type mismatches, etc; get_raw() & set_raw()
+	DONE non-whitespace qw(foo*baz bar-hypenated bla+rgh)
+	DONE compile-time constructor type mismatch in VariableDeclaration (ERROR ECVGEASRP17)
+	DONE zero-argument named & named unary operators (AKA builtins) in VariableDeclaration, C-Style For Loop, and in general
+	array size declaration compensation; package/subroutine/method names starting w/ underscore
+	variable redeclaration (masking)
+	properties & hash type-inner type-vs-key name mismatch (ECVGEASRP18: PERLOPS Class.pm properties accessors/mutators; CPPOPS entry & entrytyped)
+	accessors/mutators including get_*_element() & get_*_value()
+	subclasses Foo_raw type
+	$properties & VariableDeclaration array size on non-arrayref type
+	$properties array size PERLOPS_PERLTYPES generation
+	variable & retrieval type mismatches, etc
+	get_raw() & set_raw()
     t/13_compile_execute.t (?) for proper functionality
 	*_arrayref_arrayref_arrayref
 	while (my FOO)
-	DONE non-whitespace qw(foo*baz bar-hypenated bla+rgh)
 	<$FILEHANDLE>
 	@ARGV
 	%ENV

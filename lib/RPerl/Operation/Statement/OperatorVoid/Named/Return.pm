@@ -43,10 +43,10 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 #    RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_rperl__generate(), received $operator_void_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_void_named) . "\n" );
 
-    if ( ref $operator_void_named eq 'OperatorVoid_116' ) { # OperatorVoid -> OP01_NAMED_VOID_SCOLON
+    if ( ref $operator_void_named eq 'OperatorVoid_118' ) { # OperatorVoid -> OP01_NAMED_VOID_SCOLON
         $rperl_source_group->{PMC} .= $operator_void_named->{children}->[0]; # name semicolon
     }
-    elsif ( ref $operator_void_named eq 'OperatorVoid_117' ) {  # OperatorVoid -> OP01_NAMED_VOID_LPAREN OPTIONAL-32 ')' ';'
+    elsif ( ref $operator_void_named eq 'OperatorVoid_119' ) {  # OperatorVoid -> OP01_NAMED_VOID_LPAREN OPTIONAL-32 ')' ';'
 
 # DEV NOTE: if $arguments_optional is empty, will generate 'return();' which perltidy will change to 'return ();', both return undef, not empty array, so it's okay
         $rperl_source_group->{PMC}
@@ -68,17 +68,17 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                     . ', dying' . "\n";
             }
 #            RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_rperl__generate(), have $arguments = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments) . "\n" );
-            if ((( ref $arguments->{children}->[0] ) eq 'ListElement_188' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
+            if ((( ref $arguments->{children}->[0] ) eq 'ListElement_190' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
             {
                 my object $arguments_subexpression = $arguments->{children}->[0]->{children}->[0];
                 # look inside nested parenthesis-as-subexpressions, always length 1 so no need to check length
-                while ((ref $arguments_subexpression) eq 'SubExpression_140') {  # RPerl::Operation::Expression::SubExpression::Parenthesis
+                while ((ref $arguments_subexpression) eq 'SubExpression_142') {  # RPerl::Operation::Expression::SubExpression::Parenthesis
                     $arguments_subexpression = $arguments_subexpression->{children}->[1];
                 }
-                if (( ref $arguments_subexpression ) eq 'SubExpression_137' ) {
+                if (( ref $arguments_subexpression ) eq 'SubExpression_139' ) {
                     die 'ERROR ECVGEASRP04, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying' . "\n";
                 }
-                elsif (( ref $arguments_subexpression ) eq 'SubExpression_139' ) {
+                elsif (( ref $arguments_subexpression ) eq 'SubExpression_141' ) {
                     die 'ERROR ECVGEASRP05, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying' . "\n";
                 }
             }
@@ -90,7 +90,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         $rperl_source_group->{PMC} .= $operator_void_named->{children}->[2]
             . $operator_void_named->{children}->[3];    # rparen semicolon
     }
-    elsif ( ref $operator_void_named eq 'OperatorVoid_118' ) { # OperatorVoid -> OP01_NAMED_VOID ListElements ';'
+    elsif ( ref $operator_void_named eq 'OperatorVoid_120' ) { # OperatorVoid -> OP01_NAMED_VOID ListElements ';'
         $rperl_source_group->{PMC}
             .= $operator_void_named->{children}->[0] . q{ };    # name
         my object $arguments       = $operator_void_named->{children}->[1];
@@ -108,17 +108,17 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 . ', dying' . "\n";
         }
 #        RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_rperl__generate(), have $arguments = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments) . "\n" );
-        if ((( ref $arguments->{children}->[0] ) eq 'ListElement_188' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
+        if ((( ref $arguments->{children}->[0] ) eq 'ListElement_190' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
         {
             my object $arguments_subexpression = $arguments->{children}->[0]->{children}->[0];
             # look inside nested parenthesis-as-subexpressions, always length 1 so no need to check length
-            while ((ref $arguments_subexpression) eq 'SubExpression_140') {  # RPerl::Operation::Expression::SubExpression::Parenthesis
+            while ((ref $arguments_subexpression) eq 'SubExpression_142') {  # RPerl::Operation::Expression::SubExpression::Parenthesis
                 $arguments_subexpression = $arguments_subexpression->{children}->[1];
             }
-            if (( ref $arguments_subexpression ) eq 'SubExpression_137' ) {
+            if (( ref $arguments_subexpression ) eq 'SubExpression_139' ) {
                 die 'ERROR ECVGEASRP04, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying' . "\n";
             }
-            elsif (( ref $arguments_subexpression ) eq 'SubExpression_139' ) {
+            elsif (( ref $arguments_subexpression ) eq 'SubExpression_141' ) {
                 die 'ERROR ECVGEASRP05, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying' . "\n";
             }
         }
@@ -132,7 +132,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $operator_void_named )
-                . ' found where OperatorVoid_116, OperatorVoid_117, or OperatorVoid_118 expected, dying'
+                . ' found where OperatorVoid_118, OperatorVoid_119, or OperatorVoid_120 expected, dying'
         ) . "\n";
     }
 
@@ -162,10 +162,10 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #    RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 #    RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $operator_void_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_void_named) . "\n" );
 
-    if ( ref $operator_void_named eq 'OperatorVoid_116' ) { # OperatorVoid -> OP01_NAMED_VOID_SCOLON
+    if ( ref $operator_void_named eq 'OperatorVoid_118' ) { # OperatorVoid -> OP01_NAMED_VOID_SCOLON
         $cpp_source_group->{CPP} .= $operator_void_named->{children}->[0]; # name semicolon
     }
-    elsif ( ref $operator_void_named eq 'OperatorVoid_117' ) {  # OperatorVoid -> OP01_NAMED_VOID_LPAREN OPTIONAL-32 ')' ';'
+    elsif ( ref $operator_void_named eq 'OperatorVoid_119' ) {  # OperatorVoid -> OP01_NAMED_VOID_LPAREN OPTIONAL-32 ')' ';'
 
 # DEV NOTE: if $arguments_optional is empty, will generate 'return();' which perltidy will change to 'return ();', both return undef, not empty array, so it's okay
         $cpp_source_group->{CPP}
@@ -187,17 +187,17 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                     . ', dying' . "\n";
             }
 #            RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $arguments = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments) . "\n" );
-            if ((( ref $arguments->{children}->[0] ) eq 'ListElement_188' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
+            if ((( ref $arguments->{children}->[0] ) eq 'ListElement_190' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
             {
                 my object $arguments_subexpression = $arguments->{children}->[0]->{children}->[0];
                 # look inside nested parenthesis-as-subexpressions, always length 1 so no need to check length
-                while ((ref $arguments_subexpression) eq 'SubExpression_140') {  # RPerl::Operation::Expression::SubExpression::Parenthesis
+                while ((ref $arguments_subexpression) eq 'SubExpression_142') {  # RPerl::Operation::Expression::SubExpression::Parenthesis
                     $arguments_subexpression = $arguments_subexpression->{children}->[1];
                 }
-                if (( ref $arguments_subexpression ) eq 'SubExpression_137' ) {
+                if (( ref $arguments_subexpression ) eq 'SubExpression_139' ) {
                     die 'ERROR ECVGEASCP04, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying' . "\n";
                 }
-                elsif (( ref $arguments_subexpression ) eq 'SubExpression_139' ) {
+                elsif (( ref $arguments_subexpression ) eq 'SubExpression_141' ) {
                     die 'ERROR ECVGEASCP05, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying' . "\n";
                 }
             }
@@ -210,7 +210,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $cpp_source_group->{CPP} .= $operator_void_named->{children}->[2]
             . $operator_void_named->{children}->[3];    # rparen semicolon
     }
-    elsif ( ref $operator_void_named eq 'OperatorVoid_118' ) { # OperatorVoid -> OP01_NAMED_VOID ListElements ';'
+    elsif ( ref $operator_void_named eq 'OperatorVoid_120' ) { # OperatorVoid -> OP01_NAMED_VOID ListElements ';'
         $cpp_source_group->{CPP}
             .= $operator_void_named->{children}->[0] . q{ };    # name
         my object $arguments       = $operator_void_named->{children}->[1];
@@ -228,17 +228,17 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 . ', dying' . "\n";
         }
 #        RPerl::diag( 'in OperatorVoid::Named::Return->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $arguments = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments) . "\n" );
-        if ((( ref $arguments->{children}->[0] ) eq 'ListElement_188' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
+        if ((( ref $arguments->{children}->[0] ) eq 'ListElement_190' ) and ( exists $arguments->{children}->[0]->{children}->[0] ))
         {
             my object $arguments_subexpression = $arguments->{children}->[0]->{children}->[0];
             # look inside nested parenthesis-as-subexpressions, always length 1 so no need to check length
-            while ((ref $arguments_subexpression) eq 'SubExpression_140') {  # RPerl::Operation::Expression::SubExpression::Parenthesis
+            while ((ref $arguments_subexpression) eq 'SubExpression_142') {  # RPerl::Operation::Expression::SubExpression::Parenthesis
                 $arguments_subexpression = $arguments_subexpression->{children}->[1];
             }
-            if (( ref $arguments_subexpression ) eq 'SubExpression_137' ) {
+            if (( ref $arguments_subexpression ) eq 'SubExpression_139' ) {
                 die 'ERROR ECVGEASCP04, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying' . "\n";
             }
-            elsif (( ref $arguments_subexpression ) eq 'SubExpression_139' ) {
+            elsif (( ref $arguments_subexpression ) eq 'SubExpression_141' ) {
                 die 'ERROR ECVGEASCP05, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying' . "\n";
             }
         }
@@ -253,7 +253,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . ( ref $operator_void_named )
-                . ' found where OperatorVoid_116, OperatorVoid_117, or OperatorVoid_118 expected, dying'
+                . ' found where OperatorVoid_118, OperatorVoid_119, or OperatorVoid_120 expected, dying'
         ) . "\n";
     }
 

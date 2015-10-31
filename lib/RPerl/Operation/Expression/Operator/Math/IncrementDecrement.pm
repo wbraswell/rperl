@@ -25,12 +25,12 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in Operator::Math::IncrementDecrement->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if ( $self_class eq 'Operator_85' ) {  # Operator -> OP03_MATH_INC_DEC Variable
+    if ( $self_class eq 'Operator_87' ) {  # Operator -> OP03_MATH_INC_DEC Variable
         $rperl_source_group->{PMC} .= $self->{children}->[0];
         my string_hashref $rperl_source_subgroup = $self->{children}->[1]->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
-    elsif ( $self_class eq 'Operator_86' ) {  # Operator -> Variable OP03_MATH_INC_DEC
+    elsif ( $self_class eq 'Operator_88' ) {  # Operator -> Variable OP03_MATH_INC_DEC
         my string_hashref $rperl_source_subgroup = $self->{children}->[0]->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= $self->{children}->[1];
@@ -39,7 +39,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where Operator_85 or Operator_86 expected, dying' )
+                . ' found where Operator_87 or Operator_88 expected, dying' )
             . "\n";
     }
 
@@ -66,12 +66,12 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #    RPerl::diag( 'in Operator::Math::IncrementDecrement->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if ( $self_class eq 'Operator_85' ) {  # Operator -> OP03_MATH_INC_DEC Variable
+    if ( $self_class eq 'Operator_87' ) {  # Operator -> OP03_MATH_INC_DEC Variable
         $cpp_source_group->{CPP} .= $self->{children}->[0];
         my string_hashref $cpp_source_subgroup = $self->{children}->[1]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
-    elsif ( $self_class eq 'Operator_86' ) {  # Operator -> Variable OP03_MATH_INC_DEC
+    elsif ( $self_class eq 'Operator_88' ) {  # Operator -> Variable OP03_MATH_INC_DEC
         my string_hashref $cpp_source_subgroup = $self->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
         $cpp_source_group->{CPP} .= $self->{children}->[1];
@@ -80,7 +80,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . $self_class
-                . ' found where Operator_85 or Operator_86 expected, dying' )
+                . ' found where Operator_87 or Operator_88 expected, dying' )
             . "\n";
     }
 

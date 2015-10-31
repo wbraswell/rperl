@@ -3,7 +3,7 @@ package  # hide from PAUSE indexing
     rperloperations; ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 use strict;
 use warnings;
-our $VERSION = 0.001_200;
+our $VERSION = 0.001_210;
 use Carp;
 
 # NEED UPGRADE: make Grammars first-class citizens for full Perl 6 compatibility, we should have it done by Christmas  XD
@@ -46,6 +46,7 @@ use RPerl::Operation::Expression::Operator::Named::Sort;
 use RPerl::Operation::Expression::Operator::Named::Split;
 use RPerl::Operation::Expression::Operator::Named::Reverse;
 use RPerl::Operation::Expression::Operator::Named::Values;
+use RPerl::Operation::Expression::Operator::Named::Wait;
 use RPerl::Operation::Expression::Operator::NamedUnary;
 use RPerl::Operation::Expression::Operator::NamedUnary::ChangeDirectory;
 use RPerl::Operation::Expression::Operator::NamedUnary::Cosine;

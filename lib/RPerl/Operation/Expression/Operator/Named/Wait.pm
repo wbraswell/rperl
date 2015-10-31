@@ -1,20 +1,17 @@
 # [[[ DOCUMENTATION ]]]
-# http://perldoc.perl.org/functions/-X.html
-#     SUPPORTED:  -r EXPR
-# NOT SUPPORTED:  -r FILEHANDLE
-# NOT SUPPORTED:  -r DIRHANDLE
-# NOT SUPPORTED:  -r
+# http://perldoc.perl.org/functions/wait.html
+#     SUPPORTED:  wait
 
 # [[[ HEADER ]]]
-package RPerl::Operation::Expression::Operator::NamedUnary::FileReadable;
+package RPerl::Operation::Expression::Operator::Named::Wait;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_100;
+our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
-use parent qw(RPerl::Operation::Expression::Operator::NamedUnary);
-use RPerl::Operation::Expression::Operator::NamedUnary;
+use parent qw(RPerl::Operation::Expression::Operator::Named);
+use RPerl::Operation::Expression::Operator::Named;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -22,9 +19,9 @@ use RPerl::Operation::Expression::Operator::NamedUnary;
 ## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
 
 # [[[ CONSTANTS ]]]
-use constant NAME          => my string $TYPED_NAME           = '-r';
-use constant ARGUMENTS_MIN => my integer $TYPED_ARGUMENTS_MIN = 1;
-use constant ARGUMENTS_MAX => my integer $TYPED_ARGUMENTS_MAX = 1;
+use constant NAME          => my string $TYPED_NAME           = 'wait';
+use constant ARGUMENTS_MIN => my integer $TYPED_ARGUMENTS_MIN = 0;
+use constant ARGUMENTS_MAX => my integer $TYPED_ARGUMENTS_MAX = 0;
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
@@ -36,38 +33,39 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         = @_;
     my string_hashref $rperl_source_group = { PMC => q{} };
 
-#    RPerl::diag( 'in Operator::NamedUnary::FileReadable->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
-#    RPerl::diag( 'in Operator::NamedUnary::FileReadable->ast_to_rperl__generate(), received $operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_named) . "\n" );
+#    RPerl::diag( 'in Operator::Named::Wait->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in Operator::Named::Wait->ast_to_rperl__generate(), received $operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_named) . "\n" );
 
     my string $operator_named_class = ref $operator_named;
-    if ( $operator_named_class eq 'Operator_83' ) # Operator -> OP01_NAMED SubExpression
-    {
-        $rperl_source_group->{PMC} .= $operator_named->{children}->[0] . q{ };
-        my string_hashref $rperl_source_subgroup
-            = $operator_named->{children}->[1]
-            ->ast_to_rperl__generate( $modes, $self );
-        RPerl::Generator::source_group_append( $rperl_source_group,
-            $rperl_source_subgroup );
+    if ( $operator_named_class eq 'Operation_79' ) { # Operation -> OP01_NAMED_SCOLON
+        $rperl_source_group->{PMC} .= $operator_named->{children}->[0];
+    }
+    elsif ( $operator_named_class eq 'Operator_83' ) { # Operator -> OP01_NAMED SubExpression
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEASRP14, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
+                . $operator_named->{children}->[0]
+                . ' does not accept arguments, dying' )
+            . "\n";
     }
     elsif ( $operator_named_class eq 'Operator_84' ) { # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASRP13, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
+            'ERROR ECVGEASRP14, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
                 . $operator_named->{children}->[1]
-                . ' does not accept multiple arguments, dying' )
+                . ' does not accept arguments, dying' )
             . "\n";
     }
     elsif ( $operator_named_class eq 'OperatorVoid_121' ) { # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASRP13, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
+            'ERROR ECVGEASRP14, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
                 . $operator_named->{children}->[0]
-                . ' does not accept multiple arguments, dying' )
+                . ' does not accept arguments, dying' )
             . "\n";
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ($operator_named_class)
-                . ' found where Operator_83, Operator_84, or OperatorVoid_121 expected, dying'
+                . ' found where Operation_79, Operator_83, Operator_84, or OperatorVoid_121 expected, dying'
         ) . "\n";
     }
 
@@ -78,7 +76,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
         = { CPP =>
-            q{// <<< RP::O::E::O::NU::FRead __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
+            q{// <<< RP::O::E::O::N::W __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
             . "\n" };
 
     #...
@@ -89,7 +87,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
         = { CPP =>
-            q{// <<< RP::O::E::O::NU::FRead __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
+            q{// <<< RP::O::E::O::N::W __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
             . "\n" };
 
     #...

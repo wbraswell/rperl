@@ -33,7 +33,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= $self->{children}->[1] . "\n";  # semicolon
     }
-    elsif ( ( ref $self ) eq 'SubExpression_132' ) {  # SubExpression -> Expression
+    elsif ( ( ref $self ) eq 'SubExpression_134' ) {  # SubExpression -> Expression
         $rperl_source_subgroup
             = $self->{children}->[0]->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
@@ -43,7 +43,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $self )
-                . ' found where Operation_78 or SubExpression_132 expected, dying'
+                . ' found where Operation_78 or SubExpression_134 expected, dying'
         ) . "\n";
     }
 
@@ -76,7 +76,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             $cpp_source_subgroup );
         $cpp_source_group->{CPP} .= $self->{children}->[1] . "\n";  # semicolon
     }
-    elsif ( ( ref $self ) eq 'SubExpression_132' ) {  # SubExpression -> Expression
+    elsif ( ( ref $self ) eq 'SubExpression_134' ) {  # SubExpression -> Expression
         $cpp_source_subgroup
             = $self->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
 #        RPerl::diag( 'in Expression->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_subgroup = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_subgroup) . "\n" );
@@ -87,7 +87,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . ( ref $self )
-                . ' found where Operation_78 or SubExpression_132 expected, dying'
+                . ' found where Operation_78 or SubExpression_134 expected, dying'
         ) . "\n";
     }
 

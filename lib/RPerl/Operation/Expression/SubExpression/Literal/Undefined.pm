@@ -20,11 +20,11 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in Literal::Undefined->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) ne 'SubExpression_133' ) {
+    if ( ( ref $self ) ne 'SubExpression_135' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $self )
-                . ' found where SubExpression_133 expected, dying' )
+                . ' found where SubExpression_135 expected, dying' )
             . "\n";
     }
  

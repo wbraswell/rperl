@@ -37,12 +37,12 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in NamedUnary::Scalar->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 #    RPerl::diag( 'in NamedUnary::Scalar->ast_to_rperl__generate(), received $operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_named) . "\n" );
 
-    # unless Operator_96 below, then Operator_97: Operator -> OP10_NAMED_UNARY
+    # unless Operator_98 below, then Operator_99: Operator -> OP10_NAMED_UNARY
     #    $rperl_source_group->{PMC} = $operator_named->{children}->[0];
     # take op name from the output specifications in this file, not the input specifications in the grammar
     $rperl_source_group->{PMC} = NAME_PERLOPS_PERLTYPES();
 
-    # Operator_96: Operator -> OP10_NAMED_UNARY SubExpression
+    # Operator_98: Operator -> OP10_NAMED_UNARY SubExpression
     if ( exists $operator_named->{children}->[1] ) {
         my string_hashref $rperl_source_subgroup = $operator_named->{children}->[1]->ast_to_rperl__generate( $self, $modes );
         $rperl_source_group->{PMC} .= q{ } . $rperl_source_subgroup->{PMC};
@@ -69,28 +69,28 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     # must have ArrayDereference as only argument
     my object $subexpression       = $operator_named->{children}->[1];
     my string $subexpression_class = ref $subexpression;
-    if (    ( $subexpression_class ne 'SubExpression_137' )
-        and ( $subexpression_class ne 'ArrayDereference_197' )
-        and ( $subexpression_class ne 'ArrayDereference_198' ) )
+    if (    ( $subexpression_class ne 'SubExpression_139' )
+        and ( $subexpression_class ne 'ArrayDereference_199' )
+        and ( $subexpression_class ne 'ArrayDereference_200' ) )
     {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . $subexpression_class
-                . ' found where SubExpression_137, ArrayDereference_197 or ArrayDereference_198 expected, dying' )
+                . ' found where SubExpression_139, ArrayDereference_199 or ArrayDereference_200 expected, dying' )
             . "\n";
     }
 
-    # unwrap ArrayDereference_197 and ArrayDereference_198 from SubExpression_137
-    if ( $subexpression_class eq 'SubExpression_137' ) {    # SubExpression -> ArrayDereference
+    # unwrap ArrayDereference_199 and ArrayDereference_200 from SubExpression_139
+    if ( $subexpression_class eq 'SubExpression_139' ) {    # SubExpression -> ArrayDereference
         $subexpression = $subexpression->{children}->[0];
     }
 
     $subexpression_class = ref $subexpression;
     my string_hashref $cpp_source_subgroup;
-    if ( $subexpression_class eq 'ArrayDereference_197' ) {    # ArrayDereference -> '@{' Variable '}'
+    if ( $subexpression_class eq 'ArrayDereference_199' ) {    # ArrayDereference -> '@{' Variable '}'
         $cpp_source_subgroup = $subexpression->{children}->[1]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
-    elsif ( $subexpression_class eq 'ArrayDereference_198' ) {    # ArrayDereference -> '@{' OPTIONAL-47 ArrayReference '}'
+    elsif ( $subexpression_class eq 'ArrayDereference_200' ) {    # ArrayDereference -> '@{' OPTIONAL-47 ArrayReference '}'
         my object $type_inner_optional = $subexpression->{children}->[1];
         my object $array_reference     = $subexpression->{children}->[2];
 
@@ -115,7 +115,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . $subexpression_class
-                . ' found where ArrayDereference_197 or ArrayDereference_198 expected, dying' )
+                . ' found where ArrayDereference_199 or ArrayDereference_200 expected, dying' )
             . "\n";
     }
 

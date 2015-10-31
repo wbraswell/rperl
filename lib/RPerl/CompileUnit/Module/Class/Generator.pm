@@ -133,12 +133,12 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         $property_name       = $property_type_inner->{children}->[3];
 
         if ($property_name !~ /$property_key$/xms) {
-            die 'ERROR ECVGEASRP17, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
+            die 'ERROR ECVGEASRP18, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
                 . $property_name . q{'} . ' does not end with OO properties key ' . q{'} . $property_key . q{'} . ', dying' . "\n";
         }
 
         # TypeInnerProperties -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN SubExpression
-        if ( ref $property_type_inner eq 'TypeInnerProperties_221' ) {
+        if ( ref $property_type_inner eq 'TypeInnerProperties_223' ) {
             $property_my            = $property_type_inner->{children}->[0];
             $property_type          = $property_type_inner->{children}->[1]->{children}->[0];
             $property_TYPED         = $property_type_inner->{children}->[2];
@@ -159,7 +159,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         }
 
         # TypeInnerProperties -> MY Type '$TYPED_' WORD OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef'
-        elsif ( ref $property_type_inner eq 'TypeInnerProperties_222' ) {
+        elsif ( ref $property_type_inner eq 'TypeInnerProperties_224' ) {
             $property_my                    = $property_type_inner->{children}->[0];
             $property_type                  = $property_type_inner->{children}->[1]->{children}->[0];
             $property_TYPED                 = $property_type_inner->{children}->[2];
@@ -186,7 +186,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         else {
             die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                     . ( ref $self )
-                    . ' found where TypeInnerProperties_221 or TypeInnerProperties_222 expected, dying' )
+                    . ' found where TypeInnerProperties_223 or TypeInnerProperties_224 expected, dying' )
                 . "\n";
         }
 
@@ -201,12 +201,12 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 $property_name       = $property_type_inner->{children}->[3];
 
                 if ($property_name !~ /$property_key$/xms) {
-                    die 'ERROR ECVGEASRP17, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
+                    die 'ERROR ECVGEASRP18, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
                         . $property_name . q{'} . ' does not end with OO properties key ' . q{'} . $property_key . q{'} . ', dying' . "\n";
                 }
 
                 # TypeInnerProperties -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN SubExpression
-                if ( ref $property_type_inner eq 'TypeInnerProperties_221' ) {
+                if ( ref $property_type_inner eq 'TypeInnerProperties_223' ) {
                     $property_my            = $property_type_inner->{children}->[0];
                     $property_type          = $property_type_inner->{children}->[1]->{children}->[0];
                     $property_TYPED         = $property_type_inner->{children}->[2];
@@ -227,7 +227,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 }
 
                 # TypeInnerProperties -> MY Type '$TYPED_' WORD OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef'
-                elsif ( ref $property_type_inner eq 'TypeInnerProperties_222' ) {
+                elsif ( ref $property_type_inner eq 'TypeInnerProperties_224' ) {
                     $property_my                    = $property_type_inner->{children}->[0];
                     $property_type                  = $property_type_inner->{children}->[1]->{children}->[0];
                     $property_TYPED                 = $property_type_inner->{children}->[2];
@@ -254,7 +254,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 else {
                     die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                             . ( ref $self )
-                            . ' found where TypeInnerProperties_221 or TypeInnerProperties_222 expected, dying' )
+                            . ' found where TypeInnerProperties_223 or TypeInnerProperties_224 expected, dying' )
                         . "\n";
                 }
             }
@@ -438,20 +438,20 @@ EOL
         my object $property_arrayref_index_max = undef;
 
         # TypeInnerProperties -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN SubExpression
-        if ( ref $property_type_inner eq 'TypeInnerProperties_221' ) {
+        if ( ref $property_type_inner eq 'TypeInnerProperties_223' ) {
             $property_type          = $property_type_inner->{children}->[1]->{children}->[0];
             $property_subexpression = $property_type_inner->{children}->[5];
         }
 
         # TypeInnerProperties -> MY Type '$TYPED_' WORD OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef'
-        elsif ( ref $property_type_inner eq 'TypeInnerProperties_222' ) {
+        elsif ( ref $property_type_inner eq 'TypeInnerProperties_224' ) {
             $property_type               = $property_type_inner->{children}->[1]->{children}->[0];
             $property_arrayref_index_max = $property_type_inner->{children}->[5];
         }
         else {
             die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                     . ( ref $self )
-                    . ' found where TypeInnerProperties_221 or TypeInnerProperties_222 expected, dying' )
+                    . ' found where TypeInnerProperties_223 or TypeInnerProperties_224 expected, dying' )
                 . "\n";
         }
 
@@ -486,9 +486,9 @@ EOL
 
         $property_declaration = q{    } . $property_type . q{ } . $property_key;
 
-        # SubExpression_133 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined,
+        # SubExpression_135 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined,
         # don't perform any C++ initialization for properties initialized to 'undef' in Perl
-        if ( ( defined $property_subexpression ) and ( ( ref $property_subexpression ) ne 'SubExpression_133' ) ) {
+        if ( ( defined $property_subexpression ) and ( ( ref $property_subexpression ) ne 'SubExpression_135' ) ) {
             $cpp_source_subgroup = $property_subexpression->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
             $property_declaration .= ' = ' . $cpp_source_subgroup->{CPP};
         }
@@ -518,20 +518,20 @@ EOL
             $property_type_inner = $property->{children}->[2];
 
             # TypeInnerProperties -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN SubExpression
-            if ( ref $property_type_inner eq 'TypeInnerProperties_221' ) {
+            if ( ref $property_type_inner eq 'TypeInnerProperties_223' ) {
                 $property_type          = $property_type_inner->{children}->[1]->{children}->[0];
                 $property_subexpression = $property_type_inner->{children}->[5];
             }
 
             # TypeInnerProperties -> MY Type '$TYPED_' WORD OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef'
-            elsif ( ref $property_type_inner eq 'TypeInnerProperties_222' ) {
+            elsif ( ref $property_type_inner eq 'TypeInnerProperties_224' ) {
                 $property_type               = $property_type_inner->{children}->[1]->{children}->[0];
                 $property_arrayref_index_max = $property_type_inner->{children}->[5];
             }
             else {
                 die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                         . ( ref $self )
-                        . ' found where TypeInnerProperties_221 or TypeInnerProperties_222 expected, dying' )
+                        . ' found where TypeInnerProperties_223 or TypeInnerProperties_224 expected, dying' )
                     . "\n";
             }
 
@@ -566,9 +566,9 @@ EOL
 
             $property_declaration = q{    } . $property_type . q{ } . $property_key;
 
-            # SubExpression_133 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined,
+            # SubExpression_135 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined,
             # don't perform any C++ initialization for properties initialized to 'undef' in Perl
-            if ( ( defined $property_subexpression ) and ( ( ref $property_subexpression ) ne 'SubExpression_133' ) ) {
+            if ( ( defined $property_subexpression ) and ( ( ref $property_subexpression ) ne 'SubExpression_135' ) ) {
                 $cpp_source_subgroup = $property_subexpression->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
                 $property_declaration .= ' = ' . $cpp_source_subgroup->{CPP};
             }

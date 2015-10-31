@@ -34,10 +34,10 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in OperatorVoid::Named::Die->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 #    RPerl::diag( 'in OperatorVoid::Named::Die->ast_to_rperl__generate(), received $operator_void_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_void_named) . "\n" );
 
-    if ( ref $operator_void_named eq 'OperatorVoid_116' ) {    # OperatorVoid -> OP01_NAMED_VOID_SCOLON
+    if ( ref $operator_void_named eq 'OperatorVoid_118' ) {    # OperatorVoid -> OP01_NAMED_VOID_SCOLON
         $rperl_source_group->{PMC} .= $operator_void_named->{children}->[0];    # name semicolon
     }
-    elsif ( ref $operator_void_named eq 'OperatorVoid_118' ) {                  # OperatorVoid -> OP01_NAMED_VOID ListElements ';'
+    elsif ( ref $operator_void_named eq 'OperatorVoid_120' ) {                  # OperatorVoid -> OP01_NAMED_VOID ListElements ';'
         $rperl_source_group->{PMC}
             .= $operator_void_named->{children}->[0] . q{ };                    # name
         my object $arguments       = $operator_void_named->{children}->[1];
@@ -59,7 +59,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $operator_void_named )
-                . ' found where OperatorVoid_116 or OperatorVoid_118 expected, dying' )
+                . ' found where OperatorVoid_118 or OperatorVoid_120 expected, dying' )
             . "\n";
     }
 

@@ -26,10 +26,10 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in OperatorVoid::LoopControl->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if ( $self_class eq 'OperatorVoid_120' ) { # OperatorVoid -> OP19_LOOP_CONTROL_SCOLON
+    if ( $self_class eq 'OperatorVoid_122' ) { # OperatorVoid -> OP19_LOOP_CONTROL_SCOLON
         $rperl_source_group->{PMC} .= $self->{children}->[0] . "\n";
     }
-    elsif ( $self_class eq 'OperatorVoid_121' ) { # OperatorVoid -> OP19_LOOP_CONTROL LoopLabel ';'
+    elsif ( $self_class eq 'OperatorVoid_123' ) { # OperatorVoid -> OP19_LOOP_CONTROL LoopLabel ';'
         my string $loop_control = $self->{children}->[0];
         my string $loop_label   = $self->{children}->[1]->{children}->[0];
         my string $semicolon    = $self->{children}->[2];
@@ -40,7 +40,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where OperatorVoid_120 or OperatorVoid_121 expected, dying'
+                . ' found where OperatorVoid_122 or OperatorVoid_123 expected, dying'
         ) . "\n";
     }
 

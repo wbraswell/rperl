@@ -24,7 +24,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in ConstantCall->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) eq 'Expression_127' ) {
+    if ( ( ref $self ) eq 'Expression_129' ) {
         # Expression -> WORD_UPPERCASE LPAREN ')'
         my string $name        = $self->{children}->[0];
         my string $left_paren  = $self->{children}->[1];
@@ -32,7 +32,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
         $rperl_source_group->{PMC} .= $name . $left_paren . $right_paren;
     }
-    elsif ( ( ref $self ) eq 'Expression_128' ) {
+    elsif ( ( ref $self ) eq 'Expression_130' ) {
         # Expression -> WordScoped SCOPE WORD_UPPERCASE LPAREN ')' 
         my string_hashref $rperl_source_subgroup = $self->{children}->[0]->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
@@ -46,7 +46,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $self )
-                . ' found where Expression_127 or Expression_128 expected, dying' )
+                . ' found where Expression_129 or Expression_130 expected, dying' )
             . "\n";
     }
 
@@ -67,12 +67,12 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
 #    RPerl::diag( 'in ConstantCall->ast_to_cpp__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) eq 'Expression_127' ) {
+    if ( ( ref $self ) eq 'Expression_129' ) {
         # Expression -> WORD_UPPERCASE LPAREN ')'
         my string $name        = $self->{children}->[0];
         $cpp_source_group->{CPP} .= $name;
     }
-    elsif ( ( ref $self ) eq 'Expression_128' ) {
+    elsif ( ( ref $self ) eq 'Expression_130' ) {
         # Expression -> Expression -> CONSTANT_CALL_SCOPED
         my string $call        = $self->{children}->[0];
         substr $call, -2, 2, q{};  # strip trailing parenthesis
@@ -83,7 +83,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . ( ref $self )
-                . ' found where Expression_127 or Expression_128 expected, dying' )
+                . ' found where Expression_129 or Expression_130 expected, dying' )
             . "\n";
     }
 
