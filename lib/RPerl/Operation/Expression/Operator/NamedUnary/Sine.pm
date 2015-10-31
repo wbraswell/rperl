@@ -4,15 +4,15 @@
 # NOT SUPPORTED:  sin
 
 # [[[ HEADER ]]]
-package RPerl::Operation::Expression::Operator::Named::Sine;
+package RPerl::Operation::Expression::Operator::NamedUnary::Sine;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_100;
 
 # [[[ OO INHERITANCE ]]]
-use parent qw(RPerl::Operation::Expression::Operator::Named);
-use RPerl::Operation::Expression::Operator::Named;
+use parent qw(RPerl::Operation::Expression::Operator::NamedUnary);
+use RPerl::Operation::Expression::Operator::NamedUnary;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -34,8 +34,8 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         = @_;
     my string_hashref $rperl_source_group = { PMC => q{} };
 
-#    RPerl::diag( 'in Operator::Named::Sine->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
-#    RPerl::diag( 'in Operator::Named::Sine->ast_to_rperl__generate(), received $operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_named) . "\n" );
+#    RPerl::diag( 'in Operator::NamedUnary::Sine->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in Operator::NamedUnary::Sine->ast_to_rperl__generate(), received $operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_named) . "\n" );
 
     my string $operator_named_class = ref $operator_named;
     if ( $operator_named_class eq 'Operator_81' ) # Operator -> OP01_NAMED SubExpression
@@ -76,7 +76,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
         = { CPP =>
-            q{// <<< RP::O::E::O::N::Si __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
+            q{// <<< RP::O::E::O::NU::Si __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
             . "\n" };
 
     #...
@@ -87,7 +87,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
         = { CPP =>
-            q{// <<< RP::O::E::O::N::Si __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
+            q{// <<< RP::O::E::O::NU::Si __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
             . "\n" };
 
     #...

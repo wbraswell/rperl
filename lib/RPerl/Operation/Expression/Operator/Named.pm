@@ -19,21 +19,12 @@ our hashref $properties = {};
 # [[[ OO PROPERTIES, CLASS PROPERTY AKA PACKAGE VARIABLE ]]]
 # DEV NOTE, CORRELATION #rp20: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named/* also add in Grammar.eyp, Named.pm, and rperloperations.pm
 our string_hashref $NAMES = {
-    'cos'     => 'RPerl::Operation::Expression::Operator::Named::Cosine',
     'chomp'   => 'RPerl::Operation::Expression::Operator::Named::Chomp',
-    'defined' => 'RPerl::Operation::Expression::Operator::Named::Defined',
-    'exists'  => 'RPerl::Operation::Expression::Operator::Named::Exists',
-    '-e'      => 'RPerl::Operation::Expression::Operator::Named::FileExists',
-    '-r'      => 'RPerl::Operation::Expression::Operator::Named::FileReadable',
-    '-f'      => 'RPerl::Operation::Expression::Operator::Named::FileRegular',
-    '-T'      => 'RPerl::Operation::Expression::Operator::Named::FileText',
     'join'    => 'RPerl::Operation::Expression::Operator::Named::Join',
     'keys'    => 'RPerl::Operation::Expression::Operator::Named::Keys',
-    'length'  => 'RPerl::Operation::Expression::Operator::Named::Length',
     'pop'     => 'RPerl::Operation::Expression::Operator::Named::Pop',
     'push'    => 'RPerl::Operation::Expression::Operator::Named::Push',
     'reverse' => 'RPerl::Operation::Expression::Operator::Named::Reverse',
-    'sin'     => 'RPerl::Operation::Expression::Operator::Named::Sine',
     'sort'    => 'RPerl::Operation::Expression::Operator::Named::Sort',
     'split'   => 'RPerl::Operation::Expression::Operator::Named::Split',
     'values'  => 'RPerl::Operation::Expression::Operator::Named::Values'

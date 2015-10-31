@@ -1,20 +1,18 @@
 # [[[ DOCUMENTATION ]]]
-# http://perldoc.perl.org/functions/-X.html
-#     SUPPORTED:  -T EXPR
-# NOT SUPPORTED:  -T FILEHANDLE
-# NOT SUPPORTED:  -T DIRHANDLE
-# NOT SUPPORTED:  -T
+# http://perldoc.perl.org/functions/cos.html
+#     SUPPORTED:  cos EXPR
+# NOT SUPPORTED:  cos
 
 # [[[ HEADER ]]]
-package RPerl::Operation::Expression::Operator::Named::FileText;
+package RPerl::Operation::Expression::Operator::NamedUnary::Cosine;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_100;
 
 # [[[ OO INHERITANCE ]]]
-use parent qw(RPerl::Operation::Expression::Operator::Named);
-use RPerl::Operation::Expression::Operator::Named;
+use parent qw(RPerl::Operation::Expression::Operator::NamedUnary);
+use RPerl::Operation::Expression::Operator::NamedUnary;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -22,7 +20,10 @@ use RPerl::Operation::Expression::Operator::Named;
 ## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
 
 # [[[ CONSTANTS ]]]
-use constant NAME          => my string $TYPED_NAME           = '-T';
+use constant NAME          => my string $TYPED_NAME           = 'cos';
+# DEV NOTE: with min & max args of 1, compile-time args length checking short-circuited first by Parse Phase 0 ERROR ECVPAPL03 'Useless use of FOO in void context'
+# or ERROR ECVPARP00 'Unexpected Token:  ,'; short-circuited second by ERROR ECVGEASRP13 on Operator_82 & OperatorVoid_119 multiple-argument productions below;
+# can't figure out how to create test which gets past ECVPAPL03 & ECVPARP00 to trigger ECVGEASRP13
 use constant ARGUMENTS_MIN => my integer $TYPED_ARGUMENTS_MIN = 1;
 use constant ARGUMENTS_MAX => my integer $TYPED_ARGUMENTS_MAX = 1;
 
@@ -36,8 +37,8 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         = @_;
     my string_hashref $rperl_source_group = { PMC => q{} };
 
-#    RPerl::diag( 'in Operator::Named::FileText->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
-#    RPerl::diag( 'in Operator::Named::FileText->ast_to_rperl__generate(), received $operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_named) . "\n" );
+#    RPerl::diag( 'in Operator::NamedUnary::Cosine->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in Operator::NamedUnary::Cosine->ast_to_rperl__generate(), received $operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_named) . "\n" );
 
     my string $operator_named_class = ref $operator_named;
     if ( $operator_named_class eq 'Operator_81' ) # Operator -> OP01_NAMED SubExpression
@@ -78,7 +79,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
         = { CPP =>
-            q{// <<< RP::O::E::O::N::FT __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
+            q{// <<< RP::O::E::O::NU::C __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
             . "\n" };
 
     #...
@@ -89,7 +90,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
         = { CPP =>
-            q{// <<< RP::O::E::O::N::FT __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
+            q{// <<< RP::O::E::O::NU::C __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
             . "\n" };
 
     #...
