@@ -12,7 +12,11 @@ RELEASE Parse::Eyapp vX.YZZY
 DONE sort out Operator::Expression::Operator::Named vs NamedUnary
 DONE all named and named unary operators AKA builtins, PERLOPS_PERLTYPES mode
 all named, add support for Operation_79 ( Operation -> OP01_NAMED_SCOLON ) as in Wait.pm
-all named unary, add support for Operation_80 ( Operation -> OP10_NAMED_UNARY_SCOLON ) as in Defined.pm
+all named unary, add support for Operation_80 ( Operation -> OP10_NAMED_UNARY_SCOLON ) and other correct grammar rules, as in Random.pm
+/lib/RPerl/Test/ArrayReference/program_04_good.pl.DISABLED_GRAMMAR_OPNAMED, grammar rule (Operator_98 ISA Operation::Expression::Operator::NamedUnary) found where...
+/lib/RPerl/Test/HashReference/program_04_good.pl.DISABLED_GRAMMAR_OPNAMED, same as above
+/lib/RPerl/Test/Operator01Named/program_00_good.pl.DISABLED_GRAMMAR_OPNAMED, same as above
+
 10 more builtins, CPPOPS_CPPTYPES mode
 	NAMED
 	chomp

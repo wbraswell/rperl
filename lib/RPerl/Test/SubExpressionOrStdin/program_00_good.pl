@@ -12,4 +12,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string $foo = <STDIN>;
+my string $foo;
+$foo = <STDIN>;
