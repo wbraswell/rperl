@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  x' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  y' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -17,8 +17,8 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 
 $Data::Dumper::Indent = 0;
-my hashref $u = { z => { g => q{11}, h => '2' }, yy => { m => '23.3', n => '1' }, x => { a => '23', b => '3' } };
+my hashref $u = { z => { g => q{11}, h => '2' }, y => { m => '23.3', n => '1' }, x => { a => '23', b => '3' } };
 print Dumper( types($u) ) . "\n";
 
-$u = { z => { g => q{11}, h => '2' }, yy => { m => '23.3', n => '1' }, x => { a => '23', b => 3 } };
+$u = { z => { g => q{11}, h => '2' }, y => { m => '23.3', n => '1' }, x => { a => '23', b => 3 } };
 print Dumper( types($u) ) . "\n";

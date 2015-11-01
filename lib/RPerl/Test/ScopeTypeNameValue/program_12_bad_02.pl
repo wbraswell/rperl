@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  x' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  m' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
