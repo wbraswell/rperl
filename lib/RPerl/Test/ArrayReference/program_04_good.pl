@@ -12,7 +12,7 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 
 my number_arrayref $n_array
-    = [ sin 17 / 23, cos 42 / 1_701, -( sin 21.12 ) ];
+    = [ sin ( 17 / 23 ), cos ( 42 / 1_701 ), -( sin 21.12 ) ];
 foreach my number $n ( @{$n_array} ) {
     print '$n = ', $n, "\n";
 }
