@@ -1,4 +1,4 @@
-# RPerl Developer Notes 20150721 2015.202
+# RPerl Developer Notes 20151101 2015.305
 
 ##########################################################################################
 # WARNING & ERROR CODES
@@ -62,18 +62,24 @@ $ ln -s PATH_TO_RPERL_GITHUB/script/3rd_party_debugging/perlcritic ./perlcritic
 # PERLBREW
 ##########################################################################################
 
-# see INSTALL notes file, Step 1B
+# see RPerl INSTALL notes file, Step 1B
 
 # do NOT mix local::lib with Perlbrew
-# disable ~/.bashrc local::lib code
-	#if [ -d $HOME/perl5/lib/perl5 ]; then 
-	#    eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
-	#fi
-# enable ~/.bashrc Perlbrew code
-	source ~/perl5/perlbrew/etc/bashrc
+$ rm ~/perl5
+$ ln -s ~/perl5-perlbrew-5.12.5/ ~/perl5
+$ unset PERL5LIB
+$ vi ~/.bashrc  
+    # disable local::lib code
+        #if [ -d $HOME/perl5/lib/perl5 ]; then 
+        #    eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
+        #fi
+    # enable ~/.bashrc Perlbrew code
+        source ~/perl5/perlbrew/etc/bashrc
 $ source ~/.bashrc
+$ perlbrew list
 $ perlbrew use 5.xx.yy
-# `perl script/rperl` instead of just `rperl` to force use of Perlbrew perl
+$ export PERL5LIB=$PERL5LIB:/home/SOMEUSER/perl5/perlbrew/perls/perl-SOMEVERSION/lib/site_perl/SOMEVERSION/SOMEARCH
+$ perl script/rperl -t Foo.pm  # force use of Perlbrew perl
 
 
 ##########################################################################################

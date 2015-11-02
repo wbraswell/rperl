@@ -4,18 +4,30 @@ DONE support for special chars in qw()
 DONE Learning RPerl, all exercises parse
 	chpt3 ex3, RequireCheckedSyscalls failure
 
+DONE sort out Operator::Expression::Operator::Named vs NamedUnary
+DONE all named and named unary operators AKA builtins, PERLOPS_PERLTYPES mode
+tests
+	DONE non-whitespace qw(foo*baz bar-hypenated bla+rgh)
+	DONE compile-time constructor type mismatch in VariableDeclaration (ERROR ECVGEASRP17)
+	DONE zero-argument named & named unary operators (AKA builtins) in VariableDeclaration, C-Style For Loop, and in general
+
+RELEASE v1.2 HALLOWEEN
 
 
 Eyapp unescaped left braces for Perl v5.22 compatibility
 RELEASE Parse::Eyapp vX.YZZY
 
-DONE sort out Operator::Expression::Operator::Named vs NamedUnary
-DONE all named and named unary operators AKA builtins, PERLOPS_PERLTYPES mode
 all named, add support for Operation_79 ( Operation -> OP01_NAMED_SCOLON ) as in Wait.pm
 all named unary, add support for Operation_80 ( Operation -> OP10_NAMED_UNARY_SCOLON ) and other correct grammar rules, as in Random.pm
-/lib/RPerl/Test/ArrayReference/program_04_good.pl.DISABLED_GRAMMAR_OPNAMED, grammar rule (Operator_98 ISA Operation::Expression::Operator::NamedUnary) found where...
-/lib/RPerl/Test/HashReference/program_04_good.pl.DISABLED_GRAMMAR_OPNAMED, same as above
-/lib/RPerl/Test/Operator01Named/program_00_good.pl.DISABLED_GRAMMAR_OPNAMED, same as above
+grammar rule (Operator_98 ISA Operation::Expression::Operator::NamedUnary) found where...
+	lib/RPerl/Test/ArrayReference/program_04_good.pl.DISABLED_GRAMMAR_OPNAMED
+	lib/RPerl/Test/HashReference/program_04_good.pl.DISABLED_GRAMMAR_OPNAMED, same as above
+	lib/RPerl/Test/Operator01Named/program_00_good.pl.DISABLED_GRAMMAR_OPNAMED, same as above
+Can't parse code: Unknown error parsing Perl document
+	lib/RPerl/Test/Operator23LogicalAnd/program_00_good.pl.DISABLED_PERLCRITIC_BUG_V5_16_AND_EARLIER
+	lib/RPerl/Test/Operator06RegularExpressionMatch/program_00_good.pl.DISABLED_PERLCRITIC_BUG_V5_16_AND_EARLIER
+	lib/RPerl/Test/Operator24LogicalOrXor/program_00_good.pl.DISABLED_PERLCRITIC_BUG_V5_16_AND_EARLIER
+	lib/RPerl/Test/SubExpression/program_08_good.pl.DISABLED_PERLCRITIC_BUG_V5_16_AND_EARLIER
 
 10 more builtins, CPPOPS_CPPTYPES mode
 	NAMED
@@ -48,9 +60,6 @@ all named unary, add support for Operation_80 ( Operation -> OP10_NAMED_UNARY_SC
 Travis Windows, add ci.appveyor.com github webhook
 Monolithic Modules, Fix Deps Warning
 tests
-	DONE non-whitespace qw(foo*baz bar-hypenated bla+rgh)
-	DONE compile-time constructor type mismatch in VariableDeclaration (ERROR ECVGEASRP17)
-	DONE zero-argument named & named unary operators (AKA builtins) in VariableDeclaration, C-Style For Loop, and in general
 	array size declaration compensation; package/subroutine/method names starting w/ underscore
 	variable redeclaration (masking)
 	properties & hash type-inner type-vs-key name mismatch (ECVGEASRP18: PERLOPS Class.pm properties accessors/mutators; CPPOPS entry & entrytyped)
@@ -68,7 +77,7 @@ tests
 	%ENV
 figure out <> vs "" and also long-path-deps in includes in Bubble.cpp & Bubble.h
 
-RELEASE v1.2 HALLOWEEN
+RELEASE v1.21
 
 
 

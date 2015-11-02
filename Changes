@@ -1,5 +1,18 @@
 Revision history for Perl compiler RPerl.
 
+1.200000 2015-10-31
+
+    - HOLIDAY EDITION: Happy Halloween!
+    - Split N-Body SSE From Normal Code, Create Linking In Scripts
+    - Ensure Perfect Match For Compiled Algorithm.*, Sort.*, Bubble.*, Inefficient.* Files With Hand-Compiled *.CPPOPS_CPPTYPES versions
+    - Support For Special Characters in qw()
+    - Learning RPerl, All Exercises Parse
+    - Separate Operator::Expression::Operator::Named From NamedUnary
+    - Support For All Named & Named Unary Operators AKA Builtins, PERLOPS_PERLTYPES Mode 
+    - Test Non-Whitespace qw(foo*baz bar-hypenated bla+rgh)
+    - Test Compile-Time Constructor Type Mismatch In VariableDeclaration (ERROR ECVGEASRP17)
+    - Test Zero-Argument Named & Named Unary Operators (AKA Builtins) In VariableDeclaration, C-Style For Loop, & In General
+
 1.100002 2015-09-11
 
     - Enable Subcompile Phase During Compile Time
