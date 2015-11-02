@@ -1,9 +1,13 @@
 Revision history for Perl compiler RPerl.
 
-1.200000 2015-10-31
+1.200001 2015-11-01
+
+    - Disable 4 Tests To Avoid Perl::Critic Error "Can't parse code: Unknown error parsing Perl document" In Perl v5.16 & Earlier
+
+1.200000 2015-10-31 Codename Andromeda
 
     - HOLIDAY EDITION: Happy Halloween!
-    - Split N-Body SSE From Normal Code, Create Linking In Scripts
+    - Split N-Body Code From RPerl Into PhysicsPerl & Geometric Algebra Code Into MathPerl
     - Ensure Perfect Match For Compiled Algorithm.*, Sort.*, Bubble.*, Inefficient.* Files With Hand-Compiled *.CPPOPS_CPPTYPES versions
     - Support For Special Characters in qw()
     - Learning RPerl, All Exercises Parse

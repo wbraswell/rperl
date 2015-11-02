@@ -1,18 +1,5 @@
 DONE split n-body SSE from normal code, create linking in scripts
-DONE ensure perfect match for compiled Algorithm.*, Sort.*, Bubble.*, Inefficient.* files with hand-compiled *.CPPOPS_CPPTYPES versions
-DONE support for special chars in qw()
-DONE Learning RPerl, all exercises parse
-	chpt3 ex3, RequireCheckedSyscalls failure
-
-DONE sort out Operator::Expression::Operator::Named vs NamedUnary
-DONE all named and named unary operators AKA builtins, PERLOPS_PERLTYPES mode
-tests
-	DONE non-whitespace qw(foo*baz bar-hypenated bla+rgh)
-	DONE compile-time constructor type mismatch in VariableDeclaration (ERROR ECVGEASRP17)
-	DONE zero-argument named & named unary operators (AKA builtins) in VariableDeclaration, C-Style For Loop, and in general
-
-RELEASE v1.2 HALLOWEEN
-
+Learning RPerl, chpt3 ex3, RequireCheckedSyscalls failure
 
 Eyapp unescaped left braces for Perl v5.22 compatibility
 RELEASE Parse::Eyapp vX.YZZY
