@@ -1,4 +1,5 @@
-DONE split n-body SSE from normal code, create linking in scripts
+PARTIAL Travis Windows, add ci.appveyor.com github webhook
+
 Learning RPerl, chpt3 ex3, RequireCheckedSyscalls failure
 
 Eyapp unescaped left braces for Perl v5.22 compatibility
@@ -44,7 +45,6 @@ Can't parse code: Unknown error parsing Perl document
 	sin
 	sqrt (need create)
 
-Travis Windows, add ci.appveyor.com github webhook
 Monolithic Modules, Fix Deps Warning
 tests
 	array size declaration compensation; package/subroutine/method names starting w/ underscore
