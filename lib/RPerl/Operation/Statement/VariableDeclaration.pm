@@ -72,7 +72,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #                    RPerl::diag( 'in VariableDeclaration->ast_to_rperl__generate(), have $constructor_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($constructor_type) . "\n" );
      
                     if ( $type ne $constructor_type ) {
-                        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP17, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: data type mismatch, ' . q{'}
+                        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP19, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: data type mismatch, ' . q{'}
                                 . $type . q{'}
                                 . ' type is different than ' . q{'}
                                 . $constructor_type . q{'}
@@ -206,7 +206,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #                    RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $constructor_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($constructor_type) . "\n" );
      
                     if ( $type ne $constructor_type ) {
-                        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP17, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: data type mismatch, ' . q{'}
+                        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP19, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: data type mismatch, ' . q{'}
                                 . $type . q{'}
                                 . ' type is different than ' . q{'}
                                 . $constructor_type . q{'}

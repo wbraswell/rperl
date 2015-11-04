@@ -7,7 +7,7 @@ package RPerl::Operation::Expression::Operator::Named::Join;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_000;
+our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::Operator::Named);
@@ -20,10 +20,8 @@ use RPerl::Operation::Expression::Operator::Named;
 
 # [[[ CONSTANTS ]]]
 use constant NAME          => my string $TYPED_NAME           = 'join';
-
-# NEED UPDATE
-#use constant ARGUMENTS_MIN => my integer $TYPED_ARGUMENTS_MIN = 2;
-#use constant ARGUMENTS_MAX => my integer $TYPED_ARGUMENTS_MAX = 2;
+use constant ARGUMENTS_MIN => my integer $TYPED_ARGUMENTS_MIN = 2;
+use constant ARGUMENTS_MAX => my integer $TYPED_ARGUMENTS_MAX = 999;
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
@@ -40,29 +38,101 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     my string $operator_named_class = ref $operator_named;
     if ( $operator_named_class eq 'Operation_79' ) { # Operation -> OP01_NAMED_SCOLON
-        $rperl_source_group->{PMC} .= $operator_named->{children}->[0];
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEASRP17, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
+                . $operator_named->{children}->[0]
+                . ' requires multiple arguments, dying' )
+            . "\n";
     }
     elsif ( $operator_named_class eq 'Operator_83' ) { # Operator -> OP01_NAMED SubExpression
-        $rperl_source_group->{PMC} .= $operator_named->{children}->[0] . q{ };
-        my string_hashref $rperl_source_subgroup
-            = $operator_named->{children}->[1]
-            ->ast_to_rperl__generate( $modes, $self );
-        RPerl::Generator::source_group_append( $rperl_source_group,
-            $rperl_source_subgroup );
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECVGEASRP17, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
+                . $operator_named->{children}->[0]
+                . ' requires multiple arguments, dying' )
+            . "\n";
     }
     elsif ( $operator_named_class eq 'Operator_84' ) { # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
-        die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASRP13, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
-                . $operator_named->{children}->[1]
-                . ' does not accept multiple arguments, dying' )
-            . "\n";
+        my string $left_paren = $operator_named->{children}->[0];
+        my string $operator_name = $operator_named->{children}->[1];
+        my object $argument0 = $operator_named->{children}->[2];
+        my string $list_comma = $operator_named->{children}->[3];
+        my object $arguments = $operator_named->{children}->[4];
+        my string $right_paren = $operator_named->{children}->[5];
+
+        my integer $argument_count = $arguments->length() + 1;
+        if ( $argument_count < ARGUMENTS_MIN() ) {
+            die
+                'ERROR ECVGEASRP02, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
+                . "\n"
+                . 'Argument count '
+                . $argument_count
+                . ' falls below minimum argument limit '
+                . ARGUMENTS_MIN()
+                . ' for operation ' . q{'}
+                . NAME() . q{'}
+                . ', dying' . "\n";
+        }
+        if ( $argument_count > ARGUMENTS_MAX() ) {
+            die
+                'ERROR ECVGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
+                . "\n"
+                . 'Argument count '
+                . $argument_count
+                . ' exceeds maximum argument limit '
+                . ARGUMENTS_MAX()
+                . ' for operation ' . q{'}
+                . NAME() . q{'}
+                . ', dying' . "\n";
+        }
+
+        $rperl_source_group->{PMC} .= $left_paren . q{ } . $operator_name . q{ };
+        my string_hashref $rperl_source_subgroup = $argument0->ast_to_rperl__generate( $modes, $self );
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+        $rperl_source_group->{PMC} .= $list_comma . q{ };
+        $rperl_source_subgroup = $arguments->ast_to_rperl__generate( $modes, $self );
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+        $rperl_source_group->{PMC} .= q{ } . $right_paren;
     }
     elsif ( $operator_named_class eq 'OperatorVoid_121' ) { # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
-        die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASRP13, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
-                . $operator_named->{children}->[0]
-                . ' does not accept multiple arguments, dying' )
-            . "\n";
+        my string $operator_name = $operator_named->{children}->[0];
+        my object $argument0 = $operator_named->{children}->[1];
+        my string $list_comma = $operator_named->{children}->[2];
+        my object $arguments = $operator_named->{children}->[3];
+        my string $semicolon = $operator_named->{children}->[4];
+
+        my integer $argument_count = $arguments->length() + 1;
+        if ( $argument_count < ARGUMENTS_MIN() ) {
+            die
+                'ERROR ECVGEASRP02, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
+                . "\n"
+                . 'Argument count '
+                . $argument_count
+                . ' falls below minimum argument limit '
+                . ARGUMENTS_MIN()
+                . ' for operation ' . q{'}
+                . NAME() . q{'}
+                . ', dying' . "\n";
+        }
+        if ( $argument_count > ARGUMENTS_MAX() ) {
+            die
+                'ERROR ECVGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
+                . "\n"
+                . 'Argument count '
+                . $argument_count
+                . ' exceeds maximum argument limit '
+                . ARGUMENTS_MAX()
+                . ' for operation ' . q{'}
+                . NAME() . q{'}
+                . ', dying' . "\n";
+        }
+
+        $rperl_source_group->{PMC} .= $operator_name . q{ };
+        my string_hashref $rperl_source_subgroup = $argument0->ast_to_rperl__generate( $modes, $self );
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+        $rperl_source_group->{PMC} .= $list_comma . q{ };
+        $rperl_source_subgroup = $arguments->ast_to_rperl__generate( $modes, $self );
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+        $rperl_source_group->{PMC} .= $semicolon . "\n";
     }
     else {
         die RPerl::Parser::rperl_rule__replace(

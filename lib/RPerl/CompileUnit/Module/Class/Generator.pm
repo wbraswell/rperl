@@ -133,7 +133,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         $property_name       = $property_type_inner->{children}->[3];
 
         if ($property_name !~ /$property_key$/xms) {
-            die 'ERROR ECVGEASRP18, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
+            die 'ERROR ECVGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
                 . $property_name . q{'} . ' does not end with OO properties key ' . q{'} . $property_key . q{'} . ', dying' . "\n";
         }
 
@@ -201,7 +201,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 $property_name       = $property_type_inner->{children}->[3];
 
                 if ($property_name !~ /$property_key$/xms) {
-                    die 'ERROR ECVGEASRP18, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
+                    die 'ERROR ECVGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
                         . $property_name . q{'} . ' does not end with OO properties key ' . q{'} . $property_key . q{'} . ', dying' . "\n";
                 }
 

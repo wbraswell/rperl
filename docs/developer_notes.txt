@@ -1,8 +1,10 @@
-# RPerl Developer Notes 20151101 2015.305
+# RPerl Developer Notes 20151104 2015.308
 
 ##########################################################################################
 # WARNING & ERROR CODES
 ##########################################################################################
+
+GENERAL CODE LEGEND
 
 W: Warning
 E: Error
@@ -25,8 +27,33 @@ RP: RPerl Compiler
 
 SO: Sort
 BU: Bubble
-NEED ADD MANY MORE HERE
+[NEED ADD MANY MORE HERE]
 
+SPECIFIC CODES
+
+ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule [SOMERULE] found where [SOMERULES] expected, dying
+ERROR ECVGEASRP01, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named void operator [SOMEOP] found where [SOMEOPS] expected, dying
+ERROR ECVGEASRP02, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Argument count [SOMECOUNT] falls below minimum argument limit [SOMEMIN] for operation [SOMEOP], dying
+ERROR ECVGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Argument count [SOMECOUNT] exceeds maximum argument limit [SOMEMAX] for operation [SOMEOP], dying
+ERROR ECVGEASRP04, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Attempt to return dereferenced array, please return arrayref instead, dying
+ERROR ECVGEASRP05, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Attempt to return dereferenced hash, please return hashref instead, dying
+ERROR ECVGEASRP06, CODE GENERATOR, ABSTRACT SYNTAX TO RPerl: C-style for() loop header variable mismatch, initial-condition variable [SOMEVAR] is different than exit-condition variable [SOMEOTHERVAR], dying
+ERROR ECVGEASRP07, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: package name [SOMEPACKAGE] must not start with underscore, dying
+ERROR ECVGEASRP08, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: subroutine name [SOMESUB] must not start with underscore, dying
+ERROR ECVGEASRP09, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: method name [SOMEMETHOD] must not start with underscore, dying
+ERROR ECVGEASRP10, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: [NONE]
+ERROR ECVGEASRP11, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: [NONE]
+ERROR ECVGEASRP12, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named operator [SOMEOP] found where [SOMEOPS] expected, operator may not be properly listed in $RPerl::Operation::Expression::Operator::Named::NAMES, dying
+ERROR ECVGEASRP13, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator [SOMEOP] does not accept multiple arguments, dying
+ERROR ECVGEASRP14, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator [SOMEOP] does not accept arguments, dying
+ERROR ECVGEASRP15, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator [SOMEOP] requires exactly one argument, dying
+ERROR ECVGEASRP16, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator [SOMEOP] requires one or more arguments, dying
+ERROR ECVGEASRP17, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator [SOMEOP] requires multiple arguments, dying
+ERROR ECVGEASRP18, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named operator [SOMEOP] found where [SOMEOPS] expected, dying
+ERROR ECVGEASRP19, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: data type mismatch, [SOMETYPE] type is different than [SOMEOTHERTYPE] constructor type, dying
+ERROR ECVGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name [SOMENAME] does not end with OO properties or hash key [SOMEKEY], dying
+ERROR ECVGEASRP21, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: [NONE]
+[NEED ADD MANY MORE HERE]
 
 ##########################################################################################
 # PERLTIDY 

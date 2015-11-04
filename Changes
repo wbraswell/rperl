@@ -14,7 +14,7 @@ Revision history for Perl compiler RPerl.
     - Separate Operator::Expression::Operator::Named From NamedUnary
     - Support For All Named & Named Unary Operators AKA Builtins, PERLOPS_PERLTYPES Mode 
     - Test Non-Whitespace qw(foo*baz bar-hypenated bla+rgh)
-    - Test Compile-Time Constructor Type Mismatch In VariableDeclaration (ERROR ECVGEASRP17)
+    - Test Compile-Time Constructor Type Mismatch In VariableDeclaration (ERROR ECVGEASRP19)
     - Test Zero-Argument Named & Named Unary Operators (AKA Builtins) In VariableDeclaration, C-Style For Loop, & In General
 
 1.100002 2015-09-11
