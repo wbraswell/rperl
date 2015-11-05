@@ -6,7 +6,7 @@ Eyapp unescaped left braces for Perl v5.22 compatibility
 RELEASE Parse::Eyapp vX.YZZY
 
 DONE all named, add support for Operation_79 ( Operation -> OP01_NAMED_SCOLON )
-all named unary, add support for Operation_80 ( Operation -> OP10_NAMED_UNARY_SCOLON ) and other correct grammar rules, as in Random.pm
+DONE all named unary, add support for Operation_80 ( Operation -> OP10_NAMED_UNARY_SCOLON )
 grammar rule (Operator_98 ISA Operation::Expression::Operator::NamedUnary) found where...
 	lib/RPerl/Test/ArrayReference/program_04_good.pl.DISABLED_GRAMMAR_OPNAMED
 	lib/RPerl/Test/HashReference/program_04_good.pl.DISABLED_GRAMMAR_OPNAMED, same as above
@@ -46,6 +46,8 @@ Can't parse code: Unknown error parsing Perl document
 	sqrt (need create)
 
 Monolithic Modules, Fix Deps Warning
+figure out <> vs "" and also long-path-deps in includes in Bubble.cpp & Bubble.h
+
 tests
 	array size declaration compensation; package/subroutine/method names starting w/ underscore
 	variable redeclaration (masking)
@@ -64,11 +66,17 @@ tests
 	%ENV
 	ERROR ECVGEASRP15... named operator [SOMEOP] requires exactly one argument, dying
 	ERROR ECVGEASRP16... named operator [SOMEOP] requires one or more arguments, dying
-figure out <> vs "" and also long-path-deps in includes in Bubble.cpp & Bubble.h
+	all currently-implemented named ops
+	all currently-implemented named_unary ops
 
 RELEASE v1.21
 
 
+developer_notes.txt
+	warning & error codes
+		general code legend
+		specific codes
+	perlall
 
 1 New Benchmark Application
 Finish All CPPOPS_CPPTYPES Code Generation

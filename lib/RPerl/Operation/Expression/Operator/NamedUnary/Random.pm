@@ -1,9 +1,14 @@
+# [[[ DOCUMENTATION ]]]
+# http://perldoc.perl.org/functions/rand.html
+#     SUPPORTED:  rand EXPR
+#     SUPPORTED:  rand
+
 # [[[ HEADER ]]]
 package RPerl::Operation::Expression::Operator::NamedUnary::Random;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_010;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::Operator::NamedUnary);
