@@ -9,7 +9,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_001;
+our $VERSION = 0.007_002;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -44,7 +44,7 @@ find(
 #        RPerl::diag('in 11_generate.t, have $file = ' . $file . "\n");
 
 #        if ( $file !~ m/[.]pm$/xms ) { # TEMP DEBUGGING, ONLY FIND *.pm, NOT *.pl
-#        if ( $file !~ m/.*OperatorVoid01NamedVoid.*[.]p[ml]$/xms ) { # TEMP DEBUGGING, ONLY FIND OperatorVoid01NamedVoid*/*.pm & *.pl
+#        if ( $file !~ m/.*SubExpression\/program_08_good[.]pl$/xms ) { # TEMP DEBUGGING, ONLY FIND CERTAIN FILES
         if ( $file !~ m/[.]p[ml]$/xms ) {    # find all *.pm & *.pl files
             return;
         }
@@ -151,7 +151,7 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
             $eval_return_value = eval { RPerl::Generator::ast_to_cpp__generate( $rperl_ast, $modes_argument ); };
         }
 
-        #        RPerl::diag( 'in 11_generate.t, have $eval_return_value = ' . Dumper($eval_return_value) . "\n" );    # warning if undef retval
+#        RPerl::diag( 'in 11_generate.t, have $eval_return_value = ' . Dumper($eval_return_value) . "\n" );    # warning if undef retval
 
         if ( ( defined $eval_return_value ) and $eval_return_value ) {    # Perl eval return code defined & true, success
             RPerl::diag( 'in 11_generate.t, have defined and true $eval_return_value' . "\n" );

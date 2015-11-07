@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::VariableDeclaration;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.004_000;
+our $VERSION = 0.004_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement);
@@ -11,6 +11,9 @@ use parent qw(RPerl::Operation::Statement);
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+# [[[ INCLUDES ]]]
+use Scalar::Util 'blessed';
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
@@ -60,12 +63,15 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             $rperl_source_group->{PMC} .= $opnamed_or_subexp_or_input_scolon->{children}->[0];
         }
         elsif ($opnamed_or_subexp_or_input_scolon_type eq 'OpNamedScolonOrSubExpIn_240') {  # OpNamedScolonOrSubExpIn -> SubExpressionOrInput ';'
+#            RPerl::diag( 'in VariableDeclaration->ast_to_rperl__generate(), have (ref $opnamed_or_subexp_or_input_scolon->{children}->[0]->{children}->[0]->{children}->[0]) = ' . "\n" . RPerl::Parser::rperl_ast__dump((ref $opnamed_or_subexp_or_input_scolon->{children}->[0]->{children}->[0]->{children}->[0])) . "\n" );
+            
             if ( ( exists $opnamed_or_subexp_or_input_scolon->{children} ) and
                 ( exists $opnamed_or_subexp_or_input_scolon->{children}->[0] ) and
                 ( exists $opnamed_or_subexp_or_input_scolon->{children}->[0]->{children} ) and
                 ( exists $opnamed_or_subexp_or_input_scolon->{children}->[0]->{children}->[0] ) and
                 ( exists $opnamed_or_subexp_or_input_scolon->{children}->[0]->{children}->[0]->{children} ) and
                 ( exists $opnamed_or_subexp_or_input_scolon->{children}->[0]->{children}->[0]->{children}->[0] ) and
+                (blessed($opnamed_or_subexp_or_input_scolon->{children}->[0]->{children}->[0]->{children}->[0])) and
                 ( $opnamed_or_subexp_or_input_scolon->{children}->[0]->{children}->[0]->{children}->[0]->isa('RPerl::Operation::Expression::SubroutineCall::MethodCall::ConstructorCall') ) )
             {
                     my string $constructor_type = $opnamed_or_subexp_or_input_scolon->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0];
