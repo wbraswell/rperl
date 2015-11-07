@@ -7,10 +7,6 @@ RELEASE Parse::Eyapp vX.YZZY
 
 DONE all named, add support for Operation_79 ( Operation -> OP01_NAMED_SCOLON )
 DONE all named unary, add support for Operation_80 ( Operation -> OP10_NAMED_UNARY_SCOLON )
-grammar rule (Operator_98 ISA Operation::Expression::Operator::NamedUnary) found where...
-	lib/RPerl/Test/ArrayReference/program_04_good.pl.DISABLED_GRAMMAR_OPNAMED
-	lib/RPerl/Test/HashReference/program_04_good.pl.DISABLED_GRAMMAR_OPNAMED, same as above
-	lib/RPerl/Test/Operator01Named/program_00_good.pl.DISABLED_GRAMMAR_OPNAMED, same as above
 Can't parse code: Unknown error parsing Perl document
 	lib/RPerl/Test/Operator23LogicalAnd/program_00_good.pl.DISABLED_PERLCRITIC_BUG_V5_16_AND_EARLIER
 	lib/RPerl/Test/Operator06RegularExpressionMatch/program_00_good.pl.DISABLED_PERLCRITIC_BUG_V5_16_AND_EARLIER
