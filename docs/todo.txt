@@ -1,6 +1,6 @@
 PARTIAL Travis Windows, add ci.appveyor.com github webhook
 
-Learning RPerl, chpt3 ex3, RequireCheckedSyscalls failure
+DONE Learning RPerl, chpt3 ex3, RequireCheckedSyscalls failure
 
 Eyapp unescaped left braces for Perl v5.22 compatibility
 RELEASE Parse::Eyapp vX.YZZY

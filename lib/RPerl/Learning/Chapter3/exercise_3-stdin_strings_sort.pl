@@ -15,32 +15,29 @@ our $VERSION = 0.001_000;
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
 
 # [[[ CONSTANTS ]]]
-use constant SINGLE_LINE_OUTPUT  => my integer $TYPED_SINGLE_LINE_OUTPUT = 0;
+use constant SINGLE_LINE_OUTPUT => my integer $TYPED_SINGLE_LINE_OUTPUT = 0;
 
 # [[[ OPERATIONS ]]]
 my string_arrayref $input_strings = [];
 
 print 'Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
 
-while (my string $input_string = <STDIN>) {
+while ( my string $input_string = <STDIN> ) {
     push @{$input_strings}, $input_string;
 }
 
 print "\n";
 print 'Strings in ASCIIbetical order:' . "\n";
 
-my string_arrayref $input_strings_sorted = [sort @{$input_strings}];
+my string_arrayref $input_strings_sorted = [ sort @{$input_strings} ];
 
-foreach my string $input_strings_sorted_element (@{$input_strings_sorted}) {
-    if (SINGLE_LINE_OUTPUT()) {
+foreach my string $input_strings_sorted_element ( @{$input_strings_sorted} ) {
+    if ( SINGLE_LINE_OUTPUT() ) {
+
         # strip trailing newline, if present
         chomp $input_strings_sorted_element;
         $input_strings_sorted_element .= q{ };
     }
-
-# START HERE: fix print below
-# START HERE: fix print below
-# START HERE: fix print below
 
     print $input_strings_sorted_element;
 }
