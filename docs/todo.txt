@@ -178,3 +178,11 @@ Shiny APTech site
 Shiny RPerl site
 Shiny App Store
 
+Perl::Critic Bugs
+	Eclipse EPIC Integration, Silent Failure    https://github.com/Perl-Critic/Perl-Critic/issues/582
+	ProhibitMagicNumbers False Positive    https://github.com/Perl-Critic/Perl-Critic/issues/631
+	Subroutines::RequireFinalReturn False Positive On Typed Loop Iterator    https://github.com/Perl-Critic/Perl-Critic/issues/636
+	ControlStructures::ProhibitPostfixControls False Positives on Typed Loop Iterator    https://github.com/Perl-Critic/Perl-Critic/issues/639
+	Argument "-" isn't numeric in exponentiation (**) at .../PPI/Token/Number/Exp.pm line 55    https://github.com/Perl-Critic/Perl-Critic/issues/665
+	InputOutput::RequireCheckedSyscalls False Positive On Typed Loop Iterator Without Final Newline    https://github.com/Perl-Critic/Perl-Critic/issues/671
+	

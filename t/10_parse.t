@@ -33,7 +33,7 @@ find(
         #        RPerl::diag('in 10_parse.t, have $file = ' . $file . "\n");
 
 
-#        if ( $file !~ m/.*ArrayDereference\/program_01_bad_00[.]pl$/xms ) { # TEMP DEBUGGING, ONLY FIND CERTAIN FILES
+#        if ( $file !~ m/.*SubExpression\/program_08_good[.]pl$/xms ) { # TEMP DEBUGGING, ONLY FIND CERTAIN FILES
         if ( ( $file !~ m/.pm$/xms ) and ( $file !~ m/.pl$/xms ) ) {
             return;
         }

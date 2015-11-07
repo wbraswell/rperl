@@ -95,7 +95,7 @@ $ ln -s PATH_TO_RPERL_GITHUB/script/3rd_party_debugging/perlcritic ./perlcritic
 $ rm ~/perl5
 $ ln -s ~/perl5-perlbrew-5.12.5/ ~/perl5
 $ unset PERL5LIB
-$ vi ~/.bashrc  
+$ vi ~/.bashrc
     # disable local::lib code
         #if [ -d $HOME/perl5/lib/perl5 ]; then 
         #    eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
