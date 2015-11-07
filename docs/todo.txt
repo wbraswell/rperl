@@ -1,17 +1,13 @@
-PARTIAL Travis Windows, add ci.appveyor.com github webhook
-
 DONE Learning RPerl, chpt3 ex3, RequireCheckedSyscalls failure
-
-Eyapp unescaped left braces for Perl v5.22 compatibility
-RELEASE Parse::Eyapp vX.YZZY
-
 DONE all named, add support for Operation_79 ( Operation -> OP01_NAMED_SCOLON )
 DONE all named unary, add support for Operation_80 ( Operation -> OP10_NAMED_UNARY_SCOLON )
-Can't parse code: Unknown error parsing Perl document
-	lib/RPerl/Test/Operator23LogicalAnd/program_00_good.pl.DISABLED_PERLCRITIC_BUG_V5_16_AND_EARLIER
-	lib/RPerl/Test/Operator06RegularExpressionMatch/program_00_good.pl.DISABLED_PERLCRITIC_BUG_V5_16_AND_EARLIER
-	lib/RPerl/Test/Operator24LogicalOrXor/program_00_good.pl.DISABLED_PERLCRITIC_BUG_V5_16_AND_EARLIER
-	lib/RPerl/Test/SubExpression/program_08_good.pl.DISABLED_PERLCRITIC_BUG_V5_16_AND_EARLIER
+DONE Can't parse code: Unknown error parsing Perl document
+DONE 	lib/RPerl/Test/Operator23LogicalAnd/program_00_good.pl.DISABLED_PERLCRITIC_BUG_V5_16_AND_EARLIER
+DONE 	lib/RPerl/Test/Operator06RegularExpressionMatch/program_00_good.pl.DISABLED_PERLCRITIC_BUG_V5_16_AND_EARLIER
+DONE 	lib/RPerl/Test/Operator24LogicalOrXor/program_00_good.pl.DISABLED_PERLCRITIC_BUG_V5_16_AND_EARLIER
+DONE 	lib/RPerl/Test/SubExpression/program_08_good.pl.DISABLED_PERLCRITIC_BUG_V5_16_AND_EARLIER
+
+PARTIAL Travis Windows, add ci.appveyor.com github webhook
 
 10 more builtins, CPPOPS_CPPTYPES mode
 	NAMED
@@ -64,6 +60,9 @@ tests
 	ERROR ECVGEASRP16... named operator [SOMEOP] requires one or more arguments, dying
 	all currently-implemented named ops
 	all currently-implemented named_unary ops
+
+Eyapp unescaped left braces for Perl v5.22 compatibility
+RELEASE Parse::Eyapp vX.YZZY
 
 RELEASE v1.21
 
