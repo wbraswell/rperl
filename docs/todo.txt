@@ -1,13 +1,14 @@
 DONE Learning RPerl, chpt3 ex3, RequireCheckedSyscalls failure
 DONE all named, add support for Operation_79 ( Operation -> OP01_NAMED_SCOLON )
 DONE all named unary, add support for Operation_80 ( Operation -> OP10_NAMED_UNARY_SCOLON )
-DONE Can't parse code: Unknown error parsing Perl document
+DONE Can't parse code: Unknown error parsing Perl document     ECVGEASRP19 support
 DONE 	lib/RPerl/Test/Operator23LogicalAnd/program_00_good.pl.DISABLED_PERLCRITIC_BUG_V5_16_AND_EARLIER
 DONE 	lib/RPerl/Test/Operator06RegularExpressionMatch/program_00_good.pl.DISABLED_PERLCRITIC_BUG_V5_16_AND_EARLIER
 DONE 	lib/RPerl/Test/Operator24LogicalOrXor/program_00_good.pl.DISABLED_PERLCRITIC_BUG_V5_16_AND_EARLIER
 DONE 	lib/RPerl/Test/SubExpression/program_08_good.pl.DISABLED_PERLCRITIC_BUG_V5_16_AND_EARLIER
 
-PARTIAL Travis Windows, add ci.appveyor.com github webhook
+TEMP DISABLE Macintosh, Failed test 'Inline::CPP, call Airplane methods...'    https://github.com/wbraswell/rperl/issues/34
+PARTIAL Windows Testing, add ci.appveyor.com github webhook
 
 10 more builtins, CPPOPS_CPPTYPES mode
 	NAMED
@@ -67,16 +68,12 @@ RELEASE Parse::Eyapp vX.YZZY
 RELEASE v1.21
 
 
-developer_notes.txt
-	warning & error codes
-		general code legend
-		specific codes
-	perlall
-
 1 New Benchmark Application
 Finish All CPPOPS_CPPTYPES Code Generation
 
 RELEASE v1.3 THANKSGIVING
+
+
 
 Basic Loop Parallelization, CPPOPS_CPPTYPES Mode
 
@@ -108,9 +105,14 @@ RELEASE v3.0beta1 CHRISTMAS
 
 
 
+developer_notes.txt
+	warning & error codes
+		general code legend
+		specific codes
+	perlall
 
 Macintosh:
-	Failed test 'Inline::CPP, call Airplane methods, return correct value 1' at t/03_inline_cpp.t line 146.   '' doesn't match '/Object\ \(0x\w*\)/'
+	TEMP DISABLE Failed test 'Inline::CPP, call Airplane methods, return correct value 1' at t/03_inline_cpp.t line 146.   '' doesn't match '/Object\ \(0x\w*\)/'
 	unknown warning option '-Wno-literal-suffix'; did you mean '-Wno-literal-range'? [-Wunknown-warning-option]
 	duplicate 'extern' declaration specifier [-Wduplicate-decl-specifier] XS_EXTERNAL(boot_eval_412_3a53); /* prototype to pass -Wmissing-prototypes */
 		/System/Library/Perl/5.18/darwin-thread-multi-2level/CORE/XSUB.h:145:33: note: expanded from macro 'XS_EXTERNAL'
