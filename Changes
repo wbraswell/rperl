@@ -1,5 +1,14 @@
 Revision history for Perl compiler RPerl.
 
+1.200002 2015-11-07
+
+    - Re-enable 4 Tests, Fixed Error "Can't parse code: Unknown error parsing Perl document" In Perl v5.16 & Earlier, Enable Proper ECVGEASRP19 Support
+    - Learning RPerl, Chapter 3, Exercise 3, Fixed RequireCheckedSyscalls Failure
+        Filed Bug https://github.com/Perl-Critic/Perl-Critic/issues/671
+    - Fix Bugs In Support For All Named & Named Unary Operators AKA Builtins, PERLOPS_PERLTYPES Mode 
+    - Disable Inline::CPP Airplane Test, Macintosh Bug
+        Temporarily Fixes Bug https://github.com/wbraswell/rperl/issues/34
+ 
 1.200001 2015-11-01
 
     - Disable 4 Tests To Avoid Perl::Critic Error "Can't parse code: Unknown error parsing Perl document" In Perl v5.16 & Earlier

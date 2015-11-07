@@ -1,12 +1,3 @@
-DONE Learning RPerl, chpt3 ex3, RequireCheckedSyscalls failure
-DONE all named, add support for Operation_79 ( Operation -> OP01_NAMED_SCOLON )
-DONE all named unary, add support for Operation_80 ( Operation -> OP10_NAMED_UNARY_SCOLON )
-DONE Can't parse code: Unknown error parsing Perl document     ECVGEASRP19 support
-DONE 	lib/RPerl/Test/Operator23LogicalAnd/program_00_good.pl.DISABLED_PERLCRITIC_BUG_V5_16_AND_EARLIER
-DONE 	lib/RPerl/Test/Operator06RegularExpressionMatch/program_00_good.pl.DISABLED_PERLCRITIC_BUG_V5_16_AND_EARLIER
-DONE 	lib/RPerl/Test/Operator24LogicalOrXor/program_00_good.pl.DISABLED_PERLCRITIC_BUG_V5_16_AND_EARLIER
-DONE 	lib/RPerl/Test/SubExpression/program_08_good.pl.DISABLED_PERLCRITIC_BUG_V5_16_AND_EARLIER
-
 TEMP DISABLE Macintosh, Failed test 'Inline::CPP, call Airplane methods...'    https://github.com/wbraswell/rperl/issues/34
 PARTIAL Windows Testing, add ci.appveyor.com github webhook
 
