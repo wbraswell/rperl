@@ -34,7 +34,8 @@ Monolithic Modules, Fix Deps Warning
 figure out <> vs "" and also long-path-deps in includes in Bubble.cpp & Bubble.h
 
 tests
-	array size declaration compensation; package/subroutine/method names starting w/ underscore
+	array size declaration compensation
+	package/subroutine/method names starting w/ underscore
 	variable redeclaration (masking)
 	properties & hash type-inner type-vs-key name mismatch (ECVGEASRP20: PERLOPS Class.pm properties accessors/mutators; CPPOPS entry & entrytyped)
 	accessors/mutators including get_*_element() & get_*_value()

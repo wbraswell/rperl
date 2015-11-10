@@ -550,7 +550,9 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =head1 SYNOPSIS
 
-        rperl [OPTIONS] input_file_0.(pm|pl) [input_file_1.(pm|pl) ...]
+        rperl [OPTIONS] input_program_0.pl [input_program_1.pl input_program_2.pl ...]
+        rperl [OPTIONS] MyClassFoo.pm [MyClassBar.pm MyClassBat.pm ...]
+        rperl [OPTIONS] input_program_0.pl MyClassFoo.pm [input_program_1.pl ... MyClassBar.pm ...]
 
 =head1 OPTIONS
 
