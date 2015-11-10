@@ -1,3 +1,4 @@
+DONE Copyright assignment & disclaimer docs (CONTRIBUTING, ASSIGNMENT, EMPLOYERS)
 TEMP DISABLE Macintosh, Failed test 'Inline::CPP, call Airplane methods...'    https://github.com/wbraswell/rperl/issues/34
 PARTIAL Windows Testing, add ci.appveyor.com github webhook
 
