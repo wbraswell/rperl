@@ -57,10 +57,10 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
         if ( ( exists $type_inner_optional->{children}->[0] ) and ( defined $key_name ) ) {
             my string $type_inner_name = $type_inner_optional->{children}->[0]->{children}->[3]->{children}->[0];
-            if ( $type_inner_name !~ /$key_name$/xms ) {
+            if ( $type_inner_name ne $key_name ) {
                 die 'ERROR ECVGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
                     . $type_inner_name . q{'}
-                    . ' does not end with OO properties or hash key ' . q{'}
+                    . ' does not equal OO properties or hash key ' . q{'}
                     . $key_name . q{'}
                     . ', dying' . "\n";
             }

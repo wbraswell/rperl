@@ -139,9 +139,9 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
         # DEV NOTE: we can do error checking once here instead of twice for TypeInnerProperties_223 & TypeInnerProperties_224 below
         # because they both have OpStringOrWord as sub-element 3, grabbed as $property_name above
-        if ($property_name !~ /$property_key$/xms) {
+        if ($property_name ne $property_key) {
             die 'ERROR ECVGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
-                . $property_name . q{'} . ' does not end with OO properties key ' . q{'} . $property_key . q{'} . ', dying' . "\n";
+                . $property_name . q{'} . ' does not equal OO properties key ' . q{'} . $property_key . q{'} . ', dying' . "\n";
         }
 
         # TypeInnerProperties -> MY Type '$TYPED_' OpStringOrWord OP19_VARIABLE_ASSIGN SubExpression
@@ -212,9 +212,9 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 $property_type_inner = $property->{children}->[2];
                 $property_name       = $property_type_inner->{children}->[3]->{children}->[0];
 
-                if ($property_name !~ /$property_key$/xms) {
+                if ($property_name ne $property_key) {
                     die 'ERROR ECVGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
-                        . $property_name . q{'} . ' does not end with OO properties key ' . q{'} . $property_key . q{'} . ', dying' . "\n";
+                        . $property_name . q{'} . ' does not equal OO properties key ' . q{'} . $property_key . q{'} . ', dying' . "\n";
                 }
 
                 # TypeInnerProperties -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN SubExpression
