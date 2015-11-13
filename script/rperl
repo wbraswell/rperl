@@ -438,7 +438,7 @@ sub depends_parse_generate_save_subcompile_execute {
         }
  
         if ( $modes->{execute} eq 'ON' ) {
-            RPerl::verbose( 'EXECUTE:       Run code...' . "\n" );
+            RPerl::verbose( 'EXECUTE:            Run code...' . "\n" );
             RPerl::verbose("\n");
             my integer $execute_retval = system( $EXECUTABLE_NAME, $input_file_name );
         }

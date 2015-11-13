@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::SubExpression;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_010;
+our $VERSION = 0.001_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression);
@@ -24,35 +24,19 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in SubExpression->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if (   ( ref $self eq 'SubExpressionOrInput_143' )
-        or ( ref $self eq 'SubExpressionOrVarMod_146' )
-        or ( ref $self eq 'ListElement_190' ) )
+    if (   ( ref $self eq 'SubExpressionOrInput_143' )  # SubExpressionOrInput -> SubExpression
+        or ( ref $self eq 'SubExpressionOrVarMod_146' )  # SubExpressionOrVarMod -> SubExpression
+        or ( ref $self eq 'ListElement_190' ) )  # ListElement -> SubExpression
     {
-        my string_hashref $rperl_source_subgroup
-            = $self->{children}->[0]->ast_to_rperl__generate($modes);
-        RPerl::Generator::source_group_append( $rperl_source_group,
-            $rperl_source_subgroup );
+        my string_hashref $rperl_source_subgroup = $self->{children}->[0]->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
-    elsif ( ref $self eq 'ListElement_191' ) {
+    elsif ( ref $self eq 'ListElement_191' ) {  # ListElement -> TypeInner SubExpression
         my object $type_inner    = $self->{children}->[0];
-        my string $type_inner_my = $type_inner->{children}->[0];
-        my string $type_inner_type
-            = $type_inner->{children}->[1]->{children}->[0];
-        my string $type_inner_TYPED = $type_inner->{children}->[2];
-        my string $type_inner_name  = $type_inner->{children}->[3];
-        my string $type_inner_equal = $type_inner->{children}->[4];
-
-        $rperl_source_group->{PMC}
-            .= $type_inner_my . q{ }
-            . $type_inner_type . q{ }
-            . $type_inner_TYPED
-            . $type_inner_name . q{ }
-            . $type_inner_equal . q{ };
-
-        my string_hashref $rperl_source_subgroup
-            = $self->{children}->[1]->ast_to_rperl__generate($modes);
-        RPerl::Generator::source_group_append( $rperl_source_group,
-            $rperl_source_subgroup );
+        my string_hashref $rperl_source_subgroup = $self->{children}->[0]->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
+        $rperl_source_subgroup = $self->{children}->[1]->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
@@ -92,29 +76,11 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     elsif ( ref $self eq 'ListElement_191' ) {
         $cpp_source_group = { CPP => q{// <<< RP::O::E::SE __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>} . "\n" };
 
-
-
 #        my object $type_inner    = $self->{children}->[0];
-##        my string $type_inner_my = $type_inner->{children}->[0];
-#        my string $type_inner_type
-#            = $type_inner->{children}->[1]->{children}->[0];
-#        my string $type_inner_TYPED = $type_inner->{children}->[2];
-#        my string $type_inner_name  = $type_inner->{children}->[3];
-#        my string $type_inner_equal = $type_inner->{children}->[4];
-
-#        $cpp_source_group->{CPP}
-#            .= $type_inner_my . q{ }
-#            . $type_inner_type . q{ }
-#            . $type_inner_TYPED
-#            . $type_inner_name . q{ }
-#            . $type_inner_equal . q{ };
-
-#        my string_hashref $cpp_source_subgroup
-#            = $self->{children}->[1]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
-#        RPerl::Generator::source_group_append( $cpp_source_group,
-#            $cpp_source_subgroup );
-
-
+#        my string_hashref $cpp_source_subgroup = $self->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+#        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+#        $cpp_source_subgroup = $self->{children}->[1]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+#        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
 
     }
     else {

@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array::ListElements;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_001;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -60,6 +60,9 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     my object $list_element0      = $self->{children}->[0];
     my object $list_elements_star = $self->{children}->[1];
 
+#    RPerl::diag( 'in Array::ListElements->ast_to_rperl__generate(), top of foreach() loop, have $list_element0 = ' . "\n" . RPerl::Parser::rperl_ast__dump($list_element0) . "\n" );
+#    die 'TMP DEBUG';
+
     my string_hashref $rperl_source_subgroup
         = $list_element0->ast_to_rperl__generate($modes);
     RPerl::Generator::source_group_append( $rperl_source_group,
@@ -68,6 +71,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     foreach my object $list_element ( @{ $list_elements_star->{children} } ) {
 
 #        RPerl::diag( 'in Array::ListElements->ast_to_rperl__generate(), top of foreach() loop, have $list_element = ' . "\n" . RPerl::Parser::rperl_ast__dump($list_element) . "\n" );
+#        die 'TMP DEBUG';
         if ( ref $list_element eq 'TERMINAL' ) {
             if ( $list_element->{attr} ne q{,} ) {
                 die RPerl::Parser::rperl_rule__replace(

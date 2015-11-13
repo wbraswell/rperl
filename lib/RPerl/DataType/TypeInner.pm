@@ -30,6 +30,9 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my string $type = $self->{children}->[1]->{children}->[0];
         my string $TYPED = $self->{children}->[2];
         my string $name  = $self->{children}->[3]->{children}->[0];
+
+#        RPerl::diag( 'in TypeInner->ast_to_rperl__generate(), have $name = ' . "\n" . RPerl::Parser::rperl_ast__dump($name) . "\n" );
+        
         $name =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
         if ($name !~ /^[a-z]/) {
             die 'ERROR ECVGEASRP24, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid redundant name ' . q{'}

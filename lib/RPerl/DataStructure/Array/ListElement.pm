@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array::ListElement;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_001;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -22,7 +22,8 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $rperl_source_group = { PMC => q{} };
 
-    #    RPerl::diag( 'in Array::ListElement->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in Array::ListElement->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    die 'TMP DEBUG';
 
     my string $self_class = ref $self;
     if ( $self_class eq 'ListElement_190' ) {    # ListElement -> SubExpression
