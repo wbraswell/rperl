@@ -3,7 +3,7 @@ package RPerl::DataType::TypeInner;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -25,11 +25,16 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in TypeInner->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if ( $self_class eq 'TypeInner_222' ) {  # TypeInner -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN
+    if ( $self_class eq 'TypeInner_222' ) {  # TypeInner -> MY Type '$TYPED_' OpStringOrWord OP19_VARIABLE_ASSIGN
         my string $my = $self->{children}->[0];
         my string $type = $self->{children}->[1]->{children}->[0];
         my string $TYPED = $self->{children}->[2];
-        my string $name  = $self->{children}->[3];
+        my string $name  = $self->{children}->[3]->{children}->[0];
+        if ($name !~ /^[a-z]/) {
+            die 'ERROR ECVGEASRP24, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid redundant name ' . q{'}
+                . $name . q{'}
+                . ' does not start with a lowercase letter a-z, dying' . "\n";
+        }
         my string $equal = $self->{children}->[4];
 
         $rperl_source_group->{PMC} .= $my . q{ } . $type . q{ } . $TYPED . $name . q{ } . $equal . q{ };
@@ -64,6 +69,12 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my string $self_class = ref $self;
     if ( $self_class eq 'TypeInner_222' ) {  # TypeInner -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN
         my string $type = $self->{children}->[1]->{children}->[0];
+        my string $name  = $self->{children}->[3]->{children}->[0];
+        if ($name !~ /^[a-z]/) {
+            die 'ERROR ECVGEASCP24, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid redundant name ' . q{'}
+                . $name . q{'}
+                . ' does not start with a lowercase letter a-z, dying' . "\n";
+        }
 
         $cpp_source_group->{CPP} = $type;
     }

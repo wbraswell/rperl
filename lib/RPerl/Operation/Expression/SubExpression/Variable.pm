@@ -123,7 +123,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                         my object $subexpression = $variable_retrieval->{children}->[1];
                         if (( ( ref $subexpression ) eq 'SubExpression_136' )          # SubExpression -> Literal
                             or ( ( ref $subexpression ) eq 'VariableOrLiteral_227' )          # VariableOrLiteral -> Literal
-                            or ( ( ref $subexpression ) eq 'VariableOrLiteralOrWord_229' )    # VariableOrLiteralOrWord -> Literal
+                            or ( ( ref $subexpression ) eq 'VarOrLitOrOpStrOrWord_229' )    # VariableOrLiteralOrWord -> Literal
                             )
                         {
                             my string $number_or_string_literal = $subexpression->{children}->[0]->{children}->[0];

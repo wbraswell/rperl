@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash::Entry;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_200;
+our $VERSION = 0.002_300;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -26,7 +26,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     #    RPerl::diag( 'in Hash::Entry->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if ( $self_class eq 'HashEntry_203' ) {    # HashEntry -> VariableOrLiteralOrWord OP20_HASH_FATARROW OPTIONAL-47 SubExpression
+    if ( $self_class eq 'HashEntry_203' ) {    # HashEntry -> VarOrLitOrOpStrOrWord OP20_HASH_FATARROW OPTIONAL-48 SubExpression
         my string $key                 = $self->{children}->[0];
         my string $key_class           = ref $key;
         my string $fat_arrow           = $self->{children}->[1];
@@ -34,19 +34,24 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my string $key_name            = undef;
 
         if (   ( $key_class eq 'VariableOrLiteralOrWord_228' )
-            or ( $key_class eq 'VariableOrLiteralOrWord_229' ) )
+            or ( $key_class eq 'VarOrLitOrOpStrOrWord_229' ) )
         {                                      # Variable or Literal
             $rperl_source_subgroup = $key->ast_to_rperl__generate($modes);
             RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
         }
-        elsif ( $key_class eq 'VariableOrLiteralOrWord_230' ) {    # WORD
-            $key_name = $key->{children}->[0];
-            $rperl_source_group->{PMC} .= $key->{children}->[0] . q{ };
+        elsif ( $key_class eq 'VarOrLitOrOpStrOrWord_230' ) {    # OpStringOrWord
+            $key_name = $key->{children}->[0]->{children}->[0];
+            if ($key_name !~ /^[a-z]/) {
+                die 'ERROR ECVGEASRP22, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid hash key ' . q{'}
+                    . $key_name . q{'}
+                    . ' does not start with a lowercase letter a-z, dying' . "\n";
+            }
+            $rperl_source_group->{PMC} .= $key_name . q{ };
         }
         else {
             die RPerl::Parser::rperl_rule__replace( q{ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '}
                     . ($key_class)
-                    . q{' found where VariableOrLiteralOrWord_228, VariableOrLiteralOrWord_229, or VariableOrLiteralOrWord_230 expected, dying} )
+                    . q{' found where VariableOrLiteralOrWord_228, VarOrLitOrOpStrOrWord_229, or VarOrLitOrOpStrOrWord_230 expected, dying} )
                 . "\n";
         }
 
@@ -103,7 +108,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     #    RPerl::diag( 'in Hash::Entry->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if ( $self_class eq 'HashEntry_203' ) {    # HashEntry -> VariableOrLiteralOrWord OP20_HASH_FATARROW OPTIONAL-47 SubExpression
+    if ( $self_class eq 'HashEntry_203' ) {    # HashEntry -> VarOrLitOrOpStrOrWord OP20_HASH_FATARROW OPTIONAL-48 SubExpression
 
         my string $key                 = $self->{children}->[0];
         my string $key_class           = ref $key;
@@ -113,19 +118,24 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $cpp_source_group->{CPP} .= '{';
 
         if (   ( $key_class eq 'VariableOrLiteralOrWord_228' )
-            or ( $key_class eq 'VariableOrLiteralOrWord_229' ) )
+            or ( $key_class eq 'VarOrLitOrOpStrOrWord_229' ) )
         {                                      # Variable or Literal
             $cpp_source_subgroup = $key->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
             RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
         }
-        elsif ( $key_class eq 'VariableOrLiteralOrWord_230' ) {    # WORD
-            $key_name = $key->{children}->[0];
+        elsif ( $key_class eq 'VarOrLitOrOpStrOrWord_230' ) {    # OpStringOrWord
+            $key_name = $key->{children}->[0]->{children}->[0];
+            if ($key_name !~ /^[a-z]/) {
+                die 'ERROR ECVGEASCP22, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid hash key ' . q{'}
+                    . $key_name . q{'}
+                    . ' does not start with a lowercase letter a-z, dying' . "\n";
+            }
             $cpp_source_group->{CPP} .= q{"} . $key_name . q{" };
         }
         else {
             die RPerl::Parser::rperl_rule__replace( q{ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '}
                     . ($key_class)
-                    . q{' found where VariableOrLiteralOrWord_228, VariableOrLiteralOrWord_229, or VariableOrLiteralOrWord_230 expected, dying} )
+                    . q{' found where VariableOrLiteralOrWord_228, VarOrLitOrOpStrOrWord_229, or VarOrLitOrOpStrOrWord_230 expected, dying} )
                 . "\n";
         }
 

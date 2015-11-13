@@ -2,6 +2,8 @@ DONE Copyright assignment & disclaimer docs (CONTRIBUTING, ASSIGNMENT, EMPLOYERS
 TEMP DISABLE Macintosh, Failed test 'Inline::CPP, call Airplane methods...'    https://github.com/wbraswell/rperl/issues/34
 PARTIAL Windows Testing, add ci.appveyor.com github webhook
 
+enable opstrings as hash keys
+
 10 more builtins, CPPOPS_CPPTYPES mode
 	NAMED
 	chomp
@@ -54,6 +56,9 @@ tests
 	ERROR ECVGEASRP16... named operator [SOMEOP] requires one or more arguments, dying
 	all currently-implemented named ops
 	all currently-implemented named_unary ops
+	invalid hash key starting with non-lowercase-letter ECVGEASRP22
+	invalid OO property name (hash key) starting with non-lowercase-letter ECVGEASRP23
+	invalid type inner redundant name starting with non-lowercase-letter ECVGEASRP24
 
 Eyapp unescaped left braces for Perl v5.22 compatibility
 RELEASE Parse::Eyapp vX.YZZY

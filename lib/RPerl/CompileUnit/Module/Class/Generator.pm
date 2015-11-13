@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_510;
+our $VERSION = 0.002_610;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -127,17 +127,24 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my object $property_subexpression;
         my string $property_subexpression_string;
 
-        $property_key        = $property_0->{children}->[0];
+        $property_key        = $property_0->{children}->[0]->{children}->[0];
+        if ($property_key !~ /^[a-z]/) {
+            die 'ERROR ECVGEASRP23, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid OO properties name (hash key) ' . q{'}
+                . $property_key . q{'}
+                . ' does not start with a lowercase letter a-z, dying' . "\n";
+        }
         $property_fat_arrow  = $property_0->{children}->[1];
         $property_type_inner = $property_0->{children}->[2];
-        $property_name       = $property_type_inner->{children}->[3];
+        $property_name       = $property_type_inner->{children}->[3]->{children}->[0];
 
+        # DEV NOTE: we can do error checking once here instead of twice for TypeInnerProperties_223 & TypeInnerProperties_224 below
+        # because they both have OpStringOrWord as sub-element 3, grabbed as $property_name above
         if ($property_name !~ /$property_key$/xms) {
             die 'ERROR ECVGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
                 . $property_name . q{'} . ' does not end with OO properties key ' . q{'} . $property_key . q{'} . ', dying' . "\n";
         }
 
-        # TypeInnerProperties -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN SubExpression
+        # TypeInnerProperties -> MY Type '$TYPED_' OpStringOrWord OP19_VARIABLE_ASSIGN SubExpression
         if ( ref $property_type_inner eq 'TypeInnerProperties_223' ) {
             $property_my            = $property_type_inner->{children}->[0];
             $property_type          = $property_type_inner->{children}->[1]->{children}->[0];
@@ -158,7 +165,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
         }
 
-        # TypeInnerProperties -> MY Type '$TYPED_' WORD OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef'
+        # TypeInnerProperties -> MY Type '$TYPED_' OpStringOrWord OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef'
         elsif ( ref $property_type_inner eq 'TypeInnerProperties_224' ) {
             $property_my                    = $property_type_inner->{children}->[0];
             $property_type                  = $property_type_inner->{children}->[1]->{children}->[0];
@@ -195,7 +202,12 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 $rperl_source_group->{PMC} .= $property->{attr};    # comma between properties
             }
             else {
-                $property_key        = $property->{children}->[0];
+                $property_key        = $property->{children}->[0]->{children}->[0];
+                if ($property_key !~ /^[a-z]/) {
+                    die 'ERROR ECVGEASRP23, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid OO properties name (hash key) ' . q{'}
+                        . $property_key . q{'}
+                        . ' does not start with a lowercase letter a-z, dying' . "\n";
+                }
                 $property_fat_arrow  = $property->{children}->[1];
                 $property_type_inner = $property->{children}->[2];
                 $property_name       = $property_type_inner->{children}->[3];
@@ -431,7 +443,12 @@ EOL
         my object $property_0        = $properties->{children}->[3];
         my object $properties_1_to_n = $properties->{children}->[4];
 
-        my string $property_key                = $property_0->{children}->[0];
+        my string $property_key                = $property_0->{children}->[0]->{children}->[0];
+        if ($property_key !~ /^[a-z]/) {
+            die 'ERROR ECVGEASCP23, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid OO properties name (hash key) ' . q{'}
+                . $property_key . q{'}
+                . ' does not start with a lowercase letter a-z, dying' . "\n";
+        }
         my object $property_type_inner         = $property_0->{children}->[2];
         my string $property_type               = undef;
         my object $property_subexpression      = undef;
@@ -514,7 +531,12 @@ EOL
             $property_subexpression      = undef;
             $property_arrayref_index_max = undef;
 
-            $property_key        = $property->{children}->[0];
+            $property_key        = $property->{children}->[0]->{children}->[0];
+            if ($property_key !~ /^[a-z]/) {
+                die 'ERROR ECVGEASCP23, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid OO properties name (hash key) ' . q{'}
+                    . $property_key . q{'}
+                    . ' does not start with a lowercase letter a-z, dying' . "\n";
+            }
             $property_type_inner = $property->{children}->[2];
 
             # TypeInnerProperties -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN SubExpression
