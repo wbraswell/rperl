@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_610;
+our $VERSION = 0.002_620;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -210,7 +210,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 }
                 $property_fat_arrow  = $property->{children}->[1];
                 $property_type_inner = $property->{children}->[2];
-                $property_name       = $property_type_inner->{children}->[3];
+                $property_name       = $property_type_inner->{children}->[3]->{children}->[0];
 
                 if ($property_name !~ /$property_key$/xms) {
                     die 'ERROR ECVGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}

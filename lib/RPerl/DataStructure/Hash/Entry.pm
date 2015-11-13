@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash::Entry;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_400;
+our $VERSION = 0.002_410;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -56,7 +56,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         }
 
         if ( ( exists $type_inner_optional->{children}->[0] ) and ( defined $key_name ) ) {
-            my string $type_inner_name = $type_inner_optional->{children}->[0]->{children}->[3];
+            my string $type_inner_name = $type_inner_optional->{children}->[0]->{children}->[3]->{children}->[0];
             if ( $type_inner_name !~ /$key_name$/xms ) {
                 die 'ERROR ECVGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
                     . $type_inner_name . q{'}
@@ -140,7 +140,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         }
 
         if ( ( exists $type_inner_optional->{children}->[0] ) and ( defined $key_name ) ) {
-            my string $type_inner_name = $type_inner_optional->{children}->[0]->{children}->[3];
+            my string $type_inner_name = $type_inner_optional->{children}->[0]->{children}->[3]->{children}->[0];
             if ( $type_inner_name !~ /$key_name$/xms ) {
                 die 'ERROR ECVGEASCP17, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
                     . $type_inner_name . q{'}
