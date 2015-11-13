@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::SubExpression::Literal;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::SubExpression);
@@ -24,7 +24,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     if (( $self_class eq 'SubExpression_136' )    # SubExpression -> Literal
         or ( $self_class eq 'VariableOrLiteral_227' ) # VariableOrLiteral -> Literal
-        or ( $self_class eq 'VarOrLitOrOpStrOrWord_229' ) # VariableOrLiteralOrWord -> Literal
+        or ( $self_class eq 'VarOrLitOrOpStrOrWord_229' ) # VarOrLitOrOpStrOrWord -> Literal
         )
     {
         my object $number_or_string = $self->{children}->[0];
@@ -62,7 +62,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     if (( $self_class eq 'SubExpression_136' )    # SubExpression -> Literal
         or ( $self_class eq 'VariableOrLiteral_227' ) # VariableOrLiteral -> Literal
-        or ( $self_class eq 'VarOrLitOrOpStrOrWord_229' ) # VariableOrLiteralOrWord -> Literal
+        or ( $self_class eq 'VarOrLitOrOpStrOrWord_229' ) # VarOrLitOrOpStrOrWord -> Literal
         )
     {
         my object $number_or_string = $self->{children}->[0];

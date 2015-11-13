@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash::Entry;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_300;
+our $VERSION = 0.002_400;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -33,7 +33,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my object $type_inner_optional = $self->{children}->[2];
         my string $key_name            = undef;
 
-        if (   ( $key_class eq 'VariableOrLiteralOrWord_228' )
+        if (   ( $key_class eq 'VarOrLitOrOpStrOrWord_228' )
             or ( $key_class eq 'VarOrLitOrOpStrOrWord_229' ) )
         {                                      # Variable or Literal
             $rperl_source_subgroup = $key->ast_to_rperl__generate($modes);
@@ -51,7 +51,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         else {
             die RPerl::Parser::rperl_rule__replace( q{ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '}
                     . ($key_class)
-                    . q{' found where VariableOrLiteralOrWord_228, VarOrLitOrOpStrOrWord_229, or VarOrLitOrOpStrOrWord_230 expected, dying} )
+                    . q{' found where VarOrLitOrOpStrOrWord_228, VarOrLitOrOpStrOrWord_229, or VarOrLitOrOpStrOrWord_230 expected, dying} )
                 . "\n";
         }
 
@@ -117,7 +117,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
         $cpp_source_group->{CPP} .= '{';
 
-        if (   ( $key_class eq 'VariableOrLiteralOrWord_228' )
+        if (   ( $key_class eq 'VarOrLitOrOpStrOrWord_228' )
             or ( $key_class eq 'VarOrLitOrOpStrOrWord_229' ) )
         {                                      # Variable or Literal
             $cpp_source_subgroup = $key->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
@@ -135,7 +135,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         else {
             die RPerl::Parser::rperl_rule__replace( q{ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '}
                     . ($key_class)
-                    . q{' found where VariableOrLiteralOrWord_228, VarOrLitOrOpStrOrWord_229, or VarOrLitOrOpStrOrWord_230 expected, dying} )
+                    . q{' found where VarOrLitOrOpStrOrWord_228, VarOrLitOrOpStrOrWord_229, or VarOrLitOrOpStrOrWord_230 expected, dying} )
                 . "\n";
         }
 

@@ -2,7 +2,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.002_302;
+    our $VERSION = 0.002_400;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -210,9 +210,7 @@ ListElements:            ListElement (OP21_LIST_COMMA ListElement)* ;
 ListElement:             SubExpression | TypeInner SubExpression | OP01_QW | ARGV;
 ArrayReference:          LBRACKET ListElements? ']' ;
 ArrayDereference:        '@{' Variable '}' | '@{' TypeInner? ArrayReference '}' ;
-#HashEntry:               VariableOrLiteralOrWord OP20_HASH_FATARROW TypeInner? SubExpression | HashDereference | ENV ;
 HashEntry:               VarOrLitOrOpStrOrWord OP20_HASH_FATARROW TypeInner? SubExpression | HashDereference | ENV ;
-#HashEntryProperties:     WORD OP20_HASH_FATARROW TypeInnerProperties ;
 HashEntryProperties:     OpStringOrWord OP20_HASH_FATARROW TypeInnerProperties ;
 HashReference:           LBRACE HashEntry (OP21_LIST_COMMA HashEntry)* '}' | LBRACE '}' ;
 HashDereference:         '%{' Variable '}' | '%{' TypeInner? HashReference '}' ;
@@ -220,15 +218,11 @@ HashDereference:         '%{' Variable '}' | '%{' TypeInner? HashReference '}' ;
 WordScoped:              WORD | WORD_SCOPED ;
 LoopLabel:               WORD_UPPERCASE ;
 Type:                    WORD | WORD_SCOPED | TYPE_INTEGER ;
-#TypeInner:               MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN ;
-#TypeInnerProperties:     MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN SubExpression | 
-#                         MY Type '$TYPED_' WORD OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef' ;
 TypeInner:               MY Type '$TYPED_' OpStringOrWord OP19_VARIABLE_ASSIGN ;
 TypeInnerProperties:     MY Type '$TYPED_' OpStringOrWord OP19_VARIABLE_ASSIGN SubExpression | 
                          MY Type '$TYPED_' OpStringOrWord OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef' ;
 TypeInnerConstant:       MY Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN ;
 VariableOrLiteral:       Variable | Literal ;
-#VariableOrLiteralOrWord: Variable | Literal | WORD ;
 VarOrLitOrOpStrOrWord:   Variable | Literal | OpStringOrWord ;
 VariableSymbolOrSelf:    VARIABLE_SYMBOL | SELF ;
 Literal:                 LITERAL_NUMBER | LITERAL_STRING ;
