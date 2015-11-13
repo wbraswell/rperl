@@ -3,7 +3,7 @@ package RPerl::DataType::TypeInner;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_100;
+our $VERSION = 0.002_200;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -30,6 +30,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my string $type = $self->{children}->[1]->{children}->[0];
         my string $TYPED = $self->{children}->[2];
         my string $name  = $self->{children}->[3]->{children}->[0];
+        $name =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
         if ($name !~ /^[a-z]/) {
             die 'ERROR ECVGEASRP24, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid redundant name ' . q{'}
                 . $name . q{'}
@@ -70,6 +71,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     if ( $self_class eq 'TypeInner_222' ) {  # TypeInner -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN
         my string $type = $self->{children}->[1]->{children}->[0];
         my string $name  = $self->{children}->[3]->{children}->[0];
+        $name =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
         if ($name !~ /^[a-z]/) {
             die 'ERROR ECVGEASCP24, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid redundant name ' . q{'}
                 . $name . q{'}

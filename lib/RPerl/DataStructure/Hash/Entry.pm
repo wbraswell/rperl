@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash::Entry;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_410;
+our $VERSION = 0.002_500;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -41,6 +41,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         }
         elsif ( $key_class eq 'VarOrLitOrOpStrOrWord_230' ) {    # OpStringOrWord
             $key_name = $key->{children}->[0]->{children}->[0];
+            $key_name =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
             if ($key_name !~ /^[a-z]/) {
                 die 'ERROR ECVGEASRP22, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid hash key ' . q{'}
                     . $key_name . q{'}
@@ -57,6 +58,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
         if ( ( exists $type_inner_optional->{children}->[0] ) and ( defined $key_name ) ) {
             my string $type_inner_name = $type_inner_optional->{children}->[0]->{children}->[3]->{children}->[0];
+            $type_inner_name =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
             if ( $type_inner_name ne $key_name ) {
                 die 'ERROR ECVGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
                     . $type_inner_name . q{'}
@@ -125,6 +127,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         }
         elsif ( $key_class eq 'VarOrLitOrOpStrOrWord_230' ) {    # OpStringOrWord
             $key_name = $key->{children}->[0]->{children}->[0];
+            $key_name =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
             if ($key_name !~ /^[a-z]/) {
                 die 'ERROR ECVGEASCP22, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid hash key ' . q{'}
                     . $key_name . q{'}
@@ -141,10 +144,11 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
         if ( ( exists $type_inner_optional->{children}->[0] ) and ( defined $key_name ) ) {
             my string $type_inner_name = $type_inner_optional->{children}->[0]->{children}->[3]->{children}->[0];
-            if ( $type_inner_name !~ /$key_name$/xms ) {
-                die 'ERROR ECVGEASCP17, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
+            $type_inner_name =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
+            if ( $type_inner_name ne $key_name ) {
+                die 'ERROR ECVGEASCP20, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
                     . $type_inner_name . q{'}
-                    . ' does not end with OO properties or hash key ' . q{'}
+                    . ' does not equal OO properties or hash key ' . q{'}
                     . $key_name . q{'}
                     . ', dying' . "\n";
             }

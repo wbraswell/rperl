@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_620;
+our $VERSION = 0.002_700;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -128,6 +128,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my string $property_subexpression_string;
 
         $property_key        = $property_0->{children}->[0]->{children}->[0];
+        $property_key =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
         if ($property_key !~ /^[a-z]/) {
             die 'ERROR ECVGEASRP23, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid OO properties name (hash key) ' . q{'}
                 . $property_key . q{'}
@@ -136,6 +137,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         $property_fat_arrow  = $property_0->{children}->[1];
         $property_type_inner = $property_0->{children}->[2];
         $property_name       = $property_type_inner->{children}->[3]->{children}->[0];
+        $property_name =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
 
         # DEV NOTE: we can do error checking once here instead of twice for TypeInnerProperties_223 & TypeInnerProperties_224 below
         # because they both have OpStringOrWord as sub-element 3, grabbed as $property_name above
@@ -203,6 +205,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             }
             else {
                 $property_key        = $property->{children}->[0]->{children}->[0];
+                $property_key =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
                 if ($property_key !~ /^[a-z]/) {
                     die 'ERROR ECVGEASRP23, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid OO properties name (hash key) ' . q{'}
                         . $property_key . q{'}
@@ -211,6 +214,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 $property_fat_arrow  = $property->{children}->[1];
                 $property_type_inner = $property->{children}->[2];
                 $property_name       = $property_type_inner->{children}->[3]->{children}->[0];
+                $property_name =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
 
                 if ($property_name ne $property_key) {
                     die 'ERROR ECVGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
@@ -444,6 +448,7 @@ EOL
         my object $properties_1_to_n = $properties->{children}->[4];
 
         my string $property_key                = $property_0->{children}->[0]->{children}->[0];
+        $property_key =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
         if ($property_key !~ /^[a-z]/) {
             die 'ERROR ECVGEASCP23, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid OO properties name (hash key) ' . q{'}
                 . $property_key . q{'}
@@ -453,6 +458,15 @@ EOL
         my string $property_type               = undef;
         my object $property_subexpression      = undef;
         my object $property_arrayref_index_max = undef;
+        my string $property_name       = $property_type_inner->{children}->[3]->{children}->[0];
+        $property_name =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
+
+        # DEV NOTE: we can do error checking once here instead of twice for TypeInnerProperties_223 & TypeInnerProperties_224 below
+        # because they both have OpStringOrWord as sub-element 3, grabbed as $property_name above
+        if ($property_name ne $property_key) {
+            die 'ERROR ECVGEASCP20, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
+                . $property_name . q{'} . ' does not equal OO properties key ' . q{'} . $property_key . q{'} . ', dying' . "\n";
+        }
 
         # TypeInnerProperties -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN SubExpression
         if ( ref $property_type_inner eq 'TypeInnerProperties_223' ) {
@@ -532,12 +546,22 @@ EOL
             $property_arrayref_index_max = undef;
 
             $property_key        = $property->{children}->[0]->{children}->[0];
+            $property_key =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
             if ($property_key !~ /^[a-z]/) {
                 die 'ERROR ECVGEASCP23, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid OO properties name (hash key) ' . q{'}
                     . $property_key . q{'}
                     . ' does not start with a lowercase letter a-z, dying' . "\n";
             }
             $property_type_inner = $property->{children}->[2];
+            $property_name       = $property_type_inner->{children}->[3]->{children}->[0];
+            $property_name =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
+
+            # DEV NOTE: we can do error checking once here instead of twice for TypeInnerProperties_223 & TypeInnerProperties_224 below
+            # because they both have OpStringOrWord as sub-element 3, grabbed as $property_name above
+            if ($property_name ne $property_key) {
+                die 'ERROR ECVGEASCP20, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
+                    . $property_name . q{'} . ' does not equal OO properties key ' . q{'} . $property_key . q{'} . ', dying' . "\n";
+            }
 
             # TypeInnerProperties -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN SubExpression
             if ( ref $property_type_inner eq 'TypeInnerProperties_223' ) {
