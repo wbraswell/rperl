@@ -51,8 +51,8 @@ ERROR ECVGEASRP16, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator [SOM
 ERROR ECVGEASRP17, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator [SOMEOP] requires multiple arguments, dying
 ERROR ECVGEASRP18, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named operator [SOMEOP] found where [SOMEOPS] expected, dying
 ERROR ECVGEASRP19, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: data type mismatch, [SOMETYPE] type is different than [SOMEOTHERTYPE] constructor type, dying
-ERROR ECVGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name [SOMENAME] does not end with OO properties or hash key [SOMEKEY], dying
-ERROR ECVGEASRP21, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: [NONE]
+ERROR ECVGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name [SOMENAME] does not equal OO properties or hash key [SOMEKEY], dying
+ERROR ECVGEASRP21, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name [SOMENAME] does not end with OO properties or hash key [SOMEKEY], dying
 [NEED ADD MANY MORE HERE]
 
 ##########################################################################################
