@@ -60,6 +60,7 @@ tests
 	invalid OO property name (hash key) starting with non-lowercase-letter ECVGEASRP23
 	invalid type inner redundant name starting with non-lowercase-letter ECVGEASRP24
 	CONSTANT_CALL_SCOPED
+	*_to_*() data type conversion functions
 
 Eyapp unescaped left braces for Perl v5.22 compatibility
 RELEASE Parse::Eyapp vX.YZZY
@@ -119,6 +120,10 @@ Macintosh:
 
 App, PhysicsPerl, Alioth Shootout N-Body Benchmark, Approved
 	OR New Benchmark Org
+
+data types & structures
+	determine if Float.pm should be kept or deleted
+	char type-testing subroutines in Character.pm
 
 RELEASE v1.XY
 

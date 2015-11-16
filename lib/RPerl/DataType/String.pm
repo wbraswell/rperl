@@ -3,7 +3,7 @@ package RPerl::DataType::String;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_000;
+our $VERSION = 0.005_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -59,6 +59,13 @@ our void $string_CHECKTRACE = sub {
     }
 };
 
+# [[[ BOOLIFY ]]]
+our bool $string_to_bool = sub {
+    (my string $input_string) = @_;
+    if (($input_string * 1) == 0) { return 0; }
+    else { return 1; }
+};
+
 # [[[ INTEGERIFY ]]]
 our integer $string_to_integer = sub {
     (my string $input_string) = @_;
@@ -69,6 +76,13 @@ our integer $string_to_integer = sub {
 our number $string_to_number = sub {
     (my string $input_string) = @_;
     return $input_string * 1.0;
+};
+
+# [[[ CHARIFY ]]]
+our char $string_to_char = sub {
+    (my string $input_string) = @_;
+    if ($input_string eq q{}) { return q{}; }
+    else { return substr $input_string, 0, 1; }
 };
 
 # [[[ STRINGIFY ]]]

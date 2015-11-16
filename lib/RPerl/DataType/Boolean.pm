@@ -3,7 +3,7 @@ package RPerl::DataType::Boolean;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -58,6 +58,26 @@ our void $bool_CHECKTRACE = sub {
             "\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nbool value expected but non-bool value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
         );
     }
+};
+
+# [[[ INTEGERIFY ]]]
+our integer $bool_to_integer = sub {
+    (my bool $input_bool) = @_;
+    return $input_bool;
+};
+
+# [[[ NUMBERIFY ]]]
+our number $bool_to_number = sub {
+    (my bool $input_bool) = @_;
+    return $input_bool * 1.0;
+};
+
+# [[[ CHARIFY ]]]
+our char $bool_to_char = sub {
+    (my bool $input_bool) = @_;
+    my string $tmp_string = bool_to_string($input_bool);
+    if ($tmp_string eq q{}) { return q{}; }
+    else { return substr $tmp_string, 0, 1; }
 };
 
 # [[[ STRINGIFY ]]]
