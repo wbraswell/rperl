@@ -79,7 +79,8 @@ our number $string_to_number = sub {
 };
 
 # [[[ CHARIFY ]]]
-our char $string_to_char = sub {
+#our char $string_to_char = sub {
+our $string_to_char = sub {
     (my string $input_string) = @_;
     if ($input_string eq q{}) { return q{}; }
     else { return substr $input_string, 0, 1; }

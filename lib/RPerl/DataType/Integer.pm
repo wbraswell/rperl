@@ -84,13 +84,15 @@ our bool $integer_to_bool = sub {
 };
 
 # [[[ NUMBERIFY ]]]
-our number $integer_to_number = sub {
+#our number $integer_to_number = sub {
+our $integer_to_number = sub {
     ( my integer $input_integer ) = @_;
     return $input_integer * 1.0;
 };
 
 # [[[ CHARIFY ]]]
-our char $integer_to_char = sub {
+#our char $integer_to_char = sub {
+our $integer_to_char = sub {
     ( my integer $input_integer ) = @_;
     my string $tmp_string = integer_to_string($input_integer);
     if ($tmp_string eq q{}) { return q{}; }

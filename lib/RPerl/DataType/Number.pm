@@ -93,7 +93,8 @@ our integer $number_to_integer = sub {
 };
 
 # [[[ CHARIFY ]]]
-our char $number_to_char = sub {
+#our char $number_to_char = sub {
+our $number_to_char = sub {
     (my number $input_number) = @_;
     my string $tmp_string = number_to_string($input_number);
     if ($tmp_string eq q{}) { return q{}; }

@@ -73,7 +73,8 @@ our number $bool_to_number = sub {
 };
 
 # [[[ CHARIFY ]]]
-our char $bool_to_char = sub {
+#our char $bool_to_char = sub {
+our $bool_to_char = sub {
     (my bool $input_bool) = @_;
     my string $tmp_string = bool_to_string($input_bool);
     if ($tmp_string eq q{}) { return q{}; }
