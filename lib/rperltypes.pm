@@ -97,8 +97,10 @@ sub to_string {
     if ( not defined $variable ) { return 'undef'; }
     my string $type = type($variable);
     if    ( $type eq 'unknown' ) { return qq{$variable}; }
+    elsif ( $type eq 'bool' )    { return bool_to_string($variable); }
     elsif ( $type eq 'integer' ) { return integer_to_string($variable); }
     elsif ( $type eq 'number' )  { return number_to_string($variable); }
+    elsif ( $type eq 'char' )    { return char_to_string($variable); }
     elsif ( $type eq 'string' )  { return string_to_string($variable); }
     else {
         my $retval = Dumper($variable);
