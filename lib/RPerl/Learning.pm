@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.003_100;
+our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -24,13 +24,25 @@ __END__
 
 =head1 NAME
 
-Learning RPerl
+<u>B<Learning RPerl></u>
 
-~or~
+~ or ~
 
-Let's Write Fast Perl!
+<u>B<Let's Write Fast Perl!></u>
 
-Official Reference, User Manual, and Educational Documentation
+.<br>
+...<br>
+.....<br>
+.......<br>
+being<br>
+.......<br>
+.....<br>
+...<br>
+.
+
+The Official Introductory-Level Reference, User Manual, and Educational Documentation
+
+~ for ~
 
 Restricted Perl, The Optimizing Perl 5 Compiler
 
@@ -106,7 +118,7 @@ For Anna.
 
 =head2 Section 1.1: TPF Grant
 
-=head2 Section 1.1: History Of Book
+=head2 Section 1.1: History Of This Book
 
 =head2 Section 1.1: Acknowledgements & Thanks
 
@@ -116,12 +128,12 @@ For Anna.
 
 L<http://perldoc.perl.org/perlpod.html>
 
-~ Larry Wall & Sean M. Burke
-
+~ Saint Larry Wall & Sean M. Burke
+<br><br>
 
 "Challenge accepted."
 
-~ Will
+~ Will Braswell
 
 
 =head1 CHAPTER 1: INTRODUCTION
@@ -612,11 +624,17 @@ RPerl provides 3 numeric data types:
 
 =over
 
-=item * C<bool> is a boolean logic value, either 0 or 1
+=item * C<bool>
 
-=item * C<integer> is a whole number value, either negative, 0, or positive
+a boolean logic value, either 0 or 1
 
-=item * C<number> is a floating-point decimal number value, either negative, 0, or positive
+=item * C<integer>
+
+a whole number value, either negative, 0, or positive
+
+=item * C<number>
+
+a floating-point decimal number value, either negative, 0, or positive
 
 =back
 
@@ -671,20 +689,23 @@ For C<integer> and C<number> data types, an optional C<+> plus sign may be prepe
 
 </u>
 
-    +23    # good integer
-    +55.6  # good number
-    23     # best integer for all positive literals
-    42     # best integer for all positive literals
-    55.6   # best number  for all positive literals
+    +23    # good integer, but not aligned with other un-signed literal below
+    +55.6  # good number,  but not aligned with other un-signed literal below
+    42
 
-    23     # good integer
-    -21    # good integer
-    -12    # good integer
-    55.6   # good number
-    -66.5  # good number
-    23     # best integer for all positive literals
-    42     # best integer for all positive literals
-    55.6   # best number  for all positive literals
+    23     # best integer for all positive literals, aligned
+    55.6   # best number  for all positive literals, aligned
+    42
+
+    23     # good integer, but not aligned with other signed literals below
+    55.6   # good number,  but not aligned with other signed literals below
+    -21
+    -66.5
+
+    +23    # best integer for mixed-sign literals, aligned
+    +55.6  # best number  for mixed-sign literals, aligned
+    -21
+    -66.5
 
 =head3 Section 2.1.5: Underscore Digit Separators
 
@@ -704,13 +725,22 @@ For C<integer> and C<number> data types, very large or very small numbers should
     
 As with normal integers, negative exponents must be prefixed with a C<-> minus sign and positive exponents may be optionally prefixed with a C<+> plus sign.
 
+    1_234_567_000     # good integer
+    1.234_567_000e09  # good number, same as "1_234_567_000" in scientific notation
+
+    0.001_234_567_000  # good number
+    1.234_567_000e-03  # good number, same as "0.001_234_567_000" in scientific notation
+
+    -0.000_000_000_000_000_000_000_001_234_567  # bad number, outside limits
+    -1.234_567e-24  # good number, same as "-0.000_000_000_000_000_000_000_001_234_567" in scientific notation
+
 <u>I<BEST PRACTICES></u>
 
 <u>
 
 =over
 
-=item * I<When only positive numeric literals are used in one area of code, omit positive signs.>
+=item * I<Use 2 digits to represent all exponents.>
 
 =item * I<When only positive exponents are used, omit exponent signs.>
 
@@ -720,27 +750,51 @@ As with normal integers, negative exponents must be prefixed with a C<-> minus s
 
 </u>
 
-    1_234_567_000      # okay integer
-    1.234_567_000e9    # good number, same as "1_234_567_000" in scientific notation
-    1.234_567_000e+9   # good number, same as "1_234_567_000" in scientific notation
-    1.234_567_000e09   # best number for mixed-sign exponents,   same as "1_234_567_000" in scientific notation
-    1.234_567_000e+09  # best number for all-positive exponents, same as "1_234_567_000" in scientific notation
+    1_234_567_000      # good integer
+    1.234_567_000e9    # good number, but does not align with two-digit exponents below
+    1.234_567_000e09   # best number for all-positive exponents, aligned with two-digit exponent below
+    1.234_567_000e19
 
-    -0.000_000_000_000_000_000_000_001_234_567  # bad number, outside limits
-    -1.234_567e-24  # best number, same as "-0.000_000_000_000_000_000_000_001_234_567" in scientific notation
+    1.234_567_000e+09  # good number, but not aligned with positive exponents below
+    1.234_567_000e09   # best number for all-positive exponents, aligned with positive exponent below
+    1.234_567_000e19
+ 
+    1.234_567_000e09   # good number, but not aligned with signed exponents below
+    1.234_567_000e+09  # best number for mixed-sign exponents, aligned with signed exponent below
+    1.234_567_000e-09
 
-    +1.537_969_711_485_091_65e+01  # best number for mixed-sign exponents
+    +1.537_969_711_485_091_65e+21  # best number for mixed-sign exponents
     -2.591_931_460_998_796_41e+01  # best number for mixed-sign exponents
     +1.792_587_729_503_711_81e-01  # best number for mixed-sign exponents
     +2.680_677_724_903_893_22e-03  # best number for mixed-sign exponents
     +1.628_241_700_382_422_95e-03  # best number for mixed-sign exponents
-    -9.515_922_545_197_158_70e-05  # best number for mixed-sign exponents
+    -9.515_922_545_197_158_70e-15  # best number for mixed-sign exponents
 
 =head2 Section 2.2: Strings
 
-# START HERE
-# START HERE
-# START HERE
+RPerl provides 2 text data types:
+
+=over
+
+=item * C<char>
+
+a single text character; either a letter, number, or special character
+
+=item * C<string>
+
+one or more text characters; any combination of letters, numbers, and special characters
+
+=back
+
+=head3 Section 2.2.1: Char Literals
+
+=head3 Section 2.2.2: String Literals
+
+=head3 Section 2.2.3: Single-Quotes
+
+=head3 Section 2.2.4: Double-Quotes
+
+=head3 Section 2.2.5: q-Quotes
 
 =head2 Section 2.3: Perl’s Built-in Warnings
 

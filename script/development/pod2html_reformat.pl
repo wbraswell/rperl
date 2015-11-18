@@ -4,7 +4,7 @@
 use RPerl;
 use strict;
 use warnings;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
@@ -35,13 +35,16 @@ our void $convert_underlines = sub {
         my string_arrayref $file_lines = [];
 
         while ( my string $file_line = <$FILE> ) {
-            # enable HTML underline
+            # enable HTML newline <br>
+            $file_line =~ s/&lt;br&gt;/<br>/gxms;
+
+            # enable HTML underline <u>...</u>
             $file_line =~ s/&lt;u&gt;/<u>/gxms;
             $file_line =~ s/&lt;\/u&gt;/<\/u>/gxms;
  
             # strip extra newline between list items
             $file_line =~ s/<li><p>(.*)<\/p>/<li>$1/gxms;
- 
+
             push @{$file_lines}, $file_line;
         }
 
