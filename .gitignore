@@ -39,6 +39,9 @@
 # [ NEED FIX: Unknown Files ]
 /out
 
+# [ POD ]
+/pod2htmd.tmp
+
 # [ RPerl Compile ]
 # NEED UPDATE, CORRELATION #rp13: list of RPerl build files & directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
 /lib/RPerl/Algorithm.pmc

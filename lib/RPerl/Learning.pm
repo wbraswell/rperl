@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.003_000;
+our $VERSION = 0.003_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -19,6 +19,8 @@ our hashref $properties = {};
 1;    # end of class
 
 __END__
+
+=encoding utf8
 
 =head1 NAME
 
@@ -42,49 +44,49 @@ For Anna.
 
 =over
 
-=item FOREWORD
+=item * FOREWORD
 
-=item PREFACE
+=item * PREFACE
 
-=item CHAPTER 1:  INTRODUCTION
+=item * CHAPTER 1:  INTRODUCTION
 
-=item CHAPTER 2:  SCALAR DATA
+=item * CHAPTER 2:  SCALAR DATA
 
-=item CHAPTER 3:  LISTS & ARRAYS
+=item * CHAPTER 3:  LISTS & ARRAYS
 
-=item CHAPTER 4:  SUBROUTINES
+=item * CHAPTER 4:  SUBROUTINES
 
-=item CHAPTER 5:  INPUT & OUTPUT
+=item * CHAPTER 5:  INPUT & OUTPUT
 
-=item CHAPTER 6:  HASHES
+=item * CHAPTER 6:  HASHES
 
-=item CHAPTER 7:  REGULAR EXPRESSIONS
+=item * CHAPTER 7:  REGULAR EXPRESSIONS
 
-=item CHAPTER 8:  REGULAR EXPRESSIONS MATCHING
+=item * CHAPTER 8:  REGULAR EXPRESSIONS MATCHING
 
-=item CHAPTER 9:  REGULAR EXPRESSIONS PROCESSING
+=item * CHAPTER 9:  REGULAR EXPRESSIONS PROCESSING
 
-=item CHAPTER 10: CONTROL STRUCTURES
+=item * CHAPTER 10: CONTROL STRUCTURES
 
-=item CHAPTER 11: CLASSES, PACKAGES, MODULES, LIBRARIES
+=item * CHAPTER 11: CLASSES, PACKAGES, MODULES, LIBRARIES
 
-=item CHAPTER 12: FILE TESTS
+=item * CHAPTER 12: FILE TESTS
 
-=item CHAPTER 13: DIRECTORY OPERATIONS 
+=item * CHAPTER 13: DIRECTORY OPERATIONS 
 
-=item CHAPTER 14: STRINGS & SORTING
+=item * CHAPTER 14: STRINGS & SORTING
 
-=item CHAPTER 15: SMART MATCHING & GIVEN-WHEN
+=item * CHAPTER 15: SMART MATCHING & GIVEN-WHEN
 
-=item CHAPTER 16: PROCESS MANAGEMENT
+=item * CHAPTER 16: PROCESS MANAGEMENT
 
-=item CHAPTER 17: SOME ADVANCED TECHNIQUES
+=item * CHAPTER 17: SOME ADVANCED TECHNIQUES
 
-=item APPENDIX A: EXERCISE ANSWERS
+=item * APPENDIX A: EXERCISE ANSWERS
 
-=item APPENDIX B: BEYOND THE ROADRUNNER
+=item * APPENDIX B: BEYOND THE ROADRUNNER
 
-=item APPENDIX C: RPERL GRAMMAR
+=item * APPENDIX C: RPERL GRAMMAR
 
 =back
 
@@ -96,22 +98,30 @@ For Anna.
 
 =head1 PREFACE
 
-    why I wrote this book
-    who I am
-    defense / apology
-    TPF grant
-    history of book
-    acknowledgements / thanks
-    typography conventions
-        "quotation"
-        I<"first occurrence of key concept">
-        I<U<BEST PRACTICES>>
-        I<emphasis>
-        U<book name>
-        B<I<Program Name>>
-        F<path/to/file>
-        C<source code>
-        C<$ terminal command>
+=head2 Section 1.1: Who I Am
+
+=head2 Section 1.1: Why I Wrote This Book
+
+=head2 Section 1.1: Defense / Apology
+
+=head2 Section 1.1: TPF Grant
+
+=head2 Section 1.1: History Of Book
+
+=head2 Section 1.1: Acknowledgements & Thanks
+
+=head2 Section 1.1: POD
+
+"The Pod format is not necessarily sufficient for writing a book."
+
+L<http://perldoc.perl.org/perlpod.html>
+
+~ Larry Wall & Sean M. Burke
+
+
+"Challenge accepted."
+
+~ Will
 
 
 =head1 CHAPTER 1: INTRODUCTION
@@ -121,14 +131,38 @@ For Anna.
 You are about to learn the basic concepts of writing software using the RPerl optimizing compiler for the Perl computer programming language.  With the skills gained by reading this book, you will be empowered to create new super-fast RPerl programs which can be intermixed with the enormous amount of existing Perl software available on the Internet.
 
 This book is named and stylized for the animal mascot for RPerl, Roadie the Roadrunner.  RPerl, like Roadie, I<"runs really fast">.
+
+Throughout this text, the following typography conventions are utilized:
+
+=over 16
+
+=item * "Literal Quotation"
+
+=item * I<"First Occurrence Of Key Concept">
+
+=item * I<Added Emphasis>
+
+=item * F</path/to/program.pl>
+
+=item * B<I<Program Name>>
+
+=item * <u>B<Book Name></u>
+
+=item * <u>I<BEST PRACTICES></u>
+
+=item * C<my string $source_code;>
+
+=item * C<$ terminal_command.sh>
+
+=back
     
 =head2 Section 1.2: Learning Perl
 
-This book is purposefully patterned after the popular educational text U<Learning Perl>, affectionately known as the Llama Book.  Both the Roadrunner Book and the Llama book are meant as introductory texts on Perl topics.  The Llama Book is focused on normal Perl, and the Roadrunner Book is focused on optimized Perl.
+This book is purposefully patterned after the popular educational text <u>B<Learning Perl></u>, affectionately known as the Llama Book.  Both the Roadrunner Book and the Llama book are meant as introductory texts on Perl topics.  The Llama Book is focused on normal Perl, and the Roadrunner Book is focused on optimized Perl.
 
-This book copies the same chapter topics as U<Learning Perl>, but all content is re-written for RPerl.  U<Learning RPerl> also copies the same exercise concepts as U<Learning Perl>, but all solutions are re-written in RPerl.  Both books are canonical and may be used together in the classroom; the source code solutions are meant to be compared side-by-side as textbook examples of normal Perl versus optimized Perl.
+This book copies the same chapter topics as <u>B<Learning Perl></u>, but all content is re-written for RPerl.  <u>B<Learning RPerl></u> also copies the same exercise concepts as <u>B<Learning Perl></u>, but all solutions are re-written in RPerl.  Both books are canonical and may be used together in the classroom; the source code solutions are meant to be compared side-by-side as textbook examples of normal Perl versus optimized Perl.
 
-Please support the Perl community by purchasing a copy of U<Learning Perl> from our friends at O'Reilly:
+Please support the Perl community by purchasing a copy of <u>B<Learning Perl></u> from our friends at O'Reilly:
     
 L<http://shop.oreilly.com/product/0636920018452.do>
 
@@ -136,17 +170,17 @@ L<http://shop.oreilly.com/product/0636920018452.do>
 
 =over
 
-=item Are you totally new to computer programming, and you want to learn how to write your first program?
+=item * Are you totally new to computer programming, and you want to learn how to write your first program?
 
-=item Do you already know Perl, and now you want to make your Perl code run faster?
+=item * Do you already know Perl, and now you want to make your Perl code run faster?
 
-=item Do you already know some other computer language, and Perl has always intrigued you?
+=item * Do you already know some other computer language, and Perl has always intrigued you?
 
-=item Do you love learning about new languages and compilers?
+=item * Do you love learning about new languages and compilers?
 
-=item Do you miss you favorite old language Perl, and you're looking for a legitimate reason to go back?
+=item * Do you miss you favorite old language Perl, and you're looking for a legitimate reason to go back?
 
-=item Are you a scientist and you just want your code to run really fast without the headaches of C or C++?
+=item * Are you a scientist and you just want your code to run really fast without the headaches of C or C++?
 
 =back
 
@@ -170,7 +204,7 @@ If you are using this as an official textbook for certification or academic cred
 
 =head2 Section 1.6: What Do Those Numbers At The Start Of The Exercise Mean?
 
-The original authors of U<Learning Perl> meant the numbers at each exercise to indicate the approximate number of minutes required for an average person to reach a full working solution.  If it takes you less time, good for you!  If it takes you more time, don't worry, it's no big deal; learning technical skills requires time and dedication.  All experts were once novices.
+The original authors of <u>B<Learning Perl></u> meant the numbers at each exercise to indicate the approximate number of minutes required for an average person to reach a full working solution.  If it takes you less time, good for you!  If it takes you more time, don't worry, it's no big deal; learning technical skills requires time and dedication.  All experts were once novices.
 
 =head2 Section 1.7: What If I'm An RPerl Course Instructor?
 
@@ -220,25 +254,25 @@ The RPerl team has been regularly promoting RPerl in a number of physical and di
 
 =over
 
-=item YAPC::NA  L<http://www.yapcna.org>
+=item * YAPC::NA  L<http://www.yapcna.org>
 
-=item Austin Perl Mongers  L<http://www.austin.pm>
+=item * Austin Perl Mongers  L<http://www.austin.pm>
 
-=item RPerl Website  L<http://www.rperl.org>
+=item * RPerl Website  L<http://www.rperl.org>
 
-=item Github  L<https://github.com/wbraswell/rperl>
+=item * Github  L<https://github.com/wbraswell/rperl>
 
-=item Facebook Page  L<https://www.facebook.com/rperlcompiler>
+=item * Facebook Page  L<https://www.facebook.com/rperlcompiler>
 
-=item Facebook Groups  L<https://www.facebook.com/groups/perlprogrammers>  L<https://www.facebook.com/groups/perlmonger>
+=item * Facebook Groups  L<https://www.facebook.com/groups/perlprogrammers>  L<https://www.facebook.com/groups/perlmonger>
 
-=item Twitter  L<https://twitter.com/rperlcompiler>
+=item * Twitter  L<https://twitter.com/rperlcompiler>
 
-=item PerlMonks  L<http://perlmonks.org>
+=item * PerlMonks  L<http://perlmonks.org>
 
-=item Perl Blogs  L<http://blogs.perl.org>
+=item * Perl Blogs  L<http://blogs.perl.org>
 
-=item IRC #perl11  L<http://irc.perl.org>
+=item * IRC #perl11  L<http://irc.perl.org>
 
 =back
 
@@ -278,7 +312,7 @@ On operating systems with less Perl support, you may have to perform a number of
     
 L<https://github.com/wbraswell/rperl/blob/master/INSTALL>
 
-Unless you are an experienced programmer or system administrator, it is B<strongly> recommended you use the Xubuntu operating system.  You can download the Xubuntu ISO file at the link below, then use it to create a bootable DVD disc or USB flash drive, install Xubuntu onto any computer, and issue the C<$ sudo cpan RPerl> command as described above.
+Unless you are an experienced programmer or system administrator, it is I<strongly> recommended you use the Xubuntu operating system.  You can download the Xubuntu ISO file at the link below, then use it to create a bootable DVD disc or USB flash drive, install Xubuntu onto any computer, and issue the C<$ sudo cpan RPerl> command as described above.
 
 L<http://xubuntu.org/getxubuntu>
 
@@ -344,28 +378,26 @@ L<http://komodoide.com/perl>
 
 =head2 Section 1.22: A Simple RPerl Program
 
-C<
-#!/usr/bin/perl
+    #!/usr/bin/perl
 
-# Learning RPerl, Chapter 1, Exercise 3
-# Foo Bar Arithmetic Example
+    # Learning RPerl, Chapter 1, Exercise 3
+    # Foo Bar Arithmetic Example
 
-# [[[ HEADER ]]]
-use RPerl;
-use strict;
-use warnings;
-our $VERSION = 0.001_000;
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
 
-# [[[ CRITICS ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
-## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
-# [[[ OPERATIONS ]]]
-my number $foo = 21 + 12;
-my number $bar = 23 * 42;
-print 'have $foo = ' . $foo . "\n";
-print 'have $bar = ' . $bar . "\n";
->
+    # [[[ OPERATIONS ]]]
+    my number $foo = 21 + 12;
+    my number $bar = 23 * 42;
+    print 'have $foo = ' . $foo . "\n";
+    print 'have $bar = ' . $bar . "\n";
 
 =head2 Section 1.23: What Is Inside That RPerl Program?
 
@@ -396,14 +428,12 @@ L<https://metacpan.org/pod/distribution/RPerl/script/rperl>
 
 To partially-compile-then-execute the preceeding RPerl example program in test mode, you may copy and paste the entire program (from shebang to second C<print>) into a temporary file such as F</tmp/foobar.pl>, then execute the following command:
 
-C<$ rperl -t /tmp/foobar.pl>
+    $ rperl -t /tmp/foobar.pl
 
 The output of this example program should be:
 
-C<
-have $foo = 33
-have $bar = 966
->
+    have $foo = 33
+    have $bar = 966
 
 Please see chapter 11 for more information about compiling Perl modules.
 
@@ -414,17 +444,29 @@ Please see chapter 11 for more information about compiling Perl modules.
 Will Braswell does more than just create Perl compiler software, he is also very active in several other areas of life, including but not limited to:
 
 =over
-=item Church & Spirituality
-=item Boy Scouts of America
-=item Cane Juggling & Circus Performance
-=item Linux Operating Systems
-=item Charitable & Fraternal Organizations
-=item Homeschooling & Higher Education
-=item Astrophysics & Mathematics
-=item Entrepreneuriship & Business
-=item High-Performance Computing
-=item Professional Space Exploration
-=item Family Life
+
+=item * Church & Spirituality
+
+=item * Boy Scouts of America
+
+=item * Cane Juggling & Circus Performance
+
+=item * Linux Operating Systems
+
+=item * Charitable & Fraternal Organizations
+
+=item * Homeschooling & Higher Education
+
+=item * Astrophysics & Mathematics
+
+=item * Entrepreneuriship & Business
+
+=item * High-Performance Computing
+
+=item * Professional Space Exploration
+
+=item * Family Life
+
 =back
 
 These areas of interest are reflected in the tone and intention of RPerl.
@@ -457,7 +499,7 @@ The definitive list of do's and do-nots for high-magic vs low-magic Perl program
 
 L<http://rperl.org/the_low_magic_perl_commandments.html>
 
-The LMPC draw inspiration from, and (wherever possible) work together with Damian Conway's U<Perl Best Practices> and Jeffrey Thalhammer's Perl::Critic software.
+The LMPC draw inspiration from, and (wherever possible) work together with Damian Conway's <u>B<Perl Best Practices></u> and Jeffrey Thalhammer's Perl::Critic software.
 
 L<http://shop.oreilly.com/product/9780596001735.do>
 
@@ -467,7 +509,7 @@ L<http://search.cpan.org/~thaljef/Perl-Critic/lib/Perl/Critic/PolicySummary.pod>
 
 I<Perlism> is the computer religion dedicated to the use, promotion, and development of the Perl family of programming languages.  (Not to be confused with a spiritual religion such as Christianity, a computer religion such as Perlism is an independent and complementary belief structure.)
 
-A I<Perlite> is an adherent to the Perlism religion.  Perlism has a revered founder, Saint Larry (himself a devout Christian); a prophet, I<The Voice In The Wilderness> (Will); a monastary and shrine, I<Perl Monks>; commandments, The LMPC; proverbs from Saint Larry including I<TIMTOWTDI>, I<LMFB>, and L<HTAAOF>; and canonical scriptures, including Saint Larry's U<Apocalypses> and The Voice's U<Book of RPerl>.
+A I<Perlite> is an adherent to the Perlism religion.  Perlism has a revered founder, Saint Larry (himself a devout Christian); a prophet, I<The Voice In The Wilderness> (Will); a monastary and shrine, I<Perl Monks>; commandments, The LMPC; proverbs from Saint Larry including I<TIMTOWTDI>, I<LMFB>, and I<HTAAOF>; and canonical scriptures, including Saint Larry's B<_Apocalypses_> and The Voice's B<_Book_of_RPerl_>.
 
 The book is a description of events surrounding the creation of RPerl and the future of the Internet.  It is intended to both educate and entertain.
 
@@ -479,11 +521,11 @@ L<http://rperl.org/the_book_of_rperl.html>
 
 On a computer with RPerl already installed, create a directory named F<LearningRPerl> containing a sub-directory named F<Chapter1>.  Using the B<I<Foo Bar>> example program as a template, manually type a new RPerl program into a file named F<exercise_1-hello_world.pl> inside the F<LearningRPerl/Chapter1> sub-directory.  The sole purpose of your first program is to use the C<print> operator and simply display the following one line of text output, followed by one newline character:
 
-C<Hello, World!>
+    Hello, World!
 
 Run your new program by issuing the following command at your terminal command prompt:
 
-C<$ rperl -t LearningRPerl/Chapter1/exercise_1-hello_world.pl>
+    $ rperl -t LearningRPerl/Chapter1/exercise_1-hello_world.pl
 
 I<HINT: You only need the C<USER DEFAULT 1> critic line, so your resulting program should be 7 lines long, not counting comments or blank lines.>
 
@@ -491,14 +533,14 @@ I<HINT: You only need the C<USER DEFAULT 1> critic line, so your resulting progr
 
 Run the following RPerl commands and observe the output.
 
-C<$ rperl -?>
+    $ rperl -?
 
 2a.  What are some RPerl command-line options with which you are already familiar?
 2b.  With which options are you unfamiliar?
 
-C<$ rperl -t -V LearningRPerl/Chapter1/exercise_1-hello_world.pl>
-C<$ rperl -t -D LearningRPerl/Chapter1/exercise_1-hello_world.pl>
-C<$ rperl -t -V -D LearningRPerl/Chapter1/exercise_1-hello_world.pl>
+    $ rperl -t -V LearningRPerl/Chapter1/exercise_1-hello_world.pl
+    $ rperl -t -D LearningRPerl/Chapter1/exercise_1-hello_world.pl
+    $ rperl -t -V -D LearningRPerl/Chapter1/exercise_1-hello_world.pl
 
 2c.  How do the outputs of these 3 commands differ from the output of Exercise 1?
 2d.  How do the outputs differ from one another?
@@ -509,15 +551,13 @@ Manually type the entire B<I<Foo Bar>> example program into a file named F<exerc
 
 Modify your program by adding an extra numeric variable named C<$baz>, set its value to C<$bar / $foo>, and use C<print> to generate the following output:
 
-C<
-have $foo = 33
-have $bar = 966
-have $baz = 29.2727272727273
->
+    have $foo = 33
+    have $bar = 966
+    have $baz = 29.2727272727273
 
 Run your program thusly:
 
-C<$ rperl -t LearningRPerl/Chapter1/exercise_3-foo_bar_arithmetic.pl>
+    $ rperl -t LearningRPerl/Chapter1/exercise_3-foo_bar_arithmetic.pl
 
 
 =head1 CHAPTER 2: SCALAR DATA
@@ -529,25 +569,41 @@ A single piece of data, such as one number or one string, is called a I<"scalar"
 RPerl provides 5 scalar data types:
 
 =over
-=item C<bool>
-=item C<integer>
-=item C<number>
-=item C<char>
-=item C<string>
+
+=item * C<bool>
+
+=item * C<integer>
+
+=item * C<number>
+
+=item * C<char>
+
+=item * C<string>
+
 =back
 
 A single group of actual numeric digit(s) or quoted string character(s) is called a I<"literal">, such as:
 
 =over
-=item C<21  # integer>
-=item C<'howdy'  # string>
-=item C<-23.421_12  # number>
-=item C<1_234_567  # integer>
-=item C<'One million, two-hundred-thirty-four thousand, five-hundred-sixty-seven'  # string>
-=item C<"\n"  # newline char>
-=item C<'1'  # char>
-=item C<q{}  # empty string>
-=item C<0  # bool>
+
+=item * C<21  # integer>
+
+=item * C<'howdy'  # string>
+
+=item * C<-23.421_12  # number>
+
+=item * C<1_234_567  # integer>
+
+=item * C<'One million, two-hundred-thirty-four thousand, five-hundred-sixty-seven'  # string>
+
+=item * C<"\n"  # newline char>
+
+=item * C<'1'  # char>
+
+=item * C<q{}  # empty string>
+
+=item * C<0  # bool>
+
 =back
 
 =head2 Section 2.1: Numbers
@@ -555,92 +611,92 @@ A single group of actual numeric digit(s) or quoted string character(s) is calle
 RPerl provides 3 numeric data types:
 
 =over
-=item C<bool> is a boolean logic value, either 0 or 1
-=item C<integer> is a whole number value, either negative, 0, or positive
-=item C<number> is a floating-point decimal number value, either negative, 0, or positive
+
+=item * C<bool> is a boolean logic value, either 0 or 1
+
+=item * C<integer> is a whole number value, either negative, 0, or positive
+
+=item * C<number> is a floating-point decimal number value, either negative, 0, or positive
+
 =back
 
 =head3 Section 2.1.1: Bool Literals
 
 The most efficient data type is C<bool>, which stores a single I<"bit"> (binary digit) of information.  A C<bool> may only hold the values of exactly 0 or 1.
 
-C<
     0     # bool
     1     # bool
     -1    # not a bool
     1.5   # not a bool
     -1.5  # not a bool
->
 
 =head3 Section 2.1.2: Integer Literals
 
 The next most efficient data type is C<integer>, which stores a single whole (non-decimal) number.  An C<integer> may hold any positive or negative whole number, within the data size limits of your operating system and computer hardware.
 
-C<
     -23     # integer
     0       # integer
     42_230  # integer
     42.1    # not an integer
     -999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999  # bad integer, outside limits
->
 
 =head3 Section 2.1.3: Number Literals
 
 The C<number> data type stores a single floating-point (decimal) number, and may hold any real number within your computer's limits.
 
-C<
     -23.42     # number
     0.000_001  # number
     42.23      # number
     42         # number
     -4_123.456_789_123_456_789_123_456_789_123_456_789_123_456_789_123_456_789_123_456  # bad number, outside limits
->
 
 =head3 Section 2.1.4: Optional Positive Sign
 
 For C<integer> and C<number> data types, an optional C<+> plus sign may be prepended to explicitly indicate a numeric literal is positive (greater than zero).
 
-C<
     1   # positive one
     +1  # also positive one
->
 
-I<U<BEST PRACTICES>  When only positive numeric literals are used in one area of code, omit positive signs.  When both positive and negative literals are used in one code area, use signs for all applicable literals.>
+<u>I<BEST PRACTICES></u>
 
-C<
+<u>
+
+=over
+
+=item * I<When only positive numeric literals are used in one area of code, omit positive signs.>
+
+=item * I<When both positive and negative literals are used in one code area, use signs for all applicable literals.>
+
+=back
+
+</u>
+
     +23    # good integer
     +55.6  # good number
     23     # best integer for all positive literals
     42     # best integer for all positive literals
     55.6   # best number  for all positive literals
->
 
-C<
     23     # good integer
     -21    # good integer
     -12    # good integer
-    55.6  # good number
+    55.6   # good number
     -66.5  # good number
     23     # best integer for all positive literals
     42     # best integer for all positive literals
     55.6   # best number  for all positive literals
->
 
 =head3 Section 2.1.5: Underscore Digit Separators
 
 For C<integer> and C<number> data types, an I<"underscore"> C<_> character must be inserted after every third digit away from the decimal point, where the underscore is used in the same way as a comma when writing long numbers by hand.
 
-C<
     1_234_567  # integer, same as "1,234,567" in American notation
     -32_123    # integer, same as "-32,123" in American notation
     -32123     # bad integer, missing underscore
->
 
-C<
     1.234_567           # number, same as "1.234567" in American notation
     -32_123.456_789_01  # number, same as "-32,123.45678901" in American notation
     -32_123.456_78901   # bad number, missing underscore
->
 
 =head3 Section 2.1.6: Scientific Notation
 
@@ -648,29 +704,37 @@ For C<integer> and C<number> data types, very large or very small numbers should
     
 As with normal integers, negative exponents must be prefixed with a C<-> minus sign and positive exponents may be optionally prefixed with a C<+> plus sign.
 
-I<U<BEST PRACTICES>  Use two-digit integer exponents for code uniformity.  When only positive exponents are used, omit exponent signs.  When both positive and negative exponents are used, use signs for all exponents.>
+<u>I<BEST PRACTICES></u>
 
-C<
+<u>
+
+=over
+
+=item * I<When only positive numeric literals are used in one area of code, omit positive signs.>
+
+=item * I<When only positive exponents are used, omit exponent signs.>
+
+=item * I<When both positive and negative exponents are used, use signs for all exponents.>
+
+=back
+
+</u>
+
     1_234_567_000      # okay integer
     1.234_567_000e9    # good number, same as "1_234_567_000" in scientific notation
     1.234_567_000e+9   # good number, same as "1_234_567_000" in scientific notation
     1.234_567_000e09   # best number for mixed-sign exponents,   same as "1_234_567_000" in scientific notation
     1.234_567_000e+09  # best number for all-positive exponents, same as "1_234_567_000" in scientific notation
->
 
-C<
     -0.000_000_000_000_000_000_000_001_234_567  # bad number, outside limits
     -1.234_567e-24  # best number, same as "-0.000_000_000_000_000_000_000_001_234_567" in scientific notation
->
 
-C<
     +1.537_969_711_485_091_65e+01  # best number for mixed-sign exponents
     -2.591_931_460_998_796_41e+01  # best number for mixed-sign exponents
     +1.792_587_729_503_711_81e-01  # best number for mixed-sign exponents
     +2.680_677_724_903_893_22e-03  # best number for mixed-sign exponents
     +1.628_241_700_382_422_95e-03  # best number for mixed-sign exponents
     -9.515_922_545_197_158_70e-05  # best number for mixed-sign exponents
->
 
 =head2 Section 2.2: Strings
 
@@ -679,6 +743,7 @@ C<
 # START HERE
 
 =head2 Section 2.3: Perl’s Built-in Warnings
+
 =head2 Section 2.4: Scalar Variables
 
 An RPerl I<"expression"> is any general-purpose language component which either returns a value or is a literal value itself.
@@ -695,26 +760,18 @@ Perl's C<my> keyword is used to declare a new variable, and optionally initializ
 
 Normal Perl does not support specific data types, so in Perl one variable named C<$foo> may be initialized with a numeric value, then the same C<$foo> variable may be changed to hold a string value without any warning or error.
 
-C<
     my $foo = 23;
     $foo = 'twenty-three';  # just fine in normal Perl
->
 
 On the other hand, RPerl I<requires> the use of data types for each and every variable.
 
-C<
     my $foo = 23;  # error in RPerl, all modes
->
 
-C<
     my number $foo = 23;
     $foo = 'twenty-three';  # error in RPerl, compiled (non-test) modes, assigning string literal to number variable
->
 
-C<
     my number $foo = 23;
     $foo = 42;  # just fine in RPerl
->
 
 Data types make your code much more readable and much, much faster.  Learn to love data types.  Now.
 
@@ -722,68 +779,61 @@ Data types make your code much more readable and much, much faster.  Learn to lo
 
 The most efficient data type is C<bool>, which stores a single I<"bit"> (binary digit) of information.  A C<bool> may only hold the values of exactly 0 or 1.
 
-C<
     my bool $foo = 0;     # fine
     my bool $bar = 1;     # fine
     my bool $baz = -1.5;  # error in RPerl, compiled (non-test) modes
->
 
 =head3 Section 2.4.x: Integer Data Type
 
 The next most efficient data type is C<integer>, which stores a single whole (non-decimal) number.  An C<integer> may hold any positive or negative whole number, within the data size limits of your operating system and computer hardware.
 
-C<
     my integer $foo  = -23;     # fine
     my integer $bar  = 0;       # fine
     my integer $baz  = 42_230;  # fine
     my integer $bax  = 42.1;    # error in RPerl, compiled (non-test) modes
     my integer $quux = -999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999;  # likely error or data corruption, outside limits
->
 
 =head3 Section 2.4.x: Number Data Type
 
 The C<number> data type stores a single floating-point (decimal) number, and may hold any real number within your computer's limits.
 
-C<
     my number $foo  = -23.42;     # fine
     my number $bar  = 0.000_001;  # fine
     my number $baz  = 42.23;      # fine
     my number $bax  = 42;         # fine
     my number $quux = -4_123.456_789_123_456_789_123_456_789_123_456_789_123_456_789_123_456_789_123_456;  # likely error or data loss, outside limits
->
 
 =head3 Section 2.4.x: Type Conversion
 
 To convert from one data type to another, we use the RPerl type conversion subroutines, shown below for numeric types only:
 
 =over
-=item C<bool_to_integer()>
-=item C<bool_to_number()>
-=item C<integer_to_bool()>
-=item C<integer_to_number()>
-=item C<number_to_bool()>
-=item C<number_to_integer()>
+
+=item * C<bool_to_integer()>
+
+=item * C<bool_to_number()>
+
+=item * C<integer_to_bool()>
+
+=item * C<integer_to_number()>
+
+=item * C<number_to_bool()>
+
+=item * C<number_to_integer()>
+
 =back
 
-C<
     my integer $foo = 23;
     my number $bar  = $foo;  # error in RPerl, compiled (non-test) modes, type mismatch
->
 
-C<
     my integer $foo = 23;
     my number $bar  = integer_to_number($foo);  # fine, $bar is now 23.0
->
 
-C<
     my number $foo  = 23.42;
     my integer $bar = $foo;  # error in RPerl, compiled (non-test) modes, type mismatch
->
 
-C<
     my number $foo  = 23.42;
     my integer $bar = number_to_integer($foo);  # fine, $bar is now 23
->
 
 =head3 Section 2.4.x Scope, Type, Name, Value
 
@@ -796,12 +846,19 @@ Except for certain special circumstances, all variables in RPerl are locally-sco
 [ INSERT SCOPE TYPE NAME VALUE ]
 
 =head2 Section 2.5: Output With C<print>
+
 =head2 Section 2.6: The C<if> Control Structure
+
 =head2 Section 2.7: Getting User Input
+
 =head2 Section 2.8: The C<chomp> Operator
+
 =head2 Section 2.9: The C<while> Control Structure
+
 =head2 Section 2.10: The C<undef> Value
+
 =head2 Section 2.11: The C<defined> Function
+
 =head2 Section 2.12: Exercises
 
 =head3 1.  XXXYYYZZZ  [ XYZ mins ]

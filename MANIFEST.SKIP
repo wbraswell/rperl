@@ -40,6 +40,9 @@
 ~$
 swp$
 
+# [ POD ]
+^pod2htmd\.tmp$
+
 # [ RPerl Unused ]
 ^backup
 ^lib\/RPerl\/3rd_party_debugging
