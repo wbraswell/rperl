@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.004_000;
+our $VERSION = 0.005_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -40,11 +40,11 @@ being<br>
 ...<br>
 .
 
-The Official Introductory-Level Reference, User Manual, and Educational Documentation
+B<The Official Introductory-Level Reference, User Manual, and Educational Documentation>
 
 ~ for ~
 
-Restricted Perl, The Optimizing Perl 5 Compiler
+B<Restricted Perl, The Optimizing Perl 5 Compiler>
 
 
 =head1 DEDICATION
@@ -618,7 +618,7 @@ A single group of actual numeric digit(s) or quoted string character(s) is calle
 
 =back
 
-=head2 Section 2.1: Numbers
+=head2 Section 2.1: Numbers (Numeric Data)
 
 RPerl provides 3 numeric data types:
 
@@ -640,7 +640,7 @@ a floating-point decimal number value, either negative, 0, or positive
 
 =head3 Section 2.1.1: Bool Literals
 
-The most efficient data type is C<bool>, which stores a single I<"bit"> (binary digit) of information.  A C<bool> may only hold the values of exactly 0 or 1.
+The most memory-efficient numeric literal is C<bool>, which represents a single I<"bit"> (binary digit) of information.  A C<bool> literal may only give the values of exactly 0 or 1.
 
     0     # bool
     1     # bool
@@ -650,7 +650,7 @@ The most efficient data type is C<bool>, which stores a single I<"bit"> (binary 
 
 =head3 Section 2.1.2: Integer Literals
 
-The next most efficient data type is C<integer>, which stores a single whole (non-decimal) number.  An C<integer> may hold any positive or negative whole number, within the data size limits of your operating system and computer hardware.
+The next most efficient numeric literal is C<integer>, which represents a single whole (non-decimal) number.  An C<integer> literal may describe any positive or negative whole number, within the data size limits of your operating system and computer hardware.
 
     -23     # integer
     0       # integer
@@ -660,7 +660,7 @@ The next most efficient data type is C<integer>, which stores a single whole (no
 
 =head3 Section 2.1.3: Number Literals
 
-The C<number> data type stores a single floating-point (decimal) number, and may hold any real number within your computer's limits.
+The C<number> numeric literal represents a single floating-point (decimal) number, and may express any real number within your computer's limits.
 
     -23.42     # number
     0.000_001  # number
@@ -670,7 +670,7 @@ The C<number> data type stores a single floating-point (decimal) number, and may
 
 =head3 Section 2.1.4: Optional Positive Sign
 
-For C<integer> and C<number> data types, an optional C<+> plus sign may be prepended to explicitly indicate a numeric literal is positive (greater than zero).
+For C<integer> and C<number> literals, an optional C<+> plus sign may be prepended to explicitly indicate a numeric literal is positive (greater than zero).
 
     1   # positive one
     +1  # also positive one
@@ -709,7 +709,7 @@ For C<integer> and C<number> data types, an optional C<+> plus sign may be prepe
 
 =head3 Section 2.1.5: Underscore Digit Separators
 
-For C<integer> and C<number> data types, an I<"underscore"> C<_> character must be inserted after every third digit away from the decimal point, where the underscore is used in the same way as a comma when writing long numbers by hand.
+For C<integer> and C<number> literals, an I<"underscore"> C<_> character must be inserted after every third digit away from the decimal point, where the underscore is used in the same way as a comma when writing long numbers by hand.
 
     1_234_567  # integer, same as "1,234,567" in American notation
     -32_123    # integer, same as "-32,123" in American notation
@@ -721,7 +721,7 @@ For C<integer> and C<number> data types, an I<"underscore"> C<_> character must 
 
 =head3 Section 2.1.6: Scientific Notation
 
-For C<integer> and C<number> data types, very large or very small numbers should be represented using I<"scientific notation">, where each number is normalized to have exactly one digit to the left of the decimal point, then a lower-case C<e> character and an appropriate integer power-of-ten is appended to the resulting normalized floating-point number.  The C<e> character stands for "exponent", as in "exponent of ten", and the Perl style of scientific notation is sometimes more accurately referred to as I<"scientific e notation">.
+For C<integer> and C<number> literals, very large or very small numbers should be represented using I<"scientific notation">, where each number is normalized to have exactly one digit to the left of the decimal point, then a lower-case C<e> character and an appropriate integer power-of-ten is appended to the resulting normalized floating-point number.  The C<e> character stands for "exponent", as in "exponent of ten", and the Perl style of scientific notation is sometimes more accurately referred to as I<"scientific e notation">.
     
 As with normal integers, negative exponents must be prefixed with a C<-> minus sign and positive exponents may be optionally prefixed with a C<+> plus sign.
 
@@ -770,7 +770,7 @@ As with normal integers, negative exponents must be prefixed with a C<-> minus s
     +1.628_241_700_382_422_95e-03  # best number for mixed-sign exponents
     -9.515_922_545_197_158_70e-15  # best number for mixed-sign exponents
 
-=head2 Section 2.2: Strings
+=head2 Section 2.2: Strings (Text Data)
 
 RPerl provides 2 text data types:
 
@@ -786,15 +786,62 @@ one or more text characters; any combination of letters, numbers, and special ch
 
 =back
 
+RPerl provides 3 delimiters for enclosing text data:
+
+=over
+
+=item * C<'single quotes'>
+
+=item * C<"double quotes">
+
+=item * C<q{q quotes}>
+
+=back
+
 =head3 Section 2.2.1: Char Literals
+
+The most memory-efficient text literal is C<char>, which represents exactly zero or one character of information.  A C<char> may express the value of any single numeric digit (0, 1, 2, ..., 8, 9); letter (a, b, c, ..., y, z, A, B, C, ..., Y, Z ); or special ASCII character (!, #, *, +, etc).  If the C<char> literal has length zero, it is called the I<"empty character"> and contains no data.
+
+    ''       # not a char, use q{} for empty character
+    '0'      # char 
+    '1'      # char
+    'h'      # char
+    '+'      # char
+    '\n'     # not a char, use "\n" for newline character
+    '-1'     # not a char, too many characters
+    'howdy'  # not a char, too many characters
+
+    ""       # not a char, use q{} for empty character
+    "0"      # char 
+    "1"      # char
+    "h"      # char
+    "+"      # char
+    "\n"     # char, newline character
+    "-1"     # not a char, too many characters & invalid use of double quotes
+    "howdy"  # not a char, too many characters & invalid use of double quotes
+
+    q{}       # char, empty character
+    q{0}      # char 
+    q{1}      # char
+    q{h}      # char
+    q{+}      # char
+    q{\n}     # not a char, use "\n" for newline character
+    q{-1}     # not a char, too many characters
+    q{howdy}  # not a char, too many characters
 
 =head3 Section 2.2.2: String Literals
 
-=head3 Section 2.2.3: Single-Quotes
+Any text data longer than 1 character in length must be represented by a C<string> literal, which is comprised of any combination of valid C<char> literal characters (numeric digits, letters, and special ASCII characters).  Like the empty character, if a C<string> literal has length zero then it is called the I<"empty string"> and contains no data.
 
-=head3 Section 2.2.4: Double-Quotes
+    # START HERE
+    # START HERE
+    # START HERE
 
-=head3 Section 2.2.5: q-Quotes
+=head3 Section 2.2.3: Single Quotes
+
+=head3 Section 2.2.4: Double Quotes
+
+=head3 Section 2.2.5: q Quotes
 
 =head2 Section 2.3: Perl’s Built-in Warnings
 

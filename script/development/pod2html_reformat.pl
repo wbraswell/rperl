@@ -11,7 +11,7 @@ our $VERSION = 0.002_000;
 
 # [[[ SUBROUTINES ]]]
 
-our void $convert_underlines = sub {
+our void $pod2html_reformat = sub {
     ( my string_arrayref $command_line_arguments ) = @_;
     foreach my string $file_name ( @{$command_line_arguments} ) {
         if ( not( -e $file_name ) ) {
@@ -60,5 +60,5 @@ our void $convert_underlines = sub {
 
 # [[[ OPERATIONS ]]]
 
-convert_underlines( [@ARGV] );
+pod2html_reformat( [@ARGV] );
 
