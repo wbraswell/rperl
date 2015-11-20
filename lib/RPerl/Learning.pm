@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.005_000;
+our $VERSION = 0.011_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -24,20 +24,40 @@ __END__
 
 =head1 NAME
 
-<u>B<Learning RPerl></u>
+Learning RPerl
+
+=head1 BOOK TITLE
+
+X<u>B<Learning RPerl>X</u>
 
 ~ or ~
 
-<u>B<Let's Write Fast Perl!></u>
+X<u>B<Let's Write Fast Perl!>X</u>
 
-.<br>
-...<br>
-.....<br>
-.......<br>
-being<br>
-.......<br>
-.....<br>
-...<br>
+.
+X<br>
+
+...
+X<br>
+
+.....
+X<br>
+
+.......
+X<br>
+
+being
+X<br>
+
+.......
+X<br>
+
+.....
+X<br>
+
+...
+X<br>
+
 .
 
 B<The Official Introductory-Level Reference, User Manual, and Educational Documentation>
@@ -46,100 +66,123 @@ B<The Official Introductory-Level Reference, User Manual, and Educational Docume
 
 B<Restricted Perl, The Optimizing Perl 5 Compiler>
 
+X<br>
+
 
 =head1 DEDICATION
 
 For Anna.
+
+X<br>
 
 
 =head1 TABLE OF CONTENTS: CHAPTERS AT-A-GLANCE
 
 =over
 
-=item * FOREWORD
+=item * L</FOREWORD>
 
-=item * PREFACE
+=item * L</PREFACE>
 
-=item * CHAPTER 1:  INTRODUCTION
+=item * L</CHAPTER 1:  INTRODUCTION>
 
-=item * CHAPTER 2:  SCALAR DATA
+=item * L</CHAPTER 2:  SCALAR DATA>
 
-=item * CHAPTER 3:  LISTS & ARRAYS
+=item * L</CHAPTER 3:  LISTS & ARRAYS>
 
-=item * CHAPTER 4:  SUBROUTINES
+=item * L</CHAPTER 4:  SUBROUTINES>
 
-=item * CHAPTER 5:  INPUT & OUTPUT
+=item * L</CHAPTER 5:  INPUT & OUTPUT>
 
-=item * CHAPTER 6:  HASHES
+=item * L</CHAPTER 6:  HASHES>
 
-=item * CHAPTER 7:  REGULAR EXPRESSIONS
+=item * L</CHAPTER 7:  REGULAR EXPRESSIONS>
 
-=item * CHAPTER 8:  REGULAR EXPRESSIONS MATCHING
+=item * L</CHAPTER 8:  REGULAR EXPRESSIONS MATCHING>
 
-=item * CHAPTER 9:  REGULAR EXPRESSIONS PROCESSING
+=item * L</CHAPTER 9:  REGULAR EXPRESSIONS PROCESSING>
 
-=item * CHAPTER 10: CONTROL STRUCTURES
+=item * L</CHAPTER 10: CONTROL STRUCTURES>
 
-=item * CHAPTER 11: CLASSES, PACKAGES, MODULES, LIBRARIES
+=item * L</CHAPTER 11: CLASSES, PACKAGES, MODULES, LIBRARIES>
 
-=item * CHAPTER 12: FILE TESTS
+=item * L</CHAPTER 12: FILE TESTS>
 
-=item * CHAPTER 13: DIRECTORY OPERATIONS 
+=item * L</CHAPTER 13: DIRECTORY OPERATIONS>
 
-=item * CHAPTER 14: STRINGS & SORTING
+=item * L</CHAPTER 14: STRINGS & SORTING>
 
-=item * CHAPTER 15: SMART MATCHING & GIVEN-WHEN
+=item * L</CHAPTER 15: SMART MATCHING & GIVEN-WHEN>
 
-=item * CHAPTER 16: PROCESS MANAGEMENT
+=item * L</CHAPTER 16: PROCESS MANAGEMENT>
 
-=item * CHAPTER 17: SOME ADVANCED TECHNIQUES
+=item * L</CHAPTER 17: SOME ADVANCED TECHNIQUES>
 
-=item * APPENDIX A: EXERCISE ANSWERS
+=item * L</APPENDIX A: EXERCISE ANSWERS>
 
-=item * APPENDIX B: BEYOND THE ROADRUNNER
+=item * L</APPENDIX B: BEYOND THE ROADRUNNER>
 
-=item * APPENDIX C: RPERL GRAMMAR
+=item * L</APPENDIX C: RPERL GRAMMAR>
 
 =back
+
+X<br>
 
 
 =head1 FOREWORD
 
     [ INSERT FOREWORD CONTENT HERE ]
 
+X<br>
+
 
 =head1 PREFACE
 
-=head2 Section 1.1: Who I Am
+=head2 Section 0.1: Who I Am
 
-=head2 Section 1.1: Why I Wrote This Book
+[INSERT WHO]
 
-=head2 Section 1.1: Defense / Apology
+=head2 Section 0.2: Why I Wrote This Book
 
-=head2 Section 1.1: TPF Grant
+[INSERT WHY]
 
-=head2 Section 1.1: History Of This Book
+=head2 Section 0.3: History Of This Book
 
-=head2 Section 1.1: Acknowledgements & Thanks
+[INSERT WHEN]
 
-=head2 Section 1.1: POD
+=head2 Section 0.4: TPF Grant
+
+[INSERT MONEY]
+
+=head2 Section 0.5: Acknowledgements & Thanks
+
+[INSERT THEM]
+
+=head2 Section 0.6: Defense / Apology
+
+[INSERT SORRY]
+
+=head2 Section 0.7: POD
 
 "The Pod format is not necessarily sufficient for writing a book."
 
 L<http://perldoc.perl.org/perlpod.html>
 
 ~ Saint Larry Wall & Sean M. Burke
-<br><br>
+
+X<br>
 
 "Challenge accepted."
 
 ~ Will Braswell
 
+X<br>
+
 
 =head1 CHAPTER 1: INTRODUCTION
 
 =head2 Section 1.1: Welcome To The Roadrunner Book!
-    
+
 You are about to learn the basic concepts of writing software using the RPerl optimizing compiler for the Perl computer programming language.  With the skills gained by reading this book, you will be empowered to create new super-fast RPerl programs which can be intermixed with the enormous amount of existing Perl software available on the Internet.
 
 This book is named and stylized for the animal mascot for RPerl, Roadie the Roadrunner.  RPerl, like Roadie, I<"runs really fast">.
@@ -152,15 +195,17 @@ Throughout this text, the following typography conventions are utilized:
 
 =item * I<"First Occurrence Of Key Concept">
 
-=item * I<Added Emphasis>
+=item * I<Emphasis>
+
+=item * B<Stronger Emphasis>
 
 =item * F</path/to/program.pl>
 
 =item * B<I<Program Name>>
 
-=item * <u>B<Book Name></u>
+=item * X<u>B<Book Title>X</u>
 
-=item * <u>I<BEST PRACTICES></u>
+=item * X<u>I<BEST PRACTICES>X</u>
 
 =item * C<my string $source_code;>
 
@@ -170,12 +215,12 @@ Throughout this text, the following typography conventions are utilized:
     
 =head2 Section 1.2: Learning Perl
 
-This book is purposefully patterned after the popular educational text <u>B<Learning Perl></u>, affectionately known as the Llama Book.  Both the Roadrunner Book and the Llama book are meant as introductory texts on Perl topics.  The Llama Book is focused on normal Perl, and the Roadrunner Book is focused on optimized Perl.
+This book is purposefully patterned after the popular educational text X<u>B<Learning Perl>X</u>, affectionately known as the Llama Book.  Both the Roadrunner Book and the Llama book are meant as introductory texts on Perl topics.  The Llama Book is focused on normal Perl, and the Roadrunner Book is focused on optimized Perl.
 
-This book copies the same chapter topics as <u>B<Learning Perl></u>, but all content is re-written for RPerl.  <u>B<Learning RPerl></u> also copies the same exercise concepts as <u>B<Learning Perl></u>, but all solutions are re-written in RPerl.  Both books are canonical and may be used together in the classroom; the source code solutions are meant to be compared side-by-side as textbook examples of normal Perl versus optimized Perl.
+This book copies the same chapter topics as X<u>B<Learning Perl>X</u>, but all content is re-written for RPerl.  X<u>B<Learning RPerl>X</u> also copies the same exercise concepts as X<u>B<Learning Perl>X</u>, but all solutions are re-written in RPerl.  Both books are canonical and may be used together in the classroom; the source code solutions are meant to be compared side-by-side as textbook examples of normal Perl versus optimized Perl.
 
-Please support the Perl community by purchasing a copy of <u>B<Learning Perl></u> from our friends at O'Reilly:
-    
+Please support the Perl community by purchasing a copy of X<u>B<Learning Perl>X</u> from our friends at O'Reilly:
+
 L<http://shop.oreilly.com/product/0636920018452.do>
 
 =head2 Section 1.3: Is This Book Right For You?
@@ -209,14 +254,14 @@ This is a purposefully simple book, in the same way RPerl is a purposefully simp
 =head2 Section 1.5: What About The Exercises & Their Answers?
 
 There are one or more programming exercises at the end of every chapter, and full answers to each problem are given near the end of the book in Appendix A.
- 
+
 For maximum educational effect, we suggest you attempt to write each piece of code on your own before looking at our solutions.
 
 If you are using this as an official textbook for certification or academic credit, such as at LAMPuniversity.org or a traditional school, you are obviously expected to write all your own code without refering to our or anyone else's solutions whatsoever.  We suggest you enclose Appendix A with a paperclip or discard it altogether to avoid the potential for accidental academic dishonesty.
 
 =head2 Section 1.6: What Do Those Numbers At The Start Of The Exercise Mean?
 
-The original authors of <u>B<Learning Perl></u> meant the numbers at each exercise to indicate the approximate number of minutes required for an average person to reach a full working solution.  If it takes you less time, good for you!  If it takes you more time, don't worry, it's no big deal; learning technical skills requires time and dedication.  All experts were once novices.
+The original authors of X<u>B<Learning Perl>X</u> meant the numbers at each exercise to indicate the approximate number of minutes required for an average person to reach a full working solution.  If it takes you less time, good for you!  If it takes you more time, don't worry, it's no big deal; learning technical skills requires time and dedication.  All experts were once novices.
 
 =head2 Section 1.7: What If I'm An RPerl Course Instructor?
 
@@ -241,11 +286,11 @@ Will waited a decade or two before realizing he had to do it himself.
 =head2 Section 1.10: Why Didn't Will Just Use Normal Perl Or Some Other Language?
 
 Dynamic languages like Perl are fast at running some kinds of computational actions, such as string manipulation (editing text data) and reading from a database.
-    
+
 Unfortunately, dynamic languages are slow at running general-purpose computations, such as arithmetic and moving data around in memory.  Sometimes very slow.
-    
+
 Dynamic languages like Perl are also flexible, powerful, and relatively easy to learn.  Sometimes too flexible.
-    
+
 RPerl's goal is to keep all of Perl's power and ease-of-use, while removing the redundant parts of Perl's flexibility in order to gain a major runtime speed boost.
 
 The most complex and flexible parts of Perl are called I<"high magic">, so RPerl is focused on supporting the I<"low magic"> parts of Perl which can be made to run fast.
@@ -311,20 +356,20 @@ RPerl has purposefully disabled the most complex features of Perl, such as run-t
 =head2 Section 1.16: How Can I Get RPerl?
 
 Installing RPerl ranges from easy to difficult, depending on how well your operating system supports Perl and C++.
-    
+
 On modern operating systems with good Perl support, such as Debian or Ubuntu GNU/Linux, you should be able to install RPerl system-wide by running the following command at your terminal command prompt:
-    
-C<$ sudo cpan RPerl>
+
+    $ sudo cpan RPerl
 
 If RPerl is properly installed, you should see a short text message displayed when you type the following command:
 
-C<$ rperl -v>
+    $ rperl -v
 
 On operating systems with less Perl support, you may have to perform a number of steps to successfully install RPerl, with dry technical detail available in the INSTALL notes document:
-    
+
 L<https://github.com/wbraswell/rperl/blob/master/INSTALL>
 
-Unless you are an experienced programmer or system administrator, it is I<strongly> recommended you use the Xubuntu operating system.  You can download the Xubuntu ISO file at the link below, then use it to create a bootable DVD disc or USB flash drive, install Xubuntu onto any computer, and issue the C<$ sudo cpan RPerl> command as described above.
+Unless you are an experienced programmer or system administrator, it is B<strongly> recommended you use the Xubuntu operating system.  You can download the Xubuntu ISO file at the link below, then use it to create a bootable DVD disc or USB flash drive, install Xubuntu onto any computer, and issue the C<$ sudo cpan RPerl> command as described above.
 
 L<http://xubuntu.org/getxubuntu>
 
@@ -343,7 +388,7 @@ CPAN is the I<"Comprehensive Perl Archive Network">, the world's most successful
 CPAN servers are where most public Perl software is stored, including RPerl.
 
 L<https://en.wikipedia.org/wiki/CPAN>
- 
+
 L<http://www.cpan.org>
 
 Several other programming language communities have copied the success and implementation of CPAN, including JSAN for Javascript, CRAN for R, and CCAN for C.
@@ -351,9 +396,9 @@ Several other programming language communities have copied the success and imple
 =head2 Section 1.18: How Can I Get Support For RPerl?
 
 Official RPerl technical support is provided through Auto-Parallel Technologies, Inc.
- 
+
 To request more information, please send an e-mail to the following address:
- 
+
 william DOT braswell AT autoparallel DOT com
 
 =head2 Section 1.19: Are There Any Other Kinds Of Support?
@@ -369,7 +414,7 @@ The primary bug-tracking platform for RPerl is Github Issues, where you may file
 L<https://github.com/wbraswell/rperl/issues>
 
 Although Github Issues is strongly preferred, the RPerl development team also supports the legacy CPAN ticket system:
- 
+
 L<https://rt.cpan.org/Public/Dist/Display.html?Name=RPerl>
 
 =head2 Section 1.21: How Do I Make An RPerl Program?
@@ -433,9 +478,14 @@ Like the Perl interpreter, the RPerl compiler accepts 2 different input file typ
 
 B<I<CURRENT RPERL LIMITATION: RPerl modules are supported in full compile mode, but RPerl programs are supported in test interpret mode only, to be updated in a forthcoming RPerl release.>>
 
-A list of all valid RPerl compiler options may be seen by issuing the C<$ rperl -?> command or following one of these links:
+A list of all valid RPerl compiler options may be seen by issuing the following command:
+
+    $ rperl -?
+
+You may find the same information by viewing the following links:
 
 L<rperl>
+
 L<https://metacpan.org/pod/distribution/RPerl/script/rperl>
 
 To partially-compile-then-execute the preceeding RPerl example program in test mode, you may copy and paste the entire program (from shebang to second C<print>) into a temporary file such as F</tmp/foobar.pl>, then execute the following command:
@@ -511,7 +561,7 @@ The definitive list of do's and do-nots for high-magic vs low-magic Perl program
 
 L<http://rperl.org/the_low_magic_perl_commandments.html>
 
-The LMPC draw inspiration from, and (wherever possible) work together with Damian Conway's <u>B<Perl Best Practices></u> and Jeffrey Thalhammer's Perl::Critic software.
+The LMPC draw inspiration from, and (wherever possible) work together with Damian Conway's X<u>B<Perl Best Practices>X</u> and Jeffrey Thalhammer's Perl::Critic software.
 
 L<http://shop.oreilly.com/product/9780596001735.do>
 
@@ -521,9 +571,9 @@ L<http://search.cpan.org/~thaljef/Perl-Critic/lib/Perl/Critic/PolicySummary.pod>
 
 I<Perlism> is the computer religion dedicated to the use, promotion, and development of the Perl family of programming languages.  (Not to be confused with a spiritual religion such as Christianity, a computer religion such as Perlism is an independent and complementary belief structure.)
 
-A I<Perlite> is an adherent to the Perlism religion.  Perlism has a revered founder, Saint Larry (himself a devout Christian); a prophet, I<The Voice In The Wilderness> (Will); a monastary and shrine, I<Perl Monks>; commandments, The LMPC; proverbs from Saint Larry including I<TIMTOWTDI>, I<LMFB>, and I<HTAAOF>; and canonical scriptures, including Saint Larry's B<_Apocalypses_> and The Voice's B<_Book_of_RPerl_>.
+A I<Perlite> is an adherent to the Perlism religion.  Perlism has a revered founder, Saint Larry (himself a devout Christian); a prophet, I<The Voice In The Wilderness> (Will); a monastary and shrine, I<Perl Monks>; commandments, The LMPC; proverbs from Saint Larry including I<TIMTOWTDI>, I<LMFB>, and I<HTAAOF>; and canonical scriptures, including Saint Larry's X<u>B<Apocalypses>X</u> and The Voice's X<u>B<The Book Of RPerl>X</u>.
 
-The book is a description of events surrounding the creation of RPerl and the future of the Internet.  It is intended to both educate and entertain.
+The Book is a description of events surrounding the creation of RPerl and the future of the Internet.  It is intended to both educate and entertain.
 
 L<http://rperl.org/the_book_of_rperl.html>
 
@@ -571,12 +621,14 @@ Run your program thusly:
 
     $ rperl -t LearningRPerl/Chapter1/exercise_3-foo_bar_arithmetic.pl
 
+X<br>
+
 
 =head1 CHAPTER 2: SCALAR DATA
 
 Most programming languages include the basic principles of using named I<"variables"> to store data values such as numbers, text strings, and lists of multiple numbers or strings.  Multiple variables may be created, each with different names such as C<$foo> or C<$bar> or C<$quux>, and each potentially containing a different value.
 
-A single piece of data, such as one number or one string, is called a I<"scalar">.  Multiple pieces of data combined into a single aggregate structure may be either an I<"array"> or a I<"hash">, described in chapters 3 and 6, respectively.  (Although sharing the same terminology, the I<hash> data structure is not related to the I<hash> C<#> tic-tac-toe character.)  In normal Perl, only scalar variable names begin with the C<$> dollar-sign I<"sigil">, while aggregate data structures are stored in variables starting with different sigils like C<@> or C<%>.  In RPerl, all variable names begin the C<$> sigil, both scalar types and aggregate structures alike.
+A single piece of data, such as one number or one string, is called a I<"scalar">.  Multiple pieces of data combined into a single aggregate structure may be either an I<"array"> or a I<"hash">, described in chapters 3 and 6, respectively.  (Although sharing the same terminology, the I<hash> data structure is not related to the I<hash> C<#> tic-tac-toe character.)  In normal Perl, only scalar variable names begin with the C<$> dollar sign I<"sigil">, while aggregate data structures are stored in variables starting with different sigils like C<@> or C<%>.  In RPerl, all variable names begin the C<$> sigil, both scalar types and aggregate structures alike.
 
 RPerl provides 5 scalar data types:
 
@@ -596,27 +648,23 @@ RPerl provides 5 scalar data types:
 
 A single group of actual numeric digit(s) or quoted string character(s) is called a I<"literal">, such as:
 
-=over
+    21          # integer
 
-=item * C<21  # integer>
+    'howdy'     # string
 
-=item * C<'howdy'  # string>
+    -23.421_12  # number
 
-=item * C<-23.421_12  # number>
+    1_234_567   # integer
 
-=item * C<1_234_567  # integer>
+    'One million, two-hundred-thirty-four thousand, five-hundred-sixty-seven'  # string
 
-=item * C<'One million, two-hundred-thirty-four thousand, five-hundred-sixty-seven'  # string>
+    "\n"        # newline char
 
-=item * C<"\n"  # newline char>
+    '1'         # char
 
-=item * C<'1'  # char>
+    q{}         # empty string
 
-=item * C<q{}  # empty string>
-
-=item * C<0  # bool>
-
-=back
+    0           # bool
 
 =head2 Section 2.1: Numbers (Numeric Data)
 
@@ -626,15 +674,15 @@ RPerl provides 3 numeric data types:
 
 =item * C<bool>
 
-a boolean logic value, either 0 or 1
+S< >S< >S< >S< >a boolean logic value, either 0 or 1
 
 =item * C<integer>
 
-a whole number value, either negative, 0, or positive
+S< >S< >S< >S< >a whole number value, either negative, 0, or positive
 
 =item * C<number>
 
-a floating-point decimal number value, either negative, 0, or positive
+S< >S< >S< >S< >a floating-point decimal number value, either negative, 0, or positive
 
 =back
 
@@ -675,9 +723,9 @@ For C<integer> and C<number> literals, an optional C<+> plus sign may be prepend
     1   # positive one
     +1  # also positive one
 
-<u>I<BEST PRACTICES></u>
+X<u>I<BEST PRACTICES>X</u>
 
-<u>
+X<u>
 
 =over
 
@@ -687,7 +735,7 @@ For C<integer> and C<number> literals, an optional C<+> plus sign may be prepend
 
 =back
 
-</u>
+X</u>
 
     +23    # good integer, but not aligned with other un-signed literal below
     +55.6  # good number,  but not aligned with other un-signed literal below
@@ -722,7 +770,7 @@ For C<integer> and C<number> literals, an I<"underscore"> C<_> character must be
 =head3 Section 2.1.6: Scientific Notation
 
 For C<integer> and C<number> literals, very large or very small numbers should be represented using I<"scientific notation">, where each number is normalized to have exactly one digit to the left of the decimal point, then a lower-case C<e> character and an appropriate integer power-of-ten is appended to the resulting normalized floating-point number.  The C<e> character stands for "exponent", as in "exponent of ten", and the Perl style of scientific notation is sometimes more accurately referred to as I<"scientific e notation">.
-    
+
 As with normal integers, negative exponents must be prefixed with a C<-> minus sign and positive exponents may be optionally prefixed with a C<+> plus sign.
 
     1_234_567_000     # good integer
@@ -734,9 +782,9 @@ As with normal integers, negative exponents must be prefixed with a C<-> minus s
     -0.000_000_000_000_000_000_000_001_234_567  # bad number, outside limits
     -1.234_567e-24  # good number, same as "-0.000_000_000_000_000_000_000_001_234_567" in scientific notation
 
-<u>I<BEST PRACTICES></u>
+X<u>I<BEST PRACTICES>X</u>
 
-<u>
+X<u>
 
 =over
 
@@ -748,7 +796,7 @@ As with normal integers, negative exponents must be prefixed with a C<-> minus s
 
 =back
 
-</u>
+X</u>
 
     1_234_567_000      # good integer
     1.234_567_000e9    # good number, but does not align with two-digit exponents below
@@ -778,11 +826,11 @@ RPerl provides 2 text data types:
 
 =item * C<char>
 
-a single text character; either a letter, number, or special character
+S< >S< >S< >S< >a single text character; either a letter, number, or special character
 
 =item * C<string>
 
-one or more text characters; any combination of letters, numbers, and special characters
+S< >S< >S< >S< >one or more text characters; any combination of letters, numbers, and special characters
 
 =back
 
@@ -802,61 +850,118 @@ RPerl provides 3 delimiters for enclosing text data:
 
 The most memory-efficient text literal is C<char>, which represents exactly zero or one character of information.  A C<char> may express the value of any single numeric digit (0, 1, 2, ..., 8, 9); letter (a, b, c, ..., y, z, A, B, C, ..., Y, Z ); or special ASCII character (!, #, *, +, etc).  If the C<char> literal has length zero, it is called the I<"empty character"> and contains no data.
 
-    ''       # not a char, use q{} for empty character
-    '0'      # char 
-    '1'      # char
-    'h'      # char
-    '+'      # char
-    '\n'     # not a char, use "\n" for newline character
-    '-1'     # not a char, too many characters
-    'howdy'  # not a char, too many characters
+    ''          # not a char, use q{} for empty character
+    '0'         # char
+    'h'         # char
+    '+'         # char
+    '\n'        # not a char, too many characters, use "\n" for newline character
+    '-1'        # not a char, too many characters
+    'howdy23!'  # not a char, too many characters
 
-    ""       # not a char, use q{} for empty character
-    "0"      # char 
-    "1"      # char
-    "h"      # char
-    "+"      # char
-    "\n"     # char, newline character
-    "-1"     # not a char, too many characters & invalid use of double quotes
-    "howdy"  # not a char, too many characters & invalid use of double quotes
+    ""          # not a char, use q{} for empty character
+    "0"         # char
+    "h"         # char
+    "+"         # char
+    "\n"        # char, newline character
+    "-1"        # not a char, too many characters & invalid use of double quotes
+    "howdy23!"  # not a char, too many characters & invalid use of double quotes
 
-    q{}       # char, empty character
-    q{0}      # char 
-    q{1}      # char
-    q{h}      # char
-    q{+}      # char
-    q{\n}     # not a char, use "\n" for newline character
-    q{-1}     # not a char, too many characters
-    q{howdy}  # not a char, too many characters
+    q{}          # char, empty character
+    q{0}         # char
+    q{h}         # char
+    q{+}         # char
+    q{\n}        # not a char, too many characters, use "\n" for newline character
+    q{-1}        # not a char, too many characters
+    q{howdy23!}  # not a char, too many characters
 
 =head3 Section 2.2.2: String Literals
 
-Any text data longer than 1 character in length must be represented by a C<string> literal, which is comprised of any combination of valid C<char> literal characters (numeric digits, letters, and special ASCII characters).  Like the empty character, if a C<string> literal has length zero then it is called the I<"empty string"> and contains no data.
+Any text data more than 1 character in length must be represented by a C<string> literal, which is comprised of any combination of valid C<char> literal characters (numeric digits, letters, and special ASCII characters).  Like the empty character, if a C<string> literal has length zero then it is called the I<"empty string"> and contains no data.
 
-    # START HERE
-    # START HERE
-    # START HERE
+    ''          # not a string, use q{} for empty string
+    '0'         # string
+    'h'         # string
+    '+'         # string
+    '\n'        # string, not a newline, use "\n" for string containing newline
+    '-1'        # string
+    'howdy23!'  # string
+
+    ""          # not a string, use q{} for empty string
+    "0"         # not a string, invalid use of double quotes, must contain newline or tab character(s)
+    "h"         # not a string, invalid use of double quotes, must contain newline or tab character(s)
+    "+"         # not a string, invalid use of double quotes, must contain newline or tab character(s)
+    "\n"        # string, contains only newline character
+    "-1"        # not a string, invalid use of double quotes, must contain newline or tab character(s)
+    "howdy23!"  # not a string, invalid use of double quotes, must contain newline or tab character(s)
+
+    q{}          # empty string
+    q{0}         # string
+    q{h}         # string
+    q{+}         # string
+    q{\n}        # string, not a newline, use "\n" for string containing newline
+    q{-1}        # string
+    q{howdy23!}  # string
 
 =head3 Section 2.2.3: Single Quotes
 
+Text literals enclosed in single quotes are the simplest and most common case in RPerl.
+
+Single-quoted text literals are not I<"interpolated">, which means the literal is not changed by Perl or RPerl in any way.  Because single quotes do not activate string interpolation, the literal C<'\n'> is not a newline character; instead, it is simply two normal characters, a backslash followed by a lowercase letter n.  Do not use single quotes to represent a newline or tab character, use C<"\n"> or C<"\t"> instead.
+
+Do not use single quotes to represent an empty character or empty string, use C<q{}> instead.
+
+A single-quoted text literal begins and ends with the single quote character, therefore it cannot logically contain a single quote character as part of the literal data itself.  (RPerl does not support backslash-escaped single quote characters within a single-quoted string like normal Perl does, as this can be considered a simple form of string interpolation.)
+
+Single-quoted text literals may B<not> contain:
+
+=over
+
+=item * C<'>S< >S< >S< >S< >(Single Quote Character)
+
+=back
+
+Single-quoted text literals may contain:
+
+=over
+
+=item * Any Other Characters
+
+=back
+
 =head3 Section 2.2.4: Double Quotes
+
+# START HERE
+# START HERE
+# START HERE
+
+Double-quoted text literals may B<not> contain:
+
+=over
+
+=item * C<">S< >S< >S< >S< >(Double Quote Character)
+
+=back
 
 =head3 Section 2.2.5: q Quotes
 
+[INSERT Q QUOTES] 
+
 =head2 Section 2.3: Perl’s Built-in Warnings
+
+[INSERT WARNINGS] 
 
 =head2 Section 2.4: Scalar Variables
 
 An RPerl I<"expression"> is any general-purpose language component which either returns a value or is a literal value itself.
 
 An RPerl I<"statement"> is any general-purpose language component which performs some action(s).
-    
+
 An RPerl I<"named operator"> is any of the 220+ Perl named operators, although RPerl only supports the low-magic forms of each operator.
 
 An RPerl I<"operation"> is the equivalent of a single sentence in human language, and may be either an expression followed by a C<;> semicolon punctuation character, or a named operator followed by a semicolon, or a statement.
- 
-The C<=> equal-sign is the assignment operator, used to set the variable on its left to store the value of the expression on its right.
- 
+
+The C<=> equal sign is the assignment operator, used to set the variable on its left to store the value of the expression on its right.
+
 Perl's C<my> keyword is used to declare a new variable, and optionally initialize it to a starting value when combined with the C<=> assignment operator.
 
 Normal Perl does not support specific data types, so in Perl one variable named C<$foo> may be initialized with a numeric value, then the same C<$foo> variable may be changed to hold a string value without any warning or error.
@@ -939,30 +1044,153 @@ To convert from one data type to another, we use the RPerl type conversion subro
 =head3 Section 2.4.x Scope, Type, Name, Value
 
 The I<"scope"> of a variable is either local using the C<my> keyword, or global using the C<our> keyword.  Local variables are only usable within their own enclosing code block such as a conditional (section xxx), loop (xxx), or subroutine (chapter 4).
-    
+
 and global variables are usable within any code block accessible by the Perl interpreter or (RPerl compiler).
-    
+
 Except for certain special circumstances, all variables in RPerl are locally-scoped using C<my>.
 
 [ INSERT SCOPE TYPE NAME VALUE ]
 
 =head2 Section 2.5: Output With C<print>
 
+[INSERT PRINT]
+
 =head2 Section 2.6: The C<if> Control Structure
+
+[INSERT IF]
 
 =head2 Section 2.7: Getting User Input
 
+[INSERT INPUT]
+
 =head2 Section 2.8: The C<chomp> Operator
+
+[INSERT CHOMP]
 
 =head2 Section 2.9: The C<while> Control Structure
 
+[INSERT WHILE]
+
 =head2 Section 2.10: The C<undef> Value
 
+[INSERT UNDEF]
+
 =head2 Section 2.11: The C<defined> Function
+
+[INSERT DEFINED]
 
 =head2 Section 2.12: Exercises
 
 =head3 1.  XXXYYYZZZ  [ XYZ mins ]
+
+[INSERT EXERCISES]
+
+X<br>
+
+
+=head1 CHAPTER 3:  LISTS & ARRAYS
+
+[INSERT CHAPTER]
+
+X<br>
+
+
+=head1 CHAPTER 4:  SUBROUTINES
+
+[INSERT CHAPTER]
+
+X<br>
+
+
+=head1 CHAPTER 5:  INPUT & OUTPUT
+
+[INSERT CHAPTER]
+
+X<br>
+
+
+=head1 CHAPTER 6:  HASHES
+
+[INSERT CHAPTER]
+
+X<br>
+
+
+=head1 CHAPTER 7:  REGULAR EXPRESSIONS
+
+[INSERT CHAPTER]
+
+X<br>
+
+
+=head1 CHAPTER 8:  REGULAR EXPRESSIONS MATCHING
+
+[INSERT CHAPTER]
+
+X<br>
+
+
+=head1 CHAPTER 9:  REGULAR EXPRESSIONS PROCESSING
+
+[INSERT CHAPTER]
+
+X<br>
+
+
+=head1 CHAPTER 10: CONTROL STRUCTURES
+
+[INSERT CHAPTER]
+
+X<br>
+
+
+=head1 CHAPTER 11: CLASSES, PACKAGES, MODULES, LIBRARIES
+
+[INSERT CHAPTER]
+
+X<br>
+
+
+=head1 CHAPTER 12: FILE TESTS
+
+[INSERT CHAPTER]
+
+X<br>
+
+
+=head1 CHAPTER 13: DIRECTORY OPERATIONS
+
+[INSERT CHAPTER]
+
+X<br>
+
+
+=head1 CHAPTER 14: STRINGS & SORTING
+
+[INSERT CHAPTER]
+
+X<br>
+
+
+=head1 CHAPTER 15: SMART MATCHING & GIVEN-WHEN
+
+[INSERT CHAPTER]
+
+X<br>
+
+
+=head1 CHAPTER 16: PROCESS MANAGEMENT
+
+[INSERT CHAPTER]
+
+X<br>
+
+
+=head1 CHAPTER 17: SOME ADVANCED TECHNIQUES
+
+[INSERT CHAPTER]
+
+X<br>
 
 
 =head1 APPENDIX A: EXERCISE ANSWERS
@@ -970,11 +1198,15 @@ Except for certain special circumstances, all variables in RPerl are locally-sco
 2a.  Complete source code of solutions to chapters 1 - 6
 2b.  Describe how to arrive at each solution
 
+X<br>
+
 
 =head1 APPENDIX B: BEYOND THE ROADRUNNER
 
 The Scallion
 The Sword
+
+X<br>
 
 
 =head1 APPENDIX C: RPERL GRAMMAR
@@ -985,11 +1217,16 @@ The Sword
 1d.  Describe all grammar rules and productions
 1e.  Provide examples of valid code
 
+X<br>
+
 
 =head1 SEE ALSO
 
 L<RPerl>
+
 L<rperl>
+
+X<br>
 
 
 =head1 AUTHOR

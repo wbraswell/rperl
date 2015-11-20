@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.006_100;
+our $VERSION = 0.006_200;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -478,6 +478,9 @@ our void $save_source_files = sub {
 
             print {$SOURCE_FILE_HANDLE} $source
                 or croak("\nERROR ECVCOFI06, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot write to file,\ncroaking: $OS_ERROR");
+                
+            close $SOURCE_FILE_HANDLE
+                or croak("\nERROR ECVCOFI09, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot close file,\ncroaking: $OS_ERROR");
         }
         else {
 
