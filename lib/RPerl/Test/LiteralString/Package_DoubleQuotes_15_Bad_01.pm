@@ -1,17 +1,17 @@
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< PARSE_ERROR: 'ERROR ECVPAPC02' >>>
+# <<< PARSE_ERROR: 'Perl::Critic::Policy::Variables::ProhibitPunctuationVars' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
-package RPerl::Test::LiteralString::Package_DoubleQuotes_15_Bad_01;
+package RPerl::Test::LiteralString::Package_DoubleQuotes_15_Bad_00;
 use strict;
 use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
-# DEV NOTE: the rules for sigils inside double quotes are too complicated for now
 our string $empty_sub = sub {
-    return "@ \@bar \$foo $ \n";
+    return "`~!@#$%^&*()-_=+[]{}\|;:',<.>/?\n";
 };
 
 1;    # end of package

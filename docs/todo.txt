@@ -1,6 +1,7 @@
 DONE Copyright assignment & disclaimer docs (CONTRIBUTING, ASSIGNMENT, EMPLOYERS)
 TEMP DISABLE Macintosh, Failed test 'Inline::CPP, call Airplane methods...'    https://github.com/wbraswell/rperl/issues/34
 PARTIAL Windows Testing, add ci.appveyor.com github webhook
+PARTIAL Disallow non-newline-or-tab (AKA extraneous) backslashes in double-quoted string literals
 
 enable opstrings as hash keys
 
