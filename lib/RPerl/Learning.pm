@@ -648,23 +648,23 @@ RPerl provides 5 scalar data types:
 
 A single group of actual numeric digit(s) or quoted string character(s) is called a I<"literal">, such as:
 
-    21          # integer
+    -21         # integer or number
 
     'howdy'     # string
 
     -23.421_12  # number
 
-    1_234_567   # integer
+    1_234_567   # integer or number
 
     'One million, two-hundred-thirty-four thousand, five-hundred-sixty-seven'  # string
 
-    "\n"        # newline char
+    "\n"        # newline char or string
 
-    '1'         # char
+    '1'         # char or string
 
-    q{}         # empty string
+    q{}         # empty char or string
 
-    0           # bool
+    0           # bool or integer or number
 
 =head2 Section 2.1: Numbers (Numeric Data)
 
@@ -716,7 +716,19 @@ The C<number> numeric literal represents a single floating-point (decimal) numbe
     42         # number
     -4_123.456_789_123_456_789_123_456_789_123_456_789_123_456_789_123_456_789_123_456  # bad number, outside limits
 
-=head3 Section 2.1.4: Optional Positive Sign
+=head3 Section 2.1.4: Underscore Digit Separators
+
+For C<integer> and C<number> literals, an I<"underscore"> C<_> character must be inserted after every third digit away from the decimal point, where the underscore is used in a similar manner as a comma when writing long numbers by hand.
+
+    1_234_567  # integer, same as "1,234,567" in American notation
+    -32_123    # integer, same as "-32,123" in American notation
+    -32123     # bad integer, missing underscore
+
+    1.234_567           # number, same as "1.234567" in American notation
+    -32_123.456_789_01  # number, same as "-32,123.45678901" in American notation
+    -32_123.456_78901   # bad number, missing underscore
+
+=head3 Section 2.1.5: Optional Positive Sign
 
 For C<integer> and C<number> literals, an optional C<+> plus sign may be prepended to explicitly indicate a numeric literal is positive (greater than zero).
 
@@ -754,18 +766,6 @@ X</u>
     +55.6  # best number  for mixed-sign literals, aligned
     -21
     -66.5
-
-=head3 Section 2.1.5: Underscore Digit Separators
-
-For C<integer> and C<number> literals, an I<"underscore"> C<_> character must be inserted after every third digit away from the decimal point, where the underscore is used in the same way as a comma when writing long numbers by hand.
-
-    1_234_567  # integer, same as "1,234,567" in American notation
-    -32_123    # integer, same as "-32,123" in American notation
-    -32123     # bad integer, missing underscore
-
-    1.234_567           # number, same as "1.234567" in American notation
-    -32_123.456_789_01  # number, same as "-32,123.45678901" in American notation
-    -32_123.456_78901   # bad number, missing underscore
 
 =head3 Section 2.1.6: Scientific Notation
 
@@ -817,6 +817,10 @@ X</u>
     +2.680_677_724_903_893_22e-03  # best number for mixed-sign exponents
     +1.628_241_700_382_422_95e-03  # best number for mixed-sign exponents
     -9.515_922_545_197_158_70e-15  # best number for mixed-sign exponents
+
+=head3 Section 2.1.7: Numeric Operators
+
+[ INSERT OPS ]
 
 =head2 Section 2.2: Strings (Text Data)
 
@@ -912,11 +916,11 @@ Do not use single quotes to represent an empty character or empty string, use C<
 
 A single-quoted text literal begins and ends with the single quote character, therefore it cannot logically contain a single quote character as part of the literal data itself.  (RPerl does not support backslash-escaped single quote characters within a single-quoted string like normal Perl does, as this can be considered a simple form of string interpolation.)
 
-Single-quoted text literals may B<not> contain:
+Single-quoted text literals must B<not> contain:
 
 =over
 
-=item * C<'>S< >S< >S< >S< >(Single Quote Character)
+=item * C<'>S< >S< >S< >S< >(single quote character)
 
 =back
 
@@ -924,31 +928,71 @@ Single-quoted text literals may contain:
 
 =over
 
-=item * Any Other Characters
+=item * any other characters
 
 =back
 
 =head3 Section 2.2.4: Double Quotes
 
-# START HERE
-# START HERE
-# START HERE
+Text literals enclosed in double quotes are fully interpolated in normal Perl, and are only used for strings containing the special C<"\n"> newline or C<"\t"> tab characters in RPerl.  All double-quoted strings must contain at least one newline or tab character.
 
-Double-quoted text literals may B<not> contain:
+String interpolation in normal Perl is also triggered by finding either the C<$> dollar sign or C<@> I<"at sign"> characters inside of a double-quoted string literal.  Because RPerl does not support string interpolation, double-quoted strings must not contain the C<$> or C<@> characters.
+
+[ INSERT INFO ABOUT DON'T USE BACKSLASHES INSIDE DOUBLE QUOTE ]
+
+Double-quoted text literals must B<not> contain:
 
 =over
 
-=item * C<">S< >S< >S< >S< >(Double Quote Character)
+=item * C<">S< >S< >S< >S< >(double quote character)
+
+=item * C<$>S< >S< >S< >S< >(dollar sign character)
+
+=item * C<@>S< >S< >S< >S< >(at sign character)
+
+=back
+
+Double-quoted text literals B<must> contain:
+
+=over
+
+=item * C<\n>S< >S< >S< >S< >(newline character)
+
+=item * C<\t>S< >S< >S< >S< >(tab character)
+
+=back
+
+Double-quoted text literals may contain:
+
+=over
+
+=item * any other characters
+
+=back
+
+X<u>I<BEST PRACTICES>X</u>
+
+X<u>
+
+=over
+
+=item * I<Use double-quoted string literals to contain newline and tab characters only, not other normal characters.>
+
+=item * I<To represent a mixture of normal characters with newline and/or tab characters, enclose the normal characters in single quotes, enclose the newline and tab characters in double quotes, and use the C<.> dot "string concatenation" operator to append one string literal to the other.  (See )>
 
 =back
 
 =head3 Section 2.2.5: q Quotes
 
-[INSERT Q QUOTES] 
+[INSERT Q QUOTES]
+
+=head3 Section 2.2.6: String Operators
+
+[ INSERT OPS ]
 
 =head2 Section 2.3: Perl’s Built-in Warnings
 
-[INSERT WARNINGS] 
+[INSERT WARNINGS]
 
 =head2 Section 2.4: Scalar Variables
 
