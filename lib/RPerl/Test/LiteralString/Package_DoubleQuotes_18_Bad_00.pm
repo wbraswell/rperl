@@ -3,7 +3,7 @@
 
 # [[[ HEADER ]]]
 use RPerl;
-package RPerl::Test::LiteralString::Package_DoubleQuotes_18_Good;
+package RPerl::Test::LiteralString::Package_DoubleQuotes_18_Bad_00;
 use strict;
 use warnings;
 our $VERSION = 0.001_000;

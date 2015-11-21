@@ -938,9 +938,9 @@ Text literals enclosed in double quotes are fully interpolated in normal Perl, a
 
 String interpolation in normal Perl is also triggered by finding either the C<$> dollar sign or C<@> I<"at sign"> characters inside of a double-quoted string literal.  Because RPerl does not support string interpolation, double-quoted strings must not contain the C<$> or C<@> characters.
 
-# START HERE
-# START HERE
-# START HERE
+# START HERE: scrub old grammar string literal regexes
+# START HERE: scrub old grammar string literal regexes
+# START HERE: scrub old grammar string literal regexes
 
 [ INSERT INFO ABOUT DON'T USE BACKSLASHES INSIDE DOUBLE QUOTE ]
 
