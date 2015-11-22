@@ -84,23 +84,23 @@ X<br>
 
 =item * L</PREFACE>
 
-=item * L</CHAPTER 1:  INTRODUCTION>
+=item * L</CHAPTER 1: INTRODUCTION>
 
-=item * L</CHAPTER 2:  SCALAR DATA>
+=item * L</CHAPTER 2: SCALAR DATA>
 
-=item * L</CHAPTER 3:  LISTS & ARRAYS>
+=item * L</CHAPTER 3: LISTS & ARRAYS>
 
-=item * L</CHAPTER 4:  SUBROUTINES>
+=item * L</CHAPTER 4: SUBROUTINES>
 
-=item * L</CHAPTER 5:  INPUT & OUTPUT>
+=item * L</CHAPTER 5: INPUT & OUTPUT>
 
-=item * L</CHAPTER 6:  HASHES>
+=item * L</CHAPTER 6: HASHES>
 
-=item * L</CHAPTER 7:  REGULAR EXPRESSIONS>
+=item * L</CHAPTER 7: REGULAR EXPRESSIONS>
 
-=item * L</CHAPTER 8:  REGULAR EXPRESSIONS MATCHING>
+=item * L</CHAPTER 8: REGULAR EXPRESSIONS MATCHING>
 
-=item * L</CHAPTER 9:  REGULAR EXPRESSIONS PROCESSING>
+=item * L</CHAPTER 9: REGULAR EXPRESSIONS PROCESSING>
 
 =item * L</CHAPTER 10: CONTROL STRUCTURES>
 
@@ -497,7 +497,8 @@ The output of this example program should be:
     have $foo = 33
     have $bar = 966
 
-Please see chapter 11 for more information about compiling Perl modules.
+Please see L</CHAPTER 11: CLASSES, PACKAGES, MODULES, LIBRARIES> for more information about compiling Perl modules.
+
 
 =head2 Section 1.25: A Whirlwind Tour of RPerl
 
@@ -910,7 +911,7 @@ Any text data more than 1 character in length must be represented by a C<string>
 
 Text literals enclosed in single quotes are the simplest and most common case in RPerl.
 
-Single-quoted text literals are not I<"interpolated">, which means the literal is not changed by Perl or RPerl in any way.  Because single quotes do not activate string interpolation, the literal C<'\n'> is not a newline character; instead, it is simply two normal characters, a backslash followed by a lowercase letter n.  Do not use single quotes to represent a newline or tab character, use C<"\n"> or C<"\t"> instead.
+Single-quoted text literals are not I<"interpolated">, which means the literal's data contents are not changed by Perl or RPerl in any way.  Because single quotes do not activate string interpolation, the literal C<'\n'> is not a newline character; instead, it is simply two normal characters, a backslash followed by a lowercase letter n.  Do not use single quotes to represent a newline or tab character, use C<"\n"> or C<"\t"> instead.
 
 Do not use single quotes to represent an empty character or empty string, use C<q{}> instead.
 
@@ -934,15 +935,11 @@ Single-quoted text literals may contain:
 
 =head3 Section 2.2.4: Double Quotes
 
-Text literals enclosed in double quotes are fully interpolated in normal Perl, and are only used for strings containing the special C<"\n"> newline or C<"\t"> tab characters in RPerl.  All double-quoted strings must contain at least one newline or tab character.
+Text literals enclosed in double quotes are fully interpolated in normal Perl, and are only used for trivial interpolation of strings containing the special C<"\n"> newline or C<"\t"> tab characters in RPerl.  All double-quoted strings must contain at least one newline or tab character.
 
-String interpolation in normal Perl is also triggered by finding either the C<$> dollar sign or C<@> I<"at sign"> characters inside of a double-quoted string literal.  Because RPerl does not support string interpolation, double-quoted strings must not contain the C<$> or C<@> characters.
+String interpolation in normal Perl is triggered by finding either the C<$> dollar sign or C<@> I<"at sign"> characters inside of a double-quoted string literal.  Because RPerl does not support string interpolation, double-quoted string literals must not contain the C<$> or C<@> characters.
 
-# START HERE: scrub old grammar string literal regexes
-# START HERE: scrub old grammar string literal regexes
-# START HERE: scrub old grammar string literal regexes
-
-[ INSERT INFO ABOUT DON'T USE BACKSLASHES INSIDE DOUBLE QUOTE ]
+String interpolation is also triggered by finding a C<\> backslash character followed by one or more special I<"escape characters">, which are mostly comprised of otherwise-normal characters such as numbers and lowercase letters.  When a backslash is followed by valid escape characters, it is called an I<"escape sequence">.  Each valid escape sequence actually counts as only one character, even though it is represented by 2 or more typed characters, so a single escape sequence may be utilized as either a C<char> text literal or a C<string> text literal.  The special C<\n> newline and C<\t> tab characters are themselves escape sequences, and are the only allowed escape sequences in RPerl.  (Thus, C<"\n"> and C<"\t"> may both be utilized as either a C<char> or C<string> text literal in RPerl.)  Double-quoted string literals must not contain any backslash characters, other than those used in newline and tab escape sequences.
 
 Double-quoted text literals must B<not> contain:
 
@@ -954,9 +951,11 @@ Double-quoted text literals must B<not> contain:
 
 =item * C<@>S< >S< >S< >S< >(at sign character)
 
+=item * C<\>S< >S< >S< >S< >(extra backslash character, other than C<\n> or C<\t>)
+
 =back
 
-Double-quoted text literals B<must> contain:
+Double-quoted text literals B<must> contain 1 or more:
 
 =over
 
@@ -982,7 +981,7 @@ X<u>
 
 =item * I<Use double-quoted string literals to contain newline and tab characters only, not other normal characters.>
 
-=item * I<To represent a mixture of normal characters with newline and/or tab characters, enclose the normal characters in single quotes, enclose the newline and tab characters in double quotes, and use the C<.> dot "string concatenation" operator to append one string literal to the other.  (See )>
+=item * I<To represent a mixture of normal characters with newline and/or tab characters, enclose the normal characters in single quotes, enclose the newline and tab characters in double quotes, and use the C<.> dot "string concatenation" operator to append one string literal to the other.  (Please see L</Section 2.2.6: String Operators> for more info about string concatenation.)>
 
 =back
 
@@ -1136,49 +1135,49 @@ Except for certain special circumstances, all variables in RPerl are locally-sco
 X<br>
 
 
-=head1 CHAPTER 3:  LISTS & ARRAYS
+=head1 CHAPTER 3: LISTS & ARRAYS
 
 [INSERT CHAPTER]
 
 X<br>
 
 
-=head1 CHAPTER 4:  SUBROUTINES
+=head1 CHAPTER 4: SUBROUTINES
 
 [INSERT CHAPTER]
 
 X<br>
 
 
-=head1 CHAPTER 5:  INPUT & OUTPUT
+=head1 CHAPTER 5: INPUT & OUTPUT
 
 [INSERT CHAPTER]
 
 X<br>
 
 
-=head1 CHAPTER 6:  HASHES
+=head1 CHAPTER 6: HASHES
 
 [INSERT CHAPTER]
 
 X<br>
 
 
-=head1 CHAPTER 7:  REGULAR EXPRESSIONS
+=head1 CHAPTER 7: REGULAR EXPRESSIONS
 
 [INSERT CHAPTER]
 
 X<br>
 
 
-=head1 CHAPTER 8:  REGULAR EXPRESSIONS MATCHING
+=head1 CHAPTER 8: REGULAR EXPRESSIONS MATCHING
 
 [INSERT CHAPTER]
 
 X<br>
 
 
-=head1 CHAPTER 9:  REGULAR EXPRESSIONS PROCESSING
+=head1 CHAPTER 9: REGULAR EXPRESSIONS PROCESSING
 
 [INSERT CHAPTER]
 
