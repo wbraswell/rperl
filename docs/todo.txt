@@ -62,6 +62,7 @@ tests
 	invalid type inner redundant name starting with non-lowercase-letter ECVGEASRP24
 	CONSTANT_CALL_SCOPED
 	*_to_*() data type conversion functions
+	text literals, backslash vs double-backslash
 
 Eyapp unescaped left braces for Perl v5.22 compatibility
 RELEASE Parse::Eyapp vX.YZZY

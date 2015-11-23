@@ -921,13 +921,27 @@ Single-quoted text literals must B<not> contain:
 
 =over
 
-=item * C<'>S< >S< >S< >S< >(single quote character)
+=item * C<'S< >S< >S< >S< >S< >S< >>(single quote character)
+
+=item * C<\S< >S< >S< >S< >S< >S< >>(single backslash as final character)
+
+=item * C<\\\S< >S< >S< >S< >>(odd number of backslashes as final characters)
+
+=item * no characters
 
 =back
 
 Single-quoted text literals may contain:
 
 =over
+
+=item * C<"S< >S< >S< >S< >>(double quote character)
+
+=item * C<}S< >S< >S< >S< >>(right curly brace character)
+
+=item * C<\S< >S< >S< >S< >>(single backslash as non-final character)
+
+=item * C<\\\S< >S< >>(odd number of backslashes as non-final characters)
 
 =item * any other characters
 
@@ -945,13 +959,15 @@ Double-quoted text literals must B<not> contain:
 
 =over
 
-=item * C<">S< >S< >S< >S< >(double quote character)
+=item * C<"S< >S< >>(double quote character)
 
-=item * C<$>S< >S< >S< >S< >(dollar sign character)
+=item * C<$S< >S< >>(dollar sign character)
 
-=item * C<@>S< >S< >S< >S< >(at sign character)
+=item * C<@S< >S< >>(at sign character)
 
-=item * C<\>S< >S< >S< >S< >(extra backslash character, other than C<\n> or C<\t>)
+=item * C<\S< >S< >>(extra backslash character, other than C<\n> or C<\t>)
+
+=item * no characters
 
 =back
 
@@ -959,15 +975,19 @@ Double-quoted text literals B<must> contain 1 or more:
 
 =over
 
-=item * C<\n>S< >S< >S< >S< >(newline character)
+=item * C<\nS< >S< >>(newline character)
 
-=item * C<\t>S< >S< >S< >S< >(tab character)
+=item * C<\tS< >S< >>(tab character)
 
 =back
 
 Double-quoted text literals may contain:
 
 =over
+
+=item * C<'S< >S< >>(single quote character)
+
+=item * C<}S< >S< >>(right curly brace character)
 
 =item * any other characters
 
@@ -985,9 +1005,47 @@ X<u>
 
 =back
 
+X</u>
+
 =head3 Section 2.2.5: q Quotes
 
-[INSERT Q QUOTES]
+Text literals enclosed in C<q{}> I<"q quotes"> begin with the lowercase q followed by C<{> left curly brace characters, and end with the C<}> right curly brace character.  You must use q quotes to represent C<q{}> empty text literals containing no characters.
+
+[ INSERT BACKSLASHES, QUOTES ]
+
+[ INSERT BACKSLASHES FOR SINGLE AND DOUBLE QUOTE SECTIONS ABOVE]
+
+q-quoted text literals must B<not> contain:
+
+=over
+
+=item * C<}S< >S< >S< >S< >>(right curly brace character)
+
+=item * C<\S< >S< >S< >S< >>(single backslash as final character)
+
+=item * C<\\\S< >S< >>(odd number of backslashes as final characters)
+
+=back
+
+q-quoted text literals may contain:
+
+=over
+
+=item * C<'S< >S< >S< >S< >>(single quote character)
+
+=item * C<"S< >S< >S< >S< >>(double quote character)
+
+=item * C<\S< >S< >S< >S< >>(single backslash as non-final character)
+
+=item * C<\\\S< >S< >>(odd number of backslashes as non-final characters)
+
+=item * no characters
+
+=item * any other characters
+
+=back
+
+[ INSERT BEST PRACTICES ]
 
 =head3 Section 2.2.6: String Operators
 
