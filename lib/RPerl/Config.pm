@@ -331,7 +331,7 @@ foreach my $inc_path ( (split ':', $ENV{PATH}), File::Spec->catpath( $volume_loa
     }
 
     if ( not defined $rperl_pm_loaded ) {
-        my $possible_rperl_pm = $inc_path . '/RPerl.pm';
+        my $possible_rperl_pm = File::Spec->catfile($inc_path, 'RPerl.pm');
 
         # BULK88 20150608 2015.159: Win32 Bug Fix
         #        if ( -e $possible_rperl_pm ) {
