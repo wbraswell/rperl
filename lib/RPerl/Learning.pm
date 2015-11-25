@@ -1156,35 +1156,39 @@ Except for certain special circumstances, all variables in RPerl are locally-sco
 
 [ INSERT SCOPE TYPE NAME VALUE ]
 
-=head2 Section 2.5: Output With C<print>
+=head2 Section 2.5: Constant Data
+
+[INSERT CONSTANTS]
+
+=head2 Section 2.6: Output With C<print>
 
 [INSERT PRINT]
 
-=head2 Section 2.6: The C<if> Control Structure
+=head2 Section 2.7: The C<if> Control Structure
 
 [INSERT IF]
 
-=head2 Section 2.7: Getting User Input
+=head2 Section 2.8: Getting User Input
 
 [INSERT INPUT]
 
-=head2 Section 2.8: The C<chomp> Operator
+=head2 Section 2.9: The C<chomp> Operator
 
 [INSERT CHOMP]
 
-=head2 Section 2.9: The C<while> Control Structure
+=head2 Section 2.10: The C<while> Control Structure
 
 [INSERT WHILE]
 
-=head2 Section 2.10: The C<undef> Value
+=head2 Section 2.11: The C<undef> Value
 
 [INSERT UNDEF]
 
-=head2 Section 2.11: The C<defined> Function
+=head2 Section 2.12: The C<defined> Function
 
 [INSERT DEFINED]
 
-=head2 Section 2.12: Exercises
+=head2 Section 2.13: Exercises
 
 =head3 1.  XXXYYYZZZ  [ XYZ mins ]
 
