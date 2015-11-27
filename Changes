@@ -1,5 +1,15 @@
 Revision history for Perl compiler RPerl.
 
+1.300000 2015-11-26 Codename Pluto
+
+    - HOLIDAY EDITION: Happy Thanksgiving!
+    - Draft Copyright Assignment & Disclaimer Docs (CONTRIBUTING, ASSIGNMENT, EMPLOYERS)
+    - Disallow Non-Newline-Or-Tab (AKA Extraneous) Backslashes In Double-Quoted String Literals
+    - Learning Perl Outline & Chapters 1 - 6 Exercise Solutions
+    - Macintosh, Disable Failed Test 'Inline::CPP, call Airplane methods...'    
+        Temporarily Fixes Bug https://github.com/wbraswell/rperl/issues/34
+    - Begin Addding GMP Multi-Precision Integer Support
+
 1.200002 2015-11-07
 
     - Re-enable 4 Tests, Fixed Error "Can't parse code: Unknown error parsing Perl document" In Perl v5.16 & Earlier, Enable Proper ECVGEASRP19 Support
