@@ -1,5 +1,5 @@
 # RPerl Install Notes
-# Last Updated September 14, 2015
+# Last Updated November 26, 2015
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # NOTE: STEP 1 IS ONLY FOR SINGLE-USER INSTALL, NOT SYSTEM-WIDE INSTALL
@@ -9,7 +9,7 @@
 
 ################################################################################
 # STEP 0.
-# PRE-INSTALL, GCC & MAKEMAKER MUST BE UP-TO-DATE & INSTALLED SYSTEM-WIDE
+# PRE-INSTALL, GCC & MAKEMAKER & GMP MUST BE UP-TO-DATE & INSTALLED SYSTEM-WIDE
 ################################################################################
 
 $ g++ --version
@@ -33,6 +33,8 @@ $ mv ~/perl5 ~/perl5.old  # disable any previous local::lib or Perlbrew
 $ perl -v  # NOTE! the version of Perl determines whether you take step 1A or 1B
 $ perl -MExtUtils::MakeMaker\ 999  # v7.04 or greater required by Inline::C
 $ cpan ExtUtils::MakeMaker  # cpan system-wide, not cpanm single-user
+
+$ apt-get install libgmp-dev
 
 # Optional C++ formatter, Artistic Style
 $ sudo apt-get install astyle

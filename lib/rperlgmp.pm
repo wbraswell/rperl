@@ -6,7 +6,7 @@ use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ INCLUDES ]]]
-use RPerl::DataStructure::MultiplePrecisionInteger;
+use RPerl::DataType::GMPInteger;
 use RPerl::Operation::Expression::Operator::GMPFunctions;
 
 # [[[ EXPORTS ]]]

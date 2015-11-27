@@ -38,6 +38,7 @@ my $namespaces_rperl_missed = {
     'rperloperations::' => 1,
     'rperlrules::' => 1,
     'rperlsse::' => 1,
+    'rperlgmp::' => 1,
 };
 
 # NEED FIX: remove hard-coded list of packages
@@ -123,6 +124,7 @@ my $namespaces_rperl_deps = {
 # DEV NOTE: can not use eval{}, must use stringy eval
 eval 'use RPerl::AfterSubclass';
 eval 'use rperlsse';
+eval 'use rperlgmp';
 
 my $namespaces_rperl = rperlnamespaces::hash();
 $namespaces_rperl = { %{$namespaces_rperl}, %{$namespaces_rperl_missed} };
