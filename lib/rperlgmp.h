@@ -1,12 +1,12 @@
 #ifndef __CPP__INCLUDED__rperlgmp_h
-#define __CPP__INCLUDED__rperlgmp_h 0.003_000
+#define __CPP__INCLUDED__rperlgmp_h 0.003_100
 
-//typedef mpz_t                 gmp_integer;
+typedef mpz_t                 gmp_integer;
 
 // INITIALIZATION FUNCTIONS
 // https://gmplib.org/manual/Initializing-Integers.html
 
-//#define gmp_init                 mpz_init
+#define gmp_init                 mpz_init
 //#define gmp_inits                mpz_inits
 //#define gmp_init_bitcount        mpz_init2
 //#define gmp_clear                mpz_clear
@@ -29,7 +29,7 @@
 // https://gmplib.org/manual/Simultaneous-Integer-Init-_0026-Assign.html
 
 //#define gmp_init_set                   mpz_init_set
-//#define gmp_init_set_unsigned_integer  mpz_init_set_ui
+#define gmp_init_set_unsigned_integer  mpz_init_set_ui
 //#define gmp_init_set_signed_integer    mpz_init_set_si
 //#define gmp_init_set_number            mpz_init_set_d
 //#define gmp_init_set_string            mpz_init_set_str
@@ -37,7 +37,7 @@
 // CONVERSION FUNCTIONS
 // https://gmplib.org/manual/Converting-Integers.html
 
-//#define gmp_get_unsigned_integer   mpz_get_ui
+#define gmp_get_unsigned_integer   mpz_get_ui
 //#define gmp_get_signed_integer     mpz_get_si
 //#define gmp_get_number             mpz_get_d
 //#define gmp_get_number_power_of_2  mpz_get_d_2exp
@@ -46,18 +46,18 @@
 // ARITHMETIC FUNCTIONS
 // https://gmplib.org/manual/Integer-Arithmetic.html
 
-//#define gmp_add                       mpz_add
+#define gmp_add                       mpz_add
 //#define gmp_add_unsigned_integer      mpz_add_ui
 //#define gmp_sub                       mpz_sub
 //#define gmp_sub_unsigned_integer      mpz_sub_ui
 //#define gmp_unsigned_integer_sub      mpz_ui_sub
 //#define gmp_mul                       mpz_mul
 //#define gmp_mul_signed_integer        mpz_mul_si
-//#define gmp_mul_unsigned_integer      mpz_mul_ui
+#define gmp_mul_unsigned_integer      mpz_mul_ui
 //#define gmp_add_mul                   mpz_addmul
-//#define gmp_add_mul_unsigned_integer  mpz_addmul_ui
+#define gmp_add_mul_unsigned_integer  mpz_addmul_ui
 //#define gmp_sub_mul                   mpz_submul
-//#define gmp_sub_mul_unsigned_integer  mpz_submul_ui
+#define gmp_sub_mul_unsigned_integer  mpz_submul_ui
 //#define gmp_mul_power_of_2            mpz_mul_2exp
 //#define gmp_neg                       mpz_neg
 //#define gmp_abs                       mpz_abs
@@ -83,7 +83,7 @@
 //#define gmp_div_floor_unsigned_integer                        mpz_fdiv_ui
 //#define gmp_div_floor_quotient_power_of_2                     mpz_fdiv_q_2exp
 //#define gmp_div_floor_remainder_power_of_2                    mpz_fdiv_r_2exp
-//#define gmp_div_truncate_quotient                             mpz_tdiv_q
+#define gmp_div_truncate_quotient                             mpz_tdiv_q
 //#define gmp_div_truncate_remainder                            mpz_tdiv_r
 //#define gmp_div_truncate_quotient_remainder                   mpz_tdiv_qr
 //#define gmp_div_truncate_quotient_unsigned_integer            mpz_tdiv_q_ui
@@ -155,7 +155,7 @@
 // COMPARISON FUNCTIONS
 // https://gmplib.org/manual/Integer-Comparisons.html
 
-//#define gmp_cmp                            mpz_cmp
+#define gmp_cmp                            mpz_cmp
 //#define gmp_cmp_number                     mpz_cmp_d
 //#define gmp_cmp_signed_integer             mpz_cmp_si
 //#define gmp_cmp_unsigned_integer           mpz_cmp_ui
