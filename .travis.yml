@@ -1,5 +1,5 @@
 language: perl
-# v0.001_060
+# v0.001_100
 perl:
 # NEED FIX? Perl v5.8 $CPP_LINKED global symbol errors, leave disabled?
 #  - "5.8"
@@ -32,6 +32,7 @@ before_install:
 install:
 - sudo apt-get install -qq g++-4.8
 - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
+- sudo apt-get install libgmp-dev
 
 before_script:
 # MODIFY FOLLOWING LINE TO ENABLE TEST_VERBOSE STDOUT DURING `make test`
