@@ -41,6 +41,7 @@ our %ARGS = (
     filters           => 'Preprocess',
     auto_include => # DEV NOTE: include non-RPerl files using AUTO_INCLUDE so they are not parsed by the 'Preprocess' filter
         [
+        '#include <gmp.h>',  # GMP for multiple-precision math
         '#include <immintrin.h>',  # SSE for high-speed math
         '#include <memory>',  # smart pointers for memory management
         '#include <iostream>',
