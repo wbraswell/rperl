@@ -98,10 +98,13 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         my object $optional_loop_label = $child0->{children}->[0];
         my object $loop = $child0->{children}->[1];
         my string $loop_label = undef;
+#        RPerl::diag( 'in Statement->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $loop = ' . "\n" . RPerl::Parser::rperl_ast__dump($loop) . "\n" );
 #        RPerl::diag( 'in Statement->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $optional_loop_label = ' . "\n" . RPerl::Parser::rperl_ast__dump($optional_loop_label) . "\n" );
+
         if ( exists $optional_loop_label->{children}->[0] ) {  # LoopLabel COLON
             $loop_label = $optional_loop_label->{children}->[0]->{children}->[0];
         }
+        RPerl::diag( 'in Statement->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $loop_label = ' . "\n" . RPerl::Parser::rperl_ast__dump($loop_label) . "\n" );
         $cpp_source_subgroup = $loop->ast_to_cpp__generate__CPPOPS_CPPTYPES($loop_label, $modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
