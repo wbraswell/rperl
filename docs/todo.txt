@@ -61,6 +61,7 @@ tests
 	CONSTANT_CALL_SCOPED
 	*_to_*() data type conversion functions
 	text literals, backslash vs double-backslash
+	loop control: next & last w/ & w/out loop label; redo w/ loop label ECVGEASRP25 & 26
 
 Eyapp unescaped left braces for Perl v5.22 compatibility
 RELEASE Parse::Eyapp vX.YZZY
