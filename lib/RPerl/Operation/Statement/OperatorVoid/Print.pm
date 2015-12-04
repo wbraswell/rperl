@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::OperatorVoid::Print;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_100;
+our $VERSION = 0.003_200;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement::OperatorVoid);
@@ -34,21 +34,21 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
 #        RPerl::diag( 'in OperatorVoid::Print->ast_to_rperl__generate(), have $stdout_stderr_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($stdout_stderr_optional) . "\n" );
 
-        if ( ( $stdout_stderr_optional->{children}->[0]->{attr} ne '{*STDOUT}' ) and ( $stdout_stderr_optional->{children}->[0]->{attr} ne '{*STDERR}' ) ) {
-            die RPerl::Parser::rperl_rule__replace(
-                'ERROR ECVGEASRP27, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: output stream '
-                    . $stdout_stderr_optional->{children}->[0]->{attr}
-                    . ' found where {*STDOUT} or {*STDERR} expected, dying'
-            ) . "\n";
-        }
-
         $rperl_source_group->{PMC} .= $print . q{ };
+
+        if ( exists $stdout_stderr_optional->{children}->[0] ) {
+            if ( ( $stdout_stderr_optional->{children}->[0]->{attr} ne '{*STDOUT}' ) and ( $stdout_stderr_optional->{children}->[0]->{attr} ne '{*STDERR}' ) ) {
+                die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP27, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: output stream '
+                        . $stdout_stderr_optional->{children}->[0]->{attr}
+                        . ' found where {*STDOUT} or {*STDERR} expected, dying' )
+                    . "\n";
+            }
 
 # DEV NOTE: STDOUT & STDERR are generated below, they are only grammar tokens, not grammar rules, so they do not get their own classes, the following do not exist:
 # RPerl::InputOutput::Stderr & RPerl::InputOutput::Stdout
-        if ( exists $stdout_stderr_optional->{children}->[0] ) {
             $rperl_source_group->{PMC} .= $stdout_stderr_optional->{children}->[0]->{attr} . q{ };
         }
+
         $rperl_source_subgroup = $list_elements->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= $semicolon . "\n";
@@ -87,7 +87,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my string_hashref $cpp_source_group = { CPP => q{} };
     my string_hashref $cpp_source_subgroup;
 
-  #    RPerl::diag( 'in OperatorVoid::Print->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+ #    RPerl::diag( 'in OperatorVoid::Print->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
     if ( $self_class eq 'OperatorVoid_116' ) {    # OperatorVoid -> OP01_PRINT OPTIONAL-31 ListElements ';'
