@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_h
-#define __CPP__INCLUDED__RPerl__DataType__Integer_h 0.005_000
+#define __CPP__INCLUDED__RPerl__DataType__Integer_h 0.005_100
 
 // [[[ TYPEDEFS ]]]
 // DEV NOTE: must use "integer" typedef because "int" is already defined by Inline's default typemap, even if we put our own integer entry into typemap.rperl;
@@ -11,6 +11,7 @@ using std::cout;  using std::cerr;
 typedef int integer;
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
+
 // DEV NOTE, CORRELATION #rp12: basic data types must be wholly independent of one another, to avoid weird redefining or undefining of subroutine errors [INCORRECT???]
 #include <RPerl/DataType/String.cpp>  // string types used in *_to_string() subroutines
 
@@ -53,7 +54,9 @@ void XS_pack_integer(SV* output_sv, integer input_integer);
 # ifdef __PERL__TYPES
 SV* integer_to_unsigned_integer(SV* input_integer);
 # elif defined __CPP__TYPES
-unsigned_integer integer_to_unsigned_integer(integer input_integer);
+// DEV NOTE, CORRELATION #rp12: basic data types must be wholly independent of one another, to avoid weird redefining or undefining of subroutine errors [INCORRECT???]
+//unsigned_integer integer_to_unsigned_integer(integer input_integer);
+unsigned int integer_to_unsigned_integer(integer input_integer);
 # endif
 
 // [[[ STRINGIFY ]]]
