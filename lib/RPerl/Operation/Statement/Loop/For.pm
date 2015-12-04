@@ -304,9 +304,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $cpp_source_group->{CPP} .= $for . q{ ( } . $variable_symbol0 . q{ } . $assign . q{ };
 
         my string $opnamed_or_subexp_scolon0_type = ref $opnamed_or_subexp_scolon0;
-        RPerl::diag( 'in Loop::For->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $opnamed_or_subexp_scolon0_type = ' . "\n"
-                . RPerl::Parser::rperl_ast__dump($opnamed_or_subexp_scolon0_type)
-                . "\n" );
+#        RPerl::diag( 'in Loop::For->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $opnamed_or_subexp_scolon0_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($opnamed_or_subexp_scolon0_type) . "\n" );
 
         if (   ( $opnamed_or_subexp_scolon0_type eq 'OpNamedScolonOrSubExp_235' )
             or ( $opnamed_or_subexp_scolon0_type eq 'OpNamedScolonOrSubExp_236' ) )
@@ -330,9 +328,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $cpp_source_group->{CPP} .= q{ } . $variable_symbol1 . q{ } . $compare . q{ };
 
         my string $opnamed_or_subexp_scolon1_type = ref $opnamed_or_subexp_scolon1;
-        RPerl::diag( 'in Loop::For->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $opnamed_or_subexp_scolon1_type = ' . "\n"
-                . RPerl::Parser::rperl_ast__dump($opnamed_or_subexp_scolon1_type)
-                . "\n" );
+#        RPerl::diag( 'in Loop::For->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $opnamed_or_subexp_scolon1_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($opnamed_or_subexp_scolon1_type) . "\n" );
 
         if (   ( $opnamed_or_subexp_scolon1_type eq 'OpNamedScolonOrSubExp_235' )
             or ( $opnamed_or_subexp_scolon1_type eq 'OpNamedScolonOrSubExp_236' ) )

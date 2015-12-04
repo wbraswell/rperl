@@ -124,6 +124,8 @@ App, PhysicsPerl, Alioth Shootout N-Body Benchmark, Approved
 data types & structures
 	determine if Float.pm should be kept or deleted
 	char type-testing subroutines in Character.pm
+	full bool support via Boolean.cpp/h, rperltypes.pm, SvBOKp(), etc.
+	*OPS_CPPTYPES conversion routines
 
 RELEASE v1.XY
 

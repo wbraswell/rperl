@@ -1,9 +1,10 @@
 #ifndef __CPP__INCLUDED__RPerl__HelperFunctions_cpp
-#define __CPP__INCLUDED__RPerl__HelperFunctions_cpp 0.004_000
+#define __CPP__INCLUDED__RPerl__HelperFunctions_cpp 0.004_100
 
 #include <RPerl/HelperFunctions.h>  // -> NULL
 
 // <<< HELPER FUNCTION DEFINITIONS >>
+int RPerl_SvUIOKp(SV* input_sv) { return(SvUIOKp(input_sv)); }
 int RPerl_SvIOKp(SV* input_sv) { return(SvIOKp(input_sv)); }
 int RPerl_SvNOKp(SV* input_sv) { return(SvNOKp(input_sv)); }
 int RPerl_SvPOKp(SV* input_sv) { return(SvPOKp(input_sv)); }

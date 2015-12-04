@@ -77,7 +77,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         my string $symbol_or_self = $self->{children}->[0]->{children}->[0];
         my string_arrayref $types = [];
 
-        RPerl::diag( 'in Variable->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have pre-modification $symbol_or_self = ' . $symbol_or_self . "\n" );
+#        RPerl::diag( 'in Variable->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have pre-modification $symbol_or_self = ' . $symbol_or_self . "\n" );
 
         substr $symbol_or_self, 0, 1, q{};    # remove leading $ sigil
 

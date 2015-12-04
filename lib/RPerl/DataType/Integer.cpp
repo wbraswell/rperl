@@ -2,7 +2,7 @@
 //using std::cout;  using std::cerr;  // not needed for integer?
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_cpp
-#define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 0.004_000
+#define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 0.005_000
 
 #include <RPerl/DataType/Integer.h>		// -> NULL (relies on native C type)
 
@@ -69,14 +69,33 @@ void XS_pack_integer(SV* output_sv, integer input_integer) {
 
 //# endif
 
+// [[[ UNSIGNED INTEGERIFY ]]]
+// [[[ UNSIGNED INTEGERIFY ]]]
+// [[[ UNSIGNED INTEGERIFY ]]]
+
+# ifdef __PERL__TYPES
+
+SV* integer_to_unsigned_integer(SV* input_integer) {
+//  integer_CHECK(input_integer);
+    integer_CHECKTRACE(input_integer, "input_integer", "integer_to_string()");
+    return(input_integer);
+}
+
+# elif defined __CPP_TYPES
+
+unsigned_integer integer_to_unsigned_integer(integer input_integer) {
+    return input_integer;
+}
+
+# endif
+
 // [[[ STRINGIFY ]]]
 // [[[ STRINGIFY ]]]
 // [[[ STRINGIFY ]]]
 
 # ifdef __PERL__TYPES
 
-SV* integer_to_string(SV* input_integer)
-{
+SV* integer_to_string(SV* input_integer) {
 //	integer_CHECK(input_integer);
 	integer_CHECKTRACE(input_integer, "input_integer", "integer_to_string()");
 //	fprintf(stderr, "in CPPOPS_PERLTYPES integer_to_string(), top of subroutine, received unformatted input_integer = %d\n", (integer)SvIV(input_integer));

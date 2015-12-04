@@ -5,7 +5,7 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.002_060;
+our $VERSION = 0.002_100;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
@@ -33,6 +33,7 @@ use Scalar::Util qw(blessed);
 # [[[ DATA TYPES ]]]
 use RPerl::DataType::Void;
 use RPerl::DataType::Boolean;
+use RPerl::DataType::UnsignedInteger;
 use RPerl::DataType::Integer;
 use RPerl::DataType::Float;
 use RPerl::DataType::Number;
@@ -61,6 +62,7 @@ use RPerl::CodeBlock::Subroutine::Method;    # Method is the only item that is b
 
 # these types are currently implemented for all 3 primary RPerl modes: PERLOPS_PERLTYPES, CPPOPS_PERLTYPES, CPPOPS_CPPTYPES
 # NEED REMOVE: hard-coded list
+# MISSING: bool, unsigned_integer, *_arrayref, *_hashref
 our string_arrayref $SUPPORTED = [
     qw(
         void
@@ -98,6 +100,7 @@ sub to_string {
     my string $type = type($variable);
     if    ( $type eq 'unknown' ) { return qq{$variable}; }
     elsif ( $type eq 'bool' )    { return bool_to_string($variable); }
+    elsif ( $type eq 'unsigned_integer' ) { return unsigned_integer_to_string($variable); }
     elsif ( $type eq 'integer' ) { return integer_to_string($variable); }
     elsif ( $type eq 'number' )  { return number_to_string($variable); }
     elsif ( $type eq 'char' )    { return char_to_string($variable); }
@@ -126,7 +129,8 @@ sub type {
     if ( not defined $variable ) { return 'unknown'; }
     if ( not defined $recurse_level ) { $recurse_level = 10; }    # default to limited recursion
     my integer_hashref $is_type = build_is_type($variable);
-    if    ( $is_type->{integer} ) { return 'integer'; }
+    if    ( $is_type->{unsigned_integer} ) { return 'unsigned_integer'; }
+    elsif ( $is_type->{integer} ) { return 'integer'; }
     elsif ( $is_type->{number} )  { return 'number'; }
     elsif ( $is_type->{string} )  { return 'string'; }
     else {    # arrayref, hash, or blessed object
@@ -141,7 +145,8 @@ sub types {
     if ( not defined $variable ) { return 'unknown'; }
     if ( not defined $recurse_level ) { $recurse_level = 10; }    # default to limited recursion
     my integer_hashref $is_type = build_is_type($variable);
-    if    ( $is_type->{integer} ) { return { 'integer' => undef }; }
+    if    ( $is_type->{unsigned_integer} ) { return { 'unsigned_integer' => undef }; }
+    elsif ( $is_type->{integer} ) { return { 'integer' => undef }; }
     elsif ( $is_type->{number} )  { return { 'number'  => undef }; }
     elsif ( $is_type->{string} )  { return { 'string'  => undef }; }
     else {    # arrayref, hash, or blessed object
@@ -155,6 +160,7 @@ sub build_is_type {
     ( my unknown $variable ) = @_;
 
     my integer_hashref $is_type = {
+        unsigned_integer  => main::RPerl_SvUIOKp($variable),
         integer  => main::RPerl_SvIOKp($variable),
         number   => main::RPerl_SvNOKp($variable),
         string   => main::RPerl_SvPOKp($variable),
@@ -187,6 +193,7 @@ sub types_recurse {
     my string_hashref $types = undef;
 
     if    ( not defined $variable ) { $type = 'unknown'; }
+    elsif ( $is_type->{unsigned_integer} )   { $type = 'unsigned_integer'; }
     elsif ( $is_type->{integer} )   { $type = 'integer'; }
     elsif ( $is_type->{number} )    { $type = 'number'; }
     elsif ( $is_type->{string} )    { $type = 'string'; }

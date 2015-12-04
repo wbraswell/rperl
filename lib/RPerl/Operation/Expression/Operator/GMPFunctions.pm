@@ -63,15 +63,6 @@ sub gmp_sub_mul_unsigned_integer {
     return -1;
 }
 
-# NEED FIX: move $integer_to_unsigned_integer() to Integer.pm???
-
-#our unsigned_integer $integer_to_unsigned_integer = sub {
-sub integer_to_unsigned_integer {
-    ( my integer $input ) = @_;
-    # ...
-    return abs $input;
-}
-
 # void mpz_addmul_ui (mpz_t rop, const mpz_t op1, unsigned long int op2)
 #our void $gmp_add_mul_unsigned_integer = sub {
 sub gmp_add_mul_unsigned_integer {
