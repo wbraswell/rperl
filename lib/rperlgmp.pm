@@ -10,7 +10,7 @@ use RPerl::DataType::GMPInteger;
 use RPerl::Operation::Expression::Operator::GMPFunctions;
 
 # [[[ EXPORTS ]]]
-use Exporter 'import';
-our @EXPORT = qw(gmp_FOO);
+#use Exporter 'import';
+#our @EXPORT = qw(gmp_FOO);  # NEED ADDRESS: should we be exporting anything?
 
 1;  # end of package

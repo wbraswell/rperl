@@ -9,8 +9,8 @@ our $VERSION = 0.001_000;
 use parent qw(RPerl::Operation::Expression::Operator);
 use RPerl::Operation::Expression::Operator;
 
-use Exporter 'import';
-our @EXPORT = qw(NEED_FILL);
+#use Exporter 'import';
+#our @EXPORT = qw(NEED_FILL);  # NEED ADDRESS: should we be exporting anything?
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator

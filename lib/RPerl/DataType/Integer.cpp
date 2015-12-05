@@ -81,9 +81,9 @@ SV* integer_to_unsigned_integer(SV* input_integer) {
     return(input_integer);
 }
 
-# elif defined __CPP_TYPES
+# elif defined __CPP__TYPES
 
-unsigned_integer integer_to_unsigned_integer(integer input_integer) {
+unsigned int integer_to_unsigned_integer(integer input_integer) {
     return input_integer;
 }
 

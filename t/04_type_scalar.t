@@ -15,7 +15,7 @@ our $VERSION = 0.006_010;
 ## no critic qw(RequireCheckingReturnValueOfEval)  # SYSTEM DEFAULT 4: allow eval() test code blocks
 
 use RPerl::Test;
-use Test::More tests => 319;
+use Test::More; # tests => 319;
 use Test::Exception;
 use Test::Number::Delta;
 
@@ -93,20 +93,20 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         #        RPerl::diag(q{have main::RPerl__DataType__Integer__MODE_ID() = '} . main::RPerl__DataType__Integer__MODE_ID() . "'\n");
         #        RPerl::diag(q{have main::RPerl__DataType__Number__MODE_ID() = '} . main::RPerl__DataType__Number__MODE_ID() . "'\n");
         #        RPerl::diag(q{have main::RPerl__DataType__String__MODE_ID() = '} . main::RPerl__DataType__String__MODE_ID() . "'\n");
+ 
+#RPerl::diag('in 04_type_scalar.t, top of for() loop, have $RPerl::MODES = ' . "\n" . Dumper($RPerl::MODES) . "\n");
+#RPerl::diag('in 04_type_scalar.t, top of for() loop, have RPerl__DataType__ . $type . __MODE_ID = ' . 'RPerl__DataType__' . $type . '__MODE_ID' . "\n");
+#RPerl::diag('in 04_type_scalar.t, top of for() loop, have main::RPerl__DataType__Integer__MODE_ID() = ' . main::RPerl__DataType__Integer__MODE_ID() . "\n");
+#RPerl::diag('in 04_type_scalar.t, top of for() loop, have eval(main::RPerl__DataType__Integer__MODE_ID()) = ' . eval('main::RPerl__DataType__Integer__MODE_ID()') . "\n");
+#RPerl::diag('in 04_type_scalar.t, top of for() loop, have main->can(...) = ' . main->can( 'RPerl__DataType__Integer__MODE_ID' ) . "\n");
+#RPerl::diag('in 04_type_scalar.t, top of for() loop, have main->can(...)->() = ' . main->can( 'RPerl__DataType__Integer__MODE_ID' )->() . "\n");
 
-        lives_and(
-            sub {
-                is( $RPerl::MODES->{ main->can( 'RPerl__DataType__' . $type . '__MODE_ID' )->() }->{ops},
-                    $ops, 'main::RPerl__DataType__' . $type . '__MODE_ID() ops returns ' . $ops );
-            },
-            'main::RPerl__DataType__' . $type . '__MODE_ID() lives'
-        );
         lives_and(
             sub {
                 is( $RPerl::MODES->{ main->can( 'RPerl__DataType__' . $type . '__MODE_ID' )->() }->{types},
                     $types, 'main::RPerl__DataType__' . $type . '__MODE_ID() types returns ' . $types );
             },
-            'main::RPerl__' . $type . '__MODE_ID() lives'
+            'main::RPerl__DataType__' . $type . '__MODE_ID() lives'
         );
     }
 
