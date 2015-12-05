@@ -3,7 +3,7 @@ package RPerl::CodeBlock;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_000;
+our $VERSION = 0.003_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -74,17 +74,20 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         my string $right_brace    = $self->{children}->[2];
 
         $cpp_source_group->{CPP} .= $left_brace . "\n";
-        if ( defined $loop_label ) { $cpp_source_group->{CPP} .= $loop_label . '_REDO:' . "\n"; }
+        if ( defined $loop_label ) { $cpp_source_group->{CPP} .= $loop_label . '_REDO: 1;' . "\n"; }
 
         foreach my object $operation ( @{ $operation_plus->{children} } ) {
 #            RPerl::diag( 'in CodeBlock->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $operation = ' . "\n" . RPerl::Parser::rperl_ast__dump($operation) . "\n" );
             my object $cpp_source_subgroup = $operation->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
             RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
         }
-
-        if ( defined $loop_label ) { $cpp_source_group->{CPP} .= $loop_label . '_NEXT:' . "\n"; }
+        
+        # DEV NOTE, INLINE BUG: must include '1;' null statement after labels to avoid the following error messages during g++ call from 'Running Mkbootstrap' Inline phase
+        # error: expected primary-expression before ‘}’ token
+        # error: expected ‘;’ before ‘}’ token
+        if ( defined $loop_label ) { $cpp_source_group->{CPP} .= $loop_label . '_NEXT: 1;' . "\n"; }
         $cpp_source_group->{CPP} .= $right_brace . "\n";
-        if ( defined $loop_label ) { $cpp_source_group->{CPP} .= $loop_label . '_LAST:' . "\n"; }
+        if ( defined $loop_label ) { $cpp_source_group->{CPP} .= $loop_label . '_LAST: 1;' . "\n"; }
     }
     else {
         die RPerl::Parser::rperl_rule__replace(

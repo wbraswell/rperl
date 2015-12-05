@@ -214,17 +214,20 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     return $cpp_source_group;
 };
 
-our string_hashref::method $ast_to_cpp__generate_shim__CPPOPS_CPPTYPES = sub {
+our string_hashref::method $ast_to_cpp__generate_shims__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
-#    RPerl::diag( 'in Subroutine->ast_to_cpp__generate_shim__CPPOPS_CPPTYPES(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n");
+#    RPerl::diag( 'in Subroutine->ast_to_cpp__generate_shims__CPPOPS_CPPTYPES(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n");
  
-    my string_hashref $cpp_source_group = { PMC => q{} };
+    my string_hashref $cpp_source_group = { PMC => q{}, CPP => q{} };
+    my object $cpp_source_subgroup = undef;
 
     $self = $self->{children}->[0];    # unwrap Subroutine_48 from MethodOrSubroutine_77
+#    my string $return_type = $self->{children}->[1]->{children}->[0];  # SHIM SUBS DEPRECATED IN FAVOR OF MACROS
     my string $name        = $self->{children}->[2];
+    my object $arguments_optional = $self->{children}->[4];
 
-#RPerl::diag( 'in Subroutine->ast_to_cpp__generate_shim__CPPOPS_CPPTYPES(), have $arguments_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_optional) . "\n" );
-#RPerl::diag( 'in Subroutine->ast_to_cpp__generate_shim__CPPOPS_CPPTYPES(), have $return_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($return_type) . "\n" );
+#RPerl::diag( 'in Subroutine->ast_to_cpp__generate_shims__CPPOPS_CPPTYPES(), have $arguments_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_optional) . "\n" );
+#RPerl::diag( 'in Subroutine->ast_to_cpp__generate_shims__CPPOPS_CPPTYPES(), have $return_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($return_type) . "\n" );
 
     substr $name, 0, 1, q{};            # remove leading $ sigil
  
@@ -238,10 +241,64 @@ our string_hashref::method $ast_to_cpp__generate_shim__CPPOPS_CPPTYPES = sub {
     my string $namespace_underscores = $namespace_colons;
     $namespace_underscores =~ s/:/_/gxms;
  
-# hard-coded example
-#sub integer_bubblesort { return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort(@_); }
+# hard-coded example, PMC subroutine
+# sub integer_bubblesort { return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort(@_); }
 
     $cpp_source_group->{PMC} .= 'sub ' . $name . ' { return main::' . $namespace_underscores . $name . '(@_); }';
+
+=DEPRECATED IN FAVOR OF MACROS
+# hard-coded example, CPP subroutine
+# void display_pi_digits(integer n) { return MathPerl__Geometry__PiDigits__display_pi_digits(n); }
+
+    $cpp_source_group->{CPP} .= $return_type . q{ } . $name . '(';
+
+    if ( exists $arguments_optional->{children}->[0] ) {
+        $cpp_source_subgroup = $arguments_optional->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+
+#        RPerl::diag( 'in Subroutine->ast_to_cpp__generate_shims__CPPOPS_CPPTYPES(), have $cpp_source_subgroup = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_subgroup) . "\n" );
+        $cpp_source_group->{CPP} .= $cpp_source_subgroup->{CPP};
+    }
+
+    $cpp_source_group->{CPP} .= ') ' . ' { return ' . $namespace_underscores . $name . '(';
+
+    # remove type declarations from arguments when passing from shim to real subroutine
+    if (defined $cpp_source_subgroup) {
+       # split on commas, split again on space, discard types, join names on space, join again on commas, append 
+       my string_arrayref $split_arguments    = [ split ', ', $cpp_source_subgroup->{CPP} ];
+       my string_arrayref $typeless_arguments = [];
+       foreach my string $argument (@{$split_arguments}) {
+           my string_arrayref $split_argument = [ split /[ ]/xms, $argument ];
+           push @{$typeless_arguments}, $split_argument->[1];
+       }
+       $cpp_source_group->{CPP} .= ( join ', ', @{$typeless_arguments} );
+    }
+
+    $cpp_source_group->{CPP} .= '); }';
+=cut
+
+# hard-coded example, CPP macro
+# #define display_pi_digits(n) MathPerl__Geometry__PiDigits__display_pi_digits(n)
+    $cpp_source_group->{CPP} .= '#define ' . $name . '(';
+
+    if ( exists $arguments_optional->{children}->[0] ) {
+        $cpp_source_subgroup = $arguments_optional->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+    }
+
+    # remove type declarations from arguments
+    my string $typeless_arguments_joined = q{};
+    if (defined $cpp_source_subgroup) {
+       # split on commas, split again on space, discard types, join names on space, join again on commas, append 
+       my string_arrayref $split_arguments    = [ split ', ', $cpp_source_subgroup->{CPP} ];
+       my string_arrayref $typeless_arguments = [];
+       foreach my string $argument (@{$split_arguments}) {
+           my string_arrayref $split_argument = [ split /[ ]/xms, $argument ];
+           push @{$typeless_arguments}, $split_argument->[1];
+       }
+       $typeless_arguments_joined = ( join ', ', @{$typeless_arguments} );
+    }
+
+    $cpp_source_group->{CPP} .= $typeless_arguments_joined . ') ' . $namespace_underscores . $name . '(' . $typeless_arguments_joined . ')';
+
     return $cpp_source_group;
 };
 

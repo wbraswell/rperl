@@ -127,9 +127,9 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my object $property_subexpression;
         my string $property_subexpression_string;
 
-        $property_key        = $property_0->{children}->[0]->{children}->[0];
-        $property_key =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
-        if ($property_key !~ /^[a-z]/) {
+        $property_key = $property_0->{children}->[0]->{children}->[0];
+        $property_key =~ s/^(\w+)\s*$/$1/gxms;    # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
+        if ( $property_key !~ /^[a-z]/ ) {
             die 'ERROR ECVGEASRP23, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid OO properties name (hash key) ' . q{'}
                 . $property_key . q{'}
                 . ' does not start with a lowercase letter a-z, dying' . "\n";
@@ -137,13 +137,16 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         $property_fat_arrow  = $property_0->{children}->[1];
         $property_type_inner = $property_0->{children}->[2];
         $property_name       = $property_type_inner->{children}->[3]->{children}->[0];
-        $property_name =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
+        $property_name =~ s/^(\w+)\s*$/$1/gxms;    # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
 
         # DEV NOTE: we can do error checking once here instead of twice for TypeInnerProperties_223 & TypeInnerProperties_224 below
         # because they both have OpStringOrWord as sub-element 3, grabbed as $property_name above
-        if ($property_name ne $property_key) {
+        if ( $property_name ne $property_key ) {
             die 'ERROR ECVGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
-                . $property_name . q{'} . ' does not equal OO properties key ' . q{'} . $property_key . q{'} . ', dying' . "\n";
+                . $property_name . q{'}
+                . ' does not equal OO properties key ' . q{'}
+                . $property_key . q{'}
+                . ', dying' . "\n";
         }
 
         # TypeInnerProperties -> MY Type '$TYPED_' OpStringOrWord OP19_VARIABLE_ASSIGN SubExpression
@@ -204,9 +207,9 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 $rperl_source_group->{PMC} .= $property->{attr};    # comma between properties
             }
             else {
-                $property_key        = $property->{children}->[0]->{children}->[0];
-                $property_key =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
-                if ($property_key !~ /^[a-z]/) {
+                $property_key = $property->{children}->[0]->{children}->[0];
+                $property_key =~ s/^(\w+)\s*$/$1/gxms;              # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
+                if ( $property_key !~ /^[a-z]/ ) {
                     die 'ERROR ECVGEASRP23, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid OO properties name (hash key) ' . q{'}
                         . $property_key . q{'}
                         . ' does not start with a lowercase letter a-z, dying' . "\n";
@@ -214,11 +217,14 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 $property_fat_arrow  = $property->{children}->[1];
                 $property_type_inner = $property->{children}->[2];
                 $property_name       = $property_type_inner->{children}->[3]->{children}->[0];
-                $property_name =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
+                $property_name =~ s/^(\w+)\s*$/$1/gxms;             # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
 
-                if ($property_name ne $property_key) {
+                if ( $property_name ne $property_key ) {
                     die 'ERROR ECVGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
-                        . $property_name . q{'} . ' does not equal OO properties key ' . q{'} . $property_key . q{'} . ', dying' . "\n";
+                        . $property_name . q{'}
+                        . ' does not equal OO properties key ' . q{'}
+                        . $property_key . q{'}
+                        . ', dying' . "\n";
                 }
 
                 # TypeInnerProperties -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN SubExpression
@@ -277,8 +283,8 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         }
         $rperl_source_group->{PMC} .= "\n" . $properties_right_brace . $properties_semicolon . "\n";
     }
-    else {           # Properties_66
-                     # empty $properties
+    else {    # Properties_66
+              # empty $properties
         my string $properties_our_hashref = $properties->{children}->[0];
         my string $properties_equal       = $properties->{children}->[1];
         my string $properties_left_brace  = $properties->{children}->[2];
@@ -383,7 +389,7 @@ EOL
     my string_hashref $cpp_source_subgroup;
 
     foreach my object $include ( @{ $include_star->{children} } ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
-        $cpp_source_subgroup = $include->ast_to_cpp__generate__CPPOPS_CPPTYPES($package_name_underscores, $modes);
+        $cpp_source_subgroup = $include->ast_to_cpp__generate__CPPOPS_CPPTYPES( $package_name_underscores, $modes );
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
 
@@ -447,9 +453,9 @@ EOL
         my object $property_0        = $properties->{children}->[3];
         my object $properties_1_to_n = $properties->{children}->[4];
 
-        my string $property_key                = $property_0->{children}->[0]->{children}->[0];
-        $property_key =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
-        if ($property_key !~ /^[a-z]/) {
+        my string $property_key = $property_0->{children}->[0]->{children}->[0];
+        $property_key =~ s/^(\w+)\s*$/$1/gxms;    # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
+        if ( $property_key !~ /^[a-z]/ ) {
             die 'ERROR ECVGEASCP23, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid OO properties name (hash key) ' . q{'}
                 . $property_key . q{'}
                 . ' does not start with a lowercase letter a-z, dying' . "\n";
@@ -458,14 +464,17 @@ EOL
         my string $property_type               = undef;
         my object $property_subexpression      = undef;
         my object $property_arrayref_index_max = undef;
-        my string $property_name       = $property_type_inner->{children}->[3]->{children}->[0];
-        $property_name =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
+        my string $property_name               = $property_type_inner->{children}->[3]->{children}->[0];
+        $property_name =~ s/^(\w+)\s*$/$1/gxms;    # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
 
         # DEV NOTE: we can do error checking once here instead of twice for TypeInnerProperties_223 & TypeInnerProperties_224 below
         # because they both have OpStringOrWord as sub-element 3, grabbed as $property_name above
-        if ($property_name ne $property_key) {
+        if ( $property_name ne $property_key ) {
             die 'ERROR ECVGEASCP20, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
-                . $property_name . q{'} . ' does not equal OO properties key ' . q{'} . $property_key . q{'} . ', dying' . "\n";
+                . $property_name . q{'}
+                . ' does not equal OO properties key ' . q{'}
+                . $property_key . q{'}
+                . ', dying' . "\n";
         }
 
         # TypeInnerProperties -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN SubExpression
@@ -545,22 +554,25 @@ EOL
             $property_subexpression      = undef;
             $property_arrayref_index_max = undef;
 
-            $property_key        = $property->{children}->[0]->{children}->[0];
-            $property_key =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
-            if ($property_key !~ /^[a-z]/) {
+            $property_key = $property->{children}->[0]->{children}->[0];
+            $property_key =~ s/^(\w+)\s*$/$1/gxms;      # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
+            if ( $property_key !~ /^[a-z]/ ) {
                 die 'ERROR ECVGEASCP23, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid OO properties name (hash key) ' . q{'}
                     . $property_key . q{'}
                     . ' does not start with a lowercase letter a-z, dying' . "\n";
             }
             $property_type_inner = $property->{children}->[2];
             $property_name       = $property_type_inner->{children}->[3]->{children}->[0];
-            $property_name =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
+            $property_name =~ s/^(\w+)\s*$/$1/gxms;     # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
 
             # DEV NOTE: we can do error checking once here instead of twice for TypeInnerProperties_223 & TypeInnerProperties_224 below
             # because they both have OpStringOrWord as sub-element 3, grabbed as $property_name above
-            if ($property_name ne $property_key) {
+            if ( $property_name ne $property_key ) {
                 die 'ERROR ECVGEASCP20, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
-                    . $property_name . q{'} . ' does not equal OO properties key ' . q{'} . $property_key . q{'} . ', dying' . "\n";
+                    . $property_name . q{'}
+                    . ' does not equal OO properties key ' . q{'}
+                    . $property_key . q{'}
+                    . ', dying' . "\n";
             }
 
             # TypeInnerProperties -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN SubExpression
@@ -651,11 +663,12 @@ EOL
     }
 
     if ( exists $properties_accessors_mutators_shims->[0] ) {
-        if ((not exists $cpp_source_group->{_PMC_accessors_mutators_shims}) or (not defined $cpp_source_group->{_PMC_accessors_mutators_shims})) {
+        if ( ( not exists $cpp_source_group->{_PMC_accessors_mutators_shims} ) or ( not defined $cpp_source_group->{_PMC_accessors_mutators_shims} ) ) {
             $cpp_source_group->{_PMC_accessors_mutators_shims} = {};
         }
-        elsif ((not exists $cpp_source_group->{_PMC_accessors_mutators_shims}->{$package_name_underscores}) 
-            or (not defined $cpp_source_group->{_PMC_accessors_mutators_shims}->{$package_name_underscores})) {
+        elsif (( not exists $cpp_source_group->{_PMC_accessors_mutators_shims}->{$package_name_underscores} )
+            or ( not defined $cpp_source_group->{_PMC_accessors_mutators_shims}->{$package_name_underscores} ) )
+        {
             $cpp_source_group->{_PMC_accessors_mutators_shims}->{$package_name_underscores} = q{};
         }
         $cpp_source_group->{_PMC_accessors_mutators_shims}->{$package_name_underscores} .= ( join "\n", @{$properties_accessors_mutators_shims} ) . "\n";
@@ -683,13 +696,14 @@ EOL
     my string_arrayref $method_definitions      = [];
     my string_arrayref $subroutine_declarations = [];
     my string_arrayref $subroutine_definitions  = [];
-    my string_arrayref $subroutines_shims       = [];
+    my string_arrayref $PMC_subroutines_shims   = [];
+    my string_arrayref $CPP_subroutines_shims   = [];
 
     foreach my object $method_or_subroutine ( ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
         @{ $method_or_subroutine_star->{children} }
         )
     {
-        if ( ( ref $method_or_subroutine ) eq 'MethodOrSubroutine_76' ) {  # METHOD
+        if ( ( ref $method_or_subroutine ) eq 'MethodOrSubroutine_76' ) {    # METHOD
             $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES($modes);
             push @{$method_declarations}, $cpp_source_subgroup->{H};
             $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES( $package_name_underscores, $modes );
@@ -698,13 +712,14 @@ EOL
                 $cpp_source_group->{H_INCLUDES} .= $cpp_source_subgroup->{H_INCLUDES};
             }
         }
-        elsif ( ( ref $method_or_subroutine ) eq 'MethodOrSubroutine_77' ) {  # SUBROUTINE
+        elsif ( ( ref $method_or_subroutine ) eq 'MethodOrSubroutine_77' ) {    # SUBROUTINE
             $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES($modes);
             push @{$subroutine_declarations}, $cpp_source_subgroup->{H};
             $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
             push @{$subroutine_definitions}, $cpp_source_subgroup->{CPP};
-            $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate_shim__CPPOPS_CPPTYPES($modes);
-            push @{$subroutines_shims}, $cpp_source_subgroup->{PMC};
+            $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate_shims__CPPOPS_CPPTYPES($modes);
+            push @{$PMC_subroutines_shims}, $cpp_source_subgroup->{PMC};
+            push @{$CPP_subroutines_shims}, $cpp_source_subgroup->{CPP};
             if ( ( exists $cpp_source_subgroup->{H_INCLUDES} ) and ( defined $cpp_source_subgroup->{H_INCLUDES} ) ) {
                 $cpp_source_group->{H_INCLUDES} .= $cpp_source_subgroup->{H_INCLUDES};
             }
@@ -732,15 +747,16 @@ EOL
         if ( exists $method_definitions->[0] ) { $cpp_source_group->{CPP} .= "\n\n"; }
         $cpp_source_group->{CPP} .= ( join "\n\n", @{$subroutine_definitions} );
         if ( exists $subroutine_definitions->[0] ) { $cpp_source_group->{CPP} .= "\n\n"; }
-        if ( exists $subroutines_shims->[0] ) {
-            if ((not exists $cpp_source_group->{_PMC_subroutines_shims}) or (not defined $cpp_source_group->{_PMC_subroutines_shims})) {
+        if ( exists $PMC_subroutines_shims->[0] ) {
+            if ( ( not exists $cpp_source_group->{_PMC_subroutines_shims} ) or ( not defined $cpp_source_group->{_PMC_subroutines_shims} ) ) {
                 $cpp_source_group->{_PMC_subroutines_shims} = {};
             }
-            elsif ((not exists $cpp_source_group->{_PMC_subroutines_shims}->{$package_name_underscores}) 
-                or (not defined $cpp_source_group->{_PMC_subroutines_shims}->{$package_name_underscores})) {
+            elsif (( not exists $cpp_source_group->{_PMC_subroutines_shims}->{$package_name_underscores} )
+                or ( not defined $cpp_source_group->{_PMC_subroutines_shims}->{$package_name_underscores} ) )
+            {
                 $cpp_source_group->{_PMC_subroutines_shims}->{$package_name_underscores} = q{};
             }
-            $cpp_source_group->{_PMC_subroutines_shims}->{$package_name_underscores} .= ( join "\n", @{$subroutines_shims} ) . "\n";
+            $cpp_source_group->{_PMC_subroutines_shims}->{$package_name_underscores} .= ( join "\n", @{$PMC_subroutines_shims} ) . "\n";
         }
     }
 
@@ -761,6 +777,10 @@ EOL
             $cpp_source_group->{H} .= '// [[[ SUBROUTINES ]]]' . "\n";
         }
         $cpp_source_group->{H} .= ( join "\n", @{$subroutine_declarations} ) . "\n\n";
+        if ( $modes->{label} eq 'ON' ) {
+            $cpp_source_group->{H} .= '// <<< SHIM MACROS >>>' . "\n";
+        }
+        $cpp_source_group->{H} .= ( join "\n", @{$CPP_subroutines_shims} ) . "\n\n";
     }
 
     if ( $modes->{label} eq 'ON' ) {
