@@ -5,7 +5,7 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.002_100;
+our $VERSION = 0.002_200;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
@@ -62,7 +62,7 @@ use RPerl::CodeBlock::Subroutine::Method;    # Method is the only item that is b
 
 # these types are currently implemented for all 3 primary RPerl modes: PERLOPS_PERLTYPES, CPPOPS_PERLTYPES, CPPOPS_CPPTYPES
 # NEED REMOVE: hard-coded list
-# MISSING: bool, unsigned_integer, *_arrayref, *_hashref
+# MISSING: bool, unsigned_integer, char, *_arrayref, *_hashref
 our string_arrayref $SUPPORTED = [
     qw(
         void
@@ -129,11 +129,12 @@ sub type {
     if ( not defined $variable ) { return 'unknown'; }
     if ( not defined $recurse_level ) { $recurse_level = 10; }    # default to limited recursion
     my integer_hashref $is_type = build_is_type($variable);
-    if    ( $is_type->{unsigned_integer} ) { return 'unsigned_integer'; }
-    elsif ( $is_type->{integer} ) { return 'integer'; }
+    # DEV NOTE, CORRELATION #rp25: only report core types integer, number, string, arrayref, hashref, object;
+    # do NOT report non-core types bool, unsigned_integer, char, etc.
+    if ( $is_type->{integer} ) { return 'integer'; }
     elsif ( $is_type->{number} )  { return 'number'; }
     elsif ( $is_type->{string} )  { return 'string'; }
-    else {    # arrayref, hash, or blessed object
+    else {    # arrayref, hashref, or blessed object
         my arrayref $types = types_recurse( $variable, $recurse_level, $is_type );
         return $types->[0];    # only return flat type string, discard nested type hashref
     }
@@ -145,8 +146,9 @@ sub types {
     if ( not defined $variable ) { return 'unknown'; }
     if ( not defined $recurse_level ) { $recurse_level = 10; }    # default to limited recursion
     my integer_hashref $is_type = build_is_type($variable);
-    if    ( $is_type->{unsigned_integer} ) { return { 'unsigned_integer' => undef }; }
-    elsif ( $is_type->{integer} ) { return { 'integer' => undef }; }
+    # DEV NOTE, CORRELATION #rp25: only report core types integer, number, string, arrayref, hashref, object;
+    # do NOT report non-core types bool, unsigned_integer, char, etc.
+    if ( $is_type->{integer} ) { return { 'integer' => undef }; }
     elsif ( $is_type->{number} )  { return { 'number'  => undef }; }
     elsif ( $is_type->{string} )  { return { 'string'  => undef }; }
     else {    # arrayref, hash, or blessed object
@@ -192,8 +194,9 @@ sub types_recurse {
     my string $type          = undef;
     my string_hashref $types = undef;
 
+    # DEV NOTE, CORRELATION #rp25: only report core types integer, number, string, arrayref, hashref, object;
+    # do NOT report non-core types bool, unsigned_integer, char, etc.
     if    ( not defined $variable ) { $type = 'unknown'; }
-    elsif ( $is_type->{unsigned_integer} )   { $type = 'unsigned_integer'; }
     elsif ( $is_type->{integer} )   { $type = 'integer'; }
     elsif ( $is_type->{number} )    { $type = 'number'; }
     elsif ( $is_type->{string} )    { $type = 'string'; }

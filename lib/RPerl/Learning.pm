@@ -631,21 +631,27 @@ Most programming languages include the basic principles of using named I<"variab
 
 A single piece of data, such as one number or one string, is called a I<"scalar">.  Multiple pieces of data combined into a single aggregate structure may be either an I<"array"> or a I<"hash">, described in chapters 3 and 6, respectively.  (Although sharing the same terminology, the I<hash> data structure is not related to the I<hash> C<#> tic-tac-toe character.)  In normal Perl, only scalar variable names begin with the C<$> dollar sign I<"sigil">, while aggregate data structures are stored in variables starting with different sigils like C<@> or C<%>.  In RPerl, all variable names begin the C<$> sigil, both scalar types and aggregate structures alike.
 
-RPerl provides 5 scalar data types:
+RPerl provides 6 scalar data types:
 
 =over
 
 =item * C<bool>
 
-=item * C<integer>
+=item * C<unsigned_integer>
 
-=item * C<number>
+=item * C<integer> (core)
+
+=item * C<number> (core)
 
 =item * C<char>
 
-=item * C<string>
+=item * C<string> (core)
 
 =back
+
+START HERE: add blurb about core types, add unsigned_integer examples
+START HERE: add blurb about core types, add unsigned_integer examples
+START HERE: add blurb about core types, add unsigned_integer examples
 
 A single group of actual numeric digit(s) or quoted string character(s) is called a I<"literal">, such as:
 
