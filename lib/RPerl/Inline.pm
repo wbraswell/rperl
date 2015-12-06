@@ -2,7 +2,7 @@
 package RPerl::Inline;
 use strict;
 use warnings;
-our $VERSION = 0.001_200;
+our $VERSION = 0.001_300;
 
 #use RPerl;  # ERROR: Too late to run INIT block at ...
 #use Config;
