@@ -29,6 +29,10 @@ use warnings;
 
 # [[[ INCLUDES ]]]
 use RPerl::DataType::String;    # need stringy type
+use Math::BigInt lib => 'GMP';  # we still actually use GMP in PERLOPS_PERLTYPES mode, albeit indirectly via Math::BigInt::GMP
+
+# [[[ CONSTRUCTOR ]]]
+sub new { return Math::BigInt->new(); }
 
 # [[[ TYPE-CHECKING ]]]
 # [[[ BOOLIFY ]]]

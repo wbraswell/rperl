@@ -3,7 +3,7 @@ package RPerl::DataType::UnsignedInteger;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_000;
+our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -28,13 +28,28 @@ use strict;
 use warnings;
 use parent qw(RPerl::DataType::UnsignedInteger);
 
+# [[[ PRE-DECLARED TYPES ]]]
+package    # hide from PAUSE indexing
+    bool;
+package     # hide from PAUSE indexing
+    integer;
+package    # hide from PAUSE indexing
+    gmp_integer;
+package    # hide from PAUSE indexing
+    number;
+package    # hide from PAUSE indexing
+    char;
+package    # hide from PAUSE indexing
+    string;
+
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataType::UnsignedInteger;
 use strict;
 use warnings;
 
-# [[[ INCLUDES ]]]
-use RPerl::DataType::String;    # need string type
+# [[[ EXPORTS ]]]
+use Exporter 'import';
+our @EXPORT = qw(unsigned_integer_to_bool unsigned_integer_to_integer unsigned_integer_to_number unsigned_integer_to_char unsigned_integer_to_string);
 
 # [[[ TYPE-CHECKING ]]]
 our void $unsigned_integer_CHECK = sub {
@@ -61,37 +76,39 @@ our void $unsigned_integer_CHECKTRACE = sub {
 };
 
 # [[[ BOOLIFY ]]]
-our bool $unsigned_integer_to_bool = sub {
+#our bool $unsigned_integer_to_bool = sub {
+sub unsigned_integer_to_bool {
     ( my unsigned_integer $input_unsigned_integer ) = @_;
     if   ( $input_unsigned_integer == 0 ) { return 0; }
     else                                  { return 1; }
-};
+}
 
 # [[[ INTEGERIFY ]]]
 #our integer $unsigned_integer_to_integer = sub {
-our $unsigned_integer_to_integer = sub {
+sub unsigned_integer_to_integer {
     ( my unsigned_integer $input ) = @_;
     return $input;
-};
+}
 
 # [[[ NUMBERIFY ]]]
 #our number $unsigned_integer_to_number = sub {
-our $unsigned_integer_to_number = sub {
+sub unsigned_integer_to_number {
     ( my unsigned_integer $input_unsigned_integer ) = @_;
     return $input_unsigned_integer * 1.0;
-};
+}
 
 # [[[ CHARIFY ]]]
 #our char $unsigned_integer_to_char = sub {
-our $unsigned_integer_to_char = sub {
+sub unsigned_integer_to_char {
     ( my unsigned_integer $input_unsigned_integer ) = @_;
     my string $tmp_string = unsigned_integer_to_string($input_unsigned_integer);
     if   ( $tmp_string eq q{} ) { return q{}; }
     else                        { return substr $tmp_string, 0, 1; }
-};
+}
 
 # [[[ STRINGIFY ]]]
-our string $unsigned_integer_to_string = sub {
+#our string $unsigned_integer_to_string = sub {
+sub unsigned_integer_to_string {
     ( my unsigned_integer $input_unsigned_integer ) = @_;
 
     #    unsigned_integer_CHECK($input_unsigned_integer);
@@ -110,7 +127,7 @@ our string $unsigned_integer_to_string = sub {
 
     #    RPerl::diag('in PERLOPS_PERLTYPES unsigned_integer_to_string(), have $retval = ' . q{'} . $retval . q{'} . "\n");
     return $retval;
-};
+}
 
 # [[[ TYPE TESTING ]]]
 our unsigned_integer $unsigned_integer__typetest0 = sub {

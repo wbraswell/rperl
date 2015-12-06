@@ -1,3 +1,5 @@
+use rperltypesconv;  # DEV NOTE, CORRELATION #rp08: import from Exporter for code outside of a package or class
+
 # [[[ HEADER SPECIAL ]]]
 package RPerl;
 use strict;
@@ -144,6 +146,7 @@ sub filter {
             $post_package_lines = q{};
             $output .= '# [[[ HEADER, PART 1 ]]]' . "\n";
             $output .= $input_line . "\n";
+            $output .= 'use rperltypesconv;' . "\n";  # DEV NOTE, CORRELATION #rp08: import from Exporter for code inside of a package or class
 
 #            print {*STDERR} 'in RPerl::filter(), found $package_line = ' . $package_line . "\n";
 #            print {*STDERR} 'in RPerl::filter(), found $package = ' . $package . "\n";

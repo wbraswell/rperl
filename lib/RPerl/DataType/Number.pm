@@ -3,7 +3,7 @@ package RPerl::DataType::Number;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_200;
+our $VERSION = 0.007_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -35,15 +35,31 @@ use strict;
 use warnings;
 use parent qw(RPerl::DataType::Number);
 
+# [[[ PRE-DECLARED TYPES ]]]
+package    # hide from PAUSE indexing
+    bool;
+package    # hide from PAUSE indexing
+    unsigned_integer;
+package     # hide from PAUSE indexing
+    integer;
+package    # hide from PAUSE indexing
+    gmp_integer;
+package    # hide from PAUSE indexing
+    char;
+package    # hide from PAUSE indexing
+    string;
+
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataType::Number;
 use strict;
 use warnings;
 
 # [[[ INCLUDES ]]]
-use RPerl::DataType::String;    # need string type
-use RPerl::DataType::Integer; # need integer type, normally included by rperltypes.pm but put here in case we don't use rperltypes.pm
 use POSIX qw(floor);
+
+# [[[ EXPORTS ]]]
+use Exporter 'import';
+our @EXPORT = qw(number_to_bool number_to_unsigned_integer number_to_integer number_to_char number_to_string);
 
 # [[[ TYPE-CHECKING ]]]
 our void $number_CHECK = sub {
@@ -80,29 +96,39 @@ our void $number_CHECKTRACE = sub {
 };
 
 # [[[ BOOLIFY ]]]
-our bool $number_to_bool = sub {
+#our bool $number_to_bool = sub {
+sub number_to_bool {
     (my number $input_number) = @_;
     if ($input_number == 0) { return 0; }
     else { return 1; }
-};
+}
+
+# [[[ UNSIGNED INTEGERIFY ]]]
+#our unsigned_integer $number_to_unsigned_integer = sub {
+sub number_to_unsigned_integer {
+    (my number $input_number) = @_;
+    return floor abs $input_number;
+}
 
 # [[[ INTEGERIFY ]]]
-our integer $number_to_integer = sub {
+#our integer $number_to_integer = sub {
+sub number_to_integer {
     (my number $input_number) = @_;
     return floor $input_number;
-};
+}
 
 # [[[ CHARIFY ]]]
 #our char $number_to_char = sub {
-our $number_to_char = sub {
+sub number_to_char {
     (my number $input_number) = @_;
     my string $tmp_string = number_to_string($input_number);
     if ($tmp_string eq q{}) { return q{}; }
     else { return substr $tmp_string, 0, 1; }
-};
+}
 
 # [[[ STRINGIFY ]]]
-our string $number_to_string = sub {
+#our string $number_to_string = sub {
+sub number_to_string {
     ( my $input_number ) = @_;
 
     #    number_CHECK($input_number);
@@ -143,7 +169,7 @@ our string $number_to_string = sub {
 
 #    RPerl::diag('in PERLOPS_PERLTYPES number_to_string(), have $retval = ' . q{'} . $retval . q{'} . "\n");
     return $retval;
-};
+}
 
 # [[[ TYPE TESTING ]]]
 our number $number__typetest0 = sub {

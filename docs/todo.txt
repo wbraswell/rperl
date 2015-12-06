@@ -105,6 +105,8 @@ Basic Medium Magic Support
 RELEASE v3.0beta1 CHRISTMAS
 
 
+rperl command-line front-end
+	rperl -U un-compile option, delete all compiled files
 
 developer_notes.txt
 	warning & error codes

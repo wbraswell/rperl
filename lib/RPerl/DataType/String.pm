@@ -21,15 +21,31 @@ use strict;
 use warnings;
 use parent qw(RPerl::DataType::String);
 
+# [[[ PRE-DECLARED TYPES ]]]
+package    # hide from PAUSE indexing
+    bool;
+package     # hide from PAUSE indexing
+    unsigned_integer;
+package     # hide from PAUSE indexing
+    integer;
+package    # hide from PAUSE indexing
+    gmp_integer;
+package    # hide from PAUSE indexing
+    number;
+package    # hide from PAUSE indexing
+    char;
+
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataType::String;
 use strict;
 use warnings;
 
 # [[[ INCLUDES ]]]
-use RPerl::DataType::Integer; # need integer type, normally included by rperltypes.pm but put here in case we don't use rperltypes.pm
-use RPerl::DataType::Number; # need number type, same as above
 use POSIX qw(floor);
+
+# [[[ EXPORTS ]]]
+use Exporter 'import';
+our @EXPORT = qw(string_to_bool string_to_unsigned_integer string_to_integer string_to_number string_to_char string_to_string);
 
 # [[[ TYPE CHECKING ]]]
 our void $string_CHECK = sub {
@@ -60,34 +76,50 @@ our void $string_CHECKTRACE = sub {
 };
 
 # [[[ BOOLIFY ]]]
-our bool $string_to_bool = sub {
+#our bool $string_to_bool = sub {
+sub string_to_bool {
     (my string $input_string) = @_;
     if (($input_string * 1) == 0) { return 0; }
     else { return 1; }
-};
+}
+
+# [[[ UNSIGNED INTEGERIFY ]]]
+#our integer $string_to_unsigned_integer = sub {
+sub string_to_unsigned_integer {
+    (my string $input_string) = @_;
+    return (floor abs ($input_string * 1)) * 1;
+}
 
 # [[[ INTEGERIFY ]]]
-our integer $string_to_integer = sub {
+#our integer $string_to_integer = sub {
+sub string_to_integer {
     (my string $input_string) = @_;
-    return floor ($input_string * 1);
-};
+    # DEV NOTE: must use double-casting via '* 1' below to avoid following errors
+    # ERROR EIV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:
+    # integer value expected but non-integer value found,
+    # in variable input_sv from subroutine XS_unpack_integer(),
+#    return floor ($input_string * 1);
+    return (floor ($input_string * 1)) * 1;
+}
 
 # [[[ NUMBERIFY ]]]
-our number $string_to_number = sub {
+#our number $string_to_number = sub {
+sub string_to_number {
     (my string $input_string) = @_;
     return $input_string * 1.0;
-};
+}
 
 # [[[ CHARIFY ]]]
 #our char $string_to_char = sub {
-our $string_to_char = sub {
+sub string_to_char {
     (my string $input_string) = @_;
     if ($input_string eq q{}) { return q{}; }
     else { return substr $input_string, 0, 1; }
-};
+}
 
 # [[[ STRINGIFY ]]]
-our string $string_to_string = sub {
+#our string $string_to_string = sub {
+sub string_to_string {
     ( my string $input_string ) = @_;
 
     #    string_CHECK($input_string);
@@ -102,7 +134,7 @@ our string $string_to_string = sub {
 #    RPerl::diag("in PERLOPS_PERLTYPES string_to_string(), bottom of subroutine, returning possibly-modified \$input_string =\n$input_string\n\n");
 
     return ($input_string);
-};
+}
 
 # [[[ TYPE TESTING ]]]
 our string $string__typetest0 = sub {

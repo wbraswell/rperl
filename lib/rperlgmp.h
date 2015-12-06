@@ -3,7 +3,7 @@
 
 typedef mpz_t                 gmp_integer;
 
-// INITIALIZATION FUNCTIONS
+// [[[ INITIALIZATION FUNCTIONS ]]]
 // https://gmplib.org/manual/Initializing-Integers.html
 
 #define gmp_init                 mpz_init
@@ -13,7 +13,7 @@ typedef mpz_t                 gmp_integer;
 //#define gmp_clears               mpz_clears
 //#define gmp_reallocate_bitcount  mpz_realloc2
 
-// ASSIGNMENT FUNCTIONS
+// [[[ ASSIGNMENT FUNCTIONS ]]]
 // https://gmplib.org/manual/Assigning-Integers.html
 
 //#define gmp_set                   mpz_set
@@ -25,7 +25,7 @@ typedef mpz_t                 gmp_integer;
 //#define gmp_set_gmp_float         mpz_set_f
 //#define gmp_swap                  mpz_swap
 
-// COMBINED INITIALIZATION AND ASSIGNMENT FUNCTIONS
+// [[[ COMBINED INITIALIZATION AND ASSIGNMENT FUNCTIONS ]]]
 // https://gmplib.org/manual/Simultaneous-Integer-Init-_0026-Assign.html
 
 //#define gmp_init_set                   mpz_init_set
@@ -34,7 +34,7 @@ typedef mpz_t                 gmp_integer;
 //#define gmp_init_set_number            mpz_init_set_d
 //#define gmp_init_set_string            mpz_init_set_str
 
-// CONVERSION FUNCTIONS
+// [[[ CONVERSION FUNCTIONS ]]]
 // https://gmplib.org/manual/Converting-Integers.html
 
 #define gmp_get_unsigned_integer   mpz_get_ui
@@ -43,7 +43,7 @@ typedef mpz_t                 gmp_integer;
 //#define gmp_get_number_power_of_2  mpz_get_d_2exp
 //#define gmp_get_string             mpz_get_str
 
-// ARITHMETIC FUNCTIONS
+// [[[ ARITHMETIC FUNCTIONS ]]]
 // https://gmplib.org/manual/Integer-Arithmetic.html
 
 #define gmp_add                       mpz_add
@@ -62,7 +62,7 @@ typedef mpz_t                 gmp_integer;
 //#define gmp_neg                       mpz_neg
 //#define gmp_abs                       mpz_abs
 
-// DIVISION FUNCTIONS
+// [[[ DIVISION FUNCTIONS ]]]
 // https://gmplib.org/manual/Integer-Division.html
 
 //#define gmp_div_ceiling_quotient                              mpz_cdiv_q
@@ -103,7 +103,7 @@ typedef mpz_t                 gmp_integer;
 //#define gmp_congruent_unsigned_integer                        mpz_congruent_ui_p
 //#define gmp_congruent_power_of_2                              mpz_congruent_2exp_p
 
-// EXPONENTIATION FUNCTIONS
+// [[[ EXPONENTIATION FUNCTIONS ]]]
 // https://gmplib.org/manual/Integer-Exponentiation.html
 
 //#define gmp_pow_mod                                mpz_powm
@@ -112,7 +112,7 @@ typedef mpz_t                 gmp_integer;
 //#define gmp_pow_unsigned_integer                   mpz_pow_ui
 //#define gmp_unsigned_integer_pow_unsigned_integer  mpz_ui_pow_ui
 
-// ROOT EXTRACTION FUNCTIONS
+// [[[ ROOT EXTRACTION FUNCTIONS ]]]
 // https://gmplib.org/manual/Integer-Roots.html
 
 //#define gmp_root            mpz_root
@@ -122,7 +122,7 @@ typedef mpz_t                 gmp_integer;
 //#define gmp_perfect_power   mpz_perfect_power_p
 //#define gmp_perfect_square  mpz_perfect_square_p
 
-// NUMBER THEORETIC FUNCTIONS
+// [[[ NUMBER THEORETIC FUNCTIONS ]]]
 // https://gmplib.org/manual/Number-Theoretic-Functions.html
 
 //#define gmp_probably_prime                              mpz_probab_prime_p
@@ -152,7 +152,7 @@ typedef mpz_t                 gmp_integer;
 //#define gmp_lucas_unsigned_integer                      mpz_lucnum_ui
 //#define gmp_lucas_lucas_unsigned_integer                mpz_lucnum2_ui
 
-// COMPARISON FUNCTIONS
+// [[[ COMPARISON FUNCTIONS ]]]
 // https://gmplib.org/manual/Integer-Comparisons.html
 
 #define gmp_cmp                            mpz_cmp
@@ -164,7 +164,7 @@ typedef mpz_t                 gmp_integer;
 //#define gmp_cmp_absolute_unsigned_integer  mpz_cmpabs_ui
 //#define gmp_sign                           mpz_sgn
 
-// LOGICAL AND BIT MANIPULATION FUNCTIONS
+// [[[ LOGICAL AND BIT MANIPULATION FUNCTIONS ]]]
 // https://gmplib.org/manual/Integer-Logic-and-Bit-Fiddling.html
 
 //#define gmp_bitwise_and       mpz_and
@@ -180,7 +180,7 @@ typedef mpz_t                 gmp_integer;
 //#define gmp_complement_bit    mpz_combit
 //#define gmp_test_bit          mpz_tstbit
 
-// INPUT AND OUTPUT FUNCTIONS
+// [[[ INPUT AND OUTPUT FUNCTIONS ]]]
 // https://gmplib.org/manual/I_002fO-of-Integers.html
 
 //#define gmp_output_file_string  mpz_out_str
@@ -188,20 +188,20 @@ typedef mpz_t                 gmp_integer;
 //#define gmp_output_file_raw     mpz_out_raw
 //#define gmp_input_file_raw      mpz_inp_raw
 
-// RANDOM NUMBER FUNCTIONS
+// [[[ RANDOM NUMBER FUNCTIONS ]]]
 // https://gmplib.org/manual/Integer-Random-Numbers.html
 
 //#define gmp_random_uniform_bitcount  mpz_urandomb
 //#define gmp_random_uniform           mpz_urandomm
 //#define gmp_random_bitcount          mpz_rrandomb
 
-// INTEGER IMPORTA AND EXPORT FUNCTIONS
+// [[[ INTEGER IMPORTA AND EXPORT FUNCTIONS ]]]
 // https://gmplib.org/manual/Integer-Import-and-Export.html
 
 //#define gmp_import  mpz_import
 //#define gmp_export  mpz_export
 
-// MISCELLANEOUS FUNCTIONS
+// [[[ MISCELLANEOUS FUNCTIONS ]]]
 // https://gmplib.org/manual/Miscellaneous-Integer-Functions.html
 
 //#define gmp_fits_unsigned_integer         mpz_fits_ulong_p

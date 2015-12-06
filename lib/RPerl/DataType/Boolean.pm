@@ -3,7 +3,7 @@ package RPerl::DataType::Boolean;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_100;
+our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -22,13 +22,28 @@ use strict;
 use warnings;
 use parent qw(RPerl::DataType::Boolean);
 
+# [[[ PRE-DECLARED TYPES ]]]
+package    # hide from PAUSE indexing
+    unsigned_integer;
+package     # hide from PAUSE indexing
+    integer;
+package    # hide from PAUSE indexing
+    gmp_integer;
+package    # hide from PAUSE indexing
+    number;
+package    # hide from PAUSE indexing
+    char;
+package    # hide from PAUSE indexing
+    string;
+
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataType::Boolean;
 use strict;
 use warnings;
 
-# [[[ INCLUDES ]]]
-use RPerl::DataType::String;    # need string type
+# [[[ EXPORTS ]]]
+use Exporter 'import';
+our @EXPORT = qw(bool_to_unsigned_integer bool_to_integer bool_to_number bool_to_char bool_to_string);
 
 # NEED UPGRADE: using SvIOKp() integer type check for boolean type check, need implement SvBOKp() and full bool semantics
 
@@ -60,29 +75,39 @@ our void $bool_CHECKTRACE = sub {
     }
 };
 
-# [[[ INTEGERIFY ]]]
-our integer $bool_to_integer = sub {
+# [[[ UNSIGNED INTEGERIFY ]]]
+#our unsigned_integer $bool_to_unsigned_integer = sub {
+sub bool_to_unsigned_integer {
     (my bool $input_bool) = @_;
     return $input_bool;
-};
+}
+
+# [[[ INTEGERIFY ]]]
+#our integer $bool_to_integer = sub {
+sub bool_to_integer {
+    (my bool $input_bool) = @_;
+    return $input_bool;
+}
 
 # [[[ NUMBERIFY ]]]
-our number $bool_to_number = sub {
+#our number $bool_to_number = sub {
+sub bool_to_number {
     (my bool $input_bool) = @_;
     return $input_bool * 1.0;
-};
+}
 
 # [[[ CHARIFY ]]]
 #our char $bool_to_char = sub {
-our $bool_to_char = sub {
+sub bool_to_char {
     (my bool $input_bool) = @_;
     my string $tmp_string = bool_to_string($input_bool);
     if ($tmp_string eq q{}) { return q{}; }
     else { return substr $tmp_string, 0, 1; }
-};
+}
 
 # [[[ STRINGIFY ]]]
-our string $bool_to_string = sub {
+#our string $bool_to_string = sub {
+sub bool_to_string {
     ( my $input_bool ) = @_;
 
     #    bool_CHECK($input_bool);
@@ -107,7 +132,7 @@ our string $bool_to_string = sub {
 
 #    RPerl::diag('in PERLOPS_PERLTYPES bool_to_string(), have $retval = ' . q{'} . $retval . q{'} . "\n");
     return $retval;
-};
+}
 
 # [[[ TYPE TESTING ]]]
 our bool $bool__typetest0 = sub {
