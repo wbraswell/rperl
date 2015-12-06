@@ -2,7 +2,7 @@
 package RPerl::Inline;
 use strict;
 use warnings;
-our $VERSION = 0.001_100;
+our $VERSION = 0.001_200;
 
 #use RPerl;  # ERROR: Too late to run INIT block at ...
 #use Config;
@@ -40,7 +40,7 @@ our %ARGS = (
     warnings          => (((not defined $ENV{RPERL_WARNINGS}) or $ENV{RPERL_WARNINGS}) and $RPerl::WARNINGS),  # suppress or display Inline warnings
     filters           => 'Preprocess',
     auto_include => # DEV NOTE: include non-RPerl files using AUTO_INCLUDE so they are not parsed by the 'Preprocess' filter
-        [
+    [
         '#include <gmp.h>',  # GMP for multiple-precision math
         '#include <immintrin.h>',  # SSE for high-speed math
         '#include <memory>',  # smart pointers for memory management
@@ -53,7 +53,8 @@ our %ARGS = (
         '#include <vector>',
         '#include <math.h>',
         '#include <unordered_map>', # DEV NOTE: unordered_map may require '-std=c++0x' in CCFLAGS above
-        ],
+    ],
+    libs => '-lgmp',
     classes => sub { join('::', split('__', shift)); }
 );
 1;
