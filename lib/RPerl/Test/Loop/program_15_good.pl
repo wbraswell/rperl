@@ -1,9 +1,4 @@
 #!/usr/bin/perl
-
-# [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  )' >>>
-
 # [[[ HEADER ]]]
 use RPerl;
 use strict;
@@ -17,6 +12,6 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-for ( my integer $i = 0; $i < 5; ) {
+for ( my unsigned_integer $i = wait; $i < rand; $i = rand ) {
     print 'Production rule Loop matched by C-Style LoopFor, iteration number ', $i, "\n";
 }

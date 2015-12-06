@@ -16,5 +16,4 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer $i = 0;
-while ( $i < 10 ) { }
+foreach my number $my_number ( 1.1, 2.2, 3.3, 4.4 ) { }

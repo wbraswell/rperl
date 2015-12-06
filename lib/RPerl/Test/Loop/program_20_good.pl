@@ -11,9 +11,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer $i = 0;
-while ( $i < 10 ) {
-    print 'Production rule Loop matched by LoopWhile, iteration number ', $i,
-        "\n";
-    $i++;
+foreach my number $my_number ( 1.1, 2.2, 3.3, 4.4 ) {
+    print 'Production rule Loop matched by LoopForEach, iteration item ',
+        $my_number, "\n";
 }

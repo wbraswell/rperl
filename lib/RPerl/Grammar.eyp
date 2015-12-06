@@ -2,7 +2,7 @@
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.002_620;
+    our $VERSION = 0.002_630;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -31,7 +31,7 @@
 %token FHREF_SYMBOL_IN       = /(\<\$[A-Z][A-Z0-9_]*\>)/                 # less-than, dollar sigil, uppercase letter, uppercase letters & numbers & underscores, greater-than; ex. '<$MY_FILEHANDLE_23>'
 %token FHREF_SYMBOL_BRACES   = /(\{\$[A-Z][A-Z0-9_]*\})/                 # left brace, dollar sigil, uppercase letter, uppercase letters & numbers & underscores, right brace; ex. '{$MY_FILEHANDLE_23}'
 %token FHREF_SYMBOL          = /(\$[A-Z][A-Z0-9_]*)/                     # dollar sigil, uppercase letter, uppercase letters & numbers & underscores; ex. '$MY_FILEHANDLE_23'
-%token TYPE_INTEGER          = /(integer)\s+/                            # 'integer' followed by whitespace
+%token TYPE_INTEGER          = /(integer|unsigned_integer)\s+/           # 'integer' or 'unsigned_integer' followed by whitespace
 %token TYPE_FHREF            = /(filehandleref\s+)/                      # 'filehandleref' followed by whitespace
 %token TYPE_METHOD           = /((?:[a-zA-Z]\w*)+(?:::[a-zA-Z]\w*)*::method)/  # optionally-scoped word, followed by '::method'; ex. 'string_arrayref::method'
 %token CONSTANT_CALL_SCOPED  = /((?:[a-zA-Z]\w*)(?:::[a-zA-Z]\w*)*(?:::[A-Z0-9_]*)\(\))/

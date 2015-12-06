@@ -1,5 +1,6 @@
 PARTIAL Windows Testing, add ci.appveyor.com github webhook
 PARTIAL Add GMP Support
+DONE allow unsigned_integer as loop index
 
 enable opstrings as hash keys
 

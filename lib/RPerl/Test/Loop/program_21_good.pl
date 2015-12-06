@@ -11,9 +11,9 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer $i = 3;
-while ( $i > -5 ) {
-    print 'Production rule Loop matched by LoopWhile, iteration number ', $i,
-        "\n";
-    $i--;
+my string_arrayref $my_array
+    = [ 'howdy', 'doody', 'clarabell' ];
+foreach my string $my_element ( @{$my_array} ) {
+    print 'Production rule Loop matched by LoopForEach, iteration item ',
+        $my_element, "\n";
 }

@@ -16,6 +16,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string_arrayref $my_array
-    = [ 'howdy', 'doody', 'clarabell' ];
-foreach my string $my_element ( @{$my_array} ) { }
+my integer $i = 0;
+while ( $i < 10 ) { }
