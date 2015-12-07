@@ -34,6 +34,10 @@ use Math::BigInt lib => 'GMP';  # we still actually use GMP in PERLOPS_PERLTYPES
 # [[[ CONSTRUCTOR ]]]
 sub new { return Math::BigInt->new(); }
 
+# START HERE: implement gmp_integer type conversion subs
+# START HERE: implement gmp_integer type conversion subs
+# START HERE: implement gmp_integer type conversion subs
+
 # [[[ TYPE-CHECKING ]]]
 # [[[ BOOLIFY ]]]
 # [[[ NUMBERIFY ]]]

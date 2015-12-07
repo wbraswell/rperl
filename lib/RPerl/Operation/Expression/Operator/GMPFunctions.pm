@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::Operator::GMPFunctions;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::Operator);
@@ -17,14 +17,10 @@ use RPerl::Operation::Expression::Operator;
 use RPerl::DataType::GMPInteger;
 use Math::BigInt lib => 'GMP';  # we still actually use GMP in PERLOPS_PERLTYPES mode, albeit indirectly via Math::BigInt::GMP
 use Exporter 'import';
-our @EXPORT = qw(gmp_init gmp_init_set_unsigned_integer gmp_get_unsigned_integer gmp_add gmp_mul_unsigned_integer gmp_sub_mul_unsigned_integer gmp_add_mul_unsigned_integer gmp_div_truncate_quotient gmp_cmp);
+our @EXPORT = qw(gmp_init gmp_init_set_unsigned_integer gmp_get_unsigned_integer gmp_get_signed_integer gmp_get_number gmp_get_string gmp_add gmp_mul_unsigned_integer gmp_sub_mul_unsigned_integer gmp_add_mul_unsigned_integer gmp_div_truncate_quotient gmp_cmp);
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
-
-# START HERE: get this PERLOPS_PERLTYPES code working, implement gmp_integer type conversion subs
-# START HERE: get this PERLOPS_PERLTYPES code working, implement gmp_integer type conversion subs
-# START HERE: get this PERLOPS_PERLTYPES code working, implement gmp_integer type conversion subs
 
 # [[[ OO METHODS & SUBROUTINES ]]]
 
@@ -55,21 +51,48 @@ sub gmp_get_unsigned_integer {
     return $op->numify();
 }
 
+# signed long int mpz_get_si (const mpz_t op)
+#our integer $gmp_get_signed_integer = sub {
+sub gmp_get_signed_integer {
+    ( my gmp_integer $op ) = @_;
+    return $op->numify();
+}
+
+# double mpz_get_d (const mpz_t op)
+#our integer $gmp_get_number = sub {
+sub gmp_get_number {
+    ( my gmp_integer $op ) = @_;
+    return $op->numify();
+}
+
+# char * mpz_get_str (char *str, int base, const mpz_t op)
+#our string $gmp_get_string = sub {
+sub gmp_get_string {
+    ( my gmp_integer $op ) = @_;
+    return $op->bstr();
+}
+
 # [[[ ARITHMETIC FUNCTIONS ]]]
 
 # void mpz_add (mpz_t rop, const mpz_t op1, const mpz_t op2)
 #our gmp_integer $gmp_add = sub {
 sub gmp_add {
     ( my gmp_integer $rop, my gmp_integer $op1, my gmp_integer $op2 ) = @_;
-    $rop = $op1->copy();
-    $rop->badd($op2);
+    # in case $op1 and/or $op2 are the same variables as $rop, make copies so you don't zero them out before reading them
+    my gmp_integer $op1_copy = $op1->copy();
+    my gmp_integer $op2_copy = $op2->copy();
+    $rop->bzero();
+    $rop->badd($op1_copy);
+    $rop->badd($op2_copy);
 }
 
 # void mpz_mul_ui (mpz_t rop, const mpz_t op1, unsigned long int op2)
 #our void $gmp_mul_unsigned_integer = sub {
 sub gmp_mul_unsigned_integer {
     ( my gmp_integer $rop, my gmp_integer $op1, my unsigned_integer $op2 ) = @_;
-    $rop = $op1->copy();
+    my gmp_integer $op1_copy = $op1->copy();
+    $rop->bzero();
+    $rop->badd($op1_copy);
     $rop->bmul($op2);
 }
 
@@ -97,8 +120,11 @@ sub gmp_add_mul_unsigned_integer {
 #our void $gmp_div_truncate_quotient = sub {
 sub gmp_div_truncate_quotient {
     ( my gmp_integer $q, my gmp_integer $n, my gmp_integer $d ) = @_;
-    $q = $n->copy();
-    $q->bdiv($d);
+    my gmp_integer $n_copy = $n->copy();
+    my gmp_integer $d_copy = $d->copy();
+    $q->bzero();
+    $q->badd($n_copy);
+    $q->bdiv($d_copy);
 }
 
 # [[[ COMPARISON FUNCTIONS ]]]

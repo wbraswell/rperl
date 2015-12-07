@@ -1,5 +1,5 @@
 #ifndef __CPP__INCLUDED__rperlgmp_h
-#define __CPP__INCLUDED__rperlgmp_h 0.003_100
+#define __CPP__INCLUDED__rperlgmp_h 0.003_200
 
 typedef mpz_t                 gmp_integer;
 
@@ -38,10 +38,10 @@ typedef mpz_t                 gmp_integer;
 // https://gmplib.org/manual/Converting-Integers.html
 
 #define gmp_get_unsigned_integer   mpz_get_ui
-//#define gmp_get_signed_integer     mpz_get_si
-//#define gmp_get_number             mpz_get_d
+#define gmp_get_signed_integer     mpz_get_si
+#define gmp_get_number             mpz_get_d
 //#define gmp_get_number_power_of_2  mpz_get_d_2exp
-//#define gmp_get_string             mpz_get_str
+#define gmp_get_string(X)          mpz_get_str(NULL, 10, X)
 
 // [[[ ARITHMETIC FUNCTIONS ]]]
 // https://gmplib.org/manual/Integer-Arithmetic.html

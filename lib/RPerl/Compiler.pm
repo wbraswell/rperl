@@ -585,11 +585,14 @@ our void $cpp_to_xsbinary__subcompile = sub {
 
     # NEED FIX: why does Inline::CPP require double-subcompiling???
     # DEV NOTE: exec() and system() don't work, only backticks
-    `export RPERL_WARNINGS=0; perl -e '$eval_string'`;  # should build
+ 
+#    `export RPERL_WARNINGS=0; perl -e '$eval_string'`;  # should build
 #RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), done with backticks 1...} . "\n" );
-    `export RPERL_WARNINGS=0; perl -e '$eval_string'`;  # should not build, but does
+
+#    `export RPERL_WARNINGS=0; perl -e '$eval_string'`;  # should not build, but does
 #RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), done with backticks 2...} . "\n" );
-    `export RPERL_WARNINGS=0; perl -e '$eval_string'`;  # should not build, does not seem to
+
+#    `export RPERL_WARNINGS=0; perl -e '$eval_string'`;  # should not build, does not seem to
 #RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), done with backticks 3...} . "\n" );
 
     RPerl::verbose( '         done.' . "\n" );

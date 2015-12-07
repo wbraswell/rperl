@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::Conditional;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement);
@@ -200,7 +200,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 $cpp_source_subgroup );
             $cpp_source_group->{CPP} .= q{ } . $elsif_right_paren . q{ };
             $cpp_source_subgroup
-                = $elsif_codeblock->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+                = $elsif_codeblock->ast_to_cpp__generate__CPPOPS_CPPTYPES(undef, $modes);  # undef $loop_label
             RPerl::Generator::source_group_append( $cpp_source_group,
                 $cpp_source_subgroup );
         }
@@ -214,7 +214,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
             $cpp_source_group->{CPP} .= $else . q{ };
             $cpp_source_subgroup
-                = $else_codeblock->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+                = $else_codeblock->ast_to_cpp__generate__CPPOPS_CPPTYPES(undef, $modes);  # undef $loop_label
             RPerl::Generator::source_group_append( $cpp_source_group,
                 $cpp_source_subgroup );
         }
