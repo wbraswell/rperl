@@ -1,6 +1,8 @@
 PARTIAL Windows Testing, add ci.appveyor.com github webhook
 PARTIAL Add GMP Support
 DONE allow unsigned_integer as loop index
+DONE enable SSE and GMP support only when needed
+DONE disable SSE on Arm architectures
 
 enable opstrings as hash keys
 
@@ -66,13 +68,8 @@ tests
 Eyapp unescaped left braces for Perl v5.22 compatibility
 RELEASE Parse::Eyapp vX.YZZY
 
-RELEASE v1.21
-
-
 1 New Benchmark Application
 Finish All CPPOPS_CPPTYPES Code Generation
-
-RELEASE v1.3 THANKSGIVING
 
 
 
@@ -104,6 +101,8 @@ Basic Medium Magic Support
 
 RELEASE v3.0beta1 CHRISTMAS
 
+
+Dumper() in C++, use as default overload for <<
 
 rperl command-line front-end
 	rperl -U un-compile option, delete all compiled files

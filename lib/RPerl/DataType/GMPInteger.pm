@@ -6,7 +6,8 @@ use RPerl::AfterSubclass;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
-use parent qw(RPerl::DataType::Scalar);
+use parent qw(Math::BigInt RPerl::DataType::Scalar);  # DEV NOTE: multiple inheritance!
+use Math::BigInt lib => 'GMP';  # we still actually use GMP in PERLOPS_PERLTYPES mode, albeit indirectly via Math::BigInt::GMP
 use RPerl::DataType::Scalar;
 
 # [[[ CRITICS ]]]
@@ -22,29 +23,140 @@ use strict;
 use warnings;
 use parent qw(RPerl::DataType::GMPInteger);
 
+# [[[ PRE-DECLARED TYPES ]]]
+package    # hide from PAUSE indexing
+    bool;
+package    # hide from PAUSE indexing
+    unsigned_integer;
+package    # hide from PAUSE indexing
+    integer;
+package    # hide from PAUSE indexing
+    number;
+package    # hide from PAUSE indexing
+    char;
+package    # hide from PAUSE indexing
+    string;
+
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataType::GMPInteger;
 use strict;
 use warnings;
 
 # [[[ INCLUDES ]]]
-use RPerl::DataType::String;    # need stringy type
-use Math::BigInt lib => 'GMP';  # we still actually use GMP in PERLOPS_PERLTYPES mode, albeit indirectly via Math::BigInt::GMP
+use Scalar::Util qw(blessed);
 
-# [[[ CONSTRUCTOR ]]]
-sub new { return Math::BigInt->new(); }
 
-# START HERE: implement gmp_integer type conversion subs
-# START HERE: implement gmp_integer type conversion subs
-# START HERE: implement gmp_integer type conversion subs
+# START HERE: add *_to_gmp_integer() in this file, write C++ equivalent checking/testing/conversion subs, write tests
+# START HERE: add *_to_gmp_integer() in this file, write C++ equivalent checking/testing/conversion subs, write tests
+# START HERE: add *_to_gmp_integer() in this file, write C++ equivalent checking/testing/conversion subs, write tests
+
+
+# [[[ EXPORTS ]]]
+use Exporter 'import';
+our @EXPORT = qw(gmp_integer_to_bool gmp_integer_to_unsigned_integer gmp_integer_to_integer gmp_integer_to_number gmp_integer_to_char gmp_integer_to_string);
 
 # [[[ TYPE-CHECKING ]]]
-# [[[ BOOLIFY ]]]
-# [[[ NUMBERIFY ]]]
-# [[[ CHARIFY ]]]
-# [[[ STRINGIFY ]]]
-# [[[ TYPE TESTING ]]]
+our void $gmp_integer_CHECK = sub {
+    ( my $possible_gmp_integer ) = @_;
+    if ( not( defined $possible_gmp_integer ) ) {
+        croak("\nERROR EIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer value expected but undefined/null value found,\ncroaking");
+    }
+    my string $classname = blessed($possible_gmp_integer);
+    if (( not defined $classname ) or ($classname ne 'gmp_integer')) {
+        croak("\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer value expected but non-gmp_integer value found,\ncroaking");
+    }
+};
+our void $gmp_integer_CHECKTRACE = sub {
+    ( my $possible_gmp_integer, my $variable_name, my $subroutine_name ) = @_;
+    if ( not( defined $possible_gmp_integer ) ) {
+        croak(
+            "\nERROR EIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+        );
+    }
+    my string $classname = blessed($possible_gmp_integer);
+    if (( not defined $classname ) or ($classname ne 'gmp_integer')) {
+        croak(
+            "\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer value expected but non-gmp_integer value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+        );
+    }
+};
 
-# NEED ADD TYPE CHECKING, CONVERSION, AND TYPE TESTING SUBROUTINES
+# [[[ BOOLIFY ]]]
+#our bool $gmp_integer_to_bool = sub {
+sub gmp_integer_to_bool {
+    ( my gmp_integer $input_gmp_integer ) = @_;
+    if   ( $input_gmp_integer->is_zero() ) { return 0; }
+    else                         { return 1; }
+}
+
+# [[[ UNSIGNED INTEGERIFY ]]]
+#our unsigned_integer $gmp_integer_to_unsigned_integer = sub {
+sub gmp_integer_to_unsigned_integer {
+    ( my gmp_integer $input_gmp_integer ) = @_;
+    return abs $input_gmp_integer->numify();
+}
+
+# [[[ INTEGERIFY ]]]
+#our integer $gmp_integer_to_integer = sub {
+sub gmp_integer_to_integer {
+    ( my gmp_integer $input_gmp_integer ) = @_;
+    return $input_gmp_integer->numify();
+}
+
+# [[[ NUMBERIFY ]]]
+#our number $gmp_integer_to_number = sub {
+sub gmp_integer_to_number {
+    ( my gmp_integer $input_gmp_integer ) = @_;
+    return $input_gmp_integer->numify() * 1.0;
+}
+
+# [[[ CHARIFY ]]]
+#our char $gmp_integer_to_char = sub {
+sub gmp_integer_to_char {
+    ( my gmp_integer $input_gmp_integer ) = @_;
+    my string $tmp_string = gmp_integer_to_string($input_gmp_integer);
+    if   ( $tmp_string eq q{} ) { return q{}; }
+    else                        { return substr $tmp_string, 0, 1; }
+}
+
+# [[[ STRINGIFY ]]]
+#our string $gmp_integer_to_string = sub {
+sub gmp_integer_to_string {
+    ( my gmp_integer $input_gmp_integer ) = @_;
+
+    #    gmp_integer_CHECK($input_gmp_integer);
+    gmp_integer_CHECKTRACE( $input_gmp_integer, '$input_gmp_integer', 'gmp_integer_to_string()' );
+
+    #    RPerl::diag("in PERLOPS_PERLTYPES gmp_integer_to_string(), received \$input_gmp_integer = $input_gmp_integer\n");
+
+    my integer $is_negative = $input_gmp_integer->is_neg();
+    my string $retval = reverse $input_gmp_integer->bstr();
+    if ($is_negative) { chop $retval; }    # remove negative sign
+    $retval =~ s/(\d{3})/$1_/gxms;
+    if ( ( substr $retval, -1, 1 ) eq '_' ) { chop $retval; }
+    $retval = reverse $retval;
+
+    if ($is_negative) { $retval = q{-} . $retval; }
+
+    #    RPerl::diag('in PERLOPS_PERLTYPES gmp_integer_to_string(), have $retval = ' . q{'} . $retval . q{'} . "\n");
+    return $retval;
+}
+
+# [[[ TYPE TESTING ]]]
+our gmp_integer $gmp_integer__typetest0 = sub {
+    my gmp_integer $retval = ( 21 / 7 ) + main::RPerl__DataType__Integer__MODE_ID();    # return gmp_integer (not number) value, don't do (22 / 7) etc.
+
+    #    RPerl::diag("in PERLOPS_PERLTYPES gmp_integer__typetest0(), have \$retval = $retval\n");
+    return ($retval);
+};
+our gmp_integer $gmp_integer__typetest1 = sub {
+    ( my gmp_integer $lucky_gmp_integer ) = @_;
+
+    #    gmp_integer_CHECK($lucky_gmp_integer);
+    gmp_integer_CHECKTRACE( $lucky_gmp_integer, '$lucky_gmp_integer', 'gmp_integer__typetest1()' );
+
+    #    RPerl::diag('in PERLOPS_PERLTYPES gmp_integer__typetest1(), received $lucky_gmp_integer = ' . gmp_integer_to_string($lucky_gmp_integer) . "\n");
+    return ( ( $lucky_gmp_integer * 2 ) + main::RPerl__DataType__Integer__MODE_ID() );
+};
 
 1;  # end of class

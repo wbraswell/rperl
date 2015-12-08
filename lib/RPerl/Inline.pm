@@ -2,7 +2,7 @@
 package RPerl::Inline;
 use strict;
 use warnings;
-our $VERSION = 0.001_300;
+our $VERSION = 0.001_400;
 
 #use RPerl;  # ERROR: Too late to run INIT block at ...
 #use Config;
@@ -29,7 +29,7 @@ our $CCFLAGSEX = '-Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -
 
 our %ARGS = (
     typemaps => "$RPerl::INCLUDE_PATH/typemap.rperl",
-    optimize => '-O3 -fomit-frame-pointer -march=native -mfpmath=sse -msse3 -g',  # disable default '-O2 -g' (or similar) from Perl core & Makemaker
+    optimize => '-O3 -fomit-frame-pointer -march=native -g',  # disable default '-O2 -g' (or similar) from Perl core & Makemaker
 
 # NEED UPGRADE: strip C++ incompat CFLAGS
 #  ccflags => $Config{ccflags} . ' -DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
@@ -41,8 +41,6 @@ our %ARGS = (
     filters           => 'Preprocess',
     auto_include => # DEV NOTE: include non-RPerl files using AUTO_INCLUDE so they are not parsed by the 'Preprocess' filter
     [
-        '#include <gmp.h>',  # GMP for multiple-precision math
-        '#include <immintrin.h>',  # SSE for high-speed math
         '#include <memory>',  # smart pointers for memory management
         '#include <iostream>',
         '#include <string>',
@@ -54,7 +52,6 @@ our %ARGS = (
         '#include <math.h>',
         '#include <unordered_map>', # DEV NOTE: unordered_map may require '-std=c++0x' in CCFLAGS above
     ],
-    libs => '-lgmp',
     classes => sub { join('::', split('__', shift)); }
 );
 1;

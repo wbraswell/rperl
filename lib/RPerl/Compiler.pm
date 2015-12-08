@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.006_210;
+our $VERSION = 0.007_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -28,11 +28,12 @@ use English qw(-no_match_vars);    # for $OSNAME; why isn't this included from '
 use IPC::Cmd qw(can_run);          # to check for `perltidy` and `astyle`
 use List::MoreUtils qw(uniq);
 use File::Spec;
+use Config;
 
 # [[[ SUBROUTINES ]]]
 
 our string_arrayref $find_dependencies = sub {
-    ( my string $file_name) = @_;
+    ( my string $file_name, my string_hashref $modes ) = @_;
     my string_arrayref $dependencies = [];
 
     #    RPerl::diag( 'in Compiler::find_dependencies(), received $file_name = ' . $file_name . "\n" );
@@ -79,8 +80,6 @@ our string_arrayref $find_dependencies = sub {
                 or ( $file_line =~ /use\s+RPerl\s*;/ )
                 or ( $file_line =~ /use\s+RPerl::AfterSubclass\s*;/ )
                 or ( $file_line =~ /use\s+RPerl::Config\s*;/ )
-                or ( $file_line =~ /use\s+rperlsse\s*;/ )
-                or ( $file_line =~ /use\s+rperlgmp\s*;/ )
                 or ( $file_line =~ /use\s+parent/ )
                 or ( $file_line =~ /use\s+constant/ )
                 or ( $file_line =~ /use\s+overload/ )
@@ -89,10 +88,31 @@ our string_arrayref $find_dependencies = sub {
                 # safely ignore these possibly-valid but not-subdependency uses
                 next;
             }
+            elsif ( $file_line =~ /use\s+rperlsse\s*;/ ) {
+#            	RPerl::diag('in Compiler::find_dependencies(), found rperlsse line, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
+                if ((substr $Config{archname}, 0, 3) eq 'arm') {
+                    die q{ERROR ECVCODE05, COMPILER, FIND DEPENDENCIES: 'use rperlsse;' command found but SSE not supported on Arm architecture, file } . $file_name . ', dying' . "\n";
+                }
+                if ((not exists $modes->{_enable_sse}) or (not defined $modes->{_enable_sse})) {
+                    $modes->{_enable_sse} = {};
+                }
+                $modes->{_enable_sse}->{$file_name} = 1;
+#            	RPerl::diag('in Compiler::find_dependencies(), after finding rperlsse line, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
+                next;
+            }
+            elsif ( $file_line =~ /use\s+rperlgmp\s*;/ ) {
+#            	RPerl::diag('in Compiler::find_dependencies(), found rperlgmp line, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
+                if ((not exists $modes->{_enable_gmp}) or (not defined $modes->{_enable_gmp})) {
+                    $modes->{_enable_gmp} = {};
+                }
+                $modes->{_enable_gmp}->{$file_name} = 1;
+#            	RPerl::diag('in Compiler::find_dependencies(), after finding rperlgmp line, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
+                next;
+            }
 
             if ( $file_line =~ /use\s+lib/ ) {
                 die
-                    q{ERROR ECVCODE02, COMPILER, FIND DEPENDENCIES: 'use lib...' not currently supported, please set @INC using the PERL5LIB environment variable, dying}
+                    q{ERROR ECVCODE02, COMPILER, FIND DEPENDENCIES: 'use lib...' not currently supported, please set @INC using the PERL5LIB environment variable, file } . $file_name . ', dying'
                     . "\n";
             }
 
@@ -111,7 +131,7 @@ our string_arrayref $find_dependencies = sub {
             if ( not exists $INC{$file_line} ) {
                 die 'ERROR ECVCODE03, COMPILER, FIND DEPENDENCIES: After successful eval-use, still failed to find package file '
                     . $file_line
-                    . ' in %INC, dying' . "\n";
+                    . ' in %INC, file ' . $file_name . ', dying' . "\n";
             }
 
             #            RPerl::diag( 'in Compiler::find_dependencies(), have MATCHING $file_line = ' . $file_line . "\n" );
@@ -120,7 +140,7 @@ our string_arrayref $find_dependencies = sub {
 
             #            RPerl::diag( 'in Compiler::find_dependencies(), have PRE-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
 
-            my string_arrayref $subdependencies = find_dependencies( $INC{$file_line} );
+            my string_arrayref $subdependencies = find_dependencies( $INC{$file_line}, $modes );
 
             # discard duplicate dependencies that now appear in subdependencies
             $dependencies = [ uniq @{$subdependencies}, @{$dependencies} ];
@@ -133,6 +153,8 @@ our string_arrayref $find_dependencies = sub {
         or die 'ECVCODE04, COMPILER, FIND DEPENDENCIES: Cannot close file ' . $file_name . ' after reading, ' . $OS_ERROR . ', dying' . "\n";
 
     #    RPerl::diag( 'in Compiler::find_dependencies(), returning $dependencies = ' . Dumper($dependencies) . "\n" );
+#    RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
+#    RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
     return $dependencies;
 };
 
@@ -414,6 +436,8 @@ our void $save_source_files = sub {
             # deferred, finally read in Module PMC template file, replace package name and paths, add accessor/mutator shim methods
             my string $file_line;
             my string $file_string = q{};
+            my string $module_path_pm = $file_name_group->{PMC};
+            chop $module_path_pm;  # remove the 'c' from 'pmc' file suffix
             while ( $file_line = <$FILE_HANDLE> ) {
                 $file_line =~ s/lib\/RPerl\/CompileUnit\/Module\.cpp/$module_path/gxms;
                 $file_line =~ s/RPerl::CompileUnit::Module/$module_name/gxms;
@@ -442,6 +466,26 @@ our void $save_source_files = sub {
                         $file_line = $source_group->{_PMC_includes}->{$module_name_underscores} . "\n\n";
                     }
                     else                                            { $file_line = undef; }
+                }
+                elsif ( $file_line eq ( '        # <<< CHANGE_ME: enable optional SSE support here >>>' . "\n" ) ) {
+#                    RPerl::diag( 'in Compiler::save_source_files(), have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n" );
+                    if ((exists $modes->{_enable_sse}) and (defined $modes->{_enable_sse}) and 
+                        (exists $modes->{_enable_sse}->{$module_path_pm}) and (defined $modes->{_enable_sse}->{$module_path_pm}) and 
+                        $modes->{_enable_sse}->{$module_path_pm}) {
+                        $file_line = q[        $RPerl::Inline::ARGS{optimize}  .= ' -mfpmath=sse -msse3';  # enable SSE support] . "\n";
+                        $file_line .= q[        $RPerl::Inline::ARGS{auto_include} = ['#include <immintrin.h>', '#include <rperlsse.h>', @{$RPerl::Inline::ARGS{auto_include}}];  # enable SSE support] . "\n";
+                    }
+                    else { $file_line = undef; }
+                }
+                elsif ( $file_line eq ( '        # <<< CHANGE_ME: enable optional GMP support here >>>' . "\n" ) ) {
+#                    RPerl::diag( 'in Compiler::save_source_files(), have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n" );
+                    if ((exists $modes->{_enable_gmp}) and (defined $modes->{_enable_gmp}) and 
+                        (exists $modes->{_enable_gmp}->{$module_path_pm}) and (defined $modes->{_enable_gmp}->{$module_path_pm}) and 
+                        $modes->{_enable_gmp}->{$module_path_pm}) {
+                        $file_line = q[        $RPerl::Inline::ARGS{libs}  = '-lgmp';  # enable GMP support] . "\n";
+                        $file_line .= q[        $RPerl::Inline::ARGS{auto_include} = ['#include <gmp.h>', '#include <rperlgmp.h>', @{$RPerl::Inline::ARGS{auto_include}}];  # enable GMP support] . "\n";
+                    }
+                    else { $file_line = undef; }
                 }
                 if ( defined $file_line ) { $source_group->{PMC} .= $file_line; }
             }

@@ -337,7 +337,7 @@ sub depends_parse_generate_save_subcompile_execute {
         my hashref_arrayref $source_dep_groups           = [];
 
         if ( $modes->{dependencies} eq 'ON' ) {
-            $input_file_name_deps = find_dependencies($input_file_name);
+            $input_file_name_deps = find_dependencies($input_file_name, $modes);
             RPerl::verbose('DEPENDENCIES:       Follow & find all deps... ');
             if ( exists $input_file_name_deps->[0] ) {
                 $input_file_name_deps = accept_and_verify_input_files( $input_file_name_deps, [] );    # verify deps input files

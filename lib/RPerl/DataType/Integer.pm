@@ -3,7 +3,7 @@ package RPerl::DataType::Integer;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_000;
+our $VERSION = 0.007_001;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -86,8 +86,8 @@ sub integer_to_bool {
 # [[[ UNSIGNED INTEGERIFY ]]]
 #our unsigned_integer $integer_to_unsigned_integer = sub {
 sub integer_to_unsigned_integer {
-    ( my integer $input ) = @_;
-    return abs $input;
+    ( my integer $input_integer ) = @_;
+    return abs $input_integer;
 }
 
 # [[[ NUMBERIFY ]]]

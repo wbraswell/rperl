@@ -2,13 +2,11 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl_h
-#define __CPP__INCLUDED__RPerl_h 0.001_200
+#define __CPP__INCLUDED__RPerl_h 0.001_300
 
 // [[[ INCLUDES ]]]
 #include <rperltypes_mode.h>  // for default definitions of __PERL__TYPES or __CPP__TYPES
 #include <rperltypes.h>  // for data types and structures
-#include <rperlsse.h>  // for SSE data types and operations
-#include <rperlgmp.h>  // for GMP data types and operations
 #include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
 
 # ifdef __PERL__TYPES
