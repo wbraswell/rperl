@@ -46,14 +46,17 @@ use warnings;
 use Scalar::Util qw(blessed);
 
 
-# START HERE: add *_to_gmp_integer() in this file, write C++ equivalent checking/testing/conversion subs, write tests
-# START HERE: add *_to_gmp_integer() in this file, write C++ equivalent checking/testing/conversion subs, write tests
-# START HERE: add *_to_gmp_integer() in this file, write C++ equivalent checking/testing/conversion subs, write tests
+# START HERE: write C++ equivalent checking/testing/conversion subs, write tests
+# START HERE: write C++ equivalent checking/testing/conversion subs, write tests
+# START HERE: write C++ equivalent checking/testing/conversion subs, write tests
 
 
 # [[[ EXPORTS ]]]
 use Exporter 'import';
-our @EXPORT = qw(gmp_integer_to_bool gmp_integer_to_unsigned_integer gmp_integer_to_integer gmp_integer_to_number gmp_integer_to_char gmp_integer_to_string);
+our @EXPORT = qw(
+    gmp_integer_to_bool gmp_integer_to_unsigned_integer gmp_integer_to_integer gmp_integer_to_number gmp_integer_to_char gmp_integer_to_string
+    bool_to_gmp_integer integer_to_gmp_integer unsigned_integer_to_gmp_integer number_to_gmp_integer char_to_gmp_integer string_to_gmp_integer
+);
 
 # [[[ TYPE-CHECKING ]]]
 our void $gmp_integer_CHECK = sub {
@@ -140,6 +143,52 @@ sub gmp_integer_to_string {
 
     #    RPerl::diag('in PERLOPS_PERLTYPES gmp_integer_to_string(), have $retval = ' . q{'} . $retval . q{'} . "\n");
     return $retval;
+}
+
+# [[[ GMP INTEGERIFY ]]]
+# DEV NOTE: keep all these *_to_gmp_integer() conversion subroutines here instead of spread throughout the other RPerl/DataType/*.pm files,
+# so that loading will all be controlled by the 'use rperlgmp;' directive
+
+#our gmp_integer $bool_to_gmp_integer = sub {
+sub bool_to_gmp_integer {
+    ( my bool $input_bool ) = @_;
+    my gmp_integer $output_gmp_integer = gmp_integer->new($input_bool);
+    return $output_gmp_integer;
+}
+
+#our gmp_integer $integer_to_gmp_integer = sub {
+sub integer_to_gmp_integer {
+    ( my integer $input_integer ) = @_;
+    my gmp_integer $output_gmp_integer = gmp_integer->new($input_integer);
+    return $output_gmp_integer;
+}
+
+#our gmp_integer $unsigned_integer_to_gmp_integer = sub {
+sub unsigned_integer_to_gmp_integer {
+    ( my unsigned_integer $input_unsigned_integer ) = @_;
+    my gmp_integer $output_gmp_integer = gmp_integer->new($input_unsigned_integer);
+    return $output_gmp_integer;
+}
+
+#our gmp_integer $number_to_gmp_integer = sub {
+sub number_to_gmp_integer {
+    ( my number $input_number ) = @_;
+    my gmp_integer $output_gmp_integer = gmp_integer->new(number_to_integer($input_number));
+    return $output_gmp_integer;
+}
+
+#our gmp_integer $char_to_gmp_integer = sub {
+sub char_to_gmp_integer {
+    ( my char $input_char ) = @_;
+    my gmp_integer $output_gmp_integer = gmp_integer->new(char_to_integer($input_char));
+    return $output_gmp_integer;
+}
+
+#our gmp_integer $string_to_gmp_integer = sub {
+sub string_to_gmp_integer {
+    ( my string $input_string ) = @_;
+    my gmp_integer $output_gmp_integer = gmp_integer->new(string_to_integer($input_string));
+    return $output_gmp_integer;
 }
 
 # [[[ TYPE TESTING ]]]
