@@ -3,6 +3,7 @@ using std::cout;  using std::cerr;
 #ifndef __CPP__INCLUDED__RPerl__DataType__GMPInteger_cpp
 #define __CPP__INCLUDED__RPerl__DataType__GMPInteger_cpp 0.001_000
 
+// [[[ INCLUDES ]]]
 #include <RPerl/DataType/GMPInteger.h>		// -> NULL (relies on native C type)
 #include <RPerl/Operation/Expression/Operator/GMPFunctions.cpp>  // -> GMPFunctions.h
 
@@ -29,8 +30,9 @@ void gmp_integer_CHECK(SV* possible_gmp_integer)
 
     // DEV NOTE: PERLTYPES gmp_integer is a wrapper around PERLTYPES Math::BigInt::GMP, which is a wrapper around C gmp_integer,
     // so we can directly access the underlying C gmp_integer, nice!
-    gmp_integer possible_gmp_integer_value = *hash_entry_value;
-    gmp_get_signed_integer(possible_gmp_integer_value);
+//    gmp_integer possible_gmp_integer_value = *possible_gmp_integer_value_ptr;
+//    gmp_get_signed_integer(possible_gmp_integer_value);
+//    gmp_get_signed_integer(*possible_gmp_integer_value_ptr);
 
     // NEED FIX: is this the only way to check if the variable is actually a gmp_integer type?
     // I'm assuming the static types of C/C++ will give a compiler and/or runtime error on one of the two preceding lines of code if our var is not really a gmp_integer...
@@ -55,8 +57,7 @@ void gmp_integer_CHECKTRACE(SV* possible_gmp_integer, const char* variable_name,
 
     // DEV NOTE: PERLTYPES gmp_integer is a wrapper around PERLTYPES Math::BigInt::GMP, which is a wrapper around C gmp_integer,
     // so we can directly access the underlying C gmp_integer, nice!
-    gmp_integer possible_gmp_integer_value = *hash_entry_value;
-    gmp_get_signed_integer(possible_gmp_integer_value);
+//    gmp_get_signed_integer(*possible_gmp_integer_value_ptr);
 
     // NEED FIX: is this the only way to check if the variable is actually a gmp_integer type?
     // I'm assuming the static types of C/C++ will give a compiler and/or runtime error on one of the two preceding lines of code if our var is not really a gmp_integer...
@@ -66,8 +67,8 @@ void gmp_integer_CHECKTRACE(SV* possible_gmp_integer, const char* variable_name,
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 
-// DEV NOTE, CORRELATION #rp10: the pack/unpack subs (below) are called by *_to_string_CPPTYPES(), moved outside #ifdef blocks
-//# ifdef __CPP__TYPES
+/* DISABLED
+# ifdef __CPP__TYPES
 
 // convert from (Perl SV containing reference to (Perl HV containing reference to C gmp_integer)) to (C gmp_integer)
 gmp_integer XS_unpack_gmp_integer(SV* input_hv_ref)
@@ -113,7 +114,8 @@ void XS_pack_gmp_integer(SV* output_hv_ref, gmp_integer input_gmp_integer)
 //  fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_gmp_integer(), bottom of subroutine\n");
 }
 
-//# endif
+# endif
+*/
 
 // [[[ BOOLIFY ]]]
 // [[[ BOOLIFY ]]]
@@ -150,8 +152,8 @@ SV* gmp_integer_to_unsigned_integer(SV* input_gmp_integer) {
 
 # elif defined __CPP__TYPES
 
-unsigned int gmp_integer_to_unsigned_integer(gmp_integer input_gmp_integer) {
-    return abs gmp_get_signed_integer(input_gmp_integer);
+unsigned_integer gmp_integer_to_unsigned_integer(gmp_integer input_gmp_integer) {
+    return abs(gmp_get_signed_integer(input_gmp_integer));
 }
 
 # endif
@@ -170,7 +172,7 @@ SV* gmp_integer_to_integer(SV* input_gmp_integer) {
 
 # elif defined __CPP__TYPES
 
-int gmp_integer_to_integer(gmp_integer input_gmp_integer) {
+integer gmp_integer_to_integer(gmp_integer input_gmp_integer) {
     return gmp_get_signed_integer(input_gmp_integer);
 }
 
@@ -190,7 +192,7 @@ SV* gmp_integer_to_number(SV* input_gmp_integer) {
 
 # elif defined __CPP__TYPES
 
-double gmp_integer_to_number(gmp_integer input_gmp_integer) {
+number gmp_integer_to_number(gmp_integer input_gmp_integer) {
     return (double) gmp_get_signed_integer(input_gmp_integer);
 }
 
@@ -211,8 +213,8 @@ SV* gmp_integer_to_char(SV* input_gmp_integer) {
 # elif defined __CPP__TYPES
 
 // DEV NOTE, CORRELATION #rp10: shim CPPTYPES sub
-string gmp_integer_to_char(gmp_integer input_gmp_integer) {
-    return gmp_integer_to_char_CPPTYPES(input_gmp_integer).substr(0, 1);
+char gmp_integer_to_char(gmp_integer input_gmp_integer) {
+    return gmp_integer_to_string_CPPTYPES(input_gmp_integer).at(0);
 }
 
 # endif
@@ -238,6 +240,7 @@ string gmp_integer_to_string(gmp_integer input_gmp_integer) {
 
 # endif
 
+/* DISABLED
 // DEV NOTE, CORRELATION #rp09: must use return type 'string' instead of 'std::string' for proper typemap pack/unpack function name alignment;
 // can cause silent failure, falling back to __PERL__TYPES implementation and NOT failure of tests!
 // DEV NOTE, CORRELATION #rp10: the real CPPTYPES sub (below) is called by the wrapper PERLTYPES sub and shim CPPTYPES subs (above), moved outside #ifdef blocks
@@ -288,6 +291,7 @@ string gmp_integer_to_string_CPPTYPES(gmp_integer input_gmp_integer)
 
     return output_string_underscores;
 }
+*/
 
 // [[[ TYPE TESTING ]]]
 // [[[ TYPE TESTING ]]]
@@ -307,18 +311,22 @@ SV* gmp_integer__typetest1(SV* lucky_gmp_integer) {
 
 # elif defined __CPP__TYPES
 
-gmp_integer gmp_integer__typetest0() {
+//gmp_integer gmp_integer__typetest0() {
+string gmp_integer__typetest0() {
 	gmp_integer retval;
 	gmp_set_signed_integer(retval, (21 / 7) + RPerl__DataType__GMPInteger__MODE_ID());
 //fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer__typetest0(), have retval = %d\n", retval);
-	return retval;
+//	return retval;
+	return gmp_get_string(retval);
 }
 
-gmp_integer gmp_integer__typetest1(gmp_integer lucky_gmp_integer) {
+//gmp_integer gmp_integer__typetest1(gmp_integer lucky_gmp_integer) {
+string gmp_integer__typetest1(gmp_integer lucky_gmp_integer) {
 //fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer__typetest1(), received lucky_gmp_integer = %d\n", lucky_gmp_integer);
 	gmp_integer retval;
 	gmp_set_signed_integer(retval, (gmp_get_signed_integer(lucky_gmp_integer) * 2) + RPerl__DataType__GMPInteger__MODE_ID());
-	return retval;
+//	return retval;
+	return gmp_get_string(retval);
 }
 
 # endif

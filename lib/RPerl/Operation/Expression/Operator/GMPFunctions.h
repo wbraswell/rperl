@@ -35,11 +35,11 @@
 // [[[ CONVERSION FUNCTIONS ]]]
 // https://gmplib.org/manual/Converting-Integers.html
 
-#define gmp_get_unsigned_integer   mpz_get_ui
-#define gmp_get_signed_integer     mpz_get_si
-#define gmp_get_number             mpz_get_d
-//#define gmp_get_number_power_of_2  mpz_get_d_2exp
-#define gmp_get_string(X)          mpz_get_str(NULL, 10, X)
+#define gmp_get_unsigned_integer(X)   mpz_get_ui(X)
+#define gmp_get_signed_integer(X)     mpz_get_si(X)
+#define gmp_get_number(X)             mpz_get_d(X)
+#define gmp_get_number_power_of_2(X)  mpz_get_d_2exp(X)
+#define gmp_get_string(X)             mpz_get_str(NULL, 10, X)
 
 // [[[ ARITHMETIC FUNCTIONS ]]]
 // https://gmplib.org/manual/Integer-Arithmetic.html

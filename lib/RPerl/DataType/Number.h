@@ -1,18 +1,32 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Number_h
-#define __CPP__INCLUDED__RPerl__DataType__Number_h 0.004_010
+#define __CPP__INCLUDED__RPerl__DataType__Number_h 0.005_000
 
 // [[[ TYPEDEFS ]]]
+# ifndef __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs
+#define __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs 1
 typedef double number;
+# endif
 
+// [[[ PRE-DECLARED TYPEDEFS ]]]
+// DEV NOTE, CORRELATION #rp12: basic data types must be wholly independent of one another, to avoid possible weird redefining or undefining of subroutine errors
+# ifndef __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_h__typedefs
+#define __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_h__typedefs 1
+typedef unsigned int unsigned_integer;
+# endif
+# ifndef __CPP__INCLUDED__RPerl__DataType__Integer_h__typedefs
+#define __CPP__INCLUDED__RPerl__DataType__Integer_h__typedefs 1
+typedef int integer;
+# endif
+# ifndef __CPP__INCLUDED__RPerl__DataType__String_h__typedefs
+#define __CPP__INCLUDED__RPerl__DataType__String_h__typedefs 1
+typedef std::string string;
+typedef std::ostringstream ostringstream;
+# endif
+
+// [[[ INCLUDES ]]]
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
-// DEV NOTE, CORRELATION #rp12: basic data types must be wholly independent of one another, to avoid weird redefining or undefining of subroutine errors [INCORRECT???]
-// DEV NOTE, CORRELATION #rp09: must use return type 'string' instead of 'std::string' for proper typemap pack/unpack function name alignment;
-// can cause silent failure, falling back to __PERL__TYPES implementation and NOT failure of tests!
-// include String and Integer here for 'string' and 'integer' types used in number_to_string_CPPTYPES()
-#include <RPerl/DataType/Integer.cpp>  // integer types used in *MODE_ID() subroutines
-#include <RPerl/DataType/String.cpp>  // string types used in *_to_string() subroutines
 
 // [[[ TYPE-CHECKING MACROS ]]]
 #define number_CHECK(possible_number) \

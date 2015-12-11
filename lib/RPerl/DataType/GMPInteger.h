@@ -4,12 +4,33 @@ using std::cout;  using std::cerr;
 #define __CPP__INCLUDED__RPerl__DataType__GMPInteger_h 0.001_000
 
 // [[[ TYPEDEFS ]]]
+# ifndef __CPP__INCLUDED__RPerl__DataType__GMPInteger_h__typedefs
+#define __CPP__INCLUDED__RPerl__DataType__GMPInteger_h__typedefs 1
 typedef mpz_t gmp_integer;
+# endif
 
+// [[[ PRE-DECLARED TYPEDEFS ]]]
+// DEV NOTE, CORRELATION #rp12: basic data types must be wholly independent of one another, to avoid possible weird redefining or undefining of subroutine errors
+# ifndef __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_h__typedefs
+#define __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_h__typedefs 1
+typedef unsigned int unsigned_integer;
+# endif
+# ifndef __CPP__INCLUDED__RPerl__DataType__Integer_h__typedefs
+#define __CPP__INCLUDED__RPerl__DataType__Integer_h__typedefs 1
+typedef int integer;
+# endif
+# ifndef __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs
+#define __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs 1
+typedef double number;
+# endif
+# ifndef __CPP__INCLUDED__RPerl__DataType__String_h__typedefs
+#define __CPP__INCLUDED__RPerl__DataType__String_h__typedefs 1
+typedef std::string string;
+typedef std::ostringstream ostringstream;
+# endif
+
+// [[[ INCLUDES ]]]
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
-
-// DEV NOTE, CORRELATION #rp12: basic data types must be wholly independent of one another, to avoid weird redefining or undefining of subroutine errors [INCORRECT???]
-#include <RPerl/DataType/String.cpp>  // string types used in *_to_string() subroutines
 
 // [[[ OPERATIONS & DATA TYPES REPORTER ]]]
 # ifdef __PERL__TYPES
@@ -25,11 +46,12 @@ void gmp_integer_CHECK(SV* possible_gmp_integer);
 void gmp_integer_CHECKTRACE(SV* possible_gmp_integer, const char* variable_name, const char* subroutine_name);
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
-// DEV NOTE, CORRELATION #rp10: the pack/unpack subs (below) are called by *_to_string_CPPTYPES(), moved outside #ifdef blocks
-//# ifdef __CPP__TYPES
+/* DISABLED
+# ifdef __CPP__TYPES
 gmp_integer XS_unpack_gmp_integer(SV* input_sv);
 void XS_pack_gmp_integer(SV* output_sv, gmp_integer input_gmp_integer);
-//# endif
+# endif
+*/
 
 // [[[ BOOLIFY ]]]
 # ifdef __PERL__TYPES
@@ -42,23 +64,21 @@ bool gmp_integer_to_bool(gmp_integer input_gmp_integer);
 # ifdef __PERL__TYPES
 SV* gmp_integer_to_unsigned_integer(SV* input_gmp_integer);
 # elif defined __CPP__TYPES
-// DEV NOTE, CORRELATION #rp12: basic data types must be wholly independent of one another, to avoid weird redefining or undefining of subroutine errors [INCORRECT???]
-//unsigned_integer gmp_integer_to_unsigned_integer(gmp_integer input_gmp_integer);
-unsigned int gmp_integer_to_unsigned_integer(gmp_integer input_gmp_integer);
+unsigned_integer gmp_integer_to_unsigned_integer(gmp_integer input_gmp_integer);
 # endif
 
 // [[[ INTEGERIFY ]]]
 # ifdef __PERL__TYPES
 SV* gmp_integer_to_integer(SV* input_gmp_integer);
 # elif defined __CPP__TYPES
-int gmp_integer_to_integer(gmp_integer input_gmp_integer);
+integer gmp_integer_to_integer(gmp_integer input_gmp_integer);
 # endif
 
 // [[[ NUMBERIFY ]]]
 # ifdef __PERL__TYPES
 SV* gmp_integer_to_number(SV* input_gmp_integer);
 # elif defined __CPP__TYPES
-double gmp_integer_to_number(gmp_integer input_gmp_integer);
+number gmp_integer_to_number(gmp_integer input_gmp_integer);
 # endif
 
 // [[[ CHARIFY ]]]
@@ -81,8 +101,10 @@ string gmp_integer_to_string_CPPTYPES(gmp_integer input_gmp_integer);
 SV* gmp_integer__typetest0();
 SV* gmp_integer__typetest1(SV* lucky_gmp_integer);
 # elif defined __CPP__TYPES
-gmp_integer gmp_integer__typetest0();
-gmp_integer gmp_integer__typetest1(gmp_integer lucky_gmp_integer);
+//gmp_integer gmp_integer__typetest0();
+//gmp_integer gmp_integer__typetest1(gmp_integer lucky_gmp_integer);
+string gmp_integer__typetest0();
+string gmp_integer__typetest1(gmp_integer lucky_gmp_integer);
 # endif
 
 #endif

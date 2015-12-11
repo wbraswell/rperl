@@ -9,6 +9,7 @@
 #define RPERL_DEBUG3 1  // NEED FIX: these debug statements cause memory leaks by increasing the refcounts of data_i, data_i_plus_1, and swap
 
 // [[[ HELPER MACROS ]]]
+// DEV NOTE, CORRELATION #rp26: can't figure out how to get GMPInteger.cpp to include HelperFunctions.cpp without redefining errors
 #define SvAROKp(input_av_ref) (SvROK(input_av_ref) && (SvTYPE(SvRV(input_av_ref)) == SVt_PVAV))  // DEV NOTE: look P5P, I invented macros that should probably be in the P5 core!
 #define SvHROKp(input_hv_ref) (SvROK(input_hv_ref) && (SvTYPE(SvRV(input_hv_ref)) == SVt_PVHV))
 #define SvUIOKp(input_uiv) (SvIOK(input_uiv) && (SvIV(input_uiv) >= 0))  // NEED ADDRESS: is this a good enough semi-fake check for unsigned_integer?

@@ -5,14 +5,30 @@ using std::cout;  using std::cerr;
 
 // [[[ TYPEDEFS ]]]
 // DEV NOTE: must use "integer" typedef because "int" is already defined by Inline's default typemap, even if we put our own integer entry into typemap.rperl;
-// if we allow Inline default int, then it will accept all kinds of non-integer values which should be filtered by XS_unpack_integer() and CHECK();
-// must be above String.cpp include, as String.cpp uses integer type for it's own *MODE_ID() subroutines [NO LONGER OVERRIDDEN BY DEV NOTE CORRELATION #rp12 BELOW???]
+// if we allow Inline default int, then it will accept all kinds of non-integer values which should be filtered by XS_unpack_integer() and CHECK()
+# ifndef __CPP__INCLUDED__RPerl__DataType__Integer_h__typedefs
+#define __CPP__INCLUDED__RPerl__DataType__Integer_h__typedefs 1
 typedef int integer;
+# endif
 
+// [[[ PRE-DECLARED TYPEDEFS ]]]
+// DEV NOTE, CORRELATION #rp12: basic data types must be wholly independent of one another, to avoid possible weird redefining or undefining of subroutine errors
+# ifndef __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_h__typedefs
+#define __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_h__typedefs 1
+typedef unsigned int unsigned_integer;
+# endif
+# ifndef __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs
+#define __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs 1
+typedef double number;
+# endif
+# ifndef __CPP__INCLUDED__RPerl__DataType__String_h__typedefs
+#define __CPP__INCLUDED__RPerl__DataType__String_h__typedefs 1
+typedef std::string string;
+typedef std::ostringstream ostringstream;
+# endif
+
+// [[[ INCLUDES ]]]
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
-
-// DEV NOTE, CORRELATION #rp12: basic data types must be wholly independent of one another, to avoid weird redefining or undefining of subroutine errors [INCORRECT???]
-#include <RPerl/DataType/String.cpp>  // string types used in *_to_string() subroutines
 
 // [[[ TYPE-CHECKING MACROS ]]]
 #define integer_CHECK(possible_integer) \
@@ -53,9 +69,7 @@ void XS_pack_integer(SV* output_sv, integer input_integer);
 # ifdef __PERL__TYPES
 SV* integer_to_unsigned_integer(SV* input_integer);
 # elif defined __CPP__TYPES
-// DEV NOTE, CORRELATION #rp12: basic data types must be wholly independent of one another, to avoid weird redefining or undefining of subroutine errors [INCORRECT???]
-//unsigned_integer integer_to_unsigned_integer(integer input_integer);
-unsigned int integer_to_unsigned_integer(integer input_integer);
+unsigned_integer integer_to_unsigned_integer(integer input_integer);
 # endif
 
 // [[[ STRINGIFY ]]]
