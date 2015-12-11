@@ -1,4 +1,3 @@
-////use strict;  use warnings;
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Number_cpp
@@ -122,7 +121,7 @@ string number_to_string_CPPTYPES(number input_number)
     // DEV NOTE: disable old stringify w/out underscores
 //  return(output_stream.str());
 
-    integer is_negative = 0;
+    bool is_negative = 0;
     if (input_number < 0) { is_negative = 1; }
 
     string input_number_stringified = output_stream.str();

@@ -1,4 +1,3 @@
-////use strict;  use warnings;
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Number_h

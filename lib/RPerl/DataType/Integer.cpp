@@ -1,5 +1,4 @@
-////use strict;  use warnings;
-//using std::cout;  using std::cerr;  // not needed for integer?
+using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_cpp
 #define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 0.005_000
@@ -134,7 +133,7 @@ string integer_to_string_CPPTYPES(integer input_integer)
     string output_string = output_stream.str();
 //    fprintf(stderr, "in CPPOPS_CPPTYPES integer_to_string_CPPTYPES(), have output_string = %s\n", output_string.c_str());
 
-    integer is_negative = 0;
+    bool is_negative = 0;
     if (input_integer < 0) { is_negative = 1; }
 
     std::reverse(output_string.begin(), output_string.end());

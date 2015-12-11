@@ -1,6 +1,3 @@
-////use strict;  use warnings;
-//using std::cout;  using std::cerr;  // not needed for integer?
-
 #ifndef __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_cpp
 #define __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_cpp 0.004_100
 
