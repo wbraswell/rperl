@@ -55,7 +55,7 @@ for my integer $i ( 0 .. $i_MAX ) {
 
     # [[[ INTEGER TESTS ]]]
 
-#    $string_retval = integer_to_string();  # TIV00; error PERLOPS EIV00, CPPOPS "Usage: main::integer_to_string(input_integer)"
+#    $string_retval = integer_to_string();  # TIV00; error PERLOPS EIV00, CPPOPS "Usage: integer_to_string(input_integer)"
 #    $string_retval = integer_to_string(undef);  # TIV01; error EIV00
 #    $string_retval = integer_to_string(3);  # TIV02
 #    $string_retval = integer_to_string(-17);  # TIV03
@@ -86,7 +86,7 @@ for my integer $i ( 0 .. $i_MAX ) {
 
     # [[[ NUMBER TESTS ]]]
 
-#    $string_retval = number_to_string();  # TNV00; error PERLOPS ENV00, CPPOPS "Usage: main::number_to_string(input_number)"
+#    $string_retval = number_to_string();  # TNV00; error PERLOPS ENV00, CPPOPS "Usage: number_to_string(input_number)"
 #    $string_retval = number_to_string(undef);  # TNV01; error ENV00
 #    $string_retval = number_to_string(3);  # TNV02
 #    $string_retval = number_to_string(-17);  # TNV03
@@ -116,7 +116,7 @@ for my integer $i ( 0 .. $i_MAX ) {
 
     # [[[ STRING TESTS ]]]
 
-#    $string_retval = string_to_string();  # TPV00; error PERLOPS EPV00, CPPOPS "Usage: main::string_to_string(input_string)"
+#    $string_retval = string_to_string();  # TPV00; error PERLOPS EPV00, CPPOPS "Usage: string_to_string(input_string)"
 #    $string_retval = string_to_string(undef);  # TPV01; error EPV00
 #    $string_retval = string_to_string(3);  # TPV02; error EPV01
 #    $string_retval = string_to_string(-17);  # TPV03; error EPV01

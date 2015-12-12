@@ -45,12 +45,6 @@ use warnings;
 # [[[ INCLUDES ]]]
 use Scalar::Util qw(blessed);
 
-
-# START HERE: write C++ equivalent checking/testing/conversion subs, write tests
-# START HERE: write C++ equivalent checking/testing/conversion subs, write tests
-# START HERE: write C++ equivalent checking/testing/conversion subs, write tests
-
-
 # [[[ EXPORTS ]]]
 use Exporter 'import';
 our @EXPORT = qw(

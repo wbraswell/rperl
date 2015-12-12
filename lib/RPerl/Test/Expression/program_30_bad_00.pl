@@ -18,7 +18,7 @@ our $VERSION = 0.001_000;
 
 my number $foo            = 9_123.456_789;
 my number_arrayref $bar = [ 21, 12, 43.23, 987.654_321 ];
-my string $bat            = main::number_to_string $foo;
+my string $bat            = number_to_string $foo;
 my string $baz            = ::number_arrayref_to_string($bar);
 my string $bax = ::string_arrayref_to_string( [ 'abc', '123', 'lalala' ] );
 

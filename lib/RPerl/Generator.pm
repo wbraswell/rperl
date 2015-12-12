@@ -4,7 +4,7 @@ package RPerl::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_030;
+our $VERSION = 0.001_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -17,6 +17,7 @@ use RPerl::CompileUnit::Module::Class;
 
 # [[[ INCLUDES ]]]
 use RPerl::Grammar;
+use rperltypesconv;
 
 #use RPerl::Parser;
 #require RPerl::Parser;
@@ -50,11 +51,13 @@ our object $arrayref_convert_index_max_to_size = sub {
         $subexpression = $subexpression->{children}->[1];
         $nested_parenthesis++;
     }
+ 
+#    RPerl::diag( 'in Generator->arrayref_convert_index_max_to_size(), have post-nested-parens $subexpression = ' . "\n" . RPerl::Parser::rperl_ast__dump($subexpression) . "\n" );
 
     if ( $subexpression->{children}->[0]->isa('RPerl::Operation::Expression::Operator') ) {
         if ( $subexpression->{children}->[0]->{children}->[0]->isa('RPerl::Operation::Expression::Operator::Math::AddSubtract') ) {
             if (    ( exists $subexpression->{children}->[0]->{children}->[0]->{children}->[1] )
-                and ( $subexpression->{children}->[0]->{children}->[0]->{children}->[1] eq q{-} ) )
+                and ( $subexpression->{children}->[0]->{children}->[0]->{children}->[1] =~ /^-\s*$/xms ) )
             {
                 if ( $subexpression->{children}->[0]->{children}->[0]->{children}->[2]->isa('RPerl::Operation::Expression::SubExpression::Literal') ) {
                     if ( $subexpression->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]
@@ -62,6 +65,7 @@ our object $arrayref_convert_index_max_to_size = sub {
                     {
                         if ( $subexpression->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]->{children}->[0] eq q{1} ) {
                             # '$foo - 1' becomes '$foo'
+#                            RPerl::diag( 'in Generator->arrayref_convert_index_max_to_size(), setting ($foo - 1) to ($foo)' . "\n");
                             $subexpression = $subexpression->{children}->[0]->{children}->[0]->{children}->[0];
                             $is_modified = 1;
                             $nested_parenthesis = 0;  # discard parens if present
@@ -69,10 +73,11 @@ our object $arrayref_convert_index_max_to_size = sub {
                         else {
                             # '$foo - 10' becomes '$foo - 9'
                             my number $tmp_number
-                                = ::string_to_number( $subexpression->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]->{children}->[0] );
+                                = string_to_number( $subexpression->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]->{children}->[0] );
+#                            RPerl::diag( 'in Generator->arrayref_convert_index_max_to_size(), setting ($foo - ' . $tmp_number . ') to ($foo - ' . ($tmp_number - 1)  .')' . "\n");
                             $tmp_number--;
                             $subexpression->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]->{children}->[0]
-                                = ::number_to_string($tmp_number);
+                                = number_to_string($tmp_number);
                             $is_modified = 1;
                             if ($nested_parenthesis) { $nested_parenthesis = 1; }  # keep 1 set of parens if 1 or more is present
                         }
@@ -81,6 +86,8 @@ our object $arrayref_convert_index_max_to_size = sub {
             }
         }
     }
+#    else { RPerl::diag( 'in Generator->arrayref_convert_index_max_to_size(), have non-Operator $subexpression, not modifying' . "\n"); }
+
     if ($is_modified) {
         if ($nested_parenthesis) {
             # create new-but-equivalent object to alert caller of modification

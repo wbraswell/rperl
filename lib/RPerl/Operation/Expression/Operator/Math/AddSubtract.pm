@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::Operator::Math::AddSubtract;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::Operator::Math);
@@ -66,6 +66,8 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     if ( $self_class eq 'Operator_95' ) {  # Operator -> SubExpression OP08_MATH_ADD_SUB SubExpression
         my string_hashref $cpp_source_subgroup = $self->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+        # strip trailing whitespace, if present
+        $self->{children}->[1] =~ s/\s+$//;
         $cpp_source_group->{CPP} .= q{ } . $self->{children}->[1] . q{ };
         $cpp_source_subgroup = $self->{children}->[2]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
