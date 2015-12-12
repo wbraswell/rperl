@@ -1,7 +1,13 @@
+using std::cout;  using std::cerr;
+
 #ifndef __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_cpp
 #define __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_cpp 0.004_100
 
-#include <RPerl/DataType/UnsignedInteger.h>		// -> NULL (relies on native C type)
+// [[[ INCLUDES ]]]
+#include <RPerl/DataType/UnsignedInteger.h>  // -> NULL (relies on native C type)
+// DEV NOTE, CORRELATION #rp12: the only actual includes-level dependency between any of the RPerl core data types should be String.cpp to avoid
+// error: ‘XS_pack_string’ was not declared in this scope
+#include <RPerl/DataType/String.cpp>  // -> String.h
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]

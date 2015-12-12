@@ -1,9 +1,13 @@
 using std::cout;  using std::cerr;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_cpp
-#define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 0.005_000
+#define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 0.005_100
 
-#include <RPerl/DataType/Integer.h>		// -> NULL (relies on native C type)
+// [[[ INCLUDES ]]]
+#include <RPerl/DataType/Integer.h>  // -> NULL (relies on native C type)
+// DEV NOTE, CORRELATION #rp12: the only actual includes-level dependency between any of the RPerl core data types should be String.cpp to avoid
+// error: ‘XS_pack_string’ was not declared in this scope
+#include <RPerl/DataType/String.cpp>  // -> String.h
 
 // [[[ TYPE-CHECKING ]]]
 // [[[ TYPE-CHECKING ]]]
