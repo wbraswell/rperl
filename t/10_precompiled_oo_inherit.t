@@ -44,7 +44,7 @@ BEGIN {
     my string $algorithm_h_filename   = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm.h';
     my string $algorithm_pmc_filename = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm.pmc';
 
-    #    RPerl::diag('in 08_precompiled_oo_inherit.t, have $bubble_pmc_filename = ' . $bubble_pmc_filename . "\n");
+    #    RPerl::diag('in 10_precompiled_oo_inherit.t, have $bubble_pmc_filename = ' . $bubble_pmc_filename . "\n");
 
     # NEED FIX: triplicate code, is it redundant to do this here and also at the top of the main for() loop?
     # delete CPP, H, and PMC files if they exist;
@@ -114,8 +114,8 @@ my string $algorithm_h_filename_manual   = $algorithm_h_filename . '.CPPOPS_DUAL
 my string $algorithm_pmc_filename        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm.pmc';
 my string $algorithm_pmc_filename_manual = $algorithm_pmc_filename . '.CPPOPS_DUALTYPES';
 
-#RPerl::diag('in 08_precompiled_oo_inherit.t, have $bubble_pmc_filename = ' . $bubble_pmc_filename . "\n");
-#RPerl::diag('in 08_precompiled_oo_inherit.t, have $bubble_pmc_filename_manual = ' . $bubble_pmc_filename_manual . "\n");
+#RPerl::diag('in 10_precompiled_oo_inherit.t, have $bubble_pmc_filename = ' . $bubble_pmc_filename . "\n");
+#RPerl::diag('in 10_precompiled_oo_inherit.t, have $bubble_pmc_filename_manual = ' . $bubble_pmc_filename_manual . "\n");
 
 # [[[ PRIMARY RUNLOOP ]]]
 # [[[ PRIMARY RUNLOOP ]]]
@@ -127,7 +127,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     #for my $mode_id ( 1 .. 2 ) {    # TEMPORARY DEBUGGING xOPS_xTYPES ONLY
 
     # [[[ MODE SETUP ]]]
-    #    RPerl::diag("in 08_precompiled_oo_inherit.t, top of for() loop, have \$mode_id = $mode_id\n");
+    #    RPerl::diag("in 10_precompiled_oo_inherit.t, top of for() loop, have \$mode_id = $mode_id\n");
     my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
     my $ops                     = $mode->{ops};
     my $types                   = $mode->{types};
@@ -168,7 +168,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
     if ( $ops eq 'PERL' ) {
 
-#        RPerl::diag('in 08_precompiled_oo_inherit.t, have Bubble symtab entries:' . "\n" . RPerl::analyze_class_symtab_entries('RPerl::Algorithm::Sort::Bubble') . "\n\n");
+#        RPerl::diag('in 10_precompiled_oo_inherit.t, have Bubble symtab entries:' . "\n" . RPerl::analyze_class_symtab_entries('RPerl::Algorithm::Sort::Bubble') . "\n\n");
     }
     else {    # $ops eq 'CPP'
         foreach my string_arrayref $filenames (
@@ -234,7 +234,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         lives_ok( sub { &{ $RPerl::Algorithm::Sort::Bubble::{'cpp_load'} }(); }, q{RPerl::Algorithm::Sort::Bubble::cpp_load() lives} );    # long form
         lives_ok( sub { &{ $RPerl::Algorithm::Inefficient::{'cpp_load'} }(); },  q{RPerl::Algorithm::Inefficient::cpp_load() lives} );     # long form
 
-#RPerl::diag('in 08_precompiled_oo_inherit.t, have post-re-use, post-re-cpp_load Bubble symtab entries:' . "\n" . RPerl::analyze_class_symtab_entries('RPerl::Algorithm::Sort::Bubble') . "\n\n");
+#RPerl::diag('in 10_precompiled_oo_inherit.t, have post-re-use, post-re-cpp_load Bubble symtab entries:' . "\n" . RPerl::analyze_class_symtab_entries('RPerl::Algorithm::Sort::Bubble') . "\n\n");
     }
 
     foreach my string $type (

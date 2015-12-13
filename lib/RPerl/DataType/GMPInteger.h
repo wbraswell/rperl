@@ -3,6 +3,10 @@ using std::cout;  using std::cerr;
 #ifndef __CPP__INCLUDED__RPerl__DataType__GMPInteger_h
 #define __CPP__INCLUDED__RPerl__DataType__GMPInteger_h 0.001_000
 
+// NEED FIX: remove duplicate code
+// DEV NOTE, CORRELATION #rp26: can't figure out how to get GMPInteger.cpp to include HelperFunctions.cpp without redefining errors
+#define SvHROKp(input_hv_ref) (SvROK(input_hv_ref) && (SvTYPE(SvRV(input_hv_ref)) == SVt_PVHV))
+
 // [[[ TYPEDEFS ]]]
 # ifndef __CPP__INCLUDED__RPerl__DataType__GMPInteger_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__GMPInteger_h__typedefs 1
@@ -36,7 +40,7 @@ typedef std::ostringstream ostringstream;
 # ifdef __PERL__TYPES
 SV* RPerl__DataType__GMPInteger__MODE_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
 # elif defined __CPP__TYPES
-integer RPerl__DataType__GMPInteger__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2
+int RPerl__DataType__GMPInteger__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2
 # else
 Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_exactly_one!
 # endif

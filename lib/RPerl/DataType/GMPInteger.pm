@@ -56,24 +56,24 @@ our @EXPORT = qw(
 our void $gmp_integer_CHECK = sub {
     ( my $possible_gmp_integer ) = @_;
     if ( not( defined $possible_gmp_integer ) ) {
-        croak("\nERROR EIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer value expected but undefined/null value found,\ncroaking");
+        croak("\nERROR EGIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer value expected but undefined/null value found,\ncroaking");
     }
     my string $classname = blessed($possible_gmp_integer);
     if (( not defined $classname ) or ($classname ne 'gmp_integer')) {
-        croak("\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer value expected but non-gmp_integer value found,\ncroaking");
+        croak("\nERROR EGIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer value expected but non-gmp_integer value found,\ncroaking");
     }
 };
 our void $gmp_integer_CHECKTRACE = sub {
     ( my $possible_gmp_integer, my $variable_name, my $subroutine_name ) = @_;
     if ( not( defined $possible_gmp_integer ) ) {
         croak(
-            "\nERROR EIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+            "\nERROR EGIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
         );
     }
     my string $classname = blessed($possible_gmp_integer);
     if (( not defined $classname ) or ($classname ne 'gmp_integer')) {
         croak(
-            "\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer value expected but non-gmp_integer value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
+            "\nERROR EGIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer value expected but non-gmp_integer value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
         );
     }
 };

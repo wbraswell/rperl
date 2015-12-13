@@ -30,7 +30,7 @@ find(
     sub {
         my $file = $File::Find::name;
 
-        #        RPerl::diag('in 10_parse.t, have $file = ' . $file . "\n");
+        #        RPerl::diag('in 12_parse.t, have $file = ' . $file . "\n");
 
 
 #        if ( $file !~ m/.*SubExpression\/program_08_good[.]pl$/xms ) { # TEMP DEBUGGING, ONLY FIND CERTAIN FILES
@@ -61,14 +61,14 @@ find(
     $RPerl::INCLUDE_PATH . '/RPerl/Test'
 );
 
-#RPerl::diag( 'in 10_parse.t, have $test_files = ' . "\n" . Dumper($test_files) . "\n" );
-#RPerl::diag( 'in 10_parse.t, have sort keys %{$test_files} = ' . "\n" . Dumper(sort keys %{$test_files}) . "\n" );
+#RPerl::diag( 'in 12_parse.t, have $test_files = ' . "\n" . Dumper($test_files) . "\n" );
+#RPerl::diag( 'in 12_parse.t, have sort keys %{$test_files} = ' . "\n" . Dumper(sort keys %{$test_files}) . "\n" );
 
 plan tests => scalar keys %{$test_files};
 
 for my $test_file ( sort keys %{$test_files} ) {
 
-    #    RPerl::diag( 'in 10_parse.t, have $test_file = ' . $test_file . "\n" );
+    #    RPerl::diag( 'in 12_parse.t, have $test_file = ' . $test_file . "\n" );
     ( my string $rperl_input_file_name, my string_hashref $cpp_output_file_name_group, my string_hashref $cpp_source_group, my string_hashref $modes ) = @_;
 
     # NEED UPGRADE: enable file dependencies as in script/rperl depends_parse_generate_save_subcompile_execute()
@@ -89,7 +89,7 @@ for my $test_file ( sort keys %{$test_files} ) {
         1;    # return true
     };
 
-    #    RPerl::diag( 'in 10_parse.t, have $eval_return_value = ' . $eval_return_value . "\n" );  # warning if undef retval
+    #    RPerl::diag( 'in 12_parse.t, have $eval_return_value = ' . $eval_return_value . "\n" );  # warning if undef retval
 
     if ( ( defined $eval_return_value ) and $eval_return_value ) {    # Perl eval return code defined & true, success
         if ( ( $test_file =~ m/Good/xms ) or ( $test_file =~ m/good/xms ) ) {
@@ -101,7 +101,7 @@ for my $test_file ( sort keys %{$test_files} ) {
     }
     else {                                                            # Perl eval return code undefined or false, error
 
-        #        RPerl::diag( 'in 10_parse.t, have $EVAL_ERROR = ' . $EVAL_ERROR . "\n" );
+        #        RPerl::diag( 'in 12_parse.t, have $EVAL_ERROR = ' . $EVAL_ERROR . "\n" );
         if ( ( $test_file =~ m/Bad/ms ) or ( $test_file =~ m/bad/ms ) ) {
             my $missing_errors = [];
             if ( defined $test_files->{$test_file}->{errors} ) {

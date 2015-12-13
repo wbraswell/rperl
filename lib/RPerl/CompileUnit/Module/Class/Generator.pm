@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_700;
+our $VERSION = 0.002_800;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -369,6 +369,32 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     $cpp_source_group->{H_INCLUDES} .= <<EOL;
 #include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperltypes.h; HelperFunctions.cpp)
 EOL
+
+#    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
+#    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
+
+    # NEED FIX WIN32: change hard-coded forward-slash in generated path name below?
+    # NEED FIX: handle absolute vs relative include paths
+    my string $module_file_name = $package_name_underscores;
+    $module_file_name =~ s/__/\//gxms;
+    $module_file_name .= '.pm';
+
+#    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $module_file_name = ' . $module_file_name . "\n");
+
+    if ((exists $modes->{_enable_sse}) and (defined $modes->{_enable_sse})) {
+        foreach my string $module_path_name (keys %{$modes->{_enable_sse}}) {
+            if (($module_path_name =~ /$module_file_name$/xms) and ($modes->{_enable_sse}->{$module_path_name})) {
+                $cpp_source_group->{H_INCLUDES} .= '#include <rperlsse.h>' . "\n";
+            }
+        }
+    }
+    if ((exists $modes->{_enable_gmp}) and (defined $modes->{_enable_gmp})) {
+        foreach my string $module_path_name (keys %{$modes->{_enable_gmp}}) {
+            if (($module_path_name =~ /$module_file_name$/xms) and ($modes->{_enable_gmp}->{$module_path_name})) {
+                $cpp_source_group->{H_INCLUDES} .= '#include <rperlgmp.h>' . "\n";
+            }
+        }
+    }
 
     # NEED FIX WIN32: change hard-coded forward-slash in generated path name below?
     # NEED FIX: handle absolute vs relative include paths

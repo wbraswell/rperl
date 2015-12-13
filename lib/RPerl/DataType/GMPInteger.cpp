@@ -6,6 +6,9 @@ using std::cout;  using std::cerr;
 // [[[ INCLUDES ]]]
 #include <RPerl/DataType/GMPInteger.h>		// -> NULL (relies on native C type)
 #include <RPerl/Operation/Expression/Operator/GMPFunctions.cpp>  // -> GMPFunctions.h
+// DEV NOTE, CORRELATION #rp12: the only actual includes-level dependency between any of the RPerl core data types should be String.cpp to avoid
+// error: ‘XS_pack_string’ was not declared in this scope
+#include <RPerl/DataType/String.cpp>  // -> String.h
 
 // [[[ TYPE-CHECKING ]]]
 // [[[ TYPE-CHECKING ]]]
