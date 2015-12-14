@@ -88,8 +88,8 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
 #RPerl::diag('in 07_type_gmp.t, top of for() loop, have RPerl__DataType__ . $type . __MODE_ID = RPerl__DataType__GMPInteger__MODE_ID' . "\n");
 #RPerl::diag('in 07_type_gmp.t, top of for() loop, have main::RPerl__DataType__GMPInteger__MODE_ID() = ' . main::RPerl__DataType__GMPInteger__MODE_ID() . "\n");
 #RPerl::diag('in 07_type_gmp.t, top of for() loop, have eval(main::RPerl__DataType__GMPInteger__MODE_ID()) = ' . eval('main::RPerl__DataType__GMPInteger__MODE_ID()') . "\n");
-RPerl::diag('in 07_type_gmp.t, top of for() loop, have main->can(...) = ' . main->can( 'RPerl__DataType__GMPInteger__MODE_ID' ) . "\n");
-RPerl::diag('in 07_type_gmp.t, top of for() loop, have main->can(...)->() = ' . main->can( 'RPerl__DataType__GMPInteger__MODE_ID' )->() . "\n");
+#RPerl::diag('in 07_type_gmp.t, top of for() loop, have main->can(...) = ' . main->can( 'RPerl__DataType__GMPInteger__MODE_ID' ) . "\n");
+#RPerl::diag('in 07_type_gmp.t, top of for() loop, have main->can(...)->() = ' . main->can( 'RPerl__DataType__GMPInteger__MODE_ID' )->() . "\n");
 #die 'TMP DEBUG';
 
     lives_and(
