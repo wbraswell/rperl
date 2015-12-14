@@ -1,4 +1,4 @@
-using std::cout;  using std::cerr;
+using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Number_cpp
 #define __CPP__INCLUDED__RPerl__DataType__Number_cpp 0.004_100

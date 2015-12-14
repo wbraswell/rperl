@@ -1,5 +1,5 @@
 ////use strict;  use warnings;
-using std::cout;  using std::cerr;
+using std::cout;  using std::cerr;  using std::endl;
 
 // [[[ TYPEDEFS ]]]
 typedef std::string string;

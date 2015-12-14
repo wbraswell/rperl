@@ -17,7 +17,7 @@ RPerl::diag("in ntype_string_1a.pl have \$string_retval = '$string_retval'\n");
 __DATA__
 __CPP__
 
-using std::cout;  using std::cerr;
+using std::cout;  using std::cerr;  using std::endl;
 typedef std::string string;
 typedef std::ostringstream ostringstream;
 

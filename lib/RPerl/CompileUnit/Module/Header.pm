@@ -114,8 +114,8 @@ our string_hashref::method $ast_to_cpp__generate_begin__CPPOPS_CPPTYPES = sub {
         $cpp_source_group->{H}   .= '// [[[ HEADER ]]]' . "\n";
         $cpp_source_group->{CPP} .= '// [[[ HEADER ]]]' . "\n";
     }
-    $cpp_source_group->{H}   .= 'using std::cout;  using std::cerr;' . "\n\n";
-    $cpp_source_group->{CPP} .= 'using std::cout;  using std::cerr;' . "\n\n";
+    $cpp_source_group->{H}   .= 'using std::cout;  using std::cerr;  using std::endl;' . "\n\n";
+    $cpp_source_group->{CPP} .= 'using std::cout;  using std::cerr;  using std::endl;' . "\n\n";
 
     my string $package_name_underscores = $package_name;
     $package_name_underscores =~ s/::/__/gxms;

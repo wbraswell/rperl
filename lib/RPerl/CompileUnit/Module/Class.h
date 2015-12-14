@@ -1,5 +1,5 @@
 // [[[ HEADER ]]]
-using std::cout;  using std::cerr;
+using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__CompileUnit__Module__Class__CPP_h
 #define __CPP__INCLUDED__RPerl__CompileUnit__Module__Class__CPP_h 0.002_000

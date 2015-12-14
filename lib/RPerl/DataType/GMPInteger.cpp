@@ -1,4 +1,4 @@
-using std::cout;  using std::cerr;
+using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__GMPInteger_cpp
 #define __CPP__INCLUDED__RPerl__DataType__GMPInteger_cpp 0.001_000
@@ -70,11 +70,10 @@ void gmp_integer_CHECKTRACE(SV* possible_gmp_integer, const char* variable_name,
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 
-/* DISABLED
 # ifdef __CPP__TYPES
 
 // convert from (Perl SV containing reference to (Perl HV containing reference to C gmp_integer)) to (C gmp_integer)
-gmp_integer XS_unpack_gmp_integer(SV* input_hv_ref)
+gmp_integer* XS_unpack_gmp_integer(SV* input_hv_ref)
 {
 //  fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_gmp_integer(), top of subroutine\n");
 //  gmp_integer_CHECK(input_hv_ref);
@@ -82,7 +81,7 @@ gmp_integer XS_unpack_gmp_integer(SV* input_hv_ref)
 
     HV* input_hv;
     SV** hash_entry_value;
-    gmp_integer output_gmp_integer;
+    gmp_integer* output_gmp_integer;
 
     input_hv = (HV*)SvRV(input_hv_ref);
 
@@ -90,10 +89,12 @@ gmp_integer XS_unpack_gmp_integer(SV* input_hv_ref)
     hash_entry_value = hv_fetch(input_hv, (const char*) "value", (U32) 5, (I32) 0);
 
     cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer(), have hash_entry_value = " << hash_entry_value << endl;
+    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer(), have SvPV(*hash_entry_value, PL_na) = " << SvPV(*hash_entry_value, PL_na) << endl;
 
-    output_gmp_integer = *hash_entry_value;
+//    output_gmp_integer = *hash_entry_value;
+//    output_gmp_integer = SvPV(*hash_entry_value, PL_na);
 
-    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer(), have gmp_get_signed_integer(output_gmp_integer) = " << gmp_get_signed_integer(output_gmp_integer) << endl;
+    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer(), have gmp_get_signed_integer(output_gmp_integer) = " << gmp_get_signed_integer(*output_gmp_integer) << endl;
 
 //  fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_gmp_integer(), bottom of subroutine\n");
 
@@ -108,17 +109,18 @@ void XS_pack_gmp_integer(SV* output_hv_ref, gmp_integer input_gmp_integer)
     HV* output_hv = newHV();  // initialize output hash to empty
     SV* temp_sv_pointer;
 
+/*
     hv_store(output_hv, (const char*) "value", (U32) 5, &input_gmp_integer, (U32)0);
 
     temp_sv_pointer = newSVrv(output_hv_ref, NULL);   // upgrade output stack SV to an RV
     SvREFCNT_dec(temp_sv_pointer);       // discard temporary pointer
     SvRV(output_hv_ref) = (SV*)output_hv;      // make output stack RV pointer at our output HV
+*/
 
 //  fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_gmp_integer(), bottom of subroutine\n");
 }
 
 # endif
-*/
 
 // [[[ BOOLIFY ]]]
 // [[[ BOOLIFY ]]]
@@ -317,9 +319,9 @@ SV* gmp_integer__typetest1(SV* lucky_gmp_integer) {
 //gmp_integer gmp_integer__typetest0() {
 string gmp_integer__typetest0() {
 	gmp_integer retval;
+	gmp_init(retval);
 	gmp_set_signed_integer(retval, (21 / 7) + RPerl__DataType__GMPInteger__MODE_ID());
 //fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer__typetest0(), have retval = %d\n", retval);
-//	return retval;
 	return gmp_get_string(retval);
 }
 

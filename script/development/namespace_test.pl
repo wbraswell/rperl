@@ -24,7 +24,7 @@ print
 __DATA__
 __CPP__
 
-using std::cout;  using std::cerr;
+using std::cout;  using std::cerr;  using std::endl;
 typedef std::string string;
 #include <rperltypes.h>  // for data types and structures
 #include <RPerl/HelperFunctions.cpp>		// -> HelperFunctions.h
