@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-our $VERSION = 0.002_100;
+our $VERSION = 0.003_000;
 use ExtUtils::MakeMaker;
 
 BEGIN { use English; }
@@ -19,18 +19,18 @@ WriteMakefile(
     EXE_FILES        => ['script/rperl'],
     MIN_PERL_VERSION => '5.10.0',                                            # NEED ANSWER: is RPerl truly incompatible with Perl v5.8 and earlier?
     PREREQ_PM        => {
-        'ExtUtils::MakeMaker' => 7.04,        # for compatibility with Inline::C >= v0.75
-        'CPAN::Meta'          => 2.150005,    # RPerl system developers only, used for generating CPAN metadata from this file during dist build
+        'ExtUtils::MakeMaker' => 7.04,     # for compatibility with Inline::C >= v0.75
+        'CPAN::Meta'          => 2.150005, # RPerl system developers only, used for generating CPAN metadata from this file during dist build
         'Test::Exception'     => 0.32,
         'Test::CPAN::Changes' => 0.400002,
-        'Test::Number::Delta' => 1.06,        # for compatibility with Perls compiled using -Duselongdouble
+        'Test::Number::Delta' => 1.06,     # for compatibility with Perls compiled using -Duselongdouble
         'Perl::Critic'        => 1.121,
         'Perl::Tidy'          => 20140711,
         'Parse::Eyapp'        => 1.182,
         'Inline'              => 0.80,
-        'Inline::C'           => 0.76,        # wbraswell added CPPFLAGS
-        'Inline::CPP'         => 0.74,        # davido & mohawk fixed ntype warnings; davido & wbraswell fixed namespace hack; nanis fixed Win32 filename space bug
-        'Inline::Filters'     => 0.17,        # wbraswell, rurban, & bulk88 added preprocess inc array; wbraswell added CPPFLAGS
+        'Inline::C'           => 0.76,     # wbraswell added CPPFLAGS
+        'Inline::CPP'         => 0.74,     # davido & mohawk fixed ntype warnings; davido & wbraswell fixed namespace hack; nanis fixed Win32 filename space bug
+        'Inline::Filters'     => 0.17,     # wbraswell, rurban, & bulk88 added preprocess inc array; wbraswell added CPPFLAGS
         'PadWalker'           => 2.1,
         'Module::Refresh'     => 0.17,
         'Filter::Simple'      => 0.91,
@@ -97,4 +97,19 @@ sub pm_to_blib {
         substr( $blib, $start, 0, "\t" . 'attrib -R /S  blib/lib/*' . "\n" );
     }
     return $blib;
+}
+
+# disable PERL_DL_NONLAZY=1 to avoid C++ compile errors for GMP library (and possibly others)
+sub test_via_harness {
+    my $self = shift;
+    my $command = $self->MM::test_via_harness(@_);
+    $command =~ s/\bPERL_DL_NONLAZY=1\s+//gxms;
+    return $command;
+}
+
+sub test_via_script {
+    my $self = shift;
+    my $command = $self->MM::test_via_script(@_);
+    $command =~ s/\bPERL_DL_NONLAZY=1\s+//gxms;
+    return $command;
 }
