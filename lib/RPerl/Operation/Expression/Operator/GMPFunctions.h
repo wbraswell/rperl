@@ -1,10 +1,15 @@
 #ifndef __CPP__INCLUDED__RPerl_Operation_Expression_Operator_GMPFunctions_h
 #define __CPP__INCLUDED__RPerl_Operation_Expression_Operator_GMPFunctions_h 0.001_000
 
+// [[[ RETVAL WRAPPER FUNCTIONS ]]]
+// https://gmplib.org/manual/C_002b_002b-Interface-General.html
+
+#define gmp_integer_unretval()      get_mpz_t()
+
 // [[[ INITIALIZATION FUNCTIONS ]]]
 // https://gmplib.org/manual/Initializing-Integers.html
 
-#define gmp_init                 mpz_init
+#define gmp_init(X)                 mpz_init(X)
 //#define gmp_inits                mpz_inits
 //#define gmp_init_bitcount        mpz_init2
 //#define gmp_clear                mpz_clear
@@ -14,11 +19,11 @@
 // [[[ ASSIGNMENT FUNCTIONS ]]]
 // https://gmplib.org/manual/Assigning-Integers.html
 
-#define gmp_set                   mpz_set
-#define gmp_set_unsigned_integer  mpz_set_ui
-#define gmp_set_signed_integer    mpz_set_si
-#define gmp_set_number            mpz_set_d
-#define gmp_set_string            mpz_set_str
+#define gmp_set(X,Y)                   mpz_set(X,Y)
+#define gmp_set_unsigned_integer(X,Y)  mpz_set_ui(X,Y)
+#define gmp_set_signed_integer(X,Y)    mpz_set_si(X,Y)
+#define gmp_set_number(X,Y)            mpz_set_d(X,Y)
+#define gmp_set_string(X,Y)            mpz_set_str(X,Y)
 //#define gmp_set_gmp_rational      mpz_set_q
 //#define gmp_set_gmp_float         mpz_set_f
 //#define gmp_swap                  mpz_swap
@@ -27,7 +32,7 @@
 // https://gmplib.org/manual/Simultaneous-Integer-Init-_0026-Assign.html
 
 //#define gmp_init_set                   mpz_init_set
-#define gmp_init_set_unsigned_integer  mpz_init_set_ui
+#define gmp_init_set_unsigned_integer(X,Y)  mpz_init_set_ui(X,Y)
 //#define gmp_init_set_signed_integer    mpz_init_set_si
 //#define gmp_init_set_number            mpz_init_set_d
 //#define gmp_init_set_string            mpz_init_set_str
@@ -44,18 +49,18 @@
 // [[[ ARITHMETIC FUNCTIONS ]]]
 // https://gmplib.org/manual/Integer-Arithmetic.html
 
-#define gmp_add                       mpz_add
+#define gmp_add(X,Y,Z)                       mpz_add(X,Y,Z)
 //#define gmp_add_unsigned_integer      mpz_add_ui
 //#define gmp_sub                       mpz_sub
 //#define gmp_sub_unsigned_integer      mpz_sub_ui
 //#define gmp_unsigned_integer_sub      mpz_ui_sub
 //#define gmp_mul                       mpz_mul
 //#define gmp_mul_signed_integer        mpz_mul_si
-#define gmp_mul_unsigned_integer      mpz_mul_ui
+#define gmp_mul_unsigned_integer(X,Y,Z)      mpz_mul_ui(X,Y,Z)
 //#define gmp_add_mul                   mpz_addmul
-#define gmp_add_mul_unsigned_integer  mpz_addmul_ui
+#define gmp_add_mul_unsigned_integer(X,Y,Z)  mpz_addmul_ui(X,Y,Z)
 //#define gmp_sub_mul                   mpz_submul
-#define gmp_sub_mul_unsigned_integer  mpz_submul_ui
+#define gmp_sub_mul_unsigned_integer(X,Y,Z)  mpz_submul_ui(X,Y,Z)
 //#define gmp_mul_power_of_2            mpz_mul_2exp
 //#define gmp_neg                       mpz_neg
 //#define gmp_abs                       mpz_abs
@@ -81,7 +86,7 @@
 //#define gmp_div_floor_unsigned_integer                        mpz_fdiv_ui
 //#define gmp_div_floor_quotient_power_of_2                     mpz_fdiv_q_2exp
 //#define gmp_div_floor_remainder_power_of_2                    mpz_fdiv_r_2exp
-#define gmp_div_truncate_quotient                             mpz_tdiv_q
+#define gmp_div_truncate_quotient(X,Y,Z)                             mpz_tdiv_q(X,Y,Z)
 //#define gmp_div_truncate_remainder                            mpz_tdiv_r
 //#define gmp_div_truncate_quotient_remainder                   mpz_tdiv_qr
 //#define gmp_div_truncate_quotient_unsigned_integer            mpz_tdiv_q_ui
@@ -153,7 +158,7 @@
 // [[[ COMPARISON FUNCTIONS ]]]
 // https://gmplib.org/manual/Integer-Comparisons.html
 
-#define gmp_cmp                            mpz_cmp
+#define gmp_cmp(X,Y)                            mpz_cmp(X,Y)
 //#define gmp_cmp_number                     mpz_cmp_d
 //#define gmp_cmp_signed_integer             mpz_cmp_si
 //#define gmp_cmp_unsigned_integer           mpz_cmp_ui

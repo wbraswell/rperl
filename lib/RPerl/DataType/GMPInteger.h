@@ -7,10 +7,19 @@ using std::cout;  using std::cerr;  using std::endl;
 // DEV NOTE, CORRELATION #rp26: can't figure out how to get GMPInteger.cpp to include HelperFunctions.cpp without redefining errors
 #define SvHROKp(input_hv_ref) (SvROK(input_hv_ref) && (SvTYPE(SvRV(input_hv_ref)) == SVt_PVHV))
 
-// [[[ TYPEDEFS ]]]
 # ifndef __CPP__INCLUDED__RPerl__DataType__GMPInteger_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__GMPInteger_h__typedefs 1
+// [[[ TYPEDEFS ]]]
+typedef mpz_class gmp_integer_retval;
 typedef mpz_t gmp_integer;
+// [[[ OO SUBCLASSES ]]]
+#define gmp_integer_rawptr gmp_integer*
+/* UNUSED?
+typedef std::unique_ptr<gmp_integer> gmp_integer_ptr;
+typedef std::vector<gmp_integer_ptr> gmp_integer_arrayref;
+typedef std::unordered_map<string, gmp_integer_ptr> gmp_integer_hashref;
+typedef std::unordered_map<string, gmp_integer_ptr>::iterator gmp_integer_hashref_iterator;
+*/
 # endif
 
 // [[[ PRE-DECLARED TYPEDEFS ]]]
@@ -50,12 +59,11 @@ void gmp_integer_CHECK(SV* possible_gmp_integer);
 void gmp_integer_CHECKTRACE(SV* possible_gmp_integer, const char* variable_name, const char* subroutine_name);
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
-/* DISABLED
 # ifdef __CPP__TYPES
-gmp_integer XS_unpack_gmp_integer(SV* input_sv);
-void XS_pack_gmp_integer(SV* output_sv, gmp_integer input_gmp_integer);
+gmp_integer_retval XS_unpack_gmp_integer_retval(SV* input_sv);
+void XS_pack_gmp_integer_retval(SV* output_sv, gmp_integer_retval input_gmp_integer_retval);
+gmp_integer_rawptr sv_to_gmp_integer_rawptr(SV *input_sv);
 # endif
-*/
 
 // [[[ BOOLIFY ]]]
 # ifdef __PERL__TYPES
@@ -75,7 +83,8 @@ unsigned_integer gmp_integer_to_unsigned_integer(gmp_integer input_gmp_integer);
 # ifdef __PERL__TYPES
 SV* gmp_integer_to_integer(SV* input_gmp_integer);
 # elif defined __CPP__TYPES
-integer gmp_integer_to_integer(gmp_integer input_gmp_integer);
+//integer gmp_integer_to_integer(gmp_integer input_gmp_integer);
+integer gmp_integer_to_integer(gmp_integer_retval input_gmp_integer_retval);
 # endif
 
 // [[[ NUMBERIFY ]]]

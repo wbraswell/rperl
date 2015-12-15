@@ -10,6 +10,9 @@ using std::cout;  using std::cerr;  using std::endl;
 // error: ‘XS_pack_string’ was not declared in this scope
 #include <RPerl/DataType/String.cpp>  // -> String.h
 
+// NEED FIX: update #rp12 above???  need XS_pack_integer() for retval of gmp_integer_to_integer()
+#include <RPerl/DataType/Integer.cpp>  // -> Integer.h
+
 // [[[ TYPE-CHECKING ]]]
 // [[[ TYPE-CHECKING ]]]
 // [[[ TYPE-CHECKING ]]]
@@ -72,37 +75,30 @@ void gmp_integer_CHECKTRACE(SV* possible_gmp_integer, const char* variable_name,
 
 # ifdef __CPP__TYPES
 
-// convert from (Perl SV containing reference to (Perl HV containing reference to C gmp_integer)) to (C gmp_integer)
-gmp_integer* XS_unpack_gmp_integer(SV* input_hv_ref)
+// convert from (Perl SV containing reference to (Perl HV containing reference to C gmp_integer)) to (C gmp_integer_retval)
+gmp_integer_retval XS_unpack_gmp_integer_retval(SV* input_sv)
 {
-//  fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_gmp_integer(), top of subroutine\n");
-//  gmp_integer_CHECK(input_hv_ref);
-    gmp_integer_CHECKTRACE(input_hv_ref, "input_hv_ref", "XS_unpack_gmp_integer()");
+    fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), top of subroutine\n");
+//  gmp_integer_CHECK(input_sv);
+    gmp_integer_CHECKTRACE(input_sv, "input_sv", "XS_unpack_gmp_integer_retval()");
 
-    HV* input_hv;
-    SV** hash_entry_value;
-    gmp_integer* output_gmp_integer;
+    gmp_integer_retval output_gmp_integer_retval;
 
-    input_hv = (HV*)SvRV(input_hv_ref);
+    gmp_integer_rawptr FOO = sv_to_gmp_integer_rawptr(input_sv);
+    gmp_integer BAR;
+    BAR[1] = *FOO[1];
+    output_gmp_integer_retval = (gmp_integer_retval) BAR;
 
-//    SV**  hv_fetch(HV*, const char* key, U32 klen, I32 lval);
-    hash_entry_value = hv_fetch(input_hv, (const char*) "value", (U32) 5, (I32) 0);
+    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have gmp_get_signed_integer(output_gmp_integer_retval) = " <<
+            gmp_get_signed_integer(output_gmp_integer_retval.gmp_integer_unretval()) << endl;
 
-    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer(), have hash_entry_value = " << hash_entry_value << endl;
-    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer(), have SvPV(*hash_entry_value, PL_na) = " << SvPV(*hash_entry_value, PL_na) << endl;
+    fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), bottom of subroutine\n");
 
-//    output_gmp_integer = *hash_entry_value;
-//    output_gmp_integer = SvPV(*hash_entry_value, PL_na);
-
-    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer(), have gmp_get_signed_integer(output_gmp_integer) = " << gmp_get_signed_integer(*output_gmp_integer) << endl;
-
-//  fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_gmp_integer(), bottom of subroutine\n");
-
-    return output_gmp_integer;
+    return output_gmp_integer_retval;
 }
 
-// convert from (C gmp_integer) to (Perl SV containing reference to (Perl HV containing reference to C gmp_integer))
-void XS_pack_gmp_integer(SV* output_hv_ref, gmp_integer input_gmp_integer)
+// convert from (C gmp_integer_retval) to (Perl SV containing reference to (Perl HV containing reference to C gmp_integer))
+void XS_pack_gmp_integer_retval(SV* output_hv_ref, gmp_integer_retval input_gmp_integer_retval)
 {
 //  fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_gmp_integer(), top of subroutine\n");
 
@@ -118,6 +114,20 @@ void XS_pack_gmp_integer(SV* output_hv_ref, gmp_integer input_gmp_integer)
 */
 
 //  fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_gmp_integer(), bottom of subroutine\n");
+}
+
+//mpz_t* sv_to_mpz_t(SV* input_sv)
+gmp_integer_rawptr sv_to_gmp_integer_rawptr(SV* input_sv)
+{
+    // START HERE: fix "not of type" error, implemented below, from /tmp/rperl/gmp_symtab_dump.pl
+    // START HERE: fix "not of type" error, implemented below, from /tmp/rperl/gmp_symtab_dump.pl
+    // START HERE: fix "not of type" error, implemented below, from /tmp/rperl/gmp_symtab_dump.pl
+    MAGIC* mg;
+    if (!sv_derived_from(input_sv, "Math::BigInt::GMP")) {
+        croak("not of type Math::BigInt::GMP");
+    }
+    mg = SvMAGIC(SvRV(input_sv));
+    return (gmp_integer_rawptr) mg->mg_ptr;
 }
 
 # endif
@@ -177,8 +187,9 @@ SV* gmp_integer_to_integer(SV* input_gmp_integer) {
 
 # elif defined __CPP__TYPES
 
-integer gmp_integer_to_integer(gmp_integer input_gmp_integer) {
-    return gmp_get_signed_integer(input_gmp_integer);
+//integer gmp_integer_to_integer(gmp_integer input_gmp_integer) {
+integer gmp_integer_to_integer(gmp_integer_retval input_gmp_integer_retval) {
+    return gmp_get_signed_integer(input_gmp_integer_retval.gmp_integer_unretval());
 }
 
 # endif

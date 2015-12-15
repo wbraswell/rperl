@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_100;
+our $VERSION = 0.007_200;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -482,8 +482,8 @@ our void $save_source_files = sub {
                     if ((exists $modes->{_enable_gmp}) and (defined $modes->{_enable_gmp}) and 
                         (exists $modes->{_enable_gmp}->{$module_path_pm}) and (defined $modes->{_enable_gmp}->{$module_path_pm}) and 
                         $modes->{_enable_gmp}->{$module_path_pm}) {
-                        $file_line = q(        $RPerl::Inline::ARGS{libs}  = '-lgmp';  # enable GMP support) . "\n";
-                        $file_line .= q(        $RPerl::Inline::ARGS{auto_include} = ['#include <gmp.h>', @{$RPerl::Inline::ARGS{auto_include}}];  # enable GMP support) . "\n";
+                        $file_line = q(        $RPerl::Inline::ARGS{libs}  = '-lgmpxx -lgmp';  # enable GMP support) . "\n";
+                        $file_line .= q(        $RPerl::Inline::ARGS{auto_include} = [ @{ $RPerl::Inline::ARGS{auto_include} }, '#include <gmpxx.h>', '#include <gmp.h>' ];    # enable GMP support) . "\n";
                     }
                     else { $file_line = undef; }
                 }
