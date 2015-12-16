@@ -18,7 +18,7 @@ number_hashref	    T_PACKED
 string_hashref	    T_PACKED
 
 # GMP TYPES
-gmp_integer_retval  T_PACKED
+gmp_integer_rawptr  T_PACKED
 
 # CORRELATION #pp04: attempt to manually define pack/unpack for object return type
 # USER TYPES
