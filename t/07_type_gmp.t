@@ -205,12 +205,17 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
     );
 =cut
 
+
+=THIS ONE WORKED WITH gmp_integer_retval
+
     lives_and(                                                    # TGIV20
         sub {
             is( gmp_integer__typetest0(), ( 3 + $mode_id ), q{TGIV20 gmp_integer__typetest0() returns correct value} );
         },
         q{TGIV20 gmp_integer__typetest0() lives}
     );
+
+=cut
     
 =DISABLE
     throws_ok(                                                    # TGIV30
