@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::Operator::GMPFunctions;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_000;
+our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::Operator);
@@ -17,7 +17,13 @@ use RPerl::Operation::Expression::Operator;
 use RPerl::DataType::GMPInteger;
 use Math::BigInt lib => 'GMP';  # we still actually use GMP in PERLOPS_PERLTYPES mode, albeit indirectly via Math::BigInt::GMP
 use Exporter 'import';
-our @EXPORT = qw(gmp_init gmp_init_set_unsigned_integer gmp_get_unsigned_integer gmp_get_signed_integer gmp_get_number gmp_get_string gmp_add gmp_mul_unsigned_integer gmp_sub_mul_unsigned_integer gmp_add_mul_unsigned_integer gmp_div_truncate_quotient gmp_cmp);
+our @EXPORT = qw(
+    gmp_init gmp_init_set_unsigned_integer
+    gmp_set gmp_set_unsigned_integer gmp_set_signed_integer gmp_set_number gmp_set_string
+    gmp_get_unsigned_integer gmp_get_signed_integer gmp_get_number gmp_get_string
+    gmp_add gmp_mul_unsigned_integer gmp_sub_mul_unsigned_integer gmp_add_mul_unsigned_integer gmp_div_truncate_quotient
+    gmp_cmp
+);
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
@@ -40,6 +46,49 @@ sub gmp_init_set_unsigned_integer {
     ( my gmp_integer $rop, my unsigned_integer $op ) = @_;
     $rop->bzero();
     $rop->badd($op);
+}
+
+# [[[ ASSIGNMENT FUNCTIONS ]]]
+
+# void mpz_set (mpz_t rop, const mpz_t op)
+#our void $gmp_set = sub {
+sub gmp_set {
+    ( my gmp_integer $rop, my gmp_integer $op ) = @_;
+    $rop->bzero();
+    $rop->badd($op);
+}
+
+# void mpz_set_ui (mpz_t rop, unsigned long int op)
+#our void $gmp_set_unsigned_integer = sub {
+sub gmp_set_unsigned_integer {
+    ( my gmp_integer $rop, my unsigned_integer $op ) = @_;
+    $rop->bzero();
+    $rop->badd($op);
+}
+
+# void mpz_set_si (mpz_t rop, signed long int op)
+#our void $gmp_set_signed_integer = sub {
+sub gmp_set_signed_integer {
+    ( my gmp_integer $rop, my integer $op ) = @_;
+    $rop->bzero();
+    $rop->badd($op);
+}
+
+# void mpz_set_d (mpz_t rop, double op)
+#our void $gmp_set_number = sub {
+sub gmp_set_number {
+    ( my gmp_integer $rop, my number $op ) = @_;
+    $rop->bzero();
+    $rop->badd($op);
+}
+
+# int mpz_set_str (mpz_t rop, const char *str, int base)
+#our integer $gmp_set_string = sub {
+sub gmp_set_string {
+    ( my gmp_integer $rop, my string $str ) = @_;
+    my Math::BigInt $tmp = Math::BigInt->new($str); 
+    $rop->bzero();
+    $rop->badd($tmp);
 }
 
 # [[[ CONVERSION FUNCTIONS ]]]

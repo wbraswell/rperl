@@ -23,7 +23,7 @@
 #define gmp_set_unsigned_integer(X,Y)  mpz_set_ui(X,Y)
 #define gmp_set_signed_integer(X,Y)    mpz_set_si(X,Y)
 #define gmp_set_number(X,Y)            mpz_set_d(X,Y)
-#define gmp_set_string(X,Y)            mpz_set_str(X,Y)
+#define gmp_set_string(X,Y)            mpz_set_str(X,Y,10)
 //#define gmp_set_gmp_rational      mpz_set_q
 //#define gmp_set_gmp_float         mpz_set_f
 //#define gmp_swap                  mpz_swap
@@ -44,7 +44,7 @@
 #define gmp_get_signed_integer(X)     mpz_get_si(X)
 #define gmp_get_number(X)             mpz_get_d(X)
 #define gmp_get_number_power_of_2(X)  mpz_get_d_2exp(X)
-#define gmp_get_string(X)             mpz_get_str(NULL, 10, X)
+#define gmp_get_string(X)             mpz_get_str(NULL,10,X)
 
 // [[[ ARITHMETIC FUNCTIONS ]]]
 // https://gmplib.org/manual/Integer-Arithmetic.html

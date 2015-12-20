@@ -60,10 +60,11 @@ void gmp_integer_CHECKTRACE(SV* possible_gmp_integer, const char* variable_name,
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 # ifdef __CPP__TYPES
-//gmp_integer_retval XS_unpack_gmp_integer_retval(SV* input_sv);
-//void XS_pack_gmp_integer_retval(SV* output_sv, gmp_integer_retval input_gmp_integer_retval);
-//gmp_integer_rawptr sv_to_gmp_integer_rawptr(SV *input_sv);
+gmp_integer_retval XS_unpack_gmp_integer_retval(SV* input_sv);
+void XS_pack_gmp_integer_retval(SV* output_sv, gmp_integer_retval input_gmp_integer_retval);
+gmp_integer_rawptr sv_to_gmp_integer_rawptr(SV *input_sv);
 
+// NEED ENABLE OR DELETE
 //gmp_integer_rawptr XS_unpack_gmp_integer_rawptr(SV* input_sv_rawptr);
 //void XS_pack_gmp_integer_rawptr(SV* output_sv, gmp_integer_rawptr input_gmp_integer_rawptr);
 # endif
@@ -86,9 +87,7 @@ unsigned_integer gmp_integer_to_unsigned_integer(gmp_integer input_gmp_integer);
 # ifdef __PERL__TYPES
 //SV* gmp_integer_to_integer(SV* input_gmp_integer);
 # elif defined __CPP__TYPES
-//integer gmp_integer_to_integer(gmp_integer input_gmp_integer);
-//integer gmp_integer_to_integer(gmp_integer_rawptr input_gmp_integer_rawptr);
-//integer gmp_integer_to_integer(gmp_integer_retval input_gmp_integer_retval);
+integer gmp_integer_to_integer(gmp_integer_retval input_gmp_integer_retval);
 # endif
 
 // [[[ NUMBERIFY ]]]

@@ -24,7 +24,7 @@ use File::Basename;
 
 # [[[ OO METHODS & SUBROUTINES ]]]
 
-# RPerl object constructor, shorthand
+# RPerl object constructor, SHORT FORM
 sub new {
     no strict;
     if ( not defined ${ $_[0] . '::properties' } ) {
@@ -818,7 +818,7 @@ sub activate_subroutine {
 
 __END__
 
-# RPerl function/method autoloader, longhand; allows syntax for typed functions/methods and automates get/set accessors/mutators for object properties;
+# RPerl function/method autoloader, LONG FORM; allows syntax for typed functions/methods and automates get/set accessors/mutators for object properties;
 # creates real subroutines to avoid AUTOLOADing any function/method more than once, performs operation inside AUTOLOAD that one time
 # now fully deprecated in favor of INIT block above
 our $AUTOLOAD;
@@ -875,10 +875,10 @@ sub AUTOLOAD
 	return $retval;
 }
 
-# RPerl object constructor, longhand
+# RPerl object constructor, LONG FORM
 # DEPRECATED still uses %properties hash instead of $properties hashref
 #sub new($class_name_const_str)
-sub new_longhand
+sub new_LONG FORM
 {
 	(my $class_name_const_str) = @_;
 RPerl::diag("in Class.pm, have \$class_name_const_str = '$class_name_const_str'\n");

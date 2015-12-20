@@ -6,7 +6,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
@@ -104,175 +104,182 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
     # [[[ GMP INTEGER TESTS ]]]
     # [[[ GMP INTEGER TESTS ]]]
 
-=DISABLE
-    throws_ok(    # TGIV00
-        sub { gmp_integer_to_string() },
-        "/(EGIV00.*$mode_tagline)|(Usage.*gmp_integer_to_string)/",    # DEV NOTE: 2 different error messages, RPerl & C
-        q{TGIV00 gmp_integer_to_string() throws correct exception}
+
+    lives_and(                                                    # TGIV200
+        sub {
+            my RPerl::DataType::GMPInteger $tmp1 = RPerl::DataType::GMPInteger->new();
+            gmp_set_signed_integer($tmp1, 34_567_890);
+            is( gmp_integer_to_integer($tmp1), 34_567_890, q{TGIV200 gmp_integer_to_string($tmp1) returns correct value} );
+        },
+        q{TGIV200 gmp_integer_to_string($tmp1) lives}
     );
 
-    throws_ok(                                                    # TGIV01
+=DISABLE
+    throws_ok(    # TGIV500
+        sub { gmp_integer_to_string() },
+        "/(EGIV00.*$mode_tagline)|(Usage.*gmp_integer_to_string)/",    # DEV NOTE: 2 different error messages, RPerl & C
+        q{TGIV500 gmp_integer_to_string() throws correct exception}
+    );
+
+    throws_ok(                                                    # TGIV501
         sub { gmp_integer_to_string(undef) },
         "/EGIV00.*$mode_tagline/",
-        q{TGIV01 gmp_integer_to_string(undef) throws correct exception}
+        q{TGIV501 gmp_integer_to_string(undef) throws correct exception}
     );
-    lives_and(                                                    # TGIV02
+    lives_and(                                                    # TGIV502
         sub {
-            is( gmp_integer_to_string(0), '0', q{TGIV02 gmp_integer_to_string(0) returns correct value} );
+            is( gmp_integer_to_string(0), '0', q{TGIV502 gmp_integer_to_string(0) returns correct value} );
         },
-        q{TGIV02 gmp_integer_to_string(0) lives}
+        q{TGIV502 gmp_integer_to_string(0) lives}
     );
-    lives_and(                                                    # TGIV03
+    lives_and(                                                    # TGIV503
         sub {
-            is( gmp_integer_to_string(-0), '0', q{TGIV03 gmp_integer_to_string(-0) returns correct value} );
+            is( gmp_integer_to_string(-0), '0', q{TGIV503 gmp_integer_to_string(-0) returns correct value} );
         },
-        q{TGIV03 gmp_integer_to_string(-0) lives}
+        q{TGIV503 gmp_integer_to_string(-0) lives}
     );
-    lives_and(                                                    # TGIV04
+    lives_and(                                                    # TGIV504
         sub {
-            is( gmp_integer_to_string(3), '3', q{TGIV04 gmp_integer_to_string(3) returns correct value} );
+            is( gmp_integer_to_string(3), '3', q{TGIV504 gmp_integer_to_string(3) returns correct value} );
         },
-        q{TGIV04 gmp_integer_to_string(3) lives}
+        q{TGIV504 gmp_integer_to_string(3) lives}
     );
-    lives_and(                                                    # TGIV05
+    lives_and(                                                    # TGIV505
         sub {
-            is( gmp_integer_to_string(-17), '-17', q{TGIV05 gmp_integer_to_string(-17) returns correct value} );
+            is( gmp_integer_to_string(-17), '-17', q{TGIV505 gmp_integer_to_string(-17) returns correct value} );
         },
-        q{TGIV05 gmp_integer_to_string(-17) lives}
+        q{TGIV505 gmp_integer_to_string(-17) lives}
     );
-    throws_ok(                                                    # TGIV06
+    throws_ok(                                                    # TGIV506
         sub { gmp_integer_to_string(-17.3) },
         "/EGIV01.*$mode_tagline/",
-        q{TGIV06 gmp_integer_to_string(-17.3) throws correct exception}
+        q{TGIV506 gmp_integer_to_string(-17.3) throws correct exception}
     );
-    throws_ok(                                                    # TGIV07
+    throws_ok(                                                    # TGIV507
         sub { gmp_integer_to_string('-17.3') },
         "/EGIV01.*$mode_tagline/",
-        q{TGIV07 gmp_integer_to_string('-17.3') throws correct exception}
+        q{TGIV507 gmp_integer_to_string('-17.3') throws correct exception}
     );
-    throws_ok(                                                    # TGIV08
+    throws_ok(                                                    # TGIV508
         sub { gmp_integer_to_string( [3] ) },
         "/EGIV01.*$mode_tagline/",
-        q{TGIV08 gmp_integer_to_string([3]) throws correct exception}
+        q{TGIV508 gmp_integer_to_string([3]) throws correct exception}
     );
-    throws_ok(                                                    # TGIV09
+    throws_ok(                                                    # TGIV509
         sub { gmp_integer_to_string( { a_key => 3 } ) },
         "/EGIV01.*$mode_tagline/",
-        q{TGIV09 gmp_integer_to_string({a_key => 3}) throws correct exception}
+        q{TGIV509 gmp_integer_to_string({a_key => 3}) throws correct exception}
     );
-    lives_and(                                                    # TGIV10
+    lives_and(                                                    # TGIV510
         sub {
-            is( gmp_integer_to_string(34_567_890), '34_567_890', q{TGIV10 gmp_integer_to_string(34_567_890) returns correct value} );
+            is( gmp_integer_to_string(34_567_890), '34_567_890', q{TGIV510 gmp_integer_to_string(34_567_890) returns correct value} );
         },
-        q{TGIV10 gmp_integer_to_string(34_567_890) lives}
+        q{TGIV510 gmp_integer_to_string(34_567_890) lives}
     );
-    lives_and(                                                    # TGIV11
+    lives_and(                                                    # TGIV511
         sub {
-            is( gmp_integer_to_string(-34_567_890), '-34_567_890', q{TGIV11 gmp_integer_to_string(-34_567_890) returns correct value} );
+            is( gmp_integer_to_string(-34_567_890), '-34_567_890', q{TGIV511 gmp_integer_to_string(-34_567_890) returns correct value} );
         },
-        q{TGIV11 gmp_integer_to_string(-34_567_890) lives}
+        q{TGIV511 gmp_integer_to_string(-34_567_890) lives}
     );
-    lives_and(                                                    # TGIV12
+    lives_and(                                                    # TGIV512
         sub {
-            is( gmp_integer_to_string(234_567_890), '234_567_890', q{TGIV12 gmp_integer_to_string(234_567_890) returns correct value} );
+            is( gmp_integer_to_string(234_567_890), '234_567_890', q{TGIV512 gmp_integer_to_string(234_567_890) returns correct value} );
         },
-        q{TGIV12 gmp_integer_to_string(234_567_890) lives}
+        q{TGIV512 gmp_integer_to_string(234_567_890) lives}
     );
-    lives_and(                                                    # TGIV13
+    lives_and(                                                    # TGIV513
         sub {
-            is( gmp_integer_to_string(-234_567_890), '-234_567_890', q{TGIV13 gmp_integer_to_string(-234_567_890) returns correct value} );
+            is( gmp_integer_to_string(-234_567_890), '-234_567_890', q{TGIV513 gmp_integer_to_string(-234_567_890) returns correct value} );
         },
-        q{TGIV13 gmp_integer_to_string(-234_567_890) lives}
+        q{TGIV513 gmp_integer_to_string(-234_567_890) lives}
     );
-    lives_and(                                                    # TGIV14
+    lives_and(                                                    # TGIV514
         sub {
-            is( gmp_integer_to_string(1_234_567_890), '1_234_567_890', q{TGIV14 gmp_integer_to_string(1_234_567_890) returns correct value} );
+            is( gmp_integer_to_string(1_234_567_890), '1_234_567_890', q{TGIV514 gmp_integer_to_string(1_234_567_890) returns correct value} );
         },
-        q{TGIV14 gmp_integer_to_string(1_234_567_890) lives}
+        q{TGIV514 gmp_integer_to_string(1_234_567_890) lives}
     );
-    lives_and(                                                    # TGIV15
+    lives_and(                                                    # TGIV515
         sub {
-            is( gmp_integer_to_string(-1_234_567_890), '-1_234_567_890', q{TGIV15 gmp_integer_to_string(-1_234_567_890) returns correct value} );
+            is( gmp_integer_to_string(-1_234_567_890), '-1_234_567_890', q{TGIV515 gmp_integer_to_string(-1_234_567_890) returns correct value} );
         },
-        q{TGIV15 gmp_integer_to_string(-1_234_567_890) lives}
+        q{TGIV515 gmp_integer_to_string(-1_234_567_890) lives}
     );
-    throws_ok(                                                    # TGIV16
+    throws_ok(                                                    # TGIV516
         sub {
             gmp_integer_to_string(-1_234_567_890_000_000_000_000_000_000_000_000);
         },
         "/EGIV01.*$mode_tagline/",
-        q{TGIV16 gmp_integer_to_string(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
+        q{TGIV516 gmp_integer_to_string(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
     );
 =cut
 
 
-=THIS ONE WORKED WITH gmp_integer_retval
-
-    lives_and(                                                    # TGIV20
+    lives_and(                                                    # TGIV600
         sub {
-            is( gmp_integer__typetest0(), ( 3 + $mode_id ), q{TGIV20 gmp_integer__typetest0() returns correct value} );
+            is( gmp_integer__typetest0(), ( 3 + $mode_id ), q{TGIV600 gmp_integer__typetest0() returns correct value} );
         },
-        q{TGIV20 gmp_integer__typetest0() lives}
+        q{TGIV600 gmp_integer__typetest0() lives}
     );
 
-=cut
-    
+
 =DISABLE
-    throws_ok(                                                    # TGIV30
+    throws_ok(                                                    # TGIV610
         sub { gmp_integer__typetest1() },
         "/(EGIV00.*$mode_tagline)|(Usage.*gmp_integer__typetest1)/"
         ,                                                         # DEV NOTE: 2 different error messages, RPerl & C
-        q{TGIV30 gmp_integer__typetest1() throws correct exception}
+        q{TGIV610 gmp_integer__typetest1() throws correct exception}
     );
-    throws_ok(                                                    # TGIV31
+    throws_ok(                                                    # TGIV611
         sub { gmp_integer__typetest1(undef) },
         "/EGIV00.*$mode_tagline/",
-        q{TGIV31 gmp_integer__typetest1(undef) throws correct exception}
+        q{TGIV611 gmp_integer__typetest1(undef) throws correct exception}
     );
-    lives_and(                                                    # TGIV32
+    lives_and(                                                    # TGIV612
         sub {
-            is( gmp_integer__typetest1(3), ( ( 3 * 2 ) + $mode_id ), q{TGIV32 gmp_integer__typetest1(3) returns correct value} );
+            is( gmp_integer__typetest1(3), ( ( 3 * 2 ) + $mode_id ), q{TGIV612 gmp_integer__typetest1(3) returns correct value} );
         },
-        q{TGIV32 gmp_integer__typetest1(3) lives}
+        q{TGIV612 gmp_integer__typetest1(3) lives}
     );
-    lives_and(                                                    # TGIV33
+    lives_and(                                                    # TGIV613
         sub {
-            is( gmp_integer__typetest1(-17), ( ( -17 * 2 ) + $mode_id ), q{TGIV33 gmp_integer__typetest1(-17) returns correct value} );
+            is( gmp_integer__typetest1(-17), ( ( -17 * 2 ) + $mode_id ), q{TGIV613 gmp_integer__typetest1(-17) returns correct value} );
         },
-        q{TGIV33 gmp_integer__typetest1(-17) lives}
+        q{TGIV613 gmp_integer__typetest1(-17) lives}
     );
-    throws_ok(                                                    # TGIV34
+    throws_ok(                                                    # TGIV614
         sub { gmp_integer__typetest1(-17.3) },
         "/EGIV01.*$mode_tagline/",
-        q{TGIV34 gmp_integer__typetest1(-17.3) throws correct exception}
+        q{TGIV614 gmp_integer__typetest1(-17.3) throws correct exception}
     );
-    throws_ok(                                                    # TGIV35
+    throws_ok(                                                    # TGIV615
         sub { gmp_integer__typetest1('-17.3') },
         "/EGIV01.*$mode_tagline/",
-        q{TGIV35 gmp_integer__typetest1('-17.3') throws correct exception}
+        q{TGIV615 gmp_integer__typetest1('-17.3') throws correct exception}
     );
-    throws_ok(                                                    # TGIV36
+    throws_ok(                                                    # TGIV616
         sub { gmp_integer__typetest1( [3] ) },
         "/EGIV01.*$mode_tagline/",
-        q{TGIV36 gmp_integer__typetest1([3]) throws correct exception}
+        q{TGIV616 gmp_integer__typetest1([3]) throws correct exception}
     );
-    throws_ok(                                                    # TGIV37
+    throws_ok(                                                    # TGIV617
         sub { gmp_integer__typetest1( { a_key => 3 } ) },
         "/EGIV01.*$mode_tagline/",
-        q{TGIV37 gmp_integer__typetest1({a_key => 3}) throws correct exception}
+        q{TGIV617 gmp_integer__typetest1({a_key => 3}) throws correct exception}
     );
-    lives_and(                                                    # TGIV38
+    lives_and(                                                    # TGIV618
         sub {
-            is( gmp_integer__typetest1(-234_567_890), ( ( -234_567_890 * 2 ) + $mode_id ), q{TGIV38 gmp_integer__typetest1(-234_567_890) returns correct value} );
+            is( gmp_integer__typetest1(-234_567_890), ( ( -234_567_890 * 2 ) + $mode_id ), q{TGIV618 gmp_integer__typetest1(-234_567_890) returns correct value} );
         },
-        q{TGIV38 gmp_integer__typetest1(-234_567_890) lives}
+        q{TGIV618 gmp_integer__typetest1(-234_567_890) lives}
     );
-    throws_ok(                                                    # TGIV39
+    throws_ok(                                                    # TGIV619
         sub {
             gmp_integer__typetest1(-1_234_567_890_000_000_000_000_000_000_000_000);
         },
         "/EGIV01.*$mode_tagline/",
-        q{TGIV39 gmp_integer__typetest1(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
+        q{TGIV619 gmp_integer__typetest1(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
     );
 =cut
 }

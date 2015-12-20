@@ -45,10 +45,10 @@ SV* integer_bubblesort(SV* integer_data) {  // DEV NOTE: properly creates local-
     integer_arrayref_CHECKTRACE(integer_data, "integer_data", "integer_bubblesort()");
 
     integer is_sorted = 0;
-    AV* integer_data_av = (AV*) SvRV(integer_data);  // OPTIMIZE, LONG-HAND: integer_data dereferenced to integer_data_av more than once, declare integer_data_av and re-use, MUST REFRESH integer_data_av for every assignment directly to integer_data (none in this algorithm)
-    integer integer_data_length = av_len(integer_data_av) + 1;  // OPTIMIZE, LONG-HAND: use integer_data_av
-    SV* integer_data_i = newSV(0);  // OPTIMIZE, LONG-HAND: integer_data element i accessed more than once, declare integer_data_i and re-use;  all new SV*'s given initial undef newSV(0) value to avoid fprintf(stderr, ) errors during debugging
-    SV* integer_data_i_plus_1 = newSV(0);  // OPTIMIZE, LONG-HAND
+    AV* integer_data_av = (AV*) SvRV(integer_data);  // OPTIMIZE, LONG FORM: integer_data dereferenced to integer_data_av more than once, declare integer_data_av and re-use, MUST REFRESH integer_data_av for every assignment directly to integer_data (none in this algorithm)
+    integer integer_data_length = av_len(integer_data_av) + 1;  // OPTIMIZE, LONG FORM: use integer_data_av
+    SV* integer_data_i = newSV(0);  // OPTIMIZE, LONG FORM: integer_data element i accessed more than once, declare integer_data_i and re-use;  all new SV*'s given initial undef newSV(0) value to avoid fprintf(stderr, ) errors during debugging
+    SV* integer_data_i_plus_1 = newSV(0);  // OPTIMIZE, LONG FORM
 
     SV* swap = newSV(0);
 
@@ -57,17 +57,17 @@ SV* integer_bubblesort(SV* integer_data) {  // DEV NOTE: properly creates local-
         is_sorted = 1;
         for ( integer i = 0; i <= (integer_data_length - 2); i++ ) {
             // compare elements and swap if out-of-order, this is the core sort comparison
-            integer_data_i = AV_ELEMENT(integer_data_av, i);  // OPTIMIZE, LONG-HAND: use integer_data_i and integer_data_av
-            integer_data_i_plus_1 = AV_ELEMENT(integer_data_av, (i + 1));  // OPTIMIZE, LONG-HAND: use integer_data_i_plus_1 and integer_data_av
+            integer_data_i = AV_ELEMENT(integer_data_av, i);  // OPTIMIZE, LONG FORM: use integer_data_i and integer_data_av
+            integer_data_i_plus_1 = AV_ELEMENT(integer_data_av, (i + 1));  // OPTIMIZE, LONG FORM: use integer_data_i_plus_1 and integer_data_av
 
             // DEV NOTE: using C++ numeric greater-than comparator operator as direct replacement for equivalent Perl builtin operator
-            if ( SvIV(integer_data_i) > SvIV(integer_data_i_plus_1) ) {  // OPTIMIZE, LONG-HAND: use integer_data_i and integer_data_i_plus_1
+            if ( SvIV(integer_data_i) > SvIV(integer_data_i_plus_1) ) {  // OPTIMIZE, LONG FORM: use integer_data_i and integer_data_i_plus_1
                 is_sorted = 0;
-                integer_data_i = AV_ELEMENT(integer_data_av, i);  // OPTIMIZE, LONG-HAND: use integer_data_i and integer_data_av
-                swap = integer_data_i;  // OPTIMIZE, LONG-HAND: use integer_data_i
-                integer_data_i_plus_1 = AV_ELEMENT(integer_data_av, (i + 1));  // OPTIMIZE, LONG-HAND: use integer_data_i_plus_1 and integer_data_av
-                av_store(integer_data_av, i, SvREFCNT_inc(integer_data_i_plus_1));  // OPTIMIZE, LONG-HAND: use integer_data_av and integer_data_i_plus_1
-                av_store(integer_data_av, (i + 1), SvREFCNT_inc(swap));  // OPTIMIZE, LONG-HAND: use integer_data_av
+                integer_data_i = AV_ELEMENT(integer_data_av, i);  // OPTIMIZE, LONG FORM: use integer_data_i and integer_data_av
+                swap = integer_data_i;  // OPTIMIZE, LONG FORM: use integer_data_i
+                integer_data_i_plus_1 = AV_ELEMENT(integer_data_av, (i + 1));  // OPTIMIZE, LONG FORM: use integer_data_i_plus_1 and integer_data_av
+                av_store(integer_data_av, i, SvREFCNT_inc(integer_data_i_plus_1));  // OPTIMIZE, LONG FORM: use integer_data_av and integer_data_i_plus_1
+                av_store(integer_data_av, (i + 1), SvREFCNT_inc(swap));  // OPTIMIZE, LONG FORM: use integer_data_av
             }
         }
     }
@@ -172,8 +172,8 @@ integer_arrayref integer_bubblesort(integer_arrayref integer_data) {  // DEV NOT
     integer is_sorted = 0;
     integer integer_data_length = integer_data.size();
 
-    integer integer_data_i;  // OPTIMIZE, LONG-HAND: integer_data element i accessed more than once, declare integer_data_i and re-use
-    integer integer_data_i_plus_1;  // OPTIMIZE, LONG-HAND
+    integer integer_data_i;  // OPTIMIZE, LONG FORM: integer_data element i accessed more than once, declare integer_data_i and re-use
+    integer integer_data_i_plus_1;  // OPTIMIZE, LONG FORM
     integer swap;
 
     // iterate through the length-n list up to n times (n * n == n**2), larger elements "bubble to the top" (end) of the list
@@ -181,14 +181,14 @@ integer_arrayref integer_bubblesort(integer_arrayref integer_data) {  // DEV NOT
         is_sorted = 1;
         for ( integer i = 0; i <= (integer_data_length - 2); i++ ) {
             // compare elements and swap if out-of-order, this is the core sort comparison
-            integer_data_i = integer_data[i];  // OPTIMIZE, LONG-HAND: use integer_data_i
-            integer_data_i_plus_1 = integer_data[(i + 1)];  // OPTIMIZE, LONG-HAND: use integer_data_i_plus_1
+            integer_data_i = integer_data[i];  // OPTIMIZE, LONG FORM: use integer_data_i
+            integer_data_i_plus_1 = integer_data[(i + 1)];  // OPTIMIZE, LONG FORM: use integer_data_i_plus_1
 
             // DEV NOTE: integer_data is of type integer_arrayref, assuming numeric values for integer_data elements and using C++ numeric comparator
-            if ( integer_data_i > integer_data_i_plus_1 ) {  // OPTIMIZE, LONG-HAND: use integer_data_i and integer_data_i_plus_1
+            if ( integer_data_i > integer_data_i_plus_1 ) {  // OPTIMIZE, LONG FORM: use integer_data_i and integer_data_i_plus_1
                 is_sorted = 0;
-                swap = integer_data_i;  // OPTIMIZE, LONG-HAND: use integer_data_i
-                integer_data[i] = integer_data_i_plus_1;  // OPTIMIZE, LONG-HAND: use integer_data_i_plus_1
+                swap = integer_data_i;  // OPTIMIZE, LONG FORM: use integer_data_i
+                integer_data[i] = integer_data_i_plus_1;  // OPTIMIZE, LONG FORM: use integer_data_i_plus_1
                 integer_data[(i + 1)] = swap;
             }
         }

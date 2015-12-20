@@ -75,52 +75,36 @@ void gmp_integer_CHECKTRACE(SV* possible_gmp_integer, const char* variable_name,
 
 # ifdef __CPP__TYPES
 
-/* DISABLE RETVAL VERSION
 // convert from (Perl SV containing reference to (Perl HV containing reference to C gmp_integer)) to (C gmp_integer_retval)
 gmp_integer_retval XS_unpack_gmp_integer_retval(SV* input_sv)
 {
-    fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), top of subroutine\n");
-//  gmp_integer_CHECK(input_sv);
+//    gmp_integer_CHECK(input_sv);
 //    gmp_integer_CHECKTRACE(input_sv, "input_sv", "XS_unpack_gmp_integer_retval()");
 
-    gmp_integer_retval output_gmp_integer_retval;
+/*  // LONG FORM
+    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), top of subroutine" << endl;
+    HV* input_sv_deref = (HV*)SvRV(input_sv);
+    SV** input_sv_value_ptr = hv_fetch(input_sv_deref, (const char*) "value", (U32) 5, (I32) 0);
+    gmp_integer_rawptr gmp_integer_tmp = sv_to_gmp_integer_rawptr(*input_sv_value_ptr);
 
-    gmp_integer_rawptr FOO = sv_to_gmp_integer_rawptr(input_sv);
-    gmp_integer BAR;
-    BAR[1] = *FOO[1];
-    output_gmp_integer_retval = (gmp_integer_retval) BAR;
+    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have *gmp_integer_tmp = " << *gmp_integer_tmp << endl;
 
-    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have gmp_get_signed_integer(output_gmp_integer_retval) = " <<
-            gmp_get_signed_integer(output_gmp_integer_retval.gmp_integer_unretval()) << endl;
+    gmp_integer_retval output_gmp_integer_retval = (gmp_integer_retval) *(gmp_integer_tmp);
 
-    fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), bottom of subroutine\n");
+    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have output_gmp_integer_retval.gmp_integer_unretval() = " << output_gmp_integer_retval.gmp_integer_unretval() << endl;
+    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), bottom of subroutine" << endl;
 
     return output_gmp_integer_retval;
-}
 */
 
-/* FIX OR REPLACE
-// convert from (Perl SV containing reference to (Perl HV containing reference to C gmp_integer)) to (C gmp_integer_retval)
-gmp_integer_rawptr XS_unpack_gmp_integer_rawptr(SV* input_sv)
-{
-    fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_rawptr(), top of subroutine\n");
-//  gmp_integer_CHECK(input_sv);
-//    gmp_integer_CHECKTRACE(input_sv, "input_sv", "XS_unpack_gmp_integer_rawptr()");
-
-    gmp_integer_rawptr output_gmp_integer_rawptr;
-
-    gmp_integer_rawptr FOO = sv_to_gmp_integer_rawptr(input_sv);
-
-    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_rawptr(), have gmp_get_signed_integer(*output_gmp_integer_rawptr) = " <<
-            gmp_get_signed_integer(*output_gmp_integer_rawptr) << endl;
-
-    fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_rawptr(), bottom of subroutine\n");
-
-    return output_gmp_integer_rawptr;
+    // SHORT FORM
+    return (gmp_integer_retval) *(sv_to_gmp_integer_rawptr(*(hv_fetch((HV*)SvRV(input_sv), (const char*) "value", (U32) 5, (I32) 0))));
 }
-*/
 
-/* NEED FIX AND TEST
+// START HERE: enable & test XS_pack_gmp_integer_retval() below; test BOOLIFY, *IFY, etc.; possibly modify typetests() to return numeric types
+// START HERE: enable & test XS_pack_gmp_integer_retval() below; test BOOLIFY, *IFY, etc.; possibly modify typetests() to return numeric types
+// START HERE: enable & test XS_pack_gmp_integer_retval() below; test BOOLIFY, *IFY, etc.; possibly modify typetests() to return numeric types
+
 // convert from (C gmp_integer_retval) to (Perl SV containing reference to (Perl HV containing reference to C gmp_integer))
 void XS_pack_gmp_integer_retval(SV* output_hv_ref, gmp_integer_retval input_gmp_integer_retval)
 {
@@ -129,86 +113,36 @@ void XS_pack_gmp_integer_retval(SV* output_hv_ref, gmp_integer_retval input_gmp_
     HV* output_hv = newHV();  // initialize output hash to empty
     SV* temp_sv_pointer;
 
-/ *
+/*
     hv_store(output_hv, (const char*) "value", (U32) 5, &input_gmp_integer, (U32)0);
 
     temp_sv_pointer = newSVrv(output_hv_ref, NULL);   // upgrade output stack SV to an RV
     SvREFCNT_dec(temp_sv_pointer);       // discard temporary pointer
     SvRV(output_hv_ref) = (SV*)output_hv;      // make output stack RV pointer at our output HV
-* /
+*/
 
 //  fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_gmp_integer(), bottom of subroutine\n");
 }
-*/
 
-/* FIX OR REPLACE
-//mpz_t* sv_to_mpz_t(SV* input_sv)
-gmp_integer_rawptr sv_to_gmp_integer_rawptr(SV* input_sv)
+// convert from (Perl SV containing reference to C gmp_integer) to (C gmp_integer_rawptr)
+gmp_integer_rawptr sv_to_gmp_integer_rawptr (SV* input_sv)
 {
-    cout << "in GMPInteger.cpp sv_to_gmp_integer_rawptr(), top of subroutine" << endl;
-    MAGIC* mg;
-    cout << "in GMPInteger.cpp sv_to_gmp_integer_rawptr(), after declaration of MAGIC* mg" << endl;
     if (!sv_derived_from(input_sv, "Math::BigInt::GMP")) {
-        croak("not of type Math::BigInt::GMP");
+        croak("\nERROR EGIV10, WRONG TYPE, CPPOPS_CPPTYPES:\nscalar value not of type RPerl::DataType::GMPInteger (AKA gmp_integer) or derived from type Math::BigInt::GMP,\ncroaking");
     }
-    mg = SvMAGIC(SvRV(input_sv));
-    cout << "in GMPInteger.cpp sv_to_gmp_integer_rawptr(), have input_sv = " << input_sv << endl;
-    cout << "in GMPInteger.cpp sv_to_gmp_integer_rawptr(), have SvRV(input_sv) = " << SvRV(input_sv) << endl;
-    cout << "in GMPInteger.cpp sv_to_gmp_integer_rawptr(), have SvMAGIC(SvRV(input_sv)) = " << SvMAGIC(SvRV(input_sv)) << endl;
-    cout << "in GMPInteger.cpp sv_to_gmp_integer_rawptr(), after setting mg = SvMAGIC(SvRV(input_sv))" << endl;
-    cout << "in GMPInteger.cpp sv_to_gmp_integer_rawptr(), have mg = " << mg << endl;
-//    gmp_integer_rawptr retval = (gmp_integer_rawptr) mg->mg_ptr;
-    gmp_integer_rawptr retval;
-    cout << "in GMPInteger.cpp sv_to_gmp_integer_rawptr(), after declaration of gmp_integer_rawptr retval" << endl;
-    cout << "in GMPInteger.cpp sv_to_gmp_integer_rawptr(), have mg->mg_ptr = " << mg->mg_ptr << endl;
-    retval = (gmp_integer_rawptr) mg->mg_ptr;
-//    retval = mg->mg_ptr;
-    cout << "in GMPInteger.cpp sv_to_gmp_integer_rawptr(), after initializing gmp_integer_rawptr retval = (gmp_integer_rawptr) mg->mg_ptr;" << endl;
-    return retval;
-//    return (gmp_integer_rawptr) mg->mg_ptr;
-}
+
+/*  // LONG FORM
+    MAGIC* input_sv_magic = SvMAGIC(SvRV(input_sv));
+    cerr << "in CPPOPS_CPPTYPES sv_to_gmp_integer_rawptr(), received input_sv = " << input_sv << endl;
+    cerr << "in CPPOPS_CPPTYPES sv_to_gmp_integer_rawptr(), have input_sv_magic = " << input_sv_magic << endl;
+    cerr << "in CPPOPS_CPPTYPES sv_to_gmp_integer_rawptr(), have gmp_get_signed_integer(*(gmp_integer_rawptr)input_sv_magic->mg_ptr) = " << gmp_get_signed_integer(*(gmp_integer_rawptr)input_sv_magic->mg_ptr) << endl;
+    cerr << "in CPPOPS_CPPTYPES sv_to_gmp_integer_rawptr(), returning (gmp_integer_rawptr)input_sv_magic->mg_ptr = " << (gmp_integer_rawptr)input_sv_magic->mg_ptr << endl;
+    return (gmp_integer_rawptr) input_sv_magic->mg_ptr;
 */
 
-
-
-
-
-// UPGRADE TO PROPER MACROS, TYPE NAMES, ETC.
-mpz_t * mpz_from_sv_nofail (SV *sv)
-{
-  MAGIC *mg;
-
-  if (!sv_derived_from(sv, "Math::BigInt::GMP"))
-    croak("not of type Math::BigInt::GMP");
-
-  mg = SvMAGIC(SvRV(sv));
-
-  return (mpz_t *)mg->mg_ptr;
+    // SHORT FORM
+    return (gmp_integer_rawptr) SvMAGIC(SvRV(input_sv))->mg_ptr;
 }
-
-// DELETE AFTER TESTING FINISHED
-void _my_mul(SV * bi_rop, SV * bi_op, SV * si, SV * rop_sign, SV * op_sign) {
-     mpz_t *t1, *t2;
-
-     sv_setpv(rop_sign, SvPV_nolen(op_sign));
-
-     t1 = mpz_from_sv_nofail(bi_rop);
-     t2 = mpz_from_sv_nofail(bi_op);
-
-     mpz_abs(*t2, *t2);
-     mpz_mul_si(*t1, *t2, abs(SvIV(si)));
-
-     if(SvIV(si) < 0) {
-       if(strEQ(SvPV_nolen(op_sign), "-")) sv_setpv(rop_sign, "+");
-       else sv_setpv(rop_sign, "-");
-     }
-}
-
-
-
-
-
-
 
 # endif
 
@@ -259,66 +193,20 @@ unsigned_integer gmp_integer_to_unsigned_integer(gmp_integer input_gmp_integer) 
 
 # ifdef __PERL__TYPES
 
-/* DISABLED
 SV* gmp_integer_to_integer(SV* input_gmp_integer) {
 //  gmp_integer_CHECK(input_gmp_integer);
     gmp_integer_CHECKTRACE(input_gmp_integer, "input_gmp_integer", "gmp_integer_to_integer()");
     // NEED ADD CODE
 }
-*/
 
 # elif defined __CPP__TYPES
 
-//integer gmp_integer_to_integer(gmp_integer_rawptr input_gmp_integer_rawptr) {
-//    return gmp_get_signed_integer(*input_gmp_integer_rawptr);
-//}
-//integer gmp_integer_to_integer(gmp_integer_retval input_gmp_integer_retval) {
-//    return gmp_get_signed_integer(input_gmp_integer_retval.gmp_integer_unretval());
-//}
-
-/* GOOD STAND-ALONE
-integer gmp_integer_to_integer(SV* input_sv_rawptr) {
-     cout << "in gmp_integer_to_integer(), top of subroutine..." << endl;
-
-     gmp_integer_rawptr tmp_gmp_integer_rawptr;
-
-     tmp_gmp_integer_rawptr = mpz_from_sv_nofail(input_sv_rawptr);
-
-     integer retval = gmp_get_signed_integer(*tmp_gmp_integer_rawptr);
-     cout << "in gmp_integer_to_integer(), have retval = " << retval << endl;
-     cout << "in gmp_integer_to_integer(), bottom of subroutine..." << endl;
-
-     return retval;
+integer gmp_integer_to_integer(gmp_integer_retval input_gmp_integer_retval) {
+//    cerr << "in CPPOPS_CPPTYPES gmp_integer_to_integer(), received input_gmp_integer_retval = " << input_gmp_integer_retval << endl;
+//    cerr << "in CPPOPS_CPPTYPES gmp_integer_to_integer(), have input_gmp_integer_retval.gmp_integer_unretval() = " << input_gmp_integer_retval.gmp_integer_unretval() << endl;
+//    cerr << "in CPPOPS_CPPTYPES gmp_integer_to_integer(), returning gmp_get_signed_integer(input_gmp_integer_retval.gmp_integer_unretval()) = " << gmp_get_signed_integer(input_gmp_integer_retval.gmp_integer_unretval()) << endl;
+    return gmp_get_signed_integer(input_gmp_integer_retval.gmp_integer_unretval());
 }
-*/
-
-// START HERE: GET THIS TO WORK!!!
-// START HERE: GET THIS TO WORK!!!
-// START HERE: GET THIS TO WORK!!!
-
-/* NEED THIS TO WORK!
-gmp_integer_rawptr XS_unpack_gmp_integer_rawptr(SV* input_sv_rawptr) {
-    cout << "in XS_unpack_gmp_integer_rawptr(), top of subroutine..." << endl;
-
-    gmp_integer_rawptr tmp_gmp_integer_rawptr;
-
-    tmp_gmp_integer_rawptr = mpz_from_sv_nofail(input_sv_rawptr);
-    cout << "in XS_unpack_gmp_integer_rawptr(), bottom of subroutine..." << endl;
-
-    return tmp_gmp_integer_rawptr;
-}
-
-integer gmp_integer_to_integer(gmp_integer_rawptr input_gmp_integer_rawptr) {
-     cout << "in gmp_integer_to_integer(), top of subroutine..." << endl;
-
-     integer retval = gmp_get_signed_integer(*input_gmp_integer_rawptr);
-     cout << "in gmp_integer_to_integer(), have retval = " << retval << endl;
-     cout << "in gmp_integer_to_integer(), bottom of subroutine..." << endl;
-
-     return retval;
-}
-*/
-
 
 # endif
 
@@ -370,9 +258,9 @@ char gmp_integer_to_char(gmp_integer input_gmp_integer) {
 # ifdef __PERL__TYPES
 
 SV* gmp_integer_to_string(SV* input_gmp_integer) {
-//	gmp_integer_CHECK(input_gmp_integer);
-	gmp_integer_CHECKTRACE(input_gmp_integer, "input_gmp_integer", "gmp_integer_to_string()");
-	// NEED ADD CODE
+//  gmp_integer_CHECK(input_gmp_integer);
+    gmp_integer_CHECKTRACE(input_gmp_integer, "input_gmp_integer", "gmp_integer_to_string()");
+    // NEED ADD CODE
 }
 
 # elif defined __CPP__TYPES
@@ -384,7 +272,8 @@ string gmp_integer_to_string(gmp_integer input_gmp_integer) {
 
 # endif
 
-/* DISABLED
+
+/* NEED ENABLE OR DELETE
 // DEV NOTE, CORRELATION #rp09: must use return type 'string' instead of 'std::string' for proper typemap pack/unpack function name alignment;
 // can cause silent failure, falling back to __PERL__TYPES implementation and NOT failure of tests!
 // DEV NOTE, CORRELATION #rp10: the real CPPTYPES sub (below) is called by the wrapper PERLTYPES sub and shim CPPTYPES subs (above), moved outside #ifdef blocks

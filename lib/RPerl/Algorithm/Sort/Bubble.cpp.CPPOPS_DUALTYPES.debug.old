@@ -78,11 +78,11 @@ SV* integer_bubblesort(SV* integer_data)  // DEV NOTE: properly creates local-to
 ////    my integer $is_sorted = 0;
     integer is_sorted = 0;
 ////    my integer $integer_data_length = scalar(@{$integer_data});  # CONSTANT
-//  integer integer_data_length = av_len((AV*) SvRV(integer_data)) + 1;  // DE-OPTIMIZE, SHORT-HAND
-    AV* integer_data_av = (AV*) SvRV(integer_data);  // OPTIMIZE, LONG-HAND: integer_data dereferenced to integer_data_av more than once, declare integer_data_av and re-use, MUST REFRESH integer_data_av for every assignment directly to integer_data (none in this algorithm)
-    integer integer_data_length = av_len(integer_data_av) + 1;  // OPTIMIZE, LONG-HAND: use integer_data_av
-    SV* integer_data_i = newSV(0);  // OPTIMIZE, LONG-HAND: integer_data element i accessed more than once, declare integer_data_i and re-use;  all new SV*'s given initial undef newSV(0) value to avoid fprintf(stderr, ) errors during debugging
-    SV* integer_data_i_plus_1 = newSV(0);  // OPTIMIZE, LONG-HAND
+//  integer integer_data_length = av_len((AV*) SvRV(integer_data)) + 1;  // DE-OPTIMIZE, SHORT FORM
+    AV* integer_data_av = (AV*) SvRV(integer_data);  // OPTIMIZE, LONG FORM: integer_data dereferenced to integer_data_av more than once, declare integer_data_av and re-use, MUST REFRESH integer_data_av for every assignment directly to integer_data (none in this algorithm)
+    integer integer_data_length = av_len(integer_data_av) + 1;  // OPTIMIZE, LONG FORM: use integer_data_av
+    SV* integer_data_i = newSV(0);  // OPTIMIZE, LONG FORM: integer_data element i accessed more than once, declare integer_data_i and re-use;  all new SV*'s given initial undef newSV(0) value to avoid fprintf(stderr, ) errors during debugging
+    SV* integer_data_i_plus_1 = newSV(0);  // OPTIMIZE, LONG FORM
 
 ////    my scalartype $swap;
     SV* swap = newSV(0);
@@ -122,12 +122,12 @@ SV* integer_bubblesort(SV* integer_data)  // DEV NOTE: properly creates local-to
 
 ////            # compare elements and swap if out-of-order, this is the core sort comparison
 ////            if ($integer_data->[$i] > $integer_data->[($i + 1)])
-//          if (SvIV(AV_ELEMENT((AV*) SvRV(integer_data), i)) > SvIV(AV_ELEMENT((AV*) SvRV(integer_data), (i + 1))))  // DE-OPTIMIZE, SHORT-HAND
-            integer_data_i = AV_ELEMENT(integer_data_av, i);  // OPTIMIZE, LONG-HAND: use integer_data_i and integer_data_av
-            integer_data_i_plus_1 = AV_ELEMENT(integer_data_av, (i + 1));  // OPTIMIZE, LONG-HAND: use integer_data_i_plus_1 and integer_data_av
+//          if (SvIV(AV_ELEMENT((AV*) SvRV(integer_data), i)) > SvIV(AV_ELEMENT((AV*) SvRV(integer_data), (i + 1))))  // DE-OPTIMIZE, SHORT FORM
+            integer_data_i = AV_ELEMENT(integer_data_av, i);  // OPTIMIZE, LONG FORM: use integer_data_i and integer_data_av
+            integer_data_i_plus_1 = AV_ELEMENT(integer_data_av, (i + 1));  // OPTIMIZE, LONG FORM: use integer_data_i_plus_1 and integer_data_av
 
             // DEV NOTE: using C++ numeric greater-than comparator operator as direct replacement for equivalent Perl builtin operator
-            if ( SvIV(integer_data_i) > SvIV(integer_data_i_plus_1) )  // OPTIMIZE, LONG-HAND: use integer_data_i and integer_data_i_plus_1
+            if ( SvIV(integer_data_i) > SvIV(integer_data_i_plus_1) )  // OPTIMIZE, LONG FORM: use integer_data_i and integer_data_i_plus_1
 ////            {
             {
 ////#               RPerl::diag("in CPPOPS_PERLTYPES integer_bubblesort(), inside for() loop, SWAPPED\n");
@@ -135,16 +135,16 @@ SV* integer_bubblesort(SV* integer_data)  // DEV NOTE: properly creates local-to
 ////                $is_sorted = 0;
                 is_sorted = 0;
 ////                $swap = $integer_data->[$i];
-//              swap = AV_ELEMENT((AV*) SvRV(integer_data), i);  // DE-OPTIMIZE, SHORT-HAND
-                integer_data_i = AV_ELEMENT(integer_data_av, i);  // OPTIMIZE, LONG-HAND: use integer_data_i and integer_data_av
-                swap = integer_data_i;  // OPTIMIZE, LONG-HAND: use integer_data_i
+//              swap = AV_ELEMENT((AV*) SvRV(integer_data), i);  // DE-OPTIMIZE, SHORT FORM
+                integer_data_i = AV_ELEMENT(integer_data_av, i);  // OPTIMIZE, LONG FORM: use integer_data_i and integer_data_av
+                swap = integer_data_i;  // OPTIMIZE, LONG FORM: use integer_data_i
 ////                $integer_data->[$i] = $integer_data->[($i + 1)];
-//              av_store((AV*) SvRV(integer_data), i, SvREFCNT_inc(AV_ELEMENT((AV*) SvRV(integer_data), (i + 1))));  // DE-OPTIMIZE, SHORT-HAND
-                integer_data_i_plus_1 = AV_ELEMENT(integer_data_av, (i + 1));  // OPTIMIZE, LONG-HAND: use integer_data_i_plus_1 and integer_data_av
-                av_store(integer_data_av, i, SvREFCNT_inc(integer_data_i_plus_1));  // OPTIMIZE, LONG-HAND: use integer_data_av and integer_data_i_plus_1
+//              av_store((AV*) SvRV(integer_data), i, SvREFCNT_inc(AV_ELEMENT((AV*) SvRV(integer_data), (i + 1))));  // DE-OPTIMIZE, SHORT FORM
+                integer_data_i_plus_1 = AV_ELEMENT(integer_data_av, (i + 1));  // OPTIMIZE, LONG FORM: use integer_data_i_plus_1 and integer_data_av
+                av_store(integer_data_av, i, SvREFCNT_inc(integer_data_i_plus_1));  // OPTIMIZE, LONG FORM: use integer_data_av and integer_data_i_plus_1
 ////                $integer_data->[($i + 1)] = $swap;
-//              av_store((AV*) SvRV(integer_data), (i + 1), SvREFCNT_inc(swap));  // DE-OPTIMIZE, SHORT-HAND
-                av_store(integer_data_av, (i + 1), SvREFCNT_inc(swap));  // OPTIMIZE, LONG-HAND: use integer_data_av
+//              av_store((AV*) SvRV(integer_data), (i + 1), SvREFCNT_inc(swap));  // DE-OPTIMIZE, SHORT FORM
+                av_store(integer_data_av, (i + 1), SvREFCNT_inc(swap));  // OPTIMIZE, LONG FORM: use integer_data_av
 ////            }
             }
 //          if (RPERL_DEBUG3) { fprintf(stderr, "in CPPOPS_PERLTYPES integer_bubblesort(), bottom of for() loop, have pre-DUMPER SV_REFERENCE_COUNT(integer_data) = %u\n", SV_REFERENCE_COUNT(integer_data));  fprintf(stderr, "in CPPOPS_PERLTYPES integer_bubblesort(), bottom of for() loop, have integer_data = %s", RPerl__DUMPER(integer_data));  fprintf(stderr, "in CPPOPS_PERLTYPES integer_bubblesort(), bottom of for() loop, have post-DUMPER SV_REFERENCE_COUNT(integer_data) = %u\n\n", SV_REFERENCE_COUNT(integer_data)); }
@@ -334,8 +334,8 @@ integer_arrayref integer_bubblesort(integer_arrayref integer_data)  // DEV NOTE:
     integer integer_data_length = integer_data.size();
 
     // DEV NOTE: all new integers given initial -9999 value to avoid fprintf(stderr, ) errors during debugging
-    integer integer_data_i = -9999;  // OPTIMIZE, LONG-HAND: integer_data element i accessed more than once, declare integer_data_i and re-use
-    integer integer_data_i_plus_1 = -9999;  // OPTIMIZE, LONG-HAND
+    integer integer_data_i = -9999;  // OPTIMIZE, LONG FORM: integer_data element i accessed more than once, declare integer_data_i and re-use
+    integer integer_data_i_plus_1 = -9999;  // OPTIMIZE, LONG FORM
 
 ////    my integer $swap;
     integer swap = -9999;
@@ -375,12 +375,12 @@ integer_arrayref integer_bubblesort(integer_arrayref integer_data)  // DEV NOTE:
 
 ////            # compare elements and swap if out-of-order, this is the core sort comparison
 ////            if ($integer_data->[$i] > $integer_data->[($i + 1)])
-//          if (integer_data[i] > integer_data[(i + 1)])  // DE-OPTIMIZE, SHORT-HAND
-            integer_data_i = integer_data[i];  // OPTIMIZE, LONG-HAND: use integer_data_i
-            integer_data_i_plus_1 = integer_data[(i + 1)];  // OPTIMIZE, LONG-HAND: use integer_data_i_plus_1
+//          if (integer_data[i] > integer_data[(i + 1)])  // DE-OPTIMIZE, SHORT FORM
+            integer_data_i = integer_data[i];  // OPTIMIZE, LONG FORM: use integer_data_i
+            integer_data_i_plus_1 = integer_data[(i + 1)];  // OPTIMIZE, LONG FORM: use integer_data_i_plus_1
 
             // DEV NOTE: integer_data is of type integer_arrayref, assuming numeric values for integer_data elements and using C++ numeric comparator
-            if ( integer_data_i > integer_data_i_plus_1 )  // OPTIMIZE, LONG-HAND: use integer_data_i and integer_data_i_plus_1
+            if ( integer_data_i > integer_data_i_plus_1 )  // OPTIMIZE, LONG FORM: use integer_data_i and integer_data_i_plus_1
 ////            {
             {
 ////#               RPerl::diag("in integer_bubblesort, inside for() loop, SWAPPED\n");
@@ -388,11 +388,11 @@ integer_arrayref integer_bubblesort(integer_arrayref integer_data)  // DEV NOTE:
 ////                $is_sorted = 0;
                 is_sorted = 0;
 ////                $swap = $integer_data->[$i];
-//              swap = integer_data[i];  // DE-OPTIMIZE, SHORT-HAND
-                swap = integer_data_i;  // OPTIMIZE, LONG-HAND: use integer_data_i
+//              swap = integer_data[i];  // DE-OPTIMIZE, SHORT FORM
+                swap = integer_data_i;  // OPTIMIZE, LONG FORM: use integer_data_i
 ////                $integer_data->[$i] = $integer_data->[($i + 1)];
-//              integer_data[i] = integer_data[(i + 1)];  // DE-OPTIMIZE, SHORT-HAND
-                integer_data[i] = integer_data_i_plus_1;  // OPTIMIZE, LONG-HAND: use integer_data_i_plus_1
+//              integer_data[i] = integer_data[(i + 1)];  // DE-OPTIMIZE, SHORT FORM
+                integer_data[i] = integer_data_i_plus_1;  // OPTIMIZE, LONG FORM: use integer_data_i_plus_1
 ////                $integer_data->[($i + 1)] = $swap;
                 integer_data[(i + 1)] = swap;
 ////            }
