@@ -1,9 +1,12 @@
-using std::cout;  using std::cerr;  using std::endl;
+using std::cout;
+using std::cerr;
+using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__GMPInteger_cpp
 #define __CPP__INCLUDED__RPerl__DataType__GMPInteger_cpp 0.001_000
 
 // [[[ INCLUDES ]]]
+#include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
 #include <RPerl/DataType/GMPInteger.h>		// -> NULL (relies on native C type)
 #include <RPerl/Operation/Expression/Operator/GMPFunctions.cpp>  // -> GMPFunctions.h
 // DEV NOTE, CORRELATION #rp12: the only actual includes-level dependency between any of the RPerl core data types should be String.cpp to avoid
@@ -17,56 +20,44 @@ using std::cout;  using std::cerr;  using std::endl;
 // [[[ TYPE-CHECKING ]]]
 // [[[ TYPE-CHECKING ]]]
 
-void gmp_integer_CHECK(SV* possible_gmp_integer)
-{
-    if ( not( SvOK(possible_gmp_integer) ) ) { croak( "\nERROR EGIV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer value expected but undefined/null value found,\ncroaking" ); }
-    if ( not( SvHROKp(possible_gmp_integer) ) ) { croak( "\nERROR EGIV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer value expected but non-hashref value found,\ncroaking" ); }
+void gmp_integer_CHECK(SV* possible_gmp_integer) {
+    if (not (SvOK(possible_gmp_integer))) { croak( "\nERROR EGIV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but undefined/null value found,\ncroaking"); }
+    if (not (SvHROKp(possible_gmp_integer))) { croak( "\nERROR EGIV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-hashref value found,\ncroaking"); }
+    if (not (sv_isobject(possible_gmp_integer))) { croak( "\nERROR EGIV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-object (blessed hashref) value found,\ncroaking"); }
+    if (not (sv_derived_from(possible_gmp_integer, "Math::BigInt"))) { croak( "\nERROR EGIV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-Math::BigInt-derived object value found,\ncroaking"); }
+//    if (not (sv_isa(possible_gmp_integer, "gmp_integer"))) { croak( "\nERROR EGIV04, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-gmp_integer object value found,\ncroaking"); }
 
-    HV* possible_gmp_integer_deref = (HV*)SvRV(possible_gmp_integer);
-
-    if (not hv_exists(possible_gmp_integer_deref, (const char*) "value", (U32) 5)) {
-        croak("\nERROR EGIV02, MISSING HASH ENTRY, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer object in hash entry expected at key 'value' but no hash entry exists,\ncroaking");
-    }
+    HV* possible_gmp_integer_deref = (HV*) SvRV(possible_gmp_integer);
+    if (not hv_exists(possible_gmp_integer_deref, (const char*) "value", (U32) 5)) { croak( "\nERROR EGIV05, MISSING HASH ENTRY, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry exists,\ncroaking"); }
 
     SV** possible_gmp_integer_value_ptr = hv_fetch(possible_gmp_integer_deref, (const char*) "value", (U32) 5, (I32) 0);
+    if (possible_gmp_integer_value_ptr == NULL) { croak( "\nERROR EGIV06, MISSING HASH ENTRY, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped hash entry expected at key 'value' but no hash entry defined,\ncroaking"); }
 
-    if (possible_gmp_integer_value_ptr == NULL) {
-        croak("\nERROR EGIV03, MISSING HASH ENTRY, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nhash entry expected at key 'value' but no hash entry defined,\ncroaking");
-    }
-
-    // DEV NOTE: PERLTYPES gmp_integer is a wrapper around PERLTYPES Math::BigInt::GMP, which is a wrapper around C gmp_integer,
-    // so we can directly access the underlying C gmp_integer, nice!
-//    gmp_integer possible_gmp_integer_value = *possible_gmp_integer_value_ptr;
-//    gmp_get_signed_integer(possible_gmp_integer_value);
-//    gmp_get_signed_integer(*possible_gmp_integer_value_ptr);
-
-    // NEED FIX: is this the only way to check if the variable is actually a gmp_integer type?
-    // I'm assuming the static types of C/C++ will give a compiler and/or runtime error on one of the two preceding lines of code if our var is not really a gmp_integer...
+    if (not (SvOK(*possible_gmp_integer_value_ptr))) { croak( "\nERROR EGIV07, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped value expected but undefined/null value found,\ncroaking"); }
+    if (not (sv_isobject(*possible_gmp_integer_value_ptr))) { croak( "\nERROR EGIV08, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped value expected but non-object (blessed hashref) value found,\ncroaking"); }
+    if (not (sv_derived_from(*possible_gmp_integer_value_ptr, "Math::BigInt::GMP"))) { croak( "\nERROR EGIV09, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped value expected but non-Math::BigInt::GMP object value found,\ncroaking"); }
 }
 
-void gmp_integer_CHECKTRACE(SV* possible_gmp_integer, const char* variable_name, const char* subroutine_name)
-{
-    if ( not( SvOK(possible_gmp_integer) ) ) { croak( "\nERROR EGIV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name ); }
-    if ( not( SvHROKp(possible_gmp_integer) ) ) { croak( "\nERROR EGIV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer value expected but non-hashref value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name ); }
+void gmp_integer_CHECKTRACE(SV* possible_gmp_integer, const char* variable_name, const char* subroutine_name) {
+//    cerr << "in gmp_integer_CHECKTRACE(), top of subroutine" << endl;
+    if (not (SvOK(possible_gmp_integer))) { croak( "\nERROR EGIV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
+    if (not (SvHROKp(possible_gmp_integer))) { croak( "\nERROR EGIV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-hashref value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
+    if (not (sv_isobject(possible_gmp_integer))) { croak( "\nERROR EGIV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-object (blessed hashref) value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
+    if (not (sv_derived_from(possible_gmp_integer, "Math::BigInt"))) { croak( "\nERROR EGIV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-Math::BigInt-derived object value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
+//    if (not (sv_isa(possible_gmp_integer, "gmp_integer"))) { croak( "\nERROR EGIV04, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-gmp_integer object value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
 
-    HV* possible_gmp_integer_deref = (HV*)SvRV(possible_gmp_integer);
-
-    if (not hv_exists(possible_gmp_integer_deref, (const char*) "value", (U32) 5)) {
-        croak("\nERROR EGIV02, MISSING HASH ENTRY, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer object in hash entry expected at key 'value' but no hash entry exists,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name );
-    }
+    HV* possible_gmp_integer_deref = (HV*) SvRV(possible_gmp_integer);
+//    cerr << "in gmp_integer_CHECKTRACE(), have possible_gmp_integer_deref = " << possible_gmp_integer_deref << endl;
+    if (not hv_exists(possible_gmp_integer_deref, (const char*) "value", (U32) 5)) { croak( "\nERROR EGIV05, MISSING HASH ENTRY, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry exists,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
 
     SV** possible_gmp_integer_value_ptr = hv_fetch(possible_gmp_integer_deref, (const char*) "value", (U32) 5, (I32) 0);
+//    cerr << "in gmp_integer_CHECKTRACE(), have *possible_gmp_integer_value_ptr = " << *possible_gmp_integer_value_ptr << endl;
+    if (possible_gmp_integer_value_ptr == NULL) { croak( "\nERROR EGIV06, MISSING HASH ENTRY, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped hash entry expected at key 'value' but no hash entry defined,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
 
-    if (possible_gmp_integer_value_ptr == NULL) {
-        croak("\nERROR EGIV03, MISSING HASH ENTRY, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nhash entry expected at key 'value' but no hash entry defined,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name );
-    }
-
-    // DEV NOTE: PERLTYPES gmp_integer is a wrapper around PERLTYPES Math::BigInt::GMP, which is a wrapper around C gmp_integer,
-    // so we can directly access the underlying C gmp_integer, nice!
-//    gmp_get_signed_integer(*possible_gmp_integer_value_ptr);
-
-    // NEED FIX: is this the only way to check if the variable is actually a gmp_integer type?
-    // I'm assuming the static types of C/C++ will give a compiler and/or runtime error on one of the two preceding lines of code if our var is not really a gmp_integer...
+    if (not (SvOK(*possible_gmp_integer_value_ptr))) { croak( "\nERROR EGIV07, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
+    if (not (sv_isobject(*possible_gmp_integer_value_ptr))) { croak( "\nERROR EGIV08, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped value expected but non-object (blessed hashref) value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
+    if (not (sv_derived_from(*possible_gmp_integer_value_ptr, "Math::BigInt::GMP"))) { croak( "\nERROR EGIV09, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped value expected but non-Math::BigInt::GMP object value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
+//    cerr << "in gmp_integer_CHECKTRACE(), bottom of subroutine" << endl;
 }
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
@@ -76,75 +67,155 @@ void gmp_integer_CHECKTRACE(SV* possible_gmp_integer, const char* variable_name,
 # ifdef __CPP__TYPES
 
 // convert from (Perl SV containing reference to (Perl HV containing reference to C gmp_integer)) to (C gmp_integer_retval)
-gmp_integer_retval XS_unpack_gmp_integer_retval(SV* input_sv)
-{
-//    gmp_integer_CHECK(input_sv);
-//    gmp_integer_CHECKTRACE(input_sv, "input_sv", "XS_unpack_gmp_integer_retval()");
+gmp_integer_retval XS_unpack_gmp_integer_retval(SV* input_hv_ref) {
+//    gmp_integer_CHECK(input_hv_ref);
+    gmp_integer_CHECKTRACE(input_hv_ref, "input_hv_ref", "XS_unpack_gmp_integer_retval()");
 
-/*  // LONG FORM
-    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), top of subroutine" << endl;
-    HV* input_sv_deref = (HV*)SvRV(input_sv);
-    SV** input_sv_value_ptr = hv_fetch(input_sv_deref, (const char*) "value", (U32) 5, (I32) 0);
-    gmp_integer_rawptr gmp_integer_tmp = sv_to_gmp_integer_rawptr(*input_sv_value_ptr);
+    // DEV NOTE: PERLTYPES gmp_integer is AKA RPerl::DataType::GMPInteger,
+    // which is a wrapper around PERLTYPES Math::BigInt,
+    // which is a wrapper around PERLTYPES Math::BigInt::GMP (in our RPerl usage),
+    // which is a wrapper around CPPTYPES gmp_integer,
+    // so we can directly access the underlying CPPTYPES gmp_integer via SvMAGIC(...)->mg_ptr below, nice!
 
-    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have *gmp_integer_tmp = " << *gmp_integer_tmp << endl;
+    /*  // LONG FORM
+     cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), top of subroutine" << endl;
+     HV* input_hv = (HV*)SvRV(input_hv_ref);
+     SV** input_hv_value_ptr = hv_fetch(input_hv, (const char*) "value", (U32) 5, (I32) 0);
+     //    gmp_integer_rawptr gmp_integer_tmp = sv_to_gmp_integer_rawptr(*input_hv_value_ptr);
 
-    gmp_integer_retval output_gmp_integer_retval = (gmp_integer_retval) *(gmp_integer_tmp);
+     MAGIC* input_hv_value_ptr_magic = SvMAGIC(SvRV(*input_hv_value_ptr));
+     cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), received *input_hv_value_ptr = " << *input_hv_value_ptr << endl;
+     cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have input_hv_value_ptr_magic = " << input_hv_value_ptr_magic << endl;
+     cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have gmp_get_signed_integer(*(gmp_integer_rawptr)input_hv_value_ptr_magic->mg_ptr) = " << gmp_get_signed_integer(*(gmp_integer_rawptr)input_hv_value_ptr_magic->mg_ptr) << endl;
+     cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have (gmp_integer_rawptr)input_hv_value_ptr_magic->mg_ptr = " << (gmp_integer_rawptr)input_hv_value_ptr_magic->mg_ptr << endl;
 
-    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have output_gmp_integer_retval.gmp_integer_unretval() = " << output_gmp_integer_retval.gmp_integer_unretval() << endl;
-    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), bottom of subroutine" << endl;
+     gmp_integer_rawptr gmp_integer_tmp = (gmp_integer_rawptr) input_hv_value_ptr_magic->mg_ptr;
 
-    return output_gmp_integer_retval;
-*/
+     cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have *gmp_integer_tmp = " << *gmp_integer_tmp << endl;
+
+     gmp_integer_retval output_gmp_integer_retval = (gmp_integer_retval) *(gmp_integer_tmp);
+
+     cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have output_gmp_integer_retval.gmp_integer_unretval() = " << output_gmp_integer_retval.gmp_integer_unretval() << endl;
+     cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), bottom of subroutine" << endl;
+
+     return output_gmp_integer_retval;
+     */
 
     // SHORT FORM
-    return (gmp_integer_retval) *(sv_to_gmp_integer_rawptr(*(hv_fetch((HV*)SvRV(input_sv), (const char*) "value", (U32) 5, (I32) 0))));
+    return (gmp_integer_retval) *((gmp_integer_rawptr) SvMAGIC(SvRV(*(hv_fetch((HV*) SvRV(input_hv_ref), (const char*) "value", (U32) 5, (I32) 0))))->mg_ptr);
 }
 
-// START HERE: enable & test XS_pack_gmp_integer_retval() below; test BOOLIFY, *IFY, etc.; possibly modify typetests() to return numeric types
-// START HERE: enable & test XS_pack_gmp_integer_retval() below; test BOOLIFY, *IFY, etc.; possibly modify typetests() to return numeric types
-// START HERE: enable & test XS_pack_gmp_integer_retval() below; test BOOLIFY, *IFY, etc.; possibly modify typetests() to return numeric types
-
 // convert from (C gmp_integer_retval) to (Perl SV containing reference to (Perl HV containing reference to C gmp_integer))
-void XS_pack_gmp_integer_retval(SV* output_hv_ref, gmp_integer_retval input_gmp_integer_retval)
-{
-//  fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_gmp_integer(), top of subroutine\n");
+void XS_pack_gmp_integer_retval(SV* output_hv_ref, gmp_integer_retval input_gmp_integer_retval) {
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gmp_integer_retval(), top of subroutine, received output_hv_ref = " << output_hv_ref << endl;
 
+    dSP;
+    ENTER;
+    SAVETMPS;
+
+    PUSHMARK(SP);
+    XPUSHs(sv_2mortal(newSVpv("gmp_integer", 0)));
+    PUTBACK;
+
+    integer callback_retval_count = call_method("new", G_SCALAR);
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gmp_integer_retval(), have callback_retval_count = " << callback_retval_count << endl;
+
+    SPAGAIN;
+
+    if (callback_retval_count != 1) {
+        croak("\nERROR EGIV10, CONSTRUCTOR RETURN VALUE MISMATCH, CPPOPS_CPPTYPES:\nexactly 1 return value expected but %d return value(s) found,\ncroaking", callback_retval_count);
+    }
+
+    SV* gmp_integer_hv_ref = POPs;
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gmp_integer_retval(), have gmp_integer_hv_ref = " << gmp_integer_hv_ref << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gmp_integer_retval(), have class(gmp_integer_hv_ref) = " << class(gmp_integer_hv_ref) << endl;
+
+//    gmp_integer_CHECK(gmp_integer_hv_ref);
+    gmp_integer_CHECKTRACE(gmp_integer_hv_ref, "gmp_integer_hv_ref", "XS_pack_gmp_integer_retval()");
+
+    PUTBACK;
+
+    // METHOD A
+    SV* temp_sv_pointer;
+    temp_sv_pointer = newSVrv(output_hv_ref, NULL);   // upgrade output stack SV to an RV
+    SvREFCNT_dec(temp_sv_pointer);       // discard temporary pointer
+    SvRV(output_hv_ref) = SvRV(gmp_integer_hv_ref);      // make output stack RV pointer at our output gmp_integer
+    SvREFCNT_inc(SvRV(output_hv_ref));
+
+    // METHOD B
+/*
     HV* output_hv = newHV();  // initialize output hash to empty
     SV* temp_sv_pointer;
 
-/*
-    hv_store(output_hv, (const char*) "value", (U32) 5, &input_gmp_integer, (U32)0);
+    // SUB-METHOD B1
+    hv_store(output_hv, (const char*) "value", (U32) 5, SvREFCNT_inc(*hv_fetch((HV*)SvRV(gmp_integer_hv_ref), (const char*) "value", (U32) 5, (I32) 0)), (U32)0);
+    hv_store(output_hv, (const char*) "sign", (U32) 4, SvREFCNT_inc(*hv_fetch((HV*)SvRV(gmp_integer_hv_ref), (const char*) "sign", (U32) 4, (I32) 0)), (U32)0);
+    hv_store(output_hv, (const char*) "_a", (U32) 2, SvREFCNT_inc(*hv_fetch((HV*)SvRV(gmp_integer_hv_ref), (const char*) "_a", (U32) 2, (I32) 0)), (U32)0);
+    hv_store(output_hv, (const char*) "_p", (U32) 2, SvREFCNT_inc(*hv_fetch((HV*)SvRV(gmp_integer_hv_ref), (const char*) "_p", (U32) 2, (I32) 0)), (U32)0);
+
+//     SV* gmp_integer_hv_ref_value_value = *hv_fetch((HV*)SvRV(gmp_integer_hv_ref), (const char*) "value", (U32) 5, (I32) 0);
+//     SV* gmp_integer_hv_ref_value_value = *hv_fetch(gmp_integer_hv, (const char*) "value", (U32) 5, (I32) 0);
+//     cerr << "in CPPOPS_CPPTYPES XS_pack_gmp_integer_retval(), have gmp_integer_hv_ref_value_value = " << gmp_integer_hv_ref_value_value << endl;
+
+    // SUB-METHOD B2
+/ *
+     integer gmp_integer_hv_num_keys;
+     integer i;
+     HE* gmp_integer_hv_entry;
+     SV* gmp_integer_hv_entry_key;
+     SV* gmp_integer_hv_entry_value;
+
+     HV* gmp_integer_hv = (HV*)SvRV(gmp_integer_hv_ref);
+     cerr << "in CPPOPS_CPPTYPES XS_pack_gmp_integer_retval(), have gmp_integer_hv = " << gmp_integer_hv << endl;
+
+     gmp_integer_hv_num_keys = hv_iterinit(gmp_integer_hv);
+     cerr << "in CPPOPS_CPPTYPES XS_pack_gmp_integer_retval(), have gmp_integer_hv_num_keys = " << gmp_integer_hv_num_keys << endl;
+
+     for (i = 0;  i < gmp_integer_hv_num_keys;  ++i)  // incrementing iteration, iterator i not actually used in loop body
+     {
+         cerr << "in CPPOPS_CPPTYPES XS_pack_gmp_integer_retval(), top of for() loop, i = " << i << endl;
+         gmp_integer_hv_entry = hv_iternext(gmp_integer_hv);
+         cerr << "in CPPOPS_CPPTYPES XS_pack_gmp_integer_retval(), in for() loop, i = " << i << ", have gmp_integer_hv_entry = " << gmp_integer_hv_entry << endl;
+         gmp_integer_hv_entry_key = hv_iterkeysv(gmp_integer_hv_entry);
+         cerr << "in CPPOPS_CPPTYPES XS_pack_gmp_integer_retval(), in for() loop, i = " << i << ", have gmp_integer_hv_entry_key = " << gmp_integer_hv_entry_key << endl;
+         gmp_integer_hv_entry_value = hv_iterval(gmp_integer_hv, gmp_integer_hv_entry);
+         SvREFCNT_inc(gmp_integer_hv_entry_value);
+         cerr << "in CPPOPS_CPPTYPES XS_pack_gmp_integer_retval(), in for() loop, i = " << i << ", have gmp_integer_hv_entry_value = " << gmp_integer_hv_entry_value << endl;
+         cerr << "in CPPOPS_CPPTYPES XS_pack_gmp_integer_retval(), in for() loop, i = " << i << ", have SvPV_nolen(gmp_integer_hv_entry_key) = " << SvPV_nolen(gmp_integer_hv_entry_key) << endl;
+         hv_store(output_hv, SvPV_nolen(gmp_integer_hv_entry_key), (U32) strlen(SvPV_nolen(gmp_integer_hv_entry_key)), gmp_integer_hv_entry_value, (U32)0);
+     }
+* /
 
     temp_sv_pointer = newSVrv(output_hv_ref, NULL);   // upgrade output stack SV to an RV
     SvREFCNT_dec(temp_sv_pointer);       // discard temporary pointer
     SvRV(output_hv_ref) = (SV*)output_hv;      // make output stack RV pointer at our output HV
+    sv_bless(output_hv_ref, gv_stashpv("gmp_integer", (I32) 0));
 */
 
-//  fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_gmp_integer(), bottom of subroutine\n");
-}
+    SV* gmp_integer_hv_ref_value_value = *hv_fetch((HV*)SvRV(gmp_integer_hv_ref), (const char*) "value", (U32) 5, (I32) 0);
+    MAGIC* gmp_integer_hv_ref_value_value_magic = SvMAGIC(SvRV(gmp_integer_hv_ref_value_value));
+//    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have gmp_integer_hv_ref_value_value = " << gmp_integer_hv_ref_value_value << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have gmp_integer_hv_ref_value_value_magic = " << gmp_integer_hv_ref_value_value_magic << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have pre-set (gmp_integer_rawptr)gmp_integer_hv_ref_value_value_magic->mg_ptr = " << (gmp_integer_rawptr)gmp_integer_hv_ref_value_value_magic->mg_ptr << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have pre-set gmp_get_signed_integer(*(gmp_integer_rawptr)gmp_integer_hv_ref_value_value_magic->mg_ptr) = " << gmp_get_signed_integer(*(gmp_integer_rawptr)gmp_integer_hv_ref_value_value_magic->mg_ptr) << endl;
 
-// convert from (Perl SV containing reference to C gmp_integer) to (C gmp_integer_rawptr)
-gmp_integer_rawptr sv_to_gmp_integer_rawptr (SV* input_sv)
-{
-    if (!sv_derived_from(input_sv, "Math::BigInt::GMP")) {
-        croak("\nERROR EGIV10, WRONG TYPE, CPPOPS_CPPTYPES:\nscalar value not of type RPerl::DataType::GMPInteger (AKA gmp_integer) or derived from type Math::BigInt::GMP,\ncroaking");
-    }
+    gmp_integer_rawptr gmp_integer_tmp = (gmp_integer_rawptr) gmp_integer_hv_ref_value_value_magic->mg_ptr;
+//    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have post-set gmp_integer_tmp = " << gmp_integer_tmp << endl;
+    gmp_set(*gmp_integer_tmp, input_gmp_integer_retval.gmp_integer_unretval());
 
-/*  // LONG FORM
-    MAGIC* input_sv_magic = SvMAGIC(SvRV(input_sv));
-    cerr << "in CPPOPS_CPPTYPES sv_to_gmp_integer_rawptr(), received input_sv = " << input_sv << endl;
-    cerr << "in CPPOPS_CPPTYPES sv_to_gmp_integer_rawptr(), have input_sv_magic = " << input_sv_magic << endl;
-    cerr << "in CPPOPS_CPPTYPES sv_to_gmp_integer_rawptr(), have gmp_get_signed_integer(*(gmp_integer_rawptr)input_sv_magic->mg_ptr) = " << gmp_get_signed_integer(*(gmp_integer_rawptr)input_sv_magic->mg_ptr) << endl;
-    cerr << "in CPPOPS_CPPTYPES sv_to_gmp_integer_rawptr(), returning (gmp_integer_rawptr)input_sv_magic->mg_ptr = " << (gmp_integer_rawptr)input_sv_magic->mg_ptr << endl;
-    return (gmp_integer_rawptr) input_sv_magic->mg_ptr;
-*/
+    FREETMPS;
+    LEAVE;
 
-    // SHORT FORM
-    return (gmp_integer_rawptr) SvMAGIC(SvRV(input_sv))->mg_ptr;
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gmp_integer_retval(), bottom of subroutine" << endl;
 }
 
 # endif
+
+
+// START HERE: test BOOLIFY, *IFY, GMP INTEGERIFY, etc.; possibly modify typetests() to return numeric types
+// START HERE: test BOOLIFY, *IFY, GMP INTEGERIFY, etc.; possibly modify typetests() to return numeric types
+// START HERE: test BOOLIFY, *IFY, GMP INTEGERIFY, etc.; possibly modify typetests() to return numeric types
+
 
 // [[[ BOOLIFY ]]]
 // [[[ BOOLIFY ]]]
@@ -161,8 +232,11 @@ SV* gmp_integer_to_bool(SV* input_gmp_integer) {
 # elif defined __CPP__TYPES
 
 bool gmp_integer_to_bool(gmp_integer input_gmp_integer) {
-    if (gmp_get_signed_integer(input_gmp_integer) == 0) { return 0; }
-    else { return 1; }
+    if (gmp_get_signed_integer(input_gmp_integer) == 0) {
+        return 0;
+    } else {
+        return 1;
+    }
 }
 
 # endif
@@ -181,7 +255,8 @@ SV* gmp_integer_to_unsigned_integer(SV* input_gmp_integer) {
 
 # elif defined __CPP__TYPES
 
-unsigned_integer gmp_integer_to_unsigned_integer(gmp_integer input_gmp_integer) {
+unsigned_integer gmp_integer_to_unsigned_integer(
+        gmp_integer input_gmp_integer) {
     return abs(gmp_get_signed_integer(input_gmp_integer));
 }
 
@@ -272,59 +347,85 @@ string gmp_integer_to_string(gmp_integer input_gmp_integer) {
 
 # endif
 
-
 /* NEED ENABLE OR DELETE
-// DEV NOTE, CORRELATION #rp09: must use return type 'string' instead of 'std::string' for proper typemap pack/unpack function name alignment;
-// can cause silent failure, falling back to __PERL__TYPES implementation and NOT failure of tests!
-// DEV NOTE, CORRELATION #rp10: the real CPPTYPES sub (below) is called by the wrapper PERLTYPES sub and shim CPPTYPES subs (above), moved outside #ifdef blocks
-string gmp_integer_to_string_CPPTYPES(gmp_integer input_gmp_integer)
-{
-//    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), top of subroutine, received unformatted input_gmp_integer = %d\n", input_gmp_integer);
-//    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES()...\n");
+ // DEV NOTE, CORRELATION #rp09: must use return type 'string' instead of 'std::string' for proper typemap pack/unpack function name alignment;
+ // can cause silent failure, falling back to __PERL__TYPES implementation and NOT failure of tests!
+ // DEV NOTE, CORRELATION #rp10: the real CPPTYPES sub (below) is called by the wrapper PERLTYPES sub and shim CPPTYPES subs (above), moved outside #ifdef blocks
+ string gmp_integer_to_string_CPPTYPES(gmp_integer input_gmp_integer)
+ {
+ //    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), top of subroutine, received unformatted input_gmp_integer = %d\n", input_gmp_integer);
+ //    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES()...\n");
 
-    std::ostringstream output_stream;
-    output_stream.precision(std::numeric_limits<double>::digits10);
-    output_stream << gmp_get_signed_integer(input_gmp_integer);
+ std::ostringstream output_stream;
+ output_stream.precision(std::numeric_limits<double>::digits10);
+ output_stream << gmp_get_signed_integer(input_gmp_integer);
 
-    // DEV NOTE: disable old stringify w/out underscores
-//  return(output_stream.str());
+ // DEV NOTE: disable old stringify w/out underscores
+ //  return(output_stream.str());
 
-    string output_string = output_stream.str();
-//    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), have output_string = %s\n", output_string.c_str());
+ string output_string = output_stream.str();
+ //    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), have output_string = %s\n", output_string.c_str());
 
-    bool is_negative = 0;
-    if (input_gmp_integer < 0) { is_negative = 1; }
+ bool is_negative = 0;
+ if (input_gmp_integer < 0) { is_negative = 1; }
 
-    std::reverse(output_string.begin(), output_string.end());
+ std::reverse(output_string.begin(), output_string.end());
 
-//    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), have reversed output_string = %s\n", output_string.c_str());
-    if (is_negative) { output_string.pop_back(); }  // remove negative sign
+ //    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), have reversed output_string = %s\n", output_string.c_str());
+ if (is_negative) { output_string.pop_back(); }  // remove negative sign
 
-    string output_string_underscores = "";
-    for(std::string::size_type i = 0; i < output_string.size(); ++i) {
-//        fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), inside output_string underscore loop, have i = %d, output_string[i] = %c\n", (int)i, output_string[i]);
-        output_string_underscores += output_string[i];
-        if (((i % 3) == 2) && (i > 0) && (i != (output_string.size() - 1))) {
-//            fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), AND UNDERSCORE \n");
-            output_string_underscores += '_';
-        }
-    }
+ string output_string_underscores = "";
+ for(std::string::size_type i = 0; i < output_string.size(); ++i) {
+ //        fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), inside output_string underscore loop, have i = %d, output_string[i] = %c\n", (int)i, output_string[i]);
+ output_string_underscores += output_string[i];
+ if (((i % 3) == 2) && (i > 0) && (i != (output_string.size() - 1))) {
+ //            fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), AND UNDERSCORE \n");
+ output_string_underscores += '_';
+ }
+ }
 
-//    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), have reversed output_string_underscores = %s\n", output_string_underscores.c_str());
+ //    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), have reversed output_string_underscores = %s\n", output_string_underscores.c_str());
 
-    std::reverse(output_string_underscores.begin(), output_string_underscores.end());
+ std::reverse(output_string_underscores.begin(), output_string_underscores.end());
 
-    if (output_string_underscores == "") {
-        output_string_underscores = "0";
-    }
+ if (output_string_underscores == "") {
+ output_string_underscores = "0";
+ }
 
-//    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), have unreversed output_string_underscores = %s\n", output_string_underscores.c_str());
+ //    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), have unreversed output_string_underscores = %s\n", output_string_underscores.c_str());
 
-    if (is_negative) { output_string_underscores = '-' + output_string_underscores; }
+ if (is_negative) { output_string_underscores = '-' + output_string_underscores; }
 
-    return output_string_underscores;
+ return output_string_underscores;
+ }
+ */
+
+// [[[ GMP INTEGERIFY ]]]
+// [[[ GMP INTEGERIFY ]]]
+// [[[ GMP INTEGERIFY ]]]
+
+# ifdef __PERL__TYPES
+
+SV* integer_to_gmp_integer(SV* input_integer) {
+    // NEED ADD CODE
 }
-*/
+
+# elif defined __CPP__TYPES
+
+gmp_integer_retval integer_to_gmp_integer(integer input_integer) {
+//    cerr << "in integer_to_gmp_integer(), top of subroutine, received input_integer = " << input_integer << endl;
+
+    // LONG FORM
+//    gmp_integer_retval output_gmp_integer_retval;
+//    output_gmp_integer_retval = input_integer;
+//    cerr << "in integer_to_gmp_integer(), returning output_gmp_integer_retval = " << output_gmp_integer_retval << endl;
+//    return output_gmp_integer_retval;
+
+    // SHORT FORM
+    return (gmp_integer_retval) input_integer;
+}
+
+# endif
 
 // [[[ TYPE TESTING ]]]
 // [[[ TYPE TESTING ]]]
@@ -338,7 +439,7 @@ SV* gmp_integer__typetest0() {
 
 SV* gmp_integer__typetest1(SV* lucky_gmp_integer) {
 //	gmp_integer_CHECK(lucky_gmp_integer);
-	gmp_integer_CHECKTRACE(lucky_gmp_integer, "lucky_gmp_integer", "gmp_integer__typetest1()");
+    gmp_integer_CHECKTRACE(lucky_gmp_integer, "lucky_gmp_integer", "gmp_integer__typetest1()");
     // NEED ADD CODE
 }
 
@@ -346,20 +447,22 @@ SV* gmp_integer__typetest1(SV* lucky_gmp_integer) {
 
 //gmp_integer gmp_integer__typetest0() {
 string gmp_integer__typetest0() {
-	gmp_integer retval;
-	gmp_init(retval);
-	gmp_set_signed_integer(retval, (21 / 7) + RPerl__DataType__GMPInteger__MODE_ID());
+    gmp_integer retval;
+    gmp_init(retval);
+    gmp_set_signed_integer(retval,
+            (21 / 7) + RPerl__DataType__GMPInteger__MODE_ID());
 //fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer__typetest0(), have retval = %d\n", retval);
-	return gmp_get_string(retval);
+    return gmp_get_string(retval);
 }
 
 //gmp_integer gmp_integer__typetest1(gmp_integer lucky_gmp_integer) {
 string gmp_integer__typetest1(gmp_integer lucky_gmp_integer) {
 //fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer__typetest1(), received lucky_gmp_integer = %d\n", lucky_gmp_integer);
-	gmp_integer retval;
-	gmp_set_signed_integer(retval, (gmp_get_signed_integer(lucky_gmp_integer) * 2) + RPerl__DataType__GMPInteger__MODE_ID());
+    gmp_integer retval;
+    gmp_set_signed_integer(retval,
+            (gmp_get_signed_integer(lucky_gmp_integer) * 2) + RPerl__DataType__GMPInteger__MODE_ID());
 //	return retval;
-	return gmp_get_string(retval);
+    return gmp_get_string(retval);
 }
 
 # endif

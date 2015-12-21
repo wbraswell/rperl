@@ -100,14 +100,13 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
         'main::RPerl__DataType__GMPInteger__MODE_ID() lives'
     );
 
-    # [[[ GMP INTEGER TESTS ]]]
-    # [[[ GMP INTEGER TESTS ]]]
-    # [[[ GMP INTEGER TESTS ]]]
-
+    # [[[ GMP INTEGERIFY TESTS ]]]
+    # [[[ GMP INTEGERIFY TESTS ]]]
+    # [[[ GMP INTEGERIFY TESTS ]]]
 
     lives_and(                                                    # TGIV200
         sub {
-            my RPerl::DataType::GMPInteger $tmp1 = RPerl::DataType::GMPInteger->new();
+            my gmp_integer $tmp1 = gmp_integer->new();
             gmp_set_signed_integer($tmp1, 34_567_890);
             is( gmp_integer_to_integer($tmp1), 34_567_890, q{TGIV200 gmp_integer_to_string($tmp1) returns correct value} );
         },
@@ -215,12 +214,33 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
     );
 =cut
 
+    # [[[ GMP INTEGERIFY TESTS ]]]
+    # [[[ GMP INTEGERIFY TESTS ]]]
+    # [[[ GMP INTEGERIFY TESTS ]]]
 
     lives_and(                                                    # TGIV600
         sub {
-            is( gmp_integer__typetest0(), ( 3 + $mode_id ), q{TGIV600 gmp_integer__typetest0() returns correct value} );
+            is( gmp_integer_to_integer(integer_to_gmp_integer(34_567_890)), 34_567_890, q{TGIV600 gmp_integer_to_integer(integer_to_gmp_integer(34_567_890)) returns correct value} );
         },
-        q{TGIV600 gmp_integer__typetest0() lives}
+        q{TGIV600 gmp_integer_to_integer(integer_to_gmp_integer(34_567_890)) lives}
+    );
+
+    lives_and(                                                    # TGIV601
+        sub {
+            is( gmp_get_signed_integer(integer_to_gmp_integer(34_567_890)), 34_567_890, q{TGIV601 gmp_get_signed_integer(integer_to_gmp_integer(34_567_890)) returns correct value} );
+        },
+        q{TGIV601 gmp_get_signed_integer(integer_to_gmp_integer(34_567_890)) lives}
+    );
+
+    # [[[ TYPE TESTING TESTS ]]]
+    # [[[ TYPE TESTING TESTS ]]]
+    # [[[ TYPE TESTING TESTS ]]]
+ 
+    lives_and(                                                    # TGIV700
+        sub {
+            is( gmp_integer__typetest0(), ( 3 + $mode_id ), q{TGIV700 gmp_integer__typetest0() returns correct value} );
+        },
+        q{TGIV700 gmp_integer__typetest0() lives}
     );
 
 
