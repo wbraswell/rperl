@@ -64,7 +64,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
                 . ' found where SubExpressionOrVarMod_147, Statement_155, VariableModification_184, or VariableModification_185 expected, dying' )
             . "\n";
@@ -130,7 +130,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
                 . ' found where SubExpressionOrVarMod_147, Statement_155, VariableModification_184, or VariableModification_185 expected, dying' )
             . "\n";

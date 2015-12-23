@@ -13,8 +13,12 @@ using std::endl;
 // error: ‘XS_pack_string’ was not declared in this scope
 #include <RPerl/DataType/String.cpp>  // -> String.h
 
-// NEED FIX: update #rp12 above???  need XS_pack_integer() for retval of gmp_integer_to_integer()
+// NEED FIX: update #rp12 above???  need XS_pack_FOO() for retval of gmp_integer_to_FOO()
+#include <RPerl/DataType/Boolean.cpp>  // -> Boolean.h
 #include <RPerl/DataType/Integer.cpp>  // -> Integer.h
+#include <RPerl/DataType/UnsignedInteger.cpp>  // -> UnsignedInteger.h
+#include <RPerl/DataType/Number.cpp>  // -> Number.h
+#include <RPerl/DataType/Character.cpp>  // -> Character.h
 
 // [[[ TYPE-CHECKING ]]]
 // [[[ TYPE-CHECKING ]]]
@@ -212,27 +216,27 @@ void XS_pack_gmp_integer_retval(SV* output_hv_ref, gmp_integer_retval input_gmp_
 # endif
 
 
-// START HERE: test BOOLIFY, *IFY, GMP INTEGERIFY, etc.; possibly modify typetests() to return numeric types
-// START HERE: test BOOLIFY, *IFY, GMP INTEGERIFY, etc.; possibly modify typetests() to return numeric types
-// START HERE: test BOOLIFY, *IFY, GMP INTEGERIFY, etc.; possibly modify typetests() to return numeric types
+// START HERE: test BOOLEANIFY, *IFY, GMP INTEGERIFY, etc.; possibly modify typetests() to return numeric types
+// START HERE: test BOOLEANIFY, *IFY, GMP INTEGERIFY, etc.; possibly modify typetests() to return numeric types
+// START HERE: test BOOLEANIFY, *IFY, GMP INTEGERIFY, etc.; possibly modify typetests() to return numeric types
 
 
-// [[[ BOOLIFY ]]]
-// [[[ BOOLIFY ]]]
-// [[[ BOOLIFY ]]]
+// [[[ BOOLEANIFY ]]]
+// [[[ BOOLEANIFY ]]]
+// [[[ BOOLEANIFY ]]]
 
 # ifdef __PERL__TYPES
 
-SV* gmp_integer_to_bool(SV* input_gmp_integer) {
+SV* gmp_integer_to_boolean(SV* input_gmp_integer) {
 //  gmp_integer_CHECK(input_gmp_integer);
-    gmp_integer_CHECKTRACE(input_gmp_integer, "input_gmp_integer", "gmp_integer_to_bool()");
+    gmp_integer_CHECKTRACE(input_gmp_integer, "input_gmp_integer", "gmp_integer_to_boolean()");
     // NEED ADD CODE
 }
 
 # elif defined __CPP__TYPES
 
-bool gmp_integer_to_bool(gmp_integer input_gmp_integer) {
-    if (gmp_get_signed_integer(input_gmp_integer) == 0) { return 0; }
+boolean gmp_integer_to_boolean(gmp_integer_retval input_gmp_integer_retval) {
+    if (gmp_get_signed_integer(input_gmp_integer_retval.gmp_integer_unretval()) == 0) { return 0; }
     else { return 1; }
 }
 
@@ -252,8 +256,8 @@ SV* gmp_integer_to_unsigned_integer(SV* input_gmp_integer) {
 
 # elif defined __CPP__TYPES
 
-unsigned_integer gmp_integer_to_unsigned_integer(gmp_integer input_gmp_integer) {
-    return abs(gmp_get_signed_integer(input_gmp_integer));
+unsigned_integer gmp_integer_to_unsigned_integer(gmp_integer_retval input_gmp_integer_retval) {
+    return abs(gmp_get_signed_integer(input_gmp_integer_retval.gmp_integer_unretval()));
 }
 
 # endif
@@ -295,29 +299,28 @@ SV* gmp_integer_to_number(SV* input_gmp_integer) {
 
 # elif defined __CPP__TYPES
 
-number gmp_integer_to_number(gmp_integer input_gmp_integer) {
-    return (double) gmp_get_signed_integer(input_gmp_integer);
+number gmp_integer_to_number(gmp_integer_retval input_gmp_integer_retval) {
+    return (double) gmp_get_signed_integer(input_gmp_integer_retval.gmp_integer_unretval());
 }
 
 # endif
 
-// [[[ CHARIFY ]]]
-// [[[ CHARIFY ]]]
-// [[[ CHARIFY ]]]
+// [[[ CHARACTERIFY ]]]
+// [[[ CHARACTERIFY ]]]
+// [[[ CHARACTERIFY ]]]
 
 # ifdef __PERL__TYPES
 
-SV* gmp_integer_to_char(SV* input_gmp_integer) {
+SV* gmp_integer_to_character(SV* input_gmp_integer) {
 //  gmp_integer_CHECK(input_gmp_integer);
-    gmp_integer_CHECKTRACE(input_gmp_integer, "input_gmp_integer", "gmp_integer_to_char()");
+    gmp_integer_CHECKTRACE(input_gmp_integer, "input_gmp_integer", "gmp_integer_to_character()");
     // NEED ADD CODE
 }
 
 # elif defined __CPP__TYPES
 
-// DEV NOTE, CORRELATION #rp10: shim CPPTYPES sub
-char gmp_integer_to_char(gmp_integer input_gmp_integer) {
-    return gmp_integer_to_string_CPPTYPES(input_gmp_integer).at(0);
+character gmp_integer_to_character(gmp_integer_retval input_gmp_integer_retval) {
+    return gmp_integer_to_string_CPPTYPES(input_gmp_integer_retval.gmp_integer_unretval()).at(0);
 }
 
 # endif
@@ -337,8 +340,8 @@ SV* gmp_integer_to_string(SV* input_gmp_integer) {
 # elif defined __CPP__TYPES
 
 // DEV NOTE, CORRELATION #rp10: shim CPPTYPES sub
-string gmp_integer_to_string(gmp_integer input_gmp_integer) {
-    return gmp_integer_to_string_CPPTYPES(input_gmp_integer);
+string gmp_integer_to_string(gmp_integer_retval input_gmp_integer_retval) {
+    return gmp_integer_to_string_CPPTYPES(input_gmp_integer_retval.gmp_integer_unretval());
 }
 
 # endif
@@ -347,14 +350,14 @@ string gmp_integer_to_string(gmp_integer input_gmp_integer) {
  // DEV NOTE, CORRELATION #rp09: must use return type 'string' instead of 'std::string' for proper typemap pack/unpack function name alignment;
  // can cause silent failure, falling back to __PERL__TYPES implementation and NOT failure of tests!
  // DEV NOTE, CORRELATION #rp10: the real CPPTYPES sub (below) is called by the wrapper PERLTYPES sub and shim CPPTYPES subs (above), moved outside #ifdef blocks
- string gmp_integer_to_string_CPPTYPES(gmp_integer input_gmp_integer)
+ string gmp_integer_to_string_CPPTYPES(gmp_integer_retval input_gmp_integer_retval)
  {
- //    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), top of subroutine, received unformatted input_gmp_integer = %d\n", input_gmp_integer);
+ //    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), top of subroutine, received unformatted input_gmp_integer_retval = %d\n", input_gmp_integer_retval);
  //    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES()...\n");
 
  std::ostringstream output_stream;
  output_stream.precision(std::numeric_limits<double>::digits10);
- output_stream << gmp_get_signed_integer(input_gmp_integer);
+ output_stream << gmp_get_signed_integer(input_gmp_integer_retval.gmp_integer_unretval());
 
  // DEV NOTE: disable old stringify w/out underscores
  //  return(output_stream.str());
@@ -362,8 +365,8 @@ string gmp_integer_to_string(gmp_integer input_gmp_integer) {
  string output_string = output_stream.str();
  //    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), have output_string = %s\n", output_string.c_str());
 
- bool is_negative = 0;
- if (input_gmp_integer < 0) { is_negative = 1; }
+ boolean is_negative = 0;
+ if (input_gmp_integer_retval.gmp_integer_unretval() < 0) { is_negative = 1; }
 
  std::reverse(output_string.begin(), output_string.end());
 

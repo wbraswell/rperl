@@ -51,7 +51,7 @@ WriteMakefile(
 
             # DEV NOTE: the following 12 package namespaces are already controlled by some other PAUSE owner on CPAN,
             # their indexing is double-disabled in that they are both listed here and also given newlines-in-package-declarations
-            package => [ 'array', 'bool', 'char', 'float', 'hash', 'integer', 'method', 'number', 'object', 'ref', 'string', 'unknown' ],
+            package => [ 'array', 'boolean', 'char', 'float', 'hash', 'integer', 'method', 'number', 'object', 'ref', 'string', 'unknown' ],
 
             # DEV NOTE: disable indexing of all test package namespaces
             namespace => ['RPerl::Test'],

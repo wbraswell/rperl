@@ -1,5 +1,5 @@
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
 # <<< PARSE_ERROR: 'Global symbol "$bar" requires explicit use RPerl;
 package name' >>>
 

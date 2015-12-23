@@ -40,7 +40,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         }
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ($self_class)
                 . ' found where SubExpression_137, VariableOrLiteral_226, VarOrLitOrOpStrOrWord_228, or Variable_176 expected, dying' )
             . "\n";
@@ -116,7 +116,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                     $types->[ $i + 1 ] = 'number';
                 }
                 elsif ( exists $rperlnamespaces_generated::RPERL->{ $types->[$i] . '::' } ) { # scalar
-                    die 'ERROR ECVGEASCP18, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not retrieve data subcomponent from scalar type ' . $types->[$i] . ', dying' . "\n";
+                    die 'ERROR ECOGEASCP18, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not retrieve data subcomponent from scalar type ' . $types->[$i] . ', dying' . "\n";
                 }
                 else { # user-defined type AKA class
                     if ( ( ref $variable_retrieval ) eq 'VariableRetrieval_178' ) {    # VariableRetrieval -> OP02_HASH_THINARROW SubExpression '}'
@@ -132,12 +132,12 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                                 $types->[ $i + 1 ] = $modes->{_symbol_table}->{ $types->[$i] }->{_properties}->{$number_or_string_literal}->{type};
                             }
                             else {
-                                die 'ERROR ECVGEASCP19, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not retrieve invalid OO property ' . $number_or_string_literal . ' in user-defined class ' . $types->[$i] . ', dying' . "\n";
+                                die 'ERROR ECOGEASCP19, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not retrieve invalid OO property ' . $number_or_string_literal . ' in user-defined class ' . $types->[$i] . ', dying' . "\n";
                             }
                         }
                         else {
                             my string $subexpression_generated = ($subexpression->ast_to_cpp__generate__CPPOPS_CPPTYPES( $modes ))->{CPP};
-                            die 'ERROR ECVGEASCP30, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not determine OO property name (and thus type) from non-literal subexpression...' . "\n" . $subexpression_generated . "\n" . '...in user-defined class ' . $types->[$i] . ', dying' . "\n";
+                            die 'ERROR ECOGEASCP30, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not determine OO property name (and thus type) from non-literal subexpression...' . "\n" . $subexpression_generated . "\n" . '...in user-defined class ' . $types->[$i] . ', dying' . "\n";
                         }
                     }
                     elsif ( ( ref $variable_retrieval ) eq 'VariableRetrieval_179' ) {        # VariableRetrieval -> OP02_HASH_THINARROW WORD '}'
@@ -146,18 +146,18 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                             $types->[ $i + 1 ] = $modes->{_symbol_table}->{ $types->[$i] }->{_properties}->{$word}->{type};
                         }
                         else {
-                            die 'ERROR ECVGEASCP19, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not retrieve invalid OO property ' . $word . ' in user-defined class ' . $types->[$i] . ', dying' . "\n";
+                            die 'ERROR ECOGEASCP19, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not retrieve invalid OO property ' . $word . ' in user-defined class ' . $types->[$i] . ', dying' . "\n";
                         }
                     }
                     else {
-                        die 'ERROR ECVGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use arrayref retrieval on object of user-defined class ' . $types->[$i] . ', dying' . "\n";
+                        die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use arrayref retrieval on object of user-defined class ' . $types->[$i] . ', dying' . "\n";
                     }
                 }
             }
         }
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . ($self_class)
                 . ' found where SubExpression_137, VariableOrLiteral_226, VarOrLitOrOpStrOrWord_228, or Variable_176 expected, dying' )
             . "\n";

@@ -42,12 +42,12 @@ tests
 	array size declaration compensation
 	package/subroutine/method names starting w/ underscore
 	variable redeclaration (masking)
-	properties & hash type-inner type-vs-key name mismatch (ECVGEASRP20: PERLOPS Class.pm properties accessors/mutators; CPPOPS entry & entrytyped)
+	properties & hash type-inner type-vs-key name mismatch (ECOGEASRP20: PERLOPS Class.pm properties accessors/mutators; CPPOPS entry & entrytyped)
 	accessors/mutators including get_*_element() & get_*_value()
 	subclasses Foo_raw type
 	$properties & VariableDeclaration array size on non-arrayref type
 	$properties array size PERLOPS_PERLTYPES generation
-	variable & retrieval type mismatches, etc (including ECVGEASCP30?)
+	variable & retrieval type mismatches, etc (including ECOGEASCP30?)
 	get_raw() & set_raw()
     t/13_compile_execute.t (?) for proper functionality
 	*_arrayref_arrayref_arrayref
@@ -55,13 +55,13 @@ tests
 	<$FILEHANDLE>
 	@ARGV
 	%ENV
-	ERROR ECVGEASRP15... named operator [SOMEOP] requires exactly one argument, dying
-	ERROR ECVGEASRP16... named operator [SOMEOP] requires one or more arguments, dying
+	ERROR ECOGEASRP15... named operator [SOMEOP] requires exactly one argument, dying
+	ERROR ECOGEASRP16... named operator [SOMEOP] requires one or more arguments, dying
 	all currently-implemented named ops
 	all currently-implemented named_unary ops
-	invalid hash key starting with non-lowercase-letter ECVGEASRP22
-	invalid OO property name (hash key) starting with non-lowercase-letter ECVGEASRP23
-	invalid type inner redundant name starting with non-lowercase-letter ECVGEASRP24
+	invalid hash key starting with non-lowercase-letter ECOGEASRP22
+	invalid OO property name (hash key) starting with non-lowercase-letter ECOGEASRP23
+	invalid type inner redundant name starting with non-lowercase-letter ECOGEASRP24
 	CONSTANT_CALL_SCOPED
 	*_to_*() data type conversion functions
 	text literals, backslash vs double-backslash
@@ -126,9 +126,14 @@ App, PhysicsPerl, Alioth Shootout N-Body Benchmark, Approved
 
 data types & structures
 	determine if Float.pm should be kept or deleted
+	full boolean support via Boolean.cpp/h, rperltypes.pm, SvBOKp(), etc.
 	char type-testing subroutines in Character.pm
-	full bool support via Boolean.cpp/h, rperltypes.pm, SvBOKp(), etc.
-	*OPS_CPPTYPES conversion routines
+	full character support via Character.cpp/h, rperltypes.pm, SvCOKp(), etc.
+	full unsigned_integer support via UnsignedInteger.cpp/h, rperltypes.pm, SvUIOKp(), etc.
+	CPPOPS_CPPTYPES conversion routines
+	PERLOPS_CPPTYPES conversion routines
+	boolean_arrayref, unsigned_integer_arrayref, character_arrayref
+	boolean_hashref, unsigned_integer_hashref, character_hashref
 
 RELEASE v1.XY
 

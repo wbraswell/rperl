@@ -1,7 +1,7 @@
 #!/usr/bin/perly
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< PARSE_ERROR: 'ERROR ECOPARP00' >>>
 # <<< PARSE_ERROR: 'Unexpected Token:  y' >>>
 
 # [[[ HEADER ]]]

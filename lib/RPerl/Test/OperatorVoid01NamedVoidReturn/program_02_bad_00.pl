@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVPARP00' >>>
+# <<< PARSE_ERROR: 'ERROR ECOPARP00' >>>
 # <<< PARSE_ERROR: 'Unexpected Token:  *' >>>
 
 # [[[ HEADER ]]]
@@ -15,7 +15,7 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ SUBROUTINES ]]]
-our bool $foo = sub {
+our boolean $foo = sub {
     return * 0;
 };
 

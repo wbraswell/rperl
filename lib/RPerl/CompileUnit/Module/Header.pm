@@ -44,7 +44,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     my string $version_number           = $self->{children}->[5]->{children}->[4];
 
     if ((substr $package_name, 0, 1) eq '_') {
-        die 'ERROR ECVGEASRP07, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: package name ' . ($package_name)
+        die 'ERROR ECOGEASRP07, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: package name ' . ($package_name)
                 . ' must not start with underscore, dying' . "\n";
     }
 
@@ -100,7 +100,7 @@ our string_hashref::method $ast_to_cpp__generate_begin__CPPOPS_CPPTYPES = sub {
     my string $version_number = $self->{children}->[5]->{children}->[4];
 
     if ((substr $package_name, 0, 1) eq '_') {
-        die 'ERROR ECVGEASCP07, CODE GENERATOR, ABSTRACT SYNTAX TO C++: package name ' . ($package_name)
+        die 'ERROR ECOGEASCP07, CODE GENERATOR, ABSTRACT SYNTAX TO C++: package name ' . ($package_name)
                 . ' must not start with underscore, dying' . "\n";
     }
     $modes->{_symbol_table}->{_namespace} = $package_name . '::';  # set current namespace

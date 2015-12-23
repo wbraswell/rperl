@@ -52,7 +52,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $child0_class
                 . ' found where Statement_151, Statement_152, Statement_153, Statement_154, or Statement_155 expected, dying'
         ) . "\n";
@@ -110,7 +110,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . $child0_class
                 . ' found where Statement_151, Statement_152, Statement_153, Statement_154, or Statement_155 expected, dying'
         ) . "\n";

@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVPA' >>>
+# <<< PARSE_ERROR: 'ERROR ECOPA' >>>
 # <<< PARSE_ERROR: '@TYPED_PI' >>>
 
 # [[[ HEADER ]]]

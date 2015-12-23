@@ -53,7 +53,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         $rperl_source_group->{PMC} .= $arrow_left_brace . q{ } . $word . q{ } . $right_brace;
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ($self_class)
                 . ' found where VariableRetrieval_177, VariableRetrieval_177, or VariableRetrieval_177 expected, dying' )
             . "\n";
@@ -113,22 +113,22 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             $cpp_source_group->{CPP} .= ']';
         }
         elsif ( $base_type =~ /_hashref$/ ) {                                        # hash
-            die 'ERROR ECVGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use arrayref retrieval on hashref type ' . $base_type . ', dying' . "\n";
+            die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use arrayref retrieval on hashref type ' . $base_type . ', dying' . "\n";
         }
         elsif ( exists $rperlnamespaces_generated::RPERL->{ $base_type . '::' } ) {    # scalar
-            die 'ERROR ECVGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use arrayref retrieval on scalar type ' . $base_type . ', dying' . "\n";
+            die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use arrayref retrieval on scalar type ' . $base_type . ', dying' . "\n";
         }
         else {                                                                         # user-defined type AKA class
-            die 'ERROR ECVGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use arrayref retrieval on object of user-defined class ' . $base_type . ', dying' . "\n";
+            die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use arrayref retrieval on object of user-defined class ' . $base_type . ', dying' . "\n";
         }
     }
     elsif ( $self_class eq 'VariableRetrieval_178' ) {                                 # VariableRetrieval -> OP02_HASH_THINARROW SubExpression '}'
         my object $subexpression = $self->{children}->[1];
         if ( $base_type =~ /_arrayref$/ ) {                                            # array
-            die 'ERROR ECVGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on arrayref type ' . $base_type . ', dying' . "\n";
+            die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on arrayref type ' . $base_type . ', dying' . "\n";
         }
         elsif ( $base_type eq 'sse_number_pair' ) {
-            die 'ERROR ECVGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on SSE type ' . $base_type . ', dying' . "\n";
+            die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on SSE type ' . $base_type . ', dying' . "\n";
         }
         elsif ( $base_type =~ /_hashref$/ ) {                                          # hash
             $subtype = substr $base_type, 0, ( ( length $base_type ) - 8 );            # strip trailing '_hashref'
@@ -157,7 +157,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             }
         }
         elsif ( exists $rperlnamespaces_generated::RPERL->{ $base_type . '::' } ) {    # scalar
-            die 'ERROR ECVGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on scalar type ' . $base_type . ', dying' . "\n";
+            die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on scalar type ' . $base_type . ', dying' . "\n";
         }
         else {                                                                         # user-defined type AKA class
             $cpp_source_group->{CPP} .= '->';
@@ -169,10 +169,10 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         my string $word = $self->{children}->[1];
 
         if ( $base_type =~ /_arrayref$/ ) {                                            # array
-            die 'ERROR ECVGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on arrayref type ' . $base_type . ', dying' . "\n";
+            die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on arrayref type ' . $base_type . ', dying' . "\n";
         }
         elsif ( $base_type eq 'sse_number_pair' ) {
-            die 'ERROR ECVGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on SSE type ' . $base_type . ', dying' . "\n";
+            die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on SSE type ' . $base_type . ', dying' . "\n";
         }
         elsif ( $base_type =~ /_hashref$/ ) {                                          # hash
             $subtype = substr $base_type, 0, ( ( length $base_type ) - 8 );            # strip trailing '_hashref'
@@ -195,7 +195,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             }
         }
         elsif ( exists $rperlnamespaces_generated::RPERL->{ $base_type . '::' } ) {    # scalar
-            die 'ERROR ECVGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on scalar type ' . $base_type . ', dying' . "\n";
+            die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on scalar type ' . $base_type . ', dying' . "\n";
         }
         else {                                                                         # user-defined type AKA class
             $cpp_source_group->{CPP} .= '->' . $word;
@@ -203,7 +203,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . ($self_class)
                 . ' found where VariableRetrieval_177, VariableRetrieval_177, or VariableRetrieval_177 expected, dying' )
             . "\n";

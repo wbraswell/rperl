@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< GENERATE_ERROR: 'ERROR ECVGEASRP06' >>>
+# <<< GENERATE_ERROR: 'ERROR ECOGEASRP06' >>>
 # <<< GENERATE_ERROR: "initial-condition variable '$i' is different than exit-condition variable '$j'" >>>
 
 # [[[ HEADER ]]]

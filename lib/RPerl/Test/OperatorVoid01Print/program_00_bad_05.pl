@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVPAPL03' >>>
+# <<< PARSE_ERROR: 'ERROR ECOPAPL03' >>>
 # <<< PARSE_ERROR: 'Name "main::sTDERR" used only once: possible typo' >>>
 
 # [[[ HEADER ]]]

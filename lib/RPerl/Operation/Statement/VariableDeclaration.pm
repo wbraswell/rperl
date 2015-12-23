@@ -78,7 +78,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #                    RPerl::diag( 'in VariableDeclaration->ast_to_rperl__generate(), have $constructor_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($constructor_type) . "\n" );
      
                     if ( $type ne $constructor_type ) {
-                        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP19, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: data type mismatch, ' . q{'}
+                        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP19, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: data type mismatch, ' . q{'}
                                 . $type . q{'}
                                 . ' type is different than ' . q{'}
                                 . $constructor_type . q{'}
@@ -92,7 +92,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             $rperl_source_group->{PMC} .= $opnamed_or_subexp_or_input_scolon->{children}->[1];  # semicolon
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                     . $opnamed_or_subexp_or_input_scolon_type
                     . ' found where OpNamedScolonOrSubExpIn_238, OpNamedScolonOrSubExpIn_239, or OpNamedScolonOrSubExpIn_240 expected, dying' )
                 . "\n";
@@ -124,7 +124,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         $rperl_source_group->{PMC} .= $my . q{ } . $type_fhref . q{ } . $symbol_fhref . $semicolon . "\n";
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
                 . ' found where VariableDeclaration_180, VariableDeclaration_181, VariableDeclaration_182, or VariableDeclaration_183 expected, dying' )
             . "\n";
@@ -161,7 +161,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         substr $symbol, 0, 1, q{};                       # remove leading $ sigil
 
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
-            die 'ERROR ECVGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+            die 'ERROR ECOGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
                 . $symbol
                 . ' already declared in this scope, namespace '
                 . $modes->{_symbol_table}->{_namespace}
@@ -187,7 +187,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #        RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $opnamed_or_subexp_or_input_scolon = ' . "\n" . RPerl::Parser::rperl_ast__dump($opnamed_or_subexp_or_input_scolon) . "\n" );
 
         substr $symbol, 0, 1, q{};                          # remove leading $ sigil
-        my bool $is_constructor_call = 0;
+        my boolean $is_constructor_call = 0;
 
         my string $opnamed_or_subexp_or_input_scolon_type = ref $opnamed_or_subexp_or_input_scolon;
 #        RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $opnamed_or_subexp_or_input_scolon_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($opnamed_or_subexp_or_input_scolon_type) . "\n" );
@@ -212,7 +212,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #                    RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $constructor_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($constructor_type) . "\n" );
      
                     if ( $type ne $constructor_type ) {
-                        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP19, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: data type mismatch, ' . q{'}
+                        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP19, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: data type mismatch, ' . q{'}
                                 . $type . q{'}
                                 . ' type is different than ' . q{'}
                                 . $constructor_type . q{'}
@@ -222,7 +222,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             }
 
             if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
-                die 'ERROR ECVGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+                die 'ERROR ECOGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
                     . $symbol
                     . ' already declared in this scope, namespace '
                     . $modes->{_symbol_table}->{_namespace}
@@ -255,7 +255,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             $cpp_source_group->{CPP} .= $opnamed_or_subexp_or_input_scolon->{children}->[1];  # semicolon
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                     . $opnamed_or_subexp_or_input_scolon_type
                     . ' found where OpNamedScolonOrSubExpIn_238, OpNamedScolonOrSubExpIn_239, or OpNamedScolonOrSubExpIn_240 expected, dying' )
                 . "\n";
@@ -273,7 +273,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #        RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subexpression = ' . RPerl::Parser::rperl_ast__dump($subexpression) . "\n" );
 
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
-            die 'ERROR ECVGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+            die 'ERROR ECOGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
                 . $symbol
                 . ' already declared in this scope, namespace '
                 . $modes->{_symbol_table}->{_namespace}
@@ -308,7 +308,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         substr $symbol_fhref, 0, 1, q{};                    # remove leading $ sigil
 
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol_fhref} ) {
-            die 'ERROR ECVGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+            die 'ERROR ECOGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
                 . $symbol_fhref
                 . ' already declared in this scope, namespace '
                 . $modes->{_symbol_table}->{_namespace}
@@ -328,7 +328,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $cpp_source_group->{CPP} .= $type_fhref . q{ } . $symbol_fhref . ';' . "\n";
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . $self_class
                 . ' found where VariableDeclaration_180, VariableDeclaration_181, VariableDeclaration_182, or VariableDeclaration_183 expected, dying' )
             . "\n";

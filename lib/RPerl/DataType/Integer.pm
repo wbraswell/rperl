@@ -30,7 +30,7 @@ use parent qw(RPerl::DataType::Integer);
 
 # [[[ PRE-DECLARED TYPES ]]]
 package    # hide from PAUSE indexing
-    bool;
+    boolean;
 package    # hide from PAUSE indexing
     unsigned_integer;
 package    # hide from PAUSE indexing
@@ -38,7 +38,7 @@ package    # hide from PAUSE indexing
 package    # hide from PAUSE indexing
     number;
 package    # hide from PAUSE indexing
-    char;
+    character;
 package    # hide from PAUSE indexing
     string;
 
@@ -49,7 +49,7 @@ use warnings;
 
 # [[[ EXPORTS ]]]
 use Exporter 'import';
-our @EXPORT = qw(integer_to_bool integer_to_unsigned_integer integer_to_number integer_to_char integer_to_string);
+our @EXPORT = qw(integer_to_boolean integer_to_unsigned_integer integer_to_number integer_to_character integer_to_string);
 
 # [[[ TYPE-CHECKING ]]]
 our void $integer_CHECK = sub {
@@ -75,9 +75,9 @@ our void $integer_CHECKTRACE = sub {
     }
 };
 
-# [[[ BOOLIFY ]]]
-#our bool $integer_to_bool = sub {
-sub integer_to_bool {
+# [[[ BOOLEANIFY ]]]
+#our boolean $integer_to_boolean = sub {
+sub integer_to_boolean {
     ( my integer $input_integer ) = @_;
     if   ( $input_integer == 0 ) { return 0; }
     else                         { return 1; }
@@ -97,9 +97,9 @@ sub integer_to_number {
     return $input_integer * 1.0;
 }
 
-# [[[ CHARIFY ]]]
-#our char $integer_to_char = sub {
-sub integer_to_char {
+# [[[ CHARACTERIFY ]]]
+#our character $integer_to_character = sub {
+sub integer_to_character {
     ( my integer $input_integer ) = @_;
     my string $tmp_string = integer_to_string($input_integer);
     if   ( $tmp_string eq q{} ) { return q{}; }

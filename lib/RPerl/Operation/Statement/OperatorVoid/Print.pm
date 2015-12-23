@@ -38,7 +38,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
         if ( exists $stdout_stderr_optional->{children}->[0] ) {
             if ( ( $stdout_stderr_optional->{children}->[0]->{attr} ne '{*STDOUT}' ) and ( $stdout_stderr_optional->{children}->[0]->{attr} ne '{*STDERR}' ) ) {
-                die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP27, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: output stream '
+                die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP27, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: output stream '
                         . $stdout_stderr_optional->{children}->[0]->{attr}
                         . ' found where {*STDOUT} or {*STDERR} expected, dying' )
                     . "\n";
@@ -65,7 +65,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         $rperl_source_group->{PMC} .= $semicolon . "\n";
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
                 . ' found where OperatorVoid_116 or OperatorVoid_117 expected, dying' )
             . "\n";
@@ -105,7 +105,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 $cpp_source_group->{CPP} .= 'cerr << ';
             }
             else {
-                die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP27, CODE GENERATOR, ABSTRACT SYNTAX TO C++: output stream '
+                die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP27, CODE GENERATOR, ABSTRACT SYNTAX TO C++: output stream '
                         . $stdout_stderr_optional->{children}->[0]->{attr}
                         . ' found where {*STDOUT} or {*STDERR} expected, dying' )
                     . "\n";
@@ -122,7 +122,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $cpp_source_group->{CPP} .= '// <<< RP::O::S::OV::P __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>' . "\n";
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . $self_class
                 . ' found where OperatorVoid_116 or OperatorVoid_117 expected, dying' )
             . "\n";

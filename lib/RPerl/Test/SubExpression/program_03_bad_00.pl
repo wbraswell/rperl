@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
 # <<< PARSE_ERROR: 'near "my string"' >>>
 # <<< PARSE_ERROR: 'Global symbol "$bar" requires explicit package name' >>>
 # <<< PARSE_ERROR: 'Global symbol "$foo" requires explicit package name' >>>

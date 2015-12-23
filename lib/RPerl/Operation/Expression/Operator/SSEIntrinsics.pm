@@ -30,7 +30,7 @@ sub sse_recip_sqrt_32bit_on_64bit {
     my number $argument_1_number = $argument->[1];
     my string $argument_0_string = "$argument_0_number";
     my string $argument_1_string = "$argument_1_number";
-    my bool $has_decimal = 0;
+    my boolean $has_decimal = 0;
     if ($argument_0_string =~ /[.]/) { $has_decimal = 1; }
     if ((length $argument_0_string) > (7 + $has_decimal)) {
         $argument_0_string = substr $argument_0_string, 0, (7 + $has_decimal);

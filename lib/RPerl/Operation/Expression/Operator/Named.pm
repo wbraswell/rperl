@@ -55,7 +55,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         $operator_name = $self->{children}->[1];
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
                 . ' found where Operation_79, Operator_83, Operator_84, or OperatorVoid_121 expected, dying' )
             . "\n";
@@ -64,10 +64,10 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     # remove trailing whitespace, caused by the need to have the grammar match some tokens with a trailing whitespace, as with 'scalar ', etc.
     $operator_name =~ s/^(\w+)\s*$/$1/gxms;
 
- # DEV NOTE: compile-time operator name checking short-circuited first by Parse Phase 0 ERROR ECVPAPL02 'Bareword "FOO" not allowed while "strict subs" in use';
- # can't figure out how to create test which gets past ECVPAPL02 to trigger ECVGEASRP12
+ # DEV NOTE: compile-time operator name checking short-circuited first by Parse Phase 0 ERROR ECOPAPL02 'Bareword "FOO" not allowed while "strict subs" in use';
+ # can't figure out how to create test which gets past ECOPAPL02 to trigger ECOGEASRP12
     if ( not exists $NAMES->{$operator_name} ) {
-        die q{ERROR ECVGEASRP12, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named operator '}
+        die q{ERROR ECOGEASRP12, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named operator '}
             . $operator_name
             . q{' found where }
             . ( join ', ', ( sort keys %{$NAMES} ) )

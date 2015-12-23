@@ -51,7 +51,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     if ( ( ref $self ) ne 'ListElements_189' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $self )
                 . ' found where ListElements_189 expected, dying' )
             . "\n";
@@ -75,7 +75,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         if ( ref $list_element eq 'TERMINAL' ) {
             if ( $list_element->{attr} ne q{,} ) {
                 die RPerl::Parser::rperl_rule__replace(
-                    q{ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '}
+                    q{ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '}
                         . $list_element->{attr}
                         . q{' found where OP21_LIST_COMMA ',' expected, dying}
                 ) . "\n";
@@ -113,7 +113,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     if ( ( ref $self ) ne 'ListElements_189' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . ( ref $self )
                 . ' found where ListElements_189 expected, dying' )
             . "\n";
@@ -133,7 +133,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         if ( ref $list_element eq 'TERMINAL' ) {
             if ( $list_element->{attr} ne q{,} ) {
                 die RPerl::Parser::rperl_rule__replace(
-                    q{ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '}
+                    q{ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '}
                         . $list_element->{attr}
                         . q{' found where OP21_LIST_COMMA ',' expected, dying}
                 ) . "\n";

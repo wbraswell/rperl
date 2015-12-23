@@ -62,7 +62,7 @@ use RPerl::CodeBlock::Subroutine::Method;    # Method is the only item that is b
 
 # these types are currently implemented for all 3 primary RPerl modes: PERLOPS_PERLTYPES, CPPOPS_PERLTYPES, CPPOPS_CPPTYPES
 # NEED REMOVE: hard-coded list
-# MISSING: bool, unsigned_integer, char, *_arrayref, *_hashref
+# MISSING: boolean, unsigned_integer, char, *_arrayref, *_hashref
 our string_arrayref $SUPPORTED = [
     qw(
         void
@@ -99,11 +99,11 @@ sub to_string {
     if ( not defined $variable ) { return 'undef'; }
     my string $type = type($variable);
     if    ( $type eq 'unknown' ) { return qq{$variable}; }
-    elsif ( $type eq 'bool' )    { return bool_to_string($variable); }
+    elsif ( $type eq 'boolean' )    { return boolean_to_string($variable); }
     elsif ( $type eq 'unsigned_integer' ) { return unsigned_integer_to_string($variable); }
     elsif ( $type eq 'integer' ) { return integer_to_string($variable); }
     elsif ( $type eq 'number' )  { return number_to_string($variable); }
-    elsif ( $type eq 'char' )    { return char_to_string($variable); }
+    elsif ( $type eq 'char' )    { return character_to_string($variable); }
     elsif ( $type eq 'string' )  { return string_to_string($variable); }
     else {
         my $retval = Dumper($variable);
@@ -130,7 +130,7 @@ sub type {
     if ( not defined $recurse_level ) { $recurse_level = 10; }    # default to limited recursion
     my integer_hashref $is_type = build_is_type($variable);
     # DEV NOTE, CORRELATION #rp25: only report core types integer, number, string, arrayref, hashref, object;
-    # do NOT report non-core types bool, unsigned_integer, char, etc.
+    # do NOT report non-core types boolean, unsigned_integer, char, etc.
     if ( $is_type->{integer} ) { return 'integer'; }
     elsif ( $is_type->{number} )  { return 'number'; }
     elsif ( $is_type->{string} )  { return 'string'; }
@@ -147,7 +147,7 @@ sub types {
     if ( not defined $recurse_level ) { $recurse_level = 10; }    # default to limited recursion
     my integer_hashref $is_type = build_is_type($variable);
     # DEV NOTE, CORRELATION #rp25: only report core types integer, number, string, arrayref, hashref, object;
-    # do NOT report non-core types bool, unsigned_integer, char, etc.
+    # do NOT report non-core types boolean, unsigned_integer, char, etc.
     if ( $is_type->{integer} ) { return { 'integer' => undef }; }
     elsif ( $is_type->{number} )  { return { 'number'  => undef }; }
     elsif ( $is_type->{string} )  { return { 'string'  => undef }; }
@@ -195,7 +195,7 @@ sub types_recurse {
     my string_hashref $types = undef;
 
     # DEV NOTE, CORRELATION #rp25: only report core types integer, number, string, arrayref, hashref, object;
-    # do NOT report non-core types bool, unsigned_integer, char, etc.
+    # do NOT report non-core types boolean, unsigned_integer, char, etc.
     if    ( not defined $variable ) { $type = 'unknown'; }
     elsif ( $is_type->{integer} )   { $type = 'integer'; }
     elsif ( $is_type->{number} )    { $type = 'number'; }

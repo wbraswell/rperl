@@ -54,7 +54,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     if ( ( ref $self ) ne 'Subroutine_48' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule ' . ( ref $self ) . ' found where Subroutine_48 expected, dying' )
+            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule ' . ( ref $self ) . ' found where Subroutine_48 expected, dying' )
             . "\n";
     }
 
@@ -70,7 +70,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     my string $semicolon          = $self->{children}->[7];
  
     if ((substr $name, 1, 1) eq '_') {
-        die 'ERROR ECVGEASRP08, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: subroutine name ' . ($name)
+        die 'ERROR ECOGEASRP08, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: subroutine name ' . ($name)
                 . ' must not start with underscore, dying' . "\n";
     }
 
@@ -117,7 +117,7 @@ our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = 
     my string_arrayref $arguments = [];
  
     if ((substr $name, 0, 1) eq '_') {
-        die 'ERROR ECVGEASCP08, CODE GENERATOR, ABSTRACT SYNTAX TO C++: subroutine name ' . ($name)
+        die 'ERROR ECOGEASCP08, CODE GENERATOR, ABSTRACT SYNTAX TO C++: subroutine name ' . ($name)
                 . ' must not start with underscore, dying' . "\n";
     }
     $modes->{_symbol_table}->{_subroutine} = $name;  # set current subroutine/method
@@ -232,7 +232,7 @@ our string_hashref::method $ast_to_cpp__generate_shims__CPPOPS_CPPTYPES = sub {
     substr $name, 0, 1, q{};            # remove leading $ sigil
  
     if ((substr $name, 0, 1) eq '_') {
-        die 'ERROR ECVGEASCP08, CODE GENERATOR, ABSTRACT SYNTAX TO C++: subroutine name ' . ($name)
+        die 'ERROR ECOGEASCP08, CODE GENERATOR, ABSTRACT SYNTAX TO C++: subroutine name ' . ($name)
                 . ' must not start with underscore, dying' . "\n";
     }
 

@@ -12,6 +12,10 @@ typedef std::ostringstream ostringstream;
 
 // [[[ PRE-DECLARED TYPEDEFS ]]]
 // DEV NOTE, CORRELATION #rp12: basic data types must be wholly independent of one another, to avoid possible weird redefining or undefining of subroutine errors
+# ifndef __CPP__INCLUDED__RPerl__DataType__Boolean_h__typedefs
+#define __CPP__INCLUDED__RPerl__DataType__Boolean_h__typedefs 1
+typedef bool boolean;
+# endif
 # ifndef __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_h__typedefs 1
 typedef unsigned int unsigned_integer;
@@ -23,6 +27,10 @@ typedef int integer;
 # ifndef __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs 1
 typedef double number;
+# endif
+# ifndef __CPP__INCLUDED__RPerl__DataType__Character_h__typedefs
+#define __CPP__INCLUDED__RPerl__DataType__Character_h__typedefs 1
+typedef char character;
 # endif
 
 // [[[ INCLUDES ]]]

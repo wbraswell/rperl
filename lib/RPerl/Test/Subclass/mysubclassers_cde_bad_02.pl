@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
 # <<< PARSE_ERROR: 'No such class RPerl::Test::Subclass::MySubclasserE_Good_hashrefd' >>>
 
 # [[[ HEADER ]]]

@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< GENERATE_ERROR: 'ERROR ECVGEASRP03' >>>
+# <<< GENERATE_ERROR: 'ERROR ECOGEASRP03' >>>
 # <<< GENERATE_ERROR: "Argument count 2 exceeds maximum argument limit 1 for operator 'return'" >>>
 
 # [[[ HEADER ]]]

@@ -1,5 +1,5 @@
 #ifndef __CPP__INCLUDED__RPerl__HelperFunctions_h
-#define __CPP__INCLUDED__RPerl__HelperFunctions_h 0.004_300
+#define __CPP__INCLUDED__RPerl__HelperFunctions_h 0.005_100
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
@@ -10,17 +10,21 @@
 
 // [[[ HELPER MACROS ]]]
 // DEV NOTE, CORRELATION #rp26: can't figure out how to get GMPInteger.cpp to include HelperFunctions.cpp without redefining errors
+#define SvBOKp(input_bv) (SvIOK(input_bv) && ((SvIV(input_bv) == 0) || (SvIV(input_bv) == 1)))  // NEED ADDRESS: is this a good enough semi-fake check for boolean?
+#define SvUIOKp(input_uiv) (SvIOK(input_uiv) && (SvIV(input_uiv) >= 0))  // NEED ADDRESS: is this a good enough semi-fake check for unsigned_integer?
+#define SvCOKp(input_cv) (SvPOK(input_cv) && (strlen((char*) SvPV_nolen(input_cv)) == 1))  // NEED ADDRESS: is this a good enough semi-fake check for character?
 #define SvAROKp(input_av_ref) (SvROK(input_av_ref) && (SvTYPE(SvRV(input_av_ref)) == SVt_PVAV))  // DEV NOTE: look P5P, I invented macros that should probably be in the P5 core!
 #define SvHROKp(input_hv_ref) (SvROK(input_hv_ref) && (SvTYPE(SvRV(input_hv_ref)) == SVt_PVHV))
-#define SvUIOKp(input_uiv) (SvIOK(input_uiv) && (SvIV(input_uiv) >= 0))  // NEED ADDRESS: is this a good enough semi-fake check for unsigned_integer?
 #define AV_ELEMENT(av,index) ((av_fetch(av,index,0)!=NULL)?*av_fetch(av,index,0):newSV(0))
 #define SV_REFERENCE_COUNT(sv) (SvREFCNT(sv))
 #define class(sv) HvNAME(SvSTASH(SvRV(sv)))  // NEED ADDRESS: does this actually match the functionality of PERLOPS class() which is a wrapper around blessed()?
 
 // [[[ HELPER FUNCTION DECLARATIONS ]]]
+int RPerl_SvBOKp(SV* input_sv);
 int RPerl_SvUIOKp(SV* input_sv);
 int RPerl_SvIOKp(SV* input_sv);
 int RPerl_SvNOKp(SV* input_sv);
+int RPerl_SvCOKp(SV* input_sv);
 int RPerl_SvPOKp(SV* input_sv);
 int RPerl_SvAROKp(SV* input_av_ref);
 int RPerl_SvHROKp(SV* input_hv_ref);

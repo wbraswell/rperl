@@ -173,7 +173,7 @@ sub warning {
     if ( ( ( not defined $ENV{RPERL_WARNINGS} ) or $ENV{RPERL_WARNINGS} )
         and $RPerl::WARNINGS )
     {
-        # NEED ADDRESS? the two following lines should be equivalent, but warn causes false ECVPAPL03
+        # NEED ADDRESS? the two following lines should be equivalent, but warn causes false ECOPAPL03
         print {*STDERR} $message;
 #        warn $message . "\n";
     }

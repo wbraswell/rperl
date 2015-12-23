@@ -35,7 +35,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     if ( ( ref $self ) ne 'Method_71' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule ' . ( ref $self ) . ' found where Method_71 expected, dying' )
+            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule ' . ( ref $self ) . ' found where Method_71 expected, dying' )
             . "\n";
     }
 
@@ -49,7 +49,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     my string $semicolon          = $self->{children}->[7];
 
     if ((substr $name, 1, 1) eq '_') {
-        die 'ERROR ECVGEASRP09, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: method name ' . ($name)
+        die 'ERROR ECOGEASRP09, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: method name ' . ($name)
                 . ' must not start with underscore, dying' . "\n";
     }
  
@@ -97,7 +97,7 @@ our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = 
 #    RPerl::diag( 'in Method->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $arguments_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_optional) . "\n" );
 
     if ((substr $name, 0, 1) eq '_') {
-        die 'ERROR ECVGEASCP09, CODE GENERATOR, ABSTRACT SYNTAX TO C++: method name ' . ($name)
+        die 'ERROR ECOGEASCP09, CODE GENERATOR, ABSTRACT SYNTAX TO C++: method name ' . ($name)
                 . ' must not start with underscore, dying' . "\n";
     }
     $modes->{_symbol_table}->{_subroutine} = $name;  # set current subroutine/method
@@ -133,7 +133,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     if ( ( ref $self ) ne 'Method_71' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule ' . ( ref $self ) . ' found where Method_71 expected, dying' )
+            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule ' . ( ref $self ) . ' found where Method_71 expected, dying' )
             . "\n";
     }
 
@@ -216,9 +216,9 @@ use strict;
 use warnings;
 use parent -norequire, qw(method);
 
-# method with char return type
+# method with character return type
 package  # hide from PAUSE indexing
-    char::method;
+    character::method;
 use strict;
 use warnings;
 use parent -norequire, qw(method);

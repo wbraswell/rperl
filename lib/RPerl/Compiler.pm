@@ -39,11 +39,11 @@ our string_arrayref $find_dependencies = sub {
     #    RPerl::diag( 'in Compiler::find_dependencies(), received $file_name = ' . $file_name . "\n" );
 
     if ( not -f $file_name ) {
-        die 'ERROR ECVCODE00, COMPILER, FIND DEPENDENCIES: File not found, ' . q{'} . $file_name . q{'} . "\n" . ', dying' . "\n";
+        die 'ERROR ECOCODE00, COMPILER, FIND DEPENDENCIES: File not found, ' . q{'} . $file_name . q{'} . "\n" . ', dying' . "\n";
     }
 
     open my filehandleref $FILE_HANDLE, '<', $file_name
-        or die 'ERROR ECVCODE01, COMPILER, FIND DEPENDENCIES: Cannot open file ' . $file_name . ' for reading, ' . $OS_ERROR . ', dying' . "\n";
+        or die 'ERROR ECOCODE01, COMPILER, FIND DEPENDENCIES: Cannot open file ' . $file_name . ' for reading, ' . $OS_ERROR . ', dying' . "\n";
 
     # read in input file, match on 'use' includes for dependencies
     my string $file_line;
@@ -52,7 +52,7 @@ our string_arrayref $find_dependencies = sub {
     my integer $eval_retval;
 
     # NEED FIX: do not make recursive calls until after closing file, to avoid
-    # ERROR ECVCODE01, COMPILER, FIND DEPENDENCIES: Cannot open file Foo/Bar.pm for reading, Too many open files, dying
+    # ERROR ECOCODE01, COMPILER, FIND DEPENDENCIES: Cannot open file Foo/Bar.pm for reading, Too many open files, dying
     while ( $file_line = <$FILE_HANDLE> ) {
         if ( ( $file_line =~ /^\s*package\s+[\w:]+\s*;\s*$/xms ) and ( not defined $first_package_name ) ) {
             $first_package_name = $file_line;
@@ -91,7 +91,7 @@ our string_arrayref $find_dependencies = sub {
             elsif ( $file_line =~ /use\s+rperlsse\s*;/ ) {
 #            	RPerl::diag('in Compiler::find_dependencies(), found rperlsse line, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
                 if ((substr $Config{archname}, 0, 3) eq 'arm') {
-                    die q{ERROR ECVCODE05, COMPILER, FIND DEPENDENCIES: 'use rperlsse;' command found but SSE not supported on Arm architecture, file } . $file_name . ', dying' . "\n";
+                    die q{ERROR ECOCODE05, COMPILER, FIND DEPENDENCIES: 'use rperlsse;' command found but SSE not supported on Arm architecture, file } . $file_name . ', dying' . "\n";
                 }
                 if ((not exists $modes->{_enable_sse}) or (not defined $modes->{_enable_sse})) {
                     $modes->{_enable_sse} = {};
@@ -112,7 +112,7 @@ our string_arrayref $find_dependencies = sub {
 
             if ( $file_line =~ /use\s+lib/ ) {
                 die
-                    q{ERROR ECVCODE02, COMPILER, FIND DEPENDENCIES: 'use lib...' not currently supported, please set @INC using the PERL5LIB environment variable, file } . $file_name . ', dying'
+                    q{ERROR ECOCODE02, COMPILER, FIND DEPENDENCIES: 'use lib...' not currently supported, please set @INC using the PERL5LIB environment variable, file } . $file_name . ', dying'
                     . "\n";
             }
 
@@ -129,7 +129,7 @@ our string_arrayref $find_dependencies = sub {
             $file_line =~ s/::/\//gxms;                                 # replace double-colon :: scope delineator with forward-slash / directory delineator
             $file_line .= '.pm';
             if ( not exists $INC{$file_line} ) {
-                die 'ERROR ECVCODE03, COMPILER, FIND DEPENDENCIES: After successful eval-use, still failed to find package file '
+                die 'ERROR ECOCODE03, COMPILER, FIND DEPENDENCIES: After successful eval-use, still failed to find package file '
                     . $file_line
                     . ' in %INC, file ' . $file_name . ', dying' . "\n";
             }
@@ -150,7 +150,7 @@ our string_arrayref $find_dependencies = sub {
     }
 
     close $FILE_HANDLE
-        or die 'ECVCODE04, COMPILER, FIND DEPENDENCIES: Cannot close file ' . $file_name . ' after reading, ' . $OS_ERROR . ', dying' . "\n";
+        or die 'ECOCODE04, COMPILER, FIND DEPENDENCIES: Cannot close file ' . $file_name . ' after reading, ' . $OS_ERROR . ', dying' . "\n";
 
     #    RPerl::diag( 'in Compiler::find_dependencies(), returning $dependencies = ' . Dumper($dependencies) . "\n" );
 #    RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
@@ -338,7 +338,7 @@ our void $save_source_files = sub {
             or ( not defined $file_name_group->{$suffix_key} )
             or ( $file_name_group->{$suffix_key} eq q{} ) )
         {
-            croak("\nERROR ECVCOFI00, COMPILER, SAVE OUTPUT FILES: Expecting file name for suffix '$suffix_key', but received empty or no value, croaking");
+            croak("\nERROR ECOCOFI00, COMPILER, SAVE OUTPUT FILES: Expecting file name for suffix '$suffix_key', but received empty or no value, croaking");
         }
     }
 
@@ -347,7 +347,7 @@ our void $save_source_files = sub {
         RPerl::verbose('SAVE  PHASE 0:      Final file modifications...    ');
 
         if ( $source_group->{PMC} ne q{} ) {
-            die 'ERROR ECVCOFI01, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Received non-empty PMC source, dying' . "\n";
+            die 'ERROR ECOCOFI01, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Received non-empty PMC source, dying' . "\n";
         }
 
         # NEED FIX WIN32: handle back-slash for Win32 instead of forward-slash only for *NIX
@@ -421,13 +421,13 @@ our void $save_source_files = sub {
 #            RPerl::diag( 'in Compiler::save_source_files(), have $source_group->{_PMC_includes} = ' . Dumper($source_group->{_PMC_includes}) . "\n" );
 
             if ( not -f $module_pmc_filename_manual ) {
-                die 'ERROR ECVCOFI02, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: File not found, ' . q{'}
+                die 'ERROR ECOCOFI02, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: File not found, ' . q{'}
                     . $module_pmc_filename_manual . q{'} . "\n"
                     . ', dying' . "\n";
             }
 
             open my filehandleref $FILE_HANDLE, '<', $module_pmc_filename_manual
-                or die 'ERROR ECVCOFI03, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot open file '
+                or die 'ERROR ECOCOFI03, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot open file '
                 . $module_pmc_filename_manual
                 . ' for reading, '
                 . $OS_ERROR
@@ -491,7 +491,7 @@ our void $save_source_files = sub {
             }
 
             close $FILE_HANDLE
-                or die 'ECVCOFI04, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot close file '
+                or die 'ECOCOFI04, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot close file '
                 . $module_pmc_filename_manual
                 . ' after reading, '
                 . $OS_ERROR
@@ -511,7 +511,7 @@ our void $save_source_files = sub {
             or ( not defined $source_group->{$suffix_key} )
             or ( $source_group->{$suffix_key} eq q{} ) )
         {
-            croak("\nERROR ECVCOFI05, COMPILER, SAVE OUTPUT FILES: Expecting source code for suffix '$suffix_key', but received empty or no value, croaking");
+            croak("\nERROR ECOCOFI05, COMPILER, SAVE OUTPUT FILES: Expecting source code for suffix '$suffix_key', but received empty or no value, croaking");
         }
         my filehandleref $SOURCE_FILE_HANDLE;
         my string $file_name = $file_name_group->{$suffix_key};
@@ -522,10 +522,10 @@ our void $save_source_files = sub {
                 = tempfile( 'tempfileXXXX', SUFFIX => ( lc $suffix_key ) );
 
             print {$SOURCE_FILE_HANDLE} $source
-                or croak("\nERROR ECVCOFI06, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot write to file,\ncroaking: $OS_ERROR");
+                or croak("\nERROR ECOCOFI06, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot write to file,\ncroaking: $OS_ERROR");
                 
             close $SOURCE_FILE_HANDLE
-                or croak("\nERROR ECVCOFI09, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot close file,\ncroaking: $OS_ERROR");
+                or croak("\nERROR ECOCOFI09, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot close file,\ncroaking: $OS_ERROR");
         }
         else {
 
@@ -533,18 +533,18 @@ our void $save_source_files = sub {
             if ( -f $file_name ) {
                 unlink $file_name
                     or croak(
-                    "\nERROR ECVCOFI07, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot delete existing file,\ncroaking: $OS_ERROR");
+                    "\nERROR ECOCOFI07, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot delete existing file,\ncroaking: $OS_ERROR");
             }
 
             open $SOURCE_FILE_HANDLE, '>', $file_name
                 or
-                croak("\nERROR ECVCOFI08, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot open file for writing,\ncroaking: $OS_ERROR");
+                croak("\nERROR ECOCOFI08, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot open file for writing,\ncroaking: $OS_ERROR");
 
             print {$SOURCE_FILE_HANDLE} $source
-                or croak("\nERROR ECVCOFI06, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot write to file,\ncroaking: $OS_ERROR");
+                or croak("\nERROR ECOCOFI06, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot write to file,\ncroaking: $OS_ERROR");
 
             close $SOURCE_FILE_HANDLE
-                or croak("\nERROR ECVCOFI09, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot close file,\ncroaking: $OS_ERROR");
+                or croak("\nERROR ECOCOFI09, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot close file,\ncroaking: $OS_ERROR");
         }
 
         # format output code

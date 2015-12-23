@@ -20,10 +20,10 @@ use RPerl::DataType::String;
 use Exporter 'import';
 
 our @EXPORT = qw(
-    bool_to_unsigned_integer bool_to_integer bool_to_number bool_to_char bool_to_string
-    unsigned_integer_to_bool unsigned_integer_to_integer unsigned_integer_to_number unsigned_integer_to_char unsigned_integer_to_string
-    integer_to_bool integer_to_unsigned_integer integer_to_number integer_to_char integer_to_string
-    number_to_bool number_to_unsigned_integer number_to_integer number_to_char number_to_string
-    char_to_bool char_to_unsigned_integer char_to_integer char_to_number char_to_string
-    string_to_bool string_to_unsigned_integer string_to_integer string_to_number string_to_char string_to_string
+    boolean_to_unsigned_integer boolean_to_integer boolean_to_number boolean_to_character boolean_to_string
+    unsigned_integer_to_boolean unsigned_integer_to_integer unsigned_integer_to_number unsigned_integer_to_character unsigned_integer_to_string
+    integer_to_boolean integer_to_unsigned_integer integer_to_number integer_to_character integer_to_string
+    number_to_boolean number_to_unsigned_integer number_to_integer number_to_character number_to_string
+    character_to_boolean character_to_unsigned_integer character_to_integer character_to_number character_to_string
+    string_to_boolean string_to_unsigned_integer string_to_integer string_to_number string_to_character string_to_string
 );

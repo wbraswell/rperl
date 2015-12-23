@@ -1,5 +1,5 @@
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVPAPL02' >>>
+# <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
 # <<< PARSE_ERROR: 'No such class RPerl::Test::Subclass::MySubclasserB_Bad_00_arrayref::methodd' >>>
 
 # [[[ HEADER ]]]

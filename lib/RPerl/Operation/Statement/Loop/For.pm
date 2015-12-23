@@ -73,7 +73,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my object $codeblock                 = $self->{children}->[11];
 
         if ( $variable_symbol0 ne $variable_symbol1 ) {
-            die 'ERROR ECVGEASRP06, CODE GENERATOR, ABSTRACT SYNTAX TO RPerl: C-style for() loop header variable mismatch, initial-condition variable '
+            die 'ERROR ECOGEASRP06, CODE GENERATOR, ABSTRACT SYNTAX TO RPerl: C-style for() loop header variable mismatch, initial-condition variable '
                 . q{'}
                 . $variable_symbol0 . q{'}
                 . ' is different than exit-condition variable ' . q{'}
@@ -99,7 +99,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             $rperl_source_group->{PMC} .= $opnamed_or_subexp_scolon0->{children}->[1];                                         # semicolon
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                     . $opnamed_or_subexp_scolon0_type
                     . ' found where OpNamedScolonOrSubExp_235, OpNamedScolonOrSubExp_236, or OpNamedScolonOrSubExp_237 expected, dying' )
                 . "\n";
@@ -123,7 +123,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             $rperl_source_group->{PMC} .= $opnamed_or_subexp_scolon1->{children}->[1];                               # semicolon
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                     . $opnamed_or_subexp_scolon1_type
                     . ' found where OpNamedScolonOrSubExp_235, OpNamedScolonOrSubExp_236, or OpNamedScolonOrSubExp_237 expected, dying' )
                 . "\n";
@@ -137,7 +137,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
                 . ' found where Loop_163, LoopFor_166, or LoopFor_167 expected, dying' )
             . "\n";
@@ -192,7 +192,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 'RPerl::Operation::Expression::SubExpression::Variable::LoopIterator' )
             )
         {
-            die 'ERROR ECVGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+            die 'ERROR ECOGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
                 . $variable_symbol
                 . ' already declared in this scope, namespace '
                 . $modes->{_symbol_table}->{_namespace}
@@ -209,7 +209,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         }
         else {
             if ( ( exists $modes->{_loop_iterators}->{$variable_symbol} ) and ( $modes->{_loop_iterators}->{$variable_symbol} ne $type_integer ) ) {
-                die 'ERROR ECVGEASCP22, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Compile-time optimization, loop iterator '
+                die 'ERROR ECOGEASCP22, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Compile-time optimization, loop iterator '
                     . $variable_symbol
                     . ' declared as non-integer type '
                     . $modes->{_loop_iterators}->{$variable_symbol}
@@ -256,7 +256,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         my object $codeblock                 = $self->{children}->[11];
 
         if ( $variable_symbol0 ne $variable_symbol1 ) {
-            die 'ERROR ECVGEASCP06, CODE GENERATOR, ABSTRACT SYNTAX TO C++: C-style for() loop header variable mismatch, initial-condition variable ' . q{'}
+            die 'ERROR ECOGEASCP06, CODE GENERATOR, ABSTRACT SYNTAX TO C++: C-style for() loop header variable mismatch, initial-condition variable ' . q{'}
                 . $variable_symbol0 . q{'}
                 . ' is different than exit-condition variable ' . q{'}
                 . $variable_symbol1 . q{'}
@@ -271,7 +271,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 'RPerl::Operation::Expression::SubExpression::Variable::LoopIterator' )
             )
         {
-            die 'ERROR ECVGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+            die 'ERROR ECOGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
                 . $variable_symbol0
                 . ' already declared in this scope, namespace '
                 . $modes->{_symbol_table}->{_namespace}
@@ -288,7 +288,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         }
         else {
             if ( ( exists $modes->{_loop_iterators}->{$variable_symbol0} ) and ( $modes->{_loop_iterators}->{$variable_symbol0} ne $type_integer ) ) {
-                die 'ERROR ECVGEASCP22, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Compile-time optimization, loop iterator '
+                die 'ERROR ECOGEASCP22, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Compile-time optimization, loop iterator '
                     . $variable_symbol0
                     . ' declared as non-integer type '
                     . $modes->{_loop_iterators}->{$variable_symbol0}
@@ -315,7 +315,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             $cpp_source_group->{CPP} .= $opnamed_or_subexp_scolon0->{children}->[1];                                         # semicolon
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                     . $opnamed_or_subexp_scolon0_type
                     . ' found where OpNamedScolonOrSubExp_235, OpNamedScolonOrSubExp_236, or OpNamedScolonOrSubExp_237 expected, dying' )
                 . "\n";
@@ -339,7 +339,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             $cpp_source_group->{CPP} .= $opnamed_or_subexp_scolon1->{children}->[1];                               # semicolon
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                     . $opnamed_or_subexp_scolon1_type
                     . ' found where OpNamedScolonOrSubExp_235, OpNamedScolonOrSubExp_236, or OpNamedScolonOrSubExp_237 expected, dying' )
                 . "\n";
@@ -353,7 +353,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . $self_class
                 . ' found where Loop_163, LoopFor_166, or LoopFor_167 expected, dying' )
             . "\n";

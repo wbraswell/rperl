@@ -36,7 +36,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     if ( ($self_class) ne 'Program_18' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule ' . ($self_class) . ' found where Program_18 expected, dying' )
+            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule ' . ($self_class) . ' found where Program_18 expected, dying' )
             . "\n";
     }
 

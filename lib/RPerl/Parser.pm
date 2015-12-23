@@ -83,11 +83,11 @@ our void $rperl_source__check_syntax = sub {
 #RPerl::diag("in rperl_source__check_syntax(), have \$OS_ERROR = $OS_ERROR\n");  # $OS_ERROR seems to contain random error messages that I can't trace?
 #RPerl::diag("in rperl_source__check_syntax(), have \$? = $?\n");
 
-# NEED ADD ERROR CHECKING: ECVPAPL00 FILE DOES NOT EXIST, ECVPAPL01 FILE IS EMPTY
+# NEED ADD ERROR CHECKING: ECOPAPL00 FILE DOES NOT EXIST, ECOPAPL01 FILE IS EMPTY
 
     if ( $rperl_source__perl_syntax_retval != 0 ) {
         my $error_pretty = "\n"
-            . 'ERROR ECVPAPL02, RPERL PARSER, PERL SYNTAX ERROR' . "\n"
+            . 'ERROR ECOPAPL02, RPERL PARSER, PERL SYNTAX ERROR' . "\n"
             . 'Failed `' . $EXECUTABLE_NAME . ' -cw` syntax check with the following information:' . "\n\n" 
             . '    File Name:        ' . $rperl_source__file_name . "\n"
             . '    Return Value:     ' . ( $rperl_source__perl_syntax_retval >> 8 ) . "\n"
@@ -125,7 +125,7 @@ our void $rperl_source__check_syntax = sub {
 
     if ( ( scalar @{$rperl_source__perl_syntax_retstring_warnings} ) != 0 ) {
         my $error_pretty = "\n"
-            . 'ERROR ECVPAPL03, RPERL PARSER, PERL SYNTAX WARNING' . "\n"
+            . 'ERROR ECOPAPL03, RPERL PARSER, PERL SYNTAX WARNING' . "\n"
             . 'Failed `' . $EXECUTABLE_NAME . ' -cw` syntax check with the following information:' . "\n\n" 
             . '    File Name:        ' . $rperl_source__file_name . "\n"
             . '    Error Message(s): ';
@@ -169,7 +169,7 @@ our void $rperl_source__criticize = sub {
 #    my string $rperl_source__critic_dumperified_violations = Dumper( \@rperl_source__critic_violations );
 #RPerl::diag("in rperl_source__criticize(), have Dumper(\\\@rperl_source__critic_violations) =\n" . $rperl_source__critic_dumperified_violations . "\n");
 
-# NEED ADD ERROR CHECKING: ECVPAPC00 FILE DOES NOT EXIST, ECVPAPC01 FILE IS EMPTY; or would that be redundant with ECVPAPL0x error checking when added above?
+# NEED ADD ERROR CHECKING: ECOPAPC00 FILE DOES NOT EXIST, ECOPAPC01 FILE IS EMPTY; or would that be redundant with ECOPAPL0x error checking when added above?
 
     if ( $rperl_source__critic_num_violations > 0 ) {
         my string $violation_pretty = q{};
@@ -186,7 +186,7 @@ our void $rperl_source__criticize = sub {
             }
         }
         die "\n"
-            . 'ERROR ECVPAPC02, RPERL PARSER, PERL CRITIC VIOLATION'
+            . 'ERROR ECOPAPC02, RPERL PARSER, PERL CRITIC VIOLATION'
             . "\n"
             . 'Failed Perl::Critic brutal review with the following information:'
             . "\n\n"
@@ -217,8 +217,8 @@ our void $rperl_grammar_error = sub {
     my integer $line_number = $argument->{TOKENLINE};
     my string $rperl_source__file_name = $argument->{rperl_source__file_name};
 
-#    die( "\n" . 'ERROR ECVPARP00, RPERL PARSER, SYNTAX ERROR; have $argument =' . "\n" . Dumper($argument) . "\n" );
-#    die( "\n" . 'ERROR ECVPARP00, RPERL PARSER, SYNTAX ERROR; have $argument->{rperl_source__file_name} = ' . $argument->{rperl_source__file_name} . "\n" );
+#    die( "\n" . 'ERROR ECOPARP00, RPERL PARSER, SYNTAX ERROR; have $argument =' . "\n" . Dumper($argument) . "\n" );
+#    die( "\n" . 'ERROR ECOPARP00, RPERL PARSER, SYNTAX ERROR; have $argument->{rperl_source__file_name} = ' . $argument->{rperl_source__file_name} . "\n" );
 
     my $current_state_num        = $argument->{STACK}[-1][0];
     my $current_state            = $argument->{STATES}[$current_state_num];
@@ -237,7 +237,7 @@ our void $rperl_grammar_error = sub {
     }
 
     die "\n"
-        . 'ERROR ECVPARP00, RPERL PARSER, RPERL SYNTAX ERROR' . "\n"
+        . 'ERROR ECOPARP00, RPERL PARSER, RPERL SYNTAX ERROR' . "\n"
         . 'Failed RPerl grammar syntax check with the following information:'
         . "\n\n"
         . '    File Name:         ' . $rperl_source__file_name . "\n"

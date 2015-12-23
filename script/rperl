@@ -252,7 +252,7 @@ sub stringify_output_file_name_group {
     }
     if ((length $output_file_names) > 55) {
         my @output_file_names_split = split q{  }, $output_file_names;
-        my bool $is_first = 1;
+        my boolean $is_first = 1;
         foreach my string $output_file_name (@output_file_names_split) {
             if ($is_first) {
                 $output_file_names = $output_file_name;

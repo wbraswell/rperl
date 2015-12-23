@@ -25,7 +25,7 @@ use parent qw(RPerl::DataType::GMPInteger);
 
 # [[[ PRE-DECLARED TYPES ]]]
 package    # hide from PAUSE indexing
-    bool;
+    boolean;
 package    # hide from PAUSE indexing
     unsigned_integer;
 package    # hide from PAUSE indexing
@@ -33,7 +33,7 @@ package    # hide from PAUSE indexing
 package    # hide from PAUSE indexing
     number;
 package    # hide from PAUSE indexing
-    char;
+    character;
 package    # hide from PAUSE indexing
     string;
 
@@ -42,11 +42,19 @@ package RPerl::DataType::GMPInteger;
 use strict;
 use warnings;
 
+# [[[ INCLUDES ]]]
+# for type-checking via RPerl_SvHROKp(); inside INIT to delay until after 'use MyConfig'
+INIT {
+    use RPerl::HelperFunctions_cpp;
+    RPerl::HelperFunctions_cpp::cpp_load();
+}
+use RPerl::Operation::Expression::Operator::GMPFunctions;
+
 # [[[ EXPORTS ]]]
 use Exporter 'import';
 our @EXPORT = qw(
-    gmp_integer_to_bool gmp_integer_to_unsigned_integer gmp_integer_to_integer gmp_integer_to_number gmp_integer_to_char gmp_integer_to_string
-    bool_to_gmp_integer integer_to_gmp_integer unsigned_integer_to_gmp_integer number_to_gmp_integer char_to_gmp_integer string_to_gmp_integer
+    gmp_integer_to_boolean gmp_integer_to_unsigned_integer gmp_integer_to_integer gmp_integer_to_number gmp_integer_to_character gmp_integer_to_string
+    boolean_to_gmp_integer integer_to_gmp_integer unsigned_integer_to_gmp_integer number_to_gmp_integer character_to_gmp_integer string_to_gmp_integer
 );
 
 # [[[ TYPE-CHECKING ]]]
@@ -54,14 +62,14 @@ our void $gmp_integer_CHECK = sub {
     ( my $possible_gmp_integer ) = @_;
     RPerl::diag("in PERLOPS_PERLTYPES gmp_integer(), top of subroutine\n");
     if (not(defined $possible_gmp_integer)) { croak( "\nERROR EGIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but undefined/null value found,\ncroaking" ); }
-    if (not(RPerl_SvHROKp($possible_gmp_integer))) { croak( "\nERROR EGIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-hashref value found,\ncroaking" ); }
-    my string $classname = class($possible_gmp_integer);
+    if (not(main::RPerl_SvHROKp($possible_gmp_integer))) { croak( "\nERROR EGIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-hashref value found,\ncroaking" ); }
+    my string $classname = main::class($possible_gmp_integer);
     if (not defined $classname) { croak( "\nERROR EGIV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-object (blessed hashref) value found,\ncroaking" ); }
     if (not(UNIVERSAL::isa($possible_gmp_integer, 'Math::BigInt'))) { croak( "\nERROR EGIV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-Math::BigInt-derived object value found,\ncroaking" ); }
 #    if ($classname ne 'gmp_integer') { croak( "\nERROR EGIV04, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-gmp_integer object value found,\ncroaking" ); }
     if (not exists $possible_gmp_integer->{value}) { croak( "\nERROR EGIV05, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry exists,\ncroaking" ); }
     if (not defined $possible_gmp_integer->{value}) { croak( "\nERROR EGIV06, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry defined;\nOR\nERROR EGIV07, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but undefined/null value found,\ncroaking" ); }
-    if (not defined class($possible_gmp_integer->{value})) { croak( "\nERROR EGIV08, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-object (blessed hashref) value found,\ncroaking" ); }
+    if (not defined main::class($possible_gmp_integer->{value})) { croak( "\nERROR EGIV08, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-object (blessed hashref) value found,\ncroaking" ); }
     if (not(UNIVERSAL::isa($possible_gmp_integer->{value}, 'Math::BigInt::GMP'))) { croak( "\nERROR EGIV09, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-Math::BigInt::GMP object value found,\ncroaking" ); }
     RPerl::diag("in PERLOPS_PERLTYPES gmp_integer(), bottom of subroutine\n");
 };
@@ -70,23 +78,26 @@ our void $gmp_integer_CHECKTRACE = sub {
     ( my $possible_gmp_integer, my $variable_name, my $subroutine_name ) = @_;
     RPerl::diag("in PERLOPS_PERLTYPES gmp_integer_CHECKTRACE(), top of subroutine\n");
     if (not(defined $possible_gmp_integer)) { croak( "\nERROR EGIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but undefined/null value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
-    if (not(RPerl_SvHROKp($possible_gmp_integer))) { croak( "\nERROR EGIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-hashref value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
-    my string $classname = class($possible_gmp_integer);
+    if (not(main::RPerl_SvHROKp($possible_gmp_integer))) { croak( "\nERROR EGIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-hashref value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
+    my string $classname = main::class($possible_gmp_integer);
     if (not defined $classname) { croak( "\nERROR EGIV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-object (blessed hashref) value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
     if (not(UNIVERSAL::isa($possible_gmp_integer, 'Math::BigInt'))) { croak( "\nERROR EGIV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-Math::BigInt-derived object value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
 #    if ($classname ne 'gmp_integer') { croak( "\nERROR EGIV04, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-gmp_integer object value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
     if (not exists $possible_gmp_integer->{value}) { croak( "\nERROR EGIV05, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry exists,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
     if (not defined $possible_gmp_integer->{value}) { croak( "\nERROR EGIV06, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry defined;\nOR\nERROR EGIV07, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but undefined/null value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
-    if (not defined class($possible_gmp_integer->{value})) { croak( "\nERROR EGIV08, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-object (blessed hashref) value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
+    if (not defined main::class($possible_gmp_integer->{value})) { croak( "\nERROR EGIV08, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-object (blessed hashref) value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
     if (not(UNIVERSAL::isa($possible_gmp_integer->{value}, 'Math::BigInt::GMP'))) { croak( "\nERROR EGIV09, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-Math::BigInt::GMP object value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
     RPerl::diag("in PERLOPS_PERLTYPES gmp_integer_CHECKTRACE(), bottom of subroutine\n");
 };
 
-# [[[ BOOLIFY ]]]
-#our bool $gmp_integer_to_bool = sub {
-sub gmp_integer_to_bool {
+# [[[ BOOLEANIFY ]]]
+#our boolean $gmp_integer_to_boolean = sub {
+sub gmp_integer_to_boolean {
     ( my gmp_integer $input_gmp_integer ) = @_;
-    if   ( $input_gmp_integer->is_zero() ) { return 0; }
+#    gmp_integer_CHECK($input_gmp_integer);
+    gmp_integer_CHECKTRACE($input_gmp_integer, '$input_gmp_integer', 'gmp_integer_to_boolean()');
+    if (gmp_get_signed_integer($input_gmp_integer) == 0) { return 0; }  # DEV NOTE: this one matches the C++ code more closely
+#    if   ( $input_gmp_integer->is_zero() ) { return 0; }  # but this one may be faster?
     else                         { return 1; }
 }
 
@@ -111,9 +122,9 @@ sub gmp_integer_to_number {
     return $input_gmp_integer->numify() * 1.0;
 }
 
-# [[[ CHARIFY ]]]
-#our char $gmp_integer_to_char = sub {
-sub gmp_integer_to_char {
+# [[[ CHARACTERIFY ]]]
+#our character $gmp_integer_to_character = sub {
+sub gmp_integer_to_character {
     ( my gmp_integer $input_gmp_integer ) = @_;
     my string $tmp_string = gmp_integer_to_string($input_gmp_integer);
     if   ( $tmp_string eq q{} ) { return q{}; }
@@ -147,10 +158,10 @@ sub gmp_integer_to_string {
 # DEV NOTE: keep all these *_to_gmp_integer() conversion subroutines here instead of spread throughout the other RPerl/DataType/*.pm files,
 # so that loading will all be controlled by the 'use rperlgmp;' directive
 
-#our gmp_integer $bool_to_gmp_integer = sub {
-sub bool_to_gmp_integer {
-    ( my bool $input_bool ) = @_;
-    my gmp_integer $output_gmp_integer = gmp_integer->new($input_bool);
+#our gmp_integer $boolean_to_gmp_integer = sub {
+sub boolean_to_gmp_integer {
+    ( my boolean $input_boolean ) = @_;
+    my gmp_integer $output_gmp_integer = gmp_integer->new($input_boolean);
     return $output_gmp_integer;
 }
 
@@ -175,10 +186,10 @@ sub number_to_gmp_integer {
     return $output_gmp_integer;
 }
 
-#our gmp_integer $char_to_gmp_integer = sub {
-sub char_to_gmp_integer {
-    ( my char $input_char ) = @_;
-    my gmp_integer $output_gmp_integer = gmp_integer->new(char_to_integer($input_char));
+#our gmp_integer $character_to_gmp_integer = sub {
+sub character_to_gmp_integer {
+    ( my character $input_character ) = @_;
+    my gmp_integer $output_gmp_integer = gmp_integer->new(character_to_integer($input_character));
     return $output_gmp_integer;
 }
 

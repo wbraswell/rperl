@@ -2,7 +2,7 @@
 #!/usr/bin/perl  
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECVPAPC02' >>>
+# <<< PARSE_ERROR: 'ERROR ECOPAPC02' >>>
 # <<< PARSE_ERROR: 'Perl::Critic::Policy::Modules::RequireEndWithOne' >>>
 
 # [[[ HEADER ]]]

@@ -28,7 +28,7 @@ use File::Basename;
 sub new {
     no strict;
     if ( not defined ${ $_[0] . '::properties' } ) {
-        croak 'ERROR ECVOOCO00, SOURCE CODE, OO OBJECT CONSTRUCTOR: Undefined hashref $properties for class ' . $_[0] . ', croaking' . "\n";
+        croak 'ERROR ECOOOCO00, SOURCE CODE, OO OBJECT CONSTRUCTOR: Undefined hashref $properties for class ' . $_[0] . ', croaking' . "\n";
     }
     return bless { %{ ${ $_[0] . '::properties' } } }, $_[0];
 }
@@ -58,20 +58,20 @@ INIT {
     #    RPerl::diag('in Class.pm INIT block, have $rperlnamespaces_generated::CORE =' . "\n" . Dumper($rperlnamespaces_generated::CORE) . "\n");
 
     my $module_filename_long;           # string
-    my $use_rperl;                      # bool
-    my $inside_package;                 # bool
+    my $use_rperl;                      # boolean
+    my $inside_package;                 # boolean
     my $package_name;                   # string
     my $package_name_underscores;       # string
     my $namespace_root;                 # string
     my $object_properties;              # hashref
     my $object_properties_string;       # string
     my $object_properties_types;        # hashref
-    my $inside_object_properties;       # bool
+    my $inside_object_properties;       # boolean
     my $subroutine_type;                # string
     my $subroutine_name;                # string
     my $CHECK;                          # string
-    my $inside_subroutine;              # bool
-    my $inside_subroutine_arguments;    # bool
+    my $inside_subroutine;              # boolean
+    my $inside_subroutine_arguments;    # boolean
     my $subroutine_arguments_line;      # string
 
     #	RPerl::diag(q{in Class.pm INIT block, have $PROGRAM_NAME = '} . $PROGRAM_NAME . "'\n");
@@ -694,7 +694,7 @@ sub save_object_properties_types {
 
         while ( ( defined $object_property_key ) and ( defined $object_property_type ) and ( defined $object_property_inner_type_name ) ) {
             if ( $object_property_key ne $object_property_inner_type_name ) {
-                die 'ERROR ECVGEPPRP17, CODE GENERATOR, PURE PERL TO RPERL: redundant name mismatch, OO properties key '
+                die 'ERROR ECOGEPPRP17, CODE GENERATOR, PURE PERL TO RPERL: redundant name mismatch, OO properties key '
                     . $object_property_key
                     . ' is different than inner type name '
                     . $object_property_inner_type_name
@@ -763,7 +763,7 @@ sub activate_subroutine {
         #        RPerl::diag( "in Class::activate_subroutine(), $subroutine_name is a non-method subroutine\n" );
         if ( eval( 'defined(&main::' . $subroutine_name . ')' ) ) {
             croak
-                "ERROR ECVPR00, Pre-Processor: Attempt by package '$package_name' to re-define shared global subroutine '$subroutine_name', please re-name your subroutine or make it a method, croaking";
+                "ERROR ECOPR00, Pre-Processor: Attempt by package '$package_name' to re-define shared global subroutine '$subroutine_name', please re-name your subroutine or make it a method, croaking";
         }
 
         # DEV NOTE: must load into both main:: and $package_name:: namespaces,

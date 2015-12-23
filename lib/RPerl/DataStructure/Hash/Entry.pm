@@ -43,14 +43,14 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             $key_name = $key->{children}->[0]->{children}->[0];
             $key_name =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
             if ($key_name !~ /^[a-z]/) {
-                die 'ERROR ECVGEASRP22, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid hash key ' . q{'}
+                die 'ERROR ECOGEASRP22, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid hash key ' . q{'}
                     . $key_name . q{'}
                     . ' does not start with a lowercase letter a-z, dying' . "\n";
             }
             $rperl_source_group->{PMC} .= $key_name . q{ };
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( q{ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '}
+            die RPerl::Parser::rperl_rule__replace( q{ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '}
                     . ($key_class)
                     . q{' found where VarOrLitOrOpStrOrWord_228, VarOrLitOrOpStrOrWord_229, or VarOrLitOrOpStrOrWord_230 expected, dying} )
                 . "\n";
@@ -60,7 +60,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             my string $type_inner_name = $type_inner_optional->{children}->[0]->{children}->[3]->{children}->[0];
             $type_inner_name =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
             if ( $type_inner_name !~ /$key_name$/xms ) {
-                die 'ERROR ECVGEASRP21, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
+                die 'ERROR ECOGEASRP21, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
                     . $type_inner_name . q{'}
                     . ' does not end with OO properties or hash key ' . q{'}
                     . $key_name . q{'}
@@ -85,7 +85,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         $rperl_source_group->{PMC} .= $env . "\n";
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
                 . ' found where HashEntry_203 or HashEntry_205 expected, dying' )
             . "\n";
@@ -129,14 +129,14 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             $key_name = $key->{children}->[0]->{children}->[0];
             $key_name =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
             if ($key_name !~ /^[a-z]/) {
-                die 'ERROR ECVGEASCP22, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid hash key ' . q{'}
+                die 'ERROR ECOGEASCP22, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid hash key ' . q{'}
                     . $key_name . q{'}
                     . ' does not start with a lowercase letter a-z, dying' . "\n";
             }
             $cpp_source_group->{CPP} .= q{"} . $key_name . q{" };
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( q{ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '}
+            die RPerl::Parser::rperl_rule__replace( q{ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '}
                     . ($key_class)
                     . q{' found where VarOrLitOrOpStrOrWord_228, VarOrLitOrOpStrOrWord_229, or VarOrLitOrOpStrOrWord_230 expected, dying} )
                 . "\n";
@@ -146,7 +146,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             my string $type_inner_name = $type_inner_optional->{children}->[0]->{children}->[3]->{children}->[0];
             $type_inner_name =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
             if ( $type_inner_name !~ /$key_name$/xms ) {
-                die 'ERROR ECVGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
+                die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
                     . $type_inner_name . q{'}
                     . ' does not end with OO properties or hash key ' . q{'}
                     . $key_name . q{'}
@@ -168,7 +168,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $cpp_source_group->{CPP} .= q{// <<< RP::DS::H::E __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>} . "\n";
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . $self_class
                 . ' found where HashEntry_203 or HashEntry_205 expected, dying' )
             . "\n";

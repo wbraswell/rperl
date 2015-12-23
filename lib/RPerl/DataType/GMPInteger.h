@@ -24,6 +24,10 @@ typedef std::unordered_map<string, gmp_integer_ptr>::iterator gmp_integer_hashre
 
 // [[[ PRE-DECLARED TYPEDEFS ]]]
 // DEV NOTE, CORRELATION #rp12: basic data types must be wholly independent of one another, to avoid possible weird redefining or undefining of subroutine errors
+# ifndef __CPP__INCLUDED__RPerl__DataType__Boolean_h__typedefs
+#define __CPP__INCLUDED__RPerl__DataType__Boolean_h__typedefs 1
+typedef bool boolean;
+# endif
 # ifndef __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_h__typedefs 1
 typedef unsigned int unsigned_integer;
@@ -35,6 +39,10 @@ typedef int integer;
 # ifndef __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs 1
 typedef double number;
+# endif
+# ifndef __CPP__INCLUDED__RPerl__DataType__Character_h__typedefs
+#define __CPP__INCLUDED__RPerl__DataType__Character_h__typedefs 1
+typedef char character;
 # endif
 # ifndef __CPP__INCLUDED__RPerl__DataType__String_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__String_h__typedefs 1
@@ -69,11 +77,11 @@ gmp_integer_rawptr sv_to_gmp_integer_rawptr(SV *input_sv);
 //void XS_pack_gmp_integer_rawptr(SV* output_sv, gmp_integer_rawptr input_gmp_integer_rawptr);
 # endif
 
-// [[[ BOOLIFY ]]]
+// [[[ BOOLEANIFY ]]]
 # ifdef __PERL__TYPES
-SV* gmp_integer_to_bool(SV* input_gmp_integer);
+SV* gmp_integer_to_boolean(SV* input_gmp_integer);
 # elif defined __CPP__TYPES
-bool gmp_integer_to_bool(gmp_integer input_gmp_integer);
+boolean gmp_integer_to_boolean(gmp_integer input_gmp_integer);
 # endif
 
 // [[[ UNSIGNED INTEGERIFY ]]]
@@ -97,11 +105,11 @@ SV* gmp_integer_to_number(SV* input_gmp_integer);
 number gmp_integer_to_number(gmp_integer input_gmp_integer);
 # endif
 
-// [[[ CHARIFY ]]]
+// [[[ CHARACTERIFY ]]]
 # ifdef __PERL__TYPES
-SV* gmp_integer_to_char(SV* input_gmp_integer);
+SV* gmp_integer_to_character(SV* input_gmp_integer);
 # elif defined __CPP__TYPES
-char gmp_integer_to_char(gmp_integer input_gmp_integer);
+character gmp_integer_to_character(gmp_integer input_gmp_integer);
 # endif
 
 // [[[ STRINGIFY ]]]

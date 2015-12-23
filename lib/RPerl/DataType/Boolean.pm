@@ -15,9 +15,9 @@ use RPerl::DataType::Scalar;
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 
 # [[[ SUB-TYPES ]]]
-# a bool is a binary boolean value, the only valid values are 0 (false) or 1 (true)
+# a boolean is a binary boolean value, the only valid values are 0 (false) or 1 (true)
 package  # hide from PAUSE indexing
-    bool;
+    boolean;
 use strict;
 use warnings;
 use parent qw(RPerl::DataType::Boolean);
@@ -32,7 +32,7 @@ package    # hide from PAUSE indexing
 package    # hide from PAUSE indexing
     number;
 package    # hide from PAUSE indexing
-    char;
+    character;
 package    # hide from PAUSE indexing
     string;
 
@@ -43,115 +43,86 @@ use warnings;
 
 # [[[ EXPORTS ]]]
 use Exporter 'import';
-our @EXPORT = qw(bool_to_unsigned_integer bool_to_integer bool_to_number bool_to_char bool_to_string);
-
-# NEED UPGRADE: using SvIOKp() integer type check for boolean type check, need implement SvBOKp() and full bool semantics
+our @EXPORT = qw(boolean_to_unsigned_integer boolean_to_integer boolean_to_number boolean_to_character boolean_to_string);
 
 # [[[ TYPE-CHECKING ]]]
-our void $bool_CHECK = sub {
-    ( my $possible_bool ) = @_;
-    if ( not( defined $possible_bool ) ) {
-        croak(
-            "\nERROR EIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nbool value expected but undefined/null value found,\ncroaking"
-        );
-    }
-    if ( not( main::RPerl_SvIOKp($possible_bool) ) ) {
-        croak(
-            "\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nbool value expected but non-bool value found,\ncroaking"
-        );
-    }
+our void $boolean_CHECK = sub {
+    ( my $possible_boolean ) = @_;
+    if ( not( defined $possible_boolean ) ) { croak( "\nERROR EBV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nboolean value expected but undefined/null value found,\ncroaking" ); }
+    if ( not( main::RPerl_SvBOKp($possible_boolean) ) ) { croak( "\nERROR EBV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nboolean value expected but non-boolean value found,\ncroaking" ); }
 };
-our void $bool_CHECKTRACE = sub {
-    ( my $possible_bool, my $variable_name, my $subroutine_name ) = @_;
-    if ( not( defined $possible_bool ) ) {
-        croak(
-            "\nERROR EIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nbool value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
-    }
-    if ( not( main::RPerl_SvIOKp($possible_bool) ) ) {
-        croak(
-            "\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nbool value expected but non-bool value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
-    }
+our void $boolean_CHECKTRACE = sub {
+    ( my $possible_boolean, my $variable_name, my $subroutine_name ) = @_;
+    if ( not( defined $possible_boolean ) ) { croak( "\nERROR EBV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nboolean value expected but undefined/null value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
+    if ( not( main::RPerl_SvBOKp($possible_boolean) ) ) { croak( "\nERROR EBV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nboolean value expected but non-boolean value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
 };
 
 # [[[ UNSIGNED INTEGERIFY ]]]
-#our unsigned_integer $bool_to_unsigned_integer = sub {
-sub bool_to_unsigned_integer {
-    (my bool $input_bool) = @_;
-    return $input_bool;
+#our unsigned_integer $boolean_to_unsigned_integer = sub {
+sub boolean_to_unsigned_integer {
+    (my boolean $input_boolean) = @_;
+#    boolean_CHECK($input_boolean);
+    boolean_CHECKTRACE( $input_boolean, '$input_boolean', 'boolean_to_unsigned_integer()' );
+    return $input_boolean;
 }
 
 # [[[ INTEGERIFY ]]]
-#our integer $bool_to_integer = sub {
-sub bool_to_integer {
-    (my bool $input_bool) = @_;
-    return $input_bool;
+#our integer $boolean_to_integer = sub {
+sub boolean_to_integer {
+    (my boolean $input_boolean) = @_;
+#    boolean_CHECK($input_boolean);
+    boolean_CHECKTRACE( $input_boolean, '$input_boolean', 'boolean_to_integer()' );
+    return $input_boolean;
 }
 
 # [[[ NUMBERIFY ]]]
-#our number $bool_to_number = sub {
-sub bool_to_number {
-    (my bool $input_bool) = @_;
-    return $input_bool * 1.0;
+#our number $boolean_to_number = sub {
+sub boolean_to_number {
+    (my boolean $input_boolean) = @_;
+#    boolean_CHECK($input_boolean);
+    boolean_CHECKTRACE( $input_boolean, '$input_boolean', 'boolean_to_number()' );
+    return $input_boolean * 1.0;
 }
 
-# [[[ CHARIFY ]]]
-#our char $bool_to_char = sub {
-sub bool_to_char {
-    (my bool $input_bool) = @_;
-    my string $tmp_string = bool_to_string($input_bool);
-    if ($tmp_string eq q{}) { return q{}; }
-    else { return substr $tmp_string, 0, 1; }
+# [[[ CHARACTERIFY ]]]
+#our character $boolean_to_character = sub {
+sub boolean_to_character {
+    (my boolean $input_boolean) = @_;
+#    boolean_CHECK($input_boolean);
+    boolean_CHECKTRACE( $input_boolean, '$input_boolean', 'boolean_to_character()' );
+    my string $tmp_string = boolean_to_string($input_boolean);
+    return substr $tmp_string, 0, 1;
 }
 
 # [[[ STRINGIFY ]]]
-#our string $bool_to_string = sub {
-sub bool_to_string {
-    ( my $input_bool ) = @_;
-
-    #    bool_CHECK($input_bool);
-    bool_CHECKTRACE( $input_bool, '$input_bool',
-        'bool_to_string()' );
-
-#    RPerl::diag("in PERLOPS_PERLTYPES bool_to_string(), received \$input_bool = $input_bool\n");
-#    RPerl::diag("in PERLOPS_PERLTYPES bool_to_string()...\n");
-
-    # DEV NOTE: disable old stringify w/out underscores
-    #    return "$input_bool";
-
-    my bool $is_negative = 0;
-    if ( $input_bool < 0 ) { $is_negative = 1; }
-    my string $retval = reverse "$input_bool";
-    if ($is_negative) { chop $retval; }    # remove negative sign
-    $retval =~ s/(\d{3})/$1_/gxms;
-    if ( ( substr $retval, -1, 1 ) eq '_' ) { chop $retval; }
-    $retval = reverse $retval;
-
-    if ($is_negative) { $retval = q{-} . $retval; }
-
-#    RPerl::diag('in PERLOPS_PERLTYPES bool_to_string(), have $retval = ' . q{'} . $retval . q{'} . "\n");
-    return $retval;
+#our string $boolean_to_string = sub {
+sub boolean_to_string {
+    ( my $input_boolean ) = @_;
+#    boolean_CHECK($input_boolean);
+    boolean_CHECKTRACE( $input_boolean, '$input_boolean', 'boolean_to_string()' );
+    return "$input_boolean";
 }
 
 # [[[ TYPE TESTING ]]]
-our bool $bool__typetest0 = sub {
-    my bool $retval
-        = ( 21 / 7 ) + main::RPerl__DataType__Boolean__MODE_ID(); # return bool (not number) value, don't do (22 / 7) etc.
-
-#    RPerl::diag("in PERLOPS_PERLTYPES bool__typetest0(), have \$retval = $retval\n");
-    return ($retval);
+our boolean $boolean__typetest0 = sub {
+    # DEV NOTE, CORRELATION #rp12: maintain independence from Integer data type, re-implement integer_to_boolean() here
+#    my boolean $retval = integer_to_boolean(main::RPerl__DataType__Boolean__MODE_ID());
+    my boolean $retval = 1;
+    if (main::RPerl__DataType__Boolean__MODE_ID() == 0) { $retval = 0; }
+#    RPerl::diag("in PERLOPS_PERLTYPES boolean__typetest0(), have \$retval = $retval\n");
+    return $retval;
 };
-our bool $bool__typetest1 = sub {
-    ( my bool $lucky_bool ) = @_;
-
-    #    bool_CHECK($lucky_bool);
-    bool_CHECKTRACE( $lucky_bool, '$lucky_bool',
-        'bool__typetest1()' );
-
-#    RPerl::diag('in PERLOPS_PERLTYPES bool__typetest1(), received $lucky_bool = ' . bool_to_string($lucky_bool) . "\n");
-    return (
-        ( $lucky_bool * 2 ) + main::RPerl__DataType__Boolean__MODE_ID() );
+our boolean $boolean__typetest1 = sub {
+    ( my boolean $lucky_boolean ) = @_;
+#    boolean_CHECK($lucky_boolean);
+    boolean_CHECKTRACE( $lucky_boolean, '$lucky_boolean', 'boolean__typetest1()' );
+#    RPerl::diag('in PERLOPS_PERLTYPES boolean__typetest1(), received $lucky_boolean = ' . boolean_to_string($lucky_boolean) . "\n");
+    # DEV NOTE, CORRELATION #rp12: maintain independence from Integer data type, re-implement integer_to_boolean() here
+    my boolean $retval = 1;
+    if (($lucky_boolean + main::RPerl__DataType__Boolean__MODE_ID()) == 0) { $retval = 0; }
+#    RPerl::diag("in PERLOPS_PERLTYPES boolean__typetest1(), have \$retval = $retval\n");
+    return $retval;
+#    return integer_to_boolean( $lucky_boolean + main::RPerl__DataType__Boolean__MODE_ID() );
 };
 
 1;  # end of class

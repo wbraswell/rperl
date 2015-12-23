@@ -87,14 +87,14 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my string_hashref $cpp_source_subgroup;
     my string_hashref $cpp_source_subgroup_saved;
     my string $package_name_underscores;  # get from Header to Class or Package
-    my bool $header_started = 0;
+    my boolean $header_started = 0;
  
     foreach my object $header_or_module (@{$modules_and_headers}) {
 #        RPerl::diag('in Module->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $header_or_module = ' . "\n" . RPerl::Parser::rperl_ast__dump($header_or_module) . "\n\n");
         # C++ Module::Header wraps around Module, must call both *generate_begin*() and *generate_end*()
         if ((ref $header_or_module) eq 'ModuleHeader_23') {
             if ($header_started) {
-                die 'ERROR ECVGEASCP06, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: ModuleHeader found without first finding Module for previous ModuleHeader, dying' . "\n";
+                die 'ERROR ECOGEASCP06, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: ModuleHeader found without first finding Module for previous ModuleHeader, dying' . "\n";
             }
             else {
                 $header_started = 1;
@@ -112,12 +112,12 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 $header_started = 0;
             }
             else {
-                die 'ERROR ECVGEASCP50, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: Module found without first finding ModuleHeader, dying' . "\n";
+                die 'ERROR ECOGEASCP50, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: Module found without first finding ModuleHeader, dying' . "\n";
             }
         }
         else {
             die RPerl::Parser::rperl_rule__replace(
-                'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: grammar rule '
+                'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: grammar rule '
                     . ( ref $header_or_module )
                     . ' found where ModuleHeader_23, Module_24, or Module_25 expected, dying' )
                 . "\n";

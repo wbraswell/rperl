@@ -23,7 +23,7 @@ use parent qw(RPerl::DataType::String);
 
 # [[[ PRE-DECLARED TYPES ]]]
 package    # hide from PAUSE indexing
-    bool;
+    boolean;
 package     # hide from PAUSE indexing
     unsigned_integer;
 package     # hide from PAUSE indexing
@@ -33,7 +33,7 @@ package    # hide from PAUSE indexing
 package    # hide from PAUSE indexing
     number;
 package    # hide from PAUSE indexing
-    char;
+    character;
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataType::String;
@@ -45,7 +45,7 @@ use POSIX qw(floor);
 
 # [[[ EXPORTS ]]]
 use Exporter 'import';
-our @EXPORT = qw(string_to_bool string_to_unsigned_integer string_to_integer string_to_number string_to_char string_to_string);
+our @EXPORT = qw(string_to_boolean string_to_unsigned_integer string_to_integer string_to_number string_to_character string_to_string);
 
 # [[[ TYPE CHECKING ]]]
 our void $string_CHECK = sub {
@@ -75,9 +75,9 @@ our void $string_CHECKTRACE = sub {
     }
 };
 
-# [[[ BOOLIFY ]]]
-#our bool $string_to_bool = sub {
-sub string_to_bool {
+# [[[ BOOLEANIFY ]]]
+#our boolean $string_to_boolean = sub {
+sub string_to_boolean {
     (my string $input_string) = @_;
     if (($input_string * 1) == 0) { return 0; }
     else { return 1; }
@@ -109,9 +109,9 @@ sub string_to_number {
     return $input_string * 1.0;
 }
 
-# [[[ CHARIFY ]]]
-#our char $string_to_char = sub {
-sub string_to_char {
+# [[[ CHARACTERIFY ]]]
+#our character $string_to_character = sub {
+sub string_to_character {
     (my string $input_string) = @_;
     if ($input_string eq q{}) { return q{}; }
     else { return substr $input_string, 0, 1; }

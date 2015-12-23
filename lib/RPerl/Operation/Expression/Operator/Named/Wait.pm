@@ -42,28 +42,28 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     }
     elsif ( $operator_named_class eq 'Operator_83' ) { # Operator -> OP01_NAMED SubExpression
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASRP14, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
+            'ERROR ECOGEASRP14, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
                 . $operator_named->{children}->[0]
                 . ' does not accept arguments, dying' )
             . "\n";
     }
     elsif ( $operator_named_class eq 'Operator_84' ) { # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASRP14, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
+            'ERROR ECOGEASRP14, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
                 . $operator_named->{children}->[1]
                 . ' does not accept arguments, dying' )
             . "\n";
     }
     elsif ( $operator_named_class eq 'OperatorVoid_121' ) { # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASRP14, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
+            'ERROR ECOGEASRP14, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
                 . $operator_named->{children}->[0]
                 . ' does not accept arguments, dying' )
             . "\n";
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ($operator_named_class)
                 . ' found where Operation_79, Operator_83, Operator_84, or OperatorVoid_121 expected, dying'
         ) . "\n";

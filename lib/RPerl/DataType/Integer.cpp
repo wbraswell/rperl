@@ -80,7 +80,7 @@ void XS_pack_integer(SV* output_sv, integer input_integer) {
 
 SV* integer_to_unsigned_integer(SV* input_integer) {
 //  integer_CHECK(input_integer);
-    integer_CHECKTRACE(input_integer, "input_integer", "integer_to_string()");
+    integer_CHECKTRACE(input_integer, "input_integer", "integer_to_unsigned_integer()");
     return(input_integer);
 }
 
@@ -137,7 +137,7 @@ string integer_to_string_CPPTYPES(integer input_integer)
     string output_string = output_stream.str();
 //    fprintf(stderr, "in CPPOPS_CPPTYPES integer_to_string_CPPTYPES(), have output_string = %s\n", output_string.c_str());
 
-    bool is_negative = 0;
+    boolean is_negative = 0;
     if (input_integer < 0) { is_negative = 1; }
 
     std::reverse(output_string.begin(), output_string.end());

@@ -45,7 +45,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             my object $arguments       = $arguments_optional->{children}->[0];
             my integer $argument_count = $arguments->length();
             if ( $argument_count > ARGUMENTS_MAX() ) {
-                die 'ERROR ECVGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n"
+                die 'ERROR ECOGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n"
                     . 'Argument count '
                     . $argument_count
                     . ' exceeds maximum argument limit '
@@ -65,7 +65,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my object $arguments       = $operator_void_named->{children}->[1];
         my integer $argument_count = $arguments->length();
         if ( $argument_count > ARGUMENTS_MAX() ) {
-            die 'ERROR ECVGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n"
+            die 'ERROR ECOGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n"
                 . 'Argument count '
                 . $argument_count
                 . ' exceeds maximum argument limit '
@@ -79,7 +79,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         $rperl_source_group->{PMC} .= $operator_void_named->{children}->[2];    # semicolon
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $operator_void_named )
                 . ' found where OperatorVoid_118 or OperatorVoid_120 expected, dying' )
             . "\n";

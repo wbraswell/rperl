@@ -38,7 +38,7 @@ my $test_files = { './lib/RPerl/Algorithm/Sort/Bubble.pm' => undef };
 my string_hashref $modes_argument;
 my hashref_arrayref $output_file_name_groups;
 my string $test_file_reference;
-my bool $perform_diff_check;
+my boolean $perform_diff_check;
 my unknown $eval_return_value;
 my integer $diff_line;
 my integer $number_of_tests_run = 0;

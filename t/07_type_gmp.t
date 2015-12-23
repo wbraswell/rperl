@@ -100,35 +100,59 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
         'main::RPerl__DataType__GMPInteger__MODE_ID() lives'
     );
 
-    # [[[ BOOLIFY TESTS ]]]
-    # [[[ BOOLIFY TESTS ]]]
-    # [[[ BOOLIFY TESTS ]]]
+    # [[[ BOOLEANIFY TESTS ]]]
+    # [[[ BOOLEANIFY TESTS ]]]
+    # [[[ BOOLEANIFY TESTS ]]]
 
     lives_and(                                                    # TGIV000
         sub {
             my gmp_integer $tmp1 = gmp_integer->new();
             gmp_set_signed_integer($tmp1, 0);
-            is( gmp_integer_to_bool($tmp1), 0, q{TGIV000 gmp_integer_to_bool($tmp1==0) returns correct value} );
+            is( gmp_integer_to_boolean($tmp1), 0, q{TGIV000 gmp_integer_to_boolean($tmp1==0) returns correct value} );
         },
-        q{TGIV000 gmp_integer_to_bool($tmp1==0) lives}
+        q{TGIV000 gmp_integer_to_boolean($tmp1==0) lives}
     );
 
     lives_and(                                                    # TGIV001
         sub {
             my gmp_integer $tmp1 = gmp_integer->new();
             gmp_set_signed_integer($tmp1, 1);
-            is( gmp_integer_to_bool($tmp1), 1, q{TGIV001 gmp_integer_to_bool($tmp1==1) returns correct value} );
+            is( gmp_integer_to_boolean($tmp1), 1, q{TGIV001 gmp_integer_to_boolean($tmp1==1) returns correct value} );
         },
-        q{TGIV001 gmp_integer_to_bool($tmp1==1) lives}
+        q{TGIV001 gmp_integer_to_boolean($tmp1==1) lives}
     );
 
     lives_and(                                                    # TGIV001
         sub {
             my gmp_integer $tmp1 = gmp_integer->new();
             gmp_set_signed_integer($tmp1, -1);
-            is( gmp_integer_to_bool($tmp1), 1, q{TGIV001 gmp_integer_to_bool($tmp1==-1) returns correct value} );
+            is( gmp_integer_to_boolean($tmp1), 1, q{TGIV001 gmp_integer_to_boolean($tmp1==-1) returns correct value} );
         },
-        q{TGIV001 gmp_integer_to_bool($tmp1==-1) lives}
+        q{TGIV001 gmp_integer_to_boolean($tmp1==-1) lives}
+    );
+
+    lives_and(                                                    # TGIV001
+        sub {
+            my gmp_integer $tmp1 = gmp_integer->new();
+            gmp_set_signed_integer($tmp1, 1_234_567_890);
+            is( gmp_integer_to_boolean($tmp1), 1, q{TGIV001 gmp_integer_to_boolean($tmp1==1_234_567_890) returns correct value} );
+        },
+        q{TGIV001 gmp_integer_to_boolean($tmp1==1_234_567_890) lives}
+    );
+
+    lives_and(                                                    # TGIV001
+        sub {
+            my gmp_integer $tmp1 = gmp_integer->new();
+            gmp_set_signed_integer($tmp1, -1_234_567_890);
+            is( gmp_integer_to_boolean($tmp1), 1, q{TGIV001 gmp_integer_to_boolean($tmp1==-1_234_567_890) returns correct value} );
+        },
+        q{TGIV001 gmp_integer_to_boolean($tmp1==-1_234_567_890) lives}
+    );
+
+    throws_ok(    # TGIV500
+        sub { gmp_integer_to_boolean() },
+        "/(EGIV00.*$mode_tagline)|(Usage.*gmp_integer_to_boolean)/",    # DEV NOTE: 2 different error messages, RPerl & C
+        q{TGIV500 gmp_integer_to_boolean() throws correct exception}
     );
 
     # [[[ INTEGERIFY TESTS ]]]

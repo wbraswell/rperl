@@ -37,7 +37,7 @@ use parent qw(RPerl::DataType::Number);
 
 # [[[ PRE-DECLARED TYPES ]]]
 package    # hide from PAUSE indexing
-    bool;
+    boolean;
 package    # hide from PAUSE indexing
     unsigned_integer;
 package     # hide from PAUSE indexing
@@ -45,7 +45,7 @@ package     # hide from PAUSE indexing
 package    # hide from PAUSE indexing
     gmp_integer;
 package    # hide from PAUSE indexing
-    char;
+    character;
 package    # hide from PAUSE indexing
     string;
 
@@ -59,7 +59,7 @@ use POSIX qw(floor);
 
 # [[[ EXPORTS ]]]
 use Exporter 'import';
-our @EXPORT = qw(number_to_bool number_to_unsigned_integer number_to_integer number_to_char number_to_string);
+our @EXPORT = qw(number_to_boolean number_to_unsigned_integer number_to_integer number_to_character number_to_string);
 
 # [[[ TYPE-CHECKING ]]]
 our void $number_CHECK = sub {
@@ -95,9 +95,9 @@ our void $number_CHECKTRACE = sub {
     }
 };
 
-# [[[ BOOLIFY ]]]
-#our bool $number_to_bool = sub {
-sub number_to_bool {
+# [[[ BOOLEANIFY ]]]
+#our boolean $number_to_boolean = sub {
+sub number_to_boolean {
     (my number $input_number) = @_;
     if ($input_number == 0) { return 0; }
     else { return 1; }
@@ -117,9 +117,9 @@ sub number_to_integer {
     return floor $input_number;
 }
 
-# [[[ CHARIFY ]]]
-#our char $number_to_char = sub {
-sub number_to_char {
+# [[[ CHARACTERIFY ]]]
+#our character $number_to_character = sub {
+sub number_to_character {
     (my number $input_number) = @_;
     my string $tmp_string = number_to_string($input_number);
     if ($tmp_string eq q{}) { return q{}; }

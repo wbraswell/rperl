@@ -660,7 +660,7 @@ SV* integer_hashref_to_string(SV* input_hv_ref)
     HV* input_hv;
     integer input_hv_num_keys;
     integer i;
-    bool i_is_0 = 1;
+    boolean i_is_0 = 1;
     HE* input_hv_entry;
     SV* input_hv_entry_key;
     string input_hv_entry_key_string;
@@ -729,7 +729,7 @@ SV* number_hashref_to_string(SV* input_hv_ref)
     HV* input_hv;
     integer input_hv_num_keys;
     integer i;
-    bool i_is_0 = 1;
+    boolean i_is_0 = 1;
     HE* input_hv_entry;
     SV* input_hv_entry_key;
     string input_hv_entry_key_string;
@@ -792,7 +792,7 @@ SV* string_hashref_to_string(SV* input_hv_ref)
     HV* input_hv;
     integer input_hv_num_keys;
     integer i;
-    bool i_is_0 = 1;
+    boolean i_is_0 = 1;
     HE* input_hv_entry;
     SV* input_hv_entry_key;
     string input_hv_entry_key_string;
@@ -868,7 +868,7 @@ string integer_hashref_to_string(integer_hashref input_unordered_map)
 
 	ostringstream output_stream;
 	integer_hashref_const_iterator i;
-    bool i_is_0 = 1;
+    boolean i_is_0 = 1;
     string key_string;
     size_t key_string_pos;
 
@@ -913,7 +913,7 @@ string number_hashref_to_string(number_hashref input_unordered_map)
 
 	ostringstream output_stream;
 	number_hashref_const_iterator i;
-    bool i_is_0 = 1;
+    boolean i_is_0 = 1;
     string key_string;
     size_t key_string_pos;
 
@@ -959,7 +959,7 @@ string string_hashref_to_string(string_hashref input_unordered_map)
 
 	string output_string;
 	string_hashref_const_iterator i;
-    bool i_is_0 = 1;
+    boolean i_is_0 = 1;
     string key_string;
     size_t key_string_pos;
     string value_string;

@@ -162,7 +162,7 @@ our string $integer_arrayref_to_string = sub {
     my integer $input_av_length;
     my integer $input_av_element;
     my string $output_sv;
-    my integer $i_is_0 = 1;   # NEED UPGRADE: should be bool type, not integer
+    my integer $i_is_0 = 1;   # NEED UPGRADE: should be boolean type, not integer
 
     @input_av        = @{$input_av_ref};
     $input_av_length = scalar @input_av;
@@ -332,7 +332,7 @@ our string $number_arrayref_to_string = sub {
     my integer $input_av_length;
     my number $input_av_element;
     my string $output_sv;
-    my integer $i_is_0 = 1;   # NEED UPGRADE: should be bool type, not integer
+    my integer $i_is_0 = 1;   # NEED UPGRADE: should be boolean type, not integer
 
     @input_av        = @{$input_av_ref};
     $input_av_length = scalar @input_av;
@@ -396,7 +396,7 @@ our number_arrayref $number_arrayref__typetest1 = sub {
 
 # (ref to array) of chars
 package  # hide from PAUSE indexing
-    char_arrayref;
+    character_arrayref;
 use strict;
 use warnings;
 use parent -norequire, qw(arrayref);
@@ -493,7 +493,7 @@ our string $string_arrayref_to_string = sub {
     my integer $input_av_length;
     my string $input_av_element;
     my string $output_sv;
-    my integer $i_is_0 = 1;   # NEED UPGRADE: should be bool type, not integer
+    my integer $i_is_0 = 1;   # NEED UPGRADE: should be boolean type, not integer
 
     @input_av        = @{$input_av_ref};
     $input_av_length = scalar @input_av;

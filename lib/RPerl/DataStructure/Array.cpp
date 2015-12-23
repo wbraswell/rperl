@@ -395,7 +395,7 @@ SV* integer_arrayref_to_string(SV* input_av_ref)
     integer i;
     SV** input_av_element;
     SV* output_sv = newSV(0);
-    bool i_is_0 = 1;
+    boolean i_is_0 = 1;
 
     input_av = (AV*)SvRV(input_av_ref);
 	input_av_length = av_len(input_av) + 1;
@@ -451,7 +451,7 @@ SV* number_arrayref_to_string(SV* input_av_ref)
     integer i;
     SV** input_av_element;
     SV* output_sv = newSV(0);
-    bool i_is_0 = 1;
+    boolean i_is_0 = 1;
 	ostringstream temp_stream;
 	temp_stream.precision(std::numeric_limits<double>::digits10);
 
@@ -498,7 +498,7 @@ SV* string_arrayref_to_string(SV* input_av_ref)
     string input_av_element_string;
     size_t input_av_element_string_pos;
     SV* output_sv = newSV(0);
-    bool i_is_0 = 1;
+    boolean i_is_0 = 1;
 //	ostringstream temp_stream;
 
 	input_av = (AV*)SvRV(input_av_ref);
@@ -557,7 +557,7 @@ string integer_arrayref_to_string(integer_arrayref input_vector)
 	integer input_vector_length = input_vector.size();
 	integer i;
 	integer input_vector_element;
-    bool i_is_0 = 1;
+    boolean i_is_0 = 1;
 
 //	fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string(), have input_vector_length = %d\n", input_vector_length);
 
@@ -589,7 +589,7 @@ string number_arrayref_to_string(number_arrayref input_vector)
 	integer input_vector_length = input_vector.size();
 	integer i;
 	number input_vector_element;
-    bool i_is_0 = 1;
+    boolean i_is_0 = 1;
 
 //	fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref_to_string(), have input_vector_length = %d\n", input_vector_length);
 
@@ -625,7 +625,7 @@ string string_arrayref_to_string(string_arrayref input_vector)
 	integer i;
 	string input_vector_element;
     size_t input_vector_element_pos;
-    bool i_is_0 = 1;
+    boolean i_is_0 = 1;
 
 //	fprintf(stderr, "in CPPOPS_CPPTYPES string_arrayref_to_string(), have input_vector_length = %d\n", input_vector_length);
 

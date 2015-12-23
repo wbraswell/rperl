@@ -635,7 +635,7 @@ RPerl provides 7 scalar data types:
 
 =over
 
-=item * C<bool>
+=item * C<boolean>
 
 =item * C<unsigned_integer>
 
@@ -673,7 +673,7 @@ A single group of actual numeric digit(s) or quoted string character(s) is calle
 
     q{}         # empty char or string
 
-    0           # bool or integer or number
+    0           # boolean or integer or number
 
 =head2 Section 2.1: Numbers (Numeric Data)
 
@@ -681,7 +681,7 @@ RPerl provides 3 numeric data types:
 
 =over
 
-=item * C<bool>
+=item * C<boolean>
 
 S< >S< >S< >S< >a boolean logic value, either 0 or 1
 
@@ -697,13 +697,13 @@ S< >S< >S< >S< >a floating-point decimal number value, either negative, 0, or po
 
 =head3 Section 2.1.1: Bool Literals
 
-The most memory-efficient numeric literal is C<bool>, which represents a single I<"bit"> (binary digit) of information.  A C<bool> literal may only give the values of exactly 0 or 1.
+The most memory-efficient numeric literal is C<boolean>, which represents a single I<"bit"> (binary digit) of information.  A C<boolean> literal may only give the values of exactly 0 or 1.
 
-    0     # bool
-    1     # bool
-    -1    # not a bool
-    1.5   # not a bool
-    -1.5  # not a bool
+    0     # boolean
+    1     # boolean
+    -1    # not a boolean
+    1.5   # not a boolean
+    -1.5  # not a boolean
 
 =head3 Section 2.1.2: Integer Literals
 
@@ -1096,11 +1096,11 @@ Data types make your code much more readable and much, much faster.  Learn to lo
 
 =head3 Section 2.4.x: Bool Data Type
 
-The most efficient data type is C<bool>, which stores a single I<"bit"> (binary digit) of information.  A C<bool> may only hold the values of exactly 0 or 1.
+The most efficient data type is C<boolean>, which stores a single I<"bit"> (binary digit) of information.  A C<boolean> may only hold the values of exactly 0 or 1.
 
-    my bool $foo = 0;     # fine
-    my bool $bar = 1;     # fine
-    my bool $baz = -1.5;  # error in RPerl, compiled (non-test) modes
+    my boolean $foo = 0;     # fine
+    my boolean $bar = 1;     # fine
+    my boolean $baz = -1.5;  # error in RPerl, compiled (non-test) modes
 
 =head3 Section 2.4.x: Integer Data Type
 
@@ -1128,15 +1128,15 @@ To convert from one data type to another, we use the RPerl type conversion subro
 
 =over
 
-=item * C<bool_to_integer()>
+=item * C<boolean_to_integer()>
 
-=item * C<bool_to_number()>
+=item * C<boolean_to_number()>
 
-=item * C<integer_to_bool()>
+=item * C<integer_to_boolean()>
 
 =item * C<integer_to_number()>
 
-=item * C<number_to_bool()>
+=item * C<number_to_boolean()>
 
 =item * C<number_to_integer()>
 

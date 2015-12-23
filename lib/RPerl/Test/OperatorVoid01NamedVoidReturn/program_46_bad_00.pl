@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< GENERATE_ERROR: 'ERROR ECVGEASRP05' >>>
+# <<< GENERATE_ERROR: 'ERROR ECOGEASRP05' >>>
 # <<< GENERATE_ERROR: 'Attempt to return dereferenced hash' >>>
 
 # [[[ HEADER ]]]

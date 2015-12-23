@@ -57,7 +57,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             my integer $argument_count = $arguments->length();
             if ( $argument_count > ARGUMENTS_MAX() ) {
                 die
-                    'ERROR ECVGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
+                    'ERROR ECOGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
                     . "\n"
                     . 'Argument count '
                     . $argument_count
@@ -76,10 +76,10 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                     $arguments_subexpression = $arguments_subexpression->{children}->[1];
                 }
                 if (( ref $arguments_subexpression ) eq 'SubExpression_139' ) {
-                    die 'ERROR ECVGEASRP04, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying' . "\n";
+                    die 'ERROR ECOGEASRP04, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying' . "\n";
                 }
                 elsif (( ref $arguments_subexpression ) eq 'SubExpression_141' ) {
-                    die 'ERROR ECVGEASRP05, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying' . "\n";
+                    die 'ERROR ECOGEASRP05, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying' . "\n";
                 }
             }
             my string_hashref $rperl_source_subgroup
@@ -97,7 +97,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my integer $argument_count = $arguments->length();
         if ( $argument_count > ARGUMENTS_MAX() ) {
             die
-                'ERROR ECVGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
+                'ERROR ECOGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
                 . "\n"
                 . 'Argument count '
                 . $argument_count
@@ -116,10 +116,10 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 $arguments_subexpression = $arguments_subexpression->{children}->[1];
             }
             if (( ref $arguments_subexpression ) eq 'SubExpression_139' ) {
-                die 'ERROR ECVGEASRP04, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying' . "\n";
+                die 'ERROR ECOGEASRP04, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying' . "\n";
             }
             elsif (( ref $arguments_subexpression ) eq 'SubExpression_141' ) {
-                die 'ERROR ECVGEASRP05, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying' . "\n";
+                die 'ERROR ECOGEASRP05, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying' . "\n";
             }
         }
         my string_hashref $rperl_source_subgroup
@@ -130,7 +130,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $operator_void_named )
                 . ' found where OperatorVoid_118, OperatorVoid_119, or OperatorVoid_120 expected, dying'
         ) . "\n";
@@ -176,7 +176,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             my integer $argument_count = $arguments->length();
             if ( $argument_count > ARGUMENTS_MAX() ) {
                 die
-                    'ERROR ECVGEASCP03, CODE GENERATOR, ABSTRACT SYNTAX TO C++:'
+                    'ERROR ECOGEASCP03, CODE GENERATOR, ABSTRACT SYNTAX TO C++:'
                     . "\n"
                     . 'Argument count '
                     . $argument_count
@@ -195,10 +195,10 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                     $arguments_subexpression = $arguments_subexpression->{children}->[1];
                 }
                 if (( ref $arguments_subexpression ) eq 'SubExpression_139' ) {
-                    die 'ERROR ECVGEASCP04, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying' . "\n";
+                    die 'ERROR ECOGEASCP04, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying' . "\n";
                 }
                 elsif (( ref $arguments_subexpression ) eq 'SubExpression_141' ) {
-                    die 'ERROR ECVGEASCP05, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying' . "\n";
+                    die 'ERROR ECOGEASCP05, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying' . "\n";
                 }
             }
             my string_hashref $cpp_source_subgroup
@@ -217,7 +217,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         my integer $argument_count = $arguments->length();
         if ( $argument_count > ARGUMENTS_MAX() ) {
             die
-                'ERROR ECVGEASCP03, CODE GENERATOR, ABSTRACT SYNTAX TO C++:'
+                'ERROR ECOGEASCP03, CODE GENERATOR, ABSTRACT SYNTAX TO C++:'
                 . "\n"
                 . 'Argument count '
                 . $argument_count
@@ -236,10 +236,10 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 $arguments_subexpression = $arguments_subexpression->{children}->[1];
             }
             if (( ref $arguments_subexpression ) eq 'SubExpression_139' ) {
-                die 'ERROR ECVGEASCP04, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying' . "\n";
+                die 'ERROR ECOGEASCP04, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying' . "\n";
             }
             elsif (( ref $arguments_subexpression ) eq 'SubExpression_141' ) {
-                die 'ERROR ECVGEASCP05, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying' . "\n";
+                die 'ERROR ECOGEASCP05, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying' . "\n";
             }
         }
         my string_hashref $cpp_source_subgroup
@@ -251,7 +251,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . ( ref $operator_void_named )
                 . ' found where OperatorVoid_118, OperatorVoid_119, or OperatorVoid_120 expected, dying'
         ) . "\n";

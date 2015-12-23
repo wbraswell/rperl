@@ -31,7 +31,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             and ( $self->{children}->[1] ne 'eq' )
             and ( $self->{children}->[1] ne 'ne' ) )
         {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP28, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: comparison operator '
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP28, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: comparison operator '
                     . $self->{children}->[1]
                     . ' found where ==, !=, eq, or ne expected, dying' )
                 . "\n";
@@ -45,7 +45,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule ' . $self_class . ' found where Operator_101 expected, dying' )
+            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule ' . $self_class . ' found where Operator_101 expected, dying' )
             . "\n";
     }
 
@@ -80,7 +80,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             $cpp_source_group->{CPP} .= ' != ';    # DEV NOTE: '!=' is an overload for not(std::string::compare())
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP28, CODE GENERATOR, ABSTRACT SYNTAX TO C++: comparison operator '
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP28, CODE GENERATOR, ABSTRACT SYNTAX TO C++: comparison operator '
                     . $self->{children}->[1]
                     . ' found where ==, !=, eq, or ne expected, dying' )
                 . "\n";
@@ -90,7 +90,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule ' . $self_class . ' found where Operator_101 expected, dying' )
+            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule ' . $self_class . ' found where Operator_101 expected, dying' )
             . "\n";
     }
 

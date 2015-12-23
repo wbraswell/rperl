@@ -173,7 +173,7 @@ our string $integer_hashref_to_string = sub {
     #	my integer $input_hv_length;
     my integer $input_hv_entry_value;
     my string $output_sv;
-    my integer $i_is_0 = 1;   # NEED UPGRADE: should be bool type, not integer
+    my integer $i_is_0 = 1;   # NEED UPGRADE: should be boolean type, not integer
 
     %input_hv = %{$input_hv_ref};
 
@@ -367,7 +367,7 @@ our string $number_hashref_to_string = sub {
     #	my integer $input_hv_length;
     my number $input_hv_entry_value;
     my string $output_sv;
-    my integer $i_is_0 = 1;   # NEED UPGRADE: should be bool type, not integer
+    my integer $i_is_0 = 1;   # NEED UPGRADE: should be boolean type, not integer
 
     %input_hv = %{$input_hv_ref};
 
@@ -437,7 +437,7 @@ our number_hashref $number_hashref__typetest1 = sub {
 
 # (ref to hash) of chars
 package  # hide from PAUSE indexing
-    char_hashref;
+    character_hashref;
 use strict;
 use warnings;
 use parent -norequire, qw(hashref);
@@ -550,7 +550,7 @@ our string $string_hashref_to_string = sub {
     #	my integer $input_hv_length;
     my string $input_hv_entry_value;
     my string $output_sv;
-    my integer $i_is_0 = 1;   # NEED UPGRADE: should be bool type, not integer
+    my integer $i_is_0 = 1;   # NEED UPGRADE: should be boolean type, not integer
 
     %input_hv = %{$input_hv_ref};
 

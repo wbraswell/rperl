@@ -43,7 +43,7 @@ our object $arrayref_convert_index_max_to_size = sub {
 #    RPerl::diag( 'in Generator->arrayref_convert_index_max_to_size(), received $subexpression = ' . "\n" . RPerl::Parser::rperl_ast__dump($subexpression) . "\n" );
 
     my object $subexpression_original = $subexpression;
-    my bool $is_modified = 0;
+    my boolean $is_modified = 0;
     my integer $nested_parenthesis = 0;
     
     # look inside nested parenthesis-as-subexpressions, always length 1 so no need to check length
@@ -109,7 +109,7 @@ our object $arrayref_convert_index_max_to_size = sub {
 
 # convert RPerl types to C++ types
 our string $type_convert_perl_to_cpp = sub {
-    ( my string $return_type, my bool $pointerify_classes ) = @_;
+    ( my string $return_type, my boolean $pointerify_classes ) = @_;
 
     #    RPerl::diag('in Generator->type_convert_perl_to_cpp(), received $return_type = ' . $return_type . "\n");
     #    RPerl::diag('in Generator->type_convert_perl_to_cpp(), received $pointerify_classes = ' . $pointerify_classes . "\n");
@@ -134,7 +134,7 @@ our string $type_convert_perl_to_cpp = sub {
 };
 
 # search for dummy source code
-our bool $dummy_source_code_find = sub {
+our boolean $dummy_source_code_find = sub {
     ( my string_hashref $source_group ) = @_;
     foreach my string $suffix_key ( sort keys %{$source_group} ) {
         if ( $source_group->{$suffix_key} =~ /__DUMMY_SOURCE_CODE/xms ) {
@@ -155,11 +155,11 @@ our integer $diff_check_file_vs_string = sub {
     #    RPerl::diag('in Generator->diff_check_file_vs_string(), received $source_string = ' . "\n" . $source_string . "\n\n");
 
     if ( not -f $filename ) {
-        die 'ERROR ECVGEDI00, RPERL GENERATOR, DIFF CHECK: file not found, ' . q{'} . $filename . q{'} . "\n" . ', dying' . "\n";
+        die 'ERROR ECOGEDI00, RPERL GENERATOR, DIFF CHECK: file not found, ' . q{'} . $filename . q{'} . "\n" . ', dying' . "\n";
     }
 
     open my filehandleref $FILE_HANDLE, '<', $filename
-        or die 'ERROR ECVGEDI01, RPERL GENERATOR, DIFF CHECK: Cannot open file ' . $filename . ' for reading,' . $OS_ERROR . ', dying' . "\n";
+        or die 'ERROR ECOGEDI01, RPERL GENERATOR, DIFF CHECK: Cannot open file ' . $filename . ' for reading,' . $OS_ERROR . ', dying' . "\n";
 
     # read in file, strip comments & blank lines
     my string $file_line;
@@ -185,8 +185,8 @@ our integer $diff_check_file_vs_string = sub {
             my string $file_line_tmp = q{};
             my string $current_character;
             my string $next_character;
-            my bool $inside_string = 0;
-            my bool $advance_one   = 0;
+            my boolean $inside_string = 0;
+            my boolean $advance_one   = 0;
             my string $open_quote;
             for my integer $i ( 0 .. ( ( length $file_line ) - 1 ) ) {
                 $current_character = substr $file_line, $i, 1;
@@ -273,7 +273,7 @@ our integer $diff_check_file_vs_string = sub {
     }
 
     close $FILE_HANDLE
-        or die 'ERROR ECVGEDI02, RPERL GENERATOR, DIFF CHECK: Cannot close file ' . $filename . ' after reading,' . $OS_ERROR . ', dying' . "\n";
+        or die 'ERROR ECOGEDI02, RPERL GENERATOR, DIFF CHECK: Cannot close file ' . $filename . ' after reading,' . $OS_ERROR . ', dying' . "\n";
 
     # remove extra blank lines inserted by RPerl generators
     $source_string =~ s/\n\n/\n/gxms;
@@ -297,10 +297,10 @@ our integer $diff_check_file_vs_string = sub {
             stderr      => \$perltidy_stderr_string,
         );
         if ($perltidy_errored) {    # serious error in input parameters, no tidied output
-            die 'ERROR ECVGEDIXX: Perl::Tidy major failure with the following STDERR output, dying' . "\n" . $perltidy_stderr_string . "\n";
+            die 'ERROR ECOGEDIXX: Perl::Tidy major failure with the following STDERR output, dying' . "\n" . $perltidy_stderr_string . "\n";
         }
         elsif ($perltidy_stderr_string) {
-            die 'ERROR ECVGEDIXX: Perl::Tidy minor failure with the following STDERR output, dying' . "\n" . $perltidy_stderr_string . "\n";
+            die 'ERROR ECOGEDIXX: Perl::Tidy minor failure with the following STDERR output, dying' . "\n" . $perltidy_stderr_string . "\n";
         }
 
         # tidy source string
@@ -311,10 +311,10 @@ our integer $diff_check_file_vs_string = sub {
             stderr      => \$perltidy_stderr_string,
         );
         if ($perltidy_errored) {
-            die 'ERROR ECVGEDIXX: Perl::Tidy major failure with the following STDERR output, dying' . "\n" . $perltidy_stderr_string . "\n";
+            die 'ERROR ECOGEDIXX: Perl::Tidy major failure with the following STDERR output, dying' . "\n" . $perltidy_stderr_string . "\n";
         }
         elsif ($perltidy_stderr_string) {
-            die 'ERROR ECVGEDIXX: Perl::Tidy minor failure with the following STDERR output, dying' . "\n" . $perltidy_stderr_string . "\n";
+            die 'ERROR ECOGEDIXX: Perl::Tidy minor failure with the following STDERR output, dying' . "\n" . $perltidy_stderr_string . "\n";
         }
     }
     else {    # $ops eq 'CPP'
@@ -378,10 +378,10 @@ our string_hashref $ast_to_rperl__generate = sub {
     RPerl::verbose('GENERATE:           Generate RPerl syntax...       ');
 
     if ( not( defined $modes->{types} ) ) {
-        die 'ERROR ECVGEMO00, RPERL GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL'} . 'expected but undefined/null value found, dying' . "\n";
+        die 'ERROR ECOGEMO00, RPERL GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL'} . 'expected but undefined/null value found, dying' . "\n";
     }
     if ( not( $modes->{types} eq 'PERL' ) ) {
-        die 'ERROR ECVGEMO01, RPERL GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL'} . 'expected but non-matching value found, dying' . "\n";
+        die 'ERROR ECOGEMO01, RPERL GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL'} . 'expected but non-matching value found, dying' . "\n";
     }
 
     grammar_rules__map();
@@ -404,10 +404,10 @@ our string_hashref $ast_to_cpp__generate = sub {
     RPerl::verbose('GENERATE:           Generate   C++ syntax...       ');
 
     if ( not( defined $modes->{types} ) ) {
-        die 'ERROR ECVGEMO02, C++ GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL' or 'CPP'} . 'expected but undefined/null value found, dying' . "\n";
+        die 'ERROR ECOGEMO02, C++ GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL' or 'CPP'} . 'expected but undefined/null value found, dying' . "\n";
     }
     if ( not( ( $modes->{types} eq 'PERL' ) or ( $modes->{types} eq 'CPP' ) ) ) {
-        die 'ERROR ECVGEMO03, C++ GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL' or 'CPP'} . 'expected but non-matching value found, dying' . "\n";
+        die 'ERROR ECOGEMO03, C++ GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL' or 'CPP'} . 'expected but non-matching value found, dying' . "\n";
     }
 
     grammar_rules__map();
@@ -445,7 +445,7 @@ our void $source_group_append = sub {
                 $type_1 = ref $rperl_source_group_1->{$suffix_key};
                 if ($type_1 eq q{}) { $type_1 = 'SCALAR'; }
                 if ($type_1 ne $type_2) {
-                    die 'ERROR ECVGE00, GENERATOR: source group entries type mismatch, ' . q{'} . $type_1 . q{'} . ' is different than ' . q{'} . $type_2 . q{'} . ', dying' . "\n";
+                    die 'ERROR ECOGE00, GENERATOR: source group entries type mismatch, ' . q{'} . $type_1 . q{'} . ' is different than ' . q{'} . $type_2 . q{'} . ', dying' . "\n";
                 }
             }
             else { $type_1 = undef; }

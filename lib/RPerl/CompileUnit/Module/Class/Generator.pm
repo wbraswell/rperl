@@ -38,7 +38,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     }
 
     if ( ($self_class) ne 'Class_61' ) {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ($self_class)
                 . ' found where Module_25 or Class_61 expected, dying' )
             . "\n";
@@ -130,7 +130,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         $property_key = $property_0->{children}->[0]->{children}->[0];
         $property_key =~ s/^(\w+)\s*$/$1/gxms;    # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
         if ( $property_key !~ /^[a-z]/ ) {
-            die 'ERROR ECVGEASRP23, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid OO properties name (hash key) ' . q{'}
+            die 'ERROR ECOGEASRP23, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid OO properties name (hash key) ' . q{'}
                 . $property_key . q{'}
                 . ' does not start with a lowercase letter a-z, dying' . "\n";
         }
@@ -142,7 +142,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         # DEV NOTE: we can do error checking once here instead of twice for TypeInnerProperties_223 & TypeInnerProperties_224 below
         # because they both have OpStringOrWord as sub-element 3, grabbed as $property_name above
         if ( $property_name ne $property_key ) {
-            die 'ERROR ECVGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
+            die 'ERROR ECOGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
                 . $property_name . q{'}
                 . ' does not equal OO properties key ' . q{'}
                 . $property_key . q{'}
@@ -196,7 +196,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             $rperl_source_group->{PMC} .= $property_arrayref_rightbracket . q{ } . $property_assign . q{ } . $property_subexpression_string;
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                     . ( ref $self )
                     . ' found where TypeInnerProperties_223 or TypeInnerProperties_224 expected, dying' )
                 . "\n";
@@ -210,7 +210,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 $property_key = $property->{children}->[0]->{children}->[0];
                 $property_key =~ s/^(\w+)\s*$/$1/gxms;              # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
                 if ( $property_key !~ /^[a-z]/ ) {
-                    die 'ERROR ECVGEASRP23, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid OO properties name (hash key) ' . q{'}
+                    die 'ERROR ECOGEASRP23, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid OO properties name (hash key) ' . q{'}
                         . $property_key . q{'}
                         . ' does not start with a lowercase letter a-z, dying' . "\n";
                 }
@@ -220,7 +220,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 $property_name =~ s/^(\w+)\s*$/$1/gxms;             # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
 
                 if ( $property_name ne $property_key ) {
-                    die 'ERROR ECVGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
+                    die 'ERROR ECOGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
                         . $property_name . q{'}
                         . ' does not equal OO properties key ' . q{'}
                         . $property_key . q{'}
@@ -274,7 +274,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                     $rperl_source_group->{PMC} .= $property_arrayref_rightbracket . q{ } . $property_assign . q{ } . $property_subexpression_string;
                 }
                 else {
-                    die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+                    die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                             . ( ref $self )
                             . ' found where TypeInnerProperties_223 or TypeInnerProperties_224 expected, dying' )
                         . "\n";
@@ -347,7 +347,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     }
 
     if ( ($self_class) ne 'Class_61' ) {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: grammar rule '
                 . ($self_class)
                 . ' found where Module_25 or Class_61 expected, dying' )
             . "\n";
@@ -482,7 +482,7 @@ EOL
         my string $property_key = $property_0->{children}->[0]->{children}->[0];
         $property_key =~ s/^(\w+)\s*$/$1/gxms;    # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
         if ( $property_key !~ /^[a-z]/ ) {
-            die 'ERROR ECVGEASCP23, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid OO properties name (hash key) ' . q{'}
+            die 'ERROR ECOGEASCP23, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid OO properties name (hash key) ' . q{'}
                 . $property_key . q{'}
                 . ' does not start with a lowercase letter a-z, dying' . "\n";
         }
@@ -496,7 +496,7 @@ EOL
         # DEV NOTE: we can do error checking once here instead of twice for TypeInnerProperties_223 & TypeInnerProperties_224 below
         # because they both have OpStringOrWord as sub-element 3, grabbed as $property_name above
         if ( $property_name ne $property_key ) {
-            die 'ERROR ECVGEASCP20, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
+            die 'ERROR ECOGEASCP20, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
                 . $property_name . q{'}
                 . ' does not equal OO properties key ' . q{'}
                 . $property_key . q{'}
@@ -515,7 +515,7 @@ EOL
             $property_arrayref_index_max = $property_type_inner->{children}->[5];
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                     . ( ref $self )
                     . ' found where TypeInnerProperties_223 or TypeInnerProperties_224 expected, dying' )
                 . "\n";
@@ -528,7 +528,7 @@ EOL
 #        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property 0, have $property_arrayref_index_max = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_arrayref_index_max) . "\n" );
 
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key} ) {
-            die 'ERROR ECVGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: OO property '
+            die 'ERROR ECOGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: OO property '
                 . $property_key
                 . ' already declared in this scope, namespace '
                 . $modes->{_symbol_table}->{_namespace}
@@ -583,7 +583,7 @@ EOL
             $property_key = $property->{children}->[0]->{children}->[0];
             $property_key =~ s/^(\w+)\s*$/$1/gxms;      # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
             if ( $property_key !~ /^[a-z]/ ) {
-                die 'ERROR ECVGEASCP23, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid OO properties name (hash key) ' . q{'}
+                die 'ERROR ECOGEASCP23, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid OO properties name (hash key) ' . q{'}
                     . $property_key . q{'}
                     . ' does not start with a lowercase letter a-z, dying' . "\n";
             }
@@ -594,7 +594,7 @@ EOL
             # DEV NOTE: we can do error checking once here instead of twice for TypeInnerProperties_223 & TypeInnerProperties_224 below
             # because they both have OpStringOrWord as sub-element 3, grabbed as $property_name above
             if ( $property_name ne $property_key ) {
-                die 'ERROR ECVGEASCP20, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
+                die 'ERROR ECOGEASCP20, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
                     . $property_name . q{'}
                     . ' does not equal OO properties key ' . q{'}
                     . $property_key . q{'}
@@ -613,7 +613,7 @@ EOL
                 $property_arrayref_index_max = $property_type_inner->{children}->[5];
             }
             else {
-                die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+                die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                         . ( ref $self )
                         . ' found where TypeInnerProperties_223 or TypeInnerProperties_224 expected, dying' )
                     . "\n";
@@ -626,7 +626,7 @@ EOL
 #            RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property ' . $i . ', have $property_arrayref_index_max = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_arrayref_index_max) . "\n" );
 
             if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key} ) {
-                die 'ERROR ECVGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: OO property '
+                die 'ERROR ECOGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: OO property '
                     . $property_key
                     . ' already declared in this scope, namespace '
                     . $modes->{_symbol_table}->{_namespace}
@@ -751,7 +751,7 @@ EOL
             }
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECVGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: grammar rule '
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: grammar rule '
                     . ( ref $method_or_subroutine )
                     . ' found where MethodOrSubroutine_76 or MethodOrSubroutine_77 expected, dying' )
                 . "\n";
@@ -852,7 +852,7 @@ our string_hashref $ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES = s
 
     # grab RPerl-style type out of symtab, instead of accepting-as-arg now-C++-style type from $property_type in caller
     my string $property_type = $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}->{type};
-    my bool $is_direct       = 0;
+    my boolean $is_direct       = 0;
     my $property_element_or_value_type;
 
     # array element accessors/mutators

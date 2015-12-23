@@ -40,7 +40,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     my string $operator_named_class = ref $operator_named;
     if ( $operator_named_class eq 'Operation_79' ) { # Operation -> OP01_NAMED_SCOLON
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASRP16, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
+            'ERROR ECOGEASRP16, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
                 . $operator_named->{children}->[0]
                 . ' requires one or more arguments, dying' )
             . "\n";
@@ -65,7 +65,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my integer $argument_count = $arguments->length() + 1;
         if ( $argument_count < ARGUMENTS_MIN() ) {
             die
-                'ERROR ECVGEASRP02, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
+                'ERROR ECOGEASRP02, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
                 . "\n"
                 . 'Argument count '
                 . $argument_count
@@ -77,7 +77,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         }
         if ( $argument_count > ARGUMENTS_MAX() ) {
             die
-                'ERROR ECVGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
+                'ERROR ECOGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
                 . "\n"
                 . 'Argument count '
                 . $argument_count
@@ -106,7 +106,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my integer $argument_count = $arguments->length() + 1;
         if ( $argument_count < ARGUMENTS_MIN() ) {
             die
-                'ERROR ECVGEASRP02, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
+                'ERROR ECOGEASRP02, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
                 . "\n"
                 . 'Argument count '
                 . $argument_count
@@ -118,7 +118,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         }
         if ( $argument_count > ARGUMENTS_MAX() ) {
             die
-                'ERROR ECVGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
+                'ERROR ECOGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
                 . "\n"
                 . 'Argument count '
                 . $argument_count
@@ -139,7 +139,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECVGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ($operator_named_class)
                 . ' found where Operation_79, Operator_83, Operator_84, or OperatorVoid_121 expected, dying'
         ) . "\n";
