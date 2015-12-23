@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine::Method;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_000;
+our $VERSION = 0.005_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CodeBlock::Subroutine);
@@ -198,13 +198,6 @@ use parent -norequire, qw(method);
 # method with integer return type
 package  # hide from PAUSE indexing
     integer::method;
-use strict;
-use warnings;
-use parent -norequire, qw(method);
-
-# method with float return type
-package  # hide from PAUSE indexing
-    float::method;
 use strict;
 use warnings;
 use parent -norequire, qw(method);

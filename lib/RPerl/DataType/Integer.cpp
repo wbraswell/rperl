@@ -1,12 +1,14 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_cpp
-#define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 0.005_100
+#define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 0.006_000
 
 // [[[ INCLUDES ]]]
 #include <RPerl/DataType/Integer.h>  // -> NULL (relies on native C type)
-// DEV NOTE, CORRELATION #rp12: the only actual includes-level dependency between any of the RPerl core data types should be String.cpp to avoid
-// error: ‘XS_pack_string’ was not declared in this scope
+#include <RPerl/DataType/Boolean.cpp>  // -> Boolean.h
+#include <RPerl/DataType/UnsignedInteger.cpp>  // -> UnsignedInteger.h
+#include <RPerl/DataType/Number.cpp>  // -> Number.h
+#include <RPerl/DataType/Character.cpp>  // -> Character.h
 #include <RPerl/DataType/String.cpp>  // -> String.h
 
 // [[[ TYPE-CHECKING ]]]
@@ -72,6 +74,28 @@ void XS_pack_integer(SV* output_sv, integer input_integer) {
 
 //# endif
 
+// [[[ BOOLEANIFY ]]]
+// [[[ BOOLEANIFY ]]]
+// [[[ BOOLEANIFY ]]]
+
+# ifdef __PERL__TYPES
+
+SV* integer_to_boolean(SV* input_integer) {
+//  integer_CHECK(input_integer);
+    integer_CHECKTRACE(input_integer, "input_integer", "integer_to_boolean()");
+    if (SvIV(input_integer) == 0) { return input_integer; }
+    else { return newSViv(1); }
+}
+
+# elif defined __CPP__TYPES
+
+boolean integer_to_boolean(integer input_integer) {
+    if (input_integer == 0) { return input_integer; }
+    else { return 1; }
+}
+
+# endif
+
 // [[[ UNSIGNED INTEGERIFY ]]]
 // [[[ UNSIGNED INTEGERIFY ]]]
 // [[[ UNSIGNED INTEGERIFY ]]]
@@ -81,13 +105,56 @@ void XS_pack_integer(SV* output_sv, integer input_integer) {
 SV* integer_to_unsigned_integer(SV* input_integer) {
 //  integer_CHECK(input_integer);
     integer_CHECKTRACE(input_integer, "input_integer", "integer_to_unsigned_integer()");
-    return(input_integer);
+    if (SvIV(input_integer) < 0) { return newSViv(SvIV(input_integer) * -1); }
+    else { return input_integer; }
 }
 
 # elif defined __CPP__TYPES
 
-unsigned int integer_to_unsigned_integer(integer input_integer) {
+unsigned_integer integer_to_unsigned_integer(integer input_integer) {
+    if (input_integer < 0) { return input_integer * -1; }
+    else { return input_integer; }
+}
+
+# endif
+
+// [[[ NUMBERIFY ]]]
+// [[[ NUMBERIFY ]]]
+// [[[ NUMBERIFY ]]]
+
+# ifdef __PERL__TYPES
+
+SV* integer_to_number(SV* input_integer) {
+//  integer_CHECK(input_integer);
+    integer_CHECKTRACE(input_integer, "input_integer", "integer_to_number()");
     return input_integer;
+}
+
+# elif defined __CPP__TYPES
+
+number integer_to_number(integer input_integer) {
+    return (number) input_integer;
+}
+
+# endif
+
+// [[[ CHARACTERIFY ]]]
+// [[[ CHARACTERIFY ]]]
+// [[[ CHARACTERIFY ]]]
+
+# ifdef __PERL__TYPES
+
+SV* integer_to_character(SV* input_integer) {
+//  integer_CHECK(input_integer);
+    integer_CHECKTRACE(input_integer, "input_integer", "integer_to_character()");
+    // NEED ADD CODE
+}
+
+# elif defined __CPP__TYPES
+
+character integer_to_character(integer input_integer) {
+    // NEED OPTIMIZE: remove call to integer_to_string_CPPTYPES()
+    return (character) integer_to_string_CPPTYPES(input_integer).at(0);
 }
 
 # endif

@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array::SubTypes;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_100;
+our $VERSION = 0.007_200;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd) # DEVELOPER DEFAULT 1b: allow unreachable & POD-commented code, must be after line 1
@@ -225,15 +225,6 @@ our integer_arrayref $integer_arrayref__typetest1 = sub {
     }
     return ($new_array);
 };
-
-# [[[ FLOAT ARRAYS ]]]
-
-# (ref to array) of floats
-package  # hide from PAUSE indexing
-    float_arrayref;
-use strict;
-use warnings;
-use parent -norequire, qw(arrayref);
 
 # [[[ NUMBER ARRAY REF ]]]
 # [[[ NUMBER ARRAY REF ]]]

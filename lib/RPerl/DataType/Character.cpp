@@ -4,9 +4,12 @@ using std::cout;  using std::cerr;  using std::endl;
 #define __CPP__INCLUDED__RPerl__DataType__Character_cpp 0.001_000
 
 // [[[ INCLUDES ]]]
+#include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
 #include <RPerl/DataType/Character.h>  // -> NULL (relies on native C type)
-// DEV NOTE, CORRELATION #rp12: the only actual includes-level dependency between any of the RPerl core data types should be String.cpp to avoid
-// error: ‘XS_pack_string’ was not declared in this scope
+#include <RPerl/DataType/Boolean.cpp>  // -> Boolean.h
+#include <RPerl/DataType/UnsignedInteger.cpp>  // -> UnsignedInteger.h
+#include <RPerl/DataType/Integer.cpp>  // -> Integer.h
+#include <RPerl/DataType/Number.cpp>  // -> Number.h
 #include <RPerl/DataType/String.cpp>  // -> String.h
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
@@ -146,14 +149,14 @@ string character_to_string(character input_character) {
 # ifdef __PERL__TYPES
 
 SV* character__typetest0() {
-	return newSVpvf("%c", SvIV(RPerl__DataType__Character__MODE_ID()) + '0');
+	return newSVpvf("%c", (character) (SvIV(RPerl__DataType__Character__MODE_ID()) + '0'));
 }
 
 SV* character__typetest1(SV* lucky_character) {
 //	character_CHECK(lucky_character);
 	character_CHECKTRACE(lucky_character, "lucky_character", "character__typetest1()");
 //fprintf(stderr, "in CPPOPS_PERLTYPES character__typetest1(), received lucky_character = %d\n", SvIV(lucky_character));
-	return newSVpvf("%c", ((SvPV_nolen(lucky_character))[0] + SvIV(RPerl__DataType__Character__MODE_ID())));
+	return newSVpvf("%c", (character) ((SvPV_nolen(lucky_character))[0] + SvIV(RPerl__DataType__Character__MODE_ID())));
 }
 
 # elif defined __CPP__TYPES

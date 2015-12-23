@@ -9,16 +9,12 @@ using std::endl;
 #include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
 #include <RPerl/DataType/GMPInteger.h>		// -> NULL (relies on native C type)
 #include <RPerl/Operation/Expression/Operator/GMPFunctions.cpp>  // -> GMPFunctions.h
-// DEV NOTE, CORRELATION #rp12: the only actual includes-level dependency between any of the RPerl core data types should be String.cpp to avoid
-// error: ‘XS_pack_string’ was not declared in this scope
-#include <RPerl/DataType/String.cpp>  // -> String.h
-
-// NEED FIX: update #rp12 above???  need XS_pack_FOO() for retval of gmp_integer_to_FOO()
 #include <RPerl/DataType/Boolean.cpp>  // -> Boolean.h
-#include <RPerl/DataType/Integer.cpp>  // -> Integer.h
 #include <RPerl/DataType/UnsignedInteger.cpp>  // -> UnsignedInteger.h
+#include <RPerl/DataType/Integer.cpp>  // -> Integer.h
 #include <RPerl/DataType/Number.cpp>  // -> Number.h
 #include <RPerl/DataType/Character.cpp>  // -> Character.h
+#include <RPerl/DataType/String.cpp>  // -> String.h
 
 // [[[ TYPE-CHECKING ]]]
 // [[[ TYPE-CHECKING ]]]
@@ -320,7 +316,8 @@ SV* gmp_integer_to_character(SV* input_gmp_integer) {
 # elif defined __CPP__TYPES
 
 character gmp_integer_to_character(gmp_integer_retval input_gmp_integer_retval) {
-    return gmp_integer_to_string_CPPTYPES(input_gmp_integer_retval.gmp_integer_unretval()).at(0);
+    // NEED OPTIMIZE: remove call to gmp_integer_to_string_CPPTYPES()
+    return (character) gmp_integer_to_string_CPPTYPES(input_gmp_integer_retval.gmp_integer_unretval()).at(0);
 }
 
 # endif

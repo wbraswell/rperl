@@ -105,7 +105,7 @@ sub boolean_to_string {
 
 # [[[ TYPE TESTING ]]]
 our boolean $boolean__typetest0 = sub {
-    # DEV NOTE, CORRELATION #rp12: maintain independence from Integer data type, re-implement integer_to_boolean() here
+    # DEV NOTE: maintain independence from Integer data type, re-implement integer_to_boolean() here
 #    my boolean $retval = integer_to_boolean(main::RPerl__DataType__Boolean__MODE_ID());
     my boolean $retval = 1;
     if (main::RPerl__DataType__Boolean__MODE_ID() == 0) { $retval = 0; }
@@ -117,7 +117,7 @@ our boolean $boolean__typetest1 = sub {
 #    boolean_CHECK($lucky_boolean);
     boolean_CHECKTRACE( $lucky_boolean, '$lucky_boolean', 'boolean__typetest1()' );
 #    RPerl::diag('in PERLOPS_PERLTYPES boolean__typetest1(), received $lucky_boolean = ' . boolean_to_string($lucky_boolean) . "\n");
-    # DEV NOTE, CORRELATION #rp12: maintain independence from Integer data type, re-implement integer_to_boolean() here
+    # DEV NOTE: maintain independence from Integer data type, re-implement integer_to_boolean() here
     my boolean $retval = 1;
     if (($lucky_boolean + main::RPerl__DataType__Boolean__MODE_ID()) == 0) { $retval = 0; }
 #    RPerl::diag("in PERLOPS_PERLTYPES boolean__typetest1(), have \$retval = $retval\n");

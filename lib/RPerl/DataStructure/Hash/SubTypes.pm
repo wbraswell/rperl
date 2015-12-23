@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash::SubTypes;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_000;
+our $VERSION = 0.007_100;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd) # DEVELOPER DEFAULT 1b: allow unreachable & POD-commented code, must be after line 1
@@ -243,15 +243,6 @@ our integer_hashref $integer_hashref__typetest1 = sub {
     }
     return ($new_hash);
 };
-
-# [[[ FLOAT HASHES ]]]
-
-# (ref to hash) of floats
-package  # hide from PAUSE indexing
-    float_hashref;
-use strict;
-use warnings;
-use parent -norequire, qw(hashref);
 
 # [[[ NUMBER HASH REF ]]]
 # [[[ NUMBER HASH REF ]]]

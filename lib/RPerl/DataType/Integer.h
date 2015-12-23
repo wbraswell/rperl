@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_h
-#define __CPP__INCLUDED__RPerl__DataType__Integer_h 0.005_100
+#define __CPP__INCLUDED__RPerl__DataType__Integer_h 0.006_000
 
 // [[[ TYPEDEFS ]]]
 // DEV NOTE: must use "integer" typedef because "int" is already defined by Inline's default typemap, even if we put our own integer entry into typemap.rperl;
@@ -12,7 +12,6 @@ typedef int integer;
 # endif
 
 // [[[ PRE-DECLARED TYPEDEFS ]]]
-// DEV NOTE, CORRELATION #rp12: basic data types must be wholly independent of one another, to avoid possible weird redefining or undefining of subroutine errors
 # ifndef __CPP__INCLUDED__RPerl__DataType__Boolean_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__Boolean_h__typedefs 1
 typedef bool boolean;
@@ -73,11 +72,32 @@ integer XS_unpack_integer(SV* input_sv);
 void XS_pack_integer(SV* output_sv, integer input_integer);
 //# endif
 
+// [[[ BOOLEANIFY ]]]
+# ifdef __PERL__TYPES
+SV* integer_to_boolean(SV* input_integer);
+# elif defined __CPP__TYPES
+boolean integer_to_boolean(integer input_integer);
+# endif
+
 // [[[ UNSIGNED INTEGERIFY ]]]
 # ifdef __PERL__TYPES
 SV* integer_to_unsigned_integer(SV* input_integer);
 # elif defined __CPP__TYPES
 unsigned_integer integer_to_unsigned_integer(integer input_integer);
+# endif
+
+// [[[ NUMBERIFY ]]]
+# ifdef __PERL__TYPES
+SV* integer_to_number(SV* input_integer);
+# elif defined __CPP__TYPES
+number integer_to_number(integer input_integer);
+# endif
+
+// [[[ CHARACTERIFY ]]]
+# ifdef __PERL__TYPES
+SV* integer_to_character(SV* input_integer);
+# elif defined __CPP__TYPES
+character integer_to_character(integer input_integer);
 # endif
 
 // [[[ STRINGIFY ]]]

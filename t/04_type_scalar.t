@@ -101,6 +101,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 #RPerl::diag('in 04_type_scalar.t, top of for() loop, have eval(main::RPerl__DataType__Integer__MODE_ID()) = ' . eval('main::RPerl__DataType__Integer__MODE_ID()') . "\n");
 #RPerl::diag('in 04_type_scalar.t, top of for() loop, have main->can(...) = ' . main->can( 'RPerl__DataType__Integer__MODE_ID' ) . "\n");
 #RPerl::diag('in 04_type_scalar.t, top of for() loop, have main->can(...)->() = ' . main->can( 'RPerl__DataType__Integer__MODE_ID' )->() . "\n");
+#RPerl::diag('in 04_type_scalar.t, top of for() loop, have Dumper(\%main::) = ' . Dumper(\%main::) . "\n");
 
         lives_and(
             sub {

@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-our $VERSION = 0.003_000;
+our $VERSION = 0.003_100;
 use ExtUtils::MakeMaker;
 
 BEGIN { use English; }
@@ -49,9 +49,9 @@ WriteMakefile(
         # mst says we need to set data type package names without using 'package FOO;' like how Lexical::Types works
         no_index => {
 
-            # DEV NOTE: the following 12 package namespaces are already controlled by some other PAUSE owner on CPAN,
+            # DEV NOTE: the following package namespaces are already controlled by some other PAUSE owner on CPAN,
             # their indexing is double-disabled in that they are both listed here and also given newlines-in-package-declarations
-            package => [ 'array', 'boolean', 'char', 'float', 'hash', 'integer', 'method', 'number', 'object', 'ref', 'string', 'unknown' ],
+            package => [ 'array', 'boolean', 'hash', 'integer', 'method', 'number', 'object', 'ref', 'string', 'unknown' ],
 
             # DEV NOTE: disable indexing of all test package namespaces
             namespace => ['RPerl::Test'],

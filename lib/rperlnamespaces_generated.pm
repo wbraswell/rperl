@@ -128,6 +128,7 @@ $rperlnamespaces_generated::RPERL_DEPS = {
 
 $rperlnamespaces_generated::RPERL = undef;
 $rperlnamespaces_generated::RPERL = {
+    'Math::'                                  => 1,
     'RPerl::'                                 => 1,
     'array::'                                 => 1,
     'arrayref::'                              => 1,
@@ -144,9 +145,6 @@ $rperlnamespaces_generated::RPERL = {
     'constant_sse_number_pair::'              => 1,
     'constant_unsigned_integer::'             => 1,
     'filehandleref::'                         => 1,
-    'float::'                                 => 1,
-    'float_arrayref::'                        => 1,
-    'float_hashref::'                         => 1,
     'gmp_integer::'                           => 1,
     'hash::'                                  => 1,
     'hashref::'                               => 1,

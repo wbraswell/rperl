@@ -3,7 +3,13 @@ using std::cout;  using std::cerr;  using std::endl;
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_cpp
 #define __CPP__INCLUDED__RPerl__DataType__String_cpp 0.004_000
 
+// [[[ INCLUDES ]]]
 #include <RPerl/DataType/String.h>		// -> NULL (relies on native C type)
+#include <RPerl/DataType/Boolean.cpp>  // -> Boolean.h
+#include <RPerl/DataType/UnsignedInteger.cpp>  // -> UnsignedInteger.h
+#include <RPerl/DataType/Integer.cpp>  // -> Integer.h
+#include <RPerl/DataType/Number.cpp>  // -> Number.h
+#include <RPerl/DataType/Character.cpp>  // -> Character.h
 
 // [[[ TYPE CHECKING ]]]
 // [[[ TYPE CHECKING ]]]

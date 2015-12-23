@@ -5,8 +5,10 @@ using std::cout;  using std::cerr;  using std::endl;
 
 // [[[ INCLUDES ]]]
 #include <RPerl/DataType/Number.h>  // -> NULL (relies on native C type)
-// DEV NOTE, CORRELATION #rp12: the only actual includes-level dependency between any of the RPerl core data types should be String.cpp to avoid
-// error: ‘XS_pack_string’ was not declared in this scope
+#include <RPerl/DataType/Boolean.cpp>  // -> Boolean.h
+#include <RPerl/DataType/UnsignedInteger.cpp>  // -> UnsignedInteger.h
+#include <RPerl/DataType/Integer.cpp>  // -> Integer.h
+#include <RPerl/DataType/Character.cpp>  // -> Character.h
 #include <RPerl/DataType/String.cpp>  // -> String.h
 
 // [[[ TYPE-CHECKING ]]]

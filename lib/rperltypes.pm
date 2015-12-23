@@ -5,7 +5,7 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.002_200;
+our $VERSION = 0.002_300;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
@@ -35,7 +35,6 @@ use RPerl::DataType::Void;
 use RPerl::DataType::Boolean;
 use RPerl::DataType::UnsignedInteger;
 use RPerl::DataType::Integer;
-use RPerl::DataType::Float;
 use RPerl::DataType::Number;
 use RPerl::DataType::Character;
 use RPerl::DataType::String;

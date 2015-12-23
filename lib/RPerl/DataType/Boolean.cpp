@@ -4,9 +4,12 @@ using std::cout;  using std::cerr;  using std::endl;
 #define __CPP__INCLUDED__RPerl__DataType__Boolean_cpp 0.001_000
 
 // [[[ INCLUDES ]]]
+#include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
 #include <RPerl/DataType/Boolean.h>  // -> NULL (relies on native C type)
-// DEV NOTE, CORRELATION #rp12: the only actual includes-level dependency between any of the RPerl core data types should be String.cpp to avoid
-// error: ‘XS_pack_string’ was not declared in this scope
+#include <RPerl/DataType/UnsignedInteger.cpp>  // -> UnsignedInteger.h
+#include <RPerl/DataType/Integer.cpp>  // -> Integer.h
+#include <RPerl/DataType/Number.cpp>  // -> Number.h
+#include <RPerl/DataType/Character.cpp>  // -> Character.h
 #include <RPerl/DataType/String.cpp>  // -> String.h
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
@@ -138,7 +141,7 @@ SV* boolean_to_string(SV* input_boolean) {
 //	fprintf(stderr, "in CPPOPS_PERLTYPES boolean_to_string(), top of subroutine, received unformatted input_boolean = %d\n", (boolean)SvIV(input_boolean));
 //	fprintf(stderr, "in CPPOPS_PERLTYPES boolean_to_string()...\n");
 
-	return(newSVpvf("%d", SvIV(input_boolean)));
+	return(newSVpvf("%d", (integer) SvIV(input_boolean)));
 }
 
 # elif defined __CPP__TYPES
@@ -158,36 +161,40 @@ string boolean_to_string(boolean input_boolean) {
 # ifdef __PERL__TYPES
 
 SV* boolean__typetest0() {
-	SV* retval = integer_to_boolean(RPerl__DataType__Boolean__MODE_ID());
+    // DEV NOTE: maintain independence from Integer data type, re-implement integer_to_boolean() here & below
+    SV* retval = newSViv(1);
+    if (SvIV(RPerl__DataType__Boolean__MODE_ID()) == 0) { retval = newSViv(0); }
+//	SV* retval = integer_to_boolean(RPerl__DataType__Boolean__MODE_ID());
 //fprintf(stderr, "in CPPOPS_PERLTYPES boolean__typetest0(), have retval = %d\n", SvIV(retval));
-	return(retval);
+	return retval;
 }
 
 SV* boolean__typetest1(SV* lucky_boolean) {
 //	boolean_CHECK(lucky_boolean);
 	boolean_CHECKTRACE(lucky_boolean, "lucky_boolean", "boolean__typetest1()");
 //fprintf(stderr, "in CPPOPS_PERLTYPES boolean__typetest1(), received lucky_boolean = %d\n", SvIV(lucky_boolean));
-	return(newSViv(integer_to_boolean(SvIV(lucky_boolean) + SvIV(RPerl__DataType__Boolean__MODE_ID()))));
+    SV* retval = newSViv(1);
+    if ((SvIV(lucky_boolean) + SvIV(RPerl__DataType__Boolean__MODE_ID())) == 0) { retval = newSViv(0); }
+	return retval;
+//	return integer_to_boolean(newSViv( SvIV(lucky_boolean) + SvIV(RPerl__DataType__Boolean__MODE_ID()) ) );
 }
 
 # elif defined __CPP__TYPES
 
 boolean boolean__typetest0() {
-    // DEV NOTE, CORRELATION #rp12: maintain independence from Integer data type, re-implement integer_to_boolean() here
 //	boolean retval = integer_to_boolean(RPerl__DataType__Boolean__MODE_ID());
 	boolean retval = 1;
 	if (RPerl__DataType__Boolean__MODE_ID() == 0) { retval = 0; }
 //fprintf(stderr, "in CPPOPS_CPPTYPES boolean__typetest0(), have retval = %d\n", retval);
-	return(retval);
+	return retval;
 }
 
 boolean boolean__typetest1(boolean lucky_boolean) {
 //fprintf(stderr, "in CPPOPS_CPPTYPES boolean__typetest1(), received lucky_boolean = %d\n", lucky_boolean);
-    // DEV NOTE, CORRELATION #rp12: maintain independence from Integer data type, re-implement integer_to_boolean() here
     boolean retval = 1;
     if ((lucky_boolean + RPerl__DataType__Boolean__MODE_ID()) == 0) { retval = 0; }
 //fprintf(stderr, "in CPPOPS_CPPTYPES boolean__typetest0(), have retval = %d\n", retval);
-    return(retval);
+	return retval;
 //	return(integer_to_boolean(lucky_boolean + RPerl__DataType__Boolean__MODE_ID()));
 }
 

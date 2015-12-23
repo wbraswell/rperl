@@ -2,7 +2,7 @@
 package RPerl::DataStructure::Hash;
 use strict;
 use warnings;
-our $VERSION = 0.004_000;
+our $VERSION = 0.005_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataStructure);
@@ -22,8 +22,9 @@ INIT {
 }
 
 use RPerl::DataType::Void;
+use RPerl::DataType::Boolean;
+use RPerl::DataType::UnsignedInteger;
 use RPerl::DataType::Integer;
-use RPerl::DataType::Float;
 use RPerl::DataType::Number;
 use RPerl::DataType::Character;
 use RPerl::DataType::String;

@@ -1,11 +1,18 @@
-PARTIAL Windows Testing, add ci.appveyor.com github webhook
-PARTIAL Add GMP Support
 DONE allow unsigned_integer as loop index
 DONE enable SSE and GMP support only when needed
 DONE disable SSE on Arm architectures
+PARTIAL Add Initial GMP Support
 
-enable opstrings as hash keys
+	full boolean support via Boolean.cpp/h, rperltypes.pm, SvBOKp(), etc.
+	char type-testing subroutines in Character.pm
+	full character support via Character.cpp/h, rperltypes.pm, SvCOKp(), etc.
+	full unsigned_integer support via UnsignedInteger.cpp/h, rperltypes.pm, SvUIOKp(), etc.
+	CPPOPS_CPPTYPES conversion routines
+
+DONE??? enable opstrings as hash keys
 export ::*_*ref_to_*() conversion subroutines the same as ::*_to_*() subs in rperltypesconv.pm, remove leading scopes in all calls
+
+Windows Testing, add ci.appveyor.com github webhook
 
 10 more builtins, CPPOPS_CPPTYPES mode
 	NAMED
@@ -125,15 +132,11 @@ App, PhysicsPerl, Alioth Shootout N-Body Benchmark, Approved
 	OR New Benchmark Org
 
 data types & structures
-	determine if Float.pm should be kept or deleted
-	full boolean support via Boolean.cpp/h, rperltypes.pm, SvBOKp(), etc.
-	char type-testing subroutines in Character.pm
-	full character support via Character.cpp/h, rperltypes.pm, SvCOKp(), etc.
-	full unsigned_integer support via UnsignedInteger.cpp/h, rperltypes.pm, SvUIOKp(), etc.
-	CPPOPS_CPPTYPES conversion routines
 	PERLOPS_CPPTYPES conversion routines
 	boolean_arrayref, unsigned_integer_arrayref, character_arrayref
 	boolean_hashref, unsigned_integer_hashref, character_hashref
+	gmp_integer_arrayref, gmp_integer_hashref
+	sse_number_pair_arrayref, sse_number_pair_hashref
 
 RELEASE v1.XY
 

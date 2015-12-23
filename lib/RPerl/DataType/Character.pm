@@ -3,7 +3,7 @@ package RPerl::DataType::Character;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_000;
+our $VERSION = 0.005_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::String);
@@ -87,5 +87,14 @@ sub character_to_string {
     (my character $input_character) = @_;
     return $input_character;
 }
+
+# [[[ TYPE TESTING ]]]
+our character $character__typetest0 = sub {
+	return chr(main::RPerl__DataType__Character__MODE_ID() + (ord '0'));
+};
+our character $character__typetest1 = sub {
+    (my character $lucky_character) = @_;
+    return chr((ord $lucky_character) + main::RPerl__DataType__Character__MODE_ID());
+};
 
 1;  # end of class
