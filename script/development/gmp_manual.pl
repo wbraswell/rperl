@@ -4,8 +4,8 @@ use rperlgmp;
 
 use Math::BigInt lib => 'GMP';
 
-use RPerl::DataType::GMPInteger_cpp;
-RPerl::DataType::GMPInteger_cpp::cpp_load();
+#use RPerl::DataType::GMPInteger_cpp;
+#RPerl::DataType::GMPInteger_cpp::cpp_load();
 
 use Data::Dumper;
 print Dumper( \%main:: );

@@ -114,10 +114,10 @@ void XS_pack_gmp_integer_retval(SV* output_hv_ref, gmp_integer_retval input_gmp_
     SAVETMPS;
 
     PUSHMARK(SP);
-    XPUSHs(sv_2mortal(newSVpv("gmp_integer", 0)));
+    XPUSHs(sv_2mortal(newSVpv("gmp_integer", 0)));  // callback from C++ to Perl for gmp_integer->new() object constructor, class name is first and only argument
     PUTBACK;
 
-    integer callback_retval_count = call_method("new", G_SCALAR);
+    integer callback_retval_count = call_method("new", G_SCALAR);  // actual callback
 //    cerr << "in CPPOPS_CPPTYPES XS_pack_gmp_integer_retval(), have callback_retval_count = " << callback_retval_count << endl;
 
     SPAGAIN;
@@ -140,7 +140,7 @@ void XS_pack_gmp_integer_retval(SV* output_hv_ref, gmp_integer_retval input_gmp_
     temp_sv_pointer = newSVrv(output_hv_ref, NULL);   // upgrade output stack SV to an RV
     SvREFCNT_dec(temp_sv_pointer);       // discard temporary pointer
     SvRV(output_hv_ref) = SvRV(gmp_integer_hv_ref);      // make output stack RV pointer at our output gmp_integer
-    SvREFCNT_inc(SvRV(output_hv_ref));
+    SvREFCNT_inc(SvRV(output_hv_ref));  // avoid segfaults and attempts to free unreferenced scalars by increasing retval's ref count, seems to work on either output_hv_ref or gmp_integer_hv_ref
 
     // METHOD B
 /*
@@ -232,11 +232,8 @@ SV* gmp_integer_to_bool(SV* input_gmp_integer) {
 # elif defined __CPP__TYPES
 
 bool gmp_integer_to_bool(gmp_integer input_gmp_integer) {
-    if (gmp_get_signed_integer(input_gmp_integer) == 0) {
-        return 0;
-    } else {
-        return 1;
-    }
+    if (gmp_get_signed_integer(input_gmp_integer) == 0) { return 0; }
+    else { return 1; }
 }
 
 # endif
@@ -255,8 +252,7 @@ SV* gmp_integer_to_unsigned_integer(SV* input_gmp_integer) {
 
 # elif defined __CPP__TYPES
 
-unsigned_integer gmp_integer_to_unsigned_integer(
-        gmp_integer input_gmp_integer) {
+unsigned_integer gmp_integer_to_unsigned_integer(gmp_integer input_gmp_integer) {
     return abs(gmp_get_signed_integer(input_gmp_integer));
 }
 
