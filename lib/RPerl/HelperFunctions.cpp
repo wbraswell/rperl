@@ -14,6 +14,7 @@ int RPerl_SvAROKp(SV* input_av_ref) { return(SvAROKp(input_av_ref)); }
 int RPerl_SvHROKp(SV* input_hv_ref) { return(SvHROKp(input_hv_ref)); }
 
 // NEED ANSWER: what in the hades does this property init function even do?  why do we need it???
+// use this to avoid "panic: attempt to copy freed scalar..."
 void RPerl_object_property_init(SV* initee)
 {
 	dSP;

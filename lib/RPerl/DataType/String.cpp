@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_cpp
-#define __CPP__INCLUDED__RPerl__DataType__String_cpp 0.004_000
+#define __CPP__INCLUDED__RPerl__DataType__String_cpp 0.006_000
 
 // [[[ INCLUDES ]]]
 #include <RPerl/DataType/String.h>		// -> NULL (relies on native C type)
@@ -69,6 +69,110 @@ void XS_pack_string(SV* output_sv, string input_string) {
 }
 
 //# endif
+
+// [[[ BOOLEANIFY ]]]
+// [[[ BOOLEANIFY ]]]
+// [[[ BOOLEANIFY ]]]
+
+# ifdef __PERL__TYPES
+
+SV* string_to_boolean(SV* input_string) {
+//  string_CHECK(input_string);
+    string_CHECKTRACE(input_string, "input_string", "string_to_boolean()");
+    if (atoi(SvPV_nolen(input_string)) == 0) { return newSViv(0); }
+    else { return newSViv(1); }
+}
+
+# elif defined __CPP__TYPES
+
+boolean string_to_boolean(string input_string) {
+    if (atoi(input_string.c_str()) == 0) { return 0; }
+    else { return 1; }
+}
+
+# endif
+
+// [[[ UNSIGNED INTEGERIFY ]]]
+// [[[ UNSIGNED INTEGERIFY ]]]
+// [[[ UNSIGNED INTEGERIFY ]]]
+
+# ifdef __PERL__TYPES
+
+SV* string_to_unsigned_integer(SV* input_string) {
+//  string_CHECK(input_string);
+    string_CHECKTRACE(input_string, "input_string", "string_to_unsigned_integer()");
+    if (atoi(SvPV_nolen(input_string)) < 0) { return newSViv(atoi(SvPV_nolen(input_string)) * -1); }
+    else { return newSViv(atoi(SvPV_nolen(input_string))); }
+}
+
+# elif defined __CPP__TYPES
+
+unsigned_integer string_to_unsigned_integer(string input_string) {
+    if (atoi(input_string.c_str()) < 0) { return (unsigned_integer) (atoi(input_string.c_str()) * -1); }
+    else { return (unsigned_integer) atoi(input_string.c_str()); }
+}
+
+# endif
+
+// [[[ INTEGERIFY ]]]
+// [[[ INTEGERIFY ]]]
+// [[[ INTEGERIFY ]]]
+
+# ifdef __PERL__TYPES
+
+SV* string_to_integer(SV* input_string) {
+//  string_CHECK(input_string);
+    string_CHECKTRACE(input_string, "input_string", "string_to_integer()");
+    return newSViv(atoi(SvPV_nolen(input_string)));
+}
+
+# elif defined __CPP__TYPES
+
+integer string_to_integer(string input_string) {
+    return (integer) atoi(input_string.c_str());
+}
+
+# endif
+
+// [[[ NUMBERIFY ]]]
+// [[[ NUMBERIFY ]]]
+// [[[ NUMBERIFY ]]]
+
+# ifdef __PERL__TYPES
+
+SV* string_to_number(SV* input_string) {
+//  string_CHECK(input_string);
+    string_CHECKTRACE(input_string, "input_string", "string_to_number()");
+    return newSVnv(atof(SvPV_nolen(input_string)));
+}
+
+# elif defined __CPP__TYPES
+
+number string_to_number(string input_string) {
+    return (number) atof(input_string.c_str());
+}
+
+# endif
+
+// [[[ CHARACTERIFY ]]]
+// [[[ CHARACTERIFY ]]]
+// [[[ CHARACTERIFY ]]]
+
+# ifdef __PERL__TYPES
+
+SV* string_to_character(SV* input_string) {
+//  string_CHECK(input_string);
+    string_CHECKTRACE(input_string, "input_string", "string_to_character()");
+    // NEED ADD CODE
+}
+
+# elif defined __CPP__TYPES
+
+character string_to_character(string input_string) {
+    return (character) input_string.at(0);
+}
+
+# endif
 
 // [[[ STRINGIFY ]]]
 // [[[ STRINGIFY ]]]
@@ -168,7 +272,7 @@ SV* string__typetest1(SV* lucky_string) {
 string string__typetest0() {
 	string retval = "Spice CPPOPS_CPPTYPES";
 //fprintf(stderr, "in CPPOPS_CPPTYPES string__typetest0(), have retval = '%s'\n", retval.c_str());
-	return(retval);
+	return retval;
 }
 
 string string__typetest1(string lucky_string) {

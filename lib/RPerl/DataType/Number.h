@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Number_h
-#define __CPP__INCLUDED__RPerl__DataType__Number_h 0.005_000
+#define __CPP__INCLUDED__RPerl__DataType__Number_h 0.006_000
 
 // [[[ TYPEDEFS ]]]
 # ifndef __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs
@@ -69,6 +69,34 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 number XS_unpack_number(SV* input_sv);
 void XS_pack_number(SV* output_sv, number input_number);
 //# endif
+
+// [[[ BOOLEANIFY ]]]
+# ifdef __PERL__TYPES
+SV* number_to_boolean(SV* input_number);
+# elif defined __CPP__TYPES
+boolean number_to_boolean(number input_number);
+# endif
+
+// [[[ UNSIGNED INTEGERIFY ]]]
+# ifdef __PERL__TYPES
+SV* number_to_unsigned_integer(SV* input_number);
+# elif defined __CPP__TYPES
+unsigned_integer number_to_unsigned_integer(number input_number);
+# endif
+
+// [[[ INTEGERIFY ]]]
+# ifdef __PERL__TYPES
+SV* number_to_integer(SV* input_number);
+# elif defined __CPP__TYPES
+integer number_to_integer(number input_number);
+# endif
+
+// [[[ CHARACTERIFY ]]]
+# ifdef __PERL__TYPES
+SV* number_to_character(SV* input_number);
+# elif defined __CPP__TYPES
+character number_to_character(number input_number);
+# endif
 
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES

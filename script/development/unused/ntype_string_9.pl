@@ -81,7 +81,7 @@ string string_to_string(string input_string)
 
 string string__typetest0() {
 	string retval = "Spice CPPOPS_CPPTYPES";
-	return(retval);
+	return retval;
 }
 
 string string__typetest1(string lucky_string) {

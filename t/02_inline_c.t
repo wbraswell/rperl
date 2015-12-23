@@ -151,7 +151,7 @@ SV* greetings_sv(SV* retval, SV* name1, ...) {
 		retval = newSVpvf("%sHello %s!  ", SvPV(retval, PL_na), SvPV(Inline_Stack_Item(i), PL_na));
 //		printf("in greetings_sv(), for() loop i = %d, have retval ='%s'\n", i, SvPV_nolen(retval));
 	}
-	return(retval);
+	return retval;
 }
 END_OF_C_CODE
 EOF

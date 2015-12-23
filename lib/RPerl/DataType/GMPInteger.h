@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__GMPInteger_h
-#define __CPP__INCLUDED__RPerl__DataType__GMPInteger_h 0.001_000
+#define __CPP__INCLUDED__RPerl__DataType__GMPInteger_h 0.003_000
 
 // NEED FIX: remove duplicate code
 // DEV NOTE, CORRELATION #rp26: can't figure out how to get GMPInteger.cpp to include HelperFunctions.cpp without redefining errors
@@ -69,25 +69,20 @@ void gmp_integer_CHECKTRACE(SV* possible_gmp_integer, const char* variable_name,
 # ifdef __CPP__TYPES
 gmp_integer_retval XS_unpack_gmp_integer_retval(SV* input_sv);
 void XS_pack_gmp_integer_retval(SV* output_sv, gmp_integer_retval input_gmp_integer_retval);
-gmp_integer_rawptr sv_to_gmp_integer_rawptr(SV *input_sv);
-
-// NEED ENABLE OR DELETE
-//gmp_integer_rawptr XS_unpack_gmp_integer_rawptr(SV* input_sv_rawptr);
-//void XS_pack_gmp_integer_rawptr(SV* output_sv, gmp_integer_rawptr input_gmp_integer_rawptr);
 # endif
 
 // [[[ BOOLEANIFY ]]]
 # ifdef __PERL__TYPES
 SV* gmp_integer_to_boolean(SV* input_gmp_integer);
 # elif defined __CPP__TYPES
-boolean gmp_integer_to_boolean(gmp_integer input_gmp_integer);
+boolean gmp_integer_to_boolean(gmp_integer_retval input_gmp_integer_retval);
 # endif
 
 // [[[ UNSIGNED INTEGERIFY ]]]
 # ifdef __PERL__TYPES
 SV* gmp_integer_to_unsigned_integer(SV* input_gmp_integer);
 # elif defined __CPP__TYPES
-unsigned_integer gmp_integer_to_unsigned_integer(gmp_integer input_gmp_integer);
+unsigned_integer gmp_integer_to_unsigned_integer(gmp_integer_retval input_gmp_integer_retval);
 # endif
 
 // [[[ INTEGERIFY ]]]
@@ -101,33 +96,48 @@ integer gmp_integer_to_integer(gmp_integer_retval input_gmp_integer_retval);
 # ifdef __PERL__TYPES
 SV* gmp_integer_to_number(SV* input_gmp_integer);
 # elif defined __CPP__TYPES
-number gmp_integer_to_number(gmp_integer input_gmp_integer);
+number gmp_integer_to_number(gmp_integer_retval input_gmp_integer_retval);
 # endif
 
 // [[[ CHARACTERIFY ]]]
 # ifdef __PERL__TYPES
 SV* gmp_integer_to_character(SV* input_gmp_integer);
 # elif defined __CPP__TYPES
-character gmp_integer_to_character(gmp_integer input_gmp_integer);
+character gmp_integer_to_character(gmp_integer_retval input_gmp_integer_retval);
 # endif
 
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
 SV* gmp_integer_to_string(SV* input_gmp_integer);
 # elif defined __CPP__TYPES
-string gmp_integer_to_string(gmp_integer input_gmp_integer);
+string gmp_integer_to_string(gmp_integer_retval input_gmp_integer_retval);
 # endif
-string gmp_integer_to_string_CPPTYPES(gmp_integer input_gmp_integer);
+string gmp_integer_to_string_CPPTYPES(gmp_integer_retval input_gmp_integer_retval);
+
+// [[[ GMP INTEGERIFY ]]]
+# ifdef __PERL__TYPES
+SV* boolean_to_gmp_integer(SV* input_boolean);
+SV* unsigned_integer_to_gmp_integer(SV* input_unsigned_integer);
+SV* integer_to_gmp_integer(SV* input_integer);
+SV* number_to_gmp_integer(SV* input_number);
+SV* character_to_gmp_integer(SV* input_character);
+SV* string_to_gmp_integer(SV* input_string);
+# elif defined __CPP__TYPES
+gmp_integer_retval boolean_to_gmp_integer(boolean input_boolean);
+gmp_integer_retval unsigned_integer_to_gmp_integer(unsigned_integer input_unsigned_integer);
+gmp_integer_retval integer_to_gmp_integer(integer input_integer);
+gmp_integer_retval number_to_gmp_integer(number input_number);
+gmp_integer_retval character_to_gmp_integer(character input_character);
+gmp_integer_retval string_to_gmp_integer(string input_string);
+# endif
 
 // [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
 SV* gmp_integer__typetest0();
 SV* gmp_integer__typetest1(SV* lucky_gmp_integer);
 # elif defined __CPP__TYPES
-//gmp_integer gmp_integer__typetest0();
-//gmp_integer gmp_integer__typetest1(gmp_integer lucky_gmp_integer);
-string gmp_integer__typetest0();
-string gmp_integer__typetest1(gmp_integer lucky_gmp_integer);
+gmp_integer_retval gmp_integer__typetest0();
+gmp_integer_retval gmp_integer__typetest1(gmp_integer_retval lucky_gmp_integer_retval);
 # endif
 
 #endif

@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-#use rperlgmp;
+use rperlgmp;
 
 use Math::BigInt lib => 'GMP';
 
@@ -10,19 +10,23 @@ RPerl::DataType::GMPInteger_cpp::cpp_load();
 use Data::Dumper;
 print Dumper( \%main:: );
 
-print 'in gmp_symtab_dump.pl, have gmp_integer__typetest0() = ' . gmp_integer__typetest0() . "\n";
+#print 'in gmp_symtab_dump.pl, have gmp_integer__typetest0() = ' . gmp_integer__typetest0() . "\n";
+my gmp_integer $typetested = gmp_integer__typetest0();
+#my gmp_integer $typetested = gmp_integer__typetest0(2112);
+print 'in gmp_symtab_dump.pl, have Dumper($typetested) = ' . Dumper($typetested) . "\n";
+print 'in gmp_symtab_dump.pl, have gmp_get_signed_integer($typetested) = ' . gmp_get_signed_integer($typetested) . "\n";
 
 my integer $foo = 1234567890;
 
 # METHOD D
-#my gmp_integer $tmp3 = gmp_integer->new();
-#gmp_set_signed_integer($tmp3, $foo);
-#print 'in gmp_symtab_dump.pl, have METHOD D gmp_integer_to_integer($tmp3) = ' . gmp_integer_to_integer($tmp3) . "\n";
+my gmp_integer $tmp3 = gmp_integer->new();
+gmp_set_signed_integer($tmp3, $foo);
+print 'in gmp_symtab_dump.pl, have METHOD D gmp_integer_to_integer($tmp3) = ' . gmp_integer_to_integer($tmp3) . "\n";
 
 # METHOD C
-#my RPerl::DataType::GMPInteger $tmp2 = RPerl::DataType::GMPInteger->new();
-#gmp_set_signed_integer($tmp2, $foo);
-#print 'in gmp_symtab_dump.pl, have METHOD C gmp_integer_to_integer($tmp2) = ' . gmp_integer_to_integer($tmp2) . "\n";
+my RPerl::DataType::GMPInteger $tmp2 = RPerl::DataType::GMPInteger->new();
+gmp_set_signed_integer($tmp2, $foo);
+print 'in gmp_symtab_dump.pl, have METHOD C gmp_integer_to_integer($tmp2) = ' . gmp_integer_to_integer($tmp2) . "\n";
 
 # METHOD B
 my Math::BigInt $tmp1 = Math::BigInt->new();
@@ -40,10 +44,11 @@ print 'in gmp_symtab_dump.pl, have METHOD A gmp_integer_to_integer($tmp0) = ' . 
 print "<<<============================>>>\n" x 1;
 
 print 'in gmp_symtab_dump.pl, have Dumper($tmp3) = ' . Dumper($tmp3) . "\n";
-#print 'in gmp_symtab_dump.pl, have Dumper(integer_to_gmp_integer($foo)) = ' . Dumper(integer_to_gmp_integer($foo)) . "\n";
-#print 'in gmp_symtab_dump.pl, have gmp_get_signed_integer(integer_to_gmp_integer($foo)) = ' . gmp_get_signed_integer(integer_to_gmp_integer($foo)) . "\n";
-#print 'in gmp_symtab_dump.pl, have gmp_integer_to_integer(integer_to_gmp_integer($foo)) = ' . gmp_integer_to_integer(integer_to_gmp_integer($foo)) . "\n";
+print 'in gmp_symtab_dump.pl, have Dumper(integer_to_gmp_integer($foo)) = ' . Dumper(integer_to_gmp_integer($foo)) . "\n";
+print 'in gmp_symtab_dump.pl, have gmp_get_signed_integer(integer_to_gmp_integer($foo)) = ' . gmp_get_signed_integer(integer_to_gmp_integer($foo)) . "\n";
+print 'in gmp_symtab_dump.pl, have gmp_integer_to_integer(integer_to_gmp_integer($foo)) = ' . gmp_integer_to_integer(integer_to_gmp_integer($foo)) . "\n";
 
+=DISABLE
 print "<<<============================>>>\n" x 3;
 
 my $rop = Math::BigInt->new(0);
@@ -51,9 +56,10 @@ my $op  = Math::BigInt->new(-123456);
 my $x   = 1103;
 
 gmp_mul_unsigned_integer($rop, $op, $x);
-print (-123456 * 1103);
 print "\n" . $rop . "\n";
+print (-123456 * 1103);
 
 gmp_mul_unsigned_integer($op, $op, 5);
-print (-123456 * 5);
 print "\n" . $op . "\n";
+print (-123456 * 5);
+=cut

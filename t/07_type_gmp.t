@@ -104,6 +104,10 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
     # [[[ BOOLEANIFY TESTS ]]]
     # [[[ BOOLEANIFY TESTS ]]]
 
+# START HERE: test *IFY here; test *IFY in 04*; test typetests()
+# START HERE: test *IFY here; test *IFY in 04*; test typetests()
+# START HERE: test *IFY here; test *IFY in 04*; test typetests()
+
     lives_and(                                                    # TGIV000
         sub {
             my gmp_integer $tmp1 = gmp_integer->new();

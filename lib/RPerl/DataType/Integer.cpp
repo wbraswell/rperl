@@ -90,7 +90,7 @@ SV* integer_to_boolean(SV* input_integer) {
 # elif defined __CPP__TYPES
 
 boolean integer_to_boolean(integer input_integer) {
-    if (input_integer == 0) { return input_integer; }
+    if (input_integer == 0) { return (boolean) input_integer; }
     else { return 1; }
 }
 
@@ -112,8 +112,8 @@ SV* integer_to_unsigned_integer(SV* input_integer) {
 # elif defined __CPP__TYPES
 
 unsigned_integer integer_to_unsigned_integer(integer input_integer) {
-    if (input_integer < 0) { return input_integer * -1; }
-    else { return input_integer; }
+    if (input_integer < 0) { return (unsigned_integer) (input_integer * -1); }
+    else { return (unsigned_integer) input_integer; }
 }
 
 # endif
@@ -234,7 +234,7 @@ string integer_to_string_CPPTYPES(integer input_integer)
 
     if (is_negative) { output_string_underscores = '-' + output_string_underscores; }
 
-    return(output_string_underscores);
+    return output_string_underscores;
 }
 
 // [[[ TYPE TESTING ]]]
@@ -246,14 +246,14 @@ string integer_to_string_CPPTYPES(integer input_integer)
 SV* integer__typetest0() {
 	SV* retval = newSViv((21 / 7) + SvIV(RPerl__DataType__Integer__MODE_ID()));
 //fprintf(stderr, "in CPPOPS_PERLTYPES integer__typetest0(), have retval = %d\n", (integer)SvIV(retval));
-	return(retval);
+	return retval;
 }
 
 SV* integer__typetest1(SV* lucky_integer) {
 //	integer_CHECK(lucky_integer);
 	integer_CHECKTRACE(lucky_integer, "lucky_integer", "integer__typetest1()");
 //fprintf(stderr, "in CPPOPS_PERLTYPES integer__typetest1(), received lucky_integer = %d\n", (integer)SvIV(lucky_integer));
-	return(newSViv((SvIV(lucky_integer) * 2) + SvIV(RPerl__DataType__Integer__MODE_ID())));
+	return newSViv((SvIV(lucky_integer) * 2) + SvIV(RPerl__DataType__Integer__MODE_ID()));
 }
 
 # elif defined __CPP__TYPES
@@ -261,12 +261,12 @@ SV* integer__typetest1(SV* lucky_integer) {
 integer integer__typetest0() {
 	integer retval = (21 / 7) + RPerl__DataType__Integer__MODE_ID();
 //fprintf(stderr, "in CPPOPS_CPPTYPES integer__typetest0(), have retval = %d\n", retval);
-	return(retval);
+	return retval;
 }
 
 integer integer__typetest1(integer lucky_integer) {
 //fprintf(stderr, "in CPPOPS_CPPTYPES integer__typetest1(), received lucky_integer = %d\n", lucky_integer);
-	return((lucky_integer * 2) + RPerl__DataType__Integer__MODE_ID());
+	return (lucky_integer * 2) + RPerl__DataType__Integer__MODE_ID();
 }
 
 # endif

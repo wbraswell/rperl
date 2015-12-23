@@ -3,7 +3,7 @@ using std::cerr;
 using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__GMPInteger_cpp
-#define __CPP__INCLUDED__RPerl__DataType__GMPInteger_cpp 0.001_000
+#define __CPP__INCLUDED__RPerl__DataType__GMPInteger_cpp 0.003_000
 
 // [[[ INCLUDES ]]]
 #include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
@@ -81,7 +81,6 @@ gmp_integer_retval XS_unpack_gmp_integer_retval(SV* input_hv_ref) {
      cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), top of subroutine" << endl;
      HV* input_hv = (HV*)SvRV(input_hv_ref);
      SV** input_hv_value_ptr = hv_fetch(input_hv, (const char*) "value", (U32) 5, (I32) 0);
-     //    gmp_integer_rawptr gmp_integer_tmp = sv_to_gmp_integer_rawptr(*input_hv_value_ptr);
 
      MAGIC* input_hv_value_ptr_magic = SvMAGIC(SvRV(*input_hv_value_ptr));
      cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), received *input_hv_value_ptr = " << *input_hv_value_ptr << endl;
@@ -115,6 +114,7 @@ void XS_pack_gmp_integer_retval(SV* output_hv_ref, gmp_integer_retval input_gmp_
 
     PUSHMARK(SP);
     XPUSHs(sv_2mortal(newSVpv("gmp_integer", 0)));  // callback from C++ to Perl for gmp_integer->new() object constructor, class name is first and only argument
+//    XPUSHs(sv_2mortal(newSVpv("Math::BigInt", 0)));  // DEBUG: don't require 'use rperlgmp;' in calling Perl code
     PUTBACK;
 
     integer callback_retval_count = call_method("new", G_SCALAR);  // actual callback
@@ -210,12 +210,6 @@ void XS_pack_gmp_integer_retval(SV* output_hv_ref, gmp_integer_retval input_gmp_
 }
 
 # endif
-
-
-// START HERE: test BOOLEANIFY, *IFY, GMP INTEGERIFY, etc.; possibly modify typetests() to return numeric types
-// START HERE: test BOOLEANIFY, *IFY, GMP INTEGERIFY, etc.; possibly modify typetests() to return numeric types
-// START HERE: test BOOLEANIFY, *IFY, GMP INTEGERIFY, etc.; possibly modify typetests() to return numeric types
-
 
 // [[[ BOOLEANIFY ]]]
 // [[[ BOOLEANIFY ]]]
@@ -317,7 +311,7 @@ SV* gmp_integer_to_character(SV* input_gmp_integer) {
 
 character gmp_integer_to_character(gmp_integer_retval input_gmp_integer_retval) {
     // NEED OPTIMIZE: remove call to gmp_integer_to_string_CPPTYPES()
-    return (character) gmp_integer_to_string_CPPTYPES(input_gmp_integer_retval.gmp_integer_unretval()).at(0);
+    return (character) gmp_integer_to_string_CPPTYPES(input_gmp_integer_retval).at(0);
 }
 
 # endif
@@ -338,63 +332,61 @@ SV* gmp_integer_to_string(SV* input_gmp_integer) {
 
 // DEV NOTE, CORRELATION #rp10: shim CPPTYPES sub
 string gmp_integer_to_string(gmp_integer_retval input_gmp_integer_retval) {
-    return gmp_integer_to_string_CPPTYPES(input_gmp_integer_retval.gmp_integer_unretval());
+    return gmp_integer_to_string_CPPTYPES(input_gmp_integer_retval);
 }
 
 # endif
 
-/* NEED ENABLE OR DELETE
- // DEV NOTE, CORRELATION #rp09: must use return type 'string' instead of 'std::string' for proper typemap pack/unpack function name alignment;
- // can cause silent failure, falling back to __PERL__TYPES implementation and NOT failure of tests!
- // DEV NOTE, CORRELATION #rp10: the real CPPTYPES sub (below) is called by the wrapper PERLTYPES sub and shim CPPTYPES subs (above), moved outside #ifdef blocks
- string gmp_integer_to_string_CPPTYPES(gmp_integer_retval input_gmp_integer_retval)
- {
- //    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), top of subroutine, received unformatted input_gmp_integer_retval = %d\n", input_gmp_integer_retval);
- //    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES()...\n");
+// DEV NOTE, CORRELATION #rp09: must use return type 'string' instead of 'std::string' for proper typemap pack/unpack function name alignment;
+// can cause silent failure, falling back to __PERL__TYPES implementation and NOT failure of tests!
+// DEV NOTE, CORRELATION #rp10: the real CPPTYPES sub (below) is called by the wrapper PERLTYPES sub and shim CPPTYPES subs (above), moved outside #ifdef blocks
+string gmp_integer_to_string_CPPTYPES(gmp_integer_retval input_gmp_integer_retval)
+{
+//    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), top of subroutine, received unformatted input_gmp_integer_retval = %d\n", input_gmp_integer_retval);
+//    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES()...\n");
 
- std::ostringstream output_stream;
- output_stream.precision(std::numeric_limits<double>::digits10);
- output_stream << gmp_get_signed_integer(input_gmp_integer_retval.gmp_integer_unretval());
+    std::ostringstream output_stream;
+    output_stream.precision(std::numeric_limits<double>::digits10);
+    output_stream << gmp_get_signed_integer(input_gmp_integer_retval.gmp_integer_unretval());
 
- // DEV NOTE: disable old stringify w/out underscores
- //  return(output_stream.str());
+// DEV NOTE: disable old stringify w/out underscores
+//  return(output_stream.str());
 
- string output_string = output_stream.str();
- //    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), have output_string = %s\n", output_string.c_str());
+    string output_string = output_stream.str();
+//    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), have output_string = %s\n", output_string.c_str());
 
- boolean is_negative = 0;
- if (input_gmp_integer_retval.gmp_integer_unretval() < 0) { is_negative = 1; }
+    boolean is_negative = 0;
+    if (input_gmp_integer_retval.gmp_integer_unretval() < 0) { is_negative = 1; }
 
- std::reverse(output_string.begin(), output_string.end());
+    std::reverse(output_string.begin(), output_string.end());
 
- //    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), have reversed output_string = %s\n", output_string.c_str());
- if (is_negative) { output_string.pop_back(); }  // remove negative sign
+//    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), have reversed output_string = %s\n", output_string.c_str());
+    if (is_negative) { output_string.pop_back(); }  // remove negative sign
 
- string output_string_underscores = "";
- for(std::string::size_type i = 0; i < output_string.size(); ++i) {
- //        fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), inside output_string underscore loop, have i = %d, output_string[i] = %c\n", (int)i, output_string[i]);
- output_string_underscores += output_string[i];
- if (((i % 3) == 2) && (i > 0) && (i != (output_string.size() - 1))) {
- //            fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), AND UNDERSCORE \n");
- output_string_underscores += '_';
- }
- }
+    string output_string_underscores = "";
+    for(std::string::size_type i = 0; i < output_string.size(); ++i) {
+//        fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), inside output_string underscore loop, have i = %d, output_string[i] = %c\n", (int)i, output_string[i]);
+        output_string_underscores += output_string[i];
+        if (((i % 3) == 2) && (i > 0) && (i != (output_string.size() - 1))) {
+//            fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), AND UNDERSCORE \n");
+            output_string_underscores += '_';
+        }
+    }
 
- //    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), have reversed output_string_underscores = %s\n", output_string_underscores.c_str());
+//    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), have reversed output_string_underscores = %s\n", output_string_underscores.c_str());
 
- std::reverse(output_string_underscores.begin(), output_string_underscores.end());
+    std::reverse(output_string_underscores.begin(), output_string_underscores.end());
 
- if (output_string_underscores == "") {
- output_string_underscores = "0";
- }
+    if (output_string_underscores == "") {
+        output_string_underscores = "0";
+    }
 
- //    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), have unreversed output_string_underscores = %s\n", output_string_underscores.c_str());
+//    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), have unreversed output_string_underscores = %s\n", output_string_underscores.c_str());
 
- if (is_negative) { output_string_underscores = '-' + output_string_underscores; }
+    if (is_negative) { output_string_underscores = '-' + output_string_underscores; }
 
- return output_string_underscores;
- }
- */
+    return output_string_underscores;
+}
 
 // [[[ GMP INTEGERIFY ]]]
 // [[[ GMP INTEGERIFY ]]]
@@ -402,11 +394,51 @@ string gmp_integer_to_string(gmp_integer_retval input_gmp_integer_retval) {
 
 # ifdef __PERL__TYPES
 
+SV* boolean_to_gmp_integer(SV* input_boolean) {
+//    boolean_CHECK(input_boolean);
+    boolean_CHECKTRACE(input_boolean, "input_boolean", "boolean_to_gmp_integer()");
+    // NEED ADD CODE
+}
+
+SV* unsigned_integer_to_gmp_integer(SV* input_unsigned_integer) {
+//    unsigned_integer_CHECK(input_unsigned_integer);
+    unsigned_integer_CHECKTRACE(input_unsigned_integer, "input_unsigned_integer", "unsigned_integer_to_gmp_integer()");
+    // NEED ADD CODE
+}
+
 SV* integer_to_gmp_integer(SV* input_integer) {
+//    integer_CHECK(input_integer);
+    integer_CHECKTRACE(input_integer, "input_integer", "integer_to_gmp_integer()");
+    // NEED ADD CODE
+}
+
+SV* number_to_gmp_integer(SV* input_number) {
+//    number_CHECK(input_number);
+    number_CHECKTRACE(input_number, "input_number", "number_to_gmp_integer()");
+    // NEED ADD CODE
+}
+
+SV* character_to_gmp_integer(SV* input_character) {
+//    character_CHECK(input_character);
+    character_CHECKTRACE(input_character, "input_character", "character_to_gmp_integer()");
+    // NEED ADD CODE
+}
+
+SV* string_to_gmp_integer(SV* input_string) {
+//    string_CHECK(input_string);
+    string_CHECKTRACE(input_string, "input_string", "string_to_gmp_integer()");
     // NEED ADD CODE
 }
 
 # elif defined __CPP__TYPES
+
+gmp_integer_retval boolean_to_gmp_integer(boolean input_boolean) {
+    return (gmp_integer_retval) input_boolean;
+}
+
+gmp_integer_retval unsigned_integer_to_gmp_integer(unsigned_integer input_unsigned_integer) {
+    return (gmp_integer_retval) input_unsigned_integer;
+}
 
 gmp_integer_retval integer_to_gmp_integer(integer input_integer) {
 //    cerr << "in integer_to_gmp_integer(), top of subroutine, received input_integer = " << input_integer << endl;
@@ -419,6 +451,18 @@ gmp_integer_retval integer_to_gmp_integer(integer input_integer) {
 
     // SHORT FORM
     return (gmp_integer_retval) input_integer;
+}
+
+gmp_integer_retval number_to_gmp_integer(number input_number) {
+    return (gmp_integer_retval) ((integer) floor(input_number));
+}
+
+gmp_integer_retval character_to_gmp_integer(character input_character) {
+    return (gmp_integer_retval) atoi(&input_character);
+}
+
+gmp_integer_retval string_to_gmp_integer(string input_string) {
+    return (gmp_integer_retval) atoi(input_string.c_str());
 }
 
 # endif
@@ -441,24 +485,21 @@ SV* gmp_integer__typetest1(SV* lucky_gmp_integer) {
 
 # elif defined __CPP__TYPES
 
-//gmp_integer gmp_integer__typetest0() {
-string gmp_integer__typetest0() {
-    gmp_integer retval;
-    gmp_init(retval);
-    gmp_set_signed_integer(retval,
-            (21 / 7) + RPerl__DataType__GMPInteger__MODE_ID());
+gmp_integer_retval gmp_integer__typetest0() {
+    // LONG FORM
+//    gmp_integer retval;
+//    gmp_init(retval);
+//    gmp_set_signed_integer(retval, (21 / 7) + RPerl__DataType__GMPInteger__MODE_ID());
 //fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer__typetest0(), have retval = %d\n", retval);
-    return gmp_get_string(retval);
+//    return (gmp_integer_retval) retval;
+
+    // SHORT FORM
+    RPerl_object_property_init(newSViv(0));  // in sub not accepting any arguments, must call this crazy subroutine to  avoid "panic: attempt to copy freed scalar..."
+    return (gmp_integer_retval) ((21 / 7) + RPerl__DataType__GMPInteger__MODE_ID());
 }
 
-//gmp_integer gmp_integer__typetest1(gmp_integer lucky_gmp_integer) {
-string gmp_integer__typetest1(gmp_integer lucky_gmp_integer) {
-//fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer__typetest1(), received lucky_gmp_integer = %d\n", lucky_gmp_integer);
-    gmp_integer retval;
-    gmp_set_signed_integer(retval,
-            (gmp_get_signed_integer(lucky_gmp_integer) * 2) + RPerl__DataType__GMPInteger__MODE_ID());
-//	return retval;
-    return gmp_get_string(retval);
+gmp_integer_retval gmp_integer__typetest1(gmp_integer_retval lucky_gmp_integer_retval) {
+    return (gmp_integer_retval) ((gmp_get_signed_integer(lucky_gmp_integer_retval.gmp_integer_unretval()) * 2) + RPerl__DataType__GMPInteger__MODE_ID());
 }
 
 # endif

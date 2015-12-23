@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Number_cpp
-#define __CPP__INCLUDED__RPerl__DataType__Number_cpp 0.004_100
+#define __CPP__INCLUDED__RPerl__DataType__Number_cpp 0.006_000
 
 // [[[ INCLUDES ]]]
 #include <RPerl/DataType/Number.h>  // -> NULL (relies on native C type)
@@ -57,8 +57,8 @@ number XS_unpack_number(SV* input_sv) {
 
 //fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number(), bottom of subroutine\n");
 
-	return((number)SvNV(input_sv));
-//	return(output_number);
+	return (number)SvNV(input_sv);
+//	return output_number;
 }
 
 // convert from (C number) to (Perl SV containing number)
@@ -73,6 +73,97 @@ void XS_pack_number(SV* output_sv, number input_number) {
 }
 
 //# endif
+
+
+
+
+
+
+
+// [[[ BOOLEANIFY ]]]
+// [[[ BOOLEANIFY ]]]
+// [[[ BOOLEANIFY ]]]
+
+# ifdef __PERL__TYPES
+
+SV* number_to_boolean(SV* input_number) {
+//  number_CHECK(input_number);
+    number_CHECKTRACE(input_number, "input_number", "number_to_boolean()");
+    if (SvNV(input_number) == 0) { return input_number; }
+    else { return newSViv(1); }
+}
+
+# elif defined __CPP__TYPES
+
+boolean number_to_boolean(number input_number) {
+    if (input_number == 0) { return (boolean) input_number; }
+    else { return 1; }
+}
+
+# endif
+
+// [[[ UNSIGNED INTEGERIFY ]]]
+// [[[ UNSIGNED INTEGERIFY ]]]
+// [[[ UNSIGNED INTEGERIFY ]]]
+
+# ifdef __PERL__TYPES
+
+SV* number_to_unsigned_integer(SV* input_number) {
+//  number_CHECK(input_number);
+    number_CHECKTRACE(input_number, "input_number", "number_to_unsigned_integer()");
+    if (SvIV(input_number) < 0) { return newSViv(SvIV(input_number) * -1); }
+    else { return input_number; }
+}
+
+# elif defined __CPP__TYPES
+
+unsigned_integer number_to_unsigned_integer(number input_number) {
+    if (input_number < 0) { return (unsigned_integer) (input_number * -1); }
+    else { return (unsigned_integer) input_number; }
+}
+
+# endif
+
+// [[[ INTEGERIFY ]]]
+// [[[ INTEGERIFY ]]]
+// [[[ INTEGERIFY ]]]
+
+# ifdef __PERL__TYPES
+
+SV* number_to_integer(SV* input_number) {
+//  number_CHECK(input_number);
+    number_CHECKTRACE(input_number, "input_number", "number_to_integer()");
+    return newSViv((integer) floor(SvNV(input_number)));
+}
+
+# elif defined __CPP__TYPES
+
+integer number_to_integer(number input_number) {
+    return (integer) floor(input_number);
+}
+
+# endif
+
+// [[[ CHARACTERIFY ]]]
+// [[[ CHARACTERIFY ]]]
+// [[[ CHARACTERIFY ]]]
+
+# ifdef __PERL__TYPES
+
+SV* number_to_character(SV* input_number) {
+//  number_CHECK(input_number);
+    number_CHECKTRACE(input_number, "input_number", "number_to_character()");
+    // NEED ADD CODE
+}
+
+# elif defined __CPP__TYPES
+
+character number_to_character(number input_number) {
+    // NEED OPTIMIZE: remove call to number_to_string_CPPTYPES()
+    return (character) number_to_string_CPPTYPES(input_number).at(0);
+}
+
+# endif
 
 // [[[ STRINGIFY ]]]
 // [[[ STRINGIFY ]]]
@@ -94,20 +185,20 @@ SV* number_to_string(SV* input_number)
     output_stream << (double)SvNV(input_number);
     return(newSVpv((const char *)((output_stream.str()).c_str()), 0)); */
 
-	return(newSVpv((const char *)((number_to_string_CPPTYPES((double)SvNV(input_number))).c_str()), 0));
+	return newSVpv((const char *)((number_to_string_CPPTYPES((double)SvNV(input_number))).c_str()), 0);
 
 	// DEV NOTE: none of these fprintf(stderr, )-type solutions count significant digits both before and after the decimal point,
 	// so we fall back to utilizing C++ ostringstream which stringifies floating point numbers exactly the same as Perl (AFAICTSF)
-//	return(newSVpvf("%16.32Lf", (double)SvNV(input_number)));
-//	return(newSVpvf("%"NVff"", SvNV(input_number)));
-//	return(newSVpvf("%"NVff"", 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679));
+//	return newSVpvf("%16.32Lf", (double)SvNV(input_number));
+//	return newSVpvf("%"NVff"", SvNV(input_number));
+//	return newSVpvf("%"NVff"", 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679);
 }
 
 # elif defined __CPP__TYPES
 
 // DEV NOTE, CORRELATION #rp10: shim CPPTYPES sub
 string number_to_string(number input_number) {
-    return(number_to_string_CPPTYPES(input_number));
+    return number_to_string_CPPTYPES(input_number);
 }
 
 # endif
@@ -182,7 +273,7 @@ string number_to_string_CPPTYPES(number input_number)
 
     if (is_negative) { whole_part_underscores = '-' + whole_part_underscores; }
 
-    return(whole_part_underscores);
+    return whole_part_underscores;
 }
 
 // [[[ TYPE TESTING ]]]
@@ -194,14 +285,14 @@ string number_to_string_CPPTYPES(number input_number)
 SV* number__typetest0() {
 	SV* retval = newSVnv((22.0 / 7.0) + SvIV(RPerl__DataType__Number__MODE_ID()));
 //fprintf(stderr, "in CPPOPS_PERLTYPES number__typetest0(), have unformatted retval = %Lf\n", (number)SvNV(retval));
-	return(retval);
+	return retval;
 }
 
 SV* number__typetest1(SV* lucky_number) {
 //	number_CHECK(lucky_number);
 	number_CHECKTRACE(lucky_number, "lucky_number", "number__typetest1()");
 //fprintf(stderr, "in CPPOPS_PERLTYPES number__typetest1(), have received lucky_number = %Lf\n", (number)SvNV(lucky_number));
-	return(newSVnv((SvNV(lucky_number) * 2.0) + SvIV(RPerl__DataType__Number__MODE_ID())));
+	return newSVnv((SvNV(lucky_number) * 2.0) + SvIV(RPerl__DataType__Number__MODE_ID()));
 }
 
 # elif defined __CPP__TYPES
@@ -209,12 +300,12 @@ SV* number__typetest1(SV* lucky_number) {
 number number__typetest0() {
 	number retval = (22.0 / 7.0) + RPerl__DataType__Number__MODE_ID();
 //fprintf(stderr, "in CPPOPS_CPPTYPES number__typetest0(), have unformatted retval = %Lf\n", retval);
-	return(retval);
+	return retval;
 }
 
 number number__typetest1(number lucky_number) {
 	//fprintf(stderr, "in CPPOPS_CPPTYPES number__typetest1(), received unformatted lucky_number = %Lf\n", lucky_number);
-	return((lucky_number * 2.0) + RPerl__DataType__Number__MODE_ID());
+	return (lucky_number * 2.0) + RPerl__DataType__Number__MODE_ID();
 }
 
 # endif

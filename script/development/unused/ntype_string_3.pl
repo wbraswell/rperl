@@ -34,5 +34,5 @@ void XS_pack_string(SV* output_sv, string input_string) {
 
 string string__typetest0() {
 	string retval = "Spice CPPOPS_CPPTYPES";
-	return(retval);
+	return retval;
 }

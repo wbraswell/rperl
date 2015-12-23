@@ -41,7 +41,7 @@ public:
 string Foo__Bar__MyClass::mymethod(string myinput) {
     cout << "Namespace Hack, received myinput = '" << myinput << "'\n";
 	string retval = "Namespace Hack retval, Armstrong CPPOPS_CPPTYPES";
-	return(retval);
+	return retval;
 }
 
 class Foo__Bar__YourClass
@@ -56,5 +56,5 @@ public:
 string Foo__Bar__YourClass::yourmethod(string yourinput) {
     cout << "Namespace Hack, received yourinput = '" << yourinput << "'\n";
 	string retval = "Namespace Hack retval, Aldrin CPPOPS_CPPTYPES";
-	return(retval);
+	return retval;
 }

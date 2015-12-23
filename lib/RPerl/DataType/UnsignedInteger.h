@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_h
-#define __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_h 0.002_000
+#define __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_h 0.005_000
 
 // [[[ TYPEDEFS ]]]
 # ifndef __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_h__typedefs
@@ -64,6 +64,34 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 unsigned_integer XS_unpack_unsigned_integer(SV* input_sv);
 void XS_pack_unsigned_integer(SV* output_sv, unsigned_integer input_unsigned_integer);
 //# endif
+
+// [[[ BOOLEANIFY ]]]
+# ifdef __PERL__TYPES
+SV* unsigned_integer_to_boolean(SV* input_unsigned_integer);
+# elif defined __CPP__TYPES
+boolean unsigned_integer_to_boolean(unsigned_integer input_unsigned_integer);
+# endif
+
+// [[[ INTEGERIFY ]]]
+# ifdef __PERL__TYPES
+SV* unsigned_integer_to_integer(SV* input_unsigned_integer);
+# elif defined __CPP__TYPES
+integer unsigned_integer_to_integer(unsigned_integer input_unsigned_integer);
+# endif
+
+// [[[ NUMBERIFY ]]]
+# ifdef __PERL__TYPES
+SV* unsigned_integer_to_number(SV* input_unsigned_integer);
+# elif defined __CPP__TYPES
+number unsigned_integer_to_number(unsigned_integer input_unsigned_integer);
+# endif
+
+// [[[ CHARACTERIFY ]]]
+# ifdef __PERL__TYPES
+SV* unsigned_integer_to_character(SV* input_unsigned_integer);
+# elif defined __CPP__TYPES
+character unsigned_integer_to_character(unsigned_integer input_unsigned_integer);
+# endif
 
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
