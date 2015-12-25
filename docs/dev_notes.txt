@@ -234,7 +234,7 @@ $ perl -e 'use RPerl;'
 $ mv RPerl*.tar.gz backup/
 $ git add -A
 $ git commit -a
-	# CPAN Release, v1.00000X; FOO, BAR BAZ
+	# CPAN Release, vX.Y00000; Codename FOO, BAR Edition
 $ git push origin master
 $ apt-get install libssl-dev
 	# to avoid 'fatal error: openssl/err.h: No such file or directory' during install of Net::SSLeay, subdep of CPAN::Uploader
