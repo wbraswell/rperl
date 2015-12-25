@@ -3,7 +3,7 @@ package RPerl::DataType::GMPInteger;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(Math::BigInt RPerl::DataType::Scalar);  # DEV NOTE: multiple inheritance!
@@ -43,11 +43,12 @@ use strict;
 use warnings;
 
 # [[[ INCLUDES ]]]
-# for type-checking via RPerl_SvHROKp(); inside INIT to delay until after 'use MyConfig'
-INIT {
+# for type-checking via RPerl_SvHROKp(); inside INIT to delay until after 'use MyConfig';
+# NEED ADDRESS: INIT disabled due to warning "too late to run INIT block", do we need it any more?
+#INIT {
     use RPerl::HelperFunctions_cpp;
     RPerl::HelperFunctions_cpp::cpp_load();
-}
+#}
 use RPerl::Operation::Expression::Operator::GMPFunctions;
 
 # [[[ EXPORTS ]]]

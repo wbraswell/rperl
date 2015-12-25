@@ -1,7 +1,4 @@
-DONE allow unsigned_integer as loop index
-DONE enable SSE and GMP support only when needed
-DONE disable SSE on Arm architectures
-PARTIAL Add Initial GMP Support
+Unsigned Integer Fix
 
 	full boolean support via Boolean.cpp/h, rperltypes.pm, SvBOKp(), etc.
 	char type-testing subroutines in Character.pm
@@ -9,7 +6,6 @@ PARTIAL Add Initial GMP Support
 	full unsigned_integer support via UnsignedInteger.cpp/h, rperltypes.pm, SvUIOKp(), etc.
 	CPPOPS_CPPTYPES conversion routines
 
-DONE??? enable opstrings as hash keys
 export ::*_*ref_to_*() conversion subroutines the same as ::*_to_*() subs in rperltypesconv.pm, remove leading scopes in all calls
 
 Windows Testing, add ci.appveyor.com github webhook

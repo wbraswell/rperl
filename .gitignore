@@ -19,6 +19,7 @@
 /lib/RPerl/DataStructure/Array/_Inline
 /lib/RPerl/_Inline
 /lib/RPerl/CompileUnit/_Inline
+/lib/RPerl/DataType/_Inline
 
 # [ CPAN Build & Distribution ]
 # NEED UPDATE, CORRELATION #rp06: list of CPAN files & directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP

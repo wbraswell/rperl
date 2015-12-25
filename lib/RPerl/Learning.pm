@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.011_000;
+our $VERSION = 0.011_001;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -645,7 +645,7 @@ RPerl provides 7 scalar data types:
 
 =item * C<number> (core)
 
-=item * C<char>
+=item * C<character>
 
 =item * C<string> (core)
 
@@ -667,11 +667,11 @@ A single group of actual numeric digit(s) or quoted string character(s) is calle
 
     'One million, two-hundred-thirty-four thousand, five-hundred-sixty-seven'  # string
 
-    "\n"        # newline char or string
+    "\n"        # newline character or string
 
-    '1'         # char or string
+    '1'         # character or string
 
-    q{}         # empty char or string
+    q{}         # empty character or string
 
     0           # boolean or integer or number
 
@@ -837,7 +837,7 @@ RPerl provides 2 text data types:
 
 =over
 
-=item * C<char>
+=item * C<character>
 
 S< >S< >S< >S< >a single text character; either a letter, number, or special character
 
@@ -861,35 +861,35 @@ RPerl provides 3 delimiters for enclosing text data:
 
 =head3 Section 2.2.1: Char Literals
 
-The most memory-efficient text literal is C<char>, which represents exactly zero or one character of information.  A C<char> may express the value of any single numeric digit (0, 1, 2, ..., 8, 9); letter (a, b, c, ..., y, z, A, B, C, ..., Y, Z ); or special ASCII character (!, #, *, +, etc).  If the C<char> literal has length zero, it is called the I<"empty character"> and contains no data.
+The most memory-efficient text literal is C<character>, which represents exactly zero or one character of information.  A C<character> may express the value of any single numeric digit (0, 1, 2, ..., 8, 9); letter (a, b, c, ..., y, z, A, B, C, ..., Y, Z ); or special ASCII character (!, #, *, +, etc).  If the C<character> literal has length zero, it is called the I<"empty character"> and contains no data.
 
-    ''          # not a char, use q{} for empty character
-    '0'         # char
-    'h'         # char
-    '+'         # char
-    '\n'        # not a char, too many characters, use "\n" for newline character
-    '-1'        # not a char, too many characters
-    'howdy23!'  # not a char, too many characters
+    ''          # not a character, use q{} for empty character
+    '0'         # character
+    'h'         # character
+    '+'         # character
+    '\n'        # not a character, too many characters, use "\n" for newline character
+    '-1'        # not a character, too many characters
+    'howdy23!'  # not a character, too many characters
 
-    ""          # not a char, use q{} for empty character
-    "0"         # char
-    "h"         # char
-    "+"         # char
-    "\n"        # char, newline character
-    "-1"        # not a char, too many characters & invalid use of double quotes
-    "howdy23!"  # not a char, too many characters & invalid use of double quotes
+    ""          # not a character, use q{} for empty character
+    "0"         # character
+    "h"         # character
+    "+"         # character
+    "\n"        # character, newline
+    "-1"        # not a character, too many characters & invalid use of double quotes
+    "howdy23!"  # not a character, too many characters & invalid use of double quotes
 
-    q{}          # char, empty character
-    q{0}         # char
-    q{h}         # char
-    q{+}         # char
-    q{\n}        # not a char, too many characters, use "\n" for newline character
-    q{-1}        # not a char, too many characters
-    q{howdy23!}  # not a char, too many characters
+    q{}          # character, empty
+    q{0}         # character
+    q{h}         # character
+    q{+}         # character
+    q{\n}        # not a character, too many characters, use "\n" for newline character
+    q{-1}        # not a character, too many characters
+    q{howdy23!}  # not a character, too many characters
 
 =head3 Section 2.2.2: String Literals
 
-Any text data more than 1 character in length must be represented by a C<string> literal, which is comprised of any combination of valid C<char> literal characters (numeric digits, letters, and special ASCII characters).  Like the empty character, if a C<string> literal has length zero then it is called the I<"empty string"> and contains no data.
+Any text data more than 1 character in length must be represented by a C<string> literal, which is comprised of any combination of valid C<character> literal characters (numeric digits, letters, and special ASCII characters).  Like the empty character, if a C<string> literal has length zero then it is called the I<"empty string"> and contains no data.
 
     ''          # not a string, use q{} for empty string
     '0'         # string
@@ -961,7 +961,7 @@ Text literals enclosed in double quotes are fully interpolated in normal Perl, a
 
 String interpolation in normal Perl is triggered by finding either the C<$> dollar sign or C<@> I<"at sign"> characters inside of a double-quoted string literal.  Because RPerl does not support string interpolation, double-quoted string literals must not contain the C<$> or C<@> characters.
 
-String interpolation is also triggered by finding a C<\> backslash character followed by one or more special I<"escape characters">, which are mostly comprised of otherwise-normal characters such as numbers and lowercase letters.  When a backslash is followed by valid escape characters, it is called an I<"escape sequence">.  Each valid escape sequence actually counts as only one character, even though it is represented by 2 or more typed characters, so a single escape sequence may be utilized as either a C<char> text literal or a C<string> text literal.  The special C<\n> newline and C<\t> tab characters are themselves escape sequences, and are the only allowed escape sequences in RPerl.  (Thus, C<"\n"> and C<"\t"> may both be utilized as either a C<char> or C<string> text literal in RPerl.)  Double-quoted string literals must not contain any backslash characters, other than those used in newline and tab escape sequences.
+String interpolation is also triggered by finding a C<\> backslash character followed by one or more special I<"escape characters">, which are mostly comprised of otherwise-normal characters such as numbers and lowercase letters.  When a backslash is followed by valid escape characters, it is called an I<"escape sequence">.  Each valid escape sequence actually counts as only one character, even though it is represented by 2 or more typed characters, so a single escape sequence may be utilized as either a C<> text literal or a C<string> text literal.  The special C<\n> newline and C<\t> tab characters are themselves escape sequences, and are the only allowed escape sequences in RPerl.  (Thus, C<"\n"> and C<"\t"> may both be utilized as either a C<> or C<string> text literal in RPerl.)  Double-quoted string literals must not contain any backslash characters, other than those used in newline and tab escape sequences.
 
 Double-quoted text literals must B<not> contain:
 

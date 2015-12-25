@@ -1,5 +1,17 @@
 Revision history for Perl compiler RPerl.
 
+1.400000 2015-12-25 Codename Venus
+
+    - HOLIDAY EDITION: Merry Christmas!
+    - GMP Multi-Precision Integer Support
+        Subroutine Argument & Return Value, Automatic Packing & Unpacking
+    - Allow Hash Keys With Operator Names ('x', 'sin', etc.)
+    - Allow unsigned_integer Data Type As Loop Index
+    - Enable SSE & GMP Support Only When Needed
+    - Disable SSE On Arm Architectures
+    - Support OpenBenchmarks.org: Bubble Sort, n-Body, Pi Digits
+    - Support Perl v5.22
+
 1.300000 2015-11-26 Codename Pluto
 
     - HOLIDAY EDITION: Happy Thanksgiving!
