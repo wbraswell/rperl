@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use rperlgmp;
+#use rperlgmp;
 
 use Math::BigInt lib => 'GMP';
 
@@ -9,6 +9,7 @@ RPerl::DataType::GMPInteger_cpp::cpp_load();
 
 use Data::Dumper;
 print Dumper( \%main:: );
+die 'TMP DEBUG';
 
 #print 'in gmp_symtab_dump.pl, have gmp_integer__typetest0() = ' . gmp_integer__typetest0() . "\n";
 my gmp_integer $typetested = gmp_integer__typetest0();
@@ -19,14 +20,14 @@ print 'in gmp_symtab_dump.pl, have gmp_get_signed_integer($typetested) = ' . gmp
 my integer $foo = 1234567890;
 
 # METHOD D
-my gmp_integer $tmp3 = gmp_integer->new();
-gmp_set_signed_integer($tmp3, $foo);
-print 'in gmp_symtab_dump.pl, have METHOD D gmp_integer_to_integer($tmp3) = ' . gmp_integer_to_integer($tmp3) . "\n";
+#my gmp_integer $tmp3 = gmp_integer->new();
+#gmp_set_signed_integer($tmp3, $foo);
+#print 'in gmp_symtab_dump.pl, have METHOD D gmp_integer_to_integer($tmp3) = ' . gmp_integer_to_integer($tmp3) . "\n";
 
 # METHOD C
-my RPerl::DataType::GMPInteger $tmp2 = RPerl::DataType::GMPInteger->new();
-gmp_set_signed_integer($tmp2, $foo);
-print 'in gmp_symtab_dump.pl, have METHOD C gmp_integer_to_integer($tmp2) = ' . gmp_integer_to_integer($tmp2) . "\n";
+#my RPerl::DataType::GMPInteger $tmp2 = RPerl::DataType::GMPInteger->new();
+#gmp_set_signed_integer($tmp2, $foo);
+#print 'in gmp_symtab_dump.pl, have METHOD C gmp_integer_to_integer($tmp2) = ' . gmp_integer_to_integer($tmp2) . "\n";
 
 # METHOD B
 my Math::BigInt $tmp1 = Math::BigInt->new();

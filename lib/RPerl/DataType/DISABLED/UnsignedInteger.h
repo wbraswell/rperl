@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_h
-#define __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_h 0.001_000
+#define __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_h 0.005_000
 
 // [[[ TYPEDEFS ]]]
 # ifndef __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_h__typedefs
@@ -38,15 +38,15 @@ typedef std::ostringstream ostringstream;
 // [[[ TYPE-CHECKING MACROS ]]]
 #define unsigned_integer_CHECK(possible_unsigned_integer) \
 	(not(SvOK(possible_unsigned_integer)) ? \
-			croak("\nERROR EIV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nunsigned_integer value expected but undefined/null value found,\ncroaking") : \
+			croak("\nERROR EUIV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nunsigned_integer value expected but undefined/null value found,\ncroaking") : \
 			(not(SvUIOKp(possible_unsigned_integer)) ? \
-					croak("\nERROR EIV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nunsigned_integer value expected but non-unsigned_integer value found,\ncroaking") : \
+					croak("\nERROR EUIV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nunsigned_integer value expected but non-unsigned_integer value found,\ncroaking") : \
 					(void)0))
 #define unsigned_integer_CHECKTRACE(possible_unsigned_integer, variable_name, subroutine_name) \
 	(not(SvOK(possible_unsigned_integer)) ? \
-			croak("\nERROR EIV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nunsigned_integer value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
+			croak("\nERROR EUIV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nunsigned_integer value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
 			(not(SvUIOKp(possible_unsigned_integer)) ? \
-					croak("\nERROR EIV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nunsigned_integer value expected but non-unsigned_integer value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
+					croak("\nERROR EUIV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nunsigned_integer value expected but non-unsigned_integer value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
 					(void)0))
 
 // [[[ OPERATIONS & DATA TYPES REPORTER ]]]
@@ -72,7 +72,7 @@ SV* unsigned_integer_to_boolean(SV* input_unsigned_integer);
 boolean unsigned_integer_to_boolean(unsigned_integer input_unsigned_integer);
 # endif
 
-// [[[ UNSIGNED INTEGERIFY ]]]
+// [[[ INTEGERIFY ]]]
 # ifdef __PERL__TYPES
 SV* unsigned_integer_to_integer(SV* input_unsigned_integer);
 # elif defined __CPP__TYPES
@@ -101,6 +101,7 @@ string unsigned_integer_to_string(unsigned_integer input_unsigned_integer);
 # endif
 string unsigned_integer_to_string_CPPTYPES(unsigned_integer input_unsigned_integer);
 
+/*
 // [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
 SV* unsigned_integer__typetest0();
@@ -109,5 +110,6 @@ SV* unsigned_integer__typetest1(SV* lucky_unsigned_integer);
 unsigned_integer unsigned_integer__typetest0();
 unsigned_integer unsigned_integer__typetest1(unsigned_integer lucky_unsigned_integer);
 # endif
+*/
 
 #endif

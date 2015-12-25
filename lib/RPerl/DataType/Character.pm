@@ -3,7 +3,7 @@ package RPerl::DataType::Character;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_100;
+our $VERSION = 0.005_200;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::String);
@@ -24,8 +24,6 @@ package    # hide from PAUSE indexing
     unsigned_integer;
 package     # hide from PAUSE indexing
     integer;
-package    # hide from PAUSE indexing
-    gmp_integer;
 package    # hide from PAUSE indexing
     number;
 package    # hide from PAUSE indexing
@@ -56,6 +54,8 @@ our void $character_CHECKTRACE = sub {
 #our boolean $character_to_boolean = sub {
 sub character_to_boolean {
     (my character $input_character) = @_;
+#    character_CHECK($lucky_character);
+    character_CHECKTRACE( $input_character, '$input_character', 'character_to_boolean()' );
     if (($input_character * 1) == 0) { return 0; }
     else { return 1; }
 }
@@ -64,6 +64,8 @@ sub character_to_boolean {
 #our unsigned_integer $character_to_unsigned_integer = sub {
 sub character_to_unsigned_integer {
     (my character $input_character) = @_;
+#    character_CHECK($lucky_character);
+    character_CHECKTRACE( $input_character, '$input_character', 'character_to_unsigned_integer()' );
     return floor abs ($input_character * 1);
 }
 
@@ -71,6 +73,8 @@ sub character_to_unsigned_integer {
 #our integer $character_to_integer = sub {
 sub character_to_integer {
     (my character $input_character) = @_;
+#    character_CHECK($lucky_character);
+    character_CHECKTRACE( $input_character, '$input_character', 'character_to_integer()' );
     return floor ($input_character * 1);
 }
 
@@ -78,6 +82,8 @@ sub character_to_integer {
 #our number $character_to_number = sub {
 sub character_to_number {
     (my character $input_character) = @_;
+#    character_CHECK($lucky_character);
+    character_CHECKTRACE( $input_character, '$input_character', 'character_to_number()' );
     return $input_character * 1.0;
 }
 
@@ -85,6 +91,8 @@ sub character_to_number {
 #our string $character_to_string = sub {
 sub character_to_string {
     (my character $input_character) = @_;
+#    character_CHECK($lucky_character);
+    character_CHECKTRACE( $input_character, '$input_character', 'character_to_string()' );
     return $input_character;
 }
 
@@ -94,6 +102,8 @@ our character $character__typetest0 = sub {
 };
 our character $character__typetest1 = sub {
     (my character $lucky_character) = @_;
+#    character_CHECK($lucky_character);
+    character_CHECKTRACE( $lucky_character, '$lucky_character', 'character__typetest1()' );
     return chr((ord $lucky_character) + main::RPerl__DataType__Character__MODE_ID());
 };
 

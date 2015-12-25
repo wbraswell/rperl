@@ -3,7 +3,7 @@ package RPerl::DataType::String;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_100;
+our $VERSION = 0.005_200;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -28,8 +28,6 @@ package     # hide from PAUSE indexing
     unsigned_integer;
 package     # hide from PAUSE indexing
     integer;
-package    # hide from PAUSE indexing
-    gmp_integer;
 package    # hide from PAUSE indexing
     number;
 package    # hide from PAUSE indexing
@@ -79,6 +77,8 @@ our void $string_CHECKTRACE = sub {
 #our boolean $string_to_boolean = sub {
 sub string_to_boolean {
     (my string $input_string) = @_;
+#    string_CHECK($input_string);
+    string_CHECKTRACE( $input_string, '$input_string', 'string_to_boolean()' );
     if (($input_string * 1) == 0) { return 0; }
     else { return 1; }
 }
@@ -87,6 +87,8 @@ sub string_to_boolean {
 #our integer $string_to_unsigned_integer = sub {
 sub string_to_unsigned_integer {
     (my string $input_string) = @_;
+#    string_CHECK($input_string);
+    string_CHECKTRACE( $input_string, '$input_string', 'string_to_unsigned_integer()' );
     return (floor abs ($input_string * 1)) * 1;
 }
 
@@ -94,6 +96,8 @@ sub string_to_unsigned_integer {
 #our integer $string_to_integer = sub {
 sub string_to_integer {
     (my string $input_string) = @_;
+#    string_CHECK($input_string);
+    string_CHECKTRACE( $input_string, '$input_string', 'string_to_integer()' );
     # DEV NOTE: must use double-casting via '* 1' below to avoid following errors
     # ERROR EIV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:
     # integer value expected but non-integer value found,
@@ -106,6 +110,8 @@ sub string_to_integer {
 #our number $string_to_number = sub {
 sub string_to_number {
     (my string $input_string) = @_;
+#    string_CHECK($input_string);
+    string_CHECKTRACE( $input_string, '$input_string', 'string_to_number()' );
     return $input_string * 1.0;
 }
 
@@ -113,6 +119,8 @@ sub string_to_number {
 #our character $string_to_character = sub {
 sub string_to_character {
     (my string $input_string) = @_;
+#    string_CHECK($input_string);
+    string_CHECKTRACE( $input_string, '$input_string', 'string_to_character()' );
     if ($input_string eq q{}) { return q{}; }
     else { return substr $input_string, 0, 1; }
 }
@@ -121,10 +129,8 @@ sub string_to_character {
 #our string $string_to_string = sub {
 sub string_to_string {
     ( my string $input_string ) = @_;
-
-    #    string_CHECK($input_string);
-    string_CHECKTRACE( $input_string, '$input_string',
-        'string_to_string()' );
+#    string_CHECK($input_string);
+    string_CHECKTRACE( $input_string, '$input_string', 'string_to_string()' );
 
 #    RPerl::diag("in PERLOPS_PERLTYPES string_to_string(), received \$input_string =\n$input_string\n\n");
     $input_string =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
@@ -145,8 +151,7 @@ our string $string__typetest0 = sub {
 };
 our string $string__typetest1 = sub {
     ( my string $lucky_string ) = @_;
-
-    #    string_CHECK($lucky_string);
+#    string_CHECK($lucky_string);
     string_CHECKTRACE( $lucky_string, '$lucky_string',
         'string__typetest1()' );
 

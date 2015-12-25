@@ -99,10 +99,10 @@ sub to_string {
     my string $type = type($variable);
     if    ( $type eq 'unknown' ) { return qq{$variable}; }
     elsif ( $type eq 'boolean' )    { return boolean_to_string($variable); }
-    elsif ( $type eq 'unsigned_integer' ) { return unsigned_integer_to_string($variable); }
+#    elsif ( $type eq 'unsigned_integer' ) { return unsigned_integer_to_string($variable); }  # DEV NOTE: causes auto-vivification of empty unsigned_integer_to_string() if not already properly bound
     elsif ( $type eq 'integer' ) { return integer_to_string($variable); }
     elsif ( $type eq 'number' )  { return number_to_string($variable); }
-    elsif ( $type eq 'char' )    { return character_to_string($variable); }
+    elsif ( $type eq 'character' )    { return character_to_string($variable); }
     elsif ( $type eq 'string' )  { return string_to_string($variable); }
     else {
         my $retval = Dumper($variable);
@@ -161,14 +161,16 @@ sub build_is_type {
     ( my unknown $variable ) = @_;
 
     my integer_hashref $is_type = {
+        boolean   => main::RPerl_SvBOKp($variable),
         unsigned_integer  => main::RPerl_SvUIOKp($variable),
-        integer  => main::RPerl_SvIOKp($variable),
-        number   => main::RPerl_SvNOKp($variable),
-        string   => main::RPerl_SvPOKp($variable),
-        arrayref => main::RPerl_SvAROKp($variable),
-        hashref  => main::RPerl_SvHROKp($variable),
-        blessed  => 0,
-        class    => blessed $variable
+        integer   => main::RPerl_SvIOKp($variable),
+        number    => main::RPerl_SvNOKp($variable),
+        character => main::RPerl_SvCOKp($variable),
+        string    => main::RPerl_SvPOKp($variable),
+        arrayref  => main::RPerl_SvAROKp($variable),
+        hashref   => main::RPerl_SvHROKp($variable),
+        blessed   => 0,
+        class     => blessed $variable
     };
     if ( defined $is_type->{class} ) { $is_type->{blessed} = 1; }
 
@@ -194,7 +196,7 @@ sub types_recurse {
     my string_hashref $types = undef;
 
     # DEV NOTE, CORRELATION #rp25: only report core types integer, number, string, arrayref, hashref, object;
-    # do NOT report non-core types boolean, unsigned_integer, char, etc.
+    # do NOT report non-core types boolean, unsigned_integer, character, etc.
     if    ( not defined $variable ) { $type = 'unknown'; }
     elsif ( $is_type->{integer} )   { $type = 'integer'; }
     elsif ( $is_type->{number} )    { $type = 'number'; }

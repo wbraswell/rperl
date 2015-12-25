@@ -3,7 +3,7 @@ package RPerl::DataType::Integer;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_001;
+our $VERSION = 0.007_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -33,8 +33,6 @@ package    # hide from PAUSE indexing
     boolean;
 package    # hide from PAUSE indexing
     unsigned_integer;
-package    # hide from PAUSE indexing
-    gmp_integer;
 package    # hide from PAUSE indexing
     number;
 package    # hide from PAUSE indexing
@@ -79,6 +77,8 @@ our void $integer_CHECKTRACE = sub {
 #our boolean $integer_to_boolean = sub {
 sub integer_to_boolean {
     ( my integer $input_integer ) = @_;
+#    integer_CHECK($input_integer);
+    integer_CHECKTRACE( $input_integer, '$input_integer', 'integer_to_boolean()' );
     if   ( $input_integer == 0 ) { return 0; }
     else                         { return 1; }
 }
@@ -87,6 +87,8 @@ sub integer_to_boolean {
 #our unsigned_integer $integer_to_unsigned_integer = sub {
 sub integer_to_unsigned_integer {
     ( my integer $input_integer ) = @_;
+#    integer_CHECK($input_integer);
+    integer_CHECKTRACE( $input_integer, '$input_integer', 'integer_to_unsigned_integer()' );
     return abs $input_integer;
 }
 
@@ -94,6 +96,8 @@ sub integer_to_unsigned_integer {
 #our number $integer_to_number = sub {
 sub integer_to_number {
     ( my integer $input_integer ) = @_;
+#    integer_CHECK($input_integer);
+    integer_CHECKTRACE( $input_integer, '$input_integer', 'integer_to_number()' );
     return $input_integer * 1.0;
 }
 
@@ -101,6 +105,8 @@ sub integer_to_number {
 #our character $integer_to_character = sub {
 sub integer_to_character {
     ( my integer $input_integer ) = @_;
+#    integer_CHECK($input_integer);
+    integer_CHECKTRACE( $input_integer, '$input_integer', 'integer_to_character()' );
     my string $tmp_string = integer_to_string($input_integer);
     if   ( $tmp_string eq q{} ) { return q{}; }
     else                        { return substr $tmp_string, 0, 1; }
@@ -110,8 +116,7 @@ sub integer_to_character {
 #our string $integer_to_string = sub {
 sub integer_to_string {
     ( my integer $input_integer ) = @_;
-
-    #    integer_CHECK($input_integer);
+#    integer_CHECK($input_integer);
     integer_CHECKTRACE( $input_integer, '$input_integer', 'integer_to_string()' );
 
     #    RPerl::diag("in PERLOPS_PERLTYPES integer_to_string(), received \$input_integer = $input_integer\n");
@@ -143,8 +148,7 @@ our integer $integer__typetest0 = sub {
 };
 our integer $integer__typetest1 = sub {
     ( my integer $lucky_integer ) = @_;
-
-    #    integer_CHECK($lucky_integer);
+#    integer_CHECK($lucky_integer);
     integer_CHECKTRACE( $lucky_integer, '$lucky_integer', 'integer__typetest1()' );
 
     #    RPerl::diag('in PERLOPS_PERLTYPES integer__typetest1(), received $lucky_integer = ' . integer_to_string($lucky_integer) . "\n");

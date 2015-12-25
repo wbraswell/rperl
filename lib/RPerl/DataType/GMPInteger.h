@@ -87,7 +87,7 @@ unsigned_integer gmp_integer_to_unsigned_integer(gmp_integer_retval input_gmp_in
 
 // [[[ INTEGERIFY ]]]
 # ifdef __PERL__TYPES
-//SV* gmp_integer_to_integer(SV* input_gmp_integer);
+SV* gmp_integer_to_integer(SV* input_gmp_integer);
 # elif defined __CPP__TYPES
 integer gmp_integer_to_integer(gmp_integer_retval input_gmp_integer_retval);
 # endif

@@ -1,5 +1,5 @@
 #ifndef __CPP__INCLUDED__RPerl_Operation_Expression_Operator_GMPFunctions_h
-#define __CPP__INCLUDED__RPerl_Operation_Expression_Operator_GMPFunctions_h 0.001_000
+#define __CPP__INCLUDED__RPerl_Operation_Expression_Operator_GMPFunctions_h 0.002_000
 
 // [[[ RETVAL WRAPPER FUNCTIONS ]]]
 // https://gmplib.org/manual/C_002b_002b-Interface-General.html
@@ -33,7 +33,7 @@
 
 //#define gmp_init_set                   mpz_init_set
 #define gmp_init_set_unsigned_integer(X,Y)  mpz_init_set_ui(X,Y)
-//#define gmp_init_set_signed_integer    mpz_init_set_si
+#define gmp_init_set_signed_integer(X,Y)    mpz_init_set_si(X,Y)
 //#define gmp_init_set_number            mpz_init_set_d
 //#define gmp_init_set_string            mpz_init_set_str
 
@@ -51,18 +51,18 @@
 
 #define gmp_add(X,Y,Z)                       mpz_add(X,Y,Z)
 //#define gmp_add_unsigned_integer      mpz_add_ui
-//#define gmp_sub                       mpz_sub
+#define gmp_sub(X,Y,Z)                       mpz_sub(X,Y,Z)
 //#define gmp_sub_unsigned_integer      mpz_sub_ui
 //#define gmp_unsigned_integer_sub      mpz_ui_sub
-//#define gmp_mul                       mpz_mul
-//#define gmp_mul_signed_integer        mpz_mul_si
+#define gmp_mul(X,Y,Z)                       mpz_mul(X,Y,Z)
 #define gmp_mul_unsigned_integer(X,Y,Z)      mpz_mul_ui(X,Y,Z)
+#define gmp_mul_signed_integer(X,Y,Z)        mpz_mul_si(X,Y,Z)
 //#define gmp_add_mul                   mpz_addmul
 #define gmp_add_mul_unsigned_integer(X,Y,Z)  mpz_addmul_ui(X,Y,Z)
 //#define gmp_sub_mul                   mpz_submul
 #define gmp_sub_mul_unsigned_integer(X,Y,Z)  mpz_submul_ui(X,Y,Z)
 //#define gmp_mul_power_of_2            mpz_mul_2exp
-//#define gmp_neg                       mpz_neg
+#define gmp_neg(X,Y)                         mpz_neg(X,Y)
 //#define gmp_abs                       mpz_abs
 
 // [[[ DIVISION FUNCTIONS ]]]

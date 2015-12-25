@@ -28,8 +28,6 @@ package    # hide from PAUSE indexing
 package     # hide from PAUSE indexing
     integer;
 package    # hide from PAUSE indexing
-    gmp_integer;
-package    # hide from PAUSE indexing
     number;
 package    # hide from PAUSE indexing
     character;

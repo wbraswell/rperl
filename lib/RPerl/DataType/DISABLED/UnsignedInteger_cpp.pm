@@ -3,7 +3,7 @@ package RPerl::DataType::UnsignedInteger_cpp;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_021;
+our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()

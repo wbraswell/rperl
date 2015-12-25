@@ -25,7 +25,7 @@ void gmp_integer_CHECK(SV* possible_gmp_integer) {
     if (not (SvHROKp(possible_gmp_integer))) { croak( "\nERROR EGIV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-hashref value found,\ncroaking"); }
     if (not (sv_isobject(possible_gmp_integer))) { croak( "\nERROR EGIV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-object (blessed hashref) value found,\ncroaking"); }
     if (not (sv_derived_from(possible_gmp_integer, "Math::BigInt"))) { croak( "\nERROR EGIV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-Math::BigInt-derived object value found,\ncroaking"); }
-//    if (not (sv_isa(possible_gmp_integer, "gmp_integer"))) { croak( "\nERROR EGIV04, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-gmp_integer object value found,\ncroaking"); }
+    if (not (sv_isa(possible_gmp_integer, "gmp_integer"))) { croak( "\nERROR EGIV04, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-gmp_integer object value found,\ncroaking"); }
 
     HV* possible_gmp_integer_deref = (HV*) SvRV(possible_gmp_integer);
     if (not hv_exists(possible_gmp_integer_deref, (const char*) "value", (U32) 5)) { croak( "\nERROR EGIV05, MISSING HASH ENTRY, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry exists,\ncroaking"); }
@@ -44,7 +44,7 @@ void gmp_integer_CHECKTRACE(SV* possible_gmp_integer, const char* variable_name,
     if (not (SvHROKp(possible_gmp_integer))) { croak( "\nERROR EGIV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-hashref value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
     if (not (sv_isobject(possible_gmp_integer))) { croak( "\nERROR EGIV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-object (blessed hashref) value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
     if (not (sv_derived_from(possible_gmp_integer, "Math::BigInt"))) { croak( "\nERROR EGIV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-Math::BigInt-derived object value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
-//    if (not (sv_isa(possible_gmp_integer, "gmp_integer"))) { croak( "\nERROR EGIV04, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-gmp_integer object value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
+    if (not (sv_isa(possible_gmp_integer, "gmp_integer"))) { croak( "\nERROR EGIV04, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-gmp_integer object value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
 
     HV* possible_gmp_integer_deref = (HV*) SvRV(possible_gmp_integer);
 //    cerr << "in gmp_integer_CHECKTRACE(), have possible_gmp_integer_deref = " << possible_gmp_integer_deref << endl;
@@ -77,31 +77,36 @@ gmp_integer_retval XS_unpack_gmp_integer_retval(SV* input_hv_ref) {
     // which is a wrapper around CPPTYPES gmp_integer,
     // so we can directly access the underlying CPPTYPES gmp_integer via SvMAGIC(...)->mg_ptr below, nice!
 
-    /*  // LONG FORM
+/*     // LONG FORM
      cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), top of subroutine" << endl;
      HV* input_hv = (HV*)SvRV(input_hv_ref);
      SV** input_hv_value_ptr = hv_fetch(input_hv, (const char*) "value", (U32) 5, (I32) 0);
+     SV** input_hv_sign_ptr = hv_fetch(input_hv, (const char*) "sign", (U32) 4, (I32) 0);
 
      MAGIC* input_hv_value_ptr_magic = SvMAGIC(SvRV(*input_hv_value_ptr));
      cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), received *input_hv_value_ptr = " << *input_hv_value_ptr << endl;
      cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have input_hv_value_ptr_magic = " << input_hv_value_ptr_magic << endl;
      cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have gmp_get_signed_integer(*(gmp_integer_rawptr)input_hv_value_ptr_magic->mg_ptr) = " << gmp_get_signed_integer(*(gmp_integer_rawptr)input_hv_value_ptr_magic->mg_ptr) << endl;
      cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have (gmp_integer_rawptr)input_hv_value_ptr_magic->mg_ptr = " << (gmp_integer_rawptr)input_hv_value_ptr_magic->mg_ptr << endl;
+     cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have SvPV_nolen(*input_hv_sign_ptr) = " << SvPV_nolen(*input_hv_sign_ptr) << endl;
 
      gmp_integer_rawptr gmp_integer_tmp = (gmp_integer_rawptr) input_hv_value_ptr_magic->mg_ptr;
 
      cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have *gmp_integer_tmp = " << *gmp_integer_tmp << endl;
 
-     gmp_integer_retval output_gmp_integer_retval = (gmp_integer_retval) *(gmp_integer_tmp);
+//     gmp_integer_retval output_gmp_integer_retval = (gmp_integer_retval) *gmp_integer_tmp;
+//     if (SvPV_nolen(*input_hv_sign_ptr)[0] == '-') { output_gmp_integer_retval = output_gmp_integer_retval * ((gmp_integer_retval) -1); }
+     gmp_integer_retval output_gmp_integer_retval = (gmp_integer_retval) *gmp_integer_tmp * pow(-1, (SvPV_nolen(*input_hv_sign_ptr)[0] == '-'));
 
      cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have output_gmp_integer_retval.gmp_integer_unretval() = " << output_gmp_integer_retval.gmp_integer_unretval() << endl;
      cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), bottom of subroutine" << endl;
 
      return output_gmp_integer_retval;
-     */
+*/
 
     // SHORT FORM
-    return (gmp_integer_retval) *((gmp_integer_rawptr) SvMAGIC(SvRV(*(hv_fetch((HV*) SvRV(input_hv_ref), (const char*) "value", (U32) 5, (I32) 0))))->mg_ptr);
+    return (gmp_integer_retval) *((gmp_integer_rawptr) SvMAGIC(SvRV(*(hv_fetch((HV*)SvRV(input_hv_ref), (const char*) "value", (U32) 5, (I32) 0))))->mg_ptr)
+            * pow(-1, (SvPV_nolen(*hv_fetch((HV*)SvRV(input_hv_ref), (const char*) "sign", (U32) 4, (I32) 0))[0] == '-'));
 }
 
 // convert from (C gmp_integer_retval) to (Perl SV containing reference to (Perl HV containing reference to C gmp_integer))
@@ -247,7 +252,8 @@ SV* gmp_integer_to_unsigned_integer(SV* input_gmp_integer) {
 # elif defined __CPP__TYPES
 
 unsigned_integer gmp_integer_to_unsigned_integer(gmp_integer_retval input_gmp_integer_retval) {
-    return abs(gmp_get_signed_integer(input_gmp_integer_retval.gmp_integer_unretval()));
+//    return abs(gmp_get_signed_integer(input_gmp_integer_retval.gmp_integer_unretval()));
+    return gmp_get_signed_integer(input_gmp_integer_retval.gmp_integer_unretval());
 }
 
 # endif

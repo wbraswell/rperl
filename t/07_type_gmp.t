@@ -3,18 +3,22 @@
 # suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s)
 BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
+# [[[ HEADER ]]]
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
 our $VERSION = 0.002_000;
 
+# [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
 ## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(RequireCheckingReturnValueOfEval)  # SYSTEM DEFAULT 4: allow eval() test code blocks
 
+# [[[ INCLUDES ]]]
 use RPerl::Test;
+use RPerl::Test::Foo;
 use rperltypesconv;
 use Test::More;    # tests => XYZ;
 use Test::Exception;
@@ -100,77 +104,270 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
         'main::RPerl__DataType__GMPInteger__MODE_ID() lives'
     );
 
+    # [[[ TYPE CHECKING TESTS ]]]
+    # [[[ TYPE CHECKING TESTS ]]]
+    # [[[ TYPE CHECKING TESTS ]]]
+
+    throws_ok(    # TGIV000
+        sub { gmp_integer_to_boolean() },
+        "/(EGIV00.*$mode_tagline)|(Usage.*gmp_integer_to_boolean)/",    # DEV NOTE: 2 different error messages, RPerl & C
+        q{TGIV000 gmp_integer_to_boolean() throws correct exception}
+    );
+
+    throws_ok(    # TGIV001
+        sub { gmp_integer_to_boolean(undef) },
+        "/(EGIV00.*$mode_tagline)/",
+        q{TGIV001 gmp_integer_to_boolean(undef) throws correct exception}
+    );
+
+    throws_ok(    # TGIV002
+        sub { gmp_integer_to_boolean(0) },
+        "/(EGIV01.*$mode_tagline)/",
+        q{TGIV002 gmp_integer_to_boolean(0) throws correct exception}
+    );
+
+    throws_ok(    # TGIV003
+        sub { gmp_integer_to_boolean(-23.42) },
+        "/(EGIV01.*$mode_tagline)/",
+        q{TGIV003 gmp_integer_to_boolean(-23.42) throws correct exception}
+    );
+
+    throws_ok(    # TGIV004
+        sub { gmp_integer_to_boolean('howdy') },
+        "/(EGIV01.*$mode_tagline)/",
+        q{TGIV004 gmp_integer_to_boolean('howdy') throws correct exception}
+    );
+
+    throws_ok(    # TGIV005
+        sub { gmp_integer_to_boolean([]) },
+        "/(EGIV01.*$mode_tagline)/",
+        q{TGIV005 gmp_integer_to_boolean([]) throws correct exception}
+    );
+
+    throws_ok(    # TGIV006
+        sub { gmp_integer_to_boolean([21, 12, 23]) },
+        "/(EGIV01.*$mode_tagline)/",
+        q{TGIV006 gmp_integer_to_boolean([21, 12, 23]) throws correct exception}
+    );
+
+    throws_ok(    # TGIV007
+        sub { gmp_integer_to_boolean({}) },
+        "/(EGIV02.*$mode_tagline)/",
+        q{TGIV007 gmp_integer_to_boolean({}) throws correct exception}
+    );
+
+    throws_ok(    # TGIV008
+        sub { gmp_integer_to_boolean({carter => 'chris', duchovny => 'david', anderson => 'gillian'}) },
+        "/(EGIV02.*$mode_tagline)/",
+        q{TGIV008 gmp_integer_to_boolean({carter => 'chris', duchovny => 'david', anderson => 'gillian'}) throws correct exception}
+    );
+
+    throws_ok(    # TGIV009
+        sub { gmp_integer_to_boolean(RPerl::Test::Foo->new()) },
+        "/(EGIV03.*$mode_tagline)/",
+        q{TGIV009 gmp_integer_to_boolean(RPerl::Test::Foo->new()) throws correct exception}
+    );
+
+    throws_ok(    # TGIV010
+        sub { gmp_integer_to_boolean(Math::BigInt->new()) },
+        "/(EGIV04.*$mode_tagline)/",
+        q{TGIV010 gmp_integer_to_boolean(Math::BigInt->new()) throws correct exception}
+    );
+
+    throws_ok(    # TGIV011
+        sub { 
+            my gmp_integer $gmp_integer_no_value = gmp_integer->new();
+            delete $gmp_integer_no_value->{value};
+            gmp_integer_to_boolean($gmp_integer_no_value);
+        },
+        "/(EGIV05.*$mode_tagline)/",
+        q{TGIV011 gmp_integer_to_boolean($gmp_integer_no_value) throws correct exception}
+    );
+    
+    # NEED ADDRESS: is there no way to trigger CPPOPS EGIV06?
+
+    throws_ok(    # TGIV012
+        sub { 
+            my gmp_integer $gmp_integer_undef_value = gmp_integer->new();
+            $gmp_integer_undef_value->{value} = undef;
+            gmp_integer_to_boolean($gmp_integer_undef_value);
+        },
+        "/(EGIV07.*$mode_tagline)/",
+        q{TGIV012 gmp_integer_to_boolean($gmp_integer_undef_value) throws correct exception}
+    );
+
+    throws_ok(    # TGIV013
+        sub { 
+            my gmp_integer $gmp_integer_nonobject_value = gmp_integer->new();
+            $gmp_integer_nonobject_value->{value} = 0;
+            gmp_integer_to_boolean($gmp_integer_nonobject_value);
+        },
+        "/(EGIV08.*$mode_tagline)/",
+        q{TGIV013 gmp_integer_to_boolean($gmp_integer_nonobject_value->{value} = 0) throws correct exception}
+    );
+
+    throws_ok(    # TGIV014
+        sub { 
+            my gmp_integer $gmp_integer_nonobject_value = gmp_integer->new();
+            $gmp_integer_nonobject_value->{value} = 'the truth is out there';
+            gmp_integer_to_boolean($gmp_integer_nonobject_value);
+        },
+        "/(EGIV08.*$mode_tagline)/",
+        q{TGIV014 gmp_integer_to_boolean($gmp_integer_nonobject_value->{value} = 'the truth is out there') throws correct exception}
+    );
+
+    throws_ok(    # TGIV015
+        sub { 
+            my gmp_integer $gmp_integer_nonobject_value = gmp_integer->new();
+            $gmp_integer_nonobject_value->{value} = [];
+            gmp_integer_to_boolean($gmp_integer_nonobject_value);
+        },
+        "/(EGIV08.*$mode_tagline)/",
+        q{TGIV015 gmp_integer_to_boolean($gmp_integer_nonobject_value->{value} = []) throws correct exception}
+    );
+
+    throws_ok(    # TGIV016
+        sub { 
+            my gmp_integer $gmp_integer_nonobject_value = gmp_integer->new();
+            $gmp_integer_nonobject_value->{value} = {};
+            gmp_integer_to_boolean($gmp_integer_nonobject_value);
+        },
+        "/(EGIV08.*$mode_tagline)/",
+        q{TGIV016 gmp_integer_to_boolean($gmp_integer_nonobject_value->{value} = {}) throws correct exception}
+    );
+
+    throws_ok(    # TGIV017
+        sub { 
+            my gmp_integer $gmp_integer_object_value = gmp_integer->new();
+            $gmp_integer_object_value->{value} = RPerl::Test::Foo->new();
+            gmp_integer_to_boolean($gmp_integer_object_value);
+        },
+        "/(EGIV09.*$mode_tagline)/",
+        q{TGIV017 gmp_integer_to_boolean($gmp_integer_object_value) throws correct exception}
+    );
+
     # [[[ BOOLEANIFY TESTS ]]]
     # [[[ BOOLEANIFY TESTS ]]]
     # [[[ BOOLEANIFY TESTS ]]]
 
-# START HERE: test *IFY here; test *IFY in 04*; test typetests()
-# START HERE: test *IFY here; test *IFY in 04*; test typetests()
-# START HERE: test *IFY here; test *IFY in 04*; test typetests()
-
-    lives_and(                                                    # TGIV000
+    lives_and(                                                    # TGIV100
         sub {
             my gmp_integer $tmp1 = gmp_integer->new();
             gmp_set_signed_integer($tmp1, 0);
-            is( gmp_integer_to_boolean($tmp1), 0, q{TGIV000 gmp_integer_to_boolean($tmp1==0) returns correct value} );
+            is( gmp_integer_to_boolean($tmp1), 0, q{TGIV100 gmp_integer_to_boolean($tmp1==0) returns correct value} );
         },
-        q{TGIV000 gmp_integer_to_boolean($tmp1==0) lives}
+        q{TGIV100 gmp_integer_to_boolean($tmp1==0) lives}
     );
 
-    lives_and(                                                    # TGIV001
+    lives_and(                                                    # TGIV101
         sub {
             my gmp_integer $tmp1 = gmp_integer->new();
             gmp_set_signed_integer($tmp1, 1);
-            is( gmp_integer_to_boolean($tmp1), 1, q{TGIV001 gmp_integer_to_boolean($tmp1==1) returns correct value} );
+            is( gmp_integer_to_boolean($tmp1), 1, q{TGIV101 gmp_integer_to_boolean($tmp1==1) returns correct value} );
         },
-        q{TGIV001 gmp_integer_to_boolean($tmp1==1) lives}
+        q{TGIV101 gmp_integer_to_boolean($tmp1==1) lives}
     );
 
-    lives_and(                                                    # TGIV001
+    lives_and(                                                    # TGIV102
         sub {
             my gmp_integer $tmp1 = gmp_integer->new();
             gmp_set_signed_integer($tmp1, -1);
-            is( gmp_integer_to_boolean($tmp1), 1, q{TGIV001 gmp_integer_to_boolean($tmp1==-1) returns correct value} );
+            is( gmp_integer_to_boolean($tmp1), 1, q{TGIV102 gmp_integer_to_boolean($tmp1==-1) returns correct value} );
         },
-        q{TGIV001 gmp_integer_to_boolean($tmp1==-1) lives}
+        q{TGIV102 gmp_integer_to_boolean($tmp1==-1) lives}
     );
 
-    lives_and(                                                    # TGIV001
+    lives_and(                                                    # TGIV103
         sub {
             my gmp_integer $tmp1 = gmp_integer->new();
             gmp_set_signed_integer($tmp1, 1_234_567_890);
-            is( gmp_integer_to_boolean($tmp1), 1, q{TGIV001 gmp_integer_to_boolean($tmp1==1_234_567_890) returns correct value} );
+            is( gmp_integer_to_boolean($tmp1), 1, q{TGIV103 gmp_integer_to_boolean($tmp1==1_234_567_890) returns correct value} );
         },
-        q{TGIV001 gmp_integer_to_boolean($tmp1==1_234_567_890) lives}
+        q{TGIV103 gmp_integer_to_boolean($tmp1==1_234_567_890) lives}
     );
 
-    lives_and(                                                    # TGIV001
+    lives_and(                                                    # TGIV104
         sub {
             my gmp_integer $tmp1 = gmp_integer->new();
             gmp_set_signed_integer($tmp1, -1_234_567_890);
-            is( gmp_integer_to_boolean($tmp1), 1, q{TGIV001 gmp_integer_to_boolean($tmp1==-1_234_567_890) returns correct value} );
+            is( gmp_integer_to_boolean($tmp1), 1, q{TGIV104 gmp_integer_to_boolean($tmp1==-1_234_567_890) returns correct value} );
         },
-        q{TGIV001 gmp_integer_to_boolean($tmp1==-1_234_567_890) lives}
+        q{TGIV104 gmp_integer_to_boolean($tmp1==-1_234_567_890) lives}
     );
 
-    throws_ok(    # TGIV500
-        sub { gmp_integer_to_boolean() },
-        "/(EGIV00.*$mode_tagline)|(Usage.*gmp_integer_to_boolean)/",    # DEV NOTE: 2 different error messages, RPerl & C
-        q{TGIV500 gmp_integer_to_boolean() throws correct exception}
-    );
-
-    # [[[ INTEGERIFY TESTS ]]]
-    # [[[ INTEGERIFY TESTS ]]]
-    # [[[ INTEGERIFY TESTS ]]]
+    # [[[ UNSIGNED INTEGERIFY TESTS ]]]
+    # [[[ UNSIGNED INTEGERIFY TESTS ]]]
+    # [[[ UNSIGNED INTEGERIFY TESTS ]]]
 
     lives_and(                                                    # TGIV200
         sub {
             my gmp_integer $tmp1 = gmp_integer->new();
-            gmp_set_signed_integer($tmp1, 34_567_890);
-            is( gmp_integer_to_integer($tmp1), 34_567_890, q{TGIV200 gmp_integer_to_integer($tmp1==34_567_890) returns correct value} );
+            gmp_set_signed_integer($tmp1, 0);
+            is( gmp_integer_to_unsigned_integer($tmp1), 0, q{TGIV200 gmp_integer_to_unsigned_integer($tmp1==0) returns correct value} );
         },
-        q{TGIV200 gmp_integer_to_integer($tmp1==34_567_890) lives}
+        q{TGIV200 gmp_integer_to_unsigned_integer($tmp1==0) lives}
     );
+
+    lives_and(                                                    # TGIV201
+        sub {
+            my gmp_integer $tmp1 = gmp_integer->new();
+            gmp_set_signed_integer($tmp1, 34_567_890);
+            is( gmp_integer_to_unsigned_integer($tmp1), 34_567_890, q{TGIV201 gmp_integer_to_unsigned_integer($tmp1==34_567_890) returns correct value} );
+        },
+        q{TGIV201 gmp_integer_to_unsigned_integer($tmp1==34_567_890) lives}
+    );
+
+    lives_and(                                                    # TGIV202
+        sub {
+            my gmp_integer $tmp1 = gmp_integer->new();
+            gmp_set_signed_integer($tmp1, -34_567_890);
+            is( gmp_integer_to_unsigned_integer($tmp1), 34_567_890, q{TGIV202 gmp_integer_to_unsigned_integer($tmp1==-34_567_890) returns correct value} );
+        },
+        q{TGIV202 gmp_integer_to_unsigned_integer($tmp1==-34_567_890) lives}
+    );
+
+=DISABLE
+    throws_ok(    # TGIV210
+        sub { gmp_integer_to_unsigned_integer(undef) },
+        "/(EGIV00.*$mode_tagline)/",
+        q{TGIV210 gmp_integer_to_unsigned_integer(undef) throws correct exception}
+    );
+=cut
+
+    # [[[ INTEGERIFY TESTS ]]]
+    # [[[ INTEGERIFY TESTS ]]]
+    # [[[ INTEGERIFY TESTS ]]]
+
+    lives_and(                                                    # TGIV300
+        sub {
+            my gmp_integer $tmp1 = gmp_integer->new();
+            gmp_set_signed_integer($tmp1, 0);
+            is( gmp_integer_to_integer($tmp1), 0, q{TGIV300 gmp_integer_to_integer($tmp1==0) returns correct value} );
+        },
+        q{TGIV300 gmp_integer_to_integer($tmp1==0) lives}
+    );
+
+    lives_and(                                                    # TGIV301
+        sub {
+            my gmp_integer $tmp1 = gmp_integer->new();
+            gmp_set_signed_integer($tmp1, 34_567_890);
+            is( gmp_integer_to_integer($tmp1), 34_567_890, q{TGIV301 gmp_integer_to_integer($tmp1==34_567_890) returns correct value} );
+        },
+        q{TGIV301 gmp_integer_to_integer($tmp1==34_567_890) lives}
+    );
+
+    lives_and(                                                    # TGIV302
+        sub {
+            my gmp_integer $tmp1 = gmp_integer->new();
+            gmp_set_signed_integer($tmp1, -34_567_890);
+            is( gmp_integer_to_integer($tmp1), -34_567_890, q{TGIV302 gmp_integer_to_integer($tmp1==-34_567_890) returns correct value} );
+        },
+        q{TGIV302 gmp_integer_to_integer($tmp1==-34_567_890) lives}
+    );
+
+    # [[[ STRINGIFY TESTS ]]]
+    # [[[ STRINGIFY TESTS ]]]
+    # [[[ STRINGIFY TESTS ]]]
 
 =DISABLE
     throws_ok(    # TGIV500
