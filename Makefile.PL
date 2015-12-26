@@ -37,7 +37,8 @@ WriteMakefile(
         'Module::ScanDeps'    => 1.19,
         'Time::HiRes'         => 1.9726,
         'App::Pod2CpanHtml'   => 0.04,
-        'Math::BigInt::GMP'   => 1.46
+        'Math::BigInt::GMP'   => 1.46,
+        'List::MoreUtils'     => 0,
     },
     META_MERGE => {
         'meta-spec' => {
