@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-our $VERSION = 0.003_100;
+our $VERSION = 0.003_200;
 use ExtUtils::MakeMaker;
 
 BEGIN { use English; }
@@ -36,6 +36,7 @@ WriteMakefile(
         'Filter::Simple'      => 0.91,
         'Module::ScanDeps'    => 1.19,
         'Time::HiRes'         => 1.9726,
+        'List::MoreUtils'     => 0.33,
         'App::Pod2CpanHtml'   => 0.04,
         'Math::BigInt::GMP'   => 1.46
     },

@@ -1,5 +1,5 @@
 [submodule "pluto_distmem"]
-    path = 3rd_party/pluto_distmem
+    path = ./3rd_party/pluto_distmem
     url = git://repo.or.cz/pluto.git
     branch = distmem
     fetchRecurseSubmodules = true
