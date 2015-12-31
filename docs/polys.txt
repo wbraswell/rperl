@@ -1,0 +1,145 @@
+NAME:   Pluto
+TYPE:   Compiler
+STATUS: Active
+RATING: Primary
+PLTFRM: OpenMP, MPI
+PARENT: None
+DEPS:   CLooG, PipLib, PolyLib, ISL, Pet, LLVM
+LICNSE: 
+SPEED:
+SOURCE: C
+LEAD:   Uday Bondhugula
+PAST:   None
+OTHERS: 
+URL:    pluto-compiler.sourceforge.net
+GIT:    repo.or.cz/pluto.git
+LIST:   groups.google.com/forum/#!forum/pluto-development
+
+
+NAME:   PPCG, aka Polyhedral Parallel Code Generator
+TYPE:   Compiler
+STATUS: Active
+RATING: Primary
+PLTFRM: OpenCL, CUDA
+PARENT: None
+DEPS:   
+LICNSE: 
+SPEED:  
+SOURCE: C
+LEAD:   Sven Verdoolaege aka "skimo"
+PAST:   None
+OTHERS: 
+URL:    ppcg.gforge.inria.fr
+GIT:    repo.or.cz/ppcg.git
+LIST:   None?
+
+
+NAME:   Polybench
+TYPE:   Benchmarks
+STATUS: Active
+RATING: Primary
+PLTFRM: Independent?
+PARENT: None
+DEPS:   None?
+LICNSE: GPLv2
+SPEED:  
+SOURCE: C, Fortran, GPU
+LEAD:   Louis-Noël Pouchet
+PAST:   
+OTHERS: 
+URL:    web.cse.ohio-state.edu/~pouchet/software/polybench
+GIT:    sourceforge.net/p/polybench/code/HEAD/tree
+LIST:   sourceforge.net/p/polybench/mailman/polybench-discussion
+
+
+NAME:   Pet, aka Polyhedral Extraction Tool
+TYPE:   Library
+STATUS: Active
+RATING: Secondary
+PLTFRM: Independent
+PARENT: None
+DEPS:   LLVM, clang, ISL
+LICNSE: BSD 2-Clause
+SPEED:  
+SOURCE: C
+LEAD:   Sven Verdoolaege aka "skimo"
+PAST:   None
+OTHERS: Tobias Grosser aka "Tobi"
+URL:    freecode.com/projects/libpet
+GIT:    repo.or.cz/pet.git
+LIST:   None?
+
+
+NAME:   Polly
+TYPE:   Compiler
+STATUS: Active
+RATING: Secondary
+PLTFRM: OpenMP, other?
+PARENT: None?
+DEPS:   Pluto, PoCC, Clang, LLVM
+LICNSE: 
+SPEED:  
+SOURCE: 
+LEAD:   Tobias Grosser aka "Tobi"
+PAST:   None
+OTHERS: 
+URL:    polly.llvm.org
+GIT:    repo.or.cz/w/polly-mirror.git
+LIST:   groups.google.com/forum/#!forum/polly-dev
+
+
+NAME:   PoCC, aka Polyhedral Compiler Collection
+TYPE:   Compiler
+STATUS: Inactive
+RATING: Tertiary
+PLTFRM: 
+PARENT: None
+DEPS:   Clan, Candl, LetSee, PLuTo, CLooG, PIPLib, PolyLib, ISL, FM
+LICNSE: 
+SPEED:  
+SOURCE: 
+LEAD:   Louis-Noël Pouchet
+PAST:   None
+OTHERS: 
+URL:    web.cse.ohio-state.edu/~pouchet/software/pocc
+GIT:    None
+LIST:   groups.google.com/group/pocc-dev
+
+
+NAME:   Graphite
+TYPE:   Compiler
+STATUS: Inactive
+RATING: Tertiary
+PLTFRM: 
+PARENT: GCC
+DEPS:   CLoog, ISL, Pluto
+LICNSE: 
+SPEED:  
+SOURCE: 
+LEAD:   Tobias Grosser aka "Tobi"
+PAST:   None?
+OTHERS: 
+URL:    gcc.gnu.org/wiki/Graphite
+GIT:    
+LIST:   
+
+
+NAME:   
+TYPE:   
+STATUS: 
+RATING: 
+PLTFRM: 
+PARENT: 
+DEPS:   
+LICNSE: 
+SPEED:  
+SOURCE: 
+LEAD:   
+PAST:   
+OTHERS: 
+URL:    
+GIT:    
+LIST:   
+
+
+MORE:   polyhedral.info/software

@@ -1,0 +1,74 @@
+NAME:   Perl 5, aka P5P Perl, aka Pumpkin Perl
+TYPE:   Interpreter
+STATUS: Active
+RATING: Primary
+PARENT: none
+DEPS:   none
+SPEED:  1x
+CPAN:   Full
+XS:     Full
+SOURCE: C & C Preprocessor
+PMPKNG: Ricardo Signes
+PAST:   Saint Larry, et al.
+URL:    perl.org
+GIT:    
+
+NAME:   Perl 6, aka Rakudo* Compiler & NQP & MoarVM
+TYPE:   Interpreter
+STATUS: Active 
+RATING: Primary
+PARENT: none
+DEPS:   ?
+SPEED:  <1x
+CPAN:   None
+XS:     None
+SOURCE: ?
+PMPKNG: Will "Coke" Coleda
+PAST:   Saint Larry, jnthn, et al.
+URL:    perl6.org
+GIT:    
+
+NAME:   RPerl, aka Restricted Perl
+TYPE:   Compiler
+STATUS: Active
+RATING: Secondary
+PARENT: none
+DEPS:   Inline, SSE, GMP, Pluto
+SPEED:  ~350x Max
+CPAN:   Minimal
+XS:     Full
+SOURCE: Perl 5 & C & C++ & RPerl
+PMPKNG: Will "the Chill" Braswell
+PAST:   none
+URL:    rperl.org
+GIT:    github.com/wbraswell/rperl
+
+NAME:   cPerl, aka cPanel Perl
+TYPE:   Interpreter
+STATUS: Active
+RATING: Secondary
+PARENT: Perl 5
+DEPS:   none
+SPEED:  ~2x Max
+CPAN:   Full
+XS:     Full
+SOURCE: C & C Preprocessor
+PMPKNG: Reini Urban
+PAST:   none
+URL:    perl11.org/cperl
+GIT:    github.com/perl11/cperl
+
+NAME:   
+TYPE:   
+STATUS: 
+RATING: 
+PARENT: 
+DEPS:   
+SPEED:  
+CPAN:   
+XS:     
+SOURCE: 
+PMPKNG: 
+PAST:   
+URL:    
+GIT:    
