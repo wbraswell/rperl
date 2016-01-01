@@ -182,8 +182,18 @@ quick sort
 
 RELEASE v1.XY
 
-Book of RPerl next chapter
-Learning RPerl chapter 1 & 2
+Book of RPerl
+    next chapter
+
+Learning RPerl
+    preface
+    foreword
+    remaining exercises
+    remaining chapter contents
+    tables
+    illustrations
+    covers
+    publish
 
 RELEASE v1.XY
 

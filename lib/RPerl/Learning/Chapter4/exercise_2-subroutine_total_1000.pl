@@ -7,10 +7,10 @@
 use RPerl;
 use strict;
 use warnings;
-our $VERSION = 0.002_000;
+our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 
 # [[[ SUBROUTINES ]]]
 
@@ -27,4 +27,4 @@ our number $total = sub {
 
 my string_arrayref $one_to_one_thousand = [ 1 .. 1_000 ];
 my number $one_to_one_thousand_total    = total($one_to_one_thousand);
-print 'The total of 1 to 1000 is ' . $one_to_one_thousand_total . q{.} . "\n";
+print 'The total of 1 to 1000 is ' . to_string($one_to_one_thousand_total) . q{.} . "\n";

@@ -10,7 +10,7 @@ use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
 
 # [[[ SUBROUTINES ]]]
@@ -32,7 +32,7 @@ our void $unique_word_count = sub {
     print "\n" . 'Unique word count:' . "\n";
 
     foreach my string $unique_word (sort keys %{$words}) {
-        print $unique_word . ' appeared ' . $words->{$unique_word} . ' time(s)' . "\n";
+        print $unique_word . ' appeared ' . to_string($words->{$unique_word}) . ' time(s)' . "\n";
     }
 };
 

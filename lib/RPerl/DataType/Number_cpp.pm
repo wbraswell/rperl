@@ -6,7 +6,7 @@ use RPerl::AfterSubclass;
 our $VERSION = 0.001_011;
 
 # [[[ CRITICS ]]]
-## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
+## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
 
 # [[[ INCLUDES ]]]
 use RPerl::Inline;

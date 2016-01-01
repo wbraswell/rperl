@@ -7,10 +7,10 @@
 use RPerl;
 use strict;
 use warnings;
-our $VERSION = 0.002_000;
+our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
 
@@ -29,7 +29,7 @@ our number $total = sub {
 
 my number_arrayref $fred = [1, 3, 5, 7, 9];
 my number $fred_total = total($fred);
-print 'The total of $fred is ' . $fred_total . q{.} . "\n";
+print 'The total of $fred is ' . to_string($fred_total) . q{.} . "\n";
 
 print 'Please input zero or more numbers, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
 
@@ -39,4 +39,4 @@ while (my string $input_string = <STDIN>) {
 }
 
 my number $user_total = total($input_numbers);
-print 'The total of those numbers is ' . $user_total . q{.} . "\n";
+print 'The total of those numbers is ' . to_string($user_total) . q{.} . "\n";

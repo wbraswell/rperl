@@ -11,7 +11,7 @@ use RPerl::CompileUnit::Module::Class;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
-## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd) # DEVELOPER DEFAULT 1b: allow POD & unreachable or POD-commented code, must be after line 1
+## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd)  # DEVELOPER DEFAULT 1b: allow POD & unreachable or POD-commented code, must be after line 1
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
@@ -451,10 +451,12 @@ L<http://komodoide.com/perl>
     ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
     # [[[ OPERATIONS ]]]
-    my number $foo = 21 + 12;
-    my number $bar = 23 * 42;
-    print 'have $foo = ' . $foo . "\n";
-    print 'have $bar = ' . $bar . "\n";
+    my integer $foo = 21 + 12;
+    my integer $bar = 23 * 42 * 2;
+    my number $baz = $bar / $foo;
+    print 'have $foo = ' . to_string($foo) . "\n";
+    print 'have $bar = ' . to_string($bar) . "\n";
+    print 'have $baz = ' . to_string($baz) . "\n";
 
 =head2 Section 1.23: What Is Inside That RPerl Program?
 
@@ -468,7 +470,7 @@ The I<"header"> section is required and always contains 4 lines for an RPerl I<"
 
 The I<"critics"> section is included as necessary and may contain 1 or more lines beginning with C<## no critic>, which disable the errors caused by the over-restrictive nature of some Perl::Critic policies.  There are currently 6 critics commands enabled for normal RPerl users, the first 2 of which are given in this example.  The C<USER DEFAULT 1> critics command allows the use of numeric values such as C<21> and C<12>, as well as the common C<print> command.  The C<USER DEFAULT 2> critics command allows the printing of C<'have $foo = '>, where a single-quoted C<'> string literal value contains the the C<$> dollar sigil (covered later in Chapter 2).
 
-The I<"operations"> section is required and contains 1 or more lines of general-purpose RPerl source code.  This is the main body of your program.  The 4 lines of source code in our example are used to perform some simple arithmetic and display the results.  The C<my number $foo = 21 + 12;> line declares a new variable named C<$foo> which will only contain floating-point numeric data, and which is initialized to contain the arithmetic result of numeric literal values C<21> plus C<12>.  The C<my number $bar = 23 * 42;> line does much the same thing, creating a new numeric variable named C<$bar> and initialized with C<23> times C<42>.  The C<print 'have $foo = ' . $foo . "\n";> and C<print 'have $bar = ' . $bar . "\n";> lines will display on screen (not send to paper printer) the labeled values of C<$foo> and C<$bar> respectively.  The C<.> dot operator is string concatenation, used in this example to create one string out of 3 parts so there is only 1 argument parameter passed to the C<print> command.  The "n" in the C<"\n"> double-quoted string literal values stands for "newline", which inserts a carriage return to place the next piece of printed data down on the following line.
+The I<"operations"> section is required and contains 1 or more lines of general-purpose RPerl source code.  This is the main body of your program.  The 6 lines of source code in our example are used to perform some simple arithmetic and display the results.  The C<my integer $foo = 21 + 12;> line declares a new variable named C<$foo> which will only contain non-floating-point numeric data, and which is initialized to contain the arithmetic result of numeric literal values C<21> plus C<12>.  The C<my integer $bar = 23 * 42 * 2;> line does much the same thing, creating a new numeric variable named C<$bar> and initialized with C<23> times C<42> times C<2>.  The C<print 'have $foo = ' . to_string($foo) . "\n";> and following 2 lines will display on screen (not send to paper printer) the labeled values of C<$foo>, C<$bar>, and C<$baz> respectively.  The C<.> dot operator is string concatenation, used in this example to create one string out of 3 parts so there is only 1 argument parameter passed to the C<print> command.  The C<to_string()> RPerl operator converts a numeric value to an underscore-formatted string value, suitable for use via the C<print> operator.  The "n" in the C<"\n"> double-quoted string literal values stands for "newline", which inserts a carriage return to place the next piece of printed data down on the following line.
 
 =head2 Section 1.24: How Do I Compile RPerl?
 
@@ -495,7 +497,8 @@ To partially-compile-then-execute the preceeding RPerl example program in test m
 The output of this example program should be:
 
     have $foo = 33
-    have $bar = 966
+    have $bar = 1_932
+    have $baz = 58.545_454_545_454_5
 
 Please see L</CHAPTER 11: CLASSES, PACKAGES, MODULES, LIBRARIES> for more information about compiling Perl modules.
 
@@ -542,9 +545,9 @@ After 1 year of work, RPerl v1.0beta1 was released on New Year's Day 2014, event
 
 The much-anticipated RPerl v1.0 full release was made on US Independence Day 2015, and RPerl v1.2 came on Halloween 2015.
 
-RPerl v1.3 is scheduled for release on Thanksgiving 2015, then RPerl v2.0beta1 on Christmas 2015, and so on.
+RPerl v1.3 was released on Thanksgiving 2015, followed by RPerl v1.4 on Christmas 2015, and so forth.
 
-RPerl v1.0 was funded through a Kickstarter campaign, then RPerl v1.2 and v1.3 were funded through a second Kickstarter campaign.  Work on the first 6 chapters of this book was funded through a grant from The Perl Foundation.
+RPerl v1.0 was funded through a Kickstarter campaign, then RPerl v1.2 and v1.3 were funded through a second Kickstarter campaign.  Work on the first 6 chapters of this book was funded, in part, by a grant from The Perl Foundation.
 
 =head3 Section 1.25.3: Performance Of RPerl
 
@@ -594,18 +597,22 @@ I<HINT: You only need the C<USER DEFAULT 1> critic line, so your resulting progr
 
 =head3 2.  RPerl Commands  [ 15 mins ]
 
-Run the following RPerl commands and observe the output.
+First, run the following RPerl command, and observe the output for use in 2a and 2b below:
 
     $ rperl -?
 
 2a.  What are some RPerl command-line options with which you are already familiar?
+
 2b.  With which options are you unfamiliar?
+
+Next, run the following 3 RPerl commands, for 2c and 2d below:
 
     $ rperl -t -V LearningRPerl/Chapter1/exercise_1-hello_world.pl
     $ rperl -t -D LearningRPerl/Chapter1/exercise_1-hello_world.pl
     $ rperl -t -V -D LearningRPerl/Chapter1/exercise_1-hello_world.pl
 
 2c.  How do the outputs of these 3 commands differ from the output of Exercise 1?
+
 2d.  How do the outputs differ from one another?
 
 =head3 3.  Foo Bar Arithmetic  [ 15 mins ]
@@ -1312,8 +1319,776 @@ X<br>
 
 =head1 APPENDIX A: EXERCISE ANSWERS
 
-2a.  Complete source code of solutions to chapters 1 - 6
-2b.  Describe how to arrive at each solution
+=head2 Chapter 1, Exercise 1
+
+This exercise is commonly used as the first task for new programmers, or for programmers who are learning a new language.X<br>
+
+The goal of this exercise is to become familiar with the boilerplate (often-repeated template) RPerl C<HEADER> and C<CRITICS> code sections, as well as the basic C<print> command.X<br>
+
+The first line, starting with C<#!> and called a "shebang", tells the operating system to run this program using Perl.X<br>
+
+The 4 lines in the C<HEADER> section tell Perl to run this program using RPerl, and the C<$VERSION> number may be incremented for each update to this file.X<br>
+
+The line in the C<CRITICS> section, starting with C<##>, tells RPerl to allow hard-coded numeric values (not used in this program), as well as the C<print> operator.X<br>
+
+The last line, in the C<OPERATIONS> section, calls the C<print> operator to simply display the text "Hello, world!" followed by a newline character, combined into a single string value by the C<.> (single dot) string concatenation operator.X<br>
+
+All other lines beginning with C<#> are comments and, along with blank lines, may be safely ignored or removed.X<br>
+
+
+    #!/usr/bin/perl
+
+    # Learning RPerl, Chapter 1, Exercise 1
+    # Print "Hello, world!"; the classic first program for new programmers
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+
+    # [[[ OPERATIONS ]]]
+    print 'Hello, world!' . "\n";
+
+Example execution and output:
+
+    $ rperl -t LearningRPerl/Chapter1/exercise_1-hello_world.pl
+    Hello, world!
+
+X<br>
+
+
+=head2 Chapter 1, Exercise 2
+
+The goal of this exercise is to become familiar with the C<rperl> command.X<br>
+
+X<br>
+
+Example execution and output for 2a and 2b:
+
+    $ rperl -?
+    Usage:
+                rperl [OPTIONS] input_program_0.pl [input_program_1.pl input_program_2.pl ...]
+                rperl [OPTIONS] MyClassFoo.pm [MyClassBar.pm MyClassBat.pm ...]
+                rperl [OPTIONS] input_program_0.pl MyClassFoo.pm [input_program_1.pl ... MyClassBar.pm ...]
+
+    Options:
+        --help _OR_ -h _OR_ -?
+                Print a brief help message.
+
+        --version _OR_ -v
+                Print version number and copyright information.
+                Lowercase 'v' not to be confused with uppercase 'V' in 'Verbose' option below.
+
+        --dependencies _OR_ -d
+        --nodependencies _OR_ -nod
+                Follow and compile dependencies, or not.
+                Enabled by default, equivalent to '--mode dependencies=ON' option.
+                Lowercase 'd' not to be confused with uppercase 'D' in 'Debug' option below.
+                WARNING: Disabling dependencies will likely cause errors or undefined behavior.
+
+        --infile=MyFile.pm _OR_ -i=MyFile.pm
+                Specify input file, may be repeated for multiple input files.
+                Option prefix '--infile' may be entirely omitted.
+                Option prefix MUST be omitted to specify wildcard for multiple input files.
+
+        --outfile=MyFile _OR_ -o=MyFile
+                Specify output file prefix, may be repeated for multiple output files.
+                RPerl *.pm input file with PERL ops will create MyFile.pmc output file.
+                RPerl *.pl input file with PERL ops will create my_file (or my_file.exe) & my_file.pmc output files.
+                RPerl *.pm input file with CPP ops will create MyFile.pmc, MyFile.cpp, & MyFile.h output files.
+                RPerl *.pl input file with CPP ops will create myfile (or myfile.exe on Windows), MyFile.pmc, MyFile.cpp, & MyFile.h output files.
+                Option may be entirely omitted, 'MyFile.*' input file will default to 'MyFile.*' out.
+
+        --mode ops=PERL _OR_ -m ops=PERL
+        --mode ops=CPP _OR_ -m ops=CPP
+                Specify operations mode, CPP by default.
+                If set to PERL, forces types mode to PERL & compile mode to PARSE or GENERATE; test mode, does not actually compile.
+
+        --mode types=PERL _OR_ -m types=PERL
+        --mode types=CPP _OR_ -m types=CPP
+        --mode types=DUAL _OR_ -m types=DUAL
+                Specify data types mode, CPP by default.
+                DUAL mode allows generate-once-compile-many types, selected by '#define __FOO__TYPES' in lib/rperltypes_mode.h file.
+
+        --mode check=OFF _OR_ -m check=OFF
+        --mode check=ON _OR_ -m check=ON
+        --mode check=TRACE _OR_ -m check=TRACE
+                Specify data type checking mode, TRACE by default.
+
+        --mode dependencies=OFF _OR_ -m dependencies=OFF
+        --mode dependencies=ON _OR_ -m dependencies=ON
+                Specify dependencies mode, ON by default.
+
+        --mode compile=PARSE _OR_ -m compile=PARSE
+        --mode compile=GENERATE _OR_ -m compile=GENERATE
+        --mode compile=SUBCOMPILE _OR_ -m compile=SUBCOMPILE
+                Specify compile mode, SUBCOMPILE by default.
+
+        --mode execute=OFF _OR_ -m execute=OFF
+        --mode execute=ON _OR_ -m execute=ON
+                Specify execute mode, ON by default.
+
+        --mode label=OFF _OR_ -m label=OFF
+        --mode label=ON _OR_ -m label=ON
+                Specify source section label mode, ON by default.
+
+        --compile _OR_ -c
+        --nocompile _OR_ -noc
+                Generate & subcompile C++ source code, or not.
+                Enabled by default, equivalent to '--mode compile=SUBCOMPILE' option.
+
+        --execute _OR_ -e
+        --noexecute _OR_ -noe
+                Run input code after optional compile, or not.
+                Enabled by default for *.pl program input files, always disabled for *.pm module input files or multiple input files.
+                Equivalent to '--mode execute=ON' option.
+
+        --Verbose _OR_ -V
+        --noVerbose _OR_ -noV
+                Include additional user information in output, or not.
+                Disabled by default, equivalent to `export RPERL_VERBOSE=1` shell command.
+                Uppercase 'V' not to be confused with lowercase 'v' in 'version' option above.
+
+        --Debug _OR_ -D
+        --noDebug _OR_ -noD
+                Include system diagnostic information in output, or not.
+                Disabled by default, equivalent to `export RPERL_DEBUG=1` shell command.
+                Uppercase 'D' not to be confused with lowercase 'd' in 'dependencies' option above.
+
+        --Warnings _OR_ -W
+        --noWarnings _OR_ -noW
+                Include system warnings in output, or not.
+                Enabled by default, equivalent to `export RPERL_WARNINGS=0` shell command.
+
+        --test _OR_ -t
+                Test mode: Perl ops, Perl types, Parse & Generate (no Save or Compile)
+                Disabled by default, equivalent to '--mode ops=PERL --mode types=PERL --mode compile=GENERATE' options.
+
+Example execution and output for 2c and 2d:
+
+    $ rperl -t -V LearningRPerl/Chapter1/exercise_1-hello_world.pl 
+    Verbose Flag:       1
+    Debug Flag:         0
+    Test Flag:          1
+    Input File:         LearningRPerl/Chapter1/exercise_1-hello_world.pl
+    Output File(s):     LearningRPerl/Chapter1/exercise_1-hello_world  
+    Modes:              ops => PERL, types => PERL, check => TRACE, compile => GENERATE, execute => ON, label => ON
+
+    DEPENDENCIES:       Follow & find all deps...    0 found.
+    PARSE PHASE 0:      Check     Perl syntax...        done.
+    PARSE PHASE 1:      Criticize Perl syntax...        done.
+    PARSE PHASE 2:      Parse    RPerl syntax...        done.
+    GENERATE:           Generate RPerl syntax...        done.
+    EXECUTE:            Run code...
+
+    Hello, world!
+
+
+    $ rperl -t -D LearningRPerl/Chapter1/exercise_1-hello_world.pl 
+    in rperl, have $RPerl::DEBUG = 1
+    in rperl, have $RPerl::VERBOSE = 0
+    Hello, world!
+
+
+    $ rperl -t -V -D LearningRPerl/Chapter1/exercise_1-hello_world.pl 
+    Verbose Flag:       1
+    Debug Flag:         1
+    Test Flag:          1
+
+    in rperl, have $RPerl::DEBUG = 1
+    in rperl, have $RPerl::VERBOSE = 1
+    Input File:         LearningRPerl/Chapter1/exercise_1-hello_world.pl
+    Output File(s):     LearningRPerl/Chapter1/exercise_1-hello_world  
+    Modes:              ops => PERL, types => PERL, check => TRACE, compile => GENERATE, execute => ON, label => ON
+
+    DEPENDENCIES:       Follow & find all deps...    0 found.
+    PARSE PHASE 0:      Check     Perl syntax...        done.
+    PARSE PHASE 1:      Criticize Perl syntax...        done.
+    PARSE PHASE 2:      Parse    RPerl syntax...        done.
+    GENERATE:           Generate RPerl syntax...        done.
+    EXECUTE:            Run code...
+
+    Hello, world!
+
+Of the above 3 commands executed for 2c and 2d, the first includes normal output plus additional verbose output; the second includes normal output plus additional debugging output (minimal in this simple case); and the third includes normal output plus both verbose and debugging output.
+
+X<br>
+
+
+=head2 Chapter 1, Exercise 3
+
+The goal of this exercise is to become familiar with basic variables and arithmetic.X<br>
+
+The shebang line, C<HEADER> section, and first line in the C<CRITICS> section are the same boilerplate as the previous exercise.X<br>
+
+The second line in the C<CRITICS> section tells RPerl to allow the C<$> (dollar) character, among others, to be displayed using the C<print> operator.X<br>
+
+The first 3 lines in the C<OPERATIONS> section each declare a new variable; C<$foo> and C<$bar> each hold an C<integer> (non-floating-point) numeric value, while C<$baz> holds a C<number> (floating-point) value.X<br>
+
+The C<$foo> and C<$bar> variables receive their values from hard-coded numeric values being operated upon by the C<+> (plus sign) addition and C<*> (asterisk) multiplication operators, respectively; the C<$baz> variable receives its value from the the C<$foo> and C<$bar> variables being operated upon by the C</> (forward slash) division operator.X<br>
+
+The last 3 lines call the C<print> operator to display the names of each variable, followed by each variable's respective value converted from number to underscore-formatted string, followed by a newline character.X<br>
+
+
+    #!/usr/bin/perl
+
+    # Learning RPerl, Chapter 1, Exercise 3
+    # Foo Bar Arithmetic Example
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+    my integer $foo = 21 + 12;
+    my integer $bar = 23 * 42 * 2;
+    my number $baz = $bar / $foo;
+    print 'have $foo = ' . to_string($foo) . "\n";
+    print 'have $bar = ' . to_string($bar) . "\n";
+    print 'have $baz = ' . to_string($baz) . "\n";
+
+Example execution and output:
+
+    $ rperl -t LearningRPerl/Chapter1/exercise_3-foo_bar_arithmetic.pl 
+    have $foo = 33
+    have $bar = 1_932
+    have $baz = 58.545_454_545_454_5
+
+X<br>
+
+
+=head2 Chapter 2, Exercise 1
+
+The goal of this exercise is to become familiar with constant values.X<br>
+
+The first line in the C<CRITICS> section tells RPerl to allow hard-coded numeric values as well as the C<print> operator, both of which are utilized in this program.X<br>
+
+The second line in the C<CRITICS> section tells RPerl to allow the C<use constant> operation.X<br>
+
+The line in the C<CONSTANTS> section declares a number (floating-point) constant value named C<PI>, automatically accessible via a subroutine named C<PI()>.X<br>
+
+The inner type variable C<$TYPED_PI> is only used for RPerl parsing purposes; for example, if your constant is named C<FOO> then you should declare it using the inner type variable C<$TYPED_FOO> and you should access it by calling the subroutine C<FOO()>, but you should never directly utilize the variable C<$TYPED_FOO> anywhere else in your code.X<br>
+
+The first 2 lines in the C<OPERATIONS> section each create a new number variable, with C<$radius> set to the hard-coded value of C<12.5> and C<$circumference> set to the well-known basic geometry formula "circumference equals 2 pi times radius".X<br>
+
+The last 3 lines call the C<print> operator to display the values of C<PI()>, C<$radius>, and C<$circumference>, each followed by a newline character.X<br>
+
+
+    #!/usr/bin/perl
+
+    # Learning RPerl, Chapter 2, Exercise 1
+    # Find the circumference of a circle with hard-coded radius of 12.5 units
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
+
+    # [[[ CONSTANTS ]]]
+    use constant PI => my number $TYPED_PI = 3.141_592_654;
+
+    # [[[ OPERATIONS ]]]
+    my number $radius = 12.5;
+    my number $circumference = 2 * PI() * $radius;
+
+    print 'Pi = ' . to_string(PI()) . "\n";
+    print 'Radius = ' . to_string($radius) . "\n";
+    print 'Circumference = 2 * Pi * Radius = 2 * ' . to_string(PI()) . ' * ' . to_string($radius) . ' = ' . to_string($circumference) . "\n";
+
+Example execution and output:
+
+    $ rperl -t LearningRPerl/Chapter2/exercise_1-circumference_of_specific_radius.pl 
+    Pi = 3._141_592_654
+    Radius = 12.5
+    Circumference = 2 * Pi * Radius = 2 * 3._141_592_654 * 12.5 = 78.539_816_35
+
+X<br>
+
+
+=head2 Chapter 2, Exercise 2
+
+The goal of this exercise is to become familiar with accepting user keyboard input.X<br>
+
+The third line in the C<CRITICS> section tells RPerl to allow user input via the C<STDIN> standard stream, a software input connection which is attached to the keyboard by default.X<br>
+
+The second line in the C<OPERATIONS> section creates a string variable C<$radius_string>, and assigns to it the text value typed by the user on their keyboard.X<br>
+
+The third line in the C<OPERATIONS> section creates a number variable C<$radius>, and assigns to it the numeric value returned by calling the RPerl type conversion operator C<string_to_number()> on the string variable C<$radius_string>.X<br>
+
+This exercise is otherwise identical to the previous exercise.X<br>
+
+
+    #!/usr/bin/perl
+
+    # Learning RPerl, Chapter 2, Exercise 2
+    # Find the circumference of a circle with any radius entered by the user
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
+    ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
+
+    # [[[ CONSTANTS ]]]
+    use constant PI => my number $TYPED_PI = 3.141_592_654;
+
+    # [[[ OPERATIONS ]]]
+    print 'Please input radius: ';
+    my string $radius_string = <STDIN>;
+    my number $radius = string_to_number($radius_string);
+    my number $circumference = 2 * PI() * $radius;
+
+    print "\n";
+    print 'Pi = ' . to_string(PI()) . "\n";
+    print 'Radius = ' . to_string($radius) . "\n";
+    print 'Circumference = 2 * Pi * Radius = 2 * ' . to_string(PI()) . ' * ' . to_string($radius) . ' = ' . to_string($circumference) . "\n";
+
+Example execution and output:
+
+    $ rperl -t LearningRPerl/Chapter2/exercise_2-circumference_of_any_radius.pl 
+    Please input radius: 2
+
+    Pi = 3.141_592_654
+    Radius = 2
+    Circumference = 2 * Pi * Radius = 2 * 3.141_592_654 * 2 = 12.566_370_616
+
+X<br>
+
+
+=head2 Chapter 2, Exercise 3
+
+The goal of this exercise is to become familiar with conditional statements and comparison operators.X<br>
+
+In the C<OPERATIONS> section, the line starting with C<if ($radius E<gt>= 0)> denotes the beginning of a conditional statement: if the numeric value of the variable C<$radius> is greater-than-or-equal-to 0, then the normal calculation for C<$circumference> is used; if C<$radius> is less than 0 (physically impossible), then a warning message is printed and C<$circumference> is set to 0.X<br>
+
+This exercise is otherwise identical to the previous exercise.X<br>
+
+
+    #!/usr/bin/perl
+
+    # Learning RPerl, Chapter 2, Exercise 3
+    # Find the circumference of a circle with any positive radius entered by the user
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
+    ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
+
+    # [[[ CONSTANTS ]]]
+    use constant PI => my number $TYPED_PI = 3.141_592_654;
+
+    # [[[ OPERATIONS ]]]
+    print 'Please input radius: ';
+    my string $radius_string = <STDIN>;
+    my number $radius = string_to_number($radius_string);
+    my number $circumference;
+
+    if ($radius >= 0) {
+        $circumference = 2 * PI() * $radius;
+    }
+    else {
+        print 'Negative radius detected, defaulting to zero circumference!' . "\n";
+        $circumference = 0;
+    }
+
+    print "\n";
+    print 'Pi = ' . to_string(PI()) . "\n";
+    print 'Radius = ' . to_string($radius) . "\n";
+    print 'Circumference = 2 * Pi * Radius = 2 * ' . to_string(PI()) . ' * ' . to_string($radius) . ' = ' . to_string($circumference) . "\n";
+
+Example execution and output:
+
+    $ rperl -t LearningRPerl/Chapter2/exercise_3-circumference_of_any_positive_radius.pl 
+    Please input radius: -2
+    Negative radius detected, defaulting to zero circumference!
+
+    Pi = 3._141_592_654
+    Radius = -2
+    Circumference = 2 * Pi * Radius = 2 * 3._141_592_654 * -2 = 0
+
+X<br>
+
+
+=head2 Chapter 2, Exercise 4
+
+The goal of this exercise is to gain further exposure to the C<STDIN> standard stream and variable multiplication.X<br>
+
+In the C<OPERATIONS> section, C<STDIN> is accessed to collect user input for both C<$multiplicator_string> and C<$multiplicand_string> variables.X<br>
+
+These 2 string variables are converted from text values to numeric values by calling C<string_to_number()>, then multiplied via the C<*> multiplication operator, and the results displayed by calling C<print>.X<br>
+
+
+    #!/usr/bin/perl
+
+    # Learning RPerl, Chapter 2, Exercise 4
+    # Find the product of any two numbers entered by the user
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
+
+    # [[[ OPERATIONS ]]]
+    print 'Please input multiplicator: ';
+    my string $multiplicator_string = <STDIN>;
+    my number $multiplicator = string_to_number($multiplicator_string);
+
+    print 'Please input multiplicand: ';
+    my string $multiplicand_string = <STDIN>;
+    my number $multiplicand = string_to_number($multiplicand_string);
+
+    my number $product = $multiplicator * $multiplicand;
+
+    print "\n";
+    print 'Product = Multiplicator * Multiplicand = ' . to_string($multiplicator) . ' * ' . to_string($multiplicand) . ' = ' . to_string($product) . "\n";
+
+Example execution and output:
+
+    $ rperl -t LearningRPerl/Chapter2/exercise_4-product_of_any_two_numbers.pl 
+    Please input multiplicator: 2112
+    Please input multiplicand: 23.42
+
+    Product = Multiplicator * Multiplicand = 2_112 * 23.42 = 49_463.04
+
+X<br>
+
+
+=head2 Chapter 2, Exercise 5
+
+The goal of this exercise is to become familiar with the C<x> string repeat operator.X<br>
+
+In the C<OPERATIONS> section, C<STDIN> is accessed twice to collect user input for a string variable C<$repeat_string> to be repeated, and an integer variable C<$repeat_integer> to specify the number of repetitions.X<br>
+
+The last line contains 2 operators, C<print> and the C<x> string repeat operator.X<br>
+
+Like the C<.> (single dot) string concatenation operator, the C<x> operator has a higher precedence than C<print> and is thus executed first, generating a single string value comprised of the original string repeated 0 or more times, then the resulting string is displayed by calling C<print>.X<br>
+
+
+    #!/usr/bin/perl
+
+    # Learning RPerl, Chapter 2, Exercise 5
+    # Repeat any string any number of times, both values entered by the user
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
+
+    # [[[ OPERATIONS ]]]
+    print 'Please input string to be repeated: ';
+    my string $repeat_string = <STDIN>;
+
+    print 'Please input integer (whole number) times to repeat string: ';
+    my string $repeat_integer_string = <STDIN>;
+    my integer $repeat_integer = string_to_integer($repeat_integer_string);
+
+    print "\n";
+    print $repeat_string x $repeat_integer;
+
+
+Example execution and output:
+
+    $ rperl -t LearningRPerl/Chapter2/exercise_5-string_repeat.pl 
+    Please input string to be repeated: howdy
+    Please input integer (whole number) times to repeat string: 3
+
+    howdy
+    howdy
+    howdy
+
+X<br>
+
+
+=head2 Chapter 3, Exercise 1
+
+The goal of this exercise is to become familiar with C<while> and C<foreach> loops, arrays, and array operators.X<br>
+
+The first line in the C<OPERATIONS> section declares a new variable C<$input_strings> of type C<string_arrayref>, which is capable of storing 0 or more individual string values, and C<$input_strings> is then initialized to contain the empty set C<[]>.X<br>
+
+The line starting with C<while (my string $input_string = E<lt>STDINE<gt>)> denotes the beginning of an iterative (repeating) loop statement, which continues to accept and store user input until CTRL-D is pressed to indicate the EOF (end-of-file) condition, also known as EOT (end-of-transmission).X<br>
+
+A new copy of the variable C<$input_string> is created and assigned the value of collected user input by calling C<STDIN> at the start of each loop iteration; the C<my> operator is evaluated as a true condition and the loop repeats, until CTRL-D is received and the C<my> operator returns a false condition.X<br>
+
+Inside the body of the C<while> loop is 1 line calling the C<push> operator, which appends the current iteration's value of C<$input_string> onto the list of strings contained in C<$input_strings>.X<br>
+
+The C<@{...}> (at-sign-curly-braces) is the array dereference operator, which exists because in Perl it is still sometimes necessary to directly access an array by value, instead of the RPerl method of indirectly accessing the array by reference, such as is required by the C<push> operator.X<br>
+
+The line starting with C<my string_arrayref $input_strings_reversed> declares another array of string values C<input_strings_reversed>, and then assigns it the strings contained within the first array C<$input_strings> in reversed order, as returned by calling the C<reverse> operator.X<br>
+
+As with the C<push> operator, the C<reverse> operator requires its argument to be dereferenced using C<@{...}>; another dereferenced array value is returned by C<reverse>, and an array reference is returned by enclosing C<reverse> and its argument inside the C<[...]> (square brackets) array reference operator.X<br>
+
+Finally, the line starting with C<foreach my string $input_strings_reversed_element> denotes the beginning of another loop statement, which iterates the value of C<$input_strings_reversed_element> once for each string value contained in the C<$input_strings_reversed> array; C<print> is called inside the loop body to display the original input strings in reverse order.X<br>
+
+
+    #!/usr/bin/perl
+
+    # Learning RPerl, Chapter 3, Exercise 1
+    # Print user-supplied list of strings in reverse order
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
+
+    # [[[ OPERATIONS ]]]
+    my string_arrayref $input_strings = [];
+
+    print 'Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
+
+    while (my string $input_string = <STDIN>) {
+        push @{$input_strings}, $input_string;
+    }
+
+    print "\n";
+    print 'Strings in reverse order:' . "\n";
+
+    my string_arrayref $input_strings_reversed = [reverse @{$input_strings}];
+
+    foreach my string $input_strings_reversed_element (@{$input_strings_reversed}) {
+        print $input_strings_reversed_element;
+    }
+
+Example execution and output:
+
+    $ rperl -t ./lib/RPerl/Learning/Chapter3/exercise_1-stdin_strings_reverse.pl 
+    Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:
+    Howdy
+    Doody
+    Buffalo
+    Bob
+    Clarabell
+    Clown
+
+    Strings in reverse order:
+    Clown
+    Clarabell
+    Bob
+    Buffalo
+    Doody
+    Howdy
+
+X<br>
+
+
+=head2 Chapter 3, Exercise 2
+
+The goal of this exercise is FOO.X<br>
+
+
+    #!/usr/bin/perl FOO
+
+Example execution and output:
+
+    $ rperl -t LearningRPerl/Chapter FOO
+
+X<br>
+
+
+=head2 Chapter 3, Exercise 3
+
+The goal of this exercise is FOO.X<br>
+
+
+    #!/usr/bin/perl FOO
+
+Example execution and output:
+
+    $ rperl -t LearningRPerl/Chapter FOO
+
+X<br>
+
+
+=head2 Chapter 4, Exercise 1
+
+The goal of this exercise is FOO.X<br>
+
+
+    #!/usr/bin/perl FOO
+
+Example execution and output:
+
+    $ rperl -t LearningRPerl/Chapter FOO
+
+X<br>
+
+
+=head2 Chapter 4, Exercise 2
+
+The goal of this exercise is FOO.X<br>
+
+
+    #!/usr/bin/perl FOO
+
+Example execution and output:
+
+    $ rperl -t LearningRPerl/Chapter FOO
+
+X<br>
+
+
+=head2 Chapter 4, Exercise 3
+
+The goal of this exercise is FOO.X<br>
+
+
+    #!/usr/bin/perl FOO
+
+Example execution and output:
+
+    $ rperl -t LearningRPerl/Chapter FOO
+
+X<br>
+
+
+=head2 Chapter 4, Exercise 4
+
+The goal of this exercise is FOO.X<br>
+
+
+    #!/usr/bin/perl FOO
+
+Example execution and output:
+
+    $ rperl -t LearningRPerl/Chapter FOO
+
+X<br>
+
+
+=head2 Chapter 4, Exercise 5
+
+The goal of this exercise is FOO.X<br>
+
+
+    #!/usr/bin/perl FOO
+
+Example execution and output:
+
+    $ rperl -t LearningRPerl/Chapter FOO
+
+X<br>
+
+
+=head2 Chapter 5, Exercise 1
+
+The goal of this exercise is FOO.X<br>
+
+
+    #!/usr/bin/perl FOO
+
+Example execution and output:
+
+    $ rperl -t LearningRPerl/Chapter FOO
+
+X<br>
+
+
+=head2 Chapter 5, Exercise 2
+
+The goal of this exercise is FOO.X<br>
+
+
+    #!/usr/bin/perl FOO
+
+Example execution and output:
+
+    $ rperl -t LearningRPerl/Chapter FOO
+
+X<br>
+
+
+=head2 Chapter 5, Exercise 3
+
+The goal of this exercise is FOO.X<br>
+
+
+    #!/usr/bin/perl FOO
+
+Example execution and output:
+
+    $ rperl -t LearningRPerl/Chapter FOO
+
+X<br>
+
+
+=head2 Chapter 6, Exercise 1
+
+The goal of this exercise is FOO.X<br>
+
+
+    #!/usr/bin/perl FOO
+
+Example execution and output:
+
+    $ rperl -t LearningRPerl/Chapter FOO
+
+X<br>
+
+
+=head2 Chapter 6, Exercise 2
+
+The goal of this exercise is FOO.X<br>
+
+
+    #!/usr/bin/perl FOO
+
+Example execution and output:
+
+    $ rperl -t LearningRPerl/Chapter FOO
+
+X<br>
+
+
+=head2 Chapter 6, Exercise 3
+
+The goal of this exercise is FOO.X<br>
+
+
+    #!/usr/bin/perl FOO
+
+Example execution and output:
+
+    $ rperl -t LearningRPerl/Chapter FOO
 
 X<br>
 

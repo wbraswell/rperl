@@ -8,7 +8,7 @@ use RPerl::Config; # get Carp, English, $RPerl::INCLUDE_PATH without 'use RPerl;
 our $VERSION = 0.002_031;
 
 # [[[ CRITICS ]]]
-## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
+## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
 
 # [[[ INCLUDES ]]]
 use RPerl::Inline;

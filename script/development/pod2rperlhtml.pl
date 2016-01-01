@@ -4,10 +4,10 @@
 use RPerl;
 use strict;
 use warnings;
-our $VERSION = 0.011_000;
+our $VERSION = 0.012_000;
 
 # [[[ CRITICS ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 
 # [[[ INCLUDES ]]]
 use App::Pod2CpanHtml;
@@ -97,7 +97,11 @@ our string_arrayref $pod2cpanhtml_process = sub {
 our string_arrayref $pod2cpanhtml_postprocess = sub {
     ( my string_arrayref $file_lines ) = @_;
     my string_arrayref $file_lines_modified = [];
+    push @{$file_lines_modified}, '<!DOCTYPE html>';  # why isn't there already a DOCTYPE tag added by one of the other HTML generators?  :P
     foreach my string $file_line ( @{$file_lines} ) {
+        # help inline code tags stand out more, not only monospace font but also highlighted background matching the block-indented code
+        if ($file_line eq '</head>') { push @{$file_lines_modified}, '<style> code { background: #eeeeee; } </style>'; }  # no outline
+#        if ($file_line eq '</head>') { push @{$file_lines_modified}, '<style> code { background: #eeeeee; border: 1px solid #888888; } </style>'; }  # yes outline
 
         # enable HTML newline <br> from mangled HTML literals
         #        $file_line =~ s/&lt;br&gt;/<br>/gxms;        # pod2html

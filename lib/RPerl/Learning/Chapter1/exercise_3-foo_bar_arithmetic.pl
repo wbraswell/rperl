@@ -14,10 +14,9 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OPERATIONS ]]]
-my number $foo = 21 + 12;
-my number $bar = 23 * 42;
-#my number $baz = $foo / $bar;
+my integer $foo = 21 + 12;
+my integer $bar = 23 * 42 * 2;
 my number $baz = $bar / $foo;
-print 'have $foo = ' . $foo . "\n";
-print 'have $bar = ' . $bar . "\n";
-print 'have $baz = ' . $baz . "\n";
+print 'have $foo = ' . to_string($foo) . "\n";
+print 'have $bar = ' . to_string($bar) . "\n";
+print 'have $baz = ' . to_string($baz) . "\n";

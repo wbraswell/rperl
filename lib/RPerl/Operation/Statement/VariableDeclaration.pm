@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::VariableDeclaration;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.004_100;
+our $VERSION = 0.004_200;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement);
@@ -67,8 +67,10 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             
             if ( ( exists $opnamed_or_subexp_or_input_scolon->{children} ) and
                 ( exists $opnamed_or_subexp_or_input_scolon->{children}->[0] ) and
+                ( blessed($opnamed_or_subexp_or_input_scolon->{children}->[0])) and
                 ( exists $opnamed_or_subexp_or_input_scolon->{children}->[0]->{children} ) and
                 ( exists $opnamed_or_subexp_or_input_scolon->{children}->[0]->{children}->[0] ) and
+                ( blessed($opnamed_or_subexp_or_input_scolon->{children}->[0]->{children}->[0])) and
                 ( exists $opnamed_or_subexp_or_input_scolon->{children}->[0]->{children}->[0]->{children} ) and
                 ( exists $opnamed_or_subexp_or_input_scolon->{children}->[0]->{children}->[0]->{children}->[0] ) and
                 (blessed($opnamed_or_subexp_or_input_scolon->{children}->[0]->{children}->[0]->{children}->[0])) and

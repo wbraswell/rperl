@@ -6,7 +6,7 @@ use warnings;
 our $VERSION = 0.001_011;
 
 # [[[ CRITICS ]]]
-## no critic qw(ProhibitStringyEval) # SYSTEM DEFAULT 1: allow eval()
+## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
 
 # [[[ SUBROUTINES ]]]
 our void::method $cpp_load = sub {

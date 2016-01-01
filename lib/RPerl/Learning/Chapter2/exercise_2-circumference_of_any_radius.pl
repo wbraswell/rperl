@@ -7,13 +7,14 @@
 use RPerl;
 use strict;
 use warnings;
-our $VERSION = 0.002_000;
+our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
 
+# [[[ CONSTANTS ]]]
 use constant PI => my number $TYPED_PI = 3.141_592_654;
 
 # [[[ OPERATIONS ]]]
@@ -23,6 +24,6 @@ my number $radius = string_to_number($radius_string);
 my number $circumference = 2 * PI() * $radius;
 
 print "\n";
-print 'Pi = ' . PI() . "\n";
-print 'Radius = ' . $radius . "\n";
-print 'Circumference = 2 * Pi * Radius = 2 * ' . PI() . ' * ' . $radius . ' = ' . $circumference . "\n";
+print 'Pi = ' . to_string(PI()) . "\n";
+print 'Radius = ' . to_string($radius) . "\n";
+print 'Circumference = 2 * Pi * Radius = 2 * ' . to_string(PI()) . ' * ' . to_string($radius) . ' = ' . to_string($circumference) . "\n";

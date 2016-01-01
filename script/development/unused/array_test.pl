@@ -4,8 +4,8 @@ use warnings;
 use RPerl::AfterSubclass;
 our $VERSION = 0.004_011;
 
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
-## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd PodSpelling) # DEVELOPER DEFAULT 1: allow unreachable & POD-commented code
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd PodSpelling)  # DEVELOPER DEFAULT 1: allow unreachable & POD-commented code
 
 # UNCOMMENT TO ENABLE PERL TYPES FOR C++ OPS
 #rperltypes::types_enable('PERL');

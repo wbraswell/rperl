@@ -10,7 +10,7 @@ use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls) # USER DEFAULT 1: allow numeric values & print operator
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
 
 # [[[ OPERATIONS ]]]
@@ -25,4 +25,4 @@ my number $multiplicand = string_to_number($multiplicand_string);
 my number $product = $multiplicator * $multiplicand;
 
 print "\n";
-print 'Product = Multiplicator * Multiplicand = ' . $multiplicator . ' * ' . $multiplicand . ' = ' . $product . "\n";
+print 'Product = Multiplicator * Multiplicand = ' . to_string($multiplicator) . ' * ' . to_string($multiplicand) . ' = ' . to_string($product) . "\n";
