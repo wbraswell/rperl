@@ -4,7 +4,7 @@
 use RPerl;
 use strict;
 use warnings;
-our $VERSION = 0.020_000;
+our $VERSION = 0.020_100;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -136,8 +136,8 @@ our string_arrayref $pod2cpanhtml_postprocess = sub {
 #            push @{$file_lines_modified}, '<script src="https://metacpan.org/_assets/a869e92bd8b69760f4c3b0a85075f0f9.js" type="text/javascript"></script>';   # live remote copy
 #            push @{$file_lines_modified}, '<link href="metacpan.css" rel="stylesheet" type="text/css">';  # 20160101 local copy
 #            push @{$file_lines_modified}, '<script src="metacpan.js" type="text/javascript"></script>';   # 20160101 local copy
-            push @{$file_lines_modified}, '<link href="metacpan_rperl.css" rel="stylesheet" type="text/css">';  # modified local copy
-            push @{$file_lines_modified}, '<script src="metacpan_rperl.js" type="text/javascript"></script>';   # modified local copy
+            push @{$file_lines_modified}, '<link href="stylesheets/metacpan_rperl.css" rel="stylesheet" type="text/css">';  # modified local copy
+            push @{$file_lines_modified}, '<script src="javascripts/metacpan_rperl.js" type="text/javascript"></script>';   # modified local copy
             next;
         }
 
