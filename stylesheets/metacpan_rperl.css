@@ -6625,8 +6625,8 @@ GET file:///static/fonts//fontawesome-webfont.woff?v=4.2.0 net::ERR_FILE_NOT_FOU
 GET file:///static/fonts//fontawesome-webfont.ttf?v=4.2.0 net::ERR_FILE_NOT_FOUND */
 /* src: url('/static/fonts//fontawesome-webfont.eot?v=4.2.0');
   src: url('/static/fonts//fontawesome-webfont.eot?#iefix&v=4.2.0') format('embedded-opentype'), url('/static/fonts//fontawesome-webfont.woff?v=4.2.0') format('woff'), url('/static/fonts//fontawesome-webfont.ttf?v=4.2.0') format('truetype'), url('/static/fonts//fontawesome-webfont.svg?v=4.2.0#fontawesomeregular') format('svg'); */
-  src: url('fontawesome-webfont.eot?v=4.2.0');
-  src: url('fontawesome-webfont.eot?#iefix&v=4.2.0') format('embedded-opentype'), url('fontawesome-webfont.woff?v=4.2.0') format('woff'), url('fontawesome-webfont.ttf?v=4.2.0') format('truetype'), url('fontawesome-webfont.svg?v=4.2.0#fontawesomeregular') format('svg');
+  src: url('../fonts/fontawesome-webfont.eot?v=4.2.0');
+  src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.2.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff?v=4.2.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.2.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.2.0#fontawesomeregular') format('svg');
 
 
   font-weight: normal;
