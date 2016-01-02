@@ -2092,9 +2092,6 @@ Example execution, input, and output:
 X<noncode>
 
     $ rperl -t while $foo reverse LearningRPerl/Chapter FOO
-    $ rperl -t while $foo reverse LearningRPerl/Chapter FOO
-    $ rperl -t while $foo reverse LearningRPerl/Chapter FOO
-    $ rperl -t while $foo reverse LearningRPerl/Chapter FOO
 
 X</noncode>
 
