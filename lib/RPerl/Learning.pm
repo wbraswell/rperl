@@ -131,7 +131,7 @@ X<br>
 
 =head1 FOREWORD
 
-    [ INSERT FOREWORD CONTENT HERE ]
+[ INSERT FOREWORD CONTENT HERE ]
 
 X<br>
 
@@ -174,6 +174,8 @@ X<br>
 
 "Challenge accepted."
 
+L<https://github.com/wbraswell/rperl/blob/master/script/development/pod2rperlhtml.pl>
+
 ~ Will Braswell
 
 X<br>
@@ -187,7 +189,7 @@ You are about to learn the basic concepts of writing software using the RPerl op
 
 This book is named and stylized for the animal mascot for RPerl, Roadie the Roadrunner.  RPerl, like Roadie, I<"runs really fast">.
 
-Throughout this text, the following typography conventions are utilized:
+Throughout this text, the following 12 typography conventions are utilized:
 
 =over 16
 
@@ -207,12 +209,24 @@ Throughout this text, the following typography conventions are utilized:
 
 =item * X<u>I<BEST PRACTICES>X</u>
 
-=item * C<my string $source_code;>
+=item * L<Hyperlink|http://rperl.org>
 
-=item * C<$ terminal_command.sh>
+=item * C<$inline_code_snippet = 'unhighlighted';>
+
+    my string $indented_code_block = 'highlighted';  # with comments
+    my integer $more_code = 17;  # http://www.catb.org/jargon/html/R/random-numbers.html
+    return 'end of indented code block';
+
+X<noncode>
+
+    $ terminal_command.pl with arguments
+    Please provide input: foo bar
+    Your output is:       howdy howdy howdy
+
+X</noncode>
 
 =back
-    
+
 =head2 Section 1.2: Learning Perl
 
 This book is purposefully patterned after the popular educational text X<u>B<Learning Perl>X</u>, affectionately known as the Llama Book.  Both the Roadrunner Book and the Llama book are meant as introductory texts on Perl topics.  The Llama Book is focused on normal Perl, and the Roadrunner Book is focused on optimized Perl.
@@ -359,11 +373,19 @@ Installing RPerl ranges from easy to difficult, depending on how well your opera
 
 On modern operating systems with good Perl support, such as Debian or Ubuntu GNU/Linux, you should be able to install RPerl system-wide by running the following command at your terminal command prompt:
 
+X<noncode>
+
     $ sudo cpan RPerl
+
+X</noncode>
 
 If RPerl is properly installed, you should see a short text message displayed when you type the following command:
 
+X<noncode>
+
     $ rperl -v
+
+X</noncode>
 
 On operating systems with less Perl support, you may have to perform a number of steps to successfully install RPerl, with dry technical detail available in the INSTALL notes document:
 
@@ -482,7 +504,11 @@ B<I<CURRENT RPERL LIMITATION: RPerl modules are supported in full compile mode, 
 
 A list of all valid RPerl compiler options may be seen by issuing the following command:
 
+X<noncode>
+
     $ rperl -?
+
+X</noncode>
 
 You may find the same information by viewing the following links:
 
@@ -492,13 +518,21 @@ L<https://metacpan.org/pod/distribution/RPerl/script/rperl>
 
 To partially-compile-then-execute the preceeding RPerl example program in test mode, you may copy and paste the entire program (from shebang to second C<print>) into a temporary file such as F</tmp/foobar.pl>, then execute the following command:
 
+X<noncode>
+
     $ rperl -t /tmp/foobar.pl
 
+X</noncode>
+
 The output of this example program should be:
+
+X<noncode>
 
     have $foo = 33
     have $bar = 1_932
     have $baz = 58.545_454_545_454_5
+
+X</noncode>
 
 Please see L</CHAPTER 11: CLASSES, PACKAGES, MODULES, LIBRARIES> for more information about compiling Perl modules.
 
@@ -587,11 +621,19 @@ L<http://rperl.org/the_book_of_rperl.html>
 
 On a computer with RPerl already installed, create a directory named F<LearningRPerl> containing a sub-directory named F<Chapter1>.  Using the B<I<Foo Bar>> example program as a template, manually type a new RPerl program into a file named F<exercise_1-hello_world.pl> inside the F<LearningRPerl/Chapter1> sub-directory.  The sole purpose of your first program is to use the C<print> operator and simply display the following one line of text output, followed by one newline character:
 
+X<noncode>
+
     Hello, World!
+
+X</noncode>
 
 Run your new program by issuing the following command at your terminal command prompt:
 
+X<noncode>
+
     $ rperl -t LearningRPerl/Chapter1/exercise_1-hello_world.pl
+
+X</noncode>
 
 I<HINT: You only need the C<USER DEFAULT 1> critic line, so your resulting program should be 7 lines long, not counting comments or blank lines.>
 
@@ -599,7 +641,11 @@ I<HINT: You only need the C<USER DEFAULT 1> critic line, so your resulting progr
 
 First, run the following RPerl command, and observe the output for use in 2a and 2b below:
 
+X<noncode>
+
     $ rperl -?
+
+X</noncode>
 
 2a.  What are some RPerl command-line options with which you are already familiar?
 
@@ -607,9 +653,13 @@ First, run the following RPerl command, and observe the output for use in 2a and
 
 Next, run the following 3 RPerl commands, for 2c and 2d below:
 
+X<noncode>
+
     $ rperl -t -V LearningRPerl/Chapter1/exercise_1-hello_world.pl
     $ rperl -t -D LearningRPerl/Chapter1/exercise_1-hello_world.pl
     $ rperl -t -V -D LearningRPerl/Chapter1/exercise_1-hello_world.pl
+
+X</noncode>
 
 2c.  How do the outputs of these 3 commands differ from the output of Exercise 1?
 
@@ -621,13 +671,21 @@ Manually type the entire B<I<Foo Bar>> example program into a file named F<exerc
 
 Modify your program by adding an extra numeric variable named C<$baz>, set its value to C<$bar / $foo>, and use C<print> to generate the following output:
 
+X<noncode>
+
     have $foo = 33
     have $bar = 966
     have $baz = 29.2727272727273
 
+X</noncode>
+
 Run your program thusly:
 
+X<noncode>
+
     $ rperl -t LearningRPerl/Chapter1/exercise_3-foo_bar_arithmetic.pl
+
+X</noncode>
 
 X<br>
 
@@ -1163,6 +1221,10 @@ To convert from one data type to another, we use the RPerl type conversion subro
 
 =head3 Section 2.4.x Scope, Type, Name, Value
 
+START HERE
+START HERE
+START HERE
+
 The I<"scope"> of a variable is either local using the C<my> keyword, or global using the C<our> keyword.  Local variables are only usable within their own enclosing code block such as a conditional (section xxx), loop (xxx), or subroutine (chapter 4).
 
 and global variables are usable within any code block accessible by the Perl interpreter or (RPerl compiler).
@@ -1355,8 +1417,12 @@ All other lines beginning with C<#> are comments and, along with blank lines, ma
 
 Example execution and output:
 
+X<noncode>
+
     $ rperl -t LearningRPerl/Chapter1/exercise_1-hello_world.pl
     Hello, world!
+
+X</noncode>
 
 X<br>
 
@@ -1368,6 +1434,8 @@ The goal of this exercise is to become familiar with the C<rperl> command.X<br>
 X<br>
 
 Example execution and output for 2a and 2b:
+
+X<noncode>
 
     $ rperl -?
     Usage:
@@ -1468,7 +1536,11 @@ Example execution and output for 2a and 2b:
                 Test mode: Perl ops, Perl types, Parse & Generate (no Save or Compile)
                 Disabled by default, equivalent to '--mode ops=PERL --mode types=PERL --mode compile=GENERATE' options.
 
+X</noncode>
+
 Example execution and output for 2c and 2d:
+
+X<noncode>
 
     $ rperl -t -V LearningRPerl/Chapter1/exercise_1-hello_world.pl 
     Verbose Flag:       1
@@ -1513,6 +1585,8 @@ Example execution and output for 2c and 2d:
     EXECUTE:            Run code...
 
     Hello, world!
+
+X</noncode>
 
 Of the above 3 commands executed for 2c and 2d, the first includes normal output plus additional verbose output; the second includes normal output plus additional debugging output (minimal in this simple case); and the third includes normal output plus both verbose and debugging output.
 
@@ -1559,10 +1633,14 @@ The last 3 lines call the C<print> operator to display the names of each variabl
 
 Example execution and output:
 
+X<noncode>
+
     $ rperl -t LearningRPerl/Chapter1/exercise_3-foo_bar_arithmetic.pl 
     have $foo = 33
     have $bar = 1_932
     have $baz = 58.545_454_545_454_5
+
+X</noncode>
 
 X<br>
 
@@ -1612,10 +1690,14 @@ The last 3 lines call the C<print> operator to display the values of C<PI()>, C<
 
 Example execution and output:
 
+X<noncode>
+
     $ rperl -t LearningRPerl/Chapter2/exercise_1-circumference_of_specific_radius.pl 
     Pi = 3._141_592_654
     Radius = 12.5
     Circumference = 2 * Pi * Radius = 2 * 3._141_592_654 * 12.5 = 78.539_816_35
+
+X</noncode>
 
 X<br>
 
@@ -1663,7 +1745,9 @@ This exercise is otherwise identical to the previous exercise.X<br>
     print 'Radius = ' . to_string($radius) . "\n";
     print 'Circumference = 2 * Pi * Radius = 2 * ' . to_string(PI()) . ' * ' . to_string($radius) . ' = ' . to_string($circumference) . "\n";
 
-Example execution and output:
+Example execution, input, and output:
+
+X<noncode>
 
     $ rperl -t LearningRPerl/Chapter2/exercise_2-circumference_of_any_radius.pl 
     Please input radius: 2
@@ -1671,6 +1755,8 @@ Example execution and output:
     Pi = 3.141_592_654
     Radius = 2
     Circumference = 2 * Pi * Radius = 2 * 3.141_592_654 * 2 = 12.566_370_616
+
+X</noncode>
 
 X<br>
 
@@ -1722,7 +1808,9 @@ This exercise is otherwise identical to the previous exercise.X<br>
     print 'Radius = ' . to_string($radius) . "\n";
     print 'Circumference = 2 * Pi * Radius = 2 * ' . to_string(PI()) . ' * ' . to_string($radius) . ' = ' . to_string($circumference) . "\n";
 
-Example execution and output:
+Example execution, input, and output:
+
+X<noncode>
 
     $ rperl -t LearningRPerl/Chapter2/exercise_3-circumference_of_any_positive_radius.pl 
     Please input radius: -2
@@ -1731,6 +1819,8 @@ Example execution and output:
     Pi = 3._141_592_654
     Radius = -2
     Circumference = 2 * Pi * Radius = 2 * 3._141_592_654 * -2 = 0
+
+X</noncode>
 
 X<br>
 
@@ -1773,13 +1863,17 @@ These 2 string variables are converted from text values to numeric values by cal
     print "\n";
     print 'Product = Multiplicator * Multiplicand = ' . to_string($multiplicator) . ' * ' . to_string($multiplicand) . ' = ' . to_string($product) . "\n";
 
-Example execution and output:
+Example execution, input, and output:
+
+X<noncode>
 
     $ rperl -t LearningRPerl/Chapter2/exercise_4-product_of_any_two_numbers.pl 
     Please input multiplicator: 2112
     Please input multiplicand: 23.42
 
     Product = Multiplicator * Multiplicand = 2_112 * 23.42 = 49_463.04
+
+X</noncode>
 
 X<br>
 
@@ -1822,7 +1916,9 @@ Like the C<.> (single dot) string concatenation operator, the C<x> operator has 
     print $repeat_string x $repeat_integer;
 
 
-Example execution and output:
+Example execution, input, and output:
+
+X<noncode>
 
     $ rperl -t LearningRPerl/Chapter2/exercise_5-string_repeat.pl 
     Please input string to be repeated: howdy
@@ -1831,6 +1927,8 @@ Example execution and output:
     howdy
     howdy
     howdy
+
+X</noncode>
 
 X<br>
 
@@ -1889,9 +1987,11 @@ Finally, the line starting with C<foreach my string $input_strings_reversed_elem
         print $input_strings_reversed_element;
     }
 
-Example execution and output:
+Example execution, input, and output:
 
-    $ rperl -t ./lib/RPerl/Learning/Chapter3/exercise_1-stdin_strings_reverse.pl 
+X<noncode>
+
+    $ rperl -t LearningRPerl/Chapter3/exercise_1-stdin_strings_reverse.pl 
     Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:
     Howdy
     Doody
@@ -1908,6 +2008,8 @@ Example execution and output:
     Doody
     Howdy
 
+X</noncode>
+
 X<br>
 
 
@@ -1916,11 +2018,64 @@ X<br>
 The goal of this exercise is FOO.X<br>
 
 
-    #!/usr/bin/perl FOO
+    #!/usr/bin/perl
 
-Example execution and output:
+    # Learning RPerl, Chapter 3, Exercise 2
+    # Print string array elements indexed by user-supplied integers
 
-    $ rperl -t LearningRPerl/Chapter FOO
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
+
+    # [[[ OPERATIONS ]]]
+    my string_arrayref $flintstones_and_rubbles = [qw(fred betty barney dino wilma pebbles bamm-bamm)];
+    my integer_arrayref $input_indices          = [];
+
+    print 'Please input zero or more integers with values ranging from 0 to 6, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
+
+    while ( my string $input_string = <STDIN> ) {
+        push @{$input_indices}, string_to_integer($input_string);
+    }
+
+    print "\n";
+    print 'Flintstones & Rubbles:' . "\n";
+
+    foreach my integer $input_index ( @{$input_indices} ) {
+        print $flintstones_and_rubbles->[ ( $input_index - 1 ) ] . "\n";
+    }
+
+Example execution, input, and output:
+
+X<noncode>
+
+    $ rperl -t LearningRPerl/Chapter3/exercise_2-stdin_array_indices.pl 
+    Please input zero or more integers with values ranging from 0 to 6, separated by <ENTER>, ended by <CTRL-D>:
+    3
+    5
+    2
+    6
+    0
+    4
+    1
+    2
+
+    Flintstones & Rubbles:
+    barney
+    wilma
+    betty
+    pebbles
+    bamm-bamm
+    dino
+    fred
+    betty
+
+X</noncode>
 
 X<br>
 
@@ -1932,9 +2087,16 @@ The goal of this exercise is FOO.X<br>
 
     #!/usr/bin/perl FOO
 
-Example execution and output:
+Example execution, input, and output:
 
-    $ rperl -t LearningRPerl/Chapter FOO
+X<noncode>
+
+    $ rperl -t while $foo reverse LearningRPerl/Chapter FOO
+    $ rperl -t while $foo reverse LearningRPerl/Chapter FOO
+    $ rperl -t while $foo reverse LearningRPerl/Chapter FOO
+    $ rperl -t while $foo reverse LearningRPerl/Chapter FOO
+
+X</noncode>
 
 X<br>
 
@@ -1946,9 +2108,13 @@ The goal of this exercise is FOO.X<br>
 
     #!/usr/bin/perl FOO
 
-Example execution and output:
+Example execution, input, and output:
+
+X<noncode>
 
     $ rperl -t LearningRPerl/Chapter FOO
+
+X</noncode>
 
 X<br>
 
@@ -1960,9 +2126,13 @@ The goal of this exercise is FOO.X<br>
 
     #!/usr/bin/perl FOO
 
-Example execution and output:
+Example execution, input, and output:
+
+X<noncode>
 
     $ rperl -t LearningRPerl/Chapter FOO
+
+X</noncode>
 
 X<br>
 
@@ -1974,9 +2144,13 @@ The goal of this exercise is FOO.X<br>
 
     #!/usr/bin/perl FOO
 
-Example execution and output:
+Example execution, input, and output:
+
+X<noncode>
 
     $ rperl -t LearningRPerl/Chapter FOO
+
+X</noncode>
 
 X<br>
 
@@ -1988,9 +2162,13 @@ The goal of this exercise is FOO.X<br>
 
     #!/usr/bin/perl FOO
 
-Example execution and output:
+Example execution, input, and output:
+
+X<noncode>
 
     $ rperl -t LearningRPerl/Chapter FOO
+
+X</noncode>
 
 X<br>
 
@@ -2002,9 +2180,13 @@ The goal of this exercise is FOO.X<br>
 
     #!/usr/bin/perl FOO
 
-Example execution and output:
+Example execution, input, and output:
+
+X<noncode>
 
     $ rperl -t LearningRPerl/Chapter FOO
+
+X</noncode>
 
 X<br>
 
@@ -2016,9 +2198,13 @@ The goal of this exercise is FOO.X<br>
 
     #!/usr/bin/perl FOO
 
-Example execution and output:
+Example execution, input, and output:
+
+X<noncode>
 
     $ rperl -t LearningRPerl/Chapter FOO
+
+X</noncode>
 
 X<br>
 
@@ -2030,9 +2216,13 @@ The goal of this exercise is FOO.X<br>
 
     #!/usr/bin/perl FOO
 
-Example execution and output:
+Example execution, input, and output:
+
+X<noncode>
 
     $ rperl -t LearningRPerl/Chapter FOO
+
+X</noncode>
 
 X<br>
 
@@ -2044,9 +2234,13 @@ The goal of this exercise is FOO.X<br>
 
     #!/usr/bin/perl FOO
 
-Example execution and output:
+Example execution, input, and output:
+
+X<noncode>
 
     $ rperl -t LearningRPerl/Chapter FOO
+
+X</noncode>
 
 X<br>
 
@@ -2058,9 +2252,13 @@ The goal of this exercise is FOO.X<br>
 
     #!/usr/bin/perl FOO
 
-Example execution and output:
+Example execution, input, and output:
+
+X<noncode>
 
     $ rperl -t LearningRPerl/Chapter FOO
+
+X</noncode>
 
 X<br>
 
@@ -2072,9 +2270,13 @@ The goal of this exercise is FOO.X<br>
 
     #!/usr/bin/perl FOO
 
-Example execution and output:
+Example execution, input, and output:
+
+X<noncode>
 
     $ rperl -t LearningRPerl/Chapter FOO
+
+X</noncode>
 
 X<br>
 
@@ -2086,9 +2288,13 @@ The goal of this exercise is FOO.X<br>
 
     #!/usr/bin/perl FOO
 
-Example execution and output:
+Example execution, input, and output:
+
+X<noncode>
 
     $ rperl -t LearningRPerl/Chapter FOO
+
+X</noncode>
 
 X<br>
 
