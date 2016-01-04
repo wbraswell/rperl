@@ -4,7 +4,7 @@
 use RPerl;
 use strict;
 use warnings;
-our $VERSION = 0.020_100;
+our $VERSION = 0.021_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -63,9 +63,9 @@ our string_arrayref $pod2cpanhtml_preprocess = sub {
             if ($file_line_previous ne "\n") { croak 'ERROR: X</noncode> tag preceeded by non-blank line ' . q{'} . $file_line_previous . q{'} . ' on input file line ' . $file_line_number . ', croaking'; }
         }
 
-        # enable HTML underline <u>...</u> from null POD X<u>...X</u>
-        $file_line =~ s/X<u>/<u>/gxms;
-        $file_line =~ s/X<\/u>/<\/u>/gxms;
+        # enable HTML underline <u>...</u> from null POD X<u>...X</u>; DEPRECATED IN FAVOR OF =for html <u>...</u>
+#        $file_line =~ s/X<u>/<u>/gxms;
+#        $file_line =~ s/X<\/u>/<\/u>/gxms;
 
         push @{$file_lines}, $file_line;
         if (defined $file_line_next) {
@@ -223,9 +223,9 @@ our string_arrayref $pod2cpanhtml_postprocess = sub {
             $file_line =~ s/<\/pre>/<\/code><\/pre>/gxms;
         }
 
-        # enable HTML underline <u>...</u> from mangled HTML literals
-        $file_line =~ s/&\#60;u&\#62;/<u>/gxms;        # pod2cpanhtml
-        $file_line =~ s/&\#60;\/u&\#62;/<\/u>/gxms;    # pod2cpanhtml
+        # enable HTML underline <u>...</u> from mangled HTML literals; DEPRECATED IN FAVOR OF =for html <u>...</u>
+#        $file_line =~ s/&\#60;u&\#62;/<u>/gxms;        # pod2cpanhtml
+#        $file_line =~ s/&\#60;\/u&\#62;/<\/u>/gxms;    # pod2cpanhtml
 
         # disable HTML underline tags in page title
         $file_line =~ s/<title><u>(.*)<\/u><\/title>/<title>$1<\/title>/gxms;

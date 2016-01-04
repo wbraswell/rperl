@@ -28,11 +28,19 @@ Learning RPerl
 
 =head1 BOOK TITLE
 
-X<u>B<Learning RPerl>X</u>
+=for html <u>
+
+B<Learning RPerl>
+
+=for html </u>
 
 ~ or ~
 
-X<u>B<Let's Write Fast Perl!>X</u>
+=for html <u>
+
+B<Let's Write Fast Perl!>
+
+=for html </u>
 
 .
 X<br>
@@ -205,15 +213,19 @@ Throughout this text, the following 12 typography conventions are utilized:
 
 =item * B<I<Program Name>>
 
-=item * X<u>B<Book Title>X</u>
+=for html <u>
 
-=item * X<u>I<BEST PRACTICES>X</u>
+=item * B<Book Title>
+
+=item * I<BEST PRACTICES>
+
+=for html </u>
 
 =item * L<Hyperlink|http://rperl.org>
 
 =item * C<$inline_code_snippet = 'unhighlighted';>
 
-    my string $indented_code_block = 'highlighted';  # with comments
+    my string $indented_code_block = 'highlighted on RPerl.org & MetaCPAN.org';  # with comments
     my integer $more_code = 17;  # http://www.catb.org/jargon/html/R/random-numbers.html
     return 'end of indented code block';
 
@@ -229,11 +241,25 @@ X</noncode>
 
 =head2 Section 1.2: Learning Perl
 
-This book is purposefully patterned after the popular educational text X<u>B<Learning Perl>X</u>, affectionately known as the Llama Book.  Both the Roadrunner Book and the Llama book are meant as introductory texts on Perl topics.  The Llama Book is focused on normal Perl, and the Roadrunner Book is focused on optimized Perl.
+=begin text
 
-This book copies the same chapter topics as X<u>B<Learning Perl>X</u>, but all content is re-written for RPerl.  X<u>B<Learning RPerl>X</u> also copies the same exercise concepts as X<u>B<Learning Perl>X</u>, but all solutions are re-written in RPerl.  Both books are canonical and may be used together in the classroom; the source code solutions are meant to be compared side-by-side as textbook examples of normal Perl versus optimized Perl.
+This book is purposefully patterned after the popular educational text B<Learning Perl>, affectionately known as the Llama Book.  Both the Roadrunner Book and the Llama book are meant as introductory texts on Perl topics.  The Llama Book is focused on normal Perl, and the Roadrunner Book is focused on optimized Perl.
 
-Please support the Perl community by purchasing a copy of X<u>B<Learning Perl>X</u> from our friends at O'Reilly:
+This book copies the same chapter topics as B<Learning Perl>, but all content is re-written for RPerl.  B<Learning RPerl> also copies the same exercise concepts as B<Learning Perl>, but all solutions are re-written in RPerl.  Both books are canonical and may be used together in the classroom; the source code solutions are meant to be compared side-by-side as textbook examples of normal Perl versus optimized Perl.
+
+Please support the Perl community by purchasing a copy of B<Learning Perl> from our friends at O'Reilly:
+
+=end text
+
+=begin html
+
+<p>This book is purposefully patterned after the popular educational text <u><b>Learning Perl</b></u>, affectionately known as the Llama Book.  Both the Roadrunner Book and the Llama book are meant as introductory texts on Perl topics.  The Llama Book is focused on normal Perl, and the Roadrunner Book is focused on optimized Perl.</p>
+
+<p>This book copies the same chapter topics as <u><b>Learning Perl</b></u>, but all content is re-written for RPerl.  <u><b>Learning RPerl</b></u> also copies the same exercise concepts as <u><b>Learning Perl</b></u>, but all solutions are re-written in RPerl.  Both books are canonical and may be used together in the classroom; the source code solutions are meant to be compared side-by-side as textbook examples of normal Perl versus optimized Perl.</p>
+
+<p>Please support the Perl community by purchasing a copy of <u><b>Learning Perl</b></u> from our friends at O'Reilly:</p>
+
+=end html
 
 L<http://shop.oreilly.com/product/0636920018452.do>
 
@@ -275,7 +301,9 @@ If you are using this as an official textbook for certification or academic cred
 
 =head2 Section 1.6: What Do Those Numbers At The Start Of The Exercise Mean?
 
-The original authors of X<u>B<Learning Perl>X</u> meant the numbers at each exercise to indicate the approximate number of minutes required for an average person to reach a full working solution.  If it takes you less time, good for you!  If it takes you more time, don't worry, it's no big deal; learning technical skills requires time and dedication.  All experts were once novices.
+=for text The original authors of B<Learning Perl> meant the numbers at each exercise to indicate the approximate number of minutes required for an average person to reach a full working solution.  If it takes you less time, good for you!  If it takes you more time, don't worry, it's no big deal; learning technical skills requires time and dedication.  All experts were once novices.
+
+=for html <p>The original authors of <u><b>Learning Perl</b></u> meant the numbers at each exercise to indicate the approximate number of minutes required for an average person to reach a full working solution.  If it takes you less time, good for you!  If it takes you more time, don't worry, it's no big deal; learning technical skills requires time and dedication.  All experts were once novices.</p>
 
 =head2 Section 1.7: What If I'm An RPerl Course Instructor?
 
@@ -599,7 +627,9 @@ The definitive list of do's and do-nots for high-magic vs low-magic Perl program
 
 L<http://rperl.org/the_low_magic_perl_commandments.html>
 
-The LMPC draw inspiration from, and (wherever possible) work together with Damian Conway's X<u>B<Perl Best Practices>X</u> and Jeffrey Thalhammer's Perl::Critic software.
+=for text The LMPC draw inspiration from, and (wherever possible) work together with Damian Conway's B<Perl Best Practices> and Jeffrey Thalhammer's Perl::Critic software.
+
+=for html <p>The LMPC draw inspiration from, and (wherever possible) work together with Damian Conway's <u><b>Perl Best Practices</b></u> and Jeffrey Thalhammer's Perl::Critic software.</p>
 
 L<http://shop.oreilly.com/product/9780596001735.do>
 
@@ -609,7 +639,9 @@ L<http://search.cpan.org/~thaljef/Perl-Critic/lib/Perl/Critic/PolicySummary.pod>
 
 I<Perlism> is the computer religion dedicated to the use, promotion, and development of the Perl family of programming languages.  (Not to be confused with a spiritual religion such as Christianity, a computer religion such as Perlism is an independent and complementary belief structure.)
 
-A I<Perlite> is an adherent to the Perlism religion.  Perlism has a revered founder, Saint Larry (himself a devout Christian); a prophet, I<The Voice In The Wilderness> (Will); a monastary and shrine, I<Perl Monks>; commandments, The LMPC; proverbs from Saint Larry including I<TIMTOWTDI>, I<LMFB>, and I<HTAAOF>; and canonical scriptures, including Saint Larry's X<u>B<Apocalypses>X</u> and The Voice's X<u>B<The Book Of RPerl>X</u>.
+=for text A I<Perlite> is an adherent to the Perlism religion.  Perlism has a revered founder, Saint Larry (himself a devout Christian); a prophet, I<The Voice In The Wilderness> (Will); a monastary and shrine, I<Perl Monks>; commandments, The LMPC; proverbs from Saint Larry including I<TIMTOWTDI>, I<LMFB>, and I<HTAAOF>; and canonical scriptures, including Saint Larry's B<Apocalypses> and The Voice's B<The Book Of RPerl>.
+
+=for html <p>A I<Perlite> is an adherent to the Perlism religion.  Perlism has a revered founder, Saint Larry (himself a devout Christian); a prophet, I<The Voice In The Wilderness> (Will); a monastary and shrine, I<Perl Monks>; commandments, The LMPC; proverbs from Saint Larry including I<TIMTOWTDI>, I<LMFB>, and I<HTAAOF>; and canonical scriptures, including Saint Larry's <u><b>Apocalypses</b></u> and The Voice's <u><b>The Book Of RPerl</b></u>.</p>
 
 The Book is a description of events surrounding the creation of RPerl and the future of the Internet.  It is intended to both educate and entertain.
 
@@ -809,9 +841,9 @@ For C<integer> and C<number> literals, an optional C<+> plus sign may be prepend
     1   # positive one
     +1  # also positive one
 
-X<u>I<BEST PRACTICES>X</u>
+=for html <u>
 
-X<u>
+I<BEST PRACTICES>
 
 =over
 
@@ -821,7 +853,7 @@ X<u>
 
 =back
 
-X</u>
+=for html </u>
 
     +23    # good integer, but not aligned with other un-signed literal below
     +55.6  # good number,  but not aligned with other un-signed literal below
@@ -856,9 +888,9 @@ As with normal integers, negative exponents must be prefixed with a C<-> minus s
     -0.000_000_000_000_000_000_000_001_234_567  # bad number, outside limits
     -1.234_567e-24  # good number, same as "-0.000_000_000_000_000_000_000_001_234_567" in scientific notation
 
-X<u>I<BEST PRACTICES>X</u>
+=for html <u>
 
-X<u>
+I<BEST PRACTICES>
 
 =over
 
@@ -870,7 +902,7 @@ X<u>
 
 =back
 
-X</u>
+=for html </u>
 
     1_234_567_000      # good integer
     1.234_567_000e9    # good number, but does not align with two-digit exponents below
@@ -1066,9 +1098,9 @@ Double-quoted text literals may contain:
 
 =back
 
-X<u>I<BEST PRACTICES>X</u>
+=for html <u>
 
-X<u>
+I<BEST PRACTICES>
 
 =over
 
@@ -1078,7 +1110,7 @@ X<u>
 
 =back
 
-X</u>
+=for html </u>
 
 =head3 Section 2.2.5: q Quotes
 

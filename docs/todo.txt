@@ -186,7 +186,6 @@ Book of RPerl
     next chapter
 
 Learning RPerl
-    extract POD data into .pod file, update pod2rperlhtml.pl to convert 'X<>' tags into '=for html' tags, replace into .pm file, get MetaCPAN formatting compatibility
     preface
     foreword
     remaining exercises
