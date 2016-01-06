@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.011_001;
+our $VERSION = 0.011_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -2047,7 +2047,19 @@ X<br>
 
 =head2 Chapter 3, Exercise 2
 
-The goal of this exercise is FOO.X<br>
+The goal of this exercise is to become familiar with utilizing array indices.X<br>
+
+The first line in the C<OPERATIONS> section declares a new variable C<$flintstones_and_rubbles> of type C<string_arrayref>, which is then initialized to contain a C<qw()> (quoted word) set of names including the string element 'fred' at array index 0, 'betty' at array index 1, and so on.X<br>
+
+The second line in C<OPERATIONS> creates an empty array of integers C<$input_indices>, and the following C<while> loop uses the C<push> operator to fill C<$input_indices> with integers entered by the user.X<br>
+
+The C<foreach> loop iterates through all the user input integers, placing each in the variable C<$input_index>.X<br>
+
+Inside the C<foreach> loop, the variable C<$input_index> is used to access the individual names inside the variable C<$flintstones_and_rubbles>.X<br>
+
+In Perl, all array indices start at 0 instead of 1, so we must first subtract 1 from C<$input_index> before accessing the individual string elements of C<$flintstones_and_rubbles>.X<br>
+
+Thus, if a user inputs the integer 1, the array index will be 0, which is 'fred'; similarly, user input 5 will access array index 4 which is 'wilma'.X<br>
 
 
     #!/usr/bin/perl
@@ -2069,7 +2081,7 @@ The goal of this exercise is FOO.X<br>
     my string_arrayref $flintstones_and_rubbles = [qw(fred betty barney dino wilma pebbles bamm-bamm)];
     my integer_arrayref $input_indices          = [];
 
-    print 'Please input zero or more integers with values ranging from 0 to 6, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
+    print 'Please input zero or more integers with values ranging from 1 to 7, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
 
     while ( my string $input_string = <STDIN> ) {
         push @{$input_indices}, string_to_integer($input_string);

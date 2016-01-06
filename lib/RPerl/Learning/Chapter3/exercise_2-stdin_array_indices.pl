@@ -17,7 +17,7 @@ our $VERSION = 0.001_000;
 my string_arrayref $flintstones_and_rubbles = [qw(fred betty barney dino wilma pebbles bamm-bamm)];
 my integer_arrayref $input_indices          = [];
 
-print 'Please input zero or more integers with values ranging from 0 to 6, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
+print 'Please input zero or more integers with values ranging from 1 to 7, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
 
 while ( my string $input_string = <STDIN> ) {
     push @{$input_indices}, string_to_integer($input_string);
