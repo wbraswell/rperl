@@ -15,7 +15,7 @@ our $VERSION = 0.001_000;
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
 
 # [[[ CONSTANTS ]]]
-use constant SINGLE_LINE_OUTPUT => my integer $TYPED_SINGLE_LINE_OUTPUT = 0;
+use constant SINGLE_LINE_OUTPUT => my boolean $TYPED_SINGLE_LINE_OUTPUT = 0;
 
 # [[[ OPERATIONS ]]]
 my string_arrayref $input_strings = [];
