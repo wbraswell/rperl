@@ -2134,73 +2134,81 @@ The goal of this exercise is to become familiar with the C<sort> and C<chomp> op
 
 In the C<CONSTANTS> section, a constant C<SINGLE_LINE_OUTPUT> is created and set to 0, which will cause the program's output to be displayed on multiple lines.  If C<SINGLE_LINE_OUTPUT> is instead set to 1, the program's output will be displayed on one line.X<br>
 
+In the C<OPERATIONS> section, a C<while> loop is used to fill the array variable C<$input_strings> with data supplied by the user.X<br>
 
-#!/usr/bin/perl
+The C<sort> operator is then called to fill the C<$input_strings_sorted> array with the same data in ASCII alphabetical order.X<br>
 
-# Learning RPerl, Chapter 3, Exercise 3
-# Print user-supplied list of strings in ASCIIbetical order, optionally on single line of output
+Last, a C<foreach> loop is used to print the sorted output by storing and accessing one string at a time in the variable C<$input_strings_sorted_element>.X<br>
 
-# [[[ HEADER ]]]
-use RPerl;
-use strict;
-use warnings;
-our $VERSION = 0.001_000;
+An C<if> conditional statement inside the C<foreach> loop tests the constant C<SINGLE_LINE_OUTPUT>; if the condition is true, then the C<chomp> operator is called to remove the newline character from each string element and replace it with a normal blank space character, thereby displaying all the elements on a single line of output.X<br>
 
-# [[[ CRITICS ]]]
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
-## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
-## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
 
-# [[[ CONSTANTS ]]]
-use constant SINGLE_LINE_OUTPUT => my boolean $TYPED_SINGLE_LINE_OUTPUT = 0;
+    #!/usr/bin/perl
 
-# [[[ OPERATIONS ]]]
-my string_arrayref $input_strings = [];
+    # Learning RPerl, Chapter 3, Exercise 3
+    # Print user-supplied list of strings in ASCIIbetical order, optionally on single line of output
 
-print 'Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
 
-while ( my string $input_string = <STDIN> ) {
-    push @{$input_strings}, $input_string;
-}
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
+    ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
 
-print "\n";
-print 'Strings in ASCIIbetical order:' . "\n";
+    # [[[ CONSTANTS ]]]
+    use constant SINGLE_LINE_OUTPUT => my boolean $TYPED_SINGLE_LINE_OUTPUT = 0;
 
-my string_arrayref $input_strings_sorted = [ sort @{$input_strings} ];
+    # [[[ OPERATIONS ]]]
+    my string_arrayref $input_strings = [];
 
-foreach my string $input_strings_sorted_element ( @{$input_strings_sorted} ) {
-    if ( SINGLE_LINE_OUTPUT() ) {
+    print 'Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
 
-        # strip trailing newline, if present
-        chomp $input_strings_sorted_element;
-        $input_strings_sorted_element .= q{ };
+    while ( my string $input_string = <STDIN> ) {
+        push @{$input_strings}, $input_string;
     }
 
-    print $input_strings_sorted_element;
-}
+    print "\n";
+    print 'Strings in ASCIIbetical order:' . "\n";
 
-print "\n";
+    my string_arrayref $input_strings_sorted = [ sort @{$input_strings} ];
+
+    foreach my string $input_strings_sorted_element ( @{$input_strings_sorted} ) {
+        if ( SINGLE_LINE_OUTPUT() ) {
+
+            # strip trailing newline, if present
+            chomp $input_strings_sorted_element;
+            $input_strings_sorted_element .= q{ };
+        }
+
+        print $input_strings_sorted_element;
+    }
+
+    print "\n";
 
 Example execution, input, and output:
 
 X<noncode>
 
-$ rperl -t LearningRPerl/Chapter3/exercise_3-stdin_strings_sort.pl 
-Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:
-howdy
-doody
-buffalo
-bob
-clarabell
-clown
+    $ rperl -t LearningRPerl/Chapter3/exercise_3-stdin_strings_sort.pl 
+    Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:
+    howdy
+    doody
+    buffalo
+    bob
+    clarabell
+    clown
 
-Strings in ASCIIbetical order:
-bob
-buffalo
-clarabell
-clown
-doody
-howdy
+    Strings in ASCIIbetical order:
+    bob
+    buffalo
+    clarabell
+    clown
+    doody
+    howdy
 
 X</noncode>
 
