@@ -25,6 +25,6 @@ our number $total = sub {
 
 # [[[ OPERATIONS ]]]
 
-my string_arrayref $one_to_one_thousand = [ 1 .. 1_000 ];
+my number_arrayref $one_to_one_thousand = [ 1 .. 1_000 ];
 my number $one_to_one_thousand_total    = total($one_to_one_thousand);
 print 'The total of 1 to 1000 is ' . to_string($one_to_one_thousand_total) . q{.} . "\n";

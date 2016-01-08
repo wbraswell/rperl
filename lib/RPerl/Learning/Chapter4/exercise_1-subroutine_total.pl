@@ -29,7 +29,7 @@ our number $total = sub {
 
 my number_arrayref $fred = [1, 3, 5, 7, 9];
 my number $fred_total = total($fred);
-print 'The total of $fred is ' . to_string($fred_total) . q{.} . "\n";
+print 'The total of $fred is ' . to_string($fred_total) . "\n";
 
 print 'Please input zero or more numbers, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
 
@@ -39,4 +39,4 @@ while (my string $input_string = <STDIN>) {
 }
 
 my number $user_total = total($input_numbers);
-print 'The total of those numbers is ' . to_string($user_total) . q{.} . "\n";
+print 'The total of those numbers is ' . to_string($user_total) . "\n";

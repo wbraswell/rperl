@@ -1691,7 +1691,7 @@ The inner type variable C<$TYPED_PI> is only used for RPerl parsing purposes; fo
 
 The first 2 lines in the C<OPERATIONS> section each create a new number variable, with C<$radius> set to the hard-coded value of C<12.5> and C<$circumference> set to the well-known basic geometry formula "circumference equals 2 pi times radius".X<br>
 
-The last 3 lines call the C<print> operator to display the values of C<PI()>, C<$radius>, and C<$circumference>, each followed by a newline character.X<br>
+The last 3 lines call the C<print> operator to display the values of C<PI>, C<$radius>, and C<$circumference>, each followed by a newline character.X<br>
 
 
     #!/usr/bin/perl
@@ -2217,16 +2217,76 @@ X<br>
 
 =head2 Chapter 4, Exercise 1
 
-The goal of this exercise is FOO.X<br>
+The goal of this exercise is to become familiar with user-defined subroutines.X<br>
+
+In the C<SUBROUTINES> section, one subroutine C<total> is defined, which accepts as input one argument variable C<$input_numbers> of type C<number_arrayref>, and which also has a C<number> return value stored in the variable C<$retval>.X<br>
+
+Inside the C<total> subroutine, the return value is initialized to 0 in C<$retval>, then a C<foreach> loop iteratively adds the elements of the array C<$input_numbers> to C<$retval>, after which the value of C<$retval> is returned to original external caller of C<total>.X<br>
+
+By itself, a subroutine such as C<total> does not actually do anything; every subroutine must first be called either by some other subroutine or in the C<OPERATIONS> section.X<br>
+
+In C<OPERATIONS>, a 5-element array is created and stored in the variable C<$fred>, which is then passed as input to the subroutine C<total>, and the return value is displayed using the variable C<$fred_total> and the C<print> operator.X<br>
+
+Next, a C<while> loop and C<STDIN> are used to collect user input strings, which are then converted to numeric data values using the C<string_to_number> subroutine, and stored in the array C<$input_numbers> using the C<push> operator.X<br>
+
+Finally, the subroutine C<total> is called a second time, now with the variable C<$input_numbers> passed as the input argument, and the return value is displayed using the variable C<$user_total>.X<br>
 
 
-    #!/usr/bin/perl FOO
+    #!/usr/bin/perl
+
+    # Learning RPerl, Chapter 4, Exercise 1
+    # Subroutine & driver to calculate the totals of arrays of stringified numbers, both hard-coded and user-supplied
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+    ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
+
+    # [[[ SUBROUTINES ]]]
+
+    our number $total = sub {
+        (my number_arrayref $input_numbers) = @_;
+        my number $retval = 0;
+        foreach my number $input_number (@{$input_numbers}) {
+            $retval += $input_number;
+        }
+        return $retval;
+    };
+
+    # [[[ OPERATIONS ]]]
+
+    my number_arrayref $fred = [1, 3, 5, 7, 9];
+    my number $fred_total = total($fred);
+    print 'The total of $fred is ' . to_string($fred_total) . "\n";
+
+    print 'Please input zero or more numbers, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
+
+    my number_arrayref $input_numbers = [];
+    while (my string $input_string = <STDIN>) {
+        push @{$input_numbers}, string_to_number($input_string);
+    }
+
+    my number $user_total = total($input_numbers);
+    print 'The total of those numbers is ' . to_string($user_total) . "\n";
 
 Example execution, input, and output:
 
 X<noncode>
 
-    $ rperl -t LearningRPerl/Chapter FOO
+    $ rperl -t ./lib/RPerl/Learning/Chapter4/exercise_1-subroutine_total.pl 
+    The total of $fred is 25
+    Please input zero or more numbers, separated by <ENTER>, ended by <CTRL-D>:
+    21.12
+    23.42
+    1701.877
+    -123.456
+    The total of those numbers is 1_622.961
 
 X</noncode>
 
@@ -2235,16 +2295,57 @@ X<br>
 
 =head2 Chapter 4, Exercise 2
 
-The goal of this exercise is FOO.X<br>
+The goal of this exercise is to become familiar with the C<..> range operator.X<br>
+
+In the C<SUBROUTINES> section, the same subroutine C<total> is defined as in the previous exercise.X<br>
+
+In the C<OPERATIONS> section, an array of numbers is created and stored in the variable C<$one_to_one_thousand>.X<br>
+
+Upon execution, there will be 1,000 number elements in the array, which are automatically created by the C<..> range operator.X<br>
+
+The actual elements stored the array variable C<$one_to_one_thousand> start with C<[1, 2, 3, 4> and end with C<997, 998, 999, 1_000]>.X<br>
+
+Finally, the subroutine C<total> is called with C<$one_to_one_thousand> passed as the input argument, and the return value is displayed using the variable C<$one_to_one_thousand_total>.X<br>
 
 
-    #!/usr/bin/perl FOO
+    #!/usr/bin/perl
+
+    # Learning RPerl, Chapter 4, Exercise 2
+    # Subroutine & driver to calculate the total of 1 to 1,000
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+
+    # [[[ SUBROUTINES ]]]
+
+    our number $total = sub {
+        ( my number_arrayref $input_numbers ) = @_;
+        my number $retval = 0;
+        foreach my number $input_number ( @{$input_numbers} ) {
+            $retval += $input_number;
+        }
+        return $retval;
+    };
+
+    # [[[ OPERATIONS ]]]
+
+    my number_arrayref $one_to_one_thousand = [ 1 .. 1_000 ];
+    my number $one_to_one_thousand_total    = total($one_to_one_thousand);
+    print 'The total of 1 to 1000 is ' . to_string($one_to_one_thousand_total) . q{.} . "\n";
+
 
 Example execution, input, and output:
 
 X<noncode>
 
-    $ rperl -t LearningRPerl/Chapter FOO
+    $ rperl -t ./lib/RPerl/Learning/Chapter4/exercise_2-subroutine_total_1000.pl 
+    The total of 1 to 1000 is 500_500.
 
 X</noncode>
 
