@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.011_100;
+our $VERSION = 0.013_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -2279,7 +2279,7 @@ Example execution, input, and output:
 
 X<noncode>
 
-    $ rperl -t ./lib/RPerl/Learning/Chapter4/exercise_1-subroutine_total.pl 
+    $ rperl -t LearningRPerl/Chapter4/exercise_1-subroutine_total.pl 
     The total of $fred is 25
     Please input zero or more numbers, separated by <ENTER>, ended by <CTRL-D>:
     21.12
@@ -2344,7 +2344,7 @@ Example execution, input, and output:
 
 X<noncode>
 
-    $ rperl -t ./lib/RPerl/Learning/Chapter4/exercise_2-subroutine_total_1000.pl 
+    $ rperl -t LearningRPerl/Chapter4/exercise_2-subroutine_total_1000.pl 
     The total of 1 to 1000 is 500_500.
 
 X</noncode>
@@ -2354,16 +2354,87 @@ X<br>
 
 =head2 Chapter 4, Exercise 3
 
-The goal of this exercise is FOO.X<br>
+The goal of this exercise is to become familiar with calling user-defined subroutines from one another.X<br>
+
+In the C<SUBROUTINES> section, 3 subroutines are defined: C<total> (same as previous exercises), C<average>, and C<above_average>.X<br>
+
+Inside the subroutine C<average> is a call to the subroutine C<total>; there is also a call to the C<scalar> operator, which returns the count of elements inside the array C<$input_numbers>.  When the return value of C<total> is divided by that of C<scalar>, the result is computation of the numeric mean (average) of all elements of C<$input_numbers>.X<br>
+
+Inside C<above_average> is a call to the subroutine C<average>, with the return value stored in the variable C<$average>.  An empty array is created in the variable C<$retval>, then a C<foreach> loop iterates over all elements in C<$input_numbers> and an C<if> conditional statement makes a copy of all elements which are greater than C<$average>.  All above-average elements are returned as an array in C<$retval>.X<br>
+
+In the C<OPERATIONS> section, 2 arrays are created in the C<$fred> and C<$barney> variables, which are then passed as input arguments to 2 calls to the subroutine C<above_average>, and the results are displayed.X<br>
 
 
-    #!/usr/bin/perl FOO
+    #!/usr/bin/perl
+
+    # Learning RPerl, Chapter 4, Exercise 3
+    # Subroutines & driver to calculate the above-average elements of hard-coded arrays
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+    ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
+
+    # [[[ SUBROUTINES ]]]
+
+    our number $total = sub {
+        ( my number_arrayref $input_numbers ) = @_;
+        my number $retval = 0;
+        foreach my number $input_number ( @{$input_numbers} ) {
+            $retval += $input_number;
+        }
+        return $retval;
+    };  
+
+    our number $average = sub {
+        ( my number_arrayref $input_numbers ) = @_;
+        return (total($input_numbers) / (scalar @{$input_numbers}));
+    };
+
+    our number_arrayref $above_average = sub {
+        ( my number_arrayref $input_numbers ) = @_;
+        my number $average = average($input_numbers);
+        my number_arrayref $retval = [];
+        foreach my number $input_number (@{$input_numbers}) {
+            if ($input_number > $average) {
+                push @{$retval}, $input_number;
+            }
+        }
+        return $retval;
+    };
+
+    # [[[ OPERATIONS ]]]
+
+    my string_arrayref $fred = [1 .. 10];
+    my number $fred_above_average = above_average($fred);
+    print '$fred is ' . number_arrayref_to_string($fred) . "\n";
+    print 'The above-average elements of $fred are ' . number_arrayref_to_string($fred_above_average) . "\n";
+    print '(Should be [6, 7, 8, 9, 10])' . "\n\n";
+
+    my string_arrayref $barney = [100, 1 .. 10];
+    my number $barney_above_average = above_average($barney);
+    print '$barney is ' . number_arrayref_to_string($barney) . "\n";
+    print 'The above-average elements of $barney are ' . number_arrayref_to_string($barney_above_average) . "\n";
+    print '(Should be just [100])' . "\n";
 
 Example execution, input, and output:
 
 X<noncode>
 
-    $ rperl -t LearningRPerl/Chapter FOO
+    $ rperl -t LearningRPerl/Chapter4/exercise_3-subroutine_above_average.pl 
+    $fred is [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    The above-average elements of $fred are [6, 7, 8, 9, 10]
+    (Should be [6, 7, 8, 9, 10])
+
+    $barney is [100, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    The above-average elements of $barney are [100]
+    (Should be just [100])
 
 X</noncode>
 
@@ -2372,16 +2443,56 @@ X<br>
 
 =head2 Chapter 4, Exercise 4
 
-The goal of this exercise is FOO.X<br>
+The goal of this exercise is to become familiar with software state.X<br>
+
+As a program executes, there may be one or more variables storing information which is important to the overall program; these variables are collectively known as the I<"state"> of the program.X<br>
 
 
-    #!/usr/bin/perl FOO
+    #!/usr/bin/perl
+
+    # Learning RPerl, Chapter 4, Exercise 4
+    # Subroutine & driver to greet users
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+
+    # [[[ SUBROUTINES ]]]
+
+    our string $greet = sub {
+        ( my string $name, my string $previous_name ) = @_;
+        print 'Hi ' . $name . '!  ';
+        if ($previous_name eq q{}) {
+            print 'You are the first one here!' . "\n";
+        }
+        else {
+            print $previous_name . ' is also here!' . "\n";
+        }
+        return $name;
+    };
+
+    # [[[ OPERATIONS ]]]
+
+    my string $previous_name = q{};
+    $previous_name = greet('Fred', $previous_name);
+    $previous_name = greet('Barney', $previous_name);
+    $previous_name = greet('Wilma', $previous_name);
+    $previous_name = greet('Betty', $previous_name);
 
 Example execution, input, and output:
 
 X<noncode>
 
-    $ rperl -t LearningRPerl/Chapter FOO
+    $ rperl -t ./lib/RPerl/Learning/Chapter4/exercise_4-subroutine_greet.pl 
+    Hi Fred!  You are the first one here!
+    Hi Barney!  Fred is also here!
+    Hi Wilma!  Barney is also here!
+    Hi Betty!  Wilma is also here!
 
 X</noncode>
 

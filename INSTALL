@@ -1,5 +1,5 @@
 # RPerl Install Notes
-# Last Updated November 26, 2015
+# Last Updated January 8, 2016
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # NOTE: STEP 1 IS ONLY FOR SINGLE-USER INSTALL, NOT SYSTEM-WIDE INSTALL
@@ -9,7 +9,8 @@
 
 ################################################################################
 # STEP 0.
-# PRE-INSTALL, GCC & MAKEMAKER & GMP MUST BE UP-TO-DATE & INSTALLED SYSTEM-WIDE
+# PRE-INSTALL, GCC & MAKEMAKER & GMP MUST BE UP-TO-DATE & INSTALLED SYSTEM-WIDE;
+# ENSURE CURL WORKS PROPERLY
 ################################################################################
 
 $ g++ --version
@@ -35,6 +36,11 @@ $ perl -MExtUtils::MakeMaker\ 999  # v7.04 or greater required by Inline::C
 $ cpan ExtUtils::MakeMaker  # cpan system-wide, not cpanm single-user
 
 $ apt-get install libgmp-dev
+
+$ curl -L cpanmin.us > /dev/null
+    # execute the following "echo" command below IF AND ONLY IF the above "curl" command gives an error:
+    # curl: (77) error setting certificate verify locations
+$ echo "cacert=/etc/ssl/certs/ca-certificates.crt" >> ~/.curlrc
 
 # Optional C++ formatter, Artistic Style
 $ sudo apt-get install astyle
