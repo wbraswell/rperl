@@ -1637,7 +1637,7 @@ The first 3 lines in the C<OPERATIONS> section each declare a new variable; C<$f
 
 The C<$foo> and C<$bar> variables receive their values from hard-coded numeric values being operated upon by the C<+> (plus sign) addition and C<*> (asterisk) multiplication operators, respectively; the C<$baz> variable receives its value from the the C<$foo> and C<$bar> variables being operated upon by the C</> (forward slash) division operator.X<br>
 
-The last 3 lines call the C<print> operator to display the names of each variable, followed by each variable's respective value converted from number to underscore-formatted string, followed by a newline character.X<br>
+The last 3 lines call the C<print> operator to display the names of each variable; followed by each variable's respective value, converted from number to underscore-formatted string via the RPerl type conversion subroutine C<to_string()>; followed by a newline character.X<br>
 
 
     #!/usr/bin/perl
@@ -1742,7 +1742,7 @@ The third line in the C<CRITICS> section tells RPerl to allow user input via the
 
 The second line in the C<OPERATIONS> section creates a string variable C<$radius_string>, and assigns to it the text value typed by the user on their keyboard.X<br>
 
-The third line in the C<OPERATIONS> section creates a number variable C<$radius>, and assigns to it the numeric value returned by calling the RPerl type conversion operator C<string_to_number()> on the string variable C<$radius_string>.X<br>
+The third line in the C<OPERATIONS> section creates a number variable C<$radius>, and assigns to it the numeric value returned by calling the RPerl type conversion subroutine C<string_to_number()> on the string variable C<$radius_string>.X<br>
 
 This exercise is otherwise identical to the previous exercise.X<br>
 
@@ -2219,17 +2219,17 @@ X<br>
 
 The goal of this exercise is to become familiar with user-defined subroutines.X<br>
 
-In the C<SUBROUTINES> section, one subroutine C<total> is defined, which accepts as input one argument variable C<$input_numbers> of type C<number_arrayref>, and which also has a C<number> return value stored in the variable C<$retval>.X<br>
+In the C<SUBROUTINES> section, one subroutine C<total()> is defined, which accepts as input one argument variable C<$input_numbers> of type C<number_arrayref>, and which also has a C<number> return value stored in the variable C<$retval>.X<br>
 
-Inside the C<total> subroutine, the return value is initialized to 0 in C<$retval>, then a C<foreach> loop iteratively adds the elements of the array C<$input_numbers> to C<$retval>, after which the value of C<$retval> is returned to original external caller of C<total>.X<br>
+Inside the C<total()> subroutine, the return value is initialized to 0 in C<$retval>, then a C<foreach> loop iteratively adds the elements of the array C<$input_numbers> to C<$retval>, after which the value of C<$retval> is returned to original external caller of C<total()>.X<br>
 
-By itself, a subroutine such as C<total> does not actually do anything; every subroutine must first be called either by some other subroutine or in the C<OPERATIONS> section.X<br>
+By itself, a subroutine such as C<total()> does not actually do anything; every subroutine must first be called either by some other subroutine or in the C<OPERATIONS> section.X<br>
 
-In C<OPERATIONS>, a 5-element array is created and stored in the variable C<$fred>, which is then passed as input to the subroutine C<total>, and the return value is displayed using the variable C<$fred_total> and the C<print> operator.X<br>
+In C<OPERATIONS>, a 5-element array is created and stored in the variable C<$fred>, which is then passed as input to the subroutine C<total()>, and the return value is displayed using the variable C<$fred_total> and the C<print> operator.X<br>
 
-Next, a C<while> loop and C<STDIN> are used to collect user input strings, which are then converted to numeric data values using the C<string_to_number> subroutine, and stored in the array C<$input_numbers> using the C<push> operator.X<br>
+Next, a C<while> loop and C<STDIN> are used to collect user input strings, which are then converted to numeric data values using the C<string_to_number()> subroutine, and stored in the array C<$input_numbers> using the C<push> operator.X<br>
 
-Finally, the subroutine C<total> is called a second time, now with the variable C<$input_numbers> passed as the input argument, and the return value is displayed using the variable C<$user_total>.X<br>
+Finally, the subroutine C<total()> is called a second time, now with the variable C<$input_numbers> passed as the input argument, and the return value is displayed using the variable C<$user_total>.X<br>
 
 
     #!/usr/bin/perl
@@ -2297,7 +2297,7 @@ X<br>
 
 The goal of this exercise is to become familiar with the C<..> range operator.X<br>
 
-In the C<SUBROUTINES> section, the same subroutine C<total> is defined as in the previous exercise.X<br>
+In the C<SUBROUTINES> section, the same subroutine C<total()> is defined as in the previous exercise.X<br>
 
 In the C<OPERATIONS> section, an array of numbers is created and stored in the variable C<$one_to_one_thousand>.X<br>
 
@@ -2305,7 +2305,7 @@ Upon execution, there will be 1,000 number elements in the array, which are auto
 
 The actual elements stored the array variable C<$one_to_one_thousand> start with C<[1, 2, 3, 4> and end with C<997, 998, 999, 1_000]>.X<br>
 
-Finally, the subroutine C<total> is called with C<$one_to_one_thousand> passed as the input argument, and the return value is displayed using the variable C<$one_to_one_thousand_total>.X<br>
+Finally, the subroutine C<total()> is called with C<$one_to_one_thousand> passed as the input argument, and the return value is displayed using the variable C<$one_to_one_thousand_total>.X<br>
 
 
     #!/usr/bin/perl
@@ -2356,13 +2356,13 @@ X<br>
 
 The goal of this exercise is to become familiar with calling user-defined subroutines from one another.X<br>
 
-In the C<SUBROUTINES> section, 3 subroutines are defined: C<total> (same as previous exercises), C<average>, and C<above_average>.X<br>
+In the C<SUBROUTINES> section, 3 subroutines are defined: C<total()> (same as previous exercises), C<average()>, and C<above_average()>.X<br>
 
-Inside the subroutine C<average> is a call to the subroutine C<total>; there is also a call to the C<scalar> operator, which returns the count of elements inside the array C<$input_numbers>.  When the return value of C<total> is divided by that of C<scalar>, the result is computation of the numeric mean (average) of all elements of C<$input_numbers>.X<br>
+Inside the subroutine C<average()> is a call to the subroutine C<total()>; there is also a call to the C<scalar> operator, which returns the count of elements inside the array C<$input_numbers>.  When the return value of C<total()> is divided by that of C<scalar>, the result is computation of the numeric mean (average) of all elements of C<$input_numbers>.X<br>
 
-Inside C<above_average> is a call to the subroutine C<average>, with the return value stored in the variable C<$average>.  An empty array is created in the variable C<$retval>, then a C<foreach> loop iterates over all elements in C<$input_numbers> and an C<if> conditional statement makes a copy of all elements which are greater than C<$average>.  All above-average elements are returned as an array in C<$retval>.X<br>
+Inside C<above_average()> is a call to the subroutine C<average()>, with the return value stored in the variable C<$average>.  An empty array is created in the variable C<$retval>, then a C<foreach> loop iterates over all elements in C<$input_numbers> and an C<if> conditional statement makes a copy of all elements which are greater than C<$average>.  All above-average elements are returned as an array in C<$retval>.X<br>
 
-In the C<OPERATIONS> section, 2 arrays are created in the C<$fred> and C<$barney> variables, which are then passed as input arguments to 2 calls to the subroutine C<above_average>, and the results are displayed.X<br>
+In the C<OPERATIONS> section, 2 arrays are created in the C<$fred> and C<$barney> variables, which are then passed as input arguments to 2 calls to the subroutine C<above_average()>, and the results are displayed.X<br>
 
 
     #!/usr/bin/perl
@@ -2445,7 +2445,17 @@ X<br>
 
 The goal of this exercise is to become familiar with software state.X<br>
 
-As a program executes, there may be one or more variables storing information which is important to the overall program; these variables are collectively known as the I<"state"> of the program.X<br>
+As a program executes, there may be one or more variables in the C<OPERATIONS> section which store information that is important to the overall program; these variables are collectively known as the I<"state"> of the program.X<br>
+
+In the C<OPERATIONS> section, a string variable C<$previous_name> is created and set to the empty string C<q{}>; this 1 variable is the state of the program.X<br>
+
+Each of the 4 following lines in the C<OPERATIONS> section utilize the program state by both reading from and writing to the variable C<$previous_name>; the calls to the subroutine C<greet()> read from C<$previous_name> as the 2nd argument, and the return value of C<greet()> is then written to C<$previous_name> by the C<=> assignment operator.X<br>
+
+In the C<SUBROUTINES> section, 1 subroutine C<greet()> is defined which accepts 2 string arguments, the variables C<$name> and C<$previous_name>.X<br>
+
+Inside C<greet()>, a personalized greeting is displayed for the virtual person represented by the variable C<$name>, after which an C<if() else> conditional statement checks if there is any data inside C<$previous_name> and further displays a customized comment about the state of the program.  The state variable C<$previous_name> is used to represent the very simple state of virtual people who have already been greeted.X<br>
+
+Finally, the string variable C<$name> is returned from C<greet()> and passed to the C<=> assignment operators in the C<OPERATIONS> section, thereby updating the program state variable C<$previous_name> to contain the value of C<$name>.X<br>
 
 
     #!/usr/bin/perl
@@ -2488,7 +2498,7 @@ Example execution, input, and output:
 
 X<noncode>
 
-    $ rperl -t ./lib/RPerl/Learning/Chapter4/exercise_4-subroutine_greet.pl 
+    $ rperl -t LearningRPerl/Chapter4/exercise_4-subroutine_greet.pl 
     Hi Fred!  You are the first one here!
     Hi Barney!  Fred is also here!
     Hi Wilma!  Barney is also here!
