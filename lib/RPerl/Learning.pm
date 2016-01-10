@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.013_000;
+our $VERSION = 0.014_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -2443,7 +2443,7 @@ X<br>
 
 =head2 Chapter 4, Exercise 4
 
-The goal of this exercise is to become familiar with software state.X<br>
+The goal of this exercise is to become familiar with program state.X<br>
 
 As a program executes, there may be one or more variables in the C<OPERATIONS> section which store information that is important to the overall program; these variables are collectively known as the I<"state"> of the program.X<br>
 
@@ -2511,16 +2511,61 @@ X<br>
 
 =head2 Chapter 4, Exercise 5
 
-The goal of this exercise is FOO.X<br>
+The goal of this exercise is to become further familiarized with program state.X<br>
+
+In the C<OPERATIONS> section, the state variable C<$previous_names> is an array of strings representing all previous virtual people who have been greeted.X<br>
+
+In the C<SUBROUTINES> section, the subroutine C<greet()> prints the names of previously-greeted virtual people on one line, separated by spaces, by using the C<join> operator.X<br>
+
+Finally, the current value of C<$name> is appended as the last element of the array C<$previous_names> by the C<push> operator, and C<$previous_names> is then returned by C<greet()> to update the program state.X<br>
 
 
-    #!/usr/bin/perl FOO
+    #!/usr/bin/perl
+
+    # Learning RPerl, Chapter 4, Exercise 5
+    # Subroutine & driver to greet multiple users
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+
+    # [[[ SUBROUTINES ]]]
+
+    our string_arrayref $greet = sub {
+        ( my string $name, my string_arrayref $previous_names ) = @_;
+        print 'Hi ' . $name . '!  ';
+        if ((scalar @{$previous_names}) == 0) {
+            print 'You are the first one here!' . "\n";
+        }
+        else {
+            print q{I've seen: } . (join q{ }, @{$previous_names}) . "\n";
+        }
+        push @{$previous_names}, $name;
+        return $previous_names;
+    };
+
+    # [[[ OPERATIONS ]]]
+
+    my string_arrayref $previous_names = [];
+    $previous_names = greet('Fred', $previous_names);
+    $previous_names = greet('Barney', $previous_names);
+    $previous_names = greet('Wilma', $previous_names);
+    $previous_names = greet('Betty', $previous_names);
 
 Example execution, input, and output:
 
 X<noncode>
 
-    $ rperl -t LearningRPerl/Chapter FOO
+    $ rperl -t LearningRPerl/Chapter4/exercise_5-subroutine_greet_multiple.pl 
+    Hi Fred!  You are the first one here!
+    Hi Barney!  I've seen: Fred
+    Hi Wilma!  I've seen: Fred Barney
+    Hi Betty!  I've seen: Fred Barney Wilma
 
 X</noncode>
 
@@ -2529,16 +2574,113 @@ X<br>
 
 =head2 Chapter 5, Exercise 1
 
-The goal of this exercise is FOO.X<br>
+The goal of this exercise is to become familiar with file test operators, as well as opening, closing, and reading from a file.X<br>
+
+In the C<CRITICS> section, the C<ProhibitPostfixControls> critic is disabled due to a bug in Perl::Critic and/or PPI which causes a false error.X<br>
+
+In the C<SUBROUTINES> section, 1 subroutine C<tac()> is defined which accepts as input an array of file names received via the operating system's command-line arguments, and which has a C<void> return value, meaning there is no return value for this subroutine.X<br>
+
+Inside C<tac()>, the C<reverse> operator is called to reverse the order of the command-line arguments; for example, if the 3 file names C<fred barney betty> are given as command-line arguments, then C<reverse> causes the 3 strings C<betty barney fred> to be stored in the array variable C<$command_line_arguments>.X<br>
+
+The outer C<foreach> loop iterates through each C<$file_name> in the now-reversed C<$command_line_arguments>.X<br>
+
+Next, 4 file test operators are called, to ensure each input file exists via C<-e>, is readable via C<-r>, is a regular (not special device) file via C<-f>, and is comprised of plain text via C<-T>.X<br>
+
+The operator C<open> is called with the C<E<lt>> file input (read-only) argument, which opens each C<$file_name> for reading via the C<$FILE> filehandle variable.X<br>
+
+The inner C<while> loop reads in all lines from the current C<$FILE> filehandle using the C<E<lt>$FILEE<gt>> syntax (similar to C<E<lt>STDINE<gt>>) and stores the input file's lines in the string array variable C<$file_lines>; then, the C<reverse> operator is called again to reverse the order of the newly-read file lines.X<br>
+
+Finally, the inner C<foreach> loop displays the now-reversed C<$file_lines>, and the C<close> operator is called to close the C<$FILE> filehandle so no more file access will occur for the current C<$file_name>.X<br>
+
+In the C<OPERATIONS> section, the C<tac()> subroutine is called with its only argument being a reference to the special C<@ARGV> array, which is Perl's way of accessing the command-line arguments.X<br>
+
+Before executing this program, the non-Perl C<printf> program must be called to populate some test data into the 3 input files F<fred>, F<barney>, and F<betty>; and after execution the C<rm> program is called to delete the 3 input files.X<br>
+
+To begin execution of this program via the C<rperl> command, the program name and input file names must be enclosed in either C<'single quotes'> or C<"double quotes">; this tells RPerl the input file names are command-line arguments to be passed to the 1 specified program, instead of specifying additional RPerl programs.X<br>
 
 
-    #!/usr/bin/perl FOO
+    #!/usr/bin/perl
+
+    # Learning RPerl, Chapter 5, Exercise 1
+    # Accept one or more input files, and print their contents line-by-line in reverse order
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
+
+    # [[[ SUBROUTINES ]]]
+
+    our void $tac = sub {
+        ( my string_arrayref $command_line_arguments ) = @_;
+        $command_line_arguments = [ reverse @{$command_line_arguments} ];
+        foreach my string $file_name ( @{$command_line_arguments} ) {
+            if ( not( -e $file_name ) ) {
+                croak 'ERROR: File ' . $file_name . ' does not exist, croaking';
+            }
+            if ( not( -r $file_name ) ) {
+                croak 'ERROR: File ' . $file_name . ' is not readable, croaking';
+            }
+            if ( not( -f $file_name ) ) {
+                croak 'ERROR: File ' . $file_name . ' is not a regular file, croaking';
+            }
+            if ( not( -T $file_name ) ) {
+                croak 'ERROR: File ' . $file_name . ' is (probably) not text, croaking';
+            }
+
+            my integer $open_success = open my filehandleref $FILE, '<', $file_name;
+            if ( not $open_success ) {
+                croak 'ERROR: Failed to open file ' . $file_name . ' for reading, croaking';
+            }
+
+            my string_arrayref $file_lines = [];
+
+            while ( my string $file_line = <$FILE> ) {
+                push @{$file_lines}, $file_line;
+            }
+
+            $file_lines = [ reverse @{$file_lines} ];
+
+            foreach my string $file_line ( @{$file_lines} ) {
+                print $file_line;
+            }
+
+            if ( not close $FILE ) {
+                croak 'ERROR: Failed to close file ' . $file_name . ' after reading, croaking';
+            }
+        }
+    };
+
+    # [[[ OPERATIONS ]]]
+
+    tac( [@ARGV] );
 
 Example execution, input, and output:
 
 X<noncode>
 
-    $ rperl -t LearningRPerl/Chapter FOO
+    $ printf "fred0\nfred1\nfred2\nfred3\nfred4\n" > fred
+    $ printf "barney0\nbarney1\nbarney2\n" > barney
+    $ printf "betty0\nbetty1\nbetty2\nbetty3\n" > betty
+    $ rperl -t 'LearningRPerl/Chapter5/exercise_1-tac.pl fred barney betty'
+    betty3
+    betty2
+    betty1
+    betty0
+    barney2
+    barney1
+    barney0
+    fred4
+    fred3
+    fred2
+    fred1
+    fred0
+    $ rm fred barney betty
 
 X</noncode>
 

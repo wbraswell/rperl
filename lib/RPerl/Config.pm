@@ -268,7 +268,7 @@ if ( ( exists $INC{'RPerl.pm'} ) and ( defined $INC{'RPerl.pm'} ) ) {
     }
 }
 
-# remove trailing '/'
+# strip trailing '/'
 if ( ( substr $directories_loaded, -1, 1 ) eq q{/} ) {
     $directories_loaded = substr $directories_loaded, 0, -1;
 }

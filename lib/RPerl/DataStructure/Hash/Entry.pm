@@ -41,7 +41,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         }
         elsif ( $key_class eq 'VarOrLitOrOpStrOrWord_230' ) {    # OpStringOrWord
             $key_name = $key->{children}->[0]->{children}->[0];
-            $key_name =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
+            $key_name =~ s/^(\w+)\s*$/$1/gxms;  # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
             if ($key_name !~ /^[a-z]/) {
                 die 'ERROR ECOGEASRP22, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid hash key ' . q{'}
                     . $key_name . q{'}
@@ -58,7 +58,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
         if ( ( exists $type_inner_optional->{children}->[0] ) and ( defined $key_name ) ) {
             my string $type_inner_name = $type_inner_optional->{children}->[0]->{children}->[3]->{children}->[0];
-            $type_inner_name =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
+            $type_inner_name =~ s/^(\w+)\s*$/$1/gxms;  # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
             if ( $type_inner_name !~ /$key_name$/xms ) {
                 die 'ERROR ECOGEASRP21, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
                     . $type_inner_name . q{'}
@@ -127,7 +127,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         }
         elsif ( $key_class eq 'VarOrLitOrOpStrOrWord_230' ) {    # OpStringOrWord
             $key_name = $key->{children}->[0]->{children}->[0];
-            $key_name =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
+            $key_name =~ s/^(\w+)\s*$/$1/gxms;  # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
             if ($key_name !~ /^[a-z]/) {
                 die 'ERROR ECOGEASCP22, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid hash key ' . q{'}
                     . $key_name . q{'}
@@ -144,7 +144,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
         if ( ( exists $type_inner_optional->{children}->[0] ) and ( defined $key_name ) ) {
             my string $type_inner_name = $type_inner_optional->{children}->[0]->{children}->[3]->{children}->[0];
-            $type_inner_name =~ s/^(\w+)\s*$/$1/gxms;  # remove trailing whitespace, caused by grammar matching operator names with trailing spaces
+            $type_inner_name =~ s/^(\w+)\s*$/$1/gxms;  # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
             if ( $type_inner_name !~ /$key_name$/xms ) {
                 die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
                     . $type_inner_name . q{'}

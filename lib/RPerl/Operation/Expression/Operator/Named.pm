@@ -61,7 +61,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             . "\n";
     }
  
-    # remove trailing whitespace, caused by the need to have the grammar match some tokens with a trailing whitespace, as with 'scalar ', etc.
+    # strip trailing whitespace, caused by the need to have the grammar match some tokens with a trailing whitespace, as with 'scalar ', etc.
     $operator_name =~ s/^(\w+)\s*$/$1/gxms;
 
  # DEV NOTE: compile-time operator name checking short-circuited first by Parse Phase 0 ERROR ECOPAPL02 'Bareword "FOO" not allowed while "strict subs" in use';

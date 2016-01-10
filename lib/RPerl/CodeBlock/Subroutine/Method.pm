@@ -91,7 +91,7 @@ our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = 
     my object $arguments_optional = $self->{children}->[4];
 
     substr $name, 0, 1, q{};            # remove leading $ sigil
-    substr $return_type, -8, 8, '';                      # remove trailing '::method'
+    substr $return_type, -8, 8, '';                      # strip trailing '::method'
  
 #    RPerl::diag( 'in Method->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $name = ' . $name . "\n" );
 #    RPerl::diag( 'in Method->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $arguments_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_optional) . "\n" );
@@ -143,7 +143,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my object $operations_star    = $self->{children}->[5];
  
     substr $name, 0, 1, q{};            # remove leading $ sigil
-    substr $return_type, -8, 8, '';                      # remove trailing '::method'
+    substr $return_type, -8, 8, '';                      # strip trailing '::method'
 
     $return_type = RPerl::Generator::type_convert_perl_to_cpp($return_type, 1);  # $pointerify_classes = 1
     $cpp_source_group->{CPP} .= $return_type . q{ } . $package_name_underscores . '::' . $name . '(';
