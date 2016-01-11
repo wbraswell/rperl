@@ -1738,7 +1738,7 @@ X<br>
 
 The goal of this exercise is to become familiar with accepting user keyboard input.X<br>
 
-The third line in the C<CRITICS> section tells RPerl to allow user input via the C<STDIN> standard stream, a software input connection which is attached to the keyboard by default.X<br>
+The third line in the C<CRITICS> section tells RPerl to allow user input via the C<E<lt>STDINE<gt>> standard stream, a software input connection which is attached to the keyboard by default.X<br>
 
 The second line in the C<OPERATIONS> section creates a string variable C<$radius_string>, and assigns to it the text value typed by the user on their keyboard.X<br>
 
@@ -1859,9 +1859,9 @@ X<br>
 
 =head2 Chapter 2, Exercise 4
 
-The goal of this exercise is to gain further exposure to the C<STDIN> standard stream and variable multiplication.X<br>
+The goal of this exercise is to gain further exposure to the C<E<lt>STDINE<gt>> standard stream and variable multiplication.X<br>
 
-In the C<OPERATIONS> section, C<STDIN> is accessed to collect user input for both C<$multiplicator_string> and C<$multiplicand_string> variables.X<br>
+In the C<OPERATIONS> section, C<E<lt>STDINE<gt>> is accessed to collect user input for both the C<$multiplicator_string> and C<$multiplicand_string> variables.X<br>
 
 These 2 string variables are converted from text values to numeric values by calling C<string_to_number()>, then multiplied via the C<*> multiplication operator, and the results displayed by calling C<print>.X<br>
 
@@ -1914,7 +1914,7 @@ X<br>
 
 The goal of this exercise is to become familiar with the C<x> string repeat operator.X<br>
 
-In the C<OPERATIONS> section, C<STDIN> is accessed twice to collect user input for a string variable C<$repeat_string> to be repeated, and an integer variable C<$repeat_integer> to specify the number of repetitions.X<br>
+In the C<OPERATIONS> section, C<E<lt>STDINE<gt>> is accessed twice to collect user input for a string variable C<$repeat_string> to be repeated, and an integer variable C<$repeat_integer> to specify the number of repetitions.X<br>
 
 The last line contains 2 operators, C<print> and the C<x> string repeat operator.X<br>
 
@@ -1973,7 +1973,7 @@ The first line in the C<OPERATIONS> section declares a new variable C<$input_str
 
 The line starting with C<while (my string $input_string = E<lt>STDINE<gt>)> denotes the beginning of an iterative (repeating) loop statement, which continues to accept and store user input until CTRL-D is pressed to indicate the EOF (end-of-file) condition, also known as EOT (end-of-transmission).X<br>
 
-A new copy of the variable C<$input_string> is created and assigned the value of collected user input by calling C<STDIN> at the start of each loop iteration; the C<my> operator is evaluated as a true condition and the loop repeats, until CTRL-D is received and the C<my> operator returns a false condition.X<br>
+A new copy of the variable C<$input_string> is created and assigned the value of collected user input by calling C<E<lt>STDINE<gt>> at the start of each loop iteration; the C<my> operator is evaluated as a true condition and the loop repeats, until CTRL-D is received and the C<my> operator returns a false condition.X<br>
 
 Inside the body of the C<while> loop is 1 line calling the C<push> operator, which appends the current iteration's value of C<$input_string> onto the list of strings contained in C<$input_strings>.X<br>
 
@@ -2227,7 +2227,7 @@ By itself, a subroutine such as C<total()> does not actually do anything; every 
 
 In C<OPERATIONS>, a 5-element array is created and stored in the variable C<$fred>, which is then passed as input to the subroutine C<total()>, and the return value is displayed using the variable C<$fred_total> and the C<print> operator.X<br>
 
-Next, a C<while> loop and C<STDIN> are used to collect user input strings, which are then converted to numeric data values using the C<string_to_number()> subroutine, and stored in the array C<$input_numbers> using the C<push> operator.X<br>
+Next, a C<while> loop and C<E<lt>STDINE<gt>> are used to collect user input strings, which are then converted to numeric data values using the C<string_to_number()> subroutine, and stored in the array C<$input_numbers> using the C<push> operator.X<br>
 
 Finally, the subroutine C<total()> is called a second time, now with the variable C<$input_numbers> passed as the input argument, and the return value is displayed using the variable C<$user_total>.X<br>
 
@@ -2689,16 +2689,78 @@ X<br>
 
 =head2 Chapter 5, Exercise 2
 
-The goal of this exercise is FOO.X<br>
+The goal of this exercise is to become familiar with the string C<length> operator and basic text formatting.X<br>
+
+In the C<SUBROUTINES> section, one subroutine C<right_justify_20()> is defined, which accepts no input arguments and returns no values.X<br>
+
+Inside C<right_justify_20()>, an empty array of strings is initialized in the C<$input_strings> variable, which is then populated with strings in a C<while> loop collecting user input from C<E<lt>STDINE<gt>>.X<br>
+
+The C<x> string repeat operator is called to create a 60-character-wide horizontal ruler, which is then displayed by the C<print> operator.X<br>
+
+Finally, a C<foreach> loop iterates through each C<$input_string> and calls the C<length> operator, thereby determining the correct number of spaces to prepend in order to achieve right justification alignment to the 20th character column.  Simple C<-> subtraction arithmetic uses 21
+
+X<br>
 
 
-    #!/usr/bin/perl FOO
+    #!/usr/bin/perl
+
+    # Learning RPerl, Chapter 5, Exercise 2
+    # Accept one or more input lines, and print them in a right-justified 20-column format
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
+
+    # [[[ SUBROUTINES ]]]
+
+    our void $right_justify_20 = sub {
+        my string_arrayref $input_strings = [];
+        print 'Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
+        while ( my string $input_string = <STDIN> ) {
+            push @{$input_strings}, $input_string;
+        }
+
+        print "\n";
+        print '1234567890' x 6;
+        print "\n";
+
+        foreach my string $input_string ( @{$input_strings} ) {
+            print q{ } x ( 21 - ( length $input_string ) );
+            print $input_string;
+        }
+    };
+
+    # [[[ OPERATIONS ]]]
+
+    right_justify_20();
+
 
 Example execution, input, and output:
 
 X<noncode>
 
-    $ rperl -t LearningRPerl/Chapter FOO
+    $ rperl -t LearningRPerl/Chapter5/exercise_2-right_justify.pl
+    Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:
+    howdy
+    doody
+    buffalo
+    bob
+    clarabell
+    clown
+
+    123456789012345678901234567890123456789012345678901234567890
+                   howdy
+                   doody
+                 buffalo
+                     bob
+               clarabell
+                   clown
 
 X</noncode>
 
