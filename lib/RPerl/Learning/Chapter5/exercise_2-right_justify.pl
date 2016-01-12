@@ -27,8 +27,9 @@ our void $right_justify_20 = sub {
     print "\n";
 
     foreach my string $input_string ( @{$input_strings} ) {
-        print q{ } x ( 21 - ( length $input_string ) );
-        print $input_string;
+        chomp $input_string;
+        print q{ } x ( 20 - ( length $input_string ) );
+        print $input_string . "\n";
     }
 };
 

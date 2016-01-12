@@ -2025,20 +2025,20 @@ X<noncode>
 
     $ rperl -t LearningRPerl/Chapter3/exercise_1-stdin_strings_reverse.pl 
     Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:
-    Howdy
-    Doody
-    Buffalo
-    Bob
-    Clarabell
-    Clown
+    howdy
+    doody
+    buffalo
+    bob
+    clarabell
+    clown
 
     Strings in reverse order:
-    Clown
-    Clarabell
-    Bob
-    Buffalo
-    Doody
-    Howdy
+    clown
+    clarabell
+    bob
+    buffalo
+    doody
+    howdy
 
 X</noncode>
 
@@ -2340,7 +2340,7 @@ Finally, the subroutine C<total()> is called with C<$one_to_one_thousand> passed
     print 'The total of 1 to 1000 is ' . to_string($one_to_one_thousand_total) . q{.} . "\n";
 
 
-Example execution, input, and output:
+Example execution and output:
 
 X<noncode>
 
@@ -2423,7 +2423,7 @@ In the C<OPERATIONS> section, 2 arrays are created in the C<$fred> and C<$barney
     print 'The above-average elements of $barney are ' . number_arrayref_to_string($barney_above_average) . "\n";
     print '(Should be just [100])' . "\n";
 
-Example execution, input, and output:
+Example execution and output:
 
 X<noncode>
 
@@ -2494,7 +2494,7 @@ Finally, the string variable C<$name> is returned from C<greet()> and passed to 
     $previous_name = greet('Wilma', $previous_name);
     $previous_name = greet('Betty', $previous_name);
 
-Example execution, input, and output:
+Example execution and output:
 
 X<noncode>
 
@@ -2557,7 +2557,7 @@ Finally, the current value of C<$name> is appended as the last element of the ar
     $previous_names = greet('Wilma', $previous_names);
     $previous_names = greet('Betty', $previous_names);
 
-Example execution, input, and output:
+Example execution and output:
 
 X<noncode>
 
@@ -2691,13 +2691,15 @@ X<br>
 
 The goal of this exercise is to become familiar with the string C<length> operator and basic text formatting.X<br>
 
-In the C<SUBROUTINES> section, one subroutine C<right_justify_20()> is defined, which accepts no input arguments and returns no values.X<br>
+In the C<SUBROUTINES> section, 1 subroutine C<right_justify_20()> is defined, which accepts no input arguments and returns no values.X<br>
 
 Inside C<right_justify_20()>, an empty array of strings is initialized in the C<$input_strings> variable, which is then populated with strings in a C<while> loop collecting user input from C<E<lt>STDINE<gt>>.X<br>
 
 The C<x> string repeat operator is called to create a 60-character-wide horizontal ruler, which is then displayed by the C<print> operator.X<br>
 
-Finally, a C<foreach> loop iterates through each C<$input_string> and calls the C<length> operator, thereby determining the correct number of spaces to prepend in order to achieve right justification alignment to the 20th character column.  Simple C<-> subtraction arithmetic uses 21
+Finally, a C<foreach> loop iterates through each C<$input_string> and calls the C<length> operator, thereby determining the correct number of spaces to prepend in order to achieve right justification alignment to the 20th character column.  The C<-> subtraction operator is passed a hard-coded column width of 20, and the C<chomp> operator is called to remove any trailing newline characters which may be appended when the user presses the ENTER key after each input word.X<br>
+
+In the C<OPERATIONS> section, the only operation is a call to the C<right_justify_20()> subroutine.X<br>
 
 X<br>
 
@@ -2731,8 +2733,9 @@ X<br>
         print "\n";
 
         foreach my string $input_string ( @{$input_strings} ) {
-            print q{ } x ( 21 - ( length $input_string ) );
-            print $input_string;
+            chomp $input_string;
+            print q{ } x ( 20 - ( length $input_string ) );
+            print $input_string . "\n";
         }
     };
 
@@ -2769,16 +2772,91 @@ X<br>
 
 =head2 Chapter 5, Exercise 3
 
-The goal of this exercise is FOO.X<br>
+The goal of this exercise is to become further familiarized with basic text formatting.X<br>
+
+In the C<SUBROUTINES> section, 1 subroutine C<right_justify_variable()> is defined, which accepts no input arguments and returns no values.X<br>
+
+Inside C<right_justify_variable()>, the user is prompted to input a custom right justify width, stored in the integer variable C<$column_width>.X<br>
+
+The integer variable C<$ruler_width_tens> is used to determine the number of characters displayed for the ruler, by tens; the default value for C<$ruler_width_tens> is 6, which means a ruler width of 60 characters.  If the user-supplied C<$column_width> is greater than 60, we scale it by 1/10 and add 1, thereby creating a new value for C<$ruler_width_tens> which will always display a ruler wider than C<$column_width>.X<br> 
+
+When the ruler is displayed, C<$ruler_width_tens> is passed to the C<x> string repeat operator instead of a hard-coded value of 6; likewise, when each C<$input_string> is right justified, the C<-> subtraction operator is passed C<$column_width> instead of a hard-coded value of 20.X<br>
+
+In the C<OPERATIONS> section, the only operation is a call to the C<right_justify_variable()> subroutine.X<br>
+
+This exercise is otherwise identical to the previous exercise.X<br>
 
 
-    #!/usr/bin/perl FOO
+    #!/usr/bin/perl
+
+    # Learning RPerl, Chapter 5, Exercise 3
+    # Accept column width followed by one or more input lines, and print lines in a right-justified format
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
+
+    # [[[ SUBROUTINES ]]]
+
+    our void $right_justify_variable = sub {
+        my string_arrayref $input_strings = [];
+        print 'Please input integer column width, then press <ENTER>:' . "\n";
+        my string $column_width_string = <STDIN>;
+        my integer $column_width       = string_to_integer($column_width_string);
+
+        print 'Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
+        while ( my string $input_string = <STDIN> ) {
+            push @{$input_strings}, $input_string;
+        }
+
+        my integer $ruler_width_tens = 6;    # default to ruler line width 60
+        if ( $column_width > 60 ) {
+            $ruler_width_tens = number_to_integer( $column_width / 10 ) + 1;
+        }
+
+        print "\n";
+        print '1234567890' x $ruler_width_tens;
+        print "\n";
+
+        foreach my string $input_string ( @{$input_strings} ) {
+            chomp $input_string;
+            print q{ } x ( $column_width - ( length $input_string ) );
+            print $input_string . "\n";
+        }
+    };
+
+    # [[[ OPERATIONS ]]]
+
+    right_justify_variable();
 
 Example execution, input, and output:
 
 X<noncode>
 
-    $ rperl -t LearningRPerl/Chapter FOO
+    $ rperl -t LearningRPerl/Chapter5/exercise_3-right_justify_variable.pl 
+    Please input integer column width, then press <ENTER>:
+    67
+    Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:
+    howdy
+    doody
+    buffalo
+    bob
+    clarabell
+    clown
+
+    1234567890123456789012345678901234567890123456789012345678901234567890
+                                                                  howdy
+                                                                  doody
+                                                                buffalo
+                                                                    bob
+                                                              clarabell
+                                                                  clown
 
 X</noncode>
 
@@ -2787,16 +2865,73 @@ X<br>
 
 =head2 Chapter 6, Exercise 1
 
-The goal of this exercise is FOO.X<br>
+The goal of this exercise is to become familiar with hash data structures and hash operators.X<br>
+
+In the C<SUBROUTINES> section, 1 subroutine C<given_to_family_name()> is defined, which accepts no input arguments and returns no values.X<br>
+
+Inside C<given_to_family_name()>, a hash data structure is created in the variable C<$names>.  Another term for hash is associative array, because each hash is comprised of key-value pairs, and we say there is a value "associated" with every key.  Hash keys are bare words and must be unique, while hash values may be any specified data type and need not be unique.  The 3 keys in C<$names> are fred, barney, and wilma; the value of the key fred is 'flintstone'.X<br>
+
+A first name is collected from the user by C<E<lt>STDINE<gt>> and stored in C<$given_name>, then the C<chomp> operator is called to remove the trailing newline recorded when the user presses the ENTER key.X<br>
+
+An C<if> conditional statement calls the C<exists> and C<defined> operators to ensure the user has entered a valid hash key, and an error is returned if there is no such key in the C<$names> hash.X<br>
+
+Finally, the thin-arrow syntax C<$names-E<gt>{$given_name}> is used to retrieve the hash value, and C<print> is called to display the output.X<br>
+
+In the C<OPERATIONS> section, the only operation is a call to the C<given_to_family_name()> subroutine.X<br>
 
 
-    #!/usr/bin/perl FOO
+    #!/usr/bin/perl
+
+    # Learning RPerl, Chapter 6, Exercise 1
+    # Accept one input given (first) name, and print the corresponding family (last) name
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
+
+    # [[[ SUBROUTINES ]]]
+
+    our void $given_to_family_name = sub {
+        my string_hashref $names = {
+            fred => 'flintstone',
+            barney => 'rubble',
+            wilma => 'flintstone'
+        };
+
+        print 'Please input a given (first) name in all lowercase, then press <ENTER>:' . "\n";
+        my string $given_name = <STDIN>;
+        chomp $given_name;
+
+        if ((not exists $names->{$given_name}) or (not defined $names->{$given_name})) {
+            croak 'ERROR: No family (last) name found for given (first) name ' . $given_name . ', croaking' . "\n";
+        }
+
+        print 'The family (last) name of ' . $given_name . ' is ' . $names->{$given_name} . q{.} . "\n";
+    };
+
+    # [[[ OPERATIONS ]]]
+
+    given_to_family_name();
 
 Example execution, input, and output:
 
 X<noncode>
 
-    $ rperl -t LearningRPerl/Chapter FOO
+    $ rperl -t LearningRPerl/Chapter6/exercise_1-hash_family_names.pl 
+    Please input a given (first) name in all lowercase, then press <ENTER>:
+    fred
+    The family (last) name of fred is flintstone.
+
+    $ rperl -t LearningRPerl/Chapter6/exercise_1-hash_family_names.pl 
+    Please input a given (first) name in all lowercase, then press <ENTER>:
+    howdy
+    ERROR: No family (last) name found for given (first) name howdy, croaking
 
 X</noncode>
 
@@ -2805,16 +2940,108 @@ X<br>
 
 =head2 Chapter 6, Exercise 2
 
-The goal of this exercise is FOO.X<br>
+The goal of this exercise is to become further familiarized with hash data structures and hash operators.X<br>
+
+In the C<SUBROUTINES> section, 1 subroutine C<unique_word_count()> is defined, which accepts no input arguments and returns no values.X<br>
+
+In C<unique_word_count()>, an empty hash of integer values is created in the variable C<$word_counts>; a C<while> loop then collects user input strings, inside of which an C<if() else> conditional statement updates the C<$word_counts> hash.  If a word is seen for the first time, then the corresponding C<$word_counts> hash value will be set to 1, otherwise the count value will be incremented by 1.X<br>
+
+Finally, a C<foreach> loop iterates through the alphabetically-sorted keys of the C<$word_counts> hash by calling the C<sort> and C<keys> operators, then the thin-arrow hash value retrieval syntax C<$word_counts-E<gt>{$unique_word}> is called and the C<print> operator is displays the output.X<br>
+
+In the C<OPERATIONS> section, the only operation is a call to the C<unique_word_count()> subroutine.X<br>
 
 
-    #!/usr/bin/perl FOO
+    #!/usr/bin/perl
+
+    # Learning RPerl, Chapter 6, Exercise 2
+    # Accept a list of words, and print the count of each unique word
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
+
+    # [[[ SUBROUTINES ]]]
+
+    our void $unique_word_count = sub {
+        my integer_hashref $word_counts = {};
+
+        print 'Please input zero or more words, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
+        while (my string $input_word = <STDIN>) {
+            chomp $input_word;
+            if (not exists $word_counts->{$input_word}) {
+                $word_counts->{$input_word} = 1;
+            }
+            else {
+                $word_counts->{$input_word} += 1;
+            }
+        }
+
+        print "\n" . 'Unique word count:' . "\n";
+
+        foreach my string $unique_word (sort keys %{$word_counts}) {
+            print $unique_word . ' appeared ' . to_string($word_counts->{$unique_word}) . ' time(s)' . "\n";
+        }
+    };
+
+    # [[[ OPERATIONS ]]]
+
+    unique_word_count();
 
 Example execution, input, and output:
 
 X<noncode>
 
-    $ rperl -t LearningRPerl/Chapter FOO
+    $ rperl -t LearningRPerl/Chapter6/exercise_2-hash_unique_word_count.pl 
+    Please input zero or more words, separated by <ENTER>, ended by <CTRL-D>:
+    george
+    jane
+    judy
+    elroy
+    astro
+    rosie
+    george
+    judy
+    astro
+    fred
+    wilma
+    barney
+    betty
+    pebbles
+    bamm-bamm
+    dino
+    fred
+    barney
+    dino
+    george
+    fred
+    barney
+    astro
+    dino
+    jane
+    judy
+    betty
+    wilma
+
+    Unique word count:
+    astro appeared 3 time(s)
+    bamm-bamm appeared 1 time(s)
+    barney appeared 3 time(s)
+    betty appeared 2 time(s)
+    dino appeared 3 time(s)
+    elroy appeared 1 time(s)
+    fred appeared 3 time(s)
+    george appeared 3 time(s)
+    jane appeared 2 time(s)
+    judy appeared 3 time(s)
+    pebbles appeared 1 time(s)
+    rosie appeared 1 time(s)
+    wilma appeared 2 time(s)
 
 X</noncode>
 

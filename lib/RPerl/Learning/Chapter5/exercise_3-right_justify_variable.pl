@@ -36,8 +36,9 @@ our void $right_justify_variable = sub {
     print "\n";
 
     foreach my string $input_string ( @{$input_strings} ) {
-        print q{ } x ( ( $column_width + 1 ) - ( length $input_string ) );
-        print $input_string;
+        chomp $input_string;
+        print q{ } x ( $column_width - ( length $input_string ) );
+        print $input_string . "\n";
     }
 };
 

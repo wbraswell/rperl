@@ -16,23 +16,23 @@ our $VERSION = 0.001_000;
 # [[[ SUBROUTINES ]]]
 
 our void $unique_word_count = sub {
-    my string_hashref $words = {};
+    my integer_hashref $word_counts = {};
 
     print 'Please input zero or more words, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
     while (my string $input_word = <STDIN>) {
         chomp $input_word;
-        if (not exists $words->{$input_word}) {
-            $words->{$input_word} = 1;
+        if (not exists $word_counts->{$input_word}) {
+            $word_counts->{$input_word} = 1;
         }
         else {
-            $words->{$input_word} += 1;
+            $word_counts->{$input_word} += 1;
         }
     }
 
     print "\n" . 'Unique word count:' . "\n";
 
-    foreach my string $unique_word (sort keys %{$words}) {
-        print $unique_word . ' appeared ' . to_string($words->{$unique_word}) . ' time(s)' . "\n";
+    foreach my string $unique_word (sort keys %{$word_counts}) {
+        print $unique_word . ' appeared ' . to_string($word_counts->{$unique_word}) . ' time(s)' . "\n";
     }
 };
 
