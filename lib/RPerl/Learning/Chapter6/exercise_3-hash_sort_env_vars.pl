@@ -19,9 +19,9 @@ our void $sort_env_vars = sub {
 
     my integer $env_var_length;
     my integer $left_column_width = 0;
-    foreach my string $env_var (sort keys %{$env_vars}) {
+    foreach my string $env_var ( sort keys %{$env_vars} ) {
         $env_var_length = length $env_var;
-        if ($env_var_length > $left_column_width) {
+        if ( $env_var_length > $left_column_width ) {
             $left_column_width = $env_var_length;
         }
     }
@@ -30,10 +30,10 @@ our void $sort_env_vars = sub {
 
     print 'Environmental variables:' . "\n";
 
-    foreach my string $env_var (sort keys %{$env_vars}) {
-       print $env_var;
-       print q{ } x ($left_column_width - (length $env_var));
-       print $env_vars->{$env_var} . "\n";
+    foreach my string $env_var ( sort keys %{$env_vars} ) {
+        print $env_var;
+        print q{ } x ( $left_column_width - ( length $env_var ) );
+        print $env_vars->{$env_var} . "\n";
     }
 };
 

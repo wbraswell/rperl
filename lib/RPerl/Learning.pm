@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.014_000;
+our $VERSION = 0.020_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -2875,7 +2875,7 @@ A first name is collected from the user by C<E<lt>STDINE<gt>> and stored in C<$g
 
 An C<if> conditional statement calls the C<exists> and C<defined> operators to ensure the user has entered a valid hash key, and an error is returned if there is no such key in the C<$names> hash.X<br>
 
-Finally, the thin-arrow syntax C<$names-E<gt>{$given_name}> is used to retrieve the hash value, and C<print> is called to display the output.X<br>
+Finally, the thin-arrow syntax C<$names-E<gt>{$given_name}> is used to retrieve the hash value, and C<print> is called to display the family name outputs.X<br>
 
 In the C<OPERATIONS> section, the only operation is a call to the C<given_to_family_name()> subroutine.X<br>
 
@@ -2946,7 +2946,7 @@ In the C<SUBROUTINES> section, 1 subroutine C<unique_word_count()> is defined, w
 
 In C<unique_word_count()>, an empty hash of integer values is created in the variable C<$word_counts>; a C<while> loop then collects user input strings, inside of which an C<if() else> conditional statement updates the C<$word_counts> hash.  If a word is seen for the first time, then the corresponding C<$word_counts> hash value will be set to 1, otherwise the count value will be incremented by 1.X<br>
 
-Finally, a C<foreach> loop iterates through the alphabetically-sorted keys of the C<$word_counts> hash by calling the C<sort> and C<keys> operators, then the thin-arrow hash value retrieval syntax C<$word_counts-E<gt>{$unique_word}> is called and the C<print> operator is displays the output.X<br>
+Finally, a C<foreach> loop iterates through the alphabetically-sorted keys of the C<$word_counts> hash by calling the C<sort> and C<keys> operators, then the thin-arrow hash value retrieval syntax C<$word_counts-E<gt>{$unique_word}> is called, and the C<print> operator displays the word count outputs.X<br>
 
 In the C<OPERATIONS> section, the only operation is a call to the C<unique_word_count()> subroutine.X<br>
 
@@ -3050,16 +3050,89 @@ X<br>
 
 =head2 Chapter 6, Exercise 3
 
-The goal of this exercise is FOO.X<br>
+The goal of this exercise is to become further familiarized with hash data structures and basic text formatting.X<br>
+
+In the C<SUBROUTINES> section, 1 subroutine C<sort_env_vars()> is defined, which accepts no input arguments and returns no values.X<br>
+
+Inside C<sort_env_vars()>, a hash of strings is created in the variable C<$env_vars>, and it is initialized to contain the values of the special C<%ENV> system hash, which stores the current user's environmental variables.X<br>
+
+Next, 2 integer variables C<$env_var_length> and C<$left_column_width> are created, and C<$left_column_width> is initialized to the value 0.  A C<foreach> loop iterates through all environmental variables, measuring the string length of each C<$env_var> by the C<length> operator, and using an C<if> conditional statement to test if the current C<$env_var_length> is greater than the existing C<$left_column_width>.  If C<$env_var_length> is large enough, then C<$left_column_width> is updated, thereby resulting in the value of C<$left_column_width> being equal to the longest C<$env_var_length>.X<br>
+
+After the C<foreach> loop, C<$left_column_width> is incremented by an additional 2 character widths, allowing for 2 or more spaces between the hash keys and their respective values when displayed.X<br>
+
+Finally, there is another C<foreach> loop below the first, again iterating through all C<$env_vars>, and printing the keys at the beginning of each output line.  The C<-> subtraction operator is called to find the difference between the current key length and the pre-calculated C<$left_column_width>, then the C<x> string repeat operator is called to create the corresponding number of blank spaces as padding between the key and its value.  The thin-arrow hash value retrieval syntax C<$env_vars-E<gt>{$env_var}> is called, and the C<print> operator displays the hash value outputs.X<br>
+
+In the C<OPERATIONS> section, the only operation is a call to the C<sort_env_vars()> subroutine.X<br>
 
 
-    #!/usr/bin/perl FOO
+    #!/usr/bin/perl
+
+    # Learning RPerl, Chapter 6, Exercise 3
+    # Print sorted environmental variables
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+
+    # [[[ SUBROUTINES ]]]
+
+    our void $sort_env_vars = sub {
+        my string_hashref $env_vars = {%ENV};
+
+        my integer $env_var_length;
+        my integer $left_column_width = 0;
+        foreach my string $env_var ( sort keys %{$env_vars} ) {
+            $env_var_length = length $env_var;
+            if ( $env_var_length > $left_column_width ) {
+                $left_column_width = $env_var_length;
+            }
+        }
+
+        $left_column_width += 2;
+
+        print 'Environmental variables:' . "\n";
+
+        foreach my string $env_var ( sort keys %{$env_vars} ) {
+            print $env_var;
+            print q{ } x ( $left_column_width - ( length $env_var ) );
+            print $env_vars->{$env_var} . "\n";
+        }
+    };
+
+    # [[[ OPERATIONS ]]]
+
+    sort_env_vars();
+
 
 Example execution, input, and output:
 
 X<noncode>
 
-    $ rperl -t LearningRPerl/Chapter FOO
+    $ rperl -t LearningRPerl/Chapter6/exercise_3-hash_sort_env_vars.pl 
+    Environmental variables:
+    COLORTERM                 xfce4-terminal
+    DESKTOP_SESSION           xubuntu
+    DISPLAY                   :0.0
+    GDMSESSION                xubuntu
+    GDM_LANG                  en_US
+    HOME                      /home/wbraswell
+    LANG                      en_US.UTF-8
+    LANGUAGE                  en_US
+    LOGNAME                   wbraswell
+    PATH                      /home/wbraswell/austin_perl_mongers/rperl/rperl-latest/script:.:script:bin:/home/wbraswell/script:/home/wbraswell/bin:/home/wbraswell/perl5/bin:/home/wbraswell/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+    PERL5LIB                  /home/wbraswell/austin_perl_mongers/rperl/rperl-latest/lib:blib/lib:lib:/home/wbraswell/perl5/lib/perl5
+    PERL_LOCAL_LIB_ROOT       /home/wbraswell/perl5
+    PERL_MB_OPT               --install_base "/home/wbraswell/perl5"
+    PERL_MM_OPT               INSTALL_BASE=/home/wbraswell/perl5
+    PWD                       /home/wbraswell/austin_perl_mongers/rperl/rperl-latest
+    SHELL                     /bin/bash
+    TERM                      xterm
+    USER                      wbraswell
 
 X</noncode>
 
