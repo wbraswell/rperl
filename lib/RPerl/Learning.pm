@@ -3139,21 +3139,30 @@ X</noncode>
 X<br>
 
 
-=head1 APPENDIX B: BEYOND THE ROADRUNNER
+=head1 APPENDIX B: RPERL GRAMMAR
 
-The Scallion
-The Sword
+=head2 Eyapp Grammar Format & Sections
 
+1a.  Describe Eyapp EBNF grammar format and Grammar.eyp file sections
+
+=head2 Lexical Token Types
+
+1b.  Describe lexical token types
+
+=head2 Operator Precedence & Associativity
+
+1c.  Describe operator precedence and associativity
+
+=head2 Rules & Productions
+
+1d.  Describe all grammar rules and productions
 X<br>
 
 
-=head1 APPENDIX C: RPERL GRAMMAR
+=head1 APPENDIX C: BEYOND THE ROADRUNNER
 
-1a.  Describe Eyapp EBNF grammar format and Grammar.eyp file sections
-1b.  Describe lexical token types
-1c.  Describe operator precedence and associativity
-1d.  Describe all grammar rules and productions
-1e.  Provide examples of valid code
+The Scallion
+The Sword
 
 X<br>
 

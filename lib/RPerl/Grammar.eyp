@@ -1,8 +1,11 @@
 # DEV NOTE: DO NOT RUN PERLTIDY ON THIS FILE!  this is EYAPP syntax, not pure Perl syntax
+
+# [[[ EYAPP SETUP & CONFIG ]]]
+
 %{
     use strict;
     use warnings;
-    our $VERSION = 0.002_630;
+    our $VERSION = 0.002_700;
     use Carp;
     
     use rperlrules;  # affirmative, it totally does
@@ -10,13 +13,20 @@
 
 %strict                               # require all tokens to be declared, etc.
 %tree                                 # automatically create AST
+
+# [[[ LEXICON TOKENS, WHITESPACE ]]]
+
 %whites /((?:\s*(?:[#][^#!].*)?\s*)*|\s)/  # actual whitespace, or one or more normal comments; neither shebang '#!', nor double-hash critics '##'
+
+# [[[ SEMANTIC ACTION, ABSTRACT SYNTAX TREE NODE CONSTRUCTOR ]]]
 
 %defaultaction {
     my $self = shift;
     my $name = $self->YYName();
     bless { children => [ @_ ] }, $name;
 }
+
+# [[[ LEXICON TOKENS, TYPES & RESERVED WORDS ]]]
 
 %token SHEBANG               = /(^#!\/(?:\w+\/)*perl)/                   # begin line, hash (octothorpe), bang, *NIX path to Perl; ex. '#!/usr/bin/perl'
 %token USE_RPERL             = /(\s*use\s+RPerl\s*;\s*)/                 # 'use RPerl;'
@@ -43,6 +53,8 @@
 
 # FEATURE BOUNTY #000, 1_000 CodeCoin: Implement all Perl functions AKA builtins (PERLOPS_PERLTYPES) as C++ functions (CPPOPS_*TYPES)
 # Affects OP01_NAMED, OP01_NAMED_VOID, and OP10_NAMED_UNARY below, corresponding RPerl::Test::Operator* and C++ code;  http://perldoc.perl.org/perlfunc.html
+
+# [[[ LEXICON TOKENS, OPERATORS ]]]
 
 # PRECEDENCE, LEXICAL ORDERING: earlier declaration gets tried first;  http://perldoc.perl.org/perlop.html#Operator-Precedence-and-Associativity [1]
 # DEV NOTE: tokens which are all letters (or, ne, x, print, open, ETC) & are always followed by whitespace when tidy (NOT not or argumentless next, last, croak, return, exit, chdir, etc)
@@ -95,7 +107,9 @@
 %token OP01_NAMED_SCOLON         = /(abs;|accept;|atan2;|bind;|binmode;|bless;|break;|chmod;|chomp;|chop;|chown;|chr;|closedir;|cmp;|connect;|continue;|crypt;|dbmclose;|dbmopen;|default;|dump;|each;|endgrent;|endhostent;|endnetent;|endprotoent;|endpwent;|endservent;|eof;|evalbytes;|exec;|exp;|fc;|fcntl;|fileno;|flock;|fork;|format;|formline;|getc;|getgrent;|getgrgid;|getgrnam;|gethostbyaddr;|gethostent;|getlogin;|getnetbyaddr;|getnetent;|getpeername;|getppid;|getpriority;|getprotobynumber;|getprotoent;|getpwent;|getpwnam;|getpwuid;|getservbyname;|getservbyport;|getservent;|getsockname;|getsockopt;|given;|grep;|index;|ioctl;|join;|keys;|kill;|link;|listen;|local;|m;|map;|mkdir;|msgctl;|msgget;|msgrcv;|msgsnd;|opendir;|pack;|pipe;|pop;|pos;|prototype;|push;|q;|qq;|qr;|qx;|read;|readdir;|readline;|readpipe;|recv;|rename;|reset;|reverse;|rewinddir;|rindex;|s;|say;|seek;|seekdir;|select;|semctl;|semget;|semop;|send;|setgrent;|sethostent;|setnetent;|setpgrp;|setpriority;|setprotoent;|setpwent;|setservent;|setsockopt;|shift;|shmctl;|shmget;|shmread;|shmwrite;|shutdown;|socket;|socketpair;|sort;|splice;|split;|sprintf;|state;|study;|substr;|symlink;|syscall;|sysopen;|sysread;|sysseek;|system;|syswrite;|tell;|telldir;|tie;|tied;|time;|times;|tr;|truncate;|unless;|unlink;|unpack;|unshift;|untie;|until;|utime;|values;|vec;|wait;|waitpid;|wantarray;|warn;|when;|write;|y;)/
 %token OP01_NAMED                = /(abs\s|accept\s|atan2\s|bind\s|binmode\s|bless\s|break\s|chmod\s|chomp\s|chop\s|chown\s|chr\s|closedir\s|cmp\s|connect\s|continue\s|crypt\s|dbmclose\s|dbmopen\s|default\s|dump\s|each\s|endgrent\s|endhostent\s|endnetent\s|endprotoent\s|endpwent\s|endservent\s|eof\s|evalbytes\s|exec\s|exp\s|fc\s|fcntl\s|fileno\s|flock\s|fork\s|format\s|formline\s|getc\s|getgrent\s|getgrgid\s|getgrnam\s|gethostbyaddr\s|gethostent\s|getlogin\s|getnetbyaddr\s|getnetent\s|getpeername\s|getppid\s|getpriority\s|getprotobynumber\s|getprotoent\s|getpwent\s|getpwnam\s|getpwuid\s|getservbyname\s|getservbyport\s|getservent\s|getsockname\s|getsockopt\s|given\s|grep\s|index\s|ioctl\s|join\s|keys\s|kill\s|link\s|listen\s|local\s|m\s|map\s|mkdir\s|msgctl\s|msgget\s|msgrcv\s|msgsnd\s|opendir\s|pack\s|pipe\s|pop\s|pos\s|prototype\s|push\s|q\s|qq\s|qr\s|qx\s|read\s|readdir\s|readline\s|readpipe\s|recv\s|rename\s|reset\s|reverse\s|rewinddir\s|rindex\s|s\s|say\s|seek\s|seekdir\s|select\s|semctl\s|semget\s|semop\s|send\s|setgrent\s|sethostent\s|setnetent\s|setpgrp\s|setpriority\s|setprotoent\s|setpwent\s|setservent\s|setsockopt\s|shift\s|shmctl\s|shmget\s|shmread\s|shmwrite\s|shutdown\s|socket\s|socketpair\s|sort\s|splice\s|split\s|sprintf\s|state\s|study\s|substr\s|symlink\s|syscall\s|sysopen\s|sysread\s|sysseek\s|system\s|syswrite\s|tell\s|telldir\s|tie\s|tied\s|time\s|times\s|tr\s|truncate\s|unless\s|unlink\s|unpack\s|unshift\s|untie\s|until\s|utime\s|values\s|vec\s|wait\s|waitpid\s|wantarray\s|warn\s|when\s|write\s|y\s)/
 
-# PRECEDENCE, SYNTAX ASSOCIATIVITY: later declaration gets higher priority
+# [[[ SYNTAX, TOKEN PRECEDENCE & ASSOCIATIVITY ]]]
+
+# later declaration gets higher priority
 %left       OP24_LOGICAL_OR_XOR
 %left       OP23_LOGICAL_AND
 %right      OP22_LOGICAL_NEG
@@ -140,6 +154,8 @@
 %left       OP01_NAMED_VOID
 %left       OP01_PRINT
 
+# [[[ LEXICON TOKENS, PUNCTUATION & USER-DEFINED WORDS ]]]
+
 %token COLON                = /(:)/
 %token LPAREN_MY            = /(\(\s*my)/
 %token LPAREN               = /(\()/
@@ -149,6 +165,8 @@
 %token WORD_UPPERCASE       = /([A-Z][A-Z0-9_]*|[A-Z])/       # single uppercase letter, or uppercase letter followed by uppercase letters, numbers, and underscores; ex. 'FOOBAR_42_HOWDY'
 
 %%
+
+# [[[ SYNTAX PRODUCTION RULES, FILE FORMATS ]]]
 
 CompileUnit:             Program | (ModuleHeader Module)+ ;
 Program:                 SHEBANG Critic? USE_RPERL Header Critic* Include* Constant* Subroutine* Operation+ ;
@@ -170,6 +188,8 @@ Properties:              'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE H
 Method:                  'our' TYPE_METHOD VARIABLE_SYMBOL '= sub {' MethodArguments? Operation* '}' ';' ;
 MethodArguments:         LPAREN_MY Type SELF (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
 MethodOrSubroutine:      Method | Subroutine;
+
+# [[[ SYNTAX PRODUCTION RULES, OPERATIONS ]]]
 
 Operation:               Expression ';' | OP01_NAMED_SCOLON | OP10_NAMED_UNARY_SCOLON | Statement ;
 Operator:                LPAREN OP01_PRINT FHREF_SYMBOL_BRACES ListElements ')' |
@@ -201,6 +221,8 @@ LoopForEach:             'foreach' MY Type VARIABLE_SYMBOL LPAREN ListElements '
 LoopWhile:               'while' LPAREN SubExpression ')' CodeBlock | 'while' LPAREN_MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrInput ')' CodeBlock;
 CodeBlock:               LBRACE Operation+ '}' ;
 
+# [[[ SYNTAX PRODUCTION RULES, VARIABLE DATA ]]]
+
 Variable:                VariableSymbolOrSelf VariableRetrieval* ;
 VariableRetrieval:       OP02_ARRAY_THINARROW SubExpression ']' | OP02_HASH_THINARROW SubExpression '}' | OP02_HASH_THINARROW WORD '}' ;
 VariableDeclaration:     MY Type VARIABLE_SYMBOL ';' | MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN OpNamedScolonOrSubExpIn | 
@@ -214,6 +236,8 @@ HashEntry:               VarOrLitOrOpStrOrWord OP20_HASH_FATARROW TypeInner? Sub
 HashEntryProperties:     OpStringOrWord OP20_HASH_FATARROW TypeInnerProperties ;
 HashReference:           LBRACE HashEntry (OP21_LIST_COMMA HashEntry)* '}' | LBRACE '}' ;
 HashDereference:         '%{' Variable '}' | '%{' TypeInner? HashReference '}' ;
+
+# [[[ SYNTAX PRODUCTION RULES, USER-DEFINED WORDS ]]]
 
 WordScoped:              WORD | WORD_SCOPED ;
 LoopLabel:               WORD_UPPERCASE ;
@@ -233,6 +257,8 @@ OpStringOrWord:          OP24_LOGICAL_OR_XOR | OP23_LOGICAL_AND | OP22_LOGICAL_N
                          OP01_OPEN | OP01_NAMED_VOID | OP01_PRINT | WORD ;
 
 %%
+
+# [[[ SEMANTIC MAP, ABSTRACT SYNTAX TREE NODES TO CLASSES ]]]
 
 {
 # Map from abstract syntax tree to classes
