@@ -3143,7 +3143,47 @@ X<br>
 
 =head2 Eyapp Grammar Format & Sections
 
-1a.  Describe Eyapp EBNF grammar format and Grammar.eyp file sections
+RPerl's grammar is written using the Eyapp computer programming language, which is a combination of normal Perl 5 and grammar expressions.X<br>
+
+The grammar expression sections in Eyapp source code are written using an implementation of the Extended Backus-Naur Form (EBNF) language.X<br>
+
+The file F<lib/RPerl/Grammar.eyp> contains the uncompiled RPerl grammar, which is passed through the C<eyapp> compiler command once to generate the output file F<lib/RPerl/Grammar.pm>, which is then used by the C<rperl> compiler command to parse RPerl input source code files.X<br>
+
+Inside the F<lib/RPerl/Grammar.eyp> file, there are several labeled file sections, which can be grouped into 4 major categories:X<br>
+
+
+=over 16
+
+=item * Eyapp Setup & Config
+
+This section at the beginning of the F<Grammar.eyp> file contains Perl 5 code to initialize RPerl within the C<%{...}%> delimiters, well as the C<%strict> and C<%tree> Eyapp configuration directives.
+
+=item * Lexicon
+
+FOO BAR BAZ
+
+=item * Syntax
+
+FOO BAR BAZ
+
+=item * Semantics
+
+FOO BAR BAZ
+
+=back
+
+For more information, please review the following links:X<br>
+
+
+=over 16
+
+=item * L<Eyapp Documentation|https://metacpan.org/pod/Parse::Eyapp>
+
+=item * L<Extended Backus-Naur Form on Wikipedia|https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_Form>
+
+=item * L<RPerl Grammar Eyapp File|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Grammar.eyp>
+
+=back
 
 =head2 Lexical Token Types
 

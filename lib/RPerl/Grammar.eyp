@@ -3,11 +3,12 @@
 # [[[ EYAPP SETUP & CONFIG ]]]
 
 %{
+    # [[[ HEADER ]]]
     use strict;
     use warnings;
     our $VERSION = 0.002_700;
+
     use Carp;
-    
     use rperlrules;  # affirmative, it totally does
 %}
 
