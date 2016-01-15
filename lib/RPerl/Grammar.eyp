@@ -6,7 +6,7 @@
     # [[[ HEADER ]]]
     use strict;
     use warnings;
-    our $VERSION = 0.002_700;
+    our $VERSION = 0.002_800;
 
     use Carp;
     use rperlrules;  # affirmative, it totally does
@@ -36,17 +36,17 @@
 %token VERSION_NUMBER_ASSIGN = /\$VERSION\ =\ (\d\d?\.\d{3}\_\d{3});/    # DEV NOTE, CORRELATION #rp14: $VERSION assign v-number, only capture v-number, not a normal number; ex. '$VERSION = 12.345_678;' returns '12.345_678'
 %token MY                    = /(my)/                                    # 'my'
 %token LITERAL_NUMBER        = /([+-]?(((\d{1,2}_)?(\d{3}_)*\d{3})|\d{1,2})(\.((\d{3}(_\d{3})*(_\d{1,2})?)|\d{1,2}))?(e[+-]?\d+)?)/   # number w/ underscores, optional scientific notation; ex. '12_345_678.910_1'
-%token LITERAL_STRING        = /(('[^']+')|("((\\n)|(\\t)|[^"\@\$\\])*((\\n)|(\\t))+((\\n)|(\\t)|[^"\@\$\\])*")|(q\{[^}]*\}))/  # single quotes non-empty; double quotes non-empty w/out sigils or extra backslashes & w/ newline or tab; or single q-braces
+%token LITERAL_STRING        = /(('[^']+')|("((\\n)|(\\t)|[^"\@\$\\])*((\\n)|(\\t))+((\\n)|(\\t)|[^"\@\$\\])*")|(q\{[^}]*\}))/  # single quotes non-empty; double quotes non-empty w/out sigils or extra backslashes & w/ newline or tab; or single q-braces; ex. 'howdy $foo!' or "howdy foo!\n" or q{howdy $foo!} 
 %token SELF                  = /(\$self)/                                # '$self'
-%token VARIABLE_SYMBOL       = /(\$(?:[a-zA-Z]\w*)?[a-z]\w*(::[a-zA-Z]\w*)*)/ # dollar sigil, scoped word with at least one lowercase in the first scope segment
+%token VARIABLE_SYMBOL       = /(\$(?:[a-zA-Z]\w*)?[a-z]\w*(::[a-zA-Z]\w*)*)/ # dollar sigil, scoped word with at least one lowercase in the first scope segment; ex. '$foo' or '$Foo::Bar::baz'
 %token FHREF_SYMBOL_IN       = /(\<\$[A-Z][A-Z0-9_]*\>)/                 # less-than, dollar sigil, uppercase letter, uppercase letters & numbers & underscores, greater-than; ex. '<$MY_FILEHANDLE_23>'
 %token FHREF_SYMBOL_BRACES   = /(\{\$[A-Z][A-Z0-9_]*\})/                 # left brace, dollar sigil, uppercase letter, uppercase letters & numbers & underscores, right brace; ex. '{$MY_FILEHANDLE_23}'
 %token FHREF_SYMBOL          = /(\$[A-Z][A-Z0-9_]*)/                     # dollar sigil, uppercase letter, uppercase letters & numbers & underscores; ex. '$MY_FILEHANDLE_23'
 %token TYPE_INTEGER          = /(integer|unsigned_integer)\s+/           # 'integer' or 'unsigned_integer' followed by whitespace
 %token TYPE_FHREF            = /(filehandleref\s+)/                      # 'filehandleref' followed by whitespace
-%token TYPE_METHOD           = /((?:[a-zA-Z]\w*)+(?:::[a-zA-Z]\w*)*::method)/  # optionally-scoped word, followed by '::method'; ex. 'string_arrayref::method'
-%token CONSTANT_CALL_SCOPED  = /((?:[a-zA-Z]\w*)(?:::[a-zA-Z]\w*)*(?:::[A-Z0-9_]*)\(\))/
-%token WORD_SCOPED           = /((?:[a-zA-Z]\w*)?(?:::[a-zA-Z]\w*)+)/
+%token TYPE_METHOD           = /((?:[a-zA-Z]\w*)+(?:::[a-zA-Z]\w*)*::method)/  # optionally-scoped word, followed by '::method'; ex. 'string_arrayref::method' or 'Foo::Bar::method'
+%token CONSTANT_CALL_SCOPED  = /((?:[a-zA-Z]\w*)(?:::[a-zA-Z]\w*)*(?:::[A-Z0-9_]*)\(\))/  # optionally-scoped constant call; ex. 'MY_CONST()' or 'Foo::Bar::BAZ_CONST()'
+%token WORD_SCOPED           = /((?:[a-zA-Z]\w*)?(?:::[a-zA-Z]\w*)+)/    # optionally-scoped word; ex. 'my_word' or 'My_Word' or 'Foo::Bar::baz_word'
 %token STDOUT_STDERR         = /(\{\*STDOUT\}|\{\*STDERR\})/             # '{*STDOUT}' or '{*STDERR}'
 %token STDIN                 = /(<STDIN>)/                               # '<STDIN>'
 %token ARGV                  = /(\@ARGV)/                                # '@ARGV'
@@ -60,50 +60,50 @@
 # PRECEDENCE, LEXICAL ORDERING: earlier declaration gets tried first;  http://perldoc.perl.org/perlop.html#Operator-Precedence-and-Associativity [1]
 # DEV NOTE: tokens which are all letters (or, ne, x, print, open, ETC) & are always followed by whitespace when tidy (NOT not or argumentless next, last, croak, return, exit, chdir, etc)
 # must be explicitly made to match the trailing whitespace in the regular expressions below, in order to avoid incorrectly matching substrings of user-defined words
-%token OP24_LOGICAL_OR_XOR       = /(or|xor)\s/                  # precedence 24 infix: logical or and xor, equivalent to || except for precedence
-%token OP23_LOGICAL_AND          = /(and)\s/                     # precedence 23 infix: logical and, equivalent to && except for precedence
-%token OP22_LOGICAL_NEG          = /(not)/                       # precedence 22 prefix: logical negation, equivalent to ! except for precedence
-%token OP21_LIST_COMMA           = /(,)/                         # precedence 21 infix: "list operators (rightward)" [1] AKA comma
-%token OP20_HASH_FATARROW        = /(=>)/                        # precedence 20 infix: hash entry fat arrow AKA fat comma
-%token OP19_LOOP_CONTROL_SCOLON  = /(next;|last;)/               # precedence 19 prefix void: loop control next, last
-%token OP19_LOOP_CONTROL         = /(next|last|redo)\s/          # precedence 19 prefix void: same as above, except allows redo and requires loop label
-%token OP18_TERNARY              = /(\?)/                        # precedence 18 infix: ternary conditional
-%token OP17_LIST_RANGE           = /(\.\.)/                      # precedence 17 infix: range
-%token OP16_LOGICAL_OR           = /(\|\|)/                      # precedence 16 infix: logical or
-%token OP15_LOGICAL_AND          = /(&&)/                        # precedence 15 infix: logical and
-%token OP14_BITWISE_OR_XOR       = /(\||\^)/                     # precedence 14 infix: bitwise or, bitwise xor
-%token OP13_BITWISE_AND          = /(&)/                         # precedence 13 infix: bitwise and
-%token OP12_COMPARE_EQ_NE        = /(==|!=|eq|ne)\s/             # precedence 12 infix: comparison numeric equal, numeric not equal, string equal, string not equal
-%token OP09_BITWISE_SHIFT        = /(<<|>>)/                     # precedence 09 infix: bitwise shift left, shift right
+%token OP24_LOGICAL_OR_XOR       = /(or|xor)\s/                  # precedence 24 infix: logical 'or' and 'xor', equivalent to '||' except for precedence
+%token OP23_LOGICAL_AND          = /(and)\s/                     # precedence 23 infix: logical 'and', equivalent to '&&' except for precedence
+%token OP22_LOGICAL_NEG          = /(not)/                       # precedence 22 prefix: logical negation 'not', equivalent to '!' except for precedence
+%token OP21_LIST_COMMA           = /(,)/                         # precedence 21 infix: "list operators (rightward)" [1] AKA comma ','
+%token OP20_HASH_FATARROW        = /(=>)/                        # precedence 20 infix: hash entry fat arrow AKA fat comma '=>'
+%token OP19_LOOP_CONTROL_SCOLON  = /(next;|last;)/               # precedence 19 prefix void: loop control 'next;', 'last;'
+%token OP19_LOOP_CONTROL         = /(next|last|redo)\s/          # precedence 19 prefix void: same as above, except allows 'redo' and requires loop label
+%token OP18_TERNARY              = /(\?)/                        # precedence 18 infix: ternary conditional '?'
+%token OP17_LIST_RANGE           = /(\.\.)/                      # precedence 17 infix: range '..'
+%token OP16_LOGICAL_OR           = /(\|\|)/                      # precedence 16 infix: logical or '||'
+%token OP15_LOGICAL_AND          = /(&&)/                        # precedence 15 infix: logical and '&&'
+%token OP14_BITWISE_OR_XOR       = /(\||\^)/                     # precedence 14 infix: bitwise or '|', bitwise xor '^'
+%token OP13_BITWISE_AND          = /(&)/                         # precedence 13 infix: bitwise and '&'
+%token OP12_COMPARE_EQ_NE        = /(==|!=|eq|ne)\s/             # precedence 12 infix: comparison numeric equal '==', numeric not equal '!=', string equal 'eq', string not equal 'ne'
+%token OP09_BITWISE_SHIFT        = /(<<|>>)/                     # precedence 09 infix: bitwise shift left '<<', shift right '>>'
                                                                  # precedence 10 prefix: "named unary operators" [1] and Programming Perl, Chapter 3, List of All Named Unary Operators; 'scalar' not 'scalartype'
 %token OP10_NAMED_UNARY_SCOLON   = /(-A;|-B;|-C;|-M;|-O;|-R;|-S;|-T;|-W;|-X;|-b;|-c;|-d;|-e;|-f;|-g;|-k;|-l;|-o;|-p;|-r;|-s;|-t;|-u;|-w;|-x;|-z;|alarm;|caller;|chdir;|chroot;|cos;|defined;|delete;|do;|eval;|exists;|gethostbyname;|getnetbyname;|getpgrp;|getprotobyname;|glob;|gmtime;|goto;|hex;|int;|lc;|lcfirst;|length;|localtime;|lock;|log;|lstat;|oct;|ord;|quotemeta;|rand;|readlink;|ref;|require;|rmdir;|scalar;|sin;|sleep;|sqrt;|srand;|stat;|uc;|ucfirst;|umask;)/
 %token OP10_NAMED_UNARY          = /(-A\s|-B\s|-C\s|-M\s|-O\s|-R\s|-S\s|-T\s|-W\s|-X\s|-b\s|-c\s|-d\s|-e\s|-f\s|-g\s|-k\s|-l\s|-o\s|-p\s|-r\s|-s\s|-t\s|-u\s|-w\s|-x\s|-z\s|alarm\s|caller\s|chdir\s|chroot\s|cos\s|defined\s|delete\s|do\s|eval\s|exists\s|gethostbyname\s|getnetbyname\s|getpgrp\s|getprotobyname\s|glob\s|gmtime\s|goto\s|hex\s|int\s|lc\s|lcfirst\s|length\s|localtime\s|lock\s|log\s|lstat\s|oct\s|ord\s|quotemeta\s|rand\s|readlink\s|ref\s|require\s|rmdir\s|scalar\s|sin\s|sleep\s|sqrt\s|srand\s|stat\s|uc\s|ucfirst\s|umask\s)/
-%token OP19_VARIABLE_ASSIGN_BY   = /(\+=|-=|\*=|\/=|\.=)/        # precedence 19 infix: add assign, subtract assign, multiply assign, divide assign, cat assign
-%token OP08_STRING_CAT           = /(\.)/                        # precedence 08 infix: string concatenate
-%token OP03_MATH_INC_DEC         = /(\+\+|--)/                   # precedence 03 prefix and postfix: increment, decrement
-%token OP04_MATH_POW             = /(\*\*)/                      # precedence 04 infix: arithmetic exponent AKA power
-%token OP07_MATH_MULT_DIV_MOD    = /(\*|\/|\%|sse_mul|sse_div)/  # precedence 07 infix: arithmetic multiply, divide, modulo
-%token OP07_STRING_REPEAT        = /(x)\s/                       # precedence 07 infix: string repetition
-%token OP06_REGEX_PATTERN        = /([ms]\/.*(?:\/.*)?\/[a-z]*)/ # precedence 06 infix: regular expression pattern
-%token OP06_REGEX_MATCH          = /(=\~|!\~)/                   # precedence 06 infix: regular expression match, not match
-%token OP05_LOGICAL_NEG          = /(!)/                         # precedence 05 prefix: logical negation
-%token OP02_HASH_THINARROW       = /(->\{)/                      # precedence 02 infix: thin arrow, hash dereference and retrieval
-%token OP02_ARRAY_THINARROW      = /(->\[)/                      # precedence 02 infix: thin arrow, array dereference and retrieval
-%token OP02_METHOD_THINARROW_NEW = /(->new\()/                   # precedence 02 infix: thin arrow, class constructor
-%token OP02_METHOD_THINARROW     = /(->[a-zA-Z]\w*)/             # precedence 02 infix: thin arrow, method dereference and call
-%token OP05_MATH_NEG_LPAREN      = /(-\()/                       # precedence 05 prefix: arithmetic negative
-%token OP08_MATH_ADD_SUB         = /(\+|-\s|sse_add|sse_sub)/    # precedence 08 infix: arithmetic add, subtract
-%token OP11_COMPARE_LT_GT        = /(<=|>=|<|>|lt|gt|le|ge)\s/   # precedence 11 infix: comparison less than, greater than, less or equal, greater or equal
-%token OP19_VARIABLE_ASSIGN      = /(=)/                         # precedence 19 infix: assign
-%token OP01_PRINT                = /(print|printf)\s/            # precedence 01 prefix void: print to STDOUT, STDERR, or filehandle
-%token OP01_NAMED_VOID_SCOLON    = /(croak;|die;|exit;|return;)/ # precedence 01 prefix void: "terms and list operators (leftward)" [1] AKA builtins, no return value
-%token OP01_NAMED_VOID_LPAREN    = /(croak\(|exit\(|return\()/   # precedence 01 prefix void: same as above, except w/ parenthesis; ProhibitParensWithBuiltins excepts return() & exit(...); RequireTidyCode & RequireCarping excepts croak() 
-%token OP01_NAMED_VOID           = /(croak|die|exit|return)\s/   # precedence 01 prefix void: same as above, except accepts argument(s)
-%token OP01_QW                   = /(qw\([^()]*\))/              # precedence 01 prefix: quoted words
-%token OP01_OPEN                 = /(open)\s/                    # precedence 01 prefix: open filehandle
-%token OP01_CLOSE                = /(close)\s/                   # precedence 01 prefix: close filehandle
+%token OP19_VARIABLE_ASSIGN_BY   = /(\+=|-=|\*=|\/=|\.=)/        # precedence 19 infix: add assign '+=', subtract assign '-=', multiply assign '*=', divide assign '/=', string concatenation assign '.='
+%token OP08_STRING_CAT           = /(\.)/                        # precedence 08 infix: string concatenate '.'
+%token OP03_MATH_INC_DEC         = /(\+\+|--)/                   # precedence 03 prefix and postfix: increment '++', decrement '--'
+%token OP04_MATH_POW             = /(\*\*)/                      # precedence 04 infix: arithmetic exponent AKA power '**'
+%token OP07_MATH_MULT_DIV_MOD    = /(\*|\/|\%|sse_mul|sse_div)/  # precedence 07 infix: arithmetic multiply '*', divide '/', modulo '*', SSE multiply 'sse_mul', SSE divide 'sse_div'
+%token OP07_STRING_REPEAT        = /(x)\s/                       # precedence 07 infix: string repetition 'x'
+%token OP06_REGEX_PATTERN        = /([ms]\/.*(?:\/.*)?\/[a-z]*)/ # precedence 06 infix: regular expression pattern; ex. 'm/foo.*/xms' or 's/foo/bar/gxms'
+%token OP06_REGEX_MATCH          = /(=\~|!\~)/                   # precedence 06 infix: regular expression match '=~', not match '!~'
+%token OP05_LOGICAL_NEG          = /(!)/                         # precedence 05 prefix: logical negation '!'
+%token OP02_HASH_THINARROW       = /(->\{)/                      # precedence 02 infix: thin arrow, hash dereference and retrieval '->{'
+%token OP02_ARRAY_THINARROW      = /(->\[)/                      # precedence 02 infix: thin arrow, array dereference and retrieval '->['
+%token OP02_METHOD_THINARROW_NEW = /(->new\()/                   # precedence 02 infix: thin arrow, class constructor '->new('
+%token OP02_METHOD_THINARROW     = /(->[a-zA-Z]\w*)/             # precedence 02 infix: thin arrow, method dereference and call; ex. '->foo' or '->Bar23'
+%token OP05_MATH_NEG_LPAREN      = /(-\()/                       # precedence 05 prefix: arithmetic negative '-('
+%token OP08_MATH_ADD_SUB         = /(\+|-\s|sse_add|sse_sub)/    # precedence 08 infix: arithmetic add '+', subtract '-', SSE add 'sse_add', SSE subtract 'sse_sub'
+%token OP11_COMPARE_LT_GT        = /(<=|>=|<|>|le|ge|lt|gt)\s/   # precedence 11 infix: numeric comparison less or equal '<=', greater or equal '>=', less than '<', greater than '>'; string comparison less or equal 'le', greater or equal 'ge', less than 'lt', greater than 'gt'
+%token OP19_VARIABLE_ASSIGN      = /(=)/                         # precedence 19 infix: assign '='
+%token OP01_PRINT                = /(print|printf)\s/            # precedence 01 prefix void: 'print' or 'printf' to STDOUT, STDERR, or filehandle
+%token OP01_NAMED_VOID_SCOLON    = /(croak;|die;|exit;|return;)/ # precedence 01 prefix void: "terms and list operators (leftward)" [1] AKA builtins, no return value; 'croak;', 'die;', 'exit;', 'return;'
+%token OP01_NAMED_VOID_LPAREN    = /(croak\(|exit\(|return\()/   # precedence 01 prefix void: same as above, except w/ parenthesis & w/out semicolon & w/out die; 'croak(', 'exit(', 'return('; ProhibitParensWithBuiltins excepts return() & exit(...); RequireTidyCode & RequireCarping excepts croak() 
+%token OP01_NAMED_VOID           = /(croak|die|exit|return)\s/   # precedence 01 prefix void: same as above, except accepts argument(s); 'croak', 'die', 'exit', 'return'
+%token OP01_QW                   = /(qw\([^()]*\))/              # precedence 01 prefix: quoted words; ex. 'qw()' or 'qw(foo bar baz)' or 'qw(Foo23 BarBax Ba_z 123)'
+%token OP01_OPEN                 = /(open)\s/                    # precedence 01 prefix: 'open' filehandle
+%token OP01_CLOSE                = /(close)\s/                   # precedence 01 prefix: 'close' filehandle
                                                                  # precedence 01 prefix: "terms and list operators (leftward)" [1] AKA builtins; http://perl5.git.perl.org/perl.git/blob/HEAD:/t/op/cproto.t [2]
-# minus all-uppercase Perl system builtin keywords (__DATA__, AUTOLOAD, CHECK, etc); named unary operators above (defined, exists, etc); and RPerl keywords (use, our, my, package, for, etc)
+# w/out all-uppercase Perl system builtin keywords ('__DATA__', 'AUTOLOAD', 'CHECK', etc); named unary operators above ('defined', 'exists', etc); and RPerl keywords ('use', 'our', 'my', 'package', 'for', etc)
 # DEV NOTE, CORRELATION #rp20: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named/* also add in Grammar.eyp, Named.pm, and rperloperations.pm
 %token OP01_NAMED_SCOLON         = /(abs;|accept;|atan2;|bind;|binmode;|bless;|break;|chmod;|chomp;|chop;|chown;|chr;|closedir;|cmp;|connect;|continue;|crypt;|dbmclose;|dbmopen;|default;|dump;|each;|endgrent;|endhostent;|endnetent;|endprotoent;|endpwent;|endservent;|eof;|evalbytes;|exec;|exp;|fc;|fcntl;|fileno;|flock;|fork;|format;|formline;|getc;|getgrent;|getgrgid;|getgrnam;|gethostbyaddr;|gethostent;|getlogin;|getnetbyaddr;|getnetent;|getpeername;|getppid;|getpriority;|getprotobynumber;|getprotoent;|getpwent;|getpwnam;|getpwuid;|getservbyname;|getservbyport;|getservent;|getsockname;|getsockopt;|given;|grep;|index;|ioctl;|join;|keys;|kill;|link;|listen;|local;|m;|map;|mkdir;|msgctl;|msgget;|msgrcv;|msgsnd;|opendir;|pack;|pipe;|pop;|pos;|prototype;|push;|q;|qq;|qr;|qx;|read;|readdir;|readline;|readpipe;|recv;|rename;|reset;|reverse;|rewinddir;|rindex;|s;|say;|seek;|seekdir;|select;|semctl;|semget;|semop;|send;|setgrent;|sethostent;|setnetent;|setpgrp;|setpriority;|setprotoent;|setpwent;|setservent;|setsockopt;|shift;|shmctl;|shmget;|shmread;|shmwrite;|shutdown;|socket;|socketpair;|sort;|splice;|split;|sprintf;|state;|study;|substr;|symlink;|syscall;|sysopen;|sysread;|sysseek;|system;|syswrite;|tell;|telldir;|tie;|tied;|time;|times;|tr;|truncate;|unless;|unlink;|unpack;|unshift;|untie;|until;|utime;|values;|vec;|wait;|waitpid;|wantarray;|warn;|when;|write;|y;)/
 %token OP01_NAMED                = /(abs\s|accept\s|atan2\s|bind\s|binmode\s|bless\s|break\s|chmod\s|chomp\s|chop\s|chown\s|chr\s|closedir\s|cmp\s|connect\s|continue\s|crypt\s|dbmclose\s|dbmopen\s|default\s|dump\s|each\s|endgrent\s|endhostent\s|endnetent\s|endprotoent\s|endpwent\s|endservent\s|eof\s|evalbytes\s|exec\s|exp\s|fc\s|fcntl\s|fileno\s|flock\s|fork\s|format\s|formline\s|getc\s|getgrent\s|getgrgid\s|getgrnam\s|gethostbyaddr\s|gethostent\s|getlogin\s|getnetbyaddr\s|getnetent\s|getpeername\s|getppid\s|getpriority\s|getprotobynumber\s|getprotoent\s|getpwent\s|getpwnam\s|getpwuid\s|getservbyname\s|getservbyport\s|getservent\s|getsockname\s|getsockopt\s|given\s|grep\s|index\s|ioctl\s|join\s|keys\s|kill\s|link\s|listen\s|local\s|m\s|map\s|mkdir\s|msgctl\s|msgget\s|msgrcv\s|msgsnd\s|opendir\s|pack\s|pipe\s|pop\s|pos\s|prototype\s|push\s|q\s|qq\s|qr\s|qx\s|read\s|readdir\s|readline\s|readpipe\s|recv\s|rename\s|reset\s|reverse\s|rewinddir\s|rindex\s|s\s|say\s|seek\s|seekdir\s|select\s|semctl\s|semget\s|semop\s|send\s|setgrent\s|sethostent\s|setnetent\s|setpgrp\s|setpriority\s|setprotoent\s|setpwent\s|setservent\s|setsockopt\s|shift\s|shmctl\s|shmget\s|shmread\s|shmwrite\s|shutdown\s|socket\s|socketpair\s|sort\s|splice\s|split\s|sprintf\s|state\s|study\s|substr\s|symlink\s|syscall\s|sysopen\s|sysread\s|sysseek\s|system\s|syswrite\s|tell\s|telldir\s|tie\s|tied\s|time\s|times\s|tr\s|truncate\s|unless\s|unlink\s|unpack\s|unshift\s|untie\s|until\s|utime\s|values\s|vec\s|wait\s|waitpid\s|wantarray\s|warn\s|when\s|write\s|y\s)/
@@ -157,13 +157,13 @@
 
 # [[[ LEXICON TOKENS, PUNCTUATION & USER-DEFINED WORDS ]]]
 
-%token COLON                = /(:)/
-%token LPAREN_MY            = /(\(\s*my)/
-%token LPAREN               = /(\()/
-%token LBRACKET             = /(\[)/
-%token LBRACE               = /(\{)/
-%token WORD                 = /([a-z]\w*|[A-Z]\w*[a-z]\w*)/   # lowercase letter followed by optional word characters; or uppercase letter followed by at least one lowercase letter and optional word characters
-%token WORD_UPPERCASE       = /([A-Z][A-Z0-9_]*|[A-Z])/       # single uppercase letter, or uppercase letter followed by uppercase letters, numbers, and underscores; ex. 'FOOBAR_42_HOWDY'
+%token COLON                = /(:)/                           # ':'
+%token LPAREN_MY            = /(\(\s*my)/                     # '(my'
+%token LPAREN               = /(\()/                          # '('
+%token LBRACKET             = /(\[)/                          # '['
+%token LBRACE               = /(\{)/                          # '{'
+%token WORD                 = /([a-z]\w*|[A-Z]\w*[a-z]\w*)/   # lowercase letter followed by optional word characters; or uppercase letter followed by at least one lowercase letter and optional word characters; ex. 'foo' or 'foo23' or 'Foo23'
+%token WORD_UPPERCASE       = /([A-Z][A-Z0-9_]*|[A-Z])/       # single uppercase letter, or uppercase letter followed by uppercase letters, numbers, and underscores; ex. 'FOO' or 'FOOBAR_42_HOWDY'
 
 %%
 

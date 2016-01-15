@@ -3156,23 +3156,23 @@ Inside the F<lib/RPerl/Grammar.eyp> file, there are several labeled file section
 
 =item * Eyapp Setup & Config
 
-This section at the beginning of the F<Grammar.eyp> file contains Perl 5 code to initialize RPerl within the C<%{...}%> delimiters, well as the C<%strict> and C<%tree> Eyapp configuration directives.
+At the top of the F<Grammar.eyp> file, the C<[[[ EYAPP SETUP & CONFIG ]]]> section contains Perl 5 code to initialize RPerl within the C<%{...}%> delimiters, as well as the C<%strict> and C<%tree> Eyapp configuration directives for automatically building an abstract syntax tree (AST) from an RPerl input file.
 
 =item * Lexicon
 
-FOO BAR BAZ
+Near the top of the F<Grammar.eyp> file, multiple C<[[[ LEXICON TOKENS ... ]]]> sections contain all valid RPerl tokens in the form of Perl 5 regular expressions.  The lexicon of a language is synonymous with the language's alphabet and vocabulary; lexical analysis is synonymous with spell checking.
 
 =item * Syntax
 
-FOO BAR BAZ
+In the middle of the F<Grammar.eyp> file, one C<[[[ SYNTAX, TOKEN PRECEDENCE & ASSOCIATIVITY ]]]> section and multiple C<[[[ SYNTAX PRODUCTION RULES ... ]]]> sections define all relationships between all RPerl tokens, as well as all valid combinations of RPerl tokens.  The syntax of a language is synonymous with the rules of constructing valid sentences, and syntactic analysis is synonymous with grammar checking.
 
 =item * Semantics
 
-FOO BAR BAZ
+Near the top of the F<Grammar.eyp> file, the C<[[[ SEMANTIC ACTION, ABSTRACT SYNTAX TREE NODE CONSTRUCTOR ]]]> section creates new Perl 5 objects (blessed hash references) to be used as nodes when constructing an AST; at the bottom of the file, the C<[[[ SEMANTIC MAP, ABSTRACT SYNTAX TREE NODES TO CLASSES ]]]> section contains a 1-to-1 mapping from AST nodes to RPerl objects.  The Perl module file for each of the RPerl objects contains subroutines implementing the semantic actions which actually generate and/or execute output code.  The semantics of a language are synonymous with the meaning of words and sentences; in computer programming languages, semantic actions are the tasks which the computer source code performs when executed.
 
 =back
 
-For more information, please review the following links:X<br>
+For more information, please view the following links:X<br>
 
 
 =over 16
@@ -3181,13 +3181,334 @@ For more information, please review the following links:X<br>
 
 =item * L<Extended Backus-Naur Form on Wikipedia|https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_Form>
 
-=item * L<RPerl Grammar Eyapp File|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Grammar.eyp>
+=item * L<RPerl Grammar.eyp Eyapp File|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Grammar.eyp>
 
 =back
 
-=head2 Lexical Token Types
+=head2 Lexicon Token Types
 
-1b.  Describe lexical token types
+Following is a list of all RPerl tokens in all 4 lexicon sections, along with examples of valid matching lexeme input.
+
+C<[[[ LEXICON TOKENS, WHITESPACE ]]]>X<br>
+
+
+=over 16
+
+=item * actual whitespace, or one or more normal comments; neither shebang '#!', nor double-hash critics '##'
+
+=back
+
+C<[[[ LEXICON TOKENS, TYPES & RESERVED WORDS ]]]>X<br>
+
+
+=over 16
+
+=item * SHEBANG
+
+begin line, hash (octothorpe), bang, *NIX path to Perl; ex. C<#!/usr/bin/perl>
+
+=item * USE_RPERL
+
+C<use RPerl;>
+
+=item * USE_RPERL_AFTER
+
+C<use RPerl::AfterSubclass;>
+
+=item * USE
+
+C<use>
+
+=item * VERSION_NUMBER_ASSIGN
+
+$VERSION assign v-number, only capture v-number, not a normal number; ex. C<$VERSION = 12.345_678;> returns C<12.345_678>
+
+=item * MY
+
+C<my>
+
+=item * LITERAL_NUMBER
+
+number w/ underscores, optional scientific notation; ex. C<12_345_678.910_1>
+
+=item * LITERAL_STRING
+
+single quotes non-empty; double quotes non-empty w/out sigils or extra backslashes & w/ newline or tab; or single q-braces; ex. C<'howdy $foo!'> or C<"howdy foo!\n"> or C<q{howdy $foo!}>
+
+=item * SELF
+
+C<$self>
+
+=item * VARIABLE_SYMBOL
+
+dollar sigil, scoped word with at least one lowercase in the first scope segment; ex. C<$foo> or C<$Foo::Bar::baz>
+
+=item * FHREF_SYMBOL_IN
+
+less-than, dollar sigil, uppercase letter, uppercase letters & numbers & underscores, greater-than; ex. C<E<lt>$MY_FILEHANDLE_23E<gt>>
+
+=item * FHREF_SYMBOL_BRACES
+
+left brace, dollar sigil, uppercase letter, uppercase letters & numbers & underscores, right brace; ex. C<{$MY_FILEHANDLE_23}>
+
+=item * FHREF_SYMBOL
+
+dollar sigil, uppercase letter, uppercase letters & numbers & underscores; ex. C<$MY_FILEHANDLE_23>
+
+=item * TYPE_INTEGER
+
+C<integer> or C<unsigned_integer> followed by whitespace
+
+=item * TYPE_FHREF
+
+C<filehandleref> followed by whitespace
+
+=item * TYPE_METHOD
+
+optionally-scoped word, followed by '::method'; ex. C<string_arrayref::method> or C<Foo::Bar::method>
+
+=item * CONSTANT_CALL_SCOPED
+
+optionally-scoped constant call; ex. C<MY_CONST()> or C<Foo::Bar::BAZ_CONST()>
+
+=item * WORD_SCOPED
+
+optionally-scoped word; ex. C<my_word> or C<My_Word> or C<Foo::Bar::baz_word>
+
+=item * STDOUT_STDERR
+
+C<{*STDOUT}> or C<{*STDERR}>
+
+=item * STDIN
+
+C<E<lt>STDINE<gt>>
+
+=item * ARGV
+
+C<@ARGV>
+
+=item * ENV
+
+C<%ENV>
+
+=back
+
+C<[[[ LEXICON TOKENS, OPERATORS ]]]>X<br>
+
+
+=over 16
+
+=item * OP24_LOGICAL_OR_XOR
+
+precedence 24 infix: logical C<or> and C<xor>, equivalent to C<||> except for precedence
+
+=item * OP23_LOGICAL_AND
+
+precedence 23 infix: logical C<and>, equivalent to C<&&> except for precedence
+
+=item * OP22_LOGICAL_NEG
+
+precedence 22 prefix: logical negation 'not', equivalent to '!' except for precedence
+
+=item * OP21_LIST_COMMA
+
+precedence 21 infix: "list operators (rightward)" [1] AKA comma ','
+
+=item * OP20_HASH_FATARROW
+
+precedence 20 infix: hash entry fat arrow AKA fat comma '=>'
+
+=item * OP19_LOOP_CONTROL_SCOLON
+
+precedence 19 prefix void: loop control 'next;', 'last;'
+
+=item * OP19_LOOP_CONTROL
+
+precedence 19 prefix void: same as above, except allows 'redo' and requires loop label
+
+=item * OP18_TERNARY
+
+precedence 18 infix: ternary conditional '?'
+
+=item * OP17_LIST_RANGE
+
+precedence 17 infix: range '..'
+
+=item * OP16_LOGICAL_OR
+
+precedence 16 infix: logical or '||'
+
+=item * OP15_LOGICAL_AND
+
+precedence 15 infix: logical and '&&'
+
+=item * OP14_BITWISE_OR_XOR
+
+precedence 14 infix: bitwise or '|', bitwise xor '^'
+
+=item * OP13_BITWISE_AND
+
+precedence 13 infix: bitwise and '&'
+
+=item * OP12_COMPARE_EQ_NE
+
+precedence 12 infix: comparison numeric equal '==', numeric not equal '!=', string equal 'eq', string not equal 'ne'
+
+=item * OP09_BITWISE_SHIFT
+
+precedence 09 infix: bitwise shift left '<<', shift right '>>'
+
+=item * OP10_NAMED_UNARY_SCOLON   = /(-A;|-B;|-C;|-M;|-O;|-R;|-S;|-T;|-W;|-X;|-b;|-c;|-d;|-e;|-f;|-g;|-k;|-l;|-o;|-p;|-r;|-s;|-t;|-u;|-w;|-x;|-z;|alarm;|caller;|chdir;|chroot;|cos;|defined;|delete;|do;|eval;|exists;|gethostbyname;|getnetbyname;|getpgrp;|getprotobyname;|glob;|gmtime;|goto;|hex;|int;|lc;|lcfirst;|length;|localtime;|lock;|log;|lstat;|oct;|ord;|quotemeta;|rand;|readlink;|ref;|require;|rmdir;|scalar;|sin;|sleep;|sqrt;|srand;|stat;|uc;|ucfirst;|umask;)/
+
+precedence 10 prefix: "named unary operators" [1] and Programming Perl, Chapter 3, List of All Named Unary Operators; 'scalar' not 'scalartype'
+
+=item * OP10_NAMED_UNARY          
+
+same as above, except w/out semicolon
+
+=item * OP19_VARIABLE_ASSIGN_BY
+
+precedence 19 infix: add assign '+=', subtract assign '-=', multiply assign '*=', divide assign '/=', string concatenation assign '.='
+
+=item * OP08_STRING_CAT
+
+precedence 08 infix: string concatenate '.'
+
+=item * OP03_MATH_INC_DEC
+
+precedence 03 prefix and postfix: increment '++', decrement '--'
+
+=item * OP04_MATH_POW
+
+precedence 04 infix: arithmetic exponent AKA power '**'
+
+=item * OP07_MATH_MULT_DIV_MOD
+
+precedence 07 infix: arithmetic multiply '*', divide '/', modulo '*', SSE multiply 'sse_mul', SSE divide 'sse_div'
+
+=item * OP07_STRING_REPEAT
+
+precedence 07 infix: string repetition 'x'
+
+=item * OP06_REGEX_PATTERN
+
+precedence 06 infix: regular expression pattern; ex. 'm/foo.*/xms' or 's/foo/bar/gxms'
+
+=item * OP06_REGEX_MATCH
+
+precedence 06 infix: regular expression match '=~', not match '!~'
+
+=item * OP05_LOGICAL_NEG
+
+precedence 05 prefix: logical negation '!'
+
+=item * OP02_HASH_THINARROW
+
+precedence 02 infix: thin arrow, hash dereference and retrieval '->{'
+
+=item * OP02_ARRAY_THINARROW
+
+precedence 02 infix: thin arrow, array dereference and retrieval '->['
+
+=item * OP02_METHOD_THINARROW_NEW
+
+precedence 02 infix: thin arrow, class constructor '->new('
+
+=item * OP02_METHOD_THINARROW
+
+precedence 02 infix: thin arrow, method dereference and call; ex. '->foo' or '->Bar23'
+
+=item * OP05_MATH_NEG_LPAREN
+
+precedence 05 prefix: arithmetic negative '-('
+
+=item * OP08_MATH_ADD_SUB
+
+precedence 08 infix: arithmetic add '+', subtract '-', SSE add 'sse_add', SSE subtract 'sse_sub'
+
+=item * OP11_COMPARE_LT_GT
+
+precedence 11 infix: numeric comparison less or equal '<=', greater or equal '>=', less than '<', greater than '>'; string comparison less or equal 'le', greater or equal 'ge', less than 'lt', greater than 'gt'
+
+=item * OP19_VARIABLE_ASSIGN
+
+precedence 19 infix: assign '='
+
+=item * OP01_PRINT
+
+precedence 01 prefix void: 'print' or 'printf' to STDOUT, STDERR, or filehandle
+
+=item * OP01_NAMED_VOID_SCOLON
+
+precedence 01 prefix void: "terms and list operators (leftward)" [1] AKA builtins, no return value; 'croak;', 'die;', 'exit;', 'return;'
+
+=item * OP01_NAMED_VOID_LPAREN
+
+precedence 01 prefix void: same as above, except w/ parenthesis & w/out semicolon & w/out die; 'croak(', 'exit(', 'return('; ProhibitParensWithBuiltins excepts return() & exit(...); RequireTidyCode & RequireCarping excepts croak()
+
+=item * OP01_NAMED_VOID
+
+precedence 01 prefix void: same as above, except accepts argument(s); 'croak', 'die', 'exit', 'return'
+
+=item * OP01_QW
+
+precedence 01 prefix: quoted words; ex. 'qw()' or 'qw(foo bar baz)' or 'qw(Foo23 BarBax Ba_z 123)'
+
+=item * OP01_OPEN
+
+precedence 01 prefix: 'open' filehandle
+
+=item * OP01_CLOSE
+
+precedence 01 prefix: 'close' filehandle
+
+=item * OP01_NAMED_SCOLON         = /(abs;|accept;|atan2;|bind;|binmode;|bless;|break;|chmod;|chomp;|chop;|chown;|chr;|closedir;|cmp;|connect;|continue;|crypt;|dbmclose;|dbmopen;|default;|dump;|each;|endgrent;|endhostent;|endnetent;|endprotoent;|endpwent;|endservent;|eof;|evalbytes;|exec;|exp;|fc;|fcntl;|fileno;|flock;|fork;|format;|formline;|getc;|getgrent;|getgrgid;|getgrnam;|gethostbyaddr;|gethostent;|getlogin;|getnetbyaddr;|getnetent;|getpeername;|getppid;|getpriority;|getprotobynumber;|getprotoent;|getpwent;|getpwnam;|getpwuid;|getservbyname;|getservbyport;|getservent;|getsockname;|getsockopt;|given;|grep;|index;|ioctl;|join;|keys;|kill;|link;|listen;|local;|m;|map;|mkdir;|msgctl;|msgget;|msgrcv;|msgsnd;|opendir;|pack;|pipe;|pop;|pos;|prototype;|push;|q;|qq;|qr;|qx;|read;|readdir;|readline;|readpipe;|recv;|rename;|reset;|reverse;|rewinddir;|rindex;|s;|say;|seek;|seekdir;|select;|semctl;|semget;|semop;|send;|setgrent;|sethostent;|setnetent;|setpgrp;|setpriority;|setprotoent;|setpwent;|setservent;|setsockopt;|shift;|shmctl;|shmget;|shmread;|shmwrite;|shutdown;|socket;|socketpair;|sort;|splice;|split;|sprintf;|state;|study;|substr;|symlink;|syscall;|sysopen;|sysread;|sysseek;|system;|syswrite;|tell;|telldir;|tie;|tied;|time;|times;|tr;|truncate;|unless;|unlink;|unpack;|unshift;|untie;|until;|utime;|values;|vec;|wait;|waitpid;|wantarray;|warn;|when;|write;|y;)/
+
+precedence 01 prefix: "terms and list operators (leftward)" [1] AKA builtins; http://perl5.git.perl.org/perl.git/blob/HEAD:/t/op/cproto.t [2]
+w/out all-uppercase Perl system builtin keywords ('__DATA__', 'AUTOLOAD', 'CHECK', etc); named unary operators above ('defined', 'exists', etc); and RPerl keywords ('use', 'our', 'my', 'package', 'for', etc)
+
+=item * OP01_NAMED
+
+same as above, except w/out semicolon
+
+=back
+
+C<[[[ LEXICON TOKENS, PUNCTUATION & USER-DEFINED WORDS ]]]>X<br>
+
+
+=over 16
+
+=item * COLON
+
+':'
+
+=item * LPAREN_MY
+
+'(my'
+
+=item * LPAREN
+
+'('
+
+=item * LBRACKET
+
+'['
+
+=item * LBRACE
+
+'{'
+
+=item * WORD
+
+lowercase letter followed by optional word characters; or uppercase letter followed by at least one lowercase letter and optional word characters; ex. 'foo' or 'foo23' or 'Foo23'
+
+=item * WORD_UPPERCASE
+
+single uppercase letter, or uppercase letter followed by uppercase letters, numbers, and underscores; ex. 'FOO' or 'FOOBAR_42_HOWDY'
+
+=back
+
+
 
 =head2 Operator Precedence & Associativity
 
