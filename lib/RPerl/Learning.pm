@@ -3141,16 +3141,15 @@ X<br>
 
 =head1 APPENDIX B: RPERL GRAMMAR
 
-=head2 Eyapp Grammar Format & Sections
+=head2 B.1: Eyapp Grammar Format & Sections
 
-RPerl's grammar is written using the Eyapp computer programming language, which is a combination of normal Perl 5 and grammar expressions.X<br>
+RPerl's grammar is written using the Eyapp computer programming language, which is a combination of normal Perl 5 and grammar expressions.
 
-The grammar expression sections in Eyapp source code are written using an implementation of the Extended Backus-Naur Form (EBNF) language.X<br>
+The grammar expression sections in Eyapp source code are written using an implementation of the Extended Backus-Naur Form (EBNF) language.
 
-The file F<lib/RPerl/Grammar.eyp> contains the uncompiled RPerl grammar, which is passed through the C<eyapp> compiler command once to generate the output file F<lib/RPerl/Grammar.pm>, which is then used by the C<rperl> compiler command to parse RPerl input source code files.X<br>
+The file F<lib/RPerl/Grammar.eyp> contains the uncompiled RPerl grammar, which is passed through the C<eyapp> compiler command once to generate the output file F<lib/RPerl/Grammar.pm>, which is then used by the C<rperl> compiler command to parse RPerl input source code files.
 
-Inside the F<lib/RPerl/Grammar.eyp> file, there are several labeled file sections, which can be grouped into 4 major categories:X<br>
-
+Inside the F<lib/RPerl/Grammar.eyp> file, there are several labeled file sections, which can be grouped into 4 major categories:
 
 =over 16
 
@@ -3164,7 +3163,7 @@ Near the top of the F<Grammar.eyp> file, multiple C<[[[ LEXICON TOKENS ... ]]]> 
 
 =item * Syntax
 
-In the middle of the F<Grammar.eyp> file, one C<[[[ SYNTAX, TOKEN PRECEDENCE & ASSOCIATIVITY ]]]> section and multiple C<[[[ SYNTAX PRODUCTION RULES ... ]]]> sections define all relationships between all RPerl tokens, as well as all valid combinations of RPerl tokens.  The syntax of a language is synonymous with the rules of constructing valid sentences, and syntactic analysis is synonymous with grammar checking.
+In the middle of the F<Grammar.eyp> file, one C<[[[ SYNTAX, OPERATOR PRECEDENCE & ASSOCIATIVITY ]]]> section and multiple C<[[[ SYNTAX PRODUCTION RULES ... ]]]> sections define all relationships between all RPerl tokens, as well as all valid combinations of RPerl tokens.  The syntax of a language is synonymous with the rules of constructing valid sentences, and syntactic analysis is synonymous with grammar checking.
 
 =item * Semantics
 
@@ -3172,8 +3171,7 @@ Near the top of the F<Grammar.eyp> file, the C<[[[ SEMANTIC ACTION, ABSTRACT SYN
 
 =back
 
-For more information, please view the following links:X<br>
-
+For more information, please view the following links:
 
 =over 16
 
@@ -3185,21 +3183,25 @@ For more information, please view the following links:X<br>
 
 =back
 
-=head2 Lexicon Token Types
+=head2 B.2: Lexicon Token Types
 
 Following is a list of all RPerl tokens in all 4 lexicon sections, along with examples of valid matching lexeme input.
 
-C<[[[ LEXICON TOKENS, WHITESPACE ]]]>X<br>
+The list must be in correct order for all regexes to match; earlier declarations get tried first, thus highly-specific tokens such as RPerl keywords and builtin operators appear first, while the least-specific tokens such as user-defined words appear last.  This ordering can be considered I<"lexical matching">, and is distinct from operator precedence and associativity as covered in the next section.
 
+=head3 B.2.1: Whitespace
+
+C<[[[ LEXICON TOKENS, WHITESPACE ]]]>
 
 =over 16
 
-=item * actual whitespace, or one or more normal comments; neither shebang '#!', nor double-hash critics '##'
+=item * actual whitespace, or one or more normal comments; neither shebang C<#!>, nor double-hash critics C<##>
 
 =back
 
-C<[[[ LEXICON TOKENS, TYPES & RESERVED WORDS ]]]>X<br>
+=head3 B.2.2: Types & Reserved Words
 
+C<[[[ LEXICON TOKENS, TYPES & RESERVED WORDS ]]]>
 
 =over 16
 
@@ -3229,11 +3231,11 @@ C<my>
 
 =item * LITERAL_NUMBER
 
-number w/ underscores, optional scientific notation; ex. C<12_345_678.910_1>
+number with underscores, optional scientific notation; ex. C<12_345_678.910_1>
 
 =item * LITERAL_STRING
 
-single quotes non-empty; double quotes non-empty w/out sigils or extra backslashes & w/ newline or tab; or single q-braces; ex. C<'howdy $foo!'> or C<"howdy foo!\n"> or C<q{howdy $foo!}>
+single quotes non-empty; double quotes non-empty without sigils or extra backslashes & with newline or tab; or single q-braces; ex. C<'howdy $foo!'> or C<"howdy foo!\n"> or C<q{howdy $foo!}>
 
 =item * SELF
 
@@ -3293,8 +3295,9 @@ C<%ENV>
 
 =back
 
-C<[[[ LEXICON TOKENS, OPERATORS ]]]>X<br>
+=head3 B.2.3: Operators
 
+C<[[[ LEXICON TOKENS, OPERATORS ]]]>
 
 =over 16
 
@@ -3358,13 +3361,14 @@ precedence 12 infix: comparison numeric equal C<==>, numeric not equal C<!=>, st
 
 precedence 09 infix: bitwise shift left C<E<lt>E<lt>>, shift right C<E<gt>E<gt>>
 
-=item * OP10_NAMED_UNARY_SCOLON   = /(-A;|-B;|-C;|-M;|-O;|-R;|-S;|-T;|-W;|-X;|-b;|-c;|-d;|-e;|-f;|-g;|-k;|-l;|-o;|-p;|-r;|-s;|-t;|-u;|-w;|-x;|-z;|alarm;|caller;|chdir;|chroot;|cos;|defined;|delete;|do;|eval;|exists;|gethostbyname;|getnetbyname;|getpgrp;|getprotobyname;|glob;|gmtime;|goto;|hex;|int;|lc;|lcfirst;|length;|localtime;|lock;|log;|lstat;|oct;|ord;|quotemeta;|rand;|readlink;|ref;|require;|rmdir;|scalar;|sin;|sleep;|sqrt;|srand;|stat;|uc;|ucfirst;|umask;)/
+=item * OP10_NAMED_UNARY_SCOLON
 
-precedence 10 prefix: "named unary operators" [1] and Programming Perl, Chapter 3, List of All Named Unary Operators; C<scalar> not C<scalartype>
+precedence 10 prefix: "named unary operators" [1] and Programming Perl, Chapter 3, List of All Named Unary Operators;
+C<-A;>, C<-B;>, C<-C;>, C<-M;>, C<-O;>, C<-R;>, C<-S;>, C<-T;>, C<-W;>, C<-X;>, C<-b;>, C<-c;>, C<-d;>, C<-e;>, C<-f;>, C<-g;>, C<-k;>, C<-l;>, C<-o;>, C<-p;>, C<-r;>, C<-s;>, C<-t;>, C<-u;>, C<-w;>, C<-x;>, C<-z;>, C<alarm;>, C<caller;>, C<chdir;>, C<chroot;>, C<cos;>, C<defined;>, C<delete;>, C<do;>, C<eval;>, C<exists;>, C<gethostbyname;>, C<getnetbyname;>, C<getpgrp;>, C<getprotobyname;>, C<glob;>, C<gmtime;>, C<goto;>, C<hex;>, C<int;>, C<lc;>, C<lcfirst;>, C<length;>, C<localtime;>, C<lock;>, C<log;>, C<lstat;>, C<oct;>, C<ord;>, C<quotemeta;>, C<rand;>, C<readlink;>, C<ref;>, C<require;>, C<rmdir;>, C<scalar;>, C<sin;>, C<sleep;>, C<sqrt;>, C<srand;>, C<stat;>, C<uc;>, C<ucfirst;>, C<umask;>
 
 =item * OP10_NAMED_UNARY          
 
-same as above, except w/out semicolon
+same as above, except without semicolon; C<scalar> not C<scalartype>
 
 =item * OP19_VARIABLE_ASSIGN_BY
 
@@ -3444,7 +3448,7 @@ precedence 01 prefix void: "terms and list operators (leftward)" [1] AKA builtin
 
 =item * OP01_NAMED_VOID_LPAREN
 
-precedence 01 prefix void: same as above, except w/ parenthesis & w/out semicolon & w/out die; C<croak(>, C<exit(>, C<return(>; ProhibitParensWithBuiltins excepts return() & exit(...); RequireTidyCode & RequireCarping excepts croak()
+precedence 01 prefix void: same as above, except with parenthesis & without semicolon & without die; C<croak(>, C<exit(>, C<return(>
 
 =item * OP01_NAMED_VOID
 
@@ -3462,19 +3466,21 @@ precedence 01 prefix: C<open> filehandle
 
 precedence 01 prefix: C<close> filehandle
 
-=item * OP01_NAMED_SCOLON         = /(abs;|accept;|atan2;|bind;|binmode;|bless;|break;|chmod;|chomp;|chop;|chown;|chr;|closedir;|cmp;|connect;|continue;|crypt;|dbmclose;|dbmopen;|default;|dump;|each;|endgrent;|endhostent;|endnetent;|endprotoent;|endpwent;|endservent;|eof;|evalbytes;|exec;|exp;|fc;|fcntl;|fileno;|flock;|fork;|format;|formline;|getc;|getgrent;|getgrgid;|getgrnam;|gethostbyaddr;|gethostent;|getlogin;|getnetbyaddr;|getnetent;|getpeername;|getppid;|getpriority;|getprotobynumber;|getprotoent;|getpwent;|getpwnam;|getpwuid;|getservbyname;|getservbyport;|getservent;|getsockname;|getsockopt;|given;|grep;|index;|ioctl;|join;|keys;|kill;|link;|listen;|local;|m;|map;|mkdir;|msgctl;|msgget;|msgrcv;|msgsnd;|opendir;|pack;|pipe;|pop;|pos;|prototype;|push;|q;|qq;|qr;|qx;|read;|readdir;|readline;|readpipe;|recv;|rename;|reset;|reverse;|rewinddir;|rindex;|s;|say;|seek;|seekdir;|select;|semctl;|semget;|semop;|send;|setgrent;|sethostent;|setnetent;|setpgrp;|setpriority;|setprotoent;|setpwent;|setservent;|setsockopt;|shift;|shmctl;|shmget;|shmread;|shmwrite;|shutdown;|socket;|socketpair;|sort;|splice;|split;|sprintf;|state;|study;|substr;|symlink;|syscall;|sysopen;|sysread;|sysseek;|system;|syswrite;|tell;|telldir;|tie;|tied;|time;|times;|tr;|truncate;|unless;|unlink;|unpack;|unshift;|untie;|until;|utime;|values;|vec;|wait;|waitpid;|wantarray;|warn;|when;|write;|y;)/
+=item * OP01_NAMED_SCOLON
 
-precedence 01 prefix: "terms and list operators (leftward)" [1] AKA builtins; http://perl5.git.perl.org/perl.git/blob/HEAD:/t/op/cproto.t [2]
-w/out all-uppercase Perl system builtin keywords (C<__DATA__>, C<AUTOLOAD>, C<CHECK>, etc); named unary operators above (C<defined>, C<exists>, etc); and RPerl keywords (C<use>, C<our>, C<my>, C<package>, C<for>, etc)
+precedence 01 prefix: "terms and list operators (leftward)" [1] AKA builtins; L<List Of All Operators in Perl 5 Source Code|http://perl5.git.perl.org/perl.git/blob/HEAD:/t/op/cproto.t> [2];
+without all-uppercase Perl system builtin keywords (C<__DATA__>, C<AUTOLOAD>, C<CHECK>, etc); named unary operators above (C<defined>, C<exists>, etc); and RPerl keywords (C<use>, C<our>, C<my>, C<package>, C<for>, etc);
+C<abs;>, C<accept;>, C<atan2;>, C<bind;>, C<binmode;>, C<bless;>, C<break;>, C<chmod;>, C<chomp;>, C<chop;>, C<chown;>, C<chr;>, C<closedir;>, C<cmp;>, C<connect;>, C<continue;>, C<crypt;>, C<dbmclose;>, C<dbmopen;>, C<default;>, C<dump;>, C<each;>, C<endgrent;>, C<endhostent;>, C<endnetent;>, C<endprotoent;>, C<endpwent;>, C<endservent;>, C<eof;>, C<evalbytes;>, C<exec;>, C<exp;>, C<fc;>, C<fcntl;>, C<fileno;>, C<flock;>, C<fork;>, C<format;>, C<formline;>, C<getc;>, C<getgrent;>, C<getgrgid;>, C<getgrnam;>, C<gethostbyaddr;>, C<gethostent;>, C<getlogin;>, C<getnetbyaddr;>, C<getnetent;>, C<getpeername;>, C<getppid;>, C<getpriority;>, C<getprotobynumber;>, C<getprotoent;>, C<getpwent;>, C<getpwnam;>, C<getpwuid;>, C<getservbyname;>, C<getservbyport;>, C<getservent;>, C<getsockname;>, C<getsockopt;>, C<given;>, C<grep;>, C<index;>, C<ioctl;>, C<join;>, C<keys;>, C<kill;>, C<link;>, C<listen;>, C<local;>, C<m;>, C<map;>, C<mkdir;>, C<msgctl;>, C<msgget;>, C<msgrcv;>, C<msgsnd;>, C<opendir;>, C<pack;>, C<pipe;>, C<pop;>, C<pos;>, C<prototype;>, C<push;>, C<q;>, C<qq;>, C<qr;>, C<qx;>, C<read;>, C<readdir;>, C<readline;>, C<readpipe;>, C<recv;>, C<rename;>, C<reset;>, C<reverse;>, C<rewinddir;>, C<rindex;>, C<s;>, C<say;>, C<seek;>, C<seekdir;>, C<select;>, C<semctl;>, C<semget;>, C<semop;>, C<send;>, C<setgrent;>, C<sethostent;>, C<setnetent;>, C<setpgrp;>, C<setpriority;>, C<setprotoent;>, C<setpwent;>, C<setservent;>, C<setsockopt;>, C<shift;>, C<shmctl;>, C<shmget;>, C<shmread;>, C<shmwrite;>, C<shutdown;>, C<socket;>, C<socketpair;>, C<sort;>, C<splice;>, C<split;>, C<sprintf;>, C<state;>, C<study;>, C<substr;>, C<symlink;>, C<syscall;>, C<sysopen;>, C<sysread;>, C<sysseek;>, C<system;>, C<syswrite;>, C<tell;>, C<telldir;>, C<tie;>, C<tied;>, C<time;>, C<times;>, C<tr;>, C<truncate;>, C<unless;>, C<unlink;>, C<unpack;>, C<unshift;>, C<untie;>, C<until;>, C<utime;>, C<values;>, C<vec;>, C<wait;>, C<waitpid;>, C<wantarray;>, C<warn;>, C<when;>, C<write;>, C<y;>
 
 =item * OP01_NAMED
 
-same as above, except w/out semicolon
+same as above, except without semicolon
 
 =back
 
-C<[[[ LEXICON TOKENS, PUNCTUATION & USER-DEFINED WORDS ]]]>X<br>
+=head3 B.2.4: Punctuation & User-Defined Words
 
+C<[[[ LEXICON TOKENS, PUNCTUATION & USER-DEFINED WORDS ]]]>
 
 =over 16
 
@@ -3510,19 +3516,734 @@ single uppercase letter, or uppercase letter followed by uppercase letters, numb
 
 
 
-=head2 Operator Precedence & Associativity
+=head2 B.3: Syntax Precedence & Associativity
 
-1c.  Describe operator precedence and associativity
+Operator precedence, also known as order-of-operations, is a methodology used to determine which operator is executed first when 2 or more operators are adjacent to one another and parentheses are not used to explicitly separate them.  A numeric precedence from 1 to 24 is assigned to each operator, and the operator with the lowest precedence number is given priority to execute first.  Low precedence number equals high priority.  The C<*> arithmetic multiplication operator has a precedence number of 7, and C<+> addition has a precedence of 8, so C<a + b * c> is equivalent to C<a + (b * c)>, not C<(a + b) * c>.
 
-=head2 Rules & Productions
+L<Operator Precedence on Wikipedia|https://en.wikipedia.org/wiki/Operator_precedence>
 
-1d.  Describe all grammar rules and productions
-X<br>
+Operator associativity is used to further determine precedence when multiple operators of the same priority are adjacent to one another.  Each operator is designated as left-associative, right-associative, or non-associative.  Normal arithmetic operators are left-associative, meaning C<a - b - c> is equivalent to C<(a - b) - c>, not C<a - (b - c)>.  Some operators such as mathematic power (AKA exponentiation) are right-associative, meaning C<a ** b ** c> is equivalent to C<a ** (b ** c)>.  Operators which are not meant to be chained together are non-associative, such as the C<..> list range operator which takes scalar values as input but generates an array as output, so C<a .. b .. c> is incorrect usage and will cause an error.
 
+L<Operator Associativity on Wikipedia|https://en.wikipedia.org/wiki/Operator_associativity>
+
+In the following list of operators, later declaration gets higher priority, so all precedence numbers appear in strictly descending order from 24 to 1.  Both precedence and associativity are taken directly from Perl 5.
+
+L<Operator Precedence & Associativity in Perl 5 Documentation|http://perldoc.perl.org/perlop.html#Operator-Precedence-and-Associativity> [1]
+
+C<[[[ SYNTAX, OPERATOR PRECEDENCE & ASSOCIATIVITY ]]]>
+
+<noncode>
+
+    %left       OP24_LOGICAL_OR_XOR
+    %left       OP23_LOGICAL_AND
+    %right      OP22_LOGICAL_NEG
+    %left       OP21_LIST_COMMA
+    %left       OP20_HASH_FATARROW
+    %right      OP19_LOOP_CONTROL_SCOLON
+    %right      OP19_LOOP_CONTROL
+    %right      OP19_VARIABLE_ASSIGN_BY
+    %right      OP19_VARIABLE_ASSIGN
+    %right      OP18_TERNARY
+    %nonassoc   OP17_LIST_RANGE
+    %left       OP16_LOGICAL_OR
+    %left       OP15_LOGICAL_AND
+    %left       OP14_BITWISE_OR_XOR
+    %left       OP13_BITWISE_AND
+    %nonassoc   OP12_COMPARE_EQ_NE
+    %nonassoc   OP11_COMPARE_LT_GT
+    %nonassoc   OP10_NAMED_UNARY
+    %nonassoc   OP10_NAMED_UNARY_SCOLON
+    %left       OP09_BITWISE_SHIFT
+    %left       OP08_STRING_CAT
+    %left       OP08_MATH_ADD_SUB
+    %left       OP07_MATH_MULT_DIV_MOD
+    %left       OP07_STRING_REPEAT
+    %left       OP06_REGEX_MATCH
+    %left       OP06_REGEX_PATTERN
+    %right      OP05_MATH_NEG_LPAREN
+    %right      OP05_LOGICAL_NEG
+    %right      OP04_MATH_POW
+    %nonassoc   OP03_MATH_INC_DEC
+    %left       OP02_HASH_THINARROW
+    %left       OP02_ARRAY_THINARROW
+    %left       OP02_METHOD_THINARROW_NEW
+    %left       OP02_METHOD_THINARROW
+    %left       OP01_NAMED
+    %left       OP01_NAMED_SCOLON
+    %left       OP01_CLOSE
+    %left       OP01_OPEN
+    %left       OP01_QW
+    %left       OP01_NAMED_VOID_SCOLON
+    %left       OP01_NAMED_VOID_LPAREN
+    %left       OP01_NAMED_VOID
+    %left       OP01_PRINT
+
+</noncode>
+
+=head2 B.4: Syntax Production Rules
+
+The EBNF metasyntax implemented by Eyapp is of the form:
+
+C<ProductionRule: First Alternative 'foo' | Second Alternative 'bar' | ... | Last Alternative 'quux' ;>
+
+In this example, C<ProductionRule> is a non-terminal left-hand-side (LHS) symbol, is followed by the C<:> reduction metasymbol, and may be reduced (replaced) by any of the right-hand-side (RHS) sequences of terminal and non-terminal symbols, themselves separated by the C<|> alternation (logical or) metasymbol.  In other words, each LHS can become any of it's corresponding RHS alternatives.
+
+Terminal symbols are enclosed in single quotes as with C<'foo'>, never appear on the LHS, and are taken as literal data with no transformations applied.  Eyapp treats terminal symbols as tokens which only match one hard-coded lexeme, which is the string appearing inside the single quotes, C<foo> in this example.
+
+=head3 B.4.1: File Formats
+
+C<[[[ SYNTAX PRODUCTION RULES, FILE FORMATS ]]]>
+
+
+<noncode>
+
+    CompileUnit:             Program | (ModuleHeader Module)+ ;
+    Program:                 SHEBANG Critic? USE_RPERL Header Critic* Include* Constant* Subroutine* Operation+ ;
+    ModuleHeader:            Critic? USE_RPERL? 'package' WordScoped ';' Header ;
+    Module:                  Package | Class ;
+    Package:                 Critic* Include* Constant* Subroutine+ LITERAL_NUMBER ';' ;
+    Header:                  'use strict;' 'use warnings;' USE_RPERL_AFTER? 'our' VERSION_NUMBER_ASSIGN;
+    Critic:                  '## no critic qw(' WORD+ ')';
+    Include:                 USE WordScoped ';' | USE WordScoped OP01_QW ';' ;
+    Constant:                'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant Literal ';' ;
+    Subroutine:              'our' Type VARIABLE_SYMBOL '= sub {' SubroutineArguments? Operation* '}' ';' ;
+    SubroutineArguments:     LPAREN_MY Type VARIABLE_SYMBOL (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
+    Class:                   'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties MethodOrSubroutine* LITERAL_NUMBER ';' ;
+    Properties:              'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE HashEntryProperties (OP21_LIST_COMMA HashEntryProperties)* '}' ';' |
+                             'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE '}' ';' ;
+    Method:                  'our' TYPE_METHOD VARIABLE_SYMBOL '= sub {' MethodArguments? Operation* '}' ';' ;
+    MethodArguments:         LPAREN_MY Type SELF (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
+    MethodOrSubroutine:      Method | Subroutine;
+
+</noncode>
+
+B<Code Examples:>
+
+I<CompileUnit>
+
+=over 16
+
+=item * L<Program|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Program>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Program/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ OPERATIONS ]]]
+    my integer $i = 2 + 2;
+
+=item * L<Module|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Module>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Module/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ INCLUDES ]]]
+    use RPerl::Test::Module::Class_00_Good;
+
+    # [[[ OPERATIONS ]]]
+
+    my RPerl::Test::Module::Class_00_Good $foo = RPerl::Test::Module::Class_00_Good->new();
+    my RPerl::Test::Module::Class_00_Good $bar = RPerl::Test::Module::Class_00_Good->new();
+
+    print 'have $foo->{empty_property} = ', $foo->{empty_property}, "\n";
+    print 'have $bar->{empty_property} = ', $bar->{empty_property}, "\n";
+    print '...', "\n";
+
+    $foo->{empty_property} = 23;
+
+    print 'have $foo->{empty_property} = ', $foo->{empty_property}, "\n";
+    print 'have $bar->{empty_property} = ', $bar->{empty_property}, "\n";
+
+L<Package_00_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Module/Package_00_Good.pm>
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    package RPerl::Test::Module::Package_00_Good;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ SUBROUTINES ]]]
+    our void $empty_sub = sub {
+        return 2;
+    };
+
+    1;                  # end of package
+
+L<Class_00_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Module/Class_00_Good.pm>
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    package RPerl::Test::Module::Class_00_Good;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ OO INHERITANCE ]]]
+    use parent qw(RPerl::Test);
+    use RPerl::Test;
+
+    # [[[ OO PROPERTIES ]]]
+    our hashref $properties
+        = { empty_property => my integer $TYPED_empty_property = 2 };
+
+    # [[[ OO METHODS & SUBROUTINES ]]]
+    our void::method $empty_method = sub {
+        return 2;
+    };
+
+    1;    # end of class
+
+=item * L<Header|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Header>
+
+=item * L<VersionNumber|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/VersionNumber>
+
+=item * L<Critic|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Critic>
+
+L<program_01_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Critic/program_01_good.pl>
+
+    #!/usr/bin/perl ## no critic qw(ProhibitUselessNoCritic PodSpelling ProhibitExcessMainComplexity)  # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code; SYSTEM SPECIAL 4: allow complex code outside subroutines, must be on line 1
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic)
+
+    # [[[ OPERATIONS ]]]
+    my integer $i = 2 + 2;
+
+L<Package_00_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Critic/Package_00_Good.pm>
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    package RPerl::Test::Critic::Package_00_Good;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+
+    # [[[ SUBROUTINES ]]]
+    our void $empty_sub = sub {
+        return 2;
+    };
+
+    1;                  # end of package
+
+L<Class_00_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Critic/Class_00_Good.pm>
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    package RPerl::Test::Critic::Class_00_Good;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ OO INHERITANCE ]]]
+    use parent qw(RPerl::Test);
+    use RPerl::Test;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+
+    # [[[ OO PROPERTIES ]]]
+    our hashref $properties
+        = { empty_property => my integer $TYPED_empty_property = 2 };
+
+    # [[[ OO METHODS & SUBROUTINES ]]]
+    our void::method $empty_method = sub {
+        return 2;
+    };
+
+    1;                  # end of class
+
+=item * L<Include|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Include>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Include/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ INCLUDES ]]]
+    use RPerl::Test::Foo;
+    use RPerl::Test::Bar;
+
+    # [[[ OPERATIONS ]]]
+    my integer $i = 2 + 2;
+
+L<Package_00_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Include/Package_00_Good.pm>
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    package RPerl::Test::Include::Package_00_Good;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ INCLUDES ]]]
+    use RPerl::Test::Foo;
+    use RPerl::Test::Bar;
+
+    # [[[ SUBROUTINES ]]]
+    our integer $empty_sub = sub {
+        return 2;
+    };
+
+    1;                  # end of package
+
+L<Class_00_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Include/Class_00_Good.pm>
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    package RPerl::Test::Include::Class_00_Good;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ OO INHERITANCE ]]]
+    use parent qw(RPerl::Test);
+    use RPerl::Test;
+
+    # [[[ INCLUDES ]]]
+    use RPerl::Test::Foo;
+    use RPerl::Test::Bar;
+
+    # [[[ OO PROPERTIES ]]]
+    our hashref $properties
+        = { empty_property => my integer $TYPED_empty_property = 2 };
+
+    # [[[ OO METHODS & SUBROUTINES ]]]
+    our integer::method $empty_method = sub {
+        return 2;
+    };
+
+    1;                  # end of class
+
+=item * L<Constant|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Constant>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Constant/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CONSTANTS ]]]
+    ## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
+    use constant PI  => my number $TYPED_PI  = 3.141_59;
+    use constant PIE => my string $TYPED_PIE = 'pecan';
+
+    # [[[ OPERATIONS ]]]
+    my integer $i = 2 + 2;
+
+L<Package_00_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Constant/Package_00_Good.pm>
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    package RPerl::Test::Constant::Package_00_Good;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CONSTANTS ]]]
+    ## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
+    use constant PI  => my number $TYPED_PI  = 3.141_59;
+    use constant PIE => my string $TYPED_PIE = 'pecan';
+
+    # [[[ SUBROUTINES ]]]
+    our void $empty_sub = sub {
+        return 2;
+    };
+
+    1;                  # end of package
+
+L<Class_00_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Constant/Class_00_Good.pm>
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    package RPerl::Test::Constant::Class_00_Good;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ OO INHERITANCE ]]]
+    use parent qw(RPerl::Test);
+    use RPerl::Test;
+
+    # [[[ CONSTANTS ]]]
+    ## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
+    use constant PI  => my number $TYPED_PI  = 3.141_59;
+    use constant PIE => my string $TYPED_PIE = 'pecan';
+
+    # [[[ OO PROPERTIES ]]]
+    our hashref $properties
+        = { empty_property => my integer $TYPED_empty_property = 2 };
+
+    # [[[ OO METHODS & SUBROUTINES ]]]
+    our void::method $empty_method = sub {
+        return 2;
+    };
+
+    1;    # end of class
+
+=item * L<Subroutine|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Subroutine>
+
+=item * L<SubroutineArguments|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/SubroutineArguments>
+
+L<Package_00_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/SubroutineArguments/Package_00_Good.pm>
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    package RPerl::Test::SubroutineArguments::Package_00_Good;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ SUBROUTINES ]]]
+    our void $empty_sub = sub {
+        ( my number $foo ) = @_;
+        return 1;
+    };
+
+    1;    # end of package
+
+=back
+
+I<Class>
+
+=over 16
+
+=item * L<Properties|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Properties>
+
+L<class_00_good_02.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Properties/class_00_good_02.pl>
+
+    #!/usr/bin/perl
+
+    # [[[ PREPROCESSOR ]]]
+    # <<< EXECUTE_SUCCESS: '92' >>>
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.000_010;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+
+    # [[[ INCLUDES ]]]
+    use RPerl::Test::Properties::Class_00_Good;
+
+    # [[[ OPERATIONS ]]]
+    # set and get object property ourself
+    # using direct access to blessed $property hashref, breaking object encapsulation
+    my RPerl::Test::Properties::Class_00_Good $test_object = RPerl::Test::Properties::Class_00_Good->new();
+    $test_object->{test_property} = 4;
+    $test_object->test_method(23);
+    print $test_object->{test_property} . "\n";
+
+L<Class_00_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Properties/Class_00_Good.pm>
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    package RPerl::Test::Properties::Class_00_Good;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ OO INHERITANCE ]]]
+    use parent qw(RPerl::Test);
+    use RPerl::Test;
+
+    # [[[ OO PROPERTIES ]]]
+    our hashref $properties
+        = { test_property => my integer $TYPED_test_property = 2 };
+
+    # [[[ OO METHODS & SUBROUTINES ]]]
+    our void::method $test_method = sub {
+        ( my object $self, my integer $input_integer ) = @_;
+        $self->{test_property} *= $input_integer;
+        return $self->{test_property};
+    };
+
+    1;    # end of class
+
+=item * L<Method|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Method>
+
+=item * L<MethodArguments|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/MethodArguments>
+
+L<Class_01_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/MethodArguments/Class_01_Good.pm>
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    package RPerl::Test::MethodArguments::Class_01_Good;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ OO INHERITANCE ]]]
+    use parent qw(RPerl::Test);
+    use RPerl::Test;
+
+    # [[[ OO PROPERTIES ]]]
+    our hashref $properties
+        = { empty_property => my integer $TYPED_empty_property = 2 };
+
+    # [[[ OO METHODS & SUBROUTINES ]]]
+    our void::method $empty_method = sub {
+        ( my object $self, my integer $foo ) = @_;
+        return 2;
+    };
+
+    1;    # end of class
+
+=back
+
+=head3 B.4.2: Operations
+
+C<[[[ SYNTAX PRODUCTION RULES, OPERATIONS ]]]>
+
+<noncode>
+
+    Operation:               Expression ';' | OP01_NAMED_SCOLON | OP10_NAMED_UNARY_SCOLON | Statement ;
+    Operator:                LPAREN OP01_PRINT FHREF_SYMBOL_BRACES ListElements ')' |
+                             OP01_NAMED SubExpression | LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')' |
+                             OP01_OPEN MY TYPE_FHREF FHREF_SYMBOL OP21_LIST_COMMA LITERAL_STRING OP21_LIST_COMMA SubExpression |
+                             OP01_CLOSE FHREF_SYMBOL | OP03_MATH_INC_DEC Variable | Variable OP03_MATH_INC_DEC | SubExpression OP04_MATH_POW SubExpression |
+                             OP05_LOGICAL_NEG SubExpression | OP05_MATH_NEG_LPAREN SubExpression ')' | SubExpression OP06_REGEX_MATCH OP06_REGEX_PATTERN |
+                             SubExpression OP07_STRING_REPEAT SubExpression | SubExpression OP07_MATH_MULT_DIV_MOD SubExpression |
+                             SubExpression OP08_MATH_ADD_SUB SubExpression | SubExpression OP08_STRING_CAT SubExpression | SubExpression OP09_BITWISE_SHIFT SubExpression |
+                             OP10_NAMED_UNARY SubExpression | OP10_NAMED_UNARY | SubExpression OP11_COMPARE_LT_GT SubExpression |
+                             SubExpression OP12_COMPARE_EQ_NE SubExpression | SubExpression OP13_BITWISE_AND SubExpression |
+                             SubExpression OP14_BITWISE_OR_XOR SubExpression | SubExpression OP15_LOGICAL_AND SubExpression | SubExpression OP16_LOGICAL_OR SubExpression |
+                             SubExpression OP17_LIST_RANGE SubExpression | SubExpression OP18_TERNARY VariableOrLiteral COLON VariableOrLiteral |
+                             OP22_LOGICAL_NEG SubExpression | SubExpression OP23_LOGICAL_AND SubExpression | SubExpression OP24_LOGICAL_OR_XOR SubExpression ;
+    OperatorVoid:            OP01_PRINT (STDOUT_STDERR)? ListElements ';' | OP01_PRINT FHREF_SYMBOL_BRACES ListElements ';' |
+                             OP01_NAMED_VOID_SCOLON | OP01_NAMED_VOID_LPAREN ListElements? ')' ';' | OP01_NAMED_VOID ListElements ';' | 
+                             OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';' | OP19_LOOP_CONTROL_SCOLON | OP19_LOOP_CONTROL LoopLabel ';' ;
+    Expression:              Operator | WORD_UPPERCASE LPAREN ')' | CONSTANT_CALL_SCOPED | WordScoped LPAREN ListElements? ')' |
+                             Variable OP02_METHOD_THINARROW LPAREN ListElements? ')' | WordScoped OP02_METHOD_THINARROW_NEW ')' ;
+    SubExpression:           Expression | 'undef' | Literal | Variable | ArrayReference | ArrayDereference | HashReference | HashDereference | LPAREN SubExpression ')' ;
+    SubExpressionOrInput:    SubExpression | FHREF_SYMBOL_IN | STDIN;
+    SubExpressionOrVarMod:   SubExpression | VariableModification;
+    Statement:               Conditional | (LoopLabel COLON)? Loop | OperatorVoid | VariableDeclaration | VariableModification ';' ;
+    Conditional:             'if' LPAREN SubExpression ')' CodeBlock ('elsif' LPAREN SubExpression ')' CodeBlock)* ('else' CodeBlock)? ;
+    Loop:                    LoopFor | LoopForEach | LoopWhile ;
+    LoopFor:                 'for' MY TYPE_INTEGER VARIABLE_SYMBOL LPAREN SubExpression OP17_LIST_RANGE SubExpression ')' CodeBlock |
+                             'for' LPAREN_MY TYPE_INTEGER VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN OpNamedScolonOrSubExp VARIABLE_SYMBOL OP11_COMPARE_LT_GT OpNamedScolonOrSubExp SubExpressionOrVarMod ')' CodeBlock ;
+    LoopForEach:             'foreach' MY Type VARIABLE_SYMBOL LPAREN ListElements ')' CodeBlock ;
+    LoopWhile:               'while' LPAREN SubExpression ')' CodeBlock | 'while' LPAREN_MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrInput ')' CodeBlock;
+    CodeBlock:               LBRACE Operation+ '}' ;
+
+</noncode>
+
+B<Code Examples:>
+
+I<Operation>
+
+L<Expression|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Expression>X<br>
+
+L<Operator01Named|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator01Named>X<br>
+
+L<Operator10NamedUnary|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator10NamedUnary>X<br>
+
+L<Statement|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Statement>X<br>
+
+
+I<Operator>
+
+L<Operator01Print|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator01Print>X<br>
+
+L<Operator01OpenClose|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator01OpenClose>X<br>
+
+L<Operator03MathIncrementDecrement|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator03MathIncrementDecrement>X<br>
+
+L<Operator04MathPower|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator04MathPower>X<br>
+
+L<Operator05LogicalNegation|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator05LogicalNegation>X<br>
+
+L<Operator05MathNegative|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator05MathNegative>X<br>
+
+L<Operator06RegularExpressionMatch|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator06RegularExpressionMatch>X<br>
+
+L<Operator07StringRepeat|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator07StringRepeat>X<br>
+
+L<Operator07MathMultiplyDivideModulo|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator07MathMultiplyDivideModulo>X<br>
+
+L<Operator08AddSubtract|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator08AddSubtract>X<br>
+
+L<Operator08StringCat|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator08StringCat>X<br>
+
+L<Operator09BitwiseShift|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator09BitwiseShift>X<br>
+
+L<Operator11CompareLessThanGreaterThan|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator11CompareLessThanGreaterThan>X<br>
+
+L<Operator12CompareEqualNotEqual|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator12CompareEqualNotEqual>X<br>
+
+L<Operator13BitwiseAnd|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator13BitwiseAnd>X<br>
+
+L<Operator14BitwiseOrXor|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator14BitwiseOrXor>X<br>
+
+L<Operator15LogicalAnd|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator15LogicalAnd>X<br>
+
+L<Operator16LogicalOr|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator16LogicalOr>X<br>
+
+L<Operator17ListRange|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator17ListRange>X<br>
+
+L<Operator18Ternary|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator18Ternary>X<br>
+
+L<Operator22LogicalNegation|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator22LogicalNegation>X<br>
+
+L<Operator23LogicalAnd|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator23LogicalAnd>X<br>
+
+L<Operator24LogicalOrXor|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator24LogicalOrXor>X<br>
+
+
+I<OperatorVoid>
+
+L<OperatorVoid01Print|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/OperatorVoid01Print>X<br>
+
+L<OperatorVoid01Named|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/OperatorVoid01Named>X<br>
+
+L<OperatorVoid01NamedVoidCroak|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/OperatorVoid01NamedVoidCroak>X<br>
+
+L<OperatorVoid01NamedVoidDie|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/OperatorVoid01NamedVoidDie>X<br>
+
+L<OperatorVoid01NamedVoidExit|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/OperatorVoid01NamedVoidExit>X<br>
+
+L<OperatorVoid01NamedVoidReturn|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/OperatorVoid01NamedVoidReturn>X<br>
+
+L<Operator19LoopControl|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator19LoopControl>X<br>
+
+
+I<Expression>
+
+L<Constant|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Constant>X<br>
+
+
+I<SubExpression>
+
+L<SubExpression|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/SubExpression>X<br>
+
+L<LiteralNumber|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/LiteralNumber>X<br>
+
+L<LiteralString|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/LiteralString>X<br>
+
+L<ArrayReference|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/ArrayReference>X<br>
+
+L<ArrayDereference|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/ArrayDereference>X<br>
+
+L<HashReference|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/HashReference>X<br>
+
+L<HashDereference|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/HashDereference>X<br>
+
+
+I<SubExpressionOrInput>
+
+L<SubExpressionOrStdin|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/SubExpressionOrStdin>X<br>
+
+
+I<Statement>
+
+L<Conditional|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Conditional>X<br>
+
+L<Loop|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Loop>X<br>
+
+L<VariableDeclaration|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/VariableDeclaration>X<br>
+
+L<VariableModification|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/VariableModification>X<br>
+
+
+=head3 B.4.3: Variable Data
+
+C<[[[ SYNTAX PRODUCTION RULES, VARIABLE DATA ]]]>
+
+<noncode>
+
+    Variable:                VariableSymbolOrSelf VariableRetrieval* ;
+    VariableRetrieval:       OP02_ARRAY_THINARROW SubExpression ']' | OP02_HASH_THINARROW SubExpression '}' | OP02_HASH_THINARROW WORD '}' ;
+    VariableDeclaration:     MY Type VARIABLE_SYMBOL ';' | MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN OpNamedScolonOrSubExpIn | 
+                             MY Type VARIABLE_SYMBOL OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef' ';' | MY TYPE_FHREF FHREF_SYMBOL ';' ;
+    VariableModification:    Variable OP19_VARIABLE_ASSIGN SubExpressionOrInput | Variable OP19_VARIABLE_ASSIGN_BY SubExpression ;
+    ListElements:            ListElement (OP21_LIST_COMMA ListElement)* ;
+    ListElement:             SubExpression | TypeInner SubExpression | OP01_QW | ARGV;
+    ArrayReference:          LBRACKET ListElements? ']' ;
+    ArrayDereference:        '@{' Variable '}' | '@{' TypeInner? ArrayReference '}' ;
+    HashEntry:               VarOrLitOrOpStrOrWord OP20_HASH_FATARROW TypeInner? SubExpression | HashDereference | ENV ;
+    HashEntryProperties:     OpStringOrWord OP20_HASH_FATARROW TypeInnerProperties ;
+    HashReference:           LBRACE HashEntry (OP21_LIST_COMMA HashEntry)* '}' | LBRACE '}' ;
+    HashDereference:         '%{' Variable '}' | '%{' TypeInner? HashReference '}' ;
+
+</noncode>
+
+B<Code Examples:>
+
+I<VariableModification>
+
+L<VariableModification|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/VariableModification>X<br>
+
+
+I<ListElement>
+
+L<Operator01QuoteWord|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator01QuoteWord>X<br>
+
+
+=head3 B.4.4: User-Defined Words
+
+C<[[[ SYNTAX PRODUCTION RULES, USER-DEFINED WORDS ]]]>
+
+<noncode>
+
+    WordScoped:              WORD | WORD_SCOPED ;
+    LoopLabel:               WORD_UPPERCASE ;
+    Type:                    WORD | WORD_SCOPED | TYPE_INTEGER ;
+    TypeInner:               MY Type '$TYPED_' OpStringOrWord OP19_VARIABLE_ASSIGN ;
+    TypeInnerProperties:     MY Type '$TYPED_' OpStringOrWord OP19_VARIABLE_ASSIGN SubExpression | 
+                             MY Type '$TYPED_' OpStringOrWord OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef' ;
+    TypeInnerConstant:       MY Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN ;
+    VariableOrLiteral:       Variable | Literal ;
+    VarOrLitOrOpStrOrWord:   Variable | Literal | OpStringOrWord ;
+    VariableSymbolOrSelf:    VARIABLE_SYMBOL | SELF ;
+    Literal:                 LITERAL_NUMBER | LITERAL_STRING ;
+    OpNamedScolonOrSubExp:   OP01_NAMED_SCOLON | OP10_NAMED_UNARY_SCOLON | SubExpression ';' ;
+    OpNamedScolonOrSubExpIn: OP01_NAMED_SCOLON | OP10_NAMED_UNARY_SCOLON | SubExpressionOrInput ';' ;
+    OpStringOrWord:          OP24_LOGICAL_OR_XOR | OP23_LOGICAL_AND | OP22_LOGICAL_NEG | OP19_LOOP_CONTROL_SCOLON | OP19_LOOP_CONTROL | OP12_COMPARE_EQ_NE |
+                             OP11_COMPARE_LT_GT | OP10_NAMED_UNARY | OP08_MATH_ADD_SUB | OP07_MATH_MULT_DIV_MOD | OP07_STRING_REPEAT | OP01_NAMED | OP01_CLOSE | 
+                             OP01_OPEN | OP01_NAMED_VOID | OP01_PRINT | WORD ;
+
+</noncode>
+
+B<There are no additional code examples for this section, all pertinent examples are contained in the previous sections.>
 
 =head1 APPENDIX C: BEYOND THE ROADRUNNER
 
 The Scallion
+
 The Sword
 
 X<br>
