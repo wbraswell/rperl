@@ -4066,118 +4066,2124 @@ B<Code Examples:>
 
 I<Operation>
 
-L<Expression|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Expression>X<br>
+=over 16
 
-L<Operator01Named|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator01Named>X<br>
+=item * L<Expression|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Expression>
 
-L<Operator10NamedUnary|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator10NamedUnary>X<br>
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Expression/program_00_good.pl>
 
-L<Statement|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Statement>X<br>
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
 
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my integer $i = 0;
+    $i++;
+
+L<program_01_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Expression/program_01_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    our integer $foo = sub {
+        return 23;
+    };
+    foo();
+
+L<program_10_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Expression/program_10_good.pl>
+
+    #!/usr/bin/perl
+
+    # [[[ PREPROCESSOR ]]]
+    # <<< EXECUTE_SUCCESS: '1.570795' >>>
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+
+    # [[[ INCLUDES ]]]
+    use RPerl::Test::Foo;
+
+    # [[[ OPERATIONS ]]]
+    my number $pi_over_2 = RPerl::Test::Foo::PI() / 2;
+    print 'pi / 2 = ', $pi_over_2, "\n";
+
+L<program_21_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Expression/program_21_good.pl>
+
+    #!/usr/bin/perl
+
+    # [[[ PREPROCESSOR ]]]
+    # <<< EXECUTE_SUCCESS: "'a' => 'twenty-threetwenty-threetwenty-threetwenty-threetwenty-threetwenty-threetwenty-three'" >>>
+    # <<< EXECUTE_SUCCESS: "'b' => 'howdy'" >>>
+    # <<< EXECUTE_SUCCESS: "'c' => '-23.42'" >>>
+    # <<< EXECUTE_SUCCESS: "'a' => 'guffawguffawguffawguffawguffawguffawguffawguffawguffawguffawguffaw'" >>>
+    # <<< EXECUTE_SUCCESS: "'b' => 'howdy'" >>>
+    # <<< EXECUTE_SUCCESS: "'c' => '-23.42'" >>>
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ INCLUDES ]]]
+    use RPerl::Test::Foo;
+
+    # [[[ OPERATIONS ]]]
+    my RPerl::Test::Foo $my_foo = RPerl::Test::Foo->new();
+    print Dumper($my_foo->qorge(7)) . "\n";
+    $my_foo->{xyzzy} = 'guffaw';
+    print Dumper($my_foo->qorge(11)) . "\n";
+
+L<program_30_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Expression/program_30_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my number $foo            = 9_123.456_789;
+    my number_arrayref $bar = [ 21, 12, 43.23, 987.654_321 ];
+    my string $bat            = number_to_string($foo);
+    my string $baz            = ::number_arrayref_to_string($bar);
+    my string $bax = ::string_arrayref_to_string( [ 'abc', '123', 'lalala' ] );
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+    $bat = ::integer_hashref_to_string(
+        { foo => 23, bar => 56, quux => 123_456 } );
+    $baz = ::number_hashref_to_string(
+        { foo => 23.4, bar => 56.789, quux => 123_456.789_012 } );
+    $bax = ::string_hashref_to_string(
+        { foo => 'howdy', bar => 'dowdy', quux => 'doo' } );
+
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+=item * L<Operator01Named|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator01Named>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator01Named/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+    my number $op_sin = sin 2;
+    my number $op_cos = cos 2;
+
+    my integer_arrayref $frob = [];
+    my integer $frob_length = ( push @{$frob}, 21, 12, 23 ); # Operator, yes parentheses required for builtin w/ multiple arguments in non-void context
+    print 'have $frob_length = ', $frob_length, "\n";
+    print 'have $frob = ', "\n", Dumper($frob), "\n";
+
+    my integer $frob_pop = pop @{$frob};
+    print 'have $frob_pop = ', "\n", $frob_pop, "\n";
+    print 'have $frob = ', "\n", Dumper($frob), "\n";
+
+L<program_01_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator01Named/program_01_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+
+    # [[[ OPERATIONS ]]]
+    wait;
+
+L<program_02_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator01Named/program_02_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+
+    # [[[ OPERATIONS ]]]
+    my unknown $op_wait = wait;
+
+=item * L<Operator10NamedUnary|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator10NamedUnary>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator10NamedUnary/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my integer $foo = chdir;
+    my integer $bar = chdir 'INVALID__DIRECTORY__NAME';
+    my number $bat  = rand;
+    my number $baz  = rand 10;
+    my number $bax  = rand 30;
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+    my integer_arrayref $quux = [ 5, 6, 7, 8 ];
+    $foo = scalar @{$quux};
+    $bar = scalar @{ [] };
+    $bat = scalar @{ [0] };
+    $baz = scalar @{ [ 0, 1, 2, 3, 4, 5, 6, 7 ] };
+    $bax = scalar @{ [ 0 .. 22 ] };
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+L<program_01_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator10NamedUnary/program_01_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+
+    # [[[ OPERATIONS ]]]
+    chdir;
+
+=item * L<Statement|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Statement>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Statement/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    if (1) {
+        print 'Production rule Statement matched by Conditional', "\n";
+    }
+
+L<program_01_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Statement/program_01_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    for my integer $i ( -1 .. 1 ) {
+        print 'Production rule Statement matched by Loop, iteration number ', $i, "\n";
+    }
+
+L<program_02_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Statement/program_02_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    foreach my number $my_number ( 11.1, 22.2, 33.3, 44.4 ) {
+        print 'Production rule Statement matched by Loop, iteration item ', $my_number, "\n";
+    }
+
+L<program_03_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Statement/program_03_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my integer $i = 10;
+    FOOBARLOOP:
+    while ( $i < 23 ) {
+        print 'Production rule Statement matched by Loop, iteration number ', $i, "\n";
+        $i += 2;
+        if ( $i > 18 ) {
+            last FOOBARLOOP;
+        }
+    }
+
+L<program_04_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Statement/program_04_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    print 'Production rule Statement matched by OperatorVoid', "\n";
+
+L<program_05_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Statement/program_05_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my string $foo = 'Production rule Statement matched by VariableDeclaration';
+
+L<program_06_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Statement/program_06_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my string $foo = 'Production rule Statement matched by';
+    $foo .= ' VariableModification';
+
+=back
 
 I<Operator>
 
-L<Operator01Print|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator01Print>X<br>
+=over 16
 
-L<Operator01OpenClose|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator01OpenClose>X<br>
+=item * L<Operator01Print|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator01Print>
 
-L<Operator03MathIncrementDecrement|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator03MathIncrementDecrement>X<br>
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator01Print/program_00_good.pl>
 
-L<Operator04MathPower|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator04MathPower>X<br>
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
 
-L<Operator05LogicalNegation|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator05LogicalNegation>X<br>
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 
-L<Operator05MathNegative|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator05MathNegative>X<br>
+    # [[[ OPERATIONS ]]]
 
-L<Operator06RegularExpressionMatch|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator06RegularExpressionMatch>X<br>
+    # USER NOTE: the Operator (not OperatorVoid) production rule matched by 'print' requires parentheses and filehandle
 
-L<Operator07StringRepeat|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator07StringRepeat>X<br>
+    my integer $open_success = open my filehandleref $HOWDY, '>', '/tmp/howdy';
+    if ( not $open_success ) {
+        croak 'ERROR: Failed to open file /tmp/howdy for writing, croaking';
+    }
 
-L<Operator07MathMultiplyDivideModulo|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator07MathMultiplyDivideModulo>X<br>
+    # USER NOTE: return values of Operator print are purposefully ignored here, possibly ignoring write errors
+    ( print {$HOWDY} 2 );
+    ( print {$HOWDY} 2, 3, 4, "\n" );
+    ( print {$HOWDY} 2.31 );
+    ( print {$HOWDY} 2.31, 3.21, 4.23, "\n" );
+    ( print {$HOWDY} 'howdy' );
+    ( print {$HOWDY} 'howdy', 'doody', 'foobar', "\n" );
+    ( print {$HOWDY} 'howdy', 2.31, 'doody', 3.21, 'foobar', 4.23, "\n" );
 
-L<Operator08AddSubtract|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator08AddSubtract>X<br>
+    # USER NOTE: return values of Operator print are utilized here, catching write errors
+    # long format, 2 RPerl Operations
+    my integer $print_success = ( print {$HOWDY} 2 );
+    if ( not $print_success ) {
+        croak 'ERROR: Failed to write to file /tmp/howdy, croaking';
+    }
 
-L<Operator08StringCat|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator08StringCat>X<br>
+    # short format, 1 RPerl Operation
+    if (not( print {$HOWDY} 'howdy', 2.31, 'doody', 3.21, 'foobar', 4.23, "\n" ) )
+    {
+        croak 'ERROR: Failed to write to file /tmp/howdy, croaking';
+    }
 
-L<Operator09BitwiseShift|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator09BitwiseShift>X<br>
+    if ( not close $HOWDY ) {
+        croak 'ERROR: Failed to close file /tmp/howdy after writing, croaking';
+    }
 
-L<Operator11CompareLessThanGreaterThan|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator11CompareLessThanGreaterThan>X<br>
+=item * L<Operator01OpenClose|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator01OpenClose>
 
-L<Operator12CompareEqualNotEqual|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator12CompareEqualNotEqual>X<br>
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator01OpenClose/program_00_good.pl>
 
-L<Operator13BitwiseAnd|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator13BitwiseAnd>X<br>
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
 
-L<Operator14BitwiseOrXor|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator14BitwiseOrXor>X<br>
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 
-L<Operator15LogicalAnd|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator15LogicalAnd>X<br>
+    # [[[ OPERATIONS ]]]
 
-L<Operator16LogicalOr|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator16LogicalOr>X<br>
+    my integer $open_success = open my filehandleref $HOWDY, '>', '/tmp/howdy';
+    if ( not $open_success ) {
+        croak 'ERROR: Failed to open file /tmp/howdy for writing, croaking';
+    }
 
-L<Operator17ListRange|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator17ListRange>X<br>
+    my integer $print_success = ( print {$HOWDY} 23, 32, 42 );
+    if ( not $print_success ) {
+        croak 'ERROR: Failed to write to file /tmp/howdy, croaking';
+    }
 
-L<Operator18Ternary|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator18Ternary>X<br>
+    if ( not close $HOWDY ) {
+        croak 'ERROR: Failed to close file /tmp/howdy after writing, croaking';
+    }
 
-L<Operator22LogicalNegation|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator22LogicalNegation>X<br>
+=item * L<Operator03MathIncrementDecrement|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator03MathIncrementDecrement>
 
-L<Operator23LogicalAnd|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator23LogicalAnd>X<br>
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator03MathIncrementDecrement/program_00_good.pl>
 
-L<Operator24LogicalOrXor|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator24LogicalOrXor>X<br>
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
 
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my integer $foo = 2;
+    my integer $bar = 3;
+
+    $foo++;
+
+    my integer $bat = $foo++;
+
+    $bar--;
+
+    my integer $baz = $bar--;
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+
+    ++$foo;
+
+    $bat = ++$foo;
+
+    --$bar;
+
+    $baz = --$bar;
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+
+=item * L<Operator04MathPower|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator04MathPower>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator04MathPower/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my integer $foo = 2**3;
+    my integer $bar = 3**2;
+
+    my integer $bat = $foo**$bar;
+
+    my integer $baz = $bar**$foo;
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+
+    $foo = 2;
+    $bar = 3;
+    $bat = ( $foo**2 )**$bar;
+    $baz = $foo**( 2**$bar );
+    my integer $bax = $foo**2**$bar;    # right associative
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+=item * L<Operator05LogicalNegation|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator05LogicalNegation>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator05LogicalNegation/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my integer $foo = 0;
+    my integer $bar = 1;
+    my integer $bat = !$foo;
+    my integer $baz = !($bar);
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+
+    $foo = 2;
+    $bar = 3;
+    $bat = !2;                  # returns empty string ''
+    $baz = !( $foo - $bar );    # returns empty string ''
+    my integer $bax = !!$foo;
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+=item * L<Operator05MathNegative|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator05MathNegative>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator05MathNegative/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my integer $foo = 3;
+    my integer $bar = -3;            # Literal Number, not Operator
+    my integer $bat = -(3);          # Operator(Literal Number)
+    my integer $baz = 5 - -($bar);
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+
+    $foo = -(-3);                    # Operator(Literal Number)
+    $bar = -( -(3) );                # Operator(Operator(Literal Number))
+    $bat = $foo + -($bar);
+    $baz = $foo - -($bar);
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+
+=item * L<Operator06RegularExpressionMatch|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator06RegularExpressionMatch>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator06RegularExpressionMatch/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my string $foo  = 'howdy hello ahoy';
+    my integer $bar = $foo =~ m/owdy/msx;
+    my integer $bat = ( $foo =~ m/Hello/msx );
+    my integer $baz = ( $foo =~ m/\s[Aa]hoy$/msx );
+    my integer $bax = ( $foo =~ s/ho/HO/gms );
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+    $foo = 'Alpha Bravo Charlie 123';
+    $bar = ( $foo !~ m/owdy/msx );
+    $bat = ( $foo !~ m/ravo/msx );
+    $baz = ( $foo !~ m/\s[Cc]harlie\s\d*$/msx );
+    $bax = ( $foo !~ s/ha/HAHA/gms );
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+=item * L<Operator07StringRepeat|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator07StringRepeat>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator07StringRepeat/program_00_good.pl>
+
+    #!/usr/bin/perl
+
+    # [[[ PREPROCESSOR ]]]
+    # <<< EXECUTE_SUCCESS: "have $foo = ''" >>>
+    # <<< EXECUTE_SUCCESS: "have $bar = 'bar'" >>>
+    # <<< EXECUTE_SUCCESS: "have $bat = 'batbat'" >>>
+    # <<< EXECUTE_SUCCESS: "have $baz = 'bazbazbazbaz'" >>>
+    # <<< EXECUTE_SUCCESS: "have $bax = 'baxbaxbaxbaxbaxbaxbaxbax'" >>>
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my string $foo = 'foo' x 0;
+    my string $bar = 'bar' x 1;
+    my string $bat = 'bat' x 2;
+    my string $baz = 'baz' x 4;
+    my string $bax = 'bax' x 8;
+
+    print q{have $foo = '}, $foo, q{'}, "\n";
+    print q{have $bar = '}, $bar, q{'}, "\n";
+    print q{have $bat = '}, $bat, q{'}, "\n";
+    print q{have $baz = '}, $baz, q{'}, "\n";
+    print q{have $bax = '}, $bax, q{'}, "\n";
+
+=item * L<Operator07MathMultiplyDivideModulo|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator07MathMultiplyDivideModulo>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator07MathMultiplyDivideModulo/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my number $foo = 222 * -33;
+    my number $bar = 222 / 33;
+    my number $bat = 222 % 33;
+    my number $baz = $foo % $bar * $bat / 4;
+    my number $bax = $foo % ( $bar * ( $bat / 4 ) );
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+=item * L<Operator08AddSubtract|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator08AddSubtract>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator08AddSubtract/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my number $foo = 222 + 33;
+    my number $bar = 222 - 33;
+    my number $bat = 222 + -33;
+    my number $baz = $foo - $bar + $bat - 4;
+    my number $bax = $foo - ( $bar + ( $bat - 4 ) );
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+=item * L<Operator08StringCat|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator08StringCat>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator08StringCat/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my string $foo = 'howdy' . 'doody';
+    my string $bar = 'hello' . ('and' . 'goodbye');
+    my string $bat = ('ahoy' . 'matey') . 'yarr';
+    my string $baz = $foo . $bar . $bat;
+    my string $bax = $foo . $foo . $foo;
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+=item * L<Operator09BitwiseShift|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator09BitwiseShift>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator09BitwiseShift/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my integer $foo = 1_024;
+    my integer $bar = 256;
+    my integer $bat = 4_096 << 3;
+    my integer $baz = $foo << 3;
+    my integer $bax = $bar >> 4;
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+=item * L<Operator11CompareLessThanGreaterThan|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator11CompareLessThanGreaterThan>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator11CompareLessThanGreaterThan/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my number $foo  = 9_123.456_789;
+    my string $bar  = 'howdy';
+    my integer $bat = $foo < 22;
+    my integer $baz = 22 < $foo;
+    my integer $bax = 33 <= 44;
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+    $bat = $foo > 333_333_333_333;
+    $baz = 444 >= 222;
+    $bax = 9_123.456_789 >= $foo;
+
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+    $bat = $bar lt 'ahoy';
+    $baz = 'ZZZZZZZZZZZZZZ' lt $bar;
+    $bax = '33' le '44';
+
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+    $bat = $bar gt 'abc';
+    $baz = '144' ge '222';
+    $bax = 'howdy' ge $bar;
+
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+=item * L<Operator12CompareEqualNotEqual|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator12CompareEqualNotEqual>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator12CompareEqualNotEqual/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my number $foo  = 9_123.456_789;
+    my string $bar  = 'howdy';
+    my integer $bat = $foo == 22;
+    my integer $baz = 9_123.456_789 == $foo;
+    my integer $bax = 33 != 44;
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+    $bat = $foo == 333_333_333_333;
+    $baz = 444 != 222;
+    $bax = 33 != $foo;
+
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+    $bat = $bar eq 'howdy';
+    $baz = 'ZZZZZZZZZZZZZZ' eq $bar;
+    $bax = '33' ne '44';
+
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+    $bat = $bar eq 'abc';
+    $baz = '444' ne '222';
+    $bax = '33' ne $bar;
+
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+=item * L<Operator13BitwiseAnd|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator13BitwiseAnd>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator13BitwiseAnd/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my number $foo  = 9_123.456_789;
+    my string $bar  = 'howdy';
+    my integer $bat = $foo & 22;
+    my integer $baz = 9_123.456_789 & $foo;
+    my integer $bax = 33 & 44;
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+    $bat = $bar & 'abc';
+    $baz = '444' & '222';
+    $bax = '33' & $bar;
+
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+=item * L<Operator14BitwiseOrXor|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator14BitwiseOrXor>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator14BitwiseOrXor/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my number $foo  = 9_123.456_789;
+    my string $bar  = 'howdy';
+    my integer $bat = $foo | 22;
+    my integer $baz = 9_123.456_789 | $foo;
+    my integer $bax = 33 ^ 44;
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+    $bat = $bar | 'abc';
+    $baz = '444' ^ '222';
+    $bax = '33' ^ $bar;
+
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+=item * L<Operator15LogicalAnd|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator15LogicalAnd>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator15LogicalAnd/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my number $foo  = 9_123.456_789;
+    my string $bar  = 'howdy';
+    my integer $bat = $foo && 22;
+    my integer $baz = 9_123.456_789 && $foo;
+    my integer $bax = 33 && 0;
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+    $bat = $bar  && q{};
+    $baz = '444' && '222';
+    $bax = '33'  && $bar;
+
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+=item * L<Operator16LogicalOr|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator16LogicalOr>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator16LogicalOr/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my number $foo  = 9_123.456_789;
+    my string $bar  = 'howdy';
+    my integer $bat = $foo || 22;
+    my integer $baz = 9_123.456_789 || $foo;
+    my integer $bax = 33 || 0;
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+    $bat = $bar  || q{};
+    $baz = '444' || '222';
+    $bax = '33'  || $bar;
+
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+=item * L<Operator17ListRange|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator17ListRange>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator17ListRange/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my number $foo = 123;
+    my string $bar = 'ab';
+    my integer_arrayref $bat;
+    $bat = [ $foo .. 22 ];
+    my integer_arrayref $baz;
+    $baz = [ 22 .. $foo ];
+    my integer_arrayref $bax;
+    $bax = [ 0 .. 23 ];
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', ::integer_arrayref_to_string($bat), "\n";
+    print 'have $baz = ', ::integer_arrayref_to_string($baz), "\n";
+    print 'have $bax = ', ::integer_arrayref_to_string($bax), "\n";
+
+    my string_arrayref $bat2;
+    $bat2 = [ $bar .. 'ac' ];
+    my string_arrayref $baz2;
+    $baz2 = [ 'a2' .. 'a4' ];
+    my string_arrayref $bax2;
+    $bax2 = [ 'a' .. $bar ];
+
+    print 'have $bat2 = ', ::string_arrayref_to_string($bat2), "\n";
+    print 'have $baz2 = ', ::string_arrayref_to_string($baz2), "\n";
+    print 'have $bax2 = ', ::string_arrayref_to_string($bax2), "\n";
+
+=item * L<Operator18Ternary|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator18Ternary>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator18Ternary/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my number $foo = 9_123.456_789;
+    my number $bar = 2_112;
+    my number $bat = ( 22 > 21 ) ? $foo : $bar;
+    my number $baz = 0 ? $foo : $bar;
+    my number $bax = 1 ? 99.9 : 100.1;
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+    $bat = ( 'howdy' ne 'dowdy' ) ? $foo : 22_222.33;
+    $baz = ( 4 <= 4 )             ? 88   : $bar;
+    $bax = ( 88 > 99 )            ? 21   : 12;
+
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+=item * L<Operator22LogicalNegation|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator22LogicalNegation>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator22LogicalNegation/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my integer $foo = 0;
+    my integer $bar = 1;
+    my integer $bat = not $foo;
+    my integer $baz = not ($bar);
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+
+    $foo = 2;
+    $bar = 3;
+    $bat = not 2;                  # returns empty string ''
+    $baz = not ( $foo - $bar );    # returns empty string ''
+    my integer $bax = not not $foo;
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+=item * L<Operator23LogicalAnd|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator23LogicalAnd>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator23LogicalAnd/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my number $foo  = 9_123.456_789;
+    my string $bar  = 'howdy';
+    my integer $bat = ($foo and 22);
+    my integer $baz = (9_123.456_789 and $foo);
+    my integer $bax = (33 and 0);
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+    $bat = ($bar  and q{});
+    $baz = ('444' and '222');
+    $bax = ('33'  and $bar);
+
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+=item * L<Operator24LogicalOrXor|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator24LogicalOrXor>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator24LogicalOrXor/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my number $foo  = 9_123.456_789;
+    my string $bar  = 'howdy';
+    my integer $bat = ( $foo or 22 );
+    my integer $baz = ( 9_123.456_789 or $foo );
+    my integer $bax = ( 33 xor 0 );
+
+    print 'have $foo = ', $foo, "\n";
+    print 'have $bar = ', $bar, "\n";
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+    $bat = ( $bar  or q{} );
+    $baz = ( '444' xor '222' );
+    $bax = ( '33'  xor $bar );
+
+    print 'have $bat = ', $bat, "\n";
+    print 'have $baz = ', $baz, "\n";
+    print 'have $bax = ', $bax, "\n";
+
+=back
 
 I<OperatorVoid>
 
-L<OperatorVoid01Print|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/OperatorVoid01Print>X<br>
+=over 16
 
-L<OperatorVoid01Named|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/OperatorVoid01Named>X<br>
+=item * L<OperatorVoid01Print|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/OperatorVoid01Print>
 
-L<OperatorVoid01NamedVoidCroak|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/OperatorVoid01NamedVoidCroak>X<br>
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/OperatorVoid01Print/program_00_good.pl>
 
-L<OperatorVoid01NamedVoidDie|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/OperatorVoid01NamedVoidDie>X<br>
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
 
-L<OperatorVoid01NamedVoidExit|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/OperatorVoid01NamedVoidExit>X<br>
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 
-L<OperatorVoid01NamedVoidReturn|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/OperatorVoid01NamedVoidReturn>X<br>
+    # [[[ OPERATIONS ]]]
 
-L<Operator19LoopControl|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator19LoopControl>X<br>
+    # USER NOTE: the OperatorVoid (not Operator) production rule matched by 'print' has optional STDOUT, STDERR, or filehandle
 
+    print 2;
+    print 2, 3, 4, "\n";
+    print 2.31;
+    print 2.31, 3.21, 4.23, "\n";
+    print 'howdy';
+    print 'howdy', 'doody', 'foobar', "\n";
+    print 'howdy', 2.31, 'doody', 3.21, 'foobar', 4.23, "\n";
+
+    print {*STDOUT} 2;
+    print {*STDOUT} 2, 3, 4, "\n";
+    print {*STDOUT} 2.31;
+    print {*STDOUT} 2.31, 3.21, 4.23, "\n";
+    print {*STDOUT} 'howdy';
+    print {*STDOUT} 'howdy', 'doody', 'foobar', "\n";
+    print {*STDOUT} 'howdy', 2.31, 'doody', 3.21, 'foobar', 4.23, "\n";
+
+    print {*STDERR} 2;
+    print {*STDERR} 2, 3, 4, "\n";
+    print {*STDERR} 2.31;
+    print {*STDERR} 2.31, 3.21, 4.23, "\n";
+    print {*STDERR} 'howdy';
+    print {*STDERR} 'howdy', 'doody', 'foobar', "\n";
+    print {*STDERR} 'howdy', 2.31, 'doody', 3.21, 'foobar', 4.23, "\n";
+
+    my integer $open_success = open my filehandleref $HOWDY, '>', '/tmp/howdy';
+    if ( not $open_success ) {
+        croak 'ERROR: Failed to open file /tmp/howdy for writing, croaking';
+    }
+
+    # USER NOTE: return values of OperatorVoid print-to-filehandle are always ignored, possibly ignoring write errors
+    print {$HOWDY} 2;
+    print {$HOWDY} 2, 3, 4, "\n";
+    print {$HOWDY} 2.31;
+    print {$HOWDY} 2.31, 3.21, 4.23, "\n";
+    print {$HOWDY} 'howdy';
+    print {$HOWDY} 'howdy', 'doody', 'foobar', "\n";
+    print {$HOWDY} 'howdy', 2.31, 'doody', 3.21, 'foobar', 4.23, "\n";
+
+    if ( not close $HOWDY ) {
+        croak 'ERROR: Failed to close file /tmp/howdy after writing, croaking';
+    }
+
+=item * L<OperatorVoid01Named|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/OperatorVoid01Named>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/OperatorVoid01Named/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+    my integer_arrayref $frob = [];
+    push @{$frob}, 21, 12, 23;    # OperatorVoid, no parentheses required for builtin w/ multiple arguments in void context
+    print 'have $frob = ', "\n", Dumper($frob), "\n";
+
+=item * L<OperatorVoid01NamedVoidCroak|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/OperatorVoid01NamedVoidCroak>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/OperatorVoid01NamedVoidCroak/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+    croak;
+
+=item * L<OperatorVoid01NamedVoidDie|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/OperatorVoid01NamedVoidDie>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/OperatorVoid01NamedVoidDie/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+    die "\n";
+
+=item * L<OperatorVoid01NamedVoidExit|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/OperatorVoid01NamedVoidExit>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/OperatorVoid01NamedVoidExit/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+    exit;
+
+=item * L<OperatorVoid01NamedVoidReturn|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/OperatorVoid01NamedVoidReturn>
+
+L<program_01_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/OperatorVoid01NamedVoidReturn/program_01_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ SUBROUTINES ]]]
+
+    # DEV NOTE: DO NOT RUN PERLTIDY ON THIS FILE!  the line below should read 'return();' not 'return ();'
+    our void $foo = sub {
+        return();
+    };
+
+    # [[[ OPERATIONS ]]]
+    foo();
+
+=item * L<Operator19LoopControl|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator19LoopControl>
+
+L<program_01_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator19LoopControl/program_01_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    HOWDYLOOP:
+    while (1) {
+        next HOWDYLOOP;
+    }
+
+=back
 
 I<Expression>
 
-L<Constant|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Constant>X<br>
+=over 16
 
+=item * L<Constant|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Constant>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Constant/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CONSTANTS ]]]
+    ## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
+    use constant PI  => my number $TYPED_PI  = 3.141_59;
+    use constant PIE => my string $TYPED_PIE = 'pecan';
+
+    # [[[ OPERATIONS ]]]
+    my integer $i = 2 + 2;
+
+=back
 
 I<SubExpression>
 
-L<SubExpression|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/SubExpression>X<br>
+=over 16
 
-L<LiteralNumber|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/LiteralNumber>X<br>
+=item * L<SubExpression|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/SubExpression>
 
-L<LiteralString|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/LiteralString>X<br>
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/SubExpression/program_00_good.pl>
 
-L<ArrayReference|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/ArrayReference>X<br>
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
 
-L<ArrayDereference|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/ArrayDereference>X<br>
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
-L<HashReference|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/HashReference>X<br>
+    # [[[ OPERATIONS ]]]
 
-L<HashDereference|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/HashDereference>X<br>
+    my integer $foo = undef;
 
+L<program_07_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/SubExpression/program_07_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my string_hashref $foo = { puppet => 'howdy doody', host => 'buffalo bob', sidekick => 'clarabell clown' };
+    keys %{$foo};
+
+=item * L<LiteralNumber|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/LiteralNumber>
+
+L<Package_30_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/LiteralNumber/Package_30_Good.pm>
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    package RPerl::Test::LiteralNumber::Package_30_Good;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+
+    # [[[ SUBROUTINES ]]]
+    our number $empty_sub = sub {
+        return 0.234_567_89;
+    };
+
+    1;    # end of package
+
+=item * L<LiteralString|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/LiteralString>
+
+L<Package_DoubleQuotes_10_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/LiteralString/Package_DoubleQuotes_10_Good.pm>
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    package RPerl::Test::LiteralString::Package_DoubleQuotes_10_Good;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ SUBROUTINES ]]]
+    our string $empty_sub = sub {
+        return "{foo}\n";
+    };
+
+    1;    # end of package
+
+L<Package_SingleQ_07_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/LiteralString/Package_SingleQ_07_Good.pm>
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    package RPerl::Test::LiteralString::Package_SingleQ_07_Good;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ SUBROUTINES ]]]
+    our string $empty_sub = sub {
+        return q{@ $};
+    };
+
+    1;    # end of package
+
+L<Package_SingleQuotes_07_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/LiteralString/Package_SingleQuotes_07_Good.pm>
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    package RPerl::Test::LiteralString::Package_SingleQuotes_07_Good;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ SUBROUTINES ]]]
+    our string $empty_sub = sub {
+        return '@ $';
+    };
+
+    1;    # end of package
+
+=item * L<ArrayReference|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/ArrayReference>
+
+L<program_10_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/ArrayReference/program_10_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    # homogeneous 2-dimensional array of arrays, using inner types
+    my arrayref_arrayref $array_array = [
+        my integer_arrayref $TYPED_array_array_0 = [ 17,   -23, 1_701 ],
+        my integer_arrayref $TYPED_array_array_1 = [ -1,   444, 2_987 ],
+        my integer_arrayref $TYPED_array_array_2 = [ -321, 7,   24_851 ]
+    ];
+    foreach my arrayref $array ( @{$array_array} ) {
+        print '$array = ', Dumper($array), "\n";
+    }
+
+L<program_15_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/ArrayReference/program_15_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my string_arrayref $s_array = ['buffalo', qw(alpha beta gamma), 'howdy'];
+    foreach my string $s ( @{$s_array} ) {
+        print '$s = ', $s, "\n";
+    }
+
+=item * L<ArrayDereference|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/ArrayDereference>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/ArrayDereference/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    foreach my integer $i ( @{ [ 10, 20, 30, 40, 50 ] } ) {
+        print '$i = ', $i, "\n";
+    }
+
+L<program_01_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/ArrayDereference/program_01_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    foreach my integer $i ( @{ my integer_arrayref $TYPED_i_array = [ 10, 20, 30, 40, 50 ] } )
+    {
+        print '$i = ', $i, "\n";
+    }
+
+L<program_02_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/ArrayDereference/program_02_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    foreach my integer $i ( @{ [ my integer $TYPED_i0 = 10, 20, 30, 40, 50 ] } ) {
+        print '$i = ', $i, "\n";
+    }
+
+=item * L<HashReference|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/HashReference>
+
+L<program_10_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/HashReference/program_10_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    # homogeneous 2-dimensional hash of hashes, using inner types
+    my hashref_hashref $hash_hash = {
+        key_0 => my integer_hashref $TYPED_key_0
+            = { a => 17, b => -23, c => 1_701 },
+        key_1 => my integer_hashref $TYPED_key_1
+            = { d => -1, e => 444, f => 2_987 },
+        key_2 => my integer_hashref $TYPED_key_2
+            = { g => -321, h => 7, i => 24_851 }
+    };
+    print Dumper($hash_hash);
+
+L<program_14_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/HashReference/program_14_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my number $key_number = 0.1;
+    my string $key_string = '0.1';
+
+    my hashref $unknown_hash = {
+        key0 => my integer $TYPED_key0              = -23,
+        0    => my number_arrayref $TYPED_zero      = [ 42 / 1_701, 21.12, 2_112.23 ],
+        0.1  => my string_hashref $TYPED_zerodotone = { 'alpha' => 'strings are scalars, too', 12.345_678 => 'hello world', gamma => 'last one' },
+        '0.1'       => 'replacement',
+        "0.1\n"     => 'close but not quite',
+        $key_number => 'another replacement',
+        $key_string => 'final replacement'
+    };
+
+    print Dumper($unknown_hash);
+
+=item * L<HashDereference|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/HashDereference>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/HashDereference/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    foreach my string $key ( sort keys %{ { a => 10, b => 20, c => 30, d => 40, e => 50 } } )
+    {
+        print '$key = ', $key, "\n";
+    }
+
+L<program_01_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/HashDereference/program_01_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    foreach my string $key ( sort keys %{ my integer_hashref $TYPED_i_hash = { a => 10, b => 20, c => 30, d => 40, e => 50 } } )
+    {
+        print '$key = ', $key, "\n";
+    }
+
+L<program_02_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/HashDereference/program_02_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    foreach my string $key ( sort keys %{ { a => my integer $TYPED_a = 10, b => 20, c => 30, d => 40, e => 50 } } )
+    {
+        print '$key = ', $key, "\n";
+    }
+
+L<program_03_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/HashDereference/program_03_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    foreach my string $key ( sort keys %{ my integer_hashref $TYPED_i_hash = { a => my integer $TYPED_a = 10, b => 20, c => 30, d => 40, e => 50 } }) {
+        print '$key = ', $key, "\n";
+    }
+
+=back
 
 I<SubExpressionOrInput>
 
-L<SubExpressionOrStdin|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/SubExpressionOrStdin>X<br>
+=over 16
 
+=item * L<SubExpressionOrStdin|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/SubExpressionOrStdin>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/SubExpressionOrStdin/program_00_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+    ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
+
+    # [[[ OPERATIONS ]]]
+
+    my string $foo;
+    $foo = <STDIN>;
+
+=back
 
 I<Statement>
 
-L<Conditional|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Conditional>X<br>
+=over 16
 
-L<Loop|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Loop>X<br>
+=item * L<Conditional|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Conditional>
 
-L<VariableDeclaration|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/VariableDeclaration>X<br>
+L<program_03_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Conditional/program_03_good.pl>
 
-L<VariableModification|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/VariableModification>X<br>
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
 
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    if    (0) {
+        print 'yes if',      "\n";
+    }
+    elsif (0) {
+        print 'yes elsif 0', "\n";
+    }
+    elsif (0) {
+        print 'yes elsif 1', "\n";
+    }
+    else      {
+        print 'yes else',    "\n";
+    }
+
+=item * L<Loop|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Loop>
+
+L<program_04_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Loop/program_04_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    TESTFORLOOP:
+    for my unsigned_integer $i ( 0 .. 4 ) {
+        print 'Production rule Loop matched by LoopFor, iteration number ', $i, "\n";
+        if ( $i > 1 ) {
+            last TESTFORLOOP;
+        }
+    }
+
+L<program_23_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Loop/program_23_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    TESTFOREACHLOOP:
+    foreach my number $my_number ( 1.1, 2.2, 3.3, 4.4 ) {
+        if ( $my_number == 3.3 ) {
+            next TESTFOREACHLOOP;
+        }
+        print 'Production rule Loop matched by LoopForEach, iteration item ',
+            $my_number, "\n";
+    }
+
+L<program_32_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Loop/program_32_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my integer $i = 0;
+    TESTWHILELOOP:
+    while ( $i < 7 ) {
+        $i++;
+        if ( $i == 3 ) {
+            next TESTWHILELOOP;
+        }
+        print 'Production rule Loop matched by LoopWhile, iteration item ', $i,
+            "\n";
+    }
+
+=item * L<VariableDeclaration|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/VariableDeclaration>
+
+L<program_05_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/VariableDeclaration/program_05_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my unknown $foo;
+
+L<program_14_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/VariableDeclaration/program_14_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my string_hashref $s_hash
+        = { a => 'howdy', b => 'doody', c => 'clarabell' };
+
+L<program_23_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/VariableDeclaration/program_23_good.pl>
+
+    #!/usr/bin/perl
+
+    # [[[ PREPROCESSOR ]]]
+    # <<< EXECUTE_SUCCESS: 'size of $foo is 10' >>>
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my integer $size_max_half = 5;
+    my number_arrayref $foo->[($size_max_half * 2) - 1] = undef;
+    print 'size of $foo is ' . ( scalar @{$foo} ) . "\n";
+
+L<program_30_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/VariableDeclaration/program_30_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ OPERATIONS ]]]
+
+    my filehandleref $FOO_FH;
+
+L<program_40_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/VariableDeclaration/program_40_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+
+    # [[[ INCLUDES ]]]
+    use RPerl::Test;
+
+    # [[[ OPERATIONS ]]]
+
+    my RPerl::Test $foo = RPerl::Test->new();
+
+=item * L<VariableModification|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/VariableModification>
+
+L<program_03_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/VariableModification/program_03_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my integer_arrayref $i_array;
+    $i_array = [ -20, -15, -10, -5, 0, 5, 10, 15, 20 ];
+
+L<program_10_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/VariableModification/program_10_good.pl>
+
+    #!/usr/bin/perl
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my unknown $foo;
+    $foo = [
+        'strange', { weird => 'goofy', beard => [ 'goatee', -17.01 ] },
+        23.42, 'heterogeneous'
+    ];
+
+=back
 
 =head3 B.4.3: Variable Data
 
@@ -4203,15 +6209,70 @@ C<[[[ SYNTAX PRODUCTION RULES, VARIABLE DATA ]]]>
 
 B<Code Examples:>
 
-I<VariableModification>
-
-L<VariableModification|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/VariableModification>X<br>
-
-
 I<ListElement>
 
-L<Operator01QuoteWord|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator01QuoteWord>X<br>
+=over 16
 
+=item * L<Operator01QuoteWord|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator01QuoteWord>
+
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator01QuoteWord/program_00_good.pl>
+
+    #!/usr/bin/perl
+
+    # [[[ PREPROCESSOR ]]]
+    # <<< EXECUTE_SUCCESS: 'foo' >>>
+    # <<< EXECUTE_SUCCESS: 'quux' >>>
+    # <<< EXECUTE_SUCCESS: 'zorg' >>>
+    # <<< EXECUTE_SUCCESS: 'munge' >>>
+    # <<< EXECUTE_SUCCESS: 'frob' >>>
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my string_arrayref $s_array = [qw(foo quux zorg munge frob)];
+    foreach my string $s ( @{$s_array} ) {
+        print '$s = ', $s, "\n";
+    }
+
+L<program_06_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator01QuoteWord/program_06_good.pl>
+
+    #!/usr/bin/perl
+
+    # [[[ PREPROCESSOR ]]]
+    # <<< EXECUTE_SUCCESS: '-1bar-5bat' >>>
+    # <<< EXECUTE_SUCCESS: 'qu23ux' >>>
+    # <<< EXECUTE_SUCCESS: 'zorg0+blop+0frun' >>>
+    # <<< EXECUTE_SUCCESS: 'munge4/4sqap6/6cruft' >>>
+    # <<< EXECUTE_SUCCESS: '88frob*99grul99*jick88' >>>
+    # <<< EXECUTE_SUCCESS: '`~!@$%^&*-_=+[]{}|;:'".<>/?' >>>
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my string_arrayref $s_array = [qw(-1bar-5bat qu23ux zorg0+blop+0frun munge4/4sqap6/6cruft 88frob*99grul99*jick88 `~!@$%^&*-_=+[]{}|;:'".<>/?)];
+    foreach my string $s ( @{$s_array} ) {
+        print '$s = ', $s, "\n";
+    }
+
+=back
 
 =head3 B.4.4: User-Defined Words
 

@@ -14,8 +14,7 @@ our $VERSION = 0.001_000;
 my integer $i = 10;
 FOOBARLOOP:
 while ( $i < 23 ) {
-    print 'Production rule Statement matched by Loop, iteration number ', $i,
-        "\n";
+    print 'Production rule Statement matched by Loop, iteration number ', $i, "\n";
     $i += 2;
     if ( $i > 18 ) {
         last FOOBARLOOP;

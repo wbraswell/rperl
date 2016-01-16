@@ -12,6 +12,5 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 
 foreach my number $my_number ( 11.1, 22.2, 33.3, 44.4 ) {
-    print 'Production rule Statement matched by Loop, iteration item ',
-        $my_number, "\n";
+    print 'Production rule Statement matched by Loop, iteration item ', $my_number, "\n";
 }
