@@ -3308,59 +3308,59 @@ precedence 23 infix: logical C<and>, equivalent to C<&&> except for precedence
 
 =item * OP22_LOGICAL_NEG
 
-precedence 22 prefix: logical negation 'not', equivalent to '!' except for precedence
+precedence 22 prefix: logical negation C<not>, equivalent to C<!> except for precedence
 
 =item * OP21_LIST_COMMA
 
-precedence 21 infix: "list operators (rightward)" [1] AKA comma ','
+precedence 21 infix: "list operators (rightward)" [1] AKA comma C<,>
 
 =item * OP20_HASH_FATARROW
 
-precedence 20 infix: hash entry fat arrow AKA fat comma '=>'
+precedence 20 infix: hash entry fat arrow AKA fat comma C<=E<gt>>
 
 =item * OP19_LOOP_CONTROL_SCOLON
 
-precedence 19 prefix void: loop control 'next;', 'last;'
+precedence 19 prefix void: loop control C<next;>, C<last;>
 
 =item * OP19_LOOP_CONTROL
 
-precedence 19 prefix void: same as above, except allows 'redo' and requires loop label
+precedence 19 prefix void: same as above, except allows C<redo> and requires loop label
 
 =item * OP18_TERNARY
 
-precedence 18 infix: ternary conditional '?'
+precedence 18 infix: ternary conditional C<?>
 
 =item * OP17_LIST_RANGE
 
-precedence 17 infix: range '..'
+precedence 17 infix: range C<..>
 
 =item * OP16_LOGICAL_OR
 
-precedence 16 infix: logical or '||'
+precedence 16 infix: logical or C<||>
 
 =item * OP15_LOGICAL_AND
 
-precedence 15 infix: logical and '&&'
+precedence 15 infix: logical and C<&&>
 
 =item * OP14_BITWISE_OR_XOR
 
-precedence 14 infix: bitwise or '|', bitwise xor '^'
+precedence 14 infix: bitwise or C<|>, bitwise xor C<^>
 
 =item * OP13_BITWISE_AND
 
-precedence 13 infix: bitwise and '&'
+precedence 13 infix: bitwise and C<&>
 
 =item * OP12_COMPARE_EQ_NE
 
-precedence 12 infix: comparison numeric equal '==', numeric not equal '!=', string equal 'eq', string not equal 'ne'
+precedence 12 infix: comparison numeric equal C<==>, numeric not equal C<!=>, string equal C<eq>, string not equal C<ne>
 
 =item * OP09_BITWISE_SHIFT
 
-precedence 09 infix: bitwise shift left '<<', shift right '>>'
+precedence 09 infix: bitwise shift left C<E<lt>E<lt>>, shift right C<E<gt>E<gt>>
 
 =item * OP10_NAMED_UNARY_SCOLON   = /(-A;|-B;|-C;|-M;|-O;|-R;|-S;|-T;|-W;|-X;|-b;|-c;|-d;|-e;|-f;|-g;|-k;|-l;|-o;|-p;|-r;|-s;|-t;|-u;|-w;|-x;|-z;|alarm;|caller;|chdir;|chroot;|cos;|defined;|delete;|do;|eval;|exists;|gethostbyname;|getnetbyname;|getpgrp;|getprotobyname;|glob;|gmtime;|goto;|hex;|int;|lc;|lcfirst;|length;|localtime;|lock;|log;|lstat;|oct;|ord;|quotemeta;|rand;|readlink;|ref;|require;|rmdir;|scalar;|sin;|sleep;|sqrt;|srand;|stat;|uc;|ucfirst;|umask;)/
 
-precedence 10 prefix: "named unary operators" [1] and Programming Perl, Chapter 3, List of All Named Unary Operators; 'scalar' not 'scalartype'
+precedence 10 prefix: "named unary operators" [1] and Programming Perl, Chapter 3, List of All Named Unary Operators; C<scalar> not C<scalartype>
 
 =item * OP10_NAMED_UNARY          
 
@@ -3368,104 +3368,104 @@ same as above, except w/out semicolon
 
 =item * OP19_VARIABLE_ASSIGN_BY
 
-precedence 19 infix: add assign '+=', subtract assign '-=', multiply assign '*=', divide assign '/=', string concatenation assign '.='
+precedence 19 infix: add assign C<+=>, subtract assign C<-=>, multiply assign C<*=>, divide assign C</=>, string concatenation assign C<.=>
 
 =item * OP08_STRING_CAT
 
-precedence 08 infix: string concatenate '.'
+precedence 08 infix: string concatenate C<.>
 
 =item * OP03_MATH_INC_DEC
 
-precedence 03 prefix and postfix: increment '++', decrement '--'
+precedence 03 prefix and postfix: increment C<++>, decrement C<-->
 
 =item * OP04_MATH_POW
 
-precedence 04 infix: arithmetic exponent AKA power '**'
+precedence 04 infix: arithmetic exponent AKA power C<**>
 
 =item * OP07_MATH_MULT_DIV_MOD
 
-precedence 07 infix: arithmetic multiply '*', divide '/', modulo '*', SSE multiply 'sse_mul', SSE divide 'sse_div'
+precedence 07 infix: arithmetic multiply C<*>, divide C</>, modulo C<*>, SSE multiply C<sse_mul>, SSE divide C<sse_div>
 
 =item * OP07_STRING_REPEAT
 
-precedence 07 infix: string repetition 'x'
+precedence 07 infix: string repetition C<x>
 
 =item * OP06_REGEX_PATTERN
 
-precedence 06 infix: regular expression pattern; ex. 'm/foo.*/xms' or 's/foo/bar/gxms'
+precedence 06 infix: regular expression pattern; ex. C<m/foo.*/xms> or C<s/foo/bar/gxms>
 
 =item * OP06_REGEX_MATCH
 
-precedence 06 infix: regular expression match '=~', not match '!~'
+precedence 06 infix: regular expression match C<=~>, not match C<!~>
 
 =item * OP05_LOGICAL_NEG
 
-precedence 05 prefix: logical negation '!'
+precedence 05 prefix: logical negation C<!>
 
 =item * OP02_HASH_THINARROW
 
-precedence 02 infix: thin arrow, hash dereference and retrieval '->{'
+precedence 02 infix: thin arrow, hash dereference and retrieval C<-E<gt>{>
 
 =item * OP02_ARRAY_THINARROW
 
-precedence 02 infix: thin arrow, array dereference and retrieval '->['
+precedence 02 infix: thin arrow, array dereference and retrieval C<-E<gt>[>
 
 =item * OP02_METHOD_THINARROW_NEW
 
-precedence 02 infix: thin arrow, class constructor '->new('
+precedence 02 infix: thin arrow, class constructor C<-E<gt>new(>
 
 =item * OP02_METHOD_THINARROW
 
-precedence 02 infix: thin arrow, method dereference and call; ex. '->foo' or '->Bar23'
+precedence 02 infix: thin arrow, method dereference and call; ex. C<-E<gt>foo> or C<-E<gt>Bar23>
 
 =item * OP05_MATH_NEG_LPAREN
 
-precedence 05 prefix: arithmetic negative '-('
+precedence 05 prefix: arithmetic negative C<-(>
 
 =item * OP08_MATH_ADD_SUB
 
-precedence 08 infix: arithmetic add '+', subtract '-', SSE add 'sse_add', SSE subtract 'sse_sub'
+precedence 08 infix: arithmetic add C<+>, subtract C<->, SSE add C<sse_add>, SSE subtract C<sse_sub>
 
 =item * OP11_COMPARE_LT_GT
 
-precedence 11 infix: numeric comparison less or equal '<=', greater or equal '>=', less than '<', greater than '>'; string comparison less or equal 'le', greater or equal 'ge', less than 'lt', greater than 'gt'
+precedence 11 infix: numeric comparison less or equal C<E<lt>=>, greater or equal C<E<gt>=>, less than C<E<lt>>, greater than C<E<gt>>; string comparison less or equal C<le>, greater or equal C<ge>, less than C<lt>, greater than C<gt>
 
 =item * OP19_VARIABLE_ASSIGN
 
-precedence 19 infix: assign '='
+precedence 19 infix: assign C<=>
 
 =item * OP01_PRINT
 
-precedence 01 prefix void: 'print' or 'printf' to STDOUT, STDERR, or filehandle
+precedence 01 prefix void: C<print> or C<printf> to STDOUT, STDERR, or filehandle
 
 =item * OP01_NAMED_VOID_SCOLON
 
-precedence 01 prefix void: "terms and list operators (leftward)" [1] AKA builtins, no return value; 'croak;', 'die;', 'exit;', 'return;'
+precedence 01 prefix void: "terms and list operators (leftward)" [1] AKA builtins, no return value; C<croak;>, C<die;>, C<exit;>, C<return;>
 
 =item * OP01_NAMED_VOID_LPAREN
 
-precedence 01 prefix void: same as above, except w/ parenthesis & w/out semicolon & w/out die; 'croak(', 'exit(', 'return('; ProhibitParensWithBuiltins excepts return() & exit(...); RequireTidyCode & RequireCarping excepts croak()
+precedence 01 prefix void: same as above, except w/ parenthesis & w/out semicolon & w/out die; C<croak(>, C<exit(>, C<return(>; ProhibitParensWithBuiltins excepts return() & exit(...); RequireTidyCode & RequireCarping excepts croak()
 
 =item * OP01_NAMED_VOID
 
-precedence 01 prefix void: same as above, except accepts argument(s); 'croak', 'die', 'exit', 'return'
+precedence 01 prefix void: same as above, except accepts argument(s); C<croak>, C<die>, C<exit>, C<return>
 
 =item * OP01_QW
 
-precedence 01 prefix: quoted words; ex. 'qw()' or 'qw(foo bar baz)' or 'qw(Foo23 BarBax Ba_z 123)'
+precedence 01 prefix: quoted words; ex. C<qw()> or C<qw(foo bar baz)> or C<qw(Foo23 BarBax Ba_z 123)>
 
 =item * OP01_OPEN
 
-precedence 01 prefix: 'open' filehandle
+precedence 01 prefix: C<open> filehandle
 
 =item * OP01_CLOSE
 
-precedence 01 prefix: 'close' filehandle
+precedence 01 prefix: C<close> filehandle
 
 =item * OP01_NAMED_SCOLON         = /(abs;|accept;|atan2;|bind;|binmode;|bless;|break;|chmod;|chomp;|chop;|chown;|chr;|closedir;|cmp;|connect;|continue;|crypt;|dbmclose;|dbmopen;|default;|dump;|each;|endgrent;|endhostent;|endnetent;|endprotoent;|endpwent;|endservent;|eof;|evalbytes;|exec;|exp;|fc;|fcntl;|fileno;|flock;|fork;|format;|formline;|getc;|getgrent;|getgrgid;|getgrnam;|gethostbyaddr;|gethostent;|getlogin;|getnetbyaddr;|getnetent;|getpeername;|getppid;|getpriority;|getprotobynumber;|getprotoent;|getpwent;|getpwnam;|getpwuid;|getservbyname;|getservbyport;|getservent;|getsockname;|getsockopt;|given;|grep;|index;|ioctl;|join;|keys;|kill;|link;|listen;|local;|m;|map;|mkdir;|msgctl;|msgget;|msgrcv;|msgsnd;|opendir;|pack;|pipe;|pop;|pos;|prototype;|push;|q;|qq;|qr;|qx;|read;|readdir;|readline;|readpipe;|recv;|rename;|reset;|reverse;|rewinddir;|rindex;|s;|say;|seek;|seekdir;|select;|semctl;|semget;|semop;|send;|setgrent;|sethostent;|setnetent;|setpgrp;|setpriority;|setprotoent;|setpwent;|setservent;|setsockopt;|shift;|shmctl;|shmget;|shmread;|shmwrite;|shutdown;|socket;|socketpair;|sort;|splice;|split;|sprintf;|state;|study;|substr;|symlink;|syscall;|sysopen;|sysread;|sysseek;|system;|syswrite;|tell;|telldir;|tie;|tied;|time;|times;|tr;|truncate;|unless;|unlink;|unpack;|unshift;|untie;|until;|utime;|values;|vec;|wait;|waitpid;|wantarray;|warn;|when;|write;|y;)/
 
 precedence 01 prefix: "terms and list operators (leftward)" [1] AKA builtins; http://perl5.git.perl.org/perl.git/blob/HEAD:/t/op/cproto.t [2]
-w/out all-uppercase Perl system builtin keywords ('__DATA__', 'AUTOLOAD', 'CHECK', etc); named unary operators above ('defined', 'exists', etc); and RPerl keywords ('use', 'our', 'my', 'package', 'for', etc)
+w/out all-uppercase Perl system builtin keywords (C<__DATA__>, C<AUTOLOAD>, C<CHECK>, etc); named unary operators above (C<defined>, C<exists>, etc); and RPerl keywords (C<use>, C<our>, C<my>, C<package>, C<for>, etc)
 
 =item * OP01_NAMED
 
@@ -3480,31 +3480,31 @@ C<[[[ LEXICON TOKENS, PUNCTUATION & USER-DEFINED WORDS ]]]>X<br>
 
 =item * COLON
 
-':'
+C<:>
 
 =item * LPAREN_MY
 
-'(my'
+C<(my>
 
 =item * LPAREN
 
-'('
+C<(>
 
 =item * LBRACKET
 
-'['
+C<[>
 
 =item * LBRACE
 
-'{'
+C<{>
 
 =item * WORD
 
-lowercase letter followed by optional word characters; or uppercase letter followed by at least one lowercase letter and optional word characters; ex. 'foo' or 'foo23' or 'Foo23'
+lowercase letter followed by optional word characters; or uppercase letter followed by at least one lowercase letter and optional word characters; ex. C<foo> or C<foo23> or C<Foo23>
 
 =item * WORD_UPPERCASE
 
-single uppercase letter, or uppercase letter followed by uppercase letters, numbers, and underscores; ex. 'FOO' or 'FOOBAR_42_HOWDY'
+single uppercase letter, or uppercase letter followed by uppercase letters, numbers, and underscores; ex. C<FOO> or C<FOOBAR_42_HOWDY>
 
 =back
 
