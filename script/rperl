@@ -5,10 +5,10 @@ use warnings;
 use RPerl::AfterSubclass;
 
 # DEV NOTE, CORRELATION #rp16: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
-our $VERSION = 1.500_000;    # CODENAME GEMINI
+our $VERSION = 1.510_000;    # CODENAME GEMINI
 
-#our $VERSION = 20160101;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
-#our $VERSION = 2016.001;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
+#our $VERSION = 20160117;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
+#our $VERSION = 2016.017;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -532,9 +532,9 @@ if ($version) {
     # DEV NOTE, CORRELATION #rp16: numbering schemes mentioned below
     my $version_message = <<EOL;
 
-This is RPerl version 1.500_000, Long Date 20160101, Star Date 2016.001
-v1.500_000 using RPerl's underscore-is-comma numbering scheme
-v1.500000  using  CPAN's underscore-is-beta  numbering scheme
+This is RPerl version 1.510_000, Long Date 20160117, Star Date 2016.017
+v1.510_000 using RPerl's underscore-is-comma numbering scheme
+v1.510000  using  CPAN's underscore-is-beta  numbering scheme
 
 Copyright © 2013, 2014, 2015, 2016, William N. Braswell, Jr..  All Rights Reserved.
 This work is Free & Open Source; you can redistribute it and/or modify it 
