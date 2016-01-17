@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.031_001;
+our $VERSION = 0.031_101;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -136,9 +136,9 @@ X<br>
 
 =item * L</APPENDIX A: EXERCISE ANSWERS>
 
-=item * L</APPENDIX B: BEYOND THE ROADRUNNER>
+=item * L</APPENDIX B: RPERL GRAMMAR>
 
-=item * L</APPENDIX C: RPERL GRAMMAR>
+=item * L</APPENDIX C: BEYOND THE ROADRUNNER>
 
 =back
 
