@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.020_000;
+our $VERSION = 0.030_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -148,27 +148,199 @@ X<br>
 
 =head2 Section 0.1: Who I Am
 
-[INSERT WHO]
+My name is William N. Braswell, Jr.; I am also known by a number of other names including Will the Chill, The Voice In The Wilderness, Skipper Brassie ("braz-ee"), and just Will.
+
+I have a degree in computer science and mathematics from Texas Tech University, I have worked as a Perl software developer for over 15 years, and I am the founder of the Auto-Parallel Technologies consulting company.
+
+L<LinkedIn Profile|https://www.linkedin.com/in/williambraswell>
+
+L<GitHub Profile|https://github.com/wbraswell>
+
+I am 1 of 3 co-founders of the Perl 11 movement.
+
+L<Perl11.org|http://perl11.org/>
+
+I am also the President of the Austin Perl Mongers.
+
+L<Austin.pm|http://austin.pm>
+
+Most importantly, I am the creator of the RPerl optimizing compiler for Perl 5, about which you are currently reading!
+
+L<RPerl.org|http://rperl.org>
 
 =head2 Section 0.2: Why I Wrote This Book
 
-[INSERT WHY]
+Using RPerl is different enough from normal Perl 5 to necessitate the creation of in-depth user documentation.
+
+Manual pages and cookbooks and example source code alone are not enough, only a full textbook can provide the level of detail necessary to truly learn RPerl.
+
+This is that textbook.
 
 =head2 Section 0.3: History Of This Book
 
-[INSERT WHEN]
+RPerl v1.0 was released on US Independence Day, July 4th, 2015; 6 days later, work began on the source code solution to exercise 1 of chapter 1 of this book:
+
+L<First Learning RPerl Commit on GitHub|https://github.com/wbraswell/rperl/commit/8c3dec4448fbed6bba04f92f9f23759c5512f2e9>
+
+GitHub commit dates include, but are not limited to the following:
+
+<noncode>
+
+    $ git log --reverse --all --date=short --pretty='%cd: %s' | grep 'Learning RPerl'
+    2015-07-10: Learning RPerl, Chapter 1, Exercise 1, Hello World
+    2015-07-11: Learning RPerl, Chapter 2, Exercise 1, Circumference Of Circle With Radius 12.5
+    2015-07-12: Learning RPerl, Chapter 2, Exercise 1, Circumference Of Circle With Radius 12.5, Part 2
+    2015-07-13: Learning RPerl, Chapter 2, Exercise 2, Circumference Of Circle With Any Radius
+    2015-07-14: Learning RPerl, Chapter 2, Exercise 3, Circumference Of Circle With Any Positive Radius
+    2015-07-15: Learning RPerl, Chapter 2, Exercise 4, Product Of Any Two Numbers
+    2015-07-16: Learning RPerl, Chapter 2, Exercise 5, String Repeat
+    2015-07-18: Learning RPerl, Chapter 3, Exercise 1, STDIN Strings Reverse
+    2015-07-17: Learning RPerl, Chapters 1 & 2, Add Source Comments
+    2015-07-19: Learning RPerl, Chapter 3, Exercise 2, STDIN Array Indices
+    2015-07-20: Learning RPerl, Chapters 2 & 3, Add Source Comments
+    2015-07-21: Learning RPerl, Chapter 3, Exercise 3, STDIN Strings Sort
+    2015-07-22: Learning RPerl, Chapter 4, Exercise 1, Subroutine For Stringified Numbers Total
+    2015-07-23: Learning RPerl, Chapter 4, Exercise 2, Subroutine For Total Of 1 To 1,000
+    2015-07-25: Learning RPerl, Chapter 4, Exercise 3, Subroutines For Above-Average Array Elements
+    2015-10-03: Learning RPerl, Chapter 4, Exercise 4, Subroutine To Greet User
+    2015-10-04: Learning RPerl, Chapter 4, Exercise 5, Subroutine To Greet Multiple Users
+    2015-10-05: Learning RPerl, Chapter 5, Exercise 1, Print Input File(s) Lines In Reverse, Part 1
+    2015-10-06: Learning RPerl, Chapter 5, Exercise 1, Print Input File(s) Lines In Reverse, Part 2
+    2015-10-07: Learning RPerl, Chapter 5, Exercise 2, Print Input Line(s) Right-Justified
+    2015-10-08: Learning RPerl, Chapter 5, Exercise 3, Print Input Line(s) Variable-Width Right-Justified, Part 1
+    2015-10-09: Learning RPerl, Chapter 5, Exercise 3, Print Input Line(s) Variable-Width Right-Justified, Part 2
+    2015-10-10: Learning RPerl, Chapter 6, Exercise 1, Print Family Names
+    2015-10-11: Learning RPerl, Chapter 6, Exercise 2, Unique Word Count
+    2015-10-12: Learning RPerl, Ensure All Exercises Parse, Part 1
+    2015-10-13: Learning RPerl, Ensure All Exercises Parse, Part 2
+    2015-10-19: Learning RPerl, Ensure All Exercises Parse, Part 3
+    2015-10-20: Learning RPerl, Ensure All Exercises Parse, Part 4
+    2015-10-21: Learning RPerl, Ensure All Exercises Parse, Part 5
+    2015-10-22: Learning RPerl, Ensure All Exercises Parse, Part 6
+    2015-10-23: Learning RPerl, Ensure All Exercises Parse, Part 7
+    2015-10-24: Learning RPerl, Ensure All Exercises Parse, Part 8
+    2015-10-25: Learning RPerl, Ensure All Exercises Parse, Part 9
+    2015-10-26: Learning RPerl, Ensure All Exercises Parse, Part 10
+    2015-10-27: Learning RPerl, Ensure All Exercises Parse, Part 11
+    2015-10-28: Learning RPerl, Ensure All Exercises Parse, Part 12
+    2015-10-28: Learning RPerl, Ensure All Exercises Parse, Part 13
+    2015-10-28: Learning RPerl, Ensure All Exercises Parse, Part 14
+    2015-11-07: CPAN Release, v1.200002; Temporarily Fix Macintosh Build Failures, Learning RPerl Parse Failure, Etc.
+    2015-11-10: Learning RPerl, Content, Part 1
+    2015-11-11: Learning RPerl, Content, Part 2
+    2015-11-14: Learning RPerl, Content, Part 3
+    2015-11-15: Learning RPerl, Content, Part 4
+    2015-11-16: Learning RPerl, Content, Part 5
+    2015-11-16: Learning RPerl, Content, Part 6
+    2015-11-17: Learning RPerl, Content, Part 7
+    2015-11-18: Learning RPerl, Content, Part 8
+    2015-11-18: Learning RPerl, Content, Part 9
+    2015-11-19: Learning RPerl, Content, Part 10
+    2015-11-20: Learning RPerl, Content, Part 11
+    2015-11-21: Learning RPerl, Content, Part 12
+    2015-11-22: Learning RPerl, Content, Part 13
+    2015-11-24: Learning RPerl, Content, Part 14
+    2015-12-31: Learning RPerl, Content, Part 15
+    2015-12-31: Learning RPerl, Content, Part 16
+    2016-01-01: Learning RPerl, Content, Part 17
+    2016-01-02: Learning RPerl, FontAwesome & MetaCPAN Files, Initial Commit
+    2016-01-02: News, RPerl v1.5 Release; Learning RPerl, FontAwesome & MetaCPAN Files, Move To Subdirectories
+    2016-01-02: Learning RPerl, Update pod2rperlhtml.pl Script, Correct CSS & JS Paths
+    2016-01-02: Learning RPerl, HTML Content, Initial Commit
+    2016-01-03: Learning RPerl, Content, Part 18
+    2016-01-05: Learning RPerl, Content, Part 19
+    2016-01-06: Learning RPerl, Content, Part 20
+    2016-01-07: Learning RPerl, Content, Part 21
+    2016-01-08: Learning RPerl, Content, Part 22
+    2016-01-09: Learning RPerl, Content, Part 23
+    2016-01-09: Learning RPerl, Content, Part 24
+    2016-01-10: Learning RPerl, Content, Part 25
+    2016-01-11: Learning RPerl, Content, Part 26
+    2016-01-12: Learning RPerl, Content, Part 27
+    2016-01-14: Learning RPerl, Content, Part 28
+    2016-01-15: Learning RPerl, Content, Part 29
+    2016-01-16: Learning RPerl, Content, Part 30
+    2016-01-16: Learning RPerl, Content, Part 31
+    2016-01-16: Learning RPerl, Content, Part 32
+
+</noncode>
 
 =head2 Section 0.4: TPF Grant
 
-[INSERT MONEY]
+This book was made possible in part by a generous grant from The Perl Foundation, as part of the September 2015 round of funding.
+
+Special thanks to TPF Grants Committee Secretary, Makoto Nozaki; TPF Grant Manager, Mark Jensen; TPF Grants Committee's 8 supporting members; and everyone who gave positive feedback on the grant proposal.
+
+A history of the grant may be found at the following links:
+
+=over 16
+
+=item * L<Call For Grant Proposals|http://news.perlfoundation.org/2015/09/call-for-grant-proposals-sept.html>
+
+=item * L<Grant Proposal|http://news.perlfoundation.org/2015/09/grant-proposal-rperl-user-docu.html>
+
+=item * L<Grant Proposals|http://news.perlfoundation.org/2015/09/september-2015-grant-proposals-1.html>
+
+=item * L<Grant Proposal Votes|http://news.perlfoundation.org/2015/10/september-2015-grant-votes.html>
+
+=item * L<Grant Report 1|http://news.perlfoundation.org/2015/10/grant-report-rperl-user-docume.html>
+
+=item * L<Grant Report 2|http://news.perlfoundation.org/2015/12/grant-report-rperl-user-docume-1.html>
+
+=item * L<Grant Report 3|http://news.perlfoundation.org/2016/01/grant-report-rperl-user-docume-2.html>
+
+=back
 
 =head2 Section 0.5: Acknowledgements & Thanks
 
-[INSERT THEM]
+Countless people have contributed to the development of RPerl; from source code to bug testing to financial donations to emotional support, it truly takes a village to build a compiler!
+
+Below are the contents of the official RPerl thank-you file, listing the handles (online nicknames) and names of the most important RPerl contributors.  If you don't already know who these people are, you will be pleasantly surprised by researching each of them.
+
+L<Latest THANKS File|https://github.com/wbraswell/rperl/blob/master/THANKS>
+
+<noncode>
+
+    Many Thanks To irc.perl.org:
+
+    #perl5 Founder timtoady
+
+    #perl6 Founder timtoady (again)
+
+    #perl11 Founders ingy & rurban & willthechill (yours truly)
+
+    #perl11 Members bulk88 & mst
+
+    #inline Founders ingy (again) & nwatkiss
+
+    #inline Members davido & mohawk & sisyphus
+
+
+    Additional Thanks To:
+
+    Eyapp Creator Casiano Rodriguez-Leon, PhD
+
+    Austin Perl Mongers
+
+    All RPerl Contributors & Users & Supporters
+
+</noncode>
 
 =head2 Section 0.6: Defense / Apology
 
-[INSERT SORRY]
+I'm sure I will make errors while writing this book.
+
+I may even upset some people, particularly those who have an emotional or financial investment in slow Perl software.
+
+Despite my best efforts, I remain a fallible human being; thus, bad spelling and grammer and run-on sentences and parts that are hard to understand and parts that are not funny and formattiNg errors and bad spelling adn repetitions and other annoyances will doubtless plague this tome but we must not allow such trivialities as, improper punctuation to affect our willingness and ability to learn how to write super-fast RPerl software.
+
+If you find a mistake in this book (other than in the immediately preceeding paragraph), please utilize the following link to create a new GitHub issue (bug report) using a title starting with the words "Learning RPerl":
+
+L<New GitHub Issue|https://github.com/wbraswell/rperl/issues/new>
+
+I will try my best to create an engaging and educational experience for you, the reader; however, in anticipation of the inevitable disappointment you may experience, I can only humbly offer...
+
+B<I'M SORRY!>
 
 =head2 Section 0.7: POD
 
@@ -3586,7 +3758,7 @@ The EBNF metasyntax implemented by Eyapp is of the form:
 
 C<ProductionRule: First Alternative 'foo' | Second Alternative 'bar' | ... | Last Alternative 'quux' ;>
 
-In this example, C<ProductionRule> is a non-terminal left-hand-side (LHS) symbol, is followed by the C<:> reduction metasymbol, and may be reduced (replaced) by any of the right-hand-side (RHS) sequences of terminal and non-terminal symbols, themselves separated by the C<|> alternation (logical or) metasymbol.  In other words, each LHS can become any of it's corresponding RHS alternatives.
+In this example, C<ProductionRule> is a non-terminal left-hand-side (LHS) symbol, is followed by the C<:> reduction metasymbol, and may be reduced (replaced) by any of the right-hand-side (RHS) sequences of terminal and non-terminal symbols, themselves separated by the C<|> alternation (logical or) metasymbol.  In other words, each LHS may become any of its corresponding RHS alternatives.
 
 Terminal symbols are enclosed in single quotes as with C<'foo'>, never appear on the LHS, and are taken as literal data with no transformations applied.  Eyapp treats terminal symbols as tokens which only match one hard-coded lexeme, which is the string appearing inside the single quotes, C<foo> in this example.
 
