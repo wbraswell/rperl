@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-our $VERSION = 0.003_300;
+our $VERSION = 0.003_400;
 use ExtUtils::MakeMaker;
 
 BEGIN { use English; }
@@ -38,7 +38,8 @@ WriteMakefile(
         'Time::HiRes'         => 1.9726,
         'List::MoreUtils'     => 0.33,
         'App::Pod2CpanHtml'   => 0.04,
-        'Math::BigInt::GMP'   => 1.46
+        'Math::BigInt::GMP'   => 1.46,
+        'Date::Format'        => 2.24      # for pod2rperlhtml.pl
     },
     META_MERGE => {
         'meta-spec' => {

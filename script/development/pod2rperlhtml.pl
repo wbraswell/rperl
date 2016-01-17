@@ -4,14 +4,16 @@
 use RPerl;
 use strict;
 use warnings;
-our $VERSION = 0.021_000;
+our $VERSION = 0.022_001;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 
 # [[[ INCLUDES ]]]
+use RPerl::Learning;
 use App::Pod2CpanHtml;
 use File::Temp qw(tempfile);
+use Date::Format;
 
 # [[[ SUBROUTINES ]]]
 
@@ -116,6 +118,7 @@ our string_arrayref $pod2cpanhtml_process = sub {
 our string_arrayref $pod2cpanhtml_postprocess = sub {
     ( my string_arrayref $file_lines ) = @_;
     my string_arrayref $file_lines_modified = [];
+    my boolean $inside_edition = 0;  # no, not Bill O'Reilly
     my boolean $inside_toc = 0;
     my boolean $need_check_close_ul = 0;
     my string $file_line_saved = undef;
@@ -125,6 +128,27 @@ our string_arrayref $pod2cpanhtml_postprocess = sub {
         # CPAN only, not MetaCPAN: help inline code tags stand out more, highlighted background matching the block-indented code
 #        if ($file_line eq '</head>') { push @{$file_lines_modified}, '<style> code { background: #eeeeee; } </style>'; }  # no outline
 #        if ($file_line eq '</head>') { push @{$file_lines_modified}, '<style> code { background: #eeeeee; border: 1px solid #888888; } </style>'; }  # yes outline
+ 
+        # Edition: insert Learning.pm $VERSION & date
+        if ($file_line eq 'name="EDITION"') {
+#            print {*STDERR} 'have $file_line = ' . $file_line . "\n";
+            $inside_edition = 1;
+            push @{$file_lines_modified}, $file_line;
+            next;
+        }
+        elsif ($inside_edition) {
+            if ($file_line eq '<p>&#60;br&#62;</p>') {
+#                print {*STDERR} 'have $file_line = ' . $file_line . "\n";
+                $file_line = '<p><br></p>';
+                push @{$file_lines_modified}, ('<p>Automatically Generated From <a href="https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Learning.pm"><i>RPerl/Learning.pm</i></a> v' . number_to_string($RPerl::Learning::VERSION) . '<br>' . "\n");
+                push @{$file_lines_modified}, ('Using <a href="https://github.com/wbraswell/rperl/blob/master/script/development/pod2rperlhtml.pl"><i>pod2rperlhtml.pl</i></a> v' . number_to_string($VERSION) . '<br>' . "\n");
+                push @{$file_lines_modified}, (time2str('On %A, %B %d, %Y at %l:%M%P %Z', time) . '<br>' . "\n");
+#                push @{$file_lines_modified}, (time2str('%Y%m%d %Y.%j %H%M.%S', time) . '</p>' . "\n");  # Longdate & Stardate
+                $inside_edition = 0;
+            }
+            push @{$file_lines_modified}, $file_line;
+            next;
+        }
 
         # MetaCPAN & SyntaxHighlighter: enable CSS & Javascript
         if ($file_line eq '<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" >') {

@@ -3,11 +3,12 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.030_000;
+our $VERSION = 0.031_001;
 
 # [[[ OO INHERITANCE ]]]
-use parent qw(RPerl::CompileUnit::Module::Class);
-use RPerl::CompileUnit::Module::Class;
+# NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
+#use parent qw(RPerl::CompileUnit::Module::Class);
+#use RPerl::CompileUnit::Module::Class;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -80,6 +81,13 @@ X<br>
 =head1 DEDICATION
 
 For Anna.
+
+X<br>
+
+
+=head1 EDITION
+
+0th Edition, Pre-Release Copy
 
 X<br>
 
@@ -182,7 +190,7 @@ RPerl v1.0 was released on US Independence Day, July 4th, 2015; 6 days later, wo
 
 L<First Learning RPerl Commit on GitHub|https://github.com/wbraswell/rperl/commit/8c3dec4448fbed6bba04f92f9f23759c5512f2e9>
 
-GitHub commit dates include, but are not limited to the following:
+Significant GitHub commit dates include, but are not limited to the following:
 
 <noncode>
 
@@ -6473,11 +6481,29 @@ C<[[[ SYNTAX PRODUCTION RULES, USER-DEFINED WORDS ]]]>
 
 B<There are no additional code examples for this section, all pertinent examples are contained in the previous sections.>
 
+X<br>
+
+
 =head1 APPENDIX C: BEYOND THE ROADRUNNER
 
-The Scallion
+=for html <u>
 
-The Sword
+B<Intermediate RPerl>
+
+=for html </u>
+
+The Scallion Book
+
+X<br>
+
+
+=for html <u>
+
+B<Mastering RPerl>
+
+=for html </u>
+
+The Sword Book
 
 X<br>
 
