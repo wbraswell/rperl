@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.031_101;
+our $VERSION = 0.031_111;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -927,6 +927,8 @@ RPerl provides 7 scalar data types:
 =item * C<string> (core)
 
 =back
+
+Of the 7 RPerl scalar data types, 3 are directly supported by the Perl 5 core: C<integer>, C<number>, and C<string>.  This means the Perl 5 core is capable of directly identifying and storing those 3 core types.  The remaining 4 non-core types are indirectly supported by Perl 5: C<boolean> and C<unsigned_integer> can be stored within either a C<integer> or C<number>; C<character> can be stored within a C<string>; and C<gmp_integer> is ...
 
 START HERE: add blurb about core types, add unsigned_integer & gmp_integer examples & sections
 START HERE: add blurb about core types, add unsigned_integer & gmp_integer examples & sections
