@@ -928,7 +928,7 @@ RPerl provides 7 scalar data types:
 
 =back
 
-Of the 7 RPerl scalar data types, 3 are directly supported by the Perl 5 core: C<integer>, C<number>, and C<string>.  This means the Perl 5 core is capable of directly identifying and storing those 3 core types.  The remaining 4 non-core types are indirectly supported by Perl 5: C<boolean> and C<unsigned_integer> can be stored within either a C<integer> or C<number>; C<character> can be stored within a C<string>; and C<gmp_integer> is ...
+Of the 7 RPerl scalar data types, 3 are directly supported by the Perl 5 core: C<integer>, C<number>, and C<string>.  This means the Perl 5 core is capable of directly identifying and storing those 3 core types.  The remaining 4 non-core types are indirectly supported by the Perl 5 interpreter: C<boolean> and C<unsigned_integer> can be stored within either a C<integer> or C<number>; C<character> can be stored within a C<string>; and C<gmp_integer> is supported by the C<use bigint;> wrapper around C<Math::BigInt::GMP> module.
 
 START HERE: add blurb about core types, add unsigned_integer & gmp_integer examples & sections
 START HERE: add blurb about core types, add unsigned_integer & gmp_integer examples & sections
