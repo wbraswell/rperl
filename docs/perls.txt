@@ -58,6 +58,16 @@ PAST:   none
 URL:    perl11.org/cperl
 GIT:    github.com/perl11/cperl
 
+
+NEED UPDATED INFO:
+P2
+Perlito
+Moe
+gPerl?
+STD_P5
+Inline::Perl5
+
+
 NAME:   
 TYPE:   
 STATUS: 
