@@ -14,6 +14,17 @@ using std::cout;  using std::cerr;  using std::endl;
 #include <RPerl/DataType/Number.cpp>
 #include <RPerl/DataType/String.cpp>
 
+// [[[ TYPEDEFS, REPEATED ]]]
+typedef std::vector<integer> integer_arrayref;
+typedef std::vector<integer>::iterator integer_arrayref_iterator;
+typedef std::vector<integer>::const_iterator integer_arrayref_const_iterator;
+typedef std::vector<number> number_arrayref;
+typedef std::vector<number>::iterator number_arrayref_iterator;
+typedef std::vector<number>::const_iterator number_arrayref_const_iterator;
+typedef std::vector<string> string_arrayref;
+typedef std::vector<string>::iterator string_arrayref_iterator;
+typedef std::vector<string>::const_iterator string_arrayref_const_iterator;
+
 // [[[ TYPEDEFS ]]]
 typedef std::vector<std::vector<integer>> integer_arrayref_arrayref;
 typedef std::vector<std::vector<integer>>::iterator integer_arrayref_arrayref_iterator;
@@ -44,19 +55,19 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 # ifdef __CPP__TYPES
-integer_arrayref_arrayref XS_unpack_integer_arrayref_arrayref(SV* input_av_ref_av_ref);
-void XS_pack_integer_arrayref_arrayref(SV* output_av_ref_av_ref, integer_arrayref_arrayref input_vector_vector);
-number_arrayref_arrayref XS_unpack_number_arrayref_arrayref(SV* input_av_ref_av_ref);
-void XS_pack_number_arrayref_arrayref(SV* output_av_ref_av_ref, number_arrayref_arrayref input_vector_vector);
-string_arrayref_arrayref XS_unpack_string_arrayref_arrayref(SV* input_av_ref_av_ref);
-void XS_pack_string_arrayref_arrayref(SV* output_av_ref_av_ref, string_arrayref_arrayref input_vector_vector);
+integer_arrayref_arrayref XS_unpack_integer_arrayref_arrayref(SV* input_avref_avref);
+void XS_pack_integer_arrayref_arrayref(SV* output_avref_avref, integer_arrayref_arrayref input_vector_vector);
+number_arrayref_arrayref XS_unpack_number_arrayref_arrayref(SV* input_avref_avref);
+void XS_pack_number_arrayref_arrayref(SV* output_avref_avref, number_arrayref_arrayref input_vector_vector);
+string_arrayref_arrayref XS_unpack_string_arrayref_arrayref(SV* input_avref_avref);
+void XS_pack_string_arrayref_arrayref(SV* output_avref_avref, string_arrayref_arrayref input_vector_vector);
 # endif
 
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
-SV* integer_arrayref_arrayref_to_string(SV* input_av_ref_av_ref);
-SV* number_arrayref_arrayref_to_string(SV* input_av_ref_av_ref);
-SV* string_arrayref_arrayref_to_string(SV* input_av_ref_av_ref);
+SV* integer_arrayref_arrayref_to_string(SV* input_avref_avref);
+SV* number_arrayref_arrayref_to_string(SV* input_avref_avref);
+SV* string_arrayref_arrayref_to_string(SV* input_avref_avref);
 # elif defined __CPP__TYPES
 string integer_arrayref_arrayref_to_string(integer_arrayref_arrayref input_vector_vector);
 string number_arrayref_arrayref_to_string(number_arrayref_arrayref input_vector_vector);

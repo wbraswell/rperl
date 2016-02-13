@@ -93,7 +93,21 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     $cpp_source_group->{H} .= $cpp_source_subgroup->{CPP};
     $cpp_source_group->{H} .= ';' . "\n";
 
+    # create shim
+    if ( ( not exists $cpp_source_group->{_H_constants_shims} ) or ( not defined $cpp_source_group->{_H_constants_shims} ) ) {
+        $cpp_source_group->{_H_constants_shims} = {};
+    }
+    elsif (( not exists $cpp_source_group->{_H_constants_shims}->{$package_name_underscores} )
+        or ( not defined $cpp_source_group->{_H_constants_shims}->{$package_name_underscores} ) )
+    {
+        $cpp_source_group->{_H_constants_shims}->{$package_name_underscores} = q{};
+    }
+    $cpp_source_group->{_H_constants_shims}->{$package_name_underscores} .= 
+        'const ' . $type_inner_constant_type . q{ } . $name . '() { return ' . $package_name_underscores . '__' . $name . '; }' . "\n";
+ 
+#    RPerl::diag( 'in CompileUnit::Constant->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_group->{_H_constants_shims}->{$package_name_underscores} = ' . "\n" . $cpp_source_group->{_H_constants_shims}->{$package_name_underscores} . "\n" );
+
     return $cpp_source_group;
 };
 
-1;                                                                                         # end of class
+1;    # end of class

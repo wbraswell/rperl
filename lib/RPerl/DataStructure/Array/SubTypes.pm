@@ -150,12 +150,12 @@ our void $integer_arrayref_CHECKTRACE = sub {
 
 # convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
 our string $integer_arrayref_to_string = sub {
-    ( my $input_av_ref ) = @_;
+    ( my $input_avref ) = @_;
 
 #    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_to_string(), top of subroutine\n");
 
-    #    ::integer_arrayref_CHECK($input_av_ref);
-    ::integer_arrayref_CHECKTRACE( $input_av_ref, '$input_av_ref',
+    #    ::integer_arrayref_CHECK($input_avref);
+    ::integer_arrayref_CHECKTRACE( $input_avref, '$input_avref',
         'integer_arrayref_to_string()' );
 
     my @input_av;
@@ -164,7 +164,7 @@ our string $integer_arrayref_to_string = sub {
     my string $output_sv;
     my integer $i_is_0 = 1;   # NEED UPGRADE: should be boolean type, not integer
 
-    @input_av        = @{$input_av_ref};
+    @input_av        = @{$input_avref};
     $input_av_length = scalar @input_av;
 
 #	RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_to_string(), have \$input_av_length = $input_av_length\n");
@@ -311,12 +311,12 @@ our void $number_arrayref_CHECKTRACE = sub {
 
 # convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing NVs))) to Perl-parsable (Perl SV containing PV)
 our string $number_arrayref_to_string = sub {
-    ( my $input_av_ref ) = @_;
+    ( my $input_avref ) = @_;
 
 #    RPerl::diag("in PERLOPS_PERLTYPES number_arrayref_to_string(), top of subroutine\n");
 
-    #    ::number_arrayref_CHECK($input_av_ref);
-    ::number_arrayref_CHECKTRACE( $input_av_ref, '$input_av_ref',
+    #    ::number_arrayref_CHECK($input_avref);
+    ::number_arrayref_CHECKTRACE( $input_avref, '$input_avref',
         'number_arrayref_to_string()' );
 
     my @input_av;
@@ -325,7 +325,7 @@ our string $number_arrayref_to_string = sub {
     my string $output_sv;
     my integer $i_is_0 = 1;   # NEED UPGRADE: should be boolean type, not integer
 
-    @input_av        = @{$input_av_ref};
+    @input_av        = @{$input_avref};
     $input_av_length = scalar @input_av;
 
 #	RPerl::diag("in PERLOPS_PERLTYPES number_arrayref_to_string(), have \$input_av_length = $input_av_length\n");
@@ -472,12 +472,12 @@ our void $string_arrayref_CHECKTRACE = sub {
 
 # convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs))) to Perl-parsable (Perl SV containing PV)
 our string $string_arrayref_to_string = sub {
-    ( my $input_av_ref ) = @_;
+    ( my $input_avref ) = @_;
 
 #    RPerl::diag("in PERLOPS_PERLTYPES string_arrayref_to_string(), top of subroutine\n");
 
-    #    ::string_arrayref_CHECK($input_av_ref);
-    ::string_arrayref_CHECKTRACE( $input_av_ref, '$input_av_ref',
+    #    ::string_arrayref_CHECK($input_avref);
+    ::string_arrayref_CHECKTRACE( $input_avref, '$input_avref',
         'string_arrayref_to_string()' );
 
     my @input_av;
@@ -486,7 +486,7 @@ our string $string_arrayref_to_string = sub {
     my string $output_sv;
     my integer $i_is_0 = 1;   # NEED UPGRADE: should be boolean type, not integer
 
-    @input_av        = @{$input_av_ref};
+    @input_av        = @{$input_avref};
     $input_av_length = scalar @input_av;
 
 #	RPerl::diag("in PERLOPS_PERLTYPES string_arrayref_to_string(), have \$input_av_length = $input_av_length\n");

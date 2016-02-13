@@ -397,6 +397,9 @@ our void $save_source_files = sub {
         my string $module_name = shift @{ $module_names_split };
         my string $module_name_underscores = shift @{ $module_names_underscores_split };
         my integer $i = 0;
+ 
+        # deferred, finally insert constants shims
+#        RPerl::diag('in Compiler::save_source_files(), have $source_group->{_H_constants_shims}->{$module_name_underscores} = ' . $source_group->{_H_constants_shims}->{$module_name_underscores} . "\n");
 
         while ( defined $module_name_underscores ) {
 #            RPerl::diag( q{in Compiler::save_source_files(), have $module_path = } . $module_path . "\n" );

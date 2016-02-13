@@ -35,7 +35,7 @@ for my integer $i ( 0 .. $i_MAX ) {
 
     # [[[ INTEGER TESTS ]]]
 
-#	$retval_stringify = integer_arrayref_to_string();  # TIVAVRV00; error PERLOPS EIVAVRV00, CPPOPS "Usage: main::integer_arrayref_to_string(input_av_ref/input_vector)"
+#	$retval_stringify = integer_arrayref_to_string();  # TIVAVRV00; error PERLOPS EIVAVRV00, CPPOPS "Usage: main::integer_arrayref_to_string(input_avref/input_vector)"
 #	$retval_stringify = integer_arrayref_to_string(undef);  # TIVAVRV01; error EIVAVRV00
 #	$retval_stringify = integer_arrayref_to_string(2);  # TIVAVRV02; error EIVAVRV01
 #	$retval_stringify = integer_arrayref_to_string(2.3);  # TIVAVRV03; error EIVAVRV01
@@ -63,7 +63,7 @@ for my integer $i ( 0 .. $i_MAX ) {
 
     # [[[ NUMBER TESTS ]]]
 
-#	$retval_stringify = number_arrayref_to_string();  # TNVAVRV00; error PERLOPS ENVAVRV00, CPPOPS "Usage: main::number_arrayref_to_string(input_av_ref/input_vector)"
+#	$retval_stringify = number_arrayref_to_string();  # TNVAVRV00; error PERLOPS ENVAVRV00, CPPOPS "Usage: main::number_arrayref_to_string(input_avref/input_vector)"
 #	$retval_stringify = number_arrayref_to_string(undef);  # TNVAVRV01; error ENVAVRV00
 #	$retval_stringify = number_arrayref_to_string(2);  # TNVAVRV02; error ENVAVRV01
 #	$retval_stringify = number_arrayref_to_string(2.3);  # TNVAVRV03; error ENVAVRV01
@@ -92,7 +92,7 @@ for my integer $i ( 0 .. $i_MAX ) {
 
     # [[[ STRING TESTS ]]]
 
-#	$retval_stringify = string_arrayref_to_string();  # TPVAVRV00; error PERLOPS EPVAVRV00, CPPOPS "Usage: main::string_arrayref_to_string(input_av_ref/input_vector)"
+#	$retval_stringify = string_arrayref_to_string();  # TPVAVRV00; error PERLOPS EPVAVRV00, CPPOPS "Usage: main::string_arrayref_to_string(input_avref/input_vector)"
 #	$retval_stringify = string_arrayref_to_string(undef);  # TPVAVRV01; error EPVAVRV00
 #	$retval_stringify = string_arrayref_to_string(2);  # TPVAVRV02; error EPVAVRV01
 #	$retval_stringify = string_arrayref_to_string(2.3);  # TPVAVRV03; error EPVAVRV01

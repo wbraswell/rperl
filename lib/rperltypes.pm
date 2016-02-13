@@ -45,7 +45,7 @@ use RPerl::DataType::FileHandle;
 # [[[ DATA STRUCTURES ]]]
 use RPerl::DataStructure::Array;
 use RPerl::DataStructure::Array::Reference;
-use RPerl::DataStructure::Hash::Reference;
+use RPerl::DataStructure::Hash;
 use RPerl::DataStructure::Hash::Reference;
 
 #use RPerl::DataStructure::LinkedList;

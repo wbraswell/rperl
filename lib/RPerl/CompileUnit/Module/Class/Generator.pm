@@ -448,6 +448,7 @@ EOL
         foreach my object $constant ( @{ $constant_star->{children} } ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
             $cpp_source_subgroup = $constant->ast_to_cpp__generate__CPPOPS_CPPTYPES( $package_name_underscores, $modes );
             $cpp_source_group->{H} .= $cpp_source_subgroup->{H};
+            $cpp_source_group->{_H_constants_shims}->{$package_name_underscores} .= $cpp_source_subgroup->{_H_constants_shims}->{$package_name_underscores};
         }
         $cpp_source_group->{H} .= "\n";
     }
@@ -720,6 +721,14 @@ EOL
     my string $package_name_scoped = $package_name_underscores;
     $package_name_scoped =~ s/__/::/gxms;
     $cpp_source_group->{H} .= '    virtual string myclassname() { return (const string) "' . $package_name_scoped . '"; }' . "\n";    # CLASS NAME REPORTER
+
+#    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_group->{_H_constants_shims}->{$package_name_underscores} = ' . Dumper($cpp_source_group->{_H_constants_shims}->{$package_name_underscores}) . "\n");
+    if ((exists $cpp_source_group->{_H_constants_shims}) and (defined $cpp_source_group->{_H_constants_shims})
+        and (exists $cpp_source_group->{_H_constants_shims}->{$package_name_underscores}) and (defined $cpp_source_group->{_H_constants_shims}->{$package_name_underscores})) {
+        $cpp_source_group->{H} .= "\n";
+        if ( $modes->{label} eq 'ON' ) { $cpp_source_group->{H} .= '    // <<< CONSTANTS, SHIMS >>>' . "\n"; }
+        $cpp_source_group->{H} .= $cpp_source_group->{_H_constants_shims}->{$package_name_underscores};
+    }
 
     my string_arrayref $method_declarations     = [];
     my string_arrayref $method_definitions      = [];

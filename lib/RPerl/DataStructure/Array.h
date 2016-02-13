@@ -2,9 +2,12 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array_h
-#define __CPP__INCLUDED__RPerl__DataStructure__Array_h 0.004_100
+#define __CPP__INCLUDED__RPerl__DataStructure__Array_h 0.004_200
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
+
+// [[[ SUB-TYPES BEFORE INCLUDES ]]]
+#include <RPerl/DataStructure/Array/SubTypes.cpp>	// -> SubTypes.h
 
 // for type-checking subroutines & macros
 #include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
@@ -61,20 +64,20 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 # ifdef __CPP__TYPES
-integer_arrayref XS_unpack_integer_arrayref(SV* input_av_ref);
-void XS_pack_integer_arrayref(SV* output_av_ref, integer_arrayref input_vector);
-number_arrayref XS_unpack_number_arrayref(SV* input_av_ref);
-void XS_pack_number_arrayref(SV* output_av_ref, number_arrayref input_vector);
-string_arrayref XS_unpack_string_arrayref(SV* input_av_ref);
-void XS_pack_string_arrayref(SV* output_av_ref, string_arrayref input_vector);
+integer_arrayref XS_unpack_integer_arrayref(SV* input_avref);
+void XS_pack_integer_arrayref(SV* output_avref, integer_arrayref input_vector);
+number_arrayref XS_unpack_number_arrayref(SV* input_avref);
+void XS_pack_number_arrayref(SV* output_avref, number_arrayref input_vector);
+string_arrayref XS_unpack_string_arrayref(SV* input_avref);
+void XS_pack_string_arrayref(SV* output_avref, string_arrayref input_vector);
 # endif
 
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
-//void integer_arrayref_to_string(SV* input_av_ref);
-SV* integer_arrayref_to_string(SV* input_av_ref);
-SV* number_arrayref_to_string(SV* input_av_ref);
-SV* string_arrayref_to_string(SV* input_av_ref);
+//void integer_arrayref_to_string(SV* input_avref);
+SV* integer_arrayref_to_string(SV* input_avref);
+SV* number_arrayref_to_string(SV* input_avref);
+SV* string_arrayref_to_string(SV* input_avref);
 # elif defined __CPP__TYPES
 string integer_arrayref_to_string(integer_arrayref input_vector);
 string number_arrayref_to_string(number_arrayref input_vector);

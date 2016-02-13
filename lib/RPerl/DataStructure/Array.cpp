@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;  using std::to_string;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array_cpp
-#define __CPP__INCLUDED__RPerl__DataStructure__Array_cpp 0.004_020
+#define __CPP__INCLUDED__RPerl__DataStructure__Array_cpp 0.004_100
 
 #include <RPerl/DataStructure/Array.h>		// -> NULL (relies on <vector> being included via Inline::CPP's AUTO_INCLUDE config option)
 
@@ -42,6 +42,7 @@ void integer_arrayref_CHECK(SV* possible_integer_arrayref)
 		if (not(SvIOKp(*possible_integer_array_element))) { croak("\nERROR EIVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref element value expected but non-integer value found at index %d,\ncroaking", i); }
 	}
 }
+
 void integer_arrayref_CHECKTRACE(SV* possible_integer_arrayref, const char* variable_name, const char* subroutine_name)
 {
     if ( not( SvOK(possible_integer_arrayref) ) ) { croak( "\nERROR EIVAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name ); }
@@ -63,6 +64,7 @@ void integer_arrayref_CHECKTRACE(SV* possible_integer_arrayref, const char* vari
 		if (not(SvIOKp(*possible_integer_array_element))) { croak("\nERROR EIVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref element value expected but non-integer value found at index %d,\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name); }
 	}
 }
+
 void number_arrayref_CHECK(SV* possible_number_arrayref)
 {
     if ( not( SvOK(possible_number_arrayref) ) ) { croak( "\nERROR ENVAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber_arrayref value expected but undefined/null value found,\ncroaking" ); }
@@ -84,6 +86,7 @@ void number_arrayref_CHECK(SV* possible_number_arrayref)
 		if (not(SvNOKp(*possible_number_array_element) || SvIOKp(*possible_number_array_element))) { croak("\nERROR ENVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber_arrayref element value expected but non-number value found at index %d,\ncroaking", i); }
 	}
 }
+
 void number_arrayref_CHECKTRACE(SV* possible_number_arrayref, const char* variable_name, const char* subroutine_name)
 {
     if ( not( SvOK(possible_number_arrayref) ) ) { croak( "\nERROR ENVAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber_arrayref value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name ); }
@@ -105,6 +108,7 @@ void number_arrayref_CHECKTRACE(SV* possible_number_arrayref, const char* variab
 		if (not(SvNOKp(*possible_number_array_element) || SvIOKp(*possible_number_array_element))) { croak("\nERROR ENVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber_arrayref element value expected but non-number value found at index %d,\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name); }
 	}
 }
+
 void string_arrayref_CHECK(SV* possible_string_arrayref)
 {
     if ( not( SvOK(possible_string_arrayref) ) ) { croak( "\nERROR EPVAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring_arrayref value expected but undefined/null value found,\ncroaking" ); }
@@ -126,6 +130,7 @@ void string_arrayref_CHECK(SV* possible_string_arrayref)
 		if (not(SvPOKp(*possible_string_array_element))) { croak("\nERROR EPVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring_arrayref element value expected but non-string value found at index %d,\ncroaking", i); }
 	}
 }
+
 void string_arrayref_CHECKTRACE(SV* possible_string_arrayref, const char* variable_name, const char* subroutine_name)
 {
     if ( not( SvOK(possible_string_arrayref) ) ) { croak( "\nERROR EPVAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring_arrayref value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name ); }
@@ -155,11 +160,11 @@ void string_arrayref_CHECKTRACE(SV* possible_string_arrayref, const char* variab
 # ifdef __CPP__TYPES
 
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))) to (C++ std::vector of integers)
-integer_arrayref XS_unpack_integer_arrayref(SV* input_av_ref)
+integer_arrayref XS_unpack_integer_arrayref(SV* input_avref)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_integer_arrayref(), top of subroutine\n");
-//	integer_arrayref_CHECK(input_av_ref);
-	integer_arrayref_CHECKTRACE(input_av_ref, "input_av_ref", "XS_unpack_integer_arrayref()");
+//	integer_arrayref_CHECK(input_avref);
+	integer_arrayref_CHECKTRACE(input_avref, "input_avref", "XS_unpack_integer_arrayref()");
 
     AV* input_av;
     integer input_av_length;
@@ -167,7 +172,7 @@ integer_arrayref XS_unpack_integer_arrayref(SV* input_av_ref)
     SV** input_av_element;
     integer_arrayref output_vector;
 
-    input_av = (AV*)SvRV(input_av_ref);
+    input_av = (AV*)SvRV(input_avref);
 	input_av_length = av_len(input_av) + 1;
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_integer_arrayref(), have input_av_length = %d\n", input_av_length);
 
@@ -220,9 +225,8 @@ integer_arrayref XS_unpack_integer_arrayref(SV* input_av_ref)
 	return(output_vector);
 }
 
-
 // convert from (C++ std::vector of integers) to (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs)))
-void XS_pack_integer_arrayref(SV* output_av_ref, integer_arrayref input_vector)
+void XS_pack_integer_arrayref(SV* output_avref, integer_arrayref input_vector)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref(), top of subroutine\n");
 
@@ -236,20 +240,19 @@ void XS_pack_integer_arrayref(SV* output_av_ref, integer_arrayref input_vector)
 	if (input_vector_length > 0) { for (i = 0;  i < input_vector_length;  ++i) { av_push(output_av, newSViv(input_vector[i])); } }
 //	else warn("in CPPOPS_CPPTYPES XS_pack_integer_arrayref(), array was empty, returning empty array via newAV()");
 
-	temp_sv_pointer = newSVrv(output_av_ref, NULL);	  // upgrade output stack SV to an RV
+	temp_sv_pointer = newSVrv(output_avref, NULL);	  // upgrade output stack SV to an RV
 	SvREFCNT_dec(temp_sv_pointer);		 // discard temporary pointer
-	SvRV(output_av_ref) = (SV*)output_av;	   // make output stack RV pointer at our output AV
+	SvRV(output_avref) = (SV*)output_av;	   // make output stack RV pointer at our output AV
 
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref(), bottom of subroutine\n");
 }
 
-
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing NVs))) to (C++ std::vector of numbers)
-number_arrayref XS_unpack_number_arrayref(SV* input_av_ref)
+number_arrayref XS_unpack_number_arrayref(SV* input_avref)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number_arrayref(), top of subroutine\n");
-//	number_arrayref_CHECK(input_av_ref);
-	number_arrayref_CHECKTRACE(input_av_ref, "input_av_ref", "XS_unpack_number_arrayref()");
+//	number_arrayref_CHECK(input_avref);
+	number_arrayref_CHECKTRACE(input_avref, "input_avref", "XS_unpack_number_arrayref()");
 
     AV* input_av;
     integer input_av_length;
@@ -257,7 +260,7 @@ number_arrayref XS_unpack_number_arrayref(SV* input_av_ref)
     SV** input_av_element;
     number_arrayref output_vector;
 
-    input_av = (AV*)SvRV(input_av_ref);
+    input_av = (AV*)SvRV(input_avref);
 	input_av_length = av_len(input_av) + 1;
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number_arrayref(), have input_av_length = %d\n", input_av_length);
 
@@ -280,9 +283,8 @@ number_arrayref XS_unpack_number_arrayref(SV* input_av_ref)
 	return(output_vector);
 }
 
-
 // convert from (C++ std::vector of numbers) to (Perl SV containing RV to (Perl AV of (Perl SVs containing NVs)))
-void XS_pack_number_arrayref(SV* output_av_ref, number_arrayref input_vector)
+void XS_pack_number_arrayref(SV* output_avref, number_arrayref input_vector)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_arrayref(), top of subroutine\n");
 
@@ -296,20 +298,19 @@ void XS_pack_number_arrayref(SV* output_av_ref, number_arrayref input_vector)
 	if (input_vector_length > 0) { for (i = 0;  i < input_vector_length;  ++i) { av_push(output_av, newSVnv(input_vector[i])); } }
 //	else warn("in CPPOPS_CPPTYPES XS_pack_number_arrayref(), array was empty, returning empty array via newAV()");
 
-	temp_sv_pointer = newSVrv(output_av_ref, NULL);	  // upgrade output stack SV to an RV
+	temp_sv_pointer = newSVrv(output_avref, NULL);	  // upgrade output stack SV to an RV
 	SvREFCNT_dec(temp_sv_pointer);		 // discard temporary pointer
-	SvRV(output_av_ref) = (SV*)output_av;	   // make output stack RV pointer at our output AV
+	SvRV(output_avref) = (SV*)output_av;	   // make output stack RV pointer at our output AV
 
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_arrayref(), bottom of subroutine\n");
 }
 
-
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs))) to (C++ std::vector of std::strings)
-string_arrayref XS_unpack_string_arrayref(SV* input_av_ref)
+string_arrayref XS_unpack_string_arrayref(SV* input_avref)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_string_arrayref(), top of subroutine\n");
-//	string_arrayref_CHECK(input_av_ref);
-	string_arrayref_CHECKTRACE(input_av_ref, "input_av_ref", "XS_unpack_string_arrayref()");
+//	string_arrayref_CHECK(input_avref);
+	string_arrayref_CHECKTRACE(input_avref, "input_avref", "XS_unpack_string_arrayref()");
 
     AV* input_av;
     integer input_av_length;
@@ -317,7 +318,7 @@ string_arrayref XS_unpack_string_arrayref(SV* input_av_ref)
     SV** input_av_element;
     string_arrayref output_vector;
 
-    input_av = (AV*)SvRV(input_av_ref);
+    input_av = (AV*)SvRV(input_avref);
 	input_av_length = av_len(input_av) + 1;
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_string_arrayref(), have input_av_length = %d\n", input_av_length);
 
@@ -340,9 +341,8 @@ string_arrayref XS_unpack_string_arrayref(SV* input_av_ref)
 	return(output_vector);
 }
 
-
 // convert from (C++ std::vector of std::strings) to (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs)))
-void XS_pack_string_arrayref(SV* output_av_ref, string_arrayref input_vector)
+void XS_pack_string_arrayref(SV* output_avref, string_arrayref input_vector)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_arrayref(), top of subroutine\n");
 
@@ -356,9 +356,9 @@ void XS_pack_string_arrayref(SV* output_av_ref, string_arrayref input_vector)
 	if (input_vector_length > 0) { for (i = 0;  i < input_vector_length;  ++i) { av_push(output_av, newSVpv(input_vector[i].data(), input_vector[i].size())); } }
 //	else warn("in CPPOPS_CPPTYPES XS_pack_string_arrayref(), array was empty, returning empty array via newAV()");
 
-	temp_sv_pointer = newSVrv(output_av_ref, NULL);	  // upgrade output stack SV to an RV
+	temp_sv_pointer = newSVrv(output_avref, NULL);	  // upgrade output stack SV to an RV
 	SvREFCNT_dec(temp_sv_pointer);		 // discard temporary pointer
-	SvRV(output_av_ref) = (SV*)output_av;	   // make output stack RV pointer at our output AV
+	SvRV(output_avref) = (SV*)output_av;	   // make output stack RV pointer at our output AV
 
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_arrayref(), bottom of subroutine\n");
 }
@@ -374,8 +374,8 @@ void XS_pack_string_arrayref(SV* output_av_ref, string_arrayref input_vector)
 // DEV NOTE: direct manipulation of the Perl Stack shown in /* block comments */
 // TODO: use Perl stack manipulation to enable support for variable number of arguments, multiple return values, not setting var to retval in Perl, etc.
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
-//void integer_arrayref_to_string(SV* input_av_ref)
-SV* integer_arrayref_to_string(SV* input_av_ref)
+//void integer_arrayref_to_string(SV* input_avref)
+SV* integer_arrayref_to_string(SV* input_avref)
 {
 //	Inline_Stack_Vars;
 //define Inline_Stack_Vars	dXSARGS  // from INLINE.h
@@ -386,8 +386,8 @@ SV* integer_arrayref_to_string(SV* input_av_ref)
 //	dITEMS;
 
 //	fprintf(stderr, "in CPPOPS_PERLTYPES integer_arrayref_to_string(), top of subroutine\n");
-//	integer_arrayref_CHECK(input_av_ref);
-	integer_arrayref_CHECKTRACE(input_av_ref, "input_av_ref", "integer_arrayref_to_string()");
+//	integer_arrayref_CHECK(input_avref);
+	integer_arrayref_CHECKTRACE(input_avref, "input_avref", "integer_arrayref_to_string()");
 
     AV* input_av;
     integer input_av_length;
@@ -396,7 +396,7 @@ SV* integer_arrayref_to_string(SV* input_av_ref)
     SV* output_sv = newSV(0);
     boolean i_is_0 = 1;
 
-    input_av = (AV*)SvRV(input_av_ref);
+    input_av = (AV*)SvRV(input_avref);
 	input_av_length = av_len(input_av) + 1;
 //	fprintf(stderr, "in CPPOPS_PERLTYPES integer_arrayref_to_string(), have input_av_length = %d\n", input_av_length);
 
@@ -437,13 +437,12 @@ SV* integer_arrayref_to_string(SV* input_av_ref)
 //	XSRETURN(1);
 }
 
-
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing NVs))) to Perl-parsable (Perl SV containing PV)
-SV* number_arrayref_to_string(SV* input_av_ref)
+SV* number_arrayref_to_string(SV* input_avref)
 {
 //	fprintf(stderr, "in CPPOPS_PERLTYPES number_arrayref_to_string(), top of subroutine\n");
-//	number_arrayref_CHECK(input_av_ref);
-	number_arrayref_CHECKTRACE(input_av_ref, "input_av_ref", "number_arrayref_to_string()");
+//	number_arrayref_CHECK(input_avref);
+	number_arrayref_CHECKTRACE(input_avref, "input_avref", "number_arrayref_to_string()");
 
     AV* input_av;
     integer input_av_length;
@@ -454,7 +453,7 @@ SV* number_arrayref_to_string(SV* input_av_ref)
 	ostringstream temp_stream;
 	temp_stream.precision(std::numeric_limits<double>::digits10);
 
-	input_av = (AV*)SvRV(input_av_ref);
+	input_av = (AV*)SvRV(input_avref);
 	input_av_length = av_len(input_av) + 1;
 //	fprintf(stderr, "in CPPOPS_PERLTYPES number_arrayref_to_string(), have input_av_length = %d\n", input_av_length);
 
@@ -482,13 +481,12 @@ SV* number_arrayref_to_string(SV* input_av_ref)
 	return(output_sv);
 }
 
-
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs))) to Perl-parsable (Perl SV containing PV)
-SV* string_arrayref_to_string(SV* input_av_ref)
+SV* string_arrayref_to_string(SV* input_avref)
 {
 //	fprintf(stderr, "in CPPOPS_PERLTYPES string_arrayref_to_string(), top of subroutine\n");
-//	string_arrayref_CHECK(input_av_ref);
-	string_arrayref_CHECKTRACE(input_av_ref, "input_av_ref", "string_arrayref_to_string()");
+//	string_arrayref_CHECK(input_avref);
+	string_arrayref_CHECKTRACE(input_avref, "input_avref", "string_arrayref_to_string()");
 
     AV* input_av;
     integer input_av_length;
@@ -500,7 +498,7 @@ SV* string_arrayref_to_string(SV* input_av_ref)
     boolean i_is_0 = 1;
 //	ostringstream temp_stream;
 
-	input_av = (AV*)SvRV(input_av_ref);
+	input_av = (AV*)SvRV(input_avref);
 	input_av_length = av_len(input_av) + 1;
 //	fprintf(stderr, "in CPPOPS_PERLTYPES string_arrayref_to_string(), have input_av_length = %d\n", input_av_length);
 
@@ -578,7 +576,6 @@ string integer_arrayref_to_string(integer_arrayref input_vector)
 	return(output_stream.str());
 }
 
-
 // convert from (C++ std::vector of numbers) to Perl-parsable (C++ std::string)
 string number_arrayref_to_string(number_arrayref input_vector)
 {
@@ -611,7 +608,6 @@ string number_arrayref_to_string(number_arrayref input_vector)
 
 	return(output_stream.str());
 }
-
 
 // convert from (C++ std::vector of std::strings) to Perl-parsable (C++ std::string)
 string string_arrayref_to_string(string_arrayref input_vector)
@@ -672,7 +668,6 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 
 # endif
 
-
 // [[[ TYPE TESTING ]]]
 // [[[ TYPE TESTING ]]]
 // [[[ TYPE TESTING ]]]
@@ -722,7 +717,6 @@ SV* integer_arrayref__typetest0(SV* lucky_integers)
 /*	return(output_sv);  // do not mortalize because we receive value for output_sv from outside this function */
 	return(newSVpvf("%s%s", SvPV_nolen(integer_arrayref_to_string(lucky_integers)), "CPPOPS_PERLTYPES"));
 }
-
 
 // DEV NOTE: direct manipulation of the Perl Stack shown in /* block comments */
 /*void integer_arrayref__typetest1(integer my_size) */

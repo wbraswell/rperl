@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash_cpp
-#define __CPP__INCLUDED__RPerl__DataStructure__Hash_cpp 0.004_020
+#define __CPP__INCLUDED__RPerl__DataStructure__Hash_cpp 0.004_100
 
 #include <RPerl/DataStructure/Hash.h>		// -> NULL (relies on <unordered_map> being included via Inline::CPP's AUTO_INCLUDE config option)
 
@@ -81,6 +81,7 @@ void integer_hashref_CHECK(SV* possible_integer_hashref)
 		}
 	}
 }
+
 void integer_hashref_CHECKTRACE(SV* possible_integer_hashref, const char* variable_name, const char* subroutine_name)
 {
     if ( not( SvOK(possible_integer_hashref) ) ) { croak( "\nERROR EIVHVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_hashref value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name ); }
@@ -149,6 +150,7 @@ void integer_hashref_CHECKTRACE(SV* possible_integer_hashref, const char* variab
 		}
 	}
 }
+
 void number_hashref_CHECK(SV* possible_number_hashref)
 {
     if ( not( SvOK(possible_number_hashref) ) ) { croak( "\nERROR ENVHVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber_hashref value expected but undefined/null value found,\ncroaking" ); }
@@ -217,6 +219,7 @@ void number_hashref_CHECK(SV* possible_number_hashref)
 		}
 	}
 }
+
 void number_hashref_CHECKTRACE(SV* possible_number_hashref, const char* variable_name, const char* subroutine_name)
 {
     if ( not( SvOK(possible_number_hashref) ) ) { croak( "\nERROR ENVHVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber_hashref value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name ); }
@@ -285,6 +288,7 @@ void number_hashref_CHECKTRACE(SV* possible_number_hashref, const char* variable
 		}
 	}
 }
+
 void string_hashref_CHECK(SV* possible_string_hashref)
 {
     if ( not( SvOK(possible_string_hashref) ) ) { croak( "\nERROR EPVHVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring_hashref value expected but undefined/null value found,\ncroaking" ); }
@@ -353,6 +357,7 @@ void string_hashref_CHECK(SV* possible_string_hashref)
 		}
 	}
 }
+
 void string_hashref_CHECKTRACE(SV* possible_string_hashref, const char* variable_name, const char* subroutine_name)
 {
     if ( not( SvOK(possible_string_hashref) ) ) { croak( "\nERROR EPVHVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring_hashref value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name ); }
@@ -476,7 +481,6 @@ integer_hashref XS_unpack_integer_hashref(SV* input_hv_ref)
 	return(output_unordered_map);
 }
 
-
 // convert from (C++ std::unordered_map of integers) to (Perl SV containing reference to (Perl HV of (Perl SVs containing IVs)))
 void XS_pack_integer_hashref(SV* output_hv_ref, integer_hashref input_unordered_map)
 {
@@ -502,7 +506,6 @@ void XS_pack_integer_hashref(SV* output_hv_ref, integer_hashref input_unordered_
 
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_hashref(), bottom of subroutine\n");
 }
-
 
 // convert from (Perl SV containing reference to (Perl HV of (Perl SVs containing NVs))) to (C++ std::unordered_map of doubles)
 number_hashref XS_unpack_number_hashref(SV* input_hv_ref)
@@ -545,7 +548,6 @@ number_hashref XS_unpack_number_hashref(SV* input_hv_ref)
 	return(output_unordered_map);
 }
 
-
 // convert from (C++ std::unordered_map of doubles) to (Perl SV containing reference to (Perl HV of (Perl SVs containing NVs)))
 void XS_pack_number_hashref(SV* output_hv_ref, number_hashref input_unordered_map)
 {
@@ -571,7 +573,6 @@ void XS_pack_number_hashref(SV* output_hv_ref, number_hashref input_unordered_ma
 
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_hashref(), bottom of subroutine\n");
 }
-
 
 // convert from (Perl SV containing reference to (Perl HV of (Perl SVs containing PVs))) to (C++ std::unordered_map of strings)
 string_hashref XS_unpack_string_hashref(SV* input_hv_ref)
@@ -613,7 +614,6 @@ string_hashref XS_unpack_string_hashref(SV* input_hv_ref)
 
 	return(output_unordered_map);
 }
-
 
 // convert from (C++ std::unordered_map of strings) to (Perl SV containing reference to (Perl HV of (Perl SVs containing PVs)))
 void XS_pack_string_hashref(SV* output_hv_ref, string_hashref input_unordered_map)
@@ -904,7 +904,6 @@ string integer_hashref_to_string(integer_hashref input_unordered_map)
 	return(output_stream.str());
 }
 
-
 // convert from (C++ std::unordered_map of doubles) to Perl-parsable (C++ std::string)
 string number_hashref_to_string(number_hashref input_unordered_map)
 {
@@ -949,7 +948,6 @@ string number_hashref_to_string(number_hashref input_unordered_map)
 
 	return(output_stream.str());
 }
-
 
 // convert from (C++ std::unordered_map of std::strings) to Perl-parsable (C++ std::string)
 string string_hashref_to_string(string_hashref input_unordered_map)
@@ -1018,7 +1016,6 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 
 # endif
 
-
 // [[[ TYPE TESTING ]]]
 // [[[ TYPE TESTING ]]]
 // [[[ TYPE TESTING ]]]
@@ -1051,7 +1048,6 @@ SV* integer_hashref__typetest0(SV* lucky_integers)
 	return(newSVpvf("%s%s", SvPV_nolen(integer_hashref_to_string(lucky_integers)), "CPPOPS_PERLTYPES"));
 }
 
-
 SV* integer_hashref__typetest1(SV* my_size)
 {
 //	integer_CHECK(my_size);
@@ -1069,7 +1065,6 @@ SV* integer_hashref__typetest1(SV* my_size)
 
 	return(newRV_noinc((SV*) output_hv));
 }
-
 
 SV* number_hashref__typetest0(SV* lucky_numbers)
 {
@@ -1090,7 +1085,6 @@ SV* number_hashref__typetest0(SV* lucky_numbers)
 	return(newSVpvf("%s%s", SvPV_nolen(number_hashref_to_string(lucky_numbers)), "CPPOPS_PERLTYPES"));
 }
 
-
 SV* number_hashref__typetest1(SV* my_size)
 {
 //	integer_CHECK(my_size);
@@ -1108,7 +1102,6 @@ SV* number_hashref__typetest1(SV* my_size)
 
 	return(newRV_noinc((SV*) output_hv));
 }
-
 
 SV* string_hashref__typetest0(SV* people)
 {
@@ -1128,7 +1121,6 @@ SV* string_hashref__typetest0(SV* people)
 
 	return(newSVpvf("%s%s", SvPV_nolen(string_hashref_to_string(people)), "CPPOPS_PERLTYPES"));
 }
-
 
 SV* string_hashref__typetest1(SV* my_size)
 {
@@ -1187,6 +1179,7 @@ string number_hashref__typetest0(number_hashref lucky_numbers)
 	*/
 	return(number_hashref_to_string(lucky_numbers) + "CPPOPS_CPPTYPES");
 }
+
 number_hashref number_hashref__typetest1(integer my_size)
 {
 	number_hashref new_unordered_map(my_size);
