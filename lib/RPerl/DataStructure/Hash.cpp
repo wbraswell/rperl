@@ -1,4 +1,3 @@
-////use strict;  use warnings;
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash_cpp

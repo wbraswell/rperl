@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Include;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_100;
+our $VERSION = 0.002_200;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -79,7 +79,10 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         # Include -> USE WordScoped ...
         # DEV NOTE: ignore manually included RPerl* and rperl* modules, presumably they will all be automatically included
         my string $module_name = $self->{children}->[1]->{children}->[0];
-        if (((substr $module_name, 0, 5) ne 'RPerl') and ((substr $module_name, 0, 5) ne 'rperl')) {
+        if ( $module_name =~ /^\w+Perl::Config$/ ) { # DEV NOTE, CORRELATION #rp27: MathPerl::Config, PhysicsPerl::Config, etc
+#            RPerl::diag('in CompileUnit::Include->ast_to_cpp__generate__CPPOPS_CPPTYPES(), skipping system config file $module_name = ' . $module_name . "\n");
+        }
+        elsif (((substr $module_name, 0, 5) ne 'RPerl') and ((substr $module_name, 0, 5) ne 'rperl')) {
             if ((not exists $cpp_source_group->{_PMC_includes}) or (not defined $cpp_source_group->{_PMC_includes})) {
                 $cpp_source_group->{_PMC_includes} = {};
             }

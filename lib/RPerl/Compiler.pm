@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_200;
+our $VERSION = 0.007_300;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -36,7 +36,7 @@ our string_arrayref $find_dependencies = sub {
     ( my string $file_name, my string_hashref $modes ) = @_;
     my string_arrayref $dependencies = [];
 
-    #    RPerl::diag( 'in Compiler::find_dependencies(), received $file_name = ' . $file_name . "\n" );
+#    RPerl::diag( 'in Compiler::find_dependencies(), received $file_name = ' . $file_name . "\n" );
 
     if ( not -f $file_name ) {
         die 'ERROR ECOCODE00, COMPILER, FIND DEPENDENCIES: File not found, ' . q{'} . $file_name . q{'} . "\n" . ', dying' . "\n";
@@ -80,6 +80,7 @@ our string_arrayref $find_dependencies = sub {
                 or ( $file_line =~ /use\s+RPerl\s*;/ )
                 or ( $file_line =~ /use\s+RPerl::AfterSubclass\s*;/ )
                 or ( $file_line =~ /use\s+RPerl::Config\s*;/ )
+                or ( $file_line =~ /use\s+\w+Perl::Config\s*;/ )  # DEV NOTE, CORRELATION #rp27: MathPerl::Config, PhysicsPerl::Config, etc
                 or ( $file_line =~ /use\s+parent/ )
                 or ( $file_line =~ /use\s+constant/ )
                 or ( $file_line =~ /use\s+overload/ )

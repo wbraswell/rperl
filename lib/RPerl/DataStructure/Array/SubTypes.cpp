@@ -1,18 +1,9 @@
 using std::cout;  using std::cerr;  using std::endl;  using std::to_string;
 
-#ifndef __CPP__INCLUDED__RPerl__DataStructure__Array_cpp
-#define __CPP__INCLUDED__RPerl__DataStructure__Array_cpp 0.004_020
+#ifndef __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes_cpp
+#define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes_cpp 0.001_000
 
-#include <RPerl/DataStructure/Array.h>		// -> NULL (relies on <vector> being included via Inline::CPP's AUTO_INCLUDE config option)
-
-/*
- * NEED FIX, CORRELATION #rp02: bug, possibly in Inline, causing inability to declare 3rd count_FOO argument to T_PACKEDARRAY;
- * temporarily fixed by changing typemap to set char** to T_PACKED;
- * may need Inline to add declaration of count_FOO to PREINIT section of auto-generated XS code
- *
- * eval_FOO.c: In function ‘void XS_main_XS_unpack_charPtrPtr(PerlInterpreter*, CV*)’:
- * eval_FOO.c:1322:36: error: ‘count_charPtrPtr’ was not declared in this scope
- */
+#include <RPerl/DataStructure/Array/SubTypes.h>		// -> NULL (relies on <vector> being included via Inline::CPP's AUTO_INCLUDE config option)
 
 // [[[ TYPE-CHECKING ]]]
 // [[[ TYPE-CHECKING ]]]

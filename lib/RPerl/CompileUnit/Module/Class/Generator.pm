@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_800;
+our $VERSION = 0.002_900;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -398,11 +398,14 @@ EOL
 
     # NEED FIX WIN32: change hard-coded forward-slash in generated path name below?
     # NEED FIX: handle absolute vs relative include paths
+#    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $parent_name = ' . $parent_name . "\n");
     my string $parent_name_path = $parent_name;
     $parent_name_path =~ s/::/\//gxms;
     $parent_name_path .= '.cpp';
-    if ( ( ( substr $parent_name_path, 0, 5 ) ne 'RPerl' ) and ( ( substr $parent_name_path, 0, 5 ) ne 'rperl' ) ) {
-
+    if ( $parent_name =~ /^\w+Perl::Config$/ ) { # DEV NOTE, CORRELATION #rp27: MathPerl::Config, PhysicsPerl::Config, etc
+#        RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), skipping system config file $parent_name = ' . $parent_name . "\n");
+    }
+    elsif ( ( ( substr $parent_name_path, 0, 5 ) ne 'RPerl' ) and ( ( substr $parent_name_path, 0, 5 ) ne 'rperl' ) ) {
         # non-RPerl user module, wrapped in double-quotes " " to denote user nature
         $cpp_source_group->{H_INCLUDES} .= '#include "' . $parent_name_path . '"' . "\n";
     }

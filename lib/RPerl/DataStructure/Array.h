@@ -2,22 +2,17 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array_h
-#define __CPP__INCLUDED__RPerl__DataStructure__Array_h 0.004_020
+#define __CPP__INCLUDED__RPerl__DataStructure__Array_h 0.004_100
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
 // for type-checking subroutines & macros
 #include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
 
-//// [[[ DATA TYPES ]]]
-////use RPerl::DataType::Integer;
+// [[[ DATA TYPES ]]]
 #include <RPerl/DataType/Integer.cpp>
-////use RPerl::DataType::Number;
 #include <RPerl/DataType/Number.cpp>
-////use RPerl::DataType::String;
 #include <RPerl/DataType/String.cpp>
-////use RPerl::DataType::Scalar;
-////use RPerl::DataType::Unknown;
 
 // [[[ GENERAL MACROS ]]]
 #define VECTOR_RESIZE_NOSHRINK(my_vector, my_size) ((my_vector.size() < my_size) ? my_vector.resize((size_t)(my_size)) : (void)0)  // do grow but don't shrink

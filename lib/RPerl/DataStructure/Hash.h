@@ -2,22 +2,17 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash_h
-#define __CPP__INCLUDED__RPerl__DataStructure__Hash_h 0.004_020
+#define __CPP__INCLUDED__RPerl__DataStructure__Hash_h 0.004_100
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
 // for type-checking subroutines & macros
 #include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
 
-//// [[[ DATA TYPES ]]]
-////use RPerl::DataType::Integer;
+// [[[ DATA TYPES ]]]
 #include <RPerl/DataType/Integer.cpp>
-////use RPerl::DataType::Number;
 #include <RPerl/DataType/Number.cpp>
-////use RPerl::DataType::String;
 #include <RPerl/DataType/String.cpp>
-////use RPerl::DataType::Scalar;
-////use RPerl::DataType::Unknown;
 
 // [[[ TYPE-CHECKING MACROS ]]]
 #define hashref_CHECK(possible_hashref) \
