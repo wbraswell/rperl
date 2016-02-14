@@ -80,6 +80,10 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 
 our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
+    # START HERE: implement CPPOPS_CPPTYPES
+    # START HERE: implement CPPOPS_CPPTYPES
+    # START HERE: implement CPPOPS_CPPTYPES
+
     my string_hashref $cpp_source_group
         = { CPP =>
             q{// <<< RP::O::S::L::FE __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
