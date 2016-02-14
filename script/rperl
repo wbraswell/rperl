@@ -7,8 +7,8 @@ use RPerl::AfterSubclass;
 # DEV NOTE, CORRELATION #rp16: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
 our $VERSION = 1.510_000;    # CODENAME GEMINI
 
-#our $VERSION = 20160117;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
-#our $VERSION = 2016.017;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
+#our $VERSION = 20160213;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
+#our $VERSION = 2016.044;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -23,11 +23,11 @@ use RPerl::Generator;
 use RPerl::Compiler;    # includes Inline
 use Getopt::Long qw(:config no_ignore_case);
 use Pod::Usage;
+use File::Path qw(remove_tree);
 
 # [[[ SUBROUTINES ]]]
 
-# NEED UPGRADE: this array must be instantiated here, because GetOptions'
-# diamond '<>' operator does not allow passing arguments or receiving return values
+# this array must be instantiated here, because GetOptions' diamond '<>' operator does not allow passing arguments or receiving return values
 my string_arrayref $input_file_names_unlabeled = [];
 
 # [[[ ACCEPT, CHECK, REPORT OPTIONS (COMMAND-LINE ARGUMENTS) ]]]
@@ -50,12 +50,12 @@ sub accept_and_verify_input_files {
             $input_file_names = $input_file_names_unlabeled;
         }
         else {
-            die "ERROR EARG08: Both labeled & unlabeled RPerl source code input file option(s) specified, dying\n";
+            die 'ERROR EARG08: Both labeled & unlabeled RPerl source code input file option(s) specified, dying' . "\n";
         }
     }
 
     if ( ( scalar @{$input_file_names} ) == 0 ) {
-        die "ERROR EARG01: No RPerl source code input file(s) specified, dying\n";
+        die 'ERROR EARG01: No RPerl source code input file(s) specified, dying' . "\n";
     }
 
     # verify input file(s)
@@ -68,31 +68,38 @@ sub accept_and_verify_input_files {
 
 #    RPerl::diag('in rperl, top of file verifying loop ' . $i . ' of ' . $input_files_count . ", have \$input_file_names->[$i] = '" . $input_file_name . "'\n");
 
-        if ($input_file_name =~ m/\s/xms) {
+        if ( $input_file_name =~ m/\s/xms ) {
+
 #            RPerl::diag('in rperl, in file verifying loop ' . $i . ' of ' . $input_files_count . ", have \$input_file_name with spaces = '" . $input_file_name . "'\n");
             my string_arrayref $input_file_name_and_args = [ split /[ ]/xms, $input_file_name ];
+
 #            RPerl::diag('in rperl, in file verifying loop ' . $i . ' of ' . $input_files_count . ", have \$input_file_name_and_args = '" . Dumper($input_file_name_and_args) . "'\n");
             $input_file_name = shift @{$input_file_name_and_args};
             $input_file_names->[$i] = $input_file_name;
-#            RPerl::diag('in rperl, in file verifying loop ' . $i . ' of ' . $input_files_count . ", have \$input_file_name = '" . $input_file_name . "'\n");
+
+   #            RPerl::diag('in rperl, in file verifying loop ' . $i . ' of ' . $input_files_count . ", have \$input_file_name = '" . $input_file_name . "'\n");
             $modes->{arguments} = $input_file_name_and_args;
-#            RPerl::diag('in rperl, in file verifying loop ' . $i . ' of ' . $input_files_count . ", have \$modes = '" . Dumper($modes) . "'\n");
+
+            #            RPerl::diag('in rperl, in file verifying loop ' . $i . ' of ' . $input_files_count . ", have \$modes = '" . Dumper($modes) . "'\n");
         }
 
         if ( not( -e $input_file_name ) ) {    ## no critic qw(ProhibitCascadingIfElse)  # SYSTEM DEFAULT 2: allow argument-handling logic
-            die "ERROR EARG02: Specified RPerl source code input file '$input_file_name' does not exist, dying\n";
+            die 'ERROR EARG02: Specified RPerl source code input file ' . q{'} . $input_file_name . q{'} . ' does not exist, dying' . "\n";
         }
         elsif ( not( -r $input_file_name ) ) {
-            die "ERROR EARG03: Specified RPerl source code input file '$input_file_name' is not readable, dying\n";
+            die 'ERROR EARG03: Specified RPerl source code input file ' . q{'} . $input_file_name . q{'} . ' is not readable, dying' . "\n";
         }
         elsif ( not( -f $input_file_name ) ) {
-            die "ERROR EARG04: Specified RPerl source code input file '$input_file_name' is not a plain file, dying\n";
+            die 'ERROR EARG04: Specified RPerl source code input file ' . q{'} . $input_file_name . q{'} . ' is not a plain file, dying' . "\n";
         }
         elsif ( ( $input_file_name !~ /[.]pm$/xms )
             and ( $input_file_name !~ /[.]pl$/xms ) )
         {
-            die
-                "ERROR EARG05: Specified RPerl source code input file '$input_file_name' is not a Perl program ending in '.pl' or module ending in '.pm', dying\n";
+            die 'ERROR EARG05: Specified RPerl source code input file ' . q{'}
+                . $input_file_name . q{'}
+                . ' is not a Perl program ending in ' . q{'} . '.pl' . q{'}
+                . ' or module ending in  ' . q{'} . '.pm' . q{'}
+                . ', dying' . "\n";
         }
 
     }
@@ -104,6 +111,7 @@ sub verify_and_default_modes {
         my string_hashref $modes_default,
         my arrayref_hashref $modes_supported,
         my integer $dependencies_flag,
+        my integer $uncompile_flag,
         my integer $compile_flag,
         my integer $execute_flag,
         my integer $test_flag
@@ -115,6 +123,26 @@ sub verify_and_default_modes {
         }
         else {
             $modes->{dependencies} = 'OFF';
+        }
+    }
+
+    if ( defined $uncompile_flag ) {
+        if ($uncompile_flag) {
+            if ( ( defined $compile_flag ) and $compile_flag ) {
+                die 'ERROR EARG09: Incompatible command-line option flags provided, both --uncompile and --compile, dying' . "\n";
+            }
+            if ( ( defined $execute_flag ) and $execute_flag ) {
+                die 'ERROR EARG09: Incompatible command-line option flags provided, both --uncompile and --execute, dying' . "\n";
+            }
+            if ( ( defined $test_flag ) and $test_flag ) {
+                die 'ERROR EARG09: Incompatible command-line option flags provided, both --uncompile and --test, dying' . "\n";
+            }
+            $modes->{uncompile} = 'ON';
+            $modes->{compile}   = 'OFF';
+            $modes->{execute}   = 'OFF';
+        }
+        else {
+            $modes->{uncompile} = 'OFF';
         }
     }
 
@@ -163,7 +191,7 @@ sub verify_and_default_modes {
                 . join( ', ', keys %{$modes_supported} )
                 . '), dying' . "\n";
         }
-        elsif ( (defined $modes_supported->{$mode_key}) and not( grep { $_ eq $modes->{$mode_key} } @{ $modes_supported->{$mode_key} } ) ) {
+        elsif ( ( defined $modes_supported->{$mode_key} ) and not( grep { $_ eq $modes->{$mode_key} } @{ $modes_supported->{$mode_key} } ) ) {
             die 'ERROR EARG07: Unsupported or invalid mode ' . q{'}
                 . $modes->{$mode_key}
                 . ' in mode category ' . q{'}
@@ -236,11 +264,14 @@ sub store_unlabeled_options {
 
 # print value of option flags
 sub verbose_flags {
-    ( my integer $dependencies_flag, my integer $compile_flag, my integer $execute_flag, my integer $test_flag ) = @_;
+    ( my integer $dependencies_flag, my integer $uncompile_flag, my integer $compile_flag, my integer $execute_flag, my integer $test_flag ) = @_;
     RPerl::verbose( 'Verbose Flag:       ' . $RPerl::VERBOSE . "\n" );
     RPerl::verbose( 'Debug Flag:         ' . $RPerl::DEBUG . "\n" );
     if ( defined $dependencies_flag ) {
         RPerl::verbose( 'Dependencies Flag:  ' . $dependencies_flag . "\n" );
+    }
+    if ( defined $uncompile_flag ) {
+        RPerl::verbose( 'Uncompile Flag:     ' . $uncompile_flag . "\n" );
     }
     if ( defined $compile_flag ) {
         RPerl::verbose( 'Compile Flag:       ' . $compile_flag . "\n" );
@@ -261,20 +292,129 @@ sub stringify_output_file_name_group {
             $output_file_names .= $output_file_name_group->{$suffix_key} . q{  };
         }
     }
-    if ((length $output_file_names) > 55) {
+    if ( ( length $output_file_names ) > 55 ) {
         my @output_file_names_split = split q{  }, $output_file_names;
         my boolean $is_first = 1;
         foreach my string $output_file_name (@output_file_names_split) {
             if ($is_first) {
                 $output_file_names = $output_file_name;
-                $is_first = 0;
+                $is_first          = 0;
             }
             else {
-                $output_file_names .= "\n" . (q{ } x 20) . $output_file_name;
+                $output_file_names .= "\n" . ( q{ } x 20 ) . $output_file_name;
             }
         }
     }
     return $output_file_names;
+}
+
+# [[[ CALL UNCOMPILER ]]]
+# [[[ CALL UNCOMPILER ]]]
+# [[[ CALL UNCOMPILER ]]]
+
+sub depends_delete {
+    (   my string_arrayref $input_file_names,
+        my hashref_arrayref $output_file_name_groups,
+        my string_arrayref $output_file_name_prefixes,
+        my integer $input_files_count,
+        my string_hashref $modes
+    ) = @_;
+
+    # [[[ OUTER UNCOMPILE LOOP, USER-SPECIFIED INPUT FILES ]]]
+    # NEED FIX: Perl::Critic BUG!  'integer' triggers false positive RequireFinalReturn
+    #    for my integer $i ( 0 .. ( $input_files_count - 1 ) ) {
+    for my $i ( 0 .. ( $input_files_count - 1 ) ) {
+        my string $input_file_name                = $input_file_names->[$i];
+        my string_hashref $output_file_name_group = $output_file_name_groups->[$i];
+
+        if ( $input_files_count > 1 ) {
+            RPerl::verbose_clear_screen();
+            RPerl::verbose( 'Input File Number:  ' . ( $i + 1 ) . ' of ' . $input_files_count . "\n" );
+        }
+
+        RPerl::verbose( 'Input File:         ' . $input_file_name . "\n" );
+        RPerl::verbose( 'Output File(s):     ' . stringify_output_file_name_group($output_file_name_group) . "\n" );
+        RPerl::verbose( 'Modes:              ops => '
+                . $modes->{ops}
+                . ', types => '
+                . $modes->{types}
+                . ', check => '
+                . $modes->{check}
+                . ', uncompile => '
+                . $modes->{uncompile}
+                . ', compile => '
+                . $modes->{compile}
+                . ', execute => '
+                . $modes->{execute}
+                . ', label => '
+                . $modes->{label}
+                . "\n\n" );
+
+        my string_arrayref $input_file_name_deps = [$input_file_name];
+        my integer $input_file_and_deps_count;
+        my integer $input_file_deps_count                = 0;
+        my hashref_arrayref $output_file_name_dep_groups = [$output_file_name_group];
+
+        if ( $modes->{dependencies} eq 'ON' ) {
+            $input_file_name_deps = find_dependencies( $input_file_name, $modes );
+            RPerl::verbose('DEPENDENCIES:       Follow & find all deps... ');
+            if ( exists $input_file_name_deps->[0] ) {
+                $input_file_name_deps = accept_and_verify_input_files( $input_file_name_deps, [], $modes );    # verify deps input files
+            }
+            $input_file_name_deps      = [ @{$input_file_name_deps}, $input_file_name ];                       # append input file to deps list
+            $input_file_and_deps_count = scalar @{$input_file_name_deps};
+            $input_file_deps_count     = $input_file_and_deps_count - 1;
+            $output_file_name_dep_groups
+                = generate_output_file_names( $input_file_name_deps, $output_file_name_prefixes, $input_file_and_deps_count, $modes ); # generate deps output file names
+            RPerl::verbose( sprintf( "%4d", $input_file_deps_count ) . ' found.' . "\n" );
+            diag_multi_file_settings( $input_file_name_deps, $output_file_name_dep_groups, $input_file_and_deps_count, $modes );
+        }
+
+        # [[[ INNER UNCOMPILE LOOP, 1 INPUT FILE & ITS DEPENDENCIES ]]]
+        for my $j ( 0 .. $input_file_deps_count ) {
+            my string $input_file_name_dep                = $input_file_name_deps->[$j];
+            my string_hashref $output_file_name_dep_group = $output_file_name_dep_groups->[$j];
+
+            if ( $j < $input_file_deps_count ) {
+                RPerl::verbose( "\n" . 'Dep Output File(s): ' . stringify_output_file_name_group($output_file_name_dep_group) . "\n" );
+            }
+            else {
+                RPerl::verbose( "\n" . 'Output File(s):     ' . stringify_output_file_name_group($output_file_name_dep_group) . "\n" );
+            }
+            RPerl::verbose('UNLINK PHASE 0:     Delete output files from disk...');
+            foreach my string $output_file_name_key ( keys %{$output_file_name_dep_group} ) {
+                my string $output_file_name = $output_file_name_dep_group->{$output_file_name_key};
+                if ( -f $output_file_name ) {
+                    unlink $output_file_name
+                        or die "\nERROR EUNFI00, UNCOMPILER, FILE SYSTEM: Cannot delete existing file '$output_file_name',\ndying: $OS_ERROR";
+                }
+            }
+            RPerl::verbose( '    done.' . "\n" );
+        }
+
+        if ( ( $input_files_count > 1 ) and ( $i < ( $input_files_count - 1 ) ) ) {
+            RPerl::verbose_pause("\nPRESS <ENTER> TO CONTINUE\n");
+        }
+    }
+
+    RPerl::verbose("\n" . 'UNLINK PHASE 1:     Delete _Inline/ folder from disk...');
+    if ( -d '_Inline' ) {
+        remove_tree( '_Inline', { error => \my $error_hashes } );
+        if (@{$error_hashes}) {
+            foreach my string_hashref $error_hash (@{$error_hashes}) {
+                my ( $file_name, $error_message ) = %{$error_hash};
+                if ( $file_name eq '' ) {
+                    die "\nERROR EUNFI01, UNCOMPILER, FILE SYSTEM: Cannot delete folder '_Inline', general error, \ndying: $error_message";
+                }
+                else {
+                    die "\nERROR EUNFI01, UNCOMPILER, FILE SYSTEM: Cannot delete folder '_Inline', error deleting file '$file_name', \ndying: $error_message";
+                }
+            }
+        }
+    }
+    RPerl::verbose( ' done.' . "\n" );
+
+    return;
 }
 
 # [[[ CALL COMPILER ]]]
@@ -333,6 +473,8 @@ sub depends_parse_generate_save_subcompile_execute {
                 . $modes->{types}
                 . ', check => '
                 . $modes->{check}
+                . ', uncompile => '
+                . $modes->{uncompile}
                 . ', compile => '
                 . $modes->{compile}
                 . ', execute => '
@@ -348,12 +490,12 @@ sub depends_parse_generate_save_subcompile_execute {
         my hashref_arrayref $source_dep_groups           = [];
 
         if ( $modes->{dependencies} eq 'ON' ) {
-            $input_file_name_deps = find_dependencies($input_file_name, $modes);
+            $input_file_name_deps = find_dependencies( $input_file_name, $modes );
             RPerl::verbose('DEPENDENCIES:       Follow & find all deps... ');
             if ( exists $input_file_name_deps->[0] ) {
                 $input_file_name_deps = accept_and_verify_input_files( $input_file_name_deps, [], $modes );    # verify deps input files
             }
-            $input_file_name_deps      = [ @{$input_file_name_deps}, $input_file_name ];               # append input file to deps list
+            $input_file_name_deps      = [ @{$input_file_name_deps}, $input_file_name ];                       # append input file to deps list
             $input_file_and_deps_count = scalar @{$input_file_name_deps};
             $input_file_deps_count     = $input_file_and_deps_count - 1;
             $output_file_name_dep_groups
@@ -362,7 +504,7 @@ sub depends_parse_generate_save_subcompile_execute {
             diag_multi_file_settings( $input_file_name_deps, $output_file_name_dep_groups, $input_file_and_deps_count, $modes );
         }
 
-        if (( $input_file_deps_count > 0 ) and ($modes->{compile} ne 'PARSE')){
+        if ( ( $input_file_deps_count > 0 ) and ( $modes->{compile} ne 'PARSE' ) ) {
             $modes->{_compile_saved} = $modes->{compile};
             $modes->{compile}        = 'GENERATE';
         }
@@ -401,7 +543,8 @@ sub depends_parse_generate_save_subcompile_execute {
             }
         }
 
-        if (    ( $input_file_deps_count > 0 ) and ($modes->{compile} ne 'PARSE')
+        if (    ( $input_file_deps_count > 0 )
+            and ( $modes->{compile} ne 'PARSE' )
             and ( ( $modes->{_compile_saved} eq 'SAVE' ) or ( $modes->{_compile_saved} = 'SUBCOMPILE' ) ) )
         {
             RPerl::verbose( "\n" . 'DEPENDENCIES:       Complete deferred actions...' . "\n" );
@@ -428,7 +571,7 @@ sub depends_parse_generate_save_subcompile_execute {
 #                RPerl::diag( 'in depends_parse_generate_save_subcompile_execute(), have $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
 
                     # do not subcompile deps
-                    if (($j < $input_file_deps_count ) and ($modes->{compile} eq 'SUBCOMPILE_DEFERRED')) {
+                    if ( ( $j < $input_file_deps_count ) and ( $modes->{compile} eq 'SUBCOMPILE_DEFERRED' ) ) {
                         $modes->{compile} = 'SAVE_DEFERRED';
                     }
 
@@ -447,20 +590,21 @@ sub depends_parse_generate_save_subcompile_execute {
                 }
             }
         }
- 
+
         if ( $modes->{execute} eq 'ON' ) {
             RPerl::verbose( 'EXECUTE:            Run code...' . "\n" );
             RPerl::verbose("\n");
-#            RPerl::diag('in rperl depends_parse_generate_save_subcompile_execute(), have \$modes = ' . Dumper($modes) . "'\n");
-            if (defined $modes->{arguments}) {
-                my integer $execute_retval = system( $EXECUTABLE_NAME, $input_file_name, @{$modes->{arguments}});
+
+            #            RPerl::diag('in rperl depends_parse_generate_save_subcompile_execute(), have \$modes = ' . Dumper($modes) . "'\n");
+            if ( defined $modes->{arguments} ) {
+                my integer $execute_retval = system( $EXECUTABLE_NAME, $input_file_name, @{ $modes->{arguments} } );
             }
             else {
                 my integer $execute_retval = system( $EXECUTABLE_NAME, $input_file_name );
             }
         }
 
-#        RPerl::diag( 'in depends_parse_generate_save_subcompile_execute(), have $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
+ #        RPerl::diag( 'in depends_parse_generate_save_subcompile_execute(), have $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
 
         if (    ( $input_files_count > 1 )
             and ( $i < ( $input_files_count - 1 ) ) )
@@ -480,6 +624,7 @@ sub depends_parse_generate_save_subcompile_execute {
 my integer $help                              = 0;
 my integer $version                           = 0;
 my integer $dependencies_flag                 = undef;
+my integer $uncompile_flag                    = undef;
 my integer $compile_flag                      = undef;
 my integer $execute_flag                      = undef;
 my integer $test_flag                         = undef;
@@ -492,19 +637,21 @@ my string_hashref $modes_default              = {        # default to CPPOPS_CPP
     ops          => 'CPP',
     types        => 'CPP',
     check        => 'TRACE',
+    uncompile    => 'OFF',
     compile      => 'SUBCOMPILE',
     execute      => 'ON',
     label        => 'ON'
 };
 my arrayref_hashref $modes_supported = {
     arguments    => undef,
-    dependencies => [ 'OFF',   'ON' ],
-    ops          => [ 'PERL',  'CPP' ],
-    types        => [ 'PERL',  'CPP', 'DUAL' ],
-    check        => [ 'OFF',   'ON', 'TRACE' ],
-    compile      => [ 'PARSE', 'GENERATE', 'SAVE', 'SUBCOMPILE' ],
-    execute      => [ 'OFF',   'ON' ],
-    label        => [ 'OFF',   'ON' ]
+    dependencies => [ 'OFF', 'ON' ],
+    ops          => [ 'PERL', 'CPP' ],
+    types        => [ 'PERL', 'CPP', 'DUAL' ],
+    check        => [ 'OFF', 'ON', 'TRACE' ],
+    uncompile => [ 'OFF', 'ON' ],
+    compile   => [ 'OFF', 'PARSE', 'GENERATE', 'SAVE', 'SUBCOMPILE' ],
+    execute   => [ 'OFF', 'ON' ],
+    label     => [ 'OFF', 'ON' ]
 };
 my integer $input_files_count = 0;
 
@@ -515,6 +662,7 @@ GetOptions(
     'Verbose!'      => \$RPerl::VERBOSE,
     'Debug!'        => \$RPerl::DEBUG,
     'Warnings!'     => \$RPerl::WARNINGS,
+    'uncompile!'    => \$uncompile_flag,
     'compile!'      => \$compile_flag,
     'execute!'      => \$execute_flag,
     'test'          => \$test_flag,
@@ -551,13 +699,14 @@ EOL
     print $version_message;
     exit;
 }
-verbose_flags( $dependencies_flag, $compile_flag, $execute_flag, $test_flag );
-$input_file_names        = accept_and_verify_input_files( $input_file_names, $input_file_names_unlabeled, $modes );
-$input_files_count       = scalar @{$input_file_names};
-$modes                   = verify_and_default_modes( $modes, $modes_default, $modes_supported, $dependencies_flag, $compile_flag, $execute_flag, $test_flag );
+verbose_flags( $dependencies_flag, $uncompile_flag, $compile_flag, $execute_flag, $test_flag );
+$input_file_names = accept_and_verify_input_files( $input_file_names, $input_file_names_unlabeled, $modes );
+$input_files_count = scalar @{$input_file_names};
+$modes = verify_and_default_modes( $modes, $modes_default, $modes_supported, $dependencies_flag, $uncompile_flag, $compile_flag, $execute_flag, $test_flag );
 $output_file_name_groups = generate_output_file_names( $input_file_names, $output_file_name_prefixes, $input_files_count, $modes );
 verbose_multi_file_settings( $input_file_names, $output_file_name_groups, $input_files_count, $modes );
-depends_parse_generate_save_subcompile_execute( $input_file_names, $output_file_name_groups, $output_file_name_prefixes, $input_files_count, $modes );
+if ( $modes->{uncompile} eq 'ON' ) { depends_delete( $input_file_names, $output_file_name_groups, $output_file_name_prefixes, $input_files_count, $modes ); }
+else { depends_parse_generate_save_subcompile_execute( $input_file_names, $output_file_name_groups, $output_file_name_prefixes, $input_files_count, $modes ); }
 
 __END__
 =head1 NAME
@@ -658,6 +807,14 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 =item B<--mode label=ON _OR_ -m label=ON>
 
  Specify source section label mode, ON by default.
+
+=item B<--uncompile _OR_ -u>
+
+=item B<--nouncompile _OR_ -nou>
+
+ Uncompile (delete C++ source code & binary output files), or not.
+ Do not confuse uncompile with decompile (recreate RPerl source code from C++ source code or binary output files), which does not currently exist.
+ Disabled by default, equivalent to '--mode uncompile=ON --mode compile=OFF --mode execute=OFF' options.
 
 =item B<--compile _OR_ -c>
 

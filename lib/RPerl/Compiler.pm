@@ -532,7 +532,6 @@ our void $save_source_files = sub {
                 or croak("\nERROR ECOCOFI09, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot close file,\ncroaking: $OS_ERROR");
         }
         else {
-
             # overwrite existing file
             if ( -f $file_name ) {
                 unlink $file_name

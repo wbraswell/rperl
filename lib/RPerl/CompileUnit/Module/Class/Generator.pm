@@ -370,8 +370,8 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperltypes.h; HelperFunctions.cpp)
 EOL
 
-#    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
-#    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
+    #    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
+    #    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
 
     # NEED FIX WIN32: change hard-coded forward-slash in generated path name below?
     # NEED FIX: handle absolute vs relative include paths
@@ -379,18 +379,18 @@ EOL
     $module_file_name =~ s/__/\//gxms;
     $module_file_name .= '.pm';
 
-#    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $module_file_name = ' . $module_file_name . "\n");
+    #    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $module_file_name = ' . $module_file_name . "\n");
 
-    if ((exists $modes->{_enable_sse}) and (defined $modes->{_enable_sse})) {
-        foreach my string $module_path_name (keys %{$modes->{_enable_sse}}) {
-            if (($module_path_name =~ /$module_file_name$/xms) and ($modes->{_enable_sse}->{$module_path_name})) {
+    if ( ( exists $modes->{_enable_sse} ) and ( defined $modes->{_enable_sse} ) ) {
+        foreach my string $module_path_name ( keys %{ $modes->{_enable_sse} } ) {
+            if ( ( $module_path_name =~ /$module_file_name$/xms ) and ( $modes->{_enable_sse}->{$module_path_name} ) ) {
                 $cpp_source_group->{H_INCLUDES} .= '#include <rperlsse.h>' . "\n";
             }
         }
     }
-    if ((exists $modes->{_enable_gmp}) and (defined $modes->{_enable_gmp})) {
-        foreach my string $module_path_name (keys %{$modes->{_enable_gmp}}) {
-            if (($module_path_name =~ /$module_file_name$/xms) and ($modes->{_enable_gmp}->{$module_path_name})) {
+    if ( ( exists $modes->{_enable_gmp} ) and ( defined $modes->{_enable_gmp} ) ) {
+        foreach my string $module_path_name ( keys %{ $modes->{_enable_gmp} } ) {
+            if ( ( $module_path_name =~ /$module_file_name$/xms ) and ( $modes->{_enable_gmp}->{$module_path_name} ) ) {
                 $cpp_source_group->{H_INCLUDES} .= '#include <rperlgmp.h>' . "\n";
             }
         }
@@ -398,14 +398,16 @@ EOL
 
     # NEED FIX WIN32: change hard-coded forward-slash in generated path name below?
     # NEED FIX: handle absolute vs relative include paths
-#    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $parent_name = ' . $parent_name . "\n");
+    #    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $parent_name = ' . $parent_name . "\n");
     my string $parent_name_path = $parent_name;
     $parent_name_path =~ s/::/\//gxms;
     $parent_name_path .= '.cpp';
-    if ( $parent_name =~ /^\w+Perl::Config$/ ) { # DEV NOTE, CORRELATION #rp27: MathPerl::Config, PhysicsPerl::Config, etc
-#        RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), skipping system config file $parent_name = ' . $parent_name . "\n");
+    if ( $parent_name =~ /^\w+Perl::Config$/ ) {    # DEV NOTE, CORRELATION #rp27: MathPerl::Config, PhysicsPerl::Config, etc
+
+        #        RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), skipping system config file $parent_name = ' . $parent_name . "\n");
     }
     elsif ( ( ( substr $parent_name_path, 0, 5 ) ne 'RPerl' ) and ( ( substr $parent_name_path, 0, 5 ) ne 'rperl' ) ) {
+
         # non-RPerl user module, wrapped in double-quotes " " to denote user nature
         $cpp_source_group->{H_INCLUDES} .= '#include "' . $parent_name_path . '"' . "\n";
     }
@@ -723,8 +725,11 @@ EOL
     $cpp_source_group->{H} .= '    virtual string myclassname() { return (const string) "' . $package_name_scoped . '"; }' . "\n";    # CLASS NAME REPORTER
 
 #    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_group->{_H_constants_shims}->{$package_name_underscores} = ' . Dumper($cpp_source_group->{_H_constants_shims}->{$package_name_underscores}) . "\n");
-    if ((exists $cpp_source_group->{_H_constants_shims}) and (defined $cpp_source_group->{_H_constants_shims})
-        and (exists $cpp_source_group->{_H_constants_shims}->{$package_name_underscores}) and (defined $cpp_source_group->{_H_constants_shims}->{$package_name_underscores})) {
+    if (    ( exists $cpp_source_group->{_H_constants_shims} )
+        and ( defined $cpp_source_group->{_H_constants_shims} )
+        and ( exists $cpp_source_group->{_H_constants_shims}->{$package_name_underscores} )
+        and ( defined $cpp_source_group->{_H_constants_shims}->{$package_name_underscores} ) )
+    {
         $cpp_source_group->{H} .= "\n";
         if ( $modes->{label} eq 'ON' ) { $cpp_source_group->{H} .= '    // <<< CONSTANTS, SHIMS >>>' . "\n"; }
         $cpp_source_group->{H} .= $cpp_source_group->{_H_constants_shims}->{$package_name_underscores};
@@ -864,7 +869,7 @@ our string_hashref $ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES = s
 
     # grab RPerl-style type out of symtab, instead of accepting-as-arg now-C++-style type from $property_type in caller
     my string $property_type = $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}->{type};
-    my boolean $is_direct       = 0;
+    my boolean $is_direct    = 0;
     my $property_element_or_value_type;
 
     # array element accessors/mutators

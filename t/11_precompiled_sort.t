@@ -20,8 +20,6 @@ use RPerl::Test;
 use File::Copy;
 use Module::Refresh;
 
-#use File::Path qw(remove_tree);
-
 BEGIN {
     if ( $ENV{RPERL_VERBOSE} ) {
         diag('[[[ Beginning Pre-Compiled Sort Pre-Test Loading, RPerl Type System ]]]');

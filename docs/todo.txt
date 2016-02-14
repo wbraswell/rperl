@@ -1,3 +1,8 @@
+DONE
+    rperl command-line front-end, `rperl -u` uncompile option, delete all compiled files
+    access C++ constants from Perl
+    add integer_arrayref_arrayref data type
+
 Unsigned Integer Fix
 
 	full boolean support via Boolean.cpp/h, rperltypes.pm, SvBOKp(), etc.
@@ -109,7 +114,7 @@ RELEASE v3.0beta1 CHRISTMAS
 Dumper() in C++, use as default overload for <<
 
 rperl command-line front-end
-	rperl -U un-compile option, delete all compiled files
+    NO ITEMS CURRENTLY
 
 developer_notes.txt
 	warning & error codes
