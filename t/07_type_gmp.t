@@ -7,7 +7,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_100;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -169,7 +169,7 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
     );
 
     throws_ok(    # TGIV010
-        sub { gmp_integer_to_boolean(Math::BigInt->new()) },
+        sub { gmp_integer_to_boolean(Math::BigInt->new(0)) },
         "/(EGIV04.*$mode_tagline)/",
         q{TGIV010 gmp_integer_to_boolean(Math::BigInt->new()) throws correct exception}
     );

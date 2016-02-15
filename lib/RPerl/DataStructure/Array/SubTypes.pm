@@ -587,7 +587,7 @@ use warnings;
 use parent -norequire, qw(arrayref_arrayref);
 
 # emulate C++ behavior by actually creating arrays (and presumably allocating memory) at initialization time
-our integer_arrayref_arrayref::method $init = sub {
+our integer_arrayref_arrayref::method $new = sub {
     ( my integer $row_count, my integer $column_count ) = @_;  # row-major form (RMF)
     my integer_arrayref_arrayref $retval = [];
     for my integer $j (0 .. ($row_count - 1)) {
