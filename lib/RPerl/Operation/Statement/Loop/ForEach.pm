@@ -22,7 +22,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $rperl_source_group = { PMC => q{} };
 
-#    RPerl::diag( 'in Loop::ForEach->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+    #    RPerl::diag( 'in Loop::ForEach->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
 
@@ -32,7 +32,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         $self_class = ref $self;
     }
 
-# LoopForEach -> 'foreach' MY Type VARIABLE_SYMBOL LPAREN ListElements ')' CodeBlock
+    # LoopForEach -> 'foreach' MY Type VARIABLE_SYMBOL LPAREN ListElements ')' CodeBlock
     if ( $self_class eq 'LoopForEach_168' ) {
         my string $foreach         = $self->{children}->[0];
         my string $my              = $self->{children}->[1];
@@ -43,25 +43,25 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my string $right_paren     = $self->{children}->[6];
         my object $codeblock       = $self->{children}->[7];
 
-        $rperl_source_group->{PMC}
-            .= $foreach . q{ }
-            . $my . q{ }
-            . $type . q{ }
-            . $variable_symbol . q{ }
-            . $left_paren . q{ };
-        my object $rperl_source_subgroup
-            = $list_elements->ast_to_rperl__generate($modes);
-        RPerl::Generator::source_group_append( $rperl_source_group,
-            $rperl_source_subgroup );
+        RPerl::diag( 'in Loop::ForEach->ast_to_rperl__generate(), have $list_elements = ' . "\n" . RPerl::Parser::rperl_ast__dump($list_elements) . "\n" );
+        die 'TMP DEBUG';
+
+        # START HERE: add error checking for PERLOPS_PERLTYPES, then utilize for CPPOPS_CPPTYPES
+        # START HERE: add error checking for PERLOPS_PERLTYPES, then utilize for CPPOPS_CPPTYPES
+        # START HERE: add error checking for PERLOPS_PERLTYPES, then utilize for CPPOPS_CPPTYPES
+#        if ((scalar @{$list_elements->{children}->[1]->{children}}) > 0) {  # non-empty _STAR_LIST, meaning 2 or more total elements in ListElements
+#        }
+
+        $rperl_source_group->{PMC} .= $foreach . q{ } . $my . q{ } . $type . q{ } . $variable_symbol . q{ } . $left_paren . q{ };
+        my object $rperl_source_subgroup = $list_elements->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= q{ } . $right_paren . q{ };
         $rperl_source_subgroup = $codeblock->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
-                . $self_class
-                . ' found where LoopForEach_168 expected, dying' )
+            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule ' . $self_class . ' found where LoopForEach_168 expected, dying' )
             . "\n";
     }
     return $rperl_source_group;
@@ -69,10 +69,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
 our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $cpp_source_group
-        = { CPP =>
-            q{// <<< RP::O::S::L::FE __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
-            . "\n" };
+    my string_hashref $cpp_source_group = { CPP => q{// <<< RP::O::S::L::FE __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>} . "\n" };
 
     #...
     return $cpp_source_group;
@@ -80,14 +77,12 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 
 our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
+
     # START HERE: implement CPPOPS_CPPTYPES
     # START HERE: implement CPPOPS_CPPTYPES
     # START HERE: implement CPPOPS_CPPTYPES
 
-    my string_hashref $cpp_source_group
-        = { CPP =>
-            q{// <<< RP::O::S::L::FE __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
-            . "\n" };
+    my string_hashref $cpp_source_group = { CPP => q{// <<< RP::O::S::L::FE __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>} . "\n" };
 
     #...
     return $cpp_source_group;

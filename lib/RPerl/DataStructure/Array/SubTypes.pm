@@ -579,6 +579,20 @@ use strict;
 use warnings;
 use parent -norequire, qw(arrayref_arrayref);
 
+# emulate C++ behavior by actually creating arrays (and presumably allocating memory) at initialization time
+sub new {
+    ( my integer $row_count, my integer $column_count ) = @_;  # row-major form (RMF)
+    my integer_arrayref_arrayref $retval = [];
+    for my integer $j (0 .. ($row_count - 1)) {
+        my integer_arrayref $retval_row = [];
+        for my integer $i (0 .. ($column_count - 1)) {
+            $retval_row->[$i] = undef;
+        }
+        $retval->[$j] = $retval_row;
+    }
+    return $retval;
+}
+
 # (ref to array) of (refs to (arrays of numbers))
 package  # hide from PAUSE indexing
     number_arrayref_arrayref;

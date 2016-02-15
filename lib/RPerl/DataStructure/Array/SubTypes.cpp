@@ -11,6 +11,8 @@ using std::cout;  using std::cerr;  using std::endl;  using std::to_string;
 
 void integer_arrayref_arrayref_CHECK(SV* possible_integer_arrayref_arrayref)
 {
+	fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_arrayref_CHECK(), top of subroutine\n");
+
     if ( not( SvOK(possible_integer_arrayref_arrayref) ) ) { croak( "\nERROR EIVAVRVAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref_arrayref value expected but undefined/null value found,\ncroaking" ); }
     if ( not( SvAROKp(possible_integer_arrayref_arrayref) ) ) { croak( "\nERROR EIVAVRVAVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref_arrayref value expected but non-arrayref value found,\ncroaking" ); }
 
@@ -45,10 +47,14 @@ void integer_arrayref_arrayref_CHECK(SV* possible_integer_arrayref_arrayref)
 	        if (not(SvIOKp(*possible_integer_array_element))) { croak("\nERROR EIVAVRVAVRV05, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref element value expected but non-integer value found at index (%d, %d),\ncroaking", i, j); }
 	    }
 	}
+	fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_arrayref_CHECK(), bottom of subroutine\n");
 }
 
 void integer_arrayref_arrayref_CHECKTRACE(SV* possible_integer_arrayref_arrayref, const char* variable_name, const char* subroutine_name)
 {
+	fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_arrayref_CHECKTRACE(), top of subroutine, received variable_name = %s\n", variable_name);
+	fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_arrayref_CHECKTRACE(), top of subroutine, received subroutine_name = %s\n", subroutine_name);
+
     if ( not( SvOK(possible_integer_arrayref_arrayref) ) ) { croak( "\nERROR EIVAVRVAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref_arrayref value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name ); }
     if ( not( SvAROKp(possible_integer_arrayref_arrayref) ) ) { croak( "\nERROR EIVAVRVAVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref_arrayref value expected but non-arrayref value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name ); }
 
@@ -83,6 +89,7 @@ void integer_arrayref_arrayref_CHECKTRACE(SV* possible_integer_arrayref_arrayref
             if (not(SvIOKp(*possible_integer_array_element))) { croak("\nERROR EIVAVRVAVRV05, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref element value expected but non-integer value found at index (%d, %d),\nin variable %s from subroutine %s,\ncroaking", i, j, variable_name, subroutine_name ); }
         }
     }
+	fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_arrayref_CHECKTRACE(), bottom of subroutine\n");
 }
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
@@ -157,39 +164,41 @@ integer_arrayref_arrayref XS_unpack_integer_arrayref_arrayref(SV* input_avref_av
 // convert from (C++ std::vector of (C++ std::vector of integers)) to (Perl SV containing RV to (Perl AV of (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs)))))
 void XS_pack_integer_arrayref_arrayref(SV* output_avref_avref, integer_arrayref_arrayref input_vector_vector)
 {
-	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_arrayref(), top of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_arrayref(), top of subroutine\n");
 
 	AV* output_avref_av = newAV();  // initialize output array-of-arrays to empty
 	integer input_vector_vector_length = input_vector_vector.size();
 	integer i;
 	SV* temp_sv_pointer;
 
-	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_arrayref(), have input_vector_vector_length = %d\n", input_vector_vector_length);
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_arrayref(), have input_vector_vector_length = %d\n", input_vector_vector_length);
 
 	if (input_vector_vector_length > 0) {
 	    for (i = 0;  i < input_vector_vector_length;  ++i) {
+//            fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_arrayref(), top of outer loop, have i = %d\n", i);
 	        integer_arrayref input_vector = input_vector_vector[i];
 
-	        SV* output_avref;
 	        AV* output_av = newAV();  // initialize output sub-array to empty
 	        integer input_vector_length = input_vector.size();
 	        integer j;
-	        SV* temp_sv_pointer_inner;
 
-	        fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_arrayref(), have input_vector_length = %d\n", input_vector_length);
+//	        fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_arrayref(), have input_vector_length = %d\n", input_vector_length);
 
 	        if (input_vector_length > 0) {
 	            for (j = 0;  j < input_vector_length;  ++j) {
+//	                fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_arrayref(), top of inner loop, have (i, j) = (%d, %d)\n", i, j);
+//	                fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_arrayref(), have input_vector_vector[%d][%d] = %d\n", i, j, input_vector[j]);
 	                av_push(output_av, newSViv(input_vector[j]));
+//	                fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_arrayref(), bottom of inner loop, have (i, j) = (%d, %d)\n", i, j);
 	            }
 	        }
 	        else warn("in CPPOPS_CPPTYPES XS_pack_integer_arrayref_arrayref(), sub-array was empty, returning empty sub-array via newAV()");
 
-	        temp_sv_pointer_inner = newSVrv(output_avref, NULL);      // upgrade output stack SV to an RV
-	        SvREFCNT_dec(temp_sv_pointer_inner);       // discard temporary pointer
-	        SvRV(output_avref) = (SV*)output_av;       // make output stack RV pointer at our output AV
+	        // NEED ANSWER: is it really okay to NOT increase the reference count below???
+	        av_push(output_avref_av, newRV_noinc((SV*)output_av));  // reference, do not increase reference count
+//	        av_push(output_avref_av, newRV_inc((SV*)output_av));  // reference, do increase reference count
 
-	        av_push(output_avref_av, output_avref);
+//            fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_arrayref(), bottom of outer loop, have i = %d\n", i);
 	    }
 	}
 	else warn("in CPPOPS_CPPTYPES XS_pack_integer_arrayref_arrayref(), array was empty, returning empty array via newAV()");
@@ -198,7 +207,7 @@ void XS_pack_integer_arrayref_arrayref(SV* output_avref_avref, integer_arrayref_
 	SvREFCNT_dec(temp_sv_pointer);		 // discard temporary pointer
 	SvRV(output_avref_avref) = (SV*)output_avref_av;	   // make output stack RV pointer at our output AV
 
-	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_arrayref(), bottom of subroutine\n");
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_arrayref(), bottom of subroutine\n");
 }
 
 # endif

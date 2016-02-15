@@ -1,7 +1,9 @@
 DONE
     rperl command-line front-end, `rperl -u` uncompile option, delete all compiled files
     access C++ constants from Perl
-    add integer_arrayref_arrayref data type
+    and operator
+    or operator
+    integer_arrayref_arrayref data type
 
 Unsigned Integer Fix
 
