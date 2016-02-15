@@ -572,6 +572,13 @@ use parent -norequire, qw(arrayref);
 
 # [ HOMOGENEOUS ARRAY ARRAYS (2-dimensional) ]
 
+# method returning (ref to array) of (refs to (arrays of integers))
+package  # hide from PAUSE indexing
+    integer_arrayref_arrayref::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
+
 # (ref to array) of (refs to (arrays of integers))
 package  # hide from PAUSE indexing
     integer_arrayref_arrayref;
@@ -580,7 +587,7 @@ use warnings;
 use parent -norequire, qw(arrayref_arrayref);
 
 # emulate C++ behavior by actually creating arrays (and presumably allocating memory) at initialization time
-our integer_arrayref_arrayref $new = sub {
+our integer_arrayref_arrayref::method $new = sub {
     ( my integer $row_count, my integer $column_count ) = @_;  # row-major form (RMF)
     my integer_arrayref_arrayref $retval = [];
     for my integer $j (0 .. ($row_count - 1)) {
