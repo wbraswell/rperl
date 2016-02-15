@@ -1,5 +1,13 @@
 Revision history for Perl compiler RPerl.
 
+1.600000 2016-02-14 Codename Red Dwarf
+
+    - HOLIDAY EDITION: Happy St. Valentine's Day!
+    - `rperl -u` Uncompile Command-Line Option, Delete All Compiled Files
+    - Access To Compiled C++ Constants from Perl
+    - Logical Operators and, or, xor
+    - Two-Dimensional Data Structure integer_arrayref_arrayref, Part 1
+
 1.510000 2016-01-17
 
     - Learning RPerl, TPF Grant Completion
