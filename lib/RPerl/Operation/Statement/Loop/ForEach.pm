@@ -43,12 +43,12 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my string $right_paren     = $self->{children}->[6];
         my object $codeblock       = $self->{children}->[7];
 
-        RPerl::diag( 'in Loop::ForEach->ast_to_rperl__generate(), have $list_elements = ' . "\n" . RPerl::Parser::rperl_ast__dump($list_elements) . "\n" );
-        die 'TMP DEBUG';
-
         # START HERE: add error checking for PERLOPS_PERLTYPES, then utilize for CPPOPS_CPPTYPES
         # START HERE: add error checking for PERLOPS_PERLTYPES, then utilize for CPPOPS_CPPTYPES
         # START HERE: add error checking for PERLOPS_PERLTYPES, then utilize for CPPOPS_CPPTYPES
+ 
+#        RPerl::diag( 'in Loop::ForEach->ast_to_rperl__generate(), have $list_elements = ' . "\n" . RPerl::Parser::rperl_ast__dump($list_elements) . "\n" );
+#        die 'TMP DEBUG';
 #        if ((scalar @{$list_elements->{children}->[1]->{children}}) > 0) {  # non-empty _STAR_LIST, meaning 2 or more total elements in ListElements
 #        }
 
