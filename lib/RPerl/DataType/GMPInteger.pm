@@ -6,7 +6,8 @@ use RPerl::AfterSubclass;
 our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
-use parent qw(Math::BigInt RPerl::DataType::Scalar);  # DEV NOTE: multiple inheritance!
+#use parent qw(Math::BigInt RPerl::DataType::Scalar);  # DEV NOTE: multiple inheritance!
+use parent qw(Math::BigInt);
 use Math::BigInt lib => 'GMP';  # we still actually use GMP in PERLOPS_PERLTYPES mode, albeit indirectly via Math::BigInt::GMP
 use RPerl::DataType::Scalar;
 
