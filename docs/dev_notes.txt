@@ -1,4 +1,4 @@
-# RPerl Developer Notes 20160214 2016.045
+# RPerl Developer Notes 20160216 2016.047
 
 ##########################################################################################
 # WARNING & ERROR CODES
@@ -194,6 +194,19 @@ https://pause.perl.org
 
 
 ##########################################################################################
+# RELEASE HOLIDAYS
+##########################################################################################
+
+NEW YEAR'S
+ST VALENTINE'S
+APRIL FOOLS'
+INDEPENDENCE
+HALLOWEEN
+THANKSGIVING
+CHRISTMAS
+
+
+##########################################################################################
 # CPAN DISTRIBUTION
 ##########################################################################################
 
@@ -266,3 +279,4 @@ $ script/development/rperl_locallib_uninstall.sh
 $ cpanm WBRASWELL/RPerl-VERSION.tar.gz  # beta pre-release versions
 # OR
 $ cpanm RPerl  # full release versions
+# DONE!

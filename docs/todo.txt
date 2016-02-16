@@ -80,35 +80,6 @@ Finish All CPPOPS_CPPTYPES Code Generation
 
 
 
-Basic Loop Parallelization, CPPOPS_CPPTYPES Mode
-
-RELEASE v2.0beta1 CHRISTMAS
-
-Advanced Loop Parallelization, CPPOPS_CPPTYPES Mode
-
-RELEASE v2.0beta2 VALENTINES
-
-Basic Hyper Operators, CPPOPS_CPPTYPES Mode
-
-RELEASE v2.0beta3 APRIL FOOL'S
-
-Advanced Hyper Operators, CPPOPS_CPPTYPES Mode
-
-RELEASE v2.0 INDEPENDENCE DAY
-
-Basic Regular Expressions
-
-RELEASE v2.1 HALLOWEEN
-
-Advanced Regular Expressions
-
-RELEASE v2.2 THANKSGIVING
-
-Basic Medium Magic Support
-
-RELEASE v3.0beta1 CHRISTMAS
-
-
 Dumper() in C++, use as default overload for <<
 
 rperl command-line front-end
