@@ -1,5 +1,5 @@
 # RPerl Install Notes
-# Last Updated January 8, 2016
+# Last Updated February 20, 2016
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # NOTE: STEP 1 IS ONLY FOR SINGLE-USER INSTALL, NOT SYSTEM-WIDE INSTALL
@@ -35,7 +35,12 @@ $ perl -v  # NOTE! the version of Perl determines whether you take step 1A or 1B
 $ perl -MExtUtils::MakeMaker\ 999  # v7.04 or greater required by Inline::C
 $ cpan ExtUtils::MakeMaker  # cpan system-wide, not cpanm single-user
 
+# GNU Multiple-Precision (GMP) Arithmetic Library
 $ apt-get install libgmp-dev
+# OR
+$ urpmi gmpxx-devel
+# OR
+# visit https://gmplib.org/
 
 $ curl -L cpanmin.us > /dev/null
     # execute the following "echo" command below IF AND ONLY IF the above "curl" command gives an error:
