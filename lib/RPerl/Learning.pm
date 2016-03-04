@@ -270,6 +270,8 @@ Significant GitHub commit dates include, but are not limited to the following:
     2016-01-16: Learning RPerl, Content, Part 30
     2016-01-16: Learning RPerl, Content, Part 31
     2016-01-16: Learning RPerl, Content, Part 32
+    2016-03-03: Learning RPerl, Chapter 2 Content, Part 1
+    2016-03-03: Learning RPerl, TPF Grant #2, Part 1
 
 </noncode>
 
