@@ -273,13 +273,13 @@ Significant GitHub commit dates include, but are not limited to the following:
 
 </noncode>
 
-=head2 Section 0.4: TPF Grant
+=head2 Section 0.4: TPF Grants
 
-This book was made possible in part by a generous grant from The Perl Foundation, as part of the September 2015 round of funding.
+This book was made possible in part by 2 generous grants from The Perl Foundation, as part of the September 2015 and January / Febuary 2016 rounds of funding.
 
-Special thanks to TPF Grants Committee Secretary, Makoto Nozaki; TPF Grant Manager, Mark Jensen; TPF Grants Committee's 8 supporting members; and everyone who gave positive feedback on the grant proposal.
+Special thanks to TPF Grants Committee Secretary, Makoto Nozaki; TPF Grant Manager, Mark Jensen; TPF Grants Committee's various supporting members; and everyone who gave positive feedback on the grant proposals.
 
-A history of the grant may be found at the following links:
+A history of TPF grant #1 may be found at the following links:
 
 =over 16
 
@@ -296,6 +296,16 @@ A history of the grant may be found at the following links:
 =item * L<Grant Report 2|http://news.perlfoundation.org/2015/12/grant-report-rperl-user-docume-1.html>
 
 =item * L<Grant Report 3|http://news.perlfoundation.org/2016/01/grant-report-rperl-user-docume-2.html>
+
+=back
+
+A history of TPF grant #2 may be found at the following links:
+
+=over 16
+
+=item * L<Grant Proposal: RPerl User Documentation, Part 2|http://news.perlfoundation.org/2016/02/grant-proposal-rperl-user-docu-1.html>
+
+=item * L<Jan E<sol> Feb 2016 Grant Votes|http://news.perlfoundation.org/2016/02/janfeb-2016-grant-votes.html>
 
 =back
 
