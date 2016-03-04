@@ -49,18 +49,16 @@ print 'in gmp_symtab_dump.pl, have Dumper(integer_to_gmp_integer($foo)) = ' . Du
 print 'in gmp_symtab_dump.pl, have gmp_get_signed_integer(integer_to_gmp_integer($foo)) = ' . gmp_get_signed_integer(integer_to_gmp_integer($foo)) . "\n";
 print 'in gmp_symtab_dump.pl, have gmp_integer_to_integer(integer_to_gmp_integer($foo)) = ' . gmp_integer_to_integer(integer_to_gmp_integer($foo)) . "\n";
 
-=DISABLE
-print "<<<============================>>>\n" x 3;
+#print "<<<============================>>>\n" x 3;
 
-my $rop = Math::BigInt->new(0);
-my $op  = Math::BigInt->new(-123456);
-my $x   = 1103;
+#my $rop = Math::BigInt->new(0);
+#my $op  = Math::BigInt->new(-123456);
+#my $x   = 1103;
 
-gmp_mul_unsigned_integer($rop, $op, $x);
-print "\n" . $rop . "\n";
-print (-123456 * 1103);
+#gmp_mul_unsigned_integer($rop, $op, $x);
+#print "\n" . $rop . "\n";
+#print (-123456 * 1103);
 
-gmp_mul_unsigned_integer($op, $op, 5);
-print "\n" . $op . "\n";
-print (-123456 * 5);
-=cut
+#gmp_mul_unsigned_integer($op, $op, 5);
+#print "\n" . $op . "\n";
+#print (-123456 * 5);
