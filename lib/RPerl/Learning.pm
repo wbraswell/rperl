@@ -930,35 +930,35 @@ RPerl provides 7 scalar data types:
 
 Of the 7 RPerl scalar data types, 3 are directly (natively) supported by the Perl 5 core: C<integer>, C<number>, and C<string>.  This means the Perl 5 core is capable of directly identifying and storing those 3 core types.  The remaining 4 non-core types are indirectly supported by the Perl 5 interpreter: C<boolean> and C<unsigned_integer> can be stored within either an C<integer> or C<number>; C<character> can be stored within a C<string>; and C<gmp_integer> is supported by the C<use bigint;> wrapper around the C<Math::BigInt::GMP> module.
 
-When RPerl application source code is compiled from RPerl into C++, all 7 data types are natively supported for high-speed execution.
-
-START HERE: add unsigned_integer & gmp_integer examples & sections
-START HERE: add unsigned_integer & gmp_integer examples & sections
-START HERE: add unsigned_integer & gmp_integer examples & sections
+When RPerl application source code is compiled from RPerl into C++, all 7 data types are natively supported by C++ for high-speed execution.
 
 A single group of actual numeric digit(s) or quoted string character(s) is called a I<"literal">, such as:
 
-    -21         # integer or number
+    -21         # integer or gmp_integer or number
 
     'howdy'     # string
 
     -23.421_12  # number
 
-    1_234_567   # integer or number
+    1_234_567   # unsigned_integer or integer or gmp_integer or number
+
+    1_234_567_890_123_456_789_012_345_678_901_234_567_890_123_456_789_012_345  # gmp_integer
 
     'One million, two-hundred-thirty-four thousand, five-hundred-sixty-seven'  # string
 
-    "\n"        # newline character or string
-
     '1'         # character or string
+
+    'a'         # character or string
+
+    "\n"        # newline character or string
 
     q{}         # empty character or string
 
-    0           # boolean or integer or number
+    0           # boolean or unsigned_integer or integer or gmp_integer or number
 
 =head2 Section 2.1: Numbers (Numeric Data)
 
-RPerl provides 3 numeric data types:
+RPerl provides 5 numeric data types:
 
 =over
 
@@ -966,9 +966,17 @@ RPerl provides 3 numeric data types:
 
 S< >S< >S< >S< >a boolean logic value, either 0 or 1
 
+=item * C<unsigned_integer>
+
+S< >S< >S< >S< >a positive whole number value, greater than or equal to 0
+
 =item * C<integer>
 
 S< >S< >S< >S< >a whole number value, either negative, 0, or positive
+
+=item * C<gmp_integer>
+
+S< >S< >S< >S< >a possibly-very-large whole number value, either negative, 0, or positive; may safely exceed your computer's data type limits
 
 =item * C<number>
 
@@ -986,29 +994,50 @@ The most memory-efficient numeric literal is C<boolean>, which represents a sing
     1.5   # not a boolean
     -1.5  # not a boolean
 
-=head3 Section 2.1.2: Integer Literals
+=head3 Section 2.1.2: Unsigned Integer Literals
 
-The next most efficient numeric literal is C<integer>, which represents a single whole (non-decimal) number.  An C<integer> literal may describe any positive or negative whole number, within the data size limits of your operating system and computer hardware.
+The second most efficient numeric literal is C<unsigned_integer>, which represents a single whole (non-decimal) number greater than or equal to 0.  An C<unsigned_integer> literal may describe any positive whole number, within the data size limits of the data types supported by your operating system software and computer hardware.  An C<unsigned_integer> may not describe a negative number or a non-whole number.
+
+    23      # unsigned_integer
+    0       # unsigned_integer
+    42_230  # unsigned_integer
+    -23     # not an unsigned_integer
+    42.1    # not an unsigned_integer
+    999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999  # bad unsigned_integer, outside data type limits
+
+=head3 Section 2.1.3: Integer Literals
+
+The third most efficient numeric literal is C<integer>, which represents a single whole (non-decimal) number.  An C<integer> literal may describe any positive or negative whole number, within your operating system and hardware data type limits.
 
     -23     # integer
     0       # integer
     42_230  # integer
     42.1    # not an integer
-    -999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999  # bad integer, outside limits
+    -999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999  # bad integer, outside data type limits
 
-=head3 Section 2.1.3: Number Literals
+=head3 Section 2.1.4: GMP Integer Literals
 
-The C<number> numeric literal represents a single floating-point (decimal) number, and may express any real number within your computer's limits.
+The GNU Multi-Precision (GMP) software library is utilized to provide the C<gmp_integer> numeric literal, representing a single whole (non-decimal) number which may safely exceed the data type limits of your operating system and hardware.  A C<gmp_integer> literal may describe any positive or negative whole number, within the limits of the memory (real or virtual) available to your RPerl code.
+
+    -23     # gmp_integer
+    0       # gmp_integer
+    42_230  # gmp_integer
+    42.1    # not a gmp_integer
+    -999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999  # gmp_integer
+
+=head3 Section 2.1.5: Number Literals
+
+The C<number> numeric literal represents a single floating-point (decimal) number, and may express any real number within your computer's data type limits.
 
     -23.42     # number
     0.000_001  # number
     42.23      # number
     42         # number
-    -4_123.456_789_123_456_789_123_456_789_123_456_789_123_456_789_123_456_789_123_456  # bad number, outside limits
+    -4_123.456_789_123_456_789_123_456_789_123_456_789_123_456_789_123_456_789_123_456  # bad number, outside data type limits
 
-=head3 Section 2.1.4: Underscore Digit Separators
+=head3 Section 2.1.6: Underscore Digit Separators
 
-For C<integer> and C<number> literals, an I<"underscore"> C<_> character must be inserted after every third digit away from the decimal point, where the underscore is used in a similar manner as a comma when writing long numbers by hand.
+For C<unsigned_integer>, C<integer>, C<gmp_integer>, and C<number> literals, an I<"underscore"> C<_> character must be inserted after every third digit away from the decimal point, where the underscore is used in a similar manner as a comma when writing long numbers by hand.
 
     1_234_567  # integer, same as "1,234,567" in American notation
     -32_123    # integer, same as "-32,123" in American notation
@@ -1018,9 +1047,9 @@ For C<integer> and C<number> literals, an I<"underscore"> C<_> character must be
     -32_123.456_789_01  # number, same as "-32,123.45678901" in American notation
     -32_123.456_78901   # bad number, missing underscore
 
-=head3 Section 2.1.5: Optional Positive Sign
+=head3 Section 2.1.7: Optional Positive Sign
 
-For C<integer> and C<number> literals, an optional C<+> plus sign may be prepended to explicitly indicate a numeric literal is positive (greater than zero).
+For C<unsigned_integer>, C<integer>, C<gmp_integer>, and C<number> literals, an optional C<+> plus sign may be prepended to explicitly indicate a numeric literal is positive (greater than zero).
 
     1   # positive one
     +1  # also positive one
@@ -1057,9 +1086,9 @@ I<BEST PRACTICES>
     -21
     -66.5
 
-=head3 Section 2.1.6: Scientific Notation
+=head3 Section 2.1.8: Scientific Notation
 
-For C<integer> and C<number> literals, very large or very small numbers should be represented using I<"scientific notation">, where each number is normalized to have exactly one digit to the left of the decimal point, then a lower-case C<e> character and an appropriate integer power-of-ten is appended to the resulting normalized floating-point number.  The C<e> character stands for "exponent", as in "exponent of ten", and the Perl style of scientific notation is sometimes more accurately referred to as I<"scientific e notation">.
+For C<unsigned_integer>, C<integer>, and C<number> literals, very large or very small numbers may be approximated using I<"scientific notation">, where each number is normalized to have exactly one digit to the left of the decimal point, then a lower-case C<e> character and an appropriate integer power-of-ten is appended to the resulting normalized floating-point number.  The C<e> character stands for "exponent", as in "exponent of ten", and the Perl style of scientific notation is sometimes more accurately referred to as I<"scientific e notation">.
 
 As with normal integers, negative exponents must be prefixed with a C<-> minus sign and positive exponents may be optionally prefixed with a C<+> plus sign.
 
@@ -1069,7 +1098,7 @@ As with normal integers, negative exponents must be prefixed with a C<-> minus s
     0.001_234_567_000  # good number
     1.234_567_000e-03  # good number, same as "0.001_234_567_000" in scientific notation
 
-    -0.000_000_000_000_000_000_000_001_234_567  # bad number, outside limits
+    -0.000_000_000_000_000_000_000_001_234_567  # bad number, outside data type limits
     -1.234_567e-24  # good number, same as "-0.000_000_000_000_000_000_000_001_234_567" in scientific notation
 
 =for html <u>
@@ -1101,14 +1130,14 @@ I<BEST PRACTICES>
     1.234_567_000e+09  # best number for mixed-sign exponents, aligned with signed exponent below
     1.234_567_000e-09
 
-    +1.537_969_711_485_091_65e+21  # best number for mixed-sign exponents
-    -2.591_931_460_998_796_41e+01  # best number for mixed-sign exponents
-    +1.792_587_729_503_711_81e-01  # best number for mixed-sign exponents
-    +2.680_677_724_903_893_22e-03  # best number for mixed-sign exponents
-    +1.628_241_700_382_422_95e-03  # best number for mixed-sign exponents
-    -9.515_922_545_197_158_70e-15  # best number for mixed-sign exponents
+    +1.537_969_711_485_091_65e+21  # best number for mixed-sign exponents, accuracy may be reduced on computers with lower data type limits
+    -2.591_931_460_998_796_41e+01  # best number for mixed-sign exponents, accuracy may be reduced on computers with lower data type limits
+    +1.792_587_729_503_711_81e-01  # best number for mixed-sign exponents, accuracy may be reduced on computers with lower data type limits
+    +2.680_677_724_903_893_22e-03  # best number for mixed-sign exponents, accuracy may be reduced on computers with lower data type limits
+    +1.628_241_700_382_422_95e-03  # best number for mixed-sign exponents, accuracy may be reduced on computers with lower data type limits
+    -9.515_922_545_197_158_70e-15  # best number for mixed-sign exponents, accuracy may be reduced on computers with lower data type limits
 
-=head3 Section 2.1.7: Numeric Operators
+=head3 Section 2.1.9: Numeric Operators
 
 [ INSERT OPS ]
 

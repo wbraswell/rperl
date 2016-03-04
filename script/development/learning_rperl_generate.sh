@@ -1,6 +1,7 @@
 #!/bin/bash
+TMP_DIR=/tmp/rperl
 
-mkdir -p /tmp/rperl
+mkdir -p $TMP_DIR
 
 echo 'podchecker...'
 #podchecker -warnings -warnings lib/RPerl/Learning.pm
@@ -10,23 +11,29 @@ echo 'DONE'
 echo
 
 echo 'pod2html...'
-rm -f /tmp/rperl/learning_rperl__pod2html.htm
-#pod2html --infile=lib/RPerl/Learning.pm > /tmp/rperl/learning_rperl__pod2html.htm
-pod2html --podpath=lib:script --infile=lib/RPerl/Learning.pm > /tmp/rperl/learning_rperl__pod2html.htm
+rm -f $TMP_DIR/learning_rperl__pod2html.htm
+#pod2html --infile=lib/RPerl/Learning.pm > $TMP_DIR/learning_rperl__pod2html.htm
+pod2html --podpath=lib:script --infile=lib/RPerl/Learning.pm > $TMP_DIR/learning_rperl__pod2html.htm
 echo 'DONE'
 echo
 
 echo 'pod2cpanhtml...'
-rm -f /tmp/rperl/learning_rperl__pod2cpanhtml.htm
-#pod2cpanhtml --no-errata lib/RPerl/Learning.pm /tmp/rperl/learning_rperl__pod2cpanhtml.htm  # BROKEN???
-#pod2cpanhtml --no-index --no-errata lib/RPerl/Learning.pm /tmp/rperl/learning_rperl__pod2cpanhtml.htm
-pod2cpanhtml lib/RPerl/Learning.pm /tmp/rperl/learning_rperl__pod2cpanhtml.htm
+rm -f $TMP_DIR/learning_rperl__pod2cpanhtml.htm
+#pod2cpanhtml --no-errata lib/RPerl/Learning.pm $TMP_DIR/learning_rperl__pod2cpanhtml.htm  # BROKEN???
+#pod2cpanhtml --no-index --no-errata lib/RPerl/Learning.pm $TMP_DIR/learning_rperl__pod2cpanhtml.htm
+pod2cpanhtml lib/RPerl/Learning.pm $TMP_DIR/learning_rperl__pod2cpanhtml.htm
 echo 'DONE'
 echo
 
 echo 'pod2rperlhtml...'
 export RPERL_WARNINGS=0
-rm -f /tmp/rperl/learning_rperl__pod2rperlhtml.htm
-script/development/pod2rperlhtml.pl lib/RPerl/Learning.pm > /tmp/rperl/learning_rperl__pod2rperlhtml.htm
+rm -f $TMP_DIR/learning_rperl__pod2rperlhtml.htm
+script/development/pod2rperlhtml.pl lib/RPerl/Learning.pm > $TMP_DIR/learning_rperl__pod2rperlhtml.htm
+mkdir -p $TMP_DIR/stylesheets
+cd $TMP_DIR/stylesheets
+wget -q https://raw.githubusercontent.com/wbraswell/rperl/gh-pages/stylesheets/metacpan_rperl.css
+mkdir -p $TMP_DIR/javascripts
+cd $TMP_DIR/javascripts
+wget -q https://raw.githubusercontent.com/wbraswell/rperl/gh-pages/javascripts/metacpan_rperl.js
 echo 'DONE'
 echo
