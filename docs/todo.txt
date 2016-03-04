@@ -80,6 +80,9 @@ Finish All CPPOPS_CPPTYPES Code Generation
 
 
 
+Math::Trig support
+Math::Complex support
+
 Dumper() in C++, use as default overload for <<
 
 rperl command-line front-end

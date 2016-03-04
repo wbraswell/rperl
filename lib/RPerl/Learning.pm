@@ -477,7 +477,7 @@ If you answered "yes" to any of these questions, then the Roadrunner Book is def
 
 If you answered "no" to all of these questions, then this book may still be for you, give it a try!
 
-If you hate Perl, or only love slow software, or wish all computers would explode, then we suggest some soul-searching and a few Saint Larry videos.  You'll thank us in the morning.
+If you hate Perl, or only love slow software, or wish all computers would explode, then we suggest some soul-searching and a L<few|https://www.youtube.com/watch?v=UScm9avQM1Y> L<Saint|https://www.youtube.com/watch?v=SKqBmAHwSkg> L<Larry|https://www.youtube.com/watch?v=G49RUPv5-NU> L<videos|https://www.youtube.com/watch?v=aNAtbYSxzuA>.  You'll thank us in the morning.
 
 =head2 Section 1.4: Why Aren't There More Footnotes?
 
@@ -519,7 +519,7 @@ Will waited a decade or two before realizing he had to do it himself.
 
 =head2 Section 1.10: Why Didn't Will Just Use Normal Perl Or Some Other Language?
 
-Dynamic languages like Perl are fast at running some kinds of computational actions, such as string manipulation (editing text data) and reading from a database.
+Dynamic languages like Perl are fast at running some kinds of computational actions, such as regular expressions (text data pattern matching) and reading from a database.
 
 Unfortunately, dynamic languages are slow at running general-purpose computations, such as arithmetic and moving data around in memory.  Sometimes very slow.
 
@@ -1151,7 +1151,60 @@ I<BEST PRACTICES>
 
 =head3 Section 2.1.9: Numeric Operators
 
-[ INSERT OPS ]
+# START HERE: edit formatting of operators, add plain-English descriptions, and examples
+# START HERE: edit formatting of operators, add plain-English descriptions, and examples
+# START HERE: edit formatting of operators, add plain-English descriptions, and examples
+
+=head4 Section 2.1.9.1: Arithmetic Operators
+
+    %token OP19_VARIABLE_ASSIGN_BY   = /(\+=|-=|\*=|\/=)/            # precedence 19 infix: add assign '+=', subtract assign '-=', multiply assign '*=', divide assign '/=', string concatenation assign '.='
+    %token OP03_MATH_INC_DEC         = /(\+\+|--)/                   # precedence 03 prefix and postfix: increment '++', decrement '--'
+    %token OP04_MATH_POW             = /(\*\*)/                      # precedence 04 infix: arithmetic exponent AKA power '**'
+    %token OP07_MATH_MULT_DIV_MOD    = /(\*|\/|\%|sse_mul|sse_div)/  # precedence 07 infix: arithmetic multiply '*', divide '/', modulo '*', SSE multiply 'sse_mul', SSE divide 'sse_div'
+    %token OP05_MATH_NEG_LPAREN      = /(-\()/                       # precedence 05 prefix: arithmetic negative '-('
+    %token OP08_MATH_ADD_SUB         = /(\+|-\s|sse_add|sse_sub)/    # precedence 08 infix: arithmetic add '+', subtract '-', SSE add 'sse_add', SSE subtract 'sse_sub'
+    %token OP10_NAMED_UNARY_SCOLON   = /(sqrt;)/
+    %token OP01_NAMED_SCOLON         = /(abs;)/
+
+=head4 Section 2.1.9.2: Trigonometry Operators
+
+    %token OP10_NAMED_UNARY_SCOLON   = /(cos;|sin;)/
+    %token OP01_NAMED_SCOLON         = /(atan2;)/
+
+=head4 Section 2.1.9.3: Comparison Operators
+
+    %token OP12_COMPARE_EQ_NE        = /(==|!=)\s/             # precedence 12 infix: comparison numeric equal '==', numeric not equal '!=', string equal 'eq', string not equal 'ne'
+    %token OP11_COMPARE_LT_GT        = /(<=|>=|<|>)\s/   # precedence 11 infix: numeric comparison less or equal '<=', greater or equal '>=', less than '<', greater than '>'; string comparison less or equal 'le', greater or equal 'ge', less than 'lt', greater than 'gt'
+
+=head4 Section 2.1.9.4: Logic Operators
+
+    %token OP24_LOGICAL_OR_XOR       = /(or|xor)\s/                  # precedence 24 infix: logical 'or' and 'xor', equivalent to '||' except for precedence
+    %token OP23_LOGICAL_AND          = /(and)\s/                     # precedence 23 infix: logical 'and', equivalent to '&&' except for precedence
+    %token OP22_LOGICAL_NEG          = /(not)/                       # precedence 22 prefix: logical negation 'not', equivalent to '!' except for precedence
+    %token OP16_LOGICAL_OR           = /(\|\|)/                      # precedence 16 infix: logical or '||'
+    %token OP15_LOGICAL_AND          = /(&&)/                        # precedence 15 infix: logical and '&&'
+    %token OP05_LOGICAL_NEG          = /(!)/                         # precedence 05 prefix: logical negation '!'
+
+=head4 Section 2.1.9.5: Bitwise Operators
+
+    %token OP14_BITWISE_OR_XOR       = /(\||\^)/                     # precedence 14 infix: bitwise or '|', bitwise xor '^'
+    %token OP13_BITWISE_AND          = /(&)/                         # precedence 13 infix: bitwise and '&'
+    %token OP09_BITWISE_SHIFT        = /(<<|>>)/                     # precedence 09 infix: bitwise shift left '<<', shift right '>>'
+
+
+
+
+=head4 Section x.x.x.x: File & Directory Operators
+
+    %token OP10_NAMED_UNARY_SCOLON   = /(-A;|-B;|-C;|-M;|-O;|-R;|-S;|-T;|-W;|-X;|-b;|-c;|-d;|-e;|-f;|-g;|-k;|-l;|-o;|-p;|-r;|-s;|-t;|-u;|-w;|-x;|-z;)/
+
+=head4 Section x.x.x.x: UNSORTED Operators
+
+    %token OP10_NAMED_UNARY_SCOLON   = /(alarm;|caller;|chdir;|chroot;|defined;|delete;|do;|eval;|exists;|gethostbyname;|getnetbyname;|getpgrp;|getprotobyname;|glob;|gmtime;|goto;|hex;|int;|lc;|lcfirst;|length;|localtime;|lock;|log;|lstat;|oct;|ord;|quotemeta;|rand;|readlink;|ref;|require;|rmdir;|scalar;|sleep;|srand;|stat;|uc;|ucfirst;|umask;)/
+    %token OP01_NAMED_SCOLON         = /(accept;|bind;|binmode;|bless;|break;|chmod;|chomp;|chop;|chown;|chr;|closedir;|cmp;|connect;|continue;|crypt;|dbmclose;|dbmopen;|default;|dump;|each;|endgrent;|endhostent;|endnetent;|endprotoent;|endpwent;|endservent;|eof;|evalbytes;|exec;|exp;|fc;|fcntl;|fileno;|flock;|fork;|format;|formline;|getc;|getgrent;|getgrgid;|getgrnam;|gethostbyaddr;|gethostent;|getlogin;|getnetbyaddr;|getnetent;|getpeername;|getppid;|getpriority;|getprotobynumber;|getprotoent;|getpwent;|getpwnam;|getpwuid;|getservbyname;|getservbyport;|getservent;|getsockname;|getsockopt;|given;|grep;|index;|ioctl;|join;|keys;|kill;|link;|listen;|local;|m;|map;|mkdir;|msgctl;|msgget;|msgrcv;|msgsnd;|opendir;|pack;|pipe;|pop;|pos;|prototype;|push;|q;|qq;|qr;|qx;|read;|readdir;|readline;|readpipe;|recv;|rename;|reset;|reverse;|rewinddir;|rindex;|s;|say;|seek;|seekdir;|select;|semctl;|semget;|semop;|send;|setgrent;|sethostent;|setnetent;|setpgrp;|setpriority;|setprotoent;|setpwent;|setservent;|setsockopt;|shift;|shmctl;|shmget;|shmread;|shmwrite;|shutdown;|socket;|socketpair;|sort;|splice;|split;|sprintf;|state;|study;|substr;|symlink;|syscall;|sysopen;|sysread;|sysseek;|system;|syswrite;|tell;|telldir;|tie;|tied;|time;|times;|tr;|truncate;|unless;|unlink;|unpack;|unshift;|untie;|until;|utime;|values;|vec;|wait;|waitpid;|wantarray;|warn;|when;|write;|y;)/
+
+
+
 
 =head2 Section 2.2: Strings (Text Data)
 
