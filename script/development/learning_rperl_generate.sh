@@ -31,9 +31,15 @@ rm -f $TMP_DIR/learning_rperl__pod2rperlhtml.htm
 script/development/pod2rperlhtml.pl lib/RPerl/Learning.pm > $TMP_DIR/learning_rperl__pod2rperlhtml.htm
 mkdir -p $TMP_DIR/stylesheets
 cd $TMP_DIR/stylesheets
-wget -q https://raw.githubusercontent.com/wbraswell/rperl/gh-pages/stylesheets/metacpan_rperl.css
+if [ ! -f metacpan_rperl.css ]
+  then
+    wget -q https://raw.githubusercontent.com/wbraswell/rperl/gh-pages/stylesheets/metacpan_rperl.css
+fi
 mkdir -p $TMP_DIR/javascripts
 cd $TMP_DIR/javascripts
-wget -q https://raw.githubusercontent.com/wbraswell/rperl/gh-pages/javascripts/metacpan_rperl.js
+if [ ! -f metacpan_rperl.js ]
+  then
+    wget -q https://raw.githubusercontent.com/wbraswell/rperl/gh-pages/javascripts/metacpan_rperl.js
+fi
 echo 'DONE'
 echo

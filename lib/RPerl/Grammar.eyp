@@ -6,7 +6,7 @@
     # [[[ HEADER ]]]
     use strict;
     use warnings;
-    our $VERSION = 0.002_900;
+    our $VERSION = 0.002_901;
 
     use Carp;
     use rperlrules;  # affirmative, it totally does
@@ -82,7 +82,7 @@
 %token OP08_STRING_CAT           = /(\.)/                        # precedence 08 infix: string concatenate '.'
 %token OP03_MATH_INC_DEC         = /(\+\+|--)/                   # precedence 03 prefix and postfix: increment '++', decrement '--'
 %token OP04_MATH_POW             = /(\*\*)/                      # precedence 04 infix: arithmetic exponent AKA power '**'
-%token OP07_MATH_MULT_DIV_MOD    = /(\*|\/|\%|sse_mul|sse_div)/  # precedence 07 infix: arithmetic multiply '*', divide '/', modulo '*', SSE multiply 'sse_mul', SSE divide 'sse_div'
+%token OP07_MATH_MULT_DIV_MOD    = /(\*|\/|\%|sse_mul|sse_div)/  # precedence 07 infix: arithmetic multiply '*', divide '/', modulo '%', SSE multiply 'sse_mul', SSE divide 'sse_div'
 %token OP07_STRING_REPEAT        = /(x)\s/                       # precedence 07 infix: string repetition 'x'
 %token OP06_REGEX_PATTERN        = /([ms]\/.*(?:\/.*)?\/[a-z]*)/ # precedence 06 infix: regular expression pattern; ex. 'm/foo.*/xms' or 's/foo/bar/gxms'
 %token OP06_REGEX_MATCH          = /(=\~|!\~)/                   # precedence 06 infix: regular expression match '=~', not match '!~'

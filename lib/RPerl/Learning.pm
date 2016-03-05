@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.031_111;
+our $VERSION = 0.032_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -1151,20 +1151,308 @@ I<BEST PRACTICES>
 
 =head3 Section 2.1.9: Numeric Operators
 
-# START HERE: edit formatting of operators, add plain-English descriptions, and examples
-# START HERE: edit formatting of operators, add plain-English descriptions, and examples
-# START HERE: edit formatting of operators, add plain-English descriptions, and examples
+Perl 5 provides several builtin operators designed for use with numeric data, which can be organized into 5 general categories:
+
+=over
+
+=item * Arithmetic
+
+=item * Trigonometry
+
+=item * Comparison
+
+=item * Logic
+
+=item * Bitwise
+
+=back
+
+Each operator in Perl 5 (and thus RPerl) is assigned 3 characteristics: fixity (an order of appearance), precedence (a number) and associativity (a chirality or "handedness").  Prefix operators appear before their respective operands, postfix appear after, and infix operators appear between operands.  Operators with a lower numeric precedence are executed before operators with a higher precedence; in the absence of parenthesis, multiplication executes before addition because multiplication has a lower precedence number.  Operators with equal precedence number are grouped by (and executed in order of) associativity; in the absence of parenthesis, multiple subtraction operators will execute from left to right because subtraction is left-associative, whereas multiple exponent operators will execute from right to left because exponentiation is right-associative.  For more information, see the Appendix:
+
+L<B.3: Syntax Precedence & Associativity|"B.3: Syntax Precedence & Associativity">
+
+Beyond the builtin math operators in Perl 5, more advanced operators are available via the MathPerl software suite, which is (perhaps unsurprisingly) optimized using the RPerl compiler.  Pre-release MathPerl code is currently available:
+
+L<MathPerl on Github|https://github.com/wbraswell/mathperl>
 
 =head4 Section 2.1.9.1: Arithmetic Operators
 
-    %token OP19_VARIABLE_ASSIGN_BY   = /(\+=|-=|\*=|\/=)/            # precedence 19 infix: add assign '+=', subtract assign '-=', multiply assign '*=', divide assign '/=', string concatenation assign '.='
-    %token OP03_MATH_INC_DEC         = /(\+\+|--)/                   # precedence 03 prefix and postfix: increment '++', decrement '--'
-    %token OP04_MATH_POW             = /(\*\*)/                      # precedence 04 infix: arithmetic exponent AKA power '**'
-    %token OP07_MATH_MULT_DIV_MOD    = /(\*|\/|\%|sse_mul|sse_div)/  # precedence 07 infix: arithmetic multiply '*', divide '/', modulo '*', SSE multiply 'sse_mul', SSE divide 'sse_div'
-    %token OP05_MATH_NEG_LPAREN      = /(-\()/                       # precedence 05 prefix: arithmetic negative '-('
-    %token OP08_MATH_ADD_SUB         = /(\+|-\s|sse_add|sse_sub)/    # precedence 08 infix: arithmetic add '+', subtract '-', SSE add 'sse_add', SSE subtract 'sse_sub'
-    %token OP10_NAMED_UNARY_SCOLON   = /(sqrt;)/
-    %token OP01_NAMED_SCOLON         = /(abs;)/
+
+=for html <table class="rperl">
+
+=for html <tr><th>
+
+B<Name>
+
+=for html </th><th>
+
+B<Symbol>
+
+=for html </th><th>
+
+B<Fixity>
+
+=for html </th><th>
+
+B<Precedence>
+
+=for html </th><th>
+
+B<Associativity>
+
+=for html </th></tr>
+
+=for html <tr><td>
+
+Increment
+
+=for html </td><td>
+
+++
+
+=for html </td><td>
+
+Prefix or Postfix
+
+=for html </td><td>
+
+03
+
+=for html </td><td>
+
+Non
+
+=for html </td></tr>
+
+=for html <tr><td>
+
+Decrement
+
+=for html </td><td>
+
+--
+
+=for html </td><td>
+
+Prefix or Postfix
+
+=for html </td><td>
+
+03
+
+=for html </td><td>
+
+Non
+
+=for html </td></tr>
+
+=for html <tr><td>
+
+Exponent AKA Power
+
+=for html </td><td>
+
+**
+
+=for html </td><td>
+
+Infix
+
+=for html </td><td>
+
+04
+
+=for html </td><td>
+
+Right
+
+=for html </td></tr>
+
+=for html <tr><td>
+
+Multiply
+
+=for html </td><td>
+
+*
+
+=for html </td><td>
+
+Infix
+
+=for html </td><td>
+
+07
+
+=for html </td><td>
+
+Left
+
+=for html </td></tr>
+
+=for html <tr><td>
+
+Divide
+
+=for html </td><td>
+
+/
+
+=for html </td><td>
+
+Infix
+
+=for html </td><td>
+
+07
+
+=for html </td><td>
+
+Left
+
+=for html </td></tr>
+
+=for html <tr><td>
+
+Modulo AKA Modulus
+
+=for html </td><td>
+
+%
+
+=for html </td><td>
+
+Infix
+
+=for html </td><td>
+
+07
+
+=for html </td><td>
+
+Left
+
+=for html </td></tr>
+
+=for html <tr><td>
+
+Negative with Parentheses
+
+=for html </td><td>
+
+-()
+
+=for html </td><td>
+
+Prefix
+
+=for html </td><td>
+
+05
+
+=for html </td><td>
+
+Right
+
+=for html </td></tr>
+
+=for html <tr><td>
+
+Add
+
+=for html </td><td>
+
++
+
+=for html </td><td>
+
+Infix
+
+=for html </td><td>
+
+08
+
+=for html </td><td>
+
+Left
+
+=for html </td></tr>
+
+=for html <tr><td>
+
+Subtract
+
+=for html </td><td>
+
+-
+
+=for html </td><td>
+
+Infix
+
+=for html </td><td>
+
+08
+
+=for html </td><td>
+
+Left
+
+=for html </td></tr>
+
+=for html <tr><td>
+
+Square Root
+
+=for html </td><td>
+
+sqrt
+
+=for html </td><td>
+
+Prefix
+
+=for html </td><td>
+
+10
+
+=for html </td><td>
+
+Non
+
+=for html </td></tr>
+
+=for html <tr><td>
+
+Absolute Value
+
+=for html </td><td>
+
+abs
+
+=for html </td><td>
+
+Prefix
+
+=for html </td><td>
+
+01
+
+=for html </td><td>
+
+Left
+
+=for html </td></tr>
+
+=for html </table>
+
+# START HERE: add more fixity details in appendix, continue creating operator tables, create non-html list format, add plain-English descriptions, and examples
+# START HERE: add more fixity details in appendix, continue creating operator tables, create non-html list format, add plain-English descriptions, and examples
+# START HERE: add more fixity details in appendix, continue creating operator tables, create non-html list format, add plain-English descriptions, and examples
+
+OP08_MATH_ADD_SUB         = /(sse_add|sse_sub)/    # precedence 08 infix: SSE add 'sse_add', SSE subtract 'sse_sub'
+OP07_MATH_MULT_DIV_MOD    = /(sse_mul|sse_div)/  # precedence 07 infix: SSE multiply 'sse_mul', SSE divide 'sse_div'
+OP19_VARIABLE_ASSIGN_BY   = /(\+=|-=|\*=|\/=)/            # precedence 19 infix: add assign '+=', subtract assign '-=', multiply assign '*=', divide assign '/=', string concatenation assign '.='
 
 =head4 Section 2.1.9.2: Trigonometry Operators
 
@@ -3666,7 +3954,7 @@ precedence 04 infix: arithmetic exponent AKA power C<**>
 
 =item * OP07_MATH_MULT_DIV_MOD
 
-precedence 07 infix: arithmetic multiply C<*>, divide C</>, modulo C<*>, SSE multiply C<sse_mul>, SSE divide C<sse_div>
+precedence 07 infix: arithmetic multiply C<*>, divide C</>, modulo C<%>, SSE multiply C<sse_mul>, SSE divide C<sse_div>
 
 =item * OP07_STRING_REPEAT
 
