@@ -5,18 +5,28 @@ table.rperl {
     border-collapse:separate;
     border-radius:  6px;
     -moz-border-radius: 6px;
-    border: 2px solid #cccccc;
+/*  INLINE
+    border-style: solid;
+    border-width: 2px;
+*/
+    border-color: #cccccc;
 }
 
+/*  INLINE
 table.rperl > tbody > tr > th {
     background-color: #e0e0e0;
     text-align: center;
 }
 
-table.rperl > tbody > tr:nth-child(odd)  { background: #f5f5f5 }
-table.rperl > tbody > tr:nth-child(even) { background: #ffffff }
+table.rperl > tbody > tr:nth-child(odd)  { background-color: #f5f5f5; }
+table.rperl > tbody > tr:nth-child(even) { background-color: #ffffff; }
 
-table.rperl > tbody > tr > th, td { border: 1px solid #cccccc; }
+table.rperl > tbody > tr > th, td {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cccccc;
+}
+*/
 
 table.rperl > tbody > tr > th:first-child { 
     border-top-left-radius:  3px;
