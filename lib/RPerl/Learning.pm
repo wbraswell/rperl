@@ -23,6 +23,69 @@ __END__
 
 =encoding utf8
 
+=begin roffDISABLED
+
+.mso hdtbl.tmac
+
+.ds t*bgc white\" background color
+.ds t*fgc black\" foreground color
+.ds t*bc black\"  border color
+.nr t*cpd 0.1n\"  cell padding
+
+=end roffDISABLED
+
+
+
+=begin roff
+
+.TS
+allbox tab(@);
+ccc.
+This@is@centered
+Well,@this@also
+.TE
+
+=end roff
+
+
+
+=for comment BEGIN INLINE CSS DIV
+
+=begin html
+
+<div id="scoped-content"><style type="text/css" scoped>
+
+table.rperl {
+    border-style: solid;
+    border-width: 2px;
+}
+
+table.rperl > tbody > tr > th {
+    background-color: #e0e0e0;
+    text-align: center;
+}
+
+table.rperl > tbody > tr > td:nth-child(odd)  { text-align: right; }
+
+table.rperl > tbody > tr:nth-child(odd)  { background-color: #f5f5f5; }
+table.rperl > tbody > tr:nth-child(even) { background-color: #ffffff; }
+
+table.rperl > tbody > tr > th, td {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cccccc;
+    padding: 5px;
+}
+
+/* disable ".pod p" margins inside tables only */
+table.rperl > tbody > tr > th > p { margin: 0px; }
+table.rperl > tbody > tr > td > p { margin: 0px; }
+
+
+</style>
+
+=end html
+
 =head1 NAME
 
 Learning RPerl
@@ -1167,7 +1230,7 @@ Perl 5 provides several builtin operators designed for use with numeric data, wh
 
 =back
 
-Each operator in Perl 5 (and thus RPerl) is assigned 3 characteristics: fixity (an order of appearance), precedence (a number) and associativity (a chirality or "handedness").  Prefix operators appear before their respective operands, postfix appear after, and infix operators appear between operands.  Operators with a lower numeric precedence are executed before operators with a higher precedence; in the absence of parenthesis, multiplication executes before addition because multiplication has a lower precedence number.  Operators with equal precedence number are grouped by (and executed in order of) associativity; in the absence of parenthesis, multiple subtraction operators will execute from left to right because subtraction is left-associative, whereas multiple exponent operators will execute from right to left because exponentiation is right-associative.  For more information, see the Appendix:
+Each operator in Perl 5 (and thus RPerl) is assigned 3 characteristics: fixity (a placement location), precedence (a number) and associativity (a chirality or "handedness").  Prefix operators appear before their respective operands, postfix appear after, and infix operators appear between operands.  Operators with a lower numeric precedence are executed before operators with a higher precedence; in the absence of parenthesis, multiplication executes before addition because multiplication has a lower precedence number.  Operators with equal precedence number are grouped by (and executed in order of) associativity; in the absence of parenthesis, multiple subtraction operators will execute from left to right because subtraction is left-associative, whereas multiple exponent operators will execute from right to left because exponentiation is right-associative.  For more information, see the Appendix:
 
 L<B.3: Syntax Precedence & Associativity|"B.3: Syntax Precedence & Associativity">
 
@@ -1178,25 +1241,41 @@ L<MathPerl on Github|https://github.com/wbraswell/mathperl>
 =head4 Section 2.1.9.1: Arithmetic Operators
 
 
+
+
 =for html <table class="rperl">
 
+=for roffDISABLED .TBL cols=5
+
 =for html <tr><th>
+
+=for roffDISABLED .TR
+
+=for roffDISABLED .TH
 
 B<Name>
 
 =for html </th><th>
 
+=for roffDISABLED .TH
+
 B<Symbol>
 
 =for html </th><th>
+
+=for roffDISABLED .TH
 
 B<Fixity>
 
 =for html </th><th>
 
+=for roffDISABLED .TH
+
 B<Precedence>
 
 =for html </th><th>
+
+=for roffDISABLED .TH
 
 B<Associativity>
 
@@ -1204,131 +1283,191 @@ B<Associativity>
 
 =for html <tr><td>
 
+=for roffDISABLED .TR .TD
+
 Increment
 
 =for html </td><td>
+
+=for roffDISABLED .TD
 
 ++
 
 =for html </td><td>
 
+=for roffDISABLED .TD
+
 Prefix or Postfix
 
 =for html </td><td>
 
+=for roffDISABLED .TD
+
 03
 
 =for html </td><td>
+
+=for roffDISABLED .TD
 
 Non
 
 =for html </td></tr>
 
 =for html <tr><td>
+
+=for roffDISABLED .TR .TD
 
 Decrement
 
 =for html </td><td>
 
+=for roffDISABLED .TD
+
 --
 
 =for html </td><td>
+
+=for roffDISABLED .TD
 
 Prefix or Postfix
 
 =for html </td><td>
 
+=for roffDISABLED .TD
+
 03
 
 =for html </td><td>
+
+=for roffDISABLED .TD
 
 Non
 
 =for html </td></tr>
 
 =for html <tr><td>
+
+=for roffDISABLED .TR .TD
 
 Exponent AKA Power
 
 =for html </td><td>
 
+=for roffDISABLED .TD
+
 **
 
 =for html </td><td>
 
+=for roffDISABLED .TD
+
 Infix
 
 =for html </td><td>
+
+=for roffDISABLED .TD
 
 04
 
 =for html </td><td>
 
+=for roffDISABLED .TD
+
 Right
 
 =for html </td></tr>
 
 =for html <tr><td>
+
+=for roffDISABLED .TR .TD
 
 Multiply
 
 =for html </td><td>
 
+=for roffDISABLED .TD
+
 *
 
 =for html </td><td>
+
+=for roffDISABLED .TD
 
 Infix
 
 =for html </td><td>
 
+=for roffDISABLED .TD
+
 07
 
 =for html </td><td>
+
+=for roffDISABLED .TD
 
 Left
 
 =for html </td></tr>
 
 =for html <tr><td>
+
+=for roffDISABLED .TR .TD
 
 Divide
 
 =for html </td><td>
 
+=for roffDISABLED .TD
+
 /
 
 =for html </td><td>
+
+=for roffDISABLED .TD
 
 Infix
 
 =for html </td><td>
 
+=for roffDISABLED .TD
+
 07
 
 =for html </td><td>
+
+=for roffDISABLED .TD
 
 Left
 
 =for html </td></tr>
 
 =for html <tr><td>
+
+=for roffDISABLED .TR .TD
 
 Modulo AKA Modulus
 
 =for html </td><td>
 
+=for roffDISABLED .TD
+
 %
 
 =for html </td><td>
+
+=for roffDISABLED .TD
 
 Infix
 
 =for html </td><td>
 
+=for roffDISABLED .TD
+
 07
 
 =for html </td><td>
+
+=for roffDISABLED .TD
 
 Left
 
@@ -1336,21 +1475,31 @@ Left
 
 =for html <tr><td>
 
+=for roffDISABLED .TR .TD
+
 Negative with Parentheses
 
 =for html </td><td>
 
--()
+=for roffDISABLED .TD
+
+-( )
 
 =for html </td><td>
+
+=for roffDISABLED .TD
 
 Prefix
 
 =for html </td><td>
 
+=for roffDISABLED .TD
+
 05
 
 =for html </td><td>
+
+=for roffDISABLED .TD
 
 Right
 
@@ -1358,43 +1507,63 @@ Right
 
 =for html <tr><td>
 
+=for roffDISABLED .TR .TD
+
 Add
 
 =for html </td><td>
+
+=for roffDISABLED .TD
 
 +
 
 =for html </td><td>
 
+=for roffDISABLED .TD
+
 Infix
 
 =for html </td><td>
 
+=for roffDISABLED .TD
+
 08
 
 =for html </td><td>
+
+=for roffDISABLED .TD
 
 Left
 
 =for html </td></tr>
 
 =for html <tr><td>
+
+=for roffDISABLED .TR .TD
 
 Subtract
 
 =for html </td><td>
 
+=for roffDISABLED .TD
+
 -
 
 =for html </td><td>
+
+=for roffDISABLED .TD
 
 Infix
 
 =for html </td><td>
 
+=for roffDISABLED .TD
+
 08
 
 =for html </td><td>
+
+=for roffDISABLED .TD
 
 Left
 
@@ -1402,21 +1571,31 @@ Left
 
 =for html <tr><td>
 
+=for roffDISABLED .TR .TD
+
 Square Root
 
 =for html </td><td>
+
+=for roffDISABLED .TD
 
 sqrt
 
 =for html </td><td>
 
+=for roffDISABLED .TD
+
 Prefix
 
 =for html </td><td>
 
+=for roffDISABLED .TD
+
 10
 
 =for html </td><td>
+
+=for roffDISABLED .TD
 
 Non
 
@@ -1424,21 +1603,31 @@ Non
 
 =for html <tr><td>
 
+=for roffDISABLED .TR .TD
+
 Absolute Value
 
 =for html </td><td>
+
+=for roffDISABLED .TD
 
 abs
 
 =for html </td><td>
 
+=for roffDISABLED .TD
+
 Prefix
 
 =for html </td><td>
 
+=for roffDISABLED .TD
+
 01
 
 =for html </td><td>
+
+=for roffDISABLED .TD
 
 Left
 
@@ -1446,8 +1635,9 @@ Left
 
 =for html </table>
 
-# START HERE: add more fixity details in appendix, continue creating operator tables, create non-html list format, add plain-English descriptions, and examples
-# START HERE: add more fixity details in appendix, continue creating operator tables, create non-html list format, add plain-English descriptions, and examples
+=for roffDISABLED .ETB
+
+
 # START HERE: add more fixity details in appendix, continue creating operator tables, create non-html list format, add plain-English descriptions, and examples
 
 OP08_MATH_ADD_SUB         = /(sse_add|sse_sub)/    # precedence 08 infix: SSE add 'sse_add', SSE subtract 'sse_sub'
@@ -6908,5 +7098,9 @@ X<br>
 B<William N. Braswell, Jr.>
 
 L<mailto:wbraswell@NOSPAM.cpan.org>
+
+=for comment END INLINE CSS DIV
+
+=for html </div>
 
 =cut

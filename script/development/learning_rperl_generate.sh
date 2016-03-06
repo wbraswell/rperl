@@ -10,6 +10,18 @@ podchecker lib/RPerl/Learning.pm
 echo 'DONE'
 echo
 
+echo 'pod2man...'
+rm -f $TMP_DIR/learning_rperl__pod2man*
+pod2man lib/RPerl/Learning.pm $TMP_DIR/learning_rperl__pod2man.3
+#man -t $TMP_DIR/learning_rperl__pod2man.3 > $TMP_DIR/learning_rperl__pod2man__man_t.ps
+#groff $TMP_DIR/learning_rperl__pod2man.3 > $TMP_DIR/learning_rperl__pod2man__groff.ps
+#groff -m man $TMP_DIR/learning_rperl__pod2man.3 > $TMP_DIR/learning_rperl__pod2man__groff_man.ps
+#groff -m hdtbl -m man $TMP_DIR/learning_rperl__pod2man.3 > $TMP_DIR/learning_rperl__pod2man__groff_hdtbl_man.ps
+#groff -t $TMP_DIR/learning_rperl__pod2man.3 > $TMP_DIR/learning_rperl__pod2man__groff_tbl.ps
+groff -t -m man $TMP_DIR/learning_rperl__pod2man.3 > $TMP_DIR/learning_rperl__pod2man__groff_tbl_man.ps
+echo 'DONE'
+echo
+
 echo 'pod2html...'
 rm -f $TMP_DIR/learning_rperl__pod2html.htm
 #pod2html --infile=lib/RPerl/Learning.pm > $TMP_DIR/learning_rperl__pod2html.htm
