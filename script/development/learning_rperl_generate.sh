@@ -1,6 +1,7 @@
 #!/bin/bash
-TMP_DIR=/tmp/rperl
+# v0.010_000
 
+TMP_DIR=/tmp/rperl
 mkdir -p $TMP_DIR
 
 echo 'podchecker...'
@@ -13,18 +14,15 @@ echo
 echo 'pod2man...'
 rm -f $TMP_DIR/learning_rperl__pod2man*
 pod2man lib/RPerl/Learning.pm $TMP_DIR/learning_rperl__pod2man.3
-#man -t $TMP_DIR/learning_rperl__pod2man.3 > $TMP_DIR/learning_rperl__pod2man__man_t.ps
-#groff $TMP_DIR/learning_rperl__pod2man.3 > $TMP_DIR/learning_rperl__pod2man__groff.ps
-#groff -m man $TMP_DIR/learning_rperl__pod2man.3 > $TMP_DIR/learning_rperl__pod2man__groff_man.ps
-#groff -m hdtbl -m man $TMP_DIR/learning_rperl__pod2man.3 > $TMP_DIR/learning_rperl__pod2man__groff_hdtbl_man.ps
-#groff -t $TMP_DIR/learning_rperl__pod2man.3 > $TMP_DIR/learning_rperl__pod2man__groff_tbl.ps
-groff -t -m man $TMP_DIR/learning_rperl__pod2man.3 > $TMP_DIR/learning_rperl__pod2man__groff_tbl_man.ps
+perl -e 'my $f = 0; foreach $l (<>) { if($f) { $f = 0; if($l eq ".PP\n") { next; } } if(($l eq "T\}\@T\{\n") or ($l eq "T\{\n")) { $f = 1; } print $l; }' $TMP_DIR/learning_rperl__pod2man.3 > $TMP_DIR/learning_rperl__pod2man__noPP.3  # remove extraneous .PP formatting tags inserted by pod2man
+mv $TMP_DIR/learning_rperl__pod2man__noPP.3 $TMP_DIR/learning_rperl__pod2man.3
+#man -t $TMP_DIR/learning_rperl__pod2man.3 > $TMP_DIR/learning_rperl__pod2man.ps 2> /dev/null # same a groff below
+groff -t -m man $TMP_DIR/learning_rperl__pod2man.3 > $TMP_DIR/learning_rperl__pod2man.ps 2> /dev/null # same a man above
 echo 'DONE'
 echo
 
 echo 'pod2html...'
 rm -f $TMP_DIR/learning_rperl__pod2html.htm
-#pod2html --infile=lib/RPerl/Learning.pm > $TMP_DIR/learning_rperl__pod2html.htm
 pod2html --podpath=lib:script --infile=lib/RPerl/Learning.pm > $TMP_DIR/learning_rperl__pod2html.htm
 echo 'DONE'
 echo

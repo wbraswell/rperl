@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.032_000;
+our $VERSION = 0.033_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -23,32 +23,6 @@ __END__
 
 =encoding utf8
 
-=begin roffDISABLED
-
-.mso hdtbl.tmac
-
-.ds t*bgc white\" background color
-.ds t*fgc black\" foreground color
-.ds t*bc black\"  border color
-.nr t*cpd 0.1n\"  cell padding
-
-=end roffDISABLED
-
-
-
-=begin roff
-
-.TS
-allbox tab(@);
-ccc.
-This@is@centered
-Well,@this@also
-.TE
-
-=end roff
-
-
-
 =for comment BEGIN INLINE CSS DIV
 
 =begin html
@@ -65,7 +39,8 @@ table.rperl > tbody > tr > th {
     text-align: center;
 }
 
-table.rperl > tbody > tr > td:nth-child(odd)  { text-align: right; }
+/* right alignment for numeric precedence column */
+table.rperl > tbody > tr > td:nth-child(4)  { text-align: right; }
 
 table.rperl > tbody > tr:nth-child(odd)  { background-color: #f5f5f5; }
 table.rperl > tbody > tr:nth-child(even) { background-color: #ffffff; }
@@ -80,7 +55,6 @@ table.rperl > tbody > tr > th, td {
 /* disable ".pod p" margins inside tables only */
 table.rperl > tbody > tr > th > p { margin: 0px; }
 table.rperl > tbody > tr > td > p { margin: 0px; }
-
 
 </style>
 
@@ -1240,405 +1214,433 @@ L<MathPerl on Github|https://github.com/wbraswell/mathperl>
 
 =head4 Section 2.1.9.1: Arithmetic Operators
 
-
-
-
 =for html <table class="rperl">
 
-=for roffDISABLED .TBL cols=5
+=begin man
+
+.TS
+allbox tab(@) ;
+c c c c c
+l l l r l .
+
+=end man
 
 =for html <tr><th>
 
-=for roffDISABLED .TR
-
-=for roffDISABLED .TH
+=for man T{
 
 B<Name>
 
 =for html </th><th>
 
-=for roffDISABLED .TH
+=for man T}@T{
 
 B<Symbol>
 
 =for html </th><th>
 
-=for roffDISABLED .TH
+=for man T}@T{
 
 B<Fixity>
 
 =for html </th><th>
 
-=for roffDISABLED .TH
+=for man T}@T{
 
 B<Precedence>
 
 =for html </th><th>
 
-=for roffDISABLED .TH
+=for man T}@T{
 
 B<Associativity>
 
 =for html </th></tr>
 
+=for man T}
+
 =for html <tr><td>
 
-=for roffDISABLED .TR .TD
+=for man T{
 
 Increment
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 ++
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 Prefix or Postfix
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 03
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 Non
 
 =for html </td></tr>
 
+=for man T}
+
 =for html <tr><td>
 
-=for roffDISABLED .TR .TD
+=for man T{
 
 Decrement
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 --
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 Prefix or Postfix
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 03
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 Non
 
 =for html </td></tr>
 
+=for man T}
+
 =for html <tr><td>
 
-=for roffDISABLED .TR .TD
+=for man T{
 
 Exponent AKA Power
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 **
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 Infix
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 04
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 Right
 
 =for html </td></tr>
 
+=for man T}
+
 =for html <tr><td>
 
-=for roffDISABLED .TR .TD
+=for man T{
 
 Multiply
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 *
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 Infix
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 07
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 Left
 
 =for html </td></tr>
 
+=for man T}
+
 =for html <tr><td>
 
-=for roffDISABLED .TR .TD
+=for man T{
 
 Divide
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 /
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 Infix
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 07
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 Left
 
 =for html </td></tr>
 
+=for man T}
+
 =for html <tr><td>
 
-=for roffDISABLED .TR .TD
+=for man T{
 
 Modulo AKA Modulus
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 %
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 Infix
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 07
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 Left
 
 =for html </td></tr>
 
+=for man T}
+
 =for html <tr><td>
 
-=for roffDISABLED .TR .TD
+=for man T{
 
 Negative with Parentheses
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 -( )
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 Prefix
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 05
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 Right
 
 =for html </td></tr>
 
+=for man T}
+
 =for html <tr><td>
 
-=for roffDISABLED .TR .TD
+=for man T{
 
 Add
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 +
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 Infix
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 08
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 Left
 
 =for html </td></tr>
 
+=for man T}
+
 =for html <tr><td>
 
-=for roffDISABLED .TR .TD
+=for man T{
 
 Subtract
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 -
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 Infix
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 08
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 Left
 
 =for html </td></tr>
 
+=for man T}
+
 =for html <tr><td>
 
-=for roffDISABLED .TR .TD
+=for man T{
 
 Square Root
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 sqrt
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 Prefix
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 10
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 Non
 
 =for html </td></tr>
 
+=for man T}
+
 =for html <tr><td>
 
-=for roffDISABLED .TR .TD
+=for man T{
 
 Absolute Value
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 abs
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 Prefix
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 01
 
 =for html </td><td>
 
-=for roffDISABLED .TD
+=for man T}@T{
 
 Left
 
 =for html </td></tr>
 
+=for man T}
+
 =for html </table>
 
-=for roffDISABLED .ETB
+=for man .TE
 
 
-# START HERE: add more fixity details in appendix, continue creating operator tables, create non-html list format, add plain-English descriptions, and examples
+# START HERE: create text list format, add more fixity details in appendix, continue creating operator tables, add plain-English descriptions, and examples
+# START HERE: create text list format, add more fixity details in appendix, continue creating operator tables, add plain-English descriptions, and examples
+# START HERE: create text list format, add more fixity details in appendix, continue creating operator tables, add plain-English descriptions, and examples
 
 OP08_MATH_ADD_SUB         = /(sse_add|sse_sub)/    # precedence 08 infix: SSE add 'sse_add', SSE subtract 'sse_sub'
 OP07_MATH_MULT_DIV_MOD    = /(sse_mul|sse_div)/  # precedence 07 infix: SSE multiply 'sse_mul', SSE divide 'sse_div'
