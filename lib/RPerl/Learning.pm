@@ -39,9 +39,6 @@ table.rperl > tbody > tr > th {
     text-align: center;
 }
 
-/* right alignment for numeric precedence column */
-table.rperl > tbody > tr > td:nth-child(4)  { text-align: right; }
-
 table.rperl > tbody > tr:nth-child(odd)  { background-color: #f5f5f5; }
 table.rperl > tbody > tr:nth-child(even) { background-color: #ffffff; }
 
@@ -55,6 +52,9 @@ table.rperl > tbody > tr > th, td {
 /* disable ".pod p" margins inside tables only */
 table.rperl > tbody > tr > th > p { margin: 0px; }
 table.rperl > tbody > tr > td > p { margin: 0px; }
+
+/* right alignment for numeric precedence column of operators tables */
+table.operators > tbody > tr > td:nth-child(4)  { text-align: right; }
 
 </style>
 
@@ -1214,7 +1214,7 @@ L<MathPerl on Github|https://github.com/wbraswell/mathperl>
 
 =head4 Section 2.1.9.1: Arithmetic Operators
 
-=for html <table class="rperl">
+=for html <table class="rperl operators">
 
 =begin man
 
@@ -1638,9 +1638,9 @@ Left
 =for man .TE
 
 
-# START HERE: create text list format, add more fixity details in appendix, continue creating operator tables, add plain-English descriptions, and examples
-# START HERE: create text list format, add more fixity details in appendix, continue creating operator tables, add plain-English descriptions, and examples
-# START HERE: create text list format, add more fixity details in appendix, continue creating operator tables, add plain-English descriptions, and examples
+# START HERE: PseudoPod support, text-only format, add more fixity details in appendix, continue creating operator tables, add plain-English descriptions, and examples
+# START HERE: PseudoPod support, text-only format, add more fixity details in appendix, continue creating operator tables, add plain-English descriptions, and examples
+# START HERE: PseudoPod support, text-only format, add more fixity details in appendix, continue creating operator tables, add plain-English descriptions, and examples
 
 OP08_MATH_ADD_SUB         = /(sse_add|sse_sub)/    # precedence 08 infix: SSE add 'sse_add', SSE subtract 'sse_sub'
 OP07_MATH_MULT_DIV_MOD    = /(sse_mul|sse_div)/  # precedence 07 infix: SSE multiply 'sse_mul', SSE divide 'sse_div'

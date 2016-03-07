@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-our $VERSION = 0.003_501;
+our $VERSION = 0.003_600;
 use ExtUtils::MakeMaker;
 
 BEGIN { use English; }
@@ -19,14 +19,13 @@ WriteMakefile(
     EXE_FILES        => ['script/rperl'],
     MIN_PERL_VERSION => '5.10.0',  # NEED ANSWER, CORRELATION #rp00: is RPerl truly incompatible with Perl v5.8 and earlier?
     PREREQ_PM        => {
+        # RPERL USER DEPENDENCIES
         'ExtUtils::MakeMaker' => 7.04,     # for compatibility with Inline::C >= v0.75
-        'CPAN::Meta'          => 2.150005, # RPerl system developers only, used for generating CPAN metadata from this file during dist build
         'Test::Exception'     => 0.32,
         'Test::CPAN::Changes' => 0.400002,
         'Test::Number::Delta' => 1.06,     # for compatibility with Perls compiled using -Duselongdouble
         'Perl::Critic'        => 1.121,
         'Perl::Tidy'          => 20140711,
-        'Parse::Eyapp'        => 1.182,
         'Inline'              => 0.80,
         'Inline::C'           => 0.76,     # wbraswell added CPPFLAGS
         'Inline::CPP'         => 0.74,     # davido & mohawk fixed ntype warnings; davido & wbraswell fixed namespace hack; nanis fixed Win32 filename space bug
@@ -37,9 +36,14 @@ WriteMakefile(
         'Module::ScanDeps'    => 1.19,
         'Time::HiRes'         => 1.9726,
         'List::MoreUtils'     => 0.33,
-        'App::Pod2CpanHtml'   => 0.04,
         'Math::BigInt::GMP'   => 1.46,
-        'Date::Format'        => 2.24      # for pod2rperlhtml.pl
+
+        # RPERL SYSTEM (NON-USER) DEPENDENCIES
+        'Parse::Eyapp'        => 1.182,    # RPerl Grammar; used by grammar_recompile.sh
+        'CPAN::Meta'          => 2.150005, # CPAN Distribution Build; used for generating CPAN metadata from this file
+        'App::Pod2CpanHtml'   => 0.04,     # Learning RPerl; used by pod2rperlhtml.pl
+        'Date::Format'        => 2.24,     # Learning RPerl; used by pod2rperlhtml.pl
+        'Pod::PseudoPod'      => 0.18      # Learning RPerl
     },
     META_MERGE => {
         'meta-spec' => {
