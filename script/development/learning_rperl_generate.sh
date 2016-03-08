@@ -1,6 +1,7 @@
 #!/bin/bash
-# v0.010_000
+# v0.020_000
 
+CURRENT_DIR=`pwd`
 TMP_DIR=/tmp/rperl
 mkdir -p $TMP_DIR
 
@@ -11,11 +12,32 @@ podchecker lib/RPerl/Learning.pm
 echo 'DONE'
 echo
 
+echo 'pod2text...'
+rm -f $TMP_DIR/learning_rperl__pod2text*
+pod2text lib/RPerl/Learning.pm $TMP_DIR/learning_rperl__pod2text.txt
+perl -e 'my $f = 0; my $s = ""; foreach $l (<>) { if($f) { if($l eq "<<< END TEXT EVAL >>>\n") { $f = 0; $e = eval $s; print $e; } else { $s .= $l; } } elsif($l eq "<<< BEGIN TEXT EVAL >>>\n") { $f = 1; $s = ""; } else { print $l; } }' $TMP_DIR/learning_rperl__pod2text.txt > $TMP_DIR/learning_rperl__pod2text__eval.txt  # tables, eval to generate
+mv $TMP_DIR/learning_rperl__pod2text__eval.txt $TMP_DIR/learning_rperl__pod2text.txt
+echo 'DONE'
+echo
+
+echo 'pod2text color...'
+rm -f $TMP_DIR/learning_rperl__pod2text__color*
+pod2text --color lib/RPerl/Learning.pm $TMP_DIR/learning_rperl__pod2text__color.txt
+perl -e 'my $f = 0; my $s = ""; foreach $l (<>) { if($f) { if($l eq "<<< END TEXT EVAL >>>\n") { $f = 0; $e = eval $s; print $e; } else { $s .= $l; } } elsif($l eq "<<< BEGIN TEXT EVAL >>>\n") { $f = 1; $s = ""; } else { print $l; } }' $TMP_DIR/learning_rperl__pod2text__color.txt > $TMP_DIR/learning_rperl__pod2text__color_eval.txt  # tables, eval to generate
+mv $TMP_DIR/learning_rperl__pod2text__color_eval.txt $TMP_DIR/learning_rperl__pod2text__color.txt
+echo 'DONE'
+echo
+
 echo 'pod2man...'
 rm -f $TMP_DIR/learning_rperl__pod2man*
 pod2man lib/RPerl/Learning.pm $TMP_DIR/learning_rperl__pod2man.3
-perl -e 'my $f = 0; foreach $l (<>) { if($f) { $f = 0; if($l eq ".PP\n") { next; } } if(($l eq "T\}\@T\{\n") or ($l eq "T\{\n")) { $f = 1; } print $l; }' $TMP_DIR/learning_rperl__pod2man.3 > $TMP_DIR/learning_rperl__pod2man__noPP.3  # remove extraneous .PP formatting tags inserted by pod2man
+perl -e 'my $f = 0; foreach $l (<>) { if($f) { $f = 0; if($l eq ".PP\n") { next; } } if(($l eq "T\}\@T\{\n") or ($l eq "T\{\n")) { $f = 1; } print $l; }' $TMP_DIR/learning_rperl__pod2man.3 > $TMP_DIR/learning_rperl__pod2man__noPP.3  # tables, remove extraneous .PP formatting tags inserted by pod2man
 mv $TMP_DIR/learning_rperl__pod2man__noPP.3 $TMP_DIR/learning_rperl__pod2man.3
+echo 'DONE'
+echo
+
+echo 'pod2man postscript...'
+#rm -f $TMP_DIR/learning_rperl__pod2man*
 #man -t $TMP_DIR/learning_rperl__pod2man.3 > $TMP_DIR/learning_rperl__pod2man.ps 2> /dev/null # same a groff below
 groff -t -m man $TMP_DIR/learning_rperl__pod2man.3 > $TMP_DIR/learning_rperl__pod2man.ps 2> /dev/null # same a man above
 echo 'DONE'
@@ -51,5 +73,39 @@ if [ ! -f metacpan_rperl.js ]
   then
     wget -q https://raw.githubusercontent.com/wbraswell/rperl/gh-pages/javascripts/metacpan_rperl.js
 fi
+cd $CURRENT_DIR
+echo 'DONE'
+echo
+
+echo 'ppodchecker...'
+ppodchecker lib/RPerl/Learning.pm
+echo 'DONE'
+echo
+
+echo 'ppod2txt...'
+cd $TMP_DIR
+rm -f $TMP_DIR/learning_rperl__ppod2txt*
+ppod2txt $CURRENT_DIR/lib/RPerl/Learning.pm
+mv Learning.txt learning_rperl__ppod2txt.txt
+cd $CURRENT_DIR
+echo 'DONE'
+echo
+
+echo 'ppod2html...'
+cd $TMP_DIR
+rm -f $TMP_DIR/learning_rperl__ppod2html*
+ppod2html $CURRENT_DIR/lib/RPerl/Learning.pm
+mv Learning.html learning_rperl__ppod2html.htm
+cd $CURRENT_DIR
+echo 'DONE'
+echo
+
+echo 'ppod2docbook...'
+cd $TMP_DIR
+rm -f $TMP_DIR/learning_rperl__ppod2docbook*
+#ppod2docbook $CURRENT_DIR/lib/RPerl/Learning.pm
+ppod2docbook -i learning_rperl $CURRENT_DIR/lib/RPerl/Learning.pm
+mv book.xml learning_rperl__ppod2docbook.xml
+cd $CURRENT_DIR
 echo 'DONE'
 echo

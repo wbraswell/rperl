@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.033_000;
+our $VERSION = 0.034_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -1214,7 +1214,14 @@ L<MathPerl on Github|https://github.com/wbraswell/mathperl>
 
 =head4 Section 2.1.9.1: Arithmetic Operators
 
-=for html <table class="rperl operators">
+=begin text
+
+<<< BEGIN TEXT EVAL >>>
+use Text::ASCIITable;
+my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center'});
+$table->setCols(splice [split /\s*\n\s*/, qq{
+
+=end text
 
 =begin man
 
@@ -1225,422 +1232,477 @@ l l l r l .
 
 =end man
 
-=for html <tr><th>
+=for html <table class="rperl operators">
 
 =for man T{
+
+=for html <tr><th>
 
 B<Name>
 
-=for html </th><th>
-
 =for man T}@T{
+
+=for html </th><th>
 
 B<Symbol>
 
-=for html </th><th>
-
 =for man T}@T{
+
+=for html </th><th>
 
 B<Fixity>
 
-=for html </th><th>
-
 =for man T}@T{
+
+=for html </th><th>
 
 B<Precedence>
 
-=for html </th><th>
-
 =for man T}@T{
+
+=for html </th><th>
 
 B<Associativity>
 
+=for text }], 1);
+
+=for man T}
+
 =for html </th></tr>
 
-=for man T}
-
-=for html <tr><td>
+=for text $table->addRow(splice [split /\s*\n\s*/, qq{
 
 =for man T{
 
-Increment
-
-=for html </td><td>
-
-=for man T}@T{
-
-++
-
-=for html </td><td>
-
-=for man T}@T{
-
-Prefix or Postfix
-
-=for html </td><td>
-
-=for man T}@T{
-
-03
-
-=for html </td><td>
-
-=for man T}@T{
-
-Non
-
-=for html </td></tr>
-
-=for man T}
-
 =for html <tr><td>
-
-=for man T{
-
-Decrement
-
-=for html </td><td>
-
-=for man T}@T{
-
---
-
-=for html </td><td>
-
-=for man T}@T{
-
-Prefix or Postfix
-
-=for html </td><td>
-
-=for man T}@T{
-
-03
-
-=for html </td><td>
-
-=for man T}@T{
-
-Non
-
-=for html </td></tr>
-
-=for man T}
-
-=for html <tr><td>
-
-=for man T{
-
-Exponent AKA Power
-
-=for html </td><td>
-
-=for man T}@T{
-
-**
-
-=for html </td><td>
-
-=for man T}@T{
-
-Infix
-
-=for html </td><td>
-
-=for man T}@T{
-
-04
-
-=for html </td><td>
-
-=for man T}@T{
-
-Right
-
-=for html </td></tr>
-
-=for man T}
-
-=for html <tr><td>
-
-=for man T{
-
-Multiply
-
-=for html </td><td>
-
-=for man T}@T{
-
-*
-
-=for html </td><td>
-
-=for man T}@T{
-
-Infix
-
-=for html </td><td>
-
-=for man T}@T{
-
-07
-
-=for html </td><td>
-
-=for man T}@T{
-
-Left
-
-=for html </td></tr>
-
-=for man T}
-
-=for html <tr><td>
-
-=for man T{
-
-Divide
-
-=for html </td><td>
-
-=for man T}@T{
-
-/
-
-=for html </td><td>
-
-=for man T}@T{
-
-Infix
-
-=for html </td><td>
-
-=for man T}@T{
-
-07
-
-=for html </td><td>
-
-=for man T}@T{
-
-Left
-
-=for html </td></tr>
-
-=for man T}
-
-=for html <tr><td>
-
-=for man T{
-
-Modulo AKA Modulus
-
-=for html </td><td>
-
-=for man T}@T{
-
-%
-
-=for html </td><td>
-
-=for man T}@T{
-
-Infix
-
-=for html </td><td>
-
-=for man T}@T{
-
-07
-
-=for html </td><td>
-
-=for man T}@T{
-
-Left
-
-=for html </td></tr>
-
-=for man T}
-
-=for html <tr><td>
-
-=for man T{
-
-Negative with Parentheses
-
-=for html </td><td>
-
-=for man T}@T{
-
--( )
-
-=for html </td><td>
-
-=for man T}@T{
-
-Prefix
-
-=for html </td><td>
-
-=for man T}@T{
-
-05
-
-=for html </td><td>
-
-=for man T}@T{
-
-Right
-
-=for html </td></tr>
-
-=for man T}
-
-=for html <tr><td>
-
-=for man T{
-
-Add
-
-=for html </td><td>
-
-=for man T}@T{
-
-+
-
-=for html </td><td>
-
-=for man T}@T{
-
-Infix
-
-=for html </td><td>
-
-=for man T}@T{
-
-08
-
-=for html </td><td>
-
-=for man T}@T{
-
-Left
-
-=for html </td></tr>
-
-=for man T}
-
-=for html <tr><td>
-
-=for man T{
-
-Subtract
-
-=for html </td><td>
-
-=for man T}@T{
-
--
-
-=for html </td><td>
-
-=for man T}@T{
-
-Infix
-
-=for html </td><td>
-
-=for man T}@T{
-
-08
-
-=for html </td><td>
-
-=for man T}@T{
-
-Left
-
-=for html </td></tr>
-
-=for man T}
-
-=for html <tr><td>
-
-=for man T{
-
-Square Root
-
-=for html </td><td>
-
-=for man T}@T{
-
-sqrt
-
-=for html </td><td>
-
-=for man T}@T{
-
-Prefix
-
-=for html </td><td>
-
-=for man T}@T{
-
-10
-
-=for html </td><td>
-
-=for man T}@T{
-
-Non
-
-=for html </td></tr>
-
-=for man T}
-
-=for html <tr><td>
-
-=for man T{
 
 Absolute Value
 
-=for html </td><td>
-
 =for man T}@T{
+
+=for html </td><td>
 
 abs
 
-=for html </td><td>
-
 =for man T}@T{
+
+=for html </td><td>
 
 Prefix
 
-=for html </td><td>
-
 =for man T}@T{
+
+=for html </td><td>
 
 01
 
-=for html </td><td>
-
 =for man T}@T{
+
+=for html </td><td>
 
 Left
 
-=for html </td></tr>
+=for text }], 1);
 
 =for man T}
 
-=for html </table>
+=for html </td></tr>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, qq{
+
+=for man T{
+
+=for html <tr><td>
+
+Increment
+
+=for man T}@T{
+
+=for html </td><td>
+
+++
+
+=for man T}@T{
+
+=for html </td><td>
+
+Prefix or Postfix
+
+=for man T}@T{
+
+=for html </td><td>
+
+03
+
+=for man T}@T{
+
+=for html </td><td>
+
+Non
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, qq{
+
+=for man T{
+
+=for html <tr><td>
+
+Decrement
+
+=for man T}@T{
+
+=for html </td><td>
+
+--
+
+=for man T}@T{
+
+=for html </td><td>
+
+Prefix or Postfix
+
+=for man T}@T{
+
+=for html </td><td>
+
+03
+
+=for man T}@T{
+
+=for html </td><td>
+
+Non
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, qq{
+
+=for man T{
+
+=for html <tr><td>
+
+Exponent AKA Power
+
+=for man T}@T{
+
+=for html </td><td>
+
+**
+
+=for man T}@T{
+
+=for html </td><td>
+
+Infix
+
+=for man T}@T{
+
+=for html </td><td>
+
+04
+
+=for man T}@T{
+
+=for html </td><td>
+
+Right
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, qq{
+
+=for man T{
+
+=for html <tr><td>
+
+Negative with Parentheses
+
+=for man T}@T{
+
+=for html </td><td>
+
+-( )
+
+=for man T}@T{
+
+=for html </td><td>
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+05
+
+=for man T}@T{
+
+=for html </td><td>
+
+Right
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, qq{
+
+=for man T{
+
+=for html <tr><td>
+
+Multiply
+
+=for man T}@T{
+
+=for html </td><td>
+
+*
+
+=for man T}@T{
+
+=for html </td><td>
+
+Infix
+
+=for man T}@T{
+
+=for html </td><td>
+
+07
+
+=for man T}@T{
+
+=for html </td><td>
+
+Left
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, qq{
+
+=for man T{
+
+=for html <tr><td>
+
+Divide
+
+=for man T}@T{
+
+=for html </td><td>
+
+/
+
+=for man T}@T{
+
+=for html </td><td>
+
+Infix
+
+=for man T}@T{
+
+=for html </td><td>
+
+07
+
+=for man T}@T{
+
+=for html </td><td>
+
+Left
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, qq{
+
+=for man T{
+
+=for html <tr><td>
+
+Modulo AKA Modulus
+
+=for man T}@T{
+
+=for html </td><td>
+
+%
+
+=for man T}@T{
+
+=for html </td><td>
+
+Infix
+
+=for man T}@T{
+
+=for html </td><td>
+
+07
+
+=for man T}@T{
+
+=for html </td><td>
+
+Left
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, qq{
+
+=for man T{
+
+=for html <tr><td>
+
+Add
+
+=for man T}@T{
+
+=for html </td><td>
+
++
+
+=for man T}@T{
+
+=for html </td><td>
+
+Infix
+
+=for man T}@T{
+
+=for html </td><td>
+
+08
+
+=for man T}@T{
+
+=for html </td><td>
+
+Left
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, qq{
+
+=for man T{
+
+=for html <tr><td>
+
+Subtract
+
+=for man T}@T{
+
+=for html </td><td>
+
+-
+
+=for man T}@T{
+
+=for html </td><td>
+
+Infix
+
+=for man T}@T{
+
+=for html </td><td>
+
+08
+
+=for man T}@T{
+
+=for html </td><td>
+
+Left
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, qq{
+
+=for man T{
+
+=for html <tr><td>
+
+Square Root
+
+=for man T}@T{
+
+=for html </td><td>
+
+sqrt
+
+=for man T}@T{
+
+=for html </td><td>
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+10
+
+=for man T}@T{
+
+=for html </td><td>
+
+Non
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=begin text
+
+print $table;
+<<< END TEXT EVAL >>>
+
+=end text
 
 =for man .TE
 
+=for html </table>
 
-# START HERE: PseudoPod support, text-only format, add more fixity details in appendix, continue creating operator tables, add plain-English descriptions, and examples
-# START HERE: PseudoPod support, text-only format, add more fixity details in appendix, continue creating operator tables, add plain-English descriptions, and examples
-# START HERE: PseudoPod support, text-only format, add more fixity details in appendix, continue creating operator tables, add plain-English descriptions, and examples
+
+# START HERE: color text table headings misalignment, Pseudopod text check if correct, add more fixity details in appendix, continue creating operator tables, add plain-English descriptions, and examples
+# START HERE: color text table headings misalignment, Pseudopod text check if correct, add more fixity details in appendix, continue creating operator tables, add plain-English descriptions, and examples
+# START HERE: color text table headings misalignment, Pseudopod text check if correct, add more fixity details in appendix, continue creating operator tables, add plain-English descriptions, and examples
 
 OP08_MATH_ADD_SUB         = /(sse_add|sse_sub)/    # precedence 08 infix: SSE add 'sse_add', SSE subtract 'sse_sub'
 OP07_MATH_MULT_DIV_MOD    = /(sse_mul|sse_div)/  # precedence 07 infix: SSE multiply 'sse_mul', SSE divide 'sse_div'
