@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.034_000;
+our $VERSION = 0.034_100;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -1218,8 +1218,8 @@ L<MathPerl on Github|https://github.com/wbraswell/mathperl>
 
 <<< BEGIN TEXT EVAL >>>
 use Text::ASCIITable;
-my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center'});
-$table->setCols(splice [split /\s*\n\s*/, qq{
+my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
+$table->setCols(splice [split /\s*\n\s*/, q{
 
 =end text
 
@@ -1270,7 +1270,7 @@ B<Associativity>
 
 =for html </th></tr>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, qq{
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -1308,7 +1308,7 @@ Left
 
 =for html </td></tr>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, qq{
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -1346,7 +1346,7 @@ Non
 
 =for html </td></tr>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, qq{
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -1384,7 +1384,7 @@ Non
 
 =for html </td></tr>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, qq{
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -1422,7 +1422,7 @@ Right
 
 =for html </td></tr>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, qq{
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -1460,7 +1460,7 @@ Right
 
 =for html </td></tr>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, qq{
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -1498,7 +1498,7 @@ Left
 
 =for html </td></tr>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, qq{
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -1536,7 +1536,7 @@ Left
 
 =for html </td></tr>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, qq{
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -1574,7 +1574,7 @@ Left
 
 =for html </td></tr>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, qq{
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -1612,7 +1612,7 @@ Left
 
 =for html </td></tr>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, qq{
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -1650,7 +1650,7 @@ Left
 
 =for html </td></tr>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, qq{
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -1690,7 +1690,14 @@ Non
 
 =begin text
 
-print $table;
+#return $table;
+return $table->draw( ['.=','=.','=','='],   # .=============.
+                     ['|','|','|'],         # | info | info |
+                     ['|-','-|','=','='],   # |-===========-|
+                     ['|','|','|'],         # | info | info |
+                     ["'=","='",'=','='],   # '============='
+                     ['|-','-|','-','+']    # rowseperator
+                    );
 <<< END TEXT EVAL >>>
 
 =end text
