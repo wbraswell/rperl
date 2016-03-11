@@ -1707,9 +1707,9 @@ return $table->draw( ['.=','=.','=','='],   # .=============.
 =for html </table>
 
 
-# START HERE: color text table headings misalignment, Pseudopod text check if correct, add more fixity details in appendix, continue creating operator tables, add plain-English descriptions, and examples
-# START HERE: color text table headings misalignment, Pseudopod text check if correct, add more fixity details in appendix, continue creating operator tables, add plain-English descriptions, and examples
-# START HERE: color text table headings misalignment, Pseudopod text check if correct, add more fixity details in appendix, continue creating operator tables, add plain-English descriptions, and examples
+# START HERE: Pseudopod text check if correct, add more fixity details in appendix, continue creating operator tables, add plain-English descriptions, and examples
+# START HERE: Pseudopod text check if correct, add more fixity details in appendix, continue creating operator tables, add plain-English descriptions, and examples
+# START HERE: Pseudopod text check if correct, add more fixity details in appendix, continue creating operator tables, add plain-English descriptions, and examples
 
 OP08_MATH_ADD_SUB         = /(sse_add|sse_sub)/    # precedence 08 infix: SSE add 'sse_add', SSE subtract 'sse_sub'
 OP07_MATH_MULT_DIV_MOD    = /(sse_mul|sse_div)/  # precedence 07 infix: SSE multiply 'sse_mul', SSE divide 'sse_div'
