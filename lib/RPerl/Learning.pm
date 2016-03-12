@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.035_000;
+our $VERSION = 0.036_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -23,7 +23,7 @@ __END__
 
 =encoding utf8
 
-=for comment BEGIN INLINE CSS DIV
+=for DEV NOTE: BEGIN INLINE CSS DIV
 
 =begin html
 
@@ -1717,9 +1717,7 @@ $b = q{<<< END TEXT EVAL >>>};
 
 =for html </table>
 
-# START HERE: WARNING: Unknown entity E<apos>, Pseudopod included comments, fixity details in appendix, operator tables, add plain-English descriptions and examples
-# START HERE: WARNING: Unknown entity E<apos>, Pseudopod included comments, fixity details in appendix, operator tables, add plain-English descriptions and examples
-# START HERE: WARNING: Unknown entity E<apos>, Pseudopod included comments, fixity details in appendix, operator tables, add plain-English descriptions and examples
+START HERE: Pseudopod included comments, fixity details in appendix, operator tables, add plain-English descriptions and examples
 
 OP08_MATH_ADD_SUB         = /(sse_add|sse_sub)/    # precedence 08 infix: SSE add 'sse_add', SSE subtract 'sse_sub'
 OP07_MATH_MULT_DIV_MOD    = /(sse_mul|sse_div)/  # precedence 07 infix: SSE multiply 'sse_mul', SSE divide 'sse_div'
@@ -2017,7 +2015,9 @@ q-quoted text literals may contain:
 
 =begin html
 
-=head2 Section 2.3: PerlE<apos>s Built-in Warnings
+=for DEV NOTE: ppod2html does not support E<39> or E<apos>, replaced w/ E<acute>
+
+=head2 Section 2.3: PerlE<acute>s Built-in Warnings
 
 =end html
 
@@ -2116,9 +2116,11 @@ To convert from one data type to another, we use the RPerl type conversion subro
 
 =head3 Section 2.4.x Scope, Type, Name, Value
 
-START HERE
-START HERE
-START HERE
+=for START HERE
+
+=for START HERE
+
+=for START HERE
 
 The I<"scope"> of a variable is either local using the C<my> keyword, or global using the C<our> keyword.  Local variables are only usable within their own enclosing code block such as a conditional (section xxx), loop (xxx), or subroutine (chapter 4).
 
@@ -2126,150 +2128,150 @@ and global variables are usable within any code block accessible by the Perl int
 
 Except for certain special circumstances, all variables in RPerl are locally-scoped using C<my>.
 
-[ INSERT SCOPE TYPE NAME VALUE ]
+=for comment [ INSERT SCOPE TYPE NAME VALUE ]
 
 =head2 Section 2.5: Constant Data
 
-[INSERT CONSTANTS]
+=for comment [INSERT CONSTANTS]
 
 =head2 Section 2.6: Output With C<print>
 
-[INSERT PRINT]
+=for comment [INSERT PRINT]
 
 =head2 Section 2.7: The C<if> Control Structure
 
-[INSERT IF]
+=for comment [INSERT IF]
 
 =head2 Section 2.8: Getting User Input
 
-[INSERT INPUT]
+=for comment [INSERT INPUT]
 
 =head2 Section 2.9: The C<chomp> Operator
 
-[INSERT CHOMP]
+=for comment [INSERT CHOMP]
 
 =head2 Section 2.10: The C<while> Control Structure
 
-[INSERT WHILE]
+=for comment [INSERT WHILE]
 
 =head2 Section 2.11: The C<undef> Value
 
-[INSERT UNDEF]
+=for comment [INSERT UNDEF]
 
 =head2 Section 2.12: The C<defined> Function
 
-[INSERT DEFINED]
+=for comment [INSERT DEFINED]
 
 =head2 Section 2.13: Exercises
 
 =head3 1.  XXXYYYZZZ  [ XYZ mins ]
 
-[INSERT EXERCISES]
+=for comment [INSERT EXERCISES]
 
 X<br>
 
 
 =head1 CHAPTER 3: LISTS & ARRAYS
 
-[INSERT CHAPTER]
+=for comment [INSERT CHAPTER]
 
 X<br>
 
 
 =head1 CHAPTER 4: SUBROUTINES
 
-[INSERT CHAPTER]
+=for comment [INSERT CHAPTER]
 
 X<br>
 
 
 =head1 CHAPTER 5: INPUT & OUTPUT
 
-[INSERT CHAPTER]
+=for comment [INSERT CHAPTER]
 
 X<br>
 
 
 =head1 CHAPTER 6: HASHES
 
-[INSERT CHAPTER]
+=for comment [INSERT CHAPTER]
 
 X<br>
 
 
 =head1 CHAPTER 7: REGULAR EXPRESSIONS
 
-[INSERT CHAPTER]
+=for comment [INSERT CHAPTER]
 
 X<br>
 
 
 =head1 CHAPTER 8: REGULAR EXPRESSIONS MATCHING
 
-[INSERT CHAPTER]
+=for comment [INSERT CHAPTER]
 
 X<br>
 
 
 =head1 CHAPTER 9: REGULAR EXPRESSIONS PROCESSING
 
-[INSERT CHAPTER]
+=for comment [INSERT CHAPTER]
 
 X<br>
 
 
 =head1 CHAPTER 10: CONTROL STRUCTURES
 
-[INSERT CHAPTER]
+=for comment [INSERT CHAPTER]
 
 X<br>
 
 
 =head1 CHAPTER 11: CLASSES, PACKAGES, MODULES, LIBRARIES
 
-[INSERT CHAPTER]
+=for comment [INSERT CHAPTER]
 
 X<br>
 
 
 =head1 CHAPTER 12: FILE TESTS
 
-[INSERT CHAPTER]
+=for comment [INSERT CHAPTER]
 
 X<br>
 
 
 =head1 CHAPTER 13: DIRECTORY OPERATIONS
 
-[INSERT CHAPTER]
+=for comment [INSERT CHAPTER]
 
 X<br>
 
 
 =head1 CHAPTER 14: STRINGS & SORTING
 
-[INSERT CHAPTER]
+=for comment [INSERT CHAPTER]
 
 X<br>
 
 
 =head1 CHAPTER 15: SMART MATCHING & GIVEN-WHEN
 
-[INSERT CHAPTER]
+=for comment [INSERT CHAPTER]
 
 X<br>
 
 
 =head1 CHAPTER 16: PROCESS MANAGEMENT
 
-[INSERT CHAPTER]
+=for comment [INSERT CHAPTER]
 
 X<br>
 
 
 =head1 CHAPTER 17: SOME ADVANCED TECHNIQUES
 
-[INSERT CHAPTER]
+=for comment [INSERT CHAPTER]
 
 X<br>
 
@@ -7206,7 +7208,7 @@ B<William N. Braswell, Jr.>
 
 L<mailto:wbraswell@NOSPAM.cpan.org>
 
-=for comment END INLINE CSS DIV
+=for DEV NOTE: END INLINE CSS DIV
 
 =for html </div>
 

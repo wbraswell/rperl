@@ -1,9 +1,14 @@
 #!/bin/bash
-# v0.030_000
+# v0.040_000
 
 CURRENT_DIR=`pwd`
 TMP_DIR=/tmp/rperl
 mkdir -p $TMP_DIR
+
+echo '[[[ Pod ]]]'
+echo '[[[ Pod ]]]'
+echo '[[[ Pod ]]]'
+echo
 
 echo 'podchecker...'
 #podchecker -warnings -warnings lib/RPerl/Learning.pm
@@ -77,6 +82,11 @@ cd $CURRENT_DIR
 echo 'DONE'
 echo
 
+echo '[[[ PseudoPod ]]]'
+echo '[[[ PseudoPod ]]]'
+echo '[[[ PseudoPod ]]]'
+echo
+
 echo 'ppodchecker...'
 ppodchecker lib/RPerl/Learning.pm
 echo 'DONE'
@@ -104,10 +114,37 @@ echo
 
 echo 'ppod2docbook...'
 cd $TMP_DIR
-rm -f $TMP_DIR/learning_rperl__ppod2docbook*
+rm -f $TMP_DIR/learning_rperl__ppod2docbook.*
 #ppod2docbook $CURRENT_DIR/lib/RPerl/Learning.pm
 ppod2docbook -i learning_rperl $CURRENT_DIR/lib/RPerl/Learning.pm
 mv book.xml learning_rperl__ppod2docbook.xml
 cd $CURRENT_DIR
 echo 'DONE'
 echo
+
+exit
+
+echo '[[[ Docbook ]]]'
+echo '[[[ Docbook ]]]'
+echo '[[[ Docbook ]]]'
+echo
+
+echo 'docbook2html chunks...'
+cd $TMP_DIR
+rm -Rf $TMP_DIR/learning_rperl__ppod2docbook2html
+#docbook2html -e no-idref -e no-significant -e no-valid -o learning_rperl__ppod2docbook2html learning_rperl__ppod2docbook.xml
+docbook2html -e no-idref -e no-significant -e no-valid -o learning_rperl__ppod2docbook2html learning_rperl__ppod2docbook.xml 2> /dev/null
+cd $CURRENT_DIR
+echo 'DONE'
+echo
+
+echo 'docbook2html no chunks...'
+cd $TMP_DIR
+rm -f $TMP_DIR/learning_rperl__ppod2docbook2html.htm
+docbook2html -e no-idref -e no-significant -e no-valid --nochunks learning_rperl__ppod2docbook.xml
+#docbook2html -e no-idref -e no-significant -e no-valid --nochunks learning_rperl__ppod2docbook.xml 2> /dev/null
+mv learning_rperl__ppod2docbook.html learning_rperl__ppod2docbook2html.htm
+cd $CURRENT_DIR
+echo 'DONE'
+echo
+

@@ -2,6 +2,8 @@ Learning RPerl
     <noncode> fix
     metacpan list newline fix, section 1.1
     BEGIN INLINE CSS DIV comment should not appear in any output
+    docbook2html tables
+    docbook2pdf segfault
 
 Unsigned Integer Fix
 
