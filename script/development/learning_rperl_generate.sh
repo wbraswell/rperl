@@ -1,5 +1,5 @@
 #!/bin/bash
-# v0.021_000
+# v0.030_000
 
 CURRENT_DIR=`pwd`
 TMP_DIR=/tmp/rperl
@@ -15,7 +15,7 @@ echo
 echo 'pod2text...'
 rm -f $TMP_DIR/learning_rperl__pod2text*
 pod2text lib/RPerl/Learning.pm $TMP_DIR/learning_rperl__pod2text.txt
-perl -e 'my $f = 0; my $s = ""; my $e = ""; foreach $l (<>) { if($f) { if($l eq "<<< END TEXT EVAL >>>\n") { $f = 0; $e = eval $s; print $e; } else { $s .= $l; } } elsif($l eq "<<< BEGIN TEXT EVAL >>>\n") { $f = 1; $s = ""; } else { print $l; } }' $TMP_DIR/learning_rperl__pod2text.txt > $TMP_DIR/learning_rperl__pod2text__eval.txt  # tables, eval to generate
+perl -e 'my $f = 0; my $s = ""; my $e = ""; foreach $l (<>) { if($f) { if($l eq "\$b = q{<<< END TEXT EVAL >>>};\n") { $f = 0; $e = eval $s; print $e; } else { $s .= $l; } } elsif($l eq "my \$b = q{<<< BEGIN TEXT EVAL >>>};\n") { $f = 1; $s = $l; } else { print $l; } }' $TMP_DIR/learning_rperl__pod2text.txt > $TMP_DIR/learning_rperl__pod2text__eval.txt  # tables, eval to generate
 mv $TMP_DIR/learning_rperl__pod2text__eval.txt $TMP_DIR/learning_rperl__pod2text.txt
 echo 'DONE'
 echo
@@ -23,7 +23,7 @@ echo
 echo 'pod2text color...'
 rm -f $TMP_DIR/learning_rperl__pod2text__color*
 pod2text --color lib/RPerl/Learning.pm $TMP_DIR/learning_rperl__pod2text__color.txt
-perl -e 'my $f = 0; my $s = ""; my $e = ""; foreach $l (<>) { if($f) { if($l eq "<<< END TEXT EVAL >>>\n") { $f = 0; $e = eval $s; $e =~ s/(\e\[1m\w+\e\[0m)/\ \ \ \ $1\ \ \ \ /gxms; print $e; } else { $s .= $l; } } elsif($l eq "<<< BEGIN TEXT EVAL >>>\n") { $f = 1; $s = ""; } else { print $l; } }' $TMP_DIR/learning_rperl__pod2text__color.txt > $TMP_DIR/learning_rperl__pod2text__color_eval.txt  # tables, eval to generate, regex to fix ASCII color escape code formatting
+perl -e 'my $f = 0; my $s = ""; my $e = ""; foreach $l (<>) { if($f) { if($l eq "\$b = q{<<< END TEXT EVAL >>>};\n") { $f = 0; $e = eval $s; $e =~ s/(\e\[1m\w+\e\[0m)/\ \ \ \ $1\ \ \ \ /gxms; print $e; } else { $s .= $l; } } elsif($l eq "my \$b = q{<<< BEGIN TEXT EVAL >>>};\n") { $f = 1; $s = $l; } else { print $l; } }' $TMP_DIR/learning_rperl__pod2text__color.txt > $TMP_DIR/learning_rperl__pod2text__color_eval.txt  # tables, eval to generate, regex to fix ASCII color escape code formatting
 mv $TMP_DIR/learning_rperl__pod2text__color_eval.txt $TMP_DIR/learning_rperl__pod2text__color.txt
 echo 'DONE'
 echo
@@ -87,6 +87,8 @@ cd $TMP_DIR
 rm -f $TMP_DIR/learning_rperl__ppod2txt*
 ppod2txt $CURRENT_DIR/lib/RPerl/Learning.pm
 mv Learning.txt learning_rperl__ppod2txt.txt
+perl -e 'my $f = 0; my $s = ""; my $e = ""; foreach $l (<>) { if($f) { if((substr $l, 0, 36) eq "      \$b = q{<<< END TEXT EVAL >>>};") { $f = 0; $e = eval $s; print $e; } else { $s .= $l; } } elsif((substr $l, 0, 41) eq "      my \$b = q{<<< BEGIN TEXT EVAL >>>};") { $f = 1; $s = $l; } else { print $l; } }' $TMP_DIR/learning_rperl__ppod2txt.txt > $TMP_DIR/learning_rperl__ppod2txt__eval.txt  # tables, eval to generate
+mv $TMP_DIR/learning_rperl__ppod2txt__eval.txt $TMP_DIR/learning_rperl__ppod2txt.txt
 cd $CURRENT_DIR
 echo 'DONE'
 echo

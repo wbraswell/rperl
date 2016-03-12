@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.034_100;
+our $VERSION = 0.035_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -1216,9 +1216,12 @@ L<MathPerl on Github|https://github.com/wbraswell/mathperl>
 
 =begin text
 
-<<< BEGIN TEXT EVAL >>>
+my $b = q{<<< BEGIN TEXT EVAL >>>};
+
 use Text::ASCIITable;
+
 my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
+
 $table->setCols(splice [split /\s*\n\s*/, q{
 
 =end text
@@ -1691,14 +1694,22 @@ Non
 =begin text
 
 #return $table;
+
 return $table->draw( ['.=','=.','=','='],   # .=============.
+
                      ['|','|','|'],         # | info | info |
+ 
                      ['|-','-|','=','='],   # |-===========-|
+
                      ['|','|','|'],         # | info | info |
+
                      ["'=","='",'=','='],   # '============='
+
                      ['|-','-|','-','+']    # rowseperator
+
                     );
-<<< END TEXT EVAL >>>
+
+$b = q{<<< END TEXT EVAL >>>};
 
 =end text
 
@@ -1706,10 +1717,9 @@ return $table->draw( ['.=','=.','=','='],   # .=============.
 
 =for html </table>
 
-
-# START HERE: Pseudopod text check if correct, add more fixity details in appendix, continue creating operator tables, add plain-English descriptions, and examples
-# START HERE: Pseudopod text check if correct, add more fixity details in appendix, continue creating operator tables, add plain-English descriptions, and examples
-# START HERE: Pseudopod text check if correct, add more fixity details in appendix, continue creating operator tables, add plain-English descriptions, and examples
+# START HERE: WARNING: Unknown entity E<apos>, Pseudopod included comments, fixity details in appendix, operator tables, add plain-English descriptions and examples
+# START HERE: WARNING: Unknown entity E<apos>, Pseudopod included comments, fixity details in appendix, operator tables, add plain-English descriptions and examples
+# START HERE: WARNING: Unknown entity E<apos>, Pseudopod included comments, fixity details in appendix, operator tables, add plain-English descriptions and examples
 
 OP08_MATH_ADD_SUB         = /(sse_add|sse_sub)/    # precedence 08 infix: SSE add 'sse_add', SSE subtract 'sse_sub'
 OP07_MATH_MULT_DIV_MOD    = /(sse_mul|sse_div)/  # precedence 07 infix: SSE multiply 'sse_mul', SSE divide 'sse_div'
@@ -1987,15 +1997,31 @@ q-quoted text literals may contain:
 
 =back
 
-[ INSERT BEST PRACTICES ]
+=for comment [ INSERT BEST PRACTICES ]
 
 =head3 Section 2.2.6: String Operators
 
-[ INSERT OPS ]
+=for comment [ INSERT OPS ]
 
-=head2 Section 2.3: Perl’s Built-in Warnings
+=begin text
 
-[INSERT WARNINGS]
+=head2 Section 2.3: PerlE<39>s Built-in Warnings
+
+=end text
+
+=begin man
+
+=head2 Section 2.3: PerlE<39>s Built-in Warnings
+
+=end man
+
+=begin html
+
+=head2 Section 2.3: PerlE<apos>s Built-in Warnings
+
+=end html
+
+=for comment [INSERT WARNINGS]
 
 =head2 Section 2.4: Scalar Variables
 
