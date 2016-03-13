@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.036_000;
+our $VERSION = 0.038_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -1237,9 +1237,27 @@ l l l r l .
 
 =for html <table class="rperl operators">
 
+
+START HERE: docbook table ID, fixity details in appendix, operator tables, add plain-English descriptions and examples
+START HERE: docbook table ID, fixity details in appendix, operator tables, add plain-English descriptions and examples
+START HERE: docbook table ID, fixity details in appendix, operator tables, add plain-English descriptions and examples
+
+
+=begin docbook
+
+<table id="NEED_ID_HERE!!!" label="" frame="all" colsep="1" rowsep="1">
+<title>Arithmetic Operators</title>
+<tgroup cols="5">
+
+=end docbook
+
 =for man T{
 
 =for html <tr><th>
+
+=for docbook <thead>
+
+=for docbook <row><entry align="center">
 
 B<Name>
 
@@ -1247,11 +1265,15 @@ B<Name>
 
 =for html </th><th>
 
+=for docbook </entry><entry align="center">
+
 B<Symbol>
 
 =for man T}@T{
 
 =for html </th><th>
+
+=for docbook </entry><entry align="center">
 
 B<Fixity>
 
@@ -1259,11 +1281,15 @@ B<Fixity>
 
 =for html </th><th>
 
+=for docbook </entry><entry align="center">
+
 B<Precedence>
 
 =for man T}@T{
 
 =for html </th><th>
+
+=for docbook </entry><entry align="center">
 
 B<Associativity>
 
@@ -1273,11 +1299,19 @@ B<Associativity>
 
 =for html </th></tr>
 
+=for docbook </entry></row>
+
+=for docbook </thead>
+
 =for text $table->addRow(splice [split /\s*\n\s*/, q{
 
 =for man T{
 
 =for html <tr><td>
+
+=for docbook <tbody>
+
+=for docbook <row><entry align="left">
 
 Absolute Value
 
@@ -1285,17 +1319,23 @@ Absolute Value
 
 =for html </td><td>
 
+=for docbook </entry><entry align="left">
+
 abs
 
 =for man T}@T{
 
 =for html </td><td>
 
+=for docbook </entry><entry align="left">
+
 Prefix
 
 =for man T}@T{
 
 =for html </td><td>
+
+=for docbook </entry><entry align="right">
 
 01
 
@@ -1303,6 +1343,8 @@ Prefix
 
 =for html </td><td>
 
+=for docbook </entry><entry align="left">
+
 Left
 
 =for text }], 1);
@@ -1311,11 +1353,15 @@ Left
 
 =for html </td></tr>
 
+=for docbook </entry></row>
+
 =for text $table->addRow(splice [split /\s*\n\s*/, q{
 
 =for man T{
 
 =for html <tr><td>
+
+=for docbook <row><entry align="left">
 
 Increment
 
@@ -1323,11 +1369,15 @@ Increment
 
 =for html </td><td>
 
+=for docbook </entry><entry align="left">
+
 ++
 
 =for man T}@T{
 
 =for html </td><td>
+
+=for docbook </entry><entry align="left">
 
 Prefix or Postfix
 
@@ -1335,11 +1385,15 @@ Prefix or Postfix
 
 =for html </td><td>
 
+=for docbook </entry><entry align="right">
+
 03
 
 =for man T}@T{
 
 =for html </td><td>
+
+=for docbook </entry><entry align="left">
 
 Non
 
@@ -1349,11 +1403,15 @@ Non
 
 =for html </td></tr>
 
+=for docbook </entry></row>
+
 =for text $table->addRow(splice [split /\s*\n\s*/, q{
 
 =for man T{
 
 =for html <tr><td>
+
+=for docbook <row><entry align="left">
 
 Decrement
 
@@ -1361,11 +1419,15 @@ Decrement
 
 =for html </td><td>
 
+=for docbook </entry><entry align="left">
+
 --
 
 =for man T}@T{
 
 =for html </td><td>
+
+=for docbook </entry><entry align="left">
 
 Prefix or Postfix
 
@@ -1373,11 +1435,15 @@ Prefix or Postfix
 
 =for html </td><td>
 
+=for docbook </entry><entry align="right">
+
 03
 
 =for man T}@T{
 
 =for html </td><td>
+
+=for docbook </entry><entry align="left">
 
 Non
 
@@ -1387,11 +1453,15 @@ Non
 
 =for html </td></tr>
 
+=for docbook </entry></row>
+
 =for text $table->addRow(splice [split /\s*\n\s*/, q{
 
 =for man T{
 
 =for html <tr><td>
+
+=for docbook <row><entry align="left">
 
 Exponent AKA Power
 
@@ -1399,17 +1469,23 @@ Exponent AKA Power
 
 =for html </td><td>
 
+=for docbook </entry><entry align="left">
+
 **
 
 =for man T}@T{
 
 =for html </td><td>
 
+=for docbook </entry><entry align="left">
+
 Infix
 
 =for man T}@T{
 
 =for html </td><td>
+
+=for docbook </entry><entry align="right">
 
 04
 
@@ -1417,6 +1493,8 @@ Infix
 
 =for html </td><td>
 
+=for docbook </entry><entry align="left">
+
 Right
 
 =for text }], 1);
@@ -1425,11 +1503,15 @@ Right
 
 =for html </td></tr>
 
+=for docbook </entry></row>
+
 =for text $table->addRow(splice [split /\s*\n\s*/, q{
 
 =for man T{
 
 =for html <tr><td>
+
+=for docbook <row><entry align="left">
 
 Negative with Parentheses
 
@@ -1437,11 +1519,15 @@ Negative with Parentheses
 
 =for html </td><td>
 
+=for docbook </entry><entry align="left">
+
 -( )
 
 =for man T}@T{
 
 =for html </td><td>
+
+=for docbook </entry><entry align="left">
 
 Prefix
 
@@ -1449,11 +1535,15 @@ Prefix
 
 =for html </td><td>
 
+=for docbook </entry><entry align="right">
+
 05
 
 =for man T}@T{
 
 =for html </td><td>
+
+=for docbook </entry><entry align="left">
 
 Right
 
@@ -1463,11 +1553,15 @@ Right
 
 =for html </td></tr>
 
+=for docbook </entry></row>
+
 =for text $table->addRow(splice [split /\s*\n\s*/, q{
 
 =for man T{
 
 =for html <tr><td>
+
+=for docbook <row><entry align="left">
 
 Multiply
 
@@ -1475,11 +1569,15 @@ Multiply
 
 =for html </td><td>
 
+=for docbook </entry><entry align="left">
+
 *
 
 =for man T}@T{
 
 =for html </td><td>
+
+=for docbook </entry><entry align="left">
 
 Infix
 
@@ -1487,11 +1585,15 @@ Infix
 
 =for html </td><td>
 
+=for docbook </entry><entry align="right">
+
 07
 
 =for man T}@T{
 
 =for html </td><td>
+
+=for docbook </entry><entry align="left">
 
 Left
 
@@ -1501,11 +1603,15 @@ Left
 
 =for html </td></tr>
 
+=for docbook </entry></row>
+
 =for text $table->addRow(splice [split /\s*\n\s*/, q{
 
 =for man T{
 
 =for html <tr><td>
+
+=for docbook <row><entry align="left">
 
 Divide
 
@@ -1513,11 +1619,15 @@ Divide
 
 =for html </td><td>
 
+=for docbook </entry><entry align="left">
+
 /
 
 =for man T}@T{
 
 =for html </td><td>
+
+=for docbook </entry><entry align="left">
 
 Infix
 
@@ -1525,11 +1635,15 @@ Infix
 
 =for html </td><td>
 
+=for docbook </entry><entry align="right">
+
 07
 
 =for man T}@T{
 
 =for html </td><td>
+
+=for docbook </entry><entry align="left">
 
 Left
 
@@ -1539,11 +1653,15 @@ Left
 
 =for html </td></tr>
 
+=for docbook </entry></row>
+
 =for text $table->addRow(splice [split /\s*\n\s*/, q{
 
 =for man T{
 
 =for html <tr><td>
+
+=for docbook <row><entry align="left">
 
 Modulo AKA Modulus
 
@@ -1551,17 +1669,23 @@ Modulo AKA Modulus
 
 =for html </td><td>
 
+=for docbook </entry><entry align="left">
+
 %
 
 =for man T}@T{
 
 =for html </td><td>
 
+=for docbook </entry><entry align="left">
+
 Infix
 
 =for man T}@T{
 
 =for html </td><td>
+
+=for docbook </entry><entry align="right">
 
 07
 
@@ -1569,6 +1693,8 @@ Infix
 
 =for html </td><td>
 
+=for docbook </entry><entry align="left">
+
 Left
 
 =for text }], 1);
@@ -1577,11 +1703,15 @@ Left
 
 =for html </td></tr>
 
+=for docbook </entry></row>
+
 =for text $table->addRow(splice [split /\s*\n\s*/, q{
 
 =for man T{
 
 =for html <tr><td>
+
+=for docbook <row><entry align="left">
 
 Add
 
@@ -1589,11 +1719,15 @@ Add
 
 =for html </td><td>
 
+=for docbook </entry><entry align="left">
+
 +
 
 =for man T}@T{
 
 =for html </td><td>
+
+=for docbook </entry><entry align="left">
 
 Infix
 
@@ -1601,11 +1735,15 @@ Infix
 
 =for html </td><td>
 
+=for docbook </entry><entry align="right">
+
 08
 
 =for man T}@T{
 
 =for html </td><td>
+
+=for docbook </entry><entry align="left">
 
 Left
 
@@ -1615,11 +1753,15 @@ Left
 
 =for html </td></tr>
 
+=for docbook </entry></row>
+
 =for text $table->addRow(splice [split /\s*\n\s*/, q{
 
 =for man T{
 
 =for html <tr><td>
+
+=for docbook <row><entry align="left">
 
 Subtract
 
@@ -1627,11 +1769,15 @@ Subtract
 
 =for html </td><td>
 
+=for docbook </entry><entry align="left">
+
 -
 
 =for man T}@T{
 
 =for html </td><td>
+
+=for docbook </entry><entry align="left">
 
 Infix
 
@@ -1639,11 +1785,15 @@ Infix
 
 =for html </td><td>
 
+=for docbook </entry><entry align="right">
+
 08
 
 =for man T}@T{
 
 =for html </td><td>
+
+=for docbook </entry><entry align="left">
 
 Left
 
@@ -1653,11 +1803,15 @@ Left
 
 =for html </td></tr>
 
+=for docbook </entry></row>
+
 =for text $table->addRow(splice [split /\s*\n\s*/, q{
 
 =for man T{
 
 =for html <tr><td>
+
+=for docbook <row><entry align="left">
 
 Square Root
 
@@ -1665,11 +1819,15 @@ Square Root
 
 =for html </td><td>
 
+=for docbook </entry><entry align="left">
+
 sqrt
 
 =for man T}@T{
 
 =for html </td><td>
+
+=for docbook </entry><entry align="left">
 
 Prefix
 
@@ -1677,11 +1835,15 @@ Prefix
 
 =for html </td><td>
 
+=for docbook </entry><entry align="right">
+
 10
 
 =for man T}@T{
 
 =for html </td><td>
+
+=for docbook </entry><entry align="left">
 
 Non
 
@@ -1690,6 +1852,8 @@ Non
 =for man T}
 
 =for html </td></tr>
+
+=for docbook </entry></row>
 
 =begin text
 
@@ -1717,7 +1881,7 @@ $b = q{<<< END TEXT EVAL >>>};
 
 =for html </table>
 
-START HERE: Pseudopod included comments, fixity details in appendix, operator tables, add plain-English descriptions and examples
+=for docbook </tbody></tgroup></table>
 
 OP08_MATH_ADD_SUB         = /(sse_add|sse_sub)/    # precedence 08 infix: SSE add 'sse_add', SSE subtract 'sse_sub'
 OP07_MATH_MULT_DIV_MOD    = /(sse_mul|sse_div)/  # precedence 07 infix: SSE multiply 'sse_mul', SSE divide 'sse_div'
@@ -2116,11 +2280,9 @@ To convert from one data type to another, we use the RPerl type conversion subro
 
 =head3 Section 2.4.x Scope, Type, Name, Value
 
-=for START HERE
-
-=for START HERE
-
-=for START HERE
+START HERE
+START HERE
+START HERE
 
 The I<"scope"> of a variable is either local using the C<my> keyword, or global using the C<our> keyword.  Local variables are only usable within their own enclosing code block such as a conditional (section xxx), loop (xxx), or subroutine (chapter 4).
 

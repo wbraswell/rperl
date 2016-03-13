@@ -1,5 +1,5 @@
 #!/bin/bash
-# v0.040_000
+# v0.043_000
 
 CURRENT_DIR=`pwd`
 TMP_DIR=/tmp/rperl
@@ -20,7 +20,7 @@ echo
 echo 'pod2text...'
 rm -f $TMP_DIR/learning_rperl__pod2text*
 pod2text lib/RPerl/Learning.pm $TMP_DIR/learning_rperl__pod2text.txt
-perl -e 'my $f = 0; my $s = ""; my $e = ""; foreach $l (<>) { if($f) { if($l eq "\$b = q{<<< END TEXT EVAL >>>};\n") { $f = 0; $e = eval $s; print $e; } else { $s .= $l; } } elsif($l eq "my \$b = q{<<< BEGIN TEXT EVAL >>>};\n") { $f = 1; $s = $l; } else { print $l; } }' $TMP_DIR/learning_rperl__pod2text.txt > $TMP_DIR/learning_rperl__pod2text__eval.txt  # tables, eval to generate
+perl -e 'my $f = 0; my $s = q{}; my $e = q{}; foreach $l (<>) { if($f) { if($l eq "\$b = q{<<< END TEXT EVAL >>>};\n") { $f = 0; $e = eval $s; print $e; } else { $s .= $l; } } elsif($l eq "my \$b = q{<<< BEGIN TEXT EVAL >>>};\n") { $f = 1; $s = $l; } else { print $l; } }' $TMP_DIR/learning_rperl__pod2text.txt > $TMP_DIR/learning_rperl__pod2text__eval.txt  # tables, eval to generate
 mv $TMP_DIR/learning_rperl__pod2text__eval.txt $TMP_DIR/learning_rperl__pod2text.txt
 echo 'DONE'
 echo
@@ -28,7 +28,7 @@ echo
 echo 'pod2text color...'
 rm -f $TMP_DIR/learning_rperl__pod2text__color*
 pod2text --color lib/RPerl/Learning.pm $TMP_DIR/learning_rperl__pod2text__color.txt
-perl -e 'my $f = 0; my $s = ""; my $e = ""; foreach $l (<>) { if($f) { if($l eq "\$b = q{<<< END TEXT EVAL >>>};\n") { $f = 0; $e = eval $s; $e =~ s/(\e\[1m\w+\e\[0m)/\ \ \ \ $1\ \ \ \ /gxms; print $e; } else { $s .= $l; } } elsif($l eq "my \$b = q{<<< BEGIN TEXT EVAL >>>};\n") { $f = 1; $s = $l; } else { print $l; } }' $TMP_DIR/learning_rperl__pod2text__color.txt > $TMP_DIR/learning_rperl__pod2text__color_eval.txt  # tables, eval to generate, regex to fix ASCII color escape code formatting
+perl -e 'my $f = 0; my $s = q{}; my $e = q{}; foreach $l (<>) { if($f) { if($l eq "\$b = q{<<< END TEXT EVAL >>>};\n") { $f = 0; $e = eval $s; $e =~ s/(\e\[1m\w+\e\[0m)/\ \ \ \ $1\ \ \ \ /gxms; print $e; } else { $s .= $l; } } elsif($l eq "my \$b = q{<<< BEGIN TEXT EVAL >>>};\n") { $f = 1; $s = $l; } else { print $l; } }' $TMP_DIR/learning_rperl__pod2text__color.txt > $TMP_DIR/learning_rperl__pod2text__color_eval.txt  # tables, eval to generate, regex to fix ASCII color escape code formatting
 mv $TMP_DIR/learning_rperl__pod2text__color_eval.txt $TMP_DIR/learning_rperl__pod2text__color.txt
 echo 'DONE'
 echo
@@ -97,7 +97,7 @@ cd $TMP_DIR
 rm -f $TMP_DIR/learning_rperl__ppod2txt*
 ppod2txt $CURRENT_DIR/lib/RPerl/Learning.pm
 mv Learning.txt learning_rperl__ppod2txt.txt
-perl -e 'my $f = 0; my $s = ""; my $e = ""; foreach $l (<>) { if($f) { if((substr $l, 0, 36) eq "      \$b = q{<<< END TEXT EVAL >>>};") { $f = 0; $e = eval $s; print $e; } else { $s .= $l; } } elsif((substr $l, 0, 41) eq "      my \$b = q{<<< BEGIN TEXT EVAL >>>};") { $f = 1; $s = $l; } else { print $l; } }' $TMP_DIR/learning_rperl__ppod2txt.txt > $TMP_DIR/learning_rperl__ppod2txt__eval.txt  # tables, eval to generate
+perl -e 'my $f = 0; my $s = q{}; my $e = q{}; foreach $l (<>) { if($f) { if((substr $l, 0, 36) eq "      \$b = q{<<< END TEXT EVAL >>>};") { $f = 0; $e = eval $s; print $e; } else { $s .= $l; } } elsif((substr $l, 0, 41) eq "      my \$b = q{<<< BEGIN TEXT EVAL >>>};") { $f = 1; $s = $l; } else { print $l; } }' $TMP_DIR/learning_rperl__ppod2txt.txt > $TMP_DIR/learning_rperl__ppod2txt__eval.txt  # tables, eval to generate
 mv $TMP_DIR/learning_rperl__ppod2txt__eval.txt $TMP_DIR/learning_rperl__ppod2txt.txt
 cd $CURRENT_DIR
 echo 'DONE'
@@ -118,17 +118,52 @@ rm -f $TMP_DIR/learning_rperl__ppod2docbook.*
 #ppod2docbook $CURRENT_DIR/lib/RPerl/Learning.pm
 ppod2docbook -i learning_rperl $CURRENT_DIR/lib/RPerl/Learning.pm
 mv book.xml learning_rperl__ppod2docbook.xml
+perl -e 'my $f = 0; my $s = q{}; my $e = q{}; foreach $l (<>) { if($f) { if((substr $l, -11, 11) eq "</docbook>\n") { $f = 0; substr $l, -11, 11, q{}; $s .= $l; 
+$s =~ s/&lt;/</gxms; $s =~ s/&gt;/>/gxms; $s =~ s/&quot;/"/gxms; print $s; } else { $s .= $l; } } elsif($l eq "<docbook>\n") { $f = 1; $s = q{}; } else { print $l; } }' $TMP_DIR/learning_rperl__ppod2docbook.xml > $TMP_DIR/learning_rperl__ppod2docbook_fix.xml  # tables, regex to fix SGML tag control characters
+mv $TMP_DIR/learning_rperl__ppod2docbook_fix.xml $TMP_DIR/learning_rperl__ppod2docbook.xml
+cd $CURRENT_DIR
+echo 'DONE'
+echo
+
+echo '[[[ Docbook ]]]'
+echo '[[[ Docbook ]]]'
+echo '[[[ Docbook ]]]'
+echo
+
+# INSTALL NOTE: apt-get install sgmltools-lite
+echo 'sgmltools onehtml...'
+cd $TMP_DIR
+rm -f $TMP_DIR/learning_rperl__ppod2docbook__sgmltools.htm
+sgmltools --jade-opt="-E 1000000" learning_rperl__ppod2docbook.xml 2> /dev/null
+mv $TMP_DIR/learning_rperl__ppod2docbook.html $TMP_DIR/learning_rperl__ppod2docbook__sgmltools.htm
+cd $CURRENT_DIR
+echo 'DONE'
+echo
+
+# INSTALL NOTE: apt-get install sgml2x
+echo 'sgml2x docbook-2-html'
+cd $TMP_DIR
+rm -Rf $TMP_DIR/learning_rperl__ppod2docbook__sgml2html
+docbook-2-html learning_rperl__ppod2docbook.xml 2> /dev/null
+mv $TMP_DIR/learning_rperl__ppod2docbook-html $TMP_DIR/learning_rperl__ppod2docbook__sgml2html
 cd $CURRENT_DIR
 echo 'DONE'
 echo
 
 exit
 
-echo '[[[ Docbook ]]]'
-echo '[[[ Docbook ]]]'
-echo '[[[ Docbook ]]]'
+# DEV NOTE: outputs .jtex file instead of .pdf file
+echo 'sgml2x docbook-2-pdf'
+cd $TMP_DIR
+rm -f $TMP_DIR/learning_rperl__ppod2docbook__sgml2pdf.pdf
+docbook-2-pdf learning_rperl__ppod2docbook.xml 2> /dev/null
+#mv $TMP_DIR/learning_rperl__ppod2docbook.pdf $TMP_DIR/learning_rperl__ppod2docbook__sgml2pdf.pdf
+cd $CURRENT_DIR
+echo 'DONE'
 echo
 
+# INSTALL NOTE: apt-get install docbook-utils
+# DEV NOTE: doesn't render tables
 echo 'docbook2html chunks...'
 cd $TMP_DIR
 rm -Rf $TMP_DIR/learning_rperl__ppod2docbook2html
@@ -138,6 +173,7 @@ cd $CURRENT_DIR
 echo 'DONE'
 echo
 
+# DEV NOTE: segfaults
 echo 'docbook2html no chunks...'
 cd $TMP_DIR
 rm -f $TMP_DIR/learning_rperl__ppod2docbook2html.htm
