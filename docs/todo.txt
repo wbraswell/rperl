@@ -2,8 +2,11 @@ Learning RPerl
     <noncode> fix
     metacpan list newline fix, section 1.1
     BEGIN INLINE CSS DIV comment should not appear in any output
-    docbook2html tables
+    docbook2html & sgmltools & sgml2html: Section 2.3 "Perl's Built-In Warnings" single-quote vs apostrophe
     docbook2pdf segfault
+    sgml table cell padding
+
+rename Operation::Expression::Operator::Math to Arithmetic
 
 Unsigned Integer Fix
 

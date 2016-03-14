@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.038_000;
+our $VERSION = 0.039_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -1216,7 +1216,7 @@ L<MathPerl on Github|https://github.com/wbraswell/mathperl>
 
 =begin text
 
-my $b = q{<<< BEGIN TEXT EVAL >>>};
+my $z = q{<<< BEGIN TEXT EVAL >>>};
 
 use Text::ASCIITable;
 
@@ -1230,24 +1230,18 @@ $table->setCols(splice [split /\s*\n\s*/, q{
 
 .TS
 allbox tab(@) ;
-c c c c c
-l l l r l .
+c c c c c c
+l l l r l l .
 
 =end man
 
 =for html <table class="rperl operators">
 
-
-START HERE: docbook table ID, fixity details in appendix, operator tables, add plain-English descriptions and examples
-START HERE: docbook table ID, fixity details in appendix, operator tables, add plain-English descriptions and examples
-START HERE: docbook table ID, fixity details in appendix, operator tables, add plain-English descriptions and examples
-
-
 =begin docbook
 
-<table id="NEED_ID_HERE!!!" label="" frame="all" colsep="1" rowsep="1">
+<table id="learning_rperl-section_2.1.9.1-table_1" label="" frame="all" colsep="1" rowsep="1">
 <title>Arithmetic Operators</title>
-<tgroup cols="5">
+<tgroup cols="6">
 
 =end docbook
 
@@ -1292,6 +1286,14 @@ B<Precedence>
 =for docbook </entry><entry align="center">
 
 B<Associativity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Supported>
 
 =for text }], 1);
 
@@ -1347,6 +1349,14 @@ Prefix
 
 Left
 
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Not Yet
+
 =for text }], 1);
 
 =for man T}
@@ -1396,6 +1406,14 @@ Prefix or Postfix
 =for docbook </entry><entry align="left">
 
 Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Yes
 
 =for text }], 1);
 
@@ -1447,6 +1465,14 @@ Prefix or Postfix
 
 Non
 
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Yes
+
 =for text }], 1);
 
 =for man T}
@@ -1496,6 +1522,14 @@ Infix
 =for docbook </entry><entry align="left">
 
 Right
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Yes
 
 =for text }], 1);
 
@@ -1547,6 +1581,14 @@ Prefix
 
 Right
 
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Yes
+
 =for text }], 1);
 
 =for man T}
@@ -1596,6 +1638,14 @@ Infix
 =for docbook </entry><entry align="left">
 
 Left
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Yes
 
 =for text }], 1);
 
@@ -1647,6 +1697,14 @@ Infix
 
 Left
 
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Yes
+
 =for text }], 1);
 
 =for man T}
@@ -1696,6 +1754,14 @@ Infix
 =for docbook </entry><entry align="left">
 
 Left
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Yes
 
 =for text }], 1);
 
@@ -1747,6 +1813,14 @@ Infix
 
 Left
 
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Yes
+
 =for text }], 1);
 
 =for man T}
@@ -1796,6 +1870,14 @@ Infix
 =for docbook </entry><entry align="left">
 
 Left
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Yes
 
 =for text }], 1);
 
@@ -1847,6 +1929,14 @@ Prefix
 
 Non
 
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Not Yet
+
 =for text }], 1);
 
 =for man T}
@@ -1873,7 +1963,7 @@ return $table->draw( ['.=','=.','=','='],   # .=============.
 
                     );
 
-$b = q{<<< END TEXT EVAL >>>};
+$z = q{<<< END TEXT EVAL >>>};
 
 =end text
 
@@ -1882,6 +1972,13 @@ $b = q{<<< END TEXT EVAL >>>};
 =for html </table>
 
 =for docbook </tbody></tgroup></table>
+
+
+START HERE: fixity details in appendix, operator tables, add plain-English descriptions and examples
+START HERE: fixity details in appendix, operator tables, add plain-English descriptions and examples
+START HERE: fixity details in appendix, operator tables, add plain-English descriptions and examples
+
+
 
 OP08_MATH_ADD_SUB         = /(sse_add|sse_sub)/    # precedence 08 infix: SSE add 'sse_add', SSE subtract 'sse_sub'
 OP07_MATH_MULT_DIV_MOD    = /(sse_mul|sse_div)/  # precedence 07 infix: SSE multiply 'sse_mul', SSE divide 'sse_div'
