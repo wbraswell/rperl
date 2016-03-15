@@ -198,8 +198,11 @@ https://pause.perl.org
 ##########################################################################################
 
 NEW YEAR'S
+GROUNDHOG
 ST VALENTINE'S
+PI
 APRIL FOOLS'
+MAY THE 4TH
 INDEPENDENCE
 HALLOWEEN
 THANKSGIVING
