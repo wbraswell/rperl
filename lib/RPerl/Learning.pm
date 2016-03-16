@@ -1204,13 +1204,13 @@ Perl 5 provides several builtin operators designed for use with numeric data, wh
 
 =back
 
-Each operator in Perl 5 (and thus RPerl) is assigned 3 characteristics: fixity (a placement location), precedence (a number) and associativity (a chirality or "handedness").  Prefix operators appear before their respective operands, postfix appear after, and infix operators appear between operands.  Operators with a lower numeric precedence are executed before operators with a higher precedence; in the absence of parenthesis, multiplication executes before addition because multiplication has a lower precedence number.  Operators with equal precedence number are grouped by (and executed in order of) associativity; in the absence of parenthesis, multiple subtraction operators will execute from left to right because subtraction is left-associative, whereas multiple exponent operators will execute from right to left because exponentiation is right-associative.  For more information, see the Appendix:
+Each operator in Perl 5 (and thus RPerl) is assigned 4 important characteristics: I<"arity"> (a number), I<"fixity"> (a placement location), I<"precedence"> (a number) and I<"associativity"> (a chirality or "handedness").  Operators of unary arity accept exactly 1 input operand, binary operators accept exactly 2 operands, etc.  Prefix operators appear before their respective operands, postfix appear after, infix appear between, and closed operators appear both before and after their operands.  Operators with a lower numeric precedence are executed before operators with a higher precedence; in the absence of parentheses, multiplication executes before addition because multiplication has a lower precedence number.  Operators with equal precedence number are grouped by (and executed in order of) associativity; in the absence of parentheses, multiple subtraction operators will execute from left to right because subtraction is left-associative, whereas multiple exponent operators will execute from right to left because exponentiation is right-associative.  For more information, see the Appendix:
 
-L<B.3: Syntax Precedence & Associativity|"B.3: Syntax Precedence & Associativity">
+L<B.3: Syntax Arity, Fixity, Precedence, Associativity|"B.3: Syntax Arity, Fixity, Precedence, Associativity">
 
-Beyond the builtin math operators in Perl 5, more advanced operators are available via the MathPerl software suite, which is (perhaps unsurprisingly) optimized using the RPerl compiler.  Pre-release MathPerl code is currently available:
+Beyond the builtin math operators in Perl 5, more advanced operators and functions are available via the MathPerl software suite, which is (perhaps unsurprisingly) optimized using the RPerl compiler.
 
-L<MathPerl on Github|https://github.com/wbraswell/mathperl>
+L<MathPerl on CPAN|https://metacpan.org/release/MathPerl>
 
 =head4 Section 2.1.9.1: Arithmetic Operators
 
@@ -1563,7 +1563,7 @@ Negative with Parentheses
 
 =for docbook </entry><entry align="left">
 
-Prefix
+Closed
 
 =for man T}@T{
 
@@ -1974,9 +1974,9 @@ $z = q{<<< END TEXT EVAL >>>};
 =for docbook </tbody></tgroup></table>
 
 
-START HERE: fixity details in appendix, operator tables, add plain-English descriptions and examples
-START HERE: fixity details in appendix, operator tables, add plain-English descriptions and examples
-START HERE: fixity details in appendix, operator tables, add plain-English descriptions and examples
+START HERE: operator tables, add plain-English descriptions and examples
+START HERE: operator tables, add plain-English descriptions and examples
+START HERE: operator tables, add plain-English descriptions and examples
 
 
 
@@ -4572,7 +4572,7 @@ precedence 01 prefix void: "terms and list operators (leftward)" [1] AKA builtin
 
 =item * OP01_NAMED_VOID_LPAREN
 
-precedence 01 prefix void: same as above, except with parenthesis & without semicolon & without die; C<croak(>, C<exit(>, C<return(>
+precedence 01 prefix void: same as above, except with parentheses & without semicolon & without die; C<croak(>, C<exit(>, C<return(>
 
 =item * OP01_NAMED_VOID
 
@@ -4638,19 +4638,29 @@ single uppercase letter, or uppercase letter followed by uppercase letters, numb
 
 =back
 
+=head2 B.3: Syntax Arity, Fixity, Precedence, Associativity
 
+Operator I<"arity"> is a technical term which means the number of input operands accepted by a specific builtin operator, or the number of input arguments accepted by a user-defined function.  An operator or function which accepts 0 input arguments is known as I<"nullary">, 1 argument as I<"unary">, 2 arguments as I<"binary">, 3 arguments as I<"ternary">, and so forth.  The C<exit;> operator may be called as nullary; the C<++> increment operator is unary; the C<+> addition operator is binary; and the C<substr> operator may be called as ternary.  Not to be confused with "a ternary operator", meaning any operator which accepts 3 operands, there is one specific operator known as I<"the ternary operator">, which is a special kind of conditional operator accepting 3 input arguments.  An operator or function which may accept more than one number of arguments is known as I<"variadic">.  Some RPerl operators are variadic, such as C<substr> which may accept 2, 3, or 4 arguments.  RPerl does not currently support variadic user-defined functions.
 
-=head2 B.3: Syntax Precedence & Associativity
+L<Operator Arity on Wikipedia|https://en.wikipedia.org/wiki/Arity>
 
-Operator precedence, also known as order-of-operations, is a methodology used to determine which operator is executed first when 2 or more operators are adjacent to one another and parentheses are not used to explicitly separate them.  A numeric precedence from 1 to 24 is assigned to each operator, and the operator with the lowest precedence number is given priority to execute first.  Low precedence number equals high priority.  The C<*> arithmetic multiplication operator has a precedence number of 7, and C<+> addition has a precedence of 8, so C<a + b * c> is equivalent to C<a + (b * c)>, not C<(a + b) * c>.
+Operator I<"fixity"> is the notation form indicating the location of an operator when placed relative to its own input operands.  I<"Prefix"> operators are located before their operands, I<"infix"> between operands, and I<"postfix"> after operands.  Additionally, operators which must be placed both before and after their operands are said to be of I<"closed"> fixity, while operators capable of more than one placement location are called I<"mixfix">.  Prefix notation is also known as I<"Polish notation">, and postfix is called I<"Reverse Polish"> notation.  The C<abs> absolute value is a prefix operator; the C<+> addition operator is infix; and the C<++> increment operator can be called as postfix.  The C<-( )> negative-with-parentheses operator is of closed fixity, because the parentheses component must appear both before and after the enclosed operand.  Parentheses are always of closed fixity; in normal Perl, the C<-> negative (without parentheses) is a prefix operator, but in RPerl we only allow the closed fixity C<-( )> negative-with-parentheses operator in order to avoid grammar ambiguity, because the same C<-> dash (AKA hyphen) character is utilized for both the C<-> negative and C<-> subtraction operators.  The C<++> increment operator may also be called as prefix, so it may be classified as mixfix.
+
+L<Prefix Notation on Wikipedia|https://en.wikipedia.org/wiki/Prefix_notation>
+
+L<Infix Notation on Wikipedia|https://en.wikipedia.org/wiki/Infix_notation>
+
+L<Postfix Notation on Wikipedia|https://en.wikipedia.org/wiki/Postfix_notation>
+
+Operator I<"precedence">, also known as I<"order-of-operations">, is a methodology used to determine which operator is executed first when 2 or more operators are adjacent to one another and parentheses are not used to explicitly separate them.  A numeric precedence from 1 to 24 is assigned to each operator, and the operator with the lowest precedence number is given priority to execute first.  Low precedence number equals high priority.  The C<*> arithmetic multiplication operator has a precedence number of 7, and C<+> addition has a precedence of 8, so C<a + b * c> is equivalent to C<a + (b * c)>, not C<(a + b) * c>.
 
 L<Operator Precedence on Wikipedia|https://en.wikipedia.org/wiki/Operator_precedence>
 
-Operator associativity is used to further determine precedence when multiple operators of the same priority are adjacent to one another.  Each operator is designated as left-associative, right-associative, or non-associative.  Normal arithmetic operators are left-associative, meaning C<a - b - c> is equivalent to C<(a - b) - c>, not C<a - (b - c)>.  Some operators such as mathematic power (AKA exponentiation) are right-associative, meaning C<a ** b ** c> is equivalent to C<a ** (b ** c)>.  Operators which are not meant to be chained together are non-associative, such as the C<..> list range operator which takes scalar values as input but generates an array as output, so C<a .. b .. c> is incorrect usage and will cause an error.
+Operator I<"associativity"> is used to further determine precedence when multiple operators of the same priority are adjacent to one another.  Each operator is designated as left-associative, right-associative, or non-associative.  (Wikipedia incorrectly identifies associativity as a synonym for fixity, which is different, as described above.)  Normal arithmetic operators are left-associative, meaning C<a - b - c> is equivalent to C<(a - b) - c>, not C<a - (b - c)>.  Some operators such as mathematic power (AKA exponentiation) are right-associative, meaning C<a ** b ** c> is equivalent to C<a ** (b ** c)>.  Operators which are not meant to be chained together are non-associative, such as the C<..> list range operator which takes scalar values as input but generates an array as output, so C<a .. b .. c> is incorrect usage and will cause an error.
 
 L<Operator Associativity on Wikipedia|https://en.wikipedia.org/wiki/Operator_associativity>
 
-In the following list of operators, later declaration gets higher priority, so all precedence numbers appear in strictly descending order from 24 to 1.  Both precedence and associativity are taken directly from Perl 5.
+In the following list of operators copied directly from F<Grammar.eyp>, later declaration gets higher priority, so all precedence numbers appear in strictly descending order from 24 to 1.  (Implementation of operator arity and fixity are a bit less straightforward, and are not easily copied-and-pasted in one succinct list directly out of F<Grammar.eyp>.)  All operator arity, fixity, precedence, and associativity are taken directly from Perl 5.
 
 L<Operator Precedence & Associativity in Perl 5 Documentation|http://perldoc.perl.org/perlop.html#Operator-Precedence-and-Associativity> [1]
 

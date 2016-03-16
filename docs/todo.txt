@@ -1,4 +1,5 @@
 Learning RPerl
+    L<> hyperlinks broken or missing in some outputs?
     <noncode> fix
     metacpan list newline fix, section 1.1
     BEGIN INLINE CSS DIV comment should not appear in any output
