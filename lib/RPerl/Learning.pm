@@ -54,7 +54,7 @@ table.rperl > tbody > tr > th > p { margin: 0px; }
 table.rperl > tbody > tr > td > p { margin: 0px; }
 
 /* right alignment for numeric precedence column of operators tables */
-table.operators > tbody > tr > td:nth-child(4)  { text-align: right; }
+table.operators > tbody > tr > td:nth-child(5)  { text-align: right; }
 
 </style>
 
@@ -1230,8 +1230,8 @@ $table->setCols(splice [split /\s*\n\s*/, q{
 
 .TS
 allbox tab(@) ;
-c c c c c c
-l l l r l l .
+c c c c c c c
+l l l l r l l .
 
 =end man
 
@@ -1262,6 +1262,14 @@ B<Name>
 =for docbook </entry><entry align="center">
 
 B<Symbol>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Arity>
 
 =for man T}@T{
 
@@ -1331,6 +1339,14 @@ abs
 
 =for docbook </entry><entry align="left">
 
+Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
 Prefix
 
 =for man T}@T{
@@ -1382,6 +1398,14 @@ Increment
 =for docbook </entry><entry align="left">
 
 ++
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Unary
 
 =for man T}@T{
 
@@ -1447,6 +1471,14 @@ Decrement
 
 =for docbook </entry><entry align="left">
 
+Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
 Prefix or Postfix
 
 =for man T}@T{
@@ -1498,6 +1530,14 @@ Exponent AKA Power
 =for docbook </entry><entry align="left">
 
 **
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Binary
 
 =for man T}@T{
 
@@ -1563,6 +1603,14 @@ Negative with Parentheses
 
 =for docbook </entry><entry align="left">
 
+Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
 Closed
 
 =for man T}@T{
@@ -1614,6 +1662,14 @@ Multiply
 =for docbook </entry><entry align="left">
 
 *
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Binary
 
 =for man T}@T{
 
@@ -1679,6 +1735,14 @@ Divide
 
 =for docbook </entry><entry align="left">
 
+Binary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
 Infix
 
 =for man T}@T{
@@ -1730,6 +1794,14 @@ Modulo AKA Modulus
 =for docbook </entry><entry align="left">
 
 %
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Binary
 
 =for man T}@T{
 
@@ -1795,6 +1867,14 @@ Add
 
 =for docbook </entry><entry align="left">
 
+Binary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
 Infix
 
 =for man T}@T{
@@ -1853,6 +1933,14 @@ Subtract
 
 =for docbook </entry><entry align="left">
 
+Binary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
 Infix
 
 =for man T}@T{
@@ -1904,6 +1992,14 @@ Square Root
 =for docbook </entry><entry align="left">
 
 sqrt
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Unary
 
 =for man T}@T{
 

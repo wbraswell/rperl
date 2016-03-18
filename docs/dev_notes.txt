@@ -1,4 +1,4 @@
-# RPerl Developer Notes 20160216 2016.047
+# RPerl Developer Notes 20160317 2016.077
 
 ##########################################################################################
 # WARNING & ERROR CODES
@@ -199,8 +199,11 @@ https://pause.perl.org
 
 NEW YEAR'S
 GROUNDHOG
-ST VALENTINE'S
+ST. VALENTINE'S
 PI
+ST. PATRICK'S
+GOOD FRIDAY
+EASTER
 APRIL FOOLS'
 MAY THE 4TH
 INDEPENDENCE
