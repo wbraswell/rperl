@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.040_000;
+our $VERSION = 0.041_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -2164,6 +2164,72 @@ B<Supported>
 
 =for man T}
 
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Arctangent-Divide
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+atan2
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Binary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+01
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Left
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Not Yet
+
+=for text }], 1);
+
+=for man T}
+
 =for html </th></tr>
 
 =for docbook </entry></row>
@@ -2304,15 +2370,150 @@ Not Yet
 
 =for docbook </entry></row>
 
+=begin text
+
+#return $table;
+
+return $table->draw( ['.=','=.','=','='],   # .=============.
+
+                     ['|','|','|'],         # | info | info |
+ 
+                     ['|-','-|','=','='],   # |-===========-|
+
+                     ['|','|','|'],         # | info | info |
+
+                     ["'=","='",'=','='],   # '============='
+
+                     ['|-','-|','-','+']    # rowseperator
+
+                    );
+
+$z = q{<<< END TEXT EVAL >>>};
+
+=end text
+
+=for man .TE
+
+=for html </table>
+
+=for docbook </tbody></tgroup></table>
+
+START HERE: operator tables, add plain-English descriptions and examples
+START HERE: operator tables, add plain-English descriptions and examples
+START HERE: operator tables, add plain-English descriptions and examples
+
+=head4 Section 2.1.9.3: Comparison Operators
+
+=begin text
+
+my $z = q{<<< BEGIN TEXT EVAL >>>};
+
+use Text::ASCIITable;
+
+my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
+
+$table->setCols(splice [split /\s*\n\s*/, q{
+
+=end text
+
+=begin man
+
+.TS
+allbox tab(@) ;
+c c c c c c c
+l l l l r l l .
+
+=end man
+
+=for html <table class="rperl operators">
+
+=begin docbook
+
+<table id="learning_rperl-section_2.1.9.3-table_1" label="" frame="all" colsep="1" rowsep="1">
+<title>Comparison Operators</title>
+<tgroup cols="6">
+
+=end docbook
+
+=for man T{
+
+=for html <tr><th>
+
+=for docbook <thead>
+
+=for docbook <row><entry align="center">
+
+B<Name>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Symbol>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Arity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Fixity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Precedence>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Associativity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Supported>
+
+=for text }], 1);
+
+=for man T}
+
+=for html </th></tr>
+
+=for docbook </entry></row>
+
+=for docbook </thead>
+
 =for text $table->addRow(splice [split /\s*\n\s*/, q{
 
 =for man T{
 
 =for html <tr><td>
 
+=for docbook <tbody>
+
 =for docbook <row><entry align="left">
 
-Arctangent-Divide
+Less-Than-Or-Equal
 
 =for man T}@T{
 
@@ -2320,7 +2521,7 @@ Arctangent-Divide
 
 =for docbook </entry><entry align="left">
 
-atan2
+<=
 
 =for man T}@T{
 
@@ -2336,7 +2537,7 @@ Binary
 
 =for docbook </entry><entry align="left">
 
-Prefix
+Infix
 
 =for man T}@T{
 
@@ -2344,7 +2545,7 @@ Prefix
 
 =for docbook </entry><entry align="right">
 
-01
+11
 
 =for man T}@T{
 
@@ -2352,7 +2553,7 @@ Prefix
 
 =for docbook </entry><entry align="left">
 
-Left
+Non
 
 =for man T}@T{
 
@@ -2360,7 +2561,139 @@ Left
 
 =for docbook </entry><entry align="left">
 
-Not Yet
+Yes
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Greater-Than-Or-Equal
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+>=
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Binary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Infix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+11
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Yes
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Less-Than
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+<
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Binary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Infix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+11
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Yes
 
 =for text }], 1);
 
@@ -2397,12 +2730,6 @@ $z = q{<<< END TEXT EVAL >>>};
 =for html </table>
 
 =for docbook </tbody></tgroup></table>
-
-START HERE: operator tables, add plain-English descriptions and examples
-START HERE: operator tables, add plain-English descriptions and examples
-START HERE: operator tables, add plain-English descriptions and examples
-
-=head4 Section 2.1.9.3: Comparison Operators
 
     %token OP12_COMPARE_EQ_NE        = /(==|!=)\s/             # precedence 12 infix: comparison numeric equal '==', numeric not equal '!=', string equal 'eq', string not equal 'ne'
     %token OP11_COMPARE_LT_GT        = /(<=|>=|<|>)\s/   # precedence 11 infix: numeric comparison less or equal '<=', greater or equal '>=', less than '<', greater than '>'; string comparison less or equal 'le', greater or equal 'ge', less than 'lt', greater than 'gt'
