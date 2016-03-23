@@ -3046,7 +3046,7 @@ Logical Negation
 
 =for docbook </entry><entry align="left">
 
-Binary
+Unary
 
 =for man T}@T{
 
@@ -3062,7 +3062,7 @@ Prefix
 
 =for docbook </entry><entry align="right">
 
-01
+05
 
 =for man T}@T{
 
@@ -3070,7 +3070,7 @@ Prefix
 
 =for docbook </entry><entry align="left">
 
-Left
+Right
 
 =for man T}@T{
 
@@ -3078,7 +3078,7 @@ Left
 
 =for docbook </entry><entry align="left">
 
-Not Yet
+Yes
 
 =for text }], 1);
 
@@ -3096,7 +3096,7 @@ Not Yet
 
 =for docbook <row><entry align="left">
 
-Sine
+Logical And
 
 =for man T}@T{
 
@@ -3104,7 +3104,7 @@ Sine
 
 =for docbook </entry><entry align="left">
 
-sin
+&&
 
 =for man T}@T{
 
@@ -3112,7 +3112,7 @@ sin
 
 =for docbook </entry><entry align="left">
 
-Unary
+Binary
 
 =for man T}@T{
 
@@ -3120,7 +3120,7 @@ Unary
 
 =for docbook </entry><entry align="left">
 
-Prefix
+Infix
 
 =for man T}@T{
 
@@ -3128,7 +3128,7 @@ Prefix
 
 =for docbook </entry><entry align="right">
 
-10
+15
 
 =for man T}@T{
 
@@ -3136,7 +3136,7 @@ Prefix
 
 =for docbook </entry><entry align="left">
 
-Non
+Left
 
 =for man T}@T{
 
@@ -3144,7 +3144,7 @@ Non
 
 =for docbook </entry><entry align="left">
 
-Not Yet
+Yes
 
 =for text }], 1);
 
