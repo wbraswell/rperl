@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.042_000;
+our $VERSION = 0.043_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -2777,7 +2777,7 @@ Equal
 
 =for docbook </entry><entry align="left">
 
-==
+E<61>E<61>
 
 =for man T}@T{
 
@@ -2918,10 +2918,6 @@ $z = q{<<< END TEXT EVAL >>>};
 =for html </table>
 
 =for docbook </tbody></tgroup></table>
-
-START HERE: operator tables, add plain-English descriptions and examples
-START HERE: operator tables, add plain-English descriptions and examples
-START HERE: operator tables, add plain-English descriptions and examples
 
 =head4 Section 2.1.9.4: Logic Operators
 
@@ -3166,7 +3162,7 @@ Yes
 
 =for docbook <row><entry align="left">
 
-Cosine
+Logical Or
 
 =for man T}@T{
 
@@ -3174,7 +3170,77 @@ Cosine
 
 =for docbook </entry><entry align="left">
 
-cos
+||
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Binary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Infix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+16
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Left
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Yes
+
+=for text }], 1);
+
+=for man T}
+
+=for html </th></tr>
+
+=for docbook </entry></row>
+
+=for docbook </thead>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <tbody>
+
+=for docbook <row><entry align="left">
+
+Logical Negation
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+not
 
 =for man T}@T{
 
@@ -3198,7 +3264,7 @@ Prefix
 
 =for docbook </entry><entry align="right">
 
-10
+22
 
 =for man T}@T{
 
@@ -3206,7 +3272,7 @@ Prefix
 
 =for docbook </entry><entry align="left">
 
-Non
+Right
 
 =for man T}@T{
 
@@ -3214,7 +3280,217 @@ Non
 
 =for docbook </entry><entry align="left">
 
-Not Yet
+Yes
+
+=for text }], 1);
+
+=for man T}
+
+=for html </th></tr>
+
+=for docbook </entry></row>
+
+=for docbook </thead>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <tbody>
+
+=for docbook <row><entry align="left">
+
+Logical And 
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+and
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Binary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Infix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+23
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Left
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Yes
+
+=for text }], 1);
+
+=for man T}
+
+=for html </th></tr>
+
+=for docbook </entry></row>
+
+=for docbook </thead>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <tbody>
+
+=for docbook <row><entry align="left">
+
+Logical Or
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+or
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Binary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Infix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+24
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Left
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Yes
+
+=for text }], 1);
+
+=for man T}
+
+=for html </th></tr>
+
+=for docbook </entry></row>
+
+=for docbook </thead>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <tbody>
+
+=for docbook <row><entry align="left">
+
+Logical Xor
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+xor
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Binary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Infix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+24
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Left
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Yes
 
 =for text }], 1);
 
@@ -3250,12 +3526,9 @@ $z = q{<<< END TEXT EVAL >>>};
 
 =for docbook </tbody></tgroup></table>
 
-    %token OP24_LOGICAL_OR_XOR       = /(or|xor)\s/                  # precedence 24 infix: logical 'or' and 'xor', equivalent to '||' except for precedence
-    %token OP23_LOGICAL_AND          = /(and)\s/                     # precedence 23 infix: logical 'and', equivalent to '&&' except for precedence
-    %token OP22_LOGICAL_NEG          = /(not)/                       # precedence 22 prefix: logical negation 'not', equivalent to '!' except for precedence
-    %token OP16_LOGICAL_OR           = /(\|\|)/                      # precedence 16 infix: logical or '||'
-    %token OP15_LOGICAL_AND          = /(&&)/                        # precedence 15 infix: logical and '&&'
-    %token OP05_LOGICAL_NEG          = /(!)/                         # precedence 05 prefix: logical negation '!'
+START HERE: operator tables, add plain-English descriptions and examples
+START HERE: operator tables, add plain-English descriptions and examples
+START HERE: operator tables, add plain-English descriptions and examples
 
 =head4 Section 2.1.9.5: Bitwise Operators
 
