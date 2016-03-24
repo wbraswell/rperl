@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.044_000;
+our $VERSION = 0.045_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -1005,7 +1005,7 @@ A single group of actual numeric digit(s) or quoted string character(s) is calle
 
     0           # boolean or unsigned_integer or integer or gmp_integer or number
 
-=head2 Section 2.1: Numbers (Numeric Data)
+=head2 Section 2.1: Numbers (Numeric Data & Operators)
 
 RPerl provides 5 numeric data types:
 
@@ -1032,6 +1032,30 @@ S< >S< >S< >S< >a possibly-very-large whole number value, either negative, 0, or
 S< >S< >S< >S< >a floating-point decimal number value, either negative, 0, or positive
 
 =back
+
+Perl 5 provides several builtin operators designed for use with numeric data, which can be organized into 5 general categories:
+
+=over
+
+=item * Arithmetic
+
+=item * Trigonometry
+
+=item * Comparison
+
+=item * Logic
+
+=item * Bitwise
+
+=back
+
+Each operator in Perl 5 (and thus RPerl) is assigned 4 important characteristics: I<"arity"> (a number), I<"fixity"> (a placement location), I<"precedence"> (a number) and I<"associativity"> (a chirality or "handedness").  Operators of unary arity accept exactly 1 input operand, binary operators accept exactly 2 operands, etc.  Prefix operators appear before their respective operands, postfix appear after, infix appear between, and closed operators appear both before and after their operands.  Operators with a lower numeric precedence are executed before operators with a higher precedence; in the absence of parentheses, multiplication executes before addition because multiplication has a lower precedence number.  Operators with equal precedence number are grouped by (and executed in order of) associativity; in the absence of parentheses, multiple subtraction operators will execute from left to right because subtraction is left-associative, whereas multiple exponent operators will execute from right to left because exponentiation is right-associative.  For more information, see the Appendix:
+
+L<B.3: Syntax Arity, Fixity, Precedence, Associativity|"B.3: Syntax Arity, Fixity, Precedence, Associativity">
+
+Beyond the builtin math operators in Perl 5, more advanced operators and functions are available via the MathPerl software suite, which is (perhaps unsurprisingly) optimized using the RPerl compiler.
+
+L<MathPerl on CPAN|https://metacpan.org/release/MathPerl>
 
 =head3 Section 2.1.1: Bool Literals
 
@@ -1186,33 +1210,7 @@ I<BEST PRACTICES>
     +1.628_241_700_382_422_95e-03  # best number for mixed-sign exponents, accuracy may be reduced on computers with lower data type limits
     -9.515_922_545_197_158_70e-15  # best number for mixed-sign exponents, accuracy may be reduced on computers with lower data type limits
 
-=head3 Section 2.1.9: Numeric Operators
-
-Perl 5 provides several builtin operators designed for use with numeric data, which can be organized into 5 general categories:
-
-=over
-
-=item * Arithmetic
-
-=item * Trigonometry
-
-=item * Comparison
-
-=item * Logic
-
-=item * Bitwise
-
-=back
-
-Each operator in Perl 5 (and thus RPerl) is assigned 4 important characteristics: I<"arity"> (a number), I<"fixity"> (a placement location), I<"precedence"> (a number) and I<"associativity"> (a chirality or "handedness").  Operators of unary arity accept exactly 1 input operand, binary operators accept exactly 2 operands, etc.  Prefix operators appear before their respective operands, postfix appear after, infix appear between, and closed operators appear both before and after their operands.  Operators with a lower numeric precedence are executed before operators with a higher precedence; in the absence of parentheses, multiplication executes before addition because multiplication has a lower precedence number.  Operators with equal precedence number are grouped by (and executed in order of) associativity; in the absence of parentheses, multiple subtraction operators will execute from left to right because subtraction is left-associative, whereas multiple exponent operators will execute from right to left because exponentiation is right-associative.  For more information, see the Appendix:
-
-L<B.3: Syntax Arity, Fixity, Precedence, Associativity|"B.3: Syntax Arity, Fixity, Precedence, Associativity">
-
-Beyond the builtin math operators in Perl 5, more advanced operators and functions are available via the MathPerl software suite, which is (perhaps unsurprisingly) optimized using the RPerl compiler.
-
-L<MathPerl on CPAN|https://metacpan.org/release/MathPerl>
-
-=head4 Section 2.1.9.1: Arithmetic Operators
+=head3 Section 2.1.9: Arithmetic Operators
 
 =begin text
 
@@ -1372,138 +1370,6 @@ Left
 =for docbook </entry><entry align="left">
 
 Not Yet
-
-=for text }], 1);
-
-=for man T}
-
-=for html </td></tr>
-
-=for docbook </entry></row>
-
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
-
-=for man T{
-
-=for html <tr><td>
-
-=for docbook <row><entry align="left">
-
-Increment
-
-=for man T}@T{
-
-=for html </td><td>
-
-=for docbook </entry><entry align="left">
-
-++
-
-=for man T}@T{
-
-=for html </td><td>
-
-=for docbook </entry><entry align="left">
-
-Unary
-
-=for man T}@T{
-
-=for html </td><td>
-
-=for docbook </entry><entry align="left">
-
-Prefix or Postfix
-
-=for man T}@T{
-
-=for html </td><td>
-
-=for docbook </entry><entry align="right">
-
-03
-
-=for man T}@T{
-
-=for html </td><td>
-
-=for docbook </entry><entry align="left">
-
-Non
-
-=for man T}@T{
-
-=for html </td><td>
-
-=for docbook </entry><entry align="left">
-
-Yes
-
-=for text }], 1);
-
-=for man T}
-
-=for html </td></tr>
-
-=for docbook </entry></row>
-
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
-
-=for man T{
-
-=for html <tr><td>
-
-=for docbook <row><entry align="left">
-
-Decrement
-
-=for man T}@T{
-
-=for html </td><td>
-
-=for docbook </entry><entry align="left">
-
---
-
-=for man T}@T{
-
-=for html </td><td>
-
-=for docbook </entry><entry align="left">
-
-Unary
-
-=for man T}@T{
-
-=for html </td><td>
-
-=for docbook </entry><entry align="left">
-
-Prefix or Postfix
-
-=for man T}@T{
-
-=for html </td><td>
-
-=for docbook </entry><entry align="right">
-
-03
-
-=for man T}@T{
-
-=for html </td><td>
-
-=for docbook </entry><entry align="left">
-
-Non
-
-=for man T}@T{
-
-=for html </td><td>
-
-=for docbook </entry><entry align="left">
-
-Yes
 
 =for text }], 1);
 
@@ -2067,7 +1933,75 @@ $z = q{<<< END TEXT EVAL >>>};
 
 =for docbook </tbody></tgroup></table>
 
-=head4 Section 2.1.9.2: Trigonometry Operators
+=over
+
+=item * B<Absolute Value>
+
+If operand is 0 or positive (greater than 0), return unchanged;
+
+If operand is negative (less than 0), return positive number with equal magnitude (distance from 0)
+
+=back
+
+    abs  0  # 0
+    abs  1  # 1
+    abs -1  # 1
+    abs  2_112.23  # 2_112.23
+    abs -2_112.23  # 2_112.23
+
+=over
+
+=item * B<Exponent AKA Power>
+
+Raise first operand to the power of second operand, return result
+
+=back
+
+    0 ** 0  # 1
+    0 ** 1  # 0
+    0 ** 2  # 0
+    0 ** 3  # 0
+    1 ** 0  # 1
+    1 ** 1  # 1
+    1 ** 2  # 1
+    1 ** 3  # 1
+    2 ** 0  # 1
+    2 ** 1  # 2
+    2 ** 2  # 4
+    2 ** 3  # 8
+
+    (-1) ** 0  #  1
+    (-1) ** 1  # -1
+    (-1) ** 2  #  1
+    (-1) ** 3  # -1
+    (-2) ** 0  #  1
+    (-2) ** 1  # -2
+    (-2) ** 2  #  4
+    (-2) ** 3  # -8
+
+    0 ** -1  # inf
+    0 ** -2  # inf
+    0 ** -3  # inf
+    1 ** -1  # 1
+    1 ** -2  # 1
+    1 ** -3  # 1
+    2 ** -1  # 0.5
+    2 ** -2  # 0.25
+    2 ** -3  # 0.125
+
+    (-1) ** -1  # -1
+    (-1) ** -2  #  1
+    (-1) ** -3  # -1
+    (-2) ** -1  # -0.5
+    (-2) ** -2  #  0.25
+    (-2) ** -3  # -0.125
+
+START HERE: add plain-English descriptions and examples to numeric operator sections below
+START HERE: add plain-English descriptions and examples to numeric operator sections below
+START HERE: add plain-English descriptions and examples to numeric operator sections below
+
+
+=head3 Section 2.1.10: Trigonometry Operators
 
 =begin text
 
@@ -2394,7 +2328,7 @@ $z = q{<<< END TEXT EVAL >>>};
 
 =for docbook </tbody></tgroup></table>
 
-=head4 Section 2.1.9.3: Comparison Operators
+=head3 Section 2.1.11: Comparison Operators
 
 =begin text
 
@@ -2919,7 +2853,7 @@ $z = q{<<< END TEXT EVAL >>>};
 
 =for docbook </tbody></tgroup></table>
 
-=head4 Section 2.1.9.4: Logic Operators
+=head3 Section 2.1.12: Logic Operators
 
 =begin text
 
@@ -3526,7 +3460,7 @@ $z = q{<<< END TEXT EVAL >>>};
 
 =for docbook </tbody></tgroup></table>
 
-=head4 Section 2.1.9.5: Bitwise Operators
+=head3 Section 2.1.13: Bitwise Operators
 
 =begin text
 
@@ -3985,42 +3919,7 @@ $z = q{<<< END TEXT EVAL >>>};
 
 =for docbook </tbody></tgroup></table>
 
-START HERE: move remaining op lists out of this Numeric Operators, add plain-English descriptions and examples to this section
-START HERE: move remaining op lists out of this Numeric Operators, add plain-English descriptions and examples to this section
-START HERE: move remaining op lists out of this Numeric Operators, add plain-English descriptions and examples to this section
-
-=head4 Section x.x.x.x: File & Directory Operators
-
-    %token OP10_NAMED_UNARY_SCOLON   = /(-A;|-B;|-C;|-M;|-O;|-R;|-S;|-T;|-W;|-X;|-b;|-c;|-d;|-e;|-f;|-g;|-k;|-l;|-o;|-p;|-r;|-s;|-t;|-u;|-w;|-x;|-z;)/
-
-=head4 Section x.x.x.x: String Operators
-
-    %token OP11_COMPARE_LT_GT        = /(le|ge|lt|gt)\s/   # precedence 11 infix: string comparison less or equal 'le', greater or equal 'ge', less than 'lt', greater than 'gt'
-    %token OP12_COMPARE_EQ_NE        = /(eq|ne)\s/             # precedence 12 infix: comparison string equal 'eq', string not equal 'ne'
-
-=head4 Section x.x.x.x: UNSORTED Operators
-
-    OP08_MATH_ADD_SUB         = /(sse_add|sse_sub)/    # precedence 08 infix: SSE add 'sse_add', SSE subtract 'sse_sub'
-    OP07_MATH_MULT_DIV_MOD    = /(sse_mul|sse_div)/  # precedence 07 infix: SSE multiply 'sse_mul', SSE divide 'sse_div'
-    OP19_VARIABLE_ASSIGN_BY   = /(\+=|-=|\*=|\/=)/            # precedence 19 infix: add assign '+=', subtract assign '-=', multiply assign '*=', divide assign '/=', string concatenation assign '.='
-
-    %token OP10_NAMED_UNARY_SCOLON   = /(alarm;|caller;|chdir;|chroot;|defined;|delete;|do;|eval;|exists;|gethostbyname;|getnetbyname;|getpgrp;|getprotobyname;|glob;
-    |gmtime;|goto;|hex;|int;|lc;|lcfirst;|length;|localtime;|lock;|log;|lstat;|oct;|ord;|quotemeta;|rand;|readlink;|ref;|require;|rmdir;|scalar;|sleep;|srand;|stat;
-    |uc;|ucfirst;|umask;)/
-    %token OP01_NAMED_SCOLON         = /(accept;|bind;|binmode;|bless;|break;|chmod;|chomp;|chop;|chown;|chr;|closedir;|cmp;|connect;|continue;|crypt;|dbmclose;
-    |dbmopen;|default;|dump;|each;|endgrent;|endhostent;|endnetent;|endprotoent;|endpwent;|endservent;|eof;|evalbytes;|exec;|exp;|fc;|fcntl;|fileno;|flock;|fork;
-    |format;|formline;|getc;|getgrent;|getgrgid;|getgrnam;|gethostbyaddr;|gethostent;|getlogin;|getnetbyaddr;|getnetent;|getpeername;|getppid;|getpriority;
-    |getprotobynumber;|getprotoent;|getpwent;|getpwnam;|getpwuid;|getservbyname;|getservbyport;|getservent;|getsockname;|getsockopt;|given;|grep;|index;|ioctl;|join;
-    |keys;|kill;|link;|listen;|local;|m;|map;|mkdir;|msgctl;|msgget;|msgrcv;|msgsnd;|opendir;|pack;|pipe;|pop;|pos;|prototype;|push;|q;|qq;|qr;|qx;|read;|readdir;
-    |readline;|readpipe;|recv;|rename;|reset;|reverse;|rewinddir;|rindex;|s;|say;|seek;|seekdir;|select;|semctl;|semget;|semop;|send;|setgrent;|sethostent;|setnetent;
-    |setpgrp;|setpriority;|setprotoent;|setpwent;|setservent;|setsockopt;|shift;|shmctl;|shmget;|shmread;|shmwrite;|shutdown;|socket;|socketpair;|sort;|splice;|split;
-    |sprintf;|state;|study;|substr;|symlink;|syscall;|sysopen;|sysread;|sysseek;|system;|syswrite;|tell;|telldir;|tie;|tied;|time;|times;|tr;|truncate;|unless;|unlink;
-    |unpack;|unshift;|untie;|until;|utime;|values;|vec;|wait;|waitpid;|wantarray;|warn;|when;|write;|y;)/
-
-
-
-
-=head2 Section 2.2: Strings (Text Data)
+=head2 Section 2.2: Strings (Text Data & Operators)
 
 RPerl provides 2 text data types:
 
@@ -4246,7 +4145,9 @@ q-quoted text literals may contain:
 
 =head3 Section 2.2.6: String Operators
 
-=for comment [ INSERT OPS ]
+    # NEED ADD OTHER STRING OPS: cat, repeat, substr, etc
+    %token OP11_COMPARE_LT_GT        = /(le|ge|lt|gt)\s/   # precedence 11 infix: string comparison less or equal 'le', greater or equal 'ge', less than 'lt', greater than 'gt'
+    %token OP12_COMPARE_EQ_NE        = /(eq|ne)\s/             # precedence 12 infix: comparison string equal 'eq', string not equal 'ne'
 
 =begin text
 
@@ -4268,7 +4169,7 @@ q-quoted text literals may contain:
 
 =end html
 
-=for comment [INSERT WARNINGS]
+=for comment [ INSERT WARNINGS ]
 
 =head2 Section 2.4: Scalar Variables
 
@@ -4300,6 +4201,10 @@ On the other hand, RPerl I<requires> the use of data types for each and every va
     $foo = 42;  # just fine in RPerl
 
 Data types make your code much more readable and much, much faster.  Learn to love data types.  Now.
+
+=head3 Section 2.4.x: Choosing Good Variable Names
+
+=for comment [ INSERT CONTENT ]
 
 =head3 Section 2.4.x: Bool Data Type
 
@@ -4375,148 +4280,581 @@ Except for certain special circumstances, all variables in RPerl are locally-sco
 
 =for comment [ INSERT SCOPE TYPE NAME VALUE ]
 
+=head3 Section 2.4.x: Binary Assignment Operators
+
+    OP19_VARIABLE_ASSIGN_BY   = /(\+=|-=|\*=|\/=)/            # precedence 19 infix: add assign '+=', subtract assign '-=', multiply assign '*=', divide assign '/='
+    %token OP19_VARIABLE_ASSIGN_BY   = /(\.=)/        # precedence 19 infix: string concatenation assign '.='
+
+=head3 Section 2.4.x: Increment & Decrement Operators
+
+=begin text
+
+my $z = q{<<< BEGIN TEXT EVAL >>>};
+
+use Text::ASCIITable;
+
+my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
+
+$table->setCols(splice [split /\s*\n\s*/, q{
+
+=end text
+
+=begin man
+
+.TS
+allbox tab(@) ;
+c c c c c c c
+l l l l r l l .
+
+=end man
+
+=for html <table class="rperl operators">
+
+=begin docbook
+
+<table id="learning_rperl-section_2.4.x.1-table_1" label="" frame="all" colsep="1" rowsep="1">
+<title>Increment & Decrement Operators</title>
+<tgroup cols="6">
+
+=end docbook
+
+=for man T{
+
+=for html <tr><th>
+
+=for docbook <thead>
+
+=for docbook <row><entry align="center">
+
+B<Name>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Symbol>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Arity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Fixity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Precedence>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Associativity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Supported>
+
+=for text }], 1);
+
+=for man T}
+
+=for html </th></tr>
+
+=for docbook </entry></row>
+
+=for docbook </thead>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <tbody>
+
+=for docbook <row><entry align="left">
+
+Pre-Increment
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+++
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+03
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Yes
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Post-Increment
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+++
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Postfix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+03
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Yes
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Pre-Decrement
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+--
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+03
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Yes
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Post-Decrement
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+--
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Postfix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+03
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Yes
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=begin text
+
+return $table->draw( ['.=','=.','=','='],   # .=============.
+
+                     ['|','|','|'],         # | info | info |
+ 
+                     ['|-','-|','=','='],   # |-===========-|
+
+                     ['|','|','|'],         # | info | info |
+
+                     ["'=","='",'=','='],   # '============='
+
+                     ['|-','-|','-','+']    # rowseperator
+
+                    );
+
+$z = q{<<< END TEXT EVAL >>>};
+
+=end text
+
+=for man .TE
+
+=for html </table>
+
+=for docbook </tbody></tgroup></table>
+
+=over
+
+=item * B<Pre-Increment>
+
+Add 1 to operand, then return incremented value
+
+=back
+
+    # NEED ADD EXAMPLES
+    ++$i  # 0
+
 =head2 Section 2.5: Constant Data
 
-=for comment [INSERT CONSTANTS]
+=for comment [ INSERT CONSTANTS ]
 
 =head2 Section 2.6: Output With C<print>
 
-=for comment [INSERT PRINT]
+=for comment [ INSERT PRINT ]
 
 =head2 Section 2.7: The C<if> Control Structure
 
-=for comment [INSERT IF]
+=for comment [ INSERT IF ]
 
 =head2 Section 2.8: Getting User Input
 
-=for comment [INSERT INPUT]
+=for comment [ INSERT INPUT ]
 
 =head2 Section 2.9: The C<chomp> Operator
 
-=for comment [INSERT CHOMP]
+=for comment [ INSERT CHOMP ]
 
 =head2 Section 2.10: The C<while> Control Structure
 
-=for comment [INSERT WHILE]
+=for comment [ INSERT WHILE ]
 
 =head2 Section 2.11: The C<undef> Value
 
-=for comment [INSERT UNDEF]
+=for comment [ INSERT UNDEF ]
 
 =head2 Section 2.12: The C<defined> Function
 
-=for comment [INSERT DEFINED]
+=for comment [ INSERT DEFINED ]
 
 =head2 Section 2.13: Exercises
 
 =head3 1.  XXXYYYZZZ  [ XYZ mins ]
 
-=for comment [INSERT EXERCISES]
+=for comment [ INSERT EXERCISES ]
 
 X<br>
 
 
 =head1 CHAPTER 3: LISTS & ARRAYS
 
-=for comment [INSERT CHAPTER]
+=for comment [ INSERT CHAPTER ]
+
+=head3 Section 3.x.x: SSE Operators
+
+    OP08_MATH_ADD_SUB         = /(sse_add|sse_sub)/    # precedence 08 infix: SSE add 'sse_add', SSE subtract 'sse_sub'
+    OP07_MATH_MULT_DIV_MOD    = /(sse_mul|sse_div)/  # precedence 07 infix: SSE multiply 'sse_mul', SSE divide 'sse_div'
 
 X<br>
 
 
 =head1 CHAPTER 4: SUBROUTINES
 
-=for comment [INSERT CHAPTER]
+=for comment [ INSERT CHAPTER ]
 
 X<br>
 
 
 =head1 CHAPTER 5: INPUT & OUTPUT
 
-=for comment [INSERT CHAPTER]
+=for comment [ INSERT CHAPTER ]
 
 X<br>
 
 
 =head1 CHAPTER 6: HASHES
 
-=for comment [INSERT CHAPTER]
+=for comment [ INSERT CHAPTER ]
 
 X<br>
 
 
 =head1 CHAPTER 7: REGULAR EXPRESSIONS
 
-=for comment [INSERT CHAPTER]
+=for comment [ INSERT CHAPTER ]
 
 X<br>
 
 
 =head1 CHAPTER 8: REGULAR EXPRESSIONS MATCHING
 
-=for comment [INSERT CHAPTER]
+=for comment [ INSERT CHAPTER ]
 
 X<br>
 
 
 =head1 CHAPTER 9: REGULAR EXPRESSIONS PROCESSING
 
-=for comment [INSERT CHAPTER]
+=for comment [ INSERT CHAPTER ]
 
 X<br>
 
 
 =head1 CHAPTER 10: CONTROL STRUCTURES
 
-=for comment [INSERT CHAPTER]
+=for comment [ INSERT CHAPTER ]
 
 X<br>
 
 
 =head1 CHAPTER 11: CLASSES, PACKAGES, MODULES, LIBRARIES
 
-=for comment [INSERT CHAPTER]
+=for comment [ INSERT CHAPTER ]
 
 X<br>
 
 
 =head1 CHAPTER 12: FILE TESTS
 
-=for comment [INSERT CHAPTER]
+=for comment [ INSERT CHAPTER ]
+
+=head3 Section 12.x.x: File Test Operators
+
+    %token OP10_NAMED_UNARY_SCOLON   = /(-A;|-B;|-C;|-M;|-O;|-R;|-S;|-T;|-W;|-X;|-b;|-c;|-d;|-e;|-f;|-g;|-k;|-l;|-o;|-p;|-r;|-s;|-t;|-u;|-w;|-x;|-z;)/
 
 X<br>
 
 
 =head1 CHAPTER 13: DIRECTORY OPERATIONS
 
-=for comment [INSERT CHAPTER]
+=for comment [ INSERT CHAPTER ]
 
 X<br>
 
 
 =head1 CHAPTER 14: STRINGS & SORTING
 
-=for comment [INSERT CHAPTER]
+=for comment [ INSERT CHAPTER ]
 
 X<br>
 
 
 =head1 CHAPTER 15: SMART MATCHING & GIVEN-WHEN
 
-=for comment [INSERT CHAPTER]
+=for comment [ INSERT CHAPTER ]
 
 X<br>
 
 
 =head1 CHAPTER 16: PROCESS MANAGEMENT
 
-=for comment [INSERT CHAPTER]
+=for comment [ INSERT CHAPTER ]
 
 X<br>
 
 
 =head1 CHAPTER 17: SOME ADVANCED TECHNIQUES
 
-=for comment [INSERT CHAPTER]
+=for comment [ INSERT CHAPTER ]
+
+=head3 Section 17.x.x: UNSORTED Operators
+
+    %token OP10_NAMED_UNARY_SCOLON   = /(alarm;|caller;|chdir;|chroot;|defined;|delete;|do;|eval;|exists;|gethostbyname;|getnetbyname;|getpgrp;|getprotobyname;|glob;
+    |gmtime;|goto;|hex;|int;|lc;|lcfirst;|length;|localtime;|lock;|log;|lstat;|oct;|ord;|quotemeta;|rand;|readlink;|ref;|require;|rmdir;|scalar;|sleep;|srand;|stat;
+    |uc;|ucfirst;|umask;)/
+    %token OP01_NAMED_SCOLON         = /(accept;|bind;|binmode;|bless;|break;|chmod;|chomp;|chop;|chown;|chr;|closedir;|cmp;|connect;|continue;|crypt;|dbmclose;
+    |dbmopen;|default;|dump;|each;|endgrent;|endhostent;|endnetent;|endprotoent;|endpwent;|endservent;|eof;|evalbytes;|exec;|exp;|fc;|fcntl;|fileno;|flock;|fork;
+    |format;|formline;|getc;|getgrent;|getgrgid;|getgrnam;|gethostbyaddr;|gethostent;|getlogin;|getnetbyaddr;|getnetent;|getpeername;|getppid;|getpriority;
+    |getprotobynumber;|getprotoent;|getpwent;|getpwnam;|getpwuid;|getservbyname;|getservbyport;|getservent;|getsockname;|getsockopt;|given;|grep;|index;|ioctl;|join;
+    |keys;|kill;|link;|listen;|local;|m;|map;|mkdir;|msgctl;|msgget;|msgrcv;|msgsnd;|opendir;|pack;|pipe;|pop;|pos;|prototype;|push;|q;|qq;|qr;|qx;|read;|readdir;
+    |readline;|readpipe;|recv;|rename;|reset;|reverse;|rewinddir;|rindex;|s;|say;|seek;|seekdir;|select;|semctl;|semget;|semop;|send;|setgrent;|sethostent;|setnetent;
+    |setpgrp;|setpriority;|setprotoent;|setpwent;|setservent;|setsockopt;|shift;|shmctl;|shmget;|shmread;|shmwrite;|shutdown;|socket;|socketpair;|sort;|splice;|split;
+    |sprintf;|state;|study;|substr;|symlink;|syscall;|sysopen;|sysread;|sysseek;|system;|syswrite;|tell;|telldir;|tie;|tied;|time;|times;|tr;|truncate;|unless;|unlink;
+    |unpack;|unshift;|untie;|until;|utime;|values;|vec;|wait;|waitpid;|wantarray;|warn;|when;|write;|y;)/
 
 X<br>
 

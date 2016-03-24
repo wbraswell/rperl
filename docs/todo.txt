@@ -1,3 +1,5 @@
+asm.js and/or webassembly backend
+
 Learning RPerl
     L<> hyperlinks broken or missing in some outputs?
     <noncode> fix
