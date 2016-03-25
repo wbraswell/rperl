@@ -1,3 +1,7 @@
+change "hard work" to "diligence" in LMPC
+
+remove 'undef' from all possible locations in grammar for C++ compatibility
+
 asm.js and/or webassembly backend
 
 Learning RPerl

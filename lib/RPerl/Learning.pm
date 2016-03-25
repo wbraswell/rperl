@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.045_000;
+our $VERSION = 0.046_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -745,7 +745,7 @@ Other than the shebang and critics, all lines beginning with C<#> are comments a
 
 The I<"shebang"> section is required, always contains exactly 1 line, and is short for I<"hash bang">; referring to the two leading characters C<#!> of this line.  The I<"octothorpe"> character C<#> (tic-tac-toe symbol) is called a I<"pound sign"> when used on a telephone, and is called a I<"hash"> (or more recently and less accurately I<"hash tag">) when used on a computer.  The exclamation point character C<!> is called a I<"bang"> when used on a computer.  When appearing together as the first two characters in a plain text file, the hash and bang characters tell the operating system to run the immediately-following command (in this case the Perl interpreter located at F</usr/bin/perl>) and pass the remaining contents of the text file as input to the command.  In other words, if the first line of a plain text file is C<#!/usr/bin/perl>, then that file is a Perl program.
 
-The I<"header"> section is required and always contains 4 lines for an RPerl I<"program"> file ending in F<.pl>, or 5 lines for an RPerl I<"module"> ending in F<.pm> (covered later in Chapter 11).  C<use> is recognized by Perl as a special I<"keyword"> (AKA I<"builtin operator">) which has 2 primary purposes: to load additional RPerl modules, and to enable RPerl I<"pragma"> system configuration modes.  The C<use RPerl;> line is dual-purpose, it both loads the F<RPerl.pm> module and enables the special RPerl low-magic pragma.  The C<use strict;> and C<use warnings;> lines enable basic Perl pragmas which require decent programming practices by the human programmers.  The C<our $VERSION = 0.001_000;> line sets the version number of this RPerl program.
+The I<"header"> section is required and always contains 4 lines for an RPerl I<"program"> file ending in F<.pl>, or 5 lines for an RPerl I<"module"> ending in F<.pm> (covered later in Chapter 11).  C<use> is recognized by Perl as a special I<"keyword"> (AKA I<"built-in operator">) which has 2 primary purposes: to load additional RPerl modules, and to enable RPerl I<"pragma"> system configuration modes.  The C<use RPerl;> line is dual-purpose, it both loads the F<RPerl.pm> module and enables the special RPerl low-magic pragma.  The C<use strict;> and C<use warnings;> lines enable basic Perl pragmas which require decent programming practices by the human programmers.  The C<our $VERSION = 0.001_000;> line sets the version number of this RPerl program.
 
 The I<"critics"> section is included as necessary and may contain 1 or more lines beginning with C<## no critic>, which disable the errors caused by the over-restrictive nature of some Perl::Critic policies.  There are currently 6 critics commands enabled for normal RPerl users, the first 2 of which are given in this example.  The C<USER DEFAULT 1> critics command allows the use of numeric values such as C<21> and C<12>, as well as the common C<print> command.  The C<USER DEFAULT 2> critics command allows the printing of C<'have $foo = '>, where a single-quoted C<'> string literal value contains the the C<$> dollar sigil (covered later in Chapter 2).
 
@@ -864,17 +864,429 @@ L<http://shop.oreilly.com/product/9780596001735.do>
 
 L<http://search.cpan.org/~thaljef/Perl-Critic/lib/Perl/Critic/PolicySummary.pod>
 
-=head3 Section 1.25.5: The Book Of RPerl
+=head3 Section 1.25.5: Perlism & The Book Of RPerl
 
 I<Perlism> is the computer religion dedicated to the use, promotion, and development of the Perl family of programming languages.  (Not to be confused with a spiritual religion such as Christianity, a computer religion such as Perlism is an independent and complementary belief structure.)
 
 =for text A I<Perlite> is an adherent to the Perlism religion.  Perlism has a revered founder, Saint Larry (himself a devout Christian); a prophet, I<The Voice In The Wilderness> (Will); a monastary and shrine, I<Perl Monks>; commandments, The LMPC; proverbs from Saint Larry including I<TIMTOWTDI>, I<LMFB>, and I<HTAAOF>; and canonical scriptures, including Saint Larry's B<Apocalypses> and The Voice's B<The Book Of RPerl>.
 
-=for html <p>A I<Perlite> is an adherent to the Perlism religion.  Perlism has a revered founder, Saint Larry (himself a devout Christian); a prophet, I<The Voice In The Wilderness> (Will); a monastary and shrine, I<Perl Monks>; commandments, The LMPC; proverbs from Saint Larry including I<TIMTOWTDI>, I<LMFB>, and I<HTAAOF>; and canonical scriptures, including Saint Larry's <u><b>Apocalypses</b></u> and The Voice's <u><b>The Book Of RPerl</b></u>.</p>
+=for html <p>A <i>Perlite</i> is an adherent to the Perlism religion.  Perlism has a revered founder, Saint Larry (himself a devout Christian); a prophet, <i>The Voice In The Wilderness</i> (Will); a monastary and shrine, <i>Perl Monks</i>; commandments, The LMPC; proverbs from Saint Larry including <i>TIMTOWTDI</i>, <i>LMFB</i>, and <i>HTAAOF</i>; and canonical scriptures, including Saint Larry's <u><b>Apocalypses</b></u> and The Voice's <u><b>The Book Of RPerl</b></u>.</p>
+
+=for comment [ INSERT SGML, MAN, OTHER FORMATS ]
 
 The Book is a description of events surrounding the creation of RPerl and the future of the Internet.  It is intended to both educate and entertain.
 
 L<http://rperl.org/the_book_of_rperl.html>
+
+=head3 Section 1.25.6: Fun With Proverbs & Catch Phrases & Acronyms
+
+St. Larry has given us short and powerful proverbs, some of which are meant to have a purposefully tongue-in-cheek or sarcastic interpretation.
+
+Will has provided a corollary to each of St. Larry's official proverbs.
+
+=begin text
+
+my $z = q{<<< BEGIN TEXT EVAL >>>};
+
+use Text::ASCIITable;
+
+my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
+
+$table->setCols(splice [split /\s*\n\s*/, q{
+
+=end text
+
+=begin man
+
+.TS
+allbox tab(@) ;
+c c 
+l l .
+
+=end man
+
+=for html <table class="rperl operators">
+
+=begin docbook
+
+<table id="learning_rperl-section_1.25.6-table_1" label="" frame="all" colsep="1" rowsep="1">
+<title>Proverbs & Acronyms</title>
+<tgroup cols="2">
+
+=end docbook
+
+=for man T{
+
+=for html <tr><th>
+
+=for docbook <thead>
+
+=for docbook <row><entry align="center">
+
+B<St. Larry's Original Proverb>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Will's Corollary Proverb>
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+3 Great Virtues Of A Programmer:
+
+LIH (Laziness, Impatience, Hubris)
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+3 Greater Virtues Of A Programmer:
+
+DPH (Diligence, Patience, Humility)
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+TIMTOWTDI (There Is More Than One Way To Do It)
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+TDNNTBMTOWTDI (There Does Not Need To Be More Than One Way To Do It)
+
+TIOFWTDI (There Is One Fastest Way To Do It)
+
+=for text }], 1);
+
+=for man T}
+
+=for html </th></tr>
+
+=for docbook </entry></row>
+
+=for docbook </thead>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <tbody>
+
+=for docbook <row><entry align="left">
+
+LMFB (Let Many Flowers Bloom)
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+PTBF (Pick The Best Flowers)
+
+=for text }], 1);
+
+=for man T}
+
+=for html </th></tr>
+
+=for docbook </entry></row>
+
+=for docbook </thead>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <tbody>
+
+=for docbook <row><entry align="left">
+
+HTAAOF (Have The Appropriate Amount Of Fun)
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+DTAAOW (Do The Appropriate Amount Of Work)
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=begin text
+
+return $table->draw( ['.=','=.','=','='],   # .=============.
+
+                     ['|','|','|'],         # | info | info |
+ 
+                     ['|-','-|','=','='],   # |-===========-|
+
+                     ['|','|','|'],         # | info | info |
+
+                     ["'=","='",'=','='],   # '============='
+
+                     ['|-','-|','-','+']    # rowseperator
+
+                    );
+
+$z = q{<<< END TEXT EVAL >>>};
+
+=end text
+
+=for man .TE
+
+=for html </table>
+
+=for docbook </tbody></tgroup></table>
+
+In addition to St. Larry's official proverbs, there are a number of other commonly-used catch phrases and ideas in the Perl community.
+
+=begin text
+
+my $z = q{<<< BEGIN TEXT EVAL >>>};
+
+use Text::ASCIITable;
+
+my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
+
+$table->setCols(splice [split /\s*\n\s*/, q{
+
+=end text
+
+=begin man
+
+.TS
+allbox tab(@) ;
+c c 
+l l .
+
+=end man
+
+=for html <table class="rperl operators">
+
+=begin docbook
+
+<table id="learning_rperl-section_1.25.6-table_2" label="" frame="all" colsep="1" rowsep="1">
+<title>Catch Phrases & Acronyms</title>
+<tgroup cols="2">
+
+=end docbook
+
+=for man T{
+
+=for html <tr><th>
+
+=for docbook <thead>
+
+=for docbook <row><entry align="center">
+
+B<Original Catch Phrase>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Will's Corollary Catch Phrase>
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Perl 5 Is The Camel
+
+Perl 5 Is The Raptor
+
+Perl 6 Is The Butterfly
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+RPerl Is The Roadrunner
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Perl Is The Onion
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+RPerl Is The Scallion
+
+=for text }], 1);
+
+=for man T}
+
+=for html </th></tr>
+
+=for docbook </entry></row>
+
+=for docbook </thead>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <tbody>
+
+=for docbook <row><entry align="left">
+
+Perl Is The Swiss Army Chainsaw
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+RPerl Is The Sword
+
+=for text }], 1);
+
+=for man T}
+
+=for html </th></tr>
+
+=for docbook </entry></row>
+
+=for docbook </thead>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <tbody>
+
+=for docbook <row><entry align="left">
+
+Perl Is Line-Noise
+
+Perl Is A Write-Only Language
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+RPerl Is Best Practices
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=begin text
+
+return $table->draw( ['.=','=.','=','='],   # .=============.
+
+                     ['|','|','|'],         # | info | info |
+ 
+                     ['|-','-|','=','='],   # |-===========-|
+
+                     ['|','|','|'],         # | info | info |
+
+                     ["'=","='",'=','='],   # '============='
+
+                     ['|-','-|','-','+']    # rowseperator
+
+                    );
+
+$z = q{<<< END TEXT EVAL >>>};
+
+=end text
+
+=for man .TE
+
+=for html </table>
+
+=for docbook </tbody></tgroup></table>
 
 =head2 Section 1.26: Exercises
 
@@ -1033,7 +1445,7 @@ S< >S< >S< >S< >a floating-point decimal number value, either negative, 0, or po
 
 =back
 
-Perl 5 provides several builtin operators designed for use with numeric data, which can be organized into 5 general categories:
+Perl 5 provides several built-in operators designed for use with numeric data, which can be organized into 6 general categories:
 
 =over
 
@@ -1047,13 +1459,15 @@ Perl 5 provides several builtin operators designed for use with numeric data, wh
 
 =item * Bitwise
 
+=item * Miscellaneous
+
 =back
 
 Each operator in Perl 5 (and thus RPerl) is assigned 4 important characteristics: I<"arity"> (a number), I<"fixity"> (a placement location), I<"precedence"> (a number) and I<"associativity"> (a chirality or "handedness").  Operators of unary arity accept exactly 1 input operand, binary operators accept exactly 2 operands, etc.  Prefix operators appear before their respective operands, postfix appear after, infix appear between, and closed operators appear both before and after their operands.  Operators with a lower numeric precedence are executed before operators with a higher precedence; in the absence of parentheses, multiplication executes before addition because multiplication has a lower precedence number.  Operators with equal precedence number are grouped by (and executed in order of) associativity; in the absence of parentheses, multiple subtraction operators will execute from left to right because subtraction is left-associative, whereas multiple exponent operators will execute from right to left because exponentiation is right-associative.  For more information, see the Appendix:
 
 L<B.3: Syntax Arity, Fixity, Precedence, Associativity|"B.3: Syntax Arity, Fixity, Precedence, Associativity">
 
-Beyond the builtin math operators in Perl 5, more advanced operators and functions are available via the MathPerl software suite, which is (perhaps unsurprisingly) optimized using the RPerl compiler.
+Beyond the built-in math operators in Perl 5, more advanced operators and functions are available via the MathPerl software suite, which is (perhaps unsurprisingly) optimized using the RPerl compiler.
 
 L<MathPerl on CPAN|https://metacpan.org/release/MathPerl>
 
@@ -1237,7 +1651,7 @@ l l l l r l l .
 
 =begin docbook
 
-<table id="learning_rperl-section_2.1.9.1-table_1" label="" frame="all" colsep="1" rowsep="1">
+<table id="learning_rperl-section_2.1.9-table_1" label="" frame="all" colsep="1" rowsep="1">
 <title>Arithmetic Operators</title>
 <tgroup cols="6">
 
@@ -1849,6 +2263,72 @@ Yes
 
 =for docbook <row><entry align="left">
 
+Logarithm
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+log
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+10
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Not Yet
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
 Square Root
 
 =for man T}@T{
@@ -2028,7 +2508,7 @@ l l l l r l l .
 
 =begin docbook
 
-<table id="learning_rperl-section_2.1.9.2-table_1" label="" frame="all" colsep="1" rowsep="1">
+<table id="learning_rperl-section_2.1.10-table_1" label="" frame="all" colsep="1" rowsep="1">
 <title>Trigonometry Operators</title>
 <tgroup cols="6">
 
@@ -2355,7 +2835,7 @@ l l l l r l l .
 
 =begin docbook
 
-<table id="learning_rperl-section_2.1.9.3-table_1" label="" frame="all" colsep="1" rowsep="1">
+<table id="learning_rperl-section_2.1.11-table_1" label="" frame="all" colsep="1" rowsep="1">
 <title>Comparison Operators</title>
 <tgroup cols="6">
 
@@ -2880,7 +3360,7 @@ l l l l r l l .
 
 =begin docbook
 
-<table id="learning_rperl-section_2.1.9.4-table_1" label="" frame="all" colsep="1" rowsep="1">
+<table id="learning_rperl-section_2.1.12-table_1" label="" frame="all" colsep="1" rowsep="1">
 <title>Logic Operators</title>
 <tgroup cols="6">
 
@@ -3487,7 +3967,7 @@ l l l l r l l .
 
 =begin docbook
 
-<table id="learning_rperl-section_2.1.9.5-table_1" label="" frame="all" colsep="1" rowsep="1">
+<table id="learning_rperl-section_2.1.13-table_1" label="" frame="all" colsep="1" rowsep="1">
 <title>Bitwise Operators</title>
 <tgroup cols="6">
 
@@ -3919,6 +4399,333 @@ $z = q{<<< END TEXT EVAL >>>};
 
 =for docbook </tbody></tgroup></table>
 
+=head3 Section 2.1.14: Miscellaneous Operators
+
+=begin text
+
+my $z = q{<<< BEGIN TEXT EVAL >>>};
+
+use Text::ASCIITable;
+
+my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
+
+$table->setCols(splice [split /\s*\n\s*/, q{
+
+=end text
+
+=begin man
+
+.TS
+allbox tab(@) ;
+c c c c c c c
+l l l l r l l .
+
+=end man
+
+=for html <table class="rperl operators">
+
+=begin docbook
+
+<table id="learning_rperl-section_2.1.14-table_1" label="" frame="all" colsep="1" rowsep="1">
+<title>Miscellaneous Operators</title>
+<tgroup cols="6">
+
+=end docbook
+
+=for man T{
+
+=for html <tr><th>
+
+=for docbook <thead>
+
+=for docbook <row><entry align="center">
+
+B<Name>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Symbol>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Arity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Fixity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Precedence>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Associativity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Supported>
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Integer Part
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+int
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+10
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Not Yet
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Random Number
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+rand
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Nullary or Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+10
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Not Yet
+
+=for text }], 1);
+
+=for man T}
+
+=for html </th></tr>
+
+=for docbook </entry></row>
+
+=for docbook </thead>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <tbody>
+
+=for docbook <row><entry align="left">
+
+Random Seed
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+srand
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Nullary or Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+10
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Not Yet
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=begin text
+
+return $table->draw( ['.=','=.','=','='],   # .=============.
+
+                     ['|','|','|'],         # | info | info |
+ 
+                     ['|-','-|','=','='],   # |-===========-|
+
+                     ['|','|','|'],         # | info | info |
+
+                     ["'=","='",'=','='],   # '============='
+
+                     ['|-','-|','-','+']    # rowseperator
+
+                    );
+
+$z = q{<<< END TEXT EVAL >>>};
+
+=end text
+
+=for man .TE
+
+=for html </table>
+
+=for docbook </tbody></tgroup></table>
+
 =head2 Section 2.2: Strings (Text Data & Operators)
 
 RPerl provides 2 text data types:
@@ -3944,6 +4751,26 @@ RPerl provides 3 delimiters for enclosing text data:
 =item * C<"double quotes">
 
 =item * C<q{q quotes}>
+
+=back
+
+Perl 5 provides several built-in operators designed for use with text data, which can be organized into 7 general categories:
+
+=over
+
+=item * Editing
+
+=item * Case
+
+=item * Comparison
+
+=item * Search
+
+=item * Formatting
+
+=item * Base
+
+=item * Miscellaneous
 
 =back
 
@@ -4097,7 +4924,7 @@ I<BEST PRACTICES>
 
 =item * I<Use double-quoted string literals to contain newline and tab characters only, not other normal characters.>
 
-=item * I<To represent a mixture of normal characters with newline and/or tab characters, enclose the normal characters in single quotes, enclose the newline and tab characters in double quotes, and use the C<.> dot "string concatenation" operator to append one string literal to the other.  (Please see L</Section 2.2.6: String Operators> for more info about string concatenation.)>
+=item * I<To represent a mixture of normal characters with newline and/or tab characters, enclose the normal characters in single quotes, enclose the newline and tab characters in double quotes, and use the C<.> dot "string concatenation" operator to append one string literal to the other.  (Please see L</Section 2.2.6: Editing Operators> for more info about string concatenation.)>
 
 =back
 
@@ -4106,6 +4933,8 @@ I<BEST PRACTICES>
 =head3 Section 2.2.5: q Quotes
 
 Text literals enclosed in C<q{}> I<"q quotes"> begin with the lowercase q followed by C<{> left curly brace characters, and end with the C<}> right curly brace character.  You must use q quotes to represent C<q{}> empty text literals containing no characters.
+
+Normal Perl support q-quoted string literals using delimiters other than curly braces, as well as I<"qq quotes"> which provide string interpolation in the same way as double-quoted strings.  RPerl's existing string quoting mechanisms cover all use cases, so RPerl does not support the additional qq quotes or non-curly-brace q quotes, because TDNNTBMTOWTDI.
 
 [ INSERT BACKSLASHES, QUOTES ]
 
@@ -4143,21 +4972,51 @@ q-quoted text literals may contain:
 
 =for comment [ INSERT BEST PRACTICES ]
 
-=head3 Section 2.2.6: String Operators
+=head3 Section 2.2.6: Editing Operators
 
-    # NEED ADD OTHER STRING OPS: cat, repeat, substr, etc
+    %token OP01_NAMED_SCOLON         = /(substr;)/
+    %token OP07_STRING_REPEAT        = /(x)\s/                       # precedence 07 infix: string repetition 'x'
+    %token OP08_STRING_CAT           = /(\.)/                        # precedence 08 infix: string concatenate '.'
+    %token OP10_NAMED_UNARY_SCOLON   = /(length;)/
+
+=head3 Section 2.2.7: Case Operators
+
+    %token OP01_NAMED_SCOLON         = /(fc;)/
+    %token OP10_NAMED_UNARY_SCOLON   = /(lc;|lcfirst;|uc;|ucfirst;)/
+
+=head3 Section 2.2.8: Comparison Operators
+
+    %token OP01_NAMED_SCOLON         = /(cmp;)/
     %token OP11_COMPARE_LT_GT        = /(le|ge|lt|gt)\s/   # precedence 11 infix: string comparison less or equal 'le', greater or equal 'ge', less than 'lt', greater than 'gt'
     %token OP12_COMPARE_EQ_NE        = /(eq|ne)\s/             # precedence 12 infix: comparison string equal 'eq', string not equal 'ne'
 
+=head3 Section 2.2.9: Search Operators
+
+    %token OP01_NAMED_SCOLON         = /(index;|rindex;)/
+
+=head3 Section 2.2.10: Formatting Operators
+
+    %token OP01_NAMED_SCOLON         = /(sprintf;)/
+    %token OP10_NAMED_UNARY_SCOLON   = /(quotemeta;)/
+
+=head3 Section 2.2.11: Base Conversion Operators
+
+    %token OP01_NAMED_SCOLON         = /(chr;)/
+    %token OP10_NAMED_UNARY_SCOLON   = /(hex;|oct;|ord;)/
+
+=head3 Section 2.2.12: Miscellaneous Operators
+
+    %token OP01_NAMED_SCOLON         = /(crypt;)/
+
 =begin text
 
-=head2 Section 2.3: PerlE<39>s Built-in Warnings
+=head2 Section 2.3: RPerlE<39>s Built-In Warnings & Errors
 
 =end text
 
 =begin man
 
-=head2 Section 2.3: PerlE<39>s Built-in Warnings
+=head2 Section 2.3: RPerlE<39>s Built-In Warnings & Errors
 
 =end man
 
@@ -4165,7 +5024,7 @@ q-quoted text literals may contain:
 
 =for DEV NOTE: ppod2html does not support E<39> or E<apos>, replaced w/ E<acute>
 
-=head2 Section 2.3: PerlE<acute>s Built-in Warnings
+=head2 Section 2.3: RPerlE<acute>s Built-In Warnings & Errors
 
 =end html
 
@@ -4199,6 +5058,8 @@ On the other hand, RPerl I<requires> the use of data types for each and every va
 
     my number $foo = 23;
     $foo = 42;  # just fine in RPerl
+
+Normal Perl provides a special literal value C<undef>, along with a built-in function named C<defined> which is used to test if a variable contains the special C<undef> value.  RPerl does not support C<undef> or C<defined>, because C++ does not fully support the concept of undefined values, and RPerl's high-speed components are written using C++.
 
 Data types make your code much more readable and much, much faster.  Learn to love data types.  Now.
 
@@ -4689,6 +5550,10 @@ Add 1 to operand, then return incremented value
     # NEED ADD EXAMPLES
     ++$i  # 0
 
+=head3 Section 2.4.x: Chomp & Chop Operators
+
+=for comment [ INSERT CHOMP & CHOP ]
+
 =head2 Section 2.5: Constant Data
 
 =for comment [ INSERT CONSTANTS ]
@@ -4705,23 +5570,11 @@ Add 1 to operand, then return incremented value
 
 =for comment [ INSERT INPUT ]
 
-=head2 Section 2.9: The C<chomp> Operator
-
-=for comment [ INSERT CHOMP ]
-
 =head2 Section 2.10: The C<while> Control Structure
 
 =for comment [ INSERT WHILE ]
 
-=head2 Section 2.11: The C<undef> Value
-
-=for comment [ INSERT UNDEF ]
-
-=head2 Section 2.12: The C<defined> Function
-
-=for comment [ INSERT DEFINED ]
-
-=head2 Section 2.13: Exercises
+=head2 Section 2.x: Exercises
 
 =head3 1.  XXXYYYZZZ  [ XYZ mins ]
 
@@ -4843,18 +5696,28 @@ X<br>
 
 =head3 Section 17.x.x: UNSORTED Operators
 
-    %token OP10_NAMED_UNARY_SCOLON   = /(alarm;|caller;|chdir;|chroot;|defined;|delete;|do;|eval;|exists;|gethostbyname;|getnetbyname;|getpgrp;|getprotobyname;|glob;
-    |gmtime;|goto;|hex;|int;|lc;|lcfirst;|length;|localtime;|lock;|log;|lstat;|oct;|ord;|quotemeta;|rand;|readlink;|ref;|require;|rmdir;|scalar;|sleep;|srand;|stat;
-    |uc;|ucfirst;|umask;)/
-    %token OP01_NAMED_SCOLON         = /(accept;|bind;|binmode;|bless;|break;|chmod;|chomp;|chop;|chown;|chr;|closedir;|cmp;|connect;|continue;|crypt;|dbmclose;
-    |dbmopen;|default;|dump;|each;|endgrent;|endhostent;|endnetent;|endprotoent;|endpwent;|endservent;|eof;|evalbytes;|exec;|exp;|fc;|fcntl;|fileno;|flock;|fork;
-    |format;|formline;|getc;|getgrent;|getgrgid;|getgrnam;|gethostbyaddr;|gethostent;|getlogin;|getnetbyaddr;|getnetent;|getpeername;|getppid;|getpriority;
-    |getprotobynumber;|getprotoent;|getpwent;|getpwnam;|getpwuid;|getservbyname;|getservbyport;|getservent;|getsockname;|getsockopt;|given;|grep;|index;|ioctl;|join;
-    |keys;|kill;|link;|listen;|local;|m;|map;|mkdir;|msgctl;|msgget;|msgrcv;|msgsnd;|opendir;|pack;|pipe;|pop;|pos;|prototype;|push;|q;|qq;|qr;|qx;|read;|readdir;
-    |readline;|readpipe;|recv;|rename;|reset;|reverse;|rewinddir;|rindex;|s;|say;|seek;|seekdir;|select;|semctl;|semget;|semop;|send;|setgrent;|sethostent;|setnetent;
+# REGEX
+    %token OP01_NAMED_SCOLON         = /(m;|pos;|qr;|s;|study;|tr;|y;
+
+# FORMAT
+    %token OP01_NAMED_SCOLON         = /(format;|formline;|write;
+
+# PACK / UNPACK
+    %token OP01_NAMED_SCOLON         = /(pack;|unpack;|vec;|
+
+# UNSORTED
+    %token OP01_NAMED_SCOLON         = /(accept;|bind;|binmode;|bless;|break;|chmod;|chomp;|chop;|chown;|closedir;|connect;|continue;|dbmclose;
+    |dbmopen;|default;|dump;|each;|endgrent;|endhostent;|endnetent;|endprotoent;|endpwent;|endservent;|eof;|evalbytes;|exec;|exp;|fcntl;|fileno;|flock;|fork;
+    |getc;|getgrent;|getgrgid;|getgrnam;|gethostbyaddr;|gethostent;|getlogin;|getnetbyaddr;|getnetent;|getpeername;|getppid;|getpriority;
+    |getprotobynumber;|getprotoent;|getpwent;|getpwnam;|getpwuid;|getservbyname;|getservbyport;|getservent;|getsockname;|getsockopt;|given;|grep;|ioctl;|join;
+    |keys;|kill;|link;|listen;|local;|map;|mkdir;|msgctl;|msgget;|msgrcv;|msgsnd;|opendir;|pipe;|pop;|prototype;|push;|qx;|read;|readdir;
+    |readline;|readpipe;|recv;|rename;|reset;|reverse;|rewinddir;|say;|seek;|seekdir;|select;|semctl;|semget;|semop;|send;|setgrent;|sethostent;|setnetent;
     |setpgrp;|setpriority;|setprotoent;|setpwent;|setservent;|setsockopt;|shift;|shmctl;|shmget;|shmread;|shmwrite;|shutdown;|socket;|socketpair;|sort;|splice;|split;
-    |sprintf;|state;|study;|substr;|symlink;|syscall;|sysopen;|sysread;|sysseek;|system;|syswrite;|tell;|telldir;|tie;|tied;|time;|times;|tr;|truncate;|unless;|unlink;
-    |unpack;|unshift;|untie;|until;|utime;|values;|vec;|wait;|waitpid;|wantarray;|warn;|when;|write;|y;)/
+    |state;|symlink;|syscall;|sysopen;|sysread;|sysseek;|system;|syswrite;|tell;|telldir;|tie;|tied;|time;|times;|truncate;|unless;|unlink;
+    |unshift;|untie;|until;|utime;|values;|vec;|wait;|waitpid;|wantarray;|warn;|when;)/
+
+    %token OP10_NAMED_UNARY_SCOLON   = /(alarm;|caller;|chdir;|chroot;|defined;|delete;|do;|eval;|exists;|gethostbyname;|getnetbyname;|getpgrp;|getprotobyname;|glob;
+    |gmtime;|goto;|localtime;|lock;|lstat;|readlink;|ref;|require;|rmdir;|scalar;|sleep;|stat;|umask;)/
 
 X<br>
 
@@ -6635,7 +7498,7 @@ For more information, please view the following links:
 
 Following is a list of all RPerl tokens in all 4 lexicon sections, along with examples of valid matching lexeme input.
 
-The list must be in correct order for all regexes to match; earlier declarations get tried first, thus highly-specific tokens such as RPerl keywords and builtin operators appear first, while the least-specific tokens such as user-defined words appear last.  This ordering can be considered I<"lexical matching">, and is distinct from operator precedence and associativity as covered in the next section.
+The list must be in correct order for all regexes to match; earlier declarations get tried first, thus highly-specific tokens such as RPerl keywords and built-in operators appear first, while the least-specific tokens such as user-defined words appear last.  This ordering can be considered I<"lexical matching">, and is distinct from operator precedence and associativity as covered in the next section.
 
 =head3 B.2.1: Whitespace
 
@@ -6892,7 +7755,7 @@ precedence 01 prefix void: C<print> or C<printf> to STDOUT, STDERR, or filehandl
 
 =item * OP01_NAMED_VOID_SCOLON
 
-precedence 01 prefix void: "terms and list operators (leftward)" [1] AKA builtins, no return value; C<croak;>, C<die;>, C<exit;>, C<return;>
+precedence 01 prefix void: "terms and list operators (leftward)" [1] AKA built-ins, no return value; C<croak;>, C<die;>, C<exit;>, C<return;>
 
 =item * OP01_NAMED_VOID_LPAREN
 
@@ -6916,8 +7779,8 @@ precedence 01 prefix: C<close> filehandle
 
 =item * OP01_NAMED_SCOLON
 
-precedence 01 prefix: "terms and list operators (leftward)" [1] AKA builtins; L<List Of All Operators in Perl 5 Source Code|http://perl5.git.perl.org/perl.git/blob/HEAD:/t/op/cproto.t> [2];
-without all-uppercase Perl system builtin keywords (C<__DATA__>, C<AUTOLOAD>, C<CHECK>, etc); named unary operators above (C<defined>, C<exists>, etc); and RPerl keywords (C<use>, C<our>, C<my>, C<package>, C<for>, etc);
+precedence 01 prefix: "terms and list operators (leftward)" [1] AKA built-ins; L<List Of All Operators in Perl 5 Source Code|http://perl5.git.perl.org/perl.git/blob/HEAD:/t/op/cproto.t> [2];
+without all-uppercase Perl system built-in keywords (C<__DATA__>, C<AUTOLOAD>, C<CHECK>, etc); named unary operators above (C<defined>, C<exists>, etc); and RPerl keywords (C<use>, C<our>, C<my>, C<package>, C<for>, etc);
 C<abs;>, C<accept;>, C<atan2;>, C<bind;>, C<binmode;>, C<bless;>, C<break;>, C<chmod;>, C<chomp;>, C<chop;>, C<chown;>, C<chr;>, C<closedir;>, C<cmp;>, C<connect;>, C<continue;>, C<crypt;>, C<dbmclose;>, C<dbmopen;>, C<default;>, C<dump;>, C<each;>, C<endgrent;>, C<endhostent;>, C<endnetent;>, C<endprotoent;>, C<endpwent;>, C<endservent;>, C<eof;>, C<evalbytes;>, C<exec;>, C<exp;>, C<fc;>, C<fcntl;>, C<fileno;>, C<flock;>, C<fork;>, C<format;>, C<formline;>, C<getc;>, C<getgrent;>, C<getgrgid;>, C<getgrnam;>, C<gethostbyaddr;>, C<gethostent;>, C<getlogin;>, C<getnetbyaddr;>, C<getnetent;>, C<getpeername;>, C<getppid;>, C<getpriority;>, C<getprotobynumber;>, C<getprotoent;>, C<getpwent;>, C<getpwnam;>, C<getpwuid;>, C<getservbyname;>, C<getservbyport;>, C<getservent;>, C<getsockname;>, C<getsockopt;>, C<given;>, C<grep;>, C<index;>, C<ioctl;>, C<join;>, C<keys;>, C<kill;>, C<link;>, C<listen;>, C<local;>, C<m;>, C<map;>, C<mkdir;>, C<msgctl;>, C<msgget;>, C<msgrcv;>, C<msgsnd;>, C<opendir;>, C<pack;>, C<pipe;>, C<pop;>, C<pos;>, C<prototype;>, C<push;>, C<q;>, C<qq;>, C<qr;>, C<qx;>, C<read;>, C<readdir;>, C<readline;>, C<readpipe;>, C<recv;>, C<rename;>, C<reset;>, C<reverse;>, C<rewinddir;>, C<rindex;>, C<s;>, C<say;>, C<seek;>, C<seekdir;>, C<select;>, C<semctl;>, C<semget;>, C<semop;>, C<send;>, C<setgrent;>, C<sethostent;>, C<setnetent;>, C<setpgrp;>, C<setpriority;>, C<setprotoent;>, C<setpwent;>, C<setservent;>, C<setsockopt;>, C<shift;>, C<shmctl;>, C<shmget;>, C<shmread;>, C<shmwrite;>, C<shutdown;>, C<socket;>, C<socketpair;>, C<sort;>, C<splice;>, C<split;>, C<sprintf;>, C<state;>, C<study;>, C<substr;>, C<symlink;>, C<syscall;>, C<sysopen;>, C<sysread;>, C<sysseek;>, C<system;>, C<syswrite;>, C<tell;>, C<telldir;>, C<tie;>, C<tied;>, C<time;>, C<times;>, C<tr;>, C<truncate;>, C<unless;>, C<unlink;>, C<unpack;>, C<unshift;>, C<untie;>, C<until;>, C<utime;>, C<values;>, C<vec;>, C<wait;>, C<waitpid;>, C<wantarray;>, C<warn;>, C<when;>, C<write;>, C<y;>
 
 =item * OP01_NAMED
@@ -6964,7 +7827,7 @@ single uppercase letter, or uppercase letter followed by uppercase letters, numb
 
 =head2 B.3: Syntax Arity, Fixity, Precedence, Associativity
 
-Operator I<"arity"> is a technical term which means the number of input operands accepted by a specific builtin operator, or the number of input arguments accepted by a user-defined function.  An operator or function which accepts 0 input arguments is known as I<"nullary">, 1 argument as I<"unary">, 2 arguments as I<"binary">, 3 arguments as I<"ternary">, and so forth.  The C<exit;> operator may be called as nullary; the C<++> increment operator is unary; the C<+> addition operator is binary; and the C<substr> operator may be called as ternary.  Not to be confused with "a ternary operator", meaning any operator which accepts 3 operands, there is one specific operator known as I<"the ternary operator">, which is a special kind of conditional operator accepting 3 input arguments.  An operator or function which may accept more than one number of arguments is known as I<"variadic">.  Some RPerl operators are variadic, such as C<substr> which may accept 2, 3, or 4 arguments.  RPerl does not currently support variadic user-defined functions.
+Operator I<"arity"> is a technical term which means the number of input operands accepted by a specific built-in operator, or the number of input arguments accepted by a user-defined function.  An operator or function which accepts 0 input arguments is known as I<"nullary">, 1 argument as I<"unary">, 2 arguments as I<"binary">, 3 arguments as I<"ternary">, and so forth.  The C<exit;> operator may be called as nullary; the C<++> increment operator is unary; the C<+> addition operator is binary; and the C<substr> operator may be called as ternary.  Not to be confused with "a ternary operator", meaning any operator which accepts 3 operands, there is one specific operator known as I<"the ternary operator">, which is a special kind of conditional operator accepting 3 input arguments.  An operator or function which may accept more than one number of arguments is known as I<"variadic">.  Some RPerl operators are variadic, such as C<substr> which may accept 2, 3, or 4 arguments.  RPerl does not currently support variadic user-defined functions.
 
 L<Operator Arity on Wikipedia|https://en.wikipedia.org/wiki/Arity>
 
@@ -7678,7 +8541,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
     my number $op_cos = cos 2;
 
     my integer_arrayref $frob = [];
-    my integer $frob_length = ( push @{$frob}, 21, 12, 23 ); # Operator, yes parentheses required for builtin w/ multiple arguments in non-void context
+    my integer $frob_length = ( push @{$frob}, 21, 12, 23 ); # Operator, yes parentheses required for built-in w/ multiple arguments in non-void context
     print 'have $frob_length = ', $frob_length, "\n";
     print 'have $frob = ', "\n", Dumper($frob), "\n";
 
@@ -8881,7 +9744,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
     # [[[ OPERATIONS ]]]
     my integer_arrayref $frob = [];
-    push @{$frob}, 21, 12, 23;    # OperatorVoid, no parentheses required for builtin w/ multiple arguments in void context
+    push @{$frob}, 21, 12, 23;    # OperatorVoid, no parentheses required for built-in w/ multiple arguments in void context
     print 'have $frob = ', "\n", Dumper($frob), "\n";
 
 =item * L<OperatorVoid01NamedVoidCroak|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/OperatorVoid01NamedVoidCroak>
