@@ -4,7 +4,12 @@ remove 'undef' from all possible locations in grammar for C++ compatibility
 
 asm.js and/or webassembly backend
 
+enable looks_like_number() in *OPS_*TYPES (AKA all modes)
+    use in string_to_NUMERIC*() (AKA all string conversion subroutines) to reject non-numeric characters with RPerl error instead of Perl error
+    http://perldoc.perl.org/perlapi.html#looks_like_number
+
 Learning RPerl
+    use unsigned_integer instead of integer in ex2.6 & 2.7, check all other exercises as well, change error checking accordingly
     croak or die in exercise solutions?
     L<> hyperlinks broken or missing in some outputs?
     <noncode> fix
@@ -17,7 +22,6 @@ Learning RPerl
 rename Operation::Expression::Operator::Math to Arithmetic
 
 Unsigned Integer Fix
-
 	full boolean support via Boolean.cpp/h, rperltypes.pm, SvBOKp(), etc.
 	char type-testing subroutines in Character.pm
 	full character support via Character.cpp/h, rperltypes.pm, SvCOKp(), etc.
@@ -86,7 +90,8 @@ tests
 	CONSTANT_CALL_SCOPED
 	*_to_*() data type conversion functions
 	text literals, backslash vs double-backslash
-	string_to_NUMERIC(), test that underscores are accepted in numbers, String.pm & String.cpp & GMPInteger.pm & GMPInteger.cpp
+	string_to_NUMERIC*() (AKA all string conversion subroutines), test that underscores are accepted in numbers & non-numerics are rejected, in the following files:
+	   String.pm, String.cpp, GMPInteger.pm, GMPInteger.cpp
 
 Eyapp unescaped left braces for Perl v5.22 compatibility
 Unescaped left brace in regex is deprecated, passed through in regex;

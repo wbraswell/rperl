@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.046_000;
+our $VERSION = 0.047_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -6276,7 +6276,7 @@ X</noncode>
 X<br>
 
 
-=head2 Chapter 2, Exercise 5
+=head2 Chapter 2, Exercise 6
 
 The goal of this exercise is to become familiar with the C<while> loop control structure.X<br>
 
@@ -6284,7 +6284,7 @@ In the C<OPERATIONS> section, C<E<lt>STDINE<gt>> is accessed to collect user inp
 
 The C<if ($n E<lt> 0)> conditional control structure calls C<die> to exit with an error message if C<$n> is not a positive value.X<br>
 
-Two additional integer variables are created: C<$sum> is initialized to 0 and will eventually hold the final answer value; and C<$i> is initialized to 0 for use as the iteration counter variable inside the following C<while> loop control structure.X<br>
+Two additional integer variables are created: C<$sum> is initialized to 0 and will eventually hold the final answer value; and C<$i> is initialized to 0 for use as the iteration counter variable (AKA I<"iterator">) inside the following C<while> loop control structure.X<br>
 
 The C<while> loop iteratively executes as long as the integer value of C<$i> is less-than-or-equal-to C<$n>.  Each iteration of the C<while> loop causes the value of C<$sum> to be increased by C<$i>, after which C<$i> itself is incremented by 1, and the loop is repeated.X<br>
 
@@ -6341,9 +6341,87 @@ X</noncode>
 X<br>
 
 
+=head2 Chapter 2, Exercise 7
+
+The goal of this exercise is to utilize an optimization to remove the C<while> loop from the previous exercise.X<br>
+
+In the C<OPERATIONS> section, user input is collected and error-checked, as before.X<br>
+
+By utilizing an algorithm attributed to Gauss, we are able to remove the C<while> loop, so we also remove the C<$i> loop iterator.  The C<$sum> variable is kept the same as the previous exercise.X<br>
+
+Two new integer variables are also created: C<$n_original> is initialized to hold a copy of C<$n> which will never change; and C<$n_odd> is initialized to 0.X<br>
+
+The code block beginning with C<if ($n % 2)> is used to detect if the user provided a value for C<$n> which is odd (not even), this is detected by utilizing the C<%> modulo operator to test for a remainder of dividing C<$n> by 2.  If C<$n> is odd, then a second copy of the original value of C<$n> is stored in C<$n_odd>, after which C<$n> itself is decremented by 1.  This C<if> statement allows our algorithm to accept odd as well as even user input values for C<$n>.X<br>
+
+The computational kernel (most important part) is the one line of arithmetic: C<$sum = (($n + 1) * ($n / 2)) + $n_odd;>X<br>
+
+It is said that as a child, Gauss was punished by his teacher by being told to mentally add together all the numbers from 1 to 100.  Young Gauss realized that 1 plus 100 is 101, and 2 plus 99 is also 101, as well as 3 plus 98 and so forth.  All the numbers may be paired to equal 101, and there are 50 such pairs, so the final answer is 101 multiplied by 50.  Thus, with a bit more thought Gauss was able to achieve the answer of 5,050 and perplex his teacher in the process.X<br>
+
+Our arithmetic generalizes the idea of young Gauss by using C<$n> instead of 100, and by adding C<$n_odd> to enable support for odd values of C<$n>.  Using Gauss' own example of C<$n> equal to 100, which is even (not odd) so C<$n_odd> will equal 0, we can see the algorithm becomes: C<$sum = ((100 + 1) * (100 / 2)) + 0;>X<br>
+
+One more step of arithmetic simplification shows our algorithm to be the same as Gauss': C<$sum = 101 * 50;>X<br>
+
+The last line calls C<print> using the value of C<$n_original>, because the value of C<$n> will have been decreased by 1 if C<$n> is odd.X<br>
+
+It is usually faster to run an algorithm without a loop than with a loop, because you are only doing 1 thing instead of many things.  However, not all problems can be easily optimized by changing to a new algorithm, because it may be prohibitively complex or there may only be 1 known algorithm.  In this case, Gauss' algorithm should be faster than the C<while> loop algorithm, expecially for very large values of C<$n>.  It may be possible to further optimize this exercise by utilizing bitwise operators to replace the modulo and division operators.X<br>
+
+
+    #!/usr/bin/perl
+
+    # Learning RPerl, Chapter 2, Exercise 7
+    # Calculate the sum of the first n integers, without using a loop; 1 + 2 + 3 + ... + n = ?
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
+
+    # [[[ OPERATIONS ]]]
+    print 'Please input a positive integer: ';
+    my string $n_string = <STDIN>;
+    my integer $n = string_to_integer($n_string);
+
+    if ($n < 0) { die 'ERROR: ' . to_string($n) . ' is not positive, dying' . "\n"; }
+
+    my integer $sum = 0;
+    my integer $n_original = $n;
+    my integer $n_odd = 0;
+
+    if ($n % 2) {
+        $n_odd = $n;
+        $n--;
+    }
+
+    $sum = (($n + 1) * ($n / 2)) + $n_odd;
+
+    print 'The sum of the first ' . to_string($n_original) . ' integers = ' . to_string($sum) . "\n";
+
+
+Example executions, input, and output:
+
+X<noncode>
+
+    $ rperl -t LearningRPerl/Chapter2/exercise_7-sum_of_first_n_integers_no_loop.pl 
+    Please input a positive integer: 100
+    The sum of the first 100 integers = 5_050
+
+    $ rperl -t LearningRPerl/Chapter2/exercise_7-sum_of_first_n_integers_no_loop.pl 
+    Please input a positive integer: -100
+    ERROR: -100 is not positive, dying
+
+X</noncode>
+
+X<br>
+
+
 =head2 Chapter 3, Exercise 1
 
-The goal of this exercise is to become familiar with C<while> and C<foreach> loops, arrays, and array operators.X<br>
+The goal of this exercise is to become familiar with the C<foreach> loop control structure, arrays, and array operators; and to become further familiarized with the C<while> loop.X<br>
 
 The first line in the C<OPERATIONS> section declares a new variable C<$input_strings> of type C<string_arrayref>, which is capable of storing 0 or more individual string values, and C<$input_strings> is then initialized to contain the empty set C<[]>.X<br>
 
