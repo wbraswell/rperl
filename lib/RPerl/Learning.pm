@@ -6276,6 +6276,71 @@ X</noncode>
 X<br>
 
 
+=head2 Chapter 2, Exercise 5
+
+The goal of this exercise is to become familiar with the C<while> loop control structure.X<br>
+
+In the C<OPERATIONS> section, C<E<lt>STDINE<gt>> is accessed to collect user input into the string variable C<$n_string>, then the data type conversion subroutine C<string_to_integer()> is called to create the corresponding integer variable C<$n>.X<br>
+
+The C<if ($n E<lt> 0)> conditional control structure calls C<die> to exit with an error message if C<$n> is not a positive value.X<br>
+
+Two additional integer variables are created: C<$sum> is initialized to 0 and will eventually hold the final answer value; and C<$i> is initialized to 0 for use as the iteration counter variable inside the following C<while> loop control structure.X<br>
+
+The C<while> loop iteratively executes as long as the integer value of C<$i> is less-than-or-equal-to C<$n>.  Each iteration of the C<while> loop causes the value of C<$sum> to be increased by C<$i>, after which C<$i> itself is incremented by 1, and the loop is repeated.X<br>
+
+The last line calls C<print>, the C<to_string()> conversion subroutine, and the C<.> (single dot) string concatenation operator to display the final answer.X<br>
+
+
+    #!/usr/bin/perl
+
+    # Learning RPerl, Chapter 2, Exercise 6
+    # Calculate the sum of the first n integers; 1 + 2 + 3 + ... + n = ?
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
+
+    # [[[ OPERATIONS ]]]
+    print 'Please input a positive integer: ';
+    my string $n_string = <STDIN>;
+    my integer $n = string_to_integer($n_string);
+
+    if ($n < 0) { die 'ERROR: ' . to_string($n) . ' is not positive, dying' . "\n"; }
+
+    my integer $sum = 0;
+    my integer $i = 1;
+
+    while ($i <= $n) {
+        $sum += $i;
+        $i++;
+    }
+
+    print 'The sum of the first ' . to_string($n) . ' integers = ' . to_string($sum) . "\n";
+
+
+Example executions, input, and output:
+
+X<noncode>
+
+    $ rperl -t LearningRPerl/Chapter2/exercise_6-sum_of_first_n_integers.pl 
+    Please input a positive integer: 100
+    The sum of the first 100 integers = 5_050
+
+    $ rperl -t LearningRPerl/Chapter2/exercise_6-sum_of_first_n_integers.pl 
+    Please input a positive integer: -100
+    ERROR: -100 is not positive, dying
+
+X</noncode>
+
+X<br>
+
+
 =head2 Chapter 3, Exercise 1
 
 The goal of this exercise is to become familiar with C<while> and C<foreach> loops, arrays, and array operators.X<br>

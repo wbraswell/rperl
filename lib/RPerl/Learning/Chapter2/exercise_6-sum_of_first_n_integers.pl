@@ -18,7 +18,7 @@ print 'Please input a positive integer: ';
 my string $n_string = <STDIN>;
 my integer $n = string_to_integer($n_string);
 
-if ($n < 0) { die to_string($n) . ' is not positive, dying' . "\n"; }
+if ($n < 0) { die 'ERROR: ' . to_string($n) . ' is not positive, dying' . "\n"; }
 
 my integer $sum = 0;
 my integer $i = 1;

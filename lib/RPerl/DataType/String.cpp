@@ -87,7 +87,7 @@ void string_substitute_global(SV* input_string, const string& find_string, const
 void string_substitute_global(string& input_string, const string& find_string, const string& replace_string) {
     size_t found_position = 0;
     while ((found_position = input_string.find(find_string, found_position)) != string::npos) {
-         input_string.replace_string(found_position, find_string.length(), replace_string);
+         input_string.replace(found_position, find_string.length(), replace_string);
          found_position += replace_string.length();
     }
 }

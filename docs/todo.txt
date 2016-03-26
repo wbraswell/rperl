@@ -5,6 +5,7 @@ remove 'undef' from all possible locations in grammar for C++ compatibility
 asm.js and/or webassembly backend
 
 Learning RPerl
+    croak or die in exercise solutions?
     L<> hyperlinks broken or missing in some outputs?
     <noncode> fix
     metacpan list newline fix, section 1.1
