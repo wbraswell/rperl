@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_h
-#define __CPP__INCLUDED__RPerl__DataType__String_h 0.006_000
+#define __CPP__INCLUDED__RPerl__DataType__String_h 0.007_000
 
 // [[[ TYPEDEFS ]]]
 # ifndef __CPP__INCLUDED__RPerl__DataType__String_h__typedefs
@@ -69,6 +69,13 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 string XS_unpack_string(SV* input_sv);
 void XS_pack_string(SV* output_sv, string input_string);
 //# endif
+
+// [[[ SEARCH & REPLACE ]]]
+# ifdef __PERL__TYPES
+void string_substitute_global(SV* input_string, const string& find_string, const string& replace_string);
+# elif defined __CPP__TYPES
+void string_substitute_global(string& input_string, const string& find_string, const string& replace_string);
+# endif
 
 // [[[ BOOLEANIFY ]]]
 # ifdef __PERL__TYPES

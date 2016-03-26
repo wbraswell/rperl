@@ -85,6 +85,7 @@ tests
 	CONSTANT_CALL_SCOPED
 	*_to_*() data type conversion functions
 	text literals, backslash vs double-backslash
+	string_to_NUMERIC(), test that underscores are accepted in numbers, String.pm & String.cpp & GMPInteger.pm & GMPInteger.cpp
 
 Eyapp unescaped left braces for Perl v5.22 compatibility
 Unescaped left brace in regex is deprecated, passed through in regex;
@@ -180,12 +181,10 @@ Book of RPerl
     next chapter
 
 Learning RPerl
-    preface
     foreword
     remaining exercises
     remaining chapter contents
-    tables
-    illustrations  http://perlmaven.com/how-to-add-images-to-cpan
+    illustrations: images & ASCII art
     covers
     publish
 

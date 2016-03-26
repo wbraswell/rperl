@@ -3,7 +3,7 @@ using std::cerr;
 using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__GMPInteger_cpp
-#define __CPP__INCLUDED__RPerl__DataType__GMPInteger_cpp 0.003_000
+#define __CPP__INCLUDED__RPerl__DataType__GMPInteger_cpp 0.003_100
 
 // [[[ INCLUDES ]]]
 #include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
@@ -433,6 +433,7 @@ SV* character_to_gmp_integer(SV* input_character) {
 SV* string_to_gmp_integer(SV* input_string) {
 //    string_CHECK(input_string);
     string_CHECKTRACE(input_string, "input_string", "string_to_gmp_integer()");
+    string_substitute_global(input_string, "_", "");  // remove underscores to allow them in input_string
     // NEED ADD CODE
 }
 
@@ -468,6 +469,7 @@ gmp_integer_retval character_to_gmp_integer(character input_character) {
 }
 
 gmp_integer_retval string_to_gmp_integer(string input_string) {
+    string_substitute_global(input_string, "_", "");  // remove underscores to allow them in input_string
     return (gmp_integer_retval) atoi(input_string.c_str());
 }
 

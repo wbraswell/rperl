@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_cpp
-#define __CPP__INCLUDED__RPerl__DataType__String_cpp 0.006_000
+#define __CPP__INCLUDED__RPerl__DataType__String_cpp 0.007_000
 
 // [[[ INCLUDES ]]]
 #include <RPerl/DataType/String.h>		// -> NULL (relies on native C type)
@@ -70,6 +70,30 @@ void XS_pack_string(SV* output_sv, string input_string) {
 
 //# endif
 
+// [[[ SEARCH & REPLACE ]]]
+// [[[ SEARCH & REPLACE ]]]
+// [[[ SEARCH & REPLACE ]]]
+
+# ifdef __PERL__TYPES
+
+void string_substitute_global(SV* input_string, const string& find_string, const string& replace_string) {
+//  string_CHECK(input_string);
+    string_CHECKTRACE(input_string, "input_string", "string_substitute_global()");
+    // NEED ADD CODE
+}
+
+# elif defined __CPP__TYPES
+
+void string_substitute_global(string& input_string, const string& find_string, const string& replace_string) {
+    size_t found_position = 0;
+    while ((found_position = input_string.find(find_string, found_position)) != string::npos) {
+         input_string.replace_string(found_position, find_string.length(), replace_string);
+         found_position += replace_string.length();
+    }
+}
+
+# endif
+
 // [[[ BOOLEANIFY ]]]
 // [[[ BOOLEANIFY ]]]
 // [[[ BOOLEANIFY ]]]
@@ -79,6 +103,7 @@ void XS_pack_string(SV* output_sv, string input_string) {
 SV* string_to_boolean(SV* input_string) {
 //  string_CHECK(input_string);
     string_CHECKTRACE(input_string, "input_string", "string_to_boolean()");
+    string_substitute_global(input_string, "_", "");  // remove underscores to allow them in input_string
     if (atoi(SvPV_nolen(input_string)) == 0) { return newSViv(0); }
     else { return newSViv(1); }
 }
@@ -86,6 +111,7 @@ SV* string_to_boolean(SV* input_string) {
 # elif defined __CPP__TYPES
 
 boolean string_to_boolean(string input_string) {
+    string_substitute_global(input_string, "_", "");  // remove underscores to allow them in input_string
     if (atoi(input_string.c_str()) == 0) { return 0; }
     else { return 1; }
 }
@@ -101,6 +127,7 @@ boolean string_to_boolean(string input_string) {
 SV* string_to_unsigned_integer(SV* input_string) {
 //  string_CHECK(input_string);
     string_CHECKTRACE(input_string, "input_string", "string_to_unsigned_integer()");
+    string_substitute_global(input_string, "_", "");  // remove underscores to allow them in input_string
     if (atoi(SvPV_nolen(input_string)) < 0) { return newSViv(atoi(SvPV_nolen(input_string)) * -1); }
     else { return newSViv(atoi(SvPV_nolen(input_string))); }
 }
@@ -108,6 +135,7 @@ SV* string_to_unsigned_integer(SV* input_string) {
 # elif defined __CPP__TYPES
 
 unsigned_integer string_to_unsigned_integer(string input_string) {
+    string_substitute_global(input_string, "_", "");  // remove underscores to allow them in input_string
     if (atoi(input_string.c_str()) < 0) { return (unsigned_integer) (atoi(input_string.c_str()) * -1); }
     else { return (unsigned_integer) atoi(input_string.c_str()); }
 }
@@ -123,12 +151,14 @@ unsigned_integer string_to_unsigned_integer(string input_string) {
 SV* string_to_integer(SV* input_string) {
 //  string_CHECK(input_string);
     string_CHECKTRACE(input_string, "input_string", "string_to_integer()");
+    string_substitute_global(input_string, "_", "");  // remove underscores to allow them in input_string
     return newSViv(atoi(SvPV_nolen(input_string)));
 }
 
 # elif defined __CPP__TYPES
 
 integer string_to_integer(string input_string) {
+    string_substitute_global(input_string, "_", "");  // remove underscores to allow them in input_string
     return (integer) atoi(input_string.c_str());
 }
 
@@ -143,12 +173,14 @@ integer string_to_integer(string input_string) {
 SV* string_to_number(SV* input_string) {
 //  string_CHECK(input_string);
     string_CHECKTRACE(input_string, "input_string", "string_to_number()");
+    string_substitute_global(input_string, "_", "");  // remove underscores to allow them in input_string
     return newSVnv(atof(SvPV_nolen(input_string)));
 }
 
 # elif defined __CPP__TYPES
 
 number string_to_number(string input_string) {
+    string_substitute_global(input_string, "_", "");  // remove underscores to allow them in input_string
     return (number) atof(input_string.c_str());
 }
 

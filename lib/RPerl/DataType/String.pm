@@ -3,7 +3,7 @@ package RPerl::DataType::String;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_200;
+our $VERSION = 0.006_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -79,6 +79,7 @@ sub string_to_boolean {
     (my string $input_string) = @_;
 #    string_CHECK($input_string);
     string_CHECKTRACE( $input_string, '$input_string', 'string_to_boolean()' );
+    $input_string =~ s/_//gxms;  # remove underscores to allow them in $input_string, fixes "Argument isn't numeric in multiplication (*)"
     if (($input_string * 1) == 0) { return 0; }
     else { return 1; }
 }
@@ -89,6 +90,7 @@ sub string_to_unsigned_integer {
     (my string $input_string) = @_;
 #    string_CHECK($input_string);
     string_CHECKTRACE( $input_string, '$input_string', 'string_to_unsigned_integer()' );
+    $input_string =~ s/_//gxms;  # remove underscores to allow them in $input_string, fixes "Argument isn't numeric in multiplication (*)"
     return (floor abs ($input_string * 1)) * 1;
 }
 
@@ -102,6 +104,7 @@ sub string_to_integer {
     # ERROR EIV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:
     # integer value expected but non-integer value found,
     # in variable input_sv from subroutine XS_unpack_integer(),
+    $input_string =~ s/_//gxms;  # remove underscores to allow them in $input_string, fixes "Argument isn't numeric in multiplication (*)"
 #    return floor ($input_string * 1);
     return (floor ($input_string * 1)) * 1;
 }
@@ -112,6 +115,7 @@ sub string_to_number {
     (my string $input_string) = @_;
 #    string_CHECK($input_string);
     string_CHECKTRACE( $input_string, '$input_string', 'string_to_number()' );
+    $input_string =~ s/_//gxms;  # remove underscores to allow them in $input_string, fixes "Argument isn't numeric in multiplication (*)"
     return $input_string * 1.0;
 }
 
