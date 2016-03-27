@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::OperatorVoid::Print;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_200;
+our $VERSION = 0.003_300;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement::OperatorVoid);
@@ -114,6 +114,15 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         else {
             $cpp_source_group->{CPP} .= 'cout << ';
         }
+
+# NEED UPGRADE: detect closing newline and change to endl; decide between comma VS dot in Perl input, and double-arrow VS plus in C++ output
+
+# DEV NOTE: always use endl instead of "\n" for cout, because Perl immediately flushes buffers on STDOUT newline characters
+# http://perl.plover.com/FAQs/Buffering.html
+# When a filehandle is attached to the terminal, as STDOUT is here, it is in line buffered mode by default.
+# A filehandle in line buffered mode has two special properties: It's flushed automatically whenever you print a newline character to it,
+# and it's flushed automatically whenever you read from the terminal.
+
         $cpp_source_subgroup = $list_elements->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
         $cpp_source_group->{CPP} .= $semicolon . "\n";

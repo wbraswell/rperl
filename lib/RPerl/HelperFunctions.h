@@ -1,5 +1,5 @@
 #ifndef __CPP__INCLUDED__RPerl__HelperFunctions_h
-#define __CPP__INCLUDED__RPerl__HelperFunctions_h 0.005_100
+#define __CPP__INCLUDED__RPerl__HelperFunctions_h 0.005_200
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
@@ -18,6 +18,7 @@
 #define AV_ELEMENT(av,index) ((av_fetch(av,index,0)!=NULL)?*av_fetch(av,index,0):newSV(0))
 #define SV_REFERENCE_COUNT(sv) (SvREFCNT(sv))
 #define class(sv) HvNAME(SvSTASH(SvRV(sv)))  // NEED ADDRESS: does this actually match the functionality of PERLOPS class() which is a wrapper around blessed()?
+#define print cout <<
 
 // [[[ HELPER FUNCTION DECLARATIONS ]]]
 int RPerl_SvBOKp(SV* input_sv);

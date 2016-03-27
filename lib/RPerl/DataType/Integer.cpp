@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_cpp
-#define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 0.006_000
+#define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 0.006_100
 
 // [[[ INCLUDES ]]]
 #include <RPerl/DataType/Integer.h>  // -> NULL (relies on native C type)
@@ -132,9 +132,9 @@ SV* integer_to_number(SV* input_integer) {
 
 # elif defined __CPP__TYPES
 
-number integer_to_number(integer input_integer) {
-    return (number) input_integer;
-}
+// NEED DECIDE: use #define for speed or function for type checking???
+//#define integer_to_number(INPUT_INTEGER) (number) INPUT_INTEGER
+number integer_to_number(integer input_integer) { return (number) input_integer; }
 
 # endif
 

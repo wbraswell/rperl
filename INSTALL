@@ -1,11 +1,5 @@
 # RPerl Install Notes
-# Last Updated February 20, 2016
-
-
-
-
-NEED ADD: apt-get install libperl-dev ????
-
+# Last Updated March 27, 2016
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # NOTE: STEP 1 IS ONLY FOR SINGLE-USER INSTALL, NOT SYSTEM-WIDE INSTALL
@@ -14,11 +8,17 @@ NEED ADD: apt-get install libperl-dev ????
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ################################################################################
-# STEP 0.
-# PRE-INSTALL, GCC & MAKEMAKER & GMP MUST BE UP-TO-DATE & INSTALLED SYSTEM-WIDE;
+# STEP 0. PRE-INSTALL; UPDATE & INSTALL LIBC & LIBPERL & GCC & MAKEMAKER & GMP;
 # ENSURE CURL WORKS PROPERLY
 ################################################################################
 
+# LIBC: libcrypt.(a|so) used for compiling programs
+$ apt-get install libc6-dev
+
+# LIBPERL: libperl.(a|so) used for compiling programs
+$ apt-get install libperl-dev
+
+# GCC
 $ g++ --version
 	# must be v4.7 or higher
 $ apt-get install g++
@@ -36,24 +36,26 @@ $ cd gcc-5.2.0
 $ ./configure
 $ make
 
+# EXTUTILS::MAKEMAKER
 $ mv ~/perl5 ~/perl5.old  # disable any previous local::lib or Perlbrew
 $ perl -v  # NOTE! the version of Perl determines whether you take step 1A or 1B
 $ perl -MExtUtils::MakeMaker\ 999  # v7.04 or greater required by Inline::C
 $ cpan ExtUtils::MakeMaker  # cpan system-wide, not cpanm single-user
 
-# GNU Multiple-Precision (GMP) Arithmetic Library
+# GMP: GNU Multiple-Precision Arithmetic Library
 $ apt-get install libgmp-dev
 # OR
 $ urpmi gmpxx-devel
 # OR
 # visit https://gmplib.org/
 
+# CURL
 $ curl -L cpanmin.us > /dev/null
     # execute the following "echo" command below IF AND ONLY IF the above "curl" command gives an error:
     # curl: (77) error setting certificate verify locations
 $ echo "cacert=/etc/ssl/certs/ca-certificates.crt" >> ~/.curlrc
 
-# Optional C++ formatter, Artistic Style
+# ASTYLE: Optional C++ formatter, Artistic Style
 $ sudo apt-get install astyle
 # OR
 # visit http://astyle.sourceforge.net/

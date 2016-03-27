@@ -16,7 +16,7 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 my integer $foo = 21 + 12;
 my integer $bar = 23 * 42 * 2;
-my number $baz = $bar / $foo;
+my number $baz  = integer_to_number($bar) / $foo;
 print 'have $foo = ' . to_string($foo) . "\n";
 print 'have $bar = ' . to_string($bar) . "\n";
 print 'have $baz = ' . to_string($baz) . "\n";
