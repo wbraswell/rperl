@@ -5,7 +5,7 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.002_300;
+our $VERSION = 0.002_400;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
@@ -90,6 +90,10 @@ INIT {
     RPerl::HelperFunctions_cpp::cpp_load();
 }
 
+# [[[ GENERIC OVERLOADED STRING CONVERSION ]]]
+# [[[ GENERIC OVERLOADED STRING CONVERSION ]]]
+# [[[ GENERIC OVERLOADED STRING CONVERSION ]]]
+
 # NEED UPGRADE: don't fall back to Perl qq{} string interpolation or Dumper() for stringification;
 # Dumper will fail to call *_to_string() until stringification overloading is implemented
 #my string $to_string = sub {
@@ -100,6 +104,7 @@ sub to_string {
     if    ( $type eq 'unknown' ) { return qq{$variable}; }
     elsif ( $type eq 'boolean' )    { return boolean_to_string($variable); }
 #    elsif ( $type eq 'unsigned_integer' ) { return unsigned_integer_to_string($variable); }  # DEV NOTE: causes auto-vivification of empty unsigned_integer_to_string() if not already properly bound
+#    elsif ( $type eq 'gmp_integer' ) { return gmp_integer_to_string($variable); }  # NEED IMPLEMENT 
     elsif ( $type eq 'integer' ) { return integer_to_string($variable); }
     elsif ( $type eq 'number' )  { return number_to_string($variable); }
     elsif ( $type eq 'character' )    { return character_to_string($variable); }
