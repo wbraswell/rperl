@@ -1,4 +1,4 @@
-# RPerl Developer Notes 20160317 2016.077
+# RPerl Developer Notes 20160327 2016.087
 
 ##########################################################################################
 # WARNING & ERROR CODES
@@ -238,6 +238,7 @@ $ script/development/rperl_locallib_uninstall.sh
 $ rm RPerl*.tar.gz; rm MANIFEST
 $ perl Makefile.PL; make distclean
 $ perl Makefile.PL; make realclean
+$ inline_clean.sh
 
 # MAKE MANIFEST & DIST
 $ perl Makefile.PL; make manifest

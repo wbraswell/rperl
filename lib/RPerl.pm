@@ -6,7 +6,7 @@ use strict;
 use warnings;
 
 # DEV NOTE, CORRELATION #rp16: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
-our $VERSION = 1.600_000;    # CODENAME GEMINI
+our $VERSION = 1.600_000;
 
 #our $VERSION = 20160214;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
 #our $VERSION = 2016.045;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
