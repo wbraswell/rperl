@@ -415,7 +415,7 @@ EOL
         # RPerl system module, wrapped in angle-brackets < > to denote system nature
         $cpp_source_group->{H_INCLUDES} .= '#include <' . $parent_name_path . '>' . "\n";
     }
-    $cpp_source_group->{CPP} .= '#include "__NEED_MODULE_HEADER_PATH"' . "\n";    # defer setting header include path until files are saved in Compiler
+    $cpp_source_group->{CPP} .= '#include "__NEED_HEADER_PATH"' . "\n";    # defer setting header include path until files are saved in Compiler
 
     my string_hashref $cpp_source_subgroup;
 

@@ -6,7 +6,7 @@
     # [[[ HEADER ]]]
     use strict;
     use warnings;
-    our $VERSION = 0.002_901;
+    our $VERSION = 0.003_000;
 
     use Carp;
     use rperlrules;  # affirmative, it totally does
@@ -24,7 +24,7 @@
 %defaultaction {
     my $self = shift;
     my $name = $self->YYName();
-    bless { children => [ @_ ] }, $name;
+    bless { children => [ @_ ], line_number => ($self->{TOKENLINE} + 1) }, $name;
 }
 
 # [[[ LEXICON TOKENS, TYPES & RESERVED WORDS ]]]

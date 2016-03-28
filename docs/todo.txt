@@ -1,5 +1,3 @@
-change "hard work" to "diligence" in LMPC
-
 remove 'undef' from all possible locations in grammar for C++ compatibility
 
 asm.js and/or webassembly backend
@@ -110,7 +108,7 @@ Math::Complex support
 Dumper() in C++, use as default overload for <<
 
 rperl command-line front-end
-    NO ITEMS CURRENTLY
+    add -U strong uncompile option, delete _Inline/ for modules and EXE for programs
 
 developer_notes.txt
 	warning & error codes

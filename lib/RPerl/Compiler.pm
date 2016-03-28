@@ -29,6 +29,9 @@ use IPC::Cmd qw(can_run);          # to check for `perltidy` and `astyle`
 use List::MoreUtils qw(uniq);
 use File::Spec;
 use Config;
+use Config qw(config_re);
+use IPC::Open3;
+use IO::Select;
 
 # [[[ SUBROUTINES ]]]
 
@@ -36,7 +39,7 @@ our string_arrayref $find_dependencies = sub {
     ( my string $file_name, my string_hashref $modes ) = @_;
     my string_arrayref $dependencies = [];
 
-#    RPerl::diag( 'in Compiler::find_dependencies(), received $file_name = ' . $file_name . "\n" );
+    #    RPerl::diag( 'in Compiler::find_dependencies(), received $file_name = ' . $file_name . "\n" );
 
     if ( not -f $file_name ) {
         die 'ERROR ECOCODE00, COMPILER, FIND DEPENDENCIES: File not found, ' . q{'} . $file_name . q{'} . "\n" . ', dying' . "\n";
@@ -80,41 +83,49 @@ our string_arrayref $find_dependencies = sub {
                 or ( $file_line =~ /use\s+RPerl\s*;/ )
                 or ( $file_line =~ /use\s+RPerl::AfterSubclass\s*;/ )
                 or ( $file_line =~ /use\s+RPerl::Config\s*;/ )
-                or ( $file_line =~ /use\s+\w+Perl::Config\s*;/ )  # DEV NOTE, CORRELATION #rp27: MathPerl::Config, PhysicsPerl::Config, etc
+                or ( $file_line =~ /use\s+\w+Perl::Config\s*;/ )    # DEV NOTE, CORRELATION #rp27: MathPerl::Config, PhysicsPerl::Config, etc
                 or ( $file_line =~ /use\s+parent/ )
                 or ( $file_line =~ /use\s+constant/ )
                 or ( $file_line =~ /use\s+overload/ )
-                or ( $file_line =~ /use\s+[0-9]/ ) )
+                or ( $file_line =~ /use\s+[0-9]/ )
+                )
             {
                 # safely ignore these possibly-valid but not-subdependency uses
                 next;
             }
             elsif ( $file_line =~ /use\s+rperlsse\s*;/ ) {
-#            	RPerl::diag('in Compiler::find_dependencies(), found rperlsse line, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
-                if ((substr $Config{archname}, 0, 3) eq 'arm') {
-                    die q{ERROR ECOCODE05, COMPILER, FIND DEPENDENCIES: 'use rperlsse;' command found but SSE not supported on Arm architecture, file } . $file_name . ', dying' . "\n";
+
+       #            	RPerl::diag('in Compiler::find_dependencies(), found rperlsse line, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
+                if ( ( substr $Config{archname}, 0, 3 ) eq 'arm' ) {
+                    die q{ERROR ECOCODE05, COMPILER, FIND DEPENDENCIES: 'use rperlsse;' command found but SSE not supported on Arm architecture, file }
+                        . $file_name
+                        . ', dying' . "\n";
                 }
-                if ((not exists $modes->{_enable_sse}) or (not defined $modes->{_enable_sse})) {
+                if ( ( not exists $modes->{_enable_sse} ) or ( not defined $modes->{_enable_sse} ) ) {
                     $modes->{_enable_sse} = {};
                 }
                 $modes->{_enable_sse}->{$file_name} = 1;
+
 #            	RPerl::diag('in Compiler::find_dependencies(), after finding rperlsse line, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
                 next;
             }
             elsif ( $file_line =~ /use\s+rperlgmp\s*;/ ) {
-#            	RPerl::diag('in Compiler::find_dependencies(), found rperlgmp line, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
-                if ((not exists $modes->{_enable_gmp}) or (not defined $modes->{_enable_gmp})) {
+
+       #            	RPerl::diag('in Compiler::find_dependencies(), found rperlgmp line, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
+                if ( ( not exists $modes->{_enable_gmp} ) or ( not defined $modes->{_enable_gmp} ) ) {
                     $modes->{_enable_gmp} = {};
                 }
                 $modes->{_enable_gmp}->{$file_name} = 1;
+
 #            	RPerl::diag('in Compiler::find_dependencies(), after finding rperlgmp line, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
                 next;
             }
 
             if ( $file_line =~ /use\s+lib/ ) {
                 die
-                    q{ERROR ECOCODE02, COMPILER, FIND DEPENDENCIES: 'use lib...' not currently supported, please set @INC using the PERL5LIB environment variable, file } . $file_name . ', dying'
-                    . "\n";
+                    q{ERROR ECOCODE02, COMPILER, FIND DEPENDENCIES: 'use lib...' not currently supported, please set @INC using the PERL5LIB environment variable, file }
+                    . $file_name
+                    . ', dying' . "\n";
             }
 
             $file_line =~ s/^\s*use\s+([\w:]+)\s*.*\s*;\s*$/$1/gxms;    # remove everything except the package name
@@ -132,7 +143,9 @@ our string_arrayref $find_dependencies = sub {
             if ( not exists $INC{$file_line} ) {
                 die 'ERROR ECOCODE03, COMPILER, FIND DEPENDENCIES: After successful eval-use, still failed to find package file '
                     . $file_line
-                    . ' in %INC, file ' . $file_name . ', dying' . "\n";
+                    . ' in %INC, file '
+                    . $file_name
+                    . ', dying' . "\n";
             }
 
             #            RPerl::diag( 'in Compiler::find_dependencies(), have MATCHING $file_line = ' . $file_line . "\n" );
@@ -154,8 +167,8 @@ our string_arrayref $find_dependencies = sub {
         or die 'ECOCODE04, COMPILER, FIND DEPENDENCIES: Cannot close file ' . $file_name . ' after reading, ' . $OS_ERROR . ', dying' . "\n";
 
     #    RPerl::diag( 'in Compiler::find_dependencies(), returning $dependencies = ' . Dumper($dependencies) . "\n" );
-#    RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
-#    RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
+    #    RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
+    #    RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
     return $dependencies;
 };
 
@@ -241,7 +254,7 @@ our string_hashref $rperl_to_xsbinary__parse_generate_compile = sub {
     if (   ( $modes->{compile} eq 'SUBCOMPILE' )
         or ( $modes->{compile} eq 'SUBCOMPILE_DEFERRED' ) )
     {
-        cpp_to_xsbinary__subcompile( $cpp_output_file_name_group );
+        cpp_to_xsbinary__subcompile( $cpp_output_file_name_group, $modes );
     }
 
     # always return $cpp_source_group to maintain consistent return type,
@@ -302,21 +315,16 @@ our hashref_arrayref $generate_output_file_names = sub {
             else {
                 $output_file_name_groups->[$i]->{EXE} = $output_file_name_path_prefix;
             }
-
-            if ( $modes->{ops} eq 'CPP' ) {
-
-                # *.pl input files in CPPOPS mode requires PMC loader module; *.pl input files in PERLOPS test mode does not require PMC file, only EXE file
-                $output_file_name_groups->[$i]->{PMC} = $output_file_name_path_prefix . '.pmc';
-            }
         }
         else {    # all *.pm input files require PMC output file; PMC is the only output file for *.pm input files in PERLOPS mode
             $output_file_name_groups->[$i]->{PMC} = $output_file_name_path_prefix . '.pmc';
         }
 
-        # all CPP ops modes require CPP & H output files
+        # all CPP ops modes require CPP output files; H output files may optionally be generated as needed
         if ( $modes->{ops} eq 'CPP' ) {
-            $output_file_name_groups->[$i]->{CPP} = $output_file_name_path_prefix . '.cpp';
-            $output_file_name_groups->[$i]->{H}   = $output_file_name_path_prefix . '.h';
+            $output_file_name_groups->[$i]->{CPP}      = $output_file_name_path_prefix . '.cpp';
+            $output_file_name_groups->[$i]->{H}        = $output_file_name_path_prefix . '.h';
+            $output_file_name_groups->[$i]->{_H_label} = ' (if needed)';
         }
 
 #        RPerl::diag('in rperl::generate_output_file_names(), bottom of loop ' . $i . ' of ' . $input_files_count . ", have \$output_file_name_groups->[$i] = \n" . Dumper( $output_file_name_groups->[$i] ) . "\n");
@@ -331,6 +339,7 @@ our void $save_source_files = sub {
 
     #    RPerl::diag( q{in Compiler::save_source_files(), received $source_group =} . "\n" . Dumper($source_group) . "\n" );
     #    RPerl::diag( q{in Compiler::save_source_files(), received $file_name_group =} . "\n" . Dumper($file_name_group) . "\n" );
+    #    RPerl::diag( 'in Compiler::save_source_files(), received $modes =' . "\n" . Dumper($modes) . "\n" );
     #    RPerl::diag( 'in Compiler::save_source_files(), received $modes->{_symbol_table} =' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
 
     foreach my string $suffix_key ( sort keys %{$source_group} ) {
@@ -343,174 +352,203 @@ our void $save_source_files = sub {
         }
     }
 
-    # finally create PMC file and set H path in CPP file for CPPOPS
+    # CPPOPS POST-PROCESSING: set H paths in CPP files & finally create PMC file, as needed
     if ( $modes->{ops} eq 'CPP' ) {
         RPerl::verbose('SAVE  PHASE 0:      Final file modifications...    ');
 
-        if ( $source_group->{PMC} ne q{} ) {
-            die 'ERROR ECOCOFI01, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Received non-empty PMC source, dying' . "\n";
-        }
-
         # NEED FIX WIN32: handle back-slash for Win32 instead of forward-slash only for *NIX
 
-        my string $module_path              = $file_name_group->{CPP};
-        my string $module_header_path_nolib = $file_name_group->{H};
+        my string $cpp_file_path     = $file_name_group->{CPP};
+        my string $h_file_path_nolib = $file_name_group->{H};
 
-        # DEV NOTE: barely-documented Inline::CPP bug, must have leading './' if no other directories in path
-        if (( $OSNAME eq 'MSWin32' ) and ( $module_path !~ /\\/ )) {
-            $module_path .= q{.\\};
-        }
-        elsif ( $module_path !~ /\// ) {
-            $module_path .= q{./};
-        }
- 
         # remove leading '.\' or './' if present
-        if ((( $OSNAME eq 'MSWin32' ) and (( substr $module_header_path_nolib, 0, 2 ) eq q{.\\} ))
-            or (( substr $module_header_path_nolib, 0, 2 ) eq './' )) {
-            substr $module_header_path_nolib, 0, 2, q{};
+        if (   ( ( $OSNAME eq 'MSWin32' ) and ( ( substr $h_file_path_nolib, 0, 2 ) eq q{.\\} ) )
+            or ( ( substr $h_file_path_nolib, 0, 2 ) eq './' ) )
+        {
+            substr $h_file_path_nolib, 0, 2, q{};
         }
 
         # remove leading 'lib/' if present, because -Ilib enabled in RPerl/Inline.pm
-        if ((( $OSNAME eq 'MSWin32' ) and (( substr $module_header_path_nolib, 0, 4 ) eq 'lib\\' ))
-            or (( substr $module_header_path_nolib, 0, 4 ) eq 'lib/' )) {
-            substr $module_header_path_nolib, 0, 4, q{};
+        if (   ( ( $OSNAME eq 'MSWin32' ) and ( ( substr $h_file_path_nolib, 0, 4 ) eq 'lib\\' ) )
+            or ( ( substr $h_file_path_nolib, 0, 4 ) eq 'lib/' ) )
+        {
+            substr $h_file_path_nolib, 0, 4, q{};
         }
 
         # deferred, finally set path to H module header file in CPP module file
-        $source_group->{CPP} =~ s/__NEED_MODULE_HEADER_PATH/$module_header_path_nolib/gxms;
+        $source_group->{CPP} =~ s/__NEED_HEADER_PATH/$h_file_path_nolib/gxms;
 
-        # deferred, finally change hard-coded PERLOPS_PERLTYPES to CPPOPS_*TYPES
-        my string $mode_tagline = $modes->{ops} . 'OPS_' . $modes->{types} . 'TYPES';
-        $source_group->{H} =~ s/PERLOPS_PERLTYPES/$mode_tagline/gxms;
-        $source_group->{CPP} =~ s/PERLOPS_PERLTYPES/$mode_tagline/gxms;
+        # MODULE POST-PROCESSING
+        if ( $modes->{_input_file_name} =~ /[.]pm$/xms ) {
+
+            # DEV NOTE: barely-documented Inline::CPP bug, must have leading './' if no other directories in path
+            if ( ( $OSNAME eq 'MSWin32' ) and ( $cpp_file_path !~ /\\/ ) ) {
+                $cpp_file_path .= q{.\\};
+            }
+            elsif ( $cpp_file_path !~ /\// ) {
+                $cpp_file_path .= q{./};
+            }
+
+            # deferred, finally change hard-coded PERLOPS_PERLTYPES to CPPOPS_*TYPES
+            my string $mode_tagline = $modes->{ops} . 'OPS_' . $modes->{types} . 'TYPES';
+            $source_group->{H} =~ s/PERLOPS_PERLTYPES/$mode_tagline/gxms;
+            $source_group->{CPP} =~ s/PERLOPS_PERLTYPES/$mode_tagline/gxms;
+
+            if ( $source_group->{PMC} ne q{} ) {
+                die 'ERROR ECOCOFI01, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Received non-empty PMC source, dying' . "\n";
+            }
 
 #        RPerl::diag( q{in Compiler::save_source_files(), have %INC = } . Dumper(\%INC) . "\n" );
 #        RPerl::diag( q{in Compiler::save_source_files(), have @INC = } . Dumper(\@INC) . "\n" );
 #        RPerl::diag( q{in Compiler::save_source_files(), have $source_group->{_package_names_underscores} = } . Dumper($source_group->{_package_names_underscores}) . "\n" );
 #        RPerl::diag( q{in Compiler::save_source_files(), have $source_group->{_package_names} = } . Dumper($source_group->{_package_names}) . "\n" );
 
-        my string_arrayref $module_names_split = [(split /\n/, $source_group->{_package_names})];
-        my string_arrayref $module_names_underscores_split = [(split /\n/, $source_group->{_package_names_underscores})];
-#        RPerl::diag( q{in Compiler::save_source_files(), have $module_names_split = } . Dumper($module_names_split) . "\n" );
- 
-        my integer $module_count           = scalar @{ $module_names_split };
-        my string $module_name = shift @{ $module_names_split };
-        my string $module_name_underscores = shift @{ $module_names_underscores_split };
-        my integer $i = 0;
- 
-        # deferred, finally insert constants shims
+            my string_arrayref $module_names_split             = [ ( split /\n/, $source_group->{_package_names} ) ];
+            my string_arrayref $module_names_underscores_split = [ ( split /\n/, $source_group->{_package_names_underscores} ) ];
+
+            #        RPerl::diag( q{in Compiler::save_source_files(), have $module_names_split = } . Dumper($module_names_split) . "\n" );
+
+            my integer $module_count           = scalar @{$module_names_split};
+            my string $module_name             = shift @{$module_names_split};
+            my string $module_name_underscores = shift @{$module_names_underscores_split};
+            my integer $i                      = 0;
+
+# deferred, finally insert constants shims
 #        RPerl::diag('in Compiler::save_source_files(), have $source_group->{_H_constants_shims}->{$module_name_underscores} = ' . $source_group->{_H_constants_shims}->{$module_name_underscores} . "\n");
 
-        while ( defined $module_name_underscores ) {
-#            RPerl::diag( q{in Compiler::save_source_files(), have $module_path = } . $module_path . "\n" );
-#            RPerl::diag( q{in Compiler::save_source_files(), have $module_name_underscores = } . $module_name_underscores . "\n" );
+            while ( defined $module_name_underscores ) {
 
-            # utilize modified copies of Module PMC template file
-            my string $module_pmc_filename_manual;
-            if ($module_count == 1) {
-                $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES';
-            }
-            else {
-                if ($i == ($module_count - 1)) {
-                    $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES_MONOLITH';
+                #            RPerl::diag( q{in Compiler::save_source_files(), have $cpp_file_path = } . $cpp_file_path . "\n" );
+                #            RPerl::diag( q{in Compiler::save_source_files(), have $module_name_underscores = } . $module_name_underscores . "\n" );
+
+                # utilize modified copies of Module PMC template file
+                my string $module_pmc_filename_manual;
+                if ( $module_count == 1 ) {
+                    $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES';
                 }
                 else {
-                    $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES_MONOLITH_SECONDARY';
+                    if ( $i == ( $module_count - 1 ) ) {
+                        $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES_MONOLITH';
+                    }
+                    else {
+                        $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES_MONOLITH_SECONDARY';
+                    }
                 }
-            }
 
 #            RPerl::diag( 'in Compiler::save_source_files(), have $module_pmc_filename_manual = ' . $module_pmc_filename_manual . "\n" );
 #            RPerl::diag( 'in Compiler::save_source_files(), have $source_group->{_PMC_accessors_mutators_shims} = ' . Dumper($source_group->{_PMC_accessors_mutators_shims}) . "\n" );
 #            RPerl::diag( 'in Compiler::save_source_files(), have $source_group->{_PMC_subroutines_shims} = ' . Dumper($source_group->{_PMC_subroutines_shims}) . "\n" );
 #            RPerl::diag( 'in Compiler::save_source_files(), have $source_group->{_PMC_includes} = ' . Dumper($source_group->{_PMC_includes}) . "\n" );
 
-            if ( not -f $module_pmc_filename_manual ) {
-                die 'ERROR ECOCOFI02, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: File not found, ' . q{'}
-                    . $module_pmc_filename_manual . q{'} . "\n"
+                if ( not -f $module_pmc_filename_manual ) {
+                    die 'ERROR ECOCOFI02, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: File not found, ' . q{'}
+                        . $module_pmc_filename_manual . q{'} . "\n"
+                        . ', dying' . "\n";
+                }
+
+                open my filehandleref $FILE_HANDLE, '<', $module_pmc_filename_manual
+                    or die 'ERROR ECOCOFI03, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot open file '
+                    . $module_pmc_filename_manual
+                    . ' for reading, '
+                    . $OS_ERROR
                     . ', dying' . "\n";
+
+                # deferred, finally read in Module PMC template file, replace package name and paths, add accessor/mutator shim methods
+                my string $file_line;
+                my string $file_string  = q{};
+                my string $pm_file_path = $file_name_group->{PMC};
+                chop $pm_file_path;    # remove the 'c' from 'pmc' file suffix
+                while ( $file_line = <$FILE_HANDLE> ) {
+                    $file_line =~ s/lib\/RPerl\/CompileUnit\/Module\.cpp/$cpp_file_path/gxms;
+                    $file_line =~ s/RPerl::CompileUnit::Module/$module_name/gxms;
+                    $file_line =~ s/RPerl__CompileUnit__Module/$module_name_underscores/gxms;
+                    if ( $file_line eq
+                        ( '# <<< OO PROPERTIES, ACCESSORS & MUTATORS, SHIMS >>>  # <<< CHANGE_ME: add real shims after this line or delete it >>>' . "\n" ) )
+                    {
+                        if (    ( defined $source_group->{_PMC_accessors_mutators_shims}->{$module_name_underscores} )
+                            and ( exists $source_group->{_PMC_accessors_mutators_shims}->{$module_name_underscores} ) )
+                        {
+                            $file_line
+                                = ( substr $file_line, 0, 52 ) . "\n" . $source_group->{_PMC_accessors_mutators_shims}->{$module_name_underscores} . "\n\n";
+                        }
+                        else { $file_line = undef; }
+                    }
+                    elsif ( $file_line eq
+                        ( '# <<< OO PROPERTIES, SUBROUTINES, SHIMS >>>  # <<< CHANGE_ME: add real shims after this line or delete it >>>' . "\n" ) )
+                    {
+                        if (    ( defined $source_group->{_PMC_subroutines_shims}->{$module_name_underscores} )
+                            and ( exists $source_group->{_PMC_subroutines_shims}->{$module_name_underscores} ) )
+                        {
+                            $file_line = ( substr $file_line, 0, 43 ) . "\n" . $source_group->{_PMC_subroutines_shims}->{$module_name_underscores} . "\n\n";
+                        }
+                        else { $file_line = undef; }
+                    }
+                    elsif ( $file_line eq ( '# <<< CHANGE_ME: add user-defined includes here >>>' . "\n" ) ) {
+                        if (    ( defined $source_group->{_PMC_includes}->{$module_name_underscores} )
+                            and ( exists $source_group->{_PMC_includes}->{$module_name_underscores} ) )
+                        {
+                            $file_line = $source_group->{_PMC_includes}->{$module_name_underscores} . "\n\n";
+                        }
+                        else { $file_line = undef; }
+                    }
+                    elsif ( $file_line eq ( '        # <<< CHANGE_ME: enable optional SSE support here >>>' . "\n" ) ) {
+
+                   #                    RPerl::diag( 'in Compiler::save_source_files(), have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n" );
+                        if (    ( exists $modes->{_enable_sse} )
+                            and ( defined $modes->{_enable_sse} )
+                            and ( exists $modes->{_enable_sse}->{$pm_file_path} )
+                            and ( defined $modes->{_enable_sse}->{$pm_file_path} )
+                            and $modes->{_enable_sse}->{$pm_file_path} )
+                        {
+                            $file_line = q(        $RPerl::Inline::ARGS{optimize}  .= ' -mfpmath=sse -msse3';  # enable SSE support) . "\n";
+                            $file_line
+                                .= q(        $RPerl::Inline::ARGS{auto_include} = ['#include <immintrin.h>', @{$RPerl::Inline::ARGS{auto_include}}];  # enable SSE support)
+                                . "\n";
+                        }
+                        else { $file_line = undef; }
+                    }
+                    elsif ( $file_line eq ( '        # <<< CHANGE_ME: enable optional GMP support here >>>' . "\n" ) ) {
+
+                   #                    RPerl::diag( 'in Compiler::save_source_files(), have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n" );
+                        if (    ( exists $modes->{_enable_gmp} )
+                            and ( defined $modes->{_enable_gmp} )
+                            and ( exists $modes->{_enable_gmp}->{$pm_file_path} )
+                            and ( defined $modes->{_enable_gmp}->{$pm_file_path} )
+                            and $modes->{_enable_gmp}->{$pm_file_path} )
+                        {
+                            $file_line = q(        $RPerl::Inline::ARGS{libs}  = '-lgmpxx -lgmp';  # enable GMP support) . "\n";
+                            $file_line
+                                .= q(        $RPerl::Inline::ARGS{auto_include} = [ @{ $RPerl::Inline::ARGS{auto_include} }, '#include <gmpxx.h>', '#include <gmp.h>' ];    # enable GMP support)
+                                . "\n";
+                        }
+                        else { $file_line = undef; }
+                    }
+                    if ( defined $file_line ) { $source_group->{PMC} .= $file_line; }
+                }
+
+                close $FILE_HANDLE
+                    or die 'ECOCOFI04, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot close file '
+                    . $module_pmc_filename_manual
+                    . ' after reading, '
+                    . $OS_ERROR
+                    . ', dying' . "\n";
+
+                $module_name             = shift @{$module_names_split};
+                $module_name_underscores = shift @{$module_names_underscores_split};
+                $i++;
             }
-
-            open my filehandleref $FILE_HANDLE, '<', $module_pmc_filename_manual
-                or die 'ERROR ECOCOFI03, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot open file '
-                . $module_pmc_filename_manual
-                . ' for reading, '
-                . $OS_ERROR
-                . ', dying' . "\n";
-
-            # deferred, finally read in Module PMC template file, replace package name and paths, add accessor/mutator shim methods
-            my string $file_line;
-            my string $file_string = q{};
-            my string $module_path_pm = $file_name_group->{PMC};
-            chop $module_path_pm;  # remove the 'c' from 'pmc' file suffix
-            while ( $file_line = <$FILE_HANDLE> ) {
-                $file_line =~ s/lib\/RPerl\/CompileUnit\/Module\.cpp/$module_path/gxms;
-                $file_line =~ s/RPerl::CompileUnit::Module/$module_name/gxms;
-                $file_line =~ s/RPerl__CompileUnit__Module/$module_name_underscores/gxms;
-                if ( $file_line eq
-                    ( '# <<< OO PROPERTIES, ACCESSORS & MUTATORS, SHIMS >>>  # <<< CHANGE_ME: add real shims after this line or delete it >>>' . "\n" ) )
-                {
-                    if (( defined $source_group->{_PMC_accessors_mutators_shims}->{$module_name_underscores} ) 
-                        and ( exists $source_group->{_PMC_accessors_mutators_shims}->{$module_name_underscores} )) {
-                        $file_line = ( substr $file_line, 0, 52 ) . "\n" . $source_group->{_PMC_accessors_mutators_shims}->{$module_name_underscores} . "\n\n";
-                    }
-                    else { $file_line = undef; }
-                }
-                elsif (
-                    $file_line eq ( '# <<< OO PROPERTIES, SUBROUTINES, SHIMS >>>  # <<< CHANGE_ME: add real shims after this line or delete it >>>' . "\n" ) )
-                {
-                    if (( defined $source_group->{_PMC_subroutines_shims}->{$module_name_underscores} ) 
-                        and ( exists $source_group->{_PMC_subroutines_shims}->{$module_name_underscores} )) {
-                        $file_line = ( substr $file_line, 0, 43 ) . "\n" . $source_group->{_PMC_subroutines_shims}->{$module_name_underscores} . "\n\n";
-                    }
-                    else { $file_line = undef; }
-                }
-                elsif ( $file_line eq ( '# <<< CHANGE_ME: add user-defined includes here >>>' . "\n" ) ) {
-                    if (( defined $source_group->{_PMC_includes}->{$module_name_underscores} ) 
-                        and ( exists $source_group->{_PMC_includes}->{$module_name_underscores} )) {
-                        $file_line = $source_group->{_PMC_includes}->{$module_name_underscores} . "\n\n";
-                    }
-                    else                                            { $file_line = undef; }
-                }
-                elsif ( $file_line eq ( '        # <<< CHANGE_ME: enable optional SSE support here >>>' . "\n" ) ) {
-#                    RPerl::diag( 'in Compiler::save_source_files(), have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n" );
-                    if ((exists $modes->{_enable_sse}) and (defined $modes->{_enable_sse}) and 
-                        (exists $modes->{_enable_sse}->{$module_path_pm}) and (defined $modes->{_enable_sse}->{$module_path_pm}) and 
-                        $modes->{_enable_sse}->{$module_path_pm}) {
-                        $file_line = q(        $RPerl::Inline::ARGS{optimize}  .= ' -mfpmath=sse -msse3';  # enable SSE support) . "\n";
-                        $file_line .= q(        $RPerl::Inline::ARGS{auto_include} = ['#include <immintrin.h>', @{$RPerl::Inline::ARGS{auto_include}}];  # enable SSE support) . "\n";
-                    }
-                    else { $file_line = undef; }
-                }
-                elsif ( $file_line eq ( '        # <<< CHANGE_ME: enable optional GMP support here >>>' . "\n" ) ) {
-#                    RPerl::diag( 'in Compiler::save_source_files(), have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n" );
-                    if ((exists $modes->{_enable_gmp}) and (defined $modes->{_enable_gmp}) and 
-                        (exists $modes->{_enable_gmp}->{$module_path_pm}) and (defined $modes->{_enable_gmp}->{$module_path_pm}) and 
-                        $modes->{_enable_gmp}->{$module_path_pm}) {
-                        $file_line = q(        $RPerl::Inline::ARGS{libs}  = '-lgmpxx -lgmp';  # enable GMP support) . "\n";
-                        $file_line .= q(        $RPerl::Inline::ARGS{auto_include} = [ @{ $RPerl::Inline::ARGS{auto_include} }, '#include <gmpxx.h>', '#include <gmp.h>' ];    # enable GMP support) . "\n";
-                    }
-                    else { $file_line = undef; }
-                }
-                if ( defined $file_line ) { $source_group->{PMC} .= $file_line; }
-            }
-
-            close $FILE_HANDLE
-                or die 'ECOCOFI04, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot close file '
-                . $module_pmc_filename_manual
-                . ' after reading, '
-                . $OS_ERROR
-                . ', dying' . "\n";
-
-            $module_name = shift @{ $module_names_split };
-            $module_name_underscores = shift @{ $module_names_underscores_split };
-            $i++;
         }
         RPerl::verbose( ' done.' . "\n" );
     }
 
     RPerl::verbose('SAVE  PHASE 1:      Format & write files to disk...');
 
-    foreach my string $suffix_key ( sort keys %{$file_name_group} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
+    #    RPerl::diag( 'in Compiler::save_source_files(), have [sort keys %{$source_group}] = ' . Dumper([sort keys %{$source_group}]) . "\n" );
+    #    RPerl::diag( 'in Compiler::save_source_files(), have $source_group->{H} = ' . Dumper($source_group->{H}) . "\n" );
+    #    RPerl::diag( 'in Compiler::save_source_files(), have $source_group = ' . Dumper($source_group) . "\n" );
+
+#    foreach my string $suffix_key ( sort keys %{$file_name_group} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
+    foreach my string $suffix_key ( sort keys %{$source_group} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
         if (   ( not exists $source_group->{$suffix_key} )
             or ( not defined $source_group->{$suffix_key} )
             or ( $source_group->{$suffix_key} eq q{} ) )
@@ -527,7 +565,7 @@ our void $save_source_files = sub {
 
             print {$SOURCE_FILE_HANDLE} $source
                 or croak("\nERROR ECOCOFI06, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot write to file,\ncroaking: $OS_ERROR");
-                
+
             close $SOURCE_FILE_HANDLE
                 or croak("\nERROR ECOCOFI09, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot close file,\ncroaking: $OS_ERROR");
         }
@@ -580,67 +618,177 @@ our void $save_source_files = sub {
 
 # Sub-Compile from C++-Parsable String to Perl-Linkable XS & Machine-Readable Binary
 our void $cpp_to_xsbinary__subcompile = sub {
-    ( my string_hashref $cpp_output_file_name_group ) = @_;
+    ( my string_hashref $cpp_output_file_name_group, my string_hashref $modes ) = @_;
 
-#RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), received $cpp_output_file_name_group =} . "\n" . Dumper($cpp_output_file_name_group) . "\n" );
+  #    RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), received $cpp_output_file_name_group =} . "\n" . Dumper($cpp_output_file_name_group) . "\n" );
+  #    RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), received $modes =} . "\n" . Dumper($modes) . "\n" );
 
-    RPerl::verbose('SUBCOMPILE:         Generate XS & binary...');
+    if ( $modes->{_input_file_name} =~ /[.]pl$/xms ) {
+        RPerl::verbose('SUBCOMPILE:         Generate binary...     ');
 
-    ( my string $volume_pmc, my string $directories_pmc, my string $file_pmc ) = File::Spec->splitpath( $cpp_output_file_name_group->{PMC}, my $no_file = 0 );
-#RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), have $directories_pmc = } . $directories_pmc . "\n" );
+        # NEED ANSWER: Inline::CPP originally used 'g++', it may be more generic to use 'c++', [config_re('ccname')]->[0] is 'gcc', which to do?
+        my string $subcompile_command = 'g++';
+        $subcompile_command .= q{ } . '-pthread';    # not in original Inline::CPP subcompile command
 
-    # strip trailing / or \ as long as they are not the only characters, which could indicate the root directory
-    if (((length $directories_pmc) > 1) and 
-        (((substr $directories_pmc, -1, 1) eq q{/}) or ((substr $directories_pmc, -1, 1) eq q{\\}))) {
-        substr $directories_pmc, -1, 1, q{};
-    }
+        my string $ccflags = [ config_re('ccflags') ]->[0];
+        substr $ccflags, 0,  9, q{};                 # remove leading ccflags='
+        substr $ccflags, -1, 1, q{};                 # remove trailing '
+        $subcompile_command .= q{ } . $ccflags;
 
-    my @INC_sorted = sort { length $b <=> length $a } @INC;
-#RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), have @INC =} . "\n" . Dumper(\@INC) . "\n" );
-#RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), have @INC_sorted =} . "\n" . Dumper(\@INC_sorted) . "\n" );
+        $subcompile_command .= q{ } . '-xc++';       # force C++ language mode
 
-    # strip leading INC directory if present
-    foreach my string $INC_directory (@INC_sorted) {
-#RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), have $INC_directory = } . $INC_directory . "\n" );
-        if ($directories_pmc =~ /^$INC_directory/) {
-            substr $directories_pmc, 0, (length $INC_directory), q{};
-            last;
+        if ( ( ( substr $RPerl::INCLUDE_PATH, -4, 4 ) eq '/lib' ) or ( ( substr $RPerl::INCLUDE_PATH, -4, 4 ) eq '\lib' ) ) {
+            $subcompile_command .= q{ } . '-I"' . ( substr $RPerl::INCLUDE_PATH, 0, -4 ) . '"';    # remove trailing /lib or \lib
+        }
+
+        #        $subcompile_command .= q{ } . '-I"' . $RPerl::INCLUDE_PATH . '"';
+        $subcompile_command .= q{ } . '-I' . $RPerl::INCLUDE_PATH;   # NEED ANSWER: Inline::CPP used quotes in the previous -I but not in this one, which to do?
+        $subcompile_command .= q{ } . '-Ilib';
+
+        $subcompile_command .= q{ } . $RPerl::Inline::CCFLAGSEX;
+        $subcompile_command .= q{ } . '-D__' . $modes->{types} . '__TYPES';    # command-line equivalent of #define __PERL__TYPES or #define__CPP__TYPES
+        $subcompile_command .= q{ } . $RPerl::Inline::ARGS{optimize};
+
+        $subcompile_command .= q{ } . '-DVERSION=\"0.00\" -DXS_VERSION=\"0.00\"';    # NEED ANSWER: what does this do?
+
+        my string $cccdlflags = [ config_re('cccdlflags') ]->[0];
+        substr $cccdlflags, 0,  12, q{};                                             # remove leading cccdlflags='
+        substr $cccdlflags, -1, 1,  q{};                                             # remove trailing '
+        $subcompile_command .= q{ } . $cccdlflags;
+
+        my string $inc_core_path = q{};
+        foreach my $inc_path (@INC) {
+            $inc_core_path = File::Spec->catdir( $inc_path, 'CORE' );
+            my string $inc_core_perl_h_path = File::Spec->catfile( $inc_core_path, 'perl.h' );
+            if   ( ( -e $inc_core_perl_h_path ) and ( -r $inc_core_perl_h_path ) and ( -f $inc_core_perl_h_path ) ) { last; }
+            else                                                                                                    { $inc_core_path = q{}; }
+        }
+        if ( $inc_core_path eq q{} ) {
+            croak 'ERROR ECOCOSU00, COMPILER, SUBCOMPILE: Perl source code CORE directory or CORE/perl.h file not found in @INC path listing, croaking';
+        }
+        $subcompile_command .= q{ } . '"-I' . $inc_core_path . '"';
+
+        $subcompile_command .= q{ } . $cpp_output_file_name_group->{CPP};
+        $subcompile_command .= q{ } . '-o ' . $cpp_output_file_name_group->{EXE};
+        $subcompile_command .= q{ } . '-lperl';                                     # not in original Inline::CPP subcompile command
+
+        #        RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $subcompile_command =' . "\n\n" . $subcompile_command . "\n" );
+
+        # ACTUALLY RUN SUBCOMPILE COMMAND
+        my $pid = open3( 0, \*SUBCOMPILE_STDOUT, \*SUBCOMPILE_STDERR, $subcompile_command );    # disable STDIN w/ 0
+
+        my $stdout_select;
+        my $stderr_select;
+        if ( $OSNAME ne 'MSWin32' ) {
+            $stdout_select = IO::Select->new();
+            $stderr_select = IO::Select->new();
+            $stdout_select->add( \*SUBCOMPILE_STDOUT );
+            $stderr_select->add( \*SUBCOMPILE_STDERR );
+        }
+
+        my string $subcompile_command_stdout = q{};
+        my string $subcompile_command_stderr = q{};
+
+        if ( $OSNAME eq 'MSWin32' || $stdout_select->can_read(0) ) { sysread SUBCOMPILE_STDOUT, $subcompile_command_stdout, 4096; }
+        if ( $OSNAME eq 'MSWin32' || $stderr_select->can_read(0) ) { sysread SUBCOMPILE_STDERR, $subcompile_command_stderr, 4096; }
+        waitpid $pid, 0;
+        if ( $OSNAME eq 'MSWin32' || $stdout_select->can_read(0) ) { my $s; sysread SUBCOMPILE_STDOUT, $s, 4096; $subcompile_command_stdout .= $s; }
+        if ( $OSNAME eq 'MSWin32' || $stderr_select->can_read(0) ) { my $s; sysread SUBCOMPILE_STDERR, $s, 4096; $subcompile_command_stderr .= $s; }
+
+        my $test_exit_status = $CHILD_ERROR >> 8;
+
+        #    RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $CHILD_ERROR = ' . $CHILD_ERROR . "\n" );
+        #    RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $test_exit_status = ' . $test_exit_status . "\n" );
+
+        #    if ($subcompile_command_stdout) { RPerl::diag( "===STDOUT=BEGIN===\n" . $subcompile_command_stdout . "===STDOUT=END===\n" ); }
+        #    if ($subcompile_command_stderr) { RPerl::diag( "===STDERR=BEGIN===\n" . $subcompile_command_stderr . "===STDERR=END===\n" ); }
+
+        if ( $test_exit_status == 0 ) {    # UNIX process return code 0, success
+            if (   ( $subcompile_command_stdout ne q{} )
+                or ( $subcompile_command_stderr ne q{} ) )
+            {
+                RPerl::diag( "\n\n" );
+                RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $subcompile_command_stdout =' . "\n\n" . $subcompile_command_stdout . "\n" );
+                RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $subcompile_command_stderr =' . "\n\n" . $subcompile_command_stderr . "\n" );
+                croak 'ERROR ECOCOSU01, COMPILER, SUBCOMPILE: C++ compiler returned success code but produced output which indicates an error, please run again with `rperl -D` command or RPERL_DEBUG=1 environmental variable for error messages if none appear above, croaking';
+            }
+        }
+        else {                             # UNIX process return code not 0, error
+            if (   ( $subcompile_command_stdout ne q{} )
+                or ( $subcompile_command_stderr ne q{} ) )
+            {
+                RPerl::diag( "\n\n" );
+                RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $subcompile_command_stdout =' . "\n\n" . $subcompile_command_stdout . "\n" );
+                RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $subcompile_command_stderr =' . "\n\n" . $subcompile_command_stderr . "\n" );
+                croak 'ERROR ECOCOSU02, COMPILER, SUBCOMPILE: C++ compiler returned error code, please run again with `rperl -D` command or RPERL_DEBUG=1 environmental variable for error messages if none appear above, croaking';
+            }
         }
     }
+    else {    # *.pm module files
+        RPerl::verbose('SUBCOMPILE:         Generate XS & binary...');
 
-#RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), have POSSIBLY-MODIFIED $directories_pmc = } . $directories_pmc . "\n" );
+        ( my string $volume_pmc, my string $directories_pmc, my string $file_pmc )
+            = File::Spec->splitpath( $cpp_output_file_name_group->{PMC}, my $no_file = 0 );
 
-    my string_arrayref $directories_pmc_split = [File::Spec->splitdir($directories_pmc)];
-#RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), have $directories_pmc_split =} . "\n" . Dumper($directories_pmc_split) . "\n" );
+        #RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), have $directories_pmc = } . $directories_pmc . "\n" );
 
-    # discard '.' or empty directory names
-    my $directories_pmc_split_tmp = [];
-    foreach my $directory (@{$directories_pmc_split}) {
-        if (($directory ne q{.}) and ($directory ne q{})) {
-            push @{$directories_pmc_split_tmp}, $directory;
+        # strip trailing / or \ as long as they are not the only characters, which could indicate the root directory
+        if (    ( ( length $directories_pmc ) > 1 )
+            and ( ( ( substr $directories_pmc, -1, 1 ) eq q{/} ) or ( ( substr $directories_pmc, -1, 1 ) eq q{\\} ) ) )
+        {
+            substr $directories_pmc, -1, 1, q{};
         }
+
+        my @INC_sorted = sort { length $b <=> length $a } @INC;
+
+        #RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), have @INC =} . "\n" . Dumper(\@INC) . "\n" );
+        #RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), have @INC_sorted =} . "\n" . Dumper(\@INC_sorted) . "\n" );
+
+        # strip leading INC directory if present
+        foreach my string $INC_directory (@INC_sorted) {
+
+            #RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), have $INC_directory = } . $INC_directory . "\n" );
+            if ( $directories_pmc =~ /^$INC_directory/ ) {
+                substr $directories_pmc, 0, ( length $INC_directory ), q{};
+                last;
+            }
+        }
+
+        #RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), have POSSIBLY-MODIFIED $directories_pmc = } . $directories_pmc . "\n" );
+
+        my string_arrayref $directories_pmc_split = [ File::Spec->splitdir($directories_pmc) ];
+
+        #RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), have $directories_pmc_split =} . "\n" . Dumper($directories_pmc_split) . "\n" );
+
+        # discard '.' or empty directory names
+        my $directories_pmc_split_tmp = [];
+        foreach my $directory ( @{$directories_pmc_split} ) {
+            if ( ( $directory ne q{.} ) and ( $directory ne q{} ) ) {
+                push @{$directories_pmc_split_tmp}, $directory;
+            }
+        }
+        $directories_pmc_split = $directories_pmc_split_tmp;
+
+        # strip trailing .pmc file suffix
+        substr $file_pmc, -4, 4, q{};
+
+        my string $eval_string = join '::', @{$directories_pmc_split}, $file_pmc;
+        $eval_string = 'use ' . $eval_string . ';';
+
+        #RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), have $eval_string =} . "\n" . $eval_string . "\n" );
+
+        # NEED FIX: why does Inline::CPP require double-subcompiling???
+        # DEV NOTE: exec() and system() don't work, only backticks
+
+        #    `export RPERL_WARNINGS=0; perl -e '$eval_string'`;  # should build
+        #RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), done with backticks 1...} . "\n" );
+
+        #    `export RPERL_WARNINGS=0; perl -e '$eval_string'`;  # should not build, but does
+        #RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), done with backticks 2...} . "\n" );
+
+        #    `export RPERL_WARNINGS=0; perl -e '$eval_string'`;  # should not build, does not seem to
+        #RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), done with backticks 3...} . "\n" );
     }
-    $directories_pmc_split = $directories_pmc_split_tmp;
-    
-    # strip trailing .pmc file suffix
-    substr $file_pmc, -4, 4, q{};
-
-    my string $eval_string = join '::', @{$directories_pmc_split}, $file_pmc;
-    $eval_string = 'use ' . $eval_string . ';';
-
-#RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), have $eval_string =} . "\n" . $eval_string . "\n" );
-
-    # NEED FIX: why does Inline::CPP require double-subcompiling???
-    # DEV NOTE: exec() and system() don't work, only backticks
- 
-#    `export RPERL_WARNINGS=0; perl -e '$eval_string'`;  # should build
-#RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), done with backticks 1...} . "\n" );
-
-#    `export RPERL_WARNINGS=0; perl -e '$eval_string'`;  # should not build, but does
-#RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), done with backticks 2...} . "\n" );
-
-#    `export RPERL_WARNINGS=0; perl -e '$eval_string'`;  # should not build, does not seem to
-#RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), done with backticks 3...} . "\n" );
 
     RPerl::verbose( '         done.' . "\n" );
 };

@@ -289,7 +289,11 @@ sub stringify_output_file_name_group {
     my string $output_file_names = q{};
     foreach my string $suffix_key (qw(EXE PMC CPP H)) {
         if ( exists $output_file_name_group->{$suffix_key} ) {
-            $output_file_names .= $output_file_name_group->{$suffix_key} . q{  };
+            $output_file_names .= $output_file_name_group->{$suffix_key};
+            if (exists $output_file_name_group->{'_' . $suffix_key . '_label'}) {
+                $output_file_names .= $output_file_name_group->{'_' . $suffix_key . '_label'};
+            }
+            $output_file_names .= q{  };
         }
     }
     if ( ( length $output_file_names ) > 55 ) {
@@ -397,7 +401,7 @@ sub depends_delete {
         }
     }
 
-    RPerl::verbose("\n" . 'UNLINK PHASE 1:     Delete _Inline/ folder from disk...');
+    RPerl::verbose(("\n" x ($input_files_count - 1)) . 'UNLINK PHASE 1:     Delete _Inline/ folder from disk...');
     if ( -d '_Inline' ) {
         remove_tree( '_Inline', { error => \my $error_hashes } );
         if (@{$error_hashes}) {
@@ -451,6 +455,10 @@ sub depends_parse_generate_save_subcompile_execute {
     for my $i ( 0 .. ( $input_files_count - 1 ) ) {
         my string $input_file_name                = $input_file_names->[$i];
         my string_hashref $output_file_name_group = $output_file_name_groups->[$i];
+
+        # program files (*.pl) need to know their own input file name to create the proper C++ #ifdef version preprocessor directives;
+        # RPerl::Compiler needs to know if it should perform program or module post-processing
+        $modes->{_input_file_name} = $input_file_name;
 
         # clear symtab before each input file, use automatic dependencies mode (enabled by default) to compile multiple files within a single symtab
         $modes->{_symbol_table} = {};

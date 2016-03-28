@@ -5,12 +5,12 @@
 
 // [[[ HEADER ]]]
 #include <rperlprogram.h>
-#ifndef __CPP__INCLUDED__RPerl__Learning__Chapter1__exercise_3_foo_bar_arithmetic_cpp
-#define __CPP__INCLUDED__RPerl__Learning__Chapter1__exercise_3_foo_bar_arithmetic_cpp 0.001_000
+#ifndef __CPP__INCLUDED__lib__RPerl__Learning__Chapter1__exercise_3_foo_bar_arithmetic_cpp
+#define __CPP__INCLUDED__lib__RPerl__Learning__Chapter1__exercise_3_foo_bar_arithmetic_cpp 0.001_000
 # ifdef __CPP__TYPES
 
-int main() {  // [[[ OPERATIONS HEADER ]]]
 
+int main() {  // [[[ OPERATIONS HEADER ]]]
 
 
 // [[[ OPERATIONS ]]]
@@ -23,7 +23,9 @@ int main() {  // [[[ OPERATIONS HEADER ]]]
 
 
 
-return 0; }  // [[[ OPERATIONS FOOTER ]]]
+    // [[[ OPERATIONS FOOTER ]]]
+    return 0;
+}
 
 // [[[ FOOTER ]]]
 # elif defined __PERL__TYPES
