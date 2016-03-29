@@ -1,0 +1,41 @@
+DEPENDENCIES:       Follow & find all deps...
+PARSE PHASE 0:      Check     Perl syntax...
+PARSE PHASE 1:      Criticize Perl syntax...
+PARSE PHASE 2:      Parse    RPerl syntax...
+GENERATE:           Generate   C++ syntax...
+SAVE  PHASE 0:      Final file modifications...
+SAVE  PHASE 1:      Format & write files to disk...
+
+SUBCOMPILE:         
+
+    PROGRAM (.pl):  Generate binary...
+
+        Pre-Process;      cpp;  gcc -E;          .cpp .h input;  .cpp .h output 
+        Compile;                gcc -S;          .cpp .h input;       .s output
+        Assemble;               gcc -c;               .s input;       .o output
+        Archive, Static;  ar;                         .o input;       .a output
+        Shared, Dynamic;        gcc -shared;  .cpp .h .o input;      .so output
+        Link, Static;           gcc -static;         .a  input;     .exe output
+        Link, Dynamic;          gcc;                 .so check;     .exe output
+
+    MODULE (.pm):   Generate XS & binary...
+
+        Inline::CPP
+            validate Stage
+            Build Preprocess Stage
+                get_maps Stage
+            Build Parse Stage
+            Build Glue 1 Stage
+            Build Glue 2 Stage
+            Build Glue 3 Stage
+            Build Compile Stage
+                "perl Makefile.PL" Stage
+                "make" Stage
+                "make install" Stage
+                Cleaning Up Stage
+
+EXECUTE:            Run code...
+
+    Load, Interpreted;        perl program.pl;                 unknown run-time link
+    Load, Compiled, Static;        program;                 libc (NSS) run-time link
+    Load, Compiled, Dynamic;       program;     libperl.so libcrypt.so run-time link

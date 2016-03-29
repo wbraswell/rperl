@@ -1,10 +1,15 @@
-remove 'undef' from all possible locations in grammar for C++ compatibility
+DONE
+.pl input files, initial support
+-vv --vversions
+-u -U --mode uncompile=(OFF,SOURCE,BINARY,ALL)
+--assemble --archive --shared --static --mode subcompile=(OFF,ASSEMBLE,ARCHIVE,SHARED,STATIC,DYNAMIC)
 
-asm.js and/or webassembly backend
+DOING
+new flags to set up compiler behavior in Compiler.pm; 
+execute via compiled copy not interpreted; 
+print comma-vs-dot to correct output; 
+cpp output file post-processing for source code text alignment
 
-enable looks_like_number() in *OPS_*TYPES (AKA all modes)
-    use in string_to_NUMERIC*() (AKA all string conversion subroutines) to reject non-numeric characters with RPerl error instead of Perl error
-    http://perldoc.perl.org/perlapi.html#looks_like_number
 
 Learning RPerl
     use unsigned_integer instead of integer in ex2.6 & 2.7, check all other exercises as well, change error checking accordingly
@@ -16,6 +21,16 @@ Learning RPerl
     docbook2html & sgmltools & sgml2html: Section 2.3 "Perl's Built-In Warnings" single-quote vs apostrophe
     docbook2pdf segfault
     sgml table cell padding
+
+remove 'undef' from all possible locations in grammar for C++ compatibility
+
+update https://en.wikipedia.org/wiki/List_of_compilers#Perl_Compilers
+
+asm.js and/or webassembly backend
+
+enable looks_like_number() in *OPS_*TYPES (AKA all modes)
+    use in string_to_NUMERIC*() (AKA all string conversion subroutines) to reject non-numeric characters with RPerl error instead of Perl error
+    http://perldoc.perl.org/perlapi.html#looks_like_number
 
 rename Operation::Expression::Operator::Math to Arithmetic
 
@@ -109,6 +124,7 @@ Dumper() in C++, use as default overload for <<
 
 rperl command-line front-end
     add -U strong uncompile option, delete _Inline/ for modules and EXE for programs
+    --noWarnings option does not suppress WEXRP00, `export RPERL_WARNINGS=0` does
 
 developer_notes.txt
 	warning & error codes

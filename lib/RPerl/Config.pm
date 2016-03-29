@@ -4,7 +4,7 @@
 package RPerl::Config;
 use strict;
 use warnings;
-our $VERSION = 0.004_000;
+our $VERSION = 0.004_100;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -90,6 +90,7 @@ our $TYPES_CCFLAG = ' -D__CPP__TYPES'; # rperltypes_mode.h & here default to CPP
 our $BASE_PATH    = undef;                             # all target software lives below here
 our $INCLUDE_PATH = undef;                             # all target system modules live here
 our $SCRIPT_PATH  = undef;                             # interpreted target system programs live here
+our $CORE_PATH    = undef;                             # all Perl core components (perl.h, etc) live here
 
 # [[[ SUBROUTINES SPECIAL ]]]
 
@@ -428,6 +429,7 @@ sub set_system_paths {
     my $MY_BASE_PATH;
     my $MY_INCLUDE_PATH;
     my $MY_SCRIPT_PATH;
+    my $MY_CORE_PATH;
 
     # NEED FIX: how do we catpath() with some $volume instead of catdir() below, without breaking relative paths?
     $MY_BASE_PATH = File::Spec->catpath( $volume_loaded, File::Spec->catdir(@directories_base_split), '' );
@@ -444,11 +446,19 @@ sub set_system_paths {
         #    print {*STDERR} 'in ' . $target_package_name_config . ', have $MY_BASE_PATH ne q{} ', $MY_BASE_PATH, "\n";
     }
 
+    foreach my $inc_path (@INC) {
+        $MY_CORE_PATH = File::Spec->catdir( $inc_path, 'CORE' );
+        my $inc_core_perl_h_path = File::Spec->catfile( $MY_CORE_PATH, 'perl.h' );
+        if   ( ( -e $inc_core_perl_h_path ) and ( -r $inc_core_perl_h_path ) and ( -f $inc_core_perl_h_path ) ) { last; }
+        else                                                                                                    { $MY_CORE_PATH = q{}; }
+    }
+
     #print {*STDERR} 'in ' . $target_package_name_config . ', have $MY_BASE_PATH = ', $MY_BASE_PATH, "\n";
     #print {*STDERR} 'in ' . $target_package_name_config . ', have $MY_INCLUDE_PATH = ', $MY_INCLUDE_PATH, "\n";
     #print {*STDERR} 'in ' . $target_package_name_config . ', have $MY_SCRIPT_PATH = ', $MY_SCRIPT_PATH, "\n";
+    #print {*STDERR} 'in ' . $target_package_name_config . ', have $MY_CORE_PATH = ', $MY_CORE_PATH, "\n";
     
-    return [$MY_BASE_PATH, $MY_INCLUDE_PATH, $MY_SCRIPT_PATH];
+    return [$MY_BASE_PATH, $MY_INCLUDE_PATH, $MY_SCRIPT_PATH, $MY_CORE_PATH];
 }
 
 # [[[ OPERATIONS SPECIAL ]]]
@@ -457,6 +467,6 @@ my $file_name_config    = 'RPerl/Config.pm';    # this file name
 my $package_name_config = 'RPerl::Config';      # this file's primary package name
 my $file_name_pm        = 'RPerl.pm';
 my $file_name_script    = 'rperl';
-($BASE_PATH, $INCLUDE_PATH, $SCRIPT_PATH) = @{set_system_paths($file_name_config, $package_name_config, $file_name_pm, $file_name_script)};
+($BASE_PATH, $INCLUDE_PATH, $SCRIPT_PATH, $CORE_PATH) = @{set_system_paths($file_name_config, $package_name_config, $file_name_pm, $file_name_script)};
 
 1;                                                     # end of package

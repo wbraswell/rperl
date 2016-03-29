@@ -549,6 +549,7 @@ our void $save_source_files = sub {
 
 #    foreach my string $suffix_key ( sort keys %{$file_name_group} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
     foreach my string $suffix_key ( sort keys %{$source_group} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
+        if ((substr $suffix_key, 0, 1) eq '_' ) { next; }
         if (   ( not exists $source_group->{$suffix_key} )
             or ( not defined $source_group->{$suffix_key} )
             or ( $source_group->{$suffix_key} eq q{} ) )
@@ -628,7 +629,7 @@ our void $cpp_to_xsbinary__subcompile = sub {
 
         # NEED ANSWER: Inline::CPP originally used 'g++', it may be more generic to use 'c++', [config_re('ccname')]->[0] is 'gcc', which to do?
         my string $subcompile_command = 'g++';
-        $subcompile_command .= q{ } . '-pthread';    # not in original Inline::CPP subcompile command
+        $subcompile_command .= q{ } . '-pthread';    # DEV NOTE: this is a newer GCC command-line option, the old -lpthread option doesn't seem to work
 
         my string $ccflags = [ config_re('ccflags') ]->[0];
         substr $ccflags, 0,  9, q{};                 # remove leading ccflags='
@@ -637,6 +638,7 @@ our void $cpp_to_xsbinary__subcompile = sub {
 
         $subcompile_command .= q{ } . '-xc++';       # force C++ language mode
 
+        # NEED ANSWER: should we be using RPerl::BASE_PATH instead of substr $RPerl::INCLUDE_PATH?
         if ( ( ( substr $RPerl::INCLUDE_PATH, -4, 4 ) eq '/lib' ) or ( ( substr $RPerl::INCLUDE_PATH, -4, 4 ) eq '\lib' ) ) {
             $subcompile_command .= q{ } . '-I"' . ( substr $RPerl::INCLUDE_PATH, 0, -4 ) . '"';    # remove trailing /lib or \lib
         }
@@ -656,21 +658,14 @@ our void $cpp_to_xsbinary__subcompile = sub {
         substr $cccdlflags, -1, 1,  q{};                                             # remove trailing '
         $subcompile_command .= q{ } . $cccdlflags;
 
-        my string $inc_core_path = q{};
-        foreach my $inc_path (@INC) {
-            $inc_core_path = File::Spec->catdir( $inc_path, 'CORE' );
-            my string $inc_core_perl_h_path = File::Spec->catfile( $inc_core_path, 'perl.h' );
-            if   ( ( -e $inc_core_perl_h_path ) and ( -r $inc_core_perl_h_path ) and ( -f $inc_core_perl_h_path ) ) { last; }
-            else                                                                                                    { $inc_core_path = q{}; }
-        }
-        if ( $inc_core_path eq q{} ) {
+        if ( $RPerl::CORE_PATH eq q{} ) {
             croak 'ERROR ECOCOSU00, COMPILER, SUBCOMPILE: Perl source code CORE directory or CORE/perl.h file not found in @INC path listing, croaking';
         }
-        $subcompile_command .= q{ } . '"-I' . $inc_core_path . '"';
+        $subcompile_command .= q{ } . '"-I' . $RPerl::CORE_PATH . '"';
 
         $subcompile_command .= q{ } . $cpp_output_file_name_group->{CPP};
         $subcompile_command .= q{ } . '-o ' . $cpp_output_file_name_group->{EXE};
-        $subcompile_command .= q{ } . '-lperl';                                     # not in original Inline::CPP subcompile command
+        $subcompile_command .= q{ } . '-lperl';                                      # not in original Inline::CPP subcompile command
 
         #        RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $subcompile_command =' . "\n\n" . $subcompile_command . "\n" );
 
@@ -707,24 +702,26 @@ our void $cpp_to_xsbinary__subcompile = sub {
             if (   ( $subcompile_command_stdout ne q{} )
                 or ( $subcompile_command_stderr ne q{} ) )
             {
-                RPerl::diag( "\n\n" );
+                RPerl::diag("\n\n");
                 RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $subcompile_command_stdout =' . "\n\n" . $subcompile_command_stdout . "\n" );
                 RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $subcompile_command_stderr =' . "\n\n" . $subcompile_command_stderr . "\n" );
-                croak 'ERROR ECOCOSU01, COMPILER, SUBCOMPILE: C++ compiler returned success code but produced output which indicates an error, please run again with `rperl -D` command or RPERL_DEBUG=1 environmental variable for error messages if none appear above, croaking';
+                croak
+                    'ERROR ECOCOSU01, COMPILER, SUBCOMPILE: C++ compiler returned success code but produced output which indicates an error, please run again with `rperl -D` command or RPERL_DEBUG=1 environmental variable for error messages if none appear above, croaking';
             }
         }
         else {                             # UNIX process return code not 0, error
             if (   ( $subcompile_command_stdout ne q{} )
                 or ( $subcompile_command_stderr ne q{} ) )
             {
-                RPerl::diag( "\n\n" );
+                RPerl::diag("\n\n");
                 RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $subcompile_command_stdout =' . "\n\n" . $subcompile_command_stdout . "\n" );
                 RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $subcompile_command_stderr =' . "\n\n" . $subcompile_command_stderr . "\n" );
-                croak 'ERROR ECOCOSU02, COMPILER, SUBCOMPILE: C++ compiler returned error code, please run again with `rperl -D` command or RPERL_DEBUG=1 environmental variable for error messages if none appear above, croaking';
+                croak
+                    'ERROR ECOCOSU02, COMPILER, SUBCOMPILE: C++ compiler returned error code, please run again with `rperl -D` command or RPERL_DEBUG=1 environmental variable for error messages if none appear above, croaking';
             }
         }
     }
-    else {    # *.pm module files
+    else {                                 # *.pm module files
         RPerl::verbose('SUBCOMPILE:         Generate XS & binary...');
 
         ( my string $volume_pmc, my string $directories_pmc, my string $file_pmc )
@@ -790,7 +787,8 @@ our void $cpp_to_xsbinary__subcompile = sub {
         #RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), done with backticks 3...} . "\n" );
     }
 
-    RPerl::verbose( '         done.' . "\n" );
+#    RPerl::verbose( '         done.' . "\n" );
+    RPerl::verbose( '     DEFERRED.' . "\n" );
 };
 
-1;    # end of class
+1;                                        # end of class
