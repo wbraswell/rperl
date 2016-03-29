@@ -121,6 +121,7 @@ sub verify_and_default_modes {
         my integer $subcompile_archive_flag,
         my integer $subcompile_shared_flag,
         my integer $subcompile_static_flag,
+        my integer $subcompile_CXX,
         my integer $execute_flag,
         my integer $test_flag
     ) = @_;
@@ -288,6 +289,15 @@ sub verify_and_default_modes {
         else {
             $modes->{compile}   = 'SUBCOMPILE';
             $modes->{subcompile} = 'DYNAMIC';
+        }
+    }
+    
+    if (defined $subcompile_CXX) {
+        if ($subcompile_CXX =~ m/^\s*$/gxms) {
+            die 'ERROR EARG16: Undefined, empty, or all-whitespace CXX command-line option provided, dying' . "\n";
+        }
+        else {
+            $modes->{CXX} = $subcompile_CXX;
         }
     }
 
@@ -852,10 +862,11 @@ my integer $dependencies_flag                 = undef;
 my integer $uncompile_source_flag             = undef;
 my integer $uncompile_all_flag                = undef;
 my integer $compile_flag                      = undef;
-my integer $subcompile_assemble_flag                     = undef;
-my integer $subcompile_archive_flag                      = undef;
-my integer $subcompile_shared_flag                       = undef;
-my integer $subcompile_static_flag                       = undef;
+my integer $subcompile_assemble_flag          = undef;
+my integer $subcompile_archive_flag           = undef;
+my integer $subcompile_shared_flag            = undef;
+my integer $subcompile_static_flag            = undef;
+my string  $subcompile_CXX                    = undef;
 my integer $execute_flag                      = undef;
 my integer $test_flag                         = undef;
 my string_arrayref $input_file_names          = [];
@@ -870,11 +881,12 @@ my string_hashref $modes_default              = {        # default to CPPOPS_CPP
     uncompile    => 'OFF',
     compile      => 'SUBCOMPILE',
     subcompile   => 'DYNAMIC',
+    CXX          => 'g++',  # default to GNU GCC  http://www.gnu.org/software/make/manual/make.html#Implicit-Variables
     execute      => 'ON',
-    label        => 'ON'
+    label        => 'ON',
 };
 my arrayref_hashref $modes_supported = {
-    arguments    => undef,
+    arguments    => undef,  # accept any value
     dependencies => [ 'OFF', 'ON' ],
     ops          => [ 'PERL', 'CPP' ],
     types        => [ 'PERL', 'CPP', 'DUAL' ],
@@ -882,8 +894,9 @@ my arrayref_hashref $modes_supported = {
     uncompile    => [ 'OFF', 'SOURCE', 'BINARY', 'ALL' ],
     compile      => [ 'OFF', 'PARSE', 'GENERATE', 'SAVE', 'SUBCOMPILE' ],
     subcompile   => [ 'OFF', 'ASSEMBLE', 'ARCHIVE', 'SHARED', 'STATIC', 'DYNAMIC' ],
-    execute => [ 'OFF', 'ON' ],
-    label   => [ 'OFF', 'ON' ]
+    CXX          => undef,  # accept any value
+    execute      => [ 'OFF', 'ON' ],
+    label        => [ 'OFF', 'ON' ],
 };
 my integer $input_files_count = 0;
 
@@ -903,6 +916,7 @@ GetOptions(
     'archive'       => \$subcompile_archive_flag,
     'shared'        => \$subcompile_shared_flag,
     'static!'       => \$subcompile_static_flag,
+    'CXX=s'         => \$subcompile_CXX,
     'execute!'      => \$execute_flag,
     'test'          => \$test_flag,
     'infile=s{1,}'  => \@{$input_file_names},
@@ -949,7 +963,7 @@ $input_files_count = scalar @{$input_file_names};
 $modes             = verify_and_default_modes(
     $modes,              $modes_default, $modes_supported, $dependencies_flag, $uncompile_source_flag,
     $uncompile_all_flag, $compile_flag,  $subcompile_assemble_flag,   $subcompile_archive_flag,      $subcompile_shared_flag,
-    $subcompile_static_flag,        $execute_flag,  $test_flag
+    $subcompile_static_flag, $subcompile_CXX,        $execute_flag,  $test_flag
 );
 $output_file_name_groups = generate_output_file_names( $input_file_names, $output_file_name_prefixes, $input_files_count, $modes );
 verbose_multi_file_settings( $input_file_names, $output_file_name_groups, $input_files_count, $modes );

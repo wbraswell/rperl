@@ -1,12 +1,18 @@
 DONE
 .pl input files, initial support
--vv --vversions
 -u -U --mode uncompile=(OFF,SOURCE,BINARY,ALL)
---assemble --archive --shared --static --mode subcompile=(OFF,ASSEMBLE,ARCHIVE,SHARED,STATIC,DYNAMIC)
+-vv --vversions  # SAME AS: perl -V
+-assemble        # SAME AS: gcc -c
+-archive         # SAME AS: ar
+-shared          # SAME AS: gcc -shared
+-static          # SAME AS: gcc -static
+--mode subcompile=(OFF,ASSEMBLE,ARCHIVE,SHARED,STATIC,DYNAMIC)
+-CXX             # SAME AS: makefile CXX
 
 DOING
 new flags to set up compiler behavior in Compiler.pm; 
 execute via compiled copy not interpreted; 
+update rperl -h w/ new options
 print comma-vs-dot to correct output; 
 cpp output file post-processing for source code text alignment
 
