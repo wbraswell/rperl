@@ -286,7 +286,6 @@ our hashref_arrayref $generate_output_file_names = sub {
             # explicitly provided option should already be only prefix, but fileparse() to make sure
             ( $input_file_name_prefix, $input_file_name_path, $input_file_name_suffix ) = fileparse( $output_file_name_prefixes->[$i], qr/[.][^.]*/xms );
             if ( $input_file_name_prefix eq q{} ) {
-
                 # DEV NOTE: correlates to errors EARG* in script/rperl
                 die "ERROR EARG09: Invalid RPerl source code output file option specified, dying\n";
             }
@@ -303,21 +302,62 @@ our hashref_arrayref $generate_output_file_names = sub {
 
         my string $output_file_name_path_prefix = $input_file_name_path . $input_file_name_prefix;
 
-        # all *.pl input files require EXE output file
+        # *.pl input files may generate *.o, *.a, *.so, *.exe, and/or non-suffix output files
         if ( $input_file_name =~ /[.]pl$/xms ) {
-
-            # Micro$oft Windows uses *.exe file extension (suffix) for compiled executables
-            if ( $OSNAME eq 'MSWin32' ) {
-                $output_file_name_groups->[$i]->{EXE} = $output_file_name_path_prefix . '.exe';
+            if ($modes->{subcompile} eq 'ASSEMBLE') {
+                # NEED ANSWER: does Micro$oft Windows use *.lib file extension (suffix) for both *.o and *.a assembled object files?
+                # but does that only apply when using the M$ VC++ compiler? so does it apply here?
+                # apply answer to ARCHIVE mode elsif block immediately below; and also for ASSEMBLE & ARCHIVE blocks in *.pm else block below that;
+                # ask similar question for *.so in *NIX vs *.dll in M$, apply to .so elsif blocks below and $filename_suffixes_supported in script/rperl
+#                if ( $OSNAME eq 'MSWin32' ) {
+#                    $output_file_name_groups->[$i]->{LIB} = $output_file_name_path_prefix . '.lib';
+#                }
+                # *NIX uses *.o file extension (suffix) for assembled object files
+#                else {
+                    $output_file_name_groups->[$i]->{O} = $output_file_name_path_prefix . '.o';
+#                }
             }
 
-            # traditionally, *NIX has no file extension (suffix) for compiled executables
-            else {
-                $output_file_name_groups->[$i]->{EXE} = $output_file_name_path_prefix;
+            elsif ($modes->{subcompile} eq 'ARCHIVE') {
+                $output_file_name_groups->[$i]->{O} = $output_file_name_path_prefix . '.o';
+                $output_file_name_groups->[$i]->{_O_label} = ' (temporary)';
+                $output_file_name_groups->[$i]->{A}        = $output_file_name_path_prefix . '.a';
+            }
+            elsif ($modes->{subcompile} eq 'SHARED') {
+                $output_file_name_groups->[$i]->{SO} = $output_file_name_path_prefix . '.so';
+            }
+            elsif (($modes->{subcompile} eq 'STATIC') or 
+                ($modes->{subcompile} eq 'DYNAMIC')) {
+                # Micro$oft Windows uses *.exe file extension (suffix) for compiled executables
+                if ( $OSNAME eq 'MSWin32' ) {
+                    $output_file_name_groups->[$i]->{EXE} = $output_file_name_path_prefix . '.exe';
+                }
+    
+                # traditionally, *NIX has no file extension (suffix) for compiled executables, non-suffix
+                else {
+                    $output_file_name_groups->[$i]->{EXE} = $output_file_name_path_prefix;
+                }
             }
         }
-        else {    # all *.pm input files require PMC output file; PMC is the only output file for *.pm input files in PERLOPS mode
-            $output_file_name_groups->[$i]->{PMC} = $output_file_name_path_prefix . '.pmc';
+        else {    # *.pm input files may generate *.o, *.a, *.so, and/or *.pmc output files
+            if ($modes->{subcompile} eq 'ASSEMBLE') {
+                $output_file_name_groups->[$i]->{O} = $output_file_name_path_prefix . '.o';
+            }
+            elsif ($modes->{subcompile} eq 'ARCHIVE') {
+                $output_file_name_groups->[$i]->{O} = $output_file_name_path_prefix . '.o';
+                $output_file_name_groups->[$i]->{_O_label} = ' (temporary)';
+                $output_file_name_groups->[$i]->{A}        = $output_file_name_path_prefix . '.a';
+            }
+            elsif ($modes->{subcompile} eq 'SHARED') {
+                $output_file_name_groups->[$i]->{SO} = $output_file_name_path_prefix . '.so';
+            }
+            elsif ($modes->{subcompile} eq 'STATIC') {
+                # DEV NOTE: correlates to errors EARG* in script/rperl
+                die 'ERROR EARG15: Incompatible command-line options provided, both --static subcompile mode flag and *.pm Perl module input file, dying' . "\n";
+            }
+            elsif ($modes->{subcompile} eq 'DYNAMIC') {
+                $output_file_name_groups->[$i]->{PMC} = $output_file_name_path_prefix . '.pmc';
+            }
         }
 
         # all CPP ops modes require CPP output files; H output files may optionally be generated as needed
@@ -622,21 +662,36 @@ our void $cpp_to_xsbinary__subcompile = sub {
     ( my string_hashref $cpp_output_file_name_group, my string_hashref $modes ) = @_;
 
 #    RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), received $cpp_output_file_name_group =} . "\n" . Dumper($cpp_output_file_name_group) . "\n" );
-    RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), received $modes =} . "\n" . Dumper($modes) . "\n" );
-#    die 'TMP DEBUG';
+#    RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), received $modes =} . "\n" . Dumper($modes) . "\n" );
 
     if ( $modes->{_input_file_name} =~ /[.]pl$/xms ) {
         RPerl::verbose('SUBCOMPILE:         Generate binary...     ');
 
-# START HERE: implement 5 subcompile modes instead of just DYNAMIC as currently
-# START HERE: implement 5 subcompile modes instead of just DYNAMIC as currently
-# START HERE: implement 5 subcompile modes instead of just DYNAMIC as currently
+        if ($modes->{subcompile} eq 'OFF') {
+            croak 'ERROR ECOCOSU00, COMPILER, SUBCOMPILE: Received incorrect subcompile mode OFF while inside subcompile subroutine, croaking';
+        }
+        elsif ( ($modes->{subcompile} ne 'ASSEMBLE') and 
+                ($modes->{subcompile} ne 'ARCHIVE') and 
+                ($modes->{subcompile} ne 'SHARED') and 
+                ($modes->{subcompile} ne 'STATIC') and 
+                ($modes->{subcompile} ne 'DYNAMIC')) {
+            croak 'ERROR ECOCOSU01, COMPILER, SUBCOMPILE: Received invalid subcompile mode ' . q{'} . $modes->{subcompile} . q{'} . 
+                ' while inside subcompile subroutine, croaking';
+        }
 
         my string $subcompile_command = $modes->{CXX};
 
-        # DEV NOTE: this is a newer GCC command-line option, the old -lpthread option doesn't seem to work;
-        # not in original Inline::CPP subcompile command
-        $subcompile_command .= q{ } . '-pthread';    
+        if (($modes->{subcompile} eq 'ASSEMBLE') or 
+            ($modes->{subcompile} eq 'ARCHIVE')) {
+            # stop the subcompiler after the assemble phase, output .o file; not in original Inline::CPP subcompile command
+            $subcompile_command .= q{ } . '-c';    
+        }
+        elsif (($modes->{subcompile} eq 'STATIC') or 
+            ($modes->{subcompile} eq 'DYNAMIC')) {
+            # Perl requires pthreads, at least Perls compiled with thread support do; not in original Inline::CPP subcompile command
+            # NEED ANSWER: test for non-threaded Perl to avoid including pthread support?
+            $subcompile_command .= q{ } . '-pthread';    
+        }
 
         my string $ccflags = [ config_re('ccflags') ]->[0];
         substr $ccflags, 0,  9, q{};                 # remove leading ccflags='
@@ -655,7 +710,7 @@ our void $cpp_to_xsbinary__subcompile = sub {
         $subcompile_command .= q{ } . '-Ilib';
 
         $subcompile_command .= q{ } . $RPerl::Inline::CCFLAGSEX;
-        $subcompile_command .= q{ } . '-D__' . $modes->{types} . '__TYPES';    # command-line equivalent of #define __PERL__TYPES or #define__CPP__TYPES
+        $subcompile_command .= q{ } . '-D__' . $modes->{types} . '__TYPES';    # same as #define __PERL__TYPES or #define__CPP__TYPES; don't just use hard-coded $RPerl::TYPES_CCFLAG
         $subcompile_command .= q{ } . $RPerl::Inline::ARGS{optimize};
 
         $subcompile_command .= q{ } . '-DVERSION=\"0.00\" -DXS_VERSION=\"0.00\"';    # NEED ANSWER: what does this do?
@@ -666,15 +721,42 @@ our void $cpp_to_xsbinary__subcompile = sub {
         $subcompile_command .= q{ } . $cccdlflags;
 
         if ( $RPerl::CORE_PATH eq q{} ) {
-            croak 'ERROR ECOCOSU00, COMPILER, SUBCOMPILE: Perl source code CORE directory or CORE/perl.h file not found in @INC path listing, croaking';
+            croak 'ERROR ECOCOSU02, COMPILER, SUBCOMPILE: Perl source code CORE directory or CORE/perl.h file not found in @INC path listing, croaking';
         }
         $subcompile_command .= q{ } . '"-I' . $RPerl::CORE_PATH . '"';
 
         $subcompile_command .= q{ } . $cpp_output_file_name_group->{CPP};
-        $subcompile_command .= q{ } . '-o ' . $cpp_output_file_name_group->{EXE};
-        $subcompile_command .= q{ } . '-lperl';                                      # not in original Inline::CPP subcompile command
+        $subcompile_command .= q{ } . '-o ';
 
-        #        RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $subcompile_command =' . "\n\n" . $subcompile_command . "\n" );
+        if (($modes->{subcompile} eq 'ASSEMBLE') or 
+            ($modes->{subcompile} eq 'ARCHIVE')) {
+            $subcompile_command .= q{ } . $cpp_output_file_name_group->{O};
+        }
+        elsif ($modes->{subcompile} eq 'SHARED') {
+            $subcompile_command .= q{ } . $cpp_output_file_name_group->{SO};
+        }
+        elsif (($modes->{subcompile} eq 'STATIC') or 
+               ($modes->{subcompile} eq 'DYNAMIC')) {
+            $subcompile_command .= q{ } . $cpp_output_file_name_group->{EXE};
+        }
+
+        if ($modes->{subcompile} eq 'SHARED') {
+            $subcompile_command .= q{ } . '-shared';
+        }
+        elsif ($modes->{subcompile} eq 'STATIC') {
+            $subcompile_command .= q{ } . '-static';
+        }
+
+        if (($modes->{subcompile} eq 'STATIC') or 
+            ($modes->{subcompile} eq 'DYNAMIC')) {
+            $subcompile_command .= q{ } . '-lperl';  # not in original Inline::CPP subcompile command
+        }
+
+        if ($modes->{subcompile} eq 'STATIC') {
+            $subcompile_command .= q{ } . '-lcrypt';  # not in original Inline::CPP subcompile command
+        }
+
+#        RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $subcompile_command =' . "\n\n" . $subcompile_command . "\n" );
 
         # ACTUALLY RUN SUBCOMPILE COMMAND
         my $pid = open3( 0, \*SUBCOMPILE_STDOUT, \*SUBCOMPILE_STDERR, $subcompile_command );    # disable STDIN w/ 0
@@ -718,7 +800,7 @@ our void $cpp_to_xsbinary__subcompile = sub {
                 RPerl::diag( '[[[ SUBCOMPILE STDERR ]]]' . "\n\n" . $subcompile_command_stderr . "\n" );
             }
             if ( $test_exit_status == 0 ) {  # UNIX process return code 0, success
-                RPerl::warning('WARNING WCOCOSU01, COMPILER, SUBCOMPILE: C++ compiler returned success code but produced output which may indicate an error,' . "\n" . 
+                RPerl::warning('WARNING WCOCOSU00, COMPILER, SUBCOMPILE: C++ compiler returned success code but produced output which may indicate an error,' . "\n" . 
                 'please run again with `rperl -D` command or RPERL_DEBUG=1 environmental variable for error messages or other output if none appear above' . "\n");
             }
         }
@@ -726,7 +808,7 @@ our void $cpp_to_xsbinary__subcompile = sub {
         if ( $test_exit_status ) {  # UNIX process return code not 0, error
             if (not ($subcompile_command_stdout_content or $subcompile_command_stderr_content)) 
                 { RPerl::diag( "\n" . '[[[ SUBCOMPILE STDOUT & STDERR ARE BOTH EMPTY ]]]' . "\n\n" ); } 
-            croak 'ERROR ECOCOSU02, COMPILER, SUBCOMPILE: C++ compiler returned error code,' . "\n" . 
+            croak 'ERROR ECOCOSU03, COMPILER, SUBCOMPILE: C++ compiler returned error code,' . "\n" . 
             'please run again with `rperl -D` command or RPERL_DEBUG=1 environmental variable for error messages if none appear above,' . "\n" . 
             'croaking';
         }

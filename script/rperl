@@ -114,8 +114,7 @@ sub verify_and_default_modes {
         my string_hashref $modes_default,
         my arrayref_hashref $modes_supported,
         my integer $dependencies_flag,
-        my integer $uncompile_source_flag,
-        my integer $uncompile_all_flag,
+        my integer $uncompile_flag,
         my integer $compile_flag,
         my integer $subcompile_assemble_flag,
         my integer $subcompile_archive_flag,
@@ -123,7 +122,8 @@ sub verify_and_default_modes {
         my integer $subcompile_static_flag,
         my integer $subcompile_CXX,
         my integer $execute_flag,
-        my integer $test_flag
+        my integer $test_flag,
+        my string_arrayref $input_file_names
     ) = @_;
 
     if ( defined $dependencies_flag ) {
@@ -135,8 +135,8 @@ sub verify_and_default_modes {
         }
     }
 
-    if ( defined $uncompile_source_flag ) {
-        if ($uncompile_source_flag) {
+    if ( defined $uncompile_flag ) {
+        if ($uncompile_flag) {
             if ( ( defined $compile_flag ) and $compile_flag ) {
                 die 'ERROR EARG09: Incompatible command-line option flags provided, both --uncompile and --compile, dying' . "\n";
             }
@@ -158,40 +158,10 @@ sub verify_and_default_modes {
             if ( ( defined $test_flag ) and $test_flag ) {
                 die 'ERROR EARG09: Incompatible command-line option flags provided, both --uncompile and --test, dying' . "\n";
             }
-            $modes->{uncompile} = 'SOURCE';
-            $modes->{compile}   = 'OFF';
-            $modes->{execute}   = 'OFF';
-        }
-        else {
-            $modes->{uncompile} = 'OFF';
-        }
-    }
-
-    if ( defined $uncompile_all_flag ) {
-        if ($uncompile_all_flag) {
-            if ( ( defined $compile_flag ) and $compile_flag ) {
-                die 'ERROR EARG10: Incompatible command-line option flags provided, both --Uncompile and --compile, dying' . "\n";
-            }
-            if ( ( defined $subcompile_assemble_flag ) and $subcompile_assemble_flag ) {
-                die 'ERROR EARG10: Incompatible command-line option flags provided, both --Uncompile and --assemble, dying' . "\n";
-            }
-            if ( ( defined $subcompile_archive_flag ) and $subcompile_archive_flag ) {
-                die 'ERROR EARG10: Incompatible command-line option flags provided, both --Uncompile and --archive, dying' . "\n";
-            }
-            if ( ( defined $subcompile_shared_flag ) and $subcompile_shared_flag ) {
-                die 'ERROR EARG10: Incompatible command-line option flags provided, both --Uncompile and --shared, dying' . "\n";
-            }
-            if ( ( defined $subcompile_static_flag ) and $subcompile_static_flag ) {
-                die 'ERROR EARG10: Incompatible command-line option flags provided, both --Uncompile and --static, dying' . "\n";
-            }
-            if ( ( defined $execute_flag ) and $execute_flag ) {
-                die 'ERROR EARG10: Incompatible command-line option flags provided, both --Uncompile and --execute, dying' . "\n";
-            }
-            if ( ( defined $test_flag ) and $test_flag ) {
-                die 'ERROR EARG10: Incompatible command-line option flags provided, both --Uncompile and --test, dying' . "\n";
-            }
-            $modes->{uncompile} = 'ALL';
-            $modes->{compile}   = 'OFF';
+            if ($uncompile_flag == 1) { $modes->{uncompile} = 'SOURCE'; }
+            if ($uncompile_flag == 2) { $modes->{uncompile} = 'SOURCE_BINARY'; }
+            if ($uncompile_flag == 3) { $modes->{uncompile} = 'SOURCE_BINARY_INLINE'; }
+#            $modes->{compile}   = 'OFF';  # compile mode is utilized in Compiler::generate_output_file_names()
             $modes->{execute}   = 'OFF';
         }
         else {
@@ -205,16 +175,16 @@ sub verify_and_default_modes {
         }
         else {    # --nocompile command-line argument (option) disables SAVE & SUBCOMPILE steps, PARSE & GENERATE remain enabled
             if (( defined $subcompile_assemble_flag ) and $subcompile_assemble_flag ) {
-                die 'ERROR EARG11: Incompatible command-line option flags provided, both --nocompile and --assemble, dying' . "\n";
+                die 'ERROR EARG10: Incompatible command-line option flags provided, both --nocompile and --assemble, dying' . "\n";
             }
             if ( ( defined $subcompile_archive_flag ) and $subcompile_archive_flag ) {
-                die 'ERROR EARG11: Incompatible command-line option flags provided, both --nocompile and --archive, dying' . "\n";
+                die 'ERROR EARG10: Incompatible command-line option flags provided, both --nocompile and --archive, dying' . "\n";
             }
             if ( ( defined $subcompile_shared_flag ) and $subcompile_shared_flag ) {
-                die 'ERROR EARG11: Incompatible command-line option flags provided, both --nocompile and --shared, dying' . "\n";
+                die 'ERROR EARG10: Incompatible command-line option flags provided, both --nocompile and --shared, dying' . "\n";
             }
             if ( ( defined $subcompile_static_flag ) and $subcompile_static_flag ) {
-                die 'ERROR EARG11: Incompatible command-line option flags provided, both --nocompile and --static, dying' . "\n";
+                die 'ERROR EARG10: Incompatible command-line option flags provided, both --nocompile and --static, dying' . "\n";
             }
             $modes->{compile} = 'GENERATE';
         }
@@ -223,19 +193,19 @@ sub verify_and_default_modes {
     # assemble mode is CPPOPS_CPPTYPES_SUBCOMPILE_ASSEMBLE; flag ignored if false
     if (( defined $subcompile_assemble_flag ) and $subcompile_assemble_flag ) {
         if ( ( defined $subcompile_archive_flag ) and $subcompile_archive_flag ) {
-            die 'ERROR EARG12: Incompatible command-line option flags provided, both --assemble and --archive, dying' . "\n";
+            die 'ERROR EARG11: Incompatible command-line option flags provided, both --assemble and --archive, dying' . "\n";
         }
         if ( ( defined $subcompile_shared_flag ) and $subcompile_shared_flag ) {
-            die 'ERROR EARG12: Incompatible command-line option flags provided, both --assemble and --shared, dying' . "\n";
+            die 'ERROR EARG11: Incompatible command-line option flags provided, both --assemble and --shared, dying' . "\n";
         }
         if ( ( defined $subcompile_static_flag ) and $subcompile_static_flag ) {
-            die 'ERROR EARG12: Incompatible command-line option flags provided, both --assemble and --static, dying' . "\n";
+            die 'ERROR EARG11: Incompatible command-line option flags provided, both --assemble and --static, dying' . "\n";
         }
         if ( ( defined $execute_flag ) and $execute_flag ) {
-            die 'ERROR EARG12: Incompatible command-line option flags provided, both --assemble and --execute, dying' . "\n";
+            die 'ERROR EARG11: Incompatible command-line option flags provided, both --assemble and --execute, dying' . "\n";
         }
         if ( ( defined $test_flag ) and $test_flag ) {
-            die 'ERROR EARG12: Incompatible command-line option flags provided, both --assemble and --test, dying' . "\n";
+            die 'ERROR EARG11: Incompatible command-line option flags provided, both --assemble and --test, dying' . "\n";
         }
         $modes->{compile}   = 'SUBCOMPILE';
         $modes->{subcompile} = 'ASSEMBLE';
@@ -245,16 +215,16 @@ sub verify_and_default_modes {
     # archive mode is CPPOPS_CPPTYPES_SUBCOMPILE_ARCHIVE; flag ignored if false
     if (( defined $subcompile_archive_flag ) and $subcompile_archive_flag ) {
         if ( ( defined $subcompile_shared_flag ) and $subcompile_shared_flag ) {
-            die 'ERROR EARG13: Incompatible command-line option flags provided, both --archive and --shared, dying' . "\n";
+            die 'ERROR EARG12: Incompatible command-line option flags provided, both --archive and --shared, dying' . "\n";
         }
         if ( ( defined $subcompile_static_flag ) and $subcompile_static_flag ) {
-            die 'ERROR EARG13: Incompatible command-line option flags provided, both --archive and --static, dying' . "\n";
+            die 'ERROR EARG12: Incompatible command-line option flags provided, both --archive and --static, dying' . "\n";
         }
         if ( ( defined $execute_flag ) and $execute_flag ) {
-            die 'ERROR EARG13: Incompatible command-line option flags provided, both --archive and --execute, dying' . "\n";
+            die 'ERROR EARG12: Incompatible command-line option flags provided, both --archive and --execute, dying' . "\n";
         }
         if ( ( defined $test_flag ) and $test_flag ) {
-            die 'ERROR EARG13: Incompatible command-line option flags provided, both --archive and --test, dying' . "\n";
+            die 'ERROR EARG12: Incompatible command-line option flags provided, both --archive and --test, dying' . "\n";
         }
         $modes->{compile}   = 'SUBCOMPILE';
         $modes->{subcompile} = 'ARCHIVE';
@@ -264,13 +234,13 @@ sub verify_and_default_modes {
     # shared mode is CPPOPS_CPPTYPES_SUBCOMPILE_SHARED; flag ignored if false
     if (( defined $subcompile_shared_flag ) and $subcompile_shared_flag ) {
         if ( ( defined $subcompile_static_flag ) and $subcompile_static_flag ) {
-            die 'ERROR EARG14: Incompatible command-line option flags provided, both --shared and --static, dying' . "\n";
+            die 'ERROR EARG13: Incompatible command-line option flags provided, both --shared and --static, dying' . "\n";
         }
         if ( ( defined $execute_flag ) and $execute_flag ) {
-            die 'ERROR EARG14: Incompatible command-line option flags provided, both --shared and --execute, dying' . "\n";
+            die 'ERROR EARG13: Incompatible command-line option flags provided, both --shared and --execute, dying' . "\n";
         }
         if ( ( defined $test_flag ) and $test_flag ) {
-            die 'ERROR EARG14: Incompatible command-line option flags provided, both --shared and --test, dying' . "\n";
+            die 'ERROR EARG13: Incompatible command-line option flags provided, both --shared and --test, dying' . "\n";
         }
         $modes->{compile}   = 'SUBCOMPILE';
         $modes->{subcompile} = 'SHARED';
@@ -281,7 +251,12 @@ sub verify_and_default_modes {
     if (( defined $subcompile_static_flag ) and $subcompile_static_flag ) {
         if ($subcompile_static_flag) {
             if ( ( defined $test_flag ) and $test_flag ) {
-                die 'ERROR EARG15: Incompatible command-line option flags provided, both --static and --test, dying' . "\n";
+                die 'ERROR EARG14: Incompatible command-line option flags provided, both --static and --test, dying' . "\n";
+            }
+            foreach my string $input_file_name (@{$input_file_names}) {
+                if ( $input_file_name =~ /[.]pm$/xms ) {
+                    die 'ERROR EARG15: Incompatible command-line options provided, both --static subcompile mode flag and *.pm Perl module input file(s), dying' . "\n";
+                }
             }
             $modes->{compile}   = 'SUBCOMPILE';
             $modes->{subcompile} = 'STATIC';
@@ -315,11 +290,6 @@ sub verify_and_default_modes {
         $modes->{ops}     = 'PERL';
         $modes->{types}   = 'PERL';
         $modes->{compile} = 'GENERATE';
-    }
-
-    # can't subcompile if we don't subcompile
-    if ($modes->{compile} ne 'SUBCOMPILE') {
-        $modes->{subcompile} = 'OFF';
     }
 
     # must put Perl variables into environmental variables for the values to be properly utilized,
@@ -359,6 +329,11 @@ sub verify_and_default_modes {
         if ( not( exists $modes->{$mode_default_key} ) ) {
             $modes->{$mode_default_key} = $modes_default->{$mode_default_key};
         }
+    }
+
+    # can't subcompile if we don't subcompile
+    if ($modes->{compile} ne 'SUBCOMPILE') {
+        $modes->{subcompile} = 'OFF';
     }
 
     1;    # DEV NOTE: Perl::Critic BUG!  must have this '1;' to avoid false positive ProhibitPostfixControls & RequireFinalReturn
@@ -450,8 +425,7 @@ sub store_unlabeled_options {
 # print value of option flags
 sub verbose_flags {
     (   my integer $dependencies_flag,
-        my integer $uncompile_source_flag,
-        my integer $uncompile_all_flag,
+        my integer $uncompile_flag,
         my integer $compile_flag,
         my integer $subcompile_assemble_flag,
         my integer $subcompile_archive_flag,
@@ -466,11 +440,8 @@ sub verbose_flags {
     if ( defined $dependencies_flag ) {
         RPerl::verbose( 'Dependencies Flag.... ' . $dependencies_flag . "\n" );
     }
-    if ( defined $uncompile_source_flag ) {
-        RPerl::verbose( 'Uncompile Source Flag ' . $uncompile_source_flag . "\n" );
-    }
-    if ( defined $uncompile_all_flag ) {
-        RPerl::verbose( 'Uncompile All Flag... ' . $uncompile_all_flag . "\n" );
+    if ( defined $uncompile_flag ) {
+        RPerl::verbose( 'Uncompile Flag....... ' . $uncompile_flag . "\n" );
     }
     if ( defined $compile_flag ) {
         RPerl::verbose( 'Compile Flag......... ' . $compile_flag . "\n" );
@@ -527,11 +498,13 @@ sub stringify_output_file_name_group {
 # [[[ CALL UNCOMPILER ]]]
 # [[[ CALL UNCOMPILER ]]]
 
+# NEED MOVE to Compiler.pm?
 sub depends_delete {
     (   my string_arrayref $input_file_names,
         my hashref_arrayref $output_file_name_groups,
         my string_arrayref $output_file_name_prefixes,
         my integer $input_files_count,
+        my hashref_hashref $filename_suffixes_supported,
         my string_hashref $modes
     ) = @_;
 
@@ -587,8 +560,9 @@ sub depends_delete {
             diag_multi_file_settings( $input_file_name_deps, $output_file_name_dep_groups, $input_file_and_deps_count, $modes );
         }
 
-        # potentially delete files other than _Inline/ unless (module .pm input file and BINARY mode)
-        if (not (($input_file_name =~ /[.]pm$/xms) and ($modes->{uncompile} eq 'BINARY'))) {
+        # potentially delete OUTPUT_SOURCE and OUTPUT_BINARY files (not _Inline/);
+        # skip if INLINE only mode; or *.pm Perl Module input file and DYNAMIC subcompile mode (generates _Inline/ only) and not any SOURCE uncompile modes
+        if (not (($modes->{uncompile} eq 'INLINE') or (($input_file_name =~ /[.]pm$/xms) and ($modes->{subcompile} eq 'DYNAMIC') and ($modes->{uncompile} !~ m/SOURCE/gxms)) )) {
             # [[[ INNER UNCOMPILE LOOP, 1 INPUT FILE & ITS DEPENDENCIES ]]]
             for my $j ( 0 .. $input_file_deps_count ) {
                 my string $input_file_name_dep                = $input_file_name_deps->[$j];
@@ -604,10 +578,10 @@ sub depends_delete {
 #                RPerl::diag( 'in depends_delete(), have ( keys %{$output_file_name_dep_group} ) = ' . "\n" . Dumper(keys %{$output_file_name_dep_group}) . "\n" );
                 foreach my string $output_file_name_key ( keys %{$output_file_name_dep_group} ) {
                     if ((substr $output_file_name_key, 0, 1) eq '_') { next; }
-                    if  (                                      ($modes->{uncompile} eq 'ALL') or 
-                        (($input_file_name =~ /[.]pl$/xms) and ($modes->{uncompile} eq 'SOURCE') and ($output_file_name_key ne 'EXE')) or
-                        (($input_file_name =~ /[.]pl$/xms) and ($modes->{uncompile} eq 'BINARY') and ($output_file_name_key eq 'EXE')) or
-                         ($input_file_name =~ /[.]pm$/xms)) {
+                    if  (($modes->{uncompile} eq 'SOURCE_BINARY_INLINE') or 
+                         ($modes->{uncompile} eq 'SOURCE_BINARY') or 
+                        (($modes->{uncompile} eq 'SOURCE') and (exists $filename_suffixes_supported->{OUTPUT_SOURCE}->{$output_file_name_key})) or
+                        (($modes->{uncompile} eq 'BINARY') and (exists $filename_suffixes_supported->{OUTPUT_BINARY}->{$output_file_name_key}))) {
                         my string $output_file_name = $output_file_name_dep_group->{$output_file_name_key};
                         if ( -f $output_file_name ) {
                             unlink $output_file_name
@@ -619,8 +593,11 @@ sub depends_delete {
             }
         }
 
-        # delete _Inline/ if (ALL mode or (module .pm input file and BINARY mode)) and _Inline/ exists
-        if ((($modes->{uncompile} eq 'ALL') or (($input_file_name =~ /[.]pm$/xms) and ($modes->{uncompile} eq 'BINARY'))) and ( -d '_Inline' )){
+        # delete _Inline/ if (any INLINE mode or (*.pm Perl module input file and DYNAMIC subcompile mode and any BINARY uncompile mode)) and _Inline/ exists
+        if (    (    ($modes->{uncompile} =~ m/INLINE/gxms) or 
+                     (($input_file_name =~ /[.]pm$/xms) and ($modes->{subcompile} eq 'DYNAMIC') and ($modes->{uncompile} =~ m/BINARY/gxms))
+                ) and 
+                ( -d '_Inline' )) {
             RPerl::verbose( ( "\n" x ( $input_files_count - 1 ) ) . 'UNLINK PHASE 1:     Delete _Inline/ from disk...' );
             remove_tree( '_Inline', { error => \my $error_hashes } );
             if ( @{$error_hashes} ) {
@@ -855,25 +832,27 @@ sub depends_parse_generate_save_subcompile_execute {
 # [[[ ACTUALLY RUN CODE ]]]
 # [[[ ACTUALLY RUN CODE ]]]
 
-my integer $help_flag                         = 0;
-my integer $version_flag                      = 0;
-my integer $vversions_flag                     = 0;
-my integer $dependencies_flag                 = undef;
-my integer $uncompile_source_flag             = undef;
-my integer $uncompile_all_flag                = undef;
-my integer $compile_flag                      = undef;
-my integer $subcompile_assemble_flag          = undef;
-my integer $subcompile_archive_flag           = undef;
-my integer $subcompile_shared_flag            = undef;
-my integer $subcompile_static_flag            = undef;
-my string  $subcompile_CXX                    = undef;
-my integer $execute_flag                      = undef;
-my integer $test_flag                         = undef;
-my string_arrayref $input_file_names          = [];
-my string_arrayref $output_file_name_prefixes = [];
-my hashref_arrayref $output_file_name_groups  = [];
-my string_hashref $modes                      = {};      # can't store defaults here, erased by GetOptions()
-my string_hashref $modes_default              = {        # default to CPPOPS_CPPTYPES_CHECKTRACE_SUBCOMPILE_EXECUTE_LABEL in C++ output code
+my integer $help_flag                           = 0;
+my integer $version_flag                        = 0;
+my integer $vversions_flag                      = 0;
+my integer $dependencies_flag                   = undef;
+my integer $uncompile_flag                      = undef;
+my integer $uncompile_source_flag               = undef;
+my integer $uncompile_source_binary_flag        = undef;
+my integer $uncompile_source_binary_inline_flag = undef;
+my integer $compile_flag                        = undef;
+my integer $subcompile_assemble_flag            = undef;
+my integer $subcompile_archive_flag             = undef;
+my integer $subcompile_shared_flag              = undef;
+my integer $subcompile_static_flag              = undef;
+my string  $subcompile_CXX                      = undef;
+my integer $execute_flag                        = undef;
+my integer $test_flag                           = undef;
+my string_arrayref $input_file_names            = [];
+my string_arrayref $output_file_name_prefixes   = [];
+my hashref_arrayref $output_file_name_groups    = [];
+my string_hashref $modes                        = {};      # can't store defaults here, erased by GetOptions()
+my string_hashref $modes_default                = {        # default to CPPOPS_CPPTYPES_CHECKTRACE_SUBCOMPILE_EXECUTE_LABEL in C++ output code
     dependencies => 'ON',
     ops          => 'CPP',
     types        => 'CPP',
@@ -891,12 +870,19 @@ my arrayref_hashref $modes_supported = {
     ops          => [ 'PERL', 'CPP' ],
     types        => [ 'PERL', 'CPP', 'DUAL' ],
     check        => [ 'OFF', 'ON', 'TRACE' ],
-    uncompile    => [ 'OFF', 'SOURCE', 'BINARY', 'ALL' ],
+    uncompile    => [ 'OFF', 'SOURCE', 'BINARY', 'INLINE', 'SOURCE_BINARY', 'SOURCE_BINARY_INLINE' ],
     compile      => [ 'OFF', 'PARSE', 'GENERATE', 'SAVE', 'SUBCOMPILE' ],
     subcompile   => [ 'OFF', 'ASSEMBLE', 'ARCHIVE', 'SHARED', 'STATIC', 'DYNAMIC' ],
     CXX          => undef,  # accept any value
     execute      => [ 'OFF', 'ON' ],
     label        => [ 'OFF', 'ON' ],
+};
+#my string_arrayref_hashref_hashref $filename_suffixes_supported = {
+my hashref_hashref $filename_suffixes_supported = {
+    INPUT_SOURCE => { PL => ['.pl'], PM => ['.pm'] },
+    OUTPUT_SOURCE => { CPP => ['.cpp'], H => ['.h'], PMC => ['.pmc'] },
+    OUTPUT_BINARY => { O => ['.o'], A => ['.a'], SO => ['.so'], EXE => [q{}, '.exe']}
+#    OUTPUT_BINARY => { O => ['.o', '.lib'], A => ['.a', '.lib'], SO => ['.so', '.dll'], EXE => [q{}, '.exe']}
 };
 my integer $input_files_count = 0;
 
@@ -909,8 +895,11 @@ GetOptions(
     'Verbose!'      => \$RPerl::VERBOSE,
     'Debug!'        => \$RPerl::DEBUG,
     'Warnings!'     => \$RPerl::WARNINGS,
+    'u!'            => \$uncompile_source_flag,
     'uncompile!'    => \$uncompile_source_flag,
-    'Uncompile!'    => \$uncompile_all_flag,
+    'uu!'           => \$uncompile_source_binary_flag,
+    'uuncompile!'   => \$uncompile_source_binary_flag,
+    'uuuncompile!'  => \$uncompile_source_binary_inline_flag,
     'compile!'      => \$compile_flag,
     'assemble'      => \$subcompile_assemble_flag,
     'archive'       => \$subcompile_archive_flag,
@@ -954,20 +943,25 @@ EOL
     exit;
 }
 
+# pre-aggregate values of uncompile mode flags
+if (defined $uncompile_source_flag) { if ($uncompile_source_flag) { $uncompile_flag = 1; } else { $uncompile_flag = 0; } }
+if (defined $uncompile_source_binary_flag) { if ($uncompile_source_binary_flag) { $uncompile_flag = 2; } else { $uncompile_flag = 0; } }
+if (defined $uncompile_source_binary_inline_flag) { if ($uncompile_source_binary_inline_flag) { $uncompile_flag = 3; } else { $uncompile_flag = 0; } }
+
 verbose_flags(
-    $dependencies_flag, $uncompile_source_flag, $uncompile_all_flag, $compile_flag, $subcompile_assemble_flag,
+    $dependencies_flag, $uncompile_flag, $compile_flag, $subcompile_assemble_flag,
     $subcompile_archive_flag,      $subcompile_shared_flag,           $subcompile_static_flag,        $execute_flag, $test_flag
 );
 $input_file_names  = accept_and_verify_input_files( $input_file_names, $input_file_names_unlabeled, $modes );
 $input_files_count = scalar @{$input_file_names};
 $modes             = verify_and_default_modes(
-    $modes,              $modes_default, $modes_supported, $dependencies_flag, $uncompile_source_flag,
-    $uncompile_all_flag, $compile_flag,  $subcompile_assemble_flag,   $subcompile_archive_flag,      $subcompile_shared_flag,
-    $subcompile_static_flag, $subcompile_CXX,        $execute_flag,  $test_flag
+    $modes,              $modes_default, $modes_supported, $dependencies_flag, $uncompile_flag, $compile_flag,  
+    $subcompile_assemble_flag,   $subcompile_archive_flag,      $subcompile_shared_flag,
+    $subcompile_static_flag, $subcompile_CXX,        $execute_flag,  $test_flag, $input_file_names
 );
 $output_file_name_groups = generate_output_file_names( $input_file_names, $output_file_name_prefixes, $input_files_count, $modes );
 verbose_multi_file_settings( $input_file_names, $output_file_name_groups, $input_files_count, $modes );
-if ( $modes->{uncompile} ne 'OFF' ) { depends_delete( $input_file_names, $output_file_name_groups, $output_file_name_prefixes, $input_files_count, $modes ); }
+if ( $modes->{uncompile} ne 'OFF' ) { depends_delete( $input_file_names, $output_file_name_groups, $output_file_name_prefixes, $input_files_count, $filename_suffixes_supported, $modes ); }
 else { depends_parse_generate_save_subcompile_execute( $input_file_names, $output_file_name_groups, $output_file_name_prefixes, $input_files_count, $modes ); }
 
 __END__

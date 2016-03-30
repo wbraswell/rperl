@@ -1,6 +1,6 @@
 DONE
 .pl input files, initial support
--u -U --mode uncompile=(OFF,SOURCE,BINARY,ALL)
+-u -uu -uuu --mode uncompile=(OFF,SOURCE,BINARY,INLINE,SOURCE_BINARY,SOURCE_BINARY_INLINE)
 -vv --vversions  # SAME AS: perl -V
 -assemble        # SAME AS: gcc -c
 -archive         # SAME AS: ar
@@ -11,11 +11,12 @@ DONE
 
 DOING
 new flags to set up compiler behavior in Compiler.pm; 
+delete the intermediate .o files for ARCHIVE subcompile mode, marked as '(temporary)' in $output_file_name_groups->[$i]->{_O_label};
+delete old copies of output files before saving new output files;
 execute via compiled copy not interpreted; 
 update rperl -h w/ new options
 print comma-vs-dot to correct output; 
 cpp output file post-processing for source code text alignment
-
 
 Learning RPerl
     use unsigned_integer instead of integer in ex2.6 & 2.7, check all other exercises as well, change error checking accordingly
