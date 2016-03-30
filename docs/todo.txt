@@ -10,9 +10,7 @@ DONE
 -CXX             # SAME AS: makefile CXX
 
 DOING
-new flags to set up compiler behavior in Compiler.pm; 
-delete the intermediate .o files for ARCHIVE subcompile mode, marked as '(temporary)' in $output_file_name_groups->[$i]->{_O_label};
-delete old copies of output files before saving new output files;
+chmod a-x *.so output if not on HP-UX;
 execute via compiled copy not interpreted; 
 update rperl -h w/ new options
 print comma-vs-dot to correct output; 

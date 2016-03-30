@@ -140,18 +140,19 @@ sub verify_and_default_modes {
             if ( ( defined $compile_flag ) and $compile_flag ) {
                 die 'ERROR EARG09: Incompatible command-line option flags provided, both --uncompile and --compile, dying' . "\n";
             }
-            if ( ( defined $subcompile_assemble_flag ) and $subcompile_assemble_flag ) {
-                die 'ERROR EARG09: Incompatible command-line option flags provided, both --uncompile and --assemble, dying' . "\n";
-            }
-            if ( ( defined $subcompile_archive_flag ) and $subcompile_archive_flag ) {
-                die 'ERROR EARG09: Incompatible command-line option flags provided, both --uncompile and --archive, dying' . "\n";
-            }
-            if ( ( defined $subcompile_shared_flag ) and $subcompile_shared_flag ) {
-                die 'ERROR EARG09: Incompatible command-line option flags provided, both --uncompile and --shared, dying' . "\n";
-            }
-            if ( ( defined $subcompile_static_flag ) and $subcompile_static_flag ) {
-                die 'ERROR EARG09: Incompatible command-line option flags provided, both --uncompile and --static, dying' . "\n";
-            }
+            # subcompile mode is used in Compiler::generate_output_file_names() to determine which files to delete, allow flags to set subcompile mode
+#            if ( ( defined $subcompile_assemble_flag ) and $subcompile_assemble_flag ) {
+#                die 'ERROR EARG09: Incompatible command-line option flags provided, both --uncompile and --assemble, dying' . "\n";
+#            }
+#            if ( ( defined $subcompile_archive_flag ) and $subcompile_archive_flag ) {
+#                die 'ERROR EARG09: Incompatible command-line option flags provided, both --uncompile and --archive, dying' . "\n";
+#            }
+#            if ( ( defined $subcompile_shared_flag ) and $subcompile_shared_flag ) {
+#                die 'ERROR EARG09: Incompatible command-line option flags provided, both --uncompile and --shared, dying' . "\n";
+#            }
+#            if ( ( defined $subcompile_static_flag ) and $subcompile_static_flag ) {
+#                die 'ERROR EARG09: Incompatible command-line option flags provided, both --uncompile and --static, dying' . "\n";
+#            }
             if ( ( defined $execute_flag ) and $execute_flag ) {
                 die 'ERROR EARG09: Incompatible command-line option flags provided, both --uncompile and --execute, dying' . "\n";
             }
@@ -161,7 +162,9 @@ sub verify_and_default_modes {
             if ($uncompile_flag == 1) { $modes->{uncompile} = 'SOURCE'; }
             if ($uncompile_flag == 2) { $modes->{uncompile} = 'SOURCE_BINARY'; }
             if ($uncompile_flag == 3) { $modes->{uncompile} = 'SOURCE_BINARY_INLINE'; }
-#            $modes->{compile}   = 'OFF';  # compile mode is utilized in Compiler::generate_output_file_names()
+            # subcompile mode is used in Compiler::generate_output_file_names() to determine which files to delete,
+            # leave compile mode in tact to leave subcompile mode in tact from "can't subcompile if we don't subcompile" at bottom of this subroutine
+#            $modes->{compile}   = 'OFF';
             $modes->{execute}   = 'OFF';
         }
         else {
@@ -171,7 +174,7 @@ sub verify_and_default_modes {
 
     if ( defined $compile_flag ) {
         if ($compile_flag) {
-            $modes->{compile} = 'SUBCOMPILE';
+            $modes->{compile} = 'SUBCOMPILE';  # already default, does nothing
         }
         else {    # --nocompile command-line argument (option) disables SAVE & SUBCOMPILE steps, PARSE & GENERATE remain enabled
             if (( defined $subcompile_assemble_flag ) and $subcompile_assemble_flag ) {
@@ -378,25 +381,25 @@ sub verbose_versions {
 }
 
 sub verbose_multi_file_settings {
-    ( my string_arrayref $input_file_names, my hashref_arrayref $output_file_name_groups, my integer $input_files_count, my string_hashref $modes ) = @_;
+    ( my string_arrayref $input_file_names, my hashref_arrayref $output_file_name_groups, my integer $input_files_count, my hashref_hashref $filename_suffixes_supported, my string_hashref $modes ) = @_;
     if ( $input_files_count > 1 ) {
-        RPerl::verbose( multi_file_settings( $input_file_names, $output_file_name_groups, $input_files_count, $modes ) );
+        RPerl::verbose( multi_file_settings( $input_file_names, $output_file_name_groups, $input_files_count, $filename_suffixes_supported, $modes ) );
         RPerl::verbose_pause( "\n" . 'PRESS <ENTER> TO CONTINUE' . "\n" );
     }
     return;
 }
 
 sub diag_multi_file_settings {
-    ( my string_arrayref $input_file_names, my hashref_arrayref $output_file_name_groups, my integer $input_files_count, my string_hashref $modes ) = @_;
+    ( my string_arrayref $input_file_names, my hashref_arrayref $output_file_name_groups, my integer $input_files_count, my hashref_hashref $filename_suffixes_supported, my string_hashref $modes ) = @_;
     if ( $input_files_count > 1 ) {
-        RPerl::diag( multi_file_settings( $input_file_names, $output_file_name_groups, $input_files_count, $modes ) );
+        RPerl::diag( multi_file_settings( $input_file_names, $output_file_name_groups, $input_files_count, $filename_suffixes_supported, $modes ) );
         RPerl::diag_pause( "\n" . 'PRESS <ENTER> TO CONTINUE' . "\n" );
     }
     return;
 }
 
 sub multi_file_settings {
-    ( my string_arrayref $input_file_names, my hashref_arrayref $output_file_name_groups, my integer $input_files_count, my string_hashref $modes ) = @_;
+    ( my string_arrayref $input_file_names, my hashref_arrayref $output_file_name_groups, my integer $input_files_count, my hashref_hashref $filename_suffixes_supported, my string_hashref $modes ) = @_;
     my string $retval = q{};
 
     $retval .= 'Input File(s):' . "\n";
@@ -405,7 +408,7 @@ sub multi_file_settings {
     }
     $retval .= 'Output File(s):' . "\n";
     foreach my string_hashref $output_file_name_group ( @{$output_file_name_groups} ) {
-        $retval .= q{    } . stringify_output_file_name_group($output_file_name_group) . "\n";
+        $retval .= q{    } . stringify_output_file_name_group($output_file_name_group, $filename_suffixes_supported) . "\n";
     }
     $retval .= 'Modes:' . "\n";
     foreach my string $mode_key ( keys %{$modes} ) {
@@ -467,9 +470,10 @@ sub verbose_flags {
 }
 
 sub stringify_output_file_name_group {
-    ( my string_hashref $output_file_name_group) = @_;
+    ( my string_hashref $output_file_name_group, my hashref_hashref $filename_suffixes_supported ) = @_;
+
     my string $output_file_names = q{};
-    foreach my string $suffix_key (qw(EXE PMC CPP H)) {
+    foreach my string $suffix_key (sort @{[keys %{$filename_suffixes_supported->{OUTPUT_SOURCE}}, keys %{$filename_suffixes_supported->{OUTPUT_BINARY}}]}) {
         if ( exists $output_file_name_group->{$suffix_key} ) {
             $output_file_names .= $output_file_name_group->{$suffix_key};
             if ( exists $output_file_name_group->{ '_' . $suffix_key . '_label' } ) {
@@ -494,11 +498,10 @@ sub stringify_output_file_name_group {
     return $output_file_names;
 }
 
-# [[[ CALL UNCOMPILER ]]]
-# [[[ CALL UNCOMPILER ]]]
-# [[[ CALL UNCOMPILER ]]]
+# [[[ UNCOMPILER ]]]
+# [[[ UNCOMPILER ]]]
+# [[[ UNCOMPILER ]]]
 
-# NEED MOVE to Compiler.pm?
 sub depends_delete {
     (   my string_arrayref $input_file_names,
         my hashref_arrayref $output_file_name_groups,
@@ -521,7 +524,7 @@ sub depends_delete {
         }
 
         RPerl::verbose( 'Input File:         ' . $input_file_name . "\n" );
-        RPerl::verbose( 'Output File(s):     ' . stringify_output_file_name_group($output_file_name_group) . "\n" );
+        RPerl::verbose( 'Output File(s):     ' . stringify_output_file_name_group($output_file_name_group, $filename_suffixes_supported) . "\n" );
         RPerl::verbose( 'Modes:              ops => '
                 . $modes->{ops}
                 . ', types => '
@@ -557,7 +560,7 @@ sub depends_delete {
             $output_file_name_dep_groups
                 = generate_output_file_names( $input_file_name_deps, $output_file_name_prefixes, $input_file_and_deps_count, $modes ); # generate deps output file names
             RPerl::verbose( sprintf( "%4d", $input_file_deps_count ) . ' found.' . "\n" );
-            diag_multi_file_settings( $input_file_name_deps, $output_file_name_dep_groups, $input_file_and_deps_count, $modes );
+            diag_multi_file_settings( $input_file_name_deps, $output_file_name_dep_groups, $input_file_and_deps_count, $filename_suffixes_supported, $modes );
         }
 
         # potentially delete OUTPUT_SOURCE and OUTPUT_BINARY files (not _Inline/);
@@ -569,10 +572,10 @@ sub depends_delete {
                 my string_hashref $output_file_name_dep_group = $output_file_name_dep_groups->[$j];
     
                 if ( $j < $input_file_deps_count ) {
-                    RPerl::verbose( "\n" . 'Dep Output File(s): ' . stringify_output_file_name_group($output_file_name_dep_group) . "\n" );
+                    RPerl::verbose( "\n" . 'Dep Output File(s): ' . stringify_output_file_name_group($output_file_name_dep_group, $filename_suffixes_supported) . "\n" );
                 }
                 elsif ($input_file_deps_count > 1) { 
-                    RPerl::verbose( "\n" . 'Output File(s):     ' . stringify_output_file_name_group($output_file_name_dep_group) . "\n" );
+                    RPerl::verbose( "\n" . 'Output File(s):     ' . stringify_output_file_name_group($output_file_name_dep_group), $filename_suffixes_supported . "\n" );
                 }
                 RPerl::verbose('UNLINK PHASE 0:     Delete files from disk...');
 #                RPerl::diag( 'in depends_delete(), have ( keys %{$output_file_name_dep_group} ) = ' . "\n" . Dumper(keys %{$output_file_name_dep_group}) . "\n" );
@@ -631,6 +634,7 @@ sub depends_parse_generate_save_subcompile_execute {
         my hashref_arrayref $output_file_name_groups,
         my string_arrayref $output_file_name_prefixes,
         my integer $input_files_count,
+        my hashref_hashref $filename_suffixes_supported,
         my string_hashref $modes
     ) = @_;
 
@@ -675,7 +679,7 @@ sub depends_parse_generate_save_subcompile_execute {
         }
 
         RPerl::verbose( 'Input File:         ' . $input_file_name . "\n" );
-        RPerl::verbose( 'Output File(s):     ' . stringify_output_file_name_group($output_file_name_group) . "\n" );
+        RPerl::verbose( 'Output File(s):     ' . stringify_output_file_name_group($output_file_name_group, $filename_suffixes_supported) . "\n" );
         RPerl::verbose( 'Modes:              ops => '
                 . $modes->{ops}
                 . ', types => '
@@ -712,7 +716,7 @@ sub depends_parse_generate_save_subcompile_execute {
             $output_file_name_dep_groups
                 = generate_output_file_names( $input_file_name_deps, $output_file_name_prefixes, $input_file_and_deps_count, $modes ); # generate deps output file names
             RPerl::verbose( sprintf( "%4d", $input_file_deps_count ) . ' found.' . "\n" );
-            diag_multi_file_settings( $input_file_name_deps, $output_file_name_dep_groups, $input_file_and_deps_count, $modes );
+            diag_multi_file_settings( $input_file_name_deps, $output_file_name_dep_groups, $input_file_and_deps_count, $filename_suffixes_supported, $modes );
         }
 
         if ( ( $input_file_deps_count > 0 ) and ( $modes->{compile} ne 'PARSE' ) ) {
@@ -768,10 +772,10 @@ sub depends_parse_generate_save_subcompile_execute {
                 my string_hashref $source_dep_group           = $source_dep_groups->[$j];
 
                 if ( $j < $input_file_deps_count ) {
-                    RPerl::verbose( "\n" . 'Dep Output File(s): ' . stringify_output_file_name_group($output_file_name_dep_group) . "\n" );
+                    RPerl::verbose( "\n" . 'Dep Output File(s): ' . stringify_output_file_name_group($output_file_name_dep_group, $filename_suffixes_supported) . "\n" );
                 }
                 else {
-                    RPerl::verbose( "\n" . 'Output File(s):     ' . stringify_output_file_name_group($output_file_name_dep_group) . "\n" );
+                    RPerl::verbose( "\n" . 'Output File(s):     ' . stringify_output_file_name_group($output_file_name_dep_group, $filename_suffixes_supported) . "\n" );
                 }
 
                 if ( $modes->{ops} eq 'PERL' ) {
@@ -960,9 +964,9 @@ $modes             = verify_and_default_modes(
     $subcompile_static_flag, $subcompile_CXX,        $execute_flag,  $test_flag, $input_file_names
 );
 $output_file_name_groups = generate_output_file_names( $input_file_names, $output_file_name_prefixes, $input_files_count, $modes );
-verbose_multi_file_settings( $input_file_names, $output_file_name_groups, $input_files_count, $modes );
+verbose_multi_file_settings( $input_file_names, $output_file_name_groups, $input_files_count, $filename_suffixes_supported, $modes );
 if ( $modes->{uncompile} ne 'OFF' ) { depends_delete( $input_file_names, $output_file_name_groups, $output_file_name_prefixes, $input_files_count, $filename_suffixes_supported, $modes ); }
-else { depends_parse_generate_save_subcompile_execute( $input_file_names, $output_file_name_groups, $output_file_name_prefixes, $input_files_count, $modes ); }
+else { depends_parse_generate_save_subcompile_execute( $input_file_names, $output_file_name_groups, $output_file_name_prefixes, $input_files_count, $filename_suffixes_supported, $modes ); }
 
 __END__
 =head1 NAME

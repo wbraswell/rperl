@@ -646,7 +646,11 @@ our void $save_source_files = sub {
                 #                system $astyle_path, '-q', $file_name;
                 # don't insert extra newlines, which causes accessors, mutators, and ops_types reporting subroutines to be broken into multiple lines
                 system $astyle_path, '-q', '--keep-one-line-blocks', '--keep-one-line-statements', $file_name;
-                unlink( $file_name . '.orig' );
+                if ( -f $file_name . '.orig' ) {
+                    unlink( $file_name . '.orig' )
+                        or croak( "\n" . 'ERROR ECOCOFI10, COMPILER, FILE SYSTEM: Cannot delete Artistic Style original file ' . 
+                            q{'} . $file_name . '.orig' . q{'} . ',' . "\n" . 'croaking:' . $OS_ERROR);
+                }
             }
             else {
                 RPerl::warning( 'WARNING WCVCOFO01, COMPILER, C++ CODE FORMATTING: Artistic Style command `astyle` not found, abandoning formatting' . "\n" );
@@ -756,6 +760,13 @@ our void $cpp_to_xsbinary__subcompile = sub {
             $subcompile_command .= q{ } . '-lcrypt';  # not in original Inline::CPP subcompile command
         }
 
+        if ($modes->{subcompile} eq 'ARCHIVE') {
+            $subcompile_command .= q{ } . ' ; ar -cvq ' . $cpp_output_file_name_group->{A} . q{ } . $cpp_output_file_name_group->{O};
+            # NEED ANSWER: is this always the correct output redirect mechanism M$ Windows?  I think it is correct for cmd.exe, but what about Cygwin, etc?
+            if ( $OSNAME eq 'MSWin32' ) { $subcompile_command .= q{ } . ' > nul'; }
+            else { $subcompile_command .= q{ } . ' > /dev/null'; }
+        }
+
 #        RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $subcompile_command =' . "\n\n" . $subcompile_command . "\n" );
 
         # ACTUALLY RUN SUBCOMPILE COMMAND
@@ -786,6 +797,15 @@ our void $cpp_to_xsbinary__subcompile = sub {
  
         RPerl::verbose( '         done.' . "\n" );
 
+        # delete temporary .o file
+        if ($modes->{subcompile} eq 'ARCHIVE') {
+            if ( -f $cpp_output_file_name_group->{O} ) {
+                unlink( $cpp_output_file_name_group->{O} )
+                    or croak( "\n" . 'ERROR ECOCOSU03, COMPILER, SUBCOMPILE: Cannot delete temporary object file ' . 
+                        q{'} . $cpp_output_file_name_group->{O} . q{'} . ',' . "\n" . 'croaking:' . $OS_ERROR);
+            }
+        }
+
 #        if ($subcompile_command_stdout) { RPerl::diag( "===STDOUT=BEGIN===\n" . $subcompile_command_stdout . "===STDOUT=END===\n" ); }
 #        if ($subcompile_command_stderr) { RPerl::diag( "===STDERR=BEGIN===\n" . $subcompile_command_stderr . "===STDERR=END===\n" ); }
         my boolean $subcompile_command_stdout_content = ((defined $subcompile_command_stdout) and ($subcompile_command_stdout =~ m/[^\s]+/g));
@@ -808,7 +828,7 @@ our void $cpp_to_xsbinary__subcompile = sub {
         if ( $test_exit_status ) {  # UNIX process return code not 0, error
             if (not ($subcompile_command_stdout_content or $subcompile_command_stderr_content)) 
                 { RPerl::diag( "\n" . '[[[ SUBCOMPILE STDOUT & STDERR ARE BOTH EMPTY ]]]' . "\n\n" ); } 
-            croak 'ERROR ECOCOSU03, COMPILER, SUBCOMPILE: C++ compiler returned error code,' . "\n" . 
+            croak 'ERROR ECOCOSU04, COMPILER, SUBCOMPILE: C++ compiler returned error code,' . "\n" . 
             'please run again with `rperl -D` command or RPERL_DEBUG=1 environmental variable for error messages if none appear above,' . "\n" . 
             'croaking';
         }
