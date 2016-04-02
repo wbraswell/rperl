@@ -1,5 +1,17 @@
 Revision history for Perl compiler RPerl.
 
+1.700000 2016-04-01 Codename FOOOOOO
+
+    - HOLIDAY EDITION: Happy April Fool's Day
+    - Directly Generate Stand-Alone C++ Executable Files
+    - `rperl -uu` & `rperl -uu` Advanced Uncompile Command-Line Option
+    - `rperl -vv` Advanced Version Command-Line Option
+    - `rperl -assemble` Advanced Subcompile Command-Line Option
+    - `rperl -archive` Advanced Subcompile Command-Line Option
+    - `rperl -shared` Advanced Subcompile Command-Line Option
+    - `rperl -static` Advanced Subcompile Command-Line Option
+    - `rperl -CXX` Advanced Subcompile Command-Line Option
+
 1.600000 2016-02-14 Codename Red Dwarf
 
     - HOLIDAY EDITION: Happy St. Valentine's Day!
