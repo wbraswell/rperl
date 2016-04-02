@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.047_000;
+our $VERSION = 0.048_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -458,13 +458,13 @@ Throughout this text, the following 12 typography conventions are utilized:
     my integer $more_code = 17;  # http://www.catb.org/jargon/html/R/random-numbers.html
     return 'end of indented code block';
 
-X<noncode>
+=for comment X<noncode>
 
     $ terminal_command.pl with arguments
     Please provide input: foo bar
     Your output is:       howdy howdy howdy
 
-X</noncode>
+=for comment X</noncode>
 
 =back
 
@@ -606,7 +606,7 @@ The RPerl team has been regularly promoting RPerl in a number of physical and di
 
 =head2 Section 1.13: What Is Happening With RPerl Now?
 
-As of Q4 2015, RPerl v1.2 (codename I<Andromeda>) has been publicly released and is in use by a number of early adopters around the world.
+As of Q2 2016, RPerl v1.7 (codename I<Tycho>) has been publicly released and is in use by a number of early adopters around the world.
 
 RPerl development is proceeding with financial support from both Kickstarter crowdfunding and official grant monies from The Perl Foundation.
 
@@ -630,19 +630,19 @@ Installing RPerl ranges from easy to difficult, depending on how well your opera
 
 On modern operating systems with good Perl support, such as Debian or Ubuntu GNU/Linux, you should be able to install RPerl system-wide by running the following command at your terminal command prompt:
 
-X<noncode>
+=for comment X<noncode>
 
     $ sudo cpan RPerl
 
-X</noncode>
+=for comment X</noncode>
 
 If RPerl is properly installed, you should see a short text message displayed when you type the following command:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -v
 
-X</noncode>
+=for comment X</noncode>
 
 On operating systems with less Perl support, you may have to perform a number of steps to successfully install RPerl, with dry technical detail available in the INSTALL notes document:
 
@@ -757,15 +757,13 @@ Normal Perl source code is executed using a software mechanism known as I<"inter
 
 Like the Perl interpreter, the RPerl compiler accepts 2 different input file types: Perl programs which end in F<.pl> and Perl modules which end in F<.pm>.  Perl program files actually run and execute actions, optionally receiving some functionality from 1 or more Perl module files if specified.  Perl modules do not run or execute actions themselves, they only provide functionality which must in turn be called from a Perl program, or from another Perl module which eventually gets called by a Perl program.
 
-B<I<CURRENT RPERL LIMITATION: RPerl modules are supported in full compile mode, but RPerl programs are supported in test interpret mode only, to be updated in a forthcoming RPerl release.>>
-
 A list of all valid RPerl compiler options may be seen by issuing the following command:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -?
 
-X</noncode>
+=for comment X</noncode>
 
 You may find the same information by viewing the following links:
 
@@ -775,21 +773,21 @@ L<https://metacpan.org/pod/distribution/RPerl/script/rperl>
 
 To partially-compile-then-execute the preceeding RPerl example program in test mode, you may copy and paste the entire program (from shebang to second C<print>) into a temporary file such as F</tmp/foobar.pl>, then execute the following command:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t /tmp/foobar.pl
 
-X</noncode>
+=for comment X</noncode>
 
 The output of this example program should be:
 
-X<noncode>
+=for comment X<noncode>
 
     have $foo = 33
     have $bar = 1_932
     have $baz = 58.545_454_545_454_5
 
-X</noncode>
+=for comment X</noncode>
 
 Please see L</CHAPTER 11: CLASSES, PACKAGES, MODULES, LIBRARIES> for more information about compiling Perl modules.
 
@@ -1294,19 +1292,19 @@ $z = q{<<< END TEXT EVAL >>>};
 
 On a computer with RPerl already installed, create a directory named F<LearningRPerl> containing a sub-directory named F<Chapter1>.  Using the B<I<Foo Bar>> example program as a template, manually type a new RPerl program into a file named F<exercise_1-hello_world.pl> inside the F<LearningRPerl/Chapter1> sub-directory.  The sole purpose of your first program is to use the C<print> operator and simply display the following one line of text output, followed by one newline character:
 
-X<noncode>
+=for comment X<noncode>
 
     Hello, World!
 
-X</noncode>
+=for comment X</noncode>
 
 Run your new program by issuing the following command at your terminal command prompt:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t LearningRPerl/Chapter1/exercise_1-hello_world.pl
 
-X</noncode>
+=for comment X</noncode>
 
 I<HINT: You only need the C<USER DEFAULT 1> critic line, so your resulting program should be 7 lines long, not counting comments or blank lines.>
 
@@ -1314,11 +1312,11 @@ I<HINT: You only need the C<USER DEFAULT 1> critic line, so your resulting progr
 
 First, run the following RPerl command, and observe the output for use in 2a and 2b below:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -?
 
-X</noncode>
+=for comment X</noncode>
 
 2a.  What are some RPerl command-line options with which you are already familiar?
 
@@ -1326,13 +1324,13 @@ X</noncode>
 
 Next, run the following 3 RPerl commands, for 2c and 2d below:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t -V LearningRPerl/Chapter1/exercise_1-hello_world.pl
     $ rperl -t -D LearningRPerl/Chapter1/exercise_1-hello_world.pl
     $ rperl -t -V -D LearningRPerl/Chapter1/exercise_1-hello_world.pl
 
-X</noncode>
+=for comment X</noncode>
 
 2c.  How do the outputs of these 3 commands differ from the output of Exercise 1?
 
@@ -1344,21 +1342,21 @@ Manually type the entire B<I<Foo Bar>> example program into a file named F<exerc
 
 Modify your program by adding an extra numeric variable named C<$baz>, set its value to C<$bar / $foo>, and use C<print> to generate the following output:
 
-X<noncode>
+=for comment X<noncode>
 
     have $foo = 33
     have $bar = 966
     have $baz = 29.2727272727273
 
-X</noncode>
+=for comment X</noncode>
 
 Run your program thusly:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t LearningRPerl/Chapter1/exercise_3-foo_bar_arithmetic.pl
 
-X</noncode>
+=for comment X</noncode>
 
 X<br>
 
@@ -5760,12 +5758,12 @@ All other lines beginning with C<#> are comments and, along with blank lines, ma
 
 Example execution and output:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t LearningRPerl/Chapter1/exercise_1-hello_world.pl
     Hello, world!
 
-X</noncode>
+=for comment X</noncode>
 
 X<br>
 
@@ -5778,112 +5776,204 @@ X<br>
 
 Example execution and output for 2a and 2b:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -?
     Usage:
                 rperl [OPTIONS] input_program_0.pl [input_program_1.pl input_program_2.pl ...]
                 rperl [OPTIONS] MyClassFoo.pm [MyClassBar.pm MyClassBat.pm ...]
                 rperl [OPTIONS] input_program_0.pl MyClassFoo.pm [input_program_1.pl ... MyClassBar.pm ...]
-
+    
     Options:
         --help _OR_ -h _OR_ -?
-                Print a brief help message.
-
+                 Print a brief help message for command-line usage.
+    
         --version _OR_ -v
-                Print version number and copyright information.
-                Lowercase 'v' not to be confused with uppercase 'V' in 'Verbose' option below.
-
+        --vversion _OR_ -vv
+                 Print version number and copyright information.
+                 Repeat as 'vv' for more technical information, similar to `perl -V` configuration summary option.
+                 Lowercase 'v' not to be confused with uppercase 'V' in 'Verbose' option below.
+    
         --dependencies _OR_ -d
         --nodependencies _OR_ -nod
-                Follow and compile dependencies, or not.
-                Enabled by default, equivalent to '--mode dependencies=ON' option.
-                Lowercase 'd' not to be confused with uppercase 'D' in 'Debug' option below.
-                WARNING: Disabling dependencies will likely cause errors or undefined behavior.
-
+                 Follow and compile dependencies, or not.
+                 Enabled by default, equivalent to '--mode dependencies=ON' option.
+                 Lowercase 'd' not to be confused with uppercase 'D' in 'Debug' option below.
+                 WARNING: Disabling dependencies will likely cause errors or undefined behavior.
+    
         --infile=MyFile.pm _OR_ -i=MyFile.pm
-                Specify input file, may be repeated for multiple input files.
-                Option prefix '--infile' may be entirely omitted.
-                Option prefix MUST be omitted to specify wildcard for multiple input files.
-
+                 Specify input file, may be repeated for multiple input files.
+                 Option prefix '--infile' may be entirely omitted.
+                 Option prefix MUST be omitted to specify wildcard for multiple input files.
+    
         --outfile=MyFile _OR_ -o=MyFile
-                Specify output file prefix, may be repeated for multiple output files.
-                RPerl *.pm input file with PERL ops will create MyFile.pmc output file.
-                RPerl *.pl input file with PERL ops will create my_file (or my_file.exe) & my_file.pmc output files.
-                RPerl *.pm input file with CPP ops will create MyFile.pmc, MyFile.cpp, & MyFile.h output files.
-                RPerl *.pl input file with CPP ops will create myfile (or myfile.exe on Windows), MyFile.pmc, MyFile.cpp, & MyFile.h output files.
-                Option may be entirely omitted, 'MyFile.*' input file will default to 'MyFile.*' out.
-
+                 Specify output file prefix, may be repeated for multiple output files.
+                 RPerl *.pm input file with PERL ops will create MyFile.pmc output file.
+                 RPerl *.pl input file with PERL ops will create my_file (or my_file.exe) & my_file.pmc output files.
+                 RPerl *.pm input file with CPP ops will create MyFile.pmc, MyFile.cpp, & MyFile.h output files.
+                 RPerl *.pl input file with CPP ops will create myfile (or myfile.exe on Windows), MyFile.pmc, MyFile.cpp, & MyFile.h output files.
+                 Option may be entirely omitted, 'MyFile.*' input file will default to 'MyFile.*' out.
+    
         --mode ops=PERL _OR_ -m ops=PERL
         --mode ops=CPP _OR_ -m ops=CPP
-                Specify operations mode, CPP by default.
-                If set to PERL, forces types mode to PERL & compile mode to PARSE or GENERATE; test mode, does not actually compile.
-
+                 Specify operations mode, CPP by default.
+                 If set to PERL, generate Perl operations in the source code output file(s).
+                 If set to CPP, generate C++ operations in the source code output file(s).
+                 PERL ops mode forces PERL types mode & PARSE or GENERATE compile mode; PERLOPS_PERLTYPES is test mode, does not actually compile.
+    
         --mode types=PERL _OR_ -m types=PERL
         --mode types=CPP _OR_ -m types=CPP
         --mode types=DUAL _OR_ -m types=DUAL
-                Specify data types mode, CPP by default.
-                DUAL mode allows generate-once-compile-many types, selected by '#define __FOO__TYPES' in lib/rperltypes_mode.h file.
-
+                 Specify data types mode, CPP by default.
+                 If set to PERL, generate Perl data types in the source code output file(s).
+                 If set to CPP, generate C++ data types in the source code output file(s).
+                 If set to DUAL, generate both Perl and C++ data types in the source code output file(s).
+                 DUAL mode allows generate-once-compile-many types, selected by '#define __FOO__TYPES' in lib/rperltypes_mode.h or `gcc -D__FOO__TYPES` manual subcompile option.
+    
         --mode check=OFF _OR_ -m check=OFF
         --mode check=ON _OR_ -m check=ON
         --mode check=TRACE _OR_ -m check=TRACE
-                Specify data type checking mode, TRACE by default.
-
+                 Specify data type checking mode, TRACE by default.
+                 If set to OFF, do not perform dynamic type checking, only built-in C++ static type checking.
+                 If set to ON, perform dynamic type checking in addition to built-in C++ static type checking.
+                 If set to TRACE, perform dynamic type checking in addition to built-in C++ static type checking, with subroutine-and-variable trace information.
+    
         --mode dependencies=OFF _OR_ -m dependencies=OFF
         --mode dependencies=ON _OR_ -m dependencies=ON
-                Specify dependencies mode, ON by default.
-
+                 Specify dependencies mode, ON by default.
+                 If set to OFF, do not search for or compile dependencies.
+                 If set to ON, recursively search for dependencies and subdependencies, include as additional input file(s).
+    
+        --mode uncompile=OFF _OR_ -m uncompile=OFF
+        --mode uncompile=SOURCE _OR_ -m uncompile=SOURCE
+        --mode uncompile=BINARY _OR_ -m uncompile=BINARY
+        --mode uncompile=INLINE _OR_ -m uncompile=INLINE
+        --mode uncompile=SOURCE_BINARY _OR_ -m uncompile=SOURCE_BINARY
+        --mode uncompile=SOURCE_BINARY_INLINE _OR_ -m uncompile=SOURCE_BINARY_INLINE
+                 Specify uncompile mode, OFF by default.
+                 If set to SOURCE, delete all generated C++ output source code (not subcompiled) files: *.cpp, *.h, *.pmc
+                 If set to BINARY, delete all generated C++ output binary (subcompiled) files: *.o, *.a, *.so, *.exe, non-suffixed executables
+                 If set to INLINE, delete all generated C++ output Inline::CPP files: _Inline/ directory
+                 If set to SOURCE_BINARY, delete both SOURCE and BINARY files.
+                 If set to SOURCE_BINARY_INLINE, delete SOURCE, BINARY, and INLINE files.
+                 For *.pm Perl module input files, BINARY and INLINE are equivalent.
+    
         --mode compile=PARSE _OR_ -m compile=PARSE
         --mode compile=GENERATE _OR_ -m compile=GENERATE
         --mode compile=SUBCOMPILE _OR_ -m compile=SUBCOMPILE
-                Specify compile mode, SUBCOMPILE by default.
-
+                 Specify compile mode, SUBCOMPILE by default.
+                 If set to PARSE, begin with RPerl input source code file(s), and end with RPerl abstract syntax tree output data structure.
+                 If set to GENERATE, begin with RPerl input source code file(s), and end with RPerl and/or C++ output source code file(s).
+                 If set to SUBCOMPILE, begin with RPerl input source code file(s), and end with C++ output binary file(s).
+    
+        --mode subcompile=OFF _OR_ -m subcompile=OFF
+        --mode subcompile=ASSEMBLE _OR_ -m subcompile=ASSEMBLE
+        --mode subcompile=ARCHIVE _OR_ -m subcompile=ARCHIVE
+        --mode subcompile=SHARED _OR_ -m subcompile=SHARED
+        --mode subcompile=STATIC _OR_ -m subcompile=STATIC
+        --mode subcompile=DYNAMIC _OR_ -m subcompile=DYNAMIC
+                 Specify subcompile mode, DYNAMIC by default.
+                 If set to ASSEMBLE, generate *.o object binary output file(s).
+                 If set to ARCHIVE, generate *.a object archive binary output file(s).
+                 If set to SHARED, generate *.so shared object binary output file(s).
+                 If set to STATIC, generate statically-linked *.exe or non-suffixed executable binary output file(s).
+                 If set to DYNAMIC, generate dynamically-linked *.exe or non-suffixed executable binary output file(s).
+    
+        --mode CXX=/path/to/compiler _OR_ -m CXX=/path/to/compiler
+                 Specify path to C++ compiler for use in subcompile modes, 'g++' by default.
+    
         --mode execute=OFF _OR_ -m execute=OFF
         --mode execute=ON _OR_ -m execute=ON
-                Specify execute mode, ON by default.
-
+                 Specify execute mode, ON by default.
+                 If set to OFF, do not load or run any user-supplied program(s).
+                 If set to ON with one *.pl Perl program input file, load and run the program.
+                 If set to ON with more than one *.pl Perl program input file, do not load or run any programs.
+    
         --mode label=OFF _OR_ -m label=OFF
         --mode label=ON _OR_ -m label=ON
-                Specify source section label mode, ON by default.
-
+                 Specify source section label mode, ON by default.
+                 If set to OFF, generate minimal output source code, may save disk space.
+                 If set to ON, generate some informative labels in output source code, may be more human-readable.
+    
+        --uncompile _OR_ -u
+        --nouncompile _OR_ -nou
+        --uuncompile _OR_ -uu
+        --nouuncompile _OR_ -nouu
+        --uuuncompile _OR_ -uuu
+        --nouuncompile _OR_ -nouuu
+                 Uncompile (delete C++ source code and/or binary output files), or not.
+                 Repeat as 'uu' and 'uuu' for more thorough file removal.
+                 Do not confuse uncompile with decompile (recreate RPerl source code from C++ source code or binary output files), which does not currently exist.
+                 '-u' equivalent to '--mode uncompile=SOURCE --mode compile=OFF --mode execute=OFF' options.
+                 '-uu' equivalent to '--mode uncompile=SOURCE_BINARY --mode compile=OFF --mode execute=OFF' options.
+                 '-uuu' equivalent to '--mode uncompile=SOURCE_BINARY_INLINE --mode compile=OFF --mode execute=OFF' options.
+                 Disabled by default.
+    
         --compile _OR_ -c
         --nocompile _OR_ -noc
-                Generate & subcompile C++ source code, or not.
-                Enabled by default, equivalent to '--mode compile=SUBCOMPILE' option.
-
+                 Generate & subcompile C++ source code, or not.
+                 Enabled by default, equivalent to '--mode compile=SUBCOMPILE' option.
+    
         --execute _OR_ -e
         --noexecute _OR_ -noe
-                Run input code after optional compile, or not.
-                Enabled by default for *.pl program input files, always disabled for *.pm module input files or multiple input files.
-                Equivalent to '--mode execute=ON' option.
-
+                 Run input code after optional compile, or not.
+                 Enabled by default for *.pl program input files, always disabled for *.pm module input files or multiple input files.
+                 Equivalent to '--mode execute=ON' option.
+    
         --Verbose _OR_ -V
         --noVerbose _OR_ -noV
-                Include additional user information in output, or not.
-                Disabled by default, equivalent to `export RPERL_VERBOSE=1` shell command.
-                Uppercase 'V' not to be confused with lowercase 'v' in 'version' option above.
-
+                 Include additional user information in output, or not.
+                 If enabled, equivalent to `export RPERL_VERBOSE=1` shell command.
+                 Disabled by default.
+                 Uppercase 'V' not to be confused with lowercase 'v' in 'version' option above.
+    
         --Debug _OR_ -D
         --noDebug _OR_ -noD
-                Include system diagnostic information in output, or not.
-                Disabled by default, equivalent to `export RPERL_DEBUG=1` shell command.
-                Uppercase 'D' not to be confused with lowercase 'd' in 'dependencies' option above.
-
+                 Include system diagnostic information in output, or not.
+                 If enabled, equivalent to `export RPERL_DEBUG=1` shell command.
+                 Disabled by default.
+                 Uppercase 'D' not to be confused with lowercase 'd' in 'dependencies' option above.
+    
         --Warnings _OR_ -W
         --noWarnings _OR_ -noW
-                Include system warnings in output, or not.
-                Enabled by default, equivalent to `export RPERL_WARNINGS=0` shell command.
-
+                 Include system warnings in output, or not.
+                 Enabled by default, equivalent to `export RPERL_WARNINGS=0` shell command.
+    
         --test _OR_ -t
-                Test mode: Perl ops, Perl types, Parse & Generate (no Save or Compile)
-                Disabled by default, equivalent to '--mode ops=PERL --mode types=PERL --mode compile=GENERATE' options.
+                 Test mode: Perl ops, Perl types, Parse & Generate (no Save or Compile)
+                 If enabled, equivalent to '--mode ops=PERL --mode types=PERL --mode compile=GENERATE' options.
+                 Disabled by default.
+    
+        --assemble
+                 Assemble subcompile mode, output *.o object file(s).
+                 If enabled, equivalent to '--mode subcompile=ASSEMBLE' option or `gcc -c` manual subcompile option.
+                 Disabled by default.
+    
+        --archive
+                 Archive subcompile mode, output *.a object archive file(s).
+                 If enabled, equivalent to '--mode subcompile=ARCHIVE' option or `gcc -c` followed by `ar` manual subcompile command.
+                 Disabled by default.
+    
+        --shared
+                 Archive subcompile mode, output *.so shared object file(s).
+                 If enabled, equivalent to '--mode subcompile=SHARED' option or `gcc -shared` manual subcompile command.
+                 Disabled by default.
+    
+        --static
+        --nostatic
+                 Static subcompile mode, output *.exe or non-suffixed statically-linked executable file(s).
+                 If disabled, equivalent to '--mode subcompile=DYNAMIC' option or `gcc` manual subcompile command.
+                 If enabled, equivalent to '--mode subcompile=STATIC' option or `gcc -static` manual subcompile command.
+                 Disabled by default.
+    
+        --CXX=/path/to/compiler
+                 Specify path to C++ compiler, equivalent to '--mode CXX=/path/to/compiler' or 'CXX' manual Makefile option.
 
-X</noncode>
+=for comment X</noncode>
 
 Example execution and output for 2c and 2d:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t -V LearningRPerl/Chapter1/exercise_1-hello_world.pl 
     Verbose Flag:       1
@@ -5929,7 +6019,7 @@ X<noncode>
 
     Hello, world!
 
-X</noncode>
+=for comment X</noncode>
 
 Of the above 3 commands executed for 2c and 2d, the first includes normal output plus additional verbose output; the second includes normal output plus additional debugging output (minimal in this simple case); and the third includes normal output plus both verbose and debugging output.
 
@@ -5976,14 +6066,14 @@ The last 3 lines call the C<print> operator to display the names of each variabl
 
 Example execution and output:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t LearningRPerl/Chapter1/exercise_3-foo_bar_arithmetic.pl 
     have $foo = 33
     have $bar = 1_932
     have $baz = 58.545_454_545_454_5
 
-X</noncode>
+=for comment X</noncode>
 
 X<br>
 
@@ -6033,14 +6123,14 @@ The last 3 lines call the C<print> operator to display the values of C<PI>, C<$r
 
 Example execution and output:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t LearningRPerl/Chapter2/exercise_1-circumference_of_specific_radius.pl 
     Pi = 3._141_592_654
     Radius = 12.5
     Circumference = 2 * Pi * Radius = 2 * 3._141_592_654 * 12.5 = 78.539_816_35
 
-X</noncode>
+=for comment X</noncode>
 
 X<br>
 
@@ -6090,7 +6180,7 @@ This exercise is otherwise identical to the previous exercise.X<br>
 
 Example execution, input, and output:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t LearningRPerl/Chapter2/exercise_2-circumference_of_any_radius.pl 
     Please input radius: 2
@@ -6099,7 +6189,7 @@ X<noncode>
     Radius = 2
     Circumference = 2 * Pi * Radius = 2 * 3.141_592_654 * 2 = 12.566_370_616
 
-X</noncode>
+=for comment X</noncode>
 
 X<br>
 
@@ -6153,7 +6243,7 @@ This exercise is otherwise identical to the previous exercise.X<br>
 
 Example execution, input, and output:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t LearningRPerl/Chapter2/exercise_3-circumference_of_any_positive_radius.pl 
     Please input radius: -2
@@ -6163,7 +6253,7 @@ X<noncode>
     Radius = -2
     Circumference = 2 * Pi * Radius = 2 * 3._141_592_654 * -2 = 0
 
-X</noncode>
+=for comment X</noncode>
 
 X<br>
 
@@ -6208,7 +6298,7 @@ These 2 string variables are converted from text values to numeric values by cal
 
 Example execution, input, and output:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t LearningRPerl/Chapter2/exercise_4-product_of_any_two_numbers.pl 
     Please input multiplicator: 2112
@@ -6216,7 +6306,7 @@ X<noncode>
 
     Product = Multiplicator * Multiplicand = 2_112 * 23.42 = 49_463.04
 
-X</noncode>
+=for comment X</noncode>
 
 X<br>
 
@@ -6261,7 +6351,7 @@ Like the C<.> (single dot) string concatenation operator, the C<x> operator has 
 
 Example execution, input, and output:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t LearningRPerl/Chapter2/exercise_5-string_repeat.pl 
     Please input string to be repeated: howdy
@@ -6271,7 +6361,7 @@ X<noncode>
     howdy
     howdy
 
-X</noncode>
+=for comment X</noncode>
 
 X<br>
 
@@ -6326,7 +6416,7 @@ The last line calls C<print>, the C<to_string()> conversion subroutine, and the 
 
 Example executions, input, and output:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t LearningRPerl/Chapter2/exercise_6-sum_of_first_n_integers.pl 
     Please input a positive integer: 100
@@ -6336,7 +6426,7 @@ X<noncode>
     Please input a positive integer: -100
     ERROR: -100 is not positive, dying
 
-X</noncode>
+=for comment X</noncode>
 
 X<br>
 
@@ -6404,7 +6494,7 @@ It is usually faster to run an algorithm without a loop than with a loop, becaus
 
 Example executions, input, and output:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t LearningRPerl/Chapter2/exercise_7-sum_of_first_n_integers_no_loop.pl 
     Please input a positive integer: 100
@@ -6414,7 +6504,7 @@ X<noncode>
     Please input a positive integer: -100
     ERROR: -100 is not positive, dying
 
-X</noncode>
+=for comment X</noncode>
 
 X<br>
 
@@ -6475,7 +6565,7 @@ Finally, the line starting with C<foreach my string $input_strings_reversed_elem
 
 Example execution, input, and output:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t LearningRPerl/Chapter3/exercise_1-stdin_strings_reverse.pl 
     Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:
@@ -6494,7 +6584,7 @@ X<noncode>
     doody
     howdy
 
-X</noncode>
+=for comment X</noncode>
 
 X<br>
 
@@ -6550,7 +6640,7 @@ Thus, if a user inputs the integer 1, the array index will be 0, which is 'fred'
 
 Example execution, input, and output:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t LearningRPerl/Chapter3/exercise_2-stdin_array_indices.pl 
     Please input zero or more integers with values ranging from 1 to 7, separated by <ENTER>, ended by <CTRL-D>:
@@ -6577,7 +6667,7 @@ X<noncode>
     dino
     dino
 
-X</noncode>
+=for comment X</noncode>
 
 X<br>
 
@@ -6645,7 +6735,7 @@ An C<if> conditional statement inside the C<foreach> loop tests the constant C<S
 
 Example execution, input, and output:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t LearningRPerl/Chapter3/exercise_3-stdin_strings_sort.pl 
     Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:
@@ -6664,7 +6754,7 @@ X<noncode>
     doody
     howdy
 
-X</noncode>
+=for comment X</noncode>
 
 X<br>
 
@@ -6731,7 +6821,7 @@ Finally, the subroutine C<total()> is called a second time, now with the variabl
 
 Example execution, input, and output:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t LearningRPerl/Chapter4/exercise_1-subroutine_total.pl 
     The total of $fred is 25
@@ -6742,7 +6832,7 @@ X<noncode>
     -123.456
     The total of those numbers is 1_622.961
 
-X</noncode>
+=for comment X</noncode>
 
 X<br>
 
@@ -6796,12 +6886,12 @@ Finally, the subroutine C<total()> is called with C<$one_to_one_thousand> passed
 
 Example execution and output:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t LearningRPerl/Chapter4/exercise_2-subroutine_total_1000.pl 
     The total of 1 to 1000 is 500_500.
 
-X</noncode>
+=for comment X</noncode>
 
 X<br>
 
@@ -6879,7 +6969,7 @@ In the C<OPERATIONS> section, 2 arrays are created in the C<$fred> and C<$barney
 
 Example execution and output:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t LearningRPerl/Chapter4/exercise_3-subroutine_above_average.pl 
     $fred is [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -6890,7 +6980,7 @@ X<noncode>
     The above-average elements of $barney are [100]
     (Should be just [100])
 
-X</noncode>
+=for comment X</noncode>
 
 X<br>
 
@@ -6950,7 +7040,7 @@ Finally, the string variable C<$name> is returned from C<greet()> and passed to 
 
 Example execution and output:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t LearningRPerl/Chapter4/exercise_4-subroutine_greet.pl 
     Hi Fred!  You are the first one here!
@@ -6958,7 +7048,7 @@ X<noncode>
     Hi Wilma!  Barney is also here!
     Hi Betty!  Wilma is also here!
 
-X</noncode>
+=for comment X</noncode>
 
 X<br>
 
@@ -7013,7 +7103,7 @@ Finally, the current value of C<$name> is appended as the last element of the ar
 
 Example execution and output:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t LearningRPerl/Chapter4/exercise_5-subroutine_greet_multiple.pl 
     Hi Fred!  You are the first one here!
@@ -7021,7 +7111,7 @@ X<noncode>
     Hi Wilma!  I've seen: Fred Barney
     Hi Betty!  I've seen: Fred Barney Wilma
 
-X</noncode>
+=for comment X</noncode>
 
 X<br>
 
@@ -7116,7 +7206,7 @@ To begin execution of this program via the C<rperl> command, the program name an
 
 Example execution, input, and output:
 
-X<noncode>
+=for comment X<noncode>
 
     $ printf "fred0\nfred1\nfred2\nfred3\nfred4\n" > fred
     $ printf "barney0\nbarney1\nbarney2\n" > barney
@@ -7136,7 +7226,7 @@ X<noncode>
     fred0
     $ rm fred barney betty
 
-X</noncode>
+=for comment X</noncode>
 
 X<br>
 
@@ -7200,7 +7290,7 @@ X<br>
 
 Example execution, input, and output:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t LearningRPerl/Chapter5/exercise_2-right_justify.pl
     Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:
@@ -7219,7 +7309,7 @@ X<noncode>
                clarabell
                    clown
 
-X</noncode>
+=for comment X</noncode>
 
 X<br>
 
@@ -7291,7 +7381,7 @@ This exercise is otherwise identical to the previous exercise.X<br>
 
 Example execution, input, and output:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t LearningRPerl/Chapter5/exercise_3-right_justify_variable.pl 
     Please input integer column width, then press <ENTER>:
@@ -7312,7 +7402,7 @@ X<noncode>
                                                               clarabell
                                                                   clown
 
-X</noncode>
+=for comment X</noncode>
 
 X<br>
 
@@ -7375,7 +7465,7 @@ In the C<OPERATIONS> section, the only operation is a call to the C<given_to_fam
 
 Example execution, input, and output:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t LearningRPerl/Chapter6/exercise_1-hash_family_names.pl 
     Please input a given (first) name in all lowercase, then press <ENTER>:
@@ -7387,7 +7477,7 @@ X<noncode>
     howdy
     ERROR: No family (last) name found for given (first) name howdy, croaking
 
-X</noncode>
+=for comment X</noncode>
 
 X<br>
 
@@ -7449,7 +7539,7 @@ In the C<OPERATIONS> section, the only operation is a call to the C<unique_word_
 
 Example execution, input, and output:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t LearningRPerl/Chapter6/exercise_2-hash_unique_word_count.pl 
     Please input zero or more words, separated by <ENTER>, ended by <CTRL-D>:
@@ -7497,7 +7587,7 @@ X<noncode>
     rosie appeared 1 time(s)
     wilma appeared 2 time(s)
 
-X</noncode>
+=for comment X</noncode>
 
 X<br>
 
@@ -7565,7 +7655,7 @@ In the C<OPERATIONS> section, the only operation is a call to the C<sort_env_var
 
 Example execution, input, and output:
 
-X<noncode>
+=for comment X<noncode>
 
     $ rperl -t LearningRPerl/Chapter6/exercise_3-hash_sort_env_vars.pl 
     Environmental variables:
@@ -7588,7 +7678,7 @@ X<noncode>
     TERM                      xterm
     USER                      wbraswell
 
-X</noncode>
+=for comment X</noncode>
 
 X<br>
 

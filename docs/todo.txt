@@ -1,18 +1,9 @@
 DONE
-.pl input files, initial support
--u -uu -uuu --mode uncompile=(OFF,SOURCE,BINARY,INLINE,SOURCE_BINARY,SOURCE_BINARY_INLINE)
--vv --vversions  # SAME AS: perl -V
--assemble        # SAME AS: gcc -c
--archive         # SAME AS: ar
--shared          # SAME AS: gcc -shared
--static          # SAME AS: gcc -static
---mode subcompile=(OFF,ASSEMBLE,ARCHIVE,SHARED,STATIC,DYNAMIC)
--CXX             # SAME AS: makefile CXX
 
 DOING
+update rperl.org news & Learning RPerl
 chmod a-x *.so output if not on HP-UX;
 execute via compiled copy not interpreted; 
-update rperl -h w/ new options
 print comma-vs-dot to correct output; 
 cpp output file post-processing for source code text alignment
 

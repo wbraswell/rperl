@@ -6,10 +6,10 @@ use RPerl;
 #use RPerl::AfterSubclass;
 
 # DEV NOTE, CORRELATION #rp16: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
-our $VERSION = 1.600_000;    # CODENAME GEMINI
+our $VERSION = 1.700_000;
 
-#our $VERSION = 20160214;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
-#our $VERSION = 2016.045;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
+#our $VERSION = 20160401;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
+#our $VERSION = 2016.092;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -918,7 +918,7 @@ GetOptions(
     '<>'            => \&store_unlabeled_options
 ) or die "ERROR EARG00: Failure processing command line arguments, dying\n";
 
-if ($help_flag) { pod2usage( -verbose => 1 ); exit; }
+if ($help_flag) { pod2usage( -verbose => 1, -width => 80 ); exit; }
 if ($vversions_flag) { $RPerl::VERBOSE = 1; verbose_versions(); exit; }
 if ($version_flag) {
 
@@ -927,9 +927,9 @@ if ($version_flag) {
     # DEV NOTE, CORRELATION #rp16: numbering schemes mentioned below
     my $version_message = <<EOL;
 
-This is RPerl version 1.600_000, Long Date 20160214, Star Date 2016.045
-v1.600_000 using RPerl's underscore-is-comma numbering scheme
-v1.600000  using  CPAN's underscore-is-beta  numbering scheme
+This is RPerl version 1.700_000, Long Date 20160401, Star Date 2016.092
+v1.700_000 using RPerl's underscore-is-comma numbering scheme
+v1.700000  using  CPAN's underscore-is-beta  numbering scheme
 
 Copyright © 2013, 2014, 2015, 2016, William N. Braswell, Jr..  All Rights Reserved.
 This work is Free & Open Source; you can redistribute it and/or modify it 
@@ -991,7 +991,10 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =item B<--version _OR_ -v>
 
+=item B<--vversion _OR_ -vv>
+
  Print version number and copyright information.
+ Repeat as 'vv' for more technical information, similar to `perl -V` configuration summary option.
  Lowercase 'v' not to be confused with uppercase 'V' in 'Verbose' option below.
  
 =item B<--dependencies _OR_ -d>
@@ -1023,7 +1026,9 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 =item B<--mode ops=CPP _OR_ -m ops=CPP>
 
  Specify operations mode, CPP by default.
- If set to PERL, forces types mode to PERL & compile mode to PARSE or GENERATE; test mode, does not actually compile.
+ If set to PERL, generate Perl operations in the source code output file(s).
+ If set to CPP, generate C++ operations in the source code output file(s).
+ PERL ops mode forces PERL types mode & PARSE or GENERATE compile mode; PERLOPS_PERLTYPES is test mode, does not actually compile.
 
 =item B<--mode types=PERL _OR_ -m types=PERL>
 
@@ -1032,7 +1037,10 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 =item B<--mode types=DUAL _OR_ -m types=DUAL>
 
  Specify data types mode, CPP by default.
- DUAL mode allows generate-once-compile-many types, selected by '#define __FOO__TYPES' in lib/rperltypes_mode.h file.
+ If set to PERL, generate Perl data types in the source code output file(s).
+ If set to CPP, generate C++ data types in the source code output file(s).
+ If set to DUAL, generate both Perl and C++ data types in the source code output file(s).
+ DUAL mode allows generate-once-compile-many types, selected by '#define __FOO__TYPES' in lib/rperltypes_mode.h or `gcc -D__FOO__TYPES` manual subcompile option.
 
 =item B<--mode check=OFF _OR_ -m check=OFF>
 
@@ -1041,12 +1049,37 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 =item B<--mode check=TRACE _OR_ -m check=TRACE>
 
  Specify data type checking mode, TRACE by default.
+ If set to OFF, do not perform dynamic type checking, only built-in C++ static type checking.
+ If set to ON, perform dynamic type checking in addition to built-in C++ static type checking.
+ If set to TRACE, perform dynamic type checking in addition to built-in C++ static type checking, with subroutine-and-variable trace information.
 
 =item B<--mode dependencies=OFF _OR_ -m dependencies=OFF>
 
 =item B<--mode dependencies=ON _OR_ -m dependencies=ON>
 
  Specify dependencies mode, ON by default.
+ If set to OFF, do not search for or compile dependencies.
+ If set to ON, recursively search for dependencies and subdependencies, include as additional input file(s).
+
+=item B<--mode uncompile=OFF _OR_ -m uncompile=OFF>
+
+=item B<--mode uncompile=SOURCE _OR_ -m uncompile=SOURCE>
+
+=item B<--mode uncompile=BINARY _OR_ -m uncompile=BINARY>
+
+=item B<--mode uncompile=INLINE _OR_ -m uncompile=INLINE>
+
+=item B<--mode uncompile=SOURCE_BINARY _OR_ -m uncompile=SOURCE_BINARY>
+
+=item B<--mode uncompile=SOURCE_BINARY_INLINE _OR_ -m uncompile=SOURCE_BINARY_INLINE>
+
+ Specify uncompile mode, OFF by default.
+ If set to SOURCE, delete all generated C++ output source code (not subcompiled) files: *.cpp, *.h, *.pmc
+ If set to BINARY, delete all generated C++ output binary (subcompiled) files: *.o, *.a, *.so, *.exe, non-suffixed executables
+ If set to INLINE, delete all generated C++ output Inline::CPP files: _Inline/ directory
+ If set to SOURCE_BINARY, delete both SOURCE and BINARY files.
+ If set to SOURCE_BINARY_INLINE, delete SOURCE, BINARY, and INLINE files.
+ For *.pm Perl module input files, BINARY and INLINE are equivalent.
 
 =item B<--mode compile=PARSE _OR_ -m compile=PARSE>
 
@@ -1055,26 +1088,69 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 =item B<--mode compile=SUBCOMPILE _OR_ -m compile=SUBCOMPILE>
 
  Specify compile mode, SUBCOMPILE by default.
+ If set to PARSE, begin with RPerl input source code file(s), and end with RPerl abstract syntax tree output data structure.
+ If set to GENERATE, begin with RPerl input source code file(s), and end with RPerl and/or C++ output source code file(s).
+ If set to SUBCOMPILE, begin with RPerl input source code file(s), and end with C++ output binary file(s).
+
+=item B<--mode subcompile=OFF _OR_ -m subcompile=OFF>
+
+=item B<--mode subcompile=ASSEMBLE _OR_ -m subcompile=ASSEMBLE>
+
+=item B<--mode subcompile=ARCHIVE _OR_ -m subcompile=ARCHIVE>
+
+=item B<--mode subcompile=SHARED _OR_ -m subcompile=SHARED>
+
+=item B<--mode subcompile=STATIC _OR_ -m subcompile=STATIC>
+
+=item B<--mode subcompile=DYNAMIC _OR_ -m subcompile=DYNAMIC>
+
+ Specify subcompile mode, DYNAMIC by default.
+ If set to ASSEMBLE, generate *.o object binary output file(s).
+ If set to ARCHIVE, generate *.a object archive binary output file(s).
+ If set to SHARED, generate *.so shared object binary output file(s).
+ If set to STATIC, generate statically-linked *.exe or non-suffixed executable binary output file(s).
+ If set to DYNAMIC, generate dynamically-linked *.exe or non-suffixed executable binary output file(s).
+
+=item B<--mode CXX=/path/to/compiler _OR_ -m CXX=/path/to/compiler>
+
+ Specify path to C++ compiler for use in subcompile modes, 'g++' by default.
 
 =item B<--mode execute=OFF _OR_ -m execute=OFF>
 
 =item B<--mode execute=ON _OR_ -m execute=ON>
 
  Specify execute mode, ON by default.
+ If set to OFF, do not load or run any user-supplied program(s).
+ If set to ON with one *.pl Perl program input file, load and run the program.
+ If set to ON with more than one *.pl Perl program input file, do not load or run any programs.
 
 =item B<--mode label=OFF _OR_ -m label=OFF>
 
 =item B<--mode label=ON _OR_ -m label=ON>
 
  Specify source section label mode, ON by default.
+ If set to OFF, generate minimal output source code, may save disk space.
+ If set to ON, generate some informative labels in output source code, may be more human-readable.
 
 =item B<--uncompile _OR_ -u>
 
 =item B<--nouncompile _OR_ -nou>
 
- Uncompile (delete C++ source code & binary output files), or not.
+=item B<--uuncompile _OR_ -uu>
+
+=item B<--nouuncompile _OR_ -nouu>
+
+=item B<--uuuncompile _OR_ -uuu>
+
+=item B<--nouuncompile _OR_ -nouuu>
+
+ Uncompile (delete C++ source code and/or binary output files), or not.
+ Repeat as 'uu' and 'uuu' for more thorough file removal.
  Do not confuse uncompile with decompile (recreate RPerl source code from C++ source code or binary output files), which does not currently exist.
- Disabled by default, equivalent to '--mode uncompile=ON --mode compile=OFF --mode execute=OFF' options.
+ '-u' equivalent to '--mode uncompile=SOURCE --mode compile=OFF --mode execute=OFF' options.
+ '-uu' equivalent to '--mode uncompile=SOURCE_BINARY --mode compile=OFF --mode execute=OFF' options.
+ '-uuu' equivalent to '--mode uncompile=SOURCE_BINARY_INLINE --mode compile=OFF --mode execute=OFF' options.
+ Disabled by default.
 
 =item B<--compile _OR_ -c>
 
@@ -1096,7 +1172,8 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 =item B<--noVerbose _OR_ -noV>
 
  Include additional user information in output, or not.
- Disabled by default, equivalent to `export RPERL_VERBOSE=1` shell command.
+ If enabled, equivalent to `export RPERL_VERBOSE=1` shell command.
+ Disabled by default.
  Uppercase 'V' not to be confused with lowercase 'v' in 'version' option above.
 
 =item B<--Debug _OR_ -D>
@@ -1104,7 +1181,8 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 =item B<--noDebug _OR_ -noD>
 
  Include system diagnostic information in output, or not.
- Disabled by default, equivalent to `export RPERL_DEBUG=1` shell command.
+ If enabled, equivalent to `export RPERL_DEBUG=1` shell command.
+ Disabled by default.
  Uppercase 'D' not to be confused with lowercase 'd' in 'dependencies' option above.
 
 =item B<--Warnings _OR_ -W>
@@ -1117,8 +1195,40 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 =item B<--test _OR_ -t>
 
  Test mode: Perl ops, Perl types, Parse & Generate (no Save or Compile)
- Disabled by default, equivalent to '--mode ops=PERL --mode types=PERL --mode compile=GENERATE' options.
- 
+ If enabled, equivalent to '--mode ops=PERL --mode types=PERL --mode compile=GENERATE' options.
+ Disabled by default.
+
+=item B<--assemble>
+
+ Assemble subcompile mode, output *.o object file(s).
+ If enabled, equivalent to '--mode subcompile=ASSEMBLE' option or `gcc -c` manual subcompile option.
+ Disabled by default.
+
+=item B<--archive>
+
+ Archive subcompile mode, output *.a object archive file(s).
+ If enabled, equivalent to '--mode subcompile=ARCHIVE' option or `gcc -c` followed by `ar` manual subcompile command.
+ Disabled by default.
+
+=item B<--shared>
+
+ Archive subcompile mode, output *.so shared object file(s).
+ If enabled, equivalent to '--mode subcompile=SHARED' option or `gcc -shared` manual subcompile command.
+ Disabled by default.
+
+=item B<--static>
+
+=item B<--nostatic>
+
+ Static subcompile mode, output *.exe or non-suffixed statically-linked executable file(s).
+ If disabled, equivalent to '--mode subcompile=DYNAMIC' option or `gcc` manual subcompile command.
+ If enabled, equivalent to '--mode subcompile=STATIC' option or `gcc -static` manual subcompile command.
+ Disabled by default.
+
+=item B<--CXX=/path/to/compiler>
+
+ Specify path to C++ compiler, equivalent to '--mode CXX=/path/to/compiler' or 'CXX' manual Makefile option.
+
 =back
 
 =head1 DESCRIPTION
