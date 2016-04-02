@@ -4,7 +4,7 @@
 use RPerl;
 use strict;
 use warnings;
-our $VERSION = 0.022_001;
+our $VERSION = 0.023_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -56,12 +56,13 @@ our string_arrayref $pod2cpanhtml_preprocess = sub {
         }
  
         # disable <code>...</code> tags from null POD X<noncode>...X</noncode>
-        if ($file_line =~ s/X<noncode>/<noncode>/gxms) {
+#        if ($file_line =~ s/X<noncode>/<noncode>/gxms) {
+        if ($file_line =~ s/=for\ rperl\ X<noncode>/<noncode>/gxms) {
             $file_line_next = <$INPUT_FILEHANDLE>;
             $file_line_number++;
             if ($file_line_next ne "\n") { croak 'ERROR: X<noncode> tag followed by non-blank line ' . q{'} . $file_line_next . q{'} . ' on input file line ' . $file_line_number . ', croaking'; }
         }
-        if ($file_line =~ s/X<\/noncode>/<\/noncode>/gxms) {
+        if ($file_line =~ s/=for\ rperl\ X<\/noncode>/<\/noncode>/gxms) {
             if ($file_line_previous ne "\n") { croak 'ERROR: X</noncode> tag preceeded by non-blank line ' . q{'} . $file_line_previous . q{'} . ' on input file line ' . $file_line_number . ', croaking'; }
         }
 

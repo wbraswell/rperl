@@ -1,4 +1,5 @@
 DONE
+Learning RPerl, <noncode> fix
 
 DOING
 update rperl.org news & Learning RPerl
@@ -8,10 +9,10 @@ print comma-vs-dot to correct output;
 cpp output file post-processing for source code text alignment
 
 Learning RPerl
+    tables on metacpan, fix headers and borders CSS
     use unsigned_integer instead of integer in ex2.6 & 2.7, check all other exercises as well, change error checking accordingly
     croak or die in exercise solutions?
     L<> hyperlinks broken or missing in some outputs?
-    <noncode> fix
     metacpan list newline fix, section 1.1
     BEGIN INLINE CSS DIV comment should not appear in any output
     docbook2html & sgmltools & sgml2html: Section 2.3 "Perl's Built-In Warnings" single-quote vs apostrophe

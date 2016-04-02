@@ -458,13 +458,13 @@ Throughout this text, the following 12 typography conventions are utilized:
     my integer $more_code = 17;  # http://www.catb.org/jargon/html/R/random-numbers.html
     return 'end of indented code block';
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ terminal_command.pl with arguments
     Please provide input: foo bar
     Your output is:       howdy howdy howdy
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 =back
 
@@ -630,19 +630,19 @@ Installing RPerl ranges from easy to difficult, depending on how well your opera
 
 On modern operating systems with good Perl support, such as Debian or Ubuntu GNU/Linux, you should be able to install RPerl system-wide by running the following command at your terminal command prompt:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ sudo cpan RPerl
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 If RPerl is properly installed, you should see a short text message displayed when you type the following command:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -v
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 On operating systems with less Perl support, you may have to perform a number of steps to successfully install RPerl, with dry technical detail available in the INSTALL notes document:
 
@@ -759,11 +759,11 @@ Like the Perl interpreter, the RPerl compiler accepts 2 different input file typ
 
 A list of all valid RPerl compiler options may be seen by issuing the following command:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -?
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 You may find the same information by viewing the following links:
 
@@ -773,21 +773,21 @@ L<https://metacpan.org/pod/distribution/RPerl/script/rperl>
 
 To partially-compile-then-execute the preceeding RPerl example program in test mode, you may copy and paste the entire program (from shebang to second C<print>) into a temporary file such as F</tmp/foobar.pl>, then execute the following command:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t /tmp/foobar.pl
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 The output of this example program should be:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     have $foo = 33
     have $bar = 1_932
     have $baz = 58.545_454_545_454_5
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 Please see L</CHAPTER 11: CLASSES, PACKAGES, MODULES, LIBRARIES> for more information about compiling Perl modules.
 
@@ -1292,19 +1292,19 @@ $z = q{<<< END TEXT EVAL >>>};
 
 On a computer with RPerl already installed, create a directory named F<LearningRPerl> containing a sub-directory named F<Chapter1>.  Using the B<I<Foo Bar>> example program as a template, manually type a new RPerl program into a file named F<exercise_1-hello_world.pl> inside the F<LearningRPerl/Chapter1> sub-directory.  The sole purpose of your first program is to use the C<print> operator and simply display the following one line of text output, followed by one newline character:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     Hello, World!
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 Run your new program by issuing the following command at your terminal command prompt:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t LearningRPerl/Chapter1/exercise_1-hello_world.pl
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 I<HINT: You only need the C<USER DEFAULT 1> critic line, so your resulting program should be 7 lines long, not counting comments or blank lines.>
 
@@ -1312,11 +1312,11 @@ I<HINT: You only need the C<USER DEFAULT 1> critic line, so your resulting progr
 
 First, run the following RPerl command, and observe the output for use in 2a and 2b below:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -?
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 2a.  What are some RPerl command-line options with which you are already familiar?
 
@@ -1324,13 +1324,13 @@ First, run the following RPerl command, and observe the output for use in 2a and
 
 Next, run the following 3 RPerl commands, for 2c and 2d below:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t -V LearningRPerl/Chapter1/exercise_1-hello_world.pl
     $ rperl -t -D LearningRPerl/Chapter1/exercise_1-hello_world.pl
     $ rperl -t -V -D LearningRPerl/Chapter1/exercise_1-hello_world.pl
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 2c.  How do the outputs of these 3 commands differ from the output of Exercise 1?
 
@@ -1342,21 +1342,21 @@ Manually type the entire B<I<Foo Bar>> example program into a file named F<exerc
 
 Modify your program by adding an extra numeric variable named C<$baz>, set its value to C<$bar / $foo>, and use C<print> to generate the following output:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     have $foo = 33
     have $bar = 966
     have $baz = 29.2727272727273
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 Run your program thusly:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t LearningRPerl/Chapter1/exercise_3-foo_bar_arithmetic.pl
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 X<br>
 
@@ -5758,12 +5758,12 @@ All other lines beginning with C<#> are comments and, along with blank lines, ma
 
 Example execution and output:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t LearningRPerl/Chapter1/exercise_1-hello_world.pl
     Hello, world!
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 X<br>
 
@@ -5776,7 +5776,7 @@ X<br>
 
 Example execution and output for 2a and 2b:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -?
     Usage:
@@ -5969,11 +5969,11 @@ Example execution and output for 2a and 2b:
         --CXX=/path/to/compiler
                  Specify path to C++ compiler, equivalent to '--mode CXX=/path/to/compiler' or 'CXX' manual Makefile option.
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 Example execution and output for 2c and 2d:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t -V LearningRPerl/Chapter1/exercise_1-hello_world.pl 
     Verbose Flag:       1
@@ -6019,7 +6019,7 @@ Example execution and output for 2c and 2d:
 
     Hello, world!
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 Of the above 3 commands executed for 2c and 2d, the first includes normal output plus additional verbose output; the second includes normal output plus additional debugging output (minimal in this simple case); and the third includes normal output plus both verbose and debugging output.
 
@@ -6066,14 +6066,14 @@ The last 3 lines call the C<print> operator to display the names of each variabl
 
 Example execution and output:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t LearningRPerl/Chapter1/exercise_3-foo_bar_arithmetic.pl 
     have $foo = 33
     have $bar = 1_932
     have $baz = 58.545_454_545_454_5
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 X<br>
 
@@ -6123,14 +6123,14 @@ The last 3 lines call the C<print> operator to display the values of C<PI>, C<$r
 
 Example execution and output:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t LearningRPerl/Chapter2/exercise_1-circumference_of_specific_radius.pl 
     Pi = 3._141_592_654
     Radius = 12.5
     Circumference = 2 * Pi * Radius = 2 * 3._141_592_654 * 12.5 = 78.539_816_35
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 X<br>
 
@@ -6180,7 +6180,7 @@ This exercise is otherwise identical to the previous exercise.X<br>
 
 Example execution, input, and output:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t LearningRPerl/Chapter2/exercise_2-circumference_of_any_radius.pl 
     Please input radius: 2
@@ -6189,7 +6189,7 @@ Example execution, input, and output:
     Radius = 2
     Circumference = 2 * Pi * Radius = 2 * 3.141_592_654 * 2 = 12.566_370_616
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 X<br>
 
@@ -6243,7 +6243,7 @@ This exercise is otherwise identical to the previous exercise.X<br>
 
 Example execution, input, and output:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t LearningRPerl/Chapter2/exercise_3-circumference_of_any_positive_radius.pl 
     Please input radius: -2
@@ -6253,7 +6253,7 @@ Example execution, input, and output:
     Radius = -2
     Circumference = 2 * Pi * Radius = 2 * 3._141_592_654 * -2 = 0
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 X<br>
 
@@ -6298,7 +6298,7 @@ These 2 string variables are converted from text values to numeric values by cal
 
 Example execution, input, and output:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t LearningRPerl/Chapter2/exercise_4-product_of_any_two_numbers.pl 
     Please input multiplicator: 2112
@@ -6306,7 +6306,7 @@ Example execution, input, and output:
 
     Product = Multiplicator * Multiplicand = 2_112 * 23.42 = 49_463.04
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 X<br>
 
@@ -6351,7 +6351,7 @@ Like the C<.> (single dot) string concatenation operator, the C<x> operator has 
 
 Example execution, input, and output:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t LearningRPerl/Chapter2/exercise_5-string_repeat.pl 
     Please input string to be repeated: howdy
@@ -6361,7 +6361,7 @@ Example execution, input, and output:
     howdy
     howdy
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 X<br>
 
@@ -6416,7 +6416,7 @@ The last line calls C<print>, the C<to_string()> conversion subroutine, and the 
 
 Example executions, input, and output:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t LearningRPerl/Chapter2/exercise_6-sum_of_first_n_integers.pl 
     Please input a positive integer: 100
@@ -6426,7 +6426,7 @@ Example executions, input, and output:
     Please input a positive integer: -100
     ERROR: -100 is not positive, dying
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 X<br>
 
@@ -6494,7 +6494,7 @@ It is usually faster to run an algorithm without a loop than with a loop, becaus
 
 Example executions, input, and output:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t LearningRPerl/Chapter2/exercise_7-sum_of_first_n_integers_no_loop.pl 
     Please input a positive integer: 100
@@ -6504,7 +6504,7 @@ Example executions, input, and output:
     Please input a positive integer: -100
     ERROR: -100 is not positive, dying
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 X<br>
 
@@ -6565,7 +6565,7 @@ Finally, the line starting with C<foreach my string $input_strings_reversed_elem
 
 Example execution, input, and output:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t LearningRPerl/Chapter3/exercise_1-stdin_strings_reverse.pl 
     Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:
@@ -6584,7 +6584,7 @@ Example execution, input, and output:
     doody
     howdy
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 X<br>
 
@@ -6640,7 +6640,7 @@ Thus, if a user inputs the integer 1, the array index will be 0, which is 'fred'
 
 Example execution, input, and output:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t LearningRPerl/Chapter3/exercise_2-stdin_array_indices.pl 
     Please input zero or more integers with values ranging from 1 to 7, separated by <ENTER>, ended by <CTRL-D>:
@@ -6667,7 +6667,7 @@ Example execution, input, and output:
     dino
     dino
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 X<br>
 
@@ -6735,7 +6735,7 @@ An C<if> conditional statement inside the C<foreach> loop tests the constant C<S
 
 Example execution, input, and output:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t LearningRPerl/Chapter3/exercise_3-stdin_strings_sort.pl 
     Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:
@@ -6754,7 +6754,7 @@ Example execution, input, and output:
     doody
     howdy
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 X<br>
 
@@ -6821,7 +6821,7 @@ Finally, the subroutine C<total()> is called a second time, now with the variabl
 
 Example execution, input, and output:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t LearningRPerl/Chapter4/exercise_1-subroutine_total.pl 
     The total of $fred is 25
@@ -6832,7 +6832,7 @@ Example execution, input, and output:
     -123.456
     The total of those numbers is 1_622.961
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 X<br>
 
@@ -6886,12 +6886,12 @@ Finally, the subroutine C<total()> is called with C<$one_to_one_thousand> passed
 
 Example execution and output:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t LearningRPerl/Chapter4/exercise_2-subroutine_total_1000.pl 
     The total of 1 to 1000 is 500_500.
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 X<br>
 
@@ -6969,7 +6969,7 @@ In the C<OPERATIONS> section, 2 arrays are created in the C<$fred> and C<$barney
 
 Example execution and output:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t LearningRPerl/Chapter4/exercise_3-subroutine_above_average.pl 
     $fred is [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -6980,7 +6980,7 @@ Example execution and output:
     The above-average elements of $barney are [100]
     (Should be just [100])
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 X<br>
 
@@ -7040,7 +7040,7 @@ Finally, the string variable C<$name> is returned from C<greet()> and passed to 
 
 Example execution and output:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t LearningRPerl/Chapter4/exercise_4-subroutine_greet.pl 
     Hi Fred!  You are the first one here!
@@ -7048,7 +7048,7 @@ Example execution and output:
     Hi Wilma!  Barney is also here!
     Hi Betty!  Wilma is also here!
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 X<br>
 
@@ -7103,7 +7103,7 @@ Finally, the current value of C<$name> is appended as the last element of the ar
 
 Example execution and output:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t LearningRPerl/Chapter4/exercise_5-subroutine_greet_multiple.pl 
     Hi Fred!  You are the first one here!
@@ -7111,7 +7111,7 @@ Example execution and output:
     Hi Wilma!  I've seen: Fred Barney
     Hi Betty!  I've seen: Fred Barney Wilma
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 X<br>
 
@@ -7206,7 +7206,7 @@ To begin execution of this program via the C<rperl> command, the program name an
 
 Example execution, input, and output:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ printf "fred0\nfred1\nfred2\nfred3\nfred4\n" > fred
     $ printf "barney0\nbarney1\nbarney2\n" > barney
@@ -7226,7 +7226,7 @@ Example execution, input, and output:
     fred0
     $ rm fred barney betty
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 X<br>
 
@@ -7290,7 +7290,7 @@ X<br>
 
 Example execution, input, and output:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t LearningRPerl/Chapter5/exercise_2-right_justify.pl
     Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:
@@ -7309,7 +7309,7 @@ Example execution, input, and output:
                clarabell
                    clown
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 X<br>
 
@@ -7381,7 +7381,7 @@ This exercise is otherwise identical to the previous exercise.X<br>
 
 Example execution, input, and output:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t LearningRPerl/Chapter5/exercise_3-right_justify_variable.pl 
     Please input integer column width, then press <ENTER>:
@@ -7402,7 +7402,7 @@ Example execution, input, and output:
                                                               clarabell
                                                                   clown
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 X<br>
 
@@ -7465,7 +7465,7 @@ In the C<OPERATIONS> section, the only operation is a call to the C<given_to_fam
 
 Example execution, input, and output:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t LearningRPerl/Chapter6/exercise_1-hash_family_names.pl 
     Please input a given (first) name in all lowercase, then press <ENTER>:
@@ -7477,7 +7477,7 @@ Example execution, input, and output:
     howdy
     ERROR: No family (last) name found for given (first) name howdy, croaking
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 X<br>
 
@@ -7539,7 +7539,7 @@ In the C<OPERATIONS> section, the only operation is a call to the C<unique_word_
 
 Example execution, input, and output:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t LearningRPerl/Chapter6/exercise_2-hash_unique_word_count.pl 
     Please input zero or more words, separated by <ENTER>, ended by <CTRL-D>:
@@ -7587,7 +7587,7 @@ Example execution, input, and output:
     rosie appeared 1 time(s)
     wilma appeared 2 time(s)
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 X<br>
 
@@ -7655,7 +7655,7 @@ In the C<OPERATIONS> section, the only operation is a call to the C<sort_env_var
 
 Example execution, input, and output:
 
-=for comment X<noncode>
+=for rperl X<noncode>
 
     $ rperl -t LearningRPerl/Chapter6/exercise_3-hash_sort_env_vars.pl 
     Environmental variables:
@@ -7678,7 +7678,7 @@ Example execution, input, and output:
     TERM                      xterm
     USER                      wbraswell
 
-=for comment X</noncode>
+=for rperl X</noncode>
 
 X<br>
 
