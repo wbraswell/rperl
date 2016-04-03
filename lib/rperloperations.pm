@@ -30,11 +30,11 @@ use RPerl::Operation::Expression::Operator::List::Range;
 use RPerl::Operation::Expression::Operator::Logical::And;
 use RPerl::Operation::Expression::Operator::Logical::Negation;
 use RPerl::Operation::Expression::Operator::Logical::OrXor;
-use RPerl::Operation::Expression::Operator::Math::AddSubtract;
-use RPerl::Operation::Expression::Operator::Math::IncrementDecrement;
-use RPerl::Operation::Expression::Operator::Math::MultiplyDivideModulo;
-use RPerl::Operation::Expression::Operator::Math::Negative;
-use RPerl::Operation::Expression::Operator::Math::Power;
+use RPerl::Operation::Expression::Operator::Arithmetic::AddSubtract;
+use RPerl::Operation::Expression::Operator::IncrementDecrement;
+use RPerl::Operation::Expression::Operator::Arithmetic::MultiplyDivideModulo;
+use RPerl::Operation::Expression::Operator::Arithmetic::Negative;
+use RPerl::Operation::Expression::Operator::Arithmetic::Power;
 # DEV NOTE, CORRELATION #rp20: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named/* also add in Grammar.eyp, Named.pm, and rperloperations.pm
 use RPerl::Operation::Expression::Operator::Named;
 use RPerl::Operation::Expression::Operator::Named::Chomp;

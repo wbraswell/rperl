@@ -55,7 +55,7 @@ our object $arrayref_convert_index_max_to_size = sub {
 #    RPerl::diag( 'in Generator->arrayref_convert_index_max_to_size(), have post-nested-parens $subexpression = ' . "\n" . RPerl::Parser::rperl_ast__dump($subexpression) . "\n" );
 
     if ( $subexpression->{children}->[0]->isa('RPerl::Operation::Expression::Operator') ) {
-        if ( $subexpression->{children}->[0]->{children}->[0]->isa('RPerl::Operation::Expression::Operator::Math::AddSubtract') ) {
+        if ( $subexpression->{children}->[0]->{children}->[0]->isa('RPerl::Operation::Expression::Operator::Arithmetic::AddSubtract') ) {
             if (    ( exists $subexpression->{children}->[0]->{children}->[0]->{children}->[1] )
                 and ( $subexpression->{children}->[0]->{children}->[0]->{children}->[1] =~ /^-\s*$/xms ) )
             {

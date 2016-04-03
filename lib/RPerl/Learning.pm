@@ -9101,9 +9101,9 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
         croak 'ERROR: Failed to close file /tmp/howdy after writing, croaking';
     }
 
-=item * L<Operator03MathIncrementDecrement|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator03MathIncrementDecrement>
+=item * L<Operator03IncrementDecrement|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator03IncrementDecrement>
 
-L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator03MathIncrementDecrement/program_00_good.pl>
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator03IncrementDecrement/program_00_good.pl>
 
     #!/usr/bin/perl
     # [[[ HEADER ]]]
@@ -9147,9 +9147,9 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
     print 'have $bat = ', $bat, "\n";
     print 'have $baz = ', $baz, "\n";
 
-=item * L<Operator04MathPower|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator04MathPower>
+=item * L<Operator04ArithmeticPower|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator04ArithmeticPower>
 
-L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator04MathPower/program_00_good.pl>
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator04ArithmeticPower/program_00_good.pl>
 
     #!/usr/bin/perl
     # [[[ HEADER ]]]
@@ -9227,9 +9227,9 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
     print 'have $baz = ', $baz, "\n";
     print 'have $bax = ', $bax, "\n";
 
-=item * L<Operator05MathNegative|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator05MathNegative>
+=item * L<Operator05ArithmeticNegative|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator05ArithmeticNegative>
 
-L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator05MathNegative/program_00_good.pl>
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator05ArithmeticNegative/program_00_good.pl>
 
     #!/usr/bin/perl
     # [[[ HEADER ]]]
@@ -9342,9 +9342,9 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
     print q{have $baz = '}, $baz, q{'}, "\n";
     print q{have $bax = '}, $bax, q{'}, "\n";
 
-=item * L<Operator07MathMultiplyDivideModulo|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator07MathMultiplyDivideModulo>
+=item * L<Operator07ArithmeticMultiplyDivideModulo|https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator07ArithmeticMultiplyDivideModulo>
 
-L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator07MathMultiplyDivideModulo/program_00_good.pl>
+L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator07ArithmeticMultiplyDivideModulo/program_00_good.pl>
 
     #!/usr/bin/perl
     # [[[ HEADER ]]]

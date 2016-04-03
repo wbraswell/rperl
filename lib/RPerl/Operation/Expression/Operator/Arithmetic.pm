@@ -1,5 +1,5 @@
 # [[[ HEADER ]]]
-package RPerl::Operation::Expression::Operator::Math;
+package RPerl::Operation::Expression::Operator::Arithmetic;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;

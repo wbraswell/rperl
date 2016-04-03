@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-our $VERSION = 0.003_700;
+our $VERSION = 0.003_800;
 use ExtUtils::MakeMaker;
 
 BEGIN { use English; }
@@ -76,6 +76,9 @@ WriteMakefile(
                 url  => 'git://github.com/wbraswell/rperl.git',
                 web  => 'https://github.com/wbraswell/rperl',
             },
+            x_IRC         => "irc://irc.perl.org/#perl11",
+#            x_mailinglist => "http://lists.rperl.org/listinfo/dev",
+#            x_wiki        => "http://wiki.rperl.org/",
         },
     },
 

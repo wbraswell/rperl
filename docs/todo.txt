@@ -1,13 +1,17 @@
 DONE
-Learning RPerl, <noncode> fix
+    Learning RPerl, <noncode> fix for rperl.org only
 
 DOING
-chmod a-x *.so output if not on HP-UX;
-execute via compiled copy not interpreted; 
-print comma-vs-dot to correct output; 
-cpp output file post-processing for source code text alignment
+    Learning RPerl, examples for 2.1.9 - 2.1.14
+    travis enable dev Perl
+    dev Perl fix RPerl failures w/ P5P
+    chmod a-x *.so output if not on HP-UX
+    execute via compiled copy not interpreted
+    print comma-vs-dot to correct output
+    cpp output file post-processing for source code text alignment
+    split author tests (checking Changes file, etc) into xt/ directory, split deps in Makefile.PL, possibly utilize AUTHOR_TESTING in travis-perl/helpers
 
-Learning RPerl
+LEARNING RPERL
     tables on metacpan, fix headers and borders CSS
     noncode on metacpan
     use unsigned_integer instead of integer in ex2.6 & 2.7, check all other exercises as well, change error checking accordingly
@@ -18,205 +22,197 @@ Learning RPerl
     docbook2html & sgmltools & sgml2html: Section 2.3 "Perl's Built-In Warnings" single-quote vs apostrophe
     docbook2pdf segfault
     sgml table cell padding
-
-remove 'undef' from all possible locations in grammar for C++ compatibility
-
-update https://en.wikipedia.org/wiki/List_of_compilers#Perl_Compilers
-
-asm.js and/or webassembly backend
-
-enable looks_like_number() in *OPS_*TYPES (AKA all modes)
-    use in string_to_NUMERIC*() (AKA all string conversion subroutines) to reject non-numeric characters with RPerl error instead of Perl error
-    http://perldoc.perl.org/perlapi.html#looks_like_number
-
-rename Operation::Expression::Operator::Math to Arithmetic
-
-Unsigned Integer Fix
-	full boolean support via Boolean.cpp/h, rperltypes.pm, SvBOKp(), etc.
-	char type-testing subroutines in Character.pm
-	full character support via Character.cpp/h, rperltypes.pm, SvCOKp(), etc.
-	full unsigned_integer support via UnsignedInteger.cpp/h, rperltypes.pm, SvUIOKp(), etc.
-	CPPOPS_CPPTYPES conversion routines
-
-export ::*_*ref_to_*() conversion subroutines the same as ::*_to_*() subs in rperltypesconv.pm, remove leading scopes in all calls
-
-Windows Testing, add ci.appveyor.com github webhook
-
-10 more builtins, CPPOPS_CPPTYPES mode
-	NAMED
-	chomp
-	join
-	keys
-	pop
-	push
-	reverse
-	sort
-	split
-	values
-	wait
-
-	NAMED_UNARY
-	chdir
-	cos
-	defined
-	exists
-	-e
-	-r
-	-f
-	-T
-	length
-	rand
-	scalar
-	sin
-	sqrt (need create)
-
-Monolithic Modules, Fix Deps Warning
-figure out <> vs "" and also long-path-deps in includes in Bubble.cpp & Bubble.h
-
-tests
-	array size declaration compensation
-	package/subroutine/method names starting w/ underscore
-	variable redeclaration (masking)
-	properties & hash type-inner type-vs-key name mismatch (ECOGEASRP20: PERLOPS Class.pm properties accessors/mutators; CPPOPS entry & entrytyped)
-	accessors/mutators including get_*_element() & get_*_value()
-	subclasses Foo_raw type
-	$properties & VariableDeclaration array size on non-arrayref type
-	$properties array size PERLOPS_PERLTYPES generation
-	variable & retrieval type mismatches, etc (including ECOGEASCP30?)
-	get_raw() & set_raw()
-    t/13_compile_execute.t (?) for proper functionality
-	*_arrayref_arrayref_arrayref
-	while (my FOO)
-	<$FILEHANDLE>
-	@ARGV
-	%ENV
-	ERROR ECOGEASRP15... named operator [SOMEOP] requires exactly one argument, dying
-	ERROR ECOGEASRP16... named operator [SOMEOP] requires one or more arguments, dying
-	all currently-implemented named ops
-	all currently-implemented named_unary ops
-	invalid hash key starting with non-lowercase-letter ECOGEASRP22
-	invalid OO property name (hash key) starting with non-lowercase-letter ECOGEASRP23
-	invalid type inner redundant name starting with non-lowercase-letter ECOGEASRP24
-	CONSTANT_CALL_SCOPED
-	*_to_*() data type conversion functions
-	text literals, backslash vs double-backslash
-	string_to_NUMERIC*() (AKA all string conversion subroutines), test that underscores are accepted in numbers & non-numerics are rejected, in the following files:
-	   String.pm, String.cpp, GMPInteger.pm, GMPInteger.cpp
-
-Eyapp unescaped left braces for Perl v5.22 compatibility
-Unescaped left brace in regex is deprecated, passed through in regex;
-    marked by <-- HERE in m/\G%{ <-- HERE /
-    at /home/wbraswell/perl5/lib/perl5/Parse/Eyapp/Parse.pm line 3239.
-RELEASE Parse::Eyapp vX.YZZY
-
-1 New Benchmark Application
-Finish All CPPOPS_CPPTYPES Code Generation
-
-
-
-Math::Trig support
-Math::Complex support
-
-Dumper() in C++, use as default overload for <<
-
-rperl command-line front-end
-    add -U strong uncompile option, delete _Inline/ for modules and EXE for programs
-    --noWarnings option does not suppress WEXRP00, `export RPERL_WARNINGS=0` does
-
-developer_notes.txt
-	warning & error codes
-		general code legend
-		specific codes
-	perlall
-
-Macintosh:
-	TEMP DISABLE Failed test 'Inline::CPP, call Airplane methods, return correct value 1' at t/03_inline_cpp.t line 146.   '' doesn't match '/Object\ \(0x\w*\)/'
-	unknown warning option '-Wno-literal-suffix'; did you mean '-Wno-literal-range'? [-Wunknown-warning-option]
-	duplicate 'extern' declaration specifier [-Wduplicate-decl-specifier] XS_EXTERNAL(boot_eval_412_3a53); /* prototype to pass -Wmissing-prototypes */
-		/System/Library/Perl/5.18/darwin-thread-multi-2level/CORE/XSUB.h:145:33: note: expanded from macro 'XS_EXTERNAL'
-		#      define XS_EXTERNAL(name) extern "C" XSPROTO(name)
-
-App, PhysicsPerl, Alioth Shootout N-Body Benchmark, Approved
-	OR New Benchmark Org
-
-data types & structures
-	PERLOPS_CPPTYPES conversion routines
-	boolean_arrayref, unsigned_integer_arrayref, character_arrayref
-	boolean_hashref, unsigned_integer_hashref, character_hashref
-	gmp_integer_arrayref, gmp_integer_hashref
-	sse_number_pair_arrayref, sse_number_pair_hashref
-
-RELEASE v1.XY
-
-Class.pm, remove auto-export of subroutines from their package's namespace into main:: namespace?
-alioth nbody, optimize graphics speed
-add arrayref::grow_capacity() as safe version of std::vector::resize()
-add symtab building and checking to PERLOPS_PERLTYPES
-add mutators pass-by-reference for scalars?  see SystemRenderer2D::show()
-file bug, I::CPP comments, 7 lines okay, 8 lines broken
-file bug, I::CPP std::array
-file bug, I::CPP when attempting to return object type, CORRELATION #pp04
-	In function ‘void XS_PhysicsPerl__Astro__System_get_bodies_element(PerlInterpreter*, CV*)’: ... error: ‘CLASS’ was not declared in this scope ... sv_setref_pv( ST(0), CLASS, (void*)RETVAL );
-	hand-patched code below allows one-time use, then segfault
-	vi build/eval_637_3400/eval_637_3400.c
-	char *  CLASS = (char *)"PhysicsPerl::Astro::Body"
-;
-	chmod a-w build/eval_637_3400/eval_637_3400.c
-	
-Remove all object* types
-Fix number_to_string() in MyTest.pm
-update RPerl::filter() to properly handle *.pl files
-update INSTALL to use installed dirs, ~/perl5/lib/perl5 for local::lib
-fix 'x' string repeat operator vs 'x' string or bareword hash key
-create generator & tests for named ops: split, join, etc
-
-PERLOPS_PERLTYPES
-	C++ subclasses using AV* instead of std::vector, etc?
-
-Fix CPAN Testers Bugs
-
-fix lib/RPerl/Test/OperatorVoid01NamedVoidReturn/*.DISABLED_NEED_FIX
-	https://github.com/wbraswell/rperl/issues/25
-
-RPerl::Test package indexing
-compile Foo.pm
-update tests
-basic user docs
-website total
-
-fix RPerl/Test/ScopeTypeNameValue/program_5*_good.pl.DISABLED_PERL_V5_22
-fix RPerl/Test/Expression/program_*_good.pl.DISABLED_NEED_FIX
-
-RELEASE v1.XY
-
-merge sort
-quick sort
-
-RELEASE v1.XY
-
-Book of RPerl
-    next chapter
-
-Learning RPerl
     foreword
-    remaining exercises
-    remaining chapter contents
+    chapters 2 - 17
     illustrations: images & ASCII art
     covers
     publish
+    video series
 
-RELEASE v1.XY
+CLOUDATCOST.COM
+    new 8-core machine web server
+    cluster compute nodes
 
-cloud machines
-Shiny APTech site
-Shiny RPerl site
-Shiny App Store
+BOOK OF RPERL
+    chapter 5
 
-Perl::Critic Bugs
-	Eclipse EPIC Integration, Silent Failure    https://github.com/Perl-Critic/Perl-Critic/issues/582
-	ProhibitMagicNumbers False Positive    https://github.com/Perl-Critic/Perl-Critic/issues/631
-	Subroutines::RequireFinalReturn False Positive On Typed Loop Iterator    https://github.com/Perl-Critic/Perl-Critic/issues/636
-	ControlStructures::ProhibitPostfixControls False Positives on Typed Loop Iterator    https://github.com/Perl-Critic/Perl-Critic/issues/639
-	Argument "-" isn't numeric in exponentiation (**) at .../PPI/Token/Number/Exp.pm line 55    https://github.com/Perl-Critic/Perl-Critic/issues/665
-	InputOutput::RequireCheckedSyscalls False Positive On Typed Loop Iterator Without Final Newline    https://github.com/Perl-Critic/Perl-Critic/issues/671
-	
+MISC DOCUMENTATION
+    update https://en.wikipedia.org/wiki/List_of_compilers#Perl_Compilers
+
+RPERL.ORG
+    Book of RPerl tome graphic
+    Learning RPerl antique roadrunner icon
+    shiny
+
+RPERL COMMAND-LINE FRONT-END
+    --noWarnings option does not suppress WEXRP00, `export RPERL_WARNINGS=0` does
+
+UNSIGNED INTEGER FIX
+    full boolean support via Boolean.cpp/h, rperltypes.pm, SvBOKp(), etc.
+    char type-testing subroutines in Character.pm
+    full character support via Character.cpp/h, rperltypes.pm, SvCOKp(), etc.
+    full unsigned_integer support via UnsignedInteger.cpp/h, rperltypes.pm, SvUIOKp(), etc.
+    CPPOPS_CPPTYPES conversion routines
+
+BUILTINS, CPPOPS_CPPTYPES MODE
+    NAMED: chomp join keys pop push reverse sort split values wait
+    NAMED_UNARY: chdir cos defined exists -e -r -f -T length rand scalar sin sqrt (need create)
+
+TESTS
+    array size declaration compensation
+    package/subroutine/method names starting w/ underscore
+    variable redeclaration (masking)
+    properties & hash type-inner type-vs-key name mismatch (ECOGEASRP20: PERLOPS Class.pm properties accessors/mutators; CPPOPS entry & entrytyped)
+    accessors/mutators including get_*_element() & get_*_value()
+    subclasses Foo_raw type
+    $properties & VariableDeclaration array size on non-arrayref type
+    $properties array size PERLOPS_PERLTYPES generation
+    variable & retrieval type mismatches, etc (including ECOGEASCP30?)
+    get_raw() & set_raw()
+    t/13_compile_execute.t (?) for proper functionality
+    *_arrayref_arrayref_arrayref
+    while (my FOO)
+    <$FILEHANDLE>
+    @ARGV
+    %ENV
+    ERROR ECOGEASRP15... named operator [SOMEOP] requires exactly one argument, dying
+    ERROR ECOGEASRP16... named operator [SOMEOP] requires one or more arguments, dying
+    all currently-implemented named ops
+    all currently-implemented named_unary ops
+    invalid hash key starting with non-lowercase-letter ECOGEASRP22
+    invalid OO property name (hash key) starting with non-lowercase-letter ECOGEASRP23
+    invalid type inner redundant name starting with non-lowercase-letter ECOGEASRP24
+    CONSTANT_CALL_SCOPED
+    *_to_*() data type conversion functions
+    text literals, backslash vs double-backslash
+    string_to_NUMERIC*() (AKA all string conversion subroutines), test that underscores are accepted in numbers & non-numerics are rejected, in the following files:
+       String.pm, String.cpp, GMPInteger.pm, GMPInteger.cpp
+    fix RPerl/Test/ScopeTypeNameValue/program_5*_good.pl.DISABLED_PERL_V5_22
+    fix RPerl/Test/Expression/program_*_good.pl.DISABLED_NEED_FIX
+    fix lib/RPerl/Test/OperatorVoid01NamedVoidReturn/*.DISABLED_NEED_FIX
+    	https://github.com/wbraswell/rperl/issues/25
+
+KICKSTARTER
+    determine remaining items
+        10 builtins?
+        1 New Benchmark Application?
+        Finish All CPPOPS_CPPTYPES Code Generation?
+
+PARALLEL
+    manual loop test
+    automate
+
+QUALITY ASSURANCE
+    Fix CPAN Testers Bugs
+    cpants
+    kwalitee
+    Devel::Cover
+    Devel::Cover::Report::Coveralls
+    coveralls.io
+    appveyor, add ci.appveyor.com github webhook for Windows
+
+STDPERL
+    merge sort
+    quick sort
+
+MATHPERL
+    Math::Trig support
+    Math::Complex support
+
+PHYSICSPERL
+    nbody, optimize graphics speed
+    fractal, hsv coloring
+
+WEB BACK-END
+    asm.js and/or webassembly backend
+
+EYAPP
+    Eyapp unescaped left braces for Perl v5.22 compatibility
+        Unescaped left brace in regex is deprecated, passed through in regex;
+            marked by <-- HERE in m/\G%{ <-- HERE /
+            at /home/wbraswell/perl5/lib/perl5/Parse/Eyapp/Parse.pm line 3239.
+    Typo "synopsis" on bug tracker
+    CPAN release
+
+INSTALL NOTES
+    update to use installed dirs, ~/perl5/lib/perl5 for local::lib
+
+DEV NOTES
+    warning & error codes
+        general code legend
+        specific codes
+    perlall
+
+WINDOWS
+    fix all current errors
+
+MACINTOSH
+    TEMP DISABLE Failed test 'Inline::CPP, call Airplane methods, return correct value 1' at t/03_inline_cpp.t line 146.   '' doesn't match '/Object\ \(0x\w*\)/'
+    unknown warning option '-Wno-literal-suffix'; did you mean '-Wno-literal-range'? [-Wunknown-warning-option]
+    duplicate 'extern' declaration specifier [-Wduplicate-decl-specifier] XS_EXTERNAL(boot_eval_412_3a53); /* prototype to pass -Wmissing-prototypes */
+        /System/Library/Perl/5.18/darwin-thread-multi-2level/CORE/XSUB.h:145:33: note: expanded from macro 'XS_EXTERNAL'
+        #      define XS_EXTERNAL(name) extern "C" XSPROTO(name)
+
+OPENBENCHMARKS.ORG
+    shiny
+    content
+
+AUTOPARALLEL.COM
+    shiny
+    content
+
+PARALLELAPPSTORE.COM
+    shiny
+    content
+
+DATA TYPES & STRUCTURES
+    PERLOPS_CPPTYPES conversion routines
+    boolean_arrayref, unsigned_integer_arrayref, character_arrayref
+    boolean_hashref, unsigned_integer_hashref, character_hashref
+    gmp_integer_arrayref, gmp_integer_hashref
+    sse_number_pair_arrayref, sse_number_pair_hashref
+    enable looks_like_number() in *OPS_*TYPES (AKA all modes)
+        use in string_to_NUMERIC*() (AKA all string conversion subroutines) to reject non-numeric characters with RPerl error instead of Perl error
+        http://perldoc.perl.org/perlapi.html#looks_like_number
+    export ::*_*ref_to_*() conversion subroutines the same as ::*_to_*() subs in rperltypesconv.pm, remove leading scopes in all calls
+    remove all object* types
+    fix number_to_string() in MyTest.pm
+    add arrayref::grow_capacity() as safe version of std::vector::resize()
+    Dumper() in C++, use as default overload for <<
+
+PERL::CRITIC BUGS
+    Eclipse EPIC Integration, Silent Failure    https://github.com/Perl-Critic/Perl-Critic/issues/582
+    ProhibitMagicNumbers False Positive    https://github.com/Perl-Critic/Perl-Critic/issues/631
+    Subroutines::RequireFinalReturn False Positive On Typed Loop Iterator    https://github.com/Perl-Critic/Perl-Critic/issues/636
+    ControlStructures::ProhibitPostfixControls False Positives on Typed Loop Iterator    https://github.com/Perl-Critic/Perl-Critic/issues/639
+    Argument "-" isn't numeric in exponentiation (**) at .../PPI/Token/Number/Exp.pm line 55    https://github.com/Perl-Critic/Perl-Critic/issues/665
+    InputOutput::RequireCheckedSyscalls False Positive On Typed Loop Iterator Without Final Newline    https://github.com/Perl-Critic/Perl-Critic/issues/671
+
+INLINE::CPP BUGS
+    file bug, I::CPP comments, 7 lines okay, 8 lines broken
+    file bug, I::CPP std::array
+    file bug, I::CPP when attempting to return object type, CORRELATION #pp04
+        In function ‘void XS_PhysicsPerl__Astro__System_get_bodies_element(PerlInterpreter*, CV*)’: ... 
+        error: ‘CLASS’ was not declared in this scope ... sv_setref_pv( ST(0), CLASS, (void*)RETVAL );
+        hand-patched code below allows one-time use, then segfault
+        vi build/eval_637_3400/eval_637_3400.c
+        char *  CLASS = (char *)"PhysicsPerl::Astro::Body"
+        chmod a-w build/eval_637_3400/eval_637_3400.c
+    
+PERLOPS_PERLTYPES
+    C++ subclasses using AV* instead of std::vector, etc?
+    add symtab building and checking
+
+GRAMMAR
+    remove 'undef' from all possible locations in grammar for C++ compatibility
+    fix 'x' string repeat operator vs 'x' string or bareword hash key, already fixed???
+
+COMPILER
+    Monolithic Modules, Fix Deps Warning
+    figure out <> vs "" and also long-path-deps in includes in Bubble.cpp & Bubble.h
+    compile Foo.pm
+    add mutators pass-by-reference for scalars?  see SystemRenderer2D::show()
+ 
+INTERPRETER
+    Class.pm, remove auto-export of subroutines from their package's namespace into main:: namespace?
+    update RPerl::filter() to properly handle *.pl files
