@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.048_000;
+our $VERSION = 0.049_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -771,11 +771,11 @@ L<rperl>
 
 L<https://metacpan.org/pod/distribution/RPerl/script/rperl>
 
-To partially-compile-then-execute the preceeding RPerl example program in test mode, you may copy and paste the entire program (from shebang to second C<print>) into a temporary file such as F</tmp/foobar.pl>, then execute the following command:
+To compile-then-execute the preceeding RPerl example program, you may copy and paste the entire program (from shebang to second C<print>) into a temporary file such as F</tmp/foobar.pl>, then execute the following command:
 
 =for rperl X<noncode>
 
-    $ rperl -t /tmp/foobar.pl
+    $ rperl /tmp/foobar.pl
 
 =for rperl X</noncode>
 
@@ -783,6 +783,17 @@ The output of this example program should be:
 
 =for rperl X<noncode>
 
+    have $foo = 33
+    have $bar = 1_932
+    have $baz = 58.545_454_545_454_5
+
+=for rperl X</noncode>
+
+If the compilation is successful, a new compiled executable file will be created in F</tmp/foobar>.  You may then directly execute the compiled program as many times as you like, without needing to recompile it using the C<`rperl`> command, and you should receive the exact same output as the non-compiled code:
+
+=for rperl X<noncode>
+
+    $ /tmp/foobar
     have $foo = 33
     have $bar = 1_932
     have $baz = 58.545_454_545_454_5

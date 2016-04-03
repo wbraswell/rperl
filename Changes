@@ -4,7 +4,7 @@ Revision history for Perl compiler RPerl.
 
     - HOLIDAY EDITION: Happy April Fool's Day
     - Generate Stand-Alone C++ Executable Files From *.pl Perl Source Code Input Files
-    - `rperl -uu` & `rperl -uu` Uncompile Command-Line Options
+    - `rperl -uu` & `rperl -uuu` Uncompile Command-Line Options
     - `rperl -vv` Version Command-Line Option
     - `rperl -assemble` Subcompile Command-Line Option
     - `rperl -archive` Subcompile Command-Line Option

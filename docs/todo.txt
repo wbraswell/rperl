@@ -2,7 +2,6 @@ DONE
 Learning RPerl, <noncode> fix
 
 DOING
-update rperl.org news & Learning RPerl
 chmod a-x *.so output if not on HP-UX;
 execute via compiled copy not interpreted; 
 print comma-vs-dot to correct output; 
@@ -10,6 +9,7 @@ cpp output file post-processing for source code text alignment
 
 Learning RPerl
     tables on metacpan, fix headers and borders CSS
+    noncode on metacpan
     use unsigned_integer instead of integer in ex2.6 & 2.7, check all other exercises as well, change error checking accordingly
     croak or die in exercise solutions?
     L<> hyperlinks broken or missing in some outputs?
