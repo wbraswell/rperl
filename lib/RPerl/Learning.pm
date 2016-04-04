@@ -1810,6 +1810,72 @@ Not Yet
 
 =for docbook <row><entry align="left">
 
+Natural Exponential Function
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+exp
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+01
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Not Yet
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
 Exponent AKA Power
 
 =for man T}@T{
@@ -2272,7 +2338,7 @@ Yes
 
 =for docbook <row><entry align="left">
 
-Logarithm
+Natural Logarithm
 
 =for man T}@T{
 
@@ -2432,11 +2498,23 @@ If operand is negative (less than 0), return positive number with equal magnitud
 
 =back
 
-    abs  0  # 0
-    abs  1  # 1
-    abs -1  # 1
+    abs  0         # 0
+    abs  1         # 1
+    abs -1         # 1
     abs  2_112.23  # 2_112.23
     abs -2_112.23  # 2_112.23
+
+=over
+
+=item * B<Natural Exponential Function>
+
+Raise C<e> (base of natural logarithm) to the power of operand, return result
+
+=back
+
+    exp  0  # 1
+    exp  1  # 2.718_281_828_459_05
+    exp -1  # 0.367_879_441_171_442
 
 =over
 
@@ -2485,10 +2563,193 @@ Raise first operand to the power of second operand, return result
     (-2) ** -2  #  0.25
     (-2) ** -3  # -0.125
 
-START HERE: add plain-English descriptions and examples to numeric operator sections below
-START HERE: add plain-English descriptions and examples to numeric operator sections below
-START HERE: add plain-English descriptions and examples to numeric operator sections below
+=over
 
+=item * B<Negative with Parentheses>
+
+Change sign of operand, return result;
+
+Negative operands become positive, and positive operands become negative;
+
+Parentheses must be used, due to ambiguity of hyphen C<-> character as negative operator, subtraction operator, or negative number literal
+
+=back
+
+    -( 0)         #  0
+    -( 1)         # -1
+    -(-1)         #  1
+    -( 0.25)      # -0.25
+    -(-0.25)      #  0.25
+    -( 2_112.23)  # -2_112.23
+    -(-2_112.23)  #  2_112.23
+
+=over
+
+=item * B<Multiply>
+
+Multiply first operand by second operand, return product
+
+=back
+
+     0 *  0  #  0
+     0 *  1  #  0
+     0 * -1  #  0
+     1 *  0  #  0
+     1 *  1  #  1
+     1 * -1  # -1
+    -1 *  0  #  0
+    -1 *  1  # -1
+    -1 * -1  #  1
+
+    0.5 *  0    #  0
+    0.5 *  0.5  #  0.25
+    0.5 * -0.5  # -0.25
+    0.5 *  1    #  0.5
+    0.5 * -1    # -0.5
+    0.5 *  2    #  1.0
+    0.5 * -2    # -1.0
+
+=over
+
+=item * B<Divide>
+
+Divide first operand by second operand, return quotient;
+
+Error if attempt to divide by 0
+
+=back
+
+     0 /  0  #  ERROR
+     0 /  1  #  0
+     0 / -1  #  0
+     1 /  0  #  ERROR
+     1 /  1  #  1
+     1 / -1  # -1
+    -1 /  0  #  ERROR
+    -1 /  1  # -1
+    -1 / -1  #  1
+
+    0.5 /  0    #  ERROR
+    0.5 /  0.5  #  1
+    0.5 / -0.5  # -1
+    0.5 /  1    #  0.5
+    0.5 / -1    # -0.5
+    0.5 /  2    #  0.25
+    0.5 / -2    # -0.25
+
+=over
+
+=item * B<Modulo AKA Modulus>
+
+Divide integer part of first operand by integer part of second operand, return remainder;
+
+Error if attempt to modulus by second operand with absolute value less than 1
+
+=back
+
+     0 %  0  # ERROR
+     0 %  1  # 0
+     0 % -1  # 0
+     1 %  0  # ERROR
+     1 %  1  # 0
+     1 % -1  # 0
+    -1 %  0  # ERROR
+    -1 %  1  # 0
+    -1 % -1  # 0
+
+    0.5 %  0    # ERROR
+    0.5 %  0.5  # ERROR
+    0.5 % -0.5  # ERROR
+    0.5 %  1    # 0
+    0.5 % -1    # 0
+    0.5 %  2    # 0
+    0.5 % -2    # 0
+
+=over
+
+=item * B<Add>
+
+Add first operand to second operand, return sum
+
+=back
+
+     0 +  0  #  0
+     0 +  1  #  1
+     0 + -1  # -1
+     1 +  0  #  1
+     1 +  1  #  2
+     1 + -1  #  0
+    -1 +  0  # -1
+    -1 +  1  #  0
+    -1 + -1  # -2
+
+    0.5 +  0    #  0.5
+    0.5 +  0.5  #  1.0
+    0.5 + -0.5  #  0
+    0.5 +  1    #  1.5
+    0.5 + -1    # -0.5
+    0.5 +  2    #  2.5
+    0.5 + -2    # -1.5
+
+=over
+
+=item * B<Subtract>
+
+Subtract second operand from first operand, return difference
+
+=back
+
+     0 -  0  #  0
+     0 -  1  # -1
+     0 - -1  #  1
+     1 -  0  #  1
+     1 -  1  #  0
+     1 - -1  #  2
+    -1 -  0  # -1
+    -1 -  1  # -2
+    -1 - -1  #  0
+
+    0.5 -  0    #  0.5
+    0.5 -  0.5  #  0
+    0.5 - -0.5  #  1.0
+    0.5 -  1    # -0.5
+    0.5 - -1    #  1.5
+    0.5 -  2    # -1.5
+    0.5 - -2    #  2.5
+
+=over
+
+=item * B<Natural Logarithm>
+
+Take logarithm base C<e> of operand, return result;
+
+The constant C<e> is known as Euler's Number and is defined as the limit of C<(1 + 1/$n)**$n> as C<$n> grows to infinity;
+
+To calculate the logarithm using a base other than C<e>, utilize the ratio C<log($operand)/log($base)>;
+
+Error if attempt to take logarithm of operand less than or equal to 0
+
+=back
+
+    log  0                    # ERROR
+    log  1                    # 0
+    log -1                    # ERROR
+    log 2.718_281_828_459_05  # 1
+
+=over
+
+=item * B<Square Root>
+
+Take square root of operand, return result;
+
+Error if attempt to take square root of operand less than 0
+
+=back
+
+    sqrt  0  # 0
+    sqrt  1  # 1
+    sqrt -1  # ERROR
+    sqrt  2  # 1.414_213_562_373_1
 
 =head3 Section 2.1.10: Trigonometry Operators
 
@@ -2816,6 +3077,50 @@ $z = q{<<< END TEXT EVAL >>>};
 =for html </table>
 
 =for docbook </tbody></tgroup></table>
+
+=over
+
+=item * B<Arctangent-Divide>
+
+Divide first operand by second operand, take arctangent of quotient, return result
+
+=back
+
+    atan2  0,  0  #  0, MAY BE DIFFERENT ON YOUR SYSTEM
+    atan2  0,  1  #  0
+    atan2  0, -1  #  3.141_592_653_589_79
+    atan2  1,  0  #  1.570_796_326_794_9
+    atan2  1,  1  #  0.785_398_163_397_448
+    atan2  1, -1  #  2.356_194_490_192_34
+    atan2 -1,  0  # -1.570_796_326_794_9
+    atan2 -1,  1  # -0.785_398_163_397_448
+    atan2 -1, -1  # -2.356_194_490_192_34
+
+=over
+
+=item * B<Sine>
+
+Take sine of operand, return result
+
+=back
+
+    sin  0                    #  0
+    sin  1                    #  0.841_470_984_807_897
+    sin -1                    # -0.841_470_984_807_897
+    sin 3.141_592_653_589_79  #  0, MAY BE SLIGHTLY OFF DUE TO FLOATING POINT ERROR
+
+=over
+
+=item * B<Cosine>
+
+Take cosine of operand, return result
+
+=back
+
+    cos  0                    #  1
+    cos  1                    #  0.540_302_305_868_14
+    cos -1                    #  0.540_302_305_868_14
+    cos 3.141_592_653_589_79  # -1
 
 =head3 Section 2.1.11: Comparison Operators
 
@@ -5716,7 +6021,7 @@ X<br>
 
 # UNSORTED
     %token OP01_NAMED_SCOLON         = /(accept;|bind;|binmode;|bless;|break;|chmod;|chomp;|chop;|chown;|closedir;|connect;|continue;|dbmclose;
-    |dbmopen;|default;|dump;|each;|endgrent;|endhostent;|endnetent;|endprotoent;|endpwent;|endservent;|eof;|evalbytes;|exec;|exp;|fcntl;|fileno;|flock;|fork;
+    |dbmopen;|default;|dump;|each;|endgrent;|endhostent;|endnetent;|endprotoent;|endpwent;|endservent;|eof;|evalbytes;|exec;|fcntl;|fileno;|flock;|fork;
     |getc;|getgrent;|getgrgid;|getgrnam;|gethostbyaddr;|gethostent;|getlogin;|getnetbyaddr;|getnetent;|getpeername;|getppid;|getpriority;
     |getprotobynumber;|getprotoent;|getpwent;|getpwnam;|getpwuid;|getservbyname;|getservbyport;|getservent;|getsockname;|getsockopt;|given;|grep;|ioctl;|join;
     |keys;|kill;|link;|listen;|local;|map;|mkdir;|msgctl;|msgget;|msgrcv;|msgsnd;|opendir;|pipe;|pop;|prototype;|push;|qx;|read;|readdir;
