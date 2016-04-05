@@ -116,6 +116,8 @@ STDPERL
     quick sort
 
 MATHPERL
+    log_base_x
+    tan, cot, sec, csc
     Math::Trig support
     Math::Complex support
 

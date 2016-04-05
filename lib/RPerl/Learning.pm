@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.049_000;
+our $VERSION = 0.050_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -1462,7 +1462,7 @@ Perl 5 provides several built-in operators designed for use with numeric data, w
 
 =item * Trigonometry
 
-=item * Comparison
+=item * Comparison (Relational & Equality)
 
 =item * Logic
 
@@ -2723,9 +2723,9 @@ Subtract second operand from first operand, return difference
 
 Take logarithm base C<e> of operand, return result;
 
-The constant C<e> is known as Euler's Number and is defined as the limit of C<(1 + 1/$n)**$n> as C<$n> grows to infinity;
+Constant C<e> is known as Euler's Number and is defined as the limit of C<(1 + 1/$n)**$n> as C<$n> grows to infinity;
 
-To calculate the logarithm using a base other than C<e>, utilize the ratio C<log($operand)/log($base)>;
+To instead calculate logarithm using a base other than C<e>, utilize ratio C<(log $operand)/(log $base)>;
 
 Error if attempt to take logarithm of operand less than or equal to 0
 
@@ -3082,13 +3082,21 @@ $z = q{<<< END TEXT EVAL >>>};
 
 =item * B<Arctangent-Divide>
 
-Divide first operand by second operand, take arctangent of quotient, return result
+Divide first operand by second operand, take arctangent of quotient, return result;
+
+Attempts to conform to Open Group / IEEE standards:
+
+L<http://perldoc.perl.org/perlport.html#atan2>
+
+L<http://pubs.opengroup.org/onlinepubs/9699919799/functions/atan2.html>
+
+To instead calculate tangent of 1 operand (not arctangent of 2 operands), utilize trigonometry identity ratio C<(sin $operand)/(cos $operand)>
 
 =back
 
     atan2  0,  0  #  0, MAY BE DIFFERENT ON YOUR SYSTEM
     atan2  0,  1  #  0
-    atan2  0, -1  #  3.141_592_653_589_79
+    atan2  0, -1  #  3.141_592_653_589_79, DEFINED AS PI
     atan2  1,  0  #  1.570_796_326_794_9
     atan2  1,  1  #  0.785_398_163_397_448
     atan2  1, -1  #  2.356_194_490_192_34
@@ -3104,10 +3112,10 @@ Take sine of operand, return result
 
 =back
 
-    sin  0                    #  0
-    sin  1                    #  0.841_470_984_807_897
-    sin -1                    # -0.841_470_984_807_897
-    sin 3.141_592_653_589_79  #  0, MAY BE SLIGHTLY OFF DUE TO FLOATING POINT ERROR
+    sin  0                     #  0
+    sin  1                     #  0.841_470_984_807_897
+    sin -1                     # -0.841_470_984_807_897
+    sin  3.141_592_653_589_79  #  0, MAY BE SLIGHTLY OFF DUE TO FLOATING POINT ERROR
 
 =over
 
@@ -3117,12 +3125,12 @@ Take cosine of operand, return result
 
 =back
 
-    cos  0                    #  1
-    cos  1                    #  0.540_302_305_868_14
-    cos -1                    #  0.540_302_305_868_14
-    cos 3.141_592_653_589_79  # -1
+    cos  0                     #  1
+    cos  1                     #  0.540_302_305_868_14
+    cos -1                     #  0.540_302_305_868_14
+    cos  3.141_592_653_589_79  # -1
 
-=head3 Section 2.1.11: Comparison Operators
+=head3 Section 2.1.11: Comparison (Relational & Equality) Operators
 
 =begin text
 
@@ -3150,7 +3158,7 @@ l l l l r l l .
 =begin docbook
 
 <table id="learning_rperl-section_2.1.11-table_1" label="" frame="all" colsep="1" rowsep="1">
-<title>Comparison Operators</title>
+<title>Comparison (Relational & Equality) Operators</title>
 <tgroup cols="6">
 
 =end docbook
@@ -3646,6 +3654,128 @@ $z = q{<<< END TEXT EVAL >>>};
 =for html </table>
 
 =for docbook </tbody></tgroup></table>
+
+B<WARNING FOR ALL NUMERIC COMPARISON OPERATORS:>
+
+B<Due to different possible return values for false result, unexpected or undefined behavior may occur if return value is utilized anywhere except true-or-false conditions in loops and conditional statements>
+
+In PERLOPS mode, value for true is integer C<1>, and value for false is empty string C<''>;
+
+In CPPOPS mode, value for true is integer C<1>, and value for false is integer C<0>
+
+    if    (1 > 2) { print 'I think not'   . "\n"; }  # good use of greater-than operator
+    while (1 < 2) { print 'infinite loop' . "\n"; }  # good use of    less-than operator
+
+    (1 > 2) + 3                  # UNEXPECTED BEHAVIOR: bad use of greater-than operator
+    (1 < 2) * 3                  # UNEXPECTED BEHAVIOR: bad use of    less-than operator
+
+=over
+
+=item * B<Less-Than>
+
+Compare to determine relation of operands, return true if first operand is less than second operand, otherwise return false
+
+=back
+
+     0 <  0  # false
+     0 <  1  # true
+     0 < -1  # false
+     1 <  0  # false
+     1 <  1  # false
+     1 < -1  # false
+    -1 <  0  # true
+    -1 <  1  # true
+    -1 < -1  # false
+
+=over
+
+=item * B<Greater-Than>
+
+Compare to determine relation of operands, return true if first operand is greater than second operand, otherwise return false
+
+=back
+
+     0 >  0  # false
+     0 >  1  # false
+     0 > -1  # true
+     1 >  0  # true
+     1 >  1  # false
+     1 > -1  # true
+    -1 >  0  # false
+    -1 >  1  # false
+    -1 > -1  # false
+
+=over
+
+=item * B<Less-Than-Or-Equal>
+
+Compare to determine relation of operands, return true if first operand is less than or equal to second operand, otherwise return false
+
+=back
+
+     0 <=  0  # true
+     0 <=  1  # true
+     0 <= -1  # false
+     1 <=  0  # false
+     1 <=  1  # true
+     1 <= -1  # false
+    -1 <=  0  # true
+    -1 <=  1  # true
+    -1 <= -1  # true
+
+=over
+
+=item * B<Greater-Than-Or-Equal>
+
+Compare to determine relation of operands, return true if first operand is greater than or equal to second operand, otherwise return false
+
+=back
+
+     0 >=  0  # true
+     0 >=  1  # false
+     0 >= -1  # true
+     1 >=  0  # true
+     1 >=  1  # true
+     1 >= -1  # true
+    -1 >=  0  # false
+    -1 >=  1  # false
+    -1 >= -1  # true
+
+=over
+
+=item * B<Equal>
+
+Compare to determine equality of operands, return true if first operand is equal to second operand, otherwise return false
+
+=back
+
+     0 ==  0  # true
+     0 ==  1  # false
+     0 == -1  # false
+     1 ==  0  # false
+     1 ==  1  # true
+     1 == -1  # false
+    -1 ==  0  # false
+    -1 ==  1  # false
+    -1 == -1  # true
+
+=over
+
+=item * B<Not-Equal>
+
+Compare to determine equality of operands, return true if first operand is not equal to second operand, otherwise return false
+
+=back
+
+     0 !=  0  # false
+     0 !=  1  # true
+     0 != -1  # true
+     1 !=  0  # true
+     1 !=  1  # false
+     1 != -1  # true
+    -1 !=  0  # true
+    -1 !=  1  # true
+    -1 != -1  # false
 
 =head3 Section 2.1.12: Logic Operators
 
@@ -4254,6 +4384,90 @@ $z = q{<<< END TEXT EVAL >>>};
 
 =for docbook </tbody></tgroup></table>
 
+=over
+
+=item * B<FOOOOOOOO>
+
+Take FOOOOOOOO of operand, return result
+
+=back
+
+    FOOOOOO  0  # X
+    FOOOOOO  1  # X
+    FOOOOOO -1  # X
+
+=over
+
+=item * B<FOOOOOOOO>
+
+Take FOOOOOOOO of operand, return result
+
+=back
+
+    FOOOOOO  0  # X
+    FOOOOOO  1  # X
+    FOOOOOO -1  # X
+
+=over
+
+=item * B<FOOOOOOOO>
+
+Take FOOOOOOOO of operand, return result
+
+=back
+
+    FOOOOOO  0  # X
+    FOOOOOO  1  # X
+    FOOOOOO -1  # X
+
+=over
+
+=item * B<FOOOOOOOO>
+
+Take FOOOOOOOO of operand, return result
+
+=back
+
+    FOOOOOO  0  # X
+    FOOOOOO  1  # X
+    FOOOOOO -1  # X
+
+=over
+
+=item * B<FOOOOOOOO>
+
+Take FOOOOOOOO of operand, return result
+
+=back
+
+    FOOOOOO  0  # X
+    FOOOOOO  1  # X
+    FOOOOOO -1  # X
+
+=over
+
+=item * B<FOOOOOOOO>
+
+Take FOOOOOOOO of operand, return result
+
+=back
+
+    FOOOOOO  0  # X
+    FOOOOOO  1  # X
+    FOOOOOO -1  # X
+
+=over
+
+=item * B<FOOOOOOOO>
+
+Take FOOOOOOOO of operand, return result
+
+=back
+
+    FOOOOOO  0  # X
+    FOOOOOO  1  # X
+    FOOOOOO -1  # X
+
 =head3 Section 2.1.13: Bitwise Operators
 
 =begin text
@@ -4713,6 +4927,66 @@ $z = q{<<< END TEXT EVAL >>>};
 
 =for docbook </tbody></tgroup></table>
 
+=over
+
+=item * B<FOOOOOOOO>
+
+Take FOOOOOOOO of operand, return result
+
+=back
+
+    FOOOOOO  0  # X
+    FOOOOOO  1  # X
+    FOOOOOO -1  # X
+
+=over
+
+=item * B<FOOOOOOOO>
+
+Take FOOOOOOOO of operand, return result
+
+=back
+
+    FOOOOOO  0  # X
+    FOOOOOO  1  # X
+    FOOOOOO -1  # X
+
+=over
+
+=item * B<FOOOOOOOO>
+
+Take FOOOOOOOO of operand, return result
+
+=back
+
+    FOOOOOO  0  # X
+    FOOOOOO  1  # X
+    FOOOOOO -1  # X
+
+=over
+
+=item * B<FOOOOOOOO>
+
+Take FOOOOOOOO of operand, return result
+
+=back
+
+    FOOOOOO  0  # X
+    FOOOOOO  1  # X
+    FOOOOOO -1  # X
+
+=over
+
+=item * B<FOOOOOOOO>
+
+Take FOOOOOOOO of operand, return result
+
+=back
+
+    FOOOOOO  0  # X
+    FOOOOOO  1  # X
+    FOOOOOO -1  # X
+
 =head3 Section 2.1.14: Miscellaneous Operators
 
 =begin text
@@ -5040,6 +5314,42 @@ $z = q{<<< END TEXT EVAL >>>};
 
 =for docbook </tbody></tgroup></table>
 
+=over
+
+=item * B<FOOOOOOOO>
+
+Take FOOOOOOOO of operand, return result
+
+=back
+
+    FOOOOOO  0  # X
+    FOOOOOO  1  # X
+    FOOOOOO -1  # X
+
+=over
+
+=item * B<FOOOOOOOO>
+
+Take FOOOOOOOO of operand, return result
+
+=back
+
+    FOOOOOO  0  # X
+    FOOOOOO  1  # X
+    FOOOOOO -1  # X
+
+=over
+
+=item * B<FOOOOOOOO>
+
+Take FOOOOOOOO of operand, return result
+
+=back
+
+    FOOOOOO  0  # X
+    FOOOOOO  1  # X
+    FOOOOOO -1  # X
+
 =head2 Section 2.2: Strings (Text Data & Operators)
 
 RPerl provides 2 text data types:
@@ -5076,7 +5386,7 @@ Perl 5 provides several built-in operators designed for use with text data, whic
 
 =item * Case
 
-=item * Comparison
+=item * Comparison (Relational & Equality)
 
 =item * Search
 
@@ -5298,7 +5608,7 @@ q-quoted text literals may contain:
     %token OP01_NAMED_SCOLON         = /(fc;)/
     %token OP10_NAMED_UNARY_SCOLON   = /(lc;|lcfirst;|uc;|ucfirst;)/
 
-=head3 Section 2.2.8: Comparison Operators
+=head3 Section 2.2.8: Comparison (Relational & Equality) Operators
 
     %token OP01_NAMED_SCOLON         = /(cmp;)/
     %token OP11_COMPARE_LT_GT        = /(le|ge|lt|gt)\s/   # precedence 11 infix: string comparison less or equal 'le', greater or equal 'ge', less than 'lt', greater than 'gt'
