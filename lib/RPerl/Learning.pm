@@ -1633,6 +1633,12 @@ I<BEST PRACTICES>
     +1.628_241_700_382_422_95e-03  # best number for mixed-sign exponents, accuracy may be reduced on computers with lower data type limits
     -9.515_922_545_197_158_70e-15  # best number for mixed-sign exponents, accuracy may be reduced on computers with lower data type limits
 
+
+START HERE: insert section about truth values (true vs false)
+START HERE: insert section about truth values (true vs false)
+START HERE: insert section about truth values (true vs false)
+
+
 =head3 Section 2.1.9: Arithmetic Operators
 
 =begin text
@@ -4384,89 +4390,116 @@ $z = q{<<< END TEXT EVAL >>>};
 
 =for docbook </tbody></tgroup></table>
 
-=over
+B<WARNING FOR SOME NUMERIC LOGIC OPERATORS:>
 
-=item * B<FOOOOOOOO>
+B<Due to different possible return values for false result, unexpected or undefined behavior may occur if return value is utilized anywhere except true-or-false conditions in loops and conditional statements>
 
-Take FOOOOOOOO of operand, return result
+In PERLOPS mode, value for true is integer C<1> or integer other than C<0>, and value for false is integer C<0> or empty string C<''>, depending on operator;
 
-=back
+In CPPOPS mode, value for true is integer C<1>, and value for false is integer C<0>
 
-    FOOOOOO  0  # X
-    FOOOOOO  1  # X
-    FOOOOOO -1  # X
+    if    (0 and 1) { print 'I think not'   . "\n"; }  # good use of logical and operator
+    while (0 or  1) { print 'infinite loop' . "\n"; }  # good use of logical or  operator
 
-=over
-
-=item * B<FOOOOOOOO>
-
-Take FOOOOOOOO of operand, return result
-
-=back
-
-    FOOOOOO  0  # X
-    FOOOOOO  1  # X
-    FOOOOOO -1  # X
+    (1 and 2) + 3                  # UNEXPECTED BEHAVIOR: bad use of logical and operator
+    (1 or  2) * 3                  # UNEXPECTED BEHAVIOR: bad use of logical or  operator
 
 =over
 
-=item * B<FOOOOOOOO>
+=item * B<Logical Negation>
 
-Take FOOOOOOOO of operand, return result
+Take logical negation of operand, return result;
+
+Logical negation operators C<!> and C<not> return the same results, and differ only by precedence
 
 =back
 
-    FOOOOOO  0  # X
-    FOOOOOO  1  # X
-    FOOOOOO -1  # X
+    !    0  # true
+    !    1  # false
+    !   -1  # false
+
+    not  0  # true
+    not  1  # false
+    not -1  # false
 
 =over
 
-=item * B<FOOOOOOOO>
+=item * B<Logical And>
 
-Take FOOOOOOOO of operand, return result
+Take logical conjunction of operands, return result;
+
+Logical and operators C<&&> and C<and> return the same results, and differ only by precedence
 
 =back
 
-    FOOOOOO  0  # X
-    FOOOOOO  1  # X
-    FOOOOOO -1  # X
+     0 &&   0  # false
+     0 &&   1  # false
+     0 &&  -1  # false
+     1 &&   0  # false
+     1 &&   1  # true
+     1 &&  -1  # true
+    -1 &&   0  # false
+    -1 &&   1  # true
+    -1 &&  -1  # true
+
+     0 and  0  # false
+     0 and  1  # false
+     0 and -1  # false
+     1 and  0  # false
+     1 and  1  # true
+     1 and -1  # true
+    -1 and  0  # false
+    -1 and  1  # true
+    -1 and -1  # true
 
 =over
 
-=item * B<FOOOOOOOO>
+=item * B<Logical Or>
 
-Take FOOOOOOOO of operand, return result
+Take logical disjunction of operands, return result;
+
+Logical or operators C<||> and C<or> return the same results, and differ only by precedence
+
 
 =back
 
-    FOOOOOO  0  # X
-    FOOOOOO  1  # X
-    FOOOOOO -1  # X
+     0 ||  0  # false
+     0 ||  1  # true
+     0 || -1  # true
+     1 ||  0  # true
+     1 ||  1  # true
+     1 || -1  # true
+    -1 ||  0  # true
+    -1 ||  1  # true
+    -1 || -1  # true
+
+     0 or  0  # false
+     0 or  1  # true
+     0 or -1  # true
+     1 or  0  # true
+     1 or  1  # true
+     1 or -1  # true
+    -1 or  0  # true
+    -1 or  1  # true
+    -1 or -1  # true
 
 =over
 
-=item * B<FOOOOOOOO>
+=item * B<Logical Xor>
 
-Take FOOOOOOOO of operand, return result
-
-=back
-
-    FOOOOOO  0  # X
-    FOOOOOO  1  # X
-    FOOOOOO -1  # X
-
-=over
-
-=item * B<FOOOOOOOO>
-
-Take FOOOOOOOO of operand, return result
+Take logical exclusive disjunction of operands, return result
 
 =back
 
-    FOOOOOO  0  # X
-    FOOOOOO  1  # X
-    FOOOOOO -1  # X
+     0 xor  0  # false
+     0 xor  1  # true
+     0 xor -1  # true
+     1 xor  0  # true
+     1 xor  1  # false
+     1 xor -1  # false
+    -1 xor  0  # true
+    -1 xor  1  # false
+    -1 xor -1  # false
 
 =head3 Section 2.1.13: Bitwise Operators
 
