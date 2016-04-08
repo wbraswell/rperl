@@ -8,7 +8,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_110;
+our $VERSION = 0.005_200;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -77,13 +77,17 @@ for my $test_file ( sort keys %{$test_files} ) {
             $test_file,
             undef,    # empty $cpp_output_file_name_group, no files will be saved in PARSE mode
             {},       # empty $cpp_source_group, starting compile process from scratch, not continued
-            {   ops     => 'PERL',
+            {   
+                dependencies => 'ON',
+                ops     => 'PERL',
                 types   => 'PERL',
-                check   => 'TRACE',    # unneeded?
+#                check        => 'TRACE',    # unnecessary
+                uncompile    => 'OFF',
                 compile => 'PARSE',
-
-                #                execute => 'OFF',  # unneeded
-                #                label   => 'OFF'  # unneeded
+#                subcompile   => 'OFF',  # unnecessary
+#                CXX          => 'g++',  # unnecessary
+#                execute => 'OFF',  # unnecessary
+#                label   => 'OFF'   # unnecessary
             }
         );    # returns void
         1;    # return true

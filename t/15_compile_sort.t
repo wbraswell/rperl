@@ -10,7 +10,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_001;
+our $VERSION = 0.001_100;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -66,10 +66,14 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
         RPerl::diag( 'in 15_compile_sort.t, have $test_file = ' . $test_file . "\n" );
 
         $modes_argument = {
+            dependencies => 'ON',
             ops     => $ops,
             types   => $types,
-            check   => 'TRACE',
+#            check        => 'TRACE',  # unnecessary
+#            uncompile    => 'OFF',  # unnecessary
             compile => 'GENERATE',    # don't save source code to disk, will diff check from memory
+            subcompile   => 'OFF',
+#            CXX          => 'g++',  # unnecessary
             execute => 'OFF',
             label   => 'OFF'          # don't label source code, will strip comments before diff check
         };

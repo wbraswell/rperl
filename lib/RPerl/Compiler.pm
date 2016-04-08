@@ -267,6 +267,11 @@ our string_hashref $rperl_to_xsbinary__parse_generate_compile = sub {
 our hashref_arrayref $generate_output_file_names = sub {
     ( my string_arrayref $input_file_names, my string_arrayref $output_file_name_prefixes, my integer $input_files_count, my string_hashref $modes ) = @_;
 
+#    RPerl::diag('in Compiler::generate_output_file_names(), received $input_file_names = ' . "\n" . Dumper($input_file_names) . "\n");
+#    RPerl::diag('in Compiler::generate_output_file_names(), received $output_file_name_prefixes = ' . "\n" . Dumper($output_file_name_prefixes) . "\n");
+#    RPerl::diag('in Compiler::generate_output_file_names(), received $input_files_count = ' . $input_files_count . "\n");
+#    RPerl::diag('in Compiler::generate_output_file_names(), received $modes = ' . "\n" . Dumper($modes) . "\n");
+
     # NEED FIX: add string_hashref_arrayref type
     #    my string_hashref_arrayref $output_file_name_groups = [];
     my hashref_arrayref $output_file_name_groups = [];
@@ -293,12 +298,10 @@ our hashref_arrayref $generate_output_file_names = sub {
 
         # if output file prefix(es) not provided, then generate output file name(s) from input file name(s)
         else {
-            #            RPerl::diag('have $input_file_name = ' . $input_file_name . "\n");
+#            RPerl::diag('in Compiler::generate_output_file_names(), have $input_file_name = ' . $input_file_name . "\n");
             # should not already be only prefix, fileparse() to isolate prefix
             ( $input_file_name_prefix, $input_file_name_path, $input_file_name_suffix ) = fileparse( $input_file_name, qr/[.][^.]*/xms );
         }
-
-        #        RPerl::diag('$output_file_name_groups->[' . $i . ']' . "\n" . Dumper($output_file_name_groups->[$i]) . "\n");
 
         my string $output_file_name_path_prefix = $input_file_name_path . $input_file_name_prefix;
 
@@ -326,8 +329,9 @@ our hashref_arrayref $generate_output_file_names = sub {
             elsif ($modes->{subcompile} eq 'SHARED') {
                 $output_file_name_groups->[$i]->{SO} = $output_file_name_path_prefix . '.so';
             }
-            elsif (($modes->{subcompile} eq 'STATIC') or 
-                ($modes->{subcompile} eq 'DYNAMIC')) {
+            elsif ( ($modes->{subcompile} eq 'STATIC') or 
+                    ($modes->{subcompile} eq 'DYNAMIC') or
+                   (($modes->{subcompile} eq 'OFF') and ($modes->{compile} eq 'GENERATE'))) {
                 # Micro$oft Windows uses *.exe file extension (suffix) for compiled executables
                 if ( $OSNAME eq 'MSWin32' ) {
                     $output_file_name_groups->[$i]->{EXE} = $output_file_name_path_prefix . '.exe';
@@ -355,7 +359,8 @@ our hashref_arrayref $generate_output_file_names = sub {
                 # DEV NOTE: correlates to errors EARG* in script/rperl
                 die 'ERROR EARG15: Incompatible command-line options provided, both --static subcompile mode flag and *.pm Perl module input file, dying' . "\n";
             }
-            elsif ($modes->{subcompile} eq 'DYNAMIC') {
+            elsif ( ($modes->{subcompile} eq 'DYNAMIC') or
+                   (($modes->{subcompile} eq 'OFF') and ($modes->{compile} eq 'GENERATE'))) {
                 $output_file_name_groups->[$i]->{PMC} = $output_file_name_path_prefix . '.pmc';
             }
         }
@@ -367,7 +372,7 @@ our hashref_arrayref $generate_output_file_names = sub {
             $output_file_name_groups->[$i]->{_H_label} = ' (if needed)';
         }
 
-#        RPerl::diag('in rperl::generate_output_file_names(), bottom of loop ' . $i . ' of ' . $input_files_count . ", have \$output_file_name_groups->[$i] = \n" . Dumper( $output_file_name_groups->[$i] ) . "\n");
+#        RPerl::diag('in Compiler::generate_output_file_names(), bottom of loop ' . $i . ' of ' . ($input_files_count - 1) . ", have \$output_file_name_groups->[$i] = \n" . Dumper( $output_file_name_groups->[$i] ) . "\n");
     }
 
     return $output_file_name_groups;

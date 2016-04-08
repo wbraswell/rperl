@@ -29,7 +29,7 @@ if ( $EVAL_ERROR and ( $EVAL_ERROR =~ /attempt to reload/i ) ) {
 }
 elsif ( $EVAL_ERROR ne q{} ) { die $EVAL_ERROR; }
 
-use English qw(-no_match_vars);    # for $OSNAME; why isn't this included from 'require RPerl::Config', which is included from 'use RPerl' above?
+use English qw(-no_match_vars);    # for $OSNAME; NEED ANSWER: why isn't this included from 'require RPerl::Config', which is included from 'use RPerl' above?
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
@@ -149,10 +149,10 @@ our boolean $dummy_source_code_find = sub {
 our integer $diff_check_file_vs_string = sub {
     ( my string $filename, my string $source_string, my string $ops) = @_;
 
-    #    RPerl::diag('in Generator->diff_check_file_vs_string(), received $filename = ' . $filename . "\n");
-    #    RPerl::diag('in Generator->diff_check_file_vs_string(), contents of file = ' . "\n");
-    #    system 'cat', $filename;
-    #    RPerl::diag('in Generator->diff_check_file_vs_string(), received $source_string = ' . "\n" . $source_string . "\n\n");
+#    RPerl::diag('in Generator->diff_check_file_vs_string(), received $filename = ' . $filename . "\n");
+#    RPerl::diag('in Generator->diff_check_file_vs_string(), contents of file = ' . "\n");
+#    system 'cat', $filename;
+#    RPerl::diag('in Generator->diff_check_file_vs_string(), received $source_string = ' . "\n" . $source_string . "\n\n");
 
     if ( not -f $filename ) {
         die 'ERROR ECOGEDI00, RPERL GENERATOR, DIFF CHECK: file not found, ' . q{'} . $filename . q{'} . "\n" . ', dying' . "\n";
@@ -365,6 +365,7 @@ our integer $diff_check_file_vs_string = sub {
         }
     }
 
+#    RPerl::diag( 'in Generator->diff_check_file_vs_string(), about to return $return_value =' . "\n" . $return_value . "\n" );
     return $return_value;
 };
 

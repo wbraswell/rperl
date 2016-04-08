@@ -4,6 +4,7 @@ DONE
 DOING
     Learning RPerl, examples for 2.1.9 - 2.1.14
     travis enable dev Perl
+    INSTALL notes, update step 3 examples
     dev Perl fix RPerl failures w/ P5P
     chmod a-x *.so output if not on HP-UX
     execute via compiled copy not interpreted

@@ -1633,13 +1633,45 @@ I<BEST PRACTICES>
     +1.628_241_700_382_422_95e-03  # best number for mixed-sign exponents, accuracy may be reduced on computers with lower data type limits
     -9.515_922_545_197_158_70e-15  # best number for mixed-sign exponents, accuracy may be reduced on computers with lower data type limits
 
+=head3 Section 2.1.9: Truth Values
 
-START HERE: insert section about truth values (true vs false)
-START HERE: insert section about truth values (true vs false)
-START HERE: insert section about truth values (true vs false)
+In the most simple case, a I<"truth value"> may be represented by a boolean literal where the numeric value of C<0> represents the truth value of I<"false">, and the numeric C<1> represents I<"true">.  In general, a truth value is any data which may be recognized by Perl (and thus RPerl) as being either true or false; there is no third option.
+
+Perl recognizes relatively few values as false, of which only 4 are accepted by RPerl:
+
+      0   # false, number zero
+     '0'  # false, text   zero
+    q{0}  # false, text   zero
+    q{}   # false, text   empty
+
+All other values which RPerl accepts are recognized to hold a truth value of true.
+
+All numeric operators in the comparison and logic sub-categories, as well as all string operators in the comparison sub-category, will generate truth values as output.
+
+Perl provides magic for the truth value of false, allowing it be utilized as a truth value or a numeric value or a string value.  This magic behavior is not supported by C++, and thus not supported by RPerl. 
 
 
-=head3 Section 2.1.9: Arithmetic Operators
+START HERE: integrate below warning into above information, modify 2 redundant WARNINGS occurring after this section
+START HERE: integrate below warning into above information, modify 2 redundant WARNINGS occurring after this section
+START HERE: integrate below warning into above information, modify 2 redundant WARNINGS occurring after this section
+
+
+B<WARNING FOR ALL NUMERIC COMPARISON OPERATORS:>
+
+B<Due to different possible return values for false result, unexpected or undefined behavior may occur if return value is utilized anywhere except true-or-false conditions in loops and conditional statements>
+
+In PERLOPS mode, value for true is integer C<1>, and value for false is empty string C<''>;
+
+In CPPOPS mode, value for true is integer C<1>, and value for false is integer C<0>
+
+
+
+
+
+
+
+
+=head3 Section 2.1.10: Arithmetic Operators
 
 =begin text
 
@@ -1666,7 +1698,7 @@ l l l l r l l .
 
 =begin docbook
 
-<table id="learning_rperl-section_2.1.9-table_1" label="" frame="all" colsep="1" rowsep="1">
+<table id="learning_rperl-section_2.1.10-table_1" label="" frame="all" colsep="1" rowsep="1">
 <title>Arithmetic Operators</title>
 <tgroup cols="6">
 
@@ -2757,7 +2789,7 @@ Error if attempt to take square root of operand less than 0
     sqrt -1  # ERROR
     sqrt  2  # 1.414_213_562_373_1
 
-=head3 Section 2.1.10: Trigonometry Operators
+=head3 Section 2.1.11: Trigonometry Operators
 
 =begin text
 
@@ -2784,7 +2816,7 @@ l l l l r l l .
 
 =begin docbook
 
-<table id="learning_rperl-section_2.1.10-table_1" label="" frame="all" colsep="1" rowsep="1">
+<table id="learning_rperl-section_2.1.11-table_1" label="" frame="all" colsep="1" rowsep="1">
 <title>Trigonometry Operators</title>
 <tgroup cols="6">
 
@@ -3136,7 +3168,7 @@ Take cosine of operand, return result
     cos -1                     #  0.540_302_305_868_14
     cos  3.141_592_653_589_79  # -1
 
-=head3 Section 2.1.11: Comparison (Relational & Equality) Operators
+=head3 Section 2.1.12: Comparison (Relational & Equality) Operators
 
 =begin text
 
@@ -3163,7 +3195,7 @@ l l l l r l l .
 
 =begin docbook
 
-<table id="learning_rperl-section_2.1.11-table_1" label="" frame="all" colsep="1" rowsep="1">
+<table id="learning_rperl-section_2.1.12-table_1" label="" frame="all" colsep="1" rowsep="1">
 <title>Comparison (Relational & Equality) Operators</title>
 <tgroup cols="6">
 
@@ -3783,7 +3815,7 @@ Compare to determine equality of operands, return true if first operand is not e
     -1 !=  1  # true
     -1 != -1  # false
 
-=head3 Section 2.1.12: Logic Operators
+=head3 Section 2.1.13: Logic Operators
 
 =begin text
 
@@ -3810,7 +3842,7 @@ l l l l r l l .
 
 =begin docbook
 
-<table id="learning_rperl-section_2.1.12-table_1" label="" frame="all" colsep="1" rowsep="1">
+<table id="learning_rperl-section_2.1.13-table_1" label="" frame="all" colsep="1" rowsep="1">
 <title>Logic Operators</title>
 <tgroup cols="6">
 
@@ -4501,7 +4533,7 @@ Take logical exclusive disjunction of operands, return result
     -1 xor  1  # false
     -1 xor -1  # false
 
-=head3 Section 2.1.13: Bitwise Operators
+=head3 Section 2.1.14: Bitwise Operators
 
 =begin text
 
@@ -4528,7 +4560,7 @@ l l l l r l l .
 
 =begin docbook
 
-<table id="learning_rperl-section_2.1.13-table_1" label="" frame="all" colsep="1" rowsep="1">
+<table id="learning_rperl-section_2.1.14-table_1" label="" frame="all" colsep="1" rowsep="1">
 <title>Bitwise Operators</title>
 <tgroup cols="6">
 
@@ -5020,7 +5052,7 @@ Take FOOOOOOOO of operand, return result
     FOOOOOO  1  # X
     FOOOOOO -1  # X
 
-=head3 Section 2.1.14: Miscellaneous Operators
+=head3 Section 2.1.15: Miscellaneous Operators
 
 =begin text
 
@@ -5047,7 +5079,7 @@ l l l l r l l .
 
 =begin docbook
 
-<table id="learning_rperl-section_2.1.14-table_1" label="" frame="all" colsep="1" rowsep="1">
+<table id="learning_rperl-section_2.1.15-table_1" label="" frame="all" colsep="1" rowsep="1">
 <title>Miscellaneous Operators</title>
 <tgroup cols="6">
 
