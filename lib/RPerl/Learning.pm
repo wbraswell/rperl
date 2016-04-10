@@ -1648,21 +1648,18 @@ All other values which RPerl accepts are recognized to hold a truth value of tru
 
 All numeric operators in the comparison and logic sub-categories, as well as all string operators in the comparison sub-category, will generate truth values as output.
 
-Perl provides magic for the truth value of false, allowing it be utilized as a truth value or a numeric value or a string value.  This magic behavior is not supported by C++, and thus not supported by RPerl. 
+Perl provides magic for the truth value of false, allowing it be utilized as either a truth value C<false>, or a numeric value C<0>, or an empty string value C<q{}>.  This magic behavior is not supported by C++, and thus not supported by RPerl.
 
+In C and C++, only numeric C<0> is universally recognized as false, while the text 0 and empty text are recognized as true, which is different than Perl.  To achieve compatibility, RPerl automatically inserts additional C++ logic in all compiled output code to check for the 2 remaining RPerl false values of text character zero C<'0'> or C<q{0}>, and empty text C<q{}>.  This ensures the compiled C++ output code will behave identically to the original RPerl input source code, with regard to truth values.
 
-START HERE: integrate below warning into above information, modify 2 redundant WARNINGS occurring after this section
-START HERE: integrate below warning into above information, modify 2 redundant WARNINGS occurring after this section
-START HERE: integrate below warning into above information, modify 2 redundant WARNINGS occurring after this section
+B<WARNING FOR ALL COMPARISON & LOGIC OPERATORS:>
 
+B<Due to Perl's magic return values for a truth value of false, unexpected or undefined behavior may occur if a truth value is utilized anywhere except true-or-false conditions in loops and conditional statements.>
 
-B<WARNING FOR ALL NUMERIC COMPARISON OPERATORS:>
+START HERE: modify 2 redundant WARNINGS occurring after this section
+START HERE: modify 2 redundant WARNINGS occurring after this section
+START HERE: modify 2 redundant WARNINGS occurring after this section
 
-B<Due to different possible return values for false result, unexpected or undefined behavior may occur if return value is utilized anywhere except true-or-false conditions in loops and conditional statements>
-
-In PERLOPS mode, value for true is integer C<1>, and value for false is empty string C<''>;
-
-In CPPOPS mode, value for true is integer C<1>, and value for false is integer C<0>
 
 
 

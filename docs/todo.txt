@@ -3,6 +3,7 @@ DONE
 
 DOING
     Learning RPerl, examples for 2.1.9 - 2.1.14
+    create macro to replace all conditional truth value checks with extra logic to include RPerl false values of '0', q{0}, and q{}, in both character and string type
     travis enable dev Perl
     INSTALL notes, update step 3 examples
     dev Perl fix RPerl failures w/ P5P
