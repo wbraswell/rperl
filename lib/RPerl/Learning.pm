@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.050_000;
+our $VERSION = 0.051_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -1648,13 +1648,13 @@ All other values which RPerl accepts are recognized to hold a truth value of tru
 
 All numeric operators in the comparison and logic sub-categories, as well as all string operators in the comparison sub-category, will generate truth values as output.
 
-Perl provides magic for the truth value of false, allowing it be utilized as either a truth value false, or a numeric value C<0>, or an empty string value C<q{}>.  This magic behavior is not supported by C++, and thus not supported by RPerl.
+Perl attaches magic to the truth value of false, allowing it be utilized as either a normal truth value, or a numeric value of C<0>, or an empty string value of C<q{}>.  This magic behavior is not supported by C++, and thus not supported by RPerl.
 
 In C and C++, only numeric C<0> is universally recognized as false, while the text 0 and empty text are recognized as true, which is different than Perl.  To achieve compatibility, RPerl automatically inserts additional C++ logic in all compiled output code to check for the 2 remaining RPerl false values of text character zero C<'0'> or C<q{0}>, and empty text C<q{}>.  This ensures the compiled C++ output code will behave identically to the original RPerl input source code, with regard to truth values.
 
 B<WARNING FOR ALL COMPARISON & LOGIC OPERATORS:>
 
-B<Due to Perl's magic return values for a truth value of false, as well as the difference between Perl and C++ recognized truth values, you may experience unexpected or undefined behavior if a truth value is utilized anywhere except true-or-false conditions in loops and conditional statements.>
+B<Due to Perl's magic attached to truth values of false, as well as the difference between Perl and C++ recognized truth values, you may experience unexpected or undefined behavior if a truth value is utilized anywhere except true-or-false conditions in loops and conditional statements.>
 
 B<Only utilize the truth values returned by comparison and logic operators within the condition enclosed by parentheses in C<if ()>, C<elsif ()>, C<for ()>, or C<while ()>.>
 
@@ -1662,22 +1662,11 @@ B<Only utilize the truth values returned by comparison and logic operators withi
     elsif ($x and $y) { print 'Maybe'         . "\n"; }  # good use of          and operator
 
     for   (my integer $i = 0; $i < 23; $i++) { print 'finite loop'   . "\n"; }  # good use of less-than operator
-    while (                    1 == 2 )      { print 'infinite loop' . "\n"; }  # good use of     equal operator
+    while (                    1 != 2      ) { print 'infinite loop' . "\n"; }  # good use of not-equal operator
 
-    my integer $foo = (1 > 2) + 3;   # UNEXPECTED BEHAVIOR: bad use of greater-than operator
-    my integer $bar = (1 < 2) * 3;   # UNEXPECTED BEHAVIOR: bad use of    less-than operator
-
-START HERE: modify 2 redundant WARNINGS occurring after this section
-START HERE: modify 2 redundant WARNINGS occurring after this section
-START HERE: modify 2 redundant WARNINGS occurring after this section
-
-
-
-
-
-
-
-
+    my integer $foo = 3 + (1 >= 2);   # UNEXPECTED BEHAVIOR: bad use of greater-than-or-equal operator
+    my integer $bar = 3 * (1 <= 2);   # UNEXPECTED BEHAVIOR: bad use of    less-than-or-equal operator
+    my integer $bat = sin (1 == 2);   # UNEXPECTED BEHAVIOR: bad use of                 equal operator
 
 =head3 Section 2.1.10: Arithmetic Operators
 
