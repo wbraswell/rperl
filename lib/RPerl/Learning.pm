@@ -1635,7 +1635,7 @@ I<BEST PRACTICES>
 
 =head3 Section 2.1.9: Truth Values
 
-In the most simple case, a I<"truth value"> may be represented by a boolean literal where the numeric value of C<0> represents the truth value of I<"false">, and the numeric C<1> represents I<"true">.  In general, a truth value is any data which may be recognized by Perl (and thus RPerl) as being either true or false; there is no third option.
+In the most simple case, a I<"truth value"> may be represented by a boolean literal where the numeric value of C<0> represents the truth value of I<"false">, and numeric C<1> represents I<"true">.  In general, a truth value is any data which may be recognized by Perl (and thus RPerl) as being either true or false; there is no third option.
 
 Perl recognizes relatively few values as false, of which only 4 are accepted by RPerl:
 
@@ -1648,13 +1648,24 @@ All other values which RPerl accepts are recognized to hold a truth value of tru
 
 All numeric operators in the comparison and logic sub-categories, as well as all string operators in the comparison sub-category, will generate truth values as output.
 
-Perl provides magic for the truth value of false, allowing it be utilized as either a truth value C<false>, or a numeric value C<0>, or an empty string value C<q{}>.  This magic behavior is not supported by C++, and thus not supported by RPerl.
+Perl provides magic for the truth value of false, allowing it be utilized as either a truth value false, or a numeric value C<0>, or an empty string value C<q{}>.  This magic behavior is not supported by C++, and thus not supported by RPerl.
 
 In C and C++, only numeric C<0> is universally recognized as false, while the text 0 and empty text are recognized as true, which is different than Perl.  To achieve compatibility, RPerl automatically inserts additional C++ logic in all compiled output code to check for the 2 remaining RPerl false values of text character zero C<'0'> or C<q{0}>, and empty text C<q{}>.  This ensures the compiled C++ output code will behave identically to the original RPerl input source code, with regard to truth values.
 
 B<WARNING FOR ALL COMPARISON & LOGIC OPERATORS:>
 
-B<Due to Perl's magic return values for a truth value of false, unexpected or undefined behavior may occur if a truth value is utilized anywhere except true-or-false conditions in loops and conditional statements.>
+B<Due to Perl's magic return values for a truth value of false, as well as the difference between Perl and C++ recognized truth values, you may experience unexpected or undefined behavior if a truth value is utilized anywhere except true-or-false conditions in loops and conditional statements.>
+
+B<Only utilize the truth values returned by comparison and logic operators within the condition enclosed by parentheses in C<if ()>, C<elsif ()>, C<for ()>, or C<while ()>.>
+
+    if    (1 > 2)     { print 'I think not'   . "\n"; }  # good use of greater-than operator
+    elsif ($x and $y) { print 'Maybe'         . "\n"; }  # good use of          and operator
+
+    for   (my integer $i = 0; $i < 23; $i++) { print 'finite loop'   . "\n"; }  # good use of less-than operator
+    while (                    1 == 2 )      { print 'infinite loop' . "\n"; }  # good use of     equal operator
+
+    my integer $foo = (1 > 2) + 3;   # UNEXPECTED BEHAVIOR: bad use of greater-than operator
+    my integer $bar = (1 < 2) * 3;   # UNEXPECTED BEHAVIOR: bad use of    less-than operator
 
 START HERE: modify 2 redundant WARNINGS occurring after this section
 START HERE: modify 2 redundant WARNINGS occurring after this section
