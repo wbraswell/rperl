@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.051_000;
+our $VERSION = 0.052_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -4557,7 +4557,7 @@ l l l l r l l .
 
 =begin docbook
 
-<table id="learning_rperl-section_2.1.14-table_1" label="" frame="all" colsep="1" rowsep="1">
+<table id="learning_rperl-section_2.1.15-table_1" label="" frame="all" colsep="1" rowsep="1">
 <title>Bitwise Operators</title>
 <tgroup cols="6">
 
@@ -4637,7 +4637,77 @@ B<Supported>
 
 =for docbook <row><entry align="left">
 
-Bitwise Shift Left
+Bitwise Negation with Parentheses
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+~( )
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Closed
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+05
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Right
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Yes
+
+=for text }], 1);
+
+=for man T}
+
+=for html </th></tr>
+
+=for docbook </entry></row>
+
+=for docbook </thead>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <tbody>
+
+=for docbook <row><entry align="left">
+
+Bitwise Shift Left 
 
 =for man T}@T{
 
@@ -4685,7 +4755,7 @@ Left
 
 =for docbook </entry><entry align="left">
 
-Not Yet
+Coming Soon
 
 =for text }], 1);
 
@@ -4755,7 +4825,7 @@ Left
 
 =for docbook </entry><entry align="left">
 
-Not Yet
+Coming Soon
 
 =for text }], 1);
 
@@ -4821,7 +4891,7 @@ Left
 
 =for docbook </entry><entry align="left">
 
-Not Yet
+Coming Soon
 
 =for text }], 1);
 
@@ -4887,7 +4957,7 @@ Left
 
 =for docbook </entry><entry align="left">
 
-Not Yet
+Coming Soon
 
 =for text }], 1);
 
@@ -4953,7 +5023,7 @@ Left
 
 =for docbook </entry><entry align="left">
 
-Not Yet
+Coming Soon
 
 =for text }], 1);
 
@@ -4988,6 +5058,75 @@ $z = q{<<< END TEXT EVAL >>>};
 =for html </table>
 
 =for docbook </tbody></tgroup></table>
+
+All code examples are shown using 64-bit integers; your results may vary depending upon your C++ compiler and hardware platform.
+
+B<WARNING FOR ALL BITWISE OPERATORS:>
+
+B<Due to the difference between how integer and non-integer scalar values are stored in memory, you may experience unexpected or undefined behavior if a bitwise operator is passed any non-integer operands as input.>
+
+B<Only utilize bitwise operators with integer, unsigned_integer, or boolean operands.>
+
+    ~(1)      # good use of bitwise negation    operator
+    12 << 2   # good use of bitwise shift left  operator
+    13 >> 3   # good use of bitwise shift right operator
+
+    my unsigned_integer $foo = 14;
+    $foo & 4  # good use of bitwise and operator
+    $foo | 5  # good use of bitwise  or operator
+    $foo ^ 6  # good use of bitwise xor operator
+
+    my number $bar = 21.12;
+    ~($bar)         # UNEXPECTED BEHAVIOR: bad use of bitwise negation    operator
+      $bar <<    7  # UNEXPECTED BEHAVIOR: bad use of bitwise shift left  operator
+         8 >> $bar  # UNEXPECTED BEHAVIOR: bad use of bitwise shift right operator
+
+    23.42 &   9   # UNEXPECTED BEHAVIOR: bad use of bitwise and operator
+    23    ^ 1.1   # UNEXPECTED BEHAVIOR: bad use of bitwise xor operator
+
+B<Also, due to the difference between how signed and unsigned integer values are stored in memory, both Perl's C<use integer;> pragma configuration command as well as RPerl's C<integer> and C<unsigned_integer> data types must be utilized in correct combination, as described below.  Perl relies on the C<use integer;> pragma to determine numeric data types, while C++ relies on the actual data types provided by the software developers as part of each variable declaration.  You may experience unexpected behavior if a bitwise operator is utilized with mismatching pragma and data types.>
+
+B<Each call to Perl's C<use integer;> pragma applies to 1 entire RPerl source code file at a time, either 1 full *.pl program file or 1 full *.pm module file.  If the C<use integer;> pragma is in effect for a specific RPerl file, then all bitwise operators in said file must be provided with input operands which are signed (positive or negative) integers only, not unsigned integers or floating-point numbers or other data types.  If C<use integer;> is not in effect for an RPerl file, then all bitwise operators in said file must be provided with operands which are unsigned (non-negative) integers or booleans only, not signed integers or other data types.>
+
+B<The C<use integer;> pragma also affects the results of all arithmetic and comparison operators by discarding the non-integer (fractional) portion of input operands, as if the C<floor> operator were called to convert each floating-point number into an integer.  Because of this, floating-point operators and signed integer bitwise operators must not be included in the same single RPerl source code file; to compensate, simply move all signed bitwise operators into their own separate RPerl *.pm module file which calls C<use integer;>.>
+
+B<Please see the Perl documentation for more information about the C<use integer;> pragma:>
+
+L<http://perldoc.perl.org/integer.html>
+
+    # good combination: no 'use integer;' pragma, 
+    # unsigned_integer data types for bitwise negation operator, number data type for multiplication operation
+    my unsigned_integer $foo = 5;
+    my unsigned_integer $bar = ~($foo);  # $bar  = 18_446_744_073_709_551_610
+    my number $quux = 21.12 * 42.23;     # $quux = 891.897_6
+
+X<break_code_blocks>
+
+
+    # good combination: 'use integer;' pragma,
+    # integer data types for both bitwise negation operator and multiplication operator
+    use integer;
+    my integer $foo = 5;
+    my integer $bar = ~($foo);   # $bar  = -6
+    my integer $quux = 21 * 42;  # $quux =  882
+
+X<break_code_blocks>
+
+
+    # bad combination: no 'use integer;' pragma, 
+    # integer data types for bitwise negation operator
+    my integer $foo = 5;
+    my integer $bar = ~($foo);   # UNEXPECTED BEHAVIOR: ($bar = 18_446_744_073_709_551_610) in Perl, but ($bar = -6) in C++
+
+X<break_code_blocks>
+
+
+    # bad combination: 'use integer;' pragma,
+    # unsigned_integer data types for bitwise negation operator, number data type for multiplication operator
+    use integer;
+    my unsigned_integer $foo = 5;
+    my unsigned_integer $bar = ~($foo);  # UNEXPECTED BEHAVIOR: ($bar = -6) in Perl, but ($bar = 18_446_744_073_709_551_610) in C++
+    my number $quux = 21.12 * 42.23;     # UNEXPECTED BEHAVIOR: ($quux = 882) in Perl, but ($quux = 891.897_6) in C++
 
 =over
 
