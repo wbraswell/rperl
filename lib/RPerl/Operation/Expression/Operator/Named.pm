@@ -46,7 +46,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         $operator_name = substr $self->{children}->[0], 0, -1;
     }
     elsif (( $self_class eq 'Operator_83' )    # Operator -> OP01_NAMED SubExpression
-        or ( $self_class eq 'OperatorVoid_121' )
+        or ( $self_class eq 'OperatorVoid_122' )
         )                                   # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
     {
         $operator_name = $self->{children}->[0];
@@ -57,7 +57,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where Operation_79, Operator_83, Operator_84, or OperatorVoid_121 expected, dying' )
+                . ' found where Operation_79, Operator_83, Operator_84, or OperatorVoid_122 expected, dying' )
             . "\n";
     }
  

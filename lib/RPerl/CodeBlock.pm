@@ -27,7 +27,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     my string $self_class = ref $self;
 
-    if ( $self_class eq 'CodeBlock_173' ) {    # CodeBlock -> LBRACE PLUS-41 '}'
+    if ( $self_class eq 'CodeBlock_174' ) {    # CodeBlock -> LBRACE PLUS-41 '}'
         my string $left_brace     = $self->{children}->[0];
         my object $operation_plus = $self->{children}->[1];
         my string $right_brace    = $self->{children}->[2];
@@ -45,7 +45,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule ' . $self_class . ' found where CodeBlock_173 expected, dying' )
+            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule ' . $self_class . ' found where CodeBlock_174 expected, dying' )
             . "\n";
     }
     return $rperl_source_group;
@@ -68,7 +68,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     
     my string $self_class = ref $self;
 
-    if ( $self_class eq 'CodeBlock_173' ) {    # CodeBlock -> LBRACE PLUS-41 '}'
+    if ( $self_class eq 'CodeBlock_174' ) {    # CodeBlock -> LBRACE PLUS-41 '}'
         my string $left_brace     = $self->{children}->[0];
         my object $operation_plus = $self->{children}->[1];
         my string $right_brace    = $self->{children}->[2];
@@ -91,7 +91,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule ' . $self_class . ' found where CodeBlock_173 expected, dying' )
+            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule ' . $self_class . ' found where CodeBlock_174 expected, dying' )
             . "\n";
     }
     return $cpp_source_group;

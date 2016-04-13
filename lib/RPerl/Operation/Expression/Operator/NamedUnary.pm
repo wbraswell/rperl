@@ -49,8 +49,8 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     if ( $self_class eq 'Operation_80' ) {    # Statement -> OP01_NAMED_UNARY_SCOLON
         $operator_name = substr $self->{children}->[0], 0, -1;
     }
-    elsif (( $self_class eq 'Operator_98' ) or    # Operator -> OP10_NAMED_UNARY SubExpression
-        ( $self_class eq 'Operator_99' )
+    elsif (( $self_class eq 'Operator_99' ) or    # Operator -> OP10_NAMED_UNARY SubExpression
+        ( $self_class eq 'Operator_100' )
         )
     {                                          # Operator -> OP10_NAMED_UNARY
             # strip trailing whitespace, caused by the need to have the grammar match some tokens with a trailing whitespace, as with 'scalar ', etc.
@@ -61,7 +61,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where Operation_80, Operator_98, or Operator_99 expected, dying' )
+                . ' found where Operation_80, Operator_99, or Operator_100 expected, dying' )
             . "\n";
     }
 
@@ -103,8 +103,8 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     if ( $self_class eq 'Operation_80' ) {    # Statement -> OP01_NAMED_UNARY_SCOLON
         $operator_name = substr $self->{children}->[0], 0, -1;
     }
-    elsif (( $self_class eq 'Operator_98' ) or    # Operator -> OP10_NAMED_UNARY SubExpression
-        ( $self_class eq 'Operator_99' )
+    elsif (( $self_class eq 'Operator_99' ) or    # Operator -> OP10_NAMED_UNARY SubExpression
+        ( $self_class eq 'Operator_100' )
         )
     {                                          # Operator -> OP10_NAMED_UNARY
             # strip trailing whitespace, caused by the need to have the grammar match some tokens with a trailing whitespace, as with 'scalar ', etc.
@@ -114,7 +114,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . $self_class
-                . ' found where Operation_80, Operator_98 or Operator_99 expected, dying' )
+                . ' found where Operation_80, Operator_99 or Operator_100 expected, dying' )
             . "\n";
     }
 

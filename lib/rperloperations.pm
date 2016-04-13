@@ -3,7 +3,7 @@ package  # hide from PAUSE indexing
     rperloperations; ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 use strict;
 use warnings;
-our $VERSION = 0.001_210;
+our $VERSION = 0.001_220;
 use Carp;
 
 # NEED UPGRADE: make Grammars first-class citizens for full Perl 6 compatibility, we should have it done by Christmas  XD
@@ -23,6 +23,7 @@ our $BUILTINS = {
 use RPerl::Operation::Expression::Operator::Bitwise::And;
 use RPerl::Operation::Expression::Operator::Bitwise::OrXor;
 use RPerl::Operation::Expression::Operator::Bitwise::Shift;
+use RPerl::Operation::Expression::Operator::Bitwise::Negation;
 use RPerl::Operation::Expression::Operator::Close;
 use RPerl::Operation::Expression::Operator::Compare::EqualNotEqual;
 use RPerl::Operation::Expression::Operator::Compare::LessThanGreaterThan;

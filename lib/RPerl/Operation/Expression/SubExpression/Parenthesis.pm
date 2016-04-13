@@ -24,11 +24,11 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in Parenthesis->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) ne 'SubExpression_142' ) {
+    if ( ( ref $self ) ne 'SubExpression_143' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( ref $self )
-                . ' found where SubExpression_142 expected, dying' )
+                . ' found where SubExpression_143 expected, dying' )
             . "\n";
     }
 
@@ -61,11 +61,11 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
 #    RPerl::diag( 'in Parenthesis->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) ne 'SubExpression_142' ) {
+    if ( ( ref $self ) ne 'SubExpression_143' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . ( ref $self )
-                . ' found where SubExpression_142 expected, dying' )
+                . ' found where SubExpression_143 expected, dying' )
             . "\n";
     }
 

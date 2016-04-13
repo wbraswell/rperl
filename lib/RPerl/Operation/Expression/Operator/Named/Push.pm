@@ -94,7 +94,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= q{ } . $right_paren;
     }
-    elsif ( $operator_named_class eq 'OperatorVoid_121' ) { # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
+    elsif ( $operator_named_class eq 'OperatorVoid_122' ) { # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
         my string $operator_name = $operator_named->{children}->[0];
         my object $argument0 = $operator_named->{children}->[1];
         my string $list_comma = $operator_named->{children}->[2];
@@ -139,7 +139,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ($operator_named_class)
-                . ' found where Operation_79, Operator_83, Operator_84, or OperatorVoid_121 expected, dying'
+                . ' found where Operation_79, Operator_83, Operator_84, or OperatorVoid_122 expected, dying'
         ) . "\n";
     }
 

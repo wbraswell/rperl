@@ -26,15 +26,15 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap Loop_163, Loop_164, and Loop_165 from Statement_152
-    if ( $self_class eq 'Statement_152' ) {
+    # unwrap Loop_164, Loop_165, and Loop_166 from Statement_153
+    if ( $self_class eq 'Statement_153' ) {
         $self = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if (   ( $self_class eq 'Loop_163' )  # Loop -> LoopFor
-        or ( $self_class eq 'Loop_164' )  # Loop -> LoopForEach
-        or ( $self_class eq 'Loop_165' ) )  # Loop -> LoopWhile
+    if (   ( $self_class eq 'Loop_164' )  # Loop -> LoopFor
+        or ( $self_class eq 'Loop_165' )  # Loop -> LoopForEach
+        or ( $self_class eq 'Loop_166' ) )  # Loop -> LoopWhile
     {
         my object $rperl_source_subgroup = $self->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
@@ -44,7 +44,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . $self_class
-                . ' found where Loop_163, Loop_164, or Loop_165 expected, dying'
+                . ' found where Loop_164, Loop_165, or Loop_166 expected, dying'
         ) . "\n";
     }
     return $rperl_source_group;
@@ -71,15 +71,15 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap Loop_163, Loop_164, and Loop_165 from Statement_152
-    if ( $self_class eq 'Statement_152' ) {
+    # unwrap Loop_164, Loop_165, and Loop_166 from Statement_153
+    if ( $self_class eq 'Statement_153' ) {
         $self = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if (   ( $self_class eq 'Loop_163' )  # Loop -> LoopFor
-        or ( $self_class eq 'Loop_164' )  # Loop -> LoopForEach
-        or ( $self_class eq 'Loop_165' ) )  # Loop -> LoopWhile
+    if (   ( $self_class eq 'Loop_164' )  # Loop -> LoopFor
+        or ( $self_class eq 'Loop_165' )  # Loop -> LoopForEach
+        or ( $self_class eq 'Loop_166' ) )  # Loop -> LoopWhile
     {
         my object $cpp_source_subgroup = $self->ast_to_cpp__generate__CPPOPS_CPPTYPES($loop_label, $modes);
         RPerl::Generator::source_group_append( $cpp_source_group,
@@ -89,7 +89,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . $self_class
-                . ' found where Loop_163, Loop_164, or Loop_165 expected, dying'
+                . ' found where Loop_164, Loop_165, or Loop_166 expected, dying'
         ) . "\n";
     }
     return $cpp_source_group;

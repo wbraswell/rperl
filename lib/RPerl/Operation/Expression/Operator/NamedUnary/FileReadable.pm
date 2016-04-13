@@ -44,12 +44,12 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 . ' requires exactly one argument, dying' )
             . "\n";
     }
-    elsif ( $operator_named_class eq 'Operator_98' ) {    # Operator -> OP10_NAMED_UNARY SubExpression
+    elsif ( $operator_named_class eq 'Operator_99' ) {    # Operator -> OP10_NAMED_UNARY SubExpression
         $rperl_source_group->{PMC} .= $operator_named->{children}->[0] . q{ };
         my string_hashref $rperl_source_subgroup = $operator_named->{children}->[1]->ast_to_rperl__generate( $modes, $self );
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
-    elsif ( $operator_named_class eq 'Operator_99' ) {    # Operator -> OP10_NAMED_UNARY
+    elsif ( $operator_named_class eq 'Operator_100' ) {    # Operator -> OP10_NAMED_UNARY
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP15, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
                 . $operator_named->{children}->[0]
                 . ' requires exactly one argument, dying' )
@@ -58,7 +58,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ($operator_named_class)
-                . ' found where Operation_80, Operator_98, or Operator_99 expected, dying' )
+                . ' found where Operation_80, Operator_99, or Operator_100 expected, dying' )
             . "\n";
     }
 

@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-our $VERSION = 0.003_800;
+our $VERSION = 0.003_900;
 use ExtUtils::MakeMaker;
 
 BEGIN { use English; }
@@ -40,6 +40,7 @@ WriteMakefile(
 
         # RPERL SYSTEM (NON-USER) DEPENDENCIES
         'Parse::Eyapp'        => 1.182,    # RPerl Grammar; used by grammar_recompile.sh
+        'File::Which'         => 1.21,     # RPerl Grammar; used by grammar_increment.pl
         'CPAN::Meta'          => 2.150005, # CPAN Distribution Build; used for generating CPAN metadata from this file
         'App::Pod2CpanHtml'   => 0.04,     # Learning RPerl; used by pod2rperlhtml.pl, provides pod2cpanhtml
         'Date::Format'        => 2.24,     # Learning RPerl; used by pod2rperlhtml.pl

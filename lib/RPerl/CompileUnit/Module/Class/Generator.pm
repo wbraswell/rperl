@@ -139,7 +139,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         $property_name       = $property_type_inner->{children}->[3]->{children}->[0];
         $property_name =~ s/^(\w+)\s*$/$1/gxms;    # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
 
-        # DEV NOTE: we can do error checking once here instead of twice for TypeInnerProperties_223 & TypeInnerProperties_224 below
+        # DEV NOTE: we can do error checking once here instead of twice for TypeInnerProperties_224 & TypeInnerProperties_225 below
         # because they both have OpStringOrWord as sub-element 3, grabbed as $property_name above
         if ( $property_name ne $property_key ) {
             die 'ERROR ECOGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
@@ -150,7 +150,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         }
 
         # TypeInnerProperties -> MY Type '$TYPED_' OpStringOrWord OP19_VARIABLE_ASSIGN SubExpression
-        if ( ref $property_type_inner eq 'TypeInnerProperties_223' ) {
+        if ( ref $property_type_inner eq 'TypeInnerProperties_224' ) {
             $property_my            = $property_type_inner->{children}->[0];
             $property_type          = $property_type_inner->{children}->[1]->{children}->[0];
             $property_TYPED         = $property_type_inner->{children}->[2];
@@ -171,7 +171,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         }
 
         # TypeInnerProperties -> MY Type '$TYPED_' OpStringOrWord OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef'
-        elsif ( ref $property_type_inner eq 'TypeInnerProperties_224' ) {
+        elsif ( ref $property_type_inner eq 'TypeInnerProperties_225' ) {
             $property_my                    = $property_type_inner->{children}->[0];
             $property_type                  = $property_type_inner->{children}->[1]->{children}->[0];
             $property_TYPED                 = $property_type_inner->{children}->[2];
@@ -198,7 +198,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         else {
             die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                     . ( ref $self )
-                    . ' found where TypeInnerProperties_223 or TypeInnerProperties_224 expected, dying' )
+                    . ' found where TypeInnerProperties_224 or TypeInnerProperties_225 expected, dying' )
                 . "\n";
         }
 
@@ -228,7 +228,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 }
 
                 # TypeInnerProperties -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN SubExpression
-                if ( ref $property_type_inner eq 'TypeInnerProperties_223' ) {
+                if ( ref $property_type_inner eq 'TypeInnerProperties_224' ) {
                     $property_my            = $property_type_inner->{children}->[0];
                     $property_type          = $property_type_inner->{children}->[1]->{children}->[0];
                     $property_TYPED         = $property_type_inner->{children}->[2];
@@ -249,7 +249,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 }
 
                 # TypeInnerProperties -> MY Type '$TYPED_' WORD OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef'
-                elsif ( ref $property_type_inner eq 'TypeInnerProperties_224' ) {
+                elsif ( ref $property_type_inner eq 'TypeInnerProperties_225' ) {
                     $property_my                    = $property_type_inner->{children}->[0];
                     $property_type                  = $property_type_inner->{children}->[1]->{children}->[0];
                     $property_TYPED                 = $property_type_inner->{children}->[2];
@@ -276,7 +276,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 else {
                     die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                             . ( ref $self )
-                            . ' found where TypeInnerProperties_223 or TypeInnerProperties_224 expected, dying' )
+                            . ' found where TypeInnerProperties_224 or TypeInnerProperties_225 expected, dying' )
                         . "\n";
                 }
             }
@@ -499,7 +499,7 @@ EOL
         my string $property_name               = $property_type_inner->{children}->[3]->{children}->[0];
         $property_name =~ s/^(\w+)\s*$/$1/gxms;    # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
 
-        # DEV NOTE: we can do error checking once here instead of twice for TypeInnerProperties_223 & TypeInnerProperties_224 below
+        # DEV NOTE: we can do error checking once here instead of twice for TypeInnerProperties_224 & TypeInnerProperties_225 below
         # because they both have OpStringOrWord as sub-element 3, grabbed as $property_name above
         if ( $property_name ne $property_key ) {
             die 'ERROR ECOGEASCP20, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
@@ -510,20 +510,20 @@ EOL
         }
 
         # TypeInnerProperties -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN SubExpression
-        if ( ref $property_type_inner eq 'TypeInnerProperties_223' ) {
+        if ( ref $property_type_inner eq 'TypeInnerProperties_224' ) {
             $property_type          = $property_type_inner->{children}->[1]->{children}->[0];
             $property_subexpression = $property_type_inner->{children}->[5];
         }
 
         # TypeInnerProperties -> MY Type '$TYPED_' WORD OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef'
-        elsif ( ref $property_type_inner eq 'TypeInnerProperties_224' ) {
+        elsif ( ref $property_type_inner eq 'TypeInnerProperties_225' ) {
             $property_type               = $property_type_inner->{children}->[1]->{children}->[0];
             $property_arrayref_index_max = $property_type_inner->{children}->[5];
         }
         else {
             die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                     . ( ref $self )
-                    . ' found where TypeInnerProperties_223 or TypeInnerProperties_224 expected, dying' )
+                    . ' found where TypeInnerProperties_224 or TypeInnerProperties_225 expected, dying' )
                 . "\n";
         }
 
@@ -558,9 +558,9 @@ EOL
 
         $property_declaration = q{    } . $property_type . q{ } . $property_key;
 
-        # SubExpression_135 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined,
+        # SubExpression_136 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined,
         # don't perform any C++ initialization for properties initialized to 'undef' in Perl
-        if ( ( defined $property_subexpression ) and ( ( ref $property_subexpression ) ne 'SubExpression_135' ) ) {
+        if ( ( defined $property_subexpression ) and ( ( ref $property_subexpression ) ne 'SubExpression_136' ) ) {
             $cpp_source_subgroup = $property_subexpression->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
             $property_declaration .= ' = ' . $cpp_source_subgroup->{CPP};
         }
@@ -597,7 +597,7 @@ EOL
             $property_name       = $property_type_inner->{children}->[3]->{children}->[0];
             $property_name =~ s/^(\w+)\s*$/$1/gxms;     # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
 
-            # DEV NOTE: we can do error checking once here instead of twice for TypeInnerProperties_223 & TypeInnerProperties_224 below
+            # DEV NOTE: we can do error checking once here instead of twice for TypeInnerProperties_224 & TypeInnerProperties_225 below
             # because they both have OpStringOrWord as sub-element 3, grabbed as $property_name above
             if ( $property_name ne $property_key ) {
                 die 'ERROR ECOGEASCP20, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
@@ -608,20 +608,20 @@ EOL
             }
 
             # TypeInnerProperties -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN SubExpression
-            if ( ref $property_type_inner eq 'TypeInnerProperties_223' ) {
+            if ( ref $property_type_inner eq 'TypeInnerProperties_224' ) {
                 $property_type          = $property_type_inner->{children}->[1]->{children}->[0];
                 $property_subexpression = $property_type_inner->{children}->[5];
             }
 
             # TypeInnerProperties -> MY Type '$TYPED_' WORD OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef'
-            elsif ( ref $property_type_inner eq 'TypeInnerProperties_224' ) {
+            elsif ( ref $property_type_inner eq 'TypeInnerProperties_225' ) {
                 $property_type               = $property_type_inner->{children}->[1]->{children}->[0];
                 $property_arrayref_index_max = $property_type_inner->{children}->[5];
             }
             else {
                 die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                         . ( ref $self )
-                        . ' found where TypeInnerProperties_223 or TypeInnerProperties_224 expected, dying' )
+                        . ' found where TypeInnerProperties_224 or TypeInnerProperties_225 expected, dying' )
                     . "\n";
             }
 
@@ -656,9 +656,9 @@ EOL
 
             $property_declaration = q{    } . $property_type . q{ } . $property_key;
 
-            # SubExpression_135 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined,
+            # SubExpression_136 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined,
             # don't perform any C++ initialization for properties initialized to 'undef' in Perl
-            if ( ( defined $property_subexpression ) and ( ( ref $property_subexpression ) ne 'SubExpression_135' ) ) {
+            if ( ( defined $property_subexpression ) and ( ( ref $property_subexpression ) ne 'SubExpression_136' ) ) {
                 $cpp_source_subgroup = $property_subexpression->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
                 $property_declaration .= ' = ' . $cpp_source_subgroup->{CPP};
             }

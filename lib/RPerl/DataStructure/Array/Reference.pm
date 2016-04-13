@@ -45,17 +45,17 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap ArrayReference_196 from SubExpression_138
-    if ( $self_class eq 'SubExpression_138' ) {
+    # unwrap ArrayReference_197 from SubExpression_139
+    if ( $self_class eq 'SubExpression_139' ) {
         $self = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if ( ( $self_class ) ne 'ArrayReference_196' ) {
+    if ( ( $self_class ) ne 'ArrayReference_197' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ( $self_class )
-                . ' found where ArrayReference_196 or SubExpression_138 expected, dying' )
+                . ' found where ArrayReference_197 or SubExpression_139 expected, dying' )
             . "\n";
     }
 
@@ -99,17 +99,17 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap ArrayReference_196 from SubExpression_138
-    if ( $self_class eq 'SubExpression_138' ) {
+    # unwrap ArrayReference_197 from SubExpression_139
+    if ( $self_class eq 'SubExpression_139' ) {
         $self = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if ( ( $self_class ) ne 'ArrayReference_196' ) {
+    if ( ( $self_class ) ne 'ArrayReference_197' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . ( $self_class )
-                . ' found where ArrayReference_196 or SubExpression_138 expected, dying' )
+                . ' found where ArrayReference_197 or SubExpression_139 expected, dying' )
             . "\n";
     }
 

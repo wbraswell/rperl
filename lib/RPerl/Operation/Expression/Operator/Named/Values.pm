@@ -62,7 +62,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 . ' does not accept multiple arguments, dying' )
             . "\n";
     }
-    elsif ( $operator_named_class eq 'OperatorVoid_121' ) { # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
+    elsif ( $operator_named_class eq 'OperatorVoid_122' ) { # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP13, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
                 . $operator_named->{children}->[0]
@@ -73,7 +73,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ($operator_named_class)
-                . ' found where Operation_79, Operator_83, Operator_84, or OperatorVoid_121 expected, dying'
+                . ' found where Operation_79, Operator_83, Operator_84, or OperatorVoid_122 expected, dying'
         ) . "\n";
     }
 
