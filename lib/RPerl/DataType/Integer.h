@@ -8,7 +8,7 @@ using std::cout;  using std::cerr;  using std::endl;
 // if we allow Inline default int, then it will accept all kinds of non-integer values which should be filtered by XS_unpack_integer() and CHECK()
 # ifndef __CPP__INCLUDED__RPerl__DataType__Integer_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__Integer_h__typedefs 1
-typedef int integer;
+typedef long int integer;
 # endif
 
 // [[[ PRE-DECLARED TYPEDEFS ]]]
@@ -18,7 +18,7 @@ typedef bool boolean;
 # endif
 # ifndef __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_h__typedefs 1
-typedef unsigned int unsigned_integer;
+typedef unsigned long int unsigned_integer;
 # endif
 # ifndef __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs 1

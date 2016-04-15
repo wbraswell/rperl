@@ -6,7 +6,7 @@ using std::cout;  using std::cerr;  using std::endl;
 // [[[ TYPEDEFS ]]]
 # ifndef __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_h__typedefs 1
-typedef unsigned int unsigned_integer;
+typedef unsigned long int unsigned_integer;
 # endif
 
 // [[[ PRE-DECLARED TYPEDEFS ]]]
@@ -16,7 +16,7 @@ typedef bool boolean;
 # endif
 # ifndef __CPP__INCLUDED__RPerl__DataType__Integer_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__Integer_h__typedefs 1
-typedef int integer;
+typedef long int integer;
 # endif
 # ifndef __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs 1
