@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.052_000;
+our $VERSION = 0.053_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -5130,15 +5130,35 @@ X<break_code_blocks>
 
 =over
 
-=item * B<FOOOOOOOO>
+=item * B<Bitwise Negation with Parentheses>
 
-Take FOOOOOOOO of operand, return result
+Negate each bit of operand, return result;
+
+May be used to take one's complement of operand;
+
+Parentheses must be used, due to ambiguity of tilde C<~> character as used for bitwise negation operator, smartmatch operator C<~~>, or regular expression C<=~>
+
+    ~(-8)  #                          7
+    ~(-2)  #                          1
+    ~(-1)  #                          0
+    ~( 0)  # 18_446_744_073_709_551_615
+    ~( 1)  # 18_446_744_073_709_551_614
+    ~( 2)  # 18_446_744_073_709_551_613
+    ~( 8)  # 18_446_744_073_709_551_607
+
+X<break_code_blocks>
+
+
+    use integer;
+    ~(-8)  #  7
+    ~(-2)  #  1
+    ~(-1)  #  0
+    ~( 0)  # -1
+    ~( 1)  # -2
+    ~( 2)  # -3
+    ~( 8)  # -9
 
 =back
-
-    FOOOOOO  0  # X
-    FOOOOOO  1  # X
-    FOOOOOO -1  # X
 
 =over
 
