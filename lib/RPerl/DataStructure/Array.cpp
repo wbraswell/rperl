@@ -38,8 +38,8 @@ void integer_arrayref_CHECK(SV* possible_integer_arrayref)
 		possible_integer_array_element = av_fetch(possible_integer_array, i, 0);
 
 		// DEV NOTE: the following two if() statements are functionally equivalent to the integer_CHECK() macro & subroutine, but with array-specific error codes
-	    if (not(SvOK(*possible_integer_array_element))) { croak("\nERROR EIVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref element value expected but undefined/null value found at index %d,\ncroaking", i); }
-		if (not(SvIOKp(*possible_integer_array_element))) { croak("\nERROR EIVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref element value expected but non-integer value found at index %d,\ncroaking", i); }
+	    if (not(SvOK(*possible_integer_array_element))) { croak("\nERROR EIVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref element value expected but undefined/null value found at index %ld,\ncroaking", i); }
+		if (not(SvIOKp(*possible_integer_array_element))) { croak("\nERROR EIVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref element value expected but non-integer value found at index %ld,\ncroaking", i); }
 	}
 }
 
@@ -60,8 +60,8 @@ void integer_arrayref_CHECKTRACE(SV* possible_integer_arrayref, const char* vari
 	{
 		possible_integer_array_element = av_fetch(possible_integer_array, i, 0);
 
-	    if (not(SvOK(*possible_integer_array_element))) { croak("\nERROR EIVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref element value expected but undefined/null value found at index %d,\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name); }
-		if (not(SvIOKp(*possible_integer_array_element))) { croak("\nERROR EIVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref element value expected but non-integer value found at index %d,\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name); }
+	    if (not(SvOK(*possible_integer_array_element))) { croak("\nERROR EIVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref element value expected but undefined/null value found at index %ld,\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name); }
+		if (not(SvIOKp(*possible_integer_array_element))) { croak("\nERROR EIVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref element value expected but non-integer value found at index %ld,\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name); }
 	}
 }
 
@@ -82,8 +82,8 @@ void number_arrayref_CHECK(SV* possible_number_arrayref)
 	{
 		possible_number_array_element = av_fetch(possible_number_array, i, 0);
 
-	    if (not(SvOK(*possible_number_array_element))) { croak("\nERROR ENVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber_arrayref element value expected but undefined/null value found at index %d,\ncroaking", i); }
-		if (not(SvNOKp(*possible_number_array_element) || SvIOKp(*possible_number_array_element))) { croak("\nERROR ENVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber_arrayref element value expected but non-number value found at index %d,\ncroaking", i); }
+	    if (not(SvOK(*possible_number_array_element))) { croak("\nERROR ENVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber_arrayref element value expected but undefined/null value found at index %ld,\ncroaking", i); }
+		if (not(SvNOKp(*possible_number_array_element) || SvIOKp(*possible_number_array_element))) { croak("\nERROR ENVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber_arrayref element value expected but non-number value found at index %ld,\ncroaking", i); }
 	}
 }
 
@@ -104,8 +104,8 @@ void number_arrayref_CHECKTRACE(SV* possible_number_arrayref, const char* variab
 	{
 		possible_number_array_element = av_fetch(possible_number_array, i, 0);
 
-	    if (not(SvOK(*possible_number_array_element))) { croak("\nERROR ENVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber_arrayref element value expected but undefined/null value found at index %d,\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name); }
-		if (not(SvNOKp(*possible_number_array_element) || SvIOKp(*possible_number_array_element))) { croak("\nERROR ENVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber_arrayref element value expected but non-number value found at index %d,\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name); }
+	    if (not(SvOK(*possible_number_array_element))) { croak("\nERROR ENVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber_arrayref element value expected but undefined/null value found at index %ld,\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name); }
+		if (not(SvNOKp(*possible_number_array_element) || SvIOKp(*possible_number_array_element))) { croak("\nERROR ENVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber_arrayref element value expected but non-number value found at index %ld,\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name); }
 	}
 }
 
@@ -126,8 +126,8 @@ void string_arrayref_CHECK(SV* possible_string_arrayref)
 	{
 		possible_string_array_element = av_fetch(possible_string_array, i, 0);
 
-	    if (not(SvOK(*possible_string_array_element))) { croak("\nERROR EPVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring_arrayref element value expected but undefined/null value found at index %d,\ncroaking", i); }
-		if (not(SvPOKp(*possible_string_array_element))) { croak("\nERROR EPVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring_arrayref element value expected but non-string value found at index %d,\ncroaking", i); }
+	    if (not(SvOK(*possible_string_array_element))) { croak("\nERROR EPVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring_arrayref element value expected but undefined/null value found at index %ld,\ncroaking", i); }
+		if (not(SvPOKp(*possible_string_array_element))) { croak("\nERROR EPVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring_arrayref element value expected but non-string value found at index %ld,\ncroaking", i); }
 	}
 }
 
@@ -148,8 +148,8 @@ void string_arrayref_CHECKTRACE(SV* possible_string_arrayref, const char* variab
 	{
 		possible_string_array_element = av_fetch(possible_string_array, i, 0);
 
-	    if (not(SvOK(*possible_string_array_element))) { croak("\nERROR EPVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring_arrayref element value expected but undefined/null value found at index %d,\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name); }
-		if (not(SvPOKp(*possible_string_array_element))) { croak("\nERROR EPVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring_arrayref element value expected but non-string value found at index %d,\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name); }
+	    if (not(SvOK(*possible_string_array_element))) { croak("\nERROR EPVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring_arrayref element value expected but undefined/null value found at index %ld,\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name); }
+		if (not(SvPOKp(*possible_string_array_element))) { croak("\nERROR EPVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring_arrayref element value expected but non-string value found at index %ld,\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name); }
 	}
 }
 
@@ -174,7 +174,7 @@ integer_arrayref XS_unpack_integer_arrayref(SV* input_avref)
 
     input_av = (AV*)SvRV(input_avref);
 	input_av_length = av_len(input_av) + 1;
-//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_integer_arrayref(), have input_av_length = %d\n", input_av_length);
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_integer_arrayref(), have input_av_length = %ld\n", input_av_length);
 
 	// DEV NOTE: VECTOR ELEMENT ASSIGNMENT OPTION information is not specific to this subroutine or packing/unpacking
 
@@ -219,7 +219,7 @@ integer_arrayref XS_unpack_integer_arrayref(SV* input_avref)
 //		VECTOR_RESIZE_NOSHRINK(output_vector, (i + 1));  output_vector.erase(i + output_vector.begin());  output_vector.insert((i + output_vector.begin()), SvIV(*input_av_element));
 	}
 
-//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_integer_arrayref(), after for() loop, have output_vector.size() = %d\n", output_vector.size());
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_integer_arrayref(), after for() loop, have output_vector.size() = %ld\n", output_vector.size());
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_integer_arrayref(), bottom of subroutine\n");
 
 	return(output_vector);
@@ -235,7 +235,7 @@ void XS_pack_integer_arrayref(SV* output_avref, integer_arrayref input_vector)
 	integer i;
 	SV* temp_sv_pointer;
 
-//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref(), have input_vector_length = %d\n", input_vector_length);
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref(), have input_vector_length = %ld\n", input_vector_length);
 
 	if (input_vector_length > 0) { for (i = 0;  i < input_vector_length;  ++i) { av_push(output_av, newSViv(input_vector[i])); } }
 //	else warn("in CPPOPS_CPPTYPES XS_pack_integer_arrayref(), array was empty, returning empty array via newAV()");
@@ -262,7 +262,7 @@ number_arrayref XS_unpack_number_arrayref(SV* input_avref)
 
     input_av = (AV*)SvRV(input_avref);
 	input_av_length = av_len(input_av) + 1;
-//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number_arrayref(), have input_av_length = %d\n", input_av_length);
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number_arrayref(), have input_av_length = %ld\n", input_av_length);
 
 	// VECTOR ELEMENT ASSIGNMENT, OPTION A, SUBSCRIPT, KNOWN SIZE: vector has programmer-provided const size or compiler-guessable size,
 	// resize() ahead of time to allow l-value subscript notation
@@ -277,7 +277,7 @@ number_arrayref XS_unpack_number_arrayref(SV* input_avref)
 		output_vector[i] = SvNV(*input_av_element);
 	}
 
-//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number_arrayref(), after for() loop, have output_vector.size() = %d\n", output_vector.size());
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number_arrayref(), after for() loop, have output_vector.size() = %ld\n", output_vector.size());
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number_arrayref(), bottom of subroutine\n");
 
 	return(output_vector);
@@ -293,7 +293,7 @@ void XS_pack_number_arrayref(SV* output_avref, number_arrayref input_vector)
 	integer i;
 	SV* temp_sv_pointer;
 
-//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_arrayref(), have input_vector_length = %d\n", input_vector_length);
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_arrayref(), have input_vector_length = %ld\n", input_vector_length);
 
 	if (input_vector_length > 0) { for (i = 0;  i < input_vector_length;  ++i) { av_push(output_av, newSVnv(input_vector[i])); } }
 //	else warn("in CPPOPS_CPPTYPES XS_pack_number_arrayref(), array was empty, returning empty array via newAV()");
@@ -320,7 +320,7 @@ string_arrayref XS_unpack_string_arrayref(SV* input_avref)
 
     input_av = (AV*)SvRV(input_avref);
 	input_av_length = av_len(input_av) + 1;
-//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_string_arrayref(), have input_av_length = %d\n", input_av_length);
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_string_arrayref(), have input_av_length = %ld\n", input_av_length);
 
 	// VECTOR ELEMENT ASSIGNMENT, OPTION A, SUBSCRIPT, KNOWN SIZE: vector has programmer-provided const size or compiler-guessable size,
 	// resize() ahead of time to allow l-value subscript notation
@@ -335,7 +335,7 @@ string_arrayref XS_unpack_string_arrayref(SV* input_avref)
 		output_vector[i] = SvPV_nolen(*input_av_element);
 	}
 
-//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_string_arrayref(), after for() loop, have output_vector.size() = %d\n", output_vector.size());
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_string_arrayref(), after for() loop, have output_vector.size() = %ld\n", output_vector.size());
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_string_arrayref(), bottom of subroutine\n");
 
 	return(output_vector);
@@ -351,7 +351,7 @@ void XS_pack_string_arrayref(SV* output_avref, string_arrayref input_vector)
 	integer i;
 	SV* temp_sv_pointer;
 
-//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_arrayref(), have input_vector_length = %d\n", input_vector_length);
+//	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_arrayref(), have input_vector_length = %ld\n", input_vector_length);
 
 	if (input_vector_length > 0) { for (i = 0;  i < input_vector_length;  ++i) { av_push(output_av, newSVpv(input_vector[i].data(), input_vector[i].size())); } }
 //	else warn("in CPPOPS_CPPTYPES XS_pack_string_arrayref(), array was empty, returning empty array via newAV()");
@@ -398,7 +398,7 @@ SV* integer_arrayref_to_string(SV* input_avref)
 
     input_av = (AV*)SvRV(input_avref);
 	input_av_length = av_len(input_av) + 1;
-//	fprintf(stderr, "in CPPOPS_PERLTYPES integer_arrayref_to_string(), have input_av_length = %d\n", input_av_length);
+//	fprintf(stderr, "in CPPOPS_PERLTYPES integer_arrayref_to_string(), have input_av_length = %ld\n", input_av_length);
 
 	sv_setpvn(output_sv, "[", 1);
 
@@ -411,7 +411,7 @@ SV* integer_arrayref_to_string(SV* input_avref)
 //		integer_CHECKTRACE(*input_av_element, (char*)((string)"*input_av_element at index " + to_string(i)).c_str(), "integer_hashref_to_string()");
 
 		if (i_is_0) { i_is_0 = 0; } else { sv_catpvn(output_sv, ", ", 2); }
-		sv_catpvf(output_sv, "%d", (integer)SvIV(*input_av_element));
+		sv_catpvf(output_sv, "%ld", (integer)SvIV(*input_av_element));
 	}
 
 	sv_catpvn(output_sv, "]", 1);
@@ -455,7 +455,7 @@ SV* number_arrayref_to_string(SV* input_avref)
 
 	input_av = (AV*)SvRV(input_avref);
 	input_av_length = av_len(input_av) + 1;
-//	fprintf(stderr, "in CPPOPS_PERLTYPES number_arrayref_to_string(), have input_av_length = %d\n", input_av_length);
+//	fprintf(stderr, "in CPPOPS_PERLTYPES number_arrayref_to_string(), have input_av_length = %ld\n", input_av_length);
 
 	temp_stream << "[";
 //	sv_setpvn(output_sv, "[", 1);
@@ -500,7 +500,7 @@ SV* string_arrayref_to_string(SV* input_avref)
 
 	input_av = (AV*)SvRV(input_avref);
 	input_av_length = av_len(input_av) + 1;
-//	fprintf(stderr, "in CPPOPS_PERLTYPES string_arrayref_to_string(), have input_av_length = %d\n", input_av_length);
+//	fprintf(stderr, "in CPPOPS_PERLTYPES string_arrayref_to_string(), have input_av_length = %ld\n", input_av_length);
 
 //	temp_stream << "[";
 	sv_setpvn(output_sv, "[", 1);
@@ -556,7 +556,7 @@ string integer_arrayref_to_string(integer_arrayref input_vector)
 	integer input_vector_element;
     boolean i_is_0 = 1;
 
-//	fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string(), have input_vector_length = %d\n", input_vector_length);
+//	fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string(), have input_vector_length = %ld\n", input_vector_length);
 
 	output_stream << '[';
 
@@ -587,7 +587,7 @@ string number_arrayref_to_string(number_arrayref input_vector)
 	number input_vector_element;
     boolean i_is_0 = 1;
 
-//	fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref_to_string(), have input_vector_length = %d\n", input_vector_length);
+//	fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref_to_string(), have input_vector_length = %ld\n", input_vector_length);
 
 	output_stream.precision(std::numeric_limits<double>::digits10);
 	output_stream << '[';
@@ -622,7 +622,7 @@ string string_arrayref_to_string(string_arrayref input_vector)
     size_t input_vector_element_pos;
     boolean i_is_0 = 1;
 
-//	fprintf(stderr, "in CPPOPS_CPPTYPES string_arrayref_to_string(), have input_vector_length = %d\n", input_vector_length);
+//	fprintf(stderr, "in CPPOPS_CPPTYPES string_arrayref_to_string(), have input_vector_length = %ld\n", input_vector_length);
 
 //	output_stream << '[';
 	output_string = "[";
@@ -689,7 +689,7 @@ SV* integer_arrayref__typetest0(SV* lucky_integers)
 
 //	for (i = 0;  i < how_lucky;  ++i)
 //	{
-//		fprintf(stderr, "in CPPOPS_PERLTYPES integer_arrayref__typetest0(), have lucky integer %d/%d = %d, BARBAT\n", i, (how_lucky - 1), (integer)SvIV(*av_fetch(lucky_integers_deref, i, 0)));
+//		fprintf(stderr, "in CPPOPS_PERLTYPES integer_arrayref__typetest0(), have lucky integer %ld/%ld = %ld, BARBAT\n", i, (how_lucky - 1), (integer)SvIV(*av_fetch(lucky_integers_deref, i, 0)));
 //	}
 
 //	ENTER;
@@ -735,7 +735,7 @@ SV* integer_arrayref__typetest1(SV* my_size)
 	for (i = 0;  i < SvIV(my_size);  ++i)
 	{
 		av_store(output_av, (I32)i, newSViv(i * 5));
-//		fprintf(stderr, "in CPPOPS_PERLTYPES integer_arrayref__typetest1(), setting element %d/%d = %d, BARBAT\n", i, (integer)(SvIV(my_size) - 1), (integer)SvIV(*av_fetch(output_av, (I32)i, 0)));
+//		fprintf(stderr, "in CPPOPS_PERLTYPES integer_arrayref__typetest1(), setting element %ld/%ld = %ld, BARBAT\n", i, (integer)(SvIV(my_size) - 1), (integer)SvIV(*av_fetch(output_av, (I32)i, 0)));
 	}
 
 /*
@@ -757,7 +757,7 @@ SV* number_arrayref__typetest0(SV* lucky_numbers)
 //	{
 //		number_CHECK(*av_fetch(lucky_numbers_deref, i, 0));
 //		number_CHECKTRACE(*av_fetch(lucky_numbers_deref, i, 0), (char*)((string)"*av_fetch(lucky_numbers_deref, i, 0) at index " + to_string(i)).c_str(), "number_arrayref__typetest0()");
-//		fprintf(stderr, "in CPPOPS_PERLTYPES number_arrayref__typetest0(), have lucky number %d/%d = %Lf, BARBAT\n", i, (how_lucky - 1), (number)SvNV(*av_fetch(lucky_numbers_deref, i, 0)));
+//		fprintf(stderr, "in CPPOPS_PERLTYPES number_arrayref__typetest0(), have lucky number %ld/%ld = %Lf, BARBAT\n", i, (how_lucky - 1), (number)SvNV(*av_fetch(lucky_numbers_deref, i, 0)));
 //	}
 	return(newSVpvf("%s%s", SvPV_nolen(number_arrayref_to_string(lucky_numbers)), "CPPOPS_PERLTYPES"));
 }
@@ -772,7 +772,7 @@ SV* number_arrayref__typetest1(SV* my_size)
 	for (i = 0;  i < SvIV(my_size);  ++i)
 	{
 		av_store(output_av, (I32)i, newSVnv(i * 5.123456789));
-//		fprintf(stderr, "in CPPOPS_PERLTYPES number_arrayref__typetest1(), setting element %d/%d = %Lf, BARBAT\n", i, (integer)(SvIV(my_size) - 1), (number)SvNV(*av_fetch(output_av, (I32)i, 0)));
+//		fprintf(stderr, "in CPPOPS_PERLTYPES number_arrayref__typetest1(), setting element %ld/%ld = %Lf, BARBAT\n", i, (integer)(SvIV(my_size) - 1), (number)SvNV(*av_fetch(output_av, (I32)i, 0)));
 	}
 	return(newRV_noinc((SV*) output_av));
 }
@@ -787,7 +787,7 @@ SV* string_arrayref__typetest0(SV* people)
 //	{
 //		string_CHECK(*av_fetch(people_deref, i, 0));
 //		string_CHECKTRACE(*av_fetch(people_deref, i, 0), (char*)((string)"*av_fetch(people_deref, i, 0) at index " + to_string(i)).c_str(), "string_arrayref__typetest0()");
-//		fprintf(stderr, "in CPPOPS_PERLTYPES string_arrayref__typetest0(), have person %d = '%s', BARBAR\n", i, (char *)SvPV_nolen(*av_fetch(people_deref, i, 0)));
+//		fprintf(stderr, "in CPPOPS_PERLTYPES string_arrayref__typetest0(), have person %ld = '%s', BARBAR\n", i, (char *)SvPV_nolen(*av_fetch(people_deref, i, 0)));
 //	}
 	return(newSVpvf("%s%s", SvPV_nolen(string_arrayref_to_string(people)), "CPPOPS_PERLTYPES"));
 }
@@ -801,8 +801,8 @@ SV* string_arrayref__typetest1(SV* my_size)
 	av_extend(people, (I32)(SvIV(my_size) - 1));
 	for (i = 0;  i < SvIV(my_size);  ++i)
 	{
-		av_store(people, (I32)i, newSVpvf("Jeffy Ten! %d/%d CPPOPS_PERLTYPES", i, (integer)(SvIV(my_size) - 1)));
-//		fprintf(stderr, "in CPPOPS_PERLTYPES string_arrayref__typetest1(), bottom of for() loop, have i = %d, just set another Jeffy, BARBAR\n", i);
+		av_store(people, (I32)i, newSVpvf("Jeffy Ten! %ld/%ld CPPOPS_PERLTYPES", i, (integer)(SvIV(my_size) - 1)));
+//		fprintf(stderr, "in CPPOPS_PERLTYPES string_arrayref__typetest1(), bottom of for() loop, have i = %ld, just set another Jeffy, BARBAR\n", i);
 	}
 	return(newRV_noinc((SV*) people));
 }
@@ -815,7 +815,7 @@ string integer_arrayref__typetest0(integer_arrayref lucky_integers)
 	integer i;
 //	for (i = 0;  i < how_lucky;  ++i)
 //	{
-//		fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref__typetest0(), have lucky number %d/%d = %d, BARBAT\n", i, (how_lucky - 1), lucky_integers[i]);
+//		fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref__typetest0(), have lucky number %ld/%ld = %ld, BARBAT\n", i, (how_lucky - 1), lucky_integers[i]);
 //	}
 	return(integer_arrayref_to_string(lucky_integers) + "CPPOPS_CPPTYPES");
 }
@@ -826,7 +826,7 @@ integer_arrayref integer_arrayref__typetest1(integer my_size)
 	integer i;
 	for (i = 0;  i < my_size;  ++i) {
 		new_vec[i] = i * 5;
-//		fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref__typetest1(), setting element %d/%d = %d, BARBAT\n", i, (my_size - 1), new_vec[i]);
+//		fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref__typetest1(), setting element %ld/%ld = %ld, BARBAT\n", i, (my_size - 1), new_vec[i]);
 	}
 	return(new_vec);
 }
@@ -837,7 +837,7 @@ string number_arrayref__typetest0(number_arrayref lucky_numbers)
 	integer i;
 //	for (i = 0;  i < how_lucky;  ++i)
 //	{
-//		fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref__typetest0(), have lucky number %d/%d = %Lf, BARBAZ\n", i, (how_lucky - 1), lucky_numbers[i]);
+//		fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref__typetest0(), have lucky number %ld/%ld = %Lf, BARBAZ\n", i, (how_lucky - 1), lucky_numbers[i]);
 //	}
 	return(number_arrayref_to_string(lucky_numbers) + "CPPOPS_CPPTYPES");
 }
@@ -848,12 +848,12 @@ number_arrayref number_arrayref__typetest1(integer my_size)
 	for (i = 0;  i < my_size;  ++i)
 	{
 		new_vec[i] = i * 5.123456789;
-//		fprintf(stderr, "in CPPOPS_CPPTYPES typetest__number_in__number_arrayref_out(), setting element %d/%d = %Lf, BARBAZ\n", i, (my_size - 1), new_vec[i]);
+//		fprintf(stderr, "in CPPOPS_CPPTYPES typetest__number_in__number_arrayref_out(), setting element %ld/%ld = %Lf, BARBAZ\n", i, (my_size - 1), new_vec[i]);
 	}
 	return(new_vec);
 }
 
-//string string_arrayref__typetest0(string_arrayref people) { integer i;  for (i = 0;  i < people.size();  ++i) { fprintf(stderr, "in CPPOPS_CPPTYPES fprintf(stderr, ) string_arrayref__typetest0(), have person %d = '%s', BARBAR\n", i, people[i].c_str()); }  return(string_arrayref_to_string(people) + "BARBAR"); }
+//string string_arrayref__typetest0(string_arrayref people) { integer i;  for (i = 0;  i < people.size();  ++i) { fprintf(stderr, "in CPPOPS_CPPTYPES fprintf(stderr, ) string_arrayref__typetest0(), have person %ld = '%s', BARBAR\n", i, people[i].c_str()); }  return(string_arrayref_to_string(people) + "BARBAR"); }
 string string_arrayref__typetest0(string_arrayref people)
 {
 	integer i;
@@ -872,7 +872,7 @@ string_arrayref string_arrayref__typetest1(integer my_size)
 	for (i = 0;  i < my_size;  ++i)
 	{
 		people[i] = "Jeffy Ten! " + std::to_string(i) + "/" + std::to_string(my_size - 1) + " CPPOPS_CPPTYPES";
-//		fprintf(stderr, "in CPPOPS_CPPTYPES string_arrayref__typetest1(), bottom of for() loop, have i = %d, just set another Jeffy, BARBAR\n", i);
+//		fprintf(stderr, "in CPPOPS_CPPTYPES string_arrayref__typetest1(), bottom of for() loop, have i = %ld, just set another Jeffy, BARBAR\n", i);
 	}
 	return(people);
 }

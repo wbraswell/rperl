@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.053_000;
+our $VERSION = 0.054_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -5162,15 +5162,63 @@ X<break_code_blocks>
 
 =over
 
-=item * B<FOOOOOOOO>
+=item * B<Bitwise Shift Left>
 
-Take FOOOOOOOO of operand, return result
+Shift left the value of first operand by number of bits specified by second operand, return result;
+
+May be used to multiply first operand by 2 raised to the power of second operand
+
+    1 << 0  #  1
+    1 << 1  #  2
+    1 << 2  #  4
+    1 << 3  #  8
+    2 << 0  #  2
+    2 << 1  #  4
+    2 << 2  #  8
+    2 << 3  # 16
+    2 << 4  # 32
+    2 << 5  # 64
+
+X<break_code_blocks>
+
+
+    -1 << -8  # 18_374_686_479_671_623_680
+    -1 << -1  #  9_223_372_036_854_775_808
+    -1 <<  0  # 18_446_744_073_709_551_615
+    -1 <<  1  # 18_446_744_073_709_551_614
+    -1 <<  8  # 18_446_744_073_709_551_360
+     0 << -8  #                          0
+     0 << -1  #                          0
+     0 <<  0  #                          0
+     0 <<  1  #                          0
+     0 <<  8  #                          0
+     1 << -8  #     72_057_594_037_927_936
+     1 << -1  #  9_223_372_036_854_775_808
+     1 <<  0  #                          1
+     1 <<  1  #                          2
+     1 <<  8  #                        256
+
+X<break_code_blocks>
+
+
+    use integer;
+    -1 << -8  #    -72_057_594_037_927_936
+    -1 << -1  # -9_223_372_036_854_775_808
+    -1 <<  0  #                         -1
+    -1 <<  1  #                         -2
+    -1 <<  8  #                       -256
+     0 << -8  #                          0
+     0 << -1  #                          0
+     0 <<  0  #                          0
+     0 <<  1  #                          0
+     0 <<  8  #                          0
+     1 << -8  #     72_057_594_037_927_936
+     1 << -1  # -9_223_372_036_854_775_808
+     1 <<  0  #                          1
+     1 <<  1  #                          2
+     1 <<  8  #                        256
 
 =back
-
-    FOOOOOO  0  # X
-    FOOOOOO  1  # X
-    FOOOOOO -1  # X
 
 =over
 

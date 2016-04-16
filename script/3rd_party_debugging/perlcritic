@@ -333,8 +333,8 @@ F<.perlcriticrc> file.
      7            "%f: %m at line %l near '%r'.  (Severity: %s)\n",
      8            "[%p] %m at line %l, column %c.  (Severity: %s)\n",
      9            "[%p] %m at line %l, near '%r'.  (Severity: %s)\n",
-    10            "%m at line %l, column %c.\n  %p (Severity: %s)\n%d\n",
-    11            "%m at line %l, near '%r'.\n  %p (Severity: %s)\n%d\n"
+    10            "%m at line %l, column %c.\n  %p (Severity: %s)\n%ld\n",
+    11            "%m at line %l, near '%r'.\n  %p (Severity: %s)\n%ld\n"
 
 Formats are a combination of literal and escape characters similar to
 the way C<sprintf> works.  See L<String::Format|String::Format> for a
@@ -344,7 +344,7 @@ characters are:
     Escape    Meaning
     -------   ------------------------------------------------------------
     %c        Column number where the violation occurred
-    %d        Full diagnostic discussion of the violation
+    %ld        Full diagnostic discussion of the violation
     %e        Explanation of violation or page numbers in PBP
     %F        Just the name of the file where the violation occurred.
     %f        Path to the file where the violation occurred.

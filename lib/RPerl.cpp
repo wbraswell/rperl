@@ -26,7 +26,7 @@ int RPerl__diag(SV* message)
         PUSHMARK(SP); XPUSHs(message); PUTBACK;
         retcnt = call_pv("RPerl::diag", G_SCALAR);
         SPAGAIN;
-        if (retcnt != 1) { croak("RPerl::diag(message) return count is %d, expected 1, croaking", retcnt); }
+        if (retcnt != 1) { croak("RPerl::diag(message) return count is %ld, expected 1, croaking", retcnt); }
         retval = POPi; PUTBACK;
 //        FREETMPS;
         LEAVE;
@@ -65,7 +65,7 @@ char* RPerl::DUMPER(SV* dumpee)
         PUSHMARK(SP); XPUSHs(dumpee); PUTBACK;
         retcnt = call_pv("RPerl::DUMPER", G_SCALAR);
         SPAGAIN;
-        if (retcnt != 1) { croak("RPerl::DUMPER(dumpee) return count is %d, expected 1, croaking", retcnt); }
+        if (retcnt != 1) { croak("RPerl::DUMPER(dumpee) return count is %ld, expected 1, croaking", retcnt); }
         retval = POPp; PUTBACK;
 //        FREETMPS;
         LEAVE;
@@ -95,7 +95,7 @@ integer RPerl__diag(string message)
         PUSHMARK(SP); XPUSHs(newSVpv(message.c_str(), 0)); PUTBACK;
         retcnt = call_pv("RPerl::diag", G_SCALAR);
         SPAGAIN;
-        if (retcnt != 1) { croak("RPerl::diag(message) return count is %d, expected 1, croaking", retcnt); }
+        if (retcnt != 1) { croak("RPerl::diag(message) return count is %ld, expected 1, croaking", retcnt); }
         retval = POPi; PUTBACK;
 //        FREETMPS;
         LEAVE;
@@ -114,7 +114,7 @@ integer RPerl__verbose(string message)
         PUSHMARK(SP); XPUSHs(newSVpv(message.c_str(), 0)); PUTBACK;
         retcnt = call_pv("RPerl::verbose", G_SCALAR);
         SPAGAIN;
-        if (retcnt != 1) { croak("RPerl::verbose(message) return count is %d, expected 1, croaking", retcnt); }
+        if (retcnt != 1) { croak("RPerl::verbose(message) return count is %ld, expected 1, croaking", retcnt); }
         retval = POPi; PUTBACK;
 //        FREETMPS;
         LEAVE;
@@ -133,7 +133,7 @@ integer RPerl__warning(string message)
         PUSHMARK(SP); XPUSHs(newSVpv(message.c_str(), 0)); PUTBACK;
         retcnt = call_pv("RPerl::warning", G_SCALAR);
         SPAGAIN;
-        if (retcnt != 1) { croak("RPerl::warning(message) return count is %d, expected 1, croaking", retcnt); }
+        if (retcnt != 1) { croak("RPerl::warning(message) return count is %ld, expected 1, croaking", retcnt); }
         retval = POPi; PUTBACK;
 //        FREETMPS;
         LEAVE;

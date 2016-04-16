@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.008_000;
+our $VERSION = 0.008_300;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -87,6 +87,7 @@ our string_arrayref $find_dependencies = sub {
                 or ( $file_line =~ /use\s+parent/ )
                 or ( $file_line =~ /use\s+constant/ )
                 or ( $file_line =~ /use\s+overload/ )
+                or ( $file_line =~ /use\s+integer/ )
                 or ( $file_line =~ /use\s+[0-9]/ )
                 )
             {
@@ -179,6 +180,11 @@ our string_arrayref $find_dependencies = sub {
 our string_hashref $rperl_to_rperl__parse_generate = sub {
     ( my string $rperl_input_file_name, my string_hashref $rperl_output_file_name_group, my string_hashref $rperl_source_group, my string_hashref $modes ) = @_;
     my object $rperl_ast;
+
+#    RPerl::diag( 'in Compiler->rperl_to_rperl__parse_generate(), received $rperl_input_file_name = ' . $rperl_input_file_name . "\n" );
+#    RPerl::diag( 'in Compiler->rperl_to_rperl__parse_generate(), received $rperl_output_file_name_group = ' . "\n" . Dumper($rperl_output_file_name_group) . "\n" );
+#    RPerl::diag( 'in Compiler->rperl_to_rperl__parse_generate(), received $rperl_source_group = ' . "\n" . Dumper($rperl_source_group) . "\n" );
+#    RPerl::diag( 'in Compiler->rperl_to_rperl__parse_generate(), received $modes = ' . "\n" . Dumper($modes) . "\n" );
 
     # [[[ PARSE RPERL TO AST ]]]
 
@@ -331,7 +337,8 @@ our hashref_arrayref $generate_output_file_names = sub {
             }
             elsif ( ($modes->{subcompile} eq 'STATIC') or 
                     ($modes->{subcompile} eq 'DYNAMIC') or
-                   (($modes->{subcompile} eq 'OFF') and ($modes->{compile} eq 'GENERATE'))) {
+                   (($modes->{subcompile} eq 'OFF') and (($modes->{compile} eq 'GENERATE') or ($modes->{compile} eq 'SAVE') or ($modes->{compile} eq 'SUBCOMPILE')))
+                   ) {
                 # Micro$oft Windows uses *.exe file extension (suffix) for compiled executables
                 if ( $OSNAME eq 'MSWin32' ) {
                     $output_file_name_groups->[$i]->{EXE} = $output_file_name_path_prefix . '.exe';
@@ -341,6 +348,10 @@ our hashref_arrayref $generate_output_file_names = sub {
                 else {
                     $output_file_name_groups->[$i]->{EXE} = $output_file_name_path_prefix;
                 }
+            }
+            # NEED ANSWER: allow this subroutine to be called even when we return empty results?
+            else {
+                die "ERROR EARG17: Invalid compile mode '" . $modes->{compile} . "' and/or subcompile mode '" . $modes->{subcompile} . "' options specified, dying\n";
             }
         }
         else {    # *.pm input files may generate *.o, *.a, *.so, and/or *.pmc output files
@@ -360,8 +371,13 @@ our hashref_arrayref $generate_output_file_names = sub {
                 die 'ERROR EARG15: Incompatible command-line options provided, both --static subcompile mode flag and *.pm Perl module input file, dying' . "\n";
             }
             elsif ( ($modes->{subcompile} eq 'DYNAMIC') or
-                   (($modes->{subcompile} eq 'OFF') and ($modes->{compile} eq 'GENERATE'))) {
+                   (($modes->{subcompile} eq 'OFF') and (($modes->{compile} eq 'GENERATE') or ($modes->{compile} eq 'SAVE') or ($modes->{compile} eq 'SUBCOMPILE')))
+                   ) {
                 $output_file_name_groups->[$i]->{PMC} = $output_file_name_path_prefix . '.pmc';
+            }
+            # NEED ANSWER: allow this subroutine to be called even when we return empty results?
+            else {
+                die "ERROR EARG17: Invalid compile mode '" . $modes->{compile} . "' and/or subcompile mode '" . $modes->{subcompile} . "' options specified, dying\n";
             }
         }
 
@@ -382,10 +398,10 @@ our hashref_arrayref $generate_output_file_names = sub {
 our void $save_source_files = sub {
     ( my string_hashref $source_group, my string_hashref $file_name_group, my string_hashref $modes ) = @_;
 
-    #    RPerl::diag( q{in Compiler::save_source_files(), received $source_group =} . "\n" . Dumper($source_group) . "\n" );
-    #    RPerl::diag( q{in Compiler::save_source_files(), received $file_name_group =} . "\n" . Dumper($file_name_group) . "\n" );
-    #    RPerl::diag( 'in Compiler::save_source_files(), received $modes =' . "\n" . Dumper($modes) . "\n" );
-    #    RPerl::diag( 'in Compiler::save_source_files(), received $modes->{_symbol_table} =' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
+#    RPerl::diag( q{in Compiler::save_source_files(), received $source_group =} . "\n" . Dumper($source_group) . "\n" );
+#    RPerl::diag( q{in Compiler::save_source_files(), received $file_name_group =} . "\n" . Dumper($file_name_group) . "\n" );
+#    RPerl::diag( 'in Compiler::save_source_files(), received $modes =' . "\n" . Dumper($modes) . "\n" );
+#    RPerl::diag( 'in Compiler::save_source_files(), received $modes->{_symbol_table} =' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
 
     foreach my string $suffix_key ( sort keys %{$source_group} ) {
         if ( ( substr $suffix_key, 0, 1 ) eq '_' ) { next; }
@@ -636,12 +652,13 @@ our void $save_source_files = sub {
 
         # format output code
         if ( ( $suffix_key eq 'PMC' ) or ( $suffix_key eq 'EXE' ) ) {
-            my string $perltidy_path = can_run('perltidy');
+            my string $perltidy_path = undef;
+            $perltidy_path = can_run('perltidy');  # DEV NOTE: comment this line to disable perltidy
             if ( defined $perltidy_path ) {
                 system $perltidy_path, '-pbp', '--ignore-side-comment-lengths', '--converge', '-l=160', '-b', '-nst', q{-bext='/'}, '-q', $file_name;
             }
             else {
-                RPerl::warning( 'WARNING WCVCOFO00, COMPILER, PERL CODE FORMATTING: Perltidy command `perltidy` not found, abandoning formatting' . "\n" );
+                RPerl::warning( "\n" . 'WARNING WCVCOFO00, COMPILER, PERL CODE FORMATTING: Perltidy command `perltidy` not found, abandoning formatting' . "\n" );
             }
         }
         elsif ( ( $suffix_key eq 'H' ) or ( $suffix_key eq 'CPP' ) ) {

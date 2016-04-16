@@ -143,8 +143,8 @@ our string_arrayref $pod2cpanhtml_postprocess = sub {
                 $file_line = '<p><br></p>';
                 push @{$file_lines_modified}, ('<p>Automatically Generated From <a href="https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Learning.pm"><i>RPerl/Learning.pm</i></a> v' . number_to_string($RPerl::Learning::VERSION) . '<br>' . "\n");
                 push @{$file_lines_modified}, ('Using <a href="https://github.com/wbraswell/rperl/blob/master/script/development/pod2rperlhtml.pl"><i>pod2rperlhtml.pl</i></a> v' . number_to_string($VERSION) . '<br>' . "\n");
-                push @{$file_lines_modified}, (time2str('On %A, %B %d, %Y at %l:%M%P %Z', time) . '<br>' . "\n");
-#                push @{$file_lines_modified}, (time2str('%Y%m%d %Y.%j %H%M.%S', time) . '</p>' . "\n");  # Longdate & Stardate
+                push @{$file_lines_modified}, (time2str('On %A, %B %ld, %Y at %l:%M%P %Z', time) . '<br>' . "\n");
+#                push @{$file_lines_modified}, (time2str('%Y%m%ld %Y.%j %H%M.%S', time) . '</p>' . "\n");  # Longdate & Stardate
                 $inside_edition = 0;
             }
             push @{$file_lines_modified}, $file_line;

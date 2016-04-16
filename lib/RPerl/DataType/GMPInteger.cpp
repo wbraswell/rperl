@@ -128,7 +128,7 @@ void XS_pack_gmp_integer_retval(SV* output_hv_ref, gmp_integer_retval input_gmp_
     SPAGAIN;
 
     if (callback_retval_count != 1) {
-        croak("\nERROR EGIV10, CONSTRUCTOR RETURN VALUE MISMATCH, CPPOPS_CPPTYPES:\nexactly 1 return value expected but %d return value(s) found,\ncroaking", callback_retval_count);
+        croak("\nERROR EGIV10, CONSTRUCTOR RETURN VALUE MISMATCH, CPPOPS_CPPTYPES:\nexactly 1 return value expected but %ld return value(s) found,\ncroaking", callback_retval_count);
     }
 
     SV* gmp_integer_hv_ref = POPs;
@@ -348,7 +348,7 @@ string gmp_integer_to_string(gmp_integer_retval input_gmp_integer_retval) {
 // DEV NOTE, CORRELATION #rp10: the real CPPTYPES sub (below) is called by the wrapper PERLTYPES sub and shim CPPTYPES subs (above), moved outside #ifdef blocks
 string gmp_integer_to_string_CPPTYPES(gmp_integer_retval input_gmp_integer_retval)
 {
-//    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), top of subroutine, received unformatted input_gmp_integer_retval = %d\n", input_gmp_integer_retval);
+//    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), top of subroutine, received unformatted input_gmp_integer_retval = %ld\n", input_gmp_integer_retval);
 //    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES()...\n");
 
     std::ostringstream output_stream;
@@ -371,7 +371,7 @@ string gmp_integer_to_string_CPPTYPES(gmp_integer_retval input_gmp_integer_retva
 
     string output_string_underscores = "";
     for(std::string::size_type i = 0; i < output_string.size(); ++i) {
-//        fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), inside output_string underscore loop, have i = %d, output_string[i] = %c\n", (int)i, output_string[i]);
+//        fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), inside output_string underscore loop, have i = %ld, output_string[i] = %c\n", (int)i, output_string[i]);
         output_string_underscores += output_string[i];
         if (((i % 3) == 2) && (i > 0) && (i != (output_string.size() - 1))) {
 //            fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), AND UNDERSCORE \n");
@@ -498,7 +498,7 @@ gmp_integer_retval gmp_integer__typetest0() {
 //    gmp_integer retval;
 //    gmp_init(retval);
 //    gmp_set_signed_integer(retval, (21 / 7) + RPerl__DataType__GMPInteger__MODE_ID());
-//fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer__typetest0(), have retval = %d\n", retval);
+//fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer__typetest0(), have retval = %ld\n", retval);
 //    return (gmp_integer_retval) retval;
 
     // SHORT FORM

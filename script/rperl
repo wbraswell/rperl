@@ -638,6 +638,9 @@ sub depends_parse_generate_save_subcompile_execute {
         my string_hashref $modes
     ) = @_;
 
+#    RPerl::diag('in depends_parse_generate_save_subcompile_execute(), received $output_file_name_groups = ' . "\n" . Dumper($output_file_name_groups) . "\n");
+#    RPerl::diag('in depends_parse_generate_save_subcompile_execute(), received $output_file_name_prefixes = ' . "\n" . Dumper($output_file_name_prefixes) . "\n");
+
     if ( $modes->{ops} eq 'PERL' ) {
 
         # PERL ops does not actually SUBCOMPILE, set compile mode to SAVE instead
@@ -1081,15 +1084,20 @@ Restricted Perl, The Optimizing Perl 5 Compiler
  If set to SOURCE_BINARY_INLINE, delete SOURCE, BINARY, and INLINE files.
  For *.pm Perl module input files, BINARY and INLINE are equivalent.
 
+=item B<--mode compile=OFF _OR_ -m compile=OFF>
+
 =item B<--mode compile=PARSE _OR_ -m compile=PARSE>
 
 =item B<--mode compile=GENERATE _OR_ -m compile=GENERATE>
+
+=item B<--mode compile=SAVE _OR_ -m compile=SAVE>
 
 =item B<--mode compile=SUBCOMPILE _OR_ -m compile=SUBCOMPILE>
 
  Specify compile mode, SUBCOMPILE by default.
  If set to PARSE, begin with RPerl input source code file(s), and end with RPerl abstract syntax tree output data structure.
- If set to GENERATE, begin with RPerl input source code file(s), and end with RPerl and/or C++ output source code file(s).
+ If set to GENERATE, begin with RPerl input source code file(s), and end with RPerl and/or C++ output source code in memory.
+ If set to SAVE, begin with RPerl input source code file(s), and end with RPerl and/or C++ output source code file(s) saved to disk.
  If set to SUBCOMPILE, begin with RPerl input source code file(s), and end with C++ output binary file(s).
 
 =item B<--mode subcompile=OFF _OR_ -m subcompile=OFF>
