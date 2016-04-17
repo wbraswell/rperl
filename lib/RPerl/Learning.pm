@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.054_000;
+our $VERSION = 0.055_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -1668,7 +1668,22 @@ B<Only utilize the truth values returned by comparison and logic operators withi
     my integer $bar = 3 * (1 <= 2);   # UNEXPECTED BEHAVIOR: bad use of    less-than-or-equal operator
     my integer $bat = sin (1 == 2);   # UNEXPECTED BEHAVIOR: bad use of                 equal operator
 
-=head3 Section 2.1.10: Arithmetic Operators
+=head3 Section 2.1.10: Floating-Point Error
+
+A I<"floating-point number"> is any number which includes a decimal point C<.> as part of the numeric representation, as opposed to an integer which does not include a decimal point.  In RPerl, all floating-point values are stored in variables of the data type C<number>.
+
+       0  # integer
+       1  # integer
+    -123  # integer
+    
+       0.1    # floating-point
+       1.654  # floating-point
+    -123.4    # floating-point
+    
+    my integer $some_int   = 23;     # integer variable
+    my number  $some_float = 23.42;  # floating-point variable
+
+=head3 Section 2.1.11: Arithmetic Operators
 
 =begin text
 
@@ -1695,7 +1710,7 @@ l l l l r l l .
 
 =begin docbook
 
-<table id="learning_rperl-section_2.1.10-table_1" label="" frame="all" colsep="1" rowsep="1">
+<table id="learning_rperl-section_2.1.11-table_1" label="" frame="all" colsep="1" rowsep="1">
 <title>Arithmetic Operators</title>
 <tgroup cols="6">
 
@@ -2786,7 +2801,7 @@ Error if attempt to take square root of operand less than 0
     sqrt -1  # ERROR
     sqrt  2  # 1.414_213_562_373_1
 
-=head3 Section 2.1.11: Trigonometry Operators
+=head3 Section 2.1.12: Trigonometry Operators
 
 =begin text
 
@@ -2813,7 +2828,7 @@ l l l l r l l .
 
 =begin docbook
 
-<table id="learning_rperl-section_2.1.11-table_1" label="" frame="all" colsep="1" rowsep="1">
+<table id="learning_rperl-section_2.1.12-table_1" label="" frame="all" colsep="1" rowsep="1">
 <title>Trigonometry Operators</title>
 <tgroup cols="6">
 
@@ -3165,7 +3180,7 @@ Take cosine of operand, return result
     cos -1                     #  0.540_302_305_868_14
     cos  3.141_592_653_589_79  # -1
 
-=head3 Section 2.1.12: Comparison (Relational & Equality) Operators
+=head3 Section 2.1.13: Comparison (Relational & Equality) Operators
 
 =begin text
 
@@ -3192,7 +3207,7 @@ l l l l r l l .
 
 =begin docbook
 
-<table id="learning_rperl-section_2.1.12-table_1" label="" frame="all" colsep="1" rowsep="1">
+<table id="learning_rperl-section_2.1.13-table_1" label="" frame="all" colsep="1" rowsep="1">
 <title>Comparison (Relational & Equality) Operators</title>
 <tgroup cols="6">
 
@@ -3812,7 +3827,7 @@ Compare to determine equality of operands, return true if first operand is not e
     -1 !=  1  # true
     -1 != -1  # false
 
-=head3 Section 2.1.13: Logic Operators
+=head3 Section 2.1.14: Logic Operators
 
 =begin text
 
@@ -3839,7 +3854,7 @@ l l l l r l l .
 
 =begin docbook
 
-<table id="learning_rperl-section_2.1.13-table_1" label="" frame="all" colsep="1" rowsep="1">
+<table id="learning_rperl-section_2.1.14-table_1" label="" frame="all" colsep="1" rowsep="1">
 <title>Logic Operators</title>
 <tgroup cols="6">
 
@@ -4530,7 +4545,7 @@ Take logical exclusive disjunction of operands, return result
     -1 xor  1  # false
     -1 xor -1  # false
 
-=head3 Section 2.1.14: Bitwise Operators
+=head3 Section 2.1.15: Bitwise Operators
 
 =begin text
 
@@ -4557,7 +4572,7 @@ l l l l r l l .
 
 =begin docbook
 
-<table id="learning_rperl-section_2.1.15-table_1" label="" frame="all" colsep="1" rowsep="1">
+<table id="learning_rperl-section_2.1.16-table_1" label="" frame="all" colsep="1" rowsep="1">
 <title>Bitwise Operators</title>
 <tgroup cols="6">
 
@@ -5222,41 +5237,198 @@ X<break_code_blocks>
 
 =over
 
-=item * B<FOOOOOOOO>
+=item * B<Bitwise Shift Right>
 
-Take FOOOOOOOO of operand, return result
+Shift right the value of first operand by number of bits specified by second operand, return result;
+
+May be used to divide first operand by 2 raised to the power of second operand
+
+     8 >>  0  #  8
+     8 >>  1  #  4
+     8 >>  2  #  2
+     8 >>  3  #  1
+    64 >>  0  # 64
+    64 >>  1  # 32
+    64 >>  2  # 16
+    64 >>  3  #  8
+    64 >>  4  #  4
+    64 >>  5  #  2
+    64 >>  8  #  1
+
+X<break_code_blocks>
+
+
+    -1 >> -8  #                        255
+    -1 >> -1  #                          1
+    -1 >>  0  # 18_446_744_073_709_551_615
+    -1 >>  1  #  9_223_372_036_854_775_807
+    -1 >>  8  #     72_057_594_037_927_935
+     0 >> -8  #                          0
+     0 >> -1  #                          0
+     0 >>  0  #                          0
+     0 >>  1  #                          0
+     0 >>  8  #                          0
+     1 >> -8  #                          0
+     1 >> -1  #                          0
+     1 >>  0  #                          1
+     1 >>  1  #                          0
+     1 >>  8  #                          0
+
+X<break_code_blocks>
+
+
+    use integer;
+    -1 >> -8  # -1
+    -1 >> -1  # -1
+    -1 >>  0  # -1
+    -1 >>  1  # -1
+    -1 >>  8  # -1
+     0 >> -8  #  0
+     0 >> -1  #  0
+     0 >>  0  #  0
+     0 >>  1  #  0
+     0 >>  8  #  0
+     1 >> -8  #  0
+     1 >> -1  #  0
+     1 >>  0  #  1
+     1 >>  1  #  0
+     1 >>  8  #  0
 
 =back
-
-    FOOOOOO  0  # X
-    FOOOOOO  1  # X
-    FOOOOOO -1  # X
 
 =over
 
-=item * B<FOOOOOOOO>
+=item * B<Bitwise And>
 
-Take FOOOOOOOO of operand, return result
+Take conjunction of each bit of first operand with respective bit of second operand, return result
+
+    -1 & -8  # 18_446_744_073_709_551_608
+    -1 & -1  # 18_446_744_073_709_551_615
+    -1 &  0  #                          0
+    -1 &  1  #                          1
+    -1 &  8  #                          8
+     0 & -8  #                          0
+     0 & -1  #                          0
+     0 &  0  #                          0
+     0 &  1  #                          0
+     0 &  8  #                          0
+     1 & -8  #                          0
+     1 & -1  #                          1
+     1 &  0  #                          0
+     1 &  1  #                          1
+     1 &  8  #                          0
+
+X<break_code_blocks>
+
+
+    use integer;
+    -1 & -8  # -8
+    -1 & -1  # -1
+    -1 &  0  #  0
+    -1 &  1  #  1
+    -1 &  8  #  8
+     0 & -8  #  0
+     0 & -1  #  0
+     0 &  0  #  0
+     0 &  1  #  0
+     0 &  8  #  0
+     1 & -8  #  0
+     1 & -1  #  1
+     1 &  0  #  0
+     1 &  1  #  1
+     1 &  8  #  0
 
 =back
-
-    FOOOOOO  0  # X
-    FOOOOOO  1  # X
-    FOOOOOO -1  # X
 
 =over
 
-=item * B<FOOOOOOOO>
+=item * B<Bitwise Or>
 
-Take FOOOOOOOO of operand, return result
+Take disjunction of each bit of first operand with respective bit of second operand, return result
+
+    -1 | -8  # 18_446_744_073_709_551_615
+    -1 | -1  # 18_446_744_073_709_551_615
+    -1 |  0  # 18_446_744_073_709_551_615
+    -1 |  1  # 18_446_744_073_709_551_615
+    -1 |  8  # 18_446_744_073_709_551_615
+     0 | -8  # 18_446_744_073_709_551_608
+     0 | -1  # 18_446_744_073_709_551_615
+     0 |  0  #                          0
+     0 |  1  #                          1
+     0 |  8  #                          8
+     1 | -8  # 18_446_744_073_709_551_609
+     1 | -1  # 18_446_744_073_709_551_615
+     1 |  0  #                          1
+     1 |  1  #                          1
+     1 |  8  #                          9
+
+X<break_code_blocks>
+
+
+    use integer;
+    -1 | -8  # -1
+    -1 | -1  # -1
+    -1 |  0  # -1
+    -1 |  1  # -1
+    -1 |  8  # -1
+     0 | -8  # -8
+     0 | -1  # -1
+     0 |  0  #  0
+     0 |  1  #  1
+     0 |  8  #  8
+     1 | -8  # -7
+     1 | -1  # -1
+     1 |  0  #  1
+     1 |  1  #  1
+     1 |  8  #  9
 
 =back
 
-    FOOOOOO  0  # X
-    FOOOOOO  1  # X
-    FOOOOOO -1  # X
+=over
 
-=head3 Section 2.1.15: Miscellaneous Operators
+=item * B<Bitwise Xor>
+
+Take exclusive disjunction of each bit of first operand with respective bit of second operand, return result
+
+    -1 ^ -8  #                          7
+    -1 ^ -1  #                          0
+    -1 ^  0  # 18_446_744_073_709_551_615
+    -1 ^  1  # 18_446_744_073_709_551_614
+    -1 ^  8  # 18_446_744_073_709_551_607
+     0 ^ -8  # 18_446_744_073_709_551_608
+     0 ^ -1  # 18_446_744_073_709_551_615
+     0 ^  0  #                          0
+     0 ^  1  #                          1
+     0 ^  8  #                          8
+     1 ^ -8  # 18_446_744_073_709_551_609
+     1 ^ -1  # 18_446_744_073_709_551_614
+     1 ^  0  #                          1
+     1 ^  1  #                          0
+     1 ^  8  #                          9
+
+X<break_code_blocks>
+
+
+    use integer;
+    -1 ^ -8  #  7
+    -1 ^ -1  #  0
+    -1 ^  0  # -1
+    -1 ^  1  # -2
+    -1 ^  8  # -9
+     0 ^ -8  # -8
+     0 ^ -1  # -1
+     0 ^  0  #  0
+     0 ^  1  #  1
+     0 ^  8  #  8
+     1 ^ -8  # -7
+     1 ^ -1  # -2
+     1 ^  0  #  1
+     1 ^  1  #  0
+     1 ^  8  #  9
+
+=back
+
+=head3 Section 2.1.16: Miscellaneous Operators
 
 =begin text
 
@@ -5283,7 +5455,7 @@ l l l l r l l .
 
 =begin docbook
 
-<table id="learning_rperl-section_2.1.15-table_1" label="" frame="all" colsep="1" rowsep="1">
+<table id="learning_rperl-section_2.1.16-table_1" label="" frame="all" colsep="1" rowsep="1">
 <title>Miscellaneous Operators</title>
 <tgroup cols="6">
 
