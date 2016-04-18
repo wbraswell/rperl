@@ -4,7 +4,7 @@
 package RPerl::Config;
 use strict;
 use warnings;
-our $VERSION = 0.004_100;
+our $VERSION = 0.004_200;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -24,6 +24,7 @@ use Data::Dumper;
 $Data::Dumper::Sortkeys = 1;    # Dumper() output must be sorted for lib/RPerl/Tests/Type_Types/* etc.
 use Carp;
 use English qw(-no_match_vars);
+use POSIX qw(ceil floor modf);
 use Exporter 'import';
 
 # DEV NOTE, CORRELATION #rp08: can't include to_string(), type(), types(), name(), or scope_type_name_value() in @EXPORT here or in RPerl:: namespace below
@@ -43,6 +44,7 @@ use Data::Dumper;
 $Data::Dumper::Sortkeys = 1;    # Dumper() output must be sorted for lib/RPerl/Tests/Type_Types/* etc.
 use Carp;
 use English qw(-no_match_vars);
+use POSIX qw(ceil floor modf);
 use Exporter 'import';
 
 # DEV NOTE, CORRELATION #rp08: can't include to_string(), type(), types(), name(), or scope_type_name_value() in @EXPORT here or in RPerl:: namespace below
@@ -70,10 +72,12 @@ our $MODES = {                  # see perl_modes.txt for more info
     1 => { ops => 'CPP',  types => 'PERL' },    # NEED FIX: should be types => 'PERL_STATIC'
     2 => { ops => 'CPP',  types => 'CPP' }
 };
+
 use Data::Dumper;
 $Data::Dumper::Sortkeys = 1;                    # Dumper() output must be sorted for lib/RPerl/Tests/Type_Types/* etc.
 use Carp;
 use English qw(-no_match_vars);
+use POSIX qw(ceil floor modf);
 use Exporter 'import';
 our @EXPORT = qw(Dumper carp croak confess $OS_ERROR $EVAL_ERROR $CHILD_ERROR $EXECUTABLE_NAME $PROGRAM_NAME $OSNAME);
 
@@ -91,6 +95,10 @@ our $BASE_PATH    = undef;                             # all target software liv
 our $INCLUDE_PATH = undef;                             # all target system modules live here
 our $SCRIPT_PATH  = undef;                             # interpreted target system programs live here
 our $CORE_PATH    = undef;                             # all Perl core components (perl.h, etc) live here
+
+# NEED UPGRADE: properly determine whether to use DBL_EPSILON or FLT_EPSILON below
+use constant EPSILON => POSIX::DBL_EPSILON();
+#use constant EPSILON => POSIX::FLT_EPSILON();
 
 # [[[ SUBROUTINES SPECIAL ]]]
 

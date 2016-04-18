@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.055_000;
+our $VERSION = 0.056_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -1682,6 +1682,10 @@ A I<"floating-point number"> is any number which includes a decimal point C<.> a
     
     my integer $some_int   = 23;     # integer variable
     my number  $some_float = 23.42;  # floating-point variable
+
+All computer languages which perform calculations on floating-point numbers are susceptible to I<"floating-point error">, which is any inaccuracy due to incorrect rounding or lack of available precision.
+
+For example, suppose you have a floating-point number C<0.105>, which seems normal enough.  Let us further suppose you want to divide C<0.105> by some other number, say C<1_000>, and by the simple rules of arithmetic you would expect to arrive at an answer of C<0.000_105>.  Unfortunately, due to the way floating-point numbers are stored in computer memory, the actual result is closer to C<0.000_104_999>, so C<0.000_105> happens to be one of many possible floating-point errors.
 
 =head3 Section 2.1.11: Arithmetic Operators
 
