@@ -1704,6 +1704,24 @@ It will usually not be possible to easily predict when and where floating-point 
 
 To compensate for unpredictable floating-point error, you should use the I<"floating-point epsilon"> value stored in the constant C<RPerl::EPSILON()>, which is a very small number used to help detect inaccuracies.  Whenever you want of directly compare two floating-point values, instead use the subtraction C<-> and absolute value C<abs> operators to take the positive difference, then use the less-than C<E<lt>> operator to compare the difference to the floating-point epsilon value.  If the difference is less than the floating-point epsilon, then the two input floating-point values can be considered to be numerically equal.
 
+                                         RPerl::EPSILON()  # A VERY SMALL NUMBER: 0.000_000_000_000_000_2
+         (0.105 / 1_000) == 0.000_105                      # UNEXPECTED BEHAVIOR: false
+    abs ((0.105 / 1_000) -  0.000_105) < RPerl::EPSILON()  #   EXPECTED BEHAVIOR: true
+
+X<break_code_blocks>
+
+
+    my number $foo = 0.105 / 1_000;
+    my number $faa = 0.105 / 1_000;
+    my number $bar = 0.000_105;
+    my number $bat = 0.000_105;
+         if (0.000_105 == 0.000_105)             { print 'true'; } else { print 'false'; }  #   EXPECTED BEHAVIOR: true
+         if ((0.105 / 1_000) == (0.105 / 1_000)) { print 'true'; } else { print 'false'; }  #   EXPECTED BEHAVIOR: true
+         if ($bar == $bat)                       { print 'true'; } else { print 'false'; }  #   EXPECTED BEHAVIOR: true
+         if ($foo == $faa)                       { print 'true'; } else { print 'false'; }  #   EXPECTED BEHAVIOR: true
+         if ($foo == $bar)                       { print 'true'; } else { print 'false'; }  # UNEXPECTED BEHAVIOR: false
+    if (abs ($foo -  $bar) < RPerl::EPSILON())   { print 'true'; } else { print 'false'; }  #   EXPECTED BEHAVIOR: true
+
 =head3 Section 2.1.11: Arithmetic Operators
 
 =begin text
