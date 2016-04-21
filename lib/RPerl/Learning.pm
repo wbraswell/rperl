@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.057_000;
+our $VERSION = 0.058_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -1691,6 +1691,18 @@ For example, suppose you have a floating-point number C<0.105>, which seems norm
     print ((0.105 / 1_000) -  0.000_105);  # UNEXPECTED BEHAVIOR: -1.355_252_715_606_88e-20
 
 It will usually not be possible to easily predict when and where floating-point error will occur.  In general, you may experience the effects of floating-point error whenever your code relies upon one or more of the following:
+
+=over
+
+=item * A floating-point operator which must return a specific, exact result
+
+=item * A floating-point variable which must contain a specific, exact value
+
+=item * A floating-point value which must exactly equal another floating-point value
+
+=back
+
+To compensate for unpredictable floating-point error, you should use the I<"floating-point epsilon"> value stored in the constant C<RPerl::EPSILON()>, which is a very small number used to help detect inaccuracies.  Whenever you want of directly compare two floating-point values, instead use the subtraction C<-> and absolute value C<abs> operators to take the positive difference, then use the less-than C<E<lt>> operator to compare the difference to the floating-point epsilon value.  If the difference is less than the floating-point epsilon, then the two input floating-point values can be considered to be numerically equal.
 
 =head3 Section 2.1.11: Arithmetic Operators
 
