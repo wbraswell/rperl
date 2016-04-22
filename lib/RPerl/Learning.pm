@@ -1722,6 +1722,12 @@ X<break_code_blocks>
          if ($foo == $bar)                       { print 'true'; } else { print 'false'; }  # UNEXPECTED BEHAVIOR: false
     if (abs ($foo -  $bar) < RPerl::EPSILON())   { print 'true'; } else { print 'false'; }  #   EXPECTED BEHAVIOR: true
 
+B<WARNING FOR ALL FLOATING-POINT NUMERIC OPERATORS:>
+
+B<Due to floating-point error, unexpected behavior may be experienced if a floating-point value is tested for exact equality with any other value.>
+
+B<Always use the floating-point epsilon value C<RPerl::EPSILON()> to check for approximate equality instead of exact equality.>
+
 =head3 Section 2.1.11: Arithmetic Operators
 
 =begin text
