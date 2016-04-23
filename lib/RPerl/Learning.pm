@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.058_000;
+our $VERSION = 0.059_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -5580,6 +5580,204 @@ B<Supported>
 
 =for docbook <row><entry align="left">
 
+Floor with Parentheses
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+POSIX::floor( )
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Closed
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+01
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Left
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Ceiling with Parentheses
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+POSIX::ceil( )
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Closed
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+01
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Left
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Separate Integer & Fraction Parts with Parentheses
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+POSIX::modf( )
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Binary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Closed
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+01
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Left
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
 Integer Part
 
 =for man T}@T{
@@ -5628,7 +5826,7 @@ Non
 
 =for docbook </entry><entry align="left">
 
-Not Yet
+Coming Soon
 
 =for text }], 1);
 
@@ -5694,7 +5892,7 @@ Non
 
 =for docbook </entry><entry align="left">
 
-Not Yet
+Coming Soon
 
 =for text }], 1);
 
@@ -5764,7 +5962,7 @@ Non
 
 =for docbook </entry><entry align="left">
 
-Not Yet
+Coming Soon
 
 =for text }], 1);
 
@@ -5802,39 +6000,157 @@ $z = q{<<< END TEXT EVAL >>>};
 
 =over
 
-=item * B<FOOOOOOOO>
+=item * B<Floor with Parentheses>
 
-Take FOOOOOOOO of operand, return result
+If operand contains fractional part, then return next lowest integer, otherwise return operand unchanged;
+
+Not a Perl built-in operator, it is a Perl subroutine (which happens to provide an interface to the underlying C subroutine of the same name); thus, C<POSIX::floor()> must be called with both the preceeding C<POSIX::> namespace and parentheses around the operand
+
+    POSIX::floor( 0)  #  0
+    POSIX::floor( 1)  #  1
+    POSIX::floor(-1)  # -1
+
+    POSIX::floor(1.1)  # 1
+    POSIX::floor(1.5)  # 1
+    POSIX::floor(1.9)  # 1
+
+    POSIX::floor(-2.2)  # -3
+    POSIX::floor(-2.6)  # -3
+    POSIX::floor(-2.8)  # -3
 
 =back
-
-    FOOOOOO  0  # X
-    FOOOOOO  1  # X
-    FOOOOOO -1  # X
 
 =over
 
-=item * B<FOOOOOOOO>
+=item * B<Ceiling with Parentheses>
 
-Take FOOOOOOOO of operand, return result
+If operand contains fractional part, then return next highest integer, otherwise return operand unchanged;
+
+Not a Perl built-in operator, it is a Perl subroutine (which happens to provide an interface to the underlying C subroutine of the same name); thus, C<POSIX::ceil()> must be called with both the preceeding C<POSIX::> namespace and parentheses around the operand
+
+    POSIX::ceil( 0)  #  0
+    POSIX::ceil( 1)  #  1
+    POSIX::ceil(-1)  # -1
+
+    POSIX::ceil(1.1)  # 2
+    POSIX::ceil(1.5)  # 2
+    POSIX::ceil(1.9)  # 2
+
+    POSIX::ceil(-2.2)  # -2
+    POSIX::ceil(-2.6)  # -2
+    POSIX::ceil(-2.8)  # -2
 
 =back
-
-    FOOOOOO  0  # X
-    FOOOOOO  1  # X
-    FOOOOOO -1  # X
 
 =over
 
-=item * B<FOOOOOOOO>
+=item * B<Separate Integer & Fraction Parts with Parentheses>
 
-Take FOOOOOOOO of operand, return result
+Break apart operand into integer part and fraction part, return both, fraction part first;
+
+Not a Perl built-in operator, it is a Perl subroutine (which happens to provide an interface to the underlying C subroutine of the same name); thus, C<POSIX::modf()> must be called with both the preceeding C<POSIX::> namespace and parentheses around the operand;
+
+Returns more than one return value (always two); thus, must be wrapped in square brackets C<[ ]> and stored in C<number_arrayref> data structure, then individual parts accessed via thin-arrow C<-E<gt>> array dereference and element retrieval
+
+    POSIX::modf( 0)  # 0,  0
+    POSIX::modf( 1)  # 0,  1
+    POSIX::modf(-1)  # 0, -1
+
+    POSIX::modf(1.1)  # 0.1, 1
+    POSIX::modf(1.5)  # 0.5, 1
+    POSIX::modf(1.9)  # 0.9, 1
+
+    POSIX::modf(-2.2)  # -0.2, -2
+    POSIX::modf(-2.6)  # -0.6, -2
+    POSIX::modf(-2.8)  # -0.8, -2
+
+X<break_code_blocks>
+
+
+    my number_hashref $retvals = [POSIX::modf(-3.141_59)];  # -0.141_59, -3
+    my number $integer_part    = $retvals->[1];  # -3
+    my number $fraction_part   = $retvals->[0];  # -0.141_59
 
 =back
 
-    FOOOOOO  0  # X
-    FOOOOOO  1  # X
-    FOOOOOO -1  # X
+=over
+
+=item * B<Integer Part>
+
+Discard fractional component of operand, return result
+
+B<WARNING, FLOATING-POINT ERROR:>
+
+B<The C<int> operator may produce unexpected behavior due to floating-point error; you may instead prefer use of the C<POSIX::floor()>, C<POSIX::ceil()>, and C<POSIX::modf()> subroutines.>
+
+    int  0  #  0
+    int  1  #  1
+    int -1  # -1
+
+    int 1.1  # 1
+    int 1.5  # 1
+    int 1.9  # 1
+
+    int -2.2  # -2
+    int -2.6  # -2
+    int -2.8  # -2
+
+X<break_code_blocks>
+
+
+    int               (-4.725 / 0.025)  # UNEXPECTED BEHAVIOR: -188 due to floating-point error
+    -189 ==           (-4.725 / 0.025)  # UNEXPECTED BEHAVIOR: false, values in memory do not match
+    printf "%.18f\n", (-4.725 / 0.025)  # UNEXPECTED BEHAVIOR: -188.999_999_999_999_971_578 due to floating-point error
+    print             (-4.725 / 0.025)  #   EXPECTED BEHAVIOR: -189 due to automatic floating-point epsilon checking
+    POSIX::floor      (-4.725 / 0.025)  #   EXPECTED BEHAVIOR: -189 due to explicitly forcing to next lowest integer 
+
+=back
+
+=over
+
+=item * B<Random Number>
+
+Returns pseudo-random floating-point number between 0 and operand, defaults to operand of value 1 if called with none;
+
+Generated pseudo-random number is based on seed value passed to C<srand> operator, and C<srand> is called automatically if not called explicitly
+
+B<WARNING, SECURITY LIABILITY:>
+
+B<The C<rand> operator is not considered to be cryptographically secure pseudo-random number generator (CSPRNG), and should thus not be utilized for cryptography or other security-sensitive purposes.> 
+
+    rand     # between 0 and 1
+    rand 1   # between 0 and 1
+    rand 10  # between 0 and 10
+
+=back
+
+=over
+
+=item * B<Random Seed>
+
+Seed C<rand> operator with operand, defaults to automatically-selected operand value if called with none;
+
+Entropy (randomness) is decreased if called more than once per program;
+
+If C<srand> is called with a specific seed value followed by one or more calls to C<rand>, then you call C<srand> with the same seed value followed by C<rand> again, you will receive the same value(s) returned by C<rand> after both calls to C<srand>
+
+    srand       # seed is automatically chosen
+    srand 1     # seed is 1
+    srand 10    # seed is 10
+    srand time  # seed is number of non-leap seconds since epoch, usually Unix epoch (19700101 AKA 1970.001 AKA January 1st 1970)
+
+X<break_code_blocks>
+
+    srand 23;
+    print rand . "\n";  # 0.199_281_135_414_825
+    print rand . "\n";  # 0.955_482_658_089_267
+    print rand . "\n";  # 0.080_619_594_120_559
+    srand 23;
+    print rand . "\n";  # 0.199_281_135_414_825 REPEATED
+    print rand . "\n";  # 0.955_482_658_089_267 REPEATED
+    print rand . "\n";  # 0.080_619_594_120_559 REPEATED
+
+=back
 
 =head2 Section 2.2: Strings (Text Data & Operators)
 
