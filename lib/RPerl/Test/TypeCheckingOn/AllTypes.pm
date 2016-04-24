@@ -1,12 +1,29 @@
 # [[[ PREPROCESSOR ]]]
 # <<< TYPE_CHECKING: ON >>>
 
+# the following subroutines are automatically called when 1 or more of the subroutines in this file are called:
+
+# integer_CHECK()
+# number_CHECK()
+# string_CHECK()
+
+# arrayref_CHECK()
+# integer_arrayref_CHECK()
+# number_arrayref_CHECK()
+# string_arrayref_CHECK()
+
+# hashref_CHECK()
+# hashentry_CHECK()  [NOT A DATA TYPE]
+# integer_hashref_CHECK()
+# number_hashref_CHECK()
+# string_hashref_CHECK()
+
 # [[[ HEADER ]]]
 use RPerl;
 package RPerl::Test::TypeCheckingOn::AllTypes;
 use strict;
 use warnings;
-our $VERSION = 0.001_001;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Test);
@@ -79,11 +96,8 @@ our void $check_number_arrayrefs = sub {
 
 # DEPRECATED: type checking automated via <<< TYPE_CHECKING: CHECK(TRACE) >>> preprocessor directive
 #    ::number_arrayref_CHECK($input_1);
-#    ::number_arrayref_CHECKTRACE( $input_1, '$input_1', 'check_number_arrayrefs()' );
 #    ::number_arrayref_CHECK($input_2);
-#    ::number_arrayref_CHECKTRACE( $input_2, '$input_2', 'check_number_arrayrefs()' );
 #    ::number_arrayref_CHECK($input_3);
-#    ::number_arrayref_CHECKTRACE( $input_3, '$input_3', 'check_number_arrayrefs()' );
     return;
 };
 
@@ -209,32 +223,3 @@ our void $check__mixed_03 = sub {
 };
 
 1;    # end of class
-
-__END__
-
-integer_CHECK
-integer_CHECKTRACE
-number_CHECK
-number_CHECKTRACE
-string_CHECK
-string_CHECKTRACE
-
-arrayref_CHECK
-arrayref_CHECKTRACE
-integer_arrayref_CHECK
-integer_arrayref_CHECKTRACE
-number_arrayref_CHECK
-number_arrayref_CHECKTRACE
-string_arrayref_CHECK
-string_arrayref_CHECKTRACE
-
-hashref_CHECK
-hashref_CHECKTRACE
-hashentry_CHECK       [NOT A DATA TYPE]
-hashentry_CHECKTRACE  [NOT A DATA TYPE]
-integer_hashref_CHECK
-integer_hashref_CHECKTRACE
-number_hashref_CHECK
-number_hashref_CHECKTRACE
-string_hashref_CHECK
-string_hashref_CHECKTRACE

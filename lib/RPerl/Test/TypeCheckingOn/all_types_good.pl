@@ -7,7 +7,7 @@
 use RPerl;
 use strict;
 use warnings;
-our $VERSION = 0.000_010;
+our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -40,8 +40,8 @@ check_string('0');
 check_string('a');
 check_string('0123abcd');
 check_string(q{0123abcd});
-check_string('0123abcd\n');
-check_string(q{0123abcd\n});
+check_string('0123abcd\\n');
+check_string(q{0123abcd\\n});
 check_string("0123abcd\n");
 check_string('0123$abcd');
 check_string(q{0123$abcd});
@@ -78,7 +78,7 @@ check_string_arrayref( [] );
 check_string_arrayref( ['0'] );
 check_string_arrayref( [ '0', 'a', '0123abcd' ] );
 check_string_arrayref( [ '0', 'a', '0123abcd', q{0}, q{a}, q{0123abcd} ] );
-check_string_arrayref( [ '0\n', '$a', '0123$abcd', q{0}, q{a\n}, q{0123abcd\n} ] );
+check_string_arrayref( [ '0\\n', '$a', '0123$abcd', q{0}, q{a\\n}, q{0123abcd\\n} ] );
 check_string_arrayref( [ "0\n", "a\n", "0123abcd\n" ] );
 
 check_hashref( {} );
@@ -111,7 +111,7 @@ check_string_hashref( {} );
 check_string_hashref( { a => '0' } );
 check_string_hashref( { a => '0', b => 'a', c => '0123abcd' } );
 check_string_hashref( {   a => '0', b => 'a', c => '0123abcd', d => q{0}, e => q{a}, f => q{0123abcd} } );
-check_string_hashref( {   a => '0\n', b => '$a', c => '0123$abcd', d => q{0}, e => q{a\n}, f => q{0123abcd\n} } );
+check_string_hashref( {   a => '0\\n', b => '$a', c => '0123$abcd', d => q{0}, e => q{a\\n}, f => q{0123abcd\\n} } );
 check_string_hashref( {   a => "0\n", b => "a\n", c => "0123abcd\n" });
 
 print "1\n";

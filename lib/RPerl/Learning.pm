@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.059_000;
+our $VERSION = 0.060_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -6172,11 +6172,25 @@ RPerl provides 3 delimiters for enclosing text data:
 
 =over
 
-=item * C<'single quotes'>
+=item * Single Quotes
 
-=item * C<"double quotes">
+C<'I am a single-quoted string literal'>
 
-=item * C<q{q quotes}>
+=back
+
+=over
+
+=item * Double Quotes
+
+C<"I am a double-quoted string literal">
+
+=back
+
+=over
+
+=item * q Quotes
+
+C<q{I am a q-quoted string literal}>
 
 =back
 
@@ -6200,83 +6214,93 @@ Perl 5 provides several built-in operators designed for use with text data, whic
 
 =back
 
-=head3 Section 2.2.1: Char Literals
+=head3 Section 2.2.1: Character Literals
 
-The most memory-efficient text literal is C<character>, which represents exactly zero or one character of information.  A C<character> may express the value of any single numeric digit (0, 1, 2, ..., 8, 9); letter (a, b, c, ..., y, z, A, B, C, ..., Y, Z ); or special ASCII character (!, #, *, +, etc).  If the C<character> literal has length zero, it is called the I<"empty character"> and contains no data.
+The most memory-efficient text literal is C<character>, which represents exactly zero characters or one character of information.  A C<character> may express the value of any single numeric digit (0, 1, 2, ..., 8, 9); letter (a, b, c, ..., y, z, A, B, C, ..., Y, Z ); or special ASCII character (!, #, *, +, etc).  If the C<character> literal has length zero, meaning it represents zero characters of information, then it is called the I<"empty character"> and contains no data.
 
-    ''          # not a character, use q{} for empty character
-    '0'         # character
-    'h'         # character
-    '+'         # character
-    '\n'        # not a character, too many characters, use "\n" for newline character
-    '-1'        # not a character, too many characters
-    'howdy23!'  # not a character, too many characters
+    ''           # INVALID: use q{} for empty character
+    '0'          #   VALID
+    'h'          #   VALID
+    '+'          #   VALID
+    '\n'         # INVALID: too many characters, use "\n" for newline character
+    '-1'         # INVALID: too many characters
+    'howdy23!'   # INVALID: too many characters
 
-    ""          # not a character, use q{} for empty character
-    "0"         # character
-    "h"         # character
-    "+"         # character
-    "\n"        # character, newline
-    "-1"        # not a character, too many characters & invalid use of double quotes
-    "howdy23!"  # not a character, too many characters & invalid use of double quotes
+    ""           # INVALID: use q{} for empty character
+    "0"          #   VALID
+    "h"          #   VALID
+    "+"          #   VALID
+    "\n"         #   VALID: newline
+    "-1"         # INVALID: too many characters & invalid use of double quotes
+    "howdy23!"   # INVALID: too many characters & invalid use of double quotes
 
-    q{}          # character, empty
-    q{0}         # character
-    q{h}         # character
-    q{+}         # character
-    q{\n}        # not a character, too many characters, use "\n" for newline character
-    q{-1}        # not a character, too many characters
-    q{howdy23!}  # not a character, too many characters
+    q{}          #   VALID: empty
+    q{0}         #   VALID
+    q{h}         #   VALID
+    q{+}         #   VALID
+    q{\n}        # INVALID: too many characters, use "\n" for newline character
+    q{-1}        # INVALID: too many characters
+    q{howdy23!}  # INVALID: too many characters
 
 =head3 Section 2.2.2: String Literals
 
 Any text data more than 1 character in length must be represented by a C<string> literal, which is comprised of any combination of valid C<character> literal characters (numeric digits, letters, and special ASCII characters).  Like the empty character, if a C<string> literal has length zero then it is called the I<"empty string"> and contains no data.
 
-    ''          # not a string, use q{} for empty string
-    '0'         # string
-    'h'         # string
-    '+'         # string
-    '\n'        # string, not a newline, use "\n" for string containing newline
-    '-1'        # string
-    'howdy23!'  # string
+    ''           # INVALID: use q{} for empty string
+    '0'          #   VALID
+    'h'          #   VALID
+    '+'          #   VALID
+    '\n'         # INVALID: not a newline, use "\n" for string containing newline
+    '\\n'        #   VALID: interpolated to become two characters (backslash, letter n)
+    '-1'         #   VALID
+    'howdy23!'   #   VALID
 
-    ""          # not a string, use q{} for empty string
-    "0"         # not a string, invalid use of double quotes, must contain newline or tab character(s)
-    "h"         # not a string, invalid use of double quotes, must contain newline or tab character(s)
-    "+"         # not a string, invalid use of double quotes, must contain newline or tab character(s)
-    "\n"        # string, contains only newline character
-    "-1"        # not a string, invalid use of double quotes, must contain newline or tab character(s)
-    "howdy23!"  # not a string, invalid use of double quotes, must contain newline or tab character(s)
+    ""           # INVALID: use q{} for empty string
+    "0"          # INVALID: invalid use of double quotes, must contain newline or tab character(s)
+    "h"          # INVALID: invalid use of double quotes, must contain newline or tab character(s)
+    "+"          # INVALID: invalid use of double quotes, must contain newline or tab character(s)
+    "\n"         #   VALID: interpolated to become newline character
+    "-1"         # INVALID: invalid use of double quotes, must contain newline or tab character(s)
+    "howdy23!"   # INVALID: invalid use of double quotes, must contain newline or tab character(s)
 
-    q{}          # empty string
-    q{0}         # string
-    q{h}         # string
-    q{+}         # string
-    q{\n}        # string, not a newline, use "\n" for string containing newline
-    q{-1}        # string
-    q{howdy23!}  # string
+    q{}          #   VALID: empty string
+    q{0}         #   VALID
+    q{h}         #   VALID
+    q{+}         #   VALID
+    q{\n}        # INVALID: not a newline, use "\n" for string containing newline
+    q{\\n}       #   VALID: interpolated to become two characters (backslash, letter n)
+    q{-1}        #   VALID
+    q{howdy23!}  #   VALID
 
 =head3 Section 2.2.3: Single Quotes
 
 Text literals enclosed in single quotes are the simplest and most common case in RPerl.
 
-Single-quoted text literals are not I<"interpolated">, which means the literal's data contents are not changed by Perl or RPerl in any way.  Because single quotes do not activate string interpolation, the literal C<'\n'> is not a newline character; instead, it is simply two normal characters, a backslash followed by a lowercase letter n.  Do not use single quotes to represent a newline or tab character, use C<"\n"> or C<"\t"> instead.
+Single-quoted text literals are not I<"interpolated">, which means the literal's data contents are not changed by Perl or RPerl in any way, except for the extra-special double backslash C<\\> as described below.  Because single quotes do not activate string interpolation, you can not use a single-quoted string literal to represent special characters such as newline or tab.
 
-Do not use single quotes to represent an empty character or empty string, use C<q{}> instead.
+Do not use single quotes to represent a newline or tab character, use double quotes C<"\n"> or C<"\t"> instead.
 
-A single-quoted text literal begins and ends with the single quote character, therefore it cannot logically contain a single quote character as part of the literal data itself.  (RPerl does not support backslash-escaped single quote characters within a single-quoted string like normal Perl does, as this can be considered a simple form of string interpolation.)
+Do not use single quotes to represent an empty character or empty string, use q quotes C<q{}> instead.
+
+In normal Perl, single backslash characters C<\> are used to create special characters called I<"escape sequences">, the most common of which are the well-known newline C<\n> and tab C<\t> escape sequences.  Each valid escape sequence actually counts as only one character of computer data, even though it is represented to humans by 2 or more typed characters, so a single escape sequence may be utilized as either a C<character> text literal or a C<string> text literal.  (Thus, C<"\n"> and C<"\t"> may both be utilized as either a C<character> or C<string> in RPerl, but only when using double quotes as discussed in the following section.)
+
+In single-quoted string literals, the only escape sequence supported by RPerl is the double backslash C<\\>, so the string literal C<'\\'> is interpolated to mean only one single backslash character C<\>.  To represent two backslash characters C<\\>, utilize two double backslash escape sequences in a row C<'\\\\'>; for three backslashes C<\\\> utilize three escape sequences C<'\\\\\\'>, and so forth.
+
+Because RPerl only accepts double backslashes (not single backslashes) within single quotes, RPerl thus does not accept any odd number of consecutive backslash characters within single quotes.  For example, two or four backslashes in a row are supported, but one or three or five directly adjacent backslashes are not supported.
+
+In normal Perl, the backslash single quote C<\'> escape sequence may be used to include a single quote character C<'> within a single-quoted text literal.  As stated above, RPerl only supports the double backslash C<\\> escape sequence within single quotes, so the backslash single quote C<\'> escape sequence is thus not supported.  Use double quotes C<"'"> or q quotes C<q{'}> to represent a single quote C<'> character in an RPerl string literal.
 
 Single-quoted text literals must B<not> contain:
 
 =over
 
-=item * C<'S< >S< >S< >S< >S< >S< >>(single quote character)
+=item * Single Quote Character: C<'>
 
-=item * C<\S< >S< >S< >S< >S< >S< >>(single backslash as final character)
+=item * Single Backslash Character: C<\>
 
-=item * C<\\\S< >S< >S< >S< >>(odd number of backslashes as final characters)
+=item * Odd Number Of Consecutive Backslash Characters: C<\\\> C<\\\\\> C<\\\\\\\>
 
-=item * no characters
+=item * No Characters AKA Empty String
 
 =back
 
@@ -6284,17 +6308,58 @@ Single-quoted text literals may contain:
 
 =over
 
-=item * C<"S< >S< >S< >S< >>(double quote character)
+=item * Double Quote Character: C<">
 
-=item * C<}S< >S< >S< >S< >>(right curly brace character)
+=item * Right Curly Brace Character: C<}>
 
-=item * C<\S< >S< >S< >S< >>(single backslash as non-final character)
+=item * Double Backslash Characters: C<\\>
 
-=item * C<\\\S< >S< >>(odd number of backslashes as non-final characters)
+=item * Even Number Of Consecutive Backslash Characters: C<\\\\> C<\\\\\\> C<\\\\\\\\>
 
-=item * any other characters
+=item * Any Other Characters
 
 =back
+
+    ''      # INVALID: empty string
+    ' '     #   VALID: single space
+    'a'     #   VALID: single letter
+    '\'     # INVALID: single backslash
+
+    '   '   #   VALID: three spaces
+    ' ' '   # INVALID: single quote within single quotes
+    '\' '   # INVALID: backslash single quote escape sequence, also single backslash
+
+    ' a '   #   VALID: space, letter, space
+    '"a}'   #   VALID: double quote, letter, right brace
+    '\a}'   # INVALID: single backslash       not interpolated as audible bell (alarm beep) escape sequence
+    '\n}'   # INVALID: single backslash       not interpolated as newline                   escape sequence
+    '\\}'   #   VALID: double backslash           interpolated as one backslash character, right brace
+    '\\\'   # INVALID: odd  number of backslashes 
+    '\\\\'  #   VALID: even number of backslashes interpolated as half as many backslash characters
+
+=for html <u>
+
+I<BEST PRACTICES>
+
+=over
+
+=item * I<Use single-quoted text literals whenever possible.>
+
+=back
+
+=for html </u>
+
+    'n'      #     BEST PRACTICE
+    "n"      # NOT BEST PRACTICE: double quotes not needed
+    q{n}     # NOT BEST PRACTICE:      q quotes not needed
+
+    '1atx'   #     BEST PRACTICE
+    "1atx"   # NOT BEST PRACTICE: double quotes not needed
+    q{1atx}  # NOT BEST PRACTICE:      q quotes not needed
+
+    '\\tx'   #     BEST PRACTICE
+    "\\tx"   # NOT BEST PRACTICE: double quotes    invalid, extra backslash
+    q{\\tx}  # NOT BEST PRACTICE:      q quotes not needed
 
 =head3 Section 2.2.4: Double Quotes
 
