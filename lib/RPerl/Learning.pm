@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.060_000;
+our $VERSION = 0.061_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -6363,25 +6363,27 @@ I<BEST PRACTICES>
 
 =head3 Section 2.2.4: Double Quotes
 
-Text literals enclosed in double quotes are fully interpolated in normal Perl, and are only used for trivial interpolation of strings containing the special C<"\n"> newline or C<"\t"> tab characters in RPerl.  All double-quoted strings must contain at least one newline or tab character.
+Text literals enclosed in double quotes are fully interpolated in normal Perl, and are only used for trivial interpolation of strings containing the newline C<"\n"> or tab C<"\t"> escape sequences in RPerl.  All double-quoted strings in RPerl must contain at least one newline or tab special character.
 
-String interpolation in normal Perl is triggered by finding either the C<$> dollar sign or C<@> I<"at sign"> characters inside of a double-quoted string literal.  Because RPerl does not support string interpolation, double-quoted string literals must not contain the C<$> or C<@> characters.
+In addition to escape sequences, string interpolation in normal Perl is also triggered by finding either the dollar sign C<$> or I<"at sign"> C<@> characters inside of a double-quoted string literal.  Because RPerl does not support string interpolation, double-quoted string literals must not contain the C<$> or C<@> characters.
 
-String interpolation is also triggered by finding a C<\> backslash character followed by one or more special I<"escape characters">, which are mostly comprised of otherwise-normal characters such as numbers and lowercase letters.  When a backslash is followed by valid escape characters, it is called an I<"escape sequence">.  Each valid escape sequence actually counts as only one character, even though it is represented by 2 or more typed characters, so a single escape sequence may be utilized as either a C<> text literal or a C<string> text literal.  The special C<\n> newline and C<\t> tab characters are themselves escape sequences, and are the only allowed escape sequences in RPerl.  (Thus, C<"\n"> and C<"\t"> may both be utilized as either a C<> or C<string> text literal in RPerl.)  Double-quoted string literals must not contain any backslash characters, other than those used in newline and tab escape sequences.
+Double-quoted string literals must not contain any backslash characters, other than those used in newline C<\n> and tab C<\t> escape sequences, and thus can not represent a single backslash character C<\>; use single quotes C<'\\'> or q quotes C<q{\\}> double backslash escape sequences instead. 
+
+As with single quotes, in normal Perl the backslash double quote C<\"> escape sequence may be used to include a double quote character C<"> within a double-quoted text literal.  As stated above, RPerl only supports the newline C<\n> and tab C<\t> escape sequences within double quotes, so the backslash double quote C<\"> escape sequence is thus not supported.  Use single quotes C<'"'> or q quotes C<q{"}> to represent a double quote C<"> character in an RPerl string literal.
 
 Double-quoted text literals must B<not> contain:
 
 =over
 
-=item * C<"S< >S< >>(double quote character)
+=item * Double Quote Character: C<">
 
-=item * C<$S< >S< >>(dollar sign character)
+=item * Dollar Sign Character: C<$>
 
-=item * C<@S< >S< >>(at sign character)
+=item * At Sign Character: C<@>
 
-=item * C<\S< >S< >>(extra backslash character, other than C<\n> or C<\t>)
+=item * Extra Backslash Characters (Other Than C<\n> Or C<\t>): C<\> C<\\> C<\\\> C<\r> C<123\456>
 
-=item * no characters
+=item * No Characters AKA Empty String
 
 =back
 
@@ -6389,9 +6391,9 @@ Double-quoted text literals B<must> contain 1 or more:
 
 =over
 
-=item * C<\nS< >S< >>(newline character)
+=item * Newline Character: C<\n>
 
-=item * C<\tS< >S< >>(tab character)
+=item * Tab Character: C<\t>
 
 =back
 
@@ -6399,13 +6401,30 @@ Double-quoted text literals may contain:
 
 =over
 
-=item * C<'S< >S< >>(single quote character)
+=item * Single Quote Character: C<'>
 
-=item * C<}S< >S< >>(right curly brace character)
+=item * Right Curly Brace Character: C<}>
 
-=item * any other characters
+=item * Any Other Characters
 
 =back
+
+    ""      # INVALID: empty string
+    " "     #   VALID: single space
+    "a"     #   VALID: single letter
+    "\"     # INVALID: extra  backslash,                                                                     only \n and \t supported
+
+    "   "   #   VALID: three spaces
+    " " "   # INVALID: double quote within double quotes
+    "\" "   # INVALID: backslash double quote escape sequence, also single backslash
+
+    " a "   #   VALID: space, letter, space
+    "'a}"   #   VALID: single quote, letter, right brace
+    "\a}"   # INVALID: single backslash           interpolated as audible bell (alarm beep) escape sequence, only \n and \t supported
+    "\n}"   #   VALID: single backslash           interpolated as newline                   escape sequence, right brace
+    "\\}"   # INVALID: extra  backslashes,                                                                   only \n and \t supported
+    "\\\"   # INVALID: extra  backslashes,                                                                   only \n and \t supported 
+    "\\\\"  # INVALID: extra  backslashes,                                                                   only \n and \t supported
 
 =for html <u>
 
