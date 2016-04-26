@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.061_000;
+our $VERSION = 0.062_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -6432,13 +6432,26 @@ I<BEST PRACTICES>
 
 =over
 
-=item * I<Use double-quoted string literals to contain newline and tab characters only, not other normal characters.>
+=item * I<Use double-quoted text literals to contain newline C<\n> and tab C<\t> characters only, not other normal characters.>
 
-=item * I<To represent a mixture of normal characters with newline and/or tab characters, enclose the normal characters in single quotes, enclose the newline and tab characters in double quotes, and use the C<.> dot "string concatenation" operator to append one string literal to the other.  (Please see L</Section 2.2.6: Editing Operators> for more info about string concatenation.)>
+=item * I<To represent a mixture of normal characters with newline and/or tab characters, enclose the normal characters in single quotes, enclose the newline and tab characters in double quotes, and use the dot C<.> "string concatenation" operator to append one string literal to the other.  (Please see L</Section 2.2.6: Editing Operators> for more info about string concatenation.)>
 
 =back
 
 =for html </u>
+
+    "\n"        #     BEST PRACTICE:     newline         only
+    "\t"        #     BEST PRACTICE:                 tab only
+    "\t\n\t"    #     BEST PRACTICE:     newline and tab only
+
+    "a\n"       # NOT BEST PRACTICE: not newline and tab only
+    'a' . "\n"  #     BEST PRACTICE:     newline         only, additional characters in single quotes
+
+    "\tx"       # NOT BEST PRACTICE: not newline and tab only
+    "\t" . 'x'  #     BEST PRACTICE:                 tab only, additional characters in single quotes
+
+    "a\tx\n"                 # NOT BEST PRACTICE: not newline and tab only
+    'a' . "\t" . 'x' . "\n"  #     BEST PRACTICE:     newline and tab only, additional characters in single quotes
 
 =head3 Section 2.2.5: q Quotes
 
