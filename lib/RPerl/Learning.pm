@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.062_000;
+our $VERSION = 0.063_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -6455,23 +6455,21 @@ I<BEST PRACTICES>
 
 =head3 Section 2.2.5: q Quotes
 
-Text literals enclosed in C<q{}> I<"q quotes"> begin with the lowercase q followed by C<{> left curly brace characters, and end with the C<}> right curly brace character.  You must use q quotes to represent C<q{}> empty text literals containing no characters.
+Text literals enclosed in I<"q quotes"> begin with lowercase letter q and left curly brace characters C<q{>, and end with the right curly brace C<}> character.  You must use q quotes to represent empty text C<q{}> literals, which contain no characters.
 
-Normal Perl support q-quoted string literals using delimiters other than curly braces, as well as I<"qq quotes"> which provide string interpolation in the same way as double-quoted strings.  RPerl's existing string quoting mechanisms cover all use cases, so RPerl does not support the additional qq quotes or non-curly-brace q quotes, because TDNNTBMTOWTDI.
+Normal Perl supports q-quoted string literals using delimiters other than curly braces, as well as I<"qq quotes"> which provide string interpolation in the same way as double-quoted strings.  RPerl's existing string quoting mechanisms cover all non-interpolated use cases, so RPerl does not support the additional qq quotes or non-curly-brace q quotes, because TDNNTBMTOWTDI.
 
-[ INSERT BACKSLASHES, QUOTES ]
-
-[ INSERT BACKSLASHES FOR SINGLE AND DOUBLE QUOTE SECTIONS ABOVE]
+q-quoted literals behave exactly the same as single-quoted literals, other than the empty string C<q{}> and the difference in delimiters.
 
 q-quoted text literals must B<not> contain:
 
 =over
 
-=item * C<}S< >S< >S< >S< >>(right curly brace character)
+=item * Right Curly Brace Character: C<}>
 
-=item * C<\S< >S< >S< >S< >>(single backslash as final character)
+=item * Single Backslash Character: C<\>
 
-=item * C<\\\S< >S< >>(odd number of backslashes as final characters)
+=item * Odd Number Of Consecutive Backslash Characters: C<\\\> C<\\\\\> C<\\\\\\\>
 
 =back
 
@@ -6479,21 +6477,60 @@ q-quoted text literals may contain:
 
 =over
 
-=item * C<'S< >S< >S< >S< >>(single quote character)
+=item * Single Quote Character: C<'>
 
-=item * C<"S< >S< >S< >S< >>(double quote character)
+=item * Double Quote Character: C<">
 
-=item * C<\S< >S< >S< >S< >>(single backslash as non-final character)
+=item * Double Backslash Characters: C<\\>
 
-=item * C<\\\S< >S< >>(odd number of backslashes as non-final characters)
+=item * Even Number Of Consecutive Backslash Characters: C<\\\\> C<\\\\\\> C<\\\\\\\\>
 
-=item * no characters
+=item * No Characters AKA Empty String
 
-=item * any other characters
+=item * Any Other Characters
 
 =back
 
-=for comment [ INSERT BEST PRACTICES ]
+    q{}      #   VALID: empty string
+    q{ }     #   VALID: single space
+    q{a}     #   VALID: single letter
+    q{\}     # INVALID: single backslash
+
+    q{   }   #   VALID: three spaces
+    q{ } }   # INVALID: right brace within q quotes
+    q{\} }   # INVALID: backslash right brace escape sequence, also single backslash
+
+    q{ a }   #   VALID: space, letter, space
+    q{"a'}   #   VALID: double quote, letter, single quote
+    q{\a'}   # INVALID: single backslash       not interpolated as audible bell (alarm beep) escape sequence
+    q{\n'}   # INVALID: single backslash       not interpolated as newline                   escape sequence
+    q{\\'}   #   VALID: double backslash           interpolated as one backslash character, single quote
+    q{\\\}   # INVALID: odd  number of backslashes 
+    q{\\\\}  #   VALID: even number of backslashes interpolated as half as many backslash characters
+
+=for html <u>
+
+I<BEST PRACTICES>
+
+=over
+
+=item * I<Use q-quoted text literals to represent empty text literals only.>
+
+=back
+
+=for html </u>
+
+    ''      # NOT BEST PRACTICE: single quotes invalid, empty string
+    ""      # NOT BEST PRACTICE: double quotes invalid, empty string
+    q{}     #     BEST PRACTICE
+
+    '0gnb'   #     BEST PRACTICE
+    "0gnb"   # NOT BEST PRACTICE: double quotes not needed
+    q{0gnb}  # NOT BEST PRACTICE:      q quotes not needed
+
+    '\\nx'   #     BEST PRACTICE
+    "\\nx"   # NOT BEST PRACTICE: double quotes    invalid, extra backslash
+    q{\\nx}  # NOT BEST PRACTICE:      q quotes not needed
 
 =head3 Section 2.2.6: Editing Operators
 
