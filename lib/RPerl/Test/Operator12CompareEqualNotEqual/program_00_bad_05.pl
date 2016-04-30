@@ -36,6 +36,14 @@ print 'have $bat = ', $bat, "\n";
 print 'have $baz = ', $baz, "\n";
 print 'have $bax = ', $bax, "\n";
 
+$bat = $foo <=> 333_333_333_333;
+$baz = 444 <=> 222;
+$bax = 33 <=> $foo;
+
+print 'have $bat = ', $bat, "\n";
+print 'have $baz = ', $baz, "\n";
+print 'have $bax = ', $bax, "\n";
+
 $bat = $bar neq 'howdy';
 $baz = 'ZZZZZZZZZZZZZZ' eq $bar;
 $bax = '33' ne '44';
@@ -47,6 +55,14 @@ print 'have $bax = ', $bax, "\n";
 $bat = $bar eq 'abc';
 $baz = '444' ne '222';
 $bax = '33' ne $bar;
+
+print 'have $bat = ', $bat, "\n";
+print 'have $baz = ', $baz, "\n";
+print 'have $bax = ', $bax, "\n";
+
+$bat = $bar cmp 'abc';
+$baz = '444' cmp '222';
+$bax = '33' cmp $bar;
 
 print 'have $bat = ', $bat, "\n";
 print 'have $baz = ', $baz, "\n";

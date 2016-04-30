@@ -1,4 +1,27 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< EXECUTE_SUCCESS: 'have $foo = 9123.456789' >>>
+# <<< EXECUTE_SUCCESS: 'have $bar = howdy' >>>
+# <<< EXECUTE_SUCCESS: 'have $bat = ' >>>
+# <<< EXECUTE_SUCCESS: 'have $baz = 1' >>>
+# <<< EXECUTE_SUCCESS: 'have $bax = 1' >>>
+# <<< EXECUTE_SUCCESS: 'have $bat = ' >>>
+# <<< EXECUTE_SUCCESS: 'have $baz = 1' >>>
+# <<< EXECUTE_SUCCESS: 'have $bax = 1' >>>
+# <<< EXECUTE_SUCCESS: 'have $bat = -1' >>>
+# <<< EXECUTE_SUCCESS: 'have $baz = 1' >>>
+# <<< EXECUTE_SUCCESS: 'have $bax = -1' >>>
+# <<< EXECUTE_SUCCESS: 'have $bat = 1' >>>
+# <<< EXECUTE_SUCCESS: 'have $baz = ' >>>
+# <<< EXECUTE_SUCCESS: 'have $bax = 1' >>>
+# <<< EXECUTE_SUCCESS: 'have $bat = ' >>>
+# <<< EXECUTE_SUCCESS: 'have $baz = 1' >>>
+# <<< EXECUTE_SUCCESS: 'have $bax = 1' >>>
+# <<< EXECUTE_SUCCESS: 'have $bat = 1' >>>
+# <<< EXECUTE_SUCCESS: 'have $baz = 1' >>>
+# <<< EXECUTE_SUCCESS: 'have $bax = -1' >>>
+
 # [[[ HEADER ]]]
 use RPerl;
 use strict;
@@ -31,6 +54,14 @@ print 'have $bat = ', $bat, "\n";
 print 'have $baz = ', $baz, "\n";
 print 'have $bax = ', $bax, "\n";
 
+$bat = $foo <=> 333_333_333_333;
+$baz = 444 <=> 222;
+$bax = 33 <=> $foo;
+
+print 'have $bat = ', $bat, "\n";
+print 'have $baz = ', $baz, "\n";
+print 'have $bax = ', $bax, "\n";
+
 $bat = $bar eq 'howdy';
 $baz = 'ZZZZZZZZZZZZZZ' eq $bar;
 $bax = '33' ne '44';
@@ -42,6 +73,14 @@ print 'have $bax = ', $bax, "\n";
 $bat = $bar eq 'abc';
 $baz = '444' ne '222';
 $bax = '33' ne $bar;
+
+print 'have $bat = ', $bat, "\n";
+print 'have $baz = ', $baz, "\n";
+print 'have $bax = ', $bax, "\n";
+
+$bat = $bar cmp 'abc';
+$baz = '444' cmp '222';
+$bax = '33' cmp $bar;
 
 print 'have $bat = ', $bat, "\n";
 print 'have $baz = ', $baz, "\n";
