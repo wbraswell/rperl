@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.064_000;
+our $VERSION = 0.065_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -3724,6 +3724,72 @@ Yes
 
 =for docbook </entry></row>
 
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Three-Way Comparison AKA Spaceship
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+<=>
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Binary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Infix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+12
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
 =begin text
 
 return $table->draw( ['.=','=.','=','='],   # .=============.
@@ -3750,27 +3816,11 @@ $z = q{<<< END TEXT EVAL >>>};
 
 =for docbook </tbody></tgroup></table>
 
-B<WARNING FOR ALL NUMERIC COMPARISON OPERATORS:>
-
-B<Due to different possible return values for false result, unexpected or undefined behavior may occur if return value is utilized anywhere except true-or-false conditions in loops and conditional statements>
-
-In PERLOPS mode, value for true is integer C<1>, and value for false is empty string C<''>;
-
-In CPPOPS mode, value for true is integer C<1>, and value for false is integer C<0>
-
-    if    (1 > 2) { print 'I think not'   . "\n"; }  # good use of greater-than operator
-    while (1 < 2) { print 'infinite loop' . "\n"; }  # good use of    less-than operator
-
-    (1 > 2) + 3                  # UNEXPECTED BEHAVIOR: bad use of greater-than operator
-    (1 < 2) * 3                  # UNEXPECTED BEHAVIOR: bad use of    less-than operator
-
 =over
 
 =item * B<Less-Than>
 
 Compare to determine relation of operands, return true if first operand is less than second operand, otherwise return false
-
-=back
 
      0 <  0  # false
      0 <  1  # true
@@ -3782,13 +3832,13 @@ Compare to determine relation of operands, return true if first operand is less 
     -1 <  1  # true
     -1 < -1  # false
 
+=back
+
 =over
 
 =item * B<Greater-Than>
 
 Compare to determine relation of operands, return true if first operand is greater than second operand, otherwise return false
-
-=back
 
      0 >  0  # false
      0 >  1  # false
@@ -3800,13 +3850,13 @@ Compare to determine relation of operands, return true if first operand is great
     -1 >  1  # false
     -1 > -1  # false
 
+=back
+
 =over
 
 =item * B<Less-Than-Or-Equal>
 
 Compare to determine relation of operands, return true if first operand is less than or equal to second operand, otherwise return false
-
-=back
 
      0 <=  0  # true
      0 <=  1  # true
@@ -3818,13 +3868,13 @@ Compare to determine relation of operands, return true if first operand is less 
     -1 <=  1  # true
     -1 <= -1  # true
 
+=back
+
 =over
 
 =item * B<Greater-Than-Or-Equal>
 
 Compare to determine relation of operands, return true if first operand is greater than or equal to second operand, otherwise return false
-
-=back
 
      0 >=  0  # true
      0 >=  1  # false
@@ -3836,13 +3886,13 @@ Compare to determine relation of operands, return true if first operand is great
     -1 >=  1  # false
     -1 >= -1  # true
 
+=back
+
 =over
 
 =item * B<Equal>
 
 Compare to determine equality of operands, return true if first operand is equal to second operand, otherwise return false
-
-=back
 
      0 ==  0  # true
      0 ==  1  # false
@@ -3854,13 +3904,13 @@ Compare to determine equality of operands, return true if first operand is equal
     -1 ==  1  # false
     -1 == -1  # true
 
+=back
+
 =over
 
 =item * B<Not-Equal>
 
 Compare to determine equality of operands, return true if first operand is not equal to second operand, otherwise return false
-
-=back
 
      0 !=  0  # false
      0 !=  1  # true
@@ -3871,6 +3921,30 @@ Compare to determine equality of operands, return true if first operand is not e
     -1 !=  0  # true
     -1 !=  1  # true
     -1 != -1  # false
+
+=back
+
+=over
+
+=item * B<Three-Way Comparison AKA Spaceship>
+
+Perform three-way comparison of operands; 
+
+Return -1 if first operand is less than second operand, return 0 if operands are equal, or return 1 if first operand is greater than second operand;
+
+Randal L. Schwartz coined the operator's nickname based on visual similarity to Darth Vader's TIE Advanced x1 (TIE fighter) personal spacecraft
+
+     0 <=>  0  #  0
+     0 <=>  1  # -1
+     0 <=> -1  #  1
+     1 <=>  0  #  1
+     1 <=>  1  #  0
+     1 <=> -1  #  1
+    -1 <=>  0  # -1
+    -1 <=>  1  # -1
+    -1 <=> -1  #  0
+
+=back
 
 =head3 Section 2.1.14: Logic Operators
 
