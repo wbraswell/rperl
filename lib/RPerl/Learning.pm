@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.065_000;
+our $VERSION = 0.066_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -6994,6 +6994,85 @@ $z = q{<<< END TEXT EVAL >>>};
 =for html </table>
 
 =for docbook </tbody></tgroup></table>
+
+=over
+
+=item * B<Substring>
+
+    substr EXPR, OFFSET
+    substr EXPR, OFFSET, LENGTH
+    substr EXPR, OFFSET, LENGTH, REPLACEMENT
+
+EXPR and REPLACEMENT are string values, OFFSET and LENGTH are integer values;
+
+When called with 2 operands, return substring of first operand EXPR, beginning at second operand OFFSET character and ending at end of first operand;
+
+When called with 3 operands, return substring of first operand EXPR, beginning at second operand OFFSET character and ending after third operand LENGTH characters;
+
+When called with 4 operands, return substring of first operand EXPR, beginning at second operand OFFSET character and ending after third operand LENGTH characters, and also edit first operand by replacing original substring with fourth operand REPLACEMENT string;
+
+In all variants, OFFSET begins at 0;
+
+In all variants, if second operand OFFSET is negative then substring begins absolute value of LENGTH characters before end of first operand EXPR;
+
+In 3-operand and 4-operand variants, if third operand LENGTH is negative then substring ends absolute value of LENGTH characters before end of first operand EXPR;
+
+In 4-operand variant, return value is original substring before replacement occurs, thus you can retrieve a substring and replace it with one operation;
+
+In 4-operand variant, length of substring in third operand LENGTH need not equal length of string in fourth operand REPLACEMENT, length of first operand EXPR will be automatically increased or decreased as needed
+
+    # common usage
+    my string $foo = 'abc123!?*';               # $foo = 'abc123!?*'
+    my string $bar = substr $foo, 2;            #                     $bar =   'c123!?*'
+    my string $bat = substr $foo, 2, 3;         #                     $bat =   'c12'
+    my string $bax = substr $foo, 2, 3, 'd45';  # $foo = 'abd453!?*', $bax =   'c12'
+
+X<break_code_blocks>
+
+
+    # negative OFFSET
+    my string $foo = 'abc123!?*';                # $foo = 'abc123!?*'
+    my string $bar = substr $foo, -4;            #                     $bar =   '3!?*'
+    my string $bat = substr $foo, -4, 3;         #                     $bat =   '3!?'
+    my string $bax = substr $foo, -4, 3, 'd45';  # $foo = 'abc12d45*', $bax =   '3!?'
+
+X<break_code_blocks>
+
+
+    # negative LENGTH
+    my string $foo = 'abc123!?*';                 # $foo = 'abc123!?*'
+    my string $bar = substr $foo, 2;              #                     $bar =   'c123!?*'
+    my string $bat = substr $foo, 2, -3;          #                     $bat =   'c123'
+    my string $bax = substr $foo, 2, -3, 'd456';  # $foo = 'abd456!?*', $bax =   'c123'
+
+X<break_code_blocks>
+
+
+    # negative OFFSET and LENGTH
+    my string $foo = 'abc123!?*';                  # $foo = 'abc123!?*'
+    my string $bar = substr $foo, -6;              #                     $bar =   '123!?*'
+    my string $bat = substr $foo, -6, -2;          #                     $bat =   '123!'
+    my string $bax = substr $foo, -6, -2, 'd456';  # $foo = 'abcd456?*', $bax =   '123!'
+
+X<break_code_blocks>
+
+
+    # LENGTH less than REPLACEMENT length
+    my string $foo = 'abc123!?*';                   # $foo = 'abc123!?*'
+    my string $bar = substr $foo, 2;                #                         $bar =   'c123!?*'
+    my string $bat = substr $foo, 2, 3;             #                         $bat =   'c12'
+    my string $bax = substr $foo, 2, 3, 'd456789';  # $foo = 'abd4567893!?*', $bax =   'c12'
+
+X<break_code_blocks>
+
+
+    # LENGTH greater than REPLACEMENT length, and empty replacement string
+    my string $foo = 'abc123!?*';             # $foo = 'abc123!?*'
+    my string $bar = substr $foo, 2;          #                     $bar =   'c123!?*'
+    my string $bat = substr $foo, 2, 3;       #                     $bat =   'c12'
+    my string $bax = substr $foo, 2, 3, q{};  # $foo = 'ab3!?*',    $bax =   'c12'
+
+=back
 
 =head3 Section 2.2.7: Case Operators
 
