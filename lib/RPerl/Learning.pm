@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.066_000;
+our $VERSION = 0.067_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -7071,6 +7071,74 @@ X<break_code_blocks>
     my string $bar = substr $foo, 2;          #                     $bar =   'c123!?*'
     my string $bat = substr $foo, 2, 3;       #                     $bat =   'c12'
     my string $bax = substr $foo, 2, 3, q{};  # $foo = 'ab3!?*',    $bax =   'c12'
+
+=back
+
+=over
+
+=item * B<Repeat>
+
+    EXPR x COUNT
+
+EXPR is a string value, COUNT is unsigned_integer (non-negative whole number) value;
+
+Return a new string value comprised of string EXPR repeated COUNT times;
+
+Analogous to arithmetic multiply operator C<*>;
+
+Consecutive repeat C<x> operators may be chained for multiplicative effect
+
+    'a' x 0      # '' (empty string)
+    'a' x 1      # 'a'
+    'a' x 2      # 'aa'
+    'a' x 3      # 'aaa'
+    'a' x 3 x 2  # 'aaaaaa'
+
+    'howdy' x 3  # 'howdyhowdyhowdy'
+
+=back
+
+=over
+
+=item * B<Concatenate>
+
+    EXPR1 . EXPR2
+
+EXPR1 and EXPR2 are string values;
+
+Return a new string value comprised of string EXPR1 followed by EXPR2;
+
+Analogous to arithmetic add operator C<+>;
+
+Consecutive concatenate C<.> operators may be chained for additive (cumulative) effect
+
+    '' . ''          # '' (empty string)
+    'a' . ''         # 'a'
+    '' . 'a'         # 'a'
+    'a' . 'a'        # 'aa'
+    'a' . 'a' . 'a'  # 'aaa'
+
+    'howdy' . 'howdy' . 'howdy'  # 'howdyhowdyhowdy'
+
+=back
+
+=over
+
+=item * B<Length>
+
+    length EXPR
+
+EXPR is a string value;
+
+Return number of characters in string EXPR
+
+    length ''     # 0
+    length 'a'    # 1
+    length 'aa'   # 2
+    length 'aaa'  # 3
+
+    length 'howdy'            # 5
+    length 'howdyhowdyhowdy'  # 15
 
 =back
 
