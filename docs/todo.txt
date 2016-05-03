@@ -1,21 +1,46 @@
 DONE
     Learning RPerl, <noncode> fix for rperl.org only
+    ~ bitwise negation (AKA one's complement), match Perl & C++ output via 'use integer;'
+    allow 'use integer;' without trying to find & compile 'integer.pm' subdependencies
+    Learning RPerl, examples for 2.1.9 - 2.1.14
 
 DOING
-    Learning RPerl, examples for 2.1.9 - 2.1.14
+    add calling conventions & data types for all numeric operators, section 2.1
+    append 'L' to all numeric literals to force long int?
     create macro to replace all conditional truth value checks with extra logic to include RPerl false values of '0', q{0}, and q{}, in both character and string type
-    travis enable dev Perl
-    INSTALL notes, update step 3 examples
-    dev Perl fix RPerl failures w/ P5P
-    chmod a-x *.so output if not on HP-UX
     execute via compiled copy not interpreted
+    INSTALL notes, update step 3 examples
+    travis enable dev Perl
+    fix dev Perl via P5P
+    chmod a-x *.so output if not on HP-UX
     print comma-vs-dot to correct output
     cpp output file post-processing for source code text alignment
-    split author tests (checking Changes file, etc) into xt/ directory, split deps in Makefile.PL, possibly utilize AUTHOR_TESTING in travis-perl/helpers
+    split author tests (checking Changes file, etc) into xt/ directory, 
+        split deps in Makefile.PL, possibly utilize AUTHOR_TESTING in travis-perl/helpers
+
+OPERATORS, CPPOPS_CPPTYPES MODE
+    NAMED: chomp join keys pop push reverse sort split values wait
+    NAMED_UNARY: chdir cos defined exists -e -r -f -T length rand scalar sin sqrt (need create)
+    Perl "features"  http://perldoc.perl.org/feature.html
+        NOT YET SUPPORTED, requires at least Perl v5.16: fc
+    POSIX
+        ceil, floor, modf
+        NOT YET SUPPORTED, C99 functions require at least Perl v5.22: trunc, cbrt, fmax, round, lround, etc.
+    Math::Trig & Math::Complex
+        new, make, emake, cplx, cplxe
+        cbrt, root 
+        tan; csc, cosec, sec, sec, cot, cotan; asin, acos, atan; acsc, acosec, asec, acot, acotan; sinh, cosh, tanh; csch, cosech, sech, coth, cotanh; 
+        asinh, acosh, atanh; acsch, acosech, asech, acoth, acotanh; pi, pi2, pi4, pip2, pip4
+        overloaded complex arithmetic
+        +, -, *, /, **
+        ~
+        abs, sqrt, exp, log
 
 LEARNING RPERL
+    update appendix with grammar changes: bitwise_negation_lparen, additional operators?
     tables on metacpan, fix headers and borders CSS
-    noncode on metacpan
+    fix <noncode> on metacpan, elsewhere
+    check X<break_code_blocks> everywhere other than pod2rperlhtml
     use unsigned_integer instead of integer in ex2.6 & 2.7, check all other exercises as well, change error checking accordingly
     croak or die in exercise solutions?
     L<> hyperlinks broken or missing in some outputs?
@@ -56,11 +81,8 @@ UNSIGNED INTEGER FIX
     full unsigned_integer support via UnsignedInteger.cpp/h, rperltypes.pm, SvUIOKp(), etc.
     CPPOPS_CPPTYPES conversion routines
 
-BUILTINS, CPPOPS_CPPTYPES MODE
-    NAMED: chomp join keys pop push reverse sort split values wait
-    NAMED_UNARY: chdir cos defined exists -e -r -f -T length rand scalar sin sqrt (need create)
-
 TESTS
+    RPerl::EPSILON()
     array size declaration compensation
     package/subroutine/method names starting w/ underscore
     variable redeclaration (masking)
@@ -170,6 +192,25 @@ PARALLELAPPSTORE.COM
     content
 
 DATA TYPES & STRUCTURES
+    enable config of integer type via #define & #ifdef like __CPP__TYPES, either int or long int or long long int, default to match Perl via combo of the following
+        script/development/unused/integer_precision.cpp
+        perl -e 'use Config; print $Config{ivtype} . "\n";'
+        perl -e 'use Config; print $Config{ivsize} . "\n";'
+        perl -e 'use Config; print $Config{use64bitint} . "\n";'
+        perl -e 'use Config; print $Config{use64bitall} . "\n";'
+        perl -e 'use Config; print $Config{intsize} . "\n";'
+        perl -e 'use Config; print $Config{longsize} . "\n";'
+        perl -e 'use Config; print $Config{longlongsize} . "\n";'
+        perl -e 'use Config; print $Config{d_longlong} . "\n";'
+    enable config of number type via #define & #ifdef like __CPP__TYPES, either double or long double, default to match Perl via combo of the following
+      ALSO enable config of %d vs %ld format codes for printf & friends
+      ALSO enable config of RPerl::NUMBER_EPSILON in RPerl/Config.pm to use either POSIX::FLT_EPSILON() or POSIX::DBL_EPSILON() http://perldoc.perl.org/POSIX.html#FLOAT
+        script/development/unused/number_precision.cpp
+        perl -e 'use Config; print $Config{nvtype} . "\n";'
+        perl -e 'use Config; print $Config{nvsize} . "\n";'
+        perl -e 'use Config; print $Config{doublesize} . "\n";'
+        perl -e 'use Config; print $Config{longdblsize} . "\n";'
+        perl -e 'use Config; print $Config{d_longdbl} . "\n";'
     PERLOPS_CPPTYPES conversion routines
     boolean_arrayref, unsigned_integer_arrayref, character_arrayref
     boolean_hashref, unsigned_integer_hashref, character_hashref

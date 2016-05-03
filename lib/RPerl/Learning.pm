@@ -1564,21 +1564,29 @@ I<BEST PRACTICES>
 
 =for html </u>
 
-    +23    # good integer, but not aligned with other un-signed literal below
-    +55.6  # good number,  but not aligned with other un-signed literal below
+    +23    # NOT BEST PRACTICE: not aligned with other unsigned literal below
+    +55.6  # NOT BEST PRACTICE: not aligned with other unsigned literal below
     42
 
-    23     # best integer for all positive literals, aligned
-    55.6   # best number  for all positive literals, aligned
+    23     #     BEST PRACTICE:     aligned with other unsigned literal below, best for all-positive literals
+    55.6   #     BEST PRACTICE:     aligned with other unsigned literal below, best for all-positive literals
     42
 
-    23     # good integer, but not aligned with other signed literals below
-    55.6   # good number,  but not aligned with other signed literals below
+X<break_code_blocks>
+
+
+    23     # NOT BEST PRACTICE:      not aligned with other signed literals below
+    55.6   # NOT BEST PRACTICE:      not aligned with other signed literals below
     -21
     -66.5
 
-    +23    # best integer for mixed-sign literals, aligned
-    +55.6  # best number  for mixed-sign literals, aligned
+     23    # NOT BEST PRACTICE: manually aligned with other signed literals below, but will not automatically align via Perl::Tidy
+     55.6  # NOT BEST PRACTICE: manually aligned with other signed literals below, but will not automatically align via Perl::Tidy
+    -21
+    -66.5
+
+    +23    #     BEST PRACTICE:          aligned with other signed literals below, best for mixed-sign literals
+    +55.6  #     BEST PRACTICE:          aligned with other signed literals below, best for mixed-sign literals
     -21
     -66.5
 
@@ -1613,25 +1621,25 @@ I<BEST PRACTICES>
 
 =for html </u>
 
-    1_234_567_000      # good integer
-    1.234_567_000e9    # good number, but does not align with two-digit exponents below
-    1.234_567_000e09   # best number for all-positive exponents, aligned with two-digit exponent below
+    1_234_567_000      # NOT BEST PRACTICE: no exponent
+    1.234_567_000e9    # NOT BEST PRACTICE: not aligned with two-digit exponents below
+    1.234_567_000e+09  # NOT BEST PRACTICE: not aligned with two-digit exponents below
+    1.234_567_000e09   #     BEST PRACTICE:     aligned with two-digit exponents below, best for all-positive exponents
     1.234_567_000e19
+    2.111_000_333e04
 
-    1.234_567_000e+09  # good number, but not aligned with positive exponents below
-    1.234_567_000e09   # best number for all-positive exponents, aligned with positive exponent below
-    1.234_567_000e19
- 
-    1.234_567_000e09   # good number, but not aligned with signed exponents below
-    1.234_567_000e+09  # best number for mixed-sign exponents, aligned with signed exponent below
+    1.234_567_000e09   # NOT BEST PRACTICE: not aligned with signed exponents below
+    1.234_567_000e+09  #     BEST PRACTICE:     aligned with signed exponents below, best for mixed-sign exponents
     1.234_567_000e-09
+    2.111_000_333e-04
 
-    +1.537_969_711_485_091_65e+21  # best number for mixed-sign exponents, accuracy may be reduced on computers with lower data type limits
-    -2.591_931_460_998_796_41e+01  # best number for mixed-sign exponents, accuracy may be reduced on computers with lower data type limits
-    +1.792_587_729_503_711_81e-01  # best number for mixed-sign exponents, accuracy may be reduced on computers with lower data type limits
-    +2.680_677_724_903_893_22e-03  # best number for mixed-sign exponents, accuracy may be reduced on computers with lower data type limits
-    +1.628_241_700_382_422_95e-03  # best number for mixed-sign exponents, accuracy may be reduced on computers with lower data type limits
-    -9.515_922_545_197_158_70e-15  # best number for mixed-sign exponents, accuracy may be reduced on computers with lower data type limits
+    # accuracy of following numbers may be reduced on computers with lower precision data types
+    +1.537_969_711_485_091_65e+21  # BEST PRACTICE: best for mixed-sign exponents
+    -2.591_931_460_998_796_41e+01  # BEST PRACTICE: best for mixed-sign exponents
+    +1.792_587_729_503_711_81e-01  # BEST PRACTICE: best for mixed-sign exponents
+    +2.680_677_724_903_893_22e-03  # BEST PRACTICE: best for mixed-sign exponents
+    +1.628_241_700_382_422_95e-03  # BEST PRACTICE: best for mixed-sign exponents
+    -9.515_922_545_197_158_70e-15  # BEST PRACTICE: best for mixed-sign exponents
 
 =head3 Section 2.1.9: Truth Values
 
@@ -1887,7 +1895,7 @@ Left
 
 =for docbook </entry><entry align="left">
 
-Not Yet
+Coming Soon
 
 =for text }], 1);
 
@@ -1953,7 +1961,7 @@ Non
 
 =for docbook </entry><entry align="left">
 
-Not Yet
+Coming Soon
 
 =for text }], 1);
 
@@ -2481,7 +2489,7 @@ Non
 
 =for docbook </entry><entry align="left">
 
-Not Yet
+Coming Soon
 
 =for text }], 1);
 
@@ -2547,7 +2555,7 @@ Non
 
 =for docbook </entry><entry align="left">
 
-Not Yet
+Coming Soon
 
 =for text }], 1);
 
@@ -2591,13 +2599,13 @@ If operand is 0 or positive (greater than 0), return unchanged;
 
 If operand is negative (less than 0), return positive number with equal magnitude (distance from 0)
 
-=back
-
     abs  0         # 0
     abs  1         # 1
     abs -1         # 1
     abs  2_112.23  # 2_112.23
     abs -2_112.23  # 2_112.23
+
+=back
 
 =over
 
@@ -2605,19 +2613,17 @@ If operand is negative (less than 0), return positive number with equal magnitud
 
 Raise C<e> (base of natural logarithm) to the power of operand, return result
 
-=back
-
     exp  0  # 1
     exp  1  # 2.718_281_828_459_05
     exp -1  # 0.367_879_441_171_442
+
+=back
 
 =over
 
 =item * B<Exponent AKA Power>
 
 Raise first operand to the power of second operand, return result
-
-=back
 
     0 ** 0  # 1
     0 ** 1  # 0
@@ -2658,6 +2664,8 @@ Raise first operand to the power of second operand, return result
     (-2) ** -2  #  0.25
     (-2) ** -3  # -0.125
 
+=back
+
 =over
 
 =item * B<Negative with Parentheses>
@@ -2668,8 +2676,6 @@ Negative operands become positive, and positive operands become negative;
 
 Parentheses must be used, due to ambiguity of hyphen C<-> character as negative operator, subtraction operator, or negative number literal
 
-=back
-
     -( 0)         #  0
     -( 1)         # -1
     -(-1)         #  1
@@ -2678,13 +2684,13 @@ Parentheses must be used, due to ambiguity of hyphen C<-> character as negative 
     -( 2_112.23)  # -2_112.23
     -(-2_112.23)  #  2_112.23
 
+=back
+
 =over
 
 =item * B<Multiply>
 
 Multiply first operand by second operand, return product
-
-=back
 
      0 *  0  #  0
      0 *  1  #  0
@@ -2704,6 +2710,8 @@ Multiply first operand by second operand, return product
     0.5 *  2    #  1.0
     0.5 * -2    # -1.0
 
+=back
+
 =over
 
 =item * B<Divide>
@@ -2711,8 +2719,6 @@ Multiply first operand by second operand, return product
 Divide first operand by second operand, return quotient;
 
 Error if attempt to divide by 0
-
-=back
 
      0 /  0  #  ERROR
      0 /  1  #  0
@@ -2732,6 +2738,8 @@ Error if attempt to divide by 0
     0.5 /  2    #  0.25
     0.5 / -2    # -0.25
 
+=back
+
 =over
 
 =item * B<Modulo AKA Modulus>
@@ -2739,8 +2747,6 @@ Error if attempt to divide by 0
 Divide integer part of first operand by integer part of second operand, return remainder;
 
 Error if attempt to modulus by second operand with absolute value less than 1
-
-=back
 
      0 %  0  # ERROR
      0 %  1  # 0
@@ -2760,13 +2766,13 @@ Error if attempt to modulus by second operand with absolute value less than 1
     0.5 %  2    # 0
     0.5 % -2    # 0
 
+=back
+
 =over
 
 =item * B<Add>
 
 Add first operand to second operand, return sum
-
-=back
 
      0 +  0  #  0
      0 +  1  #  1
@@ -2786,13 +2792,13 @@ Add first operand to second operand, return sum
     0.5 +  2    #  2.5
     0.5 + -2    # -1.5
 
+=back
+
 =over
 
 =item * B<Subtract>
 
 Subtract second operand from first operand, return difference
-
-=back
 
      0 -  0  #  0
      0 -  1  # -1
@@ -2812,6 +2818,8 @@ Subtract second operand from first operand, return difference
     0.5 -  2    # -1.5
     0.5 - -2    #  2.5
 
+=back
+
 =over
 
 =item * B<Natural Logarithm>
@@ -2824,12 +2832,12 @@ To instead calculate logarithm using a base other than C<e>, utilize ratio C<(lo
 
 Error if attempt to take logarithm of operand less than or equal to 0
 
-=back
-
     log  0                    # ERROR
     log  1                    # 0
     log -1                    # ERROR
     log 2.718_281_828_459_05  # 1
+
+=back
 
 =over
 
@@ -2839,12 +2847,12 @@ Take square root of operand, return result;
 
 Error if attempt to take square root of operand less than 0
 
-=back
-
     sqrt  0  # 0
     sqrt  1  # 1
     sqrt -1  # ERROR
     sqrt  2  # 1.414_213_562_373_1
+
+=back
 
 =head3 Section 2.1.12: Trigonometry Operators
 
@@ -3001,7 +3009,7 @@ Left
 
 =for docbook </entry><entry align="left">
 
-Not Yet
+Coming Soon
 
 =for text }], 1);
 
@@ -3067,7 +3075,7 @@ Non
 
 =for docbook </entry><entry align="left">
 
-Not Yet
+Coming Soon
 
 =for text }], 1);
 
@@ -3137,7 +3145,7 @@ Non
 
 =for docbook </entry><entry align="left">
 
-Not Yet
+Coming Soon
 
 =for text }], 1);
 
@@ -3187,8 +3195,6 @@ L<http://pubs.opengroup.org/onlinepubs/9699919799/functions/atan2.html>
 
 To instead calculate tangent of 1 operand (not arctangent of 2 operands), utilize trigonometry identity ratio C<(sin $operand)/(cos $operand)>
 
-=back
-
     atan2  0,  0  #  0, MAY BE DIFFERENT ON YOUR SYSTEM
     atan2  0,  1  #  0
     atan2  0, -1  #  3.141_592_653_589_79, DEFINED AS PI
@@ -3199,18 +3205,20 @@ To instead calculate tangent of 1 operand (not arctangent of 2 operands), utiliz
     atan2 -1,  1  # -0.785_398_163_397_448
     atan2 -1, -1  # -2.356_194_490_192_34
 
+=back
+
 =over
 
 =item * B<Sine>
 
 Take sine of operand, return result
 
-=back
-
     sin  0                     #  0
     sin  1                     #  0.841_470_984_807_897
     sin -1                     # -0.841_470_984_807_897
     sin  3.141_592_653_589_79  #  0, MAY BE SLIGHTLY OFF DUE TO FLOATING POINT ERROR
+
+=back
 
 =over
 
@@ -3218,12 +3226,12 @@ Take sine of operand, return result
 
 Take cosine of operand, return result
 
-=back
-
     cos  0                     #  1
     cos  1                     #  0.540_302_305_868_14
     cos -1                     #  0.540_302_305_868_14
     cos  3.141_592_653_589_79  # -1
+
+=back
 
 =head3 Section 2.1.13: Comparison (Relational & Equality) Operators
 
@@ -4553,20 +4561,6 @@ $z = q{<<< END TEXT EVAL >>>};
 
 =for docbook </tbody></tgroup></table>
 
-B<WARNING FOR SOME NUMERIC LOGIC OPERATORS:>
-
-B<Due to different possible return values for false result, unexpected or undefined behavior may occur if return value is utilized anywhere except true-or-false conditions in loops and conditional statements>
-
-In PERLOPS mode, value for true is integer C<1> or integer other than C<0>, and value for false is integer C<0> or empty string C<''>, depending on operator;
-
-In CPPOPS mode, value for true is integer C<1>, and value for false is integer C<0>
-
-    if    (0 and 1) { print 'I think not'   . "\n"; }  # good use of logical and operator
-    while (0 or  1) { print 'infinite loop' . "\n"; }  # good use of logical or  operator
-
-    (1 and 2) + 3                  # UNEXPECTED BEHAVIOR: bad use of logical and operator
-    (1 or  2) * 3                  # UNEXPECTED BEHAVIOR: bad use of logical or  operator
-
 =over
 
 =item * B<Logical Negation>
@@ -4574,8 +4568,6 @@ In CPPOPS mode, value for true is integer C<1>, and value for false is integer C
 Take logical negation of operand, return result;
 
 Logical negation operators C<!> and C<not> return the same results, and differ only by precedence
-
-=back
 
     !    0  # true
     !    1  # false
@@ -4585,6 +4577,8 @@ Logical negation operators C<!> and C<not> return the same results, and differ o
     not  1  # false
     not -1  # false
 
+=back
+
 =over
 
 =item * B<Logical And>
@@ -4592,8 +4586,6 @@ Logical negation operators C<!> and C<not> return the same results, and differ o
 Take logical conjunction of operands, return result;
 
 Logical and operators C<&&> and C<and> return the same results, and differ only by precedence
-
-=back
 
      0 &&   0  # false
      0 &&   1  # false
@@ -4615,6 +4607,8 @@ Logical and operators C<&&> and C<and> return the same results, and differ only 
     -1 and  1  # true
     -1 and -1  # true
 
+=back
+
 =over
 
 =item * B<Logical Or>
@@ -4622,9 +4616,6 @@ Logical and operators C<&&> and C<and> return the same results, and differ only 
 Take logical disjunction of operands, return result;
 
 Logical or operators C<||> and C<or> return the same results, and differ only by precedence
-
-
-=back
 
      0 ||  0  # false
      0 ||  1  # true
@@ -4646,13 +4637,13 @@ Logical or operators C<||> and C<or> return the same results, and differ only by
     -1 or  1  # true
     -1 or -1  # true
 
+=back
+
 =over
 
 =item * B<Logical Xor>
 
 Take logical exclusive disjunction of operands, return result
-
-=back
 
      0 xor  0  # false
      0 xor  1  # true
@@ -4663,6 +4654,8 @@ Take logical exclusive disjunction of operands, return result
     -1 xor  0  # true
     -1 xor  1  # false
     -1 xor -1  # false
+
+=back
 
 =head3 Section 2.1.15: Bitwise Operators
 
@@ -4691,7 +4684,7 @@ l l l l r l l .
 
 =begin docbook
 
-<table id="learning_rperl-section_2.1.16-table_1" label="" frame="all" colsep="1" rowsep="1">
+<table id="learning_rperl-section_2.1.15-table_1" label="" frame="all" colsep="1" rowsep="1">
 <title>Bitwise Operators</title>
 <tgroup cols="6">
 
@@ -7144,32 +7137,2691 @@ Return number of characters in string EXPR
 
 =head3 Section 2.2.7: Case Operators
 
-    %token OP01_NAMED_SCOLON         = /(fc;)/
-    %token OP10_NAMED_UNARY_SCOLON   = /(lc;|lcfirst;|uc;|ucfirst;)/
+=begin text
+
+my $z = q{<<< BEGIN TEXT EVAL >>>};
+
+use Text::ASCIITable;
+
+my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
+
+$table->setCols(splice [split /\s*\n\s*/, q{
+
+=end text
+
+=begin man
+
+.TS
+allbox tab(@) ;
+c c c c c c c
+l l l l r l l .
+
+=end man
+
+=for html <table class="rperl operators">
+
+=begin docbook
+
+<table id="learning_rperl-section_2.2.7-table_1" label="" frame="all" colsep="1" rowsep="1">
+<title>Case Operators</title>
+<tgroup cols="6">
+
+=end docbook
+
+=for man T{
+
+=for html <tr><th>
+
+=for docbook <thead>
+
+=for docbook <row><entry align="center">
+
+B<Name>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Symbol>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Arity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Fixity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Precedence>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Associativity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Supported>
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Lowercase
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+lc
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+10
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Lowercase First Character
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+lcfirst
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+10
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Uppercase
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+uc
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+10
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Uppercase First Character
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+ucfirst
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+10
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=begin text
+
+return $table->draw( ['.=','=.','=','='],   # .=============.
+
+                     ['|','|','|'],         # | info | info |
+ 
+                     ['|-','-|','=','='],   # |-===========-|
+
+                     ['|','|','|'],         # | info | info |
+
+                     ["'=","='",'=','='],   # '============='
+
+                     ['|-','-|','-','+']    # rowseperator
+
+                    );
+
+$z = q{<<< END TEXT EVAL >>>};
+
+=end text
+
+=for man .TE
+
+=for html </table>
+
+=for docbook </tbody></tgroup></table>
+
+=over
+
+=item * B<Lowercase>
+
+    lc EXPR
+
+EXPR is a string value;
+
+Return new string comprised of all characters in string EXPR converted to lowercase format
+
+    lc ''     #  '' (empty string)
+    lc 'a'    #  'a'
+    lc 'A'    #  'a'
+    lc 'aA'   #  'aa'
+    lc 'AA'   #  'aa'
+    lc 'AAA'  #  'aaa'
+
+    lc 'howdyHowdyHOWDY'  # 'howdyhowdyhowdy'
+
+=back
+
+=over
+
+=item * B<Lowercase First Character>
+
+    lcfirst EXPR
+
+EXPR is a string value;
+
+Return new string comprised of first character in string EXPR converted to lowercase format and remaining characters in EXPR unmodified
+
+    lcfirst ''     #  '' (empty string)
+    lcfirst 'a'    #  'a'
+    lcfirst 'A'    #  'a'
+    lcfirst 'aA'   #  'aa'
+    lcfirst 'AA'   #  'aA'
+    lcfirst 'AAA'  #  'aAA'
+
+    lcfirst 'HOWDYHOWDYHOWDY'  # 'hOWDYHOWDYHOWDY'
+
+=back
+
+=over
+
+=item * B<Uppercase>
+
+    uc EXPR
+
+EXPR is a string value;
+
+Return new string comprised of all characters in string EXPR converted to uppercase format
+
+    uc ''     #  '' (empty string)
+    uc 'A'    #  'A'
+    uc 'a'    #  'A'
+    uc 'Aa'   #  'AA'
+    uc 'aa'   #  'AA'
+    uc 'aaa'  #  'AAA'
+
+    uc 'HOWDYhOWDYhowdy'  # 'HOWDYHOWDYHOWDY'
+
+=back
+
+=over
+
+=item * B<Uppercase First Character>
+
+    ucfirst EXPR
+
+EXPR is a string value;
+
+Return new string comprised of first character in string EXPR converted to uppercase format and remaining characters in EXPR unmodified
+
+    ucfirst ''     #  '' (empty string)
+    ucfirst 'A'    #  'A'
+    ucfirst 'a'    #  'A'
+    ucfirst 'Aa'   #  'Aa'
+    ucfirst 'aa'   #  'Aa'
+    ucfirst 'aaa'  #  'Aaa'
+
+    ucfirst 'howdyhowdyhowdy'  # 'Howdyhowdyhowdy'
+
+=back
 
 =head3 Section 2.2.8: Comparison (Relational & Equality) Operators
 
-    %token OP01_NAMED_SCOLON         = /(cmp;)/
-    %token OP11_COMPARE_LT_GT        = /(le|ge|lt|gt)\s/   # precedence 11 infix: string comparison less or equal 'le', greater or equal 'ge', less than 'lt', greater than 'gt'
-    %token OP12_COMPARE_EQ_NE        = /(eq|ne)\s/             # precedence 12 infix: comparison string equal 'eq', string not equal 'ne'
+=begin text
+
+my $z = q{<<< BEGIN TEXT EVAL >>>};
+
+use Text::ASCIITable;
+
+my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
+
+$table->setCols(splice [split /\s*\n\s*/, q{
+
+=end text
+
+=begin man
+
+.TS
+allbox tab(@) ;
+c c c c c c c
+l l l l r l l .
+
+=end man
+
+=for html <table class="rperl operators">
+
+=begin docbook
+
+<table id="learning_rperl-section_2.2.8-table_1" label="" frame="all" colsep="1" rowsep="1">
+<title>Comparison (Relational & Equality) Operators</title>
+<tgroup cols="6">
+
+=end docbook
+
+=for man T{
+
+=for html <tr><th>
+
+=for docbook <thead>
+
+=for docbook <row><entry align="center">
+
+B<Name>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Symbol>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Arity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Fixity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Precedence>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Associativity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Supported>
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Less-Than
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+lt
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Binary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Infix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+11
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Greater-Than
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+gt
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Binary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Infix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+11
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Less-Than-Or-Equal
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+le
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Binary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Infix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+11
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Greater-Than-Or-Equal
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+ge
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Binary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Infix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+11
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Equal
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+eq
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Binary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Infix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+12
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Not Equal
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+ne
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Binary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Infix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+12
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Three-Way Comparison
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+cmp
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Binary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Infix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+12
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=begin text
+
+return $table->draw( ['.=','=.','=','='],   # .=============.
+
+                     ['|','|','|'],         # | info | info |
+ 
+                     ['|-','-|','=','='],   # |-===========-|
+
+                     ['|','|','|'],         # | info | info |
+
+                     ["'=","='",'=','='],   # '============='
+
+                     ['|-','-|','-','+']    # rowseperator
+
+                    );
+
+$z = q{<<< END TEXT EVAL >>>};
+
+=end text
+
+=for man .TE
+
+=for html </table>
+
+=for docbook </tbody></tgroup></table>
+
+=over
+
+=item * B<Less-Than>
+
+    EXPR1 lt EXPR2
+
+EXPR1 and EXPR2 are string values;
+
+Compare to determine relation of operands, return true if EXPR1 is stringwise less than EXPR2, otherwise return false
+
+       '' lt    ''  #   (false)
+       '' lt   'a'  # 1 (true)
+       '' lt   'b'  # 1 (true)
+       '' lt   'A'  # 1 (true)
+       '' lt   'B'  # 1 (true)
+      'a' lt    ''  #   (false)
+      'a' lt   'a'  #   (false)
+      'a' lt   'b'  # 1 (true)
+      'a' lt   'A'  #   (false)
+      'a' lt   'B'  #   (false)
+     'aa' lt    ''  #   (false)
+     'aa' lt   'a'  #   (false)
+     'aa' lt   'b'  # 1 (true)
+     'aa' lt   'A'  #   (false)
+     'aa' lt   'B'  #   (false)
+      'b' lt    ''  #   (false)
+      'b' lt   'a'  #   (false)
+      'b' lt   'b'  #   (false)
+      'b' lt   'A'  #   (false)
+      'b' lt   'B'  #   (false)
+     'bb' lt    ''  #   (false)
+     'bb' lt   'a'  #   (false)
+     'bb' lt   'b'  #   (false)
+     'bb' lt   'A'  #   (false)
+     'bb' lt   'B'  #   (false)
+      'A' lt    ''  #   (false)
+      'A' lt   'a'  # 1 (true)
+      'A' lt   'b'  # 1 (true)
+      'A' lt   'A'  #   (false)
+      'A' lt   'B'  # 1 (true)
+     'AA' lt    ''  #   (false)
+     'AA' lt   'a'  # 1 (true)
+     'AA' lt   'b'  # 1 (true)
+     'AA' lt   'A'  #   (false)
+     'AA' lt   'B'  # 1 (true)
+      'B' lt    ''  #   (false)
+      'B' lt   'a'  # 1 (true)
+      'B' lt   'b'  # 1 (true)
+      'B' lt   'A'  #   (false)
+      'B' lt   'B'  #   (false)
+     'BB' lt    ''  #   (false)
+     'BB' lt   'a'  # 1 (true)
+     'BB' lt   'b'  # 1 (true)
+     'BB' lt   'A'  #   (false)
+     'BB' lt   'B'  #   (false)
+
+=back
+
+=over
+
+=item * B<Greater-Than>
+
+    EXPR1 gt EXPR2
+
+EXPR1 and EXPR2 are string values;
+
+Compare to determine relation of operands, return true if EXPR1 is stringwise greater than EXPR2, otherwise return false
+
+       '' gt    ''  #   (false)
+       '' gt   'a'  #   (false)
+       '' gt   'b'  #   (false)
+       '' gt   'A'  #   (false)
+       '' gt   'B'  #   (false)
+      'a' gt    ''  # 1 (true)
+      'a' gt   'a'  #   (false)
+      'a' gt   'b'  #   (false)
+      'a' gt   'A'  # 1 (true)
+      'a' gt   'B'  # 1 (true)
+     'aa' gt    ''  # 1 (true)
+     'aa' gt   'a'  # 1 (true)
+     'aa' gt   'b'  #   (false)
+     'aa' gt   'A'  # 1 (true)
+     'aa' gt   'B'  # 1 (true)
+      'b' gt    ''  # 1 (true)
+      'b' gt   'a'  # 1 (true)
+      'b' gt   'b'  #   (false)
+      'b' gt   'A'  # 1 (true)
+      'b' gt   'B'  # 1 (true)
+     'bb' gt    ''  # 1 (true)
+     'bb' gt   'a'  # 1 (true)
+     'bb' gt   'b'  # 1 (true)
+     'bb' gt   'A'  # 1 (true)
+     'bb' gt   'B'  # 1 (true)
+      'A' gt    ''  # 1 (true)
+      'A' gt   'a'  #   (false)
+      'A' gt   'b'  #   (false)
+      'A' gt   'A'  #   (false)
+      'A' gt   'B'  #   (false)
+     'AA' gt    ''  # 1 (true)
+     'AA' gt   'a'  #   (false)
+     'AA' gt   'b'  #   (false)
+     'AA' gt   'A'  # 1 (true)
+     'AA' gt   'B'  #   (false)
+      'B' gt    ''  # 1 (true)
+      'B' gt   'a'  #   (false)
+      'B' gt   'b'  #   (false)
+      'B' gt   'A'  # 1 (true)
+      'B' gt   'B'  #   (false)
+     'BB' gt    ''  # 1 (true)
+     'BB' gt   'a'  #   (false)
+     'BB' gt   'b'  #   (false)
+     'BB' gt   'A'  # 1 (true)
+     'BB' gt   'B'  # 1 (true)
+
+=back
+
+=over
+
+=item * B<Less-Than-Or-Equal>
+
+    EXPR1 le EXPR2
+
+EXPR1 and EXPR2 are string values;
+
+Compare to determine relation of operands, return true if EXPR1 is stringwise less than or equal to EXPR2, otherwise return false
+
+       '' le    ''  # 1 (true)
+       '' le   'a'  # 1 (true)
+       '' le   'b'  # 1 (true)
+       '' le   'A'  # 1 (true)
+       '' le   'B'  # 1 (true)
+      'a' le    ''  #   (false)
+      'a' le   'a'  # 1 (true)
+      'a' le   'b'  # 1 (true)
+      'a' le   'A'  #   (false)
+      'a' le   'B'  #   (false)
+     'aa' le    ''  #   (false)
+     'aa' le   'a'  #   (false)
+     'aa' le   'b'  # 1 (true)
+     'aa' le   'A'  #   (false)
+     'aa' le   'B'  #   (false)
+      'b' le    ''  #   (false)
+      'b' le   'a'  #   (false)
+      'b' le   'b'  # 1 (true)
+      'b' le   'A'  #   (false)
+      'b' le   'B'  #   (false)
+     'bb' le    ''  #   (false)
+     'bb' le   'a'  #   (false)
+     'bb' le   'b'  #   (false)
+     'bb' le   'A'  #   (false)
+     'bb' le   'B'  #   (false)
+      'A' le    ''  #   (false)
+      'A' le   'a'  # 1 (true)
+      'A' le   'b'  # 1 (true)
+      'A' le   'A'  # 1 (true)
+      'A' le   'B'  # 1 (true)
+     'AA' le    ''  #   (false)
+     'AA' le   'a'  # 1 (true)
+     'AA' le   'b'  # 1 (true)
+     'AA' le   'A'  #   (false)
+     'AA' le   'B'  # 1 (true)
+      'B' le    ''  #   (false)
+      'B' le   'a'  # 1 (true)
+      'B' le   'b'  # 1 (true)
+      'B' le   'A'  #   (false)
+      'B' le   'B'  # 1 (true)
+     'BB' le    ''  #   (false)
+     'BB' le   'a'  # 1 (true)
+     'BB' le   'b'  # 1 (true)
+     'BB' le   'A'  #   (false)
+     'BB' le   'B'  #   (false)
+
+=back
+
+=over
+
+=item * B<Greater-Than-Or-Equal>
+
+    EXPR1 ge EXPR2
+
+EXPR1 and EXPR2 are string values;
+
+Compare to determine relation of operands, return true if EXPR1 is stringwise greater than or equal to EXPR2, otherwise return false
+
+       '' ge    ''  # 1 (true)
+       '' ge   'a'  #   (false)
+       '' ge   'b'  #   (false)
+       '' ge   'A'  #   (false)
+       '' ge   'B'  #   (false)
+      'a' ge    ''  # 1 (true)
+      'a' ge   'a'  # 1 (true)
+      'a' ge   'b'  #   (false)
+      'a' ge   'A'  # 1 (true)
+      'a' ge   'B'  # 1 (true)
+     'aa' ge    ''  # 1 (true)
+     'aa' ge   'a'  # 1 (true)
+     'aa' ge   'b'  #   (false)
+     'aa' ge   'A'  # 1 (true)
+     'aa' ge   'B'  # 1 (true)
+      'b' ge    ''  # 1 (true)
+      'b' ge   'a'  # 1 (true)
+      'b' ge   'b'  # 1 (true)
+      'b' ge   'A'  # 1 (true)
+      'b' ge   'B'  # 1 (true)
+     'bb' ge    ''  # 1 (true)
+     'bb' ge   'a'  # 1 (true)
+     'bb' ge   'b'  # 1 (true)
+     'bb' ge   'A'  # 1 (true)
+     'bb' ge   'B'  # 1 (true)
+      'A' ge    ''  # 1 (true)
+      'A' ge   'a'  #   (false)
+      'A' ge   'b'  #   (false)
+      'A' ge   'A'  # 1 (true)
+      'A' ge   'B'  #   (false)
+     'AA' ge    ''  # 1 (true)
+     'AA' ge   'a'  #   (false)
+     'AA' ge   'b'  #   (false)
+     'AA' ge   'A'  # 1 (true)
+     'AA' ge   'B'  #   (false)
+      'B' ge    ''  # 1 (true)
+      'B' ge   'a'  #   (false)
+      'B' ge   'b'  #   (false)
+      'B' ge   'A'  # 1 (true)
+      'B' ge   'B'  # 1 (true)
+     'BB' ge    ''  # 1 (true)
+     'BB' ge   'a'  #   (false)
+     'BB' ge   'b'  #   (false)
+     'BB' ge   'A'  # 1 (true)
+     'BB' ge   'B'  # 1 (true)
+
+=back
+
+=over
+
+=item * B<Equal>
+
+    EXPR1 eq EXPR2
+
+EXPR1 and EXPR2 are string values;
+
+Compare to determine equality of operands, return true if EXPR1 is stringwise equal to EXPR2, otherwise return false
+
+       '' eq    ''  # 1 (true)
+       '' eq   'a'  #   (false)
+       '' eq   'b'  #   (false)
+       '' eq   'A'  #   (false)
+       '' eq   'B'  #   (false)
+      'a' eq    ''  #   (false)
+      'a' eq   'a'  # 1 (true)
+      'a' eq   'b'  #   (false)
+      'a' eq   'A'  #   (false)
+      'a' eq   'B'  #   (false)
+     'aa' eq    ''  #   (false)
+     'aa' eq   'a'  #   (false)
+     'aa' eq   'b'  #   (false)
+     'aa' eq   'A'  #   (false)
+     'aa' eq   'B'  #   (false)
+      'b' eq    ''  #   (false)
+      'b' eq   'a'  #   (false)
+      'b' eq   'b'  # 1 (true)
+      'b' eq   'A'  #   (false)
+      'b' eq   'B'  #   (false)
+     'bb' eq    ''  #   (false)
+     'bb' eq   'a'  #   (false)
+     'bb' eq   'b'  #   (false)
+     'bb' eq   'A'  #   (false)
+     'bb' eq   'B'  #   (false)
+      'A' eq    ''  #   (false)
+      'A' eq   'a'  #   (false)
+      'A' eq   'b'  #   (false)
+      'A' eq   'A'  # 1 (true)
+      'A' eq   'B'  #   (false)
+     'AA' eq    ''  #   (false)
+     'AA' eq   'a'  #   (false)
+     'AA' eq   'b'  #   (false)
+     'AA' eq   'A'  #   (false)
+     'AA' eq   'B'  #   (false)
+      'B' eq    ''  #   (false)
+      'B' eq   'a'  #   (false)
+      'B' eq   'b'  #   (false)
+      'B' eq   'A'  #   (false)
+      'B' eq   'B'  # 1 (true)
+     'BB' eq    ''  #   (false)
+     'BB' eq   'a'  #   (false)
+     'BB' eq   'b'  #   (false)
+     'BB' eq   'A'  #   (false)
+     'BB' eq   'B'  #   (false)
+
+=back
+
+=over
+
+=item * B<Not-Equal>
+
+    EXPR1 ne EXPR2
+
+EXPR1 and EXPR2 are string values;
+
+Compare to determine equality of operands, return true if EXPR1 is stringwise not equal to EXPR2, otherwise return false
+
+       '' ne    ''  #   (false)
+       '' ne   'a'  # 1 (true)
+       '' ne   'b'  # 1 (true)
+       '' ne   'A'  # 1 (true)
+       '' ne   'B'  # 1 (true)
+      'a' ne    ''  # 1 (true)
+      'a' ne   'a'  #   (false)
+      'a' ne   'b'  # 1 (true)
+      'a' ne   'A'  # 1 (true)
+      'a' ne   'B'  # 1 (true)
+     'aa' ne    ''  # 1 (true)
+     'aa' ne   'a'  # 1 (true)
+     'aa' ne   'b'  # 1 (true)
+     'aa' ne   'A'  # 1 (true)
+     'aa' ne   'B'  # 1 (true)
+      'b' ne    ''  # 1 (true)
+      'b' ne   'a'  # 1 (true)
+      'b' ne   'b'  #   (false)
+      'b' ne   'A'  # 1 (true)
+      'b' ne   'B'  # 1 (true)
+     'bb' ne    ''  # 1 (true)
+     'bb' ne   'a'  # 1 (true)
+     'bb' ne   'b'  # 1 (true)
+     'bb' ne   'A'  # 1 (true)
+     'bb' ne   'B'  # 1 (true)
+      'A' ne    ''  # 1 (true)
+      'A' ne   'a'  # 1 (true)
+      'A' ne   'b'  # 1 (true)
+      'A' ne   'A'  #   (false)
+      'A' ne   'B'  # 1 (true)
+     'AA' ne    ''  # 1 (true)
+     'AA' ne   'a'  # 1 (true)
+     'AA' ne   'b'  # 1 (true)
+     'AA' ne   'A'  # 1 (true)
+     'AA' ne   'B'  # 1 (true)
+      'B' ne    ''  # 1 (true)
+      'B' ne   'a'  # 1 (true)
+      'B' ne   'b'  # 1 (true)
+      'B' ne   'A'  # 1 (true)
+      'B' ne   'B'  #   (false)
+     'BB' ne    ''  # 1 (true)
+     'BB' ne   'a'  # 1 (true)
+     'BB' ne   'b'  # 1 (true)
+     'BB' ne   'A'  # 1 (true)
+     'BB' ne   'B'  # 1 (true)
+
+=back
+
+=over
+
+=item * B<Three-Way Comparison>
+
+    EXPR1 cmp EXPR2
+
+EXPR1 and EXPR2 are string values;
+
+Perform three-way comparison of operands;
+
+Return -1 if EXPR1 is stringwise less than EXPR2, return 0 if operands are equal, or return 1 if EXPR1 is greater than EXPR2
+
+       '' cmp    ''  #  0 (equal)
+       '' cmp   'a'  # -1 (less    than)
+       '' cmp   'b'  # -1 (less    than)
+       '' cmp   'A'  # -1 (less    than)
+       '' cmp   'B'  # -1 (less    than)
+      'a' cmp    ''  #  1 (greater than)
+      'a' cmp   'a'  #  0 (equal)
+      'a' cmp   'b'  # -1 (less    than)
+      'a' cmp   'A'  #  1 (greater than)
+      'a' cmp   'B'  #  1 (greater than)
+     'aa' cmp    ''  #  1 (greater than)
+     'aa' cmp   'a'  #  1 (greater than)
+     'aa' cmp   'b'  # -1 (less    than)
+     'aa' cmp   'A'  #  1 (greater than)
+     'aa' cmp   'B'  #  1 (greater than)
+      'b' cmp    ''  #  1 (greater than)
+      'b' cmp   'a'  #  1 (greater than)
+      'b' cmp   'b'  #  0 (equal)
+      'b' cmp   'A'  #  1 (greater than)
+      'b' cmp   'B'  #  1 (greater than)
+     'bb' cmp    ''  #  1 (greater than)
+     'bb' cmp   'a'  #  1 (greater than)
+     'bb' cmp   'b'  #  1 (greater than)
+     'bb' cmp   'A'  #  1 (greater than)
+     'bb' cmp   'B'  #  1 (greater than)
+      'A' cmp    ''  #  1 (greater than)
+      'A' cmp   'a'  # -1 (less    than)
+      'A' cmp   'b'  # -1 (less    than)
+      'A' cmp   'A'  #  0 (equal)
+      'A' cmp   'B'  # -1 (less    than)
+     'AA' cmp    ''  #  1 (greater than)
+     'AA' cmp   'a'  # -1 (less    than)
+     'AA' cmp   'b'  # -1 (less    than)
+     'AA' cmp   'A'  #  1 (greater than)
+     'AA' cmp   'B'  # -1 (less    than)
+      'B' cmp    ''  #  1 (greater than)
+      'B' cmp   'a'  # -1 (less    than)
+      'B' cmp   'b'  # -1 (less    than)
+      'B' cmp   'A'  #  1 (greater than)
+      'B' cmp   'B'  #  0 (equal)
+     'BB' cmp    ''  #  1 (greater than)
+     'BB' cmp   'a'  # -1 (less    than)
+     'BB' cmp   'b'  # -1 (less    than)
+     'BB' cmp   'A'  #  1 (greater than)
+     'BB' cmp   'B'  #  1 (greater than)
+
+=back
 
 =head3 Section 2.2.9: Search Operators
 
-    %token OP01_NAMED_SCOLON         = /(index;|rindex;)/
+=begin text
+
+my $z = q{<<< BEGIN TEXT EVAL >>>};
+
+use Text::ASCIITable;
+
+my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
+
+$table->setCols(splice [split /\s*\n\s*/, q{
+
+=end text
+
+=begin man
+
+.TS
+allbox tab(@) ;
+c c c c c c c
+l l l l r l l .
+
+=end man
+
+=for html <table class="rperl operators">
+
+=begin docbook
+
+<table id="learning_rperl-section_2.2.9-table_1" label="" frame="all" colsep="1" rowsep="1">
+<title>Search Operators</title>
+<tgroup cols="6">
+
+=end docbook
+
+=for man T{
+
+=for html <tr><th>
+
+=for docbook <thead>
+
+=for docbook <row><entry align="center">
+
+B<Name>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Symbol>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Arity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Fixity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Precedence>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Associativity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Supported>
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Index
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+index
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Variadic
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+01
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Left
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Reverse Index
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+rindex
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Variadic
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+01
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Left
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=begin text
+
+return $table->draw( ['.=','=.','=','='],   # .=============.
+
+                     ['|','|','|'],         # | info | info |
+ 
+                     ['|-','-|','=','='],   # |-===========-|
+
+                     ['|','|','|'],         # | info | info |
+
+                     ["'=","='",'=','='],   # '============='
+
+                     ['|-','-|','-','+']    # rowseperator
+
+                    );
+
+$z = q{<<< END TEXT EVAL >>>};
+
+=end text
+
+=for man .TE
+
+=for html </table>
+
+=for docbook </tbody></tgroup></table>
+
+=over
+
+=item * B<FOO_NAME>
+
+    foo EXPR
+
+Do FOO, return BAR
+
+    foo('a')    #  'a'
+    foo('aa')   #  'aa'
+    foo('aaa')  #  'aaa'
+
+=back
+
+=over
+
+=item * B<FOO_NAME>
+
+    foo EXPR
+
+Do FOO, return BAR
+
+    foo('a')    #  'a'
+    foo('aa')   #  'aa'
+    foo('aaa')  #  'aaa'
+
+=back
 
 =head3 Section 2.2.10: Formatting Operators
 
-    %token OP01_NAMED_SCOLON         = /(sprintf;)/
-    %token OP10_NAMED_UNARY_SCOLON   = /(quotemeta;)/
+=begin text
+
+my $z = q{<<< BEGIN TEXT EVAL >>>};
+
+use Text::ASCIITable;
+
+my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
+
+$table->setCols(splice [split /\s*\n\s*/, q{
+
+=end text
+
+=begin man
+
+.TS
+allbox tab(@) ;
+c c c c c c c
+l l l l r l l .
+
+=end man
+
+=for html <table class="rperl operators">
+
+=begin docbook
+
+<table id="learning_rperl-section_2.2.10-table_1" label="" frame="all" colsep="1" rowsep="1">
+<title>Formatting Operators</title>
+<tgroup cols="6">
+
+=end docbook
+
+=for man T{
+
+=for html <tr><th>
+
+=for docbook <thead>
+
+=for docbook <row><entry align="center">
+
+B<Name>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Symbol>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Arity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Fixity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Precedence>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Associativity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Supported>
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+String Formatted Print
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+sprintf
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Variadic
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+01
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Left
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Quote Meta
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+quotemeta
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+10
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=begin text
+
+return $table->draw( ['.=','=.','=','='],   # .=============.
+
+                     ['|','|','|'],         # | info | info |
+ 
+                     ['|-','-|','=','='],   # |-===========-|
+
+                     ['|','|','|'],         # | info | info |
+
+                     ["'=","='",'=','='],   # '============='
+
+                     ['|-','-|','-','+']    # rowseperator
+
+                    );
+
+$z = q{<<< END TEXT EVAL >>>};
+
+=end text
+
+=for man .TE
+
+=for html </table>
+
+=for docbook </tbody></tgroup></table>
+
+=over
+
+=item * B<FOO_NAME>
+
+    foo EXPR
+
+Do FOO, return BAR
+
+    foo('a')    #  'a'
+    foo('aa')   #  'aa'
+    foo('aaa')  #  'aaa'
+
+=back
+
+=over
+
+=item * B<FOO_NAME>
+
+    foo EXPR
+
+Do FOO, return BAR
+
+    foo('a')    #  'a'
+    foo('aa')   #  'aa'
+    foo('aaa')  #  'aaa'
+
+=back
 
 =head3 Section 2.2.11: Base Conversion Operators
 
-    %token OP01_NAMED_SCOLON         = /(chr;)/
-    %token OP10_NAMED_UNARY_SCOLON   = /(hex;|oct;|ord;)/
+=begin text
+
+my $z = q{<<< BEGIN TEXT EVAL >>>};
+
+use Text::ASCIITable;
+
+my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
+
+$table->setCols(splice [split /\s*\n\s*/, q{
+
+=end text
+
+=begin man
+
+.TS
+allbox tab(@) ;
+c c c c c c c
+l l l l r l l .
+
+=end man
+
+=for html <table class="rperl operators">
+
+=begin docbook
+
+<table id="learning_rperl-section_2.2.11-table_1" label="" frame="all" colsep="1" rowsep="1">
+<title>Base Conversion Operators</title>
+<tgroup cols="6">
+
+=end docbook
+
+=for man T{
+
+=for html <tr><th>
+
+=for docbook <thead>
+
+=for docbook <row><entry align="center">
+
+B<Name>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Symbol>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Arity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Fixity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Precedence>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Associativity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Supported>
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Chr
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+chr
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+01
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Left
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Hex
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+hex
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+10
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Oct
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+oct
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+10
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Ord
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+ord
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+10
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=begin text
+
+return $table->draw( ['.=','=.','=','='],   # .=============.
+
+                     ['|','|','|'],         # | info | info |
+ 
+                     ['|-','-|','=','='],   # |-===========-|
+
+                     ['|','|','|'],         # | info | info |
+
+                     ["'=","='",'=','='],   # '============='
+
+                     ['|-','-|','-','+']    # rowseperator
+
+                    );
+
+$z = q{<<< END TEXT EVAL >>>};
+
+=end text
+
+=for man .TE
+
+=for html </table>
+
+=for docbook </tbody></tgroup></table>
+
+=over
+
+=item * B<FOO_NAME>
+
+    foo EXPR
+
+Do FOO, return BAR
+
+    foo('a')    #  'a'
+    foo('aa')   #  'aa'
+    foo('aaa')  #  'aaa'
+
+=back
+
+=over
+
+=item * B<FOO_NAME>
+
+    foo EXPR
+
+Do FOO, return BAR
+
+    foo('a')    #  'a'
+    foo('aa')   #  'aa'
+    foo('aaa')  #  'aaa'
+
+=back
+
+=over
+
+=item * B<FOO_NAME>
+
+    foo EXPR
+
+Do FOO, return BAR
+
+    foo('a')    #  'a'
+    foo('aa')   #  'aa'
+    foo('aaa')  #  'aaa'
+
+=back
+
+=over
+
+=item * B<FOO_NAME>
+
+    foo EXPR
+
+Do FOO, return BAR
+
+    foo('a')    #  'a'
+    foo('aa')   #  'aa'
+    foo('aaa')  #  'aaa'
+
+=back
 
 =head3 Section 2.2.12: Miscellaneous Operators
 
-    %token OP01_NAMED_SCOLON         = /(crypt;)/
+=begin text
+
+my $z = q{<<< BEGIN TEXT EVAL >>>};
+
+use Text::ASCIITable;
+
+my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
+
+$table->setCols(splice [split /\s*\n\s*/, q{
+
+=end text
+
+=begin man
+
+.TS
+allbox tab(@) ;
+c c c c c c c
+l l l l r l l .
+
+=end man
+
+=for html <table class="rperl operators">
+
+=begin docbook
+
+<table id="learning_rperl-section_2.2.12-table_1" label="" frame="all" colsep="1" rowsep="1">
+<title>Miscellaneous Operators</title>
+<tgroup cols="6">
+
+=end docbook
+
+=for man T{
+
+=for html <tr><th>
+
+=for docbook <thead>
+
+=for docbook <row><entry align="center">
+
+B<Name>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Symbol>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Arity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Fixity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Precedence>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Associativity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Supported>
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Crypt
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+crypt
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Binary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+01
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Left
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=begin text
+
+return $table->draw( ['.=','=.','=','='],   # .=============.
+
+                     ['|','|','|'],         # | info | info |
+ 
+                     ['|-','-|','=','='],   # |-===========-|
+
+                     ['|','|','|'],         # | info | info |
+
+                     ["'=","='",'=','='],   # '============='
+
+                     ['|-','-|','-','+']    # rowseperator
+
+                    );
+
+$z = q{<<< END TEXT EVAL >>>};
+
+=end text
+
+=for man .TE
+
+=for html </table>
+
+=for docbook </tbody></tgroup></table>
+
+=over
+
+=item * B<FOO_NAME>
+
+    foo EXPR
+
+Do FOO, return BAR
+
+    foo('a')    #  'a'
+    foo('aa')   #  'aa'
+    foo('aaa')  #  'aaa'
+
+=back
 
 =begin text
 
@@ -7292,9 +9944,9 @@ To convert from one data type to another, we use the RPerl type conversion subro
 
 =head3 Section 2.4.x Scope, Type, Name, Value
 
-START HERE
-START HERE
-START HERE
+START HERE: continue editing & adding content
+START HERE: continue editing & adding content
+START HERE: continue editing & adding content
 
 The I<"scope"> of a variable is either local using the C<my> keyword, or global using the C<our> keyword.  Local variables are only usable within their own enclosing code block such as a conditional (section xxx), loop (xxx), or subroutine (chapter 4).
 
@@ -12353,11 +15005,11 @@ L<Package_DoubleQuotes_10_Good.pm|https://github.com/wbraswell/rperl/blob/master
 
     1;    # end of package
 
-L<Package_SingleQ_07_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/LiteralString/Package_SingleQ_07_Good.pm>
+L<Package_QQuotes_07_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/LiteralString/Package_QQuotes_07_Good.pm>
 
     # [[[ HEADER ]]]
     use RPerl;
-    package RPerl::Test::LiteralString::Package_SingleQ_07_Good;
+    package RPerl::Test::LiteralString::Package_QQuotes_07_Good;
     use strict;
     use warnings;
     our $VERSION = 0.001_000;
