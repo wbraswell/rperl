@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.067_000;
+our $VERSION = 0.068_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -7073,7 +7073,7 @@ X<break_code_blocks>
 
     EXPR x COUNT
 
-EXPR is a string value, COUNT is unsigned_integer (non-negative whole number) value;
+EXPR is string value, COUNT is unsigned_integer (non-negative whole number) value;
 
 Return a new string value comprised of string EXPR repeated COUNT times;
 
@@ -7121,7 +7121,7 @@ Consecutive concatenate C<.> operators may be chained for additive (cumulative) 
 
     length EXPR
 
-EXPR is a string value;
+EXPR is string value;
 
 Return number of characters in string EXPR
 
@@ -7530,7 +7530,7 @@ $z = q{<<< END TEXT EVAL >>>};
 
     lc EXPR
 
-EXPR is a string value;
+EXPR is string value;
 
 Return new string comprised of all characters in string EXPR converted to lowercase format
 
@@ -7551,7 +7551,7 @@ Return new string comprised of all characters in string EXPR converted to lowerc
 
     lcfirst EXPR
 
-EXPR is a string value;
+EXPR is string value;
 
 Return new string comprised of first character in string EXPR converted to lowercase format and remaining characters in EXPR unmodified
 
@@ -7572,7 +7572,7 @@ Return new string comprised of first character in string EXPR converted to lower
 
     uc EXPR
 
-EXPR is a string value;
+EXPR is string value;
 
 Return new string comprised of all characters in string EXPR converted to uppercase format
 
@@ -7593,7 +7593,7 @@ Return new string comprised of all characters in string EXPR converted to upperc
 
     ucfirst EXPR
 
-EXPR is a string value;
+EXPR is string value;
 
 Return new string comprised of first character in string EXPR converted to uppercase format and remaining characters in EXPR unmodified
 
@@ -8862,29 +8862,65 @@ $z = q{<<< END TEXT EVAL >>>};
 
 =over
 
-=item * B<FOO_NAME>
+=item * B<Index>
 
-    foo EXPR
+    index STR, SUBSTR
+    index STR, SUBSTR, OFFSET
 
-Do FOO, return BAR
+STR and SUBSTR are string values; OFFSET is unsigned_integer (non-negative whole number) value;
 
-    foo('a')    #  'a'
-    foo('aa')   #  'aa'
-    foo('aaa')  #  'aaa'
+When called with 2 operands, search within first operand STR for second operand SUBSTR, return character count location of first occurrence;
+
+When called with 3 operands, search within first operand STR for second operand SUBSTR, beginning at third operand OFFSET, return character count location of first occurrence;
+
+In 3-operand variant, if third operand OFFSET is negative then it will default to 0, or if OFFSET is beyond the end of STR then it will default to the end of STR;
+
+If SUBSTR is not located within STR, return -1
+
+    my string  $foo = 'abc123!?*abc';
+
+    my integer $bar = index $foo, 'a';      # $bar =  0
+               $bar = index $foo, 'c12';    # $bar =  2
+               $bar = index $foo, '3';      # $bar =  5
+               $bar = index $foo, '*';      # $bar =  8
+               $bar = index $foo, 'd';      # $bar = -1
+
+    my integer $bat = index $foo, 'a',  0;  # $bat =  0
+               $bat = index $foo, 'a',  1;  # $bat =  9
+               $bat = index $foo, 'a', -1;  # $bat =  0
+               $bat = index $foo, 'a', 20;  # $bat = -1
 
 =back
 
 =over
 
-=item * B<FOO_NAME>
+=item * B<Reverse Index>
 
-    foo EXPR
+    rindex STR, SUBSTR
+    rindex STR, SUBSTR, OFFSET
 
-Do FOO, return BAR
+STR and SUBSTR are string values; OFFSET is unsigned_integer (non-negative whole number) value;
 
-    foo('a')    #  'a'
-    foo('aa')   #  'aa'
-    foo('aaa')  #  'aaa'
+When called with 2 operands, search within first operand STR for second operand SUBSTR, return character count location of last occurrence;
+
+When called with 3 operands, search within first operand STR for second operand SUBSTR, beginning at third operand OFFSET, return character count location of last occurrence;
+
+In 3-operand variant, if third operand OFFSET is negative then it will default to 0, or if OFFSET is beyond the end of STR then it will default to the end of STR;
+
+If SUBSTR is not located within STR, return -1
+
+    my string  $foo = 'abc123!?*abc';
+
+    my integer $bar = rindex $foo, 'a';      # $bar =  9
+               $bar = rindex $foo, 'c12';    # $bar =  2
+               $bar = rindex $foo, '3';      # $bar =  5
+               $bar = rindex $foo, '*';      # $bar =  8
+               $bar = rindex $foo, 'd';      # $bar = -1
+
+    my integer $bat = rindex $foo, 'a',  0;  # $bat =  9
+               $bat = rindex $foo, 'a',  1;  # $bat =  9
+               $bat = rindex $foo, 'a', -1;  # $bat =  9
+               $bat = rindex $foo, 'a', 20;  # $bat = -1
 
 =back
 
@@ -9147,29 +9183,60 @@ $z = q{<<< END TEXT EVAL >>>};
 
 =over
 
-=item * B<FOO_NAME>
+=item * B<String Formatted Print>
 
-    foo EXPR
+    sprintf FORMAT, LIST
 
-Do FOO, return BAR
+FORMAT is string value, LIST is one or more mixed-type values separated by commas;
 
-    foo('a')    #  'a'
-    foo('aa')   #  'aa'
-    foo('aaa')  #  'aaa'
+Return string value comprised of element(s) from second operand LIST stringified according to conversion convention(s) in first operand FORMAT
+
+    my integer $foo = 23;
+    my string  $bar = sprintf '%d', $foo;                                  # bar = '23'
+               $bar = sprintf 'single: %d', $foo;                          # bar = 'single: 23'
+               $bar = sprintf 'single: %d; double: %d', $foo, ($foo * 2);  # bar = 'single: 23; double: 46'
+
+Accepted conversion conventions:
+
+=over
+
+=item * C<%%>  Percent Sign
+
+=item * C<%c>  Character With The Given Number
+
+=item * C<%s>  String
+
+=item * C<%d>  Signed Integer, In Decimal
+
+=item * C<%u>  Unsigned Integer, In Decimal
+
+=item * C<%o>  Unsigned Integer, In Octal
+
+=item * C<%x>  Unsigned Integer, In Hexadecimal
+
+=item * C<%e>  Floating-Point Number, In Scientific Notation
+
+=item * C<%f>  Floating-Point Number, In Fixed Decimal Notation
+
+=item * C<%g>  Floating-Point Number, In %e Or %f Notation
+
+=back
 
 =back
 
 =over
 
-=item * B<FOO_NAME>
+=item * B<Quote Meta>
 
-    foo EXPR
+    quotemeta EXPR
 
-Do FOO, return BAR
+EXPR is string value;
 
-    foo('a')    #  'a'
-    foo('aa')   #  'aa'
-    foo('aaa')  #  'aaa'
+Return new string value comprised of operand EXPR with all non-word characters (not letters or number) backslash-escaped
+
+    quotemeta 'abc123'     # 'abc123'
+    quotemeta 'abc123!?*'  # 'abc123\!\?\*'
+    quotemeta '!?*'        # '\!\?\*'
 
 =back
 
@@ -9564,57 +9631,103 @@ $z = q{<<< END TEXT EVAL >>>};
 
 =over
 
-=item * B<FOO_NAME>
+=item * B<Chr>
 
-    foo EXPR
+    chr EXPR
 
-Do FOO, return BAR
+EXPR is unsigned_integer (non-negative whole number) value;
 
-    foo('a')    #  'a'
-    foo('aa')   #  'aa'
-    foo('aaa')  #  'aaa'
+Return character with ASCII order of operand EXPR;
 
-=back
+To reverse, see C<ord> operator
 
-=over
-
-=item * B<FOO_NAME>
-
-    foo EXPR
-
-Do FOO, return BAR
-
-    foo('a')    #  'a'
-    foo('aa')   #  'aa'
-    foo('aaa')  #  'aaa'
+    chr 33  # '!'
+    chr 65  # 'A'
+    chr 97  # 'a'
 
 =back
 
 =over
 
-=item * B<FOO_NAME>
+=item * B<Hex>
 
-    foo EXPR
+    hex EXPR
 
-Do FOO, return BAR
+EXPR is string value;
 
-    foo('a')    #  'a'
-    foo('aa')   #  'aa'
-    foo('aaa')  #  'aaa'
+Return decimal (base 10) integer value of hexadecimal (base 16) string in operand EXPR 
+
+    hex '0x00'  #   0
+    hex '0x33'  #  51
+    hex '0x66'  # 102
+    hex '0x99'  # 153
+    hex '0xAA'  # 170
+    hex '0xCC'  # 204
+    hex '0xFF'  # 255
 
 =back
 
 =over
 
-=item * B<FOO_NAME>
+=item * B<Oct>
 
-    foo EXPR
+    oct EXPR
 
-Do FOO, return BAR
+EXPR is string value;
 
-    foo('a')    #  'a'
-    foo('aa')   #  'aa'
-    foo('aaa')  #  'aaa'
+If operand EXPR starts with '0x', return decimal (base 10) integer value of hexadecimal (base 16) string in EXPR, same as C<hex> operator;
+
+If operand EXPR starts with '0b', return decimal (base 10) integer value of binary (base 2) string in EXPR;
+
+Otherwise, return decimal (base 10) integer value of octal (base 8) string in operand EXPR
+
+    # hexadecimal to decimal
+    oct '0x00'  #   0
+    oct '0x33'  #  51
+    oct '0x66'  # 102
+    oct '0x99'  # 153
+    oct '0xAA'  # 170
+    oct '0xCC'  # 204
+    oct '0xFF'  # 255
+
+X<break_code_blocks>
+
+
+    # binary to decimal
+    oct '0b000'  # 0
+    oct '0b001'  # 1
+    oct '0b010'  # 2
+    oct '0b100'  # 4
+    oct '0b110'  # 6
+    oct '0b111'  # 7
+
+X<break_code_blocks>
+
+
+    # octal to decimal
+    oct '00'  #  0
+    oct '22'  # 18
+    oct '33'  # 27
+    oct '66'  # 54
+    oct '77'  # 63
+
+=back
+
+=over
+
+=item * B<Ord>
+
+    ord EXPR
+
+EXPR is string or character value;
+
+Return integer ASCII order of first character in operand EXPR;
+
+To reverse, see C<chr> operator
+
+    ord '!'  # 33
+    chr 'A'  # 65
+    chr 'a'  # 97
 
 =back
 
@@ -9811,15 +9924,21 @@ $z = q{<<< END TEXT EVAL >>>};
 
 =over
 
-=item * B<FOO_NAME>
+=item * B<Crypt>
 
-    foo EXPR
+    crypt PLAINTEXT, SALT
 
-Do FOO, return BAR
+PLAINTEXT and SALT are string values;
 
-    foo('a')    #  'a'
-    foo('aa')   #  'aa'
-    foo('aaa')  #  'aaa'
+Perform one-way hash to create "encrypted" digest (short string) of first operand PLAINTEXT using second operand SALT as password, return digest;
+
+There is no known way to create a C<decrypt> function to reverse text run through C<crypt>, thus the label "one-way";
+
+This operator is commonly used to secure and check password validity, or compare contents of 2 strings without transmitting the actual string data
+
+    crypt 'hidden dragon',       'crouching tiger'  # crnzcDddLMkLI
+    crypt 'dihydrogen monoxide', 'sodium chloride'  # sol48Jyq9nz1.
+    crypt 'irretrievable data',  'throw away key'   # thVMMPVOs6g1I
 
 =back
 
