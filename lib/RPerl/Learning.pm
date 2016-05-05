@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.068_000;
+our $VERSION = 0.069_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -2595,6 +2595,10 @@ $z = q{<<< END TEXT EVAL >>>};
 
 =item * B<Absolute Value>
 
+    abs VALUE
+
+VALUE is numeric value;
+
 If operand is 0 or positive (greater than 0), return unchanged;
 
 If operand is negative (less than 0), return positive number with equal magnitude (distance from 0)
@@ -2611,6 +2615,10 @@ If operand is negative (less than 0), return positive number with equal magnitud
 
 =item * B<Natural Exponential Function>
 
+    exp VALUE
+
+VALUE is numeric value;
+
 Raise C<e> (base of natural logarithm) to the power of operand, return result
 
     exp  0  # 1
@@ -2622,6 +2630,10 @@ Raise C<e> (base of natural logarithm) to the power of operand, return result
 =over
 
 =item * B<Exponent AKA Power>
+
+    VALUE1 ** VALUE2
+
+VALUE1 and VALUE2 are numeric values;
 
 Raise first operand to the power of second operand, return result
 
@@ -2670,6 +2682,10 @@ Raise first operand to the power of second operand, return result
 
 =item * B<Negative with Parentheses>
 
+    -( VALUE )
+
+VALUE is numeric value;
+
 Change sign of operand, return result;
 
 Negative operands become positive, and positive operands become negative;
@@ -2689,6 +2705,10 @@ Parentheses must be used, due to ambiguity of hyphen C<-> character as negative 
 =over
 
 =item * B<Multiply>
+
+    VALUE1 * VALUE2
+
+VALUE1 and VALUE2 are numeric values;
 
 Multiply first operand by second operand, return product
 
@@ -2715,6 +2735,10 @@ Multiply first operand by second operand, return product
 =over
 
 =item * B<Divide>
+
+    VALUE1 / VALUE2
+
+VALUE1 and VALUE2 are numeric values;
 
 Divide first operand by second operand, return quotient;
 
@@ -2744,6 +2768,10 @@ Error if attempt to divide by 0
 
 =item * B<Modulo AKA Modulus>
 
+    VALUE1 % VALUE2
+
+VALUE1 and VALUE2 are numeric values;
+
 Divide integer part of first operand by integer part of second operand, return remainder;
 
 Error if attempt to modulus by second operand with absolute value less than 1
@@ -2772,6 +2800,10 @@ Error if attempt to modulus by second operand with absolute value less than 1
 
 =item * B<Add>
 
+    VALUE1 + VALUE2
+
+VALUE1 and VALUE2 are numeric values;
+
 Add first operand to second operand, return sum
 
      0 +  0  #  0
@@ -2797,6 +2829,10 @@ Add first operand to second operand, return sum
 =over
 
 =item * B<Subtract>
+
+    VALUE1 - VALUE2
+
+VALUE1 and VALUE2 are numeric values;
 
 Subtract second operand from first operand, return difference
 
@@ -2824,6 +2860,10 @@ Subtract second operand from first operand, return difference
 
 =item * B<Natural Logarithm>
 
+    log VALUE
+
+VALUE is numeric value;
+
 Take logarithm base C<e> of operand, return result;
 
 Constant C<e> is known as Euler's Number and is defined as the limit of C<(1 + 1/$n)**$n> as C<$n> grows to infinity;
@@ -2842,6 +2882,10 @@ Error if attempt to take logarithm of operand less than or equal to 0
 =over
 
 =item * B<Square Root>
+
+    sqrt VALUE
+
+VALUE is numeric value;
 
 Take square root of operand, return result;
 
@@ -3185,6 +3229,10 @@ $z = q{<<< END TEXT EVAL >>>};
 
 =item * B<Arctangent-Divide>
 
+    atan2 VALUE1, VALUE2
+
+VALUE1 and VALUE2 are numeric values;
+
 Divide first operand by second operand, take arctangent of quotient, return result;
 
 Attempts to conform to Open Group / IEEE standards:
@@ -3211,6 +3259,10 @@ To instead calculate tangent of 1 operand (not arctangent of 2 operands), utiliz
 
 =item * B<Sine>
 
+    sin VALUE
+
+VALUE is numeric value;
+
 Take sine of operand, return result
 
     sin  0                     #  0
@@ -3223,6 +3275,10 @@ Take sine of operand, return result
 =over
 
 =item * B<Cosine>
+
+    cos VALUE
+
+VALUE is numeric value;
 
 Take cosine of operand, return result
 
@@ -3828,6 +3884,10 @@ $z = q{<<< END TEXT EVAL >>>};
 
 =item * B<Less-Than>
 
+    VALUE1 < VALUE2
+
+VALUE1 and VALUE2 are numeric values;
+
 Compare to determine relation of operands, return true if first operand is less than second operand, otherwise return false
 
      0 <  0  # false
@@ -3845,6 +3905,10 @@ Compare to determine relation of operands, return true if first operand is less 
 =over
 
 =item * B<Greater-Than>
+
+    VALUE1 > VALUE2
+
+VALUE1 and VALUE2 are numeric values;
 
 Compare to determine relation of operands, return true if first operand is greater than second operand, otherwise return false
 
@@ -3864,6 +3928,10 @@ Compare to determine relation of operands, return true if first operand is great
 
 =item * B<Less-Than-Or-Equal>
 
+    VALUE1 <= VALUE2
+
+VALUE1 and VALUE2 are numeric values;
+
 Compare to determine relation of operands, return true if first operand is less than or equal to second operand, otherwise return false
 
      0 <=  0  # true
@@ -3881,6 +3949,10 @@ Compare to determine relation of operands, return true if first operand is less 
 =over
 
 =item * B<Greater-Than-Or-Equal>
+
+    VALUE1 foo VALUE2
+
+VALUE1 >= VALUE2 are numeric values;
 
 Compare to determine relation of operands, return true if first operand is greater than or equal to second operand, otherwise return false
 
@@ -3900,6 +3972,10 @@ Compare to determine relation of operands, return true if first operand is great
 
 =item * B<Equal>
 
+    VALUE1 == VALUE2
+
+VALUE1 and VALUE2 are numeric values;
+
 Compare to determine equality of operands, return true if first operand is equal to second operand, otherwise return false
 
      0 ==  0  # true
@@ -3918,6 +3994,10 @@ Compare to determine equality of operands, return true if first operand is equal
 
 =item * B<Not-Equal>
 
+    VALUE1 != VALUE2
+
+VALUE1 and VALUE2 are numeric values;
+
 Compare to determine equality of operands, return true if first operand is not equal to second operand, otherwise return false
 
      0 !=  0  # false
@@ -3935,6 +4015,10 @@ Compare to determine equality of operands, return true if first operand is not e
 =over
 
 =item * B<Three-Way Comparison AKA Spaceship>
+
+    VALUE1 <=> VALUE2
+
+VALUE1 and VALUE2 are numeric values;
 
 Perform three-way comparison of operands; 
 
@@ -4565,6 +4649,11 @@ $z = q{<<< END TEXT EVAL >>>};
 
 =item * B<Logical Negation>
 
+    ! VALUE
+    not VALUE
+
+VALUE is numeric value;
+
 Take logical negation of operand, return result;
 
 Logical negation operators C<!> and C<not> return the same results, and differ only by precedence
@@ -4582,6 +4671,11 @@ Logical negation operators C<!> and C<not> return the same results, and differ o
 =over
 
 =item * B<Logical And>
+
+    VALUE1 && VALUE2
+    VALUE1 and VALUE2
+
+VALUE1 and VALUE2 are numeric values;
 
 Take logical conjunction of operands, return result;
 
@@ -4613,6 +4707,11 @@ Logical and operators C<&&> and C<and> return the same results, and differ only 
 
 =item * B<Logical Or>
 
+    VALUE1 || VALUE2
+    VALUE1 or VALUE2
+
+VALUE1 and VALUE2 are numeric values;
+
 Take logical disjunction of operands, return result;
 
 Logical or operators C<||> and C<or> return the same results, and differ only by precedence
@@ -4642,6 +4741,10 @@ Logical or operators C<||> and C<or> return the same results, and differ only by
 =over
 
 =item * B<Logical Xor>
+
+    VALUE1 xor VALUE2
+
+VALUE1 and VALUE2 are numeric values;
 
 Take logical exclusive disjunction of operands, return result
 
@@ -5259,6 +5362,10 @@ X<break_code_blocks>
 
 =item * B<Bitwise Negation with Parentheses>
 
+    ~( VALUE )
+
+VALUE is numeric value;
+
 Negate each bit of operand, return result;
 
 May be used to take one's complement of operand;
@@ -5290,6 +5397,10 @@ X<break_code_blocks>
 =over
 
 =item * B<Bitwise Shift Left>
+
+    VALUE1 << VALUE2
+
+VALUE1 and VALUE2 are numeric values;
 
 Shift left the value of first operand by number of bits specified by second operand, return result;
 
@@ -5350,6 +5461,10 @@ X<break_code_blocks>
 =over
 
 =item * B<Bitwise Shift Right>
+
+    VALUE1 >> VALUE2
+
+VALUE1 and VALUE2 are numeric values;
 
 Shift right the value of first operand by number of bits specified by second operand, return result;
 
@@ -5412,6 +5527,10 @@ X<break_code_blocks>
 
 =item * B<Bitwise And>
 
+    VALUE1 & VALUE2
+
+VALUE1 and VALUE2 are numeric values;
+
 Take conjunction of each bit of first operand with respective bit of second operand, return result
 
     -1 & -8  # 18_446_744_073_709_551_608
@@ -5456,6 +5575,10 @@ X<break_code_blocks>
 
 =item * B<Bitwise Or>
 
+    VALUE1 | VALUE2
+
+VALUE1 and VALUE2 are numeric values;
+
 Take disjunction of each bit of first operand with respective bit of second operand, return result
 
     -1 | -8  # 18_446_744_073_709_551_615
@@ -5499,6 +5622,10 @@ X<break_code_blocks>
 =over
 
 =item * B<Bitwise Xor>
+
+    VALUE1 ^ VALUE2
+
+VALUE1 and VALUE2 are numeric values;
 
 Take exclusive disjunction of each bit of first operand with respective bit of second operand, return result
 
@@ -6069,6 +6196,10 @@ $z = q{<<< END TEXT EVAL >>>};
 
 =item * B<Floor with Parentheses>
 
+    POSIX::floor( VALUE )
+
+VALUE is numeric value;
+
 If operand contains fractional part, then return next lowest integer, otherwise return operand unchanged;
 
 Not a Perl built-in operator, it is a Perl subroutine (which happens to provide an interface to the underlying C subroutine of the same name); thus, C<POSIX::floor()> must be called with both the preceeding C<POSIX::> namespace and parentheses around the operand
@@ -6091,6 +6222,10 @@ Not a Perl built-in operator, it is a Perl subroutine (which happens to provide 
 
 =item * B<Ceiling with Parentheses>
 
+    POSIX::ceil( VALUE )
+
+VALUE is numeric value;
+
 If operand contains fractional part, then return next highest integer, otherwise return operand unchanged;
 
 Not a Perl built-in operator, it is a Perl subroutine (which happens to provide an interface to the underlying C subroutine of the same name); thus, C<POSIX::ceil()> must be called with both the preceeding C<POSIX::> namespace and parentheses around the operand
@@ -6112,6 +6247,10 @@ Not a Perl built-in operator, it is a Perl subroutine (which happens to provide 
 =over
 
 =item * B<Separate Integer & Fraction Parts with Parentheses>
+
+    POSIX::modf( VALUE )
+
+VALUE is numeric value;
 
 Break apart operand into integer part and fraction part, return both, fraction part first;
 
@@ -6143,6 +6282,10 @@ X<break_code_blocks>
 =over
 
 =item * B<Integer Part>
+
+    int VALUE
+
+VALUE is numeric value;
 
 Discard fractional component of operand, return result
 
@@ -6177,6 +6320,11 @@ X<break_code_blocks>
 
 =item * B<Random Number>
 
+    rand
+    rand VALUE
+
+VALUE is numeric value;
+
 Returns pseudo-random floating-point number between 0 and operand, defaults to operand of value 1 if called with none;
 
 Generated pseudo-random number is based on seed value passed to C<srand> operator, and C<srand> is called automatically if not called explicitly
@@ -6194,6 +6342,11 @@ B<The C<rand> operator is not considered to be cryptographically secure pseudo-r
 =over
 
 =item * B<Random Seed>
+
+    srand
+    srand VALUE
+
+VALUE is numeric value;
 
 Seed C<rand> operator with operand, defaults to automatically-selected operand value if called with none;
 
