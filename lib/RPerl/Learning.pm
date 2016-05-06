@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.069_000;
+our $VERSION = 0.070_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -2599,9 +2599,9 @@ $z = q{<<< END TEXT EVAL >>>};
 
 VALUE is numeric value;
 
-If operand is 0 or positive (greater than 0), return unchanged;
+If operand VALUE is 0 or positive (greater than 0), return unchanged;
 
-If operand is negative (less than 0), return positive number with equal magnitude (distance from 0)
+If VALUE is negative (less than 0), return positive number with equal magnitude (distance from 0)
 
     abs  0         # 0
     abs  1         # 1
@@ -2619,7 +2619,7 @@ If operand is negative (less than 0), return positive number with equal magnitud
 
 VALUE is numeric value;
 
-Raise C<e> (base of natural logarithm) to the power of operand, return result
+Raise C<e> (base of natural logarithm) to the power of operand VALUE, return result
 
     exp  0  # 1
     exp  1  # 2.718_281_828_459_05
@@ -2635,7 +2635,7 @@ Raise C<e> (base of natural logarithm) to the power of operand, return result
 
 VALUE1 and VALUE2 are numeric values;
 
-Raise first operand to the power of second operand, return result
+Raise first operand VALUE1 to the power of second operand VALUE2, return result
 
     0 ** 0  # 1
     0 ** 1  # 0
@@ -2686,9 +2686,9 @@ Raise first operand to the power of second operand, return result
 
 VALUE is numeric value;
 
-Change sign of operand, return result;
+Change sign of operand VALUE, return result;
 
-Negative operands become positive, and positive operands become negative;
+Negative VALUE becomes positive, and positive VALUE becomes negative;
 
 Parentheses must be used, due to ambiguity of hyphen C<-> character as negative operator, subtraction operator, or negative number literal
 
@@ -2710,7 +2710,7 @@ Parentheses must be used, due to ambiguity of hyphen C<-> character as negative 
 
 VALUE1 and VALUE2 are numeric values;
 
-Multiply first operand by second operand, return product
+Multiply first operand VALUE1 by second operand VALUE2, return product
 
      0 *  0  #  0
      0 *  1  #  0
@@ -2740,7 +2740,7 @@ Multiply first operand by second operand, return product
 
 VALUE1 and VALUE2 are numeric values;
 
-Divide first operand by second operand, return quotient;
+Divide first operand VALUE1 by second operand VALUE2, return quotient;
 
 Error if attempt to divide by 0
 
@@ -2772,9 +2772,9 @@ Error if attempt to divide by 0
 
 VALUE1 and VALUE2 are numeric values;
 
-Divide integer part of first operand by integer part of second operand, return remainder;
+Divide integer part of first operand VALUE1 by integer part of second operand VALUE2, return remainder;
 
-Error if attempt to modulus by second operand with absolute value less than 1
+Error if attempt to modulus by VALUE2 with absolute value less than 1
 
      0 %  0  # ERROR
      0 %  1  # 0
@@ -2804,7 +2804,7 @@ Error if attempt to modulus by second operand with absolute value less than 1
 
 VALUE1 and VALUE2 are numeric values;
 
-Add first operand to second operand, return sum
+Add first operand VALUE1 to second operand VALUE2, return sum
 
      0 +  0  #  0
      0 +  1  #  1
@@ -2834,7 +2834,7 @@ Add first operand to second operand, return sum
 
 VALUE1 and VALUE2 are numeric values;
 
-Subtract second operand from first operand, return difference
+Subtract second operand VALUE2 from first operand VALUE1, return difference
 
      0 -  0  #  0
      0 -  1  # -1
@@ -2864,13 +2864,13 @@ Subtract second operand from first operand, return difference
 
 VALUE is numeric value;
 
-Take logarithm base C<e> of operand, return result;
+Take logarithm base C<e> of operand VALUE, return result;
 
 Constant C<e> is known as Euler's Number and is defined as the limit of C<(1 + 1/$n)**$n> as C<$n> grows to infinity;
 
 To instead calculate logarithm using a base other than C<e>, utilize ratio C<(log $operand)/(log $base)>;
 
-Error if attempt to take logarithm of operand less than or equal to 0
+Error if attempt to take logarithm of VALUE less than or equal to 0
 
     log  0                    # ERROR
     log  1                    # 0
@@ -2887,9 +2887,9 @@ Error if attempt to take logarithm of operand less than or equal to 0
 
 VALUE is numeric value;
 
-Take square root of operand, return result;
+Take square root of operand VALUE, return result;
 
-Error if attempt to take square root of operand less than 0
+Error if attempt to take square root of VALUE less than 0
 
     sqrt  0  # 0
     sqrt  1  # 1
@@ -3233,7 +3233,7 @@ $z = q{<<< END TEXT EVAL >>>};
 
 VALUE1 and VALUE2 are numeric values;
 
-Divide first operand by second operand, take arctangent of quotient, return result;
+Divide first operand VALUE1 by second operand VALUE2, take arctangent of quotient, return result;
 
 Attempts to conform to Open Group / IEEE standards:
 
@@ -3263,7 +3263,7 @@ To instead calculate tangent of 1 operand (not arctangent of 2 operands), utiliz
 
 VALUE is numeric value;
 
-Take sine of operand, return result
+Take sine of operand VALUE, return result
 
     sin  0                     #  0
     sin  1                     #  0.841_470_984_807_897
@@ -3280,7 +3280,7 @@ Take sine of operand, return result
 
 VALUE is numeric value;
 
-Take cosine of operand, return result
+Take cosine of operand VALUE, return result
 
     cos  0                     #  1
     cos  1                     #  0.540_302_305_868_14
@@ -3888,7 +3888,7 @@ $z = q{<<< END TEXT EVAL >>>};
 
 VALUE1 and VALUE2 are numeric values;
 
-Compare to determine relation of operands, return true if first operand is less than second operand, otherwise return false
+Compare to determine relation of operands, return true if first operand VALUE1 is less than second operand VALUE2, otherwise return false
 
      0 <  0  # false
      0 <  1  # true
@@ -3910,7 +3910,7 @@ Compare to determine relation of operands, return true if first operand is less 
 
 VALUE1 and VALUE2 are numeric values;
 
-Compare to determine relation of operands, return true if first operand is greater than second operand, otherwise return false
+Compare to determine relation of operands, return true if first operand VALUE1 is greater than second operand VALUE2, otherwise return false
 
      0 >  0  # false
      0 >  1  # false
@@ -3932,7 +3932,7 @@ Compare to determine relation of operands, return true if first operand is great
 
 VALUE1 and VALUE2 are numeric values;
 
-Compare to determine relation of operands, return true if first operand is less than or equal to second operand, otherwise return false
+Compare to determine relation of operands, return true if first operand VALUE1 is less than or equal to second operand VALUE2, otherwise return false
 
      0 <=  0  # true
      0 <=  1  # true
@@ -3950,11 +3950,11 @@ Compare to determine relation of operands, return true if first operand is less 
 
 =item * B<Greater-Than-Or-Equal>
 
-    VALUE1 foo VALUE2
+    VALUE1 >= VALUE2
 
-VALUE1 >= VALUE2 are numeric values;
+VALUE1 and VALUE2 are numeric values;
 
-Compare to determine relation of operands, return true if first operand is greater than or equal to second operand, otherwise return false
+Compare to determine relation of operands, return true if first operand VALUE1 is greater than or equal to second operand VALUE2, otherwise return false
 
      0 >=  0  # true
      0 >=  1  # false
@@ -3976,7 +3976,7 @@ Compare to determine relation of operands, return true if first operand is great
 
 VALUE1 and VALUE2 are numeric values;
 
-Compare to determine equality of operands, return true if first operand is equal to second operand, otherwise return false
+Compare to determine equality of operands, return true if first operand VALUE1 is equal to second operand VALUE2, otherwise return false
 
      0 ==  0  # true
      0 ==  1  # false
@@ -3998,7 +3998,7 @@ Compare to determine equality of operands, return true if first operand is equal
 
 VALUE1 and VALUE2 are numeric values;
 
-Compare to determine equality of operands, return true if first operand is not equal to second operand, otherwise return false
+Compare to determine equality of operands, return true if first operand VALUE1 is not equal to second operand VALUE2, otherwise return false
 
      0 !=  0  # false
      0 !=  1  # true
@@ -4022,7 +4022,7 @@ VALUE1 and VALUE2 are numeric values;
 
 Perform three-way comparison of operands; 
 
-Return -1 if first operand is less than second operand, return 0 if operands are equal, or return 1 if first operand is greater than second operand;
+Return -1 if first operand VALUE1 is less than second operand VALUE2, return 0 if operands are equal, or return 1 if VALUE1 is greater than VALUE2;
 
 Randal L. Schwartz coined the operator's nickname based on visual similarity to Darth Vader's TIE Advanced x1 (TIE fighter) personal spacecraft
 
@@ -4654,7 +4654,7 @@ $z = q{<<< END TEXT EVAL >>>};
 
 VALUE is numeric value;
 
-Take logical negation of operand, return result;
+Take logical negation of operand VALUE, return result;
 
 Logical negation operators C<!> and C<not> return the same results, and differ only by precedence
 
@@ -4677,7 +4677,7 @@ Logical negation operators C<!> and C<not> return the same results, and differ o
 
 VALUE1 and VALUE2 are numeric values;
 
-Take logical conjunction of operands, return result;
+Take logical conjunction of operands VALUE1 and VALUE2, return result;
 
 Logical and operators C<&&> and C<and> return the same results, and differ only by precedence
 
@@ -4712,7 +4712,7 @@ Logical and operators C<&&> and C<and> return the same results, and differ only 
 
 VALUE1 and VALUE2 are numeric values;
 
-Take logical disjunction of operands, return result;
+Take logical disjunction of operands VALUE1 and VALUE2, return result;
 
 Logical or operators C<||> and C<or> return the same results, and differ only by precedence
 
@@ -4746,7 +4746,7 @@ Logical or operators C<||> and C<or> return the same results, and differ only by
 
 VALUE1 and VALUE2 are numeric values;
 
-Take logical exclusive disjunction of operands, return result
+Take logical exclusive disjunction of operands VALUE1 and VALUE2, return result
 
      0 xor  0  # false
      0 xor  1  # true
@@ -5366,9 +5366,9 @@ X<break_code_blocks>
 
 VALUE is numeric value;
 
-Negate each bit of operand, return result;
+Negate each bit of operand VALUE, return result;
 
-May be used to take one's complement of operand;
+May be used to take one's complement of VALUE;
 
 Parentheses must be used, due to ambiguity of tilde C<~> character as used for bitwise negation operator, smartmatch operator C<~~>, or regular expression C<=~>
 
@@ -5402,9 +5402,9 @@ X<break_code_blocks>
 
 VALUE1 and VALUE2 are numeric values;
 
-Shift left the value of first operand by number of bits specified by second operand, return result;
+Shift left the value of first operand VALUE1 by number of bits specified by second operand VALUE2, return result;
 
-May be used to multiply first operand by 2 raised to the power of second operand
+May be used to multiply VALUE1 by 2 raised to the power of VALUE2
 
     1 << 0  #  1
     1 << 1  #  2
@@ -5466,9 +5466,9 @@ X<break_code_blocks>
 
 VALUE1 and VALUE2 are numeric values;
 
-Shift right the value of first operand by number of bits specified by second operand, return result;
+Shift right the value of first operand VALUE1 by number of bits specified by second operand VALUE2, return result;
 
-May be used to divide first operand by 2 raised to the power of second operand
+May be used to divide VALUE1 by 2 raised to the power of VALUE2
 
      8 >>  0  #  8
      8 >>  1  #  4
@@ -5531,7 +5531,7 @@ X<break_code_blocks>
 
 VALUE1 and VALUE2 are numeric values;
 
-Take conjunction of each bit of first operand with respective bit of second operand, return result
+Take conjunction of each bit of first operand VALUE1 with respective bit of second operand VALUE2, return result
 
     -1 & -8  # 18_446_744_073_709_551_608
     -1 & -1  # 18_446_744_073_709_551_615
@@ -5579,7 +5579,7 @@ X<break_code_blocks>
 
 VALUE1 and VALUE2 are numeric values;
 
-Take disjunction of each bit of first operand with respective bit of second operand, return result
+Take disjunction of each bit of first operand VALUE1 with respective bit of second operand VALUE2, return result
 
     -1 | -8  # 18_446_744_073_709_551_615
     -1 | -1  # 18_446_744_073_709_551_615
@@ -5627,7 +5627,7 @@ X<break_code_blocks>
 
 VALUE1 and VALUE2 are numeric values;
 
-Take exclusive disjunction of each bit of first operand with respective bit of second operand, return result
+Take exclusive disjunction of each bit of first operand VALUE1 with respective bit of second operand VALUE2, return result
 
     -1 ^ -8  #                          7
     -1 ^ -1  #                          0
@@ -6200,7 +6200,7 @@ $z = q{<<< END TEXT EVAL >>>};
 
 VALUE is numeric value;
 
-If operand contains fractional part, then return next lowest integer, otherwise return operand unchanged;
+If operand VALUE contains fractional part, then return next lowest integer, otherwise return VALUE unchanged;
 
 Not a Perl built-in operator, it is a Perl subroutine (which happens to provide an interface to the underlying C subroutine of the same name); thus, C<POSIX::floor()> must be called with both the preceeding C<POSIX::> namespace and parentheses around the operand
 
@@ -6226,7 +6226,7 @@ Not a Perl built-in operator, it is a Perl subroutine (which happens to provide 
 
 VALUE is numeric value;
 
-If operand contains fractional part, then return next highest integer, otherwise return operand unchanged;
+If operand VALUE contains fractional part, then return next highest integer, otherwise return VALUE unchanged;
 
 Not a Perl built-in operator, it is a Perl subroutine (which happens to provide an interface to the underlying C subroutine of the same name); thus, C<POSIX::ceil()> must be called with both the preceeding C<POSIX::> namespace and parentheses around the operand
 
@@ -6252,7 +6252,7 @@ Not a Perl built-in operator, it is a Perl subroutine (which happens to provide 
 
 VALUE is numeric value;
 
-Break apart operand into integer part and fraction part, return both, fraction part first;
+Break apart operand VALUE into integer part and fraction part, return both, fraction part first;
 
 Not a Perl built-in operator, it is a Perl subroutine (which happens to provide an interface to the underlying C subroutine of the same name); thus, C<POSIX::modf()> must be called with both the preceeding C<POSIX::> namespace and parentheses around the operand;
 
@@ -6287,7 +6287,7 @@ X<break_code_blocks>
 
 VALUE is numeric value;
 
-Discard fractional component of operand, return result
+Discard fractional component of operand VALUE, return result
 
 B<WARNING, FLOATING-POINT ERROR:>
 
@@ -6325,7 +6325,7 @@ X<break_code_blocks>
 
 VALUE is numeric value;
 
-Returns pseudo-random floating-point number between 0 and operand, defaults to operand of value 1 if called with none;
+Returns pseudo-random floating-point number between 0 and operand VALUE, defaults to VALUE of 1 if omitted;
 
 Generated pseudo-random number is based on seed value passed to C<srand> operator, and C<srand> is called automatically if not called explicitly
 
@@ -6348,7 +6348,7 @@ B<The C<rand> operator is not considered to be cryptographically secure pseudo-r
 
 VALUE is numeric value;
 
-Seed C<rand> operator with operand, defaults to automatically-selected operand value if called with none;
+Seed C<rand> operator with operand VALUE, defaults to automatically-selected VALUE if omitted;
 
 Entropy (randomness) is decreased if called more than once per program;
 
