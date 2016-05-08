@@ -7,10 +7,18 @@ The input to the RPerl compiler is low-magic Perl 5 source code.  RPerl converts
 
 The output of the RPerl compiler is fast-running binary code that is exactly equivalent to, and compatible with, the original low-magic Perl 5 source code input.  The net effect is that RPerl compiles slow low-magic Perl 5 code into fast binary code, which can optionally be mixed back into high-magic Perl apps.
 
-Please see the `rperl` command documentation for usage information:
+RPerl is Free & Open Source Software (FOSS), please see the LICENSE file for legal information:
+
+<a href="https://github.com/wbraswell/rperl/blob/master/LICENSE">https://github.com/wbraswell/rperl/blob/master/LICENSE</a>
+
+Please see "Learning RPerl" for usage information:
+
+<a href="http://rperl.org/learning_rperl.html">http://rperl.org/learning_rperl.html</a>
+
+Please see the `rperl` command documentation for calling conventions:
 
 <a href="https://metacpan.org/pod/distribution/RPerl/script/rperl">https://metacpan.org/pod/distribution/RPerl/script/rperl</a>
 
-Please see the RPerl website for non-technical information:
+Please see the RPerl website for general information:
 
 <a href="http://www.rperl.org">http://www.rperl.org</a>

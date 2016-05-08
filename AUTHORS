@@ -1,0 +1,34 @@
+# To give due honor to those who have made RPerl what it is today,
+# here are all past and current people who have contributed to RPerl.
+
+# These people have either submitted source code or documentation.
+# Corrections, additions, and deletions are welcome; send them to the address
+# below, preferably as the output of diff(1), diff -u or diff -c between the
+# original and a corrected version of this file.
+
+# William N. Braswell, Jr. AKA Will the Chill  <william.braswell at NOSPAM.autoparallel.com>
+
+# Remove "NOSPAM." from all e-mail addresses in this file before actual use.
+
+# The use of this database for anything other than RPerl development
+# is strictly forbidden.  (Passive distribution with the RPerl source
+# code kit is, of course, allowed.)
+
+# Developers who have completed the instructions in the CONTRIBUTING file
+# and are currently authorized to submit contributions to RPerl are listed 
+# as "AUTHORIZED".
+# Developers who are in the process of obtaining official authorization
+# are listed as "AUTHORIZATION PENDING".
+# Developers who have had 100% of their RPerl contributions removed for any
+# reason are listed as "SCRUBBED".
+
+-- 
+
+Anonymous Name AKA bulk88 (AUTHORIZATION PENDING)  <bulkdd at NOSPAM.cpan.org>
+David Nielson AKA naptastic (AUTHORIZATION PENDING)  <naptastic at NOSPAM.cpan.org>
+Dmitry Karasik  <dmitry at NOSPAM.karasik.eu.org>
+Matthew S. Trout AKA mst (SCRUBBED by friendly collaboration to avoid legal assignment)  <mst-pause at NOSPAM.shadowcat.co.uk>
+Pablo Rodríguez González (AUTHORIZED)  <pablrod at NOSPAM.cpan.org>
+Paul Bennett (AUTHORIZATION PENDING)  <paul.w.bennett at NOSPAM.gmail.com>
+Reini Urban AKA rurban  <rurban at NOSPAM.x-ray.at>
+Unknown Name AKA MasterDuke17  <unknown at email>

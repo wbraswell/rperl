@@ -4026,6 +4026,8 @@ Return -1 if first operand VALUE1 is less than second operand VALUE2, return 0 i
 
 Randal L. Schwartz coined the operator's nickname based on visual similarity to Darth Vader's TIE Advanced x1 (TIE fighter) personal spacecraft
 
+(Thankfully, C<E<lt>oE<gt>> and C<[=O=]> are not yet valid Perl 5 syntax)
+
      0 <=>  0  #  0
      0 <=>  1  # -1
      0 <=> -1  #  1
