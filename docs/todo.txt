@@ -3,9 +3,9 @@ DONE
     ~ bitwise negation (AKA one's complement), match Perl & C++ output via 'use integer;'
     allow 'use integer;' without trying to find & compile 'integer.pm' subdependencies
     Learning RPerl, examples for 2.1.9 - 2.1.14
+    add calling conventions & data types for all numeric operators, section 2.1
 
 DOING
-    add calling conventions & data types for all numeric operators, section 2.1
     append 'L' to all numeric literals to force long int?
     create macro to replace all conditional truth value checks with extra logic to include RPerl false values of '0', q{0}, and q{}, in both character and string type
     execute via compiled copy not interpreted
