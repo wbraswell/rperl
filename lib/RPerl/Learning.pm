@@ -676,9 +676,9 @@ Several other programming language communities have copied the success and imple
 
 Official RPerl technical support is provided through Auto-Parallel Technologies, Inc.
 
-To request more information, please send an e-mail to the following address:
+To request more information, please send an e-mail to the following address (remove "NOSPAM DOT" before sending):
 
-william DOT braswell AT autoparallel DOT com
+william DOT braswell AT NOSPAM DOT autoparallel DOT com
 
 =head2 Section 1.19: Are There Any Other Kinds Of Support?
 
@@ -15986,7 +15986,7 @@ X<br>
 
 B<William N. Braswell, Jr.>
 
-L<mailto:wbraswell@NOSPAM.cpan.org>
+L<mailto:william.braswell@NOSPAM.autoparallel.com>
 
 =for DEV NOTE: END INLINE CSS DIV
 

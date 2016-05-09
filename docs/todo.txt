@@ -17,6 +17,7 @@ DOING
     cpp output file post-processing for source code text alignment
     split author tests (checking Changes file, etc) into xt/ directory, 
         split deps in Makefile.PL, possibly utilize AUTHOR_TESTING in travis-perl/helpers
+    add copyright notices to all files
 
 OPERATORS, CPPOPS_CPPTYPES MODE
     NAMED: chomp join keys pop push reverse sort split values wait
