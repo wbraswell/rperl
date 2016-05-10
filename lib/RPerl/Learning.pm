@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.070_000;
+our $VERSION = 0.072_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -715,24 +715,23 @@ L<http://komodoide.com/perl>
 =head2 Section 1.22: A Simple RPerl Program
 
     #!/usr/bin/perl
-
-    # Learning RPerl, Chapter 1, Exercise 3
+    
     # Foo Bar Arithmetic Example
-
+    
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
     use warnings;
     our $VERSION = 0.001_000;
-
+    
     # [[[ CRITICS ]]]
     ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
     ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
-
+    
     # [[[ OPERATIONS ]]]
     my integer $foo = 21 + 12;
     my integer $bar = 23 * 42 * 2;
-    my number $baz = $bar / $foo;
+    my number  $baz = to_number($bar) / $foo;
     print 'have $foo = ' . to_string($foo) . "\n";
     print 'have $bar = ' . to_string($bar) . "\n";
     print 'have $baz = ' . to_string($baz) . "\n";
@@ -749,7 +748,9 @@ The I<"header"> section is required and always contains 4 lines for an RPerl I<"
 
 The I<"critics"> section is included as necessary and may contain 1 or more lines beginning with C<## no critic>, which disable the errors caused by the over-restrictive nature of some Perl::Critic policies.  There are currently 6 critics commands enabled for normal RPerl users, the first 2 of which are given in this example.  The C<USER DEFAULT 1> critics command allows the use of numeric values such as C<21> and C<12>, as well as the common C<print> command.  The C<USER DEFAULT 2> critics command allows the printing of C<'have $foo = '>, where a single-quoted C<'> string literal value contains the the C<$> dollar sigil (covered later in Chapter 2).
 
-The I<"operations"> section is required and contains 1 or more lines of general-purpose RPerl source code.  This is the main body of your program.  The 6 lines of source code in our example are used to perform some simple arithmetic and display the results.  The C<my integer $foo = 21 + 12;> line declares a new variable named C<$foo> which will only contain non-floating-point numeric data, and which is initialized to contain the arithmetic result of numeric literal values C<21> plus C<12>.  The C<my integer $bar = 23 * 42 * 2;> line does much the same thing, creating a new numeric variable named C<$bar> and initialized with C<23> times C<42> times C<2>.  The C<print 'have $foo = ' . to_string($foo) . "\n";> and following 2 lines will display on screen (not send to paper printer) the labeled values of C<$foo>, C<$bar>, and C<$baz> respectively.  The C<.> dot operator is string concatenation, used in this example to create one string out of 3 parts so there is only 1 argument parameter passed to the C<print> command.  The C<to_string()> RPerl operator converts a numeric value to an underscore-formatted string value, suitable for use via the C<print> operator.  The "n" in the C<"\n"> double-quoted string literal values stands for "newline", which inserts a carriage return to place the next piece of printed data down on the following line.
+The I<"operations"> section is required and contains 1 or more lines of general-purpose RPerl source code.  This is the main body of your program.  The 6 lines of source code in our example are used to perform some simple arithmetic and display the results.  The C<my integer $foo = 21 + 12;> line declares a new variable named C<$foo> which will only contain non-floating-point numeric data, and which is initialized to contain the arithmetic result of numeric literal values C<21> plus C<12>.  The C<my integer $bar = 23 * 42 * 2;> line does much the same thing, creating a new numeric variable named C<$bar> and initialized with C<23> times C<42> times C<2>.  The C<my number $baz = to_number($bar) / $foo;> line creates a new floating-point numeric variable C<$baz>, and initializes it to the quotient of the C<$bar> and C<$foo> variables.  The C<to_number()> RPerl type conversion subroutine converts a non-floating-point C<integer> value to a floating-point C<number> value.
+
+The C<print 'have $foo = ' . to_string($foo) . "\n";> and following 2 lines will display on screen (not send to paper printer) the labeled values of C<$foo>, C<$bar>, and C<$baz> respectively.  The C<.> dot operator is string concatenation, used in this example to create one string out of 3 parts so there is only 1 argument parameter passed to the C<print> command.  The C<to_string()> RPerl type conversion subroutine converts the numeric values to underscore-formatted string values, suitable for use via the C<print> operator.  The "n" in the C<"\n"> double-quoted string literal values stands for "newline", which inserts a carriage return to place the next piece of printed data down on the following line.
 
 =head2 Section 1.24: How Do I Compile RPerl?
 
@@ -1349,15 +1350,16 @@ Next, run the following 3 RPerl commands, for 2c and 2d below:
 
 =head3 3.  Foo Bar Arithmetic  [ 15 mins ]
 
-Manually type the entire B<I<Foo Bar>> example program into a file named F<exercise_3-foo_bar_arithmetic.pl> inside the F<LearningPerl/Chapter1> sub-directory.  (Even if you have already used copy-and-paste on the B<I<Foo Bar>> example program, you should still use this as an opportunity to build some RPerl muscle memory and type it in by hand.)
+Manually type the entire B<I<Foo Bar Arithmetic>> example program into a file named F<exercise_3-foo_bar_arithmetic.pl> inside the F<LearningPerl/Chapter1> sub-directory.  (Even if you have already used copy-and-paste on the B<I<Foo Bar Arithmetic>> example program, you should still use this as an opportunity to build some RPerl muscle memory and type it in by hand.)
 
-Modify your program by adding an extra numeric variable named C<$baz>, set its value to C<$bar / $foo>, and use C<print> to generate the following output:
+Modify your program by adding a new floating-point numeric variable named C<$zab>, set its value to C<$foo> divided by C<$bar> (don't forget C<to_number()>), change the starting value of C<$bar>, and use C<print> to generate the following output:
 
 =for rperl X<noncode>
 
     have $foo = 33
     have $bar = 966
-    have $baz = 29.2727272727273
+    have $baz = 29.272_727_272_727_3
+    have $zab = 0.034_161_490_683_229_8
 
 =for rperl X</noncode>
 
@@ -11127,33 +11129,36 @@ The second line in the C<CRITICS> section tells RPerl to allow the C<$> (dollar)
 
 The first 3 lines in the C<OPERATIONS> section each declare a new variable; C<$foo> and C<$bar> each hold an C<integer> (non-floating-point) numeric value, while C<$baz> holds a C<number> (floating-point) value.X<br>
 
-The C<$foo> and C<$bar> variables receive their values from hard-coded numeric values being operated upon by the C<+> (plus sign) addition and C<*> (asterisk) multiplication operators, respectively; the C<$baz> variable receives its value from the the C<$foo> and C<$bar> variables being operated upon by the C</> (forward slash) division operator.X<br>
+The C<$foo> and C<$bar> variables receive their values from hard-coded numeric values being operated upon by the C<+> (plus sign) addition and C<*> (asterisk) multiplication operators, respectively; the C<$baz> variable receives its value from the the C<$foo> and C<$bar> variables being operated upon by the C</> (forward slash) division operator.  The C<to_number()> type conversion subroutine is necessary for the C++ compiler to use floating-point arithmetic instead of integer arithmetic on the division C</> operator, without it we would receive the truncated integer answer C<58>.  We will receive the correct floating-point answer if we call C<to_number()> on either C<$bar> (as shown), or C<$foo>, or both.X<br>
 
 The last 3 lines call the C<print> operator to display the names of each variable; followed by each variable's respective value, converted from number to underscore-formatted string via the RPerl type conversion subroutine C<to_string()>; followed by a newline character.X<br>
 
 
     #!/usr/bin/perl
-
+    
     # Learning RPerl, Chapter 1, Exercise 3
     # Foo Bar Arithmetic Example
-
+    
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
     use warnings;
     our $VERSION = 0.001_000;
-
+    
     # [[[ CRITICS ]]]
     ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
     ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
-
+    
     # [[[ OPERATIONS ]]]
     my integer $foo = 21 + 12;
-    my integer $bar = 23 * 42 * 2;
-    my number $baz = $bar / $foo;
+    my integer $bar = 23 * 42;
+    my number  $baz = to_number($bar) / $foo;
+    my number  $zab = to_number($foo) / $bar;
     print 'have $foo = ' . to_string($foo) . "\n";
     print 'have $bar = ' . to_string($bar) . "\n";
     print 'have $baz = ' . to_string($baz) . "\n";
+    print 'have $zab = ' . to_string($zab) . "\n";
+
 
 Example execution and output:
 
@@ -11161,8 +11166,9 @@ Example execution and output:
 
     $ rperl -t LearningRPerl/Chapter1/exercise_3-foo_bar_arithmetic.pl 
     have $foo = 33
-    have $bar = 1_932
-    have $baz = 58.545_454_545_454_5
+    have $bar = 966
+    have $baz = 29.272_727_272_727_3
+    have $zab = 0.034_161_490_683_229_8
 
 =for rperl X</noncode>
 
