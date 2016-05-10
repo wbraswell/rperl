@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::VariableDeclaration;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_100;
+our $VERSION = 0.005_200;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement);
@@ -297,6 +297,21 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                     }
                 }
             }
+
+            # in a *.pl program, you can have variables declared outside of any namespace, which means they are in the default 'main::' namespace AKA '::' using Perl rules
+            if ((not exists $modes->{_symbol_table}->{_namespace}) or (not defined $modes->{_symbol_table}->{_namespace})) {
+                $modes->{_symbol_table}->{_namespace} = 'main::'; 
+            }
+
+            # in a *.pl program, you can have variables declared outside of any subroutine, which means they are in the default 'main()' subroutine using C++ rules
+            if ((not exists $modes->{_symbol_table}->{_subroutine}) or (not defined $modes->{_symbol_table}->{_subroutine})) {
+                $modes->{_symbol_table}->{_subroutine} = 'main'; 
+            }
+
+#            RPerl::diag('in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $symbol = ' . $symbol . "\n");
+#            RPerl::diag('in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_symbol_table} = ' . Dumper($modes->{_symbol_table}) . "\n");
+#            RPerl::diag('in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_symbol_table}->{_namespace} = ' . $modes->{_symbol_table}->{_namespace} . "\n");
+#            RPerl::diag('in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_symbol_table}->{_subroutine} = ' . $modes->{_symbol_table}->{_subroutine} . "\n");
 
             if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
                 die 'ERROR ECOGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '

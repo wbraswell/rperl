@@ -4,7 +4,7 @@ package  # hide from PAUSE indexing
     rperltypesconv;
 use strict;
 use warnings;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_100;
 
 # [[[ DATA TYPES ]]]
 use RPerl::DataType::Boolean;
@@ -19,6 +19,8 @@ use RPerl::DataType::String;
 # [[[ EXPORTS ]]]
 use Exporter 'import';
 
+# DEV NOTE: don't include generic type conversion subroutines such as to_number() & to_string() in @EXPORT below, causes error:
+# Subroutine main::to_number redefined at /usr/share/perl/5.18/Exporter.pm
 our @EXPORT = qw(
     boolean_to_unsigned_integer boolean_to_integer boolean_to_number boolean_to_character boolean_to_string
     unsigned_integer_to_boolean unsigned_integer_to_integer unsigned_integer_to_number unsigned_integer_to_character unsigned_integer_to_string

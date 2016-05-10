@@ -193,6 +193,7 @@ PARALLELAPPSTORE.COM
     content
 
 DATA TYPES & STRUCTURES
+    add remaining generic overloaded type conversion subroutines to_boolean(), to_integer(), to_unsigned_integer(), to_gmp_integer(), to_character() in rperltypes.*
     enable config of integer type via #define & #ifdef like __CPP__TYPES, either int or long int or long long int, default to match Perl via combo of the following
         script/development/unused/integer_precision.cpp
         perl -e 'use Config; print $Config{ivtype} . "\n";'

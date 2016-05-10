@@ -3,7 +3,7 @@ package  # hide from PAUSE indexing
     rperloperations; ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 use strict;
 use warnings;
-our $VERSION = 0.001_220;
+our $VERSION = 0.001_300;
 use Carp;
 
 # NEED UPGRADE: make Grammars first-class citizens for full Perl 6 compatibility, we should have it done by Christmas  XD
@@ -11,7 +11,9 @@ use Carp;
 
 # RPerl system builtin functions, RPerl to C++ name mapping, used in SubroutineCall.pm
 our $BUILTINS = {
+    'blessed' => 'classname',
     'class' => 'classname',
+    'to_string' => 'To_string',  # DEV NOTE, CORRELATION #rp28: renamed from Perl to_string() to C++ To_string() to avoid error redefining std::to_string()
     # NEED REFACTOR: move SSE builtins to rperlsse.pm, create second $BUILTINS to be used in SubroutineCall.pm?
     'sse_number_pair::new_from_singleton_duplicate' => 'sse_number_pair__new_from_singleton_duplicate',
     'sse_number_pair::new_from_pair' => 'sse_number_pair__new_from_pair',

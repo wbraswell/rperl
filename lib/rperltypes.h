@@ -1,5 +1,5 @@
 #ifndef __CPP__INCLUDED__rperltypes_h
-#define __CPP__INCLUDED__rperltypes_h 0.003_000
+#define __CPP__INCLUDED__rperltypes_h 0.004_000
 
 #include <rperltypes_mode.h>
 #include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
@@ -13,9 +13,9 @@
 #include <RPerl/DataStructure/Array.cpp>	// -> Array.h
 #include <RPerl/DataStructure/Hash.cpp>	// -> Hash.h
 
-// [[[ GENERIC OVERLOADED STRING CONVERSION ]]]
-// [[[ GENERIC OVERLOADED STRING CONVERSION ]]]
-// [[[ GENERIC OVERLOADED STRING CONVERSION ]]]
+// [[[ GENERIC OVERLOADED TYPE CONVERSION ]]]
+// [[[ GENERIC OVERLOADED TYPE CONVERSION ]]]
+// [[[ GENERIC OVERLOADED TYPE CONVERSION ]]]
 
 # ifdef __PERL__TYPES
 
@@ -23,7 +23,17 @@
 
 # elif defined __CPP__TYPES
 
-// DEV NOTE: renamed from Perl to_string() to C++ To_string() to avoid error redefining std::to_string()
+//number to_number(unknown input_unknown) { return std::to_number(input_boolean); }  // NEED IMPLEMENT
+number to_number(boolean input_boolean) { return boolean_to_number(input_boolean); }
+number to_number(unsigned_integer input_unsigned_integer) { return unsigned_integer_to_number(input_unsigned_integer); }
+number to_number(integer input_integer) { return integer_to_number(input_integer); }
+//number to_number(gmp_integer input_gmp_integer) { return gmp_integer_to_number(input_gmp_integer); }  // NEED IMPLEMENT
+//number to_number(number input_number) { return number_to_number(input_number); }  // NEED ANSWER: is this totally unneeded, and should it be deleted?
+number to_number(character input_character) { return character_to_number(input_character); }
+number to_number(string input_string) { return string_to_number(input_string); }
+//number to_number(* input_*) { return std::to_number(input_*); }  // NEED IMPLEMENT
+
+// DEV NOTE, CORRELATION #rp28: renamed from Perl to_string() to C++ To_string() to avoid error redefining std::to_string()
 //string To_string(unknown input_unknown) { return std::to_string(input_boolean); }  // NEED IMPLEMENT
 string To_string(boolean input_boolean) { return boolean_to_string(input_boolean); }
 string To_string(unsigned_integer input_unsigned_integer) { return unsigned_integer_to_string(input_unsigned_integer); }

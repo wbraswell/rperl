@@ -208,7 +208,7 @@ string number_to_string(number input_number) {
 // DEV NOTE, CORRELATION #rp10: the real CPPTYPES sub (below) is called by the wrapper PERLTYPES sub and shim CPPTYPES subs (above), moved outside #ifdef blocks
 string number_to_string_CPPTYPES(number input_number)
 {
-//fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), top of subroutine, received unformatted input_number = %Lf\n", input_number);
+//fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), top of subroutine, received unformatted input_number = %f\n", input_number);
 //fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES()...\n");
 
     std::ostringstream output_stream;
@@ -239,7 +239,7 @@ string number_to_string_CPPTYPES(number input_number)
 
     string whole_part_underscores = "";
     for(std::string::size_type i = 0; i < whole_part.size(); ++i) {
-//        fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), inside whole_part underscore loop, have i = %ld, whole_part[i] = %c\n", (int)i, whole_part[i]);
+//        fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), inside whole_part underscore loop, have i = %d, whole_part[i] = %c\n", (int)i, whole_part[i]);
         whole_part_underscores += whole_part[i];
         if (((i % 3) == 2) && (i > 0) && (i != (whole_part.size() - 1))) {
 //            fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), AND UNDERSCORE \n");
@@ -259,7 +259,7 @@ string number_to_string_CPPTYPES(number input_number)
 
     string decimal_part_underscores = "";
     for(std::string::size_type i = 0; i < decimal_part.size(); ++i) {
-//        fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), inside decimal_part underscore loop, have i = %ld, decimal_part[i] = %c\n", (int)i, decimal_part[i]);
+//        fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), inside decimal_part underscore loop, have i = %d, decimal_part[i] = %c\n", (int)i, decimal_part[i]);
         decimal_part_underscores += decimal_part[i];
         if (((i % 3) == 2) && (i > 0) && (i != (decimal_part.size() - 1))) {
 //            fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), AND UNDERSCORE \n");
