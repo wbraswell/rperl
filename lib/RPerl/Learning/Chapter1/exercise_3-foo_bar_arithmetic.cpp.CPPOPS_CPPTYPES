@@ -1,7 +1,7 @@
 //!/usr/bin/rperl
 
-// Learning RPerl, Chapter 1, Exercise 3
-// Foo Bar Arithmetic Example
+
+
 
 // [[[ HEADER ]]]
 #include <rperlprogram.h>
@@ -14,12 +14,14 @@ int main() {  // [[[ OPERATIONS HEADER ]]]
 
 
 // [[[ OPERATIONS ]]]
-    integer  foo = 21 + 12;
-    integer  bar = 23 * 42 * 2;
-    number  baz  = integer_to_number( bar) /  foo;
- print "have $foo = "<< To_string( foo)<< endl;
- print "have $bar = "<< To_string( bar)<< endl;
- print "have $baz = "<< To_string( baz)<< endl;
+    integer foo = 21 + 12;
+    integer bar = 23 * 42;
+    number baz = to_number(bar) / foo;
+    number zab = to_number(foo) / bar;
+    cout << (const string) "have $foo = " + To_string(foo) + (const string) "\n";
+    cout << (const string) "have $bar = " + To_string(bar) + (const string) "\n";
+    cout << (const string) "have $baz = " + To_string(baz) + (const string) "\n";
+    cout << (const string) "have $zab = " + To_string(zab) + (const string) "\n";
 
 
 
