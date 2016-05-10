@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.072_000;
+our $VERSION = 0.073_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -11129,9 +11129,9 @@ The second line in the C<CRITICS> section tells RPerl to allow the C<$> (dollar)
 
 The first 3 lines in the C<OPERATIONS> section each declare a new variable; C<$foo> and C<$bar> each hold an C<integer> (non-floating-point) numeric value, while C<$baz> holds a C<number> (floating-point) value.X<br>
 
-The C<$foo> and C<$bar> variables receive their values from hard-coded numeric values being operated upon by the C<+> (plus sign) addition and C<*> (asterisk) multiplication operators, respectively; the C<$baz> variable receives its value from the the C<$foo> and C<$bar> variables being operated upon by the C</> (forward slash) division operator.  The C<to_number()> type conversion subroutine is necessary for the C++ compiler to use floating-point arithmetic instead of integer arithmetic on the division C</> operator, without it we would receive the truncated integer answer C<58>.  We will receive the correct floating-point answer if we call C<to_number()> on either C<$bar> (as shown), or C<$foo>, or both.X<br>
+The C<$foo> and C<$bar> variables receive their values from hard-coded numeric values being operated upon by the addition C<+> and multiplication C<*> operators, respectively; the C<$baz> and C<$zab> variables receive their values from the the C<$foo> and C<$bar> variables being operated upon by the division C</> operator.  The C<to_number()> type conversion subroutine is necessary for the C++ compiler to use floating-point arithmetic instead of integer arithmetic on the division C</> operators, without it we would receive the truncated integer value of C<58> in C<$baz>, for example.  We will receive the correct floating-point answers if we call C<to_number()> on either C<$bar> (as shown), or C<$foo>, or both; in other words, at least one of the input operands for each operator must be passed through C<to_number()>.X<br>
 
-The last 3 lines call the C<print> operator to display the names of each variable; followed by each variable's respective value, converted from number to underscore-formatted string via the RPerl type conversion subroutine C<to_string()>; followed by a newline character.X<br>
+The last 4 lines call the C<print> operator to display the names of each variable; followed by each variable's respective value, converted from number to underscore-formatted string via the RPerl type conversion subroutine C<to_string()>; followed by a newline character.X<br>
 
 
     #!/usr/bin/perl
