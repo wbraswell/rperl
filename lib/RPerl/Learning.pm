@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.073_000;
+our $VERSION = 0.074_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -10119,7 +10119,85 @@ This operator is commonly used to secure and check password validity, or compare
 
 =end html
 
-=for comment [ INSERT WARNINGS ]
+Like normal Perl, RPerl tries to generate helpful messages when something does not go as planned.
+
+A I<"warning"> occurs when something unexpected happened, but RPerl can continue on without being forced to end prematurely.
+
+An I<"error"> occurs when something unexpected happened, and RPerl must end immediately.
+
+We will collectively refer to both warnings and errors as I<"problems">, as well as both warning messages and error messages as I<"problem messages">.
+
+All warnings and errors in RPerl fall within exactly 1 of 14 categories, based on the phase at which the problem was encountered:
+
+=over
+
+=item * Install, Dependencies
+
+=item * Install, Test Suite
+
+=item * Initialize, Bootstrap Subcompile
+
+=item * Initialize, Configuration
+
+=item * Compile, Arguments & Files
+
+=item * Compile, Dependencies (Follow & Find All)
+
+=item * Compile, Parse Phase 0 (Check Perl Syntax)
+
+=item * Compile, Parse Phase 1 (Criticize Perl Syntax)
+
+=item * Compile, Parse Phase 2 (Parse RPerl Syntax)
+
+=item * Compile, Generate (C++ Syntax)
+
+=item * Compile, Save Phase 0 (Final File Modifications)
+
+=item * Compile, Save Phase 1 (Format & Write Files To Disk)
+
+=item * Compile, Subcompile (Generate Binary)
+
+=item * Execute (Run Code)
+
+=back
+
+
+START HERE: add example problem messages for each category below
+
+START HERE: add example problem messages for each category below
+
+START HERE: add example problem messages for each category below
+
+
+INIT, CONFIG
+
+WARNING WEXRP00: Found multiple `rperl` executables, using first located, `/home/wbraswell/austin_perl_mongers/rperl/rperl-latest/script/rperl`
+
+
+COMPILE, ARGUMENTS & FILES
+
+Unknown option: FOO
+ERROR EARG00: Failure processing command line arguments, dying
+
+
+COMPILE, DEPENDENCIES
+COMPILE, PARSE PHASE 0
+COMPILE, PARSE PHASE 1
+COMPILE, PARSE PHASE 2
+COMPILE, GENERATE
+COMPILE, SAVE  PHASE 0
+COMPILE, SAVE  PHASE 1
+COMPILE, SUBCOMPILE
+COMPILE, EXECUTE
+
+
+
+
+
+
+
+
+
 
 =head2 Section 2.4: Scalar Variables
 
