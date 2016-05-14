@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.075_000;
+our $VERSION = 0.076_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -678,9 +678,9 @@ Several other programming language communities have copied the success and imple
 
 Official RPerl technical support is provided through Auto-Parallel Technologies, Inc.
 
-To request more information, please send an e-mail to the following address (remove "NOSPAM DOT" before sending):
+To request more information, please send an e-mail to the following address:
 
-william DOT braswell AT NOSPAM DOT autoparallel DOT com
+william DOT braswell AT autoparallel DOT com
 
 =head2 Section 1.19: Are There Any Other Kinds Of Support?
 
@@ -693,6 +693,20 @@ IRC #perl11 L<http://irc.perl.org>
 The primary bug-tracking platform for RPerl is Github Issues, where you may file a new bug report ("new issue") if it is not already listed:
 
 L<https://github.com/wbraswell/rperl/issues>
+
+Please be sure to include all of the following information in your bug report:
+
+=over
+
+=item * Pertinent Problem Message Output, If Long Use L<https://gist.github.com/>
+
+=item * Operating System Version C<$ cat /etc/issue>
+
+=item * Perl Version C<$ perl -v>
+
+=item * RPerl Version C<$ rperl -v>
+
+=back
 
 Although Github Issues is strongly preferred, the RPerl development team also supports the legacy CPAN ticket system:
 
@@ -10167,7 +10181,7 @@ All warnings and errors in RPerl fall within exactly 1 of 15 categories, based o
 
 =head3 Section 2.3.1: Install, Core Dependencies
 
-The first step toward using RPerl is installing RPerl, and the first step of installing RPerl is making sure you have a working copy of the Perl interpreter and a C++ compiler, as well as a few other core dependencies such as libc, libperl, ExtUtils::MakeMaker, GMP, cURL, and AStyle.  If you have a modern operating system, you may already have most-or-all of these dependencies either pre-installed or available for easy automatic install via pre-build packages; if not, you may need to manually install one or more dependencies.  For more information on this phase of installation, please see:
+The first step toward using RPerl is installing RPerl, and the first step of installing RPerl is making sure you have a working copy of the Perl interpreter and a C++ compiler, as well as a few other core dependencies such as libc, libperl, ExtUtils::MakeMaker, GMP, cURL, and AStyle.  A I<"dependency"> is simply another piece of software upon which RPerl relies in order to function properly, and a I<"subdependency"> is a dependency of a dependency.  If you have a modern operating system, you may already have most-or-all of these dependencies either pre-installed or available for easy automatic install via pre-built packages; if not, you may need to manually install one or more dependencies.  For more information on this phase of installation, please see:
 
 L</Section 1.16: How Can I Get RPerl?>
 
@@ -10189,17 +10203,19 @@ Some common types of problem messages may include:
 
 =back
 
-Please consult your operating system's documentation or technical support for help with any problems during this step.
+If you encounter any problems during this step, please consult your operating system's documentation or see:
+
+L</Section 1.18: How Can I Get Support For RPerl?>
 
 =head3 Section 2.3.2: Install, CPAN Dependencies
 
-Perhaps the most complex part of installing RPerl is comprised of finding, building, testing, and installing all of RPerl's dependencies (and subdependencies) via CPAN.  Future versions of RPerl will provide easier pre-built installation packages for popular operating systems, such as those used in the core dependencies phase, but for now all (sub)dependencies must be downloaded from CPAN and custom-built for your operating system.  Each individual piece of software downloaded from CPAN is called a I<"distribution">, so RPerl itself is a CPAN distribution, and each of RPerl's CPAN (sub)dependencies is also a CPAN distribution.
+Perhaps the most complex part of installing RPerl is comprised of finding, building, testing, and installing all of the software needed for RPerl's dependencies (and subdependencies) via CPAN.  Future versions of RPerl will provide easier pre-built installation packages for popular operating systems, such as those used in the core dependencies phase, but for now all (sub)dependencies must be downloaded from CPAN and custom-built for your operating system.  Each individual piece of software downloaded from CPAN is called a I<"distribution">, so RPerl itself is a CPAN distribution, and each of RPerl's CPAN (sub)dependencies is also a CPAN distribution.
 
 We have tried to minimize the number of dependencies upon which RPerl relies, but even 1 dependency can itself have dozens or hundreds of subdependencies.  RPerl is a relatively complex piece of software, with a moderate number of dependencies and (by association) a high number of subdependencies.  If there is an error with even 1 of the numerous (sub)dependencies, it will either cause the RPerl installation to immediately terminate, or the installation will attempt to proceed in a partially-broken state, which will likely result in further errors when the broken software components are automatically tested.
 
 CPAN promotes the use of a minimum version requirement for each (sub)dependency, which means RPerl will not use out-of-date software from CPAN, thereby avoiding a large number of known errors.  However, there is much less emphasis on utilizing a maximum version requirement, so CPAN will always default to installing the latest public release of each (sub)dependency.  It is the responsibility of the author of each (sub)dependency to ensure all public releases are stable, secure, and bug-free across a wide range of operating systems and hardware platforms, which is a constantly moving target for each software developer because new operating systems and hardware platforms are released all the time.  This means the latest public release of any 1 specific CPAN distribution may remain stable for a long time, and then all-of-a-sudden it may become unstable when a new version of one of its own (sub)dependencies is released containing a bug or incompatibility.  This further means the latest public release of the RPerl distribution on CPAN may work fine on your computer, then stop working properly if you update either the core dependencies or the CPAN dependencies.
 
-There are 2 primary front-end applications used to install dependencies from CPAN, namely the C<cpan> and C<cpanm> commands, each of which has its own style of problem messages.  In addition, there are unique problem messages which may be emitted by each individual CPAN distribution.  As with the core dependencies in the previous RPerl install phase, there are countless possible problem messages you may encounter in this phase, none of which was generated by RPerl itself.
+There are 2 primary front-end applications used to install dependencies from CPAN, namely the C<cpan> and C<cpanm> commands, each of which has its own style of problem messages.  In addition, there are unique problem messages which may be emitted by each individual CPAN distribution.  As with the core dependencies in the previous RPerl install phase, there are countless possible problem messages you may encounter in this phase, none of which would be generated by RPerl itself.
 
 Common problem messages in this phase may include:
 
@@ -10314,21 +10330,70 @@ Common problem messages in this phase may include:
 
 Getting RPerl to work correctly does not simply require hitting a moving target, it requires hitting dozens of moving targets simultaneously.  Most of the authors of CPAN distributions are volunteers, and software bugs happen even when the developers are well-paid, so don't be surprised if you encounter a problem during this phase.  If you are convinced that you have found an as-yet undiscovered problem, please see:
 
+L</Section 1.18: How Can I Get Support For RPerl?>
+
+and
+
 L</Section 1.20: What If I Find A Bug In RPerl?>
 
 The RPerl development team is in communication with the developers of several of the primary CPAN dependencies, so if you find a bug we may be able to help find the right people to fix it.
 
 =head3 Section 2.3.3: Install, Test Suite
 
-START HERE: continue filling in error examples & explanations
+The final step of installing RPerl is to pass all tests in the RPerl automatic test suite, which can only occur after all core and CPAN dependencies are properly installed.  The RPerl test suite includes a few thousand individual test cases, covering all parts of the RPerl compiler.  If any of the RPerl tests fail or generate a problem message, then there may be a problem with RPerl itself, and we would very much appreciate your help by submitting a bug report:
 
-START HERE: continue filling in error examples & explanations
+L</Section 1.20: What If I Find A Bug In RPerl?>
 
-START HERE: continue filling in error examples & explanations
+Common problem messages in this phase may include:
 
-FOO ERROR
+=over
+
+=item * RPerl Error, Test Fails
+
+=for rperl X<noncode>
+
+    1..X
+    ok 1 - Program or module does FOO with expected error(s):    /.../lib/RPerl/Test/TestDir/TestFile_00.pm
+    not ok 2 - Program or module does FOO without errors:        /.../lib/RPerl/Test/TestDir/TestFile_01.pm
+    #   Failed test 'Program or module does FOO without errors:  /.../lib/RPerl/Test/TestDir/TestFile_01.pm'
+    #   at t/XX_foo.t line 123.
+    # Looks like you failed 1 test of X.
+
+=for rperl X</noncode>
+
+X<ENABLE_LIST_SPACING>
+
+=item * RPerl Warning, Test Does Not Fail
+
+=for rperl X<noncode>
+
+    t/XX_foo.t ................ 1/? Use of uninitialized value in string eq at /.../blib/lib/RPerl/Compiler.pm line 307.
+    Use of uninitialized value in string eq at /.../blib/lib/RPerl/Compiler.pm line 321.
+    Use of uninitialized value $diff_line in numeric eq (==) at t/XX_foo.t line 205.
+    t/XX_foo.t ................ 2/? Use of uninitialized value in string eq at /.../blib/lib/RPerl/Compiler.pm line 307.
+    Use of uninitialized value in string eq at /.../blib/lib/RPerl/Compiler.pm line 321.
+    Use of uninitialized value $diff_line in numeric eq (==) at t/XX_foo.t line 205.
+    t/XX_foo.t ................ 3/? Use of uninitialized value in string eq at /.../blib/lib/RPerl/Compiler.pm line 307.
+    Use of uninitialized value in string eq at /.../blib/lib/RPerl/Compiler.pm line 321.
+    Use of uninitialized value $diff_line in numeric eq (==) at t/XX_foo.t line 205.
+    t/XX_foo.t ................ ok
+    All tests successful.
+    Files=YY, Tests=ZZZZ, XXX wallclock secs
+    Result: PASS
+
+=for rperl X</noncode>
+
+X<ENABLE_LIST_SPACING>
+
+=back
 
 =head3 Section 2.3.4: Initialize, Bootstrap Subcompile
+
+START HERE: continue filling in error examples & explanations
+
+START HERE: continue filling in error examples & explanations
+
+START HERE: continue filling in error examples & explanations
 
 FOO ERROR
 

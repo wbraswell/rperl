@@ -1,5 +1,5 @@
 # RPerl Install Notes
-# Last Updated March 27, 2016
+# Last Updated May 14, 2016
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # NOTE: STEP 1 IS ONLY FOR SINGLE-USER INSTALL, NOT SYSTEM-WIDE INSTALL
@@ -37,7 +37,7 @@ $ ./configure
 $ make
 
 # EXTUTILS::MAKEMAKER
-$ mv ~/perl5 ~/perl5.old  # disable any previous local::lib or Perlbrew
+$ mv ~/perl5 ~/perl5.old  # as user, not root; disable any previous local::lib or Perlbrew
 $ perl -v  # NOTE! the version of Perl determines whether you take step 1A or 1B
 $ perl -MExtUtils::MakeMaker\ 999  # v7.04 or greater required by Inline::C
 $ cpan ExtUtils::MakeMaker  # cpan system-wide, not cpanm single-user
@@ -50,6 +50,7 @@ $ urpmi gmpxx-devel
 # visit https://gmplib.org/
 
 # CURL
+$ apt-get install curl
 $ curl -L cpanmin.us > /dev/null
     # execute the following "echo" command below IF AND ONLY IF the above "curl" command gives an error:
     # curl: (77) error setting certificate verify locations

@@ -32,7 +32,7 @@ find(
 
         #        RPerl::diag('in 12_parse.t, have $file = ' . $file . "\n");
 
-#        if ( $file !~ m/.*LiteralString\/Package_SingleQuotes_.*[.]p[lm]$/xms ) { # TEMP DEBUGGING, ONLY FIND CERTAIN FILES
+#        if ( $file !~ m/.*LiteralString\/Package_SingleQuotes_00.*[.]p[lm]$/xms ) { # TEMP DEBUGGING, ONLY FIND CERTAIN FILES
 #        if ( $file !~ m/.*Operator12CompareEqualNotEqual\/\w+[.]p[lm]$/xms ) { # TEMP DEBUGGING, ONLY FIND CERTAIN DIRECTORY
         if ( $file !~ m/.p[lm]$/xms ) {  # FIND ALL TEST FILES
             return;
