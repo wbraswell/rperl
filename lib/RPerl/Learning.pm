@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.078_000;
+our $VERSION = 0.078_100;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -10472,31 +10472,48 @@ START HERE: continue filling in error examples & explanations
 
 WARNING WEXRP00: Found multiple `rperl` executables, using first located, `/home/wbraswell/austin_perl_mongers/rperl/rperl-latest/script/rperl`
 
+=head3 Section 2.3.6: Compile, Arguments & Files
 
-COMPILE, ARGUMENTS & FILES
+NEED ADD CONTENT
 
 Unknown option: FOO
 ERROR EARG00: Failure processing command line arguments, dying
 
+=head3 Section 2.3.7: Compile, Dependencies
 
-COMPILE, DEPENDENCIES
-COMPILE, PARSE PHASE 0
-COMPILE, PARSE PHASE 1
-COMPILE, PARSE PHASE 2
-COMPILE, GENERATE
-COMPILE, SAVE  PHASE 0
-COMPILE, SAVE  PHASE 1
-COMPILE, SUBCOMPILE
-COMPILE, EXECUTE
+NEED ADD CONTENT
 
+=head3 Section 2.3.8: Compile, Parse Phase 0
 
+NEED ADD CONTENT
 
+=head3 Section 2.3.9: Compile, Parse Phase 1
 
+NEED ADD CONTENT
 
+=head3 Section 2.3.10: Compile, Parse Phase 2
 
+NEED ADD CONTENT
 
+=head3 Section 2.3.11: Compile, Generate
 
+NEED ADD CONTENT
 
+=head3 Section 2.3.12: Compile, Save  Phase 0
+
+NEED ADD CONTENT
+
+=head3 Section 2.3.13: Compile, Save  Phase 1
+
+NEED ADD CONTENT
+
+=head3 Section 2.3.14: Compile, Subcompile
+
+NEED ADD CONTENT
+
+=head3 Section 2.3.15: Compile, Execute
+
+NEED ADD CONTENT
 
 =head2 Section 2.4: Scalar Variables
 
