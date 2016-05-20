@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.078_100;
+our $VERSION = 0.079_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -10464,15 +10464,41 @@ X<ENABLE_LIST_SPACING>
 
 =head3 Section 2.3.5: Initialize, Configuration
 
-START HERE: continue filling in error examples & explanations
+The second half of RPerl initialization involves the automatic configuration of multiple internal software settings.  This phase is primarily comprised of setting the file and directory paths to important components of your operating system and of RPerl itself.
 
-START HERE: continue filling in error examples & explanations
+Common problem messages in this phase may include:
 
-START HERE: continue filling in error examples & explanations
+=over
 
-WARNING WEXRP00: Found multiple `rperl` executables, using first located, `/home/wbraswell/austin_perl_mongers/rperl/rperl-latest/script/rperl`
+=item * Multiple Copies Of RPerl Installed
+
+=for rperl X<noncode>
+
+    WARNING WEXRP00: Found multiple `rperl` executables, using first located, `/.../rperl-latest/script/rperl`
+
+=for rperl X</noncode>
+
+X<ENABLE_LIST_SPACING>
+
+=item * Missing RPerl Compiler C<rperl>
+
+=for rperl X<noncode>
+
+    ERROR EEXRP00: Failed to find `rperl` executable, dying
+    Compilation failed in require at /.../rperl-latest/lib/RPerl/CompileUnit/Module/Class.pm line 5.
+    BEGIN failed--compilation aborted at /.../rperl-latest/lib/RPerl/CompileUnit/Module/Class.pm line 5.
+    Compilation failed in require at /.../rperl-latest/lib/RPerl/AfterSubclass.pm line 10.
+    BEGIN failed--compilation aborted at /.../rperl-latest/lib/RPerl/AfterSubclass.pm line 10.
+
+=for rperl X</noncode>
+
+X<ENABLE_LIST_SPACING>
+
+=back
 
 =head3 Section 2.3.6: Compile, Arguments & Files
+
+START HERE: continue filling in error examples & explanations
 
 NEED ADD CONTENT
 
