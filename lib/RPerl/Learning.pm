@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.079_000;
+our $VERSION = 0.079_500;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -10498,9 +10498,13 @@ X<ENABLE_LIST_SPACING>
 
 =head3 Section 2.3.6: Compile, Arguments & Files
 
-START HERE: continue filling in error examples & explanations
+RPerl is a compiler, so it is unsurprising that 9 of the 15 RPerl phases are compile phases.  When a software developer (like you!) runs the RPerl compiler via the C<rperl> command, the first compile phase checks the validity of the command-line arguments (AKA options) as well as the input source code file(s) to be compiled.  Command-line arguments can be entirely omitted, in which case default behavior will be utilized.  At least one input file must be specified, or else there would be no reason to run the C<rperl> command.
 
-NEED ADD CONTENT
+START HERE: decide where to put full explanations of all RPerl command-line arguments
+
+START HERE: decide where to put full explanations of all RPerl command-line arguments
+
+START HERE: decide where to put full explanations of all RPerl command-line arguments
 
 Unknown option: FOO
 ERROR EARG00: Failure processing command line arguments, dying
@@ -10537,7 +10541,7 @@ NEED ADD CONTENT
 
 NEED ADD CONTENT
 
-=head3 Section 2.3.15: Compile, Execute
+=head3 Section 2.3.15: Execute
 
 NEED ADD CONTENT
 
