@@ -19,6 +19,7 @@ our hashref $properties = {};
 # [[[ OO PROPERTIES, CLASS PROPERTY AKA PACKAGE VARIABLE ]]]
 # DEV NOTE, CORRELATION #rp20: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named/* also add in Grammar.eyp, Named.pm, and rperloperations.pm
 our string_hashref $NAMES = {
+    'abs'     => 'RPerl::Operation::Expression::Operator::Named::AbsoluteValue',
     'chomp'   => 'RPerl::Operation::Expression::Operator::Named::Chomp',
     'join'    => 'RPerl::Operation::Expression::Operator::Named::Join',
     'keys'    => 'RPerl::Operation::Expression::Operator::Named::Keys',
