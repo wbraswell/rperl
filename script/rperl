@@ -8,8 +8,8 @@ use RPerl;
 # DEV NOTE, CORRELATION #rp16: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
 our $VERSION = 1.700_000;
 
-#our $VERSION = 20160401;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
-#our $VERSION = 2016.092;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
+#our $VERSION = 20160523;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
+#our $VERSION = 2016.144;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -33,9 +33,9 @@ use Config qw(config_re);
 # this array must be instantiated here, because GetOptions' diamond '<>' operator does not allow passing arguments or receiving return values
 my string_arrayref $input_file_names_unlabeled = [];
 
-# [[[ ACCEPT, CHECK, REPORT OPTIONS (COMMAND-LINE ARGUMENTS) ]]]
-# [[[ ACCEPT, CHECK, REPORT OPTIONS (COMMAND-LINE ARGUMENTS) ]]]
-# [[[ ACCEPT, CHECK, REPORT OPTIONS (COMMAND-LINE ARGUMENTS) ]]]
+# [[[ ACCEPT, CHECK, REPORT COMMAND-LINE ARGUMENTS (aka OPTIONS)) ]]]
+# [[[ ACCEPT, CHECK, REPORT COMMAND-LINE ARGUMENTS (aka OPTIONS)) ]]]
+# [[[ ACCEPT, CHECK, REPORT COMMAND-LINE ARGUMENTS (aka OPTIONS)) ]]]
 
 sub accept_and_verify_input_files {
     ( my string_arrayref $input_file_names, my string_arrayref $input_file_names_unlabeled, my string_hashref $modes ) = @_;
@@ -53,7 +53,7 @@ sub accept_and_verify_input_files {
             $input_file_names = $input_file_names_unlabeled;
         }
         else {
-            die 'ERROR EARG08: Both labeled & unlabeled RPerl source code input file option(s) specified, dying' . "\n";
+            die 'ERROR EARG08: Both labeled & unlabeled RPerl source code input file argument(s) specified, dying' . "\n";
         }
     }
 
@@ -138,26 +138,26 @@ sub verify_and_default_modes {
     if ( defined $uncompile_flag ) {
         if ($uncompile_flag) {
             if ( ( defined $compile_flag ) and $compile_flag ) {
-                die 'ERROR EARG09: Incompatible command-line option flags provided, both --uncompile and --compile, dying' . "\n";
+                die 'ERROR EARG09: Incompatible command-line argument flags provided, both --uncompile and --compile, dying' . "\n";
             }
             # subcompile mode is used in Compiler::generate_output_file_names() to determine which files to delete, allow flags to set subcompile mode
 #            if ( ( defined $subcompile_assemble_flag ) and $subcompile_assemble_flag ) {
-#                die 'ERROR EARG09: Incompatible command-line option flags provided, both --uncompile and --assemble, dying' . "\n";
+#                die 'ERROR EARG09: Incompatible command-line argument flags provided, both --uncompile and --assemble, dying' . "\n";
 #            }
 #            if ( ( defined $subcompile_archive_flag ) and $subcompile_archive_flag ) {
-#                die 'ERROR EARG09: Incompatible command-line option flags provided, both --uncompile and --archive, dying' . "\n";
+#                die 'ERROR EARG09: Incompatible command-line argument flags provided, both --uncompile and --archive, dying' . "\n";
 #            }
 #            if ( ( defined $subcompile_shared_flag ) and $subcompile_shared_flag ) {
-#                die 'ERROR EARG09: Incompatible command-line option flags provided, both --uncompile and --shared, dying' . "\n";
+#                die 'ERROR EARG09: Incompatible command-line argument flags provided, both --uncompile and --shared, dying' . "\n";
 #            }
 #            if ( ( defined $subcompile_static_flag ) and $subcompile_static_flag ) {
-#                die 'ERROR EARG09: Incompatible command-line option flags provided, both --uncompile and --static, dying' . "\n";
+#                die 'ERROR EARG09: Incompatible command-line argument flags provided, both --uncompile and --static, dying' . "\n";
 #            }
             if ( ( defined $execute_flag ) and $execute_flag ) {
-                die 'ERROR EARG09: Incompatible command-line option flags provided, both --uncompile and --execute, dying' . "\n";
+                die 'ERROR EARG09: Incompatible command-line argument flags provided, both --uncompile and --execute, dying' . "\n";
             }
             if ( ( defined $test_flag ) and $test_flag ) {
-                die 'ERROR EARG09: Incompatible command-line option flags provided, both --uncompile and --test, dying' . "\n";
+                die 'ERROR EARG09: Incompatible command-line argument flags provided, both --uncompile and --test, dying' . "\n";
             }
             if ($uncompile_flag == 1) { $modes->{uncompile} = 'SOURCE'; }
             if ($uncompile_flag == 2) { $modes->{uncompile} = 'SOURCE_BINARY'; }
@@ -176,18 +176,18 @@ sub verify_and_default_modes {
         if ($compile_flag) {
             $modes->{compile} = 'SUBCOMPILE';  # already default, does nothing
         }
-        else {    # --nocompile command-line argument (option) disables SAVE & SUBCOMPILE steps, PARSE & GENERATE remain enabled
+        else {    # --nocompile command-line argument disables SAVE & SUBCOMPILE steps, PARSE & GENERATE remain enabled
             if (( defined $subcompile_assemble_flag ) and $subcompile_assemble_flag ) {
-                die 'ERROR EARG10: Incompatible command-line option flags provided, both --nocompile and --assemble, dying' . "\n";
+                die 'ERROR EARG10: Incompatible command-line argument flags provided, both --nocompile and --assemble, dying' . "\n";
             }
             if ( ( defined $subcompile_archive_flag ) and $subcompile_archive_flag ) {
-                die 'ERROR EARG10: Incompatible command-line option flags provided, both --nocompile and --archive, dying' . "\n";
+                die 'ERROR EARG10: Incompatible command-line argument flags provided, both --nocompile and --archive, dying' . "\n";
             }
             if ( ( defined $subcompile_shared_flag ) and $subcompile_shared_flag ) {
-                die 'ERROR EARG10: Incompatible command-line option flags provided, both --nocompile and --shared, dying' . "\n";
+                die 'ERROR EARG10: Incompatible command-line argument flags provided, both --nocompile and --shared, dying' . "\n";
             }
             if ( ( defined $subcompile_static_flag ) and $subcompile_static_flag ) {
-                die 'ERROR EARG10: Incompatible command-line option flags provided, both --nocompile and --static, dying' . "\n";
+                die 'ERROR EARG10: Incompatible command-line argument flags provided, both --nocompile and --static, dying' . "\n";
             }
             $modes->{compile} = 'GENERATE';
         }
@@ -196,19 +196,19 @@ sub verify_and_default_modes {
     # assemble mode is CPPOPS_CPPTYPES_SUBCOMPILE_ASSEMBLE; flag ignored if false
     if (( defined $subcompile_assemble_flag ) and $subcompile_assemble_flag ) {
         if ( ( defined $subcompile_archive_flag ) and $subcompile_archive_flag ) {
-            die 'ERROR EARG11: Incompatible command-line option flags provided, both --assemble and --archive, dying' . "\n";
+            die 'ERROR EARG11: Incompatible command-line argument flags provided, both --assemble and --archive, dying' . "\n";
         }
         if ( ( defined $subcompile_shared_flag ) and $subcompile_shared_flag ) {
-            die 'ERROR EARG11: Incompatible command-line option flags provided, both --assemble and --shared, dying' . "\n";
+            die 'ERROR EARG11: Incompatible command-line argument flags provided, both --assemble and --shared, dying' . "\n";
         }
         if ( ( defined $subcompile_static_flag ) and $subcompile_static_flag ) {
-            die 'ERROR EARG11: Incompatible command-line option flags provided, both --assemble and --static, dying' . "\n";
+            die 'ERROR EARG11: Incompatible command-line argument flags provided, both --assemble and --static, dying' . "\n";
         }
         if ( ( defined $execute_flag ) and $execute_flag ) {
-            die 'ERROR EARG11: Incompatible command-line option flags provided, both --assemble and --execute, dying' . "\n";
+            die 'ERROR EARG11: Incompatible command-line argument flags provided, both --assemble and --execute, dying' . "\n";
         }
         if ( ( defined $test_flag ) and $test_flag ) {
-            die 'ERROR EARG11: Incompatible command-line option flags provided, both --assemble and --test, dying' . "\n";
+            die 'ERROR EARG11: Incompatible command-line argument flags provided, both --assemble and --test, dying' . "\n";
         }
         $modes->{compile}   = 'SUBCOMPILE';
         $modes->{subcompile} = 'ASSEMBLE';
@@ -218,16 +218,16 @@ sub verify_and_default_modes {
     # archive mode is CPPOPS_CPPTYPES_SUBCOMPILE_ARCHIVE; flag ignored if false
     if (( defined $subcompile_archive_flag ) and $subcompile_archive_flag ) {
         if ( ( defined $subcompile_shared_flag ) and $subcompile_shared_flag ) {
-            die 'ERROR EARG12: Incompatible command-line option flags provided, both --archive and --shared, dying' . "\n";
+            die 'ERROR EARG12: Incompatible command-line argument flags provided, both --archive and --shared, dying' . "\n";
         }
         if ( ( defined $subcompile_static_flag ) and $subcompile_static_flag ) {
-            die 'ERROR EARG12: Incompatible command-line option flags provided, both --archive and --static, dying' . "\n";
+            die 'ERROR EARG12: Incompatible command-line argument flags provided, both --archive and --static, dying' . "\n";
         }
         if ( ( defined $execute_flag ) and $execute_flag ) {
-            die 'ERROR EARG12: Incompatible command-line option flags provided, both --archive and --execute, dying' . "\n";
+            die 'ERROR EARG12: Incompatible command-line argument flags provided, both --archive and --execute, dying' . "\n";
         }
         if ( ( defined $test_flag ) and $test_flag ) {
-            die 'ERROR EARG12: Incompatible command-line option flags provided, both --archive and --test, dying' . "\n";
+            die 'ERROR EARG12: Incompatible command-line argument flags provided, both --archive and --test, dying' . "\n";
         }
         $modes->{compile}   = 'SUBCOMPILE';
         $modes->{subcompile} = 'ARCHIVE';
@@ -237,13 +237,13 @@ sub verify_and_default_modes {
     # shared mode is CPPOPS_CPPTYPES_SUBCOMPILE_SHARED; flag ignored if false
     if (( defined $subcompile_shared_flag ) and $subcompile_shared_flag ) {
         if ( ( defined $subcompile_static_flag ) and $subcompile_static_flag ) {
-            die 'ERROR EARG13: Incompatible command-line option flags provided, both --shared and --static, dying' . "\n";
+            die 'ERROR EARG13: Incompatible command-line argument flags provided, both --shared and --static, dying' . "\n";
         }
         if ( ( defined $execute_flag ) and $execute_flag ) {
-            die 'ERROR EARG13: Incompatible command-line option flags provided, both --shared and --execute, dying' . "\n";
+            die 'ERROR EARG13: Incompatible command-line argument flags provided, both --shared and --execute, dying' . "\n";
         }
         if ( ( defined $test_flag ) and $test_flag ) {
-            die 'ERROR EARG13: Incompatible command-line option flags provided, both --shared and --test, dying' . "\n";
+            die 'ERROR EARG13: Incompatible command-line argument flags provided, both --shared and --test, dying' . "\n";
         }
         $modes->{compile}   = 'SUBCOMPILE';
         $modes->{subcompile} = 'SHARED';
@@ -254,11 +254,11 @@ sub verify_and_default_modes {
     if (( defined $subcompile_static_flag ) and $subcompile_static_flag ) {
         if ($subcompile_static_flag) {
             if ( ( defined $test_flag ) and $test_flag ) {
-                die 'ERROR EARG14: Incompatible command-line option flags provided, both --static and --test, dying' . "\n";
+                die 'ERROR EARG14: Incompatible command-line argument flags provided, both --static and --test, dying' . "\n";
             }
             foreach my string $input_file_name (@{$input_file_names}) {
                 if ( $input_file_name =~ /[.]pm$/xms ) {
-                    die 'ERROR EARG15: Incompatible command-line options provided, both --static subcompile mode flag and *.pm Perl module input file(s), dying' . "\n";
+                    die 'ERROR EARG15: Incompatible command-line arguments provided, both --static subcompile mode flag and *.pm Perl module input file(s), dying' . "\n";
                 }
             }
             $modes->{compile}   = 'SUBCOMPILE';
@@ -272,7 +272,7 @@ sub verify_and_default_modes {
     
     if (defined $subcompile_CXX) {
         if ($subcompile_CXX =~ m/^\s*$/gxms) {
-            die 'ERROR EARG16: Undefined, empty, or all-whitespace CXX command-line option provided, dying' . "\n";
+            die 'ERROR EARG16: Undefined, empty, or all-whitespace CXX command-line argument provided, dying' . "\n";
         }
         else {
             $modes->{CXX} = $subcompile_CXX;
@@ -418,14 +418,14 @@ sub multi_file_settings {
 }
 
 # allow omission of "-infile" on command line
-#our void $store_unlabeled_options = sub {  # NEED FIX: can't define RPerl-style subroutines here?
-sub store_unlabeled_options {
-    ( my unknown $option ) = @_;
-    push @{$input_file_names_unlabeled}, $option;
+#our void $store_unlabeled_arguments = sub {  # NEED FIX: can't define RPerl-style subroutines here?
+sub store_unlabeled_arguments {
+    ( my unknown $argument ) = @_;
+    push @{$input_file_names_unlabeled}, $argument;
     return;
 }
 
-# print value of option flags
+# print value of argument flags
 sub verbose_flags {
     (   my integer $dependencies_flag,
         my integer $uncompile_flag,
@@ -918,10 +918,10 @@ GetOptions(
     'infile=s{1,}'  => \@{$input_file_names},
     'outfile=s{1,}' => \@{$output_file_name_prefixes},
     'mode=s%'       => \$modes,
-    '<>'            => \&store_unlabeled_options
+    '<>'            => \&store_unlabeled_arguments
 ) or die "ERROR EARG00: Failure processing command line arguments, dying\n";
 
-if ($help_flag) { pod2usage( -verbose => 1, -width => 80 ); exit; }
+if ($help_flag) { pod2usage( -verbose => 1, -width => 80 ); exit; }  # NEED ANSWER: we want ARGUMENTS in output, but verbose level 1 should only display SYNOPSIS?
 if ($vversions_flag) { $RPerl::VERBOSE = 1; verbose_versions(); exit; }
 if ($version_flag) {
 
@@ -980,101 +980,141 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =head1 SYNOPSIS
 
-        rperl [OPTIONS] input_program_0.pl [input_program_1.pl input_program_2.pl ...]
-        rperl [OPTIONS] MyClassFoo.pm [MyClassBar.pm MyClassBat.pm ...]
-        rperl [OPTIONS] input_program_0.pl MyClassFoo.pm [input_program_1.pl ... MyClassBar.pm ...]
+        rperl [ARGUMENTS] input_program_0.pl [input_program_1.pl input_program_2.pl ...]
+        rperl [ARGUMENTS] MyClassFoo.pm [MyClassBar.pm MyClassBat.pm ...]
+        rperl [ARGUMENTS] input_program_0.pl MyClassFoo.pm [input_program_1.pl ... MyClassBar.pm ...]
 
-=head1 OPTIONS
+=for DEV NOTE, CORRELATION #rp29: all updates to `rperl` command-line arguments must be documented in script/rperl and 2 places in lib/RPerl/Learning.pm
 
-=over 8
+=head1 ARGUMENTS
 
-=item B<--help _OR_ -h _OR_ -?>
+=over
+
+=item B<--help ...OR... -h ...OR... -?>
+
+=for rperl X<noncode>
 
  Print a brief help message for command-line usage.
 
-=item B<--version _OR_ -v>
+=for rperl X</noncode>
 
-=item B<--vversion _OR_ -vv>
+=item B<--version ...OR... -v>
+
+=item B<--vversion ...OR... -vv>
+
+=for rperl X<noncode>
 
  Print version number and copyright information.
- Repeat as 'vv' for more technical information, similar to `perl -V` configuration summary option.
- Lowercase 'v' not to be confused with uppercase 'V' in 'Verbose' option below.
- 
-=item B<--dependencies _OR_ -d>
+ Repeat as 'vv' for more technical information, similar to `perl -V` configuration summary argument.
+ Lowercase 'v' not to be confused with uppercase 'V' in 'Verbose' argument below.
 
-=item B<--nodependencies _OR_ -nod>
+=for rperl X</noncode>
+
+=item B<--dependencies ...OR... -d>
+
+=item B<--nodependencies ...OR... -nod>
+
+=for rperl X<noncode>
 
  Follow and compile dependencies, or not.
- Enabled by default, equivalent to '--mode dependencies=ON' option.
- Lowercase 'd' not to be confused with uppercase 'D' in 'Debug' option below.
+ Enabled by default, equivalent to '--mode dependencies=ON' argument.
+ Lowercase 'd' not to be confused with uppercase 'D' in 'Debug' argument below.
  WARNING: Disabling dependencies will likely cause errors or undefined behavior.
 
-=item B<--infile=MyFile.pm _OR_ -i=MyFile.pm>
+=for rperl X</noncode>
+
+=item B<--infile=MyFile.pm ...OR... -i=MyFile.pm>
+
+=for rperl X<noncode>
 
  Specify input file, may be repeated for multiple input files.
- Option prefix '--infile' may be entirely omitted.
- Option prefix MUST be omitted to specify wildcard for multiple input files.
+ Argument prefix '--infile' may be entirely omitted.
+ Argument prefix MUST be omitted to specify wildcard for multiple input files.
 
-=item B<--outfile=MyFile _OR_ -o=MyFile>
+=for rperl X</noncode>
+
+=item B<--outfile=MyFile ...OR... -o=MyFile>
+
+=for rperl X<noncode>
 
  Specify output file prefix, may be repeated for multiple output files.
  RPerl *.pm input file with PERL ops will create MyFile.pmc output file.
  RPerl *.pl input file with PERL ops will create my_file (or my_file.exe) & my_file.pmc output files.
  RPerl *.pm input file with CPP ops will create MyFile.pmc, MyFile.cpp, & MyFile.h output files.
  RPerl *.pl input file with CPP ops will create myfile (or myfile.exe on Windows), MyFile.pmc, MyFile.cpp, & MyFile.h output files.
- Option may be entirely omitted, 'MyFile.*' input file will default to 'MyFile.*' out.
+ Argument may be entirely omitted, 'MyFile.*' input file will default to 'MyFile.*' out.
 
-=item B<--mode ops=PERL _OR_ -m ops=PERL>
+=for rperl X</noncode>
 
-=item B<--mode ops=CPP _OR_ -m ops=CPP>
+=item B<--mode ops=PERL ...OR... -m ops=PERL>
+
+=item B<--mode ops=CPP ...OR... -m ops=CPP>
+
+=for rperl X<noncode>
 
  Specify operations mode, CPP by default.
  If set to PERL, generate Perl operations in the source code output file(s).
  If set to CPP, generate C++ operations in the source code output file(s).
  PERL ops mode forces PERL types mode & PARSE or GENERATE compile mode; PERLOPS_PERLTYPES is test mode, does not actually compile.
 
-=item B<--mode types=PERL _OR_ -m types=PERL>
+=for rperl X</noncode>
 
-=item B<--mode types=CPP _OR_ -m types=CPP>
+=item B<--mode types=PERL ...OR... -m types=PERL>
 
-=item B<--mode types=DUAL _OR_ -m types=DUAL>
+=item B<--mode types=CPP ...OR... -m types=CPP>
+
+=item B<--mode types=DUAL ...OR... -m types=DUAL>
+
+=for rperl X<noncode>
 
  Specify data types mode, CPP by default.
  If set to PERL, generate Perl data types in the source code output file(s).
  If set to CPP, generate C++ data types in the source code output file(s).
  If set to DUAL, generate both Perl and C++ data types in the source code output file(s).
- DUAL mode allows generate-once-compile-many types, selected by '#define __FOO__TYPES' in lib/rperltypes_mode.h or `gcc -D__FOO__TYPES` manual subcompile option.
+ DUAL mode allows generate-once-compile-many types, selected by '#define __FOO__TYPES' in lib/rperltypes_mode.h or `gcc -D__FOO__TYPES` manual subcompile argument.
 
-=item B<--mode check=OFF _OR_ -m check=OFF>
+=for rperl X</noncode>
 
-=item B<--mode check=ON _OR_ -m check=ON>
+=item B<--mode check=OFF ...OR... -m check=OFF>
 
-=item B<--mode check=TRACE _OR_ -m check=TRACE>
+=item B<--mode check=ON ...OR... -m check=ON>
+
+=item B<--mode check=TRACE ...OR... -m check=TRACE>
+
+=for rperl X<noncode>
 
  Specify data type checking mode, TRACE by default.
  If set to OFF, do not perform dynamic type checking, only built-in C++ static type checking.
  If set to ON, perform dynamic type checking in addition to built-in C++ static type checking.
  If set to TRACE, perform dynamic type checking in addition to built-in C++ static type checking, with subroutine-and-variable trace information.
 
-=item B<--mode dependencies=OFF _OR_ -m dependencies=OFF>
+=for rperl X</noncode>
 
-=item B<--mode dependencies=ON _OR_ -m dependencies=ON>
+=item B<--mode dependencies=OFF ...OR... -m dependencies=OFF>
+
+=item B<--mode dependencies=ON ...OR... -m dependencies=ON>
+
+=for rperl X<noncode>
 
  Specify dependencies mode, ON by default.
  If set to OFF, do not search for or compile dependencies.
  If set to ON, recursively search for dependencies and subdependencies, include as additional input file(s).
 
-=item B<--mode uncompile=OFF _OR_ -m uncompile=OFF>
+=for rperl X</noncode>
 
-=item B<--mode uncompile=SOURCE _OR_ -m uncompile=SOURCE>
+=item B<--mode uncompile=OFF ...OR... -m uncompile=OFF>
 
-=item B<--mode uncompile=BINARY _OR_ -m uncompile=BINARY>
+=item B<--mode uncompile=SOURCE ...OR... -m uncompile=SOURCE>
 
-=item B<--mode uncompile=INLINE _OR_ -m uncompile=INLINE>
+=item B<--mode uncompile=BINARY ...OR... -m uncompile=BINARY>
 
-=item B<--mode uncompile=SOURCE_BINARY _OR_ -m uncompile=SOURCE_BINARY>
+=item B<--mode uncompile=INLINE ...OR... -m uncompile=INLINE>
 
-=item B<--mode uncompile=SOURCE_BINARY_INLINE _OR_ -m uncompile=SOURCE_BINARY_INLINE>
+=item B<--mode uncompile=SOURCE_BINARY ...OR... -m uncompile=SOURCE_BINARY>
+
+=item B<--mode uncompile=SOURCE_BINARY_INLINE ...OR... -m uncompile=SOURCE_BINARY_INLINE>
+
+=for rperl X<noncode>
 
  Specify uncompile mode, OFF by default.
  If set to SOURCE, delete all generated C++ output source code (not subcompiled) files: *.cpp, *.h, *.pmc
@@ -1084,15 +1124,19 @@ Restricted Perl, The Optimizing Perl 5 Compiler
  If set to SOURCE_BINARY_INLINE, delete SOURCE, BINARY, and INLINE files.
  For *.pm Perl module input files, BINARY and INLINE are equivalent.
 
-=item B<--mode compile=OFF _OR_ -m compile=OFF>
+=for rperl X</noncode>
 
-=item B<--mode compile=PARSE _OR_ -m compile=PARSE>
+=item B<--mode compile=OFF ...OR... -m compile=OFF>
 
-=item B<--mode compile=GENERATE _OR_ -m compile=GENERATE>
+=item B<--mode compile=PARSE ...OR... -m compile=PARSE>
 
-=item B<--mode compile=SAVE _OR_ -m compile=SAVE>
+=item B<--mode compile=GENERATE ...OR... -m compile=GENERATE>
 
-=item B<--mode compile=SUBCOMPILE _OR_ -m compile=SUBCOMPILE>
+=item B<--mode compile=SAVE ...OR... -m compile=SAVE>
+
+=item B<--mode compile=SUBCOMPILE ...OR... -m compile=SUBCOMPILE>
+
+=for rperl X<noncode>
 
  Specify compile mode, SUBCOMPILE by default.
  If set to PARSE, begin with RPerl input source code file(s), and end with RPerl abstract syntax tree output data structure.
@@ -1100,17 +1144,21 @@ Restricted Perl, The Optimizing Perl 5 Compiler
  If set to SAVE, begin with RPerl input source code file(s), and end with RPerl and/or C++ output source code file(s) saved to disk.
  If set to SUBCOMPILE, begin with RPerl input source code file(s), and end with C++ output binary file(s).
 
-=item B<--mode subcompile=OFF _OR_ -m subcompile=OFF>
+=for rperl X</noncode>
 
-=item B<--mode subcompile=ASSEMBLE _OR_ -m subcompile=ASSEMBLE>
+=item B<--mode subcompile=OFF ...OR... -m subcompile=OFF>
 
-=item B<--mode subcompile=ARCHIVE _OR_ -m subcompile=ARCHIVE>
+=item B<--mode subcompile=ASSEMBLE ...OR... -m subcompile=ASSEMBLE>
 
-=item B<--mode subcompile=SHARED _OR_ -m subcompile=SHARED>
+=item B<--mode subcompile=ARCHIVE ...OR... -m subcompile=ARCHIVE>
 
-=item B<--mode subcompile=STATIC _OR_ -m subcompile=STATIC>
+=item B<--mode subcompile=SHARED ...OR... -m subcompile=SHARED>
 
-=item B<--mode subcompile=DYNAMIC _OR_ -m subcompile=DYNAMIC>
+=item B<--mode subcompile=STATIC ...OR... -m subcompile=STATIC>
+
+=item B<--mode subcompile=DYNAMIC ...OR... -m subcompile=DYNAMIC>
+
+=for rperl X<noncode>
 
  Specify subcompile mode, DYNAMIC by default.
  If set to ASSEMBLE, generate *.o object binary output file(s).
@@ -1119,123 +1167,183 @@ Restricted Perl, The Optimizing Perl 5 Compiler
  If set to STATIC, generate statically-linked *.exe or non-suffixed executable binary output file(s).
  If set to DYNAMIC, generate dynamically-linked *.exe or non-suffixed executable binary output file(s).
 
-=item B<--mode CXX=/path/to/compiler _OR_ -m CXX=/path/to/compiler>
+=for rperl X</noncode>
+
+=item B<--mode CXX=/path/to/compiler ...OR... -m CXX=/path/to/compiler>
+
+=for rperl X<noncode>
 
  Specify path to C++ compiler for use in subcompile modes, 'g++' by default.
 
-=item B<--mode execute=OFF _OR_ -m execute=OFF>
+=for rperl X</noncode>
 
-=item B<--mode execute=ON _OR_ -m execute=ON>
+=item B<--mode execute=OFF ...OR... -m execute=OFF>
+
+=item B<--mode execute=ON ...OR... -m execute=ON>
+
+=for rperl X<noncode>
 
  Specify execute mode, ON by default.
  If set to OFF, do not load or run any user-supplied program(s).
  If set to ON with one *.pl Perl program input file, load and run the program.
  If set to ON with more than one *.pl Perl program input file, do not load or run any programs.
 
-=item B<--mode label=OFF _OR_ -m label=OFF>
+=for rperl X</noncode>
 
-=item B<--mode label=ON _OR_ -m label=ON>
+=item B<--mode label=OFF ...OR... -m label=OFF>
+
+=item B<--mode label=ON ...OR... -m label=ON>
+
+=for rperl X<noncode>
 
  Specify source section label mode, ON by default.
  If set to OFF, generate minimal output source code, may save disk space.
  If set to ON, generate some informative labels in output source code, may be more human-readable.
 
-=item B<--uncompile _OR_ -u>
+=for rperl X</noncode>
 
-=item B<--nouncompile _OR_ -nou>
+=item B<--uncompile ...OR... -u>
 
-=item B<--uuncompile _OR_ -uu>
+=item B<--nouncompile ...OR... -nou>
 
-=item B<--nouuncompile _OR_ -nouu>
+=item B<--uuncompile ...OR... -uu>
 
-=item B<--uuuncompile _OR_ -uuu>
+=item B<--nouuncompile ...OR... -nouu>
 
-=item B<--nouuncompile _OR_ -nouuu>
+=item B<--uuuncompile ...OR... -uuu>
+
+=item B<--nouuncompile ...OR... -nouuu>
+
+=for rperl X<noncode>
 
  Uncompile (delete C++ source code and/or binary output files), or not.
  Repeat as 'uu' and 'uuu' for more thorough file removal.
  Do not confuse uncompile with decompile (recreate RPerl source code from C++ source code or binary output files), which does not currently exist.
- '-u' equivalent to '--mode uncompile=SOURCE --mode compile=OFF --mode execute=OFF' options.
- '-uu' equivalent to '--mode uncompile=SOURCE_BINARY --mode compile=OFF --mode execute=OFF' options.
- '-uuu' equivalent to '--mode uncompile=SOURCE_BINARY_INLINE --mode compile=OFF --mode execute=OFF' options.
+ '-u' equivalent to '--mode uncompile=SOURCE --mode compile=OFF --mode execute=OFF' arguments.
+ '-uu' equivalent to '--mode uncompile=SOURCE_BINARY --mode compile=OFF --mode execute=OFF' arguments.
+ '-uuu' equivalent to '--mode uncompile=SOURCE_BINARY_INLINE --mode compile=OFF --mode execute=OFF' arguments.
  Disabled by default.
 
-=item B<--compile _OR_ -c>
+=for rperl X</noncode>
 
-=item B<--nocompile _OR_ -noc>
+=item B<--compile ...OR... -c>
+
+=item B<--nocompile ...OR... -noc>
+
+=for rperl X<noncode>
 
  Generate & subcompile C++ source code, or not.
- Enabled by default, equivalent to '--mode compile=SUBCOMPILE' option.
+ Enabled by default, equivalent to '--mode compile=SUBCOMPILE' argument.
 
-=item B<--execute _OR_ -e>
+=for rperl X</noncode>
 
-=item B<--noexecute _OR_ -noe>
+=item B<--execute ...OR... -e>
 
- Run input code after optional compile, or not.
+=item B<--noexecute ...OR... -noe>
+
+=for rperl X<noncode>
+
+ Run input code after argumental compile, or not.
  Enabled by default for *.pl program input files, always disabled for *.pm module input files or multiple input files.
- Equivalent to '--mode execute=ON' option.
+ Equivalent to '--mode execute=ON' argument.
 
-=item B<--Verbose _OR_ -V>
+=for rperl X</noncode>
 
-=item B<--noVerbose _OR_ -noV>
+=item B<--Verbose ...OR... -V>
+
+=item B<--noVerbose ...OR... -noV>
+
+=for rperl X<noncode>
 
  Include additional user information in output, or not.
  If enabled, equivalent to `export RPERL_VERBOSE=1` shell command.
  Disabled by default.
- Uppercase 'V' not to be confused with lowercase 'v' in 'version' option above.
+ Uppercase 'V' not to be confused with lowercase 'v' in 'version' argument above.
 
-=item B<--Debug _OR_ -D>
+=for rperl X</noncode>
 
-=item B<--noDebug _OR_ -noD>
+=item B<--Debug ...OR... -D>
+
+=item B<--noDebug ...OR... -noD>
+
+=for rperl X<noncode>
 
  Include system diagnostic information in output, or not.
  If enabled, equivalent to `export RPERL_DEBUG=1` shell command.
  Disabled by default.
- Uppercase 'D' not to be confused with lowercase 'd' in 'dependencies' option above.
+ Uppercase 'D' not to be confused with lowercase 'd' in 'dependencies' argument above.
 
-=item B<--Warnings _OR_ -W>
+=for rperl X</noncode>
 
-=item B<--noWarnings _OR_ -noW>
+=item B<--Warnings ...OR... -W>
+
+=item B<--noWarnings ...OR... -noW>
+
+=for rperl X<noncode>
 
  Include system warnings in output, or not.
  Enabled by default, equivalent to `export RPERL_WARNINGS=0` shell command.
 
-=item B<--test _OR_ -t>
+=for rperl X</noncode>
+
+=item B<--test ...OR... -t>
+
+=for rperl X<noncode>
 
  Test mode: Perl ops, Perl types, Parse & Generate (no Save or Compile)
- If enabled, equivalent to '--mode ops=PERL --mode types=PERL --mode compile=GENERATE' options.
+ If enabled, equivalent to '--mode ops=PERL --mode types=PERL --mode compile=GENERATE' arguments.
  Disabled by default.
+
+=for rperl X</noncode>
 
 =item B<--assemble>
 
+=for rperl X<noncode>
+
  Assemble subcompile mode, output *.o object file(s).
- If enabled, equivalent to '--mode subcompile=ASSEMBLE' option or `gcc -c` manual subcompile option.
+ If enabled, equivalent to '--mode subcompile=ASSEMBLE' argument or `gcc -c` manual subcompile argument.
  Disabled by default.
+
+=for rperl X</noncode>
 
 =item B<--archive>
 
+=for rperl X<noncode>
+
  Archive subcompile mode, output *.a object archive file(s).
- If enabled, equivalent to '--mode subcompile=ARCHIVE' option or `gcc -c` followed by `ar` manual subcompile command.
+ If enabled, equivalent to '--mode subcompile=ARCHIVE' argument or `gcc -c` followed by `ar` manual subcompile command.
  Disabled by default.
+
+=for rperl X</noncode>
 
 =item B<--shared>
 
+=for rperl X<noncode>
+
  Archive subcompile mode, output *.so shared object file(s).
- If enabled, equivalent to '--mode subcompile=SHARED' option or `gcc -shared` manual subcompile command.
+ If enabled, equivalent to '--mode subcompile=SHARED' argument or `gcc -shared` manual subcompile command.
  Disabled by default.
+
+=for rperl X</noncode>
 
 =item B<--static>
 
 =item B<--nostatic>
 
+=for rperl X<noncode>
+
  Static subcompile mode, output *.exe or non-suffixed statically-linked executable file(s).
- If disabled, equivalent to '--mode subcompile=DYNAMIC' option or `gcc` manual subcompile command.
- If enabled, equivalent to '--mode subcompile=STATIC' option or `gcc -static` manual subcompile command.
+ If disabled, equivalent to '--mode subcompile=DYNAMIC' argument or `gcc` manual subcompile command.
+ If enabled, equivalent to '--mode subcompile=STATIC' argument or `gcc -static` manual subcompile command.
  Disabled by default.
+
+=for rperl X</noncode>
 
 =item B<--CXX=/path/to/compiler>
 
- Specify path to C++ compiler, equivalent to '--mode CXX=/path/to/compiler' or 'CXX' manual Makefile option.
+=for rperl X<noncode>
+
+ Specify path to C++ compiler, equivalent to '--mode CXX=/path/to/compiler' or 'CXX' manual Makefile argument.
 
 =back
 

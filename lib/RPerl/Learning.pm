@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.080_000;
+our $VERSION = 0.081_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -10504,11 +10504,11 @@ X<ENABLE_LIST_SPACING>
 
 RPerl is a compiler, so it is unsurprising that 9 of the 15 RPerl phases are compile phases.  When a software developer (like you!) runs the RPerl compiler via the C<rperl> command, the first compile phase checks the validity of the command-line arguments (AKA options) as well as the input source code file(s) to be compiled.  Command-line arguments can be entirely omitted, in which case default behavior will be utilized.  At least one input file must be specified, or else there would be no reason to run the C<rperl> command.
 
-START HERE: decide where to put full explanations of all RPerl command-line arguments
+START HERE: add link to appendix B for command-line args, continue adding problem message content
 
-START HERE: decide where to put full explanations of all RPerl command-line arguments
+START HERE: add link to appendix B for command-line args, continue adding problem message content
 
-START HERE: decide where to put full explanations of all RPerl command-line arguments
+START HERE: add link to appendix B for command-line args, continue adding problem message content
 
 Unknown option: FOO
 ERROR EARG00: Failure processing command line arguments, dying
@@ -10649,7 +10649,9 @@ To convert from one data type to another, we use the RPerl type conversion subro
 =head3 Section 2.4.x Scope, Type, Name, Value
 
 START HERE: continue editing & adding content
+
 START HERE: continue editing & adding content
+
 START HERE: continue editing & adding content
 
 The I<"scope"> of a variable is either local using the C<my> keyword, or global using the C<our> keyword.  Local variables are only usable within their own enclosing code block such as a conditional (section xxx), loop (xxx), or subroutine (chapter 4).
@@ -11297,198 +11299,47 @@ X<br>
 
 Example execution and output for 2a and 2b:
 
+=for DEV NOTE, CORRELATION #rp29: all updates to `rperl` command-line arguments must be documented in script/rperl and 2 places in lib/RPerl/Learning.pm
+
 =for rperl X<noncode>
 
     $ rperl -?
     Usage:
-                rperl [OPTIONS] input_program_0.pl [input_program_1.pl input_program_2.pl ...]
-                rperl [OPTIONS] MyClassFoo.pm [MyClassBar.pm MyClassBat.pm ...]
-                rperl [OPTIONS] input_program_0.pl MyClassFoo.pm [input_program_1.pl ... MyClassBar.pm ...]
+                rperl [ARGUMENTS] input_program_0.pl [input_program_1.pl input_program_2.pl ...]
+                rperl [ARGUMENTS] MyClassFoo.pm [MyClassBar.pm MyClassBat.pm ...]
+                rperl [ARGUMENTS] input_program_0.pl MyClassFoo.pm [input_program_1.pl ... MyClassBar.pm ...]
     
-    Options:
-        --help _OR_ -h _OR_ -?
+    Arguments:
+        --help ...OR... -h ...OR... -?
                  Print a brief help message for command-line usage.
     
-        --version _OR_ -v
-        --vversion _OR_ -vv
+        --version ...OR... -v
+        --vversion ...OR... -vv
                  Print version number and copyright information.
-                 Repeat as 'vv' for more technical information, similar to `perl -V` configuration summary option.
-                 Lowercase 'v' not to be confused with uppercase 'V' in 'Verbose' option below.
+                 Repeat as 'vv' for more technical information, similar to `perl -V` configuration summary argument.
+                 Lowercase 'v' not to be confused with uppercase 'V' in 'Verbose' argument below.
     
-        --dependencies _OR_ -d
-        --nodependencies _OR_ -nod
+        --dependencies ...OR... -d
+        --nodependencies ...OR... -nod
                  Follow and compile dependencies, or not.
-                 Enabled by default, equivalent to '--mode dependencies=ON' option.
-                 Lowercase 'd' not to be confused with uppercase 'D' in 'Debug' option below.
+                 Enabled by default, equivalent to '--mode dependencies=ON' argument.
+                 Lowercase 'd' not to be confused with uppercase 'D' in 'Debug' argument below.
                  WARNING: Disabling dependencies will likely cause errors or undefined behavior.
     
-        --infile=MyFile.pm _OR_ -i=MyFile.pm
+        --infile=MyFile.pm ...OR... -i=MyFile.pm
                  Specify input file, may be repeated for multiple input files.
-                 Option prefix '--infile' may be entirely omitted.
-                 Option prefix MUST be omitted to specify wildcard for multiple input files.
+                 Argument prefix '--infile' may be entirely omitted.
+                 Argument prefix MUST be omitted to specify wildcard for multiple input files.
     
-        --outfile=MyFile _OR_ -o=MyFile
+        --outfile=MyFile ...OR... -o=MyFile
                  Specify output file prefix, may be repeated for multiple output files.
                  RPerl *.pm input file with PERL ops will create MyFile.pmc output file.
                  RPerl *.pl input file with PERL ops will create my_file (or my_file.exe) & my_file.pmc output files.
                  RPerl *.pm input file with CPP ops will create MyFile.pmc, MyFile.cpp, & MyFile.h output files.
                  RPerl *.pl input file with CPP ops will create myfile (or myfile.exe on Windows), MyFile.pmc, MyFile.cpp, & MyFile.h output files.
-                 Option may be entirely omitted, 'MyFile.*' input file will default to 'MyFile.*' out.
-    
-        --mode ops=PERL _OR_ -m ops=PERL
-        --mode ops=CPP _OR_ -m ops=CPP
-                 Specify operations mode, CPP by default.
-                 If set to PERL, generate Perl operations in the source code output file(s).
-                 If set to CPP, generate C++ operations in the source code output file(s).
-                 PERL ops mode forces PERL types mode & PARSE or GENERATE compile mode; PERLOPS_PERLTYPES is test mode, does not actually compile.
-    
-        --mode types=PERL _OR_ -m types=PERL
-        --mode types=CPP _OR_ -m types=CPP
-        --mode types=DUAL _OR_ -m types=DUAL
-                 Specify data types mode, CPP by default.
-                 If set to PERL, generate Perl data types in the source code output file(s).
-                 If set to CPP, generate C++ data types in the source code output file(s).
-                 If set to DUAL, generate both Perl and C++ data types in the source code output file(s).
-                 DUAL mode allows generate-once-compile-many types, selected by '#define __FOO__TYPES' in lib/rperltypes_mode.h or `gcc -D__FOO__TYPES` manual subcompile option.
-    
-        --mode check=OFF _OR_ -m check=OFF
-        --mode check=ON _OR_ -m check=ON
-        --mode check=TRACE _OR_ -m check=TRACE
-                 Specify data type checking mode, TRACE by default.
-                 If set to OFF, do not perform dynamic type checking, only built-in C++ static type checking.
-                 If set to ON, perform dynamic type checking in addition to built-in C++ static type checking.
-                 If set to TRACE, perform dynamic type checking in addition to built-in C++ static type checking, with subroutine-and-variable trace information.
-    
-        --mode dependencies=OFF _OR_ -m dependencies=OFF
-        --mode dependencies=ON _OR_ -m dependencies=ON
-                 Specify dependencies mode, ON by default.
-                 If set to OFF, do not search for or compile dependencies.
-                 If set to ON, recursively search for dependencies and subdependencies, include as additional input file(s).
-    
-        --mode uncompile=OFF _OR_ -m uncompile=OFF
-        --mode uncompile=SOURCE _OR_ -m uncompile=SOURCE
-        --mode uncompile=BINARY _OR_ -m uncompile=BINARY
-        --mode uncompile=INLINE _OR_ -m uncompile=INLINE
-        --mode uncompile=SOURCE_BINARY _OR_ -m uncompile=SOURCE_BINARY
-        --mode uncompile=SOURCE_BINARY_INLINE _OR_ -m uncompile=SOURCE_BINARY_INLINE
-                 Specify uncompile mode, OFF by default.
-                 If set to SOURCE, delete all generated C++ output source code (not subcompiled) files: *.cpp, *.h, *.pmc
-                 If set to BINARY, delete all generated C++ output binary (subcompiled) files: *.o, *.a, *.so, *.exe, non-suffixed executables
-                 If set to INLINE, delete all generated C++ output Inline::CPP files: _Inline/ directory
-                 If set to SOURCE_BINARY, delete both SOURCE and BINARY files.
-                 If set to SOURCE_BINARY_INLINE, delete SOURCE, BINARY, and INLINE files.
-                 For *.pm Perl module input files, BINARY and INLINE are equivalent.
-    
-        --mode compile=PARSE _OR_ -m compile=PARSE
-        --mode compile=GENERATE _OR_ -m compile=GENERATE
-        --mode compile=SUBCOMPILE _OR_ -m compile=SUBCOMPILE
-                 Specify compile mode, SUBCOMPILE by default.
-                 If set to PARSE, begin with RPerl input source code file(s), and end with RPerl abstract syntax tree output data structure.
-                 If set to GENERATE, begin with RPerl input source code file(s), and end with RPerl and/or C++ output source code file(s).
-                 If set to SUBCOMPILE, begin with RPerl input source code file(s), and end with C++ output binary file(s).
-    
-        --mode subcompile=OFF _OR_ -m subcompile=OFF
-        --mode subcompile=ASSEMBLE _OR_ -m subcompile=ASSEMBLE
-        --mode subcompile=ARCHIVE _OR_ -m subcompile=ARCHIVE
-        --mode subcompile=SHARED _OR_ -m subcompile=SHARED
-        --mode subcompile=STATIC _OR_ -m subcompile=STATIC
-        --mode subcompile=DYNAMIC _OR_ -m subcompile=DYNAMIC
-                 Specify subcompile mode, DYNAMIC by default.
-                 If set to ASSEMBLE, generate *.o object binary output file(s).
-                 If set to ARCHIVE, generate *.a object archive binary output file(s).
-                 If set to SHARED, generate *.so shared object binary output file(s).
-                 If set to STATIC, generate statically-linked *.exe or non-suffixed executable binary output file(s).
-                 If set to DYNAMIC, generate dynamically-linked *.exe or non-suffixed executable binary output file(s).
-    
-        --mode CXX=/path/to/compiler _OR_ -m CXX=/path/to/compiler
-                 Specify path to C++ compiler for use in subcompile modes, 'g++' by default.
-    
-        --mode execute=OFF _OR_ -m execute=OFF
-        --mode execute=ON _OR_ -m execute=ON
-                 Specify execute mode, ON by default.
-                 If set to OFF, do not load or run any user-supplied program(s).
-                 If set to ON with one *.pl Perl program input file, load and run the program.
-                 If set to ON with more than one *.pl Perl program input file, do not load or run any programs.
-    
-        --mode label=OFF _OR_ -m label=OFF
-        --mode label=ON _OR_ -m label=ON
-                 Specify source section label mode, ON by default.
-                 If set to OFF, generate minimal output source code, may save disk space.
-                 If set to ON, generate some informative labels in output source code, may be more human-readable.
-    
-        --uncompile _OR_ -u
-        --nouncompile _OR_ -nou
-        --uuncompile _OR_ -uu
-        --nouuncompile _OR_ -nouu
-        --uuuncompile _OR_ -uuu
-        --nouuncompile _OR_ -nouuu
-                 Uncompile (delete C++ source code and/or binary output files), or not.
-                 Repeat as 'uu' and 'uuu' for more thorough file removal.
-                 Do not confuse uncompile with decompile (recreate RPerl source code from C++ source code or binary output files), which does not currently exist.
-                 '-u' equivalent to '--mode uncompile=SOURCE --mode compile=OFF --mode execute=OFF' options.
-                 '-uu' equivalent to '--mode uncompile=SOURCE_BINARY --mode compile=OFF --mode execute=OFF' options.
-                 '-uuu' equivalent to '--mode uncompile=SOURCE_BINARY_INLINE --mode compile=OFF --mode execute=OFF' options.
-                 Disabled by default.
-    
-        --compile _OR_ -c
-        --nocompile _OR_ -noc
-                 Generate & subcompile C++ source code, or not.
-                 Enabled by default, equivalent to '--mode compile=SUBCOMPILE' option.
-    
-        --execute _OR_ -e
-        --noexecute _OR_ -noe
-                 Run input code after optional compile, or not.
-                 Enabled by default for *.pl program input files, always disabled for *.pm module input files or multiple input files.
-                 Equivalent to '--mode execute=ON' option.
-    
-        --Verbose _OR_ -V
-        --noVerbose _OR_ -noV
-                 Include additional user information in output, or not.
-                 If enabled, equivalent to `export RPERL_VERBOSE=1` shell command.
-                 Disabled by default.
-                 Uppercase 'V' not to be confused with lowercase 'v' in 'version' option above.
-    
-        --Debug _OR_ -D
-        --noDebug _OR_ -noD
-                 Include system diagnostic information in output, or not.
-                 If enabled, equivalent to `export RPERL_DEBUG=1` shell command.
-                 Disabled by default.
-                 Uppercase 'D' not to be confused with lowercase 'd' in 'dependencies' option above.
-    
-        --Warnings _OR_ -W
-        --noWarnings _OR_ -noW
-                 Include system warnings in output, or not.
-                 Enabled by default, equivalent to `export RPERL_WARNINGS=0` shell command.
-    
-        --test _OR_ -t
-                 Test mode: Perl ops, Perl types, Parse & Generate (no Save or Compile)
-                 If enabled, equivalent to '--mode ops=PERL --mode types=PERL --mode compile=GENERATE' options.
-                 Disabled by default.
-    
-        --assemble
-                 Assemble subcompile mode, output *.o object file(s).
-                 If enabled, equivalent to '--mode subcompile=ASSEMBLE' option or `gcc -c` manual subcompile option.
-                 Disabled by default.
-    
-        --archive
-                 Archive subcompile mode, output *.a object archive file(s).
-                 If enabled, equivalent to '--mode subcompile=ARCHIVE' option or `gcc -c` followed by `ar` manual subcompile command.
-                 Disabled by default.
-    
-        --shared
-                 Archive subcompile mode, output *.so shared object file(s).
-                 If enabled, equivalent to '--mode subcompile=SHARED' option or `gcc -shared` manual subcompile command.
-                 Disabled by default.
-    
-        --static
-        --nostatic
-                 Static subcompile mode, output *.exe or non-suffixed statically-linked executable file(s).
-                 If disabled, equivalent to '--mode subcompile=DYNAMIC' option or `gcc` manual subcompile command.
-                 If enabled, equivalent to '--mode subcompile=STATIC' option or `gcc -static` manual subcompile command.
-                 Disabled by default.
-    
-        --CXX=/path/to/compiler
-                 Specify path to C++ compiler, equivalent to '--mode CXX=/path/to/compiler' or 'CXX' manual Makefile option.
+                 Argument may be entirely omitted, 'MyFile.*' input file will default to 'MyFile.*' out.
+
+    [[[ REMAINING ARGUMENTS OMITTED FOR BREVITY ]]]
 
 =for rperl X</noncode>
 
@@ -13208,105 +13059,147 @@ Example execution, input, and output:
 X<br>
 
 
+=for DEV NOTE, CORRELATION #rp29: all updates to `rperl` command-line arguments must be documented in script/rperl and 2 places in lib/RPerl/Learning.pm
+
 =head1 APPENDIX B: RPERL COMMAND-LINE ARGUMENTS
 
-The C<rperl> I<"command-line interface"> (CLI) is the primary front-end user interface for RPerl.  When called for execution, the C<rperl> command must be provided with at least one input file name, which tells RPerl which file(s) to compile.  In addition, C<rperl> may also be provided with one or more optional I<"command-line arguments">, which tells RPerl exactly how to compile the input file(s).
+The C<rperl> I<"command-line interface"> (CLI) is the primary front-end user interface for RPerl.  When called for execution, the C<rperl> command must be provided with at least one input file name, which tells RPerl which file(s) to compile.  In addition, C<rperl> may also be provided with one or more optional I<"command-line arguments">, which tells RPerl exactly how to compile the input file(s).  Command-line arguments are also commonly referred to as I<"options">.
 
 Below is a comprehensive list of all RPerl command-line arguments, as reported by the C<rperl -?> command, with additional explanations provided.
 
-START HERE: add dev note correlation w/ `rperl` args POD, add explanations below
-START HERE: add dev note correlation w/ `rperl` args POD, add explanations below
-START HERE: add dev note correlation w/ `rperl` args POD, add explanations below
+# START HERE: decide if we keep the "definition" list type, or prefer "bullet" type instead???
+
+# START HERE: decide if we keep the "definition" list type, or prefer "bullet" type instead???
+
+# START HERE: decide if we keep the "definition" list type, or prefer "bullet" type instead???
 
 =over
 
-=item B<--help _OR_ -h _OR_ -?>
+=item B<--help ...OR... -h ...OR... -?>
+
+=for rperl X<noncode>
 
  Print a brief help message for command-line usage.
 
-=item B<--version _OR_ -v>
+=for rperl X</noncode>
 
-=item B<--vversion _OR_ -vv>
+=item B<--version ...OR... -v>
+
+=item B<--vversion ...OR... -vv>
+
+=for rperl X<noncode>
 
  Print version number and copyright information.
- Repeat as 'vv' for more technical information, similar to `perl -V` configuration summary option.
- Lowercase 'v' not to be confused with uppercase 'V' in 'Verbose' option below.
- 
-=item B<--dependencies _OR_ -d>
+ Repeat as 'vv' for more technical information, similar to `perl -V` configuration summary argument.
+ Lowercase 'v' not to be confused with uppercase 'V' in 'Verbose' argument below.
 
-=item B<--nodependencies _OR_ -nod>
+=for rperl X</noncode>
+
+=item B<--dependencies ...OR... -d>
+
+=item B<--nodependencies ...OR... -nod>
+
+=for rperl X<noncode>
 
  Follow and compile dependencies, or not.
- Enabled by default, equivalent to '--mode dependencies=ON' option.
- Lowercase 'd' not to be confused with uppercase 'D' in 'Debug' option below.
+ Enabled by default, equivalent to '--mode dependencies=ON' argument.
+ Lowercase 'd' not to be confused with uppercase 'D' in 'Debug' argument below.
  WARNING: Disabling dependencies will likely cause errors or undefined behavior.
 
-=item B<--infile=MyFile.pm _OR_ -i=MyFile.pm>
+=for rperl X</noncode>
+
+=item B<--infile=MyFile.pm ...OR... -i=MyFile.pm>
+
+=for rperl X<noncode>
 
  Specify input file, may be repeated for multiple input files.
- Option prefix '--infile' may be entirely omitted.
- Option prefix MUST be omitted to specify wildcard for multiple input files.
+ Argument prefix '--infile' may be entirely omitted.
+ Argument prefix MUST be omitted to specify wildcard for multiple input files.
 
-=item B<--outfile=MyFile _OR_ -o=MyFile>
+=for rperl X</noncode>
+
+=item B<--outfile=MyFile ...OR... -o=MyFile>
+
+=for rperl X<noncode>
 
  Specify output file prefix, may be repeated for multiple output files.
  RPerl *.pm input file with PERL ops will create MyFile.pmc output file.
  RPerl *.pl input file with PERL ops will create my_file (or my_file.exe) & my_file.pmc output files.
  RPerl *.pm input file with CPP ops will create MyFile.pmc, MyFile.cpp, & MyFile.h output files.
  RPerl *.pl input file with CPP ops will create myfile (or myfile.exe on Windows), MyFile.pmc, MyFile.cpp, & MyFile.h output files.
- Option may be entirely omitted, 'MyFile.*' input file will default to 'MyFile.*' out.
+ Argument may be entirely omitted, 'MyFile.*' input file will default to 'MyFile.*' out.
 
-=item B<--mode ops=PERL _OR_ -m ops=PERL>
+=for rperl X</noncode>
 
-=item B<--mode ops=CPP _OR_ -m ops=CPP>
+=item B<--mode ops=PERL ...OR... -m ops=PERL>
+
+=item B<--mode ops=CPP ...OR... -m ops=CPP>
+
+=for rperl X<noncode>
 
  Specify operations mode, CPP by default.
  If set to PERL, generate Perl operations in the source code output file(s).
  If set to CPP, generate C++ operations in the source code output file(s).
  PERL ops mode forces PERL types mode & PARSE or GENERATE compile mode; PERLOPS_PERLTYPES is test mode, does not actually compile.
 
-=item B<--mode types=PERL _OR_ -m types=PERL>
+=for rperl X</noncode>
 
-=item B<--mode types=CPP _OR_ -m types=CPP>
+=item B<--mode types=PERL ...OR... -m types=PERL>
 
-=item B<--mode types=DUAL _OR_ -m types=DUAL>
+=item B<--mode types=CPP ...OR... -m types=CPP>
+
+=item B<--mode types=DUAL ...OR... -m types=DUAL>
+
+=for rperl X<noncode>
 
  Specify data types mode, CPP by default.
  If set to PERL, generate Perl data types in the source code output file(s).
  If set to CPP, generate C++ data types in the source code output file(s).
  If set to DUAL, generate both Perl and C++ data types in the source code output file(s).
- DUAL mode allows generate-once-compile-many types, selected by '#define __FOO__TYPES' in lib/rperltypes_mode.h or `gcc -D__FOO__TYPES` manual subcompile option.
+ DUAL mode allows generate-once-compile-many types, selected by '#define __FOO__TYPES' in lib/rperltypes_mode.h or `gcc -D__FOO__TYPES` manual subcompile argument.
 
-=item B<--mode check=OFF _OR_ -m check=OFF>
+=for rperl X</noncode>
 
-=item B<--mode check=ON _OR_ -m check=ON>
+=item B<--mode check=OFF ...OR... -m check=OFF>
 
-=item B<--mode check=TRACE _OR_ -m check=TRACE>
+=item B<--mode check=ON ...OR... -m check=ON>
+
+=item B<--mode check=TRACE ...OR... -m check=TRACE>
+
+=for rperl X<noncode>
 
  Specify data type checking mode, TRACE by default.
  If set to OFF, do not perform dynamic type checking, only built-in C++ static type checking.
  If set to ON, perform dynamic type checking in addition to built-in C++ static type checking.
  If set to TRACE, perform dynamic type checking in addition to built-in C++ static type checking, with subroutine-and-variable trace information.
 
-=item B<--mode dependencies=OFF _OR_ -m dependencies=OFF>
+=for rperl X</noncode>
 
-=item B<--mode dependencies=ON _OR_ -m dependencies=ON>
+=item B<--mode dependencies=OFF ...OR... -m dependencies=OFF>
+
+=item B<--mode dependencies=ON ...OR... -m dependencies=ON>
+
+=for rperl X<noncode>
 
  Specify dependencies mode, ON by default.
  If set to OFF, do not search for or compile dependencies.
  If set to ON, recursively search for dependencies and subdependencies, include as additional input file(s).
 
-=item B<--mode uncompile=OFF _OR_ -m uncompile=OFF>
+=for rperl X</noncode>
 
-=item B<--mode uncompile=SOURCE _OR_ -m uncompile=SOURCE>
+=item B<--mode uncompile=OFF ...OR... -m uncompile=OFF>
 
-=item B<--mode uncompile=BINARY _OR_ -m uncompile=BINARY>
+=item B<--mode uncompile=SOURCE ...OR... -m uncompile=SOURCE>
 
-=item B<--mode uncompile=INLINE _OR_ -m uncompile=INLINE>
+=item B<--mode uncompile=BINARY ...OR... -m uncompile=BINARY>
 
-=item B<--mode uncompile=SOURCE_BINARY _OR_ -m uncompile=SOURCE_BINARY>
+=item B<--mode uncompile=INLINE ...OR... -m uncompile=INLINE>
 
-=item B<--mode uncompile=SOURCE_BINARY_INLINE _OR_ -m uncompile=SOURCE_BINARY_INLINE>
+=item B<--mode uncompile=SOURCE_BINARY ...OR... -m uncompile=SOURCE_BINARY>
+
+=item B<--mode uncompile=SOURCE_BINARY_INLINE ...OR... -m uncompile=SOURCE_BINARY_INLINE>
+
+=for rperl X<noncode>
 
  Specify uncompile mode, OFF by default.
  If set to SOURCE, delete all generated C++ output source code (not subcompiled) files: *.cpp, *.h, *.pmc
@@ -13316,15 +13209,19 @@ START HERE: add dev note correlation w/ `rperl` args POD, add explanations below
  If set to SOURCE_BINARY_INLINE, delete SOURCE, BINARY, and INLINE files.
  For *.pm Perl module input files, BINARY and INLINE are equivalent.
 
-=item B<--mode compile=OFF _OR_ -m compile=OFF>
+=for rperl X</noncode>
 
-=item B<--mode compile=PARSE _OR_ -m compile=PARSE>
+=item B<--mode compile=OFF ...OR... -m compile=OFF>
 
-=item B<--mode compile=GENERATE _OR_ -m compile=GENERATE>
+=item B<--mode compile=PARSE ...OR... -m compile=PARSE>
 
-=item B<--mode compile=SAVE _OR_ -m compile=SAVE>
+=item B<--mode compile=GENERATE ...OR... -m compile=GENERATE>
 
-=item B<--mode compile=SUBCOMPILE _OR_ -m compile=SUBCOMPILE>
+=item B<--mode compile=SAVE ...OR... -m compile=SAVE>
+
+=item B<--mode compile=SUBCOMPILE ...OR... -m compile=SUBCOMPILE>
+
+=for rperl X<noncode>
 
  Specify compile mode, SUBCOMPILE by default.
  If set to PARSE, begin with RPerl input source code file(s), and end with RPerl abstract syntax tree output data structure.
@@ -13332,17 +13229,21 @@ START HERE: add dev note correlation w/ `rperl` args POD, add explanations below
  If set to SAVE, begin with RPerl input source code file(s), and end with RPerl and/or C++ output source code file(s) saved to disk.
  If set to SUBCOMPILE, begin with RPerl input source code file(s), and end with C++ output binary file(s).
 
-=item B<--mode subcompile=OFF _OR_ -m subcompile=OFF>
+=for rperl X</noncode>
 
-=item B<--mode subcompile=ASSEMBLE _OR_ -m subcompile=ASSEMBLE>
+=item B<--mode subcompile=OFF ...OR... -m subcompile=OFF>
 
-=item B<--mode subcompile=ARCHIVE _OR_ -m subcompile=ARCHIVE>
+=item B<--mode subcompile=ASSEMBLE ...OR... -m subcompile=ASSEMBLE>
 
-=item B<--mode subcompile=SHARED _OR_ -m subcompile=SHARED>
+=item B<--mode subcompile=ARCHIVE ...OR... -m subcompile=ARCHIVE>
 
-=item B<--mode subcompile=STATIC _OR_ -m subcompile=STATIC>
+=item B<--mode subcompile=SHARED ...OR... -m subcompile=SHARED>
 
-=item B<--mode subcompile=DYNAMIC _OR_ -m subcompile=DYNAMIC>
+=item B<--mode subcompile=STATIC ...OR... -m subcompile=STATIC>
+
+=item B<--mode subcompile=DYNAMIC ...OR... -m subcompile=DYNAMIC>
+
+=for rperl X<noncode>
 
  Specify subcompile mode, DYNAMIC by default.
  If set to ASSEMBLE, generate *.o object binary output file(s).
@@ -13351,123 +13252,183 @@ START HERE: add dev note correlation w/ `rperl` args POD, add explanations below
  If set to STATIC, generate statically-linked *.exe or non-suffixed executable binary output file(s).
  If set to DYNAMIC, generate dynamically-linked *.exe or non-suffixed executable binary output file(s).
 
-=item B<--mode CXX=/path/to/compiler _OR_ -m CXX=/path/to/compiler>
+=for rperl X</noncode>
+
+=item B<--mode CXX=/path/to/compiler ...OR... -m CXX=/path/to/compiler>
+
+=for rperl X<noncode>
 
  Specify path to C++ compiler for use in subcompile modes, 'g++' by default.
 
-=item B<--mode execute=OFF _OR_ -m execute=OFF>
+=for rperl X</noncode>
 
-=item B<--mode execute=ON _OR_ -m execute=ON>
+=item B<--mode execute=OFF ...OR... -m execute=OFF>
+
+=item B<--mode execute=ON ...OR... -m execute=ON>
+
+=for rperl X<noncode>
 
  Specify execute mode, ON by default.
  If set to OFF, do not load or run any user-supplied program(s).
  If set to ON with one *.pl Perl program input file, load and run the program.
  If set to ON with more than one *.pl Perl program input file, do not load or run any programs.
 
-=item B<--mode label=OFF _OR_ -m label=OFF>
+=for rperl X</noncode>
 
-=item B<--mode label=ON _OR_ -m label=ON>
+=item B<--mode label=OFF ...OR... -m label=OFF>
+
+=item B<--mode label=ON ...OR... -m label=ON>
+
+=for rperl X<noncode>
 
  Specify source section label mode, ON by default.
  If set to OFF, generate minimal output source code, may save disk space.
  If set to ON, generate some informative labels in output source code, may be more human-readable.
 
-=item B<--uncompile _OR_ -u>
+=for rperl X</noncode>
 
-=item B<--nouncompile _OR_ -nou>
+=item B<--uncompile ...OR... -u>
 
-=item B<--uuncompile _OR_ -uu>
+=item B<--nouncompile ...OR... -nou>
 
-=item B<--nouuncompile _OR_ -nouu>
+=item B<--uuncompile ...OR... -uu>
 
-=item B<--uuuncompile _OR_ -uuu>
+=item B<--nouuncompile ...OR... -nouu>
 
-=item B<--nouuncompile _OR_ -nouuu>
+=item B<--uuuncompile ...OR... -uuu>
+
+=item B<--nouuncompile ...OR... -nouuu>
+
+=for rperl X<noncode>
 
  Uncompile (delete C++ source code and/or binary output files), or not.
  Repeat as 'uu' and 'uuu' for more thorough file removal.
  Do not confuse uncompile with decompile (recreate RPerl source code from C++ source code or binary output files), which does not currently exist.
- '-u' equivalent to '--mode uncompile=SOURCE --mode compile=OFF --mode execute=OFF' options.
- '-uu' equivalent to '--mode uncompile=SOURCE_BINARY --mode compile=OFF --mode execute=OFF' options.
- '-uuu' equivalent to '--mode uncompile=SOURCE_BINARY_INLINE --mode compile=OFF --mode execute=OFF' options.
+ '-u' equivalent to '--mode uncompile=SOURCE --mode compile=OFF --mode execute=OFF' arguments.
+ '-uu' equivalent to '--mode uncompile=SOURCE_BINARY --mode compile=OFF --mode execute=OFF' arguments.
+ '-uuu' equivalent to '--mode uncompile=SOURCE_BINARY_INLINE --mode compile=OFF --mode execute=OFF' arguments.
  Disabled by default.
 
-=item B<--compile _OR_ -c>
+=for rperl X</noncode>
 
-=item B<--nocompile _OR_ -noc>
+=item B<--compile ...OR... -c>
+
+=item B<--nocompile ...OR... -noc>
+
+=for rperl X<noncode>
 
  Generate & subcompile C++ source code, or not.
- Enabled by default, equivalent to '--mode compile=SUBCOMPILE' option.
+ Enabled by default, equivalent to '--mode compile=SUBCOMPILE' argument.
 
-=item B<--execute _OR_ -e>
+=for rperl X</noncode>
 
-=item B<--noexecute _OR_ -noe>
+=item B<--execute ...OR... -e>
 
- Run input code after optional compile, or not.
+=item B<--noexecute ...OR... -noe>
+
+=for rperl X<noncode>
+
+ Run input code after argumental compile, or not.
  Enabled by default for *.pl program input files, always disabled for *.pm module input files or multiple input files.
- Equivalent to '--mode execute=ON' option.
+ Equivalent to '--mode execute=ON' argument.
 
-=item B<--Verbose _OR_ -V>
+=for rperl X</noncode>
 
-=item B<--noVerbose _OR_ -noV>
+=item B<--Verbose ...OR... -V>
+
+=item B<--noVerbose ...OR... -noV>
+
+=for rperl X<noncode>
 
  Include additional user information in output, or not.
  If enabled, equivalent to `export RPERL_VERBOSE=1` shell command.
  Disabled by default.
- Uppercase 'V' not to be confused with lowercase 'v' in 'version' option above.
+ Uppercase 'V' not to be confused with lowercase 'v' in 'version' argument above.
 
-=item B<--Debug _OR_ -D>
+=for rperl X</noncode>
 
-=item B<--noDebug _OR_ -noD>
+=item B<--Debug ...OR... -D>
+
+=item B<--noDebug ...OR... -noD>
+
+=for rperl X<noncode>
 
  Include system diagnostic information in output, or not.
  If enabled, equivalent to `export RPERL_DEBUG=1` shell command.
  Disabled by default.
- Uppercase 'D' not to be confused with lowercase 'd' in 'dependencies' option above.
+ Uppercase 'D' not to be confused with lowercase 'd' in 'dependencies' argument above.
 
-=item B<--Warnings _OR_ -W>
+=for rperl X</noncode>
 
-=item B<--noWarnings _OR_ -noW>
+=item B<--Warnings ...OR... -W>
+
+=item B<--noWarnings ...OR... -noW>
+
+=for rperl X<noncode>
 
  Include system warnings in output, or not.
  Enabled by default, equivalent to `export RPERL_WARNINGS=0` shell command.
 
-=item B<--test _OR_ -t>
+=for rperl X</noncode>
+
+=item B<--test ...OR... -t>
+
+=for rperl X<noncode>
 
  Test mode: Perl ops, Perl types, Parse & Generate (no Save or Compile)
- If enabled, equivalent to '--mode ops=PERL --mode types=PERL --mode compile=GENERATE' options.
+ If enabled, equivalent to '--mode ops=PERL --mode types=PERL --mode compile=GENERATE' arguments.
  Disabled by default.
+
+=for rperl X</noncode>
 
 =item B<--assemble>
 
+=for rperl X<noncode>
+
  Assemble subcompile mode, output *.o object file(s).
- If enabled, equivalent to '--mode subcompile=ASSEMBLE' option or `gcc -c` manual subcompile option.
+ If enabled, equivalent to '--mode subcompile=ASSEMBLE' argument or `gcc -c` manual subcompile argument.
  Disabled by default.
+
+=for rperl X</noncode>
 
 =item B<--archive>
 
+=for rperl X<noncode>
+
  Archive subcompile mode, output *.a object archive file(s).
- If enabled, equivalent to '--mode subcompile=ARCHIVE' option or `gcc -c` followed by `ar` manual subcompile command.
+ If enabled, equivalent to '--mode subcompile=ARCHIVE' argument or `gcc -c` followed by `ar` manual subcompile command.
  Disabled by default.
+
+=for rperl X</noncode>
 
 =item B<--shared>
 
+=for rperl X<noncode>
+
  Archive subcompile mode, output *.so shared object file(s).
- If enabled, equivalent to '--mode subcompile=SHARED' option or `gcc -shared` manual subcompile command.
+ If enabled, equivalent to '--mode subcompile=SHARED' argument or `gcc -shared` manual subcompile command.
  Disabled by default.
+
+=for rperl X</noncode>
 
 =item B<--static>
 
 =item B<--nostatic>
 
+=for rperl X<noncode>
+
  Static subcompile mode, output *.exe or non-suffixed statically-linked executable file(s).
- If disabled, equivalent to '--mode subcompile=DYNAMIC' option or `gcc` manual subcompile command.
- If enabled, equivalent to '--mode subcompile=STATIC' option or `gcc -static` manual subcompile command.
+ If disabled, equivalent to '--mode subcompile=DYNAMIC' argument or `gcc` manual subcompile command.
+ If enabled, equivalent to '--mode subcompile=STATIC' argument or `gcc -static` manual subcompile command.
  Disabled by default.
+
+=for rperl X</noncode>
 
 =item B<--CXX=/path/to/compiler>
 
- Specify path to C++ compiler, equivalent to '--mode CXX=/path/to/compiler' or 'CXX' manual Makefile option.
+=for rperl X<noncode>
+
+ Specify path to C++ compiler, equivalent to '--mode CXX=/path/to/compiler' or 'CXX' manual Makefile argument.
 
 =back
 
