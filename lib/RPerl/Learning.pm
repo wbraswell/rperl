@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.079_500;
+our $VERSION = 0.080_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -173,9 +173,11 @@ X<br>
 
 =item * L</APPENDIX A: EXERCISE ANSWERS>
 
-=item * L</APPENDIX B: RPERL GRAMMAR>
+=item * L</APPENDIX B: RPERL COMMAND-LINE ARGUMENTS>
 
-=item * L</APPENDIX C: BEYOND THE ROADRUNNER>
+=item * L</APPENDIX C: RPERL GRAMMAR>
+
+=item * L</APPENDIX D: BEYOND THE ROADRUNNER>
 
 =back
 
@@ -1492,7 +1494,7 @@ Perl 5 provides several built-in operators designed for use with numeric data, w
 
 Each operator in Perl 5 (and thus RPerl) is assigned 4 important characteristics: I<"arity"> (a number), I<"fixity"> (a placement location), I<"precedence"> (a number) and I<"associativity"> (a chirality or "handedness").  Operators of unary arity accept exactly 1 input operand, binary operators accept exactly 2 operands, etc.  Prefix operators appear before their respective operands, postfix appear after, infix appear between, and closed operators appear both before and after their operands.  Operators with a lower numeric precedence are executed before operators with a higher precedence; in the absence of parentheses, multiplication executes before addition because multiplication has a lower precedence number.  Operators with equal precedence number are grouped by (and executed in order of) associativity; in the absence of parentheses, multiple subtraction operators will execute from left to right because subtraction is left-associative, whereas multiple exponent operators will execute from right to left because exponentiation is right-associative.  For more information, see the Appendix:
 
-L<B.3: Syntax Arity, Fixity, Precedence, Associativity|"B.3: Syntax Arity, Fixity, Precedence, Associativity">
+L<C.3: Syntax Arity, Fixity, Precedence, Associativity|"C.3: Syntax Arity, Fixity, Precedence, Associativity">
 
 Beyond the built-in math operators in Perl 5, more advanced operators and functions are available via the MathPerl software suite, which is (perhaps unsurprisingly) optimized using the RPerl compiler.
 
@@ -10135,6 +10137,8 @@ This operator is commonly used to secure and check password validity, or compare
 
 =end html
 
+We will now take a break from numbers and strings and operators, in order to investigate the various stages of installing and running RPerl, as well as the most common issues you may encounter.
+
 Like normal Perl, RPerl tries to generate helpful messages when something does not go as planned.
 
 A I<"warning"> occurs when something unexpected happens, but RPerl can continue on without being forced to end prematurely.
@@ -13185,28 +13189,294 @@ Example execution, input, and output:
     DISPLAY                   :0.0
     GDMSESSION                xubuntu
     GDM_LANG                  en_US
-    HOME                      /home/wbraswell
+    HOME                      /home/jlpicard
     LANG                      en_US.UTF-8
     LANGUAGE                  en_US
-    LOGNAME                   wbraswell
-    PATH                      /home/wbraswell/austin_perl_mongers/rperl/rperl-latest/script:.:script:bin:/home/wbraswell/script:/home/wbraswell/bin:/home/wbraswell/perl5/bin:/home/wbraswell/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
-    PERL5LIB                  /home/wbraswell/austin_perl_mongers/rperl/rperl-latest/lib:blib/lib:lib:/home/wbraswell/perl5/lib/perl5
-    PERL_LOCAL_LIB_ROOT       /home/wbraswell/perl5
-    PERL_MB_OPT               --install_base "/home/wbraswell/perl5"
-    PERL_MM_OPT               INSTALL_BASE=/home/wbraswell/perl5
-    PWD                       /home/wbraswell/austin_perl_mongers/rperl/rperl-latest
+    LOGNAME                   jlpicard
+    PATH                      .:script:bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+    PERL5LIB                  blib/lib:lib:/home/jlpicard/perl5/lib/perl5
+    PERL_LOCAL_LIB_ROOT       /home/jlpicard/perl5
+    PERL_MB_OPT               --install_base "/home/jlpicard/perl5"
+    PERL_MM_OPT               INSTALL_BASE=/home/jlpicard/perl5
+    PWD                       /home/jlpicard
     SHELL                     /bin/bash
     TERM                      xterm
-    USER                      wbraswell
+    USER                      jlpicard
 
 =for rperl X</noncode>
 
 X<br>
 
 
-=head1 APPENDIX B: RPERL GRAMMAR
+=head1 APPENDIX B: RPERL COMMAND-LINE ARGUMENTS
 
-=head2 B.1: Eyapp Grammar Format & Sections
+The C<rperl> I<"command-line interface"> (CLI) is the primary front-end user interface for RPerl.  When called for execution, the C<rperl> command must be provided with at least one input file name, which tells RPerl which file(s) to compile.  In addition, C<rperl> may also be provided with one or more optional I<"command-line arguments">, which tells RPerl exactly how to compile the input file(s).
+
+Below is a comprehensive list of all RPerl command-line arguments, as reported by the C<rperl -?> command, with additional explanations provided.
+
+START HERE: add dev note correlation w/ `rperl` args POD, add explanations below
+START HERE: add dev note correlation w/ `rperl` args POD, add explanations below
+START HERE: add dev note correlation w/ `rperl` args POD, add explanations below
+
+=over
+
+=item B<--help _OR_ -h _OR_ -?>
+
+ Print a brief help message for command-line usage.
+
+=item B<--version _OR_ -v>
+
+=item B<--vversion _OR_ -vv>
+
+ Print version number and copyright information.
+ Repeat as 'vv' for more technical information, similar to `perl -V` configuration summary option.
+ Lowercase 'v' not to be confused with uppercase 'V' in 'Verbose' option below.
+ 
+=item B<--dependencies _OR_ -d>
+
+=item B<--nodependencies _OR_ -nod>
+
+ Follow and compile dependencies, or not.
+ Enabled by default, equivalent to '--mode dependencies=ON' option.
+ Lowercase 'd' not to be confused with uppercase 'D' in 'Debug' option below.
+ WARNING: Disabling dependencies will likely cause errors or undefined behavior.
+
+=item B<--infile=MyFile.pm _OR_ -i=MyFile.pm>
+
+ Specify input file, may be repeated for multiple input files.
+ Option prefix '--infile' may be entirely omitted.
+ Option prefix MUST be omitted to specify wildcard for multiple input files.
+
+=item B<--outfile=MyFile _OR_ -o=MyFile>
+
+ Specify output file prefix, may be repeated for multiple output files.
+ RPerl *.pm input file with PERL ops will create MyFile.pmc output file.
+ RPerl *.pl input file with PERL ops will create my_file (or my_file.exe) & my_file.pmc output files.
+ RPerl *.pm input file with CPP ops will create MyFile.pmc, MyFile.cpp, & MyFile.h output files.
+ RPerl *.pl input file with CPP ops will create myfile (or myfile.exe on Windows), MyFile.pmc, MyFile.cpp, & MyFile.h output files.
+ Option may be entirely omitted, 'MyFile.*' input file will default to 'MyFile.*' out.
+
+=item B<--mode ops=PERL _OR_ -m ops=PERL>
+
+=item B<--mode ops=CPP _OR_ -m ops=CPP>
+
+ Specify operations mode, CPP by default.
+ If set to PERL, generate Perl operations in the source code output file(s).
+ If set to CPP, generate C++ operations in the source code output file(s).
+ PERL ops mode forces PERL types mode & PARSE or GENERATE compile mode; PERLOPS_PERLTYPES is test mode, does not actually compile.
+
+=item B<--mode types=PERL _OR_ -m types=PERL>
+
+=item B<--mode types=CPP _OR_ -m types=CPP>
+
+=item B<--mode types=DUAL _OR_ -m types=DUAL>
+
+ Specify data types mode, CPP by default.
+ If set to PERL, generate Perl data types in the source code output file(s).
+ If set to CPP, generate C++ data types in the source code output file(s).
+ If set to DUAL, generate both Perl and C++ data types in the source code output file(s).
+ DUAL mode allows generate-once-compile-many types, selected by '#define __FOO__TYPES' in lib/rperltypes_mode.h or `gcc -D__FOO__TYPES` manual subcompile option.
+
+=item B<--mode check=OFF _OR_ -m check=OFF>
+
+=item B<--mode check=ON _OR_ -m check=ON>
+
+=item B<--mode check=TRACE _OR_ -m check=TRACE>
+
+ Specify data type checking mode, TRACE by default.
+ If set to OFF, do not perform dynamic type checking, only built-in C++ static type checking.
+ If set to ON, perform dynamic type checking in addition to built-in C++ static type checking.
+ If set to TRACE, perform dynamic type checking in addition to built-in C++ static type checking, with subroutine-and-variable trace information.
+
+=item B<--mode dependencies=OFF _OR_ -m dependencies=OFF>
+
+=item B<--mode dependencies=ON _OR_ -m dependencies=ON>
+
+ Specify dependencies mode, ON by default.
+ If set to OFF, do not search for or compile dependencies.
+ If set to ON, recursively search for dependencies and subdependencies, include as additional input file(s).
+
+=item B<--mode uncompile=OFF _OR_ -m uncompile=OFF>
+
+=item B<--mode uncompile=SOURCE _OR_ -m uncompile=SOURCE>
+
+=item B<--mode uncompile=BINARY _OR_ -m uncompile=BINARY>
+
+=item B<--mode uncompile=INLINE _OR_ -m uncompile=INLINE>
+
+=item B<--mode uncompile=SOURCE_BINARY _OR_ -m uncompile=SOURCE_BINARY>
+
+=item B<--mode uncompile=SOURCE_BINARY_INLINE _OR_ -m uncompile=SOURCE_BINARY_INLINE>
+
+ Specify uncompile mode, OFF by default.
+ If set to SOURCE, delete all generated C++ output source code (not subcompiled) files: *.cpp, *.h, *.pmc
+ If set to BINARY, delete all generated C++ output binary (subcompiled) files: *.o, *.a, *.so, *.exe, non-suffixed executables
+ If set to INLINE, delete all generated C++ output Inline::CPP files: _Inline/ directory
+ If set to SOURCE_BINARY, delete both SOURCE and BINARY files.
+ If set to SOURCE_BINARY_INLINE, delete SOURCE, BINARY, and INLINE files.
+ For *.pm Perl module input files, BINARY and INLINE are equivalent.
+
+=item B<--mode compile=OFF _OR_ -m compile=OFF>
+
+=item B<--mode compile=PARSE _OR_ -m compile=PARSE>
+
+=item B<--mode compile=GENERATE _OR_ -m compile=GENERATE>
+
+=item B<--mode compile=SAVE _OR_ -m compile=SAVE>
+
+=item B<--mode compile=SUBCOMPILE _OR_ -m compile=SUBCOMPILE>
+
+ Specify compile mode, SUBCOMPILE by default.
+ If set to PARSE, begin with RPerl input source code file(s), and end with RPerl abstract syntax tree output data structure.
+ If set to GENERATE, begin with RPerl input source code file(s), and end with RPerl and/or C++ output source code in memory.
+ If set to SAVE, begin with RPerl input source code file(s), and end with RPerl and/or C++ output source code file(s) saved to disk.
+ If set to SUBCOMPILE, begin with RPerl input source code file(s), and end with C++ output binary file(s).
+
+=item B<--mode subcompile=OFF _OR_ -m subcompile=OFF>
+
+=item B<--mode subcompile=ASSEMBLE _OR_ -m subcompile=ASSEMBLE>
+
+=item B<--mode subcompile=ARCHIVE _OR_ -m subcompile=ARCHIVE>
+
+=item B<--mode subcompile=SHARED _OR_ -m subcompile=SHARED>
+
+=item B<--mode subcompile=STATIC _OR_ -m subcompile=STATIC>
+
+=item B<--mode subcompile=DYNAMIC _OR_ -m subcompile=DYNAMIC>
+
+ Specify subcompile mode, DYNAMIC by default.
+ If set to ASSEMBLE, generate *.o object binary output file(s).
+ If set to ARCHIVE, generate *.a object archive binary output file(s).
+ If set to SHARED, generate *.so shared object binary output file(s).
+ If set to STATIC, generate statically-linked *.exe or non-suffixed executable binary output file(s).
+ If set to DYNAMIC, generate dynamically-linked *.exe or non-suffixed executable binary output file(s).
+
+=item B<--mode CXX=/path/to/compiler _OR_ -m CXX=/path/to/compiler>
+
+ Specify path to C++ compiler for use in subcompile modes, 'g++' by default.
+
+=item B<--mode execute=OFF _OR_ -m execute=OFF>
+
+=item B<--mode execute=ON _OR_ -m execute=ON>
+
+ Specify execute mode, ON by default.
+ If set to OFF, do not load or run any user-supplied program(s).
+ If set to ON with one *.pl Perl program input file, load and run the program.
+ If set to ON with more than one *.pl Perl program input file, do not load or run any programs.
+
+=item B<--mode label=OFF _OR_ -m label=OFF>
+
+=item B<--mode label=ON _OR_ -m label=ON>
+
+ Specify source section label mode, ON by default.
+ If set to OFF, generate minimal output source code, may save disk space.
+ If set to ON, generate some informative labels in output source code, may be more human-readable.
+
+=item B<--uncompile _OR_ -u>
+
+=item B<--nouncompile _OR_ -nou>
+
+=item B<--uuncompile _OR_ -uu>
+
+=item B<--nouuncompile _OR_ -nouu>
+
+=item B<--uuuncompile _OR_ -uuu>
+
+=item B<--nouuncompile _OR_ -nouuu>
+
+ Uncompile (delete C++ source code and/or binary output files), or not.
+ Repeat as 'uu' and 'uuu' for more thorough file removal.
+ Do not confuse uncompile with decompile (recreate RPerl source code from C++ source code or binary output files), which does not currently exist.
+ '-u' equivalent to '--mode uncompile=SOURCE --mode compile=OFF --mode execute=OFF' options.
+ '-uu' equivalent to '--mode uncompile=SOURCE_BINARY --mode compile=OFF --mode execute=OFF' options.
+ '-uuu' equivalent to '--mode uncompile=SOURCE_BINARY_INLINE --mode compile=OFF --mode execute=OFF' options.
+ Disabled by default.
+
+=item B<--compile _OR_ -c>
+
+=item B<--nocompile _OR_ -noc>
+
+ Generate & subcompile C++ source code, or not.
+ Enabled by default, equivalent to '--mode compile=SUBCOMPILE' option.
+
+=item B<--execute _OR_ -e>
+
+=item B<--noexecute _OR_ -noe>
+
+ Run input code after optional compile, or not.
+ Enabled by default for *.pl program input files, always disabled for *.pm module input files or multiple input files.
+ Equivalent to '--mode execute=ON' option.
+
+=item B<--Verbose _OR_ -V>
+
+=item B<--noVerbose _OR_ -noV>
+
+ Include additional user information in output, or not.
+ If enabled, equivalent to `export RPERL_VERBOSE=1` shell command.
+ Disabled by default.
+ Uppercase 'V' not to be confused with lowercase 'v' in 'version' option above.
+
+=item B<--Debug _OR_ -D>
+
+=item B<--noDebug _OR_ -noD>
+
+ Include system diagnostic information in output, or not.
+ If enabled, equivalent to `export RPERL_DEBUG=1` shell command.
+ Disabled by default.
+ Uppercase 'D' not to be confused with lowercase 'd' in 'dependencies' option above.
+
+=item B<--Warnings _OR_ -W>
+
+=item B<--noWarnings _OR_ -noW>
+
+ Include system warnings in output, or not.
+ Enabled by default, equivalent to `export RPERL_WARNINGS=0` shell command.
+
+=item B<--test _OR_ -t>
+
+ Test mode: Perl ops, Perl types, Parse & Generate (no Save or Compile)
+ If enabled, equivalent to '--mode ops=PERL --mode types=PERL --mode compile=GENERATE' options.
+ Disabled by default.
+
+=item B<--assemble>
+
+ Assemble subcompile mode, output *.o object file(s).
+ If enabled, equivalent to '--mode subcompile=ASSEMBLE' option or `gcc -c` manual subcompile option.
+ Disabled by default.
+
+=item B<--archive>
+
+ Archive subcompile mode, output *.a object archive file(s).
+ If enabled, equivalent to '--mode subcompile=ARCHIVE' option or `gcc -c` followed by `ar` manual subcompile command.
+ Disabled by default.
+
+=item B<--shared>
+
+ Archive subcompile mode, output *.so shared object file(s).
+ If enabled, equivalent to '--mode subcompile=SHARED' option or `gcc -shared` manual subcompile command.
+ Disabled by default.
+
+=item B<--static>
+
+=item B<--nostatic>
+
+ Static subcompile mode, output *.exe or non-suffixed statically-linked executable file(s).
+ If disabled, equivalent to '--mode subcompile=DYNAMIC' option or `gcc` manual subcompile command.
+ If enabled, equivalent to '--mode subcompile=STATIC' option or `gcc -static` manual subcompile command.
+ Disabled by default.
+
+=item B<--CXX=/path/to/compiler>
+
+ Specify path to C++ compiler, equivalent to '--mode CXX=/path/to/compiler' or 'CXX' manual Makefile option.
+
+=back
+
+X<br>
+
+
+=head1 APPENDIX C: RPERL GRAMMAR
+
+=head2 C.1: Eyapp Grammar Format & Sections
 
 RPerl's grammar is written using the Eyapp computer programming language, which is a combination of normal Perl 5 and grammar expressions.
 
@@ -13248,13 +13518,13 @@ For more information, please view the following links:
 
 =back
 
-=head2 B.2: Lexicon Token Types
+=head2 C.2: Lexicon Token Types
 
 Following is a list of all RPerl tokens in all 4 lexicon sections, along with examples of valid matching lexeme input.
 
 The list must be in correct order for all regexes to match; earlier declarations get tried first, thus highly-specific tokens such as RPerl keywords and built-in operators appear first, while the least-specific tokens such as user-defined words appear last.  This ordering can be considered I<"lexical matching">, and is distinct from operator precedence and associativity as covered in the next section.
 
-=head3 B.2.1: Whitespace
+=head3 C.2.1: Whitespace
 
 C<[[[ LEXICON TOKENS, WHITESPACE ]]]>
 
@@ -13264,7 +13534,7 @@ C<[[[ LEXICON TOKENS, WHITESPACE ]]]>
 
 =back
 
-=head3 B.2.2: Types & Reserved Words
+=head3 C.2.2: Types & Reserved Words
 
 C<[[[ LEXICON TOKENS, TYPES & RESERVED WORDS ]]]>
 
@@ -13360,7 +13630,7 @@ C<%ENV>
 
 =back
 
-=head3 B.2.3: Operators
+=head3 C.2.3: Operators
 
 C<[[[ LEXICON TOKENS, OPERATORS ]]]>
 
@@ -13543,7 +13813,7 @@ same as above, except without semicolon
 
 =back
 
-=head3 B.2.4: Punctuation & User-Defined Words
+=head3 C.2.4: Punctuation & User-Defined Words
 
 C<[[[ LEXICON TOKENS, PUNCTUATION & USER-DEFINED WORDS ]]]>
 
@@ -13579,7 +13849,7 @@ single uppercase letter, or uppercase letter followed by uppercase letters, numb
 
 =back
 
-=head2 B.3: Syntax Arity, Fixity, Precedence, Associativity
+=head2 C.3: Syntax Arity, Fixity, Precedence, Associativity
 
 Operator I<"arity"> is a technical term which means the number of input operands accepted by a specific built-in operator, or the number of input arguments accepted by a user-defined function.  An operator or function which accepts 0 input arguments is known as I<"nullary">, 1 argument as I<"unary">, 2 arguments as I<"binary">, 3 arguments as I<"ternary">, and so forth.  The C<exit;> operator may be called as nullary; the C<++> increment operator is unary; the C<+> addition operator is binary; and the C<substr> operator may be called as ternary.  Not to be confused with "a ternary operator", meaning any operator which accepts 3 operands, there is one specific operator known as I<"the ternary operator">, which is a special kind of conditional operator accepting 3 input arguments.  An operator or function which may accept more than one number of arguments is known as I<"variadic">.  Some RPerl operators are variadic, such as C<substr> which may accept 2, 3, or 4 arguments.  RPerl does not currently support variadic user-defined functions.
 
@@ -13655,7 +13925,7 @@ C<[[[ SYNTAX, OPERATOR PRECEDENCE & ASSOCIATIVITY ]]]>
 
 =for rperl X</noncode>
 
-=head2 B.4: Syntax Production Rules
+=head2 C.4: Syntax Production Rules
 
 The EBNF metasyntax implemented by Eyapp is of the form:
 
@@ -13665,7 +13935,7 @@ In this example, C<ProductionRule> is a non-terminal left-hand-side (LHS) symbol
 
 Terminal symbols are enclosed in single quotes as with C<'foo'>, never appear on the LHS, and are taken as literal data with no transformations applied.  Eyapp treats terminal symbols as tokens which only match one hard-coded lexeme, which is the string appearing inside the single quotes, C<foo> in this example.
 
-=head3 B.4.1: File Formats
+=head3 C.4.1: File Formats
 
 C<[[[ SYNTAX PRODUCTION RULES, FILE FORMATS ]]]>
 
@@ -14099,7 +14369,7 @@ L<Class_01_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test
 
 =back
 
-=head3 B.4.2: Operations
+=head3 C.4.2: Operations
 
 C<[[[ SYNTAX PRODUCTION RULES, OPERATIONS ]]]>
 
@@ -16260,7 +16530,7 @@ L<program_10_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 =back
 
-=head3 B.4.3: Variable Data
+=head3 C.4.3: Variable Data
 
 C<[[[ SYNTAX PRODUCTION RULES, VARIABLE DATA ]]]>
 
@@ -16349,7 +16619,7 @@ L<program_06_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 =back
 
-=head3 B.4.4: User-Defined Words
+=head3 C.4.4: User-Defined Words
 
 C<[[[ SYNTAX PRODUCTION RULES, USER-DEFINED WORDS ]]]>
 
@@ -16379,7 +16649,7 @@ B<There are no additional code examples for this section, all pertinent examples
 X<br>
 
 
-=head1 APPENDIX C: BEYOND THE ROADRUNNER
+=head1 APPENDIX D: BEYOND THE ROADRUNNER
 
 =for html <u>
 
