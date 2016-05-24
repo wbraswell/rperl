@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.081_000;
+our $VERSION = 0.082_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -11311,33 +11311,53 @@ Example execution and output for 2a and 2b:
     
     Arguments:
         --help ...OR... -h ...OR... -?
-                 Print a brief help message for command-line usage.
+             Print a brief help message for command-line usage.
     
         --version ...OR... -v
         --vversion ...OR... -vv
-                 Print version number and copyright information.
-                 Repeat as 'vv' for more technical information, similar to `perl -V` configuration summary argument.
-                 Lowercase 'v' not to be confused with uppercase 'V' in 'Verbose' argument below.
-    
-        --dependencies ...OR... -d
-        --nodependencies ...OR... -nod
-                 Follow and compile dependencies, or not.
-                 Enabled by default, equivalent to '--mode dependencies=ON' argument.
-                 Lowercase 'd' not to be confused with uppercase 'D' in 'Debug' argument below.
-                 WARNING: Disabling dependencies will likely cause errors or undefined behavior.
+             Print version number and copyright information.
+             Repeat as 'vv' for more technical information, similar to `perl -V` configuration summary argument.
+             Lowercase 'v' not to be confused with uppercase 'V' in 'Verbose' argument.
     
         --infile=MyFile.pm ...OR... -i=MyFile.pm
-                 Specify input file, may be repeated for multiple input files.
-                 Argument prefix '--infile' may be entirely omitted.
-                 Argument prefix MUST be omitted to specify wildcard for multiple input files.
+             Specify input file, may be repeated for multiple input files.
+             Argument prefix '--infile' may be entirely omitted.
+             Argument prefix MUST be omitted to specify wildcard for multiple input files.
     
         --outfile=MyFile ...OR... -o=MyFile
-                 Specify output file prefix, may be repeated for multiple output files.
-                 RPerl *.pm input file with PERL ops will create MyFile.pmc output file.
-                 RPerl *.pl input file with PERL ops will create my_file (or my_file.exe) & my_file.pmc output files.
-                 RPerl *.pm input file with CPP ops will create MyFile.pmc, MyFile.cpp, & MyFile.h output files.
-                 RPerl *.pl input file with CPP ops will create myfile (or myfile.exe on Windows), MyFile.pmc, MyFile.cpp, & MyFile.h output files.
-                 Argument may be entirely omitted, 'MyFile.*' input file will default to 'MyFile.*' out.
+             Specify output file prefix, may be repeated for multiple output files.
+             RPerl *.pm input file with PERL ops will create MyFile.pmc output file.
+             RPerl *.pl input file with PERL ops will create my_file (or my_file.exe) & my_file.pmc output files.
+             RPerl *.pm input file with CPP ops will create MyFile.pmc, MyFile.cpp, & MyFile.h output files.
+             RPerl *.pl input file with CPP ops will create myfile (or myfile.exe on Windows), MyFile.pmc, MyFile.cpp, & MyFile.h output files.
+             Argument may be entirely omitted, 'MyFile.*' input file will default to 'MyFile.*' out.
+    
+        --CXX=/path/to/compiler
+             Specify path to C++ compiler, equivalent to '--mode CXX=/path/to/compiler' or 'CXX' manual Makefile argument.
+    
+        --mode ops=PERL ...OR... -m ops=PERL
+        --mode ops=CPP ...OR... -m ops=CPP
+             Specify operations mode, CPP by default.
+             If set to PERL, generate Perl operations in the source code output file(s).
+             If set to CPP, generate C++ operations in the source code output file(s).
+             PERL ops mode forces PERL types mode & PARSE or GENERATE compile mode; PERLOPS_PERLTYPES is test mode, does not actually compile.
+    
+        --mode types=PERL ...OR... -m types=PERL
+        --mode types=CPP ...OR... -m types=CPP
+        --mode types=DUAL ...OR... -m types=DUAL
+             Specify data types mode, CPP by default.
+             If set to PERL, generate Perl data types in the source code output file(s).
+             If set to CPP, generate C++ data types in the source code output file(s).
+             If set to DUAL, generate both Perl and C++ data types in the source code output file(s).
+             DUAL mode allows generate-once-compile-many types, selected by '#define __FOO__TYPES' in lib/rperltypes_mode.h or `gcc -D__FOO__TYPES` manual subcompile argument.
+    
+        --mode check=OFF ...OR... -m check=OFF
+        --mode check=ON ...OR... -m check=ON
+        --mode check=TRACE ...OR... -m check=TRACE
+             Specify data type checking mode, TRACE by default.
+             If set to OFF, do not perform dynamic type checking, only built-in C++ static type checking.
+             If set to ON, perform dynamic type checking in addition to built-in C++ static type checking.
+             If set to TRACE, perform dynamic type checking in addition to built-in C++ static type checking, with subroutine-and-variable trace information.
 
     [[[ REMAINING ARGUMENTS OMITTED FOR BREVITY ]]]
 
@@ -13065,13 +13085,13 @@ X<br>
 
 The C<rperl> I<"command-line interface"> (CLI) is the primary front-end user interface for RPerl.  When called for execution, the C<rperl> command must be provided with at least one input file name, which tells RPerl which file(s) to compile.  In addition, C<rperl> may also be provided with one or more optional I<"command-line arguments">, which tells RPerl exactly how to compile the input file(s).  Command-line arguments are also commonly referred to as I<"options">.
 
-Below is a comprehensive list of all RPerl command-line arguments, as reported by the C<rperl -?> command, with additional explanations provided.
+Below is a comprehensive list of all RPerl command-line arguments, as reported by the C<rperl -?> command.
 
-# START HERE: decide if we keep the "definition" list type, or prefer "bullet" type instead???
+Additional explanations for each command-line argument are provided I<with emphasis.>
 
-# START HERE: decide if we keep the "definition" list type, or prefer "bullet" type instead???
+# START HERE: add explanations
 
-# START HERE: decide if we keep the "definition" list type, or prefer "bullet" type instead???
+=head2 B.1: Help
 
 =over
 
@@ -13083,6 +13103,12 @@ Below is a comprehensive list of all RPerl command-line arguments, as reported b
 
 =for rperl X</noncode>
 
+=back
+
+=head2 B.2: Version
+
+=over
+
 =item B<--version ...OR... -v>
 
 =item B<--vversion ...OR... -vv>
@@ -13091,22 +13117,15 @@ Below is a comprehensive list of all RPerl command-line arguments, as reported b
 
  Print version number and copyright information.
  Repeat as 'vv' for more technical information, similar to `perl -V` configuration summary argument.
- Lowercase 'v' not to be confused with uppercase 'V' in 'Verbose' argument below.
+ Lowercase 'v' not to be confused with uppercase 'V' in 'Verbose' argument.
 
 =for rperl X</noncode>
 
-=item B<--dependencies ...OR... -d>
+=back
 
-=item B<--nodependencies ...OR... -nod>
+=head2 B.3: Input Files
 
-=for rperl X<noncode>
-
- Follow and compile dependencies, or not.
- Enabled by default, equivalent to '--mode dependencies=ON' argument.
- Lowercase 'd' not to be confused with uppercase 'D' in 'Debug' argument below.
- WARNING: Disabling dependencies will likely cause errors or undefined behavior.
-
-=for rperl X</noncode>
+=over
 
 =item B<--infile=MyFile.pm ...OR... -i=MyFile.pm>
 
@@ -13117,6 +13136,12 @@ Below is a comprehensive list of all RPerl command-line arguments, as reported b
  Argument prefix MUST be omitted to specify wildcard for multiple input files.
 
 =for rperl X</noncode>
+
+=back
+
+=head2 B.4: Output Files
+
+=over
 
 =item B<--outfile=MyFile ...OR... -o=MyFile>
 
@@ -13131,6 +13156,24 @@ Below is a comprehensive list of all RPerl command-line arguments, as reported b
 
 =for rperl X</noncode>
 
+=back
+
+=head2 B.5: C++ Compiler
+
+=over
+
+=item B<--CXX=/path/to/compiler>
+
+=for rperl X<noncode>
+
+ Specify path to C++ compiler, equivalent to '--mode CXX=/path/to/compiler' or 'CXX' manual Makefile argument.
+
+=back
+
+=head2 B.6: Modes, Operations
+
+=over
+
 =item B<--mode ops=PERL ...OR... -m ops=PERL>
 
 =item B<--mode ops=CPP ...OR... -m ops=CPP>
@@ -13143,6 +13186,12 @@ Below is a comprehensive list of all RPerl command-line arguments, as reported b
  PERL ops mode forces PERL types mode & PARSE or GENERATE compile mode; PERLOPS_PERLTYPES is test mode, does not actually compile.
 
 =for rperl X</noncode>
+
+=back
+
+=head2 B.7: Modes, Types
+
+=over
 
 =item B<--mode types=PERL ...OR... -m types=PERL>
 
@@ -13160,6 +13209,12 @@ Below is a comprehensive list of all RPerl command-line arguments, as reported b
 
 =for rperl X</noncode>
 
+=back
+
+=head2 B.8: Modes, Type Checking
+
+=over
+
 =item B<--mode check=OFF ...OR... -m check=OFF>
 
 =item B<--mode check=ON ...OR... -m check=ON>
@@ -13175,6 +13230,12 @@ Below is a comprehensive list of all RPerl command-line arguments, as reported b
 
 =for rperl X</noncode>
 
+=back
+
+=head2 B.9: Modes, Dependencies
+
+=over
+
 =item B<--mode dependencies=OFF ...OR... -m dependencies=OFF>
 
 =item B<--mode dependencies=ON ...OR... -m dependencies=ON>
@@ -13184,8 +13245,15 @@ Below is a comprehensive list of all RPerl command-line arguments, as reported b
  Specify dependencies mode, ON by default.
  If set to OFF, do not search for or compile dependencies.
  If set to ON, recursively search for dependencies and subdependencies, include as additional input file(s).
+ WARNING: Disabling dependencies will likely cause errors or undefined behavior.
 
 =for rperl X</noncode>
+
+=back
+
+=head2 B.10: Modes, Uncompile
+
+=over
 
 =item B<--mode uncompile=OFF ...OR... -m uncompile=OFF>
 
@@ -13211,6 +13279,12 @@ Below is a comprehensive list of all RPerl command-line arguments, as reported b
 
 =for rperl X</noncode>
 
+=back
+
+=head2 B.11: Modes, Compile
+
+=over
+
 =item B<--mode compile=OFF ...OR... -m compile=OFF>
 
 =item B<--mode compile=PARSE ...OR... -m compile=PARSE>
@@ -13230,6 +13304,12 @@ Below is a comprehensive list of all RPerl command-line arguments, as reported b
  If set to SUBCOMPILE, begin with RPerl input source code file(s), and end with C++ output binary file(s).
 
 =for rperl X</noncode>
+
+=back
+
+=head2 B.12: Modes, Subcompile
+
+=over
 
 =item B<--mode subcompile=OFF ...OR... -m subcompile=OFF>
 
@@ -13254,6 +13334,12 @@ Below is a comprehensive list of all RPerl command-line arguments, as reported b
 
 =for rperl X</noncode>
 
+=back
+
+=head2 B.13: Modes, C++ Compiler
+
+=over
+
 =item B<--mode CXX=/path/to/compiler ...OR... -m CXX=/path/to/compiler>
 
 =for rperl X<noncode>
@@ -13261,6 +13347,12 @@ Below is a comprehensive list of all RPerl command-line arguments, as reported b
  Specify path to C++ compiler for use in subcompile modes, 'g++' by default.
 
 =for rperl X</noncode>
+
+=back
+
+=head2 B.14: Modes, Execute
+
+=over
 
 =item B<--mode execute=OFF ...OR... -m execute=OFF>
 
@@ -13275,6 +13367,12 @@ Below is a comprehensive list of all RPerl command-line arguments, as reported b
 
 =for rperl X</noncode>
 
+=back
+
+=head2 B.15: Modes, Source Code Labels
+
+=over
+
 =item B<--mode label=OFF ...OR... -m label=OFF>
 
 =item B<--mode label=ON ...OR... -m label=ON>
@@ -13286,6 +13384,101 @@ Below is a comprehensive list of all RPerl command-line arguments, as reported b
  If set to ON, generate some informative labels in output source code, may be more human-readable.
 
 =for rperl X</noncode>
+
+=back
+
+=head2 B.16: Flags, Verbose
+
+=over
+
+=item B<--Verbose ...OR... -V>
+
+=item B<--noVerbose ...OR... -noV>
+
+=for rperl X<noncode>
+
+ Include additional user information in output, or not.
+ If enabled, equivalent to `export RPERL_VERBOSE=1` shell command.
+ Disabled by default.
+ Uppercase 'V' not to be confused with lowercase 'v' in 'version' argument.
+
+=for rperl X</noncode>
+
+=back
+
+=head2 B.17: Flags, Debug
+
+=over
+
+=item B<--Debug ...OR... -D>
+
+=item B<--noDebug ...OR... -noD>
+
+=for rperl X<noncode>
+
+ Include system diagnostic information in output, or not.
+ If enabled, equivalent to `export RPERL_DEBUG=1` shell command.
+ Disabled by default.
+ Uppercase 'D' not to be confused with lowercase 'd' in 'dependencies' argument.
+
+=for rperl X</noncode>
+
+=back
+
+=head2 B.18: Flags, Warnings
+
+=over
+
+=item B<--Warnings ...OR... -W>
+
+=item B<--noWarnings ...OR... -noW>
+
+=for rperl X<noncode>
+
+ Include system warnings in output, or not.
+ Enabled by default, equivalent to `export RPERL_WARNINGS=0` shell command.
+
+=for rperl X</noncode>
+
+=back
+
+=head2 B.19: Flags, Test
+
+=over
+
+=item B<--test ...OR... -t>
+
+=for rperl X<noncode>
+
+ Test mode: Perl ops, Perl types, Parse & Generate (no Save or Compile)
+ If enabled, equivalent to '--mode ops=PERL --mode types=PERL --mode compile=GENERATE' arguments.
+ Disabled by default.
+
+=for rperl X</noncode>
+
+=back
+
+=head2 B.20: Flags, Dependencies
+
+=over
+
+=item B<--dependencies ...OR... -d>
+
+=item B<--nodependencies ...OR... -nod>
+
+=for rperl X<noncode>
+
+ Follow and compile dependencies, or not.
+ Enabled by default, equivalent to '--mode dependencies=ON' argument.
+ Lowercase 'd' not to be confused with uppercase 'D' in 'Debug' argument.
+
+=for rperl X</noncode>
+
+=back
+
+=head2 B.21: Flags, Uncompile
+
+=over
 
 =item B<--uncompile ...OR... -u>
 
@@ -13311,6 +13504,12 @@ Below is a comprehensive list of all RPerl command-line arguments, as reported b
 
 =for rperl X</noncode>
 
+=back
+
+=head2 B.22: Flags, Compile
+
+=over
+
 =item B<--compile ...OR... -c>
 
 =item B<--nocompile ...OR... -noc>
@@ -13322,64 +13521,11 @@ Below is a comprehensive list of all RPerl command-line arguments, as reported b
 
 =for rperl X</noncode>
 
-=item B<--execute ...OR... -e>
+=back
 
-=item B<--noexecute ...OR... -noe>
+=head2 B.23: Flags, Subcompile, Assemble
 
-=for rperl X<noncode>
-
- Run input code after argumental compile, or not.
- Enabled by default for *.pl program input files, always disabled for *.pm module input files or multiple input files.
- Equivalent to '--mode execute=ON' argument.
-
-=for rperl X</noncode>
-
-=item B<--Verbose ...OR... -V>
-
-=item B<--noVerbose ...OR... -noV>
-
-=for rperl X<noncode>
-
- Include additional user information in output, or not.
- If enabled, equivalent to `export RPERL_VERBOSE=1` shell command.
- Disabled by default.
- Uppercase 'V' not to be confused with lowercase 'v' in 'version' argument above.
-
-=for rperl X</noncode>
-
-=item B<--Debug ...OR... -D>
-
-=item B<--noDebug ...OR... -noD>
-
-=for rperl X<noncode>
-
- Include system diagnostic information in output, or not.
- If enabled, equivalent to `export RPERL_DEBUG=1` shell command.
- Disabled by default.
- Uppercase 'D' not to be confused with lowercase 'd' in 'dependencies' argument above.
-
-=for rperl X</noncode>
-
-=item B<--Warnings ...OR... -W>
-
-=item B<--noWarnings ...OR... -noW>
-
-=for rperl X<noncode>
-
- Include system warnings in output, or not.
- Enabled by default, equivalent to `export RPERL_WARNINGS=0` shell command.
-
-=for rperl X</noncode>
-
-=item B<--test ...OR... -t>
-
-=for rperl X<noncode>
-
- Test mode: Perl ops, Perl types, Parse & Generate (no Save or Compile)
- If enabled, equivalent to '--mode ops=PERL --mode types=PERL --mode compile=GENERATE' arguments.
- Disabled by default.
-
-=for rperl X</noncode>
+=over
 
 =item B<--assemble>
 
@@ -13391,6 +13537,12 @@ Below is a comprehensive list of all RPerl command-line arguments, as reported b
 
 =for rperl X</noncode>
 
+=back
+
+=head2 B.24: Flags, Subcompile, Archive
+
+=over
+
 =item B<--archive>
 
 =for rperl X<noncode>
@@ -13401,15 +13553,27 @@ Below is a comprehensive list of all RPerl command-line arguments, as reported b
 
 =for rperl X</noncode>
 
+=back
+
+=head2 B.25: Flags, Subcompile, Shared Object
+
+=over
+
 =item B<--shared>
 
 =for rperl X<noncode>
 
- Archive subcompile mode, output *.so shared object file(s).
+ Shared subcompile mode, output *.so shared object file(s).
  If enabled, equivalent to '--mode subcompile=SHARED' argument or `gcc -shared` manual subcompile command.
  Disabled by default.
 
 =for rperl X</noncode>
+
+=back
+
+=head2 B.26: Flags, Subcompile, Static
+
+=over
 
 =item B<--static>
 
@@ -13424,11 +13588,23 @@ Below is a comprehensive list of all RPerl command-line arguments, as reported b
 
 =for rperl X</noncode>
 
-=item B<--CXX=/path/to/compiler>
+=back
+
+=head2 B.27: Flags, Execute
+
+=over
+
+=item B<--execute ...OR... -e>
+
+=item B<--noexecute ...OR... -noe>
 
 =for rperl X<noncode>
 
- Specify path to C++ compiler, equivalent to '--mode CXX=/path/to/compiler' or 'CXX' manual Makefile argument.
+ Run input code after argumental compile, or not.
+ Enabled by default for *.pl program input files, always disabled for *.pm module input files or multiple input files.
+ Equivalent to '--mode execute=ON' argument.
+
+=for rperl X</noncode>
 
 =back
 
