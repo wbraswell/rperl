@@ -921,7 +921,7 @@ GetOptions(
     '<>'            => \&store_unlabeled_arguments
 ) or die "ERROR EARG00: Failure processing command line arguments, dying\n";
 
-if ($help_flag) { pod2usage( -verbose => 1, -width => 80 ); exit; }  # NEED ANSWER: we want ARGUMENTS in output, but verbose level 1 should only display SYNOPSIS?
+if ($help_flag) { pod2usage( -verbose => 1, -width => 80 ); exit; }
 if ($vversions_flag) { $RPerl::VERBOSE = 1; verbose_versions(); exit; }
 if ($version_flag) {
 
@@ -943,7 +943,9 @@ GNU General Public License, which may be found in the Perl 5 source kit.
 For licensing details, please see http://dev.perl.org/licenses/
 
 Complete documentation for RPerl, including FAQ lists, should be found on 
-the Internet, point your browser at http://www.rperl.org/, the RPerl Home Page.
+this system using `man rperl` or `perldoc rperl` or `perldoc RPerl::Learning`.  
+If you have access to the Internet, point your browser at the RPerl Home Page.
+http://www.rperl.org/
 
 EOL
     print $version_message;
@@ -996,7 +998,8 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Print a brief help message for command-line usage.
+    Print a relatively brief help message for command-line usage.
+    For additional explanations, run the command `perldoc RPerl::Learning` and see Appendix B.
 
 =for rperl X</noncode>
 
@@ -1012,9 +1015,9 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Print version number and copyright information.
- Repeat as 'vv' for more technical information, similar to `perl -V` configuration summary argument.
- Lowercase 'v' not to be confused with uppercase 'V' in 'Verbose' argument.
+    Print version number and copyright information.
+    Repeat as 'vv' for more technical information, similar to `perl -V` configuration summary argument.
+    Lowercase 'v' not to be confused with uppercase 'V' in 'Verbose' argument.
 
 =for rperl X</noncode>
 
@@ -1028,9 +1031,9 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Specify input file, may be repeated for multiple input files.
- Argument prefix '--infile' may be entirely omitted.
- Argument prefix MUST be omitted to specify wildcard for multiple input files.
+    Specify input file, may be repeated for multiple input files.
+    Argument prefix '--infile' may be entirely omitted.
+    Argument prefix MUST be omitted to specify wildcard for multiple input files.
 
 =for rperl X</noncode>
 
@@ -1044,12 +1047,12 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Specify output file prefix, may be repeated for multiple output files.
- RPerl *.pm input file with PERL ops will create MyFile.pmc output file.
- RPerl *.pl input file with PERL ops will create my_file (or my_file.exe) & my_file.pmc output files.
- RPerl *.pm input file with CPP ops will create MyFile.pmc, MyFile.cpp, & MyFile.h output files.
- RPerl *.pl input file with CPP ops will create myfile (or myfile.exe on Windows), MyFile.pmc, MyFile.cpp, & MyFile.h output files.
- Argument may be entirely omitted, 'MyFile.*' input file will default to 'MyFile.*' out.
+    Specify output file prefix, may be repeated for multiple output files.
+    RPerl *.pm input file with PERL ops will create MyFile.pmc output file.
+    RPerl *.pl input file with PERL ops will create my_file (or my_file.exe) & my_file.pmc output files.
+    RPerl *.pm input file with CPP ops will create MyFile.pmc, MyFile.cpp, & MyFile.h output files.
+    RPerl *.pl input file with CPP ops will create myfile (or myfile.exe on Windows), MyFile.pmc, MyFile.cpp, & MyFile.h output files.
+    Argument may be entirely omitted, 'MyFile.*' input file will default to 'MyFile.*' out.
 
 =for rperl X</noncode>
 
@@ -1063,7 +1066,9 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Specify path to C++ compiler, equivalent to '--mode CXX=/path/to/compiler' or 'CXX' manual Makefile argument.
+    Specify path to C++ compiler, equivalent to '--mode CXX=/path/to/compiler' or 'CXX' manual Makefile argument.
+
+=for rperl X</noncode>
 
 =back
 
@@ -1077,10 +1082,10 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Specify operations mode, CPP by default.
- If set to PERL, generate Perl operations in the source code output file(s).
- If set to CPP, generate C++ operations in the source code output file(s).
- PERL ops mode forces PERL types mode & PARSE or GENERATE compile mode; PERLOPS_PERLTYPES is test mode, does not actually compile.
+    Specify operations mode, CPP by default.
+    If set to PERL, generate Perl operations in the source code output file(s).
+    If set to CPP, generate C++ operations in the source code output file(s).
+    PERL ops mode forces PERL types mode & PARSE or GENERATE compile mode; PERLOPS_PERLTYPES is test mode, does not actually compile.
 
 =for rperl X</noncode>
 
@@ -1098,11 +1103,11 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Specify data types mode, CPP by default.
- If set to PERL, generate Perl data types in the source code output file(s).
- If set to CPP, generate C++ data types in the source code output file(s).
- If set to DUAL, generate both Perl and C++ data types in the source code output file(s).
- DUAL mode allows generate-once-compile-many types, selected by '#define __FOO__TYPES' in lib/rperltypes_mode.h or `gcc -D__FOO__TYPES` manual subcompile argument.
+    Specify data types mode, CPP by default.
+    If set to PERL, generate Perl data types in the source code output file(s).
+    If set to CPP, generate C++ data types in the source code output file(s).
+    If set to DUAL, generate both Perl and C++ data types in the source code output file(s).
+    DUAL mode allows generate-once-compile-many types, selected by '#define __FOO__TYPES' in lib/rperltypes_mode.h or `gcc -D__FOO__TYPES` manual subcompile argument.
 
 =for rperl X</noncode>
 
@@ -1120,10 +1125,10 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Specify data type checking mode, TRACE by default.
- If set to OFF, do not perform dynamic type checking, only built-in C++ static type checking.
- If set to ON, perform dynamic type checking in addition to built-in C++ static type checking.
- If set to TRACE, perform dynamic type checking in addition to built-in C++ static type checking, with subroutine-and-variable trace information.
+    Specify data type checking mode, TRACE by default.
+    If set to OFF, do not perform dynamic type checking, only built-in C++ static type checking.
+    If set to ON, perform dynamic type checking in addition to built-in C++ static type checking.
+    If set to TRACE, perform dynamic type checking in addition to built-in C++ static type checking, with subroutine-and-variable trace information.
 
 =for rperl X</noncode>
 
@@ -1139,10 +1144,10 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Specify dependencies mode, ON by default.
- If set to OFF, do not search for or compile dependencies.
- If set to ON, recursively search for dependencies and subdependencies, include as additional input file(s).
- WARNING: Disabling dependencies will likely cause errors or undefined behavior.
+    Specify dependencies mode, ON by default.
+    If set to OFF, do not search for or compile dependencies.
+    If set to ON, recursively search for dependencies and subdependencies, include as additional input file(s).
+    WARNING: Disabling dependencies will likely cause errors or undefined behavior.
 
 =for rperl X</noncode>
 
@@ -1166,13 +1171,13 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Specify uncompile mode, OFF by default.
- If set to SOURCE, delete all generated C++ output source code (not subcompiled) files: *.cpp, *.h, *.pmc
- If set to BINARY, delete all generated C++ output binary (subcompiled) files: *.o, *.a, *.so, *.exe, non-suffixed executables
- If set to INLINE, delete all generated C++ output Inline::CPP files: _Inline/ directory
- If set to SOURCE_BINARY, delete both SOURCE and BINARY files.
- If set to SOURCE_BINARY_INLINE, delete SOURCE, BINARY, and INLINE files.
- For *.pm Perl module input files, BINARY and INLINE are equivalent.
+    Specify uncompile mode, OFF by default.
+    If set to SOURCE, delete all generated C++ output source code (not subcompiled) files: *.cpp, *.h, *.pmc
+    If set to BINARY, delete all generated C++ output binary (subcompiled) files: *.o, *.a, *.so, *.exe, non-suffixed executables
+    If set to INLINE, delete all generated C++ output Inline::CPP files: _Inline/ directory
+    If set to SOURCE_BINARY, delete both SOURCE and BINARY files.
+    If set to SOURCE_BINARY_INLINE, delete SOURCE, BINARY, and INLINE files.
+    For *.pm Perl module input files, BINARY and INLINE are equivalent.
 
 =for rperl X</noncode>
 
@@ -1194,11 +1199,11 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Specify compile mode, SUBCOMPILE by default.
- If set to PARSE, begin with RPerl input source code file(s), and end with RPerl abstract syntax tree output data structure.
- If set to GENERATE, begin with RPerl input source code file(s), and end with RPerl and/or C++ output source code in memory.
- If set to SAVE, begin with RPerl input source code file(s), and end with RPerl and/or C++ output source code file(s) saved to disk.
- If set to SUBCOMPILE, begin with RPerl input source code file(s), and end with C++ output binary file(s).
+    Specify compile mode, SUBCOMPILE by default.
+    If set to PARSE, begin with RPerl input source code file(s), and end with RPerl abstract syntax tree output data structure.
+    If set to GENERATE, begin with RPerl input source code file(s), and end with RPerl and/or C++ output source code in memory.
+    If set to SAVE, begin with RPerl input source code file(s), and end with RPerl and/or C++ output source code file(s) saved to disk.
+    If set to SUBCOMPILE, begin with RPerl input source code file(s), and end with C++ output binary file(s).
 
 =for rperl X</noncode>
 
@@ -1222,12 +1227,12 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Specify subcompile mode, DYNAMIC by default.
- If set to ASSEMBLE, generate *.o object binary output file(s).
- If set to ARCHIVE, generate *.a object archive binary output file(s).
- If set to SHARED, generate *.so shared object binary output file(s).
- If set to STATIC, generate statically-linked *.exe or non-suffixed executable binary output file(s).
- If set to DYNAMIC, generate dynamically-linked *.exe or non-suffixed executable binary output file(s).
+    Specify subcompile mode, DYNAMIC by default.
+    If set to ASSEMBLE, generate *.o object binary output file(s).
+    If set to ARCHIVE, generate *.a object archive binary output file(s).
+    If set to SHARED, generate *.so shared object binary output file(s).
+    If set to STATIC, generate statically-linked *.exe or non-suffixed executable binary output file(s).
+    If set to DYNAMIC, generate dynamically-linked *.exe or non-suffixed executable binary output file(s).
 
 =for rperl X</noncode>
 
@@ -1241,7 +1246,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Specify path to C++ compiler for use in subcompile modes, 'g++' by default.
+    Specify path to C++ compiler for use in subcompile modes, 'g++' by default.
 
 =for rperl X</noncode>
 
@@ -1257,10 +1262,10 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Specify execute mode, ON by default.
- If set to OFF, do not load or run any user-supplied program(s).
- If set to ON with one *.pl Perl program input file, load and run the program.
- If set to ON with more than one *.pl Perl program input file, do not load or run any programs.
+    Specify execute mode, ON by default.
+    If set to OFF, do not load or run any user-supplied program(s).
+    If set to ON with one *.pl Perl program input file, load and run the program.
+    If set to ON with more than one *.pl Perl program input file, do not load or run any programs.
 
 =for rperl X</noncode>
 
@@ -1276,9 +1281,9 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Specify source section label mode, ON by default.
- If set to OFF, generate minimal output source code, may save disk space.
- If set to ON, generate some informative labels in output source code, may be more human-readable.
+    Specify source section label mode, ON by default.
+    If set to OFF, generate minimal output source code, may save disk space.
+    If set to ON, generate some informative labels in output source code, may be more human-readable.
 
 =for rperl X</noncode>
 
@@ -1294,10 +1299,10 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Include additional user information in output, or not.
- If enabled, equivalent to `export RPERL_VERBOSE=1` shell command.
- Disabled by default.
- Uppercase 'V' not to be confused with lowercase 'v' in 'version' argument.
+    Include additional user information in output, or not.
+    If enabled, equivalent to `export RPERL_VERBOSE=1` shell command.
+    Disabled by default.
+    Uppercase 'V' not to be confused with lowercase 'v' in 'version' argument.
 
 =for rperl X</noncode>
 
@@ -1313,10 +1318,10 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Include system diagnostic information in output, or not.
- If enabled, equivalent to `export RPERL_DEBUG=1` shell command.
- Disabled by default.
- Uppercase 'D' not to be confused with lowercase 'd' in 'dependencies' argument.
+    Include system diagnostic information in output, or not.
+    If enabled, equivalent to `export RPERL_DEBUG=1` shell command.
+    Disabled by default.
+    Uppercase 'D' not to be confused with lowercase 'd' in 'dependencies' argument.
 
 =for rperl X</noncode>
 
@@ -1332,8 +1337,8 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Include system warnings in output, or not.
- Enabled by default, equivalent to `export RPERL_WARNINGS=0` shell command.
+    Include system warnings in output, or not.
+    Enabled by default, equivalent to `export RPERL_WARNINGS=0` shell command.
 
 =for rperl X</noncode>
 
@@ -1347,9 +1352,9 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Test mode: Perl ops, Perl types, Parse & Generate (no Save or Compile)
- If enabled, equivalent to '--mode ops=PERL --mode types=PERL --mode compile=GENERATE' arguments.
- Disabled by default.
+    Test mode: Perl ops, Perl types, Parse & Generate (no Save or Compile)
+    If enabled, equivalent to '--mode ops=PERL --mode types=PERL --mode compile=GENERATE' arguments.
+    Disabled by default.
 
 =for rperl X</noncode>
 
@@ -1365,9 +1370,9 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Follow and compile dependencies, or not.
- Enabled by default, equivalent to '--mode dependencies=ON' argument.
- Lowercase 'd' not to be confused with uppercase 'D' in 'Debug' argument.
+    Follow and compile dependencies, or not.
+    Enabled by default, equivalent to '--mode dependencies=ON' argument.
+    Lowercase 'd' not to be confused with uppercase 'D' in 'Debug' argument.
 
 =for rperl X</noncode>
 
@@ -1391,13 +1396,13 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Uncompile (delete C++ source code and/or binary output files), or not.
- Repeat as 'uu' and 'uuu' for more thorough file removal.
- Do not confuse uncompile with decompile (recreate RPerl source code from C++ source code or binary output files), which does not currently exist.
- '-u' equivalent to '--mode uncompile=SOURCE --mode compile=OFF --mode execute=OFF' arguments.
- '-uu' equivalent to '--mode uncompile=SOURCE_BINARY --mode compile=OFF --mode execute=OFF' arguments.
- '-uuu' equivalent to '--mode uncompile=SOURCE_BINARY_INLINE --mode compile=OFF --mode execute=OFF' arguments.
- Disabled by default.
+    Uncompile (delete C++ source code and/or binary output files), or not.
+    Repeat as 'uu' and 'uuu' for more thorough file removal.
+    Do not confuse uncompile with decompile (recreate RPerl source code from C++ source code or binary output files), which does not currently exist.
+    '-u' equivalent to '--mode uncompile=SOURCE --mode compile=OFF --mode execute=OFF' arguments.
+    '-uu' equivalent to '--mode uncompile=SOURCE_BINARY --mode compile=OFF --mode execute=OFF' arguments.
+    '-uuu' equivalent to '--mode uncompile=SOURCE_BINARY_INLINE --mode compile=OFF --mode execute=OFF' arguments.
+    Disabled by default.
 
 =for rperl X</noncode>
 
@@ -1413,8 +1418,8 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Generate & subcompile C++ source code, or not.
- Enabled by default, equivalent to '--mode compile=SUBCOMPILE' argument.
+    Generate & subcompile C++ source code, or not.
+    Enabled by default, equivalent to '--mode compile=SUBCOMPILE' argument.
 
 =for rperl X</noncode>
 
@@ -1428,9 +1433,9 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Assemble subcompile mode, output *.o object file(s).
- If enabled, equivalent to '--mode subcompile=ASSEMBLE' argument or `gcc -c` manual subcompile argument.
- Disabled by default.
+    Assemble subcompile mode, output *.o object file(s).
+    If enabled, equivalent to '--mode subcompile=ASSEMBLE' argument or `gcc -c` manual subcompile argument.
+    Disabled by default.
 
 =for rperl X</noncode>
 
@@ -1444,9 +1449,9 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Archive subcompile mode, output *.a object archive file(s).
- If enabled, equivalent to '--mode subcompile=ARCHIVE' argument or `gcc -c` followed by `ar` manual subcompile command.
- Disabled by default.
+    Archive subcompile mode, output *.a object archive file(s).
+    If enabled, equivalent to '--mode subcompile=ARCHIVE' argument or `gcc -c` followed by `ar` manual subcompile command.
+    Disabled by default.
 
 =for rperl X</noncode>
 
@@ -1460,9 +1465,9 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Shared subcompile mode, output *.so shared object file(s).
- If enabled, equivalent to '--mode subcompile=SHARED' argument or `gcc -shared` manual subcompile command.
- Disabled by default.
+    Shared subcompile mode, output *.so shared object file(s).
+    If enabled, equivalent to '--mode subcompile=SHARED' argument or `gcc -shared` manual subcompile command.
+    Disabled by default.
 
 =for rperl X</noncode>
 
@@ -1478,10 +1483,10 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Static subcompile mode, output *.exe or non-suffixed statically-linked executable file(s).
- If disabled, equivalent to '--mode subcompile=DYNAMIC' argument or `gcc` manual subcompile command.
- If enabled, equivalent to '--mode subcompile=STATIC' argument or `gcc -static` manual subcompile command.
- Disabled by default.
+    Static subcompile mode, output *.exe or non-suffixed statically-linked executable file(s).
+    If disabled, equivalent to '--mode subcompile=DYNAMIC' argument or `gcc` manual subcompile command.
+    If enabled, equivalent to '--mode subcompile=STATIC' argument or `gcc -static` manual subcompile command.
+    Disabled by default.
 
 =for rperl X</noncode>
 
@@ -1497,9 +1502,9 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
- Run input code after argumental compile, or not.
- Enabled by default for *.pl program input files, always disabled for *.pm module input files or multiple input files.
- Equivalent to '--mode execute=ON' argument.
+    Run input code after argumental compile, or not.
+    Enabled by default for *.pl program input files, always disabled for *.pm module input files or multiple input files.
+    Equivalent to '--mode execute=ON' argument.
 
 =for rperl X</noncode>
 

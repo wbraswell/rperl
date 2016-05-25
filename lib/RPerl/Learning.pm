@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.082_000;
+our $VERSION = 0.083_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -428,9 +428,9 @@ You are about to learn the basic concepts of writing software using the RPerl op
 
 This book is named and stylized for the animal mascot for RPerl, Roadie the Roadrunner.  RPerl, like Roadie, I<"runs really fast">.
 
-Throughout this text, the following 12 typography conventions are utilized:
+Throughout this text, the following 14 typography conventions are utilized:
 
-=over 16
+=over
 
 =item * "Literal Quotation"
 
@@ -454,17 +454,33 @@ Throughout this text, the following 12 typography conventions are utilized:
 
 =item * L<Hyperlink|http://rperl.org>
 
-=item * C<$inline_code_snippet = 'unhighlighted';>
+=item * C<$code_snippet = 'unhighlighted';>
 
-    my string $indented_code_block = 'highlighted on RPerl.org & MetaCPAN.org';  # with comments
+=item * C<`command_line_program.pl --with --arguments`>
+
+=item * ...
+
+    my string $code_block = 'highlighted on RPerl.org & MetaCPAN.org';  # with comments
     my integer $more_code = 17;  # http://www.catb.org/jargon/html/R/random-numbers.html
     return 'end of indented code block';
 
+=item * ...
+
 =for rperl X<noncode>
 
-    $ terminal_command.pl with arguments
+    $ command_line_program.pl --with --arguments
     Please provide input: foo bar
     Your output is:       howdy howdy howdy
+
+=for rperl X</noncode>
+
+=item * ...
+
+=for rperl X<noncode>
+
+    Documentation referring to `command_line_program.pl --with --arguments` among other things.
+    When executed, the above command accepts as input the string 'foo bar',
+    and displays as output the string 'howdy howdy howdy'.
 
 =for rperl X</noncode>
 
@@ -638,7 +654,7 @@ On modern operating systems with good Perl support, such as Debian or Ubuntu GNU
 
 =for rperl X</noncode>
 
-You may also choose to use the C<cpanm> command for simplicity, or the C<local::lib> tool for single-user (not system-wide) installation, both of which are included in the INSTALL notes document linked below.
+You may also choose to use the C<`cpanm`> command for simplicity, or the C<local::lib> tool for single-user (not system-wide) installation, both of which are included in the INSTALL notes document linked below.
 
 If RPerl is properly installed, you should see a short text message displayed when you type the following command:
 
@@ -652,7 +668,7 @@ On operating systems with less Perl support, you may have to perform a number of
 
 L<https://github.com/wbraswell/rperl/blob/master/INSTALL>
 
-Unless you are an experienced programmer or system administrator, it is B<strongly> recommended you use the Xubuntu operating system.  You can download the Xubuntu ISO file at the link below, then use it to create a bootable DVD disc or USB flash drive, install Xubuntu onto any computer, and issue the C<$ sudo cpan RPerl> command as described above.
+Unless you are an experienced programmer or system administrator, it is B<strongly> recommended you use the Xubuntu operating system.  You can download the Xubuntu ISO file at the link below, then use it to create a bootable DVD disc or USB flash drive, install Xubuntu onto any computer, and issue the C<`sudo cpan RPerl`> command as described above.
 
 L<http://xubuntu.org/getxubuntu>
 
@@ -702,11 +718,11 @@ Please be sure to include all of the following information in your bug report:
 
 =item * Pertinent Problem Message Output, If Long Use L<https://gist.github.com/>
 
-=item * Operating System Version C<$ cat /etc/issue>
+=item * Operating System Version C<`cat /etc/issue`>
 
-=item * Perl Version C<$ perl -v>
+=item * Perl Version C<`perl -v`>
 
-=item * RPerl Version C<$ rperl -v>
+=item * RPerl Version C<`rperl -v`>
 
 =back
 
@@ -768,7 +784,7 @@ The I<"critics"> section is included as necessary and may contain 1 or more line
 
 The I<"operations"> section is required and contains 1 or more lines of general-purpose RPerl source code.  This is the main body of your program.  The 6 lines of source code in our example are used to perform some simple arithmetic and display the results.  The C<my integer $foo = 21 + 12;> line declares a new variable named C<$foo> which will only contain non-floating-point numeric data, and which is initialized to contain the arithmetic result of numeric literal values C<21> plus C<12>.  The C<my integer $bar = 23 * 42 * 2;> line does much the same thing, creating a new numeric variable named C<$bar> and initialized with C<23> times C<42> times C<2>.  The C<my number $baz = to_number($bar) / $foo;> line creates a new floating-point numeric variable C<$baz>, and initializes it to the quotient of the C<$bar> and C<$foo> variables.  The C<to_number()> RPerl type conversion subroutine converts a non-floating-point C<integer> value to a floating-point C<number> value.
 
-The C<print 'have $foo = ' . to_string($foo) . "\n";> and following 2 lines will display on screen (not send to paper printer) the labeled values of C<$foo>, C<$bar>, and C<$baz> respectively.  The C<.> dot operator is string concatenation, used in this example to create one string out of 3 parts so there is only 1 argument parameter passed to the C<print> command.  The C<to_string()> RPerl type conversion subroutine converts the numeric values to underscore-formatted string values, suitable for use via the C<print> operator.  The "n" in the C<"\n"> double-quoted string literal values stands for "newline", which inserts a carriage return to place the next piece of printed data down on the following line.
+The C<print 'have $foo = ' . to_string($foo) . "\n";> and following 2 lines will display on screen (not send to paper printer) the labeled values of C<$foo>, C<$bar>, and C<$baz> respectively.  The C<.> dot operator is string concatenation, used in this example to create one string out of 3 parts so there is only 1 argument parameter passed to the C<print> operator.  The C<to_string()> RPerl type conversion subroutine converts the numeric values to underscore-formatted string values, suitable for use via the C<print> operator.  The "n" in the C<"\n"> double-quoted string literal values stands for "newline", which inserts a carriage return to place the next piece of printed data down on the following line.
 
 =head2 Section 1.24: How Do I Compile RPerl?
 
@@ -10221,13 +10237,13 @@ We have tried to minimize the number of dependencies upon which RPerl relies, bu
 
 CPAN promotes the use of a minimum version requirement for each (sub)dependency, which means RPerl will not use out-of-date software from CPAN, thereby avoiding a large number of known errors.  However, there is much less emphasis on utilizing a maximum version requirement, so CPAN will always default to installing the latest public release of each (sub)dependency.  It is the responsibility of the author of each (sub)dependency to ensure all public releases are stable, secure, and bug-free across a wide range of operating systems and hardware platforms, which is a constantly moving target for each software developer because new operating systems and hardware platforms are released all the time.  This means the latest public release of any 1 specific CPAN distribution may remain stable for a long time, and then all-of-a-sudden it may become unstable when a new version of one of its own (sub)dependencies is released containing a bug or incompatibility.  This further means the latest public release of the RPerl distribution on CPAN may work fine on your computer, then stop working properly if you update either the base dependencies or the CPAN dependencies.
 
-There are 2 primary front-end applications used to install dependencies from CPAN, namely the C<cpan> and C<cpanm> commands, each of which has its own style of problem messages.  In addition, there are unique problem messages which may be emitted by each individual CPAN distribution.  As with the base dependencies in the previous RPerl install phase, there are countless possible problem messages you may encounter in this phase, none of which would be generated by RPerl itself.
+There are 2 primary front-end applications used to install dependencies from CPAN, namely the C<`cpan`> and C<`cpanm`> commands, each of which has its own style of problem messages.  In addition, there are unique problem messages which may be emitted by each individual CPAN distribution.  As with the base dependencies in the previous RPerl install phase, there are countless possible problem messages you may encounter in this phase, none of which would be generated by RPerl itself.
 
 Common problem messages in this phase may include:
 
 =over
 
-=item * Front-End Application Not Installed (C<cpan> or C<cpanm>)
+=item * Front-End Application Not Installed (C<`cpan`> or C<`cpanm`>)
 
 =for rperl X<noncode>
 
@@ -10237,7 +10253,7 @@ Common problem messages in this phase may include:
 
 =for rperl X</noncode>
 
-=item * Dependency or Subdependency Not Installed (C<cpan> or C<cpanm>)
+=item * Dependency or Subdependency Not Installed (C<`cpan`> or C<`cpanm`>)
 
 =for rperl X<noncode>
 
@@ -10245,7 +10261,7 @@ Common problem messages in this phase may include:
 
 =for rperl X</noncode>
 
-=item * Old Dependency or Subdependency Installed (C<cpan> or C<cpanm>)
+=item * Old Dependency or Subdependency Installed (C<`cpan`> or C<`cpanm`>)
 
 =for rperl X<noncode>
 
@@ -10253,7 +10269,7 @@ Common problem messages in this phase may include:
 
 =for rperl X</noncode>
 
-=item * Dependency Or Subdependency Build Failure (C<cpan>)
+=item * Dependency Or Subdependency Build Failure (C<`cpan`>)
 
 =for rperl X<noncode>
 
@@ -10266,7 +10282,7 @@ Common problem messages in this phase may include:
 
 =for rperl X</noncode>
 
-=item * Dependency Or Subdependency Test Failure (C<cpan>)
+=item * Dependency Or Subdependency Test Failure (C<`cpan`>)
 
 =for rperl X<noncode>
 
@@ -10280,7 +10296,7 @@ Common problem messages in this phase may include:
 
 =for rperl X</noncode>
 
-=item * Dependency Or Subdependency Build Or Test Failure (C<cpanm>)
+=item * Dependency Or Subdependency Build Or Test Failure (C<`cpanm`>)
 
 =for rperl X<noncode>
 
@@ -10306,7 +10322,7 @@ Common problem messages in this phase may include:
 
 =for rperl X</noncode>
 
-=item * Network Connection Failure (C<cpan>)
+=item * Network Connection Failure (C<`cpan`>)
 
 =for rperl X<noncode>
 
@@ -10317,7 +10333,7 @@ Common problem messages in this phase may include:
 
 =for rperl X</noncode>
 
-=item * Network Connection Failure (C<cpanm>)
+=item * Network Connection Failure (C<`cpanm`>)
 
 =for rperl X<noncode>
 
@@ -10403,7 +10419,7 @@ Common problem messages in this phase may include:
 
 =over
 
-=item * Missing C++ Compiler C<g++>
+=item * Missing C++ Compiler C<`g++`>
 
 =for rperl X<noncode>
 
@@ -10484,7 +10500,7 @@ Common problem messages in this phase may include:
 
 X<ENABLE_LIST_SPACING>
 
-=item * Missing RPerl Compiler C<rperl>
+=item * Missing RPerl Compiler C<`rperl`>
 
 =for rperl X<noncode>
 
@@ -10502,7 +10518,7 @@ X<ENABLE_LIST_SPACING>
 
 =head3 Section 2.3.6: Compile, Arguments & Files
 
-RPerl is a compiler, so it is unsurprising that 9 of the 15 RPerl phases are compile phases.  When a software developer (like you!) runs the RPerl compiler via the C<rperl> command, the first compile phase checks the validity of the command-line arguments (AKA options) as well as the input source code file(s) to be compiled.  Command-line arguments can be entirely omitted, in which case default behavior will be utilized.  At least one input file must be specified, or else there would be no reason to run the C<rperl> command.
+RPerl is a compiler, so it is unsurprising that 9 of the 15 RPerl phases are compile phases.  When a software developer (like you!) runs the RPerl compiler via the C<`rperl`> command, the first compile phase checks the validity of the command-line arguments (AKA options) as well as the input source code file(s) to be compiled.  Command-line arguments can be entirely omitted, in which case default behavior will be utilized.  At least one input file must be specified, or else there would be no reason to run the C<`rperl`> command.
 
 START HERE: add link to appendix B for command-line args, continue adding problem message content
 
@@ -11249,7 +11265,7 @@ X<br>
 
 This exercise is commonly used as the first task for new programmers, or for programmers who are learning a new language.X<br>
 
-The goal of this exercise is to become familiar with the boilerplate (often-repeated template) RPerl C<HEADER> and C<CRITICS> code sections, as well as the basic C<print> command.X<br>
+The goal of this exercise is to become familiar with the boilerplate (often-repeated template) RPerl C<HEADER> and C<CRITICS> code sections, as well as the basic C<print> operator.X<br>
 
 The first line, starting with C<#!> and called a "shebang", tells the operating system to run this program using Perl.X<br>
 
@@ -11293,7 +11309,7 @@ X<br>
 
 =head2 Chapter 1, Exercise 2
 
-The goal of this exercise is to become familiar with the C<rperl> command.X<br>
+The goal of this exercise is to become familiar with the C<`rperl`> command.X<br>
 
 X<br>
 
@@ -11311,53 +11327,54 @@ Example execution and output for 2a and 2b:
     
     Arguments:
         --help ...OR... -h ...OR... -?
-             Print a brief help message for command-line usage.
+                Print a relatively brief help message for command-line usage.
+                For additional explanations, run the command `perldoc RPerl::Learning` and see Appendix B.
     
         --version ...OR... -v
         --vversion ...OR... -vv
-             Print version number and copyright information.
-             Repeat as 'vv' for more technical information, similar to `perl -V` configuration summary argument.
-             Lowercase 'v' not to be confused with uppercase 'V' in 'Verbose' argument.
+                Print version number and copyright information.
+                Repeat as 'vv' for more technical information, similar to `perl -V` configuration summary argument.
+                Lowercase 'v' not to be confused with uppercase 'V' in 'Verbose' argument.
     
         --infile=MyFile.pm ...OR... -i=MyFile.pm
-             Specify input file, may be repeated for multiple input files.
-             Argument prefix '--infile' may be entirely omitted.
-             Argument prefix MUST be omitted to specify wildcard for multiple input files.
+                Specify input file, may be repeated for multiple input files.
+                Argument prefix '--infile' may be entirely omitted.
+                Argument prefix MUST be omitted to specify wildcard for multiple input files.
     
         --outfile=MyFile ...OR... -o=MyFile
-             Specify output file prefix, may be repeated for multiple output files.
-             RPerl *.pm input file with PERL ops will create MyFile.pmc output file.
-             RPerl *.pl input file with PERL ops will create my_file (or my_file.exe) & my_file.pmc output files.
-             RPerl *.pm input file with CPP ops will create MyFile.pmc, MyFile.cpp, & MyFile.h output files.
-             RPerl *.pl input file with CPP ops will create myfile (or myfile.exe on Windows), MyFile.pmc, MyFile.cpp, & MyFile.h output files.
-             Argument may be entirely omitted, 'MyFile.*' input file will default to 'MyFile.*' out.
+                Specify output file prefix, may be repeated for multiple output files.
+                RPerl *.pm input file with PERL ops will create MyFile.pmc output file.
+                RPerl *.pl input file with PERL ops will create my_file (or my_file.exe) & my_file.pmc output files.
+                RPerl *.pm input file with CPP ops will create MyFile.pmc, MyFile.cpp, & MyFile.h output files.
+                RPerl *.pl input file with CPP ops will create myfile (or myfile.exe on Windows), MyFile.pmc, MyFile.cpp, & MyFile.h output files.
+                Argument may be entirely omitted, 'MyFile.*' input file will default to 'MyFile.*' out.
     
         --CXX=/path/to/compiler
-             Specify path to C++ compiler, equivalent to '--mode CXX=/path/to/compiler' or 'CXX' manual Makefile argument.
+                Specify path to C++ compiler, equivalent to '--mode CXX=/path/to/compiler' or 'CXX' manual Makefile argument.
     
         --mode ops=PERL ...OR... -m ops=PERL
         --mode ops=CPP ...OR... -m ops=CPP
-             Specify operations mode, CPP by default.
-             If set to PERL, generate Perl operations in the source code output file(s).
-             If set to CPP, generate C++ operations in the source code output file(s).
-             PERL ops mode forces PERL types mode & PARSE or GENERATE compile mode; PERLOPS_PERLTYPES is test mode, does not actually compile.
+                Specify operations mode, CPP by default.
+                If set to PERL, generate Perl operations in the source code output file(s).
+                If set to CPP, generate C++ operations in the source code output file(s).
+                PERL ops mode forces PERL types mode & PARSE or GENERATE compile mode; PERLOPS_PERLTYPES is test mode, does not actually compile.
     
         --mode types=PERL ...OR... -m types=PERL
         --mode types=CPP ...OR... -m types=CPP
         --mode types=DUAL ...OR... -m types=DUAL
-             Specify data types mode, CPP by default.
-             If set to PERL, generate Perl data types in the source code output file(s).
-             If set to CPP, generate C++ data types in the source code output file(s).
-             If set to DUAL, generate both Perl and C++ data types in the source code output file(s).
-             DUAL mode allows generate-once-compile-many types, selected by '#define __FOO__TYPES' in lib/rperltypes_mode.h or `gcc -D__FOO__TYPES` manual subcompile argument.
+                Specify data types mode, CPP by default.
+                If set to PERL, generate Perl data types in the source code output file(s).
+                If set to CPP, generate C++ data types in the source code output file(s).
+                If set to DUAL, generate both Perl and C++ data types in the source code output file(s).
+                DUAL mode allows generate-once-compile-many types, selected by '#define __FOO__TYPES' in lib/rperltypes_mode.h or `gcc -D__FOO__TYPES` manual subcompile argument.
     
         --mode check=OFF ...OR... -m check=OFF
         --mode check=ON ...OR... -m check=ON
         --mode check=TRACE ...OR... -m check=TRACE
-             Specify data type checking mode, TRACE by default.
-             If set to OFF, do not perform dynamic type checking, only built-in C++ static type checking.
-             If set to ON, perform dynamic type checking in addition to built-in C++ static type checking.
-             If set to TRACE, perform dynamic type checking in addition to built-in C++ static type checking, with subroutine-and-variable trace information.
+                Specify data type checking mode, TRACE by default.
+                If set to OFF, do not perform dynamic type checking, only built-in C++ static type checking.
+                If set to ON, perform dynamic type checking in addition to built-in C++ static type checking.
+                If set to TRACE, perform dynamic type checking in addition to built-in C++ static type checking, with subroutine-and-variable trace information.
 
     [[[ REMAINING ARGUMENTS OMITTED FOR BREVITY ]]]
 
@@ -12534,9 +12551,9 @@ Finally, the inner C<foreach> loop displays the now-reversed C<$file_lines>, and
 
 In the C<OPERATIONS> section, the C<tac()> subroutine is called with its only argument being a reference to the special C<@ARGV> array, which is Perl's way of accessing the command-line arguments.X<br>
 
-Before executing this program, the non-Perl C<printf> program must be called to populate some test data into the 3 input files F<fred>, F<barney>, and F<betty>; and after execution the C<rm> program is called to delete the 3 input files.X<br>
+Before executing this program, the non-Perl C<`printf`> program must be called to populate some test data into the 3 input files F<fred>, F<barney>, and F<betty>; and after execution the C<`rm`> program is called to delete the 3 input files.X<br>
 
-To begin execution of this program via the C<rperl> command, the program name and input file names must be enclosed in either C<'single quotes'> or C<"double quotes">; this tells RPerl the input file names are command-line arguments to be passed to the 1 specified program, instead of specifying additional RPerl programs.X<br>
+To begin execution of this program via the C<`rperl`> command, the program name and input file names must be enclosed in either C<'single quotes'> or C<"double quotes">; this tells RPerl the input file names are command-line arguments to be passed to the 1 specified program, instead of specifying additional RPerl programs.X<br>
 
 
     #!/usr/bin/perl
@@ -13083,13 +13100,11 @@ X<br>
 
 =head1 APPENDIX B: RPERL COMMAND-LINE ARGUMENTS
 
-The C<rperl> I<"command-line interface"> (CLI) is the primary front-end user interface for RPerl.  When called for execution, the C<rperl> command must be provided with at least one input file name, which tells RPerl which file(s) to compile.  In addition, C<rperl> may also be provided with one or more optional I<"command-line arguments">, which tells RPerl exactly how to compile the input file(s).  Command-line arguments are also commonly referred to as I<"options">.
+The C<`rperl`> I<"command-line interface"> (CLI) is a software program which serves as the primary front-end user interface for RPerl.  When called for execution, the C<`rperl`> command must be provided with at least one input file name, which tells RPerl which file(s) to compile.  In addition, C<`rperl`> may also be provided with one or more optional I<"command-line arguments">, which tells RPerl exactly how to compile the input file(s).  Command-line arguments are also commonly referred to as I<"options">.
 
-Below is a comprehensive list of all RPerl command-line arguments, as reported by the C<rperl -?> command.
+Below is a comprehensive list of all RPerl command-line arguments, as reported by the C<`rperl -?`> command.
 
 Additional explanations for each command-line argument are provided I<with emphasis.>
-
-# START HERE: add explanations
 
 =head2 B.1: Help
 
@@ -13099,9 +13114,14 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Print a brief help message for command-line usage.
+    Print a relatively brief help message for command-line usage.
+    For additional explanations, run the command `perldoc RPerl::Learning` and see Appendix B.
 
 =for rperl X</noncode>
+
+I<The help option simply displays the content of this appendix, except for the additional explanations such as this one.>
+
+I<Yes, this is the "Appendix B" you're looking for.>
 
 =back
 
@@ -13115,11 +13135,15 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Print version number and copyright information.
- Repeat as 'vv' for more technical information, similar to `perl -V` configuration summary argument.
- Lowercase 'v' not to be confused with uppercase 'V' in 'Verbose' argument.
+    Print version number and copyright information.
+    Repeat as 'vv' for more technical information, similar to `perl -V` configuration summary argument.
+    Lowercase 'v' not to be confused with uppercase 'V' in 'Verbose' argument.
 
 =for rperl X</noncode>
+
+I<The single-v version option displays a brief message similar to the output of the C<`perl -v`> command.>
+
+I<The double-v version option displays a collection of technical information similar to the output of the C<`perl -V`> command, including subcompile flags for the C++ compiler and system paths.  This option may be useful to RPerl system develpers when debugging subcompile issues or other problems.>
 
 =back
 
@@ -13131,11 +13155,15 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Specify input file, may be repeated for multiple input files.
- Argument prefix '--infile' may be entirely omitted.
- Argument prefix MUST be omitted to specify wildcard for multiple input files.
+    Specify input file, may be repeated for multiple input files.
+    Argument prefix '--infile' may be entirely omitted.
+    Argument prefix MUST be omitted to specify wildcard for multiple input files.
 
 =for rperl X</noncode>
+
+I<The input file option is the only command-line argument which is always required every time the C<`rperl`> command is executed.  Even if the argument prefix '--infile' is omitted for convenience, one or more input file names must still be specified to avoid an RPerl error message.>
+
+I<All input files must end in '.pl' for RPerl programs, or '.pm' for RPerl modules.>
 
 =back
 
@@ -13147,14 +13175,22 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Specify output file prefix, may be repeated for multiple output files.
- RPerl *.pm input file with PERL ops will create MyFile.pmc output file.
- RPerl *.pl input file with PERL ops will create my_file (or my_file.exe) & my_file.pmc output files.
- RPerl *.pm input file with CPP ops will create MyFile.pmc, MyFile.cpp, & MyFile.h output files.
- RPerl *.pl input file with CPP ops will create myfile (or myfile.exe on Windows), MyFile.pmc, MyFile.cpp, & MyFile.h output files.
- Argument may be entirely omitted, 'MyFile.*' input file will default to 'MyFile.*' out.
+    Specify output file prefix, may be repeated for multiple output files.
+    RPerl *.pm input file with PERL ops will create MyFile.pmc output file.
+    RPerl *.pl input file with PERL ops will create my_file (or my_file.exe) & my_file.pmc output files.
+    RPerl *.pm input file with CPP ops will create MyFile.pmc, MyFile.cpp, & MyFile.h output files.
+    RPerl *.pl input file with CPP ops will create myfile (or myfile.exe on Windows), MyFile.pmc, MyFile.cpp, & MyFile.h output files.
+    Argument may be entirely omitted, 'MyFile.*' input file will default to 'MyFile.*' out.
 
 =for rperl X</noncode>
+
+# START HERE: continue adding explanations
+
+# START HERE: continue adding explanations
+
+# START HERE: continue adding explanations
+
+I<FOO>
 
 =back
 
@@ -13166,7 +13202,11 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Specify path to C++ compiler, equivalent to '--mode CXX=/path/to/compiler' or 'CXX' manual Makefile argument.
+    Specify path to C++ compiler, equivalent to '--mode CXX=/path/to/compiler' or 'CXX' manual Makefile argument.
+
+=for rperl X</noncode>
+
+I<FOO>
 
 =back
 
@@ -13180,12 +13220,14 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Specify operations mode, CPP by default.
- If set to PERL, generate Perl operations in the source code output file(s).
- If set to CPP, generate C++ operations in the source code output file(s).
- PERL ops mode forces PERL types mode & PARSE or GENERATE compile mode; PERLOPS_PERLTYPES is test mode, does not actually compile.
+    Specify operations mode, CPP by default.
+    If set to PERL, generate Perl operations in the source code output file(s).
+    If set to CPP, generate C++ operations in the source code output file(s).
+    PERL ops mode forces PERL types mode & PARSE or GENERATE compile mode; PERLOPS_PERLTYPES is test mode, does not actually compile.
 
 =for rperl X</noncode>
+
+I<FOO>
 
 =back
 
@@ -13201,13 +13243,15 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Specify data types mode, CPP by default.
- If set to PERL, generate Perl data types in the source code output file(s).
- If set to CPP, generate C++ data types in the source code output file(s).
- If set to DUAL, generate both Perl and C++ data types in the source code output file(s).
- DUAL mode allows generate-once-compile-many types, selected by '#define __FOO__TYPES' in lib/rperltypes_mode.h or `gcc -D__FOO__TYPES` manual subcompile argument.
+    Specify data types mode, CPP by default.
+    If set to PERL, generate Perl data types in the source code output file(s).
+    If set to CPP, generate C++ data types in the source code output file(s).
+    If set to DUAL, generate both Perl and C++ data types in the source code output file(s).
+    DUAL mode allows generate-once-compile-many types, selected by '#define __FOO__TYPES' in lib/rperltypes_mode.h or `gcc -D__FOO__TYPES` manual subcompile argument.
 
 =for rperl X</noncode>
+
+I<FOO>
 
 =back
 
@@ -13223,12 +13267,14 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Specify data type checking mode, TRACE by default.
- If set to OFF, do not perform dynamic type checking, only built-in C++ static type checking.
- If set to ON, perform dynamic type checking in addition to built-in C++ static type checking.
- If set to TRACE, perform dynamic type checking in addition to built-in C++ static type checking, with subroutine-and-variable trace information.
+    Specify data type checking mode, TRACE by default.
+    If set to OFF, do not perform dynamic type checking, only built-in C++ static type checking.
+    If set to ON, perform dynamic type checking in addition to built-in C++ static type checking.
+    If set to TRACE, perform dynamic type checking in addition to built-in C++ static type checking, with subroutine-and-variable trace information.
 
 =for rperl X</noncode>
+
+I<FOO>
 
 =back
 
@@ -13242,12 +13288,14 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Specify dependencies mode, ON by default.
- If set to OFF, do not search for or compile dependencies.
- If set to ON, recursively search for dependencies and subdependencies, include as additional input file(s).
- WARNING: Disabling dependencies will likely cause errors or undefined behavior.
+    Specify dependencies mode, ON by default.
+    If set to OFF, do not search for or compile dependencies.
+    If set to ON, recursively search for dependencies and subdependencies, include as additional input file(s).
+    WARNING: Disabling dependencies will likely cause errors or undefined behavior.
 
 =for rperl X</noncode>
+
+I<FOO>
 
 =back
 
@@ -13269,15 +13317,17 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Specify uncompile mode, OFF by default.
- If set to SOURCE, delete all generated C++ output source code (not subcompiled) files: *.cpp, *.h, *.pmc
- If set to BINARY, delete all generated C++ output binary (subcompiled) files: *.o, *.a, *.so, *.exe, non-suffixed executables
- If set to INLINE, delete all generated C++ output Inline::CPP files: _Inline/ directory
- If set to SOURCE_BINARY, delete both SOURCE and BINARY files.
- If set to SOURCE_BINARY_INLINE, delete SOURCE, BINARY, and INLINE files.
- For *.pm Perl module input files, BINARY and INLINE are equivalent.
+    Specify uncompile mode, OFF by default.
+    If set to SOURCE, delete all generated C++ output source code (not subcompiled) files: *.cpp, *.h, *.pmc
+    If set to BINARY, delete all generated C++ output binary (subcompiled) files: *.o, *.a, *.so, *.exe, non-suffixed executables
+    If set to INLINE, delete all generated C++ output Inline::CPP files: _Inline/ directory
+    If set to SOURCE_BINARY, delete both SOURCE and BINARY files.
+    If set to SOURCE_BINARY_INLINE, delete SOURCE, BINARY, and INLINE files.
+    For *.pm Perl module input files, BINARY and INLINE are equivalent.
 
 =for rperl X</noncode>
+
+I<FOO>
 
 =back
 
@@ -13297,13 +13347,15 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Specify compile mode, SUBCOMPILE by default.
- If set to PARSE, begin with RPerl input source code file(s), and end with RPerl abstract syntax tree output data structure.
- If set to GENERATE, begin with RPerl input source code file(s), and end with RPerl and/or C++ output source code in memory.
- If set to SAVE, begin with RPerl input source code file(s), and end with RPerl and/or C++ output source code file(s) saved to disk.
- If set to SUBCOMPILE, begin with RPerl input source code file(s), and end with C++ output binary file(s).
+    Specify compile mode, SUBCOMPILE by default.
+    If set to PARSE, begin with RPerl input source code file(s), and end with RPerl abstract syntax tree output data structure.
+    If set to GENERATE, begin with RPerl input source code file(s), and end with RPerl and/or C++ output source code in memory.
+    If set to SAVE, begin with RPerl input source code file(s), and end with RPerl and/or C++ output source code file(s) saved to disk.
+    If set to SUBCOMPILE, begin with RPerl input source code file(s), and end with C++ output binary file(s).
 
 =for rperl X</noncode>
+
+I<FOO>
 
 =back
 
@@ -13325,14 +13377,16 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Specify subcompile mode, DYNAMIC by default.
- If set to ASSEMBLE, generate *.o object binary output file(s).
- If set to ARCHIVE, generate *.a object archive binary output file(s).
- If set to SHARED, generate *.so shared object binary output file(s).
- If set to STATIC, generate statically-linked *.exe or non-suffixed executable binary output file(s).
- If set to DYNAMIC, generate dynamically-linked *.exe or non-suffixed executable binary output file(s).
+    Specify subcompile mode, DYNAMIC by default.
+    If set to ASSEMBLE, generate *.o object binary output file(s).
+    If set to ARCHIVE, generate *.a object archive binary output file(s).
+    If set to SHARED, generate *.so shared object binary output file(s).
+    If set to STATIC, generate statically-linked *.exe or non-suffixed executable binary output file(s).
+    If set to DYNAMIC, generate dynamically-linked *.exe or non-suffixed executable binary output file(s).
 
 =for rperl X</noncode>
+
+I<FOO>
 
 =back
 
@@ -13344,9 +13398,11 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Specify path to C++ compiler for use in subcompile modes, 'g++' by default.
+    Specify path to C++ compiler for use in subcompile modes, 'g++' by default.
 
 =for rperl X</noncode>
+
+I<FOO>
 
 =back
 
@@ -13360,12 +13416,14 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Specify execute mode, ON by default.
- If set to OFF, do not load or run any user-supplied program(s).
- If set to ON with one *.pl Perl program input file, load and run the program.
- If set to ON with more than one *.pl Perl program input file, do not load or run any programs.
+    Specify execute mode, ON by default.
+    If set to OFF, do not load or run any user-supplied program(s).
+    If set to ON with one *.pl Perl program input file, load and run the program.
+    If set to ON with more than one *.pl Perl program input file, do not load or run any programs.
 
 =for rperl X</noncode>
+
+I<FOO>
 
 =back
 
@@ -13379,11 +13437,13 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Specify source section label mode, ON by default.
- If set to OFF, generate minimal output source code, may save disk space.
- If set to ON, generate some informative labels in output source code, may be more human-readable.
+    Specify source section label mode, ON by default.
+    If set to OFF, generate minimal output source code, may save disk space.
+    If set to ON, generate some informative labels in output source code, may be more human-readable.
 
 =for rperl X</noncode>
+
+I<FOO>
 
 =back
 
@@ -13397,12 +13457,14 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Include additional user information in output, or not.
- If enabled, equivalent to `export RPERL_VERBOSE=1` shell command.
- Disabled by default.
- Uppercase 'V' not to be confused with lowercase 'v' in 'version' argument.
+    Include additional user information in output, or not.
+    If enabled, equivalent to `export RPERL_VERBOSE=1` shell command.
+    Disabled by default.
+    Uppercase 'V' not to be confused with lowercase 'v' in 'version' argument.
 
 =for rperl X</noncode>
+
+I<FOO>
 
 =back
 
@@ -13416,12 +13478,14 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Include system diagnostic information in output, or not.
- If enabled, equivalent to `export RPERL_DEBUG=1` shell command.
- Disabled by default.
- Uppercase 'D' not to be confused with lowercase 'd' in 'dependencies' argument.
+    Include system diagnostic information in output, or not.
+    If enabled, equivalent to `export RPERL_DEBUG=1` shell command.
+    Disabled by default.
+    Uppercase 'D' not to be confused with lowercase 'd' in 'dependencies' argument.
 
 =for rperl X</noncode>
+
+I<FOO>
 
 =back
 
@@ -13435,10 +13499,12 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Include system warnings in output, or not.
- Enabled by default, equivalent to `export RPERL_WARNINGS=0` shell command.
+    Include system warnings in output, or not.
+    Enabled by default, equivalent to `export RPERL_WARNINGS=0` shell command.
 
 =for rperl X</noncode>
+
+I<FOO>
 
 =back
 
@@ -13450,11 +13516,13 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Test mode: Perl ops, Perl types, Parse & Generate (no Save or Compile)
- If enabled, equivalent to '--mode ops=PERL --mode types=PERL --mode compile=GENERATE' arguments.
- Disabled by default.
+    Test mode: Perl ops, Perl types, Parse & Generate (no Save or Compile)
+    If enabled, equivalent to '--mode ops=PERL --mode types=PERL --mode compile=GENERATE' arguments.
+    Disabled by default.
 
 =for rperl X</noncode>
+
+I<FOO>
 
 =back
 
@@ -13468,11 +13536,13 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Follow and compile dependencies, or not.
- Enabled by default, equivalent to '--mode dependencies=ON' argument.
- Lowercase 'd' not to be confused with uppercase 'D' in 'Debug' argument.
+    Follow and compile dependencies, or not.
+    Enabled by default, equivalent to '--mode dependencies=ON' argument.
+    Lowercase 'd' not to be confused with uppercase 'D' in 'Debug' argument.
 
 =for rperl X</noncode>
+
+I<FOO>
 
 =back
 
@@ -13494,15 +13564,17 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Uncompile (delete C++ source code and/or binary output files), or not.
- Repeat as 'uu' and 'uuu' for more thorough file removal.
- Do not confuse uncompile with decompile (recreate RPerl source code from C++ source code or binary output files), which does not currently exist.
- '-u' equivalent to '--mode uncompile=SOURCE --mode compile=OFF --mode execute=OFF' arguments.
- '-uu' equivalent to '--mode uncompile=SOURCE_BINARY --mode compile=OFF --mode execute=OFF' arguments.
- '-uuu' equivalent to '--mode uncompile=SOURCE_BINARY_INLINE --mode compile=OFF --mode execute=OFF' arguments.
- Disabled by default.
+    Uncompile (delete C++ source code and/or binary output files), or not.
+    Repeat as 'uu' and 'uuu' for more thorough file removal.
+    Do not confuse uncompile with decompile (recreate RPerl source code from C++ source code or binary output files), which does not currently exist.
+    '-u' equivalent to '--mode uncompile=SOURCE --mode compile=OFF --mode execute=OFF' arguments.
+    '-uu' equivalent to '--mode uncompile=SOURCE_BINARY --mode compile=OFF --mode execute=OFF' arguments.
+    '-uuu' equivalent to '--mode uncompile=SOURCE_BINARY_INLINE --mode compile=OFF --mode execute=OFF' arguments.
+    Disabled by default.
 
 =for rperl X</noncode>
+
+I<FOO>
 
 =back
 
@@ -13516,10 +13588,12 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Generate & subcompile C++ source code, or not.
- Enabled by default, equivalent to '--mode compile=SUBCOMPILE' argument.
+    Generate & subcompile C++ source code, or not.
+    Enabled by default, equivalent to '--mode compile=SUBCOMPILE' argument.
 
 =for rperl X</noncode>
+
+I<FOO>
 
 =back
 
@@ -13531,11 +13605,13 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Assemble subcompile mode, output *.o object file(s).
- If enabled, equivalent to '--mode subcompile=ASSEMBLE' argument or `gcc -c` manual subcompile argument.
- Disabled by default.
+    Assemble subcompile mode, output *.o object file(s).
+    If enabled, equivalent to '--mode subcompile=ASSEMBLE' argument or `gcc -c` manual subcompile argument.
+    Disabled by default.
 
 =for rperl X</noncode>
+
+I<FOO>
 
 =back
 
@@ -13547,11 +13623,13 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Archive subcompile mode, output *.a object archive file(s).
- If enabled, equivalent to '--mode subcompile=ARCHIVE' argument or `gcc -c` followed by `ar` manual subcompile command.
- Disabled by default.
+    Archive subcompile mode, output *.a object archive file(s).
+    If enabled, equivalent to '--mode subcompile=ARCHIVE' argument or `gcc -c` followed by `ar` manual subcompile command.
+    Disabled by default.
 
 =for rperl X</noncode>
+
+I<FOO>
 
 =back
 
@@ -13563,11 +13641,13 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Shared subcompile mode, output *.so shared object file(s).
- If enabled, equivalent to '--mode subcompile=SHARED' argument or `gcc -shared` manual subcompile command.
- Disabled by default.
+    Shared subcompile mode, output *.so shared object file(s).
+    If enabled, equivalent to '--mode subcompile=SHARED' argument or `gcc -shared` manual subcompile command.
+    Disabled by default.
 
 =for rperl X</noncode>
+
+I<FOO>
 
 =back
 
@@ -13581,12 +13661,14 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Static subcompile mode, output *.exe or non-suffixed statically-linked executable file(s).
- If disabled, equivalent to '--mode subcompile=DYNAMIC' argument or `gcc` manual subcompile command.
- If enabled, equivalent to '--mode subcompile=STATIC' argument or `gcc -static` manual subcompile command.
- Disabled by default.
+    Static subcompile mode, output *.exe or non-suffixed statically-linked executable file(s).
+    If disabled, equivalent to '--mode subcompile=DYNAMIC' argument or `gcc` manual subcompile command.
+    If enabled, equivalent to '--mode subcompile=STATIC' argument or `gcc -static` manual subcompile command.
+    Disabled by default.
 
 =for rperl X</noncode>
+
+I<FOO>
 
 =back
 
@@ -13600,11 +13682,13 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
- Run input code after argumental compile, or not.
- Enabled by default for *.pl program input files, always disabled for *.pm module input files or multiple input files.
- Equivalent to '--mode execute=ON' argument.
+    Run input code after argumental compile, or not.
+    Enabled by default for *.pl program input files, always disabled for *.pm module input files or multiple input files.
+    Equivalent to '--mode execute=ON' argument.
 
 =for rperl X</noncode>
+
+I<FOO>
 
 =back
 
@@ -13619,7 +13703,7 @@ RPerl's grammar is written using the Eyapp computer programming language, which 
 
 The grammar expression sections in Eyapp source code are written using an implementation of the Extended Backus-Naur Form (EBNF) language.
 
-The file F<lib/RPerl/Grammar.eyp> contains the uncompiled RPerl grammar, which is passed through the C<eyapp> compiler command once to generate the output file F<lib/RPerl/Grammar.pm>, which is then used by the C<rperl> compiler command to parse RPerl input source code files.
+The file F<lib/RPerl/Grammar.eyp> contains the uncompiled RPerl grammar, which is passed through the C<`eyapp`> compiler command once to generate the output file F<lib/RPerl/Grammar.pm>, which is then used by the C<`rperl`> compiler command to parse RPerl input source code files.
 
 Inside the F<lib/RPerl/Grammar.eyp> file, there are several labeled file sections, which can be grouped into 4 major categories:
 
