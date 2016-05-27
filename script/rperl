@@ -998,7 +998,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
-    Print a relatively brief help message for command-line usage.
+    Print this (relatively) brief help message for command-line usage.
     For additional explanations, run the command `perldoc RPerl::Learning` and see Appendix B.
 
 =for rperl X</noncode>
@@ -1043,16 +1043,18 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =over
 
-=item B<--outfile=MyFile ...OR... -o=MyFile>
+=item B<--outfile=MyCompiledModule ...OR... -o=MyCompiledModule>
+
+=item B<--outfile=my_compiled_program ...OR... -o=my_compiled_program>
 
 =for rperl X<noncode>
 
     Specify output file prefix, may be repeated for multiple output files.
-    RPerl *.pm input file with PERL ops will create MyFile.pmc output file.
-    RPerl *.pl input file with PERL ops will create my_file (or my_file.exe) & my_file.pmc output files.
-    RPerl *.pm input file with CPP ops will create MyFile.pmc, MyFile.cpp, & MyFile.h output files.
-    RPerl *.pl input file with CPP ops will create myfile (or myfile.exe on Windows), MyFile.pmc, MyFile.cpp, & MyFile.h output files.
-    Argument may be entirely omitted, 'MyFile.*' input file will default to 'MyFile.*' out.
+    RPerl *.pm input file with PERL ops will create MyCompiledModule.pmc output file.
+    RPerl *.pl input file with PERL ops will create my_compiled_program (or my_compiled_program.exe on Windows) output file.
+    RPerl *.pm input file with CPP  ops will create MyCompiledModule.pmc, MyCompiledModule.cpp, & MyCompiledModule.h output files.
+    RPerl *.pl input file with CPP  ops will create my_compiled_program (or my_compiled_program.exe on Windows) & my_compiled_program.cpp output files.
+    Argument may be entirely omitted, foo.* input file will default to foo.* output file(s).
 
 =for rperl X</noncode>
 
@@ -1066,7 +1068,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
-    Specify path to C++ compiler, equivalent to '--mode CXX=/path/to/compiler' or 'CXX' manual Makefile argument.
+    Specify path to C++ compiler for use in subcompile modes, equivalent to '--mode CXX=/path/to/compiler' or 'CXX' manual Makefile argument, 'g++' by default.
 
 =for rperl X</noncode>
 
@@ -1246,7 +1248,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
-    Specify path to C++ compiler for use in subcompile modes, 'g++' by default.
+    Specify path to C++ compiler for use in subcompile modes, equivalent to '--CXX=/path/to/compiler' or 'CXX' manual Makefile argument, 'g++' by default.
 
 =for rperl X</noncode>
 

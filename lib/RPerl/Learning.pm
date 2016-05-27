@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.083_000;
+our $VERSION = 0.084_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -1510,7 +1510,7 @@ Perl 5 provides several built-in operators designed for use with numeric data, w
 
 Each operator in Perl 5 (and thus RPerl) is assigned 4 important characteristics: I<"arity"> (a number), I<"fixity"> (a placement location), I<"precedence"> (a number) and I<"associativity"> (a chirality or "handedness").  Operators of unary arity accept exactly 1 input operand, binary operators accept exactly 2 operands, etc.  Prefix operators appear before their respective operands, postfix appear after, infix appear between, and closed operators appear both before and after their operands.  Operators with a lower numeric precedence are executed before operators with a higher precedence; in the absence of parentheses, multiplication executes before addition because multiplication has a lower precedence number.  Operators with equal precedence number are grouped by (and executed in order of) associativity; in the absence of parentheses, multiple subtraction operators will execute from left to right because subtraction is left-associative, whereas multiple exponent operators will execute from right to left because exponentiation is right-associative.  For more information, see the Appendix:
 
-L<C.3: Syntax Arity, Fixity, Precedence, Associativity|"C.3: Syntax Arity, Fixity, Precedence, Associativity">
+L</C.3: Syntax Arity, Fixity, Precedence, Associativity>
 
 Beyond the built-in math operators in Perl 5, more advanced operators and functions are available via the MathPerl software suite, which is (perhaps unsurprisingly) optimized using the RPerl compiler.
 
@@ -11327,7 +11327,7 @@ Example execution and output for 2a and 2b:
     
     Arguments:
         --help ...OR... -h ...OR... -?
-                Print a relatively brief help message for command-line usage.
+                Print this (relatively) brief help message for command-line usage.
                 For additional explanations, run the command `perldoc RPerl::Learning` and see Appendix B.
     
         --version ...OR... -v
@@ -11341,16 +11341,17 @@ Example execution and output for 2a and 2b:
                 Argument prefix '--infile' may be entirely omitted.
                 Argument prefix MUST be omitted to specify wildcard for multiple input files.
     
-        --outfile=MyFile ...OR... -o=MyFile
+        --outfile=MyCompiledModule ...OR... -o=MyCompiledModule
+        --outfile=my_compiled_program ...OR... -o=my_compiled_program
                 Specify output file prefix, may be repeated for multiple output files.
-                RPerl *.pm input file with PERL ops will create MyFile.pmc output file.
-                RPerl *.pl input file with PERL ops will create my_file (or my_file.exe) & my_file.pmc output files.
-                RPerl *.pm input file with CPP ops will create MyFile.pmc, MyFile.cpp, & MyFile.h output files.
-                RPerl *.pl input file with CPP ops will create myfile (or myfile.exe on Windows), MyFile.pmc, MyFile.cpp, & MyFile.h output files.
-                Argument may be entirely omitted, 'MyFile.*' input file will default to 'MyFile.*' out.
+                RPerl *.pm input file with PERL ops will create MyCompiledModule.pmc output file.
+                RPerl *.pl input file with PERL ops will create my_compiled_program (or my_compiled_program.exe on Windows) output file.
+                RPerl *.pm input file with CPP  ops will create MyCompiledModule.pmc, MyCompiledModule.cpp, & MyCompiledModule.h output files.
+                RPerl *.pl input file with CPP  ops will create my_compiled_program (or my_compiled_program.exe on Windows) & my_compiled_program.cpp output files.
+                Argument may be entirely omitted, foo.* input file will default to foo.* output file(s).
     
         --CXX=/path/to/compiler
-                Specify path to C++ compiler, equivalent to '--mode CXX=/path/to/compiler' or 'CXX' manual Makefile argument.
+                Specify path to C++ compiler for use in subcompile modes, equivalent to '--mode CXX=/path/to/compiler' or 'CXX' manual Makefile argument, 'g++' by default.
     
         --mode ops=PERL ...OR... -m ops=PERL
         --mode ops=CPP ...OR... -m ops=CPP
@@ -13114,7 +13115,7 @@ Additional explanations for each command-line argument are provided I<with empha
 
 =for rperl X<noncode>
 
-    Print a relatively brief help message for command-line usage.
+    Print this (relatively) brief help message for command-line usage.
     For additional explanations, run the command `perldoc RPerl::Learning` and see Appendix B.
 
 =for rperl X</noncode>
@@ -13161,7 +13162,7 @@ I<The double-v version option displays a collection of technical information sim
 
 =for rperl X</noncode>
 
-I<The input file option is the only command-line argument which is always required every time the C<`rperl`> command is executed.  Even if the argument prefix '--infile' is omitted for convenience, one or more input file names must still be specified to avoid an RPerl error message.>
+I<The input file option tells RPerl which file(s) to compile, and is the only command-line argument which is always required every time the C<`rperl`> command is executed.  Even if the argument prefix '--infile' is omitted for convenience, one or more input file names must still be specified to avoid an RPerl error message.>
 
 I<All input files must end in '.pl' for RPerl programs, or '.pm' for RPerl modules.>
 
@@ -13171,26 +13172,24 @@ I<All input files must end in '.pl' for RPerl programs, or '.pm' for RPerl modul
 
 =over
 
-=item B<--outfile=MyFile ...OR... -o=MyFile>
+=item B<--outfile=MyCompiledModule ...OR... -o=MyCompiledModule>
+
+=item B<--outfile=my_compiled_program ...OR... -o=my_compiled_program>
 
 =for rperl X<noncode>
 
     Specify output file prefix, may be repeated for multiple output files.
-    RPerl *.pm input file with PERL ops will create MyFile.pmc output file.
-    RPerl *.pl input file with PERL ops will create my_file (or my_file.exe) & my_file.pmc output files.
-    RPerl *.pm input file with CPP ops will create MyFile.pmc, MyFile.cpp, & MyFile.h output files.
-    RPerl *.pl input file with CPP ops will create myfile (or myfile.exe on Windows), MyFile.pmc, MyFile.cpp, & MyFile.h output files.
-    Argument may be entirely omitted, 'MyFile.*' input file will default to 'MyFile.*' out.
+    RPerl *.pm input file with PERL ops will create MyCompiledModule.pmc output file.
+    RPerl *.pl input file with PERL ops will create my_compiled_program (or my_compiled_program.exe on Windows) output file.
+    RPerl *.pm input file with CPP  ops will create MyCompiledModule.pmc, MyCompiledModule.cpp, & MyCompiledModule.h output files.
+    RPerl *.pl input file with CPP  ops will create my_compiled_program (or my_compiled_program.exe on Windows) & my_compiled_program.cpp output files.
+    Argument may be entirely omitted, foo.* input file will default to foo.* output file(s).
 
 =for rperl X</noncode>
 
-# START HERE: continue adding explanations
+I<The output file option tells RPerl which file(s) to generate by specifying a file prefix.  RPerl automatically determines the output file suffixes, depending upon the operations (AKA "ops") mode of either PERL or CPP.  The PERL ops mode is a test mode, so only Perl output files are generated; the CPP ops mode is a real compile mode, so C++ output files are generated.>
 
-# START HERE: continue adding explanations
-
-# START HERE: continue adding explanations
-
-I<FOO>
+I<If the output file option is omitted, then the original prefix of each input file is used as the prefix of the output file, as one would expect.  For example, without an output file option provided, an input file named 'foo.pl' in CPP ops mode will generate the 'foo.cpp' and 'foo' (or 'foo.exe' in Windows) output files.  With an output file option of C<-o=bar> provided, the same 'foo.pl' input file will instead generate the 'bar.cpp' and 'bar' (or 'bar.exe') output files.>
 
 =back
 
@@ -13202,11 +13201,15 @@ I<FOO>
 
 =for rperl X<noncode>
 
-    Specify path to C++ compiler, equivalent to '--mode CXX=/path/to/compiler' or 'CXX' manual Makefile argument.
+    Specify path to C++ compiler for use in subcompile modes, equivalent to '--mode CXX=/path/to/compiler' or 'CXX' manual Makefile argument, 'g++' by default.
 
 =for rperl X</noncode>
 
-I<FOO>
+I<The C++ compiler option tells RPerl which subcompiler to use for converting C++ source code into binary machine code.>
+
+I<This option is a shorthand provided for brevity, please see: L</B.13: Modes, C++ Compiler>>
+
+I<If both the shorthand and longhand forms of the C++ compiler option are omitted, then RPerl will utilize the GNU C++ compiler or give an error if it is not installed.>
 
 =back
 
@@ -13226,6 +13229,12 @@ I<FOO>
     PERL ops mode forces PERL types mode & PARSE or GENERATE compile mode; PERLOPS_PERLTYPES is test mode, does not actually compile.
 
 =for rperl X</noncode>
+
+START HERE: continue adding explanations
+
+START HERE: continue adding explanations
+
+START HERE: continue adding explanations
 
 I<FOO>
 
@@ -13398,7 +13407,7 @@ I<FOO>
 
 =for rperl X<noncode>
 
-    Specify path to C++ compiler for use in subcompile modes, 'g++' by default.
+    Specify path to C++ compiler for use in subcompile modes, equivalent to '--CXX=/path/to/compiler' or 'CXX' manual Makefile argument, 'g++' by default.
 
 =for rperl X</noncode>
 
