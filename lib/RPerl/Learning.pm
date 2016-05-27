@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.084_000;
+our $VERSION = 0.085_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -13101,11 +13101,19 @@ X<br>
 
 =head1 APPENDIX B: RPERL COMMAND-LINE ARGUMENTS
 
-The C<`rperl`> I<"command-line interface"> (CLI) is a software program which serves as the primary front-end user interface for RPerl.  When called for execution, the C<`rperl`> command must be provided with at least one input file name, which tells RPerl which file(s) to compile.  In addition, C<`rperl`> may also be provided with one or more optional I<"command-line arguments">, which tells RPerl exactly how to compile the input file(s).  Command-line arguments are also commonly referred to as I<"options">.
+The C<`rperl`> I<"command-line interface"> (CLI) is a software program which serves as the primary front-end user interface for RPerl.  When called for execution, the C<`rperl`> command must be provided with at least one input file name, which tells RPerl which file(s) to compile.  In addition, C<`rperl`> may also be provided with one or more optional I<"command-line arguments">, which tell RPerl how to behave and exactly how to compile the input file(s).  Command-line arguments are also commonly referred to as I<"options">, or in this specific context just I<"arguments">.
 
-Below is a comprehensive list of all RPerl command-line arguments, as reported by the C<`rperl -?`> command.
+Command-line arguments which are listed as one of the I<"modes"> will modify the way RPerl compiles the input source code file(s).  All RPerl modes are written using the longhand format:
 
-Additional explanations for each command-line argument are provided I<with emphasis.>
+C<--mode foo=BAR>
+
+Arguments which are listed as one of the I<"flags"> are written using the shorthand C<--foo> or even shorter C<-f> formats.  Most flags are shortcuts to common modes.
+
+Flags and other non-mode arguments which are not shortcuts to common modes will either modify some non-compiling behavior of RPerl (such as enabling additional information output), or cause RPerl to do something other than fully execute and compile input source code files (such as displaying version information then exiting).
+
+Below is a comprehensive list of all RPerl command-line arguments, as reported by the S<C<`rperl -?`>> command.
+
+Additional explanations for each argument are provided I<with emphasis.>
 
 =head2 B.1: Help
 
@@ -13162,7 +13170,7 @@ I<The double-v version option displays a collection of technical information sim
 
 =for rperl X</noncode>
 
-I<The input file option tells RPerl which file(s) to compile, and is the only command-line argument which is always required every time the C<`rperl`> command is executed.  Even if the argument prefix '--infile' is omitted for convenience, one or more input file names must still be specified to avoid an RPerl error message.>
+I<The input file option tells RPerl which file(s) to compile, and is the only command-line argument which is always required every time the C<`rperl`> command is fully executed (not just C<`rperl -?`>, C<`rperl -v`>, etc).  Even if the argument prefix '--infile' is omitted for convenience, one or more input file names must still be specified to avoid an RPerl error message.>
 
 I<All input files must end in '.pl' for RPerl programs, or '.pm' for RPerl modules.>
 
@@ -13230,13 +13238,11 @@ I<If both the shorthand and longhand forms of the C++ compiler option are omitte
 
 =for rperl X</noncode>
 
-START HERE: continue adding explanations
+I<The two most important RPerl modes are "operations" (AKA "ops") and "data types" (AKA "types").>
 
-START HERE: continue adding explanations
+I<The ops mode option tells RPerl if it should use Perl operations or C++ operations in the final output.  Perl operations are slow, but provide support for high-magic functionality.  C++ operations are fast, but only support low-magic functionality.>
 
-START HERE: continue adding explanations
-
-I<FOO>
+I<Normal Perl is considered an interpreted language and uses Perl operations.  When an RPerl application is run in Perl operations mode, then the application is interpreted instead of compiled.  When an RPerl application runs in C++ operations mode, then it is compiled.>
 
 =back
 
@@ -13260,7 +13266,11 @@ I<FOO>
 
 =for rperl X</noncode>
 
-I<FOO>
+I<The types mode option tells RPerl if it should use Perl data types or C++ data types in the final output.  Just like RPerl's ops mode, Perl data types are slow and high-magic, while C++ types are fast and low-magic.>
+
+I<Normal interpreted Perl uses Perl types (and Perl ops).  When an RPerl application is run in Perl types mode, then the application is compiled but only partial speed optimization is achieved.  When an RPerl application runs in C++ types mode, then it is compiled with full speed optimization.>
+
+I<Because RPerl's first goal is performance, support for C++-ops-Perl-types mode and C++-ops-dual-types mode is limited to hand-compiled RPerl applications only, with full support planned for a future version release.  Meanwhile, the high-performance C++-ops-C++-types mode is currently supported for compiled RPerl applications, and the slow Perl-ops-Perl-types mode (AKA "test mode") is supported for testing purposes.>
 
 =back
 
@@ -13283,7 +13293,11 @@ I<FOO>
 
 =for rperl X</noncode>
 
-I<FOO>
+I<The data type checking mode option tells RPerl if it should perform additional tests to ensure correct data types are used as "subroutine arguments" (not to be confused with "command-line arguments").  RPerl subroutines can accept 1 or more arguments (AKA "parameters"), each of which must be of a specific data type.>
+
+I<In C++-ops-C++-types mode, all data types must be determined at compile time and thus cannot change (AKA "static"), so the C++ compiler performs all necessary type checking.  In any Perl types mode, the data types can not be determined until runtime and thus can change (AKA "dynamic"), so RPerl must itself perform type checking for subroutine arguments.>
+
+I<If the type checking mode is set to TRACE, then the name of the problematic subroutine and argument will be "traced" and provided in the RPerl error message.  This setting can be useful for RPerl application developers and debugging purposes.>
 
 =back
 
@@ -13303,6 +13317,12 @@ I<FOO>
     WARNING: Disabling dependencies will likely cause errors or undefined behavior.
 
 =for rperl X</noncode>
+
+START HERE
+
+START HERE
+
+START HERE
 
 I<FOO>
 
