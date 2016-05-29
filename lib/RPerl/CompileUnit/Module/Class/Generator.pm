@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_900;
+our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -572,7 +572,7 @@ EOL
         if ( $cpp_source_subgroup->{H} ne q{} ) {
             push @{$properties_accessors_mutators}, $cpp_source_subgroup->{H};
         }
-        if ( $cpp_source_subgroup->{PMC} ne q{} ) {
+        if ((exists $cpp_source_subgroup->{PMC}) and (defined $cpp_source_subgroup->{PMC}) and ($cpp_source_subgroup->{PMC} ne q{})) {
             push @{$properties_accessors_mutators_shims}, $cpp_source_subgroup->{PMC};
         }
 
@@ -670,7 +670,7 @@ EOL
             if ( $cpp_source_subgroup->{H} ne q{} ) {
                 push @{$properties_accessors_mutators}, $cpp_source_subgroup->{H};
             }
-            if ( $cpp_source_subgroup->{PMC} ne q{} ) {
+            if ((exists $cpp_source_subgroup->{PMC}) and (defined $cpp_source_subgroup->{PMC}) and ($cpp_source_subgroup->{PMC} ne q{})) {
                 push @{$properties_accessors_mutators_shims}, $cpp_source_subgroup->{PMC};
             }
         }
@@ -761,7 +761,9 @@ EOL
             $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
             push @{$subroutine_definitions}, $cpp_source_subgroup->{CPP};
             $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate_shims__CPPOPS_CPPTYPES($modes);
-            push @{$PMC_subroutines_shims}, $cpp_source_subgroup->{PMC};
+            if ((exists $cpp_source_subgroup->{PMC}) and (defined $cpp_source_subgroup->{PMC})) {
+                push @{$PMC_subroutines_shims}, $cpp_source_subgroup->{PMC};
+            }
             push @{$CPP_subroutines_shims}, $cpp_source_subgroup->{CPP};
             if ( ( exists $cpp_source_subgroup->{H_INCLUDES} ) and ( defined $cpp_source_subgroup->{H_INCLUDES} ) ) {
                 $cpp_source_group->{H_INCLUDES} .= $cpp_source_subgroup->{H_INCLUDES};
@@ -865,7 +867,7 @@ EOL
 # generate accessors/mutators
 our string_hashref $ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES = sub {
     ( my string $property_key, my string_hashref $modes ) = @_;
-    my string_hashref $cpp_source_group = { PMC => q{}, H => q{} };
+    my string_hashref $cpp_source_group = { H => q{} };
 
     # grab RPerl-style type out of symtab, instead of accepting-as-arg now-C++-style type from $property_type in caller
     my string $property_type = $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}->{type};
@@ -1011,20 +1013,27 @@ our string_hashref $ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES = s
             . $property_key
             . '_element_rawptr; }  // call from Perl';
 
-        # Perl shim code
-        # DEV NOTE: must create return variable object in Perl so it will be memory-managed by Perl,
-        # and not wrongly destructed or double-destructed by Perl garbage collector and/or C++ memory.h,
-        # even though Perl object contents will be replaced by C++ memory address, TRICKY!
-        $cpp_source_group->{PMC} = 'sub get_' . $property_key . '_element {' . "\n";
-        $cpp_source_group->{PMC}
-            .= '( my '
-            . ( substr $modes->{_symbol_table}->{_namespace}, 0, ( ( length $modes->{_symbol_table}->{_namespace} ) - 2 ) )
-            . ' $self, my integer $i ) = @_;' . "\n";
-        $cpp_source_group->{PMC}
-            .= 'my ' . $property_element_or_value_type . ' $' . $property_key . '_element = ' . $property_element_or_value_type . '->new();' . "\n";
-        $cpp_source_group->{PMC} .= '$self->get_' . $property_key . '_element_indirect($i, $' . $property_key . '_element);' . "\n";
-        $cpp_source_group->{PMC} .= 'return $' . $property_key . '_element;' . "\n";
-        $cpp_source_group->{PMC} .= '}';
+#        RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES(), have $modes->{subcompile} = ' . "\n" . $modes->{subcompile} . "\n" );
+
+        # DEV NOTE: only generate PMC output file in dynamic (default) subcompile mode
+        if ($modes->{subcompile} eq 'DYNAMIC') {
+#            RPerl::diag( 'in Class::Generator::ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES(), YES PMC SHIMS' . "\n" );
+            # Perl shim code
+            # DEV NOTE: must create return variable object in Perl so it will be memory-managed by Perl,
+            # and not wrongly destructed or double-destructed by Perl garbage collector and/or C++ memory.h,
+            # even though Perl object contents will be replaced by C++ memory address, TRICKY!
+            $cpp_source_group->{PMC} = 'sub get_' . $property_key . '_element {' . "\n";
+            $cpp_source_group->{PMC}
+                .= '( my '
+                . ( substr $modes->{_symbol_table}->{_namespace}, 0, ( ( length $modes->{_symbol_table}->{_namespace} ) - 2 ) )
+                . ' $self, my integer $i ) = @_;' . "\n";
+            $cpp_source_group->{PMC}
+                .= 'my ' . $property_element_or_value_type . ' $' . $property_key . '_element = ' . $property_element_or_value_type . '->new();' . "\n";
+            $cpp_source_group->{PMC} .= '$self->get_' . $property_key . '_element_indirect($i, $' . $property_key . '_element);' . "\n";
+            $cpp_source_group->{PMC} .= 'return $' . $property_key . '_element;' . "\n";
+            $cpp_source_group->{PMC} .= '}';
+        }
+#        else { RPerl::diag( 'in Class::Generator::ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES(), NO PMC SHIMS' . "\n" ); }
 
 #            RPerl::diag( 'in Class::Generator::ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES(), have $cpp_source_group->{H} = ' . "\n" . $cpp_source_group->{H} . "\n" );
     }

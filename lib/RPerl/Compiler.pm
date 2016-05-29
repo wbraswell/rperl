@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.008_300;
+our $VERSION = 0.009_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -402,6 +402,7 @@ our void $save_source_files = sub {
 #    RPerl::diag( q{in Compiler::save_source_files(), received $file_name_group =} . "\n" . Dumper($file_name_group) . "\n" );
 #    RPerl::diag( 'in Compiler::save_source_files(), received $modes =' . "\n" . Dumper($modes) . "\n" );
 #    RPerl::diag( 'in Compiler::save_source_files(), received $modes->{_symbol_table} =' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
+#    RPerl::diag( "\n" . 'in Compiler::save_source_files(), received $modes->{subcompile} =' . "\n" . Dumper($modes->{subcompile}) . "\n" );
 
     foreach my string $suffix_key ( sort keys %{$source_group} ) {
         if ( ( substr $suffix_key, 0, 1 ) eq '_' ) { next; }
@@ -455,148 +456,151 @@ our void $save_source_files = sub {
             $source_group->{H} =~ s/PERLOPS_PERLTYPES/$mode_tagline/gxms;
             $source_group->{CPP} =~ s/PERLOPS_PERLTYPES/$mode_tagline/gxms;
 
-            if ( $source_group->{PMC} ne q{} ) {
-                die 'ERROR ECOCOFI01, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Received non-empty PMC source, dying' . "\n";
-            }
-
-#        RPerl::diag( q{in Compiler::save_source_files(), have %INC = } . Dumper(\%INC) . "\n" );
-#        RPerl::diag( q{in Compiler::save_source_files(), have @INC = } . Dumper(\@INC) . "\n" );
-#        RPerl::diag( q{in Compiler::save_source_files(), have $source_group->{_package_names_underscores} = } . Dumper($source_group->{_package_names_underscores}) . "\n" );
-#        RPerl::diag( q{in Compiler::save_source_files(), have $source_group->{_package_names} = } . Dumper($source_group->{_package_names}) . "\n" );
-
-            my string_arrayref $module_names_split             = [ ( split /\n/, $source_group->{_package_names} ) ];
-            my string_arrayref $module_names_underscores_split = [ ( split /\n/, $source_group->{_package_names_underscores} ) ];
-
-            #        RPerl::diag( q{in Compiler::save_source_files(), have $module_names_split = } . Dumper($module_names_split) . "\n" );
-
-            my integer $module_count           = scalar @{$module_names_split};
-            my string $module_name             = shift @{$module_names_split};
-            my string $module_name_underscores = shift @{$module_names_underscores_split};
-            my integer $i                      = 0;
-
-# deferred, finally insert constants shims
-#        RPerl::diag('in Compiler::save_source_files(), have $source_group->{_H_constants_shims}->{$module_name_underscores} = ' . $source_group->{_H_constants_shims}->{$module_name_underscores} . "\n");
-
-            while ( defined $module_name_underscores ) {
-
-                #            RPerl::diag( q{in Compiler::save_source_files(), have $cpp_file_path = } . $cpp_file_path . "\n" );
-                #            RPerl::diag( q{in Compiler::save_source_files(), have $module_name_underscores = } . $module_name_underscores . "\n" );
-
-                # utilize modified copies of Module PMC template file
-                my string $module_pmc_filename_manual;
-                if ( $module_count == 1 ) {
-                    $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES';
+            # DEV NOTE: only generate PMC output file in dynamic (default) subcompile mode
+            if ($modes->{subcompile} eq 'DYNAMIC') {
+                if ( $source_group->{PMC} ne q{} ) {
+                    die 'ERROR ECOCOFI01, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Received non-empty PMC source, dying' . "\n";
                 }
-                else {
-                    if ( $i == ( $module_count - 1 ) ) {
-                        $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES_MONOLITH';
+    
+    #        RPerl::diag( q{in Compiler::save_source_files(), have %INC = } . Dumper(\%INC) . "\n" );
+    #        RPerl::diag( q{in Compiler::save_source_files(), have @INC = } . Dumper(\@INC) . "\n" );
+    #        RPerl::diag( q{in Compiler::save_source_files(), have $source_group->{_package_names_underscores} = } . Dumper($source_group->{_package_names_underscores}) . "\n" );
+    #        RPerl::diag( q{in Compiler::save_source_files(), have $source_group->{_package_names} = } . Dumper($source_group->{_package_names}) . "\n" );
+    
+                my string_arrayref $module_names_split             = [ ( split /\n/, $source_group->{_package_names} ) ];
+                my string_arrayref $module_names_underscores_split = [ ( split /\n/, $source_group->{_package_names_underscores} ) ];
+    
+                #        RPerl::diag( q{in Compiler::save_source_files(), have $module_names_split = } . Dumper($module_names_split) . "\n" );
+    
+                my integer $module_count           = scalar @{$module_names_split};
+                my string $module_name             = shift @{$module_names_split};
+                my string $module_name_underscores = shift @{$module_names_underscores_split};
+                my integer $i                      = 0;
+    
+    # deferred, finally insert constants shims
+    #        RPerl::diag('in Compiler::save_source_files(), have $source_group->{_H_constants_shims}->{$module_name_underscores} = ' . $source_group->{_H_constants_shims}->{$module_name_underscores} . "\n");
+    
+                while ( defined $module_name_underscores ) {
+    
+                    #            RPerl::diag( q{in Compiler::save_source_files(), have $cpp_file_path = } . $cpp_file_path . "\n" );
+                    #            RPerl::diag( q{in Compiler::save_source_files(), have $module_name_underscores = } . $module_name_underscores . "\n" );
+    
+                    # utilize modified copies of Module PMC template file
+                    my string $module_pmc_filename_manual;
+                    if ( $module_count == 1 ) {
+                        $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES';
                     }
                     else {
-                        $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES_MONOLITH_SECONDARY';
+                        if ( $i == ( $module_count - 1 ) ) {
+                            $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES_MONOLITH';
+                        }
+                        else {
+                            $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES_MONOLITH_SECONDARY';
+                        }
                     }
-                }
-
-#            RPerl::diag( 'in Compiler::save_source_files(), have $module_pmc_filename_manual = ' . $module_pmc_filename_manual . "\n" );
-#            RPerl::diag( 'in Compiler::save_source_files(), have $source_group->{_PMC_accessors_mutators_shims} = ' . Dumper($source_group->{_PMC_accessors_mutators_shims}) . "\n" );
-#            RPerl::diag( 'in Compiler::save_source_files(), have $source_group->{_PMC_subroutines_shims} = ' . Dumper($source_group->{_PMC_subroutines_shims}) . "\n" );
-#            RPerl::diag( 'in Compiler::save_source_files(), have $source_group->{_PMC_includes} = ' . Dumper($source_group->{_PMC_includes}) . "\n" );
-
-                if ( not -f $module_pmc_filename_manual ) {
-                    die 'ERROR ECOCOFI02, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: File not found, ' . q{'}
-                        . $module_pmc_filename_manual . q{'} . "\n"
+    
+    #            RPerl::diag( 'in Compiler::save_source_files(), have $module_pmc_filename_manual = ' . $module_pmc_filename_manual . "\n" );
+    #            RPerl::diag( 'in Compiler::save_source_files(), have $source_group->{_PMC_accessors_mutators_shims} = ' . Dumper($source_group->{_PMC_accessors_mutators_shims}) . "\n" );
+    #            RPerl::diag( 'in Compiler::save_source_files(), have $source_group->{_PMC_subroutines_shims} = ' . Dumper($source_group->{_PMC_subroutines_shims}) . "\n" );
+    #            RPerl::diag( 'in Compiler::save_source_files(), have $source_group->{_PMC_includes} = ' . Dumper($source_group->{_PMC_includes}) . "\n" );
+    
+                    if ( not -f $module_pmc_filename_manual ) {
+                        die 'ERROR ECOCOFI02, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: File not found, ' . q{'}
+                            . $module_pmc_filename_manual . q{'} . "\n"
+                            . ', dying' . "\n";
+                    }
+    
+                    open my filehandleref $FILE_HANDLE, '<', $module_pmc_filename_manual
+                        or die 'ERROR ECOCOFI03, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot open file '
+                        . $module_pmc_filename_manual
+                        . ' for reading, '
+                        . $OS_ERROR
                         . ', dying' . "\n";
+    
+                    # deferred, finally read in Module PMC template file, replace package name and paths, add accessor/mutator shim methods
+                    my string $file_line;
+                    my string $file_string  = q{};
+                    my string $pm_file_path = $file_name_group->{PMC};
+                    chop $pm_file_path;    # remove the 'c' from 'pmc' file suffix
+                    while ( $file_line = <$FILE_HANDLE> ) {
+                        $file_line =~ s/lib\/RPerl\/CompileUnit\/Module\.cpp/$cpp_file_path/gxms;
+                        $file_line =~ s/RPerl::CompileUnit::Module/$module_name/gxms;
+                        $file_line =~ s/RPerl__CompileUnit__Module/$module_name_underscores/gxms;
+                        if ( $file_line eq
+                            ( '# <<< OO PROPERTIES, ACCESSORS & MUTATORS, SHIMS >>>  # <<< CHANGE_ME: add real shims after this line or delete it >>>' . "\n" ) )
+                        {
+                            if (    ( defined $source_group->{_PMC_accessors_mutators_shims}->{$module_name_underscores} )
+                                and ( exists $source_group->{_PMC_accessors_mutators_shims}->{$module_name_underscores} ) )
+                            {
+                                $file_line
+                                    = ( substr $file_line, 0, 52 ) . "\n" . $source_group->{_PMC_accessors_mutators_shims}->{$module_name_underscores} . "\n\n";
+                            }
+                            else { $file_line = undef; }
+                        }
+                        elsif ( $file_line eq
+                            ( '# <<< OO PROPERTIES, SUBROUTINES, SHIMS >>>  # <<< CHANGE_ME: add real shims after this line or delete it >>>' . "\n" ) )
+                        {
+                            if (    ( defined $source_group->{_PMC_subroutines_shims}->{$module_name_underscores} )
+                                and ( exists $source_group->{_PMC_subroutines_shims}->{$module_name_underscores} ) )
+                            {
+                                $file_line = ( substr $file_line, 0, 43 ) . "\n" . $source_group->{_PMC_subroutines_shims}->{$module_name_underscores} . "\n\n";
+                            }
+                            else { $file_line = undef; }
+                        }
+                        elsif ( $file_line eq ( '# <<< CHANGE_ME: add user-defined includes here >>>' . "\n" ) ) {
+                            if (    ( defined $source_group->{_PMC_includes}->{$module_name_underscores} )
+                                and ( exists $source_group->{_PMC_includes}->{$module_name_underscores} ) )
+                            {
+                                $file_line = $source_group->{_PMC_includes}->{$module_name_underscores} . "\n\n";
+                            }
+                            else { $file_line = undef; }
+                        }
+                        elsif ( $file_line eq ( '        # <<< CHANGE_ME: enable optional SSE support here >>>' . "\n" ) ) {
+    
+                       #                    RPerl::diag( 'in Compiler::save_source_files(), have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n" );
+                            if (    ( exists $modes->{_enable_sse} )
+                                and ( defined $modes->{_enable_sse} )
+                                and ( exists $modes->{_enable_sse}->{$pm_file_path} )
+                                and ( defined $modes->{_enable_sse}->{$pm_file_path} )
+                                and $modes->{_enable_sse}->{$pm_file_path} )
+                            {
+                                $file_line = q(        $RPerl::Inline::ARGS{optimize}  .= ' -mfpmath=sse -msse3';  # enable SSE support) . "\n";
+                                $file_line
+                                    .= q(        $RPerl::Inline::ARGS{auto_include} = ['#include <immintrin.h>', @{$RPerl::Inline::ARGS{auto_include}}];  # enable SSE support)
+                                    . "\n";
+                            }
+                            else { $file_line = undef; }
+                        }
+                        elsif ( $file_line eq ( '        # <<< CHANGE_ME: enable optional GMP support here >>>' . "\n" ) ) {
+    
+                       #                    RPerl::diag( 'in Compiler::save_source_files(), have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n" );
+                            if (    ( exists $modes->{_enable_gmp} )
+                                and ( defined $modes->{_enable_gmp} )
+                                and ( exists $modes->{_enable_gmp}->{$pm_file_path} )
+                                and ( defined $modes->{_enable_gmp}->{$pm_file_path} )
+                                and $modes->{_enable_gmp}->{$pm_file_path} )
+                            {
+                                $file_line = q(        $RPerl::Inline::ARGS{libs}  = '-lgmpxx -lgmp';  # enable GMP support) . "\n";
+                                $file_line
+                                    .= q(        $RPerl::Inline::ARGS{auto_include} = [ @{ $RPerl::Inline::ARGS{auto_include} }, '#include <gmpxx.h>', '#include <gmp.h>' ];    # enable GMP support)
+                                    . "\n";
+                            }
+                            else { $file_line = undef; }
+                        }
+                        if ( defined $file_line ) { $source_group->{PMC} .= $file_line; }
+                    }
+    
+                    close $FILE_HANDLE
+                        or die 'ECOCOFI04, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot close file '
+                        . $module_pmc_filename_manual
+                        . ' after reading, '
+                        . $OS_ERROR
+                        . ', dying' . "\n";
+    
+                    $module_name             = shift @{$module_names_split};
+                    $module_name_underscores = shift @{$module_names_underscores_split};
+                    $i++;
                 }
-
-                open my filehandleref $FILE_HANDLE, '<', $module_pmc_filename_manual
-                    or die 'ERROR ECOCOFI03, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot open file '
-                    . $module_pmc_filename_manual
-                    . ' for reading, '
-                    . $OS_ERROR
-                    . ', dying' . "\n";
-
-                # deferred, finally read in Module PMC template file, replace package name and paths, add accessor/mutator shim methods
-                my string $file_line;
-                my string $file_string  = q{};
-                my string $pm_file_path = $file_name_group->{PMC};
-                chop $pm_file_path;    # remove the 'c' from 'pmc' file suffix
-                while ( $file_line = <$FILE_HANDLE> ) {
-                    $file_line =~ s/lib\/RPerl\/CompileUnit\/Module\.cpp/$cpp_file_path/gxms;
-                    $file_line =~ s/RPerl::CompileUnit::Module/$module_name/gxms;
-                    $file_line =~ s/RPerl__CompileUnit__Module/$module_name_underscores/gxms;
-                    if ( $file_line eq
-                        ( '# <<< OO PROPERTIES, ACCESSORS & MUTATORS, SHIMS >>>  # <<< CHANGE_ME: add real shims after this line or delete it >>>' . "\n" ) )
-                    {
-                        if (    ( defined $source_group->{_PMC_accessors_mutators_shims}->{$module_name_underscores} )
-                            and ( exists $source_group->{_PMC_accessors_mutators_shims}->{$module_name_underscores} ) )
-                        {
-                            $file_line
-                                = ( substr $file_line, 0, 52 ) . "\n" . $source_group->{_PMC_accessors_mutators_shims}->{$module_name_underscores} . "\n\n";
-                        }
-                        else { $file_line = undef; }
-                    }
-                    elsif ( $file_line eq
-                        ( '# <<< OO PROPERTIES, SUBROUTINES, SHIMS >>>  # <<< CHANGE_ME: add real shims after this line or delete it >>>' . "\n" ) )
-                    {
-                        if (    ( defined $source_group->{_PMC_subroutines_shims}->{$module_name_underscores} )
-                            and ( exists $source_group->{_PMC_subroutines_shims}->{$module_name_underscores} ) )
-                        {
-                            $file_line = ( substr $file_line, 0, 43 ) . "\n" . $source_group->{_PMC_subroutines_shims}->{$module_name_underscores} . "\n\n";
-                        }
-                        else { $file_line = undef; }
-                    }
-                    elsif ( $file_line eq ( '# <<< CHANGE_ME: add user-defined includes here >>>' . "\n" ) ) {
-                        if (    ( defined $source_group->{_PMC_includes}->{$module_name_underscores} )
-                            and ( exists $source_group->{_PMC_includes}->{$module_name_underscores} ) )
-                        {
-                            $file_line = $source_group->{_PMC_includes}->{$module_name_underscores} . "\n\n";
-                        }
-                        else { $file_line = undef; }
-                    }
-                    elsif ( $file_line eq ( '        # <<< CHANGE_ME: enable optional SSE support here >>>' . "\n" ) ) {
-
-                   #                    RPerl::diag( 'in Compiler::save_source_files(), have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n" );
-                        if (    ( exists $modes->{_enable_sse} )
-                            and ( defined $modes->{_enable_sse} )
-                            and ( exists $modes->{_enable_sse}->{$pm_file_path} )
-                            and ( defined $modes->{_enable_sse}->{$pm_file_path} )
-                            and $modes->{_enable_sse}->{$pm_file_path} )
-                        {
-                            $file_line = q(        $RPerl::Inline::ARGS{optimize}  .= ' -mfpmath=sse -msse3';  # enable SSE support) . "\n";
-                            $file_line
-                                .= q(        $RPerl::Inline::ARGS{auto_include} = ['#include <immintrin.h>', @{$RPerl::Inline::ARGS{auto_include}}];  # enable SSE support)
-                                . "\n";
-                        }
-                        else { $file_line = undef; }
-                    }
-                    elsif ( $file_line eq ( '        # <<< CHANGE_ME: enable optional GMP support here >>>' . "\n" ) ) {
-
-                   #                    RPerl::diag( 'in Compiler::save_source_files(), have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n" );
-                        if (    ( exists $modes->{_enable_gmp} )
-                            and ( defined $modes->{_enable_gmp} )
-                            and ( exists $modes->{_enable_gmp}->{$pm_file_path} )
-                            and ( defined $modes->{_enable_gmp}->{$pm_file_path} )
-                            and $modes->{_enable_gmp}->{$pm_file_path} )
-                        {
-                            $file_line = q(        $RPerl::Inline::ARGS{libs}  = '-lgmpxx -lgmp';  # enable GMP support) . "\n";
-                            $file_line
-                                .= q(        $RPerl::Inline::ARGS{auto_include} = [ @{ $RPerl::Inline::ARGS{auto_include} }, '#include <gmpxx.h>', '#include <gmp.h>' ];    # enable GMP support)
-                                . "\n";
-                        }
-                        else { $file_line = undef; }
-                    }
-                    if ( defined $file_line ) { $source_group->{PMC} .= $file_line; }
-                }
-
-                close $FILE_HANDLE
-                    or die 'ECOCOFI04, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot close file '
-                    . $module_pmc_filename_manual
-                    . ' after reading, '
-                    . $OS_ERROR
-                    . ', dying' . "\n";
-
-                $module_name             = shift @{$module_names_split};
-                $module_name_underscores = shift @{$module_names_underscores_split};
-                $i++;
             }
         }
         RPerl::verbose( ' done.' . "\n" );
@@ -690,7 +694,7 @@ our void $cpp_to_xsbinary__subcompile = sub {
 #    RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), received $cpp_output_file_name_group =} . "\n" . Dumper($cpp_output_file_name_group) . "\n" );
 #    RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), received $modes =} . "\n" . Dumper($modes) . "\n" );
 
-    if ( $modes->{_input_file_name} =~ /[.]pl$/xms ) {
+    if (( $modes->{_input_file_name} =~ /[.]pl$/xms ) or ($modes->{subcompile} ne 'DYNAMIC')) {
         RPerl::verbose('SUBCOMPILE:         Generate binary...     ');
 
         if ($modes->{subcompile} eq 'OFF') {

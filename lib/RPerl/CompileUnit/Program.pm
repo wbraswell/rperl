@@ -212,7 +212,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $cpp_source_group->{CPP} .= "\n" x ($header_line_number - 6);
         $cpp_source_group->{CPP} .= '// [[[ HEADER ]]]' . "\n";
     }
-    $cpp_source_group->{CPP} .= '#include <rperlprogram.h>' . "\n";
+    $cpp_source_group->{CPP} .= '#include <rperlstandalone.h>' . "\n";
 
     my string $file_name_underscores = $modes->{_input_file_name};
     $file_name_underscores =~ s/^[\/\\.]*//gxms;  # remove leading forward slashes, back slashes, and dots

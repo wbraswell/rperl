@@ -41,7 +41,7 @@ our %ARGS = (
     filters           => 'Preprocess',
     auto_include => # DEV NOTE: include non-RPerl files using AUTO_INCLUDE so they are not parsed by the 'Preprocess' filter
     [
-        # DEV NOTE, CORRELATION #rp24: sync include files in both RPerl/Inline.pm and rperlprogram.h
+        # DEV NOTE, CORRELATION #rp24: sync include files in both RPerl/Inline.pm and rperlstandalone.h
         '#include <memory>',  # smart pointers for memory management
         '#include <iostream>',
         '#include <string>',

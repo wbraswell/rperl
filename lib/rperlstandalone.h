@@ -1,7 +1,7 @@
-#ifndef __CPP__INCLUDED__rperlprogram_h
-#define __CPP__INCLUDED__rperlprogram_h 0.001_000
+#ifndef __CPP__INCLUDED__rperlstandalone_h
+#define __CPP__INCLUDED__rperlstandalone_h 0.001_000
 
-// DEV NOTE, CORRELATION #rp24: sync include files in both RPerl/Inline.pm and rperlprogram.h
+// DEV NOTE, CORRELATION #rp24: sync include files in both RPerl/Inline.pm and rperlstandalone.h
 #include <memory>
 #include <iostream>
 #include <string>

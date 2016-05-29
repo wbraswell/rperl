@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_010;
+our $VERSION = 0.002_100;
 
 # [[[ OO INHERITANCE ]]]
 # <<< CHANGE_ME: leave as base class for no inheritance, or replace with real parent package name >>>
@@ -78,7 +78,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 
 our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes ) = @_;
-    my string_hashref $cpp_source_group = { CPP => q{}, H => q{}, PMC => q{} };
+    my string_hashref $cpp_source_group = { CPP => q{}, H => q{} };
 
 #    RPerl::diag('in Module->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n");
 #    RPerl::diag('in Module->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $modes = ' . "\n" . Dumper($modes) . "\n");
