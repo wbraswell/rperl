@@ -4,7 +4,7 @@
 package RPerl::Config;
 use strict;
 use warnings;
-our $VERSION = 0.004_200;
+our $VERSION = 0.004_300;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -87,7 +87,7 @@ our @EXPORT = qw(Dumper carp croak confess $OS_ERROR $EVAL_ERROR $CHILD_ERROR $E
 # changed on a per-file basis by preprocessor directive, see RPerl::CompileUnit::Module::Class::INIT
 # NEED UPGRADE: enable in RPerl system code when bootstrapping compiler
 our $CHECK    = 'OFF';
-our $DEBUG    = 0;       # $RPerl::DEBUG & env var RPERL_DEBUG are equivalent, default to off, see diag*() below
+our $DEBUG    = 0;       # $RPerl::DEBUG & env var RPERL_DEBUG are equivalent, default to off, see debug*() & diag*() below
 our $VERBOSE  = 0;       # $RPerl::VERBOSE & env var RPERL_VERBOSE are equivalent, default to off, see verbose*() below
 our $WARNINGS = 1;       # $RPerl::WARNINGS & env var RPERL_WARNINGS are equivalent, default to on, see warn*() below
 our $TYPES_CCFLAG = ' -D__CPP__TYPES'; # rperltypes_mode.h & here default to CPPTYPES if PERLTYPES not explicitly set in this variable via rperltypes::types_enable()
@@ -112,11 +112,15 @@ use constant EPSILON => POSIX::DBL_EPSILON();
 #    return Dumper($dumpee);
 #}
 
-# print diagnostic (debug) message to STDERR, if either RPERL_DEBUG environmental variable or $RPerl::DEBUG global variable are true
-sub diag {
+# DEV NOTE: diag() is simply a wrapper around debug(), they are 100% equivalent; likewise diag_pause() and debug_pause()
+sub diag { return debug(@_); }
+sub diag_pause { return debug_pause(@_); }
+
+# print debugging AKA diagnostic message to STDERR, if either RPERL_DEBUG environmental variable or $RPerl::DEBUG global variable are true
+sub debug {
     ( my $message ) = @_;
 
-    #    print {*STDERR} 'in diag(), have $ENV{RPERL_DEBUG} = ' . $ENV{RPERL_DEBUG} . "\n";
+    #    print {*STDERR} 'in debug(), have $ENV{RPERL_DEBUG} = ' . $ENV{RPERL_DEBUG} . "\n";
 
     # DEV NOTE, CORRELATION #rp17: default to off; if either variable is set to true, then do emit messages
     if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) { print {*STDERR} $message; }
@@ -125,8 +129,8 @@ sub diag {
     return 1;    # DEV NOTE: this must be here to avoid 'at -e line 0. INIT failed--call queue aborted.'... BUT WHY???
 }
 
-# same as diag(), except require <ENTER> to continue
-sub diag_pause {
+# same as debug(), except require <ENTER> to continue
+sub debug_pause {
     ( my $message ) = @_;
     if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) {
         print {*STDERR} $message;

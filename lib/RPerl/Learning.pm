@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.087_000;
+our $VERSION = 0.088_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -13318,9 +13318,11 @@ I<If the type checking mode is set to TRACE, then the name of the problematic su
 
 =for rperl X</noncode>
 
-I<The dependencies mode option tells RPerl if it should compile all the Perl application code which is used by the input RPerl application code via the C<use> operator.  If your RPerl application depends upon other RPerl code, then all should go as planned.  If your RPerl application depends upon other non-RPerl code, then you will likely encounter problems as RPerl attempts to compile the non-RPerl components.>
+I<The dependencies mode option tells RPerl if it should compile all the Perl application code which is used by the input RPerl application code via the C<use> operator.  If 1 RPerl application input file is provided which has 10 dependencies, and each of those 10 dependencies has 10 sub-dependencies of its own, then the RPerl compiler actually has at least 111 input files to compile, and possibly many more than 111 if any of the sub-dependencies has sub-sub-dependencies, etc.>
 
-I<If the dependencies mode option is set to OFF, then you will likely encounter problems as the compiled RPerl application attempts to locate the compiled form of each dependency, which will not be found unless manually compiled or copied from a previous compile.>
+I<If your RPerl application depends upon other RPerl code, then all should go as planned.  If your RPerl application depends upon other non-RPerl code, then you will likely encounter problems as RPerl attempts to compile the non-RPerl components.>
+
+I<If the dependencies mode option is set to OFF, then you will likely encounter problems as the compiled RPerl application attempts to locate the compiled form of each dependency, which will not be found unless manually compiled or copied from a previous compile.  Thus, disabling compilation of dependencies is strongly discouraged, because RPerl will not function properly if any dependency (or sub-dependency, etc) is not compiled.>
 
 =back
 
@@ -13445,13 +13447,11 @@ I<L<https://gcc.gnu.org/onlinedocs/gcc/Link-Options.html>>
 
 =for rperl X</noncode>
 
-START HERE
+I<The C++ compiler mode option tells RPerl which C++ compiler to utilize throughout the various phases of compilation.  RPerl needs a C++ compiler to function in general, and a good C++ compiler is especially important during the subcompile phases.>
 
-START HERE
+I<Use of the GNU C++ compiler C<g++> is strongly recommended, although in theory you should be able to use any C++ compiler which supports the C++11 standard.>
 
-START HERE
-
-I<FOO>
+L<https://en.wikipedia.org/wiki/C++11>
 
 =back
 
@@ -13472,7 +13472,11 @@ I<FOO>
 
 =for rperl X</noncode>
 
-I<FOO>
+I<The execute mode option tells RPerl if it should actually run a *.pl RPerl program input file, or just compile it without running.>
+
+I<The default behavior for *.pl program files is to compile-then-execute, in order to provide a similar feel to normal Perl's interpret-while-executing behavior.>
+
+I<When *.pm RPerl module input file(s) are provided, then no execution occurs because module files are not executable.>
 
 =back
 
@@ -13492,7 +13496,7 @@ I<FOO>
 
 =for rperl X</noncode>
 
-I<FOO>
+I<The source code label mode option tells RPerl if it should create human-readable labels embedded as comments in the C++ output source code.  This option may be useful to RPerl system developers when comparing an RPerl application's original uncompiled source code input with the compiled C++ source code output.>
 
 =back
 
@@ -13513,7 +13517,13 @@ I<FOO>
 
 =for rperl X</noncode>
 
-I<FOO>
+I<The verbose flag option tells RPerl to display additional user-friendly information during various phases of compilation.>
+
+I<Verbose output is generated using the C<RPerl::verbose()> RPerl system subroutine.>
+
+I<If the verbose and debug flags are not enabled, then a problem-free RPerl compilation will produce no output whatsoever, in order to preserve the "*nix" tradition of displaying no unnecessary output during successful execution of system software.>
+
+L<https://en.wikipedia.org/wiki/*nix>
 
 =back
 
@@ -13527,14 +13537,18 @@ I<FOO>
 
 =for rperl X<noncode>
 
-    Include system diagnostic information in output, or not.
+    Include debugging & system diagnostic information in output, or not.
     If enabled, equivalent to `export RPERL_DEBUG=1` shell command.
     Disabled by default.
     Uppercase 'D' not to be confused with lowercase 'd' in 'dependencies' argument.
 
 =for rperl X</noncode>
 
-I<FOO>
+I<The debug flag option tells RPerl to display additional developer-friendly information during various phases of compilation.>
+
+I<Debugging output is generated using the identical C<RPerl::debug()> & C<RPerl::diag()> RPerl system subroutines.>
+
+I<Use of both the verbose and debug flags C<rperl -V -D> is recommended for RPerl system developers.>
 
 =back
 
@@ -13549,11 +13563,14 @@ I<FOO>
 =for rperl X<noncode>
 
     Include system warnings in output, or not.
-    Enabled by default, equivalent to `export RPERL_WARNINGS=0` shell command.
+    If disabled, equivalent to `export RPERL_WARNINGS=0` shell command.
+    Enabled by default.
 
 =for rperl X</noncode>
 
-I<FOO>
+I<The warnings flag option tells RPerl if it should display non-fatal warnings.>
+
+I<The default behavior is that RPerl should display warnings, in order to encourage users and developers alike to address problems before they become fatal errors, or cause other unexpected or undefined behavior.>
 
 =back
 
@@ -13571,7 +13588,7 @@ I<FOO>
 
 =for rperl X</noncode>
 
-I<FOO>
+I<The test flag option tells RPerl to operate in test mode, which means RPerl will utilize Perl operations and Perl data types, and the resulting output code will not actually be saved to disk or subcompiled.  Because the Perl-ops-Perl-types mode is the fully-implemented reference design for the RPerl language, the test mode may be useful to RPerl application developers in order to check the correctness of an RPerl application which includes some RPerl feature that is not yet implemented in the optimized C++ modes.>
 
 =back
 
@@ -13591,7 +13608,9 @@ I<FOO>
 
 =for rperl X</noncode>
 
-I<FOO>
+I<The dependencies flag option tells RPerl if it should recursively follow and compile all dependencies of all RPerl source code input files.>
+
+I<This option is a shorthand provided for brevity, please see: L</B.9: Modes, Dependencies>>
 
 =back
 
@@ -13623,7 +13642,9 @@ I<FOO>
 
 =for rperl X</noncode>
 
-I<FOO>
+I<The uncompile flag option tells RPerl to uncompile the input file(s) instead of compiling them.  The "u" of "uncompile" may be repeated as "uu" or "uuu" for greater uncompile effect (more files deleted).>
+
+I<This option is a shorthand provided for brevity, please see: L</B.10: Modes, Uncompile>>
 
 =back
 
@@ -13642,7 +13663,11 @@ I<FOO>
 
 =for rperl X</noncode>
 
-I<FOO>
+I<The compile flag option tells RPerl if it should compile the source code input file(s), which is obviously enabled by default because RPerl is a compiler and thus is designed to compile as its primary purpose.>
+
+I<If disabled via C<--nocompile> or C<-noc>, RPerl will still perform the PARSE and GENERATE compile phases, but will not perform the SAVE or SUBCOMPILE phases, so no output files are saved to disk or subcompiled to binary using the C++ compiler.  This compile phase effect is similar to test mode in that files are not saved or subcompiled, but without automatically setting the operations or data types modes to Perl.>
+
+I<This option is a shorthand provided for brevity, please see: L</B.11: Modes, Compile>>
 
 =back
 
@@ -13660,7 +13685,9 @@ I<FOO>
 
 =for rperl X</noncode>
 
-I<FOO>
+I<The assemble flag tells RPerl to run the C++ assembler and save non-executable binary *.o object file(s) to disk.>
+
+I<This option is a shorthand provided for brevity, please see: L</B.12: Modes, Subcompile>>
 
 =back
 
@@ -13678,7 +13705,9 @@ I<FOO>
 
 =for rperl X</noncode>
 
-I<FOO>
+I<The archive flag tells RPerl to run the C++ compiler and save non-executable binary *.a archive library file(s) to disk.>
+
+I<This option is a shorthand provided for brevity, please see: L</B.12: Modes, Subcompile>>
 
 =back
 
@@ -13696,7 +13725,9 @@ I<FOO>
 
 =for rperl X</noncode>
 
-I<FOO>
+I<The archive flag tells RPerl to run the C++ compiler and save non-executable binary *.so shared object library file(s) to disk.>
+
+I<This option is a shorthand provided for brevity, please see: L</B.12: Modes, Subcompile>>
 
 =back
 
@@ -13717,7 +13748,11 @@ I<FOO>
 
 =for rperl X</noncode>
 
-I<FOO>
+I<The static flag tells RPerl to run the C++ compiler and save executable binary *.exe or non-suffixed statically-linked program file(s) to disk.>
+
+I<There is no equivalent C<--dynamic> flag, because dynamic subcompile mode is already the default behavior.>
+
+I<This option is a shorthand provided for brevity, please see: L</B.12: Modes, Subcompile>>
 
 =back
 
@@ -13737,7 +13772,9 @@ I<FOO>
 
 =for rperl X</noncode>
 
-I<FOO>
+I<The execute flag tells RPerl if it should execute a *.pl RPerl program input file.>
+
+I<This option is a shorthand provided for brevity, please see: L</B.14: Modes, Execute>>
 
 =back
 

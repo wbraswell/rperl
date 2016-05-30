@@ -1320,7 +1320,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
-    Include system diagnostic information in output, or not.
+    Include debugging & system diagnostic information in output, or not.
     If enabled, equivalent to `export RPERL_DEBUG=1` shell command.
     Disabled by default.
     Uppercase 'D' not to be confused with lowercase 'd' in 'dependencies' argument.
@@ -1340,7 +1340,8 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 =for rperl X<noncode>
 
     Include system warnings in output, or not.
-    Enabled by default, equivalent to `export RPERL_WARNINGS=0` shell command.
+    If disabled, equivalent to `export RPERL_WARNINGS=0` shell command.
+    Enabled by default.
 
 =for rperl X</noncode>
 
