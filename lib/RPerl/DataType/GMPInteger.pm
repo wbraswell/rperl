@@ -74,46 +74,46 @@ our void $gmp_integer_CHECK = sub {
     #    RPerl::diag("in PERLOPS_PERLTYPES gmp_integer(), top of subroutine\n");
     if ( not( defined $possible_gmp_integer ) ) {
         croak(
-            "\nERROR EGIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but undefined/null value found,\ncroaking"
+            "\nERROR EMV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but undefined/null value found,\ncroaking"
         );
     }
     if ( not( main::RPerl_SvHROKp($possible_gmp_integer) ) ) {
-        croak("\nERROR EGIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-hashref value found,\ncroaking");
+        croak("\nERROR EMV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-hashref value found,\ncroaking");
     }
     my string $classname = main::class($possible_gmp_integer);
     if ( not defined $classname ) {
         croak(
-            "\nERROR EGIV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-object (blessed hashref) value found,\ncroaking"
+            "\nERROR EMV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-object (blessed hashref) value found,\ncroaking"
         );
     }
     if ( not( UNIVERSAL::isa( $possible_gmp_integer, 'Math::BigInt' ) ) ) {
         croak(
-            "\nERROR EGIV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-Math::BigInt-derived object value found,\ncroaking"
+            "\nERROR EMV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-Math::BigInt-derived object value found,\ncroaking"
         );
     }
     if ( $classname ne 'gmp_integer' ) {
         croak(
-            "\nERROR EGIV04, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-gmp_integer object value found,\ncroaking"
+            "\nERROR EMV04, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-gmp_integer object value found,\ncroaking"
         );
     }
     if ( not exists $possible_gmp_integer->{value} ) {
         croak(
-            "\nERROR EGIV05, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry exists,\ncroaking"
+            "\nERROR EMV05, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry exists,\ncroaking"
         );
     }
     if ( not defined $possible_gmp_integer->{value} ) {
         croak(
-            "\nERROR EGIV06, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry defined;\nOR\nERROR EGIV07, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but undefined/null value found,\ncroaking"
+            "\nERROR EMV06, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry defined;\nOR\nERROR EMV07, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but undefined/null value found,\ncroaking"
         );
     }
     if ( not defined main::class( $possible_gmp_integer->{value} ) ) {
         croak(
-            "\nERROR EGIV08, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-object (blessed hashref) value found,\ncroaking"
+            "\nERROR EMV08, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-object (blessed hashref) value found,\ncroaking"
         );
     }
     if ( not( UNIVERSAL::isa( $possible_gmp_integer->{value}, 'Math::BigInt::GMP' ) ) ) {
         croak(
-            "\nERROR EGIV09, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-Math::BigInt::GMP object value found,\ncroaking"
+            "\nERROR EMV09, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-Math::BigInt::GMP object value found,\ncroaking"
         );
     }
 
@@ -126,7 +126,7 @@ our void $gmp_integer_CHECKTRACE = sub {
     #    RPerl::diag("in PERLOPS_PERLTYPES gmp_integer_CHECKTRACE(), top of subroutine\n");
     if ( not( defined $possible_gmp_integer ) ) {
         croak(
-            "\nERROR EGIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but undefined/null value found,\nin variable "
+            "\nERROR EMV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but undefined/null value found,\nin variable "
                 . $variable_name
                 . " from subroutine "
                 . $subroutine_name
@@ -134,7 +134,7 @@ our void $gmp_integer_CHECKTRACE = sub {
     }
     if ( not( main::RPerl_SvHROKp($possible_gmp_integer) ) ) {
         croak(
-            "\nERROR EGIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-hashref value found,\nin variable "
+            "\nERROR EMV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-hashref value found,\nin variable "
                 . $variable_name
                 . " from subroutine "
                 . $subroutine_name
@@ -143,7 +143,7 @@ our void $gmp_integer_CHECKTRACE = sub {
     my string $classname = main::class($possible_gmp_integer);
     if ( not defined $classname ) {
         croak(
-            "\nERROR EGIV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-object (blessed hashref) value found,\nin variable "
+            "\nERROR EMV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-object (blessed hashref) value found,\nin variable "
                 . $variable_name
                 . " from subroutine "
                 . $subroutine_name
@@ -151,7 +151,7 @@ our void $gmp_integer_CHECKTRACE = sub {
     }
     if ( not( UNIVERSAL::isa( $possible_gmp_integer, 'Math::BigInt' ) ) ) {
         croak(
-            "\nERROR EGIV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-Math::BigInt-derived object value found,\nin variable "
+            "\nERROR EMV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-Math::BigInt-derived object value found,\nin variable "
                 . $variable_name
                 . " from subroutine "
                 . $subroutine_name
@@ -159,7 +159,7 @@ our void $gmp_integer_CHECKTRACE = sub {
     }
     if ( $classname ne 'gmp_integer' ) {
         croak(
-            "\nERROR EGIV04, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-gmp_integer object value found,\nin variable "
+            "\nERROR EMV04, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-gmp_integer object value found,\nin variable "
                 . $variable_name
                 . " from subroutine "
                 . $subroutine_name
@@ -167,7 +167,7 @@ our void $gmp_integer_CHECKTRACE = sub {
     }
     if ( not exists $possible_gmp_integer->{value} ) {
         croak(
-            "\nERROR EGIV05, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry exists,\nin variable "
+            "\nERROR EMV05, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry exists,\nin variable "
                 . $variable_name
                 . " from subroutine "
                 . $subroutine_name
@@ -175,7 +175,7 @@ our void $gmp_integer_CHECKTRACE = sub {
     }
     if ( not defined $possible_gmp_integer->{value} ) {
         croak(
-            "\nERROR EGIV06, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry defined;\nOR\nERROR EGIV07, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but undefined/null value found,\nin variable "
+            "\nERROR EMV06, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry defined;\nOR\nERROR EMV07, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but undefined/null value found,\nin variable "
                 . $variable_name
                 . " from subroutine "
                 . $subroutine_name
@@ -183,7 +183,7 @@ our void $gmp_integer_CHECKTRACE = sub {
     }
     if ( not defined main::class( $possible_gmp_integer->{value} ) ) {
         croak(
-            "\nERROR EGIV08, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-object (blessed hashref) value found,\nin variable "
+            "\nERROR EMV08, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-object (blessed hashref) value found,\nin variable "
                 . $variable_name
                 . " from subroutine "
                 . $subroutine_name
@@ -191,7 +191,7 @@ our void $gmp_integer_CHECKTRACE = sub {
     }
     if ( not( UNIVERSAL::isa( $possible_gmp_integer->{value}, 'Math::BigInt::GMP' ) ) ) {
         croak(
-            "\nERROR EGIV09, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-Math::BigInt::GMP object value found,\nin variable "
+            "\nERROR EMV09, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-Math::BigInt::GMP object value found,\nin variable "
                 . $variable_name
                 . " from subroutine "
                 . $subroutine_name

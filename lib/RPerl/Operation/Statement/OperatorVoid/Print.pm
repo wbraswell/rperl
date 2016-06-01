@@ -38,7 +38,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
         if ( exists $stdout_stderr_optional->{children}->[0] ) {
             if ( ( $stdout_stderr_optional->{children}->[0]->{attr} ne '{*STDOUT}' ) and ( $stdout_stderr_optional->{children}->[0]->{attr} ne '{*STDERR}' ) ) {
-                die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP27, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: output stream '
+                die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP28, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: output stream '
                         . $stdout_stderr_optional->{children}->[0]->{attr}
                         . ' found where {*STDOUT} or {*STDERR} expected, dying' )
                     . "\n";
@@ -105,7 +105,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 $cpp_source_group->{CPP} .= 'cerr << ';
             }
             else {
-                die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP27, CODE GENERATOR, ABSTRACT SYNTAX TO C++: output stream '
+                die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP28, CODE GENERATOR, ABSTRACT SYNTAX TO C++: output stream '
                         . $stdout_stderr_optional->{children}->[0]->{attr}
                         . ' found where {*STDOUT} or {*STDERR} expected, dying' )
                     . "\n";

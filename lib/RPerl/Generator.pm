@@ -4,7 +4,7 @@ package RPerl::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_100;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -297,10 +297,10 @@ our integer $diff_check_file_vs_string = sub {
             stderr      => \$perltidy_stderr_string,
         );
         if ($perltidy_errored) {    # serious error in input parameters, no tidied output
-            die 'ERROR ECOGEDIXX: Perl::Tidy major failure with the following STDERR output, dying' . "\n" . $perltidy_stderr_string . "\n";
+            die 'ERROR ECOGEDI03: Perl::Tidy major failure in file ' . q{'} . $filename . q{'} . ' with the following STDERR output, dying' . "\n" . $perltidy_stderr_string . "\n";
         }
         elsif ($perltidy_stderr_string) {
-            die 'ERROR ECOGEDIXX: Perl::Tidy minor failure with the following STDERR output, dying' . "\n" . $perltidy_stderr_string . "\n";
+            die 'ERROR ECOGEDI04: Perl::Tidy minor failure in file ' . q{'} . $filename . q{'} . ' with the following STDERR output, dying' . "\n" . $perltidy_stderr_string . "\n";
         }
 
         # tidy source string
@@ -311,10 +311,10 @@ our integer $diff_check_file_vs_string = sub {
             stderr      => \$perltidy_stderr_string,
         );
         if ($perltidy_errored) {
-            die 'ERROR ECOGEDIXX: Perl::Tidy major failure with the following STDERR output, dying' . "\n" . $perltidy_stderr_string . "\n";
+            die 'ERROR ECOGEDI05: Perl::Tidy major failure in generated source code string with the following STDERR output, dying' . "\n" . $perltidy_stderr_string . "\n";
         }
         elsif ($perltidy_stderr_string) {
-            die 'ERROR ECOGEDIXX: Perl::Tidy minor failure with the following STDERR output, dying' . "\n" . $perltidy_stderr_string . "\n";
+            die 'ERROR ECOGEDI06: Perl::Tidy minor failure in generated source code string with the following STDERR output, dying' . "\n" . $perltidy_stderr_string . "\n";
         }
     }
     else {    # $ops eq 'CPP'
@@ -351,7 +351,7 @@ our integer $diff_check_file_vs_string = sub {
         $file_line   = $file_string_split->[$i];
         $string_line = $source_string_split->[$i];
         if ( $string_line =~ /__DUMMY_SOURCE_CODE/xms ) {
-            RPerl::warning( 'WARNING WCVGEDI00, RPERL GENERATOR, DIFF CHECK: Dummy source code found, abandoning check' . "\n" );
+            RPerl::warning( 'WARNING WCOGEDI00, RPERL GENERATOR, DIFF CHECK: Dummy source code found, abandoning check' . "\n" );
             $return_value = -1;
             last;
         }
@@ -446,7 +446,7 @@ our void $source_group_append = sub {
                 $type_1 = ref $rperl_source_group_1->{$suffix_key};
                 if ($type_1 eq q{}) { $type_1 = 'SCALAR'; }
                 if ($type_1 ne $type_2) {
-                    die 'ERROR ECOGE00, GENERATOR: source group entries type mismatch, ' . q{'} . $type_1 . q{'} . ' is different than ' . q{'} . $type_2 . q{'} . ', dying' . "\n";
+                    die 'ERROR ECOGE00, GENERATOR: Source group entries type mismatch, ' . q{'} . $type_1 . q{'} . ' is different than ' . q{'} . $type_2 . q{'} . ', dying' . "\n";
                 }
             }
             else { $type_1 = undef; }
@@ -510,7 +510,7 @@ our void $grammar_rules__map = sub {
         #        RPerl::diag('in Generator::grammar_rules_map(), have 1st $eval_string = ' . "\n" . $eval_string . "\n");
         my integer $eval_retval = eval $eval_string;
         if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne q{} ) ) {
-            die $EVAL_ERROR . "\n";
+            die 'ERROR ECOGE01, GENERATOR: Grammar rules map, failed to create pre-mapped namespace, dying' . "\n" . $EVAL_ERROR . "\n";
         }
 
         #        if (not defined $eval_retval) {die $EVAL_ERROR . "\n";}
@@ -532,7 +532,7 @@ our void $grammar_rules__map = sub {
         #        RPerl::diag('in Generator::grammar_rules_map(), have 2nd $eval_string = ' . "\n" . $eval_string . "\n");
         $eval_retval = eval $eval_string;
         if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne q{} ) ) {
-            die $EVAL_ERROR . "\n";
+            die 'ERROR ECOGE02, GENERATOR: Grammar rules map, failed copy subroutines into mapped namespace, dying' . "\n" . $EVAL_ERROR . "\n";
         }
     }
 };

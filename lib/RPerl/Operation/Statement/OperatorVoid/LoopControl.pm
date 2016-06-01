@@ -29,7 +29,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     if ( $self_class eq 'OperatorVoid_123' ) { # OperatorVoid -> OP19_LOOP_CONTROL_SCOLON
         if (($self->{children}->[0] ne 'next;') and ($self->{children}->[0] ne 'last;')) {
             die RPerl::Parser::rperl_rule__replace(
-                'ERROR ECOGEASRP25, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: loop control operator '
+                'ERROR ECOGEASRP26, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: loop control operator '
                     . $self->{children}->[0]
                     . ' found where next; or last; expected, dying'
             ) . "\n";
@@ -46,7 +46,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
  
         if (($loop_control !~ /^next/xms) and ($loop_control !~ /^last/xms) and ($loop_control !~ /^redo/xms)) {
             die RPerl::Parser::rperl_rule__replace(
-                'ERROR ECOGEASCP26, CODE GENERATOR, ABSTRACT SYNTAX TO C++: loop control operator '
+                'ERROR ECOGEASCP27, CODE GENERATOR, ABSTRACT SYNTAX TO C++: loop control operator '
                     . $loop_control
                     . ' found where next, last, or redo expected, dying'
             ) . "\n";
@@ -91,7 +91,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         }
         else {
             die RPerl::Parser::rperl_rule__replace(
-                'ERROR ECOGEASCP25, CODE GENERATOR, ABSTRACT SYNTAX TO C++: loop control operator '
+                'ERROR ECOGEASCP26, CODE GENERATOR, ABSTRACT SYNTAX TO C++: loop control operator '
                     . $self->{children}->[0]
                     . ' found where next; or last; expected, dying'
             ) . "\n";
@@ -112,7 +112,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         }
         else {
             die RPerl::Parser::rperl_rule__replace(
-                'ERROR ECOGEASCP26, CODE GENERATOR, ABSTRACT SYNTAX TO C++: loop control operator '
+                'ERROR ECOGEASCP27, CODE GENERATOR, ABSTRACT SYNTAX TO C++: loop control operator '
                     . $loop_control
                     . ' found where next, last, or redo expected, dying'
             ) . "\n";

@@ -33,7 +33,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             and ( $self->{children}->[1] ne 'ne' )
             and ( $self->{children}->[1] ne 'cmp' ) )
         {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP28, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: comparison operator '
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP29, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: comparison operator '
                     . $self->{children}->[1]
                     . ' found where ==, !=, <=>, eq, ne, or cmp expected, dying' )
                 . "\n";
@@ -88,7 +88,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             $cpp_source_group->{CPP} .= ' DUMMY_THREE_WAY_COMPARISON_STRING ';
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP28, CODE GENERATOR, ABSTRACT SYNTAX TO C++: comparison operator '
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP29, CODE GENERATOR, ABSTRACT SYNTAX TO C++: comparison operator '
                     . $self->{children}->[1]
                     . ' found where ==, !=, <=>, eq, ne, or cmp expected, dying' )
                 . "\n";

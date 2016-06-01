@@ -53,12 +53,12 @@ sub accept_and_verify_input_files {
             $input_file_names = $input_file_names_unlabeled;
         }
         else {
-            die 'ERROR EARG08: Both labeled & unlabeled RPerl source code input file argument(s) specified, dying' . "\n";
+            die 'ERROR EAR08: Both labeled & unlabeled RPerl source code input file argument(s) specified, dying' . "\n";
         }
     }
 
     if ( ( scalar @{$input_file_names} ) == 0 ) {
-        die 'ERROR EARG01: No RPerl source code input file(s) specified, dying' . "\n";
+        die 'ERROR EAR01: No RPerl source code input file(s) specified, dying' . "\n";
     }
 
     # verify input file(s)
@@ -87,18 +87,18 @@ sub accept_and_verify_input_files {
         }
 
         if ( not( -e $input_file_name ) ) {    ## no critic qw(ProhibitCascadingIfElse)  # SYSTEM DEFAULT 2: allow argument-handling logic
-            die 'ERROR EARG02: Specified RPerl source code input file ' . q{'} . $input_file_name . q{'} . ' does not exist, dying' . "\n";
+            die 'ERROR EAR02: Specified RPerl source code input file ' . q{'} . $input_file_name . q{'} . ' does not exist, dying' . "\n";
         }
         elsif ( not( -r $input_file_name ) ) {
-            die 'ERROR EARG03: Specified RPerl source code input file ' . q{'} . $input_file_name . q{'} . ' is not readable, dying' . "\n";
+            die 'ERROR EAR03: Specified RPerl source code input file ' . q{'} . $input_file_name . q{'} . ' is not readable, dying' . "\n";
         }
         elsif ( not( -f $input_file_name ) ) {
-            die 'ERROR EARG04: Specified RPerl source code input file ' . q{'} . $input_file_name . q{'} . ' is not a plain file, dying' . "\n";
+            die 'ERROR EAR04: Specified RPerl source code input file ' . q{'} . $input_file_name . q{'} . ' is not a plain file, dying' . "\n";
         }
         elsif ( ( $input_file_name !~ /[.]pm$/xms )
             and ( $input_file_name !~ /[.]pl$/xms ) )
         {
-            die 'ERROR EARG05: Specified RPerl source code input file ' . q{'}
+            die 'ERROR EAR05: Specified RPerl source code input file ' . q{'}
                 . $input_file_name . q{'}
                 . ' is not a Perl program ending in ' . q{'} . '.pl' . q{'}
                 . ' or module ending in  ' . q{'} . '.pm' . q{'}
@@ -138,26 +138,26 @@ sub verify_and_default_modes {
     if ( defined $uncompile_flag ) {
         if ($uncompile_flag) {
             if ( ( defined $compile_flag ) and $compile_flag ) {
-                die 'ERROR EARG09: Incompatible command-line argument flags provided, both --uncompile and --compile, dying' . "\n";
+                die 'ERROR EAR09: Incompatible command-line argument flags provided, both --uncompile and --compile, dying' . "\n";
             }
             # subcompile mode is used in Compiler::generate_output_file_names() to determine which files to delete, allow flags to set subcompile mode
 #            if ( ( defined $subcompile_assemble_flag ) and $subcompile_assemble_flag ) {
-#                die 'ERROR EARG09: Incompatible command-line argument flags provided, both --uncompile and --assemble, dying' . "\n";
+#                die 'ERROR EAR09: Incompatible command-line argument flags provided, both --uncompile and --assemble, dying' . "\n";
 #            }
 #            if ( ( defined $subcompile_archive_flag ) and $subcompile_archive_flag ) {
-#                die 'ERROR EARG09: Incompatible command-line argument flags provided, both --uncompile and --archive, dying' . "\n";
+#                die 'ERROR EAR09: Incompatible command-line argument flags provided, both --uncompile and --archive, dying' . "\n";
 #            }
 #            if ( ( defined $subcompile_shared_flag ) and $subcompile_shared_flag ) {
-#                die 'ERROR EARG09: Incompatible command-line argument flags provided, both --uncompile and --shared, dying' . "\n";
+#                die 'ERROR EAR09: Incompatible command-line argument flags provided, both --uncompile and --shared, dying' . "\n";
 #            }
 #            if ( ( defined $subcompile_static_flag ) and $subcompile_static_flag ) {
-#                die 'ERROR EARG09: Incompatible command-line argument flags provided, both --uncompile and --static, dying' . "\n";
+#                die 'ERROR EAR09: Incompatible command-line argument flags provided, both --uncompile and --static, dying' . "\n";
 #            }
             if ( ( defined $execute_flag ) and $execute_flag ) {
-                die 'ERROR EARG09: Incompatible command-line argument flags provided, both --uncompile and --execute, dying' . "\n";
+                die 'ERROR EAR09: Incompatible command-line argument flags provided, both --uncompile and --execute, dying' . "\n";
             }
             if ( ( defined $test_flag ) and $test_flag ) {
-                die 'ERROR EARG09: Incompatible command-line argument flags provided, both --uncompile and --test, dying' . "\n";
+                die 'ERROR EAR09: Incompatible command-line argument flags provided, both --uncompile and --test, dying' . "\n";
             }
             if ($uncompile_flag == 1) { $modes->{uncompile} = 'SOURCE'; }
             if ($uncompile_flag == 2) { $modes->{uncompile} = 'SOURCE_BINARY'; }
@@ -178,16 +178,16 @@ sub verify_and_default_modes {
         }
         else {    # --nocompile command-line argument disables SAVE & SUBCOMPILE steps, PARSE & GENERATE remain enabled
             if (( defined $subcompile_assemble_flag ) and $subcompile_assemble_flag ) {
-                die 'ERROR EARG10: Incompatible command-line argument flags provided, both --nocompile and --assemble, dying' . "\n";
+                die 'ERROR EAR10: Incompatible command-line argument flags provided, both --nocompile and --assemble, dying' . "\n";
             }
             if ( ( defined $subcompile_archive_flag ) and $subcompile_archive_flag ) {
-                die 'ERROR EARG10: Incompatible command-line argument flags provided, both --nocompile and --archive, dying' . "\n";
+                die 'ERROR EAR10: Incompatible command-line argument flags provided, both --nocompile and --archive, dying' . "\n";
             }
             if ( ( defined $subcompile_shared_flag ) and $subcompile_shared_flag ) {
-                die 'ERROR EARG10: Incompatible command-line argument flags provided, both --nocompile and --shared, dying' . "\n";
+                die 'ERROR EAR10: Incompatible command-line argument flags provided, both --nocompile and --shared, dying' . "\n";
             }
             if ( ( defined $subcompile_static_flag ) and $subcompile_static_flag ) {
-                die 'ERROR EARG10: Incompatible command-line argument flags provided, both --nocompile and --static, dying' . "\n";
+                die 'ERROR EAR10: Incompatible command-line argument flags provided, both --nocompile and --static, dying' . "\n";
             }
             $modes->{compile} = 'GENERATE';
         }
@@ -196,19 +196,19 @@ sub verify_and_default_modes {
     # assemble mode is CPPOPS_CPPTYPES_SUBCOMPILE_ASSEMBLE; flag ignored if false
     if (( defined $subcompile_assemble_flag ) and $subcompile_assemble_flag ) {
         if ( ( defined $subcompile_archive_flag ) and $subcompile_archive_flag ) {
-            die 'ERROR EARG11: Incompatible command-line argument flags provided, both --assemble and --archive, dying' . "\n";
+            die 'ERROR EAR11: Incompatible command-line argument flags provided, both --assemble and --archive, dying' . "\n";
         }
         if ( ( defined $subcompile_shared_flag ) and $subcompile_shared_flag ) {
-            die 'ERROR EARG11: Incompatible command-line argument flags provided, both --assemble and --shared, dying' . "\n";
+            die 'ERROR EAR11: Incompatible command-line argument flags provided, both --assemble and --shared, dying' . "\n";
         }
         if ( ( defined $subcompile_static_flag ) and $subcompile_static_flag ) {
-            die 'ERROR EARG11: Incompatible command-line argument flags provided, both --assemble and --static, dying' . "\n";
+            die 'ERROR EAR11: Incompatible command-line argument flags provided, both --assemble and --static, dying' . "\n";
         }
         if ( ( defined $execute_flag ) and $execute_flag ) {
-            die 'ERROR EARG11: Incompatible command-line argument flags provided, both --assemble and --execute, dying' . "\n";
+            die 'ERROR EAR11: Incompatible command-line argument flags provided, both --assemble and --execute, dying' . "\n";
         }
         if ( ( defined $test_flag ) and $test_flag ) {
-            die 'ERROR EARG11: Incompatible command-line argument flags provided, both --assemble and --test, dying' . "\n";
+            die 'ERROR EAR11: Incompatible command-line argument flags provided, both --assemble and --test, dying' . "\n";
         }
         $modes->{compile}   = 'SUBCOMPILE';
         $modes->{subcompile} = 'ASSEMBLE';
@@ -218,16 +218,16 @@ sub verify_and_default_modes {
     # archive mode is CPPOPS_CPPTYPES_SUBCOMPILE_ARCHIVE; flag ignored if false
     if (( defined $subcompile_archive_flag ) and $subcompile_archive_flag ) {
         if ( ( defined $subcompile_shared_flag ) and $subcompile_shared_flag ) {
-            die 'ERROR EARG12: Incompatible command-line argument flags provided, both --archive and --shared, dying' . "\n";
+            die 'ERROR EAR12: Incompatible command-line argument flags provided, both --archive and --shared, dying' . "\n";
         }
         if ( ( defined $subcompile_static_flag ) and $subcompile_static_flag ) {
-            die 'ERROR EARG12: Incompatible command-line argument flags provided, both --archive and --static, dying' . "\n";
+            die 'ERROR EAR12: Incompatible command-line argument flags provided, both --archive and --static, dying' . "\n";
         }
         if ( ( defined $execute_flag ) and $execute_flag ) {
-            die 'ERROR EARG12: Incompatible command-line argument flags provided, both --archive and --execute, dying' . "\n";
+            die 'ERROR EAR12: Incompatible command-line argument flags provided, both --archive and --execute, dying' . "\n";
         }
         if ( ( defined $test_flag ) and $test_flag ) {
-            die 'ERROR EARG12: Incompatible command-line argument flags provided, both --archive and --test, dying' . "\n";
+            die 'ERROR EAR12: Incompatible command-line argument flags provided, both --archive and --test, dying' . "\n";
         }
         $modes->{compile}   = 'SUBCOMPILE';
         $modes->{subcompile} = 'ARCHIVE';
@@ -237,13 +237,13 @@ sub verify_and_default_modes {
     # shared mode is CPPOPS_CPPTYPES_SUBCOMPILE_SHARED; flag ignored if false
     if (( defined $subcompile_shared_flag ) and $subcompile_shared_flag ) {
         if ( ( defined $subcompile_static_flag ) and $subcompile_static_flag ) {
-            die 'ERROR EARG13: Incompatible command-line argument flags provided, both --shared and --static, dying' . "\n";
+            die 'ERROR EAR13: Incompatible command-line argument flags provided, both --shared and --static, dying' . "\n";
         }
         if ( ( defined $execute_flag ) and $execute_flag ) {
-            die 'ERROR EARG13: Incompatible command-line argument flags provided, both --shared and --execute, dying' . "\n";
+            die 'ERROR EAR13: Incompatible command-line argument flags provided, both --shared and --execute, dying' . "\n";
         }
         if ( ( defined $test_flag ) and $test_flag ) {
-            die 'ERROR EARG13: Incompatible command-line argument flags provided, both --shared and --test, dying' . "\n";
+            die 'ERROR EAR13: Incompatible command-line argument flags provided, both --shared and --test, dying' . "\n";
         }
         $modes->{compile}   = 'SUBCOMPILE';
         $modes->{subcompile} = 'SHARED';
@@ -254,11 +254,11 @@ sub verify_and_default_modes {
     if (( defined $subcompile_static_flag ) and $subcompile_static_flag ) {
         if ($subcompile_static_flag) {
             if ( ( defined $test_flag ) and $test_flag ) {
-                die 'ERROR EARG14: Incompatible command-line argument flags provided, both --static and --test, dying' . "\n";
+                die 'ERROR EAR14: Incompatible command-line argument flags provided, both --static and --test, dying' . "\n";
             }
             foreach my string $input_file_name (@{$input_file_names}) {
                 if ( $input_file_name =~ /[.]pm$/xms ) {
-                    die 'ERROR EARG15: Incompatible command-line arguments provided, both --static subcompile mode flag and *.pm Perl module input file(s), dying' . "\n";
+                    die 'ERROR EAR15: Incompatible command-line arguments provided, both --static subcompile mode flag and *.pm Perl module input file(s), dying' . "\n";
                 }
             }
             $modes->{compile}   = 'SUBCOMPILE';
@@ -272,7 +272,7 @@ sub verify_and_default_modes {
     
     if (defined $subcompile_CXX) {
         if ($subcompile_CXX =~ m/^\s*$/gxms) {
-            die 'ERROR EARG16: Undefined, empty, or all-whitespace CXX command-line argument provided, dying' . "\n";
+            die 'ERROR EAR16: Undefined, empty, or all-whitespace CXX command-line argument provided, dying' . "\n";
         }
         else {
             $modes->{CXX} = $subcompile_CXX;
@@ -309,17 +309,17 @@ sub verify_and_default_modes {
     # verify modes
     foreach my string $mode_key ( keys %{$modes} ) {
         if ( not( exists $modes_supported->{$mode_key} ) ) {
-            die "ERROR EARG06: Unsupported or invalid mode category '$mode_key' specified, supported categories are ("
-                . join( ', ', keys %{$modes_supported} )
+            die "ERROR EAR06: Unsupported or invalid mode category '$mode_key' specified, supported categories are ("
+                . join( ', ', sort keys %{$modes_supported} )
                 . '), dying' . "\n";
         }
         elsif ( ( defined $modes_supported->{$mode_key} ) and not( grep { $_ eq $modes->{$mode_key} } @{ $modes_supported->{$mode_key} } ) ) {
-            die 'ERROR EARG07: Unsupported or invalid mode ' . q{'}
+            die 'ERROR EAR07: Unsupported or invalid mode ' . q{'}
                 . $modes->{$mode_key} . q{'}
                 . ' in mode category ' . q{'}
                 . $mode_key . q{'}
                 . ' specified, supported modes are ('
-                . join( ', ', @{ $modes_supported->{$mode_key} } )
+                . join( ', ', sort @{ $modes_supported->{$mode_key} } )
                 . '), dying' . "\n";
         }
     }
@@ -417,7 +417,7 @@ sub multi_file_settings {
     return $retval;
 }
 
-# allow omission of "-infile" on command line
+# allow omission of "-infile" on command-line
 #our void $store_unlabeled_arguments = sub {  # NEED FIX: can't define RPerl-style subroutines here?
 sub store_unlabeled_arguments {
     ( my unknown $argument ) = @_;
@@ -919,7 +919,7 @@ GetOptions(
     'outfile=s{1,}' => \@{$output_file_name_prefixes},
     'mode=s%'       => \$modes,
     '<>'            => \&store_unlabeled_arguments
-) or die "ERROR EARG00: Failure processing command line arguments, dying\n";
+) or die "ERROR EAR00: Failure processing command-line arguments, dying\n";
 
 if ($help_flag) { pod2usage( -verbose => 1, -width => 80 ); exit; }
 if ($vversions_flag) { $RPerl::VERBOSE = 1; verbose_versions(); exit; }

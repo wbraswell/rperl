@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.035_000;
+our $VERSION = 0.036_000;
 
 # [[[ OO INHERITANCE ]]]
 # BASE CLASS HAS NO INHERITANCE
@@ -694,10 +694,11 @@ sub save_object_properties_types {
 
         while ( ( defined $object_property_key ) and ( defined $object_property_type ) and ( defined $object_property_inner_type_name ) ) {
             if ( $object_property_key ne $object_property_inner_type_name ) {
-                die 'ERROR ECOGEPPRP17, CODE GENERATOR, PURE PERL TO RPERL: redundant name mismatch, OO properties key '
-                    . $object_property_key
-                    . ' is different than inner type name '
-                    . $object_property_inner_type_name
+                # DEV NOTE, CORRELATION #rp30: matches numbering of ECOGEASCP20 in RPerl/CompileUnit/Module/Class/Generator.pm
+                die 'ERROR ECOGEPPRP20, CODE GENERATOR, PURE PERL TO RPERL: redundant name mismatch, inner type name ' . q{'}
+                    . $object_property_inner_type_name . q{'}
+                    . ' does not equal OO properties key ' . q{'}
+                    . $object_property_key . q{'}
                     . ', dying' . "\n";
             }
             $object_properties_types->{$package_name}->{$object_property_key} = $object_property_type;

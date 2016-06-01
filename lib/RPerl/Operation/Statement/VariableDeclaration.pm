@@ -87,7 +87,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #                    RPerl::diag( 'in VariableDeclaration->ast_to_rperl__generate(), have $constructor_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($constructor_type) . "\n" );
 
                 if ( $type ne $constructor_type ) {
-                    die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP19, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: data type mismatch, ' . q{'}
+                    die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: data type mismatch, ' . q{'}
                             . $type . q{'}
                             . ' type is different than ' . q{'}
                             . $constructor_type . q{'}
@@ -115,7 +115,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #                    RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $constructor_type = ' . $constructor_type . "\n" );
 
                     if ( $type ne $constructor_type ) {
-                        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP19, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: data type mismatch, ' . q{'}
+                        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: data type mismatch, ' . q{'}
                                 . $type . q{'}
                                 . ' type is different than ' . q{'}
                                 . $constructor_type . q{'}
@@ -199,7 +199,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         substr $symbol, 0, 1, q{};                       # remove leading $ sigil
 
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
-            die 'ERROR ECOGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+            die 'ERROR ECOGEASCP11, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
                 . $symbol
                 . ' already declared in this scope, namespace '
                 . $modes->{_symbol_table}->{_namespace}
@@ -259,7 +259,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #                    RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $constructor_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($constructor_type) . "\n" );
 
                 if ( $type ne $constructor_type ) {
-                    die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP19, CODE GENERATOR, ABSTRACT SYNTAX TO C++: data type mismatch, ' . q{'}
+                    die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP20, CODE GENERATOR, ABSTRACT SYNTAX TO C++: data type mismatch, ' . q{'}
                             . $type . q{'}
                             . ' type is different than ' . q{'}
                             . $constructor_type . q{'}
@@ -288,7 +288,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #                    RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $constructor_type = ' . $constructor_type . "\n" );
 
                     if ( $type ne $constructor_type ) {
-                        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP19, CODE GENERATOR, ABSTRACT SYNTAX TO C++: data type mismatch, ' . q{'}
+                        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP20, CODE GENERATOR, ABSTRACT SYNTAX TO C++: data type mismatch, ' . q{'}
                                 . $type . q{'}
                                 . ' type is different than ' . q{'}
                                 . $constructor_type . q{'}
@@ -314,7 +314,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #            RPerl::diag('in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_symbol_table}->{_subroutine} = ' . $modes->{_symbol_table}->{_subroutine} . "\n");
 
             if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
-                die 'ERROR ECOGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+                die 'ERROR ECOGEASCP11, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
                     . $symbol
                     . ' already declared in this scope, namespace '
                     . $modes->{_symbol_table}->{_namespace}
@@ -392,7 +392,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #        RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subexpression = ' . RPerl::Parser::rperl_ast__dump($subexpression) . "\n" );
 
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
-            die 'ERROR ECOGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+            die 'ERROR ECOGEASCP11, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
                 . $symbol
                 . ' already declared in this scope, namespace '
                 . $modes->{_symbol_table}->{_namespace}
@@ -427,7 +427,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         substr $symbol_fhref, 0, 1, q{};                       # remove leading $ sigil
 
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol_fhref} ) {
-            die 'ERROR ECOGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+            die 'ERROR ECOGEASCP11, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
                 . $symbol_fhref
                 . ' already declared in this scope, namespace '
                 . $modes->{_symbol_table}->{_namespace}

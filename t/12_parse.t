@@ -1,14 +1,14 @@
 #!/usr/bin/perl  ## no critic qw(ProhibitExcessMainComplexity)  # SYSTEM SPECIAL 4: allow complex code outside subroutines, must be on line 1
 
 # suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s),
-# also 'WARNING WCVCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package' due to RPerl/Test/*/*Bad*.pm & RPerl/Test/*/*bad*.pl
+# also 'WARNING WCOCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package' due to RPerl/Test/*/*Bad*.pm & RPerl/Test/*/*bad*.pl
 BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
 # [[[ HEADER ]]]
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_300;
+our $VERSION = 0.005_400;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -110,6 +110,11 @@ for my $test_file ( sort keys %{$test_files} ) {
             my $missing_errors = [];
             if ( defined $test_files->{$test_file}->{errors} ) {
                 foreach my $error ( @{ $test_files->{$test_file}->{errors} } ) {
+                    # DEV NOTE: debug to show which tests trigger a Helpful Hint
+#                    if ( $EVAL_ERROR =~ /Helpful\ Hint/xms ) {
+#                        print '[[[ YES HELPFUL HINT ' . $test_file . ' ]]]' . "\n\n";
+#                    }
+                    
                     if ( $EVAL_ERROR !~ /\Q$error\E/xms ) {
                         push @{$missing_errors}, "Error message '$error' expected, but not found";
                     }

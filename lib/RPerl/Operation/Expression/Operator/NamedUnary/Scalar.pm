@@ -7,7 +7,7 @@ package RPerl::Operation::Expression::Operator::NamedUnary::Scalar;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_000;
+our $VERSION = 0.003_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::Operator::NamedUnary);
@@ -38,7 +38,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     my string $operator_named_class = ref $operator_named;
     if ( $operator_named_class eq 'Operation_80' ) {    # Operation -> OP10_NAMED_UNARY_SCOLON
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP15, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP16, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
                 . $operator_named->{children}->[0]
                 . ' requires exactly one argument, dying' )
             . "\n";
@@ -49,7 +49,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
     elsif ( $operator_named_class eq 'Operator_100' ) {    # Operator -> OP10_NAMED_UNARY
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP15, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP16, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
                 . $operator_named->{children}->[0]
                 . ' requires exactly one argument, dying' )
             . "\n";
@@ -81,7 +81,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     my string $operator_named_class = ref $operator_named;
     if ( $operator_named_class eq 'Operation_80' ) {    # Operation -> OP10_NAMED_UNARY_SCOLON
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP15, CODE GENERATOR, ABSTRACT SYNTAX TO C++: named operator '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP16, CODE GENERATOR, ABSTRACT SYNTAX TO C++: named operator '
                 . $operator_named->{children}->[0]
                 . ' requires exactly one argument, dying' )
             . "\n";
@@ -128,9 +128,10 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             }
 
             # DEV NOTE: I think we don't have to die here in CPPOPS_PERLTYPES mode???
+            # DEV NOTE, CORRELATION #rp31: NEED ANSWER: are array dereferences allowed in CPPOPS or not???
             else {
                 die RPerl::Parser::rperl_rule__replace(
-                    'ERROR ECOGEASCP11, CODE GENERATOR, ABSTRACT SYNTAX TO C++: array dereference of array reference must provide data type for array reference in CPPOPS_CPPTYPES mode, but no data type provide, dying'
+                    'ERROR ECOGEASCP12, CODE GENERATOR, ABSTRACT SYNTAX TO C++: array dereference of array reference must provide data type for array reference in CPPOPS_CPPTYPES mode, but no data type provided, dying'
                 ) . "\n";
             }
         }
@@ -144,7 +145,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $cpp_source_group->{CPP} .= '.' . NAME_CPPOPS_CPPTYPES() . '()';
     }
     elsif ( $operator_named_class eq 'Operator_100' ) {    # Operator -> OP10_NAMED_UNARY
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP15, CODE GENERATOR, ABSTRACT SYNTAX TO C++: named operator '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP16, CODE GENERATOR, ABSTRACT SYNTAX TO C++: named operator '
                 . $operator_named->{children}->[0]
                 . ' requires exactly one argument, dying' )
             . "\n";

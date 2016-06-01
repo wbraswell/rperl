@@ -56,7 +56,7 @@ our void $rperl_source__check_syntax = sub {
 
     my string $nul = $OSNAME eq 'MSWin32' ? 'NUL' : '/dev/null';
     my string $rperl_source__perl_syntax_command
-        = $EXECUTABLE_NAME . q{ -Iblib/lib -M"warnings FATAL=>q(all)" -cw }
+        = $EXECUTABLE_NAME . q{ -Iblib/lib -M"warnings FATAL=>q(all)" -Mstrict -cw }
         . $rperl_source__file_name;
     my string $rperl_source__perl_syntax_command__no_output
         = $rperl_source__perl_syntax_command . ' > '.$nul.' 2> '.$nul;
@@ -88,7 +88,7 @@ our void $rperl_source__check_syntax = sub {
     if ( $rperl_source__perl_syntax_retval != 0 ) {
         my $error_pretty = "\n"
             . 'ERROR ECOPAPL02, RPERL PARSER, PERL SYNTAX ERROR' . "\n"
-            . 'Failed `' . $EXECUTABLE_NAME . ' -cw` syntax check with the following information:' . "\n\n" 
+            . 'Failed normal Perl strictures-and-fatal-warnings syntax check with the following information:' . "\n\n" 
             . '    File Name:        ' . $rperl_source__file_name . "\n"
             . '    Return Value:     ' . ( $rperl_source__perl_syntax_retval >> 8 ) . "\n"
             . '    Error Message(s): ';
@@ -126,9 +126,9 @@ our void $rperl_source__check_syntax = sub {
     if ( ( scalar @{$rperl_source__perl_syntax_retstring_warnings} ) != 0 ) {
         my $error_pretty = "\n"
             . 'ERROR ECOPAPL03, RPERL PARSER, PERL SYNTAX WARNING' . "\n"
-            . 'Failed `' . $EXECUTABLE_NAME . ' -cw` syntax check with the following information:' . "\n\n" 
-            . '    File Name:        ' . $rperl_source__file_name . "\n"
-            . '    Error Message(s): ';
+            . 'Failed normal Perl strictures-and-fatal-warnings syntax check with the following information:' . "\n\n" 
+            . '    File Name:          ' . $rperl_source__file_name . "\n"
+            . '    Warning Message(s): ';
            
         if ( ( ( scalar @{$rperl_source__perl_syntax_retstring_warnings} ) == 1 )
             and ( (length $rperl_source__perl_syntax_retstring_warnings->[0]) < MAX_SINGLE_ERROR_LINE_LENGTH() ) ) {

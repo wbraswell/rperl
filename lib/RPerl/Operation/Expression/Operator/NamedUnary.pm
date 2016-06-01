@@ -68,7 +68,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in Operator::NamedUnary->ast_to_rperl__generate(), have $operator_name = ' . q{'} . $operator_name . q{'} . "\n" );
 
     if ( not exists $NAMES->{$operator_name} ) {
-        die q{ERROR ECOGEASRP18, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named operator '}
+        die q{ERROR ECOGEASRP19, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named operator '}
             . $operator_name
             . q{' found where }
             . ( join ', ', ( sort keys %{$NAMES} ) )
@@ -121,7 +121,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #    RPerl::diag( 'in Operator::NamedUnary->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $operator_name = ' . q{'} . $operator_name . q{'} . "\n" );
 
     if ( not exists $NAMES->{$operator_name} ) {
-        die q{ERROR ECOGEASRP18, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named operator '}
+        die q{ERROR ECOGEASRP19, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named operator '}
             . $operator_name
             . q{' found where }
             . ( join ', ', ( sort keys %{$NAMES} ) )

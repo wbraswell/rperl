@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.088_000;
+our $VERSION = 0.089_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -175,9 +175,11 @@ X<br>
 
 =item * L</APPENDIX B: RPERL COMMAND-LINE ARGUMENTS>
 
-=item * L</APPENDIX C: RPERL GRAMMAR>
+=item * L</APPENDIX C: RPERL CRITICS>
 
-=item * L</APPENDIX D: BEYOND THE ROADRUNNER>
+=item * L</APPENDIX D: RPERL GRAMMAR>
+
+=item * L</APPENDIX E: BEYOND THE ROADRUNNER>
 
 =back
 
@@ -456,7 +458,7 @@ Throughout this text, the following 14 typography conventions are utilized:
 
 =item * C<$code_snippet = 'unhighlighted';>
 
-=item * C<`command_line_program.pl --with --arguments`>
+=item * C<`command_line_program.pl --with --arguments`>  (Only Include Characters Between `Backquotes` When Running Command; Discard Backquote Characters Themselves)
 
 =item * ...
 
@@ -618,7 +620,7 @@ The RPerl team has been regularly promoting RPerl in a number of physical and di
 
 =item * Perl Blogs  L<http://blogs.perl.org>
 
-=item * IRC #perl11  L<http://irc.perl.org>
+=item * IRC #perl11  L<http://irc.lc/magnet/perl11/rperl_newbie@@@>
 
 =back
 
@@ -640,7 +642,7 @@ RPerl is also good for building software which utilizes Perl's strong-suit of st
 
 =head2 Section 1.15: What Is RPerl Not Good For?
 
-RPerl has purposefully disabled the most complex features of Perl, such as run-time code evaluation, secret operators, and punctuation variables.  If you have purposefully designed your Perl software to depend on these high-magic features, or you are unconditionally committed to continue using high-magic language features, then maybe RPerl isn't for you.
+RPerl has purposefully disabled the most complex features of Perl, such as runtime code evaluation, secret operators, and punctuation variables.  If you have purposefully designed your Perl software to depend on these high-magic features, or you are unconditionally committed to continue using high-magic language features, then maybe RPerl isn't for you.
 
 =head2 Section 1.16: How Can I Get RPerl?
 
@@ -702,9 +704,13 @@ william DOT braswell AT autoparallel DOT com
 
 =head2 Section 1.19: Are There Any Other Kinds Of Support?
 
-Free technical support for non-commercial users is provided by the RPerl community through IRC.
+Free technical support for non-commercial users is provided by the RPerl community through Internet Relay Chat.
 
-IRC #perl11 L<http://irc.perl.org>
+Server: irc.perl.org
+
+Channel: #perl11
+
+Easy Web Chat: L<http://irc.lc/magnet/perl11/rperl_newbie@@@>
 
 =head2 Section 1.20: What If I Find A Bug In RPerl?
 
@@ -1510,7 +1516,7 @@ Perl 5 provides several built-in operators designed for use with numeric data, w
 
 Each operator in Perl 5 (and thus RPerl) is assigned 4 important characteristics: I<"arity"> (a number), I<"fixity"> (a placement location), I<"precedence"> (a number) and I<"associativity"> (a chirality or "handedness").  Operators of unary arity accept exactly 1 input operand, binary operators accept exactly 2 operands, etc.  Prefix operators appear before their respective operands, postfix appear after, infix appear between, and closed operators appear both before and after their operands.  Operators with a lower numeric precedence are executed before operators with a higher precedence; in the absence of parentheses, multiplication executes before addition because multiplication has a lower precedence number.  Operators with equal precedence number are grouped by (and executed in order of) associativity; in the absence of parentheses, multiple subtraction operators will execute from left to right because subtraction is left-associative, whereas multiple exponent operators will execute from right to left because exponentiation is right-associative.  For more information, see the Appendix:
 
-L</C.3: Syntax Arity, Fixity, Precedence, Associativity>
+L</D.3: Syntax Arity, Fixity, Precedence, Associativity>
 
 Beyond the built-in math operators in Perl 5, more advanced operators and functions are available via the MathPerl software suite, which is (perhaps unsurprisingly) optimized using the RPerl compiler.
 
@@ -10181,7 +10187,7 @@ All warnings and errors in RPerl fall within exactly 1 phase; technically, only 
 
 =item * B<Compile, Arguments & Files>
 
-=item * B<Compile, Dependencies (Follow & Find All)>
+=item * B<Compile, Dependencies>
 
 =item * Compile, Parse Phase 0 (Check Perl Syntax)
 
@@ -10197,13 +10203,17 @@ All warnings and errors in RPerl fall within exactly 1 phase; technically, only 
 
 =item * Compile, Subcompile (Generate Binary)
 
-=item * B<Execute (Run Code)>
+=item * B<Execute>
 
 =back
 
 =head3 Section 2.3.1: Install, Base Dependencies
 
-The first step toward using RPerl is installing RPerl, and the first step of installing RPerl is making sure you have a working copy of the Perl interpreter and a C++ compiler, as well as a few other base dependencies such as libc, libperl, ExtUtils::MakeMaker, GMP, cURL, and AStyle.  A I<"dependency"> is simply another piece of software upon which RPerl relies in order to function properly, and a I<"subdependency"> is a dependency of a dependency.  If you have a modern operating system, you may already have most-or-all of these dependencies either pre-installed or available for easy automatic install via pre-built packages; if not, you may need to manually install one or more dependencies.  For more information on this phase of installation, please see:
+The first step toward using RPerl is installing RPerl, and the first step of installing RPerl is making sure you have a working copy of the Perl interpreter and a C++ compiler, as well as a few other base dependencies such as libc, libperl, ExtUtils::MakeMaker, GMP, cURL, and AStyle.  
+
+A I<"dependency"> is one piece of software which another piece of software requires for proper functionality.  One software component is thus said to I<"depend"> upon a second software component, without which the first component would not work correctly.  A I<"subdependency"> is a dependency of a dependency.  Each piece of software may require any number of dependencies, each of which may require any number of subdependencies, and so forth until all required software components have been loaded.  For the purposes of the discussions in this book, the term "dependency" will inclusively refer to all of a specific software component's dependencies, subdependencies, sub-subdependencies, etc.
+
+A I<"base dependency"> is a software component required for RPerl to function, and is differentiated from a I<"CPAN dependency"> because base dependencies are installed manually or via the operating system package manager instead of via the CPAN Perl software network, as detailed in the next section.  If you have a modern operating system, you may already have most-or-all of these base dependencies either pre-installed or available for easy automatic install via pre-built packages; if not, you may need to manually install one or more of them.  For more information on this phase of installation, please see:
 
 L</Section 1.16: How Can I Get RPerl?>
 
@@ -10231,7 +10241,7 @@ L</Section 1.18: How Can I Get Support For RPerl?>
 
 =head3 Section 2.3.2: Install, CPAN Dependencies
 
-Perhaps the most complex part of installing RPerl is comprised of finding, building, testing, and installing all of the software needed for RPerl's dependencies (and subdependencies) via CPAN.  Future versions of RPerl will provide easier pre-built installation packages for popular operating systems, such as those used in the base dependencies phase, but for now all (sub)dependencies must be downloaded from CPAN and custom-built for your operating system.  Each individual piece of software downloaded from CPAN is called a I<"distribution">, so RPerl itself is a CPAN distribution, and each of RPerl's CPAN (sub)dependencies is also a CPAN distribution.
+Perhaps the most complex part of installing RPerl is comprised of finding, building, testing, and installing all of the software needed for RPerl's dependencies (and subdependencies) via CPAN.  A I<"CPAN dependency"> is an RPerl dependency which is installed via the CPAN software network.  Future versions of RPerl will provide easier pre-built installation packages for popular operating systems, such as those used in the base dependencies phase, but for now all (sub)dependencies must be downloaded from CPAN and custom-built for your operating system.  Each individual piece of software downloaded from CPAN is called a I<"distribution">, so RPerl itself is a CPAN distribution, and each of RPerl's CPAN (sub)dependencies is also a CPAN distribution.
 
 We have tried to minimize the number of dependencies upon which RPerl relies, but even 1 dependency can itself have dozens or hundreds of subdependencies.  RPerl is a relatively complex piece of software, with a moderate number of dependencies and (by association) a high number of subdependencies.  If there is an error with even 1 of the numerous (sub)dependencies, it will either cause the RPerl installation to immediately terminate, or the installation will attempt to proceed in a partially-broken state, which will likely result in further errors when the broken software components are automatically tested.
 
@@ -10243,7 +10253,7 @@ Common problem messages in this phase may include:
 
 =over
 
-=item * Front-End Application Not Installed (C<`cpan`> or C<`cpanm`>)
+=item * PROBLEM: Front-End Application Not Installed (C<`cpan`> or C<`cpanm`>)
 
 =for rperl X<noncode>
 
@@ -10253,7 +10263,9 @@ Common problem messages in this phase may include:
 
 =for rperl X</noncode>
 
-=item * Dependency or Subdependency Not Installed (C<`cpan`> or C<`cpanm`>)
+I<SOLUTION: The C<`cpan`> command should come bundled with Perl itself, while C<`cpanm`> is part of the separate "cpanminus" software package.  In Ubuntu or other Debian-based Linux operating systems, you can use the commands C<`sudo apt-get install perl`> or C<`sudo apt-get install cpanminus`> for installation.  In other operating systems, please refer to the applicable documentation or technical support.>
+
+=item * PROBLEM: Dependency or Subdependency Not Installed (C<`cpan`> or C<`cpanm`>)
 
 =for rperl X<noncode>
 
@@ -10261,7 +10273,9 @@ Common problem messages in this phase may include:
 
 =for rperl X</noncode>
 
-=item * Old Dependency or Subdependency Installed (C<`cpan`> or C<`cpanm`>)
+I<SOLUTION: Use C<`cpan Some::Dependency`> or C<`cpanm Some::Dependency`> to install the missing dependencies.  If an error is encountered while installing a non-RPerl distribution from CPAN, such as the fictitious "Some::Dependency" in our example, then you may still be able to use RPerl by forcing the dependency to install regardless of the error by C<`cpan -f -i Some::Dependency`> or C<`cpanm -f Some::Dependency`>.  Please consider submitting a bug report to the maintainer(s) of the problematic CPAN distribution.>
+
+=item * PROBLEM: Old Dependency or Subdependency Installed (C<`cpan`> or C<`cpanm`>)
 
 =for rperl X<noncode>
 
@@ -10269,7 +10283,9 @@ Common problem messages in this phase may include:
 
 =for rperl X</noncode>
 
-=item * Dependency Or Subdependency Build Failure (C<`cpan`>)
+I<SOLUTION: Use the same installation commands as the "Dependency or Subdependency Not Installed" solution above.>
+
+=item * PROBLEM: Dependency Or Subdependency Build Failure (C<`cpan`>)
 
 =for rperl X<noncode>
 
@@ -10282,7 +10298,9 @@ Common problem messages in this phase may include:
 
 =for rperl X</noncode>
 
-=item * Dependency Or Subdependency Test Failure (C<`cpan`>)
+I<SOLUTION: Use the same C<`cpan`> forced installation commands as the "Dependency or Subdependency Not Installed" solution above, and please consider submitting a bug report to the appropriate maintainer(s).>
+
+=item * PROBLEM: Dependency Or Subdependency Test Failure (C<`cpan`>)
 
 =for rperl X<noncode>
 
@@ -10296,7 +10314,9 @@ Common problem messages in this phase may include:
 
 =for rperl X</noncode>
 
-=item * Dependency Or Subdependency Build Or Test Failure (C<`cpanm`>)
+I<SOLUTION: Use the same C<`cpan`> forced installation commands as the "Dependency or Subdependency Not Installed" solution above, and please consider submitting a bug report to the appropriate maintainer(s).>
+
+=item * PROBLEM: Dependency Or Subdependency Build Or Test Failure (C<`cpanm`>)
 
 =for rperl X<noncode>
 
@@ -10322,7 +10342,9 @@ Common problem messages in this phase may include:
 
 =for rperl X</noncode>
 
-=item * Network Connection Failure (C<`cpan`>)
+I<SOLUTION: Use the same C<`cpanm`> forced installation commands as the "Dependency or Subdependency Not Installed" solution above, and please consider submitting a bug report to the appropriate maintainer(s).>
+
+=item * PROBLEM: Network Connection Failure (C<`cpan`>)
 
 =for rperl X<noncode>
 
@@ -10333,7 +10355,9 @@ Common problem messages in this phase may include:
 
 =for rperl X</noncode>
 
-=item * Network Connection Failure (C<`cpanm`>)
+I<SOLUTION: Check your network connection through your web browser or the C<`ping`> command.  If your network connection appears to be functioning, then either you are behind a firewall of some kind which is interfering with your connection to the CPAN server(s), or there is an issue with the CPAN server(s) themselves.  If you are behind a corporate or other firewall, ask your network administrator for assistance or try again from a different network.  If you are sure your network connection is working and not blocked by a firewall, then try to select a different CPAN mirror server.  You can test your network connection via the C<`cpan -p`> command, and you can see a list of the recommended mirror servers (which should hopefully not have issues) via the C<`cpan -P`> command.  Then, you can change your CPAN mirror servers by first running the interactive CPAN shell via the C<`perl -MCPAN -e shell`> command, then when you are presented with the C<cpanE<lt>> prompt, enter the C<o conf init> command to re-run configuration and select one of the recommended mirror servers you were shown by the previous C<`cpan -P`> command.>
+
+=item * PROBLEM: Network Connection Failure (C<`cpanm`>)
 
 =for rperl X<noncode>
 
@@ -10347,6 +10371,8 @@ Common problem messages in this phase may include:
     -> FAIL Failed to fetch distribution Some-Dependency-X.YZ
 
 =for rperl X</noncode>
+
+I<SOLUTION: Check your network connection using the same process as the "Network Connection Failure (C<`cpan`>)" solution above.  If the network is not an issue, select a new CPAN mirror server via the same C<`cpan -P`> command as the solution above or some other method of your own choosing, then use the C<`cpanm --mirror`> or C<`cpanm --from`> commands to use the newly-selected mirror server.>
 
 =back
 
@@ -10370,7 +10396,7 @@ Common problem messages in this phase may include:
 
 =over
 
-=item * RPerl Error, Test Fails
+=item * PROBLEM: RPerl Error, Test Fails
 
 =for rperl X<noncode>
 
@@ -10383,9 +10409,11 @@ Common problem messages in this phase may include:
 
 =for rperl X</noncode>
 
+I<SOLUTION: Please submit an RPerl bug report.  It is not recommended to use RPerl if tests fail on your operating system, however you may still choose to do so via one of the forced installation commands C<`cpan -f -i RPerl`> or C<`cpanm -f RPerl`>.>
+
 X<ENABLE_LIST_SPACING>
 
-=item * RPerl Warning, Test Does Not Fail
+=item * PROBLEM: RPerl Warning, Test Does Not Fail
 
 =for rperl X<noncode>
 
@@ -10405,6 +10433,8 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X</noncode>
 
+I<SOLUTION: Please submit an RPerl bug report.  If all tests pass on your operating system and you only experienced non-fatal warnings during installation, then RPerl should now be installed on your system and ready to be executed via the C<`rperl`> command.>
+
 X<ENABLE_LIST_SPACING>
 
 =back
@@ -10419,7 +10449,7 @@ Common problem messages in this phase may include:
 
 =over
 
-=item * Missing C++ Compiler C<`g++`>
+=item * PROBLEM: Missing C++ Compiler C<`g++`>
 
 =for rperl X<noncode>
 
@@ -10455,9 +10485,13 @@ Common problem messages in this phase may include:
 
 =for rperl X</noncode>
 
+I<SOLUTION: Please use the C<`rperl --CXX=/path/to/compiler`> command to set the correct path to your C++ compiler, or if you do not yet have a C++ compiler installed, then the use of the GNU GCC C<`g++`> compiler is strongly recommended.  In Ubuntu or other Debian-based Linux operating systems, you can use the command C<`sudo apt-get install g++`> for installation.  In other operating systems, please refer to the applicable documentation or technical support.>
+
+I<L<https://gcc.gnu.org/install/download.html>>
+
 X<ENABLE_LIST_SPACING>
 
-=item * Missing RPerl Helper Function File I<RPerl/HelperFunctions.h>
+=item * PROBLEM: Missing RPerl Helper Function File I<RPerl/HelperFunctions.h>
 
 =for rperl X<noncode>
 
@@ -10466,9 +10500,11 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X</noncode>
 
+I<SOLUTION: Please submit an RPerl bug report.  If you are missing any critical RPerl files then either something went wrong with the installation, or you accidentally deleted an RPerl file when you should not have done so, or something else caused the RPerl file to become unavailable.  It would be very helpful if you could run a system-wide search for the missing file(s) and include that information in your bug report.  For example, in most *nix operating systems you should be able to run the command C<`find / -name HelperFunctions.h`> to search for the missing file "HelperFunctions.h".>
+
 X<ENABLE_LIST_SPACING>
 
-=item * Missing RPerl Types Mode File I<rperltypes_mode.h>
+=item * PROBLEM: Missing RPerl Types Mode File I<rperltypes_mode.h>
 
 =for rperl X<noncode>
 
@@ -10477,6 +10513,8 @@ X<ENABLE_LIST_SPACING>
     #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
 =for rperl X</noncode>
+
+I<SOLUTION: Please submit an RPerl bug report, using the same process as the "Missing RPerl Helper Function File" solution above.>
 
 X<ENABLE_LIST_SPACING>
 
@@ -10490,7 +10528,7 @@ Common problem messages in this phase may include:
 
 =over
 
-=item * Multiple Copies Of RPerl Installed
+=item * PROBLEM: Multiple Copies Of RPerl Installed
 
 =for rperl X<noncode>
 
@@ -10498,9 +10536,11 @@ Common problem messages in this phase may include:
 
 =for rperl X</noncode>
 
+I<SOLUTION: If you are an RPerl application developer or user, then you should probably not have multiple copies of RPerl installed.  One possible cause is that you have a system-wide copy of RPerl installed by your system administrator, and also a single-user copy of RPerl installed using the C<local::lib> Perl software.  You should consider uninstalling or disabling your single-user copy of RPerl, which may be achieved by deleting or renaming the "perl5/" directory in a default C<local::lib> installation; you may also want or need to ask your system administrator for assistance.  If you are an RPerl system developer and you have purposefully installed multiple copies of RPerl, then just make sure you are using the correct copy at any one time; debugging the wrong copy of software can be extremely frustrating and confusing!>
+
 X<ENABLE_LIST_SPACING>
 
-=item * Missing RPerl Compiler C<`rperl`>
+=item * PROBLEM: Missing RPerl Compiler C<`rperl`>
 
 =for rperl X<noncode>
 
@@ -10512,58 +10552,2144 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X</noncode>
 
+I<SOLUTION: Please submit an RPerl bug report, using the same process as the "Missing RPerl Helper Function File" solution in section 2.3.4 above.>
+
 X<ENABLE_LIST_SPACING>
 
 =back
 
 =head3 Section 2.3.6: Compile, Arguments & Files
 
-RPerl is a compiler, so it is unsurprising that 9 of the 15 RPerl phases are compile phases.  When a software developer (like you!) runs the RPerl compiler via the C<`rperl`> command, the first compile phase checks the validity of the command-line arguments (AKA options) as well as the input source code file(s) to be compiled.  Command-line arguments can be entirely omitted, in which case default behavior will be utilized.  At least one input file must be specified, or else there would be no reason to run the C<`rperl`> command.
+RPerl is a compiler, so it is unsurprising that 9 of the 15 RPerl phases are compile phases.  When a software developer (like you!) runs the RPerl compiler via the C<`rperl`> command, the first compile phase checks the validity of the command-line arguments (AKA options) as well as the input source code file(s) to be compiled.  Command-line arguments can be entirely omitted, in which case default behavior will be utilized.  At least one input file must be specified, unless you are running C<`rperl -?`> or C<`rperl -v`> instead of a full RPerl compile command.
 
-START HERE: add link to appendix B for command-line args, continue adding problem message content
+For details about all of RPerl's command-line arguments, please see Appendix B:
 
-START HERE: add link to appendix B for command-line args, continue adding problem message content
+L</APPENDIX B: RPERL COMMAND-LINE ARGUMENTS>
 
-START HERE: add link to appendix B for command-line args, continue adding problem message content
+Common problem messages in this phase may include:
 
-Unknown option: FOO
-ERROR EARG00: Failure processing command line arguments, dying
+=over
+
+=item * PROBLEM: Invalid Command-Line Argument
+
+=for rperl X<noncode>
+
+    Unknown option: FOO
+    ERROR EAR00: Failure processing command line arguments, dying
+
+    Option FOO requires an argument
+    ERROR EAR00: Failure processing command-line arguments, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: Check your command-line arguments for spelling errors or missing values, and review the output of C<`rperl -?`> to ensure you are utilizing valid arguments.  For example, this is good: C<`rperl --CXX=/path/to/compiler my_program.pl`>; while this is bad: C<`rperl --FOO=/path/to/compiler my_program.pl`>; and this is also bad: C<`rperl --CXX= my_program.pl`>.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: Missing Command-Line Argument, Input Source Code File
+
+=for rperl X<noncode>
+
+    ERROR EAR01: No RPerl source code input file(s) specified, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: Provide the name of 1 or more RPerl source code files as input.  For example: C<`rperl my_program.pl`>>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: Invalid Command-Line Argument Value, Input Source Code File Can Not Be Found
+
+=for rperl X<noncode>
+
+    ERROR EAR02: Specified RPerl source code input file 'FOO' does not exist, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: Check the spelling of your RPerl source code input file names and ensure they all have correct directory paths; did you forget a leading slash for absolute paths?  It may also be possible that something else in your operating system has deleted, renamed, or moved your input files.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: Invalid Command-Line Argument Value, Input Source Code File Can Not Be Read
+
+=for rperl X<noncode>
+
+    ERROR EAR03: Specified RPerl source code input file 'FOO' is not readable, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: Check the filesystem read-write-execute permissions and ownership of your RPerl source code input files, and ensure they have all have read permission allowed.  It may also be possible that something else in your operating system has modified the permissions or ownership of your input files.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: Invalid Command-Line Argument Value, Input Source Code File Is A Special File Of Some Kind
+
+=for rperl X<noncode>
+
+    ERROR EAR04: Specified RPerl source code input file 'FOO' is not a plain file, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: Check the filesystem file type of your RPerl source code input files and ensure they are all "plain" files, which means they are not "special" files such as block devices or hardware I/O devices or loopback devices, etc.  It may also be possible that something else in your operating system has modified the file type of your input files.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: Invalid Command-Line Argument Value, Input Source Code File Does Not End With '.pl' Or '.pm' Suffixes
+
+=for rperl X<noncode>
+
+    ERROR EAR05: Specified RPerl source code input file 'FOO' is not a Perl program ending in '.pl' or module ending in '.pm', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: Check the file names of your RPerl source code input files and ensure they all have correct suffixes; all RPerl source code file names must end with either the '.pl' or '.pm' suffix.  It may also be possible that something else in your operating system has renamed your input files.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: Invalid Command-Line Argument Value, Mode Category Does Not Exist
+
+=for rperl X<noncode>
+
+    ERROR EAR06: Unsupported or invalid mode category 'FOO' specified, supported categories are (CXX, arguments, check, compile, dependencies, execute, label, ops, subcompile, types, uncompile), dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: Check the spelling of your command-line argument mode category; only those categories shown in parentheses above are accepted as valid.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: Invalid Command-Line Argument Value, Mode Does Not Exist
+
+=for rperl X<noncode>
+
+    ERROR EAR07: Unsupported or invalid mode 'FOO' in mode category 'check' specified, supported modes are (OFF, ON, TRACE), dying
+    ERROR EAR07: Unsupported or invalid mode 'FOO' in mode category 'compile' specified, supported modes are (GENERATE, OFF, PARSE, SAVE, SUBCOMPILE), dying
+    ERROR EAR07: Unsupported or invalid mode 'FOO' in mode category 'dependencies' specified, supported modes are (OFF, ON), dying
+    ERROR EAR07: Unsupported or invalid mode 'FOO' in mode category 'execute' specified, supported modes are (OFF, ON), dying
+    ERROR EAR07: Unsupported or invalid mode 'FOO' in mode category 'label' specified, supported modes are (OFF, ON), dying
+    ERROR EAR07: Unsupported or invalid mode 'FOO' in mode category 'ops' specified, supported modes are (CPP, PERL), dying
+    ERROR EAR07: Unsupported or invalid mode 'FOO' in mode category 'subcompile' specified, supported modes are (ARCHIVE, ASSEMBLE, DYNAMIC, OFF, SHARED, STATIC), dying
+    ERROR EAR07: Unsupported or invalid mode 'FOO' in mode category 'types' specified, supported modes are (CPP, DUAL, PERL), dying
+    ERROR EAR07: Unsupported or invalid mode 'FOO' in mode category 'uncompile' specified, supported modes are (BINARY, INLINE, OFF, SOURCE, SOURCE_BINARY, SOURCE_BINARY_INLINE), dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: Check the spelling of your command-line argument mode; only those mode values shown in parentheses above are accepted as valid.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: Invalid Command-Line Arguments, Multiple Input Files Incorrectly Specified
+
+=for rperl X<noncode>
+
+    ERROR EAR08: Both labeled & unlabeled RPerl source code input file argument(s) specified, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: Reformat your command-line arguments so all input files are explicitly specified with the C<--infile> argument label.  For example, this is good: C<`rperl --infile=FOO.pl --infile=BAR.pl`>; and this is bad: C<`rperl --infile=FOO.pl BAR.pl`>.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM:  Invalid Command-Line Arguments, Incompatible Uncompile & Other Flags
+
+=for rperl X<noncode>
+
+    ERROR EAR09: Incompatible command-line argument flags provided, both --uncompile and --compile, dying
+    ERROR EAR09: Incompatible command-line argument flags provided, both --uncompile and --execute, dying
+    ERROR EAR09: Incompatible command-line argument flags provided, both --uncompile and --test, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: Do not attempt to combine incompatible command-line argument flags.  The uncompile and compile flags enable totally opposite functionality, so obviously they cannot be utilized simultaneously.  The uncompile and execute flags make no sense when utilized together because there would be no compiled code to execute, it being deleted by the uncompile mode.  The uncompile and test flags are incompatible for the same reason as uncompile and compile, because the test mode performs a partial compilation.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: Invalid Command-Line Arguments, Incompatible No-Compile & Other Flags
+
+=for rperl X<noncode>
+
+    ERROR EAR10: Incompatible command-line argument flags provided, both --nocompile and --assemble, dying
+    ERROR EAR10: Incompatible command-line argument flags provided, both --nocompile and --archive, dying
+    ERROR EAR10: Incompatible command-line argument flags provided, both --nocompile and --shared, dying
+    ERROR EAR10: Incompatible command-line argument flags provided, both --nocompile and --static, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: Do not attempt to combine incompatible command-line argument flags.  The no-compile and assemble flags are incompatible because assembly is a subcompile mode, and subcompiling is a compile phase, so you can't compile and no-compile simultaneously; the same incompatibility applies to no-compile and the remaining 3 flags listed above: archive, shared, and static.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: Invalid Command-Line Arguments, Incompatible Assemble Subcompile & Other Flags
+
+=for rperl X<noncode>
+
+    ERROR EAR11: Incompatible command-line argument flags provided, both --assemble and --archive, dying
+    ERROR EAR11: Incompatible command-line argument flags provided, both --assemble and --shared, dying
+    ERROR EAR11: Incompatible command-line argument flags provided, both --assemble and --static, dying
+    ERROR EAR11: Incompatible command-line argument flags provided, both --assemble and --execute, dying
+    ERROR EAR11: Incompatible command-line argument flags provided, both --assemble and --test, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: Do not attempt to combine incompatible command-line argument flags.  The assemble and archive flags are incompatible because they are mutually exclusive, due to each being a distinct subcompile mode and each execution of the RPerl compiler operating in exactly 1 subcompile mode; the same incompatibility exists between assemble and the shared or static flags.  The assemble and execute flags are incompatible because assembly is only a partial subcompile which does not reach all the way to producing an executable file.  The assemble and test flags are incompatible because test mode does not reach all the way to the subcompile phase, and assembly is a subcompile mode.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: Invalid Command-Line Arguments, Incompatible Archive Subcompile & Other Flags
+
+=for rperl X<noncode>
+
+    ERROR EAR12: Incompatible command-line argument flags provided, both --archive and --shared, dying
+    ERROR EAR12: Incompatible command-line argument flags provided, both --archive and --static, dying
+    ERROR EAR12: Incompatible command-line argument flags provided, both --archive and --execute, dying
+    ERROR EAR12: Incompatible command-line argument flags provided, both --archive and --test, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: Do not attempt to combine incompatible command-line argument flags.  The archive and shared flags are incompatible because they are mutually exclusive, due to each being a distinct subcompile mode and each execution of the RPerl compiler operating in exactly 1 subcompile mode; the same incompatibility exists between the archive and static flags.  The archive and execute flags are incompatible because building an archive library is only a partial subcompile which does not reach all the way to producing an executable file.  The archive and test flags are incompatible because test mode does not reach all the way to the subcompile phase, and building an archive library is a subcompile mode.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: Invalid Command-Line Arguments, Incompatible Shared Object Subcompile & Other Flags
+
+=for rperl X<noncode>
+
+    ERROR EAR13: Incompatible command-line argument flags provided, both --shared and --static, dying
+    ERROR EAR13: Incompatible command-line argument flags provided, both --shared and --execute, dying
+    ERROR EAR13: Incompatible command-line argument flags provided, both --shared and --test, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: Do not attempt to combine incompatible command-line argument flags.  The shared and static flags are incompatible because they are mutually exclusive, due to each being a distinct subcompile mode and each execution of the RPerl compiler operating in exactly 1 subcompile mode.  The shared and execute flags are incompatible because building a shared object library is only a partial subcompile which does not reach all the way to producing an executable file.  The shared and test flags are incompatible because test mode does not reach all the way to the subcompile phase, and building a shared object library is a subcompile mode.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: Invalid Command-Line Arguments, Incompatible Static Subcompile & Test Flags
+
+=for rperl X<noncode>
+
+    ERROR EAR14: Incompatible command-line argument flags provided, both --static and --test, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: Do not attempt to combine incompatible command-line argument flags.  The static and test flags are incompatible because test mode does not reach all the way to the subcompile phase, and building a statically-linked executable is a subcompile mode.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: Invalid Command-Line Arguments, Incompatible Static Subcompile Flag & Perl Module Input File
+
+=for rperl X<noncode>
+
+    ERROR EAR15: Incompatible command-line arguments provided, both --static subcompile mode flag and *.pm Perl module input file(s), dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: Do not attempt to combine incompatible command-line argument flags.  Static linking is a subcompile mode which is applicable only to producing executable binary output files; executable files may only be generated from *.pl RPerl program source code input files, thus it makes no sense to attempt a static subcompile mode on a *.pm RPerl module source code input file.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: Missing Command-Line Argument Value, C++ Compiler
+
+=for rperl X<noncode>
+
+    ERROR EAR16: Undefined, empty, or all-whitespace CXX command-line argument provided, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: Ensure you have specified a non-empty value for the C<--CXX> option.  For example, this is good: C<`rperl --CXX=/path/to/compiler`>; and this is bad: C<`rperl --CXX=' '`>.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: Invalid Command-Line Argument Value, Bad Output File Name
+
+=for rperl X<noncode>
+
+    ERROR EAR17: Invalid RPerl source code output file command-line argument specified, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: Ensure your output file name consists only of a filename prefix which does not contain any period (dot) C<.> characters.  For example, this is good: C<`rperl --outfile=foo`>; and this is bad: C<`rperl --outfile=foo.exe`>.  If Perl detects your operating system as Microsoft Windows, then RPerl will automatically append a '.exe' file name suffix to all output executables.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: Invalid Command-Line Argument Value, Bad Compile Or Subcompile Modes
+
+=for rperl X<noncode>
+
+    ERROR EAR18: Invalid compile mode 'FOO' and/or subcompile mode 'BAR' command-line arguments specified, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: Check the spelling of your command-line argument modes, using the same process as the "Invalid Command-Line Argument Value, Mode Does Not Exist" (ERROR EAR07) solution above.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: Uncompile, Compiled Source Code File Can Not Be Deleted
+
+=for rperl X<noncode>
+
+    ERROR EUNFI00, UNCOMPILER, FILE SYSTEM: Cannot delete existing file 'FOO', dying: OPERATING_SYSTEM_ERROR
+
+=for rperl X</noncode>
+
+I<SOLUTION: Review the operating system error reported at the end of the error message, and take applicable steps to correct the error.  You may need to check the filesystem read-write-execute permissions and ownership of the parent directory in which the files to be deleted are located, and ensure the directory has both execute and write permission allowed for your applicable user or group of users.  It may also be possible that something else in your operating system has modified the permissions or ownership of the parent directory.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: Uncompile, Compiled Inline Directory Or File Can Not Be Deleted
+
+=for rperl X<noncode>
+
+    ERROR EUNFI01, UNCOMPILER, FILE SYSTEM: Cannot delete folder '_Inline', general error, \ndying: $error_message
+    ERROR EUNFI01, UNCOMPILER, FILE SYSTEM: Cannot delete folder '_Inline', error deleting file '$file_name', \ndying: $error_message
+
+=for rperl X</noncode>
+
+I<SOLUTION: Use the same process as the "Uncompile, Compiled Source Code File Can Not Be Deleted" solution above.>
+
+X<ENABLE_LIST_SPACING>
+
+=back
 
 =head3 Section 2.3.7: Compile, Dependencies
 
+Not to be confused with base dependencies in section 2.3.1 and CPAN dependencies in section 2.3.2, a normal RPerl I<"dependency"> is one piece of RPerl application software which another piece of RPerl application software requires for proper functionality.  Every RPerl application may have 0, 1, or any number of dependencies.  As in normal Perl, an RPerl dependency is specified in source code via the C<use Some::Dependency;> operator.
+
+If your RPerl application has 1 or more dependencies, then RPerl must compile each dependency before it compiles your main RPerl application.  If any of the dependencies rely upon subdependencies (and so forth), then each subdependency must be recursively checked for its own dependencies and they must all be compiled as well.  In other words, before your main RPerl application can be compiled, RPerl must first compile all dependencies, subdependencies, etc.  If the compilation of dependencies is disabled via the C<--nodependencies> or C<--mode dependencies=OFF> command-line arguments, or if there is a problem encountered while attempting to compile one of the dependencies, then compilation of your main RPerl program will also almost certainly experience a problem or total failure.
+
+During this phase of compilation, RPerl makes a list of all dependencies which need to be compiled; however, the actual compiling of each dependency's source code input file does not occur until the following compile phases.  This phase only produces an assessment of what files need to be compiled, and in what order.
+
+Common problem messages in this phase may include:
+
+=over
+
+=item * PROBLEM: Invalid Dependency, Source Code File Can Not Be Found, Detailed Warning
+
+=for rperl X<noncode>
+
+    WARNING WCOCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package 'Bad::Dependency'  ...
+    Can't locate Bad/Dependency.pm in @INC (you may need to install the Bad::Dependency module)
+    (@INC contains: blib/lib lib /etc/perl /usr/lib/perl5 /usr/share/perl5 /usr/local/lib/site_perl .) at (eval 1234) line 1, <> line 15.
+    BEGIN failed--compilation aborted at (eval 1234) line 1, <> line 15.
+
+=for rperl X</noncode>
+
+I<SOLUTION: Check the spelling of your C<use> operators and the corresponding RPerl module file names.  The RPerl source code C<use Some::Dependency;> will cause Perl (and RPerl) to search for the file 'Dependency.pm' located in the directory 'Some', which would be written in *nix operating systems as 'Some/Dependency.pm'.  May be accompanied by the "Invalid Dependency, Source Code File Can Not Be Found" (ERROR ECOCODE03) problem message.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: Can't Check For Dependencies, Input Source Code File Can Not Be Found
+
+=for rperl X<noncode>
+
+    ERROR ECOCODE00, COMPILER, FIND DEPENDENCIES: File not found, 'FOO', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: Please submit an RPerl bug report.  You should not see this particular error unless you are an RPerl system developer, or something has gone wrong inside RPerl itself.  This error means RPerl's front-end command-line interface program C<`rperl`> found the source code input file, but then the dependency checker in the C<RPerl::Compiler> module failed to find the same input file.  Instead, you should see the error described by "Invalid Command-Line Argument Value, Input Source Code File Can Not Be Found" (ERROR EAR02) in section 2.3.6 above.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: Can't Check For Dependencies, Input Source Code File Can Not Be Opened
+
+=for rperl X<noncode>
+
+    ERROR ECOCODE01, COMPILER, FIND DEPENDENCIES: Cannot open file 'FOO' for reading, OPERATING_SYSTEM_ERROR, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: Please submit an RPerl bug report.  You should not see this particular error unless you are an RPerl system developer, or something has gone wrong inside RPerl itself.  This error means RPerl's front-end command-line interface program C<`rperl`> opened the source code input file, but then the dependency checker in the C<RPerl::Compiler> module failed to open the same input file.  Instead, you should see the error described by "Invalid Command-Line Argument Value, Input Source Code File Can Not Be Read" (ERROR EAR03) in section 2.3.6 above.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: Invalid Dependency Configuration, Attempted C<use lib FOO;> Operator
+
+=for rperl X<noncode>
+
+    ERROR ECOCODE02, COMPILER, FIND DEPENDENCIES: 'use lib...' not currently supported, please set @INC using the PERL5LIB environment variable, file 'FOO', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: Do not attempt to modify the C<@INC> include path list by utilizing the C<use lib FOO;> operator; instead, add or modify the paths in the C<PERL5LIB> environmental variable.  In *nix operating systems, you can add '/some/new/path' by running the command C<`export PERL5LIB=$PERL5LIB:/some/new/path`>.  Perl (and RPerl) will search each directory in the path list when attempting to locate a dependency's source code file.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: Invalid Dependency, Source Code File Can Not Be Found
+
+=for rperl X<noncode>
+
+    ERROR ECOCODE03, COMPILER, FIND DEPENDENCIES: Failed to find package file 'Bad/Dependency.pm' in %INC, file 'FOO', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: Check the spelling of your C<use> operators and the corresponding RPerl module file names, using the same process as the "Invalid Dependency, Source Code File Can Not Be Found, Detailed Warning" (WARNING WCOCODE00) solution above.  May be accompanied by the WARNING WCOCODE00 problem message.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: Can't Check For Dependencies, Input Source Code File Can Not Be Closed
+
+=for rperl X<noncode>
+
+    ERROR ECOCODE04, COMPILER, FIND DEPENDENCIES: Cannot close file 'FOO' after reading, OPERATING_SYSTEM_ERROR, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: Please submit an RPerl bug report.  You should not see this particular error unless you are an RPerl system developer, or something has gone wrong inside RPerl itself.  This error means RPerl's dependency checker in the C<RPerl::Compiler> module successfully opened the input file for reading, but then failed to close the same input file when done.  It may also be possible that something else in your operating system has deleted, renamed, or moved your input files, or changed the permissions or ownership of your input files.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: Invalid Dependency, SSE Not Supported By ARM Hardware
+
+=for rperl X<noncode>
+
+    ERROR ECOCODE05, COMPILER, FIND DEPENDENCIES: 'use rperlsse;' command found but SSE not supported on ARM architecture, file 'FOO', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: Do not attempt to run compile RPerl applications containing SSE (Streaming SIMD Extensions) code on ARM (Advanced RISC Machine) architecture hardware platforms.  You should still be able to execute RPerl applications containing SSE code when operating in the slow Perl-ops-Perl-types mode, because SSE is emulated by software in this mode.  You may also have the option of compiling a non-SSE version of the same RPerl application, if it exists.  Otherwise, you will need to compile your RPerl application on a hardware platform which supports SSE.  For more information, please see: L<https://en.wikipedia.org/wiki/Streaming_SIMD_Extensions>>
+
+X<ENABLE_LIST_SPACING>
+
+=back
+
+=head3 Section 2.3.8: Compile, Parse Phase 0 (Check Perl Syntax)
+
+This is the first phase where the input source code files are thoroughly checked for lexical and syntax errors.  The term I<"parse"> means to read through some structured data input such as human-readable plain-text source code, and a I<"full parse"> results in the computer storing some I<"intermediate representation"> (IR) which is a more computer-friendly encoding of the original source code.  All 3 parse phases are full parses, although only the final intermediate representation is utilized by RPerl.
+
+The normal Perl interpreter is called in "check syntax only" mode with all I<"strictures"> enabled, as well as all warnings enabled and set to I<"fatal">, via the C<`perl -M"warnings FATAL=>q(all)" -Mstrict -cw`> command.  Strictures are additional built-in rules which normal Perl can optionally apply during parsing a source code input file, and a fatal warning is essentially upgraded to become the same thing as an error because execution will terminate instead of continuing.  All RPerl source code files are required to have strictures and (non-fatal) warnings enabled via the C<use strict; use warnings;> statements, but RPerl won't check for the inclusion of those statements until the following parse phase 1 (criticize Perl syntax); thus, we make sure both strictures and warnings are automatically enabled in this step, in order to catch normal Perl errors sooner rather than later.
+
+All problems encountered in this step are triggered by normal Perl, not by RPerl itself, and it is impractical to attempt to embed all pertinent Perl documentation within this RPerl documentation.  Please utilize the following resources (in this order) to help reach a solution:
+
+=over
+
+=item * Official Perl Documentation, L<http://perldoc.perl.org>
+
+=item * Internet Search Engine, Using Error Message As Search Query
+
+=item * Internet Relay Chat (IRC), Server C<irc.perl.org>, Channel C<#perl-help>, L<http://irc.lc/magnet/perl-help/perl_newbie@@@>
+
+=item * Perl Monks, L<http://perlmonks.org>
+
+=item * Stack Overflow, L<http://stackoverflow.com>
+
+=back
+
+Common problem messages in this phase may include:
+
+=over
+
+=item * PROBLEM: Perl Syntax Error
+
+=for rperl X<noncode>
+
+    ERROR ECOPAPL02, RPERL PARSER, PERL SYNTAX ERROR
+    Failed normal Perl strictures-and-fatal-warnings syntax check with the following information:
+    
+        File Name:        FOO
+        Return Value:     2
+        Error Message(s): 
+    
+    syntax error at FOO line 23, near "BAR"
+    FOO had compilation errors.
+
+=for rperl X</noncode>
+
+I<SOLUTION: Review the error messages for anything obvious you can fix immediately.  If that doesn't solve the issue, then use the first 2 solution options listed above, by searching for pertinent sections of your error messages in both the official Perl documentation as well as an Internet search engine; it is quite likely that someone else has already encountered, solved, and documented your problem long ago.  If that also doesn't solve the issue, then move on to the last 3 solution options listed above, and ask for help from live humans in the Perl programming community.  Remember to be polite and respectful because you are asking for help from unpaid volunteers; always say "please" and "thank you".  If you somehow found a real, unsolved bug in Perl or a CPAN distribution, then please submit a bug report to the applicable maintainers.  Thank you!  (See what I did there?)>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: Perl Syntax Warning
+
+=for rperl X<noncode>
+
+    ERROR ECOPAPL03, RPERL PARSER, PERL SYNTAX WARNING
+    Failed normal Perl strictures-and-fatal-warnings syntax check with the following information:
+    
+        File Name:          FOO
+        Warning Message(s): Name "BAR" used only once: possible typo at ./FOO line 23.
+
+=for rperl X</noncode>
+
+I<SOLUTION: Review the warning messages and utilize the 5 solution options, using the same process as the "Perl Syntax Error" solution above.>
+
+X<ENABLE_LIST_SPACING>
+
+=back
+
+=head3 Section 2.3.9: Compile, Parse Phase 1 (Criticize Perl Syntax)
+
+=for text This phase of compilation checks the input source code files to make sure they all follow Perl I<"best practices"> as originated in Damian Conway's book B<Perl Best Practices> and implemented in Jeffrey Thalhammer's software Perl::Critic.  A best practice is a rule or strategy which is commonly accepted by a professional community as being the most reliable and successful technique for approaching some specific task.
+
+=for html <p>This phase of compilation checks the input source code files to make sure they all follow Perl <i>"best practices"</i> as originated in Damian Conway's book <u><b>Perl Best Practices</b></u> and implemented in Jeffrey Thalhammer's software Perl::Critic.  A best practice is a rule or strategy which is commonly accepted by a professional community as being the most reliable and successful technique for approaching some specific task.</p>
+
+In this case, the professional community is our Perl computer programming community, and the Perl best practices themselves have been reduced to practice (get it?) by automatic source code checking via Perl::Critic and the PPI Perl pseudo-parser.  In this phase of parsing, Perl::Critic is configured to operate in the most restrictive mode possible, which is called severity level 1, AKA "brutal" mode, and enables all possible Perl::Critic "policies" (rules).  Although RPerl purposefully utilizes brutal mode, there are some Perl::Critic policies which either conflict with other policies (yes that's bad) or with RPerl itself.  To compensate for this, RPerl application developers must selectively disable each problematic policy one-at-a-time using C<## no critic> statements, which are explained throughout this book where applicable.  For a complete list of all accepted no-critic statements, please see Appendix C:
+
+L</APPENDIX C: RPERL CRITICS>
+
+In addition, RPerl-specific best practices are included throughout this book where explicitly indicated, although the RPerl best practices are not currently checked or enforced in any way, and you should be careful not to confuse Perl best practices with RPerl best practices.  It is assumed the RPerl application developers already have enough flaming hoops to jump through, in the form of the 3 existing RPerl parse phases, so RPerl best practices are not required, only suggested.
+
+You may wish to purchase or download Damian Conway's book from our friends at O'Reilly Media, especially because its page numbers are referenced in this phase's error messages:
+
+L<http://shop.oreilly.com/product/9780596001735.do>
+
+If you can't afford to purchase the book at this time, then you can still review a free list including all of Mr. Conway's Perl best practices in Johan Vromans' reference guide, although currently we have not yet made a mapping from policy numbers to the corresponding book page numbers:
+
+L<http://rperl.org/docs/PBP_refguide-1.02.00.pdf>
+
+You will also likely want to refer to the list of Perl::Critic policies and the explanations thereof:
+
+L<http://search.cpan.org/~thaljef/Perl-Critic/lib/Perl/Critic/PolicySummary.pod>
+
+Common problem messages in this phase may include:
+
+=over
+
+=item * PROBLEM: Perl Critic Policy Violation
+
+=for rperl X<noncode>
+
+    ERROR ECOPAPC02, RPERL PARSER, PERL CRITIC VIOLATION
+    Failed Perl::Critic brutal review with the following information:
+    
+        File Name:    FOO
+        Line number:  23
+        Policy:       Perl::Critic::Policy::Bar
+        Description:  Bar policy violated with extreme prejudice
+        Explanation:  See Perl Best Practices page(s) 321
+
+=for rperl X</noncode>
+
+I<SOLUTION: Review the error description and explanation for anything obvious you can fix immediately.  If that doesn't solve the issue, then refer to Mr. Conway's book or Mr. Vromans' reference guide, as well as Mr. Thalhammer's applicable policy documentation at the links provided above.  If that also doesn't solve the issue, then move on to seeking support from live human members of the Perl community, using the same process as the "Perl Syntax Error" solution in section 2.3.8 above.>
+
+X<ENABLE_LIST_SPACING>
+
+=back
+
+=head3 Section 2.3.10: Compile, Parse Phase 2 (Parse RPerl Syntax)
+
+The final parse phase of compilation utilizes RPerl's actual grammar to check the input source code files for valid RPerl syntax.  The RPerl grammar implements a restricted subset of the normal Perl 5 language.  This phase follows naturally from the previous parse phases: RPerl syntax (parse phase 2) is more restrictive than Perl::Critic brutal severity (parse phase 1), which is in turn more restrictive than normal Perl with fatal warnings and strictures enabled (parse phase 0), which is again more restrictive than normal lax Perl (not needed for RPerl parsing).
+
+Some error messages may also include a "Helpful Hint" indicating a possible cause or solution; computer language parsing can be a very complicated process and there is no guarantee the hint is correct, so each hint should be taken with a grain of salt (a dose of healthy skepticism).
+
+Full documentation of the RPerl grammar is provided in Appendix D:
+
+L</APPENDIX D: RPERL GRAMMAR>
+
+Technical support for commercial RPerl users is provided by APTech, as detailed here:
+
+L</Section 1.18: How Can I Get Support For RPerl?>
+
+Free technical support for non-commercial users is provided by the RPerl community, as detailed here:
+
+L</Section 1.19: Are There Any Other Kinds Of Support?>
+
+Common problem messages in this phase may include:
+
+=over
+
+=item * PROBLEM: RPerl Syntax Error
+
+=for rperl X<noncode>
+
+    ERROR ECOPARP00, RPERL PARSER, RPERL SYNTAX ERROR
+    Failed RPerl grammar syntax check with the following information:
+    
+        File Name:         FOO
+        Line Number:       23
+        Unexpected Token:  BAR
+        Expected Token(s): %{
+                           )
+                           ;
+                           @{
+                           CONSTANT_CALL_SCOPED
+                           LBRACE
+                           LBRACKET
+                           LITERAL_NUMBER
+                           LITERAL_STRING
+                           LPAREN
+                           OP01_CLOSE
+                           OP01_NAMED
+                           OP01_OPEN
+                           ...
+                           SELF
+                           VARIABLE_SYMBOL
+                           WORD
+                           WORD_SCOPED
+                           WORD_UPPERCASE
+                           ]
+                           undef
+                           }
+
+=for rperl X</noncode>
+
+I<SOLUTION: Review the error message for anything obvious you can fix immediately.  If that doesn't solve the issue, then refer to the applicable sections of this book or the full grammar documentation in Appendix D, specifically looking for valid code examples to help you see what you've done wrong.  If that also doesn't solve the issue, then move on to seeking support from a live human as detailed in sections 1.18 and 1.19 linked above.  If you are a commercial user, please support the future of RPerl development by purchasing official tech support services through APTech.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: RPerl Syntax Error With Helpful Hint
+
+=for rperl X<noncode>
+
+    ERROR ECOPARP00, RPERL PARSER, RPERL SYNTAX ERROR
+    Failed RPerl grammar syntax check with the following information:
+    
+        File Name:         FOO
+        Line Number:       23
+        Unexpected Token:  0
+        Expected Token(s): OP01_CLOSE
+                           OP01_NAMED
+                           OP01_NAMED_VOID
+                           OP01_OPEN
+                           OP01_PRINT
+                           OP07_MATH_MULT_DIV_MOD
+                           OP07_STRING_REPEAT
+                           OP08_MATH_ADD_SUB
+                           OP10_NAMED_UNARY
+                           OP11_COMPARE_LT_GT
+                           OP12_COMPARE_EQ_NE
+                           OP19_LOOP_CONTROL
+                           OP19_LOOP_CONTROL_SCOLON
+                           OP22_LOGICAL_NEG
+                           OP23_LOGICAL_AND
+                           OP24_LOGICAL_OR_XOR
+                           WORD
+        Helpful Hint:      Possible case of PBP RequireNumberSeparators (see below)
+        Policy:            Perl::Critic::Policy::ValuesAndExpressions::RequireNumberSeparators
+        Description:       Long number not separated with underscores
+        Explanation:       See Perl Best Practices page(s) 59
+
+=for rperl X</noncode>
+
+I<SOLUTION: Review the error message and helpful hint for anything obvious you can fix immediately; remember, the helpful hint may not be correct!  If that doesn't solve the issue, then move on to documentation followed by tech support, using the same process as the "RPerl Syntax Error" solution above.>
+
+X<ENABLE_LIST_SPACING>
+
+=back
+
+=head3 Section 2.3.11: Compile, Generate (C++ Syntax)
+
+After all parse phases of compilation have concluded, the original human-readable plain-text input source code files have been converted into an intermediate representation (IR) format known as an I<"abstract syntax tree"> (AST), which exists in the computer's random-access memory (RAM or just "memory"), and which is more easily analyzed or modified by a computer.
+
+Plain-text source code formats can be readily understood by trained humans, but are nearly impossible for computers to directly understand; compilers like RPerl exist for the sole purpose of converting source code into format(s) more easily understood by a computer.  Intermediate representation formats such as RPerl's AST or normal Perl's I<"operation tree"> (AKA I<"optree">) or other languages' I<"bytecode"> can be understood by humans and computers alike, but with a significant amount of difficulty for both.  Binary code formats such as compiled executables or libraries can be readily understood by properly-configured computers, but are nearly impossible for humans to directly understand.
+
+(The process of I<"decompiling"> or I<"reverse engineering"> the original human-readable source code from an optimized binary format is comparable to unscrambling an egg; it is currently considered nearly impossible to fully achieve, thus the act of compilation is considered to be one-way process and a strong protection against other people viewing your original source code or copying your intellectual property.  You should be careful not to confuse decompiling with uncompiling: decompiling accepts as input a compiled binary file and then produces as output human-readable source code, while uncompiling accepts as input human-readable source code and then takes the action of deleting all compiled binary files which were produced from the source code during previous compilations using the same file names.  Decompiling is not widely considered to be possible, while uncompiling is one of the more frequently utilized RPerl command-line arguments.)
+
+During this phase of compilation, RPerl converts the AST format back into human-readable source code, but in the C++ language syntax (by default) instead of the RPerl language syntax.  This is called the I<"generate"> phase and is, in general, the exact opposite of a full parse phase; parsing converts from source code to IR, while generating converts from IR to source code.  When configured to operate in test mode, RPerl does not generate C++ source code during this phase, but instead generates back into the exact same RPerl source code as the original input file.  Test mode is thus able to check the generated RPerl source code to make sure it matches the original source code line-by-line, and also thereby "test" the RPerl parser's internal system code and "test" for the syntax correctness of the original source code, without the complexity of new C++ code becoming involved.
+
+When compared to normal Perl, the 2 primary benefits of the RPerl compiler come from generating C++ source code: high-performance runtime speed optimization, and intellectual property source code protection.  The act of converting from one human-readable computer language source code into another is compared to the similar act of converting from one spoken (or written) human language to another; this is called the I<"translate"> process.  When computer language translation is utilized as part of a compiler, the software is called a I<"transpiler"> or "translating compiler".  RPerl is a transpiler.
+
+Common problem messages in this phase may include:
+
+=over
+
+=item * PROBLEM: FOO_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    WARNING WCOGEDI00, RPERL GENERATOR, DIFF CHECK: Dummy source code found, abandoning check
+
+=for rperl X</noncode>
+
+I<SOLUTION: FOO_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAR_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEDI00, RPERL GENERATOR, DIFF CHECK: file not found, ' . q{'} . $filename . q{'} . "\n" . ', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAR_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEDI01, RPERL GENERATOR, DIFF CHECK: Cannot open file ' . $filename . ' for reading,' . $OS_ERROR . ', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEDI02, RPERL GENERATOR, DIFF CHECK: Cannot close file ' . $filename . ' after reading,' . $OS_ERROR . ', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEDI03: Perl::Tidy major failure in file ' . q{'} . $filename . q{'} . ' with the following STDERR output, dying' . "\n" . $perltidy_stderr_string
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEDI04: Perl::Tidy minor failure in file ' . q{'} . $filename . q{'} . ' with the following STDERR output, dying' . "\n" . $perltidy_stderr_string
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEDI05: Perl::Tidy major failure in generated source code string with the following STDERR output, dying' . "\n" . $perltidy_stderr_string
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEDI06: Perl::Tidy minor failure in generated source code string with the following STDERR output, dying' . "\n" . $perltidy_stderr_string
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEMO00, RPERL GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL'} . 'expected but undefined/null value found, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEMO01, RPERL GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL'} . 'expected but non-matching value found, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEMO02, C++ GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL' or 'CPP'} . 'expected but undefined/null value found, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEMO03, C++ GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL' or 'CPP'} . 'expected but non-matching value found, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGE00, GENERATOR: Source group entries type mismatch, ' . q{'} . $type_1 . q{'} . ' is different than ' . q{'} . $type_2 . q{'} . ', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGE01, GENERATOR: Grammar rules map, failed to create pre-mapped namespace, dying' . "\n" . $EVAL_ERROR
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGE02, GENERATOR: Grammar rules map, failed copy subroutines into mapped namespace, dying' . "\n" . $EVAL_ERROR
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGENG00, GENERATOR: Attempt to generate output source code from non-generating class ' . ::class($self) . ', croaking
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+                    . ($self_class)
+                    . ' found where Module_25 or Class_61 expected, dying
+
+    ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+                    . ( ref $self )
+                    . ' found where TypeInnerProperties_224 or TypeInnerProperties_225 expected, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP01, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named void operator '}
+            . $operator_void_name
+            . q{' found where }
+            . ( join ', ', ( sort keys %{$NAMES} ) )
+            . ' expected, dying
+
+    ERROR ECOGEASCP01, CODE GENERATOR, ABSTRACT SYNTAX TO C++: unsupported or unrecognized named void operator '}
+            . $operator_void_name
+            . q{' found where }
+            . ( join ', ', ( sort keys %{$NAMES} ) )
+            . ' expected, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP02, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
+                . "\n"
+                . 'Argument count '
+                . $argument_count
+                . ' falls below minimum argument limit '
+                . ARGUMENTS_MIN()
+                . ' for operation ' . q{'}
+                . NAME() . q{'}
+                . ', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
+                . "\n"
+                . 'Argument count '
+                . $argument_count
+                . ' exceeds maximum argument limit '
+                . ARGUMENTS_MAX()
+                . ' for operation ' . q{'}
+                . NAME() . q{'}
+                . ', dying
+
+    ERROR ECOGEASCP03, CODE GENERATOR, ABSTRACT SYNTAX TO C++:'
+                    . "\n"
+                    . 'Argument count '
+                    . $argument_count
+                    . ' exceeds maximum argument limit '
+                    . ARGUMENTS_MAX()
+                    . ' for operator ' . q{'}
+                    . NAME_PERLOPS_PERLTYPES() . q{'}
+                    . ', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP04, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying
+
+    ERROR ECOGEASCP04, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP05, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying
+
+    ERROR ECOGEASCP05, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP06, CODE GENERATOR, ABSTRACT SYNTAX TO RPerl: C-style for() loop header variable mismatch, initial-condition variable '
+                . q{'}
+                . $variable_symbol0 . q{'}
+                . ' is different than exit-condition variable ' . q{'}
+                . $variable_symbol1 . q{'}
+                . ', dying
+
+    ERROR ECOGEASCP06, CODE GENERATOR, ABSTRACT SYNTAX TO C++: C-style for() loop header variable mismatch, initial-condition variable ' . q{'}
+                . $variable_symbol0 . q{'}
+                . ' is different than exit-condition variable ' . q{'}
+                . $variable_symbol1 . q{'}
+                . ' , dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP07, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: package name ' . ($package_name)
+                . ' must not start with underscore, dying
+
+    ERROR ECOGEASCP07, CODE GENERATOR, ABSTRACT SYNTAX TO C++: package name ' . ($package_name)
+                . ' must not start with underscore, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP08, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: subroutine name ' . ($name)
+                . ' must not start with underscore, dying
+
+    ERROR ECOGEASCP08, CODE GENERATOR, ABSTRACT SYNTAX TO C++: subroutine name ' . ($name)
+                . ' must not start with underscore, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP09, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: method name ' . ($name)
+                . ' must not start with underscore, dying
+
+    ERROR ECOGEASCP09, CODE GENERATOR, ABSTRACT SYNTAX TO C++: method name ' . ($name)
+                . ' must not start with underscore, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: OO property '
+                . $property_key
+                . ' already declared in this scope, namespace '
+                . $modes->{_symbol_table}->{_namespace}
+                . ', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASCP11, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+                . $variable_symbol
+                . ' already declared in this scope, namespace '
+                . $modes->{_symbol_table}->{_namespace}
+                . ', subroutine/method '
+                . $modes->{_symbol_table}->{_subroutine}
+                . '(), dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASCP12, CODE GENERATOR, ABSTRACT SYNTAX TO C++: array dereference of array reference must provide data type for array reference in CPPOPS_CPPTYPES mode, but no data type provided, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP13, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named operator '}
+            . $operator_name
+            . q{' found where }
+            . ( join ', ', ( sort keys %{$NAMES} ) )
+            . ' expected, operator may not be properly listed in $RPerl::Operation::Expression::Operator::Named::NAMES, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: Please submit a bug report.>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP14, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
+                . $operator_named->{children}->[1]
+                . ' does not accept multiple arguments, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP15, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
+                . $operator_named->{children}->[0]
+                . ' does not accept arguments, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP16, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
+                . $operator_named->{children}->[0]
+                . ' requires exactly one argument, dying
+
+    ERROR ECOGEASCP16, CODE GENERATOR, ABSTRACT SYNTAX TO C++: named operator '
+                . $operator_named->{children}->[0]
+                . ' requires exactly one argument, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP17, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
+                . $operator_named->{children}->[0]
+                . ' requires one or more arguments, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP18, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
+                . $operator_named->{children}->[0]
+                . ' requires multiple arguments, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP19, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named operator '}
+            . $operator_name
+            . q{' found where }
+            . ( join ', ', ( sort keys %{$NAMES} ) )
+            . ' expected, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: data type mismatch, ' . q{'}
+                            . $type . q{'}
+                            . ' type is different than ' . q{'}
+                            . $constructor_type . q{'}
+                            . ' constructor type, dying
+
+    ERROR ECOGEASCP20, CODE GENERATOR, ABSTRACT SYNTAX TO C++: data type mismatch, ' . q{'}
+                            . $type . q{'}
+                            . ' type is different than ' . q{'}
+                            . $constructor_type . q{'}
+                            . ' constructor type, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP21, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
+                . $property_name . q{'}
+                . ' does not equal OO properties key ' . q{'}
+                . $property_key . q{'}
+                . ', dying
+
+    ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
+                . $property_name . q{'}
+                . ' does not equal OO properties key ' . q{'}
+                . $property_key . q{'}
+                . ', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP22, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
+                    . $type_inner_name . q{'}
+                    . ' does not end with OO properties or hash key ' . q{'}
+                    . $key_name . q{'}
+                    . ', dying
+
+    ERROR ECOGEASCP22, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
+                    . $type_inner_name . q{'}
+                    . ' does not end with OO properties or hash key ' . q{'}
+                    . $key_name . q{'}
+                    . ', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP23, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid hash key ' . q{'}
+                    . $key_name . q{'}
+                    . ' does not start with a lowercase letter a-z, dying
+
+    ERROR ECOGEASCP23, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid hash key ' . q{'}
+                    . $key_name . q{'}
+                    . ' does not start with a lowercase letter a-z, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP24, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid OO properties name (hash key) ' . q{'}
+                . $property_key . q{'}
+                . ' does not start with a lowercase letter a-z, dying
+
+    ERROR ECOGEASCP24, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid OO properties name (hash key) ' . q{'}
+                . $property_key . q{'}
+                . ' does not start with a lowercase letter a-z, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP25, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid redundant name ' . q{'}
+                . $name . q{'}
+                . ' does not start with a lowercase letter a-z, dying
+
+    ERROR ECOGEASCP25, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid redundant name ' . q{'}
+                . $name . q{'}
+                . ' does not start with a lowercase letter a-z, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP26, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: loop control operator '
+                    . $self->{children}->[0]
+                    . ' found where next; or last; expected, dying
+
+    ERROR ECOGEASCP26, CODE GENERATOR, ABSTRACT SYNTAX TO C++: loop control operator '
+                    . $self->{children}->[0]
+                    . ' found where next; or last; expected, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASCP27, CODE GENERATOR, ABSTRACT SYNTAX TO C++: loop control operator '
+                    . $loop_control
+                    . ' found where next, last, or redo expected, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP28, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: output stream '
+                        . $stdout_stderr_optional->{children}->[0]->{attr}
+                        . ' found where {*STDOUT} or {*STDERR} expected, dying
+
+    ERROR ECOGEASCP28, CODE GENERATOR, ABSTRACT SYNTAX TO C++: output stream '
+                        . $stdout_stderr_optional->{children}->[0]->{attr}
+                        . ' found where {*STDOUT} or {*STDERR} expected, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP29, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: comparison operator '
+                    . $self->{children}->[1]
+                    . ' found where ==, !=, <=>, eq, ne, or cmp expected, dying
+
+    ERROR ECOGEASCP29, CODE GENERATOR, ABSTRACT SYNTAX TO C++: comparison operator '
+                    . $self->{children}->[1]
+                    . ' found where ==, !=, <=>, eq, ne, or cmp expected, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASCP30, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not retrieve data subcomponent from scalar type ' . $types->[$i] . ', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASCP31, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not retrieve invalid OO property ' . $number_or_string_literal . ' in user-defined class ' . $types->[$i] . ', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASCP32, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not determine OO property name (and thus type) from non-literal subexpression...' . "\n" . $subexpression_generated . "\n" . '...in user-defined class ' . $types->[$i] . ', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASCP33, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use arrayref retrieval on object of user-defined class ' . $types->[$i] . ', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASCP34, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: Module found without first finding ModuleHeader, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASCP40, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Compile-time optimization, loop iterator '
+                    . $variable_symbol
+                    . ' declared as non-integer type '
+                    . $modes->{_loop_iterators}->{$variable_symbol}
+                    . ', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASCP50, CODE GENERATOR, ABSTRACT SYNTAX TO C++: string literal started with single-quote but not terminated with single-quote, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASCP51, CODE GENERATOR, ABSTRACT SYNTAX TO C++: string literal started with q-left-brace single-quote but not terminated with right-brace, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASCP60, CODE GENERATOR, ABSTRACT SYNTAX TO C++: first argument missing, constructor for type ' . $type . ', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASCP61, CODE GENERATOR, ABSTRACT SYNTAX TO C++: second argument missing, constructor for type ' . $type . ', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASCP62, CODE GENERATOR, ABSTRACT SYNTAX TO C++: constructor called for recognized but currently unsupported type ' . $type . ', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASCP63, CODE GENERATOR, ABSTRACT SYNTAX TO C++: constructor called for unrecognized type ' . $type . ', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEPPRP20, CODE GENERATOR, PURE PERL TO RPERL: redundant name mismatch, inner type name ' . q{'}
+                    . $object_property_inner_type_name . q{'}
+                    . ' does not equal OO properties key ' . q{'}
+                    . $object_property_key . q{'}
+                    . ', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=back
+
+=head3 Section 2.3.12: Compile, Save Phase 0 (Final File Modifications)
+
 NEED ADD CONTENT
 
-=head3 Section 2.3.8: Compile, Parse Phase 0
+Common problem messages in this phase may include:
+
+=over
+
+=item * PROBLEM: FOO_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOCOFI00, COMPILER, SAVE OUTPUT FILES: Expecting file name for suffix '$suffix_key', but received empty or no value, croaking
+
+=for rperl X</noncode>
+
+I<SOLUTION: FOO_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAR_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOCOFI01, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Received non-empty PMC source, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAR_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOCOFI02, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: File not found, ' . q{'}
+                            . $module_pmc_filename_manual . q{'} . "\n"
+                            . ', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOCOFI03, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot open file '
+                        . $module_pmc_filename_manual
+                        . ' for reading, '
+                        . $OS_ERROR
+                        . ', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOCOFI04, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot close file '
+                        . $module_pmc_filename_manual
+                        . ' after reading, '
+                        . $OS_ERROR
+                        . ', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=back
+
+=head3 Section 2.3.13: Compile, Save Phase 1 (Format & Write Files To Disk)
 
 NEED ADD CONTENT
 
-=head3 Section 2.3.9: Compile, Parse Phase 1
+Common problem messages in this phase may include:
+
+=over
+
+=item * PROBLEM: FOO_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOCOFI05, COMPILER, SAVE OUTPUT FILES: Expecting source code for suffix '$suffix_key', but received empty or no value, croaking
+
+=for rperl X</noncode>
+
+I<SOLUTION: FOO_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAR_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOCOFI06, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot write to file,\ncroaking: $OS_ERROR
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAR_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOCOFI07, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot delete existing file,\ncroaking: $OS_ERROR
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOCOFI08, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot open file for writing,\ncroaking: $OS_ERROR
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOCOFI09, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot close file,\ncroaking: $OS_ERROR
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOCOFI10, COMPILER, FILE SYSTEM: Cannot delete Artistic Style original file ' . 
+                            q{'} . $file_name . '.orig' . q{'} . ',' . "\n" . 'croaking:' . $OS_ERROR
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    WARNING WCOCOFO00, COMPILER, PERL CODE FORMATTING: Perltidy command `perltidy` not found, abandoning formatting
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    WARNING WCOCOFO01, COMPILER, C++ CODE FORMATTING: Artistic Style command `astyle` not found, abandoning formatting
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=back
+
+=head3 Section 2.3.14: Compile, Subcompile (Generate Binary)
 
 NEED ADD CONTENT
 
-=head3 Section 2.3.10: Compile, Parse Phase 2
+Common problem messages in this phase may include:
 
-NEED ADD CONTENT
+=over
 
-=head3 Section 2.3.11: Compile, Generate
+=item * PROBLEM: FOO_PROBLEM_LABEL
 
-NEED ADD CONTENT
+=for rperl X<noncode>
 
-=head3 Section 2.3.12: Compile, Save  Phase 0
+    ERROR ECOCOSU00, COMPILER, SUBCOMPILE: Received incorrect subcompile mode OFF while inside subcompile subroutine, croaking
 
-NEED ADD CONTENT
+=for rperl X</noncode>
 
-=head3 Section 2.3.13: Compile, Save  Phase 1
+I<SOLUTION: FOO_SOLUTION>
 
-NEED ADD CONTENT
+X<ENABLE_LIST_SPACING>
 
-=head3 Section 2.3.14: Compile, Subcompile
+=item * PROBLEM: BAR_PROBLEM_LABEL
 
-NEED ADD CONTENT
+=for rperl X<noncode>
+
+    ERROR ECOCOSU01, COMPILER, SUBCOMPILE: Received invalid subcompile mode ' . q{'} . $modes->{subcompile} . q{'} . 
+                ' while inside subcompile subroutine, croaking
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAR_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOCOSU02, COMPILER, SUBCOMPILE: Perl source code CORE directory or CORE/perl.h file not found in @INC path listing, croaking
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOCOSU03, COMPILER, SUBCOMPILE: Cannot delete temporary object file ' . 
+                        q{'} . $cpp_output_file_name_group->{O} . q{'} . ',' . "\n" . 'croaking:' . $OS_ERROR
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOCOSU04, COMPILER, SUBCOMPILE: C++ compiler returned error code,' . "\n" . 
+            'please run again with `rperl -D` command or RPERL_DEBUG=1 environmental variable for error messages if none appear above,' . "\n" . 
+            'croaking
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    WARNING WCOCOSU00, COMPILER, SUBCOMPILE: C++ compiler returned success code but produced output which may indicate an error,' . "\n" . 
+                'please run again with `rperl -D` command or RPERL_DEBUG=1 environmental variable for error messages or other output if none appear above
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=back
 
 =head3 Section 2.3.15: Execute
 
 NEED ADD CONTENT
+
+Common problem messages in this phase may include:
+
+=over
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR EBV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nboolean value expected but undefined/null value found,\ncroaking
+
+    ERROR EBV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nboolean value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR EBV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nboolean value expected but non-boolean value found,\ncroaking
+
+    ERROR EBV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nboolean value expected but non-boolean value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR EUV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nunsigned_integer value expected but undefined/null value found,\ncroaking
+
+    ERROR EUV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nunsigned_integer value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR EUV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nunsigned_integer value expected but non-unsigned_integer value found,\ncroaking
+
+    ERROR EUV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nunsigned_integer value expected but non-unsigned_integer value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR EIV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but undefined/null value found,\ncroaking
+
+    ERROR EIV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR EIV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but non-integer value found,\ncroaking
+
+    ERROR EIV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but non-integer value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR EMV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but undefined/null value found,\ncroaking
+
+    ERROR EMV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR EMV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-hashref value found,\ncroaking
+
+    ERROR EMV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-hashref value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR EMV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-object (blessed hashref) value found,\ncroaking
+
+    ERROR EMV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-object (blessed hashref) value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR EMV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-Math::BigInt-derived object value found,\ncroaking
+
+    ERROR EMV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-Math::BigInt-derived object value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR EMV04, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-gmp_integer object value found,\ncroaking
+
+    ERROR EMV04, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-gmp_integer object value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR EMV05, MISSING HASH ENTRY, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry exists,\ncroaking
+
+    ERROR EMV05, MISSING HASH ENTRY, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry exists,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR EMV06, MISSING HASH ENTRY, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped hash entry expected at key 'value' but no hash entry defined,\ncroaking
+
+    ERROR EMV06, MISSING HASH ENTRY, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped hash entry expected at key 'value' but no hash entry defined,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR EMV07, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped value expected but undefined/null value found,\ncroaking
+
+    ERROR EMV07, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR EMV08, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped value expected but non-object (blessed hashref) value found,\ncroaking
+
+    ERROR EMV08, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped value expected but non-object (blessed hashref) value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR EMV09, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped value expected but non-Math::BigInt::GMP object value found,\ncroaking
+
+    ERROR EMV09, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped value expected but non-Math::BigInt::GMP object value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR EMV10, CONSTRUCTOR RETURN VALUE MISMATCH, CPPOPS_CPPTYPES:\nexactly 1 return value expected but %ld return value(s) found,\ncroaking", callback_retval_count
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: FOO_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ENV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found,\ncroaking
+
+    ERROR ENV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name
+
+=for rperl X</noncode>
+
+I<SOLUTION: FOO_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAR_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ENV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but non-number value found,\ncroaking
+
+    ERROR ENV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but non-number value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAR_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ETV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ncharacter value expected but undefined/null value found,\ncroaking
+
+    ERROR ETV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ncharacter value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ETV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ncharacter value expected but non-character value found,\ncroaking
+
+    ERROR ETV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ncharacter value expected but non-character value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR EPV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but undefined/null value found,\ncroaking
+
+    ERROR EPV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR EPV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but non-string value found,\ncroaking
+
+    ERROR EPV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but non-string value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+START HERE: continue adding data structure errors, then go back and check if additional data type errors needs to be found in *.cpp or *.pm files
+
+START HERE: continue adding data structure errors, then go back and check if additional data type errors needs to be found in *.cpp or *.pm files
+
+START HERE: continue adding data structure errors, then go back and check if additional data type errors needs to be found in *.cpp or *.pm files
+
+    BAZ_PROBLEM_MESSAGE
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=back
 
 =head2 Section 2.4: Scalar Variables
 
@@ -13449,7 +15575,7 @@ I<L<https://gcc.gnu.org/onlinedocs/gcc/Link-Options.html>>
 
 I<The C++ compiler mode option tells RPerl which C++ compiler to utilize throughout the various phases of compilation.  RPerl needs a C++ compiler to function in general, and a good C++ compiler is especially important during the subcompile phases.>
 
-I<Use of the GNU C++ compiler C<g++> is strongly recommended, although in theory you should be able to use any C++ compiler which supports the C++11 standard.>
+I<Use of the GNU C++ compiler C<`g++`> is strongly recommended, although in theory you should be able to use any C++ compiler which supports the C++11 standard.>
 
 L<https://en.wikipedia.org/wiki/C++11>
 
@@ -13548,7 +15674,7 @@ I<The debug flag option tells RPerl to display additional developer-friendly inf
 
 I<Debugging output is generated using the identical C<RPerl::debug()> & C<RPerl::diag()> RPerl system subroutines.>
 
-I<Use of both the verbose and debug flags C<rperl -V -D> is recommended for RPerl system developers.>
+I<Use of both the verbose and debug flags C<`rperl -V -D`> is recommended for RPerl system developers.>
 
 =back
 
@@ -13781,9 +15907,95 @@ I<This option is a shorthand provided for brevity, please see: L</B.14: Modes, E
 X<br>
 
 
-=head1 APPENDIX C: RPERL GRAMMAR
+=head1 APPENDIX C: RPERL CRITICS
 
-=head2 C.1: Eyapp Grammar Format & Sections
+START HERE: add content and descriptions to all critics below
+
+START HERE: add content and descriptions to all critics below
+
+START HERE: add content and descriptions to all critics below
+
+
+# DEV NOTE: disable RequireTidyCode because Perl::Tidy is not perfect and may complain even if the code is tidy;
+
+# disable PodSpelling because calling the external spellchecker can cause errors such as aspell's "No word lists can be found for the language FOO";
+
+# disable RequireExplicitPackage because 'use RPerl;' comes before package name(s), and Grammar.eyp will catch any other violations
+
+'-exclude'  => ['RequireTidyCode', 'PodSpelling', 'RequireExplicitPackage'],
+
+
+# [[[ CRITICS ]]]
+
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+
+## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
+
+## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
+
+## no critic qw(RequireBriefOpen)  # USER DEFAULT 5: allow open() in perltidy-expanded code
+
+## no critic qw(ProhibitCStyleForLoops)  # USER DEFAULT 6: allow C-style for() loop headers
+
+## no critic qw(RequireTrailingCommas)  # USER DEFAULT X: no trailing commas in RPerl lists  # NEED ANSWER: RPerl is mostly array refs, do we even need this?
+
+
+## no critic qw(ProhibitUselessNoCritic PodSpelling)  # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code, must be on line 1
+
+## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd)  # DEVELOPER DEFAULT 1b: allow POD & unreachable or POD-commented code, must be after line 1
+
+## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
+
+
+## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
+
+## no critic qw(ProhibitCascadingIfElse)  # SYSTEM DEFAULT 2: allow argument-handling logic
+
+## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
+
+## no critic qw(RequireCheckingReturnValueOfEval)  # SYSTEM DEFAULT 4: allow eval() test code blocks
+
+
+## no critic qw(ProhibitBooleanGrep)  # SYSTEM SPECIAL 1: allow grep
+
+## no critic qw(ProhibitAutoloading RequireArgUnpacking)  # SYSTEM SPECIAL 2: allow Autoload & read-only @_
+
+## no critic qw(ProhibitParensWithBuiltins ProhibitNoisyQuotes)  # SYSTEM SPECIAL 3: allow auto-generated code
+
+## no critic qw(ProhibitExcessMainComplexity)  # SYSTEM SPECIAL 4: allow complex code outside subroutines, must be on line 1
+
+## no critic qw(ProhibitExcessComplexity)  # SYSTEM SPECIAL 5: allow complex code inside subroutines, must be after line 1
+
+## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
+
+## no critic qw(ProhibitDeepNests)  # SYSTEM SPECIAL 7: allow deeply-nested code
+
+## no critic qw(ProhibitNoStrict)  # SYSTEM SPECIAL 8: allow no strict
+
+## no critic qw(RequireUseStrict)  # SYSTEM SPECIAL 9: allow omitted strict
+
+## no critic qw(RequireBriefOpen)  # SYSTEM SPECIAL 10: allow complex processing with open filehandle
+
+## no critic qw(ProhibitBacktickOperators)  # SYSTEM SPECIAL 11: allow system command execution
+
+## no critic qw(ProhibitCascadingIfElse)  # SYSTEM SPECIAL 12: allow complex conditional logic
+
+## no critic qw(RequireCarping)  # SYSTEM SPECIAL 13: allow die instead of croak
+
+## no critic qw(ProhibitAutomaticExportation)  # SYSTEM SPECIAL 14: allow global exports from Config.pm
+
+
+# COMBO CRITICS
+
+## no critic qw(ProhibitUselessNoCritic PodSpelling ProhibitExcessMainComplexity)  # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code; SYSTEM SPECIAL 4: allow complex code outside subroutines, must be on line 1
+
+
+
+=head1 APPENDIX D: RPERL GRAMMAR
+
+=head2 D.1: Eyapp Grammar Format & Sections
 
 RPerl's grammar is written using the Eyapp computer programming language, which is a combination of normal Perl 5 and grammar expressions.
 
@@ -13825,13 +16037,13 @@ For more information, please view the following links:
 
 =back
 
-=head2 C.2: Lexicon Token Types
+=head2 D.2: Lexicon Token Types
 
 Following is a list of all RPerl tokens in all 4 lexicon sections, along with examples of valid matching lexeme input.
 
 The list must be in correct order for all regexes to match; earlier declarations get tried first, thus highly-specific tokens such as RPerl keywords and built-in operators appear first, while the least-specific tokens such as user-defined words appear last.  This ordering can be considered I<"lexical matching">, and is distinct from operator precedence and associativity as covered in the next section.
 
-=head3 C.2.1: Whitespace
+=head3 D.2.1: Whitespace
 
 C<[[[ LEXICON TOKENS, WHITESPACE ]]]>
 
@@ -13841,7 +16053,7 @@ C<[[[ LEXICON TOKENS, WHITESPACE ]]]>
 
 =back
 
-=head3 C.2.2: Types & Reserved Words
+=head3 D.2.2: Types & Reserved Words
 
 C<[[[ LEXICON TOKENS, TYPES & RESERVED WORDS ]]]>
 
@@ -13937,7 +16149,7 @@ C<%ENV>
 
 =back
 
-=head3 C.2.3: Operators
+=head3 D.2.3: Operators
 
 C<[[[ LEXICON TOKENS, OPERATORS ]]]>
 
@@ -14120,7 +16332,7 @@ same as above, except without semicolon
 
 =back
 
-=head3 C.2.4: Punctuation & User-Defined Words
+=head3 D.2.4: Punctuation & User-Defined Words
 
 C<[[[ LEXICON TOKENS, PUNCTUATION & USER-DEFINED WORDS ]]]>
 
@@ -14156,7 +16368,7 @@ single uppercase letter, or uppercase letter followed by uppercase letters, numb
 
 =back
 
-=head2 C.3: Syntax Arity, Fixity, Precedence, Associativity
+=head2 D.3: Syntax Arity, Fixity, Precedence, Associativity
 
 Operator I<"arity"> is a technical term which means the number of input operands accepted by a specific built-in operator, or the number of input arguments accepted by a user-defined function.  An operator or function which accepts 0 input arguments is known as I<"nullary">, 1 argument as I<"unary">, 2 arguments as I<"binary">, 3 arguments as I<"ternary">, and so forth.  The C<exit;> operator may be called as nullary; the C<++> increment operator is unary; the C<+> addition operator is binary; and the C<substr> operator may be called as ternary.  Not to be confused with "a ternary operator", meaning any operator which accepts 3 operands, there is one specific operator known as I<"the ternary operator">, which is a special kind of conditional operator accepting 3 input arguments.  An operator or function which may accept more than one number of arguments is known as I<"variadic">.  Some RPerl operators are variadic, such as C<substr> which may accept 2, 3, or 4 arguments.  RPerl does not currently support variadic user-defined functions.
 
@@ -14232,7 +16444,7 @@ C<[[[ SYNTAX, OPERATOR PRECEDENCE & ASSOCIATIVITY ]]]>
 
 =for rperl X</noncode>
 
-=head2 C.4: Syntax Production Rules
+=head2 D.4: Syntax Production Rules
 
 The EBNF metasyntax implemented by Eyapp is of the form:
 
@@ -14242,7 +16454,7 @@ In this example, C<ProductionRule> is a non-terminal left-hand-side (LHS) symbol
 
 Terminal symbols are enclosed in single quotes as with C<'foo'>, never appear on the LHS, and are taken as literal data with no transformations applied.  Eyapp treats terminal symbols as tokens which only match one hard-coded lexeme, which is the string appearing inside the single quotes, C<foo> in this example.
 
-=head3 C.4.1: File Formats
+=head3 D.4.1: File Formats
 
 C<[[[ SYNTAX PRODUCTION RULES, FILE FORMATS ]]]>
 
@@ -14676,7 +16888,7 @@ L<Class_01_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test
 
 =back
 
-=head3 C.4.2: Operations
+=head3 D.4.2: Operations
 
 C<[[[ SYNTAX PRODUCTION RULES, OPERATIONS ]]]>
 
@@ -16837,7 +19049,7 @@ L<program_10_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 =back
 
-=head3 C.4.3: Variable Data
+=head3 D.4.3: Variable Data
 
 C<[[[ SYNTAX PRODUCTION RULES, VARIABLE DATA ]]]>
 
@@ -16926,7 +19138,7 @@ L<program_06_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 =back
 
-=head3 C.4.4: User-Defined Words
+=head3 D.4.4: User-Defined Words
 
 C<[[[ SYNTAX PRODUCTION RULES, USER-DEFINED WORDS ]]]>
 
@@ -16956,7 +19168,7 @@ B<There are no additional code examples for this section, all pertinent examples
 X<br>
 
 
-=head1 APPENDIX D: BEYOND THE ROADRUNNER
+=head1 APPENDIX E: BEYOND THE ROADRUNNER
 
 =for html <u>
 

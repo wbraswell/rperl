@@ -41,13 +41,13 @@ our @EXPORT = qw(character_to_boolean character_to_unsigned_integer character_to
 # [[[ TYPE-CHECKING ]]]
 our void $character_CHECK = sub {
     ( my $possible_character ) = @_;
-    if ( not( defined $possible_character ) ) { croak( "\nERROR ECV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but undefined/null value found,\ncroaking" ); }
-    if ( not( main::RPerl_SvCOKp($possible_character) ) ) { croak( "\nERROR ECV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but non-character value found,\ncroaking" ); }
+    if ( not( defined $possible_character ) ) { croak( "\nERROR ETV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but undefined/null value found,\ncroaking" ); }
+    if ( not( main::RPerl_SvCOKp($possible_character) ) ) { croak( "\nERROR ETV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but non-character value found,\ncroaking" ); }
 };
 our void $character_CHECKTRACE = sub {
     ( my $possible_character, my $variable_name, my $subroutine_name ) = @_;
-    if ( not( defined $possible_character ) ) { croak( "\nERROR ECV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but undefined/null value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
-    if ( not( main::RPerl_SvCOKp($possible_character) ) ) { croak( "\nERROR ECV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but non-character value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
+    if ( not( defined $possible_character ) ) { croak( "\nERROR ETV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but undefined/null value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
+    if ( not( main::RPerl_SvCOKp($possible_character) ) ) { croak( "\nERROR ETV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but non-character value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
 };
 
 # [[[ BOOLEANIFY ]]]

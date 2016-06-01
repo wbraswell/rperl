@@ -21,42 +21,42 @@ using std::endl;
 // [[[ TYPE-CHECKING ]]]
 
 void gmp_integer_CHECK(SV* possible_gmp_integer) {
-    if (not (SvOK(possible_gmp_integer))) { croak( "\nERROR EGIV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but undefined/null value found,\ncroaking"); }
-    if (not (SvHROKp(possible_gmp_integer))) { croak( "\nERROR EGIV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-hashref value found,\ncroaking"); }
-    if (not (sv_isobject(possible_gmp_integer))) { croak( "\nERROR EGIV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-object (blessed hashref) value found,\ncroaking"); }
-    if (not (sv_derived_from(possible_gmp_integer, "Math::BigInt"))) { croak( "\nERROR EGIV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-Math::BigInt-derived object value found,\ncroaking"); }
-    if (not (sv_isa(possible_gmp_integer, "gmp_integer"))) { croak( "\nERROR EGIV04, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-gmp_integer object value found,\ncroaking"); }
+    if (not (SvOK(possible_gmp_integer))) { croak( "\nERROR EMV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but undefined/null value found,\ncroaking"); }
+    if (not (SvHROKp(possible_gmp_integer))) { croak( "\nERROR EMV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-hashref value found,\ncroaking"); }
+    if (not (sv_isobject(possible_gmp_integer))) { croak( "\nERROR EMV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-object (blessed hashref) value found,\ncroaking"); }
+    if (not (sv_derived_from(possible_gmp_integer, "Math::BigInt"))) { croak( "\nERROR EMV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-Math::BigInt-derived object value found,\ncroaking"); }
+    if (not (sv_isa(possible_gmp_integer, "gmp_integer"))) { croak( "\nERROR EMV04, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-gmp_integer object value found,\ncroaking"); }
 
     HV* possible_gmp_integer_deref = (HV*) SvRV(possible_gmp_integer);
-    if (not hv_exists(possible_gmp_integer_deref, (const char*) "value", (U32) 5)) { croak( "\nERROR EGIV05, MISSING HASH ENTRY, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry exists,\ncroaking"); }
+    if (not hv_exists(possible_gmp_integer_deref, (const char*) "value", (U32) 5)) { croak( "\nERROR EMV05, MISSING HASH ENTRY, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry exists,\ncroaking"); }
 
     SV** possible_gmp_integer_value_ptr = hv_fetch(possible_gmp_integer_deref, (const char*) "value", (U32) 5, (I32) 0);
-    if (possible_gmp_integer_value_ptr == NULL) { croak( "\nERROR EGIV06, MISSING HASH ENTRY, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped hash entry expected at key 'value' but no hash entry defined,\ncroaking"); }
+    if (possible_gmp_integer_value_ptr == NULL) { croak( "\nERROR EMV06, MISSING HASH ENTRY, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped hash entry expected at key 'value' but no hash entry defined,\ncroaking"); }
 
-    if (not (SvOK(*possible_gmp_integer_value_ptr))) { croak( "\nERROR EGIV07, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped value expected but undefined/null value found,\ncroaking"); }
-    if (not (sv_isobject(*possible_gmp_integer_value_ptr))) { croak( "\nERROR EGIV08, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped value expected but non-object (blessed hashref) value found,\ncroaking"); }
-    if (not (sv_derived_from(*possible_gmp_integer_value_ptr, "Math::BigInt::GMP"))) { croak( "\nERROR EGIV09, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped value expected but non-Math::BigInt::GMP object value found,\ncroaking"); }
+    if (not (SvOK(*possible_gmp_integer_value_ptr))) { croak( "\nERROR EMV07, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped value expected but undefined/null value found,\ncroaking"); }
+    if (not (sv_isobject(*possible_gmp_integer_value_ptr))) { croak( "\nERROR EMV08, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped value expected but non-object (blessed hashref) value found,\ncroaking"); }
+    if (not (sv_derived_from(*possible_gmp_integer_value_ptr, "Math::BigInt::GMP"))) { croak( "\nERROR EMV09, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped value expected but non-Math::BigInt::GMP object value found,\ncroaking"); }
 }
 
 void gmp_integer_CHECKTRACE(SV* possible_gmp_integer, const char* variable_name, const char* subroutine_name) {
 //    cerr << "in gmp_integer_CHECKTRACE(), top of subroutine" << endl;
-    if (not (SvOK(possible_gmp_integer))) { croak( "\nERROR EGIV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
-    if (not (SvHROKp(possible_gmp_integer))) { croak( "\nERROR EGIV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-hashref value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
-    if (not (sv_isobject(possible_gmp_integer))) { croak( "\nERROR EGIV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-object (blessed hashref) value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
-    if (not (sv_derived_from(possible_gmp_integer, "Math::BigInt"))) { croak( "\nERROR EGIV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-Math::BigInt-derived object value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
-    if (not (sv_isa(possible_gmp_integer, "gmp_integer"))) { croak( "\nERROR EGIV04, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-gmp_integer object value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
+    if (not (SvOK(possible_gmp_integer))) { croak( "\nERROR EMV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
+    if (not (SvHROKp(possible_gmp_integer))) { croak( "\nERROR EMV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-hashref value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
+    if (not (sv_isobject(possible_gmp_integer))) { croak( "\nERROR EMV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-object (blessed hashref) value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
+    if (not (sv_derived_from(possible_gmp_integer, "Math::BigInt"))) { croak( "\nERROR EMV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-Math::BigInt-derived object value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
+    if (not (sv_isa(possible_gmp_integer, "gmp_integer"))) { croak( "\nERROR EMV04, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer external wrapper value expected but non-gmp_integer object value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
 
     HV* possible_gmp_integer_deref = (HV*) SvRV(possible_gmp_integer);
 //    cerr << "in gmp_integer_CHECKTRACE(), have possible_gmp_integer_deref = " << possible_gmp_integer_deref << endl;
-    if (not hv_exists(possible_gmp_integer_deref, (const char*) "value", (U32) 5)) { croak( "\nERROR EGIV05, MISSING HASH ENTRY, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry exists,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
+    if (not hv_exists(possible_gmp_integer_deref, (const char*) "value", (U32) 5)) { croak( "\nERROR EMV05, MISSING HASH ENTRY, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry exists,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
 
     SV** possible_gmp_integer_value_ptr = hv_fetch(possible_gmp_integer_deref, (const char*) "value", (U32) 5, (I32) 0);
 //    cerr << "in gmp_integer_CHECKTRACE(), have *possible_gmp_integer_value_ptr = " << *possible_gmp_integer_value_ptr << endl;
-    if (possible_gmp_integer_value_ptr == NULL) { croak( "\nERROR EGIV06, MISSING HASH ENTRY, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped hash entry expected at key 'value' but no hash entry defined,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
+    if (possible_gmp_integer_value_ptr == NULL) { croak( "\nERROR EMV06, MISSING HASH ENTRY, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped hash entry expected at key 'value' but no hash entry defined,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
 
-    if (not (SvOK(*possible_gmp_integer_value_ptr))) { croak( "\nERROR EGIV07, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
-    if (not (sv_isobject(*possible_gmp_integer_value_ptr))) { croak( "\nERROR EGIV08, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped value expected but non-object (blessed hashref) value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
-    if (not (sv_derived_from(*possible_gmp_integer_value_ptr, "Math::BigInt::GMP"))) { croak( "\nERROR EGIV09, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped value expected but non-Math::BigInt::GMP object value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
+    if (not (SvOK(*possible_gmp_integer_value_ptr))) { croak( "\nERROR EMV07, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
+    if (not (sv_isobject(*possible_gmp_integer_value_ptr))) { croak( "\nERROR EMV08, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped value expected but non-object (blessed hashref) value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
+    if (not (sv_derived_from(*possible_gmp_integer_value_ptr, "Math::BigInt::GMP"))) { croak( "\nERROR EMV09, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ngmp_integer internal wrapped value expected but non-Math::BigInt::GMP object value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
 //    cerr << "in gmp_integer_CHECKTRACE(), bottom of subroutine" << endl;
 }
 
@@ -128,7 +128,7 @@ void XS_pack_gmp_integer_retval(SV* output_hv_ref, gmp_integer_retval input_gmp_
     SPAGAIN;
 
     if (callback_retval_count != 1) {
-        croak("\nERROR EGIV10, CONSTRUCTOR RETURN VALUE MISMATCH, CPPOPS_CPPTYPES:\nexactly 1 return value expected but %ld return value(s) found,\ncroaking", callback_retval_count);
+        croak("\nERROR EMV10, CONSTRUCTOR RETURN VALUE MISMATCH, CPPOPS_CPPTYPES:\nexactly 1 return value expected but %ld return value(s) found,\ncroaking", callback_retval_count);
     }
 
     SV* gmp_integer_hv_ref = POPs;

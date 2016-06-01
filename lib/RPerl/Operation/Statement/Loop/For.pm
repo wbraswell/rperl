@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::Loop::For;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_000;
+our $VERSION = 0.005_200;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement::Loop);
@@ -192,7 +192,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 'RPerl::Operation::Expression::SubExpression::Variable::LoopIterator' )
             )
         {
-            die 'ERROR ECOGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+            die 'ERROR ECOGEASCP11, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
                 . $variable_symbol
                 . ' already declared in this scope, namespace '
                 . $modes->{_symbol_table}->{_namespace}
@@ -209,7 +209,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         }
         else {
             if ( ( exists $modes->{_loop_iterators}->{$variable_symbol} ) and ( $modes->{_loop_iterators}->{$variable_symbol} ne $type_integer ) ) {
-                die 'ERROR ECOGEASCP22, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Compile-time optimization, loop iterator '
+                die 'ERROR ECOGEASCP40, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Compile-time optimization, loop iterator '
                     . $variable_symbol
                     . ' declared as non-integer type '
                     . $modes->{_loop_iterators}->{$variable_symbol}
@@ -271,7 +271,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 'RPerl::Operation::Expression::SubExpression::Variable::LoopIterator' )
             )
         {
-            die 'ERROR ECOGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+            die 'ERROR ECOGEASCP11, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
                 . $variable_symbol0
                 . ' already declared in this scope, namespace '
                 . $modes->{_symbol_table}->{_namespace}
@@ -288,7 +288,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         }
         else {
             if ( ( exists $modes->{_loop_iterators}->{$variable_symbol0} ) and ( $modes->{_loop_iterators}->{$variable_symbol0} ne $type_integer ) ) {
-                die 'ERROR ECOGEASCP22, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Compile-time optimization, loop iterator '
+                die 'ERROR ECOGEASCPxa, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Compile-time optimization, loop iterator '
                     . $variable_symbol0
                     . ' declared as non-integer type '
                     . $modes->{_loop_iterators}->{$variable_symbol0}

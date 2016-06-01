@@ -87,7 +87,7 @@ TESTS
     array size declaration compensation
     package/subroutine/method names starting w/ underscore
     variable redeclaration (masking)
-    properties & hash type-inner type-vs-key name mismatch (ECOGEASRP20: PERLOPS Class.pm properties accessors/mutators; CPPOPS entry & entrytyped)
+    properties & hash type-inner type-vs-key name mismatch (ECOGEASRP21: PERLOPS Class.pm properties accessors/mutators; CPPOPS entry & entrytyped)
     accessors/mutators including get_*_element() & get_*_value()
     subclasses Foo_raw type
     $properties & VariableDeclaration array size on non-arrayref type
@@ -100,13 +100,13 @@ TESTS
     <$FILEHANDLE>
     @ARGV
     %ENV
-    ERROR ECOGEASRP15... named operator [SOMEOP] requires exactly one argument, dying
-    ERROR ECOGEASRP16... named operator [SOMEOP] requires one or more arguments, dying
+    ERROR ECOGEASRP16... named operator [SOMEOP] requires exactly one argument, dying
+    ERROR ECOGEASRP17... named operator [SOMEOP] requires one or more arguments, dying
     all currently-implemented named ops
     all currently-implemented named_unary ops
-    invalid hash key starting with non-lowercase-letter ECOGEASRP22
-    invalid OO property name (hash key) starting with non-lowercase-letter ECOGEASRP23
-    invalid type inner redundant name starting with non-lowercase-letter ECOGEASRP24
+    invalid hash key starting with non-lowercase-letter ECOGEASRP23
+    invalid OO property name (hash key) starting with non-lowercase-letter ECOGEASRP24
+    invalid type inner redundant name starting with non-lowercase-letter ECOGEASRP25
     CONSTANT_CALL_SCOPED
     *_to_*() data type conversion functions
     text literals, backslash vs double-backslash

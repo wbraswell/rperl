@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< GENERATE_ERROR: 'ERROR ECOGEASRP19' >>>
+# <<< GENERATE_ERROR: 'ERROR ECOGEASRP20' >>>
 # <<< GENERATE_ERROR: "'RPerl' type is different than 'RPerl::Test' constructor type" >>>
 
 # [[[ HEADER ]]]

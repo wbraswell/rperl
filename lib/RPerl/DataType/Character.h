@@ -40,15 +40,15 @@ typedef std::ostringstream ostringstream;
 // [[[ TYPE-CHECKING MACROS ]]]
 #define character_CHECK(possible_character) \
 	(not(SvOK(possible_character)) ? \
-			croak("\nERROR ECV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ncharacter value expected but undefined/null value found,\ncroaking") : \
+			croak("\nERROR ETV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ncharacter value expected but undefined/null value found,\ncroaking") : \
 			(not(SvCOKp(possible_character)) ? \
-					croak("\nERROR ECV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ncharacter value expected but non-character value found,\ncroaking") : \
+					croak("\nERROR ETV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ncharacter value expected but non-character value found,\ncroaking") : \
 					(void)0))
 #define character_CHECKTRACE(possible_character, variable_name, subroutine_name) \
 	(not(SvOK(possible_character)) ? \
-			croak("\nERROR ECV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ncharacter value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
+			croak("\nERROR ETV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ncharacter value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
 			(not(SvCOKp(possible_character)) ? \
-					croak("\nERROR ECV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ncharacter value expected but non-character value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
+					croak("\nERROR ETV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ncharacter value expected but non-character value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
 					(void)0))
 
 // [[[ OPERATIONS & DATA TYPES REPORTER ]]]

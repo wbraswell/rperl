@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.009_000;
+our $VERSION = 0.010_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -42,11 +42,11 @@ our string_arrayref $find_dependencies = sub {
     #    RPerl::diag( 'in Compiler::find_dependencies(), received $file_name = ' . $file_name . "\n" );
 
     if ( not -f $file_name ) {
-        die 'ERROR ECOCODE00, COMPILER, FIND DEPENDENCIES: File not found, ' . q{'} . $file_name . q{'} . "\n" . ', dying' . "\n";
+        die 'ERROR ECOCODE00, COMPILER, FIND DEPENDENCIES: File not found, ' . q{'} . $file_name . q{'} . ', dying' . "\n";
     }
 
     open my filehandleref $FILE_HANDLE, '<', $file_name
-        or die 'ERROR ECOCODE01, COMPILER, FIND DEPENDENCIES: Cannot open file ' . $file_name . ' for reading, ' . $OS_ERROR . ', dying' . "\n";
+        or die 'ERROR ECOCODE01, COMPILER, FIND DEPENDENCIES: Cannot open file ' . q{'} . $file_name . q{'} . ' for reading, ' . $OS_ERROR . ', dying' . "\n";
 
     # read in input file, match on 'use' includes for dependencies
     my string $file_line;
@@ -70,7 +70,7 @@ our string_arrayref $find_dependencies = sub {
             # in RPerl/Test/*/*Bad*.pm and RPerl/Test/*/*bad*.pl
             if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne q{} ) ) {
                 RPerl::warning(
-                    'WARNING WCVCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package ' . $first_package_name . '  ...  ' . $EVAL_ERROR . "\n" );
+                    'WARNING WCOCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package ' . q{'} . $first_package_name . q{'} . '  ...  ' . $EVAL_ERROR . "\n" );
             }
         }
 
@@ -98,9 +98,8 @@ our string_arrayref $find_dependencies = sub {
 
        #            	RPerl::diag('in Compiler::find_dependencies(), found rperlsse line, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
                 if ( ( substr $Config{archname}, 0, 3 ) eq 'arm' ) {
-                    die q{ERROR ECOCODE05, COMPILER, FIND DEPENDENCIES: 'use rperlsse;' command found but SSE not supported on Arm architecture, file }
-                        . $file_name
-                        . ', dying' . "\n";
+                    die q{ERROR ECOCODE05, COMPILER, FIND DEPENDENCIES: 'use rperlsse;' command found but SSE not supported on ARM architecture, file }
+                        . q{'} . $file_name . q{'} . ', dying' . "\n";
                 }
                 if ( ( not exists $modes->{_enable_sse} ) or ( not defined $modes->{_enable_sse} ) ) {
                     $modes->{_enable_sse} = {};
@@ -125,8 +124,7 @@ our string_arrayref $find_dependencies = sub {
             if ( $file_line =~ /use\s+lib/ ) {
                 die
                     q{ERROR ECOCODE02, COMPILER, FIND DEPENDENCIES: 'use lib...' not currently supported, please set @INC using the PERL5LIB environment variable, file }
-                    . $file_name
-                    . ', dying' . "\n";
+                    . q{'} . $file_name . q{'} . ', dying' . "\n";
             }
 
             $file_line =~ s/^\s*use\s+([\w:]+)\s*.*\s*;\s*$/$1/gxms;    # remove everything except the package name
@@ -137,16 +135,15 @@ our string_arrayref $find_dependencies = sub {
 
             #            RPerl::diag('in Compiler::find_dependencies(), have POST-EVAL DEP %INC = ' . Dumper(\%INC) . "\n");
             if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne q{} ) ) {
-                RPerl::warning( 'WARNING WCVCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package ' . $file_line . '  ...  ' . $EVAL_ERROR . "\n" );
+                RPerl::warning( 'WARNING WCOCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package ' . q{'} . $first_package_name . q{'} . '  ...  ' . $EVAL_ERROR . "\n" );
             }
             $file_line =~ s/::/\//gxms;                                 # replace double-colon :: scope delineator with forward-slash / directory delineator
             $file_line .= '.pm';
             if ( not exists $INC{$file_line} ) {
-                die 'ERROR ECOCODE03, COMPILER, FIND DEPENDENCIES: After successful eval-use, still failed to find package file '
-                    . $file_line
+                die 'ERROR ECOCODE03, COMPILER, FIND DEPENDENCIES: Failed to find package file '
+                    . q{'} . $file_line . q{'}
                     . ' in %INC, file '
-                    . $file_name
-                    . ', dying' . "\n";
+                    . q{'} . $file_name . q{'} . ', dying' . "\n";
             }
 
             #            RPerl::diag( 'in Compiler::find_dependencies(), have MATCHING $file_line = ' . $file_line . "\n" );
@@ -165,7 +162,7 @@ our string_arrayref $find_dependencies = sub {
     }
 
     close $FILE_HANDLE
-        or die 'ECOCODE04, COMPILER, FIND DEPENDENCIES: Cannot close file ' . $file_name . ' after reading, ' . $OS_ERROR . ', dying' . "\n";
+        or die 'ERROR ECOCODE04, COMPILER, FIND DEPENDENCIES: Cannot close file ' . q{'} . $file_name . q{'} . ' after reading, ' . $OS_ERROR . ', dying' . "\n";
 
     #    RPerl::diag( 'in Compiler::find_dependencies(), returning $dependencies = ' . Dumper($dependencies) . "\n" );
     #    RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
@@ -297,8 +294,7 @@ our hashref_arrayref $generate_output_file_names = sub {
             # explicitly provided option should already be only prefix, but fileparse() to make sure
             ( $input_file_name_prefix, $input_file_name_path, $input_file_name_suffix ) = fileparse( $output_file_name_prefixes->[$i], qr/[.][^.]*/xms );
             if ( $input_file_name_prefix eq q{} ) {
-                # DEV NOTE: correlates to errors EARG* in script/rperl
-                die "ERROR EARG09: Invalid RPerl source code output file option specified, dying\n";
+                die "ERROR EAR17: Invalid RPerl source code output file command-line argument specified, dying\n";
             }
         }
 
@@ -351,7 +347,7 @@ our hashref_arrayref $generate_output_file_names = sub {
             }
             # NEED ANSWER: allow this subroutine to be called even when we return empty results?
             else {
-                die "ERROR EARG17: Invalid compile mode '" . $modes->{compile} . "' and/or subcompile mode '" . $modes->{subcompile} . "' options specified, dying\n";
+                die "ERROR EAR18: Invalid compile mode '" . $modes->{compile} . "' and/or subcompile mode '" . $modes->{subcompile} . "' command-line arguments specified, dying\n";
             }
         }
         else {    # *.pm input files may generate *.o, *.a, *.so, and/or *.pmc output files
@@ -367,8 +363,8 @@ our hashref_arrayref $generate_output_file_names = sub {
                 $output_file_name_groups->[$i]->{SO} = $output_file_name_path_prefix . '.so';
             }
             elsif ($modes->{subcompile} eq 'STATIC') {
-                # DEV NOTE: correlates to errors EARG* in script/rperl
-                die 'ERROR EARG15: Incompatible command-line options provided, both --static subcompile mode flag and *.pm Perl module input file, dying' . "\n";
+                # DEV NOTE: correlates to errors EAR* in script/rperl
+                die 'ERROR EAR15: Incompatible command-line arguments provided, both --static subcompile mode flag and *.pm Perl module input file, dying' . "\n";
             }
             elsif ( ($modes->{subcompile} eq 'DYNAMIC') or
                    (($modes->{subcompile} eq 'OFF') and (($modes->{compile} eq 'GENERATE') or ($modes->{compile} eq 'SAVE') or ($modes->{compile} eq 'SUBCOMPILE')))
@@ -377,7 +373,7 @@ our hashref_arrayref $generate_output_file_names = sub {
             }
             # NEED ANSWER: allow this subroutine to be called even when we return empty results?
             else {
-                die "ERROR EARG17: Invalid compile mode '" . $modes->{compile} . "' and/or subcompile mode '" . $modes->{subcompile} . "' options specified, dying\n";
+                die "ERROR EAR18: Invalid compile mode '" . $modes->{compile} . "' and/or subcompile mode '" . $modes->{subcompile} . "' command-line arguments specified, dying\n";
             }
         }
 
@@ -591,7 +587,7 @@ our void $save_source_files = sub {
                     }
     
                     close $FILE_HANDLE
-                        or die 'ECOCOFI04, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot close file '
+                        or die 'ERROR ECOCOFI04, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot close file '
                         . $module_pmc_filename_manual
                         . ' after reading, '
                         . $OS_ERROR
@@ -662,7 +658,7 @@ our void $save_source_files = sub {
                 system $perltidy_path, '-pbp', '--ignore-side-comment-lengths', '--converge', '-l=160', '-b', '-nst', q{-bext='/'}, '-q', $file_name;
             }
             else {
-                RPerl::warning( "\n" . 'WARNING WCVCOFO00, COMPILER, PERL CODE FORMATTING: Perltidy command `perltidy` not found, abandoning formatting' . "\n" );
+                RPerl::warning( "\n" . 'WARNING WCOCOFO00, COMPILER, PERL CODE FORMATTING: Perltidy command `perltidy` not found, abandoning formatting' . "\n" );
             }
         }
         elsif ( ( $suffix_key eq 'H' ) or ( $suffix_key eq 'CPP' ) ) {
@@ -679,7 +675,7 @@ our void $save_source_files = sub {
                 }
             }
             else {
-                RPerl::warning( 'WARNING WCVCOFO01, COMPILER, C++ CODE FORMATTING: Artistic Style command `astyle` not found, abandoning formatting' . "\n" );
+                RPerl::warning( 'WARNING WCOCOFO01, COMPILER, C++ CODE FORMATTING: Artistic Style command `astyle` not found, abandoning formatting' . "\n" );
             }
         }
     }

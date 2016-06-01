@@ -35,7 +35,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         
         $name =~ s/^(\w+)\s*$/$1/gxms;  # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
         if ($name !~ /^[a-z]/) {
-            die 'ERROR ECOGEASRP24, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid redundant name ' . q{'}
+            die 'ERROR ECOGEASRP25, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid redundant name ' . q{'}
                 . $name . q{'}
                 . ' does not start with a lowercase letter a-z, dying' . "\n";
         }
@@ -76,7 +76,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         my string $name  = $self->{children}->[3]->{children}->[0];
         $name =~ s/^(\w+)\s*$/$1/gxms;  # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
         if ($name !~ /^[a-z]/) {
-            die 'ERROR ECOGEASCP24, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid redundant name ' . q{'}
+            die 'ERROR ECOGEASCP25, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid redundant name ' . q{'}
                 . $name . q{'}
                 . ' does not start with a lowercase letter a-z, dying' . "\n";
         }

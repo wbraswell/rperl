@@ -39,7 +39,7 @@ print 'in gmp_symtab_dump.pl, have METHOD B gmp_integer_to_integer($tmp1) = ' . 
 my Math::BigInt $tmp0 = Math::BigInt->new($foo);
 print 'in gmp_symtab_dump.pl, have METHOD A gmp_integer_to_integer($tmp0) = ' . gmp_integer_to_integer($tmp0) . "\n";
 
-# ERROR EGIV01
+# ERROR EMV01
 #print 'in gmp_symtab_dump.pl, have ERROR gmp_integer_to_integer(23) = ' . gmp_integer_to_integer(23) . "\n";
 
 print "<<<============================>>>\n" x 1;

@@ -38,7 +38,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     my string $operator_named_class = ref $operator_named;
     if ( $operator_named_class eq 'Operation_79' ) { # Operation -> OP01_NAMED_SCOLON
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP16, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
+            'ERROR ECOGEASRP17, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
                 . $operator_named->{children}->[0]
                 . ' requires one or more arguments, dying' )
             . "\n";

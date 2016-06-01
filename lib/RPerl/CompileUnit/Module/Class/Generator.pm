@@ -130,7 +130,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         $property_key = $property_0->{children}->[0]->{children}->[0];
         $property_key =~ s/^(\w+)\s*$/$1/gxms;    # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
         if ( $property_key !~ /^[a-z]/ ) {
-            die 'ERROR ECOGEASRP23, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid OO properties name (hash key) ' . q{'}
+            die 'ERROR ECOGEASRP24, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid OO properties name (hash key) ' . q{'}
                 . $property_key . q{'}
                 . ' does not start with a lowercase letter a-z, dying' . "\n";
         }
@@ -142,7 +142,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         # DEV NOTE: we can do error checking once here instead of twice for TypeInnerProperties_224 & TypeInnerProperties_225 below
         # because they both have OpStringOrWord as sub-element 3, grabbed as $property_name above
         if ( $property_name ne $property_key ) {
-            die 'ERROR ECOGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
+            die 'ERROR ECOGEASRP21, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
                 . $property_name . q{'}
                 . ' does not equal OO properties key ' . q{'}
                 . $property_key . q{'}
@@ -210,7 +210,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 $property_key = $property->{children}->[0]->{children}->[0];
                 $property_key =~ s/^(\w+)\s*$/$1/gxms;              # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
                 if ( $property_key !~ /^[a-z]/ ) {
-                    die 'ERROR ECOGEASRP23, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid OO properties name (hash key) ' . q{'}
+                    die 'ERROR ECOGEASRP24, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid OO properties name (hash key) ' . q{'}
                         . $property_key . q{'}
                         . ' does not start with a lowercase letter a-z, dying' . "\n";
                 }
@@ -220,7 +220,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 $property_name =~ s/^(\w+)\s*$/$1/gxms;             # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
 
                 if ( $property_name ne $property_key ) {
-                    die 'ERROR ECOGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
+                    die 'ERROR ECOGEASRP21, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
                         . $property_name . q{'}
                         . ' does not equal OO properties key ' . q{'}
                         . $property_key . q{'}
@@ -488,7 +488,7 @@ EOL
         my string $property_key = $property_0->{children}->[0]->{children}->[0];
         $property_key =~ s/^(\w+)\s*$/$1/gxms;    # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
         if ( $property_key !~ /^[a-z]/ ) {
-            die 'ERROR ECOGEASCP23, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid OO properties name (hash key) ' . q{'}
+            die 'ERROR ECOGEASCP24, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid OO properties name (hash key) ' . q{'}
                 . $property_key . q{'}
                 . ' does not start with a lowercase letter a-z, dying' . "\n";
         }
@@ -502,7 +502,8 @@ EOL
         # DEV NOTE: we can do error checking once here instead of twice for TypeInnerProperties_224 & TypeInnerProperties_225 below
         # because they both have OpStringOrWord as sub-element 3, grabbed as $property_name above
         if ( $property_name ne $property_key ) {
-            die 'ERROR ECOGEASCP20, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
+            # DEV NOTE, CORRELATION #rp30: matches numbering of ECOGEPPRP20 in RPerl/CompileUnit/Module/Class.pm
+            die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
                 . $property_name . q{'}
                 . ' does not equal OO properties key ' . q{'}
                 . $property_key . q{'}
@@ -589,7 +590,7 @@ EOL
             $property_key = $property->{children}->[0]->{children}->[0];
             $property_key =~ s/^(\w+)\s*$/$1/gxms;      # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
             if ( $property_key !~ /^[a-z]/ ) {
-                die 'ERROR ECOGEASCP23, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid OO properties name (hash key) ' . q{'}
+                die 'ERROR ECOGEASCP24, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid OO properties name (hash key) ' . q{'}
                     . $property_key . q{'}
                     . ' does not start with a lowercase letter a-z, dying' . "\n";
             }
@@ -600,7 +601,8 @@ EOL
             # DEV NOTE: we can do error checking once here instead of twice for TypeInnerProperties_224 & TypeInnerProperties_225 below
             # because they both have OpStringOrWord as sub-element 3, grabbed as $property_name above
             if ( $property_name ne $property_key ) {
-                die 'ERROR ECOGEASCP20, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
+                # DEV NOTE, CORRELATION #rp30: matches numbering of ECOGEPPRP20 in RPerl/CompileUnit/Module/Class.pm
+                die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
                     . $property_name . q{'}
                     . ' does not equal OO properties key ' . q{'}
                     . $property_key . q{'}

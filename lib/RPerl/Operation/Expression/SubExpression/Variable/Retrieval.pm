@@ -113,22 +113,22 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             $cpp_source_group->{CPP} .= ']';
         }
         elsif ( $base_type =~ /_hashref$/ ) {                                        # hash
-            die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use arrayref retrieval on hashref type ' . $base_type . ', dying' . "\n";
+            die 'ERROR ECOGEASCPxd, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use arrayref retrieval on hashref type ' . $base_type . ', dying' . "\n";
         }
         elsif ( exists $rperlnamespaces_generated::RPERL->{ $base_type . '::' } ) {    # scalar
-            die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use arrayref retrieval on scalar type ' . $base_type . ', dying' . "\n";
+            die 'ERROR ECOGEASCPxd, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use arrayref retrieval on scalar type ' . $base_type . ', dying' . "\n";
         }
         else {                                                                         # user-defined type AKA class
-            die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use arrayref retrieval on object of user-defined class ' . $base_type . ', dying' . "\n";
+            die 'ERROR ECOGEASCPxd, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use arrayref retrieval on object of user-defined class ' . $base_type . ', dying' . "\n";
         }
     }
     elsif ( $self_class eq 'VariableRetrieval_179' ) {                                 # VariableRetrieval -> OP02_HASH_THINARROW SubExpression '}'
         my object $subexpression = $self->{children}->[1];
         if ( $base_type =~ /_arrayref$/ ) {                                            # array
-            die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on arrayref type ' . $base_type . ', dying' . "\n";
+            die 'ERROR ECOGEASCPxd, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on arrayref type ' . $base_type . ', dying' . "\n";
         }
         elsif ( $base_type eq 'sse_number_pair' ) {
-            die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on SSE type ' . $base_type . ', dying' . "\n";
+            die 'ERROR ECOGEASCPxd, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on SSE type ' . $base_type . ', dying' . "\n";
         }
         elsif ( $base_type =~ /_hashref$/ ) {                                          # hash
             $subtype = substr $base_type, 0, ( ( length $base_type ) - 8 );            # strip trailing '_hashref'
@@ -157,7 +157,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             }
         }
         elsif ( exists $rperlnamespaces_generated::RPERL->{ $base_type . '::' } ) {    # scalar
-            die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on scalar type ' . $base_type . ', dying' . "\n";
+            die 'ERROR ECOGEASCPxd, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on scalar type ' . $base_type . ', dying' . "\n";
         }
         else {                                                                         # user-defined type AKA class
             $cpp_source_group->{CPP} .= '->';
@@ -169,10 +169,10 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         my string $word = $self->{children}->[1];
 
         if ( $base_type =~ /_arrayref$/ ) {                                            # array
-            die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on arrayref type ' . $base_type . ', dying' . "\n";
+            die 'ERROR ECOGEASCPxd, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on arrayref type ' . $base_type . ', dying' . "\n";
         }
         elsif ( $base_type eq 'sse_number_pair' ) {
-            die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on SSE type ' . $base_type . ', dying' . "\n";
+            die 'ERROR ECOGEASCPxd, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on SSE type ' . $base_type . ', dying' . "\n";
         }
         elsif ( $base_type =~ /_hashref$/ ) {                                          # hash
             $subtype = substr $base_type, 0, ( ( length $base_type ) - 8 );            # strip trailing '_hashref'
@@ -195,7 +195,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             }
         }
         elsif ( exists $rperlnamespaces_generated::RPERL->{ $base_type . '::' } ) {    # scalar
-            die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on scalar type ' . $base_type . ', dying' . "\n";
+            die 'ERROR ECOGEASCPxd, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use hashref retrieval on scalar type ' . $base_type . ', dying' . "\n";
         }
         else {                                                                         # user-defined type AKA class
             $cpp_source_group->{CPP} .= '->' . $word;
