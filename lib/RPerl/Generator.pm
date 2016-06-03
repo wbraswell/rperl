@@ -155,11 +155,11 @@ our integer $diff_check_file_vs_string = sub {
 #    RPerl::diag('in Generator->diff_check_file_vs_string(), received $source_string = ' . "\n" . $source_string . "\n\n");
 
     if ( not -f $filename ) {
-        die 'ERROR ECOGEDI00, RPERL GENERATOR, DIFF CHECK: file not found, ' . q{'} . $filename . q{'} . "\n" . ', dying' . "\n";
+        die 'ERROR ECOGEDI00, RPERL GENERATOR, DIFF CHECK: File not found, ' . q{'} . $filename . q{'} . "\n" . ', dying' . "\n";
     }
 
     open my filehandleref $FILE_HANDLE, '<', $filename
-        or die 'ERROR ECOGEDI01, RPERL GENERATOR, DIFF CHECK: Cannot open file ' . $filename . ' for reading,' . $OS_ERROR . ', dying' . "\n";
+        or die 'ERROR ECOGEDI01, RPERL GENERATOR, DIFF CHECK: Cannot open file ' . q{'} . $filename . q{'} . ' for reading,' . $OS_ERROR . ', dying' . "\n";
 
     # read in file, strip comments & blank lines
     my string $file_line;
@@ -273,7 +273,7 @@ our integer $diff_check_file_vs_string = sub {
     }
 
     close $FILE_HANDLE
-        or die 'ERROR ECOGEDI02, RPERL GENERATOR, DIFF CHECK: Cannot close file ' . $filename . ' after reading,' . $OS_ERROR . ', dying' . "\n";
+        or die 'ERROR ECOGEDI02, RPERL GENERATOR, DIFF CHECK: Cannot close file ' . q{'} . $filename . q{'} . ' after reading, ' . $OS_ERROR . ', dying' . "\n";
 
     # remove extra blank lines inserted by RPerl generators
     $source_string =~ s/\n\n/\n/gxms;
@@ -351,7 +351,7 @@ our integer $diff_check_file_vs_string = sub {
         $file_line   = $file_string_split->[$i];
         $string_line = $source_string_split->[$i];
         if ( $string_line =~ /__DUMMY_SOURCE_CODE/xms ) {
-            RPerl::warning( 'WARNING WCOGEDI00, RPERL GENERATOR, DIFF CHECK: Dummy source code found, abandoning check' . "\n" );
+            RPerl::warning( 'WARNING WCOGEDI00, RPERL GENERATOR, DIFF CHECK: Dummy source code found, attempt to utilize incomplete RPerl feature, abandoning check' . "\n" );
             $return_value = -1;
             last;
         }
@@ -379,10 +379,10 @@ our string_hashref $ast_to_rperl__generate = sub {
     RPerl::verbose('GENERATE:           Generate RPerl syntax...       ');
 
     if ( not( defined $modes->{types} ) ) {
-        die 'ERROR ECOGEMO00, RPERL GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL'} . 'expected but undefined/null value found, dying' . "\n";
+        die 'ERROR ECOGEMO00, RPERL GENERATOR, RPERL TYPES MODE: ' . q{'PERL'} . ' types mode expected in PERL ops mode, but undefined/null value found, dying' . "\n";
     }
     if ( not( $modes->{types} eq 'PERL' ) ) {
-        die 'ERROR ECOGEMO01, RPERL GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL'} . 'expected but non-matching value found, dying' . "\n";
+        die 'ERROR ECOGEMO01, RPERL GENERATOR, RPERL TYPES MODE: ' . q{'PERL'} . ' types mode expected in PERL ops mode, but non-matching value ' . q{'} . $mode->{types} . q{'} . ' found, dying' . "\n";
     }
 
     grammar_rules__map();
@@ -405,10 +405,10 @@ our string_hashref $ast_to_cpp__generate = sub {
     RPerl::verbose('GENERATE:           Generate   C++ syntax...       ');
 
     if ( not( defined $modes->{types} ) ) {
-        die 'ERROR ECOGEMO02, C++ GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL' or 'CPP'} . 'expected but undefined/null value found, dying' . "\n";
+        die 'ERROR ECOGEMO02, C++ GENERATOR, RPERL TYPES MODE: ' . q{'PERL' or 'CPP'} . ' types mode expected in CPP ops mode, but undefined/null value found, dying' . "\n";
     }
     if ( not( ( $modes->{types} eq 'PERL' ) or ( $modes->{types} eq 'CPP' ) ) ) {
-        die 'ERROR ECOGEMO03, C++ GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL' or 'CPP'} . 'expected but non-matching value found, dying' . "\n";
+        die 'ERROR ECOGEMO03, C++ GENERATOR, RPERL TYPES MODE: ' . q{'PERL' or 'CPP'} . ' types mode expected in CPP ops mode, but non-matching value ' . q{'} . $mode->{types} . q{'} . ' found, dying' . "\n";
     }
 
     grammar_rules__map();

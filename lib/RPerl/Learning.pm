@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.089_000;
+our $VERSION = 0.090_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -10840,8 +10840,8 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR EUNFI01, UNCOMPILER, FILE SYSTEM: Cannot delete folder '_Inline', general error, \ndying: $error_message
-    ERROR EUNFI01, UNCOMPILER, FILE SYSTEM: Cannot delete folder '_Inline', error deleting file '$file_name', \ndying: $error_message
+    ERROR EUNFI01, UNCOMPILER, FILE SYSTEM: Cannot delete folder '_Inline', general error, dying: OPERATING_SYSTEM_ERROR
+    ERROR EUNFI01, UNCOMPILER, FILE SYSTEM: Cannot delete folder '_Inline', error deleting file 'FOO', dying: OPERATING_SYSTEM_ERROR
 
 =for rperl X</noncode>
 
@@ -10878,7 +10878,7 @@ I<SOLUTION: Check the spelling of your C<use> operators and the corresponding RP
 
 X<ENABLE_LIST_SPACING>
 
-=item * PROBLEM: Can't Check For Dependencies, Input Source Code File Can Not Be Found
+=item * PROBLEM: Can't Perform Dependency Check, Input Source Code File Can Not Be Found
 
 =for rperl X<noncode>
 
@@ -10890,7 +10890,7 @@ I<SOLUTION: Please submit an RPerl bug report.  You should not see this particul
 
 X<ENABLE_LIST_SPACING>
 
-=item * PROBLEM: Can't Check For Dependencies, Input Source Code File Can Not Be Opened
+=item * PROBLEM: Can't Perform Dependency Check, Input Source Code File Can Not Be Opened
 
 =for rperl X<noncode>
 
@@ -10926,7 +10926,7 @@ I<SOLUTION: Check the spelling of your C<use> operators and the corresponding RP
 
 X<ENABLE_LIST_SPACING>
 
-=item * PROBLEM: Can't Check For Dependencies, Input Source Code File Can Not Be Closed
+=item * PROBLEM: Can't Perform Dependency Check, Input Source Code File Can Not Be Closed
 
 =for rperl X<noncode>
 
@@ -11182,11 +11182,11 @@ Common problem messages in this phase may include:
 
 =over
 
-=item * PROBLEM: FOO_PROBLEM_LABEL
+=item * PROBLEM: Attempt To Use Incomplete RPerl Feature
 
 =for rperl X<noncode>
 
-    WARNING WCOGEDI00, RPERL GENERATOR, DIFF CHECK: Dummy source code found, abandoning check
+    WARNING WCOGEDI00, RPERL GENERATOR, DIFF CHECK: Dummy source code found, attempt to utilize incomplete RPerl feature, abandoning check
 
 =for rperl X</noncode>
 
@@ -11194,23 +11194,23 @@ I<SOLUTION: FOO_SOLUTION>
 
 X<ENABLE_LIST_SPACING>
 
-=item * PROBLEM: BAR_PROBLEM_LABEL
+=item * PROBLEM: Invalid Difference Check, Input Source Code File Can Not Be Found
 
 =for rperl X<noncode>
 
-    ERROR ECOGEDI00, RPERL GENERATOR, DIFF CHECK: file not found, ' . q{'} . $filename . q{'} . "\n" . ', dying
+    ERROR ECOGEDI00, RPERL GENERATOR, DIFF CHECK: File not found, 'FOO', dying
 
 =for rperl X</noncode>
 
-I<SOLUTION: BAR_SOLUTION>
+I<SOLUTION: BAR_SOLUTION   ERROR EAR02   "Invalid Command-Line Argument Value, Input Source Code File Can Not Be Found"  >
 
 X<ENABLE_LIST_SPACING>
 
-=item * PROBLEM: BAZ_PROBLEM_LABEL
+=item * PROBLEM: Invalid Difference Check, Input Source Code File Can Not Be Read
 
 =for rperl X<noncode>
 
-    ERROR ECOGEDI01, RPERL GENERATOR, DIFF CHECK: Cannot open file ' . $filename . ' for reading,' . $OS_ERROR . ', dying
+    ERROR ECOGEDI01, RPERL GENERATOR, DIFF CHECK: Cannot open file 'FOO' for reading, OPERATING_SYSTEM_ERROR, dying
 
 =for rperl X</noncode>
 
@@ -11218,11 +11218,11 @@ I<SOLUTION: BAZ_SOLUTION>
 
 X<ENABLE_LIST_SPACING>
 
-=item * PROBLEM: BAZ_PROBLEM_LABEL
+=item * PROBLEM: Can't Perform Difference Check, Source Code File Can Not Be Closed
 
 =for rperl X<noncode>
 
-    ERROR ECOGEDI02, RPERL GENERATOR, DIFF CHECK: Cannot close file ' . $filename . ' after reading,' . $OS_ERROR . ', dying
+    ERROR ECOGEDI02, RPERL GENERATOR, DIFF CHECK: Cannot close file 'FOO' after reading, OPERATING_SYSTEM_ERROR, dying
 
 =for rperl X</noncode>
 
@@ -11230,11 +11230,12 @@ I<SOLUTION: BAZ_SOLUTION>
 
 X<ENABLE_LIST_SPACING>
 
-=item * PROBLEM: BAZ_PROBLEM_LABEL
+=item * PROBLEM: Can't Perform Difference Check, Perl::Tidy Major Failure In Pre-Existing Source Code File
 
 =for rperl X<noncode>
 
-    ERROR ECOGEDI03: Perl::Tidy major failure in file ' . q{'} . $filename . q{'} . ' with the following STDERR output, dying' . "\n" . $perltidy_stderr_string
+    ERROR ECOGEDI03: Perl::Tidy major failure in file 'FOO' with the following STDERR output, dying
+    PERLTIDY_ERROR
 
 =for rperl X</noncode>
 
@@ -11242,11 +11243,12 @@ I<SOLUTION: BAZ_SOLUTION>
 
 X<ENABLE_LIST_SPACING>
 
-=item * PROBLEM: BAZ_PROBLEM_LABEL
+=item * PROBLEM: Can't Perform Difference Check, Perl::Tidy Minor Failure In Pre-Existing Source Code File
 
 =for rperl X<noncode>
 
-    ERROR ECOGEDI04: Perl::Tidy minor failure in file ' . q{'} . $filename . q{'} . ' with the following STDERR output, dying' . "\n" . $perltidy_stderr_string
+    ERROR ECOGEDI04: Perl::Tidy minor failure in file 'FOO' with the following STDERR output, dying
+    PERLTIDY_ERROR
 
 =for rperl X</noncode>
 
@@ -11254,11 +11256,12 @@ I<SOLUTION: BAZ_SOLUTION>
 
 X<ENABLE_LIST_SPACING>
 
-=item * PROBLEM: BAZ_PROBLEM_LABEL
+=item * PROBLEM: Can't Perform Difference Check, Perl::Tidy Major Failure In Generated Source Code String
 
 =for rperl X<noncode>
 
-    ERROR ECOGEDI05: Perl::Tidy major failure in generated source code string with the following STDERR output, dying' . "\n" . $perltidy_stderr_string
+    ERROR ECOGEDI05: Perl::Tidy major failure in generated source code string with the following STDERR output, dying
+    PERLTIDY_ERROR
 
 =for rperl X</noncode>
 
@@ -11266,11 +11269,12 @@ I<SOLUTION: BAZ_SOLUTION>
 
 X<ENABLE_LIST_SPACING>
 
-=item * PROBLEM: BAZ_PROBLEM_LABEL
+=item * PROBLEM: Can't Perform Difference Check, Perl::Tidy Minor Failure In Generated Source Code String
 
 =for rperl X<noncode>
 
-    ERROR ECOGEDI06: Perl::Tidy minor failure in generated source code string with the following STDERR output, dying' . "\n" . $perltidy_stderr_string
+    ERROR ECOGEDI06: Perl::Tidy minor failure in generated source code string with the following STDERR output, dying
+    PERLTIDY_ERROR
 
 =for rperl X</noncode>
 
@@ -11278,11 +11282,11 @@ I<SOLUTION: BAZ_SOLUTION>
 
 X<ENABLE_LIST_SPACING>
 
-=item * PROBLEM: BAZ_PROBLEM_LABEL
+=item * PROBLEM: Invalid Data Types Mode, No Mode Specified, Perl Operations Mode
 
 =for rperl X<noncode>
 
-    ERROR ECOGEMO00, RPERL GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL'} . 'expected but undefined/null value found, dying
+    ERROR ECOGEMO00, RPERL GENERATOR, RPERL TYPES MODE: 'PERL' types mode expected in PERL ops mode, but undefined/null value found, dying
 
 =for rperl X</noncode>
 
@@ -11290,11 +11294,11 @@ I<SOLUTION: BAZ_SOLUTION>
 
 X<ENABLE_LIST_SPACING>
 
-=item * PROBLEM: BAZ_PROBLEM_LABEL
+=item * PROBLEM: Invalid Data Types Mode, Bad Mode Specified, Perl Operations Mode
 
 =for rperl X<noncode>
 
-    ERROR ECOGEMO01, RPERL GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL'} . 'expected but non-matching value found, dying
+    ERROR ECOGEMO01, RPERL GENERATOR, RPERL TYPES MODE: 'PERL' types mode expected in PERL ops mode, but non-matching value 'FOO' found, dying
 
 =for rperl X</noncode>
 
@@ -11302,11 +11306,11 @@ I<SOLUTION: BAZ_SOLUTION>
 
 X<ENABLE_LIST_SPACING>
 
-=item * PROBLEM: BAZ_PROBLEM_LABEL
+=item * PROBLEM: Invalid Data Types Mode, No Mode Specified, C++ Operations Mode
 
 =for rperl X<noncode>
 
-    ERROR ECOGEMO02, C++ GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL' or 'CPP'} . 'expected but undefined/null value found, dying
+    ERROR ECOGEMO02, C++ GENERATOR, RPERL TYPES MODE: 'PERL' or 'CPP' types mode expected in CPP ops mode, but undefined/null value found, dying
 
 =for rperl X</noncode>
 
@@ -11314,11 +11318,11 @@ I<SOLUTION: BAZ_SOLUTION>
 
 X<ENABLE_LIST_SPACING>
 
-=item * PROBLEM: BAZ_PROBLEM_LABEL
+=item * PROBLEM: Invalid Data Types Mode, Bad Mode Specified, C++ Operations Mode
 
 =for rperl X<noncode>
 
-    ERROR ECOGEMO03, C++ GENERATOR, RPERL TYPES MODE:' . "\n" . q{'PERL' or 'CPP'} . 'expected but non-matching value found, dying
+    ERROR ECOGEMO03, C++ GENERATOR, RPERL TYPES MODE: 'PERL' or 'CPP' types mode expected in CPP ops mode, but non-matching value 'FOO' found, dying
 
 =for rperl X</noncode>
 
@@ -11326,15 +11330,15 @@ I<SOLUTION: BAZ_SOLUTION>
 
 X<ENABLE_LIST_SPACING>
 
-=item * PROBLEM: BAZ_PROBLEM_LABEL
+=item * PROBLEM: Internal RPerl System Error, Source Group Type Mismatch
 
 =for rperl X<noncode>
 
-    ERROR ECOGE00, GENERATOR: Source group entries type mismatch, ' . q{'} . $type_1 . q{'} . ' is different than ' . q{'} . $type_2 . q{'} . ', dying
+    ERROR ECOGE00, GENERATOR: Source group entries type mismatch, 'FOO' is different than 'BAR', dying
 
 =for rperl X</noncode>
 
-I<SOLUTION: BAZ_SOLUTION>
+I<SOLUTION: BAZ_SOLUTION  Please submit a bug report. >
 
 X<ENABLE_LIST_SPACING>
 
@@ -11609,7 +11613,7 @@ I<SOLUTION: BAZ_SOLUTION>
 
 X<ENABLE_LIST_SPACING>
 
-=item * PROBLEM: BAZ_PROBLEM_LABEL
+=item * PROBLEM: Internal RPerl System Error, BAZ_PROBLEM_LABEL
 
 =for rperl X<noncode>
 
@@ -12122,7 +12126,7 @@ X<ENABLE_LIST_SPACING>
     ERROR ECOCOFI03, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot open file '
                         . $module_pmc_filename_manual
                         . ' for reading, '
-                        . $OS_ERROR
+                        . OPERATING_SYSTEM_ERROR
                         . ', dying
 
 =for rperl X</noncode>
@@ -12138,7 +12142,7 @@ X<ENABLE_LIST_SPACING>
     ERROR ECOCOFI04, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot close file '
                         . $module_pmc_filename_manual
                         . ' after reading, '
-                        . $OS_ERROR
+                        . OPERATING_SYSTEM_ERROR
                         . ', dying
 
 =for rperl X</noncode>
@@ -12173,7 +12177,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOCOFI06, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot write to file,\ncroaking: $OS_ERROR
+    ERROR ECOCOFI06, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot write to file,\ncroaking: OPERATING_SYSTEM_ERROR
 
 =for rperl X</noncode>
 
@@ -12185,7 +12189,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOCOFI07, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot delete existing file,\ncroaking: $OS_ERROR
+    ERROR ECOCOFI07, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot delete existing file,\ncroaking: OPERATING_SYSTEM_ERROR
 
 =for rperl X</noncode>
 
@@ -12197,7 +12201,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOCOFI08, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot open file for writing,\ncroaking: $OS_ERROR
+    ERROR ECOCOFI08, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot open file for writing,\ncroaking: OPERATING_SYSTEM_ERROR
 
 =for rperl X</noncode>
 
@@ -12209,7 +12213,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOCOFI09, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot close file,\ncroaking: $OS_ERROR
+    ERROR ECOCOFI09, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot close file,\ncroaking: OPERATING_SYSTEM_ERROR
 
 =for rperl X</noncode>
 
@@ -12222,7 +12226,7 @@ X<ENABLE_LIST_SPACING>
 =for rperl X<noncode>
 
     ERROR ECOCOFI10, COMPILER, FILE SYSTEM: Cannot delete Artistic Style original file ' . 
-                            q{'} . $file_name . '.orig' . q{'} . ',' . "\n" . 'croaking:' . $OS_ERROR
+                            q{'} . $file_name . '.orig' . q{'} . ',' . "\n" . 'croaking:' . OPERATING_SYSTEM_ERROR
 
 =for rperl X</noncode>
 
@@ -12306,7 +12310,7 @@ X<ENABLE_LIST_SPACING>
 =for rperl X<noncode>
 
     ERROR ECOCOSU03, COMPILER, SUBCOMPILE: Cannot delete temporary object file ' . 
-                        q{'} . $cpp_output_file_name_group->{O} . q{'} . ',' . "\n" . 'croaking:' . $OS_ERROR
+                        q{'} . $cpp_output_file_name_group->{O} . q{'} . ',' . "\n" . 'croaking:' . OPERATING_SYSTEM_ERROR
 
 =for rperl X</noncode>
 
