@@ -70,7 +70,7 @@ our string_arrayref $find_dependencies = sub {
             # in RPerl/Test/*/*Bad*.pm and RPerl/Test/*/*bad*.pl
             if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne q{} ) ) {
                 RPerl::warning(
-                    'WARNING WCOCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package ' . q{'} . $first_package_name . q{'} . '  ...  ' . $EVAL_ERROR . "\n" );
+                    'WARNING WCOCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package ' . q{'} . $first_package_name . q{'} . ' with the following error message...' . "\n" . $EVAL_ERROR . "\n" );
             }
         }
 
@@ -135,7 +135,7 @@ our string_arrayref $find_dependencies = sub {
 
             #            RPerl::diag('in Compiler::find_dependencies(), have POST-EVAL DEP %INC = ' . Dumper(\%INC) . "\n");
             if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne q{} ) ) {
-                RPerl::warning( 'WARNING WCOCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package ' . q{'} . $first_package_name . q{'} . '  ...  ' . $EVAL_ERROR . "\n" );
+                RPerl::warning( 'WARNING WCOCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package ' . q{'} . $first_package_name . q{'} . ' with the following error message...' . "\n" . $EVAL_ERROR . "\n" );
             }
             $file_line =~ s/::/\//gxms;                                 # replace double-colon :: scope delineator with forward-slash / directory delineator
             $file_line .= '.pm';
@@ -454,7 +454,7 @@ our void $save_source_files = sub {
 
             # DEV NOTE: only generate PMC output file in dynamic (default) subcompile mode
             if ($modes->{subcompile} eq 'DYNAMIC') {
-                if ( $source_group->{PMC} ne q{} ) {
+                if ((exists $source_group->{PMC}) and (defined $source_group->{PMC}) and ($source_group->{PMC} ne q{})) {
                     die 'ERROR ECOCOFI01, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Received non-empty PMC source, dying' . "\n";
                 }
     

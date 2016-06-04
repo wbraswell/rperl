@@ -2,7 +2,9 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
-# <<< PARSE_ERROR: 'Unquoted string "foo" may clash with future reserved word' >>>
+# <<< PARSE_ERROR: '"use" not allowed in expression' >>>
+# <<< PARSE_ERROR: 'syntax error' >>>
+# <<< PARSE_ERROR: 'near "foo' >>>
 
 # [[[ HEADER ]]]
 foo

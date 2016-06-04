@@ -56,7 +56,9 @@ our void $rperl_source__check_syntax = sub {
 
     my string $nul = $OSNAME eq 'MSWin32' ? 'NUL' : '/dev/null';
     my string $rperl_source__perl_syntax_command
+        # DEV NOTE: inclusion of '-Mstrict' alters propagation of error messages through eval() to die()
         = $EXECUTABLE_NAME . q{ -Iblib/lib -M"warnings FATAL=>q(all)" -Mstrict -cw }
+#        = $EXECUTABLE_NAME . q{ -Iblib/lib -M"warnings FATAL=>q(all)" -cw }
         . $rperl_source__file_name;
     my string $rperl_source__perl_syntax_command__no_output
         = $rperl_source__perl_syntax_command . ' > '.$nul.' 2> '.$nul;

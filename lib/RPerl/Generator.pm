@@ -382,7 +382,7 @@ our string_hashref $ast_to_rperl__generate = sub {
         die 'ERROR ECOGEMO00, RPERL GENERATOR, RPERL TYPES MODE: ' . q{'PERL'} . ' types mode expected in PERL ops mode, but undefined/null value found, dying' . "\n";
     }
     if ( not( $modes->{types} eq 'PERL' ) ) {
-        die 'ERROR ECOGEMO01, RPERL GENERATOR, RPERL TYPES MODE: ' . q{'PERL'} . ' types mode expected in PERL ops mode, but non-matching value ' . q{'} . $mode->{types} . q{'} . ' found, dying' . "\n";
+        die 'ERROR ECOGEMO01, RPERL GENERATOR, RPERL TYPES MODE: ' . q{'PERL'} . ' types mode expected in PERL ops mode, but non-matching value ' . q{'} . $modes->{types} . q{'} . ' found, dying' . "\n";
     }
 
     grammar_rules__map();
@@ -408,7 +408,7 @@ our string_hashref $ast_to_cpp__generate = sub {
         die 'ERROR ECOGEMO02, C++ GENERATOR, RPERL TYPES MODE: ' . q{'PERL' or 'CPP'} . ' types mode expected in CPP ops mode, but undefined/null value found, dying' . "\n";
     }
     if ( not( ( $modes->{types} eq 'PERL' ) or ( $modes->{types} eq 'CPP' ) ) ) {
-        die 'ERROR ECOGEMO03, C++ GENERATOR, RPERL TYPES MODE: ' . q{'PERL' or 'CPP'} . ' types mode expected in CPP ops mode, but non-matching value ' . q{'} . $mode->{types} . q{'} . ' found, dying' . "\n";
+        die 'ERROR ECOGEMO03, C++ GENERATOR, RPERL TYPES MODE: ' . q{'PERL' or 'CPP'} . ' types mode expected in CPP ops mode, but non-matching value ' . q{'} . $modes->{types} . q{'} . ' found, dying' . "\n";
     }
 
     grammar_rules__map();
