@@ -69,8 +69,9 @@ our string_arrayref $find_dependencies = sub {
             # warn instead of dying on eval error here and below, in order to preserve proper parser errors instead of weird eval errors
             # in RPerl/Test/*/*Bad*.pm and RPerl/Test/*/*bad*.pl
             if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne q{} ) ) {
-                RPerl::warning(
-                    'WARNING WCOCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package ' . q{'} . $first_package_name . q{'} . ' with the following error message...' . "\n" . $EVAL_ERROR . "\n" );
+                RPerl::warning( 'WARNING WCOCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package ' . q{'} . $first_package_name . q{'} . ', fatal error trapped and delayed' . "\n" );
+                RPerl::diag(    '                                                Trapped the following error message...' . "\n\n" . $EVAL_ERROR . "\n" );
+                RPerl::warning( "\n" );
             }
         }
 
@@ -135,7 +136,9 @@ our string_arrayref $find_dependencies = sub {
 
             #            RPerl::diag('in Compiler::find_dependencies(), have POST-EVAL DEP %INC = ' . Dumper(\%INC) . "\n");
             if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne q{} ) ) {
-                RPerl::warning( 'WARNING WCOCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package ' . q{'} . $first_package_name . q{'} . ' with the following error message...' . "\n" . $EVAL_ERROR . "\n" );
+                RPerl::warning( 'WARNING WCOCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package ' . q{'} . $first_package_name . q{'} . ', fatal error trapped and delayed' . "\n" );
+                RPerl::diag(    '                                                Trapped the following error message...' . "\n\n" . $EVAL_ERROR . "\n" );
+                RPerl::warning( "\n" );
             }
             $file_line =~ s/::/\//gxms;                                 # replace double-colon :: scope delineator with forward-slash / directory delineator
             $file_line .= '.pm';

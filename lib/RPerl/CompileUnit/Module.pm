@@ -117,7 +117,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         }
         else {
             die RPerl::Parser::rperl_rule__replace(
-                'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: grammar rule '
+                'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: Grammar rule '
                     . ( ref $header_or_module )
                     . ' found where ModuleHeader_23, Module_24, or Module_25 expected, dying' )
                 . "\n";

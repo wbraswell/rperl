@@ -88,7 +88,7 @@ our void $rperl_source__check_syntax = sub {
 # NEED ADD ERROR CHECKING: ECOPAPL00 FILE DOES NOT EXIST, ECOPAPL01 FILE IS EMPTY
 
     if ( $rperl_source__perl_syntax_retval != 0 ) {
-        my $error_pretty = "\n"
+        my $error_pretty = "\n\n"
             . 'ERROR ECOPAPL02, RPERL PARSER, PERL SYNTAX ERROR' . "\n"
             . 'Failed normal Perl strictures-and-fatal-warnings syntax check with the following information:' . "\n\n" 
             . '    File Name:        ' . $rperl_source__file_name . "\n"

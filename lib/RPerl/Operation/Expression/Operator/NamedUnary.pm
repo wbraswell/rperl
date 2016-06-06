@@ -59,7 +59,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #        RPerl::diag( 'in Operator::NamedUnary->ast_to_rperl__generate(), have $self->{children}->[0] = ' . q{'} . $self->{children}->[0] . q{'} . "\n" );
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
                 . ' found where Operation_80, Operator_99, or Operator_100 expected, dying' )
             . "\n";
@@ -112,7 +112,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $operator_name = $self->{children}->[0];
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . $self_class
                 . ' found where Operation_80, Operator_99 or Operator_100 expected, dying' )
             . "\n";

@@ -50,7 +50,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             $rperl_source_group->{PMC} .= $key_name . q{ };
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( q{ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '}
+            die RPerl::Parser::rperl_rule__replace( q{ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '}
                     . ($key_class)
                     . q{' found where VarOrLitOrOpStrOrWord_229, VarOrLitOrOpStrOrWord_230, or VarOrLitOrOpStrOrWord_231 expected, dying} )
                 . "\n";
@@ -85,7 +85,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         $rperl_source_group->{PMC} .= $env . "\n";
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
                 . ' found where HashEntry_204 or HashEntry_206 expected, dying' )
             . "\n";
@@ -136,7 +136,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             $cpp_source_group->{CPP} .= q{"} . $key_name . q{" };
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( q{ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '}
+            die RPerl::Parser::rperl_rule__replace( q{ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '}
                     . ($key_class)
                     . q{' found where VarOrLitOrOpStrOrWord_229, VarOrLitOrOpStrOrWord_230, or VarOrLitOrOpStrOrWord_231 expected, dying} )
                 . "\n";
@@ -168,7 +168,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $cpp_source_group->{CPP} .= q{// <<< RP::DS::H::E __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>} . "\n";
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . $self_class
                 . ' found where HashEntry_204 or HashEntry_206 expected, dying' )
             . "\n";

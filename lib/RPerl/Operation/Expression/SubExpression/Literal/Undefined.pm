@@ -22,7 +22,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     if ( ( ref $self ) ne 'SubExpression_136' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ( ref $self )
                 . ' found where SubExpression_136 expected, dying' )
             . "\n";

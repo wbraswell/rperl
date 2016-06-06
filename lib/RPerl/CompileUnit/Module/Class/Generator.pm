@@ -38,7 +38,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     }
 
     if ( ($self_class) ne 'Class_61' ) {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ($self_class)
                 . ' found where Module_25 or Class_61 expected, dying' )
             . "\n";
@@ -196,7 +196,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             $rperl_source_group->{PMC} .= $property_arrayref_rightbracket . q{ } . $property_assign . q{ } . $property_subexpression_string;
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                     . ( ref $self )
                     . ' found where TypeInnerProperties_224 or TypeInnerProperties_225 expected, dying' )
                 . "\n";
@@ -274,7 +274,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                     $rperl_source_group->{PMC} .= $property_arrayref_rightbracket . q{ } . $property_assign . q{ } . $property_subexpression_string;
                 }
                 else {
-                    die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+                    die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                             . ( ref $self )
                             . ' found where TypeInnerProperties_224 or TypeInnerProperties_225 expected, dying' )
                         . "\n";
@@ -347,7 +347,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     }
 
     if ( ($self_class) ne 'Class_61' ) {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: Grammar rule '
                 . ($self_class)
                 . ' found where Module_25 or Class_61 expected, dying' )
             . "\n";
@@ -522,7 +522,7 @@ EOL
             $property_arrayref_index_max = $property_type_inner->{children}->[5];
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                     . ( ref $self )
                     . ' found where TypeInnerProperties_224 or TypeInnerProperties_225 expected, dying' )
                 . "\n";
@@ -621,7 +621,7 @@ EOL
                 $property_arrayref_index_max = $property_type_inner->{children}->[5];
             }
             else {
-                die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+                die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                         . ( ref $self )
                         . ' found where TypeInnerProperties_224 or TypeInnerProperties_225 expected, dying' )
                     . "\n";
@@ -772,7 +772,7 @@ EOL
             }
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: grammar rule '
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: Grammar rule '
                     . ( ref $method_or_subroutine )
                     . ' found where MethodOrSubroutine_76 or MethodOrSubroutine_77 expected, dying' )
                 . "\n";

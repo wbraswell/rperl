@@ -130,7 +130,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             $rperl_source_group->{PMC} .= $opnamed_or_subexp_or_input_scolon->{children}->[1];                               # semicolon
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                     . $opnamed_or_subexp_or_input_scolon_type
                     . ' found where OpNamedScolonOrSubExpIn_239, OpNamedScolonOrSubExpIn_240, or OpNamedScolonOrSubExpIn_241 expected, dying' )
                 . "\n";
@@ -162,7 +162,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         $rperl_source_group->{PMC} .= $my . q{ } . $type_fhref . q{ } . $symbol_fhref . $semicolon . "\n";
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
                 . ' found where VariableDeclaration_181, VariableDeclaration_182, VariableDeclaration_183, or VariableDeclaration_184 expected, dying' )
             . "\n";
@@ -373,7 +373,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             $cpp_source_group->{CPP} .= $opnamed_or_subexp_or_input_scolon->{children}->[1];                                                     # semicolon
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                     . $opnamed_or_subexp_or_input_scolon_type
                     . ' found where OpNamedScolonOrSubExpIn_239, OpNamedScolonOrSubExpIn_240, or OpNamedScolonOrSubExpIn_241 expected, dying' )
                 . "\n";
@@ -446,7 +446,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $cpp_source_group->{CPP} .= $type_fhref . q{ } . $symbol_fhref . ';' . "\n";
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . $self_class
                 . ' found where VariableDeclaration_181, VariableDeclaration_182, VariableDeclaration_183, or VariableDeclaration_184 expected, dying' )
             . "\n";

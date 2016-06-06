@@ -771,7 +771,7 @@ sub depends_parse_generate_save_subcompile_execute {
             and ( ( $modes->{_compile_saved} eq 'SAVE' ) or ( $modes->{_compile_saved} eq 'SUBCOMPILE' ) ) )
         {
             RPerl::verbose( "\n" . 'DEPENDENCIES:       Complete deferred actions...' . "\n" );
-            RPerl::diag( "\n" . 'have $modes = ' . Dumper($modes) . "\n" );
+#            RPerl::diag( "\n" . 'have $modes = ' . Dumper($modes) . "\n" );
 
             # [[[ SECOND INNER COMPILE LOOP, 1 INPUT FILE & ITS DEPENDENCIES, DEFERRED SAVE & SUBCOMPILE ]]]
             for my $j ( 0 .. $input_file_deps_count ) {

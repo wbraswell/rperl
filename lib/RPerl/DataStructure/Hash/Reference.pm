@@ -67,7 +67,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             if ( ref $hash_entry_star eq 'TERMINAL' ) {
                 if ( $hash_entry_star->{attr} ne q{,} ) {
                     die RPerl::Parser::rperl_rule__replace(
-                        q{ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '}
+                        q{ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '}
                             . $hash_entry_star->{attr}
                             . q{' found where OP21_LIST_COMMA ',' expected, dying}
                     ) . "\n";
@@ -92,7 +92,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ($self_class)
                 . ' found where HashReference_211, HashReference_212, or SubExpression_141 expected, dying'
         ) . "\n";
@@ -141,7 +141,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             if ( ref $hash_entry_star eq 'TERMINAL' ) {
                 if ( $hash_entry_star->{attr} ne q{,} ) {
                     die RPerl::Parser::rperl_rule__replace(
-                        q{ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '}
+                        q{ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '}
                             . $hash_entry_star->{attr}
                             . q{' found where OP21_LIST_COMMA ',' expected, dying}
                     ) . "\n";
@@ -164,7 +164,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . ($self_class)
                 . ' found where HashReference_211, HashReference_212, or SubExpression_141 expected, dying'
         ) . "\n";

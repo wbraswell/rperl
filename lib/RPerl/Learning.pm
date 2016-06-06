@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.090_000;
+our $VERSION = 0.091_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -11382,11 +11382,11 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+    ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                     . ($self_class)
                     . ' found where Module_25 or Class_61 expected, dying
 
-    ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+    ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                     . ( ref $self )
                     . ' found where TypeInnerProperties_224 or TypeInnerProperties_225 expected, dying
 
@@ -11605,7 +11605,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASCP12, CODE GENERATOR, ABSTRACT SYNTAX TO C++: array dereference of array reference must provide data type for array reference in CPPOPS_CPPTYPES mode, but no data type provided, dying
+    ERROR ECOGEASCP12, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Array dereference of array reference must provide data type for array reference in CPPOPS_CPPTYPES mode, but no data type provided, dying
 
 =for rperl X</noncode>
 
@@ -11633,7 +11633,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP14, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
+    ERROR ECOGEASRP14, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[1]
                 . ' does not accept multiple arguments, dying
 
@@ -11647,7 +11647,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP15, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
+    ERROR ECOGEASRP15, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[0]
                 . ' does not accept arguments, dying
 
@@ -11661,13 +11661,9 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP16, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
-                . $operator_named->{children}->[0]
-                . ' requires exactly one argument, dying
+    ERROR ECOGEASRP16, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator 'FOO' requires exactly one argument, dying
 
-    ERROR ECOGEASCP16, CODE GENERATOR, ABSTRACT SYNTAX TO C++: named operator '
-                . $operator_named->{children}->[0]
-                . ' requires exactly one argument, dying
+    ERROR ECOGEASCP16, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Named operator 'FOO' requires exactly one argument, dying
 
 =for rperl X</noncode>
 
@@ -11679,7 +11675,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP17, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
+    ERROR ECOGEASRP17, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[0]
                 . ' requires one or more arguments, dying
 
@@ -11693,7 +11689,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP18, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
+    ERROR ECOGEASRP18, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[0]
                 . ' requires multiple arguments, dying
 
@@ -12064,6 +12060,18 @@ X<ENABLE_LIST_SPACING>
                     . ' does not equal OO properties key ' . q{'}
                     . $object_property_key . q{'}
                     . ', dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASCP70, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Named operator 'FOO' requires ArrayDereference argument, received 'BAR' instead, dying
 
 =for rperl X</noncode>
 

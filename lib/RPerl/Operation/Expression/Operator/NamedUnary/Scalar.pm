@@ -38,8 +38,8 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     my string $operator_named_class = ref $operator_named;
     if ( $operator_named_class eq 'Operation_80' ) {    # Operation -> OP10_NAMED_UNARY_SCOLON
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP16, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
-                . $operator_named->{children}->[0]
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP16, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
+                . q{'} . $operator_named->{children}->[0] . q{'}
                 . ' requires exactly one argument, dying' )
             . "\n";
     }
@@ -49,13 +49,13 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
     elsif ( $operator_named_class eq 'Operator_100' ) {    # Operator -> OP10_NAMED_UNARY
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP16, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
-                . $operator_named->{children}->[0]
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP16, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
+                . q{'} . $operator_named->{children}->[0] . q{'}
                 . ' requires exactly one argument, dying' )
             . "\n";
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ($operator_named_class)
                 . ' found where Operation_80, Operator_99, or Operator_100 expected, dying' )
             . "\n";
@@ -81,8 +81,8 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     my string $operator_named_class = ref $operator_named;
     if ( $operator_named_class eq 'Operation_80' ) {    # Operation -> OP10_NAMED_UNARY_SCOLON
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP16, CODE GENERATOR, ABSTRACT SYNTAX TO C++: named operator '
-                . $operator_named->{children}->[0]
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP16, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Named operator '
+                . q{'} . $operator_named->{children}->[0] . q{'}
                 . ' requires exactly one argument, dying' )
             . "\n";
     }
@@ -94,9 +94,11 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             and ( $subexpression_class ne 'ArrayDereference_200' )
             and ( $subexpression_class ne 'ArrayDereference_201' ) )
         {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
-                    . $subexpression_class
-                    . ' found where SubExpression_140, ArrayDereference_200 or ArrayDereference_201 expected, dying' )
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP70, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Named operator '
+                . q{'} . $operator_named->{children}->[0] . q{'}
+                . ' requires ArrayDereference argument, received '
+                . $subexpression_class
+                    . ' instead, dying' )
                 . "\n";
         }
 
@@ -131,12 +133,12 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             # DEV NOTE, CORRELATION #rp31: NEED ANSWER: are array dereferences allowed in CPPOPS or not???
             else {
                 die RPerl::Parser::rperl_rule__replace(
-                    'ERROR ECOGEASCP12, CODE GENERATOR, ABSTRACT SYNTAX TO C++: array dereference of array reference must provide data type for array reference in CPPOPS_CPPTYPES mode, but no data type provided, dying'
+                    'ERROR ECOGEASCP12, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Array dereference of array reference must provide data type for array reference in CPPOPS_CPPTYPES mode, but no data type provided, dying'
                 ) . "\n";
             }
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                     . $subexpression_class
                     . ' found where ArrayDereference_200 or ArrayDereference_201 expected, dying' )
                 . "\n";
@@ -145,13 +147,13 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $cpp_source_group->{CPP} .= '.' . NAME_CPPOPS_CPPTYPES() . '()';
     }
     elsif ( $operator_named_class eq 'Operator_100' ) {    # Operator -> OP10_NAMED_UNARY
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP16, CODE GENERATOR, ABSTRACT SYNTAX TO C++: named operator '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP16, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Named operator '
                 . $operator_named->{children}->[0]
                 . ' requires exactly one argument, dying' )
             . "\n";
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . ($operator_named_class)
                 . ' found where Operation_80, Operator_99, or Operator_100 expected, dying' )
             . "\n";
