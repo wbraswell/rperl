@@ -11,8 +11,8 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my number $foo = abs 3;
-my number $bar = -3;
+my integer $foo = abs 3;
+my integer $bar = -3;
 
 print 'have $foo = ', $foo, "\n";
 print 'have $bar = ', $bar, "\n";
@@ -20,16 +20,16 @@ print 'have $bar = ', $bar, "\n";
 $bar = $foo + $foo;
 $bar = abs $bar;
 
-my number $float_number = -5.0;
-my number $positive_float_number = -5.0;
+my integer $other_integer = abs -5;
+my integer $onemore_integer = -5;
 
 print 'have $foo = ', $foo, "\n";
 print 'have $bar = ', $bar, "\n";
-print 'have $float_number = ', $float_number, "\n";
-print 'have $positive_float_number = ', $positive_float_number, "\n";
+print 'have $other_integer = ', $other_integer, "\n";
+print 'have $onemore_integer = ', $onemore_integer, "\n";
 
-$float_number = abs $float_number;
-$positive_float_number = abs $positive_float_number;
+$other_integer = abs $other_integer;
+$onemore_integer = abs $onemore_integer;
 
-print 'have $float_number = ', $float_number, "\n";
-print 'have $positive_float_number = ', $positive_float_number, "\n";
+print 'have $other_integer = ', $other_integer, "\n";
+print 'have $onemore_integer = ', $onemore_integer, "\n";
