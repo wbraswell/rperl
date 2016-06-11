@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_200;
+our $VERSION = 0.002_400;
 
 # [[[ OO INHERITANCE ]]]
 # <<< CHANGE_ME: leave as base class for no inheritance, or replace with real parent package name >>>
@@ -39,6 +39,10 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag('in Module->ast_to_rperl__generate(), received $modes = ' . "\n" . Dumper($modes) . "\n");
 
     my object_arrayref $modules_and_headers = $self->{children}->[0]->{children};
+    my string_hashref $rperl_source_subgroup;
+    my string $package_name_underscores;  # get from Header to Class or Package
+    my boolean $header_started = 0;
+    my boolean $current_package_count = 0;
 
     # disable unused symbol table testing
 #    RPerl::diag('in Module->ast_to_rperl__generate(), have %RPerl::Generator:: symbol table = ' . "\n" . Dumper(\%RPerl::Generator::) . "\n");
@@ -51,8 +55,39 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     foreach my object $header_or_module (@{$modules_and_headers}) {
 #        RPerl::diag('in Module->ast_to_rperl__generate(), have $header_or_module = ' . "\n" . RPerl::Parser::rperl_ast__dump($header_or_module) . "\n\n");
-        my string_hashref $rperl_source_subgroup = $header_or_module->ast_to_rperl__generate($modes);
-        RPerl::Generator::source_group_append($rperl_source_group, $rperl_source_subgroup);
+        if ((ref $header_or_module) eq 'ModuleHeader_23') {
+            if ($header_started) {
+                die 'ERROR ECOGEASRP34, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: ModuleHeader found without first finding Module for previous ModuleHeader, dying' . "\n";
+            }
+            else {
+#                if ($current_package_count >= 1) { $rperl_source_group->{PMC} .= "\n\n"; }  # DEV NOTE: extra spaces removed by perltidy???
+                if (($current_package_count == 1) and ( $modes->{label} eq 'ON' )) {
+                    $rperl_source_group->{PMC} .= '# [[[ ADDITIONAL CLASSES ]]]' . "\n\n";
+                }
+                $header_started = 1;
+                $rperl_source_subgroup = $header_or_module->ast_to_rperl__generate($modes);
+                $package_name_underscores = $rperl_source_subgroup->{_package_name_underscores};
+                RPerl::Generator::source_group_append($rperl_source_group, $rperl_source_subgroup);
+            }
+        }
+        elsif (((ref $header_or_module) eq 'Module_24') or ((ref $header_or_module) eq 'Module_25')) {
+            if ($header_started) {
+                $rperl_source_subgroup = $header_or_module->ast_to_rperl__generate($package_name_underscores, $modes);
+                RPerl::Generator::source_group_append($rperl_source_group, $rperl_source_subgroup);
+                $header_started = 0;
+                $current_package_count++;
+            }
+            else {
+                die 'ERROR ECOGEASRP35, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Module found without first finding ModuleHeader, dying' . "\n";
+            }
+        }
+        else {
+            die RPerl::Parser::rperl_rule__replace(
+                'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+                    . ( ref $header_or_module )
+                    . ' found where ModuleHeader_23, Module_24, or Module_25 expected, dying' )
+                . "\n";
+        }
     }
 
     return $rperl_source_group;
@@ -88,15 +123,24 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my string_hashref $cpp_source_subgroup_saved;
     my string $package_name_underscores;  # get from Header to Class or Package
     my boolean $header_started = 0;
+    my boolean $current_package_count = 0;
  
     foreach my object $header_or_module (@{$modules_and_headers}) {
 #        RPerl::diag('in Module->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $header_or_module = ' . "\n" . RPerl::Parser::rperl_ast__dump($header_or_module) . "\n\n");
         # C++ Module::Header wraps around Module, must call both *generate_begin*() and *generate_end*()
         if ((ref $header_or_module) eq 'ModuleHeader_23') {
             if ($header_started) {
-                die 'ERROR ECOGEASCP06, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: ModuleHeader found without first finding Module for previous ModuleHeader, dying' . "\n";
+                die 'ERROR ECOGEASCP34, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: ModuleHeader found without first finding Module for previous ModuleHeader, dying' . "\n";
             }
             else {
+                if ($current_package_count >= 1) {
+                    $cpp_source_group->{CPP} .= "\n\n";
+                    $cpp_source_group->{H}   .= "\n\n";
+                }
+                if (($current_package_count == 1) and ( $modes->{label} eq 'ON' )) {
+                    $cpp_source_group->{CPP} .= '# [[[ ADDITIONAL CLASSES ]]]' . "\n\n";
+                    $cpp_source_group->{H} .= '# [[[ ADDITIONAL CLASSES ]]]' . "\n\n";
+                }
                 $header_started = 1;
                 $cpp_source_subgroup = $header_or_module->ast_to_cpp__generate_begin__CPPOPS_CPPTYPES($modes);
                 $package_name_underscores = $cpp_source_subgroup->{_package_name_underscores};
@@ -110,9 +154,12 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 RPerl::Generator::source_group_append($cpp_source_group, $cpp_source_subgroup);
                 RPerl::Generator::source_group_append($cpp_source_group, $cpp_source_subgroup_saved);
                 $header_started = 0;
+                $cpp_source_group->{CPP} .= "\n" . '// end of class' . "\n";
+                $cpp_source_group->{H}   .= "\n" . '// end of class' . "\n";
+                $current_package_count++;
             }
             else {
-                die 'ERROR ECOGEASCP34, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: Module found without first finding ModuleHeader, dying' . "\n";
+                die 'ERROR ECOGEASCP35, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: Module found without first finding ModuleHeader, dying' . "\n";
             }
         }
         else {

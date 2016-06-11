@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Package;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_001;
+our $VERSION = 0.001_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module);
@@ -23,7 +23,7 @@ our hashref $properties = {};
 # [[[ OO METHODS & SUBROUTINES ]]]
 
 our string_hashref::method $ast_to_rperl__generate = sub {
-    ( my object $self, my string_hashref $modes ) = @_;
+    ( my object $self, my string $package_name_underscores, my string_hashref $modes ) = @_;
     my string_hashref $rperl_source_group = {};
 
 #    RPerl::diag( 'in Package->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
@@ -89,10 +89,9 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     }
 
     # always have at least one subroutine, don't need to check if they exist to label
-        if ( $modes->{label} eq 'ON' ) {
-            $rperl_source_group->{PMC}
-                .= "\n" . '# [[[ SUBROUTINES ]]]' . "\n";
-        }
+    if ( $modes->{label} eq 'ON' ) {
+        $rperl_source_group->{PMC} .= "\n" . '# [[[ SUBROUTINES ]]]' . "\n";
+    }
     foreach my object $subroutine ( ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
         @{ $subroutine_plus->{children} }
         )
@@ -119,7 +118,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 };
 
 our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
-    ( my object $self, my string_hashref $modes ) = @_;
+    ( my object $self, my string $package_name_underscores, my string_hashref $modes ) = @_;
     my string_hashref $cpp_source_group = {
         CPP =>
             q{// <<< RP::CU::M::P __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
@@ -135,7 +134,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 };
 
 our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
-    ( my object $self, my string_hashref $modes ) = @_;
+    ( my object $self, my string $package_name_underscores, my string_hashref $modes ) = @_;
     my string_hashref $cpp_source_group = {
         CPP => q{// <<< RP::CU::M::P __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
             . "\n",

@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Include;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_200;
+our $VERSION = 0.002_300;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -25,25 +25,25 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in Include->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 #    RPerl::diag( 'in Include->ast_to_rperl__generate(), have ::class($self) = ' . ::class($self) . "\n" );
     if ( ref $self eq 'Include_41' ) {
-        # Include -> USE WordScoped ';'
-        my string $use_keyword = $self->{children}->[0];
+        # Include -> USE_OR_REQUIRE WordScoped ';'
+        my string $use_or_require_keyword = $self->{children}->[0];
         my string $module_name
             = $self->{children}->[1]->{children}->[0];
         my string $semicolon = $self->{children}->[2];
         $rperl_source_group->{PMC}
-            .= $use_keyword . q{ } . $module_name . $semicolon . "\n";
+            .= $use_or_require_keyword . q{ } . $module_name . $semicolon . "\n";
 
 #        RPerl::diag( 'in Include->ast_to_rperl__generate(), have $module_name = '  . $module_name . "\n" );
     }
     elsif ( ref $self eq 'Include_42' ) {
-        # Include -> USE WordScoped OP01_QW ';'
-        my string $use_keyword = $self->{children}->[0];
+        # Include -> USE_OR_REQUIRE WordScoped OP01_QW ';'
+        my string $use_or_require_keyword = $self->{children}->[0];
         my string $module_name
             = $self->{children}->[1]->{children}->[0];
         my string $qw            = $self->{children}->[2];
         my string $semicolon         = $self->{children}->[3];
         $rperl_source_group->{PMC}
-            .= $use_keyword . q{ }
+            .= $use_or_require_keyword . q{ }
             . $module_name . q{ }
             . $qw
             . $semicolon . "\n";
@@ -76,7 +76,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     # NEED ANSWER: no difference between wholesale includes and selective includes in C++?
     if (( ref $self eq 'Include_41' ) or ( ref $self eq 'Include_42' )) {
-        # Include -> USE WordScoped ...
+        # Include -> USE_OR_REQUIRE WordScoped ...
         # DEV NOTE: ignore manually included RPerl* and rperl* modules, presumably they will all be automatically included
         my string $module_name = $self->{children}->[1]->{children}->[0];
         if ( $module_name =~ /^\w+Perl::Config$/ ) { # DEV NOTE, CORRELATION #rp27: MathPerl::Config, PhysicsPerl::Config, etc

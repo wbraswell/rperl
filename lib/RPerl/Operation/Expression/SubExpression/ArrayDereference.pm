@@ -26,13 +26,13 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in ArrayDereference->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    # unwrap ArrayDereference_200 and ArrayDereference_201 from SubExpression_140
-    if ( $self_class eq 'SubExpression_140' ) {  # SubExpression -> ArrayDereference
+    # unwrap ArrayDereference_201 and ArrayDereference_202 from SubExpression_141
+    if ( $self_class eq 'SubExpression_141' ) {  # SubExpression -> ArrayDereference
         $self = $self->{children}->[0];
     }
 
     $self_class = ref $self;
-    if ( $self_class eq 'ArrayDereference_200' ) {  # ArrayDereference -> '@{' Variable '}'
+    if ( $self_class eq 'ArrayDereference_201' ) {  # ArrayDereference -> '@{' Variable '}'
         my string $at_left_brace = $self->{children}->[0];
         my object $variable = $self->{children}->[1];
         my string $right_brace = $self->{children}->[2];
@@ -42,7 +42,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= q{ } . $right_brace;
     }
-    elsif ( $self_class eq 'ArrayDereference_201' ) {  # ArrayDereference -> '@{' OPTIONAL-47 ArrayReference '}'
+    elsif ( $self_class eq 'ArrayDereference_202' ) {  # ArrayDereference -> '@{' OPTIONAL-47 ArrayReference '}'
         my string $at_left_brace = $self->{children}->[0];
         my object $type_inner_optional = $self->{children}->[1];
         my object $array_reference = $self->{children}->[2];
@@ -62,7 +62,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where ArrayDereference_200 or ArrayDereference_201 expected, dying'
+                . ' found where ArrayDereference_201 or ArrayDereference_202 expected, dying'
         ) . "\n";
     }
 

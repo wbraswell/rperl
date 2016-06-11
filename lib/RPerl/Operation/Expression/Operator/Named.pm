@@ -42,22 +42,22 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     my string $self_class = ref $self;
     my string $operator_name;
-    if ( $self_class eq 'Operation_79' ) {    # Statement -> OP01_NAMED_SCOLON
+    if ( $self_class eq 'Operation_80' ) {    # Statement -> OP01_NAMED_SCOLON
         $operator_name = substr $self->{children}->[0], 0, -1;
     }
-    elsif (( $self_class eq 'Operator_83' )    # Operator -> OP01_NAMED SubExpression
-        or ( $self_class eq 'OperatorVoid_122' )
+    elsif (( $self_class eq 'Operator_84' )    # Operator -> OP01_NAMED SubExpression
+        or ( $self_class eq 'OperatorVoid_123' )
         )                                   # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
     {
         $operator_name = $self->{children}->[0];
     }
-    elsif ( $self_class eq 'Operator_84' ) {    # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
+    elsif ( $self_class eq 'Operator_85' ) {    # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
         $operator_name = $self->{children}->[1];
     }
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where Operation_79, Operator_83, Operator_84, or OperatorVoid_122 expected, dying' )
+                . ' found where Operation_80, Operator_84, Operator_85, or OperatorVoid_123 expected, dying' )
             . "\n";
     }
  

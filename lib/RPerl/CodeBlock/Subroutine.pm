@@ -47,8 +47,8 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     #    RPerl::diag( 'in Subroutine->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    # unwrap Subroutine_48 from MethodOrSubroutine_77
-    if ( ( ref $self ) eq 'MethodOrSubroutine_77' ) {
+    # unwrap Subroutine_48 from MethodOrSubroutine_78
+    if ( ( ref $self ) eq 'MethodOrSubroutine_78' ) {
         $self = $self->{children}->[0];
     }
 
@@ -105,7 +105,7 @@ our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = 
  
     my string_hashref $cpp_source_group = { H => q{} };
 
-    $self = $self->{children}->[0];    # unwrap Subroutine_48 from MethodOrSubroutine_77
+    $self = $self->{children}->[0];    # unwrap Subroutine_48 from MethodOrSubroutine_78
     my string $return_type = $self->{children}->[1]->{children}->[0];
     my string $name        = $self->{children}->[2];
     my object $arguments_optional = $self->{children}->[4];
@@ -150,7 +150,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group = { CPP => q{} };
 
-    $self = $self->{children}->[0];    # unwrap Subroutine_48 from MethodOrSubroutine_77
+    $self = $self->{children}->[0];    # unwrap Subroutine_48 from MethodOrSubroutine_78
     my string $return_type = $self->{children}->[1]->{children}->[0];
     my string $name        = $self->{children}->[2];
     my object $arguments_optional = $self->{children}->[4];
@@ -221,7 +221,7 @@ our string_hashref::method $ast_to_cpp__generate_shims__CPPOPS_CPPTYPES = sub {
     my string_hashref $cpp_source_group = { CPP => q{} };
     my object $cpp_source_subgroup = undef;
 
-    $self = $self->{children}->[0];    # unwrap Subroutine_48 from MethodOrSubroutine_77
+    $self = $self->{children}->[0];    # unwrap Subroutine_48 from MethodOrSubroutine_78
 #    my string $return_type = $self->{children}->[1]->{children}->[0];  # SHIM SUBS DEPRECATED IN FAVOR OF MACROS
     my string $name        = $self->{children}->[2];
     my object $arguments_optional = $self->{children}->[4];

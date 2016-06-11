@@ -37,24 +37,24 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in Operator::Named::Wait->ast_to_rperl__generate(), received $operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_named) . "\n" );
 
     my string $operator_named_class = ref $operator_named;
-    if ( $operator_named_class eq 'Operation_79' ) { # Operation -> OP01_NAMED_SCOLON
+    if ( $operator_named_class eq 'Operation_80' ) { # Operation -> OP01_NAMED_SCOLON
         $rperl_source_group->{PMC} .= $operator_named->{children}->[0];
     }
-    elsif ( $operator_named_class eq 'Operator_83' ) { # Operator -> OP01_NAMED SubExpression
+    elsif ( $operator_named_class eq 'Operator_84' ) { # Operator -> OP01_NAMED SubExpression
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP15, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[0]
                 . ' does not accept arguments, dying' )
             . "\n";
     }
-    elsif ( $operator_named_class eq 'Operator_84' ) { # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
+    elsif ( $operator_named_class eq 'Operator_85' ) { # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP15, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[1]
                 . ' does not accept arguments, dying' )
             . "\n";
     }
-    elsif ( $operator_named_class eq 'OperatorVoid_122' ) { # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
+    elsif ( $operator_named_class eq 'OperatorVoid_123' ) { # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP15, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[0]
@@ -65,7 +65,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ($operator_named_class)
-                . ' found where Operation_79, Operator_83, Operator_84, or OperatorVoid_122 expected, dying'
+                . ' found where Operation_80, Operator_84, Operator_85, or OperatorVoid_123 expected, dying'
         ) . "\n";
     }
 

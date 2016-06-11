@@ -28,14 +28,14 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     #    RPerl::diag( 'in Method->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    # unwrap Method_71 from MethodOrSubroutine_76
-    if ( ( ref $self ) eq 'MethodOrSubroutine_76' ) {
+    # unwrap Method_72 from MethodOrSubroutine_77
+    if ( ( ref $self ) eq 'MethodOrSubroutine_77' ) {
         $self = $self->{children}->[0];
     }
 
-    if ( ( ref $self ) ne 'Method_71' ) {
+    if ( ( ref $self ) ne 'Method_72' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . ( ref $self ) . ' found where Method_71 expected, dying' )
+            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . ( ref $self ) . ' found where Method_72 expected, dying' )
             . "\n";
     }
 
@@ -85,7 +85,7 @@ our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = 
 
 #    RPerl::diag( 'in Method->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    $self             = $self->{children}->[0];     # unwrap Method_71 from MethodOrSubroutine_76
+    $self             = $self->{children}->[0];     # unwrap Method_72 from MethodOrSubroutine_77
     my string $return_type = $self->{children}->[1];
     my string $name = $self->{children}->[2];
     my object $arguments_optional = $self->{children}->[4];
@@ -126,14 +126,14 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     #    RPerl::diag( 'in Method->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    # unwrap Method_71 from MethodOrSubroutine_76
-    if ( ( ref $self ) eq 'MethodOrSubroutine_76' ) {
+    # unwrap Method_72 from MethodOrSubroutine_77
+    if ( ( ref $self ) eq 'MethodOrSubroutine_77' ) {
         $self = $self->{children}->[0];
     }
 
-    if ( ( ref $self ) ne 'Method_71' ) {
+    if ( ( ref $self ) ne 'Method_72' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $self ) . ' found where Method_71 expected, dying' )
+            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $self ) . ' found where Method_72 expected, dying' )
             . "\n";
     }
 

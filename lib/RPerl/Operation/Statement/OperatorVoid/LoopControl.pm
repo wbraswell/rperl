@@ -26,7 +26,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in OperatorVoid::LoopControl->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if ( $self_class eq 'OperatorVoid_123' ) { # OperatorVoid -> OP19_LOOP_CONTROL_SCOLON
+    if ( $self_class eq 'OperatorVoid_124' ) { # OperatorVoid -> OP19_LOOP_CONTROL_SCOLON
         if (($self->{children}->[0] ne 'next;') and ($self->{children}->[0] ne 'last;')) {
             die RPerl::Parser::rperl_rule__replace(
                 'ERROR ECOGEASRP26, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: loop control operator '
@@ -36,7 +36,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         }
         $rperl_source_group->{PMC} .= $self->{children}->[0] . "\n";
     }
-    elsif ( $self_class eq 'OperatorVoid_124' ) { # OperatorVoid -> OP19_LOOP_CONTROL LoopLabel ';'
+    elsif ( $self_class eq 'OperatorVoid_125' ) { # OperatorVoid -> OP19_LOOP_CONTROL LoopLabel ';'
         my string $loop_control = $self->{children}->[0];
         my string $loop_label   = $self->{children}->[1]->{children}->[0];
         my string $semicolon    = $self->{children}->[2];
@@ -56,7 +56,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where OperatorVoid_123 or OperatorVoid_124 expected, dying'
+                . ' found where OperatorVoid_124 or OperatorVoid_125 expected, dying'
         ) . "\n";
     }
 
@@ -82,7 +82,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #    RPerl::diag( 'in OperatorVoid::LoopControl->$ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if ( $self_class eq 'OperatorVoid_123' ) { # OperatorVoid -> OP19_LOOP_CONTROL_SCOLON
+    if ( $self_class eq 'OperatorVoid_124' ) { # OperatorVoid -> OP19_LOOP_CONTROL_SCOLON
         if ($self->{children}->[0] eq 'next;') {
             $cpp_source_group->{CPP} .= 'continue;' . "\n";
         }
@@ -97,7 +97,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             ) . "\n";
         }
     }
-    elsif ( $self_class eq 'OperatorVoid_124' ) { # OperatorVoid -> OP19_LOOP_CONTROL LoopLabel ';'
+    elsif ( $self_class eq 'OperatorVoid_125' ) { # OperatorVoid -> OP19_LOOP_CONTROL LoopLabel ';'
         my string $loop_control = $self->{children}->[0];
         my string $loop_label   = $self->{children}->[1]->{children}->[0];
         my string $semicolon    = $self->{children}->[2];
@@ -122,7 +122,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . $self_class
-                . ' found where OperatorVoid_123 or OperatorVoid_124 expected, dying'
+                . ' found where OperatorVoid_124 or OperatorVoid_125 expected, dying'
         ) . "\n";
     }
     return $cpp_source_group;

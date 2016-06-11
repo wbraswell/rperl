@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Header;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.004_100;
+our $VERSION = 0.004_200;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -70,6 +70,11 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     # DEV NOTE, CORRELATION #rp14: the hard-coded ' $VERSION = ' & ';' below are the only discarded tokens in the RPerl grammar,
     # due to the need to differentiate between v-numbers and otherwise-identical normal numbers
     $rperl_source_group->{PMC} .= $our_keyword . ' $VERSION = ' . $version_number . q{;} . "\n";
+
+    my string $package_name_underscores = $package_name;
+    $package_name_underscores =~ s/::/__/gxms;
+    $rperl_source_group->{_package_name} = $package_name;
+    $rperl_source_group->{_package_name_underscores} = $package_name_underscores;
 
     return $rperl_source_group;
 };

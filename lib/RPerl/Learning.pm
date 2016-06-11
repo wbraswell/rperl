@@ -11388,7 +11388,7 @@ X<ENABLE_LIST_SPACING>
 
     ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                     . ( ref $self )
-                    . ' found where TypeInnerProperties_224 or TypeInnerProperties_225 expected, dying
+                    . ' found where TypeInnerProperties_225 or TypeInnerProperties_226 expected, dying
 
 =for rperl X</noncode>
 
@@ -11955,7 +11955,51 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASCP34, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: Module found without first finding ModuleHeader, dying
+    ERROR ECOGEASRP34, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: ModuleHeader found without first finding Module for previous ModuleHeader, dying 
+ 
+    ERROR ECOGEASCP34, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: ModuleHeader found without first finding Module for previous ModuleHeader, dying 
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP35, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Module found without first finding ModuleHeader, dying
+
+    ERROR ECOGEASCP35, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: Module found without first finding ModuleHeader, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP36, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Class FOO is attempting to inherit OO properties from non-properties variable $BAR, dying
+ 
+    ERROR ECOGEASCP36, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Class FOO is attempting to inherit OO properties from non-properties variable $BAR, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP37, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Class FOO inherits OO functionality from parent class BAR but is attempting to inherit OO properties from non-matching class BAZ, dying
+ 
+    ERROR ECOGEASCP37, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Class FOO inherits OO functionality from parent class BAR but is attempting to inherit OO properties from non-matching class BAZ, dying
 
 =for rperl X</noncode>
 
@@ -12055,11 +12099,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEPPRP20, CODE GENERATOR, PURE PERL TO RPERL: redundant name mismatch, inner type name ' . q{'}
-                    . $object_property_inner_type_name . q{'}
-                    . ' does not equal OO properties key ' . q{'}
-                    . $object_property_key . q{'}
-                    . ', dying
+    ERROR ECOGEASCP70, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Named operator 'FOO' requires ArrayDereference argument, received 'BAR' instead, dying
 
 =for rperl X</noncode>
 
@@ -12071,7 +12111,11 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASCP70, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Named operator 'FOO' requires ArrayDereference argument, received 'BAR' instead, dying
+    ERROR ECOGEPPRP20, CODE GENERATOR, PURE PERL TO RPERL: redundant name mismatch, inner type name ' . q{'}
+                    . $object_property_inner_type_name . q{'}
+                    . ' does not equal OO properties key ' . q{'}
+                    . $object_property_key . q{'}
+                    . ', dying
 
 =for rperl X</noncode>
 

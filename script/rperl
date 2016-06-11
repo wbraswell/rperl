@@ -762,6 +762,7 @@ sub depends_parse_generate_save_subcompile_execute {
                     $modes->{_compile_saved} = 'GENERATE';
                     $modes->{subcompile} = 'OFF';
                     $modes->{execute} = 'OFF';
+                    $modes->{_bailout_message} = "\n" . 'BAILING OUT:        One or more problems encountered, see error messages above for details, dying' . "\n";
                 }
             }
         }
@@ -836,6 +837,11 @@ sub depends_parse_generate_save_subcompile_execute {
             RPerl::verbose_pause("\nPRESS <ENTER> TO CONTINUE\n");
         }
     }
+
+    if ((exists $modes->{_bailout_message}) and (defined $modes->{_bailout_message}) and ($modes->{_bailout_message} ne q{})) {
+        die $modes->{_bailout_message};
+    }
+
     return;
 }
 

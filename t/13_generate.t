@@ -44,7 +44,7 @@ find(
 #        RPerl::diag('in 13_generate.t, have $file = ' . $file . "\n");
 
 #        if ( $file !~ m/[.]pm$/xms ) { # TEMP DEBUGGING, ONLY FIND *.pm, NOT *.pl
-#        if ( $file !~ m/.*SubExpression\/program_08_good[.]pl$/xms ) { # TEMP DEBUGGING, ONLY FIND CERTAIN FILES
+#        if ( $file !~ m/.*Module\/.*$/xms ) { # TEMP DEBUGGING, ONLY FIND CERTAIN FILES
         if ( $file !~ m/[.]p[ml]$/xms ) {    # find all *.pm & *.pl files
             return;
         }

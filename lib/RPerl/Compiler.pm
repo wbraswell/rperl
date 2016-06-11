@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.010_000;
+our $VERSION = 0.011_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -336,7 +336,7 @@ our hashref_arrayref $generate_output_file_names = sub {
             }
             elsif ( ($modes->{subcompile} eq 'STATIC') or 
                     ($modes->{subcompile} eq 'DYNAMIC') or
-                   (($modes->{subcompile} eq 'OFF') and (($modes->{compile} eq 'GENERATE') or ($modes->{compile} eq 'SAVE') or ($modes->{compile} eq 'SUBCOMPILE')))
+                   (($modes->{subcompile} eq 'OFF') and (($modes->{compile} eq 'PARSE') or ($modes->{compile} eq 'GENERATE') or ($modes->{compile} eq 'SAVE') or ($modes->{compile} eq 'SUBCOMPILE')))
                    ) {
                 # Micro$oft Windows uses *.exe file extension (suffix) for compiled executables
                 if ( $OSNAME eq 'MSWin32' ) {
@@ -370,7 +370,7 @@ our hashref_arrayref $generate_output_file_names = sub {
                 die 'ERROR EAR15: Incompatible command-line arguments provided, both --static subcompile mode flag and *.pm Perl module input file, dying' . "\n";
             }
             elsif ( ($modes->{subcompile} eq 'DYNAMIC') or
-                   (($modes->{subcompile} eq 'OFF') and (($modes->{compile} eq 'GENERATE') or ($modes->{compile} eq 'SAVE') or ($modes->{compile} eq 'SUBCOMPILE')))
+                   (($modes->{subcompile} eq 'OFF') and (($modes->{compile} eq 'PARSE') or ($modes->{compile} eq 'GENERATE') or ($modes->{compile} eq 'SAVE') or ($modes->{compile} eq 'SUBCOMPILE')))
                    ) {
                 $output_file_name_groups->[$i]->{PMC} = $output_file_name_path_prefix . '.pmc';
             }

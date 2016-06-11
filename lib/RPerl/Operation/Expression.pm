@@ -26,14 +26,14 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in Expression->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) eq 'Operation_78' ) {    # Operation -> Expression ';'
+    if ( ( ref $self ) eq 'Operation_79' ) {    # Operation -> Expression ';'
         $rperl_source_subgroup
             = $self->{children}->[0]->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= $self->{children}->[1] . "\n";  # semicolon
     }
-    elsif ( ( ref $self ) eq 'SubExpression_135' ) {  # SubExpression -> Expression
+    elsif ( ( ref $self ) eq 'SubExpression_136' ) {  # SubExpression -> Expression
         $rperl_source_subgroup
             = $self->{children}->[0]->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
@@ -43,7 +43,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ( ref $self )
-                . ' found where Operation_78 or SubExpression_135 expected, dying'
+                . ' found where Operation_79 or SubExpression_136 expected, dying'
         ) . "\n";
     }
 
@@ -68,7 +68,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
 #    RPerl::diag( 'in Expression->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) eq 'Operation_78' ) {    # Operation -> Expression ';'
+    if ( ( ref $self ) eq 'Operation_79' ) {    # Operation -> Expression ';'
         $cpp_source_subgroup
             = $self->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
 #        RPerl::diag( 'in Expression->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_subgroup = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_subgroup) . "\n" );
@@ -76,7 +76,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             $cpp_source_subgroup );
         $cpp_source_group->{CPP} .= $self->{children}->[1] . "\n";  # semicolon
     }
-    elsif ( ( ref $self ) eq 'SubExpression_135' ) {  # SubExpression -> Expression
+    elsif ( ( ref $self ) eq 'SubExpression_136' ) {  # SubExpression -> Expression
         $cpp_source_subgroup
             = $self->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
 #        RPerl::diag( 'in Expression->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_subgroup = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_subgroup) . "\n" );
@@ -87,7 +87,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . ( ref $self )
-                . ' found where Operation_78 or SubExpression_135 expected, dying'
+                . ' found where Operation_79 or SubExpression_136 expected, dying'
         ) . "\n";
     }
 

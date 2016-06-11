@@ -24,14 +24,14 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in Stdin->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
     
-    if ( ( ref $self ) eq 'SubExpressionOrInput_146') {  # SubExpressionOrInput -> STDIN
+    if ( ( ref $self ) eq 'SubExpressionOrInput_147') {  # SubExpressionOrInput -> STDIN
         $rperl_source_group->{PMC} .= $self->{children}->[0];
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ( ref $self )
-                . ' found where SubExpressionOrInput_146 expected, dying'
+                . ' found where SubExpressionOrInput_147 expected, dying'
         ) . "\n"; 
     }
 
