@@ -1,5 +1,9 @@
 Revision history for Perl compiler RPerl.
 
+1.750100 2016-06-14
+
+    - MathPerl, Support For Linear Algebra, Part 1
+
 1.750000 2016-06-10 Codename Jepp
 
     - Bugs, Numerous Fixes
