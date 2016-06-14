@@ -138,8 +138,8 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                     $cpp_source_group->{H}   .= "\n\n";
                 }
                 if (($current_package_count == 1) and ( $modes->{label} eq 'ON' )) {
-                    $cpp_source_group->{CPP} .= '# [[[ ADDITIONAL CLASSES ]]]' . "\n\n";
-                    $cpp_source_group->{H} .= '# [[[ ADDITIONAL CLASSES ]]]' . "\n\n";
+                    $cpp_source_group->{CPP} .= '// [[[ ADDITIONAL CLASSES ]]]' . "\n\n";
+                    $cpp_source_group->{H} .= '// [[[ ADDITIONAL CLASSES ]]]' . "\n\n";
                 }
                 $header_started = 1;
                 $cpp_source_subgroup = $header_or_module->ast_to_cpp__generate_begin__CPPOPS_CPPTYPES($modes);

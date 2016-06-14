@@ -68,7 +68,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 };
 
 our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
-    ( my object $self, my string_hashref $modes) = @_;
+    ( my object $self, my string_hashref $modes, my object $operator_void_named) = @_;
     my string_hashref $cpp_source_group = { CPP => q{// <<< RP::O::S::OV::N::D __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>} . "\n" };
 
     #...
@@ -76,10 +76,43 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 };
 
 our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
-    ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $cpp_source_group = { CPP => q{// <<< RP::O::S::OV::N::D __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>} . "\n" };
+    ( my object $self, my string_hashref $modes, my object $operator_void_named) = @_;
+    my string_hashref $cpp_source_group = { CPP => q{} };
 
-    #...
+#    RPerl::diag( 'in OperatorVoid::Named::Die->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in OperatorVoid::Named::Die->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $operator_void_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_void_named) . "\n" );
+
+    if ( ref $operator_void_named eq 'OperatorVoid_120' ) {    # OperatorVoid -> OP01_NAMED_VOID_SCOLON
+        $cpp_source_group->{CPP} .= $operator_void_named->{children}->[0];    # name semicolon
+    }
+    elsif ( ref $operator_void_named eq 'OperatorVoid_122' ) {                  # OperatorVoid -> OP01_NAMED_VOID ListElements ';'
+        $cpp_source_group->{CPP} .= $operator_void_named->{children}->[0];                    # name
+        $cpp_source_group->{CPP} .= q{( };                    # left parentheses
+        my object $arguments       = $operator_void_named->{children}->[1];
+        my integer $argument_count = $arguments->length();
+        if ( $argument_count > ARGUMENTS_MAX() ) {
+            die 'ERROR ECOGEASCP03, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n"
+                . 'Argument count '
+                . $argument_count
+                . ' exceeds maximum argument limit '
+                . ARGUMENTS_MAX()
+                . ' for operator ' . q{'}
+                . NAME() . q{'}
+                . ', dying' . "\n";
+        }
+        my string_hashref $cpp_source_subgroup = $arguments->ast_to_cpp__generate__CPPOPS_CPPTYPES( $modes, $self );
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+        $cpp_source_group->{CPP} .= q{ )};                    # right parentheses
+        $cpp_source_group->{CPP} .= $operator_void_named->{children}->[2];    # semicolon
+    }
+    else {
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+                . ( ref $operator_void_named )
+                . ' found where OperatorVoid_120 or OperatorVoid_122 expected, dying' )
+            . "\n";
+    }
+
+    $cpp_source_group->{CPP} .= "\n";
     return $cpp_source_group;
 };
 

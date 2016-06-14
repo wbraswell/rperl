@@ -4,7 +4,7 @@
 package RPerl::Config;
 use strict;
 use warnings;
-our $VERSION = 0.004_300;
+our $VERSION = 0.004_301;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -96,7 +96,7 @@ our $INCLUDE_PATH = undef;                             # all target system modul
 our $SCRIPT_PATH  = undef;                             # interpreted target system programs live here
 our $CORE_PATH    = undef;                             # all Perl core components (perl.h, etc) live here
 
-# NEED UPGRADE: properly determine whether to use DBL_EPSILON or FLT_EPSILON below
+# DEV NOTE, CORRELATION #rp32: NEED UPGRADE: properly determine whether to use DBL_EPSILON or FLT_EPSILON below
 use constant EPSILON => POSIX::DBL_EPSILON();
 #use constant EPSILON => POSIX::FLT_EPSILON();
 

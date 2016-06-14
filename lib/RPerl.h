@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl_h
-#define __CPP__INCLUDED__RPerl_h 0.001_300
+#define __CPP__INCLUDED__RPerl_h 0.001_400
 
 // [[[ INCLUDES ]]]
 #include <rperltypes_mode.h>  // for default definitions of __PERL__TYPES or __CPP__TYPES
@@ -55,6 +55,12 @@ public:
     static integer verbose(string message) { return RPerl__verbose(message); };
     static integer warning(string message) { return RPerl__warning(message); };
 };
+
+// [[[ OO CLASS PROPERTIES SPECIAL ]]]
+
+// DEV NOTE, CORRELATION #rp32: NEED UPGRADE: properly determine whether to use DBL_EPSILON or FLT_EPSILON below
+#define RPerl__EPSILON DBL_EPSILON
+//#define RPerl__EPSILON FLT_EPSILON
 
 // [[[ SUBROUTINES ]]]
 
