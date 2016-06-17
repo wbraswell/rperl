@@ -802,7 +802,7 @@ EOL
         @{ $method_or_subroutine_star->{children} }
         )
     {
-        if ( ( ref $method_or_subroutine ) eq 'MethodOrSubroutine_77' ) {    # METHOD
+        if ( ( ref $method_or_subroutine ) eq 'SubroutineOrMethod_78' ) {    # METHOD
             $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES($modes);
             push @{$method_declarations}, $cpp_source_subgroup->{H};
             $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES( $package_name_underscores, $modes );
@@ -811,7 +811,7 @@ EOL
                 $cpp_source_group->{H_INCLUDES} .= $cpp_source_subgroup->{H_INCLUDES};
             }
         }
-        elsif ( ( ref $method_or_subroutine ) eq 'MethodOrSubroutine_78' ) {    # SUBROUTINE
+        elsif ( ( ref $method_or_subroutine ) eq 'SubroutineOrMethod_77' ) {    # SUBROUTINE
             $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES($modes);
             push @{$subroutine_declarations}, $cpp_source_subgroup->{H};
             $cpp_source_subgroup = $method_or_subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
@@ -828,7 +828,7 @@ EOL
         else {
             die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: Grammar rule '
                     . ( ref $method_or_subroutine )
-                    . ' found where MethodOrSubroutine_77 or MethodOrSubroutine_78 expected, dying' )
+                    . ' found where SubroutineOrMethod_78 or SubroutineOrMethod_77 expected, dying' )
                 . "\n";
         }
     }
