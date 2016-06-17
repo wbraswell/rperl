@@ -19,4 +19,4 @@ our $VERSION = 0.001_000;
 use RPerl::Test::Foo;
 
 # [[[ OPERATIONS ]]]
-print Dumper( garply( 7, [ 23.1, 42.2, 73.8 ] ) );
+print Dumper( ylprag( 7, [ 23.1, 42.2, 73.8 ] ) );
