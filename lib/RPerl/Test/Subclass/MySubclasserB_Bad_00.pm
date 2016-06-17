@@ -21,7 +21,7 @@ use RPerl::Test::Subclass::MySubclasserA_Good;
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = { preschool => my string $TYPED_preschool = 'Eager Muskrat', kindergarten => my string $TYPED_kindergarten = 'Eagle Elementary' };
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 
 our RPerl::Test::Subclass::MySubclasserB_Bad_00::method $alphabet = sub {
     ( my RPerl::Test::Subclass::MySubclasserB_Bad_00 $self ) = @_;

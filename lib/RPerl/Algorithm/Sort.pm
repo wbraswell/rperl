@@ -16,7 +16,7 @@ use RPerl::Algorithm;
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 
 our void::method $inherited__Sort = sub {
     ( my object $self, my string $person) = @_;

@@ -20,7 +20,7 @@ our @EXPORT = qw(sse_recip_sqrt_32bit_on_64bit);
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 
 #our sse_number_pair $sse_recip_sqrt_32bit_on_64bit = sub {
 sub sse_recip_sqrt_32bit_on_64bit {

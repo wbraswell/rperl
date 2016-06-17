@@ -29,7 +29,7 @@ our @EXPORT = qw(
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 
 # [[[ INITIALIZATION FUNCTIONS ]]]
 

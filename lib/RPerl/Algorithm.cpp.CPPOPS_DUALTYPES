@@ -13,7 +13,7 @@ using std::cout;  using std::cerr;  using std::endl;
 // [[[<<< BEGIN PERL TYPES >>>]]]
 // [[[<<< BEGIN PERL TYPES >>>]]]
 
-// [[[ OO METHODS & SUBROUTINES ]]]
+// [[[ SUBROUTINES & OO METHODS ]]]
 
 void RPerl__Algorithm::inherited__Algorithm(SV* person) {
     cout << "in CPPOPS_PERLTYPES Algorithm->inherited__Algorithm(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", FNORD" << "\n";
@@ -34,7 +34,7 @@ SV* RPerl__Algorithm__uninherited__Algorithm(SV* person) {
 // [[[<<< BEGIN CPP TYPES >>>]]]
 // [[[<<< BEGIN CPP TYPES >>>]]]
 
-// [[[ OO METHODS & SUBROUTINES ]]]
+// [[[ SUBROUTINES & OO METHODS ]]]
 
 void RPerl__Algorithm::inherited__Algorithm(string person) {
     RPerl__diag((const string) "in CPPOPS_CPPTYPES Algorithm->inherited__Algorithm(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", FNORD" + (const string) "\n");

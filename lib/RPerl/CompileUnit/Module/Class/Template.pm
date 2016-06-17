@@ -18,7 +18,7 @@ use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
-# <<< CHANGE_ME: leave as base class for no inheritance, or replace with real parent package name >>>
+# <<< CHANGE_ME: leave as base class for no inheritance, or replace with real parent class name >>>
 use parent qw(RPerl::CompileUnit::Module::Class);
 use RPerl::CompileUnit::Module::Class;
 
@@ -96,42 +96,9 @@ our hashref $properties = {
     yyz => my number_hashref $TYPED_yyz = { a => 3.1, b => 6.2, c => 9.3 }
 };
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 
-# <<< CHANGE_ME: delete for no methods/subroutines, or replace with real method(s)/subroutine(s) >>>
-our void::method $quux = sub {
-    ( my object $self) = @_;
-    $self->{plugh} = $self->{plugh} * 2;
-};
-
-our integer::method $quince = sub {
-    my string $quince_def
-        = '...Cydonia vulgaris ... Cydonia, a city in Crete ... [1913 Webster]';
-    print $quince_def;
-    return (length $quince_def);
-};
-
-our string_hashref::method $qorge = sub {
-    ( my object $self, my integer $qorge_input ) = @_;
-    return {
-        a => $self->{xyzzy} x $qorge_input,
-        b => 'howdy',
-        c => q{-23.42}
-    };
-};
-
-our object_arrayref::method $qaft = sub {
-    ( my object $self, my integer $foo, my number $bar, my string $bat, my string_hashref $baz ) = @_;
-    my object_arrayref $retval = [];
-    $retval->[0] = RPerl::CompileUnit::Module::Class::Template->new();
-    $retval->[0]->{xyzzy} = 'larry';
-    $retval->[1] = RPerl::CompileUnit::Module::Class::Template->new();
-    $retval->[1]->{xyzzy} = 'curly';
-    $retval->[2] = RPerl::CompileUnit::Module::Class::Template->new();
-    $retval->[2]->{xyzzy} = 'moe';
-    return $retval;
-};
-
+# <<< CHANGE_ME: delete for no subroutines/methods, or replace with real subroutine(s)/method(s) >>>
 our void $grunt = sub {
     print 'PIE() = ' . PIE() . "\n";
 };
@@ -164,5 +131,96 @@ our string_hashref $gorce = sub {
         delta => %{$de}
     };
 };
+
+our void::method $quux = sub {
+    ( my object $self) = @_;
+    $self->{plugh} = $self->{plugh} * 2;
+};
+
+our integer::method $quince = sub {
+    my string $quince_def
+        = '...Cydonia vulgaris ... Cydonia, a city in Crete ... [1913 Webster]';
+    print $quince_def;
+    return (length $quince_def);
+};
+
+our string_hashref::method $qorge = sub {
+    ( my object $self, my integer $qorge_input ) = @_;
+    return {
+        a => $self->{xyzzy} x $qorge_input,
+        b => 'howdy',
+        c => q{-23.42}
+    };
+};
+
+our RPerl::CompileUnit::Module::Class::Template_arrayref::method $qaft = sub {
+    ( my object $self, my integer $foo, my number $bar, my string $bat, my string_hashref $baz ) = @_;
+    my RPerl::CompileUnit::Module::Class::Template_arrayref $retval = [];
+    $retval->[0] = RPerl::CompileUnit::Module::Class::Template->new();
+    $retval->[0]->{xyzzy} = 'larry';  # saint or stooge?
+    $retval->[1] = RPerl::CompileUnit::Module::Class::Template->new();
+    $retval->[1]->{xyzzy} = 'curly';
+    $retval->[2] = RPerl::CompileUnit::Module::Class::Template->new();
+    $retval->[2]->{xyzzy} = 'moe';
+    return $retval;
+};
+
+1;    # end of class
+
+
+# [[[ ADDITIONAL CLASSES ]]]
+# <<< CHANGE_ME: delete for no additional classes, or replace with real classes >>>
+
+# [[[ HEADER ]]]
+# <<< CHANGE_ME: replace with real shorthand class name >>>
+use RPerl;
+package  # hide from PAUSE indexing
+    Template;  # SHORTHAND CLASS: child class Template is functionally equivalent to parent class RPerl::CompileUnit::Module::Class::Template
+use strict;
+use warnings;
+our $VERSION = 0.001_000;
+
+# [[[ OO INHERITANCE ]]]
+# <<< CHANGE_ME: replace with real parent class name >>>
+use parent qw(RPerl::CompileUnit::Module::Class::Template);  # SHORTHAND CLASS: inherit subroutines & OO methods from parent class
+require RPerl::CompileUnit::Module::Class::Template;
+
+# [[[ OO PROPERTIES ]]]
+# <<< CHANGE_ME: replace with real parent class name >>>
+our hashref $properties = $RPerl::CompileUnit::Module::Class::Template;  # SHORTHAND CLASS: no additional properties, only inherit from parent class
+
+# SHORTHAND CLASS: no additional subroutines & OO methods, only inherit from parent class
+
+1;    # end of class
+
+
+# [[[ HEADER ]]]
+# <<< CHANGE_ME: replace with real class name >>>
+use RPerl;
+package RPerl::CompileUnit::Module::Class::TemplateAdditional;
+use strict;
+use warnings;
+our $VERSION = 0.001_000;
+
+# [[[ OO INHERITANCE ]]]
+# <<< CHANGE_ME: leave as base class for no inheritance, or replace with real parent class name >>>
+use parent qw(RPerl::CompileUnit::Module::Class);
+use RPerl::CompileUnit::Module::Class;
+
+# [[[ CRITICS ]]]
+# <<< CHANGE_ME: delete for no directives, or add real directives >>>
+
+# [[[ INCLUDES ]]]
+# <<< CHANGE_ME: delete for no includes, or add real include package name(s) >>>
+
+# [[[ CONSTANTS ]]]
+# <<< CHANGE_ME: delete for no constants, or add real constant name(s) & data >>>
+
+# [[[ OO PROPERTIES ]]]
+# <<< CHANGE_ME: leave empty for no properties, or add real property name(s) & default data >>>
+our hashref $properties = {};
+
+# [[[ SUBROUTINES & OO METHODS ]]]
+# <<< CHANGE_ME: delete for no subroutines/methods, or add real subroutine(s)/method(s) >>>
 
 1;    # end of class

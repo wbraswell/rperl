@@ -16,7 +16,7 @@ use RPerl::CompileUnit::Module::Class;
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 
 our void::method $inherited__Algorithm = sub {
     ( my RPerl::Algorithm $self, my string $person) = @_;

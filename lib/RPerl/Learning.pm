@@ -16622,7 +16622,7 @@ L<Class_00_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test
     our hashref $properties
         = { empty_property => my integer $TYPED_empty_property = 2 };
 
-    # [[[ OO METHODS & SUBROUTINES ]]]
+    # [[[ SUBROUTINES & OO METHODS ]]]
     our void::method $empty_method = sub {
         return 2;
     };
@@ -16689,7 +16689,7 @@ L<Class_00_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test
     our hashref $properties
         = { empty_property => my integer $TYPED_empty_property = 2 };
 
-    # [[[ OO METHODS & SUBROUTINES ]]]
+    # [[[ SUBROUTINES & OO METHODS ]]]
     our void::method $empty_method = sub {
         return 2;
     };
@@ -16755,7 +16755,7 @@ L<Class_00_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test
     our hashref $properties
         = { empty_property => my integer $TYPED_empty_property = 2 };
 
-    # [[[ OO METHODS & SUBROUTINES ]]]
+    # [[[ SUBROUTINES & OO METHODS ]]]
     our integer::method $empty_method = sub {
         return 2;
     };
@@ -16824,7 +16824,7 @@ L<Class_00_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test
     our hashref $properties
         = { empty_property => my integer $TYPED_empty_property = 2 };
 
-    # [[[ OO METHODS & SUBROUTINES ]]]
+    # [[[ SUBROUTINES & OO METHODS ]]]
     our void::method $empty_method = sub {
         return 2;
     };
@@ -16904,7 +16904,7 @@ L<Class_00_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test
     our hashref $properties
         = { test_property => my integer $TYPED_test_property = 2 };
 
-    # [[[ OO METHODS & SUBROUTINES ]]]
+    # [[[ SUBROUTINES & OO METHODS ]]]
     our void::method $test_method = sub {
         ( my object $self, my integer $input_integer ) = @_;
         $self->{test_property} *= $input_integer;
@@ -16934,7 +16934,7 @@ L<Class_01_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test
     our hashref $properties
         = { empty_property => my integer $TYPED_empty_property = 2 };
 
-    # [[[ OO METHODS & SUBROUTINES ]]]
+    # [[[ SUBROUTINES & OO METHODS ]]]
     our void::method $empty_method = sub {
         ( my object $self, my integer $foo ) = @_;
         return 2;

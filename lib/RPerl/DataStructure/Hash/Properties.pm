@@ -22,7 +22,7 @@ our hashref $properties = {  # whoah, so meta
     property_entries => my object_hashref $TYPED_property_entries = undef
 };
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 
 # ...
 

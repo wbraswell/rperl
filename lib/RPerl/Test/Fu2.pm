@@ -17,7 +17,7 @@ use RPerl::Test;
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = { thud => my integer_arrayref $TYPED_thud = [] };
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 our void::method $quux = sub {
     ( my object $self, my integer $howdy, my string_hashref $doody) = @_;
     return 2;

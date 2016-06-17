@@ -134,12 +134,13 @@ sub filter {
     #    print {*STDERR} 'in RPerl::filter(), have $dependencies_rperl = ' . Dumper($dependencies_rperl) . "\n";
     #    print {*STDERR} 'in RPerl::filter(), have $dependencies_nonsystem = ' . Dumper($dependencies_nonsystem) . "\n";
 
-#    print {*STDERR} "\n" . 'in RPerl::filter(), have pre-modification $input = ' . "\n" . '<<<<<<<<<<<<<<<<================ BEGIN INPUT FILE ================>>>>>>>>>>>>>>' . "\n" . $input . '<<<<<<<<<<<<<<<<================ END INPUT FILE ================>>>>>>>>>>>>>>' . "\n\n";
+#    print {*STDERR} "\n" . 'in RPerl::filter(), have pre-modification $input = ' . "\n" . '<<<<<<<<<<<<<<<<================ BEGIN INPUT FILE ================>>>>>>>>>>>>>>' . "\n" . $input . "\n" . '<<<<<<<<<<<<<<<<================ END INPUT FILE ================>>>>>>>>>>>>>>' . "\n\n";
 
     # look for all user-defined classes, create subclasses
     foreach my $input_line ( split /\n/, $input ) {
+#        print {*STDERR} 'in RPerl::filter(), have $input_line = ' . $input_line . "\n";
+        
         if ( $input_line =~ /^\s*package\s+(.*)\s*;/xms ) {
-
             # not all packages are classes
             $package_line = $input_line;
             $package = $1;
@@ -165,7 +166,7 @@ sub filter {
 #            print {*STDERR} 'in RPerl::filter(), have $rperlnamespaces_generated::RPERL->{' . $namespace_root . '} = ' . Dumper($rperlnamespaces_generated::RPERL->{$namespace_root}) . "\n";
 
             # DEV NOTE, CORRELATION #rp19: need remove hard-coded allowance of RPerl::Test namespace, at least move to rperlnamespaces.pm or friends
-            if (    ($package =~ /RPerl::Test/xms)
+            if (    ($package =~ /RPerl::Test/xms) or ($package eq 'RPerl::CompileUnit::Module::Class::Template')
                 or ( ( not exists $rperlnamespaces_generated::CORE->{$namespace_root} )
                 and ( not exists $rperlnamespaces_generated::RPERL_DEPS->{$namespace_root} )
                 and ( not exists $rperlnamespaces_generated::RPERL->{$namespace_root} ) ) )

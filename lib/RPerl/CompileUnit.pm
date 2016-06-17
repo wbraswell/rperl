@@ -33,7 +33,7 @@ our hashref $properties = {
     #properties => my object_arrayref $TYPED_properties = undef,
 };
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 
 # ...
 

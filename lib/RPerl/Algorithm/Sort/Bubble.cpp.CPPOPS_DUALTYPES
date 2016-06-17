@@ -13,7 +13,7 @@ using std::cout;  using std::cerr;  using std::endl;
 // [[[<<< BEGIN PERL TYPES >>>]]]
 // [[[<<< BEGIN PERL TYPES >>>]]]
 
-// [[[ OO METHODS & SUBROUTINES ]]]
+// [[[ SUBROUTINES & OO METHODS ]]]
 
 void RPerl__Algorithm__Sort__Bubble::integer_sort() {
     this->integer_data = RPerl__Algorithm__Sort__Bubble__integer_bubblesort(this->integer_data);
@@ -119,7 +119,7 @@ SV* RPerl__Algorithm__Sort__Bubble__number_bubblesort__typetest0(SV* lucky_numbe
 // [[[<<< BEGIN CPP TYPES >>>]]]
 // [[[<<< BEGIN CPP TYPES >>>]]]
 
-// [[[ OO METHODS & SUBROUTINES ]]]
+// [[[ SUBROUTINES & OO METHODS ]]]
 
 void RPerl__Algorithm__Sort__Bubble::integer_sort() {
     this->integer_data = RPerl__Algorithm__Sort__Bubble__integer_bubblesort(this->integer_data);

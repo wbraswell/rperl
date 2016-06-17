@@ -23,7 +23,7 @@ our hashref $properties
 
 use constant PIE => my string $TYPED_PIE = 'pecan';
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 our void::method $empty_method = sub {
     return 2;
 };

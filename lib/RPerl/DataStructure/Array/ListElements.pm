@@ -16,7 +16,7 @@ use RPerl::GrammarRule;
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 
 our integer::method $length = sub {
     ( my object $self, my string_hashref $modes) = @_;

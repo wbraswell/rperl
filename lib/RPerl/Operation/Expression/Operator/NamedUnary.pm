@@ -32,7 +32,7 @@ our string_hashref $NAMES = {
     'sin'     => 'RPerl::Operation::Expression::Operator::NamedUnary::Sine'
 };
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 
 our string_hashref::method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;

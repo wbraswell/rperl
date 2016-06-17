@@ -21,7 +21,7 @@ use RPerl::Test::Foo;
 our hashref $properties
     = { empty_property => my integer $TYPED_empty_property = 2 };
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 our integer::method $empty_method = sub {
     return 2;
 };

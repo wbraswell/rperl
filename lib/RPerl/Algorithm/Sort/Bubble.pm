@@ -19,7 +19,7 @@ our hashref $properties = {
     number_data  => my number_arrayref $TYPED_number_data   = undef
 };
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 
 our void::method $integer_sort = sub {
     ( my object $self ) = @_;

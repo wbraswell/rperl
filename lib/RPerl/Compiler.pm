@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.011_000;
+our $VERSION = 0.012_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -32,6 +32,7 @@ use Config;
 use Config qw(config_re);
 use IPC::Open3;
 use IO::Select;
+use Cwd;
 
 # [[[ SUBROUTINES ]]]
 
@@ -149,9 +150,19 @@ our string_arrayref $find_dependencies = sub {
                     . q{'} . $file_name . q{'} . ', dying' . "\n";
             }
 
-            #            RPerl::diag( 'in Compiler::find_dependencies(), have MATCHING $file_line = ' . $file_line . "\n" );
-            #            RPerl::diag( 'in Compiler::find_dependencies(), have $INC{$file_line} = ' . $INC{$file_line} . "\n" );
-            push @{$dependencies}, $INC{$file_line};
+            my string $current_working_directory = getcwd;
+
+#            RPerl::diag( 'in Compiler::find_dependencies(), have MATCHING $file_line = ' . $file_line . "\n" );
+#            RPerl::diag( 'in Compiler::find_dependencies(), have $INC{$file_line} = ' . $INC{$file_line} . "\n" );
+#            RPerl::diag( 'in Compiler::find_dependencies(), have $current_working_directory = ' . $current_working_directory . "\n" );
+
+            # trim unnecessary absolute paths
+            if ((substr $INC{$file_line}, 0, (length $current_working_directory)) eq $current_working_directory) {
+                push @{$dependencies}, (substr $INC{$file_line}, ((length $current_working_directory) + 1));
+            }
+            else {
+                push @{$dependencies}, $INC{$file_line};
+            }
 
             #            RPerl::diag( 'in Compiler::find_dependencies(), have PRE-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
 

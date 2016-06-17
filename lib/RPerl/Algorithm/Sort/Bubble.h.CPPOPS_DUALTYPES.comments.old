@@ -24,7 +24,7 @@ class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort  // SINGLE 
 //class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort, public RPerl__Algorithm__Inefficient  // NEED UPGRADE: multiple inheritance not currently supported by Inline::CPP
 {
 public:
-    ////# [[[ OO METHODS & SUBROUTINES ]]]
+    ////# [[[ SUBROUTINES & OO METHODS ]]]
 
     void integer_sort();
     void number_sort();
@@ -89,7 +89,7 @@ class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort  // SINGLE 
 //class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort, public RPerl__Algorithm__Inefficient  // NEED UPGRADE: multiple inheritance not currently supported by Inline::CPP
 {
 public:
-    ////# [[[ OO METHODS & SUBROUTINES ]]]
+    ////# [[[ SUBROUTINES & OO METHODS ]]]
 
     void integer_sort();
     void number_sort();

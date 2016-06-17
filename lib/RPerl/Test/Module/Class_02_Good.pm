@@ -16,7 +16,7 @@ use RPerl::Test;
 our hashref $properties
     = { empty_property => my integer $TYPED_empty_property = 2 };
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 our void::method $empty_method = sub {
     return 2;
 };
@@ -41,7 +41,7 @@ use RPerl::Test;
 our hashref $properties
     = { empty_property_additional => my integer $TYPED_empty_property_additional = 2 };
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 our void::method $empty_method_additional = sub {
     return 2;
 };

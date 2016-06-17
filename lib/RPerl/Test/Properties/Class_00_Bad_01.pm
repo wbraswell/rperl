@@ -18,7 +18,7 @@ use RPerl::Test;
 our properties
     = { empty_property => my integer $TYPED_empty_property = 2 };
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 our void::method $empty_method = sub {
     return 2;
 };

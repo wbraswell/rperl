@@ -39,7 +39,7 @@ our hashref $properties = {
 #    pals => my string_hashref $TYPED_pals = { a21 => 'howdy', 21 => 'buffalo', 21.3 => 'clarabell', '21.3' => 'bozo' }
 };
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 
 # START HERE: flesh out all Operator::Named (cos/sin/push etc) tests below (or in another file) and then implement
 # START HERE: flesh out all Operator::Named (cos/sin/push etc) tests below (or in another file) and then implement

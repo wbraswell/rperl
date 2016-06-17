@@ -16,7 +16,7 @@ our hashref $properties =
 	data => my unknown $TYPED_data  # TODO: create nonscalarref data type?
 };
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 
 # call out to sort data, return nothing
 our void::method $sort = sub {(my object $self) = @_;

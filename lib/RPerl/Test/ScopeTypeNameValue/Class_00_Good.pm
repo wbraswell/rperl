@@ -17,7 +17,7 @@ use RPerl::Test;
 our hashref $properties
     = { some_integer => my integer $TYPED_some_integer = 23 };
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 our string::method $properties_stnv = sub {
     return main::scope_type_name_value($properties);
 };

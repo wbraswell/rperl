@@ -21,7 +21,7 @@ use RPerl::Test;
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = { preschool => my string $TYPED_preschool = 'Busy Beaver' };
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 
 our RPerl::Test::Subclass::MySubclasserA_Bad_00::methodd $building_blocks = sub {
     ( my RPerl::Test::Subclass::MySubclasserA_Bad_00 $self ) = @_;

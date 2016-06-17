@@ -20,7 +20,7 @@ use RPerl::Test;
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 our void::method $foo = sub { return 2, 3, 5, 7; };
 
 1;    # end of class

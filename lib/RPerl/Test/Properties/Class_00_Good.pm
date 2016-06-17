@@ -13,7 +13,7 @@ use RPerl::Test;
 our hashref $properties
     = { test_property => my integer $TYPED_test_property = 2 };
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 our void::method $test_method = sub {
     ( my object $self, my integer $input_integer ) = @_;
     $self->{test_property} *= $input_integer;

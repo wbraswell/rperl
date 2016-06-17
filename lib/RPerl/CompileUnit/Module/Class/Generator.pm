@@ -21,7 +21,7 @@ use Storable qw(dclone);
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 
 our string_hashref::method $ast_to_rperl__generate = sub {
     ( my object $self, my string $package_name_underscores, my string_hashref $modes ) = @_;
@@ -324,7 +324,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     if ( exists $method_or_subroutine_star->{children}->[0] ) {
         if ( $modes->{label} eq 'ON' ) {
-            $rperl_source_group->{PMC} .= "\n" . '# [[[ OO METHODS & SUBROUTINES ]]]' . "\n\n";
+            $rperl_source_group->{PMC} .= "\n" . '# [[[ SUBROUTINES & OO METHODS ]]]' . "\n\n";
         }
     }
     foreach my object $method_or_subroutine ( ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
@@ -842,7 +842,7 @@ EOL
 
     if ( ( exists $method_definitions->[0] ) or ( exists $subroutine_definitions->[0] ) ) {
         if ( $modes->{label} eq 'ON' ) {
-            $cpp_source_group->{CPP} .= '// [[[ OO METHODS & SUBROUTINES ]]]' . "\n\n";
+            $cpp_source_group->{CPP} .= '// [[[ SUBROUTINES & OO METHODS ]]]' . "\n\n";
         }
         $cpp_source_group->{CPP} .= ( join "\n\n", @{$method_definitions} );
         if ( exists $method_definitions->[0] ) { $cpp_source_group->{CPP} .= "\n\n"; }

@@ -92,7 +92,7 @@ use overload
     '*' => \&sse_mul,
     '/' => \&sse_div;
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 
 sub sse_add {
     ( my $argument_left, my $argument_right, my $arguments_swap ) = @_;

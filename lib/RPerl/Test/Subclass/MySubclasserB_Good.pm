@@ -20,7 +20,7 @@ our hashref $properties = {
     kindergarten => my string $TYPED_kindergarten = 'Eagle Elementary'
 };
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 
 our RPerl::Test::Subclass::MySubclasserB_Good::method $alphabet = sub {
     ( my RPerl::Test::Subclass::MySubclasserB_Good $self ) = @_;

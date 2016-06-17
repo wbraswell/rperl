@@ -15,7 +15,7 @@ use RPerl::CompileUnit::Module::Class;
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 
 # OO INHERITANCE TESTING
 our void::method $empty_method = sub {

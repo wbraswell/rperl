@@ -22,7 +22,7 @@ our hashref $properties
 
 use RPerl::Test::Bar;
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 our integer::method $empty_method = sub {
     return 2;
 };

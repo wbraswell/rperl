@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Test::Foo;
 use strict;
 use warnings;
-our $VERSION = 0.003_000;
+our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -27,7 +27,7 @@ our hashref $properties = {
     yyz => my number_hashref $TYPED_yyz = { a => 3.1, b => 6.2, c => 9.3 }
 };
 
-# [[[ OO METHODS & SUBROUTINES ]]]
+# [[[ SUBROUTINES & OO METHODS ]]]
 
 our void::method $quux = sub {
     ( my object $self) = @_;
@@ -69,32 +69,32 @@ our RPerl::Test::Foo_arrayref::method $qaft = sub {
     return $retval;
 };
 
-our void $grunt = sub {
+our void $tnurg = sub {
     print 'PIE() = ' . PIE() . "\n";
 };
 
-our number $grault = sub {
-    ( my integer $grault_input ) = @_;
-    $grault_input++;
-    $grault_input--;
-    $grault_input = $grault_input**2;
-    return $grault_input**PI();
+our number $tluarg = sub {
+    ( my integer $tluarg_input ) = @_;
+    $tluarg_input++;
+    $tluarg_input--;
+    $tluarg_input = $tluarg_input**2;
+    return $tluarg_input**PI();
 };
 
-our number_arrayref $garply = sub {
-    ( my integer $garply_input, my number_arrayref $garply_array ) = @_;
-    my integer $garply_input_size = scalar @{$garply_array};
-    my integer $ungarply_size_typed = scalar @{my integer_arrayref $TYPED_ungarply = [4, 6, 8, 10]};
-#    my integer $ungarply_size_untyped = scalar @{[4, 6, 8, 10]};  missing type_inner, not supported in CPPOPS_CPPTYPES
-    my number_arrayref $garply_output = [
-        $garply_input * $garply_array->[0],
-        $garply_input * $garply_array->[1],
-        $garply_input * $garply_array->[2]
+our number_arrayref $ylprag = sub {
+    ( my integer $ylprag_input, my number_arrayref $ylprag_array ) = @_;
+    my integer $ylprag_input_size = scalar @{$ylprag_array};
+    my integer $unylprag_size_typed = scalar @{my integer_arrayref $TYPED_unylprag = [4, 6, 8, 10]};
+#    my integer $unylprag_size_untyped = scalar @{[4, 6, 8, 10]};  missing type_inner, not supported in CPPOPS_CPPTYPES
+    my number_arrayref $ylprag_output = [
+        $ylprag_input * $ylprag_array->[0],
+        $ylprag_input * $ylprag_array->[1],
+        $ylprag_input * $ylprag_array->[2]
     ];
-    return $garply_output;
+    return $ylprag_output;
 };
 
-our string_hashref $gorce = sub {
+our string_hashref $ecrog = sub {
     ( my integer $al, my number $be, my string $ga, my string_hashref $de)
         = @_;
     return {
