@@ -18,6 +18,8 @@ use RPerl::CompileUnit::Module::Class;
 # [[[ INCLUDES ]]]
 use RPerl::Grammar;
 use rperltypesconv;
+use IPC::Cmd qw(can_run);          # to check for `astyle`
+use File::Temp qw(tempfile);
 
 #use RPerl::Parser;
 #require RPerl::Parser;
@@ -147,24 +149,24 @@ our boolean $dummy_source_code_find = sub {
 # line-by-line comparison of file contents vs string contents;
 # returns -1 __DUMMY_SOURCE_CODE found, 0 no difference, >0 line number of first difference
 our integer $diff_check_file_vs_string = sub {
-    ( my string $filename, my string $source_string, my string $ops) = @_;
+    ( my string $file_name_reference, my string $string_generated, my string $ops) = @_;
 
-#    RPerl::diag('in Generator->diff_check_file_vs_string(), received $filename = ' . $filename . "\n");
+#    RPerl::diag('in Generator->diff_check_file_vs_string(), received $file_name_reference = ' . $file_name_reference . "\n");
 #    RPerl::diag('in Generator->diff_check_file_vs_string(), contents of file = ' . "\n");
-#    system 'cat', $filename;
-#    RPerl::diag('in Generator->diff_check_file_vs_string(), received $source_string = ' . "\n" . $source_string . "\n\n");
+#    system 'cat', $file_name_reference;
+#    RPerl::diag('in Generator->diff_check_file_vs_string(), received $string_generated = ' . "\n" . $string_generated . "\n\n");
 
-    if ( not -f $filename ) {
-        die 'ERROR ECOGEDI00, RPERL GENERATOR, DIFF CHECK: File not found, ' . q{'} . $filename . q{'} . "\n" . ', dying' . "\n";
+    if (( not -e $file_name_reference ) or ( not -f $file_name_reference ) or ( not -T $file_name_reference )) {
+        die 'ERROR ECOGEDI00, RPERL GENERATOR, DIFF CHECK: Missing or invalid file, ' . q{'} . $file_name_reference . q{'} . "\n" . ', dying' . "\n";
     }
 
-    open my filehandleref $FILE_HANDLE, '<', $filename
-        or die 'ERROR ECOGEDI01, RPERL GENERATOR, DIFF CHECK: Cannot open file ' . q{'} . $filename . q{'} . ' for reading,' . $OS_ERROR . ', dying' . "\n";
+    open my filehandleref $FILE_HANDLE_REFERENCE, '<', $file_name_reference
+        or die 'ERROR ECOGEDI01, RPERL GENERATOR, DIFF CHECK: Cannot open file ' . q{'} . $file_name_reference . q{'} . ' for reading,' . $OS_ERROR . ', dying' . "\n";
 
     # read in file, strip comments & blank lines
     my string $file_line;
-    my string $file_string = q{};
-    while ( $file_line = <$FILE_HANDLE> ) {
+    my string $string_reference = q{};
+    while ( $file_line = <$FILE_HANDLE_REFERENCE> ) {
         $file_line =~ s/^\s+//xms;    # strip leading whitespace
         if ( ( $ops eq 'PERL' ) and ( $file_line =~ /^[#][^#!]/xms ) ) {
             next;                     # discard whole-line comment, PERLOPS
@@ -259,31 +261,28 @@ our integer $diff_check_file_vs_string = sub {
             $file_line = $file_line_tmp;
         }
         else {    # $ops eq 'CPP'
-                  # NEED FIX: add comment-strip C++ code, accounting for strings containing // and /*
-                  # NEED FIX: add comment-strip C++ code, accounting for strings containing // and /*
-                  # NEED FIX: add comment-strip C++ code, accounting for strings containing // and /*
-
-            #            $file_line =~ s{//.*$}{\n}gxms;     # // comments
-            #            $file_line =~ s{/\*.*\*/}{}gxms;    # /* comments */
+            # NEED FIX: these regexes do not account for strings containing // or /* or */ characters
+            $file_line =~ s{^([^'"]*)//.*$}{$1\n}gxms;     # NON-QUOTE-CHARS // comments
+            $file_line =~ s{^([^'"]*)/\*.*\*/^([^'"]*)$}{$1 $2}gxms;    # NON-QUOTE-CHARS /* comments */ NON-QUOTE-CHARS
         }
 
         # strip trailing whitespace, if present
         $file_line =~ s/[ \t]+$//;
-        $file_string .= $file_line;
+        $string_reference .= $file_line;
     }
 
-    close $FILE_HANDLE
-        or die 'ERROR ECOGEDI02, RPERL GENERATOR, DIFF CHECK: Cannot close file ' . q{'} . $filename . q{'} . ' after reading, ' . $OS_ERROR . ', dying' . "\n";
+    close $FILE_HANDLE_REFERENCE
+        or die 'ERROR ECOGEDI02, RPERL GENERATOR, DIFF CHECK: Cannot close file ' . q{'} . $file_name_reference . q{'} . ' after reading, ' . $OS_ERROR . ', dying' . "\n";
 
     # remove extra blank lines inserted by RPerl generators
-    $source_string =~ s/\n\n/\n/gxms;
+    $string_generated =~ s/\n\n/\n/gxms;
 
-#    RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $file_string = ' . "\n" . ( q{=} x 60 ) . "\n" . $file_string . "\n" . ( q{=} x 60 ) . "\n\n" );
-#    RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $source_string = ' . "\n" . ( q{=} x 60 ) . "\n" . $source_string . "\n" . ( q{=} x 60 ) . "\n\n" );
+#    RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $string_reference = ' . "\n" . ( q{=} x 60 ) . "\n" . $string_reference . "\n" . ( q{=} x 60 ) . "\n\n" );
+#    RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $string_generated = ' . "\n" . ( q{=} x 60 ) . "\n" . $string_generated . "\n" . ( q{=} x 60 ) . "\n\n" );
 
     # tidy all code
-    my string $file_string_tidied;
-    my string $source_string_tidied;
+    my string $string_reference_tidied = q{};
+    my string $string_generated_tidied = q{};
     if ( $ops eq 'PERL' ) {
 
         # tidy file string
@@ -292,22 +291,22 @@ our integer $diff_check_file_vs_string = sub {
 
             # same as Compiler::save_source_files() except '-se' to redirect STDERR
             argv        => q{-pbp --ignore-side-comment-lengths --converge -l=160 -b -nst -bext='/' -q -se},
-            source      => \$file_string,
-            destination => \$file_string_tidied,
+            source      => \$string_reference,
+            destination => \$string_reference_tidied,
             stderr      => \$perltidy_stderr_string,
         );
         if ($perltidy_errored) {    # serious error in input parameters, no tidied output
-            die 'ERROR ECOGEDI03: Perl::Tidy major failure in file ' . q{'} . $filename . q{'} . ' with the following STDERR output, dying' . "\n" . $perltidy_stderr_string . "\n";
+            die 'ERROR ECOGEDI03: Perl::Tidy major failure in file ' . q{'} . $file_name_reference . q{'} . ' with the following STDERR output, dying' . "\n" . $perltidy_stderr_string . "\n";
         }
         elsif ($perltidy_stderr_string) {
-            die 'ERROR ECOGEDI04: Perl::Tidy minor failure in file ' . q{'} . $filename . q{'} . ' with the following STDERR output, dying' . "\n" . $perltidy_stderr_string . "\n";
+            die 'ERROR ECOGEDI04: Perl::Tidy minor failure in file ' . q{'} . $file_name_reference . q{'} . ' with the following STDERR output, dying' . "\n" . $perltidy_stderr_string . "\n";
         }
 
         # tidy source string
         $perltidy_errored = Perl::Tidy::perltidy(
             argv        => q{-pbp --ignore-side-comment-lengths --converge -l=160 -b -nst -bext='/' -q -se},
-            source      => \$source_string,
-            destination => \$source_string_tidied,
+            source      => \$string_generated,
+            destination => \$string_generated_tidied,
             stderr      => \$perltidy_stderr_string,
         );
         if ($perltidy_errored) {
@@ -318,48 +317,131 @@ our integer $diff_check_file_vs_string = sub {
         }
     }
     else {    # $ops eq 'CPP'
-        die 'NEED FIX: add tidy C++ code';
+        # FORMAT REFERENCE SOURCE CODE
+        my filehandleref $FILE_HANDLE_REFERENCE_TMP;
+        my string $file_name_reference_tmp;
 
-        # NEED FIX: add tidy C++ code
-        # NEED FIX: add tidy C++ code
-        # NEED FIX: add tidy C++ code
+        ( $FILE_HANDLE_REFERENCE_TMP, $file_name_reference_tmp ) = tempfile( $file_name_reference . '.reference.tempfileXXXX' );
+        print {$FILE_HANDLE_REFERENCE_TMP} $string_reference or croak("\nERROR ECOGEFI00, GENERATOR, FILE SYSTEM: Attempting to save new file '$file_name_reference_tmp', cannot write to file,\ncroaking: $OS_ERROR");
+        close $FILE_HANDLE_REFERENCE_TMP or croak("\nERROR ECOGEFI01, GENERATOR, FILE SYSTEM: Attempting to save new file '$file_name_reference_tmp', cannot close file,\ncroaking: $OS_ERROR");
+
+        my string $astyle_path = can_run('astyle');
+        if ( defined $astyle_path ) {
+            #                system $astyle_path, '-q', $file_name_reference;
+            # don't insert extra newlines, which causes accessors, mutators, and ops_types reporting subroutines to be broken into multiple lines
+            system $astyle_path, '-q', '--keep-one-line-blocks', '--keep-one-line-statements', $file_name_reference_tmp;
+            if (( -e $file_name_reference_tmp . '.orig' ) and ( -f $file_name_reference_tmp . '.orig' )) {
+                unlink( $file_name_reference_tmp . '.orig' )
+                    or croak( "\n" . 'ERROR ECOGEFI02, GENERATOR, FILE SYSTEM: Cannot delete Artistic Style original file ' . q{'} . $file_name_reference_tmp . '.orig' . q{'} . ',' . "\n" . 'croaking:' . $OS_ERROR);
+            }
+            else {
+                RPerl::warning( 'WARNING WCOGEFI01, COMPILER, C++ CODE FORMATTING: Artistic Style command `astyle` did not create the file' . q{'} . $file_name_reference_tmp . '.orig' . q{'} . ', did something go wrong?' . "\n" );
+            }
+        }
+        else {
+            RPerl::warning( 'WARNING WCOGEFI00, COMPILER, C++ CODE FORMATTING: Artistic Style command `astyle` not found, abandoning formatting' . "\n" );
+        }
+
+        if (( not -e $file_name_reference_tmp ) or ( not -f $file_name_reference_tmp ) or ( not -T $file_name_reference_tmp )) {
+            die 'ERROR ECOGEDI07, RPERL GENERATOR, DIFF CHECK: Missing or invalid temporary AStyle-tidied file, ' . q{'} . $file_name_reference_tmp . q{'} . "\n" . ', dying' . "\n";
+        }
+    
+        open $FILE_HANDLE_REFERENCE_TMP, '<', $file_name_reference_tmp
+            or die 'ERROR ECOGEDI08, RPERL GENERATOR, DIFF CHECK: Cannot open temporary AStyle-tidied file ' . q{'} . $file_name_reference_tmp . q{'} . ' for reading,' . $OS_ERROR . ', dying' . "\n";
+    
+        # read in tidied file
+        my string $file_line_reference_tmp;
+        while ( $file_line_reference_tmp = <$FILE_HANDLE_REFERENCE_TMP> ) {
+            $string_reference_tidied .= $file_line_reference_tmp . "\n";
+        }
+
+        close $FILE_HANDLE_REFERENCE_TMP
+            or die 'ERROR ECOGEDI09, RPERL GENERATOR, DIFF CHECK: Cannot close temporary AStyle-tidied file ' . q{'} . $file_name_reference_tmp . q{'} . ' after reading, ' . $OS_ERROR . ', dying' . "\n";
+
+        # FORMAT GENERATED SOURCE CODE
+        my filehandleref $FILE_HANDLE_GENERATED_TMP;
+        my string $file_name_generated_tmp;
+
+        ( $FILE_HANDLE_GENERATED_TMP, $file_name_generated_tmp ) = tempfile( $file_name_reference . '.generated.tempfileXXXX' );
+        print {$FILE_HANDLE_GENERATED_TMP} $string_generated or croak("\nERROR ECOGEFI00, GENERATOR, FILE SYSTEM: Attempting to save new file '$file_name_generated_tmp', cannot write to file,\ncroaking: $OS_ERROR");
+        close $FILE_HANDLE_GENERATED_TMP or croak("\nERROR ECOGEFI01, GENERATOR, FILE SYSTEM: Attempting to save new file '$file_name_generated_tmp', cannot close file,\ncroaking: $OS_ERROR");
+
+#        my string $astyle_path = can_run('astyle');
+        if ( defined $astyle_path ) {
+            #                system $astyle_path, '-q', $file_name_generated;
+            # don't insert extra newlines, which causes accessors, mutators, and ops_types reporting subroutines to be broken into multiple lines
+            system $astyle_path, '-q', '--keep-one-line-blocks', '--keep-one-line-statements', $file_name_generated_tmp;
+            if (( -e $file_name_generated_tmp . '.orig' ) and ( -f $file_name_generated_tmp . '.orig' )) {
+                unlink( $file_name_generated_tmp . '.orig' )
+                    or croak( "\n" . 'ERROR ECOGEFI02, GENERATOR, FILE SYSTEM: Cannot delete Artistic Style original file ' . q{'} . $file_name_generated_tmp . '.orig' . q{'} . ',' . "\n" . 'croaking:' . $OS_ERROR);
+            }
+            else {
+                RPerl::warning( 'WARNING WCOGEFI01, COMPILER, C++ CODE FORMATTING: Artistic Style command `astyle` did not create the file' . q{'} . $file_name_generated_tmp . '.orig' . q{'} . ', did something go wrong?' . "\n" );
+            }
+        }
+        else {
+            RPerl::warning( 'WARNING WCOGEFI00, COMPILER, C++ CODE FORMATTING: Artistic Style command `astyle` not found, abandoning formatting' . "\n" );
+        }
+
+        if (( not -e $file_name_generated_tmp ) or ( not -f $file_name_generated_tmp ) or ( not -T $file_name_generated_tmp )) {
+            die 'ERROR ECOGEDI07, RPERL GENERATOR, DIFF CHECK: Missing or invalid temporary AStyle-tidied file, ' . q{'} . $file_name_generated_tmp . q{'} . "\n" . ', dying' . "\n";
+        }
+    
+        open $FILE_HANDLE_GENERATED_TMP, '<', $file_name_generated_tmp
+            or die 'ERROR ECOGEDI08, RPERL GENERATOR, DIFF CHECK: Cannot open temporary AStyle-tidied file ' . q{'} . $file_name_generated_tmp . q{'} . ' for reading,' . $OS_ERROR . ', dying' . "\n";
+    
+        # read in tidied file
+        my string $file_line_generated_tmp;
+        while ( $file_line_generated_tmp = <$FILE_HANDLE_GENERATED_TMP> ) {
+            $string_generated_tidied .= $file_line_generated_tmp . "\n";
+        }
+
+        close $FILE_HANDLE_GENERATED_TMP
+            or die 'ERROR ECOGEDI09, RPERL GENERATOR, DIFF CHECK: Cannot close temporary AStyle-tidied file ' . q{'} . $file_name_generated_tmp . q{'} . ' after reading, ' . $OS_ERROR . ', dying' . "\n";
     }
+
+    # ACTUALLY START COMPARING REFERENCE VS GENERATED CODE STRINGS IN MEMORY
 
     # remove extra blank lines inserted by Perl::Tidy
-    $file_string_tidied =~ s/\n\n/\n/gxms;
-    $source_string_tidied =~ s/\n\n/\n/gxms;
+    $string_reference_tidied =~ s/\n\n/\n/gxms;
+    $string_generated_tidied =~ s/\n\n/\n/gxms;
 
-#    RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $file_string_tidied = ' . "\n" . ( q{=} x 60 ) . "\n" . $file_string_tidied . "\n" . ( q{=} x 60 ) . "\n\n" );
-#    RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $source_string_tidied = ' . "\n" . ( q{=} x 60 ) . "\n" . $source_string_tidied . "\n" . ( q{=} x 60 ) . "\n\n" );
+    # START HERE: get displayed files to match, get all RPerl CPPOPS_CPPTYPES generator tests to pass, then MathPerl & PhysicsPerl
+    # START HERE: get displayed files to match, get all RPerl CPPOPS_CPPTYPES generator tests to pass, then MathPerl & PhysicsPerl
+    # START HERE: get displayed files to match, get all RPerl CPPOPS_CPPTYPES generator tests to pass, then MathPerl & PhysicsPerl
 
-    my string_arrayref $file_string_split   = [ ( split /\n/xms, $file_string_tidied ) ];
-    my string_arrayref $source_string_split = [ ( split /\n/xms, $source_string_tidied ) ];
-    my string_arrayref $source_string_split_tmp = [];
-    my string $string_line;
+    RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $string_reference_tidied = ' . "\n" . ( q{=} x 60 ) . "\n" . $string_reference_tidied . "\n" . ( q{=} x 60 ) . "\n\n" );
+    RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $string_generated_tidied = ' . "\n" . ( q{=} x 60 ) . "\n" . $string_generated_tidied . "\n" . ( q{=} x 60 ) . "\n\n" );
+    die 'TMP DEBUG';
+
+    my string_arrayref $string_reference_split   = [ ( split /\n/xms, $string_reference_tidied ) ];
+    my string_arrayref $string_generated_split = [ ( split /\n/xms, $string_generated_tidied ) ];
+    my string_arrayref $string_generated_split_tmp = [];
+    my string $line_generated;
 
     # discard blank & all-whitespace lines
-    foreach $string_line ( @{$source_string_split} ) {
-        if ( $string_line !~ /^\s*$/xms ) {
-            push @{$source_string_split_tmp}, $string_line;
+    foreach $line_generated ( @{$string_generated_split} ) {
+        if ( $line_generated !~ /^\s*$/xms ) {
+            push @{$string_generated_split_tmp}, $line_generated;
         }
     }
-    $source_string_split     = $source_string_split_tmp;
-    $source_string_split_tmp = undef;
+    $string_generated_split     = $string_generated_split_tmp;
+    $string_generated_split_tmp = undef;
 
     my $return_value = 0;    # default return value, files do not differ
-    for my integer $i ( 0 .. ( ( scalar @{$file_string_split} ) - 1 ) ) {
-        $file_line   = $file_string_split->[$i];
-        $string_line = $source_string_split->[$i];
-        if ( $string_line =~ /__DUMMY_SOURCE_CODE/xms ) {
+    for my integer $i ( 0 .. ( ( scalar @{$string_reference_split} ) - 1 ) ) {
+        my string $line_reference = $string_reference_split->[$i];
+        $line_generated = $string_generated_split->[$i];
+        if ( $line_generated =~ /__DUMMY_SOURCE_CODE/xms ) {
             RPerl::warning( 'WARNING WCOGEDI00, RPERL GENERATOR, DIFF CHECK: Dummy source code found, attempt to utilize incomplete RPerl feature, abandoning check' . "\n" );
             $return_value = -1;
             last;
         }
 
-        if ( $file_line ne $string_line ) {
+        if ( $line_reference ne $line_generated ) {
 
-            #            RPerl::diag( 'in Generator->diff_check_file_vs_string(), have non-matching $file_line =' . "\n" . $file_line . "\n" );
-            #            RPerl::diag( 'in Generator->diff_check_file_vs_string(), have non-matching $string_line =' . "\n" . $string_line . "\n" );
+            #            RPerl::diag( 'in Generator->diff_check_file_vs_string(), have non-matching $line_reference =' . "\n" . $line_reference . "\n" );
+            #            RPerl::diag( 'in Generator->diff_check_file_vs_string(), have non-matching $line_generated =' . "\n" . $line_generated . "\n" );
             $return_value = $i + 1;    # arrays indexed from 0, file lines indexed from 1
             last;
         }

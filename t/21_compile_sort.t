@@ -10,7 +10,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_100;
+our $VERSION = 0.001_200;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -87,7 +87,7 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
             foreach my string $suffix_key ( sort keys %{ $output_file_name_groups->[0] } ) {
                 $test_file_reference = $output_file_name_groups->[0]->{$suffix_key} . q{-} . $ops . 'OPS_' . $types . 'TYPES';
                 if ( not -f $test_file_reference ) {
-                    RPerl::warning( 'WARNING WTE11GE00: Test Group 11, Code Generator; Missing pre-compiled source code reference file ' . q{'}
+                    RPerl::warning( 'WARNING WTExxGE00: Test Group xx, Code Generator; Missing pre-compiled source code reference file ' . q{'}
                             . $test_file_reference . q{'}
                             . ', not performing difference check'
                             . "\n" );
@@ -178,7 +178,7 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
             RPerl::diag( 'in 15_compile_sort.t, have $EVAL_ERROR = ' . $EVAL_ERROR . "\n" );
             if ( $EVAL_ERROR =~ /Can't\slocate\sobject\smethod\s"ast_to_\w*__generate"\svia\spackage/xms ) {
                 RPerl::warning(
-                    'WARNING WTE11GE01: Test Group 11, Code Generator; Missing code generation method, received error message...' . "\n" . $EVAL_ERROR . "\n" );
+                    'WARNING WTExxGE01: Test Group xx, Code Generator; Missing code generation method, received error message...' . "\n" . $EVAL_ERROR . "\n" );
             }
             else {
                 ok( 0, 'Program or module generates without errors: ' . $test_file );

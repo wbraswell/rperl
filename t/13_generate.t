@@ -3,13 +3,13 @@
 # suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s),
 # also 'WARNING WCOCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package' due to RPerl/Test/*/*Bad*.pm & RPerl/Test/*/*bad*.pl,
 # also other warnings generated in this file due to partially-incomplete generator code
-BEGIN { $ENV{RPERL_WARNINGS} = 0; }
+#BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
 # [[[ HEADER ]]]
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_100;
+our $VERSION = 0.008_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -37,8 +37,12 @@ use Perl::Tidy;
 # NEED UPDATE: add string_arrayref_hashref_hashref type
 #my string_arrayref_hashref_hashref $test_files = {};
 my $test_files = {};
+
+# locate all *Good* *good* *Bad* *bad* test files in RPerl/Test/ directory
 find(
     sub {
+        return;  # TMP DEBUG
+ 
         my $file = $File::Find::name;
 
 #        RPerl::diag('in 13_generate.t, have $file = ' . $file . "\n");
@@ -72,6 +76,45 @@ find(
     $RPerl::INCLUDE_PATH . '/RPerl/Test'
 );
 
+# locate all *.*OPS_*TYPES pre-compiled files in RPerl/ directory
+find(
+    sub {
+        my $file = $File::Find::name;
+
+#        RPerl::diag('in 13_generate.t, have $file = ' . $file . "\n");
+
+#        if ( $file !~ m/[.]pm$/xms ) { # TEMP DEBUGGING, ONLY FIND *.pm, NOT *.pl
+#        if ( $file !~ m/.*Module\/.*$/xms ) { # TEMP DEBUGGING, ONLY FIND CERTAIN FILES
+#        if ( $file =~ m/^(\w+[.]p[ml])[.]\w+OPS_\w+TYPES(_\w+)?$/xms ) {    # find all pre-compiled files
+        if ( $file =~ m/^(.+)[.]\w+OPS_\w+TYPES$/gxms ) {    # find all pre-compiled files
+            my string $file_base = $1;
+#            RPerl::diag('in 13_generate.t, have pre-compiled $file        = ' . $file . "\n");
+#            RPerl::diag('in 13_generate.t, have pre-compiled $file_base   = ' . $file_base . "\n");
+            if (($file_base =~ m/^(.*)[.]cpp$/gxms) or ($file_base =~ m/^(.*)[.]h$/gxms) or ($file_base =~ m/^(.*)[.]pmc$/gxms)) {
+                my string $file_prefix = $1;
+#                RPerl::diag('in 13_generate.t, have pre-compiled $file_prefix = ' . $file_prefix . "\n");
+                if ((-e ($file_prefix . '.pl')) and (-f ($file_prefix . '.pl')) and (-T ($file_prefix . '.pl'))) {
+                    $test_files->{$file_prefix . '.pl'} = undef;
+                }
+                elsif ((-e ($file_prefix . '.pm')) and (-f ($file_prefix . '.pm')) and (-T ($file_prefix . '.pm'))) {
+                    $test_files->{$file_prefix . '.pm'} = undef;
+                }
+                else {
+                    RPerl::warning( 'WARNING WTE13GE02, TEST GROUP 13, CODE GENERATOR: Missing non-compiled source code reference file ' . q{'} . $file_prefix . '.pl' . q{'} . ' or '  . q{'} . $file_prefix . '.pm' . q{'} . ', not performing difference check' . "\n" );
+                }
+            }
+            else {
+                RPerl::warning( 'WARNING WTE13GE03, TEST GROUP 13, CODE GENERATOR: Unrecognized pre-compiled source code reference file base ' . q{'} . $file_base . q{'} . ', not performing difference check' . "\n" );
+            }
+        }
+        else {  # not a pre-compiled file
+#            RPerl::diag('in 13_generate.t, have NOT pre-compiled $file = ' . $file . "\n");
+            return;
+        }
+    },
+    $RPerl::INCLUDE_PATH . '/RPerl'
+);
+
 #=cut
 
 #RPerl::diag( 'in 13_generate.t, have $test_files = ' . "\n" . Dumper($test_files) . "\n" );
@@ -85,9 +128,11 @@ my integer $diff_line;
 my integer $number_of_tests_run = 0;
 
 # [[[ PRIMARY RUNLOOP ]]]
-# loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
+# loop up to 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
 #foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
-for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
+#for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
+for my $mode_id ( 2 ) {    # CPPOPS_CPPTYPES ONLY
+#for my $mode_id ( 0 , 2 ) {    # PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
 #    RPerl::diag("in 13_generate.t, top of for() loop, have \$mode_id = $mode_id\n");
 
     # [[[ MODE SETUP ]]]
@@ -102,7 +147,7 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
     lives_ok( sub { rperltypes::types_enable($types) }, q{mode '} . $ops . ' operations and ' . $types . ' data types' . q{' enabled} );
     $number_of_tests_run++;
 
-    for my $test_file ( sort keys %{$test_files} ) {
+    foreach my $test_file ( sort keys %{$test_files} ) {
 
 #        RPerl::diag( 'in 13_generate.t, have $test_file = ' . $test_file . "\n" );
 
@@ -126,16 +171,38 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
         else {                          # $ops eq 'CPP'
             $perform_diff_check = 1;    # begin by assuming diff check, all reference file(s) found
             foreach my string $suffix_key ( sort keys %{ $output_file_name_groups->[0] } ) {
-                $test_file_reference = $output_file_name_groups->[0]->{$suffix_key} . q{-} . $ops . 'OPS_' . $types . 'TYPES';
-                if ( not -f $test_file_reference ) {
-                    RPerl::warning( 'WARNING WTE11GE00: Test Group 11, Code Generator; Missing pre-compiled source code reference file ' . q{'}
-                            . $test_file_reference . q{'}
-                            . ', not performing difference check'
-                            . "\n" );
+                RPerl::diag( 'in 13_generate.t, have $suffix_key = ' . $suffix_key . "\n" );
+                RPerl::diag( 'in 13_generate.t, have $output_file_name_groups->[0]->{$suffix_key} = ' . $output_file_name_groups->[0]->{$suffix_key} . "\n" );
+                if ((substr $suffix_key, 0, 1) eq '_') {
+                    next;
+                }
+                elsif ($suffix_key eq 'PMC') {
+                    $test_file_reference = $output_file_name_groups->[0]->{$suffix_key} . q{.} . $ops . 'OPS_DUALTYPES';
+                }
+                elsif ($suffix_key eq 'H') {
+                    if ((substr $output_file_name_groups->[0]->{$suffix_key}, -12, 12) eq ' (if needed)') {
+                        $test_file_reference = (substr $output_file_name_groups->[0]->{$suffix_key}, 0, ((length $output_file_name_groups->[0]->{$suffix_key}) - 12)) . q{.} . $ops . 'OPS_' . $types . 'TYPES';
+                    }
+                    else {
+                        $test_file_reference = $output_file_name_groups->[0]->{$suffix_key} . q{.} . $ops . 'OPS_' . $types . 'TYPES';
+                    }
+                }
+                else {
+                    $test_file_reference = $output_file_name_groups->[0]->{$suffix_key} . q{.} . $ops . 'OPS_' . $types . 'TYPES';
+                }
+                RPerl::diag( 'in 13_generate.t, have $test_file_reference = ' . $test_file_reference . "\n" );
+ 
+                if (( not -e $test_file_reference ) or ( not -f $test_file_reference ) or ( not -T $test_file_reference )) {
+                    RPerl::warning( 'WARNING WTE13GE00, TEST GROUP 13, CODE GENERATOR: Missing or invalid pre-compiled source code reference file ' . q{'} . $test_file_reference . q{'} . ', not performing difference check' . "\n" );
                     $perform_diff_check = 0;    # no diff check, at least one reference file missing
                     last;
                 }
             }
+        }
+
+        # NEED UPGRADE: remove this skip-if-no-diff-check once all CPPOPS_CPPTYPES code generation is complete
+        if (not $perform_diff_check) {
+            next;
         }
 
         # [[[ PARSE ]]]
@@ -190,7 +257,7 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
                         }
                         else {                     # $ops eq 'CPP'
                                                    # multiple reference files; use pre-compiled CPP source files as references for diff check
-                            $test_file_reference = $output_file_name_groups->[0]->{$suffix_key} . q{-} . $ops . 'OPS_' . $types . 'TYPES';
+                            $test_file_reference = $output_file_name_groups->[0]->{$suffix_key} . q{.} . $ops . 'OPS_' . $types . 'TYPES';
                         }
 
                         #                        RPerl::diag( 'in 13_generate.t, have $test_file_reference = ' . $test_file_reference . "\n" );
@@ -249,7 +316,7 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
             else {
 #                RPerl::diag( 'in 13_generate.t, have $test_file NOT named *Bad* or *bad*' . "\n" );
                 if ( $EVAL_ERROR =~ /Can't\slocate\sobject\smethod\s"ast_to_\w*__generate"\svia\spackage/xms ) {
-                    RPerl::warning( 'WARNING WTE11GE01: Test Group 11, Code Generator; Missing code generation method, received error message...' . "\n"
+                    RPerl::warning( 'WARNING WTE13GE01, TEST GROUP 13, CODE GENERATOR: Missing code generation method, received error message...' . "\n"
                             . $EVAL_ERROR
                             . "\n" );
                 }
