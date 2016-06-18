@@ -4,7 +4,7 @@
 use RPerl;
 use strict;
 use warnings;
-our $VERSION = 0.024_000;
+our $VERSION = 0.024_100;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -93,7 +93,7 @@ our string_arrayref $pod2cpanhtml_process = sub {
     my string $temp_file_name;
 
 #    ( $TEMP_FILE_HANDLE, $temp_file_name ) = tempfile( 'tempfileXXXX', SUFFIX => '.tmp' );
-    ( $TEMP_FILE_HANDLE, $temp_file_name ) = tempfile( 'tempfileXXXX', SUFFIX => '.tmp', UNLINK => 1 );
+    ( $TEMP_FILE_HANDLE, $temp_file_name ) = tempfile( 'tempfileXXXX', SUFFIX => '.tmp', UNLINK => 1, TMPDIR => 1 );
 
     my string $file_lines_joined = join q{}, @{$file_lines};
     print {$TEMP_FILE_HANDLE} $file_lines_joined

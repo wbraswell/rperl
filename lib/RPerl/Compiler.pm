@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.012_000;
+our $VERSION = 0.012_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -637,7 +637,7 @@ our void $save_source_files = sub {
 
         if ( $file_name eq '_TEMPFILE' ) {
             ( $SOURCE_FILE_HANDLE, $file_name )
-                = tempfile( 'tempfileXXXX', SUFFIX => ( lc $suffix_key ) );
+                = tempfile( 'tempfileXXXX', SUFFIX => ( lc $suffix_key ), UNLINK => 1, TMPDIR => 1 );
 
             print {$SOURCE_FILE_HANDLE} $source
                 or croak("\nERROR ECOCOFI06, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot write to file,\ncroaking: $OS_ERROR");

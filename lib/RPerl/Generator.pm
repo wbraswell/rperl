@@ -20,6 +20,7 @@ use RPerl::Grammar;
 use rperltypesconv;
 use IPC::Cmd qw(can_run);          # to check for `astyle`
 use File::Temp qw(tempfile);
+use File::Basename;
 
 #use RPerl::Parser;
 #require RPerl::Parser;
@@ -319,9 +320,14 @@ our integer $diff_check_file_vs_string = sub {
     else {    # $ops eq 'CPP'
         # FORMAT REFERENCE SOURCE CODE
         my filehandleref $FILE_HANDLE_REFERENCE_TMP;
-        my string $file_name_reference_tmp;
-
-        ( $FILE_HANDLE_REFERENCE_TMP, $file_name_reference_tmp ) = tempfile( $file_name_reference . '.reference.tempfileXXXX' );
+        (my string $file_name_reference_tmp, my string $file_name_reference_tmp_dirs, my string $file_name_reference_tmp_suffix) = fileparse($file_name_reference);
+        RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $file_name_reference_tmp = ' . q{'} . $file_name_reference_tmp . q{'} . "\n" );
+        RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $file_name_reference_tmp_dirs = ' . q{'} . $file_name_reference_tmp_dirs . q{'} . "\n" );
+        RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $file_name_reference_tmp_suffix = ' . q{'} . $file_name_reference_tmp_suffix . q{'} . "\n" );
+ 
+        ( $FILE_HANDLE_REFERENCE_TMP, $file_name_reference_tmp ) = tempfile( $file_name_reference_tmp . '.reference.tempfileXXXX', UNLINK => 1, TMPDIR => 1 );
+        RPerl::diag( 'in Generator->diff_check_file_vs_string(), have modified $file_name_reference_tmp = ' . q{'} . $file_name_reference_tmp . q{'} . "\n" );
+ 
         print {$FILE_HANDLE_REFERENCE_TMP} $string_reference or croak("\nERROR ECOGEFI00, GENERATOR, FILE SYSTEM: Attempting to save new file '$file_name_reference_tmp', cannot write to file,\ncroaking: $OS_ERROR");
         close $FILE_HANDLE_REFERENCE_TMP or croak("\nERROR ECOGEFI01, GENERATOR, FILE SYSTEM: Attempting to save new file '$file_name_reference_tmp', cannot close file,\ncroaking: $OS_ERROR");
 
@@ -360,9 +366,14 @@ our integer $diff_check_file_vs_string = sub {
 
         # FORMAT GENERATED SOURCE CODE
         my filehandleref $FILE_HANDLE_GENERATED_TMP;
-        my string $file_name_generated_tmp;
+        (my string $file_name_generated_tmp, my string $file_name_generated_tmp_dirs, my string $file_name_generated_tmp_suffix) = fileparse($file_name_reference);
+        RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $file_name_generated_tmp = ' . q{'} . $file_name_generated_tmp . q{'} . "\n" );
+        RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $file_name_generated_tmp_dirs = ' . q{'} . $file_name_generated_tmp_dirs . q{'} . "\n" );
+        RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $file_name_generated_tmp_suffix = ' . q{'} . $file_name_generated_tmp_suffix . q{'} . "\n" );
 
-        ( $FILE_HANDLE_GENERATED_TMP, $file_name_generated_tmp ) = tempfile( $file_name_reference . '.generated.tempfileXXXX' );
+        ( $FILE_HANDLE_GENERATED_TMP, $file_name_generated_tmp ) = tempfile( $file_name_generated_tmp . '.generated.tempfileXXXX', UNLINK => 1, TMPDIR => 1 );
+        RPerl::diag( 'in Generator->diff_check_file_vs_string(), have modified $file_name_generated_tmp = ' . q{'} . $file_name_generated_tmp . q{'} . "\n" );
+
         print {$FILE_HANDLE_GENERATED_TMP} $string_generated or croak("\nERROR ECOGEFI00, GENERATOR, FILE SYSTEM: Attempting to save new file '$file_name_generated_tmp', cannot write to file,\ncroaking: $OS_ERROR");
         close $FILE_HANDLE_GENERATED_TMP or croak("\nERROR ECOGEFI01, GENERATOR, FILE SYSTEM: Attempting to save new file '$file_name_generated_tmp', cannot close file,\ncroaking: $OS_ERROR");
 

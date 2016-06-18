@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Header;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.004_200;
+our $VERSION = 0.004_300;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -120,7 +120,8 @@ our string_hashref::method $ast_to_cpp__generate_begin__CPPOPS_CPPTYPES = sub {
         $cpp_source_group->{CPP} .= '// [[[ HEADER ]]]' . "\n";
     }
 
-    if ($modes->{subcompile} ne 'DYNAMIC') {
+    # only include rperlstandalone.h if actually necessary
+    if (($modes->{subcompile} ne 'OFF') and ($modes->{subcompile} ne 'DYNAMIC')) {
         $cpp_source_group->{CPP} .= '#include <rperlstandalone.h>' . "\n";
     }
 
