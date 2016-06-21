@@ -54,7 +54,7 @@ INIT {
     # DEV NOTE: should be safe to use basename() here instead of fileparse(), because $PROGRAM_NAME should never end in a directory
     $INC{ basename($PROGRAM_NAME) } = $PROGRAM_NAME;
 
-    #    RPerl::diag('in Class.pm INIT block, have %INC =' . "\n" . Dumper(\%INC) . "\n");
+#    RPerl::diag('in Class.pm INIT block, have %INC =' . "\n" . Dumper(\%INC) . "\n");
     #    RPerl::diag('in Class.pm INIT block, have $rperlnamespaces_generated::CORE =' . "\n" . Dumper($rperlnamespaces_generated::CORE) . "\n");
 
     my $module_filename_long;           # string
@@ -82,6 +82,11 @@ INIT {
 
         # skip special entry created by Filter::Util::Call
         if ( $module_filename_short eq '-e' ) {
+            next;
+        }
+        # skip absolute file names (such as Komodo's perl5db.pl) which came from a runtime `require $scalar` or `require 'foo.pm'`,
+        # and we can not determine the correct package from the absolute path name, we don't know how to figure out which part was in @INC from the absolute path
+        elsif ( $module_filename_long eq $module_filename_short )
             next;
         }
 
@@ -647,7 +652,7 @@ INIT {
             }
         }
 
-#        else { RPerl::diag('in Class.pm INIT block, found existing $rperlnamespaces_generated::CORE->{' . $namespace_root . '}, aborting RPerl activation of entire file' . "\n"); }
+        else { RPerl::diag('in Class.pm INIT block, found existing $rperlnamespaces_generated::CORE->{' . $namespace_root . '}, aborting RPerl activation of entire file' . "\n"); }
     }
 }
 

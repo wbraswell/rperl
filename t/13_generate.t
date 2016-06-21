@@ -130,8 +130,8 @@ my integer $number_of_tests_run = 0;
 # [[[ PRIMARY RUNLOOP ]]]
 # loop up to 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
 #foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
-#for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
-for my $mode_id ( 2 ) {    # CPPOPS_CPPTYPES ONLY
+for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
+#for my $mode_id ( 2 ) {    # CPPOPS_CPPTYPES ONLY
 #for my $mode_id ( 0 , 2 ) {    # PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
 #    RPerl::diag("in 13_generate.t, top of for() loop, have \$mode_id = $mode_id\n");
 
