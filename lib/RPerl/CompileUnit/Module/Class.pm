@@ -86,7 +86,7 @@ INIT {
         }
         # skip absolute file names (such as Komodo's perl5db.pl) which came from a runtime `require $scalar` or `require 'foo.pm'`,
         # and we can not determine the correct package from the absolute path name, we don't know how to figure out which part was in @INC from the absolute path
-        elsif ( $module_filename_long eq $module_filename_short )
+        elsif ( $module_filename_long eq $module_filename_short ) {
             next;
         }
 
@@ -652,7 +652,7 @@ INIT {
             }
         }
 
-        else { RPerl::diag('in Class.pm INIT block, found existing $rperlnamespaces_generated::CORE->{' . $namespace_root . '}, aborting RPerl activation of entire file' . "\n"); }
+#        else { RPerl::diag('in Class.pm INIT block, found existing $rperlnamespaces_generated::CORE->{' . $namespace_root . '}, aborting RPerl activation of entire file' . "\n"); }
     }
 }
 
