@@ -69,8 +69,10 @@ sub filename_short_to_namespace_root_guess {
     if ( ( $filename_suffix eq '.pm' ) or ( $filename_suffix eq '.pl' ) ) {
         my $filename_path_split;
         if ( $OSNAME eq 'MSWin32' ) {
-            $filename_path_split = [ split /\\/, $filename_path ];
-            shift @{$filename_path_split};    # discard leading drive letter
+            $filename_path_split = [ split /[\/\\]/, $filename_path ];
+            #absolute paths cant go through here anymore, this was dropping the
+            #first part of the package on some modules
+            #shift @{$filename_path_split};    # discard leading drive letter
         }
         else {
             $filename_path_split = [ split /\//, $filename_path ];
