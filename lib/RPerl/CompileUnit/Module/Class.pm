@@ -84,13 +84,14 @@ INIT {
         if ( $module_filename_short eq '-e' ) {
             next;
         }
-        # skip absolute file names (such as Komodo's perl5db.pl) which came from a runtime `require $scalar` or `require 'foo.pm'`,
-        # and we can not determine the correct package from the absolute path name, we don't know how to figure out which part was in @INC from the absolute path
-        elsif ((not defined $module_filename_long ) or ( $module_filename_long eq $module_filename_short )) {
-            next;
-        }
 
         $module_filename_long = $INC{$module_filename_short};
+
+        # skip absolute file names (such as Komodo's perl5db.pl) which came from a runtime `require $scalar` or `require 'foo.pm'`,
+        # and we can not determine the correct package from the absolute path name, we don't know how to figure out which part was in @INC from the absolute path
+        if ((not defined $module_filename_long) or ( $module_filename_long eq $module_filename_short )) {
+            next;
+        }
         
         # skip already-compiled files with PMC counterparts
         if (-e ($module_filename_long . 'c')) {
