@@ -86,7 +86,7 @@ INIT {
         }
         # skip absolute file names (such as Komodo's perl5db.pl) which came from a runtime `require $scalar` or `require 'foo.pm'`,
         # and we can not determine the correct package from the absolute path name, we don't know how to figure out which part was in @INC from the absolute path
-        elsif ( $module_filename_long eq $module_filename_short ) {
+        elsif ((defined $module_filename_long ) and ($module_filename_long ne q{}) and ( $module_filename_long eq $module_filename_short )) {
             next;
         }
 
