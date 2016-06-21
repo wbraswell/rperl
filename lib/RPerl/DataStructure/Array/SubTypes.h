@@ -37,12 +37,13 @@ typedef std::vector<std::vector<string>>::iterator string_arrayref_arrayref_iter
 typedef std::vector<std::vector<string>>::const_iterator string_arrayref_arrayref_const_iterator;
 
 // [[[ TYPE-CHECKING SUBROUTINES ]]]
+// NEED ENABLE, implement remaining function definitions in SubTypes.h
 void integer_arrayref_arrayref_CHECK(SV* possible_integer_arrayref_arrayref);
 void integer_arrayref_arrayref_CHECKTRACE(SV* possible_integer_arrayref_arrayref, const char* variable_name, const char* subroutine_name);
-void number_arrayref_arrayref_CHECK(SV* possible_number_arrayref_arrayref);
-void number_arrayref_arrayref_CHECKTRACE(SV* possible_number_arrayref_arrayref, const char* variable_name, const char* subroutine_name);
-void string_arrayref_arrayref_CHECK(SV* possible_string_arrayref_arrayref);
-void string_arrayref_arrayref_CHECKTRACE(SV* possible_string_arrayref_arrayref, const char* variable_name, const char* subroutine_name);
+//void number_arrayref_arrayref_CHECK(SV* possible_number_arrayref_arrayref);
+//void number_arrayref_arrayref_CHECKTRACE(SV* possible_number_arrayref_arrayref, const char* variable_name, const char* subroutine_name);
+//void string_arrayref_arrayref_CHECK(SV* possible_string_arrayref_arrayref);
+//void string_arrayref_arrayref_CHECKTRACE(SV* possible_string_arrayref_arrayref, const char* variable_name, const char* subroutine_name);
 
 // [[[ OPERATIONS & DATA TYPES REPORTER ]]]
 # ifdef __PERL__TYPES

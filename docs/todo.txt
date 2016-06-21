@@ -226,6 +226,7 @@ DATA TYPES & STRUCTURES
     fix number_to_string() in MyTest.pm
     add arrayref::grow_capacity() as safe version of std::vector::resize()
     Dumper() in C++, use as default overload for <<
+    implement remaining *_arrayref_arrayref_CHECK*() in lib/DataStructure/Array/SubTypes.cpp
 
 PERL::CRITIC BUGS
     Eclipse EPIC Integration, Silent Failure    https://github.com/Perl-Critic/Perl-Critic/issues/582
