@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes_h
-#define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes_h 0.001_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes_h 0.002_000
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
@@ -65,14 +65,15 @@ void XS_pack_string_arrayref_arrayref(SV* output_avref_avref, string_arrayref_ar
 # endif
 
 // [[[ STRINGIFY ]]]
+// NEED ENABLE, implement function definitions in SubTypes.h
 # ifdef __PERL__TYPES
-SV* integer_arrayref_arrayref_to_string(SV* input_avref_avref);
-SV* number_arrayref_arrayref_to_string(SV* input_avref_avref);
-SV* string_arrayref_arrayref_to_string(SV* input_avref_avref);
+//SV* integer_arrayref_arrayref_to_string(SV* input_avref_avref);
+//SV* number_arrayref_arrayref_to_string(SV* input_avref_avref);
+//SV* string_arrayref_arrayref_to_string(SV* input_avref_avref);
 # elif defined __CPP__TYPES
-string integer_arrayref_arrayref_to_string(integer_arrayref_arrayref input_vector_vector);
-string number_arrayref_arrayref_to_string(number_arrayref_arrayref input_vector_vector);
-string string_arrayref_arrayref_to_string(string_arrayref_arrayref input_vector_vector);
+//string integer_arrayref_arrayref_to_string(integer_arrayref_arrayref input_vector_vector);
+//string number_arrayref_arrayref_to_string(number_arrayref_arrayref input_vector_vector);
+//string string_arrayref_arrayref_to_string(string_arrayref_arrayref input_vector_vector);
 # endif
 
 // [[[ TYPE TESTING ]]]
