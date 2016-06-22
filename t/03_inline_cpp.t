@@ -2,12 +2,12 @@
 use RPerl;
 use strict;
 use warnings;
-our $VERSION = 0.004_000;
+our $VERSION = 0.005_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
 
-use Test::More tests => 16;  # NEED FIX: get Elipses Revisited part 4/4 working in Windows
+use Test::More;  # tests => 16;  # NEED FIX: get Elipses Revisited part 4/4 working in Windows
 use Test::Exception;
 use Test::Number::Delta;
 use Carp;
@@ -413,13 +413,13 @@ lives_and(
 );
 
 # NEED FIX: get Elipses Revisited part 4/4 working in Windows
-#if ( $OSNAME eq 'MSWin32' ) {
-#    RPerl::diag('in 03_inline_cpp.t, skipping Elipses Revisited part 4/4, Windows detected...' . "\n");
-#    if ( $ENV{RPERL_VERBOSE} ) {
-#        Test::More::diag("[[[ MS Windows OS Detected, Inline::CPP Exception Temporarily Disabled, Skipping Elipses Revisited Part 4/4 Test, RPerl Inline System ]]]");
-#    }
-#}
-#else {
+if ( $OSNAME eq 'MSWin32' ) {
+    RPerl::diag('in 03_inline_cpp.t, skipping Elipses Revisited part 4/4, Windows detected...' . "\n");
+    if ( $ENV{RPERL_VERBOSE} ) {
+        Test::More::diag("[[[ MS Windows OS Detected, Inline::CPP Exception Temporarily Disabled, Skipping Elipses Revisited Part 4/4 Test, RPerl Inline System ]]]");
+    }
+}
+else {
     RPerl::diag('in 03_inline_cpp.t, running Elipses Revisited part 4/4...' . "\n");
     lives_and(    # can't use throws_ok() because we are trapping the exception inside of eval
         sub {
@@ -428,7 +428,7 @@ lives_and(
         },
         q{Inline::CPP, call multiadd(1, 2, 3, 4) lives}
     );
-#}
+}
 
 RPerl::diag('in 03_inline_cpp.t, finished Elipses Revisited!' . "\n");
 
