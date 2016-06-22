@@ -2,7 +2,7 @@
 use RPerl;
 use strict;
 use warnings;
-our $VERSION = 0.003_000;
+our $VERSION = 0.004_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
@@ -356,7 +356,8 @@ int multiadd ( SV*  a, ... ) {
 	}
 //	catch ( std::runtime_error msg ) { croak( msg.what() );  }  // Perl likes croak for exceptions.  THIS DOES NOT WORK IN WINDOWS!
 	catch ( std::runtime_error msg ) { saved_error_message = sv_2mortal(newSVpv(msg.what(), 0));  }  // Perl likes croak for exceptions.  NEW LINE
-	if (saved_error_message) { croak_sv( saved_error_message ); }  // NEW LINE
+//	if (saved_error_message) { croak_sv( saved_error_message ); }  // this does not work in Perl < v5.13.1  NEW LINE
+	if (saved_error_message) { croak( SvPV_nolen(saved_error_message) ); }  // NEW LINE
 }
 END_OF_CPP_CODE
 EOF
