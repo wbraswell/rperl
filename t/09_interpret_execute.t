@@ -73,13 +73,13 @@ find(
     $RPerl::INCLUDE_PATH . '/RPerl/Test'
 );
 
-#RPerl::diag( 'in 09_interpret_execute.t, have $test_files = ' . "\n" . Dumper($test_files) . "\n" );
+RPerl::diag( 'in 09_interpret_execute.t, have $test_files = ' . "\n" . Dumper($test_files) . "\n" );
 
 plan tests => scalar keys %{$test_files};
 
 for my $test_file ( sort keys %{$test_files} ) {
 
-    #    RPerl::diag( 'in 09_interpret_execute.t, have $test_file = ' . $test_file . "\n" );
+    RPerl::diag( 'in 09_interpret_execute.t, have $test_file = ' . $test_file . "\n" );
     my $pid;
     if ( $RPerl::INCLUDE_PATH =~ /blib/ ) {
         $pid = open3( 0, \*STDOUT_TEST, \*STDERR_TEST, ( $EXECUTABLE_NAME . ' -Mblib=' . $RPerl::INCLUDE_PATH . ' ' . $test_file ) );    # disable STDIN w/ 0
@@ -136,11 +136,11 @@ for my $test_file ( sort keys %{$test_files} ) {
 
     my $test_exit_status = $CHILD_ERROR >> 8;
 
-    #    RPerl::diag( 'in 09_interpret_execute.t, have $CHILD_ERROR = ' . $CHILD_ERROR . "\n" );
-    #    RPerl::diag( 'in 09_interpret_execute.t, have $test_exit_status = ' . $test_exit_status . "\n" );
+    RPerl::diag( 'in 09_interpret_execute.t, have $CHILD_ERROR = ' . $CHILD_ERROR . "\n" );
+    RPerl::diag( 'in 09_interpret_execute.t, have $test_exit_status = ' . $test_exit_status . "\n" );
 
-    #    if ($stdout_generated) { RPerl::diag( "===STDOUT=BEGIN====\n" . $stdout_generated . "===STDOUT=END======\n" ); }
-    #    if ($stderr_generated) { RPerl::diag( "===STDERR=BEGIN====\n" . $stderr_generated . "===STDERR=END======\n" ); }
+    if ($stdout_generated) { RPerl::diag( "===STDOUT=BEGIN====\n" . $stdout_generated . "===STDOUT=END======\n" ); }
+    if ($stderr_generated) { RPerl::diag( "===STDERR=BEGIN====\n" . $stderr_generated . "===STDERR=END======\n" ); }
 
     my @stdout_generated_lines_array = split( "\n", $stdout_generated );
     my string_arrayref $stdout_generated_lines = \@stdout_generated_lines_array;
@@ -154,25 +154,24 @@ for my $test_file ( sort keys %{$test_files} ) {
                 $RPerl::DEBUG   = 0;
                 $RPerl::VERBOSE = 0;
 
-#                RPerl::diag( 'in 09_interpret_execute.t, before foreach loop, have successes =' . "\n" . Dumper($test_files->{$test_file}->{successes}) . "\n" );
+                RPerl::diag( 'in 09_interpret_execute.t, before foreach loop, have successes =' . "\n" . Dumper($test_files->{$test_file}->{successes}) . "\n" );
 
                 my string $success = $test_files->{$test_file}->{successes}->[0];
 
                 # match success strings in-order in captured output
             FOREACH_STDOUT_LINE: foreach my string $stdout_generated_line ( @{$stdout_generated_lines} ) {
 
-           #                    RPerl::diag( 'in 09_interpret_execute.t, top of foreach loop, have $success = ' . $success . "\n" );
-           #                    RPerl::diag( 'in 09_interpret_execute.t, top of foreach loop, have $stdout_generated_line = ' . $stdout_generated_line . "\n" );
-           # each stdout line is only allowed to match one success string
+                    RPerl::diag( 'in 09_interpret_execute.t, top of foreach loop, have $success = ' . $success . "\n" );
+                    RPerl::diag( 'in 09_interpret_execute.t, top of foreach loop, have $stdout_generated_line = ' . $stdout_generated_line . "\n" );
+                    # each stdout line is only allowed to match one success string
                     if ( $stdout_generated_line =~ /\Q$success\E/xms ) {
 
-                        #                        RPerl::diag( 'in 09_interpret_execute.t, MATCH' . "\n" );
+                        RPerl::diag( 'in 09_interpret_execute.t, MATCH' . "\n" );
                         shift @{ $test_files->{$test_file}->{successes} };
                         if ( ( scalar @{ $test_files->{$test_file}->{successes} } ) == 0 ) { last FOREACH_STDOUT_LINE; }
                         $success = $test_files->{$test_file}->{successes}->[0];
                     }
-
-                    #                    else { RPerl::diag( 'in 09_interpret_execute.t, NO MATCH' . "\n" ); }
+                    else { RPerl::diag( 'in 09_interpret_execute.t, NO MATCH' . "\n" ); }
                 }
             }
             RPerl::verbose( 'in 09_interpret_execute.t, have missing successes =' . "\n" . Dumper( $test_files->{$test_file}->{successes} ) . "\n" );
