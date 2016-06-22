@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-our $VERSION = 0.002_200;
+our $VERSION = 0.002_300;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
@@ -26,6 +26,8 @@ if ( $ENV{RPERL_VERBOSE} ) {
 # Note: I did not exclude any Inline::CPP examples, they are all suitable for testing.
 
 # class Farmer, AKA "Farmer Bob"
+RPerl::diag('in 03_inline_cpp.t, starting Farmer Bob...' . "\n");
+
 my $farmer_define_eval_string = <<'EOF';
 use Inline CPP => Config => CCFLAGSEX => '-DNO_XSLOCKS';
 use Inline CPP => <<'END_OF_CPP_CODE';
@@ -57,6 +59,9 @@ void Farmer::do_chores(int hl) {
 }
 END_OF_CPP_CODE
 EOF
+
+RPerl::diag('in 03_inline_cpp.t, building Farmer Bob...' . "\n");
+
 lives_and(
     sub {
         my $EVAL_RETVAL = eval $farmer_define_eval_string;
@@ -76,6 +81,9 @@ while($farmer->how_tired < 420) {
 }
 return("Wow!  The farmer worked " . $farmer->how_long . " hours!");
 EOF
+
+RPerl::diag('in 03_inline_cpp.t, running Farmer Bob...' . "\n");
+
 lives_and(
     sub {
         my $EVAL_RETVAL = eval $farmer_call_eval_string;
@@ -87,7 +95,11 @@ lives_and(
     q{Inline::CPP, call Farmer methods lives}
 );
 
+RPerl::diag('in 03_inline_cpp.t, finished Farmer Bob!' . "\n");
+
 # class Airplane, AKA "Plane and Simple"
+RPerl::diag('in 03_inline_cpp.t, starting Airplane...' . "\n");
+
 my $airplane_define_eval_string = <<'EOF';
 use Inline CPP => Config => CCFLAGSEX => '-DNO_XSLOCKS';
 use Inline CPP => <<'END_OF_CPP_CODE';
@@ -121,6 +133,9 @@ class Airplane : public Object {
 };
 END_OF_CPP_CODE
 EOF
+
+RPerl::diag('in 03_inline_cpp.t, building Airplane...' . "\n");
+
 lives_and(
     sub {
         my $EVAL_RETVAL = eval $airplane_define_eval_string;
@@ -140,6 +155,9 @@ if ($plane->isa("Object")) { $plane_retval2 .= "Plane is an Object!"; }
 unless ($plane->can("fly")) { $plane_retval2 .= "  This plane sucks!"; }
 return($plane_retval1, $plane_retval2);
 EOF
+
+RPerl::diag('in 03_inline_cpp.t, running Airplane...' . "\n");
+
 lives_and(
     sub {
         my ( $airplane_retval1, $airplane_retval2 ) = eval $airplane_call_eval_string;
@@ -152,7 +170,11 @@ lives_and(
     q{Inline::CPP, call Airplane methods lives}
 );
 
+RPerl::diag('in 03_inline_cpp.t, finished Airplane!' . "\n");
+
 # average() VS avg(), AKA "The Ellipsis Abridged"
+RPerl::diag('in 03_inline_cpp.t, starting Elipses Abridged...' . "\n");
+
 my $average_define_eval_string = <<'EOF';
 sub average {
 	my $average = 0;
@@ -177,6 +199,9 @@ double avg(...) {
 }
 END_OF_CPP_CODE
 EOF
+
+RPerl::diag('in 03_inline_cpp.t, building Elipses Abridged...' . "\n");
+
 lives_and(
     sub {
         my $EVAL_RETVAL = eval $average_define_eval_string;
@@ -195,6 +220,9 @@ my $average_retval_string = "The Perl average of 10000 random numbers is: " . $a
 my $avg_retval_string = "The C/C++ average of 10000 random numbers is: " . $avg_retval;
 return($average_retval, $avg_retval, $average_retval_string, $avg_retval_string);
 EOF
+
+RPerl::diag('in 03_inline_cpp.t, running Elipses Abridged...' . "\n");
+
 lives_and(
     sub {
         my ( $average_retval, $avg_retval, $average_retval_string, $avg_retval_string ) = eval $average_call_eval_string;
@@ -216,7 +244,11 @@ lives_and(
     q{Inline::CPP, call average() and avg() lives}
 );
 
+RPerl::diag('in 03_inline_cpp.t, finished Elipses Abridged!' . "\n");
+
 # classes Queue and Stack, AKA "Stacks and Queues"
+RPerl::diag('in 03_inline_cpp.t, starting Stacks & Queues...' . "\n");
+
 my $queuestack_define_eval_string = <<'EOF';
 use Inline CPP => Config => CCFLAGSEX => '-DNO_XSLOCKS';
 use Inline CPP => <<'END_OF_CPP_CODE';
@@ -244,6 +276,9 @@ class Stack {
 };
 END_OF_CPP_CODE
 EOF
+
+RPerl::diag('in 03_inline_cpp.t, building Stacks & Queues...' . "\n");
+
 lives_and(
     sub {
         my $EVAL_RETVAL = eval $queuestack_define_eval_string;
@@ -278,6 +313,9 @@ while($s->size) {
 }
 return($queue_retval, $stack_retval);
 EOF
+
+RPerl::diag('in 03_inline_cpp.t, running Stacks & Queues...' . "\n");
+
 lives_and(
     sub {
         my ( $queue_retval, $stack_retval ) = eval $queuestack_call_eval_string;
@@ -290,7 +328,11 @@ lives_and(
     q{Inline::CPP, call Queue and Stack methods lives}
 );
 
+RPerl::diag('in 03_inline_cpp.t, finished Stacks & Queues!' . "\n");
+
 # multiadd(), AKA "Elipses Revisited (and Overloading or Templates)"
+RPerl::diag('in 03_inline_cpp.t, starting Elipses Revisited...' . "\n");
+
 my $multiadd_define_eval_string = <<'EOF';
 use Inline CPP => Config => CCFLAGSEX => '-DNO_XSLOCKS';
 use Inline CPP => <<'END_OF_CPP_CODE';
@@ -314,6 +356,9 @@ int multiadd ( SV*  a, ... ) {
 }
 END_OF_CPP_CODE
 EOF
+
+RPerl::diag('in 03_inline_cpp.t, building Elipses Revisited...' . "\n");
+
 lives_and(
     sub {
         my $EVAL_RETVAL = eval $multiadd_define_eval_string;
@@ -324,6 +369,9 @@ lives_and(
     },
     q{Inline::CPP, define multiadd() lives}
 );
+
+RPerl::diag('in 03_inline_cpp.t, running Elipses Revisited...' . "\n");
+
 lives_and(
     sub {
         my $EVAL_RETVAL = eval 'return(multiadd(1));  # No dispatch; just return the value';
@@ -361,5 +409,7 @@ lives_and(    # can't use throws_ok() because we are trapping the exception insi
     },
     q{Inline::CPP, call multiadd(1, 2, 3, 4) lives}
 );
+
+RPerl::diag('in 03_inline_cpp.t, finished Elipses Revisited!' . "\n");
 
 done_testing();
