@@ -25,11 +25,18 @@ use RPerl::Config;  # for $RPerl::DEBUG
 #our $CCFLAGSEX = '-DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix';
 #our $CCFLAGSEX = '-DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix';
 # DEV NOTE: add -Wno-unused-variable to suppress warnings in GCC v4.9
-our $CCFLAGSEX = '-Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix';
+my $is_msvc_compiler = ($Config::Config{cc} =~ /cl/);
+
+our $CCFLAGSEX = $is_msvc_compiler ? '-DNO_XSLOCKS'
+    : '-Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix';
 
 our %ARGS = (
     typemaps => "$RPerl::INCLUDE_PATH/typemap.rperl",
-    optimize => '-O3 -fomit-frame-pointer -march=native -g',  # disable default '-O2 -g' (or similar) from Perl core & Makemaker
+     # disable default '-O2 -g' (or similar) from Perl core & Makemaker
+    ($is_msvc_compiler
+        ? ()
+        : (optimize => '-O3 -fomit-frame-pointer -march=native -g')
+    ),
 
 # NEED UPGRADE: strip C++ incompat CFLAGS
 #  ccflags => $Config{ccflags} . ' -DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
