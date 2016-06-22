@@ -6,6 +6,10 @@ DONE
     add calling conventions & data types for all numeric operators, section 2.1
 
 DOING
+    explain difference between .a, .o, and .so
+        .a is "just a tarball of .o"
+        .so must always be stand-alone
+        .o can be combined into .so or .exe
     append 'L' to all numeric literals to force long int?
     create macro to replace all conditional truth value checks with extra logic to include RPerl false values of '0', q{0}, and q{}, in both character and string type
     execute via compiled copy not interpreted
@@ -18,6 +22,7 @@ DOING
     split author tests (checking Changes file, etc) into xt/ directory, 
         split deps in Makefile.PL, possibly utilize AUTHOR_TESTING in travis-perl/helpers
     add copyright notices to all files
+    enable 07_type_gmp.t in Windows
 
 OPERATORS, CPPOPS_CPPTYPES MODE
     NAMED: chomp join keys pop push reverse sort split values wait

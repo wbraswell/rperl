@@ -7,7 +7,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_100;
+our $VERSION = 0.002_200;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -25,6 +25,13 @@ use Test::Exception;
 use Test::Number::Delta;
 
 BEGIN {
+    if ( $OSNAME eq 'MSWin32' ) {
+        if ( $ENV{RPERL_VERBOSE} ) {
+            Test::More::diag("[[[ MS Windows OS Detected, GNU Multi-Precision Library Temporarily Disabled, Skipping GMP Type Tests, RPerl Type System ]]]");
+        }
+        done_testing();
+        exit;
+    }
     if ( $ENV{RPERL_VERBOSE} ) {
         Test::More::diag("[[[ Beginning GMP Type Pre-Test Loading, RPerl Type System ]]]");
     }
