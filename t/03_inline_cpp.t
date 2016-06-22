@@ -371,7 +371,7 @@ lives_and(
     q{Inline::CPP, define multiadd() lives}
 );
 
-RPerl::diag('in 03_inline_cpp.t, running Elipses Revisited...' . "\n");
+RPerl::diag('in 03_inline_cpp.t, running Elipses Revisited part 1/4...' . "\n");
 
 lives_and(
     sub {
@@ -383,6 +383,8 @@ lives_and(
     },
     q{Inline::CPP, call multiadd(1) lives}
 );
+
+RPerl::diag('in 03_inline_cpp.t, running Elipses Revisited part 2/4...' . "\n");
 lives_and(
     sub {
         my $EVAL_RETVAL = eval 'multiadd(1, 2);  # Dispatch add(int, int)';
@@ -393,6 +395,8 @@ lives_and(
     },
     q{Inline::CPP, call multiadd(1, 2) lives}
 );
+
+RPerl::diag('in 03_inline_cpp.t, running Elipses Revisited part 3/4...' . "\n");
 lives_and(
     sub {
         my $EVAL_RETVAL = eval 'multiadd(1, 2, 3);  # Dispatch add(int, int, int)';
@@ -403,6 +407,8 @@ lives_and(
     },
     q{Inline::CPP, call multiadd(1, 2, 3) lives}
 );
+
+RPerl::diag('in 03_inline_cpp.t, running Elipses Revisited part 4/4...' . "\n");
 lives_and(    # can't use throws_ok() because we are trapping the exception inside of eval
     sub {
         my $EVAL_RETVAL = eval 'multiadd(1, 2, 3, 4);  # No dispatch; throw an exception';
