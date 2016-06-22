@@ -25,6 +25,7 @@ use Test::Exception;
 use Test::Number::Delta;
 
 BEGIN {
+    # NEED FIX: get gmpxx installed & working in Windows
     if ( $OSNAME eq 'MSWin32' ) {
         if ( $ENV{RPERL_VERBOSE} ) {
             Test::More::diag("[[[ MS Windows OS Detected, GNU Multi-Precision Library Temporarily Disabled, Skipping GMP Type Tests, RPerl Type System ]]]");
