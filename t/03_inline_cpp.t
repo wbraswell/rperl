@@ -2,12 +2,12 @@
 use RPerl;
 use strict;
 use warnings;
-our $VERSION = 0.002_300;
+our $VERSION = 0.003_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
 
-use Test::More;  # tests => 16;  # NEED FIX: get Elipses Revisited part 4/4 working in Windows
+use Test::More tests => 16;  # NEED FIX: get Elipses Revisited part 4/4 working in Windows
 use Test::Exception;
 use Test::Number::Delta;
 use Carp;
@@ -345,6 +345,7 @@ int add ( int a, int b, int c ) { return a + b + c; }
 // no Perl binding is required in reaching those functions.
 int multiadd ( SV*  a, ... ) {
 	dXSARGS;  // Creates a variable 'items' that contains a paramater count.
+	SV* saved_error_message = NULL;  // NEW LINE
 	try{
 		switch ( items ) {
 			case 1:  return SvIV(ST(0));
@@ -353,7 +354,9 @@ int multiadd ( SV*  a, ... ) {
 			default: throw std::runtime_error( "multiadd() - Too many args in function call" );
 		}
 	}
-	catch ( std::runtime_error msg ) { croak( msg.what() );  }  // Perl likes croak for exceptions.
+//	catch ( std::runtime_error msg ) { croak( msg.what() );  }  // Perl likes croak for exceptions.  THIS DOES NOT WORK IN WINDOWS!
+	catch ( std::runtime_error msg ) { saved_error_message = sv_2mortal(newSVpv(msg.what(), 0));  }  // Perl likes croak for exceptions.  NEW LINE
+	if (saved_error_message) { croak_sv( saved_error_message ); }  // NEW LINE
 }
 END_OF_CPP_CODE
 EOF
@@ -409,13 +412,13 @@ lives_and(
 );
 
 # NEED FIX: get Elipses Revisited part 4/4 working in Windows
-if ( $OSNAME eq 'MSWin32' ) {
-    RPerl::diag('in 03_inline_cpp.t, skipping Elipses Revisited part 4/4, Windows detected...' . "\n");
-    if ( $ENV{RPERL_VERBOSE} ) {
-        Test::More::diag("[[[ MS Windows OS Detected, Inline::CPP Exception Temporarily Disabled, Skipping Elipses Revisited Part 4/4 Test, RPerl Inline System ]]]");
-    }
-}
-else {
+#if ( $OSNAME eq 'MSWin32' ) {
+#    RPerl::diag('in 03_inline_cpp.t, skipping Elipses Revisited part 4/4, Windows detected...' . "\n");
+#    if ( $ENV{RPERL_VERBOSE} ) {
+#        Test::More::diag("[[[ MS Windows OS Detected, Inline::CPP Exception Temporarily Disabled, Skipping Elipses Revisited Part 4/4 Test, RPerl Inline System ]]]");
+#    }
+#}
+#else {
     RPerl::diag('in 03_inline_cpp.t, running Elipses Revisited part 4/4...' . "\n");
     lives_and(    # can't use throws_ok() because we are trapping the exception inside of eval
         sub {
@@ -424,7 +427,7 @@ else {
         },
         q{Inline::CPP, call multiadd(1, 2, 3, 4) lives}
     );
-}
+#}
 
 RPerl::diag('in 03_inline_cpp.t, finished Elipses Revisited!' . "\n");
 
