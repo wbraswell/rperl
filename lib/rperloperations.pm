@@ -40,6 +40,7 @@ use RPerl::Operation::Expression::Operator::Arithmetic::Negative;
 use RPerl::Operation::Expression::Operator::Arithmetic::Power;
 # DEV NOTE, CORRELATION #rp20: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named/* also add in Grammar.eyp, Named.pm, and rperloperations.pm
 use RPerl::Operation::Expression::Operator::Named;
+use RPerl::Operation::Expression::Operator::Named::AbsoluteValue;
 use RPerl::Operation::Expression::Operator::Named::Chomp;
 use RPerl::Operation::Expression::Operator::Named::Keys;
 use RPerl::Operation::Expression::Operator::Named::Join;

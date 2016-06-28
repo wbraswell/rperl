@@ -20,6 +20,11 @@
 #define class(sv) HvNAME(SvSTASH(SvRV(sv)))  // NEED ADDRESS: does this actually match the functionality of PERLOPS class() which is a wrapper around blessed()?
 #define print cout <<
 
+#ifdef _MSC_VER
+// need not() macro on VC
+#  include <iso646.h>
+#endif
+
 // [[[ HELPER FUNCTION DECLARATIONS ]]]
 int RPerl_SvBOKp(SV* input_sv);
 int RPerl_SvUIOKp(SV* input_sv);
