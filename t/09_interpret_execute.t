@@ -35,7 +35,7 @@ find(
 
         #        RPerl::diag('in 09_interpret_execute.t, have $file = ' . $file . "\n");
 
-#        if ( $file !~ m/.*OperatorVoid01NamedVoid.*[.]p[ml]$/xms ) { # TEMP DEBUGGING, ONLY FIND OperatorVoid01NamedVoid*/*.pm & *.pl
+        #        if ( $file !~ m/.*OperatorVoid01NamedVoid.*[.]p[ml]$/xms ) { # TEMP DEBUGGING, ONLY FIND OperatorVoid01NamedVoid*/*.pm & *.pl
         if ( $file !~ m/.pl$/xms ) {
             return;
         }
@@ -48,6 +48,18 @@ find(
             while (<$FILE_HANDLE>) {
                 if (m/^\#\s*\<\<\<\s*EXECUTE_SUCCESS\s*\:\s*['"](.*)['"]\s*\>\>\>/xms) {
                     push @{ $test_files->{$file}->{successes} }, $1;
+                }
+                elsif (m/^\#\s*\<\<\<\s*EXECUTE_SUCCESS_INTEGER_32\s*\:\s*['"](.*)['"]\s*\>\>\>/xms) {
+                    push @{ $test_files->{$file}->{successes_integer_32} }, $1;
+                }
+                elsif (m/^\#\s*\<\<\<\s*EXECUTE_SUCCESS_INTEGER_64\s*\:\s*['"](.*)['"]\s*\>\>\>/xms) {
+                    push @{ $test_files->{$file}->{successes_integer_64} }, $1;
+                }
+                elsif (m/^\#\s*\<\<\<\s*EXECUTE_SUCCESS_NUMBER_32\s*\:\s*['"](.*)['"]\s*\>\>\>/xms) {
+                    push @{ $test_files->{$file}->{successes_number_32} }, $1;
+                }
+                elsif (m/^\#\s*\<\<\<\s*EXECUTE_SUCCESS_NUMBER_64\s*\:\s*['"](.*)['"]\s*\>\>\>/xms) {
+                    push @{ $test_files->{$file}->{successes_number_64} }, $1;
                 }
             }
             close $FILE_HANDLE
@@ -92,20 +104,20 @@ for my $test_file ( sort keys %{$test_files} ) {
         my string $test_file_execute_command = $EXECUTABLE_NAME . ' -I' . $RPerl::INCLUDE_PATH . ' ' . $test_file;
         RPerl::diag( 'in 09_interpret_execute.t, not blib INCLUDE_PATH, have $test_file_execute_command = ' . $test_file_execute_command . "\n" );
         RPerl::diag( 'in 09_interpret_execute.t, not blib INCLUDE_PATH, about to call open3()...' . "\n" );
-        $pid = open3( 0, \*STDOUT_TEST, \*STDERR_TEST, $test_file_execute_command );         # disable STDIN w/ 0
+        $pid = open3( 0, \*STDOUT_TEST, \*STDERR_TEST, $test_file_execute_command );    # disable STDIN w/ 0
         RPerl::diag( 'in 09_interpret_execute.t, not blib INCLUDE_PATH, returned from open3(), have $pid = ' . $pid . "\n" );
     }
 
     my $stdout_select;
     my $stderr_select;
-    if($OSNAME ne 'MSWin32') {
-        RPerl::diag( 'in 09_interpret_execute.t, yes MSWin32, about to call IO::Select->new()...' . "\n" );
+    if ( $OSNAME ne 'MSWin32' ) {
+        RPerl::diag( 'in 09_interpret_execute.t, no MSWin32, about to call IO::Select->new()...' . "\n" );
         $stdout_select = IO::Select->new();
         $stderr_select = IO::Select->new();
-        RPerl::diag( 'in 09_interpret_execute.t, yes MSWin32, about to call $stdout_select->add( \*STDOUT_TEST )...' . "\n" );
+        RPerl::diag( 'in 09_interpret_execute.t, no MSWin32, about to call $stdout_select->add( \*STDOUT_TEST )...' . "\n" );
         $stdout_select->add( \*STDOUT_TEST );
         $stderr_select->add( \*STDERR_TEST );
-        RPerl::diag( 'in 09_interpret_execute.t, yes MSWin32, returned from $stdout_select->add( \*STDOUT_TEST )' . "\n" );
+        RPerl::diag( 'in 09_interpret_execute.t, no MSWin32, returned from $stdout_select->add( \*STDOUT_TEST )' . "\n" );
     }
 
     my $stdout_generated = q{};
@@ -125,14 +137,24 @@ for my $test_file ( sort keys %{$test_files} ) {
     if ( $OSNAME eq 'MSWin32' || $stdout_select->can_read(0) ) {
         RPerl::diag( 'in 09_interpret_execute.t, yes MSWin32 or $stdout_select->can_read(0), about to call sysread STDOUT_TEST...' . "\n" );
         sysread STDOUT_TEST, $stdout_generated, 4096;
-        RPerl::diag( 'in 09_interpret_execute.t, yes MSWin32 or $stdout_select->can_read(0), returned from sysread STDOUT_TEST, have $stdout_generated = ' . "\n" . '[BEGIN STDOUT]' . "\n" . $stdout_generated . '[END STDOUT]' . "\n" );
+        RPerl::diag(
+                  'in 09_interpret_execute.t, yes MSWin32 or $stdout_select->can_read(0), returned from sysread STDOUT_TEST, have $stdout_generated = ' . "\n"
+                . '[BEGIN STDOUT]' . "\n"
+                . $stdout_generated
+                . '[END STDOUT]'
+                . "\n" );
     }
     if ( $OSNAME eq 'MSWin32' || $stderr_select->can_read(0) ) {
         RPerl::diag( 'in 09_interpret_execute.t, yes MSWin32 or $stderr_select->can_read(0), about to call sysread STDERR_TEST...' . "\n" );
         sysread STDERR_TEST, $stderr_generated, 4096;
-        RPerl::diag( 'in 09_interpret_execute.t, yes MSWin32 or $stderr_select->can_read(0), returned from sysread STDERR_TEST, have $stderr_generated = ' . "\n" . '[BEGIN STDERR]' . "\n" . $stderr_generated . '[END STDERR]' . "\n" );
+        RPerl::diag(
+                  'in 09_interpret_execute.t, yes MSWin32 or $stderr_select->can_read(0), returned from sysread STDERR_TEST, have $stderr_generated = ' . "\n"
+                . '[BEGIN STDERR]' . "\n"
+                . $stderr_generated
+                . '[END STDERR]'
+                . "\n" );
     }
- 
+
     RPerl::diag( 'in 09_interpret_execute.t, have $pid = ' . $pid . ', about to call waitpid...' . "\n" );
     waitpid $pid, 0;
     RPerl::diag( 'in 09_interpret_execute.t, have $pid = ' . $pid . ', returned from waitpid...' . "\n" );
@@ -142,14 +164,26 @@ for my $test_file ( sort keys %{$test_files} ) {
         my string $stdout_generated_continued;
         sysread STDOUT_TEST, $stdout_generated_continued, 4096;
         $stdout_generated .= $stdout_generated_continued;
-        RPerl::diag( 'in 09_interpret_execute.t, yes MSWin32 or $stdout_select->can_read(0), returned from sysread STDOUT_TEST, have $stdout_generated_continued = ' . "\n" . '[BEGIN STDOUT]' . "\n" . $stdout_generated_continued . '[END STDOUT]' . "\n" );
+        RPerl::diag(
+            'in 09_interpret_execute.t, yes MSWin32 or $stdout_select->can_read(0), returned from sysread STDOUT_TEST, have $stdout_generated_continued = '
+                . "\n"
+                . '[BEGIN STDOUT]' . "\n"
+                . $stdout_generated_continued
+                . '[END STDOUT]'
+                . "\n" );
     }
     if ( $OSNAME eq 'MSWin32' || $stderr_select->can_read(0) ) {
         RPerl::diag( 'in 09_interpret_execute.t, yes MSWin32 or $stderr_select->can_read(0), about to call sysread STDERR_TEST...' . "\n" );
         my string $stderr_generated_continued;
         sysread STDERR_TEST, $stderr_generated_continued, 4096;
         $stderr_generated .= $stderr_generated_continued;
-        RPerl::diag( 'in 09_interpret_execute.t, yes MSWin32 or $stderr_select->can_read(0), returned from sysread STDERR_TEST, have $stderr_generated_continued = ' . "\n" . '[BEGIN STDERR]' . "\n" . $stderr_generated_continued . '[END STDERR]' . "\n" );
+        RPerl::diag(
+            'in 09_interpret_execute.t, yes MSWin32 or $stderr_select->can_read(0), returned from sysread STDERR_TEST, have $stderr_generated_continued = '
+                . "\n"
+                . '[BEGIN STDERR]' . "\n"
+                . $stderr_generated_continued
+                . '[END STDERR]'
+                . "\n" );
     }
 
     # DISABLED: no user input accepted
@@ -172,12 +206,12 @@ for my $test_file ( sort keys %{$test_files} ) {
         if ( ( $test_file =~ m/Good/xms ) or ( $test_file =~ m/good/xms ) ) {
             my $missing_successes = [];
             if ( defined $test_files->{$test_file}->{successes} ) {
-
-                #=DISABLE
+=REPLACED
                 $RPerl::DEBUG   = 0;
                 $RPerl::VERBOSE = 0;
 
-                RPerl::diag( 'in 09_interpret_execute.t, before foreach loop, have successes =' . "\n" . Dumper($test_files->{$test_file}->{successes}) . "\n" );
+                RPerl::diag(
+                    'in 09_interpret_execute.t, before foreach loop, have successes =' . "\n" . Dumper( $test_files->{$test_file}->{successes} ) . "\n" );
 
                 my string $success = $test_files->{$test_file}->{successes}->[0];
 
@@ -186,6 +220,7 @@ for my $test_file ( sort keys %{$test_files} ) {
 
                     RPerl::diag( 'in 09_interpret_execute.t, top of foreach loop, have $success = ' . $success . "\n" );
                     RPerl::diag( 'in 09_interpret_execute.t, top of foreach loop, have $stdout_generated_line = ' . $stdout_generated_line . "\n" );
+
                     # each stdout line is only allowed to match one success string
                     if ( $stdout_generated_line =~ /\Q$success\E/xms ) {
 
@@ -196,30 +231,44 @@ for my $test_file ( sort keys %{$test_files} ) {
                     }
                     else { RPerl::diag( 'in 09_interpret_execute.t, NO MATCH' . "\n" ); }
                 }
+                RPerl::verbose( 'in 09_interpret_execute.t, have missing successes =' . "\n" . Dumper( $test_files->{$test_file}->{successes} ) . "\n" );
+                ok( ( ( scalar @{ $test_files->{$test_file}->{successes} } ) == 0 ),
+                    'Program interprets and executes without errors:' . ( q{ } x 10 ) . $test_file
+                );
+=cut
+               success_match($test_file, $test_files->{$test_file}->{successes}, $stdout_generated_lines);
             }
-            RPerl::verbose( 'in 09_interpret_execute.t, have missing successes =' . "\n" . Dumper( $test_files->{$test_file}->{successes} ) . "\n" );
-            ok( ( ( scalar @{ $test_files->{$test_file}->{successes} } ) == 0 ), 'Program interprets and executes without errors:' . (q{ } x 10) . $test_file );
+            elsif ( ( defined $test_files->{$test_file}->{successes_integer_32} ) and ( rperltypes::type_bitsize_integer() == 32 ) ) {
+               success_match($test_file, $test_files->{$test_file}->{successes_integer_32}, $stdout_generated_lines);
+            }
+            elsif ( ( defined $test_files->{$test_file}->{successes_integer_64} ) and ( rperltypes::type_bitsize_integer() == 64 ) ) {
+               success_match($test_file, $test_files->{$test_file}->{successes_integer_64}, $stdout_generated_lines);
+            }
+            elsif ( ( defined $test_files->{$test_file}->{successes_number_32} ) and ( rperltypes::type_bitsize_number() == 32 ) ) {
+               success_match($test_file, $test_files->{$test_file}->{successes_number_32}, $stdout_generated_lines);
+            }
+            elsif ( ( defined $test_files->{$test_file}->{successes_number_64} ) and ( rperltypes::type_bitsize_number() == 64 ) ) {
+               success_match($test_file, $test_files->{$test_file}->{successes_number_64}, $stdout_generated_lines);
+            }
 
-            #=cut
-
-#DISABLE
-                # NEED UPGRADE: below code allows success strings to be matched out-of-order in captured output
-                # enable with some appropriate preprocessor keyword
-#                foreach my $success (
-#                    @{ $test_files->{$test_file}->{successes} } )
-#                {
-#                    if ( $stdout_generated !~ /\Q$success\E/xms ) {
-#                        push @{$missing_successes},
-#                            "Success message '$success' expected, but not found";
-#                    }
-#                }
-#            }
-#            RPerl::verbose( 'in 09_interpret_execute.t, have $missing_successes =' . "\n" . Dumper($missing_successes) . "\n" );
-#            ok( ( ( scalar @{$missing_successes} ) == 0 ), 'Program interprets and executes without errors:' . (q{ } x 10) . $test_file );
+            #DISABLE
+            # NEED UPGRADE: below code allows success strings to be matched out-of-order in captured output
+            # enable with some appropriate preprocessor keyword
+            #                foreach my $success (
+            #                    @{ $test_files->{$test_file}->{successes} } )
+            #                {
+            #                    if ( $stdout_generated !~ /\Q$success\E/xms ) {
+            #                        push @{$missing_successes},
+            #                            "Success message '$success' expected, but not found";
+            #                    }
+            #                }
+            #            }
+            #            RPerl::verbose( 'in 09_interpret_execute.t, have $missing_successes =' . "\n" . Dumper($missing_successes) . "\n" );
+            #            ok( ( ( scalar @{$missing_successes} ) == 0 ), 'Program interprets and executes without errors:' . (q{ } x 10) . $test_file );
 
         }
         else {
-            ok( 0, 'Program interprets and executes with errors:' . (q{ } x 13) . $test_file );
+            ok( 0, 'Program interprets and executes with errors:' . ( q{ } x 13 ) . $test_file );
         }
     }
     else {    # UNIX process return code not 0, error
@@ -234,10 +283,39 @@ for my $test_file ( sort keys %{$test_files} ) {
                     }
                 }
             }
-            ok( ( ( scalar @{$missing_errors} ) == 0 ), 'Program interprets and executes with expected error(s):' . (q{ } x 2) . $test_file );
+            ok( ( ( scalar @{$missing_errors} ) == 0 ), 'Program interprets and executes with expected error(s):' . ( q{ } x 2 ) . $test_file );
         }
         else {
-            ok( 0, 'Program interprets and executes without errors:' . (q{ } x 10) . $test_file );
+            ok( 0, 'Program interprets and executes without errors:' . ( q{ } x 10 ) . $test_file );
         }
     }
+}
+
+sub success_match {
+    (my string $test_file, my string_arrayref $test_file_successes, my string $stdout_generated_lines) = @_;
+#    $RPerl::DEBUG   = 0;
+#    $RPerl::VERBOSE = 0;
+
+    RPerl::diag( 'in 09_interpret_execute.t success_match(), before foreach loop, have successes =' . "\n" . Dumper( $test_file_successes ) . "\n" );
+
+    my string $success = $test_file_successes->[0];
+
+    # match success strings in-order in captured output
+FOREACH_STDOUT_LINE: foreach my string $stdout_generated_line ( @{$stdout_generated_lines} ) {
+
+        RPerl::diag( 'in 09_interpret_execute.t success_match(), top of foreach loop, have $success = ' . $success . "\n" );
+        RPerl::diag( 'in 09_interpret_execute.t success_match(), top of foreach loop, have $stdout_generated_line = ' . $stdout_generated_line . "\n" );
+
+        # each stdout line is only allowed to match one success string
+        if ( $stdout_generated_line =~ /\Q$success\E/xms ) {
+
+            RPerl::diag( 'in 09_interpret_execute.t success_match(), MATCH' . "\n" );
+            shift @{ $test_file_successes };
+            if ( ( scalar @{ $test_file_successes } ) == 0 ) { last FOREACH_STDOUT_LINE; }
+            $success = $test_file_successes->[0];
+        }
+        else { RPerl::diag( 'in 09_interpret_execute.t success_match(), NO MATCH' . "\n" ); }
+    }
+    RPerl::verbose( 'in 09_interpret_execute.t success_match(), have missing successes =' . "\n" . Dumper( $test_file_successes ) . "\n" );
+    ok( ( ( scalar @{ $test_file_successes } ) == 0 ), 'Program interprets and executes without errors:' . ( q{ } x 10 ) . $test_file );
 }

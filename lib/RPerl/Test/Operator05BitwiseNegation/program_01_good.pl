@@ -1,15 +1,25 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: 'have $foo = 0' >>>
-# <<< EXECUTE_SUCCESS: 'have $bar = 1' >>>
-# <<< EXECUTE_SUCCESS: 'have $bat = 18446744073709551615' >>>
-# <<< EXECUTE_SUCCESS: 'have $baz = 18446744073709551614' >>>
-# <<< EXECUTE_SUCCESS: 'have $foo = 18446744073709551610' >>>
-# <<< EXECUTE_SUCCESS: 'have $bar = 18446744073709551609' >>>
-# <<< EXECUTE_SUCCESS: 'have $bat = 5' >>>
-# <<< EXECUTE_SUCCESS: 'have $baz = 18446744073709551614' >>>
-# <<< EXECUTE_SUCCESS: 'have $bax = 18446744073709551610' >>>
+# <<< EXECUTE_SUCCESS_INTEGER_32: 'have $foo = 0' >>>
+# <<< EXECUTE_SUCCESS_INTEGER_32: 'have $bar = 1' >>>
+# <<< EXECUTE_SUCCESS_INTEGER_32: 'have $bat = 4294967295' >>>
+# <<< EXECUTE_SUCCESS_INTEGER_32: 'have $baz = 4294967294' >>>
+# <<< EXECUTE_SUCCESS_INTEGER_32: 'have $foo = 4294967290' >>>
+# <<< EXECUTE_SUCCESS_INTEGER_32: 'have $bar = 4294967289' >>>
+# <<< EXECUTE_SUCCESS_INTEGER_32: 'have $bat = 5' >>>
+# <<< EXECUTE_SUCCESS_INTEGER_32: 'have $baz = 4294967294' >>>
+# <<< EXECUTE_SUCCESS_INTEGER_32: 'have $bax = 4294967290' >>>
+
+# <<< EXECUTE_SUCCESS_INTEGER_64: 'have $foo = 0' >>>
+# <<< EXECUTE_SUCCESS_INTEGER_64: 'have $bar = 1' >>>
+# <<< EXECUTE_SUCCESS_INTEGER_64: 'have $bat = 18446744073709551615' >>>
+# <<< EXECUTE_SUCCESS_INTEGER_64: 'have $baz = 18446744073709551614' >>>
+# <<< EXECUTE_SUCCESS_INTEGER_64: 'have $foo = 18446744073709551610' >>>
+# <<< EXECUTE_SUCCESS_INTEGER_64: 'have $bar = 18446744073709551609' >>>
+# <<< EXECUTE_SUCCESS_INTEGER_64: 'have $bat = 5' >>>
+# <<< EXECUTE_SUCCESS_INTEGER_64: 'have $baz = 18446744073709551614' >>>
+# <<< EXECUTE_SUCCESS_INTEGER_64: 'have $bax = 18446744073709551610' >>>
 
 # [[[ HEADER ]]]
 use RPerl;

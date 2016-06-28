@@ -5,7 +5,7 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.004_000;
+our $VERSION = 0.005_000;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
@@ -22,6 +22,7 @@ our $VERSION = 0.004_000;
 # [[[ NON-RPERL MODULES ]]]
 use File::Copy qw(copy);
 use Scalar::Util qw(blessed);
+use Config;
 
 # DEV NOTE, CORRELATION #rp08: can't use Exporter here
 # [[[ EXPORTS ]]]
@@ -516,6 +517,71 @@ sub types_enable {
 
     $RPerl::TYPES_CCFLAG = ' -D__' . $types_input . '__TYPES';
     return;
+}
+
+# [[[ C++ TYPE SIZE REPORTING ]]]
+sub type_bitsize_integer {
+    if ((not exists $Config{ivsize}) or (not defined $Config{ivsize})) {
+        croak 'ERROR ERPTYxx: Non-existent or undefined Perl config value $Config{ivsize}, croaking';
+    }
+    my string $ivsize = $Config{ivsize};
+
+    if ((not exists $Config{ivtype}) or (not defined $Config{ivtype})) {
+        croak 'ERROR ERPTYxx: Non-existent or undefined Perl config value $Config{ivtype}, croaking';
+    }
+    my string $ivtypesize_key = $Config{ivtype} . 'size';
+ 
+    if ((not exists $Config{$ivtypesize_key}) or (not defined $Config{$ivtypesize_key})) {
+        croak 'ERROR ERPTYxx: Non-existent or undefined Perl config value $Config{' . $ivtypesize_key . '}, croaking';
+    }
+    my string $ivtypesize = $Config{$ivtypesize_key};
+
+    if ($ivsize ne $ivtypesize) {
+        croak 'ERROR ERPTYxx: Mis-matching Perl config values, $Config{ivsize} = ' . $ivsize . ', $Config{' . $ivtypesize_key . '} = ' . $ivtypesize . ', croaking';
+    }
+
+    # NEED ANSWER: should we be checking $Config{use64bitint}, $Config{use64bitall}, $Config{i64size}, $Config{i64type}???
+
+    my integer $return_value = (string_to_integer($ivsize) * 8);  # return answer in bits, not bytes
+    return $return_value;
+}
+
+sub type_bitsize_integer_dump {
+    foreach my $o (qw(ivsize ivtype use64bitint use64bitall intsize longsize longlongsize d_longlong i8size i8type i16size i16type i32size i32type i64size i64type)) { 
+        print q($Config{) . $o . q(} = ) . $Config{$o} . "\n";
+    }
+}
+
+sub type_bitsize_number {
+    if ((not exists $Config{nvsize}) or (not defined $Config{nvsize})) {
+        croak 'ERROR ERPTYxx: Non-existent or undefined Perl config value $Config{nvsize}, croaking';
+    }
+    my string $nvsize = $Config{nvsize};
+
+    if ((not exists $Config{nvtype}) or (not defined $Config{nvtype})) {
+        croak 'ERROR ERPTYxx: Non-existent or undefined Perl config value $Config{nvtype}, croaking';
+    }
+    my string $nvtypesize_key = $Config{nvtype} . 'size';
+ 
+    if ((not exists $Config{$nvtypesize_key}) or (not defined $Config{$nvtypesize_key})) {
+        croak 'ERROR ERPTYxx: Non-existent or undefined Perl config value $Config{' . $nvtypesize_key . '}, croaking';
+    }
+    my string $nvtypesize = $Config{$nvtypesize_key};
+
+    if ($nvsize ne $nvtypesize) {
+        croak 'ERROR ERPTYxx: Mis-matching Perl config values, $Config{nvsize} = ' . $nvsize . ', $Config{' . $nvtypesize_key . '} = ' . $nvtypesize . ', croaking';
+    }
+
+    # NEED ANSWER: should we be checking $Config{use64bitall}???
+
+    my integer $return_value = (string_to_integer($nvsize) * 8);  # return answer in bits, not bytes
+    return $return_value;
+}
+
+sub type_bitsize_number_dump {
+    foreach my $o (qw(nvsize nvtype use64bitall doublesize longdblsize d_longdbl)) { 
+        print q($Config{) . $o . q(} = ) . $Config{$o} . "\n";
+    }
 }
 
 1;  # end of package
