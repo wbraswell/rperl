@@ -41,8 +41,8 @@ RPerl::diag("[[[ END 'use Inline' STAGE for 'RPerl/DataStructure/Hash.cpp' ]]]\n
 1;
 EOF
 
-        $RPerl::Inline::ARGS{ccflagsex} = $RPerl::Inline::CCFLAGSEX . $RPerl::TYPES_CCFLAG;
-        $RPerl::Inline::ARGS{cppflags} = $RPerl::TYPES_CCFLAG;
+        $RPerl::Inline::ARGS{ccflagsex} = $RPerl::Inline::CCFLAGSEX . $RPerl::TYPES_CCFLAG . rperltypes::type_integer_native_ccflag() . rperltypes::type_number_native_ccflag();
+        $RPerl::Inline::ARGS{cppflags} = $RPerl::TYPES_CCFLAG . rperltypes::type_integer_native_ccflag() . rperltypes::type_number_native_ccflag();
 #        RPerl::diag("in Hash_cpp::cpp_load(), CPP not yet loaded, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n");
 
         eval $eval_string or croak( $OS_ERROR . "\n" . $EVAL_ERROR );

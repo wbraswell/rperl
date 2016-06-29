@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.012_100;
+our $VERSION = 0.013_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -751,6 +751,8 @@ our void $cpp_to_xsbinary__subcompile = sub {
 
         $subcompile_command .= q{ } . $RPerl::Inline::CCFLAGSEX;
         $subcompile_command .= q{ } . '-D__' . $modes->{types} . '__TYPES';    # same as #define __PERL__TYPES or #define__CPP__TYPES; don't just use hard-coded $RPerl::TYPES_CCFLAG
+        $subcompile_command .= q{ } . '-D__TYPE__INTEGER__' . $modes->{type_integer};
+        $subcompile_command .= q{ } . '-D__TYPE__NUMBER__' . $modes->{type_number};
         $subcompile_command .= q{ } . $RPerl::Inline::ARGS{optimize};
 
         $subcompile_command .= q{ } . '-DVERSION=\"0.00\" -DXS_VERSION=\"0.00\"';    # NEED ANSWER: what does this do?

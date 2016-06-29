@@ -1,14 +1,20 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_h
-#define __CPP__INCLUDED__RPerl__DataType__Integer_h 0.006_000
+#define __CPP__INCLUDED__RPerl__DataType__Integer_h 0.007_000
 
 // [[[ TYPEDEFS ]]]
 // DEV NOTE: must use "integer" typedef because "int" is already defined by Inline's default typemap, even if we put our own integer entry into typemap.rperl;
 // if we allow Inline default int, then it will accept all kinds of non-integer values which should be filtered by XS_unpack_integer() and CHECK()
 # ifndef __CPP__INCLUDED__RPerl__DataType__Integer_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__Integer_h__typedefs 1
-typedef long int integer;
+#  ifdef __TYPE__INTEGER__LONG
+typedef long integer;
+#  elif defined __TYPE__INTEGER__LONG__LONG
+typedef long long integer;
+#  else
+typedef long integer;  // default
+#  endif
 # endif
 
 // [[[ PRE-DECLARED TYPEDEFS ]]]
@@ -22,7 +28,13 @@ typedef unsigned long int unsigned_integer;
 # endif
 # ifndef __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs 1
+#  ifdef __TYPE__NUMBER__DOUBLE
 typedef double number;
+#  elif defined __TYPE__NUMBER__LONG__DOUBLE
+typedef long double number;
+#  else
+typedef double number;  // default
+#  endif
 # endif
 # ifndef __CPP__INCLUDED__RPerl__DataType__Character_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__Character_h__typedefs 1

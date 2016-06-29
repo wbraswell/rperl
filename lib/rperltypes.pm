@@ -520,7 +520,28 @@ sub types_enable {
 }
 
 # [[[ C++ TYPE SIZE REPORTING ]]]
-sub type_bitsize_integer {
+sub type_integer_bitsize {
+    type_integer_errorcheck();
+    return (string_to_integer($Config{ivsize}) * 8);  # return answer in bits, not bytes
+}
+
+sub type_integer_native {
+    type_integer_errorcheck();
+    return $Config{ivtype};
+}
+
+sub type_integer_native_ccflag {
+    type_integer_errorcheck();
+    if ($Config{ivtype} eq 'long') {
+        return ' -D__TYPE__INTEGER__LONG';
+    }
+    elsif ($Config{ivtype} eq 'longlong') {
+        return ' -D__TYPE__INTEGER__LONG__LONG';
+    }
+}
+
+sub type_integer_errorcheck {
+    # NEED ANSWER: should we be checking $Config{use64bitint}, $Config{use64bitall}, $Config{i64size}, $Config{i64type}???
     if ((not exists $Config{ivsize}) or (not defined $Config{ivsize})) {
         croak 'ERROR ERPTYxx: Non-existent or undefined Perl config value $Config{ivsize}, croaking';
     }
@@ -539,20 +560,36 @@ sub type_bitsize_integer {
     if ($ivsize ne $ivtypesize) {
         croak 'ERROR ERPTYxx: Mis-matching Perl config values, $Config{ivsize} = ' . $ivsize . ', $Config{' . $ivtypesize_key . '} = ' . $ivtypesize . ', croaking';
     }
-
-    # NEED ANSWER: should we be checking $Config{use64bitint}, $Config{use64bitall}, $Config{i64size}, $Config{i64type}???
-
-    my integer $return_value = (string_to_integer($ivsize) * 8);  # return answer in bits, not bytes
-    return $return_value;
 }
 
-sub type_bitsize_integer_dump {
+sub type_integer_bitsize_dump {
     foreach my $o (qw(ivsize ivtype use64bitint use64bitall intsize longsize longlongsize d_longlong i8size i8type i16size i16type i32size i32type i64size i64type)) { 
         print q($Config{) . $o . q(} = ) . $Config{$o} . "\n";
     }
 }
 
-sub type_bitsize_number {
+sub type_number_bitsize {
+    type_number_errorcheck();
+    return (string_to_integer($Config{nvsize}) * 8);  # return answer in bits, not bytes
+}
+
+sub type_number_native {
+    type_number_errorcheck();
+    return $Config{nvtype};
+}
+
+sub type_number_native_ccflag {
+    type_number_errorcheck();
+    if ($Config{nvtype} eq 'double') {
+        return ' -D__TYPE__NUMBER__DOUBLE';
+    }
+    elsif ($Config{nvtype} eq 'longdbl') {
+        return ' -D__TYPE__NUMBER__LONG__DOUBLE';
+    }
+}
+
+sub type_number_errorcheck {
+    # NEED ANSWER: should we be checking $Config{use64bitall}???
     if ((not exists $Config{nvsize}) or (not defined $Config{nvsize})) {
         croak 'ERROR ERPTYxx: Non-existent or undefined Perl config value $Config{nvsize}, croaking';
     }
@@ -571,14 +608,9 @@ sub type_bitsize_number {
     if ($nvsize ne $nvtypesize) {
         croak 'ERROR ERPTYxx: Mis-matching Perl config values, $Config{nvsize} = ' . $nvsize . ', $Config{' . $nvtypesize_key . '} = ' . $nvtypesize . ', croaking';
     }
-
-    # NEED ANSWER: should we be checking $Config{use64bitall}???
-
-    my integer $return_value = (string_to_integer($nvsize) * 8);  # return answer in bits, not bytes
-    return $return_value;
 }
 
-sub type_bitsize_number_dump {
+sub type_number_bitsize_dump {
     foreach my $o (qw(nvsize nvtype use64bitall doublesize longdblsize d_longdbl)) { 
         print q($Config{) . $o . q(} = ) . $Config{$o} . "\n";
     }

@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__GMPInteger_h
-#define __CPP__INCLUDED__RPerl__DataType__GMPInteger_h 0.003_000
+#define __CPP__INCLUDED__RPerl__DataType__GMPInteger_h 0.004_000
 
 // NEED FIX: remove duplicate code
 // DEV NOTE, CORRELATION #rp26: can't figure out how to get GMPInteger.cpp to include HelperFunctions.cpp without redefining errors
@@ -33,11 +33,23 @@ typedef unsigned long int unsigned_integer;
 # endif
 # ifndef __CPP__INCLUDED__RPerl__DataType__Integer_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__Integer_h__typedefs 1
-typedef long int integer;
+#  ifdef __TYPE__INTEGER__LONG
+typedef long integer;
+#  elif defined __TYPE__INTEGER__LONG__LONG
+typedef long long integer;
+#  else
+typedef long integer;  // default
+#  endif
 # endif
 # ifndef __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs 1
+#  ifdef __TYPE__NUMBER__DOUBLE
 typedef double number;
+#  elif defined __TYPE__NUMBER__LONG__DOUBLE
+typedef long double number;
+#  else
+typedef double number;  // default
+#  endif
 # endif
 # ifndef __CPP__INCLUDED__RPerl__DataType__Character_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__Character_h__typedefs 1

@@ -4,15 +4,26 @@ DONE
     allow 'use integer;' without trying to find & compile 'integer.pm' subdependencies
     Learning RPerl, examples for 2.1.9 - 2.1.14
     add calling conventions & data types for all numeric operators, section 2.1
+    enable config of integer type via #define & #ifdef like __CPP__TYPES, either int or long int or long long int, default to match Perl via combo of the following
+        script/development/unused/integer_precision.cpp
+        perl -e 'use Config; foreach my $o (qw(ivsize ivtype use64bitint use64bitall intsize longsize longlongsize d_longlong i8size i8type i16size i16type i32size i32type i64size i64type)) { print q($Config{) . $o . q(} = ) . $Config{$o} . "\n"; }'
+    enable config of number type via #define & #ifdef like __CPP__TYPES, either double or long double, default to match Perl via combo of the following
+        script/development/unused/number_precision.cpp
+        perl -e 'use Config; foreach my $o (qw(nvsize nvtype use64bitall doublesize longdblsize d_longdbl)) { print q($Config{) . $o . q(} = ) . $Config{$o} . "\n"; }'
 
 DOING
+    execute via compiled copy not interpreted
+    enable shorthand classes
+    enable loop parallelization
+    appveyor, add ci.appveyor.com github webhook for Windows
+    ExtUtils::CppGuess bug fix w/ davido
+    ...
     explain difference between .a, .o, and .so
         .o can be combined into .so or .exe?
         .a is "just a tarball of .o files"?
         .so must always be stand-alone, like a .exe w/out a main()?
     append 'L' to all numeric literals to force long int?
     create macro to replace all conditional truth value checks with extra logic to include RPerl false values of '0', q{0}, and q{}, in both character and string type
-    execute via compiled copy not interpreted
     INSTALL notes, update step 3 examples
     travis enable dev Perl
     fix dev Perl via P5P
@@ -139,7 +150,6 @@ QUALITY ASSURANCE
     Devel::Cover
     Devel::Cover::Report::Coveralls
     coveralls.io
-    appveyor, add ci.appveyor.com github webhook for Windows
 
 STDPERL
     merge sort
@@ -199,15 +209,8 @@ PARALLELAPPSTORE.COM
 
 DATA TYPES & STRUCTURES
     add remaining generic overloaded type conversion subroutines to_boolean(), to_integer(), to_unsigned_integer(), to_gmp_integer(), to_character() in rperltypes.*
-    enable config of integer type via #define & #ifdef like __CPP__TYPES, either int or long int or long long int, default to match Perl via combo of the following
-        script/development/unused/integer_precision.cpp
-        perl -e 'use Config; foreach my $o (qw(ivsize ivtype use64bitint use64bitall intsize longsize longlongsize d_longlong i8size i8type i16size i16type i32size i32type i64size i64type)) { print q($Config{) . $o . q(} = ) . $Config{$o} . "\n"; }'
-
-    enable config of number type via #define & #ifdef like __CPP__TYPES, either double or long double, default to match Perl via combo of the following
-      ALSO enable config of %d vs %ld format codes for printf & friends
-      ALSO enable config of RPerl::NUMBER_EPSILON in RPerl/Config.pm to use either POSIX::FLT_EPSILON() or POSIX::DBL_EPSILON() http://perldoc.perl.org/POSIX.html#FLOAT
-        script/development/unused/number_precision.cpp
-        perl -e 'use Config; foreach my $o (qw(nvsize nvtype use64bitall doublesize longdblsize d_longdbl)) { print q($Config{) . $o . q(} = ) . $Config{$o} . "\n"; }'
+    enable config of %d vs %ld format codes for printf & friends
+    enable config of RPerl::NUMBER_EPSILON in RPerl/Config.pm to use either POSIX::FLT_EPSILON() or POSIX::DBL_EPSILON() http://perldoc.perl.org/POSIX.html#FLOAT
     PERLOPS_CPPTYPES conversion routines
     boolean_arrayref, unsigned_integer_arrayref, character_arrayref
     boolean_hashref, unsigned_integer_hashref, character_hashref

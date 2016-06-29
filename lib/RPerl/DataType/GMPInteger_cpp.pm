@@ -41,8 +41,8 @@ RPerl::diag("[[[ END 'use Inline' STAGE for 'RPerl/DataType/GMPInteger.cpp' ]]]\
 1;
 EOF
 
-        $RPerl::Inline::ARGS{ccflagsex} = $RPerl::Inline::CCFLAGSEX . $RPerl::TYPES_CCFLAG;
-        $RPerl::Inline::ARGS{cppflags} = $RPerl::TYPES_CCFLAG;
+        $RPerl::Inline::ARGS{ccflagsex} = $RPerl::Inline::CCFLAGSEX . $RPerl::TYPES_CCFLAG . rperltypes::type_integer_native_ccflag() . rperltypes::type_number_native_ccflag();
+        $RPerl::Inline::ARGS{cppflags} = $RPerl::TYPES_CCFLAG . rperltypes::type_integer_native_ccflag() . rperltypes::type_number_native_ccflag();
         $RPerl::Inline::ARGS{libs}         = '-lgmpxx -lgmp';                                                                                     # enable GMP support
         $RPerl::Inline::ARGS{auto_include} = [ @{ $RPerl::Inline::ARGS{auto_include} }, '#include <gmpxx.h>', '#include <gmp.h>' ];    # enable GMP support
         

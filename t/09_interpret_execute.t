@@ -206,48 +206,18 @@ for my $test_file ( sort keys %{$test_files} ) {
         if ( ( $test_file =~ m/Good/xms ) or ( $test_file =~ m/good/xms ) ) {
             my $missing_successes = [];
             if ( defined $test_files->{$test_file}->{successes} ) {
-=REPLACED
-                $RPerl::DEBUG   = 0;
-                $RPerl::VERBOSE = 0;
-
-                RPerl::diag(
-                    'in 09_interpret_execute.t, before foreach loop, have successes =' . "\n" . Dumper( $test_files->{$test_file}->{successes} ) . "\n" );
-
-                my string $success = $test_files->{$test_file}->{successes}->[0];
-
-                # match success strings in-order in captured output
-            FOREACH_STDOUT_LINE: foreach my string $stdout_generated_line ( @{$stdout_generated_lines} ) {
-
-                    RPerl::diag( 'in 09_interpret_execute.t, top of foreach loop, have $success = ' . $success . "\n" );
-                    RPerl::diag( 'in 09_interpret_execute.t, top of foreach loop, have $stdout_generated_line = ' . $stdout_generated_line . "\n" );
-
-                    # each stdout line is only allowed to match one success string
-                    if ( $stdout_generated_line =~ /\Q$success\E/xms ) {
-
-                        RPerl::diag( 'in 09_interpret_execute.t, MATCH' . "\n" );
-                        shift @{ $test_files->{$test_file}->{successes} };
-                        if ( ( scalar @{ $test_files->{$test_file}->{successes} } ) == 0 ) { last FOREACH_STDOUT_LINE; }
-                        $success = $test_files->{$test_file}->{successes}->[0];
-                    }
-                    else { RPerl::diag( 'in 09_interpret_execute.t, NO MATCH' . "\n" ); }
-                }
-                RPerl::verbose( 'in 09_interpret_execute.t, have missing successes =' . "\n" . Dumper( $test_files->{$test_file}->{successes} ) . "\n" );
-                ok( ( ( scalar @{ $test_files->{$test_file}->{successes} } ) == 0 ),
-                    'Program interprets and executes without errors:' . ( q{ } x 10 ) . $test_file
-                );
-=cut
                success_match($test_file, $test_files->{$test_file}->{successes}, $stdout_generated_lines);
             }
-            elsif ( ( defined $test_files->{$test_file}->{successes_integer_32} ) and ( rperltypes::type_bitsize_integer() == 32 ) ) {
+            elsif ( ( defined $test_files->{$test_file}->{successes_integer_32} ) and ( rperltypes::type_integer_bitsize() == 32 ) ) {
                success_match($test_file, $test_files->{$test_file}->{successes_integer_32}, $stdout_generated_lines);
             }
-            elsif ( ( defined $test_files->{$test_file}->{successes_integer_64} ) and ( rperltypes::type_bitsize_integer() == 64 ) ) {
+            elsif ( ( defined $test_files->{$test_file}->{successes_integer_64} ) and ( rperltypes::type_integer_bitsize() == 64 ) ) {
                success_match($test_file, $test_files->{$test_file}->{successes_integer_64}, $stdout_generated_lines);
             }
-            elsif ( ( defined $test_files->{$test_file}->{successes_number_32} ) and ( rperltypes::type_bitsize_number() == 32 ) ) {
+            elsif ( ( defined $test_files->{$test_file}->{successes_number_32} ) and ( rperltypes::type_number_bitsize() == 32 ) ) {
                success_match($test_file, $test_files->{$test_file}->{successes_number_32}, $stdout_generated_lines);
             }
-            elsif ( ( defined $test_files->{$test_file}->{successes_number_64} ) and ( rperltypes::type_bitsize_number() == 64 ) ) {
+            elsif ( ( defined $test_files->{$test_file}->{successes_number_64} ) and ( rperltypes::type_number_bitsize() == 64 ) ) {
                success_match($test_file, $test_files->{$test_file}->{successes_number_64}, $stdout_generated_lines);
             }
 

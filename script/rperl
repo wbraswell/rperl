@@ -875,6 +875,8 @@ my string_hashref $modes_default                = {        # default to CPPOPS_C
     dependencies => 'ON',
     ops          => 'CPP',
     types        => 'CPP',
+    type_integer => 'LONG',
+    type_number  => 'DOUBLE',
     check        => 'TRACE',
     uncompile    => 'OFF',
     compile      => 'SUBCOMPILE',
@@ -888,6 +890,8 @@ my arrayref_hashref $modes_supported = {
     dependencies => [ 'OFF', 'ON' ],
     ops          => [ 'PERL', 'CPP' ],
     types        => [ 'PERL', 'CPP', 'DUAL' ],
+    type_integer => [ 'LONG', 'LONG__LONG' ],
+    type_number  => [ 'DOUBLE', 'LONG__DOUBLE' ],
     check        => [ 'OFF', 'ON', 'TRACE' ],
     uncompile    => [ 'OFF', 'SOURCE', 'BINARY', 'INLINE', 'SOURCE_BINARY', 'SOURCE_BINARY_INLINE' ],
     compile      => [ 'OFF', 'PARSE', 'GENERATE', 'SAVE', 'SUBCOMPILE' ],
@@ -1127,7 +1131,43 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.8: Modes, Type Checking
+=for comment head2 B.8: Modes, Integer Type
+
+=over
+
+=item B<--mode type_integer=LONG ...OR... -m type_integer=LONG>
+
+=item B<--mode type_integer=LONG__LONG ...OR... -m type_integer=LONG__LONG>
+
+=for rperl X<noncode>
+
+    Specify native C++ integer data type, same as internal Perl type by default.
+    If set to LONG, utilize 'long' as native type for 'integer', at least 32 bits;
+    If set to LONG__LONG, utilize 'long long' as native type for 'integer', at least 64 bits.
+
+=for rperl X</noncode>
+
+=back
+
+=for comment head2 B.9: Modes, Number Type
+
+=over
+
+=item B<--mode type_number=DOUBLE ...OR... -m type_number=DOUBLE>
+
+=item B<--mode type_number=LONG__DOUBLE ...OR... -m type_number=LONG__DOUBLE>
+
+=for rperl X<noncode>
+
+    Specify native C++ number data type, same as internal Perl type by default.
+    If set to DOUBLE, utilize 'double' as native type for 'number', usually at least 32 bits, but not guaranteed;
+    If set to LONG__DOUBLE, utilize 'long double' as native type for 'number', usually at least 64 bits, but not guaranteed.
+
+=for rperl X</noncode>
+
+=back
+
+=for comment head2 B.10: Modes, Type Checking
 
 =over
 
@@ -1148,7 +1188,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.9: Modes, Dependencies
+=for comment head2 B.11: Modes, Dependencies
 
 =over
 
@@ -1167,7 +1207,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.10: Modes, Uncompile
+=for comment head2 B.12: Modes, Uncompile
 
 =over
 
@@ -1197,7 +1237,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.11: Modes, Compile
+=for comment head2 B.13: Modes, Compile
 
 =over
 
@@ -1223,7 +1263,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.12: Modes, Subcompile
+=for comment head2 B.14: Modes, Subcompile
 
 =over
 
@@ -1252,7 +1292,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.13: Modes, C++ Compiler
+=for comment head2 B.15: Modes, C++ Compiler
 
 =over
 
@@ -1266,7 +1306,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.14: Modes, Execute
+=for comment head2 B.16: Modes, Execute
 
 =over
 
@@ -1285,7 +1325,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.15: Modes, Source Code Labels
+=for comment head2 B.17: Modes, Source Code Labels
 
 =over
 
@@ -1303,7 +1343,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.16: Flags, Verbose
+=for comment head2 B.18: Flags, Verbose
 
 =over
 
@@ -1322,7 +1362,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.17: Flags, Debug
+=for comment head2 B.19: Flags, Debug
 
 =over
 
@@ -1341,7 +1381,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.18: Flags, Warnings
+=for comment head2 B.20: Flags, Warnings
 
 =over
 
@@ -1359,7 +1399,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.19: Flags, Test
+=for comment head2 B.21: Flags, Test
 
 =over
 
@@ -1375,7 +1415,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.20: Flags, Dependencies
+=for comment head2 B.22: Flags, Dependencies
 
 =over
 
@@ -1393,7 +1433,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.21: Flags, Uncompile
+=for comment head2 B.23: Flags, Uncompile
 
 =over
 
@@ -1423,7 +1463,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.22: Flags, Compile
+=for comment head2 B.24: Flags, Compile
 
 =over
 
@@ -1440,7 +1480,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.23: Flags, Subcompile, Assemble
+=for comment head2 B.25: Flags, Subcompile, Assemble
 
 =over
 
@@ -1456,7 +1496,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.24: Flags, Subcompile, Archive
+=for comment head2 B.26: Flags, Subcompile, Archive
 
 =over
 
@@ -1472,7 +1512,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.25: Flags, Subcompile, Shared Object
+=for comment head2 B.27: Flags, Subcompile, Shared Object
 
 =over
 
@@ -1488,7 +1528,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.26: Flags, Subcompile, Static
+=for comment head2 B.28: Flags, Subcompile, Static
 
 =over
 
@@ -1507,7 +1547,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.27: Flags, Execute
+=for comment head2 B.29: Flags, Execute
 
 =over
 

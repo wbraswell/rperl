@@ -16,11 +16,25 @@ typedef bool boolean;
 # endif
 # ifndef __CPP__INCLUDED__RPerl__DataType__Integer_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__Integer_h__typedefs 1
-typedef long int integer;
+#  ifdef __TYPE__INTEGER__LONG
+typedef long integer;
+#  elif defined __TYPE__INTEGER__LONG__LONG
+typedef long long integer;
+#  else
+typedef long integer;  // default
+#  endif
 # endif
 # ifndef __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs 1
+
+
+#  ifdef __TYPE__NUMBER__DOUBLE
 typedef double number;
+#  elif defined __TYPE__NUMBER__LONG__DOUBLE
+typedef long double number;
+#  else
+typedef double number;  // default
+#  endif
 # endif
 # ifndef __CPP__INCLUDED__RPerl__DataType__Character_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__Character_h__typedefs 1
