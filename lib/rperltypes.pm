@@ -5,7 +5,7 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.005_000;
+our $VERSION = 0.006_000;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
@@ -543,22 +543,41 @@ sub type_integer_native_ccflag {
 sub type_integer_errorcheck {
     # NEED ANSWER: should we be checking $Config{use64bitint}, $Config{use64bitall}, $Config{i64size}, $Config{i64type}???
     if ((not exists $Config{ivsize}) or (not defined $Config{ivsize})) {
-        croak 'ERROR ERPTYxx: Non-existent or undefined Perl config value $Config{ivsize}, croaking';
+        croak 'ERROR ERPTYREI00: Non-existent or undefined Perl config value $Config{ivsize}, croaking';
     }
     my string $ivsize = $Config{ivsize};
 
     if ((not exists $Config{ivtype}) or (not defined $Config{ivtype})) {
-        croak 'ERROR ERPTYxx: Non-existent or undefined Perl config value $Config{ivtype}, croaking';
+        croak 'ERROR ERPTYREI01: Non-existent or undefined Perl config value $Config{ivtype}, croaking';
     }
-    my string $ivtypesize_key = $Config{ivtype} . 'size';
+    my string $ivtype = $Config{ivtype};
+
+    if ( $OSNAME ne 'MSWin32' ) {
+        my string_hashref $windows_types_to_common_types => {
+            '__int8' => 'i8',
+            '__int16' => 'i16',
+            '__int32' => 'i32',
+            '__int64' => 'i64',
+            '__int128' => 'i128',
+            'int8_t' => 'i8',
+            'int16_t' => 'i16',
+            'int32_t' => 'i32',
+            'int64_t' => 'i64',
+            'int128_t' => 'i128',
+        };
+        if (exists $windows_types_to_common_types->{$ivtype}) {
+            $ivtype = $windows_types_to_common_types->{$ivtype};
+        }
+    }
+    my string $ivtypesize_key = $ivtype . 'size';
  
     if ((not exists $Config{$ivtypesize_key}) or (not defined $Config{$ivtypesize_key})) {
-        croak 'ERROR ERPTYxx: Non-existent or undefined Perl config value $Config{' . $ivtypesize_key . '}, croaking';
+        croak 'ERROR ERPTYREI02: Non-existent or undefined Perl config value $Config{' . $ivtypesize_key . '}, croaking';
     }
     my string $ivtypesize = $Config{$ivtypesize_key};
 
     if ($ivsize ne $ivtypesize) {
-        croak 'ERROR ERPTYxx: Mis-matching Perl config values, $Config{ivsize} = ' . $ivsize . ', $Config{' . $ivtypesize_key . '} = ' . $ivtypesize . ', croaking';
+        croak 'ERROR ERPTYREI03: Mis-matching Perl config values, $Config{ivsize} = ' . $ivsize . ', $Config{' . $ivtypesize_key . '} = ' . $ivtypesize . ', croaking';
     }
 }
 
@@ -591,22 +610,22 @@ sub type_number_native_ccflag {
 sub type_number_errorcheck {
     # NEED ANSWER: should we be checking $Config{use64bitall}???
     if ((not exists $Config{nvsize}) or (not defined $Config{nvsize})) {
-        croak 'ERROR ERPTYxx: Non-existent or undefined Perl config value $Config{nvsize}, croaking';
+        croak 'ERROR ERPTYREN00: Non-existent or undefined Perl config value $Config{nvsize}, croaking';
     }
     my string $nvsize = $Config{nvsize};
 
     if ((not exists $Config{nvtype}) or (not defined $Config{nvtype})) {
-        croak 'ERROR ERPTYxx: Non-existent or undefined Perl config value $Config{nvtype}, croaking';
+        croak 'ERROR ERPTYREN01: Non-existent or undefined Perl config value $Config{nvtype}, croaking';
     }
     my string $nvtypesize_key = $Config{nvtype} . 'size';
  
     if ((not exists $Config{$nvtypesize_key}) or (not defined $Config{$nvtypesize_key})) {
-        croak 'ERROR ERPTYxx: Non-existent or undefined Perl config value $Config{' . $nvtypesize_key . '}, croaking';
+        croak 'ERROR ERPTYREN02: Non-existent or undefined Perl config value $Config{' . $nvtypesize_key . '}, croaking';
     }
     my string $nvtypesize = $Config{$nvtypesize_key};
 
     if ($nvsize ne $nvtypesize) {
-        croak 'ERROR ERPTYxx: Mis-matching Perl config values, $Config{nvsize} = ' . $nvsize . ', $Config{' . $nvtypesize_key . '} = ' . $nvtypesize . ', croaking';
+        croak 'ERROR ERPTYREN03: Mis-matching Perl config values, $Config{nvsize} = ' . $nvsize . ', $Config{' . $nvtypesize_key . '} = ' . $nvtypesize . ', croaking';
     }
 }
 

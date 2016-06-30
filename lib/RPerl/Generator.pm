@@ -421,9 +421,9 @@ our integer $diff_check_file_vs_string = sub {
     # START HERE: get displayed files to match, get all RPerl CPPOPS_CPPTYPES generator tests to pass, then MathPerl & PhysicsPerl
     # START HERE: get displayed files to match, get all RPerl CPPOPS_CPPTYPES generator tests to pass, then MathPerl & PhysicsPerl
 
-#    RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $string_reference_tidied = ' . "\n" . ( q{=} x 60 ) . "\n" . $string_reference_tidied . "\n" . ( q{=} x 60 ) . "\n\n" );
-#    RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $string_generated_tidied = ' . "\n" . ( q{=} x 60 ) . "\n" . $string_generated_tidied . "\n" . ( q{=} x 60 ) . "\n\n" );
-#    die 'TMP DEBUG';
+    RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $string_reference_tidied = ' . "\n" . ( q{=} x 60 ) . "\n" . $string_reference_tidied . "\n" . ( q{=} x 60 ) . "\n\n" );
+    RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $string_generated_tidied = ' . "\n" . ( q{=} x 60 ) . "\n" . $string_generated_tidied . "\n" . ( q{=} x 60 ) . "\n\n" );
+    die 'TMP DEBUG';
 
     my string_arrayref $string_reference_split   = [ ( split /\n/xms, $string_reference_tidied ) ];
     my string_arrayref $string_generated_split = [ ( split /\n/xms, $string_generated_tidied ) ];
