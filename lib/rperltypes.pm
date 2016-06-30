@@ -553,7 +553,7 @@ sub type_integer_errorcheck {
     my string $ivtype = $Config{ivtype};
 
     if ( $OSNAME ne 'MSWin32' ) {
-        my string_hashref $windows_types_to_common_types => {
+        my string_hashref $windows_types_to_common_types = {
             '__int8' => 'i8',
             '__int16' => 'i16',
             '__int32' => 'i32',
