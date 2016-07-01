@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.006_100;
+our $VERSION = 0.007_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -241,12 +241,13 @@ our string_hashref::method $ast_to_cpp__generate_shims__CPPOPS_CPPTYPES = sub {
     my string $namespace_underscores = $namespace_colons;
     $namespace_underscores =~ s/:/_/gxms;
  
-# hard-coded example, PMC subroutine
-# sub integer_bubblesort { return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort(@_); }
-
     # DEV NOTE: only generate PMC output file in dynamic (default) subcompile mode
     if ($modes->{subcompile} eq 'DYNAMIC') {
-        $cpp_source_group->{PMC} = 'sub ' . $name . ' { return main::' . $namespace_underscores . $name . '(@_); }';
+        # hard-coded example, PMC subroutine
+        #undef &RPerl::Algorithm::Sort::Bubble::integer_bubblesort;
+        #*RPerl::Algorithm::Sort::Bubble::integer_bubblesort = sub { return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort(@_); };
+        $cpp_source_group->{PMC} = 'undef &' . $namespace_colons . $name . ';'. "\n";
+        $cpp_source_group->{PMC} .= '*' . $namespace_colons . $name . ' = sub { return main::' . $namespace_underscores . $name . '(@_); };';
     }
 
 =DEPRECATED IN FAVOR OF MACROS

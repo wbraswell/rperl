@@ -14,7 +14,8 @@ use RPerl::Inline;
 # [[[ SUBROUTINES ]]]
 
 # <<< OO PROPERTIES, SUBROUTINES, SHIMS >>>
-sub uninherited__Inefficient { return main::RPerl__Algorithm__Inefficient__uninherited__Inefficient(@_); }
+undef &RPerl::Algorithm::Inefficient::uninherited__Inefficient;
+*RPerl::Algorithm::Inefficient::uninherited__Inefficient = sub { return main::RPerl__Algorithm__Inefficient__uninherited__Inefficient(@_); };
 
 # <<< C++ LOADER >>>
 #our void::method $cpp_load = sub {
