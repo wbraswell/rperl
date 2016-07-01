@@ -43,6 +43,7 @@ typedef std::unordered_map<string, RPerl__Algorithm__Sort_ptr>::iterator RPerl__
 
 // [[[ SUBROUTINES ]]]
 string RPerl__Algorithm__Sort__uninherited__Sort(string person);
+#define uninherited__Sort(person) RPerl__Algorithm__Sort__uninherited__Sort(person)
 
 // <<< OPERATIONS & DATA TYPES REPORTER >>>
 integer RPerl__Algorithm__Sort__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2

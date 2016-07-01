@@ -5,7 +5,7 @@ using std::cout;  using std::cerr;  using std::endl;
 #define __CPP__INCLUDED__RPerl__Algorithm_cpp 0.005_000
 
 // [[[ INCLUDES ]]]
-#include "/home/wbraswell/austin_perl_mongers/rperl/rperl-latest/lib/RPerl/Algorithm.h"
+#include "RPerl/Algorithm.h"
 
 # ifdef __PERL__TYPES
 

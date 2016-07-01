@@ -138,7 +138,7 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
 
                     #                        RPerl::diag( 'in 15_compile_sort.t, have $test_file_reference = ' . $test_file_reference . "\n" );
 
-                    $diff_line = RPerl::Generator::diff_check_file_vs_string( $test_file_reference, $source_group->{$suffix_key}, $ops );
+                    $diff_line = RPerl::Generator::diff_check_file_vs_string( $test_file_reference, $source_group, $suffix_key, $output_file_name_groups->[0], $modes_argument );
 
                     #                        RPerl::diag( 'in 15_compile_sort.t, have $diff_line = ' . $diff_line . "\n" );
                     if ( $diff_line != 0 ) {

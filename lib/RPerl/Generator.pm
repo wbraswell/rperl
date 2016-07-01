@@ -17,6 +17,7 @@ use RPerl::CompileUnit::Module::Class;
 
 # [[[ INCLUDES ]]]
 use RPerl::Grammar;
+use RPerl::Compiler;  # for post_processor_cpp_*()
 use rperltypesconv;
 use IPC::Cmd qw(can_run);          # to check for `astyle`
 use File::Temp qw(tempfile);
@@ -150,12 +151,18 @@ our boolean $dummy_source_code_find = sub {
 # line-by-line comparison of file contents vs string contents;
 # returns -1 __DUMMY_SOURCE_CODE found, 0 no difference, >0 line number of first difference
 our integer $diff_check_file_vs_string = sub {
-    ( my string $file_name_reference, my string $string_generated, my string $ops) = @_;
+    ( my string $file_name_reference, my string_hashref $source_group, my string $suffix_key, my string_hashref $file_name_group, my string_hashref $modes ) = @_;
 
 #    RPerl::diag('in Generator->diff_check_file_vs_string(), received $file_name_reference = ' . $file_name_reference . "\n");
 #    RPerl::diag('in Generator->diff_check_file_vs_string(), contents of file = ' . "\n");
 #    system 'cat', $file_name_reference;
-#    RPerl::diag('in Generator->diff_check_file_vs_string(), received $string_generated = ' . "\n" . $string_generated . "\n\n");
+#    RPerl::diag('in Generator->diff_check_file_vs_string(), received $source_group = ' . "\n" . Dumper($source_group) . "\n\n");
+#    RPerl::diag('in Generator->diff_check_file_vs_string(), received $suffix_key = ' . $suffix_key . "\n");
+#    RPerl::diag('in Generator->diff_check_file_vs_string(), received $file_name_group = ' . "\n" . Dumper($file_name_group) . "\n\n");
+#    RPerl::diag('in Generator->diff_check_file_vs_string(), received $modes = ' . "\n" . Dumper($modes) . "\n\n");
+    
+    my string $string_generated = $source_group->{$suffix_key};
+#    RPerl::diag('in Generator->diff_check_file_vs_string(), have $string_generated = ' . "\n" . $string_generated . "\n\n");
 
     if (( not -e $file_name_reference ) or ( not -f $file_name_reference ) or ( not -T $file_name_reference )) {
         die 'ERROR ECOGEDI00, RPERL GENERATOR, DIFF CHECK: Missing or invalid file, ' . q{'} . $file_name_reference . q{'} . "\n" . ', dying' . "\n";
@@ -164,107 +171,15 @@ our integer $diff_check_file_vs_string = sub {
     open my filehandleref $FILE_HANDLE_REFERENCE, '<', $file_name_reference
         or die 'ERROR ECOGEDI01, RPERL GENERATOR, DIFF CHECK: Cannot open file ' . q{'} . $file_name_reference . q{'} . ' for reading,' . $OS_ERROR . ', dying' . "\n";
 
-    # read in file, strip comments & blank lines
+    # read in file, strip blank lines
     my string $file_line;
     my string $string_reference = q{};
     while ( $file_line = <$FILE_HANDLE_REFERENCE> ) {
         $file_line =~ s/^\s+//xms;    # strip leading whitespace
-        if ( ( $ops eq 'PERL' ) and ( $file_line =~ /^[#][^#!]/xms ) ) {
-            next;                     # discard whole-line comment, PERLOPS
-        }
-        elsif ( ( $ops eq 'CPP' ) and ( $file_line =~ m{^//}xms ) ) {
-            next;                     # discard whole-line comment, CPPOPS
-        }
-        elsif ( $file_line =~ /^\s*$/xms ) {
-            next;                     # discard blank & all-whitespace lines
-        }
 
-        # strip partial-line comment, if present
-        if ( $ops eq 'PERL' ) {
-
-            # DEV NOTE: this regex does not account for strings containing # characters
-            #            $file_line =~ s/[^#][#][^#!].*$/\n/gxms;
-
-            my string $file_line_tmp = q{};
-            my string $current_character;
-            my string $next_character;
-            my boolean $inside_string = 0;
-            my boolean $advance_one   = 0;
-            my string $open_quote;
-            for my integer $i ( 0 .. ( ( length $file_line ) - 1 ) ) {
-                $current_character = substr $file_line, $i, 1;
-
-                # advance one extra character for q{ OR #! OR ##
-                if ($advance_one) {
-                    $advance_one = 0;
-                    $file_line_tmp .= $current_character;
-                    next;
-                }
-                if ( not $inside_string ) {
-                    if ( $current_character eq '#' ) {
-                        $next_character = substr $file_line, ( $i + 1 ), 1;
-                        if (   ( $next_character eq '!' )
-                            or ( $next_character eq '#' ) )
-                        {
-                            $advance_one = 1;
-
-                            #                            next;
-                        }
-                        else {
-                            #                           $file_line = substr $file_line, 0, $i;
-                            #                           $file_line .= "\n";
-                            $file_line_tmp .= "\n";
-                            last;
-                        }
-                    }
-                    elsif ( $current_character eq q{'} ) {
-                        $inside_string = 1;
-                        $open_quote    = q{'};
-                    }
-                    elsif ( $current_character eq q{"} ) {
-                        $inside_string = 1;
-                        $open_quote    = q{"};
-                    }
-                    elsif ( $current_character eq 'q' ) {
-                        $next_character = substr $file_line, ( $i + 1 ), 1;
-                        if ( $next_character eq '{' ) {
-                            $inside_string = 1;
-                            $advance_one   = 1;
-                            $open_quote    = 'q{';
-                        }
-                    }
-                    elsif ( $current_character =~ m/[ \t]/ ) {    # remove extra whitespace inserted by Perl::Tidy
-                        $next_character = substr $file_line, ( $i + 1 ), 1;
-                        if ( $next_character =~ m/[ \t]/ ) {
-                            next;
-                        }
-                    }
-                }
-                else {                                            # $inside_string
-                    if (    ( $current_character eq q{'} )
-                        and ( $open_quote eq q{'} ) )
-                    {
-                        $inside_string = 0;
-                    }
-                    elsif ( ( $current_character eq q{"} )
-                        and ( $open_quote eq q{"} ) )
-                    {
-                        $inside_string = 0;
-                    }
-                    elsif ( ( $current_character eq '}' )
-                        and ( $open_quote eq 'q{' ) )
-                    {
-                        $inside_string = 0;
-                    }
-                }
-                $file_line_tmp .= $current_character;
-            }
-            $file_line = $file_line_tmp;
-        }
-        else {    # $ops eq 'CPP'
-            # NEED FIX: these regexes do not account for strings containing // or /* or */ characters
-            $file_line =~ s{^([^'"]*)//.*$}{$1\n}gxms;     # NON-QUOTE-CHARS // comments
-            $file_line =~ s{^([^'"]*)/\*.*\*/^([^'"]*)$}{$1 $2}gxms;    # NON-QUOTE-CHARS /* comments */ NON-QUOTE-CHARS
+        # discard blank & all-whitespace lines
+        if ( $file_line =~ /^\s*$/xms ) {
+            next;
         }
 
         # strip trailing whitespace, if present
@@ -280,13 +195,13 @@ our integer $diff_check_file_vs_string = sub {
 
 #    RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $string_reference = ' . "\n" . ( q{=} x 60 ) . "\n" . $string_reference . "\n" . ( q{=} x 60 ) . "\n\n" );
 #    RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $string_generated = ' . "\n" . ( q{=} x 60 ) . "\n" . $string_generated . "\n" . ( q{=} x 60 ) . "\n\n" );
-
-    # tidy all code
+ 
+    # [ TIDY/FORMAT ALL CODE ]
     my string $string_reference_tidied = q{};
     my string $string_generated_tidied = q{};
-    if ( $ops eq 'PERL' ) {
+    if ( $suffix_key eq 'PMC' ) {
 
-        # tidy file string
+        # TIDY REFERENCE PERL SOURCE CODE
         my string $perltidy_stderr_string = undef;
         my scalartype $perltidy_errored   = Perl::Tidy::perltidy(
 
@@ -303,7 +218,7 @@ our integer $diff_check_file_vs_string = sub {
             die 'ERROR ECOGEDI04: Perl::Tidy minor failure in file ' . q{'} . $file_name_reference . q{'} . ' with the following STDERR output, dying' . "\n" . $perltidy_stderr_string . "\n";
         }
 
-        # tidy source string
+        # TIDY GENERATED PERL SOURCE CODE
         $perltidy_errored = Perl::Tidy::perltidy(
             argv        => q{-pbp --ignore-side-comment-lengths --converge -l=160 -b -nst -bext='/' -q -se},
             source      => \$string_generated,
@@ -316,9 +231,13 @@ our integer $diff_check_file_vs_string = sub {
         elsif ($perltidy_stderr_string) {
             die 'ERROR ECOGEDI06: Perl::Tidy minor failure in generated source code string with the following STDERR output, dying' . "\n" . $perltidy_stderr_string . "\n";
         }
+
+        # POST-PROCESS PERL SOURCE CODE     
+        $string_reference_tidied = RPerl::Compiler::post_processor_perl__comments_whitespace_delete($string_reference_tidied);
+        $string_generated_tidied = RPerl::Compiler::post_processor_perl__comments_whitespace_delete($string_generated_tidied);
     }
-    else {    # $ops eq 'CPP'
-        # FORMAT REFERENCE SOURCE CODE
+    elsif (($suffix_key eq 'H') or ($suffix_key eq 'CPP')) {
+        # FORMAT REFERENCE C++ SOURCE CODE
         my filehandleref $FILE_HANDLE_REFERENCE_TMP;
         (my string $file_name_reference_tmp, my string $file_name_reference_tmp_dirs, my string $file_name_reference_tmp_suffix) = fileparse($file_name_reference);
         RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $file_name_reference_tmp = ' . q{'} . $file_name_reference_tmp . q{'} . "\n" );
@@ -364,7 +283,7 @@ our integer $diff_check_file_vs_string = sub {
         close $FILE_HANDLE_REFERENCE_TMP
             or die 'ERROR ECOGEDI09, RPERL GENERATOR, DIFF CHECK: Cannot close temporary AStyle-tidied file ' . q{'} . $file_name_reference_tmp . q{'} . ' after reading, ' . $OS_ERROR . ', dying' . "\n";
 
-        # FORMAT GENERATED SOURCE CODE
+        # FORMAT GENERATED C++ SOURCE CODE
         my filehandleref $FILE_HANDLE_GENERATED_TMP;
         (my string $file_name_generated_tmp, my string $file_name_generated_tmp_dirs, my string $file_name_generated_tmp_suffix) = fileparse($file_name_reference);
         RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $file_name_generated_tmp = ' . q{'} . $file_name_generated_tmp . q{'} . "\n" );
@@ -409,13 +328,19 @@ our integer $diff_check_file_vs_string = sub {
 
         close $FILE_HANDLE_GENERATED_TMP
             or die 'ERROR ECOGEDI09, RPERL GENERATOR, DIFF CHECK: Cannot close temporary AStyle-tidied file ' . q{'} . $file_name_generated_tmp . q{'} . ' after reading, ' . $OS_ERROR . ', dying' . "\n";
+        
+        # POST-PROCESS C++ SOURCE CODE     
+        $string_generated_tidied = RPerl::Compiler::post_processor_cpp__header_path($string_generated_tidied, $file_name_group->{H});
+
+        # discard code we are not currently checking, no extra work performed by post-processor
+        my string_hashref $source_group_tmp = RPerl::Compiler::post_processor_cpp__types_change({$suffix_key => $string_generated_tidied}, $modes);
+        $string_generated_tidied = $source_group_tmp->{$suffix_key};
+
+        $string_reference_tidied = RPerl::Compiler::post_processor_cpp__comments_whitespace_delete($string_reference_tidied);
+        $string_generated_tidied = RPerl::Compiler::post_processor_cpp__comments_whitespace_delete($string_generated_tidied);
     }
 
     # ACTUALLY START COMPARING REFERENCE VS GENERATED CODE STRINGS IN MEMORY
-
-    # remove extra blank lines inserted by Perl::Tidy
-    $string_reference_tidied =~ s/\n\n/\n/gxms;
-    $string_generated_tidied =~ s/\n\n/\n/gxms;
 
     # START HERE: get displayed files to match, get all RPerl CPPOPS_CPPTYPES generator tests to pass, then MathPerl & PhysicsPerl
     # START HERE: get displayed files to match, get all RPerl CPPOPS_CPPTYPES generator tests to pass, then MathPerl & PhysicsPerl
@@ -423,21 +348,10 @@ our integer $diff_check_file_vs_string = sub {
 
     RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $string_reference_tidied = ' . "\n" . ( q{=} x 60 ) . "\n" . $string_reference_tidied . "\n" . ( q{=} x 60 ) . "\n\n" );
     RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $string_generated_tidied = ' . "\n" . ( q{=} x 60 ) . "\n" . $string_generated_tidied . "\n" . ( q{=} x 60 ) . "\n\n" );
-    die 'TMP DEBUG';
 
     my string_arrayref $string_reference_split   = [ ( split /\n/xms, $string_reference_tidied ) ];
     my string_arrayref $string_generated_split = [ ( split /\n/xms, $string_generated_tidied ) ];
-    my string_arrayref $string_generated_split_tmp = [];
     my string $line_generated;
-
-    # discard blank & all-whitespace lines
-    foreach $line_generated ( @{$string_generated_split} ) {
-        if ( $line_generated !~ /^\s*$/xms ) {
-            push @{$string_generated_split_tmp}, $line_generated;
-        }
-    }
-    $string_generated_split     = $string_generated_split_tmp;
-    $string_generated_split_tmp = undef;
 
     my $return_value = 0;    # default return value, files do not differ
     for my integer $i ( 0 .. ( ( scalar @{$string_reference_split} ) - 1 ) ) {
@@ -448,9 +362,12 @@ our integer $diff_check_file_vs_string = sub {
             $return_value = -1;
             last;
         }
+        
+        # trim trailing whitespace
+        $line_reference =~ s/\s+$//gxms;
+        $line_generated =~ s/\s+$//gxms;
 
         if ( $line_reference ne $line_generated ) {
-
             #            RPerl::diag( 'in Generator->diff_check_file_vs_string(), have non-matching $line_reference =' . "\n" . $line_reference . "\n" );
             #            RPerl::diag( 'in Generator->diff_check_file_vs_string(), have non-matching $line_generated =' . "\n" . $line_generated . "\n" );
             $return_value = $i + 1;    # arrays indexed from 0, file lines indexed from 1
