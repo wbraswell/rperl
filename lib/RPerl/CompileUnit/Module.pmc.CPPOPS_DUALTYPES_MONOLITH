@@ -41,9 +41,9 @@ sub cpp_load {
         my $eval_string = <<"EOF";
 package main;
 use RPerl::Inline;
-BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'lib/RPerl/CompileUnit/Module.cpp' ]]]\n" x 1); }
-use Inline (CPP => 'lib/RPerl/CompileUnit/Module.cpp', \%RPerl::Inline::ARGS);
-RPerl::diag("[[[ END 'use Inline' STAGE for 'lib/RPerl/CompileUnit/Module.cpp' ]]]\n" x 1);
+BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/CompileUnit/Module.cpp' ]]]\n" x 1); }
+use Inline (CPP => '$RPerl::INCLUDE_PATH' . '/RPerl/CompileUnit/Module.cpp', \%RPerl::Inline::ARGS);
+RPerl::diag("[[[ END 'use Inline' STAGE for 'RPerl/CompileUnit/Module.cpp' ]]]\n" x 1);
 1;
 EOF
 

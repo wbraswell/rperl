@@ -88,16 +88,10 @@ $tmp_debug .= '[[[ END DEBUG ]]]' . "\n";
 =cut
 #die $tmp_debug;
 
-
-
-
-
-
 # START HERE: ensure paths are working in these PMC files; edit PMC template; edit other PMCs (physicsperl, etc)
 # START HERE: ensure paths are working in these PMC files; edit PMC template; edit other PMCs (physicsperl, etc)
 # START HERE: ensure paths are working in these PMC files; edit PMC template; edit other PMCs (physicsperl, etc)
 
-=DISABLE_THIS_SHOULD_PROBABLY_BE_THE_NEW_FORMAT
         my $eval_string = <<"EOF";
 package main;
 use RPerl::Inline;
@@ -106,20 +100,6 @@ use Inline (CPP => '$RPerl::INCLUDE_PATH' . '/RPerl/Algorithm/Sort/Bubble.cpp', 
 RPerl::diag("[[[ END 'use Inline' STAGE for 'RPerl/Algorithm/Sort/Bubble.cpp' ]]]\n" x 1);
 1;
 EOF
-=cut
-
-        # DEV NOTE: THIS IS THE OLD FORMAT
-        my $eval_string = <<"EOF";
-package main;
-use RPerl::Inline;
-BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'lib/RPerl/Algorithm/Sort/Bubble.cpp' ]]]\n" x 1); }
-use Inline (CPP => 'lib/RPerl/Algorithm/Sort/Bubble.cpp', \%RPerl::Inline::ARGS);
-RPerl::diag("[[[ END 'use Inline' STAGE for 'lib/RPerl/Algorithm/Sort/Bubble.cpp' ]]]\n" x 1);
-1;
-EOF
-
-
-
 
         $RPerl::Inline::ARGS{ccflagsex} = $RPerl::Inline::CCFLAGSEX . $RPerl::TYPES_CCFLAG . rperltypes::type_integer_native_ccflag() . rperltypes::type_number_native_ccflag();
         $RPerl::Inline::ARGS{cppflags}  = $RPerl::TYPES_CCFLAG . rperltypes::type_integer_native_ccflag() . rperltypes::type_number_native_ccflag();

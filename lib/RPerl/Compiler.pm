@@ -571,16 +571,23 @@ our string $post_processor_cpp__header_path = sub {
         substr $h_file_path_nolib, 0, 2, q{};
     }
 
-    # remove leading 'lib/' if present, because -Ilib enabled in RPerl/Inline.pm
-    if (   ( ( $OSNAME eq 'MSWin32' ) and ( ( substr $h_file_path_nolib, 0, 4 ) eq 'lib\\' ) )
-        or ( ( substr $h_file_path_nolib, 0, 4 ) eq 'lib/' ) )
-    {
-        substr $h_file_path_nolib, 0, 4, q{};
-    }
+    $h_file_path_nolib = post_processor_cpp__lib_path_delete($h_file_path_nolib);
 
     # DEV NOTE, CORRELATION #rp33: deferred, finally set path to H module header file in CPP module file
     $source_CPP =~ s/__NEED_HEADER_PATH/$h_file_path_nolib/gxms;
     return $source_CPP;
+};
+
+# remove leading 'lib/' if present, because -Ilib enabled in RPerl/Inline.pm
+our string $post_processor_cpp__lib_path_delete = sub {
+    ( my string $path ) = @_;
+
+    if (   ( ( $OSNAME eq 'MSWin32' ) and ( ( substr $path, 0, 4 ) eq 'lib\\' ) )
+        or ( ( substr $path, 0, 4 ) eq 'lib/' ) )
+    {
+        substr $path, 0, 4, q{};
+    }
+    return $path;
 };
 
 # replace hard-coded PERLOPS_PERLTYPES with CPPOPS_*TYPES
@@ -818,13 +825,16 @@ our string $post_processor_cpp__pmc_generate = sub {
 
     # NEED FIX WIN32: handle back-slash for Win32 instead of forward-slash only for *NIX
     my string $cpp_file_path = $file_name_group->{CPP};
+    $cpp_file_path = post_processor_cpp__lib_path_delete($cpp_file_path);
 
     # DEV NOTE: barely-documented Inline::CPP bug, must have leading './' if no other directories in path
-    if ( ( $OSNAME eq 'MSWin32' ) and ( $cpp_file_path !~ /\\/ ) ) {
-        $cpp_file_path .= q{.\\};
-    }
-    elsif ( $cpp_file_path !~ /\// ) {
-        $cpp_file_path .= q{./};
+    if ( $cpp_file_path !~ /\// ) {
+        if ( $OSNAME eq 'MSWin32' ) {
+            $cpp_file_path .= q{.\\};
+        }
+        else {
+            $cpp_file_path .= q{./};
+        }
     }
 
     # DEV NOTE: only generate PMC output file in dynamic (default) subcompile mode
@@ -894,7 +904,8 @@ our string $post_processor_cpp__pmc_generate = sub {
             my string $pm_file_path = $file_name_group->{PMC};
             chop $pm_file_path;    # remove the 'c' from 'pmc' file suffix
             while ( $file_line = <$FILE_HANDLE> ) {
-                $file_line =~ s/lib\/RPerl\/CompileUnit\/Module\.cpp/$cpp_file_path/gxms;
+#                $file_line =~ s/lib\/RPerl\/CompileUnit\/Module\.cpp/$cpp_file_path/gxms;
+                $file_line =~ s/RPerl\/CompileUnit\/Module\.cpp/$cpp_file_path/gxms;
                 $file_line =~ s/RPerl::CompileUnit::Module/$module_name/gxms;
                 $file_line =~ s/RPerl__CompileUnit__Module/$module_name_underscores/gxms;
                 if ( $file_line eq
