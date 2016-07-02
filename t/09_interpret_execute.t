@@ -9,7 +9,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_100;
+our $VERSION = 0.003_200;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -19,6 +19,9 @@ our $VERSION = 0.003_100;
 
 # [[[ INCLUDES ]]]
 use RPerl::Test;
+use RPerl::Parser;
+use RPerl::Generator;
+use RPerl::Compiler;
 use Test::More;
 use Test::Exception;
 use File::Find qw(find);
@@ -31,13 +34,18 @@ BEGIN {
     if ( $ENV{RPERL_VERBOSE} ) {
         Test::More::diag("[[[ Beginning Interpret-Execute Pre-Test Loading, RPerl Execution System ]]]");
     }
-    lives_and( sub { use_ok('RPerl::AfterSubclass'); },            q{use_ok('RPerl::AfterSubclass') lives} );
-    lives_and( sub { use_ok('RPerl::Parser'); }, q{use_ok('RPerl::Parser') lives} );
-    lives_and( sub { use_ok('RPerl::Generator'); }, q{use_ok('RPerl::Generator') lives} );
-    lives_and( sub { use_ok('RPerl::Compiler'); }, q{use_ok('RPerl::Compiler') lives} );
+    # DEV NOTE: can't do use_ok() or require_ok() because it will place them before all other BEGIN blocks,
+    # which means we wil have 4 tests passing before we call 'plan tests',
+    # which means we will fail to have 'plan tests' first OR done_testing() last, which causes a TAP failure;
+    # must be included w/ regular 'use' operators above
+#    lives_and( sub { require_ok('RPerl::AfterSubclass'); },            q{require_ok('RPerl::AfterSubclass') lives} );
+#    lives_and( sub { require_ok('RPerl::Parser'); }, q{require_ok('RPerl::Parser') lives} );
+#    lives_and( sub { require_ok('RPerl::Generator'); }, q{require_ok('RPerl::Generator') lives} );
+#    lives_and( sub { require_ok('RPerl::Compiler'); }, q{require_ok('RPerl::Compiler') lives} );
 }
 
-my integer $number_of_tests_run = 4;  # initialize to 4 for use_ok() calls in BEGIN block above
+# DEV NOTE: must specify number of tests in EITHER 'plan tests' or done_testing() below, not both
+#my integer $number_of_tests_run = 4;  # initialize to 4 for use_ok() calls in BEGIN block above
 
 my $test_files = {};    # string_hashref
 find(
@@ -109,7 +117,7 @@ my integer $number_of_test_files = scalar keys %{$test_files};
 #RPerl::diag( 'in 09_interpret_execute.t, have sort keys %{$test_files} = ' . "\n" . Dumper(sort keys %{$test_files}) . "\n" );
 #RPerl::diag( 'in 09_interpret_execute.t, have $number_of_test_files = ' . $number_of_test_files . "\n" );
 
-plan tests => ($number_of_test_files + 4);  # 4 additional lives_and() tests in the BEGIN block above
+plan tests => $number_of_test_files;
 
 if ( $ENV{RPERL_VERBOSE} ) {
     Test::More::diag( '[[[ Beginning Interpret-Execute Tests, RPerl Execution System, PERL operations and PERL data types' . ' ]]]' );
@@ -249,7 +257,7 @@ foreach my $test_file ( sort keys %{$test_files} ) {
         }
         else {
             ok( 0, 'Program interprets and executes with errors:' . ( q{ } x 13 ) . $test_file );
-            $number_of_tests_run++;
+#            $number_of_tests_run++;
         }
     }
     else {    # UNIX process return code not 0, error
@@ -265,11 +273,11 @@ foreach my $test_file ( sort keys %{$test_files} ) {
                 }
             }
             ok( ( ( scalar @{$missing_errors} ) == 0 ), 'Program interprets and executes with expected error(s):' . ( q{ } x 2 ) . $test_file );
-            $number_of_tests_run++;
+#            $number_of_tests_run++;
         }
         else {
             ok( 0, 'Program interprets and executes without errors:' . ( q{ } x 10 ) . $test_file );
-            $number_of_tests_run++;
+#            $number_of_tests_run++;
         }
     }
 }
@@ -301,7 +309,10 @@ FOREACH_STDOUT_LINE: foreach my string $stdout_generated_line ( @{$stdout_genera
     }
 #    RPerl::diag( 'in 09_interpret_execute.t success_match(), have missing successes =' . "\n" . Dumper( $test_file_successes ) . "\n" );
     ok( ( ( scalar @{ $test_file_successes } ) == 0 ), 'Program interprets and executes without errors:' . ( q{ } x 10 ) . $test_file );
-    $number_of_tests_run++;
+#    $number_of_tests_run++;
 }
 
-done_testing($number_of_tests_run);
+#RPerl::diag( 'in 09_interpret_execute.t, have $number_of_tests_run =' . $number_of_tests_run . "\n" );
+
+done_testing();
+#done_testing($number_of_tests_run);

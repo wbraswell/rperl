@@ -18,6 +18,9 @@ our $VERSION = 0.006_100;
 ## no critic qw(ProhibitDeepNests)  # SYSTEM SPECIAL 7: allow deeply-nested code
 
 # [[[ INCLUDES ]]]
+use RPerl::Parser;
+use RPerl::Generator;
+use RPerl::Compiler;
 use Test::More;
 use Test::Exception;
 use File::Find qw(find);
@@ -29,13 +32,18 @@ BEGIN {
     if ( $ENV{RPERL_VERBOSE} ) {
         Test::More::diag("[[[ Beginning Parser Pre-Test Loading, RPerl Compilation System ]]]");
     }
-    lives_and( sub { use_ok('RPerl::AfterSubclass'); },            q{use_ok('RPerl::AfterSubclass') lives} );
-    lives_and( sub { use_ok('RPerl::Parser'); }, q{use_ok('RPerl::Parser') lives} );
-    lives_and( sub { use_ok('RPerl::Generator'); }, q{use_ok('RPerl::Generator') lives} );
-    lives_and( sub { use_ok('RPerl::Compiler'); }, q{use_ok('RPerl::Compiler') lives} );
+    # DEV NOTE: can't do use_ok() or require_ok() because it will place them before all other BEGIN blocks,
+    # which means we wil have 4 tests passing before we call 'plan tests',
+    # which means we will fail to have 'plan tests' first OR done_testing() last, which causes a TAP failure;
+    # must be included w/ regular 'use' operators above
+#    lives_and( sub { use_ok('RPerl::AfterSubclass'); },            q{use_ok('RPerl::AfterSubclass') lives} );
+#    lives_and( sub { use_ok('RPerl::Parser'); }, q{use_ok('RPerl::Parser') lives} );
+#    lives_and( sub { use_ok('RPerl::Generator'); }, q{use_ok('RPerl::Generator') lives} );
+#    lives_and( sub { use_ok('RPerl::Compiler'); }, q{use_ok('RPerl::Compiler') lives} );
 }
 
-my integer $number_of_tests_run = 4;  # initialize to 4 for use_ok() calls in BEGIN block above
+# DEV NOTE: must specify number of tests in EITHER 'plan tests' or done_testing() below, not both
+#my integer $number_of_tests_run = 4;  # initialize to 4 for use_ok() calls in BEGIN block above
 
 my $test_files = {};    # string_hashref
 find(
@@ -76,7 +84,7 @@ find(
 #RPerl::diag( 'in 12_parse.t, have $test_files = ' . "\n" . Dumper($test_files) . "\n" );
 #RPerl::diag( 'in 12_parse.t, have sort keys %{$test_files} = ' . "\n" . Dumper(sort keys %{$test_files}) . "\n" );
 
-plan tests => (scalar keys %{$test_files}) + 4;  # 4 additional lives_and() tests in the BEGIN block above
+plan tests => (scalar keys %{$test_files});
 
 if ( $ENV{RPERL_VERBOSE} ) {
     Test::More::diag( '[[[ Beginning Parser Tests, RPerl Compilation System' . ' ]]]' );
@@ -120,11 +128,11 @@ for my $test_file ( sort keys %{$test_files} ) {
     if ( ( defined $eval_return_value ) and $eval_return_value ) {    # Perl eval return code defined & true, success
         if ( ( $test_file =~ m/Good/xms ) or ( $test_file =~ m/good/xms ) ) {
             ok( 1, 'Program or module parses without errors:' . (q{ } x 10) . $test_file );
-            $number_of_tests_run++;
+#            $number_of_tests_run++;
         }
         else {
             ok( 0, 'Program or module parses with errors:' . (q{ } x 13) . $test_file );
-            $number_of_tests_run++;
+#            $number_of_tests_run++;
         }
     }
     else {                                                            # Perl eval return code undefined or false, error
@@ -145,13 +153,16 @@ for my $test_file ( sort keys %{$test_files} ) {
                 }
             }
             ok( ( ( scalar @{$missing_errors} ) == 0 ), 'Program or module parses with expected error(s):' . (q{ } x 2) . $test_file );
-            $number_of_tests_run++;
+#            $number_of_tests_run++;
         }
         else {
             ok( 0, 'Program or module parses without errors:' . (q{ } x 10) . $test_file );
-            $number_of_tests_run++;
+#            $number_of_tests_run++;
         }
     }
 }
 
-done_testing($number_of_tests_run);
+#RPerl::diag( 'in 12_parse.t, have $number_of_tests_run =' . $number_of_tests_run . "\n" );
+
+done_testing();
+#done_testing($number_of_tests_run);
