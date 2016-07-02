@@ -149,6 +149,9 @@ for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
 # START HERE: get CPPOPS_CPPTYPES to properly skip all appropriate tests, carry on with START HERE in Bubble.pmc.CPPOPS_DUALTYPES
 # START HERE: get CPPOPS_CPPTYPES to properly skip all appropriate tests, carry on with START HERE in Bubble.pmc.CPPOPS_DUALTYPES
 
+# ALSO: add Test::More::diag()s to t/21?
+# ALSO: add Test::More::diag()s to t/21?
+# ALSO: add Test::More::diag()s to t/21?
 
     # [[[ MODE SETUP ]]]
     my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
@@ -408,4 +411,4 @@ for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
 #    RPerl::diag( ( '=' x 100 ) . "\n" );
 }
 
-done_testing($number_of_tests_run);
+done_testing($number_of_tests_run + 4);
