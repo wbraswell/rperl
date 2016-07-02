@@ -188,8 +188,8 @@ for my $mode_id ( 2 ) {    # CPPOPS_CPPTYPES ONLY
             $perform_diff_check = 1;    # begin by assuming diff check, all reference file(s) found
             # check if all reference files exist, update reference file names
             foreach my string $suffix_key ( sort keys %{ $output_file_name_group } ) {
-                RPerl::diag( 'in 13_generate.t, have $suffix_key = ' . $suffix_key . "\n" );
-                RPerl::diag( 'in 13_generate.t, have $output_file_name_group->{$suffix_key} = ' . $output_file_name_group->{$suffix_key} . "\n" );
+#                RPerl::diag( 'in 13_generate.t, have $suffix_key = ' . $suffix_key . "\n" );
+#                RPerl::diag( 'in 13_generate.t, have $output_file_name_group->{$suffix_key} = ' . $output_file_name_group->{$suffix_key} . "\n" );
                 if ((substr $suffix_key, 0, 1) eq '_') {
                     next;
                 }
@@ -207,7 +207,7 @@ for my $mode_id ( 2 ) {    # CPPOPS_CPPTYPES ONLY
                 else {
                     $test_file_reference = $output_file_name_group->{$suffix_key} . q{.} . $ops . 'OPS_' . $types . 'TYPES';
                 }
-                RPerl::diag( 'in 13_generate.t, have $test_file_reference = ' . $test_file_reference . "\n" );
+#                RPerl::diag( 'in 13_generate.t, have $test_file_reference = ' . $test_file_reference . "\n" );
  
                 if (( not -e $test_file_reference ) or ( not -f $test_file_reference ) or ( not -T $test_file_reference )) {
                     RPerl::warning( 'WARNING WTE13GE00, TEST GROUP 13, CODE GENERATOR: Missing or invalid pre-compiled source code reference file ' . q{'} . $test_file_reference . q{'} . ', not performing difference check' . "\n" );
@@ -232,8 +232,8 @@ for my $mode_id ( 2 ) {    # CPPOPS_CPPTYPES ONLY
         }
         my object $rperl_ast = $eval_return_value;
 
-        RPerl::diag( 'in 13_generate.t, have $ops = ' . $ops . "\n" );
-        RPerl::diag( 'in 13_generate.t, have $types = ' . $types . "\n" );
+#        RPerl::diag( 'in 13_generate.t, have $ops = ' . $ops . "\n" );
+#        RPerl::diag( 'in 13_generate.t, have $types = ' . $types . "\n" );
  
         # [[[ GENERATE ]]]
         if ( $ops eq 'PERL' ) {
@@ -276,7 +276,8 @@ for my $mode_id ( 2 ) {    # CPPOPS_CPPTYPES ONLY
                 if ($perform_diff_check) {
 #                    RPerl::diag( 'in 13_generate.t, need to perform diff check(s)' . "\n" );
 #                    RPerl::diag( 'in 13_generate.t, have $reference_file_name_group = ' . Dumper( $reference_file_name_group ) . "\n" );
-                    foreach my string $suffix_key ( sort keys %{ $reference_file_name_group } ) {
+                    my string $suffix_key;
+                    foreach $suffix_key ( sort keys %{ $reference_file_name_group } ) {
 #                        RPerl::diag( 'in 13_generate.t, have sort keys %{ $reference_file_name_group } = ' . Dumper( [ sort keys %{ $reference_file_name_group } ] ) );
 #                        RPerl::diag( 'in 13_generate.t, have sort keys %{ $source_group } = ' . Dumper( [ sort keys %{$source_group} ] ) );
                         if ( $ops eq 'PERL' ) {    # single reference file; use original Perl source file as reference for diff check
@@ -302,7 +303,11 @@ for my $mode_id ( 2 ) {    # CPPOPS_CPPTYPES ONLY
                         $number_of_tests_run++;
                     }
                     elsif ( $diff_line > 0 ) {
-                        ok( 0, 'Program or module generates without errors, yes diff check, files differ beginning at line ' . $diff_line . ':' . (q{ } x 2) . $test_file );
+                        ok( 0, 'Program or module generates without errors, yes diff check, output & reference files differ beginning at line ' . 
+                        $diff_line . ';' . "\n" . 
+                        'Output File:    ' . $output_file_name_group->{$suffix_key} . "\n" . 
+                        'Reference File: ' . $test_file_reference . "\n" . 
+                        'Input File:     ' . $test_file );
                         $number_of_tests_run++;
                     }
                     else {    # $diff_line < 0

@@ -4,7 +4,7 @@ package RPerl::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -152,7 +152,7 @@ our boolean $dummy_source_code_find = sub {
 # returns -1 __DUMMY_SOURCE_CODE found, 0 no difference, >0 line number of first difference
 our integer $diff_check_file_vs_string = sub {
     ( my string $file_name_reference, my string_hashref $source_group, my string $suffix_key, my string_hashref $file_name_group, my string_hashref $modes ) = @_;
-
+#    RPerl::diag('in Generator->diff_check_file_vs_string(), TOP OF SUBROUTINE ' . "\n");
 #    RPerl::diag('in Generator->diff_check_file_vs_string(), received $file_name_reference = ' . $file_name_reference . "\n");
 #    RPerl::diag('in Generator->diff_check_file_vs_string(), contents of file = ' . "\n");
 #    system 'cat', $file_name_reference;
@@ -162,7 +162,7 @@ our integer $diff_check_file_vs_string = sub {
 #    RPerl::diag('in Generator->diff_check_file_vs_string(), received $modes = ' . "\n" . Dumper($modes) . "\n\n");
     
     my string $string_generated = $source_group->{$suffix_key};
-#    RPerl::diag('in Generator->diff_check_file_vs_string(), have $string_generated = ' . "\n" . $string_generated . "\n\n");
+#    RPerl::diag('in Generator->diff_check_file_vs_string(), have $string_generated = $source_group->{$suffix_key} = ' . "\n" . $string_generated . "\n\n");
 
     if (( not -e $file_name_reference ) or ( not -f $file_name_reference ) or ( not -T $file_name_reference )) {
         die 'ERROR ECOGEDI00, RPERL GENERATOR, DIFF CHECK: Missing or invalid file, ' . q{'} . $file_name_reference . q{'} . "\n" . ', dying' . "\n";
@@ -240,28 +240,29 @@ our integer $diff_check_file_vs_string = sub {
         # FORMAT REFERENCE C++ SOURCE CODE
         my filehandleref $FILE_HANDLE_REFERENCE_TMP;
         (my string $file_name_reference_tmp, my string $file_name_reference_tmp_dirs, my string $file_name_reference_tmp_suffix) = fileparse($file_name_reference);
-        RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $file_name_reference_tmp = ' . q{'} . $file_name_reference_tmp . q{'} . "\n" );
-        RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $file_name_reference_tmp_dirs = ' . q{'} . $file_name_reference_tmp_dirs . q{'} . "\n" );
-        RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $file_name_reference_tmp_suffix = ' . q{'} . $file_name_reference_tmp_suffix . q{'} . "\n" );
+#        RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $file_name_reference_tmp = ' . q{'} . $file_name_reference_tmp . q{'} . "\n" );
+#        RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $file_name_reference_tmp_dirs = ' . q{'} . $file_name_reference_tmp_dirs . q{'} . "\n" );
+#        RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $file_name_reference_tmp_suffix = ' . q{'} . $file_name_reference_tmp_suffix . q{'} . "\n" );
  
         ( $FILE_HANDLE_REFERENCE_TMP, $file_name_reference_tmp ) = tempfile( $file_name_reference_tmp . '.reference.tempfileXXXX', UNLINK => 1, TMPDIR => 1 );
-        RPerl::diag( 'in Generator->diff_check_file_vs_string(), have modified $file_name_reference_tmp = ' . q{'} . $file_name_reference_tmp . q{'} . "\n" );
+#        RPerl::diag( 'in Generator->diff_check_file_vs_string(), have modified $file_name_reference_tmp = ' . q{'} . $file_name_reference_tmp . q{'} . "\n" );
  
         print {$FILE_HANDLE_REFERENCE_TMP} $string_reference or croak("\nERROR ECOGEFI00, GENERATOR, FILE SYSTEM: Attempting to save new file '$file_name_reference_tmp', cannot write to file,\ncroaking: $OS_ERROR");
         close $FILE_HANDLE_REFERENCE_TMP or croak("\nERROR ECOGEFI01, GENERATOR, FILE SYSTEM: Attempting to save new file '$file_name_reference_tmp', cannot close file,\ncroaking: $OS_ERROR");
 
         my string $astyle_path = can_run('astyle');
         if ( defined $astyle_path ) {
-            #                system $astyle_path, '-q', $file_name_reference;
             # don't insert extra newlines, which causes accessors, mutators, and ops_types reporting subroutines to be broken into multiple lines
-            system $astyle_path, '-q', '--keep-one-line-blocks', '--keep-one-line-statements', $file_name_reference_tmp;
+            my string $astyle_command = join q{ }, ($astyle_path, '-q', '--keep-one-line-blocks', '--keep-one-line-statements', $file_name_reference_tmp);
+#            RPerl::diag( 'in Generator->diff_check_file_vs_string(), about to call system, have $astyle_command = ' . "\n" . $astyle_command . "\n" );
+            system $astyle_command;
+#            RPerl::diag( 'in Generator->diff_check_file_vs_string(), returned from call to system' . "\n" );
+
             if (( -e $file_name_reference_tmp . '.orig' ) and ( -f $file_name_reference_tmp . '.orig' )) {
-                unlink( $file_name_reference_tmp . '.orig' )
-                    or croak( "\n" . 'ERROR ECOGEFI02, GENERATOR, FILE SYSTEM: Cannot delete Artistic Style original file ' . q{'} . $file_name_reference_tmp . '.orig' . q{'} . ',' . "\n" . 'croaking:' . $OS_ERROR);
+                unlink( $file_name_reference_tmp . '.orig' ) or croak( "\n" . 'ERROR ECOGEFI02, GENERATOR, FILE SYSTEM: Cannot delete Artistic Style original file ' . q{'} . $file_name_reference_tmp . '.orig' . q{'} . ',' . "\n" . 'croaking:' . $OS_ERROR);
             }
-            else {
-                RPerl::warning( 'WARNING WCOGEFI01, COMPILER, C++ CODE FORMATTING: Artistic Style command `astyle` did not create the file' . q{'} . $file_name_reference_tmp . '.orig' . q{'} . ', did something go wrong?' . "\n" );
-            }
+            # DEV NOTE: astyle does not create a .orig file if there are no formatting changes made, so it is not actually a warning
+#            else { RPerl::warning( 'WARNING WCOGEFI01, COMPILER, C++ CODE FORMATTING: Artistic Style command `astyle` did not create the file' . q{'} . $file_name_reference_tmp . '.orig' . q{'} . ', did something go wrong?' . "\n" ); }
         }
         else {
             RPerl::warning( 'WARNING WCOGEFI00, COMPILER, C++ CODE FORMATTING: Artistic Style command `astyle` not found, abandoning formatting' . "\n" );
@@ -286,28 +287,30 @@ our integer $diff_check_file_vs_string = sub {
         # FORMAT GENERATED C++ SOURCE CODE
         my filehandleref $FILE_HANDLE_GENERATED_TMP;
         (my string $file_name_generated_tmp, my string $file_name_generated_tmp_dirs, my string $file_name_generated_tmp_suffix) = fileparse($file_name_reference);
-        RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $file_name_generated_tmp = ' . q{'} . $file_name_generated_tmp . q{'} . "\n" );
-        RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $file_name_generated_tmp_dirs = ' . q{'} . $file_name_generated_tmp_dirs . q{'} . "\n" );
-        RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $file_name_generated_tmp_suffix = ' . q{'} . $file_name_generated_tmp_suffix . q{'} . "\n" );
+#        RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $file_name_generated_tmp = ' . q{'} . $file_name_generated_tmp . q{'} . "\n" );
+#        RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $file_name_generated_tmp_dirs = ' . q{'} . $file_name_generated_tmp_dirs . q{'} . "\n" );
+#        RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $file_name_generated_tmp_suffix = ' . q{'} . $file_name_generated_tmp_suffix . q{'} . "\n" );
 
         ( $FILE_HANDLE_GENERATED_TMP, $file_name_generated_tmp ) = tempfile( $file_name_generated_tmp . '.generated.tempfileXXXX', UNLINK => 1, TMPDIR => 1 );
-        RPerl::diag( 'in Generator->diff_check_file_vs_string(), have modified $file_name_generated_tmp = ' . q{'} . $file_name_generated_tmp . q{'} . "\n" );
+#        RPerl::diag( 'in Generator->diff_check_file_vs_string(), have modified $file_name_generated_tmp = ' . q{'} . $file_name_generated_tmp . q{'} . "\n" );
+#        RPerl::diag( 'in Generator->diff_check_file_vs_string(), about to save content $string_generated = $source_group->{' . $suffix_key . '} = ' . "\n" . $string_generated . "\n\n");
 
         print {$FILE_HANDLE_GENERATED_TMP} $string_generated or croak("\nERROR ECOGEFI00, GENERATOR, FILE SYSTEM: Attempting to save new file '$file_name_generated_tmp', cannot write to file,\ncroaking: $OS_ERROR");
         close $FILE_HANDLE_GENERATED_TMP or croak("\nERROR ECOGEFI01, GENERATOR, FILE SYSTEM: Attempting to save new file '$file_name_generated_tmp', cannot close file,\ncroaking: $OS_ERROR");
 
 #        my string $astyle_path = can_run('astyle');
         if ( defined $astyle_path ) {
-            #                system $astyle_path, '-q', $file_name_generated;
             # don't insert extra newlines, which causes accessors, mutators, and ops_types reporting subroutines to be broken into multiple lines
-            system $astyle_path, '-q', '--keep-one-line-blocks', '--keep-one-line-statements', $file_name_generated_tmp;
+            my string $astyle_command = join q{ }, ($astyle_path, '-q', '--keep-one-line-blocks', '--keep-one-line-statements', $file_name_generated_tmp);
+#            RPerl::diag( 'in Generator->diff_check_file_vs_string(), about to call system, have $astyle_command = ' . "\n" . $astyle_command . "\n" );
+            system $astyle_command;
+#            RPerl::diag( 'in Generator->diff_check_file_vs_string(), returned from call to system' . "\n" );
+
             if (( -e $file_name_generated_tmp . '.orig' ) and ( -f $file_name_generated_tmp . '.orig' )) {
-                unlink( $file_name_generated_tmp . '.orig' )
-                    or croak( "\n" . 'ERROR ECOGEFI02, GENERATOR, FILE SYSTEM: Cannot delete Artistic Style original file ' . q{'} . $file_name_generated_tmp . '.orig' . q{'} . ',' . "\n" . 'croaking:' . $OS_ERROR);
+                unlink( $file_name_generated_tmp . '.orig' ) or croak( "\n" . 'ERROR ECOGEFI02, GENERATOR, FILE SYSTEM: Cannot delete Artistic Style original file ' . q{'} . $file_name_generated_tmp . '.orig' . q{'} . ',' . "\n" . 'croaking:' . $OS_ERROR);
             }
-            else {
-                RPerl::warning( 'WARNING WCOGEFI01, COMPILER, C++ CODE FORMATTING: Artistic Style command `astyle` did not create the file' . q{'} . $file_name_generated_tmp . '.orig' . q{'} . ', did something go wrong?' . "\n" );
-            }
+            # DEV NOTE: astyle does not create a .orig file if there are no formatting changes made, so it is not actually a warning
+#            else { RPerl::warning( 'WARNING WCOGEFI01, COMPILER, C++ CODE FORMATTING: Artistic Style command `astyle` did not create the file' . q{'} . $file_name_generated_tmp . '.orig' . q{'} . ', did something go wrong?' . "\n" ); }
         }
         else {
             RPerl::warning( 'WARNING WCOGEFI00, COMPILER, C++ CODE FORMATTING: Artistic Style command `astyle` not found, abandoning formatting' . "\n" );
@@ -346,8 +349,8 @@ our integer $diff_check_file_vs_string = sub {
     # START HERE: get displayed files to match, get all RPerl CPPOPS_CPPTYPES generator tests to pass, then MathPerl & PhysicsPerl
     # START HERE: get displayed files to match, get all RPerl CPPOPS_CPPTYPES generator tests to pass, then MathPerl & PhysicsPerl
 
-    RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $string_reference_tidied = ' . "\n" . ( q{=} x 60 ) . "\n" . $string_reference_tidied . "\n" . ( q{=} x 60 ) . "\n\n" );
-    RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $string_generated_tidied = ' . "\n" . ( q{=} x 60 ) . "\n" . $string_generated_tidied . "\n" . ( q{=} x 60 ) . "\n\n" );
+#    RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $string_reference_tidied = ' . "\n" . ( q{=} x 60 ) . "\n" . $string_reference_tidied . "\n" . ( q{=} x 60 ) . "\n\n" );
+#    RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $string_generated_tidied = ' . "\n" . ( q{=} x 60 ) . "\n" . $string_generated_tidied . "\n" . ( q{=} x 60 ) . "\n\n" );
 
     my string_arrayref $string_reference_split   = [ ( split /\n/xms, $string_reference_tidied ) ];
     my string_arrayref $string_generated_split = [ ( split /\n/xms, $string_generated_tidied ) ];
