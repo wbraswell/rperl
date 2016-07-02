@@ -1,5 +1,6 @@
 #!/usr/bin/perl  ## no critic qw(ProhibitExcessMainComplexity)  # SYSTEM SPECIAL 4: allow complex code outside subroutines, must be on line 1
 
+# [[[ PRE-HEADER ]]]
 # suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s),
 # also 'WARNING WCOCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package' due to RPerl/Test/*/*Bad*.pm & RPerl/Test/*/*bad*.pl
 BEGIN { $ENV{RPERL_WARNINGS} = 0; }
@@ -35,6 +36,8 @@ BEGIN {
     lives_and( sub { use_ok('RPerl::Generator'); }, q{use_ok('RPerl::Generator') lives} );
     lives_and( sub { use_ok('RPerl::Compiler'); }, q{use_ok('RPerl::Compiler') lives} );
 }
+
+my integer $number_of_tests_run = 4;  # initialize to 4 for use_ok() calls in BEGIN block above
 
 my $test_files = {};    # string_hashref
 find(
@@ -233,6 +236,7 @@ for my $test_file ( sort keys %{$test_files} ) {
         }
         else {
             ok( 0, 'Program interprets and executes with errors:' . ( q{ } x 13 ) . $test_file );
+            $number_of_tests_run++;
         }
     }
     else {    # UNIX process return code not 0, error
@@ -248,9 +252,11 @@ for my $test_file ( sort keys %{$test_files} ) {
                 }
             }
             ok( ( ( scalar @{$missing_errors} ) == 0 ), 'Program interprets and executes with expected error(s):' . ( q{ } x 2 ) . $test_file );
+            $number_of_tests_run++;
         }
         else {
             ok( 0, 'Program interprets and executes without errors:' . ( q{ } x 10 ) . $test_file );
+            $number_of_tests_run++;
         }
     }
 }
@@ -282,6 +288,7 @@ FOREACH_STDOUT_LINE: foreach my string $stdout_generated_line ( @{$stdout_genera
     }
 #    RPerl::diag( 'in 09_interpret_execute.t success_match(), have missing successes =' . "\n" . Dumper( $test_file_successes ) . "\n" );
     ok( ( ( scalar @{ $test_file_successes } ) == 0 ), 'Program interprets and executes without errors:' . ( q{ } x 10 ) . $test_file );
+    $number_of_tests_run++;
 }
 
-done_testing();
+done_testing($number_of_tests_run);

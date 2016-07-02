@@ -1,10 +1,15 @@
 #!/usr/bin/perl
+
+# [[[ HEADER ]]]
 use strict;
 use warnings;
-our $VERSION = 0.002_010;
+our $VERSION = 0.003_000;
 
+# [[[ INCLUDES ]]]
 use Test::More tests => 20;
 use Test::Exception;
+
+# [[[ OPERATIONS ]]]
 
 BEGIN {
     if ( $ENV{RPERL_VERBOSE} ) {

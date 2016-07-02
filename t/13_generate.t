@@ -1,9 +1,10 @@
 #!/usr/bin/perl  ## no critic qw(ProhibitExcessMainComplexity)  # SYSTEM SPECIAL 4: allow complex code outside subroutines, must be on line 1
 
+# [[[ PRE-HEADER ]]]
 # suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s),
 # also 'WARNING WCOCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package' due to RPerl/Test/*/*Bad*.pm & RPerl/Test/*/*bad*.pl,
 # also other warnings generated in this file due to partially-incomplete generator code
-#BEGIN { $ENV{RPERL_WARNINGS} = 0; }
+BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
 # [[[ HEADER ]]]
 use strict;
@@ -134,7 +135,7 @@ my string $test_file_reference;
 my boolean $perform_diff_check;
 my unknown $eval_return_value;
 my integer $diff_line;
-my integer $number_of_tests_run = 0;
+my integer $number_of_tests_run = 4;  # initialize to 4 for use_ok() calls in BEGIN block above
 
 # [[[ PRIMARY RUNLOOP ]]]
 # loop up to 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
@@ -411,4 +412,4 @@ for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
 #    RPerl::diag( ( '=' x 100 ) . "\n" );
 }
 
-done_testing($number_of_tests_run + 4);
+done_testing($number_of_tests_run);

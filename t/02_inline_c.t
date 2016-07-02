@@ -1,16 +1,22 @@
 #!/usr/bin/perl
+
+# [[[ HEADER ]]]
 use strict;
 use warnings;
 our $VERSION = 0.001_010;
 
+# [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
+# [[[ INCLUDES ]]]
 use Test::More tests => 16;
 use Test::Exception;
 use Carp;
 use English qw(-no_match_vars);
+
+# [[[ OPERATIONS ]]]
 
 #$SIG{__WARN__}=sub {cluck $_[0]};  # DEBUGGING
 

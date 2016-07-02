@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 
+# [[[ PRE-HEADER ]]]
 # suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s)
 BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
@@ -7,7 +8,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_200;
+our $VERSION = 0.002_300;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -20,9 +21,11 @@ our $VERSION = 0.002_200;
 use RPerl::Test;
 use RPerl::Test::Foo;
 use rperltypesconv;
-use Test::More;    # tests => XYZ;
+use Test::More tests => 75;
 use Test::Exception;
 use Test::Number::Delta;
+
+# [[[ OPERATIONS ]]]
 
 BEGIN {
     # NEED FIX: get gmpxx installed & working in Windows
@@ -37,6 +40,8 @@ BEGIN {
     lives_and( sub { use_ok('rperlgmp'); }, q{use_ok('rperlgmp') lives} );
     lives_and( sub { use_ok('RPerl::DataType::GMPInteger_cpp'); }, q{use_ok('RPerl::DataType::GMPInteger_cpp') lives} );
 }
+
+my integer $number_of_tests_run = 3;  # initialize to 3 for use_ok() calls in BEGIN block above
 
 # use Data::Dumper() to stringify a string
 #our string $string_dumperify = sub {  # NEED FIX: RPerl subroutines disabled here
@@ -77,6 +82,7 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
     #    RPerl::diag('have $mode_tagline = ' . $mode_tagline . "\n");
 
     lives_ok( sub { rperltypes::types_enable($types) }, q{mode '} . $ops . ' operations and ' . $types . ' data types' . q{' enabled} );
+    $number_of_tests_run++;
 
     if ( $ops eq 'CPP' ) {
 
@@ -85,13 +91,16 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
 
         my $package = 'RPerl::DataType::GMPInteger_cpp';
         lives_and( sub { require_ok($package); }, 'require_ok(' . $package . ') lives' );
-
+        $number_of_tests_run++;
+  
         #            lives_and( sub { use_ok($package); }, 'use_ok(' . $package . ') lives' );
 
         lives_ok( sub { eval( $package . '::cpp_load();' ) }, $package . '::cpp_load() lives' );
+        $number_of_tests_run++;
     }
 
     lives_ok( sub { main->can('RPerl__DataType__GMPInteger__MODE_ID') }, 'main::RPerl__DataType__GMPInteger__MODE_ID() exists' );
+    $number_of_tests_run++;
 
 #RPerl::diag('in 07_type_gmp.t, top of for() loop, have $RPerl::MODES = ' . "\n" . Dumper($RPerl::MODES) . "\n");
 #RPerl::diag('in 07_type_gmp.t, top of for() loop, have RPerl__DataType__ . $type . __MODE_ID = RPerl__DataType__GMPInteger__MODE_ID' . "\n");
@@ -108,7 +117,8 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
         },
         'main::RPerl__DataType__GMPInteger__MODE_ID() lives'
     );
-
+    $number_of_tests_run++;
+ 
     # [[[ TYPE CHECKING TESTS ]]]
     # [[[ TYPE CHECKING TESTS ]]]
     # [[[ TYPE CHECKING TESTS ]]]
@@ -251,6 +261,8 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
         q{TGIV017 gmp_integer_to_boolean($gmp_integer_object_value) throws correct exception}
     );
 
+    $number_of_tests_run += 18;
+
     # [[[ BOOLEANIFY TESTS ]]]
     # [[[ BOOLEANIFY TESTS ]]]
     # [[[ BOOLEANIFY TESTS ]]]
@@ -300,6 +312,8 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
         q{TGIV104 gmp_integer_to_boolean($tmp1==-1_234_567_890) lives}
     );
 
+    $number_of_tests_run += 5;
+
     # [[[ UNSIGNED INTEGERIFY TESTS ]]]
     # [[[ UNSIGNED INTEGERIFY TESTS ]]]
     # [[[ UNSIGNED INTEGERIFY TESTS ]]]
@@ -339,6 +353,8 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
     );
 =cut
 
+    $number_of_tests_run += 3;
+
     # [[[ INTEGERIFY TESTS ]]]
     # [[[ INTEGERIFY TESTS ]]]
     # [[[ INTEGERIFY TESTS ]]]
@@ -369,6 +385,8 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
         },
         q{TGIV302 gmp_integer_to_integer($tmp1==-34_567_890) lives}
     );
+
+    $number_of_tests_run += 3;
 
     # [[[ STRINGIFY TESTS ]]]
     # [[[ STRINGIFY TESTS ]]]
@@ -473,6 +491,8 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
         "/EMV01.*$mode_tagline/",
         q{TGIV516 gmp_integer_to_string(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
     );
+
+    $number_of_tests_run += 17;
 =cut
 
     # [[[ GMP INTEGERIFY TESTS ]]]
@@ -493,6 +513,8 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
         q{TGIV601 gmp_get_signed_integer(integer_to_gmp_integer(34_567_890)) lives}
     );
 
+    $number_of_tests_run += 2;
+
     # [[[ TYPE TESTING TESTS ]]]
     # [[[ TYPE TESTING TESTS ]]]
     # [[[ TYPE TESTING TESTS ]]]
@@ -504,6 +526,7 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
         q{TGIV700 gmp_integer__typetest0() lives}
     );
 
+    $number_of_tests_run += 1;
 
 =DISABLE
     throws_ok(                                                    # TGIV610
@@ -565,4 +588,4 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
 =cut
 }
 
-done_testing();
+done_testing($number_of_tests_run);

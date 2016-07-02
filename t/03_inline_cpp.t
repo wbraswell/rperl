@@ -1,17 +1,26 @@
 #!/usr/bin/perl
-use RPerl;
+
+# suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s),
+#BEGIN { $ENV{RPERL_WARNINGS} = 0; }
+
+# [[[ HEADER ]]]
+#use RPerl;  # disabled here & RPERL_WARNINGS above & RPerl::diag() below, only re-enable for RPerl::diag() debugging use
 use strict;
 use warnings;
-our $VERSION = 0.005_000;
+our $VERSION = 0.006_000;
 
+# [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
 
-use Test::More;  # tests => 16;  # NEED FIX: get Elipses Revisited part 4/4 working in Windows
+# [[[ INCLUDES ]]]
+use Test::More tests => 16;
 use Test::Exception;
 use Test::Number::Delta;
 use Carp;
 use English qw(-no_match_vars);
+
+# [[[ OPERATIONS ]]]
 
 BEGIN {
     if ( $ENV{RPERL_VERBOSE} ) {
@@ -27,7 +36,7 @@ if ( $ENV{RPERL_VERBOSE} ) {
 # Note: I did not exclude any Inline::CPP examples, they are all suitable for testing.
 
 # class Farmer, AKA "Farmer Bob"
-RPerl::diag('in 03_inline_cpp.t, starting Farmer Bob...' . "\n");
+#RPerl::diag('in 03_inline_cpp.t, starting Farmer Bob...' . "\n");
 
 my $farmer_define_eval_string = <<'EOF';
 use Inline CPP => Config => CCFLAGSEX => '-DNO_XSLOCKS';
@@ -61,7 +70,7 @@ void Farmer::do_chores(int hl) {
 END_OF_CPP_CODE
 EOF
 
-RPerl::diag('in 03_inline_cpp.t, building Farmer Bob...' . "\n");
+#RPerl::diag('in 03_inline_cpp.t, building Farmer Bob...' . "\n");
 
 lives_and(
     sub {
@@ -83,7 +92,7 @@ while($farmer->how_tired < 420) {
 return("Wow!  The farmer worked " . $farmer->how_long . " hours!");
 EOF
 
-RPerl::diag('in 03_inline_cpp.t, running Farmer Bob...' . "\n");
+#RPerl::diag('in 03_inline_cpp.t, running Farmer Bob...' . "\n");
 
 lives_and(
     sub {
@@ -96,10 +105,10 @@ lives_and(
     q{Inline::CPP, call Farmer methods lives}
 );
 
-RPerl::diag('in 03_inline_cpp.t, finished Farmer Bob!' . "\n");
+#RPerl::diag('in 03_inline_cpp.t, finished Farmer Bob!' . "\n");
 
 # class Airplane, AKA "Plane and Simple"
-RPerl::diag('in 03_inline_cpp.t, starting Airplane...' . "\n");
+#RPerl::diag('in 03_inline_cpp.t, starting Airplane...' . "\n");
 
 my $airplane_define_eval_string = <<'EOF';
 use Inline CPP => Config => CCFLAGSEX => '-DNO_XSLOCKS';
@@ -135,7 +144,7 @@ class Airplane : public Object {
 END_OF_CPP_CODE
 EOF
 
-RPerl::diag('in 03_inline_cpp.t, building Airplane...' . "\n");
+#RPerl::diag('in 03_inline_cpp.t, building Airplane...' . "\n");
 
 lives_and(
     sub {
@@ -157,7 +166,7 @@ unless ($plane->can("fly")) { $plane_retval2 .= "  This plane sucks!"; }
 return($plane_retval1, $plane_retval2);
 EOF
 
-RPerl::diag('in 03_inline_cpp.t, running Airplane...' . "\n");
+#RPerl::diag('in 03_inline_cpp.t, running Airplane...' . "\n");
 
 lives_and(
     sub {
@@ -171,10 +180,10 @@ lives_and(
     q{Inline::CPP, call Airplane methods lives}
 );
 
-RPerl::diag('in 03_inline_cpp.t, finished Airplane!' . "\n");
+#RPerl::diag('in 03_inline_cpp.t, finished Airplane!' . "\n");
 
 # average() VS avg(), AKA "The Ellipsis Abridged"
-RPerl::diag('in 03_inline_cpp.t, starting Elipses Abridged...' . "\n");
+#RPerl::diag('in 03_inline_cpp.t, starting Elipses Abridged...' . "\n");
 
 my $average_define_eval_string = <<'EOF';
 sub average {
@@ -201,7 +210,7 @@ double avg(...) {
 END_OF_CPP_CODE
 EOF
 
-RPerl::diag('in 03_inline_cpp.t, building Elipses Abridged...' . "\n");
+#RPerl::diag('in 03_inline_cpp.t, building Elipses Abridged...' . "\n");
 
 lives_and(
     sub {
@@ -222,7 +231,7 @@ my $avg_retval_string = "The C/C++ average of 10000 random numbers is: " . $avg_
 return($average_retval, $avg_retval, $average_retval_string, $avg_retval_string);
 EOF
 
-RPerl::diag('in 03_inline_cpp.t, running Elipses Abridged...' . "\n");
+#RPerl::diag('in 03_inline_cpp.t, running Elipses Abridged...' . "\n");
 
 lives_and(
     sub {
@@ -245,10 +254,10 @@ lives_and(
     q{Inline::CPP, call average() and avg() lives}
 );
 
-RPerl::diag('in 03_inline_cpp.t, finished Elipses Abridged!' . "\n");
+#RPerl::diag('in 03_inline_cpp.t, finished Elipses Abridged!' . "\n");
 
 # classes Queue and Stack, AKA "Stacks and Queues"
-RPerl::diag('in 03_inline_cpp.t, starting Stacks & Queues...' . "\n");
+#RPerl::diag('in 03_inline_cpp.t, starting Stacks & Queues...' . "\n");
 
 my $queuestack_define_eval_string = <<'EOF';
 use Inline CPP => Config => CCFLAGSEX => '-DNO_XSLOCKS';
@@ -278,7 +287,7 @@ class Stack {
 END_OF_CPP_CODE
 EOF
 
-RPerl::diag('in 03_inline_cpp.t, building Stacks & Queues...' . "\n");
+#RPerl::diag('in 03_inline_cpp.t, building Stacks & Queues...' . "\n");
 
 lives_and(
     sub {
@@ -315,7 +324,7 @@ while($s->size) {
 return($queue_retval, $stack_retval);
 EOF
 
-RPerl::diag('in 03_inline_cpp.t, running Stacks & Queues...' . "\n");
+#RPerl::diag('in 03_inline_cpp.t, running Stacks & Queues...' . "\n");
 
 lives_and(
     sub {
@@ -329,10 +338,10 @@ lives_and(
     q{Inline::CPP, call Queue and Stack methods lives}
 );
 
-RPerl::diag('in 03_inline_cpp.t, finished Stacks & Queues!' . "\n");
+#RPerl::diag('in 03_inline_cpp.t, finished Stacks & Queues!' . "\n");
 
 # multiadd(), AKA "Elipses Revisited (and Overloading or Templates)"
-RPerl::diag('in 03_inline_cpp.t, starting Elipses Revisited...' . "\n");
+#RPerl::diag('in 03_inline_cpp.t, starting Elipses Revisited...' . "\n");
 
 my $multiadd_define_eval_string = <<'EOF';
 use Inline CPP => Config => CCFLAGSEX => '-DNO_XSLOCKS';
@@ -362,7 +371,7 @@ int multiadd ( SV*  a, ... ) {
 END_OF_CPP_CODE
 EOF
 
-RPerl::diag('in 03_inline_cpp.t, building Elipses Revisited...' . "\n");
+#RPerl::diag('in 03_inline_cpp.t, building Elipses Revisited...' . "\n");
 
 lives_and(
     sub {
@@ -375,7 +384,7 @@ lives_and(
     q{Inline::CPP, define multiadd() lives}
 );
 
-RPerl::diag('in 03_inline_cpp.t, running Elipses Revisited part 1/4...' . "\n");
+#RPerl::diag('in 03_inline_cpp.t, running Elipses Revisited part 1/4...' . "\n");
 
 lives_and(
     sub {
@@ -388,7 +397,7 @@ lives_and(
     q{Inline::CPP, call multiadd(1) lives}
 );
 
-RPerl::diag('in 03_inline_cpp.t, running Elipses Revisited part 2/4...' . "\n");
+#RPerl::diag('in 03_inline_cpp.t, running Elipses Revisited part 2/4...' . "\n");
 lives_and(
     sub {
         my $EVAL_RETVAL = eval 'multiadd(1, 2);  # Dispatch add(int, int)';
@@ -400,7 +409,7 @@ lives_and(
     q{Inline::CPP, call multiadd(1, 2) lives}
 );
 
-RPerl::diag('in 03_inline_cpp.t, running Elipses Revisited part 3/4...' . "\n");
+#RPerl::diag('in 03_inline_cpp.t, running Elipses Revisited part 3/4...' . "\n");
 lives_and(
     sub {
         my $EVAL_RETVAL = eval 'multiadd(1, 2, 3);  # Dispatch add(int, int, int)';
@@ -414,13 +423,14 @@ lives_and(
 
 # NEED FIX: get Elipses Revisited part 4/4 working in Windows
 if ( $OSNAME eq 'MSWin32' ) {
-    RPerl::diag('in 03_inline_cpp.t, skipping Elipses Revisited part 4/4, Windows detected...' . "\n");
+#    RPerl::diag('in 03_inline_cpp.t, skipping Elipses Revisited part 4/4, Windows detected...' . "\n");
     if ( $ENV{RPERL_VERBOSE} ) {
         Test::More::diag("[[[ MS Windows OS Detected, Inline::CPP Exception Temporarily Disabled, Skipping Elipses Revisited Part 4/4 Test, RPerl Inline System ]]]");
     }
+    ok(1, q{Inline::CPP, call multiadd(1, 2, 3, 4) skipped on MS Windows OS});
 }
 else {
-    RPerl::diag('in 03_inline_cpp.t, running Elipses Revisited part 4/4...' . "\n");
+#    RPerl::diag('in 03_inline_cpp.t, running Elipses Revisited part 4/4...' . "\n");
     lives_and(    # can't use throws_ok() because we are trapping the exception inside of eval
         sub {
             my $EVAL_RETVAL = eval 'multiadd(1, 2, 3, 4);  # No dispatch; throw an exception';
@@ -430,6 +440,6 @@ else {
     );
 }
 
-RPerl::diag('in 03_inline_cpp.t, finished Elipses Revisited!' . "\n");
+#RPerl::diag('in 03_inline_cpp.t, finished Elipses Revisited!' . "\n");
 
 done_testing();
