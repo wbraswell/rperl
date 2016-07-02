@@ -613,6 +613,7 @@ our string $post_processor_perl__comments_whitespace_delete = sub {
     my boolean $inside_comment = 0;
     my boolean $inside_string = 0;
     my boolean $inside_heredoc = 0;
+    my boolean $inside_indent;
     my string $open_quote_string;
     my string $open_quote_heredoc;
     foreach my string $input_source_code_line ( @{$input_source_code_split} ) {
@@ -631,6 +632,8 @@ our string $post_processor_perl__comments_whitespace_delete = sub {
         if ( $input_source_code_line =~ m/^\s*[#][^#!]/xms ) { next; }    # delete whole-line # COMMENT
         if ( $input_source_code_line =~ m/^=\w+/xms ) { $inside_comment = 1; next; }    # delete beginning of multi-line POD =COMMENT
 
+        $inside_indent = 1;
+
         # delete partial-line & multi-line comments, properly handling strings which contain comment characters
         my string $input_source_code_line_tmp = q{};
         my string $current_character;
@@ -638,6 +641,9 @@ our string $post_processor_perl__comments_whitespace_delete = sub {
         my boolean $advance_one = 0;
         for my integer $i ( 0 .. ( ( length $input_source_code_line ) - 1 ) ) {
             $current_character = substr $input_source_code_line, $i, 1;
+            if (($inside_indent) and ($current_character !~ m/[ \t]/xms)) {
+                $inside_indent = 0;
+            }
 
             # advance one extra character for q{ OR #! OR ##
             if ($advance_one) {
@@ -681,11 +687,11 @@ our string $post_processor_perl__comments_whitespace_delete = sub {
                         if ((substr $open_quote_heredoc, -1, 1) eq q{"}) { substr $open_quote_heredoc, -1, 1, q{}; }
                     }
                 }
-                # NEED UPGRADE: can not delete extra whitespace characters here, because it destroys indentation
-#                elsif ( $current_character =~ m/[ \t]/ ) {
-#                    $next_character = substr $input_source_code_line, ( $i + 1 ), 1;
-#                    if ( $next_character =~ m/[ \t]/ ) { next; }  # delete extra whitespace
-#                }
+                # delete extra whitespace inserted by Perl::Tidy
+                elsif ((not $inside_indent) and ( $current_character =~ m/[ \t]/xms )) {
+                    $next_character = substr $input_source_code_line, ( $i + 1 ), 1;
+                    if ( $next_character =~ m/[ \t]/xms ) { next; }  # delete extra whitespace
+                }
             }
             else {                                            # $inside_string
                 if (    ( $current_character eq q{'} ) and ( $open_quote_string eq q{'} ) ) { $inside_string = 0; }
@@ -869,14 +875,14 @@ our string $post_processor_cpp__pmc_generate = sub {
             # utilize modified copies of Module PMC template file
             my string $module_pmc_filename_manual;
             if ( $module_count == 1 ) {
-                $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES';
+                $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES_TEMPLATE';
             }
             else {
                 if ( $i == ( $module_count - 1 ) ) {
-                    $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES_MONOLITH';
+                    $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES_TEMPLATE_MONOLITH';
                 }
                 else {
-                    $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES_MONOLITH_SECONDARY';
+                    $module_pmc_filename_manual = $RPerl::INCLUDE_PATH . '/RPerl/CompileUnit/Module.pmc.CPPOPS_DUALTYPES_TEMPLATE_MONOLITH_SECONDARY';
                 }
             }
 

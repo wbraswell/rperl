@@ -110,6 +110,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my string_hashref $cpp_source_group = { CPP => q{} };
 
 #    RPerl::diag( 'in Array::ListElements->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in Array::ListElements->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_inside_print_operator} = ' . $modes->{_inside_print_operator} . "\n" );
 
     if ( ( ref $self ) ne 'ListElements_191' ) {
         die RPerl::Parser::rperl_rule__replace(
@@ -118,6 +119,15 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 . ' found where ListElements_191 expected, dying' )
             . "\n";
     }
+
+    # save to stack of saved flags, when needed
+    if ((exists $modes->{_inside_list_elements}) and (defined $modes->{_inside_list_elements})) {
+        if ((not exists $modes->{_inside_list_elements_saved}) or (not defined $modes->{_inside_list_elements_saved})) {
+            $modes->{_inside_list_elements_saved} = [];
+        }
+        push @{$modes->{_inside_list_elements_saved}}, $modes->{_inside_list_elements};
+    }
+    $modes->{_inside_list_elements} = 1;
 
     my object $list_element0      = $self->{children}->[0];
     my object $list_elements_star = $self->{children}->[1];
@@ -138,7 +148,15 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                         . q{' found where OP21_LIST_COMMA ',' expected, dying}
                 ) . "\n";
             }
-            $cpp_source_group->{CPP} .= $list_element->{attr} . q{ }; # OP21_LIST_COMMA
+            # OP21_LIST_COMMA
+            if ((exists $modes->{_inside_print_operator}) and (defined $modes->{_inside_print_operator}) and $modes->{_inside_print_operator}) {
+                # replace comma with << when inside print operator
+                $cpp_source_group->{CPP} .= ' << ';
+            }
+            else {
+                # keep comma when not inside print operator
+                $cpp_source_group->{CPP} .= $list_element->{attr} . q{ };
+            }
         }
         else {
             my string_hashref $cpp_source_subgroup
@@ -146,6 +164,13 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             RPerl::Generator::source_group_append( $cpp_source_group,
                 $cpp_source_subgroup );
         }
+    }
+
+    # restore from stack of saved flags, when needed
+    delete $modes->{_inside_list_elements};
+    if ((exists $modes->{_inside_list_elements_saved}) and (defined $modes->{_inside_list_elements_saved}) and (scalar $modes->{_inside_list_elements_saved})) {
+        $modes->{_inside_list_elements} = pop @{$modes->{_inside_list_elements_saved}};
+        if (not scalar $modes->{_inside_list_elements_saved}) { delete $modes->{_inside_list_elements_saved}; }
     }
 
     return $cpp_source_group;

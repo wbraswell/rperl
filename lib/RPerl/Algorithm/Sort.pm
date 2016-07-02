@@ -19,7 +19,7 @@ our hashref $properties = {};
 # [[[ SUBROUTINES & OO METHODS ]]]
 
 our void::method $inherited__Sort = sub {
-    ( my object $self, my string $person) = @_;
+    ( my object $self, my string $person ) = @_;
     RPerl::diag( 'in PERLOPS_PERLTYPES Sort->inherited__Sort(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FISH' . "\n" );
 };
 
@@ -29,13 +29,13 @@ our void::method $inherited__Sort = sub {
 #};
 
 our string $uninherited__Sort = sub {
-    ( my string $person) = @_;
+    ( my string $person ) = @_;
     RPerl::diag( 'in PERLOPS_PERLTYPES Sort::uninherited__Sort(), received $person = ' . $person . ', MY' . "\n" );
     return 'Sort::uninherited__Sort() RULES! PERLOPS_PERLTYPES';
 };
 
 #our string $uninherited = sub {
-#    ( my string $person) = @_;
+#    ( my string $person ) = @_;
 #    RPerl::diag('in PERLOPS_PERLTYPES Sort::uninherited(), received $person = ' . $person . ', TROUSERS' . "\n");
 #    return 'Sort::uninherited() ROCKS! PERLOPS_PERLTYPES';
 #};

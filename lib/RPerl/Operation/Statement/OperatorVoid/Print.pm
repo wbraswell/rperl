@@ -96,13 +96,16 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         my string $semicolon              = $self->{children}->[3];
 
 #        RPerl::diag( 'in OperatorVoid::Print->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $stdout_stderr_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($stdout_stderr_optional) . "\n" );
+#        RPerl::diag( 'in OperatorVoid::Print->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $list_elements = ' . "\n" . RPerl::Parser::rperl_ast__dump($list_elements) . "\n" );
 
         if ( exists $stdout_stderr_optional->{children}->[0] ) {
             if ( $stdout_stderr_optional->{children}->[0]->{attr} eq '{*STDOUT}' ) {
-                $cpp_source_group->{CPP} .= 'cout << ';
+#                $cpp_source_group->{CPP} .= 'cout << ';
+                $cpp_source_group->{CPP} .= 'print ';
             }
             elsif ( $stdout_stderr_optional->{children}->[0]->{attr} eq '{*STDERR}' ) {
-                $cpp_source_group->{CPP} .= 'cerr << ';
+#                $cpp_source_group->{CPP} .= 'cerr << ';
+                $cpp_source_group->{CPP} .= 'prerr ';
             }
             else {
                 die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP28, CODE GENERATOR, ABSTRACT SYNTAX TO C++: output stream '
@@ -112,10 +115,9 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             }
         }
         else {
-            $cpp_source_group->{CPP} .= 'cout << ';
+#            $cpp_source_group->{CPP} .= 'cout << ';
+            $cpp_source_group->{CPP} .= 'print ';
         }
-
-# NEED UPGRADE: detect closing newline and change to endl; decide between comma VS dot in Perl input, and double-arrow VS plus in C++ output
 
 # DEV NOTE: always use endl instead of "\n" for cout, because Perl immediately flushes buffers on STDOUT newline characters
 # http://perl.plover.com/FAQs/Buffering.html
@@ -123,9 +125,31 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 # A filehandle in line buffered mode has two special properties: It's flushed automatically whenever you print a newline character to it,
 # and it's flushed automatically whenever you read from the terminal.
 
+        # save to stack of saved flags, when needed
+        if ((exists $modes->{_inside_print_operator}) and (defined $modes->{_inside_print_operator})) {
+            if ((not exists $modes->{_inside_print_operator_saved}) or (not defined $modes->{_inside_print_operator_saved})) {
+                $modes->{_inside_print_operator_saved} = [];
+            }
+            push @{$modes->{_inside_print_operator_saved}}, $modes->{_inside_print_operator};
+        }
+        $modes->{_inside_print_operator} = 1;
+
         $cpp_source_subgroup = $list_elements->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+        # replace closing "\n" with endl
+        if ((substr $cpp_source_group->{CPP}, -4, 4) eq q{"\n"}) { 
+#        if (0) {
+            substr $cpp_source_group->{CPP}, -4, 4, q{};
+            $cpp_source_group->{CPP} .= 'endl';
+        }
         $cpp_source_group->{CPP} .= $semicolon . "\n";
+
+        # restore from stack of saved flags, when needed
+        delete $modes->{_inside_print_operator};
+        if ((exists $modes->{_inside_print_operator_saved}) and (defined $modes->{_inside_print_operator_saved}) and (scalar $modes->{_inside_print_operator_saved})) {
+            $modes->{_inside_print_operator} = pop @{$modes->{_inside_print_operator_saved}};
+            if (not scalar $modes->{_inside_print_operator_saved}) { delete $modes->{_inside_print_operator_saved}; }
+        }
     }
     elsif ( $self_class eq 'OperatorVoid_119' ) {    # OperatorVoid -> OP01_PRINT FHREF_SYMBOL_BRACES ListElements ';'
         $cpp_source_group->{CPP} .= '// <<< RP::O::S::OV::P __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>' . "\n";
@@ -137,6 +161,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             . "\n";
     }
 
+#    RPerl::diag( 'in OperatorVoid::Print->ast_to_cpp__generate__CPPOPS_CPPTYPES(), about to return $cpp_source_group = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_group) . "\n" );
     return $cpp_source_group;
 };
 

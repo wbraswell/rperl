@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::Operator::String::Concatenate;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::Operator::String);
@@ -61,6 +61,15 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
 #    RPerl::diag( 'in Operator::String::Concatenate->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
+    # save to stack of saved flags, when needed
+    if ((exists $modes->{_inside_cat_operator}) and (defined $modes->{_inside_cat_operator})) {
+        if ((not exists $modes->{_inside_cat_operator_saved}) or (not defined $modes->{_inside_cat_operator_saved})) {
+            $modes->{_inside_cat_operator_saved} = [];
+        }
+        push @{$modes->{_inside_cat_operator_saved}}, $modes->{_inside_cat_operator};
+    }
+    $modes->{_inside_cat_operator} = 1;
+
     my string $self_class = ref $self;
     if ( $self_class eq 'Operator_98' ) {  # Operator -> SubExpression OP08_STRING_CAT SubExpression
         my string_hashref $cpp_source_subgroup = $self->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
@@ -75,6 +84,13 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 . $self_class
                 . ' found where Operator_98 expected, dying' )
             . "\n";
+    }
+
+    # restore from stack of saved flags, when needed
+    delete $modes->{_inside_cat_operator};
+    if ((exists $modes->{_inside_cat_operator_saved}) and (defined $modes->{_inside_cat_operator_saved}) and (scalar $modes->{_inside_cat_operator_saved})) {
+        $modes->{_inside_cat_operator} = pop @{$modes->{_inside_cat_operator_saved}};
+        if (not scalar $modes->{_inside_cat_operator_saved}) { delete $modes->{_inside_cat_operator_saved}; }
     }
 
     return $cpp_source_group;

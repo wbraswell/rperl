@@ -41,7 +41,7 @@ my $test_files = {};
 # locate all *Good* *good* *Bad* *bad* test files in RPerl/Test/ directory
 find(
     sub {
-        return;  # TMP DEBUG
+#        return;  # TMP DEBUG
  
         my $file = $File::Find::name;
 
@@ -60,14 +60,14 @@ find(
 
             # NEED FIX: remove use of $_ magic variable
             open my filehandleref $FILE_HANDLE, '<', $_
-                or croak 'ERROR ETE11GE00: Cannot open file ' . $file . ' for reading,' . $OS_ERROR . ', croaking';
+                or croak 'ERROR ETE13GE00: Cannot open file ' . $file . ' for reading,' . $OS_ERROR . ', croaking';
             while (<$FILE_HANDLE>) {
                 if (m/^\#\s*\<\<\<\s*GENERATE_ERROR\s*\:\s*['"](.*)['"]\s*\>\>\>/xms) {
                     push @{ $test_files->{$file}->{errors} }, $1;
                 }
             }
             close $FILE_HANDLE
-                or croak 'ERROR ETE11GE01: Cannot close file ' . $file . ' after reading,' . $OS_ERROR . ', croaking';
+                or croak 'ERROR ETE13GE01: Cannot close file ' . $file . ' after reading,' . $OS_ERROR . ', croaking';
         }
         else {
             return;
@@ -84,8 +84,8 @@ find(
 #        RPerl::diag('in 13_generate.t, have $file = ' . $file . "\n");
 
 #        if ( $file !~ m/[.]pm$/xms ) { # TEMP DEBUGGING, ONLY FIND *.pm, NOT *.pl
-#        if ( $file !~ m/.*Module\/.*$/xms ) { # TEMP DEBUGGING, ONLY FIND CERTAIN FILES
-#        if ( $file =~ m/^(\w+[.]p[ml])[.]\w+OPS_\w+TYPES(_\w+)?$/xms ) {    # find all pre-compiled files
+#        if ( $file !~ m/.*Module\/.*$/xms ) { # TEMP DEBUGGING, ONLY FIND FILES IN A CERTAIN DIRECTORY
+#        if ( $file =~ m/^(.*foo_bar_arith.*)[.].*OPS.*$/xms ) { # TEMP DEBUGGING, ONLY FIND CERTAIN FILES
         if ( $file =~ m/^(.+)[.]\w+OPS_\w+TYPES$/gxms ) {    # find all pre-compiled files
             my string $file_base = $1;
 #            RPerl::diag('in 13_generate.t, have pre-compiled $file        = ' . $file . "\n");
@@ -122,7 +122,7 @@ find(
 my string_hashref $modes;
 my hashref_arrayref $output_file_name_groups_tmp;
 my string_hashref $output_file_name_group;
-my string_hashref $reference_file_name_group = {};
+my string_hashref $reference_file_name_group;
 my string $test_file_reference;
 my boolean $perform_diff_check;
 my unknown $eval_return_value;
@@ -133,8 +133,8 @@ my integer $number_of_tests_run = 0;
 # loop up to 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
 #foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 #for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
-for my $mode_id ( 2 ) {    # CPPOPS_CPPTYPES ONLY
-#for my $mode_id ( 0 , 2 ) {    # PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
+#for my $mode_id ( 2 ) {    # CPPOPS_CPPTYPES ONLY
+for my $mode_id ( 0 , 2 ) {    # PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
 #    RPerl::diag("in 13_generate.t, top of for() loop, have \$mode_id = $mode_id\n");
 
 
@@ -156,7 +156,7 @@ for my $mode_id ( 2 ) {    # CPPOPS_CPPTYPES ONLY
     $number_of_tests_run++;
 
     foreach my $test_file ( sort keys %{$test_files} ) {
-
+        $reference_file_name_group = {};
 #        RPerl::diag( 'in 13_generate.t, have $test_file = ' . $test_file . "\n" );
 
         $modes = {
@@ -174,15 +174,24 @@ for my $mode_id ( 2 ) {    # CPPOPS_CPPTYPES ONLY
         $output_file_name_groups_tmp = generate_output_file_names( [$test_file], [], 1, $modes );
         $output_file_name_group = $output_file_name_groups_tmp->[0];
 
-        # trim unnecessary (and possibly problematic) absolute paths from file names
+        # trim unnecessary (and possibly problematic) absolute paths from input & output file names
+        $test_file = RPerl::Compiler::post_processor__absolute_path_delete( $test_file );
         foreach my string $suffix_key (keys %{$output_file_name_group}) {
             if (defined $output_file_name_group->{$suffix_key}) {
                 $output_file_name_group->{$suffix_key} = RPerl::Compiler::post_processor__absolute_path_delete( $output_file_name_group->{$suffix_key} );
             }
         }
 
+#        RPerl::diag( 'in 13_generate.t, have sort keys %{ $reference_file_name_group } = ' . Dumper( [ sort keys %{ $reference_file_name_group } ] ) );
+#        RPerl::diag( 'in 13_generate.t, have sort keys %{ $output_file_name_group } = ' . Dumper( [ sort keys %{ $output_file_name_group } ] ) );
+
         if ( $ops eq 'PERL' ) {
             $perform_diff_check = 1;    # Perl source code is it's own reference file, always perform diff check for PERLOPS_PERLTYPES
+            foreach my string $suffix_key (keys %{$output_file_name_group}) {
+                if (defined $output_file_name_group->{$suffix_key}) {
+                    $reference_file_name_group->{$suffix_key} = $output_file_name_group->{$suffix_key};
+                }
+            }
         }
         else {                          # $ops eq 'CPP'
             $perform_diff_check = 1;    # begin by assuming diff check, all reference file(s) found
@@ -204,17 +213,27 @@ for my $mode_id ( 2 ) {    # CPPOPS_CPPTYPES ONLY
                         $test_file_reference = $output_file_name_group->{$suffix_key} . q{.} . $ops . 'OPS_' . $types . 'TYPES';
                     }
                 }
-                else {
+                elsif ($suffix_key eq 'CPP') {
                     $test_file_reference = $output_file_name_group->{$suffix_key} . q{.} . $ops . 'OPS_' . $types . 'TYPES';
                 }
-#                RPerl::diag( 'in 13_generate.t, have $test_file_reference = ' . $test_file_reference . "\n" );
- 
-                if (( not -e $test_file_reference ) or ( not -f $test_file_reference ) or ( not -T $test_file_reference )) {
-                    RPerl::warning( 'WARNING WTE13GE00, TEST GROUP 13, CODE GENERATOR: Missing or invalid pre-compiled source code reference file ' . q{'} . $test_file_reference . q{'} . ', not performing difference check' . "\n" );
-                    $perform_diff_check = 0;    # no diff check, at least one reference file missing
-                    last;
+                elsif ($suffix_key eq 'EXE') {
+#                    $test_file_reference = $output_file_name_group->{$suffix_key} . q{.cpp.} . $ops . 'OPS_' . $types . 'TYPES';
+                    # in CPPOPS mode, EXE file should be an actual binary, don't try to compare
+                    next;
                 }
+                else {
+                    croak 'ERROR ETE13GE02: Unrecognized suffix key ' . $suffix_key . ', croaking';
+                }
+#                RPerl::diag( 'in 13_generate.t, have $test_file_reference = ' . $test_file_reference . "\n" );
+
                 $reference_file_name_group->{$suffix_key} = $test_file_reference;  # update reference file name to include *OPS_*TYPES suffix
+            }
+        }
+
+        # trim unnecessary (and possibly problematic) absolute paths from reference file names
+        foreach my string $suffix_key (keys %{$reference_file_name_group}) {
+            if (defined $reference_file_name_group->{$suffix_key}) {
+                $reference_file_name_group->{$suffix_key} = RPerl::Compiler::post_processor__absolute_path_delete( $reference_file_name_group->{$suffix_key} );
             }
         }
 
@@ -234,6 +253,8 @@ for my $mode_id ( 2 ) {    # CPPOPS_CPPTYPES ONLY
 
 #        RPerl::diag( 'in 13_generate.t, have $ops = ' . $ops . "\n" );
 #        RPerl::diag( 'in 13_generate.t, have $types = ' . $types . "\n" );
+
+        $modes->{_input_file_name} = $test_file;
  
         # [[[ GENERATE ]]]
         if ( $ops eq 'PERL' ) {
@@ -249,15 +270,16 @@ for my $mode_id ( 2 ) {    # CPPOPS_CPPTYPES ONLY
 #            RPerl::diag( 'in 13_generate.t, have defined and true $eval_return_value' . "\n" );
             my string_hashref $source_group = $eval_return_value;
 
-            # generate PMC source code
-            RPerl::Compiler::post_processor_cpp__pmc_generate( $source_group, $output_file_name_group, $modes );
-
 #            RPerl::diag( 'in 13_generate.t, have $source_group = ' . Dumper($source_group ) . "\n\n" );
 #            RPerl::diag( 'in 13_generate.t, have sort keys %{ $source_group } = ' . Dumper( [ sort keys %{$source_group} ] ) );
 
+            if (( $ops eq 'CPP' ) and (exists $output_file_name_group->{PMC}) and (defined $output_file_name_group->{PMC})) {
+                # generate PMC source code
+                RPerl::Compiler::post_processor_cpp__pmc_generate( $source_group, $output_file_name_group, $modes );
+            }
+
             if ( ( $test_file =~ m/Bad/xms ) or ( $test_file =~ m/bad/xms ) ) {    # file named *Bad* or *bad*
 #                RPerl::diag( 'in 13_generate.t, have $test_file NOT named *Good* or *good*' . "\n" );
-#                RPerl::diag( 'in 13_generate.t, have sort keys %{ $reference_file_name_group } = ' . Dumper( [ sort keys %{ $reference_file_name_group } ] ) );
 
                 # skip test if dummy source code found
                 if ( not dummy_source_code_find($source_group) ) {
@@ -277,9 +299,10 @@ for my $mode_id ( 2 ) {    # CPPOPS_CPPTYPES ONLY
 #                    RPerl::diag( 'in 13_generate.t, need to perform diff check(s)' . "\n" );
 #                    RPerl::diag( 'in 13_generate.t, have $reference_file_name_group = ' . Dumper( $reference_file_name_group ) . "\n" );
                     my string $suffix_key;
+                    my string $suffix_key_saved;
                     foreach $suffix_key ( sort keys %{ $reference_file_name_group } ) {
-#                        RPerl::diag( 'in 13_generate.t, have sort keys %{ $reference_file_name_group } = ' . Dumper( [ sort keys %{ $reference_file_name_group } ] ) );
-#                        RPerl::diag( 'in 13_generate.t, have sort keys %{ $source_group } = ' . Dumper( [ sort keys %{$source_group} ] ) );
+#                        RPerl::diag( 'in 13_generate.t, top of suffix loop, have $suffix_key = ' . $suffix_key . "\n" );
+                        $suffix_key_saved = $suffix_key;
                         if ( $ops eq 'PERL' ) {    # single reference file; use original Perl source file as reference for diff check
                             $test_file_reference = $test_file;
                         }
@@ -290,24 +313,39 @@ for my $mode_id ( 2 ) {    # CPPOPS_CPPTYPES ONLY
 
                         #                        RPerl::diag( 'in 13_generate.t, have $test_file_reference = ' . $test_file_reference . "\n" );
 
+                        # reference file does not exist (okay for some cases, such as H suffix for some .pl EXE input files)
+                        if (( not -e $test_file_reference ) or ( not -f $test_file_reference ) or ( not -T $test_file_reference )) {
+                            # source code generated
+                            if ((exists $source_group->{$suffix_key}) and (defined $source_group->{$suffix_key}) and ($source_group->{$suffix_key} ne q{})) {
+                                RPerl::warning( 'WARNING WTE13GE00, TEST GROUP 13, CODE GENERATOR: Missing or invalid pre-compiled source code reference file ' . q{'} . $test_file_reference . q{'} . ', not performing difference check' . "\n" );
+                                $perform_diff_check = 0;    # no diff check, at least one reference file missing
+                                last;
+                            }
+                            
+                            # source code not generated, ref file does not exist, okay to skip
+                            next;
+                        }
+
                         $diff_line = RPerl::Generator::diff_check_file_vs_string( $test_file_reference, $source_group, $suffix_key, $output_file_name_group, $modes );
 
                         #                        RPerl::diag( 'in 13_generate.t, have $diff_line = ' . $diff_line . "\n" );
                         if ( $diff_line != 0 ) {
+#                            RPerl::diag( 'in 13_generate.t, near bottom of suffix loop, have $diff_line = ' . $diff_line . ', $suffix_key = ' . $suffix_key . "\n" );
                             last;
                         }
+#                        RPerl::diag( 'in 13_generate.t, bottom of suffix loop, have $suffix_key = ' . $suffix_key . "\n" );
                     }
+                    # NEED ANSWER: why is $suffix_key cleared when the loop is completed?
+                    $suffix_key = $suffix_key_saved;
+                    $suffix_key_saved = undef;
+#                    RPerl::diag( 'in 13_generate.t, after suffix loop, have $suffix_key = ' . $suffix_key . "\n" );
 
                     if ( $diff_line == 0 ) {
                         ok( 1, 'Program or module generates without errors, yes diff check:' . (q{ } x 2) . $test_file );
                         $number_of_tests_run++;
                     }
                     elsif ( $diff_line > 0 ) {
-                        ok( 0, 'Program or module generates without errors, yes diff check, output & reference files differ beginning at line ' . 
-                        $diff_line . ';' . "\n" . 
-                        'Output File:    ' . $output_file_name_group->{$suffix_key} . "\n" . 
-                        'Reference File: ' . $test_file_reference . "\n" . 
-                        'Input File:     ' . $test_file );
+                        ok( 0, 'Program or module generates without errors, yes diff check, output file ' . $output_file_name_group->{$suffix_key} . ' and reference file ' . $test_file_reference . ' differ at line ' . $diff_line );
                         $number_of_tests_run++;
                     }
                     else {    # $diff_line < 0

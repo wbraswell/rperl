@@ -18,10 +18,10 @@ int main() {  // [[[ OPERATIONS HEADER ]]]
     integer bar = 23 * 42;
     number baz = to_number(bar) / foo;
     number zab = to_number(foo) / bar;
-    cout << (const string) "have $foo = " + To_string(foo) + (const string) "\n";
-    cout << (const string) "have $bar = " + To_string(bar) + (const string) "\n";
-    cout << (const string) "have $baz = " + To_string(baz) + (const string) "\n";
-    cout << (const string) "have $zab = " + To_string(zab) + (const string) "\n";
+    print "have $foo = " << To_string(foo) << endl;
+    print "have $bar = " << To_string(bar) << endl;
+    print "have $baz = " << To_string(baz) << endl;
+    print "have $zab = " << To_string(zab) << endl;
 
 
 

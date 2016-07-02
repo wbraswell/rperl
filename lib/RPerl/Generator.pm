@@ -160,7 +160,7 @@ our integer $diff_check_file_vs_string = sub {
 #    RPerl::diag('in Generator->diff_check_file_vs_string(), received $suffix_key = ' . $suffix_key . "\n");
 #    RPerl::diag('in Generator->diff_check_file_vs_string(), received $file_name_group = ' . "\n" . Dumper($file_name_group) . "\n\n");
 #    RPerl::diag('in Generator->diff_check_file_vs_string(), received $modes = ' . "\n" . Dumper($modes) . "\n\n");
-    
+
     my string $string_generated = $source_group->{$suffix_key};
 #    RPerl::diag('in Generator->diff_check_file_vs_string(), have $string_generated = $source_group->{$suffix_key} = ' . "\n" . $string_generated . "\n\n");
 
@@ -199,7 +199,7 @@ our integer $diff_check_file_vs_string = sub {
     # [ TIDY/FORMAT ALL CODE ]
     my string $string_reference_tidied = q{};
     my string $string_generated_tidied = q{};
-    if ( $suffix_key eq 'PMC' ) {
+    if (( $suffix_key eq 'PMC' ) or (($modes->{ops} eq 'PERL') and ($suffix_key eq 'EXE'))) {
 
         # TIDY REFERENCE PERL SOURCE CODE
         my string $perltidy_stderr_string = undef;
@@ -236,7 +236,7 @@ our integer $diff_check_file_vs_string = sub {
         $string_reference_tidied = RPerl::Compiler::post_processor_perl__comments_whitespace_delete($string_reference_tidied);
         $string_generated_tidied = RPerl::Compiler::post_processor_perl__comments_whitespace_delete($string_generated_tidied);
     }
-    elsif (($suffix_key eq 'H') or ($suffix_key eq 'CPP')) {
+    elsif (($suffix_key eq 'H') or ($suffix_key eq 'CPP') or (($modes->{ops} eq 'CPP') and ($suffix_key eq 'EXE'))) {
         # FORMAT REFERENCE C++ SOURCE CODE
         my filehandleref $FILE_HANDLE_REFERENCE_TMP;
         (my string $file_name_reference_tmp, my string $file_name_reference_tmp_dirs, my string $file_name_reference_tmp_suffix) = fileparse($file_name_reference);
