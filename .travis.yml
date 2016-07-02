@@ -1,5 +1,5 @@
 language: perl
-# v0.001_200
+# v0.001_300
 perl:
 # NEED ANSWER, CORRELATION #rp00: is RPerl truly incompatible with Perl v5.8 and earlier?
 # Perl v5.8 causes $CPP_LINKED global symbol errors, currently disabled
@@ -34,6 +34,7 @@ install:
 - sudo apt-get install -qq g++-4.8
 - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
 - sudo apt-get install libgmp-dev
+- sudo apt-get install astyle
 
 before_script:
 # MODIFY FOLLOWING LINE TO ENABLE TEST_VERBOSE STDOUT DURING `make test`
