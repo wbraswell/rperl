@@ -82,6 +82,10 @@ if ( $ENV{RPERL_VERBOSE} ) {
     Test::More::diag( '[[[ Beginning Parser Tests, RPerl Compilation System' . ' ]]]' );
 }
 
+# [[[ PRIMARY RUNLOOP ]]]
+# [[[ PRIMARY RUNLOOP ]]]
+# [[[ PRIMARY RUNLOOP ]]]
+
 for my $test_file ( sort keys %{$test_files} ) {
     # trim unnecessary (and possibly problematic) absolute paths from input file names
     $test_file = RPerl::Compiler::post_processor__absolute_path_delete( $test_file );

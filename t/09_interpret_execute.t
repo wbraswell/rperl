@@ -44,7 +44,7 @@ find(
     sub {
         my $file = $File::Find::name;
 
-        #        RPerl::diag('in 09_interpret_execute.t, have $file = ' . $file . "\n");
+#        RPerl::diag('in 09_interpret_execute.t, have $file = ' . $file . "\n");
 
         #        if ( $file !~ m/.*OperatorVoid01NamedVoid.*[.]p[ml]$/xms ) { # TEMP DEBUGGING, ONLY FIND OperatorVoid01NamedVoid*/*.pm & *.pl
         if ( $file !~ m/.pl$/xms ) {
@@ -96,19 +96,30 @@ find(
     $RPerl::INCLUDE_PATH . '/RPerl/Test'
 );
 
-#RPerl::diag( 'in 09_interpret_execute.t, have $test_files = ' . "\n" . Dumper($test_files) . "\n" );
+# trim unnecessary (and possibly problematic) absolute paths from input file names
+# must be done outside find() to properly utilize getcwd()
+foreach my string $test_file_key (sort keys %{$test_files}) {
+    $test_files->{RPerl::Compiler::post_processor__absolute_path_delete($test_file_key)} = $test_files->{$test_file_key};
+    delete $test_files->{$test_file_key};
+}
 
-# NEED FIX: not giving correct number of tests???
-#plan tests => (scalar keys %{$test_files}) + 4;  # 4 additional lives_and() tests in the BEGIN block above
+my integer $number_of_test_files = scalar keys %{$test_files};
+
+#RPerl::diag( 'in 09_interpret_execute.t, have $test_files = ' . "\n" . Dumper($test_files) . "\n" );
+#RPerl::diag( 'in 09_interpret_execute.t, have sort keys %{$test_files} = ' . "\n" . Dumper(sort keys %{$test_files}) . "\n" );
+#RPerl::diag( 'in 09_interpret_execute.t, have $number_of_test_files = ' . $number_of_test_files . "\n" );
+
+plan tests => ($number_of_test_files + 4);  # 4 additional lives_and() tests in the BEGIN block above
 
 if ( $ENV{RPERL_VERBOSE} ) {
     Test::More::diag( '[[[ Beginning Interpret-Execute Tests, RPerl Execution System, PERL operations and PERL data types' . ' ]]]' );
 }
 
+# [[[ PRIMARY RUNLOOP ]]]
+# [[[ PRIMARY RUNLOOP ]]]
+# [[[ PRIMARY RUNLOOP ]]]
 
-for my $test_file ( sort keys %{$test_files} ) {
-    # trim unnecessary (and possibly problematic) absolute paths from input file names
-    $test_file = RPerl::Compiler::post_processor__absolute_path_delete( $test_file );
+foreach my $test_file ( sort keys %{$test_files} ) {
 
 #    RPerl::diag( 'in 09_interpret_execute.t, have $test_file = ' . $test_file . "\n" );
     my $pid;
@@ -202,6 +213,8 @@ for my $test_file ( sort keys %{$test_files} ) {
     if ( $test_exit_status == 0 ) {    # UNIX process return code 0, success
         if ( ( $test_file =~ m/Good/xms ) or ( $test_file =~ m/good/xms ) ) {
             my $missing_successes = [];
+#            RPerl::diag( 'in 09_interpret_execute.t, run success on good code, have $test_files->{$test_file} = ' . Dumper($test_files->{$test_file}) . "\n\n" );
+
             if ( defined $test_files->{$test_file}->{successes} ) {
                success_match($test_file, $test_files->{$test_file}->{successes}, $stdout_generated_lines);
             }

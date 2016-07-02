@@ -137,7 +137,11 @@ my unknown $eval_return_value;
 my integer $diff_line;
 my integer $number_of_tests_run = 4;  # initialize to 4 for use_ok() calls in BEGIN block above
 
+
 # [[[ PRIMARY RUNLOOP ]]]
+# [[[ PRIMARY RUNLOOP ]]]
+# [[[ PRIMARY RUNLOOP ]]]
+
 # loop up to 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
 #foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
@@ -165,6 +169,10 @@ for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
 
     lives_ok( sub { rperltypes::types_enable($types) }, q{mode '} . $ops . ' operations and ' . $types . ' data types' . q{' enabled} );
     $number_of_tests_run++;
+
+    # [[[ SECONDARY RUNLOOP ]]]
+    # [[[ SECONDARY RUNLOOP ]]]
+    # [[[ SECONDARY RUNLOOP ]]]
 
     TEST_FILE_LOOP: foreach my $test_file ( sort keys %{$test_files} ) {
         $reference_file_name_group = {};
@@ -311,6 +319,11 @@ for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
 #                    RPerl::diag( 'in 13_generate.t, have $reference_file_name_group = ' . Dumper( $reference_file_name_group ) . "\n" );
                     my string $suffix_key;
                     my string $suffix_key_saved;
+
+                    # [[[ TERTIARY RUNLOOP ]]]
+                    # [[[ TERTIARY RUNLOOP ]]]
+                    # [[[ TERTIARY RUNLOOP ]]]
+
                     foreach $suffix_key ( sort keys %{ $reference_file_name_group } ) {
 #                        RPerl::diag( 'in 13_generate.t, top of suffix loop, have $suffix_key = ' . $suffix_key . "\n" );
                         $suffix_key_saved = $suffix_key;

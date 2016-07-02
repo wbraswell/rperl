@@ -47,6 +47,9 @@ my integer $diff_line;
 my integer $number_of_tests_run = 0;
 
 # [[[ PRIMARY RUNLOOP ]]]
+# [[[ PRIMARY RUNLOOP ]]]
+# [[[ PRIMARY RUNLOOP ]]]
+
 # loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
 #foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
@@ -63,6 +66,10 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
 
     lives_ok( sub { rperltypes::types_enable($types) }, q{mode '} . $ops . ' operations and ' . $types . ' data types' . q{' enabled} );
     $number_of_tests_run++;
+
+    # [[[ SECONDARY RUNLOOP ]]]
+    # [[[ SECONDARY RUNLOOP ]]]
+    # [[[ SECONDARY RUNLOOP ]]]
 
     for my $test_file ( sort keys %{$test_files} ) {
 
@@ -125,6 +132,10 @@ for my $mode_id ( 0 .. 0 ) {    # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
             RPerl::diag( 'in 21_compile_sort.t, have $test_file named *Good* or *good*' . "\n" );
             if ($perform_diff_check) {
                 RPerl::diag( 'in 21_compile_sort.t, need to perform diff check(s)' . "\n" );
+
+                # [[[ TERTIARY RUNLOOP ]]]
+                # [[[ TERTIARY RUNLOOP ]]]
+                # [[[ TERTIARY RUNLOOP ]]]
 
              #                    RPerl::diag( 'in 21_compile_sort.t, have $output_file_name_groups->[0] = ' . Dumper( $output_file_name_groups->[0] ) . "\n" );
                 foreach my string $suffix_key ( sort keys %{ $output_file_name_groups->[0] } ) {
