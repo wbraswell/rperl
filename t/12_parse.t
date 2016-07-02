@@ -8,7 +8,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_400;
+our $VERSION = 0.006_100;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -17,13 +17,22 @@ our $VERSION = 0.005_400;
 ## no critic qw(ProhibitDeepNests)  # SYSTEM SPECIAL 7: allow deeply-nested code
 
 # [[[ INCLUDES ]]]
-use RPerl::Parser;
-use RPerl::Generator;
-use RPerl::Compiler;
 use Test::More;
+use Test::Exception;
 use File::Find qw(find);
+use English;  # $EVAL_ERROR not defined after moving RPerl::* into lives_and() tests in BEGIN block below
 
 # [[[ OPERATIONS ]]]
+
+BEGIN {
+    if ( $ENV{RPERL_VERBOSE} ) {
+        Test::More::diag("[[[ Beginning Parser Pre-Test Loading, RPerl Compilation System ]]]");
+    }
+    lives_and( sub { use_ok('RPerl::AfterSubclass'); },            q{use_ok('RPerl::AfterSubclass') lives} );
+    lives_and( sub { use_ok('RPerl::Parser'); }, q{use_ok('RPerl::Parser') lives} );
+    lives_and( sub { use_ok('RPerl::Generator'); }, q{use_ok('RPerl::Generator') lives} );
+    lives_and( sub { use_ok('RPerl::Compiler'); }, q{use_ok('RPerl::Compiler') lives} );
+}
 
 my $test_files = {};    # string_hashref
 find(
@@ -64,9 +73,15 @@ find(
 #RPerl::diag( 'in 12_parse.t, have $test_files = ' . "\n" . Dumper($test_files) . "\n" );
 #RPerl::diag( 'in 12_parse.t, have sort keys %{$test_files} = ' . "\n" . Dumper(sort keys %{$test_files}) . "\n" );
 
-plan tests => scalar keys %{$test_files};
+plan tests => (scalar keys %{$test_files}) + 4;  # 4 additional lives_and() tests in the BEGIN block above
+
+if ( $ENV{RPERL_VERBOSE} ) {
+    Test::More::diag( '[[[ Beginning Parser Tests, RPerl Compilation System' . ' ]]]' );
+}
 
 for my $test_file ( sort keys %{$test_files} ) {
+    # trim unnecessary (and possibly problematic) absolute paths from input file names
+    $test_file = RPerl::Compiler::post_processor__absolute_path_delete( $test_file );
 
     #    RPerl::diag( 'in 12_parse.t, have $test_file = ' . $test_file . "\n" );
     ( my string $rperl_input_file_name, my string_hashref $cpp_output_file_name_group, my string_hashref $cpp_source_group, my string_hashref $modes ) = @_;
@@ -93,7 +108,7 @@ for my $test_file ( sort keys %{$test_files} ) {
         1;    # return true
     };
 
-    #    RPerl::diag( 'in 12_parse.t, have $eval_return_value = ' . $eval_return_value . "\n" );  # warning if undef retval
+#    RPerl::diag( 'in 12_parse.t, have $eval_return_value = ' . $eval_return_value . "\n" );  # warning if undef retval
 
     if ( ( defined $eval_return_value ) and $eval_return_value ) {    # Perl eval return code defined & true, success
         if ( ( $test_file =~ m/Good/xms ) or ( $test_file =~ m/good/xms ) ) {
@@ -105,7 +120,7 @@ for my $test_file ( sort keys %{$test_files} ) {
     }
     else {                                                            # Perl eval return code undefined or false, error
 
-        #        RPerl::diag( 'in 12_parse.t, have $EVAL_ERROR = ' . $EVAL_ERROR . "\n" );
+#        RPerl::diag( "\n\n\n" . 'in 12_parse.t, have $EVAL_ERROR = ' . $EVAL_ERROR . "\n\n\n" );
         if ( ( $test_file =~ m/Bad/ms ) or ( $test_file =~ m/bad/ms ) ) {
             my $missing_errors = [];
             if ( defined $test_files->{$test_file}->{errors} ) {

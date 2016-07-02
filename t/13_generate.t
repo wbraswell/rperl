@@ -9,7 +9,7 @@
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.008_100;
+our $VERSION = 0.008_200;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -20,15 +20,22 @@ our $VERSION = 0.008_100;
 
 # [[[ INCLUDES ]]]
 use RPerl::Test;
-use RPerl::Parser;
-use RPerl::Generator;
-use RPerl::Compiler;
 use Test::More;
 use Test::Exception;
 use File::Find qw(find);
 use Perl::Tidy;
 
 # [[[ OPERATIONS ]]]
+
+BEGIN {
+    if ( $ENV{RPERL_VERBOSE} ) {
+        Test::More::diag('[[[ Beginning Generator Pre-Test Loading, RPerl Compilation System ]]]');
+    }
+    lives_and( sub { use_ok('RPerl::AfterSubclass'); }, q{use_ok('RPerl::AfterSubclass') lives} );
+    lives_and( sub { use_ok('RPerl::Parser'); }, q{use_ok('RPerl::Parser') lives} );
+    lives_and( sub { use_ok('RPerl::Generator'); }, q{use_ok('RPerl::Generator') lives} );
+    lives_and( sub { use_ok('RPerl::Compiler'); }, q{use_ok('RPerl::Compiler') lives} );
+}
 
 # TEMP DEBUGGING, ONLY LOAD SPECIFIC FILES
 #my $test_files = { './lib/RPerl/Test/VariableRetrieval/program_04_good.pl' => undef };
@@ -100,11 +107,11 @@ find(
                     $test_files->{$file_prefix . '.pm'} = undef;
                 }
                 else {
-                    RPerl::warning( 'WARNING WTE13GE02, TEST GROUP 13, CODE GENERATOR: Missing non-compiled source code reference file ' . q{'} . $file_prefix . '.pl' . q{'} . ' or '  . q{'} . $file_prefix . '.pm' . q{'} . ', not performing difference check' . "\n" );
+                    RPerl::warning( 'WARNING WTE13GE01, TEST GROUP 13, CODE GENERATOR: Missing non-compiled source code reference file ' . q{'} . $file_prefix . '.pl' . q{'} . ' or '  . q{'} . $file_prefix . '.pm' . q{'} . ', not performing difference check' . "\n" );
                 }
             }
             else {
-                RPerl::warning( 'WARNING WTE13GE03, TEST GROUP 13, CODE GENERATOR: Unrecognized pre-compiled source code reference file base ' . q{'} . $file_base . q{'} . ', not performing difference check' . "\n" );
+                RPerl::warning( 'WARNING WTE13GE02, TEST GROUP 13, CODE GENERATOR: Unrecognized pre-compiled source code reference file base ' . q{'} . $file_base . q{'} . ', not performing difference check' . "\n" );
             }
         }
         else {  # not a pre-compiled file
@@ -132,15 +139,15 @@ my integer $number_of_tests_run = 0;
 # [[[ PRIMARY RUNLOOP ]]]
 # loop up to 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
 #foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
-#for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
+for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
 #for my $mode_id ( 2 ) {    # CPPOPS_CPPTYPES ONLY
-for my $mode_id ( 0 , 2 ) {    # PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
+#for my $mode_id ( 0 , 2 ) {    # PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
 #    RPerl::diag("in 13_generate.t, top of for() loop, have \$mode_id = $mode_id\n");
 
 
-# START HERE: re-enable PERLOPS_PERLTYPES, carry on with 2 START HERE's in Bubble.pmc.CPPOPS_DUALTYPES
-# START HERE: re-enable PERLOPS_PERLTYPES, carry on with 2 START HERE's in Bubble.pmc.CPPOPS_DUALTYPES
-# START HERE: re-enable PERLOPS_PERLTYPES, carry on with 2 START HERE's in Bubble.pmc.CPPOPS_DUALTYPES
+# START HERE: get CPPOPS_CPPTYPES to properly skip all appropriate tests, carry on with START HERE in Bubble.pmc.CPPOPS_DUALTYPES
+# START HERE: get CPPOPS_CPPTYPES to properly skip all appropriate tests, carry on with START HERE in Bubble.pmc.CPPOPS_DUALTYPES
+# START HERE: get CPPOPS_CPPTYPES to properly skip all appropriate tests, carry on with START HERE in Bubble.pmc.CPPOPS_DUALTYPES
 
 
     # [[[ MODE SETUP ]]]
@@ -149,13 +156,13 @@ for my $mode_id ( 0 , 2 ) {    # PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
     my $types               = $mode->{types};
     my string $mode_tagline = $ops . 'OPS_' . $types . 'TYPES';
     if ( $ENV{RPERL_VERBOSE} ) {
-        Test::More::diag( '[[[ Beginning RPerl Generator Tests, ' . $ops . ' operations and ' . $types . ' data types' . ' ]]]' );
+        Test::More::diag( '[[[ Beginning Generator Tests, RPerl Compilation System, ' . $ops . ' operations and ' . $types . ' data types' . ' ]]]' );
     }
 
     lives_ok( sub { rperltypes::types_enable($types) }, q{mode '} . $ops . ' operations and ' . $types . ' data types' . q{' enabled} );
     $number_of_tests_run++;
 
-    foreach my $test_file ( sort keys %{$test_files} ) {
+    TEST_FILE_LOOP: foreach my $test_file ( sort keys %{$test_files} ) {
         $reference_file_name_group = {};
 #        RPerl::diag( 'in 13_generate.t, have $test_file = ' . $test_file . "\n" );
 
@@ -317,9 +324,8 @@ for my $mode_id ( 0 , 2 ) {    # PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
                         if (( not -e $test_file_reference ) or ( not -f $test_file_reference ) or ( not -T $test_file_reference )) {
                             # source code generated
                             if ((exists $source_group->{$suffix_key}) and (defined $source_group->{$suffix_key}) and ($source_group->{$suffix_key} ne q{})) {
-                                RPerl::warning( 'WARNING WTE13GE00, TEST GROUP 13, CODE GENERATOR: Missing or invalid pre-compiled source code reference file ' . q{'} . $test_file_reference . q{'} . ', not performing difference check' . "\n" );
-                                $perform_diff_check = 0;    # no diff check, at least one reference file missing
-                                last;
+                                ok( 1, 'Program or module is missing a pre-compiled reference file, no diff check, skipped:' . (q{ } x 2) . $test_file );
+                                next TEST_FILE_LOOP;
                             }
                             
                             # source code not generated, ref file does not exist, okay to skip
@@ -386,7 +392,7 @@ for my $mode_id ( 0 , 2 ) {    # PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
             else {
 #                RPerl::diag( 'in 13_generate.t, have $test_file NOT named *Bad* or *bad*' . "\n" );
                 if ( $EVAL_ERROR =~ /Can't\slocate\sobject\smethod\s"ast_to_\w*__generate"\svia\spackage/xms ) {
-                    RPerl::warning( 'WARNING WTE13GE01, TEST GROUP 13, CODE GENERATOR: Missing code generation method, received error message...' . "\n"
+                    RPerl::warning( 'WARNING WTE13GE00, TEST GROUP 13, CODE GENERATOR: Missing code generation method, received error message...' . "\n"
                             . $EVAL_ERROR
                             . "\n" );
                 }

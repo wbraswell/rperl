@@ -15,12 +15,12 @@ use English qw(-no_match_vars);
 
 BEGIN {
     if ( $ENV{RPERL_VERBOSE} ) {
-        diag('[[[ Beginning Inline::CPP Pre-Test Loading ]]]');
+        Test::More::diag('[[[ Beginning Inline::CPP Pre-Test Loading ]]]');
     }
 }
 
 if ( $ENV{RPERL_VERBOSE} ) {
-    diag('[[[ Beginning Entirety Of Tests From The Inline::CPP POD ]]]');
+    Test::More::diag('[[[ Beginning Entirety Of Tests From The Inline::CPP POD ]]]');
 }
 
 # Inline::CPP examples from:  http://search.cpan.org/~davido/Inline-CPP-0.44/lib/Inline/CPP.pod

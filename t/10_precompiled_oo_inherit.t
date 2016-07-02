@@ -1,9 +1,13 @@
 #!/usr/bin/perl
 
+# NEED FIX: Use of uninitialized value $type in hash element at (eval 1630) line 30. ...etc
+# NEED FIX: Subroutine RPerl::Algorithm::inherited__Algorithm redefined at /usr/lib/perl/5.18/DynaLoader.pm line 207. ...etc
+
 # suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s),
 # also 'WARNING WCOCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package' due to RPerl/Test/*/*Bad*.pm & RPerl/Test/*/*bad*.pl
 BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 
+# [[[ HEADER ]]]
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
@@ -13,7 +17,7 @@ our $VERSION = 0.005_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(RequireCheckingReturnValueOfEval)  ## SYSTEM DEFAULT 4: allow eval() test code blocks
 
-use Test::More tests => 250;
+use Test::More tests => 251;
 use Test::Exception;
 use RPerl::Test;
 use File::Copy;
@@ -21,26 +25,29 @@ use Module::Refresh;
 
 BEGIN {
     if ( $ENV{RPERL_VERBOSE} ) {
-        diag('[[[ Beginning Object-Oriented Inheritance Pre-Test Loading, RPerl Type System ]]]');
+        Test::More::diag('[[[ Beginning Class Inheritance Pre-Test Loading, RPerl Object System ]]]');
     }
     lives_and( sub { use_ok('RPerl::AfterSubclass'); }, q{use_ok('RPerl::AfterSubclass') lives} );
+    lives_and( sub { use_ok('RPerl::Compiler'); }, q{use_ok('RPerl::Compiler') lives} );
+
+    # NEED ANSWER: why does all this code have to be inside a BEGIN block???
 
     # NEED FIX: duplicate code, is it redundant to do this here and also at the top of the main for() loop?
-    my string $bubble_cpp_filename = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.cpp';
-    my string $bubble_h_filename   = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.h';
-    my string $bubble_pmc_filename = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.pmc';
+    my string $bubble_cpp_filename = RPerl::Compiler::post_processor__absolute_path_delete( $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.cpp' );
+    my string $bubble_h_filename   = RPerl::Compiler::post_processor__absolute_path_delete( $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.h' );
+    my string $bubble_pmc_filename = RPerl::Compiler::post_processor__absolute_path_delete( $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.pmc' );
 
-    my string $sort_cpp_filename = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort.cpp';
-    my string $sort_h_filename   = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort.h';
-    my string $sort_pmc_filename = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort.pmc';
+    my string $sort_cpp_filename = RPerl::Compiler::post_processor__absolute_path_delete( $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort.cpp' );
+    my string $sort_h_filename   = RPerl::Compiler::post_processor__absolute_path_delete( $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort.h' );
+    my string $sort_pmc_filename = RPerl::Compiler::post_processor__absolute_path_delete( $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort.pmc' );
 
-    my string $inefficient_cpp_filename = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Inefficient.cpp';
-    my string $inefficient_h_filename   = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Inefficient.h';
-    my string $inefficient_pmc_filename = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Inefficient.pmc';
+    my string $inefficient_cpp_filename = RPerl::Compiler::post_processor__absolute_path_delete( $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Inefficient.cpp' );
+    my string $inefficient_h_filename   = RPerl::Compiler::post_processor__absolute_path_delete( $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Inefficient.h' );
+    my string $inefficient_pmc_filename = RPerl::Compiler::post_processor__absolute_path_delete( $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Inefficient.pmc' );
 
-    my string $algorithm_cpp_filename = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm.cpp';
-    my string $algorithm_h_filename   = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm.h';
-    my string $algorithm_pmc_filename = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm.pmc';
+    my string $algorithm_cpp_filename = RPerl::Compiler::post_processor__absolute_path_delete( $RPerl::INCLUDE_PATH . '/RPerl/Algorithm.cpp' );
+    my string $algorithm_h_filename   = RPerl::Compiler::post_processor__absolute_path_delete( $RPerl::INCLUDE_PATH . '/RPerl/Algorithm.h' );
+    my string $algorithm_pmc_filename = RPerl::Compiler::post_processor__absolute_path_delete( $RPerl::INCLUDE_PATH . '/RPerl/Algorithm.pmc' );
 
     #    RPerl::diag('in 10_precompiled_oo_inherit.t, have $bubble_pmc_filename = ' . $bubble_pmc_filename . "\n");
 
@@ -72,10 +79,21 @@ BEGIN {
         }
     }
 
+
+
+
     # DEV NOTE, CORRELATION #rp15: suppress 'Too late to run INIT block' at run-time loading via require or eval
     lives_and( sub { require_ok('RPerl::Algorithm::Sort::Bubble'); }, q{require_ok('RPerl::Algorithm::Sort::Bubble') lives} );
     lives_and( sub { require_ok('RPerl::Algorithm::Inefficient'); },  q{require_ok('RPerl::Algorithm::Inefficient') lives} );
 }
+
+
+
+
+
+
+
+
 
 my string $bubble_pm_filename      = 'RPerl/Algorithm/Sort/Bubble.pm';
 my string $sort_pm_filename        = 'RPerl/Algorithm/Sort.pm';
@@ -84,32 +102,32 @@ my string $algorithm_pm_filename   = 'RPerl/Algorithm.pm';
 my object $refresher               = Module::Refresh->new();
 
 # NEED FIX: duplicate code
-my string $bubble_cpp_filename        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.cpp';
+my string $bubble_cpp_filename        = RPerl::Compiler::post_processor__absolute_path_delete( $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.cpp' );
 my string $bubble_cpp_filename_manual = $bubble_cpp_filename . '.CPPOPS_DUALTYPES';
-my string $bubble_h_filename          = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.h';
+my string $bubble_h_filename          = RPerl::Compiler::post_processor__absolute_path_delete( $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.h' );
 my string $bubble_h_filename_manual   = $bubble_h_filename . '.CPPOPS_DUALTYPES';
-my string $bubble_pmc_filename        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.pmc';
+my string $bubble_pmc_filename        = RPerl::Compiler::post_processor__absolute_path_delete( $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.pmc' );
 my string $bubble_pmc_filename_manual = $bubble_pmc_filename . '.CPPOPS_DUALTYPES';
 
-my string $sort_cpp_filename        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort.cpp';
+my string $sort_cpp_filename        = RPerl::Compiler::post_processor__absolute_path_delete( $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort.cpp' );
 my string $sort_cpp_filename_manual = $sort_cpp_filename . '.CPPOPS_DUALTYPES';
-my string $sort_h_filename          = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort.h';
+my string $sort_h_filename          = RPerl::Compiler::post_processor__absolute_path_delete( $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort.h' );
 my string $sort_h_filename_manual   = $sort_h_filename . '.CPPOPS_DUALTYPES';
-my string $sort_pmc_filename        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort.pmc';
+my string $sort_pmc_filename        = RPerl::Compiler::post_processor__absolute_path_delete( $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort.pmc' );
 my string $sort_pmc_filename_manual = $sort_pmc_filename . '.CPPOPS_DUALTYPES';
 
-my string $inefficient_cpp_filename        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Inefficient.cpp';
+my string $inefficient_cpp_filename        = RPerl::Compiler::post_processor__absolute_path_delete( $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Inefficient.cpp' );
 my string $inefficient_cpp_filename_manual = $inefficient_cpp_filename . '.CPPOPS_DUALTYPES';
-my string $inefficient_h_filename          = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Inefficient.h';
+my string $inefficient_h_filename          = RPerl::Compiler::post_processor__absolute_path_delete( $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Inefficient.h' );
 my string $inefficient_h_filename_manual   = $inefficient_h_filename . '.CPPOPS_DUALTYPES';
-my string $inefficient_pmc_filename        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Inefficient.pmc';
+my string $inefficient_pmc_filename        = RPerl::Compiler::post_processor__absolute_path_delete( $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Inefficient.pmc' );
 my string $inefficient_pmc_filename_manual = $inefficient_pmc_filename . '.CPPOPS_DUALTYPES';
 
-my string $algorithm_cpp_filename        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm.cpp';
+my string $algorithm_cpp_filename        = RPerl::Compiler::post_processor__absolute_path_delete( $RPerl::INCLUDE_PATH . '/RPerl/Algorithm.cpp' );
 my string $algorithm_cpp_filename_manual = $algorithm_cpp_filename . '.CPPOPS_DUALTYPES';
-my string $algorithm_h_filename          = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm.h';
+my string $algorithm_h_filename          = RPerl::Compiler::post_processor__absolute_path_delete( $RPerl::INCLUDE_PATH . '/RPerl/Algorithm.h' );
 my string $algorithm_h_filename_manual   = $algorithm_h_filename . '.CPPOPS_DUALTYPES';
-my string $algorithm_pmc_filename        = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm.pmc';
+my string $algorithm_pmc_filename        = RPerl::Compiler::post_processor__absolute_path_delete( $RPerl::INCLUDE_PATH . '/RPerl/Algorithm.pmc' );
 my string $algorithm_pmc_filename_manual = $algorithm_pmc_filename . '.CPPOPS_DUALTYPES';
 
 #RPerl::diag('in 10_precompiled_oo_inherit.t, have $bubble_pmc_filename = ' . $bubble_pmc_filename . "\n");
@@ -131,7 +149,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     my $types                   = $mode->{types};
     my string $mode_tagline     = $ops . 'OPS_' . $types . 'TYPES';
     if ( $ENV{RPERL_VERBOSE} ) {
-        Test::More::diag( '[[[ Beginning RPerl Pre-Compiled Sort Tests, ' . $ops . ' operations and ' . $types . ' data types' . ' ]]]' );
+        Test::More::diag( '[[[ Beginning Class Inheritance Tests, RPerl Object System, ' . $ops . ' operations and ' . $types . ' data types' . ' ]]]' );
     }
 
     lives_ok( sub { rperltypes::types_enable($types) }, q{Mode '} . $ops . ' operations and ' . $types . ' data types' . q{' enabled in CPP header file(s)} );

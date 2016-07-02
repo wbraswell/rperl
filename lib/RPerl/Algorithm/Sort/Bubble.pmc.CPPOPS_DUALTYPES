@@ -88,9 +88,9 @@ $tmp_debug .= '[[[ END DEBUG ]]]' . "\n";
 =cut
 #die $tmp_debug;
 
-# START HERE: ensure paths are working in these PMC files; edit PMC template; edit other PMCs (physicsperl, etc)
-# START HERE: ensure paths are working in these PMC files; edit PMC template; edit other PMCs (physicsperl, etc)
-# START HERE: ensure paths are working in these PMC files; edit PMC template; edit other PMCs (physicsperl, etc)
+# START HERE: edit other pre-existing PMCs (physicsperl, mathperl) to use $eval_string format below and sub shims format above
+# START HERE: edit other pre-existing PMCs (physicsperl, mathperl) to use $eval_string format below and sub shims format above
+# START HERE: edit other pre-existing PMCs (physicsperl, mathperl) to use $eval_string format below and sub shims format above
 
         my $eval_string = <<"EOF";
 package main;

@@ -8,7 +8,7 @@ use Test::Exception;
 
 BEGIN {
     if ( $ENV{RPERL_VERBOSE} ) {
-        diag("[[[ Beginning Dependency Tests ]]]");
+        Test::more::diag("[[[ Beginning Dependency Tests ]]]");
     }
 }
 

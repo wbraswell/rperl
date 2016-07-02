@@ -809,7 +809,8 @@ our string $post_processor_cpp__comments_whitespace_delete = sub {
 };
 
 # remove unnecessary absolute paths
-our string $post_processor__absolute_path_delete = sub {
+#our string $post_processor__absolute_path_delete = sub {  # DEV NOTE: must have non-typed sub header to be called from BEGIN block in t/10_precompiled_oo_inherit.t
+sub post_processor__absolute_path_delete {
     ( my string $input_path ) = @_;
 #    RPerl::diag( 'in Compiler::post_processor__absolute_path_delete(), received $input_path = ' . $input_path . "\n" );
 
@@ -823,7 +824,7 @@ our string $post_processor__absolute_path_delete = sub {
     else {
         return $input_path;
     }
-};
+}
 
 # generate PMC file
 our string $post_processor_cpp__pmc_generate = sub {

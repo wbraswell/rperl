@@ -16,11 +16,11 @@ use English qw(-no_match_vars);
 
 BEGIN {
     if ( $ENV{RPERL_VERBOSE} ) {
-        diag('[[[ Beginning Inline::C Pre-Test Loading ]]]');
+        Test::More::diag('[[[ Beginning Inline::C Pre-Test Loading ]]]');
     }
 }
 if ( $ENV{RPERL_VERBOSE} ) {
-    diag('[[[ Beginning Selection Of Tests From The Inline::C Cookbook ]]]');
+    Test::More::diag('[[[ Beginning Selection Of Tests From The Inline::C Cookbook ]]]');
 }
 
 # Inline::C examples from:  http://search.cpan.org/~sisyphus/Inline-0.53/C/C-Cookbook.pod

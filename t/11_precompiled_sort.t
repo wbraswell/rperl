@@ -22,7 +22,7 @@ use Module::Refresh;
 
 BEGIN {
     if ( $ENV{RPERL_VERBOSE} ) {
-        diag('[[[ Beginning Pre-Compiled Sort Pre-Test Loading, RPerl Type System ]]]');
+        diag('[[[ Beginning Pre-Compiled Sort Pre-Test Loading, RPerl Compilation System ]]]');
     }
     lives_and( sub { use_ok('RPerl'); }, q{use_ok('RPerl') lives} );
 
@@ -116,7 +116,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     my $types                   = $mode->{types};
     my string $mode_tagline     = $ops . 'OPS_' . $types . 'TYPES';
     if ( $ENV{RPERL_VERBOSE} ) {
-        Test::More::diag( '[[[ Beginning RPerl Pre-Compiled Sort Tests, ' . $ops . ' operations and ' . $types . ' data types' . ' ]]]' );
+        Test::More::diag( '[[[ Beginning Pre-Compiled Sort Tests, RPerl Compilation System, ' . $ops . ' operations and ' . $types . ' data types' . ' ]]]' );
     }
 
     lives_ok( sub { rperltypes::types_enable($types) }, q{Mode '} . $ops . ' operations and ' . $types . ' data types' . q{' enabled in CPP header file(s)} );
