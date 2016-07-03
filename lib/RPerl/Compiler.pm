@@ -847,6 +847,7 @@ our string $post_processor_cpp__pmc_generate = sub {
     # DEV NOTE: only generate PMC output file in dynamic (default) subcompile mode
     if ( $modes->{subcompile} eq 'DYNAMIC' ) {
         if ( ( exists $source_group->{PMC} ) and ( defined $source_group->{PMC} ) and ( $source_group->{PMC} ne q{} ) ) {
+#            RPerl::diag( q{in Compiler::save_source_files(), have $source_group = } . Dumper($source_group) . "\n" );
             die 'ERROR ECOCOFI01, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Received non-empty PMC source, dying' . "\n";
         }
 

@@ -9,7 +9,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.006_100;
+our $VERSION = 0.007_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -81,10 +81,13 @@ find(
     $RPerl::INCLUDE_PATH . '/RPerl/Test'
 );
 
+my integer $number_of_test_files = scalar keys %{$test_files};
+
 #RPerl::diag( 'in 12_parse.t, have $test_files = ' . "\n" . Dumper($test_files) . "\n" );
 #RPerl::diag( 'in 12_parse.t, have sort keys %{$test_files} = ' . "\n" . Dumper(sort keys %{$test_files}) . "\n" );
+#RPerl::diag( 'in 12_parse.t, have $number_of_test_files = ' . $number_of_test_files . "\n" );
 
-plan tests => (scalar keys %{$test_files});
+plan tests => $number_of_test_files;
 
 if ( $ENV{RPERL_VERBOSE} ) {
     Test::More::diag( '[[[ Beginning Parser Tests, RPerl Compilation System' . ' ]]]' );

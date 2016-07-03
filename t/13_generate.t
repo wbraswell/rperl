@@ -10,7 +10,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.008_200;
+our $VERSION = 0.009_100;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -21,6 +21,9 @@ our $VERSION = 0.008_200;
 
 # [[[ INCLUDES ]]]
 use RPerl::Test;
+use RPerl::Parser;
+use RPerl::Generator;
+use RPerl::Compiler;
 use Test::More;
 use Test::Exception;
 use File::Find qw(find);
@@ -28,14 +31,21 @@ use Perl::Tidy;
 
 # [[[ OPERATIONS ]]]
 
+# DEV NOTE: if set to true, will speed up tests where no pre-compiled reference files are found
+my boolean $cpp_skip_parse_gen_if_no_ref_files = 1;
+
 BEGIN {
     if ( $ENV{RPERL_VERBOSE} ) {
         Test::More::diag('[[[ Beginning Generator Pre-Test Loading, RPerl Compilation System ]]]');
     }
-    lives_and( sub { use_ok('RPerl::AfterSubclass'); }, q{use_ok('RPerl::AfterSubclass') lives} );
-    lives_and( sub { use_ok('RPerl::Parser'); }, q{use_ok('RPerl::Parser') lives} );
-    lives_and( sub { use_ok('RPerl::Generator'); }, q{use_ok('RPerl::Generator') lives} );
-    lives_and( sub { use_ok('RPerl::Compiler'); }, q{use_ok('RPerl::Compiler') lives} );
+    # DEV NOTE: can't do use_ok() or require_ok() because it will place them before all other BEGIN blocks,
+    # which means we wil have 4 tests passing before we call 'plan tests',
+    # which means we will fail to have 'plan tests' first OR done_testing() last, which causes a TAP failure;
+    # must be included w/ regular 'use' operators above
+#    lives_and( sub { use_ok('RPerl::AfterSubclass'); },            q{use_ok('RPerl::AfterSubclass') lives} );
+#    lives_and( sub { use_ok('RPerl::Parser'); }, q{use_ok('RPerl::Parser') lives} );
+#    lives_and( sub { use_ok('RPerl::Generator'); }, q{use_ok('RPerl::Generator') lives} );
+#    lives_and( sub { use_ok('RPerl::Compiler'); }, q{use_ok('RPerl::Compiler') lives} );
 }
 
 # TEMP DEBUGGING, ONLY LOAD SPECIFIC FILES
@@ -125,7 +135,14 @@ find(
 
 #=cut
 
+my integer $number_of_test_files = scalar keys %{$test_files};
+
 #RPerl::diag( 'in 13_generate.t, have $test_files = ' . "\n" . Dumper($test_files) . "\n" );
+#RPerl::diag( 'in 13_generate.t, have sort keys %{$test_files} = ' . "\n" . Dumper(sort keys %{$test_files}) . "\n" );
+#RPerl::diag( 'in 13_generate.t, before primary runloop, have $number_of_test_files = ' . $number_of_test_files . "\n" );
+
+#plan tests => $number_of_test_files + 1;         # (PERLOPS_PERLTYPES or  CPPOPS_CPPTYPES) + lives_ok(rperltypes::types_enable())
+plan tests => (($number_of_test_files + 1) * 2);  # (PERLOPS_PERLTYPES and CPPOPS_CPPTYPES tests) + lives_ok(rperltypes::types_enable())
 
 my string_hashref $modes;
 my hashref_arrayref $output_file_name_groups_tmp;
@@ -135,8 +152,7 @@ my string $test_file_reference;
 my boolean $perform_diff_check;
 my unknown $eval_return_value;
 my integer $diff_line;
-my integer $number_of_tests_run = 4;  # initialize to 4 for use_ok() calls in BEGIN block above
-
+#my integer $number_of_tests_run = 0;
 
 # [[[ PRIMARY RUNLOOP ]]]
 # [[[ PRIMARY RUNLOOP ]]]
@@ -144,19 +160,21 @@ my integer $number_of_tests_run = 4;  # initialize to 4 for use_ok() calls in BE
 
 # loop up to 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
 #foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
-for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
+#for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
 #for my $mode_id ( 2 ) {    # CPPOPS_CPPTYPES ONLY
-#for my $mode_id ( 0 , 2 ) {    # PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
+for my $mode_id ( 0 , 2 ) {    # PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
 #    RPerl::diag("in 13_generate.t, top of for() loop, have \$mode_id = $mode_id\n");
+#    $number_of_test_files = scalar keys %{$test_files};
+#    RPerl::diag( 'in 13_generate.t, top of primary runloop, have $number_of_test_files = ' . $number_of_test_files . "\n" );
+
 
 
 # START HERE: get CPPOPS_CPPTYPES to properly skip all appropriate tests, carry on with START HERE in Bubble.pmc.CPPOPS_DUALTYPES
 # START HERE: get CPPOPS_CPPTYPES to properly skip all appropriate tests, carry on with START HERE in Bubble.pmc.CPPOPS_DUALTYPES
 # START HERE: get CPPOPS_CPPTYPES to properly skip all appropriate tests, carry on with START HERE in Bubble.pmc.CPPOPS_DUALTYPES
 
-# ALSO: add Test::More::diag()s to t/21?
-# ALSO: add Test::More::diag()s to t/21?
-# ALSO: add Test::More::diag()s to t/21?
+
+
 
     # [[[ MODE SETUP ]]]
     my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
@@ -168,7 +186,7 @@ for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
     }
 
     lives_ok( sub { rperltypes::types_enable($types) }, q{mode '} . $ops . ' operations and ' . $types . ' data types' . q{' enabled} );
-    $number_of_tests_run++;
+#    $number_of_tests_run++;
 
     # [[[ SECONDARY RUNLOOP ]]]
     # [[[ SECONDARY RUNLOOP ]]]
@@ -176,7 +194,9 @@ for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
 
     TEST_FILE_LOOP: foreach my $test_file ( sort keys %{$test_files} ) {
         $reference_file_name_group = {};
-#        RPerl::diag( 'in 13_generate.t, have $test_file = ' . $test_file . "\n" );
+#        RPerl::diag( 'in 13_generate.t, top of secondary runloop, have $test_file = ' . $test_file . "\n" );
+#        $number_of_test_files = scalar keys %{$test_files};
+#        RPerl::diag( 'in 13_generate.t, top of secondary runloop, have $number_of_test_files = ' . $number_of_test_files . "\n" );
 
         $modes = {
             dependencies => 'ON',
@@ -234,6 +254,17 @@ for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
                 }
                 elsif ($suffix_key eq 'CPP') {
                     $test_file_reference = $output_file_name_group->{$suffix_key} . q{.} . $ops . 'OPS_' . $types . 'TYPES';
+
+                    if (( not -e $test_file_reference ) or ( not -f $test_file_reference ) or ( not -T $test_file_reference )) {
+                        # CPP ops mode will always require some CPP output file, regardless of H or PMC output file(s), skip before reaching parse or generate below
+                        if ($cpp_skip_parse_gen_if_no_ref_files) { 
+                            ok( 1, 'Program or module is missing a pre-compiled reference file, no diff check, skipped early:' . (q{ } x 2) . $test_file );
+#                            $number_of_tests_run++;
+                            next TEST_FILE_LOOP;
+                        }
+                        # CPP reference file is missing, but go forward with parse & generate anyway, just don't try to perform a diff check
+                        $perform_diff_check = 0;
+                    }
                 }
                 elsif ($suffix_key eq 'EXE') {
 #                    $test_file_reference = $output_file_name_group->{$suffix_key} . q{.cpp.} . $ops . 'OPS_' . $types . 'TYPES';
@@ -256,16 +287,11 @@ for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
             }
         }
 
-        # NEED UPGRADE: remove this skip-if-no-diff-check once all CPPOPS_CPPTYPES code generation is complete
-        if (not $perform_diff_check) {
-            next;
-        }
-
         # [[[ PARSE ]]]
         $eval_return_value = eval { RPerl::Parser::rperl_to_ast__parse($test_file); };
         if ( not( ( defined $eval_return_value ) and $eval_return_value ) ) {
             ok( 0, 'Program or module parses with errors, code generation not reached, test aborted:' . (q{ } x 2) . $test_file );
-            $number_of_tests_run++;
+#            $number_of_tests_run++;
             next;
         }
         my object $rperl_ast = $eval_return_value;
@@ -303,10 +329,12 @@ for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
                 # skip test if dummy source code found
                 if ( not dummy_source_code_find($source_group) ) {
                     ok( 0, 'Program or module generates with errors:' . (q{ } x 21) . $test_file );
-                    $number_of_tests_run++;
+#                    $number_of_tests_run++;
                 }
-                else {
+                else { 
+                    ok( 1, 'Program or module generates with errors, unfinished C++ generator called, test skipped:' . (q{ } x 3) . $test_file );
 #                    RPerl::diag( 'in 13_generate.t, DUMMY SOURCE CODE found, from $source_group:' . "\n" . Dumper($source_group) . "\n" );
+#                    $number_of_tests_run++;
                 }
             }
 
@@ -326,7 +354,11 @@ for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
 
                     foreach $suffix_key ( sort keys %{ $reference_file_name_group } ) {
 #                        RPerl::diag( 'in 13_generate.t, top of suffix loop, have $suffix_key = ' . $suffix_key . "\n" );
+#                        $number_of_test_files = scalar keys %{$test_files};
+#                        RPerl::diag( 'in 13_generate.t, top of tertiary runloop, have $number_of_test_files = ' . $number_of_test_files . "\n" );
+
                         $suffix_key_saved = $suffix_key;
+
                         if ( $ops eq 'PERL' ) {    # single reference file; use original Perl source file as reference for diff check
                             $test_file_reference = $test_file;
                         }
@@ -356,7 +388,9 @@ for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
 #                            RPerl::diag( 'in 13_generate.t, near bottom of suffix loop, have $diff_line = ' . $diff_line . ', $suffix_key = ' . $suffix_key . "\n" );
                             last;
                         }
-#                        RPerl::diag( 'in 13_generate.t, bottom of suffix loop, have $suffix_key = ' . $suffix_key . "\n" );
+#                        RPerl::diag( 'in 13_generate.t, bottom of tertiary runloop, have $suffix_key = ' . $suffix_key . "\n" );
+#                        $number_of_test_files = scalar keys %{$test_files};
+#                        RPerl::diag( 'in 13_generate.t, bottom of tertiary runloop, have $number_of_test_files = ' . $number_of_test_files . "\n" );
                     }
                     # NEED ANSWER: why is $suffix_key cleared when the loop is completed?
                     $suffix_key = $suffix_key_saved;
@@ -365,14 +399,16 @@ for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
 
                     if ( $diff_line == 0 ) {
                         ok( 1, 'Program or module generates without errors, yes diff check:' . (q{ } x 2) . $test_file );
-                        $number_of_tests_run++;
+#                        $number_of_tests_run++;
                     }
                     elsif ( $diff_line > 0 ) {
                         ok( 0, 'Program or module generates without errors, yes diff check, output file ' . $output_file_name_group->{$suffix_key} . ' and reference file ' . $test_file_reference . ' differ at line ' . $diff_line );
-                        $number_of_tests_run++;
+#                        $number_of_tests_run++;
                     }
                     else {    # $diff_line < 0
-                              # ignore __DUMMY_SOURCE_CODE results, indicated by $diff_line < 0
+                              # skip __DUMMY_SOURCE_CODE results, indicated by $diff_line < 0
+                        ok( 1, 'Program or module generates without errors, yes diff check, unfinished C++ generator called, test skipped:' . (q{ } x 3) . $test_file );
+#                        $number_of_tests_run++;
 #                        RPerl::diag( 'in 13_generate.t, DUMMY SOURCE CODE found in diff check' . "\n" );
                     }
                 }
@@ -382,9 +418,13 @@ for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
                     # skip test if dummy source code found
                     if ( not dummy_source_code_find($source_group) ) {
                         ok( 1, 'Program or module generates without errors, no diff check:' . (q{ } x 3) . $test_file );
-                        $number_of_tests_run++;
+#                        $number_of_tests_run++;
                     }
-#                    else { RPerl::diag( 'in 13_generate.t, DUMMY SOURCE CODE found, from $source_group:' . "\n" . Dumper($source_group) . "\n" ); }
+                    else { 
+                        ok( 1, 'Program or module generates without errors, no diff check, unfinished C++ generator called, test skipped:' . (q{ } x 3) . $test_file );
+#                        $number_of_tests_run++;
+#                        RPerl::diag( 'in 13_generate.t, DUMMY SOURCE CODE found, from $source_group:' . "\n" . Dumper($source_group) . "\n" );
+                    }
                 }
             }
         }
@@ -396,7 +436,8 @@ for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
             {
 #                RPerl::diag( 'in 13_generate.t, have $test_file named *Bad* or *bad*' . "\n" );
                 my $missing_errors = [];
-                if ( defined $test_files->{$test_file}->{errors} ) {
+                if ((exists $test_files->{$test_file}) and (defined $test_files->{$test_file}) and 
+                    (exists $test_files->{$test_file}->{errors}) and (defined $test_files->{$test_file}->{errors})) {
                     foreach my $error ( @{ $test_files->{$test_file}->{errors} } ) {
                         if ( $EVAL_ERROR !~ /\Q$error\E/xms ) {
                             push @{$missing_errors}, q{Error message '} . $error . q{' expected, but not found};
@@ -404,7 +445,7 @@ for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
                     }
                 }
                 ok( ( ( scalar @{$missing_errors} ) == 0 ), 'Program or module generates with expected error(s):' . (q{ } x 10) . $test_file );
-                $number_of_tests_run++;
+#                $number_of_tests_run++;
             }
             else {
 #                RPerl::diag( 'in 13_generate.t, have $test_file NOT named *Bad* or *bad*' . "\n" );
@@ -412,17 +453,25 @@ for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
                     RPerl::warning( 'WARNING WTE13GE00, TEST GROUP 13, CODE GENERATOR: Missing code generation method, received error message...' . "\n"
                             . $EVAL_ERROR
                             . "\n" );
+                    ok( 0, 'Program or module generates without errors, missing code generator:' . (q{ } x 1) . $test_file );
+#                    $number_of_tests_run++;
                 }
                 else {
                     ok( 0, 'Program or module generates without errors:' . (q{ } x 18) . $test_file );
-                    $number_of_tests_run++;
+#                    $number_of_tests_run++;
                 }
             }
         }
 #        RPerl::diag( ( '-' x 100 ) . "\n" );
 #        die 'TMP DEBUG';
+        $number_of_test_files = scalar keys %{$test_files};
+#        RPerl::diag( 'in 13_generate.t, bottom of secondary runloop, have $number_of_test_files = ' . $number_of_test_files . "\n" );
     }
 #    RPerl::diag( ( '=' x 100 ) . "\n" );
+
+    $number_of_test_files = scalar keys %{$test_files};
+#    RPerl::diag( 'in 13_generate.t, bottom of primary runloop, have $number_of_test_files = ' . $number_of_test_files . "\n" );
 }
 
-done_testing($number_of_tests_run);
+done_testing();
+#done_testing($number_of_tests_run);

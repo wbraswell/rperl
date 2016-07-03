@@ -62,7 +62,7 @@ sub cpp_load {
 #print 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), have \$tmp_include_path = ' . $tmp_include_path . "\n";
 #print '[[[ DEBUG DEBUG DEBUG ]]]' . "\n";
 
-=DISABLE
+=DISABLE_TMP_DEBUG
 my $file_path = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.cpp';
 my $tmp_debug = '[[[ BEGIN DEBUG ]]]' . "\n";
 $tmp_debug .= 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), have $file_path = ' . $file_path . "\n";
@@ -88,9 +88,9 @@ $tmp_debug .= '[[[ END DEBUG ]]]' . "\n";
 =cut
 #die $tmp_debug;
 
-# START HERE: edit other pre-existing PMCs (physicsperl, mathperl) to use $eval_string format below and sub shims format above
-# START HERE: edit other pre-existing PMCs (physicsperl, mathperl) to use $eval_string format below and sub shims format above
-# START HERE: edit other pre-existing PMCs (physicsperl, mathperl) to use $eval_string format below and sub shims format above
+# START HERE: edit remaining pre-existing PMCs (mathperl, rperl data types) to use $eval_string format below and sub shims format above
+# START HERE: edit remaining pre-existing PMCs (mathperl, rperl data types) to use $eval_string format below and sub shims format above
+# START HERE: edit remaining pre-existing PMCs (mathperl, rperl data types) to use $eval_string format below and sub shims format above
 
         my $eval_string = <<"EOF";
 package main;
