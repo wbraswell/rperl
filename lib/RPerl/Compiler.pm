@@ -462,7 +462,7 @@ our void $save_source_files = sub {
     if ( $modes->{ops} eq 'CPP' ) {
         RPerl::verbose('SAVE  PHASE 0:      Final file modifications...    ');
 
-        $source_group->{CPP} = post_processor_cpp__header_path( $source_group->{CPP}, $file_name_group->{H} );
+        $source_group->{CPP} = post_processor_cpp__header_or_cpp_path( $source_group->{CPP}, $file_name_group->{H} );
 
         # MODULE POST-PROCESSING
         if ( $modes->{_input_file_name} =~ /[.]pm$/xms ) {
@@ -559,33 +559,49 @@ our void $save_source_files = sub {
     RPerl::verbose( ' done.' . "\n" );
 };
 
-# replace __NEED_HEADER_PATH with proper C++ header path
-our string $post_processor_cpp__header_path = sub {
-    ( my string $source_CPP, my string $file_name_group_H ) = @_;
-    my string $h_file_path_nolib = $file_name_group_H;
+# replace __NEED_HEADER_PATH or __NEED_CPP_PATH with proper C++ header path
+our string $post_processor_cpp__header_or_cpp_path = sub {
+    ( my string $source_CPP, my string $file_path ) = @_;
 
     # remove leading '.\' or './' if present
-    if (   ( ( $OSNAME eq 'MSWin32' ) and ( ( substr $h_file_path_nolib, 0, 2 ) eq q{.\\} ) )
-        or ( ( substr $h_file_path_nolib, 0, 2 ) eq './' ) )
-    {
-        substr $h_file_path_nolib, 0, 2, q{};
+    if ( $OSNAME eq 'MSWin32' ) {
+        if ((substr $file_path, 0, 2 ) eq q{.\\} ) {
+            substr $file_path, 0, 2, q{};
+        }
+    }
+    else {
+        if ( ( substr $file_path, 0, 2 ) eq './' ) {
+            substr $file_path, 0, 2, q{};
+        }
     }
 
-    $h_file_path_nolib = post_processor_cpp__lib_path_delete($h_file_path_nolib);
+    $file_path = post_processor_cpp__lib_path_delete($file_path);
 
     # DEV NOTE, CORRELATION #rp33: deferred, finally set path to H module header file in CPP module file
-    $source_CPP =~ s/__NEED_HEADER_PATH/$h_file_path_nolib/gxms;
+    $source_CPP =~ s/__NEED_HEADER_PATH/$file_path/gxms;
+    $source_CPP =~ s/__NEED_CPP_PATH/$file_path/gxms;
     return $source_CPP;
 };
 
-# remove leading 'lib/' if present, because -Ilib enabled in RPerl/Inline.pm
+# remove leading 'lib/' or 'blib/lib/' if present, because -Ilib or -Iblib/lib enabled in RPerl/Inline.pm
 our string $post_processor_cpp__lib_path_delete = sub {
     ( my string $path ) = @_;
 
-    if (   ( ( $OSNAME eq 'MSWin32' ) and ( ( substr $path, 0, 4 ) eq 'lib\\' ) )
-        or ( ( substr $path, 0, 4 ) eq 'lib/' ) )
-    {
-        substr $path, 0, 4, q{};
+    if ( ( $OSNAME eq 'MSWin32' ) ) {
+        if ((substr $path, 0, 4) eq 'lib\\') {
+            substr $path, 0, 4, q{};
+        }
+        elsif ((substr $path, 0, 9 ) eq 'blib\\lib\\') {
+            substr $path, 0, 9, q{};
+        }
+    }
+    else {
+        if (( substr $path, 0, 4 ) eq 'lib/' ) {
+            substr $path, 0, 4, q{};
+        }
+        elsif (( substr $path, 0, 9 ) eq 'blib/lib/' ) {
+            substr $path, 0, 9, q{};
+        }
     }
     return $path;
 };

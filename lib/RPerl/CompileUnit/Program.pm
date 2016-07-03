@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Program;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_100;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit);
@@ -215,8 +215,11 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     $cpp_source_group->{CPP} .= '#include <rperlstandalone.h>' . "\n";
 
     my string $file_name_underscores = $modes->{_input_file_name};
-    $file_name_underscores =~ s/^[\/\\.]*//gxms;  # remove leading forward slashes, back slashes, and dots
+#    $file_name_underscores =~ s/^[\/\\.]*//gxms;  # remove leading forward slashes, back slashes, and dots
     substr $file_name_underscores, -3, 3, q{};  # remove trailing '.pl'
+
+    $file_name_underscores = RPerl::Compiler::post_processor_cpp__header_or_cpp_path('__NEED_CPP_PATH', $file_name_underscores);
+
     $file_name_underscores =~ s/[\/\\]/__/gxms;  # replace forward slashes and back slashes with double-underscores
     $file_name_underscores =~ s/[.-]/_/gxms;  # replace dots and hyphens with underscores
     $cpp_source_group->{CPP} .= '#ifndef __CPP__INCLUDED__' . $file_name_underscores . '_cpp' . "\n";

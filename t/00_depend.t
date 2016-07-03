@@ -3,7 +3,7 @@
 # [[[ HEADER ]]]
 use strict;
 use warnings;
-our $VERSION = 0.003_000;
+our $VERSION = 0.003_001;
 
 # [[[ INCLUDES ]]]
 use Test::More tests => 20;
@@ -13,7 +13,7 @@ use Test::Exception;
 
 BEGIN {
     if ( $ENV{RPERL_VERBOSE} ) {
-        Test::more::diag("[[[ Beginning Dependency Tests ]]]");
+        Test::More::diag("[[[ Beginning Dependency Tests ]]]");
     }
 }
 

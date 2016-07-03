@@ -150,7 +150,7 @@ our boolean $dummy_source_code_find = sub {
 
 # line-by-line comparison of file contents vs string contents;
 # returns -1 __DUMMY_SOURCE_CODE found, 0 no difference, >0 line number of first difference
-our scalar_hashref $diff_check_file_vs_string = sub {
+our hashref $diff_check_file_vs_string = sub {
     ( my string $file_name_reference, my string_hashref $source_group, my string $suffix_key, my string_hashref $file_name_group, my string_hashref $modes ) = @_;
 #    RPerl::diag('in Generator->diff_check_file_vs_string(), TOP OF SUBROUTINE ' . "\n");
 #    RPerl::diag('in Generator->diff_check_file_vs_string(), received $file_name_reference = ' . $file_name_reference . "\n");
@@ -333,7 +333,7 @@ our scalar_hashref $diff_check_file_vs_string = sub {
             or die 'ERROR ECOGEDI09, RPERL GENERATOR, DIFF CHECK: Cannot close temporary AStyle-tidied file ' . q{'} . $file_name_generated_tmp . q{'} . ' after reading, ' . $OS_ERROR . ', dying' . "\n";
         
         # POST-PROCESS C++ SOURCE CODE     
-        $string_generated_tidied = RPerl::Compiler::post_processor_cpp__header_path($string_generated_tidied, $file_name_group->{H});
+        $string_generated_tidied = RPerl::Compiler::post_processor_cpp__header_or_cpp_path($string_generated_tidied, $file_name_group->{H});
 
         # discard code we are not currently checking, no extra work performed by post-processor
         my string_hashref $source_group_tmp = RPerl::Compiler::post_processor_cpp__types_change({$suffix_key => $string_generated_tidied}, $modes);
@@ -352,7 +352,7 @@ our scalar_hashref $diff_check_file_vs_string = sub {
     my string_arrayref $string_generated_split = [ ( split /\n/xms, $string_generated_tidied ) ];
     my string $line_generated;
 
-    my scalar_hashref $return_value = {};
+    my hashref $return_value = {};
     $return_value->{diff_line} = 0;    # default return value, files do not differ
     for my integer $i ( 0 .. ( ( scalar @{$string_reference_split} ) - 1 ) ) {
         my string $line_reference = $string_reference_split->[$i];
@@ -371,8 +371,8 @@ our scalar_hashref $diff_check_file_vs_string = sub {
             #            RPerl::diag( 'in Generator->diff_check_file_vs_string(), have non-matching $line_reference =' . "\n" . $line_reference . "\n" );
             #            RPerl::diag( 'in Generator->diff_check_file_vs_string(), have non-matching $line_generated =' . "\n" . $line_generated . "\n" );
             $return_value->{diff_line} = $i + 1;    # arrays indexed from 0, file lines indexed from 1
-            $return_value->{line_reference} = $line_reference
-            $return_value->{line_generated} = $line_generated
+            $return_value->{line_reference} = $line_reference;
+            $return_value->{line_generated} = $line_generated;
             last;
         }
     }

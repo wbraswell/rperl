@@ -47,10 +47,10 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     my $types                   = $mode->{types};
     my string $mode_tagline     = $ops . 'OPS_' . $types . 'TYPES';
     if ( $ENV{RPERL_VERBOSE} ) {
-        Test::More::diag( '[[[ Beginning RPerl Hash Type Tests, ' . $ops . ' operations and ' . $types . ' data types' . ' ]]]' );
+        Test::More::diag( '[[[ Beginning RPerl Hash Type Tests, ' . $ops . ' Operations & ' . $types . ' Data Types' . ' ]]]' );
     }
 
-    lives_ok( sub { rperltypes::types_enable($types) }, q{mode '} . $ops . ' operations and ' . $types . ' data types' . q{' enabled} );
+    lives_ok( sub { rperltypes::types_enable($types) }, q{mode '} . $ops . ' Operations & ' . $types . ' Data Types' . q{' enabled} );
 
     if ( $ops eq 'PERL' ) {
         lives_and( sub { require_ok('RPerl::DataStructure::Hash'); }, q{require_ok('RPerl::DataStructure::Hash') lives} );

@@ -10,7 +10,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.009_100;
+our $VERSION = 0.010_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -141,8 +141,8 @@ my integer $number_of_test_files = scalar keys %{$test_files};
 #RPerl::diag( 'in 13_generate.t, have sort keys %{$test_files} = ' . "\n" . Dumper(sort keys %{$test_files}) . "\n" );
 #RPerl::diag( 'in 13_generate.t, before primary runloop, have $number_of_test_files = ' . $number_of_test_files . "\n" );
 
-plan tests => $number_of_test_files + 1;         # (PERLOPS_PERLTYPES or  CPPOPS_CPPTYPES) + lives_ok(rperltypes::types_enable())
-#plan tests => (($number_of_test_files + 1) * 2);  # (PERLOPS_PERLTYPES and CPPOPS_CPPTYPES tests) + lives_ok(rperltypes::types_enable())
+#plan tests => $number_of_test_files + 1;         # (PERLOPS_PERLTYPES or  CPPOPS_CPPTYPES) + lives_ok(rperltypes::types_enable())
+plan tests => (($number_of_test_files + 1) * 2);  # (PERLOPS_PERLTYPES and CPPOPS_CPPTYPES tests) + lives_ok(rperltypes::types_enable())
 
 my string_hashref $modes;
 my hashref_arrayref $output_file_name_groups_tmp;
@@ -151,7 +151,7 @@ my string_hashref $reference_file_name_group;
 my string $test_file_reference;
 my boolean $perform_diff_check;
 my unknown $eval_return_value;
-my scalar_hashref $diff_check_retval;
+my hashref $diff_check_retval;
 #my integer $number_of_tests_run = 0;
 
 # [[[ PRIMARY RUNLOOP ]]]
@@ -161,20 +161,11 @@ my scalar_hashref $diff_check_retval;
 # loop up to 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
 #foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 #for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
-for my $mode_id ( 2 ) {    # CPPOPS_CPPTYPES ONLY
-#for my $mode_id ( 0 , 2 ) {    # PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
+#for my $mode_id ( 2 ) {    # CPPOPS_CPPTYPES ONLY
+for my $mode_id ( 0 , 2 ) {    # PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
 #    RPerl::diag("in 13_generate.t, top of for() loop, have \$mode_id = $mode_id\n");
 #    $number_of_test_files = scalar keys %{$test_files};
 #    RPerl::diag( 'in 13_generate.t, top of primary runloop, have $number_of_test_files = ' . $number_of_test_files . "\n" );
-
-
-
-# START HERE: get CPPOPS_CPPTYPES to properly skip all appropriate tests, carry on with START HERE in Bubble.pmc.CPPOPS_DUALTYPES
-# START HERE: get CPPOPS_CPPTYPES to properly skip all appropriate tests, carry on with START HERE in Bubble.pmc.CPPOPS_DUALTYPES
-# START HERE: get CPPOPS_CPPTYPES to properly skip all appropriate tests, carry on with START HERE in Bubble.pmc.CPPOPS_DUALTYPES
-
-
-
 
     # [[[ MODE SETUP ]]]
     my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
@@ -182,10 +173,10 @@ for my $mode_id ( 2 ) {    # CPPOPS_CPPTYPES ONLY
     my $types               = $mode->{types};
     my string $mode_tagline = $ops . 'OPS_' . $types . 'TYPES';
     if ( $ENV{RPERL_VERBOSE} ) {
-        Test::More::diag( '[[[ Beginning Generator Tests, RPerl Compilation System, ' . $ops . ' operations and ' . $types . ' data types' . ' ]]]' );
+        Test::More::diag( '[[[ Beginning Generator Tests, RPerl Compilation System, ' . $ops . ' Operations & ' . $types . ' Data Types' . ' ]]]' );
     }
 
-    lives_ok( sub { rperltypes::types_enable($types) }, q{mode '} . $ops . ' operations and ' . $types . ' data types' . q{' enabled} );
+    lives_ok( sub { rperltypes::types_enable($types) }, q{mode '} . $ops . ' Operations & ' . $types . ' Data Types' . q{' enabled} );
 #    $number_of_tests_run++;
 
     # [[[ SECONDARY RUNLOOP ]]]

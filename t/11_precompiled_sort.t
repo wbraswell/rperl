@@ -122,10 +122,10 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     my $types                   = $mode->{types};
     my string $mode_tagline     = $ops . 'OPS_' . $types . 'TYPES';
     if ( $ENV{RPERL_VERBOSE} ) {
-        Test::More::diag( '[[[ Beginning Pre-Compiled Sort Tests, RPerl Compilation System, ' . $ops . ' operations and ' . $types . ' data types' . ' ]]]' );
+        Test::More::diag( '[[[ Beginning Pre-Compiled Sort Tests, RPerl Compilation System, ' . $ops . ' Operations & ' . $types . ' Data Types' . ' ]]]' );
     }
 
-    lives_ok( sub { rperltypes::types_enable($types) }, q{Mode '} . $ops . ' operations and ' . $types . ' data types' . q{' enabled in CPP header file(s)} );
+    lives_ok( sub { rperltypes::types_enable($types) }, q{Mode '} . $ops . ' Operations & ' . $types . ' Data Types' . q{' enabled in CPP header file(s)} );
 
     # NEED FIX: triplicate code
     # delete CPP, H, and PMC files if they exist;

@@ -73,7 +73,7 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
     my string $types            = $mode->{types};
     my string $mode_tagline     = $ops . 'OPS_' . $types . 'TYPES';
     if ( $ENV{RPERL_VERBOSE} ) {
-        Test::More::diag( '[[[ Beginning RPerl GMP Type Tests, ' . $ops . ' operations and ' . $types . ' data types ]]]' );
+        Test::More::diag( '[[[ Beginning RPerl GMP Type Tests, ' . $ops . ' Operations & ' . $types . ' Data Types' . ' ]]]' );
     }
 
     #    $RPerl::DEBUG = 1;
@@ -81,7 +81,7 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
     #    RPerl::diag('have $types = ' . $types . "\n");
     #    RPerl::diag('have $mode_tagline = ' . $mode_tagline . "\n");
 
-    lives_ok( sub { rperltypes::types_enable($types) }, q{mode '} . $ops . ' operations and ' . $types . ' data types' . q{' enabled} );
+    lives_ok( sub { rperltypes::types_enable($types) }, q{mode '} . $ops . ' Operations & ' . $types . ' Data Types' . q{' enabled} );
     $number_of_tests_run++;
 
     if ( $ops eq 'CPP' ) {

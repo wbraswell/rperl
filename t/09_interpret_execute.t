@@ -120,7 +120,7 @@ my integer $number_of_test_files = scalar keys %{$test_files};
 plan tests => $number_of_test_files;
 
 if ( $ENV{RPERL_VERBOSE} ) {
-    Test::More::diag( '[[[ Beginning Interpret-Execute Tests, RPerl Execution System, PERL operations and PERL data types' . ' ]]]' );
+    Test::More::diag( '[[[ Beginning Interpret-Execute Tests, RPerl Execution System, PERL Operations & PERL Data Types' . ' ]]]' );
 }
 
 # [[[ PRIMARY RUNLOOP ]]]
