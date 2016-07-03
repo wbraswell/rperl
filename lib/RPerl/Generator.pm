@@ -150,7 +150,7 @@ our boolean $dummy_source_code_find = sub {
 
 # line-by-line comparison of file contents vs string contents;
 # returns -1 __DUMMY_SOURCE_CODE found, 0 no difference, >0 line number of first difference
-our integer $diff_check_file_vs_string = sub {
+our scalar_hashref $diff_check_file_vs_string = sub {
     ( my string $file_name_reference, my string_hashref $source_group, my string $suffix_key, my string_hashref $file_name_group, my string_hashref $modes ) = @_;
 #    RPerl::diag('in Generator->diff_check_file_vs_string(), TOP OF SUBROUTINE ' . "\n");
 #    RPerl::diag('in Generator->diff_check_file_vs_string(), received $file_name_reference = ' . $file_name_reference . "\n");
@@ -345,10 +345,6 @@ our integer $diff_check_file_vs_string = sub {
 
     # ACTUALLY START COMPARING REFERENCE VS GENERATED CODE STRINGS IN MEMORY
 
-    # START HERE: get displayed files to match, get all RPerl CPPOPS_CPPTYPES generator tests to pass, then MathPerl & PhysicsPerl
-    # START HERE: get displayed files to match, get all RPerl CPPOPS_CPPTYPES generator tests to pass, then MathPerl & PhysicsPerl
-    # START HERE: get displayed files to match, get all RPerl CPPOPS_CPPTYPES generator tests to pass, then MathPerl & PhysicsPerl
-
 #    RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $string_reference_tidied = ' . "\n" . ( q{=} x 60 ) . "\n" . $string_reference_tidied . "\n" . ( q{=} x 60 ) . "\n\n" );
 #    RPerl::diag( 'in Generator->diff_check_file_vs_string(), have $string_generated_tidied = ' . "\n" . ( q{=} x 60 ) . "\n" . $string_generated_tidied . "\n" . ( q{=} x 60 ) . "\n\n" );
 
@@ -356,13 +352,14 @@ our integer $diff_check_file_vs_string = sub {
     my string_arrayref $string_generated_split = [ ( split /\n/xms, $string_generated_tidied ) ];
     my string $line_generated;
 
-    my $return_value = 0;    # default return value, files do not differ
+    my scalar_hashref $return_value = {};
+    $return_value->{diff_line} = 0;    # default return value, files do not differ
     for my integer $i ( 0 .. ( ( scalar @{$string_reference_split} ) - 1 ) ) {
         my string $line_reference = $string_reference_split->[$i];
         $line_generated = $string_generated_split->[$i];
         if ( $line_generated =~ /__DUMMY_SOURCE_CODE/xms ) {
             RPerl::warning( 'WARNING WCOGEDI00, RPERL GENERATOR, DIFF CHECK: Dummy source code found, attempt to utilize incomplete RPerl feature, abandoning check' . "\n" );
-            $return_value = -1;
+            $return_value->{diff_line} = -1;
             last;
         }
         
@@ -373,7 +370,9 @@ our integer $diff_check_file_vs_string = sub {
         if ( $line_reference ne $line_generated ) {
             #            RPerl::diag( 'in Generator->diff_check_file_vs_string(), have non-matching $line_reference =' . "\n" . $line_reference . "\n" );
             #            RPerl::diag( 'in Generator->diff_check_file_vs_string(), have non-matching $line_generated =' . "\n" . $line_generated . "\n" );
-            $return_value = $i + 1;    # arrays indexed from 0, file lines indexed from 1
+            $return_value->{diff_line} = $i + 1;    # arrays indexed from 0, file lines indexed from 1
+            $return_value->{line_reference} = $line_reference
+            $return_value->{line_generated} = $line_generated
             last;
         }
     }

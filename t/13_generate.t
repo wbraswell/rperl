@@ -141,8 +141,8 @@ my integer $number_of_test_files = scalar keys %{$test_files};
 #RPerl::diag( 'in 13_generate.t, have sort keys %{$test_files} = ' . "\n" . Dumper(sort keys %{$test_files}) . "\n" );
 #RPerl::diag( 'in 13_generate.t, before primary runloop, have $number_of_test_files = ' . $number_of_test_files . "\n" );
 
-#plan tests => $number_of_test_files + 1;         # (PERLOPS_PERLTYPES or  CPPOPS_CPPTYPES) + lives_ok(rperltypes::types_enable())
-plan tests => (($number_of_test_files + 1) * 2);  # (PERLOPS_PERLTYPES and CPPOPS_CPPTYPES tests) + lives_ok(rperltypes::types_enable())
+plan tests => $number_of_test_files + 1;         # (PERLOPS_PERLTYPES or  CPPOPS_CPPTYPES) + lives_ok(rperltypes::types_enable())
+#plan tests => (($number_of_test_files + 1) * 2);  # (PERLOPS_PERLTYPES and CPPOPS_CPPTYPES tests) + lives_ok(rperltypes::types_enable())
 
 my string_hashref $modes;
 my hashref_arrayref $output_file_name_groups_tmp;
@@ -151,7 +151,7 @@ my string_hashref $reference_file_name_group;
 my string $test_file_reference;
 my boolean $perform_diff_check;
 my unknown $eval_return_value;
-my integer $diff_line;
+my scalar_hashref $diff_check_retval;
 #my integer $number_of_tests_run = 0;
 
 # [[[ PRIMARY RUNLOOP ]]]
@@ -161,8 +161,8 @@ my integer $diff_line;
 # loop up to 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
 #foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 #for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
-#for my $mode_id ( 2 ) {    # CPPOPS_CPPTYPES ONLY
-for my $mode_id ( 0 , 2 ) {    # PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
+for my $mode_id ( 2 ) {    # CPPOPS_CPPTYPES ONLY
+#for my $mode_id ( 0 , 2 ) {    # PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
 #    RPerl::diag("in 13_generate.t, top of for() loop, have \$mode_id = $mode_id\n");
 #    $number_of_test_files = scalar keys %{$test_files};
 #    RPerl::diag( 'in 13_generate.t, top of primary runloop, have $number_of_test_files = ' . $number_of_test_files . "\n" );
@@ -381,11 +381,11 @@ for my $mode_id ( 0 , 2 ) {    # PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
                             next;
                         }
 
-                        $diff_line = RPerl::Generator::diff_check_file_vs_string( $test_file_reference, $source_group, $suffix_key, $output_file_name_group, $modes );
+                        $diff_check_retval = RPerl::Generator::diff_check_file_vs_string( $test_file_reference, $source_group, $suffix_key, $output_file_name_group, $modes );
 
-                        #                        RPerl::diag( 'in 13_generate.t, have $diff_line = ' . $diff_line . "\n" );
-                        if ( $diff_line != 0 ) {
-#                            RPerl::diag( 'in 13_generate.t, near bottom of suffix loop, have $diff_line = ' . $diff_line . ', $suffix_key = ' . $suffix_key . "\n" );
+                        #                        RPerl::diag( 'in 13_generate.t, have $diff_check_retval->{diff_line} = ' . $diff_check_retval->{diff_line} . "\n" );
+                        if ( $diff_check_retval->{diff_line} != 0 ) {
+#                            RPerl::diag( 'in 13_generate.t, near bottom of suffix loop, have $diff_check_retval->{diff_line} = ' . $diff_check_retval->{diff_line} . ', $suffix_key = ' . $suffix_key . "\n" );
                             last;
                         }
 #                        RPerl::diag( 'in 13_generate.t, bottom of tertiary runloop, have $suffix_key = ' . $suffix_key . "\n" );
@@ -397,16 +397,17 @@ for my $mode_id ( 0 , 2 ) {    # PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
                     $suffix_key_saved = undef;
 #                    RPerl::diag( 'in 13_generate.t, after suffix loop, have $suffix_key = ' . $suffix_key . "\n" );
 
-                    if ( $diff_line == 0 ) {
+                    if ( $diff_check_retval->{diff_line} == 0 ) {
                         ok( 1, 'Program or module generates without errors, yes diff check:' . (q{ } x 2) . $test_file );
 #                        $number_of_tests_run++;
                     }
-                    elsif ( $diff_line > 0 ) {
-                        ok( 0, 'Program or module generates without errors, yes diff check, output file ' . $output_file_name_group->{$suffix_key} . ' and reference file ' . $test_file_reference . ' differ at line ' . $diff_line );
+                    elsif ( $diff_check_retval->{diff_line} > 0 ) {
+#                        ok( 0, 'Program or module generates without errors, yes diff check, output file ' . $output_file_name_group->{$suffix_key} . ' and reference file ' . $test_file_reference . ' differ at line ' . $diff_check_retval->{diff_line} );
+                        ok( 0, 'Program or module generates without errors, yes diff check, output file ' . $output_file_name_group->{$suffix_key} . ' and reference file ' . $test_file_reference . ' differ at line ' . $diff_check_retval->{diff_line} . ', have $diff_check_retval->{line_reference} = ' . "\n" . $diff_check_retval->{line_reference} . "\n" . 'have $diff_check_retval->{line_generated} = ' . "\n" . $diff_check_retval->{line_generated} . "\n");
 #                        $number_of_tests_run++;
                     }
-                    else {    # $diff_line < 0
-                              # skip __DUMMY_SOURCE_CODE results, indicated by $diff_line < 0
+                    else {    # $diff_check_retval->{diff_line} < 0
+                              # skip __DUMMY_SOURCE_CODE results, indicated by $diff_check_retval->{diff_line} < 0
                         ok( 1, 'Program or module generates without errors, yes diff check, unfinished C++ generator called, test skipped:' . (q{ } x 3) . $test_file );
 #                        $number_of_tests_run++;
 #                        RPerl::diag( 'in 13_generate.t, DUMMY SOURCE CODE found in diff check' . "\n" );
