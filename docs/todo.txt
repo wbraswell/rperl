@@ -56,6 +56,7 @@ OPERATORS, CPPOPS_CPPTYPES MODE
         abs, sqrt, exp, log
 
 LEARNING RPERL
+    update all example lesson print ops to use comma instead of dot
     update appendix with grammar changes: bitwise_negation_lparen, additional operators?
     tables on metacpan, fix headers and borders CSS
     fix <noncode> on metacpan, elsewhere

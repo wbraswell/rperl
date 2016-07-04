@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.092_000;
+our $VERSION = 0.093_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -13455,7 +13455,7 @@ The 4 lines in the C<HEADER> section tell Perl to run this program using RPerl, 
 
 The line in the C<CRITICS> section, starting with C<##>, tells RPerl to allow hard-coded numeric values (not used in this program), as well as the C<print> operator.X<br>
 
-The last line, in the C<OPERATIONS> section, calls the C<print> operator to simply display the text "Hello, world!" followed by a newline character, combined into a single string value by the C<.> (single dot) string concatenation operator.X<br>
+The last line, in the C<OPERATIONS> section, calls the C<print> operator on a comma-separated list consisting of 2 string literals, which will simply display the text "Hello, world!" followed by a newline character.X<br>
 
 All other lines beginning with C<#> are comments and, along with blank lines, may be safely ignored or removed.X<br>
 
@@ -13475,7 +13475,7 @@ All other lines beginning with C<#> are comments and, along with blank lines, ma
     ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 
     # [[[ OPERATIONS ]]]
-    print 'Hello, world!' . "\n";
+    print 'Hello, world!', "\n";
 
 Example execution and output:
 
@@ -13653,10 +13653,10 @@ The last 4 lines call the C<print> operator to display the names of each variabl
     my integer $bar = 23 * 42;
     my number  $baz = to_number($bar) / $foo;
     my number  $zab = to_number($foo) / $bar;
-    print 'have $foo = ' . to_string($foo) . "\n";
-    print 'have $bar = ' . to_string($bar) . "\n";
-    print 'have $baz = ' . to_string($baz) . "\n";
-    print 'have $zab = ' . to_string($zab) . "\n";
+    print 'have $foo = ', to_string($foo), "\n";
+    print 'have $bar = ', to_string($bar), "\n";
+    print 'have $baz = ', to_string($baz), "\n";
+    print 'have $zab = ', to_string($zab), "\n";
 
 
 Example execution and output:
