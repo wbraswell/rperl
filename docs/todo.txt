@@ -245,6 +245,7 @@ DATA TYPES & STRUCTURES
     add arrayref::grow_capacity() as safe version of std::vector::resize()
     Dumper() in C++, use as default overload for <<
     implement remaining *_arrayref_arrayref_CHECK*() in lib/DataStructure/Array/SubTypes.cpp
+    pre-declare RPerl::DataTypes and RPerl::DataStructures, as discussed in RPerl/DataStructure/Array.pm $properties, so this works: 'use RPerl::DataStructure::Array;'
     constant hashrefs and arrayrefs, via "use constant" pragma OR ":const" Perl internals attribute OR "constant_integer_hashref" data types
         :const supported in cperl only at this time
             add a sub integer::MODIFY_SCALAR_ATTRIBUTE, which handles :const

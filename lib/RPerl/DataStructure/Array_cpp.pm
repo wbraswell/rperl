@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array_cpp;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.004_021;
+our $VERSION = 0.005_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
@@ -36,7 +36,7 @@ our void::method $cpp_load = sub {
 package main;
 use RPerl::Inline;
 BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/DataStructure/Array.cpp' ]]]\n" x 0); }
-use Inline (CPP => '$RPerl::INCLUDE_PATH/RPerl/DataStructure/Array.cpp', \%RPerl::Inline::ARGS);
+use Inline (CPP => '$RPerl::INCLUDE_PATH' . '/RPerl/DataStructure/Array.cpp', \%RPerl::Inline::ARGS);
 RPerl::diag("[[[ END 'use Inline' STAGE for 'RPerl/DataStructure/Array.cpp' ]]]\n" x 0);
 1;
 EOF

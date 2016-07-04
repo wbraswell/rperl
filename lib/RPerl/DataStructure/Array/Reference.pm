@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array::Reference;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_000;
+our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Modifier::Reference);
@@ -33,7 +33,11 @@ use strict;
 use warnings;
 
 # [[[ OO PROPERTIES ]]]
+# NEED FIX: type 'hashref' not yet defined here, 
+# makes it impossible to 'use RPerl::DataStructure::Array;' or 'use RPerl::DataStructure::Hash;',
+# followed by more cascading errors
 our hashref $properties = {};
+#our $properties = {};
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 

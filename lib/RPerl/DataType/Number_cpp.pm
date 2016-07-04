@@ -3,7 +3,7 @@ package RPerl::DataType::Number_cpp;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_011;
+our $VERSION = 0.002_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
@@ -35,9 +35,9 @@ our void::method $cpp_load = sub {
         my $eval_string = <<"EOF";
 package main;
 use RPerl::Inline;
-BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/DataType/Number.cpp' ]]]\n" x 1); }
-use Inline (CPP => '$RPerl::INCLUDE_PATH/RPerl/DataType/Number.cpp', \%RPerl::Inline::ARGS);
-RPerl::diag("[[[ END 'use Inline' STAGE for 'RPerl/DataType/Number.cpp' ]]]\n" x 1);
+BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/DataType/Number.cpp' ]]]\n" x 0); }
+use Inline (CPP => '$RPerl::INCLUDE_PATH' . '/RPerl/DataType/Number.cpp', \%RPerl::Inline::ARGS);
+RPerl::diag("[[[ END 'use Inline' STAGE for 'RPerl/DataType/Number.cpp' ]]]\n" x 0);
 1;
 EOF
 

@@ -5,7 +5,7 @@ use warnings;
 use RPerl::Config; # get Carp, English, $RPerl::INCLUDE_PATH without 'use RPerl;'
 
 #use RPerl;  # DEV NOTE: need to use HelperFunctions in RPerl::DataStructure::Array for type checking SvIOKp() etc; remove dependency on RPerl void::method type so HelperFunctions can be loaded by RPerl type system
-our $VERSION = 0.002_031;
+our $VERSION = 0.003_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
@@ -42,7 +42,9 @@ sub cpp_load {
         my $eval_string = <<"EOF";
 package main;
 use RPerl::Inline;
-use Inline (CPP => '$RPerl::INCLUDE_PATH/RPerl/HelperFunctions.cpp', \%RPerl::Inline::ARGS);
+BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/HelperFunctions.cpp' ]]]\n" x 0); }
+use Inline (CPP => '$RPerl::INCLUDE_PATH' . '/RPerl/HelperFunctions.cpp', \%RPerl::Inline::ARGS);
+RPerl::diag("[[[ END 'use Inline' STAGE for 'RPerl/HelperFunctions.cpp' ]]]\n" x 0);
 1;
 EOF
 
