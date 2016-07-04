@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.014_100;
+our $VERSION = 0.015_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -952,6 +952,10 @@ our string $post_processor_cpp__pmc_generate = sub {
                         $file_line = ( substr $file_line, 0, 43 ) . "\n" . $source_group->{_PMC_subroutines_shims}->{$module_name_underscores} . "\n\n";
                     }
                     else { $file_line = undef; }
+                }
+                elsif ( $file_line eq ( '# <<< CHANGE_ME: add distribution-specific config include here >>>' . "\n" ) ) {
+                    my string $distribution_package = (split /::/, $source_group->{_package_name})[0];
+                    $file_line = 'use ' . $distribution_package . '::Config;' . "\n";
                 }
                 elsif ( $file_line eq ( '# <<< CHANGE_ME: add user-defined includes here >>>' . "\n" ) ) {
                     if (    ( exists $source_group->{_PMC_includes}->{$module_name_underscores} )

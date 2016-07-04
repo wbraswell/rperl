@@ -36,7 +36,7 @@ our void::method $cpp_load = sub {
 package main;
 use RPerl::Inline;
 BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/DataStructure/Hash.cpp' ]]]\n" x 0); }
-use Inline (CPP => '$RPerl::INCLUDE_PATH' . '/RPerl/DataStructure/Hash.cpp', \%RPerl::Inline::ARGS);
+use Inline (CPP => '$main::INCLUDE_PATH' . '/RPerl/DataStructure/Hash.cpp', \%RPerl::Inline::ARGS);
 RPerl::diag("[[[ END 'use Inline' STAGE for 'RPerl/DataStructure/Hash.cpp' ]]]\n" x 0);
 1;
 EOF

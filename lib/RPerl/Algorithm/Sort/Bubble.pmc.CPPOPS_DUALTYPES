@@ -10,6 +10,7 @@ our $VERSION = 0.001_000;
 
 # [[[ INCLUDES ]]]
 use RPerl::Inline;
+use RPerl::Config;
 
 # [[[ SUBROUTINES ]]]
 
@@ -88,15 +89,15 @@ $tmp_debug .= '[[[ END DEBUG ]]]' . "\n";
 =cut
 #die $tmp_debug;
 
-# START HERE: edit remaining pre-existing PMCs (mathperl, rperl data types) to use $eval_string format below and sub shims format above
-# START HERE: edit remaining pre-existing PMCs (mathperl, rperl data types) to use $eval_string format below and sub shims format above
-# START HERE: edit remaining pre-existing PMCs (mathperl, rperl data types) to use $eval_string format below and sub shims format above
+# START HERE: edit remaining pre-existing PMCs (mathperl) to use $eval_string format below and sub shims format above
+# START HERE: edit remaining pre-existing PMCs (mathperl) to use $eval_string format below and sub shims format above
+# START HERE: edit remaining pre-existing PMCs (mathperl) to use $eval_string format below and sub shims format above
 
         my $eval_string = <<"EOF";
 package main;
 use RPerl::Inline;
 BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/Algorithm/Sort/Bubble.cpp' ]]]\n" x 1); }
-use Inline (CPP => '$RPerl::INCLUDE_PATH' . '/RPerl/Algorithm/Sort/Bubble.cpp', \%RPerl::Inline::ARGS);
+use Inline (CPP => '$main::INCLUDE_PATH' . '/RPerl/Algorithm/Sort/Bubble.cpp', \%RPerl::Inline::ARGS);
 RPerl::diag("[[[ END 'use Inline' STAGE for 'RPerl/Algorithm/Sort/Bubble.cpp' ]]]\n" x 1);
 1;
 EOF

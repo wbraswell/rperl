@@ -482,3 +482,18 @@ my $file_name_script    = 'rperl';
 ($BASE_PATH, $INCLUDE_PATH, $SCRIPT_PATH, $CORE_PATH) = @{set_system_paths($file_name_config, $package_name_config, $file_name_pm, $file_name_script)};
 
 1;                                                     # end of package
+
+
+# export system paths to main:: namespace for use by PMC files
+package main;
+
+# [[[ OO CLASS PROPERTIES SPECIAL ]]]
+# DEV NOTE: duplicate lines to avoid 'used only once' warnings
+our $BASE_PATH = $RPerl::BASE_PATH;
+$BASE_PATH = $RPerl::BASE_PATH;
+our $INCLUDE_PATH = $RPerl::INCLUDE_PATH;
+$INCLUDE_PATH = $RPerl::INCLUDE_PATH;
+our $SCRIPT_PATH  = $RPerl::SCRIPT_PATH;
+$SCRIPT_PATH  = $RPerl::SCRIPT_PATH;
+
+1;                                                 # end of package
