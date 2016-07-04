@@ -50,49 +50,6 @@ sub cpp_load {
 
         #RPerl::diag('in RPerl::Algorithm::Sort::Bubble::cpp_load, need load CPP code' . "\n");
 
-
-
-
-
-
-
-#my $tmp_include_path = $RPerl::INCLUDE_PATH;
-#$tmp_include_path =~ s/\//\ __\ /gxms;
-
-#print '[[[ DEBUG DEBUG DEBUG ]]]' . "\n";
-#print 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), have \$tmp_include_path = ' . $tmp_include_path . "\n";
-#print '[[[ DEBUG DEBUG DEBUG ]]]' . "\n";
-
-=DISABLE_TMP_DEBUG
-my $file_path = $RPerl::INCLUDE_PATH . '/RPerl/Algorithm/Sort/Bubble.cpp';
-my $tmp_debug = '[[[ BEGIN DEBUG ]]]' . "\n";
-$tmp_debug .= 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), have $file_path = ' . $file_path . "\n";
-if (-e $file_path) {
-    $tmp_debug .= 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), $file_path exists' . "\n";
-    if (-f $file_path) {
-        $tmp_debug .= 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), $file_path is plain file' . "\n";
-        if (-r $file_path) {
-            $tmp_debug .= 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), $file_path is readable' . "\n";
-        }
-        else {
-            $tmp_debug .= 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), $file_path is NOT readable' . "\n";
-        }
-    }
-    else {
-        $tmp_debug .= 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), $file_path is NOT plain file' . "\n";
-    }
-}
-else {
-    $tmp_debug .= 'in RPerl::Algorithm::Sort::Bubble::cpp_load(), $file_path does NOT exist' . "\n";
-}
-$tmp_debug .= '[[[ END DEBUG ]]]' . "\n";
-=cut
-#die $tmp_debug;
-
-# START HERE: edit remaining pre-existing PMCs (mathperl) to use $eval_string format below and sub shims format above
-# START HERE: edit remaining pre-existing PMCs (mathperl) to use $eval_string format below and sub shims format above
-# START HERE: edit remaining pre-existing PMCs (mathperl) to use $eval_string format below and sub shims format above
-
         my $eval_string = <<"EOF";
 package main;
 use RPerl::Inline;
