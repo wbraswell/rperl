@@ -1,5 +1,5 @@
 language: perl
-# v0.002_000
+# v0.002_100
 perl:
 # NEED ANSWER, CORRELATION #rp00: is RPerl truly incompatible with Perl v5.8 and earlier?
 # Perl v5.8 causes $CPP_LINKED global symbol errors, currently disabled
@@ -33,6 +33,7 @@ before_install:
 install:
 - sudo apt-get install -qq g++-4.8
 - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
+- sudo apt-get install libgmp-dev
 # begin Pluto PolyCC
 - sudo apt-get install texinfo
 - wget http://downloads.sourceforge.net/project/pluto-compiler/pluto-0.11.4.tar.gz
@@ -44,7 +45,7 @@ install:
 - sudo make install
 - cd ..
 # end Pluto PolyCC
-- sudo apt-get install libgmp-dev
+- sudo apt-get install curl
 - sudo apt-get install astyle
 
 before_script:

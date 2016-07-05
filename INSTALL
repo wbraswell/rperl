@@ -8,24 +8,24 @@
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ################################################################################
-# STEP 0. PRE-INSTALL; UPDATE & INSTALL LIBC & LIBPERL & 
-# GCC & POLYCC & MAKEMAKER & GMP; ENSURE CURL WORKS PROPERLY
+# STEP 0. PRE-INSTALL; UPDATE & INSTALL 
+# LIBC & LIBPERL & GCC & MAKEMAKER & GMP & POLYCC & CURL & ASTYLE
 ################################################################################
 
 # LIBC: libcrypt.(a|so) used for compiling programs
-$ apt-get install libc6-dev
+$ sudo apt-get install libc6-dev
 
 # LIBPERL: libperl.(a|so) used for compiling programs
-$ apt-get install libperl-dev
+$ sudo apt-get install libperl-dev
 
 # GCC
 $ g++ --version
 	# must be v4.7 or higher
-$ apt-get install g++
+$ sudo apt-get install g++
 	# OR
-$ wget http://people.centos.org/tru/devtools-1.1/devtools-1.1.repo -P /etc/yum.repos.d
-$ sh -c 'echo "enabled=1" >> /etc/yum.repos.d/devtools-1.1.repo'
-$ yum install devtoolset-1.1
+$ sudo wget http://people.centos.org/tru/devtools-1.1/devtools-1.1.repo -P /etc/yum.repos.d
+$ sudo sh -c 'echo "enabled=1" >> /etc/yum.repos.d/devtools-1.1.repo'
+$ sudo yum install devtoolset-1.1
 $ export CC=/opt/centos/devtoolset-1.1/root/usr/bin/gcc  
 $ export CPP=/opt/centos/devtoolset-1.1/root/usr/bin/cpp
 $ export CXX=/opt/centos/devtoolset-1.1/root/usr/bin/c++
@@ -35,6 +35,20 @@ $ tar -xjvf gcc-5.2.0.tar.bz2
 $ cd gcc-5.2.0
 $ ./configure
 $ make
+$ sudo make install
+
+# EXTUTILS::MAKEMAKER
+$ mv ~/perl5 ~/perl5.old  # as user, not root; disable any previous local::lib or Perlbrew
+$ perl -v  # NOTE! the version of Perl determines whether you take step 1A or 1B
+$ perl -MExtUtils::MakeMaker\ 999  # v7.04 or greater required by Inline::C
+$ sudo cpan ExtUtils::MakeMaker  # cpan system-wide, not cpanm single-user
+
+# GMP: GNU Multiple-Precision Arithmetic Library
+$ sudo apt-get install libgmp-dev
+# OR
+$ sudo urpmi gmpxx-devel
+# OR
+# visit https://gmplib.org/
 
 # PLUTO POLYCC
 $ sudo apt-get install texinfo
@@ -46,21 +60,8 @@ $ make
 $ make test
 $ sudo make install
 
-# EXTUTILS::MAKEMAKER
-$ mv ~/perl5 ~/perl5.old  # as user, not root; disable any previous local::lib or Perlbrew
-$ perl -v  # NOTE! the version of Perl determines whether you take step 1A or 1B
-$ perl -MExtUtils::MakeMaker\ 999  # v7.04 or greater required by Inline::C
-$ cpan ExtUtils::MakeMaker  # cpan system-wide, not cpanm single-user
-
-# GMP: GNU Multiple-Precision Arithmetic Library
-$ apt-get install libgmp-dev
-# OR
-$ urpmi gmpxx-devel
-# OR
-# visit https://gmplib.org/
-
 # CURL
-$ apt-get install curl
+$ sudo apt-get install curl
 $ curl -L cpanmin.us > /dev/null
     # execute the following "echo" command below IF AND ONLY IF the above "curl" command gives an error:
     # curl: (77) error setting certificate verify locations

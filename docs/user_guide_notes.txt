@@ -1,3 +1,0 @@
-SORRY!!
-THERE ARE CURRENTLY NO USER GUIDE NOTES!!!
-For now, please see install notes file INSTALL for RPerl test commands...
