@@ -15,6 +15,10 @@ DONE
 DOING
     enable loop parallelization
         handle gauss_seidel.openmp.cpp.pluto.cloog files
+        enable num_cores
+        fix print
+        fix loop labels
+        fix min/max
     Learning
         EAR17 & any other new errors, parallel OFF OPENMP MPI, num_cores
     enable shorthand classes

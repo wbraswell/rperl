@@ -210,6 +210,9 @@ HALLOWEEN
 THANKSGIVING
 CHRISTMAS
 
+MOTHER'S DAY?
+FATHER'S DAY?
+
 
 ##########################################################################################
 # CPAN DISTRIBUTION

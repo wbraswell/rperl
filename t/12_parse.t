@@ -119,6 +119,7 @@ for my $test_file ( sort keys %{$test_files} ) {
                 compile => 'PARSE',
 #                subcompile   => 'OFF',  # unnecessary
 #                CXX          => 'g++',  # unnecessary
+                parallel => 'OFF',
 #                execute => 'OFF',  # unnecessary
 #                label   => 'OFF'   # unnecessary
             }

@@ -1,5 +1,5 @@
 # RPerl Install Notes
-# Last Updated May 14, 2016
+# Last Updated July 4, 2016
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # NOTE: STEP 1 IS ONLY FOR SINGLE-USER INSTALL, NOT SYSTEM-WIDE INSTALL
@@ -8,8 +8,8 @@
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ################################################################################
-# STEP 0. PRE-INSTALL; UPDATE & INSTALL LIBC & LIBPERL & GCC & MAKEMAKER & GMP;
-# ENSURE CURL WORKS PROPERLY
+# STEP 0. PRE-INSTALL; UPDATE & INSTALL LIBC & LIBPERL & 
+# GCC & POLYCC & MAKEMAKER & GMP; ENSURE CURL WORKS PROPERLY
 ################################################################################
 
 # LIBC: libcrypt.(a|so) used for compiling programs
@@ -35,6 +35,16 @@ $ tar -xjvf gcc-5.2.0.tar.bz2
 $ cd gcc-5.2.0
 $ ./configure
 $ make
+
+# PLUTO POLYCC
+$ sudo apt-get install texinfo
+$ wget http://downloads.sourceforge.net/project/pluto-compiler/pluto-0.11.4.tar.gz
+$ tar -xzvf pluto-0.11.4.tar.gz
+$ cd pluto-0.11.4/
+$ ./configure
+$ make
+$ make test
+$ sudo make install
 
 # EXTUTILS::MAKEMAKER
 $ mv ~/perl5 ~/perl5.old  # as user, not root; disable any previous local::lib or Perlbrew

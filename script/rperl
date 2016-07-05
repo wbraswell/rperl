@@ -978,8 +978,9 @@ v2.000_000 using RPerl's underscore-is-comma numbering scheme
 v2.000000  using  CPAN's underscore-is-beta  numbering scheme
 
 Copyright © 2013, 2014, 2015, 2016, William N. Braswell, Jr..  All Rights Reserved.
+RPerl is part of the RPerl Family of software and documentation.
 This work is Free & Open Source; you can redistribute it and/or modify it 
-under the same terms as Perl 5.22.0.
+under the same terms as Perl 5.24.0.
 
 Perl may be copied only under the terms of either the Artistic License or the
 GNU General Public License, which may be found in the Perl 5 source kit.
@@ -1333,7 +1334,48 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.16: Modes, Execute
+=for comment head2 B.16: Modes, Parallelize
+
+=over
+
+=item B<--mode parallel=OFF ...OR... -m parallel=OFF>
+
+=item B<--mode parallel=OPENMP ...OR... -m parallel=OPENMP>
+
+=item B<--mode parallel=MPI ...OR... -m parallel=MPI>  ((( COMING SOON!!! )))
+
+=for rperl X<noncode>
+
+    Specify automatic parallelization mode, OPENMP by default.
+    If set to OFF, do not automatically parallelize any input files.
+    If set to OPENMP, automatically parallelize all eligible input files for use on shared-memory OpenMP systems.
+    If set to MPI (COMING SOON), automatically parallelize all eligible input files for use on distributed-memory MPI systems.
+
+=for rperl X</noncode>
+
+=back
+
+=for comment head2 B.17: Modes, Parallelize, Number Of Cores
+
+=over
+
+=item B<--mode num_cores=2 ...OR... -m num_cores=2 ...OR... --num_cores=2 ...OR... -num=2>
+
+=item B<--mode num_cores=4 ...OR... -m num_cores=4 ...OR... --num_cores=4 ...OR... -num=4>
+
+=item B<--mode num_cores=8 ...OR... -m num_cores=8 ...OR... --num_cores=8 ...OR... -num=8>
+
+=item B<...ETC...>
+
+=for rperl X<noncode>
+
+    Specify number of CPU cores to utilize for OPENMP automatic parallelization mode, 4 by default.
+
+=for rperl X</noncode>
+
+=back
+
+=for comment head2 B.18: Modes, Execute
 
 =over
 
@@ -1352,7 +1394,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.17: Modes, Source Code Labels
+=for comment head2 B.19: Modes, Source Code Labels
 
 =over
 
@@ -1370,7 +1412,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.18: Flags, Verbose
+=for comment head2 B.20: Flags, Verbose
 
 =over
 
@@ -1389,7 +1431,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.19: Flags, Debug
+=for comment head2 B.21: Flags, Debug
 
 =over
 
@@ -1408,7 +1450,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.20: Flags, Warnings
+=for comment head2 B.22: Flags, Warnings
 
 =over
 
@@ -1426,7 +1468,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.21: Flags, Test
+=for comment head2 B.23: Flags, Test
 
 =over
 
@@ -1442,7 +1484,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.22: Flags, Dependencies
+=for comment head2 B.24: Flags, Dependencies
 
 =over
 
@@ -1460,7 +1502,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.23: Flags, Uncompile
+=for comment head2 B.25: Flags, Uncompile
 
 =over
 
@@ -1490,7 +1532,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.24: Flags, Compile
+=for comment head2 B.26: Flags, Compile
 
 =over
 
@@ -1507,7 +1549,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.25: Flags, Subcompile, Assemble
+=for comment head2 B.27: Flags, Subcompile, Assemble
 
 =over
 
@@ -1523,7 +1565,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.26: Flags, Subcompile, Archive
+=for comment head2 B.28: Flags, Subcompile, Archive
 
 =over
 
@@ -1539,7 +1581,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.27: Flags, Subcompile, Shared Object
+=for comment head2 B.29: Flags, Subcompile, Shared Object
 
 =over
 
@@ -1555,7 +1597,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.28: Flags, Subcompile, Static
+=for comment head2 B.30: Flags, Subcompile, Static
 
 =over
 
@@ -1574,7 +1616,25 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.29: Flags, Execute
+=for comment head2 B.31: Flags, Parallelize
+
+=over
+
+=item B<--parallel ...OR... -p>
+
+=item B<--noparallel ...OR... -nop>
+
+=for rperl X<noncode>
+
+    Automatically parallelize input code, or not.
+    Enabled by default.
+    Equivalent to '--mode parallel=OPENMP' argument.
+
+=for rperl X</noncode>
+
+=back
+
+=for comment head2 B.32: Flags, Execute
 
 =over
 

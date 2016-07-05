@@ -10,7 +10,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.010_000;
+our $VERSION = 0.011_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -198,6 +198,7 @@ for my $mode_id ( 0 , 2 ) {    # PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
             compile => 'GENERATE',    # don't save source code to disk, will diff check from memory
             subcompile   => 'DYNAMIC',  # must be DYNAMIC for Subroutine::ast_to_cpp__generate_shims__CPPOPS_CPPTYPES() to generate PMC output
 #            CXX          => 'g++',  # unnecessary
+            parallel => 'OFF',
             execute => 'OFF',
             label   => 'OFF'          # don't label source code, will strip comments before diff check
         };

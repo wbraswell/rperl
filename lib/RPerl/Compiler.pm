@@ -309,7 +309,7 @@ our hashref_arrayref $generate_output_file_names = sub {
     #    RPerl::diag('in Compiler::generate_output_file_names(), received $input_file_names = ' . "\n" . Dumper($input_file_names) . "\n");
     #    RPerl::diag('in Compiler::generate_output_file_names(), received $output_file_name_prefixes = ' . "\n" . Dumper($output_file_name_prefixes) . "\n");
     #    RPerl::diag('in Compiler::generate_output_file_names(), received $input_files_count = ' . $input_files_count . "\n");
-    RPerl::diag( 'in Compiler::generate_output_file_names(), received $modes = ' . "\n" . Dumper($modes) . "\n" );
+#    RPerl::diag( 'in Compiler::generate_output_file_names(), received $modes = ' . "\n" . Dumper($modes) . "\n" );
 
     # NEED FIX: add string_hashref_arrayref type
     #    my string_hashref_arrayref $output_file_name_groups = [];

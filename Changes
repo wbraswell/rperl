@@ -5,7 +5,7 @@ Revision history for Perl compiler RPerl.
     - HOLIDAY EDITION: Happy Independence Day!
     - Automatically Parallelize Loops, Part 1
     - C++ Code Generator Tests
-    - Two-Dimensional Data Structure, Part 2; number_arrayref_arrayref, string_arrayref_arrayref
+    - Two-Dimensional Data Structures, Part 2; number_arrayref_arrayref & string_arrayref_arrayref
     - Native Types, Allow Configuration Of integer & number To Match Perl & OS
     - Integer Arithmetic & Bitwise Operator Support via 'use integer;'
     - Microsoft Windows OS Compatibility, Numerous Fixes
