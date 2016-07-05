@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Program;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_000;
+our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit);
@@ -167,7 +167,12 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my integer $cpp_source_group_CPP_line_count = 0;
 
 #    RPerl::diag( 'in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
-#    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $modes = ' . "\n" . Dumper($modes) . "\n");
+    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $modes = ' . "\n" . Dumper($modes) . "\n");
+#    die 'TMP DEBUG';
+
+
+
+
 
     my string $self_class = ref $self;
 
@@ -275,23 +280,19 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     $cpp_source_group->{CPP} .= 'int main() {';
 
-    $cpp_source_group_CPP_line_count = ($cpp_source_group->{CPP} =~ tr/\n//) + 1;  # add 1 to count last line which does not have newline
-    my integer $operations_line_number = $operation_plus->{children}->[0]->{line_number};
-#    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_group_CPP_line_count = ' . $cpp_source_group_CPP_line_count . "\n");
-#    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $operations_line_number = ' . $operations_line_number . "\n");
-
-
     if ( $modes->{label} eq 'ON' ) { 
-        $cpp_source_group->{CPP} .= '  // [[[ OPERATIONS HEADER ]]]';
-        $cpp_source_group->{CPP} .= "\n" x (($operations_line_number - $cpp_source_group_CPP_line_count) - 2);
+        $cpp_source_group->{CPP} .= "\n" . '  // [[[ OPERATIONS HEADER ]]]' . "\n";
     }
 
+    my string $CPP_saved = $cpp_source_group->{CPP};
+    $cpp_source_group->{CPP} = q{};
 
 
 
     if ( $modes->{label} eq 'ON' ) {
         $cpp_source_group->{CPP} .= "\n" . '// [[[ OPERATIONS ]]]' . "\n";
     }
+
     foreach my object $operation (     ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
         @{ $operation_plus->{children} }
         )
@@ -303,6 +304,31 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
 
 
+    my integer $num_loop_iterators = 0;
+    if ((exists $modes->{_loop_iterators}) and (defined $modes->{_loop_iterators})) {
+        $num_loop_iterators = scalar keys %{$modes->{_loop_iterators}};
+    }
+
+    # COMPILE-TIME OPTIMIZATION #02: declare all loop iterators at top of subroutine/method to avoid re-declarations in nested loops
+#    if ((exists $modes->{_loop_iterators}) and (defined $modes->{_loop_iterators})) {
+    if ($num_loop_iterators) {  # shortcut
+        foreach my string $loop_iterator_symbol (sort keys %{$modes->{_loop_iterators}}) {
+            $CPP_saved .= $modes->{_loop_iterators}->{$loop_iterator_symbol} . q{ } . $loop_iterator_symbol . ';' . "\n";
+        }
+        delete $modes->{_loop_iterators};
+    }
+
+    $cpp_source_group_CPP_line_count = ($cpp_source_group->{CPP} =~ tr/\n//) + 1;  # add 1 to count last line which does not have newline
+    my integer $operations_line_number = $operation_plus->{children}->[0]->{line_number};
+#    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_group_CPP_line_count = ' . $cpp_source_group_CPP_line_count . "\n");
+#    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $operations_line_number = ' . $operations_line_number . "\n");
+
+    if ( $modes->{label} eq 'ON' ) { 
+        $cpp_source_group->{CPP} .= "\n" x (($operations_line_number - $cpp_source_group_CPP_line_count) - (2 + $num_loop_iterators));
+    }
+
+    $CPP_saved .= $cpp_source_group->{CPP};
+    $cpp_source_group->{CPP} = $CPP_saved;
 
         
     if ( $modes->{label} eq 'ON' ) { $cpp_source_group->{CPP} .= "\n" x 3; }

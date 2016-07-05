@@ -6,10 +6,10 @@ use RPerl;
 #use RPerl::AfterSubclass;
 
 # DEV NOTE, CORRELATION #rp16: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
-our $VERSION = 1.750_100;
+our $VERSION = 2.000_000;
 
-#our $VERSION = 20160614;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
-#our $VERSION = 2016.166;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
+#our $VERSION = 20160704;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
+#our $VERSION = 2016.186;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -121,6 +121,8 @@ sub verify_and_default_modes {
         my integer $subcompile_shared_flag,
         my integer $subcompile_static_flag,
         my integer $subcompile_CXX,
+        my integer $parallel_flag,
+        my integer $num_cores,
         my integer $execute_flag,
         my integer $test_flag,
         my string_arrayref $input_file_names
@@ -279,6 +281,24 @@ sub verify_and_default_modes {
         }
     }
 
+    if ( defined $parallel_flag ) {
+        if ($parallel_flag) {
+            $modes->{parallel} = 'OPENMP';
+        }
+        else {
+            $modes->{parallel} = 'OFF';
+        }
+    }
+    
+    if (defined $num_cores) {
+        if ($num_cores =~ m/^\s*$/gxms) {
+            die 'ERROR EAR17: Undefined, empty, or all-whitespace CXX command-line argument provided, dying' . "\n";
+        }
+        else {
+            $modes->{num_cores} = $num_cores;
+        }
+    }
+
     if ( defined $execute_flag ) {
         if ($execute_flag) {
             $modes->{execute} = 'ON';
@@ -434,6 +454,7 @@ sub verbose_flags {
         my integer $subcompile_archive_flag,
         my integer $subcompile_shared_flag,
         my integer $subcompile_static_flag,
+        my integer $parallel_flag,
         my integer $execute_flag,
         my integer $test_flag
     ) = @_;
@@ -460,6 +481,9 @@ sub verbose_flags {
     }
     if ( defined $subcompile_static_flag ) {
         RPerl::verbose( 'Static Flag.......... ' . $subcompile_static_flag . "\n" );
+    }
+    if ( defined $parallel_flag ) {
+        RPerl::verbose( 'Parallel Flag......... ' . $parallel_flag . "\n" );
     }
     if ( defined $execute_flag ) {
         RPerl::verbose( 'Execute Flag......... ' . $execute_flag . "\n" );
@@ -537,6 +561,8 @@ sub depends_delete {
                 . $modes->{compile}
                 . ', subcompile => '
                 . $modes->{subcompile}
+                . ', parallel => '
+                . $modes->{parallel}
                 . ', execute => '
                 . $modes->{execute}
                 . ', label => '
@@ -865,6 +891,8 @@ my integer $subcompile_archive_flag             = undef;
 my integer $subcompile_shared_flag              = undef;
 my integer $subcompile_static_flag              = undef;
 my string  $subcompile_CXX                      = undef;
+my integer $parallel_flag                       = undef;
+my integer $num_cores                           = undef;
 my integer $execute_flag                        = undef;
 my integer $test_flag                           = undef;
 my string_arrayref $input_file_names            = [];
@@ -882,6 +910,8 @@ my string_hashref $modes_default                = {        # default to CPPOPS_C
     compile      => 'SUBCOMPILE',
     subcompile   => 'DYNAMIC',
     CXX          => 'g++',  # default to GNU GCC  http://www.gnu.org/software/make/manual/make.html#Implicit-Variables
+    parallel     => 'OPENMP',
+    num_cores    => 4,
     execute      => 'ON',
     label        => 'ON',
 };
@@ -897,16 +927,12 @@ my arrayref_hashref $modes_supported = {
     compile      => [ 'OFF', 'PARSE', 'GENERATE', 'SAVE', 'SUBCOMPILE' ],
     subcompile   => [ 'OFF', 'ASSEMBLE', 'ARCHIVE', 'SHARED', 'STATIC', 'DYNAMIC' ],
     CXX          => undef,  # accept any value
+    parallel     => [ 'OFF', 'OPENMP' ],
+    num_cores    => undef,  # accept any value
     execute      => [ 'OFF', 'ON' ],
     label        => [ 'OFF', 'ON' ],
 };
-#my string_arrayref_hashref_hashref $filename_suffixes_supported = {
-my hashref_hashref $filename_suffixes_supported = {
-    INPUT_SOURCE => { PL => ['.pl'], PM => ['.pm'] },
-    OUTPUT_SOURCE => { CPP => ['.cpp'], H => ['.h'], PMC => ['.pmc'] },
-    OUTPUT_BINARY => { O => ['.o'], A => ['.a'], SO => ['.so'], EXE => [q{}, '.exe']}
-#    OUTPUT_BINARY => { O => ['.o', '.lib'], A => ['.a', '.lib'], SO => ['.so', '.dll'], EXE => [q{}, '.exe']}
-};
+my hashref_hashref $filename_suffixes_supported = $RPerl::Compiler::filename_suffixes_supported;
 my integer $input_files_count = 0;
 
 GetOptions(
@@ -929,6 +955,8 @@ GetOptions(
     'shared'        => \$subcompile_shared_flag,
     'static!'       => \$subcompile_static_flag,
     'CXX=s'         => \$subcompile_CXX,
+    'parallel!'     => \$parallel_flag,
+    'num_cores=i'   => \$num_cores,
     'execute!'      => \$execute_flag,
     'test'          => \$test_flag,
     'infile=s{1,}'  => \@{$input_file_names},
@@ -945,10 +973,9 @@ if ($version_flag) {
 
     # DEV NOTE, CORRELATION #rp16: numbering schemes mentioned below
     my $version_message = <<EOL;
-
-This is RPerl version 1.750_100, Long Date 20160614, Star Date 2016.166
-v1.750_100 using RPerl's underscore-is-comma numbering scheme
-v1.750100  using  CPAN's underscore-is-beta  numbering scheme
+This is RPerl version 2.000_000, Long Date 20160704, Star Date 2016.186
+v2.000_000 using RPerl's underscore-is-comma numbering scheme
+v2.000000  using  CPAN's underscore-is-beta  numbering scheme
 
 Copyright © 2013, 2014, 2015, 2016, William N. Braswell, Jr..  All Rights Reserved.
 This work is Free & Open Source; you can redistribute it and/or modify it 
@@ -975,14 +1002,14 @@ if (defined $uncompile_source_binary_inline_flag) { if ($uncompile_source_binary
 
 verbose_flags(
     $dependencies_flag, $uncompile_flag, $compile_flag, $subcompile_assemble_flag,
-    $subcompile_archive_flag,      $subcompile_shared_flag,           $subcompile_static_flag,        $execute_flag, $test_flag
+    $subcompile_archive_flag,      $subcompile_shared_flag,           $subcompile_static_flag, $parallel_flag,        $execute_flag, $test_flag
 );
 $input_file_names  = accept_and_verify_input_files( $input_file_names, $input_file_names_unlabeled, $modes );
 $input_files_count = scalar @{$input_file_names};
 $modes             = verify_and_default_modes(
     $modes,              $modes_default, $modes_supported, $dependencies_flag, $uncompile_flag, $compile_flag,  
     $subcompile_assemble_flag,   $subcompile_archive_flag,      $subcompile_shared_flag,
-    $subcompile_static_flag, $subcompile_CXX,        $execute_flag,  $test_flag, $input_file_names
+    $subcompile_static_flag, $subcompile_CXX, $parallel_flag, $num_cores, $execute_flag,  $test_flag, $input_file_names
 );
 $output_file_name_groups = generate_output_file_names( $input_file_names, $output_file_name_prefixes, $input_files_count, $modes );
 verbose_multi_file_settings( $input_file_names, $output_file_name_groups, $input_files_count, $filename_suffixes_supported, $modes );

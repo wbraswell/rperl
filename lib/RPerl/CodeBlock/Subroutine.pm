@@ -205,7 +205,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         }
         delete $modes->{_loop_iterators};
     }
-    
+
     $CPP_saved .= $cpp_source_group->{CPP};
     $cpp_source_group->{CPP} = $CPP_saved;
 

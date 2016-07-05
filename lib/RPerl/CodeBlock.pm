@@ -3,7 +3,7 @@ package RPerl::CodeBlock;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_100;
+our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -65,6 +65,8 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     #    RPerl::diag( 'in CodeBlock->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
     #    RPerl::diag( 'in CodeBlock->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $loop_label = ' . "\n" . RPerl::Parser::rperl_ast__dump($loop_label) . "\n" );
+#    RPerl::diag( 'in CodeBlock->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $modes->{_inside_parallel_loop} = ' . "\n" . $modes->{_inside_parallel_loop} . "\n" );
+#    RPerl::diag( 'in CodeBlock->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $modes->{_current_parallel_loop} = ' . "\n" . Dumper($modes->{_current_parallel_loop}) . "\n" );
     
     my string $self_class = ref $self;
 
@@ -74,7 +76,12 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         my string $right_brace    = $self->{children}->[2];
 
         $cpp_source_group->{CPP} .= $left_brace . "\n";
-        if ( defined $loop_label ) { $cpp_source_group->{CPP} .= $loop_label . '_REDO: 1;' . "\n"; }
+        # NEED FIX PARALLEL: temporarily disabled loop control labels while inside parallel loop to avoid pluto polycc error
+#        RPerl::diag( 'in CodeBlock->ast_to_cpp__generate__CPPOPS_CPPTYPES(), before _REDO, have $modes->{_inside_parallel_loop} = ' . "\n" . RPerl::Parser::rperl_ast__dump($modes->{_inside_parallel_loop}) . "\n" );
+        if (( defined $loop_label ) and 
+                not ((exists $modes->{_inside_parallel_loop}) and (defined $modes->{_inside_parallel_loop}) and $modes->{_inside_parallel_loop})) {
+            $cpp_source_group->{CPP} .= $loop_label . '_REDO: 1;' . "\n";
+        }
 
         foreach my object $operation ( @{ $operation_plus->{children} } ) {
 #            RPerl::diag( 'in CodeBlock->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $operation = ' . "\n" . RPerl::Parser::rperl_ast__dump($operation) . "\n" );
@@ -85,9 +92,20 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         # DEV NOTE, INLINE BUG: must include '1;' null statement after labels to avoid the following error messages during g++ call from 'Running Mkbootstrap' Inline phase
         # error: expected primary-expression before ‘}’ token
         # error: expected ‘;’ before ‘}’ token
-        if ( defined $loop_label ) { $cpp_source_group->{CPP} .= $loop_label . '_NEXT: 1;' . "\n"; }
+        # NEED FIX PARALLEL: temporarily disabled loop control labels while inside parallel loop to avoid pluto polycc error
+#        RPerl::diag( 'in CodeBlock->ast_to_cpp__generate__CPPOPS_CPPTYPES(), before _NEXT, have $modes->{_inside_parallel_loop} = ' . "\n" . RPerl::Parser::rperl_ast__dump($modes->{_inside_parallel_loop}) . "\n" );
+        if (( defined $loop_label ) and 
+                not ((exists $modes->{_inside_parallel_loop}) and (defined $modes->{_inside_parallel_loop}) and $modes->{_inside_parallel_loop})) {
+            $cpp_source_group->{CPP} .= $loop_label . '_NEXT: 1;' . "\n";
+        }
+
         $cpp_source_group->{CPP} .= $right_brace . "\n";
-        if ( defined $loop_label ) { $cpp_source_group->{CPP} .= $loop_label . '_LAST: 1;' . "\n"; }
+
+#        RPerl::diag( 'in CodeBlock->ast_to_cpp__generate__CPPOPS_CPPTYPES(), before _LAST, have $modes->{_inside_parallel_loop} = ' . "\n" . RPerl::Parser::rperl_ast__dump($modes->{_inside_parallel_loop}) . "\n" );
+        if (( defined $loop_label ) and 
+                not ((exists $modes->{_inside_parallel_loop}) and (defined $modes->{_inside_parallel_loop}) and $modes->{_inside_parallel_loop})) {
+            $cpp_source_group->{CPP} .= $loop_label . '_LAST: 1;' . "\n";
+        }
     }
     else {
         die RPerl::Parser::rperl_rule__replace(

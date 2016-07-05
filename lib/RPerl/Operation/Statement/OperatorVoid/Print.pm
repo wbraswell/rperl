@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::OperatorVoid::Print;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_300;
+our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement::OperatorVoid);
@@ -88,6 +88,11 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my string_hashref $cpp_source_subgroup;
 
  #    RPerl::diag( 'in OperatorVoid::Print->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+
+    # NEED FIX PARALLEL: temporarily disabled print operators while inside parallel loop to avoid pluto polycc error
+    if ($modes->{_inside_parallel_loop}) {
+        return $cpp_source_group;
+    }
 
     my string $self_class = ref $self;
     if ( $self_class eq 'OperatorVoid_118' ) {    # OperatorVoid -> OP01_PRINT OPTIONAL-31 ListElements ';'

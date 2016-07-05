@@ -1,5 +1,15 @@
 Revision history for Perl compiler RPerl.
 
+2.000000 2016-07-04 Codename Pioneer
+
+    - HOLIDAY EDITION: Happy Independence Day!
+    - Automatically Parallelize Loops, Part 1
+    - C++ Code Generator Tests
+    - Two-Dimensional Data Structure, Part 2; number_arrayref_arrayref, string_arrayref_arrayref
+    - Native Types, Allow Configuration Of integer & number To Match Perl & OS
+    - Integer Arithmetic & Bitwise Operator Support via 'use integer;'
+    - Microsoft Windows OS Compatibility, Numerous Fixes
+
 1.750100 2016-06-14
 
     - MathPerl, Support For Linear Algebra, Part 1

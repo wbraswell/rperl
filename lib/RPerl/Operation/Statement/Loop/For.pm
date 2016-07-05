@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::Loop::For;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_200;
+our $VERSION = 0.006_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement::Loop);
@@ -163,6 +163,24 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     my string $self_class = ref $self;
 
+    if ((not exists $modes->{_inside_parallel_loop}) and (not defined $modes->{_inside_parallel_loop})) {
+        $modes->{_inside_parallel_loop} = 0;
+    }
+    if ((not exists $modes->{_current_parallel_loop}) and (not defined $modes->{_current_parallel_loop})) {
+        $modes->{_current_parallel_loop} = [];
+    }
+    if ((defined $loop_label) and ($loop_label =~ m/PARALLEL/gmxs)) {
+        if ($modes->{_inside_parallel_loop}) {
+            die 'ERROR Exxxxx, COMPILER, PARALLELIZATION: Can not declare nested PARALLEL loops, dying';
+        }
+        $modes->{_inside_parallel_loop} = 1;
+        push @{$modes->{_current_parallel_loop}}, 1;
+    }
+    else {
+        push @{$modes->{_current_parallel_loop}}, 0;
+    }
+#    RPerl::diag( 'in Loop::For->ast_to_cpp__generate__CPPOPS_CPPTYPES(), top of subroutine, have $modes->{_current_parallel_loop} = ' . "\n" . Dumper($modes->{_current_parallel_loop}) . "\n" );
+
     # unwrap LoopFor_168 and LoopFor_169 from Loop_165
     if ( $self_class eq 'Loop_165' ) {    # Loop -> LoopFor
         $self       = $self->{children}->[0];
@@ -217,7 +235,14 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             }
             $modes->{_loop_iterators}->{$variable_symbol} = $type_integer;
         }
+#        RPerl::diag( 'in Loop::For->ast_to_cpp__generate__CPPOPS_CPPTYPES(), Perl-style for() loop, have $modes->{_loop_iterators} = ' . "\n" . Dumper($modes->{_loop_iterators}) . "\n" );
+#        RPerl::diag( 'in Loop::For->ast_to_cpp__generate__CPPOPS_CPPTYPES(), Perl-style for() loop, before #pragma scop, have $modes->{_current_parallel_loop} = ' . "\n" . Dumper($modes->{_current_parallel_loop}) . "\n" );
 
+        if ($modes->{_current_parallel_loop}->[-1]) {
+            if ($modes->{parallel} eq 'OPENMP') {
+                $cpp_source_group->{CPP} .= '#pragma scop' . "\n";
+            }
+        }
         $cpp_source_group->{CPP} .= $for . q{ } . $left_paren . q{ } . $variable_symbol . q{ = };
         $cpp_source_subgroup = $subexpression0->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
@@ -240,6 +265,15 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $cpp_source_group->{CPP} .= q{; } . $variable_symbol . '++ ' . $right_paren . q{ };
         $cpp_source_subgroup = $codeblock->ast_to_cpp__generate__CPPOPS_CPPTYPES( $loop_label, $modes );
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+
+#        RPerl::diag( 'in Loop::For->ast_to_cpp__generate__CPPOPS_CPPTYPES(), Perl-style for() loop, before #pragma endscop, have $modes->{_current_parallel_loop} = ' . "\n" . Dumper($modes->{_current_parallel_loop}) . "\n" );
+        if ($modes->{_current_parallel_loop}->[-1]) {
+            if ($modes->{parallel} eq 'OPENMP') {
+                $cpp_source_group->{CPP} .= '#pragma endscop' . "\n";
+            }
+            $modes->{_inside_parallel_loop} = 0;
+        }
+        pop @{$modes->{_current_parallel_loop}};
     }
     elsif ( $self_class eq 'LoopFor_169' ) {
 # LoopFor -> 'for' LPAREN_MY TYPE_INTEGER VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN OpNamedScolonOrSubExp VARIABLE_SYMBOL OP11_COMPARE_LT_GT OpNamedScolonOrSubExp SubExpressionOrVarMod ')' CodeBlock
@@ -296,7 +330,14 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             }
             $modes->{_loop_iterators}->{$variable_symbol0} = $type_integer;
         }
+#        RPerl::diag( 'in Loop::For->ast_to_cpp__generate__CPPOPS_CPPTYPES(), C-style for() loop, have $modes->{_loop_iterators} = ' . "\n" . Dumper($modes->{_loop_iterators}) . "\n" );
+#        RPerl::diag( 'in Loop::For->ast_to_cpp__generate__CPPOPS_CPPTYPES(), C-style for() loop, before #pragma scop, have $modes->{_current_parallel_loop} = ' . "\n" . Dumper($modes->{_current_parallel_loop}) . "\n" );
 
+        if ($modes->{_current_parallel_loop}->[-1]) {
+            if ($modes->{parallel} eq 'OPENMP') {
+                $cpp_source_group->{CPP} .= '#pragma scop' . "\n";
+            }
+        }
         $cpp_source_group->{CPP} .= $for . q{ ( } . $variable_symbol0 . q{ } . $assign . q{ };
 
         my string $opnamed_or_subexp_scolon0_type = ref $opnamed_or_subexp_scolon0;
@@ -351,6 +392,15 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $cpp_source_group->{CPP} .= q{ } . $right_paren . q{ };
         $cpp_source_subgroup = $codeblock->ast_to_cpp__generate__CPPOPS_CPPTYPES($loop_label, $modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+
+#        RPerl::diag( 'in Loop::For->ast_to_cpp__generate__CPPOPS_CPPTYPES(), C-style for() loop, before #pragma endscop, have $modes->{_current_parallel_loop} = ' . "\n" . Dumper($modes->{_current_parallel_loop}) . "\n" );
+        if ($modes->{_current_parallel_loop}->[-1]) {
+            if ($modes->{parallel} eq 'OPENMP') {
+                $cpp_source_group->{CPP} .= '#pragma endscop' . "\n";
+            }
+            $modes->{_inside_parallel_loop} = 0;
+        }
+        pop @{$modes->{_current_parallel_loop}};
     }
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
@@ -358,6 +408,8 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 . ' found where Loop_165, LoopFor_168, or LoopFor_169 expected, dying' )
             . "\n";
     }
+#    RPerl::diag( 'in Loop::For->ast_to_cpp__generate__CPPOPS_CPPTYPES(), bottom of subroutine, have $modes->{_loop_iterators} = ' . "\n" . Dumper($modes->{_loop_iterators}) . "\n" );
+
     return $cpp_source_group;
 };
 

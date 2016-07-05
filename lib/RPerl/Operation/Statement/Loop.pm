@@ -92,6 +92,8 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 . ' found where Loop_165, Loop_166, or Loop_167 expected, dying'
         ) . "\n";
     }
+#    RPerl::diag( 'in Loop->ast_to_cpp__generate__CPPOPS_CPPTYPES(), bottom of subroutine, have $modes->{_loop_iterators} = ' . "\n" . Dumper($modes->{_loop_iterators}) . "\n" );
+
     return $cpp_source_group;
 };
 

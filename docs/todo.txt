@@ -1,10 +1,10 @@
 DONE
     Learning RPerl, <noncode> fix for rperl.org only
-    ~ bitwise negation (AKA one's complement), match Perl & C++ output via 'use integer;'
-    allow 'use integer;' without trying to find & compile 'integer.pm' subdependencies
-    Learning RPerl, examples for 2.1.9 - 2.1.14
-    add calling conventions & data types for all numeric operators, section 2.1
+        Learning RPerl, examples for 2.1.9 - 2.1.14
+        add calling conventions & data types for all numeric operators, section 2.1
     appveyor, add ci.appveyor.com github webhook for Windows
+
+    # BELOW ARE MARKED IN Changes, NEED ARCHIVE NOTES
     enable config of integer type via #define & #ifdef like __CPP__TYPES, either int or long int or long long int, default to match Perl via combo of the following
         script/development/unused/integer_precision.cpp
         perl -e 'use Config; foreach my $o (qw(ivsize ivtype use64bitint use64bitall intsize longsize longlongsize d_longlong i8size i8type i16size i16type i32size i32type i64size i64type)) { print q($Config{) . $o . q(} = ) . $Config{$o} . "\n"; }'
@@ -13,9 +13,12 @@ DONE
         perl -e 'use Config; foreach my $o (qw(nvsize nvtype use64bitall doublesize longdblsize d_longdbl)) { print q($Config{) . $o . q(} = ) . $Config{$o} . "\n"; }'
 
 DOING
+    enable loop parallelization
+        handle gauss_seidel.openmp.cpp.pluto.cloog files
+    Learning
+        EAR17 & any other new errors, parallel OFF OPENMP MPI, num_cores
     enable shorthand classes
     execute via compiled copy not interpreted
-    enable loop parallelization
     add copyright notices to all files
     pass tests on appveyor strawberry
     ExtUtils::CppGuess bug fix w/ davido

@@ -34,6 +34,16 @@ use IPC::Open3;
 use IO::Select;
 use Cwd;
 
+#our string_arrayref_hashref_hashref $filename_suffixes_supported = {
+our hashref_hashref $filename_suffixes_supported = {
+    INPUT_SOURCE  => { PL  => ['.pl'],  PM => ['.pm'] },
+    OUTPUT_SOURCE => { CPP => ['.cpp'], H  => ['.h'], PMC => ['.pmc'], OPENMP_CPP => ['.openmp.cpp'] },
+    OUTPUT_BINARY => { O   => ['.o'],   A  => ['.a'], SO => ['.so'], EXE => [ q{}, '.exe' ], OPENMP_EXE => [ '.openmp', '.openmp.exe' ] }
+
+        # NEED ANSWER: what are the correct Windows file extensions?
+        #    OUTPUT_BINARY => { O => ['.o', '.lib'], A => ['.a', '.lib'], SO => ['.so', '.dll'], EXE => [q{}, '.exe'], OPENMP_EXE => ['.openmp', '.openmp.exe']}
+};
+
 # [[[ SUBROUTINES ]]]
 
 our string_arrayref $find_dependencies = sub {
@@ -272,6 +282,12 @@ our string_hashref $rperl_to_xsbinary__parse_generate_compile = sub {
         save_source_files( $cpp_source_group, $cpp_output_file_name_group, $modes );
     }
 
+    # [[[ AUTO-PARALLELIZE C++ VIA PLUTO & OPENMP ]]]
+
+    if ( $modes->{parallel} eq 'OPENMP' ) {
+        cpp_to_openmp_cpp( $cpp_output_file_name_group, $modes );
+    }
+
     # [[[ SUBCOMPILE C++ TO XS & BINARY ]]]
 
     if (   ( $modes->{compile} eq 'SUBCOMPILE' )
@@ -293,7 +309,7 @@ our hashref_arrayref $generate_output_file_names = sub {
     #    RPerl::diag('in Compiler::generate_output_file_names(), received $input_file_names = ' . "\n" . Dumper($input_file_names) . "\n");
     #    RPerl::diag('in Compiler::generate_output_file_names(), received $output_file_name_prefixes = ' . "\n" . Dumper($output_file_name_prefixes) . "\n");
     #    RPerl::diag('in Compiler::generate_output_file_names(), received $input_files_count = ' . $input_files_count . "\n");
-    #    RPerl::diag('in Compiler::generate_output_file_names(), received $modes = ' . "\n" . Dumper($modes) . "\n");
+    RPerl::diag( 'in Compiler::generate_output_file_names(), received $modes = ' . "\n" . Dumper($modes) . "\n" );
 
     # NEED FIX: add string_hashref_arrayref type
     #    my string_hashref_arrayref $output_file_name_groups = [];
@@ -331,27 +347,27 @@ our hashref_arrayref $generate_output_file_names = sub {
         if ( $input_file_name =~ /[.]pl$/xms ) {
             if ( $modes->{subcompile} eq 'ASSEMBLE' ) {
 
-                # NEED ANSWER: does Micro$oft Windows use *.lib file extension (suffix) for both *.o and *.a assembled object files?
-                # but does that only apply when using the M$ VC++ compiler? so does it apply here?
-                # apply answer to ARCHIVE mode elsif block immediately below; and also for ASSEMBLE & ARCHIVE blocks in *.pm else block below that;
-                # ask similar question for *.so in *NIX vs *.dll in M$, apply to .so elsif blocks below and $filename_suffixes_supported in script/rperl
-                #                if ( $OSNAME eq 'MSWin32' ) {
-                #                    $output_file_name_groups->[$i]->{LIB} = $output_file_name_path_prefix . '.lib';
-                #                }
-                # *NIX uses *.o file extension (suffix) for assembled object files
-                #                else {
-                $output_file_name_groups->[$i]->{O} = $output_file_name_path_prefix . '.o';
+           # NEED ANSWER: does Micro$oft Windows use *.lib file extension (suffix) for both *.o and *.a assembled object files?
+           # but does that only apply when using the M$ VC++ compiler? so does it apply here?
+           # apply answer to ARCHIVE mode elsif block immediately below; and also for ASSEMBLE & ARCHIVE blocks in *.pm else block below that;
+           # ask similar question for *.so in *NIX vs *.dll in M$, apply to .so elsif blocks below and $filename_suffixes_supported in script/rperl
+           #                if ( $OSNAME eq 'MSWin32' ) {
+           #                    $output_file_name_groups->[$i]->{LIB} = $output_file_name_path_prefix . $filename_suffixes_supported->{OUTPUT_BINARY}->{O}->[1];
+           #                }
+           # *NIX uses *.o file extension (suffix) for assembled object files
+           #                else {
+                $output_file_name_groups->[$i]->{O} = $output_file_name_path_prefix . $filename_suffixes_supported->{OUTPUT_BINARY}->{O}->[0];
 
                 #                }
             }
 
             elsif ( $modes->{subcompile} eq 'ARCHIVE' ) {
-                $output_file_name_groups->[$i]->{O}        = $output_file_name_path_prefix . '.o';
+                $output_file_name_groups->[$i]->{O}        = $output_file_name_path_prefix . $filename_suffixes_supported->{OUTPUT_BINARY}->{O}->[0];
                 $output_file_name_groups->[$i]->{_O_label} = ' (temporary)';
-                $output_file_name_groups->[$i]->{A}        = $output_file_name_path_prefix . '.a';
+                $output_file_name_groups->[$i]->{A}        = $output_file_name_path_prefix . $filename_suffixes_supported->{OUTPUT_BINARY}->{A}->[0];
             }
             elsif ( $modes->{subcompile} eq 'SHARED' ) {
-                $output_file_name_groups->[$i]->{SO} = $output_file_name_path_prefix . '.so';
+                $output_file_name_groups->[$i]->{SO} = $output_file_name_path_prefix . $filename_suffixes_supported->{OUTPUT_BINARY}->{SO}->[0];
             }
             elsif (
                    ( $modes->{subcompile} eq 'STATIC' )
@@ -366,12 +382,24 @@ our hashref_arrayref $generate_output_file_names = sub {
             {
                 # Micro$oft Windows uses *.exe file extension (suffix) for compiled executables
                 if ( $OSNAME eq 'MSWin32' ) {
-                    $output_file_name_groups->[$i]->{EXE} = $output_file_name_path_prefix . '.exe';
+                    if ( $modes->{parallel} eq 'OFF' ) {
+                        $output_file_name_groups->[$i]->{EXE} = $output_file_name_path_prefix . $filename_suffixes_supported->{OUTPUT_BINARY}->{EXE}->[1];
+                    }
+                    elsif ( $modes->{parallel} eq 'OPENMP' ) {
+                        $output_file_name_groups->[$i]->{OPENMP_EXE}
+                            = $output_file_name_path_prefix . $filename_suffixes_supported->{OUTPUT_BINARY}->{OPENMP_EXE}->[1];
+                    }
                 }
 
                 # traditionally, *NIX has no file extension (suffix) for compiled executables, non-suffix
                 else {
-                    $output_file_name_groups->[$i]->{EXE} = $output_file_name_path_prefix;
+                    if ( $modes->{parallel} eq 'OFF' ) {
+                        $output_file_name_groups->[$i]->{EXE} = $output_file_name_path_prefix . $filename_suffixes_supported->{OUTPUT_BINARY}->{EXE}->[0];
+                    }
+                    elsif ( $modes->{parallel} eq 'OPENMP' ) {
+                        $output_file_name_groups->[$i]->{OPENMP_EXE}
+                            = $output_file_name_path_prefix . $filename_suffixes_supported->{OUTPUT_BINARY}->{OPENMP_EXE}->[0];
+                    }
                 }
             }
 
@@ -386,15 +414,15 @@ our hashref_arrayref $generate_output_file_names = sub {
         }
         else {    # *.pm input files may generate *.o, *.a, *.so, and/or *.pmc output files
             if ( $modes->{subcompile} eq 'ASSEMBLE' ) {
-                $output_file_name_groups->[$i]->{O} = $output_file_name_path_prefix . '.o';
+                $output_file_name_groups->[$i]->{O} = $output_file_name_path_prefix . $filename_suffixes_supported->{OUTPUT_BINARY}->{O}->[0];
             }
             elsif ( $modes->{subcompile} eq 'ARCHIVE' ) {
-                $output_file_name_groups->[$i]->{O}        = $output_file_name_path_prefix . '.o';
+                $output_file_name_groups->[$i]->{O}        = $output_file_name_path_prefix . $filename_suffixes_supported->{OUTPUT_BINARY}->{O}->[0];
                 $output_file_name_groups->[$i]->{_O_label} = ' (temporary)';
-                $output_file_name_groups->[$i]->{A}        = $output_file_name_path_prefix . '.a';
+                $output_file_name_groups->[$i]->{A}        = $output_file_name_path_prefix . $filename_suffixes_supported->{OUTPUT_BINARY}->{A}->[0];
             }
             elsif ( $modes->{subcompile} eq 'SHARED' ) {
-                $output_file_name_groups->[$i]->{SO} = $output_file_name_path_prefix . '.so';
+                $output_file_name_groups->[$i]->{SO} = $output_file_name_path_prefix . $filename_suffixes_supported->{OUTPUT_BINARY}->{SO}->[0];
             }
             elsif ( $modes->{subcompile} eq 'STATIC' ) {
 
@@ -412,7 +440,7 @@ our hashref_arrayref $generate_output_file_names = sub {
                 )
                 )
             {
-                $output_file_name_groups->[$i]->{PMC} = $output_file_name_path_prefix . '.pmc';
+                $output_file_name_groups->[$i]->{PMC} = $output_file_name_path_prefix . $filename_suffixes_supported->{OUTPUT_SOURCE}->{PMC}->[0];
             }
 
             # NEED ANSWER: allow this subroutine to be called even when we return empty results?
@@ -427,9 +455,12 @@ our hashref_arrayref $generate_output_file_names = sub {
 
         # all CPP ops modes require CPP output files; H output files may optionally be generated as needed
         if ( $modes->{ops} eq 'CPP' ) {
-            $output_file_name_groups->[$i]->{CPP}      = $output_file_name_path_prefix . '.cpp';
-            $output_file_name_groups->[$i]->{H}        = $output_file_name_path_prefix . '.h';
+            $output_file_name_groups->[$i]->{CPP}      = $output_file_name_path_prefix . $filename_suffixes_supported->{OUTPUT_SOURCE}->{CPP}->[0];
+            $output_file_name_groups->[$i]->{H}        = $output_file_name_path_prefix . $filename_suffixes_supported->{OUTPUT_SOURCE}->{H}->[0];
             $output_file_name_groups->[$i]->{_H_label} = ' (if needed)';
+            if ( $modes->{parallel} eq 'OPENMP' ) {
+                $output_file_name_groups->[$i]->{OPENMP_CPP} = $output_file_name_path_prefix . $filename_suffixes_supported->{OUTPUT_SOURCE}->{OPENMP_CPP}->[0];
+            }
         }
 
 #        RPerl::diag('in Compiler::generate_output_file_names(), bottom of loop ' . $i . ' of ' . ($input_files_count - 1) . ", have \$output_file_name_groups->[$i] = \n" . Dumper( $output_file_name_groups->[$i] ) . "\n");
@@ -565,7 +596,7 @@ our string $post_processor_cpp__header_or_cpp_path = sub {
 
     # remove leading '.\' or './' if present
     if ( $OSNAME eq 'MSWin32' ) {
-        if ((substr $file_path, 0, 2 ) eq q{.\\} ) {
+        if ( ( substr $file_path, 0, 2 ) eq q{.\\} ) {
             substr $file_path, 0, 2, q{};
         }
     }
@@ -588,18 +619,18 @@ our string $post_processor_cpp__lib_path_delete = sub {
     ( my string $path ) = @_;
 
     if ( ( $OSNAME eq 'MSWin32' ) ) {
-        if ((substr $path, 0, 4) eq 'lib\\') {
+        if ( ( substr $path, 0, 4 ) eq 'lib\\' ) {
             substr $path, 0, 4, q{};
         }
-        elsif ((substr $path, 0, 9 ) eq 'blib\\lib\\') {
+        elsif ( ( substr $path, 0, 9 ) eq 'blib\\lib\\' ) {
             substr $path, 0, 9, q{};
         }
     }
     else {
-        if (( substr $path, 0, 4 ) eq 'lib/' ) {
+        if ( ( substr $path, 0, 4 ) eq 'lib/' ) {
             substr $path, 0, 4, q{};
         }
-        elsif (( substr $path, 0, 9 ) eq 'blib/lib/' ) {
+        elsif ( ( substr $path, 0, 9 ) eq 'blib/lib/' ) {
             substr $path, 0, 9, q{};
         }
     }
@@ -627,26 +658,27 @@ our string $post_processor_perl__comments_whitespace_delete = sub {
     my string_arrayref $input_source_code_split_tmp = [];
 
     my boolean $inside_comment = 0;
-    my boolean $inside_string = 0;
+    my boolean $inside_string  = 0;
     my boolean $inside_heredoc = 0;
     my boolean $inside_indent;
     my string $open_quote_string;
     my string $open_quote_heredoc;
     foreach my string $input_source_code_line ( @{$input_source_code_split} ) {
+
 #        RPerl::diag( 'in Compiler::post_processor_perl__comments_whitespace_delete(), have $input_source_code_line = ' . q{'} . $input_source_code_line . q{'} . "\n" );
 #        RPerl::diag( 'in C::ppp__cwd(), $iscl = ' . q{'} . $input_source_code_line . q{'} . "\n" );
         if ($inside_comment) {
-            if ( $input_source_code_line =~ m/^=cut$/xms ) { $inside_comment = 0; next; }  # delete end of multi-line POD =COMMENT
-            next;  # delete middle of multi-line POD =COMMENT
+            if ( $input_source_code_line =~ m/^=cut$/xms ) { $inside_comment = 0; next; }    # delete end of multi-line POD =COMMENT
+            next;                                                                            # delete middle of multi-line POD =COMMENT
         }
         if ($inside_heredoc) {
-            if ($input_source_code_line eq $open_quote_heredoc) { $inside_heredoc = 0; }
+            if ( $input_source_code_line eq $open_quote_heredoc ) { $inside_heredoc = 0; }
             push @{$input_source_code_split_tmp}, $input_source_code_line;
             next;
         }
-        if ( $input_source_code_line =~ m/^\s*$/xms )     { next; }    # delete blank or all-whitespace line
-        if ( $input_source_code_line =~ m/^\s*[#][^#!]/xms ) { next; }    # delete whole-line # COMMENT
-        if ( $input_source_code_line =~ m/^=\w+/xms ) { $inside_comment = 1; next; }    # delete beginning of multi-line POD =COMMENT
+        if ( $input_source_code_line =~ m/^\s*$/xms )        { next; }                         # delete blank or all-whitespace line
+        if ( $input_source_code_line =~ m/^\s*[#][^#!]/xms ) { next; }                         # delete whole-line # COMMENT
+        if ( $input_source_code_line =~ m/^=\w+/xms )        { $inside_comment = 1; next; }    # delete beginning of multi-line POD =COMMENT
 
         $inside_indent = 1;
 
@@ -657,7 +689,7 @@ our string $post_processor_perl__comments_whitespace_delete = sub {
         my boolean $advance_one = 0;
         for my integer $i ( 0 .. ( ( length $input_source_code_line ) - 1 ) ) {
             $current_character = substr $input_source_code_line, $i, 1;
-            if (($inside_indent) and ($current_character !~ m/[ \t]/xms)) {
+            if ( ($inside_indent) and ( $current_character !~ m/[ \t]/xms ) ) {
                 $inside_indent = 0;
             }
 
@@ -670,23 +702,23 @@ our string $post_processor_perl__comments_whitespace_delete = sub {
             if ( not $inside_string ) {
                 if ( $current_character eq '#' ) {
                     $next_character = substr $input_source_code_line, ( $i + 1 ), 1;
-                    if ( ( $next_character eq '!' ) or ( $next_character eq '#' ) ) { $advance_one = 1; }  # do not delete shebang #! or critics ##
-                    else { last; }  # delete partial-line # COMMENT
+                    if ( ( $next_character eq '!' ) or ( $next_character eq '#' ) ) { $advance_one = 1; }    # do not delete shebang #! or critics ##
+                    else                                                            { last; }                # delete partial-line # COMMENT
                 }
                 elsif ( $current_character eq q{'} ) {
-                    $inside_string = 1;
-                    $open_quote_string    = q{'};
+                    $inside_string     = 1;
+                    $open_quote_string = q{'};
                 }
                 elsif ( $current_character eq q{"} ) {
-                    $inside_string = 1;
-                    $open_quote_string    = q{"};
+                    $inside_string     = 1;
+                    $open_quote_string = q{"};
                 }
                 elsif ( $current_character eq 'q' ) {
                     $next_character = substr $input_source_code_line, ( $i + 1 ), 1;
                     if ( $next_character eq '{' ) {
-                        $inside_string = 1;
-                        $advance_one   = 1;
-                        $open_quote_string    = 'q{';
+                        $inside_string     = 1;
+                        $advance_one       = 1;
+                        $open_quote_string = 'q{';
                     }
                 }
                 elsif ( $current_character eq '<' ) {
@@ -694,31 +726,32 @@ our string $post_processor_perl__comments_whitespace_delete = sub {
                     if ( $next_character eq '<' ) {
                         $inside_heredoc = 1;
                         $open_quote_heredoc = substr $input_source_code_line, ( $i + 2 );
-                        if ((substr $open_quote_heredoc, 0, 1) eq q{'}) { substr $open_quote_heredoc, 0, 1, q{}; }
-                        if ((substr $open_quote_heredoc, 0, 1) eq q{"}) { substr $open_quote_heredoc, 0, 1, q{}; }
-                        $open_quote_heredoc =~ s/\s+$//xms;  # delete trailing whitespace after heredoc open quote and semicolon
-                        if ((substr $open_quote_heredoc, -1, 1) eq q{;}) { substr $open_quote_heredoc, -1, 1, q{}; }
-                        $open_quote_heredoc =~ s/\s+$//xms;  # delete whitespace between heredoc open quote and semicolon
-                        if ((substr $open_quote_heredoc, -1, 1) eq q{'}) { substr $open_quote_heredoc, -1, 1, q{}; }
-                        if ((substr $open_quote_heredoc, -1, 1) eq q{"}) { substr $open_quote_heredoc, -1, 1, q{}; }
+                        if ( ( substr $open_quote_heredoc, 0, 1 ) eq q{'} ) { substr $open_quote_heredoc, 0, 1, q{}; }
+                        if ( ( substr $open_quote_heredoc, 0, 1 ) eq q{"} ) { substr $open_quote_heredoc, 0, 1, q{}; }
+                        $open_quote_heredoc =~ s/\s+$//xms;    # delete trailing whitespace after heredoc open quote and semicolon
+                        if ( ( substr $open_quote_heredoc, -1, 1 ) eq q{;} ) { substr $open_quote_heredoc, -1, 1, q{}; }
+                        $open_quote_heredoc =~ s/\s+$//xms;    # delete whitespace between heredoc open quote and semicolon
+                        if ( ( substr $open_quote_heredoc, -1, 1 ) eq q{'} ) { substr $open_quote_heredoc, -1, 1, q{}; }
+                        if ( ( substr $open_quote_heredoc, -1, 1 ) eq q{"} ) { substr $open_quote_heredoc, -1, 1, q{}; }
                     }
                 }
+
                 # delete extra whitespace inserted by Perl::Tidy
-                elsif ((not $inside_indent) and ( $current_character =~ m/[ \t]/xms )) {
+                elsif ( ( not $inside_indent ) and ( $current_character =~ m/[ \t]/xms ) ) {
                     $next_character = substr $input_source_code_line, ( $i + 1 ), 1;
-                    if ( $next_character =~ m/[ \t]/xms ) { next; }  # delete extra whitespace
+                    if ( $next_character =~ m/[ \t]/xms ) { next; }    # delete extra whitespace
                 }
             }
-            else {                                            # $inside_string
-                if (    ( $current_character eq q{'} ) and ( $open_quote_string eq q{'} ) ) { $inside_string = 0; }
+            else {                                                     # $inside_string
+                if    ( ( $current_character eq q{'} ) and ( $open_quote_string eq q{'} ) ) { $inside_string = 0; }
                 elsif ( ( $current_character eq q{"} ) and ( $open_quote_string eq q{"} ) ) { $inside_string = 0; }
-                elsif ( ( $current_character eq '}' ) and ( $open_quote_string eq 'q{'  ) ) { $inside_string = 0; }
+                elsif ( ( $current_character eq '}' )  and ( $open_quote_string eq 'q{' ) ) { $inside_string = 0; }
             }
             $input_source_code_line_tmp .= $current_character;
         }
         $input_source_code_line = $input_source_code_line_tmp;
 
-        $input_source_code_line =~ s/[ \t]+$//xms;    # delete trailing whitespace, if present
+        $input_source_code_line =~ s/[ \t]+$//xms;                     # delete trailing whitespace, if present
 
         push @{$input_source_code_split_tmp}, $input_source_code_line;
     }
@@ -779,8 +812,9 @@ our string $post_processor_cpp__comments_whitespace_delete = sub {
                 else {                # not $inside_comment
                     if ( $current_character eq '/' ) {
                         $next_character = substr $input_source_code_line, ( $i + 1 ), 1;
-                        if ( $next_character eq '/' ) { last; }  # delete partial-line // COMMENT
+                        if ( $next_character eq '/' ) { last; }    # delete partial-line // COMMENT
                         elsif ( $next_character eq '*' ) {
+
                             # delete beginning of partial-line or multi-line /* COMMENT */
                             $advance_one    = 1;
                             $inside_comment = 1;
@@ -795,14 +829,15 @@ our string $post_processor_cpp__comments_whitespace_delete = sub {
                         $inside_string = 1;
                         $open_quote    = q{"};
                     }
+
                     # NEED UPGRADE: can not delete extra whitespace characters here, because it destroys indentation
-#                    elsif ( $current_character =~ m/[ \t]/ ) {
-#                        $next_character = substr $input_source_code_line, ( $i + 1 ), 1;
-#                        if ( $next_character =~ m/[ \t]/ ) { next; }    # delete extra whitespace
-#                    }
+                    #                    elsif ( $current_character =~ m/[ \t]/ ) {
+                    #                        $next_character = substr $input_source_code_line, ( $i + 1 ), 1;
+                    #                        if ( $next_character =~ m/[ \t]/ ) { next; }    # delete extra whitespace
+                    #                    }
                 }
             }
-            else {                                                      # $inside_string
+            else {    # $inside_string
                 if    ( ( $current_character eq q{'} ) and ( $open_quote eq q{'} ) ) { $inside_string = 0; }
                 elsif ( ( $current_character eq q{"} ) and ( $open_quote eq q{"} ) ) { $inside_string = 0; }
                 elsif ( $current_character eq '\\' ) {
@@ -828,11 +863,12 @@ our string $post_processor_cpp__comments_whitespace_delete = sub {
 #our string $post_processor__absolute_path_delete = sub {  # DEV NOTE: must have non-typed sub header to be called from BEGIN block in t/10_precompiled_oo_inherit.t
 sub post_processor__absolute_path_delete {
     ( my string $input_path ) = @_;
-#    RPerl::diag( 'in Compiler::post_processor__absolute_path_delete(), received $input_path = ' . $input_path . "\n" );
+
+    #    RPerl::diag( 'in Compiler::post_processor__absolute_path_delete(), received $input_path = ' . $input_path . "\n" );
 
     my string $current_working_directory = getcwd;
 
-#    RPerl::diag( 'in Compiler::post_processor__absolute_path_delete(), have $current_working_directory = ' . $current_working_directory . "\n" );
+    #    RPerl::diag( 'in Compiler::post_processor__absolute_path_delete(), have $current_working_directory = ' . $current_working_directory . "\n" );
 
     if ( ( substr $input_path, 0, ( length $current_working_directory ) ) eq $current_working_directory ) {
         return substr $input_path, ( ( length $current_working_directory ) + 1 );
@@ -863,7 +899,8 @@ our string $post_processor_cpp__pmc_generate = sub {
     # DEV NOTE: only generate PMC output file in dynamic (default) subcompile mode
     if ( $modes->{subcompile} eq 'DYNAMIC' ) {
         if ( ( exists $source_group->{PMC} ) and ( defined $source_group->{PMC} ) and ( $source_group->{PMC} ne q{} ) ) {
-#            RPerl::diag( q{in Compiler::save_source_files(), have $source_group = } . Dumper($source_group) . "\n" );
+
+            #            RPerl::diag( q{in Compiler::save_source_files(), have $source_group = } . Dumper($source_group) . "\n" );
             die 'ERROR ECOCOFI01, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Received non-empty PMC source, dying' . "\n";
         }
 
@@ -928,7 +965,8 @@ our string $post_processor_cpp__pmc_generate = sub {
             my string $pm_file_path = $file_name_group->{PMC};
             chop $pm_file_path;    # remove the 'c' from 'pmc' file suffix
             while ( $file_line = <$FILE_HANDLE> ) {
-#                $file_line =~ s/lib\/RPerl\/CompileUnit\/Module\.cpp/$cpp_file_path/gxms;
+
+                #                $file_line =~ s/lib\/RPerl\/CompileUnit\/Module\.cpp/$cpp_file_path/gxms;
                 $file_line =~ s/RPerl\/CompileUnit\/Module\.cpp/$cpp_file_path/gxms;
                 $file_line =~ s/RPerl::CompileUnit::Module/$module_name/gxms;
                 $file_line =~ s/RPerl__CompileUnit__Module/$module_name_underscores/gxms;
@@ -954,7 +992,7 @@ our string $post_processor_cpp__pmc_generate = sub {
                     else { $file_line = undef; }
                 }
                 elsif ( $file_line eq ( '# <<< CHANGE_ME: add distribution-specific config include here >>>' . "\n" ) ) {
-                    my string $distribution_package = (split /::/, $source_group->{_package_name})[0];
+                    my string $distribution_package = ( split /::/, $source_group->{_package_name} )[0];
                     $file_line = 'use ' . $distribution_package . '::Config;' . "\n";
                 }
                 elsif ( $file_line eq ( '# <<< CHANGE_ME: add user-defined includes here >>>' . "\n" ) ) {
@@ -1012,6 +1050,120 @@ our string $post_processor_cpp__pmc_generate = sub {
             $i++;
         }
     }
+};
+
+# Auto-Parallelize from Serial C++ File to Parallel C++ File via Pluto PolyCC & OpenMP
+our void $cpp_to_openmp_cpp = sub {
+    ( my string_hashref $cpp_output_file_name_group, my string_hashref $modes ) = @_;
+
+    RPerl::diag( q{in Compiler::cpp_to_openmp_cpp(), received $cpp_output_file_name_group =} . "\n" . Dumper($cpp_output_file_name_group) . "\n" );
+
+    #    RPerl::diag( q{in Compiler::cpp_to_openmp_cpp(), received $modes =} . "\n" . Dumper($modes) . "\n" );
+
+    #    RPerl::diag( q{in Compiler::cpp_to_openmp_cpp(), NOT DOING ANYTHING YET} . "\n" );
+    #    return;
+    #    die 'TMP DEBUG';
+
+    # START HERE: modify pluto min/max macros & calls, modify final g++ command
+    # START HERE: modify pluto min/max macros & calls, modify final g++ command
+    # START HERE: modify pluto min/max macros & calls, modify final g++ command
+
+    # THEN START HERE, NEED FIX PARALLEL: enable non-pluto min/max sub calls, re-enable prints
+    RPerl::verbose('PARALLELIZE:        Generate OpenMP Code...     ');
+
+    my string $polycc_path = can_run('polycc');
+    if ( not defined $polycc_path ) {
+        die 'ERROR Exxxxx, COMPILER, PARALLELIZATION: Pluto PolyCC command `polycc` not found, dying';
+    }
+    my string $polycc_command
+        = $polycc_path . q{ } . $cpp_output_file_name_group->{CPP} . ' -o ' . $cpp_output_file_name_group->{OPENMP_CPP} . ' --parallel --tile';
+
+    RPerl::diag( 'in Compiler::cpp_to_openmp_cpp(), have $polycc_command =' . "\n\n" . $polycc_command . "\n" );
+
+    # ACTUALLY RUN POLYCC COMMAND
+    my $pid = open3( 0, \*POLYCC_STDOUT, \*POLYCC_STDERR, $polycc_command );    # disable STDIN w/ 0
+
+    my $stdout_select;
+    my $stderr_select;
+    if ( $OSNAME ne 'MSWin32' ) {
+        $stdout_select = IO::Select->new();
+        $stderr_select = IO::Select->new();
+        $stdout_select->add( \*POLYCC_STDOUT );
+        $stderr_select->add( \*POLYCC_STDERR );
+    }
+
+    my string $polycc_command_stdout = q{};
+    my string $polycc_command_stderr = q{};
+
+    if ( $OSNAME eq 'MSWin32' || $stdout_select->can_read(0) ) { sysread POLYCC_STDOUT, $polycc_command_stdout, 4096; }
+    if ( $OSNAME eq 'MSWin32' || $stderr_select->can_read(0) ) { sysread POLYCC_STDERR, $polycc_command_stderr, 4096; }
+    waitpid $pid, 0;
+    if ( $OSNAME eq 'MSWin32' || $stdout_select->can_read(0) ) { my $s; sysread POLYCC_STDOUT, $s, 4096; $polycc_command_stdout .= $s; }
+    if ( $OSNAME eq 'MSWin32' || $stderr_select->can_read(0) ) { my $s; sysread POLYCC_STDERR, $s, 4096; $polycc_command_stderr .= $s; }
+
+    my $test_exit_status = $CHILD_ERROR >> 8;
+
+    #    RPerl::diag( 'in Compiler::cpp_to_openmp_cpp(), have $CHILD_ERROR = ' . $CHILD_ERROR . "\n" );
+    #    RPerl::diag( 'in Compiler::cpp_to_openmp_cpp(), have $test_exit_status = ' . $test_exit_status . "\n" );
+
+    RPerl::verbose( '         done.' . "\n" );
+
+    #        if ($polycc_command_stdout) { RPerl::diag( "===STDOUT=BEGIN===\n" . $polycc_command_stdout . "===STDOUT=END===\n" ); }
+    #        if ($polycc_command_stderr) { RPerl::diag( "===STDERR=BEGIN===\n" . $polycc_command_stderr . "===STDERR=END===\n" ); }
+    my boolean $polycc_command_stdout_content = ( ( defined $polycc_command_stdout ) and ( $polycc_command_stdout =~ m/[^\s]+/g ) );
+    my boolean $polycc_command_stderr_content = ( ( defined $polycc_command_stderr ) and ( $polycc_command_stderr =~ m/[^\s]+/g ) );
+
+    if ( $polycc_command_stdout_content or $polycc_command_stderr_content ) {
+        RPerl::diag("\n");
+        if ($polycc_command_stdout_content) {
+            RPerl::diag( '[[[ POLYCC STDOUT ]]]' . "\n\n" . $polycc_command_stdout . "\n" );
+        }
+        if ($polycc_command_stderr_content) {
+            RPerl::diag( '[[[ POLYCC STDERR ]]]' . "\n\n" . $polycc_command_stderr . "\n" );
+        }
+        # NEED FIX PARALLEL: actually test polycc output for failure or error messages, etc.
+#        if ( $test_exit_status == 0 ) {    # UNIX process return code 0, success
+#            RPerl::warning( 'WARNING WCOCOSU00, COMPILER, POLYCC: Pluto PolyCC compiler returned success code but produced output which may indicate an error,' . "\n" . 'please run again with `rperl -D` command or RPERL_DEBUG=1 environmental variable for error messages or other output if none appear above' . "\n" );
+#        }
+    }
+
+    if ($test_exit_status) {               # UNIX process return code not 0, error
+        if ( not( $polycc_command_stdout_content or $polycc_command_stderr_content ) ) {
+            RPerl::diag( "\n" . '[[[ POLYCC STDOUT & STDERR ARE BOTH EMPTY ]]]' . "\n\n" );
+        }
+        croak 'ERROR Exxxxx, COMPILER, POLYCC: Pluto PolyCC compiler returned error code,' . "\n"
+            . 'please run again with `rperl -D` command or RPERL_DEBUG=1 environmental variable for error messages if none appear above,' . "\n"
+            . 'croaking';
+    }
+    
+    # NEED FIX PARALLEL: temporarily disable all user-defined or non-pluto uses of string 'min' and 'max' within parallel loop
+
+    if (( not -e $cpp_output_file_name_group->{OPENMP_CPP} ) or ( not -f $cpp_output_file_name_group->{OPENMP_CPP} ) or ( not -T $cpp_output_file_name_group->{OPENMP_CPP} )) {
+        die 'ERROR Exxxxx, COMPILER, PARALLELIZATION: Missing or invalid Pluto PolyCC output file, ' . q{'} . $cpp_output_file_name_group->{OPENMP_CPP} . q{'} . "\n" . ', dying' . "\n";
+    }
+
+    open my filehandleref $FILE_HANDLE_POLYCC, '<', $cpp_output_file_name_group->{OPENMP_CPP}
+        or die 'ERROR Exxxxx, COMPILER, PARALLELIZATION: Cannot open Pluto PolyCC output file ' . q{'} . $cpp_output_file_name_group->{OPENMP_CPP} . q{'} . ' for reading,' . $OS_ERROR . ', dying' . "\n";
+
+    # read in file, strip blank lines
+    my string $file_line_polycc;
+    my string $string_polycc = q{};
+    while ( $file_line_polycc = <$FILE_HANDLE_POLYCC> ) {
+        $file_line_polycc =~ s/min/polyccmin/gxms;
+        $file_line_polycc =~ s/max/polyccmax/gxms;
+        $string_polycc .= $file_line_polycc;
+    }
+
+    close $FILE_HANDLE_POLYCC
+        or die 'ERROR Exxxxx, COMPILER, PARALLELIZATION: Cannot close file ' . q{'} . $cpp_output_file_name_group->{OPENMP_CPP} . q{'} . ' after reading, ' . $OS_ERROR . ', dying' . "\n";
+
+    open $FILE_HANDLE_POLYCC, '>', $cpp_output_file_name_group->{OPENMP_CPP}
+        or die 'ERROR Exxxxx, COMPILER, PARALLELIZATION: Cannot open Pluto PolyCC output file ' . q{'} . $cpp_output_file_name_group->{OPENMP_CPP} . q{'} . ' for writing,' . $OS_ERROR . ', dying' . "\n";
+
+    print {$FILE_HANDLE_POLYCC} $string_polycc;
+
+    close $FILE_HANDLE_POLYCC
+        or die 'ERROR Exxxxx, COMPILER, PARALLELIZATION: Cannot close file ' . q{'} . $cpp_output_file_name_group->{OPENMP_CPP} . q{'} . ' after writing, ' . $OS_ERROR . ', dying' . "\n";
 };
 
 # Sub-Compile from C++-Parsable String to Perl-Linkable XS & Machine-Readable Binary
@@ -1088,23 +1240,40 @@ our void $cpp_to_xsbinary__subcompile = sub {
         }
         $subcompile_command .= q{ } . '"-I' . $RPerl::CORE_PATH . '"';
 
-        $subcompile_command .= q{ } . $cpp_output_file_name_group->{CPP};
-        $subcompile_command .= q{ } . '-o ';
 
-        if (   ( $modes->{subcompile} eq 'ASSEMBLE' )
-            or ( $modes->{subcompile} eq 'ARCHIVE' ) )
-        {
-            $subcompile_command .= q{ } . $cpp_output_file_name_group->{O};
-        }
-        elsif ( $modes->{subcompile} eq 'SHARED' ) {
-            $subcompile_command .= q{ } . $cpp_output_file_name_group->{SO};
-        }
-        elsif (( $modes->{subcompile} eq 'STATIC' )
-            or ( $modes->{subcompile} eq 'DYNAMIC' ) )
-        {
-            $subcompile_command .= q{ } . $cpp_output_file_name_group->{EXE};
-        }
 
+
+        if ($modes->{parallel} eq 'OFF') {
+            $subcompile_command .= q{ } . $cpp_output_file_name_group->{CPP};
+            $subcompile_command .= q{ } . '-o ';
+    
+            if (   ( $modes->{subcompile} eq 'ASSEMBLE' )
+                or ( $modes->{subcompile} eq 'ARCHIVE' ) )
+            {
+                $subcompile_command .= q{ } . $cpp_output_file_name_group->{O};
+            }
+            elsif ( $modes->{subcompile} eq 'SHARED' ) {
+                $subcompile_command .= q{ } . $cpp_output_file_name_group->{SO};
+            }
+            elsif (( $modes->{subcompile} eq 'STATIC' )
+                or ( $modes->{subcompile} eq 'DYNAMIC' ) )
+            {
+                $subcompile_command .= q{ } . $cpp_output_file_name_group->{EXE};
+            }
+        }
+        elsif ($modes->{parallel} eq 'OPENMP') {
+            $subcompile_command .= q{ } . '-mtune=native -ftree-vectorize -DTIME -fopenmp';
+            $subcompile_command .= q{ } . $cpp_output_file_name_group->{OPENMP_CPP};
+            $subcompile_command .= q{ } . '-o ';
+    
+            # NEED FIX PARALLEL: handle other subcompile modes???
+            if (( $modes->{subcompile} eq 'STATIC' )
+                or ( $modes->{subcompile} eq 'DYNAMIC' ) )
+            {
+                $subcompile_command .= q{ } . $cpp_output_file_name_group->{OPENMP_EXE};
+            }
+        }
+        
         if ( $modes->{subcompile} eq 'SHARED' ) {
             $subcompile_command .= q{ } . '-shared';
         }
@@ -1115,6 +1284,9 @@ our void $cpp_to_xsbinary__subcompile = sub {
         if (   ( $modes->{subcompile} eq 'STATIC' )
             or ( $modes->{subcompile} eq 'DYNAMIC' ) )
         {
+            if ($modes->{parallel} eq 'OPENMP') {
+                $subcompile_command .= q{ } . '-lm';    # not in original Inline::CPP subcompile command
+            }
             $subcompile_command .= q{ } . '-lperl';    # not in original Inline::CPP subcompile command
         }
 
@@ -1130,7 +1302,7 @@ our void $cpp_to_xsbinary__subcompile = sub {
             else                          { $subcompile_command .= q{ } . ' > /dev/null'; }
         }
 
-        #        RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $subcompile_command =' . "\n\n" . $subcompile_command . "\n" );
+        RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $subcompile_command =' . "\n\n" . $subcompile_command . "\n" );
 
         # ACTUALLY RUN SUBCOMPILE COMMAND
         my $pid = open3( 0, \*SUBCOMPILE_STDOUT, \*SUBCOMPILE_STDERR, $subcompile_command );    # disable STDIN w/ 0

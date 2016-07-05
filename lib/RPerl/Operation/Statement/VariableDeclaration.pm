@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::VariableDeclaration;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_200;
+our $VERSION = 0.006_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement);
@@ -341,7 +341,9 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             }
             elsif ($is_constructor_call_special) {
                 if ( exists $rperlnamespaces_generated::RPERL->{ $type . '::' } ) {
-                    if ($type eq 'integer_arrayref_arrayref') {
+                    if (($type eq 'integer_arrayref_arrayref') or ($type eq 'number_arrayref_arrayref') or ($type eq 'string_arrayref_arrayref')) {
+                        my string $base_type = (split /_/, $type)[0];
+#                        RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $base_type = ' . $base_type . "\n" );
                         $cpp_source_group->{CPP} .= '(';
                         if (not exists $opnamed_or_subexp_or_input_scolon->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0]) {
                             die 'ERROR ECOGEASCP60, CODE GENERATOR, ABSTRACT SYNTAX TO C++: first argument missing, constructor for type ' . $type . ', dying' . "\n";
@@ -351,7 +353,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                         }
                         my string $row_count_argument = $opnamed_or_subexp_or_input_scolon->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0];
                         substr $row_count_argument, 0, 1, q{};  # remove leading '$' sigil
-                        $cpp_source_group->{CPP} .= $row_count_argument . ', integer_arrayref(';
+                        $cpp_source_group->{CPP} .= $row_count_argument . ', ' . $base_type . '_arrayref(';
 #                        RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $opnamed_or_subexp_or_input_scolon->... = ' . "\n" . RPerl::Parser::rperl_ast__dump($opnamed_or_subexp_or_input_scolon->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]->{children}->[1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0]) . "\n" );
                         my string $column_count_argument = $opnamed_or_subexp_or_input_scolon->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]->{children}->[1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0];
                         substr $column_count_argument, 0, 1, q{};  # remove leading '$' sigil

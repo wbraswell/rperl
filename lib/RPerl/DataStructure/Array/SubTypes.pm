@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array::SubTypes;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_200;
+our $VERSION = 0.008_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd)  # DEVELOPER DEFAULT 1b: allow unreachable & POD-commented code, must be after line 1
@@ -600,12 +600,40 @@ our integer_arrayref_arrayref::method $new = sub {
     return $retval;
 };
 
+# method returning (ref to array) of (refs to (arrays of numbers))
+package  # hide from PAUSE indexing
+    number_arrayref_arrayref::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
+
 # (ref to array) of (refs to (arrays of numbers))
 package  # hide from PAUSE indexing
     number_arrayref_arrayref;
 use strict;
 use warnings;
 use parent -norequire, qw(arrayref_arrayref);
+
+# emulate C++ behavior by actually creating arrays (and presumably allocating memory) at initialization time
+our number_arrayref_arrayref::method $new = sub {
+    ( my integer $row_count, my integer $column_count ) = @_;  # row-major form (RMF)
+    my number_arrayref_arrayref $retval = [];
+    for my integer $j (0 .. ($row_count - 1)) {
+        my number_arrayref $retval_row = [];
+        for my integer $i (0 .. ($column_count - 1)) {
+            $retval_row->[$i] = undef;
+        }
+        $retval->[$j] = $retval_row;
+    }
+    return $retval;
+};
+
+# method returning (ref to array) of (refs to (arrays of strings))
+package  # hide from PAUSE indexing
+    string_arrayref_arrayref::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
 
 # (ref to array) of (refs to (arrays of strings))
 package  # hide from PAUSE indexing
@@ -614,12 +642,47 @@ use strict;
 use warnings;
 use parent -norequire, qw(arrayref_arrayref);
 
+# emulate C++ behavior by actually creating arrays (and presumably allocating memory) at initialization time
+our string_arrayref_arrayref::method $new = sub {
+    ( my integer $row_count, my integer $column_count ) = @_;  # row-major form (RMF)
+    my string_arrayref_arrayref $retval = [];
+    for my integer $j (0 .. ($row_count - 1)) {
+        my string_arrayref $retval_row = [];
+        for my integer $i (0 .. ($column_count - 1)) {
+            $retval_row->[$i] = undef;
+        }
+        $retval->[$j] = $retval_row;
+    }
+    return $retval;
+};
+
+# method returning (ref to array) of (refs to (arrays of scalartypes))
+package  # hide from PAUSE indexing
+    scalartype_arrayref_arrayref::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
+
 # (ref to array) of (refs to (arrays of scalars))
 package  # hide from PAUSE indexing
     scalartype_arrayref_arrayref;
 use strict;
 use warnings;
 use parent -norequire, qw(arrayref_arrayref);
+
+# emulate C++ behavior by actually creating arrays (and presumably allocating memory) at initialization time
+our scalartype_arrayref_arrayref::method $new = sub {
+    ( my integer $row_count, my integer $column_count ) = @_;  # row-major form (RMF)
+    my scalartype_arrayref_arrayref $retval = [];
+    for my integer $j (0 .. ($row_count - 1)) {
+        my scalartype_arrayref $retval_row = [];
+        for my integer $i (0 .. ($column_count - 1)) {
+            $retval_row->[$i] = undef;
+        }
+        $retval->[$j] = $retval_row;
+    }
+    return $retval;
+};
 
 # [[[ ARRAY ARRAY ARRAYS (3-dimensional) ]]]
 
