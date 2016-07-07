@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.093_000;
+our $VERSION = 0.094_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -772,9 +772,9 @@ L<http://komodoide.com/perl>
     my integer $foo = 21 + 12;
     my integer $bar = 23 * 42 * 2;
     my number  $baz = to_number($bar) / $foo;
-    print 'have $foo = ' . to_string($foo) . "\n";
-    print 'have $bar = ' . to_string($bar) . "\n";
-    print 'have $baz = ' . to_string($baz) . "\n";
+    print 'have $foo = ', to_string($foo), "\n";
+    print 'have $bar = ', to_string($bar), "\n";
+    print 'have $baz = ', to_string($baz), "\n";
 
 =head2 Section 1.23: What Is Inside That RPerl Program?
 
@@ -790,7 +790,7 @@ The I<"critics"> section is included as necessary and may contain 1 or more line
 
 The I<"operations"> section is required and contains 1 or more lines of general-purpose RPerl source code.  This is the main body of your program.  The 6 lines of source code in our example are used to perform some simple arithmetic and display the results.  The C<my integer $foo = 21 + 12;> line declares a new variable named C<$foo> which will only contain non-floating-point numeric data, and which is initialized to contain the arithmetic result of numeric literal values C<21> plus C<12>.  The C<my integer $bar = 23 * 42 * 2;> line does much the same thing, creating a new numeric variable named C<$bar> and initialized with C<23> times C<42> times C<2>.  The C<my number $baz = to_number($bar) / $foo;> line creates a new floating-point numeric variable C<$baz>, and initializes it to the quotient of the C<$bar> and C<$foo> variables.  The C<to_number()> RPerl type conversion subroutine converts a non-floating-point C<integer> value to a floating-point C<number> value.
 
-The C<print 'have $foo = ' . to_string($foo) . "\n";> and following 2 lines will display on screen (not send to paper printer) the labeled values of C<$foo>, C<$bar>, and C<$baz> respectively.  The C<.> dot operator is string concatenation, used in this example to create one string out of 3 parts so there is only 1 argument parameter passed to the C<print> operator.  The C<to_string()> RPerl type conversion subroutine converts the numeric values to underscore-formatted string values, suitable for use via the C<print> operator.  The "n" in the C<"\n"> double-quoted string literal values stands for "newline", which inserts a carriage return to place the next piece of printed data down on the following line.
+The C<print 'have $foo = ', $foo, "\n";> and following 2 lines will display on screen (not send to paper printer) the labeled values of C<$foo>, C<$bar>, and C<$baz> respectively.  The C<,> comma is used to separate multiple arguments passed to the C<print> operator.  The C<to_string()> RPerl type conversion subroutine converts the numeric values to underscore-formatted string values, suitable for use via the C<print> operator.  If the <to_string()> subroutine is not used, then the displayed numeric values will still be human-readable, but will not contain the proper underscores to be accepted back into RPerl as valid numeric data.  The "n" in the C<"\n"> double-quoted string literal values stands for "newline", which inserts a carriage return to place the next piece of printed data down on the following line.
 
 =head2 Section 1.24: How Do I Compile RPerl?
 
@@ -1708,11 +1708,11 @@ B<Due to Perl's magic attached to truth values of false, as well as the differen
 
 B<Only utilize the truth values returned by comparison and logic operators within the condition enclosed by parentheses in C<if ()>, C<elsif ()>, C<for ()>, or C<while ()>.>
 
-    if    (1 > 2)     { print 'I think not'   . "\n"; }  # good use of greater-than operator
-    elsif ($x and $y) { print 'Maybe'         . "\n"; }  # good use of          and operator
+    if    (1 > 2)     { print 'I think not', "\n"; }  # good use of greater-than operator
+    elsif ($x and $y) { print 'Maybe',       "\n"; }  # good use of          and operator
 
-    for   (my integer $i = 0; $i < 23; $i++) { print 'finite loop'   . "\n"; }  # good use of less-than operator
-    while (                    1 != 2      ) { print 'infinite loop' . "\n"; }  # good use of not-equal operator
+    for   (my integer $i = 0; $i < 23; $i++) { print 'finite loop',   "\n"; }  # good use of less-than operator
+    while (                    1 != 2      ) { print 'infinite loop', "\n"; }  # good use of not-equal operator
 
     my integer $foo = 3 + (1 >= 2);   # UNEXPECTED BEHAVIOR: bad use of greater-than-or-equal operator
     my integer $bar = 3 * (1 <= 2);   # UNEXPECTED BEHAVIOR: bad use of    less-than-or-equal operator
@@ -6406,13 +6406,13 @@ If C<srand> is called with a specific seed value followed by one or more calls t
 X<break_code_blocks>
 
     srand 23;
-    print rand . "\n";  # 0.199_281_135_414_825
-    print rand . "\n";  # 0.955_482_658_089_267
-    print rand . "\n";  # 0.080_619_594_120_559
+    print to_string(rand), "\n";  # 0.199_281_135_414_825
+    print to_string(rand), "\n";  # 0.955_482_658_089_267
+    print to_string(rand), "\n";  # 0.080_619_594_120_559
     srand 23;
-    print rand . "\n";  # 0.199_281_135_414_825 REPEATED
-    print rand . "\n";  # 0.955_482_658_089_267 REPEATED
-    print rand . "\n";  # 0.080_619_594_120_559 REPEATED
+    print to_string(rand), "\n";  # 0.199_281_135_414_825 REPEATED
+    print to_string(rand), "\n";  # 0.955_482_658_089_267 REPEATED
+    print to_string(rand), "\n";  # 0.080_619_594_120_559 REPEATED
 
 =back
 
@@ -13713,13 +13713,17 @@ The last 3 lines call the C<print> operator to display the values of C<PI>, C<$r
     my number $radius = 12.5;
     my number $circumference = 2 * PI() * $radius;
 
-    print 'Pi = ' . to_string(PI()) . "\n";
-    print 'Radius = ' . to_string($radius) . "\n";
-    print 'Circumference = 2 * Pi * Radius = 2 * ' . to_string(PI()) . ' * ' . to_string($radius) . ' = ' . to_string($circumference) . "\n";
+    print 'Pi = ', to_string(PI()), "\n";
+    print 'Radius = ', to_string($radius), "\n";
+    print 'Circumference = 2 * Pi * Radius = 2 * ', to_string(PI()), ' * ', to_string($radius), ' = ', to_string($circumference), "\n";
 
 Example execution and output:
 
 =for rperl X<noncode>
+
+# START HERE: fix incorrectly-formatted Pi() below
+# START HERE: fix incorrectly-formatted Pi() below
+# START HERE: fix incorrectly-formatted Pi() below
 
     $ rperl -t LearningRPerl/Chapter2/exercise_1-circumference_of_specific_radius.pl 
     Pi = 3._141_592_654
@@ -13770,9 +13774,9 @@ This exercise is otherwise identical to the previous exercise.X<br>
     my number $circumference = 2 * PI() * $radius;
 
     print "\n";
-    print 'Pi = ' . to_string(PI()) . "\n";
-    print 'Radius = ' . to_string($radius) . "\n";
-    print 'Circumference = 2 * Pi * Radius = 2 * ' . to_string(PI()) . ' * ' . to_string($radius) . ' = ' . to_string($circumference) . "\n";
+    print 'Pi = ', to_string(PI()), "\n";
+    print 'Radius = ', to_string($radius), "\n";
+    print 'Circumference = 2 * Pi * Radius = 2 * ', to_string(PI()), ' * ', to_string($radius), ' = ', to_string($circumference), "\n";
 
 Example execution, input, and output:
 
@@ -13828,14 +13832,14 @@ This exercise is otherwise identical to the previous exercise.X<br>
         $circumference = 2 * PI() * $radius;
     }
     else {
-        print 'Negative radius detected, defaulting to zero circumference!' . "\n";
+        print 'Negative radius detected, defaulting to zero circumference!', "\n";
         $circumference = 0;
     }
 
     print "\n";
-    print 'Pi = ' . to_string(PI()) . "\n";
-    print 'Radius = ' . to_string($radius) . "\n";
-    print 'Circumference = 2 * Pi * Radius = 2 * ' . to_string(PI()) . ' * ' . to_string($radius) . ' = ' . to_string($circumference) . "\n";
+    print 'Pi = ', to_string(PI()), "\n";
+    print 'Radius = ', to_string($radius), "\n";
+    print 'Circumference = 2 * Pi * Radius = 2 * ', to_string(PI()), ' * ', to_string($radius), ' = ', to_string($circumference), "\n";
 
 Example execution, input, and output:
 
@@ -13844,6 +13848,10 @@ Example execution, input, and output:
     $ rperl -t LearningRPerl/Chapter2/exercise_3-circumference_of_any_positive_radius.pl 
     Please input radius: -2
     Negative radius detected, defaulting to zero circumference!
+
+# START HERE: fix incorrectly-formatted Pi() below
+# START HERE: fix incorrectly-formatted Pi() below
+# START HERE: fix incorrectly-formatted Pi() below
 
     Pi = 3._141_592_654
     Radius = -2
@@ -13890,7 +13898,7 @@ These 2 string variables are converted from text values to numeric values by cal
     my number $product = $multiplicator * $multiplicand;
 
     print "\n";
-    print 'Product = Multiplicator * Multiplicand = ' . to_string($multiplicator) . ' * ' . to_string($multiplicand) . ' = ' . to_string($product) . "\n";
+    print 'Product = Multiplicator * Multiplicand = ', to_string($multiplicator), ' * ', to_string($multiplicand), ' = ', to_string($product), "\n";
 
 Example execution, input, and output:
 
@@ -14007,7 +14015,7 @@ The last line calls C<print>, the C<to_string()> conversion subroutine, and the 
         $i++;
     }
 
-    print 'The sum of the first ' . to_string($n) . ' integers = ' . to_string($sum) . "\n";
+    print 'The sum of the first ', to_string($n), ' integers = ', to_string($sum), "\n";
 
 
 Example executions, input, and output:
@@ -14085,7 +14093,7 @@ It is usually faster to run an algorithm without a loop than with a loop, becaus
 
     $sum = (($n + 1) * ($n / 2)) + $n_odd;
 
-    print 'The sum of the first ' . to_string($n_original) . ' integers = ' . to_string($sum) . "\n";
+    print 'The sum of the first ', to_string($n_original), ' integers = ', to_string($sum), "\n";
 
 
 Example executions, input, and output:
@@ -14144,14 +14152,14 @@ Finally, the line starting with C<foreach my string $input_strings_reversed_elem
     # [[[ OPERATIONS ]]]
     my string_arrayref $input_strings = [];
 
-    print 'Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
+    print 'Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:', "\n";
 
     while (my string $input_string = <STDIN>) {
         push @{$input_strings}, $input_string;
     }
 
     print "\n";
-    print 'Strings in reverse order:' . "\n";
+    print 'Strings in reverse order:', "\n";
 
     my string_arrayref $input_strings_reversed = [reverse @{$input_strings}];
 
@@ -14221,14 +14229,14 @@ Thus, if a user inputs the integer 1, the array index will be 0, which is 'fred'
     my string_arrayref $flintstones_and_rubbles = [qw(fred betty barney dino wilma pebbles bamm-bamm)];
     my integer_arrayref $input_indices          = [];
 
-    print 'Please input zero or more integers with values ranging from 1 to 7, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
+    print 'Please input zero or more integers with values ranging from 1 to 7, separated by <ENTER>, ended by <CTRL-D>:', "\n";
 
     while ( my string $input_string = <STDIN> ) {
         push @{$input_indices}, string_to_integer($input_string);
     }
 
     print "\n";
-    print 'Flintstones & Rubbles:' . "\n";
+    print 'Flintstones & Rubbles:', "\n";
 
     foreach my integer $input_index ( @{$input_indices} ) {
         print $flintstones_and_rubbles->[ ( $input_index - 1 ) ] . "\n";
@@ -14305,14 +14313,14 @@ An C<if> conditional statement inside the C<foreach> loop tests the constant C<S
     # [[[ OPERATIONS ]]]
     my string_arrayref $input_strings = [];
 
-    print 'Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
+    print 'Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:', "\n";
 
     while ( my string $input_string = <STDIN> ) {
         push @{$input_strings}, $input_string;
     }
 
     print "\n";
-    print 'Strings in ASCIIbetical order:' . "\n";
+    print 'Strings in ASCIIbetical order:', "\n";
 
     my string_arrayref $input_strings_sorted = [ sort @{$input_strings} ];
 
@@ -14403,9 +14411,9 @@ Finally, the subroutine C<total()> is called a second time, now with the variabl
 
     my number_arrayref $fred = [1, 3, 5, 7, 9];
     my number $fred_total = total($fred);
-    print 'The total of $fred is ' . to_string($fred_total) . "\n";
+    print 'The total of $fred is ', to_string($fred_total), "\n";
 
-    print 'Please input zero or more numbers, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
+    print 'Please input zero or more numbers, separated by <ENTER>, ended by <CTRL-D>:', "\n";
 
     my number_arrayref $input_numbers = [];
     while (my string $input_string = <STDIN>) {
@@ -14413,7 +14421,7 @@ Finally, the subroutine C<total()> is called a second time, now with the variabl
     }
 
     my number $user_total = total($input_numbers);
-    print 'The total of those numbers is ' . to_string($user_total) . "\n";
+    print 'The total of those numbers is ', to_string($user_total), "\n";
 
 Example execution, input, and output:
 
@@ -14477,7 +14485,7 @@ Finally, the subroutine C<total()> is called with C<$one_to_one_thousand> passed
 
     my number_arrayref $one_to_one_thousand = [ 1 .. 1_000 ];
     my number $one_to_one_thousand_total    = total($one_to_one_thousand);
-    print 'The total of 1 to 1_000 is ' . to_string($one_to_one_thousand_total) . q{.} . "\n";
+    print 'The total of 1 to 1_000 is ', to_string($one_to_one_thousand_total), q{.}, "\n";
 
 
 Example execution and output:
@@ -14553,15 +14561,15 @@ In the C<OPERATIONS> section, 2 arrays are created in the C<$fred> and C<$barney
 
     my string_arrayref $fred = [1 .. 10];
     my number $fred_above_average = above_average($fred);
-    print '$fred is ' . number_arrayref_to_string($fred) . "\n";
-    print 'The above-average elements of $fred are ' . number_arrayref_to_string($fred_above_average) . "\n";
-    print '(Should be [6, 7, 8, 9, 10])' . "\n\n";
+    print '$fred is ', number_arrayref_to_string($fred), "\n";
+    print 'The above-average elements of $fred are ', number_arrayref_to_string($fred_above_average), "\n";
+    print '(Should be [6, 7, 8, 9, 10])', "\n\n";
 
     my string_arrayref $barney = [100, 1 .. 10];
     my number $barney_above_average = above_average($barney);
-    print '$barney is ' . number_arrayref_to_string($barney) . "\n";
-    print 'The above-average elements of $barney are ' . number_arrayref_to_string($barney_above_average) . "\n";
-    print '(Should be just [100])' . "\n";
+    print '$barney is ', number_arrayref_to_string($barney), "\n";
+    print 'The above-average elements of $barney are ', number_arrayref_to_string($barney_above_average), "\n";
+    print '(Should be just [100])', "\n";
 
 Example execution and output:
 
@@ -14616,12 +14624,12 @@ Finally, the string variable C<$name> is returned from C<greet()> and passed to 
 
     our string $greet = sub {
         ( my string $name, my string $previous_name ) = @_;
-        print 'Hi ' . $name . '!  ';
+        print 'Hi ', $name, '!  ';
         if ($previous_name eq q{}) {
-            print 'You are the first one here!' . "\n";
+            print 'You are the first one here!', "\n";
         }
         else {
-            print $previous_name . ' is also here!' . "\n";
+            print $previous_name, ' is also here!', "\n";
         }
         return $name;
     };
@@ -14678,12 +14686,12 @@ Finally, the current value of C<$name> is appended as the last element of the ar
 
     our string_arrayref $greet = sub {
         ( my string $name, my string_arrayref $previous_names ) = @_;
-        print 'Hi ' . $name . '!  ';
+        print 'Hi ', $name, '!  ';
         if ((scalar @{$previous_names}) == 0) {
-            print 'You are the first one here!' . "\n";
+            print 'You are the first one here!', "\n";
         }
         else {
-            print q{I've seen: } . (join q{ }, @{$previous_names}) . "\n";
+            print q{I've seen: }, (join q{ }, @{$previous_names}), "\n";
         }
         push @{$previous_names}, $name;
         return $previous_names;
@@ -14863,7 +14871,7 @@ X<br>
 
     our void $right_justify_20 = sub {
         my string_arrayref $input_strings = [];
-        print 'Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
+        print 'Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:', "\n";
         while ( my string $input_string = <STDIN> ) {
             push @{$input_strings}, $input_string;
         }
@@ -14875,7 +14883,7 @@ X<br>
         foreach my string $input_string ( @{$input_strings} ) {
             chomp $input_string;
             print q{ } x ( 20 - ( length $input_string ) );
-            print $input_string . "\n";
+            print $input_string, "\n";
         }
     };
 
@@ -14946,11 +14954,11 @@ This exercise is otherwise identical to the previous exercise.X<br>
 
     our void $right_justify_variable = sub {
         my string_arrayref $input_strings = [];
-        print 'Please input integer column width, then press <ENTER>:' . "\n";
+        print 'Please input integer column width, then press <ENTER>:', "\n";
         my string $column_width_string = <STDIN>;
         my integer $column_width       = string_to_integer($column_width_string);
 
-        print 'Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
+        print 'Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:', "\n";
         while ( my string $input_string = <STDIN> ) {
             push @{$input_strings}, $input_string;
         }
@@ -14967,7 +14975,7 @@ This exercise is otherwise identical to the previous exercise.X<br>
         foreach my string $input_string ( @{$input_strings} ) {
             chomp $input_string;
             print q{ } x ( $column_width - ( length $input_string ) );
-            print $input_string . "\n";
+            print $input_string, "\n";
         }
     };
 
@@ -15044,7 +15052,7 @@ In the C<OPERATIONS> section, the only operation is a call to the C<given_to_fam
             wilma => 'flintstone'
         };
 
-        print 'Please input a given (first) name in all lowercase, then press <ENTER>:' . "\n";
+        print 'Please input a given (first) name in all lowercase, then press <ENTER>:', "\n";
         my string $given_name = <STDIN>;
         chomp $given_name;
 
@@ -15052,7 +15060,7 @@ In the C<OPERATIONS> section, the only operation is a call to the C<given_to_fam
             croak 'ERROR: No family (last) name found for given (first) name ' . $given_name . ', croaking' . "\n";
         }
 
-        print 'The family (last) name of ' . $given_name . ' is ' . $names->{$given_name} . q{.} . "\n";
+        print 'The family (last) name of ', $given_name, ' is ', $names->{$given_name}, q{.}, "\n";
     };
 
     # [[[ OPERATIONS ]]]
@@ -15111,7 +15119,7 @@ In the C<OPERATIONS> section, the only operation is a call to the C<unique_word_
     our void $unique_word_count = sub {
         my integer_hashref $word_counts = {};
 
-        print 'Please input zero or more words, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
+        print 'Please input zero or more words, separated by <ENTER>, ended by <CTRL-D>:', "\n";
         while (my string $input_word = <STDIN>) {
             chomp $input_word;
             if (not exists $word_counts->{$input_word}) {
@@ -15122,10 +15130,10 @@ In the C<OPERATIONS> section, the only operation is a call to the C<unique_word_
             }
         }
 
-        print "\n" . 'Unique word count:' . "\n";
+        print "\n", 'Unique word count:', "\n";
 
         foreach my string $unique_word (sort keys %{$word_counts}) {
-            print $unique_word . ' appeared ' . to_string($word_counts->{$unique_word}) . ' time(s)' . "\n";
+            print $unique_word, ' appeared ', to_string($word_counts->{$unique_word}), ' time(s)', "\n";
         }
     };
 
@@ -15235,12 +15243,12 @@ In the C<OPERATIONS> section, the only operation is a call to the C<sort_env_var
 
         $left_column_width += 2;
 
-        print 'Environmental variables:' . "\n";
+        print 'Environmental variables:', "\n";
 
         foreach my string $env_var ( sort keys %{$env_vars} ) {
             print $env_var;
             print q{ } x ( $left_column_width - ( length $env_var ) );
-            print $env_vars->{$env_var} . "\n";
+            print $env_vars->{$env_var}, "\n";
         }
     };
 
@@ -16935,7 +16943,12 @@ L<class_00_good_02.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/T
     my RPerl::Test::Properties::Class_00_Good $test_object = RPerl::Test::Properties::Class_00_Good->new();
     $test_object->{test_property} = 4;
     $test_object->test_method(23);
-    print $test_object->{test_property} . "\n";
+    print $test_object->{test_property}, "\n";
+
+# START HERE: continue converting print dots to commas, also update all other lib/RPerl/Test* files
+# START HERE: continue converting print dots to commas, also update all other lib/RPerl/Test* files
+# START HERE: continue converting print dots to commas, also update all other lib/RPerl/Test* files
+
 
 L<Class_00_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Properties/Class_00_Good.pm>
 

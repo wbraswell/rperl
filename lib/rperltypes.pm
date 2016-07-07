@@ -118,8 +118,11 @@ sub to_number {
 #my string $to_string = sub {
 sub to_string {
     ( my unknown $variable) = @_;
+    RPerl::diag('in rperltypes::to_string(), received $variable = ' . $variable . "\n");
     if ( not defined $variable ) { return 'undef'; }
     my string $type = type($variable);
+    RPerl::diag('in rperltypes::to_string(), have $type = ' . $type . "\n");
+    die 'TMP DEBUG';
     if    ( $type eq 'unknown' ) { return qq{$variable}; }
     elsif ( $type eq 'boolean' )    { return boolean_to_string($variable); }
 #    elsif ( $type eq 'unsigned_integer' ) { return unsigned_integer_to_string($variable); }  # DEV NOTE: causes auto-vivification of empty unsigned_integer_to_string() if not already properly bound
@@ -187,6 +190,11 @@ sub build_is_type {
     my integer_hashref $is_type = {
         boolean   => main::RPerl_SvBOKp($variable),
         unsigned_integer  => main::RPerl_SvUIOKp($variable),
+
+# START HERE: figure out why SvIOKp() below is returning true for floating-point number Pi()
+# START HERE: figure out why SvIOKp() below is returning true for floating-point number Pi()
+# START HERE: figure out why SvIOKp() below is returning true for floating-point number Pi()
+
         integer   => main::RPerl_SvIOKp($variable),
         number    => main::RPerl_SvNOKp($variable),
         character => main::RPerl_SvCOKp($variable),

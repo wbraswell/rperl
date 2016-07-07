@@ -13,15 +13,27 @@ DONE
         perl -e 'use Config; foreach my $o (qw(nvsize nvtype use64bitall doublesize longdblsize d_longdbl)) { print q($Config{) . $o . q(} = ) . $Config{$o} . "\n"; }'
 
 DOING
+    Learning
+        EAR17 & any other new errors
+        parallel OFF OPENMP MPI
+        num_cores
+        integer_type number_type
+        update all example lesson print ops to use comma instead of dot
+        update appendix with grammar changes: bitwise_negation_lparen, additional operators?
+        v2.0
     execute via compiled copy not interpreted
+    templateperl
+    mv sort to standardperl
+    all servers online
+        rperl
+        shiny
+        sites
     enable loop parallelization
         handle gauss_seidel.openmp.cpp.pluto.cloog files
         enable num_cores
         fix print
         fix loop labels
         fix min/max
-    Learning
-        EAR17 & any other new errors, parallel OFF OPENMP MPI, num_cores
     enable shorthand classes
     add copyright notices to all files
     pass tests on appveyor strawberry
@@ -63,8 +75,6 @@ OPERATORS, CPPOPS_CPPTYPES MODE
         abs, sqrt, exp, log
 
 LEARNING RPERL
-    update all example lesson print ops to use comma instead of dot
-    update appendix with grammar changes: bitwise_negation_lparen, additional operators?
     tables on metacpan, fix headers and borders CSS
     fix <noncode> on metacpan, elsewhere
     check X<break_code_blocks> everywhere other than pod2rperlhtml

@@ -139,6 +139,7 @@ sub number_to_string {
 
 #    RPerl::diag("in PERLOPS_PERLTYPES number_to_string(), received \$input_number = $input_number\n");
 #    RPerl::diag("in PERLOPS_PERLTYPES number_to_string()...\n");
+#    die 'TMP DEBUG';
 
     # DEV NOTE: disable old stringify w/out underscores
 #    return "$input_number";
@@ -165,6 +166,7 @@ sub number_to_string {
     if ( exists $split_parts->[1] ) {
         $split_parts->[1] =~ s/(\d{3})/$1_/gxms;
         if ((substr $split_parts->[1], -1, 1) eq '_') { chop $split_parts->[1]; }
+#        if ((substr $split_parts->[1], 0, 1) eq '_') { chop $split_parts->[1]; }  # should not be necessary
         $retval .= '.' . $split_parts->[1];
     }
 
