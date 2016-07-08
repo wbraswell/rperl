@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.094_000;
+our $VERSION = 0.095_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -16945,11 +16945,6 @@ L<class_00_good_02.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/T
     $test_object->test_method(23);
     print $test_object->{test_property}, "\n";
 
-# START HERE: continue converting print dots to commas, also update all other lib/RPerl/Test* files
-# START HERE: continue converting print dots to commas, also update all other lib/RPerl/Test* files
-# START HERE: continue converting print dots to commas, also update all other lib/RPerl/Test* files
-
-
 L<Class_00_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Properties/Class_00_Good.pm>
 
     # [[[ HEADER ]]]
@@ -17141,9 +17136,9 @@ L<program_21_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
     # [[[ OPERATIONS ]]]
     my RPerl::Test::Foo $my_foo = RPerl::Test::Foo->new();
-    print Dumper($my_foo->qorge(7)) . "\n";
+    print Dumper($my_foo->qorge(7)), "\n";
     $my_foo->{xyzzy} = 'guffaw';
-    print Dumper($my_foo->qorge(11)) . "\n";
+    print Dumper($my_foo->qorge(11)), "\n";
 
 L<program_30_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Expression/program_30_good.pl>
 
@@ -19091,7 +19086,7 @@ L<program_23_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
     my integer $size_max_half = 5;
     my number_arrayref $foo->[($size_max_half * 2) - 1] = undef;
-    print 'size of $foo is ' . ( scalar @{$foo} ) . "\n";
+    print 'size of $foo is ', ( scalar @{$foo} ), "\n";
 
 L<program_30_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/VariableDeclaration/program_30_good.pl>
 

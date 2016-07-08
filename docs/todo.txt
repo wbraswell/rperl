@@ -21,6 +21,7 @@ DOING
         update all example lesson print ops to use comma instead of dot
         update appendix with grammar changes: bitwise_negation_lparen, additional operators?
         v2.0
+    print dot-to-comma in lib/RPerl/Test/*
     execute via compiled copy not interpreted
     templateperl
     mv sort to standardperl
