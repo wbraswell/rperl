@@ -1,0 +1,27 @@
+#include <rperlstandalone.h>
+#ifndef __CPP__INCLUDED___cpp
+#define __CPP__INCLUDED___cpp 0.001_000
+# ifdef __CPP__TYPES
+int main() {
+    number foo = std::abs (3);
+    number bar = -3;
+    cout << (const string) "have $foo = ", foo, (const string) "\n";
+    cout << (const string) "have $bar = ", bar, (const string) "\n";
+    bar = foo + foo;
+    bar = std::abs (bar);
+    number float_number = -5.0;
+    number positive_float_number = -5.0;
+    cout << (const string) "have $foo = ", foo, (const string) "\n";
+    cout << (const string) "have $bar = ", bar, (const string) "\n";
+    cout << (const string) "have $float_number = ", float_number, (const string) "\n";
+    cout << (const string) "have $positive_float_number = ", positive_float_number, (const string) "\n";
+    float_number = std::abs (float_number);
+    positive_float_number = std::abs (positive_float_number);
+    cout << (const string) "have $float_number = ", float_number, (const string) "\n";
+    cout << (const string) "have $positive_float_number = ", positive_float_number, (const string) "\n";
+    return 0;
+}
+# elif defined __PERL__TYPES
+Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.__We_need_to_define_only___CPP__TYPES_in_this_file!
+# endif
+#endif
