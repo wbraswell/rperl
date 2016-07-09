@@ -20,14 +20,14 @@ use constant SINGLE_LINE_OUTPUT => my boolean $TYPED_SINGLE_LINE_OUTPUT = 0;
 # [[[ OPERATIONS ]]]
 my string_arrayref $input_strings = [];
 
-print 'Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
+print 'Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:', "\n";
 
 while ( my string $input_string = <STDIN> ) {
     push @{$input_strings}, $input_string;
 }
 
 print "\n";
-print 'Strings in ASCIIbetical order:' . "\n";
+print 'Strings in ASCIIbetical order:', "\n";
 
 my string_arrayref $input_strings_sorted = [ sort @{$input_strings} ];
 

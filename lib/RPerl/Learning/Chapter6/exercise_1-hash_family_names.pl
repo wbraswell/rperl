@@ -22,15 +22,15 @@ our void $given_to_family_name = sub {
         wilma => 'flintstone'
     };
 
-    print 'Please input a given (first) name in all lowercase, then press <ENTER>:' . "\n";
+    print 'Please input a given (first) name in all lowercase, then press <ENTER>:', "\n";
     my string $given_name = <STDIN>;
     chomp $given_name;
 
     if ((not exists $names->{$given_name}) or (not defined $names->{$given_name})) {
-        croak 'ERROR: No family (last) name found for given (first) name ' . $given_name . ', croaking' . "\n";
+        croak 'ERROR: No family (last) name found for given (first) name ', $given_name, ', croaking', "\n";
     }
 
-    print 'The family (last) name of ' . $given_name . ' is ' . $names->{$given_name} . q{.} . "\n";
+    print 'The family (last) name of ', $given_name, ' is ', $names->{$given_name}, q{.}, "\n";
 };
 
 # [[[ OPERATIONS ]]]

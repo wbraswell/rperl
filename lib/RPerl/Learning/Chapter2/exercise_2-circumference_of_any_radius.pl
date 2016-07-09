@@ -24,6 +24,6 @@ my number $radius = string_to_number($radius_string);
 my number $circumference = 2 * PI() * $radius;
 
 print "\n";
-print 'Pi = ' . to_string(PI()) . "\n";
-print 'Radius = ' . to_string($radius) . "\n";
-print 'Circumference = 2 * Pi * Radius = 2 * ' . to_string(PI()) . ' * ' . to_string($radius) . ' = ' . to_string($circumference) . "\n";
+print 'Pi = ', to_string(PI()), "\n";
+print 'Radius = ', to_string($radius), "\n";
+print 'Circumference = 2 * Pi * Radius = 2 * ', to_string(PI()), ' * ', to_string($radius), ' = ', to_string($circumference), "\n";

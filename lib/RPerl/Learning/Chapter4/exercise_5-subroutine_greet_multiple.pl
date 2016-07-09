@@ -16,12 +16,12 @@ our $VERSION = 0.001_000;
 
 our string_arrayref $greet = sub {
     ( my string $name, my string_arrayref $previous_names ) = @_;
-    print 'Hi ' . $name . '!  ';
+    print 'Hi ', $name, '!  ';
     if ((scalar @{$previous_names}) == 0) {
-        print 'You are the first one here!' . "\n";
+        print 'You are the first one here!', "\n";
     }
     else {
-        print q{I've seen: } . (join q{ }, @{$previous_names}) . "\n";
+        print q{I've seen: }, (join q{ }, @{$previous_names}), "\n";
     }
     push @{$previous_names}, $name;
     return $previous_names;

@@ -122,7 +122,8 @@ sub to_string {
     if ( not defined $variable ) { return 'undef'; }
     my string $type = type($variable);
     RPerl::diag('in rperltypes::to_string(), have $type = ' . $type . "\n");
-    die 'TMP DEBUG';
+#    die 'TMP DEBUG';
+
     if    ( $type eq 'unknown' ) { return qq{$variable}; }
     elsif ( $type eq 'boolean' )    { return boolean_to_string($variable); }
 #    elsif ( $type eq 'unsigned_integer' ) { return unsigned_integer_to_string($variable); }  # DEV NOTE: causes auto-vivification of empty unsigned_integer_to_string() if not already properly bound

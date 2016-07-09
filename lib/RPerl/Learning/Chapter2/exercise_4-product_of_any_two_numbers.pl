@@ -25,4 +25,4 @@ my number $multiplicand = string_to_number($multiplicand_string);
 my number $product = $multiplicator * $multiplicand;
 
 print "\n";
-print 'Product = Multiplicator * Multiplicand = ' . to_string($multiplicator) . ' * ' . to_string($multiplicand) . ' = ' . to_string($product) . "\n";
+print 'Product = Multiplicator * Multiplicand = ', to_string($multiplicator), ' * ', to_string($multiplicand), ' = ', to_string($product), "\n";

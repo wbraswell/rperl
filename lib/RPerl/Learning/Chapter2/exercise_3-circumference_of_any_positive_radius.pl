@@ -27,11 +27,11 @@ if ($radius >= 0) {
     $circumference = 2 * PI() * $radius;
 }
 else {
-    print 'Negative radius detected, defaulting to zero circumference!' . "\n";
+    print 'Negative radius detected, defaulting to zero circumference!', "\n";
     $circumference = 0;
 }
 
 print "\n";
-print 'Pi = ' . to_string(PI()) . "\n";
-print 'Radius = ' . to_string($radius) . "\n";
-print 'Circumference = 2 * Pi * Radius = 2 * ' . to_string(PI()) . ' * ' . to_string($radius) . ' = ' . to_string($circumference) . "\n";
+print 'Pi = ', to_string(PI()), "\n";
+print 'Radius = ', to_string($radius), "\n";
+print 'Circumference = 2 * Pi * Radius = 2 * ', to_string(PI()), ' * ', to_string($radius), ' = ', to_string($circumference), "\n";

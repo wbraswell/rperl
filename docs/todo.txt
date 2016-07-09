@@ -24,6 +24,7 @@ DOING
     print dot-to-comma in lib/RPerl/Test/*
     execute via compiled copy not interpreted
     templateperl
+    Inline::RPerl
     mv sort to standardperl
     all servers online
         rperl
@@ -58,7 +59,7 @@ DOING
         split deps in Makefile.PL, possibly utilize AUTHOR_TESTING in travis-perl/helpers
 
 OPERATORS, CPPOPS_CPPTYPES MODE
-    NAMED: chomp join keys pop push reverse sort split values wait
+    NAMED: die croak chomp join keys pop push reverse sort split values wait
     NAMED_UNARY: chdir cos defined exists -e -r -f -T length rand scalar sin sqrt (need create)
     Perl "features"  http://perldoc.perl.org/feature.html
         NOT YET SUPPORTED, requires at least Perl v5.16: fc

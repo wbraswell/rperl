@@ -27,4 +27,4 @@ our number $total = sub {
 
 my number_arrayref $one_to_one_thousand = [ 1 .. 1_000 ];
 my number $one_to_one_thousand_total    = total($one_to_one_thousand);
-print 'The total of 1 to 1_000 is ' . to_string($one_to_one_thousand_total) . q{.} . "\n";
+print 'The total of 1 to 1_000 is ', to_string($one_to_one_thousand_total), q{.}, "\n";

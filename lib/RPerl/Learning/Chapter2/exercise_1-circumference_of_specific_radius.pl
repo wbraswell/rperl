@@ -20,6 +20,6 @@ use constant PI => my number $TYPED_PI = 333_333_333.141_592_654;
 my number $radius = 12.5;
 my number $circumference = 2 * PI() * $radius;
 
-print 'Pi = ' . to_string(PI()) . "\n";
-print 'Radius = ' . to_string($radius) . "\n";
-print 'Circumference = 2 * Pi * Radius = 2 * ' . to_string(PI()) . ' * ' . to_string($radius) . ' = ' . to_string($circumference) . "\n";
+print 'Pi = ', to_string(PI()), "\n";
+print 'Radius = ', to_string($radius), "\n";
+print 'Circumference = 2 * Pi * Radius = 2 * ', to_string(PI()), ' * ', to_string($radius), ' = ', to_string($circumference), "\n";

@@ -18,7 +18,7 @@ our $VERSION = 0.001_000;
 our void $unique_word_count = sub {
     my integer_hashref $word_counts = {};
 
-    print 'Please input zero or more words, separated by <ENTER>, ended by <CTRL-D>:' . "\n";
+    print 'Please input zero or more words, separated by <ENTER>, ended by <CTRL-D>:', "\n";
     while (my string $input_word = <STDIN>) {
         chomp $input_word;
         if (not exists $word_counts->{$input_word}) {
@@ -29,10 +29,10 @@ our void $unique_word_count = sub {
         }
     }
 
-    print "\n" . 'Unique word count:' . "\n";
+    print "\n", 'Unique word count:', "\n";
 
     foreach my string $unique_word (sort keys %{$word_counts}) {
-        print $unique_word . ' appeared ' . to_string($word_counts->{$unique_word}) . ' time(s)' . "\n";
+        print $unique_word, ' appeared ', to_string($word_counts->{$unique_word}), ' time(s)', "\n";
     }
 };
 

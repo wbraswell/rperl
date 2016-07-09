@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.095_000;
+our $VERSION = 0.096_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -13721,14 +13721,10 @@ Example execution and output:
 
 =for rperl X<noncode>
 
-# START HERE: fix incorrectly-formatted Pi() below
-# START HERE: fix incorrectly-formatted Pi() below
-# START HERE: fix incorrectly-formatted Pi() below
-
     $ rperl -t LearningRPerl/Chapter2/exercise_1-circumference_of_specific_radius.pl 
-    Pi = 3._141_592_654
+    Pi = 3.141_592_654
     Radius = 12.5
-    Circumference = 2 * Pi * Radius = 2 * 3._141_592_654 * 12.5 = 78.539_816_35
+    Circumference = 2 * Pi * Radius = 2 * 3.141_592_654 * 12.5 = 78.539_816_35
 
 =for rperl X</noncode>
 
@@ -13849,13 +13845,9 @@ Example execution, input, and output:
     Please input radius: -2
     Negative radius detected, defaulting to zero circumference!
 
-# START HERE: fix incorrectly-formatted Pi() below
-# START HERE: fix incorrectly-formatted Pi() below
-# START HERE: fix incorrectly-formatted Pi() below
-
-    Pi = 3._141_592_654
+    Pi = 3.141_592_654
     Radius = -2
-    Circumference = 2 * Pi * Radius = 2 * 3._141_592_654 * -2 = 0
+    Circumference = 2 * Pi * Radius = 2 * 3.141_592_654 * -2 = 0
 
 =for rperl X</noncode>
 

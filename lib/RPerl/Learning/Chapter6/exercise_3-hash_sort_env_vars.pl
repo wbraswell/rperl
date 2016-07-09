@@ -28,12 +28,12 @@ our void $sort_env_vars = sub {
 
     $left_column_width += 2;
 
-    print 'Environmental variables:' . "\n";
+    print 'Environmental variables:', "\n";
 
     foreach my string $env_var ( sort keys %{$env_vars} ) {
         print $env_var;
         print q{ } x ( $left_column_width - ( length $env_var ) );
-        print $env_vars->{$env_var} . "\n";
+        print $env_vars->{$env_var}, "\n";
     }
 };
 
