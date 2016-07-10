@@ -135,7 +135,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . ($operator_named_class)
                 . ' found where Operation_80, Operator_84, Operator_85, or OperatorVoid_123 expected, dying'
         ) . "\n";
