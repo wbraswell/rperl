@@ -1,0 +1,18 @@
+#include <rperlstandalone.h>
+#ifndef __CPP__INCLUDED__RPerl__Test__Operator01AbsoluteValue__program_02_good_cpp
+#define __CPP__INCLUDED__RPerl__Test__Operator01AbsoluteValue__program_02_good_cpp 0.001_000
+# ifdef __CPP__TYPES
+int main() {
+    number foo = std::abs (3);
+    number bar = -3;
+    print "have $foo = " << foo << endl;
+    print "have $bar = " << bar << endl;
+    number result = (std::abs (bar)) * 23 + 1;
+    result += std::abs (bar) * 10;
+    print "have $result = " << result << endl;
+    return 0;
+}
+# elif defined __PERL__TYPES
+Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.__We_need_to_define_only___CPP__TYPES_in_this_file!
+# endif
+#endif
