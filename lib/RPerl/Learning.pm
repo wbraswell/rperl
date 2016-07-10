@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.096_000;
+our $VERSION = 0.097_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -15687,7 +15687,65 @@ L<https://en.wikipedia.org/wiki/C++11>
 
 =back
 
-=head2 B.16: Modes, Execute
+=head2 B.16: Modes, Parallelize
+
+=over
+
+=item B<--mode parallel=OFF ...OR... -m parallel=OFF>
+
+=item B<--mode parallel=OPENMP ...OR... -m parallel=OPENMP>
+
+=item B<--mode parallel=MPI ...OR... -m parallel=MPI>  ((( COMING SOON!!! )))
+
+=item B<--mode parallel=OPENCL ...OR... -m parallel=OPENCL>  ((( COMING SOON!!! )))
+
+=for rperl X<noncode>
+
+    Specify automatic parallelization mode, OPENMP by default.
+    If set to OFF, do not automatically parallelize any input files.
+    If set to OPENMP, automatically parallelize all eligible input files for use on shared-memory OpenMP systems.
+    If set to MPI (COMING SOON), automatically parallelize all eligible input files for use on distributed-memory MPI systems.
+    If set to OPENCL (COMING SOON), automatically parallelize all eligible input files for use on heterogeneous or GPU systems.
+
+=for rperl X</noncode>
+
+I<The parallel mode option tells RPerl if it should automatically parallelize the RPerl input file(s) for faster runtime execution performance on parallel computing hardware platforms.>
+
+I<The "OPENMP" parallel mode utilizes the OpenMP software to provide support for shared memory computing hardware platforms, such as multi-core CPUs and supercomputers.>
+
+I<COMING SOON: The "MPI" parallel mode utilizes the MPI software to provide support for distributed memory computing hardware platforms, such as clusters and the cloud.>
+
+I<COMING SOON: The "OPENCL" parallel mode utilizes the OpenCL software to provide support for heterogeneous computing hardware platforms, such as CPU/GPU combinations, GPUs, and FPGAs.>
+
+=back
+
+=head2 B.17: Modes, Parallelize, Number Of Cores
+
+=over
+
+=item B<--mode num_cores=2 ...OR... -m num_cores=2 ...OR... --num_cores=2 ...OR... -num=2>
+
+=item B<--mode num_cores=4 ...OR... -m num_cores=4 ...OR... --num_cores=4 ...OR... -num=4>
+
+=item B<--mode num_cores=8 ...OR... -m num_cores=8 ...OR... --num_cores=8 ...OR... -num=8>
+
+=item B<...ETC...>
+
+=for rperl X<noncode>
+
+    Specify number of CPU cores to utilize for OPENMP automatic parallelization mode, 4 by default.
+
+=for rperl X</noncode>
+
+I<The num_cores mode option tells RPerl how many CPU cores to use during runtime execution of an auto-parallelized RPerl input file.>
+
+I<This option is only applicable when the parallel mode option is set to "OPENMP", for use on shared memory computing hardware platforms.>
+
+I<It may be best to choose a value which is a power of 2, although this is not required.>
+
+=back
+
+=head2 B.18: Modes, Execute
 
 =over
 
@@ -15712,7 +15770,7 @@ I<When *.pm RPerl module input file(s) are provided, then no execution occurs be
 
 =back
 
-=head2 B.17: Modes, Source Code Labels
+=head2 B.19: Modes, Source Code Labels
 
 =over
 
@@ -15732,7 +15790,7 @@ I<The source code label mode option tells RPerl if it should create human-readab
 
 =back
 
-=head2 B.18: Flags, Verbose
+=head2 B.20: Flags, Verbose
 
 =over
 
@@ -15759,7 +15817,7 @@ L<https://en.wikipedia.org/wiki/*nix>
 
 =back
 
-=head2 B.19: Flags, Debug
+=head2 B.21: Flags, Debug
 
 =over
 
@@ -15784,7 +15842,7 @@ I<Use of both the verbose and debug flags C<`rperl -V -D`> is recommended for RP
 
 =back
 
-=head2 B.20: Flags, Warnings
+=head2 B.22: Flags, Warnings
 
 =over
 
@@ -15806,7 +15864,7 @@ I<The default behavior is that RPerl should display warnings, in order to encour
 
 =back
 
-=head2 B.21: Flags, Test
+=head2 B.23: Flags, Test
 
 =over
 
@@ -15824,7 +15882,7 @@ I<The test flag option tells RPerl to operate in test mode, which means RPerl wi
 
 =back
 
-=head2 B.22: Flags, Dependencies
+=head2 B.24: Flags, Dependencies
 
 =over
 
@@ -15846,7 +15904,7 @@ I<This option is a shorthand provided for brevity, please see: L</B.11: Modes, D
 
 =back
 
-=head2 B.23: Flags, Uncompile
+=head2 B.25: Flags, Uncompile
 
 =over
 
@@ -15880,7 +15938,7 @@ I<This option is a shorthand provided for brevity, please see: L</B.12: Modes, U
 
 =back
 
-=head2 B.24: Flags, Compile
+=head2 B.26: Flags, Compile
 
 =over
 
@@ -15903,7 +15961,7 @@ I<This option is a shorthand provided for brevity, please see: L</B.13: Modes, C
 
 =back
 
-=head2 B.25: Flags, Subcompile, Assemble
+=head2 B.27: Flags, Subcompile, Assemble
 
 =over
 
@@ -15923,7 +15981,7 @@ I<This option is a shorthand provided for brevity, please see: L</B.14: Modes, S
 
 =back
 
-=head2 B.26: Flags, Subcompile, Archive
+=head2 B.28: Flags, Subcompile, Archive
 
 =over
 
@@ -15943,7 +16001,7 @@ I<This option is a shorthand provided for brevity, please see: L</B.14: Modes, S
 
 =back
 
-=head2 B.27: Flags, Subcompile, Shared Object
+=head2 B.29: Flags, Subcompile, Shared Object
 
 =over
 
@@ -15963,7 +16021,7 @@ I<This option is a shorthand provided for brevity, please see: L</B.14: Modes, S
 
 =back
 
-=head2 B.28: Flags, Subcompile, Static
+=head2 B.30: Flags, Subcompile, Static
 
 =over
 
@@ -15988,7 +16046,29 @@ I<This option is a shorthand provided for brevity, please see: L</B.14: Modes, S
 
 =back
 
-=head2 B.29: Flags, Execute
+=for comment head2 B.31: Flags, Parallelize
+
+=over
+
+=item B<--parallel ...OR... -p>
+
+=item B<--noparallel ...OR... -nop>
+
+=for rperl X<noncode>
+
+    Automatically parallelize input code, or not.
+    Enabled by default.
+    Equivalent to '--mode parallel=OPENMP' argument.
+
+=for rperl X</noncode>
+
+I<The parallel flag tells RPerl if it should auto-parallelize the RPerl input file(s).>
+
+I<This option is a shorthand provided for brevity, please see: L</B.16: Modes, Parallelize>>
+
+=back
+
+=head2 B.32: Flags, Execute
 
 =over
 
@@ -16006,7 +16086,7 @@ I<This option is a shorthand provided for brevity, please see: L</B.14: Modes, S
 
 I<The execute flag tells RPerl if it should execute a *.pl RPerl program input file.>
 
-I<This option is a shorthand provided for brevity, please see: L</B.16: Modes, Execute>>
+I<This option is a shorthand provided for brevity, please see: L</B.18: Modes, Execute>>
 
 =back
 

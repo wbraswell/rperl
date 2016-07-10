@@ -1344,12 +1344,15 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =item B<--mode parallel=MPI ...OR... -m parallel=MPI>  ((( COMING SOON!!! )))
 
+=item B<--mode parallel=OPENCL ...OR... -m parallel=OPENCL>  ((( COMING SOON!!! )))
+
 =for rperl X<noncode>
 
     Specify automatic parallelization mode, OPENMP by default.
     If set to OFF, do not automatically parallelize any input files.
     If set to OPENMP, automatically parallelize all eligible input files for use on shared-memory OpenMP systems.
     If set to MPI (COMING SOON), automatically parallelize all eligible input files for use on distributed-memory MPI systems.
+    If set to OPENCL (COMING SOON), automatically parallelize all eligible input files for use on heterogeneous or GPU systems.
 
 =for rperl X</noncode>
 

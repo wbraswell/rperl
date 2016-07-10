@@ -14,11 +14,7 @@ DONE
 
 DOING
     Learning
-        EAR17 & any other new errors
-        parallel OFF OPENMP MPI
-        num_cores
-        integer_type number_type
-        update all example lesson print ops to use comma instead of dot
+        EAR17 & Exxx & any other new errors
         update appendix with grammar changes: bitwise_negation_lparen, additional operators?
         v2.0
     print dot-to-comma in lib/RPerl/Test/*
