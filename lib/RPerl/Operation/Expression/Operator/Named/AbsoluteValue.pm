@@ -93,13 +93,54 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 };
 
 our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
-    ( my object $self, my string_hashref $modes) = @_;
+    ( my object $self, my object $operator_named, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group
-        = { CPP =>
-            q{// <<< RP::O::E::O::N::Abs __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
-            . "\n" };
+        = { CPP => q{} };
 
-    #...
+#    RPerl::diag( 'in Operator::Named::AbsoluteValue->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in Operator::Named::AbsoluteValue->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_named) . "\n" );
+
+    my string $operator_named_class = ref $operator_named;
+    if ( $operator_named_class eq 'Operation_80' ) { # Operation -> OP01_NAMED_SCOLON
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECOGEASCP15, CODE GENERATOR, ABSTRACT SYNTAX TO C++: named operator '
+                . $operator_named->{children}->[0]
+                . ' requires exactly one argument, dying' )
+            . "\n";
+    }
+    elsif ( $operator_named_class eq 'Operator_84' ) { # Operator -> OP01_NAMED SubExpression
+	# DEV NOTE: math.h is added by default (see RPerl/Inline.pm)
+	# DEV NOTE: there are multiple standard abs functions in C++ but std::abs is the most versatile
+        $cpp_source_group->{CPP} .= "std::" . $operator_named->{children}->[0] . q{(}; 
+        my string_hashref $cpp_source_subgroup
+            = $operator_named->{children}->[1]
+            ->ast_to_cpp__generate__CPPOPS_CPPTYPES( $modes, $self );
+        RPerl::Generator::source_group_append( $cpp_source_group,
+            $cpp_source_subgroup );
+	$cpp_source_group->{CPP} .= ")"
+    }
+    elsif ( $operator_named_class eq 'Operator_85' ) { # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECOGEASCP13a, CODE GENERATOR, ABSTRACT SYNTAX TO C++: named operator '
+                . $operator_named->{children}->[1]
+                . ' does not accept multiple arguments, dying' )
+            . "\n";
+    }
+    elsif ( $operator_named_class eq 'OperatorVoid_123' ) { # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECOGEASCP13b, CODE GENERATOR, ABSTRACT SYNTAX TO C++: named operator '
+                . $operator_named->{children}->[0]
+                . ' does not accept multiple arguments, dying' )
+            . "\n";
+    }
+    else {
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
+                . ($operator_named_class)
+                . ' found where Operation_80, Operator_84, Operator_85, or OperatorVoid_123 expected, dying'
+        ) . "\n";
+    }
+
     return $cpp_source_group;
 };
 
