@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.097_000;
+our $VERSION = 0.098_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -888,7 +888,9 @@ The much-anticipated RPerl v1.0 full release was made on US Independence Day 201
 
 RPerl v1.3 was released on Thanksgiving 2015, followed by RPerl v1.4 on Christmas 2015, and so forth.
 
-RPerl v1.0 was funded through a Kickstarter campaign, then RPerl v1.2 and v1.3 were funded through a second Kickstarter campaign.  Work on the first 6 chapters of this book was funded, in part, by a grant from The Perl Foundation.
+RPerl v1.0 was funded through a Kickstarter campaign, then RPerl v1.2 and v1.3 were funded through a second Kickstarter campaign.  Work on the first 6 chapters of this book was funded, in part, by grants from The Perl Foundation.
+
+RPerl v2.0 was released on US Independence Day 2016, exactly 1 year after v1.0 was released, in order to establish a regular annual release cycle.
 
 =head3 Section 1.25.3: Performance Of RPerl
 
@@ -1338,7 +1340,37 @@ $z = q{<<< END TEXT EVAL >>>};
 
 =for docbook </tbody></tgroup></table>
 
-=head2 Section 1.26: Exercises
+=head2 Section 1.26: What's New In RPerl v2.0?
+
+The single most significant new feature included in RPerl v2.0 is automatic parallelization.  This long-awaited software feature was promised from the very beginning of RPerl's initial development, with RPerl v2.0 being the originally-designated target for release of auto-parallel capabilities.  We stuck to the plan and delivered on time: the 4th of July, 2016.
+
+Automatic parallelization is now enabled on 4 parallel CPU cores by default, because quad-core CPUs are common at this times.  You may utilize the C<--num_cores=8> command-line argument to double the default number of parallel cores, for example.  (Please see L</B.16: Modes, Parallelize> and L</B.17: Modes, Parallelize, Number Of Cores> for more info about auto-parallelization arguments.)
+
+Currently, shared memory parallel hardware platforms are supported, such as multi-core CPUs and supercomputers, by utilizing the L<OpenMP|https://en.wikipedia.org/wiki/OpenMP> parallelization software.  In the near future we will add support for distributed memory platforms, such as clusters and the cloud, by utilizing the L<MPI|https://en.wikipedia.org/wiki/Message_Passing_Interface> parallelization software, as well as GPUs and other speciality hardware by utilizing the L<OpenCL|https://en.wikipedia.org/wiki/OpenCL> parallelization software. 
+
+RPerl triggers auto-parallelization by simply including the word 'PARALLEL' in a loop label; everything inside that loop will be automatically parallelized, including multiply-nested loops.  RPerl implements the L<polytope model|https://en.wikipedia.org/wiki/Polytope_model> (AKA L<polyhedral model|http://polyhedral.info>) for loop parallelization, by utilizing the L<Pluto PolyCC|http://pluto-compiler.sourceforge.net> polytope software.
+
+In addition to auto-parallelization, a number of other new features were released after RPerl v1.0 and by-or-before v2.0, including but not limited to:
+
+=over
+
+=item * Generate Stand-Alone Binary Executable Files & Shared Object Files
+
+=item * Control Native C++ Types Used For Integer & Number Values
+
+=item * Support SSE Data Types & Operations
+
+=item * Support GMP Data Types & Operations
+
+=item * Monolithic Modules
+
+=item * Uncompile (Delete) Unwanted Compiled Files
+
+=item * Two-Dimensional Data Structures
+
+=back
+
+=head2 Section 1.27: Exercises
 
 =head3 1.  Hello World  [ 15 mins ]
 
@@ -14231,7 +14263,7 @@ Thus, if a user inputs the integer 1, the array index will be 0, which is 'fred'
     print 'Flintstones & Rubbles:', "\n";
 
     foreach my integer $input_index ( @{$input_indices} ) {
-        print $flintstones_and_rubbles->[ ( $input_index - 1 ) ] . "\n";
+        print $flintstones_and_rubbles->[ ( $input_index - 1 ) ], "\n";
     }
 
 Example execution, input, and output:
@@ -14761,21 +14793,21 @@ To begin execution of this program via the C<`rperl`> command, the program name 
         $command_line_arguments = [ reverse @{$command_line_arguments} ];
         foreach my string $file_name ( @{$command_line_arguments} ) {
             if ( not( -e $file_name ) ) {
-                croak 'ERROR: File ' . $file_name . ' does not exist, croaking';
+                croak 'ERROR: File ', $file_name, ' does not exist, croaking';
             }
             if ( not( -r $file_name ) ) {
-                croak 'ERROR: File ' . $file_name . ' is not readable, croaking';
+                croak 'ERROR: File ', $file_name, ' is not readable, croaking';
             }
             if ( not( -f $file_name ) ) {
-                croak 'ERROR: File ' . $file_name . ' is not a regular file, croaking';
+                croak 'ERROR: File ', $file_name, ' is not a regular file, croaking';
             }
             if ( not( -T $file_name ) ) {
-                croak 'ERROR: File ' . $file_name . ' is (probably) not text, croaking';
+                croak 'ERROR: File ', $file_name, ' is (probably) not text, croaking';
             }
 
             my integer $open_success = open my filehandleref $FILE, '<', $file_name;
             if ( not $open_success ) {
-                croak 'ERROR: Failed to open file ' . $file_name . ' for reading, croaking';
+                croak 'ERROR: Failed to open file ', $file_name, ' for reading, croaking';
             }
 
             my string_arrayref $file_lines = [];
@@ -14791,7 +14823,7 @@ To begin execution of this program via the C<`rperl`> command, the program name 
             }
 
             if ( not close $FILE ) {
-                croak 'ERROR: Failed to close file ' . $file_name . ' after reading, croaking';
+                croak 'ERROR: Failed to close file ', $file_name, ' after reading, croaking';
             }
         }
     };
@@ -15049,7 +15081,7 @@ In the C<OPERATIONS> section, the only operation is a call to the C<given_to_fam
         chomp $given_name;
 
         if ((not exists $names->{$given_name}) or (not defined $names->{$given_name})) {
-            croak 'ERROR: No family (last) name found for given (first) name ' . $given_name . ', croaking' . "\n";
+            croak 'ERROR: No family (last) name found for given (first) name ', $given_name, ', croaking', "\n";
         }
 
         print 'The family (last) name of ', $given_name, ' is ', $names->{$given_name}, q{.}, "\n";
@@ -16046,7 +16078,7 @@ I<This option is a shorthand provided for brevity, please see: L</B.14: Modes, S
 
 =back
 
-=for comment head2 B.31: Flags, Parallelize
+=head2 B.31: Flags, Parallelize
 
 =over
 
