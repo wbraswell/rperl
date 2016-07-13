@@ -1344,7 +1344,7 @@ $z = q{<<< END TEXT EVAL >>>};
 
 The single most significant new feature included in RPerl v2.0 is automatic parallelization.  This long-awaited software feature was promised from the very beginning of RPerl's initial development, with RPerl v2.0 being the originally-designated target for release of auto-parallel capabilities.  We stuck to the plan and delivered on time: the 4th of July, 2016.
 
-Automatic parallelization is now enabled on 4 parallel CPU cores by default, because quad-core CPUs are common at this times.  You may utilize the C<--num_cores=8> command-line argument to double the default number of parallel cores, for example.  (Please see L</B.16: Modes, Parallelize> and L</B.17: Modes, Parallelize, Number Of Cores> for more info about auto-parallelization arguments.)
+Automatic parallelization is now enabled on 4 parallel CPU cores by default, because quad-core CPUs are common at this time.  You may utilize the C<--num_cores=8> command-line argument to double the default number of parallel cores, for example.  (Please see L</B.16: Modes, Parallelize> and L</B.17: Modes, Parallelize, Number Of Cores> for more info about auto-parallelization arguments.)
 
 Currently, shared memory parallel hardware platforms are supported, such as multi-core CPUs and supercomputers, by utilizing the L<OpenMP|https://en.wikipedia.org/wiki/OpenMP> parallelization software.  In the near future we will add support for distributed memory platforms, such as clusters and the cloud, by utilizing the L<MPI|https://en.wikipedia.org/wiki/Message_Passing_Interface> parallelization software, as well as GPUs and other speciality hardware by utilizing the L<OpenCL|https://en.wikipedia.org/wiki/OpenCL> parallelization software. 
 
