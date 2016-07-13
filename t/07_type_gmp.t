@@ -7,7 +7,6 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 # [[[ HEADER ]]]
 use strict;
 use warnings;
-use RPerl::AfterSubclass;
 our $VERSION = 0.002_300;
 
 # [[[ CRITICS ]]]
@@ -18,21 +17,25 @@ our $VERSION = 0.002_300;
 ## no critic qw(RequireCheckingReturnValueOfEval)  # SYSTEM DEFAULT 4: allow eval() test code blocks
 
 # [[[ INCLUDES ]]]
+
+use Test::More;
+BEGIN {
+    # NEED FIX: get gmpxx installed & working in Windows
+    if ( $^O eq 'MSWin32' ) {
+        plan skip_all => "[[[ MS Windows OS Detected, GNU Multi-Precision Library Temporarily Disabled, Skipping GMP Type Tests, RPerl Type System ]]]";
+    }
+}
+use RPerl::AfterSubclass;
 use RPerl::Test;
 use RPerl::Test::Foo;
 use rperltypesconv;
-use Test::More tests => 75;
 use Test::Exception;
 use Test::Number::Delta;
 
 # [[[ OPERATIONS ]]]
 
 BEGIN {
-    # NEED FIX: get gmpxx installed & working in Windows
-    if ( $OSNAME eq 'MSWin32' ) {
-        plan skip_all => "[[[ MS Windows OS Detected, GNU Multi-Precision Library Temporarily Disabled, Skipping GMP Type Tests, RPerl Type System ]]]";
-        exit;
-    }
+    plan tests => 75;
     if ( $ENV{RPERL_VERBOSE} ) {
         Test::More::diag("[[[ Beginning GMP Type Pre-Test Loading, RPerl Type System ]]]");
     }
