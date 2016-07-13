@@ -544,7 +544,7 @@ sub type_integer_native_ccflag {
     if ($Config{ivtype} eq 'long') {
         return ' -D__TYPE__INTEGER__LONG';
     }
-    elsif ($Config{ivtype} eq 'longlong') {
+    elsif ($Config{ivtype} eq 'longlong') { #XXX eq 'long long'????
         return ' -D__TYPE__INTEGER__LONG__LONG';
     }
 }
@@ -561,7 +561,7 @@ sub type_integer_errorcheck {
     }
     my string $ivtype = $Config{ivtype};
 
-    if ( $OSNAME ne 'MSWin32' ) {
+    if ( $OSNAME eq 'MSWin32' ) {
         my string_hashref $windows_types_to_common_types = {
             '__int8' => 'i8',
             '__int16' => 'i16',
@@ -573,6 +573,7 @@ sub type_integer_errorcheck {
             'int32_t' => 'i32',
             'int64_t' => 'i64',
             'int128_t' => 'i128',
+            'long long' => 'i64',
         };
         if (exists $windows_types_to_common_types->{$ivtype}) {
             $ivtype = $windows_types_to_common_types->{$ivtype};
