@@ -107,8 +107,11 @@ find(
 # trim unnecessary (and possibly problematic) absolute paths from input file names
 # must be done outside find() to properly utilize getcwd()
 foreach my string $test_file_key (sort keys %{$test_files}) {
-    $test_files->{RPerl::Compiler::post_processor__absolute_path_delete($test_file_key)} = $test_files->{$test_file_key};
-    delete $test_files->{$test_file_key};
+    my string $test_file_key_trimmed = RPerl::Compiler::post_processor__absolute_path_delete($test_file_key);
+    if ($test_file_key_trimmed ne $test_file_key) {
+        $test_files->{$test_file_key_trimmed} = $test_files->{$test_file_key};
+        delete $test_files->{$test_file_key};
+    }
 }
 
 my integer $number_of_test_files = scalar keys %{$test_files};
