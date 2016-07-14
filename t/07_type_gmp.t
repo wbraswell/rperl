@@ -7,7 +7,8 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 # [[[ HEADER ]]]
 use strict;
 use warnings;
-our $VERSION = 0.002_300;
+#use RPerl::AfterSubclass;  # NEED FIX: moved by bulk88 to below BEGIN block to optimize for skip speed on Windows OS, should be 'use RPerlish;' ?
+our $VERSION = 0.002_400;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -21,11 +22,12 @@ our $VERSION = 0.002_300;
 use Test::More;
 BEGIN {
     # NEED FIX: get gmpxx installed & working in Windows
-    if ( $^O eq 'MSWin32' ) {
+    use English;
+    if ( $OSNAME eq 'MSWin32' ) {
         plan skip_all => "[[[ MS Windows OS Detected, GNU Multi-Precision Library Temporarily Disabled, Skipping GMP Type Tests, RPerl Type System ]]]";
     }
 }
-use RPerl::AfterSubclass;
+use RPerl::AfterSubclass;  # NEED FIX: should not be here, see NEED FIX in HEADER above
 use RPerl::Test;
 use RPerl::Test::Foo;
 use rperltypesconv;

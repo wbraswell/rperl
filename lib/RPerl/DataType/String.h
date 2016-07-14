@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_h
-#define __CPP__INCLUDED__RPerl__DataType__String_h 0.008_000
+#define __CPP__INCLUDED__RPerl__DataType__String_h 0.008_100
 
 // [[[ TYPEDEFS ]]]
 # ifndef __CPP__INCLUDED__RPerl__DataType__String_h__typedefs
@@ -21,10 +21,31 @@ typedef unsigned long int unsigned_integer;
 # endif
 # ifndef __CPP__INCLUDED__RPerl__DataType__Integer_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__Integer_h__typedefs 1
+// DEV NOTE, CORRELATION #rp01: keep track of all these hard-coded integer data types
 #  ifdef __TYPE__INTEGER__LONG
 typedef long integer;
-#  elif defined __TYPE__INTEGER__LONG__LONG
+#  elif defined __TYPE__INTEGER__LONG_LONG
 typedef long long integer;
+#  elif defined __TYPE__INTEGER____INT8
+typedef __int8 integer;
+#  elif defined __TYPE__INTEGER____INT16
+typedef __int16 integer;
+#  elif defined __TYPE__INTEGER____INT32
+typedef __int32 integer;
+#  elif defined __TYPE__INTEGER____INT64
+typedef __int64 integer;
+#  elif defined __TYPE__INTEGER____INT128
+typedef __int128 integer;
+#  elif defined __TYPE__INTEGER__INT8_T
+typedef int8_t integer;
+#  elif defined __TYPE__INTEGER__INT16_T
+typedef int16_t integer;
+#  elif defined __TYPE__INTEGER__INT32_T
+typedef int32_t integer;
+#  elif defined __TYPE__INTEGER__INT64_T
+typedef int64_t integer;
+#  elif defined __TYPE__INTEGER__INT128_T
+typedef int128_t integer;
 #  else
 typedef long integer;  // default
 #  endif

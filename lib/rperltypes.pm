@@ -5,7 +5,7 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.006_000;
+our $VERSION = 0.006_100;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
@@ -77,6 +77,22 @@ our string_arrayref $SUPPORTED = [
         string_hashref
         )
 ];
+
+# DEV NOTE, CORRELATION #rp01: keep track of all these hard-coded integer data types
+our string_hashref $ALTERNATE_TYPES_TO_PERLISH_TYPES = {
+    '__int8' => 'i8',
+    '__int16' => 'i16',
+    '__int32' => 'i32',
+    '__int64' => 'i64',
+    '__int128' => 'i128',
+    'int8_t' => 'i8',
+    'int16_t' => 'i16',
+    'int32_t' => 'i32',
+    'int64_t' => 'i64',
+    'int128_t' => 'i128',
+#    'long long' => 'i64',  # NEED ANSWER: is it more correct to map to 'longlong' instead of 'i64', as done below?
+    'long long' => 'longlong',  # DEV NOTE: on Windows OS, real type "long long" is not shortened to "longlong" as in Linux
+};
 
 # DEV NOTE, CORRELATION #rp08: export to_string(), class(), type() and types() to main:: namespace;
 # can't achieve via Exporter due to circular dependency issue caused by Exporter in Config.pm and solved by 'require rperltypes;' in RPerl.pm
@@ -541,11 +557,45 @@ sub type_integer_native {
 
 sub type_integer_native_ccflag {
     type_integer_errorcheck();
-    if ($Config{ivtype} eq 'long') {
+    my string $ivtype = $Config{ivtype};
+
+    # NEED ANSWER: is there some better way to support all the different types, rather than all this hard-coding?
+    # DEV NOTE, CORRELATION #rp01: keep track of all these hard-coded integer data types
+    if ($ivtype eq 'long') {
         return ' -D__TYPE__INTEGER__LONG';
     }
-    elsif ($Config{ivtype} eq 'longlong') { #XXX eq 'long long'????
-        return ' -D__TYPE__INTEGER__LONG__LONG';
+    elsif (($ivtype eq 'longlong') or ($ivtype eq 'long long')) {  # DEV NOTE: match both Linux'ish 'longlong' & Windows'ish 'long long'; 'long long' is the real type
+        return ' -D__TYPE__INTEGER__LONG_LONG';
+    }
+    elsif ($ivtype eq '__int8') {
+        return ' -D__TYPE__INTEGER____INT8';
+    }
+    elsif ($ivtype eq '__int16') {
+        return ' -D__TYPE__INTEGER____INT16';
+    }
+    elsif ($ivtype eq '__int32') {
+        return ' -D__TYPE__INTEGER____INT32';
+    }
+    elsif ($ivtype eq '__int64') {
+        return ' -D__TYPE__INTEGER____INT64';
+    }
+    elsif ($ivtype eq '__int128') {
+        return ' -D__TYPE__INTEGER____INT128';
+    }
+    elsif ($ivtype eq 'int8_t') {
+        return ' -D__TYPE__INTEGER__INT8_T';
+    }
+    elsif ($ivtype eq 'int16_t') {
+        return ' -D__TYPE__INTEGER__INT16_T';
+    }
+    elsif ($ivtype eq 'int32_t') {
+        return ' -D__TYPE__INTEGER__INT32_T';
+    }
+    elsif ($ivtype eq 'int64_t') {
+        return ' -D__TYPE__INTEGER__INT64_T';
+    }
+    elsif ($ivtype eq 'int128_t') {
+        return ' -D__TYPE__INTEGER__INT128_T';
     }
 }
 
@@ -561,24 +611,10 @@ sub type_integer_errorcheck {
     }
     my string $ivtype = $Config{ivtype};
 
-    if ( $OSNAME eq 'MSWin32' ) {
-        my string_hashref $windows_types_to_common_types = {
-            '__int8' => 'i8',
-            '__int16' => 'i16',
-            '__int32' => 'i32',
-            '__int64' => 'i64',
-            '__int128' => 'i128',
-            'int8_t' => 'i8',
-            'int16_t' => 'i16',
-            'int32_t' => 'i32',
-            'int64_t' => 'i64',
-            'int128_t' => 'i128',
-            'long long' => 'i64',
-        };
-        if (exists $windows_types_to_common_types->{$ivtype}) {
-            $ivtype = $windows_types_to_common_types->{$ivtype};
-        }
+    if (exists $ALTERNATE_TYPES_TO_PERLISH_TYPES->{$ivtype}) {
+        $ivtype = $ALTERNATE_TYPES_TO_PERLISH_TYPES->{$ivtype};
     }
+
     my string $ivtypesize_key = $ivtype . 'size';
  
     if ((not exists $Config{$ivtypesize_key}) or (not defined $Config{$ivtypesize_key})) {
