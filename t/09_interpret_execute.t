@@ -9,7 +9,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.004_000;
+our $VERSION = 0.005_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -130,7 +130,14 @@ if ( $ENV{RPERL_VERBOSE} ) {
 # [[[ PRIMARY RUNLOOP ]]]
 # [[[ PRIMARY RUNLOOP ]]]
 
+my integer $i = 0;
+
 foreach my $test_file ( sort keys %{$test_files} ) {
+
+    $i++;
+    if ( $ENV{RPERL_VERBOSE} ) {
+        Test::More::diag( 'Test File #' . $i . ' of ' . $number_of_test_files . ': ' . $test_file );
+    }
 
 #    RPerl::diag( 'in 09_interpret_execute.t, have $test_file = ' . $test_file . "\n" );
     my $pid;
