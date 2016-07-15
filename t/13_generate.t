@@ -10,7 +10,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.011_000;
+our $VERSION = 0.012_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -162,7 +162,8 @@ my hashref $diff_check_retval;
 #foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 #for my $mode_id ( 0 ) {    # PERLOPS_PERLTYPES ONLY
 #for my $mode_id ( 2 ) {    # CPPOPS_CPPTYPES ONLY
-for my $mode_id ( 0 , 2 ) {    # PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
+#for my $mode_id ( 0 , 2 ) {    # PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
+for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: reverse order because many C++ tests are currently skipped, more accurate time-to-finish
 #    RPerl::diag("in 13_generate.t, top of for() loop, have \$mode_id = $mode_id\n");
 #    $number_of_test_files = scalar keys %{$test_files};
 #    RPerl::diag( 'in 13_generate.t, top of primary runloop, have $number_of_test_files = ' . $number_of_test_files . "\n" );

@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Number_cpp
-#define __CPP__INCLUDED__RPerl__DataType__Number_cpp 0.006_000
+#define __CPP__INCLUDED__RPerl__DataType__Number_cpp 0.006_100
 
 // [[[ INCLUDES ]]]
 #include <RPerl/DataType/Number.h>  // -> NULL (relies on native C type)
@@ -239,7 +239,7 @@ string number_to_string_CPPTYPES(number input_number)
 
     string whole_part_underscores = "";
     for(std::string::size_type i = 0; i < whole_part.size(); ++i) {
-//        fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), inside whole_part underscore loop, have i = %d, whole_part[i] = %c\n", (int)i, whole_part[i]);
+//        fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), inside whole_part underscore loop, have i = %"INTEGER", whole_part[i] = %c\n", (int)i, whole_part[i]);
         whole_part_underscores += whole_part[i];
         if (((i % 3) == 2) && (i > 0) && (i != (whole_part.size() - 1))) {
 //            fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), AND UNDERSCORE \n");
@@ -259,7 +259,7 @@ string number_to_string_CPPTYPES(number input_number)
 
     string decimal_part_underscores = "";
     for(std::string::size_type i = 0; i < decimal_part.size(); ++i) {
-//        fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), inside decimal_part underscore loop, have i = %d, decimal_part[i] = %c\n", (int)i, decimal_part[i]);
+//        fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), inside decimal_part underscore loop, have i = %"INTEGER", decimal_part[i] = %c\n", (int)i, decimal_part[i]);
         decimal_part_underscores += decimal_part[i];
         if (((i % 3) == 2) && (i > 0) && (i != (decimal_part.size() - 1))) {
 //            fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), AND UNDERSCORE \n");
