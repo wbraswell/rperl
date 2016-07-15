@@ -68,15 +68,21 @@ our string_arrayref $find_dependencies = sub {
     # NEED FIX: do not make recursive calls until after closing file, to avoid
     # ERROR ECOCODE01, COMPILER, FIND DEPENDENCIES: Cannot open file Foo/Bar.pm for reading, Too many open files, dying
     while ( $file_line = <$FILE_HANDLE> ) {
+        # START HERE: why are we not getting this diag info and dying here?
+        # START HERE: why are we not getting this diag info and dying here?
+        # START HERE: why are we not getting this diag info and dying here?
+ 
+#        RPerl::diag('in Compiler::find_dependencies(), top of while loop, have $file_line = ' . $file_line . "\n");
+#        die 'TMP DEBUG';
         if ( ( $file_line =~ /^\s*package\s+[\w:]+\s*;\s*$/xms ) and ( not defined $first_package_name ) ) {
             $first_package_name = $file_line;
             $first_package_name =~ s/^\s*package\s+([\w:]+)\s*;\s*$/$1/gxms;
             $eval_string = 'use ' . $first_package_name . '; 1;';
 
-            #        	RPerl::diag('in Compiler::find_dependencies(), about to call NON-DEP $eval_string = ' . $eval_string . "\n");
+            #            RPerl::diag('in Compiler::find_dependencies(), about to call NON-DEP $eval_string = ' . $eval_string . "\n");
             $eval_retval = eval($eval_string);
 
-##        	RPerl::diag('in Compiler::find_dependencies(), have POST-EVAL NON-DEP %INC = ' . Dumper(\%INC) . "\n");
+##            RPerl::diag('in Compiler::find_dependencies(), have POST-EVAL NON-DEP %INC = ' . Dumper(\%INC) . "\n");
             # warn instead of dying on eval error here and below, in order to preserve proper parser errors instead of weird eval errors
             # in RPerl/Test/*/*Bad*.pm and RPerl/Test/*/*bad*.pl
             if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne q{} ) ) {
@@ -91,6 +97,8 @@ our string_arrayref $find_dependencies = sub {
 
         # NEED FIX: remove hard-coded list of not-subdependency uses
         if ( $file_line =~ /^\s*use\s+[\w:]+/xms ) {
+#            RPerl::diag('in Compiler::find_dependencies(), found use line, have $file_line = ' . $file_line . "\n");
+#            die 'TMP DEBUG';
             if (   ( $file_line =~ /use\s+strict\s*;/ )
                 or ( $file_line =~ /use\s+warnings\s*;/ )
                 or ( $file_line =~ /use\s+RPerl::CompileUnit::Module::Class\s*;/ )
@@ -111,7 +119,7 @@ our string_arrayref $find_dependencies = sub {
             }
             elsif ( $file_line =~ /use\s+rperlsse\s*;/ ) {
 
-       #            	RPerl::diag('in Compiler::find_dependencies(), found rperlsse line, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
+#               RPerl::diag('in Compiler::find_dependencies(), found rperlsse line, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
                 if ( ( substr $Config{archname}, 0, 3 ) eq 'arm' ) {
                     die q{ERROR ECOCODE05, COMPILER, FIND DEPENDENCIES: 'use rperlsse;' command found but SSE not supported on ARM architecture, file }
                         . q{'}
@@ -123,18 +131,19 @@ our string_arrayref $find_dependencies = sub {
                 }
                 $modes->{_enable_sse}->{$file_name} = 1;
 
-#            	RPerl::diag('in Compiler::find_dependencies(), after finding rperlsse line, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
+#                RPerl::diag('in Compiler::find_dependencies(), after finding rperlsse line, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
                 next;
             }
             elsif ( $file_line =~ /use\s+rperlgmp\s*;/ ) {
 
-       #            	RPerl::diag('in Compiler::find_dependencies(), found rperlgmp line, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
+#                RPerl::diag('in Compiler::find_dependencies(), found rperlgmp line, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
+#                die 'TMP DEBUG';
                 if ( ( not exists $modes->{_enable_gmp} ) or ( not defined $modes->{_enable_gmp} ) ) {
                     $modes->{_enable_gmp} = {};
                 }
                 $modes->{_enable_gmp}->{$file_name} = 1;
 
-#            	RPerl::diag('in Compiler::find_dependencies(), after finding rperlgmp line, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
+#                RPerl::diag('in Compiler::find_dependencies(), after finding rperlgmp line, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
                 next;
             }
 
@@ -864,11 +873,16 @@ our string $post_processor_cpp__comments_whitespace_delete = sub {
 sub post_processor__absolute_path_delete {
     ( my string $input_path ) = @_;
 
-    #    RPerl::diag( 'in Compiler::post_processor__absolute_path_delete(), received $input_path = ' . $input_path . "\n" );
+#    RPerl::diag( 'in Compiler::post_processor__absolute_path_delete(), received $input_path = ' . $input_path . "\n" );
+
+    if ( $OSNAME eq 'MSWin32' ) {
+        $input_path =~ s/\\/\//gxms;
+#        RPerl::diag( 'in Compiler::post_processor__absolute_path_delete(), Windows OS detected, have possibly-reformatted $input_path = ' . $input_path . "\n" );
+    }
 
     my string $current_working_directory = getcwd;
 
-    #    RPerl::diag( 'in Compiler::post_processor__absolute_path_delete(), have $current_working_directory = ' . $current_working_directory . "\n" );
+#    RPerl::diag( 'in Compiler::post_processor__absolute_path_delete(), have $current_working_directory = ' . $current_working_directory . "\n" );
 
     if ( ( substr $input_path, 0, ( length $current_working_directory ) ) eq $current_working_directory ) {
         return substr $input_path, ( ( length $current_working_directory ) + 1 );

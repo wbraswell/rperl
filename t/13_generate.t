@@ -29,6 +29,10 @@ use Test::Exception;
 use File::Find qw(find);
 use Perl::Tidy;
 
+# [[[ CONSTANTS ]]]
+use constant PATH_TESTS => my string $TYPED_PATH_TESTS = $RPerl::INCLUDE_PATH . '/RPerl/Test';
+use constant PATH_PRECOMPILED => my string $TYPED_PATH_PRECOMPILED = $RPerl::INCLUDE_PATH . '/RPerl';
+
 # [[[ OPERATIONS ]]]
 
 # DEV NOTE: if set to true, will speed up tests where no pre-compiled reference files are found
@@ -56,7 +60,7 @@ BEGIN {
 #my string_arrayref_hashref_hashref $test_files = {};
 my $test_files = {};
 
-# locate all *Good* *good* *Bad* *bad* test files in RPerl/Test/ directory
+# locate all *Good* *good* *Bad* *bad* test files in PATH_TESTS directory
 find(
     sub {
 #        return;  # TMP DEBUG
@@ -91,10 +95,10 @@ find(
             return;
         }
     },
-    $RPerl::INCLUDE_PATH . '/RPerl/Test'
+    PATH_TESTS()
 );
 
-# locate all *.*OPS_*TYPES pre-compiled files in RPerl/ directory
+# locate all *.*OPS_*TYPES pre-compiled files in PATH_PRECOMPILED directory
 find(
     sub {
         my $file = $File::Find::name;
@@ -130,7 +134,7 @@ find(
             return;
         }
     },
-    $RPerl::INCLUDE_PATH . '/RPerl'
+    PATH_PRECOMPILED()
 );
 
 #=cut
