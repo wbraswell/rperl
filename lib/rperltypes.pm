@@ -78,7 +78,7 @@ our string_arrayref $SUPPORTED = [
         )
 ];
 
-# DEV NOTE, CORRELATION #rp01: keep track of all these hard-coded integer data types
+# DEV NOTE, CORRELATION #rp01: keep track of all these hard-coded "semi-dynamic" integer data types
 our string_hashref $ALTERNATE_TYPES_TO_PERLISH_TYPES = {
     '__int8' => 'i8',
     '__int16' => 'i16',

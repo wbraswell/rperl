@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Character_cpp
-#define __CPP__INCLUDED__RPerl__DataType__Character_cpp 0.001_000
+#define __CPP__INCLUDED__RPerl__DataType__Character_cpp 0.002_000
 
 // [[[ INCLUDES ]]]
 #include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
@@ -29,7 +29,7 @@ character XS_unpack_character(SV* input_sv) {
 // convert from (C character) to (Perl SV containing character)
 void XS_pack_character(SV* output_sv, character input_character) {
 //fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_character(), top of subroutine\n");
-//fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_character(), received input_character = %ld\n", input_character);
+//fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_character(), received input_character = %"INTEGER"\n", input_character);
 
 	sv_setsv(output_sv, sv_2mortal(newSVpvf("%c", input_character)));
 
@@ -155,7 +155,7 @@ SV* character__typetest0() {
 SV* character__typetest1(SV* lucky_character) {
 //	character_CHECK(lucky_character);
 	character_CHECKTRACE(lucky_character, "lucky_character", "character__typetest1()");
-//fprintf(stderr, "in CPPOPS_PERLTYPES character__typetest1(), received lucky_character = %ld\n", SvIV(lucky_character));
+//fprintf(stderr, "in CPPOPS_PERLTYPES character__typetest1(), received lucky_character = %"INTEGER"\n", SvIV(lucky_character));
 	return newSVpvf("%c", (character) ((SvPV_nolen(lucky_character))[0] + SvIV(RPerl__DataType__Character__MODE_ID())));
 }
 
