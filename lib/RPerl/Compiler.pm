@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.016_000;
+our $VERSION = 0.017_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -637,46 +637,44 @@ our string $post_processor_cpp__header_or_cpp_path = sub {
 our string $post_processor_cpp__lib_path_delete = sub {
     ( my string $path ) = @_;
 
-    if ( ( $OSNAME eq 'MSWin32' ) ) {
-        if ( ( substr $path, 0, 4 ) eq 'lib\\' ) {
-            substr $path, 0, 4, q{};
-        }
-#        elsif ( ( substr $path, 0, 5 ) eq '\\lib\\' ) {  # NEED ANSWER: same question as below
-#            substr $path, 0, 5, q{};
-#        }
-        elsif ( ( substr $path, 0, 6 ) eq '.\\lib\\' ) {
-            substr $path, 0, 6, q{};
-        }
-        elsif ( ( substr $path, 0, 9 ) eq 'blib\\lib\\' ) {
-            substr $path, 0, 9, q{};
-        }
-#        elsif ( ( substr $path, 0, 10 ) eq '\\blib\\lib\\' ) {  # NEED ANSWER: same question as below
-#            substr $path, 0, 10, q{};
-#        }
-        elsif ( ( substr $path, 0, 11 ) eq '.\\blib\\lib\\' ) {
-            substr $path, 0, 11, q{};
-        }
+    # DEV NOTE: sometimes MS Windows OS has forward slashes in the 'blib/lib/' part of the path, so we do not differentiate by OS
+    if ( ( substr $path, 0, 4 ) eq 'lib\\' ) {
+        substr $path, 0, 4, q{};
     }
-    else {
-        if ( ( substr $path, 0, 4 ) eq 'lib/' ) {
-            substr $path, 0, 4, q{};
-        }
-#        elsif ( ( substr $path, 0, 5 ) eq '/lib/' ) {  # NEED ANSWER: is there ever a case where '/lib/' would appear instead of 'lib/' or './lib/' ???
-#            substr $path, 0, 5, q{};
-#        }
-        elsif ( ( substr $path, 0, 6 ) eq './lib/' ) {
-            substr $path, 0, 6, q{};
-        }
-        elsif ( ( substr $path, 0, 9 ) eq 'blib/lib/' ) {
-            substr $path, 0, 9, q{};
-        }
-#        elsif ( ( substr $path, 0, 10 ) eq '/blib/lib/' ) {  # NEED ANSWER: same question as above
-#            substr $path, 0, 10, q{};
-#        }
-        elsif ( ( substr $path, 0, 11 ) eq './blib/lib/' ) {
-            substr $path, 0, 11, q{};
-        }
+#    elsif ( ( substr $path, 0, 5 ) eq '\\lib\\' ) {  # NEED ANSWER: same question as below
+#        substr $path, 0, 5, q{};
+#    }
+    elsif ( ( substr $path, 0, 6 ) eq '.\\lib\\' ) {
+        substr $path, 0, 6, q{};
     }
+    elsif ( ( substr $path, 0, 9 ) eq 'blib\\lib\\' ) {
+        substr $path, 0, 9, q{};
+    }
+#    elsif ( ( substr $path, 0, 10 ) eq '\\blib\\lib\\' ) {  # NEED ANSWER: same question as below
+#        substr $path, 0, 10, q{};
+#    }
+    elsif ( ( substr $path, 0, 11 ) eq '.\\blib\\lib\\' ) {
+        substr $path, 0, 11, q{};
+    }
+    elsif ( ( substr $path, 0, 4 ) eq 'lib/' ) {
+        substr $path, 0, 4, q{};
+    }
+#    elsif ( ( substr $path, 0, 5 ) eq '/lib/' ) {  # NEED ANSWER: is there ever a case where '/lib/' would appear instead of 'lib/' or './lib/' ???
+#        substr $path, 0, 5, q{};
+#    }
+    elsif ( ( substr $path, 0, 6 ) eq './lib/' ) {
+        substr $path, 0, 6, q{};
+    }
+    elsif ( ( substr $path, 0, 9 ) eq 'blib/lib/' ) {
+        substr $path, 0, 9, q{};
+    }
+#    elsif ( ( substr $path, 0, 10 ) eq '/blib/lib/' ) {  # NEED ANSWER: same question as above
+#        substr $path, 0, 10, q{};
+#    }
+    elsif ( ( substr $path, 0, 11 ) eq './blib/lib/' ) {
+        substr $path, 0, 11, q{};
+    }
+
     return $path;
 };
 
