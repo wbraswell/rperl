@@ -9,7 +9,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_000;
+our $VERSION = 0.008_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -25,6 +25,9 @@ use Test::More;
 use Test::Exception;
 use File::Find qw(find);
 use English;  # $EVAL_ERROR not defined after moving RPerl::* into lives_and() tests in BEGIN block below
+
+# [[[ CONSTANTS ]]]
+use constant PATH_TESTS => my string $TYPED_PATH_TESTS = $RPerl::INCLUDE_PATH . '/RPerl/Test';
 
 # [[[ OPERATIONS ]]]
 
@@ -78,7 +81,7 @@ find(
             return;
         }
     },
-    $RPerl::INCLUDE_PATH . '/RPerl/Test'
+    PATH_TESTS()
 );
 
 my integer $number_of_test_files = scalar keys %{$test_files};
@@ -111,7 +114,7 @@ for my $test_file ( sort keys %{$test_files} ) {
             undef,    # empty $cpp_output_file_name_group, no files will be saved in PARSE mode
             {},       # empty $cpp_source_group, starting compile process from scratch, not continued
             {   
-                dependencies => 'ON',
+#                dependencies => 'OFF',  # unnecessary
                 ops     => 'PERL',
                 types   => 'PERL',
 #                check        => 'TRACE',    # unnecessary

@@ -927,6 +927,8 @@ our string_hashref $ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES = s
     ( my string $property_key, my string_hashref $modes ) = @_;
     my string_hashref $cpp_source_group = { H => q{} };
 
+#    RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES(), received $modes = ' . "\n" . Dumper($modes) . "\n" );
+
     # grab RPerl-style type out of symtab, instead of accepting-as-arg now-C++-style type from $property_type in caller
     my string $property_type = $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}->{type};
     my boolean $is_direct    = 0;
@@ -997,7 +999,7 @@ our string_hashref $ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES = s
             .= 'void set_' . $property_key . '(' . $property_type . q{ } . $property_key . '_new) { this->' . $property_key . ' = ' . $property_key . '_new; }';
     }
     else {
-# hard-coded example
+# HARD-CODED EXAMPLE:
 #integer get_bodies_size() { return this->bodies.size(); }  // call from Perl or C++
 #string_arrayref get_bodies_keys() { string_arrayref keys; keys.reserve(this->keys.size()); for(auto hash_entry : this->bodies) { keys.push_back(hash_entry.first); } }  // call from Perl or C++
 #PhysicsPerl__Astro__Body_ptr& get_bodies_element(integer i) { return this->bodies[i]; }  // call from C++
@@ -1080,7 +1082,13 @@ our string_hashref $ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES = s
             # DEV NOTE: must create return variable object in Perl so it will be memory-managed by Perl,
             # and not wrongly destructed or double-destructed by Perl garbage collector and/or C++ memory.h,
             # even though Perl object contents will be replaced by C++ memory address, TRICKY!
-            $cpp_source_group->{PMC} = 'sub get_' . $property_key . '_element {' . "\n";
+            # HARD-CODED EXAMPLE:
+            # undef &PhysicsPerl::Astro::System::get_bodies_element;
+            # *PhysicsPerl::Astro::System::get_bodies_element = sub { ... };
+
+#            $cpp_source_group->{PMC} = 'sub get_' . $property_key . '_element {' . "\n";  # DEV NOTE: use alternate syntax to avoid "subroutine redefined" errors
+            $cpp_source_group->{PMC} = 'undef &' . $modes->{_symbol_table}->{_namespace} . 'get_' . $property_key . '_element;' . "\n";
+            $cpp_source_group->{PMC} .= '*' . $modes->{_symbol_table}->{_namespace} . 'get_' . $property_key . '_element = sub {' . "\n";
             $cpp_source_group->{PMC}
                 .= '( my '
                 . ( substr $modes->{_symbol_table}->{_namespace}, 0, ( ( length $modes->{_symbol_table}->{_namespace} ) - 2 ) )
@@ -1089,7 +1097,8 @@ our string_hashref $ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES = s
                 .= 'my ' . $property_element_or_value_type . ' $' . $property_key . '_element = ' . $property_element_or_value_type . '->new();' . "\n";
             $cpp_source_group->{PMC} .= '$self->get_' . $property_key . '_element_indirect($i, $' . $property_key . '_element);' . "\n";
             $cpp_source_group->{PMC} .= 'return $' . $property_key . '_element;' . "\n";
-            $cpp_source_group->{PMC} .= '}';
+#            $cpp_source_group->{PMC} .= '}';  # DEV NOTE: use alternate syntax to avoid "subroutine redefined" errors
+            $cpp_source_group->{PMC} .= '};';
         }
 #        else { RPerl::diag( 'in Class::Generator::ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES(), NO PMC SHIMS' . "\n" ); }
 

@@ -28,6 +28,9 @@ use File::Find qw(find);
 use IPC::Open3;
 use IO::Select;
 
+# [[[ CONSTANTS ]]]
+use constant PATH_TESTS => my string $TYPED_PATH_TESTS = $RPerl::INCLUDE_PATH . '/RPerl/Test';
+
 # [[[ OPERATIONS ]]]
 
 BEGIN {
@@ -101,7 +104,7 @@ find(
             return;
         }
     },
-    $RPerl::INCLUDE_PATH . '/RPerl/Test'
+    PATH_TESTS()
 );
 
 # trim unnecessary (and possibly problematic) absolute paths from input file names

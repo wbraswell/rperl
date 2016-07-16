@@ -68,6 +68,7 @@ our string_arrayref $find_dependencies = sub {
     my string $first_package_name = undef;
     my string $eval_string;
     my integer $eval_retval;
+    my boolean $use_rperl = 0;
 
     # NEED FIX: do not make recursive calls until after closing file, to avoid
     # ERROR ECOCODE01, COMPILER, FIND DEPENDENCIES: Cannot open file Foo/Bar.pm for reading, Too many open files, dying
@@ -98,11 +99,14 @@ our string_arrayref $find_dependencies = sub {
         # NEED FIX: remove hard-coded list of not-subdependency uses
         if ( $file_line =~ /^\s*use\s+[\w:]+/xms ) {
 #            RPerl::diag('in Compiler::find_dependencies(), found use line, have $file_line = ' . $file_line . "\n");
-            if (   ( $file_line =~ /use\s+strict\s*;/ )
+            if ( $file_line =~ /use\s+RPerl\s*;/ ) {
+                $use_rperl = 1;
+                next;
+            }
+            elsif (   ( $file_line =~ /use\s+strict\s*;/ )
                 or ( $file_line =~ /use\s+warnings\s*;/ )
                 or ( $file_line =~ /use\s+RPerl::CompileUnit::Module::Class\s*;/ )
                 or ( $file_line =~ /use\s+RPerl::Class\s*;/ )
-                or ( $file_line =~ /use\s+RPerl\s*;/ )
                 or ( $file_line =~ /use\s+RPerl::AfterSubclass\s*;/ )
                 or ( $file_line =~ /use\s+RPerl::Config\s*;/ )
                 or ( $file_line =~ /use\s+\w+Perl::Config\s*;/ )    # DEV NOTE, CORRELATION #rp27: MathPerl::Config, PhysicsPerl::Config, etc
@@ -144,13 +148,17 @@ our string_arrayref $find_dependencies = sub {
 #                RPerl::diag('in Compiler::find_dependencies(), after finding rperlgmp line, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
                 next;
             }
-
-            if ( $file_line =~ /use\s+lib/ ) {
+            elsif ( $file_line =~ /use\s+lib/ ) {
                 die
                     q{ERROR ECOCODE02, COMPILER, FIND DEPENDENCIES: 'use lib...' not currently supported, please set @INC using the PERL5LIB environment variable, file }
                     . q{'}
                     . $file_name . q{'}
                     . ', dying' . "\n";
+            }
+
+            # 'use RPerl;' must appear before any other 'use Foo;' statements, or else this is not a valid RPerl input file and we return empty deps
+            if (not $use_rperl) {
+                last; 
             }
 
             $file_line =~ s/^\s*use\s+([\w:]+)\s*.*\s*;\s*$/$1/gxms;    # remove everything except the package name
