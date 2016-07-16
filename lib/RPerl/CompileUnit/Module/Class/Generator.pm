@@ -408,7 +408,7 @@ EOL
     $module_file_name =~ s/__/\//gxms;
     $module_file_name .= '.pm';
 
-    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $module_file_name = ' . $module_file_name . "\n");
+#    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $module_file_name = ' . $module_file_name . "\n");
 
     if ( ( exists $modes->{_enable_sse} ) and ( defined $modes->{_enable_sse} ) ) {
         foreach my string $module_path_name ( keys %{ $modes->{_enable_sse} } ) {
@@ -418,7 +418,7 @@ EOL
         }
     }
 
-    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
+#    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
     if ( ( exists $modes->{_enable_gmp} ) and ( defined $modes->{_enable_gmp} ) ) {
         foreach my string $module_path_name ( keys %{ $modes->{_enable_gmp} } ) {
             if ( ( $module_path_name =~ /$module_file_name$/xms ) and ( $modes->{_enable_gmp}->{$module_path_name} ) ) {

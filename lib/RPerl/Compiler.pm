@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.015_000;
+our $VERSION = 0.016_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -47,10 +47,14 @@ our hashref_hashref $filename_suffixes_supported = {
 # [[[ SUBROUTINES ]]]
 
 our string_arrayref $find_dependencies = sub {
-    ( my string $file_name, my string_hashref $modes ) = @_;
-    my string_arrayref $dependencies = [];
+    ( my string $file_name, my boolean $find_subdependencies_recurse, my string_hashref $modes ) = @_;
+#    RPerl::diag( 'in Compiler::find_dependencies(), received $file_name = ' . $file_name . "\n" );
 
-    #    RPerl::diag( 'in Compiler::find_dependencies(), received $file_name = ' . $file_name . "\n" );
+    # trim unnecessary (and possibly problematic) absolute paths from input file name
+    $file_name = post_processor__absolute_path_delete($file_name);
+#    RPerl::diag( 'in Compiler::find_dependencies(), have possibly-trimmed $file_name = ' . $file_name . "\n" );
+
+    my string_arrayref $dependencies = [];
 
     if ( not -f $file_name ) {
         die 'ERROR ECOCODE00, COMPILER, FIND DEPENDENCIES: File not found, ' . q{'} . $file_name . q{'} . ', dying' . "\n";
@@ -68,12 +72,8 @@ our string_arrayref $find_dependencies = sub {
     # NEED FIX: do not make recursive calls until after closing file, to avoid
     # ERROR ECOCODE01, COMPILER, FIND DEPENDENCIES: Cannot open file Foo/Bar.pm for reading, Too many open files, dying
     while ( $file_line = <$FILE_HANDLE> ) {
-        # START HERE: why are we not getting this diag info and dying here?
-        # START HERE: why are we not getting this diag info and dying here?
-        # START HERE: why are we not getting this diag info and dying here?
- 
 #        RPerl::diag('in Compiler::find_dependencies(), top of while loop, have $file_line = ' . $file_line . "\n");
-#        die 'TMP DEBUG';
+
         if ( ( $file_line =~ /^\s*package\s+[\w:]+\s*;\s*$/xms ) and ( not defined $first_package_name ) ) {
             $first_package_name = $file_line;
             $first_package_name =~ s/^\s*package\s+([\w:]+)\s*;\s*$/$1/gxms;
@@ -98,7 +98,6 @@ our string_arrayref $find_dependencies = sub {
         # NEED FIX: remove hard-coded list of not-subdependency uses
         if ( $file_line =~ /^\s*use\s+[\w:]+/xms ) {
 #            RPerl::diag('in Compiler::find_dependencies(), found use line, have $file_line = ' . $file_line . "\n");
-#            die 'TMP DEBUG';
             if (   ( $file_line =~ /use\s+strict\s*;/ )
                 or ( $file_line =~ /use\s+warnings\s*;/ )
                 or ( $file_line =~ /use\s+RPerl::CompileUnit::Module::Class\s*;/ )
@@ -137,7 +136,6 @@ our string_arrayref $find_dependencies = sub {
             elsif ( $file_line =~ /use\s+rperlgmp\s*;/ ) {
 
 #                RPerl::diag('in Compiler::find_dependencies(), found rperlgmp line, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
-#                die 'TMP DEBUG';
                 if ( ( not exists $modes->{_enable_gmp} ) or ( not defined $modes->{_enable_gmp} ) ) {
                     $modes->{_enable_gmp} = {};
                 }
@@ -160,14 +158,14 @@ our string_arrayref $find_dependencies = sub {
 
             #            RPerl::diag( 'in Compiler::find_dependencies(), about to call DEP $eval_string = ' . $eval_string . "\n" );
             $eval_retval = eval($eval_string);
-
+    
             #            RPerl::diag('in Compiler::find_dependencies(), have POST-EVAL DEP %INC = ' . Dumper(\%INC) . "\n");
             if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne q{} ) ) {
                 RPerl::warning( 'WARNING WCOCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package ' . q{'}
                         . $first_package_name . q{'}
                         . ', fatal error trapped and delayed'
                         . "\n" );
-                RPerl::diag( '                                                Trapped the following error message...' . "\n\n" . $EVAL_ERROR . "\n" );
+                RPerl::diag( '                                    Trapped the following error message...' . "\n\n" . $EVAL_ERROR . "\n" );
                 RPerl::warning("\n");
             }
             $file_line =~ s/::/\//gxms;    # replace double-colon :: scope delineator with forward-slash / directory delineator
@@ -179,20 +177,24 @@ our string_arrayref $find_dependencies = sub {
                     . $file_name . q{'}
                     . ', dying' . "\n";
             }
-
+    
             #            RPerl::diag( 'in Compiler::find_dependencies(), have MATCHING $file_line = ' . $file_line . "\n" );
-
+    
             my string $inc_file_line_path_trimmed = post_processor__absolute_path_delete( $INC{$file_line} );
             push @{$dependencies}, $inc_file_line_path_trimmed;
-
+    
             #            RPerl::diag( 'in Compiler::find_dependencies(), have PRE-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
 
-            my string_arrayref $subdependencies = find_dependencies( $INC{$file_line}, $modes );
-
-            # discard duplicate dependencies that now appear in subdependencies
-            $dependencies = [ uniq @{$subdependencies}, @{$dependencies} ];
-
-            #            RPerl::diag( 'in Compiler::find_dependencies(), have POST-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
+            if ($find_subdependencies_recurse) {
+    
+                # recursively find subdependencies
+                my string_arrayref $subdependencies = find_dependencies( $INC{$file_line}, $find_subdependencies_recurse, $modes );
+    
+                # discard duplicate dependencies that now appear in subdependencies
+                $dependencies = [ uniq @{$subdependencies}, @{$dependencies} ];
+    
+                #            RPerl::diag( 'in Compiler::find_dependencies(), have POST-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
+            }
         }
     }
 
@@ -623,7 +625,7 @@ our string $post_processor_cpp__header_or_cpp_path = sub {
     return $source_CPP;
 };
 
-# remove leading 'lib/' or 'blib/lib/' if present, because -Ilib or -Iblib/lib enabled in RPerl/Inline.pm
+# remove leading library path if present, because it should already be enabled in RPerl/Inline.pm via -Ifoo subcompiler argument
 our string $post_processor_cpp__lib_path_delete = sub {
     ( my string $path ) = @_;
 
@@ -631,16 +633,40 @@ our string $post_processor_cpp__lib_path_delete = sub {
         if ( ( substr $path, 0, 4 ) eq 'lib\\' ) {
             substr $path, 0, 4, q{};
         }
+#        elsif ( ( substr $path, 0, 5 ) eq '\\lib\\' ) {  # NEED ANSWER: same question as below
+#            substr $path, 0, 5, q{};
+#        }
+        elsif ( ( substr $path, 0, 6 ) eq '.\\lib\\' ) {
+            substr $path, 0, 6, q{};
+        }
         elsif ( ( substr $path, 0, 9 ) eq 'blib\\lib\\' ) {
             substr $path, 0, 9, q{};
+        }
+#        elsif ( ( substr $path, 0, 10 ) eq '\\blib\\lib\\' ) {  # NEED ANSWER: same question as below
+#            substr $path, 0, 10, q{};
+#        }
+        elsif ( ( substr $path, 0, 11 ) eq '.\\blib\\lib\\' ) {
+            substr $path, 0, 11, q{};
         }
     }
     else {
         if ( ( substr $path, 0, 4 ) eq 'lib/' ) {
             substr $path, 0, 4, q{};
         }
+#        elsif ( ( substr $path, 0, 5 ) eq '/lib/' ) {  # NEED ANSWER: is there ever a case where '/lib/' would appear instead of 'lib/' or './lib/' ???
+#            substr $path, 0, 5, q{};
+#        }
+        elsif ( ( substr $path, 0, 6 ) eq './lib/' ) {
+            substr $path, 0, 6, q{};
+        }
         elsif ( ( substr $path, 0, 9 ) eq 'blib/lib/' ) {
             substr $path, 0, 9, q{};
+        }
+#        elsif ( ( substr $path, 0, 10 ) eq '/blib/lib/' ) {  # NEED ANSWER: same question as above
+#            substr $path, 0, 10, q{};
+#        }
+        elsif ( ( substr $path, 0, 11 ) eq './blib/lib/' ) {
+            substr $path, 0, 11, q{};
         }
     }
     return $path;
@@ -1035,7 +1061,8 @@ our string $post_processor_cpp__pmc_generate = sub {
                 }
                 elsif ( $file_line eq ( '        # <<< CHANGE_ME: enable optional GMP support here >>>' . "\n" ) ) {
 
-                   #                    RPerl::diag( 'in Compiler::save_source_files(), have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n" );
+#                    RPerl::diag( 'in Compiler::save_source_files(), have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n" );
+#                    RPerl::diag( 'in Compiler::save_source_files(), have $pm_file_path = ' . $pm_file_path . "\n" );
                     if (    ( exists $modes->{_enable_gmp} )
                         and ( defined $modes->{_enable_gmp} )
                         and ( exists $modes->{_enable_gmp}->{$pm_file_path} )

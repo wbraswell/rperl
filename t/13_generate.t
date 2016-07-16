@@ -10,7 +10,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.012_000;
+our $VERSION = 0.013_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -195,7 +195,7 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
 #        RPerl::diag( 'in 13_generate.t, top of secondary runloop, have $number_of_test_files = ' . $number_of_test_files . "\n" );
 
         $modes = {
-            dependencies => 'ON',
+#            dependencies => 'OFF',  # unnecessary, handled by explicitly calling find_dependencies() below, only used for RPerl system deps
             ops     => $ops,
             types   => $types,
 #            check        => 'TRACE',  # unnecessary
@@ -207,6 +207,12 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
             execute => 'OFF',
             label   => 'OFF'          # don't label source code, will strip comments before diff check
         };
+
+        # DEV NOTE: do not actually follow or compile dependencies;
+        # find RPerl system deps such as 'use rperlsse;', 'use rperlgmp;', etc.;
+        # ignore return value, here we only care about $modes->{_enable_sse}, $modes->{_enable_gmp}, etc.;
+        find_dependencies( $test_file, 0, $modes );  # second argument set to 0 for false value of $find_subdependencies_recurse
+
         $output_file_name_groups_tmp = generate_output_file_names( [$test_file], [], 1, $modes );
         $output_file_name_group = $output_file_name_groups_tmp->[0];
 
@@ -313,6 +319,7 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
             my string_hashref $source_group = $eval_return_value;
 
 #            RPerl::diag( 'in 13_generate.t, have $source_group = ' . Dumper($source_group ) . "\n\n" );
+#            RPerl::diag( 'in 13_generate.t, have $source_group->{H} = ' . "\n" . $source_group->{H} . "\n\n" );
 #            RPerl::diag( 'in 13_generate.t, have sort keys %{ $source_group } = ' . Dumper( [ sort keys %{$source_group} ] ) );
 
             if (( $ops eq 'CPP' ) and (exists $output_file_name_group->{PMC}) and (defined $output_file_name_group->{PMC})) {

@@ -297,6 +297,8 @@ PERLOPS_PERLTYPES
 GRAMMAR
     remove 'undef' from all possible locations in grammar for C++ compatibility
     fix 'x' string repeat operator vs 'x' string or bareword hash key, already fixed???
+    decide if we will allow '#!/usr/bin/env perl' as a SHEBANG, or only allow '#!/usr/bin/perl' style and allow EU::MM to mangle shebang on install?
+        https://perlbrew.pl/Dealing-with-shebangs.html
 
 COMPILER
     Monolithic Modules, Fix Deps Warning

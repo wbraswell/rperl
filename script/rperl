@@ -575,7 +575,7 @@ sub depends_delete {
         my hashref_arrayref $output_file_name_dep_groups = [$output_file_name_group];
 
         if ( $modes->{dependencies} eq 'ON' ) {
-            $input_file_name_deps = find_dependencies( $input_file_name, $modes );
+            $input_file_name_deps = find_dependencies( $input_file_name, 1, $modes );  # second argument set to 1 for true value of $find_subdependencies_recurse
             RPerl::verbose('DEPENDENCIES:       Follow & find all deps... ');
             if ( exists $input_file_name_deps->[0] ) {
                 $input_file_name_deps = accept_and_verify_input_files( $input_file_name_deps, [], $modes );    # verify deps input files
@@ -734,7 +734,7 @@ sub depends_parse_generate_save_subcompile_execute {
         my hashref_arrayref $source_dep_groups           = [];
 
         if ( $modes->{dependencies} eq 'ON' ) {
-            $input_file_name_deps = find_dependencies( $input_file_name, $modes );
+            $input_file_name_deps = find_dependencies( $input_file_name, 1, $modes );  # second argument set to 1 for true value of $find_subdependencies_recurse
             RPerl::verbose('DEPENDENCIES:       Follow & find all deps... ');
             if ( exists $input_file_name_deps->[0] ) {
                 $input_file_name_deps = accept_and_verify_input_files( $input_file_name_deps, [], $modes );    # verify deps input files
