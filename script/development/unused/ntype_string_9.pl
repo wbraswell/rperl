@@ -11,7 +11,7 @@ TYPEMAPS => "blib/lib/typemap.rperl",
   WARNINGS => 1,
   FILTERS => 'Preprocess',
   );
-print "[[[ END 'use Inline' STAGE for 'DATA' ]]]\n"x3;
+print "[[[ END   'use Inline' STAGE for 'DATA' ]]]\n"x3;
 
 #my $string_retval = string__typetest0();
 my $string_retval = string__typetest1('howdy');

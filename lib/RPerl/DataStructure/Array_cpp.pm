@@ -37,7 +37,7 @@ package main;
 use RPerl::Inline;
 BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/DataStructure/Array.cpp' ]]]\n" x 0); }
 use Inline (CPP => '$main::INCLUDE_PATH' . '/RPerl/DataStructure/Array.cpp', \%RPerl::Inline::ARGS);
-RPerl::diag("[[[ END 'use Inline' STAGE for 'RPerl/DataStructure/Array.cpp' ]]]\n" x 0);
+RPerl::diag("[[[ END   'use Inline' STAGE for 'RPerl/DataStructure/Array.cpp' ]]]\n" x 0);
 1;
 EOF
 

@@ -57,9 +57,9 @@ Installing /home/wbraswell/austin_perl_mongers/rperl/rperl-latest/_Inline/lib/au
 
 Finished Build Compile Stage
 
-[[[ END 'use Inline' STAGE for 'DATA' ]]]
-[[[ END 'use Inline' STAGE for 'DATA' ]]]
-[[[ END 'use Inline' STAGE for 'DATA' ]]]
+[[[ END   'use Inline' STAGE for 'DATA' ]]]
+[[[ END   'use Inline' STAGE for 'DATA' ]]]
+[[[ END   'use Inline' STAGE for 'DATA' ]]]
 in ntype_string_1a.pl have $string_retval = 'Spice CPPOPS_CPPTYPES'
 
 wbraswell@starman:~/austin_perl_mongers/rperl/rperl-latest$ 

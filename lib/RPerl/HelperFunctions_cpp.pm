@@ -38,13 +38,13 @@ sub cpp_load {
 
 #        RPerl::diag("in HelperFunctions_cpp::cpp_load, need load CPP code\n");
 
-#BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/HelperFunctions.cpp' ]]]\n"x3); }
+#BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/HelperFunctions.cpp' ]]]\n" x 1); }
         my $eval_string = <<"EOF";
 package main;
 use RPerl::Inline;
-BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/HelperFunctions.cpp' ]]]\n" x 0); }
+BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/HelperFunctions.cpp' ]]]\n" x 1); }
 use Inline (CPP => '$RPerl::INCLUDE_PATH' . '/RPerl/HelperFunctions.cpp', \%RPerl::Inline::ARGS);
-RPerl::diag("[[[ END 'use Inline' STAGE for 'RPerl/HelperFunctions.cpp' ]]]\n" x 0);
+RPerl::diag("[[[ END   'use Inline' STAGE for 'RPerl/HelperFunctions.cpp' ]]]\n" x 1);
 1;
 EOF
 
@@ -57,7 +57,7 @@ EOF
         eval $eval_string or croak( $OS_ERROR . "\n" . $EVAL_ERROR );
         if ($EVAL_ERROR) { croak($EVAL_ERROR); }
 
-#RPerl::diag("[[[ END 'use Inline' STAGE for 'RPerl/HelperFunctions.cpp' ]]]\n"x3);
+#RPerl::diag("[[[ END   'use Inline' STAGE for 'RPerl/HelperFunctions.cpp' ]]]\n" x 1);
     }
 
 #	else { RPerl::diag("in HelperFunctions_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"); }

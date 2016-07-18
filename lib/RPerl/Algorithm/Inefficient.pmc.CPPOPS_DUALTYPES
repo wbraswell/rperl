@@ -45,7 +45,7 @@ package main;
 use RPerl::Inline;
 BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/Algorithm/Inefficient.cpp' ]]]\n" x 1); }
 use Inline (CPP => '$main::INCLUDE_PATH' . '/RPerl/Algorithm/Inefficient.cpp', \%RPerl::Inline::ARGS);
-RPerl::diag("[[[ END 'use Inline' STAGE for 'RPerl/Algorithm/Inefficient.cpp' ]]]\n" x 1);
+RPerl::diag("[[[ END   'use Inline' STAGE for 'RPerl/Algorithm/Inefficient.cpp' ]]]\n" x 1);
 1;
 EOF
 

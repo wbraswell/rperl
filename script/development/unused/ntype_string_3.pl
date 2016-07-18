@@ -9,7 +9,7 @@ use Inline (CPP => 'DATA',
   CLEAN_AFTER_BUILD => 0, # cache it
   WARNINGS => 1,
 );
-print "[[[ END 'use Inline' STAGE for 'DATA' ]]]\n"x3;
+print "[[[ END   'use Inline' STAGE for 'DATA' ]]]\n"x3;
 
 my $string_retval = string__typetest0();
 RPerl::diag("in ntype_string_1a.pl have \$string_retval = '$string_retval'\n");
