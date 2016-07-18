@@ -3,20 +3,20 @@
 #define __CPP__INCLUDED__RPerl__Test__Operator01AbsoluteValue__program_00_good_cpp 0.001_000
 # ifdef __CPP__TYPES
 int main() {
-    number foo = abs (3);
+    number foo = abs 3;
     number bar = -3;
     print "have $foo = " << foo << endl;
     print "have $bar = " << bar << endl;
     bar = foo + foo;
-    bar = abs (bar);
+    bar = abs bar;
     number float_number = -5.0;
     number positive_float_number = -5.0;
     print "have $foo = " << foo << endl;
     print "have $bar = " << bar << endl;
     print "have $float_number = " << float_number << endl;
     print "have $positive_float_number = " << positive_float_number << endl;
-    float_number = abs (float_number);
-    positive_float_number = abs (positive_float_number);
+    float_number = abs float_number;
+    positive_float_number = abs positive_float_number;
     print "have $float_number = " << float_number << endl;
     print "have $positive_float_number = " << positive_float_number << endl;
     return 0;
