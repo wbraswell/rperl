@@ -5,7 +5,7 @@ using std::cout;  using std::cerr;  using std::endl;
 #define __CPP__INCLUDED__RPerl__Algorithm_h 0.005_000
 
 // [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]
-#include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperltypes.h; HelperFunctions.cpp)
+#include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperloperations.h; rperltypes.h; HelperFunctions.cpp)
 #include <RPerl/CompileUnit/Module/Class.cpp> // no non-system inheritance, only inherit from base class
 
 # ifdef __PERL__TYPES

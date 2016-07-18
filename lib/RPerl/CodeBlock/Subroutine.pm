@@ -22,7 +22,7 @@ BEGIN {
     use warnings;
     1;
 
-    # DEV NOTE, CORRELATION #rp03: method types reside in Subroutine.pm, which is a sub-type of Subroutine.pm, causing the need to have this special BEGIN block
+    # DEV NOTE, CORRELATION #rp003: method types reside in Subroutine.pm, which is a sub-type of Subroutine.pm, causing the need to have this special BEGIN block
     # to enable the *::method types, and Class.pm's INIT block symbol table entry generator needs us to switch back into the primary package so we have
     # that happen in the following line, which furthermore triggers the need to avoid re-defining class accessor/mutator methods; how to fix?
         package RPerl::CodeBlock::Subroutine;
@@ -126,7 +126,7 @@ our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = 
     $return_type = RPerl::Generator::type_convert_perl_to_cpp($return_type, 1);  # $pointerify_classes = 1
     $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{_global}->{$name}->{type_cpp} = $return_type;  # add converted C++ type to symtab entry
 
-    # DEV NOTE, CORRELATION #rp22: must prefix subroutine names with namespace-underscores to simulate Perl's behavior of not exporting subroutines by default
+    # DEV NOTE, CORRELATION #rp022: must prefix subroutine names with namespace-underscores to simulate Perl's behavior of not exporting subroutines by default
     my string $namespace_underscores = $modes->{_symbol_table}->{_namespace};
     $namespace_underscores =~ s/:/_/gxms;
     $cpp_source_group->{H} .= $return_type . q{ } . $namespace_underscores . $name . '(';
@@ -236,7 +236,7 @@ our string_hashref::method $ast_to_cpp__generate_shims__CPPOPS_CPPTYPES = sub {
                 . ' must not start with underscore, dying' . "\n";
     }
 
-    # DEV NOTE, CORRELATION #rp22: must create shims to un-prefix subroutine names with namespace-underscores to un-simulate Perl's behavior of not exporting subroutines by default
+    # DEV NOTE, CORRELATION #rp022: must create shims to un-prefix subroutine names with namespace-underscores to un-simulate Perl's behavior of not exporting subroutines by default
     my string $namespace_colons = $modes->{_symbol_table}->{_namespace};
     my string $namespace_underscores = $namespace_colons;
     $namespace_underscores =~ s/:/_/gxms;

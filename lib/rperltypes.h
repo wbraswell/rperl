@@ -33,7 +33,7 @@ number to_number(character input_character) { return character_to_number(input_c
 number to_number(string input_string) { return string_to_number(input_string); }
 //number to_number(* input_*) { return std::to_number(input_*); }  // NEED IMPLEMENT
 
-// DEV NOTE, CORRELATION #rp28: renamed from Perl to_string() to C++ To_string() to avoid error redefining std::to_string()
+// DEV NOTE, CORRELATION #rp028: renamed from Perl to_string() to C++ To_string() to avoid error redefining std::to_string()
 //string To_string(unknown input_unknown) { return std::to_string(input_boolean); }  // NEED IMPLEMENT
 string To_string(boolean input_boolean) { return boolean_to_string(input_boolean); }
 string To_string(unsigned_integer input_unsigned_integer) { return unsigned_integer_to_string(input_unsigned_integer); }

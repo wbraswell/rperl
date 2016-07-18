@@ -24,7 +24,7 @@ use File::Copy qw(copy);
 use Scalar::Util qw(blessed);
 use Config;
 
-# DEV NOTE, CORRELATION #rp08: can't use Exporter here
+# DEV NOTE, CORRELATION #rp008: can't use Exporter here
 # [[[ EXPORTS ]]]
 #use Exporter 'import';
 #our @EXPORT = qw(type types ETC);
@@ -78,7 +78,7 @@ our string_arrayref $SUPPORTED = [
         )
 ];
 
-# DEV NOTE, CORRELATION #rp01: keep track of all these hard-coded "semi-dynamic" integer data types
+# DEV NOTE, CORRELATION #rp001: keep track of all these hard-coded "semi-dynamic" integer data types
 our string_hashref $ALTERNATE_TYPES_TO_PERLISH_TYPES = {
     '__int8' => 'i8',
     '__int16' => 'i16',
@@ -94,7 +94,7 @@ our string_hashref $ALTERNATE_TYPES_TO_PERLISH_TYPES = {
     'long long' => 'longlong',  # DEV NOTE: on Windows OS, real type "long long" is not shortened to "longlong" as in Linux
 };
 
-# DEV NOTE, CORRELATION #rp08: export to_string(), class(), type() and types() to main:: namespace;
+# DEV NOTE, CORRELATION #rp008: export to_string(), class(), type() and types() to main:: namespace;
 # can't achieve via Exporter due to circular dependency issue caused by Exporter in Config.pm and solved by 'require rperltypes;' in RPerl.pm
 package main;
 use RPerl::Config;
@@ -172,7 +172,7 @@ sub type {
     if ( not defined $variable ) { return 'unknown'; }
     if ( not defined $recurse_level ) { $recurse_level = 10; }    # default to limited recursion
     my integer_hashref $is_type = build_is_type($variable);
-    # DEV NOTE, CORRELATION #rp25: only report core types integer, number, string, arrayref, hashref, object;
+    # DEV NOTE, CORRELATION #rp025: only report core types integer, number, string, arrayref, hashref, object;
     # do NOT report non-core types boolean, unsigned_integer, char, etc.
     if ( $is_type->{integer} ) { return 'integer'; }
     elsif ( $is_type->{number} )  { return 'number'; }
@@ -189,7 +189,7 @@ sub types {
     if ( not defined $variable ) { return 'unknown'; }
     if ( not defined $recurse_level ) { $recurse_level = 10; }    # default to limited recursion
     my integer_hashref $is_type = build_is_type($variable);
-    # DEV NOTE, CORRELATION #rp25: only report core types integer, number, string, arrayref, hashref, object;
+    # DEV NOTE, CORRELATION #rp025: only report core types integer, number, string, arrayref, hashref, object;
     # do NOT report non-core types boolean, unsigned_integer, char, etc.
     if ( $is_type->{integer} ) { return { 'integer' => undef }; }
     elsif ( $is_type->{number} )  { return { 'number'  => undef }; }
@@ -244,7 +244,7 @@ sub types_recurse {
     my string $type          = undef;
     my string_hashref $types = undef;
 
-    # DEV NOTE, CORRELATION #rp25: only report core types integer, number, string, arrayref, hashref, object;
+    # DEV NOTE, CORRELATION #rp025: only report core types integer, number, string, arrayref, hashref, object;
     # do NOT report non-core types boolean, unsigned_integer, character, etc.
     if    ( not defined $variable ) { $type = 'unknown'; }
     elsif ( $is_type->{integer} )   { $type = 'integer'; }
@@ -560,7 +560,7 @@ sub type_integer_native_ccflag {
     my string $ivtype = $Config{ivtype};
 
     # NEED ANSWER: is there some better way to support all the different types, rather than all this hard-coding?
-    # DEV NOTE, CORRELATION #rp01: keep track of all these hard-coded integer data types
+    # DEV NOTE, CORRELATION #rp001: keep track of all these hard-coded integer data types
     if ($ivtype eq 'long') {
         return ' -D__TYPE__INTEGER__LONG';
     }

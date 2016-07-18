@@ -13529,7 +13529,7 @@ X<br>
 
 Example execution and output for 2a and 2b:
 
-=for DEV NOTE, CORRELATION #rp29: all updates to `rperl` command-line arguments must be documented in script/rperl and 2 places in lib/RPerl/Learning.pm
+=for DEV NOTE, CORRELATION #rp029: all updates to `rperl` command-line arguments must be documented in script/rperl and 2 places in lib/RPerl/Learning.pm
 
 =for rperl X<noncode>
 
@@ -15311,7 +15311,7 @@ Example execution, input, and output:
 X<br>
 
 
-=for DEV NOTE, CORRELATION #rp29: all updates to `rperl` command-line arguments must be documented in script/rperl and 2 places in lib/RPerl/Learning.pm
+=for DEV NOTE, CORRELATION #rp029: all updates to `rperl` command-line arguments must be documented in script/rperl and 2 places in lib/RPerl/Learning.pm
 
 =head1 APPENDIX B: RPERL COMMAND-LINE ARGUMENTS
 

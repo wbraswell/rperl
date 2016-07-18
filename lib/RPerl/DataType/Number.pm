@@ -15,7 +15,7 @@ use RPerl::DataType::Scalar;
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 
 # [[[ SUB-TYPES ]]]
-# DEV NOTE, CORRELATION #rp07:
+# DEV NOTE, CORRELATION #rp007:
 # a number is any numeric value, meaning either an integer or a floating-point number;
 # Boolean, Unsigned Integer, and Integer are all sub-classes of Number;
 # the hidden Perl semantics are SvIOKp() for ints, and SvNOKp() for numbers;

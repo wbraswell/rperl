@@ -17,7 +17,7 @@ use RPerl::Operation::Expression::Operator;
 our hashref $properties = {};
 
 # [[[ OO PROPERTIES, CLASS PROPERTY AKA PACKAGE VARIABLE ]]]
-# DEV NOTE, CORRELATION #rp20: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named/* also add in Grammar.eyp, Named.pm, and rperloperations.pm
+# DEV NOTE, CORRELATION #rp020: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named/* also add in Grammar.eyp, Named.pm, and rperloperations.*
 our string_hashref $NAMES = {
     'abs'     => 'RPerl::Operation::Expression::Operator::Named::AbsoluteValue',
     'chomp'   => 'RPerl::Operation::Expression::Operator::Named::Chomp',

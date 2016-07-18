@@ -1,5 +1,5 @@
 #ifndef __CPP__INCLUDED__RPerl__HelperFunctions_h
-#define __CPP__INCLUDED__RPerl__HelperFunctions_h 0.005_300
+#define __CPP__INCLUDED__RPerl__HelperFunctions_h 0.006_000
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
@@ -9,7 +9,7 @@
 #define RPERL_DEBUG3 1  // NEED FIX: these debug statements cause memory leaks by increasing the refcounts of data_i, data_i_plus_1, and swap
 
 // [[[ HELPER MACROS ]]]
-// DEV NOTE, CORRELATION #rp26: can't figure out how to get GMPInteger.cpp to include HelperFunctions.cpp without redefining errors
+// DEV NOTE, CORRELATION #rp026: can't figure out how to get GMPInteger.cpp to include HelperFunctions.cpp without redefining errors
 #define SvBOKp(input_bv) (SvIOK(input_bv) && ((SvIV(input_bv) == 0) || (SvIV(input_bv) == 1)))  // NEED ADDRESS: is this a good enough semi-fake check for boolean?
 #define SvUIOKp(input_uiv) (SvIOK(input_uiv) && (SvIV(input_uiv) >= 0))  // NEED ADDRESS: is this a good enough semi-fake check for unsigned_integer?
 #define SvCOKp(input_cv) (SvPOK(input_cv) && (strlen((char*) SvPV_nolen(input_cv)) == 1))  // NEED ADDRESS: is this a good enough semi-fake check for character?
@@ -18,11 +18,9 @@
 #define AV_ELEMENT(av,index) ((av_fetch(av,index,0)!=NULL)?*av_fetch(av,index,0):newSV(0))
 #define SV_REFERENCE_COUNT(sv) (SvREFCNT(sv))
 #define class(sv) HvNAME(SvSTASH(SvRV(sv)))  // NEED ADDRESS: does this actually match the functionality of PERLOPS class() which is a wrapper around blessed()?
-#define print cout <<
-#define prerr cerr <<
 
+// MS Windows OS, need not() macro in MSVC
 #ifdef _MSC_VER
-// need not() macro on VC
 #  include <iso646.h>
 #endif
 

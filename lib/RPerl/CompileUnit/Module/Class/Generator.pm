@@ -393,11 +393,15 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     if ( $modes->{label} eq 'ON' ) {
         $cpp_source_group->{H_INCLUDES} .= '// [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]' . "\n";
         $cpp_source_group->{CPP}        .= '// [[[ INCLUDES ]]]' . "\n";
-    }
-
-    $cpp_source_group->{H_INCLUDES} .= <<EOL;
-#include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperltypes.h; HelperFunctions.cpp)
+        $cpp_source_group->{H_INCLUDES} .= <<EOL;
+#include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperloperations.h; rperltypes.h; HelperFunctions.cpp)
 EOL
+    }
+    else {
+        $cpp_source_group->{H_INCLUDES} .= <<EOL;
+#include <RPerl.cpp>
+EOL
+    }
 
     #    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
     #    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
@@ -433,7 +437,7 @@ EOL
     my string $parent_name_path = $parent_name;
     $parent_name_path =~ s/::/\//gxms;
     $parent_name_path .= '.cpp';
-    if ( $parent_name =~ /^\w+Perl::Config$/ ) {    # DEV NOTE, CORRELATION #rp27: MathPerl::Config, PhysicsPerl::Config, etc
+    if ( $parent_name =~ /^\w+Perl::Config$/ ) {    # DEV NOTE, CORRELATION #rp027: MathPerl::Config, PhysicsPerl::Config, etc
 
         #        RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), skipping system config file $parent_name = ' . $parent_name . "\n");
     }
@@ -535,7 +539,7 @@ EOL
         # DEV NOTE: we can do error checking once here instead of twice for TypeInnerProperties_225 & TypeInnerProperties_226 below
         # because they both have OpStringOrWord as sub-element 3, grabbed as $property_name above
         if ( $property_name ne $property_key ) {
-            # DEV NOTE, CORRELATION #rp30: matches numbering of ECOGEPPRP20 in RPerl/CompileUnit/Module/Class.pm
+            # DEV NOTE, CORRELATION #rp030: matches numbering of ECOGEPPRP20 in RPerl/CompileUnit/Module/Class.pm
             die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
                 . $property_name . q{'}
                 . ' does not equal OO properties key ' . q{'}
@@ -634,7 +638,7 @@ EOL
             # DEV NOTE: we can do error checking once here instead of twice for TypeInnerProperties_225 & TypeInnerProperties_226 below
             # because they both have OpStringOrWord as sub-element 3, grabbed as $property_name above
             if ( $property_name ne $property_key ) {
-                # DEV NOTE, CORRELATION #rp30: matches numbering of ECOGEPPRP20 in RPerl/CompileUnit/Module/Class.pm
+                # DEV NOTE, CORRELATION #rp030: matches numbering of ECOGEPPRP20 in RPerl/CompileUnit/Module/Class.pm
                 die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
                     . $property_name . q{'}
                     . ' does not equal OO properties key ' . q{'}

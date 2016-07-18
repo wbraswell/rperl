@@ -4,7 +4,7 @@ using std::cout;  using std::cerr;  using std::endl;
 #define __CPP__INCLUDED__RPerl__DataType__GMPInteger_h 0.005_000
 
 // NEED FIX: remove duplicate code
-// DEV NOTE, CORRELATION #rp26: can't figure out how to get GMPInteger.cpp to include HelperFunctions.cpp without redefining errors
+// DEV NOTE, CORRELATION #rp026: can't figure out how to get GMPInteger.cpp to include HelperFunctions.cpp without redefining errors
 #define SvHROKp(input_hv_ref) (SvROK(input_hv_ref) && (SvTYPE(SvRV(input_hv_ref)) == SVt_PVHV))
 
 # ifndef __CPP__INCLUDED__RPerl__DataType__GMPInteger_h__typedefs
@@ -33,7 +33,7 @@ typedef unsigned long int unsigned_integer;
 # endif
 # ifndef __CPP__INCLUDED__RPerl__DataType__Integer_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__Integer_h__typedefs 1
-// DEV NOTE, CORRELATION #rp01: keep track of all these hard-coded "semi-dynamic" integer data types
+// DEV NOTE, CORRELATION #rp001: keep track of all these hard-coded "semi-dynamic" integer data types
 #  ifdef __TYPE__INTEGER__LONG
 typedef long integer;
 #define INTEGER "ld"  // assume format code 'ld' exists if type 'long' exists

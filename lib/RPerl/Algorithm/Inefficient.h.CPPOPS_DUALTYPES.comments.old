@@ -5,7 +5,7 @@ using std::cout;  using std::cerr;  using std::endl;
 #define __CPP__INCLUDED__RPerl__Algorithm__Inefficient_h 0.005_000
 
 // [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]
-#include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperltypes.h; HelperFunctions.cpp)
+#include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperloperations.h; rperltypes.h; HelperFunctions.cpp)
 #include <RPerl/Algorithm.cpp>
 
 # ifdef __PERL__TYPES
@@ -34,7 +34,7 @@ public:
 
 SV* uninherited__Inefficient(SV* person);
 
-// DEV NOTE, CORRELATION #rp04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
+// DEV NOTE, CORRELATION #rp004: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
 //SV* uninherited(SV* person);
 
 // <<< OPERATIONS & DATA TYPES REPORTER >>>
@@ -69,7 +69,7 @@ public:
 
 string uninherited__Inefficient(string person);
 
-// DEV NOTE, CORRELATION #rp04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
+// DEV NOTE, CORRELATION #rp004: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
 //string uninherited(string person);
 
 // <<< OPERATIONS & DATA TYPES REPORTER >>>

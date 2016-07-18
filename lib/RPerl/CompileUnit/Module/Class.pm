@@ -288,7 +288,7 @@ INIT {
     #                    RPerl::diag(q{in Class.pm INIT block, have $use_rperl, enabling package in $module_filename_short = } . $module_filename_short . "\n");
 
 # ops/types reporting subroutine
-# DEV NOTE, CORRELATION #rp18: RPerl::DataStructure::Array & Hash can not 'use RPerl;' so they are skipped in the header-checking loop above, their *__MODE_ID() subroutines are not created below
+# DEV NOTE, CORRELATION #rp018: RPerl::DataStructure::Array & Hash can not 'use RPerl;' so they are skipped in the header-checking loop above, their *__MODE_ID() subroutines are not created below
                     $package_name_underscores = $package_name;
                     $package_name_underscores =~ s/::/__/g;
                     if ( not eval( 'defined &main::' . $package_name_underscores . '__MODE_ID' ) ) {
@@ -500,7 +500,7 @@ INIT {
                 foreach my $property_name ( sort keys %{$object_properties} ) {
 
                     #						RPerl::diag("in Class.pm INIT block, have \$property_name = '$property_name'\n");
-                    # DEV NOTE, CORRELATION #rp03: avoid re-defining class accessor/mutator methods; so far only triggered by RPerl::CodeBlock::Subroutine
+                    # DEV NOTE, CORRELATION #rp003: avoid re-defining class accessor/mutator methods; so far only triggered by RPerl::CodeBlock::Subroutine
                     # because it has a special BEGIN{} block with multiple package names including it's own package name
 
                     my $property_type = $object_properties_types->{$package_name}->{$property_name};
@@ -700,7 +700,7 @@ sub save_object_properties_types {
 
         while ( ( defined $object_property_key ) and ( defined $object_property_type ) and ( defined $object_property_inner_type_name ) ) {
             if ( $object_property_key ne $object_property_inner_type_name ) {
-                # DEV NOTE, CORRELATION #rp30: matches numbering of ECOGEASCP20 in RPerl/CompileUnit/Module/Class/Generator.pm
+                # DEV NOTE, CORRELATION #rp030: matches numbering of ECOGEASCP20 in RPerl/CompileUnit/Module/Class/Generator.pm
                 die 'ERROR ECOGEPPRP20, CODE GENERATOR, PURE PERL TO RPERL: redundant name mismatch, inner type name ' . q{'}
                     . $object_property_inner_type_name . q{'}
                     . ' does not equal OO properties key ' . q{'}

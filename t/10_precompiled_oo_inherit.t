@@ -91,7 +91,7 @@ BEGIN {
 
 
 
-    # DEV NOTE, CORRELATION #rp15: suppress 'Too late to run INIT block' at run-time loading via require or eval
+    # DEV NOTE, CORRELATION #rp015: suppress 'Too late to run INIT block' at run-time loading via require or eval
     lives_and( sub { require_ok('RPerl::Algorithm::Sort::Bubble'); }, q{require_ok('RPerl::Algorithm::Sort::Bubble') lives} );
     lives_and( sub { require_ok('RPerl::Algorithm::Inefficient'); },  q{require_ok('RPerl::Algorithm::Inefficient') lives} );
 }
@@ -243,7 +243,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         lives_ok( sub { $refresher->refresh_module($inefficient_pm_filename) }, 'Refresh previously-loaded module: ' . $inefficient_pm_filename );
         lives_ok( sub { $refresher->refresh_module($algorithm_pm_filename) },   'Refresh previously-loaded module: ' . $algorithm_pm_filename );
 
-        # DEV NOTE, CORRELATION #rp15: suppress 'Too late to run INIT block' at run-time loading via require or eval
+        # DEV NOTE, CORRELATION #rp015: suppress 'Too late to run INIT block' at run-time loading via require or eval
         # ONLY 2 MODULES
         lives_and( sub { require_ok('RPerl::Algorithm::Sort::Bubble'); }, q{require_ok('RPerl::Algorithm::Sort::Bubble') lives} );
         lives_and( sub { require_ok('RPerl::Algorithm::Inefficient'); },  q{require_ok('RPerl::Algorithm::Inefficient') lives} );
@@ -402,7 +402,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         q{TOOIN14 uninherited__Algorithm('Claws') lives}
     );
 
-   # DEV NOTE, CORRELATION #rp04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
+   # DEV NOTE, CORRELATION #rp004: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
    #    can_ok( 'RPerl::Algorithm::Inefficient', 'uninherited' );
    #    lives_and(    # TOOIN15
    #        sub {

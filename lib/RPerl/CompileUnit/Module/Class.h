@@ -2,11 +2,12 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__CompileUnit__Module__Class__CPP_h
-#define __CPP__INCLUDED__RPerl__CompileUnit__Module__Class__CPP_h 0.002_000
+#define __CPP__INCLUDED__RPerl__CompileUnit__Module__Class__CPP_h 0.003_000
 
 // [[[ INCLUDES ]]]
 // BASE CLASS DOES NOT INCLUDE RPerl.cpp OR HelperFunctions.cpp
 #include <rperltypes_mode.h>  // for definitions of __PERL__TYPES or __CPP__TYPES
+#include <rperloperations.h>  // for operations
 #include <rperltypes.h>  // for data types and structures
 
 # ifdef __PERL__TYPES

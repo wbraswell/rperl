@@ -32,7 +32,7 @@ use RPerl::DataType::Scalar;
 use RPerl::DataType::Unknown;
 use RPerl::DataStructure::Array;
 
-# DEV NOTE, CORRELATION #rp18: RPerl::DataStructure::Array & Hash can not 'use RPerl;' so *__MODE_ID() subroutines are hard-coded here
+# DEV NOTE, CORRELATION #rp018: RPerl::DataStructure::Array & Hash can not 'use RPerl;' so *__MODE_ID() subroutines are hard-coded here
 package main;
 use strict;
 use warnings;

@@ -255,13 +255,13 @@ $ cpanm --installdeps .; make disttest
 $ make dist
     # produces tarball output
 $ mv ./RPerl-VERSION.tar.gz ./RPerl-VERSION_BETAVERSION.tar.gz
-	# DEV NOTE, CORRELATION #rp23: must preserve six numeric digits after the decimal point in the file name
-	# DEV NOTE, CORRELATION #rp16: must manually rename beta releases only to include underscore in version number,
+	# DEV NOTE, CORRELATION #rp023: must preserve six numeric digits after the decimal point in the file name
+	# DEV NOTE, CORRELATION #rp016: must manually rename beta releases only to include underscore in version number,
 	# moving from RPerl's underscore-is-comma numbering scheme (underscores and zeros now hidden) 
 	# to CPAN's underscore-is-beta (underscores and zeros now shown) numbering scheme;
 $ vi MYMETA.json
 	"version" : "1.XXXXXX",
-	# DEV NOTE, CORRELATION #rp23: must preserve six numeric digits after the decimal point in the file name
+	# DEV NOTE, CORRELATION #rp023: must preserve six numeric digits after the decimal point in the file name
 
 # INSTALL & TEST DIST, LOCAL COPY
 $ cpanm ./RPerl-VERSION.tar.gz

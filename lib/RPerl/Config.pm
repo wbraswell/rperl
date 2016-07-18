@@ -27,7 +27,7 @@ use English qw(-no_match_vars);
 use POSIX qw(ceil floor modf);
 use Exporter 'import';
 
-# DEV NOTE, CORRELATION #rp08: can't include to_string(), type(), types(), name(), or scope_type_name_value() in @EXPORT here or in RPerl:: namespace below
+# DEV NOTE, CORRELATION #rp008: can't include to_string(), type(), types(), name(), or scope_type_name_value() in @EXPORT here or in RPerl:: namespace below
 our @EXPORT = qw(Dumper carp croak confess $OS_ERROR $EVAL_ERROR $CHILD_ERROR $EXECUTABLE_NAME $PROGRAM_NAME $OSNAME);
 
 1;                              # end of package
@@ -47,7 +47,7 @@ use English qw(-no_match_vars);
 use POSIX qw(ceil floor modf);
 use Exporter 'import';
 
-# DEV NOTE, CORRELATION #rp08: can't include to_string(), type(), types(), name(), or scope_type_name_value() in @EXPORT here or in RPerl:: namespace below
+# DEV NOTE, CORRELATION #rp008: can't include to_string(), type(), types(), name(), or scope_type_name_value() in @EXPORT here or in RPerl:: namespace below
 our @EXPORT = qw(Dumper carp croak confess $OS_ERROR $EVAL_ERROR $CHILD_ERROR $EXECUTABLE_NAME $PROGRAM_NAME $OSNAME);
 
 1;                              # end of package
@@ -96,7 +96,7 @@ our $INCLUDE_PATH = undef;                             # all target system modul
 our $SCRIPT_PATH  = undef;                             # interpreted target system programs live here
 our $CORE_PATH    = undef;                             # all Perl core components (perl.h, etc) live here
 
-# DEV NOTE, CORRELATION #rp32: NEED UPGRADE: properly determine whether to use DBL_EPSILON or FLT_EPSILON below
+# DEV NOTE, CORRELATION #rp032: NEED UPGRADE: properly determine whether to use DBL_EPSILON or FLT_EPSILON below
 use constant EPSILON => POSIX::DBL_EPSILON();
 #use constant EPSILON => POSIX::FLT_EPSILON();
 
@@ -122,7 +122,7 @@ sub debug {
 
     #    print {*STDERR} 'in debug(), have $ENV{RPERL_DEBUG} = ' . $ENV{RPERL_DEBUG} . "\n";
 
-    # DEV NOTE, CORRELATION #rp17: default to off; if either variable is set to true, then do emit messages
+    # DEV NOTE, CORRELATION #rp017: default to off; if either variable is set to true, then do emit messages
     if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) { print {*STDERR} $message; }
 
     #    if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) { print {*STDERR} "\e[1;31m $message \e[0m"; }  # print in red
@@ -143,7 +143,7 @@ sub debug_pause {
 sub verbose {
     ( my $message ) = @_;
 
-    # DEV NOTE, CORRELATION #rp17: default to off; if either variable is set to true, then do emit messages
+    # DEV NOTE, CORRELATION #rp017: default to off; if either variable is set to true, then do emit messages
     if ( $ENV{RPERL_VERBOSE} or $RPerl::VERBOSE ) {
         print {*STDOUT} $message;
     }

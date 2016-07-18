@@ -14,7 +14,7 @@ use RPerl::DataType::Number;
 use RPerl::DataType::Character;
 use RPerl::DataType::String;
 
-# DEV NOTE, CORRELATION #rp08: use Exporter here instead of rperltypes.pm
+# DEV NOTE, CORRELATION #rp008: use Exporter here instead of rperltypes.pm
 
 # [[[ EXPORTS ]]]
 use Exporter 'import';

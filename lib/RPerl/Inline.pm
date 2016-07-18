@@ -20,7 +20,7 @@ use RPerl::Config;  # for $RPerl::DEBUG
 # short form
 #use Inline CPP => config => classes => sub { join('::', split('__', shift)); };
 
-# DEV NOTE, CORRELATION #rp11: replace -std=c++0x w/ -std=c++11 for std::string::pop_back()
+# DEV NOTE, CORRELATION #rp011: replace -std=c++0x w/ -std=c++11 for std::string::pop_back()
 # DEV NOTE: move ccflags outside %ARGS, make individual modules compose ccflags with possible cppflags right before calling Inline
 #our $CCFLAGSEX = '-DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix';
 #our $CCFLAGSEX = '-DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix';
@@ -48,7 +48,7 @@ our %ARGS = (
     filters           => 'Preprocess',
     auto_include => # DEV NOTE: include non-RPerl files using AUTO_INCLUDE so they are not parsed by the 'Preprocess' filter
     [
-        # DEV NOTE, CORRELATION #rp24: sync include files in both RPerl/Inline.pm and rperlstandalone.h
+        # DEV NOTE, CORRELATION #rp024: sync include files in both RPerl/Inline.pm and rperlstandalone.h
         '#include <memory>',  # smart pointers for memory management
         '#include <iostream>',
         '#include <string>',

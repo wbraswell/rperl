@@ -14,6 +14,7 @@ DONE
         perl -e 'use Config; foreach my $o (qw(nvsize nvtype use64bitall doublesize longdblsize d_longdbl)) { print q($Config{) . $o . q(} = ) . $Config{$o} . "\n"; }'
 
 DOING
+    astyle, require for t/13 generate diff check?  (tests fail w/out astyle installed)
     Learning
         EAR17 & Exxx & any other new errors
         update appendix with grammar changes: bitwise_negation_lparen, additional operators?

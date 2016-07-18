@@ -15,7 +15,7 @@ using std::cout;  using std::cerr;  using std::endl;
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 
-// DEV NOTE, CORRELATION #rp10: the pack/unpack subs (below) are called by *_to_string_CPPTYPES(), moved outside #ifdef blocks
+// DEV NOTE, CORRELATION #rp010: the pack/unpack subs (below) are called by *_to_string_CPPTYPES(), moved outside #ifdef blocks
 //# ifdef __CPP__TYPES
 
 // convert from (Perl SV containing unsigned_integer) to (C unsigned_integer)
@@ -153,16 +153,16 @@ SV* unsigned_integer_to_string(SV* input_unsigned_integer) {
 
 # elif defined __CPP__TYPES
 
-// DEV NOTE, CORRELATION #rp10: shim CPPTYPES sub
+// DEV NOTE, CORRELATION #rp010: shim CPPTYPES sub
 string unsigned_integer_to_string(unsigned_integer input_unsigned_integer) {
     return(unsigned_integer_to_string_CPPTYPES(input_unsigned_integer));
 }
 
 # endif
 
-// DEV NOTE, CORRELATION #rp09: must use return type 'string' instead of 'std::string' for proper typemap pack/unpack function name alignment;
+// DEV NOTE, CORRELATION #rp009: must use return type 'string' instead of 'std::string' for proper typemap pack/unpack function name alignment;
 // can cause silent failure, falling back to __PERL__TYPES implementation and NOT failure of tests!
-// DEV NOTE, CORRELATION #rp10: the real CPPTYPES sub (below) is called by the wrapper PERLTYPES sub and shim CPPTYPES subs (above), moved outside #ifdef blocks
+// DEV NOTE, CORRELATION #rp010: the real CPPTYPES sub (below) is called by the wrapper PERLTYPES sub and shim CPPTYPES subs (above), moved outside #ifdef blocks
 string unsigned_integer_to_string_CPPTYPES(unsigned_integer input_unsigned_integer)
 {
 //    fprintf(stderr, "in CPPOPS_CPPTYPES unsigned_integer_to_string_CPPTYPES(), top of subroutine, received unformatted input_unsigned_integer = %"INTEGER"\n", input_unsigned_integer);

@@ -26,7 +26,7 @@ typedef unsigned long int unsigned_integer;
 # endif
 # ifndef __CPP__INCLUDED__RPerl__DataType__Integer_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__Integer_h__typedefs 1
-// DEV NOTE, CORRELATION #rp01: keep track of all these hard-coded "semi-dynamic" integer data types
+// DEV NOTE, CORRELATION #rp001: keep track of all these hard-coded "semi-dynamic" integer data types
 #  ifdef __TYPE__INTEGER__LONG
 typedef long integer;
 #define INTEGER "ld"  // assume format code 'ld' exists if type 'long' exists
@@ -160,7 +160,7 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 # endif
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
-// DEV NOTE, CORRELATION #rp10: the pack/unpack subs (below) are called by *_to_string_CPPTYPES(), moved outside #ifdef blocks
+// DEV NOTE, CORRELATION #rp010: the pack/unpack subs (below) are called by *_to_string_CPPTYPES(), moved outside #ifdef blocks
 //# ifdef __CPP__TYPES
 number XS_unpack_number(SV* input_sv);
 void XS_pack_number(SV* output_sv, number input_number);

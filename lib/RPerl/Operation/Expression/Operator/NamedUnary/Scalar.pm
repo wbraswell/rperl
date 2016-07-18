@@ -130,7 +130,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             }
 
             # DEV NOTE: I think we don't have to die here in CPPOPS_PERLTYPES mode???
-            # DEV NOTE, CORRELATION #rp31: NEED ANSWER: are array dereferences allowed in CPPOPS or not???
+            # DEV NOTE, CORRELATION #rp031: NEED ANSWER: are array dereferences allowed in CPPOPS or not???
             else {
                 die RPerl::Parser::rperl_rule__replace(
                     'ERROR ECOGEASCP12, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Array dereference of array reference must provide data type for array reference in CPPOPS_CPPTYPES mode, but no data type provided, dying'

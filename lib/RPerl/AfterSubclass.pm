@@ -26,7 +26,7 @@ require RPerl::Config;
 #BEGIN { use Data::Dumper; print 'in RPerl::AfterSubclass, have @INC = ' . "\n" . Dumper(\@INC) . "\n"; }
 
 #no magic;  # require data types, full declarations, other non-magic
-# DEV NOTE, CORRELATION #rp08: circular dependency causes "subroutine FOO redefined" errors, solved by replacing use with require below
+# DEV NOTE, CORRELATION #rp008: circular dependency causes "subroutine FOO redefined" errors, solved by replacing use with require below
 #use rperltypes;
 require rperltypes;
 #require rperloperations;
@@ -59,7 +59,7 @@ sub package_to_namespace_root {
 sub filename_short_to_namespace_root_guess {
     ( my $filename_short ) = @_;
 #    print {*STDERR} 'in RPerl::filename_short_to_namespace_root_guess(), received $filename_short = ' . $filename_short . "\n";
-    # # DEV NOTE, CORRELATION #rp21: remove hard-coded fake 'rperl::' namespace?
+    # # DEV NOTE, CORRELATION #rp021: remove hard-coded fake 'rperl::' namespace?
     if ($filename_short eq 'rperl') { return 'rperl::'; }
     my $namespace_root = q{};
     ( my $filename_prefix, my $filename_path, my $filename_suffix ) = fileparse( $filename_short, qr/[.][^.]*/xms );

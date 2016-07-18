@@ -13,7 +13,7 @@ use Carp;
 our $BUILTINS = {
     'blessed' => 'classname',
     'class' => 'classname',
-    'to_string' => 'To_string',  # DEV NOTE, CORRELATION #rp28: renamed from Perl to_string() to C++ To_string() to avoid error redefining std::to_string()
+    'to_string' => 'To_string',  # DEV NOTE, CORRELATION #rp028: renamed from Perl to_string() to C++ To_string() to avoid error redefining std::to_string()
     # NEED REFACTOR: move SSE builtins to rperlsse.pm, create second $BUILTINS to be used in SubroutineCall.pm?
     'sse_number_pair::new_from_singleton_duplicate' => 'sse_number_pair__new_from_singleton_duplicate',
     'sse_number_pair::new_from_pair' => 'sse_number_pair__new_from_pair',
@@ -38,7 +38,7 @@ use RPerl::Operation::Expression::Operator::IncrementDecrement;
 use RPerl::Operation::Expression::Operator::Arithmetic::MultiplyDivideModulo;
 use RPerl::Operation::Expression::Operator::Arithmetic::Negative;
 use RPerl::Operation::Expression::Operator::Arithmetic::Power;
-# DEV NOTE, CORRELATION #rp20: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named/* also add in Grammar.eyp, Named.pm, and rperloperations.pm
+# DEV NOTE, CORRELATION #rp020: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named/* also add in Grammar.eyp, Named.pm, and rperloperations.*
 use RPerl::Operation::Expression::Operator::Named;
 use RPerl::Operation::Expression::Operator::Named::AbsoluteValue;
 use RPerl::Operation::Expression::Operator::Named::Chomp;

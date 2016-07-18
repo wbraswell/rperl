@@ -1,11 +1,11 @@
-use rperltypesconv;  # DEV NOTE, CORRELATION #rp08: import from Exporter for code outside of a package or class
+use rperltypesconv;  # DEV NOTE, CORRELATION #rp008: import from Exporter for code outside of a package or class
 
 # [[[ HEADER SPECIAL ]]]
 package RPerl;
 use strict;
 use warnings;
 
-# DEV NOTE, CORRELATION #rp16: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
+# DEV NOTE, CORRELATION #rp016: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
 our $VERSION = 2.000_000;
 
 #our $VERSION = 20160704;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
@@ -84,7 +84,7 @@ sub filter {
                 or ( exists $rperlnamespaces_generated::RPERL->{$namespace_root} ) )
             )
         {
-            # DEV NOTE, CORRELATION #rp19: need remove hard-coded allowance of RPerl::Test namespace, at least move to rperlnamespaces.pm or friends
+            # DEV NOTE, CORRELATION #rp019: need remove hard-coded allowance of RPerl::Test namespace, at least move to rperlnamespaces.pm or friends
             if ( $namespace_root eq 'RPerl::' ) {
 #                $package = filename_short_to_package_guess($included_filename_short);
 #                if ( $package !~ /^RPerl::Test/xms ) {
@@ -147,7 +147,7 @@ sub filter {
             $post_package_lines = q{};
             $output .= '# [[[ HEADER, PART 1 ]]]' . "\n";
             $output .= $input_line . "\n";
-            $output .= 'use rperltypesconv;' . "\n";  # DEV NOTE, CORRELATION #rp08: import from Exporter for code inside of a package or class
+            $output .= 'use rperltypesconv;' . "\n";  # DEV NOTE, CORRELATION #rp008: import from Exporter for code inside of a package or class
 
 #            print {*STDERR} 'in RPerl::filter(), found $package_line = ' . $package_line . "\n";
 #            print {*STDERR} 'in RPerl::filter(), found $package = ' . $package . "\n";
@@ -165,7 +165,7 @@ sub filter {
 #            print {*STDERR} 'in RPerl::filter(), have $rperlnamespaces_generated::RPERL_DEPS->{' . $namespace_root . '} = ' . Dumper($rperlnamespaces_generated::RPERL_DEPS->{$namespace_root}) . "\n";
 #            print {*STDERR} 'in RPerl::filter(), have $rperlnamespaces_generated::RPERL->{' . $namespace_root . '} = ' . Dumper($rperlnamespaces_generated::RPERL->{$namespace_root}) . "\n";
 
-            # DEV NOTE, CORRELATION #rp19: need remove hard-coded allowance of RPerl::Test namespace, at least move to rperlnamespaces.pm or friends
+            # DEV NOTE, CORRELATION #rp019: need remove hard-coded allowance of RPerl::Test namespace, at least move to rperlnamespaces.pm or friends
             if (    ($package =~ /RPerl::Test/xms) or ($package eq 'RPerl::CompileUnit::Module::Class::Template')
                 or ( ( not exists $rperlnamespaces_generated::CORE->{$namespace_root} )
                 and ( not exists $rperlnamespaces_generated::RPERL_DEPS->{$namespace_root} )

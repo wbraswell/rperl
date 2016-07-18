@@ -17,7 +17,7 @@ WriteMakefile(
     VERSION_FROM     => 'lib/RPerl.pm',
     LICENSE          => 'perl_5',
     EXE_FILES        => ['script/rperl'],
-    MIN_PERL_VERSION => '5.10.0',  # NEED ANSWER, CORRELATION #rp00: is RPerl truly incompatible with Perl v5.8 and earlier?
+    MIN_PERL_VERSION => '5.10.0',  # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
     PREREQ_PM        => {
         # RPERL USER DEPENDENCIES
         'ExtUtils::MakeMaker' => 7.04,     # for compatibility with Inline::C >= v0.75
@@ -83,9 +83,9 @@ WriteMakefile(
         },
     },
 
-    # NEED UPDATE, CORRELATION #rp05: list of _Inline directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
-    # NEED UPDATE, CORRELATION #rp06: list of CPAN files & directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
-    # NEED UPDATE, CORRELATION #rp13: list of RPerl build files & directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
+    # NEED UPDATE, CORRELATION #rp005: list of _Inline directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
+    # NEED UPDATE, CORRELATION #rp006: list of CPAN files & directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
+    # NEED UPDATE, CORRELATION #rp013: list of RPerl build files & directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
     clean => {
         FILES =>
             'pod2htmd.tmp Makefile.old MANIFEST.bak lib/RPerl/Algorithm.pmc lib/RPerl/Algorithm.h lib/RPerl/Algorithm.cpp lib/RPerl/Algorithm/Inefficient.pmc lib/RPerl/Algorithm/Inefficient.h lib/RPerl/Algorithm/Inefficient.cpp lib/RPerl/Algorithm/Sort.pmc lib/RPerl/Algorithm/Sort.h lib/RPerl/Algorithm/Sort.cpp lib/RPerl/Algorithm/Sort/Bubble.pmc lib/RPerl/Algorithm/Sort/Bubble.h lib/RPerl/Algorithm/Sort/Bubble.cpp lib/RPerl/Test.pmc lib/RPerl/Test.h lib/RPerl/Test.cpp lib/RPerl/Test/Fu.pmc lib/RPerl/Test/Foo.pmc lib/RPerl/Test/Foo.h lib/RPerl/Test/Foo.cpp lib/RPerl/Test/Subclass/MySubclasserA_Good.pmc lib/RPerl/Test/Subclass/MySubclasserA_Good.h lib/RPerl/Test/Subclass/MySubclasserA_Good.cpp lib/RPerl/Test/Subclass/MySubclasserB_Good.pmc lib/RPerl/Test/Subclass/MySubclasserB_Good.h lib/RPerl/Test/Subclass/MySubclasserB_Good.cpp lib/RPerl/Test/Subclass/MySubclasserCDE_Good.pmc lib/RPerl/Test/Subclass/MySubclasserCDE_Good.h lib/RPerl/Test/Subclass/MySubclasserCDE_Good.cpp lib/rperltypes_mode.h.orig lib/rperltypes_mode.h.swap _Inline lib/_Inline lib/RPerl/Algorithm/Sort/_Inline script/_Inline script/development/_Inline script/development/unused/_Inline t/_Inline lib/RPerl/Test/OperationsTypesReporting/_Inline lib/RPerl/Test/Module/_Inline lib/RPerl/Test/Properties/_Inline lib/RPerl/Test/Type_Types/_Inline lib/RPerl/Operation/Statement/_Inline lib/RPerl/DataStructure/Array/_Inline lib/RPerl/_Inline lib/RPerl/CompileUnit/_Inline lib/RPerl/DataType/_Inline lib/RPerl/Operation/Expression/Operator/_Inline'

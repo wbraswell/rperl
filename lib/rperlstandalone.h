@@ -1,7 +1,7 @@
 #ifndef __CPP__INCLUDED__rperlstandalone_h
 #define __CPP__INCLUDED__rperlstandalone_h 0.001_000
 
-// DEV NOTE, CORRELATION #rp24: sync include files in both RPerl/Inline.pm and rperlstandalone.h
+// DEV NOTE, CORRELATION #rp024: sync include files in both RPerl/Inline.pm and rperlstandalone.h
 #include <memory>
 #include <iostream>
 #include <string>
@@ -19,7 +19,7 @@
 #include <XSUB.h>
 
 // RPERL PROGRAM ADDITIONAL
-#include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperltypes.h; HelperFunctions.cpp)
+#include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperloperations.h; rperltypes.h; HelperFunctions.cpp)
 using std::cout;  using std::cerr;  using std::endl;
 
 #endif

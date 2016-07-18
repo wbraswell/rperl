@@ -109,7 +109,7 @@ our string_arrayref $find_dependencies = sub {
                 or ( $file_line =~ /use\s+RPerl::Class\s*;/ )
                 or ( $file_line =~ /use\s+RPerl::AfterSubclass\s*;/ )
                 or ( $file_line =~ /use\s+RPerl::Config\s*;/ )
-                or ( $file_line =~ /use\s+\w+Perl::Config\s*;/ )    # DEV NOTE, CORRELATION #rp27: MathPerl::Config, PhysicsPerl::Config, etc
+                or ( $file_line =~ /use\s+\w+Perl::Config\s*;/ )    # DEV NOTE, CORRELATION #rp027: MathPerl::Config, PhysicsPerl::Config, etc
                 or ( $file_line =~ /use\s+parent/ )
                 or ( $file_line =~ /use\s+constant/ )
                 or ( $file_line =~ /use\s+overload/ )
@@ -627,7 +627,7 @@ our string $post_processor_cpp__header_or_cpp_path = sub {
 
     $file_path = post_processor_cpp__lib_path_delete($file_path);
 
-    # DEV NOTE, CORRELATION #rp33: deferred, finally set path to H module header file in CPP module file
+    # DEV NOTE, CORRELATION #rp033: deferred, finally set path to H module header file in CPP module file
     $source_CPP =~ s/__NEED_HEADER_PATH/$file_path/gxms;
     $source_CPP =~ s/__NEED_CPP_PATH/$file_path/gxms;
     return $source_CPP;

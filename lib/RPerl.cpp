@@ -1,7 +1,7 @@
 #ifndef __CPP__INCLUDED__RPerl_cpp
 #define __CPP__INCLUDED__RPerl_cpp 0.003_000
 
-#include <RPerl.h>  // -> (rperltypes_mode.h; rperltypes.h; HelperFunctions.cpp)
+#include <RPerl.h>  // -> (rperltypes_mode.h; rperloperations.h; rperltypes.h; HelperFunctions.cpp)
 
 # ifdef __PERL__TYPES
 

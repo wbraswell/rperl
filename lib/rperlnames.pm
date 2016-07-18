@@ -8,7 +8,7 @@ our $VERSION = 0.001_010;
 
 1;
 
-# DEV NOTE, CORRELATION #rp08: export name() and scope_type_name_value() to main:: namespace;
+# DEV NOTE, CORRELATION #rp008: export name() and scope_type_name_value() to main:: namespace;
 # can't achieve via Exporter due to circular dependency issue caused by Exporter in Config.pm and solved by 'require rperltypes;' in RPerl.pm
 package main;
 use rperltypes;

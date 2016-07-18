@@ -5,7 +5,7 @@ using std::cout;  using std::cerr;  using std::endl;
 #define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h 0.005_000
 
 // [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]
-#include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperltypes.h; HelperFunctions.cpp)
+#include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperloperations.h; rperltypes.h; HelperFunctions.cpp)
 #include <RPerl/Algorithm/Sort.cpp>
 
 ////use RPerl::Algorithm::Inefficient;
@@ -61,7 +61,7 @@ SV* number_bubblesort(SV* number_data);
 
 // OO INHERITANCE TESTING, CONTINUED
 SV* uninherited__Bubble(SV* person);
-// DEV NOTE, CORRELATION #rp04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
+// DEV NOTE, CORRELATION #rp004: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
 SV* uninherited(SV* person);
 
 // TYPE TESTING
@@ -125,7 +125,7 @@ number_arrayref number_bubblesort(number_arrayref number_data);
 
 // OO INHERITANCE TESTING, CONTINUED
 string uninherited__Bubble(string person);
-// DEV NOTE, CORRELATION #rp04: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
+// DEV NOTE, CORRELATION #rp004: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
 string uninherited(string person);
 
 // TYPE TESTING

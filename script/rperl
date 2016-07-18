@@ -5,7 +5,7 @@ use warnings;
 use RPerl;
 #use RPerl::AfterSubclass;
 
-# DEV NOTE, CORRELATION #rp16: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
+# DEV NOTE, CORRELATION #rp016: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
 our $VERSION = 2.000_000;
 
 #our $VERSION = 20160704;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
@@ -318,7 +318,7 @@ sub verify_and_default_modes {
     # must put Perl variables into environmental variables for the values to be properly utilized,
     # do not simply overwrite values, check for applicability first
 
-    # DEV NOTE, CORRELATION #rp17: default to off; if either variable is set to true, then do emit messages
+    # DEV NOTE, CORRELATION #rp017: default to off; if either variable is set to true, then do emit messages
     if ($RPerl::DEBUG) {
         $ENV{RPERL_DEBUG} = $RPerl::DEBUG;
     }
@@ -971,7 +971,7 @@ if ($version_flag) {
 
     # NEED UPDATE: automatically generate version info
 
-    # DEV NOTE, CORRELATION #rp16: numbering schemes mentioned below
+    # DEV NOTE, CORRELATION #rp016: numbering schemes mentioned below
     my $version_message = <<EOL;
 This is RPerl version 2.000_000, Long Date 20160704, Star Date 2016.186
 v2.000_000 using RPerl's underscore-is-comma numbering scheme
@@ -1030,7 +1030,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
         rperl [ARGUMENTS] MyClassFoo.pm [MyClassBar.pm MyClassBat.pm ...]
         rperl [ARGUMENTS] input_program_0.pl MyClassFoo.pm [input_program_1.pl ... MyClassBar.pm ...]
 
-=for DEV NOTE, CORRELATION #rp29: all updates to `rperl` command-line arguments must be documented in script/rperl and 2 places in lib/RPerl/Learning.pm
+=for DEV NOTE, CORRELATION #rp029: all updates to `rperl` command-line arguments must be documented in script/rperl and 2 places in lib/RPerl/Learning.pm
 
 =head1 ARGUMENTS
 

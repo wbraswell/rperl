@@ -27,9 +27,9 @@ my $namespaces_core = rperlnamespaces::hash();
 #print 'have $namespaces_core_string = ' . "\n" . $namespaces_core_string . "\n\n";
 
 # NEED FIX: remove hard-coded list of packages
-# DEV NOTE, CORRELATION #rp03: some RPerl packages are missed due to BEGIN{} or INIT{} blocks, etc.
+# DEV NOTE, CORRELATION #rp003: some RPerl packages are missed due to BEGIN{} or INIT{} blocks, etc.
 my $namespaces_rperl_missed = { 
-    # DEV NOTE, CORRELATION #rp21: remove hard-coded fake 'rperl::' namespace?
+    # DEV NOTE, CORRELATION #rp021: remove hard-coded fake 'rperl::' namespace?
     'rperl::' => 1,
     'rperlnames::' => 1,
     'rperlnamespaces::' => 1,
