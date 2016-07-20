@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::VariableModification;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_200;
+our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement);
@@ -111,12 +111,87 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         my object $variable               = $self->{children}->[0];
         my string $assign                 = $self->{children}->[1];
         my object $subexpression_or_stdin = $self->{children}->[2];
+#        RPerl::diag( 'in VariableModification->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $variable = ' . "\n" . RPerl::Parser::rperl_ast__dump($variable) . "\n" );
+#        RPerl::diag( 'in VariableModification->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subexpression_or_stdin = ' . "\n" . RPerl::Parser::rperl_ast__dump($subexpression_or_stdin) . "\n" );
 
-        $cpp_source_subgroup = $variable->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
-        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
-        $cpp_source_group->{CPP} .= q{ } . $assign . q{ };
-        $cpp_source_subgroup = $subexpression_or_stdin->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
-        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+        # detect array resize semantics: Perl '$a->[$i - 1] = undef;' becomes C++ 'a.resize(i);'
+        my boolean $rhs_is_undef = 0;
+        my boolean $lhs_is_array_retrieval_minus_one = 0;
+        # SubExpression_137 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined AKA undef
+        if (
+            ((ref $subexpression_or_stdin) eq 'SubExpressionOrInput_145') and 
+            (exists $subexpression_or_stdin->{children}) and
+            (defined $subexpression_or_stdin->{children}) and
+            (defined $subexpression_or_stdin->{children}->[0]) and
+            ((ref $subexpression_or_stdin->{children}->[0]) eq 'SubExpression_137')
+            ) {
+           $rhs_is_undef = 1; 
+#            RPerl::diag( 'in VariableModification->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $rhs_is_undef = ' . $rhs_is_undef . "\n" );
+        }
+        
+        if (
+            $rhs_is_undef and
+            ((ref    $variable) eq 'Variable_178') and  # Variable -> VariableSymbolOrSelf STAR-44
+            (exists  $variable->{children}) and
+            (defined $variable->{children}) and
+            (defined $variable->{children}->[1]) and
+            ((ref    $variable->{children}->[1]) eq '_STAR_LIST') and
+            (exists  $variable->{children}->[1]->{children}) and
+            (defined $variable->{children}->[1]->{children}) and
+            (defined $variable->{children}->[1]->{children}->[-1]) and
+            ((ref    $variable->{children}->[1]->{children}->[-1]) eq 'VariableRetrieval_179') and  # VariableRetrieval -> OP02_ARRAY_THINARROW SubExpression ']'
+            (exists  $variable->{children}->[1]->{children}->[-1]->{children}) and
+            (defined $variable->{children}->[1]->{children}->[-1]->{children}) and
+            (defined $variable->{children}->[1]->{children}->[-1]->{children}->[1]) and
+            ((ref    $variable->{children}->[1]->{children}->[-1]->{children}->[1]) eq 'SubExpression_136') and  # SubExpression -> Expression
+            (exists  $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}) and
+            (defined $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}) and
+            (defined $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]) and
+            ((ref    $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]) eq 'Expression_130') and  # Expression -> Operator
+            (exists  $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}) and
+            (defined $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}) and
+            (defined $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]) and
+            ((ref    $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]) eq 'Operator_97') and  # Operator -> SubExpression OP08_MATH_ADD_SUB SubExpression
+            (exists  $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}) and
+            (defined $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}) and
+            (defined $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[1]) and
+            (        $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[1]  eq '- ') and  # subtraction
+            (defined $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[2]) and
+            ((ref    $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[2]) eq 'SubExpression_138') and  # SubExpression -> Literal
+            (exists  $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[2]->{children}) and
+            (defined $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[2]->{children}) and
+            (defined $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]) and
+            ((ref    $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]) eq 'Literal_235') and  # Literal -> LITERAL_NUMBER
+            (exists  $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]->{children}) and
+            (defined $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]->{children}) and
+            (defined $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]->{children}->[0]) and
+            (        $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]->{children}->[0]  eq '1')  # literal number 1
+            ) {
+            $lhs_is_array_retrieval_minus_one = 1;
+#            RPerl::diag( 'in VariableModification->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $lhs_is_array_retrieval_minus_one = ' . $lhs_is_array_retrieval_minus_one . "\n" );
+        }
+
+        # array resize semantics detected
+        if ($rhs_is_undef and $lhs_is_array_retrieval_minus_one) {
+            my unknown $size = $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[0];
+            delete $variable->{children}->[1]->{children}->[-1];  # do not generate the final variable retrieval containing the size: ->[size - 1]
+#            RPerl::diag( 'in VariableModification->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have modified $variable = ' . "\n" . RPerl::Parser::rperl_ast__dump($variable) . "\n" );
+#            RPerl::diag( 'in VariableModification->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $size = ' . "\n" . RPerl::Parser::rperl_ast__dump($size) . "\n" );
+
+            $cpp_source_subgroup = $variable->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+            RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+            $cpp_source_group->{CPP} .= '.resize(';
+            $cpp_source_subgroup = $size->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+            RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+            $cpp_source_group->{CPP} .= ')';
+        }
+        else {  # normal generate
+            $cpp_source_subgroup = $variable->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+            RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+            $cpp_source_group->{CPP} .= q{ } . $assign . q{ };
+            $cpp_source_subgroup = $subexpression_or_stdin->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+            RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+        }
     }
     elsif ( $self_class eq 'VariableModification_187' ) {    # VariableModification -> Variable OP19_VARIABLE_ASSIGN_BY SubExpression
         my object $variable      = $self->{children}->[0];
