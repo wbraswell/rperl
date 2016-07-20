@@ -10962,7 +10962,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOCODE04, COMPILER, FIND DEPENDENCIES: Cannot close file 'FOO' after reading, OPERATING_SYSTEM_ERROR, dying
+    ERROR ECOCODE05, COMPILER, FIND DEPENDENCIES: Cannot close file 'FOO' after reading, OPERATING_SYSTEM_ERROR, dying
 
 =for rperl X</noncode>
 
@@ -10974,7 +10974,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOCODE05, COMPILER, FIND DEPENDENCIES: 'use rperlsse;' command found but SSE not supported on ARM architecture, file 'FOO', dying
+    ERROR ECOCODE06, COMPILER, FIND DEPENDENCIES: 'use rperlsse;' command found but SSE not supported on ARM architecture, file 'FOO', dying
 
 =for rperl X</noncode>
 

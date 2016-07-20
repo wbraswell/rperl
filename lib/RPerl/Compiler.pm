@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.017_000;
+our $VERSION = 0.018_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -33,6 +33,7 @@ use Config qw(config_re);
 use IPC::Open3;
 use IO::Select;
 use Cwd;
+use File::Copy;  # for move()
 
 #our string_arrayref_hashref_hashref $filename_suffixes_supported = {
 our hashref_hashref $filename_suffixes_supported = {
@@ -55,6 +56,7 @@ our string_arrayref $find_dependencies = sub {
 #    RPerl::diag( 'in Compiler::find_dependencies(), have possibly-trimmed $file_name = ' . $file_name . "\n" );
 
     my string_arrayref $dependencies = [];
+    my string_arrayref $pmc_disable_paths = [];
 
     if ( not -f $file_name ) {
         die 'ERROR ECOCODE00, COMPILER, FIND DEPENDENCIES: File not found, ' . q{'} . $file_name . q{'} . ', dying' . "\n";
@@ -65,9 +67,7 @@ our string_arrayref $find_dependencies = sub {
 
     # read in input file, match on 'use' includes for dependencies
     my string $file_line;
-    my string $first_package_name = undef;
-    my string $eval_string;
-    my integer $eval_retval;
+    my string $top_level_package_name = undef;
     my boolean $use_rperl = 0;
 
     # NEED FIX: do not make recursive calls until after closing file, to avoid
@@ -75,24 +75,17 @@ our string_arrayref $find_dependencies = sub {
     while ( $file_line = <$FILE_HANDLE> ) {
 #        RPerl::diag('in Compiler::find_dependencies(), top of while loop, have $file_line = ' . $file_line . "\n");
 
-        if ( ( $file_line =~ /^\s*package\s+[\w:]+\s*;\s*$/xms ) and ( not defined $first_package_name ) ) {
-            $first_package_name = $file_line;
-            $first_package_name =~ s/^\s*package\s+([\w:]+)\s*;\s*$/$1/gxms;
-            $eval_string = 'use ' . $first_package_name . '; 1;';
-
-            #            RPerl::diag('in Compiler::find_dependencies(), about to call NON-DEP $eval_string = ' . $eval_string . "\n");
-            $eval_retval = eval($eval_string);
-
-##            RPerl::diag('in Compiler::find_dependencies(), have POST-EVAL NON-DEP %INC = ' . Dumper(\%INC) . "\n");
-            # warn instead of dying on eval error here and below, in order to preserve proper parser errors instead of weird eval errors
-            # in RPerl/Test/*/*Bad*.pm and RPerl/Test/*/*bad*.pl
-            if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne q{} ) ) {
-                RPerl::warning( 'WARNING WCOCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package ' . q{'}
-                        . $first_package_name . q{'}
-                        . ', fatal error trapped and delayed'
-                        . "\n" );
-                RPerl::diag( '                                                Trapped the following error message...' . "\n\n" . $EVAL_ERROR . "\n" );
-                RPerl::warning("\n");
+        if ( ( $file_line =~ /^\s*package\s+[\w:]+\s*;\s*$/xms ) and ( not defined $top_level_package_name ) ) {
+            # disable top-level PMC file before finding subdependencies
+            $top_level_package_name = $file_line;
+            $top_level_package_name =~ s/^\s*package\s+([\w:]+)\s*;\s*$/$1/gxms;
+            my string $pmc_disable_path = pmc_disable($top_level_package_name);
+            if ($pmc_disable_path eq q{}) {
+#               my integer $eval_retval = eval_use($top_level_package_name);  # NEED ANSWER: do we need to care about $eval_retval?
+                eval_use($top_level_package_name);
+            }
+            else {
+                push @{$pmc_disable_paths}, $pmc_disable_path;
             }
         }
 
@@ -124,7 +117,7 @@ our string_arrayref $find_dependencies = sub {
 
 #               RPerl::diag('in Compiler::find_dependencies(), found rperlsse line, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
                 if ( ( substr $Config{archname}, 0, 3 ) eq 'arm' ) {
-                    die q{ERROR ECOCODE05, COMPILER, FIND DEPENDENCIES: 'use rperlsse;' command found but SSE not supported on ARM architecture, file }
+                    die q{ERROR ECOCODE06, COMPILER, FIND DEPENDENCIES: 'use rperlsse;' command found but SSE not supported on ARM architecture, file }
                         . q{'}
                         . $file_name . q{'}
                         . ', dying' . "\n";
@@ -161,62 +154,163 @@ our string_arrayref $find_dependencies = sub {
                 last; 
             }
 
-            $file_line =~ s/^\s*use\s+([\w:]+)\s*.*\s*;\s*$/$1/gxms;    # remove everything except the package name
-            $eval_string = 'use ' . $file_line . '; 1;';
+            # disable PMC file before finding subdependencies
+            my string $package_file_name_included;
+            my string $package_name = $file_line;
+            $package_name =~ s/^\s*use\s+([\w:]+)\s*.*\s*;\s*$/$1/gxms;    # remove everything except the package name
+            my string $pmc_disable_path = pmc_disable($package_name);
 
-            #            RPerl::diag( 'in Compiler::find_dependencies(), about to call DEP $eval_string = ' . $eval_string . "\n" );
-            $eval_retval = eval($eval_string);
-    
-            #            RPerl::diag('in Compiler::find_dependencies(), have POST-EVAL DEP %INC = ' . Dumper(\%INC) . "\n");
-            if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne q{} ) ) {
-                RPerl::warning( 'WARNING WCOCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package ' . q{'}
-                        . $first_package_name . q{'}
-                        . ', fatal error trapped and delayed'
-                        . "\n" );
-                RPerl::diag( '                                    Trapped the following error message...' . "\n\n" . $EVAL_ERROR . "\n" );
-                RPerl::warning("\n");
+            my string $package_file_name = $package_name;
+            $package_file_name =~ s/::/\//gxms;    # replace double-colon :: scope delineator with forward-slash / directory delineator
+            $package_file_name .= '.pm';
+
+            # find specific included dependency file in either %INC or @INC
+            if ($pmc_disable_path eq q{}) {
+                eval_use($package_name);
+                if ( not exists $INC{$package_file_name} ) {
+                    die 'ERROR ECOCODE03, COMPILER, FIND DEPENDENCIES: Failed to find package file ', q{'}, $package_file_name, q{'},
+                        ' in %INC, included from file ', q{'}, $file_name, q{'}, ', dying', "\n";
+                }
+                $package_file_name_included = $INC{$package_file_name};
             }
-            $file_line =~ s/::/\//gxms;    # replace double-colon :: scope delineator with forward-slash / directory delineator
-            $file_line .= '.pm';
-            if ( not exists $INC{$file_line} ) {
-                die 'ERROR ECOCODE03, COMPILER, FIND DEPENDENCIES: Failed to find package file ' . q{'}
-                    . $file_line . q{'}
-                    . ' in %INC, file ' . q{'}
-                    . $file_name . q{'}
-                    . ', dying' . "\n";
+            else {
+                foreach my string $INC_directory (@INC) {
+#                    RPerl::diag( 'in Compiler::find_dependencies(), top of @INC foreach loop, have $INC_directory = ' . $INC_directory . "\n" );
+                    $package_file_name_included = $INC_directory . '/' . $package_file_name;
+#                    RPerl::diag( 'in Compiler::find_dependencies(), inside @INC foreach loop, have $package_file_name_included = ' . $package_file_name_included . "\n" );
+                    if (-e $package_file_name_included) {
+#                        RPerl::diag( 'in Compiler::find_dependencies(), inside @INC foreach loop, have EXISTING $package_file_name_included = ' . $package_file_name_included . "\n" );
+                        last;
+                    }
+                    else {
+                        $package_file_name_included = q{};
+                    }
+                }
+                if ($package_file_name_included eq q{}) {
+                    die 'ERROR ECOCODE04, COMPILER, FIND DEPENDENCIES: Failed to find package file ', q{'}, $package_file_name, q{'},
+                        ' in @INC, included from file ', q{'}, $file_name, q{'}, ', dying', "\n";
+                }
+                push @{$pmc_disable_paths}, $pmc_disable_path;
             }
+
+#            RPerl::diag( 'in Compiler::find_dependencies(), have $package_file_name_included = ' . $package_file_name_included . "\n" );
+
+            my string $package_file_name_included_relative = post_processor__absolute_path_delete( $package_file_name_included );
+            push @{$dependencies}, $package_file_name_included_relative;
     
-            #            RPerl::diag( 'in Compiler::find_dependencies(), have MATCHING $file_line = ' . $file_line . "\n" );
-    
-            my string $inc_file_line_path_trimmed = post_processor__absolute_path_delete( $INC{$file_line} );
-            push @{$dependencies}, $inc_file_line_path_trimmed;
-    
-            #            RPerl::diag( 'in Compiler::find_dependencies(), have PRE-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
+#            RPerl::diag( 'in Compiler::find_dependencies(), have PRE-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
 
             if ($find_subdependencies_recurse) {
     
                 # recursively find subdependencies
-                my string_arrayref $subdependencies = find_dependencies( $INC{$file_line}, $find_subdependencies_recurse, $modes );
+                my string_arrayref $subdependencies = find_dependencies( $package_file_name_included, $find_subdependencies_recurse, $modes );
     
                 # discard duplicate dependencies that now appear in subdependencies
                 $dependencies = [ uniq @{$subdependencies}, @{$dependencies} ];
     
-                #            RPerl::diag( 'in Compiler::find_dependencies(), have POST-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
+#                RPerl::diag( 'in Compiler::find_dependencies(), have POST-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
             }
         }
     }
 
     close $FILE_HANDLE
-        or die 'ERROR ECOCODE04, COMPILER, FIND DEPENDENCIES: Cannot close file ' . q{'}
+        or die 'ERROR ECOCODE05, COMPILER, FIND DEPENDENCIES: Cannot close file ' . q{'}
         . $file_name . q{'}
         . ' after reading, '
         . $OS_ERROR
         . ', dying' . "\n";
 
+    # re-enable all PMC files after finding dependencies
+    while (scalar @{$pmc_disable_paths}) {
+        pmc_reenable(pop @{$pmc_disable_paths});
+    }
+
     #    RPerl::diag( 'in Compiler::find_dependencies(), returning $dependencies = ' . Dumper($dependencies) . "\n" );
     #    RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
     #    RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
     return $dependencies;
+};
+
+# temporarily disable a package's PMC file, if it exists
+our string $pmc_disable = sub {
+    ( my string $package_name ) = @_;
+#    RPerl::diag( 'in Compiler::pmc_disable(), received $package_name = ' . $package_name . "\n" );
+
+    my string $pmc_file_path_absolute;
+    my string $pmc_file_path_absolute_disabled = q{};
+    my string $pmc_file_path_relative = $package_name;
+    $pmc_file_path_relative =~ s/::/\//gxms;    # replace double-colon :: scope delineator with forward-slash / directory delineator
+    $pmc_file_path_relative .= '.pmc';
+
+    foreach my string $INC_directory (@INC) {
+#        RPerl::diag( 'in Compiler::pmc_disable(), top of foreach loop, have $INC_directory = ' . $INC_directory . "\n" );
+        $pmc_file_path_absolute = $INC_directory . '/' . $pmc_file_path_relative;
+#        RPerl::diag( 'in Compiler::pmc_disable(), inside foreach loop, have $pmc_file_path_absolute = ' . $pmc_file_path_absolute . "\n" );
+        if (-e $pmc_file_path_absolute) {
+#            RPerl::diag( 'in Compiler::pmc_disable(), inside foreach loop, have EXISTING $pmc_file_path_absolute = ' . $pmc_file_path_absolute . "\n" );
+            $pmc_file_path_absolute_disabled = $pmc_file_path_absolute . '.PMC_DISABLED';
+            my boolean $move_success = move($pmc_file_path_absolute, $pmc_file_path_absolute_disabled);
+            if (not $move_success) {
+                die 'ERROR ECOCODE07, COMPILER, PMC DISABLE: Failed to temporarily disable package file ', q{'}, $pmc_file_path_absolute, q{'; }, 
+                    $OS_ERROR, ', dying', "\n";
+            }
+#            RPerl::diag( 'in Compiler::pmc_disable(), DISABLED $pmc_file_path_absolute = ' . $pmc_file_path_absolute . "\n" );
+            last;
+        }
+    }
+    return $pmc_file_path_absolute_disabled;
+};
+
+# re-enable a package's temporarily-disabled PMC file, if it exists
+our boolean $pmc_reenable = sub {
+    ( my string $file_name ) = @_;
+#    RPerl::diag( 'in Compiler::pmc_reenable(), received $file_name = ' . $file_name . "\n" );
+    if ((defined $file_name) and ($file_name ne q{})) {
+        if ((substr $file_name, -13, 13) ne '.PMC_DISABLED') {
+            die 'ERROR ECOCODE08, COMPILER, PMC RE-ENABLE: Temporarily-disabled package file name ', q{'}, $file_name, q{'}, 
+            ' does not with .PMC_DISABLED, dying', "\n";
+        }
+        if (-e $file_name) {
+            my string $file_name_original = $file_name;
+            substr $file_name_original, -13, 13, q{};  # strip trailing .PMC_DISABLED
+            my boolean $move_success = move($file_name, $file_name_original);
+            if (not $move_success) {
+                die 'ERROR ECOCODE09, COMPILER, PMC RE-ENABLE: Failed to re-enable temporarily-disabled package file ', q{'}, $file_name, q{'; }, 
+                    $OS_ERROR, ', dying', "\n";
+            }
+#            RPerl::diag( 'in Compiler::pmc_disable(), RE-ENABLED $file_name = ' . $file_name . "\n" );
+        }
+        else {
+            die 'ERROR ECOCODE10, COMPILER, PMC RE-ENABLE: Failed to re-enable temporarily-disabled package file ', q{'}, $file_name, q{'; }, 
+                ' file does not exist, dying', "\n";
+        }
+        return 1;
+    }
+    else { return 0; }
+};
+
+# use eval to perform a runtime use on a package
+our integer $eval_use = sub {
+    ( my string $package_name ) = @_;
+#    RPerl::diag( 'in Compiler::eval_use(), received $package_name = ' . $package_name . "\n" );
+
+    my string $eval_string = 'use ' . $package_name . '; 1;';
+
+    #            RPerl::diag('in Compiler::find_dependencies(), about to call NON-DEP $eval_string = ' . $eval_string . "\n");
+    my integer $eval_retval = eval($eval_string);
+
+#    RPerl::diag('in Compiler::find_dependencies(), have POST-EVAL NON-DEP %INC = ' . Dumper(\%INC) . "\n");
+    # warn instead of dying on eval error here and below, in order to preserve proper parser errors instead of weird eval errors
+    # in RPerl/Test/*/*Bad*.pm and RPerl/Test/*/*bad*.pl
+    if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne q{} ) ) {
+        RPerl::warning( 'WARNING WCOCODE00, COMPILER, FIND DEPENDENCIES: Failed to eval-use package ' . q{'}
+            . $package_name . q{'} . ', fatal error trapped and delayed' . "\n" );
+        RPerl::diag( '                                                Trapped the following error message...' . "\n\n" . $EVAL_ERROR . "\n" );
+        RPerl::warning("\n");
+    }
+#    RPerl::diag( 'in Compiler::pmc_disable(), EVAL USED $package_name = ' . $package_name . "\n" );
+
+    return $eval_retval;
 };
 
 # [[[ COMPILE RPERL TO RPERL, TEST MODE ]]]
