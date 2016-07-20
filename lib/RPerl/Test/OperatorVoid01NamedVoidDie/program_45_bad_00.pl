@@ -16,5 +16,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-# DEV NOTE: DO NOT RUN PERLTIDY ON THIS FILE!  the line below should read 'die(...' not 'die (...'
-die( ( %{ { a => 2 } }, "\n" ) );
+# DEV NOTE: DO NOT RUN PERLTIDY ON THIS FILE!  the line below should read 'die (...);' not 'die(...);'
+die ( %{ { a => 2, b => 3, c => 5, d => 7 } }, "\n" );

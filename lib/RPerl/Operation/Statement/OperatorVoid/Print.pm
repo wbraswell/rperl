@@ -105,10 +105,12 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
         if ( exists $stdout_stderr_optional->{children}->[0] ) {
             if ( $stdout_stderr_optional->{children}->[0]->{attr} eq '{*STDOUT}' ) {
+                # DEV NOTE, CORRELATION #rp100: C++ cout w/ double-less-than << input list separators is equivalent to Perl print w/ comma separators
 #                $cpp_source_group->{CPP} .= 'cout << ';
                 $cpp_source_group->{CPP} .= 'print ';
             }
             elsif ( $stdout_stderr_optional->{children}->[0]->{attr} eq '{*STDERR}' ) {
+                # DEV NOTE, CORRELATION #rp101: C++ cerr w/ double-less-than << input list separators is equivalent to Perl print {*STDERR} w/ comma separators
 #                $cpp_source_group->{CPP} .= 'cerr << ';
                 $cpp_source_group->{CPP} .= 'prerr ';
             }

@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::OperatorVoid::Named::Die;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_010;
+our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: is not a Grammar Rule so should not inherit from OperatorVoid, need create Grammar Production class
@@ -83,27 +83,45 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #    RPerl::diag( 'in OperatorVoid::Named::Die->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $operator_void_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_void_named) . "\n" );
 
     if ( ref $operator_void_named eq 'OperatorVoid_120' ) {    # OperatorVoid -> OP01_NAMED_VOID_SCOLON
-        $cpp_source_group->{CPP} .= $operator_void_named->{children}->[0];    # name semicolon
+        # DEV NOTE, CORRELATION #rp102: renamed from Perl die to C++ Die to avoid error redefining Perl's embed.h die
+        $cpp_source_group->{CPP} .= ucfirst $operator_void_named->{children}->[0];    # Name semicolon
     }
     elsif ( ref $operator_void_named eq 'OperatorVoid_122' ) {                  # OperatorVoid -> OP01_NAMED_VOID ListElements ';'
-        $cpp_source_group->{CPP} .= $operator_void_named->{children}->[0];                    # name
-        $cpp_source_group->{CPP} .= q{( };                    # left parentheses
+        # DEV NOTE, CORRELATION #rp102: renamed from Perl die to C++ Die to avoid error redefining Perl's embed.h die
+        # DEV NOTE, CORRELATION #rp102a: C++ cerr w/ recursive variadic template and exit() is equivalent to Perl die, DISABLED
+        # DEV NOTE, CORRELATION #rp102b: C++ cerr w/ inlined exit() is equivalent to Perl die
+        $cpp_source_group->{CPP} .= ucfirst $operator_void_named->{children}->[0];                    # Name
+        $cpp_source_group->{CPP} .= q{(};                    # left parentheses, CORRELATION #rp102a
+        $cpp_source_group->{CPP} .= q{ };
         my object $arguments       = $operator_void_named->{children}->[1];
         my integer $argument_count = $arguments->length();
         if ( $argument_count > ARGUMENTS_MAX() ) {
             die 'ERROR ECOGEASCP03, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n"
-                . 'Argument count '
-                . $argument_count
-                . ' exceeds maximum argument limit '
-                . ARGUMENTS_MAX()
-                . ' for operator ' . q{'}
-                . NAME() . q{'}
-                . ', dying' . "\n";
+                . 'Argument count ' . $argument_count . ' exceeds maximum argument limit ' . ARGUMENTS_MAX()
+                . ' for operator ' . q{'} . NAME() . q{'} . ', dying' . "\n";
         }
+
+        # save to stack of saved flags, when needed
+        if ((exists $modes->{_inside_die_operator}) and (defined $modes->{_inside_die_operator})) {
+            if ((not exists $modes->{_inside_die_operator_saved}) or (not defined $modes->{_inside_die_operator_saved})) {
+                $modes->{_inside_die_operator_saved} = [];
+            }
+            push @{$modes->{_inside_die_operator_saved}}, $modes->{_inside_die_operator};
+        }
+        $modes->{_inside_die_operator} = 1;
+
         my string_hashref $cpp_source_subgroup = $arguments->ast_to_cpp__generate__CPPOPS_CPPTYPES( $modes, $self );
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
-        $cpp_source_group->{CPP} .= q{ )};                    # right parentheses
+        $cpp_source_group->{CPP} .= q{ )};                    # right parentheses, CORRELATION #rp102a
         $cpp_source_group->{CPP} .= $operator_void_named->{children}->[2];    # semicolon
+#        $cpp_source_group->{CPP} .= '  exit(1);';  # inlined exit(), CORRELATION #rp102b
+
+        # restore from stack of saved flags, when needed
+        delete $modes->{_inside_die_operator};
+        if ((exists $modes->{_inside_die_operator_saved}) and (defined $modes->{_inside_die_operator_saved}) and (scalar $modes->{_inside_die_operator_saved})) {
+            $modes->{_inside_die_operator} = pop @{$modes->{_inside_die_operator_saved}};
+            if (not scalar $modes->{_inside_die_operator_saved}) { delete $modes->{_inside_die_operator_saved}; }
+        }
     }
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '

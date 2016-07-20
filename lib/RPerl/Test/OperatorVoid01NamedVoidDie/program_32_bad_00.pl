@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< PARSE_ERROR: 'ERROR ECOPAPC02' >>>
+# <<< PARSE_ERROR: 'Perl::Critic::Policy::CodeLayout::ProhibitParensWithBuiltins' >>>
+
 # [[[ HEADER ]]]
 use RPerl;
 use strict;
@@ -10,6 +15,5 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OPERATIONS ]]]
-
-# DEV NOTE: DO NOT RUN PERLTIDY ON THIS FILE!  the line below should read 'die -1;' not 'die - 1;'
-die -1, "\n";
+print 'reached', "\n";
+die( 2, ' howdy ', 3, ' dowdy ', 5, ' doody ', 7, "\n" );

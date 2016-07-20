@@ -10,6 +10,4 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OPERATIONS ]]]
-
-# DEV NOTE: DO NOT RUN PERLTIDY ON THIS FILE!  the line below should read 'die -1;' not 'die - 1;'
-die -1, "\n";
+die 2, "\n";

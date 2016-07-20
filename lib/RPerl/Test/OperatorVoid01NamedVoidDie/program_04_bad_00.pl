@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  <<< NO TOKEN FOUND >>>' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  -' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -15,4 +15,6 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OPERATIONS ]]]
-die 23, "\n"
+
+# DEV NOTE: DO NOT RUN PERLTIDY ON THIS FILE!  the line below should read 'die - 1;' not 'die -1;'
+die - 1, "\n";

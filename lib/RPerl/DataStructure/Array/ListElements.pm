@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array::ListElements;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_001;
+our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -149,7 +149,8 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 ) . "\n";
             }
             # OP21_LIST_COMMA
-            if ((exists $modes->{_inside_print_operator}) and (defined $modes->{_inside_print_operator}) and $modes->{_inside_print_operator}) {
+            if  ((exists $modes->{_inside_print_operator}) and (defined $modes->{_inside_print_operator}) and $modes->{_inside_print_operator}) {  # or
+#                ((exists $modes->{_inside_die_operator}) and (defined $modes->{_inside_die_operator}) and $modes->{_inside_die_operator})) { # DEV NOTE, CORRELATION #rp102b
                 # replace comma with << when inside print operator
                 $cpp_source_group->{CPP} .= ' << ';
             }
