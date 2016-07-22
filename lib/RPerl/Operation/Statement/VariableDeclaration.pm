@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::VariableDeclaration;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.006_000;
+our $VERSION = 0.007_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement);
@@ -185,7 +185,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my string_hashref $cpp_source_subgroup;
     my string $self_class = ref $self;
 
- #    RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     # unwrap VariableDeclaration_182, VariableDeclaration_183, VariableDeclaration_184, and VariableDeclaration_185 from Statement_156
     if ( $self_class eq 'Statement_156' ) {    # Statement -> VariableDeclaration
@@ -368,9 +368,52 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 }
             }
             else {
-                $cpp_source_group->{CPP} .= q{ } . $assign . q{ };
-                $cpp_source_subgroup = $opnamed_or_subexp_or_input_scolon->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);       # subexpression
-                RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+
+                my $subexpression = $opnamed_or_subexp_or_input_scolon->{children}->[0];
+#                RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subexpression = ' . "\n" . RPerl::Parser::rperl_ast__dump($subexpression) . "\n" );
+#                RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have (ref $subexpression) = ' . (ref $subexpression) . "\n" );
+#                RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have (ref $subexpression->{children}->[0]) = ' . (ref $subexpression->{children}->[0]) . "\n" );
+#                RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have (ref $subexpression->{children}->[0]->{children}->[0]) = ' . (ref $subexpression->{children}->[0]->{children}->[0]) . "\n" );
+#                RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have (ref $subexpression->{children}->[0]->{children}->[0]->{children}->[1]) = ' . (ref $subexpression->{children}->[0]->{children}->[0]->{children}->[1]) . "\n" );
+#                RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subexpression->{children}->[0]->{children}->[0]->{children}->[1]->{children} = ' . "\n" . $subexpression->{children}->[0]->{children}->[0]->{children}->[1]->{children} . "\n" );
+#                RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subexpression->{children}->[0]->{children}->[0]->{children}->[1]->{children} = ' . "\n" . Dumper($subexpression->{children}->[0]->{children}->[0]->{children}->[1]->{children}) . "\n" );
+#                RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have scalar @{$subexpression->{children}->[0]->{children}->[0]->{children}->[1]->{children}} = ' . "\n" . (scalar @{$subexpression->{children}->[0]->{children}->[0]->{children}->[1]->{children}}) . "\n" );
+
+                # test for empty array ref as value for variable initialization, discard in C++
+                if (
+                    (blessed $subexpression) and
+                    ((ref    $subexpression) eq 'SubExpressionOrInput_145') and
+                    (exists  $subexpression->{children}) and
+                    (defined $subexpression->{children}) and
+                    (defined $subexpression->{children}->[0]) and
+                    (blessed $subexpression->{children}->[0]) and
+                    ((ref    $subexpression->{children}->[0]) eq 'SubExpression_140') and
+                    (exists  $subexpression->{children}->[0]->{children}) and
+                    (defined $subexpression->{children}->[0]->{children}) and
+                    (defined $subexpression->{children}->[0]->{children}->[0]) and
+                    (blessed $subexpression->{children}->[0]->{children}->[0]) and
+                    ((ref    $subexpression->{children}->[0]->{children}->[0]) eq 'ArrayReference_198') and
+                    (exists  $subexpression->{children}->[0]->{children}->[0]->{children}) and
+                    (defined $subexpression->{children}->[0]->{children}->[0]->{children}) and
+                    (defined $subexpression->{children}->[0]->{children}->[0]->{children}->[0]) and
+                    (        $subexpression->{children}->[0]->{children}->[0]->{children}->[0] eq '[') and
+                    (defined $subexpression->{children}->[0]->{children}->[0]->{children}->[1]) and
+                    (blessed $subexpression->{children}->[0]->{children}->[0]->{children}->[1]) and
+                    ((ref    $subexpression->{children}->[0]->{children}->[0]->{children}->[1]) eq '_OPTIONAL') and
+                    (exists  $subexpression->{children}->[0]->{children}->[0]->{children}->[1]->{children}) and
+                    (defined $subexpression->{children}->[0]->{children}->[0]->{children}->[1]->{children}) and
+                    ((scalar @{$subexpression->{children}->[0]->{children}->[0]->{children}->[1]->{children}}) == 0) and
+                    (defined $subexpression->{children}->[0]->{children}->[0]->{children}->[2]) and
+                    (        $subexpression->{children}->[0]->{children}->[0]->{children}->[2] eq ']')
+                    ) {
+#                    RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have empty array ref' . "\n");
+                    1;  # do nothing
+                }
+                else {
+                    $cpp_source_group->{CPP} .= q{ } . $assign . q{ };
+                    $cpp_source_subgroup = $opnamed_or_subexp_or_input_scolon->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);       # subexpression
+                    RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+                }
             }
             $cpp_source_group->{CPP} .= $opnamed_or_subexp_or_input_scolon->{children}->[1];                                                     # semicolon
         }
