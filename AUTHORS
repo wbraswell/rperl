@@ -16,7 +16,7 @@
 
 # Developers who have completed the instructions in the CONTRIBUTING file
 # and are currently authorized to submit contributions to RPerl are listed 
-# as "AUTHORIZED".
+# as "AUTHORIZED", followed by their authorization seniority & date.
 # Developers who are in the process of obtaining official authorization
 # are listed as "AUTHORIZATION PENDING".
 # Developers who have had 100% of their RPerl contributions removed for any
@@ -24,11 +24,12 @@
 
 -- 
 
-Anonymous Name AKA bulk88 (AUTHORIZED)  <bulkdd at NOSPAM.cpan.org>
-David Nielson AKA naptastic (AUTHORIZATION PENDING)  <david at NOSPAM.naptastic.com>
-Dmitry Karasik  <dmitry at NOSPAM.karasik.eu.org>
-Matthew S. Trout AKA mst (REDACTED by friendly collaboration to avoid legal assignment)  <mst-pause at NOSPAM.shadowcat.co.uk>
-Pablo Rodríguez González (AUTHORIZED)  <pablo.rodriguez.gonzalez at NOSPAM.gmail.com>
-Paul Bennett (AUTHORIZATION PENDING)  <paul.w.bennett at NOSPAM.gmail.com>
-Reini Urban AKA rurban  <rurban at NOSPAM.x-ray.at>
-Unknown Name AKA MasterDuke17  <unknown at email>
+Anonymous Name           AKA bulk88       <bulkdd at NOSPAM.cpan.org>                    [ AUTHORIZED #2 20160516 ]
+David Nielson            AKA naptastic    <david at NOSPAM.naptastic.com>                [ AUTHORIZATION PENDING ]
+Dmitry Karasik                            <dmitry at NOSPAM.karasik.eu.org>
+Mathias Köhler           AKA mako         <ma_ko at NOSPAM.riseup.net>                   [ AUTHORIZED #3 20160722 ]
+Matthew S. Trout         AKA mst          <mst-pause at NOSPAM.shadowcat.co.uk>          [ REDACTED by friendly collaboration to avoid legal assignment ]
+Pablo Rodríguez González                  <pablo.rodriguez.gonzalez at NOSPAM.gmail.com> [ AUTHORIZED #1 20160503 ]
+Paul Bennett                              <paul.w.bennett at NOSPAM.gmail.com>           [ AUTHORIZATION PENDING ]
+Reini Urban              AKA rurban       <rurban at NOSPAM.x-ray.at>
+Unknown Name             AKA MasterDuke17                                                [ REDACTION PENDING ]
