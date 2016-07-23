@@ -9,7 +9,7 @@ int main() {
     print "have $bar = " << bar << endl;
     bar = foo + foo;
     bar = abs bar;
-    integer other_integer = abs -5;
+    integer other_integer = -5;
     integer onemore_integer = -5;
     print "have $foo = " << foo << endl;
     print "have $bar = " << bar << endl;
