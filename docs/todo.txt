@@ -12,6 +12,7 @@ DOING
     Learning
         EAR17 & Exxx & any other new errors
         update appendix with grammar changes: bitwise_negation_lparen, additional operators?
+        abs no longer "Coming Soon"
     print dot-to-comma in lib/RPerl/Test/*
     execute via compiled copy not interpreted
     templateperl
@@ -112,6 +113,7 @@ UNSIGNED INTEGER FIX
     CPPOPS_CPPTYPES conversion routines
 
 TESTS
+    add EXECUTE_SUCCESS to *good*.pl
     uncompile w/ corrupted or missing PMC, CPP, H files
     RPerl::EPSILON()
     array size declaration compensation
