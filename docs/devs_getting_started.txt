@@ -1,5 +1,6 @@
-RPERL SYSTEM DEVELOPERS
-GETTING STARTED HOW-TO DOCUMENT
+# RPerl System Developers
+# Getting Started, A How-To Guide
+# Last Updated 20160723 2016.205
 
 Welcome to RPerl, and thank you for your interest in joining the RPerl system developers!
 
@@ -42,18 +43,20 @@ http://rperl.org/learning_rperl.html#Section_2.1.11%3A_Arithmetic_Operators
 
 You should be able to choose among most or all of the "Coming Soon" operators, although it is possible that another RPerl system developer is currently working on your first choice operator, so be sure to check with the lead developers on Trello and Facebook before finalizing your selection.
 
-For this example, we will choose the absolute value operator 'abs', recently implemented by our first authorized RPerl system developer, Pablo Rodríguez González. 
+For this example, we will choose the absolute value operator 'abs', implemented by our first authorized RPerl system developer, Pablo Rodríguez González. 
 Imagine that you are Pablo, and this is the process you are going through to implement the 'abs' operator.
 Technically, absolute value is a "named operator", as found in the RPerl grammar file with the token OP01_NAMED_SCOLON:
 
 https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Grammar.eyp
 
-By searching for OP01_NAMED_SCOLON at the URL above, you can see a long list showing that all of Perl's named operators are already enabled in the grammar only.
+By searching for OP01_NAMED_SCOLON at the URL above, you can see a long list showing that all of Perl's named operators are already enabled, but in the grammar only.
 Also, search for the token OP10_NAMED_UNARY_SCOLON to see all the "named unary operators", which are a type of named operator that accept exactly one argument.
-Most of the remaining non-named operators are already implemented, whereas most of the named operators are not yet implemented outside of the grammar.
+Many of the remaining non-named operators are already fully implemented, whereas most of the named operators are not yet implemented outside of the grammar.
 To see a list of all operators which are already (at least partially) implemented, view the URL below:
 
 https://github.com/wbraswell/rperl/blob/master/lib/rperloperations.pm
+
+Some of the operators listed in the URL above are only partially implemented in PERLOPS_PERLTYPES mode only (see step 2 below for modes explanation), whereas we need both PERLOPS_PERLTYPES mode as well as CPPOPS_CPPTYPES mode implemented for each operator.  Thus, any operators which have a stub subroutine for CPPOPS_CPPTYPES mode are eligible for you to choose, simply search for anywhere the string 'DUMMY_SOURCE_CODE' appears inside a subroutine named ast_to_cpp__generate__CPPOPS_CPPTYPES().
 
 
 STEP 2.  Study Similar Operators
@@ -87,9 +90,18 @@ Each of these 3 code generation subroutines accepts as input an RPerl abstract s
 
 All RPerl code generation subroutines also accept as their final input argument the globally-utilized $modes variable, which is a string_hashref data structure containing the current RPerl modes, symbol table, and a number of other possible flags or values required for proper RPerl functionality.  The $modes variable should be passed as the final argument to all RPerl code generation subroutines, as well as many (or perhaps most) other RPerl system subroutines.
 
-Each of the subroutines generates as output a source group variable, which is another Perl string_hashref data structure containing all generated source code.  In the PERLOPS_PERLTYPES
+Each of the subroutines generates as output a source group variable, which is another Perl string_hashref data structure containing all generated source code.  In the PERLOPS_PERLTYPES code generation subroutines, this return value variable is named $rperl_source group, and in the other 2 modes it is named $cpp_source_group.  Each key in the source group hashes is the all-uppercase equivalent of the generated source code file suffix, so in PERLOPS_PERLTYPES mode the $rperl_source_group hash variable only contains the key 'PMC' ("Perl Module Compiled"), and all generated Perl source code is stored within the corresponding 'PMC' hash value, which could eventually be saved to a file ending with the suffix '.pmc'.  The generated '.pmc' file should be exactly equivalent to the original '.pm' input file, not counting code comments, which is why PERLOPS_PERLTYPES is also called "test mode", as the original RPerl input source code is completely parsed and then generated back into the matching original form as a test of the RPerl grammar, etc.
 
-The PERLOPS_PERLTYPES subroutine is implemented first for all operators, 
+In CPPOPS_PERLTYPES and CPPOPS_CPPTYPES modes, the $cpp_source_group hash variable contains at least the 'CPP' key which can be saved to a '.cpp' output C++ source code file.  The $cpp_source_group hash may also contain 'H' and 'PMC' keys, although most named operators will only need to output into the 'CPP' source code.
+
+The PERLOPS_PERLTYPES subroutine is implemented first for all operators, and in the cases where an operator's Perl module file has already been created, there should already be a completed ast_to_cpp__generate__PERLOPS_PERLTYPES() subroutine present.  The CPPOPS_PERLTYPES mode is currently not implemented for most RPerl operators, and will be left as a stub containing "DUMMY_SOURCE_CODE" until a later version of RPerl.  The CPPOPS_CPPTYPES mode is the main focus of our RPerl system development efforts, because it offers the most speed benefits by far.  Do not attempt to implement any CPPOPS_PERLTYPES code whatsoever, only the other 2 modes.
+
+
+
+START HERE: continue fleshing out document below
+START HERE: continue fleshing out document below
+START HERE: continue fleshing out document below
+
 
 
 STEP 3.  Make A Fork On Github
