@@ -52,11 +52,13 @@ https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Grammar.eyp
 By searching for OP01_NAMED_SCOLON at the URL above, you can see a long list showing that all of Perl's named operators are already enabled, but in the grammar only.
 Also, search for the token OP10_NAMED_UNARY_SCOLON to see all the "named unary operators", which are a type of named operator that accept exactly one argument.
 Many of the remaining non-named operators are already fully implemented, whereas most of the named operators are not yet implemented outside of the grammar.
-To see a list of all operators which are already (at least partially) implemented, view the URL below:
+To see a list of all operators which are already (at least partially) implemented, view the URLs below:
 
 https://github.com/wbraswell/rperl/blob/master/lib/rperloperations.pm
+https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Operation/Expression/Operator/Named
+https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Operation/Expression/Operator/NamedUnary
 
-Some of the operators listed in the URL above are only partially implemented in PERLOPS_PERLTYPES mode only (see step 2 below for modes explanation), whereas we need both PERLOPS_PERLTYPES mode as well as CPPOPS_CPPTYPES mode implemented for each operator.  Thus, any operators which have a stub subroutine for CPPOPS_CPPTYPES mode are eligible for you to choose, simply search for anywhere the string 'DUMMY_SOURCE_CODE' appears inside a subroutine named ast_to_cpp__generate__CPPOPS_CPPTYPES().
+Some of the operators listed in the URL above are only partially implemented, in that they only support PERLOPS_PERLTYPES mode (see step 2 below for modes explanation), whereas we need both PERLOPS_PERLTYPES mode as well as CPPOPS_CPPTYPES mode implemented for each operator.  Thus, any operators which have a stub subroutine for CPPOPS_CPPTYPES mode are eligible for you to choose, simply search for anywhere the string 'DUMMY_SOURCE_CODE' appears inside a subroutine named ast_to_cpp__generate__CPPOPS_CPPTYPES().
 
 
 STEP 2.  Study Similar Operators
@@ -97,37 +99,79 @@ In CPPOPS_PERLTYPES and CPPOPS_CPPTYPES modes, the $cpp_source_group hash variab
 The PERLOPS_PERLTYPES subroutine is implemented first for all operators, and in the cases where an operator's Perl module file has already been created, there should already be a completed ast_to_cpp__generate__PERLOPS_PERLTYPES() subroutine present.  The CPPOPS_PERLTYPES mode is currently not implemented for most RPerl operators, and will be left as a stub containing "DUMMY_SOURCE_CODE" until a later version of RPerl.  The CPPOPS_CPPTYPES mode is the main focus of our RPerl system development efforts, because it offers the most speed benefits by far.  Do not attempt to implement any CPPOPS_PERLTYPES code whatsoever, only the other 2 modes.
 
 
+STEP 3.  Make A Fork On GitHub
 
-START HERE: continue fleshing out document below
-START HERE: continue fleshing out document below
-START HERE: continue fleshing out document below
+If you did not already have a GitHub account, then you should have created one during step 0.
+Now you will create your own fork of RPerl on GitHub, which means you will have your own new copy of RPerl in a GitHub repository (AKA "repo").
+This forked repository will contain all your new code changes, without accidentally breaking the main RPerl repo.
+
+While logged in to your GitHub account, visit the URL below and select the "Fork" button in the upper-right, then follow the instructions:
+https://github.com/wbraswell/rperl
+
+You may optionally create as many branches as you like within your new forked repository, or you can stay at 1 branch in the new repo to keep it simple.
+In step 7, you will carefully merge your new code back in to the main RPerl repo.
 
 
+STEP 4.  Create The Operator's Perl Module File
 
-STEP 3.  Make A Fork On Github
+You will be creating a new file named 'lib/RPerl/Operation/Expression/Operator/Named/AbsoluteValue.pm' which will contain most of your new code.
 
-Q:  Third, I've made a fork, and a feature branch in order to do a pull request. Is this the prefered way for contributions?
-A:  Yes it is best for now to create your own fork and then do pull requests.
+To find a file which you can use as a starting template, you start by looking in the directory containing all named operators:
+https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Operation/Expression/Operator/Named
 
+You see that RPerl support for the 'chomp' operator only allows the low-magic 'chomp VARIABLE' syntax, which is similar to the 'abs VALUE' syntax you need to support:
+https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Operation/Expression/Operator/Named/Chomp.pm
 
-STEP 4.  Create Operator's Perl Module File
+Thus, you create a copy of the "Chomp.pm" file and rename it to "AbsoluteValue.pm", then begin changing anywhere specific to 'chomp' to become 'abs', etc.
 
-You will be creating a new file named 'lib/RPerl/Operation/Expression/Operator/Arithmetic/AbsoluteValue.pm'  NEED FIX PATH FROM Arithmetic/ TO Named/
+Follow the URL below to see Pablo's first commit of the Perl module file, which includes support for PERLOPS_PERLTYPES mode only:
+https://github.com/wbraswell/rperl/blob/4d997f91a52a34d8f4fa1a47830bc246aacd736e/lib/RPerl/Operation/Expression/Operator/Named/AbsoluteValue.pm
 
-You should use one of the existing Arithmetic operator .pm files as the template for your work.
+But wait!  While you were working, a change was made to the RPerl grammar in the main RPerl repo, so we have to update the grammar rule serial numbers as seen here:
+https://github.com/wbraswell/rperl/commit/9d6b53f447a370869fb32835d1266a4f7f825f2e#diff-fc9b0cbe0168b9b1c7ec7026ea8175efL9
 
-Q:  First, abs is listed as a named operator in Grammar.eyp so instead of using the "arithmetic" path I've used the "named" path. Is this ok?
-A:  Named and arithmetic operators are kinda the same, kinda different.  I will need to investigate further to answer this question.
-You are correct to categorize 'abs' as a named operator, that is technically and grammatically correct.  The only special aspect of this particular operator is that it will be listed with the arithmetic operators in the Learning RPerl book, because named operators don't have their own section in the book.
+Hopefully you won't have a grammar change happen while you are working on your own operator, but as we can see it is definitely possible.
 
-Q:  The CPP part is not working, the CPP code is just a DUMMY comment. Should I complete this part?
-A:  Yes you should definitely implement the CPPOPS_CPPTYPES code which is currently just a DUMMY stub.  You can ignore the CPPOPS_PERLTYPES code stub for now.
+Next, you have noticed that you need to implement CPPOPS_CPPTYPES, because the 'chomp' operator only supports PERLOPS_PERLTYPES.
+The most similar reference file with CPPOPS_CPPTYPES already implemented is the named unary 'scalar' operator:
+https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Operation/Expression/Operator/NamedUnary/Scalar.pm
 
-what about named unary ops???
-https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Operation/Expression/Operator/NamedUnary.pm
+So you copy the ast_to_cpp__generate__CPPOPS_CPPTYPES() subroutine from "Scalar.pm" into your new "AbsoluteValue.pm" and modify as needed:
+https://github.com/wbraswell/rperl/blob/99f74bd40d0214713f92c4efaac746f89d0821d6/lib/RPerl/Operation/Expression/Operator/Named/AbsoluteValue.pm
 
-be sure to format!
+And we forgot to change the PERLOPS_PERLTYPES error code to the correct format for CPPOPS_CPPTYPES, so you fix that:
+https://github.com/wbraswell/rperl/commit/1350e0bbe8a21659faa4798f536e78fafe720034
+
+Next, you realize we want our generated C++ code to match the original RPerl input source code as closely as possible, which means we want to generate 'abs' in C++ instead of 'std::abs', which is achieved by removing 'std::' from "AbsoluteValue.pm" and adding a C++ '#define' statement to the "rperloperations.h" file:
+https://github.com/wbraswell/rperl/commit/3153a85327dd7116eeb757692c05d2ec077ada2d#diff-fc9b0cbe0168b9b1c7ec7026ea8175efL111
+https://github.com/wbraswell/rperl/commit/3153a85327dd7116eeb757692c05d2ec077ada2d#diff-1e5c0f27b0c43112d615cf4e6b903899R16
+
+Oops, another bug!  We can not add extra parentheses where there were none required, so they must be removed:
+https://github.com/wbraswell/rperl/commit/c893b70e9e047c6a7a0f9b1d9029c2f5195af53f#diff-fc9b0cbe0168b9b1c7ec7026ea8175efL114
+
+All RPerl source code files should be auto-formatted using the Perltidy utility:
+http://perltidy.sourceforge.net
+
+It is important that you are using the official RPerl formatting configuration file, contained within the Perltidy run commands ("RC") file:
 https://github.com/wbraswell/lampuniversity.org/blob/master/docs/.perltidyrc
+
+When formatted with the correct Perltidy RC file, you see some minor cosmetic changes:
+https://github.com/wbraswell/rperl/commit/272a7ffc7a515839803168dd696bd1ae2711d06d#diff-fc9b0cbe0168b9b1c7ec7026ea8175efL21
+
+Last but not least, you forgot to update the 'abs' calling convention in the Perl module file's "DOCUMENTATION" section:
+NEED LINK HERE
+
+That's it!  Your new Perl module file is now complete.
+
+As you can see from the multiple URLs in this step, it took multiple commits to reach this point.
+The new "AbsoluteValue.pm" file was merged into the main RPerl repo before CPPOPS_CPPTYPES was implemented and before all bugs were worked out.
+It is fine if it takes you several commits in your forked repo to complete work on your new operator, and hopefully you will NOT merge your code into the main RPerl repo before all the work is done and all the bugs are fixed.
+
+To see the full, real history of this file, follow the URL below:
+https://github.com/wbraswell/rperl/commits/master/lib/RPerl/Operation/Expression/Operator/Named/AbsoluteValue.pm
+
+To view the latest copy of this Perl module file, follow this URL:
+https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Operation/Expression/Operator/Named/AbsoluteValue.pm
 
 
 STEP 5.  Update Appendant Files
@@ -158,6 +202,6 @@ Q:  Real behaviour is not tested. I mean, abs correctness is not tested. Well RP
 A:  The real functionality of the PERLOPS_PERLTYPES mode is currently tested via the EXECUTE_SUCCESS preprocessor tag inside each bad and good test file.  I will soon be adding auto-compile support for the tests to also check CPPOPS_CPPTYPES functionality as well.
 
 
-STEP 7.  Make A Pull Request On Github
+STEP 7.  Make A Pull Request On GitHub
 
-Before submitting a pull request on Github, please make sure your development branch or fork is up to date and compatible with the latest Github master branch.
+Before submitting a pull request on GitHub, please make sure your development branch or fork is up to date and compatible with the latest GitHub master branch.

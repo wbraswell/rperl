@@ -1,7 +1,6 @@
 # [[[ DOCUMENTATION ]]]
 # http://perldoc.perl.org/functions/abs.html
-#     SUPPORTED:  abs VARIABLE
-# NOT SUPPORTED:  abs( LIST )
+#     SUPPORTED:  abs VALUE
 # NOT SUPPORTED:  abs
 
 # [[[ HEADER ]]]
