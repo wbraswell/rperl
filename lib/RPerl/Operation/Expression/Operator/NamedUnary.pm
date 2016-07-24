@@ -17,6 +17,7 @@ use RPerl::Operation::Expression::Operator;
 our hashref $properties = {};
 
 # [[[ OO PROPERTIES, CLASS PROPERTY AKA PACKAGE VARIABLE ]]]
+# DEV NOTE, CORRELATION #rp020: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named*/* also add in Named*.pm and rperloperations.*
 our string_hashref $NAMES = {
     'chdir'   => 'RPerl::Operation::Expression::Operator::NamedUnary::ChangeDirectory',
     'cos'     => 'RPerl::Operation::Expression::Operator::NamedUnary::Cosine',

@@ -38,7 +38,7 @@ use RPerl::Operation::Expression::Operator::IncrementDecrement;
 use RPerl::Operation::Expression::Operator::Arithmetic::MultiplyDivideModulo;
 use RPerl::Operation::Expression::Operator::Arithmetic::Negative;
 use RPerl::Operation::Expression::Operator::Arithmetic::Power;
-# DEV NOTE, CORRELATION #rp020: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named/* also add in Grammar.eyp, Named.pm, and rperloperations.*
+# DEV NOTE, CORRELATION #rp020: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named*/* also add in Named*.pm and rperloperations.*
 use RPerl::Operation::Expression::Operator::Named;
 use RPerl::Operation::Expression::Operator::Named::AbsoluteValue;
 use RPerl::Operation::Expression::Operator::Named::Chomp;

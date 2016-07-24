@@ -12,7 +12,7 @@
 
 // [[[ EXPRESSIONS ]]]
 
-// DEV NOTE, CORRELATION #rp020: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named/* also add in Grammar.eyp, Named.pm, and rperloperations.*
+// DEV NOTE, CORRELATION #rp020: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named*/* also add in Named*.pm and rperloperations.*
 #define abs std::abs  // DEV NOTE, CORRELATION #rp110: C++ std::abs is the most versatile choice of C++ operator, and is equivalent to Perl abs
 
 // [[[ STATEMENTS ]]]

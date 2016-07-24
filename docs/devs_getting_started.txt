@@ -1,6 +1,6 @@
 # RPerl System Developers
 # Getting Started, A How-To Guide
-# Last Updated 20160723 2016.205
+# Last Updated 20160724 2016.206
 
 Welcome to RPerl, and thank you for your interest in joining the RPerl system developers!
 
@@ -45,8 +45,9 @@ You should be able to choose among most or all of the "Coming Soon" operators, a
 
 For this example, we will choose the absolute value operator 'abs', implemented by our first authorized RPerl system developer, Pablo Rodríguez González. 
 Imagine that you are Pablo, and this is the process you are going through to implement the 'abs' operator.
-Technically, absolute value is a "named operator", as found in the RPerl grammar file with the token OP01_NAMED_SCOLON:
+(Obviously you will not actually be implementing the 'abs' operator because Pablo already did, you will choose a different operator instead.) 
 
+Technically, absolute value is a "named operator", as found in the RPerl grammar file with the token OP01_NAMED_SCOLON:
 https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Grammar.eyp
 
 By searching for OP01_NAMED_SCOLON at the URL above, you can see a long list showing that all of Perl's named operators are already enabled, but in the grammar only.
@@ -69,11 +70,9 @@ There is no "Named Operators" section of Learning RPerl, because it would be a l
 Again, absolute value is technically not an "Arithmetic Operator" like the '+' (addition) or '*' (multiplication) operators, even though they are all used for math.
 
 Thus, before implementing absolute value, you should study the existing implementations of other named operators at the URL below:
-
 https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Operation/Expression/Operator/Named
 
 If you have instead chosen to implement a named unary operator, they may be found here:
-
 https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Operation/Expression/Operator/NamedUnary 
 
 Each operator's Perl module file in the 2 URLs above has 3 primary subroutines, which correspond to RPerl's 3 primary modes, and each generate source code as output:
@@ -102,11 +101,18 @@ The PERLOPS_PERLTYPES subroutine is implemented first for all operators, and in 
 STEP 3.  Make A Fork On GitHub
 
 If you did not already have a GitHub account, then you should have created one during step 0.
+Also, you should know how to use git itself, at least the basic functionality, or else you could end up accidentally messing up your own code and losing work!
+
 Now you will create your own fork of RPerl on GitHub, which means you will have your own new copy of RPerl in a GitHub repository (AKA "repo").
 This forked repository will contain all your new code changes, without accidentally breaking the main RPerl repo.
 
 While logged in to your GitHub account, visit the URL below and select the "Fork" button in the upper-right, then follow the instructions:
 https://github.com/wbraswell/rperl
+
+For all commits you make in any branches of your new repo, please always use the following format for git commit messages:
+Operator, Absolute Value, Your Concise Message Here
+
+In the next step, you will notice the commits by Pablo do not use this uniform message format, while the commits from Will do use the proper format.
 
 You may optionally create as many branches as you like within your new forked repository, or you can stay at 1 branch in the new repo to keep it simple.
 In step 7, you will carefully merge your new code back in to the main RPerl repo.
@@ -158,14 +164,14 @@ https://github.com/wbraswell/lampuniversity.org/blob/master/docs/.perltidyrc
 When formatted with the correct Perltidy RC file, you see some minor cosmetic changes:
 https://github.com/wbraswell/rperl/commit/272a7ffc7a515839803168dd696bd1ae2711d06d#diff-fc9b0cbe0168b9b1c7ec7026ea8175efL21
 
-Last but not least, you forgot to update the 'abs' calling convention in the Perl module file's "DOCUMENTATION" section:
-NEED LINK HERE
+Last but not least, you forgot to update the 'abs' calling convention in the Perl module file's "DOCUMENTATION" section, so you fix that minor error:
+https://github.com/wbraswell/rperl/commit/125160fb375b9378f42069ce49473c87d6783ea2#diff-fc9b0cbe0168b9b1c7ec7026ea8175efL2
 
 That's it!  Your new Perl module file is now complete.
 
 As you can see from the multiple URLs in this step, it took multiple commits to reach this point.
 The new "AbsoluteValue.pm" file was merged into the main RPerl repo before CPPOPS_CPPTYPES was implemented and before all bugs were worked out.
-It is fine if it takes you several commits in your forked repo to complete work on your new operator, and hopefully you will NOT merge your code into the main RPerl repo before all the work is done and all the bugs are fixed.
+It is fine if it takes you several commits in your forked repo to complete work on your new operator, but hopefully you will NOT try to merge your unfinished code into the main RPerl repo before all the work is done and all the bugs are fixed.
 
 To see the full, real history of this file, follow the URL below:
 https://github.com/wbraswell/rperl/commits/master/lib/RPerl/Operation/Expression/Operator/Named/AbsoluteValue.pm
@@ -176,32 +182,133 @@ https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Operation/Expression/Op
 
 STEP 5.  Update Appendant Files
 
-Then insert a line 'use RPerl::Operation::Expression::Operator::Arithmetic::AbsoluteValue;' in the rperloperations.pm file:
+Whenever you create a new named operator, you will need to update a few extra files so RPerl will know about it.
+In the RPerl source code, this step is referenced with the following comment:
+# DEV NOTE, CORRELATION #rp020: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named*/* also add in Named*.pm and rperloperations.*
+
+Thus, you can search for everywhere affected by this step by executing the command `grep -nr '#rp020' ./*` while in the RPerl source code directory:
+
+./lib/rperloperations.pm
+./lib/rperloperations.h
+./lib/RPerl/Operation/Expression/Operator/Named.pm
+./lib/RPerl/Operation/Expression/Operator/NamedUnary.pm
+
+First, you will need to update the "rperloperations.pm" file, if it does not already contain a 'use' command for your new Perl module file.
+Check the latest copy of "rperloperations.pm" to see if 'use RPerl::Operation::Expression::Operator::Named::AbsoluteValue;' is already included:
 https://github.com/wbraswell/rperl/blob/master/lib/rperloperations.pm
 
-# DEV NOTE, CORRELATION #rp020: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named/* also add in Grammar.eyp, Named.pm, and rperloperations.*
-https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Grammar.eyp
-https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Operation/Expression/Operator/Named.pm
-https://github.com/wbraswell/rperl/blob/master/lib/rperloperations.h
-https://github.com/wbraswell/rperl/blob/master/lib/rperloperations.pm
+When Pablo first checked the URL above, his new absolute value Perl module was not included, so we can see when he added it here:
+https://github.com/wbraswell/rperl/commit/4d997f91a52a34d8f4fa1a47830bc246aacd736e#diff-66e6372bddd4fc051a1cde1a632880a8R43
 
-what about recompile grammar???
-./script/development/grammar_recompile.sh
+Second, you will need to update "rperloperations.h" with any C++ header code which may be required by your operator.
+Only some operators will need C++ header code, some may not.
+In this case, we do need to perform a C++ preprocessor directive to define the 'abs' operator to be the same as the 'std::abs' operator, as mentioned in step 4:
+https://github.com/wbraswell/rperl/commit/3153a85327dd7116eeb757692c05d2ec077ada2d#diff-1e5c0f27b0c43112d615cf4e6b903899R16
+
+Third, you need to add the 'abs' operator into either the "Named.pm" or "NamedUnary.pm" files (but not both), depending on which category your operator falls within:
+https://github.com/wbraswell/rperl/commit/01e556314f967762f494270d6e3335eaf1f70b4d#diff-6276b3143f4ba5b5e1cb10e8bbf8b30fR22
+
+Now RPerl should be able to load and recognize your new operator!
 
 
 STEP 6.  Create Tests
 
-And (I believe) lastly, create a new test directory 'lib/RPerl/Test/Operator01AbsoluteValue' containing test files for the `abs` operator, and of course run the test suite to make sure all new tests (and current tests) pass.  You can see the other arithmetic operator tests as examples here:
-https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test
+At this point the new 'abs' operator should be working in both PERLOPS_PERLTYPES and CPPOPS_CPPTYPES modes.
+The only code left to write are tests.
 
-Q:  Second, there is only one file under lib/RPerl/Test, because I think "bad" tests are included in the "bad" files located in lib/RPerl/Test/Operator01Named
-A:  I will help you sort out the tests when I have a chance to look at your new code, probably tonight or tomorrow.
-You still need to create new bad tests in "lib/RPerl/Test/Operator01AbsoluteValue", tests which specifically cause errors when using the 'abs' operator, such as passing 0 or 2 arguments to abs, or passing invalid arguments, or other grammar errors like omitting a semicolon after properly calling abs.  I always plan to create at least a half dozen failing (bad) tests and 2 or 3 passing (good) tests for each new operator.
+You will create a new test directory 'lib/RPerl/Test/Operator01NamedAbsoluteValue' containing test files for the 'abs' operator.
+It is likely you will go through a similar process of development as you did while creating the Perl module file in step 4.
+You can see the final product of creating the 'abs' tests here:
+https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Test/Operator01NamedAbsoluteValue
 
-Q:  Real behaviour is not tested. I mean, abs correctness is not tested. Well RPerl is just a compiler so we test the correct "translation" but what about the real functionality?
-A:  The real functionality of the PERLOPS_PERLTYPES mode is currently tested via the EXECUTE_SUCCESS preprocessor tag inside each bad and good test file.  I will soon be adding auto-compile support for the tests to also check CPPOPS_CPPTYPES functionality as well.
+From the URL above, you can view the full history for each test file by clicking on the file's name, then clicking on the "History" button.
+
+You will notice the file names for all tests contain either "Good", "good", "Bad", or "bad"; this tells RPerl if the test file should succeed or fail.
+
+All tests should contain exactly 1 of the following RPerl preprocessor directives:
+
+# <<< PARSE_ERROR: 'FOO' >>>
+# <<< GENERATE_ERROR: 'FOO' >>>
+# <<< COMPILE_ERROR: 'FOO' >>>
+# <<< EXECUTE_ERROR: 'FOO' >>>
+# <<< EXECUTE_SUCCESS: 'FOO' >>>
+
+Please create enough tests to thoroughly ensure your new operator is both running correctly and also failing correctly.
+
+First, create a test file named "program_00_good.pl" which tests proper usage of the new 'abs' operator.
+Be sure the file uses the 'print' operator to display meaningful output.
+Manually run the `rperl` compiler front-end command in test mode to ensure your good test parses without any errors:
+rperl -V -D -nop -t lib/RPerl/Test/Operator01NamedAbsoluteValue/program_00_good.pl
+
+When your first good test is working properly, run it and copy all pertinent output into 1 or more "EXECUTE_SUCCESS" RPerl preprocessor directives.
+In most cases, you will want to match multiple success output strings to be sure a single good test is correct, which is accomplished by multiple "EXECUTE_SUCCESS" preprocessor directives in the correct order of appearance:
+https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator01NamedAbsoluteValue/program_00_good.pl
+
+Next, copy the "program_00_good.pl" file into another file named "program_00_bad_00.pl", and introduce exactly 1 error of some kind.
+For failures, you will use one of the "ERROR" preprocessor directives listed above.
+You must manually run the `rperl` command to know which error message each bad test should produce.
+As with good tests, you will usually want to match multiple error message strings to be sure a single failure is correct, which is accomplished by multiple error preprocessor directives of the same kind.
+For example, it is okay to have 2 or more "PARSE_ERROR" directives, but it is not okay to mix different kinds of preprocessor test directives in one test file.
+
+To determine the correct error message for each test, simply supply the test file as the input to the `rperl` command:
+rperl -V -D -nop lib/RPerl/Test/Operator01NamedAbsoluteValue/program_00_bad_00.pl
+
+You can see the "PARSE_ERROR" messages we want to match here:
+https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator01NamedAbsoluteValue/program_00_bad_00.pl
+
+Now you will want to create "program_00_bad_01.pl" and so forth, which should all be failing variations on the "program_00_good.pl" test.
+Each bad test should be designed to cause a different error when using the 'abs' operator, such as passing 0 or 2 arguments to abs, or passing invalid arguments, or other grammar errors like omitting a semicolon after properly calling abs.
+
+Next, make another copy of "program_00_good.pl" into "program_01_good.pl" and change it to test the 'abs' operator in some different way, such as by utilizing different input data, or different data types, or different combinations of operators.
+As before, "program_01_good.pl" should then be used to create "program_01_bad_00.pl" and so on.
+You should always plan to create at least a half dozen failing (bad) tests and 2 or 3 passing (good) tests for each new operator.
+
+Lastly, enable testing of the CPPOPS_CPPTYPES mode by manually calling the `rperl` command again, in order to generate C++ output reference code:
+rperl -V -D -nop lib/RPerl/Test/Operator01NamedAbsoluteValue/program_00_good.pl
+
+If the C++ output code is correctly generated with no "DUMMY_SOURCE_CODE" or errors, then the reference files are denoted by appending the ".CPPOPS_CPPTYPES" file suffix to each generated file ending with ".cpp" or ".h".
+For advanced developers who choose to generate test classes or packages instead of test programs only, then the reference ".pmc" files are denoted by appending the ".CPPOPS_DUALTYPES" file suffix.
+https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator01NamedAbsoluteValue/program_00_good.cpp.CPPOPS_CPPTYPES
+
+Of course, please run the full RPerl test suite on your local machine to make sure all new tests (and current tests) pass:
+perl Makefile.PL; make realclean; perl Makefile.PL; make test
 
 
 STEP 7.  Make A Pull Request On GitHub
 
 Before submitting a pull request on GitHub, please make sure your development branch or fork is up to date and compatible with the latest GitHub master branch.
+(Remember the issue with the grammar rule serial numbers changing in the main RPerl repo in step 4?  That actually caused real problems with git.)
+You should be able to achieve this by performing a pull from your forked repo, which will import the latest code from the main RPerl repo.
+WARNING!  Always backup your work in another folder before performing unfamiliar git commands such as `git pull`, which could accidentally mess up your own code.
+
+When you are confident that all your code and tests are correct, you may request your new changes be merged into the main RPerl repo for general public usage.
+Visit the URL below, then click the "New pull request" button and follow the directions:
+https://github.com/wbraswell/rperl/pulls
+
+The main RPerl repo should automatically run your new tests via the Travis CI (continuous integration) platform:
+https://travis-ci.org/wbraswell/rperl/pull_requests
+
+If your code passes on Travis and looks good in general, then your pull request should be accepted and merged into the main RPerl repository.
+
+Congratulations, you are now a published RPerl author!  Give yourself a small gift or treat of some kind.  :-)
+
+
+STEP 8.  Update Learning RPerl
+
+After your new operator is proven to work correctly, we will want to update all corresponding sections of the Learning RPerl book, written using the POD format:
+http://perldoc.perl.org/perlpod.html
+
+The very latest version of Learning RPerl is always on GitHub:
+https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Learning.pm
+
+The latest published version of Learning RPerl is always on the official RPerl website, although it may well be older than the GitHub version:
+rperl.org/learning_rperl.html
+
+Please do a thorough search for your new operator in all sections of the Learning RPerl book, and update it as necessary.
+At the very least, you will need to change the "Coming Soon" label to "Yes" in the table of supported operators!
+
+As with the previous steps, you should make all changes to the "Learning.pm" file within your own forked repo, then make a pull request like in step 7 above.
+
+...
+
+THAT'S ALL, FOLKS!
