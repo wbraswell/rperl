@@ -3,12 +3,12 @@
 #define __CPP__INCLUDED__RPerl__Test__Operator01NamedAbsoluteValue__program_02_good_cpp 0.001_000
 # ifdef __CPP__TYPES
 int main() {
-    number foo = abs 3;
+    number foo = abs (3);
     number bar = -3;
     print "have $foo = " << foo << endl;
     print "have $bar = " << bar << endl;
-    number result = (abs bar) * 23 + 1;
-    result += abs bar * 10;
+    number result = (abs (bar)) * 23 + 1;
+    result += abs (bar) * 10;
     print "have $result = " << result << endl;
     return 0;
 }
