@@ -100,8 +100,10 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             # DEV NOTE: math.h is added by default (see RPerl/Inline.pm)
             # DEV NOTE, CORRELATION #rp110: C++ std::abs is the most versatile choice of C++ operator, and is equivalent to Perl abs
         $cpp_source_group->{CPP} .= $operator_named->{children}->[0];
+        $cpp_source_group->{CPP} .= '(';  # DEV NOTE: must wrap operand in extra parens to avoid error "cannot resolve overloaded function ‘abs’ based on conversion to type ..."
         my string_hashref $cpp_source_subgroup = $operator_named->{children}->[1]->ast_to_cpp__generate__CPPOPS_CPPTYPES( $modes, $self );
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+        $cpp_source_group->{CPP} .= ')';
     }
     elsif ( $operator_named_class eq 'Operator_85' ) {    # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP13a, CODE GENERATOR, ABSTRACT SYNTAX TO C++: named operator '

@@ -8,6 +8,7 @@ DONE
 
 DOING
     uncompile w/ corrupted or missing PMC, CPP, H files
+    uncompile delete EXE files
     astyle, require for t/13 generate diff check?  (tests fail w/out astyle installed)
     Learning
         v1.7 not the latest any more!
