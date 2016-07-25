@@ -8,7 +8,7 @@ package RPerl::Operation::Expression::Operator::Named::AbsoluteValue;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_000;
+our $VERSION = 0.003_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::Operator::Named);
