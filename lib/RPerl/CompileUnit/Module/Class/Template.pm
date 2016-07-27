@@ -99,13 +99,15 @@ our hashref $properties = {
 # [[[ SUBROUTINES & OO METHODS ]]]
 
 # <<< CHANGE_ME: delete for no subroutines/methods, or replace with real subroutine(s)/method(s) >>>
-our void $grunt = sub {
-    print 'PIE() = ', PIE(), "\n";
+our void $pies_are_round = sub {
+    print 'in subroutine pies_are_round(), having PIE() = ', PIE(), "\n";
 };
 
-our number $grault = sub {
-    ( my integer $grault_input ) = @_;
-    return $grault_input**PI();
+our number $pi_r_squared = sub {
+    ( my number $r ) = @_;
+    my number $area = PI() * $r ** 2;
+    print 'in subroutine pi_r_squared(), have $area = PI() * $r ** 2 = ', $area, "\n";
+    return $area;
 };
 
 our number_arrayref $garply = sub {

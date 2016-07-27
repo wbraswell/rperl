@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.099_000;
+our $VERSION = 0.100_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -13313,7 +13313,7 @@ Add 1 to operand, then return incremented value
 
 =head2 Section 2.5: Constant Data
 
-Sometimes you have a piece of data that will never change once your software starts running, which is what we call I<"constant data"> or just a I<"constant"> for short.
+Sometimes you have a piece of data that will never change once you compile your software, which is what we call I<"constant data"> or just a I<"constant"> for short.
 
 Constants are the opposite of variables, because constants are designed not to change, while variables are designed to change as many times as needed.
 
@@ -13327,22 +13327,49 @@ These two constants can be utilized as follows:
 
     # [[[ SUBROUTINES ]]]
 
-    our void $pies_are_round = sub {
-        print 'in subroutine pies_are_round(), having PIE() = ', PIE(), "\n";
-    };
+    my number $area = PI() * $r ** 2;
+    my string $dessert = 'having a nice slice of ' . PIE();
 
-    our number $pi_r_squared = sub {
-        ( my number $r ) = @_;
-        my number $return_value = PI() * $r ** 2;
-        print 'in subroutine pi_r_squared(), have PI() * $r ** 2 = ', $return_value, "\n";
-        return $return_value;
-    };
+As seen in the examples above, we must first declare each constant to have an all-uppercase name via the C<use constant> command, after which we can access the stored data value by calling the constant name followed by empty parentheses.  (In normal interpreted Perl, a constant is functionally equivalent to a subroutine which accepts no arguments and performs no operations other than to call the C<return> operator with a hard-coded data value; see L</CHAPTER 4: SUBROUTINES> for more info.)
 
-=for comment START HERE
+All constants must utilize names with uppercase-only lettering, in order to distinguish them from similarly-named variables.  Thus, a normal variable may not have an all-uppercase name.  (Special variables called I<"file handles"> must be all-uppercase; see L</CHAPTER 5: INPUT & OUTPUT> for more info.)
 
-=for comment START HERE
+    use constant PIE => my string $TYPED_PIE = 'peanut butter';  # fine
+    use constant Pie => my string $TYPED_Pie = 'coffee cream';   # error in RPerl, compiled modes
+    use constant pie => my string $TYPED_pie = 'mocha silk';     # error in RPerl, compiled modes
 
-=for comment START HERE
+    my string $PIE = 'oreo';        # error in RPerl, compiled modes
+    my string $Pie = 'blackberry';  # okay
+    my string $pie = 'blueberry';   # best
+
+The declaration of constants follows a purposefully-repetitive format starting with the C<use constant> command, followed by the all-uppercase constant name, a fat arrow (AKA fat comma) C<=E<gt>>, the C<my> command, the desired data type, a variable named C<$TYPED_> with the same all-uppercase name appended, the equal-sign C<=> assignment operator, and finally the desired data value with a closing semicolon.  Within a constant declaration, the all-uppercase constant name must appear identically in both places, which is a language construct enabling us to provide a data type where it would otherwise be impossible to do so.
+
+    use constant PIE => my string $TYPED_PIE = 'cherry';        # fine
+    use constant PIE =>                        'black forest';  # error in RPerl, compiled modes
+    use constant PIE => my string $TYPED_PI  = 'grasshopper';   # error in RPerl, compiled modes
+    use constant PIE => my string $TYPED_POE = 'raven';         # error in RPerl, compiled modes
+
+You may access the value of a constant as many times as you like, but you may never change the value once the software has been compiled.
+
+    $pie = PIE();       # fine
+    $pie = $PIE;        # error in RPerl, compiled modes
+    $pie = $TYPED_PIE;  # error in RPerl, compiled modes
+
+    PIE()      = 'chocolate bourbon';   # error in Perl and RPerl
+    $PIE       = 'chocolate chip';      # error in RPerl, compiled modes
+    $TYPED_PIE = 'death by chocolate';  # error in RPerl, compiled modes
+
+Constant values must be literals and not other constants or variables.
+
+    use constant PIE => my string $TYPED_PIE = 'banana cream';  # fine
+    use constant PIE => my string $TYPED_PIE = PI();            # error in RPerl, compiled modes
+    use constant PIE => my string $TYPED_PIE = $pie;            # error in RPerl, compiled modes
+
+It is always possible to use a variable instead of a constant, but not the other way around.
+You should use constants whenever possible, because they will always be at least as fast as variables, and often faster!
+
+                        my string $pie       = 'lemon meringue';  # okay
+    use constant PIE => my string $TYPED_PIE = 'key lime';        # best
 
 =head2 Section 2.6: Output With C<print>
 
@@ -13371,6 +13398,8 @@ X<br>
 
 =head1 CHAPTER 3: LISTS & ARRAYS
 
+An array may not be a constant.
+
 =for comment [ INSERT CHAPTER ]
 
 =head3 Section 3.x.x: SSE Operators
@@ -13382,6 +13411,10 @@ X<br>
 
 
 =head1 CHAPTER 4: SUBROUTINES
+
+    our void $SWEET_TOOTH = sub { print 'Yum!  I love ', PIE(), "\n"; };  # error in RPerl, compiled modes
+    our void $Sweet_Tooth = sub { print 'Yum!  I love ', PIE(), "\n"; };  # okay
+    our void $sweet_tooth = sub { print 'Yum!  I love ', PIE(), "\n"; };  # best
 
 =for comment [ INSERT CHAPTER ]
 
@@ -13396,6 +13429,8 @@ X<br>
 
 
 =head1 CHAPTER 6: HASHES
+
+A hash may not be a constant.
 
 =for comment [ INSERT CHAPTER ]
 
