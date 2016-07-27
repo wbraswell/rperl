@@ -100,7 +100,7 @@ our hashref $properties = {
 
 # <<< CHANGE_ME: delete for no subroutines/methods, or replace with real subroutine(s)/method(s) >>>
 our void $grunt = sub {
-    print 'PIE() = ' . PIE() . "\n";
+    print 'PIE() = ', PIE(), "\n";
 };
 
 our number $grault = sub {

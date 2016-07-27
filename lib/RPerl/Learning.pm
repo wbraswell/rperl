@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.098_100;
+our $VERSION = 0.099_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -626,11 +626,17 @@ The RPerl team has been regularly promoting RPerl in a number of physical and di
 
 =head2 Section 1.13: What Is Happening With RPerl Now?
 
-As of Q2 2016, RPerl v1.7 (codename I<Tycho>) has been publicly released and is in use by a number of early adopters around the world.
+As of US Independence Day 2016, RPerl v2.0 (codename I<Pioneer>) has been publicly released and is in use by a number of early adopters around the world.
 
 RPerl development is proceeding with financial support from both Kickstarter crowdfunding and official grant monies from The Perl Foundation.
 
-The RPerl community is beginning to grow, and there are a number of exciting RPerl projects currently in the works.  More info coming soon!
+The RPerl community is beginning to grow, and there are a number of exciting RPerl projects currently in the works.
+
+If you would like to create software libraries and applications (AKA "programs" or "apps") to be utilized by end-users, then please join the RPerl application developers group, also known as the "RPerl App Devs":
+
+L<RPerl App Devs Group On Facebook|https://www.facebook.com/groups/1551887621787018>
+
+L<RPerl App Devs Intake Board On Trello|https://trello.com/b/XmmPJQJj/austin-pm-rperl-app-devs-intake>
 
 =head2 Section 1.14: What Is RPerl Really Good For?
 
@@ -13307,7 +13313,36 @@ Add 1 to operand, then return incremented value
 
 =head2 Section 2.5: Constant Data
 
-=for comment [ INSERT CONSTANTS ]
+Sometimes you have a piece of data that will never change once your software starts running, which is what we call I<"constant data"> or just a I<"constant"> for short.
+
+Constants are the opposite of variables, because constants are designed not to change, while variables are designed to change as many times as needed.
+
+Below are two example RPerl constants, one containing numeric data and another containing text data:
+
+    # [[[ CONSTANTS ]]]
+    use constant PI  => my number $TYPED_PI  = 3.141_59;
+    use constant PIE => my string $TYPED_PIE = 'pecan';
+
+These two constants can be utilized as follows:
+
+    # [[[ SUBROUTINES ]]]
+
+    our void $pies_are_round = sub {
+        print 'in subroutine pies_are_round(), having PIE() = ', PIE(), "\n";
+    };
+
+    our number $pi_r_squared = sub {
+        ( my number $r ) = @_;
+        my number $return_value = PI() * $r ** 2;
+        print 'in subroutine pi_r_squared(), have PI() * $r ** 2 = ', $return_value, "\n";
+        return $return_value;
+    };
+
+=for comment START HERE
+
+=for comment START HERE
+
+=for comment START HERE
 
 =head2 Section 2.6: Output With C<print>
 
