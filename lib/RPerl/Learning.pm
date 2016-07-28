@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.100_000;
+our $VERSION = 0.101_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -12852,6 +12852,12 @@ The C<number> data type stores a single floating-point (decimal) number, and may
 
 =head3 Section 2.4.x: Type Conversion
 
+START HERE: explain this section better, continue editing & adding content in next section
+
+START HERE: explain this section better, continue editing & adding content in next section
+
+START HERE: explain this section better, continue editing & adding content in next section
+
 To convert from one data type to another, we use the RPerl type conversion subroutines, shown below for numeric types only:
 
 =over
@@ -12881,14 +12887,9 @@ To convert from one data type to another, we use the RPerl type conversion subro
 
     my number $foo  = 23.42;
     my integer $bar = number_to_integer($foo);  # fine, $bar is now 23
+ 
 
 =head3 Section 2.4.x Scope, Type, Name, Value
-
-START HERE: continue editing & adding content
-
-START HERE: continue editing & adding content
-
-START HERE: continue editing & adding content
 
 The I<"scope"> of a variable is either local using the C<my> keyword, or global using the C<our> keyword.  Local variables are only usable within their own enclosing code block such as a conditional (section xxx), loop (xxx), or subroutine (chapter 4).
 
@@ -13371,7 +13372,153 @@ You should use constants whenever possible, because they will always be at least
 
 =head2 Section 2.6: Output With C<print>
 
-=for comment [ INSERT PRINT ]
+You will often want to display some text output while your RPerl application is running, and for this we use the C<print> operator:
+
+    print 'Hello, world!', "\n";
+
+Unsurprisingly, calling C<print> as shown above will display the 13-character global greeting, followed by a special I<"newline"> character which moves the computer cursor down to the next line.  (The "n" in "\n" stands for "newline", which is very closely related to the concepts of I<"line feed">, I<"carriage return">, and pressing the I<"Enter"> key on a computer keyboard.  The history of these terms harkens back to the days of manual typewriters and is worth spending a few minutes to learn about on Wikipedia, if you are into that sort of thing.)
+
+Multiple operands are passed to the C<print> operator by separating them with commas.  The above example passes 2 operands to be received by the C<print> operator, first the greeting literal and second the newline character.  You may pass as many operands to C<print> as you like.
+
+You can also print the contents of variables and constants.  For example, the 3 operations below produce the exact same output as the 1 operation above:
+
+    use constant NEWLINE => my string $TYPED_NEWLINE = "\n";
+    my string $greeting = 'Hello, world!';
+    print $greeting, NEWLINE();
+
+When you call the C<print> operator, it sends all output to the operating system's default output stream, which is a special component called I<"standard output"> or just I<"standard out"> for short, written as C<STDOUT> in Perl.  You may explicitly specify C<STDOUT> for any C<print> operator, although this is not necessary because it is already the default behavior.  Again, the following operation produces the exact same output as the 2 preceeding examples:
+
+    print {*STDOUT} 'Hello, world', "\n";
+
+You will notice there is no comma after C<{*STDOUT}>; you should only type a blank space character, and then specify the first operand.  Other than that, the C<print> operator works exactly the same both with and without the extra C<STDOUT> included.
+
+In addition to C<STDOUT>, there is a second output stream provided by your operating system, which is called C<STDERR>.  This stream is used to display actual error and warning messages, as well as optional debugging and diagnostic information.  The following operation will display an example warning message:
+
+    print {*STDERR} 'WARNING: Danger, Will Robinson!', "\n";
+
+Your software will continue running after you call C<print> to send output to C<STDERR>; if you want execution to immediately stop after displaying an error message, then you will need to explicitly add a termination operator such as C<exit> or C<die> or C<croak>.  The operand value of C<1> passed to the C<exit> operator below is used to inform the operating system that we have encountered an error.  (Please see NEED_ADD_SECTION for more info.)
+
+    print {*STDERR} 'ERROR: A fatal error or failure has occurred, aborting.', "\n";
+    exit 1;
+
+As mentioned above, you may also choose to use C<STDERR> to display debugging and diagnostic messages, which are neither warnings nor errors.  For example, let's say you are writing an RPerl application which primarily relies on the C<$foo> variable, so your users want to see the value of C<$foo> when the program is finished running.  Your code also utilizes the secondary variables named C<$bar>, C<$bat>, and C<$baz>, but the users don't care about the values of these variables, only you (and other software developers) care about them.  Following is an example of using C<print> for both normal output to C<STDOUT> (by default), as well as diagnostic output to C<STDERR>:
+
+    #!/usr/bin/perl
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my number  $bar =    17.0;
+    my number  $bat = 2_112.42;
+    my integer $baz =    23;
+    my number  $foo;
+
+    print {*STDERR} 'before arithmetic, have $bar = ', number_to_string($bar), "\n";
+    print {*STDERR} 'before arithmetic, have $bat = ', number_to_string($bat), "\n";
+    print {*STDERR} 'before arithmetic, have $baz = ', integer_to_string($baz), "\n";
+
+    $bat = $bar;
+    $bar = $baz / ($bar * 3);
+    $baz = $baz + 1;
+    $foo = $bar + $bat;
+
+    print '$foo = ', number_to_string($foo), "\n";
+
+    print {*STDERR} 'after arithmetic, have $bar = ', number_to_string($bar), "\n";
+    print {*STDERR} 'after arithmetic, have $bat = ', number_to_string($bat), "\n";
+    print {*STDERR} 'after arithmetic, have $baz = ', integer_to_string($baz), "\n";
+
+Now you may easily choose to view only the C<STDOUT>, or C<STDERR>, or both.  Here we see a normal execution of the program with both output streams displayed:
+
+=for rperl X<noncode>
+
+    $ ./my_program.pl 
+    before arithmetic, have $bar = 17
+    before arithmetic, have $bat = 2_112.42
+    before arithmetic, have $baz = 23
+    $foo = 17.450_980_392_156_9
+    after arithmetic, have $bar = 0.450_980_392_156_863
+    after arithmetic, have $bat = 17
+    after arithmetic, have $baz = 24
+
+=for rperl X</noncode>
+
+Next, we execute the same program again; this time we append C<E<gt> /dev/null> after our program name, which discards all C<STDOUT> output by redirecting it to a I<"null"> or empty device.  (In the Windows operating system, replace C<E<gt> /dev/null> with C<E<gt> nul>.)  This results in only the C<STDERR> output being displayed:
+
+=for rperl X<noncode>
+
+    $ ./my_program.pl > /dev/null
+    before arithmetic, have $bar = 17
+    before arithmetic, have $bat = 2_112.42
+    before arithmetic, have $baz = 23
+    after arithmetic, have $bar = 0.450_980_392_156_863
+    after arithmetic, have $bat = 17
+    after arithmetic, have $baz = 24
+
+=for rperl X</noncode>
+
+Lastly, we run the same program a third time, now with C<2E<gt> /dev/null> appended to discard all C<STDERR> output, so we only see C<STDOUT>:
+
+=for rperl X<noncode>
+
+    $ ./my_program.pl 2> /dev/null
+    $foo = 17.450_980_392_156_9
+
+=for rperl X</noncode>
+
+It is easy to simply insert a C<#> hash character (AKA octothorpe) in front of each C<print {*STDERR}> operator to comment it out, thereby disabling the diagnostic output but allowing it to be re-enabled again by future developers:
+
+    #!/usr/bin/perl
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my number  $bar =    17.0;
+    my number  $bat = 2_112.42;
+    my integer $baz =    23;
+    my number  $foo;
+
+    #print {*STDERR} 'before arithmetic, have $bar = ', number_to_string($bar), "\n";
+    #print {*STDERR} 'before arithmetic, have $bat = ', number_to_string($bat), "\n";
+    #print {*STDERR} 'before arithmetic, have $baz = ', integer_to_string($baz), "\n";
+
+    $bat = $bar;
+    $bar = $baz / ($bar * 3);
+    $baz = $baz + 1;
+    $foo = $bar + $bat;
+
+    print '$foo = ', number_to_string($foo), "\n";
+
+    #print {*STDERR} 'after arithmetic, have $bar = ', number_to_string($bar), "\n";
+    #print {*STDERR} 'after arithmetic, have $bat = ', number_to_string($bat), "\n";
+    #print {*STDERR} 'after arithmetic, have $baz = ', integer_to_string($baz), "\n";
+
+Now we don't need any redirection on the command line to suppress C<STDERR> output, and our program will run faster:
+
+=for rperl X<noncode>
+
+    $ ./my_program.pl
+    $foo = 17.450_980_392_156_9
+
+=for rperl X</noncode>
 
 =head2 Section 2.7: The C<if> Control Structure
 

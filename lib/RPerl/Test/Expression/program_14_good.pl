@@ -1,5 +1,8 @@
 #!/usr/bin/perl
 
+# [[[ PREPROCESSOR ]]]
+# <<< EXECUTE_SUCCESS: 'Hello, world!' >>>
+
 # [[[ HEADER ]]]
 use RPerl;
 use strict;
@@ -9,17 +12,11 @@ our $VERSION = 0.001_000;
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
+
+# [[[ CONSTANTS ]]]
+use constant NEWLINE => my string $TYPED_NEWLINE = "\n";
 
 # [[[ OPERATIONS ]]]
-
-my number $foo = 222 * -33;
-my number $bar = 222 / 33;
-my number $bat = 222 % 33;
-my number $baz = $foo % $bar * $bat / 4;
-my number $bax = $foo % ( $bar * ( $bat / 4 ) );
-
-print 'have $foo = ', $foo, "\n";
-print 'have $bar = ', $bar, "\n";
-print 'have $bat = ', $bat, "\n";
-print 'have $baz = ', $baz, "\n";
-print 'have $bax = ', $bax, "\n";
+my string $greeting = 'Hello, world!';
+print $greeting, NEWLINE();
