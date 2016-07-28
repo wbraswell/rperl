@@ -7,6 +7,7 @@ DONE
     enable semi-dynamic auto-config of integer format code for printf & friends in CPPOPS modes, replace %ld by %"INTEGER"
 
 DOING
+    execute via compiled copy not interpreted
     uncompile w/ corrupted or missing PMC, CPP, H files
     uncompile delete EXE files
     astyle, require for t/13 generate diff check?  (tests fail w/out astyle installed)
@@ -16,7 +17,6 @@ DOING
         update appendix with grammar changes: bitwise_negation_lparen, additional operators?
         abs no longer "Coming Soon"
     print dot-to-comma in lib/RPerl/Test/*
-    execute via compiled copy not interpreted
     templateperl
     Inline::RPerl
     mv sort to standardperl
@@ -51,6 +51,18 @@ DOING
     cpp output file post-processing for source code text alignment
     split author tests (checking Changes file, etc) into xt/ directory, 
         split deps in Makefile.PL, possibly utilize AUTHOR_TESTING in travis-perl/helpers
+
+INSTALLERS
+    Linux DEB
+    Linux RPM
+    Android
+    iOS
+    Mac
+    Windows ActiveRPerl
+    Windows Strawberry RPerl
+    Tarball
+    CPAN
+    GitHub
 
 OPERATORS, CPPOPS_CPPTYPES MODE
     NAMED: croak chomp join keys pop push reverse sort split values wait
