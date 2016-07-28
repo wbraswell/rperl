@@ -13325,8 +13325,6 @@ Below are two example RPerl constants, one containing numeric data and another c
 
 These two constants can be utilized as follows:
 
-    # [[[ SUBROUTINES ]]]
-
     my number $area = PI() * $r ** 2;
     my string $dessert = 'having a nice slice of ' . PIE();
 
