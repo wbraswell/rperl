@@ -11,6 +11,7 @@ perl:
   - "5.18"
   - "5.20"
   - "5.22"
+  - "5.24"
 
 # DEV NOTE, CORRELATION #rp011: update g++ to 4.8 for full C++11 support, including:
 # -std=c++11, std::string::pop_back(), etc.
