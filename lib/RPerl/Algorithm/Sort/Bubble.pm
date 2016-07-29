@@ -3,7 +3,7 @@ package RPerl::Algorithm::Sort::Bubble;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.006_000;
+our $VERSION = 0.007_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Algorithm::Sort);
@@ -48,7 +48,7 @@ our integer_arrayref $integer_bubblesort = sub {
     my integer $integer_data_length = scalar @{$integer_data};    # CONSTANT
     my integer $integer_data_i;
     my integer $integer_data_i_plus_1;
-    my integer $swap;
+#    my integer $swap;
     while ( not $is_sorted ) {
         $is_sorted = 1;
         for my integer $i ( 0 .. ( $integer_data_length - 2 ) ) {
@@ -56,9 +56,10 @@ our integer_arrayref $integer_bubblesort = sub {
             $integer_data_i_plus_1 = $integer_data->[ ( $i + 1 ) ];
             if ( $integer_data_i > $integer_data_i_plus_1 ) {
                 $is_sorted          = 0;
-                $swap               = $integer_data_i;
+#                $swap               = $integer_data_i;
                 $integer_data->[$i] = $integer_data_i_plus_1;
-                $integer_data->[ ( $i + 1 ) ] = $swap;
+#                $integer_data->[ ( $i + 1 ) ] = $swap;
+                $integer_data->[ ( $i + 1 ) ] = $integer_data_i;
             }
         }
     }
@@ -72,7 +73,7 @@ our number_arrayref $number_bubblesort = sub {
     my integer $number_data_length = scalar @{$number_data};    # CONSTANT
     my number $number_data_i;
     my number $number_data_i_plus_1;
-    my number $swap;
+#    my number $swap;
     while ( not $is_sorted ) {
         $is_sorted = 1;
         for my integer $i ( 0 .. ( $number_data_length - 2 ) ) {
@@ -80,9 +81,10 @@ our number_arrayref $number_bubblesort = sub {
             $number_data_i_plus_1 = $number_data->[ ( $i + 1 ) ];
             if ( $number_data_i > $number_data_i_plus_1 ) {
                 $is_sorted         = 0;
-                $swap              = $number_data_i;
+#                $swap              = $number_data_i;
                 $number_data->[$i] = $number_data_i_plus_1;
-                $number_data->[ ( $i + 1 ) ] = $swap;
+#                $number_data->[ ( $i + 1 ) ] = $swap;
+                $number_data->[ ( $i + 1 ) ] = $number_data_i;
             }
         }
     }

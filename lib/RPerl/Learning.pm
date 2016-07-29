@@ -13522,7 +13522,9 @@ Now we don't need any redirection on the command line to suppress C<STDERR> outp
 
 =head2 Section 2.7: The C<if> Control Structure
 
-=for comment [ INSERT IF ]
+Often you will want to perform a task, but only if some specific condition is met; this is called a I<"conditional statement"> and is implemented using the C<if> command in Perl.  For example, 
+
+L</Section 2.1.9: Truth Values>
 
 =head2 Section 2.8: Getting User Input
 

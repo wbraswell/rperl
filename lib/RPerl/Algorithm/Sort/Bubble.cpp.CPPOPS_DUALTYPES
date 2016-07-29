@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp 0.006_000
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp 0.007_000
 
 // [[[ INCLUDES ]]]
 #include "RPerl/Algorithm/Sort/Bubble.h"
@@ -137,7 +137,7 @@ integer_arrayref RPerl__Algorithm__Sort__Bubble__integer_bubblesort(integer_arra
     integer integer_data_length = integer_data.size();
     integer integer_data_i;
     integer integer_data_i_plus_1;
-    integer swap;
+//    integer swap;
     while ( not is_sorted ) {
         is_sorted = 1;
         for ( i = 0; i < (integer_data_length - 1); i++ ) {
@@ -145,9 +145,10 @@ integer_arrayref RPerl__Algorithm__Sort__Bubble__integer_bubblesort(integer_arra
             integer_data_i_plus_1 = integer_data[(i + 1)];
             if ( integer_data_i > integer_data_i_plus_1 ) {
                 is_sorted = 0;
-                swap = integer_data_i;
+//                swap = integer_data_i;
                 integer_data[i] = integer_data_i_plus_1;
-                integer_data[(i + 1)] = swap;
+//                integer_data[(i + 1)] = swap;
+                integer_data[(i + 1)] = integer_data_i;
             }
         }
     }
@@ -160,7 +161,7 @@ number_arrayref RPerl__Algorithm__Sort__Bubble__number_bubblesort(number_arrayre
     integer number_data_length = number_data.size();
     number number_data_i;
     number number_data_i_plus_1;
-    number swap;
+//    number swap;
     while ( not is_sorted ) {
         is_sorted = 1;
         for ( i = 0; i < (number_data_length - 1); i++ ) {
@@ -168,9 +169,10 @@ number_arrayref RPerl__Algorithm__Sort__Bubble__number_bubblesort(number_arrayre
             number_data_i_plus_1 = number_data[(i + 1)];
             if ( number_data_i > number_data_i_plus_1 ) {
                 is_sorted = 0;
-                swap = number_data_i;
+//                swap = number_data_i;
                 number_data[i] = number_data_i_plus_1;
-                number_data[(i + 1)] = swap;
+//                number_data[(i + 1)] = swap;
+                number_data[(i + 1)] = number_data_i;
             }
         }
     }
