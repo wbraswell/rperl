@@ -40,9 +40,8 @@ SV* RPerl__Algorithm__Sort__Bubble__integer_bubblesort(SV* integer_data) {
     integer is_sorted = 0;
     AV* integer_data_av = (AV*) SvRV(integer_data);
     integer integer_data_length = av_len(integer_data_av) + 1;
-    SV* integer_data_i = newSV(0);
-    SV* integer_data_i_plus_1 = newSV(0);
-    SV* swap = newSV(0);
+    SV* integer_data_i;
+    SV* integer_data_i_plus_1;
     while ( not is_sorted ) {
         is_sorted = 1;
         for ( integer i = 0; i <= (integer_data_length - 2); i++ ) {
@@ -50,11 +49,9 @@ SV* RPerl__Algorithm__Sort__Bubble__integer_bubblesort(SV* integer_data) {
             integer_data_i_plus_1 = AV_ELEMENT(integer_data_av, (i + 1));
             if ( SvIV(integer_data_i) > SvIV(integer_data_i_plus_1) ) {
                 is_sorted = 0;
-                integer_data_i = AV_ELEMENT(integer_data_av, i);
-                swap = integer_data_i;
-                integer_data_i_plus_1 = AV_ELEMENT(integer_data_av, (i + 1));
-                av_store(integer_data_av, i, SvREFCNT_inc(integer_data_i_plus_1));
-                av_store(integer_data_av, (i + 1), SvREFCNT_inc(swap));
+                SvREFCNT_inc_NN(integer_data_i);
+                av_store(integer_data_av, i, SvREFCNT_inc_NN(integer_data_i_plus_1));
+                av_store(integer_data_av, (i + 1), integer_data_i);
             }
         }
     }
@@ -68,9 +65,8 @@ SV* RPerl__Algorithm__Sort__Bubble__number_bubblesort(SV* number_data) {
     integer is_sorted = 0;
     AV* number_data_av = (AV*) SvRV(number_data);
     integer number_data_length = av_len(number_data_av) + 1;
-    SV* number_data_i = newSV(0);
-    SV* number_data_i_plus_1 = newSV(0);
-    SV* swap = newSV(0);
+    SV* number_data_i;
+    SV* number_data_i_plus_1;
     while ( not is_sorted ) {
         is_sorted = 1;
         for ( integer i = 0; i <= (number_data_length - 2); i++ ) {
@@ -78,11 +74,9 @@ SV* RPerl__Algorithm__Sort__Bubble__number_bubblesort(SV* number_data) {
             number_data_i_plus_1 = AV_ELEMENT(number_data_av, (i + 1));
             if ( SvNV(number_data_i) > SvNV(number_data_i_plus_1) ) {
                 is_sorted = 0;
-                number_data_i = AV_ELEMENT(number_data_av, i);
-                swap = number_data_i;
-                number_data_i_plus_1 = AV_ELEMENT(number_data_av, (i + 1));
-                av_store(number_data_av, i, SvREFCNT_inc(number_data_i_plus_1));
-                av_store(number_data_av, (i + 1), SvREFCNT_inc(swap));
+                SvREFCNT_inc_NN(number_data_i);
+                av_store(number_data_av, i, SvREFCNT_inc_NN(number_data_i_plus_1));
+                av_store(number_data_av, (i + 1), number_data_i);
             }
         }
     }
