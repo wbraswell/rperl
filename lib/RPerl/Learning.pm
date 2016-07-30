@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.101_000;
+our $VERSION = 0.102_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -13522,9 +13522,195 @@ Now we don't need any redirection on the command line to suppress C<STDERR> outp
 
 =head2 Section 2.7: The C<if> Control Structure
 
-Often you will want to perform a task, but only if some specific condition is met; this is called a I<"conditional statement"> and is implemented using the C<if> command in Perl.  For example, 
+Often you will want to perform a task, but only if some specific I<"condition"> is met; this is called a I<"conditional statement"> or just I<"conditional"> for short, and is implemented using the C<if> statement in Perl.  You may also refer to the C<if> statement as a I<"control structure">, because it is a source code structure used to control the execution flow of a piece of Perl software.
 
-L</Section 2.1.9: Truth Values>
+Whether or not an C<if> statement's task is actually performed is determined by the truth value of its condition, which is specified within parentheses immediately after the C<if> keyword; please review L</Section 2.1.9: Truth Values> for more info.  The task to be conditionally performed is known as the conditional statement's I<"body">, and is specified within curly braces immediately after the condition.
+
+    if ( $my_integer == 17 ) { print 'I got seventeen!', "\n"; }
+
+We can read the source code above as "if the value of the variable $my_integer is equal to 17, then display the text 'I got seventeen!' followed by a newline character"; or for short we can just say "if $my_integer is 17, print 'I got seventeen!'".  Note the use of the word "then" in the long-form translation; C<if> statements are also commonly referred to as I<"if - then"> statements, although in Perl the word "then" is not used in actual source code.  We will include the word "then" in the translations below, for ease of comprehension.
+
+So, what if you also want to perform a different task when your C<if> statement's condition is evaluated as false?  Then use the C<else> keyword with its own body:
+
+    if ( $my_integer == 17 ) { print 'I got seventeen!',         "\n"; }
+    else                     { print 'I did not get seventeen.', "\n"; }
+
+We can read the two lines of code above as "if $my_integer is 17, then print 'I got seventeen!'; or else print 'I did not get seventeen.'".
+
+Now let's add a third check, to see if we match one more possible value of C<$my_integer> before declaring that these aren't the values (or droids) we're looking for.  The following three lines of code can be read as "if $my_integer is 17, then print 'I got seventeen!'; or else if $my_integer is 23, then print 'I got twenty-three!'; or else print 'I did not get either.'":
+
+    if    ( $my_integer == 17 ) { print 'I got seventeen!',      "\n"; }
+    elsif ( $my_integer == 23 ) { print 'I got twenty-three!',   "\n"; }
+    else                        { print 'I did not get either.', "\n"; }
+
+When at least one C<elsif> or C<else> statement is appended to an C<if> statement, it is called a I<"conditional chain">.
+
+Now let's look at the output values of some slightly less simple conditional statements.  For example, perhaps you want to increment the value of an integer stored in the variable named C<$heart>, but only until it reaches a value of 3.  You can achieve this (in a contrived manner) by executing the following RPerl program:
+
+    #!/usr/bin/perl
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my integer $heart = 0;
+    print '$heart = ', $heart, "\n";
+
+    if ( $heart < 3 ) { $heart++; }
+    if ( $heart < 3 ) { $heart++; }
+    if ( $heart < 3 ) { $heart++; }
+    if ( $heart < 3 ) { $heart++; }
+    if ( $heart < 3 ) { $heart++; }
+
+    print '$heart = ', $heart, "\n";
+
+What do you think will be the generated output from the code above?  Well here it is:
+
+=for rperl X<noncode>
+
+    $heart = 0
+    $heart = 3
+
+=for rperl X</noncode>
+
+By studying the source code and output above, we can see there are five opportunities for the value of the C<$heart> variable to be incremented via the C<++> operator, but only three of them are actually executed.  This is because the truth value of C<$heart E<lt> 3> is true while C<$heart> is equal to 0, 1, and 2, but then the truth value of C<$heart E<lt> 3> becomes false once the value of C<$heart> reaches 3.  Obviously, a value of 3 is not less than another equal value of 3, so the final 2 truth values are false.
+
+According to the generated output, it appears we have achieved our simple goal of incrementing C<$heart> until it reaches 3, but it can be difficult to know exactly what is happening while the program is running.  Let's add some C<print> operators to display more useful output:
+
+    my integer $heart = 0;
+    print '$heart = ', $heart, "\n";
+
+    if ( $heart < 3 ) { $heart++; }
+    print '$heart = ', $heart, "\n";
+
+    if ( $heart < 3 ) { $heart++; }
+    print '$heart = ', $heart, "\n";
+
+    if ( $heart < 3 ) { $heart++; }
+    print '$heart = ', $heart, "\n";
+
+    if ( $heart < 3 ) { $heart++; }
+    print '$heart = ', $heart, "\n";
+
+    if ( $heart < 3 ) { $heart++; }
+    print '$heart = ', $heart, "\n";
+
+Now we can see what's really going on:
+
+=for rperl X<noncode>
+
+    $heart = 0
+    $heart = 1
+    $heart = 2
+    $heart = 3
+    $heart = 3
+    $heart = 3
+
+=for rperl X</noncode>
+
+From this more informative output, we can see the final two C<print> operators are called, but the final two C<++> increment operators are not called, so "$heart = 3" is repeated twice.
+
+Each of the five C<if> statements in the previous example are syntactically independent conditional statements, which means you can change any of their conditions without affecting the evaluation of the other conditions.  In other words, all five conditions with all five C<E<lt>> less-than operators are evaluated every time this program runs, even if only three of the five C<if> statement bodies are executed.  This is fine, because it is the correct behavior we want in this example.
+
+Now let's say (for some odd reason) you want to chain three C<if> statements together where they are now dependent upon one another, so if you change any one condition then it may affect the evaluation of the following condition(s).  You can achieve this by changing the second and third C<if> statements to be C<elsif> statements instead:
+
+    my integer $heart = 0;
+    print '$heart = ', $heart, "\n";
+
+    if ( $heart < 3 ) { $heart++; }
+    elsif ( $heart < 3 ) { $heart++; }
+    elsif ( $heart < 3 ) { $heart++; }
+
+    print '$heart = ', $heart, "\n";
+
+We can't include all the extra C<print> operators because each C<elsif> keyword must follow immediately after the preceding conditional body.  Also, we can't link more than three C<if> statements together without breaking the Perl Best Practices guideline against utilizing a "cascading if-elsif chain".
+
+So what do you think the output will for the above conditional chain?  Here you go:
+
+=for rperl X<noncode>
+
+    $heart = 0
+    $heart = 1
+
+=for rperl X</noncode>
+
+This time only the first of the three C<++> increment operators was executed, so the value of C<$heart> only increased from 0 to 1.  This is because an C<elsif> statement's condition will automatically default to a truth value of false if any preceding C<if> or C<elsif> truth values in its conditional chain are evaluated as true.  In other words, both C<elsif> statements in this example were totally skipped or I<"short-circuited"> without even evaluating their C<E<lt>> less-than operators, because the condition of the starting C<if> statement is evaluated as a true.  It would literally be a waste of time to evaluate the second and third C<E<lt>> operators, so our program will run a little bit faster by allowing Perl to automatically skip over those C<elsif> statements completely.
+
+Can you quickly tell what the output will be for the following example, where we have simply added an C<else> statement?
+
+    my integer $heart = 0;
+    print '$heart = ', $heart, "\n";
+
+    if ( $heart < 3 ) { $heart++; }
+    elsif ( $heart < 3 ) { $heart++; }
+    elsif ( $heart < 3 ) { $heart++; }
+    else                 { $heart++; }
+
+    print '$heart = ', $heart, "\n";
+
+In this case, the same short-circuiting occurs for the C<else> as does for the C<elsif> statements in this and the previous example, so our output is unchanged:
+
+=for rperl X<noncode>
+
+    $heart = 0
+    $heart = 1
+
+=for rperl X</noncode>
+
+The longest conditional chain allowable by Perl Best Practices is four members long and is comprised of an C<if> statement, followed by two C<elsif> statements, followed by an C<else> statement, as seen in the example above.  If all your conditions test a single variable for equivalence to some specific values, as in our first C<$my_integer> examples in this section, then instead of a conditional chain you may be able to utilize a hash data structure with the keys pre-set to the possible matching values; please see L</CHAPTER 6: HASHES> for more info.
+
+If your conditions are not all simple equivalence tests via the C<==> operator, as in our C<$heart> examples where the conditions include C<E<lt>> less-than operators, then Perl Best Practices directs us to use a C<given ... when> statement instead of any C<if> or C<elsif> statements at all.  However, RPerl does not yet support C<given ... when>, so if it is unavoidable then you may disable the rule against cascading conditional chains for just one source code file at a time:
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+    ## no critic qw(ProhibitCascadingIfElse)  # USER DEFAULT 9: allow cascading conditional chains until given-when is implemented
+    
+    # [[[ OPERATIONS ]]]
+    
+    my integer $foo = 0;
+    print '$foo = ', $foo, "\n";
+    
+    if ( $foo < 3 ) { $foo++; }
+    elsif ( $foo < 3 ) { $foo++; }
+    elsif ( $foo < 3 ) { $foo++; }
+    elsif ( $foo < 3 ) { $foo++; }
+    else               { $foo++; }
+    
+    print '$foo = ', $foo, "\n";
+
+As seen above, now we may add one or more additional C<elsif> statements without triggering a Perl Best Practices violation error via Perl::Critic.  This is achieved by the inclusion of the special "USER DEFAULT 9" critic command, which disables the "ProhibitCascadingIfElse" policy.  If we attempt to run this source code without the proper critic command, we will receive an error:
+
+=for rperl X<noncode>
+
+    $ rperl -t my_program.pl 
+    ERROR ECOPAPC02, RPERL PARSER, PERL CRITIC VIOLATION
+    Failed Perl::Critic brutal review with the following information:
+
+        File Name:    ./lib/RPerl/Test/Conditional/program_08_bad_00.pl
+        Line number:  22
+        Policy:       Perl::Critic::Policy::ControlStructures::ProhibitCascadingIfElse
+        Description:  Cascading if-elsif chain
+        Explanation:  See Perl Best Practices page(s) 117, 118
+
+=for rperl X</noncode>
+
+However, with the proper "USER DEFAULT 9" critic command in place, we receive no errors and the same output as before:
+
+=for rperl X<noncode>
+
+    $heart = 0
+    $heart = 1
+
+=for rperl X</noncode>
 
 =head2 Section 2.8: Getting User Input
 

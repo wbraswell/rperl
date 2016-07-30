@@ -55,6 +55,7 @@ DOING
 INSTALLERS
     Linux DEB
     Linux RPM
+    Linux Portage
     Android
     iOS
     Mac
