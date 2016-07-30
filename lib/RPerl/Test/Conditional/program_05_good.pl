@@ -23,17 +23,27 @@ our $VERSION = 0.001_000;
 my integer $foo = 0;
 print '$foo = ', $foo, "\n";
 
-if ( $foo < 3 ) { $foo++; }
+if ( $foo < 3 ) {
+    $foo++;
+}
 print '$foo = ', $foo, "\n";
 
-if ( $foo < 3 ) { $foo++; }
+if ( $foo < 3 ) {
+    $foo++;
+}
 print '$foo = ', $foo, "\n";
 
-if ( $foo < 3 ) { $foo++; }
+if ( $foo < 3 ) {
+    $foo++;
+}
 print '$foo = ', $foo, "\n";
 
-if ( $foo < 3 ) { $foo++; }
+if ( $foo < 3 ) {
+    $foo++;
+}
 print '$foo = ', $foo, "\n";
 
-if ( $foo < 3 ) { $foo++; }
+if ( $foo < 3 ) {
+    $foo++;
+}
 print '$foo = ', $foo, "\n";
