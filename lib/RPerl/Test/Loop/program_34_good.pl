@@ -1,5 +1,12 @@
 #!/usr/bin/perl
 
+# [[[ PREPROCESSOR ]]]
+# <<< EXECUTE_SUCCESS: 'Hello, world #1!' >>>
+# <<< EXECUTE_SUCCESS: 'Hello, world #2!' >>>
+# <<< EXECUTE_SUCCESS: 'Hello, world #3!' >>>
+# <<< EXECUTE_SUCCESS: 'Hello, world #4!' >>>
+# <<< EXECUTE_SUCCESS: 'Hello, world #5!' >>>
+
 # [[[ HEADER ]]]
 use RPerl;
 use strict;
@@ -12,13 +19,8 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer $i = 0;
-TESTWHILELOOP:
-while ( $i < 7 ) {
+my integer $i = 1;
+while ( $i <= 5 ) {
+    print 'Hello, world #', $i, q{!}, "\n";
     $i++;
-    if ( $i == 3 ) {
-        next TESTWHILELOOP;
-    }
-    print 'Production rule Loop matched by LoopWhile, iteration item ', $i,
-        "\n";
 }

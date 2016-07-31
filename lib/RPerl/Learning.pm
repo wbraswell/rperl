@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.102_000;
+our $VERSION = 0.103_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -395,7 +395,7 @@ I may even upset some people, particularly those who have an emotional or financ
 
 Despite my best efforts, I remain a fallible human being; thus, bad spelling and grammer and run-on sentences and parts that are hard to understand and parts that are not funny and formattiNg errors and bad spelling adn repetitions and other annoyances will doubtless plague this tome but we must not allow such trivialities as, improper punctuation to affect our willingness and ability to learn how to write super-fast RPerl software.
 
-If you find a mistake in this book (other than in the immediately preceeding paragraph), please utilize the following link to create a new GitHub issue (bug report) using a title starting with the words "Learning RPerl":
+If you find a mistake in this book (other than in the immediately preceding paragraph), please utilize the following link to create a new GitHub issue (bug report) using a title starting with the words "Learning RPerl":
 
 L<New GitHub Issue|https://github.com/wbraswell/rperl/issues/new>
 
@@ -818,7 +818,7 @@ L<rperl>
 
 L<https://metacpan.org/pod/distribution/RPerl/script/rperl>
 
-To compile-then-execute the preceeding RPerl example program, you may copy and paste the entire program (from shebang to second C<print>) into a temporary file such as F</tmp/foobar.pl>, then execute the following command:
+To compile-then-execute the preceding RPerl example program, you may copy and paste the entire program (from shebang to second C<print>) into a temporary file such as F</tmp/foobar.pl>, then execute the following command:
 
 =for rperl X<noncode>
 
@@ -6284,7 +6284,7 @@ VALUE is numeric value;
 
 If operand VALUE contains fractional part, then return next lowest integer, otherwise return VALUE unchanged;
 
-Not a Perl built-in operator, it is a Perl subroutine (which happens to provide an interface to the underlying C subroutine of the same name); thus, C<POSIX::floor()> must be called with both the preceeding C<POSIX::> namespace and parentheses around the operand
+Not a Perl built-in operator, it is a Perl subroutine (which happens to provide an interface to the underlying C subroutine of the same name); thus, C<POSIX::floor()> must be called with both the preceding C<POSIX::> namespace and parentheses around the operand
 
     POSIX::floor( 0)  #  0
     POSIX::floor( 1)  #  1
@@ -6310,7 +6310,7 @@ VALUE is numeric value;
 
 If operand VALUE contains fractional part, then return next highest integer, otherwise return VALUE unchanged;
 
-Not a Perl built-in operator, it is a Perl subroutine (which happens to provide an interface to the underlying C subroutine of the same name); thus, C<POSIX::ceil()> must be called with both the preceeding C<POSIX::> namespace and parentheses around the operand
+Not a Perl built-in operator, it is a Perl subroutine (which happens to provide an interface to the underlying C subroutine of the same name); thus, C<POSIX::ceil()> must be called with both the preceding C<POSIX::> namespace and parentheses around the operand
 
     POSIX::ceil( 0)  #  0
     POSIX::ceil( 1)  #  1
@@ -6336,7 +6336,7 @@ VALUE is numeric value;
 
 Break apart operand VALUE into integer part and fraction part, return both, fraction part first;
 
-Not a Perl built-in operator, it is a Perl subroutine (which happens to provide an interface to the underlying C subroutine of the same name); thus, C<POSIX::modf()> must be called with both the preceeding C<POSIX::> namespace and parentheses around the operand;
+Not a Perl built-in operator, it is a Perl subroutine (which happens to provide an interface to the underlying C subroutine of the same name); thus, C<POSIX::modf()> must be called with both the preceding C<POSIX::> namespace and parentheses around the operand;
 
 Returns more than one return value (always two); thus, must be wrapped in square brackets C<[ ]> and stored in C<number_arrayref> data structure, then individual parts accessed via thin-arrow C<-E<gt>> array dereference and element retrieval
 
@@ -6757,7 +6757,7 @@ I<BEST PRACTICES>
 
 =head3 Section 2.2.5: q Quotes
 
-Text literals enclosed in I<"q quotes"> begin with lowercase letter q and left curly brace characters C<q{>, and end with the right curly brace C<}> character.  You must use q quotes to represent empty text C<q{}> literals, which contain no characters.
+Text literals enclosed in I<"q quotes"> begin with lowercase letter q and left I<"curly brace"> characters C<q{>, and end with the right curly brace C<}> character.  You must use q quotes to represent empty text C<q{}> literals, which contain no characters.  Curly braces are also known as I<"curly brackets"> or just I<"braces"> for short.
 
 Normal Perl supports q-quoted string literals using delimiters other than curly braces, as well as I<"qq quotes"> which provide string interpolation in the same way as double-quoted strings.  RPerl's existing string quoting mechanisms cover all non-interpolated use cases, so RPerl does not support the additional qq quotes or non-curly-brace q quotes, because TDNNTBMTOWTDI.
 
@@ -13386,13 +13386,15 @@ You can also print the contents of variables and constants.  For example, the 3 
     my string $greeting = 'Hello, world!';
     print $greeting, NEWLINE();
 
-When you call the C<print> operator, it sends all output to the operating system's default output stream, which is a special component called I<"standard output"> or just I<"standard out"> for short, written as C<STDOUT> in Perl.  You may explicitly specify C<STDOUT> for any C<print> operator, although this is not necessary because it is already the default behavior.  Again, the following operation produces the exact same output as the 2 preceeding examples:
+When you call the C<print> operator, it sends all output to the operating system's default output data stream, which is a special component called I<"standard output"> or just I<"standard out"> for short, written using the C<STDOUT> keyword in Perl.  You may explicitly specify C<STDOUT> for any C<print> operator, although this is not necessary because it is already the default behavior.  When specified, the output stream has an asterisk C<*> character prepended, and is then wrapped in curly braces. 
+
+So again, the following operation produces the exact same output as the 2 preceding examples:
 
     print {*STDOUT} 'Hello, world', "\n";
 
 You will notice there is no comma after C<{*STDOUT}>; you should only type a blank space character, and then specify the first operand.  Other than that, the C<print> operator works exactly the same both with and without the extra C<STDOUT> included.
 
-In addition to C<STDOUT>, there is a second output stream provided by your operating system, which is called C<STDERR>.  This stream is used to display actual error and warning messages, as well as optional debugging and diagnostic information.  The following operation will display an example warning message:
+In addition to C<STDOUT>, there is a second output data stream provided by your operating system, which is called I<"standard error"> and is written using the C<STDERR> keyword.  This stream is used to display actual error and warning messages, as well as optional debugging and diagnostic information.  The following operation will display an example warning message:
 
     print {*STDERR} 'WARNING: Danger, Will Robinson!', "\n";
 
@@ -13475,7 +13477,7 @@ Lastly, we run the same program a third time, now with C<2E<gt> /dev/null> appen
 
 =for rperl X</noncode>
 
-It is easy to simply insert a C<#> hash character (AKA octothorpe) in front of each C<print {*STDERR}> operator to comment it out, thereby disabling the diagnostic output but allowing it to be re-enabled again by future developers:
+It is easy to simply insert a hash character (AKA octothorpe) C<#> in front of each C<print {*STDERR}> operator to comment it out, thereby disabling the diagnostic output but allowing it to be re-enabled again by future developers:
 
     #!/usr/bin/perl
 
@@ -13522,7 +13524,7 @@ Now we don't need any redirection on the command line to suppress C<STDERR> outp
 
 =head2 Section 2.7: The C<if> Control Structure
 
-Often you will want to perform a task, but only if some specific I<"condition"> is met; this is called a I<"conditional statement"> or just I<"conditional"> for short, and is implemented using the C<if> statement in Perl.  You may also refer to the C<if> statement as a I<"control structure">, because it is a source code structure used to control the execution flow of a piece of Perl software.
+Often you will want to perform a task, but only if some specific I<"condition"> is met; this is called a I<"conditional statement"> or just I<"conditional"> for short, and is implemented using the C<if> statement in Perl.  You may also refer to the C<if> statement as a I<"control structure">, because it is a source code structure used to control the execution flow of a piece of Perl software.  In other words, a conditional statement can control how your software runs, and so your software may run differently depending on your conditional statements.
 
 Whether or not an C<if> statement's task is actually performed is determined by the truth value of its condition, which is specified within parentheses immediately after the C<if> keyword; please review L</Section 2.1.9: Truth Values> for more info.  The task to be conditionally performed is known as the conditional statement's I<"body">, and is specified within curly braces immediately after the condition.
 
@@ -13616,9 +13618,9 @@ Now we can see what's really going on:
 
 =for rperl X</noncode>
 
-From this more informative output, we can see the final two C<print> operators are called, but the final two C<++> increment operators are not called, so "$heart = 3" is repeated twice.
+From this more informative output, we can see the final two C<print> operators are called, but the final two increment C<++> operators are not called, so "$heart = 3" is repeated twice.
 
-Each of the five C<if> statements in the previous example are syntactically independent conditional statements, which means you can change any of their conditions without affecting the evaluation of the other conditions.  In other words, all five conditions with all five C<E<lt>> less-than operators are evaluated every time this program runs, even if only three of the five C<if> statement bodies are executed.  This is fine, because it is the correct behavior we want in this example.
+Each of the five C<if> statements in the previous example are syntactically independent conditional statements, which means you can change any of their conditions without affecting the evaluation of the other conditions.  In other words, all five conditions with all five less-than C<E<lt>> operators are evaluated every time this program runs, even if only three of the five C<if> statement bodies are executed.  This is fine, because it is the correct behavior we want in this example.
 
 Now let's say (for some odd reason) you want to chain three C<if> statements together where they are now dependent upon one another, so if you change any one condition then it may affect the evaluation of the following condition(s).  You can achieve this by changing the second and third C<if> statements to be C<elsif> statements instead:
 
@@ -13642,7 +13644,7 @@ So what do you think the output will for the above conditional chain?  Here you 
 
 =for rperl X</noncode>
 
-This time only the first of the three C<++> increment operators was executed, so the value of C<$heart> only increased from 0 to 1.  This is because an C<elsif> statement's condition will automatically default to a truth value of false if any preceding C<if> or C<elsif> truth values in its conditional chain are evaluated as true.  In other words, both C<elsif> statements in this example were totally skipped or I<"short-circuited"> without even evaluating their C<E<lt>> less-than operators, because the condition of the starting C<if> statement is evaluated as a true.  It would literally be a waste of time to evaluate the second and third C<E<lt>> operators, so our program will run a little bit faster by allowing Perl to automatically skip over those C<elsif> statements completely.
+This time only the first of the three increment C<++> operators was executed, so the value of C<$heart> only increased from 0 to 1.  This is because an C<elsif> statement's condition will automatically default to a truth value of false if any preceding C<if> or C<elsif> truth values in its conditional chain are evaluated as true.  In other words, both C<elsif> statements in this example were totally skipped or I<"short-circuited"> without even evaluating their less-than C<E<lt>> operators, because the condition of the starting C<if> statement is evaluated as a true.  It would literally be a waste of time to evaluate the second and third less-than operators, so our program will run a little bit faster by allowing Perl to automatically skip over those C<elsif> statements completely.
 
 Can you quickly tell what the output will be for the following example, where we have simply added an C<else> statement?
 
@@ -13667,7 +13669,7 @@ In this case, the same short-circuiting occurs for the C<else> as does for the C
 
 The longest conditional chain allowable by Perl Best Practices is four members long and is comprised of an C<if> statement, followed by two C<elsif> statements, followed by an C<else> statement, as seen in the example above.  If all your conditions test a single variable for equivalence to some specific values, as in our first C<$my_integer> examples in this section, then instead of a conditional chain you may be able to utilize a hash data structure with the keys pre-set to the possible matching values; please see L</CHAPTER 6: HASHES> for more info.
 
-If your conditions are not all simple equivalence tests via the C<==> operator, as in our C<$heart> examples where the conditions include C<E<lt>> less-than operators, then Perl Best Practices directs us to use a C<given ... when> statement instead of any C<if> or C<elsif> statements at all.  However, RPerl does not yet support C<given ... when>, so if it is unavoidable then you may disable the rule against cascading conditional chains for just one source code file at a time:
+If your conditions are not all simple equivalence tests via the equals C<==> operator, as in our C<$heart> examples where the conditions include less-than C<E<lt>> operators, then Perl Best Practices directs us to use a C<given ... when> statement instead of any C<if> or C<elsif> statements at all.  However, RPerl does not yet support C<given ... when>, so if it is unavoidable then you may disable the rule against cascading conditional chains for just one source code file at a time:
 
     # [[[ CRITICS ]]]
     ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -13712,13 +13714,196 @@ However, with the proper "USER DEFAULT 9" critic command in place, we receive no
 
 =for rperl X</noncode>
 
+In all the examples above, the body of each conditional statement only includes one operation, such as a single increment C<++> operator or a single C<print> operator.  However, the bodies of your conditional statements may include as many operations as you like.  Also, conditional statements may be nested within one another:
+
+    if ( $friend_enjoys_lasagna ) {
+        if ( $other_lasagna_lovers_so_far == 0 ) {
+            print 'Oh thank goodness, I thought I was the only one!', "\n";
+        }
+        elsif ( $other_lasagna_lovers_so_far == 1 ) {
+            print 'Well, at least there are a few of us...', "\n";
+        }
+        else {
+            print 'Welcome to the Lasagna Lovers club!', "\n";
+        }
+        $other_lasagna_lovers_so_far++;
+    }
+    else {
+        print 'Why would anyone NOT like lasagna?', "\n";
+    }
+
 =head2 Section 2.8: Getting User Input
 
-=for comment [ INSERT INPUT ]
+When you want the users of your software to provide some keyboard input, then you will need to use the C<STDIN> keyword in Perl, which represents the I<"standard input"> data stream.  This will allow the user to type one line of input text and numbers, ended by pressing the Enter key.  All user input is received in text format, and should initially be stored in a variable with a C<string> data type.
+
+When used in Perl, we wrap C<STDIN> with I<"angle brackets">, which start with the less-than C<E<lt>> character and end with the greater-than C<E<gt>> character.  In this context, the less-than and greater-than characters are not used as tests for numeric inequality.
+
+Along with the two output streams C<STDOUT> and C<STDERR>, the input stream C<STDIN> makes up the third of three standard I/O ("input / output") data streams available on most operating systems. 
+
+The following example asks the user for their name, then greets them by name:
+
+    print 'Please input your first name: ';
+    my string $first_name = <STDIN>;
+    print 'Hello ', $first_name, ', nice to meet you!', "\n";
+
+You may also receive numeric data input, with the use of the appropriate data type conversion subroutines:
+
+    print 'Please input your age in years: ';
+    my string $age_string = <STDIN>;
+    my integer $age = string_to_integer($age_string);
+    print 'You are ', integer_to_string($age), ' years old.', "\n";
+    print 'In one year from now, you will be ', integer_to_string($age + 1), ' years old.', "\n";
+
+(In the above example, you may optionally omit the two calls to the C<integer_to_string()> data type conversion subroutine, because it has no effect on any integer with a value less than 1,000.)
+
+You may receive input from C<STDIN> as many times as needed:
+
+    print 'Please input your favorite band or musician: ';
+    my string $favorite_band = <STDIN>;
+
+    print 'Please input your favorite movie: ';
+    my string $favorite_movie = <STDIN>;
+
+    print 'Please input your favorite TV show: ';
+    my string $favorite_show = <STDIN>;
+
+    print 'You are a fan of ', $favorite_band, ', ', $favorite_movie, ', and ', $favorite_show, '.', "\n";
+    print '(I like Rush, Blade Runner, and Star Trek!)', "\n";
 
 =head2 Section 2.10: The C<while> Control Structure
 
-=for comment [ INSERT WHILE ]
+Most programs will contain one or more operations which need to be repeated a certain number of times, and for these cases we use a I<"loop statement"> or just a I<"loop"> for short.  Like a conditional statement, a loop statement is a kind of control structure, because they are both used to control the execution flow of your software.
+
+In this section, we will describe the most basic loop in Perl, which is the C<while> loop statement.  Just like an C<if> conditional statement, a C<while> loop has both a condition and a body.  There is only one difference between C<if> and C<while> statements: C<if> executes once when the condition is true, and C<while> executes repeatedly as long as the condition is true.
+
+The following loop will never stop running, because it has a condition which is hard-coded to numeric literal C<1>, which has a truth value of true.  The loop will print an infinite number of global greetings until the user sends a CTRL-C or similar termination signal: 
+
+    while (1) { print 'Hello, world!', "\n"; }
+
+As with an C<if> conditional statement, a C<while> loop's condition may be any truth value, which is usually generated by a numeric comparison operator such as less-than C<E<lt>> and greater-than C<E<gt>> and equals C<==>, or a logical operator such as C<and> and C<or> and C<not>.  Also like a conditional statement, a loop's body may include as many operations as needed, on as many lines as needed.
+
+Many loops use a designated variable called an I<"iterator">, utilized for the sole purpose of keeping track of the current iteration count.  Traditionally this variable is named C<$i>, and its value is increased by one via the increment C<++> operator called as the last operation in a loop body.  The value of C<$i> would then be tested via numeric comparison in the loop's condition:
+
+    my integer $i = 0;
+    while ( $i < 5 ) {
+        print 'Hello, world #', $i, q{!}, "\n";
+        $i++;
+    }
+
+In the example above, we first declare our iterator C<$i> to start counting at a hard-coded numeric literal value of C<0>.  All of computer science is based on binary logic with two possible binary values of 0 and 1; because of this and other reasons discussed in chapter 3, most counters and iterators start with 0 as their first value, 1 as their second value, and so forth.  When C<$i> starts at 0 and uses a less-than C<E<lt>> operator to be compared to a certain maximum iteration value, then your C<while> loop will iterate exactly that many times.  
+
+When we run the code above, we receive the following output:
+
+=for rperl X<noncode>
+
+    Hello, world #0!
+    Hello, world #1!
+    Hello, world #2!
+    Hello, world #3!
+    Hello, world #4!
+
+=for rperl X</noncode>
+
+If you really want to start C<$i> at 1 instead of 0, then you have to use a less-than-or-equal C<E<lt>=> operator to perform the same number of iterations:
+
+    my integer $i = 1;
+    while ( $i <= 5 ) {
+        print 'Hello, world #', $i, q{!}, "\n";
+        $i++;
+    }
+
+Now our output seems to make more sense to a human, but our iterator variable C<$i> is no longer starting at 0:
+
+=for rperl X<noncode>
+
+    Hello, world #1!
+    Hello, world #2!
+    Hello, world #3!
+    Hello, world #4!
+    Hello, world #5!
+
+=for rperl X</noncode>
+
+In order to have our iterator C<$i> start at 0, and also have our output make sense to a human, we call the addition C<+> operator within parentheses as part of the C<print> operator:
+
+    my integer $i = 0;
+    while ( $i < 5 ) {
+        print 'Hello, world #', ( $i + 1 ), q{!}, "\n";
+        $i++;
+    }
+
+Now we receive the desired output with C<$i> starting at 0:
+
+=for rperl X<noncode>
+
+    Hello, world #1!
+    Hello, world #2!
+    Hello, world #3!
+    Hello, world #4!
+    Hello, world #5!
+
+=for rperl X</noncode>
+
+As with the C<if> conditional statements, multiple C<while> loops may be nested within one another.  When you want to have iterator variables for 2 or even 3 nested loops, the traditional naming convention for simple cases is to start with iterator C<$i> for the outer-most loop, then iterator C<$j> for the next loop nested within the C<$i> loop, and then iterator C<$k> for the loop nested within the C<$j> loop.  If you need more or different iterators, you may choose any variable names which you find appropriate.
+
+Let's take a look at the simplest example of 3 nested loops:
+
+    my integer $i = 0;
+    while ( $i < 5 ) {
+        my integer $j = 0;
+        while ( $j < 4 ) {
+            my integer $k = 0;
+            while ( $k < 3 ) {
+                print 'Hello, world #(', ( $i + 1 ), ', ', ( $j + 1 ), ', ', ( $k + 1 ), q{)!}, "\n";
+                $k++;
+            }
+            $j++;
+        }
+        $i++;
+    }
+
+In each line of the generated output, the first number is from the outer-most C<$i> loop, the second number is from the middle C<$j> loop, and the last number is from the inner-most C<$k> loop:
+
+=for rperl X<noncode>
+
+    Hello, world #(1, 1, 1)!
+    Hello, world #(1, 1, 2)!
+    Hello, world #(1, 2, 1)!
+    Hello, world #(1, 2, 2)!
+    Hello, world #(1, 3, 1)!
+    Hello, world #(1, 3, 2)!
+    Hello, world #(2, 1, 1)!
+    Hello, world #(2, 1, 2)!
+    Hello, world #(2, 2, 1)!
+    Hello, world #(2, 2, 2)!
+    Hello, world #(2, 3, 1)!
+    Hello, world #(2, 3, 2)!
+    Hello, world #(3, 1, 1)!
+    Hello, world #(3, 1, 2)!
+    Hello, world #(3, 2, 1)!
+    Hello, world #(3, 2, 2)!
+    Hello, world #(3, 3, 1)!
+    Hello, world #(3, 3, 2)!
+    Hello, world #(4, 1, 1)!
+    Hello, world #(4, 1, 2)!
+    Hello, world #(4, 2, 1)!
+    Hello, world #(4, 2, 2)!
+    Hello, world #(4, 3, 1)!
+    Hello, world #(4, 3, 2)!
+
+=for rperl X</noncode>
+
+START HERE
+START HERE
+START HERE
+
+NEED LOOP CONTROL OPERATORS
+
+NEED LOOP LABELS
+
+You can freely combine multiple C<if> conditionals and C<while> loops:
+
+    NEED EXAMPLE
 
 =head2 Section 2.x: Exercises
 
@@ -13732,6 +13917,11 @@ X<br>
 =head1 CHAPTER 3: LISTS & ARRAYS
 
 An array may not be a constant.
+
+I<"Square brackets"> are also known as just I<"brackets"> for short.
+
+Closely related to the loop concept of an iterator variable is that of an C<"index">, and depending upon the usage you may argue the "i" in C<$i> stands for either "iterator" or "index".  The main difference between an iterator and an index are usage: an iterator is an integer variable used to count loop iterations; whereas an index is a numeric value used to specify an array element, and may be either an integer variable or a hard-coded integer literal.  An iterator can always be used as an index, but an index by definition is not meant to be used as an iterator.
+
 
 =for comment [ INSERT CHAPTER ]
 
@@ -19809,6 +19999,59 @@ B<Mastering RPerl>
 =for html </u>
 
 The Sword Book
+
+X<br>
+
+
+=head1 GLOSSARY
+
+=head2 A
+
+=head3 Angle Brackets
+
+Used to wrap input streams such as C<E<lt>STDINE<gt>> or C<E<lt>$MY_FILEHANDLEE<gt>>.
+
+Also known as I<"chevrons">; created using I<"less-than"> C<E<lt>> and I<"greater-than"> C<E<gt>> characters.
+
+=head2 B
+
+=head3 Braces
+
+I<"curly brackets"> AKA I<"curly braces"> AKA I<"braces"> C<{ }>
+
+See L</Brackets>
+
+=head3 Brackets
+
+A group of opening and closing character pairs, including:
+
+I<"square brackets"> AKA I<"brackets"> C<[ ]>
+
+I<"round brackets"> AKA I<"parentheses"> C<( )>
+
+I<"curly brackets"> AKA I<"curly braces"> AKA I<"braces"> C<{ }>
+
+I<"angle brackets"> AKA I<"chevrons"> AKA I<"less-than"> and I<"greater-than"> C<E<lt> E<gt>>
+
+See L</Square Brackets>
+
+See L</Parentheses>
+
+See L</Braces>
+
+See L</Angle Brackets>
+
+=head2 P
+
+=head3 Parentheses
+
+NEED DEFINITION
+
+=head2 S
+
+=head3 Square Brackets
+
+NEED DEFINITION
 
 X<br>
 
