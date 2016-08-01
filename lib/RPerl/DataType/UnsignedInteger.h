@@ -147,7 +147,7 @@ typedef std::ostringstream ostringstream;
 
 // [[[ OPERATIONS & DATA TYPES REPORTER ]]]
 # ifdef __PERL__TYPES
-SV* RPerl__DataType__UnsignedInteger__MODE_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
+SV* RPerl__DataType__UnsignedInteger__MODE_ID(pTHX) { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
 # elif defined __CPP__TYPES
 int RPerl__DataType__UnsignedInteger__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2
 # else
@@ -157,41 +157,41 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 // DEV NOTE, CORRELATION #rp010: the pack/unpack subs (below) are called by *_to_string_CPPTYPES(), moved outside #ifdef blocks
 //# ifdef __CPP__TYPES
-unsigned_integer XS_unpack_unsigned_integer(SV* input_sv);
-void XS_pack_unsigned_integer(SV* output_sv, unsigned_integer input_unsigned_integer);
+unsigned_integer XS_unpack_unsigned_integer(pTHX_ SV* input_sv);
+void XS_pack_unsigned_integer(pTHX_ SV* output_sv, unsigned_integer input_unsigned_integer);
 //# endif
 
 // [[[ BOOLEANIFY ]]]
 # ifdef __PERL__TYPES
-SV* unsigned_integer_to_boolean(SV* input_unsigned_integer);
+SV* unsigned_integer_to_boolean(pTHX_ SV* input_unsigned_integer);
 # elif defined __CPP__TYPES
 boolean unsigned_integer_to_boolean(unsigned_integer input_unsigned_integer);
 # endif
 
 // [[[ UNSIGNED INTEGERIFY ]]]
 # ifdef __PERL__TYPES
-SV* unsigned_integer_to_integer(SV* input_unsigned_integer);
+SV* unsigned_integer_to_integer(pTHX_ SV* input_unsigned_integer);
 # elif defined __CPP__TYPES
 integer unsigned_integer_to_integer(unsigned_integer input_unsigned_integer);
 # endif
 
 // [[[ NUMBERIFY ]]]
 # ifdef __PERL__TYPES
-SV* unsigned_integer_to_number(SV* input_unsigned_integer);
+SV* unsigned_integer_to_number(pTHX_ SV* input_unsigned_integer);
 # elif defined __CPP__TYPES
 number unsigned_integer_to_number(unsigned_integer input_unsigned_integer);
 # endif
 
 // [[[ CHARACTERIFY ]]]
 # ifdef __PERL__TYPES
-SV* unsigned_integer_to_character(SV* input_unsigned_integer);
+SV* unsigned_integer_to_character(pTHX_ SV* input_unsigned_integer);
 # elif defined __CPP__TYPES
 character unsigned_integer_to_character(unsigned_integer input_unsigned_integer);
 # endif
 
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
-SV* unsigned_integer_to_string(SV* input_unsigned_integer);
+SV* unsigned_integer_to_string(pTHX_ SV* input_unsigned_integer);
 # elif defined __CPP__TYPES
 string unsigned_integer_to_string(unsigned_integer input_unsigned_integer);
 # endif
@@ -200,7 +200,7 @@ string unsigned_integer_to_string_CPPTYPES(unsigned_integer input_unsigned_integ
 // [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
 SV* unsigned_integer__typetest0();
-SV* unsigned_integer__typetest1(SV* lucky_unsigned_integer);
+SV* unsigned_integer__typetest1(pTHX_ SV* lucky_unsigned_integer);
 # elif defined __CPP__TYPES
 unsigned_integer unsigned_integer__typetest0();
 unsigned_integer unsigned_integer__typetest1(unsigned_integer lucky_unsigned_integer);

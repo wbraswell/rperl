@@ -150,7 +150,7 @@ typedef std::ostringstream ostringstream;
 
 // [[[ OPERATIONS & DATA TYPES REPORTER ]]]
 # ifdef __PERL__TYPES
-SV* RPerl__DataType__GMPInteger__MODE_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
+SV* RPerl__DataType__GMPInteger__MODE_ID(pTHX) { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
 # elif defined __CPP__TYPES
 int RPerl__DataType__GMPInteger__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2
 # else
@@ -163,8 +163,8 @@ void gmp_integer_CHECKTRACE(SV* possible_gmp_integer, const char* variable_name,
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 # ifdef __CPP__TYPES
-gmp_integer_retval XS_unpack_gmp_integer_retval(SV* input_sv);
-void XS_pack_gmp_integer_retval(SV* output_sv, gmp_integer_retval input_gmp_integer_retval);
+gmp_integer_retval XS_unpack_gmp_integer_retval(pTHX_ SV* input_sv);
+void XS_pack_gmp_integer_retval(pTHX_ SV* output_sv, gmp_integer_retval input_gmp_integer_retval);
 # endif
 
 // [[[ BOOLEANIFY ]]]

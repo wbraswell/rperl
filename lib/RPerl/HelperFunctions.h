@@ -25,20 +25,20 @@
 #endif
 
 // [[[ HELPER FUNCTION DECLARATIONS ]]]
-int RPerl_SvBOKp(SV* input_sv);
-int RPerl_SvUIOKp(SV* input_sv);
+int RPerl_SvBOKp(pTHX_ SV* input_sv);
+int RPerl_SvUIOKp(pTHX_ SV* input_sv);
 int RPerl_SvIOKp(SV* input_sv);
 int RPerl_SvNOKp(SV* input_sv);
-int RPerl_SvCOKp(SV* input_sv);
+int RPerl_SvCOKp(pTHX_ SV* input_sv);
 int RPerl_SvPOKp(SV* input_sv);
 int RPerl_SvAROKp(SV* input_avref);
 int RPerl_SvHROKp(SV* input_hv_ref);
 
-void RPerl_object_property_init(SV* initee); // NEED ANSWER: what in the hades does this property init function even do?  why do we need it???
+void RPerl_object_property_init(pTHX_ SV* initee); // NEED ANSWER: what in the hades does this property init function even do?  why do we need it???
 
 // [[[ OPERATIONS & DATA TYPES REPORTER ]]]
 # ifdef __PERL__TYPES
-SV* RPerl__HelperFunctions__MODE_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
+SV* RPerl__HelperFunctions__MODE_ID(pTHX) { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
 # elif defined __CPP__TYPES
 int RPerl__HelperFunctions__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2
 # else

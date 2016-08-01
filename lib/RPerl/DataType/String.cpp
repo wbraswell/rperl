@@ -45,7 +45,7 @@ void string_CHECKTRACE(SV* possible_string, const char* variable_name, const cha
 //# ifdef __CPP__TYPES
 
 // convert from (Perl SV containing string) to (C++ std::string)
-string XS_unpack_string(SV* input_sv)
+string XS_unpack_string(pTHX_ SV* input_sv)
 {
 //fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_string(), top of subroutine\n");
 //	string_CHECK(input_sv);
@@ -58,7 +58,7 @@ string XS_unpack_string(SV* input_sv)
 }
 
 // convert from (C++ std::string) to (Perl SV containing string)
-void XS_pack_string(SV* output_sv, string input_string) {
+void XS_pack_string(pTHX_ SV* output_sv, string input_string) {
 //fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string(), top of subroutine\n");
 //fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string(), received input_string = '%s'\n", input_string.c_str());
 
@@ -100,7 +100,7 @@ void string_substitute_global(string& input_string, const string& find_string, c
 
 # ifdef __PERL__TYPES
 
-SV* string_to_boolean(SV* input_string) {
+SV* string_to_boolean(pTHX_ SV* input_string) {
 //  string_CHECK(input_string);
     string_CHECKTRACE(input_string, "input_string", "string_to_boolean()");
     string_substitute_global(input_string, "_", "");  // remove underscores to allow them in input_string
@@ -124,7 +124,7 @@ boolean string_to_boolean(string input_string) {
 
 # ifdef __PERL__TYPES
 
-SV* string_to_unsigned_integer(SV* input_string) {
+SV* string_to_unsigned_integer(pTHX_ SV* input_string) {
 //  string_CHECK(input_string);
     string_CHECKTRACE(input_string, "input_string", "string_to_unsigned_integer()");
     string_substitute_global(input_string, "_", "");  // remove underscores to allow them in input_string
@@ -148,7 +148,7 @@ unsigned_integer string_to_unsigned_integer(string input_string) {
 
 # ifdef __PERL__TYPES
 
-SV* string_to_integer(SV* input_string) {
+SV* string_to_integer(pTHX_ SV* input_string) {
 //  string_CHECK(input_string);
     string_CHECKTRACE(input_string, "input_string", "string_to_integer()");
     string_substitute_global(input_string, "_", "");  // remove underscores to allow them in input_string
@@ -170,7 +170,7 @@ integer string_to_integer(string input_string) {
 
 # ifdef __PERL__TYPES
 
-SV* string_to_number(SV* input_string) {
+SV* string_to_number(pTHX_ SV* input_string) {
 //  string_CHECK(input_string);
     string_CHECKTRACE(input_string, "input_string", "string_to_number()");
     string_substitute_global(input_string, "_", "");  // remove underscores to allow them in input_string
@@ -212,7 +212,7 @@ character string_to_character(string input_string) {
 
 # ifdef __PERL__TYPES
 
-SV* string_to_string(SV* input_sv)
+SV* string_to_string(pTHX_ SV* input_sv)
 {
     string input_sv_string;
     size_t input_sv_string_pos;
@@ -285,18 +285,18 @@ string string_to_string(string input_string)
 
 # ifdef __PERL__TYPES
 
-SV* string__typetest0() {
+SV* string__typetest0(pTHX) {
 //fprintf(stderr, "in CPPOPS_PERLTYPES string__typetest0()\n");
 	return(newSVpv("Spice CPPOPS_PERLTYPES", 0));
 }
 
-SV* string__typetest1(SV* lucky_string) {
+SV* string__typetest1(pTHX_ SV* lucky_string) {
 //	string_CHECK(lucky_string);
 	string_CHECKTRACE(lucky_string, "lucky_string", "string__typetest1()");
 //cout << "in CPPOPS_PERLTYPES string__typetest1(), received lucky_string '" << SvPV_nolen(lucky_string) << "'" << '\n';  cout.flush();  // DEV NOTE: must flush buffer to avoid endl over-flushing and out-of-order printing
 //cerr << "in CPPOPS_PERLTYPES string__typetest1(), received lucky_string '" << SvPV_nolen(lucky_string) << "'" << '\n';  // DEV NOTE: cerr doesn't have a buffer to flush
 //fprintf(stderr, "in CPPOPS_PERLTYPES string__typetest1(), received lucky_string = '%s'\n", SvPV_nolen(lucky_string));
-	return(newSVpvf("%s%s", SvPV_nolen(string_to_string(lucky_string)), " CPPOPS_PERLTYPES"));
+	return(newSVpvf("%s%s", SvPV_nolen(string_to_string(aTHX_ lucky_string)), " CPPOPS_PERLTYPES"));
 }
 
 # elif defined __CPP__TYPES

@@ -149,7 +149,7 @@ typedef std::ostringstream ostringstream;
 
 // [[[ OPERATIONS & DATA TYPES REPORTER ]]]
 # ifdef __PERL__TYPES
-SV* RPerl__DataType__Boolean__MODE_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
+SV* RPerl__DataType__Boolean__MODE_ID(pTHX) { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
 # elif defined __CPP__TYPES
 int RPerl__DataType__Boolean__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2
 # else
@@ -159,41 +159,41 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 // DEV NOTE, CORRELATION #rp010: the pack/unpack subs (below) are called by *_to_string_CPPTYPES(), moved outside #ifdef blocks
 //# ifdef __CPP__TYPES
-boolean XS_unpack_boolean(SV* input_sv);
-void XS_pack_boolean(SV* output_sv, boolean input_boolean);
+boolean XS_unpack_boolean(pTHX_ SV* input_sv);
+void XS_pack_boolean(pTHX_ SV* output_sv, boolean input_boolean);
 //# endif
 
 // [[[ UNSIGNED INTEGERIFY ]]]
 # ifdef __PERL__TYPES
-SV* boolean_to_unsigned_integer(SV* input_boolean);
+SV* boolean_to_unsigned_integer(pTHX_ SV* input_boolean);
 # elif defined __CPP__TYPES
 unsigned_integer boolean_to_unsigned_integer(boolean input_boolean);
 # endif
 
 // [[[ INTEGERIFY ]]]
 # ifdef __PERL__TYPES
-SV* boolean_to_integer(SV* input_boolean);
+SV* boolean_to_integer(pTHX_ SV* input_boolean);
 # elif defined __CPP__TYPES
 integer boolean_to_integer(boolean input_boolean);
 # endif
 
 // [[[ NUMBERIFY ]]]
 # ifdef __PERL__TYPES
-SV* boolean_to_number(SV* input_boolean);
+SV* boolean_to_number(pTHX_ SV* input_boolean);
 # elif defined __CPP__TYPES
 number boolean_to_number(boolean input_boolean);
 # endif
 
 // [[[ CHARACTERIFY ]]]
 # ifdef __PERL__TYPES
-SV* boolean_to_character(SV* input_boolean);
+SV* boolean_to_character(pTHX_ SV* input_boolean);
 # elif defined __CPP__TYPES
 character boolean_to_character(boolean input_boolean);
 # endif
 
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
-SV* boolean_to_string(SV* input_boolean);
+SV* boolean_to_string(pTHX_ SV* input_boolean);
 # elif defined __CPP__TYPES
 string boolean_to_string(boolean input_boolean);
 # endif
@@ -201,7 +201,7 @@ string boolean_to_string(boolean input_boolean);
 // [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
 SV* boolean__typetest0();
-SV* boolean__typetest1(SV* lucky_boolean);
+SV* boolean__typetest1(pTHX_ SV* lucky_boolean);
 # elif defined __CPP__TYPES
 boolean boolean__typetest0();
 boolean boolean__typetest1(boolean lucky_boolean);

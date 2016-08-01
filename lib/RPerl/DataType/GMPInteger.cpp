@@ -67,7 +67,7 @@ void gmp_integer_CHECKTRACE(SV* possible_gmp_integer, const char* variable_name,
 # ifdef __CPP__TYPES
 
 // convert from (Perl SV containing reference to (Perl HV containing reference to C gmp_integer)) to (C gmp_integer_retval)
-gmp_integer_retval XS_unpack_gmp_integer_retval(SV* input_hv_ref) {
+gmp_integer_retval XS_unpack_gmp_integer_retval(pTHX_ SV* input_hv_ref) {
 //    gmp_integer_CHECK(input_hv_ref);
     gmp_integer_CHECKTRACE(input_hv_ref, "input_hv_ref", "XS_unpack_gmp_integer_retval()");
 
@@ -110,7 +110,7 @@ gmp_integer_retval XS_unpack_gmp_integer_retval(SV* input_hv_ref) {
 }
 
 // convert from (C gmp_integer_retval) to (Perl SV containing reference to (Perl HV containing reference to C gmp_integer))
-void XS_pack_gmp_integer_retval(SV* output_hv_ref, gmp_integer_retval input_gmp_integer_retval) {
+void XS_pack_gmp_integer_retval(pTHX_ SV* output_hv_ref, gmp_integer_retval input_gmp_integer_retval) {
 //    cerr << "in CPPOPS_CPPTYPES XS_pack_gmp_integer_retval(), top of subroutine, received output_hv_ref = " << output_hv_ref << endl;
 
     dSP;

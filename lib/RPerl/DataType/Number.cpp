@@ -17,7 +17,7 @@ using std::cout;  using std::cerr;  using std::endl;
 
 // TYPE-CHECKING SUBROUTINES DEPRECATED IN FAVOR OF EQUIVALENT MACROS
 /*
-void number_CHECK(SV* possible_number) {
+void number_CHECK(pTHX_ SV* possible_number) {
     if (not(SvOK(possible_number))) {
     	croak("\nERROR ENV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found,\ncroaking");
     }
@@ -25,7 +25,7 @@ void number_CHECK(SV* possible_number) {
     	croak("\nERROR ENV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but non-number value found,\ncroaking");
     }
 };
-void number_CHECKTRACE(SV* possible_number, const char* variable_name, const char* subroutine_name) {
+void number_CHECKTRACE(pTHX_ SV* possible_number, const char* variable_name, const char* subroutine_name) {
     if (not(SvOK(possible_number))) {
     	croak("\nERROR ENV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking",
     			variable_name, subroutine_name);
@@ -45,7 +45,7 @@ void number_CHECKTRACE(SV* possible_number, const char* variable_name, const cha
 //# ifdef __CPP__TYPES
 
 // convert from (Perl SV containing number) to (C number)
-number XS_unpack_number(SV* input_sv) {
+number XS_unpack_number(pTHX_ SV* input_sv) {
 //fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number(), top of subroutine\n");
 //	number_CHECK(input_sv);
 	number_CHECKTRACE(input_sv, "input_sv", "XS_unpack_number()");
@@ -62,7 +62,7 @@ number XS_unpack_number(SV* input_sv) {
 }
 
 // convert from (C number) to (Perl SV containing number)
-void XS_pack_number(SV* output_sv, number input_number) {
+void XS_pack_number(pTHX_ SV* output_sv, number input_number) {
 //fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number(), top of subroutine\n");
 //fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number(), received unformatted input_number = %Lf\n", input_number);
 
@@ -86,7 +86,7 @@ void XS_pack_number(SV* output_sv, number input_number) {
 
 # ifdef __PERL__TYPES
 
-SV* number_to_boolean(SV* input_number) {
+SV* number_to_boolean(pTHX_ SV* input_number) {
 //  number_CHECK(input_number);
     number_CHECKTRACE(input_number, "input_number", "number_to_boolean()");
     if (SvNV(input_number) == 0) { return input_number; }
@@ -108,7 +108,7 @@ boolean number_to_boolean(number input_number) {
 
 # ifdef __PERL__TYPES
 
-SV* number_to_unsigned_integer(SV* input_number) {
+SV* number_to_unsigned_integer(pTHX_ SV* input_number) {
 //  number_CHECK(input_number);
     number_CHECKTRACE(input_number, "input_number", "number_to_unsigned_integer()");
     if (SvIV(input_number) < 0) { return newSViv(SvIV(input_number) * -1); }
@@ -130,7 +130,7 @@ unsigned_integer number_to_unsigned_integer(number input_number) {
 
 # ifdef __PERL__TYPES
 
-SV* number_to_integer(SV* input_number) {
+SV* number_to_integer(pTHX_ SV* input_number) {
 //  number_CHECK(input_number);
     number_CHECKTRACE(input_number, "input_number", "number_to_integer()");
     return newSViv((integer) floor(SvNV(input_number)));
@@ -150,7 +150,7 @@ integer number_to_integer(number input_number) {
 
 # ifdef __PERL__TYPES
 
-SV* number_to_character(SV* input_number) {
+SV* number_to_character(pTHX_ SV* input_number) {
 //  number_CHECK(input_number);
     number_CHECKTRACE(input_number, "input_number", "number_to_character()");
     // NEED ADD CODE
@@ -172,7 +172,7 @@ character number_to_character(number input_number) {
 # ifdef __PERL__TYPES
 
 // DEV NOTE, CORRELATION #rp010: wrapper PERLTYPES sub
-SV* number_to_string(SV* input_number)
+SV* number_to_string(pTHX_ SV* input_number)
 {
 //	number_CHECK(input_number);
 	number_CHECKTRACE(input_number, "input_number", "number_to_string()");
@@ -282,17 +282,17 @@ string number_to_string_CPPTYPES(number input_number)
 
 # ifdef __PERL__TYPES
 
-SV* number__typetest0() {
-	SV* retval = newSVnv((22.0 / 7.0) + SvIV(RPerl__DataType__Number__MODE_ID()));
+SV* number__typetest0(pTHX) {
+	SV* retval = newSVnv((22.0 / 7.0) + SvIV(RPerl__DataType__Number__MODE_ID(aTHX)));
 //fprintf(stderr, "in CPPOPS_PERLTYPES number__typetest0(), have unformatted retval = %Lf\n", (number)SvNV(retval));
 	return retval;
 }
 
-SV* number__typetest1(SV* lucky_number) {
+SV* number__typetest1(pTHX_ SV* lucky_number) {
 //	number_CHECK(lucky_number);
 	number_CHECKTRACE(lucky_number, "lucky_number", "number__typetest1()");
 //fprintf(stderr, "in CPPOPS_PERLTYPES number__typetest1(), have received lucky_number = %Lf\n", (number)SvNV(lucky_number));
-	return newSVnv((SvNV(lucky_number) * 2.0) + SvIV(RPerl__DataType__Number__MODE_ID()));
+	return newSVnv((SvNV(lucky_number) * 2.0) + SvIV(RPerl__DataType__Number__MODE_ID(aTHX)));
 }
 
 # elif defined __CPP__TYPES

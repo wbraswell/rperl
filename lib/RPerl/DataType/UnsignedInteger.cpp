@@ -19,7 +19,7 @@ using std::cout;  using std::cerr;  using std::endl;
 //# ifdef __CPP__TYPES
 
 // convert from (Perl SV containing unsigned_integer) to (C unsigned_integer)
-unsigned_integer XS_unpack_unsigned_integer(SV* input_sv) {
+unsigned_integer XS_unpack_unsigned_integer(pTHX_ SV* input_sv) {
 //fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_unsigned_integer(), top of subroutine\n");
 //	unsigned_integer_CHECK(input_sv);
 	unsigned_integer_CHECKTRACE(input_sv, "input_sv", "XS_unpack_unsigned_integer()");
@@ -36,7 +36,7 @@ unsigned_integer XS_unpack_unsigned_integer(SV* input_sv) {
 }
 
 // convert from (C unsigned_integer) to (Perl SV containing unsigned_integer)
-void XS_pack_unsigned_integer(SV* output_sv, unsigned_integer input_unsigned_integer) {
+void XS_pack_unsigned_integer(pTHX_ SV* output_sv, unsigned_integer input_unsigned_integer) {
 //fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_unsigned_integer(), top of subroutine\n");
 //fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_unsigned_integer(), received input_unsigned_integer = %"INTEGER"\n", input_unsigned_integer);
 
@@ -54,7 +54,7 @@ void XS_pack_unsigned_integer(SV* output_sv, unsigned_integer input_unsigned_int
 
 # ifdef __PERL__TYPES
 
-SV* unsigned_integer_to_boolean(SV* input_unsigned_integer) {
+SV* unsigned_integer_to_boolean(pTHX_ SV* input_unsigned_integer) {
 //  unsigned_integer_CHECK(input_unsigned_integer);
     unsigned_integer_CHECKTRACE(input_unsigned_integer, "input_unsigned_integer", "unsigned_integer_to_boolean()");
     if (SvIV(input_unsigned_integer) == 0) { return input_unsigned_integer; }
@@ -76,7 +76,7 @@ boolean unsigned_integer_to_boolean(unsigned_integer input_unsigned_integer) {
 
 # ifdef __PERL__TYPES
 
-SV* unsigned_integer_to_integer(SV* input_unsigned_integer) {
+SV* unsigned_integer_to_integer(pTHX_ SV* input_unsigned_integer) {
 //  unsigned_integer_CHECK(input_unsigned_integer);
     unsigned_integer_CHECKTRACE(input_unsigned_integer, "input_unsigned_integer", "unsigned_integer_to_integer()");
     if (SvIV(input_unsigned_integer) < 0) { return newSViv(SvIV(input_unsigned_integer) * -1); }
@@ -98,7 +98,7 @@ integer unsigned_integer_to_integer(unsigned_integer input_unsigned_integer) {
 
 # ifdef __PERL__TYPES
 
-SV* unsigned_integer_to_number(SV* input_unsigned_integer) {
+SV* unsigned_integer_to_number(pTHX_ SV* input_unsigned_integer) {
 //  unsigned_integer_CHECK(input_unsigned_integer);
     unsigned_integer_CHECKTRACE(input_unsigned_integer, "input_unsigned_integer", "unsigned_integer_to_number()");
     return input_unsigned_integer;
@@ -118,7 +118,7 @@ number unsigned_integer_to_number(unsigned_integer input_unsigned_integer) {
 
 # ifdef __PERL__TYPES
 
-SV* unsigned_integer_to_character(SV* input_unsigned_integer) {
+SV* unsigned_integer_to_character(pTHX_ SV* input_unsigned_integer) {
 //  unsigned_integer_CHECK(input_unsigned_integer);
     unsigned_integer_CHECKTRACE(input_unsigned_integer, "input_unsigned_integer", "unsigned_integer_to_character()");
     // NEED ADD CODE
@@ -139,7 +139,7 @@ character unsigned_integer_to_character(unsigned_integer input_unsigned_integer)
 
 # ifdef __PERL__TYPES
 
-SV* unsigned_integer_to_string(SV* input_unsigned_integer) {
+SV* unsigned_integer_to_string(pTHX_ SV* input_unsigned_integer) {
 //	unsigned_integer_CHECK(input_unsigned_integer);
 	unsigned_integer_CHECKTRACE(input_unsigned_integer, "input_unsigned_integer", "unsigned_integer_to_string()");
 //	fprintf(stderr, "in CPPOPS_PERLTYPES unsigned_integer_to_string(), top of subroutine, received unformatted input_unsigned_integer = %"INTEGER"\n", (unsigned_integer)SvIV(input_unsigned_integer));
@@ -217,17 +217,17 @@ string unsigned_integer_to_string_CPPTYPES(unsigned_integer input_unsigned_integ
 
 # ifdef __PERL__TYPES
 
-SV* unsigned_integer__typetest0() {
-	SV* retval = newSViv((21 / 7) + SvIV(RPerl__DataType__UnsignedInteger__MODE_ID()));
+SV* unsigned_integer__typetest0(pTHX) {
+	SV* retval = newSViv((21 / 7) + SvIV(RPerl__DataType__UnsignedInteger__MODE_ID(aTHX)));
 //fprintf(stderr, "in CPPOPS_PERLTYPES unsigned_integer__typetest0(), have retval = %"INTEGER"\n", (unsigned_integer)SvIV(retval));
 	return retval;
 }
 
-SV* unsigned_integer__typetest1(SV* lucky_unsigned_integer) {
+SV* unsigned_integer__typetest1(pTHX_ SV* lucky_unsigned_integer) {
 //	unsigned_integer_CHECK(lucky_unsigned_integer);
 	unsigned_integer_CHECKTRACE(lucky_unsigned_integer, "lucky_unsigned_integer", "unsigned_integer__typetest1()");
 //fprintf(stderr, "in CPPOPS_PERLTYPES unsigned_integer__typetest1(), received lucky_unsigned_integer = %"INTEGER"\n", (unsigned_integer)SvIV(lucky_unsigned_integer));
-	return newSViv((SvIV(lucky_unsigned_integer) * 2) + SvIV(RPerl__DataType__UnsignedInteger__MODE_ID()));
+	return newSViv((SvIV(lucky_unsigned_integer) * 2) + SvIV(RPerl__DataType__UnsignedInteger__MODE_ID(aTHX)));
 }
 
 # elif defined __CPP__TYPES

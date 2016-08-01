@@ -152,7 +152,7 @@ typedef char character;
 
 // [[[ OPERATIONS & DATA TYPES REPORTER ]]]
 # ifdef __PERL__TYPES
-SV* RPerl__DataType__String__MODE_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
+SV* RPerl__DataType__String__MODE_ID(pTHX) { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
 # elif defined __CPP__TYPES
 int RPerl__DataType__String__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2
 # else
@@ -162,8 +162,8 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 // DEV NOTE, CORRELATION #rp010: the pack/unpack subs (below) are called by number_to_string_CPPTYPES(), moved outside #ifdef blocks
 //# ifdef __CPP__TYPES
-string XS_unpack_string(SV* input_sv);
-void XS_pack_string(SV* output_sv, string input_string);
+string XS_unpack_string(pTHX_ SV* input_sv);
+void XS_pack_string(pTHX_ SV* output_sv, string input_string);
 //# endif
 
 // [[[ SEARCH & REPLACE ]]]
@@ -175,42 +175,42 @@ void string_substitute_global(string& input_string, const string& find_string, c
 
 // [[[ BOOLEANIFY ]]]
 # ifdef __PERL__TYPES
-SV* string_to_boolean(SV* input_string);
+SV* string_to_boolean(pTHX_ SV* input_string);
 # elif defined __CPP__TYPES
 boolean string_to_boolean(string input_string);
 # endif
 
 // [[[ UNSIGNED INTEGERIFY ]]]
 # ifdef __PERL__TYPES
-SV* string_to_unsigned_integer(SV* input_string);
+SV* string_to_unsigned_integer(pTHX_ SV* input_string);
 # elif defined __CPP__TYPES
 unsigned_integer string_to_unsigned_integer(string input_string);
 # endif
 
 // [[[ INTEGERIFY ]]]
 # ifdef __PERL__TYPES
-SV* string_to_integer(SV* input_string);
+SV* string_to_integer(pTHX_ SV* input_string);
 # elif defined __CPP__TYPES
 integer string_to_integer(string input_string);
 # endif
 
 // [[[ NUMBERIFY ]]]
 # ifdef __PERL__TYPES
-SV* string_to_number(SV* input_string);
+SV* string_to_number(pTHX_ SV* input_string);
 # elif defined __CPP__TYPES
 number string_to_number(string input_string);
 # endif
 
 // [[[ CHARACTERIFY ]]]
 # ifdef __PERL__TYPES
-SV* string_to_character(SV* input_string);
+SV* string_to_character(pTHX_ SV* input_string);
 # elif defined __CPP__TYPES
 character string_to_character(string input_string);
 # endif
 
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
-SV* string_to_string(SV* input_sv);
+SV* string_to_string(pTHX_ SV* input_sv);
 # elif defined __CPP__TYPES
 string string_to_string(string input_string);
 # endif
@@ -218,7 +218,7 @@ string string_to_string(string input_string);
 // [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
 SV* string__typetest0();
-SV* string__typetest1(SV* lucky_string);
+SV* string__typetest1(pTHX_ SV* lucky_string);
 # elif defined __CPP__TYPES
 string string__typetest0();
 string string__typetest1(string lucky_string);

@@ -30,7 +30,7 @@ public:
 // [[[ SUBROUTINES ]]]
 
 // <<< OPERATIONS & DATA TYPES REPORTER >>>
-SV* RPerl__MODE_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
+SV* RPerl__MODE_ID(pTHX) { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
 
 // [[[<<< END PERL TYPES >>>]]]
 // [[[<<< END PERL TYPES >>>]]]

@@ -152,7 +152,7 @@ typedef std::ostringstream ostringstream;
 
 // [[[ OPERATIONS & DATA TYPES REPORTER ]]]
 # ifdef __PERL__TYPES
-SV* RPerl__DataType__Number__MODE_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
+SV* RPerl__DataType__Number__MODE_ID(pTHX) { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
 # elif defined __CPP__TYPES
 int RPerl__DataType__Number__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2
 # else
@@ -162,41 +162,41 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 // DEV NOTE, CORRELATION #rp010: the pack/unpack subs (below) are called by *_to_string_CPPTYPES(), moved outside #ifdef blocks
 //# ifdef __CPP__TYPES
-number XS_unpack_number(SV* input_sv);
-void XS_pack_number(SV* output_sv, number input_number);
+number XS_unpack_number(pTHX_ SV* input_sv);
+void XS_pack_number(pTHX_ SV* output_sv, number input_number);
 //# endif
 
 // [[[ BOOLEANIFY ]]]
 # ifdef __PERL__TYPES
-SV* number_to_boolean(SV* input_number);
+SV* number_to_boolean(pTHX_ SV* input_number);
 # elif defined __CPP__TYPES
 boolean number_to_boolean(number input_number);
 # endif
 
 // [[[ UNSIGNED INTEGERIFY ]]]
 # ifdef __PERL__TYPES
-SV* number_to_unsigned_integer(SV* input_number);
+SV* number_to_unsigned_integer(pTHX_ SV* input_number);
 # elif defined __CPP__TYPES
 unsigned_integer number_to_unsigned_integer(number input_number);
 # endif
 
 // [[[ INTEGERIFY ]]]
 # ifdef __PERL__TYPES
-SV* number_to_integer(SV* input_number);
+SV* number_to_integer(pTHX_ SV* input_number);
 # elif defined __CPP__TYPES
 integer number_to_integer(number input_number);
 # endif
 
 // [[[ CHARACTERIFY ]]]
 # ifdef __PERL__TYPES
-SV* number_to_character(SV* input_number);
+SV* number_to_character(pTHX_ SV* input_number);
 # elif defined __CPP__TYPES
 character number_to_character(number input_number);
 # endif
 
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
-SV* number_to_string(SV* input_number);
+SV* number_to_string(pTHX_ SV* input_number);
 # elif defined __CPP__TYPES
 string number_to_string(number input_number);
 # endif
@@ -206,7 +206,7 @@ string number_to_string_CPPTYPES(number input_number);
 // [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
 SV* number__typetest0();
-SV* number__typetest1(SV* lucky_number);
+SV* number__typetest1(pTHX_ SV* lucky_number);
 # elif defined __CPP__TYPES
 number number__typetest0();
 number number__typetest1(number lucky_number);

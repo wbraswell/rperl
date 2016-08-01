@@ -212,17 +212,17 @@ string unsigned_integer_to_string_CPPTYPES(unsigned_integer input_unsigned_integ
 /*
 # ifdef __PERL__TYPES
 
-SV* unsigned_integer__typetest0() {
-	SV* retval = newSViv((21 / 7) + SvIV(RPerl__DataType__UnsignedInteger__MODE_ID()));
+SV* unsigned_integer__typetest0(pTHX) {
+	SV* retval = newSViv((21 / 7) + SvIV(RPerl__DataType__UnsignedInteger__MODE_ID(aTHX)));
 //fprintf(stderr, "in CPPOPS_PERLTYPES unsigned_integer__typetest0(), have retval = %"INTEGER"\n", (unsigned_integer)SvIV(retval));
 	return retval;
 }
 
-SV* unsigned_integer__typetest1(SV* lucky_unsigned_integer) {
+SV* unsigned_integer__typetest1(pTHX_ SV* lucky_unsigned_integer) {
 //	unsigned_integer_CHECK(lucky_unsigned_integer);
 	unsigned_integer_CHECKTRACE(lucky_unsigned_integer, "lucky_unsigned_integer", "unsigned_integer__typetest1()");
 //fprintf(stderr, "in CPPOPS_PERLTYPES unsigned_integer__typetest1(), received lucky_unsigned_integer = %"INTEGER"\n", (unsigned_integer)SvIV(lucky_unsigned_integer));
-	return newSViv((SvIV(lucky_unsigned_integer) * 2) + SvIV(RPerl__DataType__UnsignedInteger__MODE_ID()));
+	return newSViv((SvIV(lucky_unsigned_integer) * 2) + SvIV(RPerl__DataType__UnsignedInteger__MODE_ID(aTHX)));
 }
 
 # elif defined __CPP__TYPES

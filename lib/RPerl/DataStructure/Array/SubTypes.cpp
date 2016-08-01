@@ -99,7 +99,7 @@ void integer_arrayref_arrayref_CHECKTRACE(SV* possible_integer_arrayref_arrayref
 # ifdef __CPP__TYPES
 
 // convert from (Perl SV containing RV to (Perl AV of (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))))) to (C++ std::vector of (C++ std::vector of integers))
-integer_arrayref_arrayref XS_unpack_integer_arrayref_arrayref(SV* input_avref_avref)
+integer_arrayref_arrayref XS_unpack_integer_arrayref_arrayref(pTHX_ SV* input_avref_avref)
 {
 	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_integer_arrayref_arrayref(), top of subroutine\n");
 //	integer_arrayref_arrayref_CHECK(input_avref_avref);
@@ -162,7 +162,7 @@ integer_arrayref_arrayref XS_unpack_integer_arrayref_arrayref(SV* input_avref_av
 
 
 // convert from (C++ std::vector of (C++ std::vector of integers)) to (Perl SV containing RV to (Perl AV of (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs)))))
-void XS_pack_integer_arrayref_arrayref(SV* output_avref_avref, integer_arrayref_arrayref input_vector_vector)
+void XS_pack_integer_arrayref_arrayref(pTHX_ SV* output_avref_avref, integer_arrayref_arrayref input_vector_vector)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_arrayref(), top of subroutine\n");
 

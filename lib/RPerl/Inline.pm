@@ -27,8 +27,8 @@ use RPerl::Config;  # for $RPerl::DEBUG
 # DEV NOTE: add -Wno-unused-variable to suppress warnings in GCC v4.9
 my $is_msvc_compiler = ($Config::Config{cc} =~ /cl/);
 
-our $CCFLAGSEX = $is_msvc_compiler ? '-DNO_XSLOCKS'
-    : '-Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix';
+our $CCFLAGSEX = $is_msvc_compiler ? '-DNO_XSLOCKS -DPERL_NO_GET_CONTEXT'
+    : '-Wno-unused-variable -DNO_XSLOCKS -DPERL_NO_GET_CONTEXT -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix';
 
 our %ARGS = (
     typemaps => "$RPerl::INCLUDE_PATH/typemap.rperl",

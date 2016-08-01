@@ -434,7 +434,7 @@ void string_hashref_CHECKTRACE(SV* possible_string_hashref, const char* variable
 # ifdef __CPP__TYPES
 
 // convert from (Perl SV containing reference to (Perl HV of (Perl SVs containing IVs))) to (C++ std::unordered_map of integers)
-integer_hashref XS_unpack_integer_hashref(SV* input_hv_ref)
+integer_hashref XS_unpack_integer_hashref(pTHX_ SV* input_hv_ref)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_integer_hashref(), top of subroutine\n");
 //	integer_hashref_CHECK(input_hv_ref);
@@ -482,7 +482,7 @@ integer_hashref XS_unpack_integer_hashref(SV* input_hv_ref)
 }
 
 // convert from (C++ std::unordered_map of integers) to (Perl SV containing reference to (Perl HV of (Perl SVs containing IVs)))
-void XS_pack_integer_hashref(SV* output_hv_ref, integer_hashref input_unordered_map)
+void XS_pack_integer_hashref(pTHX_ SV* output_hv_ref, integer_hashref input_unordered_map)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_hashref(), top of subroutine\n");
 
@@ -508,7 +508,7 @@ void XS_pack_integer_hashref(SV* output_hv_ref, integer_hashref input_unordered_
 }
 
 // convert from (Perl SV containing reference to (Perl HV of (Perl SVs containing NVs))) to (C++ std::unordered_map of doubles)
-number_hashref XS_unpack_number_hashref(SV* input_hv_ref)
+number_hashref XS_unpack_number_hashref(pTHX_ SV* input_hv_ref)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number_hashref(), top of subroutine\n");
 //	number_hashref_CHECK(input_hv_ref);
@@ -549,7 +549,7 @@ number_hashref XS_unpack_number_hashref(SV* input_hv_ref)
 }
 
 // convert from (C++ std::unordered_map of doubles) to (Perl SV containing reference to (Perl HV of (Perl SVs containing NVs)))
-void XS_pack_number_hashref(SV* output_hv_ref, number_hashref input_unordered_map)
+void XS_pack_number_hashref(pTHX_ SV* output_hv_ref, number_hashref input_unordered_map)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_hashref(), top of subroutine\n");
 
@@ -575,7 +575,7 @@ void XS_pack_number_hashref(SV* output_hv_ref, number_hashref input_unordered_ma
 }
 
 // convert from (Perl SV containing reference to (Perl HV of (Perl SVs containing PVs))) to (C++ std::unordered_map of strings)
-string_hashref XS_unpack_string_hashref(SV* input_hv_ref)
+string_hashref XS_unpack_string_hashref(pTHX_ SV* input_hv_ref)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_string_hashref(), top of subroutine\n");
 //	string_hashref_CHECK(input_hv_ref);
@@ -616,7 +616,7 @@ string_hashref XS_unpack_string_hashref(SV* input_hv_ref)
 }
 
 // convert from (C++ std::unordered_map of strings) to (Perl SV containing reference to (Perl HV of (Perl SVs containing PVs)))
-void XS_pack_string_hashref(SV* output_hv_ref, string_hashref input_unordered_map)
+void XS_pack_string_hashref(pTHX_ SV* output_hv_ref, string_hashref input_unordered_map)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_hashref(), top of subroutine\n");
 

@@ -1,29 +1,39 @@
 # VERSION 0.004_100
-# NEED FIX, CORRELATION #rp002: bug, possibly in Inline, causing inability to declare 3rd count_FOO argument to T_PACKEDARRAY; temporarily solved here
+# NEED FIX, CORRELATION #rp002: bug, possibly in Inline, causing inability to declare 3rd count_FOO argument to T_PACKEDCXTARRAY; temporarily solved here
 # DEV NOTE: all comments must be on their own line or typemapping will silently fail and typemapped subroutines will fail to bind from Inline to Perl
 
 # SCALAR TYPES
-boolean				T_PACKED
-unsigned_integer	T_PACKED
-integer				T_PACKED
-number				T_PACKED
-character			T_PACKED
-string				T_PACKED
+boolean				T_PACKEDCXT
+unsigned_integer	T_PACKEDCXT
+integer				T_PACKEDCXT
+number				T_PACKEDCXT
+character			T_PACKEDCXT
+string				T_PACKEDCXT
 
 # ARRAY TYPES
-integer_arrayref	T_PACKED
-number_arrayref	    T_PACKED
-string_arrayref	    T_PACKED
-integer_arrayref_arrayref	T_PACKED
+integer_arrayref	T_PACKEDCXT
+number_arrayref	    T_PACKEDCXT
+string_arrayref	    T_PACKEDCXT
+integer_arrayref_arrayref	T_PACKEDCXT
 
 # HASH TYPES
-integer_hashref	    T_PACKED
-number_hashref	    T_PACKED
-string_hashref	    T_PACKED
+integer_hashref	    T_PACKEDCXT
+number_hashref	    T_PACKEDCXT
+string_hashref	    T_PACKEDCXT
 
 # GMP TYPES
-gmp_integer_retval  T_PACKED
+gmp_integer_retval  T_PACKEDCXT
 
 # CORRELATION #pp04: attempt to manually define pack/unpack for object return type
 # USER TYPES
-#PhysicsPerl__Astro__Body T_PACKED
+#PhysicsPerl__Astro__Body T_PACKEDCXT
+
+#############################################################################
+INPUT
+T_PACKEDCXT
+	$var = XS_unpack_$ntype(aTHX_ $arg)
+#############################################################################
+OUTPUT
+T_PACKEDCXT
+	XS_pack_$ntype(aTHX_ $arg, $var);
+

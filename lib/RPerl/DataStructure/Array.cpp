@@ -160,7 +160,7 @@ void string_arrayref_CHECKTRACE(SV* possible_string_arrayref, const char* variab
 # ifdef __CPP__TYPES
 
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))) to (C++ std::vector of integers)
-integer_arrayref XS_unpack_integer_arrayref(SV* input_avref)
+integer_arrayref XS_unpack_integer_arrayref(pTHX_ SV* input_avref)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_integer_arrayref(), top of subroutine\n");
 //	integer_arrayref_CHECK(input_avref);
@@ -226,7 +226,7 @@ integer_arrayref XS_unpack_integer_arrayref(SV* input_avref)
 }
 
 // convert from (C++ std::vector of integers) to (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs)))
-void XS_pack_integer_arrayref(SV* output_avref, integer_arrayref input_vector)
+void XS_pack_integer_arrayref(pTHX_ SV* output_avref, integer_arrayref input_vector)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref(), top of subroutine\n");
 
@@ -248,7 +248,7 @@ void XS_pack_integer_arrayref(SV* output_avref, integer_arrayref input_vector)
 }
 
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing NVs))) to (C++ std::vector of numbers)
-number_arrayref XS_unpack_number_arrayref(SV* input_avref)
+number_arrayref XS_unpack_number_arrayref(pTHX_ SV* input_avref)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number_arrayref(), top of subroutine\n");
 //	number_arrayref_CHECK(input_avref);
@@ -284,7 +284,7 @@ number_arrayref XS_unpack_number_arrayref(SV* input_avref)
 }
 
 // convert from (C++ std::vector of numbers) to (Perl SV containing RV to (Perl AV of (Perl SVs containing NVs)))
-void XS_pack_number_arrayref(SV* output_avref, number_arrayref input_vector)
+void XS_pack_number_arrayref(pTHX_ SV* output_avref, number_arrayref input_vector)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_arrayref(), top of subroutine\n");
 
@@ -306,7 +306,7 @@ void XS_pack_number_arrayref(SV* output_avref, number_arrayref input_vector)
 }
 
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs))) to (C++ std::vector of std::strings)
-string_arrayref XS_unpack_string_arrayref(SV* input_avref)
+string_arrayref XS_unpack_string_arrayref(pTHX_ SV* input_avref)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_string_arrayref(), top of subroutine\n");
 //	string_arrayref_CHECK(input_avref);
@@ -342,7 +342,7 @@ string_arrayref XS_unpack_string_arrayref(SV* input_avref)
 }
 
 // convert from (C++ std::vector of std::strings) to (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs)))
-void XS_pack_string_arrayref(SV* output_avref, string_arrayref input_vector)
+void XS_pack_string_arrayref(pTHX_ SV* output_avref, string_arrayref input_vector)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_arrayref(), top of subroutine\n");
 

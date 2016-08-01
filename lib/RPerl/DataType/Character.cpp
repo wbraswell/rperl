@@ -20,14 +20,14 @@ using std::cout;  using std::cerr;  using std::endl;
 //# ifdef __CPP__TYPES
 
 // convert from (Perl SV containing character) to (C character)
-character XS_unpack_character(SV* input_sv) {
+character XS_unpack_character(pTHX_ SV* input_sv) {
 //	character_CHECK(input_sv);
 	character_CHECKTRACE(input_sv, "input_sv", "XS_unpack_character()");
 	return((character) (SvPV_nolen(input_sv))[1]);
 }
 
 // convert from (C character) to (Perl SV containing character)
-void XS_pack_character(SV* output_sv, character input_character) {
+void XS_pack_character(pTHX_ SV* output_sv, character input_character) {
 //fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_character(), top of subroutine\n");
 //fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_character(), received input_character = %"INTEGER"\n", input_character);
 
@@ -45,7 +45,7 @@ void XS_pack_character(SV* output_sv, character input_character) {
 
 # ifdef __PERL__TYPES
 
-SV* character_to_boolean(SV* input_character) {
+SV* character_to_boolean(pTHX_ SV* input_character) {
 //  character_CHECK(input_character);
     character_CHECKTRACE(input_character, "input_character", "character_to_boolean()");
     // NEED ADD CODE
@@ -66,7 +66,7 @@ boolean character_to_boolean(character input_character) {
 
 # ifdef __PERL__TYPES
 
-SV* character_to_unsigned_integer(SV* input_character) {
+SV* character_to_unsigned_integer(pTHX_ SV* input_character) {
 //  character_CHECK(input_character);
     character_CHECKTRACE(input_character, "input_character", "character_to_unsigned_integer()");
     // NEED ADD CODE
@@ -86,7 +86,7 @@ unsigned_integer character_to_unsigned_integer(character input_character) {
 
 # ifdef __PERL__TYPES
 
-SV* character_to_integer(SV* input_character) {
+SV* character_to_integer(pTHX_ SV* input_character) {
 //  character_CHECK(input_character);
     character_CHECKTRACE(input_character, "input_character", "character_to_integer()");
     // NEED ADD CODE
@@ -106,7 +106,7 @@ integer character_to_integer(character input_character) {
 
 # ifdef __PERL__TYPES
 
-SV* character_to_number(SV* input_character) {
+SV* character_to_number(pTHX_ SV* input_character) {
 //  character_CHECK(input_character);
     character_CHECKTRACE(input_character, "input_character", "character_to_number()");
     // NEED ADD CODE
@@ -126,7 +126,7 @@ number character_to_number(character input_character) {
 
 # ifdef __PERL__TYPES
 
-SV* character_to_string(SV* input_character) {
+SV* character_to_string(pTHX_ SV* input_character) {
 //	character_CHECK(input_character);
 	character_CHECKTRACE(input_character, "input_character", "character_to_string()");
 //	fprintf(stderr, "in CPPOPS_PERLTYPES character_to_string(), top of subroutine, received unformatted input_character = %s\n", SvPV_nolen(input_character));
@@ -148,15 +148,15 @@ string character_to_string(character input_character) {
 
 # ifdef __PERL__TYPES
 
-SV* character__typetest0() {
-	return newSVpvf("%c", (character) (SvIV(RPerl__DataType__Character__MODE_ID()) + '0'));
+SV* character__typetest0(pTHX) {
+	return newSVpvf("%c", (character) (SvIV(RPerl__DataType__Character__MODE_ID(aTHX)) + '0'));
 }
 
-SV* character__typetest1(SV* lucky_character) {
+SV* character__typetest1(pTHX_ SV* lucky_character) {
 //	character_CHECK(lucky_character);
 	character_CHECKTRACE(lucky_character, "lucky_character", "character__typetest1()");
 //fprintf(stderr, "in CPPOPS_PERLTYPES character__typetest1(), received lucky_character = %"INTEGER"\n", SvIV(lucky_character));
-	return newSVpvf("%c", (character) ((SvPV_nolen(lucky_character))[0] + SvIV(RPerl__DataType__Character__MODE_ID())));
+	return newSVpvf("%c", (character) ((SvPV_nolen(lucky_character))[0] + SvIV(RPerl__DataType__Character__MODE_ID(aTHX))));
 }
 
 # elif defined __CPP__TYPES

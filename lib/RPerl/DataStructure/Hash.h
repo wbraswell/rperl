@@ -57,7 +57,7 @@ void string_hashref_CHECKTRACE(SV* possible_string_hashref, const char* variable
 
 // [[[ OPERATIONS & DATA TYPES REPORTER ]]]
 # ifdef __PERL__TYPES
-SV* RPerl__DataStructure__Hash__MODE_ID() { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
+SV* RPerl__DataStructure__Hash__MODE_ID(pTHX) { return(newSViv(1)); }  // CPPOPS_PERLTYPES is 1
 # elif defined __CPP__TYPES
 integer RPerl__DataStructure__Hash__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2
 # else
@@ -66,12 +66,12 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 # ifdef __CPP__TYPES
-integer_hashref XS_unpack_integer_hashref(SV* input_hv_ref);
-void XS_pack_integer_hashref(SV* output_hv_ref, integer_hashref input_unordered_map);
-number_hashref XS_unpack_number_hashref(SV* input_hv_ref);
-void XS_pack_number_hashref(SV* output_hv_ref, number_hashref input_unordered_map);
-string_hashref XS_unpack_string_hashref(SV* input_hv_ref);
-void XS_pack_string_hashref(SV* output_hv_ref, string_hashref input_unordered_map);
+integer_hashref XS_unpack_integer_hashref(pTHX_ SV* input_hv_ref);
+void XS_pack_integer_hashref(pTHX_ SV* output_hv_ref, integer_hashref input_unordered_map);
+number_hashref XS_unpack_number_hashref(pTHX_ SV* input_hv_ref);
+void XS_pack_number_hashref(pTHX_ SV* output_hv_ref, number_hashref input_unordered_map);
+string_hashref XS_unpack_string_hashref(pTHX_ SV* input_hv_ref);
+void XS_pack_string_hashref(pTHX_ SV* output_hv_ref, string_hashref input_unordered_map);
 # endif
 
 // [[[ STRINGIFY ]]]
