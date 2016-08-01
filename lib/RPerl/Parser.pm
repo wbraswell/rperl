@@ -3,7 +3,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_000;
+our $VERSION = 0.006_000;
 
 # [[[ OO INHERITANCE ]]]
 #use RPerl::CompileUnit::Module::Class;
@@ -150,6 +150,33 @@ our void $rperl_source__criticize = sub {
     ( my string $rperl_source__file_name) = @_;
 
     RPerl::verbose('PARSE PHASE 1:      Criticize Perl syntax...       ');
+
+    # pre-critic error, begin check to ensure file ends with newline character or all-whitespace line
+    if ( not -f $rperl_source__file_name ) {
+        die 'ERROR ECOPAPC10, RPERL PARSER, PERL CRITIC VIOLATION: File not found, ' . q{'} . $rperl_source__file_name . q{'} . ', dying' . "\n";
+    }
+
+    open my filehandleref $FILE_HANDLE, '<', $rperl_source__file_name
+        or die 'ERROR ECOPAPC11, RPERL PARSER, PERL CRITIC VIOLATION: Cannot open file ' . q{'} . $rperl_source__file_name . q{'} . ' for reading, ' . $OS_ERROR . ', dying' . "\n";
+
+    my string $file_line = undef;
+    my string $file_line_last = undef;
+
+    while ( $file_line = <$FILE_HANDLE> ) {
+#        RPerl::diag('in rperl_source__criticize(), top of while loop, have $file_line = ' . q{'} . $file_line . q{'} . "\n");
+        $file_line_last = $file_line;
+    }
+
+#    RPerl::diag('in rperl_source__criticize(),have last $file_line = ' . q{'} . $file_line . q{'} . "\n");
+    RPerl::diag('in rperl_source__criticize(),have $file_line_last = ' . q{'} . $file_line_last . q{'} . "\n");
+
+    close $FILE_HANDLE or die 'ERROR ECOPAPC12, RPERL PARSER, PERL CRITIC VIOLATION: Cannot close file ' . q{'} . $rperl_source__file_name . q{'} . ' after reading, ' . $OS_ERROR . ', dying' . "\n";
+
+    # DEV NOTE: the last line of all RPerl input files must either end with a newline character or be all-whitespace characters,
+    # in order to avoid false positives triggered by Perl::Critic
+    if (((substr $file_line_last, -1, 1) ne "\n") and ( $file_line_last !~ m/^\s+$/xms )) {
+        die 'ERROR ECOPAPC13, RPERL PARSER, PERL CRITIC VIOLATION: RPerl source code input file ' . q{'} . $rperl_source__file_name . q{'} . ' does not end with newline character or line of all-whitespace characters, dying' . "\n";
+    }
 
 # DEV NOTE: disable RequireTidyCode because perltidy may not be stable
 #    my object $rperl_source__critic = Perl::Critic->new( -severity => 'brutal' );

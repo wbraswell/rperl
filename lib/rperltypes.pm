@@ -541,6 +541,9 @@ sub types_enable {
     }
 
     $RPerl::TYPES_CCFLAG = ' -D__' . $types_input . '__TYPES';
+
+#	RPerl::diag('in rperltypes::types_enable(), set $RPerl::TYPES_CCFLAG = ' . $RPerl::TYPES_CCFLAG . "\n");
+
     return;
 }
 

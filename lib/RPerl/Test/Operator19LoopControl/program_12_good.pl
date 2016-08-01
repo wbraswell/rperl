@@ -1,5 +1,8 @@
 #!/usr/bin/perl
 
+# [[[ PREPROCESSOR ]]]
+# <<< EXECUTE_SUCCESS: 'have $i = 2' >>>
+
 # [[[ HEADER ]]]
 use RPerl;
 use strict;
@@ -12,6 +15,10 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-while (1) {
-    next;
+my integer $i = 0;
+
+while ( $i < 10 ) {
+    $i++;
+    if ( $i % 2 ) { last; }
+    print 'have $i = ', $i, "\n";
 }
