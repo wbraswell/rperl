@@ -21,3 +21,4 @@ our integer_arrayref $foo = sub {
 
 # [[[ OPERATIONS ]]]
 foo();
+

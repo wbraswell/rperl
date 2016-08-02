@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::Loop::While;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_100;
+our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement::Loop);
@@ -49,12 +49,14 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     elsif ( $self_class eq 'LoopWhile_172' ) {  # LoopWhile -> 'while' LPAREN_MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrInput ')' CodeBlock
         my string $while         = $self->{children}->[0];
         my string $left_paren_my    = $self->{children}->[1];
-        my string $type = $self->{children}->[2];
+        my string $type = $self->{children}->[2]->{children}->[0];
         my string $variable_symbol = $self->{children}->[3];
         my string $assign                  = $self->{children}->[4];
         my object $subexpression_or_stdin = $self->{children}->[5];
         my string $right_paren   = $self->{children}->[6];
         my object $codeblock     = $self->{children}->[7];
+
+#        RPerl::diag( 'in Loop::While->ast_to_rperl__generate(), have $type = ' . "\n" . RPerl::Parser::rperl_ast__dump($type) . "\n" );
 
         $rperl_source_group->{PMC} .= $while . q{ } . $left_paren_my . q{ } . $type . q{ } . $variable_symbol . q{ } . $assign . q{ };
         my object $rperl_source_subgroup = $subexpression_or_stdin->ast_to_rperl__generate($modes);
