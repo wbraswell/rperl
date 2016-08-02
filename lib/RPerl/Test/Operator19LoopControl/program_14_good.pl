@@ -35,11 +35,11 @@ my integer $i = 0;
 
 print 'before    loop, have current $i = ', $i, "\n";
 
-while ( $i < 10 ) {
+MY_LOOP: while ( $i < 10 ) {
     print "\n";
     print 'top    of loop, have current $i = ', $i, "\n";
     $i++;
-    if ( $i % 2 ) { next; }
+    if ( $i % 2 ) { redo MY_LOOP; }
     print 'bottom of loop, have next    $i = ', $i, "\n";
 }
 

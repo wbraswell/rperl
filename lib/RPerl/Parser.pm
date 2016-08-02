@@ -167,8 +167,8 @@ our void $rperl_source__criticize = sub {
         $file_line_last = $file_line;
     }
 
-#    RPerl::diag('in rperl_source__criticize(),have last $file_line = ' . q{'} . $file_line . q{'} . "\n");
-    RPerl::diag('in rperl_source__criticize(),have $file_line_last = ' . q{'} . $file_line_last . q{'} . "\n");
+#    RPerl::diag('in rperl_source__criticize(), have last $file_line = ' . q{'} . $file_line . q{'} . "\n");
+#    RPerl::diag('in rperl_source__criticize(), have $file_line_last = ' . q{'} . $file_line_last . q{'} . "\n");
 
     close $FILE_HANDLE or die 'ERROR ECOPAPC12, RPERL PARSER, PERL CRITIC VIOLATION: Cannot close file ' . q{'} . $rperl_source__file_name . q{'} . ' after reading, ' . $OS_ERROR . ', dying' . "\n";
 

@@ -1,7 +1,9 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: 'have $i = 2' >>>
+# <<< EXECUTE_SUCCESS: 'before    loop, have current $i = 0' >>>
+# <<< EXECUTE_SUCCESS: 'top    of loop, have current $i = 0' >>>
+# <<< EXECUTE_SUCCESS: 'after     loop, have current $i = 1' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -17,8 +19,15 @@ our $VERSION = 0.001_000;
 
 my integer $i = 0;
 
+print 'before    loop, have current $i = ', $i, "\n";
+
 while ( $i < 10 ) {
+    print "\n";
+    print 'top    of loop, have current $i = ', $i, "\n";
     $i++;
     if ( $i % 2 ) { last; }
-    print 'have $i = ', $i, "\n";
+    print 'bottom of loop, have next    $i = ', $i, "\n";
 }
+
+print "\n";
+print 'after     loop, have current $i = ', $i, "\n";

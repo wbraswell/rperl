@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.103_000;
+our $VERSION = 0.104_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -792,7 +792,7 @@ The I<"shebang"> section is required, always contains exactly 1 line, and is sho
 
 The I<"header"> section is required and always contains 4 lines for an RPerl I<"program"> file ending in F<.pl>, or 5 lines for an RPerl I<"module"> ending in F<.pm> (covered later in Chapter 11).  C<use> is recognized by Perl as a special I<"keyword"> (AKA I<"built-in operator">) which has 2 primary purposes: to load additional RPerl modules, and to enable RPerl I<"pragma"> system configuration modes.  The C<use RPerl;> line is dual-purpose, it both loads the F<RPerl.pm> module and enables the special RPerl low-magic pragma.  The C<use strict;> and C<use warnings;> lines enable basic Perl pragmas which require decent programming practices by the human programmers.  The C<our $VERSION = 0.001_000;> line sets the version number of this RPerl program.
 
-The I<"critics"> section is included as necessary and may contain 1 or more lines beginning with C<## no critic>, which disable the errors caused by the over-restrictive nature of some Perl::Critic policies.  There are currently 6 critics commands enabled for normal RPerl users, the first 2 of which are given in this example.  The C<USER DEFAULT 1> critics command allows the use of numeric values such as C<21> and C<12>, as well as the common C<print> command.  The C<USER DEFAULT 2> critics command allows the printing of C<'have $foo = '>, where a single-quoted C<'> string literal value contains the the C<$> dollar sigil (covered later in Chapter 2).
+The I<"critics"> section is included as necessary and may contain 1 or more lines beginning with C<## no critic>, which disable the errors caused by the over-restrictive nature of some Perl::Critic policies.  There are currently 6 critics commands enabled for normal RPerl users, the first 2 of which are given in this example.  The "USER DEFAULT 1" C<no critic> command allows the use of numeric values such as C<21> and C<12>, as well as the common C<print> command.  The C<USER DEFAULT 2> critics command allows the printing of C<'have $foo = '>, where a single-quoted C<'> string literal value contains the the C<$> dollar sigil (covered later in Chapter 2).
 
 The I<"operations"> section is required and contains 1 or more lines of general-purpose RPerl source code.  This is the main body of your program.  The 6 lines of source code in our example are used to perform some simple arithmetic and display the results.  The C<my integer $foo = 21 + 12;> line declares a new variable named C<$foo> which will only contain non-floating-point numeric data, and which is initialized to contain the arithmetic result of numeric literal values C<21> plus C<12>.  The C<my integer $bar = 23 * 42 * 2;> line does much the same thing, creating a new numeric variable named C<$bar> and initialized with C<23> times C<42> times C<2>.  The C<my number $baz = to_number($bar) / $foo;> line creates a new floating-point numeric variable C<$baz>, and initializes it to the quotient of the C<$bar> and C<$foo> variables.  The C<to_number()> RPerl type conversion subroutine converts a non-floating-point C<integer> value to a floating-point C<number> value.
 
@@ -13693,7 +13693,7 @@ If your conditions are not all simple equivalence tests via the equals C<==> ope
     
     print '$foo = ', $foo, "\n";
 
-As seen above, now we may add one or more additional C<elsif> statements without triggering a Perl Best Practices violation error via Perl::Critic.  This is achieved by the inclusion of the special "USER DEFAULT 9" critic command, which disables the "ProhibitCascadingIfElse" policy.  If we attempt to run this source code without the proper critic command, we will receive an error:
+As seen above, now we may add one or more additional C<elsif> statements without triggering a Perl Best Practices violation error via Perl::Critic.  This is achieved by the inclusion of the special "USER DEFAULT 9" C<no critic> command, which disables the "ProhibitCascadingIfElse" policy.  If we attempt to run this source code without the proper critic command, we will receive an error:
 
 =for rperl X<noncode>
 
@@ -13709,7 +13709,7 @@ As seen above, now we may add one or more additional C<elsif> statements without
 
 =for rperl X</noncode>
 
-However, with the proper "USER DEFAULT 9" critic command in place, we receive no errors and the same output as before:
+However, with the proper "USER DEFAULT 9" C<no critic> command in place, we receive no errors and the same output as before:
 
 =for rperl X<noncode>
 
@@ -13738,19 +13738,88 @@ In all the examples above, the body of each conditional statement only includes 
         print 'Why would anyone NOT like lasagna?', "\n";
     }
 
+=head3 Section 2.7.3: Conditionals & Variable Declarations
+
+When a variable is declared inside the body of any conditional statement, then said variable may only be utilized from within that same conditional body (or any nested bodies within it).  In all the previous examples, we are implying unseen variable declarations which happen before (and thus outside) the conditional bodies, so all our example variables may be accessed or modified outside the conditional statements themselves.
+
+If a variable is declared within a conditional's statement's body, then we will receive an error if we try to utilize it outside the conditional:
+
+    my integer $foo = 0;
+    print 'outside conditional, have $foo = ', $foo, "\n";
+    
+    if ( $foo < 3 ) {
+        $foo++;
+        my integer $bar = $foo * 2;
+        print 'inside  conditional, have $bar = ', $bar, "\n";
+    }
+    
+    print 'outside conditional, have $foo = ', $foo, "\n";
+    print 'outside conditional, have $bar = ', $bar, "\n";  # THIS CAUSES A PARSE ERROR
+
+If we run the code above, the last line attempts to access the C<$bar> variable outside of the conditional body where it was declared, so we receive an error:
+
+=for rperl X<noncode>
+
+    ERROR ECOPAPL02, RPERL PARSER, PERL SYNTAX ERROR
+    Failed normal Perl strictures-and-fatal-warnings syntax check with the following information:
+    
+        File Name:        my_program.pl
+        Return Value:     2
+        Error Message(s): 
+    
+    Global symbol "$bar" requires explicit package name at my_program.pl line XYZ
+    my_program.pl had compilation errors.
+
+=for rperl X</noncode>
+
+If we simply remove the last line where C<$bar> is incorrectly accessed, then our code runs fine:
+
+=for rperl X<noncode>
+
+    outside conditional, have $foo = 0
+    inside  conditional, have $bar = 2
+    outside conditional, have $foo = 1
+
+=for rperl X</noncode>
+
 =head2 Section 2.8: Getting User Input & STDIN
 
-When you want the users of your software to provide some keyboard input, then you will need to use the C<STDIN> keyword in Perl, which represents the I<"standard input"> data stream.  This will allow the user to type one line of input text and numbers, ended by pressing the Enter key.  All user input is received in text format, and should initially be stored in a variable with a C<string> data type.
+When you want the users of your software to provide some keyboard input, then you will need to use the C<STDIN> keyword in Perl, which represents the I<"standard input"> data stream.  This will allow the user to type one line of input text and numbers, ended by pressing the Enter key.  All user input is received in text format, and should initially be stored in a variable with a C<string> data type.  Unless converted to a different data type via one of RPerl's type conversion subroutines, the string variable should be passed to the C<chomp> operator, which will remove the trailing newline character collected by C<STDIN>. 
 
-When used in Perl, we wrap C<STDIN> with I<"angle brackets">, which start with the less-than C<E<lt>> character and end with the greater-than C<E<gt>> character.  In this context, the less-than and greater-than characters are not used as tests for numeric inequality.
+When used in Perl, we wrap C<STDIN> with I<"angle brackets">, which start with the less-than C<E<lt>> character and end with the greater-than C<E<gt>> character.  In this context, the less-than and greater-than characters are not used as tests for numeric inequality.  Also, when using C<STDIN> in RPerl we must always include the "USER DEFAULT 4" C<no critic> command, which enables use of C<STDIN> in general.
 
 Along with the two output streams C<STDOUT> and C<STDERR>, the input stream C<STDIN> makes up the third of three standard I/O ("input / output") data streams available on most operating systems. 
 
 The following example asks the user for their name, then greets them by name:
 
+    #!/usr/bin/perl
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+    ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
+
+    # [[[ OPERATIONS ]]]
+
     print 'Please input your first name: ';
     my string $first_name = <STDIN>;
+    chomp $first_name;
     print 'Hello ', $first_name, ', nice to meet you!', "\n";
+
+One possible execution of this example, with the input name "Will", produces the following output:
+
+=for rperl X<noncode>
+
+    Please input your first name: Will
+    Hello Will, nice to meet you!
+
+=for rperl X</noncode>
 
 You may also receive numeric data input, with the use of the appropriate data type conversion subroutines:
 
@@ -13760,21 +13829,44 @@ You may also receive numeric data input, with the use of the appropriate data ty
     print 'You are ', integer_to_string($age), ' years old.', "\n";
     print 'In one year from now, you will be ', integer_to_string($age + 1), ' years old.', "\n";
 
-(In the above example, you may optionally omit the two calls to the C<integer_to_string()> data type conversion subroutine, because it has no effect on any integer with a value less than 1,000.)
+In the above example, you may optionally omit the two calls to the C<integer_to_string()> data type conversion subroutine, because it has no effect on any integer with a value less than 1,000.  One possible execution produces the following output:
+
+=for rperl X<noncode>
+
+    Please input your age in years: 34
+    You are 34 years old.
+    In one year from now, you will be 35 years old.
+
+=for rperl X</noncode>
 
 You may receive input from C<STDIN> as many times as needed:
 
     print 'Please input your favorite band or musician: ';
     my string $favorite_band = <STDIN>;
-
+    chomp $favorite_band;
+    
     print 'Please input your favorite movie: ';
     my string $favorite_movie = <STDIN>;
-
+    chomp $favorite_movie;
+    
     print 'Please input your favorite TV show: ';
     my string $favorite_show = <STDIN>;
-
-    print 'You are a fan of ', $favorite_band, ', ', $favorite_movie, ', and ', $favorite_show, '.', "\n";
+    chomp $favorite_show;
+    
+    print 'You are a fan of ', $favorite_band, ', ', $favorite_movie, ', and ', $favorite_show, q{.}, "\n";
     print '(I like Rush, Blade Runner, and Star Trek!)', "\n";
+
+One possible run of this example produces:
+
+=for rperl X<noncode>
+
+    Please input your favorite band or musician: Neil Peart
+    Please input your favorite movie: Blade Runner 2
+    Please input your favorite TV show: TNG
+    You are a fan of Neil Peart, Blade Runner 2, and TNG.
+    (I like Rush, Blade Runner, and Star Trek!)
+
+=for rperl X</noncode>
 
 =head2 Section 2.10: The C<while> Control Structure
 
@@ -13856,6 +13948,8 @@ Now we receive the desired output with C<$i> starting at 0:
 
 As with the C<if> conditional statements, multiple C<while> loops may be nested within one another.  When you want to have iterator variables for 2 or even 3 nested loops, the traditional naming convention for simple cases is to start with iterator C<$i> for the outer-most loop, then iterator C<$j> for the next loop nested within the C<$i> loop, and then iterator C<$k> for the loop nested within the C<$j> loop.  If you need more or different iterators, you may choose any variable names which you find appropriate.
 
+Also as with C<if> conditional statements, when a variable is declared inside the body of a C<while> loop statement, then said variable may only be utilized from within that same loop body (or any nested bodies within it).  In the previous example, the integer variable C<$i> is declared before the loop, so it may be accessed or modified outside the loop.  In the next example, the variable C<$j> is declared within the outer loop, so C<$j> may not be utilized outside the outer loop.
+
 Let's take a look at the simplest example of 3 nested loops:
 
     my integer $i = 0;
@@ -13908,47 +14002,316 @@ In each line of the generated output, the first number is from the outer-most C<
 Sometimes you need to skip to the next loop iteration immediately, without finishing the current iteration.  For this, we use the C<next> operator:
 
     my integer $i = 0;
-    while ($i < 10) {
+    
+    print 'before    loop, have current $i = ', $i, "\n";
+    
+    while ( $i < 10 ) {
+        print "\n";
+        print 'top    of loop, have current $i = ', $i, "\n";
         $i++;
-        if ($i % 2) { next; }
-        print 'have $i = ', $i, "\n";
+        if ( $i % 2 ) { next; }
+        print 'bottom of loop, have next    $i = ', $i, "\n";
     }
+    
+    print "\n";
+    print 'after     loop, have current $i = ', $i, "\n";
 
-When we run the code above, only the even numbers are displayed as output, because the C<next> operator skips over the C<print> operator for all odd numbers:
+As you can see, we can freely mix C<if> conditional statements with C<while> loop statements.  When we run the code above, the C<print> operator at the bottom of the loop's body is reached only when the incremented C<$i> is even, because odd values of C<$i> will cause the modulo C<%> operator to evaluate as a truth value of true, which then calls the C<next> operator:
 
 =for rperl X<noncode>
 
-    have $i = 2
-    have $i = 4
-    have $i = 6
-    have $i = 8
-    have $i = 10
+    before    loop, have current $i = 0
+    
+    top    of loop, have current $i = 0
+    
+    top    of loop, have current $i = 1
+    bottom of loop, have next    $i = 2
+    
+    top    of loop, have current $i = 2
+    
+    top    of loop, have current $i = 3
+    bottom of loop, have next    $i = 4
+    
+    top    of loop, have current $i = 4
+    
+    top    of loop, have current $i = 5
+    bottom of loop, have next    $i = 6
+    
+    top    of loop, have current $i = 6
+    
+    top    of loop, have current $i = 7
+    bottom of loop, have next    $i = 8
+    
+    top    of loop, have current $i = 8
+    
+    top    of loop, have current $i = 9
+    bottom of loop, have next    $i = 10
+    
+    after     loop, have current $i = 10
 
 =for rperl X</noncode>
 
-Sometimes you need to exit a loop immediately, without finishing the current iteration.  For this, we use the C<last> operator:
+Sometimes you need to exit a loop immediately, without finishing the current iteration; for this, we use the C<last> operator.  Let's take the previous example and simply replace the C<next> operator with C<last> instead:
 
-    FOO NEED CODE
+    my integer $i = 0;
+    
+    print 'before    loop, have current $i = ', $i, "\n";
+    
+    while ( $i < 10 ) {
+        print "\n";
+        print 'top    of loop, have current $i = ', $i, "\n";
+        $i++;
+        if ( $i % 2 ) { last; }
+        print 'bottom of loop, have next    $i = ', $i, "\n";
+    }
+    
+    print "\n";
+    print 'after     loop, have current $i = ', $i, "\n";
 
+When we run the code above, the C<print> operator at the bottom of the loop's body is never reached and the loop only executes for one (partial) iteration, because the very first incremented value of C<$i> is odd and will cause the modulo C<%> operator to evaluate as true, which then immediately calls the C<last> operator:
 
+=for rperl X<noncode>
 
+    before    loop, have current $i = 0
+    
+    top    of loop, have current $i = 0
+    
+    after     loop, have current $i = 1
+
+=for rperl X</noncode>
 
 =head3 Section 2.10.4: Loop Labels & More Loop Control Operators
 
-NEED LOOP LABELS
-next FOO;
-last FOO;
-redo FOO;
+Sometimes you need to restart a loop's current iteration, without actually finishing the current iteration first; for this, we use the C<redo> operator.  However, before we use the C<redo> operator, we must first learn about loop labels.
 
-=head3 Section 2.10.5: Combining C<while> & C<if>
+When using nested loops, it can be confusing to keep track of which loop is being affected by which loop control operator.  To solve this issue, we use loop labels, which are simply all-uppercase names prepended to the loop keyword, which is C<while> in this case.  The use of loop labels is optional in most cases, but is required when you want to reliably use loop control operators inside nested loops, and whenever you want to use the C<redo> operator at all.
 
-You can freely combine multiple C<if> conditionals and C<while> loops:
+Let's take the previous example again, add the loop label C<MY_LOOP>, and simply replace the C<last> operator with C<redo MY_LOOP> instead:
 
-    NEED EXAMPLE
+    my integer $i = 0;
+    
+    print 'before    loop, have current $i = ', $i, "\n";
+    
+    MY_LOOP: while ( $i < 10 ) {
+        print "\n";
+        print 'top    of loop, have current $i = ', $i, "\n";
+        $i++;
+        if ( $i % 2 ) { redo MY_LOOP; }
+        print 'bottom of loop, have next    $i = ', $i, "\n";
+    }
+    
+    print "\n";
+    print 'after     loop, have current $i = ', $i, "\n";
 
-=head3 Section 2.10.6: Combining C<while> & C<STDIN>
+When we run the code above, we see the C<redo> operator provides the exact same behavior as C<next> in this case, but that only applies to some C<while> loops and will not always be true.  (In the next chapter we will learn about another kind of loop, where C<next> and C<redo> never behave the same.)
 
-NEED LOOP STDIN & CTRL-D
+=for rperl X<noncode>
+
+    before    loop, have current $i = 0
+    
+    top    of loop, have current $i = 0
+    
+    top    of loop, have current $i = 1
+    bottom of loop, have next    $i = 2
+    
+    top    of loop, have current $i = 2
+    
+    top    of loop, have current $i = 3
+    bottom of loop, have next    $i = 4
+    
+    top    of loop, have current $i = 4
+    
+    top    of loop, have current $i = 5
+    bottom of loop, have next    $i = 6
+    
+    top    of loop, have current $i = 6
+    
+    top    of loop, have current $i = 7
+    bottom of loop, have next    $i = 8
+    
+    top    of loop, have current $i = 8
+    
+    top    of loop, have current $i = 9
+    bottom of loop, have next    $i = 10
+    
+    after     loop, have current $i = 10
+
+=for rperl X</noncode>
+
+Let's look at at a simple nested loop example; we have 2 loops with the C<last> operator called from the body of the inner loop:
+
+    my integer $i = 0;
+    my integer $j = 0;
+    
+    print 'before    outer loop, have current $i = ', $i, "\n";
+    print 'before    outer loop, have current $j = ', $j, "\n";
+    
+    while ( $i < 3 ) {
+        print "\n";
+        print 'top    of outer loop, have current $i = ', $i, "\n";
+        $i++;
+        $j = 0;
+        while ( $j < 5 ) {
+            print 'top    of inner loop, have current $j = ', $j, "\n";
+            $j++;
+            if ( $j > 2 ) { next; }
+            print 'bottom of inner loop, have current $j = ', $j, "\n";
+        }
+        print 'bottom of outer loop, have next    $i = ', $i, "\n";
+    }
+    
+    print "\n";
+    print 'after     outer loop, have current $i = ', $i, "\n";
+    print 'after     outer loop, have current $j = ', $j, "\n";
+
+When we run this code we can see that for every iteration of the outer loop, the bottom of the inner loop is only reached twice, when the current value of C<$j> is less than C<2>.  This is because when the C<next> operator is called without a loop label, then it is applied to most immediate loop, which means C<next> is applied to the inner loop in this case:
+
+=for rperl X<noncode>
+
+    before    outer loop, have current $i = 0
+    before    outer loop, have current $j = 0
+    
+    top    of outer loop, have current $i = 0
+    top    of inner loop, have current $j = 0
+    bottom of inner loop, have current $j = 1
+    top    of inner loop, have current $j = 1
+    bottom of inner loop, have current $j = 2
+    top    of inner loop, have current $j = 2
+    top    of inner loop, have current $j = 3
+    top    of inner loop, have current $j = 4
+    bottom of outer loop, have next    $i = 1
+    
+    top    of outer loop, have current $i = 1
+    top    of inner loop, have current $j = 0
+    bottom of inner loop, have current $j = 1
+    top    of inner loop, have current $j = 1
+    bottom of inner loop, have current $j = 2
+    top    of inner loop, have current $j = 2
+    top    of inner loop, have current $j = 3
+    top    of inner loop, have current $j = 4
+    bottom of outer loop, have next    $i = 2
+    
+    top    of outer loop, have current $i = 2
+    top    of inner loop, have current $j = 0
+    bottom of inner loop, have current $j = 1
+    top    of inner loop, have current $j = 1
+    bottom of inner loop, have current $j = 2
+    top    of inner loop, have current $j = 2
+    top    of inner loop, have current $j = 3
+    top    of inner loop, have current $j = 4
+    bottom of outer loop, have next    $i = 3
+    
+    after     outer loop, have current $i = 3
+    after     outer loop, have current $j = 5
+
+=for rperl X</noncode>
+
+Now let's take the same nested loops, add loop labels, and replace C<next> with C<next OUTER_LOOP> instead:
+
+    my integer $i = 0;
+    my integer $j = 0;
+    
+    print 'before    outer loop, have current $i = ', $i, "\n";
+    print 'before    outer loop, have current $j = ', $j, "\n";
+    
+    OUTER_LOOP: while ( $i < 3 ) {
+        print "\n";
+        print 'top    of outer loop, have current $i = ', $i, "\n";
+        $i++;
+        $j = 0;
+        INNER_LOOP: while ( $j < 5 ) {
+            print 'top    of inner loop, have current $j = ', $j, "\n";
+            $j++;
+            if ( $j > 2 ) { next OUTER_LOOP; }
+            print 'bottom of inner loop, have current $j = ', $j, "\n";
+        }
+        print 'bottom of outer loop, have next    $i = ', $i, "\n";
+    }
+    
+    print "\n";
+    print 'after     outer loop, have current $i = ', $i, "\n";
+    print 'after     outer loop, have current $j = ', $j, "\n";
+
+This time we can see the bottom of the inner loop is only reached twice, which is the same as before.  However, now the bottom of the outer loop is never reached, because the C<next> operator is being applied to the outer loop instead of the inner loop:
+
+=for rperl X<noncode>
+
+    before    outer loop, have current $i = 0
+    before    outer loop, have current $j = 0
+    
+    top    of outer loop, have current $i = 0
+    top    of inner loop, have current $j = 0
+    bottom of inner loop, have current $j = 1
+    top    of inner loop, have current $j = 1
+    bottom of inner loop, have current $j = 2
+    top    of inner loop, have current $j = 2
+    
+    top    of outer loop, have current $i = 1
+    top    of inner loop, have current $j = 0
+    bottom of inner loop, have current $j = 1
+    top    of inner loop, have current $j = 1
+    bottom of inner loop, have current $j = 2
+    top    of inner loop, have current $j = 2
+    
+    top    of outer loop, have current $i = 2
+    top    of inner loop, have current $j = 0
+    bottom of inner loop, have current $j = 1
+    top    of inner loop, have current $j = 1
+    bottom of inner loop, have current $j = 2
+    top    of inner loop, have current $j = 2
+    
+    after     outer loop, have current $i = 3
+    after     outer loop, have current $j = 3
+
+=for rperl X</noncode>
+
+If we replace C<next OUTER_LOOP> with C<next INNER_LOOP>, then we will see the same default behavior as when C<next> is called with no loop label.
+
+What do you think will happen if we place C<next> with C<last> or C<redo> in these example cases?  I will leave it up to you to experiment and find out for yourself!
+
+=head3 Section 2.10.5: Combining C<while> & C<STDIN>
+
+Sometimes you want to accept multiple lines of user input via C<STDIN>, instead of just one line at a time as in previous examples.  To achieve this, we put the call to C<STDIN> inside the loop's condition:
+
+    #!/usr/bin/perl
+    
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+    
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+    ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
+    
+    # [[[ OPERATIONS ]]]
+    
+    my string $input_strings = q{};
+    
+    print 'Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D> on a blank line:', "\n";
+    
+    while ( my string $input_string = <STDIN> ) {
+        $input_strings .= $input_string;
+    }
+    
+    print "\n";
+    print 'after loop, have $input_strings = ', "\n", $input_strings, "\n";
+
+As displayed by the first C<print> operator above, the users must press the two-keystroke combination <CTRL-D> in order to signal the I<"EOF"> or I<"End Of File"> condition, which tells the C<while> loop to stop iterating.  Also, we must remember to include the "USER DEFAULT 4" C<no critic> command, thereby enabling use of C<STDIN>.
+
+When we run the code above, we can see all user input has been combined into one variable C<$input_strings> via the string concatenation C<.> operator:
+
+    Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D> on a blank line:
+    howdy
+    dowdy
+    doo
+    
+    after loop, have $input_strings = 
+    howdy
+    dowdy
+    doo
 
 =head2 Section 2.x: Exercises
 
