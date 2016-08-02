@@ -29,7 +29,7 @@ use IPC::Open3;
 use IO::Select;
 
 # [[[ CONSTANTS ]]]
-use constant PATH_TESTS => my string $TYPED_PATH_TESTS = $RPerl::INCLUDE_PATH . '/RPerl/Test/Operator19LoopControl';
+use constant PATH_TESTS => my string $TYPED_PATH_TESTS = $RPerl::INCLUDE_PATH . '/RPerl/Test';
 
 # [[[ OPERATIONS ]]]
 
