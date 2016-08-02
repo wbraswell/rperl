@@ -30,12 +30,14 @@ my integer $j = 0;
 print 'before    outer loop, have current $i = ', $i, "\n";
 print 'before    outer loop, have current $j = ', $j, "\n";
 
-OUTER_LOOP: while ( $i < 3 ) {
+OUTER_LOOP:
+while ( $i < 3 ) {
     print "\n";
     print 'top    of outer loop, have current $i = ', $i, "\n";
     $i++;
     $j = 0;
-    INNER_LOOP: while ( $j < 5 ) {
+    INNER_LOOP:
+    while ( $j < 5 ) {
         print 'top    of inner loop, have current $j = ', $j, "\n";
         $j++;
         if ( $j > 2 ) {

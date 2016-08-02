@@ -20,3 +20,4 @@ use RPerl::Test;
 # [[[ OPERATIONS ]]]
 
 my RPerl $foo = RPerl::Test->new();
+

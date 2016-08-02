@@ -32,7 +32,8 @@ my integer $i = 0;
 
 print 'before    loop, have current $i = ', $i, "\n\n";
 
-MY_LOOP: while ( $i < 5 ) {
+MY_LOOP:
+while ( $i < 5 ) {
     print 'top    of loop, have current $i = ', $i, "\n";
     $i++;
     if ( $i > 10 ) {

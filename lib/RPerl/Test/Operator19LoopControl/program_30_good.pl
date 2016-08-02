@@ -1,17 +1,13 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: 'FOOOO' >>>
-
-before    loop, have current $i = 0
-
-top    of loop, have current $i = 0
-top    of loop, have current $i = 1
-top    of loop, have current $i = 2
-top    of loop, have current $i = 3
-top    of loop, have current $i = 4
-
-after     loop, have current $i = 5
+# <<< EXECUTE_SUCCESS: 'before    loop, have current $i = 0' >>>
+# <<< EXECUTE_SUCCESS: 'top    of loop, have current $i = 0' >>>
+# <<< EXECUTE_SUCCESS: 'top    of loop, have current $i = 1' >>>
+# <<< EXECUTE_SUCCESS: 'top    of loop, have current $i = 2' >>>
+# <<< EXECUTE_SUCCESS: 'top    of loop, have current $i = 3' >>>
+# <<< EXECUTE_SUCCESS: 'top    of loop, have current $i = 4' >>>
+# <<< EXECUTE_SUCCESS: 'after     loop, have current $i = 5' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -29,7 +25,8 @@ my integer $i = 0;
 
 print 'before    loop, have current $i = ', $i, "\n\n";
 
-MY_LOOP: while ( $i < 5 ) {
+MY_LOOP:
+while ( $i < 5 ) {
     print 'top    of loop, have current $i = ', $i, "\n";
     $i++;
     if ( $i > 10 ) {
@@ -41,3 +38,4 @@ MY_LOOP: while ( $i < 5 ) {
 
 print "\n";
 print 'after     loop, have current $i = ', $i, "\n";
+
