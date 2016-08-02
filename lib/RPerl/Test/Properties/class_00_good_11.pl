@@ -26,3 +26,4 @@ print $test_object->get_test_property() . "\n";
 
 $test_object->test_method(24);
 print $test_object->get_test_property() . "\n";
+

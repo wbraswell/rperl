@@ -29,3 +29,4 @@ $foo = 'howdy';
 print scope_type_name_value($foo) . "\n";
 $foo = undef;
 print scope_type_name_value($foo) . "\n";
+

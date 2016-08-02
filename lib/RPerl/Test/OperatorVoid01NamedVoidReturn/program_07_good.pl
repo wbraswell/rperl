@@ -16,3 +16,4 @@ our string $foo = sub {
 
 # [[[ OPERATIONS ]]]
 foo();
+

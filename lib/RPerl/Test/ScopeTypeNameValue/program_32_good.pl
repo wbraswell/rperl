@@ -23,3 +23,4 @@ $foo = { a => '42', b => 'is', c => 'the', d => 'answer' };
 
 $Data::Dumper::Indent = 0;
 print scope_type_name_value($foo) . "\n";
+

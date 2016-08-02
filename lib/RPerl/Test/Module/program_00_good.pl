@@ -25,3 +25,4 @@ $foo->{empty_property} = 23;
 
 print 'have $foo->{empty_property} = ', $foo->{empty_property}, "\n";
 print 'have $bar->{empty_property} = ', $bar->{empty_property}, "\n";
+

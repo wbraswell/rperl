@@ -16,3 +16,4 @@ our integer $foo = sub {
 
 # [[[ OPERATIONS ]]]
 foo();
+

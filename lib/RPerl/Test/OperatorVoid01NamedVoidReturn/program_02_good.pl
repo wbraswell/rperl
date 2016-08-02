@@ -16,3 +16,4 @@ our boolean $foo = sub {
 
 # [[[ OPERATIONS ]]]
 foo();
+

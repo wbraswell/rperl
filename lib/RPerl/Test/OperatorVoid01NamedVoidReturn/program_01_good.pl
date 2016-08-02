@@ -18,3 +18,4 @@ our void $foo = sub {
 
 # [[[ OPERATIONS ]]]
 foo();
+

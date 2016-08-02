@@ -59,7 +59,9 @@ while ( $i < 3 ) {
     while ( $j < 5 ) {
         print 'top    of inner loop, have current $j = ', $j, "\n";
         $j++;
-        if ( $j > 2 ) { next; }
+        if ( $j > 2 ) {
+            next;
+        }
         print 'bottom of inner loop, have current $j = ', $j, "\n";
     }
     print 'bottom of outer loop, have next    $i = ', $i, "\n";

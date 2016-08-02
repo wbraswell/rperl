@@ -39,7 +39,9 @@ MY_LOOP: while ( $i < 10 ) {
     print "\n";
     print 'top    of loop, have current $i = ', $i, "\n";
     $i++;
-    if ( $i % 2 ) { redo MY_LOOP; }
+    if ( $i % 2 ) {
+        redo MY_LOOP;
+    }
     print 'bottom of loop, have next    $i = ', $i, "\n";
 }
 

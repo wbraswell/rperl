@@ -16,3 +16,4 @@ our arrayref $foo = sub {
 
 # [[[ OPERATIONS ]]]
 foo();
+

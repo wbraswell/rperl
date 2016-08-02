@@ -16,3 +16,4 @@ my unknown $foo = [
     23.42, 'heterogeneous'
 ];
 print $foo->[1]->{weird};
+

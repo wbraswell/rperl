@@ -38,7 +38,9 @@ OUTER_LOOP: while ( $i < 3 ) {
     INNER_LOOP: while ( $j < 5 ) {
         print 'top    of inner loop, have current $j = ', $j, "\n";
         $j++;
-        if ( $j > 2 ) { last OUTER_LOOP; }
+        if ( $j > 2 ) {
+            last OUTER_LOOP;
+        }
         print 'bottom of inner loop, have current $j = ', $j, "\n";
     }
     print 'bottom of outer loop, have next    $i = ', $i, "\n";

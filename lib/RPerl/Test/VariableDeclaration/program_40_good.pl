@@ -14,3 +14,4 @@ use RPerl::Test;
 # [[[ OPERATIONS ]]]
 
 my RPerl::Test $foo = RPerl::Test->new();
+

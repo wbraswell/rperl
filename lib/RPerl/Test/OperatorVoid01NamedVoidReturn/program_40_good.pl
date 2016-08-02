@@ -16,3 +16,4 @@ our hashref $foo = sub {
 
 # [[[ OPERATIONS ]]]
 foo();
+

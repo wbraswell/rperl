@@ -16,3 +16,4 @@ our number $foo = sub {
 
 # [[[ OPERATIONS ]]]
 foo();
+

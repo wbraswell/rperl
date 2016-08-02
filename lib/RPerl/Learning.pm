@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.104_000;
+our $VERSION = 0.105_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -13528,7 +13528,7 @@ Now we don't need any redirection on the command line to suppress C<STDERR> outp
 
 Often you will want to perform a task, but only if some specific I<"condition"> is met; this is called a I<"conditional statement"> or just I<"conditional"> for short, and is implemented using the C<if> statement in Perl.  You may also refer to the C<if> statement as a I<"control structure">, because it is a source code structure used to control the execution flow of a piece of Perl software.  In other words, a conditional statement can control how your software runs, and so your software may run differently depending on your conditional statements.
 
-Whether or not an C<if> statement's task is actually performed is determined by the truth value of its condition, which is specified within parentheses immediately after the C<if> keyword; please review L</Section 2.1.9: Truth Values> for more info.  The task to be conditionally performed is known as the conditional statement's I<"body">, and is specified within curly braces immediately after the condition.
+Whether or not an C<if> statement's task is actually performed is determined by the truth value of its condition, which is specified in the loop's I<"header">, contained within parentheses immediately after the C<if> keyword; please review L</Section 2.1.9: Truth Values> for more info.  The header of a conditional statement contains only its condition.  The task to be conditionally performed is known as the conditional statement's I<"body">, and is specified within curly braces immediately after the header.
 
     if ( $my_integer == 17 ) { print 'I got seventeen!', "\n"; }
 
@@ -13872,9 +13872,9 @@ One possible run of this example produces:
 
 Most programs will contain one or more operations which need to be repeated a certain number of times, and for these cases we use a I<"loop statement"> or just a I<"loop"> for short.  Like a conditional statement, a loop statement is a kind of control structure, because they are both used to control the execution flow of your software.
 
-In this section, we will describe the most basic loop in Perl, which is the C<while> loop statement.  Just like an C<if> conditional statement, a C<while> loop has both a condition and a body.  There is only one difference between C<if> and C<while> statements: C<if> executes once when the condition is true, and C<while> executes repeatedly as long as the condition is true.
+In this section, we will describe the most basic loop in Perl, which is the C<while> loop statement.  Just like an C<if> conditional statement, a C<while> loop has both a header containing only a condition, and a body of operations.  There is only one difference between C<if> and C<while> statements: C<if> executes once when the condition is true, and C<while> executes repeatedly as long as the condition is true.
 
-The following loop will never stop running, because it has a condition which is hard-coded to numeric literal C<1>, which has a truth value of true.  The loop will print an infinite number of global greetings until the user sends a CTRL-C or similar termination signal: 
+The following loop will never stop running, because it has a condition which is hard-coded to numeric literal C<1>, which has a truth value of true.  This is called an I<"infinite loop">, and it will repeatedly print an unending amount of global greetings until the user sends a CTRL-C or similar termination signal:
 
     while (1) { print 'Hello, world!', "\n"; }
 
@@ -14082,7 +14082,7 @@ When we run the code above, the C<print> operator at the bottom of the loop's bo
 
 =head3 Section 2.10.4: Loop Labels & More Loop Control Operators
 
-Sometimes you need to restart a loop's current iteration, without actually finishing the current iteration first; for this, we use the C<redo> operator.  However, before we use the C<redo> operator, we must first learn about loop labels.
+Sometimes you need to restart a loop's current iteration, without actually finishing the current iteration first or re-executing the loop's header; for this, we use the C<redo> operator.  However, before we use the C<redo> operator, we must first learn about loop labels.
 
 When using nested loops, it can be confusing to keep track of which loop is being affected by which loop control operator.  To solve this issue, we use loop labels, which are simply all-uppercase names prepended to the loop keyword, which is C<while> in this case.  The use of loop labels is optional in most cases, but is required when you want to reliably use loop control operators inside nested loops, and whenever you want to use the C<redo> operator at all.
 
@@ -14138,7 +14138,119 @@ When we run the code above, we see the C<redo> operator provides the exact same 
 
 =for rperl X</noncode>
 
-Let's look at at a simple nested loop example; we have 2 loops with the C<last> operator called from the body of the inner loop:
+The C<redo> operator does not re-execute its corresponding loop's header, it jumps directly to the first operation in the loop's body and continues execution from there.  In contrast, the C<next> operator does execute the loop's header, which in the case of C<while> is comprised only of checking the loop's condition.
+
+The following source code example is comprised of a C<while> loop containing an C<if> conditional with a "bail out" condition:
+
+    my integer $i = 0;
+    
+    print 'before    loop, have current $i = ', $i, "\n\n";
+    
+    MY_LOOP: while ( $i < 5 ) {
+        print 'top    of loop, have current $i = ', $i, "\n";
+        $i++;
+        if ( $i > 10 ) {
+            print 'inside of loop, have next    $i = ', $i, '; value too big, bailing out!', "\n";
+            last MY_LOOP;
+        }
+        next MY_LOOP;
+    }
+    
+    print "\n";
+    print 'after     loop, have current $i = ', $i, "\n";
+
+When we run the example code above, we never reach the C<last> operator inside the loop, because the C<next> operator causes the loop's condition to be checked and the loop stops iterating before C<$i> reaches a value greater than C<10>.  In fact, we could totally delete the C<next MY_LOOP> line as well as the entire C<if> conditional statement, and we would still receive the same output:
+
+=for rperl X<noncode>
+
+    before    loop, have current $i = 0
+    
+    top    of loop, have current $i = 0
+    top    of loop, have current $i = 1
+    top    of loop, have current $i = 2
+    top    of loop, have current $i = 3
+    top    of loop, have current $i = 4
+    
+    after     loop, have current $i = 5
+
+=for rperl X</noncode>
+
+In the following code, we have simply replaced C<next MY_LOOP> with C<last MY_LOOP>:
+
+    my integer $i = 0;
+    
+    print 'before    loop, have current $i = ', $i, "\n\n";
+    
+    MY_LOOP: while ( $i < 5 ) {
+        print 'top    of loop, have current $i = ', $i, "\n";
+        $i++;
+        if ( $i > 10 ) {
+            print 'inside of loop, have next    $i = ', $i, '; value too big, bailing out!', "\n";
+            last MY_LOOP;
+        }
+        last MY_LOOP;
+    }
+    
+    print "\n";
+    print 'after     loop, have current $i = ', $i, "\n";
+
+As before, the body of the C<if> conditional statement is never executed because C<$i> never reaches a value higher than 10.  Perhaps unsurprisingly, running this code produces a relatively short output:
+
+=for rperl X<noncode>
+
+    before    loop, have current $i = 0
+    
+    top    of loop, have current $i = 0
+    
+    after     loop, have current $i = 1
+
+=for rperl X</noncode>
+
+Of course, we will now replace C<next MY_LOOP> with C<redo MY_LOOP>:
+
+    my integer $i = 0;
+    
+    print 'before    loop, have current $i = ', $i, "\n\n";
+    
+    MY_LOOP: while ( $i < 5 ) {
+        print 'top    of loop, have current $i = ', $i, "\n";
+        $i++;
+        if ( $i > 10 ) {
+            print 'inside of loop, have next    $i = ', $i, '; value too big, bailing out!', "\n";
+            last MY_LOOP;
+        }
+        redo MY_LOOP;
+    }
+    
+    print "\n";
+    print 'after     loop, have current $i = ', $i, "\n";
+
+The C<redo> operator does not cause the C<while> loop's header to be executed, so the C<$i E<lt> 5> condition is only checked the very first iteration.  Therefore, the value of C<$i> continues to increase until it is greater than C<10> and triggers the "bail out" mechanism.  (If only the economy was this simple.)
+
+When we run the code, this is the output we see displayed:
+
+=for rperl X<noncode>
+
+    before    loop, have current $i = 0
+    
+    top    of loop, have current $i = 0
+    top    of loop, have current $i = 1
+    top    of loop, have current $i = 2
+    top    of loop, have current $i = 3
+    top    of loop, have current $i = 4
+    top    of loop, have current $i = 5
+    top    of loop, have current $i = 6
+    top    of loop, have current $i = 7
+    top    of loop, have current $i = 8
+    top    of loop, have current $i = 9
+    top    of loop, have current $i = 10
+    inside of loop, have next    $i = 11; value too big, bailing out!
+    
+    after     loop, have current $i = 11
+
+=for rperl X</noncode>
+
+Now we will look at at a simple nested loop example; we have 2 loops with the C<last> operator called from the body of the inner loop:
 
     my integer $i = 0;
     my integer $j = 0;
@@ -14267,7 +14379,7 @@ This time we can see the bottom of the inner loop is only reached twice, which i
 
 If we replace C<next OUTER_LOOP> with C<next INNER_LOOP>, then we will see the same default behavior as when C<next> is called with no loop label.
 
-What do you think will happen if we place C<next> with C<last> or C<redo> in these example cases?  I will leave it up to you to experiment and find out for yourself!
+What do you think will happen if we place C<next> with C<last> or C<redo> in these example cases?  I will leave it up to you to experiment and find out for yourself!  (Hint: C<redo INNER_LOOP> and C<redo OUTER_LOOP> will cause two different kinds of infinite loop.)
 
 =head3 Section 2.10.5: Combining C<while> & C<STDIN>
 
@@ -14299,9 +14411,11 @@ Sometimes you want to accept multiple lines of user input via C<STDIN>, instead 
     print "\n";
     print 'after loop, have $input_strings = ', "\n", $input_strings, "\n";
 
-As displayed by the first C<print> operator above, the users must press the two-keystroke combination <CTRL-D> in order to signal the I<"EOF"> or I<"End Of File"> condition, which tells the C<while> loop to stop iterating.  Also, we must remember to include the "USER DEFAULT 4" C<no critic> command, thereby enabling use of C<STDIN>.
+As displayed by the first C<print> operator above, the users must press the two-keystroke combination CTRL-D in order to signal the I<"EOF"> or I<"End Of File"> condition, which tells the C<while> loop to stop iterating.  Also, we must remember to include the "USER DEFAULT 4" C<no critic> command, thereby enabling use of C<STDIN>.
 
 When we run the code above, we can see all user input has been combined into one variable C<$input_strings> via the string concatenation C<.> operator:
+
+=for rperl X<noncode>
 
     Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D> on a blank line:
     howdy
@@ -14312,6 +14426,8 @@ When we run the code above, we can see all user input has been combined into one
     howdy
     dowdy
     doo
+
+=for rperl X</noncode>
 
 =head2 Section 2.x: Exercises
 

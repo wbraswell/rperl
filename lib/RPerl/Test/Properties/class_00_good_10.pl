@@ -24,3 +24,4 @@ print $retval . "\n";
 
 $retval = $test_object->test_method(24);
 print $retval . "\n";
+

@@ -21,6 +21,8 @@ my integer $i = 0;
 
 while ( $i < 10 ) {
     $i++;
-    if ( $i % 2 ) { next; }
+    if ( $i % 2 ) {
+        next;
+    }
     print 'have $i = ', $i, "\n";
 }

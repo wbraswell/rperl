@@ -27,3 +27,4 @@ print scope_type_name_value($foo) . "\n";
 print scope_type_name_value($bar) . "\n";
 print scope_type_name_value($bat) . "\n";
 print scope_type_name_value($baz) . "\n";
+
