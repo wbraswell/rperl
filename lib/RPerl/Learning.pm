@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.105_000;
+our $VERSION = 0.106_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -14431,7 +14431,18 @@ When we run the code above, we can see all user input has been combined into one
 
 =head2 Section 2.x: Exercises
 
-=head3 1.  XXXYYYZZZ  [ XYZ mins ]
+=head3 1.  Constant Pi & Calculated Circumference Of A Circle  [ 30 mins ]
+
+Write an RPerl program which contains constant data for the approximate value of pi equal to C<3.141_592_654>.  Use the C<print> operator and RPerl's data type conversion subroutines to display your hard-coded value of pi.
+
+Next, create a variable named C<$radius> with a value of C<12.5>, and a second variable named C<$circumference> which contains the properly-calculated value.  Use C<print> and the type conversion subroutines to display all values.
+
+=for rperl X<noncode>
+
+    NEED RUN EXAMPLE & OUTPUT EXAMPLE
+
+=for rperl X</noncode>
+
 
 =for comment [ INSERT EXERCISES ]
 
