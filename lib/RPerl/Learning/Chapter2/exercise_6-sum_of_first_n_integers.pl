@@ -29,4 +29,4 @@ while ($i <= $n) {
     $i++;
 }
 
-print 'The sum of the first ', to_string($n), ' integers = ', to_string($sum), "\n";
+print 'The sum of the first ', to_string($n), ' integers is ', to_string($sum), "\n";

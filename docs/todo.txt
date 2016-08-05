@@ -1,4 +1,6 @@
 DONE
+    fix to_string() incorrect numeric formatting
+    numerous MS Windows fixes
     die operator
     Learning RPerl, <noncode> fix for rperl.org only
         Learning RPerl, examples for 2.1.9 - 2.1.14
@@ -269,7 +271,6 @@ DATA TYPES & STRUCTURES
         http://perldoc.perl.org/perlapi.html#looks_like_number
     export ::*_*ref_to_*() conversion subroutines the same as ::*_to_*() subs in rperltypesconv.pm, remove leading scopes in all calls
     remove all object* types
-    fix number_to_string() in MyTest.pm
     add arrayref::grow_capacity() as safe version of std::vector::resize()
     Dumper() in C++, use as default overload for <<
     implement remaining *_arrayref_arrayref_CHECK*() in lib/DataStructure/Array/SubTypes.cpp

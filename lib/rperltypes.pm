@@ -5,7 +5,7 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.006_100;
+our $VERSION = 0.007_000;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
@@ -134,11 +134,10 @@ sub to_number {
 #my string $to_string = sub {
 sub to_string {
     ( my unknown $variable) = @_;
-    RPerl::diag('in rperltypes::to_string(), received $variable = ' . $variable . "\n");
+#    RPerl::diag('in rperltypes::to_string(), received $variable = ' . $variable . "\n");
     if ( not defined $variable ) { return 'undef'; }
     my string $type = type($variable);
-    RPerl::diag('in rperltypes::to_string(), have $type = ' . $type . "\n");
-#    die 'TMP DEBUG';
+#    RPerl::diag('in rperltypes::to_string(), have $type = ' . $type . "\n");
 
     if    ( $type eq 'unknown' ) { return qq{$variable}; }
     elsif ( $type eq 'boolean' )    { return boolean_to_string($variable); }
@@ -172,10 +171,13 @@ sub type {
     if ( not defined $variable ) { return 'unknown'; }
     if ( not defined $recurse_level ) { $recurse_level = 10; }    # default to limited recursion
     my integer_hashref $is_type = build_is_type($variable);
+#    RPerl::diag('in rperltypes::type(), have $is_type = ' . Dumper($is_type) . "\n");
     # DEV NOTE, CORRELATION #rp025: only report core types integer, number, string, arrayref, hashref, object;
     # do NOT report non-core types boolean, unsigned_integer, char, etc.
-    if ( $is_type->{integer} ) { return 'integer'; }
-    elsif ( $is_type->{number} )  { return 'number'; }
+    # DEV NOTE: Perl's implicit casting can cause 1 constant or variable to report multiple types, 
+    # always report number before integer to avoid incorrect to_string() formatting
+    if ( $is_type->{number} )  { return 'number'; }
+    elsif ( $is_type->{integer} ) { return 'integer'; }
     elsif ( $is_type->{string} )  { return 'string'; }
     else {    # arrayref, hashref, or blessed object
         my arrayref $types = types_recurse( $variable, $recurse_level, $is_type );

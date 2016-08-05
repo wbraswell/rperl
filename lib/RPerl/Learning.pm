@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.107_000;
+our $VERSION = 0.108_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -1396,7 +1396,7 @@ Run your new program by issuing the following command at your terminal command p
 
 =for rperl X</noncode>
 
-I<HINT: You only need the C<USER DEFAULT 1> critic line, so your resulting program should be 7 lines long, not counting comments or blank lines.>
+I<HINT: You only need the "USER DEFAULT 1" C<no critic> command, so your resulting program should be 7 lines long, not counting comments or blank lines.>
 
 =head3 2.  RPerl Commands  [ 15 mins ]
 
@@ -13310,7 +13310,55 @@ Add 1 to operand, then return incremented value
 
 =head3 Section 2.4.x: Chomp & Chop Operators
 
-=for comment [ INSERT CHOMP & CHOP ]
+Often you will want to remove the special newline character C<"\n"> from the end of a string variable, which can be achieved safely by using the C<chomp> operator.  When you pass some variable as the operand to C<chomp>, the operator will do nothing if the operand's final character is not a newline.  Chomp knows how to use the correct newline character for each operating system, thanks to Perl's magic C<$INPUT_RECORD_SEPARATOR> variable.
+
+    my string $foo = 'howdy' . "\n";
+    print $foo;
+    print $foo;
+
+    chomp $foo;  # newline character removed
+    print $foo;
+    print $foo;
+
+    chomp $foo;  # no effect
+    print $foo;
+    print $foo;
+
+In the example source code above, only the first call to the C<chomp> operator has an effect on the value of the C<$foo> variable.  When you run this example source code, you should receive the following output:
+
+=for rperl X<noncode>
+
+    howdy
+    howdy
+    howdyhowdyhowdyhowdy
+
+=for rperl X</noncode>
+
+Sometimes you will want to trim the final character of a string variable, regardless of whether it is a newline or any other specific character.  For these cases, you will want to use the C<chop> operator, which is likened to a non-safe variant of C<chomp>.  Obviously, C<chop> and C<chomp> actually perform two different operations, so you will always need to be careful and choose which operator to utilize on a case-by-case basis.
+
+Let's modify the previous code example to use the C<chop> operator instead of C<chomp>:
+
+    my string $foo = 'howdy' . "\n";
+    print $foo;
+    print $foo;
+
+    chop $foo;    # newline character removed
+    print $foo;
+    print $foo;
+
+    chop $foo;    # 'y' character removed
+    print $foo;
+    print $foo;
+
+The trailing newline character is trimmed on the first call to C<chop>, and then the final 'y' character of C<'howdy'> is deleted on the second call to the C<chop> operator.  This generates the following output, notice the missing 'y' characters:
+
+=for rperl X<noncode>
+
+    howdy
+    howdy
+    howdyhowdyhowdhowd
+
+=for rperl X</noncode>
 
 =head2 Section 2.5: Constant Data
 
@@ -13318,8 +13366,20 @@ Sometimes you have a piece of data that will never change once you compile your 
 
 Constants are the opposite of variables, because constants are designed not to change, while variables are designed to change as many times as needed.
 
-Below are two example RPerl constants, one containing numeric data and another containing text data:
+Below is an example RPerl program with two constants, one containing numeric data and another containing text data:
 
+    #!/usr/bin/perl
+ 
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+ 
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
+ 
     # [[[ CONSTANTS ]]]
     use constant PI  => my number $TYPED_PI  = 3.141_59;
     use constant PIE => my string $TYPED_PIE = 'pecan';
@@ -13330,6 +13390,8 @@ These two constants can be utilized as follows:
     my string $dessert = 'having a nice slice of ' . PIE();
 
 As seen in the examples above, we must first declare each constant to have an all-uppercase name via the C<use constant> command, after which we can access the stored data value by calling the constant name followed by empty parentheses.  (In normal interpreted Perl, a constant is functionally equivalent to a subroutine which accepts no arguments and performs no operations other than to call the C<return> operator with a hard-coded data value; see L</CHAPTER 4: SUBROUTINES> for more info.)
+
+In all RPerl source code files which contain constants, we must include the "USER DEFAULT 3" C<no critic> command; for numeric constants, we must also include "USER DEFAULT 1", as seen in the code example above.
 
 All constants must utilize names with uppercase-only lettering, in order to distinguish them from similarly-named variables.  Thus, a normal variable may not have an all-uppercase name.  (Special variables called I<"file handles"> must be all-uppercase; see L</CHAPTER 5: INPUT & OUTPUT> for more info.)
 
@@ -14433,22 +14495,152 @@ When we run the code above, we can see all user input has been combined into one
 
 =head3 1.  Constant Pi & Calculated Circumference Of A Circle  [ 30 mins ]
 
-Write an RPerl program which contains constant data for the approximate value of pi equal to C<3.141_592_654>.  Use the C<print> operator and RPerl's data type conversion subroutines to display your hard-coded value of pi.
+In the same F<LearningRPerl> directory from the chapter 1 exercises, create a new sub-directory named F<Chapter2>.  In the new sub-directory, create a RPerl program file named F<exercise_1-circumference_of_specific_radius.pl>, which contains constant data for the approximate value of pi equal to C<3.141_592_654>.  In your program, utilize the C<print> operator and RPerl's data type conversion subroutines to display your hard-coded value of pi.
 
-Next, create a variable named C<$radius> with a value of C<12.5>, and a second variable named C<$circumference> which contains the properly-calculated circumference for a circle with the corresponding radius value.  Use C<print> and the type conversion subroutines to display all your values.
+Next, create a variable named C<$radius> with a value of C<12.5>, and a second variable named C<$circumference> which contains the properly-calculated circumference for a circle with the corresponding radius value.  Use C<print> and the type conversion subroutines to display all your values:
+
+=for rperl X<noncode>
+
+    Pi = 3.141_592_654
+    Radius = 12.5
+    Circumference = 2 * Pi * Radius = 2 * 3.141_592_654 * 12.5 = 78.539_816_35
+
+=for rperl X</noncode>
+
+Run your new program by issuing the following command at your terminal command prompt:
+
+=for rperl X<noncode>
+
+    $ rperl -t LearningRPerl/Chapter2/exercise_1-circumference_of_specific_radius.pl
+
+=for rperl X</noncode>
+
+I<HINT: You will need two C<no critic> commands, and your program should be at least 13 lines long.>
 
 =head3 2.  Variable Radius & Calculated Circumference Of A Circle  [ 20 mins ]
 
-Make a copy of your fully-functioning program from the previous exercise, thereby creating a new RPerl program file with a new name.  (Don't just edit your previous program file without making a copy, or you will not receive full credit.)
+Make a copy of your fully-functioning program from exercise 1 above, thereby creating a new RPerl program file named F<exercise_2-circumference_of_any_radius.pl>.  (Don't just edit your previous program file without making a copy, or you will not receive full credit.)
 
 Use C<print> to prompt the user to enter a custom value for C<$radius>, then use the C<STDIN> keyword to receive one input value into a new variable named C<$radius_string> of C<string> data type.  Next, use a RPerl data type conversion subroutine to convert the C<string> data type and store it in the original C<$radius> variable of C<number> data type.
 
-As in the previous exercise, end by using the C<print> operator to display all your values.
+As in the previous exercise, end by using the C<print> operator to display all your values:
 
-=for comment [ INSERT EXERCISES ]
+=for rperl X<noncode>
+
+    $ rperl -t LearningRPerl/Chapter2/exercise_2-circumference_of_any_radius.pl
+    Please input radius: 3
+
+    Pi = 3.141_592_654
+    Radius = 3
+    Circumference = 2 * Pi * Radius = 2 * 3.141_592_654 * 3 = 18.849_555_924
+
+=for rperl X</noncode>
+
+I<HINT: You will need to add a third C<no critic> command, and a total of at least 3 or 4 extra lines of code.>
+
+=head3 3.  Conditional Error Checking & Calculated Circumference Of A Circle  [ 20 mins ]
+
+Make a copy of your completed program from exercise 2 above, and name your new file F<exercise_3-circumference_of_any_positive_radius.pl>.
+
+Using an C<if> and C<else> conditional statement, detect when the user provides a negative number for the radius variable, in which case a warning should be displayed and the circumference should be set to a value of zero:
+
+=for rperl X<noncode>
+
+    $ rperl -t LearningRPerl/Chapter2/exercise_3-circumference_of_any_positive_radius.pl
+    Please input radius: -3
+    Negative radius detected, defaulting to zero circumference!
+
+    Pi = 3.141_592_654
+    Radius = -3
+    Circumference = 2 * Pi * Radius = 2 * 3.141_592_654 * -3 = 0
+
+=for rperl X</noncode>
+
+=head3 4.  Product Of Two Numbers  [ 20 mins ]
+
+Write a new RPerl program named F<exercise_4-product_of_any_two_numbers.pl>, which will prompt the user for two input numbers, one at a time, and then display the result of multiplying the two input numbers together.  As with all keyboard input in this and any other RPerl source code, your input values are text data and should be passed to the RPerl data type conversion subroutines before being used in numeric calculations.  Remember to reverse this by converting back from C<number> to C<string> types again, before passing a numeric value to the C<print> operator. 
+
+An example execution of this exercise should display:
+
+=for rperl X<noncode>
+
+    $ rperl -t LearningRPerl/Chapter2/exercise_4-product_of_any_two_numbers.pl
+    Please input multiplicator: 17
+    Please input multiplicand: 123.456_789
+
+    Product = Multiplicator * Multiplicand = 17 * 123.456_789 = 2_098.765_413
+
+=for rperl X</noncode>
+
+=head3 5.  String Repetition  [ 15 mins ]
+
+Create a new program named F<exercise_5-string_repeat.pl>, which will prompt the user for one input string followed by one input integer.  Your program should then use the string repetition operator C<x> to display the input string repeated as many times as the input integer specifies.  As always, use the RPerl data type conversion subroutines when appropriate.
+
+An example execution should display:
+
+=for rperl X<noncode>
+
+    $ rperl -t LearningRPerl/Chapter2/exercise_5-string_repeat.pl
+    Please input string to be repeated: Repetition is an aid to memory.
+    Please input integer (whole number) times to repeat string: 5
+
+    Repetition is an aid to memory.
+    Repetition is an aid to memory.
+    Repetition is an aid to memory.
+    Repetition is an aid to memory.
+    Repetition is an aid to memory.
+
+=for rperl X</noncode>
+
+=head3 6.  Looping Integer Sum  [ 35 mins ]
+
+Create a program named F<exercise_6-sum_of_first_n_integers.pl>, which will prompt the user for one input integer and then display the sum of the numbers 1 through the input integer, inclusive.  Utilize an C<if> conditional statement to perform an error check, and call the C<die> operator if the input integer is less than 0.  Then utilize a C<while> loop to compute the actual sum to be displayed as a result.
+
+Store your input integer in a variable named C<$n>, and your final result in a variable named C<$sum>, both of the C<integer> data type.  As with all loop iterators, the C<$i> variable is also an integer. 
+
+Two possible executions of this exercise follow:
+
+=for rperl X<noncode>
+
+    $ rperl -t LearningRPerl/Chapter2/exercise_6-sum_of_first_n_integers.pl
+    Please input a positive integer: 42
+    The sum of the first 42 integers is 903
+
+    $ rperl -t LearningRPerl/Chapter2/exercise_6-sum_of_first_n_integers.pl
+    Please input a positive integer: -42
+    ERROR: -42 is not positive, dying
+
+=for rperl X</noncode>
+
+=head3 7.  Non-Looping Integer Sum  [ 45 mins ]
+
+Make a copy of your completed program from the previous exercise, and save it into a new file named F<exercise_7-sum_of_first_n_integers_no_loop.pl>.
+
+Modify the new program to remove the C<while> loop, and instead replace it with the famous method credited to Gauss, the "Prince of Mathematics":
+
+It is said that as a child, Gauss was punished by his teacher by being told to mentally add together all the numbers from 1 to 100.  Young Gauss realized that 1 plus 100 is 101, and 2 plus 99 is also 101, as well as 3 plus 98 and so forth.  All the numbers may be paired in this manner to equal 101, and there are 50 such pairs from 1 to 100 inclusively, so the final answer is 101 multiplied by 50.  Thus, with a bit more thought Gauss was able to quickly calculate the correct answer of 5,050 and perplex his teacher in the process.
+
+Use young Gauss' algorithm to optimize the runtime performance (AKA speed) of your new program, which you can achieve by replacing the C<while> loop with arithmetic operators as described in the story above.  This exercise should always give the same answer as the previous exercise, but Gauss' algorithm is naturally more efficient for large input integers, because it requires far fewer calculations than the repeated addition loop algorithm.
+
+Start by assuming your input integer will be evenly divisible by two, so you can use the exact algorithm used by Gauss in the story.  Once your program works correctly for all even integer inputs, then use an C<if> conditional statement to check for odd integer inputs and extend your algorithm to handle those cases.  Of course, the error checking for negative input integers should be left in place from the previous exercise.
+
+Two possible executions of this exercise follow, one with an even input integer, and one with an odd input integer:
+
+=for rperl X<noncode>
+
+    $ rperl -t LearningRPerl/Chapter2/exercise_7-sum_of_first_n_integers_no_loop.pl
+    Please input a positive integer: 64
+    The sum of the first 64 integers = 2_080
+
+    $ rperl -t LearningRPerl/Chapter2/exercise_7-sum_of_first_n_integers_no_loop.pl
+    Please input a positive integer: 65
+    The sum of the first 65 integers = 2_145
+
+=for rperl X</noncode>
+
+I<HINT: Use the modulo C<%> operator to check for odd input integers; if found, initialize a temporary variable named C<$n_odd> to the value of C<$n>, decrement C<$n> to become even, and add C<$n_odd> to your original C<$sum> result.>
 
 X<br>
-
 
 =head1 CHAPTER 3: LISTS & ARRAYS
 
@@ -15168,7 +15360,7 @@ The last line calls C<print>, the C<to_string()> conversion subroutine, and the 
         $i++;
     }
 
-    print 'The sum of the first ', to_string($n), ' integers = ', to_string($sum), "\n";
+    print 'The sum of the first ', to_string($n), ' integers is ', to_string($sum), "\n";
 
 
 Example executions, input, and output:
@@ -15177,7 +15369,7 @@ Example executions, input, and output:
 
     $ rperl -t LearningRPerl/Chapter2/exercise_6-sum_of_first_n_integers.pl 
     Please input a positive integer: 100
-    The sum of the first 100 integers = 5_050
+    The sum of the first 100 integers is 5_050
 
     $ rperl -t LearningRPerl/Chapter2/exercise_6-sum_of_first_n_integers.pl 
     Please input a positive integer: -100
@@ -15202,9 +15394,7 @@ The code block beginning with C<if ($n % 2)> is used to detect if the user provi
 
 The computational kernel (most important part) is the one line of arithmetic: C<$sum = (($n + 1) * ($n / 2)) + $n_odd;>X<br>
 
-It is said that as a child, Gauss was punished by his teacher by being told to mentally add together all the numbers from 1 to 100.  Young Gauss realized that 1 plus 100 is 101, and 2 plus 99 is also 101, as well as 3 plus 98 and so forth.  All the numbers may be paired to equal 101, and there are 50 such pairs, so the final answer is 101 multiplied by 50.  Thus, with a bit more thought Gauss was able to achieve the answer of 5,050 and perplex his teacher in the process.X<br>
-
-Our arithmetic generalizes the idea of young Gauss by using C<$n> instead of 100, and by adding C<$n_odd> to enable support for odd values of C<$n>.  Using Gauss' own example of C<$n> equal to 100, which is even (not odd) so C<$n_odd> will equal 0, we can see the algorithm becomes: C<$sum = ((100 + 1) * (100 / 2)) + 0;>X<br>
+Recall the story of Gauss's algorithm in the exercise description; our arithmetic generalizes the idea of young Gauss by using C<$n> instead of 100, and by adding C<$n_odd> to enable support for odd values of C<$n>.  Using Gauss' own example of C<$n> equal to 100, which is even (not odd) so C<$n_odd> will equal 0, we can see the algorithm becomes: C<$sum = ((100 + 1) * (100 / 2)) + 0;>X<br>
 
 One more step of arithmetic simplification shows our algorithm to be the same as Gauss': C<$sum = 101 * 50;>X<br>
 
@@ -15246,7 +15436,7 @@ It is usually faster to run an algorithm without a loop than with a loop, becaus
 
     $sum = (($n + 1) * ($n / 2)) + $n_odd;
 
-    print 'The sum of the first ', to_string($n_original), ' integers = ', to_string($sum), "\n";
+    print 'The sum of the first ', to_string($n_original), ' integers is ', to_string($sum), "\n";
 
 
 Example executions, input, and output:
@@ -15255,7 +15445,7 @@ Example executions, input, and output:
 
     $ rperl -t LearningRPerl/Chapter2/exercise_7-sum_of_first_n_integers_no_loop.pl 
     Please input a positive integer: 100
-    The sum of the first 100 integers = 5_050
+    The sum of the first 100 integers is 5_050
 
     $ rperl -t LearningRPerl/Chapter2/exercise_7-sum_of_first_n_integers_no_loop.pl 
     Please input a positive integer: -100
