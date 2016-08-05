@@ -12820,6 +12820,10 @@ Data types make your code much more readable and much, much faster.  Learn to lo
 
 =head3 Section 2.4.x: Choosing Good Variable Names
 
+START HERE
+START HERE
+START HERE
+
 =for comment [ INSERT CONTENT ]
 
 =head3 Section 2.4.x: Bool Data Type
